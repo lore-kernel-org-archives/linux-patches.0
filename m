@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58598223C58;
-	Thu, 12 Dec 2024 17:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566D6223C55;
+	Thu, 12 Dec 2024 17:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025544; cv=none; b=kdcLhLkcEzLZhdtrK82ENOej/6rkb+nbo7z3u/BjF/KCa4yEZ5IbU0E3hZLkj0OTo5UlIPguylLeYRdKBHRcSEm+lEFesrRcEziUP/brbpFGoLTDwyOVPA05hgfRxlrZ/1tfJk+hcKFV814SrhHmkP58uNd5k5y+Z13KczroOlo=
+	t=1734025547; cv=none; b=aKLWPnIHdpL4d69llXg1L47FLxZ2Tzii7fJx4ygdMGME/UwkYhOAqRJ9vcijCy1yq6/AVlDIjUfTqitSLpWx5EMOAZEi3K2xk670ZYldUBFfh2RCnaulysLsSztBkmEOiqe20PXVRAM+tJxzj7TsaCkhBPUdW0u90zpOPzveVtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025544; c=relaxed/simple;
-	bh=w0vQLonkMB9Ho/QpMRTXdeAJu/GG4x9OdY6jadGxUM4=;
+	s=arc-20240116; t=1734025547; c=relaxed/simple;
+	bh=47JOvJv401l7UQB0QcxaNz8RlqLdggecYM8UdVBy4nU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TascWKXjpJs6TLNZu3PrzGiOpm4cKq+/GmzCZqzcLbUF4ERC9o0kTAUhut/UvpHjkyLIxnG3Mfr0rZxZwBwnWD5a7P7C4GKHAEVLuRMG0vQsi+i/sHaTmELvc1hyyAghb4v9D53Y9Y/MB/lSv5NDFQ5MH5He/4lf5h5yEiWD80A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RomAR6jZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eTtdLS4uvy4ihpxVcoGEmpjCotcvUN0q9+rcvWaZFKcHxgeS/TKBJEsKWwIWNsHtSGyKKQDTishsVX09g5umZ5o+0wMoh4h0E971zQy2lq9U6g2RxGLiRaOiCsf7Zh7lh0FG9akmTRwZIlYZK9kvP1LdaexIFAOVeTGmJWRBo3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TK+3ePMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RomAR6jZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FCFC4CECE;
-	Thu, 12 Dec 2024 17:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TK+3ePMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23FCC4CECE;
+	Thu, 12 Dec 2024 17:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025544;
-	bh=w0vQLonkMB9Ho/QpMRTXdeAJu/GG4x9OdY6jadGxUM4=;
+	s=korg; t=1734025547;
+	bh=47JOvJv401l7UQB0QcxaNz8RlqLdggecYM8UdVBy4nU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RomAR6jZbyhCZkz1L0MP6HwR++uR0N/zr23v79JHnsEvRWbjtktxkRGVFGuNADVRa
-	 kMDU1CcLeAK4f66jDn7tF8j+H3vAGU1hLAr/g2gb1H2IpwgnZx+EC6seNg2njt7xrE
-	 HGl9qwGpmrHMIHppbnAk0VXrk96w2XjJzT/XLjXU=
+	b=TK+3ePMNzrekL5zqQSOTPWUjJ/ckF8eqo6MzclT8oaZNhRoejXdvRNiYl7hVp4POI
+	 xvKHztE2bDHrGqBB4eiRr0+zV21mqM8H7zgckicJaww/31hgd1BYaVNvTIIID+vfs/
+	 WjKQPrC0lLYtELebYyFMattEfuyW2e9pZkeF3E38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7325f164162e200000c1@syzkaller.appspotmail.com,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 203/321] btrfs: ref-verify: fix use-after-free after invalid ref action
-Date: Thu, 12 Dec 2024 16:02:01 +0100
-Message-ID: <20241212144237.998217369@linuxfoundation.org>
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.4 204/321] media: i2c: tc358743: Fix crash in the probe error path when using polling
+Date: Thu, 12 Dec 2024 16:02:02 +0100
+Message-ID: <20241212144238.037619779@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -47,301 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-[ Upstream commit 7c4e39f9d2af4abaf82ca0e315d1fd340456620f ]
+commit 869f38ae07f7df829da4951c3d1f7a2be09c2e9a upstream.
 
-At btrfs_ref_tree_mod() after we successfully inserted the new ref entry
-(local variable 'ref') into the respective block entry's rbtree (local
-variable 'be'), if we find an unexpected action of BTRFS_DROP_DELAYED_REF,
-we error out and free the ref entry without removing it from the block
-entry's rbtree. Then in the error path of btrfs_ref_tree_mod() we call
-btrfs_free_ref_cache(), which iterates over all block entries and then
-calls free_block_entry() for each one, and there we will trigger a
-use-after-free when we are called against the block entry to which we
-added the freed ref entry to its rbtree, since the rbtree still points
-to the block entry, as we didn't remove it from the rbtree before freeing
-it in the error path at btrfs_ref_tree_mod(). Fix this by removing the
-new ref entry from the rbtree before freeing it.
+If an error occurs in the probe() function, we should remove the polling
+timer that was alarmed earlier, otherwise the timer is called with
+arguments that are already freed, which results in a crash.
 
-Syzbot report this with the following stack traces:
+------------[ cut here ]------------
+WARNING: CPU: 3 PID: 0 at kernel/time/timer.c:1830 __run_timers+0x244/0x268
+Modules linked in:
+CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.11.0 #226
+Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
+pstate: 804000c9 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __run_timers+0x244/0x268
+lr : __run_timers+0x1d4/0x268
+sp : ffffff80eff2baf0
+x29: ffffff80eff2bb50 x28: 7fffffffffffffff x27: ffffff80eff2bb00
+x26: ffffffc080f669c0 x25: ffffff80efef6bf0 x24: ffffff80eff2bb00
+x23: 0000000000000000 x22: dead000000000122 x21: 0000000000000000
+x20: ffffff80efef6b80 x19: ffffff80041c8bf8 x18: ffffffffffffffff
+x17: ffffffc06f146000 x16: ffffff80eff27dc0 x15: 000000000000003e
+x14: 0000000000000000 x13: 00000000000054da x12: 0000000000000000
+x11: 00000000000639c0 x10: 000000000000000c x9 : 0000000000000009
+x8 : ffffff80eff2cb40 x7 : ffffff80eff2cb40 x6 : ffffff8002bee480
+x5 : ffffffc080cb2220 x4 : ffffffc080cb2150 x3 : 00000000000f4240
+x2 : 0000000000000102 x1 : ffffff80eff2bb00 x0 : ffffff80041c8bf0
+Call trace:
+ __run_timers+0x244/0x268
+ timer_expire_remote+0x50/0x68
+ tmigr_handle_remote+0x388/0x39c
+ run_timer_softirq+0x38/0x44
+ handle_softirqs+0x138/0x298
+ __do_softirq+0x14/0x20
+ ____do_softirq+0x10/0x1c
+ call_on_irq_stack+0x24/0x4c
+ do_softirq_own_stack+0x1c/0x2c
+ irq_exit_rcu+0x9c/0xcc
+ el1_interrupt+0x48/0xc0
+ el1h_64_irq_handler+0x18/0x24
+ el1h_64_irq+0x7c/0x80
+ default_idle_call+0x34/0x68
+ do_idle+0x23c/0x294
+ cpu_startup_entry+0x38/0x3c
+ secondary_start_kernel+0x128/0x160
+ __secondary_switched+0xb8/0xbc
+---[ end trace 0000000000000000 ]---
 
-   BTRFS error (device loop0 state EA):   Ref action 2, root 5, ref_root 0, parent 8564736, owner 0, offset 0, num_refs 18446744073709551615
-      __btrfs_mod_ref+0x7dd/0xac0 fs/btrfs/extent-tree.c:2523
-      update_ref_for_cow+0x9cd/0x11f0 fs/btrfs/ctree.c:512
-      btrfs_force_cow_block+0x9f6/0x1da0 fs/btrfs/ctree.c:594
-      btrfs_cow_block+0x35e/0xa40 fs/btrfs/ctree.c:754
-      btrfs_search_slot+0xbdd/0x30d0 fs/btrfs/ctree.c:2116
-      btrfs_insert_empty_items+0x9c/0x1a0 fs/btrfs/ctree.c:4314
-      btrfs_insert_empty_item fs/btrfs/ctree.h:669 [inline]
-      btrfs_insert_orphan_item+0x1f1/0x320 fs/btrfs/orphan.c:23
-      btrfs_orphan_add+0x6d/0x1a0 fs/btrfs/inode.c:3482
-      btrfs_unlink+0x267/0x350 fs/btrfs/inode.c:4293
-      vfs_unlink+0x365/0x650 fs/namei.c:4469
-      do_unlinkat+0x4ae/0x830 fs/namei.c:4533
-      __do_sys_unlinkat fs/namei.c:4576 [inline]
-      __se_sys_unlinkat fs/namei.c:4569 [inline]
-      __x64_sys_unlinkat+0xcc/0xf0 fs/namei.c:4569
-      do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-      do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-      entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   BTRFS error (device loop0 state EA):   Ref action 1, root 5, ref_root 5, parent 0, owner 260, offset 0, num_refs 1
-      __btrfs_mod_ref+0x76b/0xac0 fs/btrfs/extent-tree.c:2521
-      update_ref_for_cow+0x96a/0x11f0
-      btrfs_force_cow_block+0x9f6/0x1da0 fs/btrfs/ctree.c:594
-      btrfs_cow_block+0x35e/0xa40 fs/btrfs/ctree.c:754
-      btrfs_search_slot+0xbdd/0x30d0 fs/btrfs/ctree.c:2116
-      btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:411
-      __btrfs_update_delayed_inode+0x1e7/0xb90 fs/btrfs/delayed-inode.c:1030
-      btrfs_update_delayed_inode fs/btrfs/delayed-inode.c:1114 [inline]
-      __btrfs_commit_inode_delayed_items+0x2318/0x24a0 fs/btrfs/delayed-inode.c:1137
-      __btrfs_run_delayed_items+0x213/0x490 fs/btrfs/delayed-inode.c:1171
-      btrfs_commit_transaction+0x8a8/0x3740 fs/btrfs/transaction.c:2313
-      prepare_to_relocate+0x3c4/0x4c0 fs/btrfs/relocation.c:3586
-      relocate_block_group+0x16c/0xd40 fs/btrfs/relocation.c:3611
-      btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4081
-      btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3377
-      __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4161
-      btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4538
-   BTRFS error (device loop0 state EA):   Ref action 2, root 5, ref_root 0, parent 8564736, owner 0, offset 0, num_refs 18446744073709551615
-      __btrfs_mod_ref+0x7dd/0xac0 fs/btrfs/extent-tree.c:2523
-      update_ref_for_cow+0x9cd/0x11f0 fs/btrfs/ctree.c:512
-      btrfs_force_cow_block+0x9f6/0x1da0 fs/btrfs/ctree.c:594
-      btrfs_cow_block+0x35e/0xa40 fs/btrfs/ctree.c:754
-      btrfs_search_slot+0xbdd/0x30d0 fs/btrfs/ctree.c:2116
-      btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:411
-      __btrfs_update_delayed_inode+0x1e7/0xb90 fs/btrfs/delayed-inode.c:1030
-      btrfs_update_delayed_inode fs/btrfs/delayed-inode.c:1114 [inline]
-      __btrfs_commit_inode_delayed_items+0x2318/0x24a0 fs/btrfs/delayed-inode.c:1137
-      __btrfs_run_delayed_items+0x213/0x490 fs/btrfs/delayed-inode.c:1171
-      btrfs_commit_transaction+0x8a8/0x3740 fs/btrfs/transaction.c:2313
-      prepare_to_relocate+0x3c4/0x4c0 fs/btrfs/relocation.c:3586
-      relocate_block_group+0x16c/0xd40 fs/btrfs/relocation.c:3611
-      btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4081
-      btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3377
-      __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4161
-      btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4538
-   ==================================================================
-   BUG: KASAN: slab-use-after-free in rb_first+0x69/0x70 lib/rbtree.c:473
-   Read of size 8 at addr ffff888042d1af38 by task syz.0.0/5329
-
-   CPU: 0 UID: 0 PID: 5329 Comm: syz.0.0 Not tainted 6.12.0-rc7-syzkaller #0
-   Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-   Call Trace:
-    <TASK>
-    __dump_stack lib/dump_stack.c:94 [inline]
-    dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
-    print_address_description mm/kasan/report.c:377 [inline]
-    print_report+0x169/0x550 mm/kasan/report.c:488
-    kasan_report+0x143/0x180 mm/kasan/report.c:601
-    rb_first+0x69/0x70 lib/rbtree.c:473
-    free_block_entry+0x78/0x230 fs/btrfs/ref-verify.c:248
-    btrfs_free_ref_cache+0xa3/0x100 fs/btrfs/ref-verify.c:917
-    btrfs_ref_tree_mod+0x139f/0x15e0 fs/btrfs/ref-verify.c:898
-    btrfs_free_extent+0x33c/0x380 fs/btrfs/extent-tree.c:3544
-    __btrfs_mod_ref+0x7dd/0xac0 fs/btrfs/extent-tree.c:2523
-    update_ref_for_cow+0x9cd/0x11f0 fs/btrfs/ctree.c:512
-    btrfs_force_cow_block+0x9f6/0x1da0 fs/btrfs/ctree.c:594
-    btrfs_cow_block+0x35e/0xa40 fs/btrfs/ctree.c:754
-    btrfs_search_slot+0xbdd/0x30d0 fs/btrfs/ctree.c:2116
-    btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:411
-    __btrfs_update_delayed_inode+0x1e7/0xb90 fs/btrfs/delayed-inode.c:1030
-    btrfs_update_delayed_inode fs/btrfs/delayed-inode.c:1114 [inline]
-    __btrfs_commit_inode_delayed_items+0x2318/0x24a0 fs/btrfs/delayed-inode.c:1137
-    __btrfs_run_delayed_items+0x213/0x490 fs/btrfs/delayed-inode.c:1171
-    btrfs_commit_transaction+0x8a8/0x3740 fs/btrfs/transaction.c:2313
-    prepare_to_relocate+0x3c4/0x4c0 fs/btrfs/relocation.c:3586
-    relocate_block_group+0x16c/0xd40 fs/btrfs/relocation.c:3611
-    btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4081
-    btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3377
-    __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4161
-    btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4538
-    btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3673
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:907 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
-    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   RIP: 0033:0x7f996df7e719
-   RSP: 002b:00007f996ede7038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-   RAX: ffffffffffffffda RBX: 00007f996e135f80 RCX: 00007f996df7e719
-   RDX: 0000000020000180 RSI: 00000000c4009420 RDI: 0000000000000004
-   RBP: 00007f996dff139e R08: 0000000000000000 R09: 0000000000000000
-   R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-   R13: 0000000000000000 R14: 00007f996e135f80 R15: 00007fff79f32e68
-    </TASK>
-
-   Allocated by task 5329:
-    kasan_save_stack mm/kasan/common.c:47 [inline]
-    kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-    poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
-    __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:394
-    kasan_kmalloc include/linux/kasan.h:257 [inline]
-    __kmalloc_cache_noprof+0x19c/0x2c0 mm/slub.c:4295
-    kmalloc_noprof include/linux/slab.h:878 [inline]
-    kzalloc_noprof include/linux/slab.h:1014 [inline]
-    btrfs_ref_tree_mod+0x264/0x15e0 fs/btrfs/ref-verify.c:701
-    btrfs_free_extent+0x33c/0x380 fs/btrfs/extent-tree.c:3544
-    __btrfs_mod_ref+0x7dd/0xac0 fs/btrfs/extent-tree.c:2523
-    update_ref_for_cow+0x9cd/0x11f0 fs/btrfs/ctree.c:512
-    btrfs_force_cow_block+0x9f6/0x1da0 fs/btrfs/ctree.c:594
-    btrfs_cow_block+0x35e/0xa40 fs/btrfs/ctree.c:754
-    btrfs_search_slot+0xbdd/0x30d0 fs/btrfs/ctree.c:2116
-    btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:411
-    __btrfs_update_delayed_inode+0x1e7/0xb90 fs/btrfs/delayed-inode.c:1030
-    btrfs_update_delayed_inode fs/btrfs/delayed-inode.c:1114 [inline]
-    __btrfs_commit_inode_delayed_items+0x2318/0x24a0 fs/btrfs/delayed-inode.c:1137
-    __btrfs_run_delayed_items+0x213/0x490 fs/btrfs/delayed-inode.c:1171
-    btrfs_commit_transaction+0x8a8/0x3740 fs/btrfs/transaction.c:2313
-    prepare_to_relocate+0x3c4/0x4c0 fs/btrfs/relocation.c:3586
-    relocate_block_group+0x16c/0xd40 fs/btrfs/relocation.c:3611
-    btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4081
-    btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3377
-    __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4161
-    btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4538
-    btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3673
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:907 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
-    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-   Freed by task 5329:
-    kasan_save_stack mm/kasan/common.c:47 [inline]
-    kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-    kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:579
-    poison_slab_object mm/kasan/common.c:247 [inline]
-    __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
-    kasan_slab_free include/linux/kasan.h:230 [inline]
-    slab_free_hook mm/slub.c:2342 [inline]
-    slab_free mm/slub.c:4579 [inline]
-    kfree+0x1a0/0x440 mm/slub.c:4727
-    btrfs_ref_tree_mod+0x136c/0x15e0
-    btrfs_free_extent+0x33c/0x380 fs/btrfs/extent-tree.c:3544
-    __btrfs_mod_ref+0x7dd/0xac0 fs/btrfs/extent-tree.c:2523
-    update_ref_for_cow+0x9cd/0x11f0 fs/btrfs/ctree.c:512
-    btrfs_force_cow_block+0x9f6/0x1da0 fs/btrfs/ctree.c:594
-    btrfs_cow_block+0x35e/0xa40 fs/btrfs/ctree.c:754
-    btrfs_search_slot+0xbdd/0x30d0 fs/btrfs/ctree.c:2116
-    btrfs_lookup_inode+0xdc/0x480 fs/btrfs/inode-item.c:411
-    __btrfs_update_delayed_inode+0x1e7/0xb90 fs/btrfs/delayed-inode.c:1030
-    btrfs_update_delayed_inode fs/btrfs/delayed-inode.c:1114 [inline]
-    __btrfs_commit_inode_delayed_items+0x2318/0x24a0 fs/btrfs/delayed-inode.c:1137
-    __btrfs_run_delayed_items+0x213/0x490 fs/btrfs/delayed-inode.c:1171
-    btrfs_commit_transaction+0x8a8/0x3740 fs/btrfs/transaction.c:2313
-    prepare_to_relocate+0x3c4/0x4c0 fs/btrfs/relocation.c:3586
-    relocate_block_group+0x16c/0xd40 fs/btrfs/relocation.c:3611
-    btrfs_relocate_block_group+0x77d/0xd90 fs/btrfs/relocation.c:4081
-    btrfs_relocate_chunk+0x12c/0x3b0 fs/btrfs/volumes.c:3377
-    __btrfs_balance+0x1b0f/0x26b0 fs/btrfs/volumes.c:4161
-    btrfs_balance+0xbdc/0x10c0 fs/btrfs/volumes.c:4538
-    btrfs_ioctl_balance+0x493/0x7c0 fs/btrfs/ioctl.c:3673
-    vfs_ioctl fs/ioctl.c:51 [inline]
-    __do_sys_ioctl fs/ioctl.c:907 [inline]
-    __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
-    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-   The buggy address belongs to the object at ffff888042d1af00
-    which belongs to the cache kmalloc-64 of size 64
-   The buggy address is located 56 bytes inside of
-    freed 64-byte region [ffff888042d1af00, ffff888042d1af40)
-
-   The buggy address belongs to the physical page:
-   page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x42d1a
-   anon flags: 0x4fff00000000000(node=1|zone=1|lastcpupid=0x7ff)
-   page_type: f5(slab)
-   raw: 04fff00000000000 ffff88801ac418c0 0000000000000000 dead000000000001
-   raw: 0000000000000000 0000000000200020 00000001f5000000 0000000000000000
-   page dumped because: kasan: bad access detected
-   page_owner tracks the page as allocated
-   page last allocated via order 0, migratetype Unmovable, gfp_mask 0x52c40(GFP_NOFS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 5055, tgid 5055 (dhcpcd-run-hook), ts 40377240074, free_ts 40376848335
-    set_page_owner include/linux/page_owner.h:32 [inline]
-    post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1541
-    prep_new_page mm/page_alloc.c:1549 [inline]
-    get_page_from_freelist+0x3649/0x3790 mm/page_alloc.c:3459
-    __alloc_pages_noprof+0x292/0x710 mm/page_alloc.c:4735
-    alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
-    alloc_slab_page+0x6a/0x140 mm/slub.c:2412
-    allocate_slab+0x5a/0x2f0 mm/slub.c:2578
-    new_slab mm/slub.c:2631 [inline]
-    ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3818
-    __slab_alloc+0x58/0xa0 mm/slub.c:3908
-    __slab_alloc_node mm/slub.c:3961 [inline]
-    slab_alloc_node mm/slub.c:4122 [inline]
-    __do_kmalloc_node mm/slub.c:4263 [inline]
-    __kmalloc_noprof+0x25a/0x400 mm/slub.c:4276
-    kmalloc_noprof include/linux/slab.h:882 [inline]
-    kzalloc_noprof include/linux/slab.h:1014 [inline]
-    tomoyo_encode2 security/tomoyo/realpath.c:45 [inline]
-    tomoyo_encode+0x26f/0x540 security/tomoyo/realpath.c:80
-    tomoyo_realpath_from_path+0x59e/0x5e0 security/tomoyo/realpath.c:283
-    tomoyo_get_realpath security/tomoyo/file.c:151 [inline]
-    tomoyo_check_open_permission+0x255/0x500 security/tomoyo/file.c:771
-    security_file_open+0x777/0x990 security/security.c:3109
-    do_dentry_open+0x369/0x1460 fs/open.c:945
-    vfs_open+0x3e/0x330 fs/open.c:1088
-    do_open fs/namei.c:3774 [inline]
-    path_openat+0x2c84/0x3590 fs/namei.c:3933
-   page last free pid 5055 tgid 5055 stack trace:
-    reset_page_owner include/linux/page_owner.h:25 [inline]
-    free_pages_prepare mm/page_alloc.c:1112 [inline]
-    free_unref_page+0xcfb/0xf20 mm/page_alloc.c:2642
-    free_pipe_info+0x300/0x390 fs/pipe.c:860
-    put_pipe_info fs/pipe.c:719 [inline]
-    pipe_release+0x245/0x320 fs/pipe.c:742
-    __fput+0x23f/0x880 fs/file_table.c:431
-    __do_sys_close fs/open.c:1567 [inline]
-    __se_sys_close fs/open.c:1552 [inline]
-    __x64_sys_close+0x7f/0x110 fs/open.c:1552
-    do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-    do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-   Memory state around the buggy address:
-    ffff888042d1ae00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ffff888042d1ae80: 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc fc
-   >ffff888042d1af00: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                           ^
-    ffff888042d1af80: 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc fc
-    ffff888042d1b000: 00 00 00 00 00 fc fc 00 00 00 00 00 fc fc 00 00
-
-Reported-by: syzbot+7325f164162e200000c1@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/673723eb.050a0220.1324f8.00a8.GAE@google.com/T/#u
-Fixes: fd708b81d972 ("Btrfs: add a extent ref verify tool")
-CC: stable@vger.kernel.org # 4.19+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4e66a52a2e4c ("[media] tc358743: Add support for platforms without IRQ line")
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ref-verify.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/i2c/tc358743.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ref-verify.c b/fs/btrfs/ref-verify.c
-index d59e89ef3251d..4acde2a05d116 100644
---- a/fs/btrfs/ref-verify.c
-+++ b/fs/btrfs/ref-verify.c
-@@ -851,6 +851,7 @@ int btrfs_ref_tree_mod(struct btrfs_fs_info *fs_info,
- "dropping a ref for a root that doesn't have a ref on the block");
- 			dump_block_entry(fs_info, be);
- 			dump_ref_action(fs_info, ra);
-+			rb_erase(&ref->node, &be->refs);
- 			kfree(ref);
- 			kfree(ra);
- 			goto out_unlock;
--- 
-2.43.0
-
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -2175,8 +2175,10 @@ static int tc358743_probe(struct i2c_cli
+ 
+ err_work_queues:
+ 	cec_unregister_adapter(state->cec_adap);
+-	if (!state->i2c_client->irq)
++	if (!state->i2c_client->irq) {
++		del_timer(&state->timer);
+ 		flush_work(&state->work_i2c_poll);
++	}
+ 	cancel_delayed_work(&state->delayed_work_enable_hotplug);
+ 	mutex_destroy(&state->confctl_mutex);
+ err_hdl:
 
 
