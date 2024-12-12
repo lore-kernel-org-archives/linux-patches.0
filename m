@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0394223E75;
-	Thu, 12 Dec 2024 17:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D704D226529;
+	Thu, 12 Dec 2024 17:07:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023228; cv=none; b=qVm6g+LSXhWzjV5RUNJWoDgNhH6VzFZAtpQHUAB/K3BpLnO7FbV84AudLM3Q12hq4kNTDqm5wovRx8aRtPUzS8d4o6z1q5PDvEMqlVsz3kZgoFs1QRpkUVGI84imFHhkTX+sI3krVp87GdiztuOMMpr9f8361va1Y5QreVSUGa8=
+	t=1734023231; cv=none; b=CIFiQMrsajw6AdUWscHjsND8FqVbXB+pm61G6ZIS/6c64RW10mMYMJqY+bBK/UVOZ93+UtT+/Is6dcwJ5tK2osE52N7EXwpBlAYmxH0diL3df07QxHINhVoM4Ydgj3nROkJ4qBU7bGXu35kqTP274GL0U2vZBpUSxd4ng15Y2WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023228; c=relaxed/simple;
-	bh=+vqRDWKnzaPUjbjragOp3BQyLc+P6/tvT6xT3vED+nw=;
+	s=arc-20240116; t=1734023231; c=relaxed/simple;
+	bh=SBjDsIjB4jYz61oVTYdqKwFm6/iSoR6F6hSUhBLKOXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lj+0bNLFlx58dayViGTk1ZvcveAAQeoI8Z12YiF9k4jkWFX58qITcRFZ2DhK7xQnRltZ1h68uA/eCD4js+wzUU6kgD1xLwwSA8j99xqVOj/qomzoib76Wv2AZGoqLr2H7Y8cMmLvnfy0tbGLcANDTc/qlKlTGpL7UenCeTcWpoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m84/UY2U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C1Kxh/eKScLr0Nfz5DTee1HR69DLsSZmWiblatRIS+31JelfEGsIx9u3l4dcJT1TeTGq7JWDuQsHeYGcbyIMTL3QcMns/Bi8z7s8b88qB2kpkooD2IG1a9ABVQSkliukRVTlvKxuqOfI4kzk+vm+0oS0xFV3063gXFNEtlZJ1ZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xjb3ukYP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m84/UY2U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA46C4CECE;
-	Thu, 12 Dec 2024 17:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xjb3ukYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F61DC4CECE;
+	Thu, 12 Dec 2024 17:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023228;
-	bh=+vqRDWKnzaPUjbjragOp3BQyLc+P6/tvT6xT3vED+nw=;
+	s=korg; t=1734023231;
+	bh=SBjDsIjB4jYz61oVTYdqKwFm6/iSoR6F6hSUhBLKOXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m84/UY2UHM8I/ca9/HIl2ueEtyuUepFTAmUQ/LdemZLjSBsfHSPo9dDBKG/cBQCJr
-	 8Ohs3hu8s9DRWOZxOFUc6DnJxHri8T3zU5yXTISXnrCtyCdOGfjd5DX5w7YXlq84G0
-	 z+BxU+srP437X6Zkp1pfjXwmr+ZBBm2IHJOX6sPA=
+	b=xjb3ukYPHZJeHYYRL9Nv5vj2WQe3ypdofdWHXZGTHxY2rAroZizAaInaLkWRUh854
+	 eu53DO7ZlIAQpza9O0sVohgVSkCpVP8jn5o0f+SM6WjovcVnKd9Eu31z1GXBIWqVXd
+	 f6Ycc/mxKZv6rNpRZ/plSJ3/2rISiEoYWxmtM6Ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anthony Pighin <anthony.pighin@nokia.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Adrian Hunter <adrian.hunter@intel.com>
-Subject: [PATCH 5.15 466/565] mmc: core: Further prevent card detect during shutdown
-Date: Thu, 12 Dec 2024 16:01:01 +0100
-Message-ID: <20241212144330.156651908@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 449/565] arm64: ptrace: fix partial SETREGSET for NT_ARM_TAGGED_ADDR_CTRL
+Date: Thu, 12 Dec 2024 16:00:44 +0100
+Message-ID: <20241212144329.466797149@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,56 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 87a0d90fcd31c0f36da0332428c9e1a1e0f97432 upstream.
+commit ca62d90085f4af36de745883faab9f8a7cbb45d3 upstream.
 
-Disabling card detect from the host's ->shutdown_pre() callback turned out
-to not be the complete solution. More precisely, beyond the point when the
-mmc_bus->shutdown() has been called, to gracefully power off the card, we
-need to prevent card detect. Otherwise the mmc_rescan work may poll for the
-card with a CMD13, to see if it's still alive, which then will fail and
-hang as the card has already been powered off.
+Currently tagged_addr_ctrl_set() doesn't initialize the temporary 'ctrl'
+variable, and a SETREGSET call with a length of zero will leave this
+uninitialized. Consequently tagged_addr_ctrl_set() will consume an
+arbitrary value, potentially leaking up to 64 bits of memory from the
+kernel stack. The read is limited to a specific slot on the stack, and
+the issue does not provide a write mechanism.
 
-To fix this problem, let's disable mmc_rescan prior to power off the card
-during shutdown.
+As set_tagged_addr_ctrl() only accepts values where bits [63:4] zero and
+rejects other values, a partial SETREGSET attempt will randomly succeed
+or fail depending on the value of the uninitialized value, and the
+exposure is significantly limited.
 
-Reported-by: Anthony Pighin <anthony.pighin@nokia.com>
-Fixes: 66c915d09b94 ("mmc: core: Disable card detect during shutdown")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Closes: https://lore.kernel.org/all/BN0PR08MB695133000AF116F04C3A9FFE83212@BN0PR08MB6951.namprd08.prod.outlook.com/
-Tested-by: Anthony Pighin <anthony.pighin@nokia.com>
-Message-ID: <20241125122446.18684-1-ulf.hansson@linaro.org>
+Fix this by initializing the temporary value before copying the regset
+from userspace, as for other regsets (e.g. NT_PRSTATUS, NT_PRFPREG,
+NT_ARM_SYSTEM_CALL). In the case of a zero-length write, the existing
+value of the tagged address ctrl will be retained.
+
+The NT_ARM_TAGGED_ADDR_CTRL regset is only visible in the
+user_aarch64_view used by a native AArch64 task to manipulate another
+native AArch64 task. As get_tagged_addr_ctrl() only returns an error
+value when called for a compat task, tagged_addr_ctrl_get() and
+tagged_addr_ctrl_set() should never observe an error value from
+get_tagged_addr_ctrl(). Add a WARN_ON_ONCE() to both to indicate that
+such an error would be unexpected, and error handlnig is not missing in
+either case.
+
+Fixes: 2200aa7154cb ("arm64: mte: ptrace: Add NT_ARM_TAGGED_ADDR_CTRL regset")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241205121655.1824269-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/bus.c  |    2 ++
- drivers/mmc/core/core.c |    3 +++
- 2 files changed, 5 insertions(+)
+ arch/arm64/kernel/ptrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/core/bus.c
-+++ b/drivers/mmc/core/bus.c
-@@ -158,6 +158,8 @@ static void mmc_bus_shutdown(struct devi
- 	if (dev->driver && drv->shutdown)
- 		drv->shutdown(card);
- 
-+	__mmc_stop_host(host);
-+
- 	if (host->bus_ops->shutdown) {
- 		ret = host->bus_ops->shutdown(host);
- 		if (ret)
---- a/drivers/mmc/core/core.c
-+++ b/drivers/mmc/core/core.c
-@@ -2282,6 +2282,9 @@ void mmc_start_host(struct mmc_host *hos
- 
- void __mmc_stop_host(struct mmc_host *host)
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -1075,7 +1075,7 @@ static int tagged_addr_ctrl_get(struct t
  {
-+	if (host->rescan_disable)
-+		return;
+ 	long ctrl = get_tagged_addr_ctrl(target);
+ 
+-	if (IS_ERR_VALUE(ctrl))
++	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
+ 		return ctrl;
+ 
+ 	return membuf_write(&to, &ctrl, sizeof(ctrl));
+@@ -1089,6 +1089,10 @@ static int tagged_addr_ctrl_set(struct t
+ 	int ret;
+ 	long ctrl;
+ 
++	ctrl = get_tagged_addr_ctrl(target);
++	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
++		return ctrl;
 +
- 	if (host->slot.cd_irq >= 0) {
- 		mmc_gpio_set_cd_wake(host, false);
- 		disable_irq(host->slot.cd_irq);
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ctrl, 0, -1);
+ 	if (ret)
+ 		return ret;
 
 
