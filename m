@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462EF211493;
-	Thu, 12 Dec 2024 17:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4C2211493;
+	Thu, 12 Dec 2024 17:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024327; cv=none; b=gmVdy1U5pS/KxHCohKLnnWgWCXBA87JSKCowcjhgQOCJsKP5Dvs4F+2pD6zRB+EXG4USQ8loJISpeoLpMGUp7UzNCo9/wr2rWii7el0tz2a6lwaOZ78DQWXh8w+a2aNvu04mkTYmnmvIFXHPzHu3hGxcvDVhpMXUNoc3S7bG6gk=
+	t=1734024330; cv=none; b=oOKDxc2YoUivBT7EJia+4+P/hla5ohiNMowZx2cmBU1IjCA77Oaidm7kGcXO1eJ+OLSVsxBC90KiZbz6o47epgb7CYSCdzGlsKLbR2E1AiTXQKsk34zWmWCWEQrQxbL8ffRZQZVow+Z4sTGWp24C1CysojTcIhfvPyx7TFfruvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024327; c=relaxed/simple;
-	bh=/0NqUIomGTEqMap8TPmu4NfErR5UmDQ0mwh6yP2KXUo=;
+	s=arc-20240116; t=1734024330; c=relaxed/simple;
+	bh=KzJSaFq2Ifv1y96rrJfaT9grORy4Eic+sGsu7peIRR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJPWVouWMJ/GrS+YObFiav0aSq/RlF7Fjv2pIIOzbm2hfYjgmWTqMBu2cIjg2xx2FAvu5uJryzlMr9TIwARfQG8RFXmg+xX5N5bBVfHhy7xy22H+7bl8/vHb6mU6YPVCWaYxxuS/pUeXVnSSm7SeRUvi/FqiyhEOO1i46/kvw0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mP5Qkdp+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rc7hDCNKVpjwNw9aL1PtIKjwUWirfmDDdJciEnZKZUcm30O6zYs9mnLqJCWPyLnK6BFJXcPrN0OdnYoloti/N7mpCCS+582g8ApSZaS/KpF33omoyzeQrxxm4ZaRCXWqCsyZSzxFM3mw8orQYTuKT+PlmCSMnYa4AzlzvBbFcQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdRa6Ci9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mP5Qkdp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96ACC4CECE;
-	Thu, 12 Dec 2024 17:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdRa6Ci9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36E6C4CECE;
+	Thu, 12 Dec 2024 17:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024327;
-	bh=/0NqUIomGTEqMap8TPmu4NfErR5UmDQ0mwh6yP2KXUo=;
+	s=korg; t=1734024330;
+	bh=KzJSaFq2Ifv1y96rrJfaT9grORy4Eic+sGsu7peIRR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mP5Qkdp+1O+POxsTRd5gm5ldOvg0VtiJ7eCii4Ohrd6WXrl9qT30oR9XhpwOU04Sr
-	 23Qg2mW5Cwbm4x81HFe1QmhyiY4pz6LdLzjUPI+rLUh6S3RJaly5L81RrQ345yOznf
-	 kEZ0VnyAp6hLrqsYMpwZBOmgIXQPKWkHbuPE3bJM=
+	b=JdRa6Ci9o10HvWVrAfL6lxLq1cfgrObfrbPDcm6fPlT29wZSgwU9PUZk8wGykWWaD
+	 XMNbFufD22ztL5tN6pCYiUADuDahBkelQlPEnOPN5aUFrbWaMxd/Emk++A0JltMwHx
+	 AtO31/t2nrSUj7fi4uaV0FuZNBiFwqpYoc0AYcAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
-Subject: [PATCH 5.10 260/459] driver core: bus: Fix double free in driver API bus_register()
-Date: Thu, 12 Dec 2024 15:59:58 +0100
-Message-ID: <20241212144303.868976790@linuxfoundation.org>
+	Michal Vrastil <michal.vrastil@hidglobal.com>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Peter korsgaard <peter@korsgaard.com>
+Subject: [PATCH 5.10 261/459] Revert "usb: gadget: composite: fix OS descriptors w_value logic"
+Date: Thu, 12 Dec 2024 15:59:59 +0100
+Message-ID: <20241212144303.912049666@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,34 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Michal Vrastil <michal.vrastil@hidglobal.com>
 
-commit bfa54a793ba77ef696755b66f3ac4ed00c7d1248 upstream.
+commit 51cdd69d6a857f527d6d0697a2e1f0fa8bca1005 upstream.
 
-For bus_register(), any error which happens after kset_register() will
-cause that @priv are freed twice, fixed by setting @priv with NULL after
-the first free.
+This reverts commit ec6ce7075ef879b91a8710829016005dc8170f17.
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240727-bus_register_fix-v1-1-fed8dd0dba7a@quicinc.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Brennan : Backport requires bus->p = NULL instead of priv = NULL ]
-Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+Fix installation of WinUSB driver using OS descriptors. Without the
+fix the drivers are not installed correctly and the property
+'DeviceInterfaceGUID' is missing on host side.
+
+The original change was based on the assumption that the interface
+number is in the high byte of wValue but it is in the low byte,
+instead. Unfortunately, the fix is based on MS documentation which is
+also wrong.
+
+The actual USB request for OS descriptors (using USB analyzer) looks
+like:
+
+Offset  0   1   2   3   4   5   6   7
+0x000   C1  A1  02  00  05  00  0A  00
+
+C1: bmRequestType (device to host, vendor, interface)
+A1: nas magic number
+0002: wValue (2: nas interface)
+0005: wIndex (5: get extended property i.e. nas interface GUID)
+008E: wLength (142)
+
+The fix was tested on Windows 10 and Windows 11.
+
+Cc: stable@vger.kernel.org
+Fixes: ec6ce7075ef8 ("usb: gadget: composite: fix OS descriptors w_value logic")
+Signed-off-by: Michal Vrastil <michal.vrastil@hidglobal.com>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Acked-by: Peter korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20241113235433.20244-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/bus.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/gadget/composite.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -874,6 +874,8 @@ bus_devices_fail:
- 	bus_remove_file(bus, &bus_attr_uevent);
- bus_uevent_fail:
- 	kset_unregister(&bus->p->subsys);
-+	/* Above kset_unregister() will kfree @bus->p */
-+	bus->p = NULL;
- out:
- 	kfree(bus->p);
- 	bus->p = NULL;
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -1924,8 +1924,20 @@ unknown:
+ 			memset(buf, 0, w_length);
+ 			buf[5] = 0x01;
+ 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
++			/*
++			 * The Microsoft CompatID OS Descriptor Spec(w_index = 0x4) and
++			 * Extended Prop OS Desc Spec(w_index = 0x5) state that the
++			 * HighByte of wValue is the InterfaceNumber and the LowByte is
++			 * the PageNumber. This high/low byte ordering is incorrectly
++			 * documented in the Spec. USB analyzer output on the below
++			 * request packets show the high/low byte inverted i.e LowByte
++			 * is the InterfaceNumber and the HighByte is the PageNumber.
++			 * Since we dont support >64KB CompatID/ExtendedProp descriptors,
++			 * PageNumber is set to 0. Hence verify that the HighByte is 0
++			 * for below two cases.
++			 */
+ 			case USB_RECIP_DEVICE:
+-				if (w_index != 0x4 || (w_value & 0xff))
++				if (w_index != 0x4 || (w_value >> 8))
+ 					break;
+ 				buf[6] = w_index;
+ 				/* Number of ext compat interfaces */
+@@ -1941,9 +1953,9 @@ unknown:
+ 				}
+ 				break;
+ 			case USB_RECIP_INTERFACE:
+-				if (w_index != 0x5 || (w_value & 0xff))
++				if (w_index != 0x5 || (w_value >> 8))
+ 					break;
+-				interface = w_value >> 8;
++				interface = w_value & 0xFF;
+ 				if (interface >= MAX_CONFIG_INTERFACES ||
+ 				    !os_desc_cfg->interface[interface])
+ 					break;
 
 
