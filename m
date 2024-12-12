@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCBB223E70;
-	Thu, 12 Dec 2024 15:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CB2221D93;
+	Thu, 12 Dec 2024 15:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018361; cv=none; b=mMcntBQsSwEhgBBtOS0UXkwBGNg305pE7fBbfkGI4XdQhOrZxEwWoi7jfG1GkGCEYC8X360bJT634hGIA8j/UcJK4LaIBHRI3/+EURmZp4P0zHcfgZO8jY+9szcZ23omqIY9n3yjTyNVYy9XcqQe6XVBZiHksTKrn/aGBCnAvRc=
+	t=1734018365; cv=none; b=iFMUPE04yLhYByFQ00NfG8gV8n53vQPScut+UCxyzp1iq7jyeuYT7+O3fWA6BvOyrmvuVtZm37MnmLtlo0BRJYx83wl9LRVWPWDs85XkiAmgrpJY4DQExsPPahJERFiVp519398zCH2xyzI5hr3WBs9l4uUQ96DKZ0zAAhqWlAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018361; c=relaxed/simple;
-	bh=cqoEtJGqQYkWXcHisLUyPCr/jGgOZE3n0d0UD1y7CHI=;
+	s=arc-20240116; t=1734018365; c=relaxed/simple;
+	bh=ACOjbtd4wAxIpaFi1vgkM/KBkzhr3cKn/jVVhOrFF/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jebzqUuIsB+EiumOOFSevtE6VKBZ5mciFiFli/vWNSEgw8a2oyJexSi+aWgJLJSD597/+nazqXWrMXKB14SwnxURHl1DmBlwZ2iwQCAsTKdqdxPPGzfsrPxJIPIKHk3Rb3eC+04WvgkJzNkXXMw3NmvIip+2RC122w6mpXOW+/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNOCrad0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVtEpalLZo/VUZISa+M0yhSzY4OLJSeVxOZpQGeSt2vMHl+DYMOVhukWH2lEpJLxYCYyTN9RLIs3C0vHqoKxCiuHlXwi3w5u3ftQwGZvFpccDrI6qImfDSnngqfpWBcMS9H1eEsxY/H+h8AwAAcCwzPXx+ExeB0iDeu5Ln4JYzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ik1B7KJu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNOCrad0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC168C4CED0;
-	Thu, 12 Dec 2024 15:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ik1B7KJu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A109C4CED4;
+	Thu, 12 Dec 2024 15:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018361;
-	bh=cqoEtJGqQYkWXcHisLUyPCr/jGgOZE3n0d0UD1y7CHI=;
+	s=korg; t=1734018364;
+	bh=ACOjbtd4wAxIpaFi1vgkM/KBkzhr3cKn/jVVhOrFF/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FNOCrad05mLy1gGBsWxETXlBnuifizGvEmfLqg7UMfAIyq18uWsFwaRlMZVGHxu0H
-	 qZ2RQpvvLZYMCOCjrKa/KZqcQ7gNudqIBpgi2//w7SZxRKBkaQ1DlOFc1wr6B8gErC
-	 xEjakBzSeu6Lo4ft6cbC8SnUSemwUAvNr0MgYOBo=
+	b=Ik1B7KJu6Fz35CAoOeyRqipCDnn/FrYxLqDKmjFoY5lFEWVbHwe2QYeB81UwyMQjZ
+	 5h/h2v7sxzlmcI9GjwJRZJNNzU6IhhYljJjLJBsweterUfNyhcHy1lWFezHbW96yh4
+	 PeJAU789wRwpo8BrIurn1pbvCM2w1QH35ooYIygw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Avri Altman <Avri.Altman@wdc.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jordan Rife <jrife@google.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 272/356] scsi: ufs: core: Make DMA mask configuration more flexible
-Date: Thu, 12 Dec 2024 15:59:51 +0100
-Message-ID: <20241212144255.335567525@linuxfoundation.org>
+Subject: [PATCH 6.6 273/356] bpf: put bpf_links program when link is safe to be deallocated
+Date: Thu, 12 Dec 2024 15:59:52 +0100
+Message-ID: <20241212144255.374426659@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,117 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 78bc671bd1501e2f6c571e063301a4fdc5db53b2 ]
+[ Upstream commit f44ec8733a8469143fde1984b5e6931b2e2f6f3f ]
 
-Replace UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS with
-ufs_hba_variant_ops::set_dma_mask.  Update the Renesas driver
-accordingly.  This patch enables supporting other configurations than
-32-bit or 64-bit DMA addresses, e.g. 36-bit DMA addresses.
+In general, BPF link's underlying BPF program should be considered to be
+reachable through attach hook -> link -> prog chain, and, pessimistically,
+we have to assume that as long as link's memory is not safe to free,
+attach hook's code might hold a pointer to BPF program and use it.
 
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20241018194753.775074-1-bvanassche@acm.org
-Reviewed-by: Avri Altman <Avri.Altman@wdc.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+As such, it's not (generally) correct to put link's program early before
+waiting for RCU GPs to go through. More eager bpf_prog_put() that we
+currently do is mostly correct due to BPF program's release code doing
+similar RCU GP waiting, but as will be shown in the following patches,
+BPF program can be non-sleepable (and, thus, reliant on only "classic"
+RCU GP), while BPF link's attach hook can have sleepable semantics and
+needs to be protected by RCU Tasks Trace, and for such cases BPF link
+has to go through RCU Tasks Trace + "classic" RCU GPs before being
+deallocated. And so, if we put BPF program early, we might free BPF
+program before we free BPF link, leading to use-after-free situation.
+
+So, this patch defers bpf_prog_put() until we are ready to perform
+bpf_link's deallocation. At worst, this delays BPF program freeing by
+one extra RCU GP, but that seems completely acceptable. Alternatively,
+we'd need more elaborate ways to determine BPF hook, BPF link, and BPF
+program lifetimes, and how they relate to each other, which seems like
+an unnecessary complication.
+
+Note, for most BPF links we still will perform eager bpf_prog_put() and
+link dealloc, so for those BPF links there are no observable changes
+whatsoever. Only BPF links that use deferred dealloc might notice
+slightly delayed freeing of BPF programs.
+
+Also, to reduce code and logic duplication, extract program put + link
+dealloc logic into bpf_link_dealloc() helper.
+
+Link: https://lore.kernel.org/20241101181754.782341-1-andrii@kernel.org
+Tested-by: Jordan Rife <jrife@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c      | 4 ++--
- drivers/ufs/host/ufs-renesas.c | 9 ++++++++-
- include/ufs/ufshcd.h           | 9 +++------
- 3 files changed, 13 insertions(+), 9 deletions(-)
+ kernel/bpf/syscall.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 10a34911c9a17..7d762c4edcc5d 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -2265,8 +2265,6 @@ static inline int ufshcd_hba_capabilities(struct ufs_hba *hba)
- 	int err;
- 
- 	hba->capabilities = ufshcd_readl(hba, REG_CONTROLLER_CAPABILITIES);
--	if (hba->quirks & UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS)
--		hba->capabilities &= ~MASK_64_ADDRESSING_SUPPORT;
- 
- 	/* nutrs and nutmrs are 0 based values */
- 	hba->nutrs = (hba->capabilities & MASK_TRANSFER_REQUESTS_SLOTS) + 1;
-@@ -10240,6 +10238,8 @@ EXPORT_SYMBOL_GPL(ufshcd_dealloc_host);
-  */
- static int ufshcd_set_dma_mask(struct ufs_hba *hba)
- {
-+	if (hba->vops && hba->vops->set_dma_mask)
-+		return hba->vops->set_dma_mask(hba);
- 	if (hba->capabilities & MASK_64_ADDRESSING_SUPPORT) {
- 		if (!dma_set_mask_and_coherent(hba->dev, DMA_BIT_MASK(64)))
- 			return 0;
-diff --git a/drivers/ufs/host/ufs-renesas.c b/drivers/ufs/host/ufs-renesas.c
-index cc94970b86c93..ea3da773b1c14 100644
---- a/drivers/ufs/host/ufs-renesas.c
-+++ b/drivers/ufs/host/ufs-renesas.c
-@@ -7,6 +7,7 @@
- 
- #include <linux/clk.h>
- #include <linux/delay.h>
-+#include <linux/dma-mapping.h>
- #include <linux/err.h>
- #include <linux/iopoll.h>
- #include <linux/kernel.h>
-@@ -364,14 +365,20 @@ static int ufs_renesas_init(struct ufs_hba *hba)
- 		return -ENOMEM;
- 	ufshcd_set_variant(hba, priv);
- 
--	hba->quirks |= UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS | UFSHCD_QUIRK_HIBERN_FASTAUTO;
-+	hba->quirks |= UFSHCD_QUIRK_HIBERN_FASTAUTO;
- 
- 	return 0;
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 252aed82d45ea..ba38c08a9a059 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2870,12 +2870,24 @@ void bpf_link_inc(struct bpf_link *link)
+ 	atomic64_inc(&link->refcnt);
  }
  
-+static int ufs_renesas_set_dma_mask(struct ufs_hba *hba)
++static void bpf_link_dealloc(struct bpf_link *link)
 +{
-+	return dma_set_mask_and_coherent(hba->dev, DMA_BIT_MASK(32));
++	/* now that we know that bpf_link itself can't be reached, put underlying BPF program */
++	if (link->prog)
++		bpf_prog_put(link->prog);
++
++	/* free bpf_link and its containing memory */
++	if (link->ops->dealloc_deferred)
++		link->ops->dealloc_deferred(link);
++	else
++		link->ops->dealloc(link);
 +}
 +
- static const struct ufs_hba_variant_ops ufs_renesas_vops = {
- 	.name		= "renesas",
- 	.init		= ufs_renesas_init,
-+	.set_dma_mask	= ufs_renesas_set_dma_mask,
- 	.setup_clocks	= ufs_renesas_setup_clocks,
- 	.hce_enable_notify = ufs_renesas_hce_enable_notify,
- 	.dbg_register_dump = ufs_renesas_dbg_register_dump,
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index b751969a3ebd5..f66a275bf8ccd 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -295,6 +295,8 @@ struct ufs_pwr_mode_info {
-  * @name: variant name
-  * @init: called when the driver is initialized
-  * @exit: called to cleanup everything done in init
-+ * @set_dma_mask: For setting another DMA mask than indicated by the 64AS
-+ *	capability bit.
-  * @get_ufs_hci_version: called to get UFS HCI version
-  * @clk_scale_notify: notifies that clks are scaled up/down
-  * @setup_clocks: called before touching any of the controller registers
-@@ -334,6 +336,7 @@ struct ufs_hba_variant_ops {
- 	int	(*init)(struct ufs_hba *);
- 	void    (*exit)(struct ufs_hba *);
- 	u32	(*get_ufs_hci_version)(struct ufs_hba *);
-+	int	(*set_dma_mask)(struct ufs_hba *);
- 	int	(*clk_scale_notify)(struct ufs_hba *, bool,
- 				    enum ufs_notify_change_status);
- 	int	(*setup_clocks)(struct ufs_hba *, bool,
-@@ -615,12 +618,6 @@ enum ufshcd_quirks {
- 	 */
- 	UFSHCD_QUIRK_SKIP_PH_CONFIGURATION		= 1 << 16,
+ static void bpf_link_defer_dealloc_rcu_gp(struct rcu_head *rcu)
+ {
+ 	struct bpf_link *link = container_of(rcu, struct bpf_link, rcu);
  
--	/*
--	 * This quirk needs to be enabled if the host controller has
--	 * 64-bit addressing supported capability but it doesn't work.
--	 */
--	UFSHCD_QUIRK_BROKEN_64BIT_ADDRESS		= 1 << 17,
--
- 	/*
- 	 * This quirk needs to be enabled if the host controller has
- 	 * auto-hibernate capability but it's FASTAUTO only.
+-	/* free bpf_link and its containing memory */
+-	link->ops->dealloc_deferred(link);
++	bpf_link_dealloc(link);
+ }
+ 
+ static void bpf_link_defer_dealloc_mult_rcu_gp(struct rcu_head *rcu)
+@@ -2897,7 +2909,6 @@ static void bpf_link_free(struct bpf_link *link)
+ 		sleepable = link->prog->aux->sleepable;
+ 		/* detach BPF program, clean up used resources */
+ 		ops->release(link);
+-		bpf_prog_put(link->prog);
+ 	}
+ 	if (ops->dealloc_deferred) {
+ 		/* schedule BPF link deallocation; if underlying BPF program
+@@ -2908,8 +2919,9 @@ static void bpf_link_free(struct bpf_link *link)
+ 			call_rcu_tasks_trace(&link->rcu, bpf_link_defer_dealloc_mult_rcu_gp);
+ 		else
+ 			call_rcu(&link->rcu, bpf_link_defer_dealloc_rcu_gp);
+-	} else if (ops->dealloc)
+-		ops->dealloc(link);
++	} else if (ops->dealloc) {
++		bpf_link_dealloc(link);
++	}
+ }
+ 
+ static void bpf_link_put_deferred(struct work_struct *work)
 -- 
 2.43.0
 
