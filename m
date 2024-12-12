@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2142210D8;
-	Thu, 12 Dec 2024 16:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2B32139C9;
+	Thu, 12 Dec 2024 16:24:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020679; cv=none; b=E+hWjO2BAixECTllm4K9/X6DFRgVVJS6gaUJSxPPQcYfayB7DNTsh6fY1grbe2ZUwEXIQ7osQYaz63bvUwSlxDHCCwKUBRXlpKaVgpVu8/cBh5k1wOhulDqp4ALTAbhbHnvS5dCUjiFvVKailz7MmY4pNEJ4+JYYAuIHHzBBQyw=
+	t=1734020683; cv=none; b=eeb9z6ovLwpCdBrUV1yFvzsnvRNwL9FwuuO0K7j6sxhdKC8DaZ8fVrgsIFZaVoT6aeYORDQnh7F++zBMqJINRhUFESGYrH/DgwwRhCjyAUv6632OeOTEOsgtS2HUzASDaUoBlYP8B+uU518mG4nWWLp1XDFujkk0Dbp8QrsLqEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020679; c=relaxed/simple;
-	bh=pAgdX5guFUKKbo0XreHrUl/v4GRbnwLLwBMg+/Tw8rg=;
+	s=arc-20240116; t=1734020683; c=relaxed/simple;
+	bh=Moxy6q0N61h9SD7ugkjXJcy7vBOkWWfP3yMm3kpaAjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YjZ510CrYD8VuVifbVjxgXBh7xDOtD3uOKzeX8QXNJK1RQ9QTkVHfp5lH133uoebTVDnGX5K63y0MwIYtHLVvRXxvafE7tNmKHsM/l62bk0ZLGlyOpGi0c34izjENvQZeDqedwcRuTRMOgNADRMJ5RVQWi4c4ODomT/aBf8Ibe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+kZ5Jzx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q13X7yciMoSO+qRJaTiB0VNfOwakmJE1nkKAyso4AIFagw9w54U5ThGBc/Yi16pLP//MWmNTDB+bbaY0DG1Uqt7TXcySKXYlfOIFMbOoDi5mV6EhK4dA8jTwwrnfHcc/mozPjufUDI133gyARuxqUHyMlgxE4mf17bYZmeJQPtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4uH5q7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+kZ5Jzx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12C1C4CECE;
-	Thu, 12 Dec 2024 16:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4uH5q7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19A6C4CECE;
+	Thu, 12 Dec 2024 16:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020679;
-	bh=pAgdX5guFUKKbo0XreHrUl/v4GRbnwLLwBMg+/Tw8rg=;
+	s=korg; t=1734020683;
+	bh=Moxy6q0N61h9SD7ugkjXJcy7vBOkWWfP3yMm3kpaAjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+kZ5JzxMR9kE2fBOOrBr5ln4ACKPmVyBmP/lFYINGimnvLzxmRXosLb+h2iv5hV2
-	 RbdCQD2dniUITCDjowHNUrZtWUQ83DE9OVjCvNGnQas58nCnup1uoO4Ux0sAFZ1q0q
-	 BoWv026OzVpLIiIu0cuLFbDmx4HByMlUnIOlV1RA=
+	b=u4uH5q7X61uvdcmlexI0fN16e/KY0Ihm+p9HGI2K8gX0/qZzxuiAVTql3Ge5iDsIB
+	 cJM8DIWNUpQQ+w1Bx7KYqIIL0mWrj8TDoPNSacM+/GiNC55DwY8GDJ1GYWsI75MWQr
+	 CXvtjKFRlmHGlg//CZcaMkWq/55bdHZLApQS0hAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Lutomirski <luto@amacapital.net>,
-	Vadim Fedorenko <vadfed@meta.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jiri Wiesner <jwiesner@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 532/772] net-timestamp: make sk_tskey more predictable in error path
-Date: Thu, 12 Dec 2024 15:57:57 +0100
-Message-ID: <20241212144411.954878308@linuxfoundation.org>
+Subject: [PATCH 6.1 533/772] net/ipv6: release expired exception dst cached in socket
+Date: Thu, 12 Dec 2024 15:57:58 +0100
+Message-ID: <20241212144411.995458821@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,125 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vadim Fedorenko <vadfed@meta.com>
+From: Jiri Wiesner <jwiesner@suse.de>
 
-[ Upstream commit 488b6d91b07112eaaaa4454332c1480894d4e06e ]
+[ Upstream commit 3301ab7d5aeb0fe270f73a3d4810c9d1b6a9f045 ]
 
-When SOF_TIMESTAMPING_OPT_ID is used to ambiguate timestamped datagrams,
-the sk_tskey can become unpredictable in case of any error happened
-during sendmsg(). Move increment later in the code and make decrement of
-sk_tskey in error path. This solution is still racy in case of multiple
-threads doing snedmsg() over the very same socket in parallel, but still
-makes error path much more predictable.
+Dst objects get leaked in ip6_negative_advice() when this function is
+executed for an expired IPv6 route located in the exception table. There
+are several conditions that must be fulfilled for the leak to occur:
+* an ICMPv6 packet indicating a change of the MTU for the path is received,
+  resulting in an exception dst being created
+* a TCP connection that uses the exception dst for routing packets must
+  start timing out so that TCP begins retransmissions
+* after the exception dst expires, the FIB6 garbage collector must not run
+  before TCP executes ip6_negative_advice() for the expired exception dst
 
-Fixes: 09c2d251b707 ("net-timestamp: add key to disambiguate concurrent datagrams")
-Reported-by: Andy Lutomirski <luto@amacapital.net>
-Signed-off-by: Vadim Fedorenko <vadfed@meta.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20240213110428.1681540-1-vadfed@meta.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 3301ab7d5aeb ("net/ipv6: release expired exception dst cached in socket")
+When TCP executes ip6_negative_advice() for an exception dst that has
+expired and if no other socket holds a reference to the exception dst, the
+refcount of the exception dst is 2, which corresponds to the increment
+made by dst_init() and the increment made by the TCP socket for which the
+connection is timing out. The refcount made by the socket is never
+released. The refcount of the dst is decremented in sk_dst_reset() but
+that decrement is counteracted by a dst_hold() intentionally placed just
+before the sk_dst_reset() in ip6_negative_advice(). After
+ip6_negative_advice() has finished, there is no other object tied to the
+dst. The socket lost its reference stored in sk_dst_cache and the dst is
+no longer in the exception table. The exception dst becomes a leaked
+object.
+
+As a result of this dst leak, an unbalanced refcount is reported for the
+loopback device of a net namespace being destroyed under kernels that do
+not contain e5f80fcf869a ("ipv6: give an IPv6 dev to blackhole_netdev"):
+unregister_netdevice: waiting for lo to become free. Usage count = 2
+
+Fix the dst leak by removing the dst_hold() in ip6_negative_advice(). The
+patch that introduced the dst_hold() in ip6_negative_advice() was
+92f1655aa2b22 ("net: fix __dst_negative_advice() race"). But 92f1655aa2b22
+merely refactored the code with regards to the dst refcount so the issue
+was present even before 92f1655aa2b22. The bug was introduced in
+54c1a859efd9f ("ipv6: Don't drop cache route entry unless timer actually
+expired.") where the expired cached route is deleted and the sk_dst_cache
+member of the socket is set to NULL by calling dst_negative_advice() but
+the refcount belonging to the socket is left unbalanced.
+
+The IPv4 version - ipv4_negative_advice() - is not affected by this bug.
+When the TCP connection times out ipv4_negative_advice() merely resets the
+sk_dst_cache of the socket while decrementing the refcount of the
+exception dst.
+
+Fixes: 92f1655aa2b22 ("net: fix __dst_negative_advice() race")
+Fixes: 54c1a859efd9f ("ipv6: Don't drop cache route entry unless timer actually expired.")
+Link: https://lore.kernel.org/netdev/20241113105611.GA6723@incl/T/#u
+Signed-off-by: Jiri Wiesner <jwiesner@suse.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241128085950.GA4505@incl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c  | 13 ++++++++-----
- net/ipv6/ip6_output.c | 13 ++++++++-----
- 2 files changed, 16 insertions(+), 10 deletions(-)
+ net/ipv6/route.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index a6d460aaee794..c82107bbd9810 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -980,8 +980,8 @@ static int __ip_append_data(struct sock *sk,
- 	unsigned int maxfraglen, fragheaderlen, maxnonfragsize;
- 	int csummode = CHECKSUM_NONE;
- 	struct rtable *rt = (struct rtable *)cork->dst;
-+	bool paged, hold_tskey, extra_uref = false;
- 	unsigned int wmem_alloc_delta = 0;
--	bool paged, extra_uref = false;
- 	u32 tskey = 0;
- 
- 	skb = skb_peek_tail(queue);
-@@ -990,10 +990,6 @@ static int __ip_append_data(struct sock *sk,
- 	mtu = cork->gso_size ? IP_MAX_MTU : cork->fragsize;
- 	paged = !!cork->gso_size;
- 
--	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
--	    READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID)
--		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 5da0c83a3ee8f..5ae3ff6ffb7e9 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -2774,10 +2774,10 @@ static void ip6_negative_advice(struct sock *sk,
+ 	if (rt->rt6i_flags & RTF_CACHE) {
+ 		rcu_read_lock();
+ 		if (rt6_check_expired(rt)) {
+-			/* counteract the dst_release() in sk_dst_reset() */
+-			dst_hold(dst);
++			/* rt/dst can not be destroyed yet,
++			 * because of rcu_read_lock()
++			 */
+ 			sk_dst_reset(sk);
 -
- 	hh_len = LL_RESERVED_SPACE(rt->dst.dev);
- 
- 	fragheaderlen = sizeof(struct iphdr) + (opt ? opt->optlen : 0);
-@@ -1051,6 +1047,11 @@ static int __ip_append_data(struct sock *sk,
- 
- 	cork->length += length;
- 
-+	hold_tskey = cork->tx_flags & SKBTX_ANY_TSTAMP &&
-+		     READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID;
-+	if (hold_tskey)
-+		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
-+
- 	/* So, what's going on in the loop below?
- 	 *
- 	 * We use calculated fragment length to generate chained skb,
-@@ -1255,6 +1256,8 @@ static int __ip_append_data(struct sock *sk,
- 	cork->length -= length;
- 	IP_INC_STATS(sock_net(sk), IPSTATS_MIB_OUTDISCARDS);
- 	refcount_add(wmem_alloc_delta, &sk->sk_wmem_alloc);
-+	if (hold_tskey)
-+		atomic_dec(&sk->sk_tskey);
- 	return err;
- }
- 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index f2227e662d1cf..4082470803615 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1499,11 +1499,11 @@ static int __ip6_append_data(struct sock *sk,
- 	bool zc = false;
- 	u32 tskey = 0;
- 	struct rt6_info *rt = (struct rt6_info *)cork->dst;
-+	bool paged, hold_tskey, extra_uref = false;
- 	struct ipv6_txoptions *opt = v6_cork->opt;
- 	int csummode = CHECKSUM_NONE;
- 	unsigned int maxnonfragsize, headersize;
- 	unsigned int wmem_alloc_delta = 0;
--	bool paged, extra_uref = false;
- 
- 	skb = skb_peek_tail(queue);
- 	if (!skb) {
-@@ -1515,10 +1515,6 @@ static int __ip6_append_data(struct sock *sk,
- 	mtu = cork->gso_size ? IP6_MAX_MTU : cork->fragsize;
- 	orig_mtu = mtu;
- 
--	if (cork->tx_flags & SKBTX_ANY_TSTAMP &&
--	    READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID)
--		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
--
- 	hh_len = LL_RESERVED_SPACE(rt->dst.dev);
- 
- 	fragheaderlen = sizeof(struct ipv6hdr) + rt->rt6i_nfheader_len +
-@@ -1606,6 +1602,11 @@ static int __ip6_append_data(struct sock *sk,
+ 			rt6_remove_exception_rt(rt);
  		}
- 	}
- 
-+	hold_tskey = cork->tx_flags & SKBTX_ANY_TSTAMP &&
-+		     READ_ONCE(sk->sk_tsflags) & SOF_TIMESTAMPING_OPT_ID;
-+	if (hold_tskey)
-+		tskey = atomic_inc_return(&sk->sk_tskey) - 1;
-+
- 	/*
- 	 * Let's try using as much space as possible.
- 	 * Use MTU if total length of the message fits into the MTU.
-@@ -1844,6 +1845,8 @@ static int __ip6_append_data(struct sock *sk,
- 	cork->length -= length;
- 	IP6_INC_STATS(sock_net(sk), rt->rt6i_idev, IPSTATS_MIB_OUTDISCARDS);
- 	refcount_add(wmem_alloc_delta, &sk->sk_wmem_alloc);
-+	if (hold_tskey)
-+		atomic_dec(&sk->sk_tskey);
- 	return err;
- }
- 
+ 		rcu_read_unlock();
 -- 
 2.43.0
 
