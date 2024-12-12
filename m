@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D4F2054EF;
-	Thu, 12 Dec 2024 16:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE91215762;
+	Thu, 12 Dec 2024 16:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020122; cv=none; b=QSpFHY6bJ/DsYkZEZm+UPLEVx5GBoarf/4H9KC4B73nsy4VB+d2nFvv0JRThMax9yg/ve0Nb5Mt4lNXKVZInicI0FgFbIfpygxweE3a6eJHF77XmgbwbVY5SsAv6sLps2h4LMIeZed6s30T3roFCbCGwOV2wFhXxYQbjCjtalik=
+	t=1734020123; cv=none; b=YniVS6yQqvEYYgUPwmt3un1r2enGXBMv0pzBfqlqznswruGXQI2tbHyjwTQESJVCOA2wY7mvimdaMh0+faILlj66hK5derMScc3bL+JSPpQCgPW/W4Mkm60o3n7WfB9MsYzwFL+eIA4pIHmVrj/TkFaQGBh9aF9RcfMHruJfXvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020122; c=relaxed/simple;
-	bh=Q2AkjSM5kQqcdQJaNE7ZAv7HTBFjKpT/zaNHgcml0eY=;
+	s=arc-20240116; t=1734020123; c=relaxed/simple;
+	bh=6g2n7ij6fIfboOYcJTlqU14qImLuz9ZPiqCeFZhNbbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hCwV6++7WSlq8buijS+9Ae9xd5JBjKePYA0cOUp/eN445JrNO6WyOYnhNENZEsE8GwQuOEm3WOo0o5mep1bu+x8bi1s8pMloNQAroovnWgfKe2la8UAMSDjDY6LJtTYommWWmX14DZhzvTEoLkAwjlPheCtRTIp5UfFNhRKzp/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VidVY5uv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nt8mGCWzGoySYgNSe/6S8JssOe8R8m1gaEgoUBX17jaByK5/A1EaiZiCqzn96zXMS7TtsvC8lo+2orrwgVDbZrh55qDNvd6buf5Wcx5zUNYJCljMzIWCNcjruKfAybbCEwAyl3r2bJ0SY1y31VatgCLmC1zT/evPjxFCHO5wSfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XMFOPuVq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VidVY5uv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FE1C4CECE;
-	Thu, 12 Dec 2024 16:15:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XMFOPuVq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF5AC4CECE;
+	Thu, 12 Dec 2024 16:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020119;
-	bh=Q2AkjSM5kQqcdQJaNE7ZAv7HTBFjKpT/zaNHgcml0eY=;
+	s=korg; t=1734020123;
+	bh=6g2n7ij6fIfboOYcJTlqU14qImLuz9ZPiqCeFZhNbbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VidVY5uvZNDxRGWj0uOXA28fO6oLf+IJtjCYMOhFCEO0aQRYPuhQf9vbhDa+RZP5n
-	 4D3SZEBjw6aW9XmGL79cXDFFkkPUAJkAMJFTStO45KKVLahgVZV6WVc1bzVcLrXN99
-	 JrVAGpAl00/FYrtO1d29y8/Igcok8LD3EzuqFJCI=
+	b=XMFOPuVq05BSXcscXM5Y/M0UvmNdSvSwUodIRVLGNlZHk157UTUqtw4rEW01dMPsv
+	 nxV6tZ8QIZkKGlm4g/Z61lhC6csz5VWzNQyfCUUB+tOA/eEZtf413sIoEgjZlnL1Q1
+	 d/awYF5+eV/r51kzkcMwi/VWQRuKBDtZO1y09SaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Shadura <andrew.shadura@collabora.co.uk>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Aleksei Vetrov <vvvvvv@google.com>
-Subject: [PATCH 6.1 382/772] Bluetooth: Fix type of len in rfcomm_sock_getsockopt{,_old}()
-Date: Thu, 12 Dec 2024 15:55:27 +0100
-Message-ID: <20241212144405.690785882@linuxfoundation.org>
+	Koichiro Den <koichiro.den@canonical.com>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: [PATCH 6.1 356/772] Revert "arm64: dts: mediatek: mt8195-cherry: Mark USB 3.0 on xhci1 as disabled"
+Date: Thu, 12 Dec 2024 15:55:01 +0100
+Message-ID: <20241212144404.620563684@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,83 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrej Shadura <andrew.shadura@collabora.co.uk>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-commit 5fe6caa62b07fd39cd6a28acc8f92ba2955e11a6 upstream.
+This reverts commit edca00ad79aa1dfd1b88ace1df1e9dfa21a3026f.
 
-Commit 9bf4e919ccad worked around an issue introduced after an innocuous
-optimisation change in LLVM main:
+The hunk was applied to the wrong device node when the commit was
+backported to the 6.1 stable branch.
 
-> len is defined as an 'int' because it is assigned from
-> '__user int *optlen'. However, it is clamped against the result of
-> sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
-> platforms). This is done with min_t() because min() requires compatible
-> types, which results in both len and the result of sizeof() being casted
-> to 'unsigned int', meaning len changes signs and the result of sizeof()
-> is truncated. From there, len is passed to copy_to_user(), which has a
-> third parameter type of 'unsigned long', so it is widened and changes
-> signs again. This excessive casting in combination with the KCSAN
-> instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
-> call, failing the build.
+Revert it to re-do the backport correctly.
 
-The same issue occurs in rfcomm in functions rfcomm_sock_getsockopt and
-rfcomm_sock_getsockopt_old.
-
-Change the type of len to size_t in both rfcomm_sock_getsockopt and
-rfcomm_sock_getsockopt_old and replace min_t() with min().
-
-Cc: stable@vger.kernel.org
-Co-authored-by: Aleksei Vetrov <vvvvvv@google.com>
-Improves: 9bf4e919ccad ("Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()")
-Link: https://github.com/ClangBuiltLinux/linux/issues/2007
-Link: https://github.com/llvm/llvm-project/issues/85647
-Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Koichiro Den <koichiro.den@canonical.com>
+Closes: https://lore.kernel.org/stable/6itvivhxbjlpky5hn6x2hmc3kzz4regcvmsk226t6ippjad7yk@26xug5lrdqdw/
+Fixes: edca00ad79aa ("arm64: dts: mediatek: mt8195-cherry: Mark USB 3.0 on xhci1 as disabled")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -729,7 +729,8 @@ static int rfcomm_sock_getsockopt_old(st
- 	struct sock *l2cap_sk;
- 	struct l2cap_conn *conn;
- 	struct rfcomm_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 	u32 opt;
+--- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
+@@ -922,7 +922,6 @@
+ 	usb2-lpm-disable;
+ 	vusb33-supply = <&mt6359_vusb_ldo_reg>;
+ 	vbus-supply = <&usb_vbus>;
+-	mediatek,u3p-dis-msk = <1>;
+ };
  
- 	BT_DBG("sk %p", sk);
-@@ -783,7 +784,7 @@ static int rfcomm_sock_getsockopt_old(st
- 		cinfo.hci_handle = conn->hcon->handle;
- 		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
- 
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
- 			err = -EFAULT;
- 
-@@ -802,7 +803,8 @@ static int rfcomm_sock_getsockopt(struct
- {
- 	struct sock *sk = sock->sk;
- 	struct bt_security sec;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 
- 	BT_DBG("sk %p", sk);
- 
-@@ -827,7 +829,7 @@ static int rfcomm_sock_getsockopt(struct
- 		sec.level = rfcomm_pi(sk)->sec_level;
- 		sec.key_size = 0;
- 
--		len = min_t(unsigned int, len, sizeof(sec));
-+		len = min(len, sizeof(sec));
- 		if (copy_to_user(optval, (char *) &sec, len))
- 			err = -EFAULT;
- 
+ #include <arm/cros-ec-keyboard.dtsi>
 
 
