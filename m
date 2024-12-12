@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC0E223E8D;
-	Thu, 12 Dec 2024 17:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BFB22370C;
+	Thu, 12 Dec 2024 17:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025736; cv=none; b=CKh5bZqIataNQRZCNuWRO4p0VvaMyomZqtnTcENWADi08T2xZY4Admg6k1qj39g0pfJWpvmbbDwO5UjwqqeRwNPbzHoRzsNfEcmpU9iO1GQsIRenc6HHCzWzf9z2fpoNiNEt7UEPN6AovmNfWtIAb0qATUW/fL1GXFOafPgdzks=
+	t=1734025739; cv=none; b=VaGDxUExd41twaQPfDb6Y7X+04dnLAK09WambzYDCXmyV2BdFb24Urgzfa/qALMf862QPSXYAjkwRPwsaFFySX5YmwwDz4azA/DMbN41MHPTBR3s4tDXa2KpPXrgidcxfUKrKIb7Q3GkjL3fJtD4jNRjLSMtLJ8hkEWYrxs/xak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025736; c=relaxed/simple;
-	bh=s2PWYsitFNWblFaNOHIE3plgtqvzcDrmCZNWl6/4Qyc=;
+	s=arc-20240116; t=1734025739; c=relaxed/simple;
+	bh=z8uCcV3cipBz719El42Ge/u8ywaxH5EOQie0vCeOIOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YIFC3UAXTusBxq3M++rLsXVrVNlE3a1OlNxH3f/+ThN34owfxOUFGgG3LNzqy1bcczVLfvONu751rWUu5wKoa0ZLfM6IvscfSDcQ8+GsP83Qgj3+pjVz71PT6I70Ar8mhj+jghMLMAhdze/DOen4e2unuoH8hO50AnIUbLCfIbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZQfjOsA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zd05JIN08DB/XGGE2AFZR4EqJ+Qr7Vdqze2gYgJLbSMfn01bP94fc3IkvYHOpSAUjev/MmtpGtdhg99iy2u+/AVmG+tTcyCEvNLZAEuRuZq0bHDZ9x6FCRFXdb/+1KiN1p6Px7DW8uWGu7M6DqqMvmYbncy5PiOIKz3ledZgUGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUmIL9Ph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZQfjOsA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8BCC4CECE;
-	Thu, 12 Dec 2024 17:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUmIL9Ph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B98BC4CECE;
+	Thu, 12 Dec 2024 17:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025736;
-	bh=s2PWYsitFNWblFaNOHIE3plgtqvzcDrmCZNWl6/4Qyc=;
+	s=korg; t=1734025739;
+	bh=z8uCcV3cipBz719El42Ge/u8ywaxH5EOQie0vCeOIOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZQfjOsAq0g/Nim95w2qrNankvtPLfoA5BgsStIMIExyq3nzHfOCpgbcGIB5FU9cv
-	 BB0NLqx6G7/FDfUIiplvRNlDuqU7IRx5dKMpKgJfHDYhlINN8IRGXtAo8JGTi0s+QF
-	 6itGOa6zmZcA9tpF9q7fwsZ4laU8SPhc9IdoCZ3Y=
+	b=yUmIL9PhC2lmcw0uX+v3EtW+6NjCxpUiaaVd9zv0MU9OWB8Sr8Fwkti0dT5rW3onr
+	 q1d6ujgpTq5UWTOGkY5Yd4YC4eafIOHHx82aPb/eOdPTKHakPFWbpbT8blstFfnULu
+	 iY7ntzAcUJ/nGfXQCxgUUd9JfMQLbdP1Ckl8t6G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Zhu Jun <zhujun2@cmss.chinamobile.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 269/321] drm/radeon/r600_cs: Fix possible int overflow in r600_packet3_check()
-Date: Thu, 12 Dec 2024 16:03:07 +0100
-Message-ID: <20241212144240.607629599@linuxfoundation.org>
+Subject: [PATCH 5.4 270/321] samples/bpf: Fix a resource leak
+Date: Thu, 12 Dec 2024 16:03:08 +0100
+Message-ID: <20241212144240.647265468@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,38 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+From: Zhu Jun <zhujun2@cmss.chinamobile.com>
 
-[ Upstream commit a1e2da6a5072f8abe5b0feaa91a5bcd9dc544a04 ]
+[ Upstream commit f3ef53174b23246fe9bc2bbc2542f3a3856fa1e2 ]
 
-It is possible, although unlikely, that an integer overflow will occur
-when the result of radeon_get_ib_value() is shifted to the left.
+The opened file should be closed in show_sockopts(), otherwise resource
+leak will occur that this problem was discovered by reading code
 
-Avoid it by casting one of the operands to larger data type (u64).
-
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241010014126.2573-1-zhujun2@cmss.chinamobile.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/r600_cs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/bpf/test_cgrp2_sock.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/radeon/r600_cs.c b/drivers/gpu/drm/radeon/r600_cs.c
-index 19c9e86b2aafe..a85470213b27f 100644
---- a/drivers/gpu/drm/radeon/r600_cs.c
-+++ b/drivers/gpu/drm/radeon/r600_cs.c
-@@ -2104,7 +2104,7 @@ static int r600_packet3_check(struct radeon_cs_parser *p,
- 				return -EINVAL;
- 			}
+diff --git a/samples/bpf/test_cgrp2_sock.c b/samples/bpf/test_cgrp2_sock.c
+index b0811da5a00f3..3f56519a1ccd7 100644
+--- a/samples/bpf/test_cgrp2_sock.c
++++ b/samples/bpf/test_cgrp2_sock.c
+@@ -174,8 +174,10 @@ static int show_sockopts(int family)
+ 		return 1;
+ 	}
  
--			offset = radeon_get_ib_value(p, idx+1) << 8;
-+			offset = (u64)radeon_get_ib_value(p, idx+1) << 8;
- 			if (offset != track->vgt_strmout_bo_offset[idx_value]) {
- 				DRM_ERROR("bad STRMOUT_BASE_UPDATE, bo offset does not match: 0x%llx, 0x%x\n",
- 					  offset, track->vgt_strmout_bo_offset[idx_value]);
+-	if (get_bind_to_device(sd, name, sizeof(name)) < 0)
++	if (get_bind_to_device(sd, name, sizeof(name)) < 0) {
++		close(sd);
+ 		return 1;
++	}
+ 
+ 	mark = get_somark(sd);
+ 	prio = get_priority(sd);
 -- 
 2.43.0
 
