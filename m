@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F389B176AA1;
-	Thu, 12 Dec 2024 17:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6052213CA93;
+	Thu, 12 Dec 2024 17:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024133; cv=none; b=suRH5g2lWvWVBFYNWpjDp6LPWl7gyValgH6eoGfPw6kQY+CWOyTbi/f6vJziQoVBYejhsPMulCEhE34X5wSt8vwoRIZ8v8loDRdW7/ZBS0RS6of99AH3zNhChW4g3wI+m7sJtELO92b7/bNwinyuMmQn1kZaia+wqeQwQTTCBfI=
+	t=1734024136; cv=none; b=YWBR193iIMEsT8jy72myN3HVIlw46O3fY114Zwq1w+sZHRQKE0LZYSy+wntooL0/Csm0WR3BzPJte8JWaw0IzeZ+UJ8w/w0uJpRUnXF7ksYLO4e3yBQzyTg3UsB6DjCuF0Nw4BKaNzqJ+X2S/LosgSo0WEmKpd5FPlqbu2Cqtq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024133; c=relaxed/simple;
-	bh=Kn1/IU91qTG6sLE3Zb06fy9ThfWYDdJS6hJ0lTiwaYI=;
+	s=arc-20240116; t=1734024136; c=relaxed/simple;
+	bh=XI2qEDV3/j+6ECgBx+DNw4fRxZhMXw0Pb5ZlgsyD92M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DsURgN2hlh2Dpg9qrV5vH1xpbJ6ByVuVWwjg8w2KIbu0woCLyPmi0nSDWE1uzphliCMkksgzT2OrSLzo+1sNUoJd7BbmYrdZ9jdSc1waH6hFiU5WCY4wsNTpSg5cUUcsOXzpZ65iG86UaXV7sfDvUuZQF0oC0xb4opRhNEfP2oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ih1KnGqt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eM9ZsXU1szqQwLHLkhZ+aTpGKGkkwA370vHKrU/D661oqMoNwLA/MZUZD+IZy9R/BrJUxGAlboPAkNhQQmiShlc6wZbgYUynU7vOCEDWSaAYMkHsK30yyLzfF/snMdZtPv+XcrYtA9TnxLo+Frbyh86lnXlsDpexbL3+T3BoYfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUd/fild; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ih1KnGqt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A053C4CECE;
-	Thu, 12 Dec 2024 17:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUd/fild"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC2DBC4CECE;
+	Thu, 12 Dec 2024 17:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024132;
-	bh=Kn1/IU91qTG6sLE3Zb06fy9ThfWYDdJS6hJ0lTiwaYI=;
+	s=korg; t=1734024136;
+	bh=XI2qEDV3/j+6ECgBx+DNw4fRxZhMXw0Pb5ZlgsyD92M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ih1KnGqt2EHeUrsGy6fJHsHAxW0eX1mK/06ue1ols6ZAjsKz2KY6TsSC4MpONIgGs
-	 8h5GwQhHeGhGEJh0QQzyov2teMu2U4r0E98fQlfw564MKElfpozJPlUX46sZBnyj/1
-	 n7PGsIoeWT1YCIBxEjEwLWkGGZVgXzifUnQuhLqo=
+	b=bUd/fildPLgs1sJfE/TflUo69fQV1xcn6e9vS0tf70mAEJykTwXjQr/I2MON0YRDE
+	 c14ixTLm45TWE/IKFGLGJFnsP88OtHlCkcnKruIZfefn4SByTBnq+Iiw2+99EEzeNH
+	 5iWd1+Sz7lBYaiin8qdHZP0a8EdCmxF6cyoKjhS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 197/459] f2fs: remove struct segment_allocation default_salloc_ops
-Date: Thu, 12 Dec 2024 15:58:55 +0100
-Message-ID: <20241212144301.351493198@linuxfoundation.org>
+Subject: [PATCH 5.10 198/459] f2fs: open code allocate_segment_by_default
+Date: Thu, 12 Dec 2024 15:58:56 +0100
+Message-ID: <20241212144301.389851845@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -54,10 +54,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 1c8a8ec0a0e9a1176022a35c4daf04fe1594d270 ]
+[ Upstream commit 8442d94b8ac8d5d8300725a9ffa9def526b71170 ]
 
-There is only  single instance of these ops, so remove the indirection
-and call allocate_segment_by_default directly.
+allocate_segment_by_default has just two callers, which use very
+different code pathes inside it based on the force paramter.  Just
+open code the logic in the two callers using a new helper to decided
+if a new segment should be allocated.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Chao Yu <chao@kernel.org>
@@ -65,77 +67,89 @@ Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: 43563069e1c1 ("f2fs: check curseg->inited before write_sum_page in change_curseg")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 11 ++---------
- fs/f2fs/segment.h |  6 ------
- 2 files changed, 2 insertions(+), 15 deletions(-)
+ fs/f2fs/segment.c | 50 +++++++++++++++++++++++------------------------
+ 1 file changed, 24 insertions(+), 26 deletions(-)
 
 diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index d2aad633529eb..82f8a86d7d701 100644
+index 82f8a86d7d701..7d6f2ee2f0177 100644
 --- a/fs/f2fs/segment.c
 +++ b/fs/f2fs/segment.c
-@@ -2953,7 +2953,7 @@ static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
+@@ -2876,31 +2876,20 @@ static int get_ssr_segment(struct f2fs_sb_info *sbi, int type,
+ 	return 0;
+ }
+ 
+-/*
+- * flush out current segment and replace it with new segment
+- * This function should be returned with success, otherwise BUG
+- */
+-static void allocate_segment_by_default(struct f2fs_sb_info *sbi,
+-						int type, bool force)
++static bool need_new_seg(struct f2fs_sb_info *sbi, int type)
+ {
+ 	struct curseg_info *curseg = CURSEG_I(sbi, type);
+ 
+-	if (force)
+-		new_curseg(sbi, type, true);
+-	else if (!is_set_ckpt_flags(sbi, CP_CRC_RECOVERY_FLAG) &&
+-					curseg->seg_type == CURSEG_WARM_NODE)
+-		new_curseg(sbi, type, false);
+-	else if (curseg->alloc_type == LFS &&
+-			is_next_segment_free(sbi, curseg, type) &&
+-			likely(!is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
+-		new_curseg(sbi, type, false);
+-	else if (f2fs_need_SSR(sbi) &&
+-			get_ssr_segment(sbi, type, SSR, 0))
+-		change_curseg(sbi, type, true);
+-	else
+-		new_curseg(sbi, type, false);
+-
+-	stat_inc_seg_type(sbi, curseg);
++	if (!is_set_ckpt_flags(sbi, CP_CRC_RECOVERY_FLAG) &&
++	    curseg->seg_type == CURSEG_WARM_NODE)
++		return true;
++	if (curseg->alloc_type == LFS &&
++	    is_next_segment_free(sbi, curseg, type) &&
++	    likely(!is_sbi_flag_set(sbi, SBI_CP_DISABLED)))
++		return true;
++	if (!f2fs_need_SSR(sbi) || !get_ssr_segment(sbi, type, SSR, 0))
++		return true;
++	return false;
+ }
+ 
+ void f2fs_allocate_segment_for_resize(struct f2fs_sb_info *sbi, int type,
+@@ -2953,7 +2942,8 @@ static void __allocate_new_segment(struct f2fs_sb_info *sbi, int type,
  		return;
  alloc:
  	old_segno = curseg->segno;
--	SIT_I(sbi)->s_ops->allocate_segment(sbi, type, true);
-+	allocate_segment_by_default(sbi, type, true);
+-	allocate_segment_by_default(sbi, type, true);
++	new_curseg(sbi, type, true);
++	stat_inc_seg_type(sbi, curseg);
  	locate_dirty_segment(sbi, old_segno);
  }
  
-@@ -2984,10 +2984,6 @@ void f2fs_allocate_new_segments(struct f2fs_sb_info *sbi)
- 	up_read(&SM_I(sbi)->curseg_lock);
- }
+@@ -3393,11 +3383,19 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
+ 	update_sit_entry(sbi, old_blkaddr, -1);
  
--static const struct segment_allocation default_salloc_ops = {
--	.allocate_segment = allocate_segment_by_default,
--};
--
- bool f2fs_exist_trim_candidates(struct f2fs_sb_info *sbi,
- 						struct cp_control *cpc)
- {
-@@ -3401,7 +3397,7 @@ void f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct page *page,
+ 	if (!__has_curseg_space(sbi, curseg)) {
+-		if (from_gc)
++		/*
++		 * Flush out current segment and replace it with new segment.
++		 */
++		if (from_gc) {
  			get_atssr_segment(sbi, type, se->type,
  						AT_SSR, se->mtime);
- 		else
--			sit_i->s_ops->allocate_segment(sbi, type, false);
-+			allocate_segment_by_default(sbi, type, false);
+-		else
+-			allocate_segment_by_default(sbi, type, false);
++		} else {
++			if (need_new_seg(sbi, type))
++				new_curseg(sbi, type, false);
++			else
++				change_curseg(sbi, type, true);
++			stat_inc_seg_type(sbi, curseg);
++		}
  	}
  	/*
  	 * segment dirty status should be updated after segment allocation,
-@@ -4337,9 +4333,6 @@ static int build_sit_info(struct f2fs_sb_info *sbi)
- 		return -ENOMEM;
- #endif
- 
--	/* init SIT information */
--	sit_i->s_ops = &default_salloc_ops;
--
- 	sit_i->sit_base_addr = le32_to_cpu(raw_super->sit_blkaddr);
- 	sit_i->sit_blocks = sit_segs << sbi->log_blocks_per_seg;
- 	sit_i->written_valid_blocks = 0;
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 665e0e186687d..720951ce2f9d1 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -227,10 +227,6 @@ struct sec_entry {
- 	unsigned int valid_blocks;	/* # of valid blocks in a section */
- };
- 
--struct segment_allocation {
--	void (*allocate_segment)(struct f2fs_sb_info *, int, bool);
--};
--
- #define MAX_SKIP_GC_COUNT			16
- 
- struct inmem_pages {
-@@ -240,8 +236,6 @@ struct inmem_pages {
- };
- 
- struct sit_info {
--	const struct segment_allocation *s_ops;
--
- 	block_t sit_base_addr;		/* start block address of SIT area */
- 	block_t sit_blocks;		/* # of blocks used by SIT area */
- 	block_t written_valid_blocks;	/* # of valid blocks in main area */
 -- 
 2.43.0
 
