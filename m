@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4A66F2FE;
-	Thu, 12 Dec 2024 15:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4CD2135B0;
+	Thu, 12 Dec 2024 15:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018422; cv=none; b=Qrmqe+LVnlp42/hZ5js97JRVBwdWIcjjEvK2So5201yDIfnPjYDkDkubA9tmehM3fdW0m1+dAGBCL7x5EPipUH3sg+IJNApvwO6p9nIp5ZRCnfrt6jxzLEMGx74ifX32eNhU5MZVnbWAklghGpTr5wJV+yfm9f1G/DrtBbC09jo=
+	t=1734018426; cv=none; b=lr01rR06UXbiIX3frIcVcBLbvIJyTxLABDJHJLeKePZMWkVA+cxxgMBireFVtwSaP9XUZiOX21wLPH3rXBLJ6r50zh6T4/avCh9znQQr3Wkon7uTtM4WFtlBsJLfL1qFDZt66GfYatkzoYrcPLqbUNzMSdjJnUxMFUiGWp6rWa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018422; c=relaxed/simple;
-	bh=w/sLeYgMa6GBHheOaMvfVrDC7N7vp9jsLGaedIMo5HY=;
+	s=arc-20240116; t=1734018426; c=relaxed/simple;
+	bh=Z6KLf2tSCwTi/DbUlj9cz49k8UoVoe6zumr3I8NUtA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVLSlh64VwtUjIoy3bAiV79G7B/yeRvpKbip5I1Lh2hU7RH2VF3oK/JElJRMPsyBNeguTaAKF78o3KhqIErdp//aJRz+NuFVx1D0qelBykYf/QaSSbrATHaH8bDzePgTtD8XApE5QOnyMb/IVluHGTJ/HWGtw1VWBwEWdCdupxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITsYlIyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwUmSROT0URmyPFHRrRRAvFdVTP6l/eG0/G90bMB4X03HO5EtwmhOvPGuLrI+4/kYeTuXxKMbBBIH1RDIFw9KGOAlrt68nO5WGlwcD8uuPu0E01Hmo23uW61+UDMbA2fVZ8t8xlMdbzhTbdD32LBQr3fBYmcWoYhocxsYPewZ18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0V7gsE2U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITsYlIyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A440C4CECE;
-	Thu, 12 Dec 2024 15:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0V7gsE2U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28BD2C4CECE;
+	Thu, 12 Dec 2024 15:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018422;
-	bh=w/sLeYgMa6GBHheOaMvfVrDC7N7vp9jsLGaedIMo5HY=;
+	s=korg; t=1734018426;
+	bh=Z6KLf2tSCwTi/DbUlj9cz49k8UoVoe6zumr3I8NUtA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ITsYlIyF0ObpXlR3sYqMGcybEgfpzs7Qsscaf0452HqJECnj5DHkm/KyohgTP0SBF
-	 sNMyj4lY5L5aKHvHmXUqJotAPpBk5A1nMb8BagVzrGVtGtEULn939JuNfS0fuQqwZ2
-	 J93vfY6il3MLUFTS4NIa0cAlbtE3AeybS0vNK2MU=
+	b=0V7gsE2UuhR6JKKVSXXqteqTnv2metVsS3ZvW6+1BRHSPYeKU80Ref+r6u96VNzJL
+	 LhkVXFT55zpXXEMFToZVL58Vr2bZXP3FVnkOb+JoFXjnH8x0yjWAVi1JDi+DxApdit
+	 UFVA/EKVo/UGIX5lgFSAiQfGkgN6wIfFK5seSkgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Han <hanqi@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	syzbot+aa0730b0a42646eb1359@syzkaller.appspotmail.com,
+	Qianqiang Liu <qianqiang.liu@163.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 287/356] f2fs: fix f2fs_bug_on when uninstalling filesystem call f2fs_evict_inode.
-Date: Thu, 12 Dec 2024 16:00:06 +0100
-Message-ID: <20241212144255.915451527@linuxfoundation.org>
+Subject: [PATCH 6.6 288/356] KMSAN: uninit-value in inode_go_dump (5)
+Date: Thu, 12 Dec 2024 16:00:07 +0100
+Message-ID: <20241212144255.953817504@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,82 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Han <hanqi@vivo.com>
+From: Qianqiang Liu <qianqiang.liu@163.com>
 
-[ Upstream commit d5c367ef8287fb4d235c46a2f8c8d68715f3a0ca ]
+[ Upstream commit f9417fcfca3c5e30a0b961e7250fab92cfa5d123 ]
 
-creating a large files during checkpoint disable until it runs out of
-space and then delete it, then remount to enable checkpoint again, and
-then unmount the filesystem triggers the f2fs_bug_on as below:
+When mounting of a corrupted disk image fails, the error message printed
+can reference uninitialized inode fields.  To prevent that from happening,
+always initialize those fields.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/inode.c:896!
-CPU: 2 UID: 0 PID: 1286 Comm: umount Not tainted 6.11.0-rc7-dirty #360
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:f2fs_evict_inode+0x58c/0x610
-Call Trace:
- __die_body+0x15/0x60
- die+0x33/0x50
- do_trap+0x10a/0x120
- f2fs_evict_inode+0x58c/0x610
- do_error_trap+0x60/0x80
- f2fs_evict_inode+0x58c/0x610
- exc_invalid_op+0x53/0x60
- f2fs_evict_inode+0x58c/0x610
- asm_exc_invalid_op+0x16/0x20
- f2fs_evict_inode+0x58c/0x610
- evict+0x101/0x260
- dispose_list+0x30/0x50
- evict_inodes+0x140/0x190
- generic_shutdown_super+0x2f/0x150
- kill_block_super+0x11/0x40
- kill_f2fs_super+0x7d/0x140
- deactivate_locked_super+0x2a/0x70
- cleanup_mnt+0xb3/0x140
- task_work_run+0x61/0x90
-
-The root cause is: creating large files during disable checkpoint
-period results in not enough free segments, so when writing back root
-inode will failed in f2fs_enable_checkpoint. When umount the file
-system after enabling checkpoint, the root inode is dirty in
-f2fs_evict_inode function, which triggers BUG_ON. The steps to
-reproduce are as follows:
-
-dd if=/dev/zero of=f2fs.img bs=1M count=55
-mount f2fs.img f2fs_dir -o checkpoint=disable:10%
-dd if=/dev/zero of=big bs=1M count=50
-sync
-rm big
-mount -o remount,checkpoint=enable f2fs_dir
-umount f2fs_dir
-
-Let's redirty inode when there is not free segments during checkpoint
-is disable.
-
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Reported-by: syzbot+aa0730b0a42646eb1359@syzkaller.appspotmail.com
+Signed-off-by: Qianqiang Liu <qianqiang.liu@163.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/gfs2/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index a3e0c92735433..7ad4a92417591 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -788,8 +788,10 @@ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
- 		return 0;
- 
--	if (!f2fs_is_checkpoint_ready(sbi))
-+	if (!f2fs_is_checkpoint_ready(sbi)) {
-+		f2fs_mark_inode_dirty_sync(inode, true);
- 		return -ENOSPC;
-+	}
- 
- 	/*
- 	 * We need to balance fs here to prevent from producing dirty node pages
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index 09285dc782cf8..49684bc82dc16 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1567,11 +1567,13 @@ static struct inode *gfs2_alloc_inode(struct super_block *sb)
+ 	if (!ip)
+ 		return NULL;
+ 	ip->i_no_addr = 0;
++	ip->i_no_formal_ino = 0;
+ 	ip->i_flags = 0;
+ 	ip->i_gl = NULL;
+ 	gfs2_holder_mark_uninitialized(&ip->i_iopen_gh);
+ 	memset(&ip->i_res, 0, sizeof(ip->i_res));
+ 	RB_CLEAR_NODE(&ip->i_res.rs_node);
++	ip->i_diskflags = 0;
+ 	ip->i_rahead = 0;
+ 	return &ip->i_inode;
+ }
 -- 
 2.43.0
 
