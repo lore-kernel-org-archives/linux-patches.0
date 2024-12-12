@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B65622330D;
-	Thu, 12 Dec 2024 17:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BAE223C5A;
+	Thu, 12 Dec 2024 17:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023704; cv=none; b=cPKNsrRrpZlwGJgWRnlU03hbf8B3vO7H9T190JQkIq2caI6kl+gMuruDeTL9sEI+3ceKUeix7R4O+KQ+Ofy+YHNHZowQV49GnXeFPPNzNF9yr8meCu0MhyXxt/Cycr9bszAhKrhTjBF6tiU/uOMXFRLOaUb+ClJtTx9/KmvP3tQ=
+	t=1734023707; cv=none; b=Xc2sEv0fGEsgWPhnrpay9/i9mitdhFH67pVsESgOyBRaJArxqFvCFnwChck4hJACI0C07oJ9RjuDxdnyNBpV3Y3icqB5TgwvT2HHHNyFMAUF6vLESS5cIjOxsWXy0iuIWN8bD2ggQazNFCFsfAOKrZx5j9My1cTou/QL6ceGqlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023704; c=relaxed/simple;
-	bh=Sy5w069IoTpGhW7NA9GM+eTqO3RXpvC5QMPwkhF5sSM=;
+	s=arc-20240116; t=1734023707; c=relaxed/simple;
+	bh=tHCrU6hWQx/nwdt+WYm7k5IVbvlMjP8ijLLQ478tXvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dpo43Spiq0YZeGht1HwLT3j6fQM56NKOg7z9k53CY3qglWeulCFtizieJVg1cR9iT/PF+1rwYqlmx2ZaMe42zYDDqsDhZYCyjVKtwxSTtjMnQw80IDUlv+fTJU5pAg3WYTHbjc/VwM83KPDxV5A3MnbskoyhHwJNQ7sFFbbC0dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O57nKSeg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IbsqVno7MdnHqXkCarGvojWDjK5nM5nQdVFJwTbZixct0EDViItBXByAceTOAwJ3b67kAKYct7CZCXZwe+yDGL0KSlhxmoUmbzyGoqtXvmvhH4saOFKLIE8jRv3Le1PGVkLB7vVkp89HopwNgM9WJgcmZTVPliUzoRPzrglzfyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIqitkOk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O57nKSeg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F88AC4CECE;
-	Thu, 12 Dec 2024 17:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIqitkOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CF6C4CECE;
+	Thu, 12 Dec 2024 17:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023704;
-	bh=Sy5w069IoTpGhW7NA9GM+eTqO3RXpvC5QMPwkhF5sSM=;
+	s=korg; t=1734023707;
+	bh=tHCrU6hWQx/nwdt+WYm7k5IVbvlMjP8ijLLQ478tXvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O57nKSegsu8O11LilWyYK4+zzMc7Iub6AiyJIRehr5GACmQvQ4N9UWMpWhmXInw66
-	 TSneqaOw0UqgKHq05yP4WvOaYs8UBdt1YHawFxFZqlI/Fhm1Bi71AGGjP3w/jA7G92
-	 46h7p3rNnFyf5PPS0HbYNtHe6UXjCMykrlf9lcK4=
+	b=VIqitkOkq/okLsP3c5IyPSIjusXc/slgxSMhbc9kCagIwdk+makwyw5k3uC+eIsUC
+	 DaVsFSmjSb406gDc7jgdLuj+Yua5n0HYGs6fy9lWnh4mUZE9zUpm6kUPFAzJ5zvKRJ
+	 Fr+mpO1R6Sl9rf1Mjo0rGwx5Xt2S5+2mKURrdsF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 024/459] mmc: core: fix return value check in devm_mmc_alloc_host()
-Date: Thu, 12 Dec 2024 15:56:02 +0100
-Message-ID: <20241212144254.480026240@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 5.10 025/459] media: dvbdev: fix the logic when DVB_DYNAMIC_MINORS is not set
+Date: Thu, 12 Dec 2024 15:56:03 +0100
+Message-ID: <20241212144254.518175418@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,46 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-commit 71d04535e853305a76853b28a01512a62006351d upstream.
+commit a4aebaf6e6efff548b01a3dc49b4b9074751c15b upstream.
 
-mmc_alloc_host() returns NULL pointer not PTR_ERR(), if it
-fails, so replace the IS_ERR() check with NULL pointer check.
+When CONFIG_DVB_DYNAMIC_MINORS, ret is not initialized, and a
+semaphore is left at the wrong state, in case of errors.
 
-In commit 418f7c2de133 ("mmc: meson-gx: use devm_mmc_alloc_host"),
-it checks NULL pointer not PTR_ERR, if devm_mmc_alloc_host() fails,
-so make it to return NULL pointer to keep same with mmc_alloc_host(),
-the drivers don't need to change the error handle when switch to
-use devm_mmc_alloc_host().
+Make the code simpler and avoid mistakes by having just one error
+check logic used weather DVB_DYNAMIC_MINORS is used or not.
 
-Fixes: 80df83c2c57e ("mmc: core: add devm_mmc_alloc_host")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/20230217024333.4018279-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202410201717.ULWWdJv8-lkp@intel.com/
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Link: https://lore.kernel.org/r/9e067488d8935b8cf00959764a1fa5de85d65725.1730926254.git.mchehab+huawei@kernel.org
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/host.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/dvb-core/dvbdev.c |   15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
---- a/drivers/mmc/core/host.c
-+++ b/drivers/mmc/core/host.c
-@@ -523,12 +523,12 @@ struct mmc_host *devm_mmc_alloc_host(str
- 
- 	dr = devres_alloc(devm_mmc_host_release, sizeof(*dr), GFP_KERNEL);
- 	if (!dr)
--		return ERR_PTR(-ENOMEM);
-+		return NULL;
- 
- 	host = mmc_alloc_host(extra, dev);
--	if (IS_ERR(host)) {
-+	if (!host) {
- 		devres_free(dr);
--		return host;
-+		return NULL;
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -544,6 +544,9 @@ int dvb_register_device(struct dvb_adapt
+ 	for (minor = 0; minor < MAX_DVB_MINORS; minor++)
+ 		if (dvb_minors[minor] == NULL)
+ 			break;
++#else
++	minor = nums2minor(adap->num, type, id);
++#endif
+ 	if (minor >= MAX_DVB_MINORS) {
+ 		if (new_node) {
+ 			list_del (&new_node->list_head);
+@@ -557,17 +560,7 @@ int dvb_register_device(struct dvb_adapt
+ 		mutex_unlock(&dvbdev_register_lock);
+ 		return -EINVAL;
  	}
- 
- 	*dr = host;
+-#else
+-	minor = nums2minor(adap->num, type, id);
+-	if (minor >= MAX_DVB_MINORS) {
+-		dvb_media_device_free(dvbdev);
+-		list_del(&dvbdev->list_head);
+-		kfree(dvbdev);
+-		*pdvbdev = NULL;
+-		mutex_unlock(&dvbdev_register_lock);
+-		return ret;
+-	}
+-#endif
++
+ 	dvbdev->minor = minor;
+ 	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
 
 
