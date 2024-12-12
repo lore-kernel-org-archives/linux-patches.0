@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D27222D44;
-	Thu, 12 Dec 2024 17:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F99222D57;
+	Thu, 12 Dec 2024 17:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023573; cv=none; b=DzjOOjHbzNnY6n1yOx/GlgbqhcIQ3miSZxHNfQS57mzpY53NHgvEqjN3F7x4ph9RKHMgJOtypcymsv/zUdJzNmMkrLsOM42r+djzxHSKWjq4azxtUjIKYHInzGgY9u29jpVZ7QQ06Vg/Ny73ndOqfqSkpOYalhUXq+oyAQczp4w=
+	t=1734023576; cv=none; b=m+5UQXZVtkiqh36xjLyiH62Kwmm+BCMjT77I9JUwcJ/dlc7fL7JX8D8PPeWGfpgAgH/8jj02A1PYMSgJz6YzXod4jCaPyk9hcAkgwPZ262LntlgRWG0KbI5XAo30rl2rryas2nP9pTCQC7MBMZBzRPbWz6uLLNGXphvG0PhugcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023573; c=relaxed/simple;
-	bh=lt/U0x6DsW0TDjoEBadDuC/jZJ2KaIn3Aqgr44w6wKw=;
+	s=arc-20240116; t=1734023576; c=relaxed/simple;
+	bh=rrZuNpcarCj5csu5OntnCPsRYqvP8zxfzx+JT10tWDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fzV5Wv7LtxUHhA9gXZgezoc76PM42tAcU6TnnHJboUYuycgLEgODSrs1hu8RiAlrIORwVClFQugv+vN8Inr/xR1vICQ4GCQ2qlzkrUHVZDE/n1Ig1hixoxC58d75dEznRUiknaHumlAFhEv/1ozNTrqOSSWYJTrTt1Xvn+bs8Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r86j6b5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QVnTtdDptkTZmuSJUXUxTXsvIhWnCacj9liKmpOZB1D4zrVFnNghOvi1xbU+nPZ4EjMREwjOwARNKJ/84Pnj72Z3Wqgm/a8H36B05FzaeeKqiXW9bH+D4+GOLguwoqOyEwwKU3AnZ3cnLQ1fK4KeJ5uEb5LRuUFDYHiMX3ixKL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD+AiMHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r86j6b5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADD9C4CED0;
-	Thu, 12 Dec 2024 17:12:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD+AiMHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E643C4CED0;
+	Thu, 12 Dec 2024 17:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023573;
-	bh=lt/U0x6DsW0TDjoEBadDuC/jZJ2KaIn3Aqgr44w6wKw=;
+	s=korg; t=1734023576;
+	bh=rrZuNpcarCj5csu5OntnCPsRYqvP8zxfzx+JT10tWDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r86j6b5nxhCXI+S0HRAM29qDQezDaLRw7wBswAyPuqL/paL0k9bHQNAobccUNMxjw
-	 r/LrDcoPVd8wyVrCFY9ZPb8Cj8353PP56Q76w5+hVp3iyy/d5WOQiTeu1XJMCLP4uO
-	 pw13vXaWjFtHDOp3PMAT2oW6znkqlUmglJ5cCJg4=
+	b=qD+AiMHPQmdsc5UWFwTPnbpkvyJEXDFHXXUYsZatVCkoEcTyzfPB4moiAGkY24oyx
+	 wybwcH1NJQnKJyyXyHhBlH1qVHnJHTItkaftlQBAxdy3OqYtBIXEtwGY1zCAqZ613U
+	 ZmP1LFk6vhevyeaJjepp6q9mk/xgbzt4VIU74+oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/459] netlink: terminate outstanding dump on socket close
-Date: Thu, 12 Dec 2024 15:55:50 +0100
-Message-ID: <20241212144254.013038636@linuxfoundation.org>
+Subject: [PATCH 5.10 013/459] net/mlx5: fs, lock FTE when checking if active
+Date: Thu, 12 Dec 2024 15:55:51 +0100
+Message-ID: <20241212144254.052849093@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,140 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit 1904fb9ebf911441f90a68e96b22aa73e4410505 ]
+[ Upstream commit 9ca314419930f9135727e39d77e66262d5f7bef6 ]
 
-Netlink supports iterative dumping of data. It provides the families
-the following ops:
- - start - (optional) kicks off the dumping process
- - dump  - actual dump helper, keeps getting called until it returns 0
- - done  - (optional) pairs with .start, can be used for cleanup
-The whole process is asynchronous and the repeated calls to .dump
-don't actually happen in a tight loop, but rather are triggered
-in response to recvmsg() on the socket.
+The referenced commits introduced a two-step process for deleting FTEs:
 
-This gives the user full control over the dump, but also means that
-the user can close the socket without getting to the end of the dump.
-To make sure .start is always paired with .done we check if there
-is an ongoing dump before freeing the socket, and if so call .done.
+- Lock the FTE, delete it from hardware, set the hardware deletion function
+  to NULL and unlock the FTE.
+- Lock the parent flow group, delete the software copy of the FTE, and
+  remove it from the xarray.
 
-The complication is that sockets can get freed from BH and .done
-is allowed to sleep. So we use a workqueue to defer the call, when
-needed.
+However, this approach encounters a race condition if a rule with the same
+match value is added simultaneously. In this scenario, fs_core may set the
+hardware deletion function to NULL prematurely, causing a panic during
+subsequent rule deletions.
 
-Unfortunately this does not work correctly. What we defer is not
-the cleanup but rather releasing a reference on the socket.
-We have no guarantee that we own the last reference, if someone
-else holds the socket they may release it in BH and we're back
-to square one.
+To prevent this, ensure the active flag of the FTE is checked under a lock,
+which will prevent the fs_core layer from attaching a new steering rule to
+an FTE that is in the process of deletion.
 
-The whole dance, however, appears to be unnecessary. Only the user
-can interact with dumps, so we can clean up when socket is closed.
-And close always happens in process context. Some async code may
-still access the socket after close, queue notification skbs to it etc.
-but no dumps can start, end or otherwise make progress.
+[  438.967589] MOSHE: 2496 mlx5_del_flow_rules del_hw_func
+[  438.968205] ------------[ cut here ]------------
+[  438.968654] refcount_t: decrement hit 0; leaking memory.
+[  438.969249] WARNING: CPU: 0 PID: 8957 at lib/refcount.c:31 refcount_warn_saturate+0xfb/0x110
+[  438.970054] Modules linked in: act_mirred cls_flower act_gact sch_ingress openvswitch nsh mlx5_vdpa vringh vhost_iotlb vdpa mlx5_ib mlx5_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay rpcrdma rdma_ucm ib_iser libiscsi scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm ib_uverbs ib_core zram zsmalloc fuse [last unloaded: cls_flower]
+[  438.973288] CPU: 0 UID: 0 PID: 8957 Comm: tc Not tainted 6.12.0-rc1+ #8
+[  438.973888] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+[  438.974874] RIP: 0010:refcount_warn_saturate+0xfb/0x110
+[  438.975363] Code: 40 66 3b 82 c6 05 16 e9 4d 01 01 e8 1f 7c a0 ff 0f 0b c3 cc cc cc cc 48 c7 c7 10 66 3b 82 c6 05 fd e8 4d 01 01 e8 05 7c a0 ff <0f> 0b c3 cc cc cc cc 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 90
+[  438.976947] RSP: 0018:ffff888124a53610 EFLAGS: 00010286
+[  438.977446] RAX: 0000000000000000 RBX: ffff888119d56de0 RCX: 0000000000000000
+[  438.978090] RDX: ffff88852c828700 RSI: ffff88852c81b3c0 RDI: ffff88852c81b3c0
+[  438.978721] RBP: ffff888120fa0e88 R08: 0000000000000000 R09: ffff888124a534b0
+[  438.979353] R10: 0000000000000001 R11: 0000000000000001 R12: ffff888119d56de0
+[  438.979979] R13: ffff888120fa0ec0 R14: ffff888120fa0ee8 R15: ffff888119d56de0
+[  438.980607] FS:  00007fe6dcc0f800(0000) GS:ffff88852c800000(0000) knlGS:0000000000000000
+[  438.983984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  438.984544] CR2: 00000000004275e0 CR3: 0000000186982001 CR4: 0000000000372eb0
+[  438.985205] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  438.985842] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  438.986507] Call Trace:
+[  438.986799]  <TASK>
+[  438.987070]  ? __warn+0x7d/0x110
+[  438.987426]  ? refcount_warn_saturate+0xfb/0x110
+[  438.987877]  ? report_bug+0x17d/0x190
+[  438.988261]  ? prb_read_valid+0x17/0x20
+[  438.988659]  ? handle_bug+0x53/0x90
+[  438.989054]  ? exc_invalid_op+0x14/0x70
+[  438.989458]  ? asm_exc_invalid_op+0x16/0x20
+[  438.989883]  ? refcount_warn_saturate+0xfb/0x110
+[  438.990348]  mlx5_del_flow_rules+0x2f7/0x340 [mlx5_core]
+[  438.990932]  __mlx5_eswitch_del_rule+0x49/0x170 [mlx5_core]
+[  438.991519]  ? mlx5_lag_is_sriov+0x3c/0x50 [mlx5_core]
+[  438.992054]  ? xas_load+0x9/0xb0
+[  438.992407]  mlx5e_tc_rule_unoffload+0x45/0xe0 [mlx5_core]
+[  438.993037]  mlx5e_tc_del_fdb_flow+0x2a6/0x2e0 [mlx5_core]
+[  438.993623]  mlx5e_flow_put+0x29/0x60 [mlx5_core]
+[  438.994161]  mlx5e_delete_flower+0x261/0x390 [mlx5_core]
+[  438.994728]  tc_setup_cb_destroy+0xb9/0x190
+[  438.995150]  fl_hw_destroy_filter+0x94/0xc0 [cls_flower]
+[  438.995650]  fl_change+0x11a4/0x13c0 [cls_flower]
+[  438.996105]  tc_new_tfilter+0x347/0xbc0
+[  438.996503]  ? ___slab_alloc+0x70/0x8c0
+[  438.996929]  rtnetlink_rcv_msg+0xf9/0x3e0
+[  438.997339]  ? __netlink_sendskb+0x4c/0x70
+[  438.997751]  ? netlink_unicast+0x286/0x2d0
+[  438.998171]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
+[  438.998625]  netlink_rcv_skb+0x54/0x100
+[  438.999020]  netlink_unicast+0x203/0x2d0
+[  438.999421]  netlink_sendmsg+0x1e4/0x420
+[  438.999820]  __sock_sendmsg+0xa1/0xb0
+[  439.000203]  ____sys_sendmsg+0x207/0x2a0
+[  439.000600]  ? copy_msghdr_from_user+0x6d/0xa0
+[  439.001072]  ___sys_sendmsg+0x80/0xc0
+[  439.001459]  ? ___sys_recvmsg+0x8b/0xc0
+[  439.001848]  ? generic_update_time+0x4d/0x60
+[  439.002282]  __sys_sendmsg+0x51/0x90
+[  439.002658]  do_syscall_64+0x50/0x110
+[  439.003040]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Delete the workqueue and flush the dump state directly from the release
-handler. Note that further cleanup is possible in -next, for instance
-we now always call .done before releasing the main module reference,
-so dump doesn't have to take a reference of its own.
-
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Fixes: ed5d7788a934 ("netlink: Do not schedule work from sk_destruct")
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241106015235.2458807-1-kuba@kernel.org
+Fixes: 718ce4d601db ("net/mlx5: Consolidate update FTE for all removal changes")
+Fixes: cefc23554fc2 ("net/mlx5: Fix FTE cleanup")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20241107183527.676877-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 31 ++++++++-----------------------
- net/netlink/af_netlink.h |  2 --
- 2 files changed, 8 insertions(+), 25 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index bda604b37db0a..4da043d9f2c7a 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -385,15 +385,6 @@ static void netlink_skb_set_owner_r(struct sk_buff *skb, struct sock *sk)
- 
- static void netlink_sock_destruct(struct sock *sk)
- {
--	struct netlink_sock *nlk = nlk_sk(sk);
--
--	if (nlk->cb_running) {
--		if (nlk->cb.done)
--			nlk->cb.done(&nlk->cb);
--		module_put(nlk->cb.module);
--		kfree_skb(nlk->cb.skb);
--	}
--
- 	skb_queue_purge(&sk->sk_receive_queue);
- 
- 	if (!sock_flag(sk, SOCK_DEAD)) {
-@@ -406,14 +397,6 @@ static void netlink_sock_destruct(struct sock *sk)
- 	WARN_ON(nlk_sk(sk)->groups);
- }
- 
--static void netlink_sock_destruct_work(struct work_struct *work)
--{
--	struct netlink_sock *nlk = container_of(work, struct netlink_sock,
--						work);
--
--	sk_free(&nlk->sk);
--}
--
- /* This lock without WQ_FLAG_EXCLUSIVE is good on UP and it is _very_ bad on
-  * SMP. Look, when several writers sleep and reader wakes them up, all but one
-  * immediately hit write lock and grab all the cpus. Exclusive sleep solves
-@@ -730,12 +713,6 @@ static void deferred_put_nlk_sk(struct rcu_head *head)
- 	if (!refcount_dec_and_test(&sk->sk_refcnt))
- 		return;
- 
--	if (nlk->cb_running && nlk->cb.done) {
--		INIT_WORK(&nlk->work, netlink_sock_destruct_work);
--		schedule_work(&nlk->work);
--		return;
--	}
--
- 	sk_free(sk);
- }
- 
-@@ -785,6 +762,14 @@ static int netlink_release(struct socket *sock)
- 				NETLINK_URELEASE, &n);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index 074c9eb44ab73..c1a0d4e616b4b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -1799,13 +1799,22 @@ lookup_fte_locked(struct mlx5_flow_group *g,
+ 		fte_tmp = NULL;
+ 		goto out;
+ 	}
++
++	nested_down_write_ref_node(&fte_tmp->node, FS_LOCK_CHILD);
++
+ 	if (!fte_tmp->node.active) {
++		up_write_ref_node(&fte_tmp->node, false);
++
++		if (take_write)
++			up_write_ref_node(&g->node, false);
++		else
++			up_read_ref_node(&g->node);
++
+ 		tree_put_node(&fte_tmp->node, false);
+-		fte_tmp = NULL;
+-		goto out;
++
++		return NULL;
  	}
  
-+	/* Terminate any outstanding dump */
-+	if (nlk->cb_running) {
-+		if (nlk->cb.done)
-+			nlk->cb.done(&nlk->cb);
-+		module_put(nlk->cb.module);
-+		kfree_skb(nlk->cb.skb);
-+	}
-+
- 	module_put(nlk->module);
- 
- 	if (netlink_is_kernel(sk)) {
-diff --git a/net/netlink/af_netlink.h b/net/netlink/af_netlink.h
-index 5f454c8de6a4d..fca9556848885 100644
---- a/net/netlink/af_netlink.h
-+++ b/net/netlink/af_netlink.h
-@@ -4,7 +4,6 @@
- 
- #include <linux/rhashtable.h>
- #include <linux/atomic.h>
--#include <linux/workqueue.h>
- #include <net/sock.h>
- 
- /* flags */
-@@ -46,7 +45,6 @@ struct netlink_sock {
- 
- 	struct rhash_head	node;
- 	struct rcu_head		rcu;
--	struct work_struct	work;
- };
- 
- static inline struct netlink_sock *nlk_sk(struct sock *sk)
+-	nested_down_write_ref_node(&fte_tmp->node, FS_LOCK_CHILD);
+ out:
+ 	if (take_write)
+ 		up_write_ref_node(&g->node, false);
 -- 
 2.43.0
 
