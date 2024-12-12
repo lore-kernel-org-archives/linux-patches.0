@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDF42AF0E;
-	Thu, 12 Dec 2024 15:22:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22AB2AF0E;
+	Thu, 12 Dec 2024 15:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016975; cv=none; b=QTYgvn21Eimz/H50LFYbIeUad1mzvnH0NPfpVEaExSuy2AQKa7H7t/0oOhTUo4nAU/g4JHQkwe7Ei/a+RZPbLSIaZrBupM82aX1rIhzJUwmlVoSpeLEa01NJVw0vr4FdUXy7bMIU2M9sRjg3hYCbdDdNfXD9r5RGlenaXtNySvI=
+	t=1734016979; cv=none; b=KXKt0tkb4I20XHztPfg4e30YE0DT3jAGWAElaJYMWRpBz74jTyQ7bwPiTQv4NSLnCOY9zxCe5yriC5HSGtE/Cd4OoBE367jeDLMy4sbQsO39bP08EC5/eQk7MfdieBMlHPlJB1rXxMsP8G1a6r2T3eQ4GYichbE+6wYvWvSo4ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016975; c=relaxed/simple;
-	bh=/GBSPLpD7o0CDUU2jGkrXYoDE9DY35MEzkUMzIjRzlY=;
+	s=arc-20240116; t=1734016979; c=relaxed/simple;
+	bh=+e4mDw3EHtOD1xqck3jQlV5BAC2GD17Hv4li+f/E2fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TRxCwCsPqAks76Nbww6neOfHlDRODKmzb0e8SYuKaCw3RCNFMYjtPnKNY8NqTjCDbstnfkZEarDLxJunH2eh5+bwaQCxu47ShI55TLk0cPqegGvRdsHETCavCrGrRyy4fHnBLiKiYXOjxaghEl/rygI7bqpd1/TariFVZwZsbvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qW1INakK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=leKw1M03rIQuD/rtaY4X965PQ+m7qcsOEXtOm1SmQASxb5CgMfnJK2NoV0gi1laKQwCAMWjpB3W/HbFw2ubAZtacAu+roVFgEc7HmUH375ZkkyDTTPKPrZuc9LSgJaNq6Uqg34p9PuVfKGr5SPexRQ5dAosFr/rY/25AkYdB3VQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QX51lTsb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qW1INakK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF5FC4CECE;
-	Thu, 12 Dec 2024 15:22:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QX51lTsb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65822C4CECE;
+	Thu, 12 Dec 2024 15:22:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016975;
-	bh=/GBSPLpD7o0CDUU2jGkrXYoDE9DY35MEzkUMzIjRzlY=;
+	s=korg; t=1734016978;
+	bh=+e4mDw3EHtOD1xqck3jQlV5BAC2GD17Hv4li+f/E2fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qW1INakKCTQnMbLZguxa6AOdWkMYTsMwR/qFuHzsWgYnoa4LrxiPibp4jUkSkeAut
-	 ROy57rx6cyeinCCJlKjVFFwG/W+jpn+gqk5pfe/B3SiG6kn6ZQyHIKfO8W4LKBskNJ
-	 J85oXYQozrWZfAJmn1OeOJfcLUuK2JNn+4TIoiTY=
+	b=QX51lTsbq2mLzlAIhUCsvGOtyAnllwrMEf53AU6e+VtgkdCOytpj97qNyCuUqOHnz
+	 F6kOdcVB46axzjE0JIK4NL/zHAlIuyY53p+Cr4EbbPvcJsg3QxHRFvvxcOTu6gh7ko
+	 YA2SdRmZYPcwkhfGIobX+hl7bHFIFhw5Pa6PCh0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danil Pylaev <danstiv404@gmail.com>,
+	Hao Qin <hao.qin@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 346/466] Bluetooth: Set quirks for ATS2851
-Date: Thu, 12 Dec 2024 15:58:35 +0100
-Message-ID: <20241212144320.458063694@linuxfoundation.org>
+Subject: [PATCH 6.12 347/466] Bluetooth: btusb: Add new VID/PID 0489/e111 for MT7925
+Date: Thu, 12 Dec 2024 15:58:36 +0100
+Message-ID: <20241212144320.497596294@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,13 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danil Pylaev <danstiv404@gmail.com>
+From: Hao Qin <hao.qin@mediatek.com>
 
-[ Upstream commit 677a55ba11a82c2835550a82324cec5fcb2f9e2d ]
+[ Upstream commit faa5fd605d2081b6c9fa2355b59582d4ccd24b16 ]
 
-This adds quirks for broken ats2851 features.
+Add VID 0489 & PID e111 for MediaTek MT7925 USB Bluetooth chip.
 
-Signed-off-by: Danil Pylaev <danstiv404@gmail.com>
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
+
+T:  Bus=02 Lev=02 Prnt=02 Port=04 Cnt=02 Dev#=  4 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e111 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
+
+Signed-off-by: Hao Qin <hao.qin@mediatek.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -65,18 +108,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index b44c990bab422..2a8fe85371804 100644
+index 2a8fe85371804..d922fa8e8b3ce 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -3911,6 +3911,8 @@ static int btusb_probe(struct usb_interface *intf,
- 		set_bit(HCI_QUIRK_BROKEN_SET_RPA_TIMEOUT, &hdev->quirks);
- 		set_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &hdev->quirks);
- 		set_bit(HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_EXT_CREATE_CONN, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_WRITE_AUTH_PAYLOAD_TIMEOUT, &hdev->quirks);
- 	}
+@@ -642,6 +642,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
  
- 	if (!reset)
+ 	/* Additional MediaTek MT7925 Bluetooth devices */
++	{ USB_DEVICE(0x0489, 0xe111), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe113), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe118), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.43.0
 
