@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C90223C69;
-	Thu, 12 Dec 2024 17:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B233F2153DD;
+	Thu, 12 Dec 2024 17:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024793; cv=none; b=J4aXrska2GtMMjsKdE9kXoI71vzRcsGEHo7Ns3vqLUt6zCpcataxoDAZXW5bre44JIwPazjZRJekjPjjG0JFSBDj01q2JNjvHyHX0rOUFCUKrV077/0qg1Q2OzowdLJDJ8qMVDZCOizTTwW6L/+TI7CJL7wRN/nTeSng6XvTp50=
+	t=1734024798; cv=none; b=hEVQXurTrBZ2xJspwOk/QcESi+B1Bzw3RZMBAgn6DI2Ca+q+0x1SD4FOdYn1Yiy7PDVTjixQqIOcdKZwmLPfLhtonGOFSILLHFoYj93m8EoJgymYETa2d0tbPNhsozkmM7cxUHSYku4f9DLQby26tLJr70rIQEMZI9bPyq/XfDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024793; c=relaxed/simple;
-	bh=x9W09Njft8U8zNYr+rxnwk7ugUHzbrd29XTr/vfVkY8=;
+	s=arc-20240116; t=1734024798; c=relaxed/simple;
+	bh=x86PpJSB4ksdHmHCZ7A46kyKbceh235Z5xFxEsKz1sw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TL+lxH0JQpqmuycX2noVj8QO6wu3Cbt0Qw5G2kcr+eD8zk2ifVZ0UC5tba8tZV+6f67YDB4kwRXTN1XFPfFsn34ny5RcUfUe/9fxdgEvodbQcgPOm54ZEfG1QHeYGAQ3UV8dqkI1QSDnB+siRNyMmWVR2eDz/LaxPglHfurAqQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyIh9Vac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W/5hLLRoP7pBp83WLXzkcB0LlRa+5QvZoctVBEb0xL1qXdsOYn9NEe8iVTodRzel4vacg0SawpaBU/i8BlMypjKtTiSCodirFFLCEyxURCRIvM/nG2UOK78u+XKHwRWzYvl+WZZ6OmF2R/WkbHf2Ygp6rXxMUZqayt735s5s6Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Vc2jy2h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyIh9Vac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E3DC4CECE;
-	Thu, 12 Dec 2024 17:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Vc2jy2h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB44BC4CECE;
+	Thu, 12 Dec 2024 17:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024793;
-	bh=x9W09Njft8U8zNYr+rxnwk7ugUHzbrd29XTr/vfVkY8=;
+	s=korg; t=1734024796;
+	bh=x86PpJSB4ksdHmHCZ7A46kyKbceh235Z5xFxEsKz1sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyIh9VacfsRNFRFCcrZXm43pnLDMrZNmuEiBaZPqFrhl+Jqr3GpIE9ofkdgrM8mHi
-	 xLyGZvr6FzKekkzPv9H9jj2X2Lpk3ur9OGpahi/RuE9uUyQZ7GMnUOjUcM8En4U6BT
-	 7aSoDrBe9sLuQjmUqbr2SZSg6MDKyToOWOzUmKco=
+	b=0Vc2jy2hHlZAXdU1PpxjCPDX/fn9tiVYpWQb5VPUjyzTby/XMphbpFVjoTTOuIW5I
+	 IPxbbrq3dv79OOAeCq70IDIQE5URx+16YUAZAN1+QtZ0pIcc2D2IOLov4gXoDxoGSV
+	 ZzBxgz6zDVmgddSC59wI2ioASL/Ar4WigNC59QUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan Barar <rohan.barar@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 384/459] media: cx231xx: Add support for Dexatek USB Video Grabber 1d19:6108
-Date: Thu, 12 Dec 2024 16:02:02 +0100
-Message-ID: <20241212144308.940001129@linuxfoundation.org>
+Subject: [PATCH 5.10 385/459] drm/vc4: hvs: Set AXI panic modes for the HVS
+Date: Thu, 12 Dec 2024 16:02:03 +0100
+Message-ID: <20241212144308.978398096@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan Barar <rohan.barar@gmail.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-[ Upstream commit 61a830bc0ea69a05d8a4534f825c6aa618263649 ]
+[ Upstream commit 014eccc9da7bfc76a3107fceea37dd60f1d63630 ]
 
-Add Dexatek Technology Ltd USB Video Grabber 1d19:6108 to the cx231xx
-driver. This device is sold under the name "BAUHN DVD Maker (DK8723)" by
-ALDI in Australia.
+The HVS can change AXI request mode based on how full the COB
+FIFOs are.
+Until now the vc4 driver has been relying on the firmware to
+have set these to sensible values.
 
-This device is similar to 1d19:6109, which is already included in cx231xx.
+With HVS channel 2 now being used for live video, change the
+panic mode for all channels to be explicitly set by the driver,
+and the same for all channels.
 
-Both video and audio capture function correctly after installing the
-patched cx231xx driver.
-
-Patch Changelog
-v1:
- - Initial submission.
-v2:
- - Fix SoB + Improve subject.
-v3:
- - Rephrase message to not exceed 75 characters per line.
- - Removed reference to external GitHub URL.
-
-Signed-off-by: Rohan Barar <rohan.barar@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-7-dave.stevenson@raspberrypi.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hvs.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
-index 92efe6c1f47ba..bda729b42d05f 100644
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -994,6 +994,8 @@ const unsigned int cx231xx_bcount = ARRAY_SIZE(cx231xx_boards);
+diff --git a/drivers/gpu/drm/vc4/vc4_hvs.c b/drivers/gpu/drm/vc4/vc4_hvs.c
+index f8f2fc3d15f73..64a02e29b7cb1 100644
+--- a/drivers/gpu/drm/vc4/vc4_hvs.c
++++ b/drivers/gpu/drm/vc4/vc4_hvs.c
+@@ -688,6 +688,17 @@ static int vc4_hvs_bind(struct device *dev, struct device *master, void *data)
+ 	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC1);
+ 	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC2);
  
- /* table of devices that work with this driver */
- struct usb_device_id cx231xx_id_table[] = {
-+	{USB_DEVICE(0x1D19, 0x6108),
-+	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
- 	{USB_DEVICE(0x1D19, 0x6109),
- 	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
- 	{USB_DEVICE(0x0572, 0x5A3C),
++	/* Set AXI panic mode.
++	 * VC4 panics when < 2 lines in FIFO.
++	 * VC5 panics when less than 1 line in the FIFO.
++	 */
++	dispctrl &= ~(SCALER_DISPCTRL_PANIC0_MASK |
++		      SCALER_DISPCTRL_PANIC1_MASK |
++		      SCALER_DISPCTRL_PANIC2_MASK);
++	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC0);
++	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC1);
++	dispctrl |= VC4_SET_FIELD(2, SCALER_DISPCTRL_PANIC2);
++
+ 	HVS_WRITE(SCALER_DISPCTRL, dispctrl);
+ 
+ 	ret = devm_request_irq(dev, platform_get_irq(pdev, 0),
 -- 
 2.43.0
 
