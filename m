@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBEB2253E0;
-	Thu, 12 Dec 2024 17:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C5E229677;
+	Thu, 12 Dec 2024 17:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022850; cv=none; b=J1Yz923YNO9g9FTHgzQlRocO3/LFrWvq2cx0EqJvt62Ng6Bfq3c6IhPPdFm0tLo8uQpD6+0arbpNYzTPHq1K7WAfGCvDVdYmaRDAcFHbGv3daqDp2WyXeXwkOIkWgd8xTRQ5I4jDQBmNE2E/hkturyCdosu8Xe6XtQZIgGHHNNg=
+	t=1734022854; cv=none; b=KfVEwpLNkXacxYCVmsD9bnpF5q5JUOnSMNDz4gYW0D/8+5kedbLOkj2OteB157TS7sDv+zmLGnXVjQycqGY+Vswqms2bv6BTTIkRrKObIQsxqZ+dXEXblgUs8E0T54bgkIMz49beuM2MGOfBEXWLolnZkcKCp8zJgp8pekXduBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022850; c=relaxed/simple;
-	bh=CVJ8fBMmFb1Y3ORSkw/jd0nCIG83rI9O30oq09VS5eM=;
+	s=arc-20240116; t=1734022854; c=relaxed/simple;
+	bh=lZgEywa1T1Ig5x65ep2AJzY8TvJlBXT1+wF6geV5mxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivIqgw8Nsthr4/PexpwaE/EOYhUdvMI8geewpj61rvq+uhy0ypMoIPeRTqsUIOThmxXobTtIIWpI92UuEdrilbwvtf7FgwOzkz6Ttc1tfIoTgiZYOvFAnekkRw0Te5oHBOrryQ0y9DqMn/8NUfkAPHWOswn2aJRAKldvRI6DY2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwgeMowR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFEGLCZNU9gtITPv9PgfdcvsMhvi6ywfUuEIaJySjOc/LPqxkabP7jOxvUQZCJlR8Ez1cnNbZ0kkmNtt+HLxjs05oCV7ScfYL40BEbvFflL9G41fKhxAMca4ZY9KRk1a/BCmvE+BETav758HcVHE6XEwbT5sI+W3kKAUJxsXvDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnMF7O1/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwgeMowR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB06BC4CED0;
-	Thu, 12 Dec 2024 17:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnMF7O1/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CAB2C4CECE;
+	Thu, 12 Dec 2024 17:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022850;
-	bh=CVJ8fBMmFb1Y3ORSkw/jd0nCIG83rI9O30oq09VS5eM=;
+	s=korg; t=1734022853;
+	bh=lZgEywa1T1Ig5x65ep2AJzY8TvJlBXT1+wF6geV5mxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwgeMowRiHeg2wokdDzCAFvtJuJ7raf1R9LVYhsibe37h4vWhHDJHcgKqQs0Bh/hS
-	 Yj5bfOempc7L2FLdbBfrUasNT7mA6AQO58Uev2RRI5v8pvtzZ71x5R+StgjBz5xcqW
-	 6Lf6b1oMl2rvK9VloqAI4N1Ax3CrjM9kG+Q7QYec=
+	b=VnMF7O1/PgMltAeigvjApcNtLZUQ3XBDzx2WnSafNqmXImQmjbChPnzPnNWf0Lnwy
+	 spaqYvr7GEEUM4t0k6NtZMQ2nxgP6InZIfcab/wJug5PJUCsc9YJfCVEOV6q50AwaJ
+	 13iv2LUF2V+5JDNQE5k9NpzooPXfdHFNaQZ9GVzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Vrastil <michal.vrastil@hidglobal.com>,
-	Elson Roy Serrao <quic_eserrao@quicinc.com>,
-	Peter korsgaard <peter@korsgaard.com>
-Subject: [PATCH 5.15 322/565] Revert "usb: gadget: composite: fix OS descriptors w_value logic"
-Date: Thu, 12 Dec 2024 15:58:37 +0100
-Message-ID: <20241212144324.329399368@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Subject: [PATCH 5.15 323/565] serial: sh-sci: Clean sci_ports[0] after at earlycon exit
+Date: Thu, 12 Dec 2024 15:58:38 +0100
+Message-ID: <20241212144324.368772208@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,81 +49,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Vrastil <michal.vrastil@hidglobal.com>
+From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
 
-commit 51cdd69d6a857f527d6d0697a2e1f0fa8bca1005 upstream.
+commit 3791ea69a4858b81e0277f695ca40f5aae40f312 upstream.
 
-This reverts commit ec6ce7075ef879b91a8710829016005dc8170f17.
+The early_console_setup() function initializes the sci_ports[0].port with
+an object of type struct uart_port obtained from the object of type
+struct earlycon_device received as argument by the early_console_setup().
 
-Fix installation of WinUSB driver using OS descriptors. Without the
-fix the drivers are not installed correctly and the property
-'DeviceInterfaceGUID' is missing on host side.
+It may happen that later, when the rest of the serial ports are probed,
+the serial port that was used as earlycon (e.g., port A) to be mapped to a
+different position in sci_ports[] and the slot 0 to be used by a different
+serial port (e.g., port B), as follows:
 
-The original change was based on the assumption that the interface
-number is in the high byte of wValue but it is in the low byte,
-instead. Unfortunately, the fix is based on MS documentation which is
-also wrong.
+sci_ports[0] = port A
+sci_ports[X] = port B
 
-The actual USB request for OS descriptors (using USB analyzer) looks
-like:
+In this case, the new port mapped at index zero will have associated data
+that was used for earlycon.
 
-Offset  0   1   2   3   4   5   6   7
-0x000   C1  A1  02  00  05  00  0A  00
+In case this happens, after Linux boot, any access to the serial port that
+maps on sci_ports[0] (port A) will block the serial port that was used as
+earlycon (port B).
 
-C1: bmRequestType (device to host, vendor, interface)
-A1: nas magic number
-0002: wValue (2: nas interface)
-0005: wIndex (5: get extended property i.e. nas interface GUID)
-008E: wLength (142)
+To fix this, add early_console_exit() that clean the sci_ports[0] at
+earlycon exit time.
 
-The fix was tested on Windows 10 and Windows 11.
-
+Fixes: 0b0cced19ab1 ("serial: sh-sci: Add CONFIG_SERIAL_EARLYCON support")
 Cc: stable@vger.kernel.org
-Fixes: ec6ce7075ef8 ("usb: gadget: composite: fix OS descriptors w_value logic")
-Signed-off-by: Michal Vrastil <michal.vrastil@hidglobal.com>
-Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
-Acked-by: Peter korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20241113235433.20244-1-quic_eserrao@quicinc.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://lore.kernel.org/r/20241106120118.1719888-4-claudiu.beznea.uj@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/composite.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sh-sci.c |   28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
---- a/drivers/usb/gadget/composite.c
-+++ b/drivers/usb/gadget/composite.c
-@@ -2017,8 +2017,20 @@ unknown:
- 			memset(buf, 0, w_length);
- 			buf[5] = 0x01;
- 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
-+			/*
-+			 * The Microsoft CompatID OS Descriptor Spec(w_index = 0x4) and
-+			 * Extended Prop OS Desc Spec(w_index = 0x5) state that the
-+			 * HighByte of wValue is the InterfaceNumber and the LowByte is
-+			 * the PageNumber. This high/low byte ordering is incorrectly
-+			 * documented in the Spec. USB analyzer output on the below
-+			 * request packets show the high/low byte inverted i.e LowByte
-+			 * is the InterfaceNumber and the HighByte is the PageNumber.
-+			 * Since we dont support >64KB CompatID/ExtendedProp descriptors,
-+			 * PageNumber is set to 0. Hence verify that the HighByte is 0
-+			 * for below two cases.
-+			 */
- 			case USB_RECIP_DEVICE:
--				if (w_index != 0x4 || (w_value & 0xff))
-+				if (w_index != 0x4 || (w_value >> 8))
- 					break;
- 				buf[6] = w_index;
- 				/* Number of ext compat interfaces */
-@@ -2034,9 +2046,9 @@ unknown:
- 				}
- 				break;
- 			case USB_RECIP_INTERFACE:
--				if (w_index != 0x5 || (w_value & 0xff))
-+				if (w_index != 0x5 || (w_value >> 8))
- 					break;
--				interface = w_value >> 8;
-+				interface = w_value & 0xFF;
- 				if (interface >= MAX_CONFIG_INTERFACES ||
- 				    !os_desc_cfg->interface[interface])
- 					break;
+--- a/drivers/tty/serial/sh-sci.c
++++ b/drivers/tty/serial/sh-sci.c
+@@ -3433,6 +3433,32 @@ sh_early_platform_init_buffer("earlyprin
+ #ifdef CONFIG_SERIAL_SH_SCI_EARLYCON
+ static struct plat_sci_port port_cfg __initdata;
+ 
++static int early_console_exit(struct console *co)
++{
++	struct sci_port *sci_port = &sci_ports[0];
++	struct uart_port *port = &sci_port->port;
++	unsigned long flags;
++	int locked = 1;
++
++	if (port->sysrq)
++		locked = 0;
++	else if (oops_in_progress)
++		locked = uart_port_trylock_irqsave(port, &flags);
++	else
++		uart_port_lock_irqsave(port, &flags);
++
++	/*
++	 * Clean the slot used by earlycon. A new SCI device might
++	 * map to this slot.
++	 */
++	memset(sci_ports, 0, sizeof(*sci_port));
++
++	if (locked)
++		uart_port_unlock_irqrestore(port, flags);
++
++	return 0;
++}
++
+ static int __init early_console_setup(struct earlycon_device *device,
+ 				      int type)
+ {
+@@ -3451,6 +3477,8 @@ static int __init early_console_setup(st
+ 		       SCSCR_RE | SCSCR_TE | port_cfg.scscr);
+ 
+ 	device->con->write = serial_console_write;
++	device->con->exit = early_console_exit;
++
+ 	return 0;
+ }
+ static int __init sci_early_console_setup(struct earlycon_device *device,
 
 
