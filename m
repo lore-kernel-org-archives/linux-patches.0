@@ -1,42 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A8B212D6A;
-	Thu, 12 Dec 2024 15:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C704212D6A;
+	Thu, 12 Dec 2024 15:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016545; cv=none; b=mOmzR45N6Xt+2sPj+unPMjvU4V1tJagB9ey+zmCdV6dYPvw4lZJ0enYTTHSYSEf2Zs/+Yyy0BaQKZuj00mhFR/JT7y95Tx1/6KcbQBJUUO2Yc16dxQC1TfIybxNftLgSwIaJi0MWU4g3Bei26S/15VQkEP+RnvEJNOSb3J9Rsjs=
+	t=1734016548; cv=none; b=mE28OFf0PrL7ozOB5i7EY9c/78QkLx5zs1S034tzijy9okqfQqbG1uCVOJWQEyqNTEaZE1FpJcpOT3agdsPhjAtFpnuzoIaR1RPFtESXMo2APyIrntBNjDuyxtXiEJYKoJc3xS6MTBhuFe0RsIlQntnR2naeAeuKuBCjCNwtjW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016545; c=relaxed/simple;
-	bh=8FDJ3g54z509uVMAoq6nUrlUEkxMOwmPlzk1U8+wKoc=;
+	s=arc-20240116; t=1734016548; c=relaxed/simple;
+	bh=7O9GKFNdTUnXVi064DUvglY1E8YoFiYzfSZku0Z+Uuk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZAtj5NemJgKLgrpGmCHn6qmo1D4blA9cTQzgBx6KY9nfBJayhHvSWGyMB4x/BEDOXrsJtUhfLHcQjoCVwd1S97rs7nOg7N2jbnKHNOJa+eRl4cBFZ/1HCqxMCr0hNzGaQ5unW+S9RsFkKrw1y/o124ihSLhHBUGOSkQHLKdatlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLoYz70u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=af5yCWj2aHoRpoK22w5WQHvH92yXnNJLZUtLkZjR06xOvQJGjQZpx0jgGSYQHRDP6Rm5XF0I1iNwBeCsqTC+LznmXF6mgjUTZg7U3kT9clRziSTjDnjhcDrZnq3MZcgwG8y3BbTQyBaOp+IlJRIbghKkqULzE/CtVUPxoLS1jRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxl5eXYG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLoYz70u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5115BC4CECE;
-	Thu, 12 Dec 2024 15:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxl5eXYG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7BEC4CECE;
+	Thu, 12 Dec 2024 15:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016544;
-	bh=8FDJ3g54z509uVMAoq6nUrlUEkxMOwmPlzk1U8+wKoc=;
+	s=korg; t=1734016548;
+	bh=7O9GKFNdTUnXVi064DUvglY1E8YoFiYzfSZku0Z+Uuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLoYz70u7DeKxZu7xz/gA2JsZfcpzAQaYlMl+6WyyrKlPZT4FBuhLZzHpLcB0NS8V
-	 B46vi1wFDIATXQOO4VhbBlPGYBtB3ahKzZHlHm/D5GgsR01cPAciN+WoajHmXTtqvh
-	 OZHgGxmB1wmmRac0ccqL73viyN5WbLGYNELVMv00=
+	b=nxl5eXYGPAcXp0Izdt5oGMHSwc9HFDw0NyqZ3K/2dnpBQHDSPS6RpIyRqQs0O23zJ
+	 lUwpbJ6ARx06gF8b2lQXjTV+7VBz4MZgBDRAzQlpgYIp7dmGOQwcKLKfS9z3o0sgBj
+	 wBmmQ/3Lrw3mbMEGBMAWb8dHmNjmFdR8XZfkjPP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Kangas <jkangas@redhat.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Peter Xu <peterx@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Dongwon Kim <dongwon.kim@intel.com>,
+	Hugh Dickins <hughd@google.com>,
+	Junxiao Chang <junxiao.chang@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 198/466] kasan: make report_lock a raw spinlock
-Date: Thu, 12 Dec 2024 15:56:07 +0100
-Message-ID: <20241212144314.615810698@linuxfoundation.org>
+Subject: [PATCH 6.12 199/466] mm/gup: handle NULL pages in unpin_user_pages()
+Date: Thu, 12 Dec 2024 15:56:08 +0100
+Message-ID: <20241212144314.654146085@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -55,66 +64,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Kangas <jkangas@redhat.com>
+From: John Hubbard <jhubbard@nvidia.com>
 
-commit e30a0361b8515d424c73c67de1a43e45a13b8ba2 upstream.
+commit a1268be280d8e484ab3606d7476edd0f14bb9961 upstream.
 
-If PREEMPT_RT is enabled, report_lock is a sleeping spinlock and must not
-be locked when IRQs are disabled.  However, KASAN reports may be triggered
-in such contexts.  For example:
+The recent addition of "pofs" (pages or folios) handling to gup has a
+flaw: it assumes that unpin_user_pages() handles NULL pages in the pages**
+array.  That's not the case, as I discovered when I ran on a new
+configuration on my test machine.
 
-        char *s = kzalloc(1, GFP_KERNEL);
-        kfree(s);
-        local_irq_disable();
-        char c = *s;  /* KASAN report here leads to spin_lock() */
-        local_irq_enable();
+Fix this by skipping NULL pages in unpin_user_pages(), just like
+unpin_folios() already does.
 
-Make report_spinlock a raw spinlock to prevent rescheduling when
-PREEMPT_RT is enabled.
+Details: when booting on x86 with "numa=fake=2 movablecore=4G" on Linux
+6.12, and running this:
 
-Link: https://lkml.kernel.org/r/20241119210234.1602529-1-jkangas@redhat.com
-Fixes: 342a93247e08 ("locking/spinlock: Provide RT variant header: <linux/spinlock_rt.h>")
-Signed-off-by: Jared Kangas <jkangas@redhat.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+    tools/testing/selftests/mm/gup_longterm
+
+...I get the following crash:
+
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+RIP: 0010:sanity_check_pinned_pages+0x3a/0x2d0
+...
+Call Trace:
+ <TASK>
+ ? __die_body+0x66/0xb0
+ ? page_fault_oops+0x30c/0x3b0
+ ? do_user_addr_fault+0x6c3/0x720
+ ? irqentry_enter+0x34/0x60
+ ? exc_page_fault+0x68/0x100
+ ? asm_exc_page_fault+0x22/0x30
+ ? sanity_check_pinned_pages+0x3a/0x2d0
+ unpin_user_pages+0x24/0xe0
+ check_and_migrate_movable_pages_or_folios+0x455/0x4b0
+ __gup_longterm_locked+0x3bf/0x820
+ ? mmap_read_lock_killable+0x12/0x50
+ ? __pfx_mmap_read_lock_killable+0x10/0x10
+ pin_user_pages+0x66/0xa0
+ gup_test_ioctl+0x358/0xb20
+ __se_sys_ioctl+0x6b/0xc0
+ do_syscall_64+0x7b/0x150
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Link: https://lkml.kernel.org/r/20241121034933.77502-1-jhubbard@nvidia.com
+Fixes: 94efde1d1539 ("mm/gup: avoid an unnecessary allocation call for FOLL_LONGTERM cases")
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Junxiao Chang <junxiao.chang@intel.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kasan/report.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ mm/gup.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -200,7 +200,7 @@ static inline void fail_non_kasan_kunit_
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -52,7 +52,12 @@ static inline void sanity_check_pinned_p
+ 	 */
+ 	for (; npages; npages--, pages++) {
+ 		struct page *page = *pages;
+-		struct folio *folio = page_folio(page);
++		struct folio *folio;
++
++		if (!page)
++			continue;
++
++		folio = page_folio(page);
  
- #endif /* CONFIG_KUNIT */
+ 		if (is_zero_page(page) ||
+ 		    !folio_test_anon(folio))
+@@ -409,6 +414,10 @@ void unpin_user_pages(struct page **page
  
--static DEFINE_SPINLOCK(report_lock);
-+static DEFINE_RAW_SPINLOCK(report_lock);
- 
- static void start_report(unsigned long *flags, bool sync)
- {
-@@ -211,7 +211,7 @@ static void start_report(unsigned long *
- 	lockdep_off();
- 	/* Make sure we don't end up in loop. */
- 	report_suppress_start();
--	spin_lock_irqsave(&report_lock, *flags);
-+	raw_spin_lock_irqsave(&report_lock, *flags);
- 	pr_err("==================================================================\n");
- }
- 
-@@ -221,7 +221,7 @@ static void end_report(unsigned long *fl
- 		trace_error_report_end(ERROR_DETECTOR_KASAN,
- 				       (unsigned long)addr);
- 	pr_err("==================================================================\n");
--	spin_unlock_irqrestore(&report_lock, *flags);
-+	raw_spin_unlock_irqrestore(&report_lock, *flags);
- 	if (!test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
- 		check_panic_on_warn("KASAN");
- 	switch (kasan_arg_fault) {
+ 	sanity_check_pinned_pages(pages, npages);
+ 	for (i = 0; i < npages; i += nr) {
++		if (!pages[i]) {
++			nr = 1;
++			continue;
++		}
+ 		folio = gup_folio_next(pages, npages, i, &nr);
+ 		gup_put_folio(folio, nr, FOLL_PIN);
+ 	}
 
 
