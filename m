@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF85222D5E;
-	Thu, 12 Dec 2024 17:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2A4222D5E;
+	Thu, 12 Dec 2024 17:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023591; cv=none; b=COAEN3msVaec2DTVDKfDA6aUU7rLQoUM5jJW1hr/SO/GF1u8A51JoIpxV318IH3JKiY1ZjKRskxkvK2sUjTm7eOZyVvmQa1Ngmt64h6jalb5zncYW6RwuLpWEyntjRFqA7y3U3UOLP+iZ4/0eRGWtSCaf4OnNcvlft5q2nDpg40=
+	t=1734023595; cv=none; b=jxf/6+EBDBNNF4/dE1c7iDXH5vmel8R0wm6y9Cs0TSX76SLOtAe39lEwGVL35KM+RezfzLt/ZbDVcdYwf6mbPEm2lcTgY6kFgg/wXGOHNjLoVPAnQNy+ZSVm0upusZlxYsFNUg8mFY1qj7WfHHJpyncU9HSYVLRm9T7gmPFJ9i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023591; c=relaxed/simple;
-	bh=q7YDbxljZFVYgeNtxj4lI9xGIaq8lwUTXupbmOrBaxQ=;
+	s=arc-20240116; t=1734023595; c=relaxed/simple;
+	bh=DrlmXyA2wK0s5cAotrHOME7Gf2jjyCVpI/K4NWbc04M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wr1w+8+HiC4qmeHA4wbZ/02zKs3/NKf445pAsZpIgfCtWRvJ+F84yN2Fs0/k0NUVgGqd69W8H4EDhnf8EcilySNxtgRM8S3Ib+x5oi4n4wHoSZ2FBOA3tEJA3OyZJg1Iv2hDmFdyNFXVMYne6iNsTHqNBEwjYmvh1AF6OIP+hMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwdfQhtZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uXphO1vyMRDK0Wii81R0Gxc7ckpE1RU+fatTgQDLMEX/chHYF1/2ouDDGSuOQ97XN8I+up9cmMHXEsaGmgYSJAWWMi9MIA8JbAs9KwjCFzJMOkx5x2zDFlQMKx7C+oA1yN3zr5myNx6VpgfC/KYvsX0VOPspaXDn0ZnaOLPoxbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X3Nr014c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwdfQhtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49898C4CED0;
-	Thu, 12 Dec 2024 17:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X3Nr014c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C23BC4CECE;
+	Thu, 12 Dec 2024 17:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023591;
-	bh=q7YDbxljZFVYgeNtxj4lI9xGIaq8lwUTXupbmOrBaxQ=;
+	s=korg; t=1734023594;
+	bh=DrlmXyA2wK0s5cAotrHOME7Gf2jjyCVpI/K4NWbc04M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwdfQhtZRcQ7VYyPSevm4h8jeeHKQjnTg3i4zl8sK0Uz4ixZcb0SojSHi2ffnIz30
-	 Kay6dXIh4USPIa889avWQWH4z+xvYroooi7RRchgeb5xt6TmTyBfeaLW+VSmi7NTmW
-	 i/H7Yvl6zgZsEscHnf6LsY7v/cngUHO95rlR0UNc=
+	b=X3Nr014cZMbLyswkAmHPKVAozn3LhqbmpOfQY/87h1kq1VBO6bTYrq8i6/76+308Q
+	 BSCFUt/u7jyWPxbkynzOKGibISTdC3LlnpiYEUcgulAtLLFOndDdNkniSRpJ/nz0EW
+	 CqZ3ycu5N9p/2a+bDn/v4YQ4eubwpuZEP7wPIvGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.10 018/459] KVM: VMX: Bury Intel PT virtualization (guest/host mode) behind CONFIG_BROKEN
-Date: Thu, 12 Dec 2024 15:55:56 +0100
-Message-ID: <20241212144254.247407361@linuxfoundation.org>
+	Alexander Shiyan <eagle.alexander923@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.10 002/459] media: i2c: tc358743: Fix crash in the probe error path when using polling
+Date: Thu, 12 Dec 2024 15:55:40 +0100
+Message-ID: <20241212144253.615245666@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,65 +44,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexander Shiyan <eagle.alexander923@gmail.com>
 
-commit aa0d42cacf093a6fcca872edc954f6f812926a17 upstream.
+commit 869f38ae07f7df829da4951c3d1f7a2be09c2e9a upstream.
 
-Hide KVM's pt_mode module param behind CONFIG_BROKEN, i.e. disable support
-for virtualizing Intel PT via guest/host mode unless BROKEN=y.  There are
-myriad bugs in the implementation, some of which are fatal to the guest,
-and others which put the stability and health of the host at risk.
+If an error occurs in the probe() function, we should remove the polling
+timer that was alarmed earlier, otherwise the timer is called with
+arguments that are already freed, which results in a crash.
 
-For guest fatalities, the most glaring issue is that KVM fails to ensure
-tracing is disabled, and *stays* disabled prior to VM-Enter, which is
-necessary as hardware disallows loading (the guest's) RTIT_CTL if tracing
-is enabled (enforced via a VMX consistency check).  Per the SDM:
+------------[ cut here ]------------
+WARNING: CPU: 3 PID: 0 at kernel/time/timer.c:1830 __run_timers+0x244/0x268
+Modules linked in:
+CPU: 3 UID: 0 PID: 0 Comm: swapper/3 Not tainted 6.11.0 #226
+Hardware name: Diasom DS-RK3568-SOM-EVB (DT)
+pstate: 804000c9 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : __run_timers+0x244/0x268
+lr : __run_timers+0x1d4/0x268
+sp : ffffff80eff2baf0
+x29: ffffff80eff2bb50 x28: 7fffffffffffffff x27: ffffff80eff2bb00
+x26: ffffffc080f669c0 x25: ffffff80efef6bf0 x24: ffffff80eff2bb00
+x23: 0000000000000000 x22: dead000000000122 x21: 0000000000000000
+x20: ffffff80efef6b80 x19: ffffff80041c8bf8 x18: ffffffffffffffff
+x17: ffffffc06f146000 x16: ffffff80eff27dc0 x15: 000000000000003e
+x14: 0000000000000000 x13: 00000000000054da x12: 0000000000000000
+x11: 00000000000639c0 x10: 000000000000000c x9 : 0000000000000009
+x8 : ffffff80eff2cb40 x7 : ffffff80eff2cb40 x6 : ffffff8002bee480
+x5 : ffffffc080cb2220 x4 : ffffffc080cb2150 x3 : 00000000000f4240
+x2 : 0000000000000102 x1 : ffffff80eff2bb00 x0 : ffffff80041c8bf0
+Call trace:
+ __run_timers+0x244/0x268
+ timer_expire_remote+0x50/0x68
+ tmigr_handle_remote+0x388/0x39c
+ run_timer_softirq+0x38/0x44
+ handle_softirqs+0x138/0x298
+ __do_softirq+0x14/0x20
+ ____do_softirq+0x10/0x1c
+ call_on_irq_stack+0x24/0x4c
+ do_softirq_own_stack+0x1c/0x2c
+ irq_exit_rcu+0x9c/0xcc
+ el1_interrupt+0x48/0xc0
+ el1h_64_irq_handler+0x18/0x24
+ el1h_64_irq+0x7c/0x80
+ default_idle_call+0x34/0x68
+ do_idle+0x23c/0x294
+ cpu_startup_entry+0x38/0x3c
+ secondary_start_kernel+0x128/0x160
+ __secondary_switched+0xb8/0xbc
+---[ end trace 0000000000000000 ]---
 
-  If the logical processor is operating with Intel PT enabled (if
-  IA32_RTIT_CTL.TraceEn = 1) at the time of VM entry, the "load
-  IA32_RTIT_CTL" VM-entry control must be 0.
-
-On the host side, KVM doesn't validate the guest CPUID configuration
-provided by userspace, and even worse, uses the guest configuration to
-decide what MSRs to save/load at VM-Enter and VM-Exit.  E.g. configuring
-guest CPUID to enumerate more address ranges than are supported in hardware
-will result in KVM trying to passthrough, save, and load non-existent MSRs,
-which generates a variety of WARNs, ToPA ERRORs in the host, a potential
-deadlock, etc.
-
-Fixes: f99e3daf94ff ("KVM: x86: Add Intel PT virtualization work mode")
+Fixes: 4e66a52a2e4c ("[media] tc358743: Add support for platforms without IRQ line")
+Signed-off-by: Alexander Shiyan <eagle.alexander923@gmail.com>
 Cc: stable@vger.kernel.org
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Tested-by: Adrian Hunter <adrian.hunter@intel.com>
-Message-ID: <20241101185031.1799556-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/vmx.c |    4 +++-
+ drivers/media/i2c/tc358743.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -199,9 +199,11 @@ module_param(ple_window_shrink, uint, 04
- static unsigned int ple_window_max        = KVM_VMX_DEFAULT_PLE_WINDOW_MAX;
- module_param(ple_window_max, uint, 0444);
+--- a/drivers/media/i2c/tc358743.c
++++ b/drivers/media/i2c/tc358743.c
+@@ -2176,8 +2176,10 @@ static int tc358743_probe(struct i2c_cli
  
--/* Default is SYSTEM mode, 1 for host-guest mode */
-+/* Default is SYSTEM mode, 1 for host-guest mode (which is BROKEN) */
- int __read_mostly pt_mode = PT_MODE_SYSTEM;
-+#ifdef CONFIG_BROKEN
- module_param(pt_mode, int, S_IRUGO);
-+#endif
- 
- static DEFINE_STATIC_KEY_FALSE(vmx_l1d_should_flush);
- static DEFINE_STATIC_KEY_FALSE(vmx_l1d_flush_cond);
+ err_work_queues:
+ 	cec_unregister_adapter(state->cec_adap);
+-	if (!state->i2c_client->irq)
++	if (!state->i2c_client->irq) {
++		del_timer(&state->timer);
+ 		flush_work(&state->work_i2c_poll);
++	}
+ 	cancel_delayed_work(&state->delayed_work_enable_hotplug);
+ 	mutex_destroy(&state->confctl_mutex);
+ err_hdl:
 
 
