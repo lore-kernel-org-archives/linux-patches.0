@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA722C354;
-	Thu, 12 Dec 2024 17:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADFB22CBEF;
+	Thu, 12 Dec 2024 17:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023241; cv=none; b=WBjV1El784WqPOtLmzouvmu/Gd+SDX/Ewyz0V4lmJaA2yLfG6Wtb8CFN5JQsHFInj93C16uudRhMBTYgDxcO08ATZczg9YRiBdoFWpmtnWR+wxLmA5G1RucJ/SOE/WNEGLJJP9YsYl1jX8njikDgItHjB/gCzvyVbojhDtNEDqY=
+	t=1734023244; cv=none; b=k4nRop2w41MmknJ1ARvP7g7v1d0NPuMAGUJDVEr0jwdDpdQfna0hfa3DAb95XiyUijbQ+EwqDzLVnGk02XJM8p9W350aenaOjzER9nlO4UlYfzYD+86ErfT7Oir004d8RituRi6wLcTCVlkOFBsHVefVn0PKdUS3q1lq3tEgaAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023241; c=relaxed/simple;
-	bh=DBpuPMklBVzc9rq6D0L8yF9vAjB2mcm1slIaCk6FhUo=;
+	s=arc-20240116; t=1734023244; c=relaxed/simple;
+	bh=IMVCVzf159gwNglLNFcZn3orjeOPwHHS136ehlbnxos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhzQwU+nUoZz4j/HKC17QXdc8mR1wKkc1ilTztjFYE8B3HBVkpzxgBYy3TWgKLS6AO7XKepL3UOMYl+G+jZAc1OuyUEED0C4O+NPcu+wuC2qD89M9CfSFQ6euuXTzjwoeF9imFAMimRxP4/ePKCjk1aI9jcJUcWYFPaFysOjvMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWuKm0Ji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSJ3blj7yNiXgOZSWuUI7pMkGzMyi+T/Yzb5gcG4uqZCrycZr/bvGK0pZ3RnGCMGlPWHd1H3LAj/nQdtp/6TegV3NFXpwyHMczooytf3ADrtaC575hi+v5Z0dEmS/BHw3lzUUfOQRSeNra8l9RORcszuYbVcEyR1jtdvfz0ZAAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vOTAe4Cr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWuKm0Ji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89592C4CEDF;
-	Thu, 12 Dec 2024 17:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vOTAe4Cr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EDFC4CECE;
+	Thu, 12 Dec 2024 17:07:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023241;
-	bh=DBpuPMklBVzc9rq6D0L8yF9vAjB2mcm1slIaCk6FhUo=;
+	s=korg; t=1734023244;
+	bh=IMVCVzf159gwNglLNFcZn3orjeOPwHHS136ehlbnxos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWuKm0Ji/j+/WXHVcMWyUqYppu1Ez/1TvaJhW92vVk7BrnpZXGUpUkyZc23Hb0s+4
-	 uxODgeFOGSpqapMTATIxMdimQ60BK9KXMIzKjx7AB3lytsraJiZuIEcPFe91ihxZD5
-	 Q5qttYU+UODdUd6PGk4sdhdSYToqR9qS3eGpHVF4=
+	b=vOTAe4Cr6qEevNJEB9e3sCstOH/xmDPf3cDWPfP5AqX6+LdobRF3VSauhHK7hYOah
+	 bXCtsM7gGKDemD4fjjlZrHPSm/b0G+FSwX8odOneCeI1KCOfnSnVuLUVdcfP3zUpBb
+	 eRre+6HK2c3luaZZKqNzRs6QxhG6aA1fiK0q/tuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	syzbot+3b6b32dc50537a49bb4a@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 469/565] epoll: annotate racy check
-Date: Thu, 12 Dec 2024 16:01:04 +0100
-Message-ID: <20241212144330.274908250@linuxfoundation.org>
+Subject: [PATCH 5.15 470/565] s390/cpum_sf: Handle CPU hotplug remove during sampling
+Date: Thu, 12 Dec 2024 16:01:05 +0100
+Message-ID: <20241212144330.313721184@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,62 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 6474353a5e3d0b2cf610153cea0c61f576a36d0a ]
+[ Upstream commit a0bd7dacbd51c632b8e2c0500b479af564afadf3 ]
 
-Epoll relies on a racy fastpath check during __fput() in
-eventpoll_release() to avoid the hit of pointlessly acquiring a
-semaphore. Annotate that race by using WRITE_ONCE() and READ_ONCE().
+CPU hotplug remove handling triggers the following function
+call sequence:
 
-Link: https://lore.kernel.org/r/66edfb3c.050a0220.3195df.001a.GAE@google.com
-Link: https://lore.kernel.org/r/20240925-fungieren-anbauen-79b334b00542@brauner
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reported-by: syzbot+3b6b32dc50537a49bb4a@syzkaller.appspotmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+   CPUHP_AP_PERF_S390_SF_ONLINE  --> s390_pmu_sf_offline_cpu()
+   ...
+   CPUHP_AP_PERF_ONLINE          --> perf_event_exit_cpu()
+
+The s390 CPUMF sampling CPU hotplug handler invokes:
+
+ s390_pmu_sf_offline_cpu()
+ +-->  cpusf_pmu_setup()
+       +--> setup_pmc_cpu()
+            +--> deallocate_buffers()
+
+This function de-allocates all sampling data buffers (SDBs) allocated
+for that CPU at event initialization. It also clears the
+PMU_F_RESERVED bit. The CPU is gone and can not be sampled.
+
+With the event still being active on the removed CPU, the CPU event
+hotplug support in kernel performance subsystem triggers the
+following function calls on the removed CPU:
+
+  perf_event_exit_cpu()
+  +--> perf_event_exit_cpu_context()
+       +--> __perf_event_exit_context()
+	    +--> __perf_remove_from_context()
+	         +--> event_sched_out()
+	              +--> cpumsf_pmu_del()
+	                   +--> cpumsf_pmu_stop()
+                                +--> hw_perf_event_update()
+
+to stop and remove the event. During removal of the event, the
+sampling device driver tries to read out the remaining samples from
+the sample data buffers (SDBs). But they have already been freed
+(and may have been re-assigned). This may lead to a use after free
+situation in which case the samples are most likely invalid. In the
+best case the memory has not been reassigned and still contains
+valid data.
+
+Remedy this situation and check if the CPU is still in reserved
+state (bit PMU_F_RESERVED set). In this case the SDBs have not been
+released an contain valid data. This is always the case when
+the event is removed (and no CPU hotplug off occured).
+If the PMU_F_RESERVED bit is not set, the SDB buffers are gone.
+
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c            | 6 ++++--
- include/linux/eventpoll.h | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ arch/s390/kernel/perf_cpum_sf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index b60edddf17870..7413b4a6ba282 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -696,7 +696,8 @@ static int ep_remove(struct eventpoll *ep, struct epitem *epi)
- 	to_free = NULL;
- 	head = file->f_ep;
- 	if (head->first == &epi->fllink && !epi->fllink.next) {
--		file->f_ep = NULL;
-+		/* See eventpoll_release() for details. */
-+		WRITE_ONCE(file->f_ep, NULL);
- 		if (!is_file_epoll(file)) {
- 			struct epitems_head *v;
- 			v = container_of(head, struct epitems_head, epitems);
-@@ -1460,7 +1461,8 @@ static int attach_epitem(struct file *file, struct epitem *epi)
- 			spin_unlock(&file->f_lock);
- 			goto allocate;
- 		}
--		file->f_ep = head;
-+		/* See eventpoll_release() for details. */
-+		WRITE_ONCE(file->f_ep, head);
- 		to_free = NULL;
- 	}
- 	hlist_add_head_rcu(&epi->fllink, file->f_ep);
-diff --git a/include/linux/eventpoll.h b/include/linux/eventpoll.h
-index 3337745d81bd6..0c0d00fcd131f 100644
---- a/include/linux/eventpoll.h
-+++ b/include/linux/eventpoll.h
-@@ -42,7 +42,7 @@ static inline void eventpoll_release(struct file *file)
- 	 * because the file in on the way to be removed and nobody ( but
- 	 * eventpoll ) has still a reference to this file.
- 	 */
--	if (likely(!file->f_ep))
-+	if (likely(!READ_ONCE(file->f_ep)))
- 		return;
+diff --git a/arch/s390/kernel/perf_cpum_sf.c b/arch/s390/kernel/perf_cpum_sf.c
+index a8ba3887b367f..22893bf86f650 100644
+--- a/arch/s390/kernel/perf_cpum_sf.c
++++ b/arch/s390/kernel/perf_cpum_sf.c
+@@ -1896,7 +1896,9 @@ static void cpumsf_pmu_stop(struct perf_event *event, int flags)
+ 	event->hw.state |= PERF_HES_STOPPED;
  
- 	/*
+ 	if ((flags & PERF_EF_UPDATE) && !(event->hw.state & PERF_HES_UPTODATE)) {
+-		hw_perf_event_update(event, 1);
++		/* CPU hotplug off removes SDBs. No samples to extract. */
++		if (cpuhw->flags & PMU_F_RESERVED)
++			hw_perf_event_update(event, 1);
+ 		event->hw.state |= PERF_HES_UPTODATE;
+ 	}
+ 	perf_pmu_enable(event->pmu);
 -- 
 2.43.0
 
