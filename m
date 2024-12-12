@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A64E211493;
-	Thu, 12 Dec 2024 17:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390A4211493;
+	Thu, 12 Dec 2024 17:25:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024322; cv=none; b=hZLikkD1PuL9zI481GwryiovuKtTQKgeqLoVKbPXGoLKkKhfN++oXK0IU5etvPCg513D4c0L9dZ7ewq4B8npog/CLGl1p8stXWSBOqAO6uRSScNEzG1AsDwEZP5yZOpB4YgIBptfLsQoz2PT9B3ErWmJ8+e+A3NNUwgjrH6EUKg=
+	t=1734024324; cv=none; b=m6Kr3swG6eqCdV35Np9mpxo1T/iqzZXKxfxdMMFU7Mt5nkk6C96u/vh3g+/nfy3Vhm7fhSDn5f+vc/bcOpsQ1glVEAPzTzd3sF4T3pNfAmw2SsVSgjyBDdkY/SewDryKxCouTwIYHfWoBZC9iX2htFuE8nvPjVwR8sop15YfnDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024322; c=relaxed/simple;
-	bh=zvDYt7eTfBvvYMiXmxhaiXipjK1ti5PoW8yWPFwaKbs=;
+	s=arc-20240116; t=1734024324; c=relaxed/simple;
+	bh=wxLngrrDYs9ST71AWg9vRRjfI3FuKYQ0PlWlc/Hctok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hBgnEYaPyIByxadamNZjsj4PoFOFavr9zzvzPGCC06P+m3ZZDuCE7uQQNUOfpqOprMzi6QReetUOlb1xb7Kt9fGCqykdeOz/89Mzt66DKaO8QqQ5hM8KuLAtcuKj1pGayYiikz1GF7V3MlTCq3XcsMNKXcQQeqq8pb/WO6Os41k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6x1aZTS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kd7iNT43PogsyxcNxwIoS1t8s1zAdWEZGKOqdCTzCTeOnrKR3OMk5xmkfoEJAEJzBAzXXNEpTEo+xv6hLo5FMAmZ1BVx60wSKdID3iNnvuz5fFGzoytOEcEYVcdVw4XYkXQqHvEq53YagJ701BAcCLMBDCKBMkD6X8kaV8x5lVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLJoJZze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6x1aZTS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E08C4CECE;
-	Thu, 12 Dec 2024 17:25:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLJoJZze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04B2C4CECE;
+	Thu, 12 Dec 2024 17:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024321;
-	bh=zvDYt7eTfBvvYMiXmxhaiXipjK1ti5PoW8yWPFwaKbs=;
+	s=korg; t=1734024324;
+	bh=wxLngrrDYs9ST71AWg9vRRjfI3FuKYQ0PlWlc/Hctok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6x1aZTS6TR/Tjdk/ia4UWWcjwv/zhW33LlbSLXLiuWUOcLrOOzUR2gZQ+m8hu25t
-	 s7U+m3o+Ho8iwSAMThrV+Cm4cjBkIownjfwef5xYk34C/OvYjRbGBK4bedVJUf85MJ
-	 HPO66y/MAR2uFJfwYX6jWmeWLj4MX7EILzdwjcSA=
+	b=uLJoJZzev3JHnPfAYyLbWEtmjNwVmHQFz01hkou+e8srRaGsf/WP7ojCYuTPkbGll
+	 1GuXs/wlwWr0mgEl2T0jIStK2KWTLMLlg0CPEU53JRXtceh+UzQwVuXYuTad1iaxus
+	 o3QaBhB25Rf7ocvDJBwx2Jn34O+3WhMo8MxoPCy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+01218003be74b5e1213a@syzkaller.appspotmail.com,
-	Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 5.10 258/459] exfat: fix uninit-value in __exfat_get_dentry_set
-Date: Thu, 12 Dec 2024 15:59:56 +0100
-Message-ID: <20241212144303.789695672@linuxfoundation.org>
+	Andrej Shadura <andrew.shadura@collabora.co.uk>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Aleksei Vetrov <vvvvvv@google.com>
+Subject: [PATCH 5.10 259/459] Bluetooth: Fix type of len in rfcomm_sock_getsockopt{,_old}()
+Date: Thu, 12 Dec 2024 15:59:57 +0100
+Message-ID: <20241212144303.829452560@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,38 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Andrej Shadura <andrew.shadura@collabora.co.uk>
 
-commit 02dffe9ab092fc4c8800aee68cb7eafd37a980c4 upstream.
+commit 5fe6caa62b07fd39cd6a28acc8f92ba2955e11a6 upstream.
 
-There is no check if stream size and start_clu are invalid.
-If start_clu is EOF cluster and stream size is 4096, It will
-cause uninit value access. because ei->hint_femp.eidx could
-be 128(if cluster size is 4K) and wrong hint will allocate
-next cluster. and this cluster will be same with the cluster
-that is allocated by exfat_extend_valid_size(). The previous
-patch will check invalid start_clu, but for clarity, initialize
-hint_femp.eidx to zero.
+Commit 9bf4e919ccad worked around an issue introduced after an innocuous
+optimisation change in LLVM main:
+
+> len is defined as an 'int' because it is assigned from
+> '__user int *optlen'. However, it is clamped against the result of
+> sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
+> platforms). This is done with min_t() because min() requires compatible
+> types, which results in both len and the result of sizeof() being casted
+> to 'unsigned int', meaning len changes signs and the result of sizeof()
+> is truncated. From there, len is passed to copy_to_user(), which has a
+> third parameter type of 'unsigned long', so it is widened and changes
+> signs again. This excessive casting in combination with the KCSAN
+> instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
+> call, failing the build.
+
+The same issue occurs in rfcomm in functions rfcomm_sock_getsockopt and
+rfcomm_sock_getsockopt_old.
+
+Change the type of len to size_t in both rfcomm_sock_getsockopt and
+rfcomm_sock_getsockopt_old and replace min_t() with min().
 
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+01218003be74b5e1213a@syzkaller.appspotmail.com
-Tested-by: syzbot+01218003be74b5e1213a@syzkaller.appspotmail.com
-Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Co-authored-by: Aleksei Vetrov <vvvvvv@google.com>
+Improves: 9bf4e919ccad ("Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()")
+Link: https://github.com/ClangBuiltLinux/linux/issues/2007
+Link: https://github.com/llvm/llvm-project/issues/85647
+Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/namei.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/rfcomm/sock.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/fs/exfat/namei.c
-+++ b/fs/exfat/namei.c
-@@ -356,6 +356,7 @@ static int exfat_find_empty_entry(struct
- 		if (ei->start_clu == EXFAT_EOF_CLUSTER) {
- 			ei->start_clu = clu.dir;
- 			p_dir->dir = clu.dir;
-+			hint_femp.eidx = 0;
- 		}
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -735,7 +735,8 @@ static int rfcomm_sock_getsockopt_old(st
+ 	struct sock *l2cap_sk;
+ 	struct l2cap_conn *conn;
+ 	struct rfcomm_conninfo cinfo;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 	u32 opt;
  
- 		/* append to the FAT chain */
+ 	BT_DBG("sk %p", sk);
+@@ -789,7 +790,7 @@ static int rfcomm_sock_getsockopt_old(st
+ 		cinfo.hci_handle = conn->hcon->handle;
+ 		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
+ 
+-		len = min_t(unsigned int, len, sizeof(cinfo));
++		len = min(len, sizeof(cinfo));
+ 		if (copy_to_user(optval, (char *) &cinfo, len))
+ 			err = -EFAULT;
+ 
+@@ -808,7 +809,8 @@ static int rfcomm_sock_getsockopt(struct
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct bt_security sec;
+-	int len, err = 0;
++	int err = 0;
++	size_t len;
+ 
+ 	BT_DBG("sk %p", sk);
+ 
+@@ -833,7 +835,7 @@ static int rfcomm_sock_getsockopt(struct
+ 		sec.level = rfcomm_pi(sk)->sec_level;
+ 		sec.key_size = 0;
+ 
+-		len = min_t(unsigned int, len, sizeof(sec));
++		len = min(len, sizeof(sec));
+ 		if (copy_to_user(optval, (char *) &sec, len))
+ 			err = -EFAULT;
+ 
 
 
