@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89CC2163AE;
-	Thu, 12 Dec 2024 15:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E22F2156EA;
+	Thu, 12 Dec 2024 15:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015906; cv=none; b=gYdffKDpTyYtvkYlrwnoq1opW2QpjB3c6v3cHpzJnLL1rAVTUvZ1VK9w/7oTGDvsSFHVjS6zecwTQAxhrAAxzhhHNWTfJCmoxxW1lysu8SXJmt6ZOhhzdC3Barf1JJN7TlD+M/8NdeV7dTvdcVTaYLlvl7SPw7pJP4j0vLbtulo=
+	t=1734015909; cv=none; b=tmE1DhSbauUtcBVk7I76ZqbVQcQ7Afy4xBrLJACz6MFF4KCamGtPBHvjzt8KOC7sD9xYvYbVGjiw2C2XzptqOg80d2QNl60emYmmhUyfoOnsanf02DyaIHhOq+Wyk1FWtNB1XFHXkUnmuR4CYGO2knPUWNt1U+VM4N0+c2LN5/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015906; c=relaxed/simple;
-	bh=Wtr6CGBOuC/zyZv+++pHJ6XtkuDvRO/3gqBcP0pbMc0=;
+	s=arc-20240116; t=1734015909; c=relaxed/simple;
+	bh=Bm62T7imI+sIEfVcv3nevS23KRXdxnrXZ4uHNWMtvyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YqhLEqtourBZj96zPeV7lk5fuDoSCwW6eqwiDJQxav3kocxu3IERyCFDTD/YF4Z+aogvyQ8HNDunUmcNu1Cgl2JtAEN84OkP6e4B0YfQ9kDBmLGdoRBHzUXKWJOdfWaamPxBs84KHPflqn8XHg9D0CYjFSVWu/KdHhqOyt05jOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjEWf/YK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AQmNjmc07mbkZmImBiMvUz5X7UaMeSKlqmj3HxRk5xHwmALBkwgckSjzWsNqf+hz+Xf8AD7wyUBur+3df2CjlJB8soCRztSEPx/4As2h5tMpNG4qBM525KtVgTTnegu6+X/TUf97w5o70W0YBJ9/B4N8rmWE31jQNudW7Jd9rOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBxmuVmX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjEWf/YK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B093C4CECE;
-	Thu, 12 Dec 2024 15:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBxmuVmX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FF4C4CECE;
+	Thu, 12 Dec 2024 15:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015905;
-	bh=Wtr6CGBOuC/zyZv+++pHJ6XtkuDvRO/3gqBcP0pbMc0=;
+	s=korg; t=1734015909;
+	bh=Bm62T7imI+sIEfVcv3nevS23KRXdxnrXZ4uHNWMtvyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjEWf/YKE5S9YG0RO23sWHzm027MuG/ByXlypoKTD+yu1DieJx3Ylw8uL9D4Hbmcv
-	 PUSSr5w6D1WB19QhasbIPLH626UddR+whGyed8sajFWH7sUV7NQp3318Rff4UM/iY5
-	 AuT73nte1b8eSY1udAAWoDpj8hT6uxc2ICilfKzg=
+	b=MBxmuVmX9fLIkjm6Sn4/R8Iv1O2I9G5BtRho/Kr0O+XctwQAI1DG/u6iRD3Ljo9Yj
+	 WBL/B4Anvq+fQWnrIjygIuj/69M6mPYoRRErRUHuyKP+I/ouJ3bREEa/NvfTBnYX3L
+	 9NMKC+6MsOhIaGA6nwloFcmxlssg8RvtNs1RNFiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	syzbot+1939f24bdb783e9e43d9@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 077/466] i3c: master: Extend address status bit to 4 and add I3C_ADDR_SLOT_EXT_DESIRED
-Date: Thu, 12 Dec 2024 15:54:06 +0100
-Message-ID: <20241212144309.857519607@linuxfoundation.org>
+Subject: [PATCH 6.12 060/466] net: avoid potential UAF in default_operstate()
+Date: Thu, 12 Dec 2024 15:53:49 +0100
+Message-ID: <20241212144309.189388247@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -46,198 +47,230 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2f552fa280590e61bd3dbe66a7b54b99caa642a4 ]
+[ Upstream commit 750e51603395e755537da08f745864c93e3ce741 ]
 
-Extend the address status bit to 4 and introduce the
-I3C_ADDR_SLOT_EXT_DESIRED macro to indicate that a device prefers a
-specific address. This is generally set by the 'assigned-address' in the
-device tree source (dts) file.
+syzbot reported an UAF in default_operstate() [1]
 
- ┌────┬─────────────┬───┬─────────┬───┐
- │S/Sr│ 7'h7E RnW=0 │ACK│ ENTDAA  │ T ├────┐
- └────┴─────────────┴───┴─────────┴───┘    │
- ┌─────────────────────────────────────────┘
- │  ┌──┬─────────────┬───┬─────────────────┬────────────────┬───┬─────────┐
- └─►│Sr│7'h7E RnW=1  │ACK│48bit UID BCR DCR│Assign 7bit Addr│PAR│ ACK/NACK│
-    └──┴─────────────┴───┴─────────────────┴────────────────┴───┴─────────┘
+Issue is a race between device and netns dismantles.
 
-Some master controllers (such as HCI) need to prepare the entire above
-transaction before sending it out to the I3C bus. This means that a 7-bit
-dynamic address needs to be allocated before knowing the target device's
-UID information.
+After calling __rtnl_unlock() from netdev_run_todo(),
+we can not assume the netns of each device is still alive.
 
-However, some I3C targets may request specific addresses (called as
-"init_dyn_addr"), which is typically specified by the DT-'s
-assigned-address property. Lower addresses having higher IBI priority. If
-it is available, i3c_bus_get_free_addr() preferably return a free address
-that is not in the list of desired addresses (called as "init_dyn_addr").
-This allows the device with the "init_dyn_addr" to switch to its
-"init_dyn_addr" when it hot-joins the I3C bus. Otherwise, if the
-"init_dyn_addr" is already in use by another I3C device, the target device
-will not be able to switch to its desired address.
+Make sure the device is not in NETREG_UNREGISTERED state,
+and add an ASSERT_RTNL() before the call to
+__dev_get_by_index().
 
-If the previous step fails, fallback returning one of the remaining
-unassigned address, regardless of its state in the desired list.
+We might move this ASSERT_RTNL() in __dev_get_by_index()
+in the future.
 
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241021-i3c_dts_assign-v8-2-4098b8bde01e@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 851bd21cdb55 ("i3c: master: Fix dynamic address leak when 'assigned-address' is present")
+[1]
+
+BUG: KASAN: slab-use-after-free in __dev_get_by_index+0x5d/0x110 net/core/dev.c:852
+Read of size 8 at addr ffff888043eba1b0 by task syz.0.0/5339
+
+CPU: 0 UID: 0 PID: 5339 Comm: syz.0.0 Not tainted 6.12.0-syzkaller-10296-gaaf20f870da0 #0
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0x169/0x550 mm/kasan/report.c:489
+  kasan_report+0x143/0x180 mm/kasan/report.c:602
+  __dev_get_by_index+0x5d/0x110 net/core/dev.c:852
+  default_operstate net/core/link_watch.c:51 [inline]
+  rfc2863_policy+0x224/0x300 net/core/link_watch.c:67
+  linkwatch_do_dev+0x3e/0x170 net/core/link_watch.c:170
+  netdev_run_todo+0x461/0x1000 net/core/dev.c:10894
+  rtnl_unlock net/core/rtnetlink.c:152 [inline]
+  rtnl_net_unlock include/linux/rtnetlink.h:133 [inline]
+  rtnl_dellink+0x760/0x8d0 net/core/rtnetlink.c:3520
+  rtnetlink_rcv_msg+0x791/0xcf0 net/core/rtnetlink.c:6911
+  netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2541
+  netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
+  netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1347
+  netlink_sendmsg+0x8e4/0xcb0 net/netlink/af_netlink.c:1891
+  sock_sendmsg_nosec net/socket.c:711 [inline]
+  __sock_sendmsg+0x221/0x270 net/socket.c:726
+  ____sys_sendmsg+0x52a/0x7e0 net/socket.c:2583
+  ___sys_sendmsg net/socket.c:2637 [inline]
+  __sys_sendmsg+0x269/0x350 net/socket.c:2669
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f2a3cb80809
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f2a3d9cd058 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 00007f2a3cd45fa0 RCX: 00007f2a3cb80809
+RDX: 0000000000000000 RSI: 0000000020000000 RDI: 0000000000000008
+RBP: 00007f2a3cbf393e R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007f2a3cd45fa0 R15: 00007ffd03bc65c8
+ </TASK>
+
+Allocated by task 5339:
+  kasan_save_stack mm/kasan/common.c:47 [inline]
+  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+  poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+  __kasan_kmalloc+0x98/0xb0 mm/kasan/common.c:394
+  kasan_kmalloc include/linux/kasan.h:260 [inline]
+  __kmalloc_cache_noprof+0x243/0x390 mm/slub.c:4314
+  kmalloc_noprof include/linux/slab.h:901 [inline]
+  kmalloc_array_noprof include/linux/slab.h:945 [inline]
+  netdev_create_hash net/core/dev.c:11870 [inline]
+  netdev_init+0x10c/0x250 net/core/dev.c:11890
+  ops_init+0x31e/0x590 net/core/net_namespace.c:138
+  setup_net+0x287/0x9e0 net/core/net_namespace.c:362
+  copy_net_ns+0x33f/0x570 net/core/net_namespace.c:500
+  create_new_namespaces+0x425/0x7b0 kernel/nsproxy.c:110
+  unshare_nsproxy_namespaces+0x124/0x180 kernel/nsproxy.c:228
+  ksys_unshare+0x57d/0xa70 kernel/fork.c:3314
+  __do_sys_unshare kernel/fork.c:3385 [inline]
+  __se_sys_unshare kernel/fork.c:3383 [inline]
+  __x64_sys_unshare+0x38/0x40 kernel/fork.c:3383
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Freed by task 12:
+  kasan_save_stack mm/kasan/common.c:47 [inline]
+  kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
+  kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:582
+  poison_slab_object mm/kasan/common.c:247 [inline]
+  __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
+  kasan_slab_free include/linux/kasan.h:233 [inline]
+  slab_free_hook mm/slub.c:2338 [inline]
+  slab_free mm/slub.c:4598 [inline]
+  kfree+0x196/0x420 mm/slub.c:4746
+  netdev_exit+0x65/0xd0 net/core/dev.c:11992
+  ops_exit_list net/core/net_namespace.c:172 [inline]
+  cleanup_net+0x802/0xcc0 net/core/net_namespace.c:632
+  process_one_work kernel/workqueue.c:3229 [inline]
+  process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
+  worker_thread+0x870/0xd30 kernel/workqueue.c:3391
+  kthread+0x2f0/0x390 kernel/kthread.c:389
+  ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
+
+The buggy address belongs to the object at ffff888043eba000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 432 bytes inside of
+ freed 2048-byte region [ffff888043eba000, ffff888043eba800)
+
+The buggy address belongs to the physical page:
+page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x43eb8
+head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+flags: 0x4fff00000000040(head|node=1|zone=1|lastcpupid=0x7ff)
+page_type: f5(slab)
+raw: 04fff00000000040 ffff88801ac42000 dead000000000122 0000000000000000
+raw: 0000000000000000 0000000000080008 00000001f5000000 0000000000000000
+head: 04fff00000000040 ffff88801ac42000 dead000000000122 0000000000000000
+head: 0000000000000000 0000000000080008 00000001f5000000 0000000000000000
+head: 04fff00000000003 ffffea00010fae01 ffffffffffffffff 0000000000000000
+head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+page_owner tracks the page as allocated
+page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 5339, tgid 5338 (syz.0.0), ts 69674195892, free_ts 69663220888
+  set_page_owner include/linux/page_owner.h:32 [inline]
+  post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1556
+  prep_new_page mm/page_alloc.c:1564 [inline]
+  get_page_from_freelist+0x3649/0x3790 mm/page_alloc.c:3474
+  __alloc_pages_noprof+0x292/0x710 mm/page_alloc.c:4751
+  alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
+  alloc_slab_page+0x6a/0x140 mm/slub.c:2408
+  allocate_slab+0x5a/0x2f0 mm/slub.c:2574
+  new_slab mm/slub.c:2627 [inline]
+  ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3815
+  __slab_alloc+0x58/0xa0 mm/slub.c:3905
+  __slab_alloc_node mm/slub.c:3980 [inline]
+  slab_alloc_node mm/slub.c:4141 [inline]
+  __do_kmalloc_node mm/slub.c:4282 [inline]
+  __kmalloc_noprof+0x2e6/0x4c0 mm/slub.c:4295
+  kmalloc_noprof include/linux/slab.h:905 [inline]
+  sk_prot_alloc+0xe0/0x210 net/core/sock.c:2165
+  sk_alloc+0x38/0x370 net/core/sock.c:2218
+  __netlink_create+0x65/0x260 net/netlink/af_netlink.c:629
+  __netlink_kernel_create+0x174/0x6f0 net/netlink/af_netlink.c:2015
+  netlink_kernel_create include/linux/netlink.h:62 [inline]
+  uevent_net_init+0xed/0x2d0 lib/kobject_uevent.c:783
+  ops_init+0x31e/0x590 net/core/net_namespace.c:138
+  setup_net+0x287/0x9e0 net/core/net_namespace.c:362
+page last free pid 1032 tgid 1032 stack trace:
+  reset_page_owner include/linux/page_owner.h:25 [inline]
+  free_pages_prepare mm/page_alloc.c:1127 [inline]
+  free_unref_page+0xdf9/0x1140 mm/page_alloc.c:2657
+  __slab_free+0x31b/0x3d0 mm/slub.c:4509
+  qlink_free mm/kasan/quarantine.c:163 [inline]
+  qlist_free_all+0x9a/0x140 mm/kasan/quarantine.c:179
+  kasan_quarantine_reduce+0x14f/0x170 mm/kasan/quarantine.c:286
+  __kasan_slab_alloc+0x23/0x80 mm/kasan/common.c:329
+  kasan_slab_alloc include/linux/kasan.h:250 [inline]
+  slab_post_alloc_hook mm/slub.c:4104 [inline]
+  slab_alloc_node mm/slub.c:4153 [inline]
+  kmem_cache_alloc_node_noprof+0x1d9/0x380 mm/slub.c:4205
+  __alloc_skb+0x1c3/0x440 net/core/skbuff.c:668
+  alloc_skb include/linux/skbuff.h:1323 [inline]
+  alloc_skb_with_frags+0xc3/0x820 net/core/skbuff.c:6612
+  sock_alloc_send_pskb+0x91a/0xa60 net/core/sock.c:2881
+  sock_alloc_send_skb include/net/sock.h:1797 [inline]
+  mld_newpack+0x1c3/0xaf0 net/ipv6/mcast.c:1747
+  add_grhead net/ipv6/mcast.c:1850 [inline]
+  add_grec+0x1492/0x19a0 net/ipv6/mcast.c:1988
+  mld_send_initial_cr+0x228/0x4b0 net/ipv6/mcast.c:2234
+  ipv6_mc_dad_complete+0x88/0x490 net/ipv6/mcast.c:2245
+  addrconf_dad_completed+0x712/0xcd0 net/ipv6/addrconf.c:4342
+ addrconf_dad_work+0xdc2/0x16f0
+  process_one_work kernel/workqueue.c:3229 [inline]
+  process_scheduled_works+0xa63/0x1850 kernel/workqueue.c:3310
+
+Memory state around the buggy address:
+ ffff888043eba080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888043eba100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+>ffff888043eba180: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                     ^
+ ffff888043eba200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+ ffff888043eba280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+
+Fixes: 8c55facecd7a ("net: linkwatch: only report IF_OPER_LOWERLAYERDOWN if iflink is actually down")
+Reported-by: syzbot+1939f24bdb783e9e43d9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/674f3a18.050a0220.48a03.0041.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20241203170933.2449307-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 65 +++++++++++++++++++++++++++++++-------
- include/linux/i3c/master.h |  7 ++--
- 2 files changed, 59 insertions(+), 13 deletions(-)
+ net/core/link_watch.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 53f3959e602c8..c022b93cd592e 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -345,7 +345,7 @@ const struct bus_type i3c_bus_type = {
- EXPORT_SYMBOL_GPL(i3c_bus_type);
+diff --git a/net/core/link_watch.c b/net/core/link_watch.c
+index ab150641142aa..1b4d39e380842 100644
+--- a/net/core/link_watch.c
++++ b/net/core/link_watch.c
+@@ -45,9 +45,14 @@ static unsigned int default_operstate(const struct net_device *dev)
+ 		int iflink = dev_get_iflink(dev);
+ 		struct net_device *peer;
  
- static enum i3c_addr_slot_status
--i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
-+i3c_bus_get_addr_slot_status_mask(struct i3c_bus *bus, u16 addr, u32 mask)
- {
- 	unsigned long status;
- 	int bitpos = addr * I3C_ADDR_SLOT_STATUS_BITS;
-@@ -356,11 +356,17 @@ i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
- 	status = bus->addrslots[bitpos / BITS_PER_LONG];
- 	status >>= bitpos % BITS_PER_LONG;
+-		if (iflink == dev->ifindex)
++		/* If called from netdev_run_todo()/linkwatch_sync_dev(),
++		 * dev_net(dev) can be already freed, and RTNL is not held.
++		 */
++		if (dev->reg_state == NETREG_UNREGISTERED ||
++		    iflink == dev->ifindex)
+ 			return IF_OPER_DOWN;
  
--	return status & I3C_ADDR_SLOT_STATUS_MASK;
-+	return status & mask;
- }
- 
--static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
--					 enum i3c_addr_slot_status status)
-+static enum i3c_addr_slot_status
-+i3c_bus_get_addr_slot_status(struct i3c_bus *bus, u16 addr)
-+{
-+	return i3c_bus_get_addr_slot_status_mask(bus, addr, I3C_ADDR_SLOT_STATUS_MASK);
-+}
-+
-+static void i3c_bus_set_addr_slot_status_mask(struct i3c_bus *bus, u16 addr,
-+					      enum i3c_addr_slot_status status, u32 mask)
- {
- 	int bitpos = addr * I3C_ADDR_SLOT_STATUS_BITS;
- 	unsigned long *ptr;
-@@ -369,9 +375,14 @@ static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
- 		return;
- 
- 	ptr = bus->addrslots + (bitpos / BITS_PER_LONG);
--	*ptr &= ~((unsigned long)I3C_ADDR_SLOT_STATUS_MASK <<
--						(bitpos % BITS_PER_LONG));
--	*ptr |= (unsigned long)status << (bitpos % BITS_PER_LONG);
-+	*ptr &= ~((unsigned long)mask << (bitpos % BITS_PER_LONG));
-+	*ptr |= ((unsigned long)status & mask) << (bitpos % BITS_PER_LONG);
-+}
-+
-+static void i3c_bus_set_addr_slot_status(struct i3c_bus *bus, u16 addr,
-+					 enum i3c_addr_slot_status status)
-+{
-+	i3c_bus_set_addr_slot_status_mask(bus, addr, status, I3C_ADDR_SLOT_STATUS_MASK);
- }
- 
- static bool i3c_bus_dev_addr_is_avail(struct i3c_bus *bus, u8 addr)
-@@ -383,13 +394,44 @@ static bool i3c_bus_dev_addr_is_avail(struct i3c_bus *bus, u8 addr)
- 	return status == I3C_ADDR_SLOT_FREE;
- }
- 
-+/*
-+ * ┌────┬─────────────┬───┬─────────┬───┐
-+ * │S/Sr│ 7'h7E RnW=0 │ACK│ ENTDAA  │ T ├────┐
-+ * └────┴─────────────┴───┴─────────┴───┘    │
-+ * ┌─────────────────────────────────────────┘
-+ * │  ┌──┬─────────────┬───┬─────────────────┬────────────────┬───┬─────────┐
-+ * └─►│Sr│7'h7E RnW=1  │ACK│48bit UID BCR DCR│Assign 7bit Addr│PAR│ ACK/NACK│
-+ *    └──┴─────────────┴───┴─────────────────┴────────────────┴───┴─────────┘
-+ * Some master controllers (such as HCI) need to prepare the entire above transaction before
-+ * sending it out to the I3C bus. This means that a 7-bit dynamic address needs to be allocated
-+ * before knowing the target device's UID information.
-+ *
-+ * However, some I3C targets may request specific addresses (called as "init_dyn_addr"), which is
-+ * typically specified by the DT-'s assigned-address property. Lower addresses having higher IBI
-+ * priority. If it is available, i3c_bus_get_free_addr() preferably return a free address that is
-+ * not in the list of desired addresses (called as "init_dyn_addr"). This allows the device with
-+ * the "init_dyn_addr" to switch to its "init_dyn_addr" when it hot-joins the I3C bus. Otherwise,
-+ * if the "init_dyn_addr" is already in use by another I3C device, the target device will not be
-+ * able to switch to its desired address.
-+ *
-+ * If the previous step fails, fallback returning one of the remaining unassigned address,
-+ * regardless of its state in the desired list.
-+ */
- static int i3c_bus_get_free_addr(struct i3c_bus *bus, u8 start_addr)
- {
- 	enum i3c_addr_slot_status status;
- 	u8 addr;
- 
- 	for (addr = start_addr; addr < I3C_MAX_ADDR; addr++) {
--		status = i3c_bus_get_addr_slot_status(bus, addr);
-+		status = i3c_bus_get_addr_slot_status_mask(bus, addr,
-+							   I3C_ADDR_SLOT_EXT_STATUS_MASK);
-+		if (status == I3C_ADDR_SLOT_FREE)
-+			return addr;
-+	}
-+
-+	for (addr = start_addr; addr < I3C_MAX_ADDR; addr++) {
-+		status = i3c_bus_get_addr_slot_status_mask(bus, addr,
-+							   I3C_ADDR_SLOT_STATUS_MASK);
- 		if (status == I3C_ADDR_SLOT_FREE)
- 			return addr;
- 	}
-@@ -1918,9 +1960,10 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
- 			goto err_rstdaa;
- 		}
- 
--		i3c_bus_set_addr_slot_status(&master->bus,
--					     i3cboardinfo->init_dyn_addr,
--					     I3C_ADDR_SLOT_I3C_DEV);
-+		i3c_bus_set_addr_slot_status_mask(&master->bus,
-+						  i3cboardinfo->init_dyn_addr,
-+						  I3C_ADDR_SLOT_I3C_DEV | I3C_ADDR_SLOT_EXT_DESIRED,
-+						  I3C_ADDR_SLOT_EXT_STATUS_MASK);
- 
- 		/*
- 		 * Only try to create/attach devices that have a static
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index 2100547b2d8d2..6e5328c6c6afd 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -298,7 +298,8 @@ enum i3c_open_drain_speed {
-  * @I3C_ADDR_SLOT_I2C_DEV: address is assigned to an I2C device
-  * @I3C_ADDR_SLOT_I3C_DEV: address is assigned to an I3C device
-  * @I3C_ADDR_SLOT_STATUS_MASK: address slot mask
-- *
-+ * @I3C_ADDR_SLOT_EXT_DESIRED: the bitmask represents addresses that are preferred by some devices,
-+ *			       such as the "assigned-address" property in a device tree source.
-  * On an I3C bus, addresses are assigned dynamically, and we need to know which
-  * addresses are free to use and which ones are already assigned.
-  *
-@@ -311,9 +312,11 @@ enum i3c_addr_slot_status {
- 	I3C_ADDR_SLOT_I2C_DEV,
- 	I3C_ADDR_SLOT_I3C_DEV,
- 	I3C_ADDR_SLOT_STATUS_MASK = 3,
-+	I3C_ADDR_SLOT_EXT_STATUS_MASK = 7,
-+	I3C_ADDR_SLOT_EXT_DESIRED = BIT(2),
- };
- 
--#define I3C_ADDR_SLOT_STATUS_BITS 2
-+#define I3C_ADDR_SLOT_STATUS_BITS 4
- 
- /**
-  * struct i3c_bus - I3C bus object
++		ASSERT_RTNL();
+ 		peer = __dev_get_by_index(dev_net(dev), iflink);
+ 		if (!peer)
+ 			return IF_OPER_DOWN;
 -- 
 2.43.0
 
