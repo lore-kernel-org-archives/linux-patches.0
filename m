@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65392185A8;
-	Thu, 12 Dec 2024 15:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FD92185A8;
+	Thu, 12 Dec 2024 15:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018190; cv=none; b=Y23ak+dyQEBusGFAsdoPQM1mRQjpEjp/v08t0wNgV6LetRwKd7GiRr2lcGidiAEp3b9yqoP3DL245wYjj+zGQHpRPvCaltx1qinnC6NjWUfW1ktlMgnOfr6iUB3lxN+C2jXQV4jQjTPeNEIWFhRpUgNI646ttYT6szw6EWsUnYw=
+	t=1734018194; cv=none; b=MNVlWSGlVTMlmBeuQCffCwCyXLF5DhHzwafyXvuMpXQrLZiRWYkPfyTfI0LBpCGq8tLL8YPLPHh2EGYEoDjDOrUd6LbwmJZ1PVYDyQnZ67/qBqtds+C4CmXU5tTWVSVE52hp17pUxmWau3sRpWsf5HMZ5KcXqSabb0UH8Z6VxAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018190; c=relaxed/simple;
-	bh=afX4iyfVrZ/rSD223IHZCRR8ERRSvr9wm89NcNu4RS4=;
+	s=arc-20240116; t=1734018194; c=relaxed/simple;
+	bh=VeBRzS9U5gG18xq0fd22iubXWyH46cFprk9ZtIulTXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CL/O58oKamkcVy8O5mrmTlGP+Spyb/mjcqfty6XzS6GWdrmm5npYUtjMS7ZI7SbQWO5FnFk0fm9ZQrHPiUjc4tk3a6PJIk+pm/tlHth+x6ZAps5KXNx7mnzITwE2vqZwxOYCjEMj2cHf/iBhAnnejeWCEqdpJEMJ11fz12P5Ugg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBXpv0A6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O04JwH63MgqghE97yG4m4/itFDa0dZMTxOY58CCi/0lh3WlRSXKD+Ugzy42QWsI9O0gwt4B3Y9r3WxKf66ANSUOh00jj1RKjlChSzhOVKBaeUgbJu4xqEHsYPSbH+i1lnC6g1Rp6MIOTkIUgmRQKyHeOmPRqrkXF/OHIL/GFxn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FFW+QzR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBXpv0A6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F96AC4CECE;
-	Thu, 12 Dec 2024 15:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FFW+QzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFB5C4CECE;
+	Thu, 12 Dec 2024 15:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018190;
-	bh=afX4iyfVrZ/rSD223IHZCRR8ERRSvr9wm89NcNu4RS4=;
+	s=korg; t=1734018194;
+	bh=VeBRzS9U5gG18xq0fd22iubXWyH46cFprk9ZtIulTXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBXpv0A63DvmDVRf3I15K2KNVW1wGtkqbsQlj6Cgxz859+fgHXR5kIIC91OHK4k8g
-	 ZyJMxYsi1bgndgBzJHdyMnZkZG4cdpwzdblfVEWuWB2IFQNoD1KYC+FJQrAUZh9PYr
-	 pQoKkb4MX7K4F07RZT7Q9y2FSTRLtCpxN8/X/fwM=
+	b=1FFW+QzRXqGwXusk6yBX8Kccm2xEHLZuXRlJSRuwnbWmb1jmTcnsEL//ClzQncp0o
+	 Q6jAdyYIntkobbrr9bU20JVAV3iiGo3idl/+yeoKLYSv+ev1fT658mms21Z1FgKyl4
+	 +pP9ceY25QOMotgMTV2g1q4qgSXO6sglbrogh79Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/356] net: ethernet: fs_enet: Use %pa to format resource_size_t
-Date: Thu, 12 Dec 2024 15:59:01 +0100
-Message-ID: <20241212144253.389097794@linuxfoundation.org>
+Subject: [PATCH 6.6 193/356] ACPI: x86: Make UART skip quirks work on PCI UARTs without an UID
+Date: Thu, 12 Dec 2024 15:58:32 +0100
+Message-ID: <20241212144252.254166899@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,55 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 45fe45fada261e1e83fce2a07fa22835aec1cf0a ]
+[ Upstream commit 7f261203d7c2e0c06e668b25dfaaee091a79ab25 ]
 
-The correct format string for resource_size_t is %pa which
-acts on the address of the variable to be formatted [1].
+The Vexia EDU ATLA 10 tablet (9V version) which shipped with Android 4.2
+as factory OS has the usual broken DSDT issues for x86 Android tablets.
 
-[1] https://elixir.bootlin.com/linux/v6.11.3/source/Documentation/core-api/printk-formats.rst#L229
+On top of that this tablet is special because all its LPSS island
+peripherals are enumerated as PCI devices rather then as ACPI devices as
+they typically are.
 
-Introduced by commit 9d9326d3bc0e ("phy: Change mii_bus id field to a string")
+For the x86-android-tablets kmod to be able to instantiate a serdev client
+for the Bluetooth HCI on this tablet, an ACPI_QUIRK_UART1_SKIP quirk is
+necessary.
 
-Flagged by gcc-14 as:
+Modify acpi_dmi_skip_serdev_enumeration() to work with PCI enumerated
+UARTs without an UID, such as the UARTs on this tablet.
 
-drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c: In function 'fs_mii_bitbang_init':
-drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c:126:46: warning: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Wformat=]
-  126 |         snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
-      |                                             ~^   ~~~~~~~~~
-      |                                              |      |
-      |                                              |      resource_size_t {aka long long unsigned int}
-      |                                              unsigned int
-      |                                             %llx
+Also make acpi_dmi_skip_serdev_enumeration() exit early if there are no
+quirks, since there is nothing to do then.
 
-No functional change intended.
-Compile tested only.
+And add the necessary quirks for the Vexia EDU ATLA 10 tablet.
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/netdev/711d7f6d-b785-7560-f4dc-c6aad2cce99@linux-m68k.org/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20241014-net-pa-fmt-v1-2-dcc9afb8858b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This should compile with CONFIG_PCI being unset without issues because
+dev_is_pci() is defined as "(false)" then.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241109215936.83004-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/x86/utils.c | 47 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 39 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c b/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-index f965a2329055e..2f4442072d059 100644
---- a/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-+++ b/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-@@ -126,7 +126,7 @@ static int fs_mii_bitbang_init(struct mii_bus *bus, struct device_node *np)
- 	 * we get is an int, and the odds of multiple bitbang mdio buses
- 	 * is low enough that it's not worth going too crazy.
- 	 */
--	snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
-+	snprintf(bus->id, MII_BUS_ID_SIZE, "%pa", &res.start);
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index e035cec614dc8..33d200cfc2fe1 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -12,6 +12,7 @@
  
- 	data = of_get_property(np, "fsl,mdio-pin", &len);
- 	if (!data || len != 4)
+ #include <linux/acpi.h>
+ #include <linux/dmi.h>
++#include <linux/pci.h>
+ #include <linux/platform_device.h>
+ #include <asm/cpu_device_id.h>
+ #include <asm/intel-family.h>
+@@ -384,6 +385,19 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+ 					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
+ 	},
++	{
++		/* Vexia Edu Atla 10 tablet 9V version */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
++			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
++			/* Above strings are too generic, also match on BIOS date */
++			DMI_MATCH(DMI_BIOS_DATE, "08/25/2014"),
++		},
++		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
++					ACPI_QUIRK_UART1_SKIP |
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY |
++					ACPI_QUIRK_SKIP_GPIO_EVENT_HANDLERS),
++	},
+ 	{
+ 		/* Whitelabel (sold as various brands) TM800A550L */
+ 		.matches = {
+@@ -432,18 +446,35 @@ static int acpi_dmi_skip_serdev_enumeration(struct device *controller_parent, bo
+ 	struct acpi_device *adev = ACPI_COMPANION(controller_parent);
+ 	const struct dmi_system_id *dmi_id;
+ 	long quirks = 0;
+-	u64 uid;
+-	int ret;
++	u64 uid = 0;
+ 
+-	ret = acpi_dev_uid_to_integer(adev, &uid);
+-	if (ret)
++	dmi_id = dmi_first_match(acpi_quirk_skip_dmi_ids);
++	if (!dmi_id)
+ 		return 0;
+ 
+-	dmi_id = dmi_first_match(acpi_quirk_skip_dmi_ids);
+-	if (dmi_id)
+-		quirks = (unsigned long)dmi_id->driver_data;
++	quirks = (unsigned long)dmi_id->driver_data;
++
++	/* uid is left at 0 on errors and 0 is not a valid UART UID */
++	acpi_dev_uid_to_integer(adev, &uid);
++
++	/* For PCI UARTs without an UID */
++	if (!uid && dev_is_pci(controller_parent)) {
++		struct pci_dev *pdev = to_pci_dev(controller_parent);
++
++		/*
++		 * Devfn values for PCI UARTs on Bay Trail SoCs, which are
++		 * the only devices where this fallback is necessary.
++		 */
++		if (pdev->devfn == PCI_DEVFN(0x1e, 3))
++			uid = 1;
++		else if (pdev->devfn == PCI_DEVFN(0x1e, 4))
++			uid = 2;
++	}
++
++	if (!uid)
++		return 0;
+ 
+-	if (!dev_is_platform(controller_parent)) {
++	if (!dev_is_platform(controller_parent) && !dev_is_pci(controller_parent)) {
+ 		/* PNP enumerated UARTs */
+ 		if ((quirks & ACPI_QUIRK_PNP_UART1_SKIP) && uid == 1)
+ 			*skip = true;
 -- 
 2.43.0
 
