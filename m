@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DABE221D9F;
-	Thu, 12 Dec 2024 16:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09C4221D9F;
+	Thu, 12 Dec 2024 16:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020953; cv=none; b=t8d+QUbmzpFa+KrbK/n2/yfXxe+XZm3u6uWD95+mMcCIzGGVHN2Zu70xGv310M6UgrYHyiitJEQ2TBo6n9/KkT77CQuhjhMzqY5yaIA1Bw/4QBp3RvgALvmbXKJ22F9WHBF9fvPHAyen4u2ggQi9AdjOvxQUVyGb+6Da/anKDYM=
+	t=1734020957; cv=none; b=HD9wAelLcBFZwYdOZE4ZiutPg6L+5cL5zLfNy/dcubQ4ftn5+mpBuXjtPE08ssU1K1Vb2QnJtr2sAadzT4m92QjAy8zIcKDykf1raxtPG3mYymgOgOIsinvivSpZO8V1+m0qyb0kyBuV+1Z7aQI3cmWwdBfE5JW3Xx6G06d/cus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020953; c=relaxed/simple;
-	bh=qVSz92ax17o9SlyeESPfkAVPrLLBLN0/5N6/9OMg7p8=;
+	s=arc-20240116; t=1734020957; c=relaxed/simple;
+	bh=wBe2R8gFRhTz19ihLfMZOa5Fp+aw800jgMkClChwrRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2QPl2WP+YqYvmxyRMne5BnF1grRjBtJoSLoW61aYFRG3WhkyZ5u0/R9GfMaeO92R1cjpOWgez5eDYR9Zbx7ZO66b8ixzVaiULp76Gnl2lg2SqpSq61JqIa/cQ2T6NISSBo473FvDMXPzSVJoqLzWDeajfXEf0soeOMGOp1mLhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AgBoMy4+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKuXbgiwv+XihYgqn1sqC0+2H9/zNBEGgh7OuQVqrP5YEuQx3CEmoZ5UALVmttp9X2w5fE1l5gNG9VYt+7/S0zYNzUJWtGgaxUutCHDTgXip/SlWiyrFtucx25DQQ6xV5/dS65IIK726A3CwXtI4YuvKNvJ52/614DuruQO27aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gow5oqqf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AgBoMy4+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF8DBC4CED0;
-	Thu, 12 Dec 2024 16:29:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gow5oqqf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48251C4CED0;
+	Thu, 12 Dec 2024 16:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020953;
-	bh=qVSz92ax17o9SlyeESPfkAVPrLLBLN0/5N6/9OMg7p8=;
+	s=korg; t=1734020956;
+	bh=wBe2R8gFRhTz19ihLfMZOa5Fp+aw800jgMkClChwrRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgBoMy4+irH9mJGTn8t6sv3lRLePvKJoPT5gkJr6xCMPXITW51SEY8RuSAjjdHk8g
-	 4EVM0BNKIoSkRrfHqQoX7J7og+O7IcQGPM4dyncdMDwUNOYmeRJRBJCbB0e0STCzLi
-	 1NqdmrnRKdrKC7PEf762hiaq2og1BNMrq27JyiF0=
+	b=Gow5oqqfkn+iLhDAYJlB0uURr3SPnPF0Pe4LG5iyG5SzNuq9zhUSjXSEcEpytsBbc
+	 7Vo04v65GFpEJs4v6oC3wR8HIG9Ob72VvrG8alQj1iTqrF/KlLlV8Mk/ZZJ9UghDCW
+	 OphYMdVnn8KsHosLw0WoLLHbjcqyCI/DI0eUhrkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordy Zomer <jordyzomer@google.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 606/772] ksmbd: fix Out-of-Bounds Write in ksmbd_vfs_stream_write
-Date: Thu, 12 Dec 2024 15:59:11 +0100
-Message-ID: <20241212144414.963155186@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>
+Subject: [PATCH 6.1 607/772] watchdog: rti: of: honor timeout-sec property
+Date: Thu, 12 Dec 2024 15:59:12 +0100
+Message-ID: <20241212144415.005360298@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,35 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jordy Zomer <jordyzomer@google.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 313dab082289e460391c82d855430ec8a28ddf81 upstream.
+commit 4962ee045d8f06638714d801ab0fb72f89c16690 upstream.
 
-An offset from client could be a negative value, It could allows
-to write data outside the bounds of the allocated buffer.
-Note that this issue is coming when setting
-'vfs objects = streams_xattr parameter' in ksmbd.conf.
+Currently "timeout-sec" Device Tree property is being silently ignored:
+even though watchdog_init_timeout() is being used, the driver always passes
+"heartbeat" == DEFAULT_HEARTBEAT == 60 as argument.
 
-Cc: stable@vger.kernel.org # v5.15+
-Reported-by: Jordy Zomer <jordyzomer@google.com>
-Signed-off-by: Jordy Zomer <jordyzomer@google.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by setting struct watchdog_device::timeout to DEFAULT_HEARTBEAT
+and passing real module parameter value to watchdog_init_timeout() (which
+may now be 0 if not specified).
+
+Cc: stable@vger.kernel.org
+Fixes: 2d63908bdbfb ("watchdog: Add K3 RTI watchdog support")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Reviewed-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20241107203830.1068456-1-alexander.sverdlin@siemens.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/watchdog/rti_wdt.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6587,6 +6587,8 @@ int smb2_write(struct ksmbd_work *work)
- 	}
+--- a/drivers/watchdog/rti_wdt.c
++++ b/drivers/watchdog/rti_wdt.c
+@@ -54,7 +54,7 @@
  
- 	offset = le64_to_cpu(req->Offset);
-+	if (offset < 0)
-+		return -EINVAL;
- 	length = le32_to_cpu(req->Length);
+ #define MAX_HW_ERROR		250
  
- 	if (req->Channel == SMB2_CHANNEL_RDMA_V1 ||
+-static int heartbeat = DEFAULT_HEARTBEAT;
++static int heartbeat;
+ 
+ /*
+  * struct to hold data for each WDT device
+@@ -240,6 +240,7 @@ static int rti_wdt_probe(struct platform
+ 	wdd->min_timeout = 1;
+ 	wdd->max_hw_heartbeat_ms = (WDT_PRELOAD_MAX << WDT_PRELOAD_SHIFT) /
+ 		wdt->freq * 1000;
++	wdd->timeout = DEFAULT_HEARTBEAT;
+ 	wdd->parent = dev;
+ 
+ 	watchdog_set_drvdata(wdd, wdt);
 
 
