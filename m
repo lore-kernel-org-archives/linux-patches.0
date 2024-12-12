@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B76215710;
-	Thu, 12 Dec 2024 17:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9478F2153EC;
+	Thu, 12 Dec 2024 17:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024732; cv=none; b=fbGX7qEivUsM5YVgQziEYYIjXC1myLc6ImBdDTqCZdRCDxfSUNJ3J2OOVcyC2sxeLEVTVkULy30BrR3kUf07hYzCYgChgE/sqtkOx8dexwcp1s2bTp5Ad39C7tjSuJHx/yuSHjgtUikbueIjjRq0a1gjQUk0n156ETFdkyLm0K8=
+	t=1734024735; cv=none; b=snNxmq+e4ih2AQBnoPF1hGIgZ6VlVVzaXXmDkyjy8fvEuI4U1wkzfyPf6cHUXSP8jtc/8O3DyoRnPBRO4rza7t8/nFqM48icWn3PP4jsY4GhNTwvuiEWToCoOxMwcH5HotWW/knyAjFZXejw/DntBQEas0jgJ26hu/6bG39kgEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024732; c=relaxed/simple;
-	bh=S2Q4vfhm9hYL7w5Grrp69UKIFGL43vPPCgIJmqT+Wa4=;
+	s=arc-20240116; t=1734024735; c=relaxed/simple;
+	bh=qO1tKx8zIn9EMGYZ84eg0rGvRV5O2nFxuMQdBa3oAxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyGXz3Nso5it7DQv9yxhe9B7estbwaQmEu6oaQ9knYzEBgT8EvVkiOBDZy36bcP3H0dKrOnheWMogQXkb8WBxfB5DKLz4rORisuGagYDkn67NAybaJdrUR90r/kqencp7jgBgpb53QVpgZOaqizBurSY12bNLF+q4BR+7tOoV3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ipzaMDLl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4L2KPdrwlzDz8UKQzdaDayTXo6Bn5nF10fPKd6AabdY5pcGUXFeZ2fFs6OPqHyzaH3gigQ/Z+fM+L9hqroebMsRtr4EEMaWuQWcX5O4sIJ+474HEvnhROi0PG51g+cs+63iz9D3cYiIVvdlnKk6Y/8NsjtkvQS3JKEBtKcEnGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWJSwASt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ipzaMDLl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A28C4CECE;
-	Thu, 12 Dec 2024 17:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWJSwASt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1490DC4CECE;
+	Thu, 12 Dec 2024 17:32:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024732;
-	bh=S2Q4vfhm9hYL7w5Grrp69UKIFGL43vPPCgIJmqT+Wa4=;
+	s=korg; t=1734024735;
+	bh=qO1tKx8zIn9EMGYZ84eg0rGvRV5O2nFxuMQdBa3oAxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ipzaMDLl6yIBsnVXCMMXGFCyS27O03lqqxMLMaovJ4BbdgEaiEYbYrNBRfhKxuAl5
-	 bxF0K0cArRA8GS7WzdoKnCMnbsChKfagIi63A1ukWH0UoToAg96EJTb4HbXWOkZrqX
-	 je1MDvM5dsjyY9uJ7Q1r+HCJRchWW1SaECF3apWs=
+	b=UWJSwAStf9YJryaXNsjVV+J+3UCWV20lzlggFFC47SwZfitoAPwhcu6wDw2StzaQo
+	 ps4oEsOm6Sz/ZdlRWhFt01KZzrLqpcPbr2jb0Yvq/JbkfgZ8AhLX6hruNg/GriKjMT
+	 09Y0PKNv9jS7LyiBBv9X+KuKe/Sxa7SmS3IEWV4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
 	Ignat Korchagin <ignat@cloudflare.com>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 394/459] af_packet: avoid erroring out after sock_init_data() in packet_create()
-Date: Thu, 12 Dec 2024 16:02:12 +0100
-Message-ID: <20241212144309.327496547@linuxfoundation.org>
+Subject: [PATCH 5.10 395/459] Bluetooth: L2CAP: do not leave dangling sk pointer on error in l2cap_sock_create()
+Date: Thu, 12 Dec 2024 16:02:13 +0100
+Message-ID: <20241212144309.367995420@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -56,62 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Ignat Korchagin <ignat@cloudflare.com>
 
-[ Upstream commit 46f2a11cb82b657fd15bab1c47821b635e03838b ]
+[ Upstream commit 7c4f78cdb8e7501e9f92d291a7d956591bf73be9 ]
 
-After sock_init_data() the allocated sk object is attached to the provided
-sock object. On error, packet_create() frees the sk object leaving the
-dangling pointer in the sock object on return. Some other code may try
-to use this pointer and cause use-after-free.
+bt_sock_alloc() allocates the sk object and attaches it to the provided
+sock object. On error l2cap_sock_alloc() frees the sk object, but the
+dangling pointer is still attached to the sock object, which may create
+use-after-free in other code.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
 Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241014153808.51894-2-ignat@cloudflare.com
+Link: https://patch.msgid.link/20241014153808.51894-3-ignat@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bluetooth/l2cap_sock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index ce3e20bcde4ab..01a191c8194b4 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3386,18 +3386,18 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
- 	if (sock->type == SOCK_PACKET)
- 		sock->ops = &packet_ops_spkt;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 93afa52c04660..cbaefbba6f4db 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1864,6 +1864,7 @@ static struct sock *l2cap_sock_alloc(struct net *net, struct socket *sock,
+ 	chan = l2cap_chan_create();
+ 	if (!chan) {
+ 		sk_free(sk);
++		sock->sk = NULL;
+ 		return NULL;
+ 	}
  
-+	po = pkt_sk(sk);
-+	err = packet_alloc_pending(po);
-+	if (err)
-+		goto out_sk_free;
-+
- 	sock_init_data(sock, sk);
- 
--	po = pkt_sk(sk);
- 	init_completion(&po->skb_completion);
- 	sk->sk_family = PF_PACKET;
- 	po->num = proto;
- 	po->xmit = dev_queue_xmit;
- 
--	err = packet_alloc_pending(po);
--	if (err)
--		goto out2;
--
- 	packet_cached_dev_reset(po);
- 
- 	sk->sk_destruct = packet_sock_destruct;
-@@ -3432,7 +3432,7 @@ static int packet_create(struct net *net, struct socket *sock, int protocol,
- 	preempt_enable();
- 
- 	return 0;
--out2:
-+out_sk_free:
- 	sk_free(sk);
- out:
- 	return err;
 -- 
 2.43.0
 
