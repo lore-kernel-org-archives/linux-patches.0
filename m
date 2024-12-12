@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4EA13C918;
-	Thu, 12 Dec 2024 17:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF346F2FE;
+	Thu, 12 Dec 2024 17:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025334; cv=none; b=Vzy/98T5ebyonUpOHBjo1QYYvDRqv8t6f14IuPYS0GiMD425cKQqedvclVpT6N/t2jxJ90jzulkTMuDr1jXuEUEt+6sxFKNFyaRJnH+Xb8QJhSLWyI9P7+YPHTu0iy5vgrpbDbKAzeRjE6XTlOGs9ShjF8ghp9O7y/TG2g7DXSQ=
+	t=1734025337; cv=none; b=lOK5Q4uVJ+nMyBph3JK7R7C1nqScPmGWaF24OUov46s3YFXoOsFEfmjdwI0loPwsjkoNVcdBRnn4NM+KOULruAQSIHFpS/8zl//tcCv2oMgc2WlUPWvoCzK9sthGlkaUadrbuZbX5s8jE8bUCeYJYGeszrTIkNzb1+KZlkyVHxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025334; c=relaxed/simple;
-	bh=zgc9gf2uwR44/f0j/ZYD5e6bcSc1W2zQC56H8IWwGKU=;
+	s=arc-20240116; t=1734025337; c=relaxed/simple;
+	bh=cooOmRh2cJJ70bCSm2nwwx5qUNAhHXK1d8ADEj450GU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f8zoOmfct/41WdeK6nPYpLGrIxY45i6K8bscB8oqYOppBiiDcvxMfXO2ZAZ/Uiyq/T9VlhBJWeQKrJ1fb59UUarqGwfTQOUiATCE/2wfXMBvn+wUipGuGjxa3E5pLwHmzMMEfFwbBgU3FAmIw9WpTOLpdK5o/pg7+Uzt210S/mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGe6wdtJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BUYOccgIjbcZ7UDHL/zaxcukbL+bVCdRx5clAmPnIFinP6SDYwhs1dfgmxvcCOOTJVQteyXYI+R7pLeTuP6eKKcj9LJ8fjNm3w6RqemX4NKcdkThS/jtxy4jLhJ89lZiKDZSRBm4ZPwJYhsi6QWd3YXCIIC0MxxhXHo8phKepPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Am13CKI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGe6wdtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37688C4CECE;
-	Thu, 12 Dec 2024 17:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Am13CKI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DA1C4CED0;
+	Thu, 12 Dec 2024 17:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025334;
-	bh=zgc9gf2uwR44/f0j/ZYD5e6bcSc1W2zQC56H8IWwGKU=;
+	s=korg; t=1734025337;
+	bh=cooOmRh2cJJ70bCSm2nwwx5qUNAhHXK1d8ADEj450GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGe6wdtJz5UVrbSKRQpK6++i4rLovycwVcoMxBO6G8VXiQZ6evymqj+b8HLIyFwy1
-	 IcA+kS9jrFf6Nuk7/zeLhDUZeRPj/VfSEf2AOrQ141bgw0HZB2gO/ydJ4Zx1r2A+EV
-	 /oZhP6uz2FbKfSSzUJnvvYNaDesuOxye5qbCXnAQ=
+	b=2Am13CKIDpuHlWfvrGr67gjPB/SevrsE8iWhrCFG6G0sdkXpIS0erIDUvv4FBg+c8
+	 8j8BaQiul02l7qimeDgh5quP3FceO5r3yeNd9B/5EYlOMrC3dIkfQSM1pF90aPyYwY
+	 yNwxXoT32QL0nSGNIoYly/sbde76F3BDvPVbxgd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/321] usb: yurex: make waiting on yurex_write interruptible
-Date: Thu, 12 Dec 2024 16:00:53 +0100
-Message-ID: <20241212144235.312849679@linuxfoundation.org>
+Subject: [PATCH 5.4 109/321] clk: clk-axi-clkgen: make sure to enable the AXI bus clock
+Date: Thu, 12 Dec 2024 16:00:27 +0100
+Message-ID: <20241212144234.291710255@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,66 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit e0aa9614ab0fd35b404e4b16ebe879f9fc152591 ]
+[ Upstream commit c64ef7e4851d1a9abbb7f7833e4936973ac5ba79 ]
 
-The IO yurex_write() needs to wait for in order to have a device
-ready for writing again can take a long time time.
-Consequently the sleep is done in an interruptible state.
-Therefore others waiting for yurex_write() itself to finish should
-use mutex_lock_interruptible.
+In order to access the registers of the HW, we need to make sure that
+the AXI bus clock is enabled. Hence let's increase the number of clocks
+by one.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Fixes: 6bc235a2e24a5 ("USB: add driver for Meywa-Denki & Kayac YUREX")
-Rule: add
-Link: https://lore.kernel.org/stable/20240924084415.300557-1-oneukum%40suse.com
-Link: https://lore.kernel.org/r/20240924084415.300557-1-oneukum@suse.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In order to keep backward compatibility and make sure old DTs still work
+we check if clock-names is available or not. If it is, then we can
+disambiguate between really having the AXI clock or a parent clock and
+so we can enable the bus clock. If not, we fallback to what was done
+before and don't explicitly enable the AXI bus clock.
+
+Note that if clock-names is given, the axi clock must be the last one in
+the phandle array (also enforced in the DT bindings) so that we can reuse
+as much code as possible.
+
+Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-2-bc5e0733ad76@analog.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/misc/iowarrior.c | 4 ----
- drivers/usb/misc/yurex.c     | 5 ++++-
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/clk/clk-axi-clkgen.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/misc/iowarrior.c b/drivers/usb/misc/iowarrior.c
-index f23291da25498..9869dda48ddea 100644
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -915,7 +915,6 @@ static int iowarrior_probe(struct usb_interface *interface,
- static void iowarrior_disconnect(struct usb_interface *interface)
- {
- 	struct iowarrior *dev = usb_get_intfdata(interface);
--	int minor = dev->minor;
+diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
+index 8d0c32e81e787..73f3bfeb44dc5 100644
+--- a/drivers/clk/clk-axi-clkgen.c
++++ b/drivers/clk/clk-axi-clkgen.c
+@@ -7,6 +7,7 @@
+  */
  
- 	usb_deregister_dev(interface, &iowarrior_class);
+ #include <linux/platform_device.h>
++#include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
+@@ -412,6 +413,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+ 	struct clk_init_data init;
+ 	const char *parent_names[2];
+ 	const char *clk_name;
++	struct clk *axi_clk;
+ 	unsigned int i;
+ 	int ret;
  
-@@ -939,9 +938,6 @@ static void iowarrior_disconnect(struct usb_interface *interface)
- 		mutex_unlock(&dev->mutex);
- 		iowarrior_delete(dev);
- 	}
--
--	dev_info(&interface->dev, "I/O-Warror #%d now disconnected\n",
--		 minor - IOWARRIOR_MINOR_BASE);
- }
+@@ -431,8 +433,24 @@ static int axi_clkgen_probe(struct platform_device *pdev)
+ 		return PTR_ERR(axi_clkgen->base);
  
- /* usb specific object needed to register this driver with the usb subsystem */
-diff --git a/drivers/usb/misc/yurex.c b/drivers/usb/misc/yurex.c
-index de2cc882f5765..6d6904856839a 100644
---- a/drivers/usb/misc/yurex.c
-+++ b/drivers/usb/misc/yurex.c
-@@ -442,7 +442,10 @@ static ssize_t yurex_write(struct file *file, const char __user *user_buffer,
- 	if (count == 0)
- 		goto error;
- 
--	mutex_lock(&dev->io_mutex);
-+	retval = mutex_lock_interruptible(&dev->io_mutex);
-+	if (retval < 0)
-+		return -EINTR;
+ 	init.num_parents = of_clk_get_parent_count(pdev->dev.of_node);
+-	if (init.num_parents < 1 || init.num_parents > 2)
+-		return -EINVAL;
 +
- 	if (dev->disconnected) {		/* already disconnected */
- 		mutex_unlock(&dev->io_mutex);
- 		retval = -ENODEV;
++	axi_clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
++	if (!IS_ERR(axi_clk)) {
++		if (init.num_parents < 2 || init.num_parents > 3)
++			return -EINVAL;
++
++		init.num_parents -= 1;
++	} else {
++		/*
++		 * Legacy... So that old DTs which do not have clock-names still
++		 * work. In this case we don't explicitly enable the AXI bus
++		 * clock.
++		 */
++		if (PTR_ERR(axi_clk) != -ENOENT)
++			return PTR_ERR(axi_clk);
++		if (init.num_parents < 1 || init.num_parents > 2)
++			return -EINVAL;
++	}
+ 
+ 	for (i = 0; i < init.num_parents; i++) {
+ 		parent_names[i] = of_clk_get_parent_name(pdev->dev.of_node, i);
 -- 
 2.43.0
 
