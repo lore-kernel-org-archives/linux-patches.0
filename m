@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F79B223336;
-	Thu, 12 Dec 2024 15:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921ED2236FA;
+	Thu, 12 Dec 2024 15:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018307; cv=none; b=VGh1CcaosVOniFQI6u7TZCEZPaojQ8XkfN67qeLwweotK5IMBtCZ4twEFcm0o4+AAgmg0qy/is5TOIQmL4ReSZWeNghIxlD3MnUyylkTHEitW4xyvAH0D468oJxjqqjGKAXJgqhH3/8/imYPm6D0MLPtT58tpYmaOghO7gF/fUc=
+	t=1734018311; cv=none; b=bN7DcqWOhxIAkKaWN7qXo9zxHnPAQgatfh3FTlG8EEyVyHBzoyqsG/saISrCHMMYQ0imUqKBds27X4C2D2NcQ1V1hpQpDv/AJyiN5GFMtAYCKlm14ciFa7tNawwnGA7E3rZTyaLm7qxypf3JOTIKpGsu7R317X+D9MaLZcKbN8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018307; c=relaxed/simple;
-	bh=ROwjmKNZ8C+gQ90amxw6WHQHM0cLFfcCNiZXfHmRsOk=;
+	s=arc-20240116; t=1734018311; c=relaxed/simple;
+	bh=H2SxPZjMXisHqihJR/xwF+xlfHyW86NuTIouEn46CU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQH1IQyxj2DEqp0DF3zYQpOqwnnn7uRKUmHwWCR0E2qUaRTgE3ePLYSVvO7RRYn7deZfhQllhI5dYRMpyhTaF/c1/NhiIXCbtQd1wNwWiYwljwHzs3hwHZRimdH1a91Uxbu9PcnQRyu1Hc7m0S7YYz3baGekVAJr2A54k+gZ9dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18LaKTq2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JmYKIg3p6eM6QxSUUUdZNMndEV27wKOZLcGi/hNPbmDqalXVehws09/dDAyqarBwqv8O9a0mVRIVkfUKA4zR5OpT41b8pOB27AU3EnHQshGHAw0Xs4ntrVY5LvpQ96dYflc4fp1KgT3G+QtAThsFBnro2YISR4qTg+ihbp9jfoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=piu6HFcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18LaKTq2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC89EC4CECE;
-	Thu, 12 Dec 2024 15:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="piu6HFcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F325C4CED0;
+	Thu, 12 Dec 2024 15:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018307;
-	bh=ROwjmKNZ8C+gQ90amxw6WHQHM0cLFfcCNiZXfHmRsOk=;
+	s=korg; t=1734018311;
+	bh=H2SxPZjMXisHqihJR/xwF+xlfHyW86NuTIouEn46CU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18LaKTq2996TFoJ7RS0s1WL0g7Wx1YblPlAoeqEQNMc9Kk+L4y9idv8ClrL4DKAIz
-	 QL5fLVttV/3iKy14oKhX4W1FbLUDOdpTLGROqRPtfQsQ2xJEWxOxi1BQseBuThlPkD
-	 8YaASiQtz59YPePhq36AIQpWhYEe/F2P+M78G3dY=
+	b=piu6HFcfgA5ab74Lextbzm6uPzoWovYEq6cAO6+G2QLblVvb49ZRYzqMgOWZ012OX
+	 4SIABhBwC4q52NwwgJmlZNPS7uiBXQbh3P2FxZo1xPIs3tLVQh7nnIJcXRiGP6hGYH
+	 4mYomP7tSQBRfvlz8VVc/tE0SgXZ3SWrelOxf6p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
+	Ignat Korchagin <ignat@cloudflare.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 255/356] dsa: qca8k: Use nested lock to avoid splat
-Date: Thu, 12 Dec 2024 15:59:34 +0100
-Message-ID: <20241212144254.679795184@linuxfoundation.org>
+Subject: [PATCH 6.6 227/356] net: af_can: do not leave a dangling sk pointer in can_create()
+Date: Thu, 12 Dec 2024 15:59:06 +0100
+Message-ID: <20241212144253.587909035@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,37 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Ignat Korchagin <ignat@cloudflare.com>
 
-[ Upstream commit 078e0d596f7b5952dad8662ace8f20ed2165e2ce ]
+[ Upstream commit 811a7ca7320c062e15d0f5b171fe6ad8592d1434 ]
 
-qca8k_phy_eth_command() is used to probe the child MDIO bus while the
-parent MDIO is locked. This causes lockdep splat, reporting a possible
-deadlock. It is not an actually deadlock, because different locks are
-used. By making use of mutex_lock_nested() we can avoid this false
-positive.
+On error can_create() frees the allocated sk object, but sock_init_data()
+has already attached it to the provided sock object. This will leave a
+dangling sk pointer in the sock object and may cause use-after-free later.
 
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241110175955.3053664-1-andrew@lunn.ch
+Signed-off-by: Ignat Korchagin <ignat@cloudflare.com>
+Reviewed-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://patch.msgid.link/20241014153808.51894-5-ignat@cloudflare.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/af_can.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
-index 17c28fe2d7433..384ae32c05b1c 100644
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -673,7 +673,7 @@ qca8k_phy_eth_command(struct qca8k_priv *priv, bool read, int phy,
- 	 * We therefore need to lock the MDIO bus onto which the switch is
- 	 * connected.
- 	 */
--	mutex_lock(&priv->bus->mdio_lock);
-+	mutex_lock_nested(&priv->bus->mdio_lock, MDIO_MUTEX_NESTED);
+diff --git a/net/can/af_can.c b/net/can/af_can.c
+index 7343fd487dbea..c469fc187f0c7 100644
+--- a/net/can/af_can.c
++++ b/net/can/af_can.c
+@@ -171,6 +171,7 @@ static int can_create(struct net *net, struct socket *sock, int protocol,
+ 		/* release sk on errors */
+ 		sock_orphan(sk);
+ 		sock_put(sk);
++		sock->sk = NULL;
+ 	}
  
- 	/* Actually start the request:
- 	 * 1. Send mdio master packet
+  errout:
 -- 
 2.43.0
 
