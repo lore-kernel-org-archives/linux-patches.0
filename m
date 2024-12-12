@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDFE7223E60;
-	Thu, 12 Dec 2024 15:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8887222D59;
+	Thu, 12 Dec 2024 15:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018640; cv=none; b=SvSfG2Ie1aXjE3n+lIph/3ALE3BTi+waANQyDe7oWQ1u9dIx6A9ikdeDH3xc+3B1cMUTRYF/Rz19VwGvvSup+qq/G0OnVT5D+6cLkWBkM+uCogGtF7CaKf1e4SbKbMQkTRZI/djAEG7eFMPwsX39aXbYGu4HoEgTZ0j+zCZCQEc=
+	t=1734018644; cv=none; b=gvFWl0hutrY+YKwUv+ZpTGxYlltNPx6U2PpjSQ8I0lxFGXjIoGgfivMUPOBV+ZGqw6YgvAmGikDoL3UByaipuBJkkFuXe4DKWUqkegGX9dgKdAfMeblMaZYT/oJnjr+yrUowRmIczqAwTpWCTsdxJUibMeLRX0mNzjLyLvr9DIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018640; c=relaxed/simple;
-	bh=0tUHNEknCgRhvL0YPGz6vlKpXdl0em0XfGjfBd8yf10=;
+	s=arc-20240116; t=1734018644; c=relaxed/simple;
+	bh=sKkY0pPicXav0Fl1zErp5BFbcWL1oYC7QWvJQPgPNok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mjX8rk2uRFlOIdeBJoHevBwIUg3wE101Su6+pF+nH5/jX4laHfDXzNtfMi1n+iRyMm1Ujqx8kazPh4bCZSEfVbs1uQLkUVF83QyMCu0FFAuP1xNMt17qqMurBLdwizKOfHmsT/wdk4npKYFxfW0NjzvYILDo0pikHuxpczfKhpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SMBtM0Xu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HRReuUfduEhjSveVSYGdC5XAXHTIoxe6fvKirNF1BA1FxRS0h9ejWanufgGe7MiOVruJFsaT2lxa40K4ThqAhFopjp47/QU4KwkgGPB8dCsLRzi58gbFKsICBGBddmp22tl1moyI32LslFN5Rq8YjuAcBQUb0FgUjcTfcKcjfQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVx12tRT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SMBtM0Xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40565C4CECE;
-	Thu, 12 Dec 2024 15:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVx12tRT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 571A1C4CECE;
+	Thu, 12 Dec 2024 15:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018639;
-	bh=0tUHNEknCgRhvL0YPGz6vlKpXdl0em0XfGjfBd8yf10=;
+	s=korg; t=1734018643;
+	bh=sKkY0pPicXav0Fl1zErp5BFbcWL1oYC7QWvJQPgPNok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SMBtM0XurF9dXOQ5uaXiALxk/a6i9jWvNEdEoWzi0YaHDzO5eN7iZewntif1KlFHC
-	 Kmuc5wx1cQyeMhUyeHGVNHukjhoCB/6QNTS547Y/WPeriegv8BYr4Dk3pF0c1jKEfv
-	 SKZVydu7YI3fFxn/Zzl5G46DQMKF+Ww05mFf2Vww=
+	b=mVx12tRTyf2sPEogA+N9oAOzTwoFxzYKaalejkrQWQ5ZaICmXykDrVtn/vshcgCOE
+	 CQUr4Z5tdP0jBmK42vTuhQlq5ja+E+ama6Kt30nS3yRmHk/X3UHqHJZid2Yr4j6Wvp
+	 Bor2DPuqT4b4q+zMMTPrabFGR34fLcgZ79TWd4m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 347/356] ASoC: Intel: avs: Fix return status of avs_pcm_hw_constraints_init()
-Date: Thu, 12 Dec 2024 16:01:06 +0100
-Message-ID: <20241212144258.276928665@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 348/356] drm/amdgpu: rework resume handling for display (v2)
+Date: Thu, 12 Dec 2024 16:01:07 +0100
+Message-ID: <20241212144258.316208206@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,44 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit a0aae96be5ffc5b456ca07bfe1385b721c20e184 upstream.
+commit 73dae652dcac776296890da215ee7dec357a1032 upstream.
 
-Check for return code from avs_pcm_hw_constraints_init() in
-avs_dai_fe_startup() only checks if value is different from 0. Currently
-function can return positive value, change it to return 0 on success.
+Split resume into a 3rd step to handle displays when DCC is
+enabled on DCN 4.0.1.  Move display after the buffer funcs
+have been re-enabled so that the GPU will do the move and
+properly set the DCC metadata for DCN.
 
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-I've observed KASAN on our setups and while patch itself is correct
-regardless. Problem seems to be caused by recent changes to rates, as
-this started happening after recent patchsets and doesn't reproduce with
-those reverted
-https://lore.kernel.org/linux-sound/20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com/
-https://lore.kernel.org/linux-sound/20240911135756.24434-1-tiwai@suse.de/
-I've tested using Mark tree, where they are both applied and for some
-reason snd_pcm_hw_constraint_minmax() started returning positive value,
-while previously it returned 0. I'm bit worried if it signals some
-potential deeper problem regarding constraints with above changes.
+v2: fix fence irq resume ordering
 
-Link: https://patch.msgid.link/20241010112008.545526-1-amadeuszx.slawinski@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/avs/pcm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   45 +++++++++++++++++++++++++++--
+ 1 file changed, 43 insertions(+), 2 deletions(-)
 
---- a/sound/soc/intel/avs/pcm.c
-+++ b/sound/soc/intel/avs/pcm.c
-@@ -424,7 +424,7 @@ static int avs_dai_hda_be_trigger(struct
- 		break;
- 	}
- 
--	return ret;
-+	return 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3172,7 +3172,7 @@ static int amdgpu_device_ip_resume_phase
+  *
+  * @adev: amdgpu_device pointer
+  *
+- * First resume function for hardware IPs.  The list of all the hardware
++ * Second resume function for hardware IPs.  The list of all the hardware
+  * IPs that make up the asic is walked and the resume callbacks are run for
+  * all blocks except COMMON, GMC, and IH.  resume puts the hardware into a
+  * functional state after a suspend and updates the software state as
+@@ -3190,6 +3190,7 @@ static int amdgpu_device_ip_resume_phase
+ 		if (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_COMMON ||
+ 		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GMC ||
+ 		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_IH ||
++		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_DCE ||
+ 		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_PSP)
+ 			continue;
+ 		r = adev->ip_blocks[i].version->funcs->resume(adev);
+@@ -3205,6 +3206,36 @@ static int amdgpu_device_ip_resume_phase
  }
  
- static const struct snd_soc_dai_ops avs_dai_hda_be_ops = {
+ /**
++ * amdgpu_device_ip_resume_phase3 - run resume for hardware IPs
++ *
++ * @adev: amdgpu_device pointer
++ *
++ * Third resume function for hardware IPs.  The list of all the hardware
++ * IPs that make up the asic is walked and the resume callbacks are run for
++ * all DCE.  resume puts the hardware into a functional state after a suspend
++ * and updates the software state as necessary.  This function is also used
++ * for restoring the GPU after a GPU reset.
++ *
++ * Returns 0 on success, negative error code on failure.
++ */
++static int amdgpu_device_ip_resume_phase3(struct amdgpu_device *adev)
++{
++	int i, r;
++
++	for (i = 0; i < adev->num_ip_blocks; i++) {
++		if (!adev->ip_blocks[i].status.valid || adev->ip_blocks[i].status.hw)
++			continue;
++		if (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_DCE) {
++			r = adev->ip_blocks[i].version->funcs->resume(adev);
++			if (r)
++				return r;
++		}
++	}
++
++	return 0;
++}
++
++/**
+  * amdgpu_device_ip_resume - run resume for hardware IPs
+  *
+  * @adev: amdgpu_device pointer
+@@ -3230,6 +3261,13 @@ static int amdgpu_device_ip_resume(struc
+ 
+ 	r = amdgpu_device_ip_resume_phase2(adev);
+ 
++	if (r)
++		return r;
++
++	amdgpu_fence_driver_hw_init(adev);
++
++	r = amdgpu_device_ip_resume_phase3(adev);
++
+ 	return r;
+ }
+ 
+@@ -4229,7 +4267,6 @@ int amdgpu_device_resume(struct drm_devi
+ 		dev_err(adev->dev, "amdgpu_device_ip_resume failed (%d).\n", r);
+ 		goto exit;
+ 	}
+-	amdgpu_fence_driver_hw_init(adev);
+ 
+ 	r = amdgpu_device_ip_late_init(adev);
+ 	if (r)
+@@ -4999,6 +5036,10 @@ int amdgpu_do_asic_reset(struct list_hea
+ 				if (r)
+ 					goto out;
+ 
++				r = amdgpu_device_ip_resume_phase3(tmp_adev);
++				if (r)
++					goto out;
++
+ 				if (vram_lost)
+ 					amdgpu_device_fill_reset_magic(tmp_adev);
+ 
 
 
