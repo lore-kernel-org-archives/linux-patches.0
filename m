@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6452210DE;
-	Thu, 12 Dec 2024 15:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2139214A82;
+	Thu, 12 Dec 2024 15:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018883; cv=none; b=Aab7RLLeQW7/3e4jVrYAIor7e5EVKgvUDDXJvM1fSsF030lTtZCAHQLxd9SdO7z/mPwWE9j+w7oZmF45DRBc6JPYPHieE9qq6r/MLsXNBq15YW85w3tsJhfg40JG9XeWo5E3DmEQ+URzqn8fLTXnTJAD2SV1TdaO7EPKkMx5EY0=
+	t=1734018886; cv=none; b=QylWnqGSOI0RnqVjIYdoNfUW5ICGpKPHeaW4tjpLKU9kE6YHfk5mbaWDv4wXuRgLbYmYy8au8w5bXaKD53ygBtrwW3Ii+GZey2Zt7Ne204NPhvKDgTjl5t/FH3xRV//XTVMYh99XcAqwoqLjXY61mQXFOmbPCgqzPIVJLzEYitE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018883; c=relaxed/simple;
-	bh=iI/n5CVPO+3djMn0bPGbH5hEk38kUKo4RRiNvHh3VHU=;
+	s=arc-20240116; t=1734018886; c=relaxed/simple;
+	bh=OFqJSFV8eiIAdkY/Z2KrG1JaLC2OfLt92xHoZdBWmkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGVyGLJJNfxP2OJW+ew7hA9VR39dHRLlxijdtwgcyD9kzltU1MswA74KFswZRQW/54QRSX+1eHlxzvCZsYNQkqOcjfGTKpM1pN1iakgGu2XFC8VYBKgV/kC3PbrrDq7zmhzA2ADiPadKF49SedHyPQHw25WOEaBaYnttpPgdTNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hk5psoCR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyPS4hOiiR9xGq5kqpcSoYzlnq/WtYFjuq3ZefCSPO1+1N68kCNi9gOWK7YM2vfJ5a73ieQniswWQNixvcuLWJZ686sRaj6PcVqlPYkk5b6a94yPQvL8R2NBOoazkys//Vu6YyiQGQz1XeIJ+WeDG7aLbyxYDYiuR3H2uxHlOuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOPCP1rH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hk5psoCR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58426C4CECE;
-	Thu, 12 Dec 2024 15:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOPCP1rH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B42C4CED0;
+	Thu, 12 Dec 2024 15:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018882;
-	bh=iI/n5CVPO+3djMn0bPGbH5hEk38kUKo4RRiNvHh3VHU=;
+	s=korg; t=1734018886;
+	bh=OFqJSFV8eiIAdkY/Z2KrG1JaLC2OfLt92xHoZdBWmkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hk5psoCRNW3t0mS9Mre6zRbBg1eJrvXDTvNpF+YLpDk8gr6y7OKvSUkvE7GyN7kEu
-	 wzvynC6gzkJi/Ri/AZSeWrkMXCR9W1TQV5c4ovz3pAnBlBnOM8LcAyPtluGpkPlI+s
-	 F2x9vP6Uhxt3h1Nz47RefkXHXhpUMSe51i3v55Vc=
+	b=MOPCP1rHpn7hshFbM2aANqhKGfQd8UcVZlwWfEdxjkXsKxLPtcqrUa23JjI3lVRyM
+	 hvBMGH7OEAdM71ZyYuyOSTw6eniq5iuTlVaVLf5VTsdqH9cF+mnnuD97sCM8m24oi/
+	 3MFu6qdWsed95sak/Bm+nR/fXFTm5ArlgyrhNDcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Bin Lan <bin.lan.cn@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/772] arm64: fix .data.rel.ro size assertion when CONFIG_LTO_CLANG
-Date: Thu, 12 Dec 2024 15:50:03 +0100
-Message-ID: <20241212144352.341137776@linuxfoundation.org>
+Subject: [PATCH 6.1 031/772] serial: sc16is7xx: fix invalid FIFO access with special register set
+Date: Thu, 12 Dec 2024 15:49:36 +0100
+Message-ID: <20241212144351.233233367@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,54 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 340fd66c856651d8c1d29f392dd26ad674d2db0e ]
+[ Upstream commit 7d3b793faaab1305994ce568b59d61927235f57b ]
 
-Commit be2881824ae9 ("arm64/build: Assert for unwanted sections")
-introduced an assertion to ensure that the .data.rel.ro section does
-not exist.
+When enabling access to the special register set, Receiver time-out and
+RHR interrupts can happen. In this case, the IRQ handler will try to read
+from the FIFO thru the RHR register at address 0x00, but address 0x00 is
+mapped to DLL register, resulting in erroneous FIFO reading.
 
-However, this check does not work when CONFIG_LTO_CLANG is enabled,
-because .data.rel.ro matches the .data.[0-9a-zA-Z_]* pattern in the
-DATA_MAIN macro.
+Call graph example:
+    sc16is7xx_startup(): entry
+    sc16is7xx_ms_proc(): entry
+    sc16is7xx_set_termios(): entry
+    sc16is7xx_set_baud(): DLH/DLL = $009C --> access special register set
+    sc16is7xx_port_irq() entry            --> IIR is 0x0C
+    sc16is7xx_handle_rx() entry
+    sc16is7xx_fifo_read(): --> unable to access FIFO (RHR) because it is
+                               mapped to DLL (LCR=LCR_CONF_MODE_A)
+    sc16is7xx_set_baud(): exit --> Restore access to general register set
 
-Move the ASSERT() above the RW_DATA() line.
+Fix the problem by claiming the efr_lock mutex when accessing the Special
+register set.
 
-Fixes: be2881824ae9 ("arm64/build: Assert for unwanted sections")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20241106161843.189927-1-masahiroy@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240723125302.1305372-3-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ Resolve minor conflicts ]
+Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/vmlinux.lds.S | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/tty/serial/sc16is7xx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index 45131e354e27f..b0226eac7bda8 100644
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -272,6 +272,9 @@ SECTIONS
- 	__initdata_end = .;
- 	__init_end = .;
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index a723df9b37dd9..c07baf5d5a9ce 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -545,6 +545,9 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ 			      SC16IS7XX_MCR_CLKSEL_BIT,
+ 			      prescaler == 1 ? 0 : SC16IS7XX_MCR_CLKSEL_BIT);
  
-+	.data.rel.ro : { *(.data.rel.ro) }
-+	ASSERT(SIZEOF(.data.rel.ro) == 0, "Unexpected RELRO detected!")
 +
- 	_data = .;
- 	_sdata = .;
- 	RW_DATA(L1_CACHE_BYTES, PAGE_SIZE, THREAD_ALIGN)
-@@ -323,9 +326,6 @@ SECTIONS
- 		*(.plt) *(.plt.*) *(.iplt) *(.igot .igot.plt)
- 	}
- 	ASSERT(SIZEOF(.plt) == 0, "Unexpected run-time procedure linkages detected!")
--
--	.data.rel.ro : { *(.data.rel.ro) }
--	ASSERT(SIZEOF(.data.rel.ro) == 0, "Unexpected RELRO detected!")
++	mutex_lock(&one->efr_lock);
++
+ 	/* Open the LCR divisors for configuration */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG,
+ 			     SC16IS7XX_LCR_CONF_MODE_A);
+@@ -558,6 +561,8 @@ static int sc16is7xx_set_baud(struct uart_port *port, int baud)
+ 	/* Put LCR back to the normal mode */
+ 	sc16is7xx_port_write(port, SC16IS7XX_LCR_REG, lcr);
+ 
++	mutex_unlock(&one->efr_lock);
++
+ 	return DIV_ROUND_CLOSEST((clk / prescaler) / 16, div);
  }
  
- #include "image-vars.h"
 -- 
 2.43.0
 
