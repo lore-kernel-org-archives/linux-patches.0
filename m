@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1568C20969B;
-	Thu, 12 Dec 2024 15:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0018E2153DF;
+	Thu, 12 Dec 2024 15:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017372; cv=none; b=fuf5RM3Z/w9NUCzeHOI63OrquVrhVF+ff/J7SFMcQgF7jrZ0lknh9KYXHjBBVfdVuFa5B/ZVaGrVMn9/J/qiQXxsNvmQk7slhpaI96H6MUVgeg6dH1pHVeVLU+mMqqdaD5il3+NTk55r0a2J+/ZlT9QQ8eVe5QUBc20KKRAfbVU=
+	t=1734017376; cv=none; b=dhWaPGw19PY3wnvYYEtRoSgHM0EJQX0vm6uz6dpjbui37DciQEpaW2EjernQuLXoJxbXDHvtrho9waJbA4zT7y6IPmQ5fM5Rr6XfVour0cKH5GibcQGizrvHBPf3LBJg8xq2nHg56ehaSoLqhi5jn82xLLjvhsuAslQoVjzVfqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017372; c=relaxed/simple;
-	bh=TE2U44ODwP2wS1xgRJmLKvSjz1dAcdO3ivFH8H4pQD4=;
+	s=arc-20240116; t=1734017376; c=relaxed/simple;
+	bh=paG7idZL37d3pRzaiGjlOwCuKmmfFJv5Dht1yvCRU1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3fEiFnaSlIHcoQIfrnPaZOXAEVkEDbc/GgAsCSvcQFhN47VNL9VQ6EPcb+7pC2rkpbxkcizyG2dXMAwF1rpFCW9BvPx36HFN7OvK18LWVolqAFk60yeLn40GF49d0nNJ5/NEpSpP+ld3c4XSxO8VYzXxPgGPODDgf3jlJhkQFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjY8jRLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fRwrkDg/YKHTF0n7oZ1aAAqPL6LaxuBOUqHS0/r+Rp6c14zsmQuQ73/wWgR4VzuNToST1V8sHIoMF3zX+0m4BEDFZ6BEL8iHEgnVzHk7sFgZdMJQKvzT2DM1ENA28P8viF78bCXY+AOqC1ars+GUz/p0JmiDxbVi1DDtRtl4jB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5mT5ZLY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjY8jRLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831E8C4CECE;
-	Thu, 12 Dec 2024 15:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5mT5ZLY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFBBC4CECE;
+	Thu, 12 Dec 2024 15:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017371;
-	bh=TE2U44ODwP2wS1xgRJmLKvSjz1dAcdO3ivFH8H4pQD4=;
+	s=korg; t=1734017375;
+	bh=paG7idZL37d3pRzaiGjlOwCuKmmfFJv5Dht1yvCRU1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjY8jRLCku25phD/AaDq00FurEL0IfuA2HhxDcP221055Re//AQhlnhDAKU1nKdPd
-	 g+7esWL4VqzpBUQvfg0KZamQD5HGgl1rUp3laB5/cKwdNmyjg+pSa0sytaO4oQ4gND
-	 v6CfZRXrHLnU3e9E5OwnAAnt3TPjREylwN7Y/gkU=
+	b=L5mT5ZLY62bxj2LY767SJx0TXqoUmAoZ6XZHlxuLlNBw9FowUSrgCfWOUShMJSWzI
+	 pg0N/BrEqxV9NO3HK2DQESEAUGV3OqK6fT/lsv9C3yfZxbwnQttjPASyjIkqxIfMEe
+	 lYFA+4vr1Vx6biEHOhuDHSW4p96n2utGrRLragc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Rob Herring <robh@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 421/466] powerpc/prom_init: Fixup missing powermac #size-cells
-Date: Thu, 12 Dec 2024 15:59:50 +0100
-Message-ID: <20241212144323.387918546@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>,
+	Nikolay Kuratov <kniv@yandex-team.ru>
+Subject: [PATCH 6.12 454/466] KVM: x86/mmu: Ensure that kvm_release_pfn_clean() takes exact pfn from kvm_faultin_pfn()
+Date: Thu, 12 Dec 2024 16:00:23 +0100
+Message-ID: <20241212144324.807059904@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,103 +50,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-[ Upstream commit cf89c9434af122f28a3552e6f9cc5158c33ce50a ]
+Since 5.16 and prior to 6.13 KVM can't be used with FSDAX
+guest memory (PMD pages). To reproduce the issue you need to reserve
+guest memory with `memmap=` cmdline, create and mount FS in DAX mode
+(tested both XFS and ext4), see doc link below. ndctl command for test:
+ndctl create-namespace -v -e namespace1.0 --map=dev --mode=fsdax -a 2M
+Then pass memory object to qemu like:
+-m 8G -object memory-backend-file,id=ram0,size=8G,\
+mem-path=/mnt/pmem/guestmem,share=on,prealloc=on,dump=off,align=2097152 \
+-numa node,memdev=ram0,cpus=0-1
+QEMU fails to run guest with error: kvm run failed Bad address
+and there are two warnings in dmesg:
+WARN_ON_ONCE(!page_count(page)) in kvm_is_zone_device_page() and
+WARN_ON_ONCE(folio_ref_count(folio) <= 0) in try_grab_folio() (v6.6.63)
 
-On some powermacs `escc` nodes are missing `#size-cells` properties,
-which is deprecated and now triggers a warning at boot since commit
-045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells
-handling").
+It looks like in the past assumption was made that pfn won't change from
+faultin_pfn() to release_pfn_clean(), e.g. see
+commit 4cd071d13c5c ("KVM: x86/mmu: Move calls to thp_adjust() down a level")
+But kvm_page_fault structure made pfn part of mutable state, so
+now release_pfn_clean() can take hugepage-adjusted pfn.
+And it works for all cases (/dev/shm, hugetlb, devdax) except fsdax.
+Apparently in fsdax mode faultin-pfn and adjusted-pfn may refer to
+different folios, so we're getting get_page/put_page imbalance.
 
-For example:
+To solve this preserve faultin pfn in separate local variable
+and pass it in kvm_release_pfn_clean().
 
-  Missing '#size-cells' in /pci@f2000000/mac-io@c/escc@13000
-  WARNING: CPU: 0 PID: 0 at drivers/of/base.c:133 of_bus_n_size_cells+0x98/0x108
-  Hardware name: PowerMac3,1 7400 0xc0209 PowerMac
-  ...
-  Call Trace:
-    of_bus_n_size_cells+0x98/0x108 (unreliable)
-    of_bus_default_count_cells+0x40/0x60
-    __of_get_address+0xc8/0x21c
-    __of_address_to_resource+0x5c/0x228
-    pmz_init_port+0x5c/0x2ec
-    pmz_probe.isra.0+0x144/0x1e4
-    pmz_console_init+0x10/0x48
-    console_init+0xcc/0x138
-    start_kernel+0x5c4/0x694
+Patch tested for all mentioned guest memory backends with tdp_mmu={0,1}.
 
-As powermacs boot via prom_init it's possible to add the missing
-properties to the device tree during boot, avoiding the warning. Note
-that `escc-legacy` nodes are also missing `#size-cells` properties, but
-they are skipped by the macio driver, so leave them alone.
+No bug in upstream as it was solved fundamentally by
+commit 8dd861cc07e2 ("KVM: x86/mmu: Put refcounted pages instead of blindly releasing pfns")
+and related patch series.
 
-Depends-on: 045b14ca5c36 ("of: WARN on deprecated #address-cells/#size-cells handling")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20241126025710.591683-1-mpe@ellerman.id.au
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://nvdimm.docs.kernel.org/2mib_fs_dax.html
+Fixes: 2f6305dd5676 ("KVM: MMU: change kvm_tdp_mmu_map() arguments to kvm_page_fault")
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/prom_init.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/mmu.c         |   10 ++++++++--
+ arch/x86/kvm/mmu/paging_tmpl.h |    5 ++++-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/kernel/prom_init.c b/arch/powerpc/kernel/prom_init.c
-index fbb68fc28ed3a..935568d68196d 100644
---- a/arch/powerpc/kernel/prom_init.c
-+++ b/arch/powerpc/kernel/prom_init.c
-@@ -2932,7 +2932,7 @@ static void __init fixup_device_tree_chrp(void)
- #endif
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -4580,6 +4580,7 @@ static bool is_page_fault_stale(struct k
  
- #if defined(CONFIG_PPC64) && defined(CONFIG_PPC_PMAC)
--static void __init fixup_device_tree_pmac(void)
-+static void __init fixup_device_tree_pmac64(void)
+ static int direct_page_fault(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault)
  {
- 	phandle u3, i2c, mpic;
- 	u32 u3_rev;
-@@ -2972,7 +2972,31 @@ static void __init fixup_device_tree_pmac(void)
- 		     &parent, sizeof(parent));
- }
- #else
--#define fixup_device_tree_pmac()
-+#define fixup_device_tree_pmac64()
-+#endif
-+
-+#ifdef CONFIG_PPC_PMAC
-+static void __init fixup_device_tree_pmac(void)
-+{
-+	__be32 val = 1;
-+	char type[8];
-+	phandle node;
-+
-+	// Some pmacs are missing #size-cells on escc nodes
-+	for (node = 0; prom_next_node(&node); ) {
-+		type[0] = '\0';
-+		prom_getprop(node, "device_type", type, sizeof(type));
-+		if (prom_strcmp(type, "escc"))
-+			continue;
-+
-+		if (prom_getproplen(node, "#size-cells") != PROM_ERROR)
-+			continue;
-+
-+		prom_setprop(node, NULL, "#size-cells", &val, sizeof(val));
-+	}
-+}
-+#else
-+static inline void fixup_device_tree_pmac(void) { }
- #endif
++	kvm_pfn_t orig_pfn;
+ 	int r;
  
- #ifdef CONFIG_PPC_EFIKA
-@@ -3197,6 +3221,7 @@ static void __init fixup_device_tree(void)
- 	fixup_device_tree_maple_memory_controller();
- 	fixup_device_tree_chrp();
- 	fixup_device_tree_pmac();
-+	fixup_device_tree_pmac64();
- 	fixup_device_tree_efika();
- 	fixup_device_tree_pasemi();
+ 	/* Dummy roots are used only for shadowing bad guest roots. */
+@@ -4601,6 +4602,8 @@ static int direct_page_fault(struct kvm_
+ 	if (r != RET_PF_CONTINUE)
+ 		return r;
+ 
++	orig_pfn = fault->pfn;
++
+ 	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+@@ -4615,7 +4618,7 @@ static int direct_page_fault(struct kvm_
+ 
+ out_unlock:
+ 	write_unlock(&vcpu->kvm->mmu_lock);
+-	kvm_release_pfn_clean(fault->pfn);
++	kvm_release_pfn_clean(orig_pfn);
+ 	return r;
  }
--- 
-2.43.0
-
+ 
+@@ -4675,6 +4678,7 @@ EXPORT_SYMBOL_GPL(kvm_handle_page_fault)
+ static int kvm_tdp_mmu_page_fault(struct kvm_vcpu *vcpu,
+ 				  struct kvm_page_fault *fault)
+ {
++	kvm_pfn_t orig_pfn;
+ 	int r;
+ 
+ 	if (page_fault_handle_page_track(vcpu, fault))
+@@ -4692,6 +4696,8 @@ static int kvm_tdp_mmu_page_fault(struct
+ 	if (r != RET_PF_CONTINUE)
+ 		return r;
+ 
++	orig_pfn = fault->pfn;
++
+ 	r = RET_PF_RETRY;
+ 	read_lock(&vcpu->kvm->mmu_lock);
+ 
+@@ -4702,7 +4708,7 @@ static int kvm_tdp_mmu_page_fault(struct
+ 
+ out_unlock:
+ 	read_unlock(&vcpu->kvm->mmu_lock);
+-	kvm_release_pfn_clean(fault->pfn);
++	kvm_release_pfn_clean(orig_pfn);
+ 	return r;
+ }
+ #endif
+--- a/arch/x86/kvm/mmu/paging_tmpl.h
++++ b/arch/x86/kvm/mmu/paging_tmpl.h
+@@ -778,6 +778,7 @@ static int FNAME(fetch)(struct kvm_vcpu
+ static int FNAME(page_fault)(struct kvm_vcpu *vcpu, struct kvm_page_fault *fault)
+ {
+ 	struct guest_walker walker;
++	kvm_pfn_t orig_pfn;
+ 	int r;
+ 
+ 	WARN_ON_ONCE(fault->is_tdp);
+@@ -836,6 +837,8 @@ static int FNAME(page_fault)(struct kvm_
+ 			walker.pte_access &= ~ACC_EXEC_MASK;
+ 	}
+ 
++	orig_pfn = fault->pfn;
++
+ 	r = RET_PF_RETRY;
+ 	write_lock(&vcpu->kvm->mmu_lock);
+ 
+@@ -849,7 +852,7 @@ static int FNAME(page_fault)(struct kvm_
+ 
+ out_unlock:
+ 	write_unlock(&vcpu->kvm->mmu_lock);
+-	kvm_release_pfn_clean(fault->pfn);
++	kvm_release_pfn_clean(orig_pfn);
+ 	return r;
+ }
+ 
 
 
