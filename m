@@ -1,238 +1,127 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from eu-smtp-delivery-151.mimecast.com (eu-smtp-delivery-151.mimecast.com [185.58.86.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AC9222D44;
-	Thu, 12 Dec 2024 17:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576AE222D68
+	for <patches@lists.linux.dev>; Thu, 12 Dec 2024 17:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.58.86.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024590; cv=none; b=PKXoxxF/QVFGnpULkEaOqqJzsqafdr+vsWgCMKsHqsyecostxTIFjswQEMg1xiJCE47yXN3TIjsD61KgicO7RD25gaB/txld+u/YU38H985xA5ZtQwwhCdJvyUiRJtVG9d68t1ZjLVBWztJ7n/L6BHbXEvDHsJDf+rQvSQ9G8xg=
+	t=1734024592; cv=none; b=BtBkQXv2TPOXPi3Tygq7GNj3PHR2mrwnO6JG5FmYNf6SqSy+HrDzAckui7PCmK4QgPhZNDHQkoK7W+XZf9yVfy7Vc5lkP2GR1ql+H6IhMRa3bC+vtORC114/9wJcghJc0cYlS6G6zGcRoNwnulJphvl80ttX4+wREPekDoUsBe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024590; c=relaxed/simple;
-	bh=PDhg8uALGT0fwm/T0SG9rxzXcIUV9sUbD9Kzy5MVNbg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SXxkUOi1UPo1OPJp+Fq3mGBkkgdcDF1dlBelvFLSGy4MvmyKcDIgaixSbpOHVw9HwYo7Vq/N45AnqU4whh7b2m0qjK0qlokAZ29e3HIllfhnhUSIiII0nh3ov2Qx7Hv1K9yYVLlrdn1vrdF0LO0uFToRZotfzNANGSnQ+IM+9z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suonoUHe; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suonoUHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD4AC4CECE;
-	Thu, 12 Dec 2024 17:29:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024589;
-	bh=PDhg8uALGT0fwm/T0SG9rxzXcIUV9sUbD9Kzy5MVNbg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=suonoUHefqLXK0HXrQS5nQYQnpzTor4ebw3C9LQHqBwEV5Y37VruKiHYyNAF5AiiS
-	 V2JW1xncxlMRbfdphJgkAIUlazAZSauB5h2/7VbKAHYcNkAGnOfIZM28xe8a55tOnT
-	 WqrUQJ1etKUjhK/73+MxVw5F16JShxz4WybgrVLA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Alexandru Ardelean <aardelean@baylibre.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 316/459] util_macros.h: fix/rework find_closest() macros
-Date: Thu, 12 Dec 2024 16:00:54 +0100
-Message-ID: <20241212144306.132980652@linuxfoundation.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
-References: <20241212144253.511169641@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1734024592; c=relaxed/simple;
+	bh=ayFvDAuq2+Jwh2xZPoLyKRjBI+kW/hEHltWiLIYYHCs=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 MIME-Version:Content-Type; b=YANdbYyVWS/XUdhi+3jyXpIQAPnqXeHVDT0apd5noBrU6hiQXKsXH4AyL9pldAOXeAOLMYjQYkel48DyzwOoTmWKu6QAAl8lnx1rG2+3PKm0ECIoS4YGbZreAU6hiQmBsX02LzVXx9S1JYCW9D2jgLk2eLbN1YLTum7nh2fxAfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM; spf=pass smtp.mailfrom=aculab.com; arc=none smtp.client-ip=185.58.86.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ACULAB.COM
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aculab.com
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) by
+ relay.mimecast.com with ESMTP with both STARTTLS and AUTH (version=TLSv1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ uk-mta-37-nu4osZHLMQSYbwV6FMbTtw-1; Thu, 12 Dec 2024 17:29:41 +0000
+X-MC-Unique: nu4osZHLMQSYbwV6FMbTtw-1
+X-Mimecast-MFC-AGG-ID: nu4osZHLMQSYbwV6FMbTtw
+Received: from AcuMS.Aculab.com (10.202.163.6) by AcuMS.aculab.com
+ (10.202.163.6) with Microsoft SMTP Server (TLS) id 15.0.1497.48; Thu, 12 Dec
+ 2024 17:28:44 +0000
+Received: from AcuMS.Aculab.com ([::1]) by AcuMS.aculab.com ([::1]) with mapi
+ id 15.00.1497.048; Thu, 12 Dec 2024 17:28:44 +0000
+From: David Laight <David.Laight@ACULAB.COM>
+To: 'Tejun Heo' <tj@kernel.org>, Nathan Chancellor <nathan@kernel.org>
+CC: Josef Bacik <josef@toxicpanda.com>, Jens Axboe <axboe@kernel.dk>,
+	"cgroups@vger.kernel.org" <cgroups@vger.kernel.org>,
+	"linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
+	"llvm@lists.linux.dev" <llvm@lists.linux.dev>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, Linux Kernel Functional Testing <lkft@linaro.org>,
+	kernel test robot <lkp@intel.com>
+Subject: RE: [PATCH] blk-iocost: Avoid using clamp() on inuse in
+ __propagate_weights()
+Thread-Topic: [PATCH] blk-iocost: Avoid using clamp() on inuse in
+ __propagate_weights()
+Thread-Index: AQHbTLneKltIssSpBEabKMv+lJlW17Li3L3A
+Date: Thu, 12 Dec 2024 17:28:44 +0000
+Message-ID: <5231409257664f8097c82f79869fb52b@AcuMS.aculab.com>
+References: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
+ <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
+In-Reply-To: <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: GpjIrwFebpSbVVjwObt8j3LEK9VejAQaV6uElQZ7yxE_1734024580
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+From: Tejun Heo <tj@kernel.org>
+> Sent: 12 December 2024 17:19
+>=20
+> On Thu, Dec 12, 2024 at 10:13:29AM -0700, Nathan Chancellor wrote:
+> > After a recent change to clamp() and its variants [1] that increases th=
+e
+> > coverage of the check that high is greater than low because it can be
+> > done through inlining, certain build configurations (such as s390
+> > defconfig) fail to build with clang with:
+> >
+...
+> > __propagate_weights() is called with an active value of zero in
+> > ioc_check_iocgs(), which results in the high value being less than the
+> > low value, which is undefined because the value returned depends on the
+> > order of the comparisons.
+> >
+> > The purpose of this expression is to ensure inuse is not more than
+> > active and at least 1. This could be written more simply with a ternary
+> > expression that uses min(inuse, active) as the condition so that the
+> > value of that condition can be used if it is not zero and one if it is.
+> > Do this conversion to resolve the error and add a comment to deter
+> > people from turning this back into clamp().
+> >
+> > Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.=
+aculab.com/ [1]
+> > Suggested-by: David Laight <david.laight@aculab.com>
+> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVST=
+uxnss-
+> AEWMN3ha0cA@mail.gmail.com/
+> > Reported-by: kernel test robot <lkp@intel.com>
+> > Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp=
+@intel.com/
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+>=20
+> Acked-by: Tejun Heo <tj@kernel.org>
+>=20
+> This likely deserves:
+>=20
+> Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
+> Cc: stable@vger.kernel.org # v5.4+
 
-------------------
+Especially since the old defn was:
 
-From: Alexandru Ardelean <aardelean@baylibre.com>
+#define __clamp(val, lo, hi)=09\
+=09((val) >=3D (hi) ? (hi) : ((val) <=3D (lo) ? (lo) : (val)))
 
-commit bc73b4186736341ab5cd2c199da82db6e1134e13 upstream.
+so:
+-=09=09inuse =3D clamp_t(u32, inuse, 1, active);
 
-A bug was found in the find_closest() (find_closest_descending() is also
-affected after some testing), where for certain values with small
-progressions, the rounding (done by averaging 2 values) causes an
-incorrect index to be returned.  The rounding issues occur for
-progressions of 1, 2 and 3.  It goes away when the progression/interval
-between two values is 4 or larger.
+is zero if active is zero.
 
-It's particularly bad for progressions of 1.  For example if there's an
-array of 'a = { 1, 2, 3 }', using 'find_closest(2, a ...)' would return 0
-(the index of '1'), rather than returning 1 (the index of '2').  This
-means that for exact values (with a progression of 1), find_closest() will
-misbehave and return the index of the value smaller than the one we're
-searching for.
+=09David
 
-For progressions of 2 and 3, the exact values are obtained correctly; but
-values aren't approximated correctly (as one would expect).  Starting with
-progressions of 4, all seems to be good (one gets what one would expect).
+>=20
+> Thanks.
+>=20
+> --
+> tejun
 
-While one could argue that 'find_closest()' should not be used for arrays
-with progressions of 1 (i.e. '{1, 2, 3, ...}', the macro should still
-behave correctly.
-
-The bug was found while testing the 'drivers/iio/adc/ad7606.c',
-specifically the oversampling feature.
-For reference, the oversampling values are listed as:
-   static const unsigned int ad7606_oversampling_avail[7] = {
-          1, 2, 4, 8, 16, 32, 64,
-   };
-
-When doing:
-  1. $ echo 1 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     1  # this is fine
-  2. $ echo 2 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     1  # this is wrong; 2 should be returned here
-  3. $ echo 3 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     2  # this is fine
-  4. $ echo 4 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     4  # this is fine
-And from here-on, the values are as correct (one gets what one would
-expect.)
-
-While writing a kunit test for this bug, a peculiar issue was found for the
-array in the 'drivers/hwmon/ina2xx.c' & 'drivers/iio/adc/ina2xx-adc.c'
-drivers. While running the kunit test (for 'ina226_avg_tab' from these
-drivers):
-  * idx = find_closest([-1 to 2], ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
-    This returns idx == 0, so value.
-  * idx = find_closest(3, ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
-    This returns idx == 0, value 1; and now one could argue whether 3 is
-    closer to 4 or to 1. This quirk only appears for value '3' in this
-    array, but it seems to be a another rounding issue.
-  * And from 4 onwards the 'find_closest'() works fine (one gets what one
-    would expect).
-
-This change reworks the find_closest() macros to also check the difference
-between the left and right elements when 'x'. If the distance to the right
-is smaller (than the distance to the left), the index is incremented by 1.
-This also makes redundant the need for using the DIV_ROUND_CLOSEST() macro.
-
-In order to accommodate for any mix of negative + positive values, the
-internal variables '__fc_x', '__fc_mid_x', '__fc_left' & '__fc_right' are
-forced to 'long' type. This also addresses any potential bugs/issues with
-'x' being of an unsigned type. In those situations any comparison between
-signed & unsigned would be promoted to a comparison between 2 unsigned
-numbers; this is especially annoying when '__fc_left' & '__fc_right'
-underflow.
-
-The find_closest_descending() macro was also reworked and duplicated from
-the find_closest(), and it is being iterated in reverse. The main reason
-for this is to get the same indices as 'find_closest()' (but in reverse).
-The comparison for '__fc_right < __fc_left' favors going the array in
-ascending order.
-For example for array '{ 1024, 512, 256, 128, 64, 16, 4, 1 }' and x = 3, we
-get:
-    __fc_mid_x = 2
-    __fc_left = -1
-    __fc_right = -2
-    Then '__fc_right < __fc_left' evaluates to true and '__fc_i++' becomes 7
-    which is not quite incorrect, but 3 is closer to 4 than to 1.
-
-This change has been validated with the kunit from the next patch.
-
-Link: https://lkml.kernel.org/r/20241105145406.554365-1-aardelean@baylibre.com
-Fixes: 95d119528b0b ("util_macros.h: add find_closest() macro")
-Signed-off-by: Alexandru Ardelean <aardelean@baylibre.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/util_macros.h |   56 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 40 insertions(+), 16 deletions(-)
-
---- a/include/linux/util_macros.h
-+++ b/include/linux/util_macros.h
-@@ -2,19 +2,6 @@
- #ifndef _LINUX_HELPER_MACROS_H_
- #define _LINUX_HELPER_MACROS_H_
- 
--#define __find_closest(x, a, as, op)					\
--({									\
--	typeof(as) __fc_i, __fc_as = (as) - 1;				\
--	typeof(x) __fc_x = (x);						\
--	typeof(*a) const *__fc_a = (a);					\
--	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
--		if (__fc_x op DIV_ROUND_CLOSEST(__fc_a[__fc_i] +	\
--						__fc_a[__fc_i + 1], 2))	\
--			break;						\
--	}								\
--	(__fc_i);							\
--})
 -
- /**
-  * find_closest - locate the closest element in a sorted array
-  * @x: The reference value.
-@@ -23,8 +10,27 @@
-  * @as: Size of 'a'.
-  *
-  * Returns the index of the element closest to 'x'.
-+ * Note: If using an array of negative numbers (or mixed positive numbers),
-+ *       then be sure that 'x' is of a signed-type to get good results.
-  */
--#define find_closest(x, a, as) __find_closest(x, a, as, <=)
-+#define find_closest(x, a, as)						\
-+({									\
-+	typeof(as) __fc_i, __fc_as = (as) - 1;				\
-+	long __fc_mid_x, __fc_x = (x);					\
-+	long __fc_left, __fc_right;					\
-+	typeof(*a) const *__fc_a = (a);					\
-+	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
-+		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i + 1]) / 2;	\
-+		if (__fc_x <= __fc_mid_x) {				\
-+			__fc_left = __fc_x - __fc_a[__fc_i];		\
-+			__fc_right = __fc_a[__fc_i + 1] - __fc_x;	\
-+			if (__fc_right < __fc_left)			\
-+				__fc_i++;				\
-+			break;						\
-+		}							\
-+	}								\
-+	(__fc_i);							\
-+})
- 
- /**
-  * find_closest_descending - locate the closest element in a sorted array
-@@ -34,9 +40,27 @@
-  * @as: Size of 'a'.
-  *
-  * Similar to find_closest() but 'a' is expected to be sorted in descending
-- * order.
-+ * order. The iteration is done in reverse order, so that the comparison
-+ * of '__fc_right' & '__fc_left' also works for unsigned numbers.
-  */
--#define find_closest_descending(x, a, as) __find_closest(x, a, as, >=)
-+#define find_closest_descending(x, a, as)				\
-+({									\
-+	typeof(as) __fc_i, __fc_as = (as) - 1;				\
-+	long __fc_mid_x, __fc_x = (x);					\
-+	long __fc_left, __fc_right;					\
-+	typeof(*a) const *__fc_a = (a);					\
-+	for (__fc_i = __fc_as; __fc_i >= 1; __fc_i--) {			\
-+		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i - 1]) / 2;	\
-+		if (__fc_x <= __fc_mid_x) {				\
-+			__fc_left = __fc_x - __fc_a[__fc_i];		\
-+			__fc_right = __fc_a[__fc_i - 1] - __fc_x;	\
-+			if (__fc_right < __fc_left)			\
-+				__fc_i--;				\
-+			break;						\
-+		}							\
-+	}								\
-+	(__fc_i);							\
-+})
- 
- /**
-  * is_insidevar - check if the @ptr points inside the @var memory range.
-
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1=
+PT, UK
+Registration No: 1397386 (Wales)
 
