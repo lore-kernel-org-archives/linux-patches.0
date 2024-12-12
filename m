@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD8E222D77;
-	Thu, 12 Dec 2024 16:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A98223E62;
+	Thu, 12 Dec 2024 16:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020317; cv=none; b=gZw72kNbZsB/mjGaMQkN5eChc//pv+41FT5tr+dRKNjgBQJQ6dATPjU9l+L6E0P0Co+axMrSbFFI/7FTY+hwonFsIzN91CDfnYjC2LNnpYQH+y3NlF9JCKYP9cToTYUy3rRQJb1mkL3ceuMkRhfqKbmvt6VRwrH+B4KisXHUBHc=
+	t=1734020321; cv=none; b=BkzdsmyMyVxB5mCxDqaba9MvUnCfmJhFkbf3gJ9Xy7DErHi4oHX2Ea1YJfov3qxJzFcgAH+iOdFy0vSHKNExjwQObdpMOkPnw2EwCHNkm3C9agJw/AufAXiIWMwzgdNtRvDLnPgP6/FX0l4ikMHmmQECeGgmRE8bKNGqbuWxsag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020317; c=relaxed/simple;
-	bh=iObcVONDUgovw4BUOwgvnXae9VSkHVIjz9Yak2qZMjA=;
+	s=arc-20240116; t=1734020321; c=relaxed/simple;
+	bh=g/kGIXYvrZDVzZxnm7273c6XuGeNY35kVzf7cimj184=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jNyb0D16aHXEZYxSjIbJuZdVk2WgPSSdbatFYv7xBnSrOgL0A9aS4PXXAtKS6CTii96Q89d6N6i187Fu0ELFaH6cDNoDfoZLM0RaTqguX2/NvXU1RsOpcE/wmMQnVl4fphJGuEr8oIpKG2VwqMdRFYEsIKXuGebzAvEYSG4FMOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKuDnput; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8S98F6D6NqnpIYVkg5UvydSH0hCycLiVzvnJn1prh9/LQP1ZxCfWaqcG0+FKDcLG4nCSNbjWMT4FO1mvutJVjGHUMkw8P3s0WucXDDNEWouEokdxtzU9cixfb5INYRkVHrlWvBj2yaQLu2qHjev4JzWp9GQng6zyp9jTEHoykA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hUPRcWpl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKuDnput"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E868C4CECE;
-	Thu, 12 Dec 2024 16:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hUPRcWpl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F09C4CECE;
+	Thu, 12 Dec 2024 16:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020317;
-	bh=iObcVONDUgovw4BUOwgvnXae9VSkHVIjz9Yak2qZMjA=;
+	s=korg; t=1734020321;
+	bh=g/kGIXYvrZDVzZxnm7273c6XuGeNY35kVzf7cimj184=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKuDnputdBxuyDkiyG0DqrGy418XIwpm5qyvZRxRNlGvYitUoneMnGJQ9AssvZL+2
-	 SXHFNF5lHbggcuCnwPELSz8OJi0rDFVFPDtrZJuBuameAQ44g0UO3Cp39LtI7AYVxW
-	 VMfWrLgH6mSeVnpz/UTpZw5vdPVMG4couPzbUmG8=
+	b=hUPRcWpl2OGPrbQxDEXV10GOezpxc/gymJjHmLYrSvsr9Kse6wLhlGiHMSpEiBe5/
+	 74daFrGcJtzhSvBXg6qswP1I49gArs1kWhkWQETQk/Sz3kGwI4InfLJHItBmUyANJD
+	 exqLItA6e3GnHIAE32b0RKy0Q1bzBv4LSKc3VQrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <qingfang.deng@siflower.com.cn>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 437/772] jffs2: fix use of uninitialized variable
-Date: Thu, 12 Dec 2024 15:56:22 +0100
-Message-ID: <20241212144407.986967074@linuxfoundation.org>
+Subject: [PATCH 6.1 438/772] rtc: rzn1: fix BCD to rtc_time conversion errors
+Date: Thu, 12 Dec 2024 15:56:23 +0100
+Message-ID: <20241212144408.026141667@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,55 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@siflower.com.cn>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 3ba44ee966bc3c41dd8a944f963466c8fcc60dc8 ]
+[ Upstream commit 55727188dfa3572aecd946e58fab9e4a64f06894 ]
 
-When building the kernel with -Wmaybe-uninitialized, the compiler
-reports this warning:
+tm_mon describes months from 0 to 11, but the register contains BCD from
+1 to 12. tm_year contains years since 1900, but the BCD contains 20XX.
+Apply the offsets when converting these numbers.
 
-In function 'jffs2_mark_erased_block',
-    inlined from 'jffs2_erase_pending_blocks' at fs/jffs2/erase.c:116:4:
-fs/jffs2/erase.c:474:9: warning: 'bad_offset' may be used uninitialized [-Wmaybe-uninitialized]
-  474 |         jffs2_erase_failed(c, jeb, bad_offset);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-fs/jffs2/erase.c: In function 'jffs2_erase_pending_blocks':
-fs/jffs2/erase.c:402:18: note: 'bad_offset' was declared here
-  402 |         uint32_t bad_offset;
-      |                  ^~~~~~~~~~
-
-When mtd->point() is used, jffs2_erase_pending_blocks can return -EIO
-without initializing bad_offset, which is later used at the filebad
-label in jffs2_mark_erased_block.
-Fix it by initializing this variable.
-
-Fixes: 8a0f572397ca ("[JFFS2] Return values of jffs2_block_check_erase error paths")
-Signed-off-by: Qingfang Deng <qingfang.deng@siflower.com.cn>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: deeb4b5393e1 ("rtc: rzn1: Add new RTC driver")
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20241113113032.27409-1-wsa+renesas@sang-engineering.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jffs2/erase.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/rtc/rtc-rzn1.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/jffs2/erase.c b/fs/jffs2/erase.c
-index acd32f05b5198..ef3a1e1b6cb06 100644
---- a/fs/jffs2/erase.c
-+++ b/fs/jffs2/erase.c
-@@ -338,10 +338,9 @@ static int jffs2_block_check_erase(struct jffs2_sb_info *c, struct jffs2_erasebl
- 		} while(--retlen);
- 		mtd_unpoint(c->mtd, jeb->offset, c->sector_size);
- 		if (retlen) {
--			pr_warn("Newly-erased block contained word 0x%lx at offset 0x%08tx\n",
--				*wordebuf,
--				jeb->offset +
--				c->sector_size-retlen * sizeof(*wordebuf));
-+			*bad_offset = jeb->offset + c->sector_size - retlen * sizeof(*wordebuf);
-+			pr_warn("Newly-erased block contained word 0x%lx at offset 0x%08x\n",
-+				*wordebuf, *bad_offset);
- 			return -EIO;
- 		}
- 		return 0;
+diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
+index 0d36bc50197c1..ff094b3ce9e3c 100644
+--- a/drivers/rtc/rtc-rzn1.c
++++ b/drivers/rtc/rtc-rzn1.c
+@@ -111,8 +111,8 @@ static int rzn1_rtc_read_time(struct device *dev, struct rtc_time *tm)
+ 	tm->tm_hour = bcd2bin(tm->tm_hour);
+ 	tm->tm_wday = bcd2bin(tm->tm_wday);
+ 	tm->tm_mday = bcd2bin(tm->tm_mday);
+-	tm->tm_mon = bcd2bin(tm->tm_mon);
+-	tm->tm_year = bcd2bin(tm->tm_year);
++	tm->tm_mon = bcd2bin(tm->tm_mon) - 1;
++	tm->tm_year = bcd2bin(tm->tm_year) + 100;
+ 
+ 	return 0;
+ }
+@@ -128,8 +128,8 @@ static int rzn1_rtc_set_time(struct device *dev, struct rtc_time *tm)
+ 	tm->tm_hour = bin2bcd(tm->tm_hour);
+ 	tm->tm_wday = bin2bcd(rzn1_rtc_tm_to_wday(tm));
+ 	tm->tm_mday = bin2bcd(tm->tm_mday);
+-	tm->tm_mon = bin2bcd(tm->tm_mon);
+-	tm->tm_year = bin2bcd(tm->tm_year);
++	tm->tm_mon = bin2bcd(tm->tm_mon + 1);
++	tm->tm_year = bin2bcd(tm->tm_year - 100);
+ 
+ 	val = readl(rtc->base + RZN1_RTC_CTL2);
+ 	if (!(val & RZN1_RTC_CTL2_STOPPED)) {
 -- 
 2.43.0
 
