@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E373B222D68;
-	Thu, 12 Dec 2024 16:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB9C223E9C;
+	Thu, 12 Dec 2024 16:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020373; cv=none; b=JhV7Lfyk/rL/RLOuhoAyq3ucxHh7l6gQ0LI7JqNOwTyKJThYfqdkFwfl9Q8srGy82opZik4u92mRqB29i7CDBQeh6wNevRgqTLrwDqVftSlsXxDG3aQQsxP6YqBn4NsaJ59jk3jJaptkLcydfuJJ6tTP4vHwi8rtmoT3mZvlHSE=
+	t=1734020377; cv=none; b=oZVJfE64k6U98U+NBBiFyBwVJzXkwlZZeYRuxpVdXRfmm4JqAcfOq3cwi/IMuJGjucu53a/FnHZ1WL1pzhM+7IhCGalSWSumN0JvjSlMHrZL5m+slWSGkEI8NxkG/SiI8LrjccIjs/vt0ey7Jl4RRkQYDEURTzhZ3SZl4iZcOFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020373; c=relaxed/simple;
-	bh=qgJhTaSHitTXg6R9sRhf9d6NokqnWG2O8cf5QGDvdic=;
+	s=arc-20240116; t=1734020377; c=relaxed/simple;
+	bh=IrRd5xV/HESlEMuIT8nuEz/3AswLsdA14s3/D7HHG10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWHtvx9OtbNWbAAr/ArDv/nPhUVj+AVljU6tIyB/dtfLQwBgoFT4mUCLbzhz3lz1n40AZiBBC8OBDcvS4TgsA0soZquPsv1ezf9vaujhL1foKZT8xYrJtSl3BnlqCc4ujZdXEWhkQ4U4oV01kRhyzXqqIHMfqQxhMGhz87qJj9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxzzmIRh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mwh4+8AjCam7JyDJoQnHLW1Bg6EfPYsL2A0zaYu4wGtyH11SUPdzjc6il5RHrjMe0Mi3fmJH4SFmekeIJMC09RAGmWQvglk+4CgaVtuXqfRyr4nX8sxsiqoGzubD46hZ8MM6NhtrOfrtEdDtfn1DI2LdtqYBD2SuEuaxsMbRL2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDzuNMjW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxzzmIRh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD5FC4CECE;
-	Thu, 12 Dec 2024 16:19:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDzuNMjW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48A50C4CED4;
+	Thu, 12 Dec 2024 16:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020372;
-	bh=qgJhTaSHitTXg6R9sRhf9d6NokqnWG2O8cf5QGDvdic=;
+	s=korg; t=1734020376;
+	bh=IrRd5xV/HESlEMuIT8nuEz/3AswLsdA14s3/D7HHG10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxzzmIRhWeKcnMsTQW0MS0YhJB0jkvXs9rF13PW5LU7NSey6sJFnrU/4U30W2aNLc
-	 Oa8/D17Wqb2RzivLuWemarP47a/cw2wiPBlhmR8cm1ugeRLjLDVYuVnR4z/riNZWHp
-	 YtX8MoCQ0Ri2zc0/NbNv5xvo7BUZO64yx+ITvlrE=
+	b=VDzuNMjW29OGu+FzDCnTx6mHSv3fKPn6k326xylCWCgKVpv9ndB5qkKoRSLAs6dIM
+	 h72t0eMBUrRlZfEpssJyd5UOy9QfaubCXIk+/w1m+n6lmsEBhlWRwxDPk9WN/xyw1Z
+	 IVuOBvjtq1w2l7MNmBL3bhduWuwCSNr6az57rgZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 449/772] xfs: remove unknown compat feature check in superblock write validation
-Date: Thu, 12 Dec 2024 15:56:34 +0100
-Message-ID: <20241212144408.479440854@linuxfoundation.org>
+Subject: [PATCH 6.1 450/772] quota: flush quota_release_work upon quota writeback
+Date: Thu, 12 Dec 2024 15:56:35 +0100
+Message-ID: <20241212144408.521481237@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,57 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-[ Upstream commit 652f03db897ba24f9c4b269e254ccc6cc01ff1b7 ]
+[ Upstream commit ac6f420291b3fee1113f21d612fa88b628afab5b ]
 
-Compat features are new features that older kernels can safely ignore,
-allowing read-write mounts without issues. The current sb write validation
-implementation returns -EFSCORRUPTED for unknown compat features,
-preventing filesystem write operations and contradicting the feature's
-definition.
+One of the paths quota writeback is called from is:
 
-Additionally, if the mounted image is unclean, the log recovery may need
-to write to the superblock. Returning an error for unknown compat features
-during sb write validation can cause mount failures.
+freeze_super()
+  sync_filesystem()
+    ext4_sync_fs()
+      dquot_writeback_dquots()
 
-Although XFS currently does not use compat feature flags, this issue
-affects current kernels' ability to mount images that may use compat
-feature flags in the future.
+Since we currently don't always flush the quota_release_work queue in
+this path, we can end up with the following race:
 
-Since superblock read validation already warns about unknown compat
-features, it's unnecessary to repeat this warning during write validation.
-Therefore, the relevant code in write validation is being removed.
+ 1. dquot are added to releasing_dquots list during regular operations.
+ 2. FS Freeze starts, however, this does not flush the quota_release_work queue.
+ 3. Freeze completes.
+ 4. Kernel eventually tries to flush the workqueue while FS is frozen which
+    hits a WARN_ON since transaction gets started during frozen state:
 
-Fixes: 9e037cb7972f ("xfs: check for unknown v5 feature bits in superblock write verifier")
-Cc: stable@vger.kernel.org # v4.19+
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+  ext4_journal_check_start+0x28/0x110 [ext4] (unreliable)
+  __ext4_journal_start_sb+0x64/0x1c0 [ext4]
+  ext4_release_dquot+0x90/0x1d0 [ext4]
+  quota_release_workfn+0x43c/0x4d0
+
+Which is the following line:
+
+  WARN_ON(sb->s_writers.frozen == SB_FREEZE_COMPLETE);
+
+Which ultimately results in generic/390 failing due to dmesg
+noise. This was detected on powerpc machine 15 cores.
+
+To avoid this, make sure to flush the workqueue during
+dquot_writeback_dquots() so we dont have any pending workitems after
+freeze.
+
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+CC: stable@vger.kernel.org
+Fixes: dabc8b207566 ("quota: fix dqput() to follow the guarantees dquot_srcu should provide")
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20241121123855.645335-2-ojaswin@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_sb.c | 7 -------
- 1 file changed, 7 deletions(-)
+ fs/quota/dquot.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
-index c24a38272cb7c..d214233ef532f 100644
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -259,13 +259,6 @@ xfs_validate_sb_write(
- 	 * the kernel cannot support since we checked for unsupported bits in
- 	 * the read verifier, which means that memory is corrupt.
- 	 */
--	if (xfs_sb_has_compat_feature(sbp, XFS_SB_FEAT_COMPAT_UNKNOWN)) {
--		xfs_warn(mp,
--"Corruption detected in superblock compatible features (0x%x)!",
--			(sbp->sb_features_compat & XFS_SB_FEAT_COMPAT_UNKNOWN));
--		return -EFSCORRUPTED;
--	}
--
- 	if (!xfs_is_readonly(mp) &&
- 	    xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
- 		xfs_alert(mp,
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index f7ab6b44011b5..0f82db69d2d86 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -690,6 +690,8 @@ int dquot_writeback_dquots(struct super_block *sb, int type)
+ 
+ 	WARN_ON_ONCE(!rwsem_is_locked(&sb->s_umount));
+ 
++	flush_delayed_work(&quota_release_work);
++
+ 	for (cnt = 0; cnt < MAXQUOTAS; cnt++) {
+ 		if (type != -1 && cnt != type)
+ 			continue;
 -- 
 2.43.0
 
