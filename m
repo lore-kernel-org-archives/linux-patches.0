@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAD022540E;
-	Thu, 12 Dec 2024 16:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0481A2210E5;
+	Thu, 12 Dec 2024 16:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019797; cv=none; b=oygFOhEgcuUsmrFJKKYllZkzv8Bz8wYr66z/K6EYZVH8/pOON4N3rGSRRHSP0tQR3vtFgkfkGZhSBlohgoKA4+NxKyDdUBnTB1niLSMzJn6kCqhnco4HrpGkgTXbtBrvKgAEu5NVrUgzPvIZSJqQYp0RFVdbGbCCQrYEbChEEZg=
+	t=1734019801; cv=none; b=jgEmUHa0ydWtfDHjJJScv5EaoVNUMKfE5CmZzJ+BlURa+ybDlx7RW58EZrMqQ7aI5mo8wEfIz6E8cNQs2DcMDkdLU8CiOJ8qFPT3zeR2YRTxGx8BefOfJh1DAzw1R+I0KZrsxrOakz/hCHlJOdAtnJ0naBjSQatsvn4XSjC0hQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019797; c=relaxed/simple;
-	bh=Y79HnsDe02EpDdqUIQVwZGXadnh/pzu9tDgoEhGpsq4=;
+	s=arc-20240116; t=1734019801; c=relaxed/simple;
+	bh=0V6lT0vs3qHe0ZQUZdKYqwuZW3HE+UYB2TLN0FJVCZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuk+OK1BZTLl+5f6eT2hroP9VEgPC4DpxxvL4tcoYWNDK5VhrqF0YRcnguh7FPgOTjYU/ah3ELfWBbA5RjGoVlUDwnYy7XRE8JGoWrFbFDd75EtkXNRpnmumIvxsRdLaz0lrd0tvFc4fmG+AeEovJHDCJ8yHjBXtOE4KwEy/wnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oZ2MysOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pW1pJ8h9A/Cq0/3X6szt86tsGtqeHH0UItZz6FrfXIrUadPQMON5sXW0p7wV7J7+wi9e6NbKmwTYDT3RZbdjrx5mCICuF7cDNawyfszsz2XnlqU+diUjSgHU3hqGx8H9LPGYHUQhoZNLtlUA6gwpYIEnHO3I6oZ0mTBaGyNXe3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTCdzYXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oZ2MysOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7397C4CED0;
-	Thu, 12 Dec 2024 16:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTCdzYXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C222C4CECE;
+	Thu, 12 Dec 2024 16:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019797;
-	bh=Y79HnsDe02EpDdqUIQVwZGXadnh/pzu9tDgoEhGpsq4=;
+	s=korg; t=1734019800;
+	bh=0V6lT0vs3qHe0ZQUZdKYqwuZW3HE+UYB2TLN0FJVCZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZ2MysOI5uA955ucV9XWnJ5VyWPVoF/s/USimlOM4KzWD27HrBGlu0TeIynHi8maQ
-	 e9CsBIgwfoMH/LRArIVe0P/BP0D6MsfFHywMiGZVlC0Qk7dqwn52Zou5diFs7P9GX2
-	 4ZzvUzs2ISEyLG0WKB2mrDHNF2iynA7tCWbdAoGQ=
+	b=vTCdzYXHBkYQo74zLl0q24A9GMHW/TM2Cnw4ppP7OpISExtaM17/9qitE+e1lcdCx
+	 ulsHHopqylXUFNidr9yM4EcAuyLjV/qUlhhqKiwxRc6nwRxUYMs5561VJiSmuFZWCk
+	 3Kruvf4L8sxasqiAqhLRfhYJ9BoL5YWVr90efJig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Fastabend <john.fastabend@gmail.com>,
 	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/772] LoongArch: Fix build failure with GCC 15 (-std=gnu23)
-Date: Thu, 12 Dec 2024 15:54:06 +0100
-Message-ID: <20241212144402.342400034@linuxfoundation.org>
+Subject: [PATCH 6.1 302/772] LoongArch: BPF: Sign-extend return values
+Date: Thu, 12 Dec 2024 15:54:07 +0100
+Message-ID: <20241212144402.382545650@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,64 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 947d5d036c788156f09e83e7f16322ffe8124384 ]
+[ Upstream commit 73c359d1d356cf10236ccd358bd55edab33e9424 ]
 
-Whenever I try to build the kernel with upcoming GCC 15 which defaults
-to -std=gnu23 I get a build failure:
+(1) Description of Problem:
 
-  CC      arch/loongarch/vdso/vgetcpu.o
-In file included from ./include/uapi/linux/posix_types.h:5,
-                 from ./include/uapi/linux/types.h:14,
-                 from ./include/linux/types.h:6,
-                 from ./include/linux/kasan-checks.h:5,
-                 from ./include/asm-generic/rwonce.h:26,
-                 from ./arch/loongarch/include/generated/asm/rwonce.h:1,
-                 from ./include/linux/compiler.h:317,
-                 from ./include/asm-generic/bug.h:5,
-                 from ./arch/loongarch/include/asm/bug.h:60,
-                 from ./include/linux/bug.h:5,
-                 from ./include/linux/mmdebug.h:5,
-                 from ./include/linux/mm.h:6,
-                 from ./arch/loongarch/include/asm/vdso.h:10,
-                 from arch/loongarch/vdso/vgetcpu.c:6:
-./include/linux/stddef.h:11:9: error: expected identifier before 'false'
-   11 |         false   = 0,
-      |         ^~~~~
-./include/linux/types.h:35:33: error: two or more data types in declaration specifiers
-   35 | typedef _Bool                   bool;
-      |                                 ^~~~
-./include/linux/types.h:35:1: warning: useless type name in empty declaration
-   35 | typedef _Bool                   bool;
-      | ^~~~~~~
+When testing BPF JIT with the latest compiler toolchains on LoongArch,
+there exist some strange failed test cases, dmesg shows something like
+this:
 
-The kernel builds explicitly with -std=gnu11 in top Makefile, but
-arch/loongarch/vdso does not use KBUILD_CFLAGS from the rest of the
-kernel, just add -std=gnu11 flag to arch/loongarch/vdso/Makefile.
+  # dmesg -t | grep FAIL | head -1
+  ... ret -3 != -3 (0xfffffffd != 0xfffffffd)FAIL ...
 
-By the way, commit e8c07082a810 ("Kbuild: move to -std=gnu11") did a
-similar change for arch/arm64/kernel/vdso32/Makefile.
+(2) Steps to Reproduce:
 
-Fixes: c6b99bed6b8f ("LoongArch: Add VDSO and VSYSCALL support")
+  # echo 1 > /proc/sys/net/core/bpf_jit_enable
+  # modprobe test_bpf
+
+(3) Additional Info:
+
+There are no failed test cases compiled with the lower version of GCC
+such as 13.3.0, while the problems only appear with higher version of
+GCC such as 14.2.0.
+
+This is because the problems were hidden by the lower version of GCC due
+to redundant sign extension instructions generated by compiler, but with
+optimization of higher version of GCC, the sign extension instructions
+have been removed.
+
+(4) Root Cause Analysis:
+
+The LoongArch architecture does not expose sub-registers, and hold all
+32-bit values in a sign-extended format. While BPF, on the other hand,
+exposes sub-registers, and use zero-extension (similar to arm64/x86).
+
+This has led to some subtle bugs, where a BPF JITted program has not
+sign-extended the a0 register (return value in LoongArch land), passed
+the return value up the kernel, for example:
+
+  | int from_bpf(void);
+  |
+  | long foo(void)
+  | {
+  |    return from_bpf();
+  | }
+
+Here, a0 would be 0xffffffff instead of the expected 0xffffffffffffffff.
+
+Internally, the LoongArch JIT uses a5 as a dedicated register for BPF
+return values. That is to say, the LoongArch BPF uses a5 for BPF return
+values, which are zero-extended, whereas the LoongArch ABI uses a0 which
+is sign-extended.
+
+(5) Final Solution:
+
+Keep a5 zero-extended, but explicitly sign-extend a0 (which is used
+outside BPF land). Because libbpf currently defines the return value
+of an ebpf program as a 32-bit unsigned integer, just use addi.w to
+extend bit 31 into bits 63 through 32 of a5 to a0. This is similar to
+commit 2f1b0d3d7331 ("riscv, bpf: Sign-extend return values").
+
+Fixes: 5dc615520c4d ("LoongArch: Add BPF JIT support")
+Acked-by: John Fastabend <john.fastabend@gmail.com>
 Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/vdso/Makefile | 2 +-
+ arch/loongarch/net/bpf_jit.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/vdso/Makefile b/arch/loongarch/vdso/Makefile
-index 67cfb4934bcf8..ed196e42972c7 100644
---- a/arch/loongarch/vdso/Makefile
-+++ b/arch/loongarch/vdso/Makefile
-@@ -23,7 +23,7 @@ endif
- cflags-vdso := $(ccflags-vdso) \
- 	-isystem $(shell $(CC) -print-file-name=include) \
- 	$(filter -W%,$(filter-out -Wa$(comma)%,$(KBUILD_CFLAGS))) \
--	-O2 -g -fno-strict-aliasing -fno-common -fno-builtin \
-+	-std=gnu11 -O2 -g -fno-strict-aliasing -fno-common -fno-builtin \
- 	-fno-stack-protector -fno-jump-tables -DDISABLE_BRANCH_PROFILING \
- 	$(call cc-option, -fno-asynchronous-unwind-tables) \
- 	$(call cc-option, -fno-stack-protector)
+diff --git a/arch/loongarch/net/bpf_jit.c b/arch/loongarch/net/bpf_jit.c
+index 4e86441e63196..2567916370b4e 100644
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -179,7 +179,7 @@ static void __build_epilogue(struct jit_ctx *ctx, bool is_tail_call)
+ 
+ 	if (!is_tail_call) {
+ 		/* Set return value */
+-		move_reg(ctx, LOONGARCH_GPR_A0, regmap[BPF_REG_0]);
++		emit_insn(ctx, addiw, LOONGARCH_GPR_A0, regmap[BPF_REG_0], 0);
+ 		/* Return to the caller */
+ 		emit_insn(ctx, jirl, LOONGARCH_GPR_RA, LOONGARCH_GPR_ZERO, 0);
+ 	} else {
 -- 
 2.43.0
 
