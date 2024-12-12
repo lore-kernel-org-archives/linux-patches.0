@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008712210F1;
-	Thu, 12 Dec 2024 17:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7391D20A5EE;
+	Thu, 12 Dec 2024 17:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024861; cv=none; b=gW7GIj05rwWjFAqWlDPjSMI7Z3LWxbMMBoEXflNqee9HDz7tR5uXpx7Anb/x8JFzVDBnwPARJvzBI1FwFv004rwXLgFed8GfVglkIQmN+4XG0Y3CfJMVLO9MoBpAk71+889OkZrzNI+0lDxn4K2cMg1+FsOvevZfoJcoG3y8cVY=
+	t=1734024864; cv=none; b=XdgxJSmZdEZLK4UFL3BMlgVAdWfF3SY76CWW2pUMCdStrYBXJKfCypRE2XYUjhHL7HSl5Vvqr26acJzUd0ewsrLuWT4JlpKPnVAkbFyHoWWChWI1BAbkt+YWqjFsqfvDoZ7QVnGtKuESpQofHFo6mvteBoiyYzw0pE8F0h/Z6EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024861; c=relaxed/simple;
-	bh=Y6wykeZF2i8Gl6rIDix89aJOt/aoBP54omOcTFSRx8U=;
+	s=arc-20240116; t=1734024864; c=relaxed/simple;
+	bh=TpUSddJXaFAp/Ql+9yeQQ5nPDw4uvh/lqXzMOIOI7ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rO+8NeZo6wfCvhUaT59H8/lFA63+h34bwQkEgYsa9bdQhcqKPjZIDav4ZpXV5t3hLwcaIWPWco7iu5q2bT4jFVEox1ubw/aKhgZrQwlTptFRvY7ortkstQi3OKgiop60gCbo4TjKnElJWzS7ytyOwRuRw8j6V6GSsbBBLsu8Xq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/AykDn4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMj+FltCbQoSo0FXASncXsLpTIydlJ1DhkenukGjJgoCuMlUz1sWQ5uWkf4qDtscw9xixQEry/GN9C2CbjQCtBEe10xAZV2UD+wzuH+18fYdzUA5ydXH7kt6LmmuRF+C5djUDmoqFx5nbiHTX/63Kn7oPe1LrsXmdsWV4GlIhPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZo7cwHa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/AykDn4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D01C4CECE;
-	Thu, 12 Dec 2024 17:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZo7cwHa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D250C4CECE;
+	Thu, 12 Dec 2024 17:34:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024860;
-	bh=Y6wykeZF2i8Gl6rIDix89aJOt/aoBP54omOcTFSRx8U=;
+	s=korg; t=1734024863;
+	bh=TpUSddJXaFAp/Ql+9yeQQ5nPDw4uvh/lqXzMOIOI7ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/AykDn48aHHtItPXyazp6QI82L5Xnit70bcXXHOxALN+LXghN1vM9E4lw+kneRtt
-	 YRN+HSfJm3FJrCbv5FStYOj7+krZ1iH6A27GyXwugVPdh4Jc2r6AOrwhxr2AByGWoj
-	 cs+S1cg4ksYslLnLrIR+jYZswrJy8LCuQk840n64=
+	b=sZo7cwHapHb2gd5hL33d6KfJFHu4vYkZufbN1ggngSey01OBrEgkfSlyHsuaIHOa3
+	 p/TnRZia8NEfhlfVyg9poMGUJebIdkBuui9roToKthhJGK9AKD0W1+dxANsXhtgaS5
+	 5ChBD1U8fEt/6+kVnnGFHfTtvsm2bSFOgXlXwznU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	Valentin Schneider <valentin.schneider@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 436/459] sched/fair: Merge for each idle cpu loop of ILB
-Date: Thu, 12 Dec 2024 16:02:54 +0100
-Message-ID: <20241212144310.977891311@linuxfoundation.org>
+Subject: [PATCH 5.10 437/459] sched/fair: Trigger the update of blocked load on newly idle cpu
+Date: Thu, 12 Dec 2024 16:02:55 +0100
+Message-ID: <20241212144311.018420394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -55,87 +55,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 7a82e5f52a3506bc35a4dc04d53ad2c9daf82e7f ]
+[ Upstream commit c6f886546cb8a38617cdbe755fe50d3acd2463e4 ]
 
-Remove the specific case for handling this_cpu outside for_each_cpu() loop
-when running ILB. Instead we use for_each_cpu_wrap() and start with the
-next cpu after this_cpu so we will continue to finish with this_cpu.
-
-update_nohz_stats() is now used for this_cpu too and will prevents
-unnecessary update. We don't need a special case for handling the update of
-nohz.next_balance for this_cpu anymore because it is now handled by the
-loop like others.
+Instead of waking up a random and already idle CPU, we can take advantage
+of this_cpu being about to enter idle to run the ILB and update the
+blocked load.
 
 Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Reviewed-by: Valentin Schneider <valentin.schneider@arm.com>
-Link: https://lkml.kernel.org/r/20210224133007.28644-5-vincent.guittot@linaro.org
+Link: https://lkml.kernel.org/r/20210224133007.28644-7-vincent.guittot@linaro.org
 Stable-dep-of: ff47a0acfcce ("sched/fair: Check idle_cpu() before need_resched() to detect ilb CPU turning busy")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 32 +++++++-------------------------
- 1 file changed, 7 insertions(+), 25 deletions(-)
+ kernel/sched/core.c  |  2 +-
+ kernel/sched/fair.c  | 24 +++++++++++++++++++++---
+ kernel/sched/idle.c  |  6 ++++++
+ kernel/sched/sched.h |  7 +++++++
+ 4 files changed, 35 insertions(+), 4 deletions(-)
 
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 8e30041cecf94..1f4bf91c27d22 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -746,7 +746,7 @@ static void nohz_csd_func(void *info)
+ 	/*
+ 	 * Release the rq::nohz_csd.
+ 	 */
+-	flags = atomic_fetch_andnot(NOHZ_KICK_MASK, nohz_flags(cpu));
++	flags = atomic_fetch_andnot(NOHZ_KICK_MASK | NOHZ_NEWILB_KICK, nohz_flags(cpu));
+ 	WARN_ON(!(flags & NOHZ_KICK_MASK));
+ 
+ 	rq->idle_balance = idle_cpu(cpu);
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 0af373c4d7450..ab29666eb50ed 100644
+index ab29666eb50ed..8121cfd60b8fb 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -10333,22 +10333,9 @@ static void rebalance_domains(struct rq *rq, enum cpu_idle_type idle)
- 	 * When the cpu is attached to null domain for ex, it will not be
- 	 * updated.
- 	 */
--	if (likely(update_next_balance)) {
-+	if (likely(update_next_balance))
- 		rq->next_balance = next_balance;
- 
--#ifdef CONFIG_NO_HZ_COMMON
--		/*
--		 * If this CPU has been elected to perform the nohz idle
--		 * balance. Other idle CPUs have already rebalanced with
--		 * nohz_idle_balance() and nohz.next_balance has been
--		 * updated accordingly. This CPU is now running the idle load
--		 * balance for itself and we need to update the
--		 * nohz.next_balance accordingly.
--		 */
--		if ((idle == CPU_IDLE) && time_after(nohz.next_balance, rq->next_balance))
--			nohz.next_balance = rq->next_balance;
--#endif
--	}
+@@ -10747,6 +10747,24 @@ static bool nohz_idle_balance(struct rq *this_rq, enum cpu_idle_type idle)
+ 	return true;
  }
  
- static inline int on_null_domain(struct rq *rq)
-@@ -10674,8 +10661,12 @@ static bool _nohz_idle_balance(struct rq *this_rq, unsigned int flags,
- 	 */
- 	smp_mb();
- 
--	for_each_cpu(balance_cpu, nohz.idle_cpus_mask) {
--		if (balance_cpu == this_cpu || !idle_cpu(balance_cpu))
++/*
++ * Check if we need to run the ILB for updating blocked load before entering
++ * idle state.
++ */
++void nohz_run_idle_balance(int cpu)
++{
++	unsigned int flags;
++
++	flags = atomic_fetch_andnot(NOHZ_NEWILB_KICK, nohz_flags(cpu));
++
 +	/*
-+	 * Start with the next CPU after this_cpu so we will end with this_cpu and let a
-+	 * chance for other idle cpu to pull load.
++	 * Update the blocked load only if no SCHED_SOFTIRQ is about to happen
++	 * (ie NOHZ_STATS_KICK set) and will do the same.
 +	 */
-+	for_each_cpu_wrap(balance_cpu,  nohz.idle_cpus_mask, this_cpu+1) {
-+		if (!idle_cpu(balance_cpu))
- 			continue;
++	if ((flags == NOHZ_NEWILB_KICK) && !need_resched())
++		_nohz_idle_balance(cpu_rq(cpu), NOHZ_STATS_KICK, CPU_IDLE);
++}
++
+ static void nohz_newidle_balance(struct rq *this_rq)
+ {
+ 	int this_cpu = this_rq->cpu;
+@@ -10768,10 +10786,10 @@ static void nohz_newidle_balance(struct rq *this_rq)
+ 		return;
  
- 		/*
-@@ -10721,15 +10712,6 @@ static bool _nohz_idle_balance(struct rq *this_rq, unsigned int flags,
- 	if (likely(update_next_balance))
- 		nohz.next_balance = next_balance;
+ 	/*
+-	 * Blocked load of idle CPUs need to be updated.
+-	 * Kick an ILB to update statistics.
++	 * Set the need to trigger ILB in order to update blocked load
++	 * before entering idle state.
+ 	 */
+-	kick_ilb(NOHZ_STATS_KICK);
++	atomic_or(NOHZ_NEWILB_KICK, nohz_flags(this_cpu));
+ }
  
--	/* Newly idle CPU doesn't need an update */
--	if (idle != CPU_NEWLY_IDLE) {
--		update_blocked_averages(this_cpu);
--		has_blocked_load |= this_rq->has_blocked_load;
--	}
--
--	if (flags & NOHZ_BALANCE_KICK)
--		rebalance_domains(this_rq, CPU_IDLE);
--
- 	WRITE_ONCE(nohz.next_blocked,
- 		now + msecs_to_jiffies(LOAD_AVG_PERIOD));
+ #else /* !CONFIG_NO_HZ_COMMON */
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index 2593a733c0849..cdc3e690de714 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -261,6 +261,12 @@ static void cpuidle_idle_call(void)
+ static void do_idle(void)
+ {
+ 	int cpu = smp_processor_id();
++
++	/*
++	 * Check if we need to update blocked load
++	 */
++	nohz_run_idle_balance(cpu);
++
+ 	/*
+ 	 * If the arch has a polling bit, we maintain an invariant:
+ 	 *
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index df6cf8aa59f89..66e3ecb7c10e4 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -2292,9 +2292,11 @@ extern void cfs_bandwidth_usage_dec(void);
+ #ifdef CONFIG_NO_HZ_COMMON
+ #define NOHZ_BALANCE_KICK_BIT	0
+ #define NOHZ_STATS_KICK_BIT	1
++#define NOHZ_NEWILB_KICK_BIT	2
  
+ #define NOHZ_BALANCE_KICK	BIT(NOHZ_BALANCE_KICK_BIT)
+ #define NOHZ_STATS_KICK		BIT(NOHZ_STATS_KICK_BIT)
++#define NOHZ_NEWILB_KICK	BIT(NOHZ_NEWILB_KICK_BIT)
+ 
+ #define NOHZ_KICK_MASK	(NOHZ_BALANCE_KICK | NOHZ_STATS_KICK)
+ 
+@@ -2305,6 +2307,11 @@ extern void nohz_balance_exit_idle(struct rq *rq);
+ static inline void nohz_balance_exit_idle(struct rq *rq) { }
+ #endif
+ 
++#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
++extern void nohz_run_idle_balance(int cpu);
++#else
++static inline void nohz_run_idle_balance(int cpu) { }
++#endif
+ 
+ #ifdef CONFIG_SMP
+ static inline
 -- 
 2.43.0
 
