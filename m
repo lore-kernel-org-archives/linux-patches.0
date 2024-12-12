@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4715205ACF;
-	Thu, 12 Dec 2024 15:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DB8209693;
+	Thu, 12 Dec 2024 15:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017189; cv=none; b=mgbeb/DJg16WSnfiZYn/Mggwz8YSqABp7lqLR9rKEBdcs9gbbWvPnz3bAYEqwU83P0l8zhNU+enJvomfXwmPXRUOybbtxJzSb5FsTMGSnPFPD7OtFqwqhcTgS5mIXR1xPgegXsCoO/ThnP/Z5TAmTsY1vJM+KuwG2/+v31SjYkE=
+	t=1734017193; cv=none; b=oLI2jvZ+RYKkA+K2HIXPU7WwVuOnwcyVJtxLIX/Lc0d33UtI3lU6raq3zgNeoH8b5wDYEtpMbKowDc3tZtJkxYyjKzxHlkbDy9olqDIqlaRBpHYxdz8Rhr8YnlSJFgTywg5w+ZfoEXifmB26U03MFdfoVBCeSrd55Aa7TVFGwZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017189; c=relaxed/simple;
-	bh=QDsRv+XrhfM2F7MkihohpiJYoRJPIeth5jFFycUwQAw=;
+	s=arc-20240116; t=1734017193; c=relaxed/simple;
+	bh=0EtQgNIbwVe8aCb5sEFwsOv5vs5+YK7WKqp/BCLlNi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jDzfDALIc/YO/ZUgXB3eitqd695TnNMZmbKVb3HCdN5SjNs0mtdomjgMipdC+MgpXPdKLsLl1Uf7hiyw0ExRssKAb+4bK/q7cJzj2hXKTITGMbJzqnQ6AY8MDbhzHEogquWmqbLwc9aVY8Zytp0fCElJjDO02cyjEf+5ti8WvCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0klOgmd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTJddDpeV6HJaK5jtQMtjBCRmDktTw0OGX8J9CKk+KfF7RIICZgzM8fXimXfer9uZTVtLk9Q4+kqq/3OmkEIYDo7b47muynQmHP7J0q0jUMpOpvR9NNXFycPf0vcJofiQj1PiuQmbHVyLR9J0eEvwey92MkrKIQUZMqG88iNjgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0pANXKn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0klOgmd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AE0C4CECE;
-	Thu, 12 Dec 2024 15:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0pANXKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5730C4CECE;
+	Thu, 12 Dec 2024 15:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017189;
-	bh=QDsRv+XrhfM2F7MkihohpiJYoRJPIeth5jFFycUwQAw=;
+	s=korg; t=1734017193;
+	bh=0EtQgNIbwVe8aCb5sEFwsOv5vs5+YK7WKqp/BCLlNi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0klOgmdXDq/j8Do4x/5u+BC+ZWBbCyyNRCtA1IP8NmNVnQZeLtZC07VvqoSdcwA6
-	 uJ1X03D0LaB1GRZuCoIjJ+/ZnZ3/WddBPQklSLhALa4cJ2WJCK21QTYpSOgkfGJYDt
-	 MNBv/ab3OHnAa/wUNCW9f7bebNxkMZeOuoUP119I=
+	b=L0pANXKnHRBBg4lPksnfju6znoG/tzlG3MjmuRE17I+gvs+H21bRAas7fYjZJJnEX
+	 l9raKUUnaq1rjCQnJqisS2Lc4tuMpn5Xlk3vsNOkhyK9B1nLRUzzeGVaxbL8XY4ZQ0
+	 NXXemT8no4CTWLhRS4NJQ/toUEvFVg9AYiocj4go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 390/466] i3c: mipi-i3c-hci: Mask ring interrupts before ring stop request
-Date: Thu, 12 Dec 2024 15:59:19 +0100
-Message-ID: <20241212144322.180238116@linuxfoundation.org>
+Subject: [PATCH 6.12 408/466] regulator: qcom-rpmh: Update ranges for FTSMPS525
+Date: Thu, 12 Dec 2024 15:59:37 +0100
+Message-ID: <20241212144322.873010676@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,42 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Melody Olvera <quic_molvera@quicinc.com>
 
-[ Upstream commit 6ca2738174e4ee44edb2ab2d86ce74f015a0cc32 ]
+[ Upstream commit eeecf953d697cb7f0d916f9908a2b9f451bb2667 ]
 
-Bus cleanup path in DMA mode may trigger a RING_OP_STAT interrupt when
-the ring is being stopped. Depending on timing between ring stop request
-completion, interrupt handler removal and code execution this may lead
-to a NULL pointer dereference in hci_dma_irq_handler() if it gets to run
-after the io_data pointer is set to NULL in hci_dma_cleanup().
+All FTSMPS525 regulators support LV and MV ranges; however,
+the boot loader firmware will determine which range to use as
+the device boots.
 
-Prevent this my masking the ring interrupts before ring stop request.
+Nonetheless, the driver cannot determine which range was selected,
+so hardcoding the ranges as either LV or MV will not cover all cases
+as it's possible for the firmware to select a range not supported by
+the driver's current hardcoded values.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Link: https://lore.kernel.org/r/20240920144432.62370-2-jarkko.nikula@linux.intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To this end, combine the ranges for the FTSMPS525s into one struct
+and point all regulators to the updated combined struct. This should
+work on all boards regardless of which range is selected by the firmware
+and more accurately caputres the capability of this regulator on a
+hardware level.
+
+Signed-off-by: Melody Olvera <quic_molvera@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patch.msgid.link/20241112002645.2803506-1-quic_molvera@quicinc.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/qcom-rpmh-regulator.c | 83 +++++++++++--------------
+ 1 file changed, 36 insertions(+), 47 deletions(-)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-index a918e96b21fdd..13adc58400942 100644
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -159,10 +159,10 @@ static void hci_dma_cleanup(struct i3c_hci *hci)
- 	for (i = 0; i < rings->total; i++) {
- 		rh = &rings->headers[i];
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index 6c343b4b9d15a..7870722b6ee21 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -843,26 +843,15 @@ static const struct rpmh_vreg_hw_data pmic5_ftsmps520 = {
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
  
-+		rh_reg_write(INTR_SIGNAL_ENABLE, 0);
- 		rh_reg_write(RING_CONTROL, 0);
- 		rh_reg_write(CR_SETUP, 0);
- 		rh_reg_write(IBI_SETUP, 0);
--		rh_reg_write(INTR_SIGNAL_ENABLE, 0);
+-static const struct rpmh_vreg_hw_data pmic5_ftsmps525_lv = {
++static const struct rpmh_vreg_hw_data pmic5_ftsmps525 = {
+ 	.regulator_type = VRM,
+ 	.ops = &rpmh_regulator_vrm_ops,
+ 	.voltage_ranges = (struct linear_range[]) {
+ 		REGULATOR_LINEAR_RANGE(300000, 0, 267, 4000),
++		REGULATOR_LINEAR_RANGE(1376000, 268, 438, 8000),
+ 	},
+-	.n_linear_ranges = 1,
+-	.n_voltages = 268,
+-	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+-	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+-};
+-
+-static const struct rpmh_vreg_hw_data pmic5_ftsmps525_mv = {
+-	.regulator_type = VRM,
+-	.ops = &rpmh_regulator_vrm_ops,
+-	.voltage_ranges = (struct linear_range[]) {
+-		REGULATOR_LINEAR_RANGE(600000, 0, 267, 8000),
+-	},
+-	.n_linear_ranges = 1,
+-	.n_voltages = 268,
++	.n_linear_ranges = 2,
++	.n_voltages = 439,
+ 	.pmic_mode_map = pmic_mode_map_pmic5_smps,
+ 	.of_map_mode = rpmh_regulator_pmic4_smps_of_map_mode,
+ };
+@@ -1190,12 +1179,12 @@ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
+ };
  
- 		if (rh->xfer)
- 			dma_free_coherent(&hci->master.dev,
+ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
+-	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
+-	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
++	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3",  "smp%s3",  &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525, "vdd-s6"),
+ 	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo515,   "vdd-l2"),
+ 	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,   "vdd-l3"),
+@@ -1203,14 +1192,14 @@ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
+-	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
+-	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
+-	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
+-	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
++	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525, "vdd-s6"),
++	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525, "vdd-s7"),
++	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525, "vdd-s8"),
+ 	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
+ 	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
+@@ -1218,14 +1207,14 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pmc8380_vreg_data[] = {
+-	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525_mv, "vdd-s4"),
+-	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
+-	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
+-	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
++	RPMH_VREG("smps1", "smp%s1", &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2", "smp%s2", &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3", "smp%s3", &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4", "smp%s4", &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5", "smp%s5", &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525, "vdd-s6"),
++	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525, "vdd-s7"),
++	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525, "vdd-s8"),
+ 	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
+ 	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
+@@ -1409,16 +1398,16 @@ static const struct rpmh_vreg_init_data pmx65_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pmx75_vreg_data[] = {
+-	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps525_lv, "vdd-s1"),
+-	RPMH_VREG("smps2",   "smp%s2",    &pmic5_ftsmps525_lv, "vdd-s2"),
+-	RPMH_VREG("smps3",   "smp%s3",    &pmic5_ftsmps525_lv, "vdd-s3"),
+-	RPMH_VREG("smps4",   "smp%s4",    &pmic5_ftsmps525_mv, "vdd-s4"),
+-	RPMH_VREG("smps5",   "smp%s5",    &pmic5_ftsmps525_lv, "vdd-s5"),
+-	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps525_lv, "vdd-s6"),
+-	RPMH_VREG("smps7",   "smp%s7",    &pmic5_ftsmps525_lv, "vdd-s7"),
+-	RPMH_VREG("smps8",   "smp%s8",    &pmic5_ftsmps525_lv, "vdd-s8"),
+-	RPMH_VREG("smps9",   "smp%s9",    &pmic5_ftsmps525_lv, "vdd-s9"),
+-	RPMH_VREG("smps10",  "smp%s10",   &pmic5_ftsmps525_lv, "vdd-s10"),
++	RPMH_VREG("smps1",   "smp%s1",    &pmic5_ftsmps525, "vdd-s1"),
++	RPMH_VREG("smps2",   "smp%s2",    &pmic5_ftsmps525, "vdd-s2"),
++	RPMH_VREG("smps3",   "smp%s3",    &pmic5_ftsmps525, "vdd-s3"),
++	RPMH_VREG("smps4",   "smp%s4",    &pmic5_ftsmps525, "vdd-s4"),
++	RPMH_VREG("smps5",   "smp%s5",    &pmic5_ftsmps525, "vdd-s5"),
++	RPMH_VREG("smps6",   "smp%s6",    &pmic5_ftsmps525, "vdd-s6"),
++	RPMH_VREG("smps7",   "smp%s7",    &pmic5_ftsmps525, "vdd-s7"),
++	RPMH_VREG("smps8",   "smp%s8",    &pmic5_ftsmps525, "vdd-s8"),
++	RPMH_VREG("smps9",   "smp%s9",    &pmic5_ftsmps525, "vdd-s9"),
++	RPMH_VREG("smps10",  "smp%s10",   &pmic5_ftsmps525, "vdd-s10"),
+ 	RPMH_VREG("ldo1",    "ldo%s1",    &pmic5_nldo515,   "vdd-l1"),
+ 	RPMH_VREG("ldo2",    "ldo%s2",    &pmic5_nldo515,   "vdd-l2-18"),
+ 	RPMH_VREG("ldo3",    "ldo%s3",    &pmic5_nldo515,   "vdd-l3"),
 -- 
 2.43.0
 
