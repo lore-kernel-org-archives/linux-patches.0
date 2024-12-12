@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF52E2210E3;
-	Thu, 12 Dec 2024 15:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6C72210DA;
+	Thu, 12 Dec 2024 15:55:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018896; cv=none; b=IdgfpMVtdlJ9qY182BbpiiQXgNJJVK8Ny4152Mqxk+Yzg/U1i6dvwwd1nmDsJtQBYHtm+zNjg7feVRScOsXEldwKv5f7gdVe3g5BWtnN2DuWYxgyjCPvj3GnGYlEqOaU1BP6s4b+MOGx1lVkO3ySrTNoC2M4eGV/x6dOjKDfY/c=
+	t=1734018900; cv=none; b=q2AU7AemwMeXTM+54dLLgi2JEunGarbGbn2eBQo83puEZTyGtxKFQS18w85BtxYDG6VkouSExXcCwxZO8LcGzZafZ5YTHSSZBW8ih5gBJd0wQwYRKF9WI8yzxlLenB1hI9ITelWvHAgEmdQ90KMRNbBvFGe2ELHG8S+z6+qQJ0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018896; c=relaxed/simple;
-	bh=gQZBjDx8b/f/RuG8MNdsivXUvGvcitE1JD+cgomgbcI=;
+	s=arc-20240116; t=1734018900; c=relaxed/simple;
+	bh=vpywQPDRdKxQyNg2Ozo1OdZHXtnwzBel41Ao4ryapbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLKHcaWoF4h+p6KIVDi2xcx3i+zdrpBwrJ+V2wq1JgqNBnEsI4sIciebF/JS3h+5VtwuoAs2TfRBOQnkqnP+TFNw7aCIQLOTM/iHWzRbcuvav7nVOR63+MqceN+t+CuslKX1uxPNe3YdOwGGEeYY+b5GvAz9a/2/c7AzaVADQak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaFuTb7t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AVv1LKyf6qlDHyOnXR0etaOfs/CBcHUbjk6pSy4Nwl3vPlGoUXWRcsP/JkGo0vN7DGKuV3hpgxvzaG7Zi2l343MZXX+Fn2z8nZM1WW7Q8dmjrbK5yvZxY3Bzf74kbkTjIc9s2cd/tNcCQHoKsbQMgTrr0xHy5UMNVNpky4DaSMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IayYcG4V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaFuTb7t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DABEC4CECE;
-	Thu, 12 Dec 2024 15:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IayYcG4V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46C2C4CED0;
+	Thu, 12 Dec 2024 15:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018896;
-	bh=gQZBjDx8b/f/RuG8MNdsivXUvGvcitE1JD+cgomgbcI=;
+	s=korg; t=1734018900;
+	bh=vpywQPDRdKxQyNg2Ozo1OdZHXtnwzBel41Ao4ryapbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaFuTb7twjWssPprMzCx2UtVRInLIuVQLRjNYnlK74KM8iMxuEB2ZWuKAXbHUIbfe
-	 0+Y7q8dyT3YPjrSgmhg6rO35d5C2jQlgScyxmGHvzOAWeb15FAE7JYPO00D/Y5hQdp
-	 3kVUazoc9eOXDxFmJ+FmGbHJEl4Mf2Ub3M5FAyRE=
+	b=IayYcG4VjiEJ7ENGHrmjlREXZ2NRyI+mtppkrevSuyPBjXPFIa/XGmWLEfg7cjPOz
+	 ejS85QB99dA3LeDnHhmkSIBkhNITDU92VsvU+1awjT4VGSR97U+TULhkHXpOTCuVGw
+	 Olb94gINmYjE0M+YB8WwEymyC7KGjVyNCMNihQeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xu Yilun <yilun.xu@intel.com>,
-	Russ Weight <russ.weight@linux.dev>,
 	Marco Pagani <marpagan@redhat.com>,
 	Xu Yilun <yilun.xu@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Xiangyu Chen <xiangyu.chen@windriver.com>
-Subject: [PATCH 6.1 034/772] fpga: bridge: add owner module and take its refcount
-Date: Thu, 12 Dec 2024 15:49:39 +0100
-Message-ID: <20241212144351.351678758@linuxfoundation.org>
+Subject: [PATCH 6.1 035/772] fpga: manager: add owner module and take its refcount
+Date: Thu, 12 Dec 2024 15:49:40 +0100
+Message-ID: <20241212144351.393379643@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -56,249 +55,406 @@ Content-Transfer-Encoding: 8bit
 
 From: Marco Pagani <marpagan@redhat.com>
 
-[ Upstream commit 1da11f822042eb6ef4b6064dc048f157a7852529 ]
+[ Upstream commit 4d4d2d4346857bf778fafaa97d6f76bb1663e3c9 ]
 
-The current implementation of the fpga bridge assumes that the low-level
+The current implementation of the fpga manager assumes that the low-level
 module registers a driver for the parent device and uses its owner pointer
 to take the module's refcount. This approach is problematic since it can
-lead to a null pointer dereference while attempting to get the bridge if
+lead to a null pointer dereference while attempting to get the manager if
 the parent device does not have a driver.
 
-To address this problem, add a module owner pointer to the fpga_bridge
-struct and use it to take the module's refcount. Modify the function for
-registering a bridge to take an additional owner module parameter and
-rename it to avoid conflicts. Use the old function name for a helper macro
-that automatically sets the module that registers the bridge as the owner.
-This ensures compatibility with existing low-level control modules and
-reduces the chances of registering a bridge without setting the owner.
+To address this problem, add a module owner pointer to the fpga_manager
+struct and use it to take the module's refcount. Modify the functions for
+registering the manager to take an additional owner module parameter and
+rename them to avoid conflicts. Use the old function names for helper
+macros that automatically set the module that registers the manager as the
+owner. This ensures compatibility with existing low-level control modules
+and reduces the chances of registering a manager without setting the owner.
 
 Also, update the documentation to keep it consistent with the new interface
-for registering an fpga bridge.
+for registering an fpga manager.
 
-Other changes: opportunistically move put_device() from __fpga_bridge_get()
-to fpga_bridge_get() and of_fpga_bridge_get() to improve code clarity since
-the bridge device is taken in these functions.
+Other changes: opportunistically move put_device() from __fpga_mgr_get() to
+fpga_mgr_get() and of_fpga_mgr_get() to improve code clarity since the
+manager device is taken in these functions.
 
-Fixes: 21aeda950c5f ("fpga: add fpga bridge framework")
+Fixes: 654ba4cc0f3e ("fpga manager: ensure lifetime with of_fpga_mgr_get")
 Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Suggested-by: Xu Yilun <yilun.xu@intel.com>
-Reviewed-by: Russ Weight <russ.weight@linux.dev>
 Signed-off-by: Marco Pagani <marpagan@redhat.com>
 Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20240322171839.233864-1-marpagan@redhat.com
+Link: https://lore.kernel.org/r/20240305192926.84886-1-marpagan@redhat.com
 Signed-off-by: Xu Yilun <yilun.xu@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/fpga/fpga-bridge.rst |  7 ++-
- drivers/fpga/fpga-bridge.c                    | 57 ++++++++++---------
- include/linux/fpga/fpga-bridge.h              | 10 +++-
- 3 files changed, 43 insertions(+), 31 deletions(-)
+ Documentation/driver-api/fpga/fpga-mgr.rst | 34 +++++----
+ drivers/fpga/fpga-mgr.c                    | 82 +++++++++++++---------
+ include/linux/fpga/fpga-mgr.h              | 26 +++++--
+ 3 files changed, 89 insertions(+), 53 deletions(-)
 
-diff --git a/Documentation/driver-api/fpga/fpga-bridge.rst b/Documentation/driver-api/fpga/fpga-bridge.rst
-index 6042085340953..833f68fb07008 100644
---- a/Documentation/driver-api/fpga/fpga-bridge.rst
-+++ b/Documentation/driver-api/fpga/fpga-bridge.rst
-@@ -6,9 +6,12 @@ API to implement a new FPGA bridge
+diff --git a/Documentation/driver-api/fpga/fpga-mgr.rst b/Documentation/driver-api/fpga/fpga-mgr.rst
+index 49c0a95126532..8d2b79f696c1f 100644
+--- a/Documentation/driver-api/fpga/fpga-mgr.rst
++++ b/Documentation/driver-api/fpga/fpga-mgr.rst
+@@ -24,7 +24,8 @@ How to support a new FPGA device
+ --------------------------------
  
- * struct fpga_bridge - The FPGA Bridge structure
- * struct fpga_bridge_ops - Low level Bridge driver ops
--* fpga_bridge_register() - Create and register a bridge
-+* __fpga_bridge_register() - Create and register a bridge
- * fpga_bridge_unregister() - Unregister a bridge
+ To add another FPGA manager, write a driver that implements a set of ops.  The
+-probe function calls fpga_mgr_register() or fpga_mgr_register_full(), such as::
++probe function calls ``fpga_mgr_register()`` or ``fpga_mgr_register_full()``,
++such as::
  
-+The helper macro ``fpga_bridge_register()`` automatically sets
-+the module that registers the FPGA bridge as the owner.
+ 	static const struct fpga_manager_ops socfpga_fpga_ops = {
+ 		.write_init = socfpga_fpga_ops_configure_init,
+@@ -69,10 +70,11 @@ probe function calls fpga_mgr_register() or fpga_mgr_register_full(), such as::
+ 	}
+ 
+ Alternatively, the probe function could call one of the resource managed
+-register functions, devm_fpga_mgr_register() or devm_fpga_mgr_register_full().
+-When these functions are used, the parameter syntax is the same, but the call
+-to fpga_mgr_unregister() should be removed. In the above example, the
+-socfpga_fpga_remove() function would not be required.
++register functions, ``devm_fpga_mgr_register()`` or
++``devm_fpga_mgr_register_full()``.  When these functions are used, the
++parameter syntax is the same, but the call to ``fpga_mgr_unregister()`` should be
++removed. In the above example, the ``socfpga_fpga_remove()`` function would not be
++required.
+ 
+ The ops will implement whatever device specific register writes are needed to
+ do the programming sequence for this particular FPGA.  These ops return 0 for
+@@ -125,15 +127,19 @@ API for implementing a new FPGA Manager driver
+ * struct fpga_manager -  the FPGA manager struct
+ * struct fpga_manager_ops -  Low level FPGA manager driver ops
+ * struct fpga_manager_info -  Parameter structure for fpga_mgr_register_full()
+-* fpga_mgr_register_full() -  Create and register an FPGA manager using the
++* __fpga_mgr_register_full() -  Create and register an FPGA manager using the
+   fpga_mgr_info structure to provide the full flexibility of options
+-* fpga_mgr_register() -  Create and register an FPGA manager using standard
++* __fpga_mgr_register() -  Create and register an FPGA manager using standard
+   arguments
+-* devm_fpga_mgr_register_full() -  Resource managed version of
+-  fpga_mgr_register_full()
+-* devm_fpga_mgr_register() -  Resource managed version of fpga_mgr_register()
++* __devm_fpga_mgr_register_full() -  Resource managed version of
++  __fpga_mgr_register_full()
++* __devm_fpga_mgr_register() -  Resource managed version of __fpga_mgr_register()
+ * fpga_mgr_unregister() -  Unregister an FPGA manager
+ 
++Helper macros ``fpga_mgr_register_full()``, ``fpga_mgr_register()``,
++``devm_fpga_mgr_register_full()``, and ``devm_fpga_mgr_register()`` are available
++to ease the registration.
 +
- .. kernel-doc:: include/linux/fpga/fpga-bridge.h
-    :functions: fpga_bridge
+ .. kernel-doc:: include/linux/fpga/fpga-mgr.h
+    :functions: fpga_mgr_states
  
-@@ -16,7 +19,7 @@ API to implement a new FPGA bridge
-    :functions: fpga_bridge_ops
+@@ -147,16 +153,16 @@ API for implementing a new FPGA Manager driver
+    :functions: fpga_manager_info
  
- .. kernel-doc:: drivers/fpga/fpga-bridge.c
--   :functions: fpga_bridge_register
-+   :functions: __fpga_bridge_register
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: fpga_mgr_register_full
++   :functions: __fpga_mgr_register_full
  
- .. kernel-doc:: drivers/fpga/fpga-bridge.c
-    :functions: fpga_bridge_unregister
-diff --git a/drivers/fpga/fpga-bridge.c b/drivers/fpga/fpga-bridge.c
-index 833ce13ff6f86..698d6cbf782a4 100644
---- a/drivers/fpga/fpga-bridge.c
-+++ b/drivers/fpga/fpga-bridge.c
-@@ -55,33 +55,26 @@ int fpga_bridge_disable(struct fpga_bridge *bridge)
- }
- EXPORT_SYMBOL_GPL(fpga_bridge_disable);
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: fpga_mgr_register
++   :functions: __fpga_mgr_register
  
--static struct fpga_bridge *__fpga_bridge_get(struct device *dev,
-+static struct fpga_bridge *__fpga_bridge_get(struct device *bridge_dev,
- 					     struct fpga_image_info *info)
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: devm_fpga_mgr_register_full
++   :functions: __devm_fpga_mgr_register_full
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+-   :functions: devm_fpga_mgr_register
++   :functions: __devm_fpga_mgr_register
+ 
+ .. kernel-doc:: drivers/fpga/fpga-mgr.c
+    :functions: fpga_mgr_unregister
+diff --git a/drivers/fpga/fpga-mgr.c b/drivers/fpga/fpga-mgr.c
+index 8efa67620e216..0c71d91ba7f6e 100644
+--- a/drivers/fpga/fpga-mgr.c
++++ b/drivers/fpga/fpga-mgr.c
+@@ -664,20 +664,16 @@ static struct attribute *fpga_mgr_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(fpga_mgr);
+ 
+-static struct fpga_manager *__fpga_mgr_get(struct device *dev)
++static struct fpga_manager *__fpga_mgr_get(struct device *mgr_dev)
  {
- 	struct fpga_bridge *bridge;
--	int ret = -ENODEV;
+ 	struct fpga_manager *mgr;
  
--	bridge = to_fpga_bridge(dev);
-+	bridge = to_fpga_bridge(bridge_dev);
- 
- 	bridge->info = info;
- 
--	if (!mutex_trylock(&bridge->mutex)) {
--		ret = -EBUSY;
--		goto err_dev;
--	}
-+	if (!mutex_trylock(&bridge->mutex))
-+		return ERR_PTR(-EBUSY);
+-	mgr = to_fpga_manager(dev);
++	mgr = to_fpga_manager(mgr_dev);
  
 -	if (!try_module_get(dev->parent->driver->owner))
--		goto err_ll_mod;
-+	if (!try_module_get(bridge->br_ops_owner)) {
-+		mutex_unlock(&bridge->mutex);
-+		return ERR_PTR(-ENODEV);
-+	}
+-		goto err_dev;
++	if (!try_module_get(mgr->mops_owner))
++		mgr = ERR_PTR(-ENODEV);
  
- 	dev_dbg(&bridge->dev, "get\n");
- 
- 	return bridge;
+ 	return mgr;
 -
--err_ll_mod:
--	mutex_unlock(&bridge->mutex);
 -err_dev:
 -	put_device(dev);
--	return ERR_PTR(ret);
+-	return ERR_PTR(-ENODEV);
  }
  
- /**
-@@ -97,13 +90,18 @@ static struct fpga_bridge *__fpga_bridge_get(struct device *dev,
- struct fpga_bridge *of_fpga_bridge_get(struct device_node *np,
- 				       struct fpga_image_info *info)
+ static int fpga_mgr_dev_match(struct device *dev, const void *data)
+@@ -693,12 +689,18 @@ static int fpga_mgr_dev_match(struct device *dev, const void *data)
+  */
+ struct fpga_manager *fpga_mgr_get(struct device *dev)
+ {
+-	struct device *mgr_dev = class_find_device(fpga_mgr_class, NULL, dev,
+-						   fpga_mgr_dev_match);
++	struct fpga_manager *mgr;
++	struct device *mgr_dev;
++
++	mgr_dev = class_find_device(fpga_mgr_class, NULL, dev, fpga_mgr_dev_match);
+ 	if (!mgr_dev)
+ 		return ERR_PTR(-ENODEV);
+ 
+-	return __fpga_mgr_get(mgr_dev);
++	mgr = __fpga_mgr_get(mgr_dev);
++	if (IS_ERR(mgr))
++		put_device(mgr_dev);
++
++	return mgr;
+ }
+ EXPORT_SYMBOL_GPL(fpga_mgr_get);
+ 
+@@ -711,13 +713,18 @@ EXPORT_SYMBOL_GPL(fpga_mgr_get);
+  */
+ struct fpga_manager *of_fpga_mgr_get(struct device_node *node)
  {
 -	struct device *dev;
-+	struct fpga_bridge *bridge;
-+	struct device *bridge_dev;
++	struct fpga_manager *mgr;
++	struct device *mgr_dev;
  
--	dev = class_find_device_by_of_node(fpga_bridge_class, np);
+-	dev = class_find_device_by_of_node(fpga_mgr_class, node);
 -	if (!dev)
-+	bridge_dev = class_find_device_by_of_node(fpga_bridge_class, np);
-+	if (!bridge_dev)
++	mgr_dev = class_find_device_by_of_node(fpga_mgr_class, node);
++	if (!mgr_dev)
  		return ERR_PTR(-ENODEV);
  
--	return __fpga_bridge_get(dev, info);
-+	bridge = __fpga_bridge_get(bridge_dev, info);
-+	if (IS_ERR(bridge))
-+		put_device(bridge_dev);
+-	return __fpga_mgr_get(dev);
++	mgr = __fpga_mgr_get(mgr_dev);
++	if (IS_ERR(mgr))
++		put_device(mgr_dev);
 +
-+	return bridge;
++	return mgr;
  }
- EXPORT_SYMBOL_GPL(of_fpga_bridge_get);
+ EXPORT_SYMBOL_GPL(of_fpga_mgr_get);
  
-@@ -124,6 +122,7 @@ static int fpga_bridge_dev_match(struct device *dev, const void *data)
- struct fpga_bridge *fpga_bridge_get(struct device *dev,
- 				    struct fpga_image_info *info)
+@@ -727,7 +734,7 @@ EXPORT_SYMBOL_GPL(of_fpga_mgr_get);
+  */
+ void fpga_mgr_put(struct fpga_manager *mgr)
  {
-+	struct fpga_bridge *bridge;
- 	struct device *bridge_dev;
- 
- 	bridge_dev = class_find_device(fpga_bridge_class, NULL, dev,
-@@ -131,7 +130,11 @@ struct fpga_bridge *fpga_bridge_get(struct device *dev,
- 	if (!bridge_dev)
- 		return ERR_PTR(-ENODEV);
- 
--	return __fpga_bridge_get(bridge_dev, info);
-+	bridge = __fpga_bridge_get(bridge_dev, info);
-+	if (IS_ERR(bridge))
-+		put_device(bridge_dev);
-+
-+	return bridge;
+-	module_put(mgr->dev.parent->driver->owner);
++	module_put(mgr->mops_owner);
+ 	put_device(&mgr->dev);
  }
- EXPORT_SYMBOL_GPL(fpga_bridge_get);
- 
-@@ -145,7 +148,7 @@ void fpga_bridge_put(struct fpga_bridge *bridge)
- 	dev_dbg(&bridge->dev, "put\n");
- 
- 	bridge->info = NULL;
--	module_put(bridge->dev.parent->driver->owner);
-+	module_put(bridge->br_ops_owner);
- 	mutex_unlock(&bridge->mutex);
- 	put_device(&bridge->dev);
- }
-@@ -312,18 +315,19 @@ static struct attribute *fpga_bridge_attrs[] = {
- ATTRIBUTE_GROUPS(fpga_bridge);
+ EXPORT_SYMBOL_GPL(fpga_mgr_put);
+@@ -766,9 +773,10 @@ void fpga_mgr_unlock(struct fpga_manager *mgr)
+ EXPORT_SYMBOL_GPL(fpga_mgr_unlock);
  
  /**
-- * fpga_bridge_register - create and register an FPGA Bridge device
-+ * __fpga_bridge_register - create and register an FPGA Bridge device
-  * @parent:	FPGA bridge device from pdev
-  * @name:	FPGA bridge name
-  * @br_ops:	pointer to structure of fpga bridge ops
-  * @priv:	FPGA bridge private data
-+ * @owner:	owner module containing the br_ops
+- * fpga_mgr_register_full - create and register an FPGA Manager device
++ * __fpga_mgr_register_full - create and register an FPGA Manager device
+  * @parent:	fpga manager device from pdev
+  * @info:	parameters for fpga manager
++ * @owner:	owner module containing the ops
   *
-  * Return: struct fpga_bridge pointer or ERR_PTR()
+  * The caller of this function is responsible for calling fpga_mgr_unregister().
+  * Using devm_fpga_mgr_register_full() instead is recommended.
+@@ -776,7 +784,8 @@ EXPORT_SYMBOL_GPL(fpga_mgr_unlock);
+  * Return: pointer to struct fpga_manager pointer or ERR_PTR()
   */
- struct fpga_bridge *
--fpga_bridge_register(struct device *parent, const char *name,
--		     const struct fpga_bridge_ops *br_ops,
--		     void *priv)
-+__fpga_bridge_register(struct device *parent, const char *name,
-+		       const struct fpga_bridge_ops *br_ops,
-+		       void *priv, struct module *owner)
+ struct fpga_manager *
+-fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info)
++__fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			 struct module *owner)
  {
- 	struct fpga_bridge *bridge;
- 	int id, ret;
-@@ -353,6 +357,7 @@ fpga_bridge_register(struct device *parent, const char *name,
+ 	const struct fpga_manager_ops *mops = info->mops;
+ 	struct fpga_manager *mgr;
+@@ -804,6 +813,8 @@ fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *in
  
- 	bridge->name = name;
- 	bridge->br_ops = br_ops;
-+	bridge->br_ops_owner = owner;
- 	bridge->priv = priv;
+ 	mutex_init(&mgr->ref_mutex);
  
- 	bridge->dev.groups = br_ops->groups;
-@@ -382,7 +387,7 @@ fpga_bridge_register(struct device *parent, const char *name,
++	mgr->mops_owner = owner;
++
+ 	mgr->name = info->name;
+ 	mgr->mops = info->mops;
+ 	mgr->priv = info->priv;
+@@ -841,14 +852,15 @@ fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *in
  
  	return ERR_PTR(ret);
  }
--EXPORT_SYMBOL_GPL(fpga_bridge_register);
-+EXPORT_SYMBOL_GPL(__fpga_bridge_register);
+-EXPORT_SYMBOL_GPL(fpga_mgr_register_full);
++EXPORT_SYMBOL_GPL(__fpga_mgr_register_full);
  
  /**
-  * fpga_bridge_unregister - unregister an FPGA bridge
-diff --git a/include/linux/fpga/fpga-bridge.h b/include/linux/fpga/fpga-bridge.h
-index 223da48a6d18b..94c4edd047e54 100644
---- a/include/linux/fpga/fpga-bridge.h
-+++ b/include/linux/fpga/fpga-bridge.h
-@@ -45,6 +45,7 @@ struct fpga_bridge_info {
-  * @dev: FPGA bridge device
-  * @mutex: enforces exclusive reference to bridge
-  * @br_ops: pointer to struct of FPGA bridge ops
-+ * @br_ops_owner: module containing the br_ops
-  * @info: fpga image specific information
-  * @node: FPGA bridge list node
+- * fpga_mgr_register - create and register an FPGA Manager device
++ * __fpga_mgr_register - create and register an FPGA Manager device
+  * @parent:	fpga manager device from pdev
+  * @name:	fpga manager name
+  * @mops:	pointer to structure of fpga manager ops
+  * @priv:	fpga manager private data
++ * @owner:	owner module containing the ops
+  *
+  * The caller of this function is responsible for calling fpga_mgr_unregister().
+  * Using devm_fpga_mgr_register() instead is recommended. This simple
+@@ -859,8 +871,8 @@ EXPORT_SYMBOL_GPL(fpga_mgr_register_full);
+  * Return: pointer to struct fpga_manager pointer or ERR_PTR()
+  */
+ struct fpga_manager *
+-fpga_mgr_register(struct device *parent, const char *name,
+-		  const struct fpga_manager_ops *mops, void *priv)
++__fpga_mgr_register(struct device *parent, const char *name,
++		    const struct fpga_manager_ops *mops, void *priv, struct module *owner)
+ {
+ 	struct fpga_manager_info info = { 0 };
+ 
+@@ -868,9 +880,9 @@ fpga_mgr_register(struct device *parent, const char *name,
+ 	info.mops = mops;
+ 	info.priv = priv;
+ 
+-	return fpga_mgr_register_full(parent, &info);
++	return __fpga_mgr_register_full(parent, &info, owner);
+ }
+-EXPORT_SYMBOL_GPL(fpga_mgr_register);
++EXPORT_SYMBOL_GPL(__fpga_mgr_register);
+ 
+ /**
+  * fpga_mgr_unregister - unregister an FPGA manager
+@@ -900,9 +912,10 @@ static void devm_fpga_mgr_unregister(struct device *dev, void *res)
+ }
+ 
+ /**
+- * devm_fpga_mgr_register_full - resource managed variant of fpga_mgr_register()
++ * __devm_fpga_mgr_register_full - resource managed variant of fpga_mgr_register()
+  * @parent:	fpga manager device from pdev
+  * @info:	parameters for fpga manager
++ * @owner:	owner module containing the ops
+  *
+  * Return:  fpga manager pointer on success, negative error code otherwise.
+  *
+@@ -910,7 +923,8 @@ static void devm_fpga_mgr_unregister(struct device *dev, void *res)
+  * function will be called automatically when the managing device is detached.
+  */
+ struct fpga_manager *
+-devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info)
++__devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			      struct module *owner)
+ {
+ 	struct fpga_mgr_devres *dr;
+ 	struct fpga_manager *mgr;
+@@ -919,7 +933,7 @@ devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_inf
+ 	if (!dr)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	mgr = fpga_mgr_register_full(parent, info);
++	mgr = __fpga_mgr_register_full(parent, info, owner);
+ 	if (IS_ERR(mgr)) {
+ 		devres_free(dr);
+ 		return mgr;
+@@ -930,14 +944,15 @@ devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_inf
+ 
+ 	return mgr;
+ }
+-EXPORT_SYMBOL_GPL(devm_fpga_mgr_register_full);
++EXPORT_SYMBOL_GPL(__devm_fpga_mgr_register_full);
+ 
+ /**
+- * devm_fpga_mgr_register - resource managed variant of fpga_mgr_register()
++ * __devm_fpga_mgr_register - resource managed variant of fpga_mgr_register()
+  * @parent:	fpga manager device from pdev
+  * @name:	fpga manager name
+  * @mops:	pointer to structure of fpga manager ops
+  * @priv:	fpga manager private data
++ * @owner:	owner module containing the ops
+  *
+  * Return:  fpga manager pointer on success, negative error code otherwise.
+  *
+@@ -946,8 +961,9 @@ EXPORT_SYMBOL_GPL(devm_fpga_mgr_register_full);
+  * device is detached.
+  */
+ struct fpga_manager *
+-devm_fpga_mgr_register(struct device *parent, const char *name,
+-		       const struct fpga_manager_ops *mops, void *priv)
++__devm_fpga_mgr_register(struct device *parent, const char *name,
++			 const struct fpga_manager_ops *mops, void *priv,
++			 struct module *owner)
+ {
+ 	struct fpga_manager_info info = { 0 };
+ 
+@@ -955,9 +971,9 @@ devm_fpga_mgr_register(struct device *parent, const char *name,
+ 	info.mops = mops;
+ 	info.priv = priv;
+ 
+-	return devm_fpga_mgr_register_full(parent, &info);
++	return __devm_fpga_mgr_register_full(parent, &info, owner);
+ }
+-EXPORT_SYMBOL_GPL(devm_fpga_mgr_register);
++EXPORT_SYMBOL_GPL(__devm_fpga_mgr_register);
+ 
+ static void fpga_mgr_dev_release(struct device *dev)
+ {
+diff --git a/include/linux/fpga/fpga-mgr.h b/include/linux/fpga/fpga-mgr.h
+index 54f63459efd6e..0d4fe068f3d8a 100644
+--- a/include/linux/fpga/fpga-mgr.h
++++ b/include/linux/fpga/fpga-mgr.h
+@@ -201,6 +201,7 @@ struct fpga_manager_ops {
+  * @state: state of fpga manager
+  * @compat_id: FPGA manager id for compatibility check.
+  * @mops: pointer to struct of fpga manager ops
++ * @mops_owner: module containing the mops
   * @priv: low level driver private date
-@@ -54,6 +55,7 @@ struct fpga_bridge {
- 	struct device dev;
- 	struct mutex mutex; /* for exclusive reference to bridge */
- 	const struct fpga_bridge_ops *br_ops;
-+	struct module *br_ops_owner;
- 	struct fpga_image_info *info;
- 	struct list_head node;
+  */
+ struct fpga_manager {
+@@ -210,6 +211,7 @@ struct fpga_manager {
+ 	enum fpga_mgr_states state;
+ 	struct fpga_compat_id *compat_id;
+ 	const struct fpga_manager_ops *mops;
++	struct module *mops_owner;
  	void *priv;
-@@ -79,10 +81,12 @@ int of_fpga_bridge_get_to_list(struct device_node *np,
- 			       struct fpga_image_info *info,
- 			       struct list_head *bridge_list);
+ };
  
-+#define fpga_bridge_register(parent, name, br_ops, priv) \
-+	__fpga_bridge_register(parent, name, br_ops, priv, THIS_MODULE)
- struct fpga_bridge *
--fpga_bridge_register(struct device *parent, const char *name,
--		     const struct fpga_bridge_ops *br_ops,
--		     void *priv);
-+__fpga_bridge_register(struct device *parent, const char *name,
-+		       const struct fpga_bridge_ops *br_ops, void *priv,
-+		       struct module *owner);
- void fpga_bridge_unregister(struct fpga_bridge *br);
+@@ -230,18 +232,30 @@ struct fpga_manager *fpga_mgr_get(struct device *dev);
  
- #endif /* _LINUX_FPGA_BRIDGE_H */
+ void fpga_mgr_put(struct fpga_manager *mgr);
+ 
++#define fpga_mgr_register_full(parent, info) \
++	__fpga_mgr_register_full(parent, info, THIS_MODULE)
+ struct fpga_manager *
+-fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info);
++__fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			 struct module *owner);
+ 
++#define fpga_mgr_register(parent, name, mops, priv) \
++	__fpga_mgr_register(parent, name, mops, priv, THIS_MODULE)
+ struct fpga_manager *
+-fpga_mgr_register(struct device *parent, const char *name,
+-		  const struct fpga_manager_ops *mops, void *priv);
++__fpga_mgr_register(struct device *parent, const char *name,
++		    const struct fpga_manager_ops *mops, void *priv, struct module *owner);
++
+ void fpga_mgr_unregister(struct fpga_manager *mgr);
+ 
++#define devm_fpga_mgr_register_full(parent, info) \
++	__devm_fpga_mgr_register_full(parent, info, THIS_MODULE)
+ struct fpga_manager *
+-devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info);
++__devm_fpga_mgr_register_full(struct device *parent, const struct fpga_manager_info *info,
++			      struct module *owner);
++#define devm_fpga_mgr_register(parent, name, mops, priv) \
++	__devm_fpga_mgr_register(parent, name, mops, priv, THIS_MODULE)
+ struct fpga_manager *
+-devm_fpga_mgr_register(struct device *parent, const char *name,
+-		       const struct fpga_manager_ops *mops, void *priv);
++__devm_fpga_mgr_register(struct device *parent, const char *name,
++			 const struct fpga_manager_ops *mops, void *priv,
++			 struct module *owner);
+ 
+ #endif /*_LINUX_FPGA_MGR_H */
 -- 
 2.43.0
 
