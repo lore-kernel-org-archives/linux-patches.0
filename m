@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C049D2236EB;
-	Thu, 12 Dec 2024 15:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08381223C7A;
+	Thu, 12 Dec 2024 15:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018784; cv=none; b=joFSasbTjcLPZg/BtColc435f77oSD0Bhlfu5Zd1B7znLVJg8GhRkL6ECoNTqtimun6cxjhvbLBHNWfrA0J1USKuUKofKdo6kayjfO1BA0UosE3R8K+JoGXAD0X0jj8p1tNxUh5Fz7HwfWraDihYSAnONAbIIBQIHWRre8GK11A=
+	t=1734018788; cv=none; b=WgNWf6QkTgUdkAIyDC/he0nUHfJaD7V6w5O8gfSUAIepVNQhts39Oc6oyjofMYwDD+Q6pXxgFNBomA7MrXOalpSRjhjDWxw4gBoPSsBLGZiWfjDobj7I8giUNjWWSwZxwc44gve3vHURv7CRKdRxYo5XoHaZfMmh6rbtceIIrxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018784; c=relaxed/simple;
-	bh=x0E7XEx2t9IZ7SiBnZz8zcHClgesKiKJbqUPcQNUbOo=;
+	s=arc-20240116; t=1734018788; c=relaxed/simple;
+	bh=Fx+GYVLHBhVMA0PUhR9R0PuHathXWEd2TwK1iXbOJYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZT9iPh4BmztJNMxbu27/Cemw61pdl3ajk95aEqnLfQ016iKWr+EpF0NRLAiP+D4LsKHr4XcZUXqki1+x+vfAcsZ07Nk5Rm7Ezs/b+SKoEq/YSvRjX3s8CuJLhICElmPT+Udy0/Wr6aPwAut8MkQ46Ft6brgwpG5JBQJyA6OGMNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTV4P7Yj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o8YWa92wYVSc6DQLrNnOFBqbxGwzsj2TJf4/1DSSKSCimxIAOdzRLJBohTKhalQ0NSa/186UQAhYcppWjWYrJkOJ0Jw6reLLrhgAkLuabyg3l5krzJkW6RxoVWoa1cjkpHj2LHbX6CRiR3Fj514rHt03vSt2BsBoDF7u4kXjsuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SviPC81y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTV4P7Yj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA43C4CEE1;
-	Thu, 12 Dec 2024 15:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SviPC81y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68302C4CECE;
+	Thu, 12 Dec 2024 15:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018784;
-	bh=x0E7XEx2t9IZ7SiBnZz8zcHClgesKiKJbqUPcQNUbOo=;
+	s=korg; t=1734018787;
+	bh=Fx+GYVLHBhVMA0PUhR9R0PuHathXWEd2TwK1iXbOJYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTV4P7YjIpHq2XIwVLMgIHQ9JwCsyL68AG4ZGX6wu7LpERmd3sC2PO6BCIlo/GdyO
-	 idmkrRu1RobeiPKnL+NgHYqsEkHEAeC83XZkDSYX6UMauk3daA/CttBGbSAYiSkMuU
-	 f6ld6OfrHx0TP2nayu8EoVSBrJlASmnpaT5q518U=
+	b=SviPC81y2ijoby4hWG9C78X5BxPi5YnJFcSFYJJV26uTzn9AdPw7aWSnMNSVr27Z6
+	 PJQCEhDYYWb75K3av6c7BQSbiY7gfpc5HuauBQ4G9UeSKSFu5Fh2cz3dxvpuzvN6oy
+	 MAhT6/xvKMPkzdzgPc64hmxPYgLbuXTELHVG4PFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piyush Raj Chouhan <piyushchouhan1598@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/772] ALSA: hda/realtek: Add subwoofer quirk for Infinix ZERO BOOK 13
-Date: Thu, 12 Dec 2024 15:49:13 +0100
-Message-ID: <20241212144350.285067117@linuxfoundation.org>
+Subject: [PATCH 6.1 009/772] x86/amd_nb: Fix compile-testing without CONFIG_AMD_NB
+Date: Thu, 12 Dec 2024 15:49:14 +0100
+Message-ID: <20241212144350.326301455@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,71 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Piyush Raj Chouhan <piyushchouhan1598@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit ef5fbdf732a158ec27eeba69d8be851351f29f73 ]
+[ Upstream commit fce9642c765a18abd1db0339a7d832c29b68456a ]
 
-Infinix ZERO BOOK 13 has a 2+2 speaker system which isn't probed correctly.
-This patch adds a quirk with the proper pin connections.
-Also The mic in this laptop suffers too high gain resulting in mostly
-fan noise being recorded,
-This patch Also limit mic boost.
+node_to_amd_nb() is defined to NULL in non-AMD configs:
 
-HW Probe for device; https://linux-hardware.org/?probe=a2e892c47b
+  drivers/platform/x86/amd/hsmp/plat.c: In function 'init_platform_device':
+  drivers/platform/x86/amd/hsmp/plat.c:165:68: error: dereferencing 'void *' pointer [-Werror]
+    165 |                 sock->root                      = node_to_amd_nb(i)->root;
+        |                                                                    ^~
+  drivers/platform/x86/amd/hsmp/plat.c:165:68: error: request for member 'root' in something not a structure or union
 
-Test: All 4 speaker works, Mic has low noise.
+Users of the interface who also allow COMPILE_TEST will cause the above build
+error so provide an inline stub to fix that.
 
-Signed-off-by: Piyush Raj Chouhan <piyushchouhan1598@gmail.com>
-Link: https://patch.msgid.link/20241028155516.15552-1-piyuschouhan1598@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  [ bp: Massage commit message. ]
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20241029092329.3857004-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/x86/include/asm/amd_nb.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index a56ec9bd90fae..f3e368f82be9b 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7190,6 +7190,7 @@ enum {
- 	ALC290_FIXUP_SUBWOOFER_HSJACK,
- 	ALC269_FIXUP_THINKPAD_ACPI,
- 	ALC269_FIXUP_DMIC_THINKPAD_ACPI,
-+	ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13,
- 	ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO,
- 	ALC255_FIXUP_ACER_MIC_NO_PRESENCE,
- 	ALC255_FIXUP_ASUS_MIC_NO_PRESENCE,
-@@ -7542,6 +7543,16 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc269_fixup_pincfg_U7x7_headset_mic,
- 	},
-+	[ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x14, 0x90170151 }, /* use as internal speaker (LFE) */
-+			{ 0x1b, 0x90170152 }, /* use as internal speaker (back) */
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC269_FIXUP_LIMIT_INT_MIC_BOOST
-+	},
- 	[ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -10224,6 +10235,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
+diff --git a/arch/x86/include/asm/amd_nb.h b/arch/x86/include/asm/amd_nb.h
+index ed0eaf65c4372..c8cdc69aae098 100644
+--- a/arch/x86/include/asm/amd_nb.h
++++ b/arch/x86/include/asm/amd_nb.h
+@@ -116,7 +116,10 @@ static inline bool amd_gart_present(void)
+ 
+ #define amd_nb_num(x)		0
+ #define amd_nb_has_feature(x)	false
+-#define node_to_amd_nb(x)	NULL
++static inline struct amd_northbridge *node_to_amd_nb(int node)
++{
++	return NULL;
++}
+ #define amd_gart_present(x)	false
+ 
+ #endif
 -- 
 2.43.0
 
