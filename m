@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BEA82210E3;
-	Thu, 12 Dec 2024 15:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC1A2210E3;
+	Thu, 12 Dec 2024 15:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018584; cv=none; b=I3w51t+hL8CX7fC763CGBTjmqfLT3TdgHt8Jci/CqGatGmXwMIELCsl1SCw1MDJhSin5/ftx7JMSfiI5LiNatWZiXDJcjoIamWcHFdX2vmVyYE7krcJbCX3FFuCmZ/8Vh1m9Tdh6FxGISAfDp8lnmXgDzOJujTi3cnySo775kos=
+	t=1734018587; cv=none; b=Z04s7i8hJAxgceIKoz2XJGv934ziqI8HMPgOQPXhP3G0LE6wzdmsqdfE7cRoFy/p1XHXtIAFbjXisokFfJzAJfwyFd1fm5DeAYjBGSqmQYYKc97dPyqHOtZ/xSUsKNTUA4/M5MWsrV5emzIE02z7nFCgH0Z99XSwrJJlrRCsl18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018584; c=relaxed/simple;
-	bh=hVHiHejRdR8pIrxl4lPQotPdXVIhAcaWSmFYT/UyXSE=;
+	s=arc-20240116; t=1734018587; c=relaxed/simple;
+	bh=ftuH3ab+NfiP/e6tHtuovDz/53B9oE9GYshOClt8P/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kRFJST0zOX2HBjlON+8g7SoN3tBAkmS/N5mvKRyr4kYm8merSvDV9B4jy0T17noN/8XKxL/PX2m2850KAKEjwh43o59D1xtOotPVvkktrklkLf3PIUYy4PeziIf7YGj6TLGnF8wo71VTuJFlW3zlUjqXI4Vt+HLRhUQFsNMlr98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YuN7uQI1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DJPMwvlEq9szLZ4LUbhtrya3SZQL74xmA/MGJ2J/ZhWcQVekAOloyibCuOdSr1en2FQ+ME/LDq7iyuEj/TvV7mWy9qDI1/o2cU4qcyyU9uIBiwrakkPwvxGzmHwGSwAjK/I5KEcbW4azcztz7StnNMdGiBoaRogUpXQCTniKv/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WcSdVv+L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YuN7uQI1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E470C4CECE;
-	Thu, 12 Dec 2024 15:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WcSdVv+L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0975EC4CECE;
+	Thu, 12 Dec 2024 15:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018583;
-	bh=hVHiHejRdR8pIrxl4lPQotPdXVIhAcaWSmFYT/UyXSE=;
+	s=korg; t=1734018587;
+	bh=ftuH3ab+NfiP/e6tHtuovDz/53B9oE9GYshOClt8P/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YuN7uQI1ckn2aIZl8A1BEPfMyuLvPkOdBkUlTw9s2ZwZCP1dijx/sXVXX83A9IqPE
-	 co0RzvanVjZCsnaOmkgYqU5W2CxdV+pZaiUgOSExoZVi49VcHMJGmiSwk42hNWjdha
-	 haydJ8Jo+BrhykNieL80MJ9K+QR0Pp2tMG/CwphU=
+	b=WcSdVv+LHXjdGByy9s6LjWH8/ZeM5TBfLbe19PiaLyx+4JUb12VvJHW4aT80VpjEU
+	 qVHAvtyo2x2IH7M830ejoNLr5gxyhunUxEyFeEP32owlmzsaVupLaZchTaeayPNJah
+	 9s3AINUMYn6XlvAhlXucl8g6JY9GcwstfJTQTHdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoyu Li <lihaoyu499@gmail.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 333/356] clk: en7523: Initialize num before accessing hws in en7523_register_clocks()
-Date: Thu, 12 Dec 2024 16:00:52 +0100
-Message-ID: <20241212144257.717759057@linuxfoundation.org>
+Subject: [PATCH 6.6 334/356] tracing/eprobe: Fix to release eprobe when failed to add dyn_event
+Date: Thu, 12 Dec 2024 16:00:53 +0100
+Message-ID: <20241212144257.754929153@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,46 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoyu Li <lihaoyu499@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 52fd1709e41d3a85b48bcfe2404a024ebaf30c3b ]
+[ Upstream commit 494b332064c0ce2f7392fa92632bc50191c1b517 ]
 
-With the new __counted_by annotation in clk_hw_onecell_data, the "num"
-struct member must be set before accessing the "hws" array. Failing to
-do so will trigger a runtime warning when enabling CONFIG_UBSAN_BOUNDS
-and CONFIG_FORTIFY_SOURCE.
+Fix eprobe event to unregister event call and release eprobe when it fails
+to add dynamic event correctly.
 
-Fixes: f316cdff8d67 ("clk: Annotate struct clk_hw_onecell_data with __counted_by")
-Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
-Link: https://lore.kernel.org/r/20241203142915.345523-1-lihaoyu499@gmail.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/all/173289886698.73724.1959899350183686006.stgit@devnote2/
+
+Fixes: 7491e2c44278 ("tracing: Add a probe that attaches to trace events")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-en7523.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_eprobe.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
-index 7914e60f3d6c5..1331b4bacf0b6 100644
---- a/drivers/clk/clk-en7523.c
-+++ b/drivers/clk/clk-en7523.c
-@@ -284,6 +284,8 @@ static void en7523_register_clocks(struct device *dev, struct clk_hw_onecell_dat
- 	u32 rate;
- 	int i;
- 
-+	clk_data->num = EN7523_NUM_CLOCKS;
-+
- 	for (i = 0; i < ARRAY_SIZE(en7523_base_clks); i++) {
- 		const struct en_clk_desc *desc = &en7523_base_clks[i];
- 
-@@ -302,8 +304,6 @@ static void en7523_register_clocks(struct device *dev, struct clk_hw_onecell_dat
- 
- 	hw = en7523_register_pcie_clk(dev, np_base);
- 	clk_data->hws[EN7523_CLK_PCIE] = hw;
--
--	clk_data->num = EN7523_NUM_CLOCKS;
- }
- 
- static int en7523_clk_probe(struct platform_device *pdev)
+diff --git a/kernel/trace/trace_eprobe.c b/kernel/trace/trace_eprobe.c
+index 31bb977670bdf..f1f12ce5efb0a 100644
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -966,6 +966,11 @@ static int __trace_eprobe_create(int argc, const char *argv[])
+ 		goto error;
+ 	}
+ 	ret = dyn_event_add(&ep->devent, &ep->tp.event->call);
++	if (ret < 0) {
++		trace_probe_unregister_event_call(&ep->tp);
++		mutex_unlock(&event_mutex);
++		goto error;
++	}
+ 	mutex_unlock(&event_mutex);
+ 	return ret;
+ parse_error:
 -- 
 2.43.0
 
