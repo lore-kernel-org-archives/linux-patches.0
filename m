@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1F92054F8;
-	Thu, 12 Dec 2024 15:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFDF2165F0;
+	Thu, 12 Dec 2024 15:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017072; cv=none; b=NQOfJX1N6o7cJxR4Me2On1sCdRafp/rKRwqVkJknuSZHuBOGXlhfIdGFl5s4nHsLfET2qp+Iht5+kFEP10iQWeN4Go38RXpOVOTNqxB9lNJQGVTAyAelQ6/1ynhqKuKmvlTODeSylpSWt7RPYpkYEkiIyJaleenRET9EtiGcWbM=
+	t=1734017076; cv=none; b=ZUiTKDLojSzJGdbceaNHhATnYUS9FALvlGWgCNm9+nXiQuiUper4lKkzY610b4VIA63NcQKKFPIS3+wrjpnQtghpQ5MhT2DLwpe+88NMH40be5HS4uV8XT+a95Vx/xhyYS+G6QdjoeymqocOdSXOCz6CNqLJNUsDCypgapgFJ+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017072; c=relaxed/simple;
-	bh=YtOvUgco+NdETp+iuWgSWAtAQPSvhdWMtIaM1HlbxAk=;
+	s=arc-20240116; t=1734017076; c=relaxed/simple;
+	bh=inJEMy530bk1Wy2P+5GIR6sIvx8ILYN96w3A6X7ZV3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbdYuhyRnZZ5c2hjc4CfnVApe1U8sqLlYEtIRsHtIhIYZ3QtTuttsbdQA2+rxFX79o3ItyAGZfGf4goQu2lOf5VJzj1TUTklRxqVeLad6vErSxz37AVHqejqujWLU9zZ+4Ir5ZynOPUt2LluWlIMynbcYALNt+PFHs4Y7oO+Aa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWG4NHBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EhueD5617/7pBsX33MhwEQWwAeuNxYGSeQzpgOzgoaSsaWmvz1Avq0lFXlVVtqSqx8eE+do3SWumBdh/p9Ilb+5nvsGZaBttdUqZjWlIn8Omt/caK+vL8VpR998b+CvSzz82SzphdNT5n1fuwOWyBwuKALOOzHR5nnZN272E2VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKsUkfqU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWG4NHBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBE3C4CED0;
-	Thu, 12 Dec 2024 15:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKsUkfqU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432F5C4CED4;
+	Thu, 12 Dec 2024 15:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017072;
-	bh=YtOvUgco+NdETp+iuWgSWAtAQPSvhdWMtIaM1HlbxAk=;
+	s=korg; t=1734017075;
+	bh=inJEMy530bk1Wy2P+5GIR6sIvx8ILYN96w3A6X7ZV3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWG4NHBR2Gh1bQHg45gu7elZmvNOsR9Kq1uA8IkWECMTd/9nmuI+U97iabmfm/OS2
-	 wvKPAFXdAiS9PE7DGPEcTvALBuuIa1OZJD2F85tWUJVfAmhNLVOExo0sul02CQJIL9
-	 5iF/F1V/qP2/fM4GdH+dltH4JmDrJzhV3fRjcSxc=
+	b=jKsUkfqUYTEtiDgm3z9XBJRyJ8ezY9a8Dvoz+P9NNqnfWLRyRXMjK5pXbYuHl4jPp
+	 hb8RQLzqBNcRtvICBDS8R17hsTXMfwjfRrjCa4k/BEZxEGiQ4JqO1RKCr5FZVVevNF
+	 IxtYBaUKgwBGkMXVg4519CrZOoQlwStdUUZk/m+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Devi Priya <quic_devipriy@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jan Stancek <jstancek@redhat.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 375/466] clk: qcom: clk-alpha-pll: Add NSS HUAYRA ALPHA PLL support for ipq9574
-Date: Thu, 12 Dec 2024 15:59:04 +0100
-Message-ID: <20241212144321.592532666@linuxfoundation.org>
+Subject: [PATCH 6.12 358/466] tools/rtla: fix collision with glibc sched_attr/sched_set_attr
+Date: Thu, 12 Dec 2024 15:58:47 +0100
+Message-ID: <20241212144320.928009330@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -46,64 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Devi Priya <quic_devipriy@quicinc.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit 79dfed29aa3f714e0a94a39b2bfe9ac14ce19a6a ]
+[ Upstream commit 0eecee340672c4b512f6f4a8c6add26df05d130c ]
 
-Add support for NSS Huayra alpha pll found on ipq9574 SoCs.
-Programming sequence is the same as that of Huayra type Alpha PLL,
-so we can re-use the same.
+glibc commit 21571ca0d703 ("Linux: Add the sched_setattr
+and sched_getattr functions") now also provides 'struct sched_attr'
+and sched_setattr() which collide with the ones from rtla.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-Link: https://lore.kernel.org/r/20241028060506.246606-2-quic_srichara@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+  In file included from src/trace.c:11:
+  src/utils.h:49:8: error: redefinition of ‘struct sched_attr’
+     49 | struct sched_attr {
+        |        ^~~~~~~~~~
+  In file included from /usr/include/bits/sched.h:60,
+                   from /usr/include/sched.h:43,
+                   from /usr/include/tracefs/tracefs.h:10,
+                   from src/trace.c:4:
+  /usr/include/linux/sched/types.h:98:8: note: originally defined here
+     98 | struct sched_attr {
+        |        ^~~~~~~~~~
+
+Define 'struct sched_attr' conditionally, similar to what strace did:
+  https://lore.kernel.org/all/20240930222913.3981407-1-raj.khem@gmail.com/
+and rename rtla's version of sched_setattr() to avoid collision.
+
+Link: https://lore.kernel.org/8088f66a7a57c1b209cd8ae0ae7c336a7f8c930d.1728572865.git.jstancek@redhat.com
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 11 +++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |  1 +
- 2 files changed, 12 insertions(+)
+ tools/tracing/rtla/src/utils.c | 4 ++--
+ tools/tracing/rtla/src/utils.h | 2 ++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index be9bee6ab65f6..49687512184b9 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -267,6 +267,17 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_OPMODE] = 0x30,
- 		[PLL_OFF_STATUS] = 0x3c,
- 	},
-+	[CLK_ALPHA_PLL_TYPE_NSS_HUAYRA] =  {
-+		[PLL_OFF_L_VAL] = 0x04,
-+		[PLL_OFF_ALPHA_VAL] = 0x08,
-+		[PLL_OFF_TEST_CTL] = 0x0c,
-+		[PLL_OFF_TEST_CTL_U] = 0x10,
-+		[PLL_OFF_USER_CTL] = 0x14,
-+		[PLL_OFF_CONFIG_CTL] = 0x18,
-+		[PLL_OFF_CONFIG_CTL_U] = 0x1c,
-+		[PLL_OFF_STATUS] = 0x20,
-+	},
-+
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+diff --git a/tools/tracing/rtla/src/utils.c b/tools/tracing/rtla/src/utils.c
+index 9ac71a66840c1..0735fcb827ed7 100644
+--- a/tools/tracing/rtla/src/utils.c
++++ b/tools/tracing/rtla/src/utils.c
+@@ -233,7 +233,7 @@ long parse_ns_duration(char *val)
  
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index 55eca04b23a1f..c6d1b8429f951 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -32,6 +32,7 @@ enum {
- 	CLK_ALPHA_PLL_TYPE_BRAMMO_EVO,
- 	CLK_ALPHA_PLL_TYPE_STROMER,
- 	CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
-+	CLK_ALPHA_PLL_TYPE_NSS_HUAYRA,
- 	CLK_ALPHA_PLL_TYPE_MAX,
- };
+ #define SCHED_DEADLINE		6
  
+-static inline int sched_setattr(pid_t pid, const struct sched_attr *attr,
++static inline int syscall_sched_setattr(pid_t pid, const struct sched_attr *attr,
+ 				unsigned int flags) {
+ 	return syscall(__NR_sched_setattr, pid, attr, flags);
+ }
+@@ -243,7 +243,7 @@ int __set_sched_attr(int pid, struct sched_attr *attr)
+ 	int flags = 0;
+ 	int retval;
+ 
+-	retval = sched_setattr(pid, attr, flags);
++	retval = syscall_sched_setattr(pid, attr, flags);
+ 	if (retval < 0) {
+ 		err_msg("Failed to set sched attributes to the pid %d: %s\n",
+ 			pid, strerror(errno));
+diff --git a/tools/tracing/rtla/src/utils.h b/tools/tracing/rtla/src/utils.h
+index d44513e6c66a0..99c9cf81bcd02 100644
+--- a/tools/tracing/rtla/src/utils.h
++++ b/tools/tracing/rtla/src/utils.h
+@@ -46,6 +46,7 @@ update_sum(unsigned long long *a, unsigned long long *b)
+ 	*a += *b;
+ }
+ 
++#ifndef SCHED_ATTR_SIZE_VER0
+ struct sched_attr {
+ 	uint32_t size;
+ 	uint32_t sched_policy;
+@@ -56,6 +57,7 @@ struct sched_attr {
+ 	uint64_t sched_deadline;
+ 	uint64_t sched_period;
+ };
++#endif /* SCHED_ATTR_SIZE_VER0 */
+ 
+ int parse_prio(char *arg, struct sched_attr *sched_param);
+ int parse_cpu_set(char *cpu_list, cpu_set_t *set);
 -- 
 2.43.0
 
