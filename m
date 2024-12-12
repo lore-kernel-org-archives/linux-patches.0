@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B8313792B;
-	Thu, 12 Dec 2024 15:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C4613792B;
+	Thu, 12 Dec 2024 15:52:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018758; cv=none; b=cd5H9j3zu43ZcsDc7NHqOu/zty3urVjXCGlTbqGQQUqG3pXu/frmUYxuB1iRkb625rjV2ugZfhil0rW2ihL7KZ8ehrUxhm6Z8qGf8b6N3n7zURPfqc27BZRvihszLQpSgwPHN7Ar6RlsoJd2t/LmGYAsWVhbyBM08p3yVX+I7QM=
+	t=1734018762; cv=none; b=c9i63JOBJOuyu3HowFHUDWFNKKxM6GiAq+IgCsQiDn6IX2p7vNsBJWghj7PijqtOMPnSSPE9VY7NeOp3aOv7uVxDjZrgF7lPkFIKMSq+LywnETAd4uAAUoMlawttHsNZIL3V/NsmBJhMEm/lj6VOX+mi9Q6pP6YIQXHRp1rmwr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018758; c=relaxed/simple;
-	bh=Ej/DMhiZtuNQ29dIA1Zs2HI1fTsbHjalKJbovTBB8ks=;
+	s=arc-20240116; t=1734018762; c=relaxed/simple;
+	bh=x6wlQNfv4wXinj6FQbAjpGgBlt6fZBvpWPeCxyKpJ5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiX+eYvSSr+3V09Duymuz5VPihy2oyr3lSLymuXwNuWPfC49h9WxhvH4BZjSvwMa1EGM/NjObcWYZL9UTtW44lo3oa9hjfUxD9HcsF5DmEzmpmPNGjQ8xOYTWk7ewbisQWq7ZqEzbhmTmunmiXjuXT6rH2KmqjLa0EEhp710Tx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HmW1Htdc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9y/frtf3YpixKpyHvGlzkuMrTLk6kR3CYRXSLpOLhrS+5hFqMdupvqy6cVhnadBMlvNFwLlWQHL1fItjF5IvAPxNnIaZj8Mwd91fLVc+hWxRyPRYSIA6BGXv1zKdy9qXp92qVEizUGbL/HyR9PDmz7o+bNqn/SIMltI/o6byCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFJRorTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HmW1Htdc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF54DC4CED0;
-	Thu, 12 Dec 2024 15:52:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFJRorTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E25C4CECE;
+	Thu, 12 Dec 2024 15:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018758;
-	bh=Ej/DMhiZtuNQ29dIA1Zs2HI1fTsbHjalKJbovTBB8ks=;
+	s=korg; t=1734018761;
+	bh=x6wlQNfv4wXinj6FQbAjpGgBlt6fZBvpWPeCxyKpJ5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmW1Htdc5u4QGDbmKCG92lAuPuw6kOXosp9Q7dnN1PYDLZ8eOIEhB4TIVy6UcHHgs
-	 zq2mwp0NvEFSZLIy/gRV4W6VFcVf4yFjf8a7TIyXYBonsy6ZqeptqE5bUUdsKzbqMv
-	 paSGMT2rDEODG7BXMsRYl3GpHgzGPPBzn8cbUkag=
+	b=MFJRorTH1MJrZZtLQCi5m4g0S19tmRKmXgLGY5jVTPmFbdROfUKzsdcReqDOkpyre
+	 PjqxMGwBEDx1iJSkPveaEgWxt7zHZ68cSUQNXlfKgRnUxd4etR1FBjLP0tju1fzATY
+	 blQWX9eUZhEcJzVsp7UfhfWADV9jShsWlq3H6NxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Watts <contact@jookia.org>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Yuli Wang <wangyuli@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/772] ASoC: audio-graph-card2: Purge absent supplies for device tree nodes
-Date: Thu, 12 Dec 2024 15:49:29 +0100
-Message-ID: <20241212144350.941895024@linuxfoundation.org>
+Subject: [PATCH 6.1 025/772] LoongArch: Define a default value for VM_DATA_DEFAULT_FLAGS
+Date: Thu, 12 Dec 2024 15:49:30 +0100
+Message-ID: <20241212144350.988211050@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,52 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Watts <contact@jookia.org>
+From: Yuli Wang <wangyuli@uniontech.com>
 
-[ Upstream commit f8da001ae7af0abd9f6250c02c01a1121074ca60 ]
+[ Upstream commit c859900a841b0a6cd9a73d16426465e44cdde29c ]
 
-The audio graph card doesn't mark its subnodes such as multi {}, dpcm {}
-and c2c {} as not requiring any suppliers. This causes a hang as Linux
-waits for these phantom suppliers to show up on boot.
-Make it clear these nodes have no suppliers.
+This is a trivial cleanup, commit c62da0c35d58518d ("mm/vma: define a
+default value for VM_DATA_DEFAULT_FLAGS") has unified default values of
+VM_DATA_DEFAULT_FLAGS across different platforms.
 
-Example error message:
-[   15.208558] platform 2034000.i2s: deferred probe pending: platform: wait for supplier /sound/multi
-[   15.208584] platform sound: deferred probe pending: asoc-audio-graph-card2: parse error
+Apply the same consistency to LoongArch.
 
-Signed-off-by: John Watts <contact@jookia.org>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/20241108-graph_dt_fix-v1-1-173e2f9603d6@jookia.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Yuli Wang <wangyuli@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/generic/audio-graph-card2.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/loongarch/include/asm/page.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/sound/soc/generic/audio-graph-card2.c b/sound/soc/generic/audio-graph-card2.c
-index 8ac6df645ee6c..33f35eaa76a8b 100644
---- a/sound/soc/generic/audio-graph-card2.c
-+++ b/sound/soc/generic/audio-graph-card2.c
-@@ -249,16 +249,19 @@ static enum graph_type __graph_get_type(struct device_node *lnk)
+diff --git a/arch/loongarch/include/asm/page.h b/arch/loongarch/include/asm/page.h
+index bbac81dd73788..9919253804e61 100644
+--- a/arch/loongarch/include/asm/page.h
++++ b/arch/loongarch/include/asm/page.h
+@@ -102,10 +102,7 @@ static inline int pfn_valid(unsigned long pfn)
+ extern int __virt_addr_valid(volatile void *kaddr);
+ #define virt_addr_valid(kaddr)	__virt_addr_valid((volatile void *)(kaddr))
  
- 	if (of_node_name_eq(np, GRAPH_NODENAME_MULTI)) {
- 		ret = GRAPH_MULTI;
-+		fw_devlink_purge_absent_suppliers(&np->fwnode);
- 		goto out_put;
- 	}
+-#define VM_DATA_DEFAULT_FLAGS \
+-	(VM_READ | VM_WRITE | \
+-	 ((current->personality & READ_IMPLIES_EXEC) ? VM_EXEC : 0) | \
+-	 VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
++#define VM_DATA_DEFAULT_FLAGS	VM_DATA_FLAGS_TSK_EXEC
  
- 	if (of_node_name_eq(np, GRAPH_NODENAME_DPCM)) {
- 		ret = GRAPH_DPCM;
-+		fw_devlink_purge_absent_suppliers(&np->fwnode);
- 		goto out_put;
- 	}
- 
- 	if (of_node_name_eq(np, GRAPH_NODENAME_C2C)) {
- 		ret = GRAPH_C2C;
-+		fw_devlink_purge_absent_suppliers(&np->fwnode);
- 		goto out_put;
- 	}
- 
+ #include <asm-generic/memory_model.h>
+ #include <asm-generic/getorder.h>
 -- 
 2.43.0
 
