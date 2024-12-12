@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820DF22F395;
-	Thu, 12 Dec 2024 15:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F2522FE04;
+	Thu, 12 Dec 2024 15:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019052; cv=none; b=bNlKU7hW59few6J8eDdRy9QB6VOlVcf1HHmCKuJ6v0beQGl47QOndWnfYTrx97ON10lQViZUDCIV/rVW5otIQit+bHFSUKZq9iIK4mbO6nVzcmiyMarFiQTyIDlEABJOPKDGIi7euMWG8CSracCEtujH0xfjFtYwEZ4hZijq3hk=
+	t=1734019056; cv=none; b=qeV5ys5ZU6OE8GeZaEM0vvTfxp2PxARQ9ACVv35NG+SkEc3rCAk8TReZAunjenwpvbod3paRuJoVKYIxyLv2YaOOrn0/GaZrwnH4UgRKlbJrNntRZMEoGu5EcCabf5x5kydvBXp1YSMevJYKi6h5ANrSpOgf3yPKstNnkpgWteg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019052; c=relaxed/simple;
-	bh=QeCsHVI0dpQe7X5YgGeacw1DlQPS6ykDPSWheOfycl8=;
+	s=arc-20240116; t=1734019056; c=relaxed/simple;
+	bh=OW9p/S4vDez05a9Xg8JXxSmsM/OGus5JCM7TGTdSgAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TMsezw4ETgGPgS2/iC5lTDGDB0o7ioDcsFnDS1KxAYoe9z4KiGMEtHMjcTkX06YYyocUjccr58b9zNJqLERqZVB8sUXjDElELjazxZElr4AxWSIqRhLKKLS9WJpXWtKyc0M2JOkXemp8GOUVH3/7bpK4aiPVBsnUxm2RAw0yDZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xrnMy2R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dirn7nD9zBq4QCQKj5iQN5TraIM/ad+6aoJVQjW18ghTVnlYrKhJHDc5vLSVlVmXPfvWK9OICKwV2WfW5jduxGipawDHEkDD5+J7cYdUbOCUzxFLt11A7TmC2B4ZLEHep0qFDsvCdM/K+UaJVc46FjFzDXeJRts0DVDFpXHETwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRkntum6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xrnMy2R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E59E5C4CECE;
-	Thu, 12 Dec 2024 15:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRkntum6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22F7C4CECE;
+	Thu, 12 Dec 2024 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019052;
-	bh=QeCsHVI0dpQe7X5YgGeacw1DlQPS6ykDPSWheOfycl8=;
+	s=korg; t=1734019056;
+	bh=OW9p/S4vDez05a9Xg8JXxSmsM/OGus5JCM7TGTdSgAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xrnMy2RJsKgwE3FBySLsXSI327IgHzIWi5mpmOoyMEWpOm9VZORtoMBulZe3YtJn
-	 pT0DzcQwiHqO1vlioMG2b8Opew25G6I+aQYluSSFM2CTU7GOfwCTSit+KJc9Hjgh95
-	 Eu0iVWqEJrT+IMpAL2eyrFaNcIdbslG3nyKc4heM=
+	b=JRkntum6MugF39TI0cYO7GouMx7XJg0MZnzpiH6zCQ9L3t9nXvibHVsYTgf/dxjQh
+	 mmDNwjxeIWmWFAZVPBeEQkZExf+JxamaKzqa2A3OXlWJRcQkv7M5rxRflJOP09iH/J
+	 aLFLBKg+dOWy/34hGnobqXMQ7e5xWv6uuvCriOtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/772] cgroup/bpf: only cgroup v2 can be attached by bpf programs
-Date: Thu, 12 Dec 2024 15:50:50 +0100
-Message-ID: <20241212144354.274997360@linuxfoundation.org>
+Subject: [PATCH 6.1 106/772] arm64: dts: mt8183: fennel: add i2c2s i2c-scl-internal-delay-ns
+Date: Thu, 12 Dec 2024 15:50:51 +0100
+Message-ID: <20241212144354.314760938@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,68 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
 
-[ Upstream commit 2190df6c91373fdec6db9fc07e427084f232f57e ]
+[ Upstream commit c802db127dfb9602aaa9338e433c0553d34f1a9c ]
 
-Only cgroup v2 can be attached by bpf programs, so this patch introduces
-that cgroup_bpf_inherit and cgroup_bpf_offline can only be called in
-cgroup v2, and this can fix the memleak mentioned by commit 04f8ef5643bc
-("cgroup: Fix memory leak caused by missing cgroup_bpf_offline"), which
-has been reverted.
+Add i2c2's i2c-scl-internal-delay-ns.
 
-Fixes: 2b0d3d3e4fcf ("percpu_ref: reduce memory footprint of percpu_ref in fast path")
-Fixes: 4bfc0bb2c60e ("bpf: decouple the lifetime of cgroup_bpf from cgroup itself")
-Link: https://lore.kernel.org/cgroups/aka2hk5jsel5zomucpwlxsej6iwnfw4qu5jkrmjhyfhesjlfdw@46zxhg5bdnr7/
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 6cd7fdc8c530 ("arm64: dts: mt8183: Add kukui-jacuzzi-fennel board")
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daolong Zhu <jg_daolongzhu@mediatek.corp-partner.google.com>
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Reviewed-by:
+Link: https://lore.kernel.org/r/20241025-i2c-delay-v2-1-9be1bcaf35e0@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 11aa400979971..72ad4de66d10f 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -2119,8 +2119,10 @@ int cgroup_setup_root(struct cgroup_root *root, u16 ss_mask)
- 	if (ret)
- 		goto exit_stats;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi
+index bbe6c338f465e..f9c1ec366b266 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-fennel.dtsi
+@@ -25,3 +25,6 @@ trackpad@2c {
+ 	};
+ };
  
--	ret = cgroup_bpf_inherit(root_cgrp);
--	WARN_ON_ONCE(ret);
-+	if (root == &cgrp_dfl_root) {
-+		ret = cgroup_bpf_inherit(root_cgrp);
-+		WARN_ON_ONCE(ret);
-+	}
- 
- 	trace_cgroup_setup_root(root);
- 
-@@ -5626,9 +5628,11 @@ static struct cgroup *cgroup_create(struct cgroup *parent, const char *name,
- 	if (ret)
- 		goto out_kernfs_remove;
- 
--	ret = cgroup_bpf_inherit(cgrp);
--	if (ret)
--		goto out_psi_free;
-+	if (cgrp->root == &cgrp_dfl_root) {
-+		ret = cgroup_bpf_inherit(cgrp);
-+		if (ret)
-+			goto out_psi_free;
-+	}
- 
- 	/*
- 	 * New cgroup inherits effective freeze counter, and
-@@ -5946,7 +5950,8 @@ static int cgroup_destroy_locked(struct cgroup *cgrp)
- 
- 	cgroup1_check_for_release(parent);
- 
--	cgroup_bpf_offline(cgrp);
-+	if (cgrp->root == &cgrp_dfl_root)
-+		cgroup_bpf_offline(cgrp);
- 
- 	/* put the base reference */
- 	percpu_ref_kill(&cgrp->self.refcnt);
++&i2c2 {
++	i2c-scl-internal-delay-ns = <21500>;
++};
 -- 
 2.43.0
 
