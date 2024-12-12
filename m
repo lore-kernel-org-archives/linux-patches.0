@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71927217F40;
-	Thu, 12 Dec 2024 15:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C38218594;
+	Thu, 12 Dec 2024 15:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015839; cv=none; b=SR5fgL/n/PdFgkKp1bZYbkvhVqEZf9kKHIMxzqW0ciJ/sjXVdR8Kz53HDFQu9Si7IlTCHN0jgkYDTdVx0c+e6PUY0D0Gq4xOFCcQ5UclPe1WQZcIdQkYfkcv8hIYNlr7aBjYestPhOEmHGorY991S39HgQEN3piCET/ifE/pNBo=
+	t=1734015843; cv=none; b=pAlPjF4v6/3SodCG0osxdtPPHgSG4nxCjwr3z3eLseaw5KQh0i69GQQAJxGRhwrTE2K6wq3y5NjozUUytq1+HN6kZ2Z2me3AlVyhXDPgfNaYwQViXvh4vUhEhmEnHPRGT6PrmrX8ETrYwkVgW+GiqTPhgJiBENr+r1MKIyS/m3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015839; c=relaxed/simple;
-	bh=ZvC3dIcTVTA9Gf2knXMsoBhsilCMFrZoe+tBQRivK0M=;
+	s=arc-20240116; t=1734015843; c=relaxed/simple;
+	bh=5WVXJuLIATHnji1BulnNgrBnsrdU2aX9i5wyMCVyThg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0xCjTp1D+ZMxiU4NvKT3tYiiQk0+rN2YxBwWStwMyx6eGSi9DBZBjSUEnUs8ZllVKPgrJ3CMxNUYJTFBRwXvapFADGHS64iDQ3CfnxrTCWU15wwlt7SHe47dv1k0UM3DqgYki8iujrtJcBxpYiK22wMO6NALKD5PtKONihxAso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSmq1Y8u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxkuOeqkRCi4uHHiAnjFl5durfTTrPK63vmS79UQGZxyntMne+IWcQA2ObNNlR7z+LGFKgxWIXwh39NprkGHbhEFO7Xs6bvz+SNpJ8OcVmkW36+d+ni1Zqw9rDQqTswwfpNBVKpnxnQ2CJ3N7vj8mc3/cpkxv3F4apKijYN7piQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WQKKWCBp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSmq1Y8u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985DDC4CECE;
-	Thu, 12 Dec 2024 15:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WQKKWCBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43C19C4CEDE;
+	Thu, 12 Dec 2024 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015839;
-	bh=ZvC3dIcTVTA9Gf2knXMsoBhsilCMFrZoe+tBQRivK0M=;
+	s=korg; t=1734015843;
+	bh=5WVXJuLIATHnji1BulnNgrBnsrdU2aX9i5wyMCVyThg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSmq1Y8uUXfQLeidhyNB3940vwT1u9Z8xC2rephvBKeKKIUKQ039kJ8WNkiAcRaha
-	 7wUoDRsZch8VjtHBx1h2MS/96Ma9PZzBT4j9ZAvIPJ/BpdD7F6azD5PeYKgspQ0AnP
-	 uXy57Uvoxh0WHHd22u2yZORfBUhmJeokEjkSZJIQ=
+	b=WQKKWCBpH6pBQyMVfi6sz0mHKujbWhxbzgihSnfHhPa9XRKFOP7Am4pbqFKk1NBbu
+	 8iO2Z7ebY9v4v/O5YWYdDH0WYryP3B49I0knbljqd9UXJMZKU0RMKhmvjdpp8wzV13
+	 g+e9AzuFuQCsX8SMDykUouSoQsv3/H0hWedsifHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jiri Wiesner <jwiesner@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/466] net: phy: microchip: Reset LAN88xx PHY to ensure clean link state on LAN7800/7850
-Date: Thu, 12 Dec 2024 15:53:18 +0100
-Message-ID: <20241212144307.838350073@linuxfoundation.org>
+Subject: [PATCH 6.12 030/466] net/ipv6: release expired exception dst cached in socket
+Date: Thu, 12 Dec 2024 15:53:19 +0100
+Message-ID: <20241212144307.876431172@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,66 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Jiri Wiesner <jwiesner@suse.de>
 
-[ Upstream commit ccb989e4d1efe0dd81b28c437443532d80d9ecee ]
+[ Upstream commit 3301ab7d5aeb0fe270f73a3d4810c9d1b6a9f045 ]
 
-Fix outdated MII_LPA data in the LAN88xx PHY, which is used in LAN7800
-and LAN7850 USB Ethernet controllers. Due to a hardware limitation, the
-PHY cannot reliably update link status after parallel detection when the
-link partner does not support auto-negotiation. To mitigate this, add a
-PHY reset in `lan88xx_link_change_notify()` when `phydev->state` is
-`PHY_NOLINK`, ensuring the PHY starts in a clean state and reports
-accurate fixed link parallel detection results.
+Dst objects get leaked in ip6_negative_advice() when this function is
+executed for an expired IPv6 route located in the exception table. There
+are several conditions that must be fulfilled for the leak to occur:
+* an ICMPv6 packet indicating a change of the MTU for the path is received,
+  resulting in an exception dst being created
+* a TCP connection that uses the exception dst for routing packets must
+  start timing out so that TCP begins retransmissions
+* after the exception dst expires, the FIB6 garbage collector must not run
+  before TCP executes ip6_negative_advice() for the expired exception dst
 
-Fixes: 792aec47d59d9 ("add microchip LAN88xx phy driver")
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20241125084050.414352-1-o.rempel@pengutronix.de
+When TCP executes ip6_negative_advice() for an exception dst that has
+expired and if no other socket holds a reference to the exception dst, the
+refcount of the exception dst is 2, which corresponds to the increment
+made by dst_init() and the increment made by the TCP socket for which the
+connection is timing out. The refcount made by the socket is never
+released. The refcount of the dst is decremented in sk_dst_reset() but
+that decrement is counteracted by a dst_hold() intentionally placed just
+before the sk_dst_reset() in ip6_negative_advice(). After
+ip6_negative_advice() has finished, there is no other object tied to the
+dst. The socket lost its reference stored in sk_dst_cache and the dst is
+no longer in the exception table. The exception dst becomes a leaked
+object.
+
+As a result of this dst leak, an unbalanced refcount is reported for the
+loopback device of a net namespace being destroyed under kernels that do
+not contain e5f80fcf869a ("ipv6: give an IPv6 dev to blackhole_netdev"):
+unregister_netdevice: waiting for lo to become free. Usage count = 2
+
+Fix the dst leak by removing the dst_hold() in ip6_negative_advice(). The
+patch that introduced the dst_hold() in ip6_negative_advice() was
+92f1655aa2b22 ("net: fix __dst_negative_advice() race"). But 92f1655aa2b22
+merely refactored the code with regards to the dst refcount so the issue
+was present even before 92f1655aa2b22. The bug was introduced in
+54c1a859efd9f ("ipv6: Don't drop cache route entry unless timer actually
+expired.") where the expired cached route is deleted and the sk_dst_cache
+member of the socket is set to NULL by calling dst_negative_advice() but
+the refcount belonging to the socket is left unbalanced.
+
+The IPv4 version - ipv4_negative_advice() - is not affected by this bug.
+When the TCP connection times out ipv4_negative_advice() merely resets the
+sk_dst_cache of the socket while decrementing the refcount of the
+exception dst.
+
+Fixes: 92f1655aa2b22 ("net: fix __dst_negative_advice() race")
+Fixes: 54c1a859efd9f ("ipv6: Don't drop cache route entry unless timer actually expired.")
+Link: https://lore.kernel.org/netdev/20241113105611.GA6723@incl/T/#u
+Signed-off-by: Jiri Wiesner <jwiesner@suse.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241128085950.GA4505@incl
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/microchip.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ net/ipv6/route.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
-index d3273bc0da4a1..691969a4910f2 100644
---- a/drivers/net/phy/microchip.c
-+++ b/drivers/net/phy/microchip.c
-@@ -351,6 +351,22 @@ static int lan88xx_config_aneg(struct phy_device *phydev)
- static void lan88xx_link_change_notify(struct phy_device *phydev)
- {
- 	int temp;
-+	int ret;
-+
-+	/* Reset PHY to ensure MII_LPA provides up-to-date information. This
-+	 * issue is reproducible only after parallel detection, as described
-+	 * in IEEE 802.3-2022, Section 28.2.3.1 ("Parallel detection function"),
-+	 * where the link partner does not support auto-negotiation.
-+	 */
-+	if (phydev->state == PHY_NOLINK) {
-+		ret = phy_init_hw(phydev);
-+		if (ret < 0)
-+			goto link_change_notify_failed;
-+
-+		ret = _phy_start_aneg(phydev);
-+		if (ret < 0)
-+			goto link_change_notify_failed;
-+	}
- 
- 	/* At forced 100 F/H mode, chip may fail to set mode correctly
- 	 * when cable is switched between long(~50+m) and short one.
-@@ -377,6 +393,11 @@ static void lan88xx_link_change_notify(struct phy_device *phydev)
- 		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
- 		phy_write(phydev, LAN88XX_INT_MASK, temp);
- 	}
-+
-+	return;
-+
-+link_change_notify_failed:
-+	phydev_err(phydev, "Link change process failed %pe\n", ERR_PTR(ret));
- }
- 
- /**
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index cff4fbbc66efb..8ebfed5d63232 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -2780,10 +2780,10 @@ static void ip6_negative_advice(struct sock *sk,
+ 	if (rt->rt6i_flags & RTF_CACHE) {
+ 		rcu_read_lock();
+ 		if (rt6_check_expired(rt)) {
+-			/* counteract the dst_release() in sk_dst_reset() */
+-			dst_hold(dst);
++			/* rt/dst can not be destroyed yet,
++			 * because of rcu_read_lock()
++			 */
+ 			sk_dst_reset(sk);
+-
+ 			rt6_remove_exception_rt(rt);
+ 		}
+ 		rcu_read_unlock();
 -- 
 2.43.0
 
