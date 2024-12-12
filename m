@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FFF20A5EE;
-	Thu, 12 Dec 2024 17:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2FE215178;
+	Thu, 12 Dec 2024 17:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025184; cv=none; b=dQCxJpxRQOqXB9Pr2H+JjtJuVOwYsyYJZuNbn/rQbKuQjJB7lB82xNtJvWvlIW/A6LNu9PXllZGXVvLkWm4ybTXLoUuZYiZSwVaVKuImgFbt0o47sWQuSepirixKPsLqcH/ufRNHJHNFyEBh8l7HWM6iRtvJaNUoxfN2KCruSv8=
+	t=1734025187; cv=none; b=L5uv95viwtXDPAhVVsssUnH7D3lrEGPZbZi22qZuOnYPW9Z7R1u2aKMLcRgnpuk9G2PsCSraIqQ2q/aBuxzyJfjcCcr/DrjsjYA8fBk4lJEIJIz4YcbhqKrlWK5lQTjgyQRb43Hx4egcvculruRJEXeatLetoiJ3W8IzD2qb6TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025184; c=relaxed/simple;
-	bh=3H23y+nhAz9BuiyO6FHCQB15Dym9+QCrFh8NP/rdzA8=;
+	s=arc-20240116; t=1734025187; c=relaxed/simple;
+	bh=o5x5yXPsvBARClWBhV/R0Tuft4SzUFEgjeaghEr5+4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g42/wORV+oaWFAAcUH+0YPe5PQZJn/zkZUjYAUv6wIwEa9l4eal5IPzAZ/BLsoFCH9VpTfIJPeuOU9ndBxtJC8QvKyB/TOMKkylRZHfDkjCDIw1y3zyVYPlQGFQj5ZeFc6Hnj+qFgNOVO6D/2RZS57pYh5wwFzg8P2foWo0gWJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHAswu22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiwHGZ+MqL7dby5is9j96x5vYTlcxczY2IiLN0WLIYSdM+9DqkajkWLxixmRe3lqGIexGkfGzILdXvBCwRJPgPIF+J91MDnP/Uxb9OhICwm3+bbWn1SSxKbV/arymjj9YaseW1r2tSew/ZpHqsu3Z4jzpNRDihWx7yx9LjnDbbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5/bYv95; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHAswu22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09AA8C4CECE;
-	Thu, 12 Dec 2024 17:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5/bYv95"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DAF2C4CED0;
+	Thu, 12 Dec 2024 17:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025184;
-	bh=3H23y+nhAz9BuiyO6FHCQB15Dym9+QCrFh8NP/rdzA8=;
+	s=korg; t=1734025187;
+	bh=o5x5yXPsvBARClWBhV/R0Tuft4SzUFEgjeaghEr5+4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHAswu22cbcsB2IKyX93EJPOhV6mVK53xuc3wXcU6x7mo7CbZRBM+GLAzAXS4jPqk
-	 ZhdVoOKtaQ8Vb695UxDFz0dsD9WM9JzNRZBKv1E6kIQllCjoq84MApYglTSXBK4CVA
-	 Y+G6yy3QcGBqv24TM7RmMcwdZ6lS1AloLafM/byA=
+	b=s5/bYv95YWrx5GmiCjx+jCpUK6VtHEMWA4ggVF0DyakVFDAZP52JPXA2wU0BduSSz
+	 LD+wG/GPIRfJIan2czgqjb+vY+62U7R6jS/SEa0cRXrtNMQORmlT4qEU4f6oxyTxTS
+	 FF8I4vNsUENKdFT35Aq0gROM2m6VmPlstxe6gft8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Levi Yun <yeoreum.yun@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 085/321] netpoll: Use rcu_access_pointer() in netpoll_poll_lock
-Date: Thu, 12 Dec 2024 16:00:03 +0100
-Message-ID: <20241212144233.340015634@linuxfoundation.org>
+Subject: [PATCH 5.4 086/321] trace/trace_event_perf: remove duplicate samples on the first tracepoint event
+Date: Thu, 12 Dec 2024 16:00:04 +0100
+Message-ID: <20241212144233.380017571@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,43 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Levi Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit a57d5a72f8dec7db8a79d0016fb0a3bdecc82b56 ]
+[ Upstream commit afe5960dc208fe069ddaaeb0994d857b24ac19d1 ]
 
-The ndev->npinfo pointer in netpoll_poll_lock() is RCU-protected but is
-being accessed directly for a NULL check. While no RCU read lock is held
-in this context, we should still use proper RCU primitives for
-consistency and correctness.
+When a tracepoint event is created with attr.freq = 1,
+'hwc->period_left' is not initialized correctly. As a result,
+in the perf_swevent_overflow() function, when the first time the event occurs,
+it calculates the event overflow and the perf_swevent_set_period() returns 3,
+this leads to the event are recorded for three duplicate times.
 
-Replace the direct NULL check with rcu_access_pointer(), which is the
-appropriate primitive when only checking for NULL without dereferencing
-the pointer. This function provides the necessary ordering guarantees
-without requiring RCU read-side protection.
+Step to reproduce:
+    1. Enable the tracepoint event & starting tracing
+         $ echo 1 > /sys/kernel/tracing/events/module/module_free
+         $ echo 1 > /sys/kernel/tracing/tracing_on
 
-Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://patch.msgid.link/20241118-netpoll_rcu-v1-2-a1888dcb4a02@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    2. Record with perf
+         $ perf record -a --strict-freq -F 1 -e "module:module_free"
+
+    3. Trigger module_free event.
+         $ modprobe -i sunrpc
+         $ modprobe -r sunrpc
+
+Result:
+     - Trace pipe result:
+         $ cat trace_pipe
+         modprobe-174509  [003] .....  6504.868896: module_free: sunrpc
+
+     - perf sample:
+         modprobe  174509 [003]  6504.868980: module:module_free: sunrpc
+         modprobe  174509 [003]  6504.868980: module:module_free: sunrpc
+         modprobe  174509 [003]  6504.868980: module:module_free: sunrpc
+
+By setting period_left via perf_swevent_set_period() as other sw_event did,
+This problem could be solved.
+
+After patch:
+     - Trace pipe result:
+         $ cat trace_pipe
+         modprobe 1153096 [068] 613468.867774: module:module_free: xfs
+
+     - perf sample
+         modprobe 1153096 [068] 613468.867794: module:module_free: xfs
+
+Link: https://lore.kernel.org/20240913021347.595330-1-yeoreum.yun@arm.com
+Fixes: bd2b5b12849a ("perf_counter: More aggressive frequency adjustment")
+Signed-off-by: Levi Yun <yeoreum.yun@arm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netpoll.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_event_perf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/linux/netpoll.h b/include/linux/netpoll.h
-index 676f1ff161a98..3ff0303672842 100644
---- a/include/linux/netpoll.h
-+++ b/include/linux/netpoll.h
-@@ -78,7 +78,7 @@ static inline void *netpoll_poll_lock(struct napi_struct *napi)
+diff --git a/kernel/trace/trace_event_perf.c b/kernel/trace/trace_event_perf.c
+index 563c0e659a40e..3de49b3f4cae1 100644
+--- a/kernel/trace/trace_event_perf.c
++++ b/kernel/trace/trace_event_perf.c
+@@ -350,10 +350,16 @@ void perf_uprobe_destroy(struct perf_event *p_event)
+ int perf_trace_add(struct perf_event *p_event, int flags)
  {
- 	struct net_device *dev = napi->dev;
+ 	struct trace_event_call *tp_event = p_event->tp_event;
++	struct hw_perf_event *hwc = &p_event->hw;
  
--	if (dev && dev->npinfo) {
-+	if (dev && rcu_access_pointer(dev->npinfo)) {
- 		int owner = smp_processor_id();
+ 	if (!(flags & PERF_EF_START))
+ 		p_event->hw.state = PERF_HES_STOPPED;
  
- 		while (cmpxchg(&napi->poll_owner, -1, owner) != -1)
++	if (is_sampling_event(p_event)) {
++		hwc->last_period = hwc->sample_period;
++		perf_swevent_set_period(p_event);
++	}
++
+ 	/*
+ 	 * If TRACE_REG_PERF_ADD returns false; no custom action was performed
+ 	 * and we need to take the default action of enqueueing our event on
 -- 
 2.43.0
 
