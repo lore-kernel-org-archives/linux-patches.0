@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699FE223C46;
-	Thu, 12 Dec 2024 16:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF628223C46;
+	Thu, 12 Dec 2024 16:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019481; cv=none; b=R8cBet/jXZ36QzdFE4d7KRv2s8ghaF/N743+NJDdFJp80V14OWUXGfENIeYrHX+agCthziuaVF8L1Da240QiuPio++rVu1YdVH/uw38G2DVwyFEYlDYvIYRiA1615AQ/AfJIZgXf6nzeTIrSqn6fdUjKe4740zwT4lUDqn88Lrs=
+	t=1734019484; cv=none; b=JC22pO78/toza/fjiqd9dxum7Dro+tRDH4GWYN8HPpbxDbqORf+MUMhOxKwSqvoZxDEWzjPrpSetTQ/mZ0LhnNutNlGzZKXt+qHb0ItAEJ0NhSGwvODLCGDZ2+gMfTXQCkcGOAXbKq+kaNo5t0a1Qozc9LYcjMLsDT8RoR8oEUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019481; c=relaxed/simple;
-	bh=sTh0R1w2P9bU+BexzIQIPsWYPfuZSDursjSfyxTWk3M=;
+	s=arc-20240116; t=1734019484; c=relaxed/simple;
+	bh=B6cDyLFIBsW8K+U9vAwmyHqCp/gcnL7Qa/7xg6b6aHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mpw86BsuE/F8excfHRZLQXFgn6h5jiWYvl5lr1B57D/lMxkrpNqJHM7mDIHDHva0hfNcjuhBsp8wOxhKyqT2Px5/56D7zzYxcDpcXbvTnsf2/YGe9iZMEasToOb0HTSZT5KxM1MpWMcTAYIbEbqGEsdru+Ve6md2cpxFmoJnwMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ar30JiGa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aN9Dt84rTM7/U8zm8jg/kc0gj0d4jQsBHW96+nd9mZGN8Cs/8VU8R91Hv71ie7PqfZJWhR/SH31Z076Q3DS6CD9dMmHa1TI372sfe3IuqvzsUGPjl5YtShFyvX+cxcfQtnmphRE0FGBlDNb+zpW6QFbpCvbw4v5e5qBf3wK8wmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hyW5JKxN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ar30JiGa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B20C4CED3;
-	Thu, 12 Dec 2024 16:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hyW5JKxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A833C4CED0;
+	Thu, 12 Dec 2024 16:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019481;
-	bh=sTh0R1w2P9bU+BexzIQIPsWYPfuZSDursjSfyxTWk3M=;
+	s=korg; t=1734019484;
+	bh=B6cDyLFIBsW8K+U9vAwmyHqCp/gcnL7Qa/7xg6b6aHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ar30JiGaE6jhk6FA5qPqrIEp1msUuPZmg8NFGp3fL6rrREs2OLMc/ROvuNrLf3fWq
-	 B9B/7135X3xJkmFacPsv7+eWkj/DIRwTonaZW+yl/IHklnH2vKJdHADWSy2ZDUBwi2
-	 W/NjFrmy7AP91O+u88HWuQ+CVD2G9raxwc/kJZsY=
+	b=hyW5JKxNvAZru3NqhNWNXHMZ8VOq5KpxAG6KuYJubjfSEYaxfdSSBZmwE9FkMDDGB
+	 zF2/MO7nDCaRHvhsDTWNhoDox+kFFH1JDoZa5oZMdf3m49Rumkr2jUBUeW7WjBnUQ4
+	 zVucMhwQpl6nT+iFxNNDJEA50D1m6qVYA3maBOn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/772] mtd: rawnand: atmel: Fix possible memory leak
-Date: Thu, 12 Dec 2024 15:52:43 +0100
-Message-ID: <20241212144358.922703096@linuxfoundation.org>
+Subject: [PATCH 6.1 219/772] powerpc/mm/fault: Fix kfence page fault reporting
+Date: Thu, 12 Dec 2024 15:52:44 +0100
+Message-ID: <20241212144358.961496400@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,68 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 6d734f1bfc336aaea91313a5632f2f197608fadd ]
+[ Upstream commit 06dbbb4d5f7126b6307ab807cbf04ecfc459b933 ]
 
-The pmecc "user" structure is allocated in atmel_pmecc_create_user() and
-was supposed to be freed with atmel_pmecc_destroy_user(), but this other
-helper is never called. One solution would be to find the proper
-location to call the destructor, but the trend today is to switch to
-device managed allocations, which in this case fits pretty well.
+copy_from_kernel_nofault() can be called when doing read of /proc/kcore.
+/proc/kcore can have some unmapped kfence objects which when read via
+copy_from_kernel_nofault() can cause page faults. Since *_nofault()
+functions define their own fixup table for handling fault, use that
+instead of asking kfence to handle such faults.
 
-Replace kzalloc() by devm_kzalloc() and drop the destructor entirely.
+Hence we search the exception tables for the nip which generated the
+fault. If there is an entry then we let the fixup table handler handle the
+page fault by returning an error from within ___do_page_fault().
 
-Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
-Closes: https://lore.kernel.org/all/ZvmIvRJCf6VhHvpo@gallifrey/
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20241001203149.387655-1-miquel.raynal@bootlin.com
+This can be easily triggered if someone tries to do dd from /proc/kcore.
+eg. dd if=/proc/kcore of=/dev/null bs=1M
+
+Some example false negatives:
+
+  ===============================
+  BUG: KFENCE: invalid read in copy_from_kernel_nofault+0x9c/0x1a0
+  Invalid read at 0xc0000000fdff0000:
+   copy_from_kernel_nofault+0x9c/0x1a0
+   0xc00000000665f950
+   read_kcore_iter+0x57c/0xa04
+   proc_reg_read_iter+0xe4/0x16c
+   vfs_read+0x320/0x3ec
+   ksys_read+0x90/0x154
+   system_call_exception+0x120/0x310
+   system_call_vectored_common+0x15c/0x2ec
+
+  BUG: KFENCE: use-after-free read in copy_from_kernel_nofault+0x9c/0x1a0
+  Use-after-free read at 0xc0000000fe050000 (in kfence-#2):
+   copy_from_kernel_nofault+0x9c/0x1a0
+   0xc00000000665f950
+   read_kcore_iter+0x57c/0xa04
+   proc_reg_read_iter+0xe4/0x16c
+   vfs_read+0x320/0x3ec
+   ksys_read+0x90/0x154
+   system_call_exception+0x120/0x310
+   system_call_vectored_common+0x15c/0x2ec
+
+Fixes: 90cbac0e995d ("powerpc: Enable KFENCE for PPC32")
+Suggested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reported-by: Disha Goel <disgoel@linux.ibm.com>
+Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/a411788081d50e3b136c6270471e35aba3dfafa3.1729271995.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c | 8 +-------
- drivers/mtd/nand/raw/atmel/pmecc.h | 2 --
- 2 files changed, 1 insertion(+), 9 deletions(-)
+ arch/powerpc/mm/fault.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
-index 4d7dc8a9c3738..a22aab4ed4e8a 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -362,7 +362,7 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
- 	size = ALIGN(size, sizeof(s32));
- 	size += (req->ecc.strength + 1) * sizeof(s32) * 3;
+diff --git a/arch/powerpc/mm/fault.c b/arch/powerpc/mm/fault.c
+index 644e4ec6ce99d..4b59315cb820a 100644
+--- a/arch/powerpc/mm/fault.c
++++ b/arch/powerpc/mm/fault.c
+@@ -431,10 +431,16 @@ static int ___do_page_fault(struct pt_regs *regs, unsigned long address,
+ 	/*
+ 	 * The kernel should never take an execute fault nor should it
+ 	 * take a page fault to a kernel address or a page fault to a user
+-	 * address outside of dedicated places
++	 * address outside of dedicated places.
++	 *
++	 * Rather than kfence directly reporting false negatives, search whether
++	 * the NIP belongs to the fixup table for cases where fault could come
++	 * from functions like copy_from_kernel_nofault().
+ 	 */
+ 	if (unlikely(!is_user && bad_kernel_fault(regs, error_code, address, is_write))) {
+-		if (kfence_handle_page_fault(address, is_write, regs))
++		if (is_kfence_address((void *)address) &&
++		    !search_exception_tables(instruction_pointer(regs)) &&
++		    kfence_handle_page_fault(address, is_write, regs))
+ 			return 0;
  
--	user = kzalloc(size, GFP_KERNEL);
-+	user = devm_kzalloc(pmecc->dev, size, GFP_KERNEL);
- 	if (!user)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -408,12 +408,6 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
- }
- EXPORT_SYMBOL_GPL(atmel_pmecc_create_user);
- 
--void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user)
--{
--	kfree(user);
--}
--EXPORT_SYMBOL_GPL(atmel_pmecc_destroy_user);
--
- static int get_strength(struct atmel_pmecc_user *user)
- {
- 	const int *strengths = user->pmecc->caps->strengths;
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.h b/drivers/mtd/nand/raw/atmel/pmecc.h
-index 7851c05126cf1..cc0c5af1f4f1a 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.h
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.h
-@@ -55,8 +55,6 @@ struct atmel_pmecc *devm_atmel_pmecc_get(struct device *dev);
- struct atmel_pmecc_user *
- atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
- 			struct atmel_pmecc_user_req *req);
--void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user);
--
- void atmel_pmecc_reset(struct atmel_pmecc *pmecc);
- int atmel_pmecc_enable(struct atmel_pmecc_user *user, int op);
- void atmel_pmecc_disable(struct atmel_pmecc_user *user);
+ 		return SIGSEGV;
 -- 
 2.43.0
 
