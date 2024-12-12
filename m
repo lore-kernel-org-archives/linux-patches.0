@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1724F218;
-	Thu, 12 Dec 2024 15:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7622E2210D8;
+	Thu, 12 Dec 2024 15:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018669; cv=none; b=bvJNrp7XShL1SJACJ8crWhNm3yRrgO0lJHVfU46qIAqECFTkzIE7w+kRGY79MtOOX8q6yk4vBzVL8IfQaOHMo65kxrtuaKBuAlHgPq8+DYCBNBzWTjTU6Gc2jfS6Xb/FBTwwCcCR0gE+xlqBzs/rpEDLUwlNBBck0r5ENvo88nM=
+	t=1734018672; cv=none; b=EyXo1okUrSMk0xOJ4DSnmuKwA53d7CNDe16m9vVTKDuxLKxl07p5JwU6nzHane6TzyGNhLHPImYSDu3sqJKOk2wtzwb9KLhC2OpNnfq3SXg1w7FnTPQcVd6Db2YTQGMI1yr2MmaY5y6fHEzGALsHUOAeQRxcUWiSOktaYULCJ50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018669; c=relaxed/simple;
-	bh=vyng9YAgm24aGj2vrP+VPZnovyVzlgQwUccHBafVTMM=;
+	s=arc-20240116; t=1734018672; c=relaxed/simple;
+	bh=u4Ww2h/PuFK1FqH9QSkXHG//5mJB2fetBCA/IXhP6b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWLRtLnCCKxbIQ2x+ihmOW85zds7w+1QrC1Rq6y5WBITyP+zOJY8LLGgDO86NlEBOCKKV/eYPClKd5NVJauiluXax4QuwJnt42KUE/4f7gzzQExmMCTCstyZs9UsJcNyNdpSs9WYxHIhCO+Wd7H1BHGUjIm+36P+8Lx1A0LeueA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILINU2RB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3bnuh/TpuKhlkGWNXzv1p1mU6boUTqgUPs0GCg/vE2it4+zKL5Zttvxvf+zwXYCQB6uRmtxeGPUhmCL1v9lvYnJmKEtsoN6DPTCKrDZ1IXdN1EIgTyMyH4VqxLYHBXm5UwmkF78kBcOOVpupOFeWO1recIf2vt9ssa2YKI9qHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NbEXUHfQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILINU2RB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53CD0C4CECE;
-	Thu, 12 Dec 2024 15:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NbEXUHfQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8805C4CECE;
+	Thu, 12 Dec 2024 15:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018668;
-	bh=vyng9YAgm24aGj2vrP+VPZnovyVzlgQwUccHBafVTMM=;
+	s=korg; t=1734018672;
+	bh=u4Ww2h/PuFK1FqH9QSkXHG//5mJB2fetBCA/IXhP6b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ILINU2RB5qCzFHKYSpE2oqboQxeKDFwHH6NIsk3LYPJYVkqTs2fdQZgdmvjJ9AfLn
-	 n8PsQ95HD5V7DZ4rpMx52yxhFXawGlrjp+BtToIOtoSEuroBIm5E6xR6tyfShCFzy+
-	 1MC23stvqCcepE9mIzZmASKikYq2kwwR7BiHPVhk=
+	b=NbEXUHfQSBNGSUXG9Ihrcgw7hCkxA10jaddaECZJPLd0K8EEy2zQJ78Qgz0EhJ+uq
+	 oTePVfe/jYj7DwAI/RNE4EMOUQYCh5KqZUiFfelxuhyXYFGAb41GAwMW/+x0Pd0m+R
+	 UiBQDU3q0Ifi1jRcAkAr5H1SPqlmUpMvGb0iFmmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	Phil Auld <pauld@redhat.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 326/356] sched: Unify runtime accounting across classes
-Date: Thu, 12 Dec 2024 16:00:45 +0100
-Message-ID: <20241212144257.443889811@linuxfoundation.org>
+Subject: [PATCH 6.6 327/356] sched: Remove vruntime from trace_sched_stat_runtime()
+Date: Thu, 12 Dec 2024 16:00:46 +0100
+Message-ID: <20241212144257.482395937@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -56,249 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 5d69eca542ee17c618f9a55da52191d5e28b435f ]
+[ Upstream commit 5fe6ec8f6ab549b6422e41551abb51802bd48bc7 ]
 
-All classes use sched_entity::exec_start to track runtime and have
-copies of the exact same code around to compute runtime.
+Tracing the runtime delta makes sense, observer can sum over time.
+Tracing the absolute vruntime makes less sense, inconsistent:
+absolute-vs-delta, but also vruntime delta can be computed from
+runtime delta.
 
-Collapse all that.
+Removing the vruntime thing also makes the two tracepoint sites
+identical, allowing to unify the code in a later patch.
 
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lkml.kernel.org/r/54d148a144f26d9559698c4dd82d8859038a7380.1699095159.git.bristot@kernel.org
 Stable-dep-of: 0664e2c311b9 ("sched/deadline: Fix warning in migrate_enable for boosted tasks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h    |  2 +-
- kernel/sched/deadline.c  | 15 +++--------
- kernel/sched/fair.c      | 57 ++++++++++++++++++++++++++++++----------
- kernel/sched/rt.c        | 15 +++--------
- kernel/sched/sched.h     | 12 ++-------
- kernel/sched/stop_task.c | 13 +--------
- 6 files changed, 53 insertions(+), 61 deletions(-)
+ include/trace/events/sched.h | 15 ++++++---------
+ kernel/sched/fair.c          |  5 ++---
+ 2 files changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 323aa1aaaf91e..4809f27b52017 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -523,7 +523,7 @@ struct sched_statistics {
- 	u64				block_max;
- 	s64				sum_block_runtime;
+diff --git a/include/trace/events/sched.h b/include/trace/events/sched.h
+index 010ba1b7cb0ea..bdb1e838954af 100644
+--- a/include/trace/events/sched.h
++++ b/include/trace/events/sched.h
+@@ -493,33 +493,30 @@ DEFINE_EVENT_SCHEDSTAT(sched_stat_template, sched_stat_blocked,
+  */
+ DECLARE_EVENT_CLASS(sched_stat_runtime,
  
--	u64				exec_max;
-+	s64				exec_max;
- 	u64				slice_max;
+-	TP_PROTO(struct task_struct *tsk, u64 runtime, u64 vruntime),
++	TP_PROTO(struct task_struct *tsk, u64 runtime),
  
- 	u64				nr_migrations_cold;
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 36aeaaf9ab090..6421d28553576 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -1299,9 +1299,8 @@ static void update_curr_dl(struct rq *rq)
- {
- 	struct task_struct *curr = rq->curr;
- 	struct sched_dl_entity *dl_se = &curr->dl;
--	u64 delta_exec, scaled_delta_exec;
-+	s64 delta_exec, scaled_delta_exec;
- 	int cpu = cpu_of(rq);
--	u64 now;
+-	TP_ARGS(tsk, __perf_count(runtime), vruntime),
++	TP_ARGS(tsk, __perf_count(runtime)),
  
- 	if (!dl_task(curr) || !on_dl_rq(dl_se))
- 		return;
-@@ -1314,21 +1313,13 @@ static void update_curr_dl(struct rq *rq)
- 	 * natural solution, but the full ramifications of this
- 	 * approach need further study.
- 	 */
--	now = rq_clock_task(rq);
--	delta_exec = now - curr->se.exec_start;
--	if (unlikely((s64)delta_exec <= 0)) {
-+	delta_exec = update_curr_common(rq);
-+	if (unlikely(delta_exec <= 0)) {
- 		if (unlikely(dl_se->dl_yielded))
- 			goto throttle;
- 		return;
- 	}
+ 	TP_STRUCT__entry(
+ 		__array( char,	comm,	TASK_COMM_LEN	)
+ 		__field( pid_t,	pid			)
+ 		__field( u64,	runtime			)
+-		__field( u64,	vruntime			)
+ 	),
  
--	schedstat_set(curr->stats.exec_max,
--		      max(curr->stats.exec_max, delta_exec));
--
--	trace_sched_stat_runtime(curr, delta_exec, 0);
--
--	update_current_exec_runtime(curr, now, delta_exec);
--
- 	if (dl_entity_is_special(dl_se))
- 		return;
+ 	TP_fast_assign(
+ 		memcpy(__entry->comm, tsk->comm, TASK_COMM_LEN);
+ 		__entry->pid		= tsk->pid;
+ 		__entry->runtime	= runtime;
+-		__entry->vruntime	= vruntime;
+ 	),
  
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index a32d344623716..3e9333466438c 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -1150,23 +1150,17 @@ static void update_tg_load_avg(struct cfs_rq *cfs_rq)
- }
- #endif /* CONFIG_SMP */
+-	TP_printk("comm=%s pid=%d runtime=%Lu [ns] vruntime=%Lu [ns]",
++	TP_printk("comm=%s pid=%d runtime=%Lu [ns]",
+ 			__entry->comm, __entry->pid,
+-			(unsigned long long)__entry->runtime,
+-			(unsigned long long)__entry->vruntime)
++			(unsigned long long)__entry->runtime)
+ );
  
--/*
-- * Update the current task's runtime statistics.
-- */
--static void update_curr(struct cfs_rq *cfs_rq)
-+static s64 update_curr_se(struct rq *rq, struct sched_entity *curr)
- {
--	struct sched_entity *curr = cfs_rq->curr;
--	u64 now = rq_clock_task(rq_of(cfs_rq));
--	u64 delta_exec;
--
--	if (unlikely(!curr))
--		return;
-+	u64 now = rq_clock_task(rq);
-+	s64 delta_exec;
- 
- 	delta_exec = now - curr->exec_start;
--	if (unlikely((s64)delta_exec <= 0))
--		return;
-+	if (unlikely(delta_exec <= 0))
-+		return delta_exec;
- 
- 	curr->exec_start = now;
-+	curr->sum_exec_runtime += delta_exec;
- 
- 	if (schedstat_enabled()) {
- 		struct sched_statistics *stats;
-@@ -1176,8 +1170,43 @@ static void update_curr(struct cfs_rq *cfs_rq)
- 				max(delta_exec, stats->exec_max));
- 	}
- 
--	curr->sum_exec_runtime += delta_exec;
--	schedstat_add(cfs_rq->exec_clock, delta_exec);
-+	return delta_exec;
-+}
-+
-+/*
-+ * Used by other classes to account runtime.
-+ */
-+s64 update_curr_common(struct rq *rq)
-+{
-+	struct task_struct *curr = rq->curr;
-+	s64 delta_exec;
-+
-+	delta_exec = update_curr_se(rq, &curr->se);
-+	if (unlikely(delta_exec <= 0))
-+		return delta_exec;
-+
-+	trace_sched_stat_runtime(curr, delta_exec, 0);
-+
-+	account_group_exec_runtime(curr, delta_exec);
-+	cgroup_account_cputime(curr, delta_exec);
-+
-+	return delta_exec;
-+}
-+
-+/*
-+ * Update the current task's runtime statistics.
-+ */
-+static void update_curr(struct cfs_rq *cfs_rq)
-+{
-+	struct sched_entity *curr = cfs_rq->curr;
-+	s64 delta_exec;
-+
-+	if (unlikely(!curr))
-+		return;
-+
-+	delta_exec = update_curr_se(rq_of(cfs_rq), curr);
-+	if (unlikely(delta_exec <= 0))
-+		return;
- 
- 	curr->vruntime += calc_delta_fair(delta_exec, curr);
- 	update_deadline(cfs_rq, curr);
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index a8c47d8d51bde..b89223a973168 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -1050,24 +1050,15 @@ static void update_curr_rt(struct rq *rq)
- {
- 	struct task_struct *curr = rq->curr;
- 	struct sched_rt_entity *rt_se = &curr->rt;
--	u64 delta_exec;
--	u64 now;
-+	s64 delta_exec;
- 
- 	if (curr->sched_class != &rt_sched_class)
- 		return;
- 
--	now = rq_clock_task(rq);
--	delta_exec = now - curr->se.exec_start;
--	if (unlikely((s64)delta_exec <= 0))
-+	delta_exec = update_curr_common(rq);
-+	if (unlikely(delta_exec <= 0))
- 		return;
- 
--	schedstat_set(curr->stats.exec_max,
--		      max(curr->stats.exec_max, delta_exec));
--
--	trace_sched_stat_runtime(curr, delta_exec, 0);
--
--	update_current_exec_runtime(curr, now, delta_exec);
--
- 	if (!rt_bandwidth_enabled())
- 		return;
- 
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 0e289300fe78d..1d586e7576bc2 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2231,6 +2231,8 @@ struct affinity_context {
- 	unsigned int flags;
- };
- 
-+extern s64 update_curr_common(struct rq *rq);
-+
- struct sched_class {
- 
- #ifdef CONFIG_UCLAMP_TASK
-@@ -3283,16 +3285,6 @@ extern int sched_dynamic_mode(const char *str);
- extern void sched_dynamic_update(int mode);
- #endif
- 
--static inline void update_current_exec_runtime(struct task_struct *curr,
--						u64 now, u64 delta_exec)
--{
--	curr->se.sum_exec_runtime += delta_exec;
--	account_group_exec_runtime(curr, delta_exec);
--
--	curr->se.exec_start = now;
--	cgroup_account_cputime(curr, delta_exec);
--}
--
- #ifdef CONFIG_SCHED_MM_CID
- 
- #define SCHED_MM_CID_PERIOD_NS	(100ULL * 1000000)	/* 100ms */
-diff --git a/kernel/sched/stop_task.c b/kernel/sched/stop_task.c
-index 6cf7304e6449d..b1b8fe61c532a 100644
---- a/kernel/sched/stop_task.c
-+++ b/kernel/sched/stop_task.c
-@@ -70,18 +70,7 @@ static void yield_task_stop(struct rq *rq)
- 
- static void put_prev_task_stop(struct rq *rq, struct task_struct *prev)
- {
--	struct task_struct *curr = rq->curr;
--	u64 now, delta_exec;
--
--	now = rq_clock_task(rq);
--	delta_exec = now - curr->se.exec_start;
--	if (unlikely((s64)delta_exec < 0))
--		delta_exec = 0;
--
--	schedstat_set(curr->stats.exec_max,
--		      max(curr->stats.exec_max, delta_exec));
--
--	update_current_exec_runtime(curr, now, delta_exec);
-+	update_curr_common(rq);
- }
+ DEFINE_EVENT(sched_stat_runtime, sched_stat_runtime,
+-	     TP_PROTO(struct task_struct *tsk, u64 runtime, u64 vruntime),
+-	     TP_ARGS(tsk, runtime, vruntime));
++	     TP_PROTO(struct task_struct *tsk, u64 runtime),
++	     TP_ARGS(tsk, runtime));
  
  /*
+  * Tracepoint for showing priority inheritance modifying a tasks
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3e9333466438c..062447861d8e6 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -1185,8 +1185,7 @@ s64 update_curr_common(struct rq *rq)
+ 	if (unlikely(delta_exec <= 0))
+ 		return delta_exec;
+ 
+-	trace_sched_stat_runtime(curr, delta_exec, 0);
+-
++	trace_sched_stat_runtime(curr, delta_exec);
+ 	account_group_exec_runtime(curr, delta_exec);
+ 	cgroup_account_cputime(curr, delta_exec);
+ 
+@@ -1215,7 +1214,7 @@ static void update_curr(struct cfs_rq *cfs_rq)
+ 	if (entity_is_task(curr)) {
+ 		struct task_struct *curtask = task_of(curr);
+ 
+-		trace_sched_stat_runtime(curtask, delta_exec, curr->vruntime);
++		trace_sched_stat_runtime(curtask, delta_exec);
+ 		cgroup_account_cputime(curtask, delta_exec);
+ 		account_group_exec_runtime(curtask, delta_exec);
+ 	}
 -- 
 2.43.0
 
