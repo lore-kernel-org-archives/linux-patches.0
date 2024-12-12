@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 599AB2236EB;
-	Thu, 12 Dec 2024 17:33:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD70F2236EB;
+	Thu, 12 Dec 2024 17:33:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024826; cv=none; b=AMGUjvu+qncbRxBGINPGdPIimEGBbLcSUpoln8pkK4OaFNEkjqkuNXg9j14jLPQgpsZ+rFEgJzdspIXgY451/jw40BVxWLmYd/Lt1u9uNmtXWQz/2BWho+PakxjfpiWFT3cTpPCg8zW3XAtdYKtSG0Xh6Tn5fVDPGySG+wSQhiM=
+	t=1734024829; cv=none; b=bo+jhl3/ePtCebvTIPBbe8lXrlazKaSl+NQ0e+v4C5mrkHBgWKWBhJm42zWCytxVyF9jmrKe9PFi5M06t9kOzdLv9zBQ7aL7sPc0I2vY62yPpr1kM/nEh1Sxx4frQ4+ClQzQWGgir1hmULOUS5bcoCMyCxLc5/RRzNu9VLOcgRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024826; c=relaxed/simple;
-	bh=b7+NAydOgXuVLQ3PH1VOty9u4v85+pz7zItGkYYEQj0=;
+	s=arc-20240116; t=1734024829; c=relaxed/simple;
+	bh=abuvRrm3uKUKKTYizTlOoquQv+3jgQugT8DZEnT+QP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkwSJydR9LFQ1auNSndZ/wUL5tE+RxIxjy9PWng1qzQXqnbppYmUfZcG3HTDg01fcxwkaeIDHsBNicpYzFgtVcYvRpVG18Dt6+GbNyqezmLUNBQiuiwf2AzBKRRXH6MEKnQQ4JOzpzskwVuYRTtj2b8ZOyK+dOb94HwVBDuicLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e+EQ5v5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzlUXl8HVnlLu53CqJz2yUJKMqQd/drdwTuM1sv2+/9iMZcrh1sYZyV2PuBSlK15Xd8Q7GDO26fpqHI8fs3xltiGMEYJw4iGvh0YQxBkOYKS+czuCU90GiOA0Cpc1TleC0S9QHZyrHmeOv54IN0SO1CGq2Uzq2WHhBA7467Hf9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKPpnDug; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e+EQ5v5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72711C4CED0;
-	Thu, 12 Dec 2024 17:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKPpnDug"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC3AC4CECE;
+	Thu, 12 Dec 2024 17:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024825;
-	bh=b7+NAydOgXuVLQ3PH1VOty9u4v85+pz7zItGkYYEQj0=;
+	s=korg; t=1734024828;
+	bh=abuvRrm3uKUKKTYizTlOoquQv+3jgQugT8DZEnT+QP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+EQ5v5iYKcTSgtajQrPMpZD2FVSNlXgf3tFcj13e2wZKhRRSp13G3r9xR0pvXdVy
-	 HsCCY9bnj7aSoCTy8yaMW6y8IXT4HPFCmZ+hh/wFO3f4jKqjsbfb/c8HvDU70/+uNR
-	 T31gegdVgp5MlAyDckhm6kfViX56bg/2kny462/Q=
+	b=IKPpnDug+tGpHKKaAAoKE4P0r9mdIf0BOcQEvZjLSKnLN8s/siAPenyXPL/Kion6x
+	 afs16cC+K8JA1APIC+Z2avCGFB7Yk0Tp0ll0AS3FmDOTFqgejbIW7QH9s9XV/3PRJw
+	 jeIBTqXQQjWAqfe1iq62xLRn5ouypq6HQh+pJJ6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Han <hanqi@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Amey Narkhede <ameynarkhede03@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 425/459] f2fs: fix f2fs_bug_on when uninstalling filesystem call f2fs_evict_inode.
-Date: Thu, 12 Dec 2024 16:02:43 +0100
-Message-ID: <20241212144310.550331665@linuxfoundation.org>
+Subject: [PATCH 5.10 426/459] PCI: Add reset_subordinate to reset hierarchy below bridge
+Date: Thu, 12 Dec 2024 16:02:44 +0100
+Message-ID: <20241212144310.591595773@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,82 +53,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Han <hanqi@vivo.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit d5c367ef8287fb4d235c46a2f8c8d68715f3a0ca ]
+[ Upstream commit 2fa046449a82a7d0f6d9721dd83e348816038444 ]
 
-creating a large files during checkpoint disable until it runs out of
-space and then delete it, then remount to enable checkpoint again, and
-then unmount the filesystem triggers the f2fs_bug_on as below:
+The "bus" and "cxl_bus" reset methods reset a device by asserting Secondary
+Bus Reset on the bridge leading to the device.  These only work if the
+device is the only device below the bridge.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/inode.c:896!
-CPU: 2 UID: 0 PID: 1286 Comm: umount Not tainted 6.11.0-rc7-dirty #360
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:f2fs_evict_inode+0x58c/0x610
-Call Trace:
- __die_body+0x15/0x60
- die+0x33/0x50
- do_trap+0x10a/0x120
- f2fs_evict_inode+0x58c/0x610
- do_error_trap+0x60/0x80
- f2fs_evict_inode+0x58c/0x610
- exc_invalid_op+0x53/0x60
- f2fs_evict_inode+0x58c/0x610
- asm_exc_invalid_op+0x16/0x20
- f2fs_evict_inode+0x58c/0x610
- evict+0x101/0x260
- dispose_list+0x30/0x50
- evict_inodes+0x140/0x190
- generic_shutdown_super+0x2f/0x150
- kill_block_super+0x11/0x40
- kill_f2fs_super+0x7d/0x140
- deactivate_locked_super+0x2a/0x70
- cleanup_mnt+0xb3/0x140
- task_work_run+0x61/0x90
+Add a sysfs 'reset_subordinate' attribute on bridges that can assert
+Secondary Bus Reset regardless of how many devices are below the bridge.
 
-The root cause is: creating large files during disable checkpoint
-period results in not enough free segments, so when writing back root
-inode will failed in f2fs_enable_checkpoint. When umount the file
-system after enabling checkpoint, the root inode is dirty in
-f2fs_evict_inode function, which triggers BUG_ON. The steps to
-reproduce are as follows:
+This resets all the devices below a bridge in a single command, including
+the locking and config space save/restore that reset methods normally do.
 
-dd if=/dev/zero of=f2fs.img bs=1M count=55
-mount f2fs.img f2fs_dir -o checkpoint=disable:10%
-dd if=/dev/zero of=big bs=1M count=50
-sync
-rm big
-mount -o remount,checkpoint=enable f2fs_dir
-umount f2fs_dir
+This may be the only way to reset devices that don't support other reset
+methods (ACPI, FLR, PM reset, etc).
 
-Let's redirty inode when there is not free segments during checkpoint
-is disable.
-
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lore.kernel.org/r/20241025222755.3756162-1-kbusch@meta.com
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[bhelgaas: commit log, add capable(CAP_SYS_ADMIN) check]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Amey Narkhede <ameynarkhede03@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-bus-pci | 11 +++++++++++
+ drivers/pci/pci-sysfs.c                 | 26 +++++++++++++++++++++++++
+ drivers/pci/pci.c                       |  2 +-
+ drivers/pci/pci.h                       |  1 +
+ 4 files changed, 39 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index b23e6a848e9b7..452c0240cc11e 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -701,8 +701,10 @@ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
- 		return 0;
+diff --git a/Documentation/ABI/testing/sysfs-bus-pci b/Documentation/ABI/testing/sysfs-bus-pci
+index 77ad9ec3c8019..da33ab66ddfe7 100644
+--- a/Documentation/ABI/testing/sysfs-bus-pci
++++ b/Documentation/ABI/testing/sysfs-bus-pci
+@@ -131,6 +131,17 @@ Description:
+ 		will be present in sysfs.  Writing 1 to this file
+ 		will perform reset.
  
--	if (!f2fs_is_checkpoint_ready(sbi))
-+	if (!f2fs_is_checkpoint_ready(sbi)) {
-+		f2fs_mark_inode_dirty_sync(inode, true);
- 		return -ENOSPC;
++What:		/sys/bus/pci/devices/.../reset_subordinate
++Date:		October 2024
++Contact:	linux-pci@vger.kernel.org
++Description:
++		This is visible only for bridge devices. If you want to reset
++		all devices attached through the subordinate bus of a specific
++		bridge device, writing 1 to this will try to do it.  This will
++		affect all devices attached to the system through this bridge
++		similiar to writing 1 to their individual "reset" file, so use
++		with caution.
++
+ What:		/sys/bus/pci/devices/.../vpd
+ Date:		February 2008
+ Contact:	Ben Hutchings <bwh@kernel.org>
+diff --git a/drivers/pci/pci-sysfs.c b/drivers/pci/pci-sysfs.c
+index e14c83f59b48a..d27bc5a5d2f86 100644
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -488,6 +488,31 @@ static ssize_t bus_rescan_store(struct device *dev,
+ static struct device_attribute dev_attr_bus_rescan = __ATTR(rescan, 0200, NULL,
+ 							    bus_rescan_store);
+ 
++static ssize_t reset_subordinate_store(struct device *dev,
++				struct device_attribute *attr,
++				const char *buf, size_t count)
++{
++	struct pci_dev *pdev = to_pci_dev(dev);
++	struct pci_bus *bus = pdev->subordinate;
++	unsigned long val;
++
++	if (!capable(CAP_SYS_ADMIN))
++		return -EPERM;
++
++	if (kstrtoul(buf, 0, &val) < 0)
++		return -EINVAL;
++
++	if (val) {
++		int ret = __pci_reset_bus(bus);
++
++		if (ret)
++			return ret;
 +	}
++
++	return count;
++}
++static DEVICE_ATTR_WO(reset_subordinate);
++
+ #if defined(CONFIG_PM) && defined(CONFIG_ACPI)
+ static ssize_t d3cold_allowed_store(struct device *dev,
+ 				    struct device_attribute *attr,
+@@ -611,6 +636,7 @@ static struct attribute *pci_dev_attrs[] = {
+ static struct attribute *pci_bridge_attrs[] = {
+ 	&dev_attr_subordinate_bus_number.attr,
+ 	&dev_attr_secondary_bus_number.attr,
++	&dev_attr_reset_subordinate.attr,
+ 	NULL,
+ };
  
- 	/*
- 	 * We need to balance fs here to prevent from producing dirty node pages
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 800df0f1417d8..1d4585b07de3b 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5598,7 +5598,7 @@ EXPORT_SYMBOL_GPL(pci_probe_reset_bus);
+  *
+  * Same as above except return -EAGAIN if the bus cannot be locked
+  */
+-static int __pci_reset_bus(struct pci_bus *bus)
++int __pci_reset_bus(struct pci_bus *bus)
+ {
+ 	int rc;
+ 
+diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+index da40f29036d65..c2fd92a9ee1ad 100644
+--- a/drivers/pci/pci.h
++++ b/drivers/pci/pci.h
+@@ -42,6 +42,7 @@ int pci_mmap_fits(struct pci_dev *pdev, int resno, struct vm_area_struct *vmai,
+ int pci_probe_reset_function(struct pci_dev *dev);
+ int pci_bridge_secondary_bus_reset(struct pci_dev *dev);
+ int pci_bus_error_reset(struct pci_dev *dev);
++int __pci_reset_bus(struct pci_bus *bus);
+ 
+ #define PCI_PM_D2_DELAY         200	/* usec; see PCIe r4.0, sec 5.9.1 */
+ #define PCI_PM_D3HOT_WAIT       10	/* msec */
 -- 
 2.43.0
 
