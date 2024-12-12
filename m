@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8C91F2381;
-	Thu, 12 Dec 2024 16:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D8D211A34;
+	Thu, 12 Dec 2024 16:56:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022568; cv=none; b=BsKogRgkswX+4mcJz1cvJZDWrYo/hqitpT4lFDoOUphPRU/kPTOmGRpSDTwWZglMiVecLKa91B9VRexRr2WWtWTNPnzDGXbL8Cf1cWEfl87kOtBggSdlpkFTrmj4bNiD8AZQ/jLK2P/D8xoIsySmKjxv396LVYEw9wBqqrBERXs=
+	t=1734022571; cv=none; b=aD/htbZ+OajxWO/mwLyWyVNFrJPDA9qXa+PpY0dHhKFaG06tmoroOQo3QtJ1rL9/bukGK7QyWHIwvwDaTAw0R8BlCmv51pRPCRexJ2wEowZmeatbZ2Q3nB5mY3ajd03U+kSQJeU/B8vZfpdHE8oyItF3MjQc0GTKLskdelVdSj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022568; c=relaxed/simple;
-	bh=BLhJ3L4HU5Uha8CT7F389E0s4p4nxzLNrPfStjYYYBE=;
+	s=arc-20240116; t=1734022571; c=relaxed/simple;
+	bh=sxrbsKVpHRORoQWuuRDg9aMYXYeoFp66+ngkL9YtPEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IiWjd5J2QfCe3fWH2uEM+rCfLnLWDtoryWn07s73Hp/2kMlAuN2ZpNy5uGHOKsAOzh+howhS74wwek11EiW3Ti6J98TOn5dqTBaEN+oZumqzkLJqY+XIdMqPMirWk9YyjQNosL2NrjpJyHemK3qgoBCSj3dnJCZBGQAFgqdvlXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tuTjOS3G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C/uf7Kbmvjxfx8nL3mwQKDr+JVv/Kl0f+hFWSRNwwbCvqjfG1WCwvdOLIBFYM6+T2ozL4vfEV+vDeHGpQJmR6xuD/ct5MVVBSXFaIxXgxE/bFIgT9jzNX8zw4B/NqaPIpp4vlg0P7zpu7HwqaGuF3vfFWqymUyFfLF5STK+jUy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XNbHVsJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tuTjOS3G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EE3C4CED3;
-	Thu, 12 Dec 2024 16:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XNbHVsJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3324C4CECE;
+	Thu, 12 Dec 2024 16:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022567;
-	bh=BLhJ3L4HU5Uha8CT7F389E0s4p4nxzLNrPfStjYYYBE=;
+	s=korg; t=1734022571;
+	bh=sxrbsKVpHRORoQWuuRDg9aMYXYeoFp66+ngkL9YtPEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuTjOS3G3B6HpYMfDm9UBC/TzkFebxvvR/O/3BHojQq+6ces/kEjAJnGLwoLcgg6F
-	 FWgmBFAQA5JtVwFewjvw8x40ejjFNtak6iE7sO5UIH6uihlt9v7h9OnTCWkFtpXGpC
-	 1A/XTvbWqjO3rShMfws51Yn/9ILvLAEtOOdD3mTc=
+	b=XNbHVsJ0GeUYC/xx4wPG9v2cI9kxdTQIla/hKPk5GTDpKs4kR9VQD6hyp5ZFfpKrm
+	 iRuCL7Nrf4CNTCSAe0HxFVtuI0goJ6diHeRgyFJlxn0obm1zK3Nb5lbLjvb9YhiY/v
+	 p5U03tX1xfVrgyIg7yTQhhYD9ZlxQfrcV4rR5BAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salam Noureddine <noureddine@arista.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 276/565] tg3: Set coherent DMA mask bits to 31 for BCM57766 chipsets
-Date: Thu, 12 Dec 2024 15:57:51 +0100
-Message-ID: <20241212144322.369405931@linuxfoundation.org>
+Subject: [PATCH 5.15 277/565] net: usb: lan78xx: Fix refcounting and autosuspend on invalid WoL configuration
+Date: Thu, 12 Dec 2024 15:57:52 +0100
+Message-ID: <20241212144322.407047603@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -55,59 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 614f4d166eeeb9bd709b0ad29552f691c0f45776 ]
+[ Upstream commit e863ff806f72098bccaf8fa89c80d9ad6187c3b0 ]
 
-The hardware on Broadcom 1G chipsets have a known limitation
-where they cannot handle DMA addresses that cross over 4GB.
-When such an address is encountered, the hardware sets the
-address overflow error bit in the DMA status register and
-triggers a reset.
+Validate Wake-on-LAN (WoL) options in `lan78xx_set_wol` before calling
+`usb_autopm_get_interface`. This prevents USB autopm refcounting issues
+and ensures the adapter can properly enter autosuspend when invalid WoL
+options are provided.
 
-However, BCM57766 hardware is setting the overflow bit and
-triggering a reset in some cases when there is no actual
-underlying address overflow. The hardware team analyzed the
-issue and concluded that it is happening when the status
-block update has an address with higher (b16 to b31) bits
-as 0xffff following a previous update that had lowest bits
-as 0xffff.
-
-To work around this bug in the BCM57766 hardware, set the
-coherent dma mask from the current 64b to 31b. This will
-ensure that upper bits of the status block DMA address are
-always at most 0x7fff, thus avoiding the improper overflow
-check described above. This work around is intended for only
-status block and ring memories and has no effect on TX and
-RX buffers as they do not require coherent memory.
-
-Fixes: 72f2afb8a685 ("[TG3]: Add DMA address workaround")
-Reported-by: Salam Noureddine <noureddine@arista.com>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://patch.msgid.link/20241119055741.147144-1-pavan.chebbi@broadcom.com
+Fixes: eb9ad088f966 ("lan78xx: Check for supported Wake-on-LAN modes")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://patch.msgid.link/20241118140351.2398166-1-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/usb/lan78xx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 757138c33b753..4fb1d2749c063 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -17739,6 +17739,9 @@ static int tg3_init_one(struct pci_dev *pdev,
- 	} else
- 		persist_dma_mask = dma_mask = DMA_BIT_MASK(64);
+diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
+index 9d0d67e11eb14..2279a4b8cd4e3 100644
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -1490,13 +1490,13 @@ static int lan78xx_set_wol(struct net_device *netdev,
+ 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
+ 	int ret;
  
-+	if (tg3_asic_rev(tp) == ASIC_REV_57766)
-+		persist_dma_mask = DMA_BIT_MASK(31);
++	if (wol->wolopts & ~WAKE_ALL)
++		return -EINVAL;
 +
- 	/* Configure DMA attributes. */
- 	if (dma_mask > DMA_BIT_MASK(32)) {
- 		err = dma_set_mask(&pdev->dev, dma_mask);
+ 	ret = usb_autopm_get_interface(dev->intf);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	if (wol->wolopts & ~WAKE_ALL)
+-		return -EINVAL;
+-
+ 	pdata->wol = wol->wolopts;
+ 
+ 	device_set_wakeup_enable(&dev->udev->dev, (bool)wol->wolopts);
 -- 
 2.43.0
 
