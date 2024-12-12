@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996BD748A;
-	Thu, 12 Dec 2024 15:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3981487CD;
+	Thu, 12 Dec 2024 15:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017311; cv=none; b=TV+pwd1LenMUOVVP7OPIV0XgSITTc4jM7jQdGDMKQz19crp5yjTMS/2bLT3yAYrsTb31lkI2mn4BAycaSaPgDLYipIVQlM7s5N6aa8aQezkZwJ3nedmoneUtZlPEnKHHSQ5Rg2q4HeAE0TMy+F2+67Pv42cJaEamZ85gBX3MQmA=
+	t=1734017315; cv=none; b=qVF90UclCfEm3T91UirwTO4U6rGHcKpRt5dgNa3aGiNiQ7d88bg1QVHOXqLiikQc+FO4BSTcjSWt/cSoTUTd67NnuDalq46BGvXjhYEGTkJC8UlhL6Y+EY9lJZLMAsUEI4zVT7fYITTySTF3BeNF0auGgoTYuh0LOcM+dVSmFVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017311; c=relaxed/simple;
-	bh=jo+soLT40rXgf1Qn0g60kPv7F3PTkDyA51ojdrN9RF8=;
+	s=arc-20240116; t=1734017315; c=relaxed/simple;
+	bh=saPzCIUse62pKiWlAmMzVbk2xK7R4z1dUsV+fdV6lqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ewMD7ttJ7O0V+SaRCfEppliaJmvuLpKi/LTT/ejE8bpjMNl2UHMAYqKROWdx/6pvPFsy+/W7w2M/1SIuX69EINaNndfeQFG5Gz1kGdK6N4cx0XyqdMXjwXLiUAhrjkf6qKyqAguGrwLaHa5H4sP3d1SmVmUTlK3x1Inh6O+BHE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEGP+sib; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=El6BrGR08nuZl8btsNqhH5KTCp7EehyNtjQlLqMvyQs2Oh2tJU44L9SmUhIdTO0nLExeX4zIUr96ya9h0Y5L8ZOOVa+8Bn9T6G+v116OQZKWuTr1Ikcs3JTM5EgjGjaD8z5sK1QxlULX1KvPwVZX/tEJppNpcq7/HJSGNpPfiAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=127QwXf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEGP+sib"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D567C4CECE;
-	Thu, 12 Dec 2024 15:28:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="127QwXf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47563C4CECE;
+	Thu, 12 Dec 2024 15:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017311;
-	bh=jo+soLT40rXgf1Qn0g60kPv7F3PTkDyA51ojdrN9RF8=;
+	s=korg; t=1734017314;
+	bh=saPzCIUse62pKiWlAmMzVbk2xK7R4z1dUsV+fdV6lqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEGP+sibIOhhDZFj0fm8Zyed7gYxDvPg5xU36vWlhzkW5NynMS9IyxXKGKADQwfo9
-	 fksmxubuTCAZruGpZiwj0uPhpRd2lm2V8RAoRfpMn2XRKG3q56hFP+nc/+Kw7W78Xo
-	 U2OcE239b1C1q0qR2oBVX2aWtTyofnUX6g7ybVuI=
+	b=127QwXf3wzHCnNHj8KGUhVcaYLMHh1pgYdvpxIOkyw7dJ2cSR0kYvyx97Z9N/b0fs
+	 +wN/+uW6pUBO5p5VMTYeGHgsi8TnVcPw9vbk4qXQl7Ov3+q3VWLvZS0NzHXHaIsU8M
+	 zv4qMV8H/k55ZUM8Cur6fVh93I0cUXMYFJZujmDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 443/466] sched/deadline: Fix warning in migrate_enable for boosted tasks
-Date: Thu, 12 Dec 2024 16:00:12 +0100
-Message-ID: <20241212144324.358551206@linuxfoundation.org>
+Subject: [PATCH 6.12 444/466] btrfs: drop unused parameter options from open_ctree()
+Date: Thu, 12 Dec 2024 16:00:13 +0100
+Message-ID: <20241212144324.397343530@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,78 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 0664e2c311b9fa43b33e3e81429cd0c2d7f9c638 ]
+[ Upstream commit 87cbab86366e75dec52f787e0e0b17b2aea769ca ]
 
-When running the following command:
+Since the new mount option parser in commit ad21f15b0f79 ("btrfs:
+switch to the new mount API") we don't pass the options like that
+anymore.
 
-while true; do
-    stress-ng --cyclic 30 --timeout 30s --minimize --quiet
-done
-
-a warning is eventually triggered:
-
-WARNING: CPU: 43 PID: 2848 at kernel/sched/deadline.c:794
-setup_new_dl_entity+0x13e/0x180
-...
-Call Trace:
- <TASK>
- ? show_trace_log_lvl+0x1c4/0x2df
- ? enqueue_dl_entity+0x631/0x6e0
- ? setup_new_dl_entity+0x13e/0x180
- ? __warn+0x7e/0xd0
- ? report_bug+0x11a/0x1a0
- ? handle_bug+0x3c/0x70
- ? exc_invalid_op+0x14/0x70
- ? asm_exc_invalid_op+0x16/0x20
- enqueue_dl_entity+0x631/0x6e0
- enqueue_task_dl+0x7d/0x120
- __do_set_cpus_allowed+0xe3/0x280
- __set_cpus_allowed_ptr_locked+0x140/0x1d0
- __set_cpus_allowed_ptr+0x54/0xa0
- migrate_enable+0x7e/0x150
- rt_spin_unlock+0x1c/0x90
- group_send_sig_info+0xf7/0x1a0
- ? kill_pid_info+0x1f/0x1d0
- kill_pid_info+0x78/0x1d0
- kill_proc_info+0x5b/0x110
- __x64_sys_kill+0x93/0xc0
- do_syscall_64+0x5c/0xf0
- entry_SYSCALL_64_after_hwframe+0x6e/0x76
- RIP: 0033:0x7f0dab31f92b
-
-This warning occurs because set_cpus_allowed dequeues and enqueues tasks
-with the ENQUEUE_RESTORE flag set. If the task is boosted, the warning
-is triggered. A boosted task already had its parameters set by
-rt_mutex_setprio, and a new call to setup_new_dl_entity is unnecessary,
-hence the WARN_ON call.
-
-Check if we are requeueing a boosted task and avoid calling
-setup_new_dl_entity if that's the case.
-
-Fixes: 295d6d5e3736 ("sched/deadline: Fix switching to -deadline")
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://lore.kernel.org/r/20240724142253.27145-2-wander@redhat.com
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 951a3f59d268 ("btrfs: fix mount failure due to remount races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/disk-io.c | 3 +--
+ fs/btrfs/disk-io.h | 3 +--
+ fs/btrfs/super.c   | 2 +-
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index be1b917dc8ce4..40a1ad4493b4d 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2042,6 +2042,7 @@ enqueue_dl_entity(struct sched_dl_entity *dl_se, int flags)
- 	} else if (flags & ENQUEUE_REPLENISH) {
- 		replenish_dl_entity(dl_se);
- 	} else if ((flags & ENQUEUE_RESTORE) &&
-+		   !is_dl_boosted(dl_se) &&
- 		   dl_time_before(dl_se->deadline, rq_clock(rq_of_dl_se(dl_se)))) {
- 		setup_new_dl_entity(dl_se);
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index b11bfe68dd65f..43b7b331b2da3 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3202,8 +3202,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
+ 	return 0;
+ }
+ 
+-int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
+-		      const char *options)
++int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices)
+ {
+ 	u32 sectorsize;
+ 	u32 nodesize;
+diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
+index 99af64d3f2778..127e31e083470 100644
+--- a/fs/btrfs/disk-io.h
++++ b/fs/btrfs/disk-io.h
+@@ -52,8 +52,7 @@ struct extent_buffer *btrfs_find_create_tree_block(
+ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info);
+ int btrfs_check_super_csum(struct btrfs_fs_info *fs_info,
+ 			   const struct btrfs_super_block *disk_sb);
+-int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
+-		      const char *options);
++int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices);
+ void __cold close_ctree(struct btrfs_fs_info *fs_info);
+ int btrfs_validate_super(const struct btrfs_fs_info *fs_info,
+ 			 const struct btrfs_super_block *sb, int mirror_num);
+diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
+index c64d071341223..1a4225a1a2003 100644
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -971,7 +971,7 @@ static int btrfs_fill_super(struct super_block *sb,
+ 		return err;
  	}
+ 
+-	err = open_ctree(sb, fs_devices, (char *)data);
++	err = open_ctree(sb, fs_devices);
+ 	if (err) {
+ 		btrfs_err(fs_info, "open_ctree failed");
+ 		return err;
 -- 
 2.43.0
 
