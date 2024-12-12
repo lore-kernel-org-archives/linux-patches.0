@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41BF205501;
-	Thu, 12 Dec 2024 17:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF1A4F218;
+	Thu, 12 Dec 2024 17:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024023; cv=none; b=Ksvt8fDYPT0kmdlbkYeXymRtgicAij4s3pkL3v7d+Kk2YrRRQg/sOYu1mN/m8nVBjwHa7j7nMi2RumK7/0hGGouB0tj83iKpbNgDIDDMyzr0Zkw9G7gf3DG3hG12TnTs76MwOe8neux73ILDy3/zJE4DJWzvrTMzUUHFbaxxBkE=
+	t=1734024028; cv=none; b=G9QYOIYKoMqCYqUpmxn27HpBpLnWfWoBY4ywuKe9Yp9z5rX2TSDPcca11tiZIo1SHifo8UBHKoA8ZN6QycY7sclfyFzqBF12GFheYUH3x6E8BK3O/Um6mn7mdORCNXEnPvixeZDM6LRwNG9zmiaQ2vJXKTuIeO2EZIIuWOpKYgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024023; c=relaxed/simple;
-	bh=C5vNwgtAkDmb9p/qtycjEgIjwbGm2FmAucHcViQp1EQ=;
+	s=arc-20240116; t=1734024028; c=relaxed/simple;
+	bh=p5AybDFq6SO27z7homJIvaCMimggntxJdNL/CfGazqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxyme69S14ZmJ6ZP9QMjauzO4xRU6m9jZVaYbFEOQSN3YvmCT22XfidjdbdXWbPq+OhyV+HnO67ViDz4ABywfFKxCRrXrffZka65BHIXGv1LT/TF3SzG4bwbtYw1dHHa7u0ErI+bLJcEKsJsyF21o0yNYHyZVWvFGZkGpqLHiVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mldf8UGg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mH3/4CQJBtVLU4EwphHhFzXWNUK+7Ywi3gisoyFgI/+nehM6eTEA+tQ5VAtl96OC1Ir82ZqFbDDen0T5mjj9Qse+9muzF6iSxHtAxuJkm0wh4TbxyHqMhd4dqVsz6u6cMyd2jXJaCJ4ZqSKOiKSVBFAysr3OJAAfcecg24CUUV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvCb6KjV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mldf8UGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37104C4CECE;
-	Thu, 12 Dec 2024 17:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvCb6KjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2126DC4CED3;
+	Thu, 12 Dec 2024 17:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024023;
-	bh=C5vNwgtAkDmb9p/qtycjEgIjwbGm2FmAucHcViQp1EQ=;
+	s=korg; t=1734024026;
+	bh=p5AybDFq6SO27z7homJIvaCMimggntxJdNL/CfGazqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mldf8UGgFEBTQf+UcHWNZbH6r7p15dWK1KKnpQ0GxYYQnMwi1mWMndQKFCzLUgelH
-	 +gQxy4hATb23a54LEZPqD7l+tdsLDeBWC3h+VUPYudyt/Gu90GZXO7CtNKaPBUcJWv
-	 NIPW2njJHbHFeqL7p5Yb6jA9cFrn3FZLf5R/o0q8=
+	b=wvCb6KjVi3TD8OLEJAVA1tBf5Fcna4g/bigETYWh1jnj6HaB75y99/FH9lhG7VYY4
+	 PbTwkoLaS7MxQaVHMi/76mvryfV//CxmZlIv+0vjfh5h22PVnzKJWY7s1UfYMQxChh
+	 ApSCs8hzjo0ZrYwOwIWbt1wIcOdFIkS76TOe/8G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Michal Kubiak <michal.kubiak@intel.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 161/459] netpoll: Use rcu_access_pointer() in netpoll_poll_lock
-Date: Thu, 12 Dec 2024 15:58:19 +0100
-Message-ID: <20241212144259.876063554@linuxfoundation.org>
+Subject: [PATCH 5.10 162/459] wireguard: selftests: load nf_conntrack if not present
+Date: Thu, 12 Dec 2024 15:58:20 +0100
+Message-ID: <20241212144259.916233570@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,43 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit a57d5a72f8dec7db8a79d0016fb0a3bdecc82b56 ]
+[ Upstream commit 0290abc9860917f1ee8b58309c2bbd740a39ee8e ]
 
-The ndev->npinfo pointer in netpoll_poll_lock() is RCU-protected but is
-being accessed directly for a NULL check. While no RCU read lock is held
-in this context, we should still use proper RCU primitives for
-consistency and correctness.
+Some distros may not load nf_conntrack by default, which will cause
+subsequent nf_conntrack sets to fail. Load this module if it is not
+already loaded.
 
-Replace the direct NULL check with rcu_access_pointer(), which is the
-appropriate primitive when only checking for NULL without dereferencing
-the pointer. This function provides the necessary ordering guarantees
-without requiring RCU read-side protection.
-
-Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://patch.msgid.link/20241118-netpoll_rcu-v1-2-a1888dcb4a02@debian.org
+Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+[ Jason: add [[ -e ... ]] check so this works in the qemu harness. ]
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://patch.msgid.link/20241117212030.629159-4-Jason@zx2c4.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netpoll.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/wireguard/netns.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/netpoll.h b/include/linux/netpoll.h
-index e6a2d72e0dc7a..533f8a5323a3b 100644
---- a/include/linux/netpoll.h
-+++ b/include/linux/netpoll.h
-@@ -70,7 +70,7 @@ static inline void *netpoll_poll_lock(struct napi_struct *napi)
- {
- 	struct net_device *dev = napi->dev;
+diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
+index 93e44410f170e..4732c23e35ee5 100755
+--- a/tools/testing/selftests/wireguard/netns.sh
++++ b/tools/testing/selftests/wireguard/netns.sh
+@@ -320,6 +320,7 @@ waitiface $netns1 vethc
+ waitiface $netns2 veths
  
--	if (dev && dev->npinfo) {
-+	if (dev && rcu_access_pointer(dev->npinfo)) {
- 		int owner = smp_processor_id();
- 
- 		while (cmpxchg(&napi->poll_owner, -1, owner) != -1)
+ n0 bash -c 'printf 1 > /proc/sys/net/ipv4/ip_forward'
++[[ -e /proc/sys/net/netfilter/nf_conntrack_udp_timeout ]] || modprobe nf_conntrack
+ n0 bash -c 'printf 2 > /proc/sys/net/netfilter/nf_conntrack_udp_timeout'
+ n0 bash -c 'printf 2 > /proc/sys/net/netfilter/nf_conntrack_udp_timeout_stream'
+ n0 iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 10.0.0.0/24 -j SNAT --to 10.0.0.1
 -- 
 2.43.0
 
