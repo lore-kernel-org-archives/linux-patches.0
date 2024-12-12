@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB0D20A5EE;
-	Thu, 12 Dec 2024 17:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564F20A5EE;
+	Thu, 12 Dec 2024 17:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025217; cv=none; b=Wq0SmwUe+u1L3if1XCwt5YNhlk9OYSicYrIh99oz1/5RhGzrqx5FIXdxWG2/LfUYzzFUX51p0tEornQ6W/9G5HnwNMIbTOcvzZB82IqgQeSi+0OzYWOr7oV0QyeyR8jh9+vQLJowCh6SWIw8A8HxJ8rm8V9ZgC2875t5RttU1V0=
+	t=1734025220; cv=none; b=B23gAvbjD0A9lVhZX2HV89f+Y+SN5E2zMcBwYwYMxri6OloDmi9Y+xfvoGf3+O5lQBPVIai2DB1lgDgkgsXRAPhRTL0X8bcbbM6VB+RgaAgY5AhzRx0DctuBztuPLlszsp5ubsXB0yfmUVL480cERCtmnfEYmtV4vSur6Wc2IPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025217; c=relaxed/simple;
-	bh=rUlJ0xehBckZ94R9ks04EtZqQBJ2FmV+LNnDMZBc7xE=;
+	s=arc-20240116; t=1734025220; c=relaxed/simple;
+	bh=yWGTSweGMh8m4iGOdmyuidU9qWehICKYPaUt4sLb4EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYlZV0hekx7ZYhvoPER2XWL1wAoEArrv/B2iE9KFtEJyp5wG31ZbXrAhaWriOwgub4td228+iRyhvJ7lgrskpIiflyz6/+WE6wn5pVn1b4A0+CeM6bkrBBnmkj5reLnYtanogDS4sEC1FJCUtbiL97xj0MpcDX2jowuo4NF+uTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLY1aS91; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FiYArcip+5piAl0bd84hmSm+f4/hMCuojLrTxOl7MVqyoicXhny3RRyFeXkLKd1GuPVi/uk12PPFopcsEY9o15wP2U8ah97bYXyrD4lVAXxQf+gmLq5WcsHTC3/HWTRBrMJgMTdhC5e/F/L7OXYKYq7hst58JPo3FaeJzpYciVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XGomdR14; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLY1aS91"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2A2C4CECE;
-	Thu, 12 Dec 2024 17:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XGomdR14"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAAEDC4CECE;
+	Thu, 12 Dec 2024 17:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025217;
-	bh=rUlJ0xehBckZ94R9ks04EtZqQBJ2FmV+LNnDMZBc7xE=;
+	s=korg; t=1734025220;
+	bh=yWGTSweGMh8m4iGOdmyuidU9qWehICKYPaUt4sLb4EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLY1aS915TPywv4JXWooUH4XJsCHChfsowtNFnYnBEofr0EsIIe2R5JaV9y8VEYk4
-	 E1IdkMOEvhg6jqFIBiuJupLp9L7Q0lJStY4vWARWBmtF8woBftlN4WqADmFWbBngHZ
-	 fRekQH+vecJsEQfmuokijMaaZd5ihCytshqS/sc0=
+	b=XGomdR14MJIcaFpknkZ9hWapNQtU2D6HW/8oSPt0TNj9BchwKAhDr0TG78mC3mETn
+	 ue9j4TH7WDCwZaFc97bNpGNurkRiew7GV9QedDdAkTlDc5bDOCN3g8Qwih33pEXyWz
+	 8kDeFcsetrpctoGcjvF9V36C1x+J0iTnxARn1p1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dr. David Alan Gilbert" <linux@treblig.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 095/321] mtd: rawnand: atmel: Fix possible memory leak
-Date: Thu, 12 Dec 2024 16:00:13 +0100
-Message-ID: <20241212144233.743466257@linuxfoundation.org>
+Subject: [PATCH 5.4 096/321] RDMA/bnxt_re: Check cqe flags to know imm_data vs inv_irkey
+Date: Thu, 12 Dec 2024 16:00:14 +0100
+Message-ID: <20241212144233.781895134@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,68 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 6d734f1bfc336aaea91313a5632f2f197608fadd ]
+[ Upstream commit 808ca6de989c598bc5af1ae0ad971a66077efac0 ]
 
-The pmecc "user" structure is allocated in atmel_pmecc_create_user() and
-was supposed to be freed with atmel_pmecc_destroy_user(), but this other
-helper is never called. One solution would be to find the proper
-location to call the destructor, but the trend today is to switch to
-device managed allocations, which in this case fits pretty well.
+Invalidate rkey is cpu endian and immediate data is in big endian format.
+Both immediate data and invalidate the remote key returned by
+HW is in little endian format.
 
-Replace kzalloc() by devm_kzalloc() and drop the destructor entirely.
+While handling the commit in fixes tag, the difference between
+immediate data and invalidate rkey endianness was not considered.
 
-Reported-by: "Dr. David Alan Gilbert" <linux@treblig.org>
-Closes: https://lore.kernel.org/all/ZvmIvRJCf6VhHvpo@gallifrey/
-Fixes: f88fc122cc34 ("mtd: nand: Cleanup/rework the atmel_nand driver")
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20241001203149.387655-1-miquel.raynal@bootlin.com
+Without changes of this patch, Kernel ULP was failing while processing
+inv_rkey.
+
+dmesg log snippet -
+nvme nvme0: Bogus remote invalidation for rkey 0x2000019Fix in this patch
+
+Do endianness conversion based on completion queue entry flag.
+Also, the HW completions are already converted to host endianness in
+bnxt_qplib_cq_process_res_rc and bnxt_qplib_cq_process_res_ud and there
+is no need to convert it again in bnxt_re_poll_cq. Modified the union to
+hold the correct data type.
+
+Fixes: 95b087f87b78 ("bnxt_re: Fix imm_data endianness")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/1730110014-20755-1-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c | 8 +-------
- drivers/mtd/nand/raw/atmel/pmecc.h | 2 --
- 2 files changed, 1 insertion(+), 9 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +++++--
+ drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.c b/drivers/mtd/nand/raw/atmel/pmecc.c
-index cbb023bf00f72..09848d13802d8 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -362,7 +362,7 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
- 	size = ALIGN(size, sizeof(s32));
- 	size += (req->ecc.strength + 1) * sizeof(s32) * 3;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 4a1c11bdc4adc..eca36da7f9d4b 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -3250,7 +3250,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *gsi_sqp,
+ 	wc->byte_len = orig_cqe->length;
+ 	wc->qp = &gsi_qp->ib_qp;
  
--	user = kzalloc(size, GFP_KERNEL);
-+	user = devm_kzalloc(pmecc->dev, size, GFP_KERNEL);
- 	if (!user)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -408,12 +408,6 @@ atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
- }
- EXPORT_SYMBOL_GPL(atmel_pmecc_create_user);
- 
--void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user)
--{
--	kfree(user);
--}
--EXPORT_SYMBOL_GPL(atmel_pmecc_destroy_user);
--
- static int get_strength(struct atmel_pmecc_user *user)
- {
- 	const int *strengths = user->pmecc->caps->strengths;
-diff --git a/drivers/mtd/nand/raw/atmel/pmecc.h b/drivers/mtd/nand/raw/atmel/pmecc.h
-index 7851c05126cf1..cc0c5af1f4f1a 100644
---- a/drivers/mtd/nand/raw/atmel/pmecc.h
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.h
-@@ -55,8 +55,6 @@ struct atmel_pmecc *devm_atmel_pmecc_get(struct device *dev);
- struct atmel_pmecc_user *
- atmel_pmecc_create_user(struct atmel_pmecc *pmecc,
- 			struct atmel_pmecc_user_req *req);
--void atmel_pmecc_destroy_user(struct atmel_pmecc_user *user);
--
- void atmel_pmecc_reset(struct atmel_pmecc *pmecc);
- int atmel_pmecc_enable(struct atmel_pmecc_user *user, int op);
- void atmel_pmecc_disable(struct atmel_pmecc_user *user);
+-	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
++	wc->ex.imm_data = cpu_to_be32(orig_cqe->immdata);
+ 	wc->src_qp = orig_cqe->src_qp;
+ 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
+ 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
+@@ -3391,7 +3391,10 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
+ 				continue;
+ 			}
+ 			wc->qp = &qp->ib_qp;
+-			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
++			if (cqe->flags & CQ_RES_RC_FLAGS_IMM)
++				wc->ex.imm_data = cpu_to_be32(cqe->immdata);
++			else
++				wc->ex.invalidate_rkey = cqe->invrkey;
+ 			wc->src_qp = cqe->src_qp;
+ 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
+ 			wc->port_num = 1;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+index bdc3a4f969c7e..a40f8cd8860a7 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+@@ -350,7 +350,7 @@ struct bnxt_qplib_cqe {
+ 	u16				cfa_meta;
+ 	u64				wr_id;
+ 	union {
+-		__le32			immdata;
++		u32			immdata;
+ 		u32			invrkey;
+ 	};
+ 	u64				qp_handle;
 -- 
 2.43.0
 
