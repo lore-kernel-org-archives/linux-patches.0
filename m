@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC376215782;
-	Thu, 12 Dec 2024 17:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EFE222D54;
+	Thu, 12 Dec 2024 17:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023198; cv=none; b=LSgJrlTJBTmYitAOvwj2Bn7JS6ols977TJga+Opt0A49NB8WbMU1t7Ff1kcsydYamxipaySFbGbY5web0S6UK90X0Q9fXHAakY/R8hDUaIBbMiDIYTfA+BG1BekhZAEsNEyyY3l8LwxItGjEHv5UAIH4WbJsEXd1LX4LJ2ow/1I=
+	t=1734023202; cv=none; b=QwbqFsuJRYN6GqA6iNwcB7ozmBECaZPH6U5j2XuEzf+bZdFE4YGmvvQm9bL2ij/BLOUyWfUx0KqvFzEwXAMNO8itZcwN9RpzdNLeZdFgEXxXtzWUjtxozcRDNufMD2c9io3RLg2gy62LGvog/KdISzaycbqNDpm1pvoCPd8gNnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023198; c=relaxed/simple;
-	bh=NRu6g4iTIbSlaaYyT3mfI3qaIgXqSpjGZ8OwDKGLT9w=;
+	s=arc-20240116; t=1734023202; c=relaxed/simple;
+	bh=1D50uWfEZGHcjBm3WH/5CnFa8gzwVrKHNTYn4VK2ISo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCJMyGMw3OAZnP2EA9nyObg6VQ6XocLFnOKJCw1LfoMiBDDNqhe7chrf8ks+Mayfbc7jDIdE3HSthKAALWCslc4YQoHAnsExY+qC4futquEdq71QDePDrow1gxGCMOPvHcYJfOpSlXGKB2/zozJA0CHJAX8SeGxSZjfkPZT6Nzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iDRSKO4g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zredu3vlyQ6O1JqOXa764pvP5IJAFGJS6QiA/E9EfHp4a+HqJzFRRF/JnNiWS3leymyWTxTWUCF5RP8pP6F0bZtvAAmyZiVoO6/nmojHvb0bQ2OK3EwnlXyYRhPngci3ikptBl/CtgGTRMjd/t0l7W/ouFZe76xSTH32qv04apI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XxEuNsD+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iDRSKO4g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59BAC4CECE;
-	Thu, 12 Dec 2024 17:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XxEuNsD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA1FC4CECE;
+	Thu, 12 Dec 2024 17:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023198;
-	bh=NRu6g4iTIbSlaaYyT3mfI3qaIgXqSpjGZ8OwDKGLT9w=;
+	s=korg; t=1734023201;
+	bh=1D50uWfEZGHcjBm3WH/5CnFa8gzwVrKHNTYn4VK2ISo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDRSKO4gflppUlsF1XlO7lCfZel3fiGvku4OguCRE+9wzHfLZL0ZBNoSiwzbHqMM9
-	 PJsM231+yseFVlElGLaJFLsVwBuBbygXoOblN9g2R0FWztzoP2eQMVCN/IkBCFymBo
-	 F4mIeYySml/aGEqyjVBeOwaNHguFYZ1jsqqo+zyM=
+	b=XxEuNsD+BDvPwNOYUO5SCgjfLMNZhUVez0mbYUJlTe9J4oYhndw43z6e4UZbWBbOS
+	 /LduhTVM6rssLIvwXrWcGNI9eEe2RY1864DlhDF3HnbQWDpDx4kqILNOABXOi4+jR9
+	 n2ok0r/EadSksj58WQPu0Hu3Wfd/IvKFRaT4jKa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 448/565] tracing: Fix cmp_entries_dup() to respect sort() comparison rules
-Date: Thu, 12 Dec 2024 16:00:43 +0100
-Message-ID: <20241212144329.425457131@linuxfoundation.org>
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 457/565] scsi: qla2xxx: Remove check req_sg_cnt should be equal to rsp_sg_cnt
+Date: Thu, 12 Dec 2024 16:00:52 +0100
+Message-ID: <20241212144329.788963868@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,52 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-commit e63fbd5f6810ed756bbb8a1549c7d4132968baa9 upstream.
+commit 833c70e212fc40d3e98da941796f4c7bcaecdf58 upstream.
 
-The cmp_entries_dup() function used as the comparator for sort()
-violated the symmetry and transitivity properties required by the
-sorting algorithm. Specifically, it returned 1 whenever memcmp() was
-non-zero, which broke the following expectations:
-
-* Symmetry: If x < y, then y > x.
-* Transitivity: If x < y and y < z, then x < z.
-
-These violations could lead to incorrect sorting and failure to
-correctly identify duplicate elements.
-
-Fix the issue by directly returning the result of memcmp(), which
-adheres to the required comparison properties.
+Firmware supports multiple sg_cnt for request and response for CT
+commands, so remove the redundant check. A check is there where sg_cnt
+for request and response should be same. This is not required as driver
+and FW have code to handle multiple and different sg_cnt on request and
+response.
 
 Cc: stable@vger.kernel.org
-Fixes: 08d43a5fa063 ("tracing: Add lock-free tracing_map")
-Link: https://lore.kernel.org/20241203202228.1274403-1-visitorckw@gmail.com
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20241115130313.46826-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -845,15 +845,11 @@ int tracing_map_init(struct tracing_map
- static int cmp_entries_dup(const void *A, const void *B)
- {
- 	const struct tracing_map_sort_entry *a, *b;
--	int ret = 0;
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -494,16 +494,6 @@ qla2x00_process_ct(struct bsg_job *bsg_j
+ 		goto done;
+ 	}
  
- 	a = *(const struct tracing_map_sort_entry **)A;
- 	b = *(const struct tracing_map_sort_entry **)B;
- 
--	if (memcmp(a->key, b->key, a->elt->map->key_size))
--		ret = 1;
+-	if ((req_sg_cnt !=  bsg_job->request_payload.sg_cnt) ||
+-	    (rsp_sg_cnt != bsg_job->reply_payload.sg_cnt)) {
+-		ql_log(ql_log_warn, vha, 0x7011,
+-		    "request_sg_cnt: %x dma_request_sg_cnt: %x reply_sg_cnt:%x "
+-		    "dma_reply_sg_cnt: %x\n", bsg_job->request_payload.sg_cnt,
+-		    req_sg_cnt, bsg_job->reply_payload.sg_cnt, rsp_sg_cnt);
+-		rval = -EAGAIN;
+-		goto done_unmap_sg;
+-	}
 -
--	return ret;
-+	return memcmp(a->key, b->key, a->elt->map->key_size);
- }
- 
- static int cmp_entries_sum(const void *A, const void *B)
+ 	if (!vha->flags.online) {
+ 		ql_log(ql_log_warn, vha, 0x7012,
+ 		    "Host is not online.\n");
 
 
