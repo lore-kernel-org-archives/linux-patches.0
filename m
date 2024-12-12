@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B6F223E87;
-	Thu, 12 Dec 2024 17:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CEB223E64;
+	Thu, 12 Dec 2024 17:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022999; cv=none; b=rM56L9ZCy0Hn0Av+gE9jAmFQ1sP8iqqEphuhUXlTUO7idZtOe1bab4ej00hOlXlKxoM1FvVW8e3MtdjhBf16xzfMPYN6CdLZC1KByYt4yLUXe3a0rKShlzxGJPLFMWHIATSLYmNchAPSCz1B+dCgC1HpojRQB1Dx9OVPCQ7tonQ=
+	t=1734023003; cv=none; b=POekPlGj2rRWBFHruWRedS3Bna807ftVzc3HVeLCa82FTyrOGpUdfEVmBml9a5oKJeziSVGOPhmA+wG9aKC2aVNVIM433DIXoE4yRmCRXBHsYSce1BbCvEu3e02g1pl/az9eUKvBlpuEKi0YSNgM++pWQvCaneaXFftGbGlFM+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022999; c=relaxed/simple;
-	bh=WduUDU8HGWnVnLXijDbaAFupOgEHngwGcsmkm53BS2Q=;
+	s=arc-20240116; t=1734023003; c=relaxed/simple;
+	bh=Hixige3tTxzoZ9v6dL8MYATlTAdBj4X39q+htXJV3uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e9BdMMWbuSUxZqEcKKp4LkBxE41MJM3grM5ai+ojn69+0K6IZ9D3ptCEkHrqa2ZmIHS3LflBFWpLgvLcMjvrTSuphuPHOyVc2Oj7Uewn83cWicQTsNqEp2+1Ejf1wr5UdXMhvlqbJlx6+YNVmwAaEQ8xO6jraXpvho/QMRh3PrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwIUAial; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vFaWIx/fS1tw8B54ZcUo3uUxNvQhFhb1GDYmYXK3S/GbIqBoKCp6Tdh9S2ONBcfkjMakSI2xhMWEsmKl6/zWWj+Are4joRHgsR8p10Wi7162mNowkaI9MKZG6m5FpCMTLphNs9zWNw+lqTOSCq55B/xjAaWzy+hLREynKIDBEpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1RSQCNg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwIUAial"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C70BC4CECE;
-	Thu, 12 Dec 2024 17:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1RSQCNg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF4FC4CECE;
+	Thu, 12 Dec 2024 17:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022999;
-	bh=WduUDU8HGWnVnLXijDbaAFupOgEHngwGcsmkm53BS2Q=;
+	s=korg; t=1734023002;
+	bh=Hixige3tTxzoZ9v6dL8MYATlTAdBj4X39q+htXJV3uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwIUAialBc0pCSTr97cxORGcy8ZTM9oFh1D2jVYrapCnyEW6NX2q+85PXfRwm6P5o
-	 NYTK9+ngSMUWgqPeK0x35UtmXqvL9rqeCEV7nGKMJd59yuU/ojQ4TsrKM/N9HtQ4pK
-	 1DnEM7QOBO0fhNBn0ehur2PtWT50fW3sutD4lOnc=
+	b=D1RSQCNgtnux6CJtprNFyvz9M+c54Y5r0E2Npz+ddotUm8BAbO8rvT2lwY4bWd0u1
+	 NMKDLFdbxUC3RFUs2E/EVizlPHK7Yazz59jpzfynXsMhcBwEz4KszzZVTbMzlpziNc
+	 bY1qhEMuj9KGVLDH88r7nEUYN92pcFh3aZ6Jqdy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 5.15 393/565] btrfs: dont BUG_ON on ENOMEM from btrfs_lookup_extent_info() in walk_down_proc()
-Date: Thu, 12 Dec 2024 15:59:48 +0100
-Message-ID: <20241212144327.182257867@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Alain Volmat <alain.volmat@foss.st.com>
+Subject: [PATCH 5.15 394/565] drm/sti: avoid potential dereference of error pointers in sti_hqvdp_atomic_check
+Date: Thu, 12 Dec 2024 15:59:49 +0100
+Message-ID: <20241212144327.220908802@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,31 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit a580fb2c3479d993556e1c31b237c9e5be4944a3 upstream.
+commit c1ab40a1fdfee732c7e6ff2fb8253760293e47e8 upstream.
 
-We handle errors here properly, ENOMEM isn't fatal, return the error.
+The return value of drm_atomic_get_crtc_state() needs to be
+checked. To avoid use of error pointer 'crtc_state' in case
+of the failure.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Cc: stable@vger.kernel.org
+Fixes: dd86dc2f9ae1 ("drm/sti: implement atomic_check for the planes")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240913090926.2023716-1-make24@iscas.ac.cn
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent-tree.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/sti/sti_hqvdp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -5099,7 +5099,6 @@ static noinline int walk_down_proc(struc
- 					       eb->start, level, 1,
- 					       &wc->refs[level],
- 					       &wc->flags[level]);
--		BUG_ON(ret == -ENOMEM);
- 		if (ret)
- 			return ret;
- 		if (unlikely(wc->refs[level] == 0)) {
+--- a/drivers/gpu/drm/sti/sti_hqvdp.c
++++ b/drivers/gpu/drm/sti/sti_hqvdp.c
+@@ -1035,6 +1035,9 @@ static int sti_hqvdp_atomic_check(struct
+ 		return 0;
+ 
+ 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
++	if (IS_ERR(crtc_state))
++		return PTR_ERR(crtc_state);
++
+ 	mode = &crtc_state->mode;
+ 	dst_x = new_plane_state->crtc_x;
+ 	dst_y = new_plane_state->crtc_y;
 
 
