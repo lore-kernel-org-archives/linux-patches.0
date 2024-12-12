@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09732EAE5;
-	Thu, 12 Dec 2024 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89792EAE5;
+	Thu, 12 Dec 2024 15:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016639; cv=none; b=a8NmQyDYkvTvr6j7WYvy7Rns8DfEsEkIdbdIYw7wnE1Q1llizavygNGxRfW67Y2MDhHPzct5OAXoFNOobWSX3A/jgn0wYME9iZft+9x9Yd4DYb15l7+7ua7ON4Z/y25vp+uWJl7iBJzL/Rv+OT9FQ6ZKUqB1nZLn155HZ7n3TSY=
+	t=1734016643; cv=none; b=ClCtzHcGnJucbkZgf2i9dThSu28C5A4cjGETubWzvORRAbJaVLrk5G42FiucYcoNS0OEzjnxDH52w4WReOpUb9YA0lGwXPkASWt8GCdCXAxroUI1NyqL4qrxOFDuudQSD0jn13673rCVSY+BBoIw7CNHnDmP1e09BE/pAt70L1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016639; c=relaxed/simple;
-	bh=kJJr+R0wj/IPqXneRa5Bk09HszHWq7qmp44GTYmpp1c=;
+	s=arc-20240116; t=1734016643; c=relaxed/simple;
+	bh=Td66NEbgNbDRkTMygdeZH9hjgDiLU13kkB4yaoxcS8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+oPdF95/Pp2d4gCLprv5CLaZVgNR6YB7uWmCIAkEHnQ87Kio3wlo6cykL+5yywUYc9Ou3r6XIYN1vzLnUnHVe/pwj2d5vHu8ex9k5nf915YhxOaT0aGfS/MRjmk7f6OOyMFSlddzXLDoBxtRoFAYMTT2Jqkj+Xo+OFsECCaC1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HIkC5hPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDZRhzmssfdw/tjW4dWasb4yBIVAkHWEjN079vSAkWd6qsiS5NnUvcM//GpqG9rGws6cFHSb+nd73QQQD+8GAtoE57r+oGmTKfNFGMS3w9hs1Pw4+bqC993JvAg8l8xZADs7HjoXDVdamkwxTy4+YHDh40srKmNJ7sO1dBJ3OQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5zeUQJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HIkC5hPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8D0C4CED4;
-	Thu, 12 Dec 2024 15:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5zeUQJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82DDC4CEE7;
+	Thu, 12 Dec 2024 15:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016639;
-	bh=kJJr+R0wj/IPqXneRa5Bk09HszHWq7qmp44GTYmpp1c=;
+	s=korg; t=1734016643;
+	bh=Td66NEbgNbDRkTMygdeZH9hjgDiLU13kkB4yaoxcS8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIkC5hPG0uN4Zy6TV1f1UX5bk8POgrfQuOdEz7oeQhBGjaMHsWtEC7Sgumkyh5fF8
-	 ghKkSV1J6xlX445+EHA1JoO9WfH+nWdjq5ydph3xCw/dkb79QqefAr7gfTGWusrbCP
-	 37vrVi/z8sQoYmLvCT5se+PoIJL2SG2luQPa+psI=
+	b=y5zeUQJgoIe4JckaAAW+JRosijg2L7/+5ZepunvZ5FHCXBFitMYhrK59/bq2mGB4k
+	 nFR2z7f2P5eTWhvMyiUcj0w09YippH4xO9geG6Cbz5ttZ3tRazA+v+n/WJNMFgb61U
+	 28ixEgxhEOogJFRoGUdmRRj0jxB2KSNPsIf1AEr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shekhar Chauhan <shekhar.chauhan@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Dom Cobley <popcornmix@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 254/466] drm/xe/pciids: separate ARL and MTL PCI IDs
-Date: Thu, 12 Dec 2024 15:57:03 +0100
-Message-ID: <20241212144316.824212969@linuxfoundation.org>
+Subject: [PATCH 6.12 255/466] drm/vc4: hdmi: Avoid log spam for audio start failure
+Date: Thu, 12 Dec 2024 15:57:04 +0100
+Message-ID: <20241212144316.863963827@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,64 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Dom Cobley <popcornmix@gmail.com>
 
-[ Upstream commit cdb56a63f7eef34e89b045fc8bcae8d326bbdb19 ]
+[ Upstream commit b4e5646178e86665f5caef2894578600f597098a ]
 
-Avoid including PCI IDs for one platform to the PCI IDs of another. It's
-more clear to deal with them completely separately at the PCI ID macro
-level.
+We regularly get dmesg error reports of:
+[   18.184066] hdmi-audio-codec hdmi-audio-codec.3.auto: ASoC: error at snd_soc_dai_startup on i2s-hifi: -19
+[   18.184098]  MAI: soc_pcm_open() failed (-19)
 
-Reviewed-by: Shekhar Chauhan <shekhar.chauhan@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/a30cb0da7694a8eccceba66d676ac59aa0e96176.1725443121.git.jani.nikula@intel.com
+These are generated for any disconnected hdmi interface when pulseaudio
+attempts to open the associated ALSA device (numerous times). Each open
+generates a kernel error message, generating general log spam.
+
+The error messages all come from _soc_pcm_ret in sound/soc/soc-pcm.c#L39
+which suggests returning ENOTSUPP, rather that ENODEV will be quiet.
+And indeed it is.
+
+Signed-off-by: Dom Cobley <popcornmix@gmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-5-dave.stevenson@raspberrypi.com
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pci.c   |  1 +
- include/drm/intel/xe_pciids.h | 13 ++++++++-----
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pci.c b/drivers/gpu/drm/xe/xe_pci.c
-index 8563206f643e6..025d649434673 100644
---- a/drivers/gpu/drm/xe/xe_pci.c
-+++ b/drivers/gpu/drm/xe/xe_pci.c
-@@ -388,6 +388,7 @@ static const struct pci_device_id pciidlist[] = {
- 	XE_RPLS_IDS(INTEL_VGA_DEVICE, &adl_s_desc),
- 	XE_DG1_IDS(INTEL_VGA_DEVICE, &dg1_desc),
- 	XE_ATS_M_IDS(INTEL_VGA_DEVICE, &ats_m_desc),
-+	XE_ARL_IDS(INTEL_VGA_DEVICE, &mtl_desc),
- 	XE_DG2_IDS(INTEL_VGA_DEVICE, &dg2_desc),
- 	XE_MTL_IDS(INTEL_VGA_DEVICE, &mtl_desc),
- 	XE_LNL_IDS(INTEL_VGA_DEVICE, &lnl_desc),
-diff --git a/include/drm/intel/xe_pciids.h b/include/drm/intel/xe_pciids.h
-index 7ee7524141f10..67dad09e62bc8 100644
---- a/include/drm/intel/xe_pciids.h
-+++ b/include/drm/intel/xe_pciids.h
-@@ -174,16 +174,19 @@
- 	XE_ATS_M150_IDS(MACRO__, ## __VA_ARGS__),\
- 	XE_ATS_M75_IDS(MACRO__, ## __VA_ARGS__)
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 2d7d3e90f3be4..7e0a5ea7ab859 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -1924,7 +1924,7 @@ static int vc4_hdmi_audio_startup(struct device *dev, void *data)
+ 	}
  
--/* MTL / ARL */
-+/* ARL */
-+#define XE_ARL_IDS(MACRO__, ...)		\
-+	MACRO__(0x7D41, ## __VA_ARGS__),	\
-+	MACRO__(0x7D51, ## __VA_ARGS__),        \
-+	MACRO__(0x7D67, ## __VA_ARGS__),	\
-+	MACRO__(0x7DD1, ## __VA_ARGS__)
-+
-+/* MTL */
- #define XE_MTL_IDS(MACRO__, ...)		\
- 	MACRO__(0x7D40, ## __VA_ARGS__),	\
--	MACRO__(0x7D41, ## __VA_ARGS__),	\
- 	MACRO__(0x7D45, ## __VA_ARGS__),	\
--	MACRO__(0x7D51, ## __VA_ARGS__),        \
- 	MACRO__(0x7D55, ## __VA_ARGS__),	\
- 	MACRO__(0x7D60, ## __VA_ARGS__),	\
--	MACRO__(0x7D67, ## __VA_ARGS__),	\
--	MACRO__(0x7DD1, ## __VA_ARGS__),        \
- 	MACRO__(0x7DD5, ## __VA_ARGS__)
+ 	if (!vc4_hdmi_audio_can_stream(vc4_hdmi)) {
+-		ret = -ENODEV;
++		ret = -ENOTSUPP;
+ 		goto out_dev_exit;
+ 	}
  
- #define XE_LNL_IDS(MACRO__, ...) \
 -- 
 2.43.0
 
