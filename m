@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6169B21577F;
-	Thu, 12 Dec 2024 15:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71927217F40;
+	Thu, 12 Dec 2024 15:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015835; cv=none; b=HV8j3ewZegwer+7Qdvh3WK3x2ky+2W67wF40oD3gRWnCgfE3qu9UbcRO9W2UmkvFHoGOZ36BBFWt6zZRDbSQo7n+gGd2LXr0EfET4pl2eZIVcouKM3O/gntHaQufEKToLPcPOj2GgS3YBHFyxPJdSlBU/GLsCqKIgExqnFYUMa0=
+	t=1734015839; cv=none; b=SR5fgL/n/PdFgkKp1bZYbkvhVqEZf9kKHIMxzqW0ciJ/sjXVdR8Kz53HDFQu9Si7IlTCHN0jgkYDTdVx0c+e6PUY0D0Gq4xOFCcQ5UclPe1WQZcIdQkYfkcv8hIYNlr7aBjYestPhOEmHGorY991S39HgQEN3piCET/ifE/pNBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015835; c=relaxed/simple;
-	bh=LDZzdKnpntRYg7S8s7uhbO9lBnSW7CuVvlWQQZ7BFYw=;
+	s=arc-20240116; t=1734015839; c=relaxed/simple;
+	bh=ZvC3dIcTVTA9Gf2knXMsoBhsilCMFrZoe+tBQRivK0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mr7I1cs7qmreElb5oZuEa9bybi29HepJM2ot2ZC3jMq3Y1aAIDpvHGpCpIOD0kCPcp56Vd9e3omwCBuPGqVmwKeDW78rNnVJnJRosrPZy33EKocpLbOsRdXvZoEdgJIHoOEdfM0AKvBenDkuDA+5I3cDWsitPnTVVkHBwAx2ba0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uvShe4zN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l0xCjTp1D+ZMxiU4NvKT3tYiiQk0+rN2YxBwWStwMyx6eGSi9DBZBjSUEnUs8ZllVKPgrJ3CMxNUYJTFBRwXvapFADGHS64iDQ3CfnxrTCWU15wwlt7SHe47dv1k0UM3DqgYki8iujrtJcBxpYiK22wMO6NALKD5PtKONihxAso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSmq1Y8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uvShe4zN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78831C4CECE;
-	Thu, 12 Dec 2024 15:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSmq1Y8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985DDC4CECE;
+	Thu, 12 Dec 2024 15:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015835;
-	bh=LDZzdKnpntRYg7S8s7uhbO9lBnSW7CuVvlWQQZ7BFYw=;
+	s=korg; t=1734015839;
+	bh=ZvC3dIcTVTA9Gf2knXMsoBhsilCMFrZoe+tBQRivK0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uvShe4zN9rTxg9Oyorw1kiSboD9jPV3eRwrljPybTRT2ZrIwxdDbQMx1HYtM04EYi
-	 UqBjJtY8FW+vdScGhcDhtBPy3gli/cyRjlDmibuH2vE2iWBse75La/cA2d+q/JF0Gl
-	 A1qDnXORb2jpbH5MUj1MosCusE0aDZynKMLL5ByU=
+	b=nSmq1Y8uUXfQLeidhyNB3940vwT1u9Z8xC2rephvBKeKKIUKQ039kJ8WNkiAcRaha
+	 7wUoDRsZch8VjtHBx1h2MS/96Ma9PZzBT4j9ZAvIPJ/BpdD7F6azD5PeYKgspQ0AnP
+	 uXy57Uvoxh0WHHd22u2yZORfBUhmJeokEjkSZJIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Frode Nordahl <frode.nordahl@canonical.com>,
-	Chris Mi <cmi@nvidia.com>,
-	Ariel Levkovich <lariel@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/466] net/mlx5e: Remove workaround to avoid syndrome for internal port
-Date: Thu, 12 Dec 2024 15:53:46 +0100
-Message-ID: <20241212144309.071595332@linuxfoundation.org>
+Subject: [PATCH 6.12 029/466] net: phy: microchip: Reset LAN88xx PHY to ensure clean link state on LAN7800/7850
+Date: Thu, 12 Dec 2024 15:53:18 +0100
+Message-ID: <20241212144307.838350073@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -55,67 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 5085f861b414e4a51ce28a891dfa32a10a54b64e ]
+[ Upstream commit ccb989e4d1efe0dd81b28c437443532d80d9ecee ]
 
-Previously a workaround was added to avoid syndrome 0xcdb051. It is
-triggered when offload a rule with tunnel encapsulation, and
-forwarding to another table, but not matching on the internal port in
-firmware steering mode. The original workaround skips internal tunnel
-port logic, which is not correct as not all cases are considered. As
-an example, if vlan is configured on the uplink port, traffic can't
-pass because vlan header is not added with this workaround. Besides,
-there is no such issue for software steering. So, this patch removes
-that, and returns error directly if trying to offload such rule for
-firmware steering.
+Fix outdated MII_LPA data in the LAN88xx PHY, which is used in LAN7800
+and LAN7850 USB Ethernet controllers. Due to a hardware limitation, the
+PHY cannot reliably update link status after parallel detection when the
+link partner does not support auto-negotiation. To mitigate this, add a
+PHY reset in `lan88xx_link_change_notify()` when `phydev->state` is
+`PHY_NOLINK`, ensuring the PHY starts in a clean state and reports
+accurate fixed link parallel detection results.
 
-Fixes: 06b4eac9c4be ("net/mlx5e: Don't offload internal port if filter device is out device")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Tested-by: Frode Nordahl <frode.nordahl@canonical.com>
-Reviewed-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Ariel Levkovich <lariel@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241203204920.232744-7-tariqt@nvidia.com
+Fixes: 792aec47d59d9 ("add microchip LAN88xx phy driver")
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20241125084050.414352-1-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/mellanox/mlx5/core/en/tc_tun_encap.c   | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/phy/microchip.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-index 878cbdbf5ec8b..e7e01f3298efb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-@@ -5,6 +5,7 @@
- #include <net/nexthop.h>
- #include <net/ip_tunnels.h>
- #include "tc_tun_encap.h"
-+#include "fs_core.h"
- #include "en_tc.h"
- #include "tc_tun.h"
- #include "rep/tc.h"
-@@ -24,10 +25,18 @@ static int mlx5e_set_int_port_tunnel(struct mlx5e_priv *priv,
- 
- 	route_dev = dev_get_by_index(dev_net(e->out_dev), e->route_dev_ifindex);
- 
--	if (!route_dev || !netif_is_ovs_master(route_dev) ||
--	    attr->parse_attr->filter_dev == e->out_dev)
-+	if (!route_dev || !netif_is_ovs_master(route_dev))
- 		goto out;
- 
-+	if (priv->mdev->priv.steering->mode == MLX5_FLOW_STEERING_MODE_DMFS &&
-+	    mlx5e_eswitch_uplink_rep(attr->parse_attr->filter_dev) &&
-+	    (attr->esw_attr->dests[out_index].flags & MLX5_ESW_DEST_ENCAP)) {
-+		mlx5_core_warn(priv->mdev,
-+			       "Matching on external port with encap + fwd to table actions is not allowed for firmware steering\n");
-+		err = -EINVAL;
-+		goto out;
-+	}
+diff --git a/drivers/net/phy/microchip.c b/drivers/net/phy/microchip.c
+index d3273bc0da4a1..691969a4910f2 100644
+--- a/drivers/net/phy/microchip.c
++++ b/drivers/net/phy/microchip.c
+@@ -351,6 +351,22 @@ static int lan88xx_config_aneg(struct phy_device *phydev)
+ static void lan88xx_link_change_notify(struct phy_device *phydev)
+ {
+ 	int temp;
++	int ret;
 +
- 	err = mlx5e_set_fwd_to_int_port_actions(priv, attr, e->route_dev_ifindex,
- 						MLX5E_TC_INT_PORT_EGRESS,
- 						&attr->action, out_index);
++	/* Reset PHY to ensure MII_LPA provides up-to-date information. This
++	 * issue is reproducible only after parallel detection, as described
++	 * in IEEE 802.3-2022, Section 28.2.3.1 ("Parallel detection function"),
++	 * where the link partner does not support auto-negotiation.
++	 */
++	if (phydev->state == PHY_NOLINK) {
++		ret = phy_init_hw(phydev);
++		if (ret < 0)
++			goto link_change_notify_failed;
++
++		ret = _phy_start_aneg(phydev);
++		if (ret < 0)
++			goto link_change_notify_failed;
++	}
+ 
+ 	/* At forced 100 F/H mode, chip may fail to set mode correctly
+ 	 * when cable is switched between long(~50+m) and short one.
+@@ -377,6 +393,11 @@ static void lan88xx_link_change_notify(struct phy_device *phydev)
+ 		temp |= LAN88XX_INT_MASK_MDINTPIN_EN_;
+ 		phy_write(phydev, LAN88XX_INT_MASK, temp);
+ 	}
++
++	return;
++
++link_change_notify_failed:
++	phydev_err(phydev, "Link change process failed %pe\n", ERR_PTR(ret));
+ }
+ 
+ /**
 -- 
 2.43.0
 
