@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96662165EA;
-	Thu, 12 Dec 2024 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ED520E034;
+	Thu, 12 Dec 2024 15:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016615; cv=none; b=XDq/0tQUMJEE/QTn7Vmrbr6upTO8Ce5k7gkx1EMNTu5BnNlQy2vzpxYnpZgsgYJkJuNcEM8g2gj1JPyR4rIHOkIxAeFpAEK1BxOLIZnH3BM3agnny2ZmLPfwDedAOKCRd6oyNB4gkreDsLSrH2E4hxRXoNKsmP7TdcO7TR+YETM=
+	t=1734016619; cv=none; b=co5gDByN7yJRDqHwGefHB3eWLDnoka9XTUt9NuNSti7OvST9ouDcoMM4JwfLL32JTld/BOWBFl4O7mTQjcNORtxoSYFetxeW8tardJsaz8OkgPvNUBoKrDJlrONBrKYvw2atkqKuP0bOrVv+QelltG9tHAeA9WazQ98YdqR4zh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016615; c=relaxed/simple;
-	bh=9UGg+c5TbM5aJY0N2tkFrxJhNbKh6vQcEuqvQCViOj4=;
+	s=arc-20240116; t=1734016619; c=relaxed/simple;
+	bh=MUMv6rRnScSBqJsgjPGrE6nq8faNTUDm4eOp/ekda8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F83EIH9ZVMyqf+mmFXcWm5EOAfpA9NVehpd6HCvvFzcUjBtXWSWLenh11+cj6tsRl1Ox0EuyxbU6Yp0mALXg3A578JbjM3L8wjFbiQ7vJpR7Nf9SeSvPK2KnN+0tgXS6u/lUjDFqJYlyU5ye1ak7pZfnrwsHKXEwcW7biZVT9KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNwwEDhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SwXQMItYlCIVas3CO9bzjqVeSYAw+zAiPiqTAE7GIJXJjZlxBRH6L0+4+Fy0wbw8W/hO81Sjjup3THHU6RXCD06mzFkwAlQBMKwATsxB1NRVywwPF/oFsnwWwLpmyfNqXqjE5Peqpw+QxNya0olBTsTMG/aby+7bDpQJNYcLI0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arp1ciWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNwwEDhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17322C4CED4;
-	Thu, 12 Dec 2024 15:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arp1ciWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF46C4CED0;
+	Thu, 12 Dec 2024 15:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016615;
-	bh=9UGg+c5TbM5aJY0N2tkFrxJhNbKh6vQcEuqvQCViOj4=;
+	s=korg; t=1734016619;
+	bh=MUMv6rRnScSBqJsgjPGrE6nq8faNTUDm4eOp/ekda8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNwwEDhSk+4TuReusI+Rxdl2WDd85YV4KPIQEcNILq+vbjzDZVwRrznJFEjhtV4Yy
-	 GeaNzV2j3EoQ8TbqUxA3hbRqDvDhQb3LSFa/8DENwnAU7UlHwqfVN0M8IfxHTfoeuv
-	 qegYex6MQUYjpeJjsRL7jVBmL/ejrXywOkKIBTZw=
+	b=arp1ciWq6rblrs7G9ouD5eQAKLpwp13FtrwSySEmCHDy34VpOU0Ae8jOojaEsEYME
+	 q1J5ek8Bbkyfk2Ix2oKMLasA1rQeXJfA5ebA9wgL4UnbfNn/JrxxsfmtRJCuS33FAq
+	 USrqm693CwswXWBz6SJrS91k2weIVsuaTYvbPuvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 248/466] soc: imx8m: Probe the SoC driver as platform driver
-Date: Thu, 12 Dec 2024 15:56:57 +0100
-Message-ID: <20241212144316.586484113@linuxfoundation.org>
+Subject: [PATCH 6.12 249/466] regmap: maple: Provide lockdep (sub)class for maple trees internal lock
+Date: Thu, 12 Dec 2024 15:56:58 +0100
+Message-ID: <20241212144316.624428153@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,271 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 9cc832d37799dbea950c4c8a34721b02b8b5a8ff ]
+[ Upstream commit 1ed9b927e7dd8b8cff13052efe212a8ff72ec51d ]
 
-With driver_async_probe=* on kernel command line, the following trace is
-produced because on i.MX8M Plus hardware because the soc-imx8m.c driver
-calls of_clk_get_by_name() which returns -EPROBE_DEFER because the clock
-driver is not yet probed. This was not detected during regular testing
-without driver_async_probe.
+In some cases when using the maple tree register cache, the lockdep
+validator might complain about invalid deadlocks:
 
-Convert the SoC code to platform driver and instantiate a platform device
-in its current device_initcall() to probe the platform driver. Rework
-.soc_revision callback to always return valid error code and return SoC
-revision via parameter. This way, if anything in the .soc_revision callback
-return -EPROBE_DEFER, it gets propagated to .probe and the .probe will get
-retried later.
+[7.131886]  Possible interrupt unsafe locking scenario:
 
-"
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 1 at drivers/soc/imx/soc-imx8m.c:115 imx8mm_soc_revision+0xdc/0x180
-CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-next-20240924-00002-g2062bb554dea #603
-Hardware name: DH electronics i.MX8M Plus DHCOM Premium Developer Kit (3) (DT)
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : imx8mm_soc_revision+0xdc/0x180
-lr : imx8mm_soc_revision+0xd0/0x180
-sp : ffff8000821fbcc0
-x29: ffff8000821fbce0 x28: 0000000000000000 x27: ffff800081810120
-x26: ffff8000818a9970 x25: 0000000000000006 x24: 0000000000824311
-x23: ffff8000817f42c8 x22: ffff0000df8be210 x21: fffffffffffffdfb
-x20: ffff800082780000 x19: 0000000000000001 x18: ffffffffffffffff
-x17: ffff800081fff418 x16: ffff8000823e1000 x15: ffff0000c03b65e8
-x14: ffff0000c00051b0 x13: ffff800082790000 x12: 0000000000000801
-x11: ffff80008278ffff x10: ffff80008209d3a6 x9 : ffff80008062e95c
-x8 : ffff8000821fb9a0 x7 : 0000000000000000 x6 : 00000000000080e3
-x5 : ffff0000df8c03d8 x4 : 0000000000000000 x3 : 0000000000000000
-x2 : 0000000000000000 x1 : fffffffffffffdfb x0 : fffffffffffffdfb
-Call trace:
- imx8mm_soc_revision+0xdc/0x180
- imx8_soc_init+0xb0/0x1e0
- do_one_initcall+0x94/0x1a8
- kernel_init_freeable+0x240/0x2a8
- kernel_init+0x28/0x140
- ret_from_fork+0x10/0x20
----[ end trace 0000000000000000 ]---
-SoC: i.MX8MP revision 1.1
-"
+[7.131890]        CPU0                    CPU1
+[7.131893]        ----                    ----
+[7.131896]   lock(&mt->ma_lock);
+[7.131904]                                local_irq_disable();
+[7.131907]                                lock(rockchip_drm_vop2:3114:(&vop2_regmap_config)->lock);
+[7.131916]                                lock(&mt->ma_lock);
+[7.131925]   <Interrupt>
+[7.131928]     lock(rockchip_drm_vop2:3114:(&vop2_regmap_config)->lock);
+[7.131936]
+                *** DEADLOCK ***
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+[7.131939] no locks held by swapper/0/0.
+[7.131944]
+               the shortest dependencies between 2nd lock and 1st lock:
+[7.131950]  -> (&mt->ma_lock){+.+.}-{2:2} {
+[7.131966]     HARDIRQ-ON-W at:
+[7.131973]                       lock_acquire+0x200/0x330
+[7.131986]                       _raw_spin_lock+0x50/0x70
+[7.131998]                       regcache_maple_write+0x68/0xe0
+[7.132010]                       regcache_write+0x6c/0x90
+[7.132019]                       _regmap_read+0x19c/0x1d0
+[7.132029]                       _regmap_update_bits+0xc0/0x148
+[7.132038]                       regmap_update_bits_base+0x6c/0xa8
+[7.132048]                       rk8xx_probe+0x22c/0x3d8
+[7.132057]                       rk8xx_spi_probe+0x74/0x88
+[7.132065]                       spi_probe+0xa8/0xe0
+
+[...]
+
+[7.132675]   }
+[7.132678]   ... key      at: [<ffff800082943c20>] __key.0+0x0/0x10
+[7.132691]   ... acquired at:
+[7.132695]    _raw_spin_lock+0x50/0x70
+[7.132704]    regcache_maple_write+0x68/0xe0
+[7.132714]    regcache_write+0x6c/0x90
+[7.132724]    _regmap_read+0x19c/0x1d0
+[7.132732]    _regmap_update_bits+0xc0/0x148
+[7.132741]    regmap_field_update_bits_base+0x74/0xb8
+[7.132751]    vop2_plane_atomic_update+0x480/0x14d8 [rockchipdrm]
+[7.132820]    drm_atomic_helper_commit_planes+0x1a0/0x320 [drm_kms_helper]
+
+[...]
+
+[7.135112] -> (rockchip_drm_vop2:3114:(&vop2_regmap_config)->lock){-...}-{2:2} {
+[7.135130]    IN-HARDIRQ-W at:
+[7.135136]                     lock_acquire+0x200/0x330
+[7.135147]                     _raw_spin_lock_irqsave+0x6c/0x98
+[7.135157]                     regmap_lock_spinlock+0x20/0x40
+[7.135166]                     regmap_read+0x44/0x90
+[7.135175]                     vop2_isr+0x90/0x290 [rockchipdrm]
+[7.135225]                     __handle_irq_event_percpu+0x124/0x2d0
+
+In the example above, the validator seems to get the scope of
+dependencies wrong, since the regmap instance used in rk8xx-spi driver
+has nothing to do with the instance from vop2.
+
+Improve validation by sharing the regmap's lockdep class with the maple
+tree's internal lock, while also providing a subclass for the latter.
+
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20241031-regmap-maple-lockdep-fix-v2-1-06a3710f3623@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 107 ++++++++++++++++++++++++++++--------
- 1 file changed, 85 insertions(+), 22 deletions(-)
+ drivers/base/regmap/internal.h       | 1 +
+ drivers/base/regmap/regcache-maple.c | 3 +++
+ drivers/base/regmap/regmap.c         | 1 +
+ 3 files changed, 5 insertions(+)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index fe111bae38c8e..5ea8887828c06 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -30,7 +30,7 @@
+diff --git a/drivers/base/regmap/internal.h b/drivers/base/regmap/internal.h
+index 83acccdc10089..bdb450436cbc5 100644
+--- a/drivers/base/regmap/internal.h
++++ b/drivers/base/regmap/internal.h
+@@ -59,6 +59,7 @@ struct regmap {
+ 			unsigned long raw_spinlock_flags;
+ 		};
+ 	};
++	struct lock_class_key *lock_key;
+ 	regmap_lock lock;
+ 	regmap_unlock unlock;
+ 	void *lock_arg; /* This is passed to lock/unlock functions */
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index 8d27d3653ea3e..23da7b31d7153 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -355,6 +355,9 @@ static int regcache_maple_init(struct regmap *map)
  
- struct imx8_soc_data {
- 	char *name;
--	u32 (*soc_revision)(void);
-+	int (*soc_revision)(u32 *socrev);
- };
+ 	mt_init(mt);
  
- static u64 soc_uid;
-@@ -51,24 +51,29 @@ static u32 imx8mq_soc_revision_from_atf(void)
- static inline u32 imx8mq_soc_revision_from_atf(void) { return 0; };
- #endif
- 
--static u32 __init imx8mq_soc_revision(void)
-+static int imx8mq_soc_revision(u32 *socrev)
- {
- 	struct device_node *np;
- 	void __iomem *ocotp_base;
- 	u32 magic;
- 	u32 rev;
- 	struct clk *clk;
-+	int ret;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mq-ocotp");
- 	if (!np)
--		return 0;
-+		return -EINVAL;
- 
- 	ocotp_base = of_iomap(np, 0);
--	WARN_ON(!ocotp_base);
-+	if (!ocotp_base) {
-+		ret = -EINVAL;
-+		goto err_iomap;
-+	}
++	if (!mt_external_lock(mt) && map->lock_key)
++		lockdep_set_class_and_subclass(&mt->ma_lock, map->lock_key, 1);
 +
- 	clk = of_clk_get_by_name(np, NULL);
- 	if (IS_ERR(clk)) {
--		WARN_ON(IS_ERR(clk));
--		return 0;
-+		ret = PTR_ERR(clk);
-+		goto err_clk;
+ 	if (!map->num_reg_defaults)
+ 		return 0;
+ 
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 7ef8577aeb100..e3e2afc2c83c6 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -756,6 +756,7 @@ struct regmap *__regmap_init(struct device *dev,
+ 						   lock_key, lock_name);
+ 		}
+ 		map->lock_arg = map;
++		map->lock_key = lock_key;
  	}
  
- 	clk_prepare_enable(clk);
-@@ -88,32 +93,45 @@ static u32 __init imx8mq_soc_revision(void)
- 	soc_uid <<= 32;
- 	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
- 
-+	*socrev = rev;
-+
- 	clk_disable_unprepare(clk);
- 	clk_put(clk);
- 	iounmap(ocotp_base);
- 	of_node_put(np);
- 
--	return rev;
-+	return 0;
-+
-+err_clk:
-+	iounmap(ocotp_base);
-+err_iomap:
-+	of_node_put(np);
-+	return ret;
- }
- 
--static void __init imx8mm_soc_uid(void)
-+static int imx8mm_soc_uid(void)
- {
- 	void __iomem *ocotp_base;
- 	struct device_node *np;
- 	struct clk *clk;
-+	int ret = 0;
- 	u32 offset = of_machine_is_compatible("fsl,imx8mp") ?
- 		     IMX8MP_OCOTP_UID_OFFSET : 0;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mm-ocotp");
- 	if (!np)
--		return;
-+		return -EINVAL;
- 
- 	ocotp_base = of_iomap(np, 0);
--	WARN_ON(!ocotp_base);
-+	if (!ocotp_base) {
-+		ret = -EINVAL;
-+		goto err_iomap;
-+	}
-+
- 	clk = of_clk_get_by_name(np, NULL);
- 	if (IS_ERR(clk)) {
--		WARN_ON(IS_ERR(clk));
--		return;
-+		ret = PTR_ERR(clk);
-+		goto err_clk;
- 	}
- 
- 	clk_prepare_enable(clk);
-@@ -124,31 +142,41 @@ static void __init imx8mm_soc_uid(void)
- 
- 	clk_disable_unprepare(clk);
- 	clk_put(clk);
-+
-+err_clk:
- 	iounmap(ocotp_base);
-+err_iomap:
- 	of_node_put(np);
-+
-+	return ret;
- }
- 
--static u32 __init imx8mm_soc_revision(void)
-+static int imx8mm_soc_revision(u32 *socrev)
- {
- 	struct device_node *np;
- 	void __iomem *anatop_base;
--	u32 rev;
-+	int ret;
- 
- 	np = of_find_compatible_node(NULL, NULL, "fsl,imx8mm-anatop");
- 	if (!np)
--		return 0;
-+		return -EINVAL;
- 
- 	anatop_base = of_iomap(np, 0);
--	WARN_ON(!anatop_base);
-+	if (!anatop_base) {
-+		ret = -EINVAL;
-+		goto err_iomap;
-+	}
- 
--	rev = readl_relaxed(anatop_base + ANADIG_DIGPROG_IMX8MM);
-+	*socrev = readl_relaxed(anatop_base + ANADIG_DIGPROG_IMX8MM);
- 
- 	iounmap(anatop_base);
- 	of_node_put(np);
- 
--	imx8mm_soc_uid();
-+	return imx8mm_soc_uid();
- 
--	return rev;
-+err_iomap:
-+	of_node_put(np);
-+	return ret;
- }
- 
- static const struct imx8_soc_data imx8mq_soc_data = {
-@@ -184,7 +212,7 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
- 	kasprintf(GFP_KERNEL, "%d.%d", (soc_rev >> 4) & 0xf,  soc_rev & 0xf) : \
- 	"unknown"
- 
--static int __init imx8_soc_init(void)
-+static int imx8m_soc_probe(struct platform_device *pdev)
- {
- 	struct soc_device_attribute *soc_dev_attr;
- 	struct soc_device *soc_dev;
-@@ -212,8 +240,11 @@ static int __init imx8_soc_init(void)
- 	data = id->data;
- 	if (data) {
- 		soc_dev_attr->soc_id = data->name;
--		if (data->soc_revision)
--			soc_rev = data->soc_revision();
-+		if (data->soc_revision) {
-+			ret = data->soc_revision(&soc_rev);
-+			if (ret)
-+				goto free_soc;
-+		}
- 	}
- 
- 	soc_dev_attr->revision = imx8_revision(soc_rev);
-@@ -251,6 +282,38 @@ static int __init imx8_soc_init(void)
- 	kfree(soc_dev_attr);
- 	return ret;
- }
-+
-+static struct platform_driver imx8m_soc_driver = {
-+	.probe = imx8m_soc_probe,
-+	.driver = {
-+		.name = "imx8m-soc",
-+	},
-+};
-+
-+static int __init imx8_soc_init(void)
-+{
-+	struct platform_device *pdev;
-+	int ret;
-+
-+	/* No match means this is non-i.MX8M hardware, do nothing. */
-+	if (!of_match_node(imx8_soc_match, of_root))
-+		return 0;
-+
-+	ret = platform_driver_register(&imx8m_soc_driver);
-+	if (ret) {
-+		pr_err("Failed to register imx8m-soc platform driver: %d\n", ret);
-+		return ret;
-+	}
-+
-+	pdev = platform_device_register_simple("imx8m-soc", -1, NULL, 0);
-+	if (IS_ERR(pdev)) {
-+		pr_err("Failed to register imx8m-soc platform device: %ld\n", PTR_ERR(pdev));
-+		platform_driver_unregister(&imx8m_soc_driver);
-+		return PTR_ERR(pdev);
-+	}
-+
-+	return 0;
-+}
- device_initcall(imx8_soc_init);
- MODULE_DESCRIPTION("NXP i.MX8M SoC driver");
- MODULE_LICENSE("GPL");
+ 	/*
 -- 
 2.43.0
 
