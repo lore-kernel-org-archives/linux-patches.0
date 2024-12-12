@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1E323EC14;
-	Thu, 12 Dec 2024 15:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B69922541B;
+	Thu, 12 Dec 2024 15:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019127; cv=none; b=T9r9BP8u0T5vGOQmIfIIcJXJ1ubwx+Vamoeec0qkI4ru16tfT4iPZt4VGOZ+eiXrgWKk4BWHmppUDXuxEh0paKLKWHtIVX/x70ZlfK4sGu/Q0j1EXRd1uiAwBihKHTi60AZZcxpDQE/XPLOSFGyprsx+q6gkM6XmOnW+lfdbg28=
+	t=1734019131; cv=none; b=J0OJku68Hnj2OyzYvrC8eoehDHUrV7P0uhBlvaa6Z7V17+8mIdIXYiSYAAumeR9FfVuVL0uMM2UzrnWTixZqIILzmCEwvkwfrrB7Vtv3z7SOlH/bEsIE166oqDcudPbgbM8kJ5UN8NHXY8nfL/i0HMYABpAfSpGkiwVlHq0zrA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019127; c=relaxed/simple;
-	bh=DU5ZProBw0nO+oAUYS3Wc8GGXZmJIk6YV6a33KTL+qI=;
+	s=arc-20240116; t=1734019131; c=relaxed/simple;
+	bh=43TND/t5/HRDoU6UfOXZz8qmsH278+06rPJyp70m/HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TO9MNcfpThQwmIpsJtUcnxT4/FiV/u5UMgb/+jjnx/PergfSnvqhp9sM2ZdQ71fAIw1wmckeRt7spKwimhklkNR+K5TTQVPPhBMkS8+sFBUtMXtOvoWmKXl29VL+WlrTdX6yyL7sS6zX0rTopqez3IOZ/V1BIAFNP9NdacnTHx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjJavzfC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mXz3fhvQ2c1BtcRHZhLBu8yajiBELBp6XwBgjd7FLTuJE9AwhdqUIrPyfJ/w/RxsXwL/r+C7e3Il11HKOUypoKbYfjayBEoySXCISW/tn2zLisIURrJ3AcU7Syr19NCdKCwiwOk5769MHjQry+GyMe2AC4dMdfhbTZOz7At5ItI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/+nNGRd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjJavzfC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76F3C4CECE;
-	Thu, 12 Dec 2024 15:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/+nNGRd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FCAC4CECE;
+	Thu, 12 Dec 2024 15:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019127;
-	bh=DU5ZProBw0nO+oAUYS3Wc8GGXZmJIk6YV6a33KTL+qI=;
+	s=korg; t=1734019131;
+	bh=43TND/t5/HRDoU6UfOXZz8qmsH278+06rPJyp70m/HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjJavzfCNBH7Sr3vbXHj6SOV4K2Dg/mottiiO/eFoGvkPkm1DoGmXoNv0BGq+ph41
-	 Ip/XJH4V/NCnhYca7REkhEEgVLp05DMG1ISgHX+zjlwwFuw6Xj7tTsxKUBsyBZzsHW
-	 oLMOi4xumEj0vLhYHGpQt1qDh/s6j3nQVqBBDZa8=
+	b=a/+nNGRdIPz4xvNX0zKs8JQ81H8/5EimTYDnYqfuui3u1v/43hyR3KPLVNzewcxfS
+	 o0FwXFr9XABXwTaLpzRPXznxjju5ryFfNKUFnbzeFcxzVVTH/xSk/gsN5v9PR06rky
+	 PzUFx3pl2aRWN9JAVS2ynCPmbXVtbQga/HgenS7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Macpaul Lin <macpaul.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/772] microblaze: Export xmb_manager functions
-Date: Thu, 12 Dec 2024 15:50:40 +0100
-Message-ID: <20241212144353.861899358@linuxfoundation.org>
+Subject: [PATCH 6.1 096/772] arm64: dts: mt8195: Fix dtbs_check error for infracfg_ao node
+Date: Thu, 12 Dec 2024 15:50:41 +0100
+Message-ID: <20241212144353.900004357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,56 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Simek <michal.simek@amd.com>
+From: Macpaul Lin <macpaul.lin@mediatek.com>
 
-[ Upstream commit badf752b5e4b17d281f93f409d4718388ff912e6 ]
+[ Upstream commit c14ab45f5d458073248ddc62d31045d5d616806f ]
 
-When TMR_MANAGER is enabled as module there is a need to export functions
-which are present in architecture code.
+The infracfg_ao node in mt8195.dtsi was causing a dtbs_check error.
+The error message was:
 
-It has been found by running:
-make W=1 C=1 allmodconfig
-sed -i -e 's/WERROR=y/WERROR=n/g' .config
-make C=1 W=1
+syscon@10001000: compatible: ['mediatek,mt8195-infracfg_ao', 'syscon',
+                 'simple-mfd'] is too long
 
-which errors out like this:
-ERROR: modpost: "xmb_manager_register" [drivers/misc/xilinx_tmr_manager.ko] undefined!
-ERROR: modpost: "xmb_inject_err" [drivers/misc/xilinx_tmr_inject.ko] undefined!
+To resolve this, remove 'simple-mfd' from the 'compatible' property of the
+infracfg_ao node.
 
-Fixes: a5e3aaa654c1 ("microblaze: Add xmb_manager_register function")
-Reported-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/e322dbbbde0feef83f44304ea13249d365d1dc5f.1718799090.git.michal.simek@amd.com
+Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
+Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241002051620.2050-1-macpaul.lin@mediatek.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/microblaze_ksyms.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/microblaze/kernel/microblaze_ksyms.c b/arch/microblaze/kernel/microblaze_ksyms.c
-index c892e173ec990..a8553f54152b7 100644
---- a/arch/microblaze/kernel/microblaze_ksyms.c
-+++ b/arch/microblaze/kernel/microblaze_ksyms.c
-@@ -16,6 +16,7 @@
- #include <asm/page.h>
- #include <linux/ftrace.h>
- #include <linux/uaccess.h>
-+#include <asm/xilinx_mb_manager.h>
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index bdf002e9cece1..aa8fbaf15e629 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -332,7 +332,7 @@ topckgen: syscon@10000000 {
+ 		};
  
- #ifdef CONFIG_FUNCTION_TRACER
- extern void _mcount(void);
-@@ -46,3 +47,12 @@ extern void __udivsi3(void);
- EXPORT_SYMBOL(__udivsi3);
- extern void __umodsi3(void);
- EXPORT_SYMBOL(__umodsi3);
-+
-+#ifdef CONFIG_MB_MANAGER
-+extern void xmb_manager_register(uintptr_t phys_baseaddr, u32 cr_val,
-+				 void (*callback)(void *data),
-+				 void *priv, void (*reset_callback)(void *data));
-+EXPORT_SYMBOL(xmb_manager_register);
-+extern asmlinkage void xmb_inject_err(void);
-+EXPORT_SYMBOL(xmb_inject_err);
-+#endif
+ 		infracfg_ao: syscon@10001000 {
+-			compatible = "mediatek,mt8195-infracfg_ao", "syscon", "simple-mfd";
++			compatible = "mediatek,mt8195-infracfg_ao", "syscon";
+ 			reg = <0 0x10001000 0 0x1000>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
 -- 
 2.43.0
 
