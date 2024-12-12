@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FE82397B1;
-	Thu, 12 Dec 2024 16:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BD02253EC;
+	Thu, 12 Dec 2024 16:11:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019900; cv=none; b=Ib8uBCM274xMC8CvgEC4CNqaZRMhQ5Ke0+n4QcTC2z+Bu+4VjKn+SP6rm15NJvqBuazcVR+6W6oaE5//fAtJmv6x7S+AdtSpcS32usk7eOwy0hC+21DPioGYVnGJquqRir6VJyYqdROn0H7fR/BgE+whltUy8Dme3mXtJaLxuz4=
+	t=1734019905; cv=none; b=ZQlFquA69UBxL4H3Vgf9LpCtYkhr0XhfZrtagI2uVsMut18en4HOOih0RM68DicT0DDoh1hJCNiFC1y/LVsmOqEYix3C203lUabEhroNjUTKEoq4TLeWQUcy/9ElxJQJ9Os5/4UPryD5B7SxvTCvsszWXZpXrLZODlSw24Z67Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019900; c=relaxed/simple;
-	bh=jzetHflY4LWjToPRIGH6WQQmxRlpPpOIGNvTTjnI8Uo=;
+	s=arc-20240116; t=1734019905; c=relaxed/simple;
+	bh=7YCkHoY4EjxUhBRmvhXLL91yZib0uhOI7HawFP4FX7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZEttiZYRrrxSOz1ZzJBP+UjbfH9M9NLw7jWwbhGvhdYNVK/bIXt5q6VW/shaOiuyIj1bJFxZu8qsOCrYiRgKrH/pI8a/hZKNkRwv82Ou0NzwwdHfhFJInh1jTYVRNhT8tD1EUvs+h8GqfKkdopfUPqt9lJTPv5NTTGSzrDNCBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DnloPcID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MA6Wuba+/2a+1QkS1Oz/M1s0hpc/TQpOwrfpn2I7aA9iHtXMzr4AZxrJUVfmpJCiLZGHhr2zMraJEZJL7J8go8LwEV3l0VQrik0EiEJdM9NzqaipwQRW8Q6q/Tvn5Z8F27NhWRJGdlt3dJNuI+ZDgIX0Z9drXYPL5TPNvfPWz24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rUp41Llp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DnloPcID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2D8BC4CECE;
-	Thu, 12 Dec 2024 16:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rUp41Llp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B647C4CECE;
+	Thu, 12 Dec 2024 16:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019900;
-	bh=jzetHflY4LWjToPRIGH6WQQmxRlpPpOIGNvTTjnI8Uo=;
+	s=korg; t=1734019905;
+	bh=7YCkHoY4EjxUhBRmvhXLL91yZib0uhOI7HawFP4FX7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DnloPcIDSHsQBTHIiV713aCE+6EiYmHjPCurOQPuK61RVaYvn5iUD3ocz/h+ukQQP
-	 BtRcHhJk7Dm40nQ8kFSkrwYrRH1Hh/pDi6TGdzmUe0+yN0ZqNwT8rFZBifODqLTqMZ
-	 5F+ZLHn+J13l4e6eaSZYG3tanQZNc7L1vxYcif2o=
+	b=rUp41Llp1hUU9pybxUCBYEX1rvj7gw0o40d4pM46RgfndGDY0Z4gREpO8RGD2tcSn
+	 keFQtxl59VS1lYuXwpPfYoIwa05AG0JMoWEgRt8uOue7ZME3Oxm8NlfD6tYXvAlO/2
+	 69oq9T3TrC62SIZNAntsMItT7WCZlX1eeVDg22KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 297/772] selftests/mount_setattr: Fix failures on 64K PAGE_SIZE kernels
-Date: Thu, 12 Dec 2024 15:54:02 +0100
-Message-ID: <20241212144402.176319077@linuxfoundation.org>
+Subject: [PATCH 6.1 288/772] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
+Date: Thu, 12 Dec 2024 15:53:53 +0100
+Message-ID: <20241212144401.805636296@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,65 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit f13242a46438e690067a4bf47068fde4d5719947 ]
+[ Upstream commit 06c59d97f63c1b8af521fa5aef8a716fb988b285 ]
 
-Currently the mount_setattr_test fails on machines with a 64K PAGE_SIZE,
-with errors such as:
+The name len field of the CMD_OPEN packet is only 16-bits and the upper
+16-bits of "param2" are a different "prio" field, which can be nonzero in
+certain situations, and CMD_OPEN packets can be unexpectedly dropped
+because of this.
 
-  #  RUN           mount_setattr_idmapped.invalid_fd_negative ...
-  mkfs.ext4: No space left on device while writing out and closing file system
-  # mount_setattr_test.c:1055:invalid_fd_negative:Expected system("mkfs.ext4 -q /mnt/C/ext4.img") (256) == 0 (0)
-  # invalid_fd_negative: Test terminated by assertion
-  #          FAIL  mount_setattr_idmapped.invalid_fd_negative
-  not ok 12 mount_setattr_idmapped.invalid_fd_negative
+Fix this by masking out the upper 16 bits of param2.
 
-The code creates a 100,000 byte tmpfs:
-
-	ASSERT_EQ(mount("testing", "/mnt", "tmpfs", MS_NOATIME | MS_NODEV,
-			"size=100000,mode=700"), 0);
-
-And then a little later creates a 2MB ext4 filesystem in that tmpfs:
-
-	ASSERT_EQ(ftruncate(img_fd, 1024 * 2048), 0);
-	ASSERT_EQ(system("mkfs.ext4 -q /mnt/C/ext4.img"), 0);
-
-At first glance it seems like that should never work, after all 2MB is
-larger than 100,000 bytes. However the filesystem image doesn't actually
-occupy 2MB on "disk" (actually RAM, due to tmpfs). On 4K kernels the
-ext4.img uses ~84KB of actual space (according to du), which just fits.
-
-However on 64K PAGE_SIZE kernels the ext4.img takes at least 256KB,
-which is too large to fit in the tmpfs, hence the errors.
-
-It seems fraught to rely on the ext4.img taking less space on disk than
-the allocated size, so instead create the tmpfs with a size of 2MB. With
-that all 21 tests pass on 64K PAGE_SIZE kernels.
-
-Fixes: 01eadc8dd96d ("tests: add mount_setattr() selftests")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20241115134114.1219555-1-mpe@ellerman.id.au
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241007235935.6216-1-jonathan@marek.ca
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mount_setattr/mount_setattr_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rpmsg/qcom_glink_native.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-index c6a8c732b8021..304e6422a1f1c 100644
---- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-+++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-@@ -1026,7 +1026,7 @@ FIXTURE_SETUP(mount_setattr_idmapped)
- 			"size=100000,mode=700"), 0);
- 
- 	ASSERT_EQ(mount("testing", "/mnt", "tmpfs", MS_NOATIME | MS_NODEV,
--			"size=100000,mode=700"), 0);
-+			"size=2m,mode=700"), 0);
- 
- 	ASSERT_EQ(mkdir("/mnt/A", 0777), 0);
- 
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 2c388426e4019..c838be098e865 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1043,7 +1043,8 @@ static irqreturn_t qcom_glink_native_intr(int irq, void *data)
+ 			qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
+ 			break;
+ 		case GLINK_CMD_OPEN:
+-			ret = qcom_glink_rx_defer(glink, param2);
++			/* upper 16 bits of param2 are the "prio" field */
++			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
+ 			break;
+ 		case GLINK_CMD_TX_DATA:
+ 		case GLINK_CMD_TX_DATA_CONT:
 -- 
 2.43.0
 
