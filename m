@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C24E221D88;
-	Thu, 12 Dec 2024 15:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3990222540E;
+	Thu, 12 Dec 2024 15:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018242; cv=none; b=uxl4Xhx1Xzq5W6G56kVCyZsqWH5sxBBNUv+FWlk5UcNIU4+OLli8cNMEAlrWv4huEiKJ+g4/OGABfIEhDuX88DXmn3etbngs5S7KODhtauRaK2RffEFfb3W825BBJNqAxNI9ozNhjLYjGcmzLjMC7PV3nbLNgCv65l9h6iV0pEQ=
+	t=1734018246; cv=none; b=DI24jmMianL0mySurDsf4sViJ6L6uWLvoCaKlzyYJdcX7Syildn3ujI4rcOUMRhBkwQpwFQOb4n0JoOihVPLpk54ViBg8wZ1htE6RKeU8gwRaku+JzrUo60CMxze8QAsCNZgCE19j1Kyh2lxylAd1f9Ux959O1w++UYLpQtngaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018242; c=relaxed/simple;
-	bh=Q4RKRNLv+9UKKSwFWVsWbAIthjJMiKU2im4fjtblZUU=;
+	s=arc-20240116; t=1734018246; c=relaxed/simple;
+	bh=Kji1KNWRcaq07U+6LLVzGCQTNIAvMqG6zNdot4V2tvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZ1UeA1QYMBUgK264PQJvnIi9Sp11ajx//wXBajcBqwvzMf4R0/+9LAJpWmIl9NIgbGh8nMpU7GODnKMdPgualWhL8jBq/cJucoRiu+z3xufl2VpeQV6+6bwljdFuQbZJC/Bw9PA7iFq8cVqHgBb9PsCdffVbrcO43zzA+075XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rx/D9yqH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pg/G+eob3jMhpkNJCQsKVErGNvOA/IC3DVRa9t1enlU1c5Xg5S7b3zuzFYHXTmqK0mDlMKO7TB33SWJbLTFIK0JI8goVrYXEYHc0PJS4MjWMBofcuOLUgCVvQC39g7It8Ji0sLAWqDE2DmTriFEwTHXS+S/4cryb8bQqkC9u6BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFTfcxZb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rx/D9yqH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BCCC4CED0;
-	Thu, 12 Dec 2024 15:44:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFTfcxZb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80567C4CEDE;
+	Thu, 12 Dec 2024 15:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018242;
-	bh=Q4RKRNLv+9UKKSwFWVsWbAIthjJMiKU2im4fjtblZUU=;
+	s=korg; t=1734018246;
+	bh=Kji1KNWRcaq07U+6LLVzGCQTNIAvMqG6zNdot4V2tvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rx/D9yqHDF395VsVg/l4rEX37jfiOCKBV9kUlXA3iXeOzsTYlgx8eIegCCqdlK5g5
-	 6gCf6c9jLGfVIHn3l8NEvwqcTmVFKLqUN0Oh2fAVmya76mf8A8N2tTIIre4eUchefi
-	 muIIB7UE4SanTCtqd3soUW5NSeeGE0sQu1NjAKc4=
+	b=rFTfcxZbC/efugAbyjqMUrTnTJFdlnbs5BH9Bvr5e8Gw6gzYYqfEz5Yu4QHuPoFyK
+	 R+teVnoz7DqgRjHQoxudtiZC+Z2CjsTMtSV76adf+8f8EbSTIvzMpi1+xCfEVsM90u
+	 PAwCUPrlA3i9zUYV3H+c/YrqDryHFAkgRkllVVaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Donald Hunter <donald.hunter@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 239/356] drm/amdgpu: Dereference the ATCS ACPI buffer
-Date: Thu, 12 Dec 2024 15:59:18 +0100
-Message-ID: <20241212144254.055148768@linuxfoundation.org>
+Subject: [PATCH 6.6 240/356] netlink: specs: Add missing bitset attrs to ethtool spec
+Date: Thu, 12 Dec 2024 15:59:19 +0100
+Message-ID: <20241212144254.095621232@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,34 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Donald Hunter <donald.hunter@gmail.com>
 
-[ Upstream commit 32e7ee293ff476c67b51be006e986021967bc525 ]
+[ Upstream commit b0b3683419b45e2971b6d413c506cb818b268d35 ]
 
-Need to dereference the atcs acpi buffer after
-the method is executed, otherwise it will result in
-a memory leak.
+There are a couple of attributes missing from the 'bitset' attribute-set
+in the ethtool netlink spec. Add them to the spec.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Kory Maincent <kory.maincent@bootlin.com>
+Closes: https://lore.kernel.org/netdev/20241017180551.1259bf5c@kmaincent-XPS-13-7390/
+Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Tested-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20241018090630.22212-1-donald.hunter@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/netlink/specs/ethtool.yaml | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-index 12a0ac42fcfea..8b2f2b921d9de 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -798,6 +798,7 @@ int amdgpu_acpi_power_shift_control(struct amdgpu_device *adev,
- 		return -EIO;
- 	}
- 
-+	kfree(info);
- 	return 0;
- }
- 
+diff --git a/Documentation/netlink/specs/ethtool.yaml b/Documentation/netlink/specs/ethtool.yaml
+index 837b565577ca6..3e38f69567939 100644
+--- a/Documentation/netlink/specs/ethtool.yaml
++++ b/Documentation/netlink/specs/ethtool.yaml
+@@ -64,7 +64,12 @@ attribute-sets:
+         name: bits
+         type: nest
+         nested-attributes: bitset-bits
+-
++      -
++        name: value
++        type: binary
++      -
++        name: mask
++        type: binary
+   -
+     name: string
+     attributes:
 -- 
 2.43.0
 
