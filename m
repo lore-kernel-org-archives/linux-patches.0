@@ -1,39 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CF1235C58;
-	Thu, 12 Dec 2024 16:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D169C235C40;
+	Thu, 12 Dec 2024 16:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019730; cv=none; b=gu13GqRovM913zSfcoU/9QNiR76BjlSBiU/ZFk6wJvsvD3D7yGKj1a3HcVlvf9EvxD9LTPj/T2JFeKjwCfGhqYnOFMwcoS+9b784N/cx7VPjUF3YSQc2YTsrxtBGe4BvKErCy6otahs2856lekbx8h/OLb6NpEdRHZq3k0SaPNk=
+	t=1734019733; cv=none; b=CMXQoBE9b4ao5KFd2nbtq3qKIdmqOiN7hBZAmhItUY6Bawgw2XOMsSCgiV6VUn+hUcVhojITFGSEC3zo0Dc1Lz7pdQUmSetLQ36EGSYgGUA9NsL1eLbXHEN83/i4m0/rJR+2TAa6YO+yX/AzyCdXnPeOY05D4/hWfXkZup/zUDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019730; c=relaxed/simple;
-	bh=XD4sPBUy0hPnxs01hLQ8c44UZK/JSXqkluTh9ar5qZM=;
+	s=arc-20240116; t=1734019733; c=relaxed/simple;
+	bh=N/BGw5ofhLb3/nYwOYvOUFosgWS3IB4l6xeFAf3rTrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HW0gfTUheEOL5+94x46p9bnpEwLYoJQiHFGSvCAtexIY0MBs/PSVXV35mBVSHlPkmcZHAmqy242SiNsB3QyUdMhQHtSOmXsbNj1n/cGZFY0ThKMkwqH77O6ROOItfk+6OCHE9wpTYDguecdIWi9qx7ykfBGYeRhFTFmVKIsMAQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/n4jvwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YFwFKCkSEhE0pIQ98M5AMK+Q6ZBVbhvkbMpuAmFYTXwnXE74suG0HWFkrmDSsy2EARO0LaaogZ8d9CTa1yUXSzodoEYzZMn2xBHRzWrEot9wnZauht7s/5vtKxDoToh9uLSQcgENZqw90Zc/rUcGBzf8gz8mrSXGHlKBX9x9VUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpYG2X7G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/n4jvwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68640C4CECE;
-	Thu, 12 Dec 2024 16:08:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpYG2X7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F3FC4CED3;
+	Thu, 12 Dec 2024 16:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019730;
-	bh=XD4sPBUy0hPnxs01hLQ8c44UZK/JSXqkluTh9ar5qZM=;
+	s=korg; t=1734019733;
+	bh=N/BGw5ofhLb3/nYwOYvOUFosgWS3IB4l6xeFAf3rTrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/n4jvwipbJbdQHcym2Mr4JXUxFKUG4JlDMfKd1NpC/je2mkFg8Al85rAgh+sqedr
-	 /c+n1ItEYhcb1j/rNBFi9wmSoxLbQtjF9mcv5HoZzq2wQWvLOZ7nuz/A9UU/6Adlel
-	 qGF3YNh3v0AI40OlgsM8RVH94eUESM00iAsPcBZQ=
+	b=JpYG2X7GBQrFjE4EupbVfy7McYkchq6q/xeDpGrBbhVsyJMKThHcSFx6LYWzke8mf
+	 vKk3X81myzVFDEZcCX0+Wsw/iFp8IYcCAwiGXJa2Gu/U5E/GEVdSVx+Dbau9i4pgqX
+	 +oZ2fSuN9Q2AC6zThLRdN29Z4xFO0OT2l7RSYCfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Benjamin Peterson <benjamin@engflow.com>,
+	Howard Chu <howardchu95@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 282/772] svcrdma: Address an integer overflow
-Date: Thu, 12 Dec 2024 15:53:47 +0100
-Message-ID: <20241212144401.555883880@linuxfoundation.org>
+Subject: [PATCH 6.1 283/772] perf trace: Do not lose last events in a race
+Date: Thu, 12 Dec 2024 15:53:48 +0100
+Message-ID: <20241212144401.596417223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,66 +61,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Benjamin Peterson <benjamin@engflow.com>
 
-[ Upstream commit 3c63d8946e578663b868cb9912dac616ea68bfd0 ]
+[ Upstream commit 3fd7c36973a250e17a4ee305a31545a9426021f4 ]
 
-Dan Carpenter reports:
-> Commit 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data
-> structure") from Jun 22, 2020 (linux-next), leads to the following
-> Smatch static checker warning:
->
->	net/sunrpc/xprtrdma/svc_rdma_recvfrom.c:498 xdr_check_write_chunk()
->	warn: potential user controlled sizeof overflow 'segcount * 4 * 4'
->
-> net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
->     488 static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
->     489 {
->     490         u32 segcount;
->     491         __be32 *p;
->     492
->     493         if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
->                                                               ^^^^^^^^
->
->     494                 return false;
->     495
->     496         /* A bogus segcount causes this buffer overflow check to fail. */
->     497         p = xdr_inline_decode(&rctxt->rc_stream,
-> --> 498                               segcount * rpcrdma_segment_maxsz * sizeof(*p));
->
->
-> segcount is an untrusted u32.  On 32bit systems anything >= SIZE_MAX / 16 will
-> have an integer overflow and some those values will be accepted by
-> xdr_inline_decode().
+If a perf trace event selector specifies a maximum number of events to output
+(i.e., "/nr=N/" syntax), the event printing handler, trace__event_handler,
+disables the event selector after the maximum number events are
+printed.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 78147ca8b4a9 ("svcrdma: Add a "parsed chunk list" data structure")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Furthermore, trace__event_handler checked if the event selector was
+disabled before doing any work. This avoided exceeding the maximum
+number of events to print if more events were in the buffer before the
+selector was disabled.
+
+However, the event selector can be disabled for reasons other than
+exceeding the maximum number of events. In particular, when the traced
+subprocess exits, the main loop disables all event selectors. This meant
+the last events of a traced subprocess might be lost to the printing
+handler's short-circuiting logic.
+
+This nondeterministic problem could be seen by running the following many times:
+
+  $ perf trace -e syscalls:sys_enter_exit_group true
+
+trace__event_handler should simply check for exceeding the maximum number of
+events to print rather than the state of the event selector.
+
+Fixes: a9c5e6c1e9bff42c ("perf trace: Introduce per-event maximum number of events property")
+Signed-off-by: Benjamin Peterson <benjamin@engflow.com>
+Tested-by: Howard Chu <howardchu95@gmail.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241107232128.108981-1-benjamin@engflow.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_recvfrom.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/builtin-trace.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-index b2dd01e5274e9..186c9c12432b1 100644
---- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
-@@ -482,7 +482,13 @@ static bool xdr_check_write_chunk(struct svc_rdma_recv_ctxt *rctxt)
- 	if (xdr_stream_decode_u32(&rctxt->rc_stream, &segcount))
- 		return false;
- 
--	/* A bogus segcount causes this buffer overflow check to fail. */
-+	/* Before trusting the segcount value enough to use it in
-+	 * a computation, perform a simple range check. This is an
-+	 * arbitrary but sensible limit (ie, not architectural).
-+	 */
-+	if (unlikely(segcount > RPCSVC_MAXPAGES))
-+		return false;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 9aafa332828f8..48e101ad13924 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -2779,13 +2779,8 @@ static int trace__event_handler(struct trace *trace, struct evsel *evsel,
+ {
+ 	struct thread *thread;
+ 	int callchain_ret = 0;
+-	/*
+-	 * Check if we called perf_evsel__disable(evsel) due to, for instance,
+-	 * this event's max_events having been hit and this is an entry coming
+-	 * from the ring buffer that we should discard, since the max events
+-	 * have already been considered/printed.
+-	 */
+-	if (evsel->disabled)
 +
- 	p = xdr_inline_decode(&rctxt->rc_stream,
- 			      segcount * rpcrdma_segment_maxsz * sizeof(*p));
- 	return p != NULL;
++	if (evsel->nr_events_printed >= evsel->max_events)
+ 		return 0;
+ 
+ 	thread = machine__findnew_thread(trace->host, sample->pid, sample->tid);
 -- 
 2.43.0
 
