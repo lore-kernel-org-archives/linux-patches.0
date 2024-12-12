@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62858211493;
-	Thu, 12 Dec 2024 17:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C3F211493;
+	Thu, 12 Dec 2024 17:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024309; cv=none; b=iDzJifahBD6o0zl5aDm8RrXePYAj8C/SOwx6oEgzC7r8l0+fAZXSiADwVrZzTBJfPr8uAxkS37kyB/o0+9MPnMlG115s4xgEvRly2zH80J+siwTqGzIsj3snhTR83apz4w3xjcR/XYFFsKy96nzWISSxPeZObMpcfF3c1iW8QdU=
+	t=1734024312; cv=none; b=L2mrtpIAHwTQ61ATvZ/V1up9OGtIJ76Ozi4TJv4Ipo2MqUbpS2NB6swjlqEIrgYp1yl5N8wq58wyjwZ7IDYSdB/FK3OZWT3W0wzmq/yWZ0z6G/CfljiHPRJSGcVcCmKWCrQiQ6IUGk/tzrrH9xsSNu3/A1RIsXHRFVJXvNq37Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024309; c=relaxed/simple;
-	bh=CNtlVLqpiD5PlzGxjxNI+LpYLJIRzq40MfQugVlAptM=;
+	s=arc-20240116; t=1734024312; c=relaxed/simple;
+	bh=BxSdHezyxRvY2TiJk7vvFahtQebubTiuc5WI6jxQWQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmzNKq5544y6OUf+ND7qfDr3kyC9gomdU44hpW4SQ7tcPk/jQswyFq0YMMvczjxX74dIIA1Z8LM45rOQJnzXNSOsE1frFSdW5A7aDnreorGTZrVeBebR/LNDVpNcpupnvee+SeLqZmRg2+8iOrzLB6oAN4/xCrSueX3PhKTX7cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U234Qpmp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlDkuqNWVuTmf5rUGLb1hQNFLpp83axRnykRFGfaCSXEBMHtY9t6oOCNEBfr5OxTX8il1xg1FmM6qXk8y4A6rZxbQdANeUjV9pA/eMUyQ1uYlzlKEYYfVyupDzINke3burTbC8mD+/zHANtO2a3PuIpoKrt5e30444ov2PR9aH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3tV/aSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U234Qpmp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4377C4CECE;
-	Thu, 12 Dec 2024 17:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3tV/aSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FB3C4CECE;
+	Thu, 12 Dec 2024 17:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024309;
-	bh=CNtlVLqpiD5PlzGxjxNI+LpYLJIRzq40MfQugVlAptM=;
+	s=korg; t=1734024311;
+	bh=BxSdHezyxRvY2TiJk7vvFahtQebubTiuc5WI6jxQWQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U234QpmpQhvX6jEqnDN4xw4eZeWJ9Ndkh0hYdxDMOIwf3hNteGNNZBB5r3PDa3VZI
-	 otbj5F/xh0tcyerNENXbPjaWj0mtk1PtUI98x1VLTwM76eRRaDuXNIdxymR0xCAPYR
-	 Gpk4Ub947vt+Xa/dI4hemY9pUZdtYX+T3A77bP4w=
+	b=y3tV/aSa2KJmSHaQ34jV6UzPwFog8427L6UklgUpX9PuCeS1YC3/X+dGnuZ39btFN
+	 X2lIeO60vb+ed+Cyf9jy07k1VK7Ygx05/wS/fqBMBBDIMjPVyGkzoF7zIf0X4S/Mne
+	 j7iX/9Lp4Pnm158VExmME7nLIPzf379+g3Uf4Vio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Si-Wei Liu <si-wei.liu@oracle.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/459] marvell: pxa168_eth: fix call balance of pep->clk handling routines
-Date: Thu, 12 Dec 2024 15:59:21 +0100
-Message-ID: <20241212144302.380073095@linuxfoundation.org>
+Subject: [PATCH 5.10 214/459] vdpa/mlx5: Fix suboptimal range on iotlb iteration
+Date: Thu, 12 Dec 2024 15:59:12 +0100
+Message-ID: <20241212144302.024428766@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,74 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-[ Upstream commit b032ae57d4fe2b2445e3bc190db6fcaa8c102f68 ]
+[ Upstream commit 35025963326e44d8bced3eecd42d2f040f4f0024 ]
 
-If the clock pep->clk was not enabled in pxa168_eth_probe,
-it should not be disabled in any path.
+The starting iova address to iterate iotlb map entry within a range
+was set to an irrelevant value when passing to the itree_next()
+iterator, although luckily it doesn't affect the outcome of finding
+out the granule of the smallest iotlb map size. Fix the code to make
+it consistent with the following for-loop.
 
-Conversely, if it was enabled in pxa168_eth_probe, it must be disabled
-in all error paths to ensure proper cleanup.
-
-Use the devm_clk_get_enabled helper function to ensure proper call balance
-for pep->clk.
-
-Found by Linux Verification Center (linuxtesting.org) with Klever.
-
-Fixes: a49f37eed22b ("net: add Fast Ethernet driver for PXA168.")
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Link: https://patch.msgid.link/20241121200658.2203871-1-mordan@ispras.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 94abbccdf291 ("vdpa/mlx5: Add shared memory registration code")
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Message-Id: <20241021134040.975221-3-dtatulea@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/pxa168_eth.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/vdpa/mlx5/core/mr.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/pxa168_eth.c b/drivers/net/ethernet/marvell/pxa168_eth.c
-index 3712e1786091f..cf867b8f43808 100644
---- a/drivers/net/ethernet/marvell/pxa168_eth.c
-+++ b/drivers/net/ethernet/marvell/pxa168_eth.c
-@@ -1397,18 +1397,15 @@ static int pxa168_eth_probe(struct platform_device *pdev)
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index 48489beb6e0a7..4615f827cd0cb 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -226,7 +226,6 @@ static int map_direct_mr(struct mlx5_vdpa_dev *mvdev, struct mlx5_vdpa_direct_mr
+ 	unsigned long lgcd = 0;
+ 	int log_entity_size;
+ 	unsigned long size;
+-	u64 start = 0;
+ 	int err;
+ 	struct page *pg;
+ 	unsigned int nsg;
+@@ -237,10 +236,9 @@ static int map_direct_mr(struct mlx5_vdpa_dev *mvdev, struct mlx5_vdpa_direct_mr
+ 	struct device *dma = mvdev->mdev->device;
  
- 	printk(KERN_NOTICE "PXA168 10/100 Ethernet Driver\n");
- 
--	clk = devm_clk_get(&pdev->dev, NULL);
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(clk)) {
--		dev_err(&pdev->dev, "Fast Ethernet failed to get clock\n");
-+		dev_err(&pdev->dev, "Fast Ethernet failed to get and enable clock\n");
- 		return -ENODEV;
+ 	for (map = vhost_iotlb_itree_first(iotlb, mr->start, mr->end - 1);
+-	     map; map = vhost_iotlb_itree_next(map, start, mr->end - 1)) {
++	     map; map = vhost_iotlb_itree_next(map, mr->start, mr->end - 1)) {
+ 		size = maplen(map, mr);
+ 		lgcd = gcd(lgcd, size);
+-		start += size;
  	}
--	clk_prepare_enable(clk);
+ 	log_entity_size = ilog2(lgcd);
  
- 	dev = alloc_etherdev(sizeof(struct pxa168_eth_private));
--	if (!dev) {
--		err = -ENOMEM;
--		goto err_clk;
--	}
-+	if (!dev)
-+		return -ENOMEM;
- 
- 	platform_set_drvdata(pdev, dev);
- 	pep = netdev_priv(dev);
-@@ -1523,8 +1520,6 @@ static int pxa168_eth_probe(struct platform_device *pdev)
- 	mdiobus_free(pep->smi_bus);
- err_netdev:
- 	free_netdev(dev);
--err_clk:
--	clk_disable_unprepare(clk);
- 	return err;
- }
- 
-@@ -1541,7 +1536,6 @@ static int pxa168_eth_remove(struct platform_device *pdev)
- 	if (dev->phydev)
- 		phy_disconnect(dev->phydev);
- 
--	clk_disable_unprepare(pep->clk);
- 	mdiobus_unregister(pep->smi_bus);
- 	mdiobus_free(pep->smi_bus);
- 	cancel_work_sync(&pep->tx_timeout_task);
 -- 
 2.43.0
 
