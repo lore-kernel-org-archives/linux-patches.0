@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E67F21171A;
-	Thu, 12 Dec 2024 15:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5EC21171A;
+	Thu, 12 Dec 2024 15:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016376; cv=none; b=NzCKTarcFDSxNkrk4xu88t/U9vy1KlHTFA2I2Xc6IHlXZskmJl2KjMVB9NJNwaBVPvPzaHvPkw2cOfIoa6NJxbsCxZqjY9St2g4ig0iTXxaOyXJytMwJqoUggpY/yC9XsBOnhEhkNq49SM0w4lLqoErPw832sPsNF2NQ3dt9URw=
+	t=1734016380; cv=none; b=HrdbPA2/w18hSw+yN43uZAqjPf8rlwwb58SzC9P07oBGB74V57k6BjuonF4GoBVjamrGzTk5HAvUP10YQ9YgyJPolhj1SJ4XXxrOM5Xwb2AQrR7JZzQKDBfBaoOcTCC5hAmNpwBXF3XXCK4VXq0QeeA6+OO+aNxtnqPoQxfycBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016376; c=relaxed/simple;
-	bh=cO47pyqaWym4Ef55F/95+K3BxeH5YDPQI08Ae39D1ZM=;
+	s=arc-20240116; t=1734016380; c=relaxed/simple;
+	bh=5Xke635Nf6Ho7go3PB0ST9u9+3EmC8uipVEPAjj2sL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGg12ty3ygPf8i+H+NVtg53MsAANoSkdwL5W528CfQ9ugzA0MeUoTgy66JmzIQWaEkm39+Ms9GjI5B6/Kc+XvKQ1wRTNRhz0ppZ+jFGoeV6iXy60XQRI6we3myjkNDEM+NxErTGdnefN4lFfN7xRihz+LK1NnZ8E19HXFsIdWMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOjjkmBK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tiZjocTPrgj5W0oyMunX0/2A3LGZyLL1hTRq7wdau7KoU1t6Aby8/Fu5Ogpn1loCIzJbFysFodZZEmkpE28lZjIz8SQKYjiApGGgncO0COxSjBr1UkfL/DXGZTXmdwWm2xBFuN+l7uXHjIuXpmQ1RJ6wpEirsOt9tTYfyDVzPFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h9nXPBvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOjjkmBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F21F5C4CED0;
-	Thu, 12 Dec 2024 15:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h9nXPBvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271B7C4CED0;
+	Thu, 12 Dec 2024 15:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016376;
-	bh=cO47pyqaWym4Ef55F/95+K3BxeH5YDPQI08Ae39D1ZM=;
+	s=korg; t=1734016379;
+	bh=5Xke635Nf6Ho7go3PB0ST9u9+3EmC8uipVEPAjj2sL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOjjkmBKcquNBn1gMaRYc2VXooSBw+JwxKfQ963EA96H64H1jwpjKsUmalool7d3+
-	 ayxBpdq5tMDVET4bobRhaC6sMuEgDNz5MrgY+pE+dLwj2S7WZp46vQPRi8DxgBE5x/
-	 KofkbngWYJmoQu1KjqOUl0jlGzwNIj1foQuGe7+0=
+	b=h9nXPBvrefWfr82IZta8Udpb8bKikj6FkwubBA7a7e9eQRBWAHEXlLzouKsaivvBb
+	 MnHKSLuIGzrb6Mikpj43DuJ9sX1B+LdseodNFQVl9S8ThTXCOUYN1PHFK8OU5Qoqed
+	 aL7KFc946iGPH0QRaxhbwrdLkSebhEcZ1Db+7Wp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Belanger <david.belanger@amd.com>,
-	Frank Min <frank.min@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 181/466] drm/amdgpu/hdp5.2: do a posting read when flushing HDP
-Date: Thu, 12 Dec 2024 15:55:50 +0100
-Message-ID: <20241212144313.943157847@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.12 182/466] modpost: Add .irqentry.text to OTHER_SECTIONS
+Date: Thu, 12 Dec 2024 15:55:51 +0100
+Message-ID: <20241212144313.987115997@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,40 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit f756dbac1ce1d5f9a2b35e3b55fa429cf6336437 upstream.
+commit 7912405643a14b527cd4a4f33c1d4392da900888 upstream.
 
-Need to read back to make sure the write goes through.
+The compiler can fully inline the actual handler function of an interrupt
+entry into the .irqentry.text entry point. If such a function contains an
+access which has an exception table entry, modpost complains about a
+section mismatch:
 
-Cc: David Belanger <david.belanger@amd.com>
-Reviewed-by: Frank Min <frank.min@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+  WARNING: vmlinux.o(__ex_table+0x447c): Section mismatch in reference ...
+
+  The relocation at __ex_table+0x447c references section ".irqentry.text"
+  which is not in the list of authorized sections.
+
+Add .irqentry.text to OTHER_SECTIONS to cure the issue.
+
+Reported-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org # needed for linux-5.4-y
+Link: https://lore.kernel.org/all/20241128111844.GE10431@google.com/
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ scripts/mod/modpost.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/hdp_v5_2.c
-@@ -31,13 +31,15 @@
- static void hdp_v5_2_flush_hdp(struct amdgpu_device *adev,
- 				struct amdgpu_ring *ring)
- {
--	if (!ring || !ring->funcs->emit_wreg)
-+	if (!ring || !ring->funcs->emit_wreg) {
- 		WREG32_NO_KIQ((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2,
- 			0);
--	else
-+		RREG32_NO_KIQ((adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2);
-+	} else {
- 		amdgpu_ring_emit_wreg(ring,
- 			(adev->rmmio_remap.reg_offset + KFD_MMIO_REMAP_HDP_MEM_FLUSH_CNTL) >> 2,
- 			0);
-+	}
- }
+--- a/scripts/mod/modpost.c
++++ b/scripts/mod/modpost.c
+@@ -785,7 +785,7 @@ static void check_section(const char *mo
+ 		".ltext", ".ltext.*"
+ #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
+ 		".fixup", ".entry.text", ".exception.text", \
+-		".coldtext", ".softirqentry.text"
++		".coldtext", ".softirqentry.text", ".irqentry.text"
  
- static void hdp_v5_2_update_mem_power_gating(struct amdgpu_device *adev,
+ #define ALL_TEXT_SECTIONS  ".init.text", ".exit.text", \
+ 		TEXT_SECTIONS, OTHER_TEXT_SECTIONS
 
 
