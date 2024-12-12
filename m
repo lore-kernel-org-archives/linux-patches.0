@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C67D168C3F;
-	Thu, 12 Dec 2024 17:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C96C22A81B;
+	Thu, 12 Dec 2024 17:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025506; cv=none; b=XNzjkx2B8BIfPlejXeB8RpSO2zdkm9Xu0LrYVTxT2tdwYcS+vuasOwzH3SAWB5Y9RP4yGq+ByFw9NDeeXF6DwxtgeCqOnteE577j3CN4jG5UCcgGxr9OekSRpzH7rpMLzEs+oGjrIQq72+OGbN3ir5AnOATLJJQLaeweOzntoJs=
+	t=1734025510; cv=none; b=NvJYOGVFn82urynXY4oDaZiGJEwKH/dsNkWULKOKt0SzEAdwmNHVwFBFk8CjKaMeGFMzJCXYZ+7d35M/sijPyqzqQ2WXf7ZxESrVeIYgxCkGf4gfKVLCkGU7i2FtPmOmSRq1sDjFtL5dkFvwQQn3OKqxkC6QYyD3igG8v1xC9gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025506; c=relaxed/simple;
-	bh=FWpu0a2KpvG4/z6ipzsavYle9JlpQBR+/8emFzwD83U=;
+	s=arc-20240116; t=1734025510; c=relaxed/simple;
+	bh=DXsn0FbtWQnxXSkHpdgcmFKZxBpgazyrreYgW8WkVJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ps9enxXlR6gtYcHzRWsv+7+bBchUxgLO1vDheEebSNGvQr30DpeWc1+bnM17vU6ZELkpA6JBAwY5v9Y6uFNT0RhQJgXfCgfZpqRT5GE5IyP8o1HlEfq5axqN13FxtwVC+Ddopdjw0ej5S88B5yn/LYAuDfUw003W80/IfVA2uJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQXOsgPI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+6HyC1qL2Dzt7pvrxegvsjmNsRNrhPed1fF/HW19lkgDVS7Oy+guhr7NmOWdFMLD87GUbuZvt5EZnf9Aur6JSP0MOpULNuKb4haOqz+FK0WFMJOZAMT8Je3t1uReJsukyTuz8LbWYlwJQnLJ9wzu47J1bOkuok+KZQ/q6/ZOkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cATcRSTU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQXOsgPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5333C4CED0;
-	Thu, 12 Dec 2024 17:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cATcRSTU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C00C4CECE;
+	Thu, 12 Dec 2024 17:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025506;
-	bh=FWpu0a2KpvG4/z6ipzsavYle9JlpQBR+/8emFzwD83U=;
+	s=korg; t=1734025510;
+	bh=DXsn0FbtWQnxXSkHpdgcmFKZxBpgazyrreYgW8WkVJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQXOsgPId0XqsR3O6l8d3sv7wF1qOKSlHFofwVUaJORcNPnsHwUSJ6E6B6CApfLBw
-	 cXpqTF7xoaLfNwU87Y/zAie3+Jzok+/Db4nNA2Lwvo1MmznG7paJcWxqcPdtgTytPP
-	 CHovOWWElw9G6xv7qmJd0FidKw1rfp/sTyuJTcMI=
+	b=cATcRSTUK/Eqc0O3Jf+8SXGHXw3Uv76W4fArcGs2gJ5aHDyu127T3mEVczzim9TTQ
+	 CHoIs5MIwQicXABlzHs82QtQmV9hmtmdrrb8ENe37vVDfmdv5w5RWdyCHT2K9Qrs+M
+	 n9bDTA9QcBdHUnLJBSbsOKYVW4q5kIJ559qPQEXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.4 175/321] NFSD: Prevent a potential integer overflow
-Date: Thu, 12 Dec 2024 16:01:33 +0100
-Message-ID: <20241212144236.896635325@linuxfoundation.org>
+	Alex Zenla <alex@edera.dev>,
+	Alexander Merritt <alexander@edera.dev>,
+	Ariadne Conill <ariadne@ariadne.space>,
+	Juergen Gross <jgross@suse.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 193/321] 9p/xen: fix init sequence
+Date: Thu, 12 Dec 2024 16:01:51 +0100
+Message-ID: <20241212144237.607027615@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,50 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Alex Zenla <alex@edera.dev>
 
-commit 7f33b92e5b18e904a481e6e208486da43e4dc841 upstream.
+[ Upstream commit 7ef3ae82a6ebbf4750967d1ce43bcdb7e44ff74b ]
 
-If the tag length is >= U32_MAX - 3 then the "length + 4" addition
-can result in an integer overflow. Address this by splitting the
-decoding into several steps so that decode_cb_compound4res() does
-not have to perform arithmetic on the unsafe length value.
+Large amount of mount hangs observed during hotplugging of 9pfs devices. The
+9pfs Xen driver attempts to initialize itself more than once, causing the
+frontend and backend to disagree: the backend listens on a channel that the
+frontend does not send on, resulting in stalled processing.
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Only allow initialization of 9p frontend once.
+
+Fixes: c15fe55d14b3b ("9p/xen: fix connection sequence")
+Signed-off-by: Alex Zenla <alex@edera.dev>
+Signed-off-by: Alexander Merritt <alexander@edera.dev>
+Signed-off-by: Ariadne Conill <ariadne@ariadne.space>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241119211633.38321-1-alexander@edera.dev>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4callback.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/9p/trans_xen.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -285,17 +285,17 @@ static int decode_cb_compound4res(struct
- 	u32 length;
- 	__be32 *p;
+diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
+index 4a16c5dd1576d..f5b8f009b8a95 100644
+--- a/net/9p/trans_xen.c
++++ b/net/9p/trans_xen.c
+@@ -480,6 +480,7 @@ static int xen_9pfs_front_init(struct xenbus_device *dev)
+ 		goto error;
+ 	}
  
--	p = xdr_inline_decode(xdr, 4 + 4);
-+	p = xdr_inline_decode(xdr, XDR_UNIT);
- 	if (unlikely(p == NULL))
- 		goto out_overflow;
--	hdr->status = be32_to_cpup(p++);
-+	hdr->status = be32_to_cpup(p);
- 	/* Ignore the tag */
--	length = be32_to_cpup(p++);
--	p = xdr_inline_decode(xdr, length + 4);
--	if (unlikely(p == NULL))
-+	if (xdr_stream_decode_u32(xdr, &length) < 0)
-+		goto out_overflow;
-+	if (xdr_inline_decode(xdr, length) == NULL)
-+		goto out_overflow;
-+	if (xdr_stream_decode_u32(xdr, &hdr->nops) < 0)
- 		goto out_overflow;
--	p += XDR_QUADLEN(length);
--	hdr->nops = be32_to_cpup(p);
++	xenbus_switch_state(dev, XenbusStateInitialised);
  	return 0;
- out_overflow:
- 	return -EIO;
+ 
+  error_xenbus:
+@@ -527,8 +528,10 @@ static void xen_9pfs_front_changed(struct xenbus_device *dev,
+ 		break;
+ 
+ 	case XenbusStateInitWait:
+-		if (!xen_9pfs_front_init(dev))
+-			xenbus_switch_state(dev, XenbusStateInitialised);
++		if (dev->state != XenbusStateInitialising)
++			break;
++
++		xen_9pfs_front_init(dev);
+ 		break;
+ 
+ 	case XenbusStateConnected:
+-- 
+2.43.0
+
 
 
