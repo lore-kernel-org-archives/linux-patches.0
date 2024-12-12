@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B69922541B;
-	Thu, 12 Dec 2024 15:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7473123FA0D;
+	Thu, 12 Dec 2024 15:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019131; cv=none; b=J0OJku68Hnj2OyzYvrC8eoehDHUrV7P0uhBlvaa6Z7V17+8mIdIXYiSYAAumeR9FfVuVL0uMM2UzrnWTixZqIILzmCEwvkwfrrB7Vtv3z7SOlH/bEsIE166oqDcudPbgbM8kJ5UN8NHXY8nfL/i0HMYABpAfSpGkiwVlHq0zrA0=
+	t=1734019135; cv=none; b=CN79jhX6oxAFER/eCg1nXDIzIjlxPYdZ5RDGGtSDnSsSb5J/qxRA+2WL20jOIil/wsSA++PkFqb8x46CSAFmYS9LCCy/WL+8vAqlfpzX6rCHwj//p0PffXBsBJKQBvMo4kV622V0GoFL5pvMRHdtkxP75VTWd9yFt9rDHXU3to4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019131; c=relaxed/simple;
-	bh=43TND/t5/HRDoU6UfOXZz8qmsH278+06rPJyp70m/HY=;
+	s=arc-20240116; t=1734019135; c=relaxed/simple;
+	bh=qPk4QHDvTrnSIUYELzb7gOhQ24pcxcbsD9cuBwojw/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mXz3fhvQ2c1BtcRHZhLBu8yajiBELBp6XwBgjd7FLTuJE9AwhdqUIrPyfJ/w/RxsXwL/r+C7e3Il11HKOUypoKbYfjayBEoySXCISW/tn2zLisIURrJ3AcU7Syr19NCdKCwiwOk5769MHjQry+GyMe2AC4dMdfhbTZOz7At5ItI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/+nNGRd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2TuoLZ9OzgEN+a+HvWxrUzzVWGH1qu+/q3/DYVWxnMptuswf+AFC0az/szNDOn+PD18tcfCQ64I6JJHi9wLn0YBnJ77Pnh/DQ+cbHy9jnZhJGmWgVHRqPNQtRQTaDlq/aK9U+QNiy/ROfHpoGBCjIo5H4/cEnqIp7/m4Hvr8Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJKmqciC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/+nNGRd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0FCAC4CECE;
-	Thu, 12 Dec 2024 15:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJKmqciC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4D8C4CECE;
+	Thu, 12 Dec 2024 15:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019131;
-	bh=43TND/t5/HRDoU6UfOXZz8qmsH278+06rPJyp70m/HY=;
+	s=korg; t=1734019135;
+	bh=qPk4QHDvTrnSIUYELzb7gOhQ24pcxcbsD9cuBwojw/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/+nNGRdIPz4xvNX0zKs8JQ81H8/5EimTYDnYqfuui3u1v/43hyR3KPLVNzewcxfS
-	 o0FwXFr9XABXwTaLpzRPXznxjju5ryFfNKUFnbzeFcxzVVTH/xSk/gsN5v9PR06rky
-	 PzUFx3pl2aRWN9JAVS2ynCPmbXVtbQga/HgenS7Y=
+	b=MJKmqciCHwvGqcqEQ0EgrWoqy8Hb1Bgn3P/O81Feo3aL3gcCUIgEtRPB6Qi7BonCe
+	 MPwJxRzC3kVAM/ooPBA71ZTxEWgxplTA1u3kJa+B9YOH/jxllobQl+dSx0Zi39bRnA
+	 EIWWzTBlg2irjupubXt5kS2oT7ExoEuRzkBB9mf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/772] arm64: dts: mt8195: Fix dtbs_check error for infracfg_ao node
-Date: Thu, 12 Dec 2024 15:50:41 +0100
-Message-ID: <20241212144353.900004357@linuxfoundation.org>
+Subject: [PATCH 6.1 097/772] soc: ti: smartreflex: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Thu, 12 Dec 2024 15:50:42 +0100
+Message-ID: <20241212144353.948326739@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,42 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit c14ab45f5d458073248ddc62d31045d5d616806f ]
+[ Upstream commit 16a0a69244240cfa32c525c021c40f85e090557a ]
 
-The infracfg_ao node in mt8195.dtsi was causing a dtbs_check error.
-The error message was:
+If request_irq() fails in sr_late_init(), there is no need to enable
+the irq, and if it succeeds, disable_irq() after request_irq() still has
+a time gap in which interrupts can come.
 
-syscon@10001000: compatible: ['mediatek,mt8195-infracfg_ao', 'syscon',
-                 'simple-mfd'] is too long
+request_irq() with IRQF_NO_AUTOEN flag will disable IRQ auto-enable when
+request IRQ.
 
-To resolve this, remove 'simple-mfd' from the 'compatible' property of the
-infracfg_ao node.
-
-Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241002051620.2050-1-macpaul.lin@mediatek.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 1279ba5916f6 ("OMAP3+: SR: disable interrupt by default")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20240912034147.3014213-1-ruanjinjie@huawei.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/ti/smartreflex.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index bdf002e9cece1..aa8fbaf15e629 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -332,7 +332,7 @@ topckgen: syscon@10000000 {
- 		};
+diff --git a/drivers/soc/ti/smartreflex.c b/drivers/soc/ti/smartreflex.c
+index 6a389a6444f36..e2e06b8488227 100644
+--- a/drivers/soc/ti/smartreflex.c
++++ b/drivers/soc/ti/smartreflex.c
+@@ -203,10 +203,10 @@ static int sr_late_init(struct omap_sr *sr_info)
  
- 		infracfg_ao: syscon@10001000 {
--			compatible = "mediatek,mt8195-infracfg_ao", "syscon", "simple-mfd";
-+			compatible = "mediatek,mt8195-infracfg_ao", "syscon";
- 			reg = <0 0x10001000 0 0x1000>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
+ 	if (sr_class->notify && sr_class->notify_flags && sr_info->irq) {
+ 		ret = devm_request_irq(&sr_info->pdev->dev, sr_info->irq,
+-				       sr_interrupt, 0, sr_info->name, sr_info);
++				       sr_interrupt, IRQF_NO_AUTOEN,
++				       sr_info->name, sr_info);
+ 		if (ret)
+ 			goto error;
+-		disable_irq(sr_info->irq);
+ 	}
+ 
+ 	if (pdata && pdata->enable_on_init)
 -- 
 2.43.0
 
