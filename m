@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8B7209693;
-	Thu, 12 Dec 2024 15:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A8B212D6A;
+	Thu, 12 Dec 2024 15:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016541; cv=none; b=a2JjFCA9aEaOYdV8GpXpf1AHu1sGJfiSB5DOoKwI3W4C/1FitU9lSf7NHpyOBSs5dyA4IdhlVWB+gWnYSg8CZ2jIRFREuW9LUhBl7hPOp/Rfa0gnC1DWCnlsKm6ZTsnPKps2O1kKJllVzBoVbCe09WHt4/feWgTrCjE5bIyu81s=
+	t=1734016545; cv=none; b=mOmzR45N6Xt+2sPj+unPMjvU4V1tJagB9ey+zmCdV6dYPvw4lZJ0enYTTHSYSEf2Zs/+Yyy0BaQKZuj00mhFR/JT7y95Tx1/6KcbQBJUUO2Yc16dxQC1TfIybxNftLgSwIaJi0MWU4g3Bei26S/15VQkEP+RnvEJNOSb3J9Rsjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016541; c=relaxed/simple;
-	bh=xjTA1wxwZnrpVsGUyL/egYn7JZazkPO6B0Dkpxzduik=;
+	s=arc-20240116; t=1734016545; c=relaxed/simple;
+	bh=8FDJ3g54z509uVMAoq6nUrlUEkxMOwmPlzk1U8+wKoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FLpYu1LPDMycyqGq5tdi4ZhM40+kYgjRRlxdjW4+32S///Hi2f/vThhJBGhXzidkOhDnhn4Llz6Ol5RTBEKZdHPLGLZauijreCXkY8zT3rzE8qYxvqcYoR0WQpwjJNlJUh7vHYxGTPuq81M/NEU4gvwkIAjhurm7mKYboiX4v50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kMdvbcR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAtj5NemJgKLgrpGmCHn6qmo1D4blA9cTQzgBx6KY9nfBJayhHvSWGyMB4x/BEDOXrsJtUhfLHcQjoCVwd1S97rs7nOg7N2jbnKHNOJa+eRl4cBFZ/1HCqxMCr0hNzGaQ5unW+S9RsFkKrw1y/o124ihSLhHBUGOSkQHLKdatlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLoYz70u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kMdvbcR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DFDC4CECE;
-	Thu, 12 Dec 2024 15:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLoYz70u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5115BC4CECE;
+	Thu, 12 Dec 2024 15:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016541;
-	bh=xjTA1wxwZnrpVsGUyL/egYn7JZazkPO6B0Dkpxzduik=;
+	s=korg; t=1734016544;
+	bh=8FDJ3g54z509uVMAoq6nUrlUEkxMOwmPlzk1U8+wKoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kMdvbcR/J1OWzla7tSxEoErhG2mljMiKYFByU6G8DpvVDlrOLke3ENfeeHxDT9QJX
-	 5JRpqU7NIatHrXRvhUSLhqpybGVmynJc/asYa+gtzsrJEuwa51RC80sE/o+MZAkZva
-	 iomMzPGv5D3taIvDfPwnnu/rTw6MeOdsyaA6YjmM=
+	b=TLoYz70u7DeKxZu7xz/gA2JsZfcpzAQaYlMl+6WyyrKlPZT4FBuhLZzHpLcB0NS8V
+	 B46vi1wFDIATXQOO4VhbBlPGYBtB3ahKzZHlHm/D5GgsR01cPAciN+WoajHmXTtqvh
+	 OZHgGxmB1wmmRac0ccqL73viyN5WbLGYNELVMv00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Huang <ahuang12@lenovo.com>,
-	Jiwei Sun <sunjw10@lenovo.com>,
-	Raghavendra K T <raghavendra.kt@amd.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Ben Segall <bsegall@google.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Jared Kangas <jkangas@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 197/466] sched/numa: fix memory leak due to the overwritten vma->numab_state
-Date: Thu, 12 Dec 2024 15:56:06 +0100
-Message-ID: <20241212144314.577551609@linuxfoundation.org>
+Subject: [PATCH 6.12 198/466] kasan: make report_lock a raw spinlock
+Date: Thu, 12 Dec 2024 15:56:07 +0100
+Message-ID: <20241212144314.615810698@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -62,106 +55,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Huang <ahuang12@lenovo.com>
+From: Jared Kangas <jkangas@redhat.com>
 
-commit 5f1b64e9a9b7ee9cfd32c6b2fab796e29bfed075 upstream.
+commit e30a0361b8515d424c73c67de1a43e45a13b8ba2 upstream.
 
-[Problem Description]
-When running the hackbench program of LTP, the following memory leak is
-reported by kmemleak.
+If PREEMPT_RT is enabled, report_lock is a sleeping spinlock and must not
+be locked when IRQs are disabled.  However, KASAN reports may be triggered
+in such contexts.  For example:
 
-  # /opt/ltp/testcases/bin/hackbench 20 thread 1000
-  Running with 20*40 (== 800) tasks.
+        char *s = kzalloc(1, GFP_KERNEL);
+        kfree(s);
+        local_irq_disable();
+        char c = *s;  /* KASAN report here leads to spin_lock() */
+        local_irq_enable();
 
-  # dmesg | grep kmemleak
-  ...
-  kmemleak: 480 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-  kmemleak: 665 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+Make report_spinlock a raw spinlock to prevent rescheduling when
+PREEMPT_RT is enabled.
 
-  # cat /sys/kernel/debug/kmemleak
-  unreferenced object 0xffff888cd8ca2c40 (size 64):
-    comm "hackbench", pid 17142, jiffies 4299780315
-    hex dump (first 32 bytes):
-      ac 74 49 00 01 00 00 00 4c 84 49 00 01 00 00 00  .tI.....L.I.....
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace (crc bff18fd4):
-      [<ffffffff81419a89>] __kmalloc_cache_noprof+0x2f9/0x3f0
-      [<ffffffff8113f715>] task_numa_work+0x725/0xa00
-      [<ffffffff8110f878>] task_work_run+0x58/0x90
-      [<ffffffff81ddd9f8>] syscall_exit_to_user_mode+0x1c8/0x1e0
-      [<ffffffff81dd78d5>] do_syscall_64+0x85/0x150
-      [<ffffffff81e0012b>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  ...
-
-This issue can be consistently reproduced on three different servers:
-  * a 448-core server
-  * a 256-core server
-  * a 192-core server
-
-[Root Cause]
-Since multiple threads are created by the hackbench program (along with
-the command argument 'thread'), a shared vma might be accessed by two or
-more cores simultaneously. When two or more cores observe that
-vma->numab_state is NULL at the same time, vma->numab_state will be
-overwritten.
-
-Although current code ensures that only one thread scans the VMAs in a
-single 'numa_scan_period', there might be a chance for another thread
-to enter in the next 'numa_scan_period' while we have not gotten till
-numab_state allocation [1].
-
-Note that the command `/opt/ltp/testcases/bin/hackbench 50 process 1000`
-cannot the reproduce the issue. It is verified with 200+ test runs.
-
-[Solution]
-Use the cmpxchg atomic operation to ensure that only one thread executes
-the vma->numab_state assignment.
-
-[1] https://lore.kernel.org/lkml/1794be3c-358c-4cdc-a43d-a1f841d91ef7@amd.com/
-
-Link: https://lkml.kernel.org/r/20241113102146.2384-1-ahuang12@lenovo.com
-Fixes: ef6a22b70f6d ("sched/numa: apply the scan delay to every new vma")
-Signed-off-by: Adrian Huang <ahuang12@lenovo.com>
-Reported-by: Jiwei Sun <sunjw10@lenovo.com>
-Reviewed-by: Raghavendra K T <raghavendra.kt@amd.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20241119210234.1602529-1-jkangas@redhat.com
+Fixes: 342a93247e08 ("locking/spinlock: Provide RT variant header: <linux/spinlock_rt.h>")
+Signed-off-by: Jared Kangas <jkangas@redhat.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ mm/kasan/report.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3399,10 +3399,16 @@ retry_pids:
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -200,7 +200,7 @@ static inline void fail_non_kasan_kunit_
  
- 		/* Initialise new per-VMA NUMAB state. */
- 		if (!vma->numab_state) {
--			vma->numab_state = kzalloc(sizeof(struct vma_numab_state),
--				GFP_KERNEL);
--			if (!vma->numab_state)
-+			struct vma_numab_state *ptr;
-+
-+			ptr = kzalloc(sizeof(*ptr), GFP_KERNEL);
-+			if (!ptr)
-+				continue;
-+
-+			if (cmpxchg(&vma->numab_state, NULL, ptr)) {
-+				kfree(ptr);
- 				continue;
-+			}
+ #endif /* CONFIG_KUNIT */
  
- 			vma->numab_state->start_scan_seq = mm->numa_scan_seq;
+-static DEFINE_SPINLOCK(report_lock);
++static DEFINE_RAW_SPINLOCK(report_lock);
  
+ static void start_report(unsigned long *flags, bool sync)
+ {
+@@ -211,7 +211,7 @@ static void start_report(unsigned long *
+ 	lockdep_off();
+ 	/* Make sure we don't end up in loop. */
+ 	report_suppress_start();
+-	spin_lock_irqsave(&report_lock, *flags);
++	raw_spin_lock_irqsave(&report_lock, *flags);
+ 	pr_err("==================================================================\n");
+ }
+ 
+@@ -221,7 +221,7 @@ static void end_report(unsigned long *fl
+ 		trace_error_report_end(ERROR_DETECTOR_KASAN,
+ 				       (unsigned long)addr);
+ 	pr_err("==================================================================\n");
+-	spin_unlock_irqrestore(&report_lock, *flags);
++	raw_spin_unlock_irqrestore(&report_lock, *flags);
+ 	if (!test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
+ 		check_panic_on_warn("KASAN");
+ 	switch (kasan_arg_fault) {
 
 
