@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D441813CA93;
-	Thu, 12 Dec 2024 15:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7A92153FC;
+	Thu, 12 Dec 2024 15:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017577; cv=none; b=XCsW6CvyHD/C3eIHsQO+xxNxBEd4xgDCeB0sCrcXYuZdlvcYDb7PCmK3a7/rYKPgVXZO4oxqjQjR4RwpKW+Cj8zWvCSgLNYyk2780WwDJXClAgGtGifls+ImLckbk3NLLU48HYkjQBTYMO4j1Wif0xuLIRWieqUaVlAcnp0KoeY=
+	t=1734017581; cv=none; b=bCcXNpLo1QFGWCTcyRh28sOlAw+qhpIkFV3Z1MK/oTIihFZf4daoTTj1Awli1arA7MjlGzsB8W88Q4nwabx+OQCTP5U5c6Q/2HiCo2kuCgh8WpnZ9p5onRepixp/AguRpVBiniBYxAMEqfsurp0q9myPFUktBeRZ56hvidN5IDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017577; c=relaxed/simple;
-	bh=cYmzr7sKdPIf/V3BPvS5EbdaaKu50YEGr2kqjJwGIGs=;
+	s=arc-20240116; t=1734017581; c=relaxed/simple;
+	bh=xYUufvMJp451qWzE0WO/DzoOPD9oiOH+i+ZTSYZV9i4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VlSFcyqJvRHq8/kUfTgR+Zqizd4FCS/tCj9bZeY+/WPhycoPrUIkm9p1NGj38U5t1AJoUE1btecPaHEIP/nAsiFRPYrHOSR5wHEFWFYnIgAxwNJPUZ4Ly249kQSN+MbIPmPDGNux/LSovtvnyI8z9+xY4xTMFF7v28vA1caElrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HotvUTcx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XyWwzt8Sq+z2UwlUTTz5c5vXz2LVDyVYnuSomb7/QS+8Co2/swGjRtkZ0QVxsOPs+RLXM1xd+HSFtWHS770TVzGsSFKWzjqSQr1w139vqhb1eqgYBqHqt/+hihcWFgWTR9bOz843zV064EgID/sRwfBuEkAQYzkYdu/rB3rgHGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7kPrPjz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HotvUTcx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B1EC4CECE;
-	Thu, 12 Dec 2024 15:32:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7kPrPjz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E82C4CECE;
+	Thu, 12 Dec 2024 15:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017577;
-	bh=cYmzr7sKdPIf/V3BPvS5EbdaaKu50YEGr2kqjJwGIGs=;
+	s=korg; t=1734017580;
+	bh=xYUufvMJp451qWzE0WO/DzoOPD9oiOH+i+ZTSYZV9i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HotvUTcxiz5IbLPos4ZsXWGvVPQ0UFu48rozQoPY1yTEKB94SrNgsr+RemTtYP6Cr
-	 HSmBX11+nCfLmMh6cmadIDE1AXV8BI3SOxU/cD2QZdMf7nRM7oQg9kEwYRdgZbqCrv
-	 SaSImI/1erAgmVNuqQQSdvqrLJe2TgqcGg8AEIac=
+	b=x7kPrPjzR0ziXQauXKkk0vIC57DOxrH9eGzG1gqYK3pjsOo1AmFGsqXm3YnEApXvj
+	 Jih2CDOWusmkeu+1S9IODnEMEAViG1CXcc63Kb/4XD90Af1UJTnoycXIVs+b/q+ySe
+	 +NbslUOqTCeZIQi8ueuFn3R5FotqRPXex8bySkZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 053/356] ethtool: Fix wrong mod state in case of verbose and no_mask bitset
-Date: Thu, 12 Dec 2024 15:56:12 +0100
-Message-ID: <20241212144246.726323497@linuxfoundation.org>
+Subject: [PATCH 6.6 054/356] mlxsw: Add ipv4_5 flex key
+Date: Thu, 12 Dec 2024 15:56:13 +0100
+Message-ID: <20241212144246.764073178@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,125 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 910c4788d6155b2202ec88273376cd7ecdc24f0a ]
+[ Upstream commit c2f3e10ac4ebf23e177226b9b4d297bfe2fb6b20 ]
 
-A bitset without mask in a _SET request means we want exactly the bits in
-the bitset to be set. This works correctly for compact format but when
-verbose format is parsed, ethnl_update_bitset32_verbose() only sets the
-bits present in the request bitset but does not clear the rest. The commit
-6699170376ab ("ethtool: fix application of verbose no_mask bitset") fixes
-this issue by clearing the whole target bitmap before we start iterating.
-The solution proposed brought an issue with the behavior of the mod
-variable. As the bitset is always cleared the old value will always
-differ to the new value.
+Currently virtual router ID element is broken to two sub-elements -
+'VIRT_ROUTER_LSB' and 'VIRT_ROUTER_MSB'. It was broken as this field is
+broken in 'ipv4_4' flex key which is used for IPv4 in Spectrum < 4.
+For Spectrum-4, we use 'ipv4_4b' flex key which contains one field for
+virtual router, this key is not supported in older ASICs.
 
-Fix it by adding a new function to compare bitmaps and a temporary variable
-which save the state of the old bitmap.
+Add 'ipv4_5' flex key which is supported in all ASICs and contains one
+field for virtual router. Then there is no reason to use 'VIRT_ROUTER_LSB'
+and 'VIRT_ROUTER_MSB', remove them and add one element 'VIRT_ROUTER' for
+this field.
 
-Fixes: 6699170376ab ("ethtool: fix application of verbose no_mask bitset")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20241202153358.1142095-1-kory.maincent@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The motivation is to get rid of 'ipv4_4' flex key, as it might be chosen
+for IPv6 multicast forwarding region. This will not allow the improvement
+in a following patch. See more details in the cover letter and in a
+following patch.
+
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 217bbf156f93 ("mlxsw: spectrum_acl_flex_keys: Use correct key block on Spectrum-4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/bitset.c | 48 ++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 44 insertions(+), 4 deletions(-)
+ .../ethernet/mellanox/mlxsw/core_acl_flex_keys.c    |  3 +--
+ .../ethernet/mellanox/mlxsw/core_acl_flex_keys.h    |  3 +--
+ .../net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c | 13 ++++---------
+ .../mellanox/mlxsw/spectrum_acl_flex_keys.c         | 10 ++++------
+ 4 files changed, 10 insertions(+), 19 deletions(-)
 
-diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
-index 0515d6604b3b9..f0883357d12e5 100644
---- a/net/ethtool/bitset.c
-+++ b/net/ethtool/bitset.c
-@@ -425,12 +425,32 @@ static int ethnl_parse_bit(unsigned int *index, bool *val, unsigned int nbits,
- 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
+index bf140e7416e19..5fa3800940c89 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
+@@ -33,8 +33,7 @@ static const struct mlxsw_afk_element_info mlxsw_afk_element_infos[] = {
+ 	MLXSW_AFK_ELEMENT_INFO_U32(IP_TTL_, 0x18, 0, 8),
+ 	MLXSW_AFK_ELEMENT_INFO_U32(IP_ECN, 0x18, 9, 2),
+ 	MLXSW_AFK_ELEMENT_INFO_U32(IP_DSCP, 0x18, 11, 6),
+-	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER_MSB, 0x18, 17, 4),
+-	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER_LSB, 0x18, 21, 8),
++	MLXSW_AFK_ELEMENT_INFO_U32(VIRT_ROUTER, 0x18, 17, 12),
+ 	MLXSW_AFK_ELEMENT_INFO_BUF(SRC_IP_96_127, 0x20, 4),
+ 	MLXSW_AFK_ELEMENT_INFO_BUF(SRC_IP_64_95, 0x24, 4),
+ 	MLXSW_AFK_ELEMENT_INFO_BUF(SRC_IP_32_63, 0x28, 4),
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h
+index 2eac7582c31a8..75e9bbc361701 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h
+@@ -33,8 +33,7 @@ enum mlxsw_afk_element {
+ 	MLXSW_AFK_ELEMENT_IP_TTL_,
+ 	MLXSW_AFK_ELEMENT_IP_ECN,
+ 	MLXSW_AFK_ELEMENT_IP_DSCP,
+-	MLXSW_AFK_ELEMENT_VIRT_ROUTER_MSB,
+-	MLXSW_AFK_ELEMENT_VIRT_ROUTER_LSB,
++	MLXSW_AFK_ELEMENT_VIRT_ROUTER,
+ 	MLXSW_AFK_ELEMENT_FDB_MISS,
+ 	MLXSW_AFK_ELEMENT_L4_PORT_RANGE,
+ 	MLXSW_AFK_ELEMENT_MAX,
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c
+index b1178b7a7f51a..2efcc9372d4e6 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum2_mr_tcam.c
+@@ -45,8 +45,7 @@ static int mlxsw_sp2_mr_tcam_bind_group(struct mlxsw_sp *mlxsw_sp,
  }
  
-+/**
-+ * ethnl_bitmap32_equal() - Compare two bitmaps
-+ * @map1:  first bitmap
-+ * @map2:  second bitmap
-+ * @nbits: bit size to compare
-+ *
-+ * Return: true if first @nbits are equal, false if not
-+ */
-+static bool ethnl_bitmap32_equal(const u32 *map1, const u32 *map2,
-+				 unsigned int nbits)
-+{
-+	if (memcmp(map1, map2, nbits / 32 * sizeof(u32)))
-+		return false;
-+	if (nbits % 32 == 0)
-+		return true;
-+	return !((map1[nbits / 32] ^ map2[nbits / 32]) &
-+		 ethnl_lower_bits(nbits % 32));
-+}
-+
- static int
- ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 			      const struct nlattr *attr, struct nlattr **tb,
- 			      ethnl_string_array_t names,
- 			      struct netlink_ext_ack *extack, bool *mod)
- {
-+	u32 *saved_bitmap = NULL;
- 	struct nlattr *bit_attr;
- 	bool no_mask;
- 	int rem;
-@@ -448,8 +468,20 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 	}
- 
- 	no_mask = tb[ETHTOOL_A_BITSET_NOMASK];
--	if (no_mask)
--		ethnl_bitmap32_clear(bitmap, 0, nbits, mod);
-+	if (no_mask) {
-+		unsigned int nwords = DIV_ROUND_UP(nbits, 32);
-+		unsigned int nbytes = nwords * sizeof(u32);
-+		bool dummy;
-+
-+		/* The bitmap size is only the size of the map part without
-+		 * its mask part.
-+		 */
-+		saved_bitmap = kcalloc(nwords, sizeof(u32), GFP_KERNEL);
-+		if (!saved_bitmap)
-+			return -ENOMEM;
-+		memcpy(saved_bitmap, bitmap, nbytes);
-+		ethnl_bitmap32_clear(bitmap, 0, nbits, &dummy);
-+	}
- 
- 	nla_for_each_nested(bit_attr, tb[ETHTOOL_A_BITSET_BITS], rem) {
- 		bool old_val, new_val;
-@@ -458,22 +490,30 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 		if (nla_type(bit_attr) != ETHTOOL_A_BITSET_BITS_BIT) {
- 			NL_SET_ERR_MSG_ATTR(extack, bit_attr,
- 					    "only ETHTOOL_A_BITSET_BITS_BIT allowed in ETHTOOL_A_BITSET_BITS");
-+			kfree(saved_bitmap);
- 			return -EINVAL;
- 		}
- 		ret = ethnl_parse_bit(&idx, &new_val, nbits, bit_attr, no_mask,
- 				      names, extack);
--		if (ret < 0)
-+		if (ret < 0) {
-+			kfree(saved_bitmap);
- 			return ret;
-+		}
- 		old_val = bitmap[idx / 32] & ((u32)1 << (idx % 32));
- 		if (new_val != old_val) {
- 			if (new_val)
- 				bitmap[idx / 32] |= ((u32)1 << (idx % 32));
- 			else
- 				bitmap[idx / 32] &= ~((u32)1 << (idx % 32));
--			*mod = true;
-+			if (!no_mask)
-+				*mod = true;
- 		}
- 	}
- 
-+	if (no_mask && !ethnl_bitmap32_equal(saved_bitmap, bitmap, nbits))
-+		*mod = true;
-+
-+	kfree(saved_bitmap);
- 	return 0;
+ static const enum mlxsw_afk_element mlxsw_sp2_mr_tcam_usage_ipv4[] = {
+-		MLXSW_AFK_ELEMENT_VIRT_ROUTER_MSB,
+-		MLXSW_AFK_ELEMENT_VIRT_ROUTER_LSB,
++		MLXSW_AFK_ELEMENT_VIRT_ROUTER,
+ 		MLXSW_AFK_ELEMENT_SRC_IP_0_31,
+ 		MLXSW_AFK_ELEMENT_DST_IP_0_31,
+ };
+@@ -89,8 +88,7 @@ static void mlxsw_sp2_mr_tcam_ipv4_fini(struct mlxsw_sp2_mr_tcam *mr_tcam)
  }
  
+ static const enum mlxsw_afk_element mlxsw_sp2_mr_tcam_usage_ipv6[] = {
+-		MLXSW_AFK_ELEMENT_VIRT_ROUTER_MSB,
+-		MLXSW_AFK_ELEMENT_VIRT_ROUTER_LSB,
++		MLXSW_AFK_ELEMENT_VIRT_ROUTER,
+ 		MLXSW_AFK_ELEMENT_SRC_IP_96_127,
+ 		MLXSW_AFK_ELEMENT_SRC_IP_64_95,
+ 		MLXSW_AFK_ELEMENT_SRC_IP_32_63,
+@@ -189,11 +187,8 @@ mlxsw_sp2_mr_tcam_rule_parse(struct mlxsw_sp_acl_rule *rule,
+ 
+ 	rulei = mlxsw_sp_acl_rule_rulei(rule);
+ 	rulei->priority = priority;
+-	mlxsw_sp_acl_rulei_keymask_u32(rulei, MLXSW_AFK_ELEMENT_VIRT_ROUTER_LSB,
+-				       key->vrid, GENMASK(7, 0));
+-	mlxsw_sp_acl_rulei_keymask_u32(rulei,
+-				       MLXSW_AFK_ELEMENT_VIRT_ROUTER_MSB,
+-				       key->vrid >> 8, GENMASK(3, 0));
++	mlxsw_sp_acl_rulei_keymask_u32(rulei, MLXSW_AFK_ELEMENT_VIRT_ROUTER,
++				       key->vrid, GENMASK(11, 0));
+ 	switch (key->proto) {
+ 	case MLXSW_SP_L3_PROTO_IPV4:
+ 		return mlxsw_sp2_mr_tcam_rule_parse4(rulei, key);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
+index cb746a43b24b3..cc00c8d69eb77 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
+@@ -171,9 +171,8 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_2[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_PROTO, 0x04, 16, 8),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_4[] = {
+-	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_LSB, 0x04, 24, 8),
+-	MLXSW_AFK_ELEMENT_INST_EXT_U32(VIRT_ROUTER_MSB, 0x00, 0, 3, 0, true),
++static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_5[] = {
++	MLXSW_AFK_ELEMENT_INST_EXT_U32(VIRT_ROUTER, 0x04, 20, 11, 0, true),
+ };
+ 
+ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_0[] = {
+@@ -220,7 +219,7 @@ static const struct mlxsw_afk_block mlxsw_sp2_afk_blocks[] = {
+ 	MLXSW_AFK_BLOCK(0x38, mlxsw_sp_afk_element_info_ipv4_0),
+ 	MLXSW_AFK_BLOCK(0x39, mlxsw_sp_afk_element_info_ipv4_1),
+ 	MLXSW_AFK_BLOCK(0x3A, mlxsw_sp_afk_element_info_ipv4_2),
+-	MLXSW_AFK_BLOCK(0x3C, mlxsw_sp_afk_element_info_ipv4_4),
++	MLXSW_AFK_BLOCK(0x3D, mlxsw_sp_afk_element_info_ipv4_5),
+ 	MLXSW_AFK_BLOCK(0x40, mlxsw_sp_afk_element_info_ipv6_0),
+ 	MLXSW_AFK_BLOCK(0x41, mlxsw_sp_afk_element_info_ipv6_1),
+ 	MLXSW_AFK_BLOCK(0x42, mlxsw_sp_afk_element_info_ipv6_2),
+@@ -323,8 +322,7 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5b[] = {
+ };
+ 
+ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_4b[] = {
+-	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_LSB, 0x04, 13, 8),
+-	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_MSB, 0x04, 21, 4),
++	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER, 0x04, 13, 12),
+ };
+ 
+ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_2b[] = {
 -- 
 2.43.0
 
