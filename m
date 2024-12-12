@@ -1,38 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D809221DAB;
-	Thu, 12 Dec 2024 15:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9612814A82;
+	Thu, 12 Dec 2024 15:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018336; cv=none; b=RPjCCUdbL1TA+qeZaO6KLC0hVYcS9AVhHdXgktZIO7cAD1Jf5aZH7T614/JTMAbMtgcMjxtLPQHbClbg8UrpUiUlMcsxTBIDSHUiahWSwErMjQIzGw4EV95bJZ2kYH6OhZkBI+9ubi9GI3eRUtAyYsMsNl8/CYoEOECCEkTgXDs=
+	t=1734018339; cv=none; b=I7pZxIHCotbATPOYICE6TbhCb/eVrtF+Au0AFBjIn5+QBUUww4rMK5oTyOsCtc9PJ2Jr3gj//65EGBimIzSFuq89DN2MTe2+LiAlTQI3YMFtNHPLybUn/UY+R6137QKK01AO4LtMzanwhL0UZhgfkjmTemGGbkD9TjBkCleTtWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018336; c=relaxed/simple;
-	bh=QLeJPhr6ZE74x/V+vvkmtwdqARrZwJ87ZUjMEkM955U=;
+	s=arc-20240116; t=1734018339; c=relaxed/simple;
+	bh=/2N1SQjInvbz4DIky4O9YmfcFq726Z8eYoysWQ+D0GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ON/kcUy3A+nVdP1dggjoukFti7lY10NSOsEjNEcqRIiL9yKb6eKtEp5t7GBtsj834UkLh8qFnGeDq7Gzh770YNKeA6aYBP8QQh4ouwZXHc7HxGy7WwlTnQS67baI7FaNIoBwzg3DEn5/cpm3GoyssAkX2MpTUEj3Xqg4efEuTBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oiUTpjT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sxHuq1H1Vl4WCgI1izM8aRcY/hWIYOH899kc5++swQiajxDtqyCigpkzaFQgaJ/sLCJLPHYNN7XkMIudIjjIv1Q46CZujkoqrBIw7UIwfoyOff1O6XuFKc8uN6GbgcRxBnwJfPBQDzdhYZvFqo/P1pnhQWHIE/fAKD0EqhRvFSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmoPJHtc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oiUTpjT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEBFC4CECE;
-	Thu, 12 Dec 2024 15:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmoPJHtc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C90A8C4CECE;
+	Thu, 12 Dec 2024 15:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018335;
-	bh=QLeJPhr6ZE74x/V+vvkmtwdqARrZwJ87ZUjMEkM955U=;
+	s=korg; t=1734018339;
+	bh=/2N1SQjInvbz4DIky4O9YmfcFq726Z8eYoysWQ+D0GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oiUTpjTLEk/mjCmxkvsH7fyRfDLrdvtuTW9+jUcHlEh0pVIcaEBawpgTYH4ILtnW
-	 S1etnG/XvNZ/2VaA4hzIhfu3tbyP9kC4OD8vtaRC9RMiRxLytt1QxsHC0sKJcjrGeG
-	 n/+RRh7ia2uLRfd0EDV3/1TrfW52krA1rKXds13g=
+	b=MmoPJHtckwRdvMKWJElVT/uBYQks+rUn36aSXxK6scdyaSsRDvOv3QtqlESGtTpem
+	 4LkfV74y2h4AGHEQE1Kos+jee5A5XupjXs2aaYxNE94fuUgr6K/yMFAKAbj7TKJPW/
+	 P2S51U8S6W8p3I8jOwojD/2dB2ckWClyvg188gVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6ea290ba76d8c1eb1ac2@syzkaller.appspotmail.com,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Michael Jeanson <mjeanson@efficios.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
+	bpf@vger.kernel.org,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 257/356] Bluetooth: hci_core: Fix not checking skb length on hci_acldata_packet
-Date: Thu, 12 Dec 2024 15:59:36 +0100
-Message-ID: <20241212144254.754729560@linuxfoundation.org>
+Subject: [PATCH 6.6 266/356] tracing/ftrace: disable preemption in syscall probe
+Date: Thu, 12 Dec 2024 15:59:45 +0100
+Message-ID: <20241212144255.100642783@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,62 +65,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit 3fe288a8214e7dd784d1f9b7c9e448244d316b47 ]
+[ Upstream commit 13d750c2c03e9861e15268574ed2c239cca9c9d5 ]
 
-This fixes not checking if skb really contains an ACL header otherwise
-the code may attempt to access some uninitilized/invalid memory past the
-valid skb->data.
+In preparation for allowing system call enter/exit instrumentation to
+handle page faults, make sure that ftrace can handle this change by
+explicitly disabling preemption within the ftrace system call tracepoint
+probes to respect the current expectations within ftrace ring buffer
+code.
 
-Reported-by: syzbot+6ea290ba76d8c1eb1ac2@syzkaller.appspotmail.com
-Tested-by: syzbot+6ea290ba76d8c1eb1ac2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6ea290ba76d8c1eb1ac2
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+This change does not yet allow ftrace to take page faults per se within
+its probe, but allows its existing probes to adapt to the upcoming
+change.
+
+Cc: Michael Jeanson <mjeanson@efficios.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Yonghong Song <yhs@fb.com>
+Cc: Paul E. McKenney <paulmck@kernel.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Andrii Nakryiko <andrii.nakryiko@gmail.com>
+Cc: bpf@vger.kernel.org
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Link: https://lore.kernel.org/20241009010718.2050182-3-mathieu.desnoyers@efficios.com
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ include/trace/trace_events.h  | 36 +++++++++++++++++++++++++++++++----
+ kernel/trace/trace_syscalls.c | 12 ++++++++++++
+ 2 files changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 3cf4dd9cad8a3..30519d47e8a69 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3735,18 +3735,22 @@ static void hci_tx_work(struct work_struct *work)
- /* ACL data packet */
- static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	struct hci_acl_hdr *hdr = (void *) skb->data;
-+	struct hci_acl_hdr *hdr;
- 	struct hci_conn *conn;
- 	__u16 handle, flags;
+diff --git a/include/trace/trace_events.h b/include/trace/trace_events.h
+index c2f9cabf154d1..fa0d51cad57a8 100644
+--- a/include/trace/trace_events.h
++++ b/include/trace/trace_events.h
+@@ -244,6 +244,9 @@ static struct trace_event_fields trace_event_fields_##call[] = {	\
+ 	tstruct								\
+ 	{} };
  
--	skb_pull(skb, HCI_ACL_HDR_SIZE);
-+	hdr = skb_pull_data(skb, sizeof(*hdr));
-+	if (!hdr) {
-+		bt_dev_err(hdev, "ACL packet too small");
-+		goto drop;
-+	}
++#undef DECLARE_EVENT_SYSCALL_CLASS
++#define DECLARE_EVENT_SYSCALL_CLASS DECLARE_EVENT_CLASS
++
+ #undef DEFINE_EVENT_PRINT
+ #define DEFINE_EVENT_PRINT(template, name, proto, args, print)
  
- 	handle = __le16_to_cpu(hdr->handle);
- 	flags  = hci_flags(handle);
- 	handle = hci_handle(handle);
+@@ -374,11 +377,11 @@ static inline notrace int trace_event_get_offsets_##call(		\
  
--	BT_DBG("%s len %d handle 0x%4.4x flags 0x%4.4x", hdev->name, skb->len,
--	       handle, flags);
-+	bt_dev_dbg(hdev, "len %d handle 0x%4.4x flags 0x%4.4x", skb->len,
-+		   handle, flags);
+ #include "stages/stage6_event_callback.h"
  
- 	hdev->stat.acl_rx++;
- 
-@@ -3765,6 +3769,7 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 			   handle);
- 	}
- 
-+drop:
- 	kfree_skb(skb);
+-#undef DECLARE_EVENT_CLASS
+-#define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
+-									\
++
++#undef __DECLARE_EVENT_CLASS
++#define __DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print) \
+ static notrace void							\
+-trace_event_raw_event_##call(void *__data, proto)			\
++do_trace_event_raw_event_##call(void *__data, proto)			\
+ {									\
+ 	struct trace_event_file *trace_file = __data;			\
+ 	struct trace_event_data_offsets_##call __maybe_unused __data_offsets;\
+@@ -403,6 +406,29 @@ trace_event_raw_event_##call(void *__data, proto)			\
+ 									\
+ 	trace_event_buffer_commit(&fbuffer);				\
  }
++
++#undef DECLARE_EVENT_CLASS
++#define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
++__DECLARE_EVENT_CLASS(call, PARAMS(proto), PARAMS(args), PARAMS(tstruct), \
++		      PARAMS(assign), PARAMS(print))			\
++static notrace void							\
++trace_event_raw_event_##call(void *__data, proto)			\
++{									\
++	do_trace_event_raw_event_##call(__data, args);			\
++}
++
++#undef DECLARE_EVENT_SYSCALL_CLASS
++#define DECLARE_EVENT_SYSCALL_CLASS(call, proto, args, tstruct, assign, print) \
++__DECLARE_EVENT_CLASS(call, PARAMS(proto), PARAMS(args), PARAMS(tstruct), \
++		      PARAMS(assign), PARAMS(print))			\
++static notrace void							\
++trace_event_raw_event_##call(void *__data, proto)			\
++{									\
++	preempt_disable_notrace();					\
++	do_trace_event_raw_event_##call(__data, args);			\
++	preempt_enable_notrace();					\
++}
++
+ /*
+  * The ftrace_test_probe is compiled out, it is only here as a build time check
+  * to make sure that if the tracepoint handling changes, the ftrace probe will
+@@ -418,6 +444,8 @@ static inline void ftrace_test_probe_##call(void)			\
  
+ #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
+ 
++#undef __DECLARE_EVENT_CLASS
++
+ #include "stages/stage7_class_define.h"
+ 
+ #undef DECLARE_EVENT_CLASS
+diff --git a/kernel/trace/trace_syscalls.c b/kernel/trace/trace_syscalls.c
+index de753403cdafb..9508d9022940f 100644
+--- a/kernel/trace/trace_syscalls.c
++++ b/kernel/trace/trace_syscalls.c
+@@ -299,6 +299,12 @@ static void ftrace_syscall_enter(void *data, struct pt_regs *regs, long id)
+ 	int syscall_nr;
+ 	int size;
+ 
++	/*
++	 * Syscall probe called with preemption enabled, but the ring
++	 * buffer and per-cpu data require preemption to be disabled.
++	 */
++	guard(preempt_notrace)();
++
+ 	syscall_nr = trace_get_syscall_nr(current, regs);
+ 	if (syscall_nr < 0 || syscall_nr >= NR_syscalls)
+ 		return;
+@@ -338,6 +344,12 @@ static void ftrace_syscall_exit(void *data, struct pt_regs *regs, long ret)
+ 	struct trace_event_buffer fbuffer;
+ 	int syscall_nr;
+ 
++	/*
++	 * Syscall probe called with preemption enabled, but the ring
++	 * buffer and per-cpu data require preemption to be disabled.
++	 */
++	guard(preempt_notrace)();
++
+ 	syscall_nr = trace_get_syscall_nr(current, regs);
+ 	if (syscall_nr < 0 || syscall_nr >= NR_syscalls)
+ 		return;
 -- 
 2.43.0
 
