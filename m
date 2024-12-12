@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBD52210F1;
-	Thu, 12 Dec 2024 17:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED1B2210F1;
+	Thu, 12 Dec 2024 17:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025683; cv=none; b=Z8snjNNBblNhs9b/ilnovwK/4EywJ4YZP/5HQzczK9f1zScJXIErreaNK3I9fOigwpfAMqDia0USFSBvwm31bbtQ+xO526BdsSydhA04XFPVKEsKnmCuPnYnnnwbUQS0zTZKaiNk3CbHBd2EIYD/zzTmy2Y0HA3Xzv8uK0lBt6Y=
+	t=1734025686; cv=none; b=Yrp73e3jndlp0dvOOIq1q6E5ImBM1p49E5SjII/ZpPL5a27XMPccmmypMq8Ux1X8RMWB8KZN43whr0AuhcDlK+x7zJeidOSitloNFz7Bxb6wUodXdLV7M46+XVqN1zoRw9eabn2KYa2VrDq7ItpHjt0p3edET8CZK2dFBo9VIXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025683; c=relaxed/simple;
-	bh=Z0F7B+7l6OFS8QU8FFR4KYwAtJUYs4ZXkMDAx+91tnw=;
+	s=arc-20240116; t=1734025686; c=relaxed/simple;
+	bh=EWYXLk9kBKIvGt7mgjhmKAG+0A5AcNnZATOzqJ9BFuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mi5+qdcjkKNK3r4TJRhl20Q0hAoNp3gsSvr0sz32zCLCkNW9Bhyq7HEFxaeB14mNHPachH21ushCMjM8xt1Azo+YxV0GXEv590G2NZsQ1jSdCA2Fr5QYcbJgpJsjn0nafPnl/WPlo/lkLKLNFNVAPz3jUjSfoTP//mpCgvkOz3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQHSmqHG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAKqex4oM0669BLxGImSItzEYD/wGXxxHcRn6o1R/x0+lvM8FDkr6qScB4oNlKp9HgtLTEv+of0qVDkOmniIn2TDABf4OJ3iofp4exqadWuh2lxsteH7A+1HVSoAy2EaJ7jnwzt6dNa2S2I3k8uDWKrrRUXFAenruh434J4m2Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnpEq/NM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQHSmqHG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D37FC4CECE;
-	Thu, 12 Dec 2024 17:48:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnpEq/NM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CE3C4CED1;
+	Thu, 12 Dec 2024 17:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025683;
-	bh=Z0F7B+7l6OFS8QU8FFR4KYwAtJUYs4ZXkMDAx+91tnw=;
+	s=korg; t=1734025686;
+	bh=EWYXLk9kBKIvGt7mgjhmKAG+0A5AcNnZATOzqJ9BFuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQHSmqHG/7WviaGHN5TSgG0Kcjscp9eOL321sdLYeAAYI7D0FNs4kllEQNSFZ3e1D
-	 SBhTY3jhivfgxIPWH1cehM0LdDo/OZ+aqzHUNtey+yzD1WM8+4RxcdZaAgjOW5EwBF
-	 QEMWLOvL6wU9deMyQxbvY5rsYzvlJIMCCy9LJABQ=
+	b=TnpEq/NMTF7eMHKr/ZjO65V3xO5lDeL1ARPsc0ztEHWaIDDW4i2Ulbf6nH/Cr501l
+	 RuOXbALUGXZuZihHtL+8WpXYVfZU392OTkeYv+BnLjVEcHn4v8hi+QqkiZSQj3OfWJ
+	 JQi4uH9+HnLJ2MiFrMMtGtcrYSQvrdSYg27PFATs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhenxing Chen <chenzhenxing@uniontech.com>,
-	Xu Rao <raoxu@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.4 253/321] HID: wacom: fix when get product name maybe null pointer
-Date: Thu, 12 Dec 2024 16:02:51 +0100
-Message-ID: <20241212144239.962844857@linuxfoundation.org>
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 254/321] tracing: Fix cmp_entries_dup() to respect sort() comparison rules
+Date: Thu, 12 Dec 2024 16:02:52 +0100
+Message-ID: <20241212144240.002294947@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,108 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit 59548215b76be98cf3422eea9a67d6ea578aca3d upstream.
+commit e63fbd5f6810ed756bbb8a1549c7d4132968baa9 upstream.
 
-Due to incorrect dev->product reporting by certain devices, null
-pointer dereferences occur when dev->product is empty, leading to
-potential system crashes.
+The cmp_entries_dup() function used as the comparator for sort()
+violated the symmetry and transitivity properties required by the
+sorting algorithm. Specifically, it returned 1 whenever memcmp() was
+non-zero, which broke the following expectations:
 
-This issue was found on EXCELSIOR DL37-D05 device with
-Loongson-LS3A6000-7A2000-DL37 motherboard.
+* Symmetry: If x < y, then y > x.
+* Transitivity: If x < y and y < z, then x < z.
 
-Kernel logs:
-[   56.470885] usb 4-3: new full-speed USB device number 4 using ohci-pci
-[   56.671638] usb 4-3: string descriptor 0 read error: -22
-[   56.671644] usb 4-3: New USB device found, idVendor=056a, idProduct=0374, bcdDevice= 1.07
-[   56.671647] usb 4-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[   56.678839] hid-generic 0003:056A:0374.0004: hiddev0,hidraw3: USB HID v1.10 Device [HID 056a:0374] on usb-0000:00:05.0-3/input0
-[   56.697719] CPU 2 Unable to handle kernel paging request at virtual address 0000000000000000, era == 90000000066e35c8, ra == ffff800004f98a80
-[   56.697732] Oops[#1]:
-[   56.697734] CPU: 2 PID: 2742 Comm: (udev-worker) Tainted: G           OE      6.6.0-loong64-desktop #25.00.2000.015
-[   56.697737] Hardware name: Inspur CE520L2/C09901N000000000, BIOS 2.09.00 10/11/2024
-[   56.697739] pc 90000000066e35c8 ra ffff800004f98a80 tp 9000000125478000 sp 900000012547b8a0
-[   56.697741] a0 0000000000000000 a1 ffff800004818b28 a2 0000000000000000 a3 0000000000000000
-[   56.697743] a4 900000012547b8f0 a5 0000000000000000 a6 0000000000000000 a7 0000000000000000
-[   56.697745] t0 ffff800004818b2d t1 0000000000000000 t2 0000000000000003 t3 0000000000000005
-[   56.697747] t4 0000000000000000 t5 0000000000000000 t6 0000000000000000 t7 0000000000000000
-[   56.697748] t8 0000000000000000 u0 0000000000000000 s9 0000000000000000 s0 900000011aa48028
-[   56.697750] s1 0000000000000000 s2 0000000000000000 s3 ffff800004818e80 s4 ffff800004810000
-[   56.697751] s5 90000001000b98d0 s6 ffff800004811f88 s7 ffff800005470440 s8 0000000000000000
-[   56.697753]    ra: ffff800004f98a80 wacom_update_name+0xe0/0x300 [wacom]
-[   56.697802]   ERA: 90000000066e35c8 strstr+0x28/0x120
-[   56.697806]  CRMD: 000000b0 (PLV0 -IE -DA +PG DACF=CC DACM=CC -WE)
-[   56.697816]  PRMD: 0000000c (PPLV0 +PIE +PWE)
-[   56.697821]  EUEN: 00000000 (-FPE -SXE -ASXE -BTE)
-[   56.697827]  ECFG: 00071c1d (LIE=0,2-4,10-12 VS=7)
-[   56.697831] ESTAT: 00010000 [PIL] (IS= ECode=1 EsubCode=0)
-[   56.697835]  BADV: 0000000000000000
-[   56.697836]  PRID: 0014d000 (Loongson-64bit, Loongson-3A6000)
-[   56.697838] Modules linked in: wacom(+) bnep bluetooth rfkill qrtr nls_iso8859_1 nls_cp437 snd_hda_codec_conexant snd_hda_codec_generic ledtrig_audio snd_hda_codec_hdmi snd_hda_intel snd_intel_dspcfg snd_hda_codec snd_hda_core snd_hwdep snd_pcm snd_timer snd soundcore input_leds mousedev led_class joydev deepin_netmonitor(OE) fuse nfnetlink dmi_sysfs ip_tables x_tables overlay amdgpu amdxcp drm_exec gpu_sched drm_buddy radeon drm_suballoc_helper i2c_algo_bit drm_ttm_helper r8169 ttm drm_display_helper spi_loongson_pci xhci_pci cec xhci_pci_renesas spi_loongson_core hid_generic realtek gpio_loongson_64bit
-[   56.697887] Process (udev-worker) (pid: 2742, threadinfo=00000000aee0d8b4, task=00000000a9eff1f3)
-[   56.697890] Stack : 0000000000000000 ffff800004817e00 0000000000000000 0000251c00000000
-[   56.697896]         0000000000000000 00000011fffffffd 0000000000000000 0000000000000000
-[   56.697901]         0000000000000000 1b67a968695184b9 0000000000000000 90000001000b98d0
-[   56.697906]         90000001000bb8d0 900000011aa48028 0000000000000000 ffff800004f9d74c
-[   56.697911]         90000001000ba000 ffff800004f9ce58 0000000000000000 ffff800005470440
-[   56.697916]         ffff800004811f88 90000001000b98d0 9000000100da2aa8 90000001000bb8d0
-[   56.697921]         0000000000000000 90000001000ba000 900000011aa48028 ffff800004f9d74c
-[   56.697926]         ffff8000054704e8 90000001000bb8b8 90000001000ba000 0000000000000000
-[   56.697931]         90000001000bb8d0 9000000006307564 9000000005e666e0 90000001752359b8
-[   56.697936]         9000000008cbe400 900000000804d000 9000000005e666e0 0000000000000000
-[   56.697941]         ...
-[   56.697944] Call Trace:
-[   56.697945] [<90000000066e35c8>] strstr+0x28/0x120
-[   56.697950] [<ffff800004f98a80>] wacom_update_name+0xe0/0x300 [wacom]
-[   56.698000] [<ffff800004f9ce58>] wacom_parse_and_register+0x338/0x900 [wacom]
-[   56.698050] [<ffff800004f9d74c>] wacom_probe+0x32c/0x420 [wacom]
-[   56.698099] [<9000000006307564>] hid_device_probe+0x144/0x260
-[   56.698103] [<9000000005e65d68>] really_probe+0x208/0x540
-[   56.698109] [<9000000005e661dc>] __driver_probe_device+0x13c/0x1e0
-[   56.698112] [<9000000005e66620>] driver_probe_device+0x40/0x100
-[   56.698116] [<9000000005e6680c>] __device_attach_driver+0x12c/0x180
-[   56.698119] [<9000000005e62bc8>] bus_for_each_drv+0x88/0x160
-[   56.698123] [<9000000005e66468>] __device_attach+0x108/0x260
-[   56.698126] [<9000000005e63918>] device_reprobe+0x78/0x100
-[   56.698129] [<9000000005e62a68>] bus_for_each_dev+0x88/0x160
-[   56.698132] [<9000000006304e54>] __hid_bus_driver_added+0x34/0x80
-[   56.698134] [<9000000005e62bc8>] bus_for_each_drv+0x88/0x160
-[   56.698137] [<9000000006304df0>] __hid_register_driver+0x70/0xa0
-[   56.698142] [<9000000004e10fe4>] do_one_initcall+0x104/0x320
-[   56.698146] [<9000000004f38150>] do_init_module+0x90/0x2c0
-[   56.698151] [<9000000004f3a3d8>] init_module_from_file+0xb8/0x120
-[   56.698155] [<9000000004f3a590>] idempotent_init_module+0x150/0x3a0
-[   56.698159] [<9000000004f3a890>] sys_finit_module+0xb0/0x140
-[   56.698163] [<900000000671e4e8>] do_syscall+0x88/0xc0
-[   56.698166] [<9000000004e12404>] handle_syscall+0xc4/0x160
-[   56.698171] Code: 0011958f  00150224  5800cd85 <2a00022c> 00150004  4000c180  0015022c  03400000  03400000
-[   56.698192] ---[ end trace 0000000000000000 ]---
+These violations could lead to incorrect sorting and failure to
+correctly identify duplicate elements.
 
-Fixes: 09dc28acaec7 ("HID: wacom: Improve generic name generation")
-Reported-by: Zhenxing Chen <chenzhenxing@uniontech.com>
-Co-developed-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: Xu Rao <raoxu@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Link: https://patch.msgid.link/B31757FE8E1544CF+20241125052616.18261-1-wangyuli@uniontech.com
+Fix the issue by directly returning the result of memcmp(), which
+adheres to the required comparison properties.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Fixes: 08d43a5fa063 ("tracing: Add lock-free tracing_map")
+Link: https://lore.kernel.org/20241203202228.1274403-1-visitorckw@gmail.com
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_sys.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/tracing_map.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -2242,7 +2242,8 @@ static void wacom_update_name(struct wac
- 		if (hid_is_usb(wacom->hdev)) {
- 			struct usb_interface *intf = to_usb_interface(wacom->hdev->dev.parent);
- 			struct usb_device *dev = interface_to_usbdev(intf);
--			product_name = dev->product;
-+			if (dev->product != NULL)
-+				product_name = dev->product;
- 		}
+--- a/kernel/trace/tracing_map.c
++++ b/kernel/trace/tracing_map.c
+@@ -845,15 +845,11 @@ int tracing_map_init(struct tracing_map
+ static int cmp_entries_dup(const void *A, const void *B)
+ {
+ 	const struct tracing_map_sort_entry *a, *b;
+-	int ret = 0;
  
- 		if (wacom->hdev->bus == BUS_I2C) {
+ 	a = *(const struct tracing_map_sort_entry **)A;
+ 	b = *(const struct tracing_map_sort_entry **)B;
+ 
+-	if (memcmp(a->key, b->key, a->elt->map->key_size))
+-		ret = 1;
+-
+-	return ret;
++	return memcmp(a->key, b->key, a->elt->map->key_size);
+ }
+ 
+ static int cmp_entries_sum(const void *A, const void *B)
 
 
