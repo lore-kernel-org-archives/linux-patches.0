@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012C92236EA;
-	Thu, 12 Dec 2024 16:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A849B2236EA;
+	Thu, 12 Dec 2024 16:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019524; cv=none; b=eckQ/iCZqklSiqlMzuwelB/NA9DNPrlCfG/3hnIsyNWiVNAu1KdfB+4IQ5fRAMdOvjEiS9vHCWj1H48oDSyEvH7253LrsXZUNvFW7PTb5+mjlTXCDGXy3iZ5yqiiabr/rXVJMV45UepY0XCBmpcnQ3RyqrWL74o6dbWSZsVZsQw=
+	t=1734019527; cv=none; b=OfPHEOBePex+rfJqOEmzCvGtj1d3mFXS6+PGxQVaeDAa4KUcHAOUroSphvU2EtXYmKXqEMgNt/M0tdgZzt6oFkm37y7/RvceuJ07vklJjcuyXQkQRUINfyNLE4ttcziVWJA6MpKdLPcyvs/A5j9USk/iXK6XLbf8ok80+IPOIb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019524; c=relaxed/simple;
-	bh=yppY8/k2SvDK2u4RkVGeALp/cWqVjGVPi/nKXcg2oFc=;
+	s=arc-20240116; t=1734019527; c=relaxed/simple;
+	bh=H6og7SWPpjpaZae0lxfR1ywJwL7R2SvmnU0jWgz54qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2o4QFm/IXDd8RghGJc+f0abHJyt9UtzEayFDB7wOiYlA4cyiILonJztiQrblOUNsOktyb5LV0lGl3xc/ThKzYZurVCs5IMJmpDueV/7QUQ/e6OIDT+B/VdnzDDFXtWNjKf23OmWLNyrq8ZvoFv/QsyyhtpaL5h6F9P/Is8WXjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9Xk/xWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SXOUisTz+z+3d77QYkuI/Lumu5YwyDro+N1+4WJ0LL/GLh339kZG3pnc8qPEYpLwBaXYkxnD6JM/7mKgDY3AQ6t31PwmC7QSHSugp3q3Oko4OfnN7UpafRrAfivNIcEPgGwJ3wDrTWDs4bvatf89xB6cGkgTjHG4pueXIMJZ79E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vO4zrUYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9Xk/xWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A17AC4CECE;
-	Thu, 12 Dec 2024 16:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vO4zrUYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1135FC4CECE;
+	Thu, 12 Dec 2024 16:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019523;
-	bh=yppY8/k2SvDK2u4RkVGeALp/cWqVjGVPi/nKXcg2oFc=;
+	s=korg; t=1734019527;
+	bh=H6og7SWPpjpaZae0lxfR1ywJwL7R2SvmnU0jWgz54qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9Xk/xWcnrFbqqvO0I0Xs3JKblz4CI0YWZzvab0+TPz+A9sZ8TS5O2dqB4Ge5ZxX3
-	 VMnmOV+6GAcp3Dp7zNXVZWyZ5oLNgTb9HYIR8NzU8sZbFudRqqpYWmug+TT1XEwnvu
-	 QMTxDrJdz3Y1mCP+4DPxKUEdMQUoSleaAqZOey6Y=
+	b=vO4zrUYkQZ4jfU/zpU467kmZQoAbdCoQ4yvtRr/p8NNJtRCjYvz3O7C+FdedWj7SO
+	 r5I/yn457c4wDS1NzzfzNO9UXuAVxKSd5WLD6YT61EVCfLT94EWg3JWBzQzM3D2Ee5
+	 YMSebAsiBmZtjdwDOaW0p76AzhsS24Bop1vF3GC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/772] wireguard: selftests: load nf_conntrack if not present
-Date: Thu, 12 Dec 2024 15:52:24 +0100
-Message-ID: <20241212144358.160147743@linuxfoundation.org>
+Subject: [PATCH 6.1 190/772] selftests: net: really check for bg process completion
+Date: Thu, 12 Dec 2024 15:52:15 +0100
+Message-ID: <20241212144357.795704552@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,38 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 0290abc9860917f1ee8b58309c2bbd740a39ee8e ]
+[ Upstream commit 52ed077aa6336dbef83a2d6d21c52d1706fb7f16 ]
 
-Some distros may not load nf_conntrack by default, which will cause
-subsequent nf_conntrack sets to fail. Load this module if it is not
-already loaded.
+A recent refactor transformed the check for process completion
+in a true statement, due to a typo.
 
-Fixes: e7096c131e51 ("net: WireGuard secure network tunnel")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-[ Jason: add [[ -e ... ]] check so this works in the qemu harness. ]
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://patch.msgid.link/20241117212030.629159-4-Jason@zx2c4.com
+As a result, the relevant test-case is unable to catch the
+regression it was supposed to detect.
+
+Restore the correct condition.
+
+Fixes: 691bb4e49c98 ("selftests: net: avoid just another constant wait")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/0e6f213811f8e93a235307e683af8225cc6277ae.1730828007.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/wireguard/netns.sh | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/net/pmtu.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/wireguard/netns.sh b/tools/testing/selftests/wireguard/netns.sh
-index 405ff262ca93d..55500f901fbc3 100755
---- a/tools/testing/selftests/wireguard/netns.sh
-+++ b/tools/testing/selftests/wireguard/netns.sh
-@@ -332,6 +332,7 @@ waitiface $netns1 vethc
- waitiface $netns2 veths
+diff --git a/tools/testing/selftests/net/pmtu.sh b/tools/testing/selftests/net/pmtu.sh
+index 00ab4c6e40446..dbfa56173d291 100755
+--- a/tools/testing/selftests/net/pmtu.sh
++++ b/tools/testing/selftests/net/pmtu.sh
+@@ -1932,7 +1932,7 @@ check_running() {
+ 	pid=${1}
+ 	cmd=${2}
  
- n0 bash -c 'printf 1 > /proc/sys/net/ipv4/ip_forward'
-+[[ -e /proc/sys/net/netfilter/nf_conntrack_udp_timeout ]] || modprobe nf_conntrack
- n0 bash -c 'printf 2 > /proc/sys/net/netfilter/nf_conntrack_udp_timeout'
- n0 bash -c 'printf 2 > /proc/sys/net/netfilter/nf_conntrack_udp_timeout_stream'
- n0 iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 10.0.0.0/24 -j SNAT --to 10.0.0.1
+-	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "{cmd}" ]
++	[ "$(cat /proc/${pid}/cmdline 2>/dev/null | tr -d '\0')" = "${cmd}" ]
+ }
+ 
+ test_cleanup_vxlanX_exception() {
 -- 
 2.43.0
 
