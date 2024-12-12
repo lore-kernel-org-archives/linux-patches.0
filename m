@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3005216E3A;
-	Thu, 12 Dec 2024 15:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC79211476;
+	Thu, 12 Dec 2024 15:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015912; cv=none; b=PEKVAE+zM7w8ed+Dws7KiYvSkT0AVy8esiR/uNCsS7aXJ1Clr4fDFNkk5J1jz23yzt5smMF+XIj1xDppO7HtmDMqkKonwURUb1qyWO/SsGY6xyO4++LeMW3TJ5TT0eqzVibcpjqo4k61J02EZjdpKOuhrA+Nb7YJtiofBSWQKNY=
+	t=1734015916; cv=none; b=lf0nlzq+3D2lc3KDShoZtmqA/DLx6OQRm1q9imOvuDpZV1qNnGMw4HkSVdp1QMgWDxSyNqahac6PaJYKY4fM4QWM8jciER2SvzOt5off//T0g56ZINzEzXQFTYnxuR1cpJ80frBgfA7dLbVjF5plVZqSYfxHsNi6wBpPIOTJ0iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015912; c=relaxed/simple;
-	bh=BuiSzzw+5dgWRgciKlw4dM7DJZFKcTp4gwJyV4A665Y=;
+	s=arc-20240116; t=1734015916; c=relaxed/simple;
+	bh=VWyKMh4h7MTaTTsaAwDXPlrTKb3tGfcNuTpfoL3nUFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejyn0sp7k//Ov75FQ0Yo6t7v2jK803kP4k0Ne2Mpr6Xh/0WL03kzw8Ua9tAXq1zcTbWHujD/oitxQcJxIroG6HAG1vvT+v0mWfmHQdoc+RCd+rxCkuvvFK8joHTF7QoIdGeKSs//wlBlLn2VNjlZ3T2E4bh3v3cZ1HM2vQd5w6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xYMTdEgV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dO91vfhSyipVULIHilyuMJV8S7auI0PJmIqfaxkfyWE13VmkLaTN03ziWZLSQgIQ0jia6RgMReTbiTp0ITs0iOfqgO1WH7vbRosjmJc+0RR+ekwpfHEfvMsIQXHWEZxIj5LHXMzp56fhji1/lKdEWqr8UQmOtjHyZ2CX8BQQsaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9D9t/QP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xYMTdEgV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32860C4CED0;
-	Thu, 12 Dec 2024 15:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9D9t/QP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F33BC4CED4;
+	Thu, 12 Dec 2024 15:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015912;
-	bh=BuiSzzw+5dgWRgciKlw4dM7DJZFKcTp4gwJyV4A665Y=;
+	s=korg; t=1734015916;
+	bh=VWyKMh4h7MTaTTsaAwDXPlrTKb3tGfcNuTpfoL3nUFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xYMTdEgVnmOVIOZuxwRHuMVue0DCH7p7PUpbspU0aLYZCmRjMza44/UXtfQsjyhV4
-	 AE+GtNT9mtF5zeBDYs9T3nDMRGvVny6FUSgl7FZov1/qmJ1Va0yRODfRp4uAIVFuZf
-	 9NwRXIciDSuOeN9bwOY6pNUdskdtMexxSMIb4mUw=
+	b=i9D9t/QPXC3MioA3Hc+eJr6HuSUhbuWIqEIo9v8ECWf2o9MAeRV0M+DnYmFW0Uh97
+	 jbe8XCyCPYUFsA8IKLnHkhqj6iLERH1pffvU+nFv0uuHBfLkFa240YZr8d8kyGB/nr
+	 rBCI1UXajXME3rdAeg7KGwl9pHRTeO54/H9U5A3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
+	Yihan Zhu <Yihan.Zhu@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/466] i3c: master: Fix dynamic address leak when assigned-address is present
-Date: Thu, 12 Dec 2024 15:54:07 +0100
-Message-ID: <20241212144309.897122696@linuxfoundation.org>
+Subject: [PATCH 6.12 079/466] drm/amd/display: calculate final viewport before TAP optimization
+Date: Thu, 12 Dec 2024 15:54:08 +0100
+Message-ID: <20241212144309.934986087@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,101 +54,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Yihan Zhu <Yihan.Zhu@amd.com>
 
-[ Upstream commit 851bd21cdb55e727ab29280bc9f6b678164f802a ]
+[ Upstream commit e982310c9ce074e428abc260dc3cba1b1ea62b78 ]
 
-If the DTS contains 'assigned-address', a dynamic address leak occurs
-during hotjoin events.
+Viewport size excess surface size observed sometime with some timings or
+resizing the MPO video window to cause MPO unsupported. Calculate final
+viewport size first with a 100x100 dummy viewport to get the max TAP
+support and then re-run final viewport calculation if TAP value changed.
+Removed obsolete preliminary viewport calculation for TAP validation.
 
-Assume a device have assigned-address 0xb.
-  - Device issue Hotjoin
-  - Call i3c_master_do_daa()
-  - Call driver xxx_do_daa()
-  - Call i3c_master_get_free_addr() to get dynamic address 0x9
-  - i3c_master_add_i3c_dev_locked(0x9)
-  -     expected_dyn_addr  = newdev->boardinfo->init_dyn_addr (0xb);
-  -     i3c_master_reattach_i3c_dev(newdev(0xb), old_dyn_addr(0x9));
-  -         if (dev->info.dyn_addr != old_dyn_addr &&
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 0xb != 0x9 -> TRUE
-                (!dev->boardinfo ||
-                 ^^^^^^^^^^^^^^^ ->  FALSE
-                 dev->info.dyn_addr != dev->boardinfo->init_dyn_addr)) {
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                 0xb != 0xb      ->  FALSE
-                 ...
-                 i3c_bus_set_addr_slot_status(&master->bus, old_dyn_addr,
-                                                     I3C_ADDR_SLOT_FREE);
-		 ^^^
-                 This will be skipped. So old_dyn_addr never free
-            }
-
-  - i3c_master_get_free_addr() will return increased sequence number.
-
-Remove dev->info.dyn_addr != dev->boardinfo->init_dyn_addr condition check.
-dev->info.dyn_addr should be checked before calling this function because
-i3c_master_setnewda_locked() has already been called and the target device
-has already accepted dyn_addr. It is too late to check if dyn_addr is free
-in i3c_master_reattach_i3c_dev().
-
-Add check to ensure expected_dyn_addr is free before
-i3c_master_setnewda_locked().
-
-Fixes: cc3a392d69b6 ("i3c: master: fix for SETDASA and DAA process")
-Cc: stable@kernel.org
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241021-i3c_dts_assign-v8-3-4098b8bde01e@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reviewed-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+Signed-off-by: Yihan Zhu <Yihan.Zhu@amd.com>
+Signed-off-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: c33a93201ca0 ("drm/amd/display: Ignore scalar validation failure if pipe is phantom")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ .../gpu/drm/amd/display/dc/core/dc_resource.c | 49 +++++++++----------
+ 1 file changed, 23 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index c022b93cd592e..770908cff2434 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -1548,16 +1548,9 @@ static int i3c_master_reattach_i3c_dev(struct i3c_dev_desc *dev,
- 				       u8 old_dyn_addr)
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+index c7599c40d4be3..df513dbd32bdf 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -765,25 +765,6 @@ static inline void get_vp_scan_direction(
+ 		*flip_horz_scan_dir = !*flip_horz_scan_dir;
+ }
+ 
+-/*
+- * This is a preliminary vp size calculation to allow us to check taps support.
+- * The result is completely overridden afterwards.
+- */
+-static void calculate_viewport_size(struct pipe_ctx *pipe_ctx)
+-{
+-	struct scaler_data *data = &pipe_ctx->plane_res.scl_data;
+-
+-	data->viewport.width = dc_fixpt_ceil(dc_fixpt_mul_int(data->ratios.horz, data->recout.width));
+-	data->viewport.height = dc_fixpt_ceil(dc_fixpt_mul_int(data->ratios.vert, data->recout.height));
+-	data->viewport_c.width = dc_fixpt_ceil(dc_fixpt_mul_int(data->ratios.horz_c, data->recout.width));
+-	data->viewport_c.height = dc_fixpt_ceil(dc_fixpt_mul_int(data->ratios.vert_c, data->recout.height));
+-	if (pipe_ctx->plane_state->rotation == ROTATION_ANGLE_90 ||
+-			pipe_ctx->plane_state->rotation == ROTATION_ANGLE_270) {
+-		swap(data->viewport.width, data->viewport.height);
+-		swap(data->viewport_c.width, data->viewport_c.height);
+-	}
+-}
+-
+ static struct rect intersect_rec(const struct rect *r0, const struct rect *r1)
  {
- 	struct i3c_master_controller *master = i3c_dev_get_master(dev);
--	enum i3c_addr_slot_status status;
- 	int ret;
+ 	struct rect rec;
+@@ -1468,6 +1449,7 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
+ 	const struct dc_plane_state *plane_state = pipe_ctx->plane_state;
+ 	struct dc_crtc_timing *timing = &pipe_ctx->stream->timing;
+ 	const struct rect odm_slice_src = resource_get_odm_slice_src_rect(pipe_ctx);
++	struct scaling_taps temp = {0};
+ 	bool res = false;
  
--	if (dev->info.dyn_addr != old_dyn_addr &&
--	    (!dev->boardinfo ||
--	     dev->info.dyn_addr != dev->boardinfo->init_dyn_addr)) {
--		status = i3c_bus_get_addr_slot_status(&master->bus,
--						      dev->info.dyn_addr);
--		if (status != I3C_ADDR_SLOT_FREE)
--			return -EBUSY;
-+	if (dev->info.dyn_addr != old_dyn_addr) {
- 		i3c_bus_set_addr_slot_status(&master->bus,
- 					     dev->info.dyn_addr,
- 					     I3C_ADDR_SLOT_I3C_DEV);
-@@ -1960,9 +1953,10 @@ static int i3c_master_bus_init(struct i3c_master_controller *master)
- 			goto err_rstdaa;
- 		}
+ 	DC_LOGGER_INIT(pipe_ctx->stream->ctx->logger);
+@@ -1525,8 +1507,6 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
+ 	calculate_recout(pipe_ctx);
+ 	/* depends on pixel format */
+ 	calculate_scaling_ratios(pipe_ctx);
+-	/* depends on scaling ratios and recout, does not calculate offset yet */
+-	calculate_viewport_size(pipe_ctx);
  
-+		/* Do not mark as occupied until real device exist in bus */
- 		i3c_bus_set_addr_slot_status_mask(&master->bus,
- 						  i3cboardinfo->init_dyn_addr,
--						  I3C_ADDR_SLOT_I3C_DEV | I3C_ADDR_SLOT_EXT_DESIRED,
-+						  I3C_ADDR_SLOT_EXT_DESIRED,
- 						  I3C_ADDR_SLOT_EXT_STATUS_MASK);
+ 	/*
+ 	 * LB calculations depend on vp size, h/v_active and scaling ratios
+@@ -1547,6 +1527,24 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
  
- 		/*
-@@ -2131,7 +2125,8 @@ int i3c_master_add_i3c_dev_locked(struct i3c_master_controller *master,
- 	else
- 		expected_dyn_addr = newdev->info.dyn_addr;
+ 	pipe_ctx->plane_res.scl_data.lb_params.alpha_en = plane_state->per_pixel_alpha;
  
--	if (newdev->info.dyn_addr != expected_dyn_addr) {
-+	if (newdev->info.dyn_addr != expected_dyn_addr &&
-+	    i3c_bus_get_addr_slot_status(&master->bus, expected_dyn_addr) == I3C_ADDR_SLOT_FREE) {
- 		/*
- 		 * Try to apply the expected dynamic address. If it fails, keep
- 		 * the address assigned by the master.
++	// get TAP value with 100x100 dummy data for max scaling qualify, override
++	// if a new scaling quality required
++	pipe_ctx->plane_res.scl_data.viewport.width = 100;
++	pipe_ctx->plane_res.scl_data.viewport.height = 100;
++	pipe_ctx->plane_res.scl_data.viewport_c.width = 100;
++	pipe_ctx->plane_res.scl_data.viewport_c.height = 100;
++	if (pipe_ctx->plane_res.xfm != NULL)
++		res = pipe_ctx->plane_res.xfm->funcs->transform_get_optimal_number_of_taps(
++				pipe_ctx->plane_res.xfm, &pipe_ctx->plane_res.scl_data, &plane_state->scaling_quality);
++
++	if (pipe_ctx->plane_res.dpp != NULL)
++		res = pipe_ctx->plane_res.dpp->funcs->dpp_get_optimal_number_of_taps(
++				pipe_ctx->plane_res.dpp, &pipe_ctx->plane_res.scl_data, &plane_state->scaling_quality);
++
++	temp = pipe_ctx->plane_res.scl_data.taps;
++
++	calculate_inits_and_viewports(pipe_ctx);
++
+ 	if (pipe_ctx->plane_res.xfm != NULL)
+ 		res = pipe_ctx->plane_res.xfm->funcs->transform_get_optimal_number_of_taps(
+ 				pipe_ctx->plane_res.xfm, &pipe_ctx->plane_res.scl_data, &plane_state->scaling_quality);
+@@ -1573,11 +1571,10 @@ bool resource_build_scaling_params(struct pipe_ctx *pipe_ctx)
+ 					&plane_state->scaling_quality);
+ 	}
+ 
+-	/*
+-	 * Depends on recout, scaling ratios, h_active and taps
+-	 * May need to re-check lb size after this in some obscure scenario
+-	 */
+-	if (res)
++	if (res && (pipe_ctx->plane_res.scl_data.taps.v_taps != temp.v_taps ||
++		pipe_ctx->plane_res.scl_data.taps.h_taps != temp.h_taps ||
++		pipe_ctx->plane_res.scl_data.taps.v_taps_c != temp.v_taps_c ||
++		pipe_ctx->plane_res.scl_data.taps.h_taps_c != temp.h_taps_c))
+ 		calculate_inits_and_viewports(pipe_ctx);
+ 
+ 	/*
 -- 
 2.43.0
 
