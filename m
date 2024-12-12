@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB44422A7E4;
-	Thu, 12 Dec 2024 16:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9CB23A580;
+	Thu, 12 Dec 2024 16:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022075; cv=none; b=ds5R/i5k5gfxWlJh4mtHLOHApB2n8teSzusAoyb+0caYhHeMkcgSer8Ivws1xGYFHXYSFD1b6W1ozmIqzMy4E3J9LxPZmhFCPOEHaNIt3zjxtZlPEdIGRIqOiX4NN2TTMiDBGXJe/QQkeUqu37GdMbxy6N7OjZIFm5pJ7hfqlGY=
+	t=1734022079; cv=none; b=GCbIEDrnPDupNEM5Is/b9y8mP+PulGvihyMqx1QJA36U2ER5fuGi+lpXM+21ZqEYLyL3o+PWeQU9uCeLCEhYLAcXXMXRTgMpUFxMxjGT6h/fVRpBMqy6EX9JzRiLqQD9a1p4cirdwFjPu31gdoQJmY9Q8u6gDJp33RBlnGhcP3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022075; c=relaxed/simple;
-	bh=viBTxaL9O+/m9oKG143gxEJ1lkmYZkRvNZ1Ae3GJOgo=;
+	s=arc-20240116; t=1734022079; c=relaxed/simple;
+	bh=9VeHxGTA1FucJ6GeQ79HRarRJenh3hXsh64+a9NCek8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFbqBeSBkugct6H9nE8hzBoLexjoztY2ao2FP7LsZ8EfolayKpY7Fk0xCVeZiBhpZok7L8zIbbX6kGXXNMBExePRejVBd5qUqz37v+TVghNVDI7aj2g2qq8jTne6tjVDGqMVId/NjHVayGwl95lOA08pEy4u0DIkaqeIkK7WqBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czm52eZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=piKsouScpC5fJndkNDdB+uk3pllAifqA7hNrC1Hk7MOS3qhPOhBshT6a8RyozjCRmoTQFodbkPMaUos03DIVv5oTr70wB0mIjXfdVO0zSWIriZ2Nwtaoyo/iqEMazFv00kNH5Kq6Ii3VyGo/3ByYxsG9w5cCAHB36R5zWvdrdpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IRtnY3YO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czm52eZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A510C4CECE;
-	Thu, 12 Dec 2024 16:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IRtnY3YO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C7AC4CECE;
+	Thu, 12 Dec 2024 16:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022075;
-	bh=viBTxaL9O+/m9oKG143gxEJ1lkmYZkRvNZ1Ae3GJOgo=;
+	s=korg; t=1734022079;
+	bh=9VeHxGTA1FucJ6GeQ79HRarRJenh3hXsh64+a9NCek8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czm52eZzBZTbVwUx0PRCyFUbSOlEXApw8qRh74pxJvxpQS2Mpoi55OUYIy3w1cse4
-	 RySAxDxW7WSwEBUGgsp4AhSUANS8nlj+1LvViET3WGXNToQdNlE+g8i814/szNtiC6
-	 /4qtMvaKDmNWzcBzBw8lWebcTyItENdIhhIhscMc=
+	b=IRtnY3YOOAUXPYiI2NQlhOV2dJE2WOhlx7U4QpGp7GhiYVMt/9aCMn60CLn08b7Xw
+	 keD0/s7LcsO2UoKNm0F47f+XmIvxyKZBg4NP+k7cKOdYgDn9H/hU7wWNccl8SriNwU
+	 bTpCo3zjS9umrsfvWuPN32WAO3aQoPaH/UC920t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/565] venus: venc: add handling for VIDIOC_ENCODER_CMD
-Date: Thu, 12 Dec 2024 15:55:35 +0100
-Message-ID: <20241212144317.014033018@linuxfoundation.org>
+Subject: [PATCH 5.15 141/565] media: venus: provide ctx queue lock for ioctl synchronization
+Date: Thu, 12 Dec 2024 15:55:36 +0100
+Message-ID: <20241212144317.055195867@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,176 +54,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 7493db46e4c4aa5126dd32f8eae12a4cdcf7a401 ]
+[ Upstream commit 34318b808ef20cdddd4e187ea2df0455936cf61b ]
 
-Add handling for below commands in encoder:
-1. V4L2_ENC_CMD_STOP
-2. V4L2_ENC_CMD_START
+Video device has to provide a lock so that __video_do_ioctl()
+can serialize IOCTL calls. Introduce a dedicated venus_inst
+mutex for the purpose of vb2 operations synchronization.
 
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Stable-dep-of: 6c9934c5a00a ("media: venus: fix enc/dec destruction order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/core.h |  9 ++++
- drivers/media/platform/qcom/venus/venc.c | 68 ++++++++++++++++++++++++
- 2 files changed, 77 insertions(+)
+ drivers/media/platform/qcom/venus/core.h | 2 ++
+ drivers/media/platform/qcom/venus/vdec.c | 4 ++++
+ drivers/media/platform/qcom/venus/venc.c | 4 ++++
+ 3 files changed, 10 insertions(+)
 
 diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 6869f0d06b774..cf9d2dd265f7d 100644
+index cf9d2dd265f7d..b83e4cb214d39 100644
 --- a/drivers/media/platform/qcom/venus/core.h
 +++ b/drivers/media/platform/qcom/venus/core.h
-@@ -310,6 +310,14 @@ enum venus_dec_state {
- 	VENUS_DEC_STATE_DRC		= 7,
- };
- 
-+enum venus_enc_state {
-+	VENUS_ENC_STATE_DEINIT		= 0,
-+	VENUS_ENC_STATE_INIT		= 1,
-+	VENUS_ENC_STATE_ENCODING	= 2,
-+	VENUS_ENC_STATE_STOPPED		= 3,
-+	VENUS_ENC_STATE_DRAIN		= 4,
-+};
-+
- struct venus_ts_metadata {
- 	bool used;
- 	u64 ts_ns;
-@@ -415,6 +423,7 @@ struct venus_inst {
- 	u8 quantization;
- 	u8 xfer_func;
- 	enum venus_dec_state codec_state;
-+	enum venus_enc_state enc_state;
- 	wait_queue_head_t reconf_wait;
- 	unsigned int subscriptions;
- 	int buf_count;
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 52a7366d7a5fc..ae47535168d12 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -522,6 +522,51 @@ static int venc_subscribe_event(struct v4l2_fh *fh,
- 	}
- }
- 
-+static int
-+venc_encoder_cmd(struct file *file, void *fh, struct v4l2_encoder_cmd *cmd)
-+{
-+	struct venus_inst *inst = to_inst(file);
-+	struct hfi_frame_data fdata = {0};
-+	int ret = 0;
-+
-+	ret = v4l2_m2m_ioctl_try_encoder_cmd(file, fh, cmd);
-+	if (ret)
-+		return ret;
-+
-+	mutex_lock(&inst->lock);
-+
-+	if (cmd->cmd == V4L2_ENC_CMD_STOP &&
-+	    inst->enc_state == VENUS_ENC_STATE_ENCODING) {
-+		/*
-+		 * Implement V4L2_ENC_CMD_STOP by enqueue an empty buffer on
-+		 * encoder input to signal EOS.
-+		 */
-+		if (!(inst->streamon_out && inst->streamon_cap))
-+			goto unlock;
-+
-+		fdata.buffer_type = HFI_BUFFER_INPUT;
-+		fdata.flags |= HFI_BUFFERFLAG_EOS;
-+		fdata.device_addr = 0xdeadb000;
-+
-+		ret = hfi_session_process_buf(inst, &fdata);
-+
-+		inst->enc_state = VENUS_ENC_STATE_DRAIN;
-+	} else if (cmd->cmd == V4L2_ENC_CMD_START) {
-+		if (inst->enc_state == VENUS_ENC_STATE_DRAIN) {
-+			ret = -EBUSY;
-+			goto unlock;
-+		}
-+		if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-+			vb2_clear_last_buffer_dequeued(&inst->fh.m2m_ctx->cap_q_ctx.q);
-+			inst->enc_state = VENUS_ENC_STATE_ENCODING;
-+		}
-+	}
-+
-+unlock:
-+	mutex_unlock(&inst->lock);
-+	return ret;
-+}
-+
- static const struct v4l2_ioctl_ops venc_ioctl_ops = {
- 	.vidioc_querycap = venc_querycap,
- 	.vidioc_enum_fmt_vid_cap = venc_enum_fmt,
-@@ -550,6 +595,7 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
- 	.vidioc_subscribe_event = venc_subscribe_event,
- 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
- 	.vidioc_try_encoder_cmd = v4l2_m2m_ioctl_try_encoder_cmd,
-+	.vidioc_encoder_cmd = venc_encoder_cmd,
- };
- 
- static int venc_pm_get(struct venus_inst *inst)
-@@ -1182,6 +1228,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+@@ -381,6 +381,7 @@ enum venus_inst_modes {
+  * @sequence_out:	a sequence counter for output queue
+  * @m2m_dev:	a reference to m2m device structure
+  * @m2m_ctx:	a reference to m2m context structure
++ * @ctx_q_lock:	a lock to serialize video device ioctl calls
+  * @state:	current state of the instance
+  * @done:	a completion for sync HFI operation
+  * @error:	an error returned during last HFI sync operation
+@@ -448,6 +449,7 @@ struct venus_inst {
+ 	u32 sequence_out;
+ 	struct v4l2_m2m_dev *m2m_dev;
+ 	struct v4l2_m2m_ctx *m2m_ctx;
++	struct mutex ctx_q_lock;
+ 	unsigned int state;
+ 	struct completion done;
+ 	unsigned int error;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index fef414f624069..3cb8a284fc68f 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1537,6 +1537,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
+ 	src_vq->allow_zero_bytesused = 1;
+ 	src_vq->min_buffers_needed = 0;
+ 	src_vq->dev = inst->core->dev;
++	src_vq->lock = &inst->ctx_q_lock;
+ 	ret = vb2_queue_init(src_vq);
  	if (ret)
- 		goto error;
- 
-+	inst->enc_state = VENUS_ENC_STATE_ENCODING;
-+
- 	mutex_unlock(&inst->lock);
- 
- 	return 0;
-@@ -1201,10 +1249,21 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
- static void venc_vb2_buf_queue(struct vb2_buffer *vb)
- {
- 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-+	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 
- 	venc_pm_get_put(inst);
- 
- 	mutex_lock(&inst->lock);
-+
-+	if (inst->enc_state == VENUS_ENC_STATE_STOPPED) {
-+		vbuf->sequence = inst->sequence_cap++;
-+		vbuf->field = V4L2_FIELD_NONE;
-+		vb2_set_plane_payload(vb, 0, 0);
-+		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
-+		mutex_unlock(&inst->lock);
-+		return;
-+	}
-+
- 	venus_helper_vb2_buf_queue(vb);
- 	mutex_unlock(&inst->lock);
+ 		return ret;
+@@ -1551,6 +1552,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
+ 	dst_vq->allow_zero_bytesused = 1;
+ 	dst_vq->min_buffers_needed = 0;
+ 	dst_vq->dev = inst->core->dev;
++	dst_vq->lock = &inst->ctx_q_lock;
+ 	return vb2_queue_init(dst_vq);
  }
-@@ -1246,6 +1305,10 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 		vb->planes[0].data_offset = data_offset;
- 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
- 		vbuf->sequence = inst->sequence_cap++;
-+		if ((vbuf->flags & V4L2_BUF_FLAG_LAST) &&
-+		    inst->enc_state == VENUS_ENC_STATE_DRAIN) {
-+			inst->enc_state = VENUS_ENC_STATE_STOPPED;
-+		}
- 	} else {
- 		vbuf->sequence = inst->sequence_out++;
- 	}
-@@ -1346,6 +1409,9 @@ static int venc_open(struct file *file)
- 	inst->clk_data.core_id = VIDC_CORE_ID_DEFAULT;
- 	inst->core_acquired = false;
  
-+	if (inst->enc_state == VENUS_ENC_STATE_DEINIT)
-+		inst->enc_state = VENUS_ENC_STATE_INIT;
-+
- 	venus_helper_init_instance(inst);
+@@ -1569,6 +1571,7 @@ static int vdec_open(struct file *file)
+ 	INIT_LIST_HEAD(&inst->internalbufs);
+ 	INIT_LIST_HEAD(&inst->list);
+ 	mutex_init(&inst->lock);
++	mutex_init(&inst->ctx_q_lock);
  
- 	ret = venc_ctrl_init(inst);
-@@ -1408,6 +1474,8 @@ static int venc_close(struct file *file)
+ 	inst->core = core;
+ 	inst->session_type = VIDC_SESSION_TYPE_DEC;
+@@ -1643,6 +1646,7 @@ static int vdec_close(struct file *file)
+ 	ida_destroy(&inst->dpb_ids);
+ 	hfi_session_destroy(inst);
+ 	mutex_destroy(&inst->lock);
++	mutex_destroy(&inst->ctx_q_lock);
  	v4l2_fh_del(&inst->fh);
  	v4l2_fh_exit(&inst->fh);
  
-+	inst->enc_state = VENUS_ENC_STATE_DEINIT;
-+
- 	venc_pm_put(inst, false);
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index ae47535168d12..4a439b4908ea7 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1355,6 +1355,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
+ 	src_vq->allow_zero_bytesused = 1;
+ 	src_vq->min_buffers_needed = 1;
+ 	src_vq->dev = inst->core->dev;
++	src_vq->lock = &inst->ctx_q_lock;
+ 	if (inst->core->res->hfi_version == HFI_VERSION_1XX)
+ 		src_vq->bidirectional = 1;
+ 	ret = vb2_queue_init(src_vq);
+@@ -1371,6 +1372,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
+ 	dst_vq->allow_zero_bytesused = 1;
+ 	dst_vq->min_buffers_needed = 1;
+ 	dst_vq->dev = inst->core->dev;
++	dst_vq->lock = &inst->ctx_q_lock;
+ 	return vb2_queue_init(dst_vq);
+ }
  
- 	kfree(inst);
+@@ -1403,6 +1405,7 @@ static int venc_open(struct file *file)
+ 	INIT_LIST_HEAD(&inst->internalbufs);
+ 	INIT_LIST_HEAD(&inst->list);
+ 	mutex_init(&inst->lock);
++	mutex_init(&inst->ctx_q_lock);
+ 
+ 	inst->core = core;
+ 	inst->session_type = VIDC_SESSION_TYPE_ENC;
+@@ -1471,6 +1474,7 @@ static int venc_close(struct file *file)
+ 	venc_ctrl_deinit(inst);
+ 	hfi_session_destroy(inst);
+ 	mutex_destroy(&inst->lock);
++	mutex_destroy(&inst->ctx_q_lock);
+ 	v4l2_fh_del(&inst->fh);
+ 	v4l2_fh_exit(&inst->fh);
+ 
 -- 
 2.43.0
 
