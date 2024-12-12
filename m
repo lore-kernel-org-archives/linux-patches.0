@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C8823ED45;
-	Thu, 12 Dec 2024 16:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F375521CFF0;
+	Thu, 12 Dec 2024 16:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019972; cv=none; b=tUBybkhUf/qUAS8rjQwlGsUyzuD9nin8hr5zEQe/re/sECW4bnBj5LLPhwetQ0pRROwJX7dHw8msHS7lWMnhcvpbB+BcfsFL0790mk8A8cFM0h6aTi8AY0UYMNdg0agEDbRSIiRxeKSIpRqrx/HijILtOf8tcWhZz5ALUpQokdM=
+	t=1734019976; cv=none; b=hZmK1B3d52IaBLmRuzgpQj8ipPSfEku8X3lq33FCTuFZW1B2UIyh8XF5/EH0+NoRHz2GikRgTHlA3uACx1zsaVDdCplt4EQVnWPcRyE42Jtea9TMuSW6Qy+xwvnVjlOcwVL3I1WBdGn82z7yT51xAvvqh2woECLPePv2k3L++60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019972; c=relaxed/simple;
-	bh=CgHLtzEaS5c1ah46wXom79o8CEAuQlcQKpccM4h1x1I=;
+	s=arc-20240116; t=1734019976; c=relaxed/simple;
+	bh=0twdHZYYEV400CHqB2ib/oOYE9io30l83OHySeivKoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNL/6OmC26B2y6WB8tirFw0W/g8O4QwGOK12qjUwNnljt3Iy/kuW/OqGtIQK4nVU2GxmuWY8gA8GV16adcMzN+EmAFJtmVv6zvYCAX8/1kl9awNcjreQ+UXTpw/0cyJ+4i2t1FOmeTuj0SjulgjqJbx1Tt4ZXYsuTIEAncmzwH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVa/a2MM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCnk49D+fJBMTy2sRD2nUxSejKa2/5KL/rdKETAKbtTX6l2jRLrRYnVN2LVMM3/p7F5wxD1X8AaNzVxdWu+qckLadBjQTdefWYXvWdJ2kCbGLcXEAeqVWQNoDId/2AapFyl4ULEH88Vdk4ClWnYA/VD9vyxtsXAibTQLbr5UrAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsY57tR9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVa/a2MM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0F8C4CECE;
-	Thu, 12 Dec 2024 16:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsY57tR9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47643C4CED0;
+	Thu, 12 Dec 2024 16:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019972;
-	bh=CgHLtzEaS5c1ah46wXom79o8CEAuQlcQKpccM4h1x1I=;
+	s=korg; t=1734019975;
+	bh=0twdHZYYEV400CHqB2ib/oOYE9io30l83OHySeivKoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVa/a2MMv+uBadd9vNB0QqWxvjk5oiUMRFT+EVK/ptHncwatMpUccTKd+d4vdpA4L
-	 KgmHEMZxyy4P0WekvughXw5Kdyja3B9W5wU8RIV5tJxGXCUlu3LbIxgj+l7VXwX8yx
-	 ruPidYRDbYCq/aO9RYI+knW7JsxCWMzTL0fcu/9I=
+	b=qsY57tR9FiSAz9rwczbHbwN1NqUC4eQ8synFnkyOaZCB9TlMAsQND/XDaqT+jXhOR
+	 ZAupbkqMps4x4SQIQMf+PisNwnAyibhoERjH3ssEU0oWsYQelHm9xQqD7SVbkNCwF6
+	 lUbzwv+l4DFaFjKKf5UISvPInB+Oz8zdluvtyd2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jammy Huang <jammy_huang@aspeedtech.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Bin Lan <bin.lan.cn@windriver.com>
-Subject: [PATCH 6.1 345/772] media: aspeed: Fix memory overwrite if timing is 1600x900
-Date: Thu, 12 Dec 2024 15:54:50 +0100
-Message-ID: <20241212144404.168783546@linuxfoundation.org>
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Xiangyu Chen <xiangyu.chen@windriver.com>
+Subject: [PATCH 6.1 346/772] wifi: iwlwifi: mvm: avoid NULL pointer dereference
+Date: Thu, 12 Dec 2024 15:54:51 +0100
+Message-ID: <20241212144404.208141457@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,54 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jammy Huang <jammy_huang@aspeedtech.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-commit c281355068bc258fd619c5aefd978595bede7bfe upstream.
+commit 557a6cd847645e667f3b362560bd7e7c09aac284 upstream.
 
-When capturing 1600x900, system could crash when system memory usage is
-tight.
+iwl_mvm_tx_skb_sta() and iwl_mvm_tx_mpdu() verify that the mvmvsta
+pointer is not NULL.
+It retrieves this pointer using iwl_mvm_sta_from_mac80211, which is
+dereferencing the ieee80211_sta pointer.
+If sta is NULL, iwl_mvm_sta_from_mac80211 will dereference a NULL
+pointer.
+Fix this by checking the sta pointer before retrieving the mvmsta
+from it. If sta is not NULL, then mvmsta isn't either.
 
-The way to reproduce this issue:
-1. Use 1600x900 to display on host
-2. Mount ISO through 'Virtual media' on OpenBMC's web
-3. Run script as below on host to do sha continuously
-  #!/bin/bash
-  while [ [1] ];
-  do
-	find /media -type f -printf '"%h/%f"\n' | xargs sha256sum
-  done
-4. Open KVM on OpenBMC's web
-
-The size of macro block captured is 8x8. Therefore, we should make sure
-the height of src-buf is 8 aligned to fix this issue.
-
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://patch.msgid.link/20240825191257.880921ce23b7.I340052d70ab6d3410724ce955eb00da10e08188f@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Xiangyu Chen <xiangyu.chen@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/aspeed/aspeed-video.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c |   12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---- a/drivers/media/platform/aspeed/aspeed-video.c
-+++ b/drivers/media/platform/aspeed/aspeed-video.c
-@@ -1047,7 +1047,7 @@ static void aspeed_video_get_resolution(
- static void aspeed_video_set_resolution(struct aspeed_video *video)
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -1105,6 +1105,9 @@ static int iwl_mvm_tx_mpdu(struct iwl_mv
+ 	bool is_ampdu = false;
+ 	int hdrlen;
+ 
++	if (WARN_ON_ONCE(!sta))
++		return -1;
++
+ 	mvmsta = iwl_mvm_sta_from_mac80211(sta);
+ 	fc = hdr->frame_control;
+ 	hdrlen = ieee80211_hdrlen(fc);
+@@ -1112,9 +1115,6 @@ static int iwl_mvm_tx_mpdu(struct iwl_mv
+ 	if (IWL_MVM_NON_TRANSMITTING_AP && ieee80211_is_probe_resp(fc))
+ 		return -1;
+ 
+-	if (WARN_ON_ONCE(!mvmsta))
+-		return -1;
+-
+ 	if (WARN_ON_ONCE(mvmsta->sta_id == IWL_MVM_INVALID_STA))
+ 		return -1;
+ 
+@@ -1242,16 +1242,18 @@ drop:
+ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
+ 		       struct ieee80211_sta *sta)
  {
- 	struct v4l2_bt_timings *act = &video->active_timings;
--	unsigned int size = act->width * act->height;
-+	unsigned int size = act->width * ALIGN(act->height, 8);
+-	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
++	struct iwl_mvm_sta *mvmsta;
+ 	struct ieee80211_tx_info info;
+ 	struct sk_buff_head mpdus_skbs;
+ 	unsigned int payload_len;
+ 	int ret;
+ 	struct sk_buff *orig_skb = skb;
  
- 	/* Set capture/compression frame sizes */
- 	aspeed_video_calc_compressed_size(video, size);
-@@ -1064,7 +1064,7 @@ static void aspeed_video_set_resolution(
- 		u32 width = ALIGN(act->width, 64);
+-	if (WARN_ON_ONCE(!mvmsta))
++	if (WARN_ON_ONCE(!sta))
+ 		return -1;
  
- 		aspeed_video_write(video, VE_CAP_WINDOW, width << 16 | act->height);
--		size = width * act->height;
-+		size = width * ALIGN(act->height, 8);
- 	} else {
- 		aspeed_video_write(video, VE_CAP_WINDOW,
- 				   act->width << 16 | act->height);
++	mvmsta = iwl_mvm_sta_from_mac80211(sta);
++
+ 	if (WARN_ON_ONCE(mvmsta->sta_id == IWL_MVM_INVALID_STA))
+ 		return -1;
+ 
 
 
