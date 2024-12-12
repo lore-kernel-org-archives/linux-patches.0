@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6575D22540B;
-	Thu, 12 Dec 2024 17:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2AC22540B;
+	Thu, 12 Dec 2024 17:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025605; cv=none; b=Qgxbou8bfvlIa6RLb+mKxKlQgQVMb5Di39gUyqD1hQvh/EQL+xAndnc2vW00VcO1G/sFffXQ4Z1AvwEuUizW2Mg5PE6NEnrI4HrwizbQlKiboFTVor6nL7m3CiUOnaWoTFqwzRYU158JnYiS7KW7bRhPnLJpXyMhxgYlCfdaZRg=
+	t=1734025608; cv=none; b=iMNR+SbS2JM1X0UD2pv7JE0UymEvF84vC6+KR/5G65/vH69VBvyBNw51T1cwMbYsz4S+t7cAE6l12PtxYvxv7JxZF2rTUnFDh4r8A+OcNRdOlqohxiYbq1FHPn/nv30mJA6XeVt69Wmg8Ap33Y5MGwMaXb4JTEa6rgtqipsMcBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025605; c=relaxed/simple;
-	bh=IYEpBgdG+gwUcdnzEVjhQBc9drW1sweRrohpva0XKu8=;
+	s=arc-20240116; t=1734025608; c=relaxed/simple;
+	bh=sVnp4+04EqbjpHBW9PRbeKoPc/tb99MTDSsDlum64jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsU0eS/8r7ZDq6TjT9qTxm8IgqNXdR2CU66OtkBPlEIT09DM8yai2ZhhITwIDuxGD3ULvKZPE7BGH6JDD2uq8XH2/HOzw9cDxMp9toIJiQ84zIEkOa0X4UduL2553RvjraMHL7rZRNzpdLV8D3/7UoOufsBE5V0Az+6FWnJ76M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSJTDUXH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1xRCSFkpF2mPsykNK1flJfxt3XAGqgWC9bAH+wkgjwlh8tP3LAra/orXNwMI5hYKvs9sA2a8kiQ4AItFuGjKdkynSAMu1fb7KAG8Ra1hRr29gK4H680YI29TEl4K6tiTKlpoEg4W+j9hSOCjQaciAN5IYx1+CT0IqMmsDOhDXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SzbfEvy1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSJTDUXH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF819C4CECE;
-	Thu, 12 Dec 2024 17:46:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SzbfEvy1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C72D6C4CECE;
+	Thu, 12 Dec 2024 17:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025605;
-	bh=IYEpBgdG+gwUcdnzEVjhQBc9drW1sweRrohpva0XKu8=;
+	s=korg; t=1734025608;
+	bh=sVnp4+04EqbjpHBW9PRbeKoPc/tb99MTDSsDlum64jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSJTDUXH3kXVxIXu48JDRohKhY8Ltatibh0zWl0Q44PNE7XQBfQj/kpKgXCL/9oyv
-	 /8u9pYC67cDiPPzhBGQJ3XbIBF/rmBdYGCgsKke7awrOT6BB4HjNiB+VXJCnCKvX90
-	 2F4XPBwW+v8rNjfxNxvlgnLCnkZJMR9BtjIYQeUA=
+	b=SzbfEvy1UKAnKharcuGy/xMkOKeaMuiiNfaLy+aCtn77B1mY2URJx7mmUeUxpyfwW
+	 aMAxCcX9oBzZpT47nVLvY/rBfqP3V1eT7DVqc0tBVoAif4yUi2YGsQotkruBaslzBz
+	 uq5QShBi08jp7DVhsYduIDpt0gulv/GQJtsii9hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.4 208/321] media: platform: allegro-dvt: Fix possible memory leak in allocate_buffers_internal()
-Date: Thu, 12 Dec 2024 16:02:06 +0100
-Message-ID: <20241212144238.199354634@linuxfoundation.org>
+	syzbot+d4e8dc385d9258220c31@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 226/321] can: j1939: j1939_session_new(): fix skb reference counting
+Date: Thu, 12 Dec 2024 16:02:24 +0100
+Message-ID: <20241212144238.904098361@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -50,37 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-commit 0f514068fbc5d4d189c817adc7c4e32cffdc2e47 upstream.
+[ Upstream commit a8c695005bfe6569acd73d777ca298ddddd66105 ]
 
-The buffer in the loop should be released under the exception path,
-otherwise there may be a memory leak here.
+Since j1939_session_skb_queue() does an extra skb_get() for each new
+skb, do the same for the initial one in j1939_session_new() to avoid
+refcount underflow.
 
-To mitigate this, free the buffer when allegro_alloc_buffer fails.
-
-Fixes: f20387dfd065 ("media: allegro: add Allegro DVT video IP core driver")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+d4e8dc385d9258220c31@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d4e8dc385d9258220c31
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20241105094823.2403806-1-dmantipov@yandex.ru
+[mkl: clean up commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/allegro-dvt/allegro-core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/can/j1939/transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/media/allegro-dvt/allegro-core.c
-+++ b/drivers/staging/media/allegro-dvt/allegro-core.c
-@@ -1250,8 +1250,10 @@ static int allocate_buffers_internal(str
- 		INIT_LIST_HEAD(&buffer->head);
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 1d926a0372e61..7cef19287a3ff 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1489,7 +1489,7 @@ static struct j1939_session *j1939_session_new(struct j1939_priv *priv,
+ 	session->state = J1939_SESSION_NEW;
  
- 		err = allegro_alloc_buffer(dev, buffer, size);
--		if (err)
-+		if (err) {
-+			kfree(buffer);
- 			goto err;
-+		}
- 		list_add(&buffer->head, list);
- 	}
+ 	skb_queue_head_init(&session->skb_queue);
+-	skb_queue_tail(&session->skb_queue, skb);
++	skb_queue_tail(&session->skb_queue, skb_get(skb));
  
+ 	skcb = j1939_skb_to_cb(skb);
+ 	memcpy(&session->skcb, skcb, sizeof(session->skcb));
+-- 
+2.43.0
+
 
 
