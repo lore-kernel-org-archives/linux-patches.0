@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3981487CD;
-	Thu, 12 Dec 2024 15:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409F51487CD;
+	Thu, 12 Dec 2024 15:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017315; cv=none; b=qVF90UclCfEm3T91UirwTO4U6rGHcKpRt5dgNa3aGiNiQ7d88bg1QVHOXqLiikQc+FO4BSTcjSWt/cSoTUTd67NnuDalq46BGvXjhYEGTkJC8UlhL6Y+EY9lJZLMAsUEI4zVT7fYITTySTF3BeNF0auGgoTYuh0LOcM+dVSmFVk=
+	t=1734017318; cv=none; b=jz+RDdVynkd+ljuTzitXHDzbZegeUlh6M6u9xvn5vhdi2L5IlBdWlVPCsP3MmNEUqKAcSoeWdBXbhMHUu5WVHMglMc07xvaeH7rJLNHVSWk39V/bAXgrquu1/tnPPVo6CQvkZ9P1LXu9JwVc5JOqchucrdull1+FA0GZ/wz0A6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017315; c=relaxed/simple;
-	bh=saPzCIUse62pKiWlAmMzVbk2xK7R4z1dUsV+fdV6lqc=;
+	s=arc-20240116; t=1734017318; c=relaxed/simple;
+	bh=sTbaDvgshKELpLcT/HFNvc69kvhYiliHQjDl/IG+5SI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=El6BrGR08nuZl8btsNqhH5KTCp7EehyNtjQlLqMvyQs2Oh2tJU44L9SmUhIdTO0nLExeX4zIUr96ya9h0Y5L8ZOOVa+8Bn9T6G+v116OQZKWuTr1Ikcs3JTM5EgjGjaD8z5sK1QxlULX1KvPwVZX/tEJppNpcq7/HJSGNpPfiAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=127QwXf3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=beVlGxnjUMeTYD1wFnI+08DqSK9phOPo4k0vDpKRAiJy7CDt/dlhaje/Emn+MrHZs+Z1Pg8agb0+lVv/Sc//u9RZgEW4q5pnlbffboEMgayUxDkQlwFz8oFs+8ETs/ZtQxsiIdqF23EACl1mBF3w1WwcXPRf4LF+xWWkWivv1AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1V8Qy+Yd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="127QwXf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47563C4CECE;
-	Thu, 12 Dec 2024 15:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1V8Qy+Yd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3013C4CECE;
+	Thu, 12 Dec 2024 15:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017314;
-	bh=saPzCIUse62pKiWlAmMzVbk2xK7R4z1dUsV+fdV6lqc=;
+	s=korg; t=1734017318;
+	bh=sTbaDvgshKELpLcT/HFNvc69kvhYiliHQjDl/IG+5SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=127QwXf3wzHCnNHj8KGUhVcaYLMHh1pgYdvpxIOkyw7dJ2cSR0kYvyx97Z9N/b0fs
-	 +wN/+uW6pUBO5p5VMTYeGHgsi8TnVcPw9vbk4qXQl7Ov3+q3VWLvZS0NzHXHaIsU8M
-	 zv4qMV8H/k55ZUM8Cur6fVh93I0cUXMYFJZujmDU=
+	b=1V8Qy+YdrL8YrjhCj63ojHWN05o5W8C92ahjTUXwf2cr3GxqgHYgaguaIbpTlEB4T
+	 oAJOUKltbgW4BVifrGw+WlMBYoxtJGlLknIvvjkoXhFc3TieCBiV7hrGu4tC9ZmGe1
+	 tuD+hB4l4LKwk3hKGeKN+7UNhldpnapFrStQ2AiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anand Jain <anand.jain@oracle.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 444/466] btrfs: drop unused parameter options from open_ctree()
-Date: Thu, 12 Dec 2024 16:00:13 +0100
-Message-ID: <20241212144324.397343530@linuxfoundation.org>
+Subject: [PATCH 6.12 445/466] btrfs: drop unused parameter data from btrfs_fill_super()
+Date: Thu, 12 Dec 2024 16:00:14 +0100
+Message-ID: <20241212144324.436443903@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,63 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit 87cbab86366e75dec52f787e0e0b17b2aea769ca ]
+[ Upstream commit 01c5db782e3ad1aea1d06a1765c710328c145f10 ]
 
-Since the new mount option parser in commit ad21f15b0f79 ("btrfs:
-switch to the new mount API") we don't pass the options like that
-anymore.
+The only caller passes NULL, we can drop the parameter. This is since
+the new mount option parser done in 3bb17a25bcb09a ("btrfs: add get_tree
+callback for new mount API").
 
 Reviewed-by: Anand Jain <anand.jain@oracle.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 951a3f59d268 ("btrfs: fix mount failure due to remount races")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 3 +--
- fs/btrfs/disk-io.h | 3 +--
- fs/btrfs/super.c   | 2 +-
- 3 files changed, 3 insertions(+), 5 deletions(-)
+ fs/btrfs/super.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index b11bfe68dd65f..43b7b331b2da3 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3202,8 +3202,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	return 0;
- }
- 
--int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
--		      const char *options)
-+int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices)
- {
- 	u32 sectorsize;
- 	u32 nodesize;
-diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
-index 99af64d3f2778..127e31e083470 100644
---- a/fs/btrfs/disk-io.h
-+++ b/fs/btrfs/disk-io.h
-@@ -52,8 +52,7 @@ struct extent_buffer *btrfs_find_create_tree_block(
- int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info);
- int btrfs_check_super_csum(struct btrfs_fs_info *fs_info,
- 			   const struct btrfs_super_block *disk_sb);
--int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
--		      const char *options);
-+int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices);
- void __cold close_ctree(struct btrfs_fs_info *fs_info);
- int btrfs_validate_super(const struct btrfs_fs_info *fs_info,
- 			 const struct btrfs_super_block *sb, int mirror_num);
 diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index c64d071341223..1a4225a1a2003 100644
+index 1a4225a1a2003..0c477443fbc5f 100644
 --- a/fs/btrfs/super.c
 +++ b/fs/btrfs/super.c
-@@ -971,7 +971,7 @@ static int btrfs_fill_super(struct super_block *sb,
- 		return err;
+@@ -946,8 +946,7 @@ static int get_default_subvol_objectid(struct btrfs_fs_info *fs_info, u64 *objec
+ }
+ 
+ static int btrfs_fill_super(struct super_block *sb,
+-			    struct btrfs_fs_devices *fs_devices,
+-			    void *data)
++			    struct btrfs_fs_devices *fs_devices)
+ {
+ 	struct inode *inode;
+ 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
+@@ -1893,7 +1892,7 @@ static int btrfs_get_tree_super(struct fs_context *fc)
+ 		snprintf(sb->s_id, sizeof(sb->s_id), "%pg", bdev);
+ 		shrinker_debugfs_rename(sb->s_shrink, "sb-btrfs:%s", sb->s_id);
+ 		btrfs_sb(sb)->bdev_holder = &btrfs_fs_type;
+-		ret = btrfs_fill_super(sb, fs_devices, NULL);
++		ret = btrfs_fill_super(sb, fs_devices);
  	}
  
--	err = open_ctree(sb, fs_devices, (char *)data);
-+	err = open_ctree(sb, fs_devices);
- 	if (err) {
- 		btrfs_err(fs_info, "open_ctree failed");
- 		return err;
+ 	if (ret) {
 -- 
 2.43.0
 
