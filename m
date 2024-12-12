@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2496521504F;
-	Thu, 12 Dec 2024 15:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823C421504F;
+	Thu, 12 Dec 2024 15:14:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016473; cv=none; b=dRUYFnHpTItUnglVlhDLnil33wAnO31JcCxibIH5rvOfbf3/E+weJxxQEsscrJ7Qu8s3A32NrAtPNjeDnhvyZPvc8vZKQpeULytAI07UHkoM8xKgIae8ZhH9H02aRPUTL88TJJ8HLzxTsCF8GD5l7Eztint6xGtSPvjsALjDDD8=
+	t=1734016476; cv=none; b=Xfi4PCNZPnvccBAu2ZQLyHiKidX0VNsuv/BlXP9F712pWYSZ8wHf8xGXB7jn0V9soAHOw05ST5ueY7d566Dg6mORjNL+2esZcu/sCnu5KYHtbrAwplkREqoRkqA+rqocPC5ta4L9hC0GpeQq7XQSVSKrHAbUijmgt8P9LH34314=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016473; c=relaxed/simple;
-	bh=NSv79MCFDIxHg8NI5cl8omOIc3hwpjeWf2s4fHJXFyk=;
+	s=arc-20240116; t=1734016476; c=relaxed/simple;
+	bh=xmNaQLO4dNmkgcve64rsYLfQT7A2tiYUCekv505DV54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dGN1M++KSYPEvud2QF5S2rjfqNCIoia/AHKNobTWNxcGbgaiZpzz1b6pgCl44SaaFzyNHhoWWua/cMRpFtxCLmtmcXcjsseGf5po/Q9S40lPQ0JColLO6N6pBRmPZEoHqs2XdDyEqm9bG0tlmQUbeqcBIq+CTe1l5+8T/LD7VAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znBPaE3c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g6jHceuvaJ4/nHTKxbTlJ8cI5G/OCUV2uVqt+OiGVSNFvflVIw3N5eIw6YE1jihHkBTv2OapVKCV2/6KmMZ3x209d7QJvd/E0VJiuEm+073eDRKP7pXkhhM9l8ekne4L7pkYrXYUgSzK8iBWMwt3UZfBdqcRUNmY1EXTwq1Z/I0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFEJl3Ea; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znBPaE3c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 819E4C4CECE;
-	Thu, 12 Dec 2024 15:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFEJl3Ea"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38AEC4CED4;
+	Thu, 12 Dec 2024 15:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016473;
-	bh=NSv79MCFDIxHg8NI5cl8omOIc3hwpjeWf2s4fHJXFyk=;
+	s=korg; t=1734016476;
+	bh=xmNaQLO4dNmkgcve64rsYLfQT7A2tiYUCekv505DV54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znBPaE3cbhGoQf9weH+jDb9x2PVlhsGGM4UO2SM28v6k5WY3MvCX4VgNJvVY4oBaU
-	 vdsATg09kYzzG4bsQwR5sNK8jES51lZTBGtdqAm1u1cDqN3somQVpbvqoqA5O81zjP
-	 KeDrl/BSqRoTaBguWl2NRBsyZ1s1I6vMcEkfhvRU=
+	b=uFEJl3EaEieB8cN3A2S+9Zcac8m6G13C4HmUsr62VDMfsdLuj4pY9+A2w/4vs7hzS
+	 2jCNKJlkjZE04Hv+nSDoTciSsq4NrzgM30QqS8EdvydwYlMmzzZlts7uUKtfPs/d9R
+	 54WfvkUmmSr/UBPfwUJeSCPgmxDBgzgLlAFe3j+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 209/466] scsi: ufs: pltfrm: Drop PM runtime reference count after ufshcd_remove()
-Date: Thu, 12 Dec 2024 15:56:18 +0100
-Message-ID: <20241212144315.044253607@linuxfoundation.org>
+	Anthony Pighin <anthony.pighin@nokia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Adrian Hunter <adrian.hunter@intel.com>
+Subject: [PATCH 6.12 192/466] mmc: core: Further prevent card detect during shutdown
+Date: Thu, 12 Dec 2024 15:56:01 +0100
+Message-ID: <20241212144314.381321011@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,99 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-commit 1745dcdb7227102e16248a324c600b9121c8f6df upstream.
+commit 87a0d90fcd31c0f36da0332428c9e1a1e0f97432 upstream.
 
-During the remove stage of glue drivers, some of them are incrementing the
-reference count using pm_runtime_get_sync(), before removing the ufshcd
-using ufshcd_remove(). But they are not dropping that reference count after
-ufshcd_remove() to balance the refcount.
+Disabling card detect from the host's ->shutdown_pre() callback turned out
+to not be the complete solution. More precisely, beyond the point when the
+mmc_bus->shutdown() has been called, to gracefully power off the card, we
+need to prevent card detect. Otherwise the mmc_rescan work may poll for the
+card with a CMD13, to see if it's still alive, which then will fail and
+hang as the card has already been powered off.
 
-So drop the reference count by calling pm_runtime_put_noidle() after
-ufshcd_remove(). Since the behavior is applicable to all glue drivers, move
-the PM handling to ufshcd_pltfrm_remove().
+To fix this problem, let's disable mmc_rescan prior to power off the card
+during shutdown.
 
-Cc: stable@vger.kernel.org # 3.12
-Fixes: 62694735ca95 ("[SCSI] ufs: Add runtime PM support for UFS host controller driver")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20241111-ufs_bug_fix-v1-4-45ad8b62f02e@linaro.org
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bean Huo <beanhuo@micron.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Anthony Pighin <anthony.pighin@nokia.com>
+Fixes: 66c915d09b94 ("mmc: core: Disable card detect during shutdown")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Closes: https://lore.kernel.org/all/BN0PR08MB695133000AF116F04C3A9FFE83212@BN0PR08MB6951.namprd08.prod.outlook.com/
+Tested-by: Anthony Pighin <anthony.pighin@nokia.com>
+Message-ID: <20241125122446.18684-1-ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/host/tc-dwc-g210-pltfrm.c |    1 -
- drivers/ufs/host/ufs-exynos.c         |    1 -
- drivers/ufs/host/ufs-mediatek.c       |    1 -
- drivers/ufs/host/ufs-qcom.c           |    1 -
- drivers/ufs/host/ufs-sprd.c           |    1 -
- drivers/ufs/host/ufshcd-pltfrm.c      |    2 ++
- 6 files changed, 2 insertions(+), 5 deletions(-)
+ drivers/mmc/core/bus.c  |    2 ++
+ drivers/mmc/core/core.c |    3 +++
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-+++ b/drivers/ufs/host/tc-dwc-g210-pltfrm.c
-@@ -76,7 +76,6 @@ static int tc_dwc_g210_pltfm_probe(struc
-  */
- static void tc_dwc_g210_pltfm_remove(struct platform_device *pdev)
+--- a/drivers/mmc/core/bus.c
++++ b/drivers/mmc/core/bus.c
+@@ -149,6 +149,8 @@ static void mmc_bus_shutdown(struct devi
+ 	if (dev->driver && drv->shutdown)
+ 		drv->shutdown(card);
+ 
++	__mmc_stop_host(host);
++
+ 	if (host->bus_ops->shutdown) {
+ 		ret = host->bus_ops->shutdown(host);
+ 		if (ret)
+--- a/drivers/mmc/core/core.c
++++ b/drivers/mmc/core/core.c
+@@ -2296,6 +2296,9 @@ void mmc_start_host(struct mmc_host *hos
+ 
+ void __mmc_stop_host(struct mmc_host *host)
  {
--	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_pltfrm_remove(pdev);
- }
- 
---- a/drivers/ufs/host/ufs-exynos.c
-+++ b/drivers/ufs/host/ufs-exynos.c
-@@ -1963,7 +1963,6 @@ static void exynos_ufs_remove(struct pla
- 	struct ufs_hba *hba =  platform_get_drvdata(pdev);
- 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 
--	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_pltfrm_remove(pdev);
- 
- 	phy_power_off(ufs->phy);
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1869,7 +1869,6 @@ out:
-  */
- static void ufs_mtk_remove(struct platform_device *pdev)
- {
--	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_pltfrm_remove(pdev);
- }
- 
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1845,7 +1845,6 @@ static void ufs_qcom_remove(struct platf
- 	struct ufs_hba *hba =  platform_get_drvdata(pdev);
- 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
- 
--	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_pltfrm_remove(pdev);
- 	if (host->esi_enabled)
- 		platform_device_msi_free_irqs_all(hba->dev);
---- a/drivers/ufs/host/ufs-sprd.c
-+++ b/drivers/ufs/host/ufs-sprd.c
-@@ -427,7 +427,6 @@ static int ufs_sprd_probe(struct platfor
- 
- static void ufs_sprd_remove(struct platform_device *pdev)
- {
--	pm_runtime_get_sync(&(pdev)->dev);
- 	ufshcd_pltfrm_remove(pdev);
- }
- 
---- a/drivers/ufs/host/ufshcd-pltfrm.c
-+++ b/drivers/ufs/host/ufshcd-pltfrm.c
-@@ -532,8 +532,10 @@ void ufshcd_pltfrm_remove(struct platfor
- {
- 	struct ufs_hba *hba =  platform_get_drvdata(pdev);
- 
-+	pm_runtime_get_sync(&pdev->dev);
- 	ufshcd_remove(hba);
- 	pm_runtime_disable(&pdev->dev);
-+	pm_runtime_put_noidle(&pdev->dev);
- }
- EXPORT_SYMBOL_GPL(ufshcd_pltfrm_remove);
- 
++	if (host->rescan_disable)
++		return;
++
+ 	if (host->slot.cd_irq >= 0) {
+ 		mmc_gpio_set_cd_wake(host, false);
+ 		disable_irq(host->slot.cd_irq);
 
 
