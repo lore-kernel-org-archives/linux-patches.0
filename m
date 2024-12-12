@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB27222D44;
-	Thu, 12 Dec 2024 17:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF40222D4E;
+	Thu, 12 Dec 2024 17:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023579; cv=none; b=mFvXoxtwu2wneFFq3tlRt8XGgvpD6vawd/62ju0EiTB6wV8D/sY4ReDtn2l6uOl8a1rG4DXQG5fbt/KYPbM7Bv0KdimZM4/Yb8BtvfcyyOCgcwSpR2BMKrKzoJ+GawBrj2GoHf3VJsoq9Spm8xW+us+ouPzDh3sQY+dBiXN6Vng=
+	t=1734023582; cv=none; b=DKVHAijSMWcMghfp556i8orI1jI1x2HxApul/ltVWlxkQ6YjH46TwEWOVsM3y/66e00CczqHXj0m0+fMyVAjfSJM9HeptM4bEX+J4oA0ihUj+M/4rn213PgEmbhA38HHhi7Z56k70jy/kLTTiqVatQpcXe0DkyKQXzfifezroGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023579; c=relaxed/simple;
-	bh=X9DSlHCmEOB6e6P8GNeAmfc7xZEROX5ut16RDeI4z9c=;
+	s=arc-20240116; t=1734023582; c=relaxed/simple;
+	bh=Vwp3OH8nFNJw1xn5nCs5OlT6JvzgNSN67SIcRhePkTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tmxZDEshDZZpPHB1bputesIe++vU7BLmGsvdbtkF6/2vaxyyjBNtY/9fU1bz+GT98CF/t2LYzcOVpm1AVicvM0kjsGospZubc1f8SAOECmQR7Zjw+57BR3qQeAPfnEXVUuEjBBmZahV/Xn31vuuZDrL3PztSSl8VcmPVIySj2+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SiBHJzWr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PFbBmeowlGzz8cnUtWUrRphy5QCie6wF51vjRw+89rjlJoW76HrjAelVxpFqI7zpBKYPisiJDL700TreXrt+nu6pAjrJ76Rwyywo9cfxAIP36aL41TFYapRypCf02V/uRS42RyZjeMwNPW0oevwylRUcIrCaEP9rWOFyom72CmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoEIbBuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SiBHJzWr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A014C4CED3;
-	Thu, 12 Dec 2024 17:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoEIbBuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A12C4CED0;
+	Thu, 12 Dec 2024 17:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023579;
-	bh=X9DSlHCmEOB6e6P8GNeAmfc7xZEROX5ut16RDeI4z9c=;
+	s=korg; t=1734023582;
+	bh=Vwp3OH8nFNJw1xn5nCs5OlT6JvzgNSN67SIcRhePkTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SiBHJzWr6yY8UE0gUnllZRl/WgnPI1oyoiGfe8eULPPZsrr+1d+6yUd0OjdW7J6qQ
-	 68inSFLQ0l8qG7iOfgOOk5RwWBN9bWdZn4jOrNR2a5aBE3GnaeKjV6sch6BIptBcj9
-	 HtkuMIpguh4hUAFmQmFweEbxdLXNW6BBV9jGLOqQ=
+	b=PoEIbBuhpcSGjR3dyY0FLO9q2arjUsqnKGs3MeruJcsAEw3ghZplBDetCyfwIHiKg
+	 uJx246B7YJTDKaDDBY3vUUe9qrMeq8ZuwE2gqeadDdZGyomvARpSWxJfNcts40P1pa
+	 5xzIH3w1LwKXzhb4RBufM3fOExzzkkh1j4BsmXAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/459] net/mlx5e: kTLS, Fix incorrect page refcounting
-Date: Thu, 12 Dec 2024 15:55:52 +0100
-Message-ID: <20241212144254.093297847@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 5.10 015/459] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
+Date: Thu, 12 Dec 2024 15:55:53 +0100
+Message-ID: <20241212144254.130774620@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,78 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit dd6e972cc5890d91d6749bb48e3912721c4e4b25 ]
+commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
 
-The kTLS tx handling code is using a mix of get_page() and
-page_ref_inc() APIs to increment the page reference. But on the release
-path (mlx5e_ktls_tx_handle_resync_dump_comp()), only put_page() is used.
+The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
+Debugging traced the issue back to
 
-This is an issue when using pages from large folios: the get_page()
-references are stored on the folio page while the page_ref_inc()
-references are stored directly in the given page. On release the folio
-page will be dereferenced too many times.
+  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
 
-This was found while doing kTLS testing with sendfile() + ZC when the
-served file was read from NFS on a kernel with NFS large folios support
-(commit 49b29a573da8 ("nfs: add support for large folios")).
+Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
+enabled, which led to the oversight, with the following incarnation:
 
-Fixes: 84d1bb2b139e ("net/mlx5e: kTLS, Limit DUMP wqe size")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241107183527.676877-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+...
+  ima: No TPM chip found, activating TPM-bypass!
+  Loading compiled-in module X.509 certificates
+  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
+  ima: Allocated hash algorithm: sha256
+  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
+  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
+  RIP: 0010:ima_restore_measurement_list
+  Call Trace:
+   <TASK>
+   ? show_trace_log_lvl
+   ? show_trace_log_lvl
+   ? ima_load_kexec_buffer
+   ? __die_body.cold
+   ? die_addr
+   ? exc_general_protection
+   ? asm_exc_general_protection
+   ? ima_restore_measurement_list
+   ? vprintk_emit
+   ? ima_load_kexec_buffer
+   ima_load_kexec_buffer
+   ima_init
+   ? __pfx_init_ima
+   init_ima
+   ? __pfx_init_ima
+   do_one_initcall
+   do_initcalls
+   ? __pfx_kernel_init
+   kernel_init_freeable
+   kernel_init
+   ret_from_fork
+   ? __pfx_kernel_init
+   ret_from_fork_asm
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  ...
+  Kernel panic - not syncing: Fatal exception
+  Kernel Offset: disabled
+  Rebooting in 10 seconds..
+
+Adding debug printks showed that the stored addr and size of ima_kexec buffer
+are not decrypted correctly like:
+
+  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
+
+Three types of setup_data info
+
+  — SETUP_EFI,
+  - SETUP_IMA, and
+  - SETUP_RNG_SEED
+
+are passed to the kexec/kdump kernel. Only the ima_kexec buffer
+experienced incorrect decryption. Debugging identified a bug in
+early_memremap_is_setup_data(), where an incorrect range calculation
+occurred due to the len variable in struct setup_data ended up only
+representing the length of the data field, excluding the struct's size,
+and thus leading to miscalculation.
+
+Address a similar issue in memremap_is_setup_data() while at it.
+
+  [ bp: Heavily massage. ]
+
+Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c    | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/mm/ioremap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-index 679747db3110c..0228b4df2d06d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ktls_tx.c
-@@ -261,7 +261,7 @@ tx_sync_info_get(struct mlx5e_ktls_offload_context_tx *priv_tx,
- 	while (remaining > 0) {
- 		skb_frag_t *frag = &record->frags[i];
+--- a/arch/x86/mm/ioremap.c
++++ b/arch/x86/mm/ioremap.c
+@@ -660,7 +660,8 @@ static bool memremap_is_setup_data(resou
+ 		paddr_next = data->next;
+ 		len = data->len;
  
--		get_page(skb_frag_page(frag));
-+		page_ref_inc(skb_frag_page(frag));
- 		remaining -= skb_frag_size(frag);
- 		info->frags[i++] = *frag;
- 	}
-@@ -348,7 +348,7 @@ void mlx5e_ktls_tx_handle_resync_dump_comp(struct mlx5e_txqsq *sq,
- 	stats = sq->stats;
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			memunmap(data);
+ 			return true;
+ 		}
+@@ -722,7 +723,8 @@ static bool __init early_memremap_is_set
+ 		paddr_next = data->next;
+ 		len = data->len;
  
- 	mlx5e_tx_dma_unmap(sq->pdev, dma);
--	put_page(wi->resync_dump_frag_page);
-+	page_ref_dec(wi->resync_dump_frag_page);
- 	stats->tls_dump_packets++;
- 	stats->tls_dump_bytes += wi->num_bytes;
- }
-@@ -429,12 +429,12 @@ mlx5e_ktls_tx_handle_ooo(struct mlx5e_ktls_offload_context_tx *priv_tx,
- 
- err_out:
- 	for (; i < info.nr_frags; i++)
--		/* The put_page() here undoes the page ref obtained in tx_sync_info_get().
-+		/* The page_ref_dec() here undoes the page ref obtained in tx_sync_info_get().
- 		 * Page refs obtained for the DUMP WQEs above (by page_ref_add) will be
- 		 * released only upon their completions (or in mlx5e_free_txqsq_descs,
- 		 * if channel closes).
- 		 */
--		put_page(skb_frag_page(&info.frags[i]));
-+		page_ref_dec(skb_frag_page(&info.frags[i]));
- 
- 	return MLX5E_KTLS_SYNC_FAIL;
- }
--- 
-2.43.0
-
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			early_memunmap(data, sizeof(*data));
+ 			return true;
+ 		}
 
 
