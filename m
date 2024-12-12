@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F3A21578E;
-	Thu, 12 Dec 2024 15:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C530217F26;
+	Thu, 12 Dec 2024 15:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017715; cv=none; b=kJqyCAxey6DoZPInTf31qP7+TfoXDSeKwE3oO/frCDxsdXACbC+Jc7w7ty/yZbiamk7V9PVacOBOB/LoDaODSLzw/vtnJIcHaF0t0v1iW6ewgqMPytGBLG2yzI/s7f4dsNiwTMcLMpAEsIPB8RdAzc9LTg8ws7sYDnEP4kvKyvY=
+	t=1734017717; cv=none; b=F35wZHf1jF1J9fdo2w5CXjJjQHGOnlO+/0OjF6qp9jxDsZxOcUZ6mpC/+GEAf5SqvAk8T5lFr/Ms08DeBqjMDpniw7Pzg7OfAekpGu9s5jkSbeokJtLZuqL3Q5rC9PhMu/P+n/ciDU4iWBUKSjnUymGmDs7n8ujoH4G9JuhJ57Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017715; c=relaxed/simple;
-	bh=9w4q49ul6SpU51qV3NW5u99YuFwHdcOdypTxmSB42j0=;
+	s=arc-20240116; t=1734017717; c=relaxed/simple;
+	bh=tP/SfBgC81tfTdoQueFknx+548zmZ3tJisEU4UZ9RAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxo8anWYE40zmLJ2DiWDqBL2k2f0dfK2rAhS7biHzLn+MFMeRCiS2v+QqsUAmvKZNc8lyZ8ekTMxae4nBaF4BPX89RdAwZSLtbq5b4sDwKzR/i+H+pSD120pLb1h1gcf6gOvr5hlP125bi3abcLr4tnVrOxa3eHtqXX6TK/s6vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1YORaaW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IOx2bfSr8av5dwQkhguFnS1aolpmYJd+KFBxjALuVW1fsyA3Svazh54eZVddJbQjBBdlmHgVdbIZqFbx3jQy4f9nsTMBbcJF7udHCSVlVv37e8uCktWjDaMGrPTyQGUl+7rCUuX2JDT/T/tI2KPnsS6ZoTN8ORR63/+jAKV3Igo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCjT5bnY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1YORaaW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC05C4CED4;
-	Thu, 12 Dec 2024 15:35:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCjT5bnY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0614C4CED0;
+	Thu, 12 Dec 2024 15:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017713;
-	bh=9w4q49ul6SpU51qV3NW5u99YuFwHdcOdypTxmSB42j0=;
+	s=korg; t=1734017717;
+	bh=tP/SfBgC81tfTdoQueFknx+548zmZ3tJisEU4UZ9RAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1YORaaWLod5r1ZbsSYOJEr/ATZKZjGidZwtrUVdq3Z7MiyMmtZQFGp3yVrPeWwTF
-	 zcLd8R56SoSnQ79AgfIopRpFLjknrhFHSX+67tF992X+EdUQFbDwww+xDqlV0h2AGO
-	 N9rt4iiDp6p9jqeZmhLt06ODM0IC5I6Hu200ItMY=
+	b=pCjT5bnYCVFDqiXc4SDC7TDH6v1/wFkiIPwLhCz6rc5soIrYfKYWieTCkj5pI9OqF
+	 2NsLwIpQuthbWhtNZ5JNyUwNB722v9C9mAgrWn/gcoz7kZxz90EL9yGeupdd5Z/AMa
+	 sEc68jw8BGWi7nzHyy38+Xhy3+7RHMZk/NgHBoY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Shin Kawamura <kawasin@google.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/356] zram: clear IDLE flag in mark_idle()
-Date: Thu, 12 Dec 2024 15:56:48 +0100
-Message-ID: <20241212144248.134124194@linuxfoundation.org>
+	Prakash Gupta <quic_guptap@quicinc.com>,
+	Pratyush Brahma <quic_pbrahma@quicinc.com>,
+	Will Deacon <will@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>
+Subject: [PATCH 6.6 090/356] iommu/arm-smmu: Defer probe of clients after smmu device bound
+Date: Thu, 12 Dec 2024 15:56:49 +0100
+Message-ID: <20241212144248.172100215@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -54,50 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Pratyush Brahma <quic_pbrahma@quicinc.com>
 
-[ Upstream commit d37da422edb0664a2037e6d7d42fe6d339aae78a ]
+commit 229e6ee43d2a160a1592b83aad620d6027084aad upstream.
 
-If entry does not fulfill current mark_idle() parameters, e.g.  cutoff
-time, then we should clear its ZRAM_IDLE from previous mark_idle()
-invocations.
+Null pointer dereference occurs due to a race between smmu
+driver probe and client driver probe, when of_dma_configure()
+for client is called after the iommu_device_register() for smmu driver
+probe has executed but before the driver_bound() for smmu driver
+has been called.
 
-Consider the following case:
-- mark_idle() cutoff time 8h
-- mark_idle() cutoff time 4h
-- writeback() idle - will writeback entries with cutoff time 8h,
-  while it should only pick entries with cutoff time 4h
+Following is how the race occurs:
 
-The bug was reported by Shin Kawamura.
+T1:Smmu device probe		T2: Client device probe
 
-Link: https://lkml.kernel.org/r/20241028153629.1479791-3-senozhatsky@chromium.org
-Fixes: 755804d16965 ("zram: introduce an aged idle interface")
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reported-by: Shin Kawamura <kawasin@google.com>
-Acked-by: Brian Geffon <bgeffon@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+really_probe()
+arm_smmu_device_probe()
+iommu_device_register()
+					really_probe()
+					platform_dma_configure()
+					of_dma_configure()
+					of_dma_configure_id()
+					of_iommu_configure()
+					iommu_probe_device()
+					iommu_init_device()
+					arm_smmu_probe_device()
+					arm_smmu_get_by_fwnode()
+						driver_find_device_by_fwnode()
+						driver_find_device()
+						next_device()
+						klist_next()
+						    /* null ptr
+						       assigned to smmu */
+					/* null ptr dereference
+					   while smmu->streamid_mask */
+driver_bound()
+	klist_add_tail()
+
+When this null smmu pointer is dereferenced later in
+arm_smmu_probe_device, the device crashes.
+
+Fix this by deferring the probe of the client device
+until the smmu device has bound to the arm smmu driver.
+
+Fixes: 021bb8420d44 ("iommu/arm-smmu: Wire up generic configuration support")
+Cc: stable@vger.kernel.org
+Co-developed-by: Prakash Gupta <quic_guptap@quicinc.com>
+Signed-off-by: Prakash Gupta <quic_guptap@quicinc.com>
+Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
+Link: https://lore.kernel.org/r/20241004090428.2035-1-quic_pbrahma@quicinc.com
+[will: Add comment]
+Signed-off-by: Will Deacon <will@kernel.org>
+[rm: backport for context conflict prior to 6.8]
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/arm/arm-smmu/arm-smmu.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index e05eace18cc47..27f9ae16a7282 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -319,6 +319,8 @@ static void mark_idle(struct zram *zram, ktime_t cutoff)
- #endif
- 		if (is_idle)
- 			zram_set_flag(zram, index, ZRAM_IDLE);
-+		else
-+			zram_clear_flag(zram, index, ZRAM_IDLE);
- 		zram_slot_unlock(zram, index);
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+@@ -1359,6 +1359,17 @@ static struct iommu_device *arm_smmu_pro
+ 			goto out_free;
+ 	} else if (fwspec && fwspec->ops == &arm_smmu_ops) {
+ 		smmu = arm_smmu_get_by_fwnode(fwspec->iommu_fwnode);
++
++		/*
++		 * Defer probe if the relevant SMMU instance hasn't finished
++		 * probing yet. This is a fragile hack and we'd ideally
++		 * avoid this race in the core code. Until that's ironed
++		 * out, however, this is the most pragmatic option on the
++		 * table.
++		 */
++		if (!smmu)
++			return ERR_PTR(dev_err_probe(dev, -EPROBE_DEFER,
++						"smmu dev has not bound yet\n"));
+ 	} else {
+ 		return ERR_PTR(-ENODEV);
  	}
- }
--- 
-2.43.0
-
 
 
