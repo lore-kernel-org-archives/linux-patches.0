@@ -1,50 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BA52253E0;
-	Thu, 12 Dec 2024 15:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E9B2210CD;
+	Thu, 12 Dec 2024 15:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018525; cv=none; b=dPBEpgt8Tvf/Ylp/A0TaWBbVISN/ncm/pKtJnC8JlGl0O0G5ATyKRivbN+SBTodj4WKuTwd7lCIzvQiQ+Zv+QgrtuZZruAUCl0dG+CObQuBYZZvV3SI71Ua1C2ewCNJ8zDxAZ6mQfsIMNzUBqLbL4bv5m365lNrlb6vA9uv1mks=
+	t=1734018528; cv=none; b=Li4SnqUzA6KR6q9/QjuCq1qRraIjFsJgPv4qKJTRPIEYlPD4TukNAC32SBb4Mv0h/GNxp3w3i8ST1hSW/AQFOqvAKnzXMW7hbxsaXiK6UykXG4zcDrRVF285R4rT3E7kyo8vQX/OOlPUMBjaTDNB+C8s59aP1EP+wR3jMPKlC7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018525; c=relaxed/simple;
-	bh=C+8GxS4M2j1ACnt277a40d3DSpANpjLJTqoGvl3diu4=;
+	s=arc-20240116; t=1734018528; c=relaxed/simple;
+	bh=oJNapP8PJtfo5DlwM178APsSbcmSL6C4qVb9akQHkeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eab2EBA9bnYTUJ8zgIZq2J+6wRPAk+j+MwDbcCN08g8ZkcJIFlkNY9wEkgFIDrIyWKE8KjCCFQuR5H9FWsCTDiaapAQZ3HTrE+712RcHOhcrHeJHx2TG/y3uagHLsXn36IzLRCg/sgtcUey355fyeTl+LrTxek++mk5ye3qz3ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d3tBe4+s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CwAbCQ+576/e7j4FAMC4TOjIbaq9t7a0ZV9ODbE2dtYUtxmOyR3gKKlN1AcGe/ganSWETgU+Np+ZmDbOFZtfAUXayxNxotMaV4uDmOtg1tKjqCZdncPRzNhs/HQA3YjxuqEROJVzLalOdLyKyxrXDZWnZbBkYFlCN/9y9pkQIRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWwHQqeZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d3tBe4+s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A9EC4CECE;
-	Thu, 12 Dec 2024 15:48:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWwHQqeZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA63C4CECE;
+	Thu, 12 Dec 2024 15:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018524;
-	bh=C+8GxS4M2j1ACnt277a40d3DSpANpjLJTqoGvl3diu4=;
+	s=korg; t=1734018528;
+	bh=oJNapP8PJtfo5DlwM178APsSbcmSL6C4qVb9akQHkeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3tBe4+sS0LNwVNHsj3zSSmL0Tkqr7XEv2wXgRDnga/S/TrhDA+BiMrq09Dp7Pyzy
-	 uL7wtkIgEFeYgGTfWLUDtVhqmxLcJszUML6/wKH72j2fTGLjcQe+mb/p/5S2pCwYgx
-	 FoEwOqpFc7LV+etfn353ITsTArwb9nVr1Ia7QmKc=
+	b=PWwHQqeZs6sdFFbuXJR/kw1nZDePOhxbZqKxtXOpS7jkUdG+HMQEDEKElTn6MhnEF
+	 26dISgNW6oDsPfQjgwTtzcWkGwNTRpSUfs7PMdCcCGNnVFUp6jyZbe9fEya5b9A+7X
+	 n3TrYWFNzyTQXmlCGBBpKravPuwMh72Nd8dVsvpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Huang <ahuang12@lenovo.com>,
-	Jiwei Sun <sunjw10@lenovo.com>,
-	Raghavendra K T <raghavendra.kt@amd.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Ben Segall <bsegall@google.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Hugh Dickins <hughd@google.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Christoph Lameter <cl@linux.com>,
+	David Hildenbrand <david@redhat.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Sidhartha Kumar <sidhartha.kumar@oracle.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Tejun heo <tj@kernel.org>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 317/356] sched/numa: fix memory leak due to the overwritten vma->numab_state
-Date: Thu, 12 Dec 2024 16:00:36 +0100
-Message-ID: <20241212144257.077491823@linuxfoundation.org>
+Subject: [PATCH 6.6 318/356] mempolicy: fix migrate_pages(2) syscall return nr_failed
+Date: Thu, 12 Dec 2024 16:00:37 +0100
+Message-ID: <20241212144257.118755452@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -63,109 +67,663 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Huang <ahuang12@lenovo.com>
+From: Hugh Dickins <hughd@google.com>
 
-[ Upstream commit 5f1b64e9a9b7ee9cfd32c6b2fab796e29bfed075 ]
+[ Upstream commit 1cb5d11a370f661c5d0d888bb0cfc2cdc5791382 ]
 
-[Problem Description]
-When running the hackbench program of LTP, the following memory leak is
-reported by kmemleak.
+"man 2 migrate_pages" says "On success migrate_pages() returns the number
+of pages that could not be moved".  Although 5.3 and 5.4 commits fixed
+mbind(MPOL_MF_STRICT|MPOL_MF_MOVE*) to fail with EIO when not all pages
+could be moved (because some could not be isolated for migration),
+migrate_pages(2) was left still reporting only those pages failing at the
+migration stage, forgetting those failing at the earlier isolation stage.
 
-  # /opt/ltp/testcases/bin/hackbench 20 thread 1000
-  Running with 20*40 (== 800) tasks.
+Fix that by accumulating a long nr_failed count in struct queue_pages,
+returned by queue_pages_range() when it's not returning an error, for
+adding on to the nr_failed count from migrate_pages() in mm/migrate.c.  A
+count of pages?  It's more a count of folios, but changing it to pages
+would entail more work (also in mm/migrate.c): does not seem justified.
 
-  # dmesg | grep kmemleak
-  ...
-  kmemleak: 480 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-  kmemleak: 665 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+queue_pages_range() itself should only return -EIO in the "strictly
+unmovable" case (STRICT without any MOVEs): in that case it's best to
+break out as soon as nr_failed gets set; but otherwise it should continue
+to isolate pages for MOVing even when nr_failed - as the mbind(2) manpage
+promises.
 
-  # cat /sys/kernel/debug/kmemleak
-  unreferenced object 0xffff888cd8ca2c40 (size 64):
-    comm "hackbench", pid 17142, jiffies 4299780315
-    hex dump (first 32 bytes):
-      ac 74 49 00 01 00 00 00 4c 84 49 00 01 00 00 00  .tI.....L.I.....
-      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace (crc bff18fd4):
-      [<ffffffff81419a89>] __kmalloc_cache_noprof+0x2f9/0x3f0
-      [<ffffffff8113f715>] task_numa_work+0x725/0xa00
-      [<ffffffff8110f878>] task_work_run+0x58/0x90
-      [<ffffffff81ddd9f8>] syscall_exit_to_user_mode+0x1c8/0x1e0
-      [<ffffffff81dd78d5>] do_syscall_64+0x85/0x150
-      [<ffffffff81e0012b>] entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  ...
+There's a case when nr_failed should be incremented when it was missed:
+queue_folios_pte_range() and queue_folios_hugetlb() count the transient
+migration entries, like queue_folios_pmd() already did.  And there's a
+case when nr_failed should not be incremented when it would have been: in
+meeting later PTEs of the same large folio, which can only be isolated
+once: fixed by recording the current large folio in struct queue_pages.
 
-This issue can be consistently reproduced on three different servers:
-  * a 448-core server
-  * a 256-core server
-  * a 192-core server
+Clean up the affected functions, fixing or updating many comments.  Bool
+migrate_folio_add(), without -EIO: true if adding, or if skipping shared
+(but its arguable folio_estimated_sharers() heuristic left unchanged).
+Use MPOL_MF_WRLOCK flag to queue_pages_range(), instead of bool lock_vma.
+Use explicit STRICT|MOVE* flags where queue_pages_test_walk() checks for
+skipping, instead of hiding them behind MPOL_MF_VALID.
 
-[Root Cause]
-Since multiple threads are created by the hackbench program (along with
-the command argument 'thread'), a shared vma might be accessed by two or
-more cores simultaneously. When two or more cores observe that
-vma->numab_state is NULL at the same time, vma->numab_state will be
-overwritten.
-
-Although current code ensures that only one thread scans the VMAs in a
-single 'numa_scan_period', there might be a chance for another thread
-to enter in the next 'numa_scan_period' while we have not gotten till
-numab_state allocation [1].
-
-Note that the command `/opt/ltp/testcases/bin/hackbench 50 process 1000`
-cannot the reproduce the issue. It is verified with 200+ test runs.
-
-[Solution]
-Use the cmpxchg atomic operation to ensure that only one thread executes
-the vma->numab_state assignment.
-
-[1] https://lore.kernel.org/lkml/1794be3c-358c-4cdc-a43d-a1f841d91ef7@amd.com/
-
-Link: https://lkml.kernel.org/r/20241113102146.2384-1-ahuang12@lenovo.com
-Fixes: ef6a22b70f6d ("sched/numa: apply the scan delay to every new vma")
-Signed-off-by: Adrian Huang <ahuang12@lenovo.com>
-Reported-by: Jiwei Sun <sunjw10@lenovo.com>
-Reviewed-by: Raghavendra K T <raghavendra.kt@amd.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/9a6b0b9-3bb-dbef-8adf-efab4397b8d@google.com
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Christoph Lameter <cl@linux.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Sidhartha Kumar <sidhartha.kumar@oracle.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Tejun heo <tj@kernel.org>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Yosry Ahmed <yosryahmed@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 091c1dd2d4df ("mm/mempolicy: fix migrate_to_node() assuming there is at least one VMA in a MM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ mm/mempolicy.c | 338 +++++++++++++++++++++++--------------------------
+ 1 file changed, 159 insertions(+), 179 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 934d6f198b073..ddab19e5bd637 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3344,10 +3344,16 @@ static void task_numa_work(struct callback_head *work)
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 109826a2af387..54f1b78d1b2c0 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -111,7 +111,8 @@
  
- 		/* Initialise new per-VMA NUMAB state. */
- 		if (!vma->numab_state) {
--			vma->numab_state = kzalloc(sizeof(struct vma_numab_state),
--				GFP_KERNEL);
--			if (!vma->numab_state)
-+			struct vma_numab_state *ptr;
+ /* Internal flags */
+ #define MPOL_MF_DISCONTIG_OK (MPOL_MF_INTERNAL << 0)	/* Skip checks for continuous vmas */
+-#define MPOL_MF_INVERT (MPOL_MF_INTERNAL << 1)		/* Invert check for nodemask */
++#define MPOL_MF_INVERT       (MPOL_MF_INTERNAL << 1)	/* Invert check for nodemask */
++#define MPOL_MF_WRLOCK       (MPOL_MF_INTERNAL << 2)	/* Write-lock walked vmas */
+ 
+ static struct kmem_cache *policy_cache;
+ static struct kmem_cache *sn_cache;
+@@ -420,9 +421,19 @@ static const struct mempolicy_operations mpol_ops[MPOL_MAX] = {
+ 	},
+ };
+ 
+-static int migrate_folio_add(struct folio *folio, struct list_head *foliolist,
++static bool migrate_folio_add(struct folio *folio, struct list_head *foliolist,
+ 				unsigned long flags);
+ 
++static bool strictly_unmovable(unsigned long flags)
++{
++	/*
++	 * STRICT without MOVE flags lets do_mbind() fail immediately with -EIO
++	 * if any misplaced page is found.
++	 */
++	return (flags & (MPOL_MF_STRICT | MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ==
++			 MPOL_MF_STRICT;
++}
 +
-+			ptr = kzalloc(sizeof(*ptr), GFP_KERNEL);
-+			if (!ptr)
+ struct queue_pages {
+ 	struct list_head *pagelist;
+ 	unsigned long flags;
+@@ -430,7 +441,8 @@ struct queue_pages {
+ 	unsigned long start;
+ 	unsigned long end;
+ 	struct vm_area_struct *first;
+-	bool has_unmovable;
++	struct folio *large;		/* note last large folio encountered */
++	long nr_failed;			/* could not be isolated at this time */
+ };
+ 
+ /*
+@@ -448,61 +460,37 @@ static inline bool queue_folio_required(struct folio *folio,
+ 	return node_isset(nid, *qp->nmask) == !(flags & MPOL_MF_INVERT);
+ }
+ 
+-/*
+- * queue_folios_pmd() has three possible return values:
+- * 0 - folios are placed on the right node or queued successfully, or
+- *     special page is met, i.e. zero page, or unmovable page is found
+- *     but continue walking (indicated by queue_pages.has_unmovable).
+- * -EIO - is migration entry or only MPOL_MF_STRICT was specified and an
+- *        existing folio was already on a node that does not follow the
+- *        policy.
+- */
+-static int queue_folios_pmd(pmd_t *pmd, spinlock_t *ptl, unsigned long addr,
+-				unsigned long end, struct mm_walk *walk)
+-	__releases(ptl)
++static void queue_folios_pmd(pmd_t *pmd, struct mm_walk *walk)
+ {
+-	int ret = 0;
+ 	struct folio *folio;
+ 	struct queue_pages *qp = walk->private;
+-	unsigned long flags;
+ 
+ 	if (unlikely(is_pmd_migration_entry(*pmd))) {
+-		ret = -EIO;
+-		goto unlock;
++		qp->nr_failed++;
++		return;
+ 	}
+ 	folio = pfn_folio(pmd_pfn(*pmd));
+ 	if (is_huge_zero_page(&folio->page)) {
+ 		walk->action = ACTION_CONTINUE;
+-		goto unlock;
++		return;
+ 	}
+ 	if (!queue_folio_required(folio, qp))
+-		goto unlock;
+-
+-	flags = qp->flags;
+-	/* go to folio migration */
+-	if (flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) {
+-		if (!vma_migratable(walk->vma) ||
+-		    migrate_folio_add(folio, qp->pagelist, flags)) {
+-			qp->has_unmovable = true;
+-			goto unlock;
+-		}
+-	} else
+-		ret = -EIO;
+-unlock:
+-	spin_unlock(ptl);
+-	return ret;
++		return;
++	if (!(qp->flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
++	    !vma_migratable(walk->vma) ||
++	    !migrate_folio_add(folio, qp->pagelist, qp->flags))
++		qp->nr_failed++;
+ }
+ 
+ /*
+- * Scan through pages checking if pages follow certain conditions,
+- * and move them to the pagelist if they do.
++ * Scan through folios, checking if they satisfy the required conditions,
++ * moving them from LRU to local pagelist for migration if they do (or not).
+  *
+- * queue_folios_pte_range() has three possible return values:
+- * 0 - folios are placed on the right node or queued successfully, or
+- *     special page is met, i.e. zero page, or unmovable page is found
+- *     but continue walking (indicated by queue_pages.has_unmovable).
+- * -EIO - only MPOL_MF_STRICT was specified and an existing folio was already
+- *        on a node that does not follow the policy.
++ * queue_folios_pte_range() has two possible return values:
++ * 0 - continue walking to scan for more, even if an existing folio on the
++ *     wrong node could not be isolated and queued for migration.
++ * -EIO - only MPOL_MF_STRICT was specified, without MPOL_MF_MOVE or ..._ALL,
++ *        and an existing folio was on a node that does not follow the policy.
+  */
+ static int queue_folios_pte_range(pmd_t *pmd, unsigned long addr,
+ 			unsigned long end, struct mm_walk *walk)
+@@ -516,8 +504,11 @@ static int queue_folios_pte_range(pmd_t *pmd, unsigned long addr,
+ 	spinlock_t *ptl;
+ 
+ 	ptl = pmd_trans_huge_lock(pmd, vma);
+-	if (ptl)
+-		return queue_folios_pmd(pmd, ptl, addr, end, walk);
++	if (ptl) {
++		queue_folios_pmd(pmd, walk);
++		spin_unlock(ptl);
++		goto out;
++	}
+ 
+ 	mapped_pte = pte = pte_offset_map_lock(walk->mm, pmd, addr, &ptl);
+ 	if (!pte) {
+@@ -526,8 +517,13 @@ static int queue_folios_pte_range(pmd_t *pmd, unsigned long addr,
+ 	}
+ 	for (; addr != end; pte++, addr += PAGE_SIZE) {
+ 		ptent = ptep_get(pte);
+-		if (!pte_present(ptent))
++		if (pte_none(ptent))
+ 			continue;
++		if (!pte_present(ptent)) {
++			if (is_migration_entry(pte_to_swp_entry(ptent)))
++				qp->nr_failed++;
++			continue;
++		}
+ 		folio = vm_normal_folio(vma, addr, ptent);
+ 		if (!folio || folio_is_zone_device(folio))
+ 			continue;
+@@ -539,95 +535,87 @@ static int queue_folios_pte_range(pmd_t *pmd, unsigned long addr,
+ 			continue;
+ 		if (!queue_folio_required(folio, qp))
+ 			continue;
+-		if (flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) {
+-			/*
+-			 * MPOL_MF_STRICT must be specified if we get here.
+-			 * Continue walking vmas due to MPOL_MF_MOVE* flags.
+-			 */
+-			if (!vma_migratable(vma))
+-				qp->has_unmovable = true;
+-
++		if (folio_test_large(folio)) {
+ 			/*
+-			 * Do not abort immediately since there may be
+-			 * temporary off LRU pages in the range.  Still
+-			 * need migrate other LRU pages.
++			 * A large folio can only be isolated from LRU once,
++			 * but may be mapped by many PTEs (and Copy-On-Write may
++			 * intersperse PTEs of other, order 0, folios).  This is
++			 * a common case, so don't mistake it for failure (but
++			 * there can be other cases of multi-mapped pages which
++			 * this quick check does not help to filter out - and a
++			 * search of the pagelist might grow to be prohibitive).
++			 *
++			 * migrate_pages(&pagelist) returns nr_failed folios, so
++			 * check "large" now so that queue_pages_range() returns
++			 * a comparable nr_failed folios.  This does imply that
++			 * if folio could not be isolated for some racy reason
++			 * at its first PTE, later PTEs will not give it another
++			 * chance of isolation; but keeps the accounting simple.
+ 			 */
+-			if (migrate_folio_add(folio, qp->pagelist, flags))
+-				qp->has_unmovable = true;
+-		} else
+-			break;
++			if (folio == qp->large)
 +				continue;
++			qp->large = folio;
++		}
++		if (!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
++		    !vma_migratable(vma) ||
++		    !migrate_folio_add(folio, qp->pagelist, flags)) {
++			qp->nr_failed++;
++			if (strictly_unmovable(flags))
++				break;
++		}
+ 	}
+ 	pte_unmap_unlock(mapped_pte, ptl);
+ 	cond_resched();
+-
+-	return addr != end ? -EIO : 0;
++out:
++	if (qp->nr_failed && strictly_unmovable(flags))
++		return -EIO;
++	return 0;
+ }
+ 
+ static int queue_folios_hugetlb(pte_t *pte, unsigned long hmask,
+ 			       unsigned long addr, unsigned long end,
+ 			       struct mm_walk *walk)
+ {
+-	int ret = 0;
+ #ifdef CONFIG_HUGETLB_PAGE
+ 	struct queue_pages *qp = walk->private;
+-	unsigned long flags = (qp->flags & MPOL_MF_VALID);
++	unsigned long flags = qp->flags;
+ 	struct folio *folio;
+ 	spinlock_t *ptl;
+ 	pte_t entry;
+ 
+ 	ptl = huge_pte_lock(hstate_vma(walk->vma), walk->mm, pte);
+ 	entry = huge_ptep_get(pte);
+-	if (!pte_present(entry))
++	if (!pte_present(entry)) {
++		if (unlikely(is_hugetlb_entry_migration(entry)))
++			qp->nr_failed++;
+ 		goto unlock;
++	}
+ 	folio = pfn_folio(pte_pfn(entry));
+ 	if (!queue_folio_required(folio, qp))
+ 		goto unlock;
+-
+-	if (flags == MPOL_MF_STRICT) {
+-		/*
+-		 * STRICT alone means only detecting misplaced folio and no
+-		 * need to further check other vma.
+-		 */
+-		ret = -EIO;
++	if (!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) ||
++	    !vma_migratable(walk->vma)) {
++		qp->nr_failed++;
+ 		goto unlock;
+ 	}
+-
+-	if (!vma_migratable(walk->vma)) {
+-		/*
+-		 * Must be STRICT with MOVE*, otherwise .test_walk() have
+-		 * stopped walking current vma.
+-		 * Detecting misplaced folio but allow migrating folios which
+-		 * have been queued.
+-		 */
+-		qp->has_unmovable = true;
+-		goto unlock;
+-	}
+-
+ 	/*
+-	 * With MPOL_MF_MOVE, we try to migrate only unshared folios. If it
+-	 * is shared it is likely not worth migrating.
++	 * Unless MPOL_MF_MOVE_ALL, we try to avoid migrating a shared folio.
++	 * Choosing not to migrate a shared folio is not counted as a failure.
+ 	 *
+ 	 * To check if the folio is shared, ideally we want to make sure
+ 	 * every page is mapped to the same process. Doing that is very
+-	 * expensive, so check the estimated mapcount of the folio instead.
++	 * expensive, so check the estimated sharers of the folio instead.
+ 	 */
+-	if (flags & (MPOL_MF_MOVE_ALL) ||
+-	    (flags & MPOL_MF_MOVE && folio_estimated_sharers(folio) == 1 &&
+-	     !hugetlb_pmd_shared(pte))) {
+-		if (!isolate_hugetlb(folio, qp->pagelist) &&
+-			(flags & MPOL_MF_STRICT))
+-			/*
+-			 * Failed to isolate folio but allow migrating pages
+-			 * which have been queued.
+-			 */
+-			qp->has_unmovable = true;
+-	}
++	if ((flags & MPOL_MF_MOVE_ALL) ||
++	    (folio_estimated_sharers(folio) == 1 && !hugetlb_pmd_shared(pte)))
++		if (!isolate_hugetlb(folio, qp->pagelist))
++			qp->nr_failed++;
+ unlock:
+ 	spin_unlock(ptl);
+-#else
+-	BUG();
++	if (qp->nr_failed && strictly_unmovable(flags))
++		return -EIO;
+ #endif
+-	return ret;
++	return 0;
+ }
+ 
+ #ifdef CONFIG_NUMA_BALANCING
+@@ -708,8 +696,11 @@ static int queue_pages_test_walk(unsigned long start, unsigned long end,
+ 		return 1;
+ 	}
+ 
+-	/* queue pages from current vma */
+-	if (flags & MPOL_MF_VALID)
++	/*
++	 * Check page nodes, and queue pages to move, in the current vma.
++	 * But if no moving, and no strict checking, the scan can be skipped.
++	 */
++	if (flags & (MPOL_MF_STRICT | MPOL_MF_MOVE | MPOL_MF_MOVE_ALL))
+ 		return 0;
+ 	return 1;
+ }
+@@ -731,22 +722,21 @@ static const struct mm_walk_ops queue_pages_lock_vma_walk_ops = {
+ /*
+  * Walk through page tables and collect pages to be migrated.
+  *
+- * If pages found in a given range are on a set of nodes (determined by
+- * @nodes and @flags,) it's isolated and queued to the pagelist which is
+- * passed via @private.
++ * If pages found in a given range are not on the required set of @nodes,
++ * and migration is allowed, they are isolated and queued to @pagelist.
+  *
+- * queue_pages_range() has three possible return values:
+- * 1 - there is unmovable page, but MPOL_MF_MOVE* & MPOL_MF_STRICT were
+- *     specified.
+- * 0 - queue pages successfully or no misplaced page.
+- * errno - i.e. misplaced pages with MPOL_MF_STRICT specified (-EIO) or
+- *         memory range specified by nodemask and maxnode points outside
+- *         your accessible address space (-EFAULT)
++ * queue_pages_range() may return:
++ * 0 - all pages already on the right node, or successfully queued for moving
++ *     (or neither strict checking nor moving requested: only range checking).
++ * >0 - this number of misplaced folios could not be queued for moving
++ *      (a hugetlbfs page or a transparent huge page being counted as 1).
++ * -EIO - a misplaced page found, when MPOL_MF_STRICT specified without MOVEs.
++ * -EFAULT - a hole in the memory range, when MPOL_MF_DISCONTIG_OK unspecified.
+  */
+-static int
++static long
+ queue_pages_range(struct mm_struct *mm, unsigned long start, unsigned long end,
+ 		nodemask_t *nodes, unsigned long flags,
+-		struct list_head *pagelist, bool lock_vma)
++		struct list_head *pagelist)
+ {
+ 	int err;
+ 	struct queue_pages qp = {
+@@ -756,20 +746,17 @@ queue_pages_range(struct mm_struct *mm, unsigned long start, unsigned long end,
+ 		.start = start,
+ 		.end = end,
+ 		.first = NULL,
+-		.has_unmovable = false,
+ 	};
+-	const struct mm_walk_ops *ops = lock_vma ?
++	const struct mm_walk_ops *ops = (flags & MPOL_MF_WRLOCK) ?
+ 			&queue_pages_lock_vma_walk_ops : &queue_pages_walk_ops;
+ 
+ 	err = walk_page_range(mm, start, end, ops, &qp);
+ 
+-	if (qp.has_unmovable)
+-		err = 1;
+ 	if (!qp.first)
+ 		/* whole range in hole */
+ 		err = -EFAULT;
+ 
+-	return err;
++	return err ? : qp.nr_failed;
+ }
+ 
+ /*
+@@ -1032,16 +1019,16 @@ static long do_get_mempolicy(int *policy, nodemask_t *nmask,
+ }
+ 
+ #ifdef CONFIG_MIGRATION
+-static int migrate_folio_add(struct folio *folio, struct list_head *foliolist,
++static bool migrate_folio_add(struct folio *folio, struct list_head *foliolist,
+ 				unsigned long flags)
+ {
+ 	/*
+-	 * We try to migrate only unshared folios. If it is shared it
+-	 * is likely not worth migrating.
++	 * Unless MPOL_MF_MOVE_ALL, we try to avoid migrating a shared folio.
++	 * Choosing not to migrate a shared folio is not counted as a failure.
+ 	 *
+ 	 * To check if the folio is shared, ideally we want to make sure
+ 	 * every page is mapped to the same process. Doing that is very
+-	 * expensive, so check the estimated mapcount of the folio instead.
++	 * expensive, so check the estimated sharers of the folio instead.
+ 	 */
+ 	if ((flags & MPOL_MF_MOVE_ALL) || folio_estimated_sharers(folio) == 1) {
+ 		if (folio_isolate_lru(folio)) {
+@@ -1049,32 +1036,31 @@ static int migrate_folio_add(struct folio *folio, struct list_head *foliolist,
+ 			node_stat_mod_folio(folio,
+ 				NR_ISOLATED_ANON + folio_is_file_lru(folio),
+ 				folio_nr_pages(folio));
+-		} else if (flags & MPOL_MF_STRICT) {
++		} else {
+ 			/*
+ 			 * Non-movable folio may reach here.  And, there may be
+ 			 * temporary off LRU folios or non-LRU movable folios.
+ 			 * Treat them as unmovable folios since they can't be
+-			 * isolated, so they can't be moved at the moment.  It
+-			 * should return -EIO for this case too.
++			 * isolated, so they can't be moved at the moment.
+ 			 */
+-			return -EIO;
++			return false;
+ 		}
+ 	}
+-
+-	return 0;
++	return true;
+ }
+ 
+ /*
+  * Migrate pages from one node to a target node.
+  * Returns error or the number of pages not migrated.
+  */
+-static int migrate_to_node(struct mm_struct *mm, int source, int dest,
+-			   int flags)
++static long migrate_to_node(struct mm_struct *mm, int source, int dest,
++			    int flags)
+ {
+ 	nodemask_t nmask;
+ 	struct vm_area_struct *vma;
+ 	LIST_HEAD(pagelist);
+-	int err = 0;
++	long nr_failed;
++	long err = 0;
+ 	struct migration_target_control mtc = {
+ 		.nid = dest,
+ 		.gfp_mask = GFP_HIGHUSER_MOVABLE | __GFP_THISNODE,
+@@ -1083,23 +1069,27 @@ static int migrate_to_node(struct mm_struct *mm, int source, int dest,
+ 	nodes_clear(nmask);
+ 	node_set(source, nmask);
+ 
++	VM_BUG_ON(!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)));
++	vma = find_vma(mm, 0);
 +
-+			if (cmpxchg(&vma->numab_state, NULL, ptr)) {
-+				kfree(ptr);
- 				continue;
-+			}
+ 	/*
+-	 * This does not "check" the range but isolates all pages that
++	 * This does not migrate the range, but isolates all pages that
+ 	 * need migration.  Between passing in the full user address
+-	 * space range and MPOL_MF_DISCONTIG_OK, this call can not fail.
++	 * space range and MPOL_MF_DISCONTIG_OK, this call cannot fail,
++	 * but passes back the count of pages which could not be isolated.
+ 	 */
+-	vma = find_vma(mm, 0);
+-	VM_BUG_ON(!(flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)));
+-	queue_pages_range(mm, vma->vm_start, mm->task_size, &nmask,
+-			flags | MPOL_MF_DISCONTIG_OK, &pagelist, false);
++	nr_failed = queue_pages_range(mm, vma->vm_start, mm->task_size, &nmask,
++				      flags | MPOL_MF_DISCONTIG_OK, &pagelist);
  
- 			vma->numab_state->start_scan_seq = mm->numa_scan_seq;
+ 	if (!list_empty(&pagelist)) {
+ 		err = migrate_pages(&pagelist, alloc_migration_target, NULL,
+-				(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL, NULL);
++			(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL, NULL);
+ 		if (err)
+ 			putback_movable_pages(&pagelist);
+ 	}
  
++	if (err >= 0)
++		err += nr_failed;
+ 	return err;
+ }
+ 
+@@ -1112,8 +1102,8 @@ static int migrate_to_node(struct mm_struct *mm, int source, int dest,
+ int do_migrate_pages(struct mm_struct *mm, const nodemask_t *from,
+ 		     const nodemask_t *to, int flags)
+ {
+-	int busy = 0;
+-	int err = 0;
++	long nr_failed = 0;
++	long err = 0;
+ 	nodemask_t tmp;
+ 
+ 	lru_cache_disable();
+@@ -1195,7 +1185,7 @@ int do_migrate_pages(struct mm_struct *mm, const nodemask_t *from,
+ 		node_clear(source, tmp);
+ 		err = migrate_to_node(mm, source, dest, flags);
+ 		if (err > 0)
+-			busy += err;
++			nr_failed += err;
+ 		if (err < 0)
+ 			break;
+ 	}
+@@ -1204,8 +1194,7 @@ int do_migrate_pages(struct mm_struct *mm, const nodemask_t *from,
+ 	lru_cache_enable();
+ 	if (err < 0)
+ 		return err;
+-	return busy;
+-
++	return (nr_failed < INT_MAX) ? nr_failed : INT_MAX;
+ }
+ 
+ /*
+@@ -1244,10 +1233,10 @@ static struct folio *new_folio(struct folio *src, unsigned long start)
+ }
+ #else
+ 
+-static int migrate_folio_add(struct folio *folio, struct list_head *foliolist,
++static bool migrate_folio_add(struct folio *folio, struct list_head *foliolist,
+ 				unsigned long flags)
+ {
+-	return -EIO;
++	return false;
+ }
+ 
+ int do_migrate_pages(struct mm_struct *mm, const nodemask_t *from,
+@@ -1271,8 +1260,8 @@ static long do_mbind(unsigned long start, unsigned long len,
+ 	struct vma_iterator vmi;
+ 	struct mempolicy *new;
+ 	unsigned long end;
+-	int err;
+-	int ret;
++	long err;
++	long nr_failed;
+ 	LIST_HEAD(pagelist);
+ 
+ 	if (flags & ~(unsigned long)MPOL_MF_VALID)
+@@ -1312,10 +1301,8 @@ static long do_mbind(unsigned long start, unsigned long len,
+ 		 start, start + len, mode, mode_flags,
+ 		 nmask ? nodes_addr(*nmask)[0] : NUMA_NO_NODE);
+ 
+-	if (flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL)) {
+-
++	if (flags & (MPOL_MF_MOVE | MPOL_MF_MOVE_ALL))
+ 		lru_cache_disable();
+-	}
+ 	{
+ 		NODEMASK_SCRATCH(scratch);
+ 		if (scratch) {
+@@ -1331,44 +1318,37 @@ static long do_mbind(unsigned long start, unsigned long len,
+ 		goto mpol_out;
+ 
+ 	/*
+-	 * Lock the VMAs before scanning for pages to migrate, to ensure we don't
+-	 * miss a concurrently inserted page.
++	 * Lock the VMAs before scanning for pages to migrate,
++	 * to ensure we don't miss a concurrently inserted page.
+ 	 */
+-	ret = queue_pages_range(mm, start, end, nmask,
+-			  flags | MPOL_MF_INVERT, &pagelist, true);
++	nr_failed = queue_pages_range(mm, start, end, nmask,
++			flags | MPOL_MF_INVERT | MPOL_MF_WRLOCK, &pagelist);
+ 
+-	if (ret < 0) {
+-		err = ret;
+-		goto up_out;
+-	}
+-
+-	vma_iter_init(&vmi, mm, start);
+-	prev = vma_prev(&vmi);
+-	for_each_vma_range(vmi, vma, end) {
+-		err = mbind_range(&vmi, vma, &prev, start, end, new);
+-		if (err)
+-			break;
++	if (nr_failed < 0) {
++		err = nr_failed;
++	} else {
++		vma_iter_init(&vmi, mm, start);
++		prev = vma_prev(&vmi);
++		for_each_vma_range(vmi, vma, end) {
++			err = mbind_range(&vmi, vma, &prev, start, end, new);
++			if (err)
++				break;
++		}
+ 	}
+ 
+ 	if (!err) {
+-		int nr_failed = 0;
+-
+ 		if (!list_empty(&pagelist)) {
+ 			WARN_ON_ONCE(flags & MPOL_MF_LAZY);
+-			nr_failed = migrate_pages(&pagelist, new_folio, NULL,
++			nr_failed |= migrate_pages(&pagelist, new_folio, NULL,
+ 				start, MIGRATE_SYNC, MR_MEMPOLICY_MBIND, NULL);
+-			if (nr_failed)
+-				putback_movable_pages(&pagelist);
+ 		}
+-
+-		if (((ret > 0) || nr_failed) && (flags & MPOL_MF_STRICT))
++		if (nr_failed && (flags & MPOL_MF_STRICT))
+ 			err = -EIO;
+-	} else {
+-up_out:
+-		if (!list_empty(&pagelist))
+-			putback_movable_pages(&pagelist);
+ 	}
+ 
++	if (!list_empty(&pagelist))
++		putback_movable_pages(&pagelist);
++
+ 	mmap_write_unlock(mm);
+ mpol_out:
+ 	mpol_put(new);
 -- 
 2.43.0
 
