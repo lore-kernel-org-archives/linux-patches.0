@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D93A22EA04;
-	Thu, 12 Dec 2024 17:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836CB223313;
+	Thu, 12 Dec 2024 17:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025386; cv=none; b=prNcmd8sOlhOKGBSLJnyvg38HpZL1VHBwGn0+a+vWKj4yxAgZcP3twJAjsvK1yZznAGQvj5n9BCMd5vYMmpKQhisTvBsqqC8fa+6XN9vHMn3yF0PPbRuJBqG1ssTtWAtbzps+pX7A7kXoEObuzTEgbgCiokJ6nFoRoARV4Ap690=
+	t=1734025389; cv=none; b=LPCjirK8VWt9cTXAwefmTctt43bKtt+YJ9yTxodvdXrHB/nAL6NDZpCC5pmLuFHmVJIfB+qwnmwDCPIDVHbCoICnhAed7eOnzr2lw5ueMOup0oF4gtOM0Bj3G/5DE3j4MYrw+SxCLJbiB3n5DL1VkuTxcBNYTSvOa/J/8Tdeayw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025386; c=relaxed/simple;
-	bh=V+rrO2sDuGeQe5ivEgNEtjCYvhDriBbH/IsG/Vb0fZI=;
+	s=arc-20240116; t=1734025389; c=relaxed/simple;
+	bh=7c/Rgi30a3WvsqExppx4ypkySA5mJSwv81QiWWHMdF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVaI++7qVYmE66C8ZzmfKhy2Ai7E14gQEAxsv/7wKUEwjbLeFthyG88eIPMTk3hmZXvaLgRQYnLHRMaqdKV5jrE0DxrSUw0JLvmu/yDFEHDEUUvTiP+j42XtUUZGtRTJWsrOxaGJDvt4L36wrsex2rZv85d9oHFqvQdfUZSaM7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OWGO2xfh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M4zjoZUwzm+BwLRW6iuzKHGpTOzIlStBcxQwdjfM6r6ByUNA87MYKgfy7x/kRhLYo36iq4+rN5itB0u7KTaivr6ehcvlNTUaQKl1Zb43x2Ms/6hC1lSi071oxT5liH7saUYTP4+39YPREGh7Uvzyvor+b8ECU/Xr4fc4undgGQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSkuiL5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OWGO2xfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9ED3C4CEE2;
-	Thu, 12 Dec 2024 17:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSkuiL5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059FAC4CEE5;
+	Thu, 12 Dec 2024 17:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025386;
-	bh=V+rrO2sDuGeQe5ivEgNEtjCYvhDriBbH/IsG/Vb0fZI=;
+	s=korg; t=1734025389;
+	bh=7c/Rgi30a3WvsqExppx4ypkySA5mJSwv81QiWWHMdF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWGO2xfh+Qaa2+Ls7eese1b7ClxnxGO2MA1BZu5XAyV8rKktXXK8VpA/GfQjly2r9
-	 9kLyg22HKQOv7EJoJpF5UorYffka/GawLLCnSZs6m3zbAZ3BF439t7oINgkif6JTzl
-	 SbHpHHIwydlrdjFYADxHhDUSB1JpaazCE0446A2A=
+	b=PSkuiL5hfBQTcmGuhl+h/cfmWrEOiDdfBmtSt1Ibbt7DTOTZ/H0L0gaohK3HYCDWB
+	 JJz+/tjx6oDMxEOyOWS7W2WPxGpkASQRlJZ+4xmkltfuH6dgzdHB9roR81BJc1n2He
+	 AcTT8koI0FbD5Q+fJ6guBwm9T8nC9TAdxDD6P6GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Shadura <andrew.shadura@collabora.co.uk>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Aleksei Vetrov <vvvvvv@google.com>
-Subject: [PATCH 5.4 153/321] Bluetooth: Fix type of len in rfcomm_sock_getsockopt{,_old}()
-Date: Thu, 12 Dec 2024 16:01:11 +0100
-Message-ID: <20241212144236.020117249@linuxfoundation.org>
+	Michal Vrastil <michal.vrastil@hidglobal.com>,
+	Elson Roy Serrao <quic_eserrao@quicinc.com>,
+	Peter korsgaard <peter@korsgaard.com>
+Subject: [PATCH 5.4 154/321] Revert "usb: gadget: composite: fix OS descriptors w_value logic"
+Date: Thu, 12 Dec 2024 16:01:12 +0100
+Message-ID: <20241212144236.061117139@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,83 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrej Shadura <andrew.shadura@collabora.co.uk>
+From: Michal Vrastil <michal.vrastil@hidglobal.com>
 
-commit 5fe6caa62b07fd39cd6a28acc8f92ba2955e11a6 upstream.
+commit 51cdd69d6a857f527d6d0697a2e1f0fa8bca1005 upstream.
 
-Commit 9bf4e919ccad worked around an issue introduced after an innocuous
-optimisation change in LLVM main:
+This reverts commit ec6ce7075ef879b91a8710829016005dc8170f17.
 
-> len is defined as an 'int' because it is assigned from
-> '__user int *optlen'. However, it is clamped against the result of
-> sizeof(), which has a type of 'size_t' ('unsigned long' for 64-bit
-> platforms). This is done with min_t() because min() requires compatible
-> types, which results in both len and the result of sizeof() being casted
-> to 'unsigned int', meaning len changes signs and the result of sizeof()
-> is truncated. From there, len is passed to copy_to_user(), which has a
-> third parameter type of 'unsigned long', so it is widened and changes
-> signs again. This excessive casting in combination with the KCSAN
-> instrumentation causes LLVM to fail to eliminate the __bad_copy_from()
-> call, failing the build.
+Fix installation of WinUSB driver using OS descriptors. Without the
+fix the drivers are not installed correctly and the property
+'DeviceInterfaceGUID' is missing on host side.
 
-The same issue occurs in rfcomm in functions rfcomm_sock_getsockopt and
-rfcomm_sock_getsockopt_old.
+The original change was based on the assumption that the interface
+number is in the high byte of wValue but it is in the low byte,
+instead. Unfortunately, the fix is based on MS documentation which is
+also wrong.
 
-Change the type of len to size_t in both rfcomm_sock_getsockopt and
-rfcomm_sock_getsockopt_old and replace min_t() with min().
+The actual USB request for OS descriptors (using USB analyzer) looks
+like:
+
+Offset  0   1   2   3   4   5   6   7
+0x000   C1  A1  02  00  05  00  0A  00
+
+C1: bmRequestType (device to host, vendor, interface)
+A1: nas magic number
+0002: wValue (2: nas interface)
+0005: wIndex (5: get extended property i.e. nas interface GUID)
+008E: wLength (142)
+
+The fix was tested on Windows 10 and Windows 11.
 
 Cc: stable@vger.kernel.org
-Co-authored-by: Aleksei Vetrov <vvvvvv@google.com>
-Improves: 9bf4e919ccad ("Bluetooth: Fix type of len in {l2cap,sco}_sock_getsockopt_old()")
-Link: https://github.com/ClangBuiltLinux/linux/issues/2007
-Link: https://github.com/llvm/llvm-project/issues/85647
-Signed-off-by: Andrej Shadura <andrew.shadura@collabora.co.uk>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: ec6ce7075ef8 ("usb: gadget: composite: fix OS descriptors w_value logic")
+Signed-off-by: Michal Vrastil <michal.vrastil@hidglobal.com>
+Signed-off-by: Elson Roy Serrao <quic_eserrao@quicinc.com>
+Acked-by: Peter korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20241113235433.20244-1-quic_eserrao@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/sock.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/composite.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -736,7 +736,8 @@ static int rfcomm_sock_getsockopt_old(st
- 	struct sock *l2cap_sk;
- 	struct l2cap_conn *conn;
- 	struct rfcomm_conninfo cinfo;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 	u32 opt;
- 
- 	BT_DBG("sk %p", sk);
-@@ -790,7 +791,7 @@ static int rfcomm_sock_getsockopt_old(st
- 		cinfo.hci_handle = conn->hcon->handle;
- 		memcpy(cinfo.dev_class, conn->hcon->dev_class, 3);
- 
--		len = min_t(unsigned int, len, sizeof(cinfo));
-+		len = min(len, sizeof(cinfo));
- 		if (copy_to_user(optval, (char *) &cinfo, len))
- 			err = -EFAULT;
- 
-@@ -809,7 +810,8 @@ static int rfcomm_sock_getsockopt(struct
- {
- 	struct sock *sk = sock->sk;
- 	struct bt_security sec;
--	int len, err = 0;
-+	int err = 0;
-+	size_t len;
- 
- 	BT_DBG("sk %p", sk);
- 
-@@ -834,7 +836,7 @@ static int rfcomm_sock_getsockopt(struct
- 		sec.level = rfcomm_pi(sk)->sec_level;
- 		sec.key_size = 0;
- 
--		len = min_t(unsigned int, len, sizeof(sec));
-+		len = min(len, sizeof(sec));
- 		if (copy_to_user(optval, (char *) &sec, len))
- 			err = -EFAULT;
- 
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -1924,8 +1924,20 @@ unknown:
+ 			memset(buf, 0, w_length);
+ 			buf[5] = 0x01;
+ 			switch (ctrl->bRequestType & USB_RECIP_MASK) {
++			/*
++			 * The Microsoft CompatID OS Descriptor Spec(w_index = 0x4) and
++			 * Extended Prop OS Desc Spec(w_index = 0x5) state that the
++			 * HighByte of wValue is the InterfaceNumber and the LowByte is
++			 * the PageNumber. This high/low byte ordering is incorrectly
++			 * documented in the Spec. USB analyzer output on the below
++			 * request packets show the high/low byte inverted i.e LowByte
++			 * is the InterfaceNumber and the HighByte is the PageNumber.
++			 * Since we dont support >64KB CompatID/ExtendedProp descriptors,
++			 * PageNumber is set to 0. Hence verify that the HighByte is 0
++			 * for below two cases.
++			 */
+ 			case USB_RECIP_DEVICE:
+-				if (w_index != 0x4 || (w_value & 0xff))
++				if (w_index != 0x4 || (w_value >> 8))
+ 					break;
+ 				buf[6] = w_index;
+ 				/* Number of ext compat interfaces */
+@@ -1941,9 +1953,9 @@ unknown:
+ 				}
+ 				break;
+ 			case USB_RECIP_INTERFACE:
+-				if (w_index != 0x5 || (w_value & 0xff))
++				if (w_index != 0x5 || (w_value >> 8))
+ 					break;
+-				interface = w_value >> 8;
++				interface = w_value & 0xFF;
+ 				if (interface >= MAX_CONFIG_INTERFACES ||
+ 				    !os_desc_cfg->interface[interface])
+ 					break;
 
 
