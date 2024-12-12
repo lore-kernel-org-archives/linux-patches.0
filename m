@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E9D215710;
-	Thu, 12 Dec 2024 17:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 383EF6F2FE;
+	Thu, 12 Dec 2024 17:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025352; cv=none; b=NikSay7IK4STYQ/YRh7HFCJ8PrvtirTawURoDaRBKSFstt5tZ6ozAYX166U7yU8dXH5iydy03lY/n4p9Ilr5F6KAmCKrBrRrdGDuaRTI3PcbPF9LJFAr2AJPedyOPzAM8lvO9pVa6GbcMC094M70A15T2hY4ho6LgdF5Tvcx3IU=
+	t=1734025355; cv=none; b=TQyteUdX3t4Qm7NNd2taSwxk7Z0qmAurhy/XWCWq9cbmtfVzd3w2zXRQq6FRoutGhCFZ7P6PpiW9Xy95foZqwVSyGdkgqj3UlVmhtZAKniPzkCucXYcQpslPAiAWj3EAtTjG3fU/hppiWU4WOWppwfAWBMX+J6FzXIrxS264IiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025352; c=relaxed/simple;
-	bh=jPwdlVyvOAWhAbY3mRafTwv25zWcDzJOfD374VTU1Wk=;
+	s=arc-20240116; t=1734025355; c=relaxed/simple;
+	bh=RhgWwyUuISPOw+pO+jfpMC+jS4UjPA4WBiyC7KoqrTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJY9L9L6eqGjd8dLiMH8e9u2etEl1hwh2O7m1ny4eoYj0/bU5n6WJRcS2vvY7P51iQawfKcGfVcWIuO0BtqmmME1AsFGsDadhGnXWSlPQuEG7ZVprJfYb0U2tMfxFsREETnNe9BL1F1XJgJ7med7LcEVoh/b8Zi4xZPfdHZO0yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtqgIVts; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDNL2A/R4K8KtJvJPdcqYBzwhHc/zWbPQCvjQ60Jzn2XPp0rwtqfer+68ow7G1cEXNJATByyFvN3Iiyst/OI48Q8izSQEUHlF24nS3r6fyfBknVvj7huDR8OBdqbFXcdRkT1H/DvxxqDLgATJ6Lt9PVlpHHvpewG/XmYFZzSmok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iazug9FB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtqgIVts"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A55C4CECE;
-	Thu, 12 Dec 2024 17:42:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iazug9FB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A04C4CECE;
+	Thu, 12 Dec 2024 17:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025352;
-	bh=jPwdlVyvOAWhAbY3mRafTwv25zWcDzJOfD374VTU1Wk=;
+	s=korg; t=1734025355;
+	bh=RhgWwyUuISPOw+pO+jfpMC+jS4UjPA4WBiyC7KoqrTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LtqgIVtswBKKaZtvOVcTpiBWZCQtCDVlHxN3wAknpBak0qWS47483fp8zT/EMdWoV
-	 xEHcV+OZW0hxTbLxXY23iEe8Xz4S3JJpNmxkLWV9E5opx9rgRgeHtDKM9zyNcj0JHx
-	 fwFJ7yscqwXvC/XlYu2qrzrcCKYODwqo0Gg7miu0=
+	b=Iazug9FBGadkuiANox7uLJ/0N9kuO/t9OdCjWLRTfdgzJnf/g8B54S15gXfhglT6f
+	 XyBk9/nxlZixAjlxzQnUOWDjHOX3UQIgvhjIfhb+x6xcR0m+W0ijEVy9jjCZM/eyNY
+	 dg2wSX7z9A1p7alTxEfa1NqZ1+9UpzRVgQvUFs3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Naveen Naidu <naveennaidu479@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 111/321] perf probe: Correct demangled symbols in C++ program
-Date: Thu, 12 Dec 2024 16:00:29 +0100
-Message-ID: <20241212144234.369220274@linuxfoundation.org>
+Subject: [PATCH 5.4 112/321] PCI: cpqphp: Use PCI_POSSIBLE_ERROR() to check config reads
+Date: Thu, 12 Dec 2024 16:00:30 +0100
+Message-ID: <20241212144234.407673621@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,139 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: weiyufeng <weiyufeng@kylinos.cn>
 
-[ Upstream commit 314909f13cc12d47c468602c37dace512d225eeb ]
+[ Upstream commit a18a025c2fb5fbf2d1d0606ea0d7441ac90e9c39 ]
 
-An issue can be observed when probe C++ demangled symbol with steps:
+When config pci_ops.read() can detect failed PCI transactions, the data
+returned to the CPU is PCI_ERROR_RESPONSE (~0 or 0xffffffff).
 
-  # nm test_cpp_mangle | grep print_data
-    0000000000000c94 t _GLOBAL__sub_I__Z10print_datai
-    0000000000000afc T _Z10print_datai
-    0000000000000b38 T _Z10print_dataR5Point
+Obviously a successful PCI config read may *also* return that data if a
+config register happens to contain ~0, so it doesn't definitively indicate
+an error unless we know the register cannot contain ~0.
 
-  # perf probe -x /home/niayan01/test_cpp_mangle -F --demangle
-    ...
-    print_data(Point&)
-    print_data(int)
-    ...
+Use PCI_POSSIBLE_ERROR() to check the response we get when we read data
+from hardware.  This unifies PCI error response checking and makes error
+checks consistent and easier to find.
 
-  # perf --debug verbose=3 probe -x test_cpp_mangle --add "test=print_data(int)"
-    probe-definition(0): test=print_data(int)
-    symbol:print_data(int) file:(null) line:0 offset:0 return:0 lazy:(null)
-    0 arguments
-    Open Debuginfo file: /home/niayan01/test_cpp_mangle
-    Try to find probe point from debuginfo.
-    Symbol print_data(int) address found : afc
-    Matched function: print_data [2ccf]
-    Probe point found: print_data+0
-    Found 1 probe_trace_events.
-    Opening /sys/kernel/tracing//uprobe_events write=1
-    Opening /sys/kernel/tracing//README write=0
-    Writing event: p:probe_test_cpp_mangle/test /home/niayan01/test_cpp_mangle:0xb38
-    ...
-
-When tried to probe symbol "print_data(int)", the log shows:
-
-    Symbol print_data(int) address found : afc
-
-The found address is 0xafc - which is right with verifying the output
-result from nm. Afterwards when write event, the command uses offset
-0xb38 in the last log, which is a wrong address.
-
-The dwarf_diename() gets a common function name, in above case, it
-returns string "print_data". As a result, the tool parses the offset
-based on the common name. This leads to probe at the wrong symbol
-"print_data(Point&)".
-
-To fix the issue, use the die_get_linkage_name() function to retrieve
-the distinct linkage name - this is the mangled name for the C++ case.
-Based on this unique name, the tool can get a correct offset for
-probing. Based on DWARF doc, it is possible the linkage name is missed
-in the DIE, it rolls back to use dwarf_diename().
-
-After:
-
-  # perf --debug verbose=3 probe -x test_cpp_mangle --add "test=print_data(int)"
-    probe-definition(0): test=print_data(int)
-    symbol:print_data(int) file:(null) line:0 offset:0 return:0 lazy:(null)
-    0 arguments
-    Open Debuginfo file: /home/niayan01/test_cpp_mangle
-    Try to find probe point from debuginfo.
-    Symbol print_data(int) address found : afc
-    Matched function: print_data [2d06]
-    Probe point found: print_data+0
-    Found 1 probe_trace_events.
-    Opening /sys/kernel/tracing//uprobe_events write=1
-    Opening /sys/kernel/tracing//README write=0
-    Writing event: p:probe_test_cpp_mangle/test /home/niayan01/test_cpp_mangle:0xafc
-    Added new event:
-      probe_test_cpp_mangle:test (on print_data(int) in /home/niayan01/test_cpp_mangle)
-
-    You can now use it in all perf tools, such as:
-
-            perf record -e probe_test_cpp_mangle:test -aR sleep 1
-
-  # perf --debug verbose=3 probe -x test_cpp_mangle --add "test2=print_data(Point&)"
-    probe-definition(0): test2=print_data(Point&)
-    symbol:print_data(Point&) file:(null) line:0 offset:0 return:0 lazy:(null)
-    0 arguments
-    Open Debuginfo file: /home/niayan01/test_cpp_mangle
-    Try to find probe point from debuginfo.
-    Symbol print_data(Point&) address found : b38
-    Matched function: print_data [2ccf]
-    Probe point found: print_data+0
-    Found 1 probe_trace_events.
-    Opening /sys/kernel/tracing//uprobe_events write=1
-    Parsing probe_events: p:probe_test_cpp_mangle/test /home/niayan01/test_cpp_mangle:0x0000000000000afc
-    Group:probe_test_cpp_mangle Event:test probe:p
-    Opening /sys/kernel/tracing//README write=0
-    Writing event: p:probe_test_cpp_mangle/test2 /home/niayan01/test_cpp_mangle:0xb38
-    Added new event:
-      probe_test_cpp_mangle:test2 (on print_data(Point&) in /home/niayan01/test_cpp_mangle)
-
-    You can now use it in all perf tools, such as:
-
-            perf record -e probe_test_cpp_mangle:test2 -aR sleep 1
-
-Fixes: fb1587d869a3 ("perf probe: List probes with line number and file name")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20241012141432.877894-1-leo.yan@arm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/b12005c0d57bb9d4c8b486724d078b7bd92f8321.1637243717.git.naveennaidu479@gmail.com
+Signed-off-by: Naveen Naidu <naveennaidu479@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Stable-dep-of: e2226dbc4a49 ("PCI: cpqphp: Fix PCIBIOS_* return value confusion")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/probe-finder.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/pci/hotplug/cpqphp_pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
-index 849d8d2e5976b..261ad8d123af7 100644
---- a/tools/perf/util/probe-finder.c
-+++ b/tools/perf/util/probe-finder.c
-@@ -1604,8 +1604,21 @@ int debuginfo__find_probe_point(struct debuginfo *dbg, unsigned long addr,
+diff --git a/drivers/pci/hotplug/cpqphp_pci.c b/drivers/pci/hotplug/cpqphp_pci.c
+index 1b2b3f3b648bc..a20875da4ec70 100644
+--- a/drivers/pci/hotplug/cpqphp_pci.c
++++ b/drivers/pci/hotplug/cpqphp_pci.c
+@@ -138,7 +138,7 @@ static int PCI_RefinedAccessConfig(struct pci_bus *bus, unsigned int devfn, u8 o
  
- 	/* Find a corresponding function (name, baseline and baseaddr) */
- 	if (die_find_realfunc(&cudie, (Dwarf_Addr)addr, &spdie)) {
--		/* Get function entry information */
--		func = basefunc = dwarf_diename(&spdie);
-+		/*
-+		 * Get function entry information.
-+		 *
-+		 * As described in the document DWARF Debugging Information
-+		 * Format Version 5, section 2.22 Linkage Names, "mangled names,
-+		 * are used in various ways, ... to distinguish multiple
-+		 * entities that have the same name".
-+		 *
-+		 * Firstly try to get distinct linkage name, if fail then
-+		 * rollback to get associated name in DIE.
-+		 */
-+		func = basefunc = die_get_linkage_name(&spdie);
-+		if (!func)
-+			func = basefunc = dwarf_diename(&spdie);
-+
- 		if (!func ||
- 		    die_entrypc(&spdie, &baseaddr) != 0 ||
- 		    dwarf_decl_line(&spdie, &baseline) != 0) {
+ 	if (pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID) == -1)
+ 		return -1;
+-	if (vendID == 0xffffffff)
++	if (PCI_POSSIBLE_ERROR(vendID))
+ 		return -1;
+ 	return pci_bus_read_config_dword(bus, devfn, offset, value);
+ }
+@@ -251,7 +251,7 @@ static int PCI_GetBusDevHelper(struct controller *ctrl, u8 *bus_num, u8 *dev_num
+ 			*dev_num = tdevice;
+ 			ctrl->pci_bus->number = tbus;
+ 			pci_bus_read_config_dword(ctrl->pci_bus, *dev_num, PCI_VENDOR_ID, &work);
+-			if (!nobridge || (work == 0xffffffff))
++			if (!nobridge || PCI_POSSIBLE_ERROR(work))
+ 				return 0;
+ 
+ 			dbg("bus_num %d devfn %d\n", *bus_num, *dev_num);
 -- 
 2.43.0
 
