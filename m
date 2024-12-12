@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA6421CFF0;
-	Thu, 12 Dec 2024 16:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DDF226542;
+	Thu, 12 Dec 2024 16:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021286; cv=none; b=AcMb7MzYkR2/CF4cJk/kPRheWWHaHjNDvb+8yRKHBjcoCqqBsjnld9wkQxRnoSFOSgeaV02mK1GLuvMmH0v0flw2FSEEcmmQYCdDchAicu+itO8VjFT0r5PU/ihy0qoc0FzEyyJKgpgF3fLPaxMbTEhVkj2Q0uRevql9qYEujJ4=
+	t=1734021290; cv=none; b=BOkHDVR4NpXISWRtWRWVf7rxj4W7Ih5ZBb2DQgAeLYzWA3Z+qzM/t7oQyW1RtpRCvkB8hdNaFHZmwk/aRBunz6GVD+AqqCMKSxJF/BSPGtdkALlhMEOU01HQdUJcNYVS5FxTRfhv1ft+OShTdcYftd06HmA4ZwmRtyGRZBEBPkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021286; c=relaxed/simple;
-	bh=i0fsg9nm0wCiFj/V/ZuyiomYdfwhiPnpCfiMAAKLY8c=;
+	s=arc-20240116; t=1734021290; c=relaxed/simple;
+	bh=8JGmcecF5Hgut53F4LrAuTtqpT2ap+FwRGIyugOTOu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miLYiOvPAKgYsm0l1yiD+7COWLhgQpoQhNzdTB0cClxtRSyIPP0EXFUj/rTXgMVRueRp0JKEy37XuyHlEUWnwYvCVfAyTRfeWUpC28S9T/274YnePSMOOPZPHKehPS+lIfyxM9M+ZzL82N11wZR+m05Ft31wvNf/lRLvUhfGvqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiNC2cZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GGRS7pVGtrS0hu4sgunwNaYLOfzB3F3R4VosTN0QGxwByMDVPfqwDaHaSAmEFzi9PF/UI2hcGs+rEwn6GnMsVcRm6ZsxPlleO1swNh5c87kQOWbUdtvt2KN6XDApJyucsaaPEoIxO+3J5G2jWTh/RZ3hvk8m44O/gdrL1VeDbi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZXfXIJB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiNC2cZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5119CC4CED0;
-	Thu, 12 Dec 2024 16:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZXfXIJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6B7C4CED3;
+	Thu, 12 Dec 2024 16:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021286;
-	bh=i0fsg9nm0wCiFj/V/ZuyiomYdfwhiPnpCfiMAAKLY8c=;
+	s=korg; t=1734021290;
+	bh=8JGmcecF5Hgut53F4LrAuTtqpT2ap+FwRGIyugOTOu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LiNC2cZNWmD0A+7+feP4PBuo2iK68icqhlTkUSLFv42GXftcoRSlzMEJK+xr0RDb7
-	 Vq2gUasXhqvSx6vi2s3mKvXVJzcy1HtJ/uzsgH6RXsJV8NX1dCxp6E5Z3jY5GTPcHE
-	 fNBSROxRKZm6zIJA3L5dwJLjzy8atEtpY4WLfoKk=
+	b=JZXfXIJBhUIJQ6wq8GINxktprOLHit5Ul+fdR7gAYN94Sacj/Xm/2l/wR6ueIz/pX
+	 +z+dh520SeIdlXgcYj9p9+oflsgmuqSmW33y4yDIhPLS4IJ0gtOR3zVDCNP8wAmcNr
+	 SADP/f6NjqCmMamFQBmxxHVOJxwnxW08lINnTZC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 697/772] net/neighbor: clear error in case strict check is not set
-Date: Thu, 12 Dec 2024 16:00:42 +0100
-Message-ID: <20241212144418.703543049@linuxfoundation.org>
+Subject: [PATCH 6.1 698/772] netpoll: Use rcu_access_pointer() in __netpoll_setup
+Date: Thu, 12 Dec 2024 16:00:43 +0100
+Message-ID: <20241212144418.742540503@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,40 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 0de6a472c3b38432b2f184bd64eb70d9ea36d107 ]
+[ Upstream commit c69c5e10adb903ae2438d4f9c16eccf43d1fcbc1 ]
 
-Commit 51183d233b5a ("net/neighbor: Update neigh_dump_info for strict
-data checking") added strict checking. The err variable is not cleared,
-so if we find no table to dump we will return the validation error even
-if user did not want strict checking.
+The ndev->npinfo pointer in __netpoll_setup() is RCU-protected but is being
+accessed directly for a NULL check. While no RCU read lock is held in this
+context, we should still use proper RCU primitives for consistency and
+correctness.
 
-I think the only way to hit this is to send an buggy request, and ask
-for a table which doesn't exist, so there's no point treating this
-as a real fix. I only noticed it because a syzbot repro depended on it
-to trigger another bug.
+Replace the direct NULL check with rcu_access_pointer(), which is the
+appropriate primitive when only checking for NULL without dereferencing
+the pointer. This function provides the necessary ordering guarantees
+without requiring RCU read-side protection.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241115003221.733593-1-kuba@kernel.org
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20241118-netpoll_rcu-v1-1-a1888dcb4a02@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/netpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index c842f150c3048..dd0965e1afe85 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -2865,6 +2865,7 @@ static int neigh_dump_info(struct sk_buff *skb, struct netlink_callback *cb)
- 	err = neigh_valid_dump_req(nlh, cb->strict_check, &filter, cb->extack);
- 	if (err < 0 && cb->strict_check)
- 		return err;
-+	err = 0;
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index fd2195cfcb4aa..681eeb2b73992 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -636,7 +636,7 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 		goto out;
+ 	}
  
- 	s_t = cb->args[0];
- 
+-	if (!ndev->npinfo) {
++	if (!rcu_access_pointer(ndev->npinfo)) {
+ 		npinfo = kmalloc(sizeof(*npinfo), GFP_KERNEL);
+ 		if (!npinfo) {
+ 			err = -ENOMEM;
 -- 
 2.43.0
 
