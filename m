@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE73F1487CD;
-	Thu, 12 Dec 2024 15:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67FF1487CD;
+	Thu, 12 Dec 2024 15:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017262; cv=none; b=IemI2N/hfhEHEGfIBcFWyVOceZHM2LoJFpW/mwyOvZGU0kYF8K6zOnSJwbTbeCYgkmVtIcpcjWY7QxIfR0E1a/JydJUVQl1Tnegpf49mWo+lBDKWv0EqmHKsT9iyenjWmtmnceFhpdlEaQbDdeGhGeYuXsD29FKySz5swuzE3j8=
+	t=1734017266; cv=none; b=uX5SgYTV8TA2WlHRL5Yu6KZSl0eIvK4CUwkNesg39FqHTVgZuuGtp9hXAO21dHyYD2KgsNk2ZogXBYJSlpPYSDf6ojjfeBLpoRO372cPl5I8zniB/aEBGOms/gjfhBMstu3ToyhqpQW13ArLoHZCiYjToCz5BLgTH+rF5ITVhNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017262; c=relaxed/simple;
-	bh=3isLC30Ncs02+UiLchcBJ45wo4lqNBg62waeTJA/5x0=;
+	s=arc-20240116; t=1734017266; c=relaxed/simple;
+	bh=6geqNnmrgig/yK91QooXzTNEirV9TnincBf8uRo1+Hg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KI8QQrcdfXJvVvgAXPM751j9S5lOSHr/WU7XF8Sw1Yuu30xJIDEW5TuSAjb3vLTvPx0my3dC01gxD2f2ExvmvqsGKjZUvCtTBXuT/T0ee5vsqJFeJHxYKB+aRujvDw9L3VhCxfYm4yLo9OHf5bldjlvRk/iHlNfSEcp6u7Z4bfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZW0MKcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCOfDDCNNkw0i2zmpw7tgvLhQZz1E17jtGA6bpbwOyRbeGcxXK+ZW/O/1GCdi78oSGsLY7za8E/qEq7c4GSRu1Di/2zlvEmUksd8iNjt8cb+1mp45Rsl+KaJI1x4cx6ClN5r893tSGkkLnW2q5bqPkF1UvxHfLfMSF/P7xZY+CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1O+HFZL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZW0MKcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCEEC4CECE;
-	Thu, 12 Dec 2024 15:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1O+HFZL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54303C4CECE;
+	Thu, 12 Dec 2024 15:27:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017262;
-	bh=3isLC30Ncs02+UiLchcBJ45wo4lqNBg62waeTJA/5x0=;
+	s=korg; t=1734017265;
+	bh=6geqNnmrgig/yK91QooXzTNEirV9TnincBf8uRo1+Hg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZW0MKcdLGfxEYXKzZP5nbhXvAm1j4avbOJqOimAiRh7/+mzVYjh939kvmmMt9Wht
-	 rm+Ys/qKufjCRKd+2d0Xcdrb81bXV22cLbZHnSMi0QYb6cxMKQrJxKDVMVw+nZfhmv
-	 kQNeTP+vcfztKxL00KKgrKMgs2n99WrPBXfuMl/o=
+	b=A1O+HFZLkQrQmrkobOwjtl4q8ODSi1jjgPd8C0HGfM/6gtiSI66jYtn/mTyC8lQaR
+	 mtsaD+oX3RowLsQlxOy1Qj+Ks34kCadAECmNqVJIVtihhxk6x5RktklmT8LlbLuLNn
+	 y5zlq9GHXQax1aUn8cPflcYOaGK2zuWMjH3UMcPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Han <hanqi@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Parker Newman <pnewman@connecttech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 388/466] f2fs: fix f2fs_bug_on when uninstalling filesystem call f2fs_evict_inode.
-Date: Thu, 12 Dec 2024 15:59:17 +0100
-Message-ID: <20241212144322.096417958@linuxfoundation.org>
+Subject: [PATCH 6.12 422/466] misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle
+Date: Thu, 12 Dec 2024 15:59:51 +0100
+Message-ID: <20241212144323.427816533@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,82 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Han <hanqi@vivo.com>
+From: Parker Newman <pnewman@connecttech.com>
 
-[ Upstream commit d5c367ef8287fb4d235c46a2f8c8d68715f3a0ca ]
+[ Upstream commit 7738a7ab9d12c5371ed97114ee2132d4512e9fd5 ]
 
-creating a large files during checkpoint disable until it runs out of
-space and then delete it, then remount to enable checkpoint again, and
-then unmount the filesystem triggers the f2fs_bug_on as below:
+Add a quirk similar to eeprom_93xx46 to add an extra clock cycle before
+reading data from the EEPROM.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/inode.c:896!
-CPU: 2 UID: 0 PID: 1286 Comm: umount Not tainted 6.11.0-rc7-dirty #360
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:f2fs_evict_inode+0x58c/0x610
-Call Trace:
- __die_body+0x15/0x60
- die+0x33/0x50
- do_trap+0x10a/0x120
- f2fs_evict_inode+0x58c/0x610
- do_error_trap+0x60/0x80
- f2fs_evict_inode+0x58c/0x610
- exc_invalid_op+0x53/0x60
- f2fs_evict_inode+0x58c/0x610
- asm_exc_invalid_op+0x16/0x20
- f2fs_evict_inode+0x58c/0x610
- evict+0x101/0x260
- dispose_list+0x30/0x50
- evict_inodes+0x140/0x190
- generic_shutdown_super+0x2f/0x150
- kill_block_super+0x11/0x40
- kill_f2fs_super+0x7d/0x140
- deactivate_locked_super+0x2a/0x70
- cleanup_mnt+0xb3/0x140
- task_work_run+0x61/0x90
+The 93Cx6 family of EEPROMs output a "dummy 0 bit" between the writing
+of the op-code/address from the host to the EEPROM and the reading of
+the actual data from the EEPROM.
 
-The root cause is: creating large files during disable checkpoint
-period results in not enough free segments, so when writing back root
-inode will failed in f2fs_enable_checkpoint. When umount the file
-system after enabling checkpoint, the root inode is dirty in
-f2fs_evict_inode function, which triggers BUG_ON. The steps to
-reproduce are as follows:
+More info can be found on page 6 of the AT93C46 datasheet (linked below).
+Similar notes are found in other 93xx6 datasheets.
 
-dd if=/dev/zero of=f2fs.img bs=1M count=55
-mount f2fs.img f2fs_dir -o checkpoint=disable:10%
-dd if=/dev/zero of=big bs=1M count=50
-sync
-rm big
-mount -o remount,checkpoint=enable f2fs_dir
-umount f2fs_dir
+In summary the read operation for a 93Cx6 EEPROM is:
+Write to EEPROM:	110[A5-A0]	(9 bits)
+Read from EEPROM:	0[D15-D0]	(17 bits)
 
-Let's redirty inode when there is not free segments during checkpoint
-is disable.
+Where:
+	110 is the start bit and READ OpCode
+	[A5-A0] is the address to read from
+	0 is a "dummy bit" preceding the actual data
+	[D15-D0] is the actual data.
 
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Looking at the READ timing diagrams in the 93Cx6 datasheets the dummy
+bit should be clocked out on the last address bit clock cycle meaning it
+should be discarded naturally.
+
+However, depending on the hardware configuration sometimes this dummy
+bit is not discarded. This is the case with Exar PCI UARTs which require
+an extra clock cycle between sending the address and reading the data.
+
+Datasheet: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-5193-SEEPROM-AT93C46D-Datasheet.pdf
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Parker Newman <pnewman@connecttech.com>
+Link: https://lore.kernel.org/r/0f23973efefccd2544705a0480b4ad4c2353e407.1727880931.git.pnewman@connecttech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/misc/eeprom/eeprom_93cx6.c | 10 ++++++++++
+ include/linux/eeprom_93cx6.h       | 11 +++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 1ed86df343a5d..10780e37fc7b6 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -775,8 +775,10 @@ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
- 		return 0;
+diff --git a/drivers/misc/eeprom/eeprom_93cx6.c b/drivers/misc/eeprom/eeprom_93cx6.c
+index 9627294fe3e95..4c9827fe92173 100644
+--- a/drivers/misc/eeprom/eeprom_93cx6.c
++++ b/drivers/misc/eeprom/eeprom_93cx6.c
+@@ -186,6 +186,11 @@ void eeprom_93cx6_read(struct eeprom_93cx6 *eeprom, const u8 word,
+ 	eeprom_93cx6_write_bits(eeprom, command,
+ 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width);
  
--	if (!f2fs_is_checkpoint_ready(sbi))
-+	if (!f2fs_is_checkpoint_ready(sbi)) {
-+		f2fs_mark_inode_dirty_sync(inode, true);
- 		return -ENOSPC;
++	if (has_quirk_extra_read_cycle(eeprom)) {
++		eeprom_93cx6_pulse_high(eeprom);
++		eeprom_93cx6_pulse_low(eeprom);
 +	}
- 
++
  	/*
- 	 * We need to balance fs here to prevent from producing dirty node pages
+ 	 * Read the requested 16 bits.
+ 	 */
+@@ -252,6 +257,11 @@ void eeprom_93cx6_readb(struct eeprom_93cx6 *eeprom, const u8 byte,
+ 	eeprom_93cx6_write_bits(eeprom, command,
+ 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width + 1);
+ 
++	if (has_quirk_extra_read_cycle(eeprom)) {
++		eeprom_93cx6_pulse_high(eeprom);
++		eeprom_93cx6_pulse_low(eeprom);
++	}
++
+ 	/*
+ 	 * Read the requested 8 bits.
+ 	 */
+diff --git a/include/linux/eeprom_93cx6.h b/include/linux/eeprom_93cx6.h
+index c860c72a921d0..3a485cc0e0fa0 100644
+--- a/include/linux/eeprom_93cx6.h
++++ b/include/linux/eeprom_93cx6.h
+@@ -11,6 +11,8 @@
+ 	Supported chipsets: 93c46, 93c56 and 93c66.
+  */
+ 
++#include <linux/bits.h>
++
+ /*
+  * EEPROM operation defines.
+  */
+@@ -34,6 +36,7 @@
+  * @register_write(struct eeprom_93cx6 *eeprom): handler to
+  * write to the eeprom register by using all reg_* fields.
+  * @width: eeprom width, should be one of the PCI_EEPROM_WIDTH_* defines
++ * @quirks: eeprom or controller quirks
+  * @drive_data: Set if we're driving the data line.
+  * @reg_data_in: register field to indicate data input
+  * @reg_data_out: register field to indicate data output
+@@ -50,6 +53,9 @@ struct eeprom_93cx6 {
+ 	void (*register_write)(struct eeprom_93cx6 *eeprom);
+ 
+ 	int width;
++	unsigned int quirks;
++/* Some EEPROMs require an extra clock cycle before reading */
++#define PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE	BIT(0)
+ 
+ 	char drive_data;
+ 	char reg_data_in;
+@@ -71,3 +77,8 @@ extern void eeprom_93cx6_wren(struct eeprom_93cx6 *eeprom, bool enable);
+ 
+ extern void eeprom_93cx6_write(struct eeprom_93cx6 *eeprom,
+ 			       u8 addr, u16 data);
++
++static inline bool has_quirk_extra_read_cycle(struct eeprom_93cx6 *eeprom)
++{
++	return eeprom->quirks & PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE;
++}
 -- 
 2.43.0
 
