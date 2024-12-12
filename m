@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327FF2139B2;
-	Thu, 12 Dec 2024 15:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C082139B2;
+	Thu, 12 Dec 2024 15:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016114; cv=none; b=RciivQK+Fq9yMI0MU8VGT6Z+8iNo7G0amsC3a6uy5jTk/o8RWv/6woeZYyZdxGBCcSpjKPyS4ug5eLiokh7/Xut2A/2nTMB1Rv/6qasiNzJ7OGvMKx0hEzJV8Ou+DrE47Cz0sLTA4Sp0Hf4CK+c1vMJA02n6BC+25Jwcj2pLHTE=
+	t=1734016117; cv=none; b=AQG2tdit2lswFQ9yRJ9UZM81E+qi2r4DUvVm+L2AMW/Egr1ub+PjUj1b+Ug6MU2Ct7tp1Ay43L6c53PqkYGVSUAIwzrl5XFalmiVFWgkrM4Fw9+s1c6x9v78seRsOWwgCoWMD4sA6561j2ruT770Y/aYdBCpbFVLtoAFUM/8q24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016114; c=relaxed/simple;
-	bh=x+Z1rFqlgZC1faQkyFojAewLmwlYSIf6rLlrD+UoD/Q=;
+	s=arc-20240116; t=1734016117; c=relaxed/simple;
+	bh=6wnUgyBA2RE/avQYIak0Gk5U7+UF0V0h2C8LpOzhnJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bev0GNHE3kHO9FG4JOaxlWbB00NlkJPuAAcrKlwluJlNLRa7wAsE5DQk7cySXt23R3Mi72UzAuxfZjZiYCFIq7fUlAHhLfonb2kwmkj3GLJRLGGW/W+bMgufThTRaeGBkK65Q5eJTJR0FesyacGiwxAGNMcqY1PxHJWWAUOF3M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhtYXgnH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XfYnxGDvIlsmGqEP/aPIGPkl6lG2w74V+Hrkq78NftfVbjz6TPdvrZxVULfRzvsNuop9SO8lRCknhKRPssCzIIf0LYk9f36ZohY0JnF81fuRbElP70JIry3bB7fZgxlRyyI9fA7Td1GKN7rqWtcH/4d6Z2VWPT7Sco1v2CX1Fqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NluXTxVb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhtYXgnH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19C7C4CED0;
-	Thu, 12 Dec 2024 15:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NluXTxVb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD70C4CECE;
+	Thu, 12 Dec 2024 15:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016114;
-	bh=x+Z1rFqlgZC1faQkyFojAewLmwlYSIf6rLlrD+UoD/Q=;
+	s=korg; t=1734016117;
+	bh=6wnUgyBA2RE/avQYIak0Gk5U7+UF0V0h2C8LpOzhnJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhtYXgnHe6/ttTt0Fl01UQRg/XHGwVt064XA3XkOgtzd4PzrpLpFlepXzuhIqCeHq
-	 CBSKz4zKPxRfkTU9qyUIZSQWozPEkU/2SuVpvQJQKNSZW5ag6WGZQJtehR3GG60204
-	 GWBOLTtUdn9OQpV+7BdDjMrbrKU7vbg8ez2py3s4=
+	b=NluXTxVbTzme7Dx1r088EPNdWJ2EQuRolwmE887qh7LIK4lcrgAqL2MKoPGPH2jaS
+	 KSyKbqT4GvqP4s1SdUqcMH14E7hXhaZQFMtjMGCXhYhTRg30Pu8UyLcTpyisCOZj7o
+	 5GeJCqDIYTT3xjvenasGi1TUVczPlZNKHJ4yZPb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joey Gouly <joey.gouly@arm.com>,
 	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 137/466] arm64: ptrace: fix partial SETREGSET for NT_ARM_FPMR
-Date: Thu, 12 Dec 2024 15:55:06 +0100
-Message-ID: <20241212144312.214725297@linuxfoundation.org>
+Subject: [PATCH 6.12 138/466] arm64: ptrace: fix partial SETREGSET for NT_ARM_POE
+Date: Thu, 12 Dec 2024 15:55:07 +0100
+Message-ID: <20241212144312.253529951@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -54,61 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-commit f5d71291841aecfe5d8435da2dfa7f58ccd18bc8 upstream.
+commit 594bfc4947c4fcabba1318d8384c61a29a6b89fb upstream.
 
-Currently fpmr_set() doesn't initialize the temporary 'fpmr' variable,
+Currently poe_set() doesn't initialize the temporary 'ctrl' variable,
 and a SETREGSET call with a length of zero will leave this
 uninitialized. Consequently an arbitrary value will be written back to
-target->thread.uw.fpmr, potentially leaking up to 64 bits of memory from
+target->thread.por_el0, potentially leaking up to 64 bits of memory from
 the kernel stack. The read is limited to a specific slot on the stack,
 and the issue does not provide a write mechanism.
 
 Fix this by initializing the temporary value before copying the regset
 from userspace, as for other regsets (e.g. NT_PRSTATUS, NT_PRFPREG,
 NT_ARM_SYSTEM_CALL). In the case of a zero-length write, the existing
-contents of FPMR will be retained.
+contents of POR_EL1 will be retained.
 
 Before this patch:
 
-| # ./fpmr-test
-| Attempting to write NT_ARM_FPMR::fpmr = 0x900d900d900d900d
-| SETREGSET(nt=0x40e, len=8) wrote 8 bytes
+| # ./poe-test
+| Attempting to write NT_ARM_POE::por_el0 = 0x900d900d900d900d
+| SETREGSET(nt=0x40f, len=8) wrote 8 bytes
 |
-| Attempting to read NT_ARM_FPMR::fpmr
-| GETREGSET(nt=0x40e, len=8) read 8 bytes
-| Read NT_ARM_FPMR::fpmr = 0x900d900d900d900d
+| Attempting to read NT_ARM_POE::por_el0
+| GETREGSET(nt=0x40f, len=8) read 8 bytes
+| Read NT_ARM_POE::por_el0 = 0x900d900d900d900d
 |
-| Attempting to write NT_ARM_FPMR (zero length)
-| SETREGSET(nt=0x40e, len=0) wrote 0 bytes
+| Attempting to write NT_ARM_POE (zero length)
+| SETREGSET(nt=0x40f, len=0) wrote 0 bytes
 |
-| Attempting to read NT_ARM_FPMR::fpmr
-| GETREGSET(nt=0x40e, len=8) read 8 bytes
-| Read NT_ARM_FPMR::fpmr = 0xffff800083963d50
+| Attempting to read NT_ARM_POE::por_el0
+| GETREGSET(nt=0x40f, len=8) read 8 bytes
+| Read NT_ARM_POE::por_el0 = 0xffff8000839c3d50
 
 After this patch:
 
-| # ./fpmr-test
-| Attempting to write NT_ARM_FPMR::fpmr = 0x900d900d900d900d
-| SETREGSET(nt=0x40e, len=8) wrote 8 bytes
+| # ./poe-test
+| Attempting to write NT_ARM_POE::por_el0 = 0x900d900d900d900d
+| SETREGSET(nt=0x40f, len=8) wrote 8 bytes
 |
-| Attempting to read NT_ARM_FPMR::fpmr
-| GETREGSET(nt=0x40e, len=8) read 8 bytes
-| Read NT_ARM_FPMR::fpmr = 0x900d900d900d900d
+| Attempting to read NT_ARM_POE::por_el0
+| GETREGSET(nt=0x40f, len=8) read 8 bytes
+| Read NT_ARM_POE::por_el0 = 0x900d900d900d900d
 |
-| Attempting to write NT_ARM_FPMR (zero length)
-| SETREGSET(nt=0x40e, len=0) wrote 0 bytes
+| Attempting to write NT_ARM_POE (zero length)
+| SETREGSET(nt=0x40f, len=0) wrote 0 bytes
 |
-| Attempting to read NT_ARM_FPMR::fpmr
-| GETREGSET(nt=0x40e, len=8) read 8 bytes
-| Read NT_ARM_FPMR::fpmr = 0x900d900d900d900d
+| Attempting to read NT_ARM_POE::por_el0
+| GETREGSET(nt=0x40f, len=8) read 8 bytes
+| Read NT_ARM_POE::por_el0 = 0x900d900d900d900d
 
-Fixes: 4035c22ef7d4 ("arm64/ptrace: Expose FPMR via ptrace")
-Cc: <stable@vger.kernel.org> # 6.9.x
+Fixes: 175198199262 ("arm64/ptrace: add support for FEAT_POE")
+Cc: <stable@vger.kernel.org> # 6.12.x
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Mark Brown <broonie@kernel.org>
+Cc: Joey Gouly <joey.gouly@arm.com>
 Cc: Will Deacon <will@kernel.org>
 Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20241205121655.1824269-3-mark.rutland@arm.com
+Link: https://lore.kernel.org/r/20241205121655.1824269-4-mark.rutland@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -117,13 +118,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/arch/arm64/kernel/ptrace.c
 +++ b/arch/arm64/kernel/ptrace.c
-@@ -719,6 +719,8 @@ static int fpmr_set(struct task_struct *
- 	if (!system_supports_fpmr())
+@@ -1469,6 +1469,8 @@ static int poe_set(struct task_struct *t
+ 	if (!system_supports_poe())
  		return -EINVAL;
  
-+	fpmr = target->thread.uw.fpmr;
++	ctrl = target->thread.por_el0;
 +
- 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &fpmr, 0, count);
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ctrl, 0, -1);
  	if (ret)
  		return ret;
 
