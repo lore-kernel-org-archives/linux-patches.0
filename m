@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E02E223E61;
-	Thu, 12 Dec 2024 17:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876642236EA;
+	Thu, 12 Dec 2024 17:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025710; cv=none; b=leBy4z/MGPZqVC1EBKBZXGOQ2dY17JErPatF3fRT5wJ2S4rAthswQdFjqEiFXuCE4Gbw13lXbWUF924P2Ba4ub9aoKEvVPT7VKdKe3EInTDeUWJMaPW2NC5/10et0KBROHaf2xh8QzwwIiXFgpdoZK91MbXThE9oY82g+dDgNf4=
+	t=1734025713; cv=none; b=kaYEzch7+wFj2pooFO25AISLgiolbFtBuO1cm4Zu6GWti7X50PEejlzbSR0gGhvvj25ZyR7UkiU9hYBSCcpNxjJwUdB+5FokMBiB3jx2Fu8srX89Enow50n9nhQQBy+eoSLk+ucrrq9wLelYACNQD2vBvuSOMx648aXUI+cSjnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025710; c=relaxed/simple;
-	bh=O+4CZVjelUAfKmISBHoTH1jtwS7jhLBF7n6zz+q1tfQ=;
+	s=arc-20240116; t=1734025713; c=relaxed/simple;
+	bh=qa4QqnRj8eKKk/AcFtwnLz6J/QXGrUdCWTbJWh6IFaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=O2U7xWBfxWCMcWnIEcrj3mMr4eLeNJDel0UktFz9B7zXt5TVYYQXML1IhlCK4JZLq3ea5Whk1FT5ptjRts9Hmpf4a81MG6U09+yPT/gEmR/rEXuNTBgyYs0ecTznCHAGVhLJWC7IK9YvSZEt7DaqkjpASzLFcOzGdUObWCmaR8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mERhfPok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHBHKdqN9A55FCclu8jmIMVMUDib/Me5K7ugU5glu2Y0A7BfwRDETqMbYTPBpCxTd2gk0biMPnlQkdnLO6ThQ3DfuMqUK1v71QRkObvcKFylfnI4jm8O+31KfIyow8tAamnH/Dgvob1G2ABVzRiODXE0Bb/SWoigVb58DUAZ7vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kGAxnQtm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mERhfPok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8074C4CED1;
-	Thu, 12 Dec 2024 17:48:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kGAxnQtm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E55C4CECE;
+	Thu, 12 Dec 2024 17:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025710;
-	bh=O+4CZVjelUAfKmISBHoTH1jtwS7jhLBF7n6zz+q1tfQ=;
+	s=korg; t=1734025713;
+	bh=qa4QqnRj8eKKk/AcFtwnLz6J/QXGrUdCWTbJWh6IFaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mERhfPokgdvpQxSpY37g58us2/ynmGkVdVir4iAqSinC/cBPS9fd5s/etcB6VUiuG
-	 yIOmnMwMxZFFz3mOFPTEYVa2jZwqL+CgP1ZW5ly7yMWnXuyPY5Q7pAwp5foI0ZU/y5
-	 G6NsHlKC8w11SUo56DT6ZqWIamNZnQQnfZofGiKY=
+	b=kGAxnQtmjccGbfl9LGo0k/a4EgrZxXDdvXWD19Ea/mr4QgFow/IQp0eav3CmNy2EI
+	 t2KRECXiGBcoMb+7ZO4cAxsE1avJ7Povwyw1WM34bAAAqT+jZ/r71dl+xjPaV6eF+C
+	 R/ERHZxFGTN6g0ZYJLOCrKe6dUXyhZfuMzvyyU1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Chia-I Wu <olvaffe@gmail.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Subject: [PATCH 5.4 261/321] dma-buf: fix dma_fence_array_signaled v4
-Date: Thu, 12 Dec 2024 16:02:59 +0100
-Message-ID: <20241212144240.292701874@linuxfoundation.org>
+	Cosmin Tanislav <demonsingur@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 262/321] regmap: detach regmap from dev on regmap_exit
+Date: Thu, 12 Dec 2024 16:03:00 +0100
+Message-ID: <20241212144240.331741077@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -46,79 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Cosmin Tanislav <demonsingur@gmail.com>
 
-commit 78ac1c3558810486d90aa533b0039aa70487a3da upstream.
+commit 3061e170381af96d1e66799d34264e6414d428a7 upstream.
 
-The function silently assumed that signaling was already enabled for the
-dma_fence_array. This meant that without enabling signaling first we would
-never see forward progress.
+At the end of __regmap_init(), if dev is not NULL, regmap_attach_dev()
+is called, which adds a devres reference to the regmap, to be able to
+retrieve a dev's regmap by name using dev_get_regmap().
 
-Fix that by falling back to testing each individual fence when signaling
-isn't enabled yet.
+When calling regmap_exit, the opposite does not happen, and the
+reference is kept until the dev is detached.
 
-v2: add the comment suggested by Boris why this is done this way
-v3: fix the underflow pointed out by Tvrtko
-v4: atomic_read_acquire() as suggested by Tvrtko
+Add a regmap_detach_dev() function and call it in regmap_exit() to make
+sure that the devres reference is not kept.
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Tested-by: Chia-I Wu <olvaffe@gmail.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/12094
-Cc: <stable@vger.kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241112121925.18464-1-christian.koenig@amd.com
+Cc: stable@vger.kernel.org
+Fixes: 72b39f6f2b5a ("regmap: Implement dev_get_regmap()")
+Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
+Rule: add
+Link: https://lore.kernel.org/stable/20241128130554.362486-1-demonsingur%40gmail.com
+Link: https://patch.msgid.link/20241128131625.363835-1-demonsingur@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma-buf/dma-fence-array.c |   28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ drivers/base/regmap/regmap.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/dma-buf/dma-fence-array.c
-+++ b/drivers/dma-buf/dma-fence-array.c
-@@ -103,10 +103,36 @@ static bool dma_fence_array_enable_signa
- static bool dma_fence_array_signaled(struct dma_fence *fence)
- {
- 	struct dma_fence_array *array = to_dma_fence_array(fence);
-+	int num_pending;
-+	unsigned int i;
- 
--	if (atomic_read(&array->num_pending) > 0)
-+	/*
-+	 * We need to read num_pending before checking the enable_signal bit
-+	 * to avoid racing with the enable_signaling() implementation, which
-+	 * might decrement the counter, and cause a partial check.
-+	 * atomic_read_acquire() pairs with atomic_dec_and_test() in
-+	 * dma_fence_array_enable_signaling()
-+	 *
-+	 * The !--num_pending check is here to account for the any_signaled case
-+	 * if we race with enable_signaling(), that means the !num_pending check
-+	 * in the is_signalling_enabled branch might be outdated (num_pending
-+	 * might have been decremented), but that's fine. The user will get the
-+	 * right value when testing again later.
-+	 */
-+	num_pending = atomic_read_acquire(&array->num_pending);
-+	if (test_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT, &array->base.flags)) {
-+		if (num_pending <= 0)
-+			goto signal;
- 		return false;
-+	}
- 
-+	for (i = 0; i < array->num_fences; ++i) {
-+		if (dma_fence_is_signaled(array->fences[i]) && !--num_pending)
-+			goto signal;
-+	}
-+	return false;
-+
-+signal:
- 	dma_fence_array_clear_pending_error(array);
- 	return true;
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -603,6 +603,17 @@ int regmap_attach_dev(struct device *dev
  }
+ EXPORT_SYMBOL_GPL(regmap_attach_dev);
+ 
++static int dev_get_regmap_match(struct device *dev, void *res, void *data);
++
++static int regmap_detach_dev(struct device *dev, struct regmap *map)
++{
++	if (!dev)
++		return 0;
++
++	return devres_release(dev, dev_get_regmap_release,
++			      dev_get_regmap_match, (void *)map->name);
++}
++
+ static enum regmap_endian regmap_get_reg_endian(const struct regmap_bus *bus,
+ 					const struct regmap_config *config)
+ {
+@@ -1347,6 +1358,7 @@ void regmap_exit(struct regmap *map)
+ {
+ 	struct regmap_async *async;
+ 
++	regmap_detach_dev(map->dev, map);
+ 	regcache_exit(map);
+ 	regmap_debugfs_exit(map);
+ 	regmap_range_exit(map);
 
 
