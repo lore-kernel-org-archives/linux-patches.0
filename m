@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A186F2FE;
-	Thu, 12 Dec 2024 16:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24793229676;
+	Thu, 12 Dec 2024 16:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019244; cv=none; b=W2vq7b83B3hf+KovxX56JQEsCdpI9Lu2eO4/dw1H6arsU5Js3PXg6Bdy2VquRADJRCGiWmE7KB0qJuFJ1r0zFDZe0tB28GJT4wAuXnouodKqtDlTOxqRy/xZVXnMYvILdOMYgZmZ8jXDnFv37HLbVbmn+ci9/z3o2zfxKVn9DZ4=
+	t=1734019247; cv=none; b=Jcyv1Vl8qiqhuu1ne+52u2lRjzj0su0ktFV3BfXRjLSscm6R/eNa5O4NTAJCPLaxn2yfwxtF8os7gX/EWDMZu8j9Vb3jIaKdSb5t2oblotpDmC6fnhE46aAQltHHA8W+1B55mNzx8JTq+4BRONyj9iiYs/4WCXOGAGd1u8Za6Pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019244; c=relaxed/simple;
-	bh=dEgNwH7NbbAIjC5lHq7Gi83Pf43uhRJOH7eUkeMqQz0=;
+	s=arc-20240116; t=1734019247; c=relaxed/simple;
+	bh=70/seDV07+hZNSpMao6+ncHRfpfg17KNIxzrn8dK2s4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PDMscAElw6z/AXTbVN1qUOXO2dGdM0Kc0SMW+yqmt9zUWFCPWW7tq01vU/tMsKDTRhcmIOwTc9x76Q+Bbpy/rDA0875X6Wus6EmOCojiwgAAyfs61Yyy7vTgEweA6rz0lpOFPv0tRX9aMhI8DsFfDstqHRG3Kh4zKxCJ3aXJsYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdRSJu5K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dUBWcf5z9fM1Vpt7azolA4GkqqPdd4SCLFK8zEUy4MZcRVUpte5SQI/A87/fSSBbm8wIi3zCEQjeXWBBf+B+CZMbwcfdNHcGnhf1YMR0etjTtPnw2lsNPeyi4hKgDdC/Fg2N77cooXviiw3IQswn23xJRZPnsNSM88eDoOTw1Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbhyFbw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdRSJu5K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467C3C4CED3;
-	Thu, 12 Dec 2024 16:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbhyFbw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF56C4CECE;
+	Thu, 12 Dec 2024 16:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019243;
-	bh=dEgNwH7NbbAIjC5lHq7Gi83Pf43uhRJOH7eUkeMqQz0=;
+	s=korg; t=1734019247;
+	bh=70/seDV07+hZNSpMao6+ncHRfpfg17KNIxzrn8dK2s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdRSJu5KqVcyPYSBh65OEzztUHewTJweyFQbfUm1wzQP8tkv32HHL33L9pBWIcdiO
-	 GrbWw+p8IimNwdIINyiI5DipmdTudZq6nWV1Q9hMSlZknD1KIqxNGy1UHZBcONbOHs
-	 wmqMdf/paNHrjU7JBaWi7R2EkgSqzTy6dOBif/xM=
+	b=mbhyFbw+VoWzG/2QxE+LtjMSzogXNcK3ftxZreOStpm5Bola54U4zuSJSDKrsBVQL
+	 xivdN1Kl9+vWG1ckyKXW1Dg2AZ4C3RuFjuochBqOkbTz1ZQsZtSaUi1bw+hcMPZUDg
+	 AEjDHhRv7PaKq2r+hnMZYhIfFpwmgm+A/Blq1wCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Fastabend <john.fastabend@gmail.com>,
-	Zijian Zhang <zijianzhang@bytedance.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alper Nebi Yasak <alpernebiyasak@gmail.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 155/772] selftests/bpf: Fix txmsg_redir of test_txmsg_pull in test_sockmap
-Date: Thu, 12 Dec 2024 15:51:40 +0100
-Message-ID: <20241212144356.336840772@linuxfoundation.org>
+Subject: [PATCH 6.1 156/772] wifi: mwifiex: Fix memcpy() field-spanning write warning in mwifiex_config_scan()
+Date: Thu, 12 Dec 2024 15:51:41 +0100
+Message-ID: <20241212144356.382479421@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,36 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijian Zhang <zijianzhang@bytedance.com>
+From: Alper Nebi Yasak <alpernebiyasak@gmail.com>
 
-[ Upstream commit b29e231d66303c12b7b8ac3ac2a057df06b161e8 ]
+[ Upstream commit d241a139c2e9f8a479f25c75ebd5391e6a448500 ]
 
-txmsg_redir in "Test pull + redirect" case of test_txmsg_pull should be
-1 instead of 0.
+Replace one-element array with a flexible-array member in `struct
+mwifiex_ie_types_wildcard_ssid_params` to fix the following warning
+on a MT8173 Chromebook (mt8173-elm-hana):
 
-Fixes: 328aa08a081b ("bpf: Selftests, break down test_sockmap into subtests")
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
-Link: https://lore.kernel.org/r/20241012203731.1248619-3-zijianzhang@bytedance.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+[  356.775250] ------------[ cut here ]------------
+[  356.784543] memcpy: detected field-spanning write (size 6) of single field "wildcard_ssid_tlv->ssid" at drivers/net/wireless/marvell/mwifiex/scan.c:904 (size 1)
+[  356.813403] WARNING: CPU: 3 PID: 742 at drivers/net/wireless/marvell/mwifiex/scan.c:904 mwifiex_scan_networks+0x4fc/0xf28 [mwifiex]
+
+The "(size 6)" above is exactly the length of the SSID of the network
+this device was connected to. The source of the warning looks like:
+
+    ssid_len = user_scan_in->ssid_list[i].ssid_len;
+    [...]
+    memcpy(wildcard_ssid_tlv->ssid,
+           user_scan_in->ssid_list[i].ssid, ssid_len);
+
+There is a #define WILDCARD_SSID_TLV_MAX_SIZE that uses sizeof() on this
+struct, but it already didn't account for the size of the one-element
+array, so it doesn't need to be changed.
+
+Fixes: 5e6e3a92b9a4 ("wireless: mwifiex: initial commit for Marvell mwifiex driver")
+Signed-off-by: Alper Nebi Yasak <alpernebiyasak@gmail.com>
+Acked-by: Brian Norris <briannorris@chromium.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241007222301.24154-1-alpernebiyasak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 2 +-
+ drivers/net/wireless/marvell/mwifiex/fw.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 72023e1b894db..1954c2aeb7a9c 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -1609,7 +1609,7 @@ static void test_txmsg_pull(int cgrp, struct sockmap_options *opt)
- 	test_send_large(opt, cgrp);
+diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
+index 26979013ca52d..9c9fe5757b295 100644
+--- a/drivers/net/wireless/marvell/mwifiex/fw.h
++++ b/drivers/net/wireless/marvell/mwifiex/fw.h
+@@ -842,7 +842,7 @@ struct mwifiex_ietypes_chanstats {
+ struct mwifiex_ie_types_wildcard_ssid_params {
+ 	struct mwifiex_ie_types_header header;
+ 	u8 max_ssid_length;
+-	u8 ssid[1];
++	u8 ssid[];
+ } __packed;
  
- 	/* Test pull + redirect */
--	txmsg_redir = 0;
-+	txmsg_redir = 1;
- 	txmsg_start = 1;
- 	txmsg_end = 2;
- 	test_send(opt, cgrp);
+ #define TSF_DATA_SIZE            8
 -- 
 2.43.0
 
