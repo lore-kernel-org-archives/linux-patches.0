@@ -1,52 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075A313792B;
-	Thu, 12 Dec 2024 15:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F7313792B;
+	Thu, 12 Dec 2024 15:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017146; cv=none; b=KWYLYa7gRO7SG8TbfFgi0rHNXV4TgtmUkJ6ekkpEA06iScyvyW9Pgp6WUdUti1DLU2Jsg1zVCDmqsjgdNrnKCWz+cQ1QT034DqUFsdmg2bChR3bCt9VcRVXuw5TJLtS0T4H7ably0VIKud/p2z19BcsiM9EDS8EFm1bW/RUpbzg=
+	t=1734017149; cv=none; b=fXMdhslQdtLtHYWKFOhshTZjlLwKx4XvIDX9811oP3TEXTC51Y4dPNRPa9VCZAZ/RP073LrUs6xhkv6B2F+2pj4bM9PoY7GKhA/MYthMpgMbZkMIr5mWDYobnoF6U0hUpWZRK2idowro9BB+OqEXlsJON7mojw1QeBEWOiZ2diU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017146; c=relaxed/simple;
-	bh=AKDo7YFnQwyQMBe94YUXBK4uoriGyY4O/EJSn1FUVYI=;
+	s=arc-20240116; t=1734017149; c=relaxed/simple;
+	bh=ZO43cznYBHTHlfdYf44pQFblYoLKWyLWVPxf60GmDxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VT8Dj4pvuFKHgTOOJDjQq0PPgv7SogCRdeGXneQ5HInXkCfL3rI4TWfB7Q4XGGCLE0qBTcSxnOUEHC5/AY6J/+AolIiSvnLE7AtZtYeSoOx5+LaTmS+sIYBFTw3NyJoAnHdiuWv0tph8nQVHejyJ2VWPPi9B3fhc7HFY2VldwXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbQxJR9Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDAzkH5WD/EpZ52EqiEDofTMnuL9jCDLcJ8Gu7KdBN6oR8Ei1K+LDkbR+bm/aVEVC9w4xFRLEiIStfpY/ysR88zXzYkMUusFpkTv5q/y3wluJ6Elw1uLTSTA65YDVmCbhb/DUY9ge1JC31keDiYj+Vq19R0OXEYX91+JX0gKWgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yWm8xz7i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbQxJR9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E88C4CECE;
-	Thu, 12 Dec 2024 15:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yWm8xz7i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03A97C4CECE;
+	Thu, 12 Dec 2024 15:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017145;
-	bh=AKDo7YFnQwyQMBe94YUXBK4uoriGyY4O/EJSn1FUVYI=;
+	s=korg; t=1734017149;
+	bh=ZO43cznYBHTHlfdYf44pQFblYoLKWyLWVPxf60GmDxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rbQxJR9ZfuUqxKIrGcApRnauFzGDLySoraPNqpB0Rc3O0iyzZkpZIlhWjYS3/RJzB
-	 ohGbSf93S5NysRi0HemRTk6vo3HFnaV1XgdJTDJYY7R0/nBc8Y8LLOkmwDN8tOz61/
-	 k4YVaQKhjI8gh2x/MLINgr5R2Mv3RtasFiXFGLhU=
+	b=yWm8xz7i5rRtCIICJ3IkmocI3e6hzpW6+KdNhI0gIfy0E6qESPeHXYmLFE1gA6NhM
+	 7gRb+6+kCrST5sV0j+06sLt3OgbeptN/vihbpEPF0T5xIdlSXId/E6bh+BVa9ShFKh
+	 tlIJvsfZ3d5W4iS6UIEFz/0XJKNJgQrRoDoZvQx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Jeanson <mjeanson@efficios.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Andrii Nakryiko <andrii.nakryiko@gmail.com>,
-	bpf@vger.kernel.org,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	syzbot+aa0730b0a42646eb1359@syzkaller.appspotmail.com,
+	Qianqiang Liu <qianqiang.liu@163.com>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 356/466] tracing/ftrace: disable preemption in syscall probe
-Date: Thu, 12 Dec 2024 15:58:45 +0100
-Message-ID: <20241212144320.848645313@linuxfoundation.org>
+Subject: [PATCH 6.12 389/466] KMSAN: uninit-value in inode_go_dump (5)
+Date: Thu, 12 Dec 2024 15:59:18 +0100
+Message-ID: <20241212144322.141423582@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -65,143 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Qianqiang Liu <qianqiang.liu@163.com>
 
-[ Upstream commit 13d750c2c03e9861e15268574ed2c239cca9c9d5 ]
+[ Upstream commit f9417fcfca3c5e30a0b961e7250fab92cfa5d123 ]
 
-In preparation for allowing system call enter/exit instrumentation to
-handle page faults, make sure that ftrace can handle this change by
-explicitly disabling preemption within the ftrace system call tracepoint
-probes to respect the current expectations within ftrace ring buffer
-code.
+When mounting of a corrupted disk image fails, the error message printed
+can reference uninitialized inode fields.  To prevent that from happening,
+always initialize those fields.
 
-This change does not yet allow ftrace to take page faults per se within
-its probe, but allows its existing probes to adapt to the upcoming
-change.
-
-Cc: Michael Jeanson <mjeanson@efficios.com>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Yonghong Song <yhs@fb.com>
-Cc: Paul E. McKenney <paulmck@kernel.org>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Andrii Nakryiko <andrii.nakryiko@gmail.com>
-Cc: bpf@vger.kernel.org
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Link: https://lore.kernel.org/20241009010718.2050182-3-mathieu.desnoyers@efficios.com
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: syzbot+aa0730b0a42646eb1359@syzkaller.appspotmail.com
+Signed-off-by: Qianqiang Liu <qianqiang.liu@163.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/trace_events.h  | 36 +++++++++++++++++++++++++++++++----
- kernel/trace/trace_syscalls.c | 12 ++++++++++++
- 2 files changed, 44 insertions(+), 4 deletions(-)
+ fs/gfs2/super.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/trace/trace_events.h b/include/trace/trace_events.h
-index c2f9cabf154d1..fa0d51cad57a8 100644
---- a/include/trace/trace_events.h
-+++ b/include/trace/trace_events.h
-@@ -244,6 +244,9 @@ static struct trace_event_fields trace_event_fields_##call[] = {	\
- 	tstruct								\
- 	{} };
- 
-+#undef DECLARE_EVENT_SYSCALL_CLASS
-+#define DECLARE_EVENT_SYSCALL_CLASS DECLARE_EVENT_CLASS
-+
- #undef DEFINE_EVENT_PRINT
- #define DEFINE_EVENT_PRINT(template, name, proto, args, print)
- 
-@@ -374,11 +377,11 @@ static inline notrace int trace_event_get_offsets_##call(		\
- 
- #include "stages/stage6_event_callback.h"
- 
--#undef DECLARE_EVENT_CLASS
--#define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
--									\
-+
-+#undef __DECLARE_EVENT_CLASS
-+#define __DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print) \
- static notrace void							\
--trace_event_raw_event_##call(void *__data, proto)			\
-+do_trace_event_raw_event_##call(void *__data, proto)			\
- {									\
- 	struct trace_event_file *trace_file = __data;			\
- 	struct trace_event_data_offsets_##call __maybe_unused __data_offsets;\
-@@ -403,6 +406,29 @@ trace_event_raw_event_##call(void *__data, proto)			\
- 									\
- 	trace_event_buffer_commit(&fbuffer);				\
+diff --git a/fs/gfs2/super.c b/fs/gfs2/super.c
+index e22c1edc32b39..b9cef63c78717 100644
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -1537,11 +1537,13 @@ static struct inode *gfs2_alloc_inode(struct super_block *sb)
+ 	if (!ip)
+ 		return NULL;
+ 	ip->i_no_addr = 0;
++	ip->i_no_formal_ino = 0;
+ 	ip->i_flags = 0;
+ 	ip->i_gl = NULL;
+ 	gfs2_holder_mark_uninitialized(&ip->i_iopen_gh);
+ 	memset(&ip->i_res, 0, sizeof(ip->i_res));
+ 	RB_CLEAR_NODE(&ip->i_res.rs_node);
++	ip->i_diskflags = 0;
+ 	ip->i_rahead = 0;
+ 	return &ip->i_inode;
  }
-+
-+#undef DECLARE_EVENT_CLASS
-+#define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
-+__DECLARE_EVENT_CLASS(call, PARAMS(proto), PARAMS(args), PARAMS(tstruct), \
-+		      PARAMS(assign), PARAMS(print))			\
-+static notrace void							\
-+trace_event_raw_event_##call(void *__data, proto)			\
-+{									\
-+	do_trace_event_raw_event_##call(__data, args);			\
-+}
-+
-+#undef DECLARE_EVENT_SYSCALL_CLASS
-+#define DECLARE_EVENT_SYSCALL_CLASS(call, proto, args, tstruct, assign, print) \
-+__DECLARE_EVENT_CLASS(call, PARAMS(proto), PARAMS(args), PARAMS(tstruct), \
-+		      PARAMS(assign), PARAMS(print))			\
-+static notrace void							\
-+trace_event_raw_event_##call(void *__data, proto)			\
-+{									\
-+	preempt_disable_notrace();					\
-+	do_trace_event_raw_event_##call(__data, args);			\
-+	preempt_enable_notrace();					\
-+}
-+
- /*
-  * The ftrace_test_probe is compiled out, it is only here as a build time check
-  * to make sure that if the tracepoint handling changes, the ftrace probe will
-@@ -418,6 +444,8 @@ static inline void ftrace_test_probe_##call(void)			\
- 
- #include TRACE_INCLUDE(TRACE_INCLUDE_FILE)
- 
-+#undef __DECLARE_EVENT_CLASS
-+
- #include "stages/stage7_class_define.h"
- 
- #undef DECLARE_EVENT_CLASS
-diff --git a/kernel/trace/trace_syscalls.c b/kernel/trace/trace_syscalls.c
-index 785733245eadf..f9b21bac9d45e 100644
---- a/kernel/trace/trace_syscalls.c
-+++ b/kernel/trace/trace_syscalls.c
-@@ -299,6 +299,12 @@ static void ftrace_syscall_enter(void *data, struct pt_regs *regs, long id)
- 	int syscall_nr;
- 	int size;
- 
-+	/*
-+	 * Syscall probe called with preemption enabled, but the ring
-+	 * buffer and per-cpu data require preemption to be disabled.
-+	 */
-+	guard(preempt_notrace)();
-+
- 	syscall_nr = trace_get_syscall_nr(current, regs);
- 	if (syscall_nr < 0 || syscall_nr >= NR_syscalls)
- 		return;
-@@ -338,6 +344,12 @@ static void ftrace_syscall_exit(void *data, struct pt_regs *regs, long ret)
- 	struct trace_event_buffer fbuffer;
- 	int syscall_nr;
- 
-+	/*
-+	 * Syscall probe called with preemption enabled, but the ring
-+	 * buffer and per-cpu data require preemption to be disabled.
-+	 */
-+	guard(preempt_notrace)();
-+
- 	syscall_nr = trace_get_syscall_nr(current, regs);
- 	if (syscall_nr < 0 || syscall_nr >= NR_syscalls)
- 		return;
 -- 
 2.43.0
 
