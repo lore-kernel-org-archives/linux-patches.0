@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944492248A4;
-	Thu, 12 Dec 2024 17:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187B0223711;
+	Thu, 12 Dec 2024 17:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025585; cv=none; b=Wlj4cDdBIesImh3+AvadXpJdMBB2MciKn8Twja2Httzc7u7ae5yVsd0ztHtseZf7jccBcF7kbwmUtxsX5YKz8EisU7W7kzHdAr2SjjEgwz0M6RFyA30EaCJuulW0RnWj1GIqmRmgWQtLPX7+fteG+bzEekSq2CSMwmNxDLDX9JY=
+	t=1734025588; cv=none; b=f4x8BVL9fTI080/klnW0n6jOBRKjboxlpP4KkO1KlJWXxl6MrJrq9YP0/tCZMentDmTvl0jRyGlvRE9D0p1Uph6Zetvp+haLFC1mBp+4OLYS98aKEXjhyjP2YfAeAdrbYnl0c0OQG4INKUubDBje9yBE122sooTgcRgp6T/uuk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025585; c=relaxed/simple;
-	bh=hP7hW1cYSLGnEkYC/FiOhuAg6eLTTnWNwfdr1Z9Y02I=;
+	s=arc-20240116; t=1734025588; c=relaxed/simple;
+	bh=dkPeQ6onle//LngIqHD+Q3iXxqrqPEr6OTGFfycf69M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1Ksr7fFpRhkUED1PP4MAndmj4qzX9yx6cRRGV0Q14Lf1DM7bgVHnLRZWenn7rF35FuEAk/KlKzPx+G3G86Np1ngEGNEvPTxkchfMRIwzN1lOx6zCD20j1pk0iQZtk43uVKoUYOpSpNCGEaxJWhICDcHU13hTDlWRpYjS2qzw3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Voi5lIEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjuXYFNE1E+mc+nKXMR38z88n6WW5pk95nAnsLmZ3YLDwshczR2GIjL/Z+qvqCaesad30ROnblGuA+mxBovsQf1J0Q/IG5yA0krG53lZDy/3eH9dsdPOnqEMQNoVe2KznntNzxfWUyaFvq71Iy2pEGhuilqO8W/cUh0upS+4dVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T4l5CfQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Voi5lIEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B5DC4CECE;
-	Thu, 12 Dec 2024 17:46:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T4l5CfQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96237C4CECE;
+	Thu, 12 Dec 2024 17:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025585;
-	bh=hP7hW1cYSLGnEkYC/FiOhuAg6eLTTnWNwfdr1Z9Y02I=;
+	s=korg; t=1734025588;
+	bh=dkPeQ6onle//LngIqHD+Q3iXxqrqPEr6OTGFfycf69M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Voi5lIEiqDa3FsksIjztXWOE7pW7tc6bLlClPF2cBBF7PHvg1DNMhxqG5lfFCfzpN
-	 Rui/yIG+VUE3TdGNK9SPiW9KDbu5N0pv5+W8B2kYPiPm9tRgZVo2lMXjBW10UxUJA6
-	 +k+jXjHlcjVCOE0u6Wd3A3J9Hn3PVWEMWlX4R8Z4=
+	b=T4l5CfQ92wIe38ZPtxl2xZbBhgV5tsVAlqy81U+cQjwi3DytN1RqBxSPoyoHhKzn4
+	 WRJ3BpYBzz+p0McyD2DFQ3OSezx1jD5a2rDTNarPuTdmX2Z0oTz99N/OimXuqtSbC4
+	 lmiHePVUn9v68Bda7oKDSlc2Y/u14R7UKzweqoXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Ocheretnyi <oocheret@cisco.com>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 219/321] iTCO_wdt: mask NMI_NOW bit for update_no_reboot_bit() call
-Date: Thu, 12 Dec 2024 16:02:17 +0100
-Message-ID: <20241212144238.631484417@linuxfoundation.org>
+Subject: [PATCH 5.4 220/321] watchdog: mediatek: Make sure system reset gets asserted in mtk_wdt_restart()
+Date: Thu, 12 Dec 2024 16:02:18 +0100
+Message-ID: <20241212144238.669124509@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,83 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Ocheretnyi <oocheret@cisco.com>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-[ Upstream commit daa814d784ac034c62ab3fb0ef83daeafef527e2 ]
+[ Upstream commit a1495a21e0b8aad92132dfcf9c6fffc1bde9d5b2 ]
 
-Commit da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake
-PCH iTCO") does not mask NMI_NOW bit during TCO1_CNT register's
-value comparison for update_no_reboot_bit() call causing following
-failure:
+Clear the IRQ enable bit of WDT_MODE before asserting software reset
+in order to make TOPRGU issue a system reset signal instead of an IRQ.
 
-   ...
-   iTCO_vendor_support: vendor-support=0
-   iTCO_wdt iTCO_wdt: unable to reset NO_REBOOT flag, device
-                                    disabled by hardware/BIOS
-   ...
-
-and this can lead to unexpected NMIs later during regular
-crashkernel's workflow because of watchdog probe call failures.
-
-This change masks NMI_NOW bit for TCO1_CNT register values to
-avoid unexpected NMI_NOW bit inversions.
-
-Fixes: da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake PCH iTCO")
-Signed-off-by: Oleksandr Ocheretnyi <oocheret@cisco.com>
+Fixes: a44a45536f7b ("watchdog: Add driver for Mediatek watchdog")
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20240913191403.2560805-1-oocheret@cisco.com
+Link: https://lore.kernel.org/r/20241106104738.195968-2-y.oudjana@protonmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/watchdog/mtk_wdt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 134237d8b8fca..c03df400ffb90 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -83,6 +83,13 @@
- #define TCO2_CNT(p)	(TCOBASE(p) + 0x0a) /* TCO2 Control Register	*/
- #define TCOv2_TMR(p)	(TCOBASE(p) + 0x12) /* TCOv2 Timer Initial Value*/
+diff --git a/drivers/watchdog/mtk_wdt.c b/drivers/watchdog/mtk_wdt.c
+index 9c3d0033260d9..a2845c9ad3a7c 100644
+--- a/drivers/watchdog/mtk_wdt.c
++++ b/drivers/watchdog/mtk_wdt.c
+@@ -60,9 +60,15 @@ static int mtk_wdt_restart(struct watchdog_device *wdt_dev,
+ {
+ 	struct mtk_wdt_dev *mtk_wdt = watchdog_get_drvdata(wdt_dev);
+ 	void __iomem *wdt_base;
++	u32 reg;
  
-+/*
-+ * NMI_NOW is bit 8 of TCO1_CNT register
-+ * Read/Write
-+ * This bit is implemented as RW but has no effect on HW.
-+ */
-+#define NMI_NOW		BIT(8)
+ 	wdt_base = mtk_wdt->wdt_base;
+ 
++	/* Enable reset in order to issue a system reset instead of an IRQ */
++	reg = readl(wdt_base + WDT_MODE);
++	reg &= ~WDT_MODE_IRQ_EN;
++	writel(reg | WDT_MODE_KEY, wdt_base + WDT_MODE);
 +
- /* internal variables */
- struct iTCO_wdt_private {
- 	struct watchdog_device wddev;
-@@ -221,13 +228,23 @@ static int update_no_reboot_bit_cnt(void *priv, bool set)
- 	struct iTCO_wdt_private *p = priv;
- 	u16 val, newval;
- 
--	val = inw(TCO1_CNT(p));
-+	/*
-+	 * writing back 1b1 to NMI_NOW of TCO1_CNT register
-+	 * causes NMI_NOW bit inversion what consequently does
-+	 * not allow to perform the register's value comparison
-+	 * properly.
-+	 *
-+	 * NMI_NOW bit masking for TCO1_CNT register values
-+	 * helps to avoid possible NMI_NOW bit inversions on
-+	 * following write operation.
-+	 */
-+	val = inw(TCO1_CNT(p)) & ~NMI_NOW;
- 	if (set)
- 		val |= BIT(0);
- 	else
- 		val &= ~BIT(0);
- 	outw(val, TCO1_CNT(p));
--	newval = inw(TCO1_CNT(p));
-+	newval = inw(TCO1_CNT(p)) & ~NMI_NOW;
- 
- 	/* make sure the update is successful */
- 	return val != newval ? -EIO : 0;
+ 	while (1) {
+ 		writel(WDT_SWRST_KEY, wdt_base + WDT_SWRST);
+ 		mdelay(5);
 -- 
 2.43.0
 
