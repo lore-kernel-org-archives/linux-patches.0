@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C0D23FD2B;
-	Thu, 12 Dec 2024 16:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86A422968E;
+	Thu, 12 Dec 2024 16:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021375; cv=none; b=CbDpM3ID+PZWix79W7Mc+AyxET0Jykwf73MdOrTnpAqiCqh8dd2Xu7W5ar9uCZOitGnqZUaabCDg+YBxFAmUjysjH/B75B6mcIqvoc5zqO8lqinQEbNuiaSGQuTmIYmLaM8bHzV7pvJDEruz8lAA2xlVxjtA3EBI+kfM2h/fVNI=
+	t=1734021378; cv=none; b=nE7m4st2e/ueGcXB4sE/LAyjjnLm0/Cz28KERUYdZMKadXp0FThnoE2U7kX/ZaEKz67jv9ngxkJS07TxNdGlA6neZUXIofUigwZv72NtZQD+D06/6nDPI5sOegdOODOwYyTzVZywLzsgHPX1BgDI7YRuK3QeCdfHvVqrdC4ki2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021375; c=relaxed/simple;
-	bh=rem8Z/PSDZwreTRqGX+oYq91cBbOT15iN5zfIVDgVfY=;
+	s=arc-20240116; t=1734021378; c=relaxed/simple;
+	bh=u9IDm/LSD+eioTc4gidxY4bjcmDE7D0U6ZjPTec0k/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4h2MVpotRAc4a8Zm+I8v1Qa7AS7Em562ycK88BYlLsdBmJErJe7ktYlVd8wQEAadq/6sxTsDZGo5Foa54IbpxTejahJ/VjcsPChRqSTw9LGaqTwP770hrLjj8oBKmUb9CdQEnVV/pDglwRzz7m8qjxfslXG5ntCtsPeCOu0id4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttX0273V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mZY9+wRwBeckGpovQjRqGqPrTG+jZAFTLjf28L4EzLVPctpued3KAlAFeRVInuGh9UXimSuhdS/W5NKkox2R9gQTc9kLAkl4lht3q4f4UKoP7cATwqd4TrDCWZgm4QODAgA8SBTuMa0w7xZHydYBck9MUdkJf+ZG51Knn6TlNr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yUcnpFj+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttX0273V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9632DC4CECE;
-	Thu, 12 Dec 2024 16:36:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yUcnpFj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122BFC4CECE;
+	Thu, 12 Dec 2024 16:36:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021375;
-	bh=rem8Z/PSDZwreTRqGX+oYq91cBbOT15iN5zfIVDgVfY=;
+	s=korg; t=1734021378;
+	bh=u9IDm/LSD+eioTc4gidxY4bjcmDE7D0U6ZjPTec0k/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttX0273V8ZToIRn/jPfQwlTtE1znDzmoaQfgOwPef4inYUpYRDV/owf0QVWyq+K9V
-	 RSMBL7SuPyWtPZzg9IdyTaWjIZqgc1pvzRaqkCVE2U47jrOhtoGa0nmnB56n3bkTUP
-	 D7u+nfRJCtuPoPwK3VPTKoYRzuBxdm2geROXV+oo=
+	b=yUcnpFj+6gUT7K4J/J5TYd1cnZaR2f334+i237pdpdXe3ulUE0XqmAsPYHycLbQ0J
+	 OD7WB+P+YLkBb2/RNExpYDvRDLE1tRFqbjrHxa/UDoM21tmS5eeqlBEDfkXMGgciUO
+	 gw7i7nRRjJ5BzWPehAQ6qV6n5ck25b17bhLZzzKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Han <hanqi@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 713/772] f2fs: fix f2fs_bug_on when uninstalling filesystem call f2fs_evict_inode.
-Date: Thu, 12 Dec 2024 16:00:58 +0100
-Message-ID: <20241212144419.355378200@linuxfoundation.org>
+Subject: [PATCH 6.1 722/772] MIPS: Loongson64: DTS: Really fix PCIe port nodes for ls7a
+Date: Thu, 12 Dec 2024 16:01:07 +0100
+Message-ID: <20241212144419.726792407@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,82 +51,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qi Han <hanqi@vivo.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit d5c367ef8287fb4d235c46a2f8c8d68715f3a0ca ]
+[ Upstream commit 4fbd66d8254cedfd1218393f39d83b6c07a01917 ]
 
-creating a large files during checkpoint disable until it runs out of
-space and then delete it, then remount to enable checkpoint again, and
-then unmount the filesystem triggers the f2fs_bug_on as below:
+Fix the dtc warnings:
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/inode.c:896!
-CPU: 2 UID: 0 PID: 1286 Comm: umount Not tainted 6.11.0-rc7-dirty #360
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:f2fs_evict_inode+0x58c/0x610
-Call Trace:
- __die_body+0x15/0x60
- die+0x33/0x50
- do_trap+0x10a/0x120
- f2fs_evict_inode+0x58c/0x610
- do_error_trap+0x60/0x80
- f2fs_evict_inode+0x58c/0x610
- exc_invalid_op+0x53/0x60
- f2fs_evict_inode+0x58c/0x610
- asm_exc_invalid_op+0x16/0x20
- f2fs_evict_inode+0x58c/0x610
- evict+0x101/0x260
- dispose_list+0x30/0x50
- evict_inodes+0x140/0x190
- generic_shutdown_super+0x2f/0x150
- kill_block_super+0x11/0x40
- kill_f2fs_super+0x7d/0x140
- deactivate_locked_super+0x2a/0x70
- cleanup_mnt+0xb3/0x140
- task_work_run+0x61/0x90
+    arch/mips/boot/dts/loongson/ls7a-pch.dtsi:68.16-416.5: Warning (interrupt_provider): /bus@10000000/pci@1a000000: '#interrupt-cells' found, but node is not an interrupt provider
+    arch/mips/boot/dts/loongson/ls7a-pch.dtsi:68.16-416.5: Warning (interrupt_provider): /bus@10000000/pci@1a000000: '#interrupt-cells' found, but node is not an interrupt provider
+    arch/mips/boot/dts/loongson/loongson64g_4core_ls7a.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
 
-The root cause is: creating large files during disable checkpoint
-period results in not enough free segments, so when writing back root
-inode will failed in f2fs_enable_checkpoint. When umount the file
-system after enabling checkpoint, the root inode is dirty in
-f2fs_evict_inode function, which triggers BUG_ON. The steps to
-reproduce are as follows:
+And a runtime warning introduced in commit 045b14ca5c36 ("of: WARN on
+deprecated #address-cells/#size-cells handling"):
 
-dd if=/dev/zero of=f2fs.img bs=1M count=55
-mount f2fs.img f2fs_dir -o checkpoint=disable:10%
-dd if=/dev/zero of=big bs=1M count=50
-sync
-rm big
-mount -o remount,checkpoint=enable f2fs_dir
-umount f2fs_dir
+    WARNING: CPU: 0 PID: 1 at drivers/of/base.c:106 of_bus_n_addr_cells+0x9c/0xe0
+    Missing '#address-cells' in /bus@10000000/pci@1a000000/pci_bridge@9,0
 
-Let's redirty inode when there is not free segments during checkpoint
-is disable.
+The fix is similar to commit d89a415ff8d5 ("MIPS: Loongson64: DTS: Fix PCIe
+port nodes for ls7a"), which has fixed the issue for ls2k (despite its
+subject mentions ls7a).
 
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/mips/boot/dts/loongson/ls7a-pch.dtsi | 73 +++++++++++++++++++----
+ 1 file changed, 60 insertions(+), 13 deletions(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 5b672df194a99..0f350368dea73 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -719,8 +719,10 @@ int f2fs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		!is_inode_flag_set(inode, FI_DIRTY_INODE))
- 		return 0;
+diff --git a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
+index ed99ee316febb..1292e9ab282ad 100644
+--- a/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
++++ b/arch/mips/boot/dts/loongson/ls7a-pch.dtsi
+@@ -63,7 +63,6 @@
+ 			device_type = "pci";
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+-			#interrupt-cells = <2>;
+ 			msi-parent = <&msi>;
  
--	if (!f2fs_is_checkpoint_ready(sbi))
-+	if (!f2fs_is_checkpoint_ready(sbi)) {
-+		f2fs_mark_inode_dirty_sync(inode, true);
- 		return -ENOSPC;
-+	}
+ 			reg = <0 0x1a000000 0 0x02000000>,
+@@ -227,7 +226,7 @@
+ 				};
+ 			};
  
- 	/*
- 	 * We need to balance fs here to prevent from producing dirty node pages
+-			pci_bridge@9,0 {
++			pcie@9,0 {
+ 				compatible = "pci0014,7a19.1",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+@@ -237,12 +236,16 @@
+ 				interrupts = <32 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 32 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@a,0 {
++			pcie@a,0 {
+ 				compatible = "pci0014,7a09.1",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+@@ -252,12 +255,16 @@
+ 				interrupts = <33 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 33 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@b,0 {
++			pcie@b,0 {
+ 				compatible = "pci0014,7a09.1",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+@@ -267,12 +274,16 @@
+ 				interrupts = <34 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 34 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@c,0 {
++			pcie@c,0 {
+ 				compatible = "pci0014,7a09.1",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+@@ -282,12 +293,16 @@
+ 				interrupts = <35 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 35 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@d,0 {
++			pcie@d,0 {
+ 				compatible = "pci0014,7a19.1",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+@@ -297,12 +312,16 @@
+ 				interrupts = <36 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 36 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@e,0 {
++			pcie@e,0 {
+ 				compatible = "pci0014,7a09.1",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+@@ -312,12 +331,16 @@
+ 				interrupts = <37 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 37 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@f,0 {
++			pcie@f,0 {
+ 				compatible = "pci0014,7a29.1",
+ 						   "pci0014,7a29",
+ 						   "pciclass060400",
+@@ -327,12 +350,16 @@
+ 				interrupts = <40 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 40 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@10,0 {
++			pcie@10,0 {
+ 				compatible = "pci0014,7a19.1",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+@@ -342,12 +369,16 @@
+ 				interrupts = <41 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 41 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@11,0 {
++			pcie@11,0 {
+ 				compatible = "pci0014,7a29.1",
+ 						   "pci0014,7a29",
+ 						   "pciclass060400",
+@@ -357,12 +388,16 @@
+ 				interrupts = <42 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 42 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@12,0 {
++			pcie@12,0 {
+ 				compatible = "pci0014,7a19.1",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+@@ -372,12 +407,16 @@
+ 				interrupts = <43 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 43 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@13,0 {
++			pcie@13,0 {
+ 				compatible = "pci0014,7a29.1",
+ 						   "pci0014,7a29",
+ 						   "pciclass060400",
+@@ -387,12 +426,16 @@
+ 				interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 38 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 
+-			pci_bridge@14,0 {
++			pcie@14,0 {
+ 				compatible = "pci0014,7a19.1",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+@@ -402,9 +445,13 @@
+ 				interrupts = <39 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&pic>;
+ 
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &pic 39 IRQ_TYPE_LEVEL_HIGH>;
++				ranges;
+ 			};
+ 		};
+ 
 -- 
 2.43.0
 
