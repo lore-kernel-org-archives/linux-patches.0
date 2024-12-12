@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFBD6F2FE;
-	Thu, 12 Dec 2024 16:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF9322912F;
+	Thu, 12 Dec 2024 16:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021820; cv=none; b=fthmIqNJnKvwQoc3xw+PuORFgW7N1314ZHCnisnunEk/WuszPBmlLCcFAWlcmkfQuQi3nN9LOjoiABLfVIgXkqrQBlm9Ye3iA/NNBjtFbFfGXW1UU3WBs5dOCuohIyfkUrzi+PL7cVoX4M9277erHxrobQ9EM2Xq3jOQjAYvTWA=
+	t=1734021823; cv=none; b=AWqrbLhQHyGEzDBwd54crMg+JNGuN8kAQL6AECH4ZdNDCCu8tcl3mdyaYlRzCRutqzPH7gSx5PgoyoKd7AK/+enTxtJI1+Ds15bPNK6RkAFL8y5HkLU48rkfYbFQIR+5gVAkPbZXTMB1HxlbwUFnSDLRVBYYq5mpEOKd9aSSmag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021820; c=relaxed/simple;
-	bh=x4xbLZ9Uekw0ONhVIe5scJ82QhK9pvy3gAJWmYcsO6U=;
+	s=arc-20240116; t=1734021823; c=relaxed/simple;
+	bh=Xz149ggTHoliDBnkrTEkSIjYhNGL+Y3OIGjJaInC2eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ea2yXHQTWDLT46Z9exd6PEXu1JP/z9GYUCdP9rCU+3KTeiTxCfa1KEmr4e4Nnr1hr3UW644IZM5TRjD3xsqg0R0+4Fsf6V0u2QiK9JTcdBMiis1l3yrWon9BYjjIbE8JYoTORtdqckgQBBfgAqgDO1uqrwQaUWcl8apYYJZbeUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXoDT4sA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMTVSwZhMiEWYxS6mGQrIPI+JWXAcDQznj5do0MasG0ohBMdbWLOaOw36A8qJwuHqjX2L1XzEF5c85LXFxtH2JhSMP1rUa65R8g1fMIkhRozLz+DbZtZ/yP7RvFU2gaWJxvxaSKZWdN7hgIrqDrhGNEovj4AVZfG541QeCb7AuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCTJv2SB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXoDT4sA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB93C4CECE;
-	Thu, 12 Dec 2024 16:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCTJv2SB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147E2C4CECE;
+	Thu, 12 Dec 2024 16:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021820;
-	bh=x4xbLZ9Uekw0ONhVIe5scJ82QhK9pvy3gAJWmYcsO6U=;
+	s=korg; t=1734021823;
+	bh=Xz149ggTHoliDBnkrTEkSIjYhNGL+Y3OIGjJaInC2eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXoDT4sAIJbwdT3xkFUw6I5/Om0Ni4Xb0tCo6fUlxBWNmDWJRTELKrfJz7eXEQP/2
-	 5due2dvjaNY+DxbzCMHMYKoZCWTHgRS+JGFy/yryMyK1Rl/xxQpkC5Na9g8JrlF0mE
-	 cXBw0AMvOtL2uCNUwHawfci/8CGIUWGtjlKF9A5s=
+	b=yCTJv2SBfBhsfdz8QFDkK/RDrhG2AnBtBsRXOGRM4UMUbRBzREKjgpIXMra4EXmap
+	 KwrXcIkoEQ7Md8bP32wCdZlBWdpfeZOBSV4ViUcEh+R8bg7Auf5bvZE9f5Y15L6GvW
+	 flZt6txjPlnoXpF0HAij5lpH0b3Z3zG7sSQhmHg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <kafai@fb.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Krister Johansen <kjlx@templeofstupid.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Brian Gerst <brgerst@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/565] rcu-tasks: Idle tasks on offline CPUs are in quiescent states
-Date: Thu, 12 Dec 2024 15:54:27 +0100
-Message-ID: <20241212144314.337229422@linuxfoundation.org>
+Subject: [PATCH 5.15 073/565] x86/stackprotector: Work around strict Clang TLS symbol requirements
+Date: Thu, 12 Dec 2024 15:54:28 +0100
+Message-ID: <20241212144314.376068717@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -57,41 +53,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 5c9a9ca44fda41c5e82f50efced5297a9c19760d upstream.
+[ Upstream commit 577c134d311b9b94598d7a0c86be1f431f823003 ]
 
-Any idle task corresponding to an offline CPU is in an RCU Tasks Trace
-quiescent state.  This commit causes rcu_tasks_trace_postscan() to ignore
-idle tasks for offline CPUs, which it can do safely due to CPU-hotplug
-operations being disabled.
+GCC and Clang both implement stack protector support based on Thread Local
+Storage (TLS) variables, and this is used in the kernel to implement per-task
+stack cookies, by copying a task's stack cookie into a per-CPU variable every
+time it is scheduled in.
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Cc: Neeraj Upadhyay <quic_neeraju@quicinc.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <kafai@fb.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Both now also implement -mstack-protector-guard-symbol=, which permits the TLS
+variable to be specified directly. This is useful because it will allow to
+move away from using a fixed offset of 40 bytes into the per-CPU area on
+x86_64, which requires a lot of special handling in the per-CPU code and the
+runtime relocation code.
+
+However, while GCC is rather lax in its implementation of this command line
+option, Clang actually requires that the provided symbol name refers to a TLS
+variable (i.e., one declared with __thread), although it also permits the
+variable to be undeclared entirely, in which case it will use an implicit
+declaration of the right type.
+
+The upshot of this is that Clang will emit the correct references to the stack
+cookie variable in most cases, e.g.,
+
+  10d:       64 a1 00 00 00 00       mov    %fs:0x0,%eax
+                     10f: R_386_32   __stack_chk_guard
+
+However, if a non-TLS definition of the symbol in question is visible in the
+same compilation unit (which amounts to the whole of vmlinux if LTO is
+enabled), it will drop the per-CPU prefix and emit a load from a bogus
+address.
+
+Work around this by using a symbol name that never occurs in C code, and emit
+it as an alias in the linker script.
+
+Fixes: 3fb0fdb3bbe7 ("x86/stackprotector/32: Make the canary into a regular percpu variable")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Brian Gerst <brgerst@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/ClangBuiltLinux/linux/issues/1854
+Link: https://lore.kernel.org/r/20241105155801.1779119-2-brgerst@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tasks.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/Makefile                     |  3 ++-
+ arch/x86/entry/entry.S                | 15 +++++++++++++++
+ arch/x86/include/asm/asm-prototypes.h |  3 +++
+ arch/x86/kernel/cpu/common.c          |  2 ++
+ arch/x86/kernel/vmlinux.lds.S         |  3 +++
+ 5 files changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
-index 0e50ec9ded86e..0a83d0ce46d78 100644
---- a/kernel/rcu/tasks.h
-+++ b/kernel/rcu/tasks.h
-@@ -1090,7 +1090,7 @@ static void rcu_tasks_trace_postscan(struct list_head *hop)
- {
- 	int cpu;
+diff --git a/arch/x86/Makefile b/arch/x86/Makefile
+index 9c09bbd390cec..f8a7d2a654347 100644
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -81,7 +81,8 @@ ifeq ($(CONFIG_X86_32),y)
  
--	for_each_possible_cpu(cpu)
-+	for_each_online_cpu(cpu)
- 		rcu_tasks_trace_pertask(idle_task(cpu), hop);
+ 	ifeq ($(CONFIG_STACKPROTECTOR),y)
+ 		ifeq ($(CONFIG_SMP),y)
+-			KBUILD_CFLAGS += -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard
++			KBUILD_CFLAGS += -mstack-protector-guard-reg=fs \
++					 -mstack-protector-guard-symbol=__ref_stack_chk_guard
+ 		else
+ 			KBUILD_CFLAGS += -mstack-protector-guard=global
+ 		endif
+diff --git a/arch/x86/entry/entry.S b/arch/x86/entry/entry.S
+index f4419afc7147d..23f9efbe9d705 100644
+--- a/arch/x86/entry/entry.S
++++ b/arch/x86/entry/entry.S
+@@ -48,3 +48,18 @@ EXPORT_SYMBOL_GPL(mds_verw_sel);
  
- 	// Re-enable CPU hotplug now that the tasklist scan has completed.
+ .popsection
+ 
++#ifndef CONFIG_X86_64
++/*
++ * Clang's implementation of TLS stack cookies requires the variable in
++ * question to be a TLS variable. If the variable happens to be defined as an
++ * ordinary variable with external linkage in the same compilation unit (which
++ * amounts to the whole of vmlinux with LTO enabled), Clang will drop the
++ * segment register prefix from the references, resulting in broken code. Work
++ * around this by avoiding the symbol used in -mstack-protector-guard-symbol=
++ * entirely in the C code, and use an alias emitted by the linker script
++ * instead.
++ */
++#ifdef CONFIG_STACKPROTECTOR
++EXPORT_SYMBOL(__ref_stack_chk_guard);
++#endif
++#endif
+diff --git a/arch/x86/include/asm/asm-prototypes.h b/arch/x86/include/asm/asm-prototypes.h
+index 5cdccea455544..390b13db24b81 100644
+--- a/arch/x86/include/asm/asm-prototypes.h
++++ b/arch/x86/include/asm/asm-prototypes.h
+@@ -18,3 +18,6 @@
+ extern void cmpxchg8b_emu(void);
+ #endif
+ 
++#if defined(__GENKSYMS__) && defined(CONFIG_STACKPROTECTOR)
++extern unsigned long __ref_stack_chk_guard;
++#endif
+diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
+index f0cc4c616ceb3..5db433cfaaa78 100644
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -2000,8 +2000,10 @@ EXPORT_PER_CPU_SYMBOL(cpu_current_top_of_stack);
+ 
+ #ifdef CONFIG_STACKPROTECTOR
+ DEFINE_PER_CPU(unsigned long, __stack_chk_guard);
++#ifndef CONFIG_SMP
+ EXPORT_PER_CPU_SYMBOL(__stack_chk_guard);
+ #endif
++#endif
+ 
+ #endif	/* CONFIG_X86_64 */
+ 
+diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
+index 351c604de263a..ab36dacb4cc50 100644
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -490,6 +490,9 @@ SECTIONS
+ 	ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
+ }
+ 
++/* needed for Clang - see arch/x86/entry/entry.S */
++PROVIDE(__ref_stack_chk_guard = __stack_chk_guard);
++
+ /*
+  * The ASSERT() sink to . is intentional, for binutils 2.14 compatibility:
+  */
 -- 
 2.43.0
 
