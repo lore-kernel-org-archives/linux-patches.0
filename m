@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8513521660B;
-	Thu, 12 Dec 2024 17:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E973421660B;
+	Thu, 12 Dec 2024 17:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024445; cv=none; b=HgqKuBvN8ziS/BmAiTOMfMzrmCCxe9d3gpnqNwG/S9anJeWy6/ku8c5CRQH348ySp7aCYq/ao1mTxfYYQ0wCYu2CZtRV+Vi+kuogQGsj0HSYpDHKPe9/ani3UA1dIM1J9XMgz7vMaih8AjKCJLL6OHUKz5lULFayfMaEb/iUPNM=
+	t=1734024449; cv=none; b=K3rbMIv9X942Npdv4MQj8IFV/5/4uqE3xwrpQ6Q2mHESPZ6dYbnY3zLXi7UKwBkoOrG9uV4xn8WYRMXvDAdJhgsBGWdgWJbCT3d+8EDi/ZTZLB0w1c6oN6FH1y6ay4eXoSXsVyekO63HrbU2ogo/YPwd0pE7i3SMfx7pWp6YJXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024445; c=relaxed/simple;
-	bh=K2rs2QTGYHbIFblqdRhmq2LAiXpbJFmyYFN7ka64fMM=;
+	s=arc-20240116; t=1734024449; c=relaxed/simple;
+	bh=MbHDKlleUe/VyjcTpmzmYRRcPQ1XPDxC5UsWrWBHf8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2RPK8vjw95BftGdfMMro8ZUTnVmwvFi/9Cg7Inpq/eT3HX0iuyq+SIESngBmtkyPnL+BFx2yg7Xm9BgkPSdq9BYENJcDpi7k+WA2G44iNR3OB4xmb1ZDlAauzspOtj+x/R/G7QdwK9q07ljbQTPat3UmEWXJ6GIdEOr/4IP3d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVEZSq0t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HyObTJ4fCGxsajLevgg+CSQ7aE3dIrj72lbxHVzU3qHZD31vn+x1EkGu3jTdccScKnhyIXKyGaCSbD6BmadxeuCsUVY72SRV01z2AWNTrkfeKHXBiz66DhQdmvuTZXx1ldt/cIy/3BOFnTWam+h49hTDWlAWwvrgNgyEEVVmQpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKvfLIDL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVEZSq0t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6A0C4CED0;
-	Thu, 12 Dec 2024 17:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKvfLIDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F9CAC4CED0;
+	Thu, 12 Dec 2024 17:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024445;
-	bh=K2rs2QTGYHbIFblqdRhmq2LAiXpbJFmyYFN7ka64fMM=;
+	s=korg; t=1734024448;
+	bh=MbHDKlleUe/VyjcTpmzmYRRcPQ1XPDxC5UsWrWBHf8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVEZSq0t5HhZz/Ql/pMfgT2wNKlTeeXugotT+PV+32sQjFmg7G9GzAE7zRfhoEKu6
-	 WsBx7QhpMqsd2MtyRNpx4wkuBalqCJ3EhwPRUXkGBsPT7w+eL2kgVHWTCqoxEIaWc+
-	 WpS1ctn01nHp0QqnYoS5TzQ0C38w1CzaCdKBpSV0=
+	b=nKvfLIDLHiwduhmEhBAEWi7Op6i9nEDj52v+cGyfBiAHEoi9KuSEB8AqSyEsgiZzx
+	 NkOwn4htpSJwpU2yYfcTnRjE8UtdWF1qkHjNyxpLJhz/3ve4Tao/A6YbMVWPAs9JyI
+	 wVOr93l+Dsi+OSxr9MoAQj3qswZzKXSQbrkloNRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 281/459] ALSA: hda/realtek: Apply quirk for Medion E15433
-Date: Thu, 12 Dec 2024 16:00:19 +0100
-Message-ID: <20241212144304.730473107@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 299/459] block: return unsigned int from bdev_io_min
+Date: Thu, 12 Dec 2024 16:00:37 +0100
+Message-ID: <20241212144305.452483573@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -49,31 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Christoph Hellwig <hch@lst.de>
 
-commit ca0f79f0286046f6a91c099dc941cf7afae198d6 upstream.
+[ Upstream commit 46fd48ab3ea3eb3bb215684bd66ea3d260b091a9 ]
 
-Medion E15433 laptop wich ALC269VC (SSID 2782:1705) needs the same
-workaround for the missing speaker as another model.
+The underlying limit is defined as an unsigned int, so return that from
+bdev_io_min as well.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1233298
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241128072646.15659-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ac481c20ef8f ("block: Topology ioctls")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Link: https://lore.kernel.org/r/20241119072602.1059488-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/blkdev.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9464,6 +9464,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
- 	SND_PCI_QUIRK(0x2782, 0x1701, "Infinix Y4 Max", ALC269VC_FIXUP_INFINIX_Y4_MAX),
-+	SND_PCI_QUIRK(0x2782, 0x1705, "MEDION E15433", ALC269VC_FIXUP_INFINIX_Y4_MAX),
- 	SND_PCI_QUIRK(0x2782, 0x1707, "Vaio VJFE-ADL", ALC298_FIXUP_SPK_VOLUME),
- 	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
- 	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index e5f11dae208dd..7ad4df2c25255 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -1468,7 +1468,7 @@ static inline unsigned int queue_io_min(const struct request_queue *q)
+ 	return q->limits.io_min;
+ }
+ 
+-static inline int bdev_io_min(struct block_device *bdev)
++static inline unsigned int bdev_io_min(struct block_device *bdev)
+ {
+ 	return queue_io_min(bdev_get_queue(bdev));
+ }
+-- 
+2.43.0
+
 
 
