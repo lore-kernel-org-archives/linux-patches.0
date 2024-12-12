@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E6D14A82;
-	Thu, 12 Dec 2024 15:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4578614A82;
+	Thu, 12 Dec 2024 15:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018876; cv=none; b=WYn1V6AFs64ULhoFXpPR5cPH6ZUBnj7L80Yq5JVQBAPooNSbTWb5e3vkidHU8X7OJt11IOz2kG9TMdY/GIkXkKN5zc5oO4Rm17JgxrMtz/rzlysUKftIStQD/HsIyrOn6hb2WgH9OtjS8CV8Mb6v7KJa6wLVFE5WSeCBmY2JZaU=
+	t=1734018879; cv=none; b=YrtQv3o7nPfOOrZA/14AaqlKpmwQlhaROgtkR7vPVYVdpKHEZ1FVHulodygz4dC95IryvcrORA+J5mSTfXmExiitNaCmTKC7G5EC2ydWpjRcVP1aMuq20YnuaH6MHM2dgm/aHB+Fst9msWx8Ul2/O5qdnCY8+wQGYuY3VY5EabU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018876; c=relaxed/simple;
-	bh=te40OVqwEpDUAjNFXRG0ZZcM5vRdV02+uT55jEMtXqQ=;
+	s=arc-20240116; t=1734018879; c=relaxed/simple;
+	bh=mstrpkeYV0PUmK6RTcxSGL0CExfOGqVGCmgObBLsCYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BTOkLJXDDhQI/zb5wQA1kyDhVSOvg0kmhcLkEA2kpChlT3junLOms7KBAQvnNphtfJmpXlrByreBVnSwiAHQ2JIHv4gWq9CWfUy6+dH4zv7Bb4pTnPTNk/f8BFMgHbNveo5caMxeXOZ6lhqJIkPcPOPPLJ+1rUR1DUZSUrCwDFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voCMWuJq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VLrZI4VZYKLbMwkeaQt9nwkf/dVHgc8GaYunzSd/22JJOGt4AGx1fBV/s8jRwNKcNUoHSMrackSa5BasN0H57EGReXzRPvvpklf7XLV+j8OYxAly2GbK6ZW+9qrZ1KP6fM7C6fhlwOiESqaNaX3wzBrNU0BeCIqmROIM4Tjbb5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YyGKrI2L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voCMWuJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4FDC4CED0;
-	Thu, 12 Dec 2024 15:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YyGKrI2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5471C4CECE;
+	Thu, 12 Dec 2024 15:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018875;
-	bh=te40OVqwEpDUAjNFXRG0ZZcM5vRdV02+uT55jEMtXqQ=;
+	s=korg; t=1734018879;
+	bh=mstrpkeYV0PUmK6RTcxSGL0CExfOGqVGCmgObBLsCYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voCMWuJqHHeltqIah1yCx4Zcp37CA2VmqLu1nfaK7Ufo22kSjwcf7g47WKxriynP0
-	 hsQhL8RutMEl+z9BfiaKa3JXGSv2xQMPxGo0bBtXiJyjN074EOprXKaVClZGOlBVik
-	 18xtSisujre2kmSR1AtFX95lnGfjvD/2yHKBivy0=
+	b=YyGKrI2L3QwtWc2ozkTreo6fKzZyiU1+MxDGWoD4sgZVgKBYufE6MGei3KgkjK5iJ
+	 j+1uaidJ/LAsdRZhbAQo4rcnB1kmaVXPL4faQD5pVhsPuY0Vb5NVL4tPwuEEZN/LUy
+	 ZEZxTns0F6XRTpG8ztVwcmWVtqNJ6YruS0hMzkzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bin Lan <bin.lan.cn@windriver.com>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/772] net: fix crash when config small gso_max_size/gso_ipv4_max_size
-Date: Thu, 12 Dec 2024 15:49:35 +0100
-Message-ID: <20241212144351.192674743@linuxfoundation.org>
+Subject: [PATCH 6.1 057/772] m68k: mvme147: Reinstate early console
+Date: Thu, 12 Dec 2024 15:50:02 +0100
+Message-ID: <20241212144352.301434388@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,50 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit 9ab5cf19fb0e4680f95e506d6c544259bf1111c4 ]
+[ Upstream commit 077b33b9e2833ff25050d986178a2c4c4036cbac ]
 
-Config a small gso_max_size/gso_ipv4_max_size will lead to an underflow
-in sk_dst_gso_max_size(), which may trigger a BUG_ON crash,
-because sk->sk_gso_max_size would be much bigger than device limits.
-Call Trace:
-tcp_write_xmit
-    tso_segs = tcp_init_tso_segs(skb, mss_now);
-        tcp_set_skb_tso_segs
-            tcp_skb_pcount_set
-                // skb->len = 524288, mss_now = 8
-                // u16 tso_segs = 524288/8 = 65535 -> 0
-                tso_segs = DIV_ROUND_UP(skb->len, mss_now)
-    BUG_ON(!tso_segs)
-Add check for the minimum value of gso_max_size and gso_ipv4_max_size.
+Commit a38eaa07a0ce ("m68k/mvme147: config.c - Remove unused
+functions"), removed the console functionality for the mvme147 instead
+of wiring it up to an early console.  Put the console write function
+back and wire it up like mvme16x does so it's possible to see Linux boot
+on this fine hardware once more.
 
-Fixes: 46e6b992c250 ("rtnetlink: allow GSO maximums to be set on device creation")
-Fixes: 9eefedd58ae1 ("net: add gso_ipv4_max_size and gro_ipv4_max_size per device")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241023035213.517386-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Resolve minor conflicts to fix CVE-2024-50258 ]
-Signed-off-by: Bin Lan <bin.lan.cn@windriver.com>
+Fixes: a38eaa07a0ce ("m68k/mvme147: config.c - Remove unused functions")
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Co-developed-by: Finn Thain <fthain@linux-m68k.org>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/a82e8f0068a8722996a0ccfe666abb5e0a5c120d.1730850684.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/rtnetlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/m68k/kernel/early_printk.c |  5 ++++-
+ arch/m68k/mvme147/config.c      | 30 ++++++++++++++++++++++++++++++
+ arch/m68k/mvme147/mvme147.h     |  6 ++++++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
+ create mode 100644 arch/m68k/mvme147/mvme147.h
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index afb52254a47ec..45c54fb9ad03f 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -1939,7 +1939,7 @@ static const struct nla_policy ifla_policy[IFLA_MAX+1] = {
- 	[IFLA_NUM_TX_QUEUES]	= { .type = NLA_U32 },
- 	[IFLA_NUM_RX_QUEUES]	= { .type = NLA_U32 },
- 	[IFLA_GSO_MAX_SEGS]	= { .type = NLA_U32 },
--	[IFLA_GSO_MAX_SIZE]	= { .type = NLA_U32 },
-+	[IFLA_GSO_MAX_SIZE]	= NLA_POLICY_MIN(NLA_U32, MAX_TCP_HEADER + 1),
- 	[IFLA_PHYS_PORT_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
- 	[IFLA_CARRIER_CHANGES]	= { .type = NLA_U32 },  /* ignored */
- 	[IFLA_PHYS_SWITCH_ID]	= { .type = NLA_BINARY, .len = MAX_PHYS_ITEM_ID_LEN },
+diff --git a/arch/m68k/kernel/early_printk.c b/arch/m68k/kernel/early_printk.c
+index 3cc944df04f65..f11ef9f1f56fc 100644
+--- a/arch/m68k/kernel/early_printk.c
++++ b/arch/m68k/kernel/early_printk.c
+@@ -13,6 +13,7 @@
+ #include <asm/setup.h>
+ 
+ 
++#include "../mvme147/mvme147.h"
+ #include "../mvme16x/mvme16x.h"
+ 
+ asmlinkage void __init debug_cons_nputs(const char *s, unsigned n);
+@@ -22,7 +23,9 @@ static void __ref debug_cons_write(struct console *c,
+ {
+ #if !(defined(CONFIG_SUN3) || defined(CONFIG_M68000) || \
+       defined(CONFIG_COLDFIRE))
+-	if (MACH_IS_MVME16x)
++	if (MACH_IS_MVME147)
++		mvme147_scc_write(c, s, n);
++	else if (MACH_IS_MVME16x)
+ 		mvme16x_cons_write(c, s, n);
+ 	else
+ 		debug_cons_nputs(s, n);
+diff --git a/arch/m68k/mvme147/config.c b/arch/m68k/mvme147/config.c
+index 4e6218115f43c..95d4a7e13b33d 100644
+--- a/arch/m68k/mvme147/config.c
++++ b/arch/m68k/mvme147/config.c
+@@ -35,6 +35,7 @@
+ #include <asm/mvme147hw.h>
+ #include <asm/config.h>
+ 
++#include "mvme147.h"
+ 
+ static void mvme147_get_model(char *model);
+ extern void mvme147_sched_init(void);
+@@ -188,3 +189,32 @@ int mvme147_hwclk(int op, struct rtc_time *t)
+ 	}
+ 	return 0;
+ }
++
++static void scc_delay(void)
++{
++	__asm__ __volatile__ ("nop; nop;");
++}
++
++static void scc_write(char ch)
++{
++	do {
++		scc_delay();
++	} while (!(in_8(M147_SCC_A_ADDR) & BIT(2)));
++	scc_delay();
++	out_8(M147_SCC_A_ADDR, 8);
++	scc_delay();
++	out_8(M147_SCC_A_ADDR, ch);
++}
++
++void mvme147_scc_write(struct console *co, const char *str, unsigned int count)
++{
++	unsigned long flags;
++
++	local_irq_save(flags);
++	while (count--)	{
++		if (*str == '\n')
++			scc_write('\r');
++		scc_write(*str++);
++	}
++	local_irq_restore(flags);
++}
+diff --git a/arch/m68k/mvme147/mvme147.h b/arch/m68k/mvme147/mvme147.h
+new file mode 100644
+index 0000000000000..140bc98b0102a
+--- /dev/null
++++ b/arch/m68k/mvme147/mvme147.h
+@@ -0,0 +1,6 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++struct console;
++
++/* config.c */
++void mvme147_scc_write(struct console *co, const char *str, unsigned int count);
 -- 
 2.43.0
 
