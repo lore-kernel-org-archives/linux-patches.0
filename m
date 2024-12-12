@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D8320969B;
-	Thu, 12 Dec 2024 16:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F8721E0BC;
+	Thu, 12 Dec 2024 16:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020237; cv=none; b=FlV+SYXoeplMzwdwlLkqJL6dV6DWB4vSl3hRYACgTsvGvqLJ+9a29lMEJVIf/akD6BFFb/gXgDHrXqHa0Bw76Qj1q+tq98km3/043x/W8hpQngg7TnHP7lhoO1+HthboR85WVu8rhUFnnwFLU9/H/0T1v4c8q7RufVSoNT3b9PA=
+	t=1734020240; cv=none; b=oTrOyQU9HjNE23GZ1d9A+sRPuvjNEp6ZSdoNUyKcHhruVIc07304k8SJbFOMM5NH4KCrLx5h0F73w/huEc/EIzKns0UX4Q2ZgUc6PwXqQ9buVLl8oIbLmH2573Z5BoM181Fl5yUEcnqtmj0qmxhtKFelzHq3AZZreeWGiiNq7do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020237; c=relaxed/simple;
-	bh=GCST0m+ZjCA3hk39tH8fC9YjLq2w3nQSKQhzq6m/19M=;
+	s=arc-20240116; t=1734020240; c=relaxed/simple;
+	bh=nZnNn93YNpYUUA2goygRPkdD4q84Ehu/LtMIAZAMf7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWcsyGOJskIRW74r71Hel0IC6u0FtLw5ZkSv4xJ679EhJsxpsbrN1cCKs5SpGxmjltSJ8v3mhBO5VAm/DuYWcPwqn3xg3z8fbGeq7ZzaYHCuacF5bySnTsLqPEFYNv3AtcizG49TdAiFjH7sN7VhxsH6FvsleOWM9JYB4U3Soyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFhCvSU/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UhoFQLTrLY0uNXnDmB+D9fU5tEpT3r5SUkrab2NqpqjfDs9YuMNq7ie+npwI2E3mpOpSweGAmCg1AmbT6YwpE8NaiAvEhlvRCZWs3zBIQQdGyjYTOXnCyEDFIGqX3Elgfjy5JMF3B+MdWOZUCB7ljvbaDm4YrTCvAWqQf5B7//w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJcdw59E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFhCvSU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328B6C4CECE;
-	Thu, 12 Dec 2024 16:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJcdw59E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1887EC4CED0;
+	Thu, 12 Dec 2024 16:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020236;
-	bh=GCST0m+ZjCA3hk39tH8fC9YjLq2w3nQSKQhzq6m/19M=;
+	s=korg; t=1734020240;
+	bh=nZnNn93YNpYUUA2goygRPkdD4q84Ehu/LtMIAZAMf7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFhCvSU/pyPY5W9g4kDxq8T8qElN3GHiYKHmy7G5VDjo8TDY6wkBLRqSzxDdwZNNh
-	 4rPJ22wwe/0jWAujBGrdtPTnvvDI27JbcMrozTBNdVmPgEemhpcFj40MnKMIQZ/qU/
-	 6Z1gi8n9I3mudyoDlTwB4ZI11uPJYaEDbM+iq96Q=
+	b=BJcdw59EAeXNBExGkekKkxVv3m1O1tYa+vTv2P4yf5XQ1IgPqVYY7/nYB30GaMFd6
+	 hZXyv6tnwbum3he/3iTpxtaFhGHg6ggvCKAK+5nyN++zUOiCK2NrigslPIUEDVvwA5
+	 6IeSVXJXYLpC8BZ/vSPThYDa/WclcEqZF/Tp8Zpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 413/772] ALSA: hda/realtek: Update ALC225 depop procedure
-Date: Thu, 12 Dec 2024 15:55:58 +0100
-Message-ID: <20241212144406.983455297@linuxfoundation.org>
+Subject: [PATCH 6.1 414/772] ALSA: hda/realtek: Set PCBeep to default value for ALC274
+Date: Thu, 12 Dec 2024 15:55:59 +0100
+Message-ID: <20241212144407.023998960@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,145 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Kailang Yang <kailang@realtek.com>
 
-commit 1fd50509fe14a9adc9329e0454b986157a4c155a upstream.
+commit 155699ccab7c78cbba69798242b68bc8ac66d5d2 upstream.
 
-Old procedure has a chance to meet Headphone no output.
+BIOS Enable PC beep path cause pop noise via speaker during boot time.
+Set to default value from driver will solve the issue.
 
-Fixes: da911b1f5e98 ("ALSA: hda/realtek - update ALC225 depop optimize")
 Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/5a27b016ba9d42b4a4e6dadce50a3ba4@realtek.com
+Link: https://lore.kernel.org/2721bb57e20a44c3826c473e933f9105@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   95 +++++++++++++++++++-----------------------
- 1 file changed, 43 insertions(+), 52 deletions(-)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -3754,33 +3754,28 @@ static void alc225_init(struct hda_codec
- 	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 	hp2_pin_sense = snd_hda_jack_detect(codec, 0x16);
- 
--	if (hp1_pin_sense || hp2_pin_sense)
-+	if (hp1_pin_sense || hp2_pin_sense) {
- 		msleep(2);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(100);
--
--	alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+		msleep(75);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+	}
- }
- 
- static void alc225_shutup(struct hda_codec *codec)
-@@ -3792,36 +3787,35 @@ static void alc225_shutup(struct hda_cod
- 	if (!hp_pin)
- 		hp_pin = 0x21;
- 
--	alc_disable_headset_jack_key(codec);
--	/* 3k pull low control for Headset jack. */
--	alc_update_coef_idx(codec, 0x4a, 0, 3 << 10);
--
- 	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 	hp2_pin_sense = snd_hda_jack_detect(codec, 0x16);
- 
--	if (hp1_pin_sense || hp2_pin_sense)
-+	if (hp1_pin_sense || hp2_pin_sense) {
-+		alc_disable_headset_jack_key(codec);
-+		/* 3k pull low control for Headset jack. */
-+		alc_update_coef_idx(codec, 0x4a, 0, 3 << 10);
- 		msleep(2);
- 
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(100);
--
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+
-+		msleep(75);
-+		alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
-+		alc_enable_headset_jack_key(codec);
-+	}
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
- 	if (spec->ultra_low_power) {
-@@ -3832,9 +3826,6 @@ static void alc225_shutup(struct hda_cod
- 		alc_update_coef_idx(codec, 0x4a, 3<<4, 2<<4);
- 		msleep(30);
- 	}
--
--	alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
--	alc_enable_headset_jack_key(codec);
- }
- 
- static void alc_default_init(struct hda_codec *codec)
+@@ -469,6 +469,8 @@ static void alc_fill_eapd_coef(struct hd
+ 		break;
+ 	case 0x10ec0234:
+ 	case 0x10ec0274:
++		alc_write_coef_idx(codec, 0x6e, 0x0c25);
++		fallthrough;
+ 	case 0x10ec0294:
+ 	case 0x10ec0700:
+ 	case 0x10ec0701:
 
 
