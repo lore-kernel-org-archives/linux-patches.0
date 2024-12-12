@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFE7222D5C;
-	Thu, 12 Dec 2024 16:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B34222D59;
+	Thu, 12 Dec 2024 16:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020132; cv=none; b=JdIZO5N2Fpd0+MP+wuHzRNFvrjLJb0TbiJ3qNUma/SxvYQotsmGR70UPycHDV89avq2Lrx/pgd71OCCizk0vurjvrXms4vqR94E5oc5m2WVvJQNlKxz8/J85jiNskvaDmGqbibGQfE4aT1LcaAd8v80A7QMePc1M2Tzb9Ji+N6s=
+	t=1734020136; cv=none; b=F2qK9GcnisE3uuGDzqxxcjgkX8sgc9FeOxpcrmYxCRzuNNcd3R26/hRT/k25NqMs2q40deELSojLbl3z6hvHfVo8l0WvZ49QRvwJXrWJLgGoGcWULz4yMuJ1RGG+/aRPJB7iZEEbXEwNmQ4ulnDPiac1MwCxIu7Hky8Ylk0dvpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020132; c=relaxed/simple;
-	bh=PTtb+hO0DMfuh9cu68HoYIiTx4jJXbSqeq5/EfsfgXY=;
+	s=arc-20240116; t=1734020136; c=relaxed/simple;
+	bh=goDvfWRsKVExnBiIhqWe5ayAzJuHM2U5FnY95bSHQ/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwtUm8yNELpvKjvpMSWAxIodRwB3XBSGHXEkVZXuNTzvuE3PQrgQ41cs7GOdaoF3e1X86V7By4Dz25VcflY1Kcx8zWl4gmBjRL2DfMX7fOvRUFtaFqEN5v6V3y5Ar5UCF66PegQ7aGCdOh1RQz1hYZx95l6Wq55v53iOFPo58us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMyODxOg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWOp5Q/eLiRoxxIrBRNF+w+eT9lJxVHCGQBViUutWrBEMXzZZeAZKhauJJLPPjQjpzMsXwnzA/UtOXfwtDZn9Ub/EVDH6D7AvPlrj63wz+nBB7ew3kpZRWu683H3rEDbzy1+gbZcznABqTZVlZmSDmX13bb5y91atN8n2Zy0PqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sESSZ0P0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMyODxOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C1C1C4CECE;
-	Thu, 12 Dec 2024 16:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sESSZ0P0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4015C4CECE;
+	Thu, 12 Dec 2024 16:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020131;
-	bh=PTtb+hO0DMfuh9cu68HoYIiTx4jJXbSqeq5/EfsfgXY=;
+	s=korg; t=1734020135;
+	bh=goDvfWRsKVExnBiIhqWe5ayAzJuHM2U5FnY95bSHQ/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iMyODxOgbnCijOEBQ6XNoWXMmNU6NmEgGaOEM60M6e3xgvCXo7gd1ceBgAgoDBnpW
-	 9BVgNmL3GpuXUyLd8Q1yk10hEh9RAyPVs7mHKhIIQyknGL6kEaH45yHRJkRZgCymf1
-	 zz8xvG4mGoFR/pavbGmOrVwNiq+g6IO1qosvpysw=
+	b=sESSZ0P0x/U6UaNIfHQKc33MBGHI7jpucnydze5DduAvgVkG63JqgO5XI7n6A6Gsp
+	 0wtxEzfVUErAB1MwaMqsDFLLBPFTQ8Rjkniqk+R1vKMuAubNDBBTa6xsuiAcCOWr3O
+	 F96vPJOJTjZ0EpnkvZQbD4uEeG0eq2tXJWW+DfOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
-Subject: [PATCH 6.1 384/772] driver core: bus: Fix double free in driver API bus_register()
-Date: Thu, 12 Dec 2024 15:55:29 +0100
-Message-ID: <20241212144405.778553125@linuxfoundation.org>
+	syzbot+edd9fe0d3a65b14588d5@syzkaller.appspotmail.com,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.1 385/772] wifi: rtlwifi: Drastically reduce the attempts to read efuse in case of failures
+Date: Thu, 12 Dec 2024 15:55:30 +0100
+Message-ID: <20241212144405.819097748@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,34 +52,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit bfa54a793ba77ef696755b66f3ac4ed00c7d1248 upstream.
+commit 5c1b544563005a00591a3aa86ecff62ed4d11be3 upstream.
 
-For bus_register(), any error which happens after kset_register() will
-cause that @priv are freed twice, fixed by setting @priv with NULL after
-the first free.
+Syzkaller reported a hung task with uevent_show() on stack trace. That
+specific issue was addressed by another commit [0], but even with that
+fix applied (for example, running v6.12-rc5) we face another type of hung
+task that comes from the same reproducer [1]. By investigating that, we
+could narrow it to the following path:
 
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20240727-bus_register_fix-v1-1-fed8dd0dba7a@quicinc.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Brennan : Backport requires bus->p = NULL instead of priv = NULL ]
-Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+(a) Syzkaller emulates a Realtek USB WiFi adapter using raw-gadget and
+dummy_hcd infrastructure.
+
+(b) During the probe of rtl8192cu, the driver ends-up performing an efuse
+read procedure (which is related to EEPROM load IIUC), and here lies the
+issue: the function read_efuse() calls read_efuse_byte() many times, as
+loop iterations depending on the efuse size (in our example, 512 in total).
+
+This procedure for reading efuse bytes relies in a loop that performs an
+I/O read up to *10k* times in case of failures. We measured the time of
+the loop inside read_efuse_byte() alone, and in this reproducer (which
+involves the dummy_hcd emulation layer), it takes 15 seconds each. As a
+consequence, we have the driver stuck in its probe routine for big time,
+exposing a stack trace like below if we attempt to reboot the system, for
+example:
+
+task:kworker/0:3 state:D stack:0 pid:662 tgid:662 ppid:2 flags:0x00004000
+Workqueue: usb_hub_wq hub_event
+Call Trace:
+ __schedule+0xe22/0xeb6
+ schedule_timeout+0xe7/0x132
+ __wait_for_common+0xb5/0x12e
+ usb_start_wait_urb+0xc5/0x1ef
+ ? usb_alloc_urb+0x95/0xa4
+ usb_control_msg+0xff/0x184
+ _usbctrl_vendorreq_sync+0xa0/0x161
+ _usb_read_sync+0xb3/0xc5
+ read_efuse_byte+0x13c/0x146
+ read_efuse+0x351/0x5f0
+ efuse_read_all_map+0x42/0x52
+ rtl_efuse_shadow_map_update+0x60/0xef
+ rtl_get_hwinfo+0x5d/0x1c2
+ rtl92cu_read_eeprom_info+0x10a/0x8d5
+ ? rtl92c_read_chip_version+0x14f/0x17e
+ rtl_usb_probe+0x323/0x851
+ usb_probe_interface+0x278/0x34b
+ really_probe+0x202/0x4a4
+ __driver_probe_device+0x166/0x1b2
+ driver_probe_device+0x2f/0xd8
+ [...]
+
+We propose hereby to drastically reduce the attempts of doing the I/O
+reads in case of failures, restricted to USB devices (given that
+they're inherently slower than PCIe ones). By retrying up to 10 times
+(instead of 10000), we got reponsiveness in the reproducer, while seems
+reasonable to believe that there's no sane USB device implementation in
+the field requiring this amount of retries at every I/O read in order
+to properly work. Based on that assumption, it'd be good to have it
+backported to stable but maybe not since driver implementation (the 10k
+number comes from day 0), perhaps up to 6.x series makes sense.
+
+[0] Commit 15fffc6a5624 ("driver core: Fix uevent_show() vs driver detach race")
+
+[1] A note about that: this syzkaller report presents multiple reproducers
+that differs by the type of emulated USB device. For this specific case,
+check the entry from 2024/08/08 06:23 in the list of crashes; the C repro
+is available at https://syzkaller.appspot.com/text?tag=ReproC&x=1521fc83980000.
+
+Cc: stable@vger.kernel.org # v6.1+
+Reported-by: syzbot+edd9fe0d3a65b14588d5@syzkaller.appspotmail.com
+Tested-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241101193412.1390391-1-gpiccoli@igalia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/bus.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtlwifi/efuse.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -853,6 +853,8 @@ bus_devices_fail:
- 	bus_remove_file(bus, &bus_attr_uevent);
- bus_uevent_fail:
- 	kset_unregister(&bus->p->subsys);
-+	/* Above kset_unregister() will kfree @bus->p */
-+	bus->p = NULL;
- out:
- 	kfree(bus->p);
- 	bus->p = NULL;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/efuse.c b/drivers/net/wireless/realtek/rtlwifi/efuse.c
+index 82cf5fb5175f..6518e77b89f5 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/efuse.c
++++ b/drivers/net/wireless/realtek/rtlwifi/efuse.c
+@@ -162,10 +162,19 @@ void efuse_write_1byte(struct ieee80211_hw *hw, u16 address, u8 value)
+ void read_efuse_byte(struct ieee80211_hw *hw, u16 _offset, u8 *pbuf)
+ {
+ 	struct rtl_priv *rtlpriv = rtl_priv(hw);
++	u16 max_attempts = 10000;
+ 	u32 value32;
+ 	u8 readbyte;
+ 	u16 retry;
+ 
++	/*
++	 * In case of USB devices, transfer speeds are limited, hence
++	 * efuse I/O reads could be (way) slower. So, decrease (a lot)
++	 * the read attempts in case of failures.
++	 */
++	if (rtlpriv->rtlhal.interface == INTF_USB)
++		max_attempts = 10;
++
+ 	rtl_write_byte(rtlpriv, rtlpriv->cfg->maps[EFUSE_CTRL] + 1,
+ 		       (_offset & 0xff));
+ 	readbyte = rtl_read_byte(rtlpriv, rtlpriv->cfg->maps[EFUSE_CTRL] + 2);
+@@ -178,7 +187,7 @@ void read_efuse_byte(struct ieee80211_hw *hw, u16 _offset, u8 *pbuf)
+ 
+ 	retry = 0;
+ 	value32 = rtl_read_dword(rtlpriv, rtlpriv->cfg->maps[EFUSE_CTRL]);
+-	while (!(((value32 >> 24) & 0xff) & 0x80) && (retry < 10000)) {
++	while (!(((value32 >> 24) & 0xff) & 0x80) && (retry < max_attempts)) {
+ 		value32 = rtl_read_dword(rtlpriv,
+ 					 rtlpriv->cfg->maps[EFUSE_CTRL]);
+ 		retry++;
+-- 
+2.47.1
+
 
 
