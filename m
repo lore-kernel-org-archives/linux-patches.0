@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC922216E2D;
-	Thu, 12 Dec 2024 17:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0483415696E;
+	Thu, 12 Dec 2024 17:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025054; cv=none; b=SjZTVqvHJhXZVgC7slYyWRZH2w+4hXrmQw/PZJix5g9JFsd5BxxzQqvJ1b3Dc4rMgkeOsW0lTUmMyv4pmMJlDF3VEvnCSggtsJ0CEo/LWRXpye6ROAedMSyr1C8EW2PgR5ekecalw5BiKeZOr5YyZ5bOk9Hk/OyYDmwRpXhcOmo=
+	t=1734025057; cv=none; b=RdOq34o+TrkqumDKxozL9LUF2dD/zWqG7n6lTv3cZNQeq2pBtdZ7KMsfo2jEo4rutb8mgn/JMXiphMGkF7QshsZkulT9iFKNLrAY64nq3ItjH4XrlzgL5ka1yQUU40G6OrvHeXsu5eIZaM8tDV/Tpqz78EGJLYn5MFzsKIXyrTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025054; c=relaxed/simple;
-	bh=JAsdKWJQ/e42yQDmOd6rcblI/83G5+xbYVjpH/4J2Yk=;
+	s=arc-20240116; t=1734025057; c=relaxed/simple;
+	bh=XF78K/OpJC6b7MBW2Py19Wda77QU0OLrYFKZXr+c37k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tp5b9w5oPpLx4M38jGXovDmZOkhG/VVyK8BANylhiOi8dLDE8vAfAD+42epdCBAnoVyK/eXKDSLTyP+HeW9f/nlDHU7TvVjQe8XhAdKVpcrCg5l+wvlcP8HQPv1AUfr+ZqjcTuQ9KluyE5YjSa+wpwqiVyZ58GNEFYOWG9EcRhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PsfpRYZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PneaA6PTTIpEbtT6oxn58v48EL3dqmeT4mxwB6B1hXfG7G6YBG4v0Yos7xuuHVpxATF7UdlICO+B7k/r1/wAy/6blIQQ6AyPor5iHC1b7BnVmHJsm/5z1PmBuH1dO2PAJrcBmjQedcfNzbPYlo8DOSu5zv21KYaur9vqN+2jS84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpGY9c8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PsfpRYZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B33C4CECE;
-	Thu, 12 Dec 2024 17:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpGY9c8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E4B0C4CECE;
+	Thu, 12 Dec 2024 17:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025053;
-	bh=JAsdKWJQ/e42yQDmOd6rcblI/83G5+xbYVjpH/4J2Yk=;
+	s=korg; t=1734025056;
+	bh=XF78K/OpJC6b7MBW2Py19Wda77QU0OLrYFKZXr+c37k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PsfpRYZWeP33MMHgB5gWh7Xszg1jgnzPDJfgyO8mNOTjzfnJ4kvfkzr+0r6nPwWY/
-	 IwbG19DFRjGb+vEclxmJmfvawNxXwNP39TloocLDxN4PduVuB24QHvucXNB/okAS2L
-	 NEG+6q3HC9nUsQ2HErQe7XmeRUFKAVnWKf2Sl4m8=
+	b=YpGY9c8ekXktjwcLFLrG/0ZKejFR6bQpH/xpqaA/CmEwfRp3UXN7eS+X+EL1jGzdj
+	 /Jw5ituH8tJ+OL38k1iBsXpgXMDQT+lqIy0VZTHxwXBNEpVOLuqklxLVdNaxeEnXhU
+	 5MJHA7GLPh0uHONz5BHO/EOCx8b8Ai5oI0AMtpnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 039/321] firmware: google: Unregister driver_info on failure
-Date: Thu, 12 Dec 2024 15:59:17 +0100
-Message-ID: <20241212144231.541188905@linuxfoundation.org>
+	Chris Down <chris@chrisdown.name>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 5.4 011/321] kbuild: Use uname for LINUX_COMPILE_HOST detection
+Date: Thu, 12 Dec 2024 15:58:49 +0100
+Message-ID: <20241212144230.093284824@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,53 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit 32b0901e141f6d4cf49d820b53eb09b88b1f72f7 ]
+commit 1e66d50ad3a1dbf0169b14d502be59a4b1213149 upstream.
 
-When platform_device_register_full() returns error, the gsmi_init() returns
-without unregister gsmi_driver_info, fix by add missing
-platform_driver_unregister() when platform_device_register_full() failed.
+`hostname` may not be present on some systems as it's not mandated by
+POSIX/SUSv4. This isn't just a theoretical problem: on Arch Linux,
+`hostname` is provided by `inetutils`, which isn't part of the base
+distribution.
 
-Fixes: 8942b2d5094b ("gsmi: Add GSMI commands to log S0ix info")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Link: https://lore.kernel.org/r/20241015131344.20272-1-yuancan@huawei.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    ./scripts/mkcompile_h: line 38: hostname: command not found
+
+Use `uname -n` instead, which is more likely to be available (and
+mandated by standards).
+
+Signed-off-by: Chris Down <chris@chrisdown.name>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/gsmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ scripts/mkcompile_h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/google/gsmi.c b/drivers/firmware/google/gsmi.c
-index 633997af4b09e..b25a05c56f537 100644
---- a/drivers/firmware/google/gsmi.c
-+++ b/drivers/firmware/google/gsmi.c
-@@ -898,7 +898,8 @@ static __init int gsmi_init(void)
- 	gsmi_dev.pdev = platform_device_register_full(&gsmi_dev_info);
- 	if (IS_ERR(gsmi_dev.pdev)) {
- 		printk(KERN_ERR "gsmi: unable to register platform device\n");
--		return PTR_ERR(gsmi_dev.pdev);
-+		ret = PTR_ERR(gsmi_dev.pdev);
-+		goto out_unregister;
- 	}
- 
- 	/* SMI access needs to be serialized */
-@@ -1025,10 +1026,11 @@ static __init int gsmi_init(void)
- 	gsmi_buf_free(gsmi_dev.name_buf);
- 	dma_pool_destroy(gsmi_dev.dma_pool);
- 	platform_device_unregister(gsmi_dev.pdev);
--	pr_info("gsmi: failed to load: %d\n", ret);
-+out_unregister:
- #ifdef CONFIG_PM
- 	platform_driver_unregister(&gsmi_driver_info);
- #endif
-+	pr_info("gsmi: failed to load: %d\n", ret);
- 	return ret;
- }
- 
--- 
-2.43.0
-
+--- a/scripts/mkcompile_h
++++ b/scripts/mkcompile_h
+@@ -45,7 +45,7 @@ else
+ 	LINUX_COMPILE_BY=$KBUILD_BUILD_USER
+ fi
+ if test -z "$KBUILD_BUILD_HOST"; then
+-	LINUX_COMPILE_HOST=`hostname`
++	LINUX_COMPILE_HOST=`uname -n`
+ else
+ 	LINUX_COMPILE_HOST=$KBUILD_BUILD_HOST
+ fi
 
 
