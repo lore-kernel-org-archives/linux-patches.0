@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0080C213E99;
-	Thu, 12 Dec 2024 16:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FF122488E;
+	Thu, 12 Dec 2024 16:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021102; cv=none; b=s9p1TfwwdKYBAImXFBmW0TIZX16OEOd8ujN/4X7H3LVhAVMyMcHyqXQZqluUUYnlir6/EFZlHcG0nekC04VWI95G09GclWH6cM5JbYlFUQWqR7t5fG3/ERNCr+xRfpNnctlxn23Hc4ofo+eS2cwmPWkxH8uvdR2LS5nTU7pPCLU=
+	t=1734021105; cv=none; b=cDzOnZBtnfE0NXszzwKzxFmst2omqqYuokYtXCNaG0reRXwpUixdVdrsvvYjCP43bBuNpMHc1VzhU29aRDAnHGrZ2IWSwAs/cPmvA9kf3fKOiRjei6TCswAub6QKWltmI5LwZ6xbNXw/HiU1qiUfzrJWQVXAuOQ215ddV/DXLr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021102; c=relaxed/simple;
-	bh=e+7WKT9sSoirNc8A5mFCSgijNhwX2CGt/q/4GmyytXs=;
+	s=arc-20240116; t=1734021105; c=relaxed/simple;
+	bh=HybcYvqEWBvJ3b11h608hmUS5dlpDLH34LSIcxv/5i0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2tuyYdGqSLdXoEGJv4Slyse/1Qodqc2xB2YZLri4pGC7oKDQsrwqkv3L9ah/1uEBi2f0kJASoZA+JaRbgQBgbkEv0WwZNQVU3lno1o5cZoWkqlUHTGvSFgHbTXnLEIlTGOfpsisjgL4+ip1NmL6SEQ8DT0XAdKGWJWgTGjlRJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFUWnkbe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oZdKhdy6PtkazyRT9ojV+TCyPzZHYAm6Fvd4nJbexwwpkAPgENV31M19lJSjxUWzc62eGzF3/h6GmgFXqZTwoxQOLxOVR+E9jD3GYbvIt9PBm/MQNf3a+MJLO1sQISsqz4jjkQ+/5Vxj6SI5LAD6KPtgzoLz3FpDMTlagSdOLOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBbBuVmB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFUWnkbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F88C4CECE;
-	Thu, 12 Dec 2024 16:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBbBuVmB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D683C4CECE;
+	Thu, 12 Dec 2024 16:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021101;
-	bh=e+7WKT9sSoirNc8A5mFCSgijNhwX2CGt/q/4GmyytXs=;
+	s=korg; t=1734021105;
+	bh=HybcYvqEWBvJ3b11h608hmUS5dlpDLH34LSIcxv/5i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFUWnkbeyYBtN4MSq5Dd6Tl4jyP3VOnMgYs9IeMrufivhaQg1awZdE7Qd/BnfCofx
-	 FVSu8UGL41achYzEIzUMYGpT/hZKTb2si5KRQhUbGOK310av3UqIkZJHCgPkWfV5jM
-	 pUqKdfH7nmHg+OUypPG3QG8PXeCrruQTpH8PN5+o=
+	b=yBbBuVmB6STs3koc51Cfn398sYrJXKfqVZ6LHqo24SgwiIMQoZg5HiZCDGoMCW55V
+	 Viz7ogp5eDH1RhkJleB83MJUx+79fdnBJVRneO2dOYWLk1ZmSIBOjMAwsLxxiehYKM
+	 Wv2iPU6nEKNMk1j9LEbOQmUzAqZICFtPWqL2PktE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Gurumurthy <agurumurthy@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 618/772] scsi: qla2xxx: Supported speed displayed incorrectly for VPorts
-Date: Thu, 12 Dec 2024 15:59:23 +0100
-Message-ID: <20241212144415.464733556@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 645/772] kselftest/arm64: Dont leak pipe fds in pac.exec_sign_all()
+Date: Thu, 12 Dec 2024 15:59:50 +0100
+Message-ID: <20241212144416.579136585@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,36 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Gurumurthy <agurumurthy@marvell.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit e4e268f898c8a08f0a1188677e15eadbc06e98f6 upstream.
+[ Upstream commit 27141b690547da5650a420f26ec369ba142a9ebb ]
 
-The fc_function_template for vports was missing the
-.show_host_supported_speeds. The base port had the same.
+The PAC exec_sign_all() test spawns some child processes, creating pipes
+to be stdin and stdout for the child. It cleans up most of the file
+descriptors that are created as part of this but neglects to clean up the
+parent end of the child stdin and stdout. Add the missing close() calls.
 
-Add .show_host_supported_speeds to the vport template as well.
-
-Cc: stable@vger.kernel.org
-Fixes: 2c3dfe3f6ad8 ("[SCSI] qla2xxx: add support for NPIV")
-Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-7-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241111-arm64-pac-test-collisions-v1-1-171875f37e44@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_attr.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/arm64/pauth/pac.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_attr.c
-+++ b/drivers/scsi/qla2xxx/qla_attr.c
-@@ -3312,6 +3312,7 @@ struct fc_function_template qla2xxx_tran
- 	.show_host_node_name = 1,
- 	.show_host_port_name = 1,
- 	.show_host_supported_classes = 1,
-+	.show_host_supported_speeds = 1,
+diff --git a/tools/testing/selftests/arm64/pauth/pac.c b/tools/testing/selftests/arm64/pauth/pac.c
+index b743daa772f55..5a07b3958fbf2 100644
+--- a/tools/testing/selftests/arm64/pauth/pac.c
++++ b/tools/testing/selftests/arm64/pauth/pac.c
+@@ -182,6 +182,9 @@ int exec_sign_all(struct signatures *signed_vals, size_t val)
+ 		return -1;
+ 	}
  
- 	.get_host_port_id = qla2x00_get_host_port_id,
- 	.show_host_port_id = 1,
++	close(new_stdin[1]);
++	close(new_stdout[0]);
++
+ 	return 0;
+ }
+ 
+-- 
+2.43.0
+
 
 
