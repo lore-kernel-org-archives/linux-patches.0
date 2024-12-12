@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623392288E9;
-	Thu, 12 Dec 2024 15:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E565E22966D;
+	Thu, 12 Dec 2024 15:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019026; cv=none; b=k3GM41ZCa4jxHmKhlYuAYd/OmwiQinB3IXl1s6+DPnVY5Mx1+GSHQ9MgSH8Em9Somfervw5ubJifNNJEPcurf8NLNMIbXnpN8aehH3VrHD/ogsg7sjdee0QtegnMAMmhbNVkyxMuQkXQzl0MWfiMu6BV1JtrZBlmU6fJQmoD+iY=
+	t=1734019030; cv=none; b=GyNSkBVjyVEZCz7kpfuQ5gs4+VKEMY72RJHgoywLvoQim1bObrbNgNLzuwZL1IfAlkhjM2NVifjLNgCu+zWpGUOMS3p8Pl0beV6cGQ3a0vvrIK+sxYdM2VPux6xn6KR43kYo2XuzsQmAAaIc+TyG1W1Tx56uKn/Vnek8W5uVQ0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019026; c=relaxed/simple;
-	bh=m37KOQUR8lvayd2yHqiqm3cD/KyTPuPLXhBeuCft5VE=;
+	s=arc-20240116; t=1734019030; c=relaxed/simple;
+	bh=j8nNUYg8iWsHefrfGA7QEHHrMmg2Sh3ALrVNRyihPBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5pAzgjis0sZRXjxAJp02N0MRUQLiSl423twfm3Rmg+SXPMrii9GLB9EVtJrupvPqelgHWvKwUc1R0j67slvfBcQaNu2nTsuVkMD5WDu3t1fppFc1iplbR0yW5gzYCnlfMulYwO2LMaWgyKAj9IAaoBxozSiSo1R32GrZlnXfIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nbuqPFVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ul/d28P5+fRbdqw4cGIbBm/Pm2ko53RiUOugPK8cyV52qrV3sV4rht9/G4BxIoYpST2NpwI6nnaJ8nKl3UL5qNEdiFc+z439c2vPUA7d1iLdN0whJbXmOb+6jjgYZXGT4N5/qH/iDrLDN2mQfgFw4Ow1AQ7qo7i3IE5czOBtBUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBZZ8OTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nbuqPFVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA52C4CED3;
-	Thu, 12 Dec 2024 15:57:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBZZ8OTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B3BC4CED0;
+	Thu, 12 Dec 2024 15:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019026;
-	bh=m37KOQUR8lvayd2yHqiqm3cD/KyTPuPLXhBeuCft5VE=;
+	s=korg; t=1734019029;
+	bh=j8nNUYg8iWsHefrfGA7QEHHrMmg2Sh3ALrVNRyihPBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbuqPFVdU/kcBStZtyJohmPzFPa/xq/1HhKEPBK81jwILVyxTmT82/cyfShbpASRX
-	 55PAB7WDSz0wtVYOBjsqYfszdev8L4qgFFo0A4ztdl7GjwXm0rd+2cZk1i0dEA9Q3e
-	 douwgRjh4fvRbnHUUI1gYYPd0X5o1waM5/f9e3Bw=
+	b=XBZZ8OTdBSwUjWgtWKiN+k5R1T45gPeTOKMfuMbfQ9Pv1/ZogS879P90PZthnXmsq
+	 JjLOxxjgGN6wtMbYxr/X7BHLrSQ/4i4MV0PY37z/4GdhvEjAcdj4fjFh/ae1+Q/FF9
+	 IU6Rb8HEzpdMPe7BxMvWMRjLSCSp+dnoOgJJ8dbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Brian Norris <briannorris@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/772] firmware: google: Unregister driver_info on failure
-Date: Thu, 12 Dec 2024 15:50:13 +0100
-Message-ID: <20241212144352.747407583@linuxfoundation.org>
+Subject: [PATCH 6.1 059/772] acpi/arm64: Adjust error handling procedure in gtdt_parse_timer_block()
+Date: Thu, 12 Dec 2024 15:50:04 +0100
+Message-ID: <20241212144352.387990448@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,51 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Can <yuancan@huawei.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 32b0901e141f6d4cf49d820b53eb09b88b1f72f7 ]
+[ Upstream commit 1a9de2f6fda69d5f105dd8af776856a66abdaa64 ]
 
-When platform_device_register_full() returns error, the gsmi_init() returns
-without unregister gsmi_driver_info, fix by add missing
-platform_driver_unregister() when platform_device_register_full() failed.
+In case of error in gtdt_parse_timer_block() invalid 'gtdt_frame'
+will be used in 'do {} while (i-- >= 0 && gtdt_frame--);' statement block
+because do{} block will be executed even if 'i == 0'.
 
-Fixes: 8942b2d5094b ("gsmi: Add GSMI commands to log S0ix info")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Brian Norris <briannorris@chromium.org>
-Link: https://lore.kernel.org/r/20241015131344.20272-1-yuancan@huawei.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Adjust error handling procedure by replacing 'i-- >= 0' with 'i-- > 0'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a712c3ed9b8a ("acpi/arm64: Add memory-mapped timer support in GTDT driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Acked-by: Hanjun Guo <guohanjun@huawei.com>
+Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://lore.kernel.org/r/20240827101239.22020-1-amishin@t-argos.ru
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/gsmi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/arm64/gtdt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/google/gsmi.c b/drivers/firmware/google/gsmi.c
-index 871bedf533a80..8c75308b01d5d 100644
---- a/drivers/firmware/google/gsmi.c
-+++ b/drivers/firmware/google/gsmi.c
-@@ -918,7 +918,8 @@ static __init int gsmi_init(void)
- 	gsmi_dev.pdev = platform_device_register_full(&gsmi_dev_info);
- 	if (IS_ERR(gsmi_dev.pdev)) {
- 		printk(KERN_ERR "gsmi: unable to register platform device\n");
--		return PTR_ERR(gsmi_dev.pdev);
-+		ret = PTR_ERR(gsmi_dev.pdev);
-+		goto out_unregister;
- 	}
+diff --git a/drivers/acpi/arm64/gtdt.c b/drivers/acpi/arm64/gtdt.c
+index c0e77c1c8e09d..eb6c2d3603874 100644
+--- a/drivers/acpi/arm64/gtdt.c
++++ b/drivers/acpi/arm64/gtdt.c
+@@ -283,7 +283,7 @@ static int __init gtdt_parse_timer_block(struct acpi_gtdt_timer_block *block,
+ 		if (frame->virt_irq > 0)
+ 			acpi_unregister_gsi(gtdt_frame->virtual_timer_interrupt);
+ 		frame->virt_irq = 0;
+-	} while (i-- >= 0 && gtdt_frame--);
++	} while (i-- > 0 && gtdt_frame--);
  
- 	/* SMI access needs to be serialized */
-@@ -1056,10 +1057,11 @@ static __init int gsmi_init(void)
- 	gsmi_buf_free(gsmi_dev.name_buf);
- 	kmem_cache_destroy(gsmi_dev.mem_pool);
- 	platform_device_unregister(gsmi_dev.pdev);
--	pr_info("gsmi: failed to load: %d\n", ret);
-+out_unregister:
- #ifdef CONFIG_PM
- 	platform_driver_unregister(&gsmi_driver_info);
- #endif
-+	pr_info("gsmi: failed to load: %d\n", ret);
- 	return ret;
+ 	return -EINVAL;
  }
- 
 -- 
 2.43.0
 
