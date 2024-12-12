@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0654C222D5F;
-	Thu, 12 Dec 2024 16:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601C821CFEA;
+	Thu, 12 Dec 2024 16:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020809; cv=none; b=fHx+xkfOyJTSF2PMlDD8mTS6S8+TA1JUkMvlBHwx/Xf/wG0Nssb3+Oko9qHu3R3WZBcfRKCyOVNlihXmNWGslNvpnwiUsAsY0Vpcr5FZGoX8KA7IvTjlk2vsnUOrqLn1TwxtYWFqffTY7eDFIPWzYQ0qLW6GYQRT6x3k3kdj68I=
+	t=1734020813; cv=none; b=YNLIXnlcX8xHHkxQZFFNIEuVbXJw6ozxxPaD/gjYtHW1d3u+5XR+yzuTurEDm3bLaRfH+qdHBh2kxyY7Y6HITd4QI/yRXjH0MWRU41aXbjliU1xuOO/5cquv51fpoN0yn2Uv/H/y8OCDluU0EmqscySsxplbqCIZAXCbt9sipyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020809; c=relaxed/simple;
-	bh=ApT8FOJ3u4Bw0C/Cd8T/erv98IXDU2AFteIUc94Gl8Q=;
+	s=arc-20240116; t=1734020813; c=relaxed/simple;
+	bh=+slE99/cKbOU11ehcIl2n/z/hVe4VvrWdRRcn0qnrEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJyfkc77XMkH8Iyyo1h9GJ1jWAUkJgs2kCBaSW3l8NrXqv/yVZXoMXanSszfjXpjg+fC4lfYeeCzCneRoWBaTBV7pg8P+6ufVFNzMONN4aivPO7zZoN0LkQJn+7qcVYuiOtOCKMHvIMFkd9bJh6UI+uRACNO0+aiyE4Vi+otf0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9thQQJf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mLKPFs/uqNG6TCQLOa58Dam+KrQZ/SC0/dJxMGRxE6rfJEGgvaur4gh8s8Deu7VmADZHDLwNmrxr20CkEDo8IrcPbUhMIrxy+oIzQQoEUZ0jDQaqoOJyRin/pdn8+raYwaga7uqHXvogSkCkVErTNoziYFaDD9L06AMPzJjBJjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYm02etO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9thQQJf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690ECC4CECE;
-	Thu, 12 Dec 2024 16:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYm02etO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04512C4CECE;
+	Thu, 12 Dec 2024 16:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020808;
-	bh=ApT8FOJ3u4Bw0C/Cd8T/erv98IXDU2AFteIUc94Gl8Q=;
+	s=korg; t=1734020812;
+	bh=+slE99/cKbOU11ehcIl2n/z/hVe4VvrWdRRcn0qnrEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9thQQJfkKAtlpkhjxC0mF1A7B9GX5ZW9BqNqJE1/EBP5w3vpQ7dJ0c5Inwycexe+
-	 uGFZYAa8bnU2aeZWjhiF0btEIY0mfh5aj5G7lfk0Cc2KRm06h3pdFT6mZ3idgWeKdN
-	 +yhMriwmSWO+8yas28yxSgc3698+PLmUkV5+Xyls=
+	b=VYm02etOoNQh/wBdqnu76fr6FOlNYFDbK660Smm9qSpb8xpSYu56WcZzSlzn2gQDU
+	 VgzBF+Vk81tEuXyhq/yZWjlRUPgpLdpHAvjoXfsqt5tA2rbmxcyjp1gk2S51SYNLbX
+	 UAqXGbB0B3hf9yWyU0h2Yn/52/cuumEifgyScgZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	stable <stable@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 566/772] driver core: fw_devlink: Stop trying to optimize cycle detection logic
-Date: Thu, 12 Dec 2024 15:58:31 +0100
-Message-ID: <20241212144413.345290890@linuxfoundation.org>
+Subject: [PATCH 6.1 567/772] i3c: Make i3c_master_unregister() return void
+Date: Thu, 12 Dec 2024 15:58:32 +0100
+Message-ID: <20241212144413.389053943@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -46,172 +46,137 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saravana Kannan <saravanak@google.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit bac3b10b78e54b7da3cede397258f75a2180609b ]
+[ Upstream commit 0f74f8b6675cc36d689abb4d9b3d75ab4049b7d7 ]
 
-In attempting to optimize fw_devlink runtime, I introduced numerous cycle
-detection bugs by foregoing cycle detection logic under specific
-conditions. Each fix has further narrowed the conditions for optimization.
+The function returned zero unconditionally. Switch the return type to void
+and simplify the callers accordingly.
 
-It's time to give up on these optimization attempts and just run the cycle
-detection logic every time fw_devlink tries to create a device link.
-
-The specific bug report that triggered this fix involved a supplier fwnode
-that never gets a device created for it. Instead, the supplier fwnode is
-represented by the device that corresponds to an ancestor fwnode.
-
-In this case, fw_devlink didn't do any cycle detection because the cycle
-detection logic is only run when a device link is created between the
-devices that correspond to the actual consumer and supplier fwnodes.
-
-With this change, fw_devlink will run cycle detection logic even when
-creating SYNC_STATE_ONLY proxy device links from a device that is an
-ancestor of a consumer fwnode.
-
-Reported-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Closes: https://lore.kernel.org/all/1a1ab663-d068-40fb-8c94-f0715403d276@ideasonboard.com/
-Fixes: 6442d79d880c ("driver core: fw_devlink: Improve detection of overlapping cycles")
-Cc: stable <stable@kernel.org>
-Tested-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Link: https://lore.kernel.org/r/20241030171009.1853340-1-saravanak@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230318233311.265186-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 25bc99be5fe5 ("i3c: master: svc: Modify enabled_events bit 7:0 to act as IBI enable counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/core.c | 55 ++++++++++++++++++++-------------------------
- 1 file changed, 24 insertions(+), 31 deletions(-)
+ drivers/i3c/master.c                   | 6 +-----
+ drivers/i3c/master/dw-i3c-master.c     | 5 +----
+ drivers/i3c/master/i3c-master-cdns.c   | 5 +----
+ drivers/i3c/master/mipi-i3c-hci/core.c | 4 +++-
+ drivers/i3c/master/svc-i3c-master.c    | 5 +----
+ include/linux/i3c/master.h             | 2 +-
+ 6 files changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/base/core.c b/drivers/base/core.c
-index e1436e351826c..f21ceb93e50ef 100644
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -1933,10 +1933,10 @@ static bool fwnode_ancestor_init_without_drv(struct fwnode_handle *fwnode)
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 2263bc066108f..c8aa0d27143cc 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2696,17 +2696,13 @@ EXPORT_SYMBOL_GPL(i3c_master_register);
+  * @master: master used to send frames on the bus
   *
-  * Return true if one or more cycles were found. Otherwise, return false.
+  * Basically undo everything done in i3c_master_register().
+- *
+- * Return: 0 in case of success, a negative error code otherwise.
   */
--static bool __fw_devlink_relax_cycles(struct device *con,
-+static bool __fw_devlink_relax_cycles(struct fwnode_handle *con_handle,
- 				 struct fwnode_handle *sup_handle)
+-int i3c_master_unregister(struct i3c_master_controller *master)
++void i3c_master_unregister(struct i3c_master_controller *master)
  {
--	struct device *sup_dev = NULL, *par_dev = NULL;
-+	struct device *sup_dev = NULL, *par_dev = NULL, *con_dev = NULL;
- 	struct fwnode_link *link;
- 	struct device_link *dev_link;
- 	bool ret = false;
-@@ -1953,22 +1953,22 @@ static bool __fw_devlink_relax_cycles(struct device *con,
- 
- 	sup_handle->flags |= FWNODE_FLAG_VISITED;
- 
--	sup_dev = get_dev_from_fwnode(sup_handle);
+ 	i3c_master_i2c_adapter_cleanup(master);
+ 	i3c_master_unregister_i3c_devs(master);
+ 	i3c_master_bus_cleanup(master);
+ 	device_unregister(&master->dev);
 -
- 	/* Termination condition. */
--	if (sup_dev == con) {
-+	if (sup_handle == con_handle) {
- 		pr_debug("----- cycle: start -----\n");
- 		ret = true;
- 		goto out;
- 	}
+-	return 0;
+ }
+ EXPORT_SYMBOL_GPL(i3c_master_unregister);
  
-+	sup_dev = get_dev_from_fwnode(sup_handle);
-+	con_dev = get_dev_from_fwnode(con_handle);
- 	/*
- 	 * If sup_dev is bound to a driver and @con hasn't started binding to a
- 	 * driver, sup_dev can't be a consumer of @con. So, no need to check
- 	 * further.
- 	 */
- 	if (sup_dev && sup_dev->links.status ==  DL_DEV_DRIVER_BOUND &&
--	    con->links.status == DL_DEV_NO_DRIVER) {
-+	    con_dev && con_dev->links.status == DL_DEV_NO_DRIVER) {
- 		ret = false;
- 		goto out;
- 	}
-@@ -1977,7 +1977,7 @@ static bool __fw_devlink_relax_cycles(struct device *con,
- 		if (link->flags & FWLINK_FLAG_IGNORE)
- 			continue;
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index 51a8608203de7..b72f6dce18b48 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1184,11 +1184,8 @@ static int dw_i3c_probe(struct platform_device *pdev)
+ static int dw_i3c_remove(struct platform_device *pdev)
+ {
+ 	struct dw_i3c_master *master = platform_get_drvdata(pdev);
+-	int ret;
  
--		if (__fw_devlink_relax_cycles(con, link->supplier)) {
-+		if (__fw_devlink_relax_cycles(con_handle, link->supplier)) {
- 			__fwnode_link_cycle(link);
- 			ret = true;
- 		}
-@@ -1992,7 +1992,7 @@ static bool __fw_devlink_relax_cycles(struct device *con,
- 	else
- 		par_dev = fwnode_get_next_parent_dev(sup_handle);
+-	ret = i3c_master_unregister(&master->base);
+-	if (ret)
+-		return ret;
++	i3c_master_unregister(&master->base);
  
--	if (par_dev && __fw_devlink_relax_cycles(con, par_dev->fwnode)) {
-+	if (par_dev && __fw_devlink_relax_cycles(con_handle, par_dev->fwnode)) {
- 		pr_debug("%pfwf: cycle: child of %pfwf\n", sup_handle,
- 			 par_dev->fwnode);
- 		ret = true;
-@@ -2010,7 +2010,7 @@ static bool __fw_devlink_relax_cycles(struct device *con,
- 		    !(dev_link->flags & DL_FLAG_CYCLE))
- 			continue;
+ 	reset_control_assert(master->core_rst);
  
--		if (__fw_devlink_relax_cycles(con,
-+		if (__fw_devlink_relax_cycles(con_handle,
- 					      dev_link->supplier->fwnode)) {
- 			pr_debug("%pfwf: cycle: depends on %pfwf\n", sup_handle,
- 				 dev_link->supplier->fwnode);
-@@ -2058,11 +2058,6 @@ static int fw_devlink_create_devlink(struct device *con,
- 	if (link->flags & FWLINK_FLAG_IGNORE)
- 		return 0;
+diff --git a/drivers/i3c/master/i3c-master-cdns.c b/drivers/i3c/master/i3c-master-cdns.c
+index b9cfda6ae9ae5..35b90bb686ad3 100644
+--- a/drivers/i3c/master/i3c-master-cdns.c
++++ b/drivers/i3c/master/i3c-master-cdns.c
+@@ -1666,11 +1666,8 @@ static int cdns_i3c_master_probe(struct platform_device *pdev)
+ static int cdns_i3c_master_remove(struct platform_device *pdev)
+ {
+ 	struct cdns_i3c_master *master = platform_get_drvdata(pdev);
+-	int ret;
  
--	if (con->fwnode == link->consumer)
--		flags = fw_devlink_get_flags(link->flags);
--	else
--		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
--
- 	/*
- 	 * In some cases, a device P might also be a supplier to its child node
- 	 * C. However, this would defer the probe of C until the probe of P
-@@ -2083,25 +2078,23 @@ static int fw_devlink_create_devlink(struct device *con,
- 		return -EINVAL;
+-	ret = i3c_master_unregister(&master->base);
+-	if (ret)
+-		return ret;
++	i3c_master_unregister(&master->base);
  
- 	/*
--	 * SYNC_STATE_ONLY device links don't block probing and supports cycles.
--	 * So, one might expect that cycle detection isn't necessary for them.
--	 * However, if the device link was marked as SYNC_STATE_ONLY because
--	 * it's part of a cycle, then we still need to do cycle detection. This
--	 * is because the consumer and supplier might be part of multiple cycles
--	 * and we need to detect all those cycles.
-+	 * Don't try to optimize by not calling the cycle detection logic under
-+	 * certain conditions. There's always some corner case that won't get
-+	 * detected.
- 	 */
--	if (!device_link_flag_is_sync_state_only(flags) ||
--	    flags & DL_FLAG_CYCLE) {
--		device_links_write_lock();
--		if (__fw_devlink_relax_cycles(con, sup_handle)) {
--			__fwnode_link_cycle(link);
--			flags = fw_devlink_get_flags(link->flags);
--			pr_debug("----- cycle: end -----\n");
--			dev_info(con, "Fixed dependency cycle(s) with %pfwf\n",
--				 sup_handle);
--		}
--		device_links_write_unlock();
-+	device_links_write_lock();
-+	if (__fw_devlink_relax_cycles(link->consumer, sup_handle)) {
-+		__fwnode_link_cycle(link);
-+		pr_debug("----- cycle: end -----\n");
-+		pr_info("%pfwf: Fixed dependency cycle(s) with %pfwf\n",
-+			link->consumer, sup_handle);
- 	}
-+	device_links_write_unlock();
+ 	clk_disable_unprepare(master->sysclk);
+ 	clk_disable_unprepare(master->pclk);
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index 6aef5ce43cc1f..f9bc58366a721 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -769,7 +769,9 @@ static int i3c_hci_remove(struct platform_device *pdev)
+ {
+ 	struct i3c_hci *hci = platform_get_drvdata(pdev);
+ 
+-	return i3c_master_unregister(&hci->master);
++	i3c_master_unregister(&hci->master);
 +
-+	if (con->fwnode == link->consumer)
-+		flags = fw_devlink_get_flags(link->flags);
-+	else
-+		flags = FW_DEVLINK_FLAGS_PERMISSIVE;
++	return 0;
+ }
  
- 	if (sup_handle->flags & FWNODE_FLAG_NOT_DEVICE)
- 		sup_dev = fwnode_get_next_parent_dev(sup_handle);
+ static const __maybe_unused struct of_device_id i3c_hci_of_match[] = {
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index eca50705e9ce8..77bb7c0468250 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -1651,11 +1651,8 @@ static int svc_i3c_master_probe(struct platform_device *pdev)
+ static int svc_i3c_master_remove(struct platform_device *pdev)
+ {
+ 	struct svc_i3c_master *master = platform_get_drvdata(pdev);
+-	int ret;
+ 
+-	ret = i3c_master_unregister(&master->base);
+-	if (ret)
+-		return ret;
++	i3c_master_unregister(&master->base);
+ 
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
+index 604a126b78c83..4b7bb43bf4307 100644
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -541,7 +541,7 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 			struct device *parent,
+ 			const struct i3c_master_controller_ops *ops,
+ 			bool secondary);
+-int i3c_master_unregister(struct i3c_master_controller *master);
++void i3c_master_unregister(struct i3c_master_controller *master);
+ 
+ /**
+  * i3c_dev_get_master_data() - get master private data attached to an I3C
 -- 
 2.43.0
 
