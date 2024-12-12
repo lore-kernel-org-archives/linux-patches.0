@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5162210DA;
-	Thu, 12 Dec 2024 15:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6A621B91D;
+	Thu, 12 Dec 2024 15:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018008; cv=none; b=IjVq8Y9M1AHn7SLfP5rRZUyERBorWKUrqnVVSSLTIYJKdU7JLMS+alUDNQNoCr7NPfV8gApbJMT8ZAyIPn2/csJDMu95+cyLsBQCohoj93k7kFjvJnMM5nIXZwYH01uUKY94QU/ptar3alMmoxusLlg7mCnKeZEt1DOOEvY9M9s=
+	t=1734018012; cv=none; b=Z5j2CZggTOQ9pYMINn96dbnX7sM5kWTIyd3I6DxlEy19wky40DzGJTXdpC/Fupb7i7t76K2PNVdfQOX73BQS4h/eYaAsIRk48oRs2/HouFuheSdqRO7MJrAaYRzguSGCdpQYo9Tgu99iYaJGr0h65bVjPAb5jpIu7dFhFrgeZAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018008; c=relaxed/simple;
-	bh=M6gEHOznYxA+492DouX+0pM8eEcfgFN+RMYypiJiXkc=;
+	s=arc-20240116; t=1734018012; c=relaxed/simple;
+	bh=1SCLVJVkGWfH9gBnYCTTM0JS+44MHKQ1G8urEd6fKjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ixDdmzw0BR3VfhKOxbTYV4NLb948seTVP+MUQxZlXzR892xF6jzamxRcNWxq37oIG9clpVsZ8dD7s/ezn25imO7nkbvPU/MPu2Z2wxsH6QsuoPjhwI5WChBSqIZA/D9BM3sBU2r8WsB6DJdONer01IgxsV+lfAunWlf6c4xzasA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Q/ivi9E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XLpuft9voxASV7Vaj1aoKrRn5K25vPD+tqY/PWQZh/IRYBn/tT8e+Kzpi0lKXsD9SmJysmRn3rEN6QI+Fl38oZpCHagk5HVWefOUOaIw4sMYdLkYXxCfVIYyTD8XVOSmQDuIls8IdXeQ5HkbLZkbGoXE54IoRi78PyenduufGao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gxf7J/Zp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Q/ivi9E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CA8C4CECE;
-	Thu, 12 Dec 2024 15:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gxf7J/Zp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF780C4CECE;
+	Thu, 12 Dec 2024 15:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018008;
-	bh=M6gEHOznYxA+492DouX+0pM8eEcfgFN+RMYypiJiXkc=;
+	s=korg; t=1734018012;
+	bh=1SCLVJVkGWfH9gBnYCTTM0JS+44MHKQ1G8urEd6fKjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Q/ivi9EZwJXpZf92X5gS2TdN2IUnYozPSdNabbR6EgqzBJSdoz0DDBOcHpeKXFgr
-	 J7cBUZShcYRJb0Ka4eg52chmXcOeidrsAEl05xMTy4Y72SQj8+fqiHyI1Qb5s3/th6
-	 ZovNtngyqaLyVUM4PbyXrdn2Nw19rfdIE6ESibzA=
+	b=Gxf7J/ZpGO/FN9fHy9mRxrUZ6/83HCfbE+NnwG0aSV/a/5CiSV2fOyTAlaOJ68uuP
+	 yfRbjluF1gvBM82Y2e4SaKoVlUBPuGlc0a1FazZJQDMQ17FHrKJ2P9qnrmreq/cM0C
+	 Xg43X55rN0Jx5oaztuldsSePoodAVguqMerSeaO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordy Zomer <jordyzomer@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 172/356] bpf: fix OOB devmap writes when deleting elements
-Date: Thu, 12 Dec 2024 15:58:11 +0100
-Message-ID: <20241212144251.431018411@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Subject: [PATCH 6.6 173/356] dma-buf: fix dma_fence_array_signaled v4
+Date: Thu, 12 Dec 2024 15:58:12 +0100
+Message-ID: <20241212144251.469163279@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -54,107 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Christian König <christian.koenig@amd.com>
 
-commit ab244dd7cf4c291f82faacdc50b45cc0f55b674d upstream.
+commit 78ac1c3558810486d90aa533b0039aa70487a3da upstream.
 
-Jordy reported issue against XSKMAP which also applies to DEVMAP - the
-index used for accessing map entry, due to being a signed integer,
-causes the OOB writes. Fix is simple as changing the type from int to
-u32, however, when compared to XSKMAP case, one more thing needs to be
-addressed.
+The function silently assumed that signaling was already enabled for the
+dma_fence_array. This meant that without enabling signaling first we would
+never see forward progress.
 
-When map is released from system via dev_map_free(), we iterate through
-all of the entries and an iterator variable is also an int, which
-implies OOB accesses. Again, change it to be u32.
+Fix that by falling back to testing each individual fence when signaling
+isn't enabled yet.
 
-Example splat below:
+v2: add the comment suggested by Boris why this is done this way
+v3: fix the underflow pointed out by Tvrtko
+v4: atomic_read_acquire() as suggested by Tvrtko
 
-[  160.724676] BUG: unable to handle page fault for address: ffffc8fc2c001000
-[  160.731662] #PF: supervisor read access in kernel mode
-[  160.736876] #PF: error_code(0x0000) - not-present page
-[  160.742095] PGD 0 P4D 0
-[  160.744678] Oops: Oops: 0000 [#1] PREEMPT SMP
-[  160.749106] CPU: 1 UID: 0 PID: 520 Comm: kworker/u145:12 Not tainted 6.12.0-rc1+ #487
-[  160.757050] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0008.031920191559 03/19/2019
-[  160.767642] Workqueue: events_unbound bpf_map_free_deferred
-[  160.773308] RIP: 0010:dev_map_free+0x77/0x170
-[  160.777735] Code: 00 e8 fd 91 ed ff e8 b8 73 ed ff 41 83 7d 18 19 74 6e 41 8b 45 24 49 8b bd f8 00 00 00 31 db 85 c0 74 48 48 63 c3 48 8d 04 c7 <48> 8b 28 48 85 ed 74 30 48 8b 7d 18 48 85 ff 74 05 e8 b3 52 fa ff
-[  160.796777] RSP: 0018:ffffc9000ee1fe38 EFLAGS: 00010202
-[  160.802086] RAX: ffffc8fc2c001000 RBX: 0000000080000000 RCX: 0000000000000024
-[  160.809331] RDX: 0000000000000000 RSI: 0000000000000024 RDI: ffffc9002c001000
-[  160.816576] RBP: 0000000000000000 R08: 0000000000000023 R09: 0000000000000001
-[  160.823823] R10: 0000000000000001 R11: 00000000000ee6b2 R12: dead000000000122
-[  160.831066] R13: ffff88810c928e00 R14: ffff8881002df405 R15: 0000000000000000
-[  160.838310] FS:  0000000000000000(0000) GS:ffff8897e0c40000(0000) knlGS:0000000000000000
-[  160.846528] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  160.852357] CR2: ffffc8fc2c001000 CR3: 0000000005c32006 CR4: 00000000007726f0
-[  160.859604] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  160.866847] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  160.874092] PKRU: 55555554
-[  160.876847] Call Trace:
-[  160.879338]  <TASK>
-[  160.881477]  ? __die+0x20/0x60
-[  160.884586]  ? page_fault_oops+0x15a/0x450
-[  160.888746]  ? search_extable+0x22/0x30
-[  160.892647]  ? search_bpf_extables+0x5f/0x80
-[  160.896988]  ? exc_page_fault+0xa9/0x140
-[  160.900973]  ? asm_exc_page_fault+0x22/0x30
-[  160.905232]  ? dev_map_free+0x77/0x170
-[  160.909043]  ? dev_map_free+0x58/0x170
-[  160.912857]  bpf_map_free_deferred+0x51/0x90
-[  160.917196]  process_one_work+0x142/0x370
-[  160.921272]  worker_thread+0x29e/0x3b0
-[  160.925082]  ? rescuer_thread+0x4b0/0x4b0
-[  160.929157]  kthread+0xd4/0x110
-[  160.932355]  ? kthread_park+0x80/0x80
-[  160.936079]  ret_from_fork+0x2d/0x50
-[  160.943396]  ? kthread_park+0x80/0x80
-[  160.950803]  ret_from_fork_asm+0x11/0x20
-[  160.958482]  </TASK>
-
-Fixes: 546ac1ffb70d ("bpf: add devmap, a map for storing net device references")
-CC: stable@vger.kernel.org
-Reported-by: Jordy Zomer <jordyzomer@google.com>
-Suggested-by: Jordy Zomer <jordyzomer@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Link: https://lore.kernel.org/r/20241122121030.716788-3-maciej.fijalkowski@intel.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Tested-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/12094
+Cc: <stable@vger.kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241112121925.18464-1-christian.koenig@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/devmap.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/dma-buf/dma-fence-array.c |   28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -180,7 +180,7 @@ static struct bpf_map *dev_map_alloc(uni
- static void dev_map_free(struct bpf_map *map)
+--- a/drivers/dma-buf/dma-fence-array.c
++++ b/drivers/dma-buf/dma-fence-array.c
+@@ -103,10 +103,36 @@ static bool dma_fence_array_enable_signa
+ static bool dma_fence_array_signaled(struct dma_fence *fence)
  {
- 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
--	int i;
-+	u32 i;
+ 	struct dma_fence_array *array = to_dma_fence_array(fence);
++	int num_pending;
++	unsigned int i;
  
- 	/* At this point bpf_prog->aux->refcnt == 0 and this map->refcnt == 0,
- 	 * so the programs (can be more than one that used this map) were
-@@ -813,7 +813,7 @@ static long dev_map_delete_elem(struct b
- {
- 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
- 	struct bpf_dtab_netdev *old_dev;
--	int k = *(u32 *)key;
-+	u32 k = *(u32 *)key;
+-	if (atomic_read(&array->num_pending) > 0)
++	/*
++	 * We need to read num_pending before checking the enable_signal bit
++	 * to avoid racing with the enable_signaling() implementation, which
++	 * might decrement the counter, and cause a partial check.
++	 * atomic_read_acquire() pairs with atomic_dec_and_test() in
++	 * dma_fence_array_enable_signaling()
++	 *
++	 * The !--num_pending check is here to account for the any_signaled case
++	 * if we race with enable_signaling(), that means the !num_pending check
++	 * in the is_signalling_enabled branch might be outdated (num_pending
++	 * might have been decremented), but that's fine. The user will get the
++	 * right value when testing again later.
++	 */
++	num_pending = atomic_read_acquire(&array->num_pending);
++	if (test_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT, &array->base.flags)) {
++		if (num_pending <= 0)
++			goto signal;
+ 		return false;
++	}
  
- 	if (k >= map->max_entries)
- 		return -EINVAL;
-@@ -830,7 +830,7 @@ static long dev_map_hash_delete_elem(str
- {
- 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
- 	struct bpf_dtab_netdev *old_dev;
--	int k = *(u32 *)key;
-+	u32 k = *(u32 *)key;
- 	unsigned long flags;
- 	int ret = -ENOENT;
- 
++	for (i = 0; i < array->num_fences; ++i) {
++		if (dma_fence_is_signaled(array->fences[i]) && !--num_pending)
++			goto signal;
++	}
++	return false;
++
++signal:
+ 	dma_fence_array_clear_pending_error(array);
+ 	return true;
+ }
 
 
