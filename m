@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E543F22969D;
-	Thu, 12 Dec 2024 16:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A1022969B;
+	Thu, 12 Dec 2024 16:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022058; cv=none; b=iWmb1kDMR8UWdyvy4WEHlrKqG9U6pmbB/lKaVCSnnUgDaeTVdm8YKAwsN9IYQKF4ZXICL8qKmA55uTAGRh5b2/nf7yEweY27gVqSEG5h9SK0K+zMIAMWZzd3wQ240UT22VBctLqTJM74CgUsGFGBB+hlNUkYfI+KAAK0go42EM4=
+	t=1734022061; cv=none; b=jBk0cTxWg6lIi3XrZKo1x/J1aCFryARev6cK2QYNMPVsxyElb7OQ19BGYC3WPDSLqLt0G3+m5iF/N2un02Z+Fx4fsQPW1Jr1oFBv0N53jLpso2/eWRIQfdGxzrZp6Py/h+YYqfSaeJbu1qc+8vAgfbBYsEf4FV42XaJ53LpD/2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022058; c=relaxed/simple;
-	bh=hu3sRxOmd4znzHRCUkJblEiR57Dl/7NwyjIDp4TF5SQ=;
+	s=arc-20240116; t=1734022061; c=relaxed/simple;
+	bh=k5NFRkgLkWfsVD3HFAXd0+ZRDnpxMMhh907C8yd16X8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEr4KwhBGeu4SMLNKYMFlvy8xQiRxf+cjianSYHQUSKkU6o0GszEjESWp7yx3yQWC2XsNqr1y/VN31i2Zoq7b45zfxGiBHrCCdB79MCKDfAzKtdPN8WRp0dNDcN7s8l2GPOnCN4/TCN7yv7yKOPt+xz7OgyqLqSGjiEf6ctO8YM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mm14N9d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h6LLHoyaQYKavsvDwJxvsFqb/1w1xT20LyeeAj/AjnJR/AdTu9UeYtiDdxN0YU1UrFY6d7H/8ccaEsp+JTf7tjZkw66ZqyNi9vD3RARDcmjqsSY2fXlJ5y5qJ0dzv57y+sfmrdPzljFMX+Dcz8V2sziP4Eu7TMmHxRKUmLvZynE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0TQUNdY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mm14N9d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667A8C4CECE;
-	Thu, 12 Dec 2024 16:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0TQUNdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1941AC4CED0;
+	Thu, 12 Dec 2024 16:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022057;
-	bh=hu3sRxOmd4znzHRCUkJblEiR57Dl/7NwyjIDp4TF5SQ=;
+	s=korg; t=1734022061;
+	bh=k5NFRkgLkWfsVD3HFAXd0+ZRDnpxMMhh907C8yd16X8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mm14N9dvT5K+PbnAX6LN0TIjafTBLG6vhxhzPV2jz3Rdf88a//D5orO0A1McTabA
-	 i5WHTFK4dXb5V43D/nDloJrXPDPiRHO2ecN2JVEWXp6N2gA0ty22pozRrdAcLJzKzS
-	 DsnCugb0IP7NOJTssVExIKvXOWMEgX4iHXGidrwQ=
+	b=y0TQUNdYdY6dc2Jc72nIv3FM2jyd/VLfPQmPjjaAVnbkIHMpnAaFN3sM1kkw0wN61
+	 3v65TCTkLoaVwSjMLZwlN1hpwDA58xwxHvMZJenTGKgDcSK3JfQoKcyo0R2GfBt7Rj
+	 QUB+5Vh8+PsnnJTsMAaoTtPwH0cU7hmrVBt8y+j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mansur Alisha Shaik <mansur@codeaurora.org>,
 	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-	Vikash Garodia <vgarodia@codeaurora.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/565] media: venus: venc: Use pmruntime autosuspend
-Date: Thu, 12 Dec 2024 15:55:31 +0100
-Message-ID: <20241212144316.854677557@linuxfoundation.org>
+Subject: [PATCH 5.15 137/565] media: venus: vdec: decoded picture buffer handling during reconfig sequence
+Date: Thu, 12 Dec 2024 15:55:32 +0100
+Message-ID: <20241212144316.895099901@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,240 +52,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+From: Mansur Alisha Shaik <mansur@codeaurora.org>
 
-[ Upstream commit 3f3e877ce8efabe44ddc8e13885f99cdc770e198 ]
+[ Upstream commit 40d87aafee29fb01ce1e1868502fb2059a6a7f34 ]
 
-Migrate encoder to pm-runtime autosuspend.
+In existing implementation, driver is freeing and un-mapping all the
+decoded picture buffers(DPB) as part of dynamic resolution change(DRC)
+handling. As a result, when firmware try to access the DPB buffer, from
+previous sequence, SMMU context fault is seen due to the buffer being
+already unmapped.
 
+With this change, driver defines ownership of each DPB buffer. If a buffer
+is owned by firmware, driver would skip from un-mapping the same.
+
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Tested-by: Vikash Garodia <vgarodia@codeaurora.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 6c9934c5a00a ("media: venus: fix enc/dec destruction order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/venc.c | 103 +++++++++++++++++++++--
- 1 file changed, 95 insertions(+), 8 deletions(-)
+ drivers/media/platform/qcom/venus/core.h    |  1 +
+ drivers/media/platform/qcom/venus/helpers.c | 51 ++++++++++++++++++++-
+ drivers/media/platform/qcom/venus/helpers.h |  3 ++
+ drivers/media/platform/qcom/venus/vdec.c    |  7 ++-
+ 4 files changed, 60 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index c4e0fe14c058d..8720606cdd95a 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -538,6 +538,64 @@ static const struct v4l2_ioctl_ops venc_ioctl_ops = {
- 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 5ec851115eca8..6869f0d06b774 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -452,6 +452,7 @@ struct venus_inst {
+ 	bool next_buf_last;
+ 	bool drain_active;
+ 	enum venus_inst_modes flags;
++	struct ida dpb_ids;
  };
  
-+static int venc_pm_get(struct venus_inst *inst)
-+{
-+	struct venus_core *core = inst->core;
-+	struct device *dev = core->dev_enc;
-+	int ret;
+ #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index ff705d513aae4..9d43d4dbfc60c 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -3,6 +3,7 @@
+  * Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+  * Copyright (C) 2017 Linaro Ltd.
+  */
++#include <linux/idr.h>
+ #include <linux/list.h>
+ #include <linux/mutex.h>
+ #include <linux/slab.h>
+@@ -21,6 +22,11 @@
+ #define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
+ #define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+ 
++enum dpb_buf_owner {
++	DRIVER,
++	FIRMWARE,
++};
 +
-+	mutex_lock(&core->pm_lock);
-+	ret = pm_runtime_resume_and_get(dev);
-+	mutex_unlock(&core->pm_lock);
+ struct intbuf {
+ 	struct list_head list;
+ 	u32 type;
+@@ -28,6 +34,8 @@ struct intbuf {
+ 	void *va;
+ 	dma_addr_t da;
+ 	unsigned long attrs;
++	enum dpb_buf_owner owned_by;
++	u32 dpb_out_tag;
+ };
+ 
+ bool venus_helper_check_codec(struct venus_inst *inst, u32 v4l2_pixfmt)
+@@ -95,9 +103,16 @@ int venus_helper_queue_dpb_bufs(struct venus_inst *inst)
+ 		fdata.device_addr = buf->da;
+ 		fdata.buffer_type = buf->type;
+ 
++		if (buf->owned_by == FIRMWARE)
++			continue;
 +
-+	return ret < 0 ? ret : 0;
-+}
++		fdata.clnt_data = buf->dpb_out_tag;
 +
-+static int venc_pm_put(struct venus_inst *inst, bool autosuspend)
-+{
-+	struct venus_core *core = inst->core;
-+	struct device *dev = core->dev_enc;
-+	int ret;
+ 		ret = hfi_session_process_buf(inst, &fdata);
+ 		if (ret)
+ 			goto fail;
 +
-+	mutex_lock(&core->pm_lock);
-+
-+	if (autosuspend)
-+		ret = pm_runtime_put_autosuspend(dev);
-+	else
-+		ret = pm_runtime_put_sync(dev);
-+
-+	mutex_unlock(&core->pm_lock);
-+
-+	return ret < 0 ? ret : 0;
-+}
-+
-+static int venc_pm_get_put(struct venus_inst *inst)
-+{
-+	struct venus_core *core = inst->core;
-+	struct device *dev = core->dev_enc;
-+	int ret = 0;
-+
-+	mutex_lock(&core->pm_lock);
-+
-+	if (pm_runtime_suspended(dev)) {
-+		ret = pm_runtime_resume_and_get(dev);
-+		if (ret < 0)
-+			goto error;
-+
-+		ret = pm_runtime_put_autosuspend(dev);
-+	}
-+
-+error:
-+	mutex_unlock(&core->pm_lock);
-+
-+	return ret < 0 ? ret : 0;
-+}
-+
-+static void venc_pm_touch(struct venus_inst *inst)
-+{
-+	pm_runtime_mark_last_busy(inst->core->dev_enc);
-+}
-+
- static int venc_set_properties(struct venus_inst *inst)
- {
- 	struct venc_controls *ctr = &inst->controls.enc;
-@@ -931,10 +989,18 @@ static int venc_queue_setup(struct vb2_queue *q,
- 		return 0;
++		buf->owned_by = FIRMWARE;
  	}
  
-+	ret = venc_pm_get(inst);
-+	if (ret)
-+		return ret;
-+
- 	mutex_lock(&inst->lock);
- 	ret = venc_init_session(inst);
- 	mutex_unlock(&inst->lock);
+ fail:
+@@ -110,13 +125,19 @@ int venus_helper_free_dpb_bufs(struct venus_inst *inst)
+ 	struct intbuf *buf, *n;
  
-+	if (ret)
-+		goto put_power;
+ 	list_for_each_entry_safe(buf, n, &inst->dpbbufs, list) {
++		if (buf->owned_by == FIRMWARE)
++			continue;
 +
-+	ret = venc_pm_put(inst, false);
- 	if (ret)
- 		return ret;
- 
-@@ -970,6 +1036,9 @@ static int venc_queue_setup(struct vb2_queue *q,
- 		break;
++		ida_free(&inst->dpb_ids, buf->dpb_out_tag);
++
+ 		list_del_init(&buf->list);
+ 		dma_free_attrs(inst->core->dev, buf->size, buf->va, buf->da,
+ 			       buf->attrs);
+ 		kfree(buf);
  	}
  
-+	return ret;
-+put_power:
-+	venc_pm_put(inst, false);
- 	return ret;
- }
- 
-@@ -986,6 +1055,8 @@ static void venc_release_session(struct venus_inst *inst)
- {
- 	int ret;
- 
-+	venc_pm_get(inst);
-+
- 	mutex_lock(&inst->lock);
- 
- 	ret = hfi_session_deinit(inst);
-@@ -997,6 +1068,8 @@ static void venc_release_session(struct venus_inst *inst)
- 	venus_pm_load_scale(inst);
- 	INIT_LIST_HEAD(&inst->registeredbufs);
- 	venus_pm_release_core(inst);
-+
-+	venc_pm_put(inst, false);
- }
- 
- static void venc_buf_cleanup(struct vb2_buffer *vb)
-@@ -1066,7 +1139,15 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
- 	inst->sequence_cap = 0;
- 	inst->sequence_out = 0;
- 
-+	ret = venc_pm_get(inst);
-+	if (ret)
-+		goto error;
-+
- 	ret = venus_pm_acquire_core(inst);
-+	if (ret)
-+		goto put_power;
-+
-+	ret = venc_pm_put(inst, true);
- 	if (ret)
- 		goto error;
- 
-@@ -1091,6 +1172,8 @@ static int venc_start_streaming(struct vb2_queue *q, unsigned int count)
+-	INIT_LIST_HEAD(&inst->dpbbufs);
++	if (list_empty(&inst->dpbbufs))
++		INIT_LIST_HEAD(&inst->dpbbufs);
  
  	return 0;
+ }
+@@ -134,6 +155,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+ 	unsigned int i;
+ 	u32 count;
+ 	int ret;
++	int id;
  
-+put_power:
-+	venc_pm_put(inst, false);
- error:
- 	venus_helper_buffers_done(inst, q->type, VB2_BUF_STATE_QUEUED);
- 	if (q->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
-@@ -1105,6 +1188,8 @@ static void venc_vb2_buf_queue(struct vb2_buffer *vb)
+ 	/* no need to allocate dpb buffers */
+ 	if (!inst->dpb_fmt)
+@@ -171,6 +193,15 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+ 			ret = -ENOMEM;
+ 			goto fail;
+ 		}
++		buf->owned_by = DRIVER;
++
++		id = ida_alloc_min(&inst->dpb_ids, VB2_MAX_FRAME, GFP_KERNEL);
++		if (id < 0) {
++			ret = id;
++			goto fail;
++		}
++
++		buf->dpb_out_tag = id;
+ 
+ 		list_add_tail(&buf->list, &inst->dpbbufs);
+ 	}
+@@ -1365,6 +1396,24 @@ venus_helper_find_buf(struct venus_inst *inst, unsigned int type, u32 idx)
+ }
+ EXPORT_SYMBOL_GPL(venus_helper_find_buf);
+ 
++void venus_helper_change_dpb_owner(struct venus_inst *inst,
++				   struct vb2_v4l2_buffer *vbuf, unsigned int type,
++				   unsigned int buf_type, u32 tag)
++{
++	struct intbuf *dpb_buf;
++
++	if (!V4L2_TYPE_IS_CAPTURE(type) ||
++	    buf_type != inst->dpb_buftype)
++		return;
++
++	list_for_each_entry(dpb_buf, &inst->dpbbufs, list)
++		if (dpb_buf->dpb_out_tag == tag) {
++			dpb_buf->owned_by = DRIVER;
++			break;
++		}
++}
++EXPORT_SYMBOL_GPL(venus_helper_change_dpb_owner);
++
+ int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
  {
  	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
+index e6269b4be3afb..ff8889795b433 100644
+--- a/drivers/media/platform/qcom/venus/helpers.h
++++ b/drivers/media/platform/qcom/venus/helpers.h
+@@ -14,6 +14,9 @@ struct venus_core;
+ bool venus_helper_check_codec(struct venus_inst *inst, u32 v4l2_pixfmt);
+ struct vb2_v4l2_buffer *venus_helper_find_buf(struct venus_inst *inst,
+ 					      unsigned int type, u32 idx);
++void venus_helper_change_dpb_owner(struct venus_inst *inst,
++				   struct vb2_v4l2_buffer *vbuf, unsigned int type,
++				   unsigned int buf_type, u32 idx);
+ void venus_helper_buffers_done(struct venus_inst *inst, unsigned int type,
+ 			       enum vb2_buffer_state state);
+ int venus_helper_vb2_buf_init(struct vb2_buffer *vb);
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 42134cde120db..fef414f624069 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1316,8 +1316,10 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 		type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
  
-+	venc_pm_get_put(inst);
+ 	vbuf = venus_helper_find_buf(inst, type, tag);
+-	if (!vbuf)
++	if (!vbuf) {
++		venus_helper_change_dpb_owner(inst, vbuf, type, buf_type, tag);
+ 		return;
++	}
+ 
+ 	vbuf->flags = flags;
+ 	vbuf->field = V4L2_FIELD_NONE;
+@@ -1590,6 +1592,8 @@ static int vdec_open(struct file *file)
+ 
+ 	vdec_inst_init(inst);
+ 
++	ida_init(&inst->dpb_ids);
 +
- 	mutex_lock(&inst->lock);
- 	venus_helper_vb2_buf_queue(vb);
- 	mutex_unlock(&inst->lock);
-@@ -1128,6 +1213,8 @@ static void venc_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 	struct vb2_buffer *vb;
- 	unsigned int type;
- 
-+	venc_pm_touch(inst);
-+
- 	if (buf_type == HFI_BUFFER_INPUT)
- 		type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE;
- 	else
-@@ -1157,6 +1244,8 @@ static void venc_event_notify(struct venus_inst *inst, u32 event,
- {
- 	struct device *dev = inst->core->dev_enc;
- 
-+	venc_pm_touch(inst);
-+
- 	if (event == EVT_SESSION_ERROR) {
- 		inst->session_error = true;
- 		dev_err(dev, "enc: event session error %x\n", inst->error);
-@@ -1245,13 +1334,9 @@ static int venc_open(struct file *file)
- 
- 	venus_helper_init_instance(inst);
- 
--	ret = pm_runtime_resume_and_get(core->dev_enc);
--	if (ret < 0)
--		goto err_free;
--
- 	ret = venc_ctrl_init(inst);
- 	if (ret)
--		goto err_put_sync;
-+		goto err_free;
- 
- 	ret = hfi_session_create(inst, &venc_hfi_ops);
- 	if (ret)
-@@ -1290,8 +1375,6 @@ static int venc_open(struct file *file)
- 	hfi_session_destroy(inst);
- err_ctrl_deinit:
- 	venc_ctrl_deinit(inst);
--err_put_sync:
--	pm_runtime_put_sync(core->dev_enc);
- err_free:
- 	kfree(inst);
- 	return ret;
-@@ -1301,6 +1384,8 @@ static int venc_close(struct file *file)
- {
- 	struct venus_inst *inst = to_inst(file);
- 
-+	venc_pm_get(inst);
-+
+ 	/*
+ 	 * create m2m device for every instance, the m2m context scheduling
+ 	 * is made by firmware side so we do not need to care about.
+@@ -1636,6 +1640,7 @@ static int vdec_close(struct file *file)
  	v4l2_m2m_ctx_release(inst->m2m_ctx);
  	v4l2_m2m_release(inst->m2m_dev);
- 	venc_ctrl_deinit(inst);
-@@ -1309,7 +1394,7 @@ static int venc_close(struct file *file)
+ 	vdec_ctrl_deinit(inst);
++	ida_destroy(&inst->dpb_ids);
+ 	hfi_session_destroy(inst);
+ 	mutex_destroy(&inst->lock);
  	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 
--	pm_runtime_put_sync(inst->core->dev_enc);
-+	venc_pm_put(inst, false);
- 
- 	kfree(inst);
- 	return 0;
-@@ -1366,6 +1451,8 @@ static int venc_probe(struct platform_device *pdev)
- 	core->dev_enc = dev;
- 
- 	video_set_drvdata(vdev, core);
-+	pm_runtime_set_autosuspend_delay(dev, 2000);
-+	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_enable(dev);
- 
- 	return 0;
 -- 
 2.43.0
 
