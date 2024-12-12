@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B9E6F2FE;
-	Thu, 12 Dec 2024 16:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A6B6F2FE;
+	Thu, 12 Dec 2024 16:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021794; cv=none; b=r7GdspmjHHWBOhN7ohGieqnpsUgy1BfdV79cTcQpxB35tZ6hS9OM+gvrlyfCiDnelpYZBbhrVEKp7x+lFp5Mby2YmTfPdUbw3g/rPVO45xmZSBI3Q150m7ZScomKboh43VPmQnUNSEdJ4AKEBPiecRacmxxX2RaukqvO4VGupVU=
+	t=1734021798; cv=none; b=OhGAKWwguhH0Z5fD/JWUqCLSpV2fBPQOXvwENlSUIXVFWUbaMHba99c7VS9cHUo+wvB7NDQSSsc/gvJ/eioU6curCvx8RJyogBERauMMNd3rTgR8T8kgo3pMX7ESRyeirLTEi1pdHr8E7vI7/dvLZjJM4RuSfULc9WaKKBCUS78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021794; c=relaxed/simple;
-	bh=fBGt7jhlTq/uiF3DhN68OqTvCH8ZDXGxOxyOr+78J3o=;
+	s=arc-20240116; t=1734021798; c=relaxed/simple;
+	bh=moC7ggwc4ImsNdG8gaSoTuPRngs4E8AHHzzHdQE0Os0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=apU+89nmuLGB19l1NK7AlGgu5svowadhRtaFeNaWXMaSDgr+JvlfZJEAlL5+Felb8WOZMGOKY65TRKzhbkibReSVDwVfkzuCw1K/bJ8sSyNeApqltMsp1tr9dZtERlXyEkZGy/efwhy0sFj2WwhADRZ8eZX4h5xTIKjdhGqipyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0jIOG9L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gC27ZKWhg5pbZSkY2oKkgHec28WhiRNyqulNrQrUAv19tCHd76LTvoQa+uoKT8EWy3hyxCjLj3fzjIInVUiSvZB5KOU6c+otCT4hoLGpx3td7d2SZLtoY1wEoNxNQtULUr0xiDg6qI8TE/1k2oKnG5bijRAeOenluUV3WQXFRmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eU/S5+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0jIOG9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C30BC4CECE;
-	Thu, 12 Dec 2024 16:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eU/S5+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F0CC4CED3;
+	Thu, 12 Dec 2024 16:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021794;
-	bh=fBGt7jhlTq/uiF3DhN68OqTvCH8ZDXGxOxyOr+78J3o=;
+	s=korg; t=1734021797;
+	bh=moC7ggwc4ImsNdG8gaSoTuPRngs4E8AHHzzHdQE0Os0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0jIOG9L4X0znHBKvBSZGdXG///i+rBMAd0mQgZSF0mo8wi3r+BIxG1Al7nZW53p8
-	 KvccBBRfOx7AdA5WMxmLvYy5Hg8lryrcRJC3uGAJFrTtsfk0T77peuuQXPS6zzFna7
-	 FeWM4mD339Bo0D1JaUArdhE3y8tNGCY9c7PpnRuo=
+	b=2eU/S5+USkX3go6CCEnHBVdUVatClxcJ2MPI7Nlidn/kFouF8Qvb66dwV+5U46p7g
+	 YReQDdAHQ8iMdPcL4q/dXvHntcNwg05+uTL4uW2DO+0UTHxZgymFgGmdyNtStPKfvJ
+	 TIXcJKVynxOg8fJLbtBxQZ2PZ8rTBpg30+TDknmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexander=20H=C3=B6lzl?= <alexander.hoelzl@gmx.net>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Luo Yifan <luoyifan@cmss.chinamobile.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/565] can: j1939: fix error in J1939 documentation.
-Date: Thu, 12 Dec 2024 15:54:20 +0100
-Message-ID: <20241212144314.063500894@linuxfoundation.org>
+Subject: [PATCH 5.15 066/565] ASoC: stm: Prevent potential division by zero in stm32_sai_mclk_round_rate()
+Date: Thu, 12 Dec 2024 15:54:21 +0100
+Message-ID: <20241212144314.102994564@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -47,41 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Hölzl <alexander.hoelzl@gmx.net>
+From: Luo Yifan <luoyifan@cmss.chinamobile.com>
 
-[ Upstream commit b6ec62e01aa4229bc9d3861d1073806767ea7838 ]
+[ Upstream commit 63c1c87993e0e5bb11bced3d8224446a2bc62338 ]
 
-The description of PDU1 format usage mistakenly referred to PDU2 format.
+This patch checks if div is less than or equal to zero (div <= 0). If
+div is zero or negative, the function returns -EINVAL, ensuring the
+division operation (*prate / div) is safe to perform.
 
-Signed-off-by: Alexander Hölzl <alexander.hoelzl@gmx.net>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://patch.msgid.link/20241023145257.82709-1-alexander.hoelzl@gmx.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Luo Yifan <luoyifan@cmss.chinamobile.com>
+Link: https://patch.msgid.link/20241106014654.206860-1-luoyifan@cmss.chinamobile.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/networking/j1939.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/stm/stm32_sai_sub.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/networking/j1939.rst b/Documentation/networking/j1939.rst
-index b705d2801e9c3..80b1c5e19fd53 100644
---- a/Documentation/networking/j1939.rst
-+++ b/Documentation/networking/j1939.rst
-@@ -121,7 +121,7 @@ format, the Group Extension is set in the PS-field.
+diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
+index 9c3b8e2096565..aa9cdd93b5778 100644
+--- a/sound/soc/stm/stm32_sai_sub.c
++++ b/sound/soc/stm/stm32_sai_sub.c
+@@ -380,8 +380,8 @@ static long stm32_sai_mclk_round_rate(struct clk_hw *hw, unsigned long rate,
+ 	int div;
  
- On the other hand, when using PDU1 format, the PS-field contains a so-called
- Destination Address, which is _not_ part of the PGN. When communicating a PGN
--from user space to kernel (or vice versa) and PDU2 format is used, the PS-field
-+from user space to kernel (or vice versa) and PDU1 format is used, the PS-field
- of the PGN shall be set to zero. The Destination Address shall be set
- elsewhere.
+ 	div = stm32_sai_get_clk_div(sai, *prate, rate);
+-	if (div < 0)
+-		return div;
++	if (div <= 0)
++		return -EINVAL;
+ 
+ 	mclk->freq = *prate / div;
  
 -- 
 2.43.0
