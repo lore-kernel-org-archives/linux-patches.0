@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16DD216E14;
-	Thu, 12 Dec 2024 16:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A87216E14;
+	Thu, 12 Dec 2024 16:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022461; cv=none; b=AM/a4G+fZOER0aK1itXNxphoUSlGjh5cqW7LBRl5POIHaagw3A5PldWOHbsHnZNhT0LFpjusUZyf36eOdrpbuT0wioVCjQgM8J+Ga3NMGSSD56cdSEnWTn1USIPTQg9fy5a/kTEdFTsHuiWPxlbQg+cLVJLvtKKmmoeBDDiWKB0=
+	t=1734022465; cv=none; b=DxRGr8DmPmYSa0oRInElvkeIjJ/vQQ7GeI2c4w3/ihZGZFooYx7MgjVpKfjWXlrJ16ZgtjbcztdmTQUwwvlOOS2W+oZOGUXSf+QA+3WkprP0PW7tiInSnA3lazvfNpl10lVN58+1t+qgnAq4FJeNRFz1471mPAWGm311s6SJ+OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022461; c=relaxed/simple;
-	bh=SMXr52G3UIWNzMVCQNW15iletGQDmsNya3meIDXvhjQ=;
+	s=arc-20240116; t=1734022465; c=relaxed/simple;
+	bh=lL+6md4a9c9kIUM6AoJPldqdMqgCjxCa8boSzPK1/e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxP16AH04Eez9bFSoCAhz2xpv1MRDWVUnRRXSQS2RYL1mKl9u9JCjkKAGCMTk64dWj2TBD06w8kvAgXvSpUE4KZvjY08cIfepfPDyCGQeHcfwNwrKSfNzsIi9y8d0OMNRQJrdRnpEy3n/m6GDtcL/Ho00SolfNzcclaMRyOTAdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4F1CDLF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krer7jmFu12AXIU59IA4u+4WKDpA/0lN7Hh55BN495FN4LWhoWV5HNytGHb2psuVUwZAF+bIByzaCxlEk6zf1rB/3f1rfjfgUkifNxiXSOGukUiyJ+E9M/Nhg98HapLG8DN4aa6r3h3EQ+tZ1fcHGckNN82dj4npm2wwN1Ndols=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQHSq7Tg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4F1CDLF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B324C4CED3;
-	Thu, 12 Dec 2024 16:54:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQHSq7Tg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A01C4CECE;
+	Thu, 12 Dec 2024 16:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022461;
-	bh=SMXr52G3UIWNzMVCQNW15iletGQDmsNya3meIDXvhjQ=;
+	s=korg; t=1734022465;
+	bh=lL+6md4a9c9kIUM6AoJPldqdMqgCjxCa8boSzPK1/e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4F1CDLFCEYWywrVcDsg+5aWJ3QauyWO7Af5lb5ecl8xHr/b6gYDnMoB9EAiKrV8l
-	 yvDl6S7in9uYWa7Xt7NHTMalls+d+9IVpX7cw4EXyGIwp+Hx2ahCc18AMc4zvJbbTd
-	 UNeBxaEUM47wXR3/RcZbfabf+RPXZnI0/QWw9PbA=
+	b=vQHSq7TgK09ig79aLtJl1uecFeLAbJj/5B59b+XL0OFzxw8+12dWanNvALBndoRjK
+	 wiEPZBjDpnG8PcM8CxPkX2Wu8dYN01Yo6McVZFPqg9zhlSEj0AkmUDI5xjzBot7In2
+	 wxz41HZBdV7cUnkesH52BXdrWX5CJEEYMTV5zhOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LongPing Wei <weilongping@oppo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	"Nysal Jan K.A" <nysal@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 247/565] f2fs: fix the wrong f2fs_bug_on condition in f2fs_do_replace_block
-Date: Thu, 12 Dec 2024 15:57:22 +0100
-Message-ID: <20241212144321.238808444@linuxfoundation.org>
+Subject: [PATCH 5.15 221/565] powerpc/pseries: Fix dtl_access_lock to be a rw_semaphore
+Date: Thu, 12 Dec 2024 15:56:56 +0100
+Message-ID: <20241212144320.226968796@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,38 +52,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: LongPing Wei <weilongping@oppo.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit c3af1f13476ec23fd99c98d060a89be28c1e8871 ]
+[ Upstream commit cadae3a45d23aa4f6485938a67cbc47aaaa25e38 ]
 
-This f2fs_bug_on was introduced by commit 2c1905042c8c ("f2fs: check
-segment type in __f2fs_replace_block") when there were only 6 curseg types.
-After commit d0b9e42ab615 ("f2fs: introduce inmem curseg") was introduced,
-the condition should be changed to checking curseg->seg_type.
+The dtl_access_lock needs to be a rw_sempahore, a sleeping lock, because
+the code calls kmalloc() while holding it, which can sleep:
 
-Fixes: d0b9e42ab615 ("f2fs: introduce inmem curseg")
-Signed-off-by: LongPing Wei <weilongping@oppo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+  # echo 1 > /proc/powerpc/vcpudispatch_stats
+  BUG: sleeping function called from invalid context at include/linux/sched/mm.h:337
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 199, name: sh
+  preempt_count: 1, expected: 0
+  3 locks held by sh/199:
+   #0: c00000000a0743f8 (sb_writers#3){.+.+}-{0:0}, at: vfs_write+0x324/0x438
+   #1: c0000000028c7058 (dtl_enable_mutex){+.+.}-{3:3}, at: vcpudispatch_stats_write+0xd4/0x5f4
+   #2: c0000000028c70b8 (dtl_access_lock){+.+.}-{2:2}, at: vcpudispatch_stats_write+0x220/0x5f4
+  CPU: 0 PID: 199 Comm: sh Not tainted 6.10.0-rc4 #152
+  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,HEAD hv:linux,kvm pSeries
+  Call Trace:
+    dump_stack_lvl+0x130/0x148 (unreliable)
+    __might_resched+0x174/0x410
+    kmem_cache_alloc_noprof+0x340/0x3d0
+    alloc_dtl_buffers+0x124/0x1ac
+    vcpudispatch_stats_write+0x2a8/0x5f4
+    proc_reg_write+0xf4/0x150
+    vfs_write+0xfc/0x438
+    ksys_write+0x88/0x148
+    system_call_exception+0x1c4/0x5a0
+    system_call_common+0xf4/0x258
+
+Fixes: 06220d78f24a ("powerpc/pseries: Introduce rwlock to gatekeep DTLB usage")
+Tested-by: Kajol Jain <kjain@linux.ibm.com>
+Reviewed-by: Nysal Jan K.A <nysal@linux.ibm.com>
+Reviewed-by: Kajol Jain <kjain@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://patch.msgid.link/20240819122401.513203-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/include/asm/dtl.h        | 4 ++--
+ arch/powerpc/platforms/pseries/dtl.c  | 8 ++++----
+ arch/powerpc/platforms/pseries/lpar.c | 8 ++++----
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index dc33b4e5c07b8..9e6c4a475d6d0 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -3698,8 +3698,8 @@ void f2fs_do_replace_block(struct f2fs_sb_info *sbi, struct f2fs_summary *sum,
- 		}
+diff --git a/arch/powerpc/include/asm/dtl.h b/arch/powerpc/include/asm/dtl.h
+index 1625888f27ef6..5e40f27aa76e5 100644
+--- a/arch/powerpc/include/asm/dtl.h
++++ b/arch/powerpc/include/asm/dtl.h
+@@ -1,8 +1,8 @@
+ #ifndef _ASM_POWERPC_DTL_H
+ #define _ASM_POWERPC_DTL_H
+ 
++#include <linux/rwsem.h>
+ #include <asm/lppaca.h>
+-#include <linux/spinlock_types.h>
+ 
+ /*
+  * Layout of entries in the hypervisor's dispatch trace log buffer.
+@@ -35,7 +35,7 @@ struct dtl_entry {
+ #define DTL_LOG_ALL		(DTL_LOG_CEDE | DTL_LOG_PREEMPT | DTL_LOG_FAULT)
+ 
+ extern struct kmem_cache *dtl_cache;
+-extern rwlock_t dtl_access_lock;
++extern struct rw_semaphore dtl_access_lock;
+ 
+ /*
+  * When CONFIG_VIRT_CPU_ACCOUNTING_NATIVE = y, the cpu accounting code controls
+diff --git a/arch/powerpc/platforms/pseries/dtl.c b/arch/powerpc/platforms/pseries/dtl.c
+index 352af5b14a0f7..b9096e343ffb8 100644
+--- a/arch/powerpc/platforms/pseries/dtl.c
++++ b/arch/powerpc/platforms/pseries/dtl.c
+@@ -181,7 +181,7 @@ static int dtl_enable(struct dtl *dtl)
+ 		return -EBUSY;
+ 
+ 	/* ensure there are no other conflicting dtl users */
+-	if (!read_trylock(&dtl_access_lock))
++	if (!down_read_trylock(&dtl_access_lock))
+ 		return -EBUSY;
+ 
+ 	n_entries = dtl_buf_entries;
+@@ -189,7 +189,7 @@ static int dtl_enable(struct dtl *dtl)
+ 	if (!buf) {
+ 		printk(KERN_WARNING "%s: buffer alloc failed for cpu %d\n",
+ 				__func__, dtl->cpu);
+-		read_unlock(&dtl_access_lock);
++		up_read(&dtl_access_lock);
+ 		return -ENOMEM;
  	}
  
--	f2fs_bug_on(sbi, !IS_DATASEG(type));
- 	curseg = CURSEG_I(sbi, type);
-+	f2fs_bug_on(sbi, !IS_DATASEG(curseg->seg_type));
+@@ -207,7 +207,7 @@ static int dtl_enable(struct dtl *dtl)
+ 	spin_unlock(&dtl->lock);
  
- 	mutex_lock(&curseg->curseg_mutex);
- 	down_write(&sit_i->sentry_lock);
+ 	if (rc) {
+-		read_unlock(&dtl_access_lock);
++		up_read(&dtl_access_lock);
+ 		kmem_cache_free(dtl_cache, buf);
+ 	}
+ 
+@@ -222,7 +222,7 @@ static void dtl_disable(struct dtl *dtl)
+ 	dtl->buf = NULL;
+ 	dtl->buf_entries = 0;
+ 	spin_unlock(&dtl->lock);
+-	read_unlock(&dtl_access_lock);
++	up_read(&dtl_access_lock);
+ }
+ 
+ /* file interface */
+diff --git a/arch/powerpc/platforms/pseries/lpar.c b/arch/powerpc/platforms/pseries/lpar.c
+index c2fff9a339285..49aaa5a6d165d 100644
+--- a/arch/powerpc/platforms/pseries/lpar.c
++++ b/arch/powerpc/platforms/pseries/lpar.c
+@@ -167,7 +167,7 @@ struct vcpu_dispatch_data {
+  */
+ #define NR_CPUS_H	NR_CPUS
+ 
+-DEFINE_RWLOCK(dtl_access_lock);
++DECLARE_RWSEM(dtl_access_lock);
+ static DEFINE_PER_CPU(struct vcpu_dispatch_data, vcpu_disp_data);
+ static DEFINE_PER_CPU(u64, dtl_entry_ridx);
+ static DEFINE_PER_CPU(struct dtl_worker, dtl_workers);
+@@ -461,7 +461,7 @@ static int dtl_worker_enable(unsigned long *time_limit)
+ {
+ 	int rc = 0, state;
+ 
+-	if (!write_trylock(&dtl_access_lock)) {
++	if (!down_write_trylock(&dtl_access_lock)) {
+ 		rc = -EBUSY;
+ 		goto out;
+ 	}
+@@ -477,7 +477,7 @@ static int dtl_worker_enable(unsigned long *time_limit)
+ 		pr_err("vcpudispatch_stats: unable to setup workqueue for DTL processing\n");
+ 		free_dtl_buffers(time_limit);
+ 		reset_global_dtl_mask();
+-		write_unlock(&dtl_access_lock);
++		up_write(&dtl_access_lock);
+ 		rc = -EINVAL;
+ 		goto out;
+ 	}
+@@ -492,7 +492,7 @@ static void dtl_worker_disable(unsigned long *time_limit)
+ 	cpuhp_remove_state(dtl_worker_state);
+ 	free_dtl_buffers(time_limit);
+ 	reset_global_dtl_mask();
+-	write_unlock(&dtl_access_lock);
++	up_write(&dtl_access_lock);
+ }
+ 
+ static ssize_t vcpudispatch_stats_write(struct file *file, const char __user *p,
 -- 
 2.43.0
 
