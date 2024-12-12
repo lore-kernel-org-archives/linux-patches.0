@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3FA229677;
-	Thu, 12 Dec 2024 17:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE79229677;
+	Thu, 12 Dec 2024 17:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022843; cv=none; b=RG+QLcHs9TXUIt3DF30BteJRCPCJq0CAiHSGTvap/AAUEUDM0ZCPevrtD3OFwXJpTtma1YkZxiowEp2UZ2v22cz0NKgJYCWGHhnAoxgeOHjbaTyocK9qh5x8akq57JJ2r3gecfG0+NqZImoUWMihLflxeCO3AS6RQi7fPIxourY=
+	t=1734022846; cv=none; b=sZG2dOxz6anlFrhMimqjTWn09mucVHSfwkVMh5jPJZEwUls+aUQ6k7fC0R0JihSfWjkuX2+J2dtzpTkPAoAWahGK2yAVhRdgJhl1yYZ0i8EsA2u0GNww84PNJPzu+JucEuruisUohhMg14pVpBfU5+hjCQkBZ4V/3ibauVaow80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022843; c=relaxed/simple;
-	bh=QozCcMWY1rdcOxTTvn6Ia0Ywq/DAQlin0Moi94/iEqQ=;
+	s=arc-20240116; t=1734022846; c=relaxed/simple;
+	bh=RxxfuOJejaqixWInRBor3+AfZTfQIMOS1tp20icg5hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssT36+SSPLgU1QB/9/fK0+jzS2rmjS22pCSXpB4rAHUWboxmRMG7OTFqJoHRR+n3CS7o++HOJ3Yc1eQ8FPvhQosAZrlxzIFs4Jfr/qKOowGZEj5ahImj/m+TAtAuHbi1qSENCHtvJyyHCuKwdG8kTDvrxFb6aCRTCowkHMM7xTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5KanIyS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PkNxYE/OQarpTrdh6ID/6dFZWHqXbAYm3JoyuVrSOIBe9YvRXXtzD+lrRWkZKtqgiuq8bTxaG2l0t/LWMvPgcUB6PUyeAObpHF5fGt88X/MU9y8pX26kbzvtDU9TnKEcTG/tLe64vXT442uvW9U9DfbJmry7eV5/T+eQRXlZ4H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/Ao16UC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5KanIyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E905C4CECE;
-	Thu, 12 Dec 2024 17:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/Ao16UC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEA4C4CECE;
+	Thu, 12 Dec 2024 17:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022842;
-	bh=QozCcMWY1rdcOxTTvn6Ia0Ywq/DAQlin0Moi94/iEqQ=;
+	s=korg; t=1734022846;
+	bh=RxxfuOJejaqixWInRBor3+AfZTfQIMOS1tp20icg5hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5KanIySxj0jSaSX8/kqBEVaXE8ZxdWkpPG0zmInM+ShSTfVD3HxyCAeFtKYWjado
-	 KLQacrO25EhaPAFk8g099KxAIJCdtlJPk7j4Trxm56S9fS0sYa0JYONU/dPaf0JNwN
-	 +5TrYmb6BiidVadyQiNbJosdqTsorf6ePLlqUz+o=
+	b=v/Ao16UCgeh76Y8aNFCyJ2dcUl/J1tQVZePoFD5nC9ktrLCDpSzpSRlXEKkIzOcKq
+	 OHcBf3Rh3rAVC6zD8QThLEywn/j5SzSzlF1rhVCo2OEbDUhmBDqrMSjY3coj6GGv0g
+	 H7c4G6vf0zwv9PuUFSbtlltfSL5O3cbXwtfQm+9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 348/565] usb: dwc3: gadget: Fix checking for number of TRBs left
-Date: Thu, 12 Dec 2024 15:59:03 +0100
-Message-ID: <20241212144325.355265255@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+Subject: [PATCH 5.15 321/565] driver core: bus: Fix double free in driver API bus_register()
+Date: Thu, 12 Dec 2024 15:58:36 +0100
+Message-ID: <20241212144324.291216840@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -49,53 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
+commit bfa54a793ba77ef696755b66f3ac4ed00c7d1248 upstream.
 
-The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
-is insufficient. It assumes there are active TRBs if there's any request
-in the started_list. However, that's not the case for requests with a
-large SG list.
+For bus_register(), any error which happens after kset_register() will
+cause that @priv are freed twice, fixed by setting @priv with NULL after
+the first free.
 
-That is, if we have a single usb request that requires more TRBs than
-the total TRBs in the TRB ring, the queued TRBs will be available when
-all the TRBs in the ring are completed. But the request is only
-partially completed and remains in the started_list. With the current
-logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
-
-Fix this by additionally checking for the request->num_trbs for active
-TRB count.
-
-Cc: stable@vger.kernel.org
-Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20240727-bus_register_fix-v1-1-fed8dd0dba7a@quicinc.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ Brennan : Backport requires bus->p = NULL instead of priv = NULL ]
+Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/base/bus.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1168,11 +1168,14 @@ static u32 dwc3_calc_trbs_left(struct dw
- 	 * pending to be processed by the driver.
- 	 */
- 	if (dep->trb_enqueue == dep->trb_dequeue) {
-+		struct dwc3_request *req;
-+
- 		/*
--		 * If there is any request remained in the started_list at
--		 * this point, that means there is no TRB available.
-+		 * If there is any request remained in the started_list with
-+		 * active TRBs at this point, then there is no TRB available.
- 		 */
--		if (!list_empty(&dep->started_list))
-+		req = next_request(&dep->started_list);
-+		if (req && req->num_trbs)
- 			return 0;
- 
- 		return DWC3_TRB_NUM - 1;
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -853,6 +853,8 @@ bus_devices_fail:
+ 	bus_remove_file(bus, &bus_attr_uevent);
+ bus_uevent_fail:
+ 	kset_unregister(&bus->p->subsys);
++	/* Above kset_unregister() will kfree @bus->p */
++	bus->p = NULL;
+ out:
+ 	kfree(bus->p);
+ 	bus->p = NULL;
 
 
