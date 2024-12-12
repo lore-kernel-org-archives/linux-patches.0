@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5A42153F0;
-	Thu, 12 Dec 2024 15:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7D72206A5;
+	Thu, 12 Dec 2024 15:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017424; cv=none; b=ZyFZ6BtXoaESa635RpVB7TpSJ3et0tmGUqGlwh5tV1XBs061k03cmgTNmpI1X+CJI5Wa/921AukJY5t6faTfmV+g2E3p7ee/zF2k/68FE6xeazRVQp4LCqQLEFHgImv1eo6qddMme1GzBY6NLESVSAQa32SlWLDwrj7M8dqYUO4=
+	t=1734017428; cv=none; b=G3Fa/iSVY+rlNChRctl1MfQQSlqWSi19NQiENW0OsOhtQ8GRiGFw1bvm/d93JrGNOvlbwTAGJBWOzc4bqIt881M6QW0ysGuLWdBFMCoqc8+cc8IeL6LNNF8vp2NJgtfbKtQ6R5+Jj329FkUc8LZZ5D9L0jCmRI5nsA2BeAiTMzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017424; c=relaxed/simple;
-	bh=w6fAE0lHvRP6rPNNndR56I6Dj6X2BQdLYTDjPi0E/7Y=;
+	s=arc-20240116; t=1734017428; c=relaxed/simple;
+	bh=nUFQChGHhU/xz2wzcavEBb1nNx+99QnqQzX3pXtETcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/044OxjqNOwzzcJ3E/BtQIX6KJ9vp1zY00lzAycdtZIws88ImhWpqKlyGps7oyfwRy9/tmxry45ld6FH0JkVyDTvHStp/1P+GbIESida2vYPK4iK0SlblTnWnOe8yl+SsDNMBSanwnX6ptJeF369YRvR4FIlD3+n279GT4VBhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrpzMhRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EntmViXrWqU41+jgkgl8wzj67yUVCzNyK0ika9RCPr0gq6pG23SQGaTuTLx3mkm3YfIMkU1TrWwKsiAjco35l+XDw8YmDwvzDpyFnKhKNn7yUXejTJjnrIknE66a1LoTvcChdklNvoLqwgZKFCvDcnAsVok4aeoaIxoTqWoKxBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFLfR8SJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrpzMhRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA21C4CECE;
-	Thu, 12 Dec 2024 15:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFLfR8SJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D17C4CECE;
+	Thu, 12 Dec 2024 15:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017423;
-	bh=w6fAE0lHvRP6rPNNndR56I6Dj6X2BQdLYTDjPi0E/7Y=;
+	s=korg; t=1734017427;
+	bh=nUFQChGHhU/xz2wzcavEBb1nNx+99QnqQzX3pXtETcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrpzMhRaTH02JwDICQIz9QDS3K9WCf+BaFgZAbERrR5wkRPEcqMiQ3olOJTUiZWOc
-	 JQTbpcF2nYe39HVWbQ6V9J7LZqqWDA0FOVzhRPH+7KLIBGZBECFm2C5Z/Mld2F3wnJ
-	 P/KH5W1witW72OQpKCsHfwVKKTiH+Jd/cVFB7j2w=
+	b=VFLfR8SJzpgJUhBwA0J339VVSl5JtW3fglTs/zR9Xb7EZsrmm/qrohls7MPRwxW7L
+	 gn1Nbw2L53tD6LYY5EteLR5If8n9zDTa8I9+xTXpjS6MzwKW0Cfe8Or/GWXIW57FF6
+	 jydDU+12OUYlTS9IOWILGyx+rl+UumcJ/s0qSSjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Ocheretnyi <oocheret@cisco.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/356] iTCO_wdt: mask NMI_NOW bit for update_no_reboot_bit() call
-Date: Thu, 12 Dec 2024 15:55:20 +0100
-Message-ID: <20241212144244.666739043@linuxfoundation.org>
+Subject: [PATCH 6.6 010/356] can: m_can: m_can_handle_lec_err(): fix {rx,tx}_errors statistics
+Date: Thu, 12 Dec 2024 15:55:29 +0100
+Message-ID: <20241212144245.022551019@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,83 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Ocheretnyi <oocheret@cisco.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit daa814d784ac034c62ab3fb0ef83daeafef527e2 ]
+[ Upstream commit 988d4222bf9039a875a3d48f2fe35c317831ff68 ]
 
-Commit da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake
-PCH iTCO") does not mask NMI_NOW bit during TCO1_CNT register's
-value comparison for update_no_reboot_bit() call causing following
-failure:
+The m_can_handle_lec_err() function was incorrectly incrementing only the
+receive error counter, even in cases of bit or acknowledgment errors that
+occur during transmission.
 
-   ...
-   iTCO_vendor_support: vendor-support=0
-   iTCO_wdt iTCO_wdt: unable to reset NO_REBOOT flag, device
-                                    disabled by hardware/BIOS
-   ...
+Fix the issue by incrementing the appropriate counter based on the
+type of error.
 
-and this can lead to unexpected NMIs later during regular
-crashkernel's workflow because of watchdog probe call failures.
-
-This change masks NMI_NOW bit for TCO1_CNT register values to
-avoid unexpected NMI_NOW bit inversions.
-
-Fixes: da23b6faa8bf ("watchdog: iTCO: Add support for Cannon Lake PCH iTCO")
-Signed-off-by: Oleksandr Ocheretnyi <oocheret@cisco.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20240913191403.2560805-1-oocheret@cisco.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: e0d1f4816f2a ("can: m_can: add Bosch M_CAN controller support")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://patch.msgid.link/20241122221650.633981-7-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/iTCO_wdt.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ drivers/net/can/m_can/m_can.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/watchdog/iTCO_wdt.c b/drivers/watchdog/iTCO_wdt.c
-index 264857d314da8..dd297dcd524c9 100644
---- a/drivers/watchdog/iTCO_wdt.c
-+++ b/drivers/watchdog/iTCO_wdt.c
-@@ -82,6 +82,13 @@
- #define TCO2_CNT(p)	(TCOBASE(p) + 0x0a) /* TCO2 Control Register	*/
- #define TCOv2_TMR(p)	(TCOBASE(p) + 0x12) /* TCOv2 Timer Initial Value*/
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index ec6e740b03247..2a258986eed02 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -636,47 +636,60 @@ static int m_can_handle_lec_err(struct net_device *dev,
+ 	u32 timestamp = 0;
  
-+/*
-+ * NMI_NOW is bit 8 of TCO1_CNT register
-+ * Read/Write
-+ * This bit is implemented as RW but has no effect on HW.
-+ */
-+#define NMI_NOW		BIT(8)
+ 	cdev->can.can_stats.bus_error++;
+-	stats->rx_errors++;
+ 
+ 	/* propagate the error condition to the CAN stack */
+ 	skb = alloc_can_err_skb(dev, &cf);
+-	if (unlikely(!skb))
+-		return 0;
+ 
+ 	/* check for 'last error code' which tells us the
+ 	 * type of the last error to occur on the CAN bus
+ 	 */
+-	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
++	if (likely(skb))
++		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
+ 
+ 	switch (lec_type) {
+ 	case LEC_STUFF_ERROR:
+ 		netdev_dbg(dev, "stuff error\n");
+-		cf->data[2] |= CAN_ERR_PROT_STUFF;
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_STUFF;
+ 		break;
+ 	case LEC_FORM_ERROR:
+ 		netdev_dbg(dev, "form error\n");
+-		cf->data[2] |= CAN_ERR_PROT_FORM;
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_FORM;
+ 		break;
+ 	case LEC_ACK_ERROR:
+ 		netdev_dbg(dev, "ack error\n");
+-		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++		stats->tx_errors++;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
+ 		break;
+ 	case LEC_BIT1_ERROR:
+ 		netdev_dbg(dev, "bit1 error\n");
+-		cf->data[2] |= CAN_ERR_PROT_BIT1;
++		stats->tx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT1;
+ 		break;
+ 	case LEC_BIT0_ERROR:
+ 		netdev_dbg(dev, "bit0 error\n");
+-		cf->data[2] |= CAN_ERR_PROT_BIT0;
++		stats->tx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT0;
+ 		break;
+ 	case LEC_CRC_ERROR:
+ 		netdev_dbg(dev, "CRC error\n");
+-		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
+ 		break;
+ 	default:
+ 		break;
+ 	}
+ 
++	if (unlikely(!skb))
++		return 0;
 +
- /* internal variables */
- struct iTCO_wdt_private {
- 	struct watchdog_device wddev;
-@@ -219,13 +226,23 @@ static int update_no_reboot_bit_cnt(void *priv, bool set)
- 	struct iTCO_wdt_private *p = priv;
- 	u16 val, newval;
+ 	if (cdev->is_peripheral)
+ 		timestamp = m_can_get_timestamp(cdev);
  
--	val = inw(TCO1_CNT(p));
-+	/*
-+	 * writing back 1b1 to NMI_NOW of TCO1_CNT register
-+	 * causes NMI_NOW bit inversion what consequently does
-+	 * not allow to perform the register's value comparison
-+	 * properly.
-+	 *
-+	 * NMI_NOW bit masking for TCO1_CNT register values
-+	 * helps to avoid possible NMI_NOW bit inversions on
-+	 * following write operation.
-+	 */
-+	val = inw(TCO1_CNT(p)) & ~NMI_NOW;
- 	if (set)
- 		val |= BIT(0);
- 	else
- 		val &= ~BIT(0);
- 	outw(val, TCO1_CNT(p));
--	newval = inw(TCO1_CNT(p));
-+	newval = inw(TCO1_CNT(p)) & ~NMI_NOW;
- 
- 	/* make sure the update is successful */
- 	return val != newval ? -EIO : 0;
 -- 
 2.43.0
 
