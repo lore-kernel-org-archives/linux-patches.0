@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E596621C166;
-	Thu, 12 Dec 2024 17:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FAE21C166;
+	Thu, 12 Dec 2024 17:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023030; cv=none; b=lR0Y7OdIXiBWHecuIAuLgfsjfHh8CJmBIQXVTyiICPE6XThpNUZZilZH9T1/Dr6feh7pdQf3l0ELaB7sy8cF4NA+oCFc2KsoGuPX+6KWuPa2EQIxdlbTFdi/w9Pi6pZ6UQnR3vjvi9b14LeemxlW3ldAV5iS5ITO7ZQ6c8ZViQ4=
+	t=1734023033; cv=none; b=Uujh4QGzYE3jjKDMUWYDUY7zWxv3xA1TRvkc4xOCrQENkJlGeir2Q2pY266NJ4NVsCVhUyGB39/QzA9ftkQdEcU6QWNzUQhGMV7OdLp0Ac47khk4YmeYRzNc4s6mVbEmNfmQHAHBMfgqGjLIBJzcZGbJPtoaOPrllEd/uv0gbLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023030; c=relaxed/simple;
-	bh=Sn1TSgpiRYvcprBLR7LoOBXDzaGZpRJFdz84P0BzdcI=;
+	s=arc-20240116; t=1734023033; c=relaxed/simple;
+	bh=y0dEE7Po0bPI4CKLIj+sasLDcpefXnIe+P7AORulU2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QdhACg6/O8cwV7bFazVf0UfgxzwOiIN6i4gVZRShuyoMeP72ix0w3HB0cf7IAdbymaDWyyvr7Qt+6s/noQoUk5vvWBy5QsrKuOj+X/bNySEvhpnO8eGC68bT0oiE9b+E5oZHAGGOybiNCPpg+nr70Jn3Hcp2hDUg+IZlIOMRg9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvc2BorT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fL7joRfHRWO7myVi8cdh+f9Iu0KG90GTX0cRzV6BmkqYoXHiAisJJROUEvR0kfvitR4wPrwMWJy/cChnlrlaGRznTKnAWJbLDYzcB0ipHcdLrrmXtFCG34rSs3V3xxnEMfZSSjoEMMLJGLgCmftIl4Q+71f+PpYl1zLLiOgAvrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trWfntwD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvc2BorT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CF7C4CECE;
-	Thu, 12 Dec 2024 17:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trWfntwD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F423DC4CECE;
+	Thu, 12 Dec 2024 17:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023029;
-	bh=Sn1TSgpiRYvcprBLR7LoOBXDzaGZpRJFdz84P0BzdcI=;
+	s=korg; t=1734023033;
+	bh=y0dEE7Po0bPI4CKLIj+sasLDcpefXnIe+P7AORulU2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvc2BorTB+TtRKUtkwIzyaZokCG+dmAoWVVs7yrdkyduKHftca+Q3BRKcjg08LCf7
-	 CiBZJ4S0emzpskWg820qsr+qxCfC5ZCeCNFmPjT96PQbymv9dZj0WRyAv/CpXPHFtD
-	 WY08l3h0b+rTnmZ8WEpulek+V8CsB/n12rzLGCcE=
+	b=trWfntwDemy0JEF1LqAhveYvBd5QGLkfJo7qm/hq9mjFC2vF5Ucj+IlEdfrxBSSfi
+	 gx+lSdUKOamC+i2azRc/gM5laTpsSc3ebFHbbJXZFuzyKg7bUxsxQYrr5F+oIG1zQT
+	 QFczAc4VPeMkykHe9DhbZf39W2I7GxCqmbxGfVEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Ardelean <aardelean@baylibre.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 384/565] util_macros.h: fix/rework find_closest() macros
-Date: Thu, 12 Dec 2024 15:59:39 +0100
-Message-ID: <20241212144326.818354633@linuxfoundation.org>
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 402/565] can: c_can: c_can_handle_bus_err(): update statistics if skb allocation fails
+Date: Thu, 12 Dec 2024 15:59:57 +0100
+Message-ID: <20241212144327.543302591@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,188 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Ardelean <aardelean@baylibre.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-commit bc73b4186736341ab5cd2c199da82db6e1134e13 upstream.
+[ Upstream commit 9e66242504f49e17481d8e197730faba7d99c934 ]
 
-A bug was found in the find_closest() (find_closest_descending() is also
-affected after some testing), where for certain values with small
-progressions, the rounding (done by averaging 2 values) causes an
-incorrect index to be returned.  The rounding issues occur for
-progressions of 1, 2 and 3.  It goes away when the progression/interval
-between two values is 4 or larger.
+Ensure that the statistics are always updated, even if the skb
+allocation fails.
 
-It's particularly bad for progressions of 1.  For example if there's an
-array of 'a = { 1, 2, 3 }', using 'find_closest(2, a ...)' would return 0
-(the index of '1'), rather than returning 1 (the index of '2').  This
-means that for exact values (with a progression of 1), find_closest() will
-misbehave and return the index of the value smaller than the one we're
-searching for.
-
-For progressions of 2 and 3, the exact values are obtained correctly; but
-values aren't approximated correctly (as one would expect).  Starting with
-progressions of 4, all seems to be good (one gets what one would expect).
-
-While one could argue that 'find_closest()' should not be used for arrays
-with progressions of 1 (i.e. '{1, 2, 3, ...}', the macro should still
-behave correctly.
-
-The bug was found while testing the 'drivers/iio/adc/ad7606.c',
-specifically the oversampling feature.
-For reference, the oversampling values are listed as:
-   static const unsigned int ad7606_oversampling_avail[7] = {
-          1, 2, 4, 8, 16, 32, 64,
-   };
-
-When doing:
-  1. $ echo 1 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     1  # this is fine
-  2. $ echo 2 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     1  # this is wrong; 2 should be returned here
-  3. $ echo 3 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     2  # this is fine
-  4. $ echo 4 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
-     4  # this is fine
-And from here-on, the values are as correct (one gets what one would
-expect.)
-
-While writing a kunit test for this bug, a peculiar issue was found for the
-array in the 'drivers/hwmon/ina2xx.c' & 'drivers/iio/adc/ina2xx-adc.c'
-drivers. While running the kunit test (for 'ina226_avg_tab' from these
-drivers):
-  * idx = find_closest([-1 to 2], ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
-    This returns idx == 0, so value.
-  * idx = find_closest(3, ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
-    This returns idx == 0, value 1; and now one could argue whether 3 is
-    closer to 4 or to 1. This quirk only appears for value '3' in this
-    array, but it seems to be a another rounding issue.
-  * And from 4 onwards the 'find_closest'() works fine (one gets what one
-    would expect).
-
-This change reworks the find_closest() macros to also check the difference
-between the left and right elements when 'x'. If the distance to the right
-is smaller (than the distance to the left), the index is incremented by 1.
-This also makes redundant the need for using the DIV_ROUND_CLOSEST() macro.
-
-In order to accommodate for any mix of negative + positive values, the
-internal variables '__fc_x', '__fc_mid_x', '__fc_left' & '__fc_right' are
-forced to 'long' type. This also addresses any potential bugs/issues with
-'x' being of an unsigned type. In those situations any comparison between
-signed & unsigned would be promoted to a comparison between 2 unsigned
-numbers; this is especially annoying when '__fc_left' & '__fc_right'
-underflow.
-
-The find_closest_descending() macro was also reworked and duplicated from
-the find_closest(), and it is being iterated in reverse. The main reason
-for this is to get the same indices as 'find_closest()' (but in reverse).
-The comparison for '__fc_right < __fc_left' favors going the array in
-ascending order.
-For example for array '{ 1024, 512, 256, 128, 64, 16, 4, 1 }' and x = 3, we
-get:
-    __fc_mid_x = 2
-    __fc_left = -1
-    __fc_right = -2
-    Then '__fc_right < __fc_left' evaluates to true and '__fc_i++' becomes 7
-    which is not quite incorrect, but 3 is closer to 4 than to 1.
-
-This change has been validated with the kunit from the next patch.
-
-Link: https://lkml.kernel.org/r/20241105145406.554365-1-aardelean@baylibre.com
-Fixes: 95d119528b0b ("util_macros.h: add find_closest() macro")
-Signed-off-by: Alexandru Ardelean <aardelean@baylibre.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d6d26537940 ("can: c_can: fix {rx,tx}_errors statistics")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Link: https://patch.msgid.link/20241122221650.633981-2-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/util_macros.h |   56 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ drivers/net/can/c_can/c_can_main.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
---- a/include/linux/util_macros.h
-+++ b/include/linux/util_macros.h
-@@ -2,19 +2,6 @@
- #ifndef _LINUX_HELPER_MACROS_H_
- #define _LINUX_HELPER_MACROS_H_
+diff --git a/drivers/net/can/c_can/c_can_main.c b/drivers/net/can/c_can/c_can_main.c
+index d9595eb3e125f..875ac76bc5fdd 100644
+--- a/drivers/net/can/c_can/c_can_main.c
++++ b/drivers/net/can/c_can/c_can_main.c
+@@ -1022,49 +1022,57 @@ static int c_can_handle_bus_err(struct net_device *dev,
  
--#define __find_closest(x, a, as, op)					\
--({									\
--	typeof(as) __fc_i, __fc_as = (as) - 1;				\
--	typeof(x) __fc_x = (x);						\
--	typeof(*a) const *__fc_a = (a);					\
--	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
--		if (__fc_x op DIV_ROUND_CLOSEST(__fc_a[__fc_i] +	\
--						__fc_a[__fc_i + 1], 2))	\
--			break;						\
--	}								\
--	(__fc_i);							\
--})
--
- /**
-  * find_closest - locate the closest element in a sorted array
-  * @x: The reference value.
-@@ -23,8 +10,27 @@
-  * @as: Size of 'a'.
-  *
-  * Returns the index of the element closest to 'x'.
-+ * Note: If using an array of negative numbers (or mixed positive numbers),
-+ *       then be sure that 'x' is of a signed-type to get good results.
-  */
--#define find_closest(x, a, as) __find_closest(x, a, as, <=)
-+#define find_closest(x, a, as)						\
-+({									\
-+	typeof(as) __fc_i, __fc_as = (as) - 1;				\
-+	long __fc_mid_x, __fc_x = (x);					\
-+	long __fc_left, __fc_right;					\
-+	typeof(*a) const *__fc_a = (a);					\
-+	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
-+		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i + 1]) / 2;	\
-+		if (__fc_x <= __fc_mid_x) {				\
-+			__fc_left = __fc_x - __fc_a[__fc_i];		\
-+			__fc_right = __fc_a[__fc_i + 1] - __fc_x;	\
-+			if (__fc_right < __fc_left)			\
-+				__fc_i++;				\
-+			break;						\
-+		}							\
-+	}								\
-+	(__fc_i);							\
-+})
+ 	/* propagate the error condition to the CAN stack */
+ 	skb = alloc_can_err_skb(dev, &cf);
+-	if (unlikely(!skb))
+-		return 0;
  
- /**
-  * find_closest_descending - locate the closest element in a sorted array
-@@ -34,9 +40,27 @@
-  * @as: Size of 'a'.
-  *
-  * Similar to find_closest() but 'a' is expected to be sorted in descending
-- * order.
-+ * order. The iteration is done in reverse order, so that the comparison
-+ * of '__fc_right' & '__fc_left' also works for unsigned numbers.
-  */
--#define find_closest_descending(x, a, as) __find_closest(x, a, as, >=)
-+#define find_closest_descending(x, a, as)				\
-+({									\
-+	typeof(as) __fc_i, __fc_as = (as) - 1;				\
-+	long __fc_mid_x, __fc_x = (x);					\
-+	long __fc_left, __fc_right;					\
-+	typeof(*a) const *__fc_a = (a);					\
-+	for (__fc_i = __fc_as; __fc_i >= 1; __fc_i--) {			\
-+		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i - 1]) / 2;	\
-+		if (__fc_x <= __fc_mid_x) {				\
-+			__fc_left = __fc_x - __fc_a[__fc_i];		\
-+			__fc_right = __fc_a[__fc_i - 1] - __fc_x;	\
-+			if (__fc_right < __fc_left)			\
-+				__fc_i--;				\
-+			break;						\
-+		}							\
-+	}								\
-+	(__fc_i);							\
-+})
+ 	/* check for 'last error code' which tells us the
+ 	 * type of the last error to occur on the CAN bus
+ 	 */
+-	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
++	if (likely(skb))
++		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
  
- /**
-  * is_insidevar - check if the @ptr points inside the @var memory range.
+ 	switch (lec_type) {
+ 	case LEC_STUFF_ERROR:
+ 		netdev_dbg(dev, "stuff error\n");
+-		cf->data[2] |= CAN_ERR_PROT_STUFF;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_STUFF;
+ 		stats->rx_errors++;
+ 		break;
+ 	case LEC_FORM_ERROR:
+ 		netdev_dbg(dev, "form error\n");
+-		cf->data[2] |= CAN_ERR_PROT_FORM;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_FORM;
+ 		stats->rx_errors++;
+ 		break;
+ 	case LEC_ACK_ERROR:
+ 		netdev_dbg(dev, "ack error\n");
+-		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
+ 		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT1_ERROR:
+ 		netdev_dbg(dev, "bit1 error\n");
+-		cf->data[2] |= CAN_ERR_PROT_BIT1;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT1;
+ 		stats->tx_errors++;
+ 		break;
+ 	case LEC_BIT0_ERROR:
+ 		netdev_dbg(dev, "bit0 error\n");
+-		cf->data[2] |= CAN_ERR_PROT_BIT0;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT0;
+ 		stats->tx_errors++;
+ 		break;
+ 	case LEC_CRC_ERROR:
+ 		netdev_dbg(dev, "CRC error\n");
+-		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
+ 		stats->rx_errors++;
+ 		break;
+ 	default:
+ 		break;
+ 	}
+ 
++	if (unlikely(!skb))
++		return 0;
++
+ 	netif_receive_skb(skb);
+ 	return 1;
+ }
+-- 
+2.43.0
+
 
 
