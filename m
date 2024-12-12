@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2E6213E6B;
-	Thu, 12 Dec 2024 17:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD01A214227;
+	Thu, 12 Dec 2024 17:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023455; cv=none; b=VVv9jBXwcAh9hUczHDy/L/cA48e3nSWO0+FG7jJcTgqJ1CRFHS5pkfgIopYQexR2hPSO81eL/Rk+YFqtYyh7ALCRAg0ce8wDo34GaruI/7BIB1cY/g3dt9R3+E7vHR1tU5iMWnHFy5SYH9MGGe8FSNYZRd17/osK5lO6YMurM74=
+	t=1734023458; cv=none; b=nzUvJuexew2WNlOr2DBLSrsUv1ZQAaCp1G7N9mhkIopP86MPVd1QElVaycaAzV+kQ1qb+6k1ZX31t/HS3KHMqcSbXqxr+jZajvvnbt3m5PceBa38zAzsVY7hoek/PjtUVnsfKDuzv17cOjM/50qC59fYb1xwOFIN5DfW+SbKfmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023455; c=relaxed/simple;
-	bh=sS7t9bAMctXufkxgYmEilDyU1bfupAYji+pYt7PUynY=;
+	s=arc-20240116; t=1734023458; c=relaxed/simple;
+	bh=yqRRE/4mhJos0ZV4FpLMB44uu663+t+VKm+E8HxRuxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmQID6pL3ymJ0Yz3vUOsCckB/VcDySzpOX2VF+pkv4ln1bO/Tk9xxrixoCnR3W8vbGxIOISY9zc8wiXotllX0A9V+eBYJjQLsilEdtj2DznIvWad7qT+kPq176/qf6Z+3+gh5700WMd1clTl+A95gXx7ciCD+vpSRuNv5QckWNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/lD6S8f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HNpYK/dBBR6fMCD3tvhvXMRZWSbaoIm4tUQfcmnjc6uqaxJHxkZ9Ov1QTnaeoZhBNXER3bPm0UviC0TAAB8v7RwtS/I6EYgfAD6zpB+crZdpXVQmP5+P1dNPB2YUaI2kOO/Z1S0op4VNu0kH8YqA+FwtAWw3ggbzPNQ7GL8FZ/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rWTPCft/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/lD6S8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9118C4CED3;
-	Thu, 12 Dec 2024 17:10:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rWTPCft/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A25C4CECE;
+	Thu, 12 Dec 2024 17:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023455;
-	bh=sS7t9bAMctXufkxgYmEilDyU1bfupAYji+pYt7PUynY=;
+	s=korg; t=1734023458;
+	bh=yqRRE/4mhJos0ZV4FpLMB44uu663+t+VKm+E8HxRuxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/lD6S8fHiH3LSecY8KwPja4IUpjJuGR/MYmy9bJCibDhBiHwQBoaFnNIATi7RDlM
-	 sxEcOKgZUB4Y0c+7/LK+clIUjYT4t/s66pptu2XDzgyCRjtkexSpwHXbsYc1Iz6DDK
-	 bgOHdepiVpfvWDqi4cGP3Xuii/teYaUU/8+m1cjw=
+	b=rWTPCft/iBjds0IZRjxrZ6b55QmxpEqlkjoP4QGU2NfkMGreA1zqdvwStLnEiUM8s
+	 RgaRMxxb16SEZ+3E+mMKZv5OtKh8DTqQ/BxS4MCq5mT3VVfWTXDZJf0pYOsRKiLg2o
+	 dpsHSI9kO3nKsG5Q9tbQdyXY1xn5w1tn6hjp7Uew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Shusen Li <lishusen2@huawei.com>,
 	Kunkun Jiang <jiangkunkun@huawei.com>,
 	Jing Zhang <jingzhangos@google.com>,
 	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 5.15 539/565] KVM: arm64: vgic-its: Add a data length check in vgic_its_save_*
-Date: Thu, 12 Dec 2024 16:02:14 +0100
-Message-ID: <20241212144333.155650227@linuxfoundation.org>
+Subject: [PATCH 5.15 540/565] KVM: arm64: vgic-its: Clear DTE when MAPD unmaps a device
+Date: Thu, 12 Dec 2024 16:02:15 +0100
+Message-ID: <20241212144333.196804956@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,145 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Zhang <jingzhangos@google.com>
+From: Kunkun Jiang <jiangkunkun@huawei.com>
 
-commit 7fe28d7e68f92cc3d0668b8f2fbdf5c303ac3022 upstream.
+commit e9649129d33dca561305fc590a7c4ba8c3e5675a upstream.
 
-In all the vgic_its_save_*() functinos, they do not check whether
-the data length is 8 bytes before calling vgic_write_guest_lock.
-This patch adds the check. To prevent the kernel from being blown up
-when the fault occurs, KVM_BUG_ON() is used. And the other BUG_ON()s
-are replaced together.
+vgic_its_save_device_tables will traverse its->device_list to
+save DTE for each device. vgic_its_restore_device_tables will
+traverse each entry of device table and check if it is valid.
+Restore if valid.
+
+But when MAPD unmaps a device, it does not invalidate the
+corresponding DTE. In the scenario of continuous saves
+and restores, there may be a situation where a device's DTE
+is not saved but is restored. This is unreasonable and may
+cause restore to fail. This patch clears the corresponding
+DTE when MAPD unmaps a device.
 
 Cc: stable@vger.kernel.org
+Fixes: 57a9a117154c ("KVM: arm64: vgic-its: Device table save/restore")
+Co-developed-by: Shusen Li <lishusen2@huawei.com>
+Signed-off-by: Shusen Li <lishusen2@huawei.com>
 Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
-[Jing: Update with the new entry read/write helpers]
+[Jing: Update with entry write helper]
 Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-4-jingzhangos@google.com
+Link: https://lore.kernel.org/r/20241107214137.428439-5-jingzhangos@google.com
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |   20 ++++++++------------
- arch/arm64/kvm/vgic/vgic.h     |   24 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 12 deletions(-)
+ arch/arm64/kvm/vgic/vgic-its.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 --- a/arch/arm64/kvm/vgic/vgic-its.c
 +++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2135,7 +2135,6 @@ static int scan_its_table(struct vgic_it
- static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
- 			      struct its_ite *ite, gpa_t gpa, int ite_esz)
- {
--	struct kvm *kvm = its->dev->kvm;
- 	u32 next_offset;
- 	u64 val;
+@@ -1182,9 +1182,11 @@ static int vgic_its_cmd_handle_mapd(stru
+ 	bool valid = its_cmd_get_validbit(its_cmd);
+ 	u8 num_eventid_bits = its_cmd_get_size(its_cmd);
+ 	gpa_t itt_addr = its_cmd_get_ittaddr(its_cmd);
++	int dte_esz = vgic_its_get_abi(its)->dte_esz;
+ 	struct its_device *device;
++	gpa_t gpa;
  
-@@ -2144,7 +2143,8 @@ static int vgic_its_save_ite(struct vgic
- 	       ((u64)ite->irq->intid << KVM_ITS_ITE_PINTID_SHIFT) |
- 		ite->collection->collection_id;
- 	val = cpu_to_le64(val);
--	return kvm_write_guest_lock(kvm, gpa, &val, ite_esz);
-+
-+	return vgic_its_write_entry_lock(its, gpa, val, ite_esz);
- }
+-	if (!vgic_its_check_id(its, its->baser_device_table, device_id, NULL))
++	if (!vgic_its_check_id(its, its->baser_device_table, device_id, &gpa))
+ 		return E_ITS_MAPD_DEVICE_OOR;
  
- /**
-@@ -2280,7 +2280,6 @@ static int vgic_its_restore_itt(struct v
- static int vgic_its_save_dte(struct vgic_its *its, struct its_device *dev,
- 			     gpa_t ptr, int dte_esz)
- {
--	struct kvm *kvm = its->dev->kvm;
- 	u64 val, itt_addr_field;
- 	u32 next_offset;
- 
-@@ -2291,7 +2290,8 @@ static int vgic_its_save_dte(struct vgic
- 	       (itt_addr_field << KVM_ITS_DTE_ITTADDR_SHIFT) |
- 		(dev->num_eventid_bits - 1));
- 	val = cpu_to_le64(val);
--	return kvm_write_guest_lock(kvm, ptr, &val, dte_esz);
-+
-+	return vgic_its_write_entry_lock(its, ptr, val, dte_esz);
- }
- 
- /**
-@@ -2471,7 +2471,8 @@ static int vgic_its_save_cte(struct vgic
- 	       ((u64)collection->target_addr << KVM_ITS_CTE_RDBASE_SHIFT) |
- 	       collection->collection_id);
- 	val = cpu_to_le64(val);
--	return kvm_write_guest_lock(its->dev->kvm, gpa, &val, esz);
-+
-+	return vgic_its_write_entry_lock(its, gpa, val, esz);
- }
- 
- static int vgic_its_restore_cte(struct vgic_its *its, gpa_t gpa, int esz)
-@@ -2482,8 +2483,7 @@ static int vgic_its_restore_cte(struct v
- 	u64 val;
- 	int ret;
- 
--	BUG_ON(esz > sizeof(val));
--	ret = kvm_read_guest_lock(kvm, gpa, &val, esz);
-+	ret = vgic_its_read_entry_lock(its, gpa, &val, esz);
- 	if (ret)
- 		return ret;
- 	val = le64_to_cpu(val);
-@@ -2517,7 +2517,6 @@ static int vgic_its_save_collection_tabl
- 	u64 baser = its->baser_coll_table;
- 	gpa_t gpa = GITS_BASER_ADDR_48_to_52(baser);
- 	struct its_collection *collection;
--	u64 val;
- 	size_t max_size, filled = 0;
- 	int ret, cte_esz = abi->cte_esz;
- 
-@@ -2541,10 +2540,7 @@ static int vgic_its_save_collection_tabl
- 	 * table is not fully filled, add a last dummy element
- 	 * with valid bit unset
+ 	if (valid && num_eventid_bits > VITS_TYPER_IDBITS)
+@@ -1205,7 +1207,7 @@ static int vgic_its_cmd_handle_mapd(stru
+ 	 * is an error, so we are done in any case.
  	 */
--	val = 0;
--	BUG_ON(cte_esz > sizeof(val));
--	ret = kvm_write_guest_lock(its->dev->kvm, gpa, &val, cte_esz);
--	return ret;
-+	return vgic_its_write_entry_lock(its, gpa, 0, cte_esz);
- }
+ 	if (!valid)
+-		return 0;
++		return vgic_its_write_entry_lock(its, gpa, 0, dte_esz);
  
- /**
---- a/arch/arm64/kvm/vgic/vgic.h
-+++ b/arch/arm64/kvm/vgic/vgic.h
-@@ -6,6 +6,7 @@
- #define __KVM_ARM_VGIC_NEW_H__
- 
- #include <linux/irqchip/arm-gic-common.h>
-+#include <asm/kvm_mmu.h>
- 
- #define PRODUCT_ID_KVM		0x4b	/* ASCII code K */
- #define IMPLEMENTER_ARM		0x43b
-@@ -126,6 +127,29 @@ static inline bool vgic_irq_is_multi_sgi
- 	return vgic_irq_get_lr_count(irq) > 1;
- }
- 
-+static inline int vgic_its_read_entry_lock(struct vgic_its *its, gpa_t eaddr,
-+					   u64 *eval, unsigned long esize)
-+{
-+	struct kvm *kvm = its->dev->kvm;
-+
-+	if (KVM_BUG_ON(esize != sizeof(*eval), kvm))
-+		return -EINVAL;
-+
-+	return kvm_read_guest_lock(kvm, eaddr, eval, esize);
-+
-+}
-+
-+static inline int vgic_its_write_entry_lock(struct vgic_its *its, gpa_t eaddr,
-+					    u64 eval, unsigned long esize)
-+{
-+	struct kvm *kvm = its->dev->kvm;
-+
-+	if (KVM_BUG_ON(esize != sizeof(eval), kvm))
-+		return -EINVAL;
-+
-+	return kvm_write_guest_lock(kvm, eaddr, &eval, esize);
-+}
-+
- /*
-  * This struct provides an intermediate representation of the fields contained
-  * in the GICH_VMCR and ICH_VMCR registers, such that code exporting the GIC
+ 	device = vgic_its_alloc_device(its, device_id, itt_addr,
+ 				       num_eventid_bits);
 
 
