@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9B04F218;
-	Thu, 12 Dec 2024 17:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2F7205501;
+	Thu, 12 Dec 2024 17:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023839; cv=none; b=RPIm3ZvWWtMG6/M0MT20UNREo9RAka7BHiKm+HW99J3JNdgKCYr57MjWTRAmZDah+6IQDf/240QuJBbWZXBYKgNDsszWjuJYf7Tf8qUfLk9KlRGwWc3EqFLqzj9UZXLlboQR4tsGvT7MPChORvufCuRdTcBsKSYvugjZrazUdJc=
+	t=1734023842; cv=none; b=HcxzlEGep2MnvFwQR5iAvfxd1r65Y3Zh2K+HgfxlP15l1gRnCLbYmMytNoNJlKIBmVFAOmSD2DGeFNrO7VI+DQy0oE2/Lbs9BJLEJjZEqNVSNqz2d4OzB7EO9/34V3RVbpeYHfEzRYwAcGYYRbMRhl6wrhKlZVuLk4y8cZlu1IE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023839; c=relaxed/simple;
-	bh=y6jynlx/iO+i2CxH7JGpAwrJ0zaZUxQ8F56JRkxyRB4=;
+	s=arc-20240116; t=1734023842; c=relaxed/simple;
+	bh=hXmffrSAEvRe6Dc6IoC31r608eiLzrt7GYh02+3NA9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBuqi19m85Ev2HmzO2fvms8unJyqO4JQG1JDMSJMcO2YVP8liI8PNRVNnNRTnX4mv4ZKtTmOqhy0jjJuAZeXBoK38OiqQlOG5yEhanUAiKU5NrqA9Juqkr/ULOaTwKpg2xTjIld4Cx1h0hQrT1Be5cbrgWquh5f5WteBJnuFi7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0RYFIE8P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSLfX2V3JoXolBE6FIT7x+bIjLeuHEz2ni+WNyOPfxgVtaah9imFG3f0Tq+MJfRmQ7E+I3MmXWm5NAWXDhx58P95/jwGIHKoaH9VBy40GVb8w/Z6NlafGFd2O7p07X2tz/CQwNZZRB/exNcfz2MMOIYNuCY7qgushetQgIY++0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xn58DjQ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0RYFIE8P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45804C4CECE;
-	Thu, 12 Dec 2024 17:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xn58DjQ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A139C4CECE;
+	Thu, 12 Dec 2024 17:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023839;
-	bh=y6jynlx/iO+i2CxH7JGpAwrJ0zaZUxQ8F56JRkxyRB4=;
+	s=korg; t=1734023842;
+	bh=hXmffrSAEvRe6Dc6IoC31r608eiLzrt7GYh02+3NA9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0RYFIE8PtSC6+r9OSJ7PtMvoAn1xacK9geQMyF/gd6HEuaXUV9FxQ8qBqSy8NOQsB
-	 xFXcQZ+OBqTAMXAWSX8n6PdkER+wguUJhxuVNBOD5lZrtiNo/h7bGT00VTxLG/CZrd
-	 s1DP5lnGOV/OGDvQtR1Z8DR49hBnpkhGnEwIFCAo=
+	b=Xn58DjQ+YzoStpRoVT4oadia2qtAtJsepPtpPeDCSKW9MOr/h9v8ayHFl2rPddozL
+	 PFSHqs0CiLggQVuDjsXn3SBiUQjAYROAvlqr7aXSOt49O/thpPLb8bRzIQq6fRckdb
+	 DXA/CW6ApJRaFJo34NM2Hq2swmBbsg/S27B9lLjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 100/459] drm/omap: Fix locking in omap_gem_new_dmabuf()
-Date: Thu, 12 Dec 2024 15:57:18 +0100
-Message-ID: <20241212144257.459741366@linuxfoundation.org>
+Subject: [PATCH 5.10 101/459] wifi: p54: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Thu, 12 Dec 2024 15:57:19 +0100
+Message-ID: <20241212144257.502961762@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,74 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit e6a1c4037227539373c8cf484ace83833e2ad6a2 ]
+[ Upstream commit bcd1371bd85e560ccc9159b7747f94bfe43b77a6 ]
 
-omap_gem_new_dmabuf() creates the new gem object, and then takes and
-holds the omap_obj->lock for the rest of the function. This has two
-issues:
+disable_irq() after request_irq() still has a time gap in which
+interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+disable IRQ auto-enable when request IRQ.
 
-- omap_gem_free_object(), which is called in the error paths, also takes
-  the same lock, leading to deadlock
-- Even if the above wouldn't happen, in the error cases
-  omap_gem_new_dmabuf() still unlocks omap_obj->lock, even after the
-  omap_obj has already been freed.
-
-Furthermore, I don't think there's any reason to take the lock at all,
-as the object was just created and not yet shared with anyone else.
-
-To fix all this, drop taking the lock.
-
-Fixes: 3cbd0c587b12 ("drm/omap: gem: Replace struct_mutex usage with omap_obj private lock")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/511b99d7-aade-4f92-bd3e-63163a13d617@stanley.mountain/
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240806-omapdrm-misc-fixes-v1-3-15d31aea0831@ideasonboard.com
+Fixes: cd8d3d321285 ("p54spi: p54spi driver")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20240910124314.698896-2-ruanjinjie@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/omapdrm/omap_gem.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intersil/p54/p54spi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/omapdrm/omap_gem.c b/drivers/gpu/drm/omapdrm/omap_gem.c
-index f67f223c6479f..662062cdba9d4 100644
---- a/drivers/gpu/drm/omapdrm/omap_gem.c
-+++ b/drivers/gpu/drm/omapdrm/omap_gem.c
-@@ -1289,8 +1289,6 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
+diff --git a/drivers/net/wireless/intersil/p54/p54spi.c b/drivers/net/wireless/intersil/p54/p54spi.c
+index cdb57819684ae..8a9168aac7281 100644
+--- a/drivers/net/wireless/intersil/p54/p54spi.c
++++ b/drivers/net/wireless/intersil/p54/p54spi.c
+@@ -623,7 +623,7 @@ static int p54spi_probe(struct spi_device *spi)
+ 	gpio_direction_input(p54spi_gpio_irq);
  
- 	omap_obj = to_omap_bo(obj);
+ 	ret = request_irq(gpio_to_irq(p54spi_gpio_irq),
+-			  p54spi_interrupt, 0, "p54spi",
++			  p54spi_interrupt, IRQF_NO_AUTOEN, "p54spi",
+ 			  priv->spi);
+ 	if (ret < 0) {
+ 		dev_err(&priv->spi->dev, "request_irq() failed");
+@@ -632,8 +632,6 @@ static int p54spi_probe(struct spi_device *spi)
  
--	mutex_lock(&omap_obj->lock);
+ 	irq_set_irq_type(gpio_to_irq(p54spi_gpio_irq), IRQ_TYPE_EDGE_RISING);
+ 
+-	disable_irq(gpio_to_irq(p54spi_gpio_irq));
 -
- 	omap_obj->sgt = sgt;
- 
- 	if (sgt->orig_nents == 1) {
-@@ -1305,8 +1303,7 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
- 		pages = kcalloc(npages, sizeof(*pages), GFP_KERNEL);
- 		if (!pages) {
- 			omap_gem_free_object(obj);
--			obj = ERR_PTR(-ENOMEM);
--			goto done;
-+			return ERR_PTR(-ENOMEM);
- 		}
- 
- 		omap_obj->pages = pages;
-@@ -1314,13 +1311,10 @@ struct drm_gem_object *omap_gem_new_dmabuf(struct drm_device *dev, size_t size,
- 						       npages);
- 		if (ret) {
- 			omap_gem_free_object(obj);
--			obj = ERR_PTR(-ENOMEM);
--			goto done;
-+			return ERR_PTR(-ENOMEM);
- 		}
- 	}
- 
--done:
--	mutex_unlock(&omap_obj->lock);
- 	return obj;
- }
- 
+ 	INIT_WORK(&priv->work, p54spi_work);
+ 	init_completion(&priv->fw_comp);
+ 	INIT_LIST_HEAD(&priv->tx_pending);
 -- 
 2.43.0
 
