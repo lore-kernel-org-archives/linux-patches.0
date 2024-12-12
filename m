@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4273B2080D9;
-	Thu, 12 Dec 2024 17:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4253D2080D9;
+	Thu, 12 Dec 2024 17:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025863; cv=none; b=d98WewbChS1oipqLaZBoEvDEdFY5KXZodW16Zc7tBZvdOENgJIVZV6qiCiMZsy2mnqfmssNNDkY1jxbnL4Q3KJo4ztIyLK1yMrsSvROEk5b9IQvdOXzIMHaz9sGIDgEmk+GWQa2Uv7dHvjeLp0tCxh+PDSlH0GmhM/x3t0Gnxvk=
+	t=1734025867; cv=none; b=PiNZ6y/bk+Ss7mgMSEVmVat/iGTbBh1f8na15U79lNryefx3uJYsz2FauRADubXDMhcNoFciC3FsN41T8yT4j90hkypF7OLecELi9Hz0K9xuZ/tJjlPwr3sv+8LTNMxJC78zacYG8sYQsDPPKoEkioztNwkiL4sLcVpFp6JICX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025863; c=relaxed/simple;
-	bh=ff0GypvfYURFDDZH57v8VLFghGzFJF4RP4JpYZkGCvI=;
+	s=arc-20240116; t=1734025867; c=relaxed/simple;
+	bh=6i8g3MAAo5+zl6+YeVWW7HUuxYb7O784+GoqLOW/hwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGVbcM1LyGKdFuHVhG9UXrbMecCfCJVZvQ1JDLVHipKkpthmt4TfgWUGdLnDtcAESJT3uwkd8LvKA6zE4+HqH5A3I/QwCeTqv8th/o0uJwcwuML7pynCQv5mrHm/e9b0RjXQBL8JwIDPqX99oxG4ko3xcOqCsi0sIXJHrBozcXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znQ5eWXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jieNUY9uVMMyB9PLMxtr1Ua1cdLWOVUhgI+T1B3uw52Kzo2aDTY4gpHWujSsgdLD3jMb5YDgCvX/fRLWqBNVNnZUhfHcxZNtKAIVID5wcxcoOzFT4R/NnHcsmAhKyglZg9y0qs+1d/aQsLSZpPPqLTWstAhcp56OyKSf9/CS5wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKBaWWTg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znQ5eWXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F721C4CECE;
-	Thu, 12 Dec 2024 17:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKBaWWTg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726A7C4CECE;
+	Thu, 12 Dec 2024 17:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025862;
-	bh=ff0GypvfYURFDDZH57v8VLFghGzFJF4RP4JpYZkGCvI=;
+	s=korg; t=1734025865;
+	bh=6i8g3MAAo5+zl6+YeVWW7HUuxYb7O784+GoqLOW/hwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znQ5eWXcbFLYVbS7Cvb5aoEtfPqcDU327HKqrKusXVnNtY+VcZQy9IV3t2Gv6Caci
-	 xHmeyjD0Hbiz2dXPCv2RtRZJb/dLC3X+QLpEAGMrObCzf5bF2Ae91nvcZ6gbxl2KGU
-	 IC0EZjVsmyoH/ghcpZGRMBlOIkNS439nGhRGfB8o=
+	b=bKBaWWTgtqm803BYXJ/EsXcB6s2NYYfYGQDSfZTjVchsiijBFiCclbIb+SzHMRBeF
+	 ggvtvawoJpYi6X2Vb1FCSiKYfBKk5CNxNHUqCG17re2iEGFKyeEYeesTOEZ/yU1rEl
+	 hNHa9+6e+ToU8jJrdE+QmjJjwh3jaTCmy8ddsrYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Simon Horman <horms@kernel.org>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Parker Newman <pnewman@connecttech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 272/321] net: ethernet: fs_enet: Use %pa to format resource_size_t
-Date: Thu, 12 Dec 2024 16:03:10 +0100
-Message-ID: <20241212144240.723527666@linuxfoundation.org>
+Subject: [PATCH 5.4 306/321] misc: eeprom: eeprom_93cx6: Add quirk for extra read clock cycle
+Date: Thu, 12 Dec 2024 16:03:44 +0100
+Message-ID: <20241212144242.064946561@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,55 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Parker Newman <pnewman@connecttech.com>
 
-[ Upstream commit 45fe45fada261e1e83fce2a07fa22835aec1cf0a ]
+[ Upstream commit 7738a7ab9d12c5371ed97114ee2132d4512e9fd5 ]
 
-The correct format string for resource_size_t is %pa which
-acts on the address of the variable to be formatted [1].
+Add a quirk similar to eeprom_93xx46 to add an extra clock cycle before
+reading data from the EEPROM.
 
-[1] https://elixir.bootlin.com/linux/v6.11.3/source/Documentation/core-api/printk-formats.rst#L229
+The 93Cx6 family of EEPROMs output a "dummy 0 bit" between the writing
+of the op-code/address from the host to the EEPROM and the reading of
+the actual data from the EEPROM.
 
-Introduced by commit 9d9326d3bc0e ("phy: Change mii_bus id field to a string")
+More info can be found on page 6 of the AT93C46 datasheet (linked below).
+Similar notes are found in other 93xx6 datasheets.
 
-Flagged by gcc-14 as:
+In summary the read operation for a 93Cx6 EEPROM is:
+Write to EEPROM:	110[A5-A0]	(9 bits)
+Read from EEPROM:	0[D15-D0]	(17 bits)
 
-drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c: In function 'fs_mii_bitbang_init':
-drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c:126:46: warning: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Wformat=]
-  126 |         snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
-      |                                             ~^   ~~~~~~~~~
-      |                                              |      |
-      |                                              |      resource_size_t {aka long long unsigned int}
-      |                                              unsigned int
-      |                                             %llx
+Where:
+	110 is the start bit and READ OpCode
+	[A5-A0] is the address to read from
+	0 is a "dummy bit" preceding the actual data
+	[D15-D0] is the actual data.
 
-No functional change intended.
-Compile tested only.
+Looking at the READ timing diagrams in the 93Cx6 datasheets the dummy
+bit should be clocked out on the last address bit clock cycle meaning it
+should be discarded naturally.
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/netdev/711d7f6d-b785-7560-f4dc-c6aad2cce99@linux-m68k.org/
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20241014-net-pa-fmt-v1-2-dcc9afb8858b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+However, depending on the hardware configuration sometimes this dummy
+bit is not discarded. This is the case with Exar PCI UARTs which require
+an extra clock cycle between sending the address and reading the data.
+
+Datasheet: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-5193-SEEPROM-AT93C46D-Datasheet.pdf
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Parker Newman <pnewman@connecttech.com>
+Link: https://lore.kernel.org/r/0f23973efefccd2544705a0480b4ad4c2353e407.1727880931.git.pnewman@connecttech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/eeprom/eeprom_93cx6.c | 10 ++++++++++
+ include/linux/eeprom_93cx6.h       | 11 +++++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c b/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-index 21de56345503f..f743112730194 100644
---- a/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-+++ b/drivers/net/ethernet/freescale/fs_enet/mii-bitbang.c
-@@ -126,7 +126,7 @@ static int fs_mii_bitbang_init(struct mii_bus *bus, struct device_node *np)
- 	 * we get is an int, and the odds of multiple bitbang mdio buses
- 	 * is low enough that it's not worth going too crazy.
- 	 */
--	snprintf(bus->id, MII_BUS_ID_SIZE, "%x", res.start);
-+	snprintf(bus->id, MII_BUS_ID_SIZE, "%pa", &res.start);
+diff --git a/drivers/misc/eeprom/eeprom_93cx6.c b/drivers/misc/eeprom/eeprom_93cx6.c
+index 36a2eb837371b..6b42ba6705d3f 100644
+--- a/drivers/misc/eeprom/eeprom_93cx6.c
++++ b/drivers/misc/eeprom/eeprom_93cx6.c
+@@ -186,6 +186,11 @@ void eeprom_93cx6_read(struct eeprom_93cx6 *eeprom, const u8 word,
+ 	eeprom_93cx6_write_bits(eeprom, command,
+ 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width);
  
- 	data = of_get_property(np, "fsl,mdio-pin", &len);
- 	if (!data || len != 4)
++	if (has_quirk_extra_read_cycle(eeprom)) {
++		eeprom_93cx6_pulse_high(eeprom);
++		eeprom_93cx6_pulse_low(eeprom);
++	}
++
+ 	/*
+ 	 * Read the requested 16 bits.
+ 	 */
+@@ -252,6 +257,11 @@ void eeprom_93cx6_readb(struct eeprom_93cx6 *eeprom, const u8 byte,
+ 	eeprom_93cx6_write_bits(eeprom, command,
+ 		PCI_EEPROM_WIDTH_OPCODE + eeprom->width + 1);
+ 
++	if (has_quirk_extra_read_cycle(eeprom)) {
++		eeprom_93cx6_pulse_high(eeprom);
++		eeprom_93cx6_pulse_low(eeprom);
++	}
++
+ 	/*
+ 	 * Read the requested 8 bits.
+ 	 */
+diff --git a/include/linux/eeprom_93cx6.h b/include/linux/eeprom_93cx6.h
+index c860c72a921d0..3a485cc0e0fa0 100644
+--- a/include/linux/eeprom_93cx6.h
++++ b/include/linux/eeprom_93cx6.h
+@@ -11,6 +11,8 @@
+ 	Supported chipsets: 93c46, 93c56 and 93c66.
+  */
+ 
++#include <linux/bits.h>
++
+ /*
+  * EEPROM operation defines.
+  */
+@@ -34,6 +36,7 @@
+  * @register_write(struct eeprom_93cx6 *eeprom): handler to
+  * write to the eeprom register by using all reg_* fields.
+  * @width: eeprom width, should be one of the PCI_EEPROM_WIDTH_* defines
++ * @quirks: eeprom or controller quirks
+  * @drive_data: Set if we're driving the data line.
+  * @reg_data_in: register field to indicate data input
+  * @reg_data_out: register field to indicate data output
+@@ -50,6 +53,9 @@ struct eeprom_93cx6 {
+ 	void (*register_write)(struct eeprom_93cx6 *eeprom);
+ 
+ 	int width;
++	unsigned int quirks;
++/* Some EEPROMs require an extra clock cycle before reading */
++#define PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE	BIT(0)
+ 
+ 	char drive_data;
+ 	char reg_data_in;
+@@ -71,3 +77,8 @@ extern void eeprom_93cx6_wren(struct eeprom_93cx6 *eeprom, bool enable);
+ 
+ extern void eeprom_93cx6_write(struct eeprom_93cx6 *eeprom,
+ 			       u8 addr, u16 data);
++
++static inline bool has_quirk_extra_read_cycle(struct eeprom_93cx6 *eeprom)
++{
++	return eeprom->quirks & PCI_EEPROM_QUIRK_EXTRA_READ_CYCLE;
++}
 -- 
 2.43.0
 
