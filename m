@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D207223E6B;
-	Thu, 12 Dec 2024 16:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C33221D9F;
+	Thu, 12 Dec 2024 16:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020933; cv=none; b=gcGzOWq7HlTt5+opphgGcPyhXEOBnh/UsQHIhIr9T5BDO7Vc14T6o6q8c6uXJJ2+UPUYxddVXFgqVtTKlbmhkivRyecxXZesXqLiU6UuzmTeJgKtfLJuk25KT9RmZ6uRD2m6FuHoGCIbFqa0vWikmf1UwdGHF1IMjyANtlsjrvQ=
+	t=1734020937; cv=none; b=IRwIHj2WAjJBE3fO+Euw5ssw4DajfS0XjULoyzJ0WggILq5xGlyUpwtkpOqTbJD0qb7cyTPvM01mwhMZFDcv1n+mG5Vj07g9xK9sw1xK7W6ahGAuDqoMbP67IfNoxbaJtpwem+25B2pGWCaRWhNk5zoOMYmoaD7jx2b7Cua45Pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020933; c=relaxed/simple;
-	bh=pbfX+EyynPc1mANM+PSZ0J+eBqSmH01E7z2kUMNEpYg=;
+	s=arc-20240116; t=1734020937; c=relaxed/simple;
+	bh=3rv2AEn5T8I7kJa+UwOip674mHTPc/Jj08EQdIgKvGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bLmXlkedIi7QQTUZsbKmyCcFHM+jiTg3ud36jxP/i/X4Vn0LWAPc9c708bUDUBp7nCTRE+s6UoWW+sTt7BD/XsO23oNzDMfAq3FT16PpazJCYUDNbz0Lf13slKvBUFQMiPgPAicFggxfWYF5kQsK88m7wl/mfLsiLkN0rc94lIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7HGSQBd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ukDCup1e1q8KsOG9PpWxUQ8Rk498u+uD7+diK85YeHKEHvhnIjrbu+VErizZCCn3JfoXaeui7oeijWVRUypEaScdTL9Zm5yQZMIAvqkM12NzVhK6hQgmMuwmScsAT+yootjrZH43KKD/X/w8vkUdldIaiAJ55FV8neVq+FDQF+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nO2k/vfT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7HGSQBd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1DFC4CED0;
-	Thu, 12 Dec 2024 16:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nO2k/vfT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE0FC4CED0;
+	Thu, 12 Dec 2024 16:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020933;
-	bh=pbfX+EyynPc1mANM+PSZ0J+eBqSmH01E7z2kUMNEpYg=;
+	s=korg; t=1734020937;
+	bh=3rv2AEn5T8I7kJa+UwOip674mHTPc/Jj08EQdIgKvGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7HGSQBdq9HTrI/+XN7g36Q6k849Je/BRtYzXTU/ZBnWt7GHQL4KYLAmsKtLijDPt
-	 BtD5s1WBPyHdNQOgf6ATfE8/SMJy13BZ+65mpxP0IKE2CmjOE6uWwxhYd00vJjHp7F
-	 e7n93IjoVi/SVVniwvxp68oXImQ25hL4C40g2o10=
+	b=nO2k/vfTWnmtVonTBj6rkQZsO/EYELxrk1gSwbZdBfnGUDwZ0vNctkvdmFj+Wl4Lv
+	 cYVnFGVS5w1CRHL0hd1/0iwBGhEwcwkxeJD9wjpgOSm1QUJS3zx5pAn6O3SHWxc7va
+	 FAXkWdSXKvRU4U2AYyTQp3ugn3QccBKTPj0VbfFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 584/772] drm/bridge: it6505: Fix inverted reset polarity
-Date: Thu, 12 Dec 2024 15:58:49 +0100
-Message-ID: <20241212144414.070053452@linuxfoundation.org>
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	syzbot+e985d3026c4fd041578e@syzkaller.appspotmail.com,
+	Hugh Dickins <hughd@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 602/772] mm: page_alloc: move mlocked flag clearance into free_pages_prepare()
+Date: Thu, 12 Dec 2024 15:59:07 +0100
+Message-ID: <20241212144414.799806161@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,74 +55,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Roman Gushchin <roman.gushchin@linux.dev>
 
-[ Upstream commit c5f3f21728b069412e8072b8b1d0a3d9d3ab0265 ]
+commit 66edc3a5894c74f8887c8af23b97593a0dd0df4d upstream.
 
-The IT6505 bridge chip has a active low reset line. Since it is a
-"reset" and not an "enable" line, the GPIO should be asserted to
-put it in reset and deasserted to bring it out of reset during
-the power on sequence.
+Syzbot reported a bad page state problem caused by a page being freed
+using free_page() still having a mlocked flag at free_pages_prepare()
+stage:
 
-The polarity was inverted when the driver was first introduced, likely
-because the device family that was targeted had an inverting level
-shifter on the reset line.
+  BUG: Bad page state in process syz.5.504  pfn:61f45
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x61f45
+  flags: 0xfff00000080204(referenced|workingset|mlocked|node=0|zone=1|lastcpupid=0x7ff)
+  raw: 00fff00000080204 0000000000000000 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+  page dumped because: PAGE_FLAGS_CHECK_AT_FREE flag(s) set
+  page_owner tracks the page as allocated
+  page last allocated via order 0, migratetype Unmovable, gfp_mask 0x400dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO), pid 8443, tgid 8442 (syz.5.504), ts 201884660643, free_ts 201499827394
+   set_page_owner include/linux/page_owner.h:32 [inline]
+   post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1537
+   prep_new_page mm/page_alloc.c:1545 [inline]
+   get_page_from_freelist+0x303f/0x3190 mm/page_alloc.c:3457
+   __alloc_pages_noprof+0x292/0x710 mm/page_alloc.c:4733
+   alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
+   kvm_coalesced_mmio_init+0x1f/0xf0 virt/kvm/coalesced_mmio.c:99
+   kvm_create_vm virt/kvm/kvm_main.c:1235 [inline]
+   kvm_dev_ioctl_create_vm virt/kvm/kvm_main.c:5488 [inline]
+   kvm_dev_ioctl+0x12dc/0x2240 virt/kvm/kvm_main.c:5530
+   __do_compat_sys_ioctl fs/ioctl.c:1007 [inline]
+   __se_compat_sys_ioctl+0x510/0xc90 fs/ioctl.c:950
+   do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+   __do_fast_syscall_32+0xb4/0x110 arch/x86/entry/common.c:386
+   do_fast_syscall_32+0x34/0x80 arch/x86/entry/common.c:411
+   entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+  page last free pid 8399 tgid 8399 stack trace:
+   reset_page_owner include/linux/page_owner.h:25 [inline]
+   free_pages_prepare mm/page_alloc.c:1108 [inline]
+   free_unref_folios+0xf12/0x18d0 mm/page_alloc.c:2686
+   folios_put_refs+0x76c/0x860 mm/swap.c:1007
+   free_pages_and_swap_cache+0x5c8/0x690 mm/swap_state.c:335
+   __tlb_batch_free_encoded_pages mm/mmu_gather.c:136 [inline]
+   tlb_batch_pages_flush mm/mmu_gather.c:149 [inline]
+   tlb_flush_mmu_free mm/mmu_gather.c:366 [inline]
+   tlb_flush_mmu+0x3a3/0x680 mm/mmu_gather.c:373
+   tlb_finish_mmu+0xd4/0x200 mm/mmu_gather.c:465
+   exit_mmap+0x496/0xc40 mm/mmap.c:1926
+   __mmput+0x115/0x390 kernel/fork.c:1348
+   exit_mm+0x220/0x310 kernel/exit.c:571
+   do_exit+0x9b2/0x28e0 kernel/exit.c:926
+   do_group_exit+0x207/0x2c0 kernel/exit.c:1088
+   __do_sys_exit_group kernel/exit.c:1099 [inline]
+   __se_sys_exit_group kernel/exit.c:1097 [inline]
+   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1097
+   x64_sys_call+0x2634/0x2640 arch/x86/include/generated/asm/syscalls_64.h:232
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 8442 Comm: syz.5.504 Not tainted 6.12.0-rc6-syzkaller #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+  Call Trace:
+   <TASK>
+   __dump_stack lib/dump_stack.c:94 [inline]
+   dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
+   bad_page+0x176/0x1d0 mm/page_alloc.c:501
+   free_page_is_bad mm/page_alloc.c:918 [inline]
+   free_pages_prepare mm/page_alloc.c:1100 [inline]
+   free_unref_page+0xed0/0xf20 mm/page_alloc.c:2638
+   kvm_destroy_vm virt/kvm/kvm_main.c:1327 [inline]
+   kvm_put_kvm+0xc75/0x1350 virt/kvm/kvm_main.c:1386
+   kvm_vcpu_release+0x54/0x60 virt/kvm/kvm_main.c:4143
+   __fput+0x23f/0x880 fs/file_table.c:431
+   task_work_run+0x24f/0x310 kernel/task_work.c:239
+   exit_task_work include/linux/task_work.h:43 [inline]
+   do_exit+0xa2f/0x28e0 kernel/exit.c:939
+   do_group_exit+0x207/0x2c0 kernel/exit.c:1088
+   __do_sys_exit_group kernel/exit.c:1099 [inline]
+   __se_sys_exit_group kernel/exit.c:1097 [inline]
+   __ia32_sys_exit_group+0x3f/0x40 kernel/exit.c:1097
+   ia32_sys_call+0x2624/0x2630 arch/x86/include/generated/asm/syscalls_32.h:253
+   do_syscall_32_irqs_on arch/x86/entry/common.c:165 [inline]
+   __do_fast_syscall_32+0xb4/0x110 arch/x86/entry/common.c:386
+   do_fast_syscall_32+0x34/0x80 arch/x86/entry/common.c:411
+   entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+  RIP: 0023:0xf745d579
+  Code: Unable to access opcode bytes at 0xf745d54f.
+  RSP: 002b:00000000f75afd6c EFLAGS: 00000206 ORIG_RAX: 00000000000000fc
+  RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 0000000000000000
+  RDX: 0000000000000000 RSI: 00000000ffffff9c RDI: 00000000f744cff4
+  RBP: 00000000f717ae61 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000206 R12: 0000000000000000
+  R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+   </TASK>
 
-The MT8186 Corsola devices already have the IT6505 in their device tree,
-but the whole display pipeline is actually disabled and won't be enabled
-until some remaining issues are sorted out. The other known user is
-the MT8183 Kukui / Jacuzzi family; their device trees currently do not
-have the IT6505 included.
+The problem was originally introduced by commit b109b87050df ("mm/munlock:
+replace clear_page_mlock() by final clearance"): it was focused on
+handling pagecache and anonymous memory and wasn't suitable for lower
+level get_page()/free_page() API's used for example by KVM, as with this
+reproducer.
 
-Fix the polarity in the driver while there are no actual users.
+Fix it by moving the mlocked flag clearance down to free_page_prepare().
 
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241029095411.657616-1-wenst@chromium.org
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The bug itself if fairly old and harmless (aside from generating these
+warnings), aside from a small memory leak - "bad" pages are stopped from
+being allocated again.
+
+Link: https://lkml.kernel.org/r/20241106195354.270757-1-roman.gushchin@linux.dev
+Fixes: b109b87050df ("mm/munlock: replace clear_page_mlock() by final clearance")
+Signed-off-by: Roman Gushchin <roman.gushchin@linux.dev>
+Reported-by: syzbot+e985d3026c4fd041578e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6729f475.050a0220.701a.0019.GAE@google.com
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Hugh Dickins <hughd@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ mm/page_alloc.c |   15 +++++++++++++++
+ mm/swap.c       |   20 --------------------
+ 2 files changed, 15 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index aad750ad4798d..fbccf7835f700 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -2560,9 +2560,9 @@ static int it6505_poweron(struct it6505 *it6505)
- 	/* time interval between OVDD and SYSRSTN at least be 10ms */
- 	if (pdata->gpiod_reset) {
- 		usleep_range(10000, 20000);
--		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
--		usleep_range(1000, 2000);
- 		gpiod_set_value_cansleep(pdata->gpiod_reset, 1);
-+		usleep_range(1000, 2000);
-+		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
- 		usleep_range(25000, 35000);
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1388,12 +1388,27 @@ static __always_inline bool free_pages_p
+ 	int bad = 0;
+ 	bool skip_kasan_poison = should_skip_kasan_poison(page, fpi_flags);
+ 	bool init = want_init_on_free();
++	struct folio *folio = page_folio(page);
+ 
+ 	VM_BUG_ON_PAGE(PageTail(page), page);
+ 
+ 	trace_mm_page_free(page, order);
+ 	kmsan_free_page(page, order);
+ 
++	/*
++	 * In rare cases, when truncation or holepunching raced with
++	 * munlock after VM_LOCKED was cleared, Mlocked may still be
++	 * found set here.  This does not indicate a problem, unless
++	 * "unevictable_pgs_cleared" appears worryingly large.
++	 */
++	if (unlikely(folio_test_mlocked(folio))) {
++		long nr_pages = folio_nr_pages(folio);
++
++		__folio_clear_mlocked(folio);
++		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
++		count_vm_events(UNEVICTABLE_PGCLEARED, nr_pages);
++	}
++
+ 	if (unlikely(PageHWPoison(page)) && !order) {
+ 		/*
+ 		 * Do not let hwpoison pages hit pcplists/buddy
+--- a/mm/swap.c
++++ b/mm/swap.c
+@@ -88,14 +88,6 @@ static void __page_cache_release(struct
+ 		__folio_clear_lru_flags(folio);
+ 		unlock_page_lruvec_irqrestore(lruvec, flags);
  	}
+-	/* See comment on folio_test_mlocked in release_pages() */
+-	if (unlikely(folio_test_mlocked(folio))) {
+-		long nr_pages = folio_nr_pages(folio);
+-
+-		__folio_clear_mlocked(folio);
+-		zone_stat_mod_folio(folio, NR_MLOCK, -nr_pages);
+-		count_vm_events(UNEVICTABLE_PGCLEARED, nr_pages);
+-	}
+ }
  
-@@ -2589,7 +2589,7 @@ static int it6505_poweroff(struct it6505 *it6505)
+ static void __folio_put_small(struct folio *folio)
+@@ -1034,18 +1026,6 @@ void release_pages(struct page **pages,
+ 			__folio_clear_lru_flags(folio);
+ 		}
+ 
+-		/*
+-		 * In rare cases, when truncation or holepunching raced with
+-		 * munlock after VM_LOCKED was cleared, Mlocked may still be
+-		 * found set here.  This does not indicate a problem, unless
+-		 * "unevictable_pgs_cleared" appears worryingly large.
+-		 */
+-		if (unlikely(folio_test_mlocked(folio))) {
+-			__folio_clear_mlocked(folio);
+-			zone_stat_sub_folio(folio, NR_MLOCK);
+-			count_vm_event(UNEVICTABLE_PGCLEARED);
+-		}
+-
+ 		list_add(&folio->lru, &pages_to_free);
  	}
- 
- 	if (pdata->gpiod_reset)
--		gpiod_set_value_cansleep(pdata->gpiod_reset, 0);
-+		gpiod_set_value_cansleep(pdata->gpiod_reset, 1);
- 
- 	if (pdata->pwr18) {
- 		err = regulator_disable(pdata->pwr18);
-@@ -3050,7 +3050,7 @@ static int it6505_init_pdata(struct it6505 *it6505)
- 		return PTR_ERR(pdata->ovdd);
- 	}
- 
--	pdata->gpiod_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
-+	pdata->gpiod_reset = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(pdata->gpiod_reset)) {
- 		dev_err(dev, "gpiod_reset gpio not found");
- 		return PTR_ERR(pdata->gpiod_reset);
--- 
-2.43.0
-
+ 	if (lruvec)
 
 
