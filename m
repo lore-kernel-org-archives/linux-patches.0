@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE32F2080FC;
-	Thu, 12 Dec 2024 15:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DF62080FC;
+	Thu, 12 Dec 2024 15:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017038; cv=none; b=Y6MKQyHbyDSsfwBPvUZ0/i3Sj7baJACBswHgAwQe4gklKIaTiTvXrpehzMp7kILMvJN7CadNoJAxUbwgi5QsfzzNgD7e8k36ELe3Ntld2TK7VrfvE9a27aCLq58itP6RyHfQiEqtlv9rLVzR9qe8bW3Qdm+vFILkJFe2qZGuTnc=
+	t=1734017042; cv=none; b=tOxKZHaQNPlV9jn2qmFprcdA89v+paNbeM5gbCKcA33K8UrF7FX9FzBsaGvqPGPzrzoMwTK118g6ru8zg4iKUU4aRZxDO/hnMJWVCI684xq/AdzWVaU+hR6NM+yibwNb+9+3GvmfnAAvd7UPmnSJNRSmKx3eQzHkXf2zNtKJhmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017038; c=relaxed/simple;
-	bh=uYxU5l50oQjHKlDT80qsGx9ihPQCq3dnh/9S1pfY9IU=;
+	s=arc-20240116; t=1734017042; c=relaxed/simple;
+	bh=iGoN12MLWWHpGBrnP6UmWIMeJKC5IftWuosEudDSjz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyL+jVQllGUpZ7DBibnDFn3o48aHrpY+uKo8H7nB7mkemROErE81QExY0tQoR15JhbCjECDI9SQqRnD/hkFAHJghqfR2xH5dY+h/9TMMNdp9fVnaXiEqB6PBYKyr6OMGx7R4WKrf+/JttjWvqMz661sWWEQqbPpm1Yzn80xnvhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlYdpLZV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iqcethZXX0BDVU0PLJ9x6G5H9gQzOCNgT1UV+VWLy/+42iur5sZut88/Fa0R/M9v3FWTCzXoGTcqK1LQ74cxNf0+0paPLtZnc0/0tTfAFSaHJXSjeUUDYfVRHQCDZ866I1r1UPspr3kSHTd5UDhln1rChY4ZfYxTlOWFjEIykho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0W92gGH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlYdpLZV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1932DC4CECE;
-	Thu, 12 Dec 2024 15:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0W92gGH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91502C4CECE;
+	Thu, 12 Dec 2024 15:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017038;
-	bh=uYxU5l50oQjHKlDT80qsGx9ihPQCq3dnh/9S1pfY9IU=;
+	s=korg; t=1734017042;
+	bh=iGoN12MLWWHpGBrnP6UmWIMeJKC5IftWuosEudDSjz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlYdpLZVOOn4loEJtcJYP2KYqFufHL+XRpssSNMkhJLdlbEsrdPMVHRg9YkilyxhY
-	 4zd42csyPeQ9H8KvqhUII6tsfT0QBUDQYRENqZZg4Su3oMJWJnA3ImZJjziw2BFeAj
-	 b+PC6hk2jCkc7sYpg5ZILhEhnR3ZahE3SaUC6tA4=
+	b=H0W92gGHJ8cVKbCVRWVQwNsd4SqQjd8EmwJvMzMcMahil8yDK9/qR8sX9bZrcIZVc
+	 pN+OTtMRh0FBUXrc4qM4p7gwf6z+N7oGFgaBEXRRJxoZbtlvUJrIRSj0kXA57JH7I/
+	 OQZVzjxAzpfGqjFMn87vVnTPxQvVHxH/BVg7WGCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Uros Bizjak <ubizjak@gmail.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 357/466] tracing: Use atomic64_inc_return() in trace_clock_counter()
-Date: Thu, 12 Dec 2024 15:58:46 +0100
-Message-ID: <20241212144320.889259255@linuxfoundation.org>
+Subject: [PATCH 6.12 366/466] iommu/amd: Fix corruption when mapping large pages from 0
+Date: Thu, 12 Dec 2024 15:58:55 +0100
+Message-ID: <20241212144321.237726470@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,36 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit eb887c4567d1b0e7684c026fe7df44afa96589e6 ]
+[ Upstream commit e3a682eaf2af51a83f5313145ef592ce50fa787f ]
 
-Use atomic64_inc_return(&ref) instead of atomic64_add_return(1, &ref)
-to use optimized implementation and ease register pressure around
-the primitive for targets that implement optimized variant.
+If a page is mapped starting at 0 that is equal to or larger than can fit
+in the current mode (number of table levels) it results in corrupting the
+mapping as the following logic assumes the mode is correct for the page
+size being requested.
 
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20241007085651.48544-1-ubizjak@gmail.com
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+There are two issues here, the check if the address fits within the table
+uses the start address, it should use the last address to ensure that last
+byte of the mapping fits within the current table mode.
+
+The second is if the mapping is exactly the size of the full page table it
+has to add another level to instead hold a single IOPTE for the large
+size.
+
+Since both corner cases require a 0 IOVA to be hit and doesn't start until
+a page size of 2^48 it is unlikely to ever hit in a real system.
+
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/0-v1-27ab08d646a1+29-amd_0map_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_clock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/io_pgtable.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/trace_clock.c b/kernel/trace/trace_clock.c
-index 4702efb00ff21..4cb2ebc439be6 100644
---- a/kernel/trace/trace_clock.c
-+++ b/kernel/trace/trace_clock.c
-@@ -154,5 +154,5 @@ static atomic64_t trace_counter;
+diff --git a/drivers/iommu/amd/io_pgtable.c b/drivers/iommu/amd/io_pgtable.c
+index 804b788f3f167..f3399087859fd 100644
+--- a/drivers/iommu/amd/io_pgtable.c
++++ b/drivers/iommu/amd/io_pgtable.c
+@@ -118,6 +118,7 @@ static void free_sub_pt(u64 *root, int mode, struct list_head *freelist)
   */
- u64 notrace trace_clock_counter(void)
+ static bool increase_address_space(struct amd_io_pgtable *pgtable,
+ 				   unsigned long address,
++				   unsigned int page_size_level,
+ 				   gfp_t gfp)
  {
--	return atomic64_add_return(1, &trace_counter);
-+	return atomic64_inc_return(&trace_counter);
- }
+ 	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
+@@ -133,7 +134,8 @@ static bool increase_address_space(struct amd_io_pgtable *pgtable,
+ 
+ 	spin_lock_irqsave(&domain->lock, flags);
+ 
+-	if (address <= PM_LEVEL_SIZE(pgtable->mode))
++	if (address <= PM_LEVEL_SIZE(pgtable->mode) &&
++	    pgtable->mode - 1 >= page_size_level)
+ 		goto out;
+ 
+ 	ret = false;
+@@ -163,18 +165,21 @@ static u64 *alloc_pte(struct amd_io_pgtable *pgtable,
+ 		      gfp_t gfp,
+ 		      bool *updated)
+ {
++	unsigned long last_addr = address + (page_size - 1);
+ 	struct io_pgtable_cfg *cfg = &pgtable->pgtbl.cfg;
+ 	int level, end_lvl;
+ 	u64 *pte, *page;
+ 
+ 	BUG_ON(!is_power_of_2(page_size));
+ 
+-	while (address > PM_LEVEL_SIZE(pgtable->mode)) {
++	while (last_addr > PM_LEVEL_SIZE(pgtable->mode) ||
++	       pgtable->mode - 1 < PAGE_SIZE_LEVEL(page_size)) {
+ 		/*
+ 		 * Return an error if there is no memory to update the
+ 		 * page-table.
+ 		 */
+-		if (!increase_address_space(pgtable, address, gfp))
++		if (!increase_address_space(pgtable, last_addr,
++					    PAGE_SIZE_LEVEL(page_size), gfp))
+ 			return NULL;
+ 	}
+ 
 -- 
 2.43.0
 
