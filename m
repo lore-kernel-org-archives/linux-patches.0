@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3A82F44;
-	Thu, 12 Dec 2024 17:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117631F2381;
+	Thu, 12 Dec 2024 17:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023284; cv=none; b=MQ3Y+2tWqS5ygOGye9yuzcklGsS8qBlUMqzvtAE1IYbmIzdokicLcCrBOErFxTZe5IKv6/cudEGaUfgZotH+XQ0HwclbB7kticzHf8n5DovuqLHeLGlbAZhScEZwn6DQcZ120IgLHhRSJ1Bccya1fOM4mLGwOe9l8vyEqW8MF2U=
+	t=1734023287; cv=none; b=TuZhVOlBfPVx6UYsBgej2k1aAKlB4oMqMf5GEjKAG9usTfOfafzkq9djTshBxcuyRbPDsWIh0yAveVG6FYWdCu0m1PLCovX4JQK6y5JIcOPCB/cO+wO3Bx78OS//nQ8k66QRA5lrR9L4jSFlMVu3+QRPUbuNAsqVB3A53QN1yMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023284; c=relaxed/simple;
-	bh=rRh5oBnR9t95VW+7TWamTONGSSZp3DveQnNNHinv8AA=;
+	s=arc-20240116; t=1734023287; c=relaxed/simple;
+	bh=WWW9vEybyvAOhK6AGDNpjBSAVjdAAOhP+AaT0vw2H28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GEWWSFnkuKh19FaZr6/FymbhBn5yXCzWxVHxsbUWC9OqIzqllZg03tp5aaEOz4IfgtQMXCdgvs8IleQCVN8u6T5H9IXOAbgsL879Np7JePojf0Vi670fzYMq3YtOnofXHPHkbJIxtXDTC176nPwtDNHH5TfrPckqQW/MySuUZhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sSFFaDZ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IetFfX1m9Bxj6OYl4HrFxMcxjVqjAGmUhfOLFr/R7p+ArrcBQd+hprAvX/pVWwO6okOSJmuOdGEO8UKYH6DuC8uvIH6B1lZ57Lch7xnjdkVHA/xj0CLqWtvh88p+QzfxtlJcf1NSk1f6f6Lsywl7W22uOJi84n0EAXvwH3O21hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtQML4n+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sSFFaDZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FB8C4CECE;
-	Thu, 12 Dec 2024 17:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtQML4n+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86439C4CECE;
+	Thu, 12 Dec 2024 17:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023283;
-	bh=rRh5oBnR9t95VW+7TWamTONGSSZp3DveQnNNHinv8AA=;
+	s=korg; t=1734023286;
+	bh=WWW9vEybyvAOhK6AGDNpjBSAVjdAAOhP+AaT0vw2H28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sSFFaDZ7YRwAmSh2iD/KpXJMphSOc+rRdp6IOcHb/u2jR2mArTdXMKLrGYESymrwz
-	 vsJ95S5uoTc5CyF/FdyuT8AlCpXJL77w8XIWwISP1McmNatU22ZTRCN4o5Oevxixjx
-	 8bS43upjaLgjBLBoHNv4Mw6XbHwV+sl+LKszetQ8=
+	b=xtQML4n+/bFqsd5RkXZkxyOBtaJvrX4Tx114uRXeIyMVuYDUsYPVgErcSQtm/znN5
+	 NVsx7DdacfFYY3DdGB7YOXNBgHRdHhUOkpnGv/kPruy766xQiQ+fDFxZ5x+u6cqT+6
+	 xwysg0Y9YXTKyUW6v+/sRHJCm+sxGQ/wbClC6UNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
+	Anil Gurumurthy <agurumurthy@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 454/565] scsi: qla2xxx: Fix NVMe and NPIV connect issue
-Date: Thu, 12 Dec 2024 16:00:49 +0100
-Message-ID: <20241212144329.669962861@linuxfoundation.org>
+Subject: [PATCH 5.15 455/565] scsi: qla2xxx: Supported speed displayed incorrectly for VPorts
+Date: Thu, 12 Dec 2024 16:00:50 +0100
+Message-ID: <20241212144329.710619853@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,46 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Anil Gurumurthy <agurumurthy@marvell.com>
 
-commit 4812b7796c144f63a1094f79a5eb8fbdad8d7ebc upstream.
+commit e4e268f898c8a08f0a1188677e15eadbc06e98f6 upstream.
 
-NVMe controller fails to send connect command due to failure to locate
-hw context buffer for NVMe queue 0 (blk_mq_hw_ctx, hctx_idx=0). The
-cause of the issue is NPIV host did not initialize the vha->irq_offset
-field.  This field is given to blk-mq (blk_mq_pci_map_queues) to help
-locate the beginning of IO Queues which in turn help locate NVMe queue
-0.
+The fc_function_template for vports was missing the
+.show_host_supported_speeds. The base port had the same.
 
-Initialize this field to allow NVMe to work properly with NPIV host.
-
- kernel: nvme nvme5: Connect command failed, errno: -18
- kernel: nvme nvme5: qid 0: secure concatenation is not supported
- kernel: nvme nvme5: NVME-FC{5}: create_assoc failed, assoc_id 2e9100 ret 401
- kernel: nvme nvme5: NVME-FC{5}: reset: Reconnect attempt failed (401)
- kernel: nvme nvme5: NVME-FC{5}: Reconnect attempt in 2 seconds
+Add .show_host_supported_speeds to the vport template as well.
 
 Cc: stable@vger.kernel.org
-Fixes: f0783d43dde4 ("scsi: qla2xxx: Use correct number of vectors for online CPUs")
-Signed-off-by: Quinn Tran <qutran@marvell.com>
+Fixes: 2c3dfe3f6ad8 ("[SCSI] qla2xxx: add support for NPIV")
+Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-6-njavali@marvell.com
+Link: https://lore.kernel.org/r/20241115130313.46826-7-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_mid.c |    1 +
+ drivers/scsi/qla2xxx/qla_attr.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/qla2xxx/qla_mid.c
-+++ b/drivers/scsi/qla2xxx/qla_mid.c
-@@ -515,6 +515,7 @@ qla24xx_create_vhost(struct fc_vport *fc
- 		return(NULL);
- 	}
+--- a/drivers/scsi/qla2xxx/qla_attr.c
++++ b/drivers/scsi/qla2xxx/qla_attr.c
+@@ -3303,6 +3303,7 @@ struct fc_function_template qla2xxx_tran
+ 	.show_host_node_name = 1,
+ 	.show_host_port_name = 1,
+ 	.show_host_supported_classes = 1,
++	.show_host_supported_speeds = 1,
  
-+	vha->irq_offset = QLA_BASE_VECTORS;
- 	host = vha->host;
- 	fc_vport->dd_data = vha;
- 	/* New host info */
+ 	.get_host_port_id = qla2x00_get_host_port_id,
+ 	.show_host_port_id = 1,
 
 
