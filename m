@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2E415696E;
-	Thu, 12 Dec 2024 17:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6366B22333D;
+	Thu, 12 Dec 2024 17:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024903; cv=none; b=MKWmh716Unu+h1X/FTUifVyQXLV1N6f4hsKYmYhoviAdCN1IdiWNVnJRQNccGCY2wlj4X9c8JOFZAkzMuOxjiUnsimneLX2dJbfK+KOJCvJFqbwXX7l1ik88CZqIbXXSARbOriFAF2VGqK1zlZkcPhuES6aD4G7jTxvg4s4Ujwc=
+	t=1734024906; cv=none; b=fUIpdAJi59sa+pAbJzIA5YXzOExM5Eht3f2Z6k08Q5X1NJ6GYErcMkm2POWX/vZFN/yMCB/hYum2ckMXGJyGuGxItsKHtJSDi6ZQeNTluA3eZFH1BPqST2YKtfwwKOlWoXxFqa3ZCesjwaHcP4/jo21jMu6CvfTC9qjz5x1+4Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024903; c=relaxed/simple;
-	bh=rHm2b6cUZgut5ta8lGN8+t6PHnMpCP8HZu0ch1lShY8=;
+	s=arc-20240116; t=1734024906; c=relaxed/simple;
+	bh=fz5IMC84DK+dcEP35jfxY8vBLno0juO6nwODlHXHLLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jruqbyibeGO/IhoR4mIqjuxY/WKwd3KKqUT4YGOT0CTDeJzdijU7HLeNaheTUuMGzsQhW6wWV+EwQYJyHcpmI3ojf/NetCakpCLjIY6tR8TC2YOEOypZWhiyxmzkYn2Z2O57+pNvBfUUGOCDIs+JyDmiOAwZH5J29k73d38JsFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyKyiq0f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYwBiIX1nkq7t1Wbrc/0ap4tfNd5i2tyaPYA1Bp+iZmd6OvmYt9oXibL928cQrDxsoHp8F+E3f6rGUOgj6cjNTlDO1xQjy1rLegfqvjNx7vvqbzVoiq4zJ7E7lbfkAYaultuD75or5kXY1gIGwxbx5xCBS4rWBeRjOTjibIFI30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m3DpfODW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyKyiq0f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D05C4CECE;
-	Thu, 12 Dec 2024 17:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m3DpfODW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D92AAC4CED0;
+	Thu, 12 Dec 2024 17:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024903;
-	bh=rHm2b6cUZgut5ta8lGN8+t6PHnMpCP8HZu0ch1lShY8=;
+	s=korg; t=1734024906;
+	bh=fz5IMC84DK+dcEP35jfxY8vBLno0juO6nwODlHXHLLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyKyiq0fVx1eLxtXmBHba66hEVYWYv0q5q2p4WNxsFB+pPVtu2/EuVf/cb8gxkPOQ
-	 GnFc6K4pAXE0p37Nlvr5j5CwU5B/dYc66FY+uefgfTMQehXkR5UjzqqKb3vw0RtmIK
-	 3Pr3fSGd64ALp6z/ygN6dLHRehC9SnSgZcpZCKIM=
+	b=m3DpfODWNjRx8G9SDm83czqfhmNCsY3RpUfD8DqAP6OzMIv65NAk/JiW2nwJeyxFY
+	 MmbfZ/9aXjAjI0MQ2jjzuueSdjq5UpwvDRwIA55f3YMrdlQeeVQ4+0TrTzsF5vPXZ6
+	 kemlXVEK1LxMKwFlnB+vlTQhubN4icUYzS+Mvw4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunkun Jiang <jiangkunkun@huawei.com>,
-	Jing Zhang <jingzhangos@google.com>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 5.10 443/459] KVM: arm64: vgic-its: Add a data length check in vgic_its_save_*
-Date: Thu, 12 Dec 2024 16:03:01 +0100
-Message-ID: <20241212144311.262591606@linuxfoundation.org>
+	Zhang Zekun <zhangzekun11@huawei.com>
+Subject: [PATCH 5.10 452/459] Revert "drm/amdgpu: add missing size check in amdgpu_debugfs_gprwave_read()"
+Date: Thu, 12 Dec 2024 16:03:10 +0100
+Message-ID: <20241212144311.626966237@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,145 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jing Zhang <jingzhangos@google.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-commit 7fe28d7e68f92cc3d0668b8f2fbdf5c303ac3022 upstream.
+This reverts commit 17f5f18085acb5e9d8d13d84a4e12bb3aff2bd64.
 
-In all the vgic_its_save_*() functinos, they do not check whether
-the data length is 8 bytes before calling vgic_write_guest_lock.
-This patch adds the check. To prevent the kernel from being blown up
-when the fault occurs, KVM_BUG_ON() is used. And the other BUG_ON()s
-are replaced together.
+The origin mainline patch fix a buffer overflow issue in
+amdgpu_debugfs_gprwave_read(), but it has not been introduced in kernel
+6.1 and older kernels. This patch add a check in a wrong function in the
+same file.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Kunkun Jiang <jiangkunkun@huawei.com>
-[Jing: Update with the new entry read/write helpers]
-Signed-off-by: Jing Zhang <jingzhangos@google.com>
-Link: https://lore.kernel.org/r/20241107214137.428439-4-jingzhangos@google.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |   20 ++++++++------------
- arch/arm64/kvm/vgic/vgic.h     |   24 ++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -2135,7 +2135,6 @@ static int scan_its_table(struct vgic_it
- static int vgic_its_save_ite(struct vgic_its *its, struct its_device *dev,
- 			      struct its_ite *ite, gpa_t gpa, int ite_esz)
- {
--	struct kvm *kvm = its->dev->kvm;
- 	u32 next_offset;
- 	u64 val;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
+@@ -396,7 +396,7 @@ static ssize_t amdgpu_debugfs_regs_pcie_
+ 	ssize_t result = 0;
+ 	int r;
  
-@@ -2144,7 +2143,8 @@ static int vgic_its_save_ite(struct vgic
- 	       ((u64)ite->irq->intid << KVM_ITS_ITE_PINTID_SHIFT) |
- 		ite->collection->collection_id;
- 	val = cpu_to_le64(val);
--	return kvm_write_guest_lock(kvm, gpa, &val, ite_esz);
-+
-+	return vgic_its_write_entry_lock(its, gpa, val, ite_esz);
- }
+-	if (size > 4096 || size & 0x3 || *pos & 0x3)
++	if (size & 0x3 || *pos & 0x3)
+ 		return -EINVAL;
  
- /**
-@@ -2280,7 +2280,6 @@ static int vgic_its_restore_itt(struct v
- static int vgic_its_save_dte(struct vgic_its *its, struct its_device *dev,
- 			     gpa_t ptr, int dte_esz)
- {
--	struct kvm *kvm = its->dev->kvm;
- 	u64 val, itt_addr_field;
- 	u32 next_offset;
- 
-@@ -2291,7 +2290,8 @@ static int vgic_its_save_dte(struct vgic
- 	       (itt_addr_field << KVM_ITS_DTE_ITTADDR_SHIFT) |
- 		(dev->num_eventid_bits - 1));
- 	val = cpu_to_le64(val);
--	return kvm_write_guest_lock(kvm, ptr, &val, dte_esz);
-+
-+	return vgic_its_write_entry_lock(its, ptr, val, dte_esz);
- }
- 
- /**
-@@ -2471,7 +2471,8 @@ static int vgic_its_save_cte(struct vgic
- 	       ((u64)collection->target_addr << KVM_ITS_CTE_RDBASE_SHIFT) |
- 	       collection->collection_id);
- 	val = cpu_to_le64(val);
--	return kvm_write_guest_lock(its->dev->kvm, gpa, &val, esz);
-+
-+	return vgic_its_write_entry_lock(its, gpa, val, esz);
- }
- 
- static int vgic_its_restore_cte(struct vgic_its *its, gpa_t gpa, int esz)
-@@ -2482,8 +2483,7 @@ static int vgic_its_restore_cte(struct v
- 	u64 val;
- 	int ret;
- 
--	BUG_ON(esz > sizeof(val));
--	ret = kvm_read_guest_lock(kvm, gpa, &val, esz);
-+	ret = vgic_its_read_entry_lock(its, gpa, &val, esz);
- 	if (ret)
- 		return ret;
- 	val = le64_to_cpu(val);
-@@ -2517,7 +2517,6 @@ static int vgic_its_save_collection_tabl
- 	u64 baser = its->baser_coll_table;
- 	gpa_t gpa = GITS_BASER_ADDR_48_to_52(baser);
- 	struct its_collection *collection;
--	u64 val;
- 	size_t max_size, filled = 0;
- 	int ret, cte_esz = abi->cte_esz;
- 
-@@ -2541,10 +2540,7 @@ static int vgic_its_save_collection_tabl
- 	 * table is not fully filled, add a last dummy element
- 	 * with valid bit unset
- 	 */
--	val = 0;
--	BUG_ON(cte_esz > sizeof(val));
--	ret = kvm_write_guest_lock(its->dev->kvm, gpa, &val, cte_esz);
--	return ret;
-+	return vgic_its_write_entry_lock(its, gpa, 0, cte_esz);
- }
- 
- /**
---- a/arch/arm64/kvm/vgic/vgic.h
-+++ b/arch/arm64/kvm/vgic/vgic.h
-@@ -6,6 +6,7 @@
- #define __KVM_ARM_VGIC_NEW_H__
- 
- #include <linux/irqchip/arm-gic-common.h>
-+#include <asm/kvm_mmu.h>
- 
- #define PRODUCT_ID_KVM		0x4b	/* ASCII code K */
- #define IMPLEMENTER_ARM		0x43b
-@@ -126,6 +127,29 @@ static inline bool vgic_irq_is_multi_sgi
- 	return vgic_irq_get_lr_count(irq) > 1;
- }
- 
-+static inline int vgic_its_read_entry_lock(struct vgic_its *its, gpa_t eaddr,
-+					   u64 *eval, unsigned long esize)
-+{
-+	struct kvm *kvm = its->dev->kvm;
-+
-+	if (KVM_BUG_ON(esize != sizeof(*eval), kvm))
-+		return -EINVAL;
-+
-+	return kvm_read_guest_lock(kvm, eaddr, eval, esize);
-+
-+}
-+
-+static inline int vgic_its_write_entry_lock(struct vgic_its *its, gpa_t eaddr,
-+					    u64 eval, unsigned long esize)
-+{
-+	struct kvm *kvm = its->dev->kvm;
-+
-+	if (KVM_BUG_ON(esize != sizeof(eval), kvm))
-+		return -EINVAL;
-+
-+	return kvm_write_guest_lock(kvm, eaddr, &eval, esize);
-+}
-+
- /*
-  * This struct provides an intermediate representation of the fields contained
-  * in the GICH_VMCR and ICH_VMCR registers, such that code exporting the GIC
+ 	r = pm_runtime_get_sync(adev_to_drm(adev)->dev);
 
 
