@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECE920A5EE;
-	Thu, 12 Dec 2024 17:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAA913CA81;
+	Thu, 12 Dec 2024 17:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025295; cv=none; b=G+dBV5PIHexNfr6oxXTWfWnBHFG1KI5OOtJ2NJ3f8+IxaASCifOgq3L17/L6bjUujXSLLoY+xLqcSrULzfPhcBTWR44vRSnDrryFkyrwni/34tOMXaw6SvnIgLiQ+FPfUrIBkPYygFyVr1PdPPJtqPdGAl1/BMmBYqqWN/2tkOc=
+	t=1734025297; cv=none; b=b9HnzM79+vjgqSfRRdFiYrP6htQLoBjbbo5H9jpV8UzPfd1O5QW8KL/tbvVEPhq8R/CfILYKS3zPqMvmFzK70ljd5bOQZ6hj/QQd/TDfHqCWYjnOnd29AkLCryOh3YqzdMw8uF3WLmoWw3/ZdxoVWC2U48jY8DnWaapGN6Qj7PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025295; c=relaxed/simple;
-	bh=xolOzt0IdWTZmyNNGA7WCis2Ko/MBA7/ewNn4KGv/8I=;
+	s=arc-20240116; t=1734025297; c=relaxed/simple;
+	bh=5K5lxpcui7L8JC+Tni81wG8azZrEX2w0Rr9LrcTmL2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EBLntor5bsoam63jxiEp7fLuO7X0fWMUdZXWFiQVSX9+mkbUrcDP8wPQQ4mZ3+uECqLxt/+edRVRl1K1kmGCpHiMz9ROk380eOZvXvo26ckNwbqVtsOTO8JuCqajmBnLDlp4qFLQHICK7/qTAvTt/Zam1/2my9GaC/AK7wj8NiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDolz2w2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yf49DftmhA+PRGx0nAEzzxQQOHUkChTIqTlD2c9Aw2gvKqRsdZdBLyCXRYkScAfhUJgEieyDtLCfePWNOeLw53HmucJN1NtJqSbH0YlrGRHmHv2Ny4YASeGZVDBX+n7feO5V2w3AiYLsOvjVXlqXI1IiP6/L7s9eM37EW3qkAT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1cexMjhx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDolz2w2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8593BC4CECE;
-	Thu, 12 Dec 2024 17:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1cexMjhx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767BAC4CECE;
+	Thu, 12 Dec 2024 17:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025293;
-	bh=xolOzt0IdWTZmyNNGA7WCis2Ko/MBA7/ewNn4KGv/8I=;
+	s=korg; t=1734025296;
+	bh=5K5lxpcui7L8JC+Tni81wG8azZrEX2w0Rr9LrcTmL2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDolz2w2H6T/lqa+Mc86a/8uLf6XIeyMsBzjIOHwuNSUfTJ8GDmzlMrXH30TlQ3aF
-	 CUeNmGrgYJWCPNtNpqdYmtSMyz70T5GsHni7SleAuR0NU57Z4OnKbGFRVUBryPwJLo
-	 6CBfkUImNeOLc3z/F/AihQmZGM3vSSoGNGnoWOug=
+	b=1cexMjhxMEEsiWHnSJLEHL9iIMwrgcOp9Eeh4yJgS6PzD5il0H/zVEwKFwhKVdUpr
+	 9kNaNoRgg0Nz89EdChgsvKqUaiuyyr0s7hhN0qAYDnau50uD8lvCwY6wkQ1kC9PkYG
+	 ZyikSwplyMtso1IG5wM1QTOHdi2EFXg+sQE+Ihos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 122/321] NFSD: Prevent NULL dereference in nfsd4_process_cb_update()
-Date: Thu, 12 Dec 2024 16:00:40 +0100
-Message-ID: <20241212144234.797653042@linuxfoundation.org>
+Subject: [PATCH 5.4 123/321] NFSD: Cap the number of bytes copied by nfs4_reset_recoverydir()
+Date: Thu, 12 Dec 2024 16:00:41 +0100
+Message-ID: <20241212144234.836544216@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -53,33 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1e02c641c3a43c88cecc08402000418e15578d38 ]
+[ Upstream commit f64ea4af43161bb86ffc77e6aeb5bcf5c3229df0 ]
 
-@ses is initialized to NULL. If __nfsd4_find_backchannel() finds no
-available backchannel session, setup_callback_client() will try to
-dereference @ses and segfault.
+It's only current caller already length-checks the string, but let's
+be safe.
 
-Fixes: dcbeaa68dbbd ("nfsd4: allow backchannel recovery")
+Fixes: 0964a3d3f1aa ("[PATCH] knfsd: nfsd4 reboot dirname fix")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4callback.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4recover.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 771733396eab2..51462f7958b3c 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -1229,6 +1229,8 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
- 		ses = c->cn_session;
+diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
+index 1abddad2b7ae7..594db9085b24a 100644
+--- a/fs/nfsd/nfs4recover.c
++++ b/fs/nfsd/nfs4recover.c
+@@ -666,7 +666,8 @@ nfs4_reset_recoverydir(char *recdir)
+ 		return status;
+ 	status = -ENOTDIR;
+ 	if (d_is_dir(path.dentry)) {
+-		strcpy(user_recovery_dirname, recdir);
++		strscpy(user_recovery_dirname, recdir,
++			sizeof(user_recovery_dirname));
+ 		status = 0;
  	}
- 	spin_unlock(&clp->cl_lock);
-+	if (!c)
-+		return;
- 
- 	err = setup_callback_client(clp, &conn, ses);
- 	if (err) {
+ 	path_put(&path);
 -- 
 2.43.0
 
