@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD2222145E;
-	Thu, 12 Dec 2024 17:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AC9222D44;
+	Thu, 12 Dec 2024 17:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024587; cv=none; b=mtNQ6BvgbawCANCCN27ZuObK2MerqyBiWMKrauP5W9V0AhGr8QdcnUVpAY2F7PhnBr8Y90t+an30UCr2K0Ljwn23Vwsx6be+Pca8sngOQBIZCGHU2g6Pc7p1e06qaN4ZrX/SD8EyPikW4qRGQ7zmg6xHW0yBQYGvTaGD0SBImBA=
+	t=1734024590; cv=none; b=PKXoxxF/QVFGnpULkEaOqqJzsqafdr+vsWgCMKsHqsyecostxTIFjswQEMg1xiJCE47yXN3TIjsD61KgicO7RD25gaB/txld+u/YU38H985xA5ZtQwwhCdJvyUiRJtVG9d68t1ZjLVBWztJ7n/L6BHbXEvDHsJDf+rQvSQ9G8xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024587; c=relaxed/simple;
-	bh=85oqSZindcOdyDkhpR3gmtFDSa6sn3R4+YSBS1QQqko=;
+	s=arc-20240116; t=1734024590; c=relaxed/simple;
+	bh=PDhg8uALGT0fwm/T0SG9rxzXcIUV9sUbD9Kzy5MVNbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XjGwyDuekQjwxcYrL0qtml7G0rvrWZPu1HFmDZQ6fPTF86444xx2BeEKpQVo6s1qKQF974iMG31bWIDbOGcqsFVC2N+qSdI+GdwRWWEaiX56szURU9IlGyV2Cy2vl3+TgCOxK0YeEx4Ebht+E977VugKN1fv6V07t5oVWmJ8kJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blKZT9CK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SXxkUOi1UPo1OPJp+Fq3mGBkkgdcDF1dlBelvFLSGy4MvmyKcDIgaixSbpOHVw9HwYo7Vq/N45AnqU4whh7b2m0qjK0qlokAZ29e3HIllfhnhUSIiII0nh3ov2Qx7Hv1K9yYVLlrdn1vrdF0LO0uFToRZotfzNANGSnQ+IM+9z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=suonoUHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blKZT9CK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B751C4CECE;
-	Thu, 12 Dec 2024 17:29:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="suonoUHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD4AC4CECE;
+	Thu, 12 Dec 2024 17:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024586;
-	bh=85oqSZindcOdyDkhpR3gmtFDSa6sn3R4+YSBS1QQqko=;
+	s=korg; t=1734024589;
+	bh=PDhg8uALGT0fwm/T0SG9rxzXcIUV9sUbD9Kzy5MVNbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blKZT9CKGXlwATbGbDuIx0O1BVNS0xGAZDa3rVn2rH9wcIXIzgRNPyy8LEqL7NEVS
-	 C9mYg2U7XxhjVrZ/Wd6ptdZ29gsqwSrgnss33P0y/U9MmpRltWU973dzJJI+2z5Vcr
-	 yH2yXIQSsoEdfrq0y2Ou+ZjzseTcYlnAznKvgPCw=
+	b=suonoUHefqLXK0HXrQS5nQYQnpzTor4ebw3C9LQHqBwEV5Y37VruKiHYyNAF5AiiS
+	 V2JW1xncxlMRbfdphJgkAIUlazAZSauB5h2/7VbKAHYcNkAGnOfIZM28xe8a55tOnT
+	 WqrUQJ1etKUjhK/73+MxVw5F16JShxz4WybgrVLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 344/459] geneve: do not assume mac header is set in geneve_xmit_skb()
-Date: Thu, 12 Dec 2024 16:01:22 +0100
-Message-ID: <20241212144307.252177323@linuxfoundation.org>
+	Alexandru Ardelean <aardelean@baylibre.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 316/459] util_macros.h: fix/rework find_closest() macros
+Date: Thu, 12 Dec 2024 16:00:54 +0100
+Message-ID: <20241212144306.132980652@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,85 +51,188 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alexandru Ardelean <aardelean@baylibre.com>
 
-[ Upstream commit 8588c99c7d47448fcae39e3227d6e2bb97aad86d ]
+commit bc73b4186736341ab5cd2c199da82db6e1134e13 upstream.
 
-We should not assume mac header is set in output path.
+A bug was found in the find_closest() (find_closest_descending() is also
+affected after some testing), where for certain values with small
+progressions, the rounding (done by averaging 2 values) causes an
+incorrect index to be returned.  The rounding issues occur for
+progressions of 1, 2 and 3.  It goes away when the progression/interval
+between two values is 4 or larger.
 
-Use skb_eth_hdr() instead of eth_hdr() to fix the issue.
+It's particularly bad for progressions of 1.  For example if there's an
+array of 'a = { 1, 2, 3 }', using 'find_closest(2, a ...)' would return 0
+(the index of '1'), rather than returning 1 (the index of '2').  This
+means that for exact values (with a progression of 1), find_closest() will
+misbehave and return the index of the value smaller than the one we're
+searching for.
 
-sysbot reported the following :
+For progressions of 2 and 3, the exact values are obtained correctly; but
+values aren't approximated correctly (as one would expect).  Starting with
+progressions of 4, all seems to be good (one gets what one would expect).
 
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 skb_mac_header include/linux/skbuff.h:3052 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 eth_hdr include/linux/if_ether.h:24 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit_skb drivers/net/geneve.c:898 [inline]
- WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
-Modules linked in:
-CPU: 0 UID: 0 PID: 11635 Comm: syz.4.1423 Not tainted 6.12.0-syzkaller-10296-gaaf20f870da0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
- RIP: 0010:skb_mac_header include/linux/skbuff.h:3052 [inline]
- RIP: 0010:eth_hdr include/linux/if_ether.h:24 [inline]
- RIP: 0010:geneve_xmit_skb drivers/net/geneve.c:898 [inline]
- RIP: 0010:geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
-Code: 21 c6 02 e9 35 d4 ff ff e8 a5 48 4c fb 90 0f 0b 90 e9 fd f5 ff ff e8 97 48 4c fb 90 0f 0b 90 e9 d8 f5 ff ff e8 89 48 4c fb 90 <0f> 0b 90 e9 41 e4 ff ff e8 7b 48 4c fb 90 0f 0b 90 e9 cd e7 ff ff
-RSP: 0018:ffffc90003b2f870 EFLAGS: 00010283
-RAX: 000000000000037a RBX: 000000000000ffff RCX: ffffc9000dc3d000
-RDX: 0000000000080000 RSI: ffffffff86428417 RDI: 0000000000000003
-RBP: ffffc90003b2f9f0 R08: 0000000000000003 R09: 000000000000ffff
-R10: 000000000000ffff R11: 0000000000000002 R12: ffff88806603c000
-R13: 0000000000000000 R14: ffff8880685b2780 R15: 0000000000000e23
-FS:  00007fdc2deed6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b30a1dff8 CR3: 0000000056b8c000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
-  __dev_direct_xmit+0x58a/0x720 net/core/dev.c:4490
-  dev_direct_xmit include/linux/netdevice.h:3181 [inline]
-  packet_xmit+0x1e4/0x360 net/packet/af_packet.c:285
-  packet_snd net/packet/af_packet.c:3146 [inline]
-  packet_sendmsg+0x2700/0x5660 net/packet/af_packet.c:3178
-  sock_sendmsg_nosec net/socket.c:711 [inline]
-  __sock_sendmsg net/socket.c:726 [inline]
-  __sys_sendto+0x488/0x4f0 net/socket.c:2197
-  __do_sys_sendto net/socket.c:2204 [inline]
-  __se_sys_sendto net/socket.c:2200 [inline]
-  __x64_sys_sendto+0xe0/0x1c0 net/socket.c:2200
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+While one could argue that 'find_closest()' should not be used for arrays
+with progressions of 1 (i.e. '{1, 2, 3, ...}', the macro should still
+behave correctly.
 
-Fixes: a025fb5f49ad ("geneve: Allow configuration of DF behaviour")
-Reported-by: syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/674f4b72.050a0220.17bd51.004a.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20241203182122.2725517-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The bug was found while testing the 'drivers/iio/adc/ad7606.c',
+specifically the oversampling feature.
+For reference, the oversampling values are listed as:
+   static const unsigned int ad7606_oversampling_avail[7] = {
+          1, 2, 4, 8, 16, 32, 64,
+   };
+
+When doing:
+  1. $ echo 1 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     1  # this is fine
+  2. $ echo 2 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     1  # this is wrong; 2 should be returned here
+  3. $ echo 3 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     2  # this is fine
+  4. $ echo 4 > /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     $ cat /sys/bus/iio/devices/iio\:device0/oversampling_ratio
+     4  # this is fine
+And from here-on, the values are as correct (one gets what one would
+expect.)
+
+While writing a kunit test for this bug, a peculiar issue was found for the
+array in the 'drivers/hwmon/ina2xx.c' & 'drivers/iio/adc/ina2xx-adc.c'
+drivers. While running the kunit test (for 'ina226_avg_tab' from these
+drivers):
+  * idx = find_closest([-1 to 2], ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
+    This returns idx == 0, so value.
+  * idx = find_closest(3, ina226_avg_tab, ARRAY_SIZE(ina226_avg_tab));
+    This returns idx == 0, value 1; and now one could argue whether 3 is
+    closer to 4 or to 1. This quirk only appears for value '3' in this
+    array, but it seems to be a another rounding issue.
+  * And from 4 onwards the 'find_closest'() works fine (one gets what one
+    would expect).
+
+This change reworks the find_closest() macros to also check the difference
+between the left and right elements when 'x'. If the distance to the right
+is smaller (than the distance to the left), the index is incremented by 1.
+This also makes redundant the need for using the DIV_ROUND_CLOSEST() macro.
+
+In order to accommodate for any mix of negative + positive values, the
+internal variables '__fc_x', '__fc_mid_x', '__fc_left' & '__fc_right' are
+forced to 'long' type. This also addresses any potential bugs/issues with
+'x' being of an unsigned type. In those situations any comparison between
+signed & unsigned would be promoted to a comparison between 2 unsigned
+numbers; this is especially annoying when '__fc_left' & '__fc_right'
+underflow.
+
+The find_closest_descending() macro was also reworked and duplicated from
+the find_closest(), and it is being iterated in reverse. The main reason
+for this is to get the same indices as 'find_closest()' (but in reverse).
+The comparison for '__fc_right < __fc_left' favors going the array in
+ascending order.
+For example for array '{ 1024, 512, 256, 128, 64, 16, 4, 1 }' and x = 3, we
+get:
+    __fc_mid_x = 2
+    __fc_left = -1
+    __fc_right = -2
+    Then '__fc_right < __fc_left' evaluates to true and '__fc_i++' becomes 7
+    which is not quite incorrect, but 3 is closer to 4 than to 1.
+
+This change has been validated with the kunit from the next patch.
+
+Link: https://lkml.kernel.org/r/20241105145406.554365-1-aardelean@baylibre.com
+Fixes: 95d119528b0b ("util_macros.h: add find_closest() macro")
+Signed-off-by: Alexandru Ardelean <aardelean@baylibre.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/geneve.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/util_macros.h |   56 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
-index d0b7d1b922218..e7412edb84dcd 100644
---- a/drivers/net/geneve.c
-+++ b/drivers/net/geneve.c
-@@ -983,7 +983,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
- 		if (geneve->cfg.df == GENEVE_DF_SET) {
- 			df = htons(IP_DF);
- 		} else if (geneve->cfg.df == GENEVE_DF_INHERIT) {
--			struct ethhdr *eth = eth_hdr(skb);
-+			struct ethhdr *eth = skb_eth_hdr(skb);
+--- a/include/linux/util_macros.h
++++ b/include/linux/util_macros.h
+@@ -2,19 +2,6 @@
+ #ifndef _LINUX_HELPER_MACROS_H_
+ #define _LINUX_HELPER_MACROS_H_
  
- 			if (ntohs(eth->h_proto) == ETH_P_IPV6) {
- 				df = htons(IP_DF);
--- 
-2.43.0
-
+-#define __find_closest(x, a, as, op)					\
+-({									\
+-	typeof(as) __fc_i, __fc_as = (as) - 1;				\
+-	typeof(x) __fc_x = (x);						\
+-	typeof(*a) const *__fc_a = (a);					\
+-	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
+-		if (__fc_x op DIV_ROUND_CLOSEST(__fc_a[__fc_i] +	\
+-						__fc_a[__fc_i + 1], 2))	\
+-			break;						\
+-	}								\
+-	(__fc_i);							\
+-})
+-
+ /**
+  * find_closest - locate the closest element in a sorted array
+  * @x: The reference value.
+@@ -23,8 +10,27 @@
+  * @as: Size of 'a'.
+  *
+  * Returns the index of the element closest to 'x'.
++ * Note: If using an array of negative numbers (or mixed positive numbers),
++ *       then be sure that 'x' is of a signed-type to get good results.
+  */
+-#define find_closest(x, a, as) __find_closest(x, a, as, <=)
++#define find_closest(x, a, as)						\
++({									\
++	typeof(as) __fc_i, __fc_as = (as) - 1;				\
++	long __fc_mid_x, __fc_x = (x);					\
++	long __fc_left, __fc_right;					\
++	typeof(*a) const *__fc_a = (a);					\
++	for (__fc_i = 0; __fc_i < __fc_as; __fc_i++) {			\
++		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i + 1]) / 2;	\
++		if (__fc_x <= __fc_mid_x) {				\
++			__fc_left = __fc_x - __fc_a[__fc_i];		\
++			__fc_right = __fc_a[__fc_i + 1] - __fc_x;	\
++			if (__fc_right < __fc_left)			\
++				__fc_i++;				\
++			break;						\
++		}							\
++	}								\
++	(__fc_i);							\
++})
+ 
+ /**
+  * find_closest_descending - locate the closest element in a sorted array
+@@ -34,9 +40,27 @@
+  * @as: Size of 'a'.
+  *
+  * Similar to find_closest() but 'a' is expected to be sorted in descending
+- * order.
++ * order. The iteration is done in reverse order, so that the comparison
++ * of '__fc_right' & '__fc_left' also works for unsigned numbers.
+  */
+-#define find_closest_descending(x, a, as) __find_closest(x, a, as, >=)
++#define find_closest_descending(x, a, as)				\
++({									\
++	typeof(as) __fc_i, __fc_as = (as) - 1;				\
++	long __fc_mid_x, __fc_x = (x);					\
++	long __fc_left, __fc_right;					\
++	typeof(*a) const *__fc_a = (a);					\
++	for (__fc_i = __fc_as; __fc_i >= 1; __fc_i--) {			\
++		__fc_mid_x = (__fc_a[__fc_i] + __fc_a[__fc_i - 1]) / 2;	\
++		if (__fc_x <= __fc_mid_x) {				\
++			__fc_left = __fc_x - __fc_a[__fc_i];		\
++			__fc_right = __fc_a[__fc_i - 1] - __fc_x;	\
++			if (__fc_right < __fc_left)			\
++				__fc_i--;				\
++			break;						\
++		}							\
++	}								\
++	(__fc_i);							\
++})
+ 
+ /**
+  * is_insidevar - check if the @ptr points inside the @var memory range.
 
 
