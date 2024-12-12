@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF1822B581;
-	Thu, 12 Dec 2024 16:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F57A223C46;
+	Thu, 12 Dec 2024 16:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021526; cv=none; b=tDonIM2e6/+L8XTNno+CFH6q0e3EsCN6z9wkzHiVbbKW5dP00UWQkqXOrStTeBsX96r9N6MdGo6MR6OgzkYXBwPa9K09PNey35l2nmmX5CRnfh9t2c+gg+hXjj3ihyhkbU0jkx+c3iuCf8wguwfbOKtKOZ+Kuzgsr5DIjKzWUdw=
+	t=1734021530; cv=none; b=ZnXiJjGC6jlKXKUSR5jBAPRtBlpVr8K1GctuKNjg93dtn8+tsxUZjozoyqyJHrj4zJiUBLRIviLbed7NoXK38BKrgT4hzAJ6Cq0MX21HZPth+u1tGou8bof4GdVoeT+MWt3G67pTxN/zIQRMj7Xliqo43pxq0txyYcTuT4k4cII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021526; c=relaxed/simple;
-	bh=ZV8aCbQESAIyccwYQDYD7ICK5HtwOWIV5tkhDjelztE=;
+	s=arc-20240116; t=1734021530; c=relaxed/simple;
+	bh=S218KWwRIopZQLsnQe70EIv2wdEwuo+1tNriL78eO9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=p/hbCu8sSwQVfuE45PlCe/QV61sRFQ8ceihfJPs1medLm/AWcItHo1qntbfOC+jb1+yoOM5cfqItmESf+qVZFn2gbSWJNks0+QeQxHBY6NEZwn4JJcpX6anvaUoWzCBfCaCx7rfxGSJyiS86hAIWb4HhAusGhRz1NX8kcQlAnhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S45BnSc/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qGRKdwhR4m6kor7yVxyNPd/FOXQccjAH5l8Dh2uORa4BOiw+9FI8nXC01bPwEzMhEU9RvpUprGKPuTuxQIXiR6tK5TfUhy/O7OV8JuMjVQx6yrwE6djB6f+e43URJc734xfSqVfyOt2UAH/hhOrnNkTLrz1/wkrrtXKXEJVbRds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAzophNV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S45BnSc/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD78C4CED3;
-	Thu, 12 Dec 2024 16:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAzophNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5461EC4CECE;
+	Thu, 12 Dec 2024 16:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021526;
-	bh=ZV8aCbQESAIyccwYQDYD7ICK5HtwOWIV5tkhDjelztE=;
+	s=korg; t=1734021529;
+	bh=S218KWwRIopZQLsnQe70EIv2wdEwuo+1tNriL78eO9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S45BnSc/mY282mvbODML/CC2ukKIN0O9qiBoBMN7pbVVvkopfZH1oYSJc7Ryn7qIV
-	 zyTdq+MnecFVkDpJFNgZ4scPbztObMgwbqWyRvLP6+6V2qetu+Q//l7aF/EPCesjUT
-	 M/TCyemG31KZj4jpAYWdUKBBiUPjctP5KLj5DXy0=
+	b=QAzophNVyTDk36Nzw4HEtbM6BexgJEXAOhjVvrcxzxRsxlBgIxUnb6G1YnGk81FoY
+	 p3Yd7m1gpuKF1XyZ3r41PfQhL2yGTZ2BcnCIPEP7yO6eL3fu930Ohakiu0gmx536sq
+	 4kVvacmYMgsVzBj0Hp6EgufE9dwqkYi4qKmbywbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 763/772] drm/amdgpu: rework resume handling for display (v2)
-Date: Thu, 12 Dec 2024 16:01:48 +0100
-Message-ID: <20241212144421.471292052@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 746/772] io_uring: wake up optimisations
+Date: Thu, 12 Dec 2024 16:01:31 +0100
+Message-ID: <20241212144420.758026993@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -44,120 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 73dae652dcac776296890da215ee7dec357a1032 upstream.
+commit 3181e22fb79910c7071e84a43af93ac89e8a7106 upstream.
 
-Split resume into a 3rd step to handle displays when DCC is
-enabled on DCN 4.0.1.  Move display after the buffer funcs
-have been re-enabled so that the GPU will do the move and
-properly set the DCC metadata for DCN.
+Flush completions is done either from the submit syscall or by the
+task_work, both are in the context of the submitter task, and when it
+goes for a single threaded rings like implied by ->task_complete, there
+won't be any waiters on ->cq_wait but the master task. That means that
+there can be no tasks sleeping on cq_wait while we run
+__io_submit_flush_completions() and so waking up can be skipped.
 
-v2: fix fence irq resume ordering
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.11.x
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/60ad9768ec74435a0ddaa6eec0ffa7729474f69f.1673274244.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |   45 +++++++++++++++++++++++++++--
- 1 file changed, 43 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3242,7 +3242,7 @@ static int amdgpu_device_ip_resume_phase
-  *
-  * @adev: amdgpu_device pointer
-  *
-- * First resume function for hardware IPs.  The list of all the hardware
-+ * Second resume function for hardware IPs.  The list of all the hardware
-  * IPs that make up the asic is walked and the resume callbacks are run for
-  * all blocks except COMMON, GMC, and IH.  resume puts the hardware into a
-  * functional state after a suspend and updates the software state as
-@@ -3260,6 +3260,7 @@ static int amdgpu_device_ip_resume_phase
- 		if (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_COMMON ||
- 		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GMC ||
- 		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_IH ||
-+		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_DCE ||
- 		    adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_PSP)
- 			continue;
- 		r = adev->ip_blocks[i].version->funcs->resume(adev);
-@@ -3284,6 +3285,36 @@ static int amdgpu_device_ip_resume_phase
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -582,6 +582,16 @@ static inline void __io_cq_unlock_post(s
+ 	io_cqring_ev_posted(ctx);
  }
  
- /**
-+ * amdgpu_device_ip_resume_phase3 - run resume for hardware IPs
-+ *
-+ * @adev: amdgpu_device pointer
-+ *
-+ * Third resume function for hardware IPs.  The list of all the hardware
-+ * IPs that make up the asic is walked and the resume callbacks are run for
-+ * all DCE.  resume puts the hardware into a functional state after a suspend
-+ * and updates the software state as necessary.  This function is also used
-+ * for restoring the GPU after a GPU reset.
-+ *
-+ * Returns 0 on success, negative error code on failure.
-+ */
-+static int amdgpu_device_ip_resume_phase3(struct amdgpu_device *adev)
++static inline void __io_cq_unlock_post_flush(struct io_ring_ctx *ctx)
++	__releases(ctx->completion_lock)
 +{
-+	int i, r;
-+
-+	for (i = 0; i < adev->num_ip_blocks; i++) {
-+		if (!adev->ip_blocks[i].status.valid || adev->ip_blocks[i].status.hw)
-+			continue;
-+		if (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_DCE) {
-+			r = adev->ip_blocks[i].version->funcs->resume(adev);
-+			if (r)
-+				return r;
-+		}
-+	}
-+
-+	return 0;
++	io_commit_cqring(ctx);
++	spin_unlock(&ctx->completion_lock);
++	io_commit_cqring_flush(ctx);
++	if (!(ctx->flags & IORING_SETUP_DEFER_TASKRUN))
++		__io_cqring_wake(ctx);
 +}
 +
-+/**
-  * amdgpu_device_ip_resume - run resume for hardware IPs
-  *
-  * @adev: amdgpu_device pointer
-@@ -3313,6 +3344,13 @@ static int amdgpu_device_ip_resume(struc
- 
- 	r = amdgpu_device_ip_resume_phase2(adev);
- 
-+	if (r)
-+		return r;
-+
-+	amdgpu_fence_driver_hw_init(adev);
-+
-+	r = amdgpu_device_ip_resume_phase3(adev);
-+
- 	return r;
- }
- 
-@@ -4311,7 +4349,6 @@ int amdgpu_device_resume(struct drm_devi
- 		dev_err(adev->dev, "amdgpu_device_ip_resume failed (%d).\n", r);
- 		return r;
+ void io_cq_unlock_post(struct io_ring_ctx *ctx)
+ {
+ 	__io_cq_unlock_post(ctx);
+@@ -1339,7 +1349,7 @@ static void __io_submit_flush_completion
+ 		if (!(req->flags & REQ_F_CQE_SKIP))
+ 			__io_fill_cqe_req(ctx, req);
  	}
--	amdgpu_fence_driver_hw_init(adev);
+-	__io_cq_unlock_post(ctx);
++	__io_cq_unlock_post_flush(ctx);
  
- 	r = amdgpu_device_ip_late_init(adev);
- 	if (r)
-@@ -5065,6 +5102,10 @@ int amdgpu_do_asic_reset(struct list_hea
- 				if (r)
- 					goto out;
- 
-+				r = amdgpu_device_ip_resume_phase3(tmp_adev);
-+				if (r)
-+					goto out;
-+
- 				if (vram_lost)
- 					amdgpu_device_fill_reset_magic(tmp_adev);
- 
+ 	io_free_batch_list(ctx, state->compl_reqs.first);
+ 	INIT_WQ_LIST(&state->compl_reqs);
 
 
