@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D08176AA1;
-	Thu, 12 Dec 2024 17:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C0B176AA1;
+	Thu, 12 Dec 2024 17:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023063; cv=none; b=E3/J+XzaKcBKwKgOnXrlUVqh2KtPDCLtcaKmMNOgx74nVp6HnIpka4LwPH+0jIFKvDWmij2dmA4OAY9AX2dbUKb6LuxODFJwpUkeSPzyOWRQqqAF2Q8o+jPsWKfNivAIgX46i3MITxR7m0CWvZtzeV40D0836N/ZmYYB2sWZVQM=
+	t=1734023066; cv=none; b=O7SDX7RRDFzT4c4l23BFAu3CY8F9LuurZbdT4WEacXtbBPqAFHLrw//PQcnc4c0n0HBtUaPlNC18s6O4B2ksFJC1Mm8E11ZSorTly/yF9jiCutS9b4b/0Ssr9Z7peX+R9SPTycVgU3It6elIM87Tz/ieNzJrdlRP+4/RmaNpxFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023063; c=relaxed/simple;
-	bh=U0UcI7Nq1ZhvCgzENlBhINQXcqaj6awzxtSaa7fS9jM=;
+	s=arc-20240116; t=1734023066; c=relaxed/simple;
+	bh=Gdvb4BefB7JE5xp/wVxgH7BJEOmBAnGEKMGH3jtN6Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kd58lRB6TXE5ayqSIOvdMuSVOBZfAL9TAozhASqgvmKJXHL7GoFo66tde2hQd8TtKp+KbEdg9TVbmKZVzzIa6YCzPt2R8UwuDP8ljTDKRuW/7g9Jxcg3BxijFNQ2A4DWBfiqXn57CCPr99SNO0LnIrAwJ7DUuw8C9gIHLsx/PhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5zOjgI8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6+rTeQvJNrDlqxydxKyUC0emZmwA1RdxrM+/ghOLFGpouehcG3rC5xSby2toNqOKmPv1M2WWwnV+h3lzY/sQcGcvWkwCN3+WnQElhQcbnV62LqiJkxiEtnSNe2iMottLlqNcDLZt60T2IAflHQogjG+r/3CDq4t1muwFnoe5FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2Y0VagT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5zOjgI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6F24C4CECE;
-	Thu, 12 Dec 2024 17:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2Y0VagT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CD5C4CECE;
+	Thu, 12 Dec 2024 17:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023063;
-	bh=U0UcI7Nq1ZhvCgzENlBhINQXcqaj6awzxtSaa7fS9jM=;
+	s=korg; t=1734023066;
+	bh=Gdvb4BefB7JE5xp/wVxgH7BJEOmBAnGEKMGH3jtN6Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5zOjgI8VpH4i6LJOEZkOiH6uNd6T00cUZs2m1XICJgonvmcH+KdWb/J8vif2UmKh
-	 K4rMMoz+zGlkcBnCBVdPOChruPhPj2skFOHJ6eLQbsC8KVEHE2wOKu+GeZ8tlLnwAT
-	 WTpedb6eL2nEAlnqgyfTwqmgrxBagoF/QUiwDrEI=
+	b=M2Y0VagTjcJMMcBAR6z5jOqpzkft+porveJigxbyQxAT3lNXCDG0YQAk7PwGgg3Ng
+	 oA4PVvpQjY6MRw5B6dgpTFKZ4Nw67rPY+WhGkpbC+E9fbqLqgwFqfjzDyXSOpN0ZQo
+	 rZH4cM054GhWGcIsTK62oQGBHF7BAGINe+8dwqDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Ottens <martin.ottens@fau.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/565] net/sched: tbf: correct backlog statistic for GSO packets
-Date: Thu, 12 Dec 2024 16:00:06 +0100
-Message-ID: <20241212144327.904928400@linuxfoundation.org>
+	Peter Griffin <peter.griffin@linaro.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 5.15 385/565] scsi: ufs: exynos: Fix hibern8 notify callbacks
+Date: Thu, 12 Dec 2024 15:59:40 +0100
+Message-ID: <20241212144326.856932419@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,90 +51,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Ottens <martin.ottens@fau.de>
+From: Peter Griffin <peter.griffin@linaro.org>
 
-[ Upstream commit 1596a135e3180c92e42dd1fbcad321f4fb3e3b17 ]
+commit ceef938bbf8b93ba3a218b4adc244cde94b582aa upstream.
 
-When the length of a GSO packet in the tbf qdisc is larger than the burst
-size configured the packet will be segmented by the tbf_segment function.
-Whenever this function is used to enqueue SKBs, the backlog statistic of
-the tbf is not increased correctly. This can lead to underflows of the
-'backlog' byte-statistic value when these packets are dequeued from tbf.
+v1 of the patch which introduced the ufshcd_vops_hibern8_notify()
+callback used a bool instead of an enum. In v2 this was updated to an
+enum based on the review feedback in [1].
 
-Reproduce the bug:
-Ensure that the sender machine has GSO enabled. Configured the tbf on
-the outgoing interface of the machine as follows (burstsize = 1 MTU):
-$ tc qdisc add dev <oif> root handle 1: tbf rate 50Mbit burst 1514 latency 50ms
+ufs-exynos hibernate calls have always been broken upstream as it
+follows the v1 bool implementation.
 
-Send bulk TCP traffic out via this interface, e.g., by running an iPerf3
-client on this machine. Check the qdisc statistics:
-$ tc -s qdisc show dev <oif>
-
-The 'backlog' byte-statistic has incorrect values while traffic is
-transferred, e.g., high values due to u32 underflows. When the transfer
-is stopped, the value is != 0, which should never happen.
-
-This patch fixes this bug by updating the statistics correctly, even if
-single SKBs of a GSO SKB cannot be enqueued.
-
-Fixes: e43ac79a4bc6 ("sch_tbf: segment too big GSO packets")
-Signed-off-by: Martin Ottens <martin.ottens@fau.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241125174608.1484356-1-martin.ottens@fau.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://patchwork.kernel.org/project/linux-scsi/patch/001f01d23994$719997c0$54ccc740$@samsung.com/ [1]
+Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
+Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
+Link: https://lore.kernel.org/r/20241031150033.3440894-13-peter.griffin@linaro.org
+Cc: stable@vger.kernel.org
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_tbf.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/scsi/ufs/ufs-exynos.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/net/sched/sch_tbf.c b/net/sched/sch_tbf.c
-index 7461e5c67d50a..5f50fdeaafa8d 100644
---- a/net/sched/sch_tbf.c
-+++ b/net/sched/sch_tbf.c
-@@ -193,7 +193,7 @@ static int tbf_segment(struct sk_buff *skb, struct Qdisc *sch,
- 	struct tbf_sched_data *q = qdisc_priv(sch);
- 	struct sk_buff *segs, *nskb;
- 	netdev_features_t features = netif_skb_features(skb);
--	unsigned int len = 0, prev_len = qdisc_pkt_len(skb);
-+	unsigned int len = 0, prev_len = qdisc_pkt_len(skb), seg_len;
- 	int ret, nb;
- 
- 	segs = skb_gso_segment(skb, features & ~NETIF_F_GSO_MASK);
-@@ -204,21 +204,27 @@ static int tbf_segment(struct sk_buff *skb, struct Qdisc *sch,
- 	nb = 0;
- 	skb_list_walk_safe(segs, segs, nskb) {
- 		skb_mark_not_on_list(segs);
--		qdisc_skb_cb(segs)->pkt_len = segs->len;
--		len += segs->len;
-+		seg_len = segs->len;
-+		qdisc_skb_cb(segs)->pkt_len = seg_len;
- 		ret = qdisc_enqueue(segs, q->qdisc, to_free);
- 		if (ret != NET_XMIT_SUCCESS) {
- 			if (net_xmit_drop_count(ret))
- 				qdisc_qstats_drop(sch);
- 		} else {
- 			nb++;
-+			len += seg_len;
- 		}
- 	}
- 	sch->q.qlen += nb;
--	if (nb > 1)
-+	sch->qstats.backlog += len;
-+	if (nb > 0) {
- 		qdisc_tree_reduce_backlog(sch, 1 - nb, prev_len - len);
--	consume_skb(skb);
--	return nb > 0 ? NET_XMIT_SUCCESS : NET_XMIT_DROP;
-+		consume_skb(skb);
-+		return NET_XMIT_SUCCESS;
-+	}
-+
-+	kfree_skb(skb);
-+	return NET_XMIT_DROP;
+--- a/drivers/scsi/ufs/ufs-exynos.c
++++ b/drivers/scsi/ufs/ufs-exynos.c
+@@ -1038,12 +1038,12 @@ static void exynos_ufs_dev_hw_reset(stru
+ 	hci_writel(ufs, 1 << 0, HCI_GPIO_OUT);
  }
  
- static int tbf_enqueue(struct sk_buff *skb, struct Qdisc *sch,
--- 
-2.43.0
-
+-static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, u8 enter)
++static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
+ {
+ 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+ 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
+ 
+-	if (!enter) {
++	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
+ 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
+ 			exynos_ufs_disable_auto_ctrl_hcc(ufs);
+ 		exynos_ufs_ungate_clks(ufs);
+@@ -1071,11 +1071,11 @@ static void exynos_ufs_pre_hibern8(struc
+ 	}
+ }
+ 
+-static void exynos_ufs_post_hibern8(struct ufs_hba *hba, u8 enter)
++static void exynos_ufs_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
+ {
+ 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
+ 
+-	if (!enter) {
++	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
+ 		u32 cur_mode = 0;
+ 		u32 pwrmode;
+ 
+@@ -1094,7 +1094,7 @@ static void exynos_ufs_post_hibern8(stru
+ 
+ 		if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB))
+ 			exynos_ufs_establish_connt(ufs);
+-	} else {
++	} else if (cmd == UIC_CMD_DME_HIBER_ENTER) {
+ 		ufs->entry_hibern8_t = ktime_get();
+ 		exynos_ufs_gate_clks(ufs);
+ 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
+@@ -1163,15 +1163,15 @@ static int exynos_ufs_pwr_change_notify(
+ }
+ 
+ static void exynos_ufs_hibern8_notify(struct ufs_hba *hba,
+-				     enum uic_cmd_dme enter,
++				     enum uic_cmd_dme cmd,
+ 				     enum ufs_notify_change_status notify)
+ {
+ 	switch ((u8)notify) {
+ 	case PRE_CHANGE:
+-		exynos_ufs_pre_hibern8(hba, enter);
++		exynos_ufs_pre_hibern8(hba, cmd);
+ 		break;
+ 	case POST_CHANGE:
+-		exynos_ufs_post_hibern8(hba, enter);
++		exynos_ufs_post_hibern8(hba, cmd);
+ 		break;
+ 	}
+ }
 
 
