@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437F7215764;
-	Thu, 12 Dec 2024 17:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D98215764;
+	Thu, 12 Dec 2024 17:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024389; cv=none; b=JFOJjm/pq/+Nl+k53WPyMhB8qTstC5532a7MGxGds0qY6kof3fWcoFCWQITSHan1Skk+n9nWNZ+S+djAVNVfn7gGh1fG1e6ilLKGwHXquyiJPUtyaznGWnSnmIihcm5TCBp53taOqwh2NTepKye/l3qqKSEPl0SVEUMf29Ny9JU=
+	t=1734024390; cv=none; b=itrMDiyNL5iCdzA2JHUUyaSUVPG9E4zjFjeiFp4k60kBMiSpklGW1ptXQixdT42vkl/TJSndVlI2Ta2Dxxgka+wtbr2cssVQF8ST/VggymfdSYUwHm5sAW6Fg4I7KpmzJE/Lh2myKUGlbpL8Dlv18XwN88fuJhwwkOAc4Jywy0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024389; c=relaxed/simple;
-	bh=VAz5zEk697APLFcVNePyTr3dl6ccOvzLnG6dCHaK1fg=;
+	s=arc-20240116; t=1734024390; c=relaxed/simple;
+	bh=62NNRZFHQmo40hFSGvOtd//d9jJBBMxlJXBiGjvW+Jg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CvRZ3MQaSLMQ1NRGvWlCUAFRaS6BbOSrayur1N2+aGBSStMW0TUu+qbWoHbqpjJfCc6Sk4t2UN6mFzdbHD7+xVd5+lCx3qhYfgPo0aHnGzGZwFMeYvByMs1PUC1njoItyExFd+Jp0/HuVi1gXgKPOdylf/YhwuQ7xJtmR2g9D70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X34GwAO4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VncAeD6YVdk0gPK2wp/MTbpQNvklq5a2tcOkkbojCgwhmTlwK5qawdTTie6sUoxzxfJDMeDdBiqSedltQgHg0GG5HC4WCFBk4XlK78LOcP7Jg6auvhqIye5jl8bloSEVq3SsDzu2cOGXoqyCGMhZeqiUlhg70/69OCvpQGk2928=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfNv9XoS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X34GwAO4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF2DC4CED0;
-	Thu, 12 Dec 2024 17:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfNv9XoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D778C4CED0;
+	Thu, 12 Dec 2024 17:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024387;
-	bh=VAz5zEk697APLFcVNePyTr3dl6ccOvzLnG6dCHaK1fg=;
+	s=korg; t=1734024390;
+	bh=62NNRZFHQmo40hFSGvOtd//d9jJBBMxlJXBiGjvW+Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X34GwAO4M6SKd2ND5Z8BQNvPCNpYWglYyOJwIPZht3KBgtV7PeYAwPUu7jNz4ofSI
-	 mVNPURcwtmteUA5SBYCB1SkvYYADx8pcIUONG7cCTQGhkZ+CR/9rcAGNMXCdz249w0
-	 Kv5QSC3NRp/Ht5KG8XTLIirekVlT8tnwoz3Hrep8=
+	b=gfNv9XoS00s83f5WueyibpNMsZ3yOu7h4MUtlJQ117rT/VXusQRpRX/gN0anEwFRg
+	 il5qcOSmQWbUzQqfusi3XNuCGpna5D0DHmWz2chCuvLStD/4wr+j8KruAjCGn997gL
+	 lS+FNKL8z9/AgX8bvKdk4VHHLhoCdP0gDD/tX2z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 278/459] ALSA: hda/realtek: Update ALC225 depop procedure
-Date: Thu, 12 Dec 2024 16:00:16 +0100
-Message-ID: <20241212144304.606859161@linuxfoundation.org>
+	Raghavendra Rao Ananta <rananta@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 5.10 251/459] KVM: arm64: Ignore PMCNTENSET_EL0 while checking for overflow status
+Date: Thu, 12 Dec 2024 15:59:49 +0100
+Message-ID: <20241212144303.508684223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -50,147 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Raghavendra Rao Ananta <rananta@google.com>
 
-commit 1fd50509fe14a9adc9329e0454b986157a4c155a upstream.
+commit 54bbee190d42166209185d89070c58a343bf514b upstream.
 
-Old procedure has a chance to meet Headphone no output.
+DDI0487K.a D13.3.1 describes the PMU overflow condition, which evaluates
+to true if any counter's global enable (PMCR_EL0.E), overflow flag
+(PMOVSSET_EL0[n]), and interrupt enable (PMINTENSET_EL1[n]) are all 1.
+Of note, this does not require a counter to be enabled
+(i.e. PMCNTENSET_EL0[n] = 1) to generate an overflow.
 
-Fixes: da911b1f5e98 ("ALSA: hda/realtek - update ALC225 depop optimize")
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/5a27b016ba9d42b4a4e6dadce50a3ba4@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Align kvm_pmu_overflow_status() with the reality of the architecture
+and stop using PMCNTENSET_EL0 as part of the overflow condition. The
+bug was discovered while running an SBSA PMU test [*], which only sets
+PMCR.E, PMOVSSET<0>, PMINTENSET<0>, and expects an overflow interrupt.
+
+Cc: stable@vger.kernel.org
+Fixes: 76d883c4e640 ("arm64: KVM: Add access handler for PMOVSSET and PMOVSCLR register")
+Link: https://github.com/ARM-software/sbsa-acs/blob/master/test_pool/pmu/operating_system/test_pmu001.c
+Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
+[ oliver: massaged changelog ]
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241120005230.2335682-2-oliver.upton@linux.dev
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   95 +++++++++++++++++++-----------------------
- 1 file changed, 43 insertions(+), 52 deletions(-)
+ arch/arm64/kvm/pmu-emul.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3691,33 +3691,28 @@ static void alc225_init(struct hda_codec
- 	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 	hp2_pin_sense = snd_hda_jack_detect(codec, 0x16);
+--- a/arch/arm64/kvm/pmu-emul.c
++++ b/arch/arm64/kvm/pmu-emul.c
+@@ -371,7 +371,6 @@ static u64 kvm_pmu_overflow_status(struc
  
--	if (hp1_pin_sense || hp2_pin_sense)
-+	if (hp1_pin_sense || hp2_pin_sense) {
- 		msleep(2);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
- 
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_UNMUTE);
- 
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, PIN_OUT);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(100);
--
--	alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
--	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+		msleep(75);
-+		alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x4); /* Hight power */
-+	}
- }
- 
- static void alc225_shutup(struct hda_codec *codec)
-@@ -3729,36 +3724,35 @@ static void alc225_shutup(struct hda_cod
- 	if (!hp_pin)
- 		hp_pin = 0x21;
- 
--	alc_disable_headset_jack_key(codec);
--	/* 3k pull low control for Headset jack. */
--	alc_update_coef_idx(codec, 0x4a, 0, 3 << 10);
--
- 	hp1_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 	hp2_pin_sense = snd_hda_jack_detect(codec, 0x16);
- 
--	if (hp1_pin_sense || hp2_pin_sense)
-+	if (hp1_pin_sense || hp2_pin_sense) {
-+		alc_disable_headset_jack_key(codec);
-+		/* 3k pull low control for Headset jack. */
-+		alc_update_coef_idx(codec, 0x4a, 0, 3 << 10);
- 		msleep(2);
- 
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(85);
--
--	if (hp1_pin_sense || spec->ultra_low_power)
--		snd_hda_codec_write(codec, hp_pin, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
--	if (hp2_pin_sense)
--		snd_hda_codec_write(codec, 0x16, 0,
--			    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
--
--	if (hp1_pin_sense || hp2_pin_sense || spec->ultra_low_power)
--		msleep(100);
--
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
-+
-+		msleep(75);
-+
-+		if (hp1_pin_sense)
-+			snd_hda_codec_write(codec, hp_pin, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+		if (hp2_pin_sense)
-+			snd_hda_codec_write(codec, 0x16, 0,
-+				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
-+
-+		msleep(75);
-+		alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
-+		alc_enable_headset_jack_key(codec);
-+	}
- 	alc_auto_setup_eapd(codec, false);
- 	alc_shutup_pins(codec);
- 	if (spec->ultra_low_power) {
-@@ -3769,9 +3763,6 @@ static void alc225_shutup(struct hda_cod
- 		alc_update_coef_idx(codec, 0x4a, 3<<4, 2<<4);
- 		msleep(30);
+ 	if ((__vcpu_sys_reg(vcpu, PMCR_EL0) & ARMV8_PMU_PMCR_E)) {
+ 		reg = __vcpu_sys_reg(vcpu, PMOVSSET_EL0);
+-		reg &= __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
+ 		reg &= __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
+ 		reg &= kvm_pmu_valid_counter_mask(vcpu);
  	}
--
--	alc_update_coef_idx(codec, 0x4a, 3 << 10, 0);
--	alc_enable_headset_jack_key(codec);
- }
- 
- static void alc_default_init(struct hda_codec *codec)
 
 
