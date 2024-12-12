@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 041E720A5EE;
-	Thu, 12 Dec 2024 17:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE21B15696E;
+	Thu, 12 Dec 2024 17:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025247; cv=none; b=fS0NIiCUFlHa/yxUmh9gJs62dKdVALd9AFXFwao6iv0Zzphloq4DLsPq2k/phyryG7bfYMNccXZT6OUluwTpwDqzlKsYEFBHnrgst4VvTvqaH6X9G3V/hmjp2CbATJbnfa2u1F1KW26f2MbAJGR0v7+V6KPNH5i4wupjBqncK5g=
+	t=1734025250; cv=none; b=uYNYRNWQZRx4BfBvfZk1oyJIYLwZ2wEYZX3szIXlGxCJdrug7w9bQqea4S4ENUvGywUBG24dE7gn6nwwIoE2ti/ZREEWsd+wb0lh7qRxp6r988U7DBiP20MYMEFbIMNM84nV9iOTN/TZ5+LOiceGNe/7YOptu6PQXQ+t+yi2rwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025247; c=relaxed/simple;
-	bh=Hqdx2vHuSAzKGefWMebn5a8XW5hJg5mtoPtSEl4R9Xg=;
+	s=arc-20240116; t=1734025250; c=relaxed/simple;
+	bh=KMC8OXdcf/YAPkL7z/mRsIqLn8aPYhON4bPtVOMlYiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9fH2zTvVbTnNH2y2xNin53gTwwg/dZFW/J9h7w3JhYs/WwxHLm6Qr8GYvcjr98i1af0ofl8kd/L/5la9k0Kl8v+loZ56YfjX+siBTy7HmQ01wqP1PyGq9zy6LA/Hm8gfBfffMiplDsSJwWMzHOFJSoKNW32P9bGdXyKVSABeuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlORJof9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHdPSiRO7mV7JOMtmpyrpfp9X0jzxy4ny7N++peHx0Hd8SPOSy90uU8eYIIc1twGXmG0YiYk2VVqHmmzpfvuLFUrYW44+MhlFMwIEcACjpVKyiOLRiPBvR18UDLTgwqEp3Ewpia5y3q9aEOUlaFqzhAyDtHoo/olz73zBvf17z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BEN7XO4e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlORJof9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC9CC4CECE;
-	Thu, 12 Dec 2024 17:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BEN7XO4e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D3AC4CECE;
+	Thu, 12 Dec 2024 17:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025246;
-	bh=Hqdx2vHuSAzKGefWMebn5a8XW5hJg5mtoPtSEl4R9Xg=;
+	s=korg; t=1734025249;
+	bh=KMC8OXdcf/YAPkL7z/mRsIqLn8aPYhON4bPtVOMlYiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlORJof9RRiOHWft7Bkoivfg2mt68qIYojlXCwNa0xxtzpVLitTc9v25BaYQtCSuj
-	 NHletEiw7yEV8MWMo5fAuWV3M6Fi33sn0vlnptihLeKGJ/ISvRPaF/HRqUEe00lTY1
-	 act7hQIUzGD69XLGIHQLQJgKo0iPQj05symXDY7I=
+	b=BEN7XO4eqWloerFaWl/lMIgSCEpTqAanzI0UpQCxSNK2zaixLMvj74ABUcvTJx/Os
+	 5x9GytSv5KmafdJEHik1TCq6vYDoUeKKjBfH/8WZ0BO5u+lhhH9WZnixBcx9JPqAyX
+	 NSBcx1N1yasQL50u+zDD9OFen5oB/kX4H7Ba+YFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Zhen Lei <thunder.leizhen@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/321] fbdev/sh7760fb: Alloc DMA memory from hardware device
-Date: Thu, 12 Dec 2024 16:00:22 +0100
-Message-ID: <20241212144234.097138457@linuxfoundation.org>
+Subject: [PATCH 5.4 105/321] fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()
+Date: Thu, 12 Dec 2024 16:00:23 +0100
+Message-ID: <20241212144234.136398378@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,63 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Zhen Lei <thunder.leizhen@huawei.com>
 
-[ Upstream commit 8404e56f4bc1d1a65bfc98450ba3dae5e653dda1 ]
+[ Upstream commit f89d17ae2ac42931be2a0153fecbf8533280c927 ]
 
-Pass the hardware device to the DMA helpers dma_alloc_coherent() and
-dma_free_coherent(). The fbdev device that is currently being used is
-a software device and does not provide DMA memory. Also update the
-related dev_*() output statements similarly.
+When information such as info->screen_base is not ready, calling
+sh7760fb_free_mem() does not release memory correctly. Call
+dma_free_coherent() instead.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230613110953.24176-28-tzimmermann@suse.de
-Stable-dep-of: f89d17ae2ac4 ("fbdev: sh7760fb: Fix a possible memory leak in sh7760fb_alloc_mem()")
+Fixes: 4a25e41831ee ("video: sh7760fb: SH7760/SH7763 LCDC framebuffer driver")
+Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/sh7760fb.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/sh7760fb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/drivers/video/fbdev/sh7760fb.c b/drivers/video/fbdev/sh7760fb.c
-index ab8fe838c7763..ac65163f40325 100644
+index ac65163f40325..e83232bbd7ff8 100644
 --- a/drivers/video/fbdev/sh7760fb.c
 +++ b/drivers/video/fbdev/sh7760fb.c
-@@ -359,7 +359,7 @@ static void sh7760fb_free_mem(struct fb_info *info)
- 	if (!info->screen_base)
- 		return;
- 
--	dma_free_coherent(info->dev, info->screen_size,
-+	dma_free_coherent(info->device, info->screen_size,
- 			  info->screen_base, par->fbdma);
- 
- 	par->fbdma = 0;
-@@ -408,14 +408,14 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
- 	if (vram < PAGE_SIZE)
+@@ -409,12 +409,11 @@ static int sh7760fb_alloc_mem(struct fb_info *info)
  		vram = PAGE_SIZE;
  
--	fbmem = dma_alloc_coherent(info->dev, vram, &par->fbdma, GFP_KERNEL);
-+	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
- 
+ 	fbmem = dma_alloc_coherent(info->device, vram, &par->fbdma, GFP_KERNEL);
+-
  	if (!fbmem)
  		return -ENOMEM;
  
  	if ((par->fbdma & SH7760FB_DMA_MASK) != SH7760FB_DMA_MASK) {
- 		sh7760fb_free_mem(info);
--		dev_err(info->dev, "kernel gave me memory at 0x%08lx, which is"
-+		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
+-		sh7760fb_free_mem(info);
++		dma_free_coherent(info->device, vram, fbmem, par->fbdma);
+ 		dev_err(info->device, "kernel gave me memory at 0x%08lx, which is"
  			"unusable for the LCDC\n", (unsigned long)par->fbdma);
  		return -ENOMEM;
- 	}
-@@ -486,7 +486,7 @@ static int sh7760fb_probe(struct platform_device *pdev)
- 
- 	ret = sh7760fb_alloc_mem(info);
- 	if (ret) {
--		dev_dbg(info->dev, "framebuffer memory allocation failed!\n");
-+		dev_dbg(info->device, "framebuffer memory allocation failed!\n");
- 		goto out_unmap;
- 	}
- 
 -- 
 2.43.0
 
