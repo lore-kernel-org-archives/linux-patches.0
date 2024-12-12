@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F522206A5;
-	Thu, 12 Dec 2024 15:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755D822331B;
+	Thu, 12 Dec 2024 15:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018489; cv=none; b=E+5TXc+oLC6Br4mmyx+eD/k6IPEWrpUoQyeTQiGdzq/z9gY43f6MGXv7DRoXPfXHin7QCYk1CpV8i7fJcQwTTMgImPmDbKUI7PDD35RUV3zOULAoeFd6WvpZu8KCLUMC5sGY83Vo69XvsyZqDC+B045r8Zu/nZvCcn2Mh2yOY/4=
+	t=1734018493; cv=none; b=YJVMU9GL8VooXTRGEHWwQyIWttEQRlXrM9ovS6V+KUnigTQ13JE0ewmswne1HLFldpZi7xarbRKyHkonJ4ogegKUHuircFh1blf1GnHLa6c5B/sDPnCG9YKZ1aQmoKp1Ba7XlBP4AlwaR/ja6qLcTTsDeszXK8qPxLvn1dNWlPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018489; c=relaxed/simple;
-	bh=+UXuSw8QGolWP8dVFndUCnkg3seDLb4Orinn/2Cv19Y=;
+	s=arc-20240116; t=1734018493; c=relaxed/simple;
+	bh=ZCgWOwUW1iuRzWTEfMPkSxwj5CBdrLZDLcz0O4CfrFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q8kF6PMX8ZU1LMqJjiWXBVerSrEkX4+bUKdnndYp3huSgNp9rMZRyC5MaYfF0EILtcw3eAAhfOuAjVeMrcKv9d7TB4jXqnsDr4+g/Wun530haEu31Zh26Fy7QkOmOWjaZ6tozVC8Sbf1VyZsHCcoCwMRDzt4zGs6daLCB0yJFpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqxapzuT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jy6GvDMLL9jfK3EBoiwYKYeEX7F40rY7nC4hhW/4sqWqQFPELknEhpLkGSLuU+1InkZd9q5jjVnQDl8LBNtZvGalokhcdEMd5rk4ooRRR7YZxqAkTXggVq9zgWlqh64NOdPwc7Gv5trvwhSG5uD2KM3hFE/1MO3fYhgHnOBQZ/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P8omhO6d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqxapzuT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBAAC4CECE;
-	Thu, 12 Dec 2024 15:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P8omhO6d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF78BC4CED3;
+	Thu, 12 Dec 2024 15:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018489;
-	bh=+UXuSw8QGolWP8dVFndUCnkg3seDLb4Orinn/2Cv19Y=;
+	s=korg; t=1734018493;
+	bh=ZCgWOwUW1iuRzWTEfMPkSxwj5CBdrLZDLcz0O4CfrFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqxapzuT3/TajBiGmSm/cP+nSd5OwigXigOKof5uoSwT+JGh/9sLggE/9atMRefvT
-	 SGsG0+lqyS101ab90EXfCc5KfD7b7bJsW5NDS6P/Xi/fKtR9DIUjRISVRPyCkSRsc9
-	 qYUP27JQnfu/nOr3TtBA0PB3ow6b4CwAO/jgfls4=
+	b=P8omhO6dKfVuDWlxHpPwjyYDhWjygmmZRelob9oHarXmawE3J5E/zRxbdNnb5AVPT
+	 67X5RkwWn8CccH7kwc6Em/gKejShYZmeM2XsqnJIcQs1bSOH0HPBWDX6rgqMHBTYpE
+	 LfePObdcQDxIlVzvuKM8zEzN9PgYe5HwRcUwijAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tova <blueaddagio@laposte.net>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>,
-	Mark Brown <broonie@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.ntel.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 308/356] ASoC: amd: yc: Add quirk for microphone on Lenovo Thinkpad T14s Gen 6 21M1CTO1WW
-Date: Thu, 12 Dec 2024 16:00:27 +0100
-Message-ID: <20241212144256.729637285@linuxfoundation.org>
+Subject: [PATCH 6.6 291/356] PCI: vmd: Add DID 8086:B06F and 8086:B60B for Intel client SKUs
+Date: Thu, 12 Dec 2024 16:00:10 +0100
+Message-ID: <20241212144256.068765237@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,40 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uwe Kleine-König <ukleinek@debian.org>
+From: Nirmal Patel <nirmal.patel@linux.ntel.com>
 
-[ Upstream commit cbc86dd0a4fe9f8c41075328c2e740b68419d639 ]
+[ Upstream commit b727484cace4be22be9321cc0bc9487648ba447b ]
 
-Add a quirk for Tova's Lenovo Thinkpad T14s with product name 21M1.
+Add support for this VMD device which supports the bus restriction mode.
+The feature that turns off vector 0 for MSI-X remapping is also enabled.
 
-Suggested-by: Tova <blueaddagio@laposte.net>
-Link: https://bugs.debian.org/1087673
-Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
-Link: https://patch.msgid.link/20241122075606.213132-2-ukleinek@debian.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241011175657.249948-1-nirmal.patel@linux.intel.com
+Signed-off-by: Nirmal Patel <nirmal.patel@linux.ntel.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pci/controller/vmd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 8a99ba5394b4a..39f151d073a6c 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -220,6 +220,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21J6"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21M1"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index 6ac0afae0ca18..ade18991e7366 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -1114,6 +1114,10 @@ static const struct pci_device_id vmd_ids[] = {
+ 		.driver_data = VMD_FEATS_CLIENT,},
+ 	{PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_VMD_9A0B),
+ 		.driver_data = VMD_FEATS_CLIENT,},
++	{PCI_VDEVICE(INTEL, 0xb60b),
++                .driver_data = VMD_FEATS_CLIENT,},
++	{PCI_VDEVICE(INTEL, 0xb06f),
++                .driver_data = VMD_FEATS_CLIENT,},
+ 	{0,}
+ };
+ MODULE_DEVICE_TABLE(pci, vmd_ids);
 -- 
 2.43.0
 
