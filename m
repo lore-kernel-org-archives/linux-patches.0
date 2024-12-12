@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7777B1547F0;
-	Thu, 12 Dec 2024 15:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34CC2185A8;
+	Thu, 12 Dec 2024 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018197; cv=none; b=pIb2iDkFaGSefURKEKBW4Cf+tNxChp0r9BP71PNvEylv5AH5Dos9J77GPm5E7BQxfsUEEoq7GssOpuCf4xh5AnYzbVbar+xBqkj7HIZrUWSKLwzzwyntaJxngvKqgYB+o42Vpm7m1RwQ//KqNb2o0DLBgs0p24Le4eZhwv8zkI0=
+	t=1734018200; cv=none; b=Mh979I6ovJjzTDZ6aHrEqZ/u3qg6290O6ZqTNXjpe8jjyce0fWJiYCvXsJEh10858lbO3abve45nsYXJIyPqgH6PQimfCvf6wFWIP9EZmT9L/6kp1KGaIZbbwhgStKjNIq9XnZNWpj+arfnaBm+QsulA+6I0UiKQkCssflbEHqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018197; c=relaxed/simple;
-	bh=aUsAp68o3SH+LrZJXA8u4pNMTKZcpCrRZl5UqjXumZM=;
+	s=arc-20240116; t=1734018200; c=relaxed/simple;
+	bh=LdLm1OfITKhkodrSSeYJ72j1Hv20X3s3gPoG+UUePpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlpgPgNbH3q6+YWtF4NHINNhCwYSd7fhoC/GnzE7jCon9TkjAiq4MdpAZSVqaDh8IIzqVGOSXboTRER44rfOSzUeW2MoCFzxnA+AFPfxSspKSBJq22M+O99pbF1HgLnFOLtIq/RK/qRCssD44+JGD93WSYYppc7fQSHxtwY5mWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwCH7GKm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WevfzUvdjUuPUlezF/ARtaTIujr8X5pgTCYj0pWnx5qB+1YPc/yjY9F9W9Zb+RryKOD9tqT2Mcorv0j29JVV2VPiO5/RnhXaZkU+07XhkMw/lnYQongDGA7taRfAkZqb4f73vsUEkPDLKRPl/NHqrOpW5V34gxOy59Nk5fVePfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaGuauF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwCH7GKm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C90C4CECE;
-	Thu, 12 Dec 2024 15:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaGuauF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416C3C4CECE;
+	Thu, 12 Dec 2024 15:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018197;
-	bh=aUsAp68o3SH+LrZJXA8u4pNMTKZcpCrRZl5UqjXumZM=;
+	s=korg; t=1734018200;
+	bh=LdLm1OfITKhkodrSSeYJ72j1Hv20X3s3gPoG+UUePpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwCH7GKmVy0CCMSLdaqKTjyiRxI0fi1evCCaQmAiz4kSi5t57A36mcQMmgfKieYPJ
-	 /RyBaKmnRR5Te+ap0sx7MLiF7adBBYeORxZPG2OEGxuSGvNsitfRFdphbP9HsySECc
-	 oyNZ1bNFBr4X9joK5wEWp9juA+0OogwrNRixB67o=
+	b=eaGuauF52xYWQ4YEAdjYSL57ZPlDj0viLFagTUpwI6uig8NXolP3i90WqmLODSP2y
+	 1k/HNloiXTFvIO9gDbbbplhAH8IPGEg4c26LUfKTGoXBYj3NQ+2XBZtnyhT9/Oln+/
+	 sKo3qSnnxsr7FxMzgD1kXuVccf1s24q9LF5IQq5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sandipan Das <sandipan.das@amd.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/356] perf/x86/amd: Warn only on new bits set
-Date: Thu, 12 Dec 2024 15:58:33 +0100
-Message-ID: <20241212144252.292017840@linuxfoundation.org>
+Subject: [PATCH 6.6 195/356] spi: spi-fsl-lpspi: Adjust type of scldiv
+Date: Thu, 12 Dec 2024 15:58:34 +0100
+Message-ID: <20241212144252.329932320@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,68 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit de20037e1b3c2f2ca97b8c12b8c7bca8abd509a7 ]
+[ Upstream commit fa8ecda9876ac1e7b29257aa82af1fd0695496e2 ]
 
-Warning at every leaking bits can cause a flood of message, triggering
-various stall-warning mechanisms to fire, including CSD locks, which
-makes the machine to be unusable.
+The target value of scldiv is just a byte, but its calculation in
+fsl_lpspi_set_bitrate could be negative. So use an adequate type to store
+the result and avoid overflows. After that this needs range check
+adjustments, but this should make the code less opaque.
 
-Track the bits that are being leaked, and only warn when a new bit is
-set.
-
-That said, this patch will help with the following issues:
-
-1) It will tell us which bits are being set, so, it is easy to
-   communicate it back to vendor, and to do a root-cause analyzes.
-
-2) It avoid the machine to be unusable, because, worst case
-   scenario, the user gets less than 60 WARNs (one per unhandled bit).
-
-Suggested-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Link: https://lkml.kernel.org/r/20241001141020.2620361-1-leitao@debian.org
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20240930093056.93418-2-wahrenst@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/core.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/amd/core.c b/arch/x86/events/amd/core.c
-index 8ed10366c4a27..aa8fc2cf1bde7 100644
---- a/arch/x86/events/amd/core.c
-+++ b/arch/x86/events/amd/core.c
-@@ -895,11 +895,12 @@ static int amd_pmu_handle_irq(struct pt_regs *regs)
- static int amd_pmu_v2_handle_irq(struct pt_regs *regs)
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 514a2c5c84226..9e2541dee56e5 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -315,9 +315,10 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
+ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
  {
- 	struct cpu_hw_events *cpuc = this_cpu_ptr(&cpu_hw_events);
-+	static atomic64_t status_warned = ATOMIC64_INIT(0);
-+	u64 reserved, status, mask, new_bits, prev_bits;
- 	struct perf_sample_data data;
- 	struct hw_perf_event *hwc;
- 	struct perf_event *event;
- 	int handled = 0, idx;
--	u64 reserved, status, mask;
- 	bool pmu_enabled;
+ 	struct lpspi_config config = fsl_lpspi->config;
+-	unsigned int perclk_rate, scldiv, div;
++	unsigned int perclk_rate, div;
+ 	u8 prescale_max;
+ 	u8 prescale;
++	int scldiv;
  
- 	/*
-@@ -964,7 +965,12 @@ static int amd_pmu_v2_handle_irq(struct pt_regs *regs)
- 	 * the corresponding PMCs are expected to be inactive according to the
- 	 * active_mask
- 	 */
--	WARN_ON(status > 0);
-+	if (status > 0) {
-+		prev_bits = atomic64_fetch_or(status, &status_warned);
-+		// A new bit was set for the very first time.
-+		new_bits = status & ~prev_bits;
-+		WARN(new_bits, "New overflows for inactive PMCs: %llx\n", new_bits);
-+	}
+ 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
+ 	prescale_max = fsl_lpspi->devtype_data->prescale_max;
+@@ -338,13 +339,13 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
  
- 	/* Clear overflow and freeze bits */
- 	amd_pmu_ack_global_status(~status);
+ 	for (prescale = 0; prescale <= prescale_max; prescale++) {
+ 		scldiv = div / (1 << prescale) - 2;
+-		if (scldiv < 256) {
++		if (scldiv >= 0 && scldiv < 256) {
+ 			fsl_lpspi->config.prescale = prescale;
+ 			break;
+ 		}
+ 	}
+ 
+-	if (scldiv >= 256)
++	if (scldiv < 0 || scldiv >= 256)
+ 		return -EINVAL;
+ 
+ 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
 -- 
 2.43.0
 
