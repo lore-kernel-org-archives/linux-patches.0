@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A71213E6F;
-	Thu, 12 Dec 2024 17:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A643C20A5EE;
+	Thu, 12 Dec 2024 17:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024635; cv=none; b=WggFAkNoQzTsxR5nM1H0ZXmTNABtFjNmta0smMVy7e4NXBf7kHYSzAPolnT6NNAn3ng7lvhGjb5gARLjQzIowyQk5xfzG6xpmQJQnkcXclwaONueqgrvKvXq+w3kycqXSgF/OXsJlJbw2Unwmp4CUmUv0JyZaSDgTYlpZ9l47cY=
+	t=1734024638; cv=none; b=Y8iwE/xGe5LxXlVpBetgLQxy+e2Pfb4JGgTUi0TFo7Kizlmj3SX85+MOk8gjEuDeyRTUSfNA7zYtIGzVml9qAXa9k/ZjNrtfXd8QwsyZBOgKc2apzgRKWXcRBNjgYH90ZUMm22GLlj5X9r7dvrKCErKHRJv/QdAY5c4zZvUQkdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024635; c=relaxed/simple;
-	bh=bfrG3dl8bh45ZGrM8htbXNasL/jDAHAtHxwrbG7i1/I=;
+	s=arc-20240116; t=1734024638; c=relaxed/simple;
+	bh=o3+6KZcN+vpKrpLo8tWrgEKuZs38LamRiGXS2pEKhC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kt1WrfNNrdAt42RbaTd+pcp7prts9lWma5T8Hk2qtVp5kV0QQJwUAyTHrz+j7UP101HaooXhs+vAUT60nfO9uWXjHoRirHX81SidYcuTM3j8QeMVe6eSiCi7oYif1BxxP428WSQhEvZ1/Vzp5/AuKB7ziQfFFrNOpAFM5zWB/9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh+z4n3l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgQ8LhSF8RC/J2R5Spkhec3TH9HmK/14BpSAdhBTwhtwvI8ajKKfbEWGtfgEoQjJdesKG9AKZkjc37DRhAVYCbzh69TEfnY3/Fa41ydq/g61n+eKV5rCajT9hhwaLdnnGHoFmKqZFrCRYyL3QC31VQbkQd4wMIohTabl2fzzLQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNKPmalt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh+z4n3l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130FFC4CECE;
-	Thu, 12 Dec 2024 17:30:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNKPmalt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2434CC4CECE;
+	Thu, 12 Dec 2024 17:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024635;
-	bh=bfrG3dl8bh45ZGrM8htbXNasL/jDAHAtHxwrbG7i1/I=;
+	s=korg; t=1734024638;
+	bh=o3+6KZcN+vpKrpLo8tWrgEKuZs38LamRiGXS2pEKhC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fh+z4n3l3VBtMGQyTRofLpw1A2P2BOCCTwoptiQKqHr5hoVg14M5mIPOVYVSZSbR+
-	 sDKD2Fb71gBHsXbVzJv3aH/v1o9J9zUFfJFcOfh1SngH1UnVtZJSE1qG55aW/gHQxR
-	 CeKkA5mD4XZBCSDkAhTZdfwXbF5F/vRK5jQ4IMhY=
+	b=BNKPmaltlSQ8ecT30Pcq6/tlGC9nAed39F/j0pfmS2pYB8WIz4vwJMr0hjthHd6pG
+	 hDejBKDqivhP6F5F7WvvEqL+I6ATeZRxSZUOC458KmnOqc0RMK20r6rrKVcR/PSlZH
+	 bY/zpS/G62/z5BkUCddf/FnL9aCyuniZZ5kVChM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 5.10 362/459] arm64: ptrace: fix partial SETREGSET for NT_ARM_TAGGED_ADDR_CTRL
-Date: Thu, 12 Dec 2024 16:01:40 +0100
-Message-ID: <20241212144307.971953023@linuxfoundation.org>
+	Marie Ramlow <me@nycode.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 363/459] ALSA: usb-audio: add mixer mapping for Corsair HS80
+Date: Thu, 12 Dec 2024 16:01:41 +0100
+Message-ID: <20241212144308.011477173@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,69 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Marie Ramlow <me@nycode.dev>
 
-commit ca62d90085f4af36de745883faab9f8a7cbb45d3 upstream.
+commit a7de2b873f3dbcda02d504536f1ec6dc50e3f6c4 upstream.
 
-Currently tagged_addr_ctrl_set() doesn't initialize the temporary 'ctrl'
-variable, and a SETREGSET call with a length of zero will leave this
-uninitialized. Consequently tagged_addr_ctrl_set() will consume an
-arbitrary value, potentially leaking up to 64 bits of memory from the
-kernel stack. The read is limited to a specific slot on the stack, and
-the issue does not provide a write mechanism.
+The Corsair HS80 RGB Wireless is a USB headset with a mic and a sidetone
+feature. It has the same quirk as the Virtuoso series.
+This labels the mixers appropriately, so applications don't
+move the sidetone volume when they actually intend to move the main
+headset volume.
 
-As set_tagged_addr_ctrl() only accepts values where bits [63:4] zero and
-rejects other values, a partial SETREGSET attempt will randomly succeed
-or fail depending on the value of the uninitialized value, and the
-exposure is significantly limited.
-
-Fix this by initializing the temporary value before copying the regset
-from userspace, as for other regsets (e.g. NT_PRSTATUS, NT_PRFPREG,
-NT_ARM_SYSTEM_CALL). In the case of a zero-length write, the existing
-value of the tagged address ctrl will be retained.
-
-The NT_ARM_TAGGED_ADDR_CTRL regset is only visible in the
-user_aarch64_view used by a native AArch64 task to manipulate another
-native AArch64 task. As get_tagged_addr_ctrl() only returns an error
-value when called for a compat task, tagged_addr_ctrl_get() and
-tagged_addr_ctrl_set() should never observe an error value from
-get_tagged_addr_ctrl(). Add a WARN_ON_ONCE() to both to indicate that
-such an error would be unexpected, and error handlnig is not missing in
-either case.
-
-Fixes: 2200aa7154cb ("arm64: mte: ptrace: Add NT_ARM_TAGGED_ADDR_CTRL regset")
-Cc: <stable@vger.kernel.org> # 5.10.x
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20241205121655.1824269-2-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Marie Ramlow <me@nycode.dev>
+cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241130165240.17838-1-me@nycode.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/ptrace.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/mixer_maps.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -1040,7 +1040,7 @@ static int tagged_addr_ctrl_get(struct t
- {
- 	long ctrl = get_tagged_addr_ctrl(target);
- 
--	if (IS_ERR_VALUE(ctrl))
-+	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
- 		return ctrl;
- 
- 	return membuf_write(&to, &ctrl, sizeof(ctrl));
-@@ -1054,6 +1054,10 @@ static int tagged_addr_ctrl_set(struct t
- 	int ret;
- 	long ctrl;
- 
-+	ctrl = get_tagged_addr_ctrl(target);
-+	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
-+		return ctrl;
-+
- 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ctrl, 0, -1);
- 	if (ret)
- 		return ret;
+--- a/sound/usb/mixer_maps.c
++++ b/sound/usb/mixer_maps.c
+@@ -596,6 +596,16 @@ static const struct usbmix_ctl_map usbmi
+ 		.id = USB_ID(0x1b1c, 0x0a42),
+ 		.map = corsair_virtuoso_map,
+ 	},
++	{
++		/* Corsair HS80 RGB Wireless (wired mode) */
++		.id = USB_ID(0x1b1c, 0x0a6a),
++		.map = corsair_virtuoso_map,
++	},
++	{
++		/* Corsair HS80 RGB Wireless (wireless mode) */
++		.id = USB_ID(0x1b1c, 0x0a6b),
++		.map = corsair_virtuoso_map,
++	},
+ 	{	/* Gigabyte TRX40 Aorus Master (rear panel + front mic) */
+ 		.id = USB_ID(0x0414, 0xa001),
+ 		.map = aorus_master_alc1220vb_map,
 
 
