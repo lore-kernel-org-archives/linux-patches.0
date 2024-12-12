@@ -1,101 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA59E1487CD;
-	Thu, 12 Dec 2024 17:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D2021766D;
+	Thu, 12 Dec 2024 17:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023964; cv=none; b=CjtMJ+3WdcI5g2FKGll1B9Jt8b+NsLjTjxmDRwk63cDeDu+4C+1xQMgX1g3OA/50cD3uxsrPo4TIaKSOZ8EZdnii9Xx0fKSOSBLd/pmJPl0QVvfLZ+pGDZrF5T2LdBteetDJE+AfJawBgnasYP37kWUv1yP2GNR5xiRJqKJDaX4=
+	t=1734023965; cv=none; b=feZvG7QMpTuXO/iIm4oOnTeJd1O9LZrauFq8Cxf/NpA+ZlFclNVMCHHCEMXqfKG6xLOFcJ0qlRnpfC4NPCFHT2T3Po/Cdq2jrVT8OVtqqQDN4VVsJFUnaUfngfoctFL2OJ/V3B5V7n5YlZmikeMkVWeX6k3YLPePWYHl5B7sgk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023964; c=relaxed/simple;
-	bh=DkH6pOAD6QKqV51TEa2FwY8/RsRE/pLozR2Nuj2ICB4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dh6yNQT3HBtG1PCxxjUW3AzHW0vdIMfUQIKPR/Vswob1j3NJ0iW4OZuTiQC1wgaaky4ZU6eAj39rITAP9ZWfZFkVrg9aXfvJ1uBLRyooKYz40cHjClnjLz4ZtZX7OIBtNwxQBWskyGk/ld82l+QKKTIM3qJGDNE8txNXTxZeDTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EWO+5QDW; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734023965; c=relaxed/simple;
+	bh=RYeb84NJsd9XozLQJpdZUCiIM2fX3l/PPqnAu853Bbs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=n/D78ZQYk+fpDgd08dWq72y038mvNeCPGUO99ToUGSpStBpccoVLKxGx28Z2NsK59TyvFo5EkJY4XDevN/YSWzzKmd/tOw1jvcXoVs2lUOCsjDq03ZnBz03AXTDCL1CiYRiq+jGVjPN468HVc2ersaIksNfwnPWtTnkXGN4+8sQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3lMRv/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EWO+5QDW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936A4C4CECE;
-	Thu, 12 Dec 2024 17:19:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734023964;
-	bh=DkH6pOAD6QKqV51TEa2FwY8/RsRE/pLozR2Nuj2ICB4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EWO+5QDWqclfAlSAKLa6E7bgNqlx9dQW3ew2/Z+uXYQ7KXgAvzocNLQVWcshzdPCK
-	 lS6neF4G0lVdkYQb7K8ienigW6Q3hgIGq3xeVZY84SSLoDApC+Xf2G4p2/w1gRq1x1
-	 kohx9KePCS7Z+RLf9SgfGg9HenjbQS31Pal8rSAOUPBi9SbusJuGxhzdYu3d1E044g
-	 4UOq0O6Y5JEmQbySuc+kVDwyJwhh1pEkHUM1mGuKByLxSHPAGjW9yn+L0q7axlSDgU
-	 KJTkETudMK/L7/KXC++CAhT9F5gYY/yV1nztOmqLajKIRvAZ2UMF//zYP9kVgDJkcY
-	 obFWPPy+GxPVg==
-Date: Thu, 12 Dec 2024 07:19:23 -1000
-From: Tejun Heo <tj@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Josef Bacik <josef@toxicpanda.com>, Jens Axboe <axboe@kernel.dk>,
-	cgroups@vger.kernel.org, linux-block@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] blk-iocost: Avoid using clamp() on inuse in
- __propagate_weights()
-Message-ID: <Z1sbG2zh8xmb-lxu@slm.duckdns.org>
-References: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3lMRv/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5999CC4CED0;
+	Thu, 12 Dec 2024 17:19:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1734023965;
+	bh=RYeb84NJsd9XozLQJpdZUCiIM2fX3l/PPqnAu853Bbs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j3lMRv/oOGz3CS+TqjGARl9kAC+dsTdUd49ZkBHAiia5OB8gxD7gMcB0EG2CIIT3x
+	 b3GwzlvpHXugZP4I6axm3YKuGDwxrAU5od50Ee2BouUIiOgA7UeWihU14ZB1I2hovH
+	 8clc9+pNM6yNo9gCxyFhzTwk+iTqo93B1Ef9+zbI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Zijian Zhang <zijianzhang@bytedance.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 141/459] selftests/bpf: Add txmsg_pass to pull/push/pop in test_sockmap
+Date: Thu, 12 Dec 2024 15:57:59 +0100
+Message-ID: <20241212144259.078165978@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
+References: <20241212144253.511169641@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 12, 2024 at 10:13:29AM -0700, Nathan Chancellor wrote:
-> After a recent change to clamp() and its variants [1] that increases the
-> coverage of the check that high is greater than low because it can be
-> done through inlining, certain build configurations (such as s390
-> defconfig) fail to build with clang with:
-> 
->   block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
->    1101 |                 inuse = clamp_t(u32, inuse, 1, active);
->         |                         ^
->   include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
->     218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
->         |                                    ^
->   include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
->     195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
->         |         ^
->   include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
->     188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
->         |         ^
-> 
-> __propagate_weights() is called with an active value of zero in
-> ioc_check_iocgs(), which results in the high value being less than the
-> low value, which is undefined because the value returned depends on the
-> order of the comparisons.
-> 
-> The purpose of this expression is to ensure inuse is not more than
-> active and at least 1. This could be written more simply with a ternary
-> expression that uses min(inuse, active) as the condition so that the
-> value of that condition can be used if it is not zero and one if it is.
-> Do this conversion to resolve the error and add a comment to deter
-> people from turning this back into clamp().
-> 
-> Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
-> Suggested-by: David Laight <david.laight@aculab.com>
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-Acked-by: Tejun Heo <tj@kernel.org>
+------------------
 
-This likely deserves:
+From: Zijian Zhang <zijianzhang@bytedance.com>
 
-Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-Cc: stable@vger.kernel.org # v5.4+
+[ Upstream commit 66c54c20408d994be34be2c070fba08472f69eee ]
 
-Thanks.
+Add txmsg_pass to test_txmsg_pull/push/pop. If txmsg_pass is missing,
+tx_prog will be NULL, and no program will be attached to the sockmap.
+As a result, pull/push/pop are never invoked.
 
+Fixes: 328aa08a081b ("bpf: Selftests, break down test_sockmap into subtests")
+Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20241106222520.527076-2-zijianzhang@bytedance.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ tools/testing/selftests/bpf/test_sockmap.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index 157a3c7b735e2..cd3ecf12535c1 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -1547,11 +1547,13 @@ static void test_txmsg_cork_hangs(int cgrp, struct sockmap_options *opt)
+ static void test_txmsg_pull(int cgrp, struct sockmap_options *opt)
+ {
+ 	/* Test basic start/end */
++	txmsg_pass = 1;
+ 	txmsg_start = 1;
+ 	txmsg_end = 2;
+ 	test_send(opt, cgrp);
+ 
+ 	/* Test >4k pull */
++	txmsg_pass = 1;
+ 	txmsg_start = 4096;
+ 	txmsg_end = 9182;
+ 	test_send_large(opt, cgrp);
+@@ -1580,11 +1582,13 @@ static void test_txmsg_pull(int cgrp, struct sockmap_options *opt)
+ static void test_txmsg_pop(int cgrp, struct sockmap_options *opt)
+ {
+ 	/* Test basic pop */
++	txmsg_pass = 1;
+ 	txmsg_start_pop = 1;
+ 	txmsg_pop = 2;
+ 	test_send_many(opt, cgrp);
+ 
+ 	/* Test pop with >4k */
++	txmsg_pass = 1;
+ 	txmsg_start_pop = 4096;
+ 	txmsg_pop = 4096;
+ 	test_send_large(opt, cgrp);
+@@ -1613,11 +1617,13 @@ static void test_txmsg_pop(int cgrp, struct sockmap_options *opt)
+ static void test_txmsg_push(int cgrp, struct sockmap_options *opt)
+ {
+ 	/* Test basic push */
++	txmsg_pass = 1;
+ 	txmsg_start_push = 1;
+ 	txmsg_end_push = 1;
+ 	test_send(opt, cgrp);
+ 
+ 	/* Test push 4kB >4k */
++	txmsg_pass = 1;
+ 	txmsg_start_push = 4096;
+ 	txmsg_end_push = 4096;
+ 	test_send_large(opt, cgrp);
+@@ -1638,6 +1644,7 @@ static void test_txmsg_push(int cgrp, struct sockmap_options *opt)
+ 
+ static void test_txmsg_push_pop(int cgrp, struct sockmap_options *opt)
+ {
++	txmsg_pass = 1;
+ 	txmsg_start_push = 1;
+ 	txmsg_end_push = 10;
+ 	txmsg_start_pop = 5;
 -- 
-tejun
+2.43.0
+
+
+
