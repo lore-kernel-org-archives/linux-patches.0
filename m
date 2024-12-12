@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6404F2054F8;
-	Thu, 12 Dec 2024 15:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D8D2054F8;
+	Thu, 12 Dec 2024 15:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016808; cv=none; b=dmHenvcLXgAAlx3DQ/8qO1vyrLz05P5dzDzozxCbXiQP8svN7CONYLty/rXGKqdi2SDbMt9Hon0bZDpdZoWz/1TIMc+d0sJBGpJUh+KsF60IoIlbQuvWK2h8kAL4ml9RWvq43HT46jWlG7Mo08xqkSnMAJ3QW7AbooT9tcxUFb0=
+	t=1734016809; cv=none; b=LJd3/3StFCy4nShmVKA9GqoLfo222ADv8Ko5sRgPHKjNe6f4wRP/ILn+TBZdBN8BpjpnzFbEKAgMGjwFhSAgFHDHtWHXXUEZJee3kDshA/ASZh/0ZFQjW6Maz5mJXNBr8aBtpcstvhrI+KZt1bfJstbIgMfs9j5BwehYqS2rH9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016808; c=relaxed/simple;
-	bh=0Oej/UG6ok/KxEzZYxPzIlB4ZSr9ZIRppY5Xv0wLnmM=;
+	s=arc-20240116; t=1734016809; c=relaxed/simple;
+	bh=kZvzeTVs7wBR6BEVmJmeOTMiSGGi5bcUBsAn7c/TQIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQij6yuitg5urlkxZxDpZxJUk00sVS13TKdg2mwdwujh5wHO2VmhYSn8/CPgC5m2Vyt4SNfCQW4NEe/hAdJjqZO0JYpRbx8/p+5Rqln5pkg4/xyIcFsicSt02ASpvfNFbEpJ/Rdk/0x9eAKfBQ8kYDMIUxLv9ZkUybIVjrDT8PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnmlQOe6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jeOGo8rGrrzy+X/eRBEL6AOwgtQT+TPNJKY/wV7+6dSH4JHSt6WSgPfvUv8LOMDFyRLfbJkMcj8wyAGLhGYmZ8owy8NehhRjUDvHvskcxKBru3S6If7NhXdLmdn6wHxUZT0OsbRIzEDC6SQMvPJVGz1zNjZl5OuowOOP3TQ7DZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoipyRFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnmlQOe6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8974FC4CECE;
-	Thu, 12 Dec 2024 15:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoipyRFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8D9C4CED4;
+	Thu, 12 Dec 2024 15:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016806;
-	bh=0Oej/UG6ok/KxEzZYxPzIlB4ZSr9ZIRppY5Xv0wLnmM=;
+	s=korg; t=1734016809;
+	bh=kZvzeTVs7wBR6BEVmJmeOTMiSGGi5bcUBsAn7c/TQIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnmlQOe6nnfPGwfc+3T7+qlahxYjYKoXVWI/P15B50bm3AK0+Gik8Ajyxkt+QB8f7
-	 2WEbryE86ofHxKPPUmcg4HHIEDZWuoryIkRLLwXW1CTOH4PFdHlCRpuzoOxrenixHC
-	 okK/vpkZ3l0PnsYwEy+/f1qxt4/W+1wIjWBhh87k=
+	b=DoipyRFLOvv9GDBU6tCxvxHZB1tXRjbJlllcWsiMxLaT7OEH/U+cdUN5M9S0ubKFq
+	 ugvYIOR+jRApmOJytPeUBGqs2cybKzGizjQ8Hq6z9vO8YDZduvD4L6HqPlvWswMZeq
+	 2kfLU/i06g/yuPyuDyYsqTlyCJ9/Fa9uSQ540o0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Badal Nilawar <badal.nilawar@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 302/466] ASoC: Intel: sof_sdw: Add quirks for some new Lenovo laptops
-Date: Thu, 12 Dec 2024 15:57:51 +0100
-Message-ID: <20241212144318.710477959@linuxfoundation.org>
+Subject: [PATCH 6.12 303/466] drm/xe/guc/ct: Flush g2h worker in case of g2h response timeout
+Date: Thu, 12 Dec 2024 15:57:52 +0100
+Message-ID: <20241212144318.748707968@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,72 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Badal Nilawar <badal.nilawar@intel.com>
 
-[ Upstream commit 83c062ae81e89f73e3ab85953111a8b3daaaf98e ]
+[ Upstream commit e5152723380404acb8175e0777b1cea57f319a01 ]
 
-Add some more sidecar amplifier quirks.
+In case if g2h worker doesn't get opportunity to within specified
+timeout delay then flush the g2h worker explicitly.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20241016030344.13535-5-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+v2:
+  - Describe change in the comment and add TODO (Matt B/John H)
+  - Add xe_gt_warn on fence done after G2H flush (John H)
+v3:
+  - Updated the comment with root cause
+  - Clean up xe_gt_warn message (John H)
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/issues/1620
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/issues/2902
+Signed-off-by: Badal Nilawar <badal.nilawar@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Acked-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241017111410.2553784-2-badal.nilawar@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/gpu/drm/xe/xe_guc_ct.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index fa937cc4d8cd1..a58842a8c8a64 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -580,6 +580,30 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		},
- 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "3838")
-+		},
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
-+	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "3832")
-+		},
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
-+	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "380E")
-+		},
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
-+	},
- 	{
- 		.callback = sof_sdw_quirk_cb,
- 		.matches = {
-@@ -589,6 +613,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 		/* Note this quirk excludes the CODEC mic */
- 		.driver_data = (void *)(SOC_SDW_CODEC_MIC),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "233B")
-+		},
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
-+	},
+diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
+index 9c505d3517cd1..cd6a5f09d631e 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -906,6 +906,24 @@ static int guc_ct_send_recv(struct xe_guc_ct *ct, const u32 *action, u32 len,
+ 		}
+ 	}
  
- 	/* ArrowLake devices */
- 	{
++	/*
++	 * Occasionally it is seen that the G2H worker starts running after a delay of more than
++	 * a second even after being queued and activated by the Linux workqueue subsystem. This
++	 * leads to G2H timeout error. The root cause of issue lies with scheduling latency of
++	 * Lunarlake Hybrid CPU. Issue dissappears if we disable Lunarlake atom cores from BIOS
++	 * and this is beyond xe kmd.
++	 *
++	 * TODO: Drop this change once workqueue scheduling delay issue is fixed on LNL Hybrid CPU.
++	 */
++	if (!ret) {
++		flush_work(&ct->g2h_worker);
++		if (g2h_fence.done) {
++			xe_gt_warn(gt, "G2H fence %u, action %04x, done\n",
++				   g2h_fence.seqno, action[0]);
++			ret = 1;
++		}
++	}
++
+ 	/*
+ 	 * Ensure we serialize with completion side to prevent UAF with fence going out of scope on
+ 	 * the stack, since we have no clue if it will fire after the timeout before we can erase
 -- 
 2.43.0
 
