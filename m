@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3863E2054EF;
-	Thu, 12 Dec 2024 16:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C8F2054EF;
+	Thu, 12 Dec 2024 16:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022579; cv=none; b=MkuOwXKiWfP4gpkZOvI97uNlsF5oH31IJxsb0ALJCYydtSY8GkbsaFeyf5IUoY/2wBSJe7TI+uTrQqzRf3Z9BenLfonPNjnhOmzXXMoHdeJhvOMAW/rnkxBxldyLuqZHUrT1CRpEBELmFab5i5C0LifdCryAU/Ol/T8cn8Sn2lY=
+	t=1734022582; cv=none; b=O4imTjqKQA8pI+MAWbJ/s5TOvRvqNyi/8G7dP8H9YGOPmo+TvrO+p1KxyMXVtA4y09MGcPd4GHBxaIJEFrTV7WIjV/2g7NS821qHr6I5R5a+JsSnzU1M9zdnxgr1Z3Rzn+re8iMzies0MG1N4Wyoa3FfD9u12CGtbgBuHiFD7ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022579; c=relaxed/simple;
-	bh=dbCQrxVbfP0Hi7AmV2DSmdzMCTd9R6DPFMcFni3QBAs=;
+	s=arc-20240116; t=1734022582; c=relaxed/simple;
+	bh=R7WxliadeRyRq+jM6h+QR6AsLCMyHbMr8WBn2LvWvSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqkZY4IV0/Tunk/odv8spKPg77S3UbGZJZHzc8KAA5X738QUHXtU08wGHzFu4MqxRoBG3XmYBzsSGVrk3UmvciEBOmNjoSxuGqtp7gpctdQrvOlE58q7DEqOkYcHQCTsIyxjxLLauHXn74VGaaXLtWsfXQmFn/+/4nH/9wm8F4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWXtnjE5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZISO6DEAjUlPisvDBCkZiHKQe7+hAoLEde6OhAxsruvwVh/SFmRfi0XsGfZ5glDHeGH/owi+6l8Ywv3odgYP1209eF+D8Og7H22A7YNPgM434dKYQZoko829XtYrziFrHU3MR5EJxWTyxw78kFj/B/AsoH/AYKZhgMm6fvhcd00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtmX+ec9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWXtnjE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E11AC4CED3;
-	Thu, 12 Dec 2024 16:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtmX+ec9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAC1C4CECE;
+	Thu, 12 Dec 2024 16:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022579;
-	bh=dbCQrxVbfP0Hi7AmV2DSmdzMCTd9R6DPFMcFni3QBAs=;
+	s=korg; t=1734022582;
+	bh=R7WxliadeRyRq+jM6h+QR6AsLCMyHbMr8WBn2LvWvSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWXtnjE5+s6L8rGKtCHmzOC/z/3qSNbWHgSZa4XiZEcqvNkm5Ix1n4jRZjLDwnGle
-	 lS1kFLqeK8hpoGeNCSMerXjzEDDsnaYYlzfefEK7R/e+BGXF1ENetVcG6qfYsrJbq1
-	 Zf9Sgakp0f8x4KuY1VXNt7GpnIVWsxl2gC5D86oo=
+	b=jtmX+ec9FbqBL/d/SLMI0BJGP9U8a+TfNs1tfnHB+PMci5vyAyz0HTRLobhoYnq4d
+	 SBNtI1kjrdCRE+lkUFf1a7OoJb1aRlAWP/fzqcQwNwLEalDPrDCCI8e/Bkc3TfSX1g
+	 6EN+xlHf1zFQNpmDad4WP8W0usmauuKkgfWueJQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 279/565] marvell: pxa168_eth: fix call balance of pep->clk handling routines
-Date: Thu, 12 Dec 2024 15:57:54 +0100
-Message-ID: <20241212144322.483788608@linuxfoundation.org>
+Subject: [PATCH 5.15 280/565] net: stmmac: dwmac-socfpga: Set RX watchdog interrupt as broken
+Date: Thu, 12 Dec 2024 15:57:55 +0100
+Message-ID: <20241212144322.521241361@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,74 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit b032ae57d4fe2b2445e3bc190db6fcaa8c102f68 ]
+[ Upstream commit 407618d66dba55e7db1278872e8be106808bbe91 ]
 
-If the clock pep->clk was not enabled in pxa168_eth_probe,
-it should not be disabled in any path.
+On DWMAC3 and later, there's a RX Watchdog interrupt that's used for
+interrupt coalescing. It's known to be buggy on some platforms, and
+dwmac-socfpga appears to be one of them. Changing the interrupt
+coalescing from ethtool doesn't appear to have any effect here.
 
-Conversely, if it was enabled in pxa168_eth_probe, it must be disabled
-in all error paths to ensure proper cleanup.
+Without disabling RIWT (Received Interrupt Watchdog Timer, I
+believe...), we observe latencies while receiving traffic that amount to
+around ~0.4ms. This was discovered with NTP but can be easily reproduced
+with a simple ping. Without this patch :
 
-Use the devm_clk_get_enabled helper function to ensure proper call balance
-for pep->clk.
+64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.657 ms
 
-Found by Linux Verification Center (linuxtesting.org) with Klever.
+With this patch :
 
-Fixes: a49f37eed22b ("net: add Fast Ethernet driver for PXA168.")
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Link: https://patch.msgid.link/20241121200658.2203871-1-mordan@ispras.ru
+64 bytes from 192.168.5.2: icmp_seq=1 ttl=64 time=0.254 ms
+
+Fixes: 801d233b7302 ("net: stmmac: Add SOCFPGA glue driver")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Link: https://patch.msgid.link/20241122141256.764578-1-maxime.chevallier@bootlin.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/pxa168_eth.c | 14 ++++----------
- 1 file changed, 4 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/pxa168_eth.c b/drivers/net/ethernet/marvell/pxa168_eth.c
-index 11ef1d8dea15c..a202320c26985 100644
---- a/drivers/net/ethernet/marvell/pxa168_eth.c
-+++ b/drivers/net/ethernet/marvell/pxa168_eth.c
-@@ -1396,18 +1396,15 @@ static int pxa168_eth_probe(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
+index 6b447d8f0bd8a..9c726fe40acdf 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c
+@@ -426,6 +426,8 @@ static int socfpga_dwmac_probe(struct platform_device *pdev)
+ 	plat_dat->bsp_priv = dwmac;
+ 	plat_dat->fix_mac_speed = socfpga_dwmac_fix_mac_speed;
  
- 	printk(KERN_NOTICE "PXA168 10/100 Ethernet Driver\n");
- 
--	clk = devm_clk_get(&pdev->dev, NULL);
-+	clk = devm_clk_get_enabled(&pdev->dev, NULL);
- 	if (IS_ERR(clk)) {
--		dev_err(&pdev->dev, "Fast Ethernet failed to get clock\n");
-+		dev_err(&pdev->dev, "Fast Ethernet failed to get and enable clock\n");
- 		return -ENODEV;
- 	}
--	clk_prepare_enable(clk);
- 
- 	dev = alloc_etherdev(sizeof(struct pxa168_eth_private));
--	if (!dev) {
--		err = -ENOMEM;
--		goto err_clk;
--	}
-+	if (!dev)
-+		return -ENOMEM;
- 
- 	platform_set_drvdata(pdev, dev);
- 	pep = netdev_priv(dev);
-@@ -1518,8 +1515,6 @@ static int pxa168_eth_probe(struct platform_device *pdev)
- 	mdiobus_free(pep->smi_bus);
- err_netdev:
- 	free_netdev(dev);
--err_clk:
--	clk_disable_unprepare(clk);
- 	return err;
- }
- 
-@@ -1537,7 +1532,6 @@ static int pxa168_eth_remove(struct platform_device *pdev)
- 	if (dev->phydev)
- 		phy_disconnect(dev->phydev);
- 
--	clk_disable_unprepare(pep->clk);
- 	mdiobus_unregister(pep->smi_bus);
- 	mdiobus_free(pep->smi_bus);
- 	unregister_netdev(dev);
++	plat_dat->riwt_off = 1;
++
+ 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+ 	if (ret)
+ 		goto err_remove_config_dt;
 -- 
 2.43.0
 
