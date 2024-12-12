@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C2C6F2FE;
-	Thu, 12 Dec 2024 15:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3AF6F2FE;
+	Thu, 12 Dec 2024 15:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017850; cv=none; b=pND8nayPxuqiX/W/imBjtmVMtCTu78/XIVKDJdSgqfNatngDiLNwQbjPxBfLxmi7XP6CImHyKiBokjQnpAoQMk3pQwTsT3Yy0nL0HHIVes2zGg7+ulDLf0d1MN3RZVuLWy7k96nGUJv2ZGE157H7tz0yhmtoWid/okFRFlpDhcM=
+	t=1734017853; cv=none; b=p/rV19NqVNaIY4n2bs3IJhMcrl72/zS7KbA5dtb67sgwkB9s4WbtbnkI2Yo81a1gJubiGCNoD/1u7YfZ7ST0nAeA/YQoDmFbuJkCcdPhB9yVXGcv0pF/nu67YF8t2l7N+cSZcqS9NyMKeTijwd7vTlaN8tpoRgSoKUUJI2ukoic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017850; c=relaxed/simple;
-	bh=xVN9IJ7uIdT/29KFG1B4sygXXIgPBPDyXQoa/4L2kH8=;
+	s=arc-20240116; t=1734017853; c=relaxed/simple;
+	bh=DJWptvMv0VcVd1ZbXgK7pW4adKpdI3jY4mGwCBfGajo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aIY4LDnfNs+q1SxXrCu6STAf8ox6LYflQe4oUqjIYEnCw9SLuyR2iSaLFwCVK15e4ej2+xeT2vb6hwyX3oukMs1EJLax1hT5f40yjkPLaMpk8pd0epKuz0G7PN94sHfXLXjLj9swul2+ObtM3UlExLKv8hjOj+FBGq/hTXgI3AE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gg52GIZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TM6DQK6vcAJ49kdroMjRNN2Df7nKSe9ZTlt1xwldryOtHyg3sSoNoLxbAOm8lypytjJScYtg3RAtn+7nkfYponKQmOR34usB3KAvomShE50DUA5JEo4XcEdSPqIyzPPPbODhY6kIKij4ooQ75YnW/q6Vy+VwtSxmsxlGffa340Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDIYO8YM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gg52GIZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636A9C4CECE;
-	Thu, 12 Dec 2024 15:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDIYO8YM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB6EC4CECE;
+	Thu, 12 Dec 2024 15:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017849;
-	bh=xVN9IJ7uIdT/29KFG1B4sygXXIgPBPDyXQoa/4L2kH8=;
+	s=korg; t=1734017853;
+	bh=DJWptvMv0VcVd1ZbXgK7pW4adKpdI3jY4mGwCBfGajo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gg52GIZGuBfHbl8Xgu+xIZoZyegjKb68XxFv1uVMhOIy6WojF/PktZIyoBthlJSq7
-	 kGkQlS0kryCcDMDKsK9BypNcr1iAG9kNFxsI4zN4+81POsC+LgrPHGO82mSvPrywGU
-	 6G7cefQGBgJMEfhkAKzkGhld2AD1Lr48MY/c5olc=
+	b=NDIYO8YMNb2IyF7cYNEnuf9hqqzwlgidsbNUTnrt8S6EcJRnjsaaM3mkloDs8asxa
+	 o+QE0fSi5SUpZUJMELCPaTBvgaEKPOHSDGZBnF2p8RM0NufzymWdLKT4J/O3Ymxpi8
+	 VV91+aohUpM9QZkOZOjGcx7k7Cu1w3Sk+GRF7T+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/356] i3c: master: add enable(disable) hot join in sys entry
-Date: Thu, 12 Dec 2024 15:56:57 +0100
-Message-ID: <20241212144248.490683506@linuxfoundation.org>
+Subject: [PATCH 6.6 099/356] i3c: master: svc: add hot join support
+Date: Thu, 12 Dec 2024 15:56:58 +0100
+Message-ID: <20241212144248.529371002@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,155 +53,161 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 317bacf960a4879af22d12175f47d284930b3273 ]
+[ Upstream commit 05b26c31a4859af9e75b7de77458e99358364fe1 ]
 
-Add hotjoin entry in sys file system allow user enable/disable hotjoin
-feature.
-
-Add (*enable(disable)_hotjoin)() to i3c_master_controller_ops.
-Add api i3c_master_enable(disable)_hotjoin();
+Add hot join support for svc master controller. Disable hot join by
+default.
+User can use sysfs entry to enable hot join.
 
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20231201222532.2431484-2-Frank.Li@nxp.com
+Link: https://lore.kernel.org/r/20231201222532.2431484-3-Frank.Li@nxp.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Stable-dep-of: 25bc99be5fe5 ("i3c: master: svc: Modify enabled_events bit 7:0 to act as IBI enable counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master.c       | 83 ++++++++++++++++++++++++++++++++++++++
- include/linux/i3c/master.h |  5 +++
- 2 files changed, 88 insertions(+)
+ drivers/i3c/master/svc-i3c-master.c | 61 +++++++++++++++++++++++++++--
+ 1 file changed, 57 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
-index 70d120dfb0908..bbd5dc89be229 100644
---- a/drivers/i3c/master.c
-+++ b/drivers/i3c/master.c
-@@ -526,6 +526,88 @@ static ssize_t i2c_scl_frequency_show(struct device *dev,
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index dca266d9dd122..139b51a575366 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -128,6 +128,9 @@
+ /* This parameter depends on the implementation and may be tuned */
+ #define SVC_I3C_FIFO_SIZE 16
+ 
++#define SVC_I3C_EVENT_IBI	BIT(0)
++#define SVC_I3C_EVENT_HOTJOIN	BIT(1)
++
+ struct svc_i3c_cmd {
+ 	u8 addr;
+ 	bool rnw;
+@@ -178,6 +181,7 @@ struct svc_i3c_regs_save {
+  * @ibi.tbq_slot: To be queued IBI slot
+  * @ibi.lock: IBI lock
+  * @lock: Transfer lock, protect between IBI work thread and callbacks from master
++ * @enabled_events: Bit masks for enable events (IBI, HotJoin).
+  */
+ struct svc_i3c_master {
+ 	struct i3c_master_controller base;
+@@ -207,6 +211,7 @@ struct svc_i3c_master {
+ 		spinlock_t lock;
+ 	} ibi;
+ 	struct mutex lock;
++	int enabled_events;
+ };
+ 
+ /**
+@@ -221,6 +226,11 @@ struct svc_i3c_i2c_dev_data {
+ 	struct i3c_generic_ibi_pool *ibi_pool;
+ };
+ 
++static inline bool is_events_enabled(struct svc_i3c_master *master, u32 mask)
++{
++	return !!(master->enabled_events & mask);
++}
++
+ static bool svc_i3c_master_error(struct svc_i3c_master *master)
+ {
+ 	u32 mstatus, merrwarn;
+@@ -440,13 +450,16 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 	switch (ibitype) {
+ 	case SVC_I3C_MSTATUS_IBITYPE_IBI:
+ 		dev = svc_i3c_master_dev_from_addr(master, ibiaddr);
+-		if (!dev)
++		if (!dev || !is_events_enabled(master, SVC_I3C_EVENT_IBI))
+ 			svc_i3c_master_nack_ibi(master);
+ 		else
+ 			svc_i3c_master_handle_ibi(master, dev);
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_HOT_JOIN:
+-		svc_i3c_master_ack_ibi(master, false);
++		if (is_events_enabled(master, SVC_I3C_EVENT_HOTJOIN))
++			svc_i3c_master_ack_ibi(master, false);
++		else
++			svc_i3c_master_nack_ibi(master);
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
+ 		svc_i3c_master_nack_ibi(master);
+@@ -483,7 +496,9 @@ static void svc_i3c_master_ibi_work(struct work_struct *work)
+ 		svc_i3c_master_emit_stop(master);
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_HOT_JOIN:
+-		queue_work(master->base.wq, &master->hj_work);
++		svc_i3c_master_emit_stop(master);
++		if (is_events_enabled(master, SVC_I3C_EVENT_HOTJOIN))
++			queue_work(master->base.wq, &master->hj_work);
+ 		break;
+ 	case SVC_I3C_MSTATUS_IBITYPE_MASTER_REQUEST:
+ 	default:
+@@ -1520,6 +1535,7 @@ static int svc_i3c_master_enable_ibi(struct i3c_dev_desc *dev)
+ 		return ret;
+ 	}
+ 
++	master->enabled_events |= SVC_I3C_EVENT_IBI;
+ 	svc_i3c_master_enable_interrupts(master, SVC_I3C_MINT_SLVSTART);
+ 
+ 	return i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
+@@ -1531,7 +1547,9 @@ static int svc_i3c_master_disable_ibi(struct i3c_dev_desc *dev)
+ 	struct svc_i3c_master *master = to_svc_i3c_master(m);
+ 	int ret;
+ 
+-	svc_i3c_master_disable_interrupts(master);
++	master->enabled_events &= ~SVC_I3C_EVENT_IBI;
++	if (!master->enabled_events)
++		svc_i3c_master_disable_interrupts(master);
+ 
+ 	ret = i3c_master_disec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
+ 
+@@ -1541,6 +1559,39 @@ static int svc_i3c_master_disable_ibi(struct i3c_dev_desc *dev)
+ 	return ret;
  }
- static DEVICE_ATTR_RO(i2c_scl_frequency);
  
-+static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
++static int svc_i3c_master_enable_hotjoin(struct i3c_master_controller *m)
 +{
++	struct svc_i3c_master *master = to_svc_i3c_master(m);
 +	int ret;
 +
-+	if (!master || !master->ops)
-+		return -EINVAL;
-+
-+	if (!master->ops->enable_hotjoin || !master->ops->disable_hotjoin)
-+		return -EINVAL;
-+
-+	i3c_bus_normaluse_lock(&master->bus);
-+
-+	if (enable)
-+		ret = master->ops->enable_hotjoin(master);
-+	else
-+		ret = master->ops->disable_hotjoin(master);
-+
-+	master->hotjoin = enable;
-+
-+	i3c_bus_normaluse_unlock(&master->bus);
-+
-+	return ret;
-+}
-+
-+static ssize_t hotjoin_store(struct device *dev, struct device_attribute *attr,
-+			     const char *buf, size_t count)
-+{
-+	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
-+	int ret;
-+	bool res;
-+
-+	if (!i3cbus->cur_master)
-+		return -EINVAL;
-+
-+	if (kstrtobool(buf, &res))
-+		return -EINVAL;
-+
-+	ret = i3c_set_hotjoin(i3cbus->cur_master->common.master, res);
-+	if (ret)
++	ret = pm_runtime_resume_and_get(master->dev);
++	if (ret < 0) {
++		dev_err(master->dev, "<%s> Cannot get runtime PM.\n", __func__);
 +		return ret;
++	}
 +
-+	return count;
++	master->enabled_events |= SVC_I3C_EVENT_HOTJOIN;
++
++	svc_i3c_master_enable_interrupts(master, SVC_I3C_MINT_SLVSTART);
++
++	return 0;
 +}
 +
-+/*
-+ * i3c_master_enable_hotjoin - Enable hotjoin
-+ * @master: I3C master object
-+ *
-+ * Return: a 0 in case of success, an negative error code otherwise.
-+ */
-+int i3c_master_enable_hotjoin(struct i3c_master_controller *master)
++static int svc_i3c_master_disable_hotjoin(struct i3c_master_controller *m)
 +{
-+	return i3c_set_hotjoin(master, true);
-+}
-+EXPORT_SYMBOL_GPL(i3c_master_enable_hotjoin);
++	struct svc_i3c_master *master = to_svc_i3c_master(m);
 +
-+/*
-+ * i3c_master_disable_hotjoin - Disable hotjoin
-+ * @master: I3C master object
-+ *
-+ * Return: a 0 in case of success, an negative error code otherwise.
-+ */
-+int i3c_master_disable_hotjoin(struct i3c_master_controller *master)
-+{
-+	return i3c_set_hotjoin(master, false);
-+}
-+EXPORT_SYMBOL_GPL(i3c_master_disable_hotjoin);
++	master->enabled_events &= ~SVC_I3C_EVENT_HOTJOIN;
 +
-+static ssize_t hotjoin_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
-+	ssize_t ret;
++	if (!master->enabled_events)
++		svc_i3c_master_disable_interrupts(master);
 +
-+	i3c_bus_normaluse_lock(i3cbus);
-+	ret = sysfs_emit(buf, "%d\n", i3cbus->cur_master->common.master->hotjoin);
-+	i3c_bus_normaluse_unlock(i3cbus);
++	pm_runtime_mark_last_busy(master->dev);
++	pm_runtime_put_autosuspend(master->dev);
 +
-+	return ret;
++	return 0;
 +}
 +
-+static DEVICE_ATTR_RW(hotjoin);
-+
- static struct attribute *i3c_masterdev_attrs[] = {
- 	&dev_attr_mode.attr,
- 	&dev_attr_current_master.attr,
-@@ -536,6 +618,7 @@ static struct attribute *i3c_masterdev_attrs[] = {
- 	&dev_attr_pid.attr,
- 	&dev_attr_dynamic_address.attr,
- 	&dev_attr_hdrcap.attr,
-+	&dev_attr_hotjoin.attr,
- 	NULL,
- };
- ATTRIBUTE_GROUPS(i3c_masterdev);
-diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
-index 0b52da4f23467..65b8965968af2 100644
---- a/include/linux/i3c/master.h
-+++ b/include/linux/i3c/master.h
-@@ -452,6 +452,8 @@ struct i3c_master_controller_ops {
- 	int (*disable_ibi)(struct i3c_dev_desc *dev);
- 	void (*recycle_ibi_slot)(struct i3c_dev_desc *dev,
- 				 struct i3c_ibi_slot *slot);
-+	int (*enable_hotjoin)(struct i3c_master_controller *master);
-+	int (*disable_hotjoin)(struct i3c_master_controller *master);
+ static void svc_i3c_master_recycle_ibi_slot(struct i3c_dev_desc *dev,
+ 					    struct i3c_ibi_slot *slot)
+ {
+@@ -1567,6 +1618,8 @@ static const struct i3c_master_controller_ops svc_i3c_master_ops = {
+ 	.recycle_ibi_slot = svc_i3c_master_recycle_ibi_slot,
+ 	.enable_ibi = svc_i3c_master_enable_ibi,
+ 	.disable_ibi = svc_i3c_master_disable_ibi,
++	.enable_hotjoin = svc_i3c_master_enable_hotjoin,
++	.disable_hotjoin = svc_i3c_master_disable_hotjoin,
  };
  
- /**
-@@ -487,6 +489,7 @@ struct i3c_master_controller {
- 	const struct i3c_master_controller_ops *ops;
- 	unsigned int secondary : 1;
- 	unsigned int init_done : 1;
-+	unsigned int hotjoin: 1;
- 	struct {
- 		struct list_head i3c;
- 		struct list_head i2c;
-@@ -543,6 +546,8 @@ int i3c_master_register(struct i3c_master_controller *master,
- 			const struct i3c_master_controller_ops *ops,
- 			bool secondary);
- void i3c_master_unregister(struct i3c_master_controller *master);
-+int i3c_master_enable_hotjoin(struct i3c_master_controller *master);
-+int i3c_master_disable_hotjoin(struct i3c_master_controller *master);
- 
- /**
-  * i3c_dev_get_master_data() - get master private data attached to an I3C
+ static int svc_i3c_master_prepare_clks(struct svc_i3c_master *master)
 -- 
 2.43.0
 
