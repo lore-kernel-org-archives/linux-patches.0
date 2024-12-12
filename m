@@ -1,95 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE7021766D;
-	Thu, 12 Dec 2024 17:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34712144C0;
+	Thu, 12 Dec 2024 17:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023616; cv=none; b=mjznVK6bgPrH+Q9SY6mlwl1V3k36OMcDnQ3vR5nqEULGc+gQqOa3v5PUQ/JKKXY0ctaOYp89lptRQs6V239KJjTDsb+SY1Lcw2v+OE6lvKB2HBAtKgpvd6fqdoR1NA/XgVZPPDmD07mX+LYHNBOs+g/w0C3ewqfQ/egps88ZV74=
+	t=1734023619; cv=none; b=KtQgSuXXaA69l2QivACevPEdxGOWClDxQAvUR3NwfCLvZlgqx5pDrrnKLX6rAr44UN3c8RW+DV7ePRzS/nxtQzlPR0NndMuDudUEFkyQvl+8ocf/pcimwKVHc2+0l9EUP3AN68B5UnQOske5vq9h43AqpalaEtUBX6si1a00chY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023616; c=relaxed/simple;
-	bh=vsSh4lF4dQS0I6+i62LIxC9qaq2yK6GONrrO0OlgXlQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU+PHyKg9wDH+Wt0sk0hJdZ0aZVEu/f1t/gWN/8hN3LSJQimGpbvJu3cdg44oqfyLJlXv9LYYKWNxtnVx3r+0wSghDC8ODFNeBQ8KS5GxzVo8c1vt+c6/8Pz0oLVmpMzomCKti9/x8NqbbOFSFYqKIzbFO9wkSgH9Ks/mKpL0Rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+wh4c3t; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734023619; c=relaxed/simple;
+	bh=kf4S/jdgQYOx7jCwcwrana0ZODUIAqThGt9H4Hm4324=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YV+u/GFuZ88rgTk1+n7hZCLAUypgo/k9m9UWtrVwJmL9HP9M1gRl2ckxjRAO/h+qoI4h55cGMrpZMrd9NMnYksOzV68FO4FgUZ+RDlKq4sTZMaPu8MKMJFNmkxza+X32mpjNKxaQatEZoFA+YmHIvV+amb3EiKCm/iApCDnxMYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IMAxf+2N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+wh4c3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCC1C4CECE;
-	Thu, 12 Dec 2024 17:13:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023615;
-	bh=vsSh4lF4dQS0I6+i62LIxC9qaq2yK6GONrrO0OlgXlQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+wh4c3t72uS4cfIs4Gb/d4pEoHJ2ahmjhnzuVwEQV2kb39YASAao6YGbJW3xD0Dt
-	 oREJjwA1FzKVEToMVGr4f6rE1LtNGz/khidhyZk5v5fzKKOxez+upx5hcN6dtr8xUM
-	 g9U5bsZMyxp7t+G9azSQzrWNj0v15VO1YjkQS69U=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	guoweikang <guoweikang.kernel@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 009/459] ftrace: Fix regression with module command in stack_trace_filter
-Date: Thu, 12 Dec 2024 15:55:47 +0100
-Message-ID: <20241212144253.895789317@linuxfoundation.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
-References: <20241212144253.511169641@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IMAxf+2N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954EAC4CECE;
+	Thu, 12 Dec 2024 17:13:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734023618;
+	bh=kf4S/jdgQYOx7jCwcwrana0ZODUIAqThGt9H4Hm4324=;
+	h=From:Date:Subject:To:Cc:From;
+	b=IMAxf+2NXf6cOxfAjK2pBt6kSjL0ENFAac1a4rRl3X/RH6NFI1XMEpQOi5cuA/1f3
+	 OJmfwfyMGIptlIzfwRCrMXliwnZ+iHMNqptzHupR4toYsCnco/iGtwDX5k9JfRJohV
+	 yTnDklKp0SW/qLlQXIfUDe/L7H5b6QUtyED3TqhiojbAU1PHYDl7vmzdrPNM2Wqb53
+	 VDjKg5TFvu69HFU/Rsbo6uEj6Vc0rVSZjsR/tw27d2tSud6BxEwi1oHihGxgOAtNzx
+	 ckuySj9yYcAfVvfEaER5dqcK2pghWn3snvZk0W0zklnwDH8e5tJKd7OxDgbMC2UUFM
+	 YKZ5cPxtWAcBw==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 12 Dec 2024 10:13:29 -0700
+Subject: [PATCH] blk-iocost: Avoid using clamp() on inuse in
+ __propagate_weights()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241212-blk-iocost-fix-clamp-error-v1-1-b925491bc7d3@kernel.org>
+X-B4-Tracking: v=1; b=H4sIALgZW2cC/x3MSwqAMAwA0atI1gZsUCleRVxojRr8VFIRQXp3i
+ 8sHw7wQWIUDNNkLyrcE8UeCyTNwS3/MjDImAxVUGjKEw7aieOfDhZM86LZ+P5FVvWJlTe0KsgO
+ VFaTBqZySf952MX4dJ3UsbAAAAA==
+X-Change-ID: 20241212-blk-iocost-fix-clamp-error-5816c028b245
+To: Tejun Heo <tj@kernel.org>, Josef Bacik <josef@toxicpanda.com>, 
+ Jens Axboe <axboe@kernel.dk>
+Cc: cgroups@vger.kernel.org, linux-block@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ David Laight <david.laight@aculab.com>, 
+ Linux Kernel Functional Testing <lkft@linaro.org>, 
+ kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3356; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=kf4S/jdgQYOx7jCwcwrana0ZODUIAqThGt9H4Hm4324=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOnRkgeWXVvwy/7p05+M7BMiM6Rm8Lcelvq4+LrsrhNfT
+ h/WODSPqaOEhUGMi0FWTJGl+rHqcUPDOWcZb5yaBDOHlQlkCAMXpwBM5M9nhh+7pHu5g1ekGE32
+ /mT8tjMr+KnBuxNPy5advBz8OdpgQwzDP4XHOVcrqwKWT4t+EFa80esXS8smpXl55q1HGpwj9qm
+ UcQMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+After a recent change to clamp() and its variants [1] that increases the
+coverage of the check that high is greater than low because it can be
+done through inlining, certain build configurations (such as s390
+defconfig) fail to build with clang with:
 
-------------------
+  block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
+   1101 |                 inuse = clamp_t(u32, inuse, 1, active);
+        |                         ^
+  include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
+    218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
+        |                                    ^
+  include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
+    195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
+        |         ^
+  include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
+    188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
+        |         ^
 
-From: guoweikang <guoweikang.kernel@gmail.com>
+__propagate_weights() is called with an active value of zero in
+ioc_check_iocgs(), which results in the high value being less than the
+low value, which is undefined because the value returned depends on the
+order of the comparisons.
 
-commit 45af52e7d3b8560f21d139b3759735eead8b1653 upstream.
+The purpose of this expression is to ensure inuse is not more than
+active and at least 1. This could be written more simply with a ternary
+expression that uses min(inuse, active) as the condition so that the
+value of that condition can be used if it is not zero and one if it is.
+Do this conversion to resolve the error and add a comment to deter
+people from turning this back into clamp().
 
-When executing the following command:
-
-    # echo "write*:mod:ext3" > /sys/kernel/tracing/stack_trace_filter
-
-The current mod command causes a null pointer dereference. While commit
-0f17976568b3f ("ftrace: Fix regression with module command in stack_trace_filter")
-has addressed part of the issue, it left a corner case unhandled, which still
-results in a kernel crash.
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20241120052750.275463-1-guoweikang.kernel@gmail.com
-Fixes: 04ec7bb642b77 ("tracing: Have the trace_array hold the list of registered func probes");
-Signed-off-by: guoweikang <guoweikang.kernel@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
+Suggested-by: David Laight <david.laight@aculab.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- kernel/trace/ftrace.c |    3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-iocost.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/ftrace.c
-+++ b/kernel/trace/ftrace.c
-@@ -4311,6 +4311,9 @@ ftrace_mod_callback(struct trace_array *
- 	char *func;
- 	int ret;
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 384aa15e8260bd4d83b00f1c03efb87829950327..a5894ec9696e7e8c1011cbda1d849562e1732d31 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -1098,7 +1098,14 @@ static void __propagate_weights(struct ioc_gq *iocg, u32 active, u32 inuse,
+ 		inuse = DIV64_U64_ROUND_UP(active * iocg->child_inuse_sum,
+ 					   iocg->child_active_sum);
+ 	} else {
+-		inuse = clamp_t(u32, inuse, 1, active);
++		/*
++		 * It may be tempting to turn this into a clamp expression with
++		 * a lower limit of 1 but active may be 0, which cannot be used
++		 * as an upper limit in that situation. This expression allows
++		 * active to clamp inuse unless it is 0, in which case inuse
++		 * becomes 1.
++		 */
++		inuse = min(inuse, active) ?: 1;
+ 	}
  
-+	if (!tr)
-+		return -ENODEV;
-+
- 	/* match_records() modifies func, and we need the original */
- 	func = kstrdup(func_orig, GFP_KERNEL);
- 	if (!func)
+ 	iocg->last_inuse = iocg->inuse;
 
+---
+base-commit: 3e42dc9229c5950e84b1ed705f94ed75ed208228
+change-id: 20241212-blk-iocost-fix-clamp-error-5816c028b245
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
