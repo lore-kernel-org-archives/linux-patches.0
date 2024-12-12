@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097AE22C34C;
-	Thu, 12 Dec 2024 16:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A37A223C79;
+	Thu, 12 Dec 2024 16:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021543; cv=none; b=Jp3/CBCeuNdzVkOochbiEtakYzkXNK+2j4T/TFOP/h0Fu/Y/MjN7e0wsCWLQL+EtQj2lUOSXVksjSvz61NtbkJ4pGNiwq4Wd9sZcrIz/0N9R05Ez2Q2OTjjnSig03Z+h5Td2RjnFQaZpfU/tcx3NfgQYNSGfdIEJK6lYRVQWreg=
+	t=1734021546; cv=none; b=r7G/NXqwQ8DBH+M0ha5Q+Dp0KZV4U0yYupUkSr/RFSNJswPvkbrUrR1E3qKuYJTUXCmF3p4tIIp/BM6Bw9NVmVCvVTEpaOU8sLMnu6/qtrHzEj2MCS8tEUfBd9PYGsrtgBKltrMPNC3ik8+qTdv2nx/6/ckcYbDzM3DZnLKepqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021543; c=relaxed/simple;
-	bh=1enGG8WQNkSOGy5lQj6WHr7h40BoVxsG+2CMJ0EUP2g=;
+	s=arc-20240116; t=1734021546; c=relaxed/simple;
+	bh=Hs5VIvyiKEKPXehDiNCK9wPwCu05qa2+TAzfRbl9u30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AKuzCUCX0GXb1/+1lhH0vP/cpu9tzWcVsf061F/XKepIeNRcR49owWVRfC2yLPd/hl4jBbQlMjo5/IV9T/0agBuo0wDipIB7yI87IDwxM+XOEd3s/QJg/jIsBb1vJO9AfLqlv0XgdmoXUPX9ZPmJSCfeOyQekj7Q9TqqRuKWBy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SwLvwGYb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mr1tolsqwh8WfgpdSTtZgsa+zm4pq+weNBilx47tfS5zazBlD0oXQGifFkEOn6zKCIFyFmm1qNRo7jmFMLe2ADMmhAsgPydcIk31MRwBTe2RUzgypUgDWfUVpqJaUNBgfSshSMlgQyxLMC17BNkDw3Cp4yCosOsg2laH3oahSQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pTk6g0F7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SwLvwGYb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA29C4CED0;
-	Thu, 12 Dec 2024 16:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pTk6g0F7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07282C4CED3;
+	Thu, 12 Dec 2024 16:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021542;
-	bh=1enGG8WQNkSOGy5lQj6WHr7h40BoVxsG+2CMJ0EUP2g=;
+	s=korg; t=1734021546;
+	bh=Hs5VIvyiKEKPXehDiNCK9wPwCu05qa2+TAzfRbl9u30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SwLvwGYbWdzg50Ybpa7ODNqrtgf1pR9VXDyeKossptowycG+x85zNeZlsosYVr9jA
-	 U4l0s036L6+4acJQIlwFYqIj9eQBi+yvBrcGgZ7PHC6fszSV68iEuT3G20g6FfXkco
-	 JIBCPtcJxKUEqS6MIcefXfrfiTcOtB5f6XuAQgUU=
+	b=pTk6g0F7PJv/xCNIbyNM3L/PNN0jIm4Jb9ZuiDSyMT33IIrghSKkkxpY0V4FPjApB
+	 heEplfsFTgOJNVwwtl56B87TgZXVd7mSFq0zjv6PMdUj4/OzDUERDnI6si0aaRyVfE
+	 ciE5sGOm5XPVsfjUaK2Ls8mcZi1MJBnR62hEW0Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 767/772] i3c: master: svc: fix possible assignment of the same address to two devices
-Date: Thu, 12 Dec 2024 16:01:52 +0100
-Message-ID: <20241212144421.628721466@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH 6.1 768/772] PM / devfreq: Fix build issues with devfreq disabled
+Date: Thu, 12 Dec 2024 16:01:53 +0100
+Message-ID: <20241212144421.667694659@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,81 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Rob Clark <robdclark@chromium.org>
 
-commit 3b2ac810d86eb96e882db80a3320a3848b133208 upstream.
+commit dbd7a2a941b8cbf9e5f79a777ed9fe0090eebb61 upstream.
 
-svc_i3c_master_do_daa() {
-    ...
-    for (i = 0; i < dev_nb; i++) {
-        ret = i3c_master_add_i3c_dev_locked(m, addrs[i]);
-        if (ret)
-            goto rpm_out;
-    }
-}
+The existing no-op shims for when PM_DEVFREQ (or an individual governor)
+only do half the job.  The governor specific config/tuning structs need
+to be available to avoid compile errors in drivers using devfreq.
 
-If two devices (A and B) are detected in DAA and address 0xa is assigned to
-device A and 0xb to device B, a failure in i3c_master_add_i3c_dev_locked()
-for device A (addr: 0xa) could prevent device B (addr: 0xb) from being
-registered on the bus. The I3C stack might still consider 0xb a free
-address. If a subsequent Hotjoin occurs, 0xb might be assigned to Device A,
-causing both devices A and B to use the same address 0xb, violating the I3C
-specification.
-
-The return value for i3c_master_add_i3c_dev_locked() should not be checked
-because subsequent steps will scan the entire I3C bus, independent of
-whether i3c_master_add_i3c_dev_locked() returns success.
-
-If device A registration fails, there is still a chance to register device
-B. i3c_master_add_i3c_dev_locked() can reset DAA if a failure occurs while
-retrieving device information.
-
-Cc: stable@kernel.org
-Fixes: 317bacf960a4 ("i3c: master: add enable(disable) hot join in sys entry")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/20241002-svc-i3c-hj-v6-6-7e6e1d3569ae@nxp.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 6563f60f14cb ("drm/msm/gpu: Add devfreq tuning debugfs")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+Patchwork: https://patchwork.freedesktop.org/patch/519801/
+Link: https://lore.kernel.org/r/20230123153745.3185032-1-robdclark@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/svc-i3c-master.c |   27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ include/linux/devfreq.h |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -1010,12 +1010,27 @@ static int svc_i3c_master_do_daa(struct
- 		goto rpm_out;
- 	}
+--- a/include/linux/devfreq.h
++++ b/include/linux/devfreq.h
+@@ -273,8 +273,8 @@ void devm_devfreq_unregister_notifier(st
+ struct devfreq *devfreq_get_devfreq_by_node(struct device_node *node);
+ struct devfreq *devfreq_get_devfreq_by_phandle(struct device *dev,
+ 				const char *phandle_name, int index);
++#endif /* CONFIG_PM_DEVFREQ */
  
--	/* Register all devices who participated to the core */
--	for (i = 0; i < dev_nb; i++) {
--		ret = i3c_master_add_i3c_dev_locked(m, addrs[i]);
--		if (ret)
--			goto rpm_out;
--	}
-+	/*
-+	 * Register all devices who participated to the core
-+	 *
-+	 * If two devices (A and B) are detected in DAA and address 0xa is assigned to
-+	 * device A and 0xb to device B, a failure in i3c_master_add_i3c_dev_locked()
-+	 * for device A (addr: 0xa) could prevent device B (addr: 0xb) from being
-+	 * registered on the bus. The I3C stack might still consider 0xb a free
-+	 * address. If a subsequent Hotjoin occurs, 0xb might be assigned to Device A,
-+	 * causing both devices A and B to use the same address 0xb, violating the I3C
-+	 * specification.
-+	 *
-+	 * The return value for i3c_master_add_i3c_dev_locked() should not be checked
-+	 * because subsequent steps will scan the entire I3C bus, independent of
-+	 * whether i3c_master_add_i3c_dev_locked() returns success.
-+	 *
-+	 * If device A registration fails, there is still a chance to register device
-+	 * B. i3c_master_add_i3c_dev_locked() can reset DAA if a failure occurs while
-+	 * retrieving device information.
-+	 */
-+	for (i = 0; i < dev_nb; i++)
-+		i3c_master_add_i3c_dev_locked(m, addrs[i]);
+-#if IS_ENABLED(CONFIG_DEVFREQ_GOV_SIMPLE_ONDEMAND)
+ /**
+  * struct devfreq_simple_ondemand_data - ``void *data`` fed to struct devfreq
+  *	and devfreq_add_device
+@@ -292,9 +292,7 @@ struct devfreq_simple_ondemand_data {
+ 	unsigned int upthreshold;
+ 	unsigned int downdifferential;
+ };
+-#endif
  
- 	/* Configure IBI auto-rules */
- 	ret = svc_i3c_update_ibirules(master);
+-#if IS_ENABLED(CONFIG_DEVFREQ_GOV_PASSIVE)
+ enum devfreq_parent_dev_type {
+ 	DEVFREQ_PARENT_DEV,
+ 	CPUFREQ_PARENT_DEV,
+@@ -337,9 +335,8 @@ struct devfreq_passive_data {
+ 	struct notifier_block nb;
+ 	struct list_head cpu_data_list;
+ };
+-#endif
+ 
+-#else /* !CONFIG_PM_DEVFREQ */
++#if !defined(CONFIG_PM_DEVFREQ)
+ static inline struct devfreq *devfreq_add_device(struct device *dev,
+ 					struct devfreq_dev_profile *profile,
+ 					const char *governor_name,
 
 
