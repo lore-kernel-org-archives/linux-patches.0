@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A4A2236EF;
-	Thu, 12 Dec 2024 17:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13475223E96;
+	Thu, 12 Dec 2024 17:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025725; cv=none; b=AmLxfOE+D+zINtEENoGkp4cG/hzSpMLQMaI8IukCd1i3ENmbJIvGnSws3SOFPJVH//NW71k8yIrZyp9SqtGyupZeUUCBJq19heswSDDZAJWnTGSfhSdW0DlmH6kBD2eWLFMFTZ8KgKBaYIwGx4h+9ef+el3FsNwnZ5yzgVJXYlY=
+	t=1734025728; cv=none; b=IHHsc2a/pkiisrcr39I48QtK5YpNAsRD/pOlBBAtU/4/4eUf1jnM9SDZwA2NDoiDN+mi2/xJUgwGyRjVScIOi+3lUHoC1bhhXDG6g1WWsh2HSihjNVTccPKbqiNOCQkGYyCNnPPsdZHAgF083W7lF+QTPOZL4ma6R9VGCtQEPD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025725; c=relaxed/simple;
-	bh=vltvw4/EY6D/+vHvJng0uKU4DFozfDyHk1xRqMEcUjU=;
+	s=arc-20240116; t=1734025728; c=relaxed/simple;
+	bh=ThDCvsf6eP9ZVhxmUQYLaEMZvC9fLwQfrmYV+s1d2zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmbvrY1DInO6irE8h+CA9vZYXoZzPMzLvY8ez6c0sc6s/qnQEiAr81nuwegoLeegpGmb0476TCbFHPiMlF1MeVabwV1NpNFevtrnnsAtPj6ld3JTmaxRANfjVRiMW9hZMLWJcQTDu1S99xo6wRg39ybQttj5c6PtyjOsUW5KAqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TxHmH8Mx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WpBP4qN4EPIfNf2U/UwgIwwanbS6CLHoAXA0zEY4XFpCm0GUDJHi2dh/U6KRQjFEHAe+QQWA2t1+J1XXonUfwcGWWtUZEIFOKOxNp7mZ9kOrUxXdyZw0Fl9Hv0DcsMP30z3wo5vXqs84nxiCcNsmaMQ1QnUhSHJpZ/peCn0ljxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDDtLPB4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TxHmH8Mx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0FAC4CED1;
-	Thu, 12 Dec 2024 17:48:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDDtLPB4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92605C4CECE;
+	Thu, 12 Dec 2024 17:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025725;
-	bh=vltvw4/EY6D/+vHvJng0uKU4DFozfDyHk1xRqMEcUjU=;
+	s=korg; t=1734025728;
+	bh=ThDCvsf6eP9ZVhxmUQYLaEMZvC9fLwQfrmYV+s1d2zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxHmH8MxQJ3AisOzAf21eGTA4orEQOYMpypEu7paO3Pb25Umg5nKe26g7GRwGBerq
-	 Eq+keymmKtyLctI08Mf+oHjB5YGthtabC9QYmEsgR6bDoYKPuFxx8WBRkz4ihZI3O5
-	 GSAYWxs37BlkOt4grqAHXcm55qazjQLMk21B8J0o=
+	b=PDDtLPB4mWotIPYwOftsYDSpFxffllMN73cWPkKpC57VaNf4eKE7wFl0ftNlRhf1m
+	 SwvDIOKDHbZ1oGMC5+Ipl5YWzZcHBE9obKtsZq+STOIiMVEUKtUjFHgMRTG7Jzbc//
+	 NJabLlwkXJCo966fRfB9wbMheY6xk/xEaeFV/Oc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan Barar <rohan.barar@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	=?UTF-8?q?Joaqu=C3=ADn=20Ignacio=20Aramend=C3=ADa?= <samsagax@gmail.com>,
+	Tobias Jakobi <tjakobi@math.uni-bielefeld.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 266/321] media: cx231xx: Add support for Dexatek USB Video Grabber 1d19:6108
-Date: Thu, 12 Dec 2024 16:03:04 +0100
-Message-ID: <20241212144240.489686237@linuxfoundation.org>
+Subject: [PATCH 5.4 267/321] drm: panel-orientation-quirks: Add quirk for AYA NEO 2 model
+Date: Thu, 12 Dec 2024 16:03:05 +0100
+Message-ID: <20241212144240.527924224@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -45,54 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rohan Barar <rohan.barar@gmail.com>
+From: Joaquín Ignacio Aramendía <samsagax@gmail.com>
 
-[ Upstream commit 61a830bc0ea69a05d8a4534f825c6aa618263649 ]
+[ Upstream commit 361ebf5ef843b0aa1704c72eb26b91cf76c3c5b7 ]
 
-Add Dexatek Technology Ltd USB Video Grabber 1d19:6108 to the cx231xx
-driver. This device is sold under the name "BAUHN DVD Maker (DK8723)" by
-ALDI in Australia.
+Add quirk orientation for AYA NEO 2. The name appears without spaces in
+DMI strings. That made it difficult to reuse the 2021 match. Also the
+display is larger in resolution.
 
-This device is similar to 1d19:6109, which is already included in cx231xx.
+Tested by the JELOS team that has been patching their own kernel for a
+while now and confirmed by users in the AYA NEO and ChimeraOS discord
+servers.
 
-Both video and audio capture function correctly after installing the
-patched cx231xx driver.
-
-Patch Changelog
-v1:
- - Initial submission.
-v2:
- - Fix SoB + Improve subject.
-v3:
- - Rephrase message to not exceed 75 characters per line.
- - Removed reference to external GitHub URL.
-
-Signed-off-by: Rohan Barar <rohan.barar@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Joaquín Ignacio Aramendía <samsagax@gmail.com>
+Signed-off-by: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/2b35545b77a9fd8c9699b751ca282226dcecb1dd.1726492131.git.tjakobi@math.uni-bielefeld.de
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/cx231xx/cx231xx-cards.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/usb/cx231xx/cx231xx-cards.c b/drivers/media/usb/cx231xx/cx231xx-cards.c
-index e123e74c549ed..49094b6b2a31e 100644
---- a/drivers/media/usb/cx231xx/cx231xx-cards.c
-+++ b/drivers/media/usb/cx231xx/cx231xx-cards.c
-@@ -994,6 +994,8 @@ const unsigned int cx231xx_bcount = ARRAY_SIZE(cx231xx_boards);
- 
- /* table of devices that work with this driver */
- struct usb_device_id cx231xx_id_table[] = {
-+	{USB_DEVICE(0x1D19, 0x6108),
-+	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
- 	{USB_DEVICE(0x1D19, 0x6109),
- 	.driver_info = CX231XX_BOARD_PV_XCAPTURE_USB},
- 	{USB_DEVICE(0x0572, 0x5A3C),
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index f1091cb87de0c..bf90a5be956fe 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -166,6 +166,12 @@ static const struct dmi_system_id orientation_data[] = {
+ 		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
+ 		},
+ 		.driver_data = (void *)&lcd800x1280_rightside_up,
++	}, {	/* AYA NEO AYANEO 2 */
++		.matches = {
++		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
++		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AYANEO 2"),
++		},
++		.driver_data = (void *)&lcd1200x1920_rightside_up,
+ 	}, {	/* AYA NEO 2021 */
+ 		.matches = {
+ 		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYADEVICE"),
 -- 
 2.43.0
 
