@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08056222D4B;
-	Thu, 12 Dec 2024 15:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF447215764;
+	Thu, 12 Dec 2024 15:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019001; cv=none; b=cJR9I/0kiT8rb+34kEosOWawquZ+q/JMZrRUtrEixjPaCQasM2P5bxg2vROLEkot+C7924ffGoR7Hn8o7lurNd6L1G+LskWGSVWSt+3e21szXhte56bXTsloEvNKz6+QkTREditZG02zt3k/nHPk4MCblTtCXvQiRclvsnx1+B4=
+	t=1734019004; cv=none; b=TinxRDwH5ki9Quu84IY0aEMLh9OivvL8P4Z7nDrkcoiBM6ebZh9l4+NvgbzebslAQLKReOp0zyh4d2roYVfNwLqkxV0ZveYhjhCKWa5+eixAaqYqFU/Ftytn3VXCwdprdMdqA24YmRySCYxX8ZjBf8rfAfuTxdYC4Lpc06hww78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019001; c=relaxed/simple;
-	bh=P3klbdE+mHRjATzGk3hLPsVTJ3o/YNC0LvIFg6DhHpw=;
+	s=arc-20240116; t=1734019004; c=relaxed/simple;
+	bh=7KgaqQKdorTHn90pw9qMz7bRDjOxdX4rycGVClfH6s0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgMScx8Snnsr5kyn3OYDSt+RGfqI73TZjzmlcF8h+5GFSqr2XAqzuhSXOzx2IwJZaT8ueC4hqSFXuDXDZm5gfY7+yE4hpgumNaMI7HpEpibdsJwBNiMpzVk3jrzvdXfMYn1fAHLXXZyd6yojWLJtS5OnKEv7wag7z+RvnmkoWy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ete3mWVq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FntWD4yGyXppp5XbwVAj9GA+JPpIbh3y4vQ1e6LQ/Vxeqsi17lxVjkW+fBLUs90vyTOGQFxYNUhAoCE3+tj54R1UtNVYx1QZMyJpDAyJiOGAR9ggBCENGSjBK06f5b05rNOqz7GOeBENIAInhf2IDO2gToOcjMF+/rsV+0uLZik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pSnQQpbQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ete3mWVq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 507A0C4CECE;
-	Thu, 12 Dec 2024 15:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pSnQQpbQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BEA5C4CECE;
+	Thu, 12 Dec 2024 15:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019000;
-	bh=P3klbdE+mHRjATzGk3hLPsVTJ3o/YNC0LvIFg6DhHpw=;
+	s=korg; t=1734019004;
+	bh=7KgaqQKdorTHn90pw9qMz7bRDjOxdX4rycGVClfH6s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ete3mWVqDKqLDYOQ0dQ9SbAGoBFT3stPB6zyHCRT6wh1+greOQCW9q6ihBbiHSkvG
-	 6gWRfXMgKqdrNVClGAhBCcVoD87xeaZcjfbWrX+U8QKqv3tndxTJi/ATjCJcDRreN7
-	 /LZmt6OJlokMERBoh3kA8mq9zHyu/3LoZydtY/C8=
+	b=pSnQQpbQnFu5n4WJXbMtbOtfoipitbjZ/cVV+l0u6w3sUDIsuQF3OW1U1UGdwPwPa
+	 3UwKreJcG5i4JWVxdhyLFRMzAzWcatzDyEqodxXuEMxSmQ+SRxNdIrvkYCoFw3Wt0E
+	 MbqMI5QzgO21u8pgWjW3nPWJjf9Hee3HBOrg56V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ross Burton <ross.burton@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/772] kcsan, seqlock: Fix incorrect assumption in read_seqbegin()
-Date: Thu, 12 Dec 2024 15:50:34 +0100
-Message-ID: <20241212144353.626988805@linuxfoundation.org>
+Subject: [PATCH 6.1 090/772] clocksource/drivers:sp804: Make user selectable
+Date: Thu, 12 Dec 2024 15:50:35 +0100
+Message-ID: <20241212144353.667041711@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,76 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Elver <elver@google.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 183ec5f26b2fc97a4a9871865bfe9b33c41fddb2 ]
+[ Upstream commit 0309f714a0908e947af1c902cf6a330cb593e75e ]
 
-During testing of the preceding changes, I noticed that in some cases,
-current->kcsan_ctx.in_flat_atomic remained true until task exit. This is
-obviously wrong, because _all_ accesses for the given task will be
-treated as atomic, resulting in false negatives i.e. missed data races.
+The sp804 is currently only user selectable if COMPILE_TEST, this was
+done by commit dfc82faad725 ("clocksource/drivers/sp804: Add
+COMPILE_TEST to CONFIG_ARM_TIMER_SP804") in order to avoid it being
+spuriously offered on platforms that won't have the hardware since it's
+generally only seen on Arm based platforms.  This config is overly
+restrictive, while platforms that rely on the SP804 do select it in
+their Kconfig there are others such as the Arm fast models which have a
+SP804 available but currently unused by Linux.  Relax the dependency to
+allow it to be user selectable on arm and arm64 to avoid surprises and
+in case someone comes up with a use for extra timer hardware.
 
-Debugging led to fs/dcache.c, where we can see this usage of seqlock:
-
-	struct dentry *d_lookup(const struct dentry *parent, const struct qstr *name)
-	{
-		struct dentry *dentry;
-		unsigned seq;
-
-		do {
-			seq = read_seqbegin(&rename_lock);
-			dentry = __d_lookup(parent, name);
-			if (dentry)
-				break;
-		} while (read_seqretry(&rename_lock, seq));
-	[...]
-
-As can be seen, read_seqretry() is never called if dentry != NULL;
-consequently, current->kcsan_ctx.in_flat_atomic will never be reset to
-false by read_seqretry().
-
-Give up on the wrong assumption of "assume closing read_seqretry()", and
-rely on the already-present annotations in read_seqcount_begin/retry().
-
-Fixes: 88ecd153be95 ("seqlock, kcsan: Add annotations for KCSAN")
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241104161910.780003-6-elver@google.com
+Fixes: dfc82faad725 ("clocksource/drivers/sp804: Add COMPILE_TEST to CONFIG_ARM_TIMER_SP804")
+Reported-by: Ross Burton <ross.burton@arm.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241001-arm64-vexpress-sp804-v3-1-0a2d3f7883e4@kernel.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/seqlock.h | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ drivers/clocksource/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/seqlock.h b/include/linux/seqlock.h
-index 484f9a179fc12..b4b4ce9a4151e 100644
---- a/include/linux/seqlock.h
-+++ b/include/linux/seqlock.h
-@@ -890,11 +890,7 @@ typedef struct {
-  */
- static inline unsigned read_seqbegin(const seqlock_t *sl)
- {
--	unsigned ret = read_seqcount_begin(&sl->seqcount);
--
--	kcsan_atomic_next(0);  /* non-raw usage, assume closing read_seqretry() */
--	kcsan_flat_atomic_begin();
--	return ret;
-+	return read_seqcount_begin(&sl->seqcount);
- }
+diff --git a/drivers/clocksource/Kconfig b/drivers/clocksource/Kconfig
+index 4469e7f555e97..c957bd470507e 100644
+--- a/drivers/clocksource/Kconfig
++++ b/drivers/clocksource/Kconfig
+@@ -390,7 +390,8 @@ config ARM_GT_INITIAL_PRESCALER_VAL
+ 	  This affects CPU_FREQ max delta from the initial frequency.
  
- /**
-@@ -910,12 +906,6 @@ static inline unsigned read_seqbegin(const seqlock_t *sl)
-  */
- static inline unsigned read_seqretry(const seqlock_t *sl, unsigned start)
- {
--	/*
--	 * Assume not nested: read_seqretry() may be called multiple times when
--	 * completing read critical section.
--	 */
--	kcsan_flat_atomic_end();
--
- 	return read_seqcount_retry(&sl->seqcount, start);
- }
- 
+ config ARM_TIMER_SP804
+-	bool "Support for Dual Timer SP804 module" if COMPILE_TEST
++	bool "Support for Dual Timer SP804 module"
++	depends on ARM || ARM64 || COMPILE_TEST
+ 	depends on GENERIC_SCHED_CLOCK && HAVE_CLK
+ 	select CLKSRC_MMIO
+ 	select TIMER_OF if OF
 -- 
 2.43.0
 
