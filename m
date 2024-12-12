@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8373120A5EE;
-	Thu, 12 Dec 2024 17:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A71213E6F;
+	Thu, 12 Dec 2024 17:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024632; cv=none; b=oa2X19bQRP33zisGZuTDqybSa6Zu0pvFL0+5jrOfqsvh79vcNdaeMvX2Wb3OfSDnbFwm9Ne290rs/rYQuDQxLMFH/OCTLPBYtczpJeY8xxuFqlCJ6r6z5SyZFQ93InGhpbhkHa27AEK+e2UrvjBDsIYsTcMp1wZpdakaAW4ml6s=
+	t=1734024635; cv=none; b=WggFAkNoQzTsxR5nM1H0ZXmTNABtFjNmta0smMVy7e4NXBf7kHYSzAPolnT6NNAn3ng7lvhGjb5gARLjQzIowyQk5xfzG6xpmQJQnkcXclwaONueqgrvKvXq+w3kycqXSgF/OXsJlJbw2Unwmp4CUmUv0JyZaSDgTYlpZ9l47cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024632; c=relaxed/simple;
-	bh=s/qf08bCakapr9sjB7qetguhsre6tynbxRQNunctC/4=;
+	s=arc-20240116; t=1734024635; c=relaxed/simple;
+	bh=bfrG3dl8bh45ZGrM8htbXNasL/jDAHAtHxwrbG7i1/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thP/8S6utRv3eNPliCw7W4x5Q1QWPMuy5BZYxOTdjRJgNFFihoKmjEoqS7nAGliuK5PoWeZuaBjIwIdfJ7p1c8Iqcs3ATmo2sOWOfS39k/YgHFIxwpluNiM56v+8ipbz7U1R3YEPBPy4dB5Oh40/i00F9ziFuQNIDqZqAUf0BHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vModcOdF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kt1WrfNNrdAt42RbaTd+pcp7prts9lWma5T8Hk2qtVp5kV0QQJwUAyTHrz+j7UP101HaooXhs+vAUT60nfO9uWXjHoRirHX81SidYcuTM3j8QeMVe6eSiCi7oYif1BxxP428WSQhEvZ1/Vzp5/AuKB7ziQfFFrNOpAFM5zWB/9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh+z4n3l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vModcOdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA72C4CECE;
-	Thu, 12 Dec 2024 17:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh+z4n3l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 130FFC4CECE;
+	Thu, 12 Dec 2024 17:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024632;
-	bh=s/qf08bCakapr9sjB7qetguhsre6tynbxRQNunctC/4=;
+	s=korg; t=1734024635;
+	bh=bfrG3dl8bh45ZGrM8htbXNasL/jDAHAtHxwrbG7i1/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vModcOdFYSZOSmAWv1diVKVAfmiOLwl4YXCHDxXnsecrVFMgQ86O/sFz/59UPjF0n
-	 wlJI5CMYs+XGyx3bbc1xyo9Lv/pkT7szZ8jhf40tjPDLpUNw2tMpCxU4sDB2zURr6m
-	 ucomjTqpn824668CQP4b8gGCZeUAMJdWu3EVS8Hc=
+	b=Fh+z4n3l3VBtMGQyTRofLpw1A2P2BOCCTwoptiQKqHr5hoVg14M5mIPOVYVSZSbR+
+	 sDKD2Fb71gBHsXbVzJv3aH/v1o9J9zUFfJFcOfh1SngH1UnVtZJSE1qG55aW/gHQxR
+	 CeKkA5mD4XZBCSDkAhTZdfwXbF5F/vRK5jQ4IMhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 361/459] tracing: Fix cmp_entries_dup() to respect sort() comparison rules
-Date: Thu, 12 Dec 2024 16:01:39 +0100
-Message-ID: <20241212144307.934085802@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.10 362/459] arm64: ptrace: fix partial SETREGSET for NT_ARM_TAGGED_ADDR_CTRL
+Date: Thu, 12 Dec 2024 16:01:40 +0100
+Message-ID: <20241212144307.971953023@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -50,52 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit e63fbd5f6810ed756bbb8a1549c7d4132968baa9 upstream.
+commit ca62d90085f4af36de745883faab9f8a7cbb45d3 upstream.
 
-The cmp_entries_dup() function used as the comparator for sort()
-violated the symmetry and transitivity properties required by the
-sorting algorithm. Specifically, it returned 1 whenever memcmp() was
-non-zero, which broke the following expectations:
+Currently tagged_addr_ctrl_set() doesn't initialize the temporary 'ctrl'
+variable, and a SETREGSET call with a length of zero will leave this
+uninitialized. Consequently tagged_addr_ctrl_set() will consume an
+arbitrary value, potentially leaking up to 64 bits of memory from the
+kernel stack. The read is limited to a specific slot on the stack, and
+the issue does not provide a write mechanism.
 
-* Symmetry: If x < y, then y > x.
-* Transitivity: If x < y and y < z, then x < z.
+As set_tagged_addr_ctrl() only accepts values where bits [63:4] zero and
+rejects other values, a partial SETREGSET attempt will randomly succeed
+or fail depending on the value of the uninitialized value, and the
+exposure is significantly limited.
 
-These violations could lead to incorrect sorting and failure to
-correctly identify duplicate elements.
+Fix this by initializing the temporary value before copying the regset
+from userspace, as for other regsets (e.g. NT_PRSTATUS, NT_PRFPREG,
+NT_ARM_SYSTEM_CALL). In the case of a zero-length write, the existing
+value of the tagged address ctrl will be retained.
 
-Fix the issue by directly returning the result of memcmp(), which
-adheres to the required comparison properties.
+The NT_ARM_TAGGED_ADDR_CTRL regset is only visible in the
+user_aarch64_view used by a native AArch64 task to manipulate another
+native AArch64 task. As get_tagged_addr_ctrl() only returns an error
+value when called for a compat task, tagged_addr_ctrl_get() and
+tagged_addr_ctrl_set() should never observe an error value from
+get_tagged_addr_ctrl(). Add a WARN_ON_ONCE() to both to indicate that
+such an error would be unexpected, and error handlnig is not missing in
+either case.
 
-Cc: stable@vger.kernel.org
-Fixes: 08d43a5fa063 ("tracing: Add lock-free tracing_map")
-Link: https://lore.kernel.org/20241203202228.1274403-1-visitorckw@gmail.com
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 2200aa7154cb ("arm64: mte: ptrace: Add NT_ARM_TAGGED_ADDR_CTRL regset")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241205121655.1824269-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ arch/arm64/kernel/ptrace.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -845,15 +845,11 @@ int tracing_map_init(struct tracing_map
- static int cmp_entries_dup(const void *A, const void *B)
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -1040,7 +1040,7 @@ static int tagged_addr_ctrl_get(struct t
  {
- 	const struct tracing_map_sort_entry *a, *b;
--	int ret = 0;
+ 	long ctrl = get_tagged_addr_ctrl(target);
  
- 	a = *(const struct tracing_map_sort_entry **)A;
- 	b = *(const struct tracing_map_sort_entry **)B;
+-	if (IS_ERR_VALUE(ctrl))
++	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
+ 		return ctrl;
  
--	if (memcmp(a->key, b->key, a->elt->map->key_size))
--		ret = 1;
--
--	return ret;
-+	return memcmp(a->key, b->key, a->elt->map->key_size);
- }
+ 	return membuf_write(&to, &ctrl, sizeof(ctrl));
+@@ -1054,6 +1054,10 @@ static int tagged_addr_ctrl_set(struct t
+ 	int ret;
+ 	long ctrl;
  
- static int cmp_entries_sum(const void *A, const void *B)
++	ctrl = get_tagged_addr_ctrl(target);
++	if (WARN_ON_ONCE(IS_ERR_VALUE(ctrl)))
++		return ctrl;
++
+ 	ret = user_regset_copyin(&pos, &count, &kbuf, &ubuf, &ctrl, 0, -1);
+ 	if (ret)
+ 		return ret;
 
 
