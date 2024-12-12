@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C985C2397B6;
-	Thu, 12 Dec 2024 16:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291A7226542;
+	Thu, 12 Dec 2024 16:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020629; cv=none; b=aZOWaIfz0RGBCOKGPwt3B1Hvek/d8e8WNiig7cXX72TBw54xyioWSVgAP9YmspG70sMWgUsowP4sR7rOrKq94mn1x4pAVZLqh5cFNtBmyjlV9ICnMmXmtaV4Jaa6VVXeDMQmwQo2lspgF5aTs3bFX5pOaDYErY2VZrutSZI8aTE=
+	t=1734020634; cv=none; b=Uv/Egm3AdMFDeZs1bEsXNfumlrzL21w/nGhpZvEVBncUjJZKdNfHKdS5N1osCZTNJ+HLaYFMEO0pZui7PvCAJLHbZ4/q87rXYuOrOuRA3sOIXJ7f1mOpd0rH+Pb3DChdID6ozzgWO1FvPuYKoTZ29qZ8tZBNLZcO3/qhmyZFkQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020629; c=relaxed/simple;
-	bh=kljfqyTZwidfIjTynyiaCld+tSR30Wqd9rJSZ6kJrXA=;
+	s=arc-20240116; t=1734020634; c=relaxed/simple;
+	bh=9QRiMLeISc9L9udaBROp7HWmtHUlhuyGRpuiXFShN/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=StUd1QLph12ouZaJgR70e7SkKTJhHLZ0B3a+FkUtZ140EGYmPOwypFlBdYCkAu5TGgDYyuGKtGHu5oLtlBNoaJ2mA6HzQAIIcn+Pgp127kWZuu7Ykr+KqiJ12Vc6bNZwkLZy/fEYEdw6xGIvRYue0hAiRvyjlPuJbiF0VQZL8DU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hX9Pc+ND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SfTXFQCcRcRFTAUhWlian3UvIGpDf4vLSb4jV9Ih0NvVLc8Zy/p7qp7hLRhChzalYCf6TmPUBKJeOY6poayx9E5/aBeaMKalEMIBjvS5waPJ+D9+73tNOtTpxX8ELmQUKrlmpWKu41v/g/o1SPOPwvbLg6RSBbZZf3qZhu1MNN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDvAmz/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hX9Pc+ND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A26C4CECE;
-	Thu, 12 Dec 2024 16:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDvAmz/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC6AC4CECE;
+	Thu, 12 Dec 2024 16:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020629;
-	bh=kljfqyTZwidfIjTynyiaCld+tSR30Wqd9rJSZ6kJrXA=;
+	s=korg; t=1734020633;
+	bh=9QRiMLeISc9L9udaBROp7HWmtHUlhuyGRpuiXFShN/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hX9Pc+NDBB60ZZkyVmmW9kWckaaHcmKo/9wegKgWyGhBfkq2iK5b6Y5zaH6pmt3Zh
-	 ulRVqqIehmK0fmeRmp1q50m5OTLfqGpMc4SnAZXe+zKrxF+ERy5unwwjK3zs4dAvQ4
-	 p8AowMNrACQ6ah7phe4lPqkumOKGyCoNYIbi7IGg=
+	b=gDvAmz/bsQrfF2lbb3pPnHoCxYRr1XYx/3DWbWnk9LXokdE9DeK4AL4Ocg6ZPtx3H
+	 M7MMF571nZ73CQTvd+8mkQg4Dxc/8W0WvICoCkUmhZMdAlDWgNYEH7Ad860i7NNjEN
+	 NYoguvUGzmBs0qNKF5OGcb+/ucUyk+MJNf9ZbKPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kishon Vijay Abraham I <kishon@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Subject: [PATCH 6.1 489/772] PCI: keystone: Add link up check to ks_pcie_other_map_bus()
-Date: Thu, 12 Dec 2024 15:57:14 +0100
-Message-ID: <20241212144410.163108496@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 490/772] fs/proc/kcore.c: Clear ret value in read_kcore_iter after successful iov_iter_zero
+Date: Thu, 12 Dec 2024 15:57:15 +0100
+Message-ID: <20241212144410.202124980@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,56 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kishon Vijay Abraham I <kishon@ti.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 9e9ec8d8692a6f64d81ef67d4fb6255af6be684b upstream.
+commit 088f294609d8f8816dc316681aef2eb61982e0da upstream.
 
-K2G forwards the error triggered by a link-down state (e.g., no connected
-endpoint device) on the system bus for PCI configuration transactions;
-these errors are reported as an SError at system level, which is fatal and
-hangs the system.
+If iov_iter_zero succeeds after failed copy_from_kernel_nofault,
+we need to reset the ret value to zero otherwise it will be returned
+as final return value of read_kcore_iter.
 
-So, apply fix similar to how it was done in the DesignWare Core driver
-commit 15b23906347c ("PCI: dwc: Add link up check in dw_child_pcie_ops.map_bus()").
+This fixes objdump -d dump over /proc/kcore for me.
 
-Fixes: 10a797c6e54a ("PCI: dwc: keystone: Use pci_ops for config space accessors")
-Link: https://lore.kernel.org/r/20240524105714.191642-3-s-vadapalli@ti.com
-Signed-off-by: Kishon Vijay Abraham I <kishon@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-[kwilczynski: commit log, added tag for stable releases]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Cc: stable@vger.kernel.org
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: 3d5854d75e31 ("fs/proc/kcore.c: allow translation of physical memory addresses")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20241121231118.3212000-1-jolsa@kernel.org
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/proc/kcore.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -465,6 +465,17 @@ static void __iomem *ks_pcie_other_map_b
- 	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
- 	u32 reg;
- 
-+	/*
-+	 * Checking whether the link is up here is a last line of defense
-+	 * against platforms that forward errors on the system bus as
-+	 * SError upon PCI configuration transactions issued when the link
-+	 * is down. This check is racy by definition and does not stop
-+	 * the system from triggering an SError if the link goes down
-+	 * after this check is performed.
-+	 */
-+	if (!dw_pcie_link_up(pci))
-+		return NULL;
-+
- 	reg = CFG_BUS(bus->number) | CFG_DEVICE(PCI_SLOT(devfn)) |
- 		CFG_FUNC(PCI_FUNC(devfn));
- 	if (!pci_is_root_bus(bus->parent))
+--- a/fs/proc/kcore.c
++++ b/fs/proc/kcore.c
+@@ -585,6 +585,7 @@ read_kcore_iter(struct kiocb *iocb, stru
+ 					ret = -EFAULT;
+ 					goto out;
+ 				}
++				ret = 0;
+ 			/*
+ 			 * We know the bounce buffer is safe to copy from, so
+ 			 * use _copy_to_iter() directly.
 
 
