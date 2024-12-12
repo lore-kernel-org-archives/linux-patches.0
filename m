@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E00E1487CD;
-	Thu, 12 Dec 2024 15:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800A02054F8;
+	Thu, 12 Dec 2024 15:23:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016993; cv=none; b=WjlwLyHqCGy+JcsSzGYN7j/vv0N6hITkGiX93GPc0yEUTeWgGIURsB1s0ez7RHQqnJuS9E/61mD/VfoopmhMUosYqC7phx3em+FBhlAPyMcPilrd4GVKAipALNcLZHZRWvUugEQTUrQgPIJGR2OsWId63iIRpcdlGZW/Z43d7Y4=
+	t=1734016996; cv=none; b=smmc0M5bkmVZoFazj08fd4ZSgM7+LJB8JX+Fi9fnYqg6NiPaaM+ieu2iFIMc4oGIzmRjmABcp/KQOgevxfDv+Ew4F/KyNI3ocN/ckTY7tQfr+QO5d9mbDk4wNi/285hpixtYQ7YCkSC/UzDVOizUsgxqn2qo6txKbadrYQK+3VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016993; c=relaxed/simple;
-	bh=3e930U/WATObH5v76rIA9t8VanjRCkPvH8YTL7M62Hk=;
+	s=arc-20240116; t=1734016996; c=relaxed/simple;
+	bh=3wae159dIRdG6sxBQfs48pMNTWOlIUFeteN60VhT6As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UNBegDzcZL2AOYvdxtW+RkrzbiC6lLPKMjAH9SbXwPO0QkoIU4BL7pPUZZnXLYToW2iwUV5I506EjC/rLWZpkzK+6tcB5tvy6r5F5M2/nHCnW/XplxrCmDE0VFYpNELEqbGvoxCCJf0sLATbr0pOCSaPq6HimZ9niR51OfzYFTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9dPHoEO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcMeR/TEvceBminBVzTEkktyUJpVBohGTZX7thPJDkBzAsO4CuKEPHi8jYKAxFobB0q5HIkhem7hTbACJIIe0VCVi1iYVaykbwYvjHuhY/LLNmZ8hz6nVCr1/c6a9rxWTNs17FBBNyiepzlA55lr/Ks8mqn4YFLyv+gshyKNr0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5/rq8Bx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9dPHoEO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E925C4CECE;
-	Thu, 12 Dec 2024 15:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5/rq8Bx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7A30C4CECE;
+	Thu, 12 Dec 2024 15:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016993;
-	bh=3e930U/WATObH5v76rIA9t8VanjRCkPvH8YTL7M62Hk=;
+	s=korg; t=1734016996;
+	bh=3wae159dIRdG6sxBQfs48pMNTWOlIUFeteN60VhT6As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9dPHoEOb0BXQ7PypagSllmqVw8Jw0fiCRFlPXnMpB9BejwHCq2GyDL53VAHtaAAj
-	 DQznTYmbl3Bd4GPXldigqDbj8iJI6j7T3/r375n7gls+XMe+uHNwi/Hp1uYsv6m+sc
-	 IbfFiluYCz1l//FEFgfSyLx/5JOjEMhhWV+N6lLc=
+	b=a5/rq8BxHrNOcYpuZDD41XApZGedRfXxz4dqfqqGalmg6OjClbhqsm2upnbQvP639
+	 JjJIC/cbCQXP/0QSVikPXaezPAsUhC7QbToF9y4sUR0UZnXEUTLc0fBwsy8C7rKQyP
+	 v5CQIFI3XxLLuvVg8S7Xzi69u24t1aJs91qxFUBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 351/466] rocker: fix link status detection in rocker_carrier_init()
-Date: Thu, 12 Dec 2024 15:58:40 +0100
-Message-ID: <20241212144320.653592417@linuxfoundation.org>
+Subject: [PATCH 6.12 325/466] drm/panic: Add ABGR2101010 support
+Date: Thu, 12 Dec 2024 15:58:14 +0100
+Message-ID: <20241212144319.632411099@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,37 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Jocelyn Falempe <jfalempe@redhat.com>
 
-[ Upstream commit e64285ff41bb7a934bd815bd38f31119be62ac37 ]
+[ Upstream commit 04596969eea9e73b64d63be52aabfddb382e9ce6 ]
 
-Since '1 << rocker_port->pport' may be undefined for port >= 32,
-cast the left operand to 'unsigned long long' like it's done in
-'rocker_port_set_enable()' above. Compile tested only.
+Add support for ABGR2101010, used by the nouveau driver.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://patch.msgid.link/20241114151946.519047-1-dmantipov@yandex.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241022185553.1103384-2-jfalempe@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/rocker/rocker_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_panic.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/rocker/rocker_main.c b/drivers/net/ethernet/rocker/rocker_main.c
-index 84fa911c78db5..fe0bf1d3217af 100644
---- a/drivers/net/ethernet/rocker/rocker_main.c
-+++ b/drivers/net/ethernet/rocker/rocker_main.c
-@@ -2502,7 +2502,7 @@ static void rocker_carrier_init(const struct rocker_port *rocker_port)
- 	u64 link_status = rocker_read64(rocker, PORT_PHYS_LINK_STATUS);
- 	bool link_up;
+diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+index 74412b7bf936c..0a9ecc1380d2a 100644
+--- a/drivers/gpu/drm/drm_panic.c
++++ b/drivers/gpu/drm/drm_panic.c
+@@ -209,6 +209,14 @@ static u32 convert_xrgb8888_to_argb2101010(u32 pix)
+ 	return GENMASK(31, 30) /* set alpha bits */ | pix | ((pix >> 8) & 0x00300C03);
+ }
  
--	link_up = link_status & (1 << rocker_port->pport);
-+	link_up = link_status & (1ULL << rocker_port->pport);
- 	if (link_up)
- 		netif_carrier_on(rocker_port->dev);
- 	else
++static u32 convert_xrgb8888_to_abgr2101010(u32 pix)
++{
++	pix = ((pix & 0x00FF0000) >> 14) |
++	      ((pix & 0x0000FF00) << 4) |
++	      ((pix & 0x000000FF) << 22);
++	return GENMASK(31, 30) /* set alpha bits */ | pix | ((pix >> 8) & 0x00300C03);
++}
++
+ /*
+  * convert_from_xrgb8888 - convert one pixel from xrgb8888 to the desired format
+  * @color: input color, in xrgb8888 format
+@@ -242,6 +250,8 @@ static u32 convert_from_xrgb8888(u32 color, u32 format)
+ 		return convert_xrgb8888_to_xrgb2101010(color);
+ 	case DRM_FORMAT_ARGB2101010:
+ 		return convert_xrgb8888_to_argb2101010(color);
++	case DRM_FORMAT_ABGR2101010:
++		return convert_xrgb8888_to_abgr2101010(color);
+ 	default:
+ 		WARN_ONCE(1, "Can't convert to %p4cc\n", &format);
+ 		return 0;
 -- 
 2.43.0
 
