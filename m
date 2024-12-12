@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767382153EC;
-	Thu, 12 Dec 2024 17:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852B2211493;
+	Thu, 12 Dec 2024 17:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025698; cv=none; b=eXjw5bsKMdok3KoNiQi1H8loOFxmJV7IqgvE0kP+FdqCix7/+9PuX9ZC0uuN6VV/N7wNomwQ2icQ2xZdQeTSL4mwc4l8j9MbVqsKsic3NkDp4un+Fm2A4fuhSG/Nf2Omg+0YEWBPEK529aZaBaKQQcqvxQMa8ZeEaXrKsIPBKA8=
+	t=1734025701; cv=none; b=Ld5gQzMAT3QIWObjfAb+d1cyEVmOcSuInVYfdtjBiSHZVG+BSGveoBy6ECpDrjBocX8vzh3bqqZLvqtEIxxS/J4E7zWTYpdmSW/y5FVFQvJa6KF8U2+r9tvDkm6ND1cB33yHeSXXQSs12mlFXsXxTWApooWNeQ6LRFL3/qskimA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025698; c=relaxed/simple;
-	bh=FeSpDvAcljI+gjk3UYIvU2mmMNNCrrbRUvxqKvlnaDM=;
+	s=arc-20240116; t=1734025701; c=relaxed/simple;
+	bh=i/byawCNdmauWhmDsX1mHkry4+ayDyOfTFQcaFhPte0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijo4UtTB4gC/mispKS48Ok5lfXO5Qy2u7iW6QGmF9yRI8hT1rdZgChmXSNPpCLXmSyTUgBIVFp+caata4J6HPxSUADDyOjrn987ozElY0CxfDwroTyBruRj2D+SChZdlE5uzYANk5wV8nEgmXLytXijnIBpAWY+1blliEgZ4TPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVkUcvaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2kGWiLkps1thjSxS3QKutCwnlivzyOcYYoUosJsGn1RtBPckdu0mu59D+FG1c0FjZQweYlSnNWCPwCh1HpyEEZZwIlSBk7RIV1r7kPL4oRK5/dQW+hKzN1S90Rm1RPhQcABl2jaStEW1Lve7gdFQAN+eOqkGzxnqqf0aq7sK94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT4+keuJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVkUcvaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EE6C4CED1;
-	Thu, 12 Dec 2024 17:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT4+keuJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1454C4CEDD;
+	Thu, 12 Dec 2024 17:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025698;
-	bh=FeSpDvAcljI+gjk3UYIvU2mmMNNCrrbRUvxqKvlnaDM=;
+	s=korg; t=1734025701;
+	bh=i/byawCNdmauWhmDsX1mHkry4+ayDyOfTFQcaFhPte0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVkUcvaKx+5E8eTkmWgrDmIc2fN777PthyjPZah/ZdXXkl+44KnAFH7JSyMmA2hxv
-	 bKnL2BLsMmyEcn144s/e7I8z+xAhKorVySOMVIICfIiE8/MN4xvOhp1SV2KWL//UJr
-	 5rC5Ym8bxgS3ZGnYkSCDncY/sdqAOmOXuqmYAfns=
+	b=LT4+keuJb/W6LoMZ0iMmziFiduGFEq3rpyDTXSmDds/IGtcS3AgVQG/0IiIGldwuA
+	 8OO00QbSen6//dfKkpIR9fgYJb5KKLEhYqpmAzh2J2MI9Vn5QAqUjnTr89hNofSaqo
+	 FFEzLAHUHquoQVgGo4dfavD7rdgHUx4CMyfBVim4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.4 258/321] scsi: qla2xxx: Remove check req_sg_cnt should be equal to rsp_sg_cnt
-Date: Thu, 12 Dec 2024 16:02:56 +0100
-Message-ID: <20241212144240.159308483@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 241/321] xen: Fix the issue of resource not being properly released in xenbus_dev_probe()
+Date: Thu, 12 Dec 2024 16:02:39 +0100
+Message-ID: <20241212144239.495970292@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -52,45 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Qiu-ji Chen <chenqiuji666@gmail.com>
 
-commit 833c70e212fc40d3e98da941796f4c7bcaecdf58 upstream.
+[ Upstream commit afc545da381ba0c651b2658966ac737032676f01 ]
 
-Firmware supports multiple sg_cnt for request and response for CT
-commands, so remove the redundant check. A check is there where sg_cnt
-for request and response should be same. This is not required as driver
-and FW have code to handle multiple and different sg_cnt on request and
-response.
+This patch fixes an issue in the function xenbus_dev_probe(). In the
+xenbus_dev_probe() function, within the if (err) branch at line 313, the
+program incorrectly returns err directly without releasing the resources
+allocated by err = drv->probe(dev, id). As the return value is non-zero,
+the upper layers assume the processing logic has failed. However, the probe
+operation was performed earlier without a corresponding remove operation.
+Since the probe actually allocates resources, failing to perform the remove
+operation could lead to problems.
 
+To fix this issue, we followed the resource release logic of the
+xenbus_dev_remove() function by adding a new block fail_remove before the
+fail_put block. After entering the branch if (err) at line 313, the
+function will use a goto statement to jump to the fail_remove block,
+ensuring that the previously acquired resources are correctly released,
+thus preventing the reference count leak.
+
+This bug was identified by an experimental static analysis tool developed
+by our team. The tool specializes in analyzing reference count operations
+and detecting potential issues where resources are not properly managed.
+In this case, the tool flagged the missing release operation as a
+potential problem, which led to the development of this patch.
+
+Fixes: 4bac07c993d0 ("xen: add the Xenbus sysfs and virtual device hotplug driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20241115130313.46826-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20241105130919.4621-1-chenqiuji666@gmail.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   10 ----------
- 1 file changed, 10 deletions(-)
+ drivers/xen/xenbus/xenbus_probe.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -462,16 +462,6 @@ qla2x00_process_ct(struct bsg_job *bsg_j
- 		goto done;
+diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
+index b88512d92ef52..fd686b962727a 100644
+--- a/drivers/xen/xenbus/xenbus_probe.c
++++ b/drivers/xen/xenbus/xenbus_probe.c
+@@ -250,10 +250,16 @@ int xenbus_dev_probe(struct device *_dev)
+ 	if (err) {
+ 		dev_warn(&dev->dev, "watch_otherend on %s failed.\n",
+ 		       dev->nodename);
+-		return err;
++		goto fail_remove;
  	}
  
--	if ((req_sg_cnt !=  bsg_job->request_payload.sg_cnt) ||
--	    (rsp_sg_cnt != bsg_job->reply_payload.sg_cnt)) {
--		ql_log(ql_log_warn, vha, 0x7011,
--		    "request_sg_cnt: %x dma_request_sg_cnt: %x reply_sg_cnt:%x "
--		    "dma_reply_sg_cnt: %x\n", bsg_job->request_payload.sg_cnt,
--		    req_sg_cnt, bsg_job->reply_payload.sg_cnt, rsp_sg_cnt);
--		rval = -EAGAIN;
--		goto done_unmap_sg;
--	}
--
- 	if (!vha->flags.online) {
- 		ql_log(ql_log_warn, vha, 0x7012,
- 		    "Host is not online.\n");
+ 	return 0;
++fail_remove:
++	if (drv->remove) {
++		down(&dev->reclaim_sem);
++		drv->remove(dev);
++		up(&dev->reclaim_sem);
++	}
+ fail_put:
+ 	module_put(drv->driver.owner);
+ fail:
+-- 
+2.43.0
+
 
 
