@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B64E213E6B;
-	Thu, 12 Dec 2024 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F696F2FE;
+	Thu, 12 Dec 2024 17:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023647; cv=none; b=S3MLKlyXPPua4691Lbosptr3v5gXjY6qt4L8Vsy8gFQKjpENCujbm27fl3PjLOu1WXLROfnUuvJaVwDPxFcdVvZxUoh1PHQi+zg9k1BlLXeCxLgY77PMXlidW+wDRAZ2UogJaxcZ71YcKIILijSTGIOi5rDN9APKbug9xA5IivA=
+	t=1734023650; cv=none; b=bNLtopq8ER5JPVQI7rbEYIpMgCBVGgNTygfmQDVJjZKZTSFrKChlWtgZTylAPldGozo+2t1xP5cAY9I23ismL6xPNveVTWAqBB6Gmxz9CyiEuw/1NwHY7ZbGBCdLmVbG5QRI1urNkYGf3se35rxbs3tMfBN9+njb2sq3coUnkMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023647; c=relaxed/simple;
-	bh=+Oj6dBxRp5Ac+aGv5z+RnqYX47ajyroYg6ye4GI0vSs=;
+	s=arc-20240116; t=1734023650; c=relaxed/simple;
+	bh=B7qybUifTJbwOyVKSVzgM4/kt+Y/kZJV1SOsNjYaskE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lmG4K8+M2xqt3fX/3s7J9VBHzFLhhaAa0WVa00hEs7nG8BVA79eti5ODj5hgFBBPLHxGChYT9R29LMpeRI8O0281VSe+VsTDor0xBXmaZHX9KJfI+QTs5hI6zhN+Qt00yzdsddAe0o9NfkD4v9AeXvW2JDkhYOj6YoGKid6hx6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B52MsRG+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qI6Xo6bth2/aPgrFvNNYImCXp+1VSyhx63OqmACBGql19GMsjV6OLWx+d3vRF1+xc8TCEcMfTUUDe2oFytg88GoQfj6ZVYUoNK72MWzNsA+99dQbuk+6NMO0R3PkYidQiSW6+1y+bDSZVpP77L9Qlu4SwJ0VWhgDP9dTM7rr2y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OqskVf6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B52MsRG+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA36FC4CECE;
-	Thu, 12 Dec 2024 17:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OqskVf6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2328C4CECE;
+	Thu, 12 Dec 2024 17:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023647;
-	bh=+Oj6dBxRp5Ac+aGv5z+RnqYX47ajyroYg6ye4GI0vSs=;
+	s=korg; t=1734023650;
+	bh=B7qybUifTJbwOyVKSVzgM4/kt+Y/kZJV1SOsNjYaskE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B52MsRG+FMMBQhIkB2eRR++ztpl9Lt8qOAr0GSV3+yVBJQP4kyPMAELOvExTlNxAY
-	 uCMYfRe41wnmL326YEzIBmvaMmqdWtEjGnBY1M6SxT7UlzbwBnaKJSzL+GJGXn2oik
-	 YHoI7lk2PyhW7rIs3QuubLGi9Q7vrE9iCyqtxyq8=
+	b=OqskVf6ZQRs/m2uVKr43nxOS6OwEeUF0KhpuC3BW9GGcZwstgQWLXRytPVhDDQBdd
+	 0N77CGlMsaNw5zka7MvV+ii9y+un6WoKiEQJTu47RPqR2ZazsuwspDTNi0rC3IHp6Z
+	 RQX/b6ZOtAV1R0nidL+f5Ku2nwcP6KWwKwWa3P9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ben Greear <greearb@candelatech.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/459] ASoC: Intel: bytcr_rt5640: Add DMI quirk for Vexia Edu Atla 10 tablet
-Date: Thu, 12 Dec 2024 15:56:14 +0100
-Message-ID: <20241212144254.954151237@linuxfoundation.org>
+Subject: [PATCH 5.10 037/459] mac80211: fix user-power when emulating chanctx
+Date: Thu, 12 Dec 2024 15:56:15 +0100
+Message-ID: <20241212144254.992760153@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,51 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ben Greear <greearb@candelatech.com>
 
-[ Upstream commit 0107f28f135231da22a9ad5756bb16bd5cada4d5 ]
+[ Upstream commit 9b15c6cf8d2e82c8427cd06f535d8de93b5b995c ]
 
-The Vexia Edu Atla 10 tablet mostly uses the BYTCR tablet defaults,
-but as happens on more models it is using IN1 instead of IN3 for
-its internal mic and JD_SRC_JD2_IN4N instead of JD_SRC_JD1_IN4P
-for jack-detection.
+ieee80211_calc_hw_conf_chan was ignoring the configured
+user_txpower.  If it is set, use it to potentially decrease
+txpower as requested.
 
-Add a DMI quirk for this to fix the internal-mic and jack-detection.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patch.msgid.link/20241024211615.79518-2-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ben Greear <greearb@candelatech.com>
+Link: https://patch.msgid.link/20241010203954.1219686-1-greearb@candelatech.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ net/mac80211/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 47b581d99da67..6fc6a1fcd935e 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -935,6 +935,21 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF2 |
- 					BYT_RT5640_MCLK_EN),
- 	},
-+	{	/* Vexia Edu Atla 10 tablet */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
-+			/* Above strings are too generic, also match on BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "08/25/2014"),
-+		},
-+		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
-+					BYT_RT5640_JD_SRC_JD2_IN4N |
-+					BYT_RT5640_OVCD_TH_2000UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_DIFF_MIC |
-+					BYT_RT5640_SSP0_AIF2 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{	/* Voyo Winpad A15 */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
+diff --git a/net/mac80211/main.c b/net/mac80211/main.c
+index ae90ac3be59aa..8b3eead8989dd 100644
+--- a/net/mac80211/main.c
++++ b/net/mac80211/main.c
+@@ -144,6 +144,8 @@ static u32 ieee80211_hw_conf_chan(struct ieee80211_local *local)
+ 	}
+ 
+ 	power = ieee80211_chandef_max_power(&chandef);
++	if (local->user_power_level != IEEE80211_UNSET_POWER_LEVEL)
++		power = min(local->user_power_level, power);
+ 
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
 -- 
 2.43.0
 
