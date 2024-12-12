@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AAC223C7A;
-	Thu, 12 Dec 2024 16:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574012236EB;
+	Thu, 12 Dec 2024 16:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019535; cv=none; b=gc26hqhd6vZlSZ/zv6hShxbJr5wj8P3mwYazNiCq3/wfW9NyanvKepb4PWXLsw301kul2m4pB2UL8HaZU0ySXMbYLkwaszxa9d5FnnC9kMdNMs3GvABEIhY0FGQtL9CeBI709KzEMhsGjK2hVc5V27+7OwbiZ4nmR+LH2KBv2+Y=
+	t=1734019539; cv=none; b=fCxIRRj0V57jJBE5TdGi/QxORcHar1Mclsuff+3vJuYppTo4/e3lt5bCcUvIwZ8BKsXhq0ekSTw9jVE7uoHbqgrD0+KCm80QgVqhi9k0VTylaAf/FY3fsTr+C5SxOs+ifZM7iW9fKI8Rs3vymEQMekLdDfQaKo89ryN1+VioHV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019535; c=relaxed/simple;
-	bh=gJO9AoFccjozS059vjWqt1qPAMqMOsBu/9xo4GhGMKY=;
+	s=arc-20240116; t=1734019539; c=relaxed/simple;
+	bh=Z2QtZlmhNVa7beZvB07pjt52Xi6JMzvoj9nItFAN7Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbs0LctNugIuLK6Ewo2lzSTO/P13CyvH+LRFF7CAf0Nh1NCXlSIrI+MEZpNLpRyUPKwZcdK0pf+bw0WUnwEvh0wWxYl4V/T/o5UVOvpzCBr2Ivp4eID03cntuatvImj2Ysi90YvvKD4uH30r2j/aVzpwikDEVgW3dU1udJEn/i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uRtyNLCE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o4xlA5stHDtTNPjD+gwe4vcWrQ6TzBSUh3CnwKp/pQ1Oq0xBPXz7fCYeZfX+ySSkz9Fk3s4jQR4KpejmW7gFNqJNS4YVHPGRQnWEV2jdRlYLFeBWEpn4P/2i5awIT23vz/XUjTLH2oyDLekAQdVq1b/wWPa1zWxbtrLKMjlNvEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEa5qznu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uRtyNLCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D265C4CECE;
-	Thu, 12 Dec 2024 16:05:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEa5qznu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04FEC4CED3;
+	Thu, 12 Dec 2024 16:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019534;
-	bh=gJO9AoFccjozS059vjWqt1qPAMqMOsBu/9xo4GhGMKY=;
+	s=korg; t=1734019539;
+	bh=Z2QtZlmhNVa7beZvB07pjt52Xi6JMzvoj9nItFAN7Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uRtyNLCEDaSNGJnvfOHw4XM13LknBhFxwlmnxDZBI1p5WJZOHO4c4v8e/Iw0EckLz
-	 NoSqzc2OdQ0eEcNLTAO/YNCJYUPG/eiMXIM6glSzXK7E93g+rgvWuRxpEiYj3dijAy
-	 aba3S7oN9gC//Zl/yexGbGJKgRgbOb7ybvuH54hQ=
+	b=gEa5qznuQ4b1SDYSe5n6xrX/klH3eSPMlB8IMiDAuMbNaPlkewLLZsKEE5550LVG5
+	 ZMEu1ig5IsriF8sYT9RBVcNw/yHNz0dOLC1QRQCzYg1ww13VDf6x4N8ZdPucwoflql
+	 E703L+9nrqQWdKFV9p7+PxXTPl9nIWKQxmB5r2m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Dong Aisheng <aisheng.dong@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 233/772] clk: imx: fracn-gppll: fix pll power up
-Date: Thu, 12 Dec 2024 15:52:58 +0100
-Message-ID: <20241212144359.537978927@linuxfoundation.org>
+Subject: [PATCH 6.1 234/772] clk: imx: clk-scu: fix clk enable state save and restore
+Date: Thu, 12 Dec 2024 15:52:59 +0100
+Message-ID: <20241212144359.582775573@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,85 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Dong Aisheng <aisheng.dong@nxp.com>
 
-[ Upstream commit ff4279618f0aec350b0fb41b2b35841324fbd96e ]
+[ Upstream commit e81361f6cf9bf4a1848b0813bc4becb2250870b8 ]
 
-To i.MX93 which features dual Cortex-A55 cores and DSU, when using
-writel_relaxed to write value to PLL registers, the value might be
-buffered. To make sure the value has been written into the hardware,
-using readl to read back the register could achieve the goal.
+The scu clk_ops only inplements prepare() and unprepare() callback.
+Saving the clock state during suspend by checking clk_hw_is_enabled()
+is not safe as it's possible that some device drivers may only
+disable the clocks without unprepare. Then the state retention will not
+work for such clocks.
 
-current PLL power up flow can be simplified as below:
-  1. writel_relaxed to set the PLL POWERUP bit;
-  2. readl_poll_timeout to check the PLL lock bit:
-     a). timeout = ktime_add_us(ktime_get(), timeout_us);
-     b). readl the pll the lock reg;
-     c). check if the pll lock bit ready
-     d). check if timeout
+Fixing it by checking clk_hw_is_prepared() which is more reasonable
+and safe.
 
-But in some corner cases, both the write in step 1 and read in
-step 2 will be blocked by other bus transaction in the SoC for a
-long time, saying the value into real hardware is just before step b).
-That means the timeout counting has begins for quite sometime since
-step a), but value still not written into real hardware until bus
-released just at a point before step b).
-
-Then there maybe chances that the pll lock bit is not ready
-when readl done but the timeout happens. readl_poll_timeout will
-err return due to timeout. To avoid such unexpected failure,
-read back the reg to make sure the write has been done in HW
-reg.
-
-So use readl after writel_relaxed to fix the issue.
-
-Since we are here, to avoid udelay to run before writel_relaxed, use
-readl before udelay.
-
-Fixes: 1b26cb8a77a4 ("clk: imx: support fracn gppll")
-Co-developed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-3-89152574d1d7@nxp.com
+Fixes: d0409631f466 ("clk: imx: scu: add suspend/resume support")
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Tested-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
+Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-4-89152574d1d7@nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-fracn-gppll.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/imx/clk-scu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-fracn-gppll.c b/drivers/clk/imx/clk-fracn-gppll.c
-index 281fc62ecd3d5..5f2296bb67a65 100644
---- a/drivers/clk/imx/clk-fracn-gppll.c
-+++ b/drivers/clk/imx/clk-fracn-gppll.c
-@@ -250,9 +250,11 @@ static int clk_fracn_gppll_set_rate(struct clk_hw *hw, unsigned long drate,
- 	pll_div = FIELD_PREP(PLL_RDIV_MASK, rate->rdiv) | rate->odiv |
- 		FIELD_PREP(PLL_MFI_MASK, rate->mfi);
- 	writel_relaxed(pll_div, pll->base + PLL_DIV);
-+	readl(pll->base + PLL_DIV);
- 	if (pll->flags & CLK_FRACN_GPPLL_FRACN) {
- 		writel_relaxed(rate->mfd, pll->base + PLL_DENOMINATOR);
- 		writel_relaxed(FIELD_PREP(PLL_MFN_MASK, rate->mfn), pll->base + PLL_NUMERATOR);
-+		readl(pll->base + PLL_NUMERATOR);
- 	}
+diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
+index db307890e4c16..ec5afc7f2690b 100644
+--- a/drivers/clk/imx/clk-scu.c
++++ b/drivers/clk/imx/clk-scu.c
+@@ -577,7 +577,7 @@ static int __maybe_unused imx_clk_scu_suspend(struct device *dev)
+ 		clk->rate = clk_scu_recalc_rate(&clk->hw, 0);
+ 	else
+ 		clk->rate = clk_hw_get_rate(&clk->hw);
+-	clk->is_enabled = clk_hw_is_enabled(&clk->hw);
++	clk->is_enabled = clk_hw_is_prepared(&clk->hw);
  
- 	/* Wait for 5us according to fracn mode pll doc */
-@@ -261,6 +263,7 @@ static int clk_fracn_gppll_set_rate(struct clk_hw *hw, unsigned long drate,
- 	/* Enable Powerup */
- 	tmp |= POWERUP_MASK;
- 	writel_relaxed(tmp, pll->base + PLL_CTRL);
-+	readl(pll->base + PLL_CTRL);
- 
- 	/* Wait Lock */
- 	ret = clk_fracn_gppll_wait_lock(pll);
-@@ -298,6 +301,7 @@ static int clk_fracn_gppll_prepare(struct clk_hw *hw)
- 
- 	val |= POWERUP_MASK;
- 	writel_relaxed(val, pll->base + PLL_CTRL);
-+	readl(pll->base + PLL_CTRL);
- 
- 	ret = clk_fracn_gppll_wait_lock(pll);
- 	if (ret)
+ 	if (clk->parent)
+ 		dev_dbg(dev, "save parent %s idx %u\n", clk_hw_get_name(clk->parent),
 -- 
 2.43.0
 
