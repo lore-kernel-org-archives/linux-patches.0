@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C29120A5EE;
-	Thu, 12 Dec 2024 17:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311DB2153EC;
+	Thu, 12 Dec 2024 17:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024775; cv=none; b=kkvGnYgg0FV7f0h3cgvSYvgr8mxRpLUw/IgfJR/PDNGaKygiKaLS2ca+zj1YZiNk9g2U8ig9kJc80pfhrpKkJgR2b2eIUdCWvg58tYz3ol0BvRltimSMrjD7P4SbOWzDUVm1XA5Wyn5aRZPdOTde9IiPZUPutt3kIZObOkvfXao=
+	t=1734024778; cv=none; b=iuBuHP+ZSGuUy2ov71js1ovrwhhkVEJN0/MBd90iuysKEiNiW5QdS40W5PLj6t71QQJQbe8496sLNINI7/q7rlKhS9TFOQ54TRTujYSuojKhqpwEqYLBl0Nj24Up+hnWtz/idRATPhK580aI/RhTcOWYritTcuN5kUVgmDrxDjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024775; c=relaxed/simple;
-	bh=2pV/s57rz7qw0AYR9YRgpuK5GlBr6cjOUESovixDZuQ=;
+	s=arc-20240116; t=1734024778; c=relaxed/simple;
+	bh=9sDrmI/02x1zisZCOAWX3wZBZu5pO/00Wn0TpO1EM2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szkskX+1F8exPQb2yGwypFJoNA79ssD6V47W8WgMaNpZtDncXcPjXgB+g6vlt8LtiYkn3Nz06XVvtVCPhZdF2SHIq9nvteQja3APIXo7dMwfzdQ5GndLeHbVeSRwC6YL8Narxkxi5+yx1m+wxujVCtDiDmqeuwnCeTtTyRdssRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0HBIvUC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lbRluxOnquBK4Iv1g4ABIHrAScXjeLZaKMd9CQ/6+IR5ChNKeYAmc0MZ8HwwDPRnWypVs6Q4W0jWaAN0zUEUTeOfTYvhvm8+5Mk4nPBnBEeW7ZsJsF18Ex9UltoD/2w41iApZ3wJUrNGzOP6Zdz2gCVQPdJcsvc89G8f9KcSaUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrOxyKMu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0HBIvUC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A975BC4CECE;
-	Thu, 12 Dec 2024 17:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrOxyKMu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3728C4CECE;
+	Thu, 12 Dec 2024 17:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024775;
-	bh=2pV/s57rz7qw0AYR9YRgpuK5GlBr6cjOUESovixDZuQ=;
+	s=korg; t=1734024778;
+	bh=9sDrmI/02x1zisZCOAWX3wZBZu5pO/00Wn0TpO1EM2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0HBIvUCfm44D8rUNWlh3Pu+lPCKfx6aJ3aKU7gOXnifLe/PR/Y7eFQ4pHvdq63Jx
-	 B/riEyvkEYrmu+BUG9+XK5NV8GVKWX8OJCsR96vJwEAttqnBX8sW7W3JF13u2qKMZp
-	 QUKmkbqLymP33k8ClE/GTLA+4Tvos2s6O8F9oFb0=
+	b=BrOxyKMu7XuoBuPDEVqAYOnMc8/useQ3TDift6Uy5gY7I2oJnNX2YGX8ozzy3crR7
+	 4lbtDsGRuG6bzcXv///jssuRM+wVBuOLiyHPxdK9nYQKyl3PS0MKsc/CEzBo+tbcfc
+	 jJxi0L2QwTiAympeWOPf26ketTiLEyOV4bXUxhPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Fabian Vogt <fvogt@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	syzbot+412dea214d8baa3f7483@syzkaller.appspotmail.com,
+	Nihar Chaithanya <niharchaithanya@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 380/459] btrfs: avoid unnecessary device path update for the same device
-Date: Thu, 12 Dec 2024 16:01:58 +0100
-Message-ID: <20241212144308.784919730@linuxfoundation.org>
+Subject: [PATCH 5.10 407/459] jfs: add a check to prevent array-index-out-of-bounds in dbAdjTree
+Date: Thu, 12 Dec 2024 16:02:25 +0100
+Message-ID: <20241212144309.843666779@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -53,124 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Nihar Chaithanya <niharchaithanya@gmail.com>
 
-[ Upstream commit 2e8b6bc0ab41ce41e6dfcc204b6cc01d5abbc952 ]
+[ Upstream commit a174706ba4dad895c40b1d2277bade16dfacdcd9 ]
 
-[PROBLEM]
-It is very common for udev to trigger device scan, and every time a
-mounted btrfs device got re-scan from different soft links, we will get
-some of unnecessary device path updates, this is especially common
-for LVM based storage:
+When the value of lp is 0 at the beginning of the for loop, it will
+become negative in the next assignment and we should bail out.
 
- # lvs
-  scratch1 test -wi-ao---- 10.00g
-  scratch2 test -wi-a----- 10.00g
-  scratch3 test -wi-a----- 10.00g
-  scratch4 test -wi-a----- 10.00g
-  scratch5 test -wi-a----- 10.00g
-  test     test -wi-a----- 10.00g
-
- # mkfs.btrfs -f /dev/test/scratch1
- # mount /dev/test/scratch1 /mnt/btrfs
- # dmesg -c
- [  205.705234] BTRFS: device fsid 7be2602f-9e35-4ecf-a6ff-9e91d2c182c9 devid 1 transid 6 /dev/mapper/test-scratch1 (253:4) scanned by mount (1154)
- [  205.710864] BTRFS info (device dm-4): first mount of filesystem 7be2602f-9e35-4ecf-a6ff-9e91d2c182c9
- [  205.711923] BTRFS info (device dm-4): using crc32c (crc32c-intel) checksum algorithm
- [  205.713856] BTRFS info (device dm-4): using free-space-tree
- [  205.722324] BTRFS info (device dm-4): checking UUID tree
-
-So far so good, but even if we just touched any soft link of
-"dm-4", we will get quite some unnecessary device path updates.
-
- # touch /dev/mapper/test-scratch1
- # dmesg -c
- [  469.295796] BTRFS info: devid 1 device path /dev/mapper/test-scratch1 changed to /dev/dm-4 scanned by (udev-worker) (1221)
- [  469.300494] BTRFS info: devid 1 device path /dev/dm-4 changed to /dev/mapper/test-scratch1 scanned by (udev-worker) (1221)
-
-Such device path rename is unnecessary and can lead to random path
-change due to the udev race.
-
-[CAUSE]
-Inside device_list_add(), we are using a very primitive way checking if
-the device has changed, strcmp().
-
-Which can never handle links well, no matter if it's hard or soft links.
-
-So every different link of the same device will be treated as a different
-device, causing the unnecessary device path update.
-
-[FIX]
-Introduce a helper, is_same_device(), and use path_equal() to properly
-detect the same block device.
-So that the different soft links won't trigger the rename race.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1230641
-Reported-by: Fabian Vogt <fvogt@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: syzbot+412dea214d8baa3f7483@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=412dea214d8baa3f7483
+Tested-by: syzbot+412dea214d8baa3f7483@syzkaller.appspotmail.com
+Signed-off-by: Nihar Chaithanya <niharchaithanya@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 38 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 209eb85b6c270..9524588346b8e 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -726,6 +726,42 @@ u8 *btrfs_sb_fsid_ptr(struct btrfs_super_block *sb)
- 	return has_metadata_uuid ? sb->metadata_uuid : sb->fsid;
- }
- 
-+static bool is_same_device(struct btrfs_device *device, const char *new_path)
-+{
-+	struct path old = { .mnt = NULL, .dentry = NULL };
-+	struct path new = { .mnt = NULL, .dentry = NULL };
-+	char *old_path = NULL;
-+	bool is_same = false;
-+	int ret;
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index c61fcf0e88d29..ef220709c7f51 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -2953,6 +2953,9 @@ static void dbAdjTree(dmtree_t *tp, int leafno, int newval, bool is_ctl)
+ 	/* bubble the new value up the tree as required.
+ 	 */
+ 	for (k = 0; k < le32_to_cpu(tp->dmt_height); k++) {
++		if (lp == 0)
++			break;
 +
-+	if (!device->name)
-+		goto out;
-+
-+	old_path = kzalloc(PATH_MAX, GFP_NOFS);
-+	if (!old_path)
-+		goto out;
-+
-+	rcu_read_lock();
-+	ret = strscpy(old_path, rcu_str_deref(device->name), PATH_MAX);
-+	rcu_read_unlock();
-+	if (ret < 0)
-+		goto out;
-+
-+	ret = kern_path(old_path, LOOKUP_FOLLOW, &old);
-+	if (ret)
-+		goto out;
-+	ret = kern_path(new_path, LOOKUP_FOLLOW, &new);
-+	if (ret)
-+		goto out;
-+	if (path_equal(&old, &new))
-+		is_same = true;
-+out:
-+	kfree(old_path);
-+	path_put(&old);
-+	path_put(&new);
-+	return is_same;
-+}
-+
- /*
-  * Handle scanned device having its CHANGING_FSID_V2 flag set and the fs_devices
-  * being created with a disk that has already completed its fsid change. Such
-@@ -927,7 +963,7 @@ static noinline struct btrfs_device *device_list_add(const char *path,
- 				disk_super->fsid, devid, found_transid, path,
- 				current->comm, task_pid_nr(current));
- 
--	} else if (!device->name || strcmp(device->name->str, path)) {
-+	} else if (!device->name || !is_same_device(device, path)) {
- 		/*
- 		 * When FS is already mounted.
- 		 * 1. If you are here and if the device->name is NULL that
+ 		/* get the index of the first leaf of the 4 leaf
+ 		 * group containing the specified leaf (leafno).
+ 		 */
 -- 
 2.43.0
 
