@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52266223E81;
-	Thu, 12 Dec 2024 16:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB25321E085;
+	Thu, 12 Dec 2024 16:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019662; cv=none; b=qrt+jqVcsLCgqZqQhAdSGgnMymp7x0wKoE8iM85GcwbIoHKz8iMI43tg4OLOUh3nul0p/RweMdtuJGvTB8RDqRlDm6mK0vqDnYNP0yFighFiN6Olt2MMmA9HP9amdRfOSNNsogXqMIGPK11B+sc5DRTmlm1dNliPS7kuMMksfe8=
+	t=1734019665; cv=none; b=bi3Xrt2NNnJzxYrY6hGt6P5royehEViY25hsuNRkEVXHzmtEucrpgMDrgO3lpDvsbW6ZAzhe5e4S6r9Nc6zwbYG7vaq5/ko9PYQKDctZxgukEgFIuokEcauCqyVExvA+FqCyVwHRGbLFKupNi9N5skM9szF79lYKtBHBXdRsus0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019662; c=relaxed/simple;
-	bh=fwDlHEO8idT1UmCKwnJLis9mWI5+bSSF8GUBLGG7y5Y=;
+	s=arc-20240116; t=1734019665; c=relaxed/simple;
+	bh=gsIVNYW5APV1uyKCKO9+mQd4g997yFkMAJM1rLeaiJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgB2laBuSGv1Aef9dO2zIsEnkHOEn+NKye7KY4/d/ccWqdf2syPMxGO1g3oJJMULT05UnLvQgV8wo9B0TobbHt95Oc657SYXkQ0PFDbKhFcHYf38+mdbYbvAm4i3YPhqsJm4HgxD7y+F0PNXqzYH3SJj/YZtBrmMuUymlyCENiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igsm12L0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPtt/S5f8D7SPgDGO4qHYfFM3tvkoMnwWVjBylKQxoVay/2LJJjhO4q34jOibY5sw0HfAksXGKUccsrWUzdYsrhT8sZ3r4GdKiwvwfB+VBDIFLGiLm/zIHVlxQ1xiZ34HG3nfBOC9EJSGqZyYRVJO+d3eGNQyIbdMkrTPORmIYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/oCQIoZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igsm12L0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCF7C4CECE;
-	Thu, 12 Dec 2024 16:07:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/oCQIoZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7E6C4CECE;
+	Thu, 12 Dec 2024 16:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019662;
-	bh=fwDlHEO8idT1UmCKwnJLis9mWI5+bSSF8GUBLGG7y5Y=;
+	s=korg; t=1734019665;
+	bh=gsIVNYW5APV1uyKCKO9+mQd4g997yFkMAJM1rLeaiJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igsm12L0PPn1OcOk46oSmXR6TxF1BxsAPUCYNFvbo1Z/2UFHFGEne5x9nxgqGFtCD
-	 bvFENoyLTfxmet8hgv1QEQkJ+CyFA93ScPiyADgz6XgqIzfzYFOrkuqfjZ/eY9XiWm
-	 mkgyXrA9CluIol5YgTKIX+Vt0zc++Br1UqZOPXyo=
+	b=E/oCQIoZzC1qkJdJtHC5yLDVknAMJlTnzRhu+NxqlJY/VZ9QIy7BmwINii/IQmaQI
+	 2PamgisoV9Z5B14t4r6Y6Ww/uEHXC82n+KQRgR5htGXstupg8/6L4EGGyNCbuPj2cC
+	 313Gl1hW4x+nLu3NGsrO+XRvRUVLlG3o5viqHh/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Rosenberg <drosen@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Hemant Kumar <hemant@linux.vnet.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 266/772] f2fs: fix to account dirty data in __get_secs_required()
-Date: Thu, 12 Dec 2024 15:53:31 +0100
-Message-ID: <20241212144400.902000042@linuxfoundation.org>
+Subject: [PATCH 6.1 267/772] perf probe: Fix libdw memory leak
+Date: Thu, 12 Dec 2024 15:53:32 +0100
+Message-ID: <20241212144400.946461819@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,130 +58,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 1acd73edbbfef2c3c5b43cba4006a7797eca7050 ]
+[ Upstream commit 4585038b8e186252141ef86e9f0d8e97f11dce8d ]
 
-It will trigger system panic w/ testcase in [1]:
+Add missing dwarf_cfi_end to free memory associated with probe_finder
+cfi_eh which is allocated and owned via a call to
+dwarf_getcfi_elf. Confusingly cfi_dbg shouldn't be freed as its memory
+is owned by the passed in debuginfo struct. Add comments to highlight
+this.
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.c:2752!
-RIP: 0010:new_curseg+0xc81/0x2110
-Call Trace:
- f2fs_allocate_data_block+0x1c91/0x4540
- do_write_page+0x163/0xdf0
- f2fs_outplace_write_data+0x1aa/0x340
- f2fs_do_write_data_page+0x797/0x2280
- f2fs_write_single_data_page+0x16cd/0x2190
- f2fs_write_cache_pages+0x994/0x1c80
- f2fs_write_data_pages+0x9cc/0xea0
- do_writepages+0x194/0x7a0
- filemap_fdatawrite_wbc+0x12b/0x1a0
- __filemap_fdatawrite_range+0xbb/0xf0
- file_write_and_wait_range+0xa1/0x110
- f2fs_do_sync_file+0x26f/0x1c50
- f2fs_sync_file+0x12b/0x1d0
- vfs_fsync_range+0xfa/0x230
- do_fsync+0x3d/0x80
- __x64_sys_fsync+0x37/0x50
- x64_sys_call+0x1e88/0x20d0
- do_syscall_64+0x4b/0x110
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+This addresses leak sanitizer issues seen in:
+tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
-The root cause is if checkpoint_disabling and lfs_mode are both on,
-it will trigger OPU for all overwritten data, it may cost more free
-segment than expected, so f2fs must account those data correctly to
-calculate cosumed free segments later, and return ENOSPC earlier to
-avoid run out of free segment during block allocation.
-
-[1] https://lore.kernel.org/fstests/20241015025106.3203676-1-chao@kernel.org/
-
-Fixes: 4354994f097d ("f2fs: checkpoint disabling")
-Cc: Daniel Rosenberg <drosen@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 270bde1e76f4 ("perf probe: Search both .eh_frame and .debug_frame sections for probe location")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Hemant Kumar <hemant@linux.vnet.ibm.com>
+Link: https://lore.kernel.org/r/20241016235622.52166-3-irogers@google.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.h | 35 +++++++++++++++++++++++++----------
- 1 file changed, 25 insertions(+), 10 deletions(-)
+ tools/perf/util/probe-finder.c | 4 ++++
+ tools/perf/util/probe-finder.h | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 17d1723d98a0b..dde79842d14d1 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -584,18 +584,21 @@ static inline int reserved_sections(struct f2fs_sb_info *sbi)
- }
+diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
+index 50d861a80f572..2f86103761ab2 100644
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -1490,6 +1490,10 @@ int debuginfo__find_trace_events(struct debuginfo *dbg,
+ 	if (ret >= 0 && tf.pf.skip_empty_arg)
+ 		ret = fill_empty_trace_arg(pev, tf.tevs, tf.ntevs);
  
- static inline bool has_curseg_enough_space(struct f2fs_sb_info *sbi,
--			unsigned int node_blocks, unsigned int dent_blocks)
-+			unsigned int node_blocks, unsigned int data_blocks,
-+			unsigned int dent_blocks)
- {
- 
--	unsigned segno, left_blocks;
-+	unsigned int segno, left_blocks, blocks;
- 	int i;
- 
--	/* check current node sections in the worst case. */
--	for (i = CURSEG_HOT_NODE; i <= CURSEG_COLD_NODE; i++) {
-+	/* check current data/node sections in the worst case. */
-+	for (i = CURSEG_HOT_DATA; i < NR_PERSISTENT_LOG; i++) {
- 		segno = CURSEG_I(sbi, i)->segno;
- 		left_blocks = CAP_BLKS_PER_SEC(sbi) -
- 				get_ckpt_valid_blocks(sbi, segno, true);
--		if (node_blocks > left_blocks)
++#if _ELFUTILS_PREREQ(0, 142)
++	dwarf_cfi_end(tf.pf.cfi_eh);
++#endif
 +
-+		blocks = i <= CURSEG_COLD_DATA ? data_blocks : node_blocks;
-+		if (blocks > left_blocks)
- 			return false;
- 	}
+ 	if (ret < 0 || tf.ntevs == 0) {
+ 		for (i = 0; i < tf.ntevs; i++)
+ 			clear_probe_trace_event(&tf.tevs[i]);
+diff --git a/tools/perf/util/probe-finder.h b/tools/perf/util/probe-finder.h
+index 8bc1c80d3c1c0..1f4650b955094 100644
+--- a/tools/perf/util/probe-finder.h
++++ b/tools/perf/util/probe-finder.h
+@@ -81,9 +81,9 @@ struct probe_finder {
  
-@@ -609,8 +612,9 @@ static inline bool has_curseg_enough_space(struct f2fs_sb_info *sbi,
- }
- 
- /*
-- * calculate needed sections for dirty node/dentry
-- * and call has_curseg_enough_space
-+ * calculate needed sections for dirty node/dentry and call
-+ * has_curseg_enough_space, please note that, it needs to account
-+ * dirty data as well in lfs mode when checkpoint is disabled.
-  */
- static inline void __get_secs_required(struct f2fs_sb_info *sbi,
- 		unsigned int *lower_p, unsigned int *upper_p, bool *curseg_p)
-@@ -619,19 +623,30 @@ static inline void __get_secs_required(struct f2fs_sb_info *sbi,
- 					get_pages(sbi, F2FS_DIRTY_DENTS) +
- 					get_pages(sbi, F2FS_DIRTY_IMETA);
- 	unsigned int total_dent_blocks = get_pages(sbi, F2FS_DIRTY_DENTS);
-+	unsigned int total_data_blocks = 0;
- 	unsigned int node_secs = total_node_blocks / CAP_BLKS_PER_SEC(sbi);
- 	unsigned int dent_secs = total_dent_blocks / CAP_BLKS_PER_SEC(sbi);
-+	unsigned int data_secs = 0;
- 	unsigned int node_blocks = total_node_blocks % CAP_BLKS_PER_SEC(sbi);
- 	unsigned int dent_blocks = total_dent_blocks % CAP_BLKS_PER_SEC(sbi);
-+	unsigned int data_blocks = 0;
-+
-+	if (f2fs_lfs_mode(sbi) &&
-+		unlikely(is_sbi_flag_set(sbi, SBI_CP_DISABLED))) {
-+		total_data_blocks = get_pages(sbi, F2FS_DIRTY_DATA);
-+		data_secs = total_data_blocks / CAP_BLKS_PER_SEC(sbi);
-+		data_blocks = total_data_blocks % CAP_BLKS_PER_SEC(sbi);
-+	}
- 
- 	if (lower_p)
--		*lower_p = node_secs + dent_secs;
-+		*lower_p = node_secs + dent_secs + data_secs;
- 	if (upper_p)
- 		*upper_p = node_secs + dent_secs +
--			(node_blocks ? 1 : 0) + (dent_blocks ? 1 : 0);
-+			(node_blocks ? 1 : 0) + (dent_blocks ? 1 : 0) +
-+			(data_blocks ? 1 : 0);
- 	if (curseg_p)
- 		*curseg_p = has_curseg_enough_space(sbi,
--				node_blocks, dent_blocks);
-+				node_blocks, data_blocks, dent_blocks);
- }
- 
- static inline bool has_not_enough_free_secs(struct f2fs_sb_info *sbi,
+ 	/* For variable searching */
+ #if _ELFUTILS_PREREQ(0, 142)
+-	/* Call Frame Information from .eh_frame */
++	/* Call Frame Information from .eh_frame. Owned by this struct. */
+ 	Dwarf_CFI		*cfi_eh;
+-	/* Call Frame Information from .debug_frame */
++	/* Call Frame Information from .debug_frame. Not owned. */
+ 	Dwarf_CFI		*cfi_dbg;
+ #endif
+ 	Dwarf_Op		*fb_ops;	/* Frame base attribute */
 -- 
 2.43.0
 
