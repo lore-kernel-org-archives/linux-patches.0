@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852B2211493;
-	Thu, 12 Dec 2024 17:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6E5223C51;
+	Thu, 12 Dec 2024 17:48:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025701; cv=none; b=Ld5gQzMAT3QIWObjfAb+d1cyEVmOcSuInVYfdtjBiSHZVG+BSGveoBy6ECpDrjBocX8vzh3bqqZLvqtEIxxS/J4E7zWTYpdmSW/y5FVFQvJa6KF8U2+r9tvDkm6ND1cB33yHeSXXQSs12mlFXsXxTWApooWNeQ6LRFL3/qskimA=
+	t=1734025704; cv=none; b=RyOHjldLcEqk2kXt7uLBI4WrDLzDiaoAiAt6kcEZ6Lj5sVa1+bJwEgEzsjyMmEGEx36/qleSGITcAK1vKnoGeSBOtapj7tqRhlBofawP+6ryvUmrpn2TjXOCioorvEl940VlJclVVhwN2+2ck2gqP2gmFhuNAcD4jVIhfgCccgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025701; c=relaxed/simple;
-	bh=i/byawCNdmauWhmDsX1mHkry4+ayDyOfTFQcaFhPte0=;
+	s=arc-20240116; t=1734025704; c=relaxed/simple;
+	bh=R9JsiXqWanI8JQHT6vdgqshz2Tv5ywGM/T+DQuhDLnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2kGWiLkps1thjSxS3QKutCwnlivzyOcYYoUosJsGn1RtBPckdu0mu59D+FG1c0FjZQweYlSnNWCPwCh1HpyEEZZwIlSBk7RIV1r7kPL4oRK5/dQW+hKzN1S90Rm1RPhQcABl2jaStEW1Lve7gdFQAN+eOqkGzxnqqf0aq7sK94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT4+keuJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pa5hTUrG0DaXeen93rcwWIipZrJIJvWM7JRYuzupqEzj2TTdX/dvwCsgpUHyAR3kgtappZSd1F4G3RemH/eS81lsuLHv4MGwCCmPwk/LGZw5sgU/zNYN6kP0YDRcsEnCuCoJImH8+pRhcEegyEXjpQkGIS/V9Aj91nZQqyRii+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0hducaT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT4+keuJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1454C4CEDD;
-	Thu, 12 Dec 2024 17:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0hducaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7D4C4CEDE;
+	Thu, 12 Dec 2024 17:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025701;
-	bh=i/byawCNdmauWhmDsX1mHkry4+ayDyOfTFQcaFhPte0=;
+	s=korg; t=1734025704;
+	bh=R9JsiXqWanI8JQHT6vdgqshz2Tv5ywGM/T+DQuhDLnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LT4+keuJb/W6LoMZ0iMmziFiduGFEq3rpyDTXSmDds/IGtcS3AgVQG/0IiIGldwuA
-	 8OO00QbSen6//dfKkpIR9fgYJb5KKLEhYqpmAzh2J2MI9Vn5QAqUjnTr89hNofSaqo
-	 FFEzLAHUHquoQVgGo4dfavD7rdgHUx4CMyfBVim4=
+	b=b0hducaT+XPQU9m5a1l52T+r+qopxtCwvCuGFsk1xbLNr82TQ0XK7zOuPutjHXWAa
+	 1DhrRQzBPG3gBWCvbH8hI9vbJB/0fkn8ln0Y4kjuyHyY/ctusjPz8iceFb7fHOc7d3
+	 E5YzdCQycsIOB+9sP3G6PM9iDykAPJTnpHiUsm94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 241/321] xen: Fix the issue of resource not being properly released in xenbus_dev_probe()
-Date: Thu, 12 Dec 2024 16:02:39 +0100
-Message-ID: <20241212144239.495970292@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 259/321] nilfs2: fix potential out-of-bounds memory access in nilfs_find_entry()
+Date: Thu, 12 Dec 2024 16:02:57 +0100
+Message-ID: <20241212144240.197583741@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,67 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiu-ji Chen <chenqiuji666@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit afc545da381ba0c651b2658966ac737032676f01 ]
+commit 985ebec4ab0a28bb5910c3b1481a40fbf7f9e61d upstream.
 
-This patch fixes an issue in the function xenbus_dev_probe(). In the
-xenbus_dev_probe() function, within the if (err) branch at line 313, the
-program incorrectly returns err directly without releasing the resources
-allocated by err = drv->probe(dev, id). As the return value is non-zero,
-the upper layers assume the processing logic has failed. However, the probe
-operation was performed earlier without a corresponding remove operation.
-Since the probe actually allocates resources, failing to perform the remove
-operation could lead to problems.
+Syzbot reported that when searching for records in a directory where the
+inode's i_size is corrupted and has a large value, memory access outside
+the folio/page range may occur, or a use-after-free bug may be detected if
+KASAN is enabled.
 
-To fix this issue, we followed the resource release logic of the
-xenbus_dev_remove() function by adding a new block fail_remove before the
-fail_put block. After entering the branch if (err) at line 313, the
-function will use a goto statement to jump to the fail_remove block,
-ensuring that the previously acquired resources are correctly released,
-thus preventing the reference count leak.
+This is because nilfs_last_byte(), which is called by nilfs_find_entry()
+and others to calculate the number of valid bytes of directory data in a
+page from i_size and the page index, loses the upper 32 bits of the 64-bit
+size information due to an inappropriate type of local variable to which
+the i_size value is assigned.
 
-This bug was identified by an experimental static analysis tool developed
-by our team. The tool specializes in analyzing reference count operations
-and detecting potential issues where resources are not properly managed.
-In this case, the tool flagged the missing release operation as a
-potential problem, which led to the development of this patch.
+This caused a large byte offset value due to underflow in the end address
+calculation in the calling nilfs_find_entry(), resulting in memory access
+that exceeds the folio/page size.
 
-Fixes: 4bac07c993d0 ("xen: add the Xenbus sysfs and virtual device hotplug driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20241105130919.4621-1-chenqiuji666@gmail.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this issue by changing the type of the local variable causing the bit
+loss from "unsigned int" to "u64".  The return value of nilfs_last_byte()
+is also of type "unsigned int", but it is truncated so as not to exceed
+PAGE_SIZE and no bit loss occurs, so no change is required.
+
+Link: https://lkml.kernel.org/r/20241119172403.9292-1-konishi.ryusuke@gmail.com
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=96d5d14c47d97015c624
+Tested-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xenbus/xenbus_probe.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/nilfs2/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xenbus/xenbus_probe.c b/drivers/xen/xenbus/xenbus_probe.c
-index b88512d92ef52..fd686b962727a 100644
---- a/drivers/xen/xenbus/xenbus_probe.c
-+++ b/drivers/xen/xenbus/xenbus_probe.c
-@@ -250,10 +250,16 @@ int xenbus_dev_probe(struct device *_dev)
- 	if (err) {
- 		dev_warn(&dev->dev, "watch_otherend on %s failed.\n",
- 		       dev->nodename);
--		return err;
-+		goto fail_remove;
- 	}
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -76,7 +76,7 @@ static inline void nilfs_put_page(struct
+  */
+ static unsigned int nilfs_last_byte(struct inode *inode, unsigned long page_nr)
+ {
+-	unsigned int last_byte = inode->i_size;
++	u64 last_byte = inode->i_size;
  
- 	return 0;
-+fail_remove:
-+	if (drv->remove) {
-+		down(&dev->reclaim_sem);
-+		drv->remove(dev);
-+		up(&dev->reclaim_sem);
-+	}
- fail_put:
- 	module_put(drv->driver.owner);
- fail:
--- 
-2.43.0
-
+ 	last_byte -= page_nr << PAGE_SHIFT;
+ 	if (last_byte > PAGE_SIZE)
 
 
