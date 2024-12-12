@@ -1,51 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E7513792B;
-	Thu, 12 Dec 2024 16:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70BD5223E66;
+	Thu, 12 Dec 2024 16:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019555; cv=none; b=TpRrrylgdu4WaSlzVwo09GaS5/3+Jlh54qLCs1FtP/Mz9Zelp0MzJpkDqqflI+oXVLZ5VdmrFbsxsSJIhqXO5dVXKjEaWKiDipxXTq5TG/LIClFW2OeA2NL9y4JdVKo5SXqZ9q5IMs6chN31XSPaVSf0BSSB1m2R/a+OYxuLj0Y=
+	t=1734019559; cv=none; b=LI++Vv31w9WQZ7KOnG1TONrMPdWH9J5ShRUh/a5XMRqYlD9BKK63N7AR37WqPSW8P+z2i/e6wWow3OScONse3tNSv6+cVBSH/CICdzcZChlF+fJderU4RYRNPMouecjn6NP+BepMm4BpPAd0iv1Nh4DqdxezDRbG99IbxinS+rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019555; c=relaxed/simple;
-	bh=L7bD2CyaR4PE6DyL3RW0IdVFNsKJBjjWh2tt27qDsvM=;
+	s=arc-20240116; t=1734019559; c=relaxed/simple;
+	bh=lqpcrlwOvYD56VRJxSrt07xD6HmlrcvGNtmW3yXkxKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lij5P6eCGeaqrcD90V9HxVKJnXYlz7XPiR2K/VWa4FI4BzHs5i594lkaHHHdJb/tnkP5QBXMcV5uwTnWwSG/ZgiXC1u/ffcJCMCEqyW++7oux45DBup7AvTFxdBfeKcj4JGhsBTWmQSuiIYwHuyCi4CcQkOHsr1+msljUgae028=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T30aR1RH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W2IWJuLmd57V//xWrtuVbcmnVG3iDfBhjfwG1H8dbOxbl043YUuMFPbmBsvRoMH9r4J0+lT6+RF6zUJHgEeuJY8Bjqwnjnhntk19cBnFs+H8aPdgFd2v/POFWReeuX0ID8MknT1zkUfj7PTVE2rsC7ALGNJICZvKoEzZtWO5Od8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhaN4fe6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T30aR1RH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380E8C4CED0;
-	Thu, 12 Dec 2024 16:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhaN4fe6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6477CC4CECE;
+	Thu, 12 Dec 2024 16:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019555;
-	bh=L7bD2CyaR4PE6DyL3RW0IdVFNsKJBjjWh2tt27qDsvM=;
+	s=korg; t=1734019559;
+	bh=lqpcrlwOvYD56VRJxSrt07xD6HmlrcvGNtmW3yXkxKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T30aR1RHo3szCqBG7KamZiOxOUvDXFR5g5200Yjk/nk5vBGCWs0CKl+ex+rzX3f9i
-	 RStb9+yu3UcAfz9/AVO117fd1pVWTjeZfsyAchaxDJOvJAy0G+H69AN93SveOxPeIn
-	 xRxFwWwmuUJSXb08x2Rbpviy2J6OQETSZKkcYb2U=
+	b=bhaN4fe6gKOzEg49gP3240rnTOgNKPaBKXLxEjMBciOHi8YRNkp9JJxeD7gdCq9UQ
+	 kCfgaJJulsO+pPx9czqdnXZIkZSyS+2QalVLoNAgO4JlYnWMxcZCpkl7EzRKPHl7jx
+	 MNalE6kPQ54OPyiWnP74WMSEwOapREBM+4AjIU4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakob Koschel <jakobkoschel@gmail.com>,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Brian Johannesmeyer" <bjohannesmeyer@gmail.com>,
-	Cristiano Giuffrida <c.giuffrida@vu.nl>,
-	"Bos, H.J." <h.j.bos@vu.nl>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Baoquan He <bhe@redhat.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Yan Zhen <yanzhen@vivo.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Ye Bin <yebin10@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 238/772] fs/proc/kcore.c: fix coccinelle reported ERROR instances
-Date: Thu, 12 Dec 2024 15:53:03 +0100
-Message-ID: <20241212144359.741866826@linuxfoundation.org>
+Subject: [PATCH 6.1 239/772] scsi: bfa: Fix use-after-free in bfad_im_module_exit()
+Date: Thu, 12 Dec 2024 15:53:04 +0100
+Message-ID: <20241212144359.782707877@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -64,77 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mirsad Todorovac <mtodorovac69@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 82e33f249f1126cf3c5f39a31b850d485ac33bc3 ]
+[ Upstream commit 178b8f38932d635e90f5f0e9af1986c6f4a89271 ]
 
-Coccinelle complains about the nested reuse of the pointer `iter' with
-different pointer type:
+BUG: KASAN: slab-use-after-free in __lock_acquire+0x2aca/0x3a20
+Read of size 8 at addr ffff8881082d80c8 by task modprobe/25303
 
-./fs/proc/kcore.c:515:26-30: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:534:23-27: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:550:40-44: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:568:27-31: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:581:28-32: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:599:27-31: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:607:38-42: ERROR: invalid reference to the index variable of the iterator on line 499
-./fs/proc/kcore.c:614:26-30: ERROR: invalid reference to the index variable of the iterator on line 499
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x95/0xe0
+ print_report+0xcb/0x620
+ kasan_report+0xbd/0xf0
+ __lock_acquire+0x2aca/0x3a20
+ lock_acquire+0x19b/0x520
+ _raw_spin_lock+0x2b/0x40
+ attribute_container_unregister+0x30/0x160
+ fc_release_transport+0x19/0x90 [scsi_transport_fc]
+ bfad_im_module_exit+0x23/0x60 [bfa]
+ bfad_init+0xdb/0xff0 [bfa]
+ do_one_initcall+0xdc/0x550
+ do_init_module+0x22d/0x6b0
+ load_module+0x4e96/0x5ff0
+ init_module_from_file+0xcd/0x130
+ idempotent_init_module+0x330/0x620
+ __x64_sys_finit_module+0xb3/0x110
+ do_syscall_64+0xc1/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
 
-Replacing `struct kcore_list *iter' with `struct kcore_list *tmp' doesn't change the
-scope and the functionality is the same and coccinelle seems happy.
+Allocated by task 25303:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ __kasan_kmalloc+0x7f/0x90
+ fc_attach_transport+0x4f/0x4740 [scsi_transport_fc]
+ bfad_im_module_init+0x17/0x80 [bfa]
+ bfad_init+0x23/0xff0 [bfa]
+ do_one_initcall+0xdc/0x550
+ do_init_module+0x22d/0x6b0
+ load_module+0x4e96/0x5ff0
+ init_module_from_file+0xcd/0x130
+ idempotent_init_module+0x330/0x620
+ __x64_sys_finit_module+0xb3/0x110
+ do_syscall_64+0xc1/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-NOTE: There was an issue with using `struct kcore_list *pos' as the nested iterator.
-      The build did not work!
+Freed by task 25303:
+ kasan_save_stack+0x24/0x50
+ kasan_save_track+0x14/0x30
+ kasan_save_free_info+0x3b/0x60
+ __kasan_slab_free+0x38/0x50
+ kfree+0x212/0x480
+ bfad_im_module_init+0x7e/0x80 [bfa]
+ bfad_init+0x23/0xff0 [bfa]
+ do_one_initcall+0xdc/0x550
+ do_init_module+0x22d/0x6b0
+ load_module+0x4e96/0x5ff0
+ init_module_from_file+0xcd/0x130
+ idempotent_init_module+0x330/0x620
+ __x64_sys_finit_module+0xb3/0x110
+ do_syscall_64+0xc1/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-[akpm@linux-foundation.org: s/tmp/pos/]
-Link: https://lkml.kernel.org/r/20241029054651.86356-2-mtodorovac69@gmail.com
-Link: https://lore.kernel.org/all/CAHk-=wgRr_D8CB-D9Kg-c=EHreAsk5SqXPwr9Y7k9sA6cWXJ6w@mail.gmail.com/ [1]
-Link: https://lkml.kernel.org/r/20220331223700.902556-1-jakobkoschel@gmail.com
-Fixes: 04d168c6d42d ("fs/proc/kcore.c: remove check of list iterator against head past the loop body")
-Signed-off-by: Jakob Koschel <jakobkoschel@gmail.com>
-Signed-off-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: "Brian Johannesmeyer" <bjohannesmeyer@gmail.com>
-Cc: Cristiano Giuffrida <c.giuffrida@vu.nl>
-Cc: "Bos, H.J." <h.j.bos@vu.nl>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Yang Li <yang.lee@linux.alibaba.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Hari Bathini <hbathini@linux.ibm.com>
-Cc: Yan Zhen <yanzhen@vivo.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Above issue happens as follows:
+
+bfad_init
+  error = bfad_im_module_init()
+    fc_release_transport(bfad_im_scsi_transport_template);
+  if (error)
+    goto ext;
+
+ext:
+  bfad_im_module_exit();
+    fc_release_transport(bfad_im_scsi_transport_template);
+    --> Trigger double release
+
+Don't call bfad_im_module_exit() if bfad_im_module_init() failed.
+
+Fixes: 7725ccfda597 ("[SCSI] bfa: Brocade BFA FC SCSI driver")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/r/20241023011809.63466-1-yebin@huaweicloud.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/kcore.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/scsi/bfa/bfad.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
-index a2d430549012f..92c7259adfd98 100644
---- a/fs/proc/kcore.c
-+++ b/fs/proc/kcore.c
-@@ -496,13 +496,13 @@ read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
- 		 * the previous entry, search for a matching entry.
- 		 */
- 		if (!m || start < m->addr || start >= m->addr + m->size) {
--			struct kcore_list *iter;
-+			struct kcore_list *pos;
+diff --git a/drivers/scsi/bfa/bfad.c b/drivers/scsi/bfa/bfad.c
+index e5aa982ffedc3..d4455ca3a7dd2 100644
+--- a/drivers/scsi/bfa/bfad.c
++++ b/drivers/scsi/bfa/bfad.c
+@@ -1699,9 +1699,8 @@ bfad_init(void)
  
- 			m = NULL;
--			list_for_each_entry(iter, &kclist_head, list) {
--				if (start >= iter->addr &&
--				    start < iter->addr + iter->size) {
--					m = iter;
-+			list_for_each_entry(pos, &kclist_head, list) {
-+				if (start >= pos->addr &&
-+				    start < pos->addr + pos->size) {
-+					m = pos;
- 					break;
- 				}
- 			}
+ 	error = bfad_im_module_init();
+ 	if (error) {
+-		error = -ENOMEM;
+ 		printk(KERN_WARNING "bfad_im_module_init failure\n");
+-		goto ext;
++		return -ENOMEM;
+ 	}
+ 
+ 	if (strcmp(FCPI_NAME, " fcpim") == 0)
 -- 
 2.43.0
 
