@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADD62288DD;
-	Thu, 12 Dec 2024 16:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E8921660C;
+	Thu, 12 Dec 2024 16:00:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019206; cv=none; b=tnnGF8Tci1iXah8Vca5hPZw5RJZvlqT20TGy7MDV1Xf2EjhCxOnfc2pFOoDuuPKYh0J8xVbFKBHBrCattJ7NMxVSmHvO9Uf3KzRsf2Ws3cy6kZdKeSPOVRo5VknfEDzLJWEZK/4afJ2aLnqtNWlIHBVkXmcgK3ZyRfwuRMNvySY=
+	t=1734019209; cv=none; b=ajGFj9g1rbGkn396FeAWxqCeFcxgpl4dtvXw3LaEcYW+8JsrQiUsJtllZh5K2nVVCwl9oA+4yT258m/KAW4/eFeIm8gKQA0Pr5l0dd+Dz3w/NTx2l8CkCZGBO5STFA+3zwjMQwIY2HgCjHyOXzin2K/NNsqIbdCKeF4j9yAr9Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019206; c=relaxed/simple;
-	bh=jJnjh+uwpyGZ5P5LN8OqmKSUWTFoxubTnJYYyFNjwgs=;
+	s=arc-20240116; t=1734019209; c=relaxed/simple;
+	bh=eNeKkNl59b/x+TIZwZCkLn9VHbtxEm17ppsKSxOGzyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adnPOzdtI3mNAn6lmShO31Iws4vzl/9JrO6jJupc+6h16G91PQsUhX3ryTaAL6zThHsuQxczYs8VZ12KtMNgUQWplRtrIunxrYmeHPVVNnOBfuWKhLSQUW6wa76BXMfKAvsQn1QNBq0nHX25WbpM873BJwqzYlQaXZRthrmRxbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+7vROFz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzio5mHyd43HbDu+GWnAUIV3h5gUS4vQ5t2Cb6A223dzWQFVlwhSttkOA0fIXMjXKtrWGZfvtVA73YAe1eAl5sVS8oj9zNDJIU9ohTM5Hz++Xcw30yc/tJ2HHIuwYWRZ0QZjB/dYOeUQ/YpkJZdlTs0hEgcgxNTmD505zBboh40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQ+MZV8X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+7vROFz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50523C4CECE;
-	Thu, 12 Dec 2024 16:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQ+MZV8X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2ABC4CED0;
+	Thu, 12 Dec 2024 16:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019205;
-	bh=jJnjh+uwpyGZ5P5LN8OqmKSUWTFoxubTnJYYyFNjwgs=;
+	s=korg; t=1734019209;
+	bh=eNeKkNl59b/x+TIZwZCkLn9VHbtxEm17ppsKSxOGzyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+7vROFzK6cdzbWihbYSnV0NaveCGspLPmp8Y+Ur6yobGwLlU2Tlxjpnz1SH5oeMP
-	 knrzp2oTfKENYrIBWccen5iQNAEuHS5tad9ykelO/xgrB6VGZbf4jifXcYDSsv1PTh
-	 gg8xOqjuuYOfegJyLJp/spyuwa9ZQvY+ZEVyjUe4=
+	b=BQ+MZV8XZxg+8Wn0AVFA3mR6qo1NyJVky+cjC1vPJJfwXVKRwzPDYTBY6/cCe+Ypz
+	 f48NMgkW8Zf+S1yV0AX2/tDNQYJLYQJT8cGKDjLMdHEz1XZbDs1KMztn+coEzHhOuO
+	 NHlwc+1kFi0J8YE+xMo0W8IzLe5FXdB7PkZKDb2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Chen <chenyuan@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/772] bpf: Fix the xdp_adjust_tail sample prog issue
-Date: Thu, 12 Dec 2024 15:51:31 +0100
-Message-ID: <20241212144355.968787184@linuxfoundation.org>
+Subject: [PATCH 6.1 147/772] selftests/bpf: Add csum helpers
+Date: Thu, 12 Dec 2024 15:51:32 +0100
+Message-ID: <20241212144356.010153791@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,39 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Chen <chenyuan@kylinos.cn>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 4236f114a3ffbbfd217436c08852e94cae372f57 ]
+[ Upstream commit f6642de0c3e94d3ef6f44e127d11fcf4138873f7 ]
 
-During the xdp_adjust_tail test, probabilistic failure occurs and SKB package
-is discarded by the kernel. After checking the issues by tracking SKB package,
-it is identified that they were caused by checksum errors. Refer to checksum
-of the arch/arm64/include/asm/checksum.h for fixing.
+Checksum helpers will be used to calculate pseudo-header checksum in
+AF_XDP metadata selftests.
 
-v2: Based on Alexei Starovoitov's suggestions, it is necessary to keep the code
- implementation consistent.
+The helpers are mirroring existing kernel ones:
+- csum_tcpudp_magic : IPv4 pseudo header csum
+- csum_ipv6_magic : IPv6 pseudo header csum
+- csum_fold : fold csum and do one's complement
 
-Fixes: c6ffd1ff7856 (bpf: add bpf_xdp_adjust_tail sample prog)
-Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240930024115.52841-1-chenyuan_fl@163.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20231127190319.1190813-11-sdf@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 5bf1557e3d6a ("selftests/bpf: Fix backtrace printing for selftests crashes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/xdp_adjust_tail_kern.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/network_helpers.h | 43 +++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/samples/bpf/xdp_adjust_tail_kern.c b/samples/bpf/xdp_adjust_tail_kern.c
-index ffdd548627f0a..da67bcad1c638 100644
---- a/samples/bpf/xdp_adjust_tail_kern.c
-+++ b/samples/bpf/xdp_adjust_tail_kern.c
-@@ -57,6 +57,7 @@ static __always_inline void swap_mac(void *data, struct ethhdr *orig_eth)
- 
- static __always_inline __u16 csum_fold_helper(__u32 csum)
- {
+diff --git a/tools/testing/selftests/bpf/network_helpers.h b/tools/testing/selftests/bpf/network_helpers.h
+index f882c691b7909..2582ec56dcc50 100644
+--- a/tools/testing/selftests/bpf/network_helpers.h
++++ b/tools/testing/selftests/bpf/network_helpers.h
+@@ -66,4 +66,47 @@ struct nstoken;
+  */
+ struct nstoken *open_netns(const char *name);
+ void close_netns(struct nstoken *token);
++
++static __u16 csum_fold(__u32 csum)
++{
 +	csum = (csum & 0xffff) + (csum >> 16);
- 	return ~((csum & 0xffff) + (csum >> 16));
- }
- 
++	csum = (csum & 0xffff) + (csum >> 16);
++
++	return (__u16)~csum;
++}
++
++static inline __sum16 csum_tcpudp_magic(__be32 saddr, __be32 daddr,
++					__u32 len, __u8 proto,
++					__wsum csum)
++{
++	__u64 s = csum;
++
++	s += (__u32)saddr;
++	s += (__u32)daddr;
++	s += htons(proto + len);
++	s = (s & 0xffffffff) + (s >> 32);
++	s = (s & 0xffffffff) + (s >> 32);
++
++	return csum_fold((__u32)s);
++}
++
++static inline __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
++				      const struct in6_addr *daddr,
++					__u32 len, __u8 proto,
++					__wsum csum)
++{
++	__u64 s = csum;
++	int i;
++
++	for (i = 0; i < 4; i++)
++		s += (__u32)saddr->s6_addr32[i];
++	for (i = 0; i < 4; i++)
++		s += (__u32)daddr->s6_addr32[i];
++	s += htons(proto + len);
++	s = (s & 0xffffffff) + (s >> 32);
++	s = (s & 0xffffffff) + (s >> 32);
++
++	return csum_fold((__u32)s);
++}
++
+ #endif
 -- 
 2.43.0
 
