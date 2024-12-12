@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D404F21766D;
-	Thu, 12 Dec 2024 17:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3917F21766D;
+	Thu, 12 Dec 2024 17:21:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024066; cv=none; b=e6/QhdZmvrAI4FlhQkv0Sj42T1agqAYqb1O1iC2XyVKmJVPfXrfMRBo/CoGgZd3GzM4tlM1ft9jx8LggUNxxUGcfG0nCOOP850P0N2NFsLqN5VMyY6UC8hNREOD/SD+wkpSnmJzPEpRZPanxF9/qsECMpwzzd40lqY0vY52PBlE=
+	t=1734024070; cv=none; b=o1aQ/j6VGJHwmscEiNFwARaqEUMPjdGLiMi7V8zneQ8JFXicm2HuC95ZFiWwAvI8Sxn8ByEwLGzzECX9Hp06vYGfNrb8LfNbbLO8TRVqFq85yXfyc+7RlqPAn9Di+50p0F/oDIGBI2UUiGyuv7RH21e8taRKfTKZSQ39IgzeMpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024066; c=relaxed/simple;
-	bh=AZ2a5EAsYHWD+wH7E3qsXwFf4hPUb7AcFgfUUnylDbw=;
+	s=arc-20240116; t=1734024070; c=relaxed/simple;
+	bh=EunpLDT9XIfP6LLR5dxwMWYH9/xjO78NTqbvCZbgVyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PrurRlNiLJn6JGkhd8b+UGQMyrByFf00pvcX57qeOWex5iWIdElysTsCn59iVU8zKtJUOpmY3puDDLsk9HpZKmKuVSY5swLtKYP27Wz9s9uGdniaX1pHieqvNu1sH/IHYXwVqkECQLDaAa8cwRcJbmmLSL0sy/0hIARFJeuMlzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVOxfJC+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sPqN3ico336eso0vuigN4l3I974KYfTcI5IrrZ9Bd72vc163SJ0ld/8hwHa83YDfZiK7hKKU47o8mXYqBPCI6cQCUETRh4b4PZNpIpTFG7IssWxt1OumkuuUEwtgl2zGvqdPsEy2qhCryqRxnWwavuoRYNDoRs/QwGkxG95qQAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOnjj16C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVOxfJC+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56526C4CECE;
-	Thu, 12 Dec 2024 17:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOnjj16C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B5DC4CECE;
+	Thu, 12 Dec 2024 17:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024066;
-	bh=AZ2a5EAsYHWD+wH7E3qsXwFf4hPUb7AcFgfUUnylDbw=;
+	s=korg; t=1734024069;
+	bh=EunpLDT9XIfP6LLR5dxwMWYH9/xjO78NTqbvCZbgVyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVOxfJC+wB6Q5QhmQ/ausQgzMlRgpEh4U+OKs2zMdb1UWN3DoaOK0akLvzTFSxBnn
-	 etuzMeQkbKrPWyhGqS7TfLLdzNSfng1M1cFgahmLmVYXJ2GXCQprqNWkERP7VNptVh
-	 4MFh9fO4qI3SsrvBRTEkGhoExZzkcgUHV47u2pvY=
+	b=LOnjj16Cq8Cku48OTKD95jF54Apt8pzpOTBM/mxaTRDfdgY6T+4Nc5DVBzCQrTLtU
+	 zQAG+qOj4xmv5vp5KUB82xepo2uDIIOgSaoj3H1FAgRJv0tU5LOBvfOkMjWZLR2/wE
+	 QTIVtMnG6HJzYIaCUuuqhbcCLuSFEDiazh0QASfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/459] RDMA/bnxt_re: Check cqe flags to know imm_data vs inv_irkey
-Date: Thu, 12 Dec 2024 15:58:32 +0100
-Message-ID: <20241212144300.396159179@linuxfoundation.org>
+Subject: [PATCH 5.10 175/459] mfd: rt5033: Fix missing regmap_del_irq_chip()
+Date: Thu, 12 Dec 2024 15:58:33 +0100
+Message-ID: <20241212144300.438174212@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,78 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 808ca6de989c598bc5af1ae0ad971a66077efac0 ]
+[ Upstream commit d256d612f47529ed0b332298e2d5ea981a4dd5b8 ]
 
-Invalidate rkey is cpu endian and immediate data is in big endian format.
-Both immediate data and invalidate the remote key returned by
-HW is in little endian format.
+Fix missing call to regmap_del_irq_chip() in error handling path by
+using devm_regmap_add_irq_chip().
 
-While handling the commit in fixes tag, the difference between
-immediate data and invalidate rkey endianness was not considered.
-
-Without changes of this patch, Kernel ULP was failing while processing
-inv_rkey.
-
-dmesg log snippet -
-nvme nvme0: Bogus remote invalidation for rkey 0x2000019Fix in this patch
-
-Do endianness conversion based on completion queue entry flag.
-Also, the HW completions are already converted to host endianness in
-bnxt_qplib_cq_process_res_rc and bnxt_qplib_cq_process_res_ud and there
-is no need to convert it again in bnxt_re_poll_cq. Modified the union to
-hold the correct data type.
-
-Fixes: 95b087f87b78 ("bnxt_re: Fix imm_data endianness")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1730110014-20755-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0b271258544b ("mfd: rt5033: Add Richtek RT5033 driver core.")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Link: https://lore.kernel.org/r/1730302867-8391-1-git-send-email-zhangchangzhong@huawei.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +++++--
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 2 +-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/mfd/rt5033.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index f16e0b2c7895e..9ffd28ab526a8 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -3334,7 +3334,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *gsi_sqp,
- 	wc->byte_len = orig_cqe->length;
- 	wc->qp = &gsi_qp->ib_qp;
+diff --git a/drivers/mfd/rt5033.c b/drivers/mfd/rt5033.c
+index 302115dabff4b..9afb8d2b35476 100644
+--- a/drivers/mfd/rt5033.c
++++ b/drivers/mfd/rt5033.c
+@@ -82,8 +82,8 @@ static int rt5033_i2c_probe(struct i2c_client *i2c,
+ 	}
+ 	dev_info(&i2c->dev, "Device found Device ID: %04x\n", dev_id);
  
--	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
-+	wc->ex.imm_data = cpu_to_be32(orig_cqe->immdata);
- 	wc->src_qp = orig_cqe->src_qp;
- 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
- 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
-@@ -3474,7 +3474,10 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
- 				continue;
- 			}
- 			wc->qp = &qp->ib_qp;
--			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
-+			if (cqe->flags & CQ_RES_RC_FLAGS_IMM)
-+				wc->ex.imm_data = cpu_to_be32(cqe->immdata);
-+			else
-+				wc->ex.invalidate_rkey = cqe->invrkey;
- 			wc->src_qp = cqe->src_qp;
- 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
- 			wc->port_num = 1;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 01cb48caa9dbd..6803162261a7d 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -372,7 +372,7 @@ struct bnxt_qplib_cqe {
- 	u16				cfa_meta;
- 	u64				wr_id;
- 	union {
--		__le32			immdata;
-+		u32			immdata;
- 		u32			invrkey;
- 	};
- 	u64				qp_handle;
+-	ret = regmap_add_irq_chip(rt5033->regmap, rt5033->irq,
+-			IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
++	ret = devm_regmap_add_irq_chip(rt5033->dev, rt5033->regmap,
++			rt5033->irq, IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+ 			0, &rt5033_irq_chip, &rt5033->irq_data);
+ 	if (ret) {
+ 		dev_err(&i2c->dev, "Failed to request IRQ %d: %d\n",
 -- 
 2.43.0
 
