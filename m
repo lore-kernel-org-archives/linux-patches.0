@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF2E226866;
-	Thu, 12 Dec 2024 16:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E592210CA;
+	Thu, 12 Dec 2024 16:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020694; cv=none; b=nP3+7jiqJXyxE+4nsIuu0V6N3OhVLIAgUXaVZlMcKnr+gUi7s0vgvlhkuEvn1K4VV+QWXCgIfPX2q4xqOi4OBDqfBL+0cDWNo2rCGDL9fH8aaetSZkV1dqCBeuOc6Go7MXVwQgTDk/qiIpPXChHnT4TcEWlAu3BFkBSh8gJ+5bo=
+	t=1734020698; cv=none; b=bjhLSfypZwMlP9ULkhGBPAtV2Cj1m/7+GaVvYtDEbBEMR2EfCp1b/nc6zvlICwKP7axjozg7IrHf4omT++XidJOQGZJwBYHrPKzEi8KXq/LouQGNJnRfl2hTPcP2kaR2/5xT2qwxVpMvw2rEzMu2EXZvPdkm65LrPbxqoxp2OIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020694; c=relaxed/simple;
-	bh=9YdS0VWMq9xoMptPFGfVwi/v6s872G1AWwJCsbc5QYw=;
+	s=arc-20240116; t=1734020698; c=relaxed/simple;
+	bh=Kf8Hb53+DCHMsGs+Q3klelNyZiFbIB5eRTu9iccom30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DWWUA/IC+4q8lhUzLKQttsctgOn5laFtr0Y7AB5LPFQ6u/tKakWQXpgWZrWUoKT0gzb6wh0nubMusRCD7Wm6k5fhpYhK5fbnZwyTJKGl8D4vm4byE+u2DIkNUV0IA7XMN0zYuDdeoblUOUl1WkNoqKYPOg/VL1OqhlSvkeWvsMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IusjBU+f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eLPxCrdG4OkigSHOSKWNx6G403dVMMhP2e4EGpkr/ekZCDbXnalG/bSddZgj/5NsJCJ1kFD0v2dV+F+JCQq/kcB3XEGTGOpEru0UR1oORz0rQ1mYx7MZKIATCNGCTaLxV4HmKE5dMj+U+7hcP3a6afRdPzxZTNCj8/1TfI8CaRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GarNuds1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IusjBU+f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66A7C4CECE;
-	Thu, 12 Dec 2024 16:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GarNuds1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB63BC4CECE;
+	Thu, 12 Dec 2024 16:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020694;
-	bh=9YdS0VWMq9xoMptPFGfVwi/v6s872G1AWwJCsbc5QYw=;
+	s=korg; t=1734020698;
+	bh=Kf8Hb53+DCHMsGs+Q3klelNyZiFbIB5eRTu9iccom30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IusjBU+fRQp9DyyIx7m38bz2WtPOhzfCcpTx0qi+mF7QjB0vsgUqxgMqB4MsZHaKX
-	 doOphCjLf7SN2xRj3skKqthm4GjRBWv8Qco7l2kPZ/mAh1YDZggTe/vgRfjMBTdn+h
-	 EHmCBBmQRk+dgnjfPewicOO0Zl5MA51/YviddrF4=
+	b=GarNuds1gU6Yqh/gygn+V0ujQ0emzs72cxMA3V4eihNbCKJ2y6Qz0bezw6xmfUw55
+	 d/pVeI73Se2p0SKU1KDx1J1BbLrO4F5LEAVLJxgG5L7l7d2GYwDGagpL0GIUU6UDek
+	 eSKSuKUw9mBYbViAGghilJK2gAwP2kcnPoLx0Eg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Kai <KaiShen@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marek Vasut <marex@denx.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 536/772] net/smc: fix LGR and link use-after-free issue
-Date: Thu, 12 Dec 2024 15:58:01 +0100
-Message-ID: <20241212144412.122612515@linuxfoundation.org>
+Subject: [PATCH 6.1 519/772] can: ifi_canfd: ifi_canfd_handle_lec_err(): fix {rx,tx}_errors statistics
+Date: Thu, 12 Dec 2024 15:57:44 +0100
+Message-ID: <20241212144411.414418203@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -54,90 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wen Gu <guwen@linux.alibaba.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 2c7f14ed9c19ec0f149479d1c2842ec1f9bf76d7 ]
+[ Upstream commit bb03d568bb21b4afe7935d1943bcf68ddea3ea45 ]
 
-We encountered a LGR/link use-after-free issue, which manifested as
-the LGR/link refcnt reaching 0 early and entering the clear process,
-making resource access unsafe.
+The ifi_canfd_handle_lec_err() function was incorrectly incrementing only
+the receive error counter, even in cases of bit or acknowledgment errors
+that occur during transmission.
 
- refcount_t: addition on 0; use-after-free.
- WARNING: CPU: 14 PID: 107447 at lib/refcount.c:25 refcount_warn_saturate+0x9c/0x140
- Workqueue: events smc_lgr_terminate_work [smc]
- Call trace:
-  refcount_warn_saturate+0x9c/0x140
-  __smc_lgr_terminate.part.45+0x2a8/0x370 [smc]
-  smc_lgr_terminate_work+0x28/0x30 [smc]
-  process_one_work+0x1b8/0x420
-  worker_thread+0x158/0x510
-  kthread+0x114/0x118
+Fix the issue by incrementing the appropriate counter based on the
+type of error.
 
-or
-
- refcount_t: underflow; use-after-free.
- WARNING: CPU: 6 PID: 93140 at lib/refcount.c:28 refcount_warn_saturate+0xf0/0x140
- Workqueue: smc_hs_wq smc_listen_work [smc]
- Call trace:
-  refcount_warn_saturate+0xf0/0x140
-  smcr_link_put+0x1cc/0x1d8 [smc]
-  smc_conn_free+0x110/0x1b0 [smc]
-  smc_conn_abort+0x50/0x60 [smc]
-  smc_listen_find_device+0x75c/0x790 [smc]
-  smc_listen_work+0x368/0x8a0 [smc]
-  process_one_work+0x1b8/0x420
-  worker_thread+0x158/0x510
-  kthread+0x114/0x118
-
-It is caused by repeated release of LGR/link refcnt. One suspect is that
-smc_conn_free() is called repeatedly because some smc_conn_free() from
-server listening path are not protected by sock lock.
-
-e.g.
-
-Calls under socklock        | smc_listen_work
--------------------------------------------------------
-lock_sock(sk)               | smc_conn_abort
-smc_conn_free               | \- smc_conn_free
-\- smcr_link_put            |    \- smcr_link_put (duplicated)
-release_sock(sk)
-
-So here add sock lock protection in smc_listen_work() path, making it
-exclusive with other connection operations.
-
-Fixes: 3b2dec2603d5 ("net/smc: restructure client and server code in af_smc")
-Co-developed-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Co-developed-by: Kai <KaiShen@linux.alibaba.com>
-Signed-off-by: Kai <KaiShen@linux.alibaba.com>
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 5bbd655a8bd0 ("can: ifi: Add more detailed error reporting")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Link: https://patch.msgid.link/20241122221650.633981-8-dario.binacchi@amarulasolutions.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/can/ifi_canfd/ifi_canfd.c | 58 ++++++++++++++++++---------
+ 1 file changed, 40 insertions(+), 18 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index e86db21fef6e5..868e722aef064 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1860,6 +1860,7 @@ static void smc_listen_out(struct smc_sock *new_smc)
- 	if (tcp_sk(new_smc->clcsock->sk)->syn_smc)
- 		atomic_dec(&lsmc->queued_smc_hs);
+diff --git a/drivers/net/can/ifi_canfd/ifi_canfd.c b/drivers/net/can/ifi_canfd/ifi_canfd.c
+index 07eaf724a5727..de26f5788ff5f 100644
+--- a/drivers/net/can/ifi_canfd/ifi_canfd.c
++++ b/drivers/net/can/ifi_canfd/ifi_canfd.c
+@@ -391,36 +391,55 @@ static int ifi_canfd_handle_lec_err(struct net_device *ndev)
+ 		return 0;
  
-+	release_sock(newsmcsk); /* lock in smc_listen_work() */
- 	if (lsmc->sk.sk_state == SMC_LISTEN) {
- 		lock_sock_nested(&lsmc->sk, SINGLE_DEPTH_NESTING);
- 		smc_accept_enqueue(&lsmc->sk, newsmcsk);
-@@ -2352,6 +2353,7 @@ static void smc_listen_work(struct work_struct *work)
- 	u8 accept_version;
- 	int rc = 0;
+ 	priv->can.can_stats.bus_error++;
+-	stats->rx_errors++;
  
-+	lock_sock(&new_smc->sk); /* release in smc_listen_out() */
- 	if (new_smc->listen_smc->sk.sk_state != SMC_LISTEN)
- 		return smc_listen_out_err(new_smc);
+ 	/* Propagate the error condition to the CAN stack. */
+ 	skb = alloc_can_err_skb(ndev, &cf);
+-	if (unlikely(!skb))
+-		return 0;
  
+ 	/* Read the error counter register and check for new errors. */
+-	cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
++	if (likely(skb))
++		cf->can_id |= CAN_ERR_PROT | CAN_ERR_BUSERROR;
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_OVERLOAD_FIRST)
+-		cf->data[2] |= CAN_ERR_PROT_OVERLOAD;
++	if (errctr & IFI_CANFD_ERROR_CTR_OVERLOAD_FIRST) {
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_OVERLOAD;
++	}
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_ACK_ERROR_FIRST)
+-		cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++	if (errctr & IFI_CANFD_ERROR_CTR_ACK_ERROR_FIRST) {
++		stats->tx_errors++;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_ACK;
++	}
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_BIT0_ERROR_FIRST)
+-		cf->data[2] |= CAN_ERR_PROT_BIT0;
++	if (errctr & IFI_CANFD_ERROR_CTR_BIT0_ERROR_FIRST) {
++		stats->tx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT0;
++	}
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_BIT1_ERROR_FIRST)
+-		cf->data[2] |= CAN_ERR_PROT_BIT1;
++	if (errctr & IFI_CANFD_ERROR_CTR_BIT1_ERROR_FIRST) {
++		stats->tx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_BIT1;
++	}
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_STUFF_ERROR_FIRST)
+-		cf->data[2] |= CAN_ERR_PROT_STUFF;
++	if (errctr & IFI_CANFD_ERROR_CTR_STUFF_ERROR_FIRST) {
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_STUFF;
++	}
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_CRC_ERROR_FIRST)
+-		cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++	if (errctr & IFI_CANFD_ERROR_CTR_CRC_ERROR_FIRST) {
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[3] = CAN_ERR_PROT_LOC_CRC_SEQ;
++	}
+ 
+-	if (errctr & IFI_CANFD_ERROR_CTR_FORM_ERROR_FIRST)
+-		cf->data[2] |= CAN_ERR_PROT_FORM;
++	if (errctr & IFI_CANFD_ERROR_CTR_FORM_ERROR_FIRST) {
++		stats->rx_errors++;
++		if (likely(skb))
++			cf->data[2] |= CAN_ERR_PROT_FORM;
++	}
+ 
+ 	/* Reset the error counter, ack the IRQ and re-enable the counter. */
+ 	writel(IFI_CANFD_ERROR_CTR_ER_RESET, priv->base + IFI_CANFD_ERROR_CTR);
+@@ -428,6 +447,9 @@ static int ifi_canfd_handle_lec_err(struct net_device *ndev)
+ 	       priv->base + IFI_CANFD_INTERRUPT);
+ 	writel(IFI_CANFD_ERROR_CTR_ER_ENABLE, priv->base + IFI_CANFD_ERROR_CTR);
+ 
++	if (unlikely(!skb))
++		return 0;
++
+ 	netif_receive_skb(skb);
+ 
+ 	return 1;
 -- 
 2.43.0
 
