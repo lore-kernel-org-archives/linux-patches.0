@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6371F217F34;
-	Thu, 12 Dec 2024 15:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C955215799;
+	Thu, 12 Dec 2024 15:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734018057; cv=none; b=YssGaHlKuxtrjRLL/VtYLCTFkPQYuLiY2/thWljPF1Mb5s8YO9sQyMz3KHFLf43bB3K73RH/wBWQyU3gDSz8sjvwjDe53qfry5I91U8KlNQT//pdySL5a8z6DLrkeiwJdXpGPUkV4f/W0FbXPGez02gUaZ4BA7n9wdecH3hqL1s=
+	t=1734018061; cv=none; b=cjRb6/H+rk60giVAYZYnRm4chsTuilxlIyvhVbdaXcaT40mYeh9RruyS/GQOpWdqcT48FEVqH6WGPgBnqu+VzvgkgAxnWUNvhoCXaxiSYel8OKi4ptr6AQjNhrEOaLJuQiv1fXZdBkMt56lJ7YUcmReTt7qydsbunPals6hLLT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734018057; c=relaxed/simple;
-	bh=SIOH4DvyNCtk8sucXaN6ljvUsQ6qpsSYs2aXNnXmOO8=;
+	s=arc-20240116; t=1734018061; c=relaxed/simple;
+	bh=m2bRSNEDrlBxOw4754BthLHhMgexODPbXg5h3thouDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aj1Hg5WRH8W6WoBw7Fr7Sn5CoQcgm+3RjjJ/x4fI1j7zlauj70aZ3fEc7Ix75jK5b6nB0qYSWz2YfbzNSUAXFYPuWJnu+rM6N9FLS2RtolBThZeW1ZxIrVjCVNhBl9BQ/MIKQWp9E+qmyW4dAvekkTMFGu6zfvgrj2x+zxVR/f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x7orQqzE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=doR3HnAr1HaDqp9P1lf93wSUrXOw+EgHAf12zwOioh0ZrM4edncCBiHBBKZViXUhrG/P3VmLGnfc/0kcOQO7qjRsDU+vrUS62MYLbzdaBB1VpdOr8tG+LdEkJgbOXbC3J3eodLkKIsIPa/8WdfdltoiXnP4mtM+olS8f/YGGUwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPdnozI6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x7orQqzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB69CC4CECE;
-	Thu, 12 Dec 2024 15:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPdnozI6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF59C4CECE;
+	Thu, 12 Dec 2024 15:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734018057;
-	bh=SIOH4DvyNCtk8sucXaN6ljvUsQ6qpsSYs2aXNnXmOO8=;
+	s=korg; t=1734018060;
+	bh=m2bRSNEDrlBxOw4754BthLHhMgexODPbXg5h3thouDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x7orQqzEASBCjbz9VPF8sJDkxrynQm1i2ZF2EikjXKMFrxX0yD+iE30x5il6ULzoI
-	 YBjFquGX1v1EZnZkGgJM5fSwNM+PkCI0rndhpwE2WVriBgTjnnL2zutYbCHZEeRN9R
-	 LUInA4Ik4sej2EyvHhIGDkP+BLAoqebIvt1V5N10=
+	b=kPdnozI6DWANgi2MHeA8ccOyUa3Kclarae/vISoCQPdiGQ/Ebg7Dr8rcNEuqnwL3b
+	 H+Oa8lJcmB1wtHAMbh6eJUZAItzW06wTpKiNe7eg1TURprFkgEP2lIQ1KReXiVzjbY
+	 Pu4ql/HTL60WjT+sKYVYIwWyjoOHUUyFZdDa4A8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/356] kselftest/arm64: Log fp-stress child startup errors to stdout
-Date: Thu, 12 Dec 2024 15:58:24 +0100
-Message-ID: <20241212144251.937348915@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 159/356] nilfs2: fix potential out-of-bounds memory access in nilfs_find_entry()
+Date: Thu, 12 Dec 2024 15:57:58 +0100
+Message-ID: <20241212144250.922077592@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -51,71 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Brown <broonie@kernel.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit dca93d29845dfed60910ba13dbfb6ae6a0e19f6d ]
+commit 985ebec4ab0a28bb5910c3b1481a40fbf7f9e61d upstream.
 
-Currently if we encounter an error between fork() and exec() of a child
-process we log the error to stderr. This means that the errors don't get
-annotated with the child information which makes diagnostics harder and
-means that if we miss the exit signal from the child we can deadlock
-waiting for output from the child. Improve robustness and output quality
-by logging to stdout instead.
+Syzbot reported that when searching for records in a directory where the
+inode's i_size is corrupted and has a large value, memory access outside
+the folio/page range may occur, or a use-after-free bug may be detected if
+KASAN is enabled.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20241023-arm64-fp-stress-exec-fail-v1-1-ee3c62932c15@kernel.org
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is because nilfs_last_byte(), which is called by nilfs_find_entry()
+and others to calculate the number of valid bytes of directory data in a
+page from i_size and the page index, loses the upper 32 bits of the 64-bit
+size information due to an inappropriate type of local variable to which
+the i_size value is assigned.
+
+This caused a large byte offset value due to underflow in the end address
+calculation in the calling nilfs_find_entry(), resulting in memory access
+that exceeds the folio/page size.
+
+Fix this issue by changing the type of the local variable causing the bit
+loss from "unsigned int" to "u64".  The return value of nilfs_last_byte()
+is also of type "unsigned int", but it is truncated so as not to exceed
+PAGE_SIZE and no bit loss occurs, so no change is required.
+
+Link: https://lkml.kernel.org/r/20241119172403.9292-1-konishi.ryusuke@gmail.com
+Fixes: 2ba466d74ed7 ("nilfs2: directory entry operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=96d5d14c47d97015c624
+Tested-by: syzbot+96d5d14c47d97015c624@syzkaller.appspotmail.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/arm64/fp/fp-stress.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ fs/nilfs2/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/arm64/fp/fp-stress.c b/tools/testing/selftests/arm64/fp/fp-stress.c
-index dd31647b00a22..cf9d7b2e4630c 100644
---- a/tools/testing/selftests/arm64/fp/fp-stress.c
-+++ b/tools/testing/selftests/arm64/fp/fp-stress.c
-@@ -79,7 +79,7 @@ static void child_start(struct child_data *child, const char *program)
- 		 */
- 		ret = dup2(pipefd[1], 1);
- 		if (ret == -1) {
--			fprintf(stderr, "dup2() %d\n", errno);
-+			printf("dup2() %d\n", errno);
- 			exit(EXIT_FAILURE);
- 		}
+--- a/fs/nilfs2/dir.c
++++ b/fs/nilfs2/dir.c
+@@ -76,7 +76,7 @@ static inline void nilfs_put_page(struct
+  */
+ static unsigned int nilfs_last_byte(struct inode *inode, unsigned long page_nr)
+ {
+-	unsigned int last_byte = inode->i_size;
++	u64 last_byte = inode->i_size;
  
-@@ -89,7 +89,7 @@ static void child_start(struct child_data *child, const char *program)
- 		 */
- 		ret = dup2(startup_pipe[0], 3);
- 		if (ret == -1) {
--			fprintf(stderr, "dup2() %d\n", errno);
-+			printf("dup2() %d\n", errno);
- 			exit(EXIT_FAILURE);
- 		}
- 
-@@ -107,16 +107,15 @@ static void child_start(struct child_data *child, const char *program)
- 		 */
- 		ret = read(3, &i, sizeof(i));
- 		if (ret < 0)
--			fprintf(stderr, "read(startp pipe) failed: %s (%d)\n",
--				strerror(errno), errno);
-+			printf("read(startp pipe) failed: %s (%d)\n",
-+			       strerror(errno), errno);
- 		if (ret > 0)
--			fprintf(stderr, "%d bytes of data on startup pipe\n",
--				ret);
-+			printf("%d bytes of data on startup pipe\n", ret);
- 		close(3);
- 
- 		ret = execl(program, program, NULL);
--		fprintf(stderr, "execl(%s) failed: %d (%s)\n",
--			program, errno, strerror(errno));
-+		printf("execl(%s) failed: %d (%s)\n",
-+		       program, errno, strerror(errno));
- 
- 		exit(EXIT_FAILURE);
- 	} else {
--- 
-2.43.0
-
+ 	last_byte -= page_nr << PAGE_SHIFT;
+ 	if (last_byte > PAGE_SIZE)
 
 
