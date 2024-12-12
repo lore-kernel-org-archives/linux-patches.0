@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A56F2FE;
-	Thu, 12 Dec 2024 17:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07776F2FE;
+	Thu, 12 Dec 2024 17:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025306; cv=none; b=F8bzChTSOqSy0J8IBbEwJxCDJqU6ltxj89vpdhSadwiyxqGEdtphzWiRm/aO7H4AvL58LJK3/kE67wOXJ3wqQV7xn9RPFPrd7+LiUNDoxAxGyRE5kPvzYIQpnFy5MFXeohLMZcis1YcqOGcCLBztLw5xACD4dFArzb3Gk/ZXC0U=
+	t=1734025308; cv=none; b=Z+3X7meK8mx86HrdmVyXOPSNzMdymN9pjx9vbnBaVeyBRCKIKrDNQKRadPK7gftAPvDSco9ZzvWP5AC5quKhRWKfSspxixwXIEUIO3vgH1MVYDqQqiB8nsgWLkgXPtC8CmGDT3xXp79NcNfWYUPDR8axzZ0fi87B5bNJPzErAtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025306; c=relaxed/simple;
-	bh=WE0qzHuGmwh+Pfvnto3FMVZBjRSlAHAB91EeLirn2xI=;
+	s=arc-20240116; t=1734025308; c=relaxed/simple;
+	bh=kDrsaTU66xr0BKEdPVTdBaQ6GwWrwsHJY+hEJ3fkjrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRWk4w/HEOFcR73t+03lNf1EgJhfOVeX467BTw3Vla61VTN6EvCn2s4zMc20Dx2Dr+1MBNaAoq0dy2XabhtTLZizWohs9qCBNfCUYt8dS8MEKqisuFf3YSAoZxGbc+obI7CQTUy1vmmLwaVPx0ONL/0A/aCMZqJXTZLgKUNvCTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDbe0fEG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PeYulj4fMnmBhFubSLu+JlNTPaJK/Hchi0fc5RvOn9+YndfRChcrYSRQrAOwIwT+Ma8fWBvkx2CgYcFHTZX2nEYWzbmXn8/lvV/MrKAuPnWPb85xqJxbqL5pL2rFblttQKiQFNUaWgRiWI7XpuOFSOfK3LdnIrWUgm2CcpG+FfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hvZ5IlPT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDbe0fEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D36C4CECE;
-	Thu, 12 Dec 2024 17:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hvZ5IlPT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37472C4CECE;
+	Thu, 12 Dec 2024 17:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025305;
-	bh=WE0qzHuGmwh+Pfvnto3FMVZBjRSlAHAB91EeLirn2xI=;
+	s=korg; t=1734025308;
+	bh=kDrsaTU66xr0BKEdPVTdBaQ6GwWrwsHJY+hEJ3fkjrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDbe0fEG8PlLQt4NJSnSZFvdXpATHCjvEPYdI0439Oe6rGUmbkzGEy7FDso4PTp3A
-	 tM5xONM1boDYJx/KA9vvV7DmBsNLv1RFVEkdQhmyKs8FxiKqtnjfjlDKAm4XnxYnLY
-	 GuHkls0y4Ey3lFcLx5/ucPAJWWSLyE3NgYgb5gdc=
+	b=hvZ5IlPTSLy+9cKXjZjgTXfh1yI/Db+Srd3CXndt7eZ32Zz+cI/a/TT0FomzMvAte
+	 Hpap1tGZ3/HKKdYiXJ+1PCC2k33pEkLDHz4bVwpgCLuO6wIvAQx5uDJJwfn33+Vyu0
+	 94GBH8p2piePsgLH5MbQ53vF7cJXY0K4QUKsst5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Ardelean <alexandru.ardelean@analog.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Kyle Tso <kyletso@google.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 108/321] clk: axi-clkgen: use devm_platform_ioremap_resource() short-hand
-Date: Thu, 12 Dec 2024 16:00:26 +0100
-Message-ID: <20241212144234.253660726@linuxfoundation.org>
+Subject: [PATCH 5.4 126/321] power: supply: core: Remove might_sleep() from power_supply_put()
+Date: Thu, 12 Dec 2024 16:00:44 +0100
+Message-ID: <20241212144234.954673068@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,45 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandru Ardelean <alexandru.ardelean@analog.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 6ba7ea7630fb03c1ce01508bdf89f5bb39b38e54 ]
+[ Upstream commit f6da4553ff24a5d1c959c9627c965323adc3d307 ]
 
-No major functional change. Noticed while checking the driver code that
-this could be used.
-Saves two lines.
+The put_device() call in power_supply_put() may call
+power_supply_dev_release(). The latter function does not sleep so
+power_supply_put() doesn't sleep either. Hence, remove the might_sleep()
+call from power_supply_put(). This patch suppresses false positive
+complaints about calling a sleeping function from atomic context if
+power_supply_put() is called from atomic context.
 
-Signed-off-by: Alexandru Ardelean <alexandru.ardelean@analog.com>
-Link: https://lore.kernel.org/r/20210201151245.21845-5-alexandru.ardelean@analog.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: c64ef7e4851d ("clk: clk-axi-clkgen: make sure to enable the AXI bus clock")
+Cc: Kyle Tso <kyletso@google.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: 1a352462b537 ("power_supply: Add power_supply_put for decrementing device reference counter")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240917193914.47566-1-bvanassche@acm.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-axi-clkgen.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/power/supply/power_supply_core.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
-index 96f351785b41b..8d0c32e81e787 100644
---- a/drivers/clk/clk-axi-clkgen.c
-+++ b/drivers/clk/clk-axi-clkgen.c
-@@ -412,7 +412,6 @@ static int axi_clkgen_probe(struct platform_device *pdev)
- 	struct clk_init_data init;
- 	const char *parent_names[2];
- 	const char *clk_name;
--	struct resource *mem;
- 	unsigned int i;
- 	int ret;
- 
-@@ -427,8 +426,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
- 	if (!axi_clkgen)
- 		return -ENOMEM;
- 
--	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	axi_clkgen->base = devm_ioremap_resource(&pdev->dev, mem);
-+	axi_clkgen->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(axi_clkgen->base))
- 		return PTR_ERR(axi_clkgen->base);
- 
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 2d6836b33da33..606e21fe599d2 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -479,8 +479,6 @@ EXPORT_SYMBOL_GPL(power_supply_get_by_name);
+  */
+ void power_supply_put(struct power_supply *psy)
+ {
+-	might_sleep();
+-
+ 	atomic_dec(&psy->use_cnt);
+ 	put_device(&psy->dev);
+ }
 -- 
 2.43.0
 
