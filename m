@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57D4216E14;
-	Thu, 12 Dec 2024 17:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1FA1632E6;
+	Thu, 12 Dec 2024 17:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023917; cv=none; b=X+b8wpofX7HNYa4cnk7jJT9LuODbOciUNQStb2pgt119SWo4+X+zfn+bI1I7C6kZPEtV5PAdM9vAmffWHvD+zzdPkO/tjTky1gpkklRipNoviKM5CtJvwH2VssFs7pdld8UzzZpf2JJjRW+GtiBr+KZ5R9EtyyQTzIOJ8u9IgWA=
+	t=1734023920; cv=none; b=tun4BJkS1CObdBI96a457Gnw0SOjoQbcH+u1ttaw7soYhbg6/99TdSH4+Iz7fcqRlkkhGJDXWUQsY6LushRGtEa6EAo7YSx6aUCZgKkSYZIKq+cFbmS6GVRbTrDW5UKPmcpZ7xsC/v1zU/O5seUd2+ovwDoKwDLlMQgw+rSevkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023917; c=relaxed/simple;
-	bh=+JYzJXsN9uSP46oXOkcBPkgi+j4GxfYtVmDvB4dMaWA=;
+	s=arc-20240116; t=1734023920; c=relaxed/simple;
+	bh=4itDBqr9klbgZDXWK9oo++ibrgHxSFMghwGWKoPpVZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1l8qnc4jeJqAcr1UVSav1fydWZYoTaml37AzSRqurIJ5sr6soNxHhj8rPi2cXgIr4GjmPtzTraYFMZEVtgLJzJdyi1XxlJVW5WCPbZkbBATmURDLYMdShq+nhfqZxHqyvaD08aN/IVesBUzM/DWXm1QUEuIwbL1GCa5T69SfF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9zVpHNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uH9NiCYqovZJHy1yDtlXR95cYPgc+CZ+x+z++/ldLmd+fzVOEEozIfn+oeJ2OrZec5Z275sPBXHxpLlgv1Q9KsRUSoqV+/Pa2CHWprtQ3y+yVqiyouURUpj8N/Z+8xJ2JZ0LvmXzrY7iOTZCSOVHb2rNYoh/OSvK00qk8/QD3rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RKzcFbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9zVpHNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9C1C4CED0;
-	Thu, 12 Dec 2024 17:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RKzcFbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CE3C4CED0;
+	Thu, 12 Dec 2024 17:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023917;
-	bh=+JYzJXsN9uSP46oXOkcBPkgi+j4GxfYtVmDvB4dMaWA=;
+	s=korg; t=1734023920;
+	bh=4itDBqr9klbgZDXWK9oo++ibrgHxSFMghwGWKoPpVZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9zVpHNEZU/DpV1XNsyQtXjc1YfOqYcS09pBW42QmpTExKotm+hM/AloGo+Oyix55
-	 Gg4UWXVgo/QjTjObEZVAgOkJpdoGzxQ8PjKtT+NZe/LH/xjDtfuuOzeXRSSFmhMA+y
-	 xpkMzpoRt5MoQ7P+MZ4ufRBtkOeOY0UdCucdR8X0=
+	b=2RKzcFbvrPmiEr4DsBdKdmcB9VlTDKbn9ZSOlTrb/zFPhZrm8fB7qFsqX+uQmif62
+	 XSNYoBteFVQwCbUKHEPGmul7Y+nfHSPbWLDHMqbJugnf/s8QF2vjxhXxZBqvxaM9DU
+	 xkob7/1DIGoYjeNr+3w6g74md5eE0W2BWDj60bL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Price <gourry@gourry.net>,
-	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Aradhya Bhatia <a-bhatia1@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/459] tpm: fix signed/unsigned bug when checking event logs
-Date: Thu, 12 Dec 2024 15:57:03 +0100
-Message-ID: <20241212144256.876968864@linuxfoundation.org>
+Subject: [PATCH 5.10 119/459] drm/bridge: tc358767: Fix link properties discovery
+Date: Thu, 12 Dec 2024 15:57:37 +0100
+Message-ID: <20241212144258.210275143@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,81 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 
-[ Upstream commit e6d654e9f5a97742cfe794b1c4bb5d3fb2d25e98 ]
+[ Upstream commit 2d343723c7e1f9f6d64f721f07cfdfc2993758d1 ]
 
-A prior bugfix that fixes a signed/unsigned error causes
-another signed unsigned error.
+When a display controller driver uses DRM_BRIDGE_ATTACH_NO_CONNECTOR,
+tc358767 will behave properly and skip the creation of the connector.
 
-A situation where log_tbl->size is invalid can cause the
-size passed to memblock_reserve to become negative.
+However, tc_get_display_props(), which is used to find out about the DP
+monitor and link, is only called from two places: .atomic_enable() and
+tc_connector_get_modes(). The latter is only used when tc358767 creates
+its own connector, i.e. when DRM_BRIDGE_ATTACH_NO_CONNECTOR is _not_
+set.
 
-log_size from the main event log is an unsigned int, and
-the code reduces to the following
+Thus, the driver never finds out the link properties before get_edid()
+is called. With num_lanes of 0 and link_rate of 0 there are not many
+valid modes...
 
-u64 value = (int)unsigned_value;
+Fix this by adding tc_get_display_props() call at the beginning of
+get_edid(), so that we have up to date information before looking at the
+modes.
 
-This results in sign extension, and the value sent to
-memblock_reserve becomes effectively negative.
-
-Fixes: be59d57f9806 ("efi/tpm: Fix sanity check of unsigned tbl_size being less than zero")
-Signed-off-by: Gregory Price <gourry@gourry.net>
-Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reported-by: Jan Kiszka <jan.kiszka@siemens.com>
+Closes: https://lore.kernel.org/all/24282420-b4dd-45b3-bb1c-fc37fe4a8205@siemens.com/
+Fixes: de5e6c027ae6 ("drm/bridge: tc358767: add drm_panel_bridge support")
+Reviewed-by: Aradhya Bhatia <a-bhatia1@ti.com>
+Tested-by: Jan Kiszka <jan.kiszka@siemens.com>
+Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231108-tc358767-v2-2-25c5f70a2159@ideasonboard.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/tpm.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/bridge/tc358767.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
-index e8d69bd548f3f..9c3613e6af158 100644
---- a/drivers/firmware/efi/tpm.c
-+++ b/drivers/firmware/efi/tpm.c
-@@ -40,7 +40,8 @@ int __init efi_tpm_eventlog_init(void)
+diff --git a/drivers/gpu/drm/bridge/tc358767.c b/drivers/gpu/drm/bridge/tc358767.c
+index 9c905634fec79..1c7dafb5dc088 100644
+--- a/drivers/gpu/drm/bridge/tc358767.c
++++ b/drivers/gpu/drm/bridge/tc358767.c
+@@ -1319,6 +1319,13 @@ static struct edid *tc_get_edid(struct drm_bridge *bridge,
+ 				struct drm_connector *connector)
  {
- 	struct linux_efi_tpm_eventlog *log_tbl;
- 	struct efi_tcg2_final_events_table *final_tbl;
--	int tbl_size;
-+	unsigned int tbl_size;
-+	int final_tbl_size;
- 	int ret = 0;
+ 	struct tc_data *tc = bridge_to_tc(bridge);
++	int ret;
++
++	ret = tc_get_display_props(tc);
++	if (ret < 0) {
++		dev_err(tc->dev, "failed to read display props: %d\n", ret);
++		return 0;
++	}
  
- 	if (efi.tpm_log == EFI_INVALID_TABLE_ADDR) {
-@@ -80,26 +81,26 @@ int __init efi_tpm_eventlog_init(void)
- 		goto out;
- 	}
- 
--	tbl_size = 0;
-+	final_tbl_size = 0;
- 	if (final_tbl->nr_events != 0) {
- 		void *events = (void *)efi.tpm_final_log
- 				+ sizeof(final_tbl->version)
- 				+ sizeof(final_tbl->nr_events);
- 
--		tbl_size = tpm2_calc_event_log_size(events,
--						    final_tbl->nr_events,
--						    log_tbl->log);
-+		final_tbl_size = tpm2_calc_event_log_size(events,
-+							  final_tbl->nr_events,
-+							  log_tbl->log);
- 	}
- 
--	if (tbl_size < 0) {
-+	if (final_tbl_size < 0) {
- 		pr_err(FW_BUG "Failed to parse event in TPM Final Events Log\n");
- 		ret = -EINVAL;
- 		goto out_calc;
- 	}
- 
- 	memblock_reserve(efi.tpm_final_log,
--			 tbl_size + sizeof(*final_tbl));
--	efi_tpm_final_log_size = tbl_size;
-+			 final_tbl_size + sizeof(*final_tbl));
-+	efi_tpm_final_log_size = final_tbl_size;
- 
- out_calc:
- 	early_memunmap(final_tbl, sizeof(*final_tbl));
+ 	return drm_get_edid(connector, &tc->aux.ddc);
+ }
 -- 
 2.43.0
 
