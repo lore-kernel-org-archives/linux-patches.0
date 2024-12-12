@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B772210DE;
-	Thu, 12 Dec 2024 17:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF23215762;
+	Thu, 12 Dec 2024 17:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023909; cv=none; b=E8s/4x9jZwrqoCpaMdN7CZFlWYat4JD4VHi+p50irI2Y9Zfmwr+ddSL7zzyT4jYVy+0AmArrV1eSJy5+yVIr5QWi+vtA0DmNcQ2FzXqMkjVXt5CMeO9k2CQ3eEu3+gYQcZ3rMOVrCPECa1Lee9TyYpmHWZZTE/RErdCFQOjJt1I=
+	t=1734023911; cv=none; b=pQHZV23ORWR8aadOuvzWkAJlbivaVM3SBqN7TWgtUp1ruckBqoGPlegXjnHvwmPhl8ZOwPtyPnZyvu9BPy8WdmVn/kU9rNHoYREwhA8tVC/Va15gFw8XIH6quRVg/WXI9MtYgzQNUmr9I7HJL0XyiiPRBMMfaxmbzx2sstcQA+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023909; c=relaxed/simple;
-	bh=4IiSklLf/KNdSUJ4yJnCqonEdtAE0I/3jGErD4RSggk=;
+	s=arc-20240116; t=1734023911; c=relaxed/simple;
+	bh=IX26V7noLB4AMYljVp+f10Lup6b5vO6wDJlbX+3yfWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HU4jIXQ0RcCrw5NOmRm09e4wSMUM7rJFEGiGbirV2Nsg/REt4LuCzAk3UXqwz+Cp+XhaXmBb2A0pIAP2uALrfTp+Jg3iw77bR/fFaBd1GmSmvyLTLUnZwpBMwKIx+kAk4mFR+i4G2d20NhGXsBam7WLJGlodMsfel6PQhJx7Zdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3VtoYxY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KjSUxGhXixdO0hE2B3d/83oGE1W+AkCmNjt4Rr8zzw5eQXzT2Ou8/tSpLEAyydju+Hw+dfrHad9qw10wNBAEHlmYJkAKbk3u4USMpAXDeKZbRLDMH3TBWjfjlfdc5OwfX8pvcrH8RvQqdqQnHLTNORj2sFHoUphBBgaaNF4o6Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wOMTwea7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3VtoYxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCF1C4CECE;
-	Thu, 12 Dec 2024 17:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wOMTwea7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5550EC4CECE;
+	Thu, 12 Dec 2024 17:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023908;
-	bh=4IiSklLf/KNdSUJ4yJnCqonEdtAE0I/3jGErD4RSggk=;
+	s=korg; t=1734023911;
+	bh=IX26V7noLB4AMYljVp+f10Lup6b5vO6wDJlbX+3yfWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3VtoYxYDmzYFILvvcWevAq/HoV6TM6rC4n/hrCG/tmWXlJF1eKHUYJAXo9K7yFRo
-	 +PEn5tEcfCoJwfz7F3x60/velGSrhdG3MLd8kGwpkzD8yOTgsl/K9w8rLPPoyZYvye
-	 UOhBwxZb8VyBSaDlCY0nqiH4D15oaxo5/Ev07/58=
+	b=wOMTwea7jpqpvJRKL1lTQ+VauNtQvNJ3kEGnh20xlqNNIs8XH0Ig+temNI/iwA1bK
+	 25dE2fQDsXpQwbQE73foS40vBzE4Qkxdi6QctlM59za5Gks9oV9oV+Cn7RVCmPc9WY
+	 OskeGyl2jbtoHa26N6KytPwze9MelsJmbXQ2/YwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 092/459] pmdomain: ti-sci: Add missing of_node_put() for args.np
-Date: Thu, 12 Dec 2024 15:57:10 +0100
-Message-ID: <20241212144257.145917573@linuxfoundation.org>
+Subject: [PATCH 5.10 093/459] regmap: irq: Set lockdep class for hierarchical IRQ domains
+Date: Thu, 12 Dec 2024 15:57:11 +0100
+Message-ID: <20241212144257.186178658@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -52,46 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit afc2331ef81657493c074592c409dac7c3cb8ccc ]
+[ Upstream commit 953e549471cabc9d4980f1da2e9fa79f4c23da06 ]
 
-of_parse_phandle_with_args() needs to call of_node_put() to decrement
-the refcount of args.np. So, Add the missing of_node_put() in the loop.
+Lockdep gives a false positive splat as it can't distinguish the lock
+which is taken by different IRQ descriptors from different IRQ chips
+that are organized in a way of a hierarchy:
 
-Fixes: efa5c01cd7ee ("soc: ti: ti_sci_pm_domains: switch to use multiple genpds instead of one")
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Reviewed-by: Dhruva Gole <d-gole@ti.com>
-Message-ID: <20241024030442.119506-2-zhangzekun11@huawei.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+   ======================================================
+   WARNING: possible circular locking dependency detected
+   6.12.0-rc5-next-20241101-00148-g9fabf8160b53 #562 Tainted: G        W
+   ------------------------------------------------------
+   modprobe/141 is trying to acquire lock:
+   ffff899446947868 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}, at: regmap_update_bits_base+0x33/0x90
+
+   but task is already holding lock:
+   ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
+
+   which lock already depends on the new lock.
+
+   -> #3 (&d->lock){+.+.}-{4:4}:
+   -> #2 (&desc->request_mutex){+.+.}-{4:4}:
+   -> #1 (ipclock){+.+.}-{4:4}:
+   -> #0 (intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock){+.+.}-{4:4}:
+
+   Chain exists of:
+     intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock --> &desc->request_mutex --> &d->lock
+
+    Possible unsafe locking scenario:
+
+          CPU0                    CPU1
+          ----                    ----
+     lock(&d->lock);
+                                  lock(&desc->request_mutex);
+                                  lock(&d->lock);
+     lock(intel_soc_pmic_bxtwc:502:(&bxtwc_regmap_config)->lock);
+
+    *** DEADLOCK ***
+
+   3 locks held by modprobe/141:
+    #0: ffff8994419368f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xf6/0x250
+    #1: ffff89944690b250 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq+0x1a2/0x790
+    #2: ffff899446947c68 (&d->lock){+.+.}-{4:4}, at: __setup_irq+0x682/0x790
+
+Set a lockdep class when we map the IRQ so that it doesn't warn about
+a lockdep bug that doesn't exist.
+
+Fixes: 4af8be67fd99 ("regmap: Convert regmap_irq to use irq_domain")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20241101165553.4055617-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/ti_sci_pm_domains.c | 4 ++++
+ drivers/base/regmap/regmap-irq.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/soc/ti/ti_sci_pm_domains.c b/drivers/soc/ti/ti_sci_pm_domains.c
-index 17984a7bffba5..b21b152ed5d0f 100644
---- a/drivers/soc/ti/ti_sci_pm_domains.c
-+++ b/drivers/soc/ti/ti_sci_pm_domains.c
-@@ -165,6 +165,7 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
- 				break;
+diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
+index 4466f8bdab2e1..301e849a87d1c 100644
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -539,12 +539,16 @@ static irqreturn_t regmap_irq_thread(int irq, void *d)
+ 		return IRQ_NONE;
+ }
  
- 			if (args.args_count >= 1 && args.np == dev->of_node) {
-+				of_node_put(args.np);
- 				if (args.args[0] > max_id) {
- 					max_id = args.args[0];
- 				} else {
-@@ -192,7 +193,10 @@ static int ti_sci_pm_domain_probe(struct platform_device *pdev)
- 				pm_genpd_init(&pd->pd, NULL, true);
- 
- 				list_add(&pd->node, &pd_provider->pd_list);
-+			} else {
-+				of_node_put(args.np);
- 			}
++static struct lock_class_key regmap_irq_lock_class;
++static struct lock_class_key regmap_irq_request_class;
 +
- 			index++;
- 		}
- 	}
+ static int regmap_irq_map(struct irq_domain *h, unsigned int virq,
+ 			  irq_hw_number_t hw)
+ {
+ 	struct regmap_irq_chip_data *data = h->host_data;
+ 
+ 	irq_set_chip_data(virq, data);
++	irq_set_lockdep_class(virq, &regmap_irq_lock_class, &regmap_irq_request_class);
+ 	irq_set_chip(virq, &data->irq_chip);
+ 	irq_set_nested_thread(virq, 1);
+ 	irq_set_parent(virq, data->irq);
 -- 
 2.43.0
 
