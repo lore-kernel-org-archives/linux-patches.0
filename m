@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574012236EB;
-	Thu, 12 Dec 2024 16:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96698231A33;
+	Thu, 12 Dec 2024 16:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019539; cv=none; b=fCxIRRj0V57jJBE5TdGi/QxORcHar1Mclsuff+3vJuYppTo4/e3lt5bCcUvIwZ8BKsXhq0ekSTw9jVE7uoHbqgrD0+KCm80QgVqhi9k0VTylaAf/FY3fsTr+C5SxOs+ifZM7iW9fKI8Rs3vymEQMekLdDfQaKo89ryN1+VioHV0=
+	t=1734019543; cv=none; b=O/vyF3LjfPiovHvRDjEzo0coXWEoZzumMF3O8AYk5ai4rdt7FaGNhOIrb1fHjABs5KGWUiAZzyZ6hrkZR/s9UTQyDOJiJsK02hXg3eiNIhW+WqhBhHZaI1uf1nyz6Qjc7ZSqtchDw03w1rk8QkSWnFSUYERMBBeHdrjo6gd06B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019539; c=relaxed/simple;
-	bh=Z2QtZlmhNVa7beZvB07pjt52Xi6JMzvoj9nItFAN7Dc=;
+	s=arc-20240116; t=1734019543; c=relaxed/simple;
+	bh=J+SzsHMxYsMapez3kKI6/gtg8Z4+wNOBrWZq+0VIvT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4xlA5stHDtTNPjD+gwe4vcWrQ6TzBSUh3CnwKp/pQ1Oq0xBPXz7fCYeZfX+ySSkz9Fk3s4jQR4KpejmW7gFNqJNS4YVHPGRQnWEV2jdRlYLFeBWEpn4P/2i5awIT23vz/XUjTLH2oyDLekAQdVq1b/wWPa1zWxbtrLKMjlNvEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEa5qznu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kWVv1/SqKbwQVtYk39zajFCYmieHYMhLQYqvEB/EL0HyQ2Un8WGV/m6EVv+D0JTVjw5E0sFYXle7wQf4wIZe9PpokonCZ+XpqcBl5Xq4E6pfA3Tq3RJj/ahq7al/Ql5+/6gDpCPY5q9pL6++3H6lklUnRdjsDiUzBflRI1aK5ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cs5nOyJD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEa5qznu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04FEC4CED3;
-	Thu, 12 Dec 2024 16:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cs5nOyJD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E899BC4CED0;
+	Thu, 12 Dec 2024 16:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019539;
-	bh=Z2QtZlmhNVa7beZvB07pjt52Xi6JMzvoj9nItFAN7Dc=;
+	s=korg; t=1734019543;
+	bh=J+SzsHMxYsMapez3kKI6/gtg8Z4+wNOBrWZq+0VIvT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEa5qznuQ4b1SDYSe5n6xrX/klH3eSPMlB8IMiDAuMbNaPlkewLLZsKEE5550LVG5
-	 ZMEu1ig5IsriF8sYT9RBVcNw/yHNz0dOLC1QRQCzYg1ww13VDf6x4N8ZdPucwoflql
-	 E703L+9nrqQWdKFV9p7+PxXTPl9nIWKQxmB5r2m8=
+	b=Cs5nOyJD5D5UI9AHGe7m5/7Na5s8CCT7R1gWyZJpyTnNLmY64PgJoAsSXfJFd/WV4
+	 5aMZ5g/3JNyOtMcYb0uvaxMRHyvYrREldFfESEyREPNv9kNlrrwlh+89uiukLd1E3Q
+	 yBhvFDJpufwl8H7cmMtNoHD6nOWV11NWLaocQAtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Carlos Song <carlos.song@nxp.com>,
-	Dong Aisheng <aisheng.dong@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Zhenzhong Duan <zhenzhong.duan@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 234/772] clk: imx: clk-scu: fix clk enable state save and restore
-Date: Thu, 12 Dec 2024 15:52:59 +0100
-Message-ID: <20241212144359.582775573@linuxfoundation.org>
+Subject: [PATCH 6.1 235/772] iommu/vt-d: Fix checks and print in dmar_fault_dump_ptes()
+Date: Thu, 12 Dec 2024 15:53:00 +0100
+Message-ID: <20241212144359.624936545@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,43 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dong Aisheng <aisheng.dong@nxp.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-[ Upstream commit e81361f6cf9bf4a1848b0813bc4becb2250870b8 ]
+[ Upstream commit 6ceb93f952f6ca34823ce3650c902c31b8385b40 ]
 
-The scu clk_ops only inplements prepare() and unprepare() callback.
-Saving the clock state during suspend by checking clk_hw_is_enabled()
-is not safe as it's possible that some device drivers may only
-disable the clocks without unprepare. Then the state retention will not
-work for such clocks.
+There are some issues in dmar_fault_dump_ptes():
 
-Fixing it by checking clk_hw_is_prepared() which is more reasonable
-and safe.
+1. return value of phys_to_virt() is used for checking if an entry is
+   present.
+2. dump is confusing, e.g., "pasid table entry is not present", confusing
+   by unpresent pasid table vs. unpresent pasid table entry. Current code
+   means the former.
+3. pgtable_walk() is called without checking if page table is present.
 
-Fixes: d0409631f466 ("clk: imx: scu: add suspend/resume support")
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Carlos Song <carlos.song@nxp.com>
-Signed-off-by: Dong Aisheng <aisheng.dong@nxp.com>
-Link: https://lore.kernel.org/r/20241027-imx-clk-v1-v3-4-89152574d1d7@nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fix 1 by checking present bit of an entry before dump a lower level entry.
+Fix 2 by removing "entry" string, e.g., "pasid table is not present".
+Fix 3 by checking page table present before walk.
+
+Take issue 3 for example, before fix:
+
+[  442.240357] DMAR: pasid dir entry: 0x000000012c83e001
+[  442.246661] DMAR: pasid table entry[0]: 0x0000000000000000
+[  442.253429] DMAR: pasid table entry[1]: 0x0000000000000000
+[  442.260203] DMAR: pasid table entry[2]: 0x0000000000000000
+[  442.266969] DMAR: pasid table entry[3]: 0x0000000000000000
+[  442.273733] DMAR: pasid table entry[4]: 0x0000000000000000
+[  442.280479] DMAR: pasid table entry[5]: 0x0000000000000000
+[  442.287234] DMAR: pasid table entry[6]: 0x0000000000000000
+[  442.293989] DMAR: pasid table entry[7]: 0x0000000000000000
+[  442.300742] DMAR: PTE not present at level 2
+
+After fix:
+...
+[  357.241214] DMAR: pasid table entry[6]: 0x0000000000000000
+[  357.248022] DMAR: pasid table entry[7]: 0x0000000000000000
+[  357.254824] DMAR: scalable mode page table is not present
+
+Fixes: 914ff7719e8a ("iommu/vt-d: Dump DMAR translation structure when DMA fault occurs")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Link: https://lore.kernel.org/r/20241024092146.715063-2-zhenzhong.duan@intel.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-scu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/intel/iommu.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
-index db307890e4c16..ec5afc7f2690b 100644
---- a/drivers/clk/imx/clk-scu.c
-+++ b/drivers/clk/imx/clk-scu.c
-@@ -577,7 +577,7 @@ static int __maybe_unused imx_clk_scu_suspend(struct device *dev)
- 		clk->rate = clk_scu_recalc_rate(&clk->hw, 0);
- 	else
- 		clk->rate = clk_hw_get_rate(&clk->hw);
--	clk->is_enabled = clk_hw_is_enabled(&clk->hw);
-+	clk->is_enabled = clk_hw_is_prepared(&clk->hw);
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index f118c89911303..2bf9157256c55 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -861,11 +861,11 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	pr_info("Dump %s table entries for IOVA 0x%llx\n", iommu->name, addr);
  
- 	if (clk->parent)
- 		dev_dbg(dev, "save parent %s idx %u\n", clk_hw_get_name(clk->parent),
+ 	/* root entry dump */
+-	rt_entry = &iommu->root_entry[bus];
+-	if (!rt_entry) {
+-		pr_info("root table entry is not present\n");
++	if (!iommu->root_entry) {
++		pr_info("root table is not present\n");
+ 		return;
+ 	}
++	rt_entry = &iommu->root_entry[bus];
+ 
+ 	if (sm_supported(iommu))
+ 		pr_info("scalable mode root entry: hi 0x%016llx, low 0x%016llx\n",
+@@ -876,7 +876,7 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	/* context entry dump */
+ 	ctx_entry = iommu_context_addr(iommu, bus, devfn, 0);
+ 	if (!ctx_entry) {
+-		pr_info("context table entry is not present\n");
++		pr_info("context table is not present\n");
+ 		return;
+ 	}
+ 
+@@ -885,17 +885,23 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 
+ 	/* legacy mode does not require PASID entries */
+ 	if (!sm_supported(iommu)) {
++		if (!context_present(ctx_entry)) {
++			pr_info("legacy mode page table is not present\n");
++			return;
++		}
+ 		level = agaw_to_level(ctx_entry->hi & 7);
+ 		pgtable = phys_to_virt(ctx_entry->lo & VTD_PAGE_MASK);
+ 		goto pgtable_walk;
+ 	}
+ 
+-	/* get the pointer to pasid directory entry */
+-	dir = phys_to_virt(ctx_entry->lo & VTD_PAGE_MASK);
+-	if (!dir) {
+-		pr_info("pasid directory entry is not present\n");
++	if (!context_present(ctx_entry)) {
++		pr_info("pasid directory table is not present\n");
+ 		return;
+ 	}
++
++	/* get the pointer to pasid directory entry */
++	dir = phys_to_virt(ctx_entry->lo & VTD_PAGE_MASK);
++
+ 	/* For request-without-pasid, get the pasid from context entry */
+ 	if (intel_iommu_sm && pasid == INVALID_IOASID)
+ 		pasid = PASID_RID2PASID;
+@@ -907,7 +913,7 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	/* get the pointer to the pasid table entry */
+ 	entries = get_pasid_table_from_pde(pde);
+ 	if (!entries) {
+-		pr_info("pasid table entry is not present\n");
++		pr_info("pasid table is not present\n");
+ 		return;
+ 	}
+ 	index = pasid & PASID_PTE_MASK;
+@@ -915,6 +921,11 @@ void dmar_fault_dump_ptes(struct intel_iommu *iommu, u16 source_id,
+ 	for (i = 0; i < ARRAY_SIZE(pte->val); i++)
+ 		pr_info("pasid table entry[%d]: 0x%016llx\n", i, pte->val[i]);
+ 
++	if (!pasid_pte_is_present(pte)) {
++		pr_info("scalable mode page table is not present\n");
++		return;
++	}
++
+ 	if (pasid_pte_get_pgtt(pte) == PASID_ENTRY_PGTT_FL_ONLY) {
+ 		level = pte->val[2] & BIT_ULL(2) ? 5 : 4;
+ 		pgtable = phys_to_virt(pte->val[2] & VTD_PAGE_MASK);
 -- 
 2.43.0
 
