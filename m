@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E732F20E034;
-	Thu, 12 Dec 2024 15:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7652EAE5;
+	Thu, 12 Dec 2024 15:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015986; cv=none; b=AVWVhUew0kXbYni35FHaK0C+8mmWT1CZ91pRKKToJh7WCFlbwY3KhARQzNMawGut9GgMfBUvI0kIM/RSfw0Hfs2gxGY5DeASDhkL6TcGQx8aH9aoaAy6uJCB7KmYrld+vo59vn0uJCl2fth57aURSa0awtwn+fpeHqD9jAQ8vcc=
+	t=1734015989; cv=none; b=CJGQbQ8aQuM7ucBetGvTAdk09z4VLfqG6bsl1TCDlpiJ/Ch6eoWU2hUx3DWCfrZwF1cAwfg82Qy8qTpIMhIsHGJnFcv6Nmha5Rsu9pQbj15DILFu67PFewSSwowKRLdyTBeFEI1hevW+fuV58TX/9CGqEzcpspogbeQg7MDOJ6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015986; c=relaxed/simple;
-	bh=ROBPTureRdXr9MelmfEQOD+IDjTPgOToocXmar7EFvs=;
+	s=arc-20240116; t=1734015989; c=relaxed/simple;
+	bh=5aTEZC0G98TI5ce2GfaZZJAEanR0jzP8Xth/0cekz18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgrJOvtFcPF8xtHeKUvGOqj+5YkBZONldGpk3MCWg6VInzhMFQJj+wmIrFz9oH8tlX7iA1kQ9/ivhXVkXyJ46xpvzX+xZ4K5WBTFcD0SG68iiw9sBmkPKrT3L7yGWZ01JbXzEgnHyt8myNsjXfwJwqodBGL3tV0vu1Eflm3nq/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZU85yPH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZLmEgqv0n/RnbCnLCljIpDkKSH5ffpc9i3qIw/YvgW7H/SUrc3VlxDmnvmLqrASvn04LHgUXlbbTD8XKCBuqZqD/kuxZPufiENoFXaTEWtVD80zvdx91NhFSXPKB/ZqeaKD8mVRHCRyI3g9UFDmEaFQNCfWkiyu+FgxfxnMWhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMoElA52; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZU85yPH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8EAC4CECE;
-	Thu, 12 Dec 2024 15:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMoElA52"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE581C4CECE;
+	Thu, 12 Dec 2024 15:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015985;
-	bh=ROBPTureRdXr9MelmfEQOD+IDjTPgOToocXmar7EFvs=;
+	s=korg; t=1734015989;
+	bh=5aTEZC0G98TI5ce2GfaZZJAEanR0jzP8Xth/0cekz18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZU85yPH0a0Aqjs4r9Zu/oQWyjGyelyk+4e0daMYzBWhQI7OOHpnuTAvRtYQ2yNjq
-	 2Zsmoh7P3fsn036jVaZDYKGtBKKl6lfE675ePIxc1RT+d16qxLLN4b43WliBfQXV5S
-	 g7fmTAE3nCJkUvBrswOAR5Ou6JLaZr3RcdUfAmvE=
+	b=vMoElA52yEeyyx01wLmH6OD3cqtLDzxGZC82hfoXNUbjZmzalK+XAfwakaA0YadfR
+	 PtunUbao2fY3fjMVilXwXr/R4gJzshVg94IGKbbkFSHqnW2FNyJnSFAzOyRihf07Jc
+	 +LS/qj2UaEQajXaZVVieu5Aw/8970Wmg4nbmQ6Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/466] spi: mpc52xx: Add cancel_work_sync before module remove
-Date: Thu, 12 Dec 2024 15:54:21 +0100
-Message-ID: <20241212144310.451476807@linuxfoundation.org>
+Subject: [PATCH 6.12 101/466] irqchip/stm32mp-exti: CONFIG_STM32MP_EXTI should not default to y when compile-testing
+Date: Thu, 12 Dec 2024 15:54:30 +0100
+Message-ID: <20241212144310.804308534@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,39 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 984836621aad98802d92c4a3047114cf518074c8 ]
+[ Upstream commit 9151299ee5101e03eeed544c1280b0e14b89a8a4 ]
 
-If we remove the module which will call mpc52xx_spi_remove
-it will free 'ms' through spi_unregister_controller.
-while the work ms->work will be used. The sequence of operations
-that may lead to a UAF bug.
+Merely enabling compile-testing should not enable additional functionality.
 
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in mpc52xx_spi_remove.
-
-Fixes: ca632f556697 ("spi: reorganize drivers")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://patch.msgid.link/1f16f8ae0e50ca9adb1dc849bf2ac65a40c9ceb9.1732783000.git.xiaopei01@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0be58e0553812fcb ("irqchip/stm32mp-exti: Allow building as module")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/ef5ec063b23522058f92087e072419ea233acfe9.1733243115.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mpc52xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mpc52xx.c b/drivers/spi/spi-mpc52xx.c
-index d5ac60c135c20..159f359d7501a 100644
---- a/drivers/spi/spi-mpc52xx.c
-+++ b/drivers/spi/spi-mpc52xx.c
-@@ -520,6 +520,7 @@ static void mpc52xx_spi_remove(struct platform_device *op)
- 	struct mpc52xx_spi *ms = spi_controller_get_devdata(host);
- 	int i;
- 
-+	cancel_work_sync(&ms->work);
- 	free_irq(ms->irq0, ms);
- 	free_irq(ms->irq1, ms);
- 
+diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
+index d82bcab233a1b..66ce15027f28d 100644
+--- a/drivers/irqchip/Kconfig
++++ b/drivers/irqchip/Kconfig
+@@ -407,7 +407,7 @@ config PARTITION_PERCPU
+ config STM32MP_EXTI
+ 	tristate "STM32MP extended interrupts and event controller"
+ 	depends on (ARCH_STM32 && !ARM_SINGLE_ARMV7M) || COMPILE_TEST
+-	default y
++	default ARCH_STM32 && !ARM_SINGLE_ARMV7M
+ 	select IRQ_DOMAIN_HIERARCHY
+ 	select GENERIC_IRQ_CHIP
+ 	help
 -- 
 2.43.0
 
