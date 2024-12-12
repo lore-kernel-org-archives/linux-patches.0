@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC31F222D67;
-	Thu, 12 Dec 2024 16:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C496E2368E0;
+	Thu, 12 Dec 2024 16:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020402; cv=none; b=nyT6mX1YLpZ80WDyq7pWQrtw4ylVQYg19jTvn7fuIeAnyfv/miCKVAHHdpKQ5diUHHO+YMUHKOwafJkkTCpaqTxP0wM6taUlq8+kZv5sN8N4q+QrEGpD/NZtMe0yUGvn+zBzItiPxmBbS4trHtKr6/0hSMI+XaRI6h0K9eRB6Tw=
+	t=1734020406; cv=none; b=Xqe40rEm5YX6s5UTLRlAPzqE4GPwcjdV2w67h9P1gzsajurRkbpIMcLjbpHbVcn+w+IGro2+7C8mTZ6UrtNJM8OcQJBhbhdMUP4rU7dB2gQQkDBM88hpvN0sFxrrbQK72xfIOQIdwtJrAU1WkYjYUGIiJ+HSr5dEYVbR9NAH1rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020402; c=relaxed/simple;
-	bh=HhpIgwjfFtB0E5ujJecn/rTrtswxSq4Qg9XCEcTqsOM=;
+	s=arc-20240116; t=1734020406; c=relaxed/simple;
+	bh=e+MsuQxXgF+CJZNzGEDhQ8PE97qON8hSnFA0Adol1t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ku0tW9hb3aGW3ZA7QNcUJsr/pSxjGYpAlvWSbO8jw0iWsu52Fl3Puos1jhRsxw7etdI2oG8OVT+7eQBSD5x55Rn0PSqtuz0L8U6WZv6ZkWPJj4qJWWrTh41I3khBL7P5Gk8N/j/6kVD2l1m3PEchJ771CBl7k5CEqTV4IQXUNxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9Mdc1oL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKrMZ7eBQQ5ADcHPaEmyfRaMXblvAQvRfFXp+7EUs4laVuvC93S2tLDkeLLUTv/j/fkcELwktep3ccPp91UT0f8BIhnhPx702VeBEHMzfaxsB3ZDxQU6uqTTdx5v2HRhGq/cZLhxLTxsHtIjAr9nA51QaRzK3s9dKvghUC56N38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuRC3WNe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9Mdc1oL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003CAC4CECE;
-	Thu, 12 Dec 2024 16:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuRC3WNe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17117C4CECE;
+	Thu, 12 Dec 2024 16:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020402;
-	bh=HhpIgwjfFtB0E5ujJecn/rTrtswxSq4Qg9XCEcTqsOM=;
+	s=korg; t=1734020406;
+	bh=e+MsuQxXgF+CJZNzGEDhQ8PE97qON8hSnFA0Adol1t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9Mdc1oLMvxrPVRh20iIYnXzrVvBKoHWGGgQtndUaf7ArUlOhmyDRjYbNfot5JI3i
-	 Jm2GGiP4+TQ90vfBD8fP/ssqSdZ5MrHnmMAD8gBSzX1Dchp4Oe8pEaylIiKZBBJKAE
-	 aP6pSJ50E/B5GmQnenJYka8H9bLmCH3yDrJgMa1c=
+	b=xuRC3WNeFdThAFFqWm6odogYa1JeMnLWQNQ8+n1q80vG8ESXmTmYAVY0vhPFBWK/5
+	 qZkvtAM3pc+at2UoXWLvMe2arQV5MCcMiUmVcxx5EpvEkvdER/crmabsEHCSv2Y/E2
+	 oxY9OE5IUyQR8YPOfyu254QKrLEvhfdpu2MfdVCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiwei Bie <tiwei.btw@antgroup.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 428/772] um: Always dump trace for specified task in show_stack
-Date: Thu, 12 Dec 2024 15:56:13 +0100
-Message-ID: <20241212144407.608754223@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 419/772] usb: dwc3: gadget: Fix checking for number of TRBs left
+Date: Thu, 12 Dec 2024 15:56:04 +0100
+Message-ID: <20241212144407.224671360@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,37 +49,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiwei Bie <tiwei.btw@antgroup.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-[ Upstream commit 0f659ff362eac69777c4c191b7e5ccb19d76c67d ]
+commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
 
-Currently, show_stack() always dumps the trace of the current task.
-However, it should dump the trace of the specified task if one is
-provided. Otherwise, things like running "echo t > sysrq-trigger"
-won't work as expected.
+The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
+is insufficient. It assumes there are active TRBs if there's any request
+in the started_list. However, that's not the case for requests with a
+large SG list.
 
-Fixes: 970e51feaddb ("um: Add support for CONFIG_STACKTRACE")
-Signed-off-by: Tiwei Bie <tiwei.btw@antgroup.com>
-Link: https://patch.msgid.link/20241106103933.1132365-1-tiwei.btw@antgroup.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That is, if we have a single usb request that requires more TRBs than
+the total TRBs in the TRB ring, the queued TRBs will be available when
+all the TRBs in the ring are completed. But the request is only
+partially completed and remains in the started_list. With the current
+logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
+
+Fix this by additionally checking for the request->num_trbs for active
+TRB count.
+
+Cc: stable@vger.kernel.org
+Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/um/kernel/sysrq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/um/kernel/sysrq.c b/arch/um/kernel/sysrq.c
-index 746715379f12a..7e897e44a03da 100644
---- a/arch/um/kernel/sysrq.c
-+++ b/arch/um/kernel/sysrq.c
-@@ -53,5 +53,5 @@ void show_stack(struct task_struct *task, unsigned long *stack,
- 	}
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -1203,11 +1203,14 @@ static u32 dwc3_calc_trbs_left(struct dw
+ 	 * pending to be processed by the driver.
+ 	 */
+ 	if (dep->trb_enqueue == dep->trb_dequeue) {
++		struct dwc3_request *req;
++
+ 		/*
+-		 * If there is any request remained in the started_list at
+-		 * this point, that means there is no TRB available.
++		 * If there is any request remained in the started_list with
++		 * active TRBs at this point, then there is no TRB available.
+ 		 */
+-		if (!list_empty(&dep->started_list))
++		req = next_request(&dep->started_list);
++		if (req && req->num_trbs)
+ 			return 0;
  
- 	printk("%sCall Trace:\n", loglvl);
--	dump_trace(current, &stackops, (void *)loglvl);
-+	dump_trace(task ?: current, &stackops, (void *)loglvl);
- }
--- 
-2.43.0
-
+ 		return DWC3_TRB_NUM - 1;
 
 
