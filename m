@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CEE222D75;
-	Thu, 12 Dec 2024 17:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60175221D93;
+	Thu, 12 Dec 2024 17:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025006; cv=none; b=u3AqovdZlxXCir7b1eDUk5IUTLKubf96j1pL4mnVTc4CZ9NnPIKcqjEoG/U/a0XVvfeXx0z2l077VuKzCuf6h4xnhAY7b+EGWLVPohe/K4y7Drz7gbAZwT9QEqoBe5wQPEV5FlKKNz7QghThnKU8aaHiWoxnInEQhR3GyJOpTPs=
+	t=1734025009; cv=none; b=VI0n2h8UBC9mAmVJ0kxqRJF17+GK1oR0qqT9qod6w0v35VrdZfF+B6y9IuXB64F8ASaeBZObZFN0TzteOFOWU4lCPJ3JLlt2dqtE5WEwzjvbgDM/mJFEAS6fh4w9xj5ef6rjaqRo/Hqd3YiAIP5Smn68kibsmaombhfGeWBqhyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025006; c=relaxed/simple;
-	bh=M1Ky2xygdpCVeWznumJ+Hn1ttEG0fxi1KdVon/gduGM=;
+	s=arc-20240116; t=1734025009; c=relaxed/simple;
+	bh=JpeSKqi5dqsLA3+kpy2a1JqHZOXogP35oekri1220Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rKPGTzSU9nBr1qePvcgAa1xQEXQE4xG39ChvYX+oCBeKYP1D74Kn21nm69TzrQ+TG2sWPUQXiom+VsjLr9cyGh6fQ59sLM3Gib6ceJNmu8a7Tei7657sbC9dtMoUPnPXpflsD7wrP3fmN+1/p5IMBK+7Zu0nPH4k74YBQzazdsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ab96mTpg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nWQRvyERdVedZo9d5LeMNgJ2+fGAZD8WWyn9Z9aAK5ecYjkWrSyZ/B9kEZibp4WlaUP/VzTk3c40dYaOutPVLtvYKVLQnLVDIMHaTFToXZ4EZczbQeN5oWiPe3z0tJb5/VjG/n8JrclskcEgnVA4HI2jBWzx/q6CN46u6jnNF3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hChK5284; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ab96mTpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD276C4CECE;
-	Thu, 12 Dec 2024 17:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hChK5284"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F4FC4CED3;
+	Thu, 12 Dec 2024 17:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025006;
-	bh=M1Ky2xygdpCVeWznumJ+Hn1ttEG0fxi1KdVon/gduGM=;
+	s=korg; t=1734025009;
+	bh=JpeSKqi5dqsLA3+kpy2a1JqHZOXogP35oekri1220Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ab96mTpgxD1mwjgte9kuS5gcl3nltD9La/PAVxUIK0gqBKTaWJNC8ehNHQenZOgsE
-	 NmXP/V9iXicpllsaTAohaeO2jQuweHUab33a11jdnW2NmRoVJa56QRklTJwiVHElQO
-	 iJJw8uOJPxDA942+7JkNR+n5Ly5FfRPvSv0Q8cr8=
+	b=hChK5284Wro5WQNRlq+VmInXzwGSt//62MSfys3mORR2yW6tQEGM+bb2hCKxFaxTx
+	 P7b5H7A3U6S04J3UuQtJRzBdvIJtC9BJ7OhfV03bL1wH6TLldgdE/HGTsye3RaUKjM
+	 avbhx4MorNpcn1AZOx2GsY4blWIxgAX9tsB7vBhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Mahmoud Adam <mngyadam@amazon.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/321] cifs: Fix buffer overflow when parsing NFS reparse points
-Date: Thu, 12 Dec 2024 15:59:03 +0100
-Message-ID: <20241212144230.995820758@linuxfoundation.org>
+Subject: [PATCH 5.4 026/321] NFSD: Force all NFSv4.2 COPY requests to be synchronous
+Date: Thu, 12 Dec 2024 15:59:04 +0100
+Message-ID: <20241212144231.036049453@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -47,62 +44,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pali Rohár <pali@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit e2a8910af01653c1c268984855629d71fb81f404 upstream.
+[ Upstream commit 8d915bbf39266bb66082c1e4980e123883f19830 ]
 
-ReparseDataLength is sum of the InodeType size and DataBuffer size.
-So to get DataBuffer size it is needed to subtract InodeType's size from
-ReparseDataLength.
+We've discovered that delivering a CB_OFFLOAD operation can be
+unreliable in some pretty unremarkable situations. Examples
+include:
 
-Function cifs_strndup_from_utf16() is currentlly accessing buf->DataBuffer
-at position after the end of the buffer because it does not subtract
-InodeType size from the length. Fix this problem and correctly subtract
-variable len.
+ - The server dropped the connection because it lost a forechannel
+   NFSv4 request and wishes to force the client to retransmit
+ - The GSS sequence number window under-flowed
+ - A network partition occurred
 
-Member InodeType is present only when reparse buffer is large enough. Check
-for ReparseDataLength before accessing InodeType to prevent another invalid
-memory access.
+When that happens, all pending callback operations, including
+CB_OFFLOAD, are lost. NFSD does not retransmit them.
 
-Major and minor rdev values are present also only when reparse buffer is
-large enough. Check for reparse buffer size before calling reparse_mkdev().
+Moreover, the Linux NFS client does not yet support sending an
+OFFLOAD_STATUS operation to probe whether an asynchronous COPY
+operation has finished. Thus, on Linux NFS clients, when a
+CB_OFFLOAD is lost, asynchronous COPY can hang until manually
+interrupted.
 
-Fixes: d5ecebc4900d ("smb3: Allow query of symlinks stored as reparse points")
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[use variable name symlink_buf, the other buf->InodeType accesses are
-not used in current version so skip]
-Signed-off-by: Mahmoud Adam <mngyadam@amazon.com>
+I've tried a couple of remedies, but so far the side-effects are
+worse than the disease and they have had to be reverted. So
+temporarily force COPY operations to be synchronous so that the use
+of CB_OFFLOAD is avoided entirely. This is a fix that can easily be
+backported to LTS kernels. I am working on client patches that
+introduce an implementation of OFFLOAD_STATUS.
+
+Note that NFSD arbitrarily limits the size of a copy_file_range
+to 4MB to avoid indefinitely blocking an nfsd thread. A short
+COPY result is returned in that case, and the client can present
+a fresh COPY request for the remainder.
+
+Link: https://nvd.nist.gov/vuln/detail/CVE-2024-49974
+[ cel: adjusted to apply to origin/linux-5.4.y ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/nfsd/nfs4proc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/cifs/smb2ops.c b/fs/cifs/smb2ops.c
-index b2e45e168548b..64ac683498e03 100644
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -2539,6 +2539,12 @@ parse_reparse_posix(struct reparse_posix_data *symlink_buf,
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index e38f873f98a7f..27e9754ad3b9d 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1262,6 +1262,13 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	__be32 status;
+ 	struct nfsd4_copy *async_copy = NULL;
  
- 	/* See MS-FSCC 2.1.2.6 for the 'NFS' style reparse tags */
- 	len = le16_to_cpu(symlink_buf->ReparseDataLength);
-+	if (len < sizeof(symlink_buf->InodeType)) {
-+		cifs_dbg(VFS, "srv returned malformed nfs buffer\n");
-+		return -EIO;
-+	}
++	/*
++	 * Currently, async COPY is not reliable. Force all COPY
++	 * requests to be synchronous to avoid client application
++	 * hangs waiting for COPY completion.
++	 */
++	copy->cp_synchronous = 1;
 +
-+	len -= sizeof(symlink_buf->InodeType);
- 
- 	if (le64_to_cpu(symlink_buf->InodeType) != NFS_SPECFILE_LNK) {
- 		cifs_dbg(VFS, "%lld not a supported symlink type\n",
+ 	status = nfsd4_verify_copy(rqstp, cstate, &copy->cp_src_stateid,
+ 				   &copy->nf_src, &copy->cp_dst_stateid,
+ 				   &copy->nf_dst);
 -- 
 2.43.0
 
