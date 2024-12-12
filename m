@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7552080FC;
-	Thu, 12 Dec 2024 15:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BD420E034;
+	Thu, 12 Dec 2024 15:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015953; cv=none; b=rPmp0Q9rgd25WZ7qF3P3gZH5r7KZleZUG/0PI2ZvYKAmkG5XOEQElOg5Z7J9L+GVGUwdr2N3x8x+rcx5QoAW+Kg9Ty4vBHDdKR7ZyVbk3t3ziVcBxNurEy5YaSwsmS+AMTPAbscYa83XB87ch0unLYHsZaDV+7NkJ2oyiX6zuzY=
+	t=1734015957; cv=none; b=L/8gefUY2I2IcTmC4mcv9o6pvMBQQG0nk7jmexKfLNyL6eGiM1tNyzHRMzY6V3OuhdiYRMLJ2MQfobnvb2uVuQSa9H9EjZ+mQu/YRXBfl1amlv4LwHbfGHtVC1xhcvRWoKJ9M9DI59n4878V4GYBRvmPZEUqnVOCfnbvOan4M+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015953; c=relaxed/simple;
-	bh=UT+2cNNATiI75AoYoournL7hOwCWTITHT+CU15Cl/hA=;
+	s=arc-20240116; t=1734015957; c=relaxed/simple;
+	bh=oZhRoRwTk26dyRFRS4q5AFwa8BJQVOvypeJC5IZ2KYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZQX9BQOQBc6fya15vcV+M9ykvA3r2gd5Ffd+w5eXBeg4XPZBl8DqZDW1HSawPw4p0LjGYHmmE8RHckPZbF4mB5P2evErXxhdqlydZR8meJDalwdzy1hdc5V8Hqr9ZvKHenUDoQaQ+P+1hH73y8STV+qh8sOcG4X8BxJ+nIWOHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1ncEPxv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=or6aJ+2+MtYMpNWiTE144H7zlDEa9I5h130Gur8SU9pS/oOjr6YdfNIbM3nUatb77xgB1N3VbW03lJIPObL5MXAMDMtTy41RPmO7FBx+BFMvGgCDyEfC6xDupHavq2wzKFii0eNHvI8PtD+X0p+6x9ykN1hOarVIL66afTltnKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogG1AmBq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1ncEPxv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EEDC4CED0;
-	Thu, 12 Dec 2024 15:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogG1AmBq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8DEC4CED0;
+	Thu, 12 Dec 2024 15:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015953;
-	bh=UT+2cNNATiI75AoYoournL7hOwCWTITHT+CU15Cl/hA=;
+	s=korg; t=1734015956;
+	bh=oZhRoRwTk26dyRFRS4q5AFwa8BJQVOvypeJC5IZ2KYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1ncEPxvr+KxmoTg6V51NX/UTrDAVok4rYEpfhLufv8QpmK+SAFYS71QUWsf4Ip9d
-	 pJXDRlAPb6aqExfcNRoYsybZRBunY8axQajkKZSsFykty3h7ybT0I8eJylr4/TZNZa
-	 wesynXeBLDz3bqNICRVFlpI1ZwoNDAWHhw6a3HhI=
+	b=ogG1AmBqei11d3qjwtAT63hbfYl9lgyqOyencyIaCdHXvo/dbxt7tTaZRpFYYWklc
+	 9G+fPcM41NlB0MPli8uHPdU+cD9KlQUZOVcj/uEpIHqKLrW2Nfkr0DEd0ZoDXPjoPN
+	 K3XM+83w5CLC1NRv7fp8DcQSJRwM5rHqIHGUTv14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leonard Crestez <cdleonard@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/466] ALSA: seq: ump: Fix seq port updates per FB info notify
-Date: Thu, 12 Dec 2024 15:54:18 +0100
-Message-ID: <20241212144310.333022086@linuxfoundation.org>
+Subject: [PATCH 6.12 090/466] ALSA: usb-audio: Notify xrun for low-latency mode
+Date: Thu, 12 Dec 2024 15:54:19 +0100
+Message-ID: <20241212144310.371738992@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,57 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit aaa55faa2495320e44bc643a917c701f2cc89ee7 ]
+[ Upstream commit 4f9d674377d090e38d93360bd4df21b67534d622 ]
 
-update_port_infos() is called when a UMP FB Info update notification
-is received, and this function is supposed to update the attributes of
-the corresponding sequencer port.  However, the function had a few
-issues and it brought to the incorrect states.  Namely:
+The low-latency mode of USB-audio driver uses a similar approach like
+the implicit feedback mode but it has an explicit queuing at the
+trigger start time.  The difference is, however, that no packet will
+be handled any longer after all queued packets are handled but no
+enough data is fed.  In the case of implicit feedback mode, the
+capture-side packet handling triggers the re-queuing, and this checks
+the XRUN.  OTOH, in the low-latency mode, it just stops without XRUN
+notification unless any new action is taken from user-space via ack
+callback.  For example, when you stop the stream in aplay, no XRUN is
+reported.
 
-- It tried to get a wrong sequencer info for the update without
-  correcting the port number with the group-offset 1
-- The loop exited immediately when a sequencer port isn't present;
-  this ended up with the truncation if a sequencer port in the middle
-  goes away
+This patch adds the XRUN check at the packet complete callback in the
+case all pending URBs are exhausted.  Strictly speaking, this state
+doesn't match really with XRUN; in theory the application may queue
+immediately after this happens.  But such behavior is only for
+1-period configuration, which the USB-audio driver doesn't support.
+So we may conclude that this situation leads certainly to XRUN.
 
-This patch addresses those bugs.
+A caveat is that the XRUN should be triggered only for the PCM RUNNING
+state, and not during DRAINING.  This additional state check is put in
+notify_xrun(), too.
 
-Fixes: 4a16a3af0571 ("ALSA: seq: ump: Handle FB info update")
-Link: https://patch.msgid.link/20241128170423.23351-1-tiwai@suse.de
+Fixes: d5f871f89e21 ("ALSA: usb-audio: Improved lowlatency playback support")
+Reported-by: Leonard Crestez <cdleonard@gmail.com>
+Link: https://lore.kernel.org/25d5b0d8-4efd-4630-9d33-7a9e3fa9dc2b@gmail.com
+Link: https://patch.msgid.link/20241128080446.1181-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_ump_client.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/endpoint.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
-index e5d3f4d206bf6..e956f17f37928 100644
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -257,12 +257,12 @@ static void update_port_infos(struct seq_ump_client *client)
- 			continue;
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 568099467dbbc..a29f28eb7d0c6 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -403,10 +403,15 @@ static int prepare_inbound_urb(struct snd_usb_endpoint *ep,
+ static void notify_xrun(struct snd_usb_endpoint *ep)
+ {
+ 	struct snd_usb_substream *data_subs;
++	struct snd_pcm_substream *psubs;
  
- 		old->addr.client = client->seq_client;
--		old->addr.port = i;
-+		old->addr.port = ump_group_to_seq_port(i);
- 		err = snd_seq_kernel_client_ctl(client->seq_client,
- 						SNDRV_SEQ_IOCTL_GET_PORT_INFO,
- 						old);
- 		if (err < 0)
--			return;
-+			continue;
- 		fill_port_info(new, client, &client->ump->groups[i]);
- 		if (old->capability == new->capability &&
- 		    !strcmp(old->name, new->name))
-@@ -271,7 +271,7 @@ static void update_port_infos(struct seq_ump_client *client)
- 						SNDRV_SEQ_IOCTL_SET_PORT_INFO,
- 						new);
- 		if (err < 0)
--			return;
-+			continue;
- 		/* notify to system port */
- 		snd_seq_system_client_ev_port_change(client->seq_client, i);
- 	}
+ 	data_subs = READ_ONCE(ep->data_subs);
+-	if (data_subs && data_subs->pcm_substream)
+-		snd_pcm_stop_xrun(data_subs->pcm_substream);
++	if (!data_subs)
++		return;
++	psubs = data_subs->pcm_substream;
++	if (psubs && psubs->runtime &&
++	    psubs->runtime->state == SNDRV_PCM_STATE_RUNNING)
++		snd_pcm_stop_xrun(psubs);
+ }
+ 
+ static struct snd_usb_packet_info *
+@@ -562,7 +567,10 @@ static void snd_complete_urb(struct urb *urb)
+ 			push_back_to_ready_list(ep, ctx);
+ 			clear_bit(ctx->index, &ep->active_mask);
+ 			snd_usb_queue_pending_output_urbs(ep, false);
+-			atomic_dec(&ep->submitted_urbs); /* decrement at last */
++			/* decrement at last, and check xrun */
++			if (atomic_dec_and_test(&ep->submitted_urbs) &&
++			    !snd_usb_endpoint_implicit_feedback_sink(ep))
++				notify_xrun(ep);
+ 			return;
+ 		}
+ 
 -- 
 2.43.0
 
