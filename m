@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D304953365;
-	Thu, 12 Dec 2024 17:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE0C1487CD;
+	Thu, 12 Dec 2024 17:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022924; cv=none; b=MOMYXqcl9xlJHcnhKpIZrBb5lnHxHjyQ0qXXAwhK5gZYBABXbq0abFDz+JRTcVxk6jn9NPXkqwS+SI4Dw/XRjh8swOIE+KAyTMktYHFj5fneSkQvCt5OBM05wXR99k6aIymSb457vYunvUwMms5DFX3sb9Ya3fwsou5jK5iq9gE=
+	t=1734022928; cv=none; b=SRLXV/LpyHsJpO25sWvf5frAAYfewE++MMqtrB7hKXYyu0o7MNeAnDdK5BeQkTlm3mfaDYe2qnfAvb5FMYR3c9EMvx3glVsFHzgEyt3gywyTVTqaDdeC0PqaIrcrIePbud6MOoAxNDHnDy9DahzsRNEqIgsW8mvttqYt9992e7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022924; c=relaxed/simple;
-	bh=pVMIe/ovDVY/jaK++Na5xc7FwRFb+wBje6kct6JiiGI=;
+	s=arc-20240116; t=1734022928; c=relaxed/simple;
+	bh=v4VVzs+PtZS894MBKe8Azg+p2Eja7JYrQoEtlid/mh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdLF7i+R2iLVJ1EW/71It+KFmWHMHnn0GsM92Eb90yLH2HJRpVfFSojhhY1g32otPZfyQQ4gyXG8Zha/zUN8b4Dv1q1WptRJC5JGhY7VZoyCs6qLRHoha4CS0SMiDNaP1hYFBFZN4/Rjk2dZvsMdji5fNQ4w6dGAsbc9eULOnIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c60DEzxN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CDLJItHxpn1wU7H58x8PLnaLXth01xsp+x3h2Nwz7X/yjsZtlMYUX2C63JNPMkyYX6tnDfJ+/AuLEwwod2GKPix6kr9/pvxZ29bYKLuP3SxI9Q78JDcOGg8De5KuQvozLdgSkWBhziSPwFMlbFSqf/7XpOvzXGnm0lZ0b9Z9Lwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQUbCIiX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c60DEzxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B840C4CECE;
-	Thu, 12 Dec 2024 17:02:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQUbCIiX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB9FC4CECE;
+	Thu, 12 Dec 2024 17:02:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022924;
-	bh=pVMIe/ovDVY/jaK++Na5xc7FwRFb+wBje6kct6JiiGI=;
+	s=korg; t=1734022928;
+	bh=v4VVzs+PtZS894MBKe8Azg+p2Eja7JYrQoEtlid/mh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c60DEzxNBH+Xt/2XIL5sI7xTVfNmO4wp+6PvcCOyQjdeVz/bYUSbDYU12HWfddjF8
-	 nKNFkIwJSJXfH1a72DJWJ7BCXqUAZw8dZ+cjMgJcUcii2xbtFSvLUYUHNcvMfhcDlx
-	 Qgj0hJWKwzcOkYwjBTH4rjbPWvcf4SxoyQQR2Cxc=
+	b=iQUbCIiXyp3vzzETt/IvWxJnkBjzHTMHD8uheN7ZXqxfMV4ItX2ccT+MRiM37Ivdb
+	 iwaQKBV7itKRBtas23uTJy5dwnUrXnMW/Ih5WdwKS8u3F+vPmWfoqdPvJ69SGG/+RB
+	 YgI+E/DCZQwSCXYfdCC5INqOsm/ukrMw/Uu18US4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
+	Thiago Rafael Becker <trbecker@gmail.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 370/565] nfs: ignore SB_RDONLY when mounting nfs
-Date: Thu, 12 Dec 2024 15:59:25 +0100
-Message-ID: <20241212144326.250283392@linuxfoundation.org>
+Subject: [PATCH 5.15 371/565] sunrpc: remove unnecessary test in rpc_task_set_client()
+Date: Thu, 12 Dec 2024 15:59:26 +0100
+Message-ID: <20241212144326.288698009@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -51,77 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Thiago Rafael Becker <trbecker@gmail.com>
 
-[ Upstream commit 52cb7f8f177878b4f22397b9c4d2c8f743766be3 ]
+[ Upstream commit 023859ce6f88f7cfc223752fb56ec453a147b852 ]
 
-When exporting only one file system with fsid=0 on the server side, the
-client alternately uses the ro/rw mount options to perform the mount
-operation, and a new vfsmount is generated each time.
+In rpc_task_set_client(), testing for a NULL clnt is not necessary, as
+clnt should always be a valid pointer to a rpc_client.
 
-It can be reproduced as follows:
-[root@localhost ~]# mount /dev/sda /mnt2
-[root@localhost ~]# echo "/mnt2 *(rw,no_root_squash,fsid=0)" >/etc/exports
-[root@localhost ~]# systemctl restart nfs-server
-[root@localhost ~]# mount -t nfs -o ro,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount -t nfs -o rw,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount -t nfs -o ro,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount -t nfs -o rw,vers=4 127.0.0.1:/ /mnt/sdaa
-[root@localhost ~]# mount | grep nfs4
-127.0.0.1:/ on /mnt/sdaa type nfs4 (ro,relatime,vers=4.2,rsize=1048576,...
-127.0.0.1:/ on /mnt/sdaa type nfs4 (rw,relatime,vers=4.2,rsize=1048576,...
-127.0.0.1:/ on /mnt/sdaa type nfs4 (ro,relatime,vers=4.2,rsize=1048576,...
-127.0.0.1:/ on /mnt/sdaa type nfs4 (rw,relatime,vers=4.2,rsize=1048576,...
-[root@localhost ~]#
-
-We expected that after mounting with the ro option, using the rw option to
-mount again would return EBUSY, but the actual situation was not the case.
-
-As shown above, when mounting for the first time, a superblock with the ro
-flag will be generated, and at the same time, in do_new_mount_fc -->
-do_add_mount, it detects that the superblock corresponding to the current
-target directory is inconsistent with the currently generated one
-(path->mnt->mnt_sb != newmnt->mnt.mnt_sb), and a new vfsmount will be
-generated.
-
-When mounting with the rw option for the second time, since no matching
-superblock can be found in the fs_supers list, a new superblock with the
-rw flag will be generated again. The superblock in use (ro) is different
-from the newly generated superblock (rw), and a new vfsmount will be
-generated again.
-
-When mounting with the ro option for the third time, the superblock (ro)
-is found in fs_supers, the superblock in use (rw) is different from the
-found superblock (ro), and a new vfsmount will be generated again.
-
-We can switch between ro/rw through remount, and only one superblock needs
-to be generated, thus avoiding the problem of repeated generation of
-vfsmount caused by switching superblocks.
-
-Furthermore, This can also resolve the issue described in the link.
-
-Fixes: 275a5d24bf56 ("NFS: Error when mounting the same filesystem with different options")
-Link: https://lore.kernel.org/all/20240604112636.236517-3-lilingfeng@huaweicloud.com/
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Thiago Rafael Becker <trbecker@gmail.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: 4db9ad82a6c8 ("sunrpc: clear XPRT_SOCK_UPD_TIMEOUT when reset transport")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sunrpc/clnt.c | 33 +++++++++++++++------------------
+ 1 file changed, 15 insertions(+), 18 deletions(-)
 
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index f82264fcbb07e..692018327b5ff 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -11,7 +11,7 @@
- #include <linux/nfs_page.h>
- #include <linux/wait_bit.h>
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 38071a6780211..5de2fc7af268a 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -1096,24 +1096,21 @@ void rpc_task_set_transport(struct rpc_task *task, struct rpc_clnt *clnt)
+ static
+ void rpc_task_set_client(struct rpc_task *task, struct rpc_clnt *clnt)
+ {
+-
+-	if (clnt != NULL) {
+-		rpc_task_set_transport(task, clnt);
+-		task->tk_client = clnt;
+-		refcount_inc(&clnt->cl_count);
+-		if (clnt->cl_softrtry)
+-			task->tk_flags |= RPC_TASK_SOFT;
+-		if (clnt->cl_softerr)
+-			task->tk_flags |= RPC_TASK_TIMEOUT;
+-		if (clnt->cl_noretranstimeo)
+-			task->tk_flags |= RPC_TASK_NO_RETRANS_TIMEOUT;
+-		if (atomic_read(&clnt->cl_swapper))
+-			task->tk_flags |= RPC_TASK_SWAPPER;
+-		/* Add to the client's list of all tasks */
+-		spin_lock(&clnt->cl_lock);
+-		list_add_tail(&task->tk_task, &clnt->cl_tasks);
+-		spin_unlock(&clnt->cl_lock);
+-	}
++	rpc_task_set_transport(task, clnt);
++	task->tk_client = clnt;
++	refcount_inc(&clnt->cl_count);
++	if (clnt->cl_softrtry)
++		task->tk_flags |= RPC_TASK_SOFT;
++	if (clnt->cl_softerr)
++		task->tk_flags |= RPC_TASK_TIMEOUT;
++	if (clnt->cl_noretranstimeo)
++		task->tk_flags |= RPC_TASK_NO_RETRANS_TIMEOUT;
++	if (atomic_read(&clnt->cl_swapper))
++		task->tk_flags |= RPC_TASK_SWAPPER;
++	/* Add to the client's list of all tasks */
++	spin_lock(&clnt->cl_lock);
++	list_add_tail(&task->tk_task, &clnt->cl_tasks);
++	spin_unlock(&clnt->cl_lock);
+ }
  
--#define NFS_SB_MASK (SB_RDONLY|SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
-+#define NFS_SB_MASK (SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
- 
- extern const struct export_operations nfs_export_ops;
- 
+ static void
 -- 
 2.43.0
 
