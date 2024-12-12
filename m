@@ -1,51 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACAD20967D;
-	Thu, 12 Dec 2024 17:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352213CA93;
+	Thu, 12 Dec 2024 17:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024202; cv=none; b=ZsG3wwkYIUuWoJaBfu3snu1EEKH/pyU/9QH+xQYq6mRiZ1ptlOCP+hSUe6VK/cmNkE5EX7d6uOE/Y/3Pe0Cq9av9CHtl2jzi2u+wm68dp2WXbXfu0DbzDsYABEJVftzHvW4SSwS0c6j6QKK96Dpmha9jKN3dBCtB2Oq14Vjjw1E=
+	t=1734024208; cv=none; b=crMNNLZpxrj2zaVgv9009asEJc7T23lJ9yObreGGoJNoOMH468pN6Uc1TKRyHvarbjXNah+YD8CXWBVgJ7s7zTAei/FyTLOUFgnAzOhK4Murdh2MzErOBlK84PBQXwf886336IopXAEsgf6SRdmnjEDiOulYHySfuI6FAUPZwms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024202; c=relaxed/simple;
-	bh=moHxxYuHX+/4Ux7xJgP07L2sWYqOJbiA4ypMG7Xh6PE=;
+	s=arc-20240116; t=1734024208; c=relaxed/simple;
+	bh=DWCRGQGZUWGCaSyqk5o1Q6T4c5uJPdXywRHiMVYbsHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULqFF9w3JR4xDf2p/ua/19aO0Y0yQgPop7Fc5YTvU42kKkdbY0VWIZx7oU/+fOEXXNVz1FjLzGJLPszZWjykiWMWEkeBWI5yDnDYFADgkh8V5CyUNpxp0furvWC9SgRlc0PjGQwAWkrCyYABMZpuCpCmk9oDFP7SMYaPsa4UV40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxmkFAkI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e93cNyiAZyKma9A/cyub+asAr/8eILHrkcc9Qr89W4JYP8pTN+GiXLPOiohwDiY9SK5kd1Dl17I3M6DEWbX9WyhSYu3x6UspWLPqDrG8NIG3b1fOs4biiDTPtTRrBYTQKPUXJZGWWVebWOSQjid2JiVlKp+NQmxEMr3HJb4ZRgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdVy6YEU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxmkFAkI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DF2C4CED0;
-	Thu, 12 Dec 2024 17:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdVy6YEU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D491C4CECE;
+	Thu, 12 Dec 2024 17:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024202;
-	bh=moHxxYuHX+/4Ux7xJgP07L2sWYqOJbiA4ypMG7Xh6PE=;
+	s=korg; t=1734024206;
+	bh=DWCRGQGZUWGCaSyqk5o1Q6T4c5uJPdXywRHiMVYbsHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CxmkFAkIaLhUOmVWeoMUbwNdBfNQd5hAopwVDKH+7Pm0qC7uGsbxZDDLTEvs9HNxb
-	 1Q0jgM8wxe/jYjUOrqnpyHNgiz5JjIobfdgt1qftvGb+e6lNnvuhlyhoowWkZtR94j
-	 8sIcqwQXZFa7IDK2dnYxOY2xwb5sd/vfsJ8QR/GA=
+	b=MdVy6YEUbBjxdgIz9ZlBJV6OmGSTootRisW+RUm/jCqfnNu0qiaykP+mtd+xc/p/4
+	 fEGlyGAD41Z1asfB3RYjI9VIh3NZH39o9QvnTz+1OzuvPDhx4lbKWyke0AJQ6Vhmjh
+	 3mM4+n1fCG2mfgAcej3KUHY7zqwIpDkgfOMmO2Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>,
-	Leo Yan <leo.yan@arm.com>,
-	James Clark <james.clark@linaro.org>,
-	Ben Gainey <ben.gainey@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Ruidong Tian <tianruidong@linux.alibaba.com>,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	linux-arm-kernel@lists.infradead.org,
-	coresight@lists.linaro.org,
-	John Garry <john.g.garry@oracle.com>,
-	scclevenger@os.amperecomputing.com,
+	Ian Rogers <irogers@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Hemant Kumar <hemant@linux.vnet.ibm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 190/459] perf cs-etm: Dont flush when packet_queue fills up
-Date: Thu, 12 Dec 2024 15:58:48 +0100
-Message-ID: <20241212144301.068702140@linuxfoundation.org>
+Subject: [PATCH 5.10 191/459] perf probe: Fix libdw memory leak
+Date: Thu, 12 Dec 2024 15:58:49 +0100
+Message-ID: <20241212144301.111803176@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -64,119 +58,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 5afd032961e8465808c4bc385c06e7676fbe1951 ]
+[ Upstream commit 4585038b8e186252141ef86e9f0d8e97f11dce8d ]
 
-cs_etm__flush(), like cs_etm__sample() is an operation that generates a
-sample and then swaps the current with the previous packet. Calling
-flush after processing the queues results in two swaps which corrupts
-the next sample. Therefore it wasn't appropriate to call flush here so
-remove it.
+Add missing dwarf_cfi_end to free memory associated with probe_finder
+cfi_eh which is allocated and owned via a call to
+dwarf_getcfi_elf. Confusingly cfi_dbg shouldn't be freed as its memory
+is owned by the passed in debuginfo struct. Add comments to highlight
+this.
 
-Flushing is still done on a discontinuity to explicitly clear the last
-branch buffer, but when the packet_queue fills up before reaching a
-timestamp, that's not a discontinuity and the call to
-cs_etm__process_traceid_queue() already generated samples and drained
-the buffers correctly.
+This addresses leak sanitizer issues seen in:
+tools/perf/tests/shell/test_uprobe_from_different_cu.sh
 
-This is visible by looking for a branch that has the same target as the
-previous branch and the following source is before the address of the
-last target, which is impossible as execution would have had to have
-gone backwards:
-
-  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
-   (packet_queue fills here before a timestamp, resulting in a flush and
-    branch target ffff80008011cadc is duplicated.)
-  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff80008011cadc update_sg_lb_stats+0x94
-  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
-
-After removing the flush the correct branch target is used for the
-second sample, and ffff8000801117c4 is no longer before the previous
-address:
-
-  ffff800080849d40 _find_next_and_bit+0x78 => ffff80008011cadc update_sg_lb_stats+0x94
-  ffff80008011cb1c update_sg_lb_stats+0xd4 => ffff8000801117a0 cpu_util+0x0
-  ffff8000801117c4 cpu_util+0x24 => ffff8000801117d4 cpu_util+0x34
-
-Make sure that a final branch stack is output at the end of the trace
-by calling cs_etm__end_block(). This is already done for both the
-timeless decode paths.
-
-Fixes: 21fe8dc1191a ("perf cs-etm: Add support for CPU-wide trace scenarios")
-Reported-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
-Closes: https://lore.kernel.org/all/20240719092619.274730-1-gankulkarni@os.amperecomputing.com/
-Reviewed-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Tested-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
-Cc: Ben Gainey <ben.gainey@arm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Ruidong Tian <tianruidong@linux.alibaba.com>
-Cc: Benjamin Gray <bgray@linux.ibm.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: coresight@lists.linaro.org
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: scclevenger@os.amperecomputing.com
-Link: https://lore.kernel.org/r/20240916135743.1490403-2-james.clark@linaro.org
+Fixes: 270bde1e76f4 ("perf probe: Search both .eh_frame and .debug_frame sections for probe location")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Alexander Lobakin <aleksander.lobakin@intel.com>
+Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Hemant Kumar <hemant@linux.vnet.ibm.com>
+Link: https://lore.kernel.org/r/20241016235622.52166-3-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ tools/perf/util/probe-finder.c | 4 ++++
+ tools/perf/util/probe-finder.h | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index a2a369e2fbb67..e3fa32b83367e 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -2098,12 +2098,6 @@ static void cs_etm__clear_all_traceid_queues(struct cs_etm_queue *etmq)
+diff --git a/tools/perf/util/probe-finder.c b/tools/perf/util/probe-finder.c
+index fdafbfcef6871..31c779ce029db 100644
+--- a/tools/perf/util/probe-finder.c
++++ b/tools/perf/util/probe-finder.c
+@@ -1483,6 +1483,10 @@ int debuginfo__find_trace_events(struct debuginfo *dbg,
+ 	if (ret >= 0 && tf.pf.skip_empty_arg)
+ 		ret = fill_empty_trace_arg(pev, tf.tevs, tf.ntevs);
  
- 		/* Ignore return value */
- 		cs_etm__process_traceid_queue(etmq, tidq);
--
--		/*
--		 * Generate an instruction sample with the remaining
--		 * branchstack entries.
--		 */
--		cs_etm__flush(etmq, tidq);
- 	}
- }
- 
-@@ -2186,7 +2180,7 @@ static int cs_etm__process_queues(struct cs_etm_auxtrace *etm)
- 
- 	while (1) {
- 		if (!etm->heap.heap_cnt)
--			goto out;
-+			break;
- 
- 		/* Take the entry at the top of the min heap */
- 		cs_queue_nr = etm->heap.heap_array[0].queue_nr;
-@@ -2269,6 +2263,23 @@ static int cs_etm__process_queues(struct cs_etm_auxtrace *etm)
- 		ret = auxtrace_heap__add(&etm->heap, cs_queue_nr, timestamp);
- 	}
- 
-+	for (i = 0; i < etm->queues.nr_queues; i++) {
-+		struct int_node *inode;
++#if _ELFUTILS_PREREQ(0, 142)
++	dwarf_cfi_end(tf.pf.cfi_eh);
++#endif
 +
-+		etmq = etm->queues.queue_array[i].priv;
-+		if (!etmq)
-+			continue;
-+
-+		intlist__for_each_entry(inode, etmq->traceid_queues_list) {
-+			int idx = (int)(intptr_t)inode->priv;
-+
-+			/* Flush any remaining branch stack entries */
-+			tidq = etmq->traceid_queues[idx];
-+			ret = cs_etm__end_block(etmq, tidq);
-+			if (ret)
-+				return ret;
-+		}
-+	}
- out:
- 	return ret;
- }
+ 	if (ret < 0 || tf.ntevs == 0) {
+ 		for (i = 0; i < tf.ntevs; i++)
+ 			clear_probe_trace_event(&tf.tevs[i]);
+diff --git a/tools/perf/util/probe-finder.h b/tools/perf/util/probe-finder.h
+index 2febb58756789..35eae263ffe74 100644
+--- a/tools/perf/util/probe-finder.h
++++ b/tools/perf/util/probe-finder.h
+@@ -81,9 +81,9 @@ struct probe_finder {
+ 
+ 	/* For variable searching */
+ #if _ELFUTILS_PREREQ(0, 142)
+-	/* Call Frame Information from .eh_frame */
++	/* Call Frame Information from .eh_frame. Owned by this struct. */
+ 	Dwarf_CFI		*cfi_eh;
+-	/* Call Frame Information from .debug_frame */
++	/* Call Frame Information from .debug_frame. Not owned. */
+ 	Dwarf_CFI		*cfi_dbg;
+ #endif
+ 	Dwarf_Op		*fb_ops;	/* Frame base attribute */
 -- 
 2.43.0
 
