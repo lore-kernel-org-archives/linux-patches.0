@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DC6222D59;
-	Thu, 12 Dec 2024 17:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C341C222D59;
+	Thu, 12 Dec 2024 17:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025596; cv=none; b=EVfpHPhl3VxgzHomL3QPmfhGSZ5+JuKFLsAR9A4VJ0jYdm7iCxCHAHW/O5RvD1HG5ZH/RZLzSLGni9qd3RSpMl1NpfQYAYjLxrPGdggWPoUCPBIgtM6RB8TaSTPXnAio+t3gj0zwI0CeJkYmW/ArQDRaWgsP/ixDKWUNACQyADQ=
+	t=1734025599; cv=none; b=dYWn9Ra0febQ1Qu6ahLa5ttfnFn/bVdDMctt/JlrLTsTna6W9e8RRuSysHOvGGQ/s6LemEuo+oCA3n0wGD7JD+2NCBKaigO03QkACdWDqAP59rJxTz3WYr8lXv8VkWA/91E1qV7Y8v29a1hhbp2kEL6vS9B/ZVK5Gc474vKRLLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025596; c=relaxed/simple;
-	bh=Ew1sN5LkXfnbz8GgFu6XE/ZUsCfGakG1oEWvPJ9Th0k=;
+	s=arc-20240116; t=1734025599; c=relaxed/simple;
+	bh=qztOIygnxnECAQm/R1SIht4dhev17/r4a1wXTA5wLIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+fXkmihrwVg65QySuwCYr6sHtPD2o+0fxN8+Sej4VglEkEA3YJ+EKd7atWFR8o1PEgfvVyKVJ/lL11Va73bNFkmf/iPa4BUW9JQ+/PrKAzZbjb3nQpjfjtQNxrfJByn/s3RwapfwOFV3oPV3lo9omLgK8+oFZftaaqbrR6KQIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KLHl8UqX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CEAHCpgSXLb5SoC576FtM6EggmnwUVvJsjZ2BpbUHW6ulL5/bJRcwNVyqnzb0sioBTJaYgNg8i8GqVhGNAhAwhqnjuIlHtAXH/WkxCmKYRuZ8SIH7HwDZ+CVo+Uf1lwyXPpq0Oz79ETpg1hYUpAG8/Z8pgx+eeRag0cumjzxbOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv9Ng97X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KLHl8UqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C622C4CECE;
-	Thu, 12 Dec 2024 17:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv9Ng97X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C075C4CED0;
+	Thu, 12 Dec 2024 17:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025596;
-	bh=Ew1sN5LkXfnbz8GgFu6XE/ZUsCfGakG1oEWvPJ9Th0k=;
+	s=korg; t=1734025599;
+	bh=qztOIygnxnECAQm/R1SIht4dhev17/r4a1wXTA5wLIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KLHl8UqXbqAledjWLY+mK7Q6ChD6RCN6b7aQPxClg+Qhr6C0CEKYJwyfVoY7D3mpu
-	 vBWn8Gq7p9xqy4uUUHmfy07kUxub8x61xM5YdCtWD5O4D9ABGw588eWiHq9/9oNInY
-	 YTw8PZfigQp9te54BMebVRZykK2QJ64jxOZuIS+o=
+	b=Zv9Ng97XVW9Dqhim/hiKFGOs1mmuQCvBbuDWMygRRbZ4kkaDB8abhs1u2HLWNZMxf
+	 sjVijLVr4ezDe0c3koMy7Vjbst4HyvLnwsX88Ivs2an5jbTdo2vxQ2fTO6o39vWGbv
+	 GHggb8qEtOT8rf5bRCerySu1hI0SjrDZve4Y8EQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Ruowen Qin <ruqin@redhat.com>,
-	Jinghao Jia <jinghao7@illinois.edu>,
-	Julian Anastasov <ja@ssi.bg>,
+	syzbot+6c8215822f35fdb35667@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 223/321] ipvs: fix UB due to uninitialized stack access in ip_vs_protocol_init()
-Date: Thu, 12 Dec 2024 16:02:21 +0100
-Message-ID: <20241212144238.787128702@linuxfoundation.org>
+Subject: [PATCH 5.4 224/321] netfilter: x_tables: fix LED ID check in led_tg_check()
+Date: Thu, 12 Dec 2024 16:02:22 +0100
+Message-ID: <20241212144238.825426430@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -54,114 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinghao Jia <jinghao7@illinois.edu>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 146b6f1112eb30a19776d6c323c994e9d67790db ]
+[ Upstream commit 04317f4eb2aad312ad85c1a17ad81fe75f1f9bc7 ]
 
-Under certain kernel configurations when building with Clang/LLVM, the
-compiler does not generate a return or jump as the terminator
-instruction for ip_vs_protocol_init(), triggering the following objtool
-warning during build time:
+Syzbot has reported the following BUG detected by KASAN:
 
-  vmlinux.o: warning: objtool: ip_vs_protocol_init() falls through to next function __initstub__kmod_ip_vs_rr__935_123_ip_vs_rr_init6()
+BUG: KASAN: slab-out-of-bounds in strlen+0x58/0x70
+Read of size 1 at addr ffff8881022da0c8 by task repro/5879
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x241/0x360
+ ? __pfx_dump_stack_lvl+0x10/0x10
+ ? __pfx__printk+0x10/0x10
+ ? _printk+0xd5/0x120
+ ? __virt_addr_valid+0x183/0x530
+ ? __virt_addr_valid+0x183/0x530
+ print_report+0x169/0x550
+ ? __virt_addr_valid+0x183/0x530
+ ? __virt_addr_valid+0x183/0x530
+ ? __virt_addr_valid+0x45f/0x530
+ ? __phys_addr+0xba/0x170
+ ? strlen+0x58/0x70
+ kasan_report+0x143/0x180
+ ? strlen+0x58/0x70
+ strlen+0x58/0x70
+ kstrdup+0x20/0x80
+ led_tg_check+0x18b/0x3c0
+ xt_check_target+0x3bb/0xa40
+ ? __pfx_xt_check_target+0x10/0x10
+ ? stack_depot_save_flags+0x6e4/0x830
+ ? nft_target_init+0x174/0xc30
+ nft_target_init+0x82d/0xc30
+ ? __pfx_nft_target_init+0x10/0x10
+ ? nf_tables_newrule+0x1609/0x2980
+ ? nf_tables_newrule+0x1609/0x2980
+ ? rcu_is_watching+0x15/0xb0
+ ? nf_tables_newrule+0x1609/0x2980
+ ? nf_tables_newrule+0x1609/0x2980
+ ? __kmalloc_noprof+0x21a/0x400
+ nf_tables_newrule+0x1860/0x2980
+ ? __pfx_nf_tables_newrule+0x10/0x10
+ ? __nla_parse+0x40/0x60
+ nfnetlink_rcv+0x14e5/0x2ab0
+ ? __pfx_validate_chain+0x10/0x10
+ ? __pfx_nfnetlink_rcv+0x10/0x10
+ ? __lock_acquire+0x1384/0x2050
+ ? netlink_deliver_tap+0x2e/0x1b0
+ ? __pfx_lock_release+0x10/0x10
+ ? netlink_deliver_tap+0x2e/0x1b0
+ netlink_unicast+0x7f8/0x990
+ ? __pfx_netlink_unicast+0x10/0x10
+ ? __virt_addr_valid+0x183/0x530
+ ? __check_object_size+0x48e/0x900
+ netlink_sendmsg+0x8e4/0xcb0
+ ? __pfx_netlink_sendmsg+0x10/0x10
+ ? aa_sock_msg_perm+0x91/0x160
+ ? __pfx_netlink_sendmsg+0x10/0x10
+ __sock_sendmsg+0x223/0x270
+ ____sys_sendmsg+0x52a/0x7e0
+ ? __pfx_____sys_sendmsg+0x10/0x10
+ __sys_sendmsg+0x292/0x380
+ ? __pfx___sys_sendmsg+0x10/0x10
+ ? lockdep_hardirqs_on_prepare+0x43d/0x780
+ ? __pfx_lockdep_hardirqs_on_prepare+0x10/0x10
+ ? exc_page_fault+0x590/0x8c0
+ ? do_syscall_64+0xb6/0x230
+ do_syscall_64+0xf3/0x230
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+...
+ </TASK>
 
-At runtime, this either causes an oops when trying to load the ipvs
-module or a boot-time panic if ipvs is built-in. This same issue has
-been reported by the Intel kernel test robot previously.
+Since an invalid (without '\0' byte at all) byte sequence may be passed
+from userspace, add an extra check to ensure that such a sequence is
+rejected as possible ID and so never passed to 'kstrdup()' and further.
 
-Digging deeper into both LLVM and the kernel code reveals this to be a
-undefined behavior problem. ip_vs_protocol_init() uses a on-stack buffer
-of 64 chars to store the registered protocol names and leaves it
-uninitialized after definition. The function calls strnlen() when
-concatenating protocol names into the buffer. With CONFIG_FORTIFY_SOURCE
-strnlen() performs an extra step to check whether the last byte of the
-input char buffer is a null character (commit 3009f891bb9f ("fortify:
-Allow strlen() and strnlen() to pass compile-time known lengths")).
-This, together with possibly other configurations, cause the following
-IR to be generated:
-
-  define hidden i32 @ip_vs_protocol_init() local_unnamed_addr #5 section ".init.text" align 16 !kcfi_type !29 {
-    %1 = alloca [64 x i8], align 16
-    ...
-
-  14:                                               ; preds = %11
-    %15 = getelementptr inbounds i8, ptr %1, i64 63
-    %16 = load i8, ptr %15, align 1
-    %17 = tail call i1 @llvm.is.constant.i8(i8 %16)
-    %18 = icmp eq i8 %16, 0
-    %19 = select i1 %17, i1 %18, i1 false
-    br i1 %19, label %20, label %23
-
-  20:                                               ; preds = %14
-    %21 = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %1) #23
-    ...
-
-  23:                                               ; preds = %14, %11, %20
-    %24 = call i64 @strnlen(ptr noundef nonnull dereferenceable(1) %1, i64 noundef 64) #24
-    ...
-  }
-
-The above code calculates the address of the last char in the buffer
-(value %15) and then loads from it (value %16). Because the buffer is
-never initialized, the LLVM GVN pass marks value %16 as undefined:
-
-  %13 = getelementptr inbounds i8, ptr %1, i64 63
-  br i1 undef, label %14, label %17
-
-This gives later passes (SCCP, in particular) more DCE opportunities by
-propagating the undef value further, and eventually removes everything
-after the load on the uninitialized stack location:
-
-  define hidden i32 @ip_vs_protocol_init() local_unnamed_addr #0 section ".init.text" align 16 !kcfi_type !11 {
-    %1 = alloca [64 x i8], align 16
-    ...
-
-  12:                                               ; preds = %11
-    %13 = getelementptr inbounds i8, ptr %1, i64 63
-    unreachable
-  }
-
-In this way, the generated native code will just fall through to the
-next function, as LLVM does not generate any code for the unreachable IR
-instruction and leaves the function without a terminator.
-
-Zero the on-stack buffer to avoid this possible UB.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202402100205.PWXIz1ZK-lkp@intel.com/
-Co-developed-by: Ruowen Qin <ruqin@redhat.com>
-Signed-off-by: Ruowen Qin <ruqin@redhat.com>
-Signed-off-by: Jinghao Jia <jinghao7@illinois.edu>
-Acked-by: Julian Anastasov <ja@ssi.bg>
+Reported-by: syzbot+6c8215822f35fdb35667@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6c8215822f35fdb35667
+Fixes: 268cb38e1802 ("netfilter: x_tables: add LED trigger target")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipvs/ip_vs_proto.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/netfilter/xt_LED.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipvs/ip_vs_proto.c b/net/netfilter/ipvs/ip_vs_proto.c
-index f100da4ba3bc3..a9fd1d3fc2cbf 100644
---- a/net/netfilter/ipvs/ip_vs_proto.c
-+++ b/net/netfilter/ipvs/ip_vs_proto.c
-@@ -340,7 +340,7 @@ void __net_exit ip_vs_protocol_net_cleanup(struct netns_ipvs *ipvs)
+diff --git a/net/netfilter/xt_LED.c b/net/netfilter/xt_LED.c
+index 0371c387b0d1f..13a2b5820b34b 100644
+--- a/net/netfilter/xt_LED.c
++++ b/net/netfilter/xt_LED.c
+@@ -97,7 +97,9 @@ static int led_tg_check(const struct xt_tgchk_param *par)
+ 	struct xt_led_info_internal *ledinternal;
+ 	int err;
  
- int __init ip_vs_protocol_init(void)
- {
--	char protocols[64];
-+	char protocols[64] = { 0 };
- #define REGISTER_PROTOCOL(p)			\
- 	do {					\
- 		register_ip_vs_protocol(p);	\
-@@ -348,8 +348,6 @@ int __init ip_vs_protocol_init(void)
- 		strcat(protocols, (p)->name);	\
- 	} while (0)
+-	if (ledinfo->id[0] == '\0')
++	/* Bail out if empty string or not a string at all. */
++	if (ledinfo->id[0] == '\0' ||
++	    !memchr(ledinfo->id, '\0', sizeof(ledinfo->id)))
+ 		return -EINVAL;
  
--	protocols[0] = '\0';
--	protocols[2] = '\0';
- #ifdef CONFIG_IP_VS_PROTO_TCP
- 	REGISTER_PROTOCOL(&ip_vs_protocol_tcp);
- #endif
+ 	mutex_lock(&xt_led_mutex);
 -- 
 2.43.0
 
