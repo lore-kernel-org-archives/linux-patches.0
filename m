@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1D8223C62;
-	Thu, 12 Dec 2024 17:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62740223C74;
+	Thu, 12 Dec 2024 17:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023186; cv=none; b=iLLbylO43fkwdsMy60NZ97e/uBAUl2GGsdLinKTjIqyIdpS0KOp8yxV7j90siroLP9Q0C5xaAhDPcCLJ1okpwr80i+z6Q7UNLEGWEl/aGObTf9hGD0yH10TRnMmRWxK7IHjZQpyXshNwLd465iJecgahgLJHTOXZmAW2/YuMSEc=
+	t=1734023189; cv=none; b=WxOueaKOOm2ZsY7r31sNnUs5Vee4HnFAECiWCzUqrCanuLMbtNV3ihMnqcuQkJc+lmcMVk0zGY8X5ikyK6+Hu2PS1poAGclm5qroqhCRTrKklYExnhppaoWAYcFBquNB/4nr35QxXUcyOdVTfpcPlpQAQMnO0HOur+MMKjtdncs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023186; c=relaxed/simple;
-	bh=dvpEoRgyzf7S2ycV33ftTIGfMUBwSvxotGe7vcvZdNk=;
+	s=arc-20240116; t=1734023189; c=relaxed/simple;
+	bh=1IHX3kmRqW6MYEyV3tA3HMqZzs4HAs2LZDcsOK8vlQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=giTY/obUtMUVjQrhjNflDYXRu3wL/r6Ep8XXUPa1Da5hF50YFAPZ4wJbS+X9tFcTigWZYy6tSgXX5TDDkuRkcRXwOxbpAtId3Y8IGPEk/qIl5M32ysdxHVB8SRlaRYw/hnjDIFnsF3SFlI826tg3ky6BJ049Q4sse+XlYLFLNNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B82NnGfG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uRjpLS+DAXfZU3UGLtJkL8f+TSNwl2l6W9ueVemqz2wVqxUIKjOwYyymliQlA4YGPNqldUltpQ8nZHr4GtwZVG447iq/Fw4l8NCsBSaH7UihTL7tSUArJQ/9vDRlN34jXt9z5PIv5rW6GXMzRCY/R8b6KTvBYQ+solSdsp9li0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJgieU8N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B82NnGfG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AB1C4CED3;
-	Thu, 12 Dec 2024 17:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJgieU8N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FF5C4CED0;
+	Thu, 12 Dec 2024 17:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023186;
-	bh=dvpEoRgyzf7S2ycV33ftTIGfMUBwSvxotGe7vcvZdNk=;
+	s=korg; t=1734023189;
+	bh=1IHX3kmRqW6MYEyV3tA3HMqZzs4HAs2LZDcsOK8vlQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B82NnGfG+orGT2sfCCQQOxsd9q6j5MAYjudoUh4Pqd79U2Hrzrrip/Io7qWPecufo
-	 M78G/nnDspNxUf3XniYGjEWnsUn8GI/kc+zB8l4m4mhWISQOpVJyH4gBgJD3SgUAEh
-	 rvQSkxtmG2t4yeOI/UadzhFZD+lJkVcnG1dmhy5E=
+	b=mJgieU8N73jde+OM2VhtPi7jZ4nO+aLqsWjOMO9GlLCcTRpMynQh1VhG+E/iNgYzE
+	 ynJ4ZD4zZJEw2j4lgi7ZTqcCpis2k7feJBt6jA4mvnaS/HKHKDsWwRZho/bds5ayxk
+	 nq14ZRyZ0iNTgbY3iJ/xqcra8ZIHKX21uwXAltBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Phil Sutter <phil@nwl.cc>,
+	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 421/565] net: sched: fix erspan_opt settings in cls_flower
-Date: Thu, 12 Dec 2024 16:00:16 +0100
-Message-ID: <20241212144328.307053753@linuxfoundation.org>
+Subject: [PATCH 5.15 422/565] netfilter: ipset: Hold module reference while requesting a module
+Date: Thu, 12 Dec 2024 16:00:17 +0100
+Message-ID: <20241212144328.346501713@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,66 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit 292207809486d99c78068d3f459cbbbffde88415 ]
+[ Upstream commit 456f010bfaefde84d3390c755eedb1b0a5857c3c ]
 
-When matching erspan_opt in cls_flower, only the (version, dir, hwid)
-fields are relevant. However, in fl_set_erspan_opt() it initializes
-all bits of erspan_opt and its mask to 1. This inadvertently requires
-packets to match not only the (version, dir, hwid) fields but also the
-other fields that are unexpectedly set to 1.
+User space may unload ip_set.ko while it is itself requesting a set type
+backend module, leading to a kernel crash. The race condition may be
+provoked by inserting an mdelay() right after the nfnl_unlock() call.
 
-This patch resolves the issue by ensuring that only the (version, dir,
-hwid) fields are configured in fl_set_erspan_opt(), leaving the other
-fields to 0 in erspan_opt.
-
-Fixes: 79b1011cb33d ("net: sched: allow flower to match erspan options")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Cong Wang <cong.wang@bytedance.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: a7b4f989a629 ("netfilter: ipset: IP set core support")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flower.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/netfilter/ipset/ip_set_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/sched/cls_flower.c b/net/sched/cls_flower.c
-index bff0a5f24aca8..057612c97a372 100644
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -1224,7 +1224,6 @@ static int fl_set_erspan_opt(const struct nlattr *nla, struct fl_flow_key *key,
- 	int err;
+diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
+index f2f6b7325c706..72e5638206c0e 100644
+--- a/net/netfilter/ipset/ip_set_core.c
++++ b/net/netfilter/ipset/ip_set_core.c
+@@ -104,14 +104,19 @@ find_set_type(const char *name, u8 family, u8 revision)
+ static bool
+ load_settype(const char *name)
+ {
++	if (!try_module_get(THIS_MODULE))
++		return false;
++
+ 	nfnl_unlock(NFNL_SUBSYS_IPSET);
+ 	pr_debug("try to load ip_set_%s\n", name);
+ 	if (request_module("ip_set_%s", name) < 0) {
+ 		pr_warn("Can't find ip_set type %s\n", name);
+ 		nfnl_lock(NFNL_SUBSYS_IPSET);
++		module_put(THIS_MODULE);
+ 		return false;
+ 	}
+ 	nfnl_lock(NFNL_SUBSYS_IPSET);
++	module_put(THIS_MODULE);
+ 	return true;
+ }
  
- 	md = (struct erspan_metadata *)&key->enc_opts.data[key->enc_opts.len];
--	memset(md, 0xff, sizeof(*md));
- 	md->version = 1;
- 
- 	if (!depth)
-@@ -1253,9 +1252,9 @@ static int fl_set_erspan_opt(const struct nlattr *nla, struct fl_flow_key *key,
- 			NL_SET_ERR_MSG(extack, "Missing tunnel key erspan option index");
- 			return -EINVAL;
- 		}
-+		memset(&md->u.index, 0xff, sizeof(md->u.index));
- 		if (tb[TCA_FLOWER_KEY_ENC_OPT_ERSPAN_INDEX]) {
- 			nla = tb[TCA_FLOWER_KEY_ENC_OPT_ERSPAN_INDEX];
--			memset(&md->u, 0x00, sizeof(md->u));
- 			md->u.index = nla_get_be32(nla);
- 		}
- 	} else if (md->version == 2) {
-@@ -1264,10 +1263,12 @@ static int fl_set_erspan_opt(const struct nlattr *nla, struct fl_flow_key *key,
- 			NL_SET_ERR_MSG(extack, "Missing tunnel key erspan option dir or hwid");
- 			return -EINVAL;
- 		}
-+		md->u.md2.dir = 1;
- 		if (tb[TCA_FLOWER_KEY_ENC_OPT_ERSPAN_DIR]) {
- 			nla = tb[TCA_FLOWER_KEY_ENC_OPT_ERSPAN_DIR];
- 			md->u.md2.dir = nla_get_u8(nla);
- 		}
-+		set_hwid(&md->u.md2, 0xff);
- 		if (tb[TCA_FLOWER_KEY_ENC_OPT_ERSPAN_HWID]) {
- 			nla = tb[TCA_FLOWER_KEY_ENC_OPT_ERSPAN_HWID];
- 			set_hwid(&md->u.md2, nla_get_u8(nla));
 -- 
 2.43.0
 
