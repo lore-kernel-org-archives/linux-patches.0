@@ -1,59 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33140222D7F;
-	Thu, 12 Dec 2024 16:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D42211A34;
+	Thu, 12 Dec 2024 16:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020147; cv=none; b=Jax3NMsg/AR/aKn84jDE2LJOFaihPgv71cRD6IaGhyrgDLWNA5MJWEARuCKve3DKYPLGve626QglhfrrH1QyQR2vtLenYbOvhOTRI2qzntY3G/NrxLS0OSD0mjShusOWEucKIlF7/vo/BrlRpKX30x5G7shAR3/nufGHykih6jA=
+	t=1734020151; cv=none; b=LEvx58VoigOteExb7tKvMu7+7SMsgULmptvO79Eq5EXSb8Sj2vJ6+CtDNyP5YZ72wHXMQIp827DMLG4JGNpiUr3Tomy8Tz+Ifd2vKKHSWV7FsbV/TTHKX8d1M4zr4RiGLUEMvKQ6GEbmob3qo7OmjbY/Vq1k/AtRimIvwmuuA64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020147; c=relaxed/simple;
-	bh=iL9KFQwOL83ywQ4qE9O/HvmYj/sSamcPIC1u5zo4FLI=;
+	s=arc-20240116; t=1734020151; c=relaxed/simple;
+	bh=u70sL5l5/WE9bTbxsLZN8bQP0O+TYVg1OY6Wq9YVsFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2DElTSI3F+8FHD82MqArJpoLzwv4spdHnSeO+B7t6JgtQdnNYLGoHca56SAPfUGTD30b29zt+3+dTuf6qtdWopAksAxn79oP7+NtTuB4FQLU9TsZnMoJufLKIicMssQ98xcz2G04B7Uq6JdX+deWi5oFmOQeZv4wd2+vNaac+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8sdI4fv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nyiU3mTTDQvhVd3+HtYaUvFis6kfYWRooRVmh4wk/4RVx4QbnzpDV2WwfG1086cYbCH/5rrBoBESisUlKDr+A0uvPCZ4/zInQIr+S65N/6zDUNEdjS5feZ6hiPH67/Y2TWdSOYUcpsDKfC9+8Ufb7/xrvPxeKu++WzDZaoMgCV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kPwi4413; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8sdI4fv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64373C4CECE;
-	Thu, 12 Dec 2024 16:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kPwi4413"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933AAC4CECE;
+	Thu, 12 Dec 2024 16:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020147;
-	bh=iL9KFQwOL83ywQ4qE9O/HvmYj/sSamcPIC1u5zo4FLI=;
+	s=korg; t=1734020151;
+	bh=u70sL5l5/WE9bTbxsLZN8bQP0O+TYVg1OY6Wq9YVsFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8sdI4fvdEf3NMSmhtk0uW4h6Hj32ELp0JBGG7ptS/psN2SQGcd/gs8x8Cu0/HwIo
-	 eUe1brh2N6BuHFHQE2VlM+IYmixiCP+/Rzh7/S9UyHinFxTOtQjgXj2FRFA2kcU/iM
-	 DMSOvNm69N5//xhJVDu+xl/EGGGAa1R3N42m2+hw=
+	b=kPwi44131HEi0SjOct3M5mDEDw0AnYi2khl/eaUEux1vzZYJETkNpiial5kG9tXwI
+	 LUwKsTkq3KOtKHXBpmmz18WTJPR3VYzUnkx8U+Ezhc4MGLCMLZ7KPWZ2O4/9gdccuR
+	 P6ZEge/CaRoMzbUPlTBMpzzh7HFvd1PsD46yUz50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Alasdair Kergon <agk@redhat.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <joro@8bytes.org>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Mike Snitzer <snitzer@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 359/772] dma: allow dma_get_cache_alignment() to be overridden by the arch code
-Date: Thu, 12 Dec 2024 15:55:04 +0100
-Message-ID: <20241212144404.751067955@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 360/772] ASoC: Intel: sst: Fix used of uninitialized ctx to log an error
+Date: Thu, 12 Dec 2024 15:55:05 +0100
+Message-ID: <20241212144404.790917603@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -72,63 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 8c57da28dc3df4e091474a004b5596c9b88a3be0 upstream.
+commit c1895ba181e560144601fafe46aeedbafdf4dbc4 upstream.
 
-On arm64, ARCH_DMA_MINALIGN is larger than most cache line size
-configurations deployed.  Allow an architecture to override
-dma_get_cache_alignment() in order to return a run-time probed value (e.g.
-cache_line_size()).
+Fix the new "LPE0F28" code path using the uninitialized ctx variable
+to log an error.
 
-Link: https://lkml.kernel.org/r/20230612153201.554742-3-catalin.marinas@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Alasdair Kergon <agk@redhat.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Cc: Jerry Snitselaar <jsnitsel@redhat.com>
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Jonathan Cameron <jic23@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Logan Gunthorpe <logang@deltatee.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Mike Snitzer <snitzer@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Guenter Roeck <linux@roeck-us.net>
+Fixes: 6668610b4d8c ("ASoC: Intel: sst: Support LPE0F28 ACPI HID")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202410261106.EBx49ssy-lkp@intel.com/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241026143615.171821-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/dma-mapping.h |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/intel/atom/sst/sst_acpi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/dma-mapping.h
-+++ b/include/linux/dma-mapping.h
-@@ -544,6 +544,7 @@ static inline int dma_set_min_align_mask
- 	return 0;
- }
- 
-+#ifndef dma_get_cache_alignment
- static inline int dma_get_cache_alignment(void)
- {
- #ifdef ARCH_HAS_DMA_MINALIGN
-@@ -551,6 +552,7 @@ static inline int dma_get_cache_alignmen
- #endif
- 	return 1;
- }
-+#endif
- 
- static inline void *dmam_alloc_coherent(struct device *dev, size_t size,
- 		dma_addr_t *dma_handle, gfp_t gfp)
+--- a/sound/soc/intel/atom/sst/sst_acpi.c
++++ b/sound/soc/intel/atom/sst/sst_acpi.c
+@@ -309,7 +309,7 @@ static int sst_acpi_probe(struct platfor
+ 		rsrc = platform_get_resource(pdev, IORESOURCE_MEM,
+ 					     pdata->res_info->acpi_lpe_res_index);
+ 		if (!rsrc) {
+-			dev_err(ctx->dev, "Invalid SHIM base\n");
++			dev_err(dev, "Invalid SHIM base\n");
+ 			return -EIO;
+ 		}
+ 		rsrc->start -= pdata->res_info->shim_offset;
 
 
