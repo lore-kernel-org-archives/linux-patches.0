@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A6B6F2FE;
-	Thu, 12 Dec 2024 16:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659FA2288CB;
+	Thu, 12 Dec 2024 16:43:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021798; cv=none; b=OhGAKWwguhH0Z5fD/JWUqCLSpV2fBPQOXvwENlSUIXVFWUbaMHba99c7VS9cHUo+wvB7NDQSSsc/gvJ/eioU6curCvx8RJyogBERauMMNd3rTgR8T8kgo3pMX7ESRyeirLTEi1pdHr8E7vI7/dvLZjJM4RuSfULc9WaKKBCUS78=
+	t=1734021801; cv=none; b=NJ5SOfQFfiNLK7wzFrN07J+Qi5RNX+LezYT+VirxOYgXrknodChahgg0btPTBikMY2gef2C2AgijVGFv6y7w1EvCmMe35gDfSrzSjRaYkHRhAcuocpSc+3JrWfxputzvXUqXUZXjGF4lQMjIq4/yNDfuweUdhSLWA1yb8FlUmVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021798; c=relaxed/simple;
-	bh=moC7ggwc4ImsNdG8gaSoTuPRngs4E8AHHzzHdQE0Os0=;
+	s=arc-20240116; t=1734021801; c=relaxed/simple;
+	bh=YQsekKBikgQqdRN5Xl6OnXDE0GNvltAAad3gtwOtT5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gC27ZKWhg5pbZSkY2oKkgHec28WhiRNyqulNrQrUAv19tCHd76LTvoQa+uoKT8EWy3hyxCjLj3fzjIInVUiSvZB5KOU6c+otCT4hoLGpx3td7d2SZLtoY1wEoNxNQtULUr0xiDg6qI8TE/1k2oKnG5bijRAeOenluUV3WQXFRmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eU/S5+U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4STnzRydq7arbnf4EYey9AqGIEf9BK7kkMc92ptBNvUwGCV1scegbEzIL4/z53L3WOgdADRqMVifT2i1/A6uKpaAbVF5DYtAg7k9JuEFkAT+O/KqVEwAlnPfooSIJ5q8MTHo4w6i0qhFVuJabl4FSCBIpbC3X/LaVawH/08ypM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0THrzejx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eU/S5+U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F0CC4CED3;
-	Thu, 12 Dec 2024 16:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0THrzejx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D264BC4CECE;
+	Thu, 12 Dec 2024 16:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021797;
-	bh=moC7ggwc4ImsNdG8gaSoTuPRngs4E8AHHzzHdQE0Os0=;
+	s=korg; t=1734021801;
+	bh=YQsekKBikgQqdRN5Xl6OnXDE0GNvltAAad3gtwOtT5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2eU/S5+USkX3go6CCEnHBVdUVatClxcJ2MPI7Nlidn/kFouF8Qvb66dwV+5U46p7g
-	 YReQDdAHQ8iMdPcL4q/dXvHntcNwg05+uTL4uW2DO+0UTHxZgymFgGmdyNtStPKfvJ
-	 TIXcJKVynxOg8fJLbtBxQZ2PZ8rTBpg30+TDknmg=
+	b=0THrzejx7j+CMe8KY3bCK11RLLIEdu4m7ziJvgnPj5aHBbRBjNFhC0PHk8IrtmK1H
+	 crpB9AcIccYTVLGl1eVehtsAs+NIM/Os74gKKFmiuwOIcSwgn6mDaSKG/h/OkE32Dj
+	 vntevdRlvTa1kY2Op3GHeNl0lEBLDSaAqqSy8U6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luo Yifan <luoyifan@cmss.chinamobile.com>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/565] ASoC: stm: Prevent potential division by zero in stm32_sai_mclk_round_rate()
-Date: Thu, 12 Dec 2024 15:54:21 +0100
-Message-ID: <20241212144314.102994564@linuxfoundation.org>
+Subject: [PATCH 5.15 067/565] ASoC: stm: Prevent potential division by zero in stm32_sai_get_clk_div()
+Date: Thu, 12 Dec 2024 15:54:22 +0100
+Message-ID: <20241212144314.141789249@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,35 +54,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Luo Yifan <luoyifan@cmss.chinamobile.com>
 
-[ Upstream commit 63c1c87993e0e5bb11bced3d8224446a2bc62338 ]
+[ Upstream commit 23569c8b314925bdb70dd1a7b63cfe6100868315 ]
 
 This patch checks if div is less than or equal to zero (div <= 0). If
 div is zero or negative, the function returns -EINVAL, ensuring the
-division operation (*prate / div) is safe to perform.
+division operation is safe to perform.
 
 Signed-off-by: Luo Yifan <luoyifan@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20241106014654.206860-1-luoyifan@cmss.chinamobile.com
+Reviewed-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://patch.msgid.link/20241107015936.211902-1-luoyifan@cmss.chinamobile.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_sai_sub.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/stm/stm32_sai_sub.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/stm/stm32_sai_sub.c b/sound/soc/stm/stm32_sai_sub.c
-index 9c3b8e2096565..aa9cdd93b5778 100644
+index aa9cdd93b5778..d71b4aecd269f 100644
 --- a/sound/soc/stm/stm32_sai_sub.c
 +++ b/sound/soc/stm/stm32_sai_sub.c
-@@ -380,8 +380,8 @@ static long stm32_sai_mclk_round_rate(struct clk_hw *hw, unsigned long rate,
+@@ -319,7 +319,7 @@ static int stm32_sai_get_clk_div(struct stm32_sai_sub_data *sai,
  	int div;
  
- 	div = stm32_sai_get_clk_div(sai, *prate, rate);
--	if (div < 0)
--		return div;
-+	if (div <= 0)
-+		return -EINVAL;
- 
- 	mclk->freq = *prate / div;
- 
+ 	div = DIV_ROUND_CLOSEST(input_rate, output_rate);
+-	if (div > SAI_XCR1_MCKDIV_MAX(version)) {
++	if (div > SAI_XCR1_MCKDIV_MAX(version) || div <= 0) {
+ 		dev_err(&sai->pdev->dev, "Divider %d out of range\n", div);
+ 		return -EINVAL;
+ 	}
 -- 
 2.43.0
 
