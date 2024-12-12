@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB85F6F2FE;
-	Thu, 12 Dec 2024 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C2C6F2FE;
+	Thu, 12 Dec 2024 15:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017846; cv=none; b=kR0GpA0fcFQ4K6LPCt+8kLJ1fFJjD1S7dBu8ZJ7dqAcvVR3oSVr/rKFdQUJVtBpE20h24tmcvGcDA8f5odw0EsOuFtUtU7PUazVc4/hCtw8YVTOmQQGQHoz9UNYcESisp6e0ksSrWVIoa32Mic/Aaen+0zG35yXZhUzdqGKj5eE=
+	t=1734017850; cv=none; b=pND8nayPxuqiX/W/imBjtmVMtCTu78/XIVKDJdSgqfNatngDiLNwQbjPxBfLxmi7XP6CImHyKiBokjQnpAoQMk3pQwTsT3Yy0nL0HHIVes2zGg7+ulDLf0d1MN3RZVuLWy7k96nGUJv2ZGE157H7tz0yhmtoWid/okFRFlpDhcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017846; c=relaxed/simple;
-	bh=3NPt5VFD3IA9+R/ziypU+D9BWnkg++o7HLjibRczAcA=;
+	s=arc-20240116; t=1734017850; c=relaxed/simple;
+	bh=xVN9IJ7uIdT/29KFG1B4sygXXIgPBPDyXQoa/4L2kH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fKGgGSjXPS+WEeGA5JEdfaY9NWZ3sA1RxOS73oNoQWmR4CtlcDGGMrv+NbxTjZrq4YyGxZZViCdo4/1tlnANXHriuaeaOdlizVIpnUW16LMqTp2QHQFnwzjgJRjKbvrkDPNqIfwkFq3ynbDZjKjdeMNIkQINeBxuCemLg4rTtTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+qCqkdq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aIY4LDnfNs+q1SxXrCu6STAf8ox6LYflQe4oUqjIYEnCw9SLuyR2iSaLFwCVK15e4ej2+xeT2vb6hwyX3oukMs1EJLax1hT5f40yjkPLaMpk8pd0epKuz0G7PN94sHfXLXjLj9swul2+ObtM3UlExLKv8hjOj+FBGq/hTXgI3AE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gg52GIZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+qCqkdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF9CC4CECE;
-	Thu, 12 Dec 2024 15:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gg52GIZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636A9C4CECE;
+	Thu, 12 Dec 2024 15:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017846;
-	bh=3NPt5VFD3IA9+R/ziypU+D9BWnkg++o7HLjibRczAcA=;
+	s=korg; t=1734017849;
+	bh=xVN9IJ7uIdT/29KFG1B4sygXXIgPBPDyXQoa/4L2kH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+qCqkdqXC32OaYVrC4QuhihZsMZFfjVwdxG2rQrU5b+HRYTNooQvh10C9UW+I6Yx
-	 ckWIU5kJg0JSN+X1jz1nHS5fq+fdgXRexGlM+5gYtMois0bvo+jrjx7+MsqUf8u52a
-	 2au1PM2Y0jL1CmPntbRpNaeu2wQTw0eg1y9NfJbk=
+	b=Gg52GIZGuBfHbl8Xgu+xIZoZyegjKb68XxFv1uVMhOIy6WojF/PktZIyoBthlJSq7
+	 kGkQlS0kryCcDMDKsK9BypNcr1iAG9kNFxsI4zN4+81POsC+LgrPHGO82mSvPrywGU
+	 6G7cefQGBgJMEfhkAKzkGhld2AD1Lr48MY/c5olc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piergiorgio Sartor <piergiorgio.sartor@nexgo.de>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/356] f2fs: fix to drop all discards after creating snapshot on lvm device
-Date: Thu, 12 Dec 2024 15:56:56 +0100
-Message-ID: <20241212144248.448477184@linuxfoundation.org>
+Subject: [PATCH 6.6 098/356] i3c: master: add enable(disable) hot join in sys entry
+Date: Thu, 12 Dec 2024 15:56:57 +0100
+Message-ID: <20241212144248.490683506@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,101 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit bc8aeb04fd80cb8cfae3058445c84410fd0beb5e ]
+[ Upstream commit 317bacf960a4879af22d12175f47d284930b3273 ]
 
-Piergiorgio reported a bug in bugzilla as below:
+Add hotjoin entry in sys file system allow user enable/disable hotjoin
+feature.
 
-------------[ cut here ]------------
-WARNING: CPU: 2 PID: 969 at fs/f2fs/segment.c:1330
-RIP: 0010:__submit_discard_cmd+0x27d/0x400 [f2fs]
-Call Trace:
- __issue_discard_cmd+0x1ca/0x350 [f2fs]
- issue_discard_thread+0x191/0x480 [f2fs]
- kthread+0xcf/0x100
- ret_from_fork+0x31/0x50
- ret_from_fork_asm+0x1a/0x30
+Add (*enable(disable)_hotjoin)() to i3c_master_controller_ops.
+Add api i3c_master_enable(disable)_hotjoin();
 
-w/ below testcase, it can reproduce this bug quickly:
-- pvcreate /dev/vdb
-- vgcreate myvg1 /dev/vdb
-- lvcreate -L 1024m -n mylv1 myvg1
-- mount /dev/myvg1/mylv1 /mnt/f2fs
-- dd if=/dev/zero of=/mnt/f2fs/file bs=1M count=20
-- sync
-- rm /mnt/f2fs/file
-- sync
-- lvcreate -L 1024m -s -n mylv1-snapshot /dev/myvg1/mylv1
-- umount /mnt/f2fs
-
-The root cause is: it will update discard_max_bytes of mounted lvm
-device to zero after creating snapshot on this lvm device, then,
-__submit_discard_cmd() will pass parameter @nr_sects w/ zero value
-to __blkdev_issue_discard(), it returns a NULL bio pointer, result
-in panic.
-
-This patch changes as below for fixing:
-1. Let's drop all remained discards in f2fs_unfreeze() if snapshot
-of lvm device is created.
-2. Checking discard_max_bytes before submitting discard during
-__submit_discard_cmd().
-
-Cc: stable@vger.kernel.org
-Fixes: 35ec7d574884 ("f2fs: split discard command in prior to block layer")
-Reported-by: Piergiorgio Sartor <piergiorgio.sartor@nexgo.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219484
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20231201222532.2431484-2-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 25bc99be5fe5 ("i3c: master: svc: Modify enabled_events bit 7:0 to act as IBI enable counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c |  9 +++++++++
- fs/f2fs/super.c   | 12 ++++++++++++
- 2 files changed, 21 insertions(+)
+ drivers/i3c/master.c       | 83 ++++++++++++++++++++++++++++++++++++++
+ include/linux/i3c/master.h |  5 +++
+ 2 files changed, 88 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 670104628ddbe..156d92b945258 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1282,6 +1282,15 @@ static int __submit_discard_cmd(struct f2fs_sb_info *sbi,
- 	}
- #endif
- 
-+	/*
-+	 * stop issuing discard for any of below cases:
-+	 * 1. device is conventional zone, but it doesn't support discard.
-+	 * 2. device is regulare device, after snapshot it doesn't support
-+	 * discard.
-+	 */
-+	if (!bdev_max_discard_sectors(bdev))
-+		return -EOPNOTSUPP;
-+
- 	trace_f2fs_issue_discard(bdev, dc->di.start, dc->di.len);
- 
- 	lstart = dc->di.lstart;
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index f05d0e43db9e2..b72fa103b9632 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1735,6 +1735,18 @@ static int f2fs_freeze(struct super_block *sb)
- 
- static int f2fs_unfreeze(struct super_block *sb)
- {
-+	struct f2fs_sb_info *sbi = F2FS_SB(sb);
-+
-+	/*
-+	 * It will update discard_max_bytes of mounted lvm device to zero
-+	 * after creating snapshot on this lvm device, let's drop all
-+	 * remained discards.
-+	 * We don't need to disable real-time discard because discard_max_bytes
-+	 * will recover after removal of snapshot.
-+	 */
-+	if (test_opt(sbi, DISCARD) && !f2fs_hw_support_discard(sbi))
-+		f2fs_issue_discard_timeout(sbi);
-+
- 	clear_sbi_flag(F2FS_SB(sb), SBI_IS_FREEZING);
- 	return 0;
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index 70d120dfb0908..bbd5dc89be229 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -526,6 +526,88 @@ static ssize_t i2c_scl_frequency_show(struct device *dev,
  }
+ static DEVICE_ATTR_RO(i2c_scl_frequency);
+ 
++static int i3c_set_hotjoin(struct i3c_master_controller *master, bool enable)
++{
++	int ret;
++
++	if (!master || !master->ops)
++		return -EINVAL;
++
++	if (!master->ops->enable_hotjoin || !master->ops->disable_hotjoin)
++		return -EINVAL;
++
++	i3c_bus_normaluse_lock(&master->bus);
++
++	if (enable)
++		ret = master->ops->enable_hotjoin(master);
++	else
++		ret = master->ops->disable_hotjoin(master);
++
++	master->hotjoin = enable;
++
++	i3c_bus_normaluse_unlock(&master->bus);
++
++	return ret;
++}
++
++static ssize_t hotjoin_store(struct device *dev, struct device_attribute *attr,
++			     const char *buf, size_t count)
++{
++	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
++	int ret;
++	bool res;
++
++	if (!i3cbus->cur_master)
++		return -EINVAL;
++
++	if (kstrtobool(buf, &res))
++		return -EINVAL;
++
++	ret = i3c_set_hotjoin(i3cbus->cur_master->common.master, res);
++	if (ret)
++		return ret;
++
++	return count;
++}
++
++/*
++ * i3c_master_enable_hotjoin - Enable hotjoin
++ * @master: I3C master object
++ *
++ * Return: a 0 in case of success, an negative error code otherwise.
++ */
++int i3c_master_enable_hotjoin(struct i3c_master_controller *master)
++{
++	return i3c_set_hotjoin(master, true);
++}
++EXPORT_SYMBOL_GPL(i3c_master_enable_hotjoin);
++
++/*
++ * i3c_master_disable_hotjoin - Disable hotjoin
++ * @master: I3C master object
++ *
++ * Return: a 0 in case of success, an negative error code otherwise.
++ */
++int i3c_master_disable_hotjoin(struct i3c_master_controller *master)
++{
++	return i3c_set_hotjoin(master, false);
++}
++EXPORT_SYMBOL_GPL(i3c_master_disable_hotjoin);
++
++static ssize_t hotjoin_show(struct device *dev, struct device_attribute *da, char *buf)
++{
++	struct i3c_bus *i3cbus = dev_to_i3cbus(dev);
++	ssize_t ret;
++
++	i3c_bus_normaluse_lock(i3cbus);
++	ret = sysfs_emit(buf, "%d\n", i3cbus->cur_master->common.master->hotjoin);
++	i3c_bus_normaluse_unlock(i3cbus);
++
++	return ret;
++}
++
++static DEVICE_ATTR_RW(hotjoin);
++
+ static struct attribute *i3c_masterdev_attrs[] = {
+ 	&dev_attr_mode.attr,
+ 	&dev_attr_current_master.attr,
+@@ -536,6 +618,7 @@ static struct attribute *i3c_masterdev_attrs[] = {
+ 	&dev_attr_pid.attr,
+ 	&dev_attr_dynamic_address.attr,
+ 	&dev_attr_hdrcap.attr,
++	&dev_attr_hotjoin.attr,
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(i3c_masterdev);
+diff --git a/include/linux/i3c/master.h b/include/linux/i3c/master.h
+index 0b52da4f23467..65b8965968af2 100644
+--- a/include/linux/i3c/master.h
++++ b/include/linux/i3c/master.h
+@@ -452,6 +452,8 @@ struct i3c_master_controller_ops {
+ 	int (*disable_ibi)(struct i3c_dev_desc *dev);
+ 	void (*recycle_ibi_slot)(struct i3c_dev_desc *dev,
+ 				 struct i3c_ibi_slot *slot);
++	int (*enable_hotjoin)(struct i3c_master_controller *master);
++	int (*disable_hotjoin)(struct i3c_master_controller *master);
+ };
+ 
+ /**
+@@ -487,6 +489,7 @@ struct i3c_master_controller {
+ 	const struct i3c_master_controller_ops *ops;
+ 	unsigned int secondary : 1;
+ 	unsigned int init_done : 1;
++	unsigned int hotjoin: 1;
+ 	struct {
+ 		struct list_head i3c;
+ 		struct list_head i2c;
+@@ -543,6 +546,8 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 			const struct i3c_master_controller_ops *ops,
+ 			bool secondary);
+ void i3c_master_unregister(struct i3c_master_controller *master);
++int i3c_master_enable_hotjoin(struct i3c_master_controller *master);
++int i3c_master_disable_hotjoin(struct i3c_master_controller *master);
+ 
+ /**
+  * i3c_dev_get_master_data() - get master private data attached to an I3C
 -- 
 2.43.0
 
