@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81668222D72;
-	Thu, 12 Dec 2024 16:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93216223E81;
+	Thu, 12 Dec 2024 16:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019677; cv=none; b=WjYIqq/avPO6DG+PS2gMScpBBzUEDEXsDrG+fkfYRNRlYMNbLWUZEXpH47Qr1PqPi//hUprFEgA4dW0hY4cXQj7MQHW4N+kv4pTi9X8tOX+2JR8qJI2JngRYeCVuEQv6GWfqUnRwoXmH3aF35fxl+nThh6EQ5yzqD+hnGduaQ64=
+	t=1734019681; cv=none; b=nQbSre1wfQxf4OK3G6wt8Ko9+sgOED4QKV6PWJGVzaOW9wZA1QoeqmBtZpYmBwTo/u8XLoYoUgfsT05Bi/+/vdDfHPYqm4yVtRNKpGt8t8Y92zTldfeySOLBepXsJqf/y2UqHEzgSJc7x360wJopY+WK9IkrdAlLpZxTaJa/BB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019677; c=relaxed/simple;
-	bh=GEiYqv+ctHq3IrLCWI/vC80++wSVgfirMBMta0C22dA=;
+	s=arc-20240116; t=1734019681; c=relaxed/simple;
+	bh=PUj7ddEPQ4brmZvcnHwucz10oOBAZ+3Nb7ycdmqJCRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BdvFO6uNq4d7QUuuGctuXPNugkxNe+66Oxq9OyCa66WY6q8OEAYE5BkTIKZqnS4ALBeT4Ubbs8yP0T/Ag0thOoxTga2OitNwvLLFtK6pGnMyAxCXTfy8gJnNyp9ryPg15GKnqXg8JYnAbpcu4gRgZnQ0rKwMqY87lSNAvaTft6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8376EK6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pSYBVoxYHvzd0vptCfYltPtVsWN1s5eOegUDXjZM+1mIoimOtyVeOYkDIYYVttTCmqNBEIUtuiD9m4W/Su38thXrhvRtsqG9K35HzTs01cK5qwCvM8dpDLd8pxKOGhduiOkYQoZBmx+CO2s2tn7Kp0a2FEU+GlyPqrvD6ca7rx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1o1K0VGC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8376EK6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000F6C4CECE;
-	Thu, 12 Dec 2024 16:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1o1K0VGC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1047C4CECE;
+	Thu, 12 Dec 2024 16:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019677;
-	bh=GEiYqv+ctHq3IrLCWI/vC80++wSVgfirMBMta0C22dA=;
+	s=korg; t=1734019681;
+	bh=PUj7ddEPQ4brmZvcnHwucz10oOBAZ+3Nb7ycdmqJCRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s8376EK6bd/aK8pyU1vU0CGw4w5Iwg1m55BK2h67+CaWjmnROhQPj9/agUMk2ZcAR
-	 cJEy89kT+CsXL3wqEcoZ8mR/ZnBfU6eKDwC7mHegz/D+jqOk+pp0+HYtscjsrvVZBH
-	 QKKmjgdzZZdFWhgquuzYwKDg0T4/FWcvrqsnrSso=
+	b=1o1K0VGCvmozNgF4b6SDEy3qNxVZCUvTIXmoz+juiTeU5jPCY+w0JBQYa8Yy07t4d
+	 dShd18wcQFHe4rzoRrE8jYru7PdJiMkP7M7olcEIZkRHc4i8lSjxLlJAwM+zSCs8tB
+	 iU12tzmw+bSMOtIDFBYvQWpDvMHo/Io6RztUxNMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Gabriele Monaco <gmonaco@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/772] PCI: cpqphp: Fix PCIBIOS_* return value confusion
-Date: Thu, 12 Dec 2024 15:53:35 +0100
-Message-ID: <20241212144401.073070416@linuxfoundation.org>
+Subject: [PATCH 6.1 271/772] perf ftrace latency: Fix unit on histogram first entry when using --use-nsec
+Date: Thu, 12 Dec 2024 15:53:36 +0100
+Message-ID: <20241212144401.113346501@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,87 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
 
-[ Upstream commit e2226dbc4a4919d9c8bd9293299b532090bdf020 ]
+[ Upstream commit 064d569e20e82c065b1dec9d20c29c7087bb1a00 ]
 
-Code in and related to PCI_RefinedAccessConfig() has three types of return
-type confusion:
+The use_nsec arg wasn't being taken into account when printing the first
+histogram entry, fix it:
 
- - PCI_RefinedAccessConfig() tests pci_bus_read_config_dword() return value
-   against -1.
+  root@number:~# perf ftrace latency --use-nsec -T switch_mm_irqs_off -a sleep 2
+  #   DURATION     |      COUNT | GRAPH                                          |
+       0 - 1    us |          0 |                                                |
+       1 - 2    ns |          0 |                                                |
+       2 - 4    ns |          0 |                                                |
+       4 - 8    ns |          0 |                                                |
+       8 - 16   ns |          0 |                                                |
+      16 - 32   ns |          0 |                                                |
+      32 - 64   ns |        125 |                                                |
+      64 - 128  ns |        335 |                                                |
+     128 - 256  ns |       2155 | ####                                           |
+     256 - 512  ns |       9996 | ###################                            |
+     512 - 1024 ns |       4958 | #########                                      |
+       1 - 2    us |       4636 | #########                                      |
+       2 - 4    us |       1053 | ##                                             |
+       4 - 8    us |         15 |                                                |
+       8 - 16   us |          1 |                                                |
+      16 - 32   us |          0 |                                                |
+      32 - 64   us |          0 |                                                |
+      64 - 128  us |          0 |                                                |
+     128 - 256  us |          0 |                                                |
+     256 - 512  us |          0 |                                                |
+     512 - 1024 us |          0 |                                                |
+       1 - ...  ms |          0 |                                                |
+  root@number:~#
 
- - PCI_RefinedAccessConfig() returns both -1 and PCIBIOS_* return codes.
+After:
 
- - Callers of PCI_RefinedAccessConfig() only test for -1.
+  root@number:~# perf ftrace latency --use-nsec -T switch_mm_irqs_off -a sleep 2
+  #   DURATION     |      COUNT | GRAPH                                          |
+       0 - 1    ns |          0 |                                                |
+       1 - 2    ns |          0 |                                                |
+       2 - 4    ns |          0 |                                                |
+       4 - 8    ns |          0 |                                                |
+       8 - 16   ns |          0 |                                                |
+      16 - 32   ns |          0 |                                                |
+      32 - 64   ns |         19 |                                                |
+      64 - 128  ns |         94 |                                                |
+     128 - 256  ns |       2191 | ####                                           |
+     256 - 512  ns |       9719 | ####################                           |
+     512 - 1024 ns |       5330 | ###########                                    |
+       1 - 2    us |       4104 | ########                                       |
+       2 - 4    us |        807 | #                                              |
+       4 - 8    us |          9 |                                                |
+       8 - 16   us |          0 |                                                |
+      16 - 32   us |          0 |                                                |
+      32 - 64   us |          0 |                                                |
+      64 - 128  us |          0 |                                                |
+     128 - 256  us |          0 |                                                |
+     256 - 512  us |          0 |                                                |
+     512 - 1024 us |          0 |                                                |
+       1 - ...  ms |          0 |                                                |
+  root@number:~#
 
-Make PCI_RefinedAccessConfig() return PCIBIOS_* codes consistently and
-adapt callers accordingly.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20241022091140.3504-2-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: 84005bb6148618cc ("perf ftrace latency: Add -n/--use-nsec option")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Gabriele Monaco <gmonaco@redhat.com>
+Link: https://lore.kernel.org/r/ZyE3frB-hMXHCnMO@x1
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/hotplug/cpqphp_pci.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ tools/perf/builtin-ftrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/hotplug/cpqphp_pci.c b/drivers/pci/hotplug/cpqphp_pci.c
-index ae95307e6ece3..a35af42d6a3d8 100644
---- a/drivers/pci/hotplug/cpqphp_pci.c
-+++ b/drivers/pci/hotplug/cpqphp_pci.c
-@@ -135,11 +135,13 @@ int cpqhp_unconfigure_device(struct pci_func *func)
- static int PCI_RefinedAccessConfig(struct pci_bus *bus, unsigned int devfn, u8 offset, u32 *value)
- {
- 	u32 vendID = 0;
-+	int ret;
+diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
+index 1d40f9bcb63bc..86597f6119003 100644
+--- a/tools/perf/builtin-ftrace.c
++++ b/tools/perf/builtin-ftrace.c
+@@ -769,7 +769,7 @@ static void display_histogram(int buckets[], bool use_nsec)
  
--	if (pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID) == -1)
--		return -1;
-+	ret = pci_bus_read_config_dword(bus, devfn, PCI_VENDOR_ID, &vendID);
-+	if (ret != PCIBIOS_SUCCESSFUL)
-+		return PCIBIOS_DEVICE_NOT_FOUND;
- 	if (PCI_POSSIBLE_ERROR(vendID))
--		return -1;
-+		return PCIBIOS_DEVICE_NOT_FOUND;
- 	return pci_bus_read_config_dword(bus, devfn, offset, value);
- }
+ 	bar_len = buckets[0] * bar_total / total;
+ 	printf("  %4d - %-4d %s | %10d | %.*s%*s |\n",
+-	       0, 1, "us", buckets[0], bar_len, bar, bar_total - bar_len, "");
++	       0, 1, use_nsec ? "ns" : "us", buckets[0], bar_len, bar, bar_total - bar_len, "");
  
-@@ -202,13 +204,15 @@ static int PCI_ScanBusForNonBridge(struct controller *ctrl, u8 bus_num, u8 *dev_
- {
- 	u16 tdevice;
- 	u32 work;
-+	int ret;
- 	u8 tbus;
- 
- 	ctrl->pci_bus->number = bus_num;
- 
- 	for (tdevice = 0; tdevice < 0xFF; tdevice++) {
- 		/* Scan for access first */
--		if (PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work) == -1)
-+		ret = PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work);
-+		if (ret)
- 			continue;
- 		dbg("Looking for nonbridge bus_num %d dev_num %d\n", bus_num, tdevice);
- 		/* Yep we got one. Not a bridge ? */
-@@ -220,7 +224,8 @@ static int PCI_ScanBusForNonBridge(struct controller *ctrl, u8 bus_num, u8 *dev_
- 	}
- 	for (tdevice = 0; tdevice < 0xFF; tdevice++) {
- 		/* Scan for access first */
--		if (PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work) == -1)
-+		ret = PCI_RefinedAccessConfig(ctrl->pci_bus, tdevice, 0x08, &work);
-+		if (ret)
- 			continue;
- 		dbg("Looking for bridge bus_num %d dev_num %d\n", bus_num, tdevice);
- 		/* Yep we got one. bridge ? */
+ 	for (i = 1; i < NUM_BUCKET - 1; i++) {
+ 		int start = (1 << (i - 1));
 -- 
 2.43.0
 
