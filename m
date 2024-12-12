@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A415217F48;
-	Thu, 12 Dec 2024 15:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8B62185A0;
+	Thu, 12 Dec 2024 15:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017829; cv=none; b=QTRpbIkPqO73fH6BQOmfntTHsXaru9c/Gvn3cOb6H2tZKaQttGLU2oNkr/XyXM/4LS3loQj457GakrMAVqnM4wLIAZrtCVM/ZwLGTdiojaL7RRvjj07Z27Qfml7YFfVjiLXNlFWCVYSOkIYXbR/7oJc7USjV8ElXlGxJ6Yf6RF4=
+	t=1734017832; cv=none; b=s0wXFOUtkrDxwOhZtikrbGJqOKBVA5nLR/CBLT1/Z6rNPsKW6ICGqD9ClUmHe3dtvLB8qRyPrh8M481KozOGvszI8xgoJibWiKJQnNRDi1xhygAnGS7rTyWfEpuIs1cj7B0NubNKNE5qMQ9nl9TK24Iw1FivABO6ymlfJAsVURI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017829; c=relaxed/simple;
-	bh=opKDVIxjUHZxlesfnA1HsOkw4bbOwFvQwYS8WRBwXKQ=;
+	s=arc-20240116; t=1734017832; c=relaxed/simple;
+	bh=dhk/JcFF7ISGjWf0jqshyt4/YB4Gz3vgn54aYcPn/+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ndhT1LZatoHX2+IRf7f9eEG/DnR+9uSGVnodgCNVsy5uXh+P+wgWAjbR2qrIFzj+qyk3Qm7vLdlhlfG/Jy3SoruZe4b6iWeoVp84HH6s76oCnrpOFSAorzLWfUV03VYznFryArdpiYVuveZXBorZ23/QvEevsI4AvmBjMVbKOms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vknXUBqQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hdlUtW8/JW/LETnIOO1VHpamVtO8tam/LuihsXtEFC4/8ZzXacazPDF+LB2KSxGr40lHlsZDgAPQJ0mEQ8QmiVaaSUcQqf0x8UkeTarTilcyzT4qgGUxdJBI5Ae/8zmezJ0pG5bgt+swrMBdyL4sK8VNKUi6Fk2XVW5GrYM4T1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/kXFClx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vknXUBqQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC91C4CED0;
-	Thu, 12 Dec 2024 15:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/kXFClx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A8DC4CECE;
+	Thu, 12 Dec 2024 15:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017828;
-	bh=opKDVIxjUHZxlesfnA1HsOkw4bbOwFvQwYS8WRBwXKQ=;
+	s=korg; t=1734017832;
+	bh=dhk/JcFF7ISGjWf0jqshyt4/YB4Gz3vgn54aYcPn/+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vknXUBqQ31ebhX7blc5VrR/KR9cliMMpX0Zwot6c9+rn6D9fEtBU4nFhTuYTFL34C
-	 tHOEQ9A1IhvBXwnZSZBkrfKrl6zYCiibrOIpcTf7o9eaRstAwg6vMKmqc987roT9bW
-	 zu04LdkYKNyuiA0CsgiKB2QT7ZdMzrNXrfVsfmkE=
+	b=i/kXFClxInGYb6XIrogAZN5WP+ekdEBDPbWVE/ZzV1ccSVU8KqEZ+yyBU/oQFvTBS
+	 72U/Fu9ZNcpjgU0e3QtJ/NODbjpTY6evJRAqDOErT8/7VPJM41g3RYjfaQ8rzWq3cK
+	 0JT8Zqh562S5ObleY8UxONc35xtx0pfd2sE94B8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Jean-Philippe Brucker <jean-philippe@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Quentin Monnet <qmo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/356] tools: Override makefile ARCH variable if defined, but empty
-Date: Thu, 12 Dec 2024 15:57:20 +0100
-Message-ID: <20241212144249.432884961@linuxfoundation.org>
+Subject: [PATCH 6.6 122/356] spi: mpc52xx: Add cancel_work_sync before module remove
+Date: Thu, 12 Dec 2024 15:57:21 +0100
+Message-ID: <20241212144249.472191972@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -52,61 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 537a2525eaf76ea9b0dca62b994500d8670b39d5 ]
+[ Upstream commit 984836621aad98802d92c4a3047114cf518074c8 ]
 
-There are a number of tools (bpftool, selftests), that require a
-"bootstrap" build. Here, a bootstrap build is a build host variant of
-a target. E.g., assume that you're performing a bpftool cross-build on
-x86 to riscv, a bootstrap build would then be an x86 variant of
-bpftool. The typical way to perform the host build variant, is to pass
-"ARCH=" in a sub-make. However, if a variable has been set with a
-command argument, then ordinary assignments in the makefile are
-ignored.
+If we remove the module which will call mpc52xx_spi_remove
+it will free 'ms' through spi_unregister_controller.
+while the work ms->work will be used. The sequence of operations
+that may lead to a UAF bug.
 
-This side-effect results in that ARCH, and variables depending on ARCH
-are not set. Workaround by overriding ARCH to the host arch, if ARCH
-is empty.
+Fix it by ensuring that the work is canceled before proceeding with
+the cleanup in mpc52xx_spi_remove.
 
-Fixes: 8859b0da5aac ("tools/bpftool: Fix cross-build")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/bpf/20241127101748.165693-1-bjorn@kernel.org
+Fixes: ca632f556697 ("spi: reorganize drivers")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://patch.msgid.link/1f16f8ae0e50ca9adb1dc849bf2ac65a40c9ceb9.1732783000.git.xiaopei01@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/scripts/Makefile.arch | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-mpc52xx.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/scripts/Makefile.arch b/tools/scripts/Makefile.arch
-index f6a50f06dfc45..eabfe9f411d91 100644
---- a/tools/scripts/Makefile.arch
-+++ b/tools/scripts/Makefile.arch
-@@ -7,8 +7,8 @@ HOSTARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
-                                   -e s/sh[234].*/sh/ -e s/aarch64.*/arm64/ \
-                                   -e s/riscv.*/riscv/ -e s/loongarch.*/loongarch/)
+diff --git a/drivers/spi/spi-mpc52xx.c b/drivers/spi/spi-mpc52xx.c
+index ab7df5f64342a..b8e2d9263fc88 100644
+--- a/drivers/spi/spi-mpc52xx.c
++++ b/drivers/spi/spi-mpc52xx.c
+@@ -519,6 +519,7 @@ static void mpc52xx_spi_remove(struct platform_device *op)
+ 	struct mpc52xx_spi *ms = spi_master_get_devdata(master);
+ 	int i;
  
--ifndef ARCH
--ARCH := $(HOSTARCH)
-+ifeq ($(strip $(ARCH)),)
-+override ARCH := $(HOSTARCH)
- endif
++	cancel_work_sync(&ms->work);
+ 	free_irq(ms->irq0, ms);
+ 	free_irq(ms->irq1, ms);
  
- SRCARCH := $(ARCH)
 -- 
 2.43.0
 
