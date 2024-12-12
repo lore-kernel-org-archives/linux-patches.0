@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AB11487CD;
-	Thu, 12 Dec 2024 15:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAED2054F8;
+	Thu, 12 Dec 2024 15:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016847; cv=none; b=JcFBL+ud2dUVBZ+CS+skNKcgYWbgRFT1e2iFVUx7H8AsFy+N2JEAy8AMLWyUNgP/2H5ZzmfibhR2R7WzszboSoqoIOxMBIBN0hrAhQs/7Q8FMfbz06UKycpjr7N4eFDYdTI4mkakXZjOck+VKU+9ziBiMgMal2bvpUCMWtimjt4=
+	t=1734016851; cv=none; b=u0UXWXlcczpgHC8CQsNdFm0ofzI0u1I46Ddu19qpG3GUJkSnx6gOa4wZUpEkFVCg3TOHt7bd4yr3QznBH9RLBRY73K7t99mNp7EwBPv+aLst529iiHTFkmJW7iaHp7uhAX2MENN4oJhsbv1m9XSrItVcvHfRIDVUIYUWtTSGGb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016847; c=relaxed/simple;
-	bh=GXFl2thFBj0amLQd2tyX9rjpTJYQG9uZp1OoNg3ZA/s=;
+	s=arc-20240116; t=1734016851; c=relaxed/simple;
+	bh=EoFV/8VcBfB31cnSItfxz2LPo+Zg/a/wtoDI0sRxBbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcaIiuDmmRZj0PyMBbTJECLVs1sAumH2znOiGmvLlWGYNY2lTWS3Z3FT3FldQjmckfdJEe6kqnoDqohysGBmzfucBFhI/D3f7TnqGOMDx2Vo1nz8M4MhxzAR2BK/BRvSBgoNdnysmSU/e1S9y8W+PqGgY80risQN2kszKYCzYq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiX1TrXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRBTih1pv5w7TzwYpopPvth6f7zISHYoGdB6mz8VeJafoLGYF1SKjhQfvieGriDoEwJKjbycD9RO6gV2MKUvxAj/Q/MB0Lff46oC00I3vIEA/o45nbebNSy2PG87WA2Zq72EQ0yADmuUpI+RuCMjfgW5WxLn/Xt+MqAZoEWyf+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKqqn8bC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiX1TrXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C43C4CED7;
-	Thu, 12 Dec 2024 15:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKqqn8bC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D767C4CEDD;
+	Thu, 12 Dec 2024 15:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016847;
-	bh=GXFl2thFBj0amLQd2tyX9rjpTJYQG9uZp1OoNg3ZA/s=;
+	s=korg; t=1734016851;
+	bh=EoFV/8VcBfB31cnSItfxz2LPo+Zg/a/wtoDI0sRxBbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZiX1TrXFtaUM6Eh02mvndLEyiJtouC3To496zahC+ACYDlC/m2sd8QrYI5HTXauHc
-	 NcgHPw5BlPc5BOQ5vZ3VwnD0PCO9f6utVMAB/q0nlnQo3U2z+KL9mhxwsNwpvliomh
-	 pVldGIw7CvC4G6VoKqAYoi5PMvzPMZS152YbAni4=
+	b=pKqqn8bCBegJZN8Sxh9XaWWpArHzvFhSiEdwlwOIgrrdfrzM0vY1DI3ZePy2G5ajf
+	 osunU5Chv1ODzDk0/B4/SCZN7uhykpoZ552p0khnKmZ2p7xedsDj6D32Bh5R17IvBT
+	 Mv22gIHu9dAhvKBBCm1MovFZiK5ixXUNLjGXhVjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lang Yu <lang.yu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mac Chiang <mac.chiang@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 313/466] drm/amdgpu: refine error handling in amdgpu_ttm_tt_pin_userptr
-Date: Thu, 12 Dec 2024 15:58:02 +0100
-Message-ID: <20241212144319.144587921@linuxfoundation.org>
+Subject: [PATCH 6.12 314/466] ASoC: sdw_utils: Add quirk to exclude amplifier function
+Date: Thu, 12 Dec 2024 15:58:03 +0100
+Message-ID: <20241212144319.185312293@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,42 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lang Yu <lang.yu@amd.com>
+From: Mac Chiang <mac.chiang@intel.com>
 
-[ Upstream commit 46186667f98fb7158c98f4ff5da62c427761ffcd ]
+[ Upstream commit 358ee2c1493e5d2c59820ffd8087eb0e367be4c6 ]
 
-Free sg table when dma_map_sgtable() failed to avoid memory leak.
+When SKUs use the multi-function codec, which integrates
+Headset, Amplifier and DMIC. The corresponding quirks provide
+options to support internal amplifier/DMIC or not.
 
-Signed-off-by: Lang Yu <lang.yu@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In the case of RT722, this SKU excludes the internal amplifier and
+use an additional amplifier instead.
+
+Signed-off-by: Mac Chiang <mac.chiang@intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20241028072631.15536-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/sdw_utils/soc_sdw_utils.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-index 74adb983ab03e..0637414fc70e0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
-@@ -812,7 +812,7 @@ static int amdgpu_ttm_tt_pin_userptr(struct ttm_device *bdev,
- 	/* Map SG to device */
- 	r = dma_map_sgtable(adev->dev, ttm->sg, direction, 0);
- 	if (r)
--		goto release_sg;
-+		goto release_sg_table;
- 
- 	/* convert SG to linear array of pages and dma addresses */
- 	drm_prime_sg_to_dma_addr_array(ttm->sg, gtt->ttm.dma_address,
-@@ -820,6 +820,8 @@ static int amdgpu_ttm_tt_pin_userptr(struct ttm_device *bdev,
- 
- 	return 0;
- 
-+release_sg_table:
-+	sg_free_table(ttm->sg);
- release_sg:
- 	kfree(ttm->sg);
- 	ttm->sg = NULL;
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index c06963ac7fafa..e6ac5c0fd3bec 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -363,6 +363,8 @@ struct asoc_sdw_codec_info codec_info_list[] = {
+ 				.num_controls = ARRAY_SIZE(generic_spk_controls),
+ 				.widgets = generic_spk_widgets,
+ 				.num_widgets = ARRAY_SIZE(generic_spk_widgets),
++				.quirk = SOC_SDW_CODEC_SPKR,
++				.quirk_exclude = true,
+ 			},
+ 			{
+ 				.direction = {false, true},
 -- 
 2.43.0
 
