@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E747321576C;
-	Thu, 12 Dec 2024 15:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E64521766B;
+	Thu, 12 Dec 2024 15:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016004; cv=none; b=q1D5hOrifMQC5Ye7tQ2uSpY3hgzoz3tn+psMXP8zIxibLQk2LxV1zhhSTGZGE+d3S3mCTMBwerwJpMD+WfHmp0T1bSF1Q4UmQud3+aGbE9jik8sSCTO6c8UEKystMBeGa0Z1DzbtNtvZ0hLEdNe8gFLOJaqu7mN8URRbH5UK86Q=
+	t=1734016007; cv=none; b=KGkNz5/Lni6q861cb9HK3GvXQWjHsbed+cwFAvU2Evw9kJstxz0V24MRG4b/ce+ZSw97paVwsdjSu62CAdym2JNSrZF1sNSEAzVxoImN4qNnBHsL35JPIRA75jbhtPc+MQ2mv98y2jOGNyIOtCKBdbvjIyfintVBY+c3kAjc8K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016004; c=relaxed/simple;
-	bh=0hPJ8J68dfzh5vzjzOO5QMv5REGXmxQb8FI4OUArdAk=;
+	s=arc-20240116; t=1734016007; c=relaxed/simple;
+	bh=MSeky+d8LidpYuddQugZXQMdj1MCVIZN2okYHyB0/Lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXv3NDeMHlRr+rziW/+a0UGP314ny3UBe6qpehoa9i/zHk3ppUiYb0Wr41vODh706QGq58ChfpmxSdHBWhCCmP/JbR47ZQIUYGStoOMM2Io7hPZZdBA08/5niozTPyceSUjTyVDfM0OIgYZS3DKg+9nmFMlmEoLheUTUT3gYNhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbI85SEI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e/h8pEy5rA6e9N8SrA2FiOFRv9lfJbdQ8ZcXhOHvseFUMy9n/OHT8lGS82AU9x4my4PIzYVJyv8Wq3q9jvIUrzJiGuo3VCq6qJc/N0W5j3OjsvQV3dcWNosGNNfUmfu0SVxPFKIhD8e4KX51za8BDD4kbwEVxnOUt7Ow5kfNoRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oFZoR5Z2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbI85SEI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7DFC4CED7;
-	Thu, 12 Dec 2024 15:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oFZoR5Z2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACB9C4CECE;
+	Thu, 12 Dec 2024 15:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016003;
-	bh=0hPJ8J68dfzh5vzjzOO5QMv5REGXmxQb8FI4OUArdAk=;
+	s=korg; t=1734016007;
+	bh=MSeky+d8LidpYuddQugZXQMdj1MCVIZN2okYHyB0/Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbI85SEIWG9RU/19qyUzLWjLYNVJozq9jX7BGW1V74kcecivRQiQRI7/E3hCMG8Yy
-	 wVY9gK/6kKj7SABIEvOyIlGYd1WXz8xEDPxaiScJa1z3abuvtaEKAzyqim+qMN++t/
-	 YC/GWBCx9AIAqRHYgIia9yvRw1ZaJHcbPbqG6C/8=
+	b=oFZoR5Z2f3cV+jID9v0SJ+saOGyyt4oFEh4iYC8pfHNdZajy7U+kjAwIVzX4TZRl6
+	 Zbp3zRwI80xTiJC2yZu8Jq+/o5eoTrqF2k6WJn6glIQr7uYVFqXmXAXqIoaJLCtGVC
+	 iLDlpudg3tdL9QwQHM4wpv1cFrFxGCiueuumK6Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Laurence Oberman <loberman@redhat.com>,
+	"Chunguang.xu" <chunguang.xu@shopee.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/466] nvme-fabrics: handle zero MAXCMD without closing the connection
-Date: Thu, 12 Dec 2024 15:54:34 +0100
-Message-ID: <20241212144310.964726207@linuxfoundation.org>
+Subject: [PATCH 6.12 106/466] nvme-tcp: fix the memleak while create new ctrl failed
+Date: Thu, 12 Dec 2024 15:54:35 +0100
+Message-ID: <20241212144311.006996858@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,49 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Chunguang.xu <chunguang.xu@shopee.com>
 
-[ Upstream commit 88c23a32b851e36adc4ab36f796d9b711f47e2bb ]
+[ Upstream commit fec55c29e54d3ca6fe9d7d7d9266098b4514fd34 ]
 
-The NVMe specification states that MAXCMD is mandatory
-for NVMe-over-Fabrics implementations. However, some NVMe/TCP
-and NVMe/FC arrays from major vendors have buggy firmware
-that reports MAXCMD as zero in the Identify Controller data structure.
+Now while we create new ctrl failed, we have not free the
+tagset occupied by admin_q, here try to fix it.
 
-Currently, the implementation closes the connection in such cases,
-completely preventing the host from connecting to the target.
-
-Fix the issue by printing a clear error message about the firmware bug
-and allowing the connection to proceed. It assumes that the
-target supports a MAXCMD value of SQSIZE + 1. If any issues arise,
-the user can manually adjust SQSIZE to mitigate them.
-
-Fixes: 4999568184e5 ("nvme-fabrics: check max outstanding commands")
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Laurence Oberman <loberman@redhat.com>
+Fixes: fd1418de10b9 ("nvme-tcp: avoid open-coding nvme_tcp_teardown_admin_queue()")
+Signed-off-by: Chunguang.xu <chunguang.xu@shopee.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/host/tcp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index fe83d31ac928b..ec03b25eacbbc 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3251,8 +3251,9 @@ static int nvme_check_ctrl_fabric_info(struct nvme_ctrl *ctrl, struct nvme_id_ct
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 3e416af2659f1..55abfe5e1d254 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2278,7 +2278,7 @@ static int nvme_tcp_setup_ctrl(struct nvme_ctrl *ctrl, bool new)
  	}
+ destroy_admin:
+ 	nvme_stop_keep_alive(ctrl);
+-	nvme_tcp_teardown_admin_queue(ctrl, false);
++	nvme_tcp_teardown_admin_queue(ctrl, new);
+ 	return ret;
+ }
  
- 	if (!ctrl->maxcmd) {
--		dev_err(ctrl->device, "Maximum outstanding commands is 0\n");
--		return -EINVAL;
-+		dev_warn(ctrl->device,
-+			"Firmware bug: maximum outstanding commands is 0\n");
-+		ctrl->maxcmd = ctrl->sqsize + 1;
- 	}
- 
- 	return 0;
 -- 
 2.43.0
 
