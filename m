@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AC521765E;
-	Thu, 12 Dec 2024 15:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669A421504F;
+	Thu, 12 Dec 2024 15:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016455; cv=none; b=ikbbs6jYXYqjkzzeyUmsgKzK2fVzzUVOuW/pvrPNH4O0MqN3ix6bxAtAlEzff6qc5UrpvOEC7i02B1CThNq0gjEfZXwAA0JKyt8stVFK6kFLaQmpluISaWXHf/YWCj0+WuzKSHsSmPseK7flYQ4FZGWXeyT0lanT3smtozn7i0c=
+	t=1734016458; cv=none; b=d0jCh5M2p5re+ff6DvV+0sn7OkNqZ/NxUxe5F5QJMDsr/lpEL89VHaNb8RzGpHGnenNfX82W3/Q2Qje65336MUpDL5RCweaiYuGolpvngXkh+wJSAzBY0r5l0Ry966q72K43a4FjU/F6FC1dX+0CxCF+APdAFJ5fzZzqFcC0AT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016455; c=relaxed/simple;
-	bh=qErvlU+RXXLiBDaly4SizXvz9rCPR6ZsOvCraZZCMxM=;
+	s=arc-20240116; t=1734016458; c=relaxed/simple;
+	bh=XlFwrZGGrpOebLfzA3FuPrPmPZEnPVlu5vnyQi9NGwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rpzd13lQpdMgtUTTL4eWZgdu6wLpqJpY14qoxscj1aSt9+scfauGjf3VMzZnodweCI80CLyGn/BXawfmBnLaNoyRbMC3xM8KsKRMIGicdPhqoEwD5kBszTuq/ULFdrZQdse0wV+gldbb6Bc2t8uHOjxuDDCO0mjU9g6T68e4x6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqmleTIG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Twy/7shcYsCHgZ1EwNnzSMORehfDyfwIaJbo7nkK6Uyzm8acp8NG0AL4A1f3mDzmSL3sw7Hq5qq3Z8tKDiHTRyUQsyhN2I/B8MHWFsNMoMi2kvIMisWARi9hNxfPhjvJcem9pVk+QEbHEdVIFslpX7WUH+eCdZGBSzFVskAIU/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hS4hoB2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqmleTIG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D287C4CED0;
-	Thu, 12 Dec 2024 15:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hS4hoB2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C603BC4CED0;
+	Thu, 12 Dec 2024 15:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016454;
-	bh=qErvlU+RXXLiBDaly4SizXvz9rCPR6ZsOvCraZZCMxM=;
+	s=korg; t=1734016458;
+	bh=XlFwrZGGrpOebLfzA3FuPrPmPZEnPVlu5vnyQi9NGwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqmleTIGY0ZqBGyBDAx0B8h/dbL4zsv07x1GyzAKA6YoqOL3+N1ArOWNQTMRJPg/b
-	 RFNiT+Ys4JKysrnyFVjCh7K6YC6J6LKv8JZFpsS8Joca32MOqchMoE+zjz9GiCiZo3
-	 zO94qJRtDOq53rqT2EJw3PApZwyaIN0c0x2reLYI=
+	b=hS4hoB2DeyLRABR3MaoER2PfNaEzAQmiZoTaZYDB7n+JRygvfGdHcvH+A7k0gJxv3
+	 XnDdMLKIJfsMQC47Aiw/hf5Zxq5p1jo64F5ObG+iUAaMEreN8QD53QtR+wStV4pwnd
+	 94qGwzLEuu9hkICvGvemTqt/B53lUGwUHQVWDwCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Sperbeck <jsperbeck@google.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Kees Cook <kees@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 204/466] mm: memcg: declare do_memsw_account inline
-Date: Thu, 12 Dec 2024 15:56:13 +0100
-Message-ID: <20241212144314.850136025@linuxfoundation.org>
+Subject: [PATCH 6.12 205/466] mm: open-code PageTail in folio_flags() and const_folio_flags()
+Date: Thu, 12 Dec 2024 15:56:14 +0100
+Message-ID: <20241212144314.888291794@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -55,50 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Sperbeck <jsperbeck@google.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit 89dd878282881306c38f7e354e7614fca98cb9a6 upstream.
+commit 4de22b2a6a7477d84d9a01eb6b62a9117309d722 upstream.
 
-In commit 66d60c428b23 ("mm: memcg: move legacy memcg event code into
-memcontrol-v1.c"), the static do_memsw_account() function was moved from a
-.c file to a .h file.  Unfortunately, the traditional inline keyword
-wasn't added.  If a file (e.g., a unit test) includes the .h file, but
-doesn't refer to do_memsw_account(), it will get a warning like:
+It is unsafe to call PageTail() in dump_page() as page_is_fake_head() will
+almost certainly return true when called on a head page that is copied to
+the stack.  That will cause the VM_BUG_ON_PGFLAGS() in const_folio_flags()
+to trigger when it shouldn't.  Fortunately, we don't need to call
+PageTail() here; it's fine to have a pointer to a virtual alias of the
+page's flag word rather than the real page's flag word.
 
-mm/memcontrol-v1.h:41:13: warning: unused function 'do_memsw_account' [-Wunused-function]
-   41 | static bool do_memsw_account(void)
-      |             ^~~~~~~~~~~~~~~~
-
-Link: https://lkml.kernel.org/r/20241128203959.726527-1-jsperbeck@google.com
-Fixes: 66d60c428b23 ("mm: memcg: move legacy memcg event code into memcontrol-v1.c")
-Signed-off-by: John Sperbeck <jsperbeck@google.com>
-Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://lkml.kernel.org/r/20241125201721.2963278-1-willy@infradead.org
+Fixes: fae7d834c43c ("mm: add __dump_folio()")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Kees Cook <kees@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol-v1.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/page-flags.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memcontrol-v1.h b/mm/memcontrol-v1.h
-index 0e3b82951d91..144d71b65907 100644
---- a/mm/memcontrol-v1.h
-+++ b/mm/memcontrol-v1.h
-@@ -38,7 +38,7 @@ void mem_cgroup_id_put_many(struct mem_cgroup *memcg, unsigned int n);
- 	     iter = mem_cgroup_iter(NULL, iter, NULL))
- 
- /* Whether legacy memory+swap accounting is active */
--static bool do_memsw_account(void)
-+static inline bool do_memsw_account(void)
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -306,7 +306,7 @@ static const unsigned long *const_folio_
  {
- 	return !cgroup_subsys_on_dfl(memory_cgrp_subsys);
+ 	const struct page *page = &folio->page;
+ 
+-	VM_BUG_ON_PGFLAGS(PageTail(page), page);
++	VM_BUG_ON_PGFLAGS(page->compound_head & 1, page);
+ 	VM_BUG_ON_PGFLAGS(n > 0 && !test_bit(PG_head, &page->flags), page);
+ 	return &page[n].flags;
  }
--- 
-2.47.1
-
+@@ -315,7 +315,7 @@ static unsigned long *folio_flags(struct
+ {
+ 	struct page *page = &folio->page;
+ 
+-	VM_BUG_ON_PGFLAGS(PageTail(page), page);
++	VM_BUG_ON_PGFLAGS(page->compound_head & 1, page);
+ 	VM_BUG_ON_PGFLAGS(n > 0 && !test_bit(PG_head, &page->flags), page);
+ 	return &page[n].flags;
+ }
 
 
