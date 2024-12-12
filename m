@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3465522B58A;
-	Thu, 12 Dec 2024 17:07:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA722C354;
+	Thu, 12 Dec 2024 17:07:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023238; cv=none; b=hbb0cLFLCTaI0MimqypuYtwWJQkY1EV1CXd2PxLkB99qTjiQEf71IOTlEtmHSfwUpIueVnm9wGL06fFCo2dkzPPVKaoen/z5Pr7gmne45RSreBbv9zp8w49Q7/tfs+BKbJmsWtvT4LRSxLh3xemZuiUzFKXXUI9aqtN1u7487dk=
+	t=1734023241; cv=none; b=WBjV1El784WqPOtLmzouvmu/Gd+SDX/Ewyz0V4lmJaA2yLfG6Wtb8CFN5JQsHFInj93C16uudRhMBTYgDxcO08ATZczg9YRiBdoFWpmtnWR+wxLmA5G1RucJ/SOE/WNEGLJJP9YsYl1jX8njikDgItHjB/gCzvyVbojhDtNEDqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023238; c=relaxed/simple;
-	bh=ZI5OdUy1G8+fFSyvJ1+2Cc/A3IMvvaWkh3SnkDtI4RE=;
+	s=arc-20240116; t=1734023241; c=relaxed/simple;
+	bh=DBpuPMklBVzc9rq6D0L8yF9vAjB2mcm1slIaCk6FhUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXkuJWlNLMwqNdCrlYOFPZpHFLgihTm088PA62MkB+KAJBZBh4aM4zizi2KSIHL/6qZhsLXJi2vG8i/tRASNjY6sLZOPtXtLdObuPkFc+jFGDJf0uNSnVYW+/8fYgdNHW7S0lchNWudh38UsVG1vWj0teBWVFH4e9zEQT51Asmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blp2BJLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OhzQwU+nUoZz4j/HKC17QXdc8mR1wKkc1ilTztjFYE8B3HBVkpzxgBYy3TWgKLS6AO7XKepL3UOMYl+G+jZAc1OuyUEED0C4O+NPcu+wuC2qD89M9CfSFQ6euuXTzjwoeF9imFAMimRxP4/ePKCjk1aI9jcJUcWYFPaFysOjvMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWuKm0Ji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blp2BJLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7430FC4CED4;
-	Thu, 12 Dec 2024 17:07:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWuKm0Ji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89592C4CEDF;
+	Thu, 12 Dec 2024 17:07:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023237;
-	bh=ZI5OdUy1G8+fFSyvJ1+2Cc/A3IMvvaWkh3SnkDtI4RE=;
+	s=korg; t=1734023241;
+	bh=DBpuPMklBVzc9rq6D0L8yF9vAjB2mcm1slIaCk6FhUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blp2BJLmcWe8I+tYkVnTkEjz1XSItQD//XjvoPzdGfYClJqvn5Lm9LKiMNmrphlfe
-	 O3XPbB+X6xWAjklDVZaH1bFBnmKdTT8l93xztbO+DT1LPIJ9kx1FHBnpT/lT5hyPzM
-	 CuWjc640a2H9f8sil41gLELuLebL7gN24ewWk8rw=
+	b=jWuKm0Ji/j+/WXHVcMWyUqYppu1Ez/1TvaJhW92vVk7BrnpZXGUpUkyZc23Hb0s+4
+	 uxODgeFOGSpqapMTATIxMdimQ60BK9KXMIzKjx7AB3lytsraJiZuIEcPFe91ihxZD5
+	 Q5qttYU+UODdUd6PGk4sdhdSYToqR9qS3eGpHVF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prakash Gupta <quic_guptap@quicinc.com>,
-	Pratyush Brahma <quic_pbrahma@quicinc.com>,
-	Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>
-Subject: [PATCH 5.15 468/565] iommu/arm-smmu: Defer probe of clients after smmu device bound
-Date: Thu, 12 Dec 2024 16:01:03 +0100
-Message-ID: <20241212144330.235117742@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	syzbot+3b6b32dc50537a49bb4a@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 469/565] epoll: annotate racy check
+Date: Thu, 12 Dec 2024 16:01:04 +0100
+Message-ID: <20241212144330.274908250@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,83 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Brahma <quic_pbrahma@quicinc.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 229e6ee43d2a160a1592b83aad620d6027084aad upstream.
+[ Upstream commit 6474353a5e3d0b2cf610153cea0c61f576a36d0a ]
 
-Null pointer dereference occurs due to a race between smmu
-driver probe and client driver probe, when of_dma_configure()
-for client is called after the iommu_device_register() for smmu driver
-probe has executed but before the driver_bound() for smmu driver
-has been called.
+Epoll relies on a racy fastpath check during __fput() in
+eventpoll_release() to avoid the hit of pointlessly acquiring a
+semaphore. Annotate that race by using WRITE_ONCE() and READ_ONCE().
 
-Following is how the race occurs:
-
-T1:Smmu device probe		T2: Client device probe
-
-really_probe()
-arm_smmu_device_probe()
-iommu_device_register()
-					really_probe()
-					platform_dma_configure()
-					of_dma_configure()
-					of_dma_configure_id()
-					of_iommu_configure()
-					iommu_probe_device()
-					iommu_init_device()
-					arm_smmu_probe_device()
-					arm_smmu_get_by_fwnode()
-						driver_find_device_by_fwnode()
-						driver_find_device()
-						next_device()
-						klist_next()
-						    /* null ptr
-						       assigned to smmu */
-					/* null ptr dereference
-					   while smmu->streamid_mask */
-driver_bound()
-	klist_add_tail()
-
-When this null smmu pointer is dereferenced later in
-arm_smmu_probe_device, the device crashes.
-
-Fix this by deferring the probe of the client device
-until the smmu device has bound to the arm smmu driver.
-
-Fixes: 021bb8420d44 ("iommu/arm-smmu: Wire up generic configuration support")
-Cc: stable@vger.kernel.org
-Co-developed-by: Prakash Gupta <quic_guptap@quicinc.com>
-Signed-off-by: Prakash Gupta <quic_guptap@quicinc.com>
-Signed-off-by: Pratyush Brahma <quic_pbrahma@quicinc.com>
-Link: https://lore.kernel.org/r/20241004090428.2035-1-quic_pbrahma@quicinc.com
-[will: Add comment]
-Signed-off-by: Will Deacon <will@kernel.org>
-[rm: backport for context conflict prior to 6.8]
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/66edfb3c.050a0220.3195df.001a.GAE@google.com
+Link: https://lore.kernel.org/r/20240925-fungieren-anbauen-79b334b00542@brauner
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-by: syzbot+3b6b32dc50537a49bb4a@syzkaller.appspotmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/eventpoll.c            | 6 ++++--
+ include/linux/eventpoll.h | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -1375,6 +1375,17 @@ static struct iommu_device *arm_smmu_pro
- 			goto out_free;
- 	} else if (fwspec && fwspec->ops == &arm_smmu_ops) {
- 		smmu = arm_smmu_get_by_fwnode(fwspec->iommu_fwnode);
-+
-+		/*
-+		 * Defer probe if the relevant SMMU instance hasn't finished
-+		 * probing yet. This is a fragile hack and we'd ideally
-+		 * avoid this race in the core code. Until that's ironed
-+		 * out, however, this is the most pragmatic option on the
-+		 * table.
-+		 */
-+		if (!smmu)
-+			return ERR_PTR(dev_err_probe(dev, -EPROBE_DEFER,
-+						"smmu dev has not bound yet\n"));
- 	} else {
- 		return ERR_PTR(-ENODEV);
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index b60edddf17870..7413b4a6ba282 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -696,7 +696,8 @@ static int ep_remove(struct eventpoll *ep, struct epitem *epi)
+ 	to_free = NULL;
+ 	head = file->f_ep;
+ 	if (head->first == &epi->fllink && !epi->fllink.next) {
+-		file->f_ep = NULL;
++		/* See eventpoll_release() for details. */
++		WRITE_ONCE(file->f_ep, NULL);
+ 		if (!is_file_epoll(file)) {
+ 			struct epitems_head *v;
+ 			v = container_of(head, struct epitems_head, epitems);
+@@ -1460,7 +1461,8 @@ static int attach_epitem(struct file *file, struct epitem *epi)
+ 			spin_unlock(&file->f_lock);
+ 			goto allocate;
+ 		}
+-		file->f_ep = head;
++		/* See eventpoll_release() for details. */
++		WRITE_ONCE(file->f_ep, head);
+ 		to_free = NULL;
  	}
+ 	hlist_add_head_rcu(&epi->fllink, file->f_ep);
+diff --git a/include/linux/eventpoll.h b/include/linux/eventpoll.h
+index 3337745d81bd6..0c0d00fcd131f 100644
+--- a/include/linux/eventpoll.h
++++ b/include/linux/eventpoll.h
+@@ -42,7 +42,7 @@ static inline void eventpoll_release(struct file *file)
+ 	 * because the file in on the way to be removed and nobody ( but
+ 	 * eventpoll ) has still a reference to this file.
+ 	 */
+-	if (likely(!file->f_ep))
++	if (likely(!READ_ONCE(file->f_ep)))
+ 		return;
+ 
+ 	/*
+-- 
+2.43.0
+
 
 
