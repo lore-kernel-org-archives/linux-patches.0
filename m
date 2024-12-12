@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89792EAE5;
-	Thu, 12 Dec 2024 15:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0996F2153FC;
+	Thu, 12 Dec 2024 15:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016643; cv=none; b=ClCtzHcGnJucbkZgf2i9dThSu28C5A4cjGETubWzvORRAbJaVLrk5G42FiucYcoNS0OEzjnxDH52w4WReOpUb9YA0lGwXPkASWt8GCdCXAxroUI1NyqL4qrxOFDuudQSD0jn13673rCVSY+BBoIw7CNHnDmP1e09BE/pAt70L1Y=
+	t=1734016647; cv=none; b=S7sqYZOrAQcC5R9Vckk2pJ9OJNx5ojYXAC4OBCgzjmRqqWdClcsYGwXz9kpDM7TQF++1wu+M7NkHX8aPiE+gM3WBS3BWlBJRDzPkRxbEf8llyLgIsLMLgip0aLWWr5CziYHxIPFtoq2BtXIL+5ne5emp6OFOIw7ne+ZG/2gi0cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016643; c=relaxed/simple;
-	bh=Td66NEbgNbDRkTMygdeZH9hjgDiLU13kkB4yaoxcS8M=;
+	s=arc-20240116; t=1734016647; c=relaxed/simple;
+	bh=A0XYsUuBLyWrIx3EqjooKB7Pxr1XF4NBomJRQzQ4Q0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDZRhzmssfdw/tjW4dWasb4yBIVAkHWEjN079vSAkWd6qsiS5NnUvcM//GpqG9rGws6cFHSb+nd73QQQD+8GAtoE57r+oGmTKfNFGMS3w9hs1Pw4+bqC993JvAg8l8xZADs7HjoXDVdamkwxTy4+YHDh40srKmNJ7sO1dBJ3OQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5zeUQJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H2EcrjPGM7VR7oTQfPPyhiRcW2dpwDAqkfwuimUie68ARiUNno1G4lzgox2iILKnSIfZ7IxF3eTNjqb9799x4L1AFUoOVuuuw4POGi2OtZAp3C2vcSGMjdBpOsIBJuZP4GAxB56HuYeEgzgMvItSYgq8mxV67+NrjXNnxtTnxWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhmGOg2J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5zeUQJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82DDC4CEE7;
-	Thu, 12 Dec 2024 15:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhmGOg2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68937C4CED4;
+	Thu, 12 Dec 2024 15:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016643;
-	bh=Td66NEbgNbDRkTMygdeZH9hjgDiLU13kkB4yaoxcS8M=;
+	s=korg; t=1734016646;
+	bh=A0XYsUuBLyWrIx3EqjooKB7Pxr1XF4NBomJRQzQ4Q0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5zeUQJgoIe4JckaAAW+JRosijg2L7/+5ZepunvZ5FHCXBFitMYhrK59/bq2mGB4k
-	 nFR2z7f2P5eTWhvMyiUcj0w09YippH4xO9geG6Cbz5ttZ3tRazA+v+n/WJNMFgb61U
-	 28ixEgxhEOogJFRoGUdmRRj0jxB2KSNPsIf1AEr8=
+	b=uhmGOg2Je41TK27qANi2+rFb4m7oDDwlL1CasdP2qmVCiv9DtPIKAzTvnWnTrfXDt
+	 pQgero5n9ZKWKIUxz7pLMt72sJ3h0n1z3dH6W5G83wMYH9E+w2Tt+oXQcn1nHRbR7P
+	 Rjr8tNTbC+KCwb5YMQyM8ZennoE/Nyw82DGiPTpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dom Cobley <popcornmix@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Tommy Giesler <tommy.giesler@hetzner.com>,
+	Sarah Maedel <sarah.maedel@hetzner-cloud.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 255/466] drm/vc4: hdmi: Avoid log spam for audio start failure
-Date: Thu, 12 Dec 2024 15:57:04 +0100
-Message-ID: <20241212144316.863963827@linuxfoundation.org>
+Subject: [PATCH 6.12 227/466] hwmon: (nct6775) Add 665-ACE/600M-CL to ASUS WMI monitoring list
+Date: Thu, 12 Dec 2024 15:56:36 +0100
+Message-ID: <20241212144315.743092426@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,44 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dom Cobley <popcornmix@gmail.com>
+From: Sarah Maedel <sarah.maedel@hetzner-cloud.de>
 
-[ Upstream commit b4e5646178e86665f5caef2894578600f597098a ]
+[ Upstream commit ccae49e5cf6ebda1a7fa5d2ca99500987c7420c4 ]
 
-We regularly get dmesg error reports of:
-[   18.184066] hdmi-audio-codec hdmi-audio-codec.3.auto: ASoC: error at snd_soc_dai_startup on i2s-hifi: -19
-[   18.184098]  MAI: soc_pcm_open() failed (-19)
+Boards such as
+* Pro WS 665-ACE
+* Pro WS 600M-CL
+have got a nct6775 chip, but by default there's no use of it
+because of resource conflict with WMI method.
 
-These are generated for any disconnected hdmi interface when pulseaudio
-attempts to open the associated ALSA device (numerous times). Each open
-generates a kernel error message, generating general log spam.
+Add affected boards to the WMI monitoring list.
 
-The error messages all come from _soc_pcm_ret in sound/soc/soc-pcm.c#L39
-which suggests returning ENOTSUPP, rather that ENODEV will be quiet.
-And indeed it is.
-
-Signed-off-by: Dom Cobley <popcornmix@gmail.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240621152055.4180873-5-dave.stevenson@raspberrypi.com
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=204807
+Co-developed-by: Tommy Giesler <tommy.giesler@hetzner.com>
+Signed-off-by: Tommy Giesler <tommy.giesler@hetzner.com>
+Signed-off-by: Sarah Maedel <sarah.maedel@hetzner-cloud.de>
+Message-ID: <20241018074611.358619-1-sarah.maedel@hetzner-cloud.de>
+[groeck: Change commit message to imperative mood]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/nct6775-platform.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 2d7d3e90f3be4..7e0a5ea7ab859 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -1924,7 +1924,7 @@ static int vc4_hdmi_audio_startup(struct device *dev, void *data)
- 	}
- 
- 	if (!vc4_hdmi_audio_can_stream(vc4_hdmi)) {
--		ret = -ENODEV;
-+		ret = -ENOTSUPP;
- 		goto out_dev_exit;
- 	}
- 
+diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
+index 096f1daa8f2bc..1218a3b449a80 100644
+--- a/drivers/hwmon/nct6775-platform.c
++++ b/drivers/hwmon/nct6775-platform.c
+@@ -1350,6 +1350,8 @@ static const char * const asus_msi_boards[] = {
+ 	"Pro H610M-CT D4",
+ 	"Pro H610T D4",
+ 	"Pro Q670M-C",
++	"Pro WS 600M-CL",
++	"Pro WS 665-ACE",
+ 	"Pro WS W680-ACE",
+ 	"Pro WS W680-ACE IPMI",
+ 	"Pro WS W790-ACE",
 -- 
 2.43.0
 
