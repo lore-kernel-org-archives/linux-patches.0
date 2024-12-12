@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5A821660B;
-	Thu, 12 Dec 2024 17:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F5C13CA81;
+	Thu, 12 Dec 2024 17:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024478; cv=none; b=kfqn0hlXjwWkItv6MhX6nX90T7nmRMnDJyD/zaJi0Lhn0Ds2VStULLWRhZs98hJ/+D/6c37eD4UI5ebeoRfoR8VX1aECayAyMtNXeOoUv+55RQngsPGvl82atPvIOeFp3RJzQjp9y7FrULFOtvxYWH97dQ6CVO8jXU2GNs/Qwuo=
+	t=1734024481; cv=none; b=aRq8470fX6eONfE0FBdTWmXqE9/iza/k3/a0+yoRO4UbRA6sSkWEKgZIBAs6214NVKBf2uHQ9v15PgRM69Gx02sjdzsy/VhrhF12gs5OXuEae0sy4061dQXuiHeOfbiQutZPBl6YRKT4WOIzO4XG+Dl94oifti+ACrLZOXhpX1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024478; c=relaxed/simple;
-	bh=+yEjuido8qfFC5WvYm/quN8OQi+lRqHM3Q6CF9w/sXA=;
+	s=arc-20240116; t=1734024481; c=relaxed/simple;
+	bh=i9Kv5qs+1lGMfCu469MKkCDHgHKM8UwVee5bh/k1bTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaDSHC+OIsxR4dynzg4yZcAxTVz37VGYuQlfm4tXPD0nU5m8GKXidj41qtDlG5Qs/MXARg/g+Yx0WzVJuxe0CJogMFjr7ucxCgqn2zENN2PjoqSNddR28ULBrvWKIhj5WPDxEmXvaHlua3weoUhn5TVUJione+JpqD4NxZyOZYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rms60Xv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hufcVoOvqrbHPS+GK+uXpydOgZEIzuTQzv4Wm/7gP3NsAJKDvEGaQz8zl+BTovrVnWgRWNkh6eAcgsI4kvs6ekdiXi1UNjkADBO9r8PpkS4yVoXBJF1BH7TP3yUAUKeK5T63/J+KpEYdo+4VlUBPQ7P8qfrSjmLKLrEJj9UAmJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j47ILGNv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rms60Xv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59E6C4CECE;
-	Thu, 12 Dec 2024 17:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j47ILGNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67AEC4CECE;
+	Thu, 12 Dec 2024 17:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024478;
-	bh=+yEjuido8qfFC5WvYm/quN8OQi+lRqHM3Q6CF9w/sXA=;
+	s=korg; t=1734024481;
+	bh=i9Kv5qs+1lGMfCu469MKkCDHgHKM8UwVee5bh/k1bTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rms60Xv4UpWQRqqb8Nra59htaCEL3CQYpURKVagqyiDbw0XSZtEnHLvNo9zfRBI+J
-	 gDOQqQkZChhRDgff/4kN5byIIzOnbl7mFqiX1VTKV8Zu7lxCy2aBAUQdLkeiTnoBmg
-	 ViCU4TBlzEUQjzdmEPglER5yc9GaxWDZr0Fh2XvU=
+	b=j47ILGNv9jjCmZmTNoIG2ngQrQrwRUAWOTduVIQsyRG4xJqfgw4FNnAiU6WXHBb3D
+	 lIokpQ2dNHg15JCdOrEujy0qjW3CiuQ46hKCTspyZI3qDxA2It6OcT2QHRS9jDPbvL
+	 oe8odsXsNZYWAwIMQ4wXH1OMI34flB6LYSqEA/LA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 282/459] usb: dwc3: gadget: Fix checking for number of TRBs left
-Date: Thu, 12 Dec 2024 16:00:20 +0100
-Message-ID: <20241212144304.772184972@linuxfoundation.org>
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Liu Jian <liujian56@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 309/459] sunrpc: clear XPRT_SOCK_UPD_TIMEOUT when reset transport
+Date: Thu, 12 Dec 2024 16:00:47 +0100
+Message-ID: <20241212144305.852023542@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -49,53 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Liu Jian <liujian56@huawei.com>
 
-commit 02a6982b0ccfcdc39e20016f5fc9a1b7826a6ee7 upstream.
+[ Upstream commit 4db9ad82a6c823094da27de4825af693a3475d51 ]
 
-The check whether the TRB ring is full or empty in dwc3_calc_trbs_left()
-is insufficient. It assumes there are active TRBs if there's any request
-in the started_list. However, that's not the case for requests with a
-large SG list.
+Since transport->sock has been set to NULL during reset transport,
+XPRT_SOCK_UPD_TIMEOUT also needs to be cleared. Otherwise, the
+xs_tcp_set_socket_timeouts() may be triggered in xs_tcp_send_request()
+to dereference the transport->sock that has been set to NULL.
 
-That is, if we have a single usb request that requires more TRBs than
-the total TRBs in the TRB ring, the queued TRBs will be available when
-all the TRBs in the ring are completed. But the request is only
-partially completed and remains in the started_list. With the current
-logic, the TRB ring is empty, but dwc3_calc_trbs_left() returns 0.
-
-Fix this by additionally checking for the request->num_trbs for active
-TRB count.
-
-Cc: stable@vger.kernel.org
-Fixes: 51f1954ad853 ("usb: dwc3: gadget: Fix dwc3_calc_trbs_left()")
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/708dc62b56b77da1f704cc2ae9b6ddb1f2dbef1f.1731545781.git.Thinh.Nguyen@synopsys.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7196dbb02ea0 ("SUNRPC: Allow changing of the TCP timeout parameters on the fly")
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/sunrpc/xprtsock.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -953,11 +953,14 @@ static u32 dwc3_calc_trbs_left(struct dw
- 	 * pending to be processed by the driver.
- 	 */
- 	if (dep->trb_enqueue == dep->trb_dequeue) {
-+		struct dwc3_request *req;
-+
- 		/*
--		 * If there is any request remained in the started_list at
--		 * this point, that means there is no TRB available.
-+		 * If there is any request remained in the started_list with
-+		 * active TRBs at this point, then there is no TRB available.
- 		 */
--		if (!list_empty(&dep->started_list))
-+		req = next_request(&dep->started_list);
-+		if (req && req->num_trbs)
- 			return 0;
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index 278d044e1fd4a..79ce634017f9a 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -1129,6 +1129,7 @@ static void xs_sock_reset_state_flags(struct rpc_xprt *xprt)
+ 	clear_bit(XPRT_SOCK_WAKE_WRITE, &transport->sock_state);
+ 	clear_bit(XPRT_SOCK_WAKE_DISCONNECT, &transport->sock_state);
+ 	clear_bit(XPRT_SOCK_NOSPACE, &transport->sock_state);
++	clear_bit(XPRT_SOCK_UPD_TIMEOUT, &transport->sock_state);
+ }
  
- 		return DWC3_TRB_NUM - 1;
+ static void xs_run_error_worker(struct sock_xprt *transport, unsigned int nr)
+-- 
+2.43.0
+
 
 
