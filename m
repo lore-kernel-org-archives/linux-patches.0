@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107852139CB;
-	Thu, 12 Dec 2024 15:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7696F2FE;
+	Thu, 12 Dec 2024 15:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017798; cv=none; b=MIia9AOg1oeTRjlJyo7J7Cx+rrNQt12JylopSoOO93phGnctfHSKnymdGlQFr5w0VECK+KcENZxb+qfT774wepZsHtzymLXm2Qw1wz6qX9lRblV6REdFlu7jtKxxPbrMZgCJzRs42c+1Lp1n9i6ZevqMKLqTWMkWvwp8nP1PstM=
+	t=1734017801; cv=none; b=Snq8eVB4oufAbeYFGopn7zMn+GLjr8iLQfG8t9ueHNBZ+UlxsPX0nMrNpC7av54PKAaTOM9NfLTJCEyIydvMkXvrK7zkCusS9hhYWTHalR2e8yfRKpEVfCiSB0uQq0fCrM4bCtfhWWEEP+9D+iJ9RRYn/RfMsiQ7Bi2m3KP2BEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017798; c=relaxed/simple;
-	bh=5BsGiqhiC+JZVXpKBoxsiqxL8u1pjevn8T7qnK1TD0s=;
+	s=arc-20240116; t=1734017801; c=relaxed/simple;
+	bh=41gCDumUho9y4L/QAUgCCPFp0L43lmd4nfCRMNwCUAM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PlBsAgkqRvfF0vl2iK8HirOQFXCI+g7aGm3kCNWUnOinumRmxqsyOxGst7KVN+VHRMbzk4U5/2TgUSBk7INMghmQJo4/XjQNqCplNyEjelCEacbMe8G0UIY1i57i53NMWrOFazTbZLDV63AzLI6l/9wQDDwig38qxdBbJbT2Zrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18CGwrgl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aRnoCNtet9e9USpFsLXvnGIT4fl4n+ZrAX33kljY1lYKQENOXpCDP8kTqm53CPReAjvJevEgFwZeXCbD1doyWyMJmagj++2huJneNkV1LpISxRvLf9DKArqka+cxSuyBEvx1KENAl68zibfClNpv3/ZpvLWA6ZKB98P8ZRxRB78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTvH4Aq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18CGwrgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A91C4CECE;
-	Thu, 12 Dec 2024 15:36:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTvH4Aq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A9AC4CECE;
+	Thu, 12 Dec 2024 15:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017797;
-	bh=5BsGiqhiC+JZVXpKBoxsiqxL8u1pjevn8T7qnK1TD0s=;
+	s=korg; t=1734017801;
+	bh=41gCDumUho9y4L/QAUgCCPFp0L43lmd4nfCRMNwCUAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18CGwrglEEGje+5h19PyIAHq/U+ymKMk1ppReot+9a4TaIX6Y3XALLlGITbU5K9hF
-	 1M4m9TrDvOcmGTVUXGOaKMA6VpY66nJ14Rg1K9lRiQaIjz4qt2kOwf7d75KQ+LfB2E
-	 dDbxG7p6lPP+yG1XsNiCNqF/cz4vq9gHVxPw72wo=
+	b=BTvH4Aq3uZ33onPajXINqnCkfPfqsGfHtfacnd2nleYbI3pz6OrktUQuV1BtHyr+F
+	 yc50TeLNxpR6pCH8PST2ts6D9kxwQSOk34sAW+55OP3Z+akQnuMCo5RPwe4eidqfQE
+	 l2YjFtq8X/cI7uVXXfXt3pr46mh4ouUzglS+cWeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alasdair McWilliam <alasdair.mcwilliam@outlook.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Amir Mohammadi <amiremohamadi@yahoo.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 113/356] xsk: always clear DMA mapping information when unmapping the pool
-Date: Thu, 12 Dec 2024 15:57:12 +0100
-Message-ID: <20241212144249.109473680@linuxfoundation.org>
+Subject: [PATCH 6.6 114/356] bpftool: fix potential NULL pointer dereferencing in prog_dump()
+Date: Thu, 12 Dec 2024 15:57:13 +0100
+Message-ID: <20241212144249.149605036@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
 References: <20241212144244.601729511@linuxfoundation.org>
@@ -53,65 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Amir Mohammadi <amirmohammadi1999.am@gmail.com>
 
-[ Upstream commit ac9a48a6f1610b094072b815e884e1668aea4401 ]
+[ Upstream commit ef3ba8c258ee368a5343fa9329df85b4bcb9e8b5 ]
 
-When the umem is shared, the DMA mapping is also shared between the xsk
-pools, therefore it should stay valid as long as at least 1 user remains.
-However, the pool also keeps the copies of DMA-related information that are
-initialized in the same way in xp_init_dma_info(), but cleared by
-xp_dma_unmap() only for the last remaining pool, this causes the problems
-below.
+A NULL pointer dereference could occur if ksyms
+is not properly checked before usage in the prog_dump() function.
 
-The first one is that the commit adbf5a42341f ("ice: remove af_xdp_zc_qps
-bitmap") relies on pool->dev to determine the presence of a ZC pool on a
-given queue, avoiding internal bookkeeping. This works perfectly fine if
-the UMEM is not shared, but reliably fails otherwise as stated in the
-linked report.
-
-The second one is pool->dma_pages which is dynamically allocated and
-only freed in xp_dma_unmap(), this leads to a small memory leak. kmemleak
-does not catch it, but by printing the allocation results after terminating
-the userspace program it is possible to see that all addresses except the
-one belonging to the last detached pool are still accessible through the
-kmemleak dump functionality.
-
-Always clear the DMA mapping information from the pool and free
-pool->dma_pages when unmapping the pool, so that the only difference
-between results of the last remaining user's call and the ones before would
-be the destruction of the DMA mapping.
-
-Fixes: adbf5a42341f ("ice: remove af_xdp_zc_qps bitmap")
-Fixes: 921b68692abb ("xsk: Enable sharing of dma mappings")
-Reported-by: Alasdair McWilliam <alasdair.mcwilliam@outlook.com>
-Closes: https://lore.kernel.org/PA4P194MB10056F208AF221D043F57A3D86512@PA4P194MB1005.EURP194.PROD.OUTLOOK.COM
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/r/20241122112912.89881-1-larysa.zaremba@intel.com
+Fixes: b053b439b72a ("bpf: libbpf: bpftool: Print bpf_line_info during prog dump")
+Signed-off-by: Amir Mohammadi <amiremohamadi@yahoo.com>
+Reviewed-by: Quentin Monnet <qmo@kernel.org>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20241121083413.7214-1-amiremohamadi@yahoo.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xdp/xsk_buff_pool.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ tools/bpf/bpftool/prog.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index b0a611677865d..f38388b6b62c2 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -369,10 +369,9 @@ void xp_dma_unmap(struct xsk_buff_pool *pool, unsigned long attrs)
- 		return;
- 	}
+diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
+index e5e0fe3854a35..90ae2ea61324c 100644
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -818,11 +818,18 @@ prog_dump(struct bpf_prog_info *info, enum dump_mode mode,
+ 					printf("%s:\n", sym_name);
+ 				}
  
--	if (!refcount_dec_and_test(&dma_map->users))
--		return;
-+	if (refcount_dec_and_test(&dma_map->users))
-+		__xp_dma_unmap(dma_map, attrs);
+-				if (disasm_print_insn(img, lens[i], opcodes,
+-						      name, disasm_opt, btf,
+-						      prog_linfo, ksyms[i], i,
+-						      linum))
+-					goto exit_free;
++				if (ksyms) {
++					if (disasm_print_insn(img, lens[i], opcodes,
++							      name, disasm_opt, btf,
++							      prog_linfo, ksyms[i], i,
++							      linum))
++						goto exit_free;
++				} else {
++					if (disasm_print_insn(img, lens[i], opcodes,
++							      name, disasm_opt, btf,
++							      NULL, 0, 0, false))
++						goto exit_free;
++				}
  
--	__xp_dma_unmap(dma_map, attrs);
- 	kvfree(pool->dma_pages);
- 	pool->dma_pages = NULL;
- 	pool->dma_pages_cnt = 0;
+ 				img += lens[i];
+ 
 -- 
 2.43.0
 
