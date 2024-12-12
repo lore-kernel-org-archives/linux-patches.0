@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D046353365;
-	Thu, 12 Dec 2024 17:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAD853365;
+	Thu, 12 Dec 2024 17:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023557; cv=none; b=nb5BCwskDeF9y1KX8Imqj99j8K03LxwwD43XSDwGSKSt63vMBvNMeB2b0uA1/sCr5YeK3AuxbEhhnONXY0Lgdi1EnzGwqrNT/+kW+ioh3O1m8GO/karGMHLVDLpCj0MxEcCbjcGVeTA0repnQaaC/9+IvY70XO1bvEJr4vgjFwk=
+	t=1734023561; cv=none; b=cR1VK1wPncNTsx3fqK96g2gw9hJZy1aEXVPkjYkXUD37c7Ia7dF+GbzZjfIuQX6EhDjikHJZ1PJjVqCJg5J8ZrL54Q2t59bZ3PxE/JV6FYVZwwu0Ai+sIcQMbVgi40QJ53NeT1uj7b+/SsbV1VmPCU6Xe7cORTZiUKayZ7WIe1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023557; c=relaxed/simple;
-	bh=7ugiDzyqmtymFq5Q80d12FBNkHrb0qy9jYJqHvtgOT8=;
+	s=arc-20240116; t=1734023561; c=relaxed/simple;
+	bh=Gs1geyviPmFJhxYgw+R2iIfXXwHeZ0tYwQToTIRXvEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nrd7vajnWlmrvgeAOGKNzBvZHLBpkkOwXVGFJjE1VxcWVqfmCQ+/aPK2b/CxBS4g4SJ6EzkVQUnMvFAf3jWqNuaNs5fyRYqhvVbdOlCI+WBsrmXtnaWnYJwtFS+VFK2TeZE0erwPhMu69/ziCKpQf4bDlhBpQZkLClC6brkY5b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAJIDiPf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PitAw+5KcksrsAnSbtmMV9TmBKXGCJocTMe+lshGemAO9XNvrjOj2BdeDIzpKo57Z1ltE+PPIKDWDcn8jHzdTUC/29swyYWUtilOkNmqgQk0AzAIbtkP2uZTI7d25/wxXHHEBiAZOsTuXgMEGDrn7ziyQ6rxn1lozLSiN3CGdAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ib9ptz2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAJIDiPf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EDCC4CED4;
-	Thu, 12 Dec 2024 17:12:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ib9ptz2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6599AC4CED0;
+	Thu, 12 Dec 2024 17:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023557;
-	bh=7ugiDzyqmtymFq5Q80d12FBNkHrb0qy9jYJqHvtgOT8=;
+	s=korg; t=1734023560;
+	bh=Gs1geyviPmFJhxYgw+R2iIfXXwHeZ0tYwQToTIRXvEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAJIDiPfnhvt5p+lEGlJWFqQ8vaK4MQGXTje7hZOcHdJJ2RjDAeCNftT5pLOINcuP
-	 RZXdQDp119vIuSjHfk8939Zs8emqx3Hn/8xF6XtysL20TRoZ5z6f+SU2CkxfuxPEtn
-	 5tj6UZd9W6Sz3wy5xOfuBDOX/4erqT+a6+NmbiFQ=
+	b=Ib9ptz2tESxqcQF+VXWsjF6sTIkfD0XlH48YH0WvOKr/hiM4ex0XDbEbH38IEPFIL
+	 p2o0orJb8bAer8kR2Bm9EOWrcjf1i/EwPLV7uPp2UR6AUidVoaOgyBNmzy4n7ZQwWB
+	 SkQCaLPfnzIUpSHIRIXGp7YpwriojnfkFYv2d6e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 554/565] scsi: core: Fix scsi_mode_select() buffer length handling
-Date: Thu, 12 Dec 2024 16:02:29 +0100
-Message-ID: <20241212144333.762072965@linuxfoundation.org>
+	Zheng Yejian <zhengyejian@huaweicloud.com>,
+	SeongJae Park <sj@kernel.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	Leonard Foerster <foersleo@amazon.de>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Ye Weihua <yeweihua4@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 545/565] mm/damon/vaddr: fix issue in damon_va_evenly_split_region()
+Date: Thu, 12 Dec 2024 16:02:20 +0100
+Message-ID: <20241212144333.398839906@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -50,71 +55,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <damien.lemoal@wdc.com>
+From: Zheng Yejian <zhengyejian@huaweicloud.com>
 
-commit a7d6840bed0c2b16ac3071b74b5fcf08fc488241 upstream.
+commit f3c7a1ede435e2e45177d7a490a85fb0a0ec96d1 upstream.
 
-The MODE SELECT(6) command allows handling mode page buffers that are up to
-255 bytes, including the 4 byte header needed in front of the page
-buffer. For requests larger than this limit, automatically use the MODE
-SELECT(10) command.
+Patch series "mm/damon/vaddr: Fix issue in
+damon_va_evenly_split_region()".  v2.
 
-In both cases, since scsi_mode_select() adds the mode select page header,
-checks on the buffer length value must include this header size to avoid
-overflows of the command CDB allocation length field.
+According to the logic of damon_va_evenly_split_region(), currently
+following split case would not meet the expectation:
 
-While at it, use put_unaligned_be16() for setting the header block
-descriptor length and CDB allocation length when using MODE SELECT(10).
+  Suppose DAMON_MIN_REGION=0x1000,
+  Case: Split [0x0, 0x3000) into 2 pieces, then the result would be
+        acutually 3 regions:
+          [0x0, 0x1000), [0x1000, 0x2000), [0x2000, 0x3000)
+        but NOT the expected 2 regions:
+          [0x0, 0x1000), [0x1000, 0x3000) !!!
 
-[mkp: fix MODE SENSE vs. MODE SELECT confusion]
+The root cause is that when calculating size of each split piece in
+damon_va_evenly_split_region():
 
-Link: https://lore.kernel.org/r/20210820070255.682775-3-damien.lemoal@wdc.com
-Signed-off-by: Damien Le Moal <damien.lemoal@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  `sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);`
+
+both the dividing and the ALIGN_DOWN may cause loss of precision, then
+each time split one piece of size 'sz_piece' from origin 'start' to 'end'
+would cause more pieces are split out than expected!!!
+
+To fix it, count for each piece split and make sure no more than
+'nr_pieces'.  In addition, add above case into damon_test_split_evenly().
+
+And add 'nr_piece == 1' check in damon_va_evenly_split_region() for better
+code readability and add a corresponding kunit testcase.
+
+
+This patch (of 2):
+
+According to the logic of damon_va_evenly_split_region(), currently
+following split case would not meet the expectation:
+
+  Suppose DAMON_MIN_REGION=0x1000,
+  Case: Split [0x0, 0x3000) into 2 pieces, then the result would be
+        acutually 3 regions:
+          [0x0, 0x1000), [0x1000, 0x2000), [0x2000, 0x3000)
+        but NOT the expected 2 regions:
+          [0x0, 0x1000), [0x1000, 0x3000) !!!
+
+The root cause is that when calculating size of each split piece in
+damon_va_evenly_split_region():
+
+  `sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);`
+
+both the dividing and the ALIGN_DOWN may cause loss of precision,
+then each time split one piece of size 'sz_piece' from origin 'start' to
+'end' would cause more pieces are split out than expected!!!
+
+To fix it, count for each piece split and make sure no more than
+'nr_pieces'. In addition, add above case into damon_test_split_evenly().
+
+After this patch, damon-operations test passed:
+
+ # ./tools/testing/kunit/kunit.py run damon-operations
+ [...]
+ ============== damon-operations (6 subtests) ===============
+ [PASSED] damon_test_three_regions_in_vmas
+ [PASSED] damon_test_apply_three_regions1
+ [PASSED] damon_test_apply_three_regions2
+ [PASSED] damon_test_apply_three_regions3
+ [PASSED] damon_test_apply_three_regions4
+ [PASSED] damon_test_split_evenly
+ ================ [PASSED] damon-operations =================
+
+Link: https://lkml.kernel.org/r/20241022083927.3592237-1-zhengyejian@huaweicloud.com
+Link: https://lkml.kernel.org/r/20241022083927.3592237-2-zhengyejian@huaweicloud.com
+Fixes: 3f49584b262c ("mm/damon: implement primitives for the virtual memory address spaces")
+Signed-off-by: Zheng Yejian <zhengyejian@huaweicloud.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: Leonard Foerster <foersleo@amazon.de>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Ye Weihua <yeweihua4@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/scsi/scsi_lib.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -2044,8 +2044,15 @@ scsi_mode_select(struct scsi_device *sde
- 	memset(cmd, 0, sizeof(cmd));
- 	cmd[1] = (pf ? 0x10 : 0) | (sp ? 0x01 : 0);
+---
+ mm/damon/vaddr-test.h |    1 +
+ mm/damon/vaddr.c      |    4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+--- a/mm/damon/vaddr-test.h
++++ b/mm/damon/vaddr-test.h
+@@ -306,6 +306,7 @@ static void damon_test_split_evenly(stru
+ 	damon_test_split_evenly_fail(test, 0, 100, 0);
+ 	damon_test_split_evenly_succ(test, 0, 100, 10);
+ 	damon_test_split_evenly_succ(test, 5, 59, 5);
++	damon_test_split_evenly_succ(test, 0, 3, 2);
+ 	damon_test_split_evenly_fail(test, 5, 6, 2);
  
--	if (sdev->use_10_for_ms) {
--		if (len > 65535)
-+	/*
-+	 * Use MODE SELECT(10) if the device asked for it or if the mode page
-+	 * and the mode select header cannot fit within the maximumm 255 bytes
-+	 * of the MODE SELECT(6) command.
-+	 */
-+	if (sdev->use_10_for_ms ||
-+	    len + 4 > 255 ||
-+	    data->block_descriptor_length > 255) {
-+		if (len > 65535 - 8)
- 			return -EINVAL;
- 		real_buffer = kmalloc(8 + len, GFP_KERNEL);
- 		if (!real_buffer)
-@@ -2058,15 +2065,13 @@ scsi_mode_select(struct scsi_device *sde
- 		real_buffer[3] = data->device_specific;
- 		real_buffer[4] = data->longlba ? 0x01 : 0;
- 		real_buffer[5] = 0;
--		real_buffer[6] = data->block_descriptor_length >> 8;
--		real_buffer[7] = data->block_descriptor_length;
-+		put_unaligned_be16(data->block_descriptor_length,
-+				   &real_buffer[6]);
+ 	damon_destroy_ctx(c);
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -69,6 +69,7 @@ static int damon_va_evenly_split_region(
+ 	unsigned long sz_orig, sz_piece, orig_end;
+ 	struct damon_region *n = NULL, *next;
+ 	unsigned long start;
++	unsigned int i;
  
- 		cmd[0] = MODE_SELECT_10;
--		cmd[7] = len >> 8;
--		cmd[8] = len;
-+		put_unaligned_be16(len, &cmd[7]);
- 	} else {
--		if (len > 255 || data->block_descriptor_length > 255 ||
--		    data->longlba)
-+		if (data->longlba)
- 			return -EINVAL;
+ 	if (!r || !nr_pieces)
+ 		return -EINVAL;
+@@ -82,8 +83,7 @@ static int damon_va_evenly_split_region(
  
- 		real_buffer = kmalloc(4 + len, GFP_KERNEL);
+ 	r->ar.end = r->ar.start + sz_piece;
+ 	next = damon_next_region(r);
+-	for (start = r->ar.end; start + sz_piece <= orig_end;
+-			start += sz_piece) {
++	for (start = r->ar.end, i = 1; i < nr_pieces; start += sz_piece, i++) {
+ 		n = damon_new_region(start, start + sz_piece);
+ 		if (!n)
+ 			return -ENOMEM;
 
 
