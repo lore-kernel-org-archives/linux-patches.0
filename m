@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279FA205ACF;
-	Thu, 12 Dec 2024 15:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4715205ACF;
+	Thu, 12 Dec 2024 15:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017186; cv=none; b=FTouuywujvsF+Qa02w/o4IRk6B0lH7BBVGCdJq8+GdOwrWA/Gl/OnZ80txfynM3/51kLiD1Jf7yOCBb/P3h4iAds05NoUYpsQlAPtdllUxd28Q4M9GUh2N6eO1GCXkuaJFSCPcjsoYIVtx97+Nbf1EFYge1j5SFen4gjhdUIua8=
+	t=1734017189; cv=none; b=mgbeb/DJg16WSnfiZYn/Mggwz8YSqABp7lqLR9rKEBdcs9gbbWvPnz3bAYEqwU83P0l8zhNU+enJvomfXwmPXRUOybbtxJzSb5FsTMGSnPFPD7OtFqwqhcTgS5mIXR1xPgegXsCoO/ThnP/Z5TAmTsY1vJM+KuwG2/+v31SjYkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017186; c=relaxed/simple;
-	bh=98fLkRc5syxwqOavCuCxV4JRusyxhireMu190o4xs3Y=;
+	s=arc-20240116; t=1734017189; c=relaxed/simple;
+	bh=QDsRv+XrhfM2F7MkihohpiJYoRJPIeth5jFFycUwQAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKuWorhpoVTVq/Dn8U6sEFz3kN9dZPCMhG9RxuHc7dC310Bu6YNOkGFG4khwFoMszlaSpyInBIIahnJqn8DVUIE/E/PVQi3Zm879uZY2EVoyHdabfwo+f5oWEhZrovuQHqa/Ocrf6P+bnQsn/Sqjcl1rqKI1yFHffIKnYjNJpW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OcPqmIZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDzfDALIc/YO/ZUgXB3eitqd695TnNMZmbKVb3HCdN5SjNs0mtdomjgMipdC+MgpXPdKLsLl1Uf7hiyw0ExRssKAb+4bK/q7cJzj2hXKTITGMbJzqnQ6AY8MDbhzHEogquWmqbLwc9aVY8Zytp0fCElJjDO02cyjEf+5ti8WvCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0klOgmd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OcPqmIZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE78C4CECE;
-	Thu, 12 Dec 2024 15:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0klOgmd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AE0C4CECE;
+	Thu, 12 Dec 2024 15:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017186;
-	bh=98fLkRc5syxwqOavCuCxV4JRusyxhireMu190o4xs3Y=;
+	s=korg; t=1734017189;
+	bh=QDsRv+XrhfM2F7MkihohpiJYoRJPIeth5jFFycUwQAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OcPqmIZN0kKe1tJVK38fiq5YMA6Wf7WF1FgLUz9Q16s8ks/3RiT6GuuBNftz6lm2a
-	 PBYdw2Pz7GTZ5gjDGpg42HbdYqR3vrpaFGmESTVuCC4/JW6eEvh8iTgWlrYl0Q/2Ey
-	 y840XjK3ZlwbaLsS+PIl2W3DCKck8KMWmv6XH6Fw=
+	b=I0klOgmdXDq/j8Do4x/5u+BC+ZWBbCyyNRCtA1IP8NmNVnQZeLtZC07VvqoSdcwA6
+	 uJ1X03D0LaB1GRZuCoIjJ+/ZnZ3/WddBPQklSLhALa4cJ2WJCK21QTYpSOgkfGJYDt
+	 MNBv/ab3OHnAa/wUNCW9f7bebNxkMZeOuoUP119I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7f3761b790fa41d0f3d5@syzkaller.appspotmail.com,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 407/466] fs/ntfs3: Fix case when unmarked clusters intersect with zone
-Date: Thu, 12 Dec 2024 15:59:36 +0100
-Message-ID: <20241212144322.832684911@linuxfoundation.org>
+Subject: [PATCH 6.12 390/466] i3c: mipi-i3c-hci: Mask ring interrupts before ring stop request
+Date: Thu, 12 Dec 2024 15:59:19 +0100
+Message-ID: <20241212144322.180238116@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,84 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 5fc982fe7eca9d0cf7b25832450ebd4f7c8e1c36 ]
+[ Upstream commit 6ca2738174e4ee44edb2ab2d86ce74f015a0cc32 ]
 
-Reported-by: syzbot+7f3761b790fa41d0f3d5@syzkaller.appspotmail.com
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Bus cleanup path in DMA mode may trigger a RING_OP_STAT interrupt when
+the ring is being stopped. Depending on timing between ring stop request
+completion, interrupt handler removal and code execution this may lead
+to a NULL pointer dereference in hci_dma_irq_handler() if it gets to run
+after the io_data pointer is set to NULL in hci_dma_cleanup().
+
+Prevent this my masking the ring interrupts before ring stop request.
+
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Link: https://lore.kernel.org/r/20240920144432.62370-2-jarkko.nikula@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/run.c | 40 ++++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/run.c b/fs/ntfs3/run.c
-index 58e988cd80490..48566dff0dc92 100644
---- a/fs/ntfs3/run.c
-+++ b/fs/ntfs3/run.c
-@@ -1055,8 +1055,8 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- {
- 	int ret, err;
- 	CLST next_vcn, lcn, len;
--	size_t index;
--	bool ok;
-+	size_t index, done;
-+	bool ok, zone;
- 	struct wnd_bitmap *wnd;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index a918e96b21fdd..13adc58400942 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -159,10 +159,10 @@ static void hci_dma_cleanup(struct i3c_hci *hci)
+ 	for (i = 0; i < rings->total; i++) {
+ 		rh = &rings->headers[i];
  
- 	ret = run_unpack(run, sbi, ino, svcn, evcn, vcn, run_buf, run_buf_size);
-@@ -1087,8 +1087,9 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 			continue;
++		rh_reg_write(INTR_SIGNAL_ENABLE, 0);
+ 		rh_reg_write(RING_CONTROL, 0);
+ 		rh_reg_write(CR_SETUP, 0);
+ 		rh_reg_write(IBI_SETUP, 0);
+-		rh_reg_write(INTR_SIGNAL_ENABLE, 0);
  
- 		down_read_nested(&wnd->rw_lock, BITMAP_MUTEX_CLUSTERS);
-+		zone = max(wnd->zone_bit, lcn) < min(wnd->zone_end, lcn + len);
- 		/* Check for free blocks. */
--		ok = wnd_is_used(wnd, lcn, len);
-+		ok = !zone && wnd_is_used(wnd, lcn, len);
- 		up_read(&wnd->rw_lock);
- 		if (ok)
- 			continue;
-@@ -1096,14 +1097,33 @@ int run_unpack_ex(struct runs_tree *run, struct ntfs_sb_info *sbi, CLST ino,
- 		/* Looks like volume is corrupted. */
- 		ntfs_set_state(sbi, NTFS_DIRTY_ERROR);
- 
--		if (down_write_trylock(&wnd->rw_lock)) {
--			/* Mark all zero bits as used in range [lcn, lcn+len). */
--			size_t done;
--			err = wnd_set_used_safe(wnd, lcn, len, &done);
--			up_write(&wnd->rw_lock);
--			if (err)
--				return err;
-+		if (!down_write_trylock(&wnd->rw_lock))
-+			continue;
-+
-+		if (zone) {
-+			/*
-+			 * Range [lcn, lcn + len) intersects with zone.
-+			 * To avoid complex with zone just turn it off.
-+			 */
-+			wnd_zone_set(wnd, 0, 0);
-+		}
-+
-+		/* Mark all zero bits as used in range [lcn, lcn+len). */
-+		err = wnd_set_used_safe(wnd, lcn, len, &done);
-+		if (zone) {
-+			/* Restore zone. Lock mft run. */
-+			struct rw_semaphore *lock;
-+			lock = is_mounted(sbi) ? &sbi->mft.ni->file.run_lock :
-+						 NULL;
-+			if (lock)
-+				down_read(lock);
-+			ntfs_refresh_zone(sbi);
-+			if (lock)
-+				up_read(lock);
- 		}
-+		up_write(&wnd->rw_lock);
-+		if (err)
-+			return err;
- 	}
- 
- 	return ret;
+ 		if (rh->xfer)
+ 			dma_free_coherent(&hci->master.dev,
 -- 
 2.43.0
 
