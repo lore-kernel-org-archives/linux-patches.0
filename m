@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF3642206A5;
-	Thu, 12 Dec 2024 17:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD2222145E;
+	Thu, 12 Dec 2024 17:29:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024584; cv=none; b=fN8IGVAkLf95hoo49wgXkmPURk8e/dxNoMtbgDdNsVkUE135MPB26kco7gxzLSg/idvZQ/APfKdKQtAsgqyYXJQKkOLl4n4eRoxPWBQJ02BxpDo9b6uqj71hZyHhuHndE8g+9CfHC9Vil72OxJTqupehwgg4432MkxzXAQl21gE=
+	t=1734024587; cv=none; b=mtNQ6BvgbawCANCCN27ZuObK2MerqyBiWMKrauP5W9V0AhGr8QdcnUVpAY2F7PhnBr8Y90t+an30UCr2K0Ljwn23Vwsx6be+Pca8sngOQBIZCGHU2g6Pc7p1e06qaN4ZrX/SD8EyPikW4qRGQ7zmg6xHW0yBQYGvTaGD0SBImBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024584; c=relaxed/simple;
-	bh=oqxoka6W5Oj7XHPr4Otid+xLwyT1VlM3ct6xsIhKBjA=;
+	s=arc-20240116; t=1734024587; c=relaxed/simple;
+	bh=85oqSZindcOdyDkhpR3gmtFDSa6sn3R4+YSBS1QQqko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/86a4WaICs+23+mxN+hROnkHjjpjp6MYog9msqGP/6PvX7UUU/LMlWsu0qt5qsVx7DXOSOpeh+QKjRGqK5OoEHQjOWiTpvjJ1BUq0UcxsnNHVFyW6jNIu9PRko5lmdMpbw/NeRzqKwDFFZRrI47U/E4i4vrlGReMaluL6t26es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmrBBMVv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XjGwyDuekQjwxcYrL0qtml7G0rvrWZPu1HFmDZQ6fPTF86444xx2BeEKpQVo6s1qKQF974iMG31bWIDbOGcqsFVC2N+qSdI+GdwRWWEaiX56szURU9IlGyV2Cy2vl3+TgCOxK0YeEx4Ebht+E977VugKN1fv6V07t5oVWmJ8kJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blKZT9CK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmrBBMVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E0AC4CECE;
-	Thu, 12 Dec 2024 17:29:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blKZT9CK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B751C4CECE;
+	Thu, 12 Dec 2024 17:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024583;
-	bh=oqxoka6W5Oj7XHPr4Otid+xLwyT1VlM3ct6xsIhKBjA=;
+	s=korg; t=1734024586;
+	bh=85oqSZindcOdyDkhpR3gmtFDSa6sn3R4+YSBS1QQqko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmrBBMVvQPaN8b+dr2S4VWNRWCrp7QbRcnipPffDcSg9vSMC/TBXs6JSZ75TA8sD6
-	 9h+KxNf4ScXdqJqnIkTFGqkluZcD62rZfhmBSVNhNU5YTUyR5vwJsw2+ezfX08KM8Y
-	 4SAzmyktRPO2dZXWEwMZHT2Dy39wd5OlmIXp6lkw=
+	b=blKZT9CKGXlwATbGbDuIx0O1BVNS0xGAZDa3rVn2rH9wcIXIzgRNPyy8LEqL7NEVS
+	 C9mYg2U7XxhjVrZ/Wd6ptdZ29gsqwSrgnss33P0y/U9MmpRltWU973dzJJI+2z5Vcr
+	 yH2yXIQSsoEdfrq0y2Ou+ZjzseTcYlnAznKvgPCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 343/459] ethtool: Fix wrong mod state in case of verbose and no_mask bitset
-Date: Thu, 12 Dec 2024 16:01:21 +0100
-Message-ID: <20241212144307.213278178@linuxfoundation.org>
+Subject: [PATCH 5.10 344/459] geneve: do not assume mac header is set in geneve_xmit_skb()
+Date: Thu, 12 Dec 2024 16:01:22 +0100
+Message-ID: <20241212144307.252177323@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,125 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 910c4788d6155b2202ec88273376cd7ecdc24f0a ]
+[ Upstream commit 8588c99c7d47448fcae39e3227d6e2bb97aad86d ]
 
-A bitset without mask in a _SET request means we want exactly the bits in
-the bitset to be set. This works correctly for compact format but when
-verbose format is parsed, ethnl_update_bitset32_verbose() only sets the
-bits present in the request bitset but does not clear the rest. The commit
-6699170376ab ("ethtool: fix application of verbose no_mask bitset") fixes
-this issue by clearing the whole target bitmap before we start iterating.
-The solution proposed brought an issue with the behavior of the mod
-variable. As the bitset is always cleared the old value will always
-differ to the new value.
+We should not assume mac header is set in output path.
 
-Fix it by adding a new function to compare bitmaps and a temporary variable
-which save the state of the old bitmap.
+Use skb_eth_hdr() instead of eth_hdr() to fix the issue.
 
-Fixes: 6699170376ab ("ethtool: fix application of verbose no_mask bitset")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20241202153358.1142095-1-kory.maincent@bootlin.com
+sysbot reported the following :
+
+ WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 skb_mac_header include/linux/skbuff.h:3052 [inline]
+ WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 eth_hdr include/linux/if_ether.h:24 [inline]
+ WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit_skb drivers/net/geneve.c:898 [inline]
+ WARNING: CPU: 0 PID: 11635 at include/linux/skbuff.h:3052 geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
+Modules linked in:
+CPU: 0 UID: 0 PID: 11635 Comm: syz.4.1423 Not tainted 6.12.0-syzkaller-10296-gaaf20f870da0 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+ RIP: 0010:skb_mac_header include/linux/skbuff.h:3052 [inline]
+ RIP: 0010:eth_hdr include/linux/if_ether.h:24 [inline]
+ RIP: 0010:geneve_xmit_skb drivers/net/geneve.c:898 [inline]
+ RIP: 0010:geneve_xmit+0x4c38/0x5730 drivers/net/geneve.c:1039
+Code: 21 c6 02 e9 35 d4 ff ff e8 a5 48 4c fb 90 0f 0b 90 e9 fd f5 ff ff e8 97 48 4c fb 90 0f 0b 90 e9 d8 f5 ff ff e8 89 48 4c fb 90 <0f> 0b 90 e9 41 e4 ff ff e8 7b 48 4c fb 90 0f 0b 90 e9 cd e7 ff ff
+RSP: 0018:ffffc90003b2f870 EFLAGS: 00010283
+RAX: 000000000000037a RBX: 000000000000ffff RCX: ffffc9000dc3d000
+RDX: 0000000000080000 RSI: ffffffff86428417 RDI: 0000000000000003
+RBP: ffffc90003b2f9f0 R08: 0000000000000003 R09: 000000000000ffff
+R10: 000000000000ffff R11: 0000000000000002 R12: ffff88806603c000
+R13: 0000000000000000 R14: ffff8880685b2780 R15: 0000000000000e23
+FS:  00007fdc2deed6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b30a1dff8 CR3: 0000000056b8c000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
+  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
+  __dev_direct_xmit+0x58a/0x720 net/core/dev.c:4490
+  dev_direct_xmit include/linux/netdevice.h:3181 [inline]
+  packet_xmit+0x1e4/0x360 net/packet/af_packet.c:285
+  packet_snd net/packet/af_packet.c:3146 [inline]
+  packet_sendmsg+0x2700/0x5660 net/packet/af_packet.c:3178
+  sock_sendmsg_nosec net/socket.c:711 [inline]
+  __sock_sendmsg net/socket.c:726 [inline]
+  __sys_sendto+0x488/0x4f0 net/socket.c:2197
+  __do_sys_sendto net/socket.c:2204 [inline]
+  __se_sys_sendto net/socket.c:2200 [inline]
+  __x64_sys_sendto+0xe0/0x1c0 net/socket.c:2200
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: a025fb5f49ad ("geneve: Allow configuration of DF behaviour")
+Reported-by: syzbot+3ec5271486d7cb2d242a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/674f4b72.050a0220.17bd51.004a.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Link: https://patch.msgid.link/20241203182122.2725517-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/bitset.c | 48 ++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 44 insertions(+), 4 deletions(-)
+ drivers/net/geneve.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
-index 0515d6604b3b9..f0883357d12e5 100644
---- a/net/ethtool/bitset.c
-+++ b/net/ethtool/bitset.c
-@@ -425,12 +425,32 @@ static int ethnl_parse_bit(unsigned int *index, bool *val, unsigned int nbits,
- 	return 0;
- }
+diff --git a/drivers/net/geneve.c b/drivers/net/geneve.c
+index d0b7d1b922218..e7412edb84dcd 100644
+--- a/drivers/net/geneve.c
++++ b/drivers/net/geneve.c
+@@ -983,7 +983,7 @@ static int geneve_xmit_skb(struct sk_buff *skb, struct net_device *dev,
+ 		if (geneve->cfg.df == GENEVE_DF_SET) {
+ 			df = htons(IP_DF);
+ 		} else if (geneve->cfg.df == GENEVE_DF_INHERIT) {
+-			struct ethhdr *eth = eth_hdr(skb);
++			struct ethhdr *eth = skb_eth_hdr(skb);
  
-+/**
-+ * ethnl_bitmap32_equal() - Compare two bitmaps
-+ * @map1:  first bitmap
-+ * @map2:  second bitmap
-+ * @nbits: bit size to compare
-+ *
-+ * Return: true if first @nbits are equal, false if not
-+ */
-+static bool ethnl_bitmap32_equal(const u32 *map1, const u32 *map2,
-+				 unsigned int nbits)
-+{
-+	if (memcmp(map1, map2, nbits / 32 * sizeof(u32)))
-+		return false;
-+	if (nbits % 32 == 0)
-+		return true;
-+	return !((map1[nbits / 32] ^ map2[nbits / 32]) &
-+		 ethnl_lower_bits(nbits % 32));
-+}
-+
- static int
- ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 			      const struct nlattr *attr, struct nlattr **tb,
- 			      ethnl_string_array_t names,
- 			      struct netlink_ext_ack *extack, bool *mod)
- {
-+	u32 *saved_bitmap = NULL;
- 	struct nlattr *bit_attr;
- 	bool no_mask;
- 	int rem;
-@@ -448,8 +468,20 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 	}
- 
- 	no_mask = tb[ETHTOOL_A_BITSET_NOMASK];
--	if (no_mask)
--		ethnl_bitmap32_clear(bitmap, 0, nbits, mod);
-+	if (no_mask) {
-+		unsigned int nwords = DIV_ROUND_UP(nbits, 32);
-+		unsigned int nbytes = nwords * sizeof(u32);
-+		bool dummy;
-+
-+		/* The bitmap size is only the size of the map part without
-+		 * its mask part.
-+		 */
-+		saved_bitmap = kcalloc(nwords, sizeof(u32), GFP_KERNEL);
-+		if (!saved_bitmap)
-+			return -ENOMEM;
-+		memcpy(saved_bitmap, bitmap, nbytes);
-+		ethnl_bitmap32_clear(bitmap, 0, nbits, &dummy);
-+	}
- 
- 	nla_for_each_nested(bit_attr, tb[ETHTOOL_A_BITSET_BITS], rem) {
- 		bool old_val, new_val;
-@@ -458,22 +490,30 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 		if (nla_type(bit_attr) != ETHTOOL_A_BITSET_BITS_BIT) {
- 			NL_SET_ERR_MSG_ATTR(extack, bit_attr,
- 					    "only ETHTOOL_A_BITSET_BITS_BIT allowed in ETHTOOL_A_BITSET_BITS");
-+			kfree(saved_bitmap);
- 			return -EINVAL;
- 		}
- 		ret = ethnl_parse_bit(&idx, &new_val, nbits, bit_attr, no_mask,
- 				      names, extack);
--		if (ret < 0)
-+		if (ret < 0) {
-+			kfree(saved_bitmap);
- 			return ret;
-+		}
- 		old_val = bitmap[idx / 32] & ((u32)1 << (idx % 32));
- 		if (new_val != old_val) {
- 			if (new_val)
- 				bitmap[idx / 32] |= ((u32)1 << (idx % 32));
- 			else
- 				bitmap[idx / 32] &= ~((u32)1 << (idx % 32));
--			*mod = true;
-+			if (!no_mask)
-+				*mod = true;
- 		}
- 	}
- 
-+	if (no_mask && !ethnl_bitmap32_equal(saved_bitmap, bitmap, nbits))
-+		*mod = true;
-+
-+	kfree(saved_bitmap);
- 	return 0;
- }
- 
+ 			if (ntohs(eth->h_proto) == ETH_P_IPV6) {
+ 				df = htons(IP_DF);
 -- 
 2.43.0
 
