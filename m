@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACE22AF0E;
-	Thu, 12 Dec 2024 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AB11487CD;
+	Thu, 12 Dec 2024 15:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016844; cv=none; b=D7PfLUKhwLfm+h6z9zq5BS86cBKAUXtFYdDqPjZGkKQ7cZpJcRo7M9ClB44Nwxdq3rEC802UeC5WTixT5SmvHo2rCX5aTi+TcAOtZRO0YA8oRr889vCjZRpx+2aItf1ofSbjnU5VUNpufPoVXs0CHA9THKtADYksikEBDslLLcA=
+	t=1734016847; cv=none; b=JcFBL+ud2dUVBZ+CS+skNKcgYWbgRFT1e2iFVUx7H8AsFy+N2JEAy8AMLWyUNgP/2H5ZzmfibhR2R7WzszboSoqoIOxMBIBN0hrAhQs/7Q8FMfbz06UKycpjr7N4eFDYdTI4mkakXZjOck+VKU+9ziBiMgMal2bvpUCMWtimjt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016844; c=relaxed/simple;
-	bh=3aeGxPRiOcP7zyq12u+oAPISoSDxqZ6K8eunCEhztvI=;
+	s=arc-20240116; t=1734016847; c=relaxed/simple;
+	bh=GXFl2thFBj0amLQd2tyX9rjpTJYQG9uZp1OoNg3ZA/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amZmD3VXr93GC3ulLLzmi8hbY92+D6aO4I4Ec1ocd6FSm/G3EpLN79gfwnnm3wiOI+wZtomJTU24aDdEe6/bt6ezGS5zLW+LKZn3uw/vC7dyHZuxPDSsYJyeUyrkS0wN0M1akJxJDz/764iCk9LHp/kKPvPSc0EncqaXxq5oDjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVEE90Y1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcaIiuDmmRZj0PyMBbTJECLVs1sAumH2znOiGmvLlWGYNY2lTWS3Z3FT3FldQjmckfdJEe6kqnoDqohysGBmzfucBFhI/D3f7TnqGOMDx2Vo1nz8M4MhxzAR2BK/BRvSBgoNdnysmSU/e1S9y8W+PqGgY80risQN2kszKYCzYq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZiX1TrXF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVEE90Y1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05058C4CECE;
-	Thu, 12 Dec 2024 15:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZiX1TrXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C43C4CED7;
+	Thu, 12 Dec 2024 15:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016844;
-	bh=3aeGxPRiOcP7zyq12u+oAPISoSDxqZ6K8eunCEhztvI=;
+	s=korg; t=1734016847;
+	bh=GXFl2thFBj0amLQd2tyX9rjpTJYQG9uZp1OoNg3ZA/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVEE90Y12bySGjMK4Nzm+JS/t/HJpYpGet3WUBbBGC4j+1Piy7oPw08QOKYVsidDr
-	 KZnPOUql3Zps9vovfgHzRRqocIqyoQqvbOrpCad/4OZbBvtnDnzKo3lFJEf0Vts7we
-	 OJ5i5SWjEoW8RhxWvxFOMB+RwMJsgXYH9o67nNGA=
+	b=ZiX1TrXFtaUM6Eh02mvndLEyiJtouC3To496zahC+ACYDlC/m2sd8QrYI5HTXauHc
+	 NcgHPw5BlPc5BOQ5vZ3VwnD0PCO9f6utVMAB/q0nlnQo3U2z+KL9mhxwsNwpvliomh
+	 pVldGIw7CvC4G6VoKqAYoi5PMvzPMZS152YbAni4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Donald Hunter <donald.hunter@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Lang Yu <lang.yu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 312/466] netlink: specs: Add missing bitset attrs to ethtool spec
-Date: Thu, 12 Dec 2024 15:58:01 +0100
-Message-ID: <20241212144319.106338673@linuxfoundation.org>
+Subject: [PATCH 6.12 313/466] drm/amdgpu: refine error handling in amdgpu_ttm_tt_pin_userptr
+Date: Thu, 12 Dec 2024 15:58:02 +0100
+Message-ID: <20241212144319.144587921@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,43 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donald Hunter <donald.hunter@gmail.com>
+From: Lang Yu <lang.yu@amd.com>
 
-[ Upstream commit b0b3683419b45e2971b6d413c506cb818b268d35 ]
+[ Upstream commit 46186667f98fb7158c98f4ff5da62c427761ffcd ]
 
-There are a couple of attributes missing from the 'bitset' attribute-set
-in the ethtool netlink spec. Add them to the spec.
+Free sg table when dma_map_sgtable() failed to avoid memory leak.
 
-Reported-by: Kory Maincent <kory.maincent@bootlin.com>
-Closes: https://lore.kernel.org/netdev/20241017180551.1259bf5c@kmaincent-XPS-13-7390/
-Signed-off-by: Donald Hunter <donald.hunter@gmail.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Tested-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20241018090630.22212-1-donald.hunter@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Lang Yu <lang.yu@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/ethtool.yaml | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/ethtool.yaml b/Documentation/netlink/specs/ethtool.yaml
-index 6a050d755b9cb..f6c5d8214c7e9 100644
---- a/Documentation/netlink/specs/ethtool.yaml
-+++ b/Documentation/netlink/specs/ethtool.yaml
-@@ -96,7 +96,12 @@ attribute-sets:
-         name: bits
-         type: nest
-         nested-attributes: bitset-bits
--
-+      -
-+        name: value
-+        type: binary
-+      -
-+        name: mask
-+        type: binary
-   -
-     name: string
-     attributes:
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index 74adb983ab03e..0637414fc70e0 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -812,7 +812,7 @@ static int amdgpu_ttm_tt_pin_userptr(struct ttm_device *bdev,
+ 	/* Map SG to device */
+ 	r = dma_map_sgtable(adev->dev, ttm->sg, direction, 0);
+ 	if (r)
+-		goto release_sg;
++		goto release_sg_table;
+ 
+ 	/* convert SG to linear array of pages and dma addresses */
+ 	drm_prime_sg_to_dma_addr_array(ttm->sg, gtt->ttm.dma_address,
+@@ -820,6 +820,8 @@ static int amdgpu_ttm_tt_pin_userptr(struct ttm_device *bdev,
+ 
+ 	return 0;
+ 
++release_sg_table:
++	sg_free_table(ttm->sg);
+ release_sg:
+ 	kfree(ttm->sg);
+ 	ttm->sg = NULL;
 -- 
 2.43.0
 
