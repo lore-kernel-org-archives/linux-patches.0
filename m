@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E9F21504F;
-	Thu, 12 Dec 2024 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1007421504F;
+	Thu, 12 Dec 2024 15:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016316; cv=none; b=FUDDFYqu06Dl9VgO8r3K8eo6r6JS+XayK1KYqll0SBVxDwekZHyPe5ZyilL8odiRpanlY4DSxr/rNF5O2WnGKJV+AUKVCvKTuoHU3wrP/u+hdKZ01MeJ4ft+H0WUbtpC7iHKELI83GRUUGuhPo0BChCnAJkREHH6SRMcN5O9AA0=
+	t=1734016320; cv=none; b=dKcDKT6YS1UNyTesDVKDYaWZRVV1ffowUTLxeEN/iNFqwX4jv6pm1O74eTzcpxUgxQc/ub2L4CiO9WGAK6kumWMUjZztTcSU2MnQjojTemVTYhW75PCaXXVg9MRrb/cPhpIVVQIHSmdYWk1LQ4JobORXmE48qHpHmyMprgCMnvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016316; c=relaxed/simple;
-	bh=Bw2Jd4Az82V8uRnSer8qatBL79muYHL4BYQqLY3O/Lc=;
+	s=arc-20240116; t=1734016320; c=relaxed/simple;
+	bh=rYSV9eB/IQBNFJ+wprtOA/Veq+8P6isiVdowmteyH4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MT+h+KrEoepLrlS/Rj300iHmf64EMiCWe+2PjMgF2MPa6rNXs5ArR+DmAi1ELYpXM/FfcT9miKjhlMsICt2cSRC1Qqbs5akuGd1A+iAyx/cL8ufi0eStuMOmwbq3AlIg6yDskhfXrgoohhyTD8Ky8JG0dzQib/yPbrZnQgVFoIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=byyIuWFk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PEf1C9us2Bm0NQf1hYuppoUec0c2Q0Dy+LuviovxXiNd3gtvEM73cd9Qj/SwXLZPs00omzwci+lWk6kLuV9bJkUZ9P0KUt+VLq/P4MpllFv0vEXiXeMbUtDoXad40h46sB6tsTAwUx5a1x3u9jXsGTRXXKs80rzujbclVM/eMrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gkmrgjo+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="byyIuWFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14779C4CECE;
-	Thu, 12 Dec 2024 15:11:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gkmrgjo+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F0AC4CECE;
+	Thu, 12 Dec 2024 15:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016316;
-	bh=Bw2Jd4Az82V8uRnSer8qatBL79muYHL4BYQqLY3O/Lc=;
+	s=korg; t=1734016319;
+	bh=rYSV9eB/IQBNFJ+wprtOA/Veq+8P6isiVdowmteyH4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byyIuWFkiXrmOjvUFnYs3Qd7hDeLCa83um37tAlO9O2Jkih5xvx+kGOAH86HNftkF
-	 ZhLhR6CB5UHvnQZk0DHvKxW5jp4awMSWEUs1VASRNR9ds6vSnyPcTNKhSo8JVYiMfW
-	 n772aoO3clySxLtoTar/57g1mIOTkQpH+tAVO/d0=
+	b=Gkmrgjo+qi9lKq8GPf8Uk6M6K17aABjdfnJcPZ/BqX1zA1J1URCdCqICE/Vh5butH
+	 8kEd+2eH2krKYhdeofeKmBU1ov2kQG/rrVlNTGc+YioZBEMINwYhIR1rK9XwJxzvkW
+	 ymDpjSg7GCoARewC/guVGdbWP3rfJezOYco5yMjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
 	Ralph Boehme <slow@samba.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 156/466] fs/smb/client: avoid querying SMB2_OP_QUERY_WSL_EA for SMB3 POSIX
-Date: Thu, 12 Dec 2024 15:55:25 +0100
-Message-ID: <20241212144312.959530683@linuxfoundation.org>
+Subject: [PATCH 6.12 158/466] fs/smb/client: cifs_prime_dcache() for SMB3 POSIX reparse points
+Date: Thu, 12 Dec 2024 15:55:27 +0100
+Message-ID: <20241212144313.037299920@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Ralph Boehme <slow@samba.org>
 
-commit ca4b2c4607433033e9c4f4659f809af4261d8992 upstream.
+commit 8cb0bc5436351de8a11eef13b7367d64cc0d6c68 upstream.
 
-Avoid extra roundtrip
+Spares an extra revalidation request
 
 Cc: stable@vger.kernel.org
 Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
@@ -63,20 +63,42 @@ Signed-off-by: Ralph Boehme <slow@samba.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/client/readdir.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -943,7 +943,8 @@ int smb2_query_path_info(const unsigned
- 		if (rc || !data->reparse_point)
- 			goto out;
+--- a/fs/smb/client/readdir.c
++++ b/fs/smb/client/readdir.c
+@@ -71,6 +71,8 @@ cifs_prime_dcache(struct dentry *parent,
+ 	struct inode *inode;
+ 	struct super_block *sb = parent->d_sb;
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
++	bool posix = cifs_sb_master_tcon(cifs_sb)->posix_extensions;
++	bool reparse_need_reval = false;
+ 	DECLARE_WAIT_QUEUE_HEAD_ONSTACK(wq);
+ 	int rc;
  
--		cmds[num_cmds++] = SMB2_OP_QUERY_WSL_EA;
-+		if (!tcon->posix_extensions)
-+			cmds[num_cmds++] = SMB2_OP_QUERY_WSL_EA;
- 		/*
- 		 * Skip SMB2_OP_GET_REPARSE if symlink already parsed in create
- 		 * response.
+@@ -85,7 +87,21 @@ cifs_prime_dcache(struct dentry *parent,
+ 		 * this spares us an invalidation.
+ 		 */
+ retry:
+-		if ((fattr->cf_cifsattrs & ATTR_REPARSE) ||
++		if (posix) {
++			switch (fattr->cf_mode & S_IFMT) {
++			case S_IFLNK:
++			case S_IFBLK:
++			case S_IFCHR:
++				reparse_need_reval = true;
++				break;
++			default:
++				break;
++			}
++		} else if (fattr->cf_cifsattrs & ATTR_REPARSE) {
++			reparse_need_reval = true;
++		}
++
++		if (reparse_need_reval ||
+ 		    (fattr->cf_flags & CIFS_FATTR_NEED_REVAL))
+ 			return;
+ 
 
 
