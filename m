@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2A4221DA4;
-	Thu, 12 Dec 2024 17:30:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D54C223320;
+	Thu, 12 Dec 2024 17:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024605; cv=none; b=vGo5X5Y6BcKhN5oUSdo9VYft3GtygFl+1pwEi08dB68kviWMOA41vmQ6W9PQbnnqKWrUwgqipb4SxX9IlSwvl29oXIStCdbTRw5KH77UnRbUCGj+pvdiVLomjgKVMBSdHQny3Fp0cMqPkSF6kaEr3XOsQHOX16MNZ67IYXJtcfg=
+	t=1734024608; cv=none; b=qFQq8yBKQLutH4aiX3v5sD+rOtp7i3iolF5L74si2tB3JLGJr7uikg6sHNF8t/hF1mPOuJS8Wqq0J+paeHaXRRYukQZ9VtiYcAvDeFfbAtnLpslHGw84APu6GiqE6m7eB++JK90azAEeuClg4M2TaiQKmbfkT5dma3UaHQmCjvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024605; c=relaxed/simple;
-	bh=QkhtXDXfhF3M6QIl5Kp3zT5r3P3ZhHgZBq05v42Fsyw=;
+	s=arc-20240116; t=1734024608; c=relaxed/simple;
+	bh=peJu836SFe7EytLwqTOJECHue+1MnnZqmfBBOivN/EI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIx7ojvCfQIwIoh/xATd3dSNg1kr+MhBpaTfSxYNaHjqJxS/kx/IA+rVxkXlXHSqe35MYC17NFmmcvvj7U1g3vzcG6A5N7Om2cGQ5FjySTg7UAvknxN91h3QaHI/GQJ/wygrfzQaM+cBB3rgmtmJQDfPPEhkub6FfmMBpAxqkPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zh5Y4H58; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rUaDFKSp0LWP74lcNDvhiqhC5oM/+DikPd++7nBpUcU/nMNdPMnQF45k4GYS552N1FITUAdVgALU7uuIS2KUFT2zNg6Zx5ASf8zDXKn/a3F5U1PpVIEqxetc/y6fVZf1lLdky/sIietwzAUkCBJoXFXE1IG2KBpbQyJ5slcGaQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZp7Skq7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zh5Y4H58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B64D1C4CECE;
-	Thu, 12 Dec 2024 17:30:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZp7Skq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5B04C4CECE;
+	Thu, 12 Dec 2024 17:30:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024605;
-	bh=QkhtXDXfhF3M6QIl5Kp3zT5r3P3ZhHgZBq05v42Fsyw=;
+	s=korg; t=1734024608;
+	bh=peJu836SFe7EytLwqTOJECHue+1MnnZqmfBBOivN/EI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zh5Y4H58/DiNELiWBcXEuguqCJL7J5icsC1VGT4O4mGAOQJtBNGbIJj8BzwtBG5cD
-	 7Fa7F/Q/eTZqLm5sSxU/3NO2r5bAFE3Nohq1baDahWwXiNkTD2wXCXLd5uVFnmkmMb
-	 K6hkAeM5qpBNHH3LAORIByn3NDwYGWLJetUE8gb4=
+	b=lZp7Skq7BqlHnDZjBVB4n++qRHcqIruBEcz4RlVK7X0vUsFbqR+wOWk3LMb4AOSFV
+	 bpPpURiwC/N3E7zpgokxdmFQIDxGWcK594t4ueSnZKiOjgK8SRFZ+vxZ6QKo5QyhSQ
+	 Io12vEaMB6vGpSEZ+ZqrIP1stvXbtLNfCZt7T8D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 321/459] nfsd: make sure exp active before svc_export_show
-Date: Thu, 12 Dec 2024 16:00:59 +0100
-Message-ID: <20241212144306.336651501@linuxfoundation.org>
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 312/459] octeontx2-pf: Fix out-of-bounds read in otx2_get_fecparam()
+Date: Thu, 12 Dec 2024 16:00:50 +0100
+Message-ID: <20241212144305.969420049@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,60 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-commit be8f982c369c965faffa198b46060f8853e0f1f0 upstream.
+commit 93efb0c656837f4a31d7cc6117a7c8cecc8fadac upstream.
 
-The function `e_show` was called with protection from RCU. This only
-ensures that `exp` will not be freed. Therefore, the reference count for
-`exp` can drop to zero, which will trigger a refcount use-after-free
-warning when `exp_get` is called. To resolve this issue, use
-`cache_get_rcu` to ensure that `exp` remains active.
+Code at line 967 implies that rsp->fwdata.supported_fec may be up to 4:
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 3 PID: 819 at lib/refcount.c:25
-refcount_warn_saturate+0xb1/0x120
-CPU: 3 UID: 0 PID: 819 Comm: cat Not tainted 6.12.0-rc3+ #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-1.16.1-2.fc37 04/01/2014
-RIP: 0010:refcount_warn_saturate+0xb1/0x120
-...
-Call Trace:
- <TASK>
- e_show+0x20b/0x230 [nfsd]
- seq_read_iter+0x589/0x770
- seq_read+0x1e5/0x270
- vfs_read+0x125/0x530
- ksys_read+0xc1/0x160
- do_syscall_64+0x5f/0x170
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ 967: if (rsp->fwdata.supported_fec <= FEC_MAX_INDEX)
 
-Fixes: bf18f163e89c ("NFSD: Using exp_get for export getting")
-Cc: stable@vger.kernel.org # 4.20+
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+If rsp->fwdata.supported_fec evaluates to 4, then there is an
+out-of-bounds read at line 971 because fec is an array with
+a maximum of 4 elements:
+
+ 954         const int fec[] = {
+ 955                 ETHTOOL_FEC_OFF,
+ 956                 ETHTOOL_FEC_BASER,
+ 957                 ETHTOOL_FEC_RS,
+ 958                 ETHTOOL_FEC_BASER | ETHTOOL_FEC_RS};
+ 959 #define FEC_MAX_INDEX 4
+
+ 971: fecparam->fec = fec[rsp->fwdata.supported_fec];
+
+Fix this by properly indexing fec[] with rsp->fwdata.supported_fec - 1.
+In this case the proper indexes 0 to 3 are used when
+rsp->fwdata.supported_fec evaluates to a range of 1 to 4, correspondingly.
+
+Fixes: d0cf9503e908 ("octeontx2-pf: ethtool fec mode support")
+Addresses-Coverity-ID: 1501722 ("Out-of-bounds read")
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -1318,9 +1318,12 @@ static int e_show(struct seq_file *m, vo
- 		return 0;
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_ethtool.c
+@@ -805,7 +805,7 @@ static int otx2_get_fecparam(struct net_
+ 		if (!rsp->fwdata.supported_fec)
+ 			fecparam->fec = ETHTOOL_FEC_NONE;
+ 		else
+-			fecparam->fec = fec[rsp->fwdata.supported_fec];
++			fecparam->fec = fec[rsp->fwdata.supported_fec - 1];
  	}
- 
--	exp_get(exp);
-+	if (!cache_get_rcu(&exp->h))
-+		return 0;
-+
- 	if (cache_check(cd, &exp->h, NULL))
- 		return 0;
-+
- 	exp_put(exp);
- 	return svc_export_show(m, cd, cp);
+ 	return 0;
  }
 
 
