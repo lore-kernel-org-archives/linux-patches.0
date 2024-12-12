@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CAA22FDF9;
-	Thu, 12 Dec 2024 16:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCD523098A;
+	Thu, 12 Dec 2024 16:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021007; cv=none; b=NWuuKyp8pZiw/87ADkvnvFp9/SZGLGbWSjxUMjuwbNLXvN4FZ9rNoEIRhQeqVRQ78QRmMJg0n35PO5B5zpnpeWSi9DjpJmVxHJt5+pEPzRO6A3dVyxuILEtmjIckA91JFdsMo44EQ2zlUE4Uu+Si/NCu0LwG5Z9lpvTh6q1npIY=
+	t=1734021011; cv=none; b=eukSVY/uTi3ReIKeBirKwJEboGIS27u8hPafDmg8Cj5ukXCaxZxznrts41ScvDYFJuQs/eC4UCvylenUR4K5V8+8cfJtl25xdh+W0BDO4cDz01gE5mH0wnF+b4i/4sr0Kq8CRYZe2NDLWBMIuql4Lgh9LmEL1MteNScm9wW2Lac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021007; c=relaxed/simple;
-	bh=nPBAAsPmxzAeGNQybzalcL3zDaOZsw7LllXbi04kvzE=;
+	s=arc-20240116; t=1734021011; c=relaxed/simple;
+	bh=79BHqE88ph4I3nW8luOUGWqK4xTvpIeXsp4ZflqRsiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KoqtNeAcnj20/eMnwty0evj9nKTaXUbSMkQ28SQh6/fVQrKS+AztZS3c9J5xOJUHWseAaZdvvD0wlYDgf52d3JcsuyNuQIsSgcWs4Zr9kAWBGshAYvpvkLSerYTBp+F8y51GSzonktnBPH4ATb1heSEm1kkdTK/ROkqOQhzH0xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThDgrSnB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sjbrJIy5PhuWmGGLNA0QIxb0ZPKhAcgtcgYVGZH8cSDznyx4OJINrQERYfnd+NGPUYPGrV64x7xee8D6/aoTHauzURAXNoEBjFbykPG2zQh7wRvFq3/Dm3FV+xwki7Mri0rqydgMvaNPqxOyfI/XKQa9LCmnCPzFgGYmSO6j3xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAfvVycg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThDgrSnB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F3C4CECE;
-	Thu, 12 Dec 2024 16:30:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAfvVycg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBB9C4CED0;
+	Thu, 12 Dec 2024 16:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021006;
-	bh=nPBAAsPmxzAeGNQybzalcL3zDaOZsw7LllXbi04kvzE=;
+	s=korg; t=1734021010;
+	bh=79BHqE88ph4I3nW8luOUGWqK4xTvpIeXsp4ZflqRsiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThDgrSnBF6VPABNkotfu5UUjEkMywtTPPnGKpUtvevoluIOeD2Hh4cqSypj9KPLaq
-	 NiVZawPzb1vd28FgB6WA/oX/4e6R7hjLYD9602Dns1/Az3iYlkjnzmuaOeUAIHotJO
-	 aCjuu2W849K7sSZYXuvmXBqlY9vbSM1AFz2/z2HQ=
+	b=KAfvVycgKpRTEUADnY9sUm2x1MVEqgd/mSqnGRQ/C4TXxoflLHc/1irc7tU47Ylf3
+	 LFqFCOvzsDh11QMtp4a10tB7o4QErzZYkYQ1x7JCfsXfkXHPuANisKlb17XhkJgUj/
+	 4qTo1EwwTq1eU38uL6k3tt0HIZdId5bQan51X+yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonard Crestez <cdleonard@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Quentin Monnet <qmo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 590/772] ALSA: usb-audio: Notify xrun for low-latency mode
-Date: Thu, 12 Dec 2024 15:58:55 +0100
-Message-ID: <20241212144414.316793479@linuxfoundation.org>
+Subject: [PATCH 6.1 591/772] tools: Override makefile ARCH variable if defined, but empty
+Date: Thu, 12 Dec 2024 15:58:56 +0100
+Message-ID: <20241212144414.355748082@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -45,82 +52,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Björn Töpel <bjorn@rivosinc.com>
 
-[ Upstream commit 4f9d674377d090e38d93360bd4df21b67534d622 ]
+[ Upstream commit 537a2525eaf76ea9b0dca62b994500d8670b39d5 ]
 
-The low-latency mode of USB-audio driver uses a similar approach like
-the implicit feedback mode but it has an explicit queuing at the
-trigger start time.  The difference is, however, that no packet will
-be handled any longer after all queued packets are handled but no
-enough data is fed.  In the case of implicit feedback mode, the
-capture-side packet handling triggers the re-queuing, and this checks
-the XRUN.  OTOH, in the low-latency mode, it just stops without XRUN
-notification unless any new action is taken from user-space via ack
-callback.  For example, when you stop the stream in aplay, no XRUN is
-reported.
+There are a number of tools (bpftool, selftests), that require a
+"bootstrap" build. Here, a bootstrap build is a build host variant of
+a target. E.g., assume that you're performing a bpftool cross-build on
+x86 to riscv, a bootstrap build would then be an x86 variant of
+bpftool. The typical way to perform the host build variant, is to pass
+"ARCH=" in a sub-make. However, if a variable has been set with a
+command argument, then ordinary assignments in the makefile are
+ignored.
 
-This patch adds the XRUN check at the packet complete callback in the
-case all pending URBs are exhausted.  Strictly speaking, this state
-doesn't match really with XRUN; in theory the application may queue
-immediately after this happens.  But such behavior is only for
-1-period configuration, which the USB-audio driver doesn't support.
-So we may conclude that this situation leads certainly to XRUN.
+This side-effect results in that ARCH, and variables depending on ARCH
+are not set. Workaround by overriding ARCH to the host arch, if ARCH
+is empty.
 
-A caveat is that the XRUN should be triggered only for the PCM RUNNING
-state, and not during DRAINING.  This additional state check is put in
-notify_xrun(), too.
-
-Fixes: d5f871f89e21 ("ALSA: usb-audio: Improved lowlatency playback support")
-Reported-by: Leonard Crestez <cdleonard@gmail.com>
-Link: https://lore.kernel.org/25d5b0d8-4efd-4630-9d33-7a9e3fa9dc2b@gmail.com
-Link: https://patch.msgid.link/20241128080446.1181-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8859b0da5aac ("tools/bpftool: Fix cross-build")
+Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Quentin Monnet <qmo@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Cc: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/bpf/20241127101748.165693-1-bjorn@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/endpoint.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ tools/scripts/Makefile.arch | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 647fa054d8b1d..e3684dfa5f1fa 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -403,10 +403,15 @@ static int prepare_inbound_urb(struct snd_usb_endpoint *ep,
- static void notify_xrun(struct snd_usb_endpoint *ep)
- {
- 	struct snd_usb_substream *data_subs;
-+	struct snd_pcm_substream *psubs;
+diff --git a/tools/scripts/Makefile.arch b/tools/scripts/Makefile.arch
+index 0c6c7f4568878..a57a9b752b6c5 100644
+--- a/tools/scripts/Makefile.arch
++++ b/tools/scripts/Makefile.arch
+@@ -7,8 +7,8 @@ HOSTARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
+                                   -e s/sh[234].*/sh/ -e s/aarch64.*/arm64/ \
+                                   -e s/riscv.*/riscv/)
  
- 	data_subs = READ_ONCE(ep->data_subs);
--	if (data_subs && data_subs->pcm_substream)
--		snd_pcm_stop_xrun(data_subs->pcm_substream);
-+	if (!data_subs)
-+		return;
-+	psubs = data_subs->pcm_substream;
-+	if (psubs && psubs->runtime &&
-+	    psubs->runtime->state == SNDRV_PCM_STATE_RUNNING)
-+		snd_pcm_stop_xrun(psubs);
- }
+-ifndef ARCH
+-ARCH := $(HOSTARCH)
++ifeq ($(strip $(ARCH)),)
++override ARCH := $(HOSTARCH)
+ endif
  
- static struct snd_usb_packet_info *
-@@ -557,7 +562,10 @@ static void snd_complete_urb(struct urb *urb)
- 			push_back_to_ready_list(ep, ctx);
- 			clear_bit(ctx->index, &ep->active_mask);
- 			snd_usb_queue_pending_output_urbs(ep, false);
--			atomic_dec(&ep->submitted_urbs); /* decrement at last */
-+			/* decrement at last, and check xrun */
-+			if (atomic_dec_and_test(&ep->submitted_urbs) &&
-+			    !snd_usb_endpoint_implicit_feedback_sink(ep))
-+				notify_xrun(ep);
- 			return;
- 		}
- 
+ SRCARCH := $(ARCH)
 -- 
 2.43.0
 
