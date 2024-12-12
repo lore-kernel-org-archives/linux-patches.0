@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF346F2FE;
-	Thu, 12 Dec 2024 17:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1A613C918;
+	Thu, 12 Dec 2024 17:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025337; cv=none; b=lOK5Q4uVJ+nMyBph3JK7R7C1nqScPmGWaF24OUov46s3YFXoOsFEfmjdwI0loPwsjkoNVcdBRnn4NM+KOULruAQSIHFpS/8zl//tcCv2oMgc2WlUPWvoCzK9sthGlkaUadrbuZbX5s8jE8bUCeYJYGeszrTIkNzb1+KZlkyVHxM=
+	t=1734025340; cv=none; b=lYEb+XrjEtmJsdrV7frdUqakAO+uUB58vmNSpM7CaGhrkbaJBJjJmR5oc1fhq1Ly5BaVySrj0tpnCrFG1cKku/Pjfy6mM58VwsuHhV5iKrpvaG/0eQ1YOsY6Rva1VY0bGTfGZWri/hsNs/Vxzvm/HepZjEluuz1BqAD/BZv54Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025337; c=relaxed/simple;
-	bh=cooOmRh2cJJ70bCSm2nwwx5qUNAhHXK1d8ADEj450GU=;
+	s=arc-20240116; t=1734025340; c=relaxed/simple;
+	bh=HrMBizKxK9v6h6AOHl2MhxoXWZrs+BF7jzfCIdy6/U0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BUYOccgIjbcZ7UDHL/zaxcukbL+bVCdRx5clAmPnIFinP6SDYwhs1dfgmxvcCOOTJVQteyXYI+R7pLeTuP6eKKcj9LJ8fjNm3w6RqemX4NKcdkThS/jtxy4jLhJ89lZiKDZSRBm4ZPwJYhsi6QWd3YXCIIC0MxxhXHo8phKepPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Am13CKI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHFZL+Xjzq3cv7ZIN+VUAdKif5KPUp9oS7ttDRb1zpMM+SkKyzWH5RCpzwF5tzhGC33xyuFHq3X2iHkHQRdDTOm3Ttfm5iHzjTZ2S6hnNvR9eqpv6+kOYXlp/IBF+BwZDNM0P6sZnPJ4r5igapqz2tO4YR2dMcdnG27DQjIKJ4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ie3/HtOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Am13CKI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DA1C4CED0;
-	Thu, 12 Dec 2024 17:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ie3/HtOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A38C4CECE;
+	Thu, 12 Dec 2024 17:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025337;
-	bh=cooOmRh2cJJ70bCSm2nwwx5qUNAhHXK1d8ADEj450GU=;
+	s=korg; t=1734025340;
+	bh=HrMBizKxK9v6h6AOHl2MhxoXWZrs+BF7jzfCIdy6/U0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Am13CKIDpuHlWfvrGr67gjPB/SevrsE8iWhrCFG6G0sdkXpIS0erIDUvv4FBg+c8
-	 8j8BaQiul02l7qimeDgh5quP3FceO5r3yeNd9B/5EYlOMrC3dIkfQSM1pF90aPyYwY
-	 yNwxXoT32QL0nSGNIoYly/sbde76F3BDvPVbxgd4=
+	b=ie3/HtOXbcx9g+xFDYHy9Zhm5k7XC2WXukQphkBJsTrPkext1KN94FM9DkwQbTojj
+	 YqpFSn7H6WVJm1uIHXYF8w0Qco3WZrMh0N54jjma1x1xVBRPES5VXaHpbEuB6d7lQI
+	 kN/8bqQKTnnbn7s9WSPiUPKgoYdaSHcbc8m4Wdl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	syzbot+422188bce66e76020e55@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 109/321] clk: clk-axi-clkgen: make sure to enable the AXI bus clock
-Date: Thu, 12 Dec 2024 16:00:27 +0100
-Message-ID: <20241212144234.291710255@linuxfoundation.org>
+Subject: [PATCH 5.4 136/321] USB: chaoskey: fail open after removal
+Date: Thu, 12 Dec 2024 16:00:54 +0100
+Message-ID: <20241212144235.352800585@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -51,80 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit c64ef7e4851d1a9abbb7f7833e4936973ac5ba79 ]
+[ Upstream commit 422dc0a4d12d0b80dd3aab3fe5943f665ba8f041 ]
 
-In order to access the registers of the HW, we need to make sure that
-the AXI bus clock is enabled. Hence let's increase the number of clocks
-by one.
+chaoskey_open() takes the lock only to increase the
+counter of openings. That means that the mutual exclusion
+with chaoskey_disconnect() cannot prevent an increase
+of the counter and chaoskey_open() returning a success.
 
-In order to keep backward compatibility and make sure old DTs still work
-we check if clock-names is available or not. If it is, then we can
-disambiguate between really having the AXI clock or a parent clock and
-so we can enable the bus clock. If not, we fallback to what was done
-before and don't explicitly enable the AXI bus clock.
+If that race is hit, chaoskey_disconnect() will happily
+free all resources associated with the device after
+it has dropped the lock, as it has read the counter
+as zero.
 
-Note that if clock-names is given, the axi clock must be the last one in
-the phandle array (also enforced in the DT bindings) so that we can reuse
-as much code as possible.
+To prevent this race chaoskey_open() has to check
+the presence of the device under the lock.
+However, the current per device lock cannot be used,
+because it is a part of the data structure to be
+freed. Hence an additional global mutex is needed.
+The issue is as old as the driver.
 
-Fixes: 0e646c52cf0e ("clk: Add axi-clkgen driver")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20241029-axi-clkgen-fix-axiclk-v2-2-bc5e0733ad76@analog.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Reported-by: syzbot+422188bce66e76020e55@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=422188bce66e76020e55
+Fixes: 66e3e591891da ("usb: Add driver for Altus Metrum ChaosKey device (v2)")
+Rule: add
+Link: https://lore.kernel.org/stable/20241002132201.552578-1-oneukum%40suse.com
+Link: https://lore.kernel.org/r/20241002132201.552578-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-axi-clkgen.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/usb/misc/chaoskey.c | 35 ++++++++++++++++++++++++-----------
+ 1 file changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/clk-axi-clkgen.c b/drivers/clk/clk-axi-clkgen.c
-index 8d0c32e81e787..73f3bfeb44dc5 100644
---- a/drivers/clk/clk-axi-clkgen.c
-+++ b/drivers/clk/clk-axi-clkgen.c
-@@ -7,6 +7,7 @@
-  */
+diff --git a/drivers/usb/misc/chaoskey.c b/drivers/usb/misc/chaoskey.c
+index 87067c3d6109b..32fa7fd50c380 100644
+--- a/drivers/usb/misc/chaoskey.c
++++ b/drivers/usb/misc/chaoskey.c
+@@ -27,6 +27,8 @@ static struct usb_class_driver chaoskey_class;
+ static int chaoskey_rng_read(struct hwrng *rng, void *data,
+ 			     size_t max, bool wait);
  
- #include <linux/platform_device.h>
-+#include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/slab.h>
- #include <linux/io.h>
-@@ -412,6 +413,7 @@ static int axi_clkgen_probe(struct platform_device *pdev)
- 	struct clk_init_data init;
- 	const char *parent_names[2];
- 	const char *clk_name;
-+	struct clk *axi_clk;
- 	unsigned int i;
- 	int ret;
- 
-@@ -431,8 +433,24 @@ static int axi_clkgen_probe(struct platform_device *pdev)
- 		return PTR_ERR(axi_clkgen->base);
- 
- 	init.num_parents = of_clk_get_parent_count(pdev->dev.of_node);
--	if (init.num_parents < 1 || init.num_parents > 2)
--		return -EINVAL;
++static DEFINE_MUTEX(chaoskey_list_lock);
 +
-+	axi_clk = devm_clk_get_enabled(&pdev->dev, "s_axi_aclk");
-+	if (!IS_ERR(axi_clk)) {
-+		if (init.num_parents < 2 || init.num_parents > 3)
-+			return -EINVAL;
-+
-+		init.num_parents -= 1;
-+	} else {
-+		/*
-+		 * Legacy... So that old DTs which do not have clock-names still
-+		 * work. In this case we don't explicitly enable the AXI bus
-+		 * clock.
-+		 */
-+		if (PTR_ERR(axi_clk) != -ENOENT)
-+			return PTR_ERR(axi_clk);
-+		if (init.num_parents < 1 || init.num_parents > 2)
-+			return -EINVAL;
+ #define usb_dbg(usb_if, format, arg...) \
+ 	dev_dbg(&(usb_if)->dev, format, ## arg)
+ 
+@@ -231,6 +233,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
+ 	if (dev->hwrng_registered)
+ 		hwrng_unregister(&dev->hwrng);
+ 
++	mutex_lock(&chaoskey_list_lock);
+ 	usb_deregister_dev(interface, &chaoskey_class);
+ 
+ 	usb_set_intfdata(interface, NULL);
+@@ -245,6 +248,7 @@ static void chaoskey_disconnect(struct usb_interface *interface)
+ 	} else
+ 		mutex_unlock(&dev->lock);
+ 
++	mutex_unlock(&chaoskey_list_lock);
+ 	usb_dbg(interface, "disconnect done");
+ }
+ 
+@@ -252,6 +256,7 @@ static int chaoskey_open(struct inode *inode, struct file *file)
+ {
+ 	struct chaoskey *dev;
+ 	struct usb_interface *interface;
++	int rv = 0;
+ 
+ 	/* get the interface from minor number and driver information */
+ 	interface = usb_find_interface(&chaoskey_driver, iminor(inode));
+@@ -267,18 +272,23 @@ static int chaoskey_open(struct inode *inode, struct file *file)
+ 	}
+ 
+ 	file->private_data = dev;
++	mutex_lock(&chaoskey_list_lock);
+ 	mutex_lock(&dev->lock);
+-	++dev->open;
++	if (dev->present)
++		++dev->open;
++	else
++		rv = -ENODEV;
+ 	mutex_unlock(&dev->lock);
++	mutex_unlock(&chaoskey_list_lock);
+ 
+-	usb_dbg(interface, "open success");
+-	return 0;
++	return rv;
+ }
+ 
+ static int chaoskey_release(struct inode *inode, struct file *file)
+ {
+ 	struct chaoskey *dev = file->private_data;
+ 	struct usb_interface *interface;
++	int rv = 0;
+ 
+ 	if (dev == NULL)
+ 		return -ENODEV;
+@@ -287,14 +297,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
+ 
+ 	usb_dbg(interface, "release");
+ 
++	mutex_lock(&chaoskey_list_lock);
+ 	mutex_lock(&dev->lock);
+ 
+ 	usb_dbg(interface, "open count at release is %d", dev->open);
+ 
+ 	if (dev->open <= 0) {
+ 		usb_dbg(interface, "invalid open count (%d)", dev->open);
+-		mutex_unlock(&dev->lock);
+-		return -ENODEV;
++		rv = -ENODEV;
++		goto bail;
+ 	}
+ 
+ 	--dev->open;
+@@ -303,13 +314,15 @@ static int chaoskey_release(struct inode *inode, struct file *file)
+ 		if (dev->open == 0) {
+ 			mutex_unlock(&dev->lock);
+ 			chaoskey_free(dev);
+-		} else
+-			mutex_unlock(&dev->lock);
+-	} else
+-		mutex_unlock(&dev->lock);
+-
++			goto destruction;
++		}
 +	}
++bail:
++	mutex_unlock(&dev->lock);
++destruction:
++	mutex_lock(&chaoskey_list_lock);
+ 	usb_dbg(interface, "release success");
+-	return 0;
++	return rv;
+ }
  
- 	for (i = 0; i < init.num_parents; i++) {
- 		parent_names[i] = of_clk_get_parent_name(pdev->dev.of_node, i);
+ static void chaos_read_callback(struct urb *urb)
 -- 
 2.43.0
 
