@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C7A218592;
-	Thu, 12 Dec 2024 16:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D66228C8D;
+	Thu, 12 Dec 2024 16:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020067; cv=none; b=RZeQE2F6oeQazVxZ6b93w3Rf0PxJQTKu9di3yYvI1XdVUaDd4ptiVykELr4zUiHFKTxrk5FmbyjGsxXsaJ+bK+RUJM3J/UXsRTbsqOknTRURkb8O+ds67tbu1O+WMOMgqm8WH/j/KI7oe2qpwBMKqP5JhBgnprrD816X19eHTmE=
+	t=1734020071; cv=none; b=asPgvIxBzSizr2GUdtBQ2sX1Y4djCTQJ7kfVEMB/BB0pM4ELgqn/8isJKGNZKhb+dlgjlWpYxDeICcM96m+/oNqtNQBqBhT4A2cq2EQJheKiQszmAlU0ReutJ1hj52CKNlWrgR9s0e/SPwJz/EYRurFqQO7NghbWCBLOmExubGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020067; c=relaxed/simple;
-	bh=KXopIyzoex0fCsDuRzdGuIOHCLjOG5/68oLzr3sjWBY=;
+	s=arc-20240116; t=1734020071; c=relaxed/simple;
+	bh=rufw4Vxv90xXQhhhJqyyLt/1ytHPmaMwB3sGScdZyBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHSyfSA6Xw6o6H6hjBA6TShsIIf5Y0Vcyjahaad4f9Qet5tf9CIae8m/5Kg2BzISnBZMQZSFs7wmfmOgau7vAFrBZKx2f34truzPP5c+P0yUt+/Wed2XtFsHuqhnuhhalgLQsZdWpE1lZk/Gew+zMqjh+MXhOc7ClXbhfxQPVwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPkAzhc2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LuDGmzVyUDksokdKbFvrL5+qusSzssGTVxYlChAYqULEmk/ARc3CPtiTKxApid75g5INcOF4kpt0rq0z0kE3Fooy+2DPlJbDFtXSmjBz2l6Zgq1XwrSbPiiqfE8sRG4GKBEKTCicjhzs02Uxdm8qhmiyh6YKBddL0FnhaOD6HMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQDVvCyn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPkAzhc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40C3C4CECE;
-	Thu, 12 Dec 2024 16:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQDVvCyn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F422C4CED0;
+	Thu, 12 Dec 2024 16:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020067;
-	bh=KXopIyzoex0fCsDuRzdGuIOHCLjOG5/68oLzr3sjWBY=;
+	s=korg; t=1734020071;
+	bh=rufw4Vxv90xXQhhhJqyyLt/1ytHPmaMwB3sGScdZyBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPkAzhc2j24xFOya7oBErbpTvep9CzwVwTvc5Pcg3ePK3lOhOhrkvMLx1G6GGy4b5
-	 M/Wd5qHSEMriGMoilk7KFHL5aPpKA/Z3bvPCO1XHFXe9tAaSFrI3ujxZIOf39mDkCB
-	 bYg0ZRVuiPaUW9GT5jxWlpmj120+3n1FUZA3qgv4=
+	b=xQDVvCynU1JUgCkpjTl16zpOM9I/q4XOMcdVz6iIBjElEZfL6ZgBmJOFsXRzM1lG2
+	 XQorMmuyXboCxgaTBMmiNxpNG0ieXrLemg5FKDYZOGG7Ytf0p2ErU1rQ2aA+EDQlva
+	 SaOo+n3yM67pCQOn3xQ2qE3hv6RHGON6mDWIzRow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.1 370/772] powerpc/pseries: Fix KVM guest detection for disabling hardlockup detector
-Date: Thu, 12 Dec 2024 15:55:15 +0100
-Message-ID: <20241212144405.199636813@linuxfoundation.org>
+	Alexander Potapenko <glider@google.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.1 371/772] KVM: arm64: vgic-v3: Sanitise guest writes to GICR_INVLPIR
+Date: Thu, 12 Dec 2024 15:55:16 +0100
+Message-ID: <20241212144405.241000522@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,45 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 44e5d21e6d3fd2a1fed7f0327cf72e99397e2eaf upstream.
+commit d561491ba927cb5634094ff311795e9d618e9b86 upstream.
 
-As per the kernel documentation[1], hardlockup detector should
-be disabled in KVM guests as it may give false positives. On
-PPC, hardlockup detector is enabled inside KVM guests because
-disable_hardlockup_detector() is marked as early_initcall and it
-relies on kvm_guest static key (is_kvm_guest()) which is initialized
-later during boot by check_kvm_guest(), which is a core_initcall.
-check_kvm_guest() is also called in pSeries_smp_probe(), which is called
-before initcalls, but it is skipped if KVM guest does not have doorbell
-support or if the guest is launched with SMT=1.
+Make sure we filter out non-LPI invalidation when handling writes
+to GICR_INVLPIR.
 
-Call check_kvm_guest() in disable_hardlockup_detector() so that
-is_kvm_guest() check goes through fine and hardlockup detector can be
-disabled inside the KVM guest.
-
-[1]: Documentation/admin-guide/sysctl/kernel.rst
-
-Fixes: 633c8e9800f3 ("powerpc/pseries: Enable hardlockup watchdog for PowerVM partitions")
-Cc: stable@vger.kernel.org # v5.14+
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20241108094839.33084-1-gautam@linux.ibm.com
+Fixes: 4645d11f4a553 ("KVM: arm64: vgic-v3: Implement MMIO-based LPI invalidation")
+Reported-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241117165757.247686-2-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/setup_64.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/arch/powerpc/kernel/setup_64.c
-+++ b/arch/powerpc/kernel/setup_64.c
-@@ -924,6 +924,7 @@ static int __init disable_hardlockup_det
- 	hardlockup_detector_disable();
- #else
- 	if (firmware_has_feature(FW_FEATURE_LPAR)) {
-+		check_kvm_guest();
- 		if (is_kvm_guest())
- 			hardlockup_detector_disable();
- 	}
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -555,6 +555,7 @@ static void vgic_mmio_write_invlpi(struc
+ 				   unsigned long val)
+ {
+ 	struct vgic_irq *irq;
++	u32 intid;
+ 
+ 	/*
+ 	 * If the guest wrote only to the upper 32bit part of the
+@@ -566,9 +567,13 @@ static void vgic_mmio_write_invlpi(struc
+ 	if ((addr & 4) || !vgic_lpis_enabled(vcpu))
+ 		return;
+ 
++	intid = lower_32_bits(val);
++	if (intid < VGIC_MIN_LPI)
++		return;
++
+ 	vgic_set_rdist_busy(vcpu, true);
+ 
+-	irq = vgic_get_irq(vcpu->kvm, NULL, lower_32_bits(val));
++	irq = vgic_get_irq(vcpu->kvm, NULL, intid);
+ 	if (irq) {
+ 		vgic_its_inv_lpi(vcpu->kvm, irq);
+ 		vgic_put_irq(vcpu->kvm, irq);
 
 
