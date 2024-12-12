@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44839236F9F;
-	Thu, 12 Dec 2024 16:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72D9225412;
+	Thu, 12 Dec 2024 16:10:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019839; cv=none; b=DU/hQsQlkW/DWh+EXiLPEJtknxSscWl50MBca0/UHySucSSTet8kopaSk5Yq0qOLHENpfEyBFYPe+BjE2xhx8c7rOswOBpIcG/MfttYF4GeXxuN7qLJLBnuFeElbwoYtlVvZ8+eg+8jCg9fSe2rGjmYjGUf0uVdlKN3NlgvOVG0=
+	t=1734019842; cv=none; b=UyRGRMlJMvx9m62UM1HgOw9F13Iw+pJEeP6gujTHmj3zY4MdAsCkHEz3cHmWAPJix9Bs+kvMrxz3KwTkJsZdXwNcivhngMQibzBkFueAYFsVwgH43jAgfJ1cUjKR4BRA3PsHWqsYQfu0XRDCFh8ZeoPiEp/6jW1mKjlSym6fL3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019839; c=relaxed/simple;
-	bh=IK08f0/h4AWk78a68L4Nr8HBH6zxSh2ocxmP/7vZyJg=;
+	s=arc-20240116; t=1734019842; c=relaxed/simple;
+	bh=UMoclU8tn1YeW8Yo7UNRc65D8f7xMyD8DDvPJRz/Kfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXoagZ+UvRvso6Zvzie6NNFSAGUk7RBbM0NBNWSnRV9aXWFqynu450RBM9i+XTPXv7lsSprGMXr4Nrd9ieThyl/VnAGdCLknf1F0OCQsX2QfUWnPiu49pJ71tbTPcmcBmw0BN7OEq4uKSQDcgCh9JsTUXMlwcYJsx38ycp/ZFaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwgFRXfN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZR/gB5X1lfIhOIP4KrgVfEkUBNXdLGC2sw5M/8Ld7LpIiJHd09bdwt53hMwWpHbesD+eegwcDNiIFmu8sTOIj3dYvk8stqvO5NqqKbKOkAMWXm0/FH6qLHrICWkTEKoLpD4ybIbP9Ibnywq8w8dPAVQMO0sqedeLkpxDvvTBIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFObDKq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwgFRXfN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C8CC4CECE;
-	Thu, 12 Dec 2024 16:10:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFObDKq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DCAC4CED0;
+	Thu, 12 Dec 2024 16:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019839;
-	bh=IK08f0/h4AWk78a68L4Nr8HBH6zxSh2ocxmP/7vZyJg=;
+	s=korg; t=1734019842;
+	bh=UMoclU8tn1YeW8Yo7UNRc65D8f7xMyD8DDvPJRz/Kfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwgFRXfNTYY1H5q3wX8/pdZAFxOXjQcf7Tm4gseWjMt/brq5DRnQ+vtIVqiJ+heWt
-	 vZlZE4fB2bdJyMqwqJVDyaFpZKT0bBq8R6aSxTVbVWHUg3VclAwK8wvm6tqw8zgPod
-	 8iEP55f10gmfrH9pp6kM63sUh9jaFAo7FMdYBk5Y=
+	b=RFObDKq6BizAXNFTvL3t+cP/AdldQ8Mk/iRWxWprRtaAyQ6oRLY1HfnmxXpjAe1pD
+	 EFrg6PzaQ3J2tGW4fea3WN0vOMklGDnDh38odRN2lKuRqgWfkDzKApx5TZqnr7Lkid
+	 2Vi4gpMHfks3fp+Ea4unjmk3+6iY6rX8g+pnSeoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Vitalii Mordan <mordan@ispras.ru>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 311/772] net: mdio-ipq4019: add missing error check
-Date: Thu, 12 Dec 2024 15:54:16 +0100
-Message-ID: <20241212144402.747209190@linuxfoundation.org>
+Subject: [PATCH 6.1 312/772] marvell: pxa168_eth: fix call balance of pep->clk handling routines
+Date: Thu, 12 Dec 2024 15:54:17 +0100
+Message-ID: <20241212144402.785788496@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,41 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-[ Upstream commit 9cc8d0ecdd2aad42e377e971e3bb114339df609e ]
+[ Upstream commit b032ae57d4fe2b2445e3bc190db6fcaa8c102f68 ]
 
-If an optional resource is found but fails to remap, return on failure.
-Avoids any potential problems when using the iomapped resource as the
-assumption is that it's available.
+If the clock pep->clk was not enabled in pxa168_eth_probe,
+it should not be disabled in any path.
 
-Fixes: 23a890d493e3 ("net: mdio: Add the reset function for IPQ MDIO driver")
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241121193152.8966-1-rosenp@gmail.com
+Conversely, if it was enabled in pxa168_eth_probe, it must be disabled
+in all error paths to ensure proper cleanup.
+
+Use the devm_clk_get_enabled helper function to ensure proper call balance
+for pep->clk.
+
+Found by Linux Verification Center (linuxtesting.org) with Klever.
+
+Fixes: a49f37eed22b ("net: add Fast Ethernet driver for PXA168.")
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Link: https://patch.msgid.link/20241121200658.2203871-1-mordan@ispras.ru
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-ipq4019.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/pxa168_eth.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
-index 4eba5a91075c0..da5dc854b6ca6 100644
---- a/drivers/net/mdio/mdio-ipq4019.c
-+++ b/drivers/net/mdio/mdio-ipq4019.c
-@@ -231,8 +231,11 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
- 	/* The platform resource is provided on the chipset IPQ5018 */
- 	/* This resource is optional */
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
--	if (res)
-+	if (res) {
- 		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
-+		if (IS_ERR(priv->eth_ldo_rdy))
-+			return PTR_ERR(priv->eth_ldo_rdy);
-+	}
+diff --git a/drivers/net/ethernet/marvell/pxa168_eth.c b/drivers/net/ethernet/marvell/pxa168_eth.c
+index cf456d62677fe..1e8568a96443d 100644
+--- a/drivers/net/ethernet/marvell/pxa168_eth.c
++++ b/drivers/net/ethernet/marvell/pxa168_eth.c
+@@ -1394,18 +1394,15 @@ static int pxa168_eth_probe(struct platform_device *pdev)
  
- 	bus->name = "ipq4019_mdio";
- 	bus->read = ipq4019_mdio_read;
+ 	printk(KERN_NOTICE "PXA168 10/100 Ethernet Driver\n");
+ 
+-	clk = devm_clk_get(&pdev->dev, NULL);
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(clk)) {
+-		dev_err(&pdev->dev, "Fast Ethernet failed to get clock\n");
++		dev_err(&pdev->dev, "Fast Ethernet failed to get and enable clock\n");
+ 		return -ENODEV;
+ 	}
+-	clk_prepare_enable(clk);
+ 
+ 	dev = alloc_etherdev(sizeof(struct pxa168_eth_private));
+-	if (!dev) {
+-		err = -ENOMEM;
+-		goto err_clk;
+-	}
++	if (!dev)
++		return -ENOMEM;
+ 
+ 	platform_set_drvdata(pdev, dev);
+ 	pep = netdev_priv(dev);
+@@ -1523,8 +1520,6 @@ static int pxa168_eth_probe(struct platform_device *pdev)
+ 	mdiobus_free(pep->smi_bus);
+ err_netdev:
+ 	free_netdev(dev);
+-err_clk:
+-	clk_disable_unprepare(clk);
+ 	return err;
+ }
+ 
+@@ -1542,7 +1537,6 @@ static int pxa168_eth_remove(struct platform_device *pdev)
+ 	if (dev->phydev)
+ 		phy_disconnect(dev->phydev);
+ 
+-	clk_disable_unprepare(pep->clk);
+ 	mdiobus_unregister(pep->smi_bus);
+ 	mdiobus_free(pep->smi_bus);
+ 	unregister_netdev(dev);
 -- 
 2.43.0
 
