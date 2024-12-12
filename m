@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D241F2381;
-	Thu, 12 Dec 2024 16:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976E8215782;
+	Thu, 12 Dec 2024 16:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021440; cv=none; b=MweGivqh/fYwxgwjWT/pU94mf0DO+BOm000DyaLf9RpIriLiOpOJIPVu+kEdtSc9B2U/7fF4spjWfPJx1XjRy/Igxq/VoGz5wsLPgKXp63avX2v+/Y7zXGkYyxjPe6CwLgbEeaZTsJvhSWzGmDqAKVI6/Qq/8nAqHFjBP/xyUm8=
+	t=1734021443; cv=none; b=mfrblx/KmA66/nAKJCSe/vi/mBJ85Dsg2aZKTnRXZPoAMkmweBkw1ZNjVl5gftWvh5jK593iPwcGnTF7b0bx3UMCpHPl/98h7Jt1fGVDx+VGRIoJRRFx1r32NPNFdzjTuQd36GrqOqSHqFluqpgACoZ9E8YRli6QdTs7EBU6o5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021440; c=relaxed/simple;
-	bh=go2GMSTp8266UPqRCGCVlruvK0lC5oabmjWwJOr8eyQ=;
+	s=arc-20240116; t=1734021443; c=relaxed/simple;
+	bh=4al7AiiJ+EYsuKcmyBB7+FS/NwQu762MlUzFtGrLQ/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GLdb6Y5tFHW0w/GIZY9Cwb0F6r2zkq7Ew5yzGX6CMmirVAMUmXE6w36yPKez/9BOa4+pPMLbA/PkRuY9zTrT0n67TJy7ly+hK53HPy1As7R3AETdxNQHJ92AiFztkuKHCuEJjnZQLe1tpeDrhkR1g34Y/YOQfRl4Ixy+OMK0cVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHl8JwJ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HXDWbwmOf8R1MdTrSP/4yVK1vDDq9KU41+0V8oV9SAJUIRV/MRAQOcQxzwD51qDp9ifmfve55LvbpeysYH3qy51dLKPv6UbiyqgMDOPlGe+OhoIIwsUfj1+OmSb+wT74XEi2mYK3qVB8KlvA3kuAgosYqfkNcdTw8GamnAbd0ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AprkdEWk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHl8JwJ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B141C4CECE;
-	Thu, 12 Dec 2024 16:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AprkdEWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC68FC4CECE;
+	Thu, 12 Dec 2024 16:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021439;
-	bh=go2GMSTp8266UPqRCGCVlruvK0lC5oabmjWwJOr8eyQ=;
+	s=korg; t=1734021443;
+	bh=4al7AiiJ+EYsuKcmyBB7+FS/NwQu762MlUzFtGrLQ/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHl8JwJ+SDtbMcedLcZmQey50yEu3wZ50JZQ7G+azlPRpt69VOxVFVuwleOjX6WY3
-	 7v0/j8BbZKEvQOAXdX/eiomDiv/F9lu+yVJwYWMRWdGO/39R5Ocq3ARwlCL4ENwshT
-	 2aiZ127g8Tc/BD6GmNelw3V5GYZ6p72XN8GsVvpY=
+	b=AprkdEWk3Ei0md6vr87HBc6qsSJC4HZC/OPJ8kBRcHLXDg3onQ3fvQGJ8BQXY0kZQ
+	 Oz9kXaEXKxwahNn3ntU1FUA7aZUty32GDpqS9RugTOaJTBgKF5p5zQnJ8CvWtI9rw1
+	 cJYc2CuuMPuxidEMNCAJrR/NWddWJNCrrmWHJAak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
-	Yingshun Cui <yicui@redhat.com>,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 737/772] vfio/mlx5: Align the page tracking max message size with the device capability
-Date: Thu, 12 Dec 2024 16:01:22 +0100
-Message-ID: <20241212144420.385920241@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Jakub Acs <acsjakub@amazon.de>
+Subject: [PATCH 6.1 738/772] udf: Fold udf_getblk() into udf_bread()
+Date: Thu, 12 Dec 2024 16:01:23 +0100
+Message-ID: <20241212144420.425153374@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -47,127 +44,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yishai Hadas <yishaih@nvidia.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 9c7c5430bca36e9636eabbba0b3b53251479c7ab ]
+commit 32f123a3f34283f9c6446de87861696f0502b02e upstream.
 
-Align the page tracking maximum message size with the device's
-capability instead of relying on PAGE_SIZE.
+udf_getblk() has a single call site. Fold it there.
 
-This adjustment resolves a mismatch on systems where PAGE_SIZE is 64K,
-but the firmware only supports a maximum message size of 4K.
-
-Now that we rely on the device's capability for max_message_size, we
-must account for potential future increases in its value.
-
-Key considerations include:
-- Supporting message sizes that exceed a single system page (e.g., an 8K
-  message on a 4K system).
-- Ensuring the RQ size is adjusted to accommodate at least 4
-  WQEs/messages, in line with the device specification.
-
-The above has been addressed as part of the patch.
-
-Fixes: 79c3cf279926 ("vfio/mlx5: Init QP based resources for dirty tracking")
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Yingshun Cui <yicui@redhat.com>
-Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
-Link: https://lore.kernel.org/r/20241205122654.235619-1-yishaih@nvidia.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+[acsjakub: backport-adjusting changes
+ udf_getblk() has changed between 6.1 and the backported commit, namely
+ in commit 541e047b14c8 ("udf: Use udf_map_block() in udf_getblk()")
+ Backport using the form of udf_getblk present in 6.1., that means use
+ udf_get_block() instead of udf_map_block() and use dummy in buffer_new()
+ and buffer_mapped(). ]
+Closes: https://syzkaller.appspot.com/bug?extid=a38e34ca637c224f4a79
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vfio/pci/mlx5/cmd.c | 47 +++++++++++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 12 deletions(-)
+ fs/udf/inode.c |   46 +++++++++++++++++++++-------------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
-index c604b70437a5d..3f93b5c3f0993 100644
---- a/drivers/vfio/pci/mlx5/cmd.c
-+++ b/drivers/vfio/pci/mlx5/cmd.c
-@@ -1106,7 +1106,8 @@ int mlx5vf_start_page_tracker(struct vfio_device *vdev,
- 	struct mlx5_vhca_qp *host_qp;
- 	struct mlx5_vhca_qp *fw_qp;
- 	struct mlx5_core_dev *mdev;
--	u32 max_msg_size = PAGE_SIZE;
-+	u32 log_max_msg_size;
-+	u32 max_msg_size;
- 	u64 rq_size = SZ_2M;
- 	u32 max_recv_wr;
- 	int err;
-@@ -1123,6 +1124,12 @@ int mlx5vf_start_page_tracker(struct vfio_device *vdev,
- 	}
- 
- 	mdev = mvdev->mdev;
-+	log_max_msg_size = MLX5_CAP_ADV_VIRTUALIZATION(mdev, pg_track_log_max_msg_size);
-+	max_msg_size = (1ULL << log_max_msg_size);
-+	/* The RQ must hold at least 4 WQEs/messages for successful QP creation */
-+	if (rq_size < 4 * max_msg_size)
-+		rq_size = 4 * max_msg_size;
-+
- 	memset(tracker, 0, sizeof(*tracker));
- 	tracker->uar = mlx5_get_uars_page(mdev);
- 	if (IS_ERR(tracker->uar)) {
-@@ -1212,25 +1219,41 @@ set_report_output(u32 size, int index, struct mlx5_vhca_qp *qp,
- {
- 	u32 entry_size = MLX5_ST_SZ_BYTES(page_track_report_entry);
- 	u32 nent = size / entry_size;
-+	u32 nent_in_page;
-+	u32 nent_to_set;
- 	struct page *page;
-+	u32 page_offset;
-+	u32 page_index;
-+	u32 buf_offset;
-+	void *kaddr;
- 	u64 addr;
- 	u64 *buf;
- 	int i;
- 
--	if (WARN_ON(index >= qp->recv_buf.npages ||
-+	buf_offset = index * qp->max_msg_size;
-+	if (WARN_ON(buf_offset + size >= qp->recv_buf.npages * PAGE_SIZE ||
- 		    (nent > qp->max_msg_size / entry_size)))
- 		return;
- 
--	page = qp->recv_buf.page_list[index];
--	buf = kmap_local_page(page);
--	for (i = 0; i < nent; i++) {
--		addr = MLX5_GET(page_track_report_entry, buf + i,
--				dirty_address_low);
--		addr |= (u64)MLX5_GET(page_track_report_entry, buf + i,
--				      dirty_address_high) << 32;
--		iova_bitmap_set(dirty, addr, qp->tracked_page_size);
--	}
--	kunmap_local(buf);
-+	do {
-+		page_index = buf_offset / PAGE_SIZE;
-+		page_offset = buf_offset % PAGE_SIZE;
-+		nent_in_page = (PAGE_SIZE - page_offset) / entry_size;
-+		page = qp->recv_buf.page_list[page_index];
-+		kaddr = kmap_local_page(page);
-+		buf = kaddr + page_offset;
-+		nent_to_set = min(nent, nent_in_page);
-+		for (i = 0; i < nent_to_set; i++) {
-+			addr = MLX5_GET(page_track_report_entry, buf + i,
-+					dirty_address_low);
-+			addr |= (u64)MLX5_GET(page_track_report_entry, buf + i,
-+					      dirty_address_high) << 32;
-+			iova_bitmap_set(dirty, addr, qp->tracked_page_size);
-+		}
-+		kunmap_local(kaddr);
-+		buf_offset += (nent_to_set * entry_size);
-+		nent -= nent_to_set;
-+	} while (nent);
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -369,29 +369,6 @@ abort:
+ 	return err;
  }
  
- static void
--- 
-2.43.0
-
+-static struct buffer_head *udf_getblk(struct inode *inode, udf_pblk_t block,
+-				      int create, int *err)
+-{
+-	struct buffer_head *bh;
+-	struct buffer_head dummy;
+-
+-	dummy.b_state = 0;
+-	dummy.b_blocknr = -1000;
+-	*err = udf_get_block(inode, block, &dummy, create);
+-	if (!*err && buffer_mapped(&dummy)) {
+-		bh = sb_getblk(inode->i_sb, dummy.b_blocknr);
+-		if (buffer_new(&dummy)) {
+-			lock_buffer(bh);
+-			memset(bh->b_data, 0x00, inode->i_sb->s_blocksize);
+-			set_buffer_uptodate(bh);
+-			unlock_buffer(bh);
+-			mark_buffer_dirty_inode(bh, inode);
+-		}
+-		return bh;
+-	}
+-
+-	return NULL;
+-}
+ 
+ /* Extend the file with new blocks totaling 'new_block_bytes',
+  * return the number of extents added
+@@ -1108,11 +1085,30 @@ struct buffer_head *udf_bread(struct ino
+ 			      int create, int *err)
+ {
+ 	struct buffer_head *bh = NULL;
++	struct buffer_head dummy;
++
++	dummy.b_state = 0;
++	dummy.b_blocknr = -1000;
+ 
+-	bh = udf_getblk(inode, block, create, err);
+-	if (!bh)
++	*err = udf_get_block(inode, block, &dummy, create);
++	if (*err || !buffer_mapped(&dummy))
+ 		return NULL;
+ 
++	bh = sb_getblk(inode->i_sb, dummy.b_blocknr);
++	if (!bh) {
++		*err = -ENOMEM;
++		return NULL;
++	}
++
++	if (buffer_new(&dummy)) {
++		lock_buffer(bh);
++		memset(bh->b_data, 0x00, inode->i_sb->s_blocksize);
++		set_buffer_uptodate(bh);
++		unlock_buffer(bh);
++		mark_buffer_dirty_inode(bh, inode);
++		return bh;
++	}
++
+ 	if (bh_read(bh, 0) >= 0)
+ 		return bh;
+ 
 
 
