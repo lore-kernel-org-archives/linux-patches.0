@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DBE2080FC;
-	Thu, 12 Dec 2024 15:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7612139B2;
+	Thu, 12 Dec 2024 15:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015964; cv=none; b=ixdQ5r06gUyAvLiJ26OIcnhBEVsXH61x/7xUxk7QNr6vhjvDPboFS/RCoTFA8vOdsYdDQ0uVbS2KBCqc4tkxljxfpdiKKWJuGNprugWrpIsTIHVEkG+NbKnIb+Ls9HmacWKgslHqwqrdvAARK644kVeEkYY5FWhztM3UmgbLgyg=
+	t=1734015967; cv=none; b=YhCNvkWela1FDSH9knIMiB1XxJX7LsQgZfRwK5lKgcdyL9q23cRSSvn6sXCFMEgZr548ZFG4nVAbi1SPqYtLxl2lMsa5XUU6hO3rbycgcyhOGouQXyNiZRrL2rvPqnrIrCRbvwnKD9zEQAczKm7vvR5W5wfALTlDldzGhR+ESKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015964; c=relaxed/simple;
-	bh=dfRS6F9hnA1TiqsNMu0MqblvV/rqbmL9cHau3vwtAPw=;
+	s=arc-20240116; t=1734015967; c=relaxed/simple;
+	bh=vDcRnnGChjUYOaw2CQ0LRqX2LT4t+8/sVujOiLMK9Pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IY9qV8yCptyaioSBBajEydEtpPZB0LLfoGmcCWqovYqVSnf9aMjipWhaJYgHtBLkjWfynTNAMHvRYTynzjFotDYqERF2AQi4ioClNNZ3WkAW48W6KOYzkbkHWVi51SGaS2t6zISQE7P0SuZAgCGqqMAslkV6GXmXrshw3BBRqlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XczK13/P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YtpfZRO6G0tOhCFqPw16vQ246T1FDDJGnDu1uQyakCdKXb3ZT4DOAqtphPXU+EwPMlyddd6uWTSDRyJlKWJHnO1hc3VDGXKcbTX8OJ90AXyjS1dXucDLfDGqbnVweh0iukz89w0y3SQ4JJGPL7vP/Gcv8jLS58hMinbKXlyOW/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPUDtRe7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XczK13/P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964B9C4CEE0;
-	Thu, 12 Dec 2024 15:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPUDtRe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19269C4CECE;
+	Thu, 12 Dec 2024 15:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015964;
-	bh=dfRS6F9hnA1TiqsNMu0MqblvV/rqbmL9cHau3vwtAPw=;
+	s=korg; t=1734015967;
+	bh=vDcRnnGChjUYOaw2CQ0LRqX2LT4t+8/sVujOiLMK9Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XczK13/PoLMpkCgXkCzpndMerjLsVIyfBMUToX9LBVcbAs8txnMD38TsyzvufT7cS
-	 gp96JFTwjEKsYOH08uGADQWThT3k8QPHylNsl4Lwr091qyIJ5p+ZkUMMeU8W4yhwW9
-	 NS40+xQxx8pojK4Pm/obOb+JvbH2gLWJnrVBY/0s=
+	b=aPUDtRe7gT84RX8B0WwarQ4RSlHK4TTILtfrfQxnBpGOp1j4xiQ3Rd+6UUgQzXuP8
+	 fUf7dZ2EpniPYPi/CE6l7m3gXDCLcA2ANbxmKD+tNZKlfADvEMcOyxVAf92QAQICil
+	 ex4SyMA5MEqqKPDM8Tn2zHcID4GZ/6kwVa+E60nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Andy-ld Lu <andy-ld.lu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/466] mmc: mtk-sd: use devm_mmc_alloc_host
-Date: Thu, 12 Dec 2024 15:53:52 +0100
-Message-ID: <20241212144309.304836496@linuxfoundation.org>
+Subject: [PATCH 6.12 064/466] mmc: mtk-sd: Fix error handle of probe function
+Date: Thu, 12 Dec 2024 15:53:53 +0100
+Message-ID: <20241212144309.342675737@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,157 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Andy-ld Lu <andy-ld.lu@mediatek.com>
 
-[ Upstream commit 7a2fa8eed936b33b22e49b1d2349cd7d02f22710 ]
+[ Upstream commit 291220451c775a054cedc4fab4578a1419eb6256 ]
 
-Allows removing several gotos.
+In the probe function, it goes to 'release_mem' label and returns after
+some procedure failure. But if the clocks (partial or all) have been
+enabled previously, they would not be disabled in msdc_runtime_suspend,
+since runtime PM is not yet enabled for this case.
 
-Also fixed some wrong ones.
+That cause mmc related clocks always on during system suspend and block
+suspend flow. Below log is from a SDCard issue of MT8196 chromebook, it
+returns -ETIMEOUT while polling clock stable in the msdc_ungate_clock()
+and probe failed, but the enabled clocks could not be disabled anyway.
 
-Added dev_err_probe where EPROBE_DEFER is possible.
+[  129.059253] clk_chk_dev_pm_suspend()
+[  129.350119] suspend warning: msdcpll is on
+[  129.354494] [ck_msdc30_1_sel : enabled, 1, 1, 191999939,   ck_msdcpll_d2]
+[  129.362787] [ck_msdcpll_d2   : enabled, 1, 1, 191999939,         msdcpll]
+[  129.371041] [ck_msdc30_1_ck  : enabled, 1, 1, 191999939, ck_msdc30_1_sel]
+[  129.379295] [msdcpll         : enabled, 1, 1, 383999878,          clk26m]
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://lore.kernel.org/r/20240930224919.355359-2-rosenp@gmail.com
+Add a new 'release_clk' label and reorder the error handle functions to
+make sure the clocks be disabled after probe failure.
+
+Fixes: ffaea6ebfe9c ("mmc: mtk-sd: Use readl_poll_timeout instead of open-coded polling")
+Fixes: 7a2fa8eed936 ("mmc: mtk-sd: use devm_mmc_alloc_host")
+Signed-off-by: Andy-ld Lu <andy-ld.lu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: stable@vger.kernel.org
+Message-ID: <20241107121215.5201-1-andy-ld.lu@mediatek.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: 291220451c77 ("mmc: mtk-sd: Fix error handle of probe function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mtk-sd.c | 55 ++++++++++++++-------------------------
- 1 file changed, 20 insertions(+), 35 deletions(-)
+ drivers/mmc/host/mtk-sd.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mmc/host/mtk-sd.c b/drivers/mmc/host/mtk-sd.c
-index 89018b6c97b9a..c607312dfe078 100644
+index c607312dfe078..73f97f985daf4 100644
 --- a/drivers/mmc/host/mtk-sd.c
 +++ b/drivers/mmc/host/mtk-sd.c
-@@ -2736,20 +2736,18 @@ static int msdc_drv_probe(struct platform_device *pdev)
+@@ -2875,7 +2875,7 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ 	ret = msdc_ungate_clock(host);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "Cannot ungate clocks!\n");
+-		goto release_mem;
++		goto release_clk;
  	}
+ 	msdc_init_hw(host);
  
- 	/* Allocate MMC host for this device */
--	mmc = mmc_alloc_host(sizeof(struct msdc_host), &pdev->dev);
-+	mmc = devm_mmc_alloc_host(&pdev->dev, sizeof(struct msdc_host));
- 	if (!mmc)
- 		return -ENOMEM;
- 
- 	host = mmc_priv(mmc);
- 	ret = mmc_of_parse(mmc);
- 	if (ret)
--		goto host_free;
-+		return ret;
- 
- 	host->base = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(host->base)) {
--		ret = PTR_ERR(host->base);
--		goto host_free;
--	}
-+	if (IS_ERR(host->base))
-+		return PTR_ERR(host->base);
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	if (res) {
-@@ -2760,18 +2758,16 @@ static int msdc_drv_probe(struct platform_device *pdev)
- 
- 	ret = mmc_regulator_get_supply(mmc);
- 	if (ret)
--		goto host_free;
-+		return ret;
- 
- 	ret = msdc_of_clock_parse(pdev, host);
- 	if (ret)
--		goto host_free;
-+		return ret;
- 
- 	host->reset = devm_reset_control_get_optional_exclusive(&pdev->dev,
- 								"hrst");
--	if (IS_ERR(host->reset)) {
--		ret = PTR_ERR(host->reset);
--		goto host_free;
--	}
-+	if (IS_ERR(host->reset))
-+		return PTR_ERR(host->reset);
- 
- 	/* only eMMC has crypto property */
- 	if (!(mmc->caps2 & MMC_CAP2_NO_MMC)) {
-@@ -2783,30 +2779,24 @@ static int msdc_drv_probe(struct platform_device *pdev)
- 	}
- 
- 	host->irq = platform_get_irq(pdev, 0);
--	if (host->irq < 0) {
--		ret = host->irq;
--		goto host_free;
--	}
-+	if (host->irq < 0)
-+		return host->irq;
- 
- 	host->pinctrl = devm_pinctrl_get(&pdev->dev);
--	if (IS_ERR(host->pinctrl)) {
--		ret = PTR_ERR(host->pinctrl);
--		dev_err(&pdev->dev, "Cannot find pinctrl!\n");
--		goto host_free;
--	}
-+	if (IS_ERR(host->pinctrl))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(host->pinctrl),
-+				     "Cannot find pinctrl");
- 
- 	host->pins_default = pinctrl_lookup_state(host->pinctrl, "default");
- 	if (IS_ERR(host->pins_default)) {
--		ret = PTR_ERR(host->pins_default);
- 		dev_err(&pdev->dev, "Cannot find pinctrl default!\n");
--		goto host_free;
-+		return PTR_ERR(host->pins_default);
- 	}
- 
- 	host->pins_uhs = pinctrl_lookup_state(host->pinctrl, "state_uhs");
- 	if (IS_ERR(host->pins_uhs)) {
--		ret = PTR_ERR(host->pins_uhs);
- 		dev_err(&pdev->dev, "Cannot find pinctrl uhs!\n");
--		goto host_free;
-+		return PTR_ERR(host->pins_uhs);
- 	}
- 
- 	/* Support for SDIO eint irq ? */
-@@ -2895,14 +2885,14 @@ static int msdc_drv_probe(struct platform_device *pdev)
+@@ -2885,14 +2885,14 @@ static int msdc_drv_probe(struct platform_device *pdev)
  					     GFP_KERNEL);
  		if (!host->cq_host) {
  			ret = -ENOMEM;
--			goto host_free;
-+			goto release_mem;
+-			goto release_mem;
++			goto release;
  		}
  		host->cq_host->caps |= CQHCI_TASK_DESC_SZ_128;
  		host->cq_host->mmio = host->base + 0x800;
  		host->cq_host->ops = &msdc_cmdq_ops;
  		ret = cqhci_init(host->cq_host, mmc, true);
  		if (ret)
--			goto host_free;
-+			goto release_mem;
+-			goto release_mem;
++			goto release;
  		mmc->max_segs = 128;
  		/* cqhci 16bit length */
  		/* 0 size, means 65536 so we don't have to -1 here */
-@@ -2939,11 +2929,8 @@ static int msdc_drv_probe(struct platform_device *pdev)
- 			host->dma.gpd, host->dma.gpd_addr);
- 	if (host->dma.bd)
+@@ -2919,9 +2919,10 @@ static int msdc_drv_probe(struct platform_device *pdev)
+ end:
+ 	pm_runtime_disable(host->dev);
+ release:
+-	platform_set_drvdata(pdev, NULL);
+ 	msdc_deinit_hw(host);
++release_clk:
+ 	msdc_gate_clock(host);
++	platform_set_drvdata(pdev, NULL);
+ release_mem:
+ 	if (host->dma.gpd)
  		dma_free_coherent(&pdev->dev,
--			MAX_BD_NUM * sizeof(struct mt_bdma_desc),
--			host->dma.bd, host->dma.bd_addr);
--host_free:
--	mmc_free_host(mmc);
--
-+				  MAX_BD_NUM * sizeof(struct mt_bdma_desc),
-+				  host->dma.bd, host->dma.bd_addr);
- 	return ret;
- }
- 
-@@ -2968,9 +2955,7 @@ static void msdc_drv_remove(struct platform_device *pdev)
- 			2 * sizeof(struct mt_gpdma_desc),
- 			host->dma.gpd, host->dma.gpd_addr);
- 	dma_free_coherent(&pdev->dev, MAX_BD_NUM * sizeof(struct mt_bdma_desc),
--			host->dma.bd, host->dma.bd_addr);
--
--	mmc_free_host(mmc);
-+			  host->dma.bd, host->dma.bd_addr);
- }
- 
- static void msdc_save_reg(struct msdc_host *host)
 -- 
 2.43.0
 
