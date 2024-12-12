@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163B621CFEA;
-	Thu, 12 Dec 2024 17:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD2D221D93;
+	Thu, 12 Dec 2024 17:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024593; cv=none; b=hDgDaJyB+Z7SBsAwstjn3tHa8+4CbrTtVZU2E/cdfoXHB6BKXCU0jex9uPg/Wbcnq5ocK3EEP7TggJxydgNKHdlEEIT3BGNLeFghvzZgYiZnkZLDuEup7xx9KNQoHbkZ+YMtBl9oabSjdSwziKhdEqlVAKLAQ3hOyf/QC/kzN70=
+	t=1734024596; cv=none; b=aMZtrAaUDhr2eGrcbzvp17XIbZq227mxDfhyTZVYHO0iiGUBD4mWVXqgFFtKHNyKdXS6WL7mDJYdu2MLlDw33wFRzoEn2DgMRa2W1gLfSDsXUSLH1oYcGcN2/XQN5uqB4EEnbcelechz0r4NbZ6xCvWsIJhYzLU1k4UvCAtSihc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024593; c=relaxed/simple;
-	bh=GnpuiMfuJGUTOPFD2uxG5/UIoSaW39QuNnQxNPdGoM8=;
+	s=arc-20240116; t=1734024596; c=relaxed/simple;
+	bh=DIUdQ2cX/DSvB0Ng1j1dBhtxeuYzkYfEPTKchwRoLnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mu0Y50ELaLmIeKmVtd38g6PTdYFgFAXsp6APYX82iAnu+Vq/Pk4WGBZDzJVt9g3z1AZzs7qoAYc8tCrIN+1EA4vruzidlM2yHYOMk+vQs5kTHv87nKIJvTPefLJbm3X2C5pbClgbubNfWqaAYkHUGlBrzZxyh5p+ieycQvKSPm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aEN54xiz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zdm+WNMEL3FrQmH3rB2ZJZT1ndRhv0u55INhzfKJCzwpiNqEb0THgRUS1XJjFJyvHtcKHfkRWGMoeyH41kOQ+h+Xh9KOLOr+Ic7troF+Ltq+0mN0c0IeSttbh7KcbXDP02YKb/N+VDbkYlosumlXnYyIaAmfKC/0rO4BnKZP+i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d28ZiawZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aEN54xiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87803C4CEDE;
-	Thu, 12 Dec 2024 17:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d28ZiawZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81445C4CECE;
+	Thu, 12 Dec 2024 17:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024592;
-	bh=GnpuiMfuJGUTOPFD2uxG5/UIoSaW39QuNnQxNPdGoM8=;
+	s=korg; t=1734024595;
+	bh=DIUdQ2cX/DSvB0Ng1j1dBhtxeuYzkYfEPTKchwRoLnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aEN54xizUFX9cP5JV22LDWAHVpT+EPlwUz+MpVflhSEzLqqA3oUchYh2K4kTu2WvL
-	 V5fvSBFw48N0xRTA5jidVPZMK0qVcdkaYPwyYtHoTBwkAkq/6OMBO6smzoiIc+or9n
-	 Vj7VXkrIM3huZ53IIu7xLXq5W5ik2gDiviegRSaE=
+	b=d28ZiawZIH4lKoHHfABAeDUiKbcyJvTU0rQDAs5QnJ8jBRyhiu76IpXI2Y/Hh6q+J
+	 cS7ua2cMxoOap/xqimytGDBrUBfqnByzmCZ4to81gT3Js9eXop8b7TLc9W2hmhshrM
+	 4ksg9/zgr5FcjR2Sz8aeLxvcqmwoB8njFWCHhU7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 317/459] scsi: ufs: exynos: Fix hibern8 notify callbacks
-Date: Thu, 12 Dec 2024 16:00:55 +0100
-Message-ID: <20241212144306.176781203@linuxfoundation.org>
+	stable@kernel.org,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 318/459] i3c: master: Fix miss free init_dyn_addr at i3c_master_put_i3c_addrs()
+Date: Thu, 12 Dec 2024 16:00:56 +0100
+Message-ID: <20241212144306.216291603@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,87 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit ceef938bbf8b93ba3a218b4adc244cde94b582aa upstream.
+commit 3082990592f7c6d7510a9133afa46e31bbe26533 upstream.
 
-v1 of the patch which introduced the ufshcd_vops_hibern8_notify()
-callback used a bool instead of an enum. In v2 this was updated to an
-enum based on the review feedback in [1].
+if (dev->boardinfo && dev->boardinfo->init_dyn_addr)
+                                      ^^^ here check "init_dyn_addr"
+	i3c_bus_set_addr_slot_status(&master->bus, dev->info.dyn_addr, ...)
+						             ^^^^
+							free "dyn_addr"
+Fix copy/paste error "dyn_addr" by replacing it with "init_dyn_addr".
 
-ufs-exynos hibernate calls have always been broken upstream as it
-follows the v1 bool implementation.
-
-Link: https://patchwork.kernel.org/project/linux-scsi/patch/001f01d23994$719997c0$54ccc740$@samsung.com/ [1]
-Fixes: 55f4b1f73631 ("scsi: ufs: ufs-exynos: Add UFS host support for Exynos SoCs")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Link: https://lore.kernel.org/r/20241031150033.3440894-13-peter.griffin@linaro.org
-Cc: stable@vger.kernel.org
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@kernel.org
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://lore.kernel.org/r/20241001162608.224039-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/ufs/ufs-exynos.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/i3c/master.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/ufs/ufs-exynos.c
-+++ b/drivers/scsi/ufs/ufs-exynos.c
-@@ -1051,12 +1051,12 @@ static void exynos_ufs_dev_hw_reset(stru
- 	hci_writel(ufs, 1 << 0, HCI_GPIO_OUT);
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -1285,7 +1285,7 @@ static void i3c_master_put_i3c_addrs(str
+ 					     I3C_ADDR_SLOT_FREE);
+ 
+ 	if (dev->boardinfo && dev->boardinfo->init_dyn_addr)
+-		i3c_bus_set_addr_slot_status(&master->bus, dev->info.dyn_addr,
++		i3c_bus_set_addr_slot_status(&master->bus, dev->boardinfo->init_dyn_addr,
+ 					     I3C_ADDR_SLOT_FREE);
  }
  
--static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, u8 enter)
-+static void exynos_ufs_pre_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
- {
- 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 	struct exynos_ufs_uic_attr *attr = ufs->drv_data->uic_attr;
- 
--	if (!enter) {
-+	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
- 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
- 			exynos_ufs_disable_auto_ctrl_hcc(ufs);
- 		exynos_ufs_ungate_clks(ufs);
-@@ -1084,11 +1084,11 @@ static void exynos_ufs_pre_hibern8(struc
- 	}
- }
- 
--static void exynos_ufs_post_hibern8(struct ufs_hba *hba, u8 enter)
-+static void exynos_ufs_post_hibern8(struct ufs_hba *hba, enum uic_cmd_dme cmd)
- {
- 	struct exynos_ufs *ufs = ufshcd_get_variant(hba);
- 
--	if (!enter) {
-+	if (cmd == UIC_CMD_DME_HIBER_EXIT) {
- 		u32 cur_mode = 0;
- 		u32 pwrmode;
- 
-@@ -1107,7 +1107,7 @@ static void exynos_ufs_post_hibern8(stru
- 
- 		if (!(ufs->opts & EXYNOS_UFS_OPT_SKIP_CONNECTION_ESTAB))
- 			exynos_ufs_establish_connt(ufs);
--	} else {
-+	} else if (cmd == UIC_CMD_DME_HIBER_ENTER) {
- 		ufs->entry_hibern8_t = ktime_get();
- 		exynos_ufs_gate_clks(ufs);
- 		if (ufs->opts & EXYNOS_UFS_OPT_BROKEN_AUTO_CLK_CTRL)
-@@ -1176,15 +1176,15 @@ static int exynos_ufs_pwr_change_notify(
- }
- 
- static void exynos_ufs_hibern8_notify(struct ufs_hba *hba,
--				     enum uic_cmd_dme enter,
-+				     enum uic_cmd_dme cmd,
- 				     enum ufs_notify_change_status notify)
- {
- 	switch ((u8)notify) {
- 	case PRE_CHANGE:
--		exynos_ufs_pre_hibern8(hba, enter);
-+		exynos_ufs_pre_hibern8(hba, cmd);
- 		break;
- 	case POST_CHANGE:
--		exynos_ufs_post_hibern8(hba, enter);
-+		exynos_ufs_post_hibern8(hba, cmd);
- 		break;
- 	}
- }
 
 
