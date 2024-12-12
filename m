@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C515C226542;
-	Thu, 12 Dec 2024 16:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D645D226545;
+	Thu, 12 Dec 2024 16:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020637; cv=none; b=CAr335Acem5FQLcd4SE/1Z944gwgTXYVMx8wYP1V7nQVB0KP5KQeLOUVl/UIx8rhlGoYJrd3fFMHmjPSEF+w6CCCfghNgPLitFCs0dmx4zEPM9hkbLmLBtVx+F27WQ48WMIdjtmvPLNCrIpMjLPPWLJ29Z/BvZyX/Di5+37n6Y0=
+	t=1734020641; cv=none; b=JtUB7JTVl1blv+LU6E8LmPR570Gn14tP1O84KiodZivN21i/jTz4mR72WL7NQM0xXrRPdNEeFciEZfkyFrNPcDEVpanWhSALWQ241ApaelpROk8WAoz1mrJTNrsxHG530M2p0QOl1FHnYmK7ZLeumrfrbsvMwAZpZJj1K7WWE+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020637; c=relaxed/simple;
-	bh=HCgQ90lr0Y+wKyZmZUdBOe3qcY+YO2+HRJnOzUWLD7E=;
+	s=arc-20240116; t=1734020641; c=relaxed/simple;
+	bh=6tV71f/ybmjl762N2GcDWmstXEWajcgHQiuu8bj0L7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/8NLW1nMFtBd6+tYyUFnuV4TH852Ibxjc6RW4qsM7pQOL5tJlWjfgQUdhszW5QYmufAB//Lnmb7vPkeky+TDIuFDBzCNKADCXnTjEUwpRCONrQf4mWMXBkNylBFgfhgFBZ8c57H+KFjF1k2rsK0DbJ3M4/Om1lQ1V1BaILu4Ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FK60m2La; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZkWMtJvVMHn4nv+UB1jCkOjOxO/yZtMf/dCL1cWsYeMhqFIyfPXZDXzO80lAmlspQe9+HK5LY1T15T1FGCIm0xGGxTB1JEiT758fPYsZVLUk+eU/Zo3UNojynz+dx/MDby/I78BUsm4m26ghYhHj4ot8sK+5VftG1srn4oLnK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZaFGa8v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FK60m2La"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA36C4CECE;
-	Thu, 12 Dec 2024 16:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZaFGa8v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC58DC4CECE;
+	Thu, 12 Dec 2024 16:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020637;
-	bh=HCgQ90lr0Y+wKyZmZUdBOe3qcY+YO2+HRJnOzUWLD7E=;
+	s=korg; t=1734020641;
+	bh=6tV71f/ybmjl762N2GcDWmstXEWajcgHQiuu8bj0L7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FK60m2LaV78lOz9whwo7gAu3Lr1nEN++P9/02U1M4iIN0+we+N3Fg5c8imaHgknbw
-	 /zHapbk1m/Xe5v5+8jE2GkW4fDum3RthBEWgqjpfQWhGavxgY0DJk0kisn82LrniQw
-	 vUBLF0pCsYdKuKnzoM9Z0hueWByIct9xBtTRL+lA=
+	b=XZaFGa8vapDnB8FP7cCJFUDZVdjrSV0KY47k7ETMd1liv2tMvMrtVN8i6fxy49l/b
+	 dJq5rI+l64b8T3PBTM3rwDOSH2aSYJmSvd2QwS/LMbKVLdnnZkQ8I/+CiY+KWj+Krf
+	 87lBF7L8Wd5BgzH0pCdrZ5J2/hwM0QteWKrt4lLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 491/772] thermal: int3400: Fix reading of current_uuid for active policy
-Date: Thu, 12 Dec 2024 15:57:16 +0100
-Message-ID: <20241212144410.241829198@linuxfoundation.org>
+	Oleksandr Tymoshenko <ovt@google.com>,
+	Amir Goldstein <amir73il@gmail.com>
+Subject: [PATCH 6.1 492/772] ovl: properly handle large files in ovl_security_fileattr
+Date: Thu, 12 Dec 2024 15:57:17 +0100
+Message-ID: <20241212144410.281864316@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -50,47 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Oleksandr Tymoshenko <ovt@google.com>
 
-commit 7082503622986537f57bdb5ef23e69e70cfad881 upstream.
+commit 3b6b99ef15ea37635604992ede9ebcccef38a239 upstream.
 
-When the current_uuid attribute is set to the active policy UUID,
-reading back the same attribute is returning "INVALID" instead of
-the active policy UUID on some platforms before Ice Lake.
+dentry_open in ovl_security_fileattr fails for any file
+larger than 2GB if open method of the underlying filesystem
+calls generic_file_open (e.g. fusefs).
 
-In platforms before Ice Lake, firmware provides a list of supported
-thermal policies. In this case, user space can select any of the
-supported thermal policies via a write to attribute "current_uuid".
+The issue can be reproduce using the following script:
+(passthrough_ll is an example app from libfuse).
 
-In commit c7ff29763989 ("thermal: int340x: Update OS policy capability
-handshake")', the OS policy handshake was updated to support Ice Lake
-and later platforms and it treated priv->current_uuid_index=0 as
-invalid. However, priv->current_uuid_index=0 is for the active policy,
-only priv->current_uuid_index=-1 is invalid.
+  $ D=/opt/test/mnt
+  $ mkdir -p ${D}/{source,base,top/uppr,top/work,ovlfs}
+  $ dd if=/dev/zero of=${D}/source/zero.bin bs=1G count=2
+  $ passthrough_ll -o source=${D}/source ${D}/base
+  $ mount -t overlay overlay \
+      -olowerdir=${D}/base,upperdir=${D}/top/uppr,workdir=${D}/top/work \
+      ${D}/ovlfs
+  $ chmod 0777 ${D}/mnt/ovlfs/zero.bin
 
-Fix this issue by updating the priv->current_uuid_index check.
+Running this script results in "Value too large for defined data type"
+error message from chmod.
 
-Fixes: c7ff29763989 ("thermal: int340x: Update OS policy capability handshake")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 5.18+ <stable@vger.kernel.org> # 5.18+
-Link: https://patch.msgid.link/20241114200213.422303-1-srinivas.pandruvada@linux.intel.com
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Oleksandr Tymoshenko <ovt@google.com>
+Fixes: 72db82115d2b ("ovl: copy up sync/noatime fileattr flags")
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3400_thermal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/overlayfs/inode.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -145,7 +145,7 @@ static ssize_t current_uuid_show(struct
- 	struct int3400_thermal_priv *priv = dev_get_drvdata(dev);
- 	int i, length = 0;
+--- a/fs/overlayfs/inode.c
++++ b/fs/overlayfs/inode.c
+@@ -593,8 +593,13 @@ static int ovl_security_fileattr(const s
+ 	struct file *file;
+ 	unsigned int cmd;
+ 	int err;
++	unsigned int flags;
  
--	if (priv->current_uuid_index > 0)
-+	if (priv->current_uuid_index >= 0)
- 		return sprintf(buf, "%s\n",
- 			       int3400_thermal_uuids[priv->current_uuid_index]);
+-	file = dentry_open(realpath, O_RDONLY, current_cred());
++	flags = O_RDONLY;
++	if (force_o_largefile())
++		flags |= O_LARGEFILE;
++
++	file = dentry_open(realpath, flags, current_cred());
+ 	if (IS_ERR(file))
+ 		return PTR_ERR(file);
  
 
 
