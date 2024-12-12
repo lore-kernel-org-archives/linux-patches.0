@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E6A215F5A;
-	Thu, 12 Dec 2024 15:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220D8215764;
+	Thu, 12 Dec 2024 15:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016166; cv=none; b=aRoLrH7YqDv0w3EJSL2Cibmyi2tvJkoHDVlMnDllCdShHP9nGoldrf3u/TqVZfl9iSM3veYQAIv/GweKzQKWmZ8E7Fl1vA+qfUExpvwO2AU5CQnfd+Od8PEPvNOWP5n6tUHrCd2dZtw9Hu8KyVQ2Npc9/cFXWXdCG8geP2VJPgU=
+	t=1734016170; cv=none; b=qIi2gKU9BkPOZxrqMbpdaOVwEUcdBx0Rnx0bc8yRyPRO03wPu8H2bS+lcF4TrzopYwzsr/RmCkfZAkDRxjlya6MBMmcs8W9WnfjW1cgx6Y58P00TjUN1Id9NTtm8Bvg/5XwQqFMibGFRWGYB68MEJaRhQrlgjXS8yGDTc2ag+X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016166; c=relaxed/simple;
-	bh=7CTzYORPT/jt9qUceaWlujAS/81gWEd99vrGHq2if6Q=;
+	s=arc-20240116; t=1734016170; c=relaxed/simple;
+	bh=A5/4NMfPVvaHvcHoI4dBUiLqk/H4wFX8bvmiXWn4W+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dp6wIiW0iBTdbw/2kXBijqtFKbQdjpVbfBBG5MxdylVd7zKi+mqipdyOn9wCzWvbnk9aG0p4RcpJ8Ax2OywL5Xua6JN67CdN2J6NNtB6/e23akPyhHIZsYSuQfXVyZc9DA1S2B8sF35OLVxNiP/6w8gzMGaT+leG56SqZ/dPLqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duRl2bnK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPKdc7B2QDICr2sUFzxadGZo/yZwb15qWVvfnB5qOM6HsXUtnqW/YjgfFVxZN+yG8URDOMU1CdD3x8iFSgB5C6P00X7wM0Fs5/Em6/oeYQTsoh5f+/zds/KKvPECYgF4MzCZeeDvqcrEe7LVuFA+8vC2x/gTqMReJEQ7TUX+pRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmmopxPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duRl2bnK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101B5C4CECE;
-	Thu, 12 Dec 2024 15:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmmopxPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85671C4CECE;
+	Thu, 12 Dec 2024 15:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016166;
-	bh=7CTzYORPT/jt9qUceaWlujAS/81gWEd99vrGHq2if6Q=;
+	s=korg; t=1734016170;
+	bh=A5/4NMfPVvaHvcHoI4dBUiLqk/H4wFX8bvmiXWn4W+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=duRl2bnKAs8yrsGFSY+26NQmHhh1DK7VZWv5F8vq/Lrq8a0D8fRPE/cR8VIiwZaLH
-	 N2njBDcWXu2wVbOE/PazbYT/uWQqZfIiWkpCKjBqtyzd+JVKjy9brFgiKQY2697yR7
-	 ejNLV06JolMxoWL3lfl+3YFVgWldpa3qJuOpp8aY=
+	b=UmmopxPmtk+XYRM/ehGf8oZw4nx9Usj/jQj/HCWWSP3uYtUav81GIlljHspjJRNBm
+	 d7ZrgveKRpwFQLK6j5xcflcuyJyIIUol+zniiEuFnFgAapMYDxLhCLKDY57XGh0V+s
+	 4lchR9uJ1ez/FZl7gLP9HWxD2aHwhxL2uTtKVMAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 131/466] tracing: Fix cmp_entries_dup() to respect sort() comparison rules
-Date: Thu, 12 Dec 2024 15:55:00 +0100
-Message-ID: <20241212144311.978300514@linuxfoundation.org>
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 132/466] net :mana :Request a V2 response version for MANA_QUERY_GF_STAT
+Date: Thu, 12 Dec 2024 15:55:01 +0100
+Message-ID: <20241212144312.021613148@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -50,52 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Shradha Gupta <shradhagupta@linux.microsoft.com>
 
-commit e63fbd5f6810ed756bbb8a1549c7d4132968baa9 upstream.
+commit 31f1b55d5d7e531cd827419e5d71c19f24de161c upstream.
 
-The cmp_entries_dup() function used as the comparator for sort()
-violated the symmetry and transitivity properties required by the
-sorting algorithm. Specifically, it returned 1 whenever memcmp() was
-non-zero, which broke the following expectations:
-
-* Symmetry: If x < y, then y > x.
-* Transitivity: If x < y and y < z, then x < z.
-
-These violations could lead to incorrect sorting and failure to
-correctly identify duplicate elements.
-
-Fix the issue by directly returning the result of memcmp(), which
-adheres to the required comparison properties.
+The current requested response version(V1) for MANA_QUERY_GF_STAT query
+results in STATISTICS_FLAGS_TX_ERRORS_GDMA_ERROR value being set to
+0 always.
+In order to get the correct value for this counter we request the response
+version to be V2.
 
 Cc: stable@vger.kernel.org
-Fixes: 08d43a5fa063 ("tracing: Add lock-free tracing_map")
-Link: https://lore.kernel.org/20241203202228.1274403-1-visitorckw@gmail.com
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: e1df5202e879 ("net :mana :Add remaining GDMA stats for MANA to ethtool")
+Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://patch.msgid.link/1733291300-12593-1-git-send-email-shradhagupta@linux.microsoft.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/tracing_map.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ethernet/microsoft/mana/mana_en.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/tracing_map.c
-+++ b/kernel/trace/tracing_map.c
-@@ -845,15 +845,11 @@ int tracing_map_init(struct tracing_map
- static int cmp_entries_dup(const void *A, const void *B)
- {
- 	const struct tracing_map_sort_entry *a, *b;
--	int ret = 0;
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -2439,6 +2439,7 @@ void mana_query_gf_stats(struct mana_por
  
- 	a = *(const struct tracing_map_sort_entry **)A;
- 	b = *(const struct tracing_map_sort_entry **)B;
- 
--	if (memcmp(a->key, b->key, a->elt->map->key_size))
--		ret = 1;
--
--	return ret;
-+	return memcmp(a->key, b->key, a->elt->map->key_size);
- }
- 
- static int cmp_entries_sum(const void *A, const void *B)
+ 	mana_gd_init_req_hdr(&req.hdr, MANA_QUERY_GF_STAT,
+ 			     sizeof(req), sizeof(resp));
++	req.hdr.resp.msg_version = GDMA_MESSAGE_V2;
+ 	req.req_stats = STATISTICS_FLAGS_RX_DISCARDS_NO_WQE |
+ 			STATISTICS_FLAGS_RX_ERRORS_VPORT_DISABLED |
+ 			STATISTICS_FLAGS_HC_RX_BYTES |
 
 
