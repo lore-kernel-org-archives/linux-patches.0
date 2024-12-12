@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22383231CA0;
-	Thu, 12 Dec 2024 16:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93942231A45;
+	Thu, 12 Dec 2024 16:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021709; cv=none; b=q3/sN54QfWE1Kf2BH5yiSVT8QD50kVCfUJXnE4MSs8F2+jjnCIaXzGRGtMO0KS8Y1sWhwL0iI2QJ3o+pBqDPQLeUGC/j+4gEjsDdoydtSUMlInl69ORNG4czS+GP4ld9WigfzBzA6d0afdZTqoPre/vPDaovlKnfLfIq3sK8K28=
+	t=1734021712; cv=none; b=hKKkHD50ZP6ROacZ0ZYw+EM7IJj547oYHATAvkxUmMdPmYSXy5JlpqAcKsT1f5+H8ZbwxRF4wqbBFdsoQJnj/2OfeusGYJ6CkAIcyB9gAC1tA2mSHm+LR81IZOhMNUbpuEulbcZ8W29acQ+QY8N/iL9KMouNXvQFhV+gUdH9P8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021709; c=relaxed/simple;
-	bh=nmC2eOQsLuSFLRzlHgGq1+3cK06ULzgZlGyU/KAWE3U=;
+	s=arc-20240116; t=1734021712; c=relaxed/simple;
+	bh=ZEkahWUdUErumfJocQMLYbG8skVNAOuC6SAbXAdWcqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RyNOA25RnRC3xoZdgjd4wop2SLw39TOXGPwQ/ktAo5j/htpxBT0+kgkLO6mQZ65APZngtWz/FsuFWXEvZ/WMmuGYHnKZzzLKnu9czeTtgehadebfXh47n8YjO0V6bi+ylGBNWo6NEQduWw8sMfq5w2Vmao+q2xeqRqpauu9NfMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nz2F8d+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PpSRnVUj2CmPqb7ymnRspA/jyPnzuDNTp0uXvcc70DdNFtlQzr3TNs4sCcWHa7Qidq1mrQy1rCkTRyqKWU3pX90WHAONofU+OQejhaKZKT6EpcXr8BWtUR5N3dCKXX6UJW4W5kdhqCW+FBYuUrlzrTRsHIMpqPeFSAmZDzVFgyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J99ihBtB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nz2F8d+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84274C4CECE;
-	Thu, 12 Dec 2024 16:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J99ihBtB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 024F6C4CED0;
+	Thu, 12 Dec 2024 16:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021709;
-	bh=nmC2eOQsLuSFLRzlHgGq1+3cK06ULzgZlGyU/KAWE3U=;
+	s=korg; t=1734021712;
+	bh=ZEkahWUdUErumfJocQMLYbG8skVNAOuC6SAbXAdWcqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nz2F8d+Dcc7E7V0KOMW2Igv1xr2lGV2vUReXQD1wXILt3QdWGlnt610AYFKV4wk/r
-	 y6ioCFx7ifNKIU21pAa/Crc6z2BCcqju8XxxQBSEeGKGF94/KGD8p+5VFA/pFiocJ5
-	 ore1t1u9wdVH+Uzg+QIQYY+nzYujodMAHkaB3dMc=
+	b=J99ihBtBH0AwlEzanIChG2yR08FFk2K2y2YzFDeqnm5uiHuBmvEAc+ElbO9GP2XTB
+	 qJm3Dsh0Tj+eJcIXBQtmVMTAFevwKHxPNpe1tPAO64GheUlgUGMH4s1BojKTr+FmIy
+	 hdhnci/aYOe63OTHqlEp80mULfKEjrjGUIwmIBRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 041/565] NFSD: Limit the number of concurrent async COPY operations
-Date: Thu, 12 Dec 2024 15:53:56 +0100
-Message-ID: <20241212144313.084913807@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org
+Subject: [PATCH 5.15 024/565] x86/mm: Fix a kdump kernel failure on SME system when CONFIG_IMA_KEXEC=y
+Date: Thu, 12 Dec 2024 15:53:39 +0100
+Message-ID: <20241212144312.403473714@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -44,111 +46,121 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Baoquan He <bhe@redhat.com>
 
-[ Upstream commit aadc3bbea163b6caaaebfdd2b6c4667fbc726752 ]
+commit 8d9ffb2fe65a6c4ef114e8d4f947958a12751bbe upstream.
 
-Nothing appears to limit the number of concurrent async COPY
-operations that clients can start. In addition, AFAICT each async
-COPY can copy an unlimited number of 4MB chunks, so can run for a
-long time. Thus IMO async COPY can become a DoS vector.
+The kdump kernel is broken on SME systems with CONFIG_IMA_KEXEC=y enabled.
+Debugging traced the issue back to
 
-Add a restriction mechanism that bounds the number of concurrent
-background COPY operations. Start simple and try to be fair -- this
-patch implements a per-namespace limit.
+  b69a2afd5afc ("x86/kexec: Carry forward IMA measurement log on kexec").
 
-An async COPY request that occurs while this limit is exceeded gets
-NFS4ERR_DELAY. The requesting client can choose to send the request
-again after a delay or fall back to a traditional read/write style
-copy.
+Testing was previously not conducted on SME systems with CONFIG_IMA_KEXEC
+enabled, which led to the oversight, with the following incarnation:
 
-If there is need to make the mechanism more sophisticated, we can
-visit that in future patches.
+...
+  ima: No TPM chip found, activating TPM-bypass!
+  Loading compiled-in module X.509 certificates
+  Loaded X.509 cert 'Build time autogenerated kernel key: 18ae0bc7e79b64700122bb1d6a904b070fef2656'
+  ima: Allocated hash algorithm: sha256
+  Oops: general protection fault, probably for non-canonical address 0xcfacfdfe6660003e: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0-rc2+ #14
+  Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS 1.20.0 05/03/2023
+  RIP: 0010:ima_restore_measurement_list
+  Call Trace:
+   <TASK>
+   ? show_trace_log_lvl
+   ? show_trace_log_lvl
+   ? ima_load_kexec_buffer
+   ? __die_body.cold
+   ? die_addr
+   ? exc_general_protection
+   ? asm_exc_general_protection
+   ? ima_restore_measurement_list
+   ? vprintk_emit
+   ? ima_load_kexec_buffer
+   ima_load_kexec_buffer
+   ima_init
+   ? __pfx_init_ima
+   init_ima
+   ? __pfx_init_ima
+   do_one_initcall
+   do_initcalls
+   ? __pfx_kernel_init
+   kernel_init_freeable
+   kernel_init
+   ret_from_fork
+   ? __pfx_kernel_init
+   ret_from_fork_asm
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  ...
+  Kernel panic - not syncing: Fatal exception
+  Kernel Offset: disabled
+  Rebooting in 10 seconds..
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://nvd.nist.gov/vuln/detail/CVE-2024-49974
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Adding debug printks showed that the stored addr and size of ima_kexec buffer
+are not decrypted correctly like:
+
+  ima: ima_load_kexec_buffer, buffer:0xcfacfdfe6660003e, size:0xe48066052d5df359
+
+Three types of setup_data info
+
+  — SETUP_EFI,
+  - SETUP_IMA, and
+  - SETUP_RNG_SEED
+
+are passed to the kexec/kdump kernel. Only the ima_kexec buffer
+experienced incorrect decryption. Debugging identified a bug in
+early_memremap_is_setup_data(), where an incorrect range calculation
+occurred due to the len variable in struct setup_data ended up only
+representing the length of the data field, excluding the struct's size,
+and thus leading to miscalculation.
+
+Address a similar issue in memremap_is_setup_data() while at it.
+
+  [ bp: Heavily massage. ]
+
+Fixes: b3c72fc9a78e ("x86/boot: Introduce setup_indirect")
+Signed-off-by: Baoquan He <bhe@redhat.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240911081615.262202-3-bhe@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/netns.h     |    1 +
- fs/nfsd/nfs4proc.c  |   11 +++++++++--
- fs/nfsd/nfs4state.c |    1 +
- fs/nfsd/xdr4.h      |    1 +
- 4 files changed, 12 insertions(+), 2 deletions(-)
+ arch/x86/mm/ioremap.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/nfsd/netns.h
-+++ b/fs/nfsd/netns.h
-@@ -152,6 +152,7 @@ struct nfsd_net {
- 	u32		s2s_cp_cl_id;
- 	struct idr	s2s_cp_stateids;
- 	spinlock_t	s2s_cp_lock;
-+	atomic_t	pending_async_copies;
+--- a/arch/x86/mm/ioremap.c
++++ b/arch/x86/mm/ioremap.c
+@@ -641,7 +641,8 @@ static bool memremap_is_setup_data(resou
+ 		paddr_next = data->next;
+ 		len = data->len;
  
- 	/*
- 	 * Version information
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1244,6 +1244,7 @@ static void nfs4_put_copy(struct nfsd4_c
- {
- 	if (!refcount_dec_and_test(&copy->refcount))
- 		return;
-+	atomic_dec(&copy->cp_nn->pending_async_copies);
- 	kfree(copy->cp_src);
- 	kfree(copy);
- }
-@@ -1782,10 +1783,16 @@ nfsd4_copy(struct svc_rqst *rqstp, struc
- 	memcpy(&copy->fh, &cstate->current_fh.fh_handle,
- 		sizeof(struct knfsd_fh));
- 	if (nfsd4_copy_is_async(copy)) {
--		status = nfserrno(-ENOMEM);
- 		async_copy = kzalloc(sizeof(struct nfsd4_copy), GFP_KERNEL);
- 		if (!async_copy)
- 			goto out_err;
-+		async_copy->cp_nn = nn;
-+		/* Arbitrary cap on number of pending async copy operations */
-+		if (atomic_inc_return(&nn->pending_async_copies) >
-+				(int)rqstp->rq_pool->sp_nrthreads) {
-+			atomic_dec(&nn->pending_async_copies);
-+			goto out_err;
-+		}
- 		INIT_LIST_HEAD(&async_copy->copies);
- 		refcount_set(&async_copy->refcount, 1);
- 		async_copy->cp_src = kmalloc(sizeof(*async_copy->cp_src), GFP_KERNEL);
-@@ -1824,7 +1831,7 @@ out_err:
- 	}
- 	if (async_copy)
- 		cleanup_async_copy(async_copy);
--	status = nfserrno(-ENOMEM);
-+	status = nfserr_jukebox;
- 	goto out;
- }
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			memunmap(data);
+ 			return true;
+ 		}
+@@ -703,7 +704,8 @@ static bool __init early_memremap_is_set
+ 		paddr_next = data->next;
+ 		len = data->len;
  
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -8079,6 +8079,7 @@ static int nfs4_state_create_net(struct
- 	spin_lock_init(&nn->client_lock);
- 	spin_lock_init(&nn->s2s_cp_lock);
- 	idr_init(&nn->s2s_cp_stateids);
-+	atomic_set(&nn->pending_async_copies, 0);
- 
- 	spin_lock_init(&nn->blocked_locks_lock);
- 	INIT_LIST_HEAD(&nn->blocked_locks_lru);
---- a/fs/nfsd/xdr4.h
-+++ b/fs/nfsd/xdr4.h
-@@ -574,6 +574,7 @@ struct nfsd4_copy {
- 	struct nfsd4_ssc_umount_item *ss_nsui;
- 	struct nfs_fh		c_fh;
- 	nfs4_stateid		stateid;
-+	struct nfsd_net		*cp_nn;
- };
- 
- static inline void nfsd4_copy_set_sync(struct nfsd4_copy *copy, bool sync)
+-		if ((phys_addr > paddr) && (phys_addr < (paddr + len))) {
++		if ((phys_addr > paddr) &&
++		    (phys_addr < (paddr + sizeof(struct setup_data) + len))) {
+ 			early_memunmap(data, sizeof(*data));
+ 			return true;
+ 		}
 
 
