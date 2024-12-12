@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891CD217739;
-	Thu, 12 Dec 2024 15:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCD621766D;
+	Thu, 12 Dec 2024 15:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016524; cv=none; b=EBDrsucS8tetJw11klS1k4ZqRadfvinwkCkd/F/Z9eO71Vq/+7G61Jr1jVy2loPyq+PkAPPUnL71AhCW/auC4wgX2UAMf5hC1bRqB8Pzj7csdwJScf4X2HtRn3Yr6FW0T+yAfv6B8v7WdrmF8wRTQTzsn6GPKslQ8BDKy0rfgao=
+	t=1734016531; cv=none; b=DsZ1gXTYKExoVA8StVT4Hi3nGzc1ojXSSybaQyYJHocYJpa8PWMOaB8ZxguLNWWSwXBL1BMHXhHss2VtyagFpSwoRdmCMirLqrrz4KiAVBWmfKRV46mSS5EbH2YFeO4QVVHoHWiVpowey5nTbJs+kNg01PK+N2etGC2BewBusX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016524; c=relaxed/simple;
-	bh=ZRwUKUbAVdIuA6uUGfRAwBJDnj5WLHq1F/Fl266liNY=;
+	s=arc-20240116; t=1734016531; c=relaxed/simple;
+	bh=6n7Ckx8U0DHzePhIjlpIdBCzie84j9ldr3eDvEL2T7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5xtJUkyB8u78joFZVsbtlLmofUc7CD2ooZwJWIkF0LVl4DpjGX26NOc0T3HfooPmcpYHfpLY/gLgUCrCbBlpLPg0mgo6aAjmTyBBOsB/7bYBLoK6nEo8vFEYmzzAVFPSOHAVzHFREGaUppae+362MorSRqPj0daMTDBzdq0pUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXx360MC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmDI9WWwUyu2YD/1QdOEyD1BVfUMnNOhZyrCxuWNYlLzuKR0oIpfWkWjKRs3foDswRcLrwQb0MlomszXE7KDBN0lRCyfiV5U5U7f3Y57VloeB+WM/rQ9SHE46XDyh0ngAhOyN8o3lsgrImbc1q/5nprtnWEpQzOX/NZTn2xSvDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/eDr63A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXx360MC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F95C4CECE;
-	Thu, 12 Dec 2024 15:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/eDr63A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947E8C4CECE;
+	Thu, 12 Dec 2024 15:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016524;
-	bh=ZRwUKUbAVdIuA6uUGfRAwBJDnj5WLHq1F/Fl266liNY=;
+	s=korg; t=1734016531;
+	bh=6n7Ckx8U0DHzePhIjlpIdBCzie84j9ldr3eDvEL2T7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXx360MCd/6lzAxpHY77njq7lotGYgw4cLVhToZj80ehw4a/YOvx/wy50jF9N7mR8
-	 1nS3NcUK7/I3Z6fngetC7MCTN09yFSZYjSJUFHsN0twMJZ3l9ICgVeYb9lTGwdjMsp
-	 Whrh7zDm22jbhy3lrVhXkC0/C28YQbfzUIXwhjC8=
+	b=N/eDr63A63Jt8h3kFqyaZ5XQkTECyr04vendWhhYDFDmkjCCWr7rirBZDxde5I2hw
+	 fajXDcwW708AJfTAC8MQAJeI1xdK6hSl1b0ui+2Xha5cPaCIdnhSVTRVF0fAkzujFs
+	 ydprWjRPUIWiUlQgh3JeMWnKGl+ugkZRC2CqoekY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/466] btrfs: do not clear read-only when adding sprout device
-Date: Thu, 12 Dec 2024 15:56:31 +0100
-Message-ID: <20241212144315.553289096@linuxfoundation.org>
+	Wengang Wang <wen.gang.wang@oracle.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 194/466] ocfs2: update seq_file index in ocfs2_dlm_seq_next
+Date: Thu, 12 Dec 2024 15:56:03 +0100
+Message-ID: <20241212144314.459361308@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -52,66 +56,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Wengang Wang <wen.gang.wang@oracle.com>
 
-[ Upstream commit 70958a949d852cbecc3d46127bf0b24786df0130 ]
+commit 914eec5e980171bc128e7e24f7a22aa1d803570e upstream.
 
-If you follow the seed/sprout wiki, it suggests the following workflow:
+The following INFO level message was seen:
 
-btrfstune -S 1 seed_dev
-mount seed_dev mnt
-btrfs device add sprout_dev
-mount -o remount,rw mnt
+seq_file: buggy .next function ocfs2_dlm_seq_next [ocfs2] did not
+update position index
 
-The first mount mounts the FS readonly, which results in not setting
-BTRFS_FS_OPEN, and setting the readonly bit on the sb. The device add
-somewhat surprisingly clears the readonly bit on the sb (though the
-mount is still practically readonly, from the users perspective...).
-Finally, the remount checks the readonly bit on the sb against the flag
-and sees no change, so it does not run the code intended to run on
-ro->rw transitions, leaving BTRFS_FS_OPEN unset.
+Fix:
+Update *pos (so m->index) to make seq_read_iter happy though the index its
+self makes no sense to ocfs2_dlm_seq_next.
 
-As a result, when the cleaner_kthread runs, it sees no BTRFS_FS_OPEN and
-does no work. This results in leaking deleted snapshots until we run out
-of space.
-
-I propose fixing it at the first departure from what feels reasonable:
-when we clear the readonly bit on the sb during device add.
-
-A new fstest I have written reproduces the bug and confirms the fix.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20241119174500.9198-1-wen.gang.wang@oracle.com
+Signed-off-by: Wengang Wang <wen.gang.wang@oracle.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c | 4 ----
- 1 file changed, 4 deletions(-)
+ fs/ocfs2/dlmglue.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 5895397364aac..0c4d14c59ebec 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2842,8 +2842,6 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 	set_blocksize(device->bdev_file, BTRFS_BDEV_BLOCKSIZE);
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -3110,6 +3110,7 @@ static void *ocfs2_dlm_seq_next(struct s
+ 	struct ocfs2_lock_res *iter = v;
+ 	struct ocfs2_lock_res *dummy = &priv->p_iter_res;
  
- 	if (seeding_dev) {
--		btrfs_clear_sb_rdonly(sb);
--
- 		/* GFP_KERNEL allocation must not be under device_list_mutex */
- 		seed_devices = btrfs_init_sprout(fs_info);
- 		if (IS_ERR(seed_devices)) {
-@@ -2986,8 +2984,6 @@ int btrfs_init_new_device(struct btrfs_fs_info *fs_info, const char *device_path
- 	mutex_unlock(&fs_info->chunk_mutex);
- 	mutex_unlock(&fs_info->fs_devices->device_list_mutex);
- error_trans:
--	if (seeding_dev)
--		btrfs_set_sb_rdonly(sb);
- 	if (trans)
- 		btrfs_end_transaction(trans);
- error_free_zone:
--- 
-2.43.0
-
++	(*pos)++;
+ 	spin_lock(&ocfs2_dlm_tracking_lock);
+ 	iter = ocfs2_dlm_next_res(iter, priv);
+ 	list_del_init(&dummy->l_debug_list);
 
 
