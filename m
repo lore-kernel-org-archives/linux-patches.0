@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D07A2210CA;
-	Thu, 12 Dec 2024 16:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA352288FD;
+	Thu, 12 Dec 2024 16:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020722; cv=none; b=WaosGyA9MYjDffpR4TVUSlz+hPTBueebikOb/MYHMndWMbXKAoHC4go2cbG5xmM0xkQ0FI40xKWhgO+4ZkKMz/3mTFF4POGgxvTidnMrr3LI0PhJ6j0Sw0PKJV2FsC/qrYUzRFrzUr9U6vWnJNsvjHU62xD8281r7Q/yjQVfER8=
+	t=1734020725; cv=none; b=Wx98neSjw28p8o2fURwCsjYhkjTGGVMB3d5R7tkPWBbBMnfonIWQehVj6zLbvjffMOepcZNAGJp1LRFcX5xSO6kwbw9Xh0soUxrkuIejwTal/Pg/88aQQ9CveYa9Ti/EZT2VUTsmyoEu5hgEf+BUoRsOJIXgFkC1jmk+3rYPm1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020722; c=relaxed/simple;
-	bh=oy/2a1AJW8dXFBOdNQT1EMGgQc7PNJyuBgGuzMov9pI=;
+	s=arc-20240116; t=1734020725; c=relaxed/simple;
+	bh=TZA+j1P7V31/rCMU6RNCJTqKSqhWSoK6Fzxnp9vGIV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4gqdyJOtX04O8l+46FakSd7W+66/8OMGsOl4rPb+RyWs/2yJ5+q10q8cFQy7QIUQXCTauhFbEXf2GqhcMBimqwkGpHLJwdV+O/SUMxX1QLce4rfLIIk25IIiE1CE8ADKE2q6aIcy0z1xECYJemK6Q4Oyz+WDOgTGYmKspt5DEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QND/qGGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTeSp71P4XcHBV2ZyTk83/F6pAtxrJ0OcNDyUgqAJTI+G94cvNxlRW0IyULithmBXzECO3AXoVYIueMO5URQOS9Ad3rLirqYxlRLx1/hEFIlFDeBdtt8ecjJMCnpHM1X/3BWOyQR9LHD8Bwenk4/ni97lPdvRd6cNnuIkRrNgEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/PfkS9K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QND/qGGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB7E4C4CECE;
-	Thu, 12 Dec 2024 16:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/PfkS9K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 133A8C4CECE;
+	Thu, 12 Dec 2024 16:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020722;
-	bh=oy/2a1AJW8dXFBOdNQT1EMGgQc7PNJyuBgGuzMov9pI=;
+	s=korg; t=1734020725;
+	bh=TZA+j1P7V31/rCMU6RNCJTqKSqhWSoK6Fzxnp9vGIV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QND/qGGCvVishI0kJ5d4SkE9Amv7CLyLQCt2CoL3ass0bwVCqMxVAEXIqS6b7Z4tx
-	 IKXBcgGQJZQGnVEysyDvU+rulE02hyIiaBXic2ZJcR6iNip9TD5tKGBKS4bB3S77YP
-	 QLTd+rZ3TGqi4PE71jDg9Z5c3hXP83jQdQGO0Sjs=
+	b=P/PfkS9Km+PpzcCzyrwjlvTbIGXwszT7RasLLDp20305sm/UsEtpsB5nIJ/v/aco7
+	 yxA3FE+qjNaXjJZ52Kbe/KyoK0PWaOFTcRRmc+kn3+XZ8QGvy9J3IQQOp13vpgnKq3
+	 yi86EVRbM4OuZFzBpFLxxsRuW380ExL7/kjooQGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Jozsef Kadlecsik <kadlec@netfilter.org>,
+	Laurent Fasnacht <laurent.fasnacht@proton.ch>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 542/772] netfilter: ipset: Hold module reference while requesting a module
-Date: Thu, 12 Dec 2024 15:58:07 +0100
-Message-ID: <20241212144412.361092405@linuxfoundation.org>
+Subject: [PATCH 6.1 543/772] netfilter: nft_set_hash: skip duplicated elements pending gc run
+Date: Thu, 12 Dec 2024 15:58:08 +0100
+Message-ID: <20241212144412.402009586@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,46 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 456f010bfaefde84d3390c755eedb1b0a5857c3c ]
+[ Upstream commit 7ffc7481153bbabf3332c6a19b289730c7e1edf5 ]
 
-User space may unload ip_set.ko while it is itself requesting a set type
-backend module, leading to a kernel crash. The race condition may be
-provoked by inserting an mdelay() right after the nfnl_unlock() call.
+rhashtable does not provide stable walk, duplicated elements are
+possible in case of resizing. I considered that checking for errors when
+calling rhashtable_walk_next() was sufficient to detect the resizing.
+However, rhashtable_walk_next() returns -EAGAIN only at the end of the
+iteration, which is too late, because a gc work containing duplicated
+elements could have been already scheduled for removal to the worker.
 
-Fixes: a7b4f989a629 ("netfilter: ipset: IP set core support")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Acked-by: Jozsef Kadlecsik <kadlec@netfilter.org>
+Add a u32 gc worker sequence number per set, bump it on every workqueue
+run. Annotate gc worker sequence number on the expired element. Use it
+to skip those already seen in this gc workqueue run.
+
+Note that this new field is never reset in case gc transaction fails, so
+next gc worker run on the expired element overrides it. Wraparound of gc
+worker sequence number should not be an issue with stale gc worker
+sequence number in the element, that would just postpone the element
+removal in one gc run.
+
+Note that it is not possible to use flags to annotate that element is
+pending gc run to detect duplicates, given that gc transaction can be
+invalidated in case of update from the control plane, therefore, not
+allowing to clear such flag.
+
+On x86_64, pahole reports no changes in the size of nft_rhash_elem.
+
+Fixes: f6c383b8c31a ("netfilter: nf_tables: adapt set backend to use GC transaction API")
+Reported-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
+Tested-by: Laurent Fasnacht <laurent.fasnacht@proton.ch>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/ipset/ip_set_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/nft_set_hash.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/netfilter/ipset/ip_set_core.c b/net/netfilter/ipset/ip_set_core.c
-index 0b24b638bfd2e..56215fb63b645 100644
---- a/net/netfilter/ipset/ip_set_core.c
-+++ b/net/netfilter/ipset/ip_set_core.c
-@@ -104,14 +104,19 @@ find_set_type(const char *name, u8 family, u8 revision)
- static bool
- load_settype(const char *name)
- {
-+	if (!try_module_get(THIS_MODULE))
-+		return false;
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 1fd3b413350dc..5c4209b49bda7 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -24,10 +24,12 @@
+ struct nft_rhash {
+ 	struct rhashtable		ht;
+ 	struct delayed_work		gc_work;
++	u32				wq_gc_seq;
+ };
+ 
+ struct nft_rhash_elem {
+ 	struct rhash_head		node;
++	u32				wq_gc_seq;
+ 	struct nft_set_ext		ext;
+ };
+ 
+@@ -339,6 +341,10 @@ static void nft_rhash_gc(struct work_struct *work)
+ 	if (!gc)
+ 		goto done;
+ 
++	/* Elements never collected use a zero gc worker sequence number. */
++	if (unlikely(++priv->wq_gc_seq == 0))
++		priv->wq_gc_seq++;
 +
- 	nfnl_unlock(NFNL_SUBSYS_IPSET);
- 	pr_debug("try to load ip_set_%s\n", name);
- 	if (request_module("ip_set_%s", name) < 0) {
- 		pr_warn("Can't find ip_set type %s\n", name);
- 		nfnl_lock(NFNL_SUBSYS_IPSET);
-+		module_put(THIS_MODULE);
- 		return false;
+ 	rhashtable_walk_enter(&priv->ht, &hti);
+ 	rhashtable_walk_start(&hti);
+ 
+@@ -356,6 +362,14 @@ static void nft_rhash_gc(struct work_struct *work)
+ 			goto try_later;
+ 		}
+ 
++		/* rhashtable walk is unstable, already seen in this gc run?
++		 * Then, skip this element. In case of (unlikely) sequence
++		 * wraparound and stale element wq_gc_seq, next gc run will
++		 * just find this expired element.
++		 */
++		if (he->wq_gc_seq == priv->wq_gc_seq)
++			continue;
++
+ 		if (nft_set_elem_is_dead(&he->ext))
+ 			goto dead_elem;
+ 
+@@ -372,6 +386,8 @@ static void nft_rhash_gc(struct work_struct *work)
+ 		if (!gc)
+ 			goto try_later;
+ 
++		/* annotate gc sequence for this attempt. */
++		he->wq_gc_seq = priv->wq_gc_seq;
+ 		nft_trans_gc_elem_add(gc, he);
  	}
- 	nfnl_lock(NFNL_SUBSYS_IPSET);
-+	module_put(THIS_MODULE);
- 	return true;
- }
  
 -- 
 2.43.0
