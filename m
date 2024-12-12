@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AEC215762;
-	Thu, 12 Dec 2024 17:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57D4216E14;
+	Thu, 12 Dec 2024 17:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023914; cv=none; b=aRdULPkQ1iNQklBvRYBgDJLl/2OqjHHTUf5NRhmiNg2gV9Wq7aFdcxanNLAu6Wc0gSNFNeDQ59UOHN9h/uzGKVidVsZNE4Bzt+harecREQaSI/o8DcKC1eL+Pe64tQX8cqqZCW93l7geghuiDLTIklbDF3GB3mJYWvH4XGWLmro=
+	t=1734023917; cv=none; b=X+b8wpofX7HNYa4cnk7jJT9LuODbOciUNQStb2pgt119SWo4+X+zfn+bI1I7C6kZPEtV5PAdM9vAmffWHvD+zzdPkO/tjTky1gpkklRipNoviKM5CtJvwH2VssFs7pdld8UzzZpf2JJjRW+GtiBr+KZ5R9EtyyQTzIOJ8u9IgWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023914; c=relaxed/simple;
-	bh=GGaZeXa0ECEdApuw6xqdLiEk3bVxfsdYjYx+kuGmMYA=;
+	s=arc-20240116; t=1734023917; c=relaxed/simple;
+	bh=+JYzJXsN9uSP46oXOkcBPkgi+j4GxfYtVmDvB4dMaWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HkqWPACxbgVlScjbd3BJCHdDKQsOhXaarZ/LZ1zH4w8YHCujG6RlhKnC6h1oY585QKzFq/GqBB2WYCb0zxgT68urGkh1lLXM1BNX3mVz1i7ei1Gb5Up616a2slHcdJjUa+NKETGEAm1LXLBiZloOrHH+3fhhiO7AXPwVT3nQXzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1qvOL8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1l8qnc4jeJqAcr1UVSav1fydWZYoTaml37AzSRqurIJ5sr6soNxHhj8rPi2cXgIr4GjmPtzTraYFMZEVtgLJzJdyi1XxlJVW5WCPbZkbBATmURDLYMdShq+nhfqZxHqyvaD08aN/IVesBUzM/DWXm1QUEuIwbL1GCa5T69SfF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9zVpHNE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1qvOL8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EACC4CECE;
-	Thu, 12 Dec 2024 17:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9zVpHNE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D9C1C4CED0;
+	Thu, 12 Dec 2024 17:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023914;
-	bh=GGaZeXa0ECEdApuw6xqdLiEk3bVxfsdYjYx+kuGmMYA=;
+	s=korg; t=1734023917;
+	bh=+JYzJXsN9uSP46oXOkcBPkgi+j4GxfYtVmDvB4dMaWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1qvOL8YUEC16+e9C8CWxKkA2USUuk+BpbxPAe04kNsXjzFjmRUVnlwGWkU9zZZZp
-	 q1ua9cyMd8tcafaBmiTd3qvbpPoxhiymq4gl1PdYxcALwrEsKLCqpM4mJmH4TptFvn
-	 LwiccjB2Lus8Sv5NZp1FszdPmg6d67+7fImNod+U=
+	b=a9zVpHNEZU/DpV1XNsyQtXjc1YfOqYcS09pBW42QmpTExKotm+hM/AloGo+Oyix55
+	 Gg4UWXVgo/QjTjObEZVAgOkJpdoGzxQ8PjKtT+NZe/LH/xjDtfuuOzeXRSSFmhMA+y
+	 xpkMzpoRt5MoQ7P+MZ4ufRBtkOeOY0UdCucdR8X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Gregory Price <gourry@gourry.net>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 094/459] selftests/resctrl: Protect against array overrun during iMC config parsing
-Date: Thu, 12 Dec 2024 15:57:12 +0100
-Message-ID: <20241212144257.228078712@linuxfoundation.org>
+Subject: [PATCH 5.10 085/459] tpm: fix signed/unsigned bug when checking event logs
+Date: Thu, 12 Dec 2024 15:57:03 +0100
+Message-ID: <20241212144256.876968864@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -46,68 +46,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 48ed4e799e8fbebae838dca404a8527763d41191 ]
+[ Upstream commit e6d654e9f5a97742cfe794b1c4bb5d3fb2d25e98 ]
 
-The MBM and MBA tests need to discover the event and umask with which to
-configure the performance event used to measure read memory bandwidth.
-This is done by parsing the
-/sys/bus/event_source/devices/uncore_imc_<imc instance>/events/cas_count_read
-file for each iMC instance that contains the formatted
-output: "event=<event>,umask=<umask>"
+A prior bugfix that fixes a signed/unsigned error causes
+another signed unsigned error.
 
-Parsing of cas_count_read contents is done by initializing an array of
-MAX_TOKENS elements with tokens (deliminated by "=,") from this file.
-Remove the unnecessary append of a delimiter to the string needing to be
-parsed. Per the strtok() man page: "delimiter bytes at the start or end of
-the string are ignored". This has no impact on the token placement within
-the array.
+A situation where log_tbl->size is invalid can cause the
+size passed to memblock_reserve to become negative.
 
-After initialization, the actual event and umask is determined by
-parsing the tokens directly following the "event" and "umask" tokens
-respectively.
+log_size from the main event log is an unsigned int, and
+the code reduces to the following
 
-Iterating through the array up to index "i < MAX_TOKENS" but then
-accessing index "i + 1" risks array overrun during the final iteration.
-Avoid array overrun by ensuring that the index used within for
-loop will always be valid.
+u64 value = (int)unsigned_value;
 
-Fixes: 1d3f08687d76 ("selftests/resctrl: Read memory bandwidth from perf IMC counter and from resctrl file system")
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+This results in sign extension, and the value sent to
+memblock_reserve becomes effectively negative.
+
+Fixes: be59d57f9806 ("efi/tpm: Fix sanity check of unsigned tbl_size being less than zero")
+Signed-off-by: Gregory Price <gourry@gourry.net>
+Reviewed-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrl_val.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/firmware/efi/tpm.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index 8df557894059a..a93fab28f97ec 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -102,13 +102,12 @@ void get_event_and_umask(char *cas_count_cfg, int count, bool op)
- 	char *token[MAX_TOKENS];
- 	int i = 0;
+diff --git a/drivers/firmware/efi/tpm.c b/drivers/firmware/efi/tpm.c
+index e8d69bd548f3f..9c3613e6af158 100644
+--- a/drivers/firmware/efi/tpm.c
++++ b/drivers/firmware/efi/tpm.c
+@@ -40,7 +40,8 @@ int __init efi_tpm_eventlog_init(void)
+ {
+ 	struct linux_efi_tpm_eventlog *log_tbl;
+ 	struct efi_tcg2_final_events_table *final_tbl;
+-	int tbl_size;
++	unsigned int tbl_size;
++	int final_tbl_size;
+ 	int ret = 0;
  
--	strcat(cas_count_cfg, ",");
- 	token[0] = strtok(cas_count_cfg, "=,");
+ 	if (efi.tpm_log == EFI_INVALID_TABLE_ADDR) {
+@@ -80,26 +81,26 @@ int __init efi_tpm_eventlog_init(void)
+ 		goto out;
+ 	}
  
- 	for (i = 1; i < MAX_TOKENS; i++)
- 		token[i] = strtok(NULL, "=,");
+-	tbl_size = 0;
++	final_tbl_size = 0;
+ 	if (final_tbl->nr_events != 0) {
+ 		void *events = (void *)efi.tpm_final_log
+ 				+ sizeof(final_tbl->version)
+ 				+ sizeof(final_tbl->nr_events);
  
--	for (i = 0; i < MAX_TOKENS; i++) {
-+	for (i = 0; i < MAX_TOKENS - 1; i++) {
- 		if (!token[i])
- 			break;
- 		if (strcmp(token[i], "event") == 0) {
+-		tbl_size = tpm2_calc_event_log_size(events,
+-						    final_tbl->nr_events,
+-						    log_tbl->log);
++		final_tbl_size = tpm2_calc_event_log_size(events,
++							  final_tbl->nr_events,
++							  log_tbl->log);
+ 	}
+ 
+-	if (tbl_size < 0) {
++	if (final_tbl_size < 0) {
+ 		pr_err(FW_BUG "Failed to parse event in TPM Final Events Log\n");
+ 		ret = -EINVAL;
+ 		goto out_calc;
+ 	}
+ 
+ 	memblock_reserve(efi.tpm_final_log,
+-			 tbl_size + sizeof(*final_tbl));
+-	efi_tpm_final_log_size = tbl_size;
++			 final_tbl_size + sizeof(*final_tbl));
++	efi_tpm_final_log_size = final_tbl_size;
+ 
+ out_calc:
+ 	early_memunmap(final_tbl, sizeof(*final_tbl));
 -- 
 2.43.0
 
