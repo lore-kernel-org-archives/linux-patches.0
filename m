@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17B41487CD;
-	Thu, 12 Dec 2024 15:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F36C2210DF;
+	Thu, 12 Dec 2024 15:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016566; cv=none; b=MvGFMDNtkJB6UxbgT4wGlkiEDGPRjC3F06xXo3VF5dr6p6qYbGWW70QGeXuCrJFHoOm7c1jPCVM25NX7lM1IjvEvPxY9XgeD0A52Sg/q6btJaYjc423fU218g+7ZcqkMefPEZIXYmShvcyQiUv1nSPwZjvEFP1k0E9p+XtLrpws=
+	t=1734016569; cv=none; b=h7sMLScHDndhC967u/27I41nVIgYiaVpB1S5Mz0QILVFgcN56nhKTejEdMgVzmfn7w0TNfAJJmVHA87kSV/DBmZNAe6WjHFUjwdN575GsXUGhpbpcbjo1+IzgT9YTJD0lQ4oJZmxXGpKn9sOrh+2myuV4LQZC1hSn+SJMFgO5SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016566; c=relaxed/simple;
-	bh=eeHMsiPu65vh6XQVQ3uc2wi7Pot/ecLSeYZZWSxeX2k=;
+	s=arc-20240116; t=1734016569; c=relaxed/simple;
+	bh=/hu+UM0g7byTMxdX7pwy15YoI/wG254KuSMs4nLyZZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mj5wrC1HKUy6BEQogjXzx4UJEUiuoq0zS8EuuvC00vYlB2GvHGate9EBh4MDnDhPkW7PjYHRy4XreXYj95lUHwUu8W/NKYEJ4lnHQ3TWuRFVaDwtG2cH2E1gK7xZY1KgY4l9G8UERnzUWw1hFRpWvshs0FHkGW6/XNyL5mpjfug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xd8NVzmr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W9Aizp7qOT2m+AqdoqJ4cbHndNEvDeCAxYPdY4gkq8SCtjgEcp1XTjEtI+mu8kKEVxNN6k+StGMlQAFMuObszg9M948xep/CNqQFcY6yK7updsTdaaLd5OX46Wu4Epfm4YODJw0vsvdohzcz9BgwGpWAsaQvSX0Kuucfh62TjyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMPk/7au; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xd8NVzmr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9C9C4CECE;
-	Thu, 12 Dec 2024 15:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMPk/7au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C641AC4CECE;
+	Thu, 12 Dec 2024 15:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016565;
-	bh=eeHMsiPu65vh6XQVQ3uc2wi7Pot/ecLSeYZZWSxeX2k=;
+	s=korg; t=1734016569;
+	bh=/hu+UM0g7byTMxdX7pwy15YoI/wG254KuSMs4nLyZZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xd8NVzmrIk2DMkN4GUnrZLCXMmzs3o0rcEtLI/1EN6usGs7t1eVHOpf0P5nw0QWd7
-	 2zmHBBm9bp12E7DD/Oam+zlcuxagUvr1i5T8d1xJuxUkjCQHhe92WCbxhM6LN/Ov/3
-	 HIA9IhEI8Z4cUPiDkKrodbrfc3qcPT3Gv2J0fHpQ=
+	b=yMPk/7auj3GonQMAvsZoKUcigCVDebDWZ0NcrXfixaSEaDjwUjYF7msZ1OsorqvaT
+	 fqCyC1RwWIVydKggyd99dRrL66P8NUJsbLqbJ4dlUaHQXQpLw4qElkTiFMwWnRGOPf
+	 ua1dvIA96I79xfSBMZDpZUiU0GUTYwL7OkrkYS1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Frank Li <Frank.Li@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/466] gpio: free irqs that are still requested when the chip is being removed
-Date: Thu, 12 Dec 2024 15:56:44 +0100
-Message-ID: <20241212144316.066251568@linuxfoundation.org>
+Subject: [PATCH 6.12 236/466] spi: spi-fsl-lpspi: Adjust type of scldiv
+Date: Thu, 12 Dec 2024 15:56:45 +0100
+Message-ID: <20241212144316.103679702@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,96 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit ec8b6f55b98146c41dcf15e8189eb43291e35e89 ]
+[ Upstream commit fa8ecda9876ac1e7b29257aa82af1fd0695496e2 ]
 
-If we remove a GPIO chip that is also an interrupt controller with users
-not having freed some interrupts, we'll end up leaking resources as
-indicated by the following warning:
+The target value of scldiv is just a byte, but its calculation in
+fsl_lpspi_set_bitrate could be negative. So use an adequate type to store
+the result and avoid overflows. After that this needs range check
+adjustments, but this should make the code less opaque.
 
-  remove_proc_entry: removing non-empty directory 'irq/30', leaking at least 'gpio'
-
-As there's no way of notifying interrupt users about the irqchip going
-away and the interrupt subsystem is not plugged into the driver model and
-so not all cases can be handled by devlinks, we need to make sure to free
-all interrupts before the complete the removal of the provider.
-
-Reviewed-by: Herve Codina <herve.codina@bootlin.com>
-Tested-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20240919135104.3583-1-brgl@bgdev.pl
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20240930093056.93418-2-wahrenst@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/spi/spi-fsl-lpspi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index 2b02655abb56e..44372f8647d51 100644
---- a/drivers/gpio/gpiolib.c
-+++ b/drivers/gpio/gpiolib.c
-@@ -14,6 +14,7 @@
- #include <linux/idr.h>
- #include <linux/interrupt.h>
- #include <linux/irq.h>
-+#include <linux/irqdesc.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
- #include <linux/lockdep.h>
-@@ -713,6 +714,45 @@ bool gpiochip_line_is_valid(const struct gpio_chip *gc,
- }
- EXPORT_SYMBOL_GPL(gpiochip_line_is_valid);
- 
-+static void gpiod_free_irqs(struct gpio_desc *desc)
-+{
-+	int irq = gpiod_to_irq(desc);
-+	struct irq_desc *irqd = irq_to_desc(irq);
-+	void *cookie;
-+
-+	for (;;) {
-+		/*
-+		 * Make sure the action doesn't go away while we're
-+		 * dereferencing it. Retrieve and store the cookie value.
-+		 * If the irq is freed after we release the lock, that's
-+		 * alright - the underlying maple tree lookup will return NULL
-+		 * and nothing will happen in free_irq().
-+		 */
-+		scoped_guard(mutex, &irqd->request_mutex) {
-+			if (!irq_desc_has_action(irqd))
-+				return;
-+
-+			cookie = irqd->action->dev_id;
-+		}
-+
-+		free_irq(irq, cookie);
-+	}
-+}
-+
-+/*
-+ * The chip is going away but there may be users who had requested interrupts
-+ * on its GPIO lines who have no idea about its removal and have no way of
-+ * being notified about it. We need to free any interrupts still in use here or
-+ * we'll leak memory and resources (like procfs files).
-+ */
-+static void gpiochip_free_remaining_irqs(struct gpio_chip *gc)
-+{
-+	struct gpio_desc *desc;
-+
-+	for_each_gpio_desc_with_flag(gc, desc, FLAG_USED_AS_IRQ)
-+		gpiod_free_irqs(desc);
-+}
-+
- static void gpiodev_release(struct device *dev)
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 9573b8fa4fbfc..29b9676fe43d8 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -315,9 +315,10 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
+ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
  {
- 	struct gpio_device *gdev = to_gpio_device(dev);
-@@ -1125,6 +1165,7 @@ void gpiochip_remove(struct gpio_chip *gc)
- 	/* FIXME: should the legacy sysfs handling be moved to gpio_device? */
- 	gpiochip_sysfs_unregister(gdev);
- 	gpiochip_free_hogs(gc);
-+	gpiochip_free_remaining_irqs(gc);
+ 	struct lpspi_config config = fsl_lpspi->config;
+-	unsigned int perclk_rate, scldiv, div;
++	unsigned int perclk_rate, div;
+ 	u8 prescale_max;
+ 	u8 prescale;
++	int scldiv;
  
- 	scoped_guard(mutex, &gpio_devices_lock)
- 		list_del_rcu(&gdev->list);
+ 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
+ 	prescale_max = fsl_lpspi->devtype_data->prescale_max;
+@@ -338,13 +339,13 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ 
+ 	for (prescale = 0; prescale <= prescale_max; prescale++) {
+ 		scldiv = div / (1 << prescale) - 2;
+-		if (scldiv < 256) {
++		if (scldiv >= 0 && scldiv < 256) {
+ 			fsl_lpspi->config.prescale = prescale;
+ 			break;
+ 		}
+ 	}
+ 
+-	if (scldiv >= 256)
++	if (scldiv < 0 || scldiv >= 256)
+ 		return -EINVAL;
+ 
+ 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
 -- 
 2.43.0
 
