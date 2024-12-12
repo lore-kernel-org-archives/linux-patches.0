@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFDF2165F0;
-	Thu, 12 Dec 2024 15:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2540C215776;
+	Thu, 12 Dec 2024 15:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017076; cv=none; b=ZUiTKDLojSzJGdbceaNHhATnYUS9FALvlGWgCNm9+nXiQuiUper4lKkzY610b4VIA63NcQKKFPIS3+wrjpnQtghpQ5MhT2DLwpe+88NMH40be5HS4uV8XT+a95Vx/xhyYS+G6QdjoeymqocOdSXOCz6CNqLJNUsDCypgapgFJ+A=
+	t=1734017079; cv=none; b=F0iGHI2jAvL/AP/ddUhCYVlUvEyYctvrhUxv6zIoudYNW8NmNaU6dZitdPBe6w+TmNHwl2DMetlsLVQri6RHybeC5BF2eMrFKPWlIDQsxJdMRiRyLuYkj1N/gwjkaH8CH3y7q6Q3n4sHD/RvJj/T3IcGqFbzcnCm36Gtq23YiTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017076; c=relaxed/simple;
-	bh=inJEMy530bk1Wy2P+5GIR6sIvx8ILYN96w3A6X7ZV3s=;
+	s=arc-20240116; t=1734017079; c=relaxed/simple;
+	bh=7r4CNJnIY/vIIOoAclA6bRReLr7YevGnXKUeRqbyHx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EhueD5617/7pBsX33MhwEQWwAeuNxYGSeQzpgOzgoaSsaWmvz1Avq0lFXlVVtqSqx8eE+do3SWumBdh/p9Ilb+5nvsGZaBttdUqZjWlIn8Omt/caK+vL8VpR998b+CvSzz82SzphdNT5n1fuwOWyBwuKALOOzHR5nnZN272E2VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKsUkfqU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hnuhP3sPN4q8N4c8Y1nVpKxC73n+w5gVI4X4Nse/gNDl/C6ewrRqd2oaVBC7A1Qc9MABgdUKcoST9488vyUH4Bv8dU5Hnq5yVilJH7Tn0fd90VaAAiEnrMPBLcllej+QJss+Qlnoae88037SrAgkYD21TYTgpU2BtELNp3YVL6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIMR5F8Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKsUkfqU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432F5C4CED4;
-	Thu, 12 Dec 2024 15:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIMR5F8Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89587C4CECE;
+	Thu, 12 Dec 2024 15:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017075;
-	bh=inJEMy530bk1Wy2P+5GIR6sIvx8ILYN96w3A6X7ZV3s=;
+	s=korg; t=1734017079;
+	bh=7r4CNJnIY/vIIOoAclA6bRReLr7YevGnXKUeRqbyHx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKsUkfqUYTEtiDgm3z9XBJRyJ8ezY9a8Dvoz+P9NNqnfWLRyRXMjK5pXbYuHl4jPp
-	 hb8RQLzqBNcRtvICBDS8R17hsTXMfwjfRrjCa4k/BEZxEGiQ4JqO1RKCr5FZVVevNF
-	 IxtYBaUKgwBGkMXVg4519CrZOoQlwStdUUZk/m+E=
+	b=yIMR5F8YqejQ7FItClrpMOvfgG+eRw1DIUH4Uemkk5bNvR4C+NS7slfyWrJioV1vE
+	 vOPHbA/m1rRKhxGCf9E2ly94ZGB5knWGvxrhPIoGFi2tzP7EV4WmIcCRwWtxcOhru5
+	 Ra/r1klVXBO45ysEbsq/QDDJ+as3/nln2pJXDwjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Stancek <jstancek@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Anish Kumar <yesanishhere@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 358/466] tools/rtla: fix collision with glibc sched_attr/sched_set_attr
-Date: Thu, 12 Dec 2024 15:58:47 +0100
-Message-ID: <20241212144320.928009330@linuxfoundation.org>
+Subject: [PATCH 6.12 376/466] leds: class: Protect brightness_show() with led_cdev->led_access mutex
+Date: Thu, 12 Dec 2024 15:59:05 +0100
+Message-ID: <20241212144321.630821964@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -45,88 +46,177 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Mukesh Ojha <quic_mojha@quicinc.com>
 
-[ Upstream commit 0eecee340672c4b512f6f4a8c6add26df05d130c ]
+[ Upstream commit 4ca7cd938725a4050dcd62ae9472e931d603118d ]
 
-glibc commit 21571ca0d703 ("Linux: Add the sched_setattr
-and sched_getattr functions") now also provides 'struct sched_attr'
-and sched_setattr() which collide with the ones from rtla.
+There is NULL pointer issue observed if from Process A where hid device
+being added which results in adding a led_cdev addition and later a
+another call to access of led_cdev attribute from Process B can result
+in NULL pointer issue.
 
-  In file included from src/trace.c:11:
-  src/utils.h:49:8: error: redefinition of ‘struct sched_attr’
-     49 | struct sched_attr {
-        |        ^~~~~~~~~~
-  In file included from /usr/include/bits/sched.h:60,
-                   from /usr/include/sched.h:43,
-                   from /usr/include/tracefs/tracefs.h:10,
-                   from src/trace.c:4:
-  /usr/include/linux/sched/types.h:98:8: note: originally defined here
-     98 | struct sched_attr {
-        |        ^~~~~~~~~~
+Use mutex led_cdev->led_access to protect access to led->cdev and its
+attribute inside brightness_show() and max_brightness_show() and also
+update the comment for mutex that it should be used to protect the led
+class device fields.
 
-Define 'struct sched_attr' conditionally, similar to what strace did:
-  https://lore.kernel.org/all/20240930222913.3981407-1-raj.khem@gmail.com/
-and rename rtla's version of sched_setattr() to avoid collision.
+	Process A 				Process B
 
-Link: https://lore.kernel.org/8088f66a7a57c1b209cd8ae0ae7c336a7f8c930d.1728572865.git.jstancek@redhat.com
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+ kthread+0x114
+ worker_thread+0x244
+ process_scheduled_works+0x248
+ uhid_device_add_worker+0x24
+ hid_add_device+0x120
+ device_add+0x268
+ bus_probe_device+0x94
+ device_initial_probe+0x14
+ __device_attach+0xfc
+ bus_for_each_drv+0x10c
+ __device_attach_driver+0x14c
+ driver_probe_device+0x3c
+ __driver_probe_device+0xa0
+ really_probe+0x190
+ hid_device_probe+0x130
+ ps_probe+0x990
+ ps_led_register+0x94
+ devm_led_classdev_register_ext+0x58
+ led_classdev_register_ext+0x1f8
+ device_create_with_groups+0x48
+ device_create_groups_vargs+0xc8
+ device_add+0x244
+ kobject_uevent+0x14
+ kobject_uevent_env[jt]+0x224
+ mutex_unlock[jt]+0xc4
+ __mutex_unlock_slowpath+0xd4
+ wake_up_q+0x70
+ try_to_wake_up[jt]+0x48c
+ preempt_schedule_common+0x28
+ __schedule+0x628
+ __switch_to+0x174
+						el0t_64_sync+0x1a8/0x1ac
+						el0t_64_sync_handler+0x68/0xbc
+						el0_svc+0x38/0x68
+						do_el0_svc+0x1c/0x28
+						el0_svc_common+0x80/0xe0
+						invoke_syscall+0x58/0x114
+						__arm64_sys_read+0x1c/0x2c
+						ksys_read+0x78/0xe8
+						vfs_read+0x1e0/0x2c8
+						kernfs_fop_read_iter+0x68/0x1b4
+						seq_read_iter+0x158/0x4ec
+						kernfs_seq_show+0x44/0x54
+						sysfs_kf_seq_show+0xb4/0x130
+						dev_attr_show+0x38/0x74
+						brightness_show+0x20/0x4c
+						dualshock4_led_get_brightness+0xc/0x74
+
+[ 3313.874295][ T4013] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
+[ 3313.874301][ T4013] Mem abort info:
+[ 3313.874303][ T4013]   ESR = 0x0000000096000006
+[ 3313.874305][ T4013]   EC = 0x25: DABT (current EL), IL = 32 bits
+[ 3313.874307][ T4013]   SET = 0, FnV = 0
+[ 3313.874309][ T4013]   EA = 0, S1PTW = 0
+[ 3313.874311][ T4013]   FSC = 0x06: level 2 translation fault
+[ 3313.874313][ T4013] Data abort info:
+[ 3313.874314][ T4013]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+[ 3313.874316][ T4013]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[ 3313.874318][ T4013]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[ 3313.874320][ T4013] user pgtable: 4k pages, 39-bit VAs, pgdp=00000008f2b0a000
+..
+
+[ 3313.874332][ T4013] Dumping ftrace buffer:
+[ 3313.874334][ T4013]    (ftrace buffer empty)
+..
+..
+[ dd3313.874639][ T4013] CPU: 6 PID: 4013 Comm: InputReader
+[ 3313.874648][ T4013] pc : dualshock4_led_get_brightness+0xc/0x74
+[ 3313.874653][ T4013] lr : led_update_brightness+0x38/0x60
+[ 3313.874656][ T4013] sp : ffffffc0b910bbd0
+..
+..
+[ 3313.874685][ T4013] Call trace:
+[ 3313.874687][ T4013]  dualshock4_led_get_brightness+0xc/0x74
+[ 3313.874690][ T4013]  brightness_show+0x20/0x4c
+[ 3313.874692][ T4013]  dev_attr_show+0x38/0x74
+[ 3313.874696][ T4013]  sysfs_kf_seq_show+0xb4/0x130
+[ 3313.874700][ T4013]  kernfs_seq_show+0x44/0x54
+[ 3313.874703][ T4013]  seq_read_iter+0x158/0x4ec
+[ 3313.874705][ T4013]  kernfs_fop_read_iter+0x68/0x1b4
+[ 3313.874708][ T4013]  vfs_read+0x1e0/0x2c8
+[ 3313.874711][ T4013]  ksys_read+0x78/0xe8
+[ 3313.874714][ T4013]  __arm64_sys_read+0x1c/0x2c
+[ 3313.874718][ T4013]  invoke_syscall+0x58/0x114
+[ 3313.874721][ T4013]  el0_svc_common+0x80/0xe0
+[ 3313.874724][ T4013]  do_el0_svc+0x1c/0x28
+[ 3313.874727][ T4013]  el0_svc+0x38/0x68
+[ 3313.874730][ T4013]  el0t_64_sync_handler+0x68/0xbc
+[ 3313.874732][ T4013]  el0t_64_sync+0x1a8/0x1ac
+
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Reviewed-by: Anish Kumar <yesanishhere@gmail.com>
+Link: https://lore.kernel.org/r/20241103160527.82487-1-quic_mojha@quicinc.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/utils.c | 4 ++--
- tools/tracing/rtla/src/utils.h | 2 ++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/leds/led-class.c | 14 +++++++++++---
+ include/linux/leds.h     |  2 +-
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/tools/tracing/rtla/src/utils.c b/tools/tracing/rtla/src/utils.c
-index 9ac71a66840c1..0735fcb827ed7 100644
---- a/tools/tracing/rtla/src/utils.c
-+++ b/tools/tracing/rtla/src/utils.c
-@@ -233,7 +233,7 @@ long parse_ns_duration(char *val)
+diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+index 06b97fd49ad9a..f69f4e928d614 100644
+--- a/drivers/leds/led-class.c
++++ b/drivers/leds/led-class.c
+@@ -29,11 +29,14 @@ static ssize_t brightness_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+ {
+ 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
++	unsigned int brightness;
  
- #define SCHED_DEADLINE		6
+-	/* no lock needed for this */
++	mutex_lock(&led_cdev->led_access);
+ 	led_update_brightness(led_cdev);
++	brightness = led_cdev->brightness;
++	mutex_unlock(&led_cdev->led_access);
  
--static inline int sched_setattr(pid_t pid, const struct sched_attr *attr,
-+static inline int syscall_sched_setattr(pid_t pid, const struct sched_attr *attr,
- 				unsigned int flags) {
- 	return syscall(__NR_sched_setattr, pid, attr, flags);
- }
-@@ -243,7 +243,7 @@ int __set_sched_attr(int pid, struct sched_attr *attr)
- 	int flags = 0;
- 	int retval;
- 
--	retval = sched_setattr(pid, attr, flags);
-+	retval = syscall_sched_setattr(pid, attr, flags);
- 	if (retval < 0) {
- 		err_msg("Failed to set sched attributes to the pid %d: %s\n",
- 			pid, strerror(errno));
-diff --git a/tools/tracing/rtla/src/utils.h b/tools/tracing/rtla/src/utils.h
-index d44513e6c66a0..99c9cf81bcd02 100644
---- a/tools/tracing/rtla/src/utils.h
-+++ b/tools/tracing/rtla/src/utils.h
-@@ -46,6 +46,7 @@ update_sum(unsigned long long *a, unsigned long long *b)
- 	*a += *b;
+-	return sprintf(buf, "%u\n", led_cdev->brightness);
++	return sprintf(buf, "%u\n", brightness);
  }
  
-+#ifndef SCHED_ATTR_SIZE_VER0
- struct sched_attr {
- 	uint32_t size;
- 	uint32_t sched_policy;
-@@ -56,6 +57,7 @@ struct sched_attr {
- 	uint64_t sched_deadline;
- 	uint64_t sched_period;
+ static ssize_t brightness_store(struct device *dev,
+@@ -70,8 +73,13 @@ static ssize_t max_brightness_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+ {
+ 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
++	unsigned int max_brightness;
++
++	mutex_lock(&led_cdev->led_access);
++	max_brightness = led_cdev->max_brightness;
++	mutex_unlock(&led_cdev->led_access);
+ 
+-	return sprintf(buf, "%u\n", led_cdev->max_brightness);
++	return sprintf(buf, "%u\n", max_brightness);
+ }
+ static DEVICE_ATTR_RO(max_brightness);
+ 
+diff --git a/include/linux/leds.h b/include/linux/leds.h
+index e5968c3ed4ae0..2337f516fa7c2 100644
+--- a/include/linux/leds.h
++++ b/include/linux/leds.h
+@@ -238,7 +238,7 @@ struct led_classdev {
+ 	struct kernfs_node	*brightness_hw_changed_kn;
+ #endif
+ 
+-	/* Ensures consistent access to the LED Flash Class device */
++	/* Ensures consistent access to the LED class device */
+ 	struct mutex		led_access;
  };
-+#endif /* SCHED_ATTR_SIZE_VER0 */
  
- int parse_prio(char *arg, struct sched_attr *sched_param);
- int parse_cpu_set(char *cpu_list, cpu_set_t *set);
 -- 
 2.43.0
 
