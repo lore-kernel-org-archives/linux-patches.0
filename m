@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B4D215764;
-	Thu, 12 Dec 2024 16:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B7F215764;
+	Thu, 12 Dec 2024 16:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734022156; cv=none; b=k1ZzcZupUeZqDmbMK3YTcZ8uJ7jYB1Jx+M+iX3VA0KiBduBIpIbJniSuxe8l1hHaYaXwlrBnniZBwdZMEbu7y5WoD5ucLD+QOWlnhnzHLX0MyaG8+/swn1gso3ens3YCSbj7SJwx5zMYEMWDvErZvGcpaSkG3WYFyimxMuwzD0Y=
+	t=1734022160; cv=none; b=BYUqua28tESNTUdgfwe3Ep41xrGGXPk8wRGrOssfuiiHJnbTTKICDORMFdPz4LR+skzulMCZttfUmOMqXjbIWBjM/n0PqJSgqk9y9gvaRUx+T9AK0qtkTNAzS8sWGhrTEEvxYY4yLm/SpEsHkOElrcWmB58L8DPz/j7MU+hlVLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734022156; c=relaxed/simple;
-	bh=B91lwocSpDfF6JN/47P6fYhxWvhHF3Okyd130h0q6o4=;
+	s=arc-20240116; t=1734022160; c=relaxed/simple;
+	bh=l0lYLfOJIBWOAOPHPQNuTmgBogg21RiNmxMKOafr+Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D2cqEgee00G6IflZo39o+pJMOAg0OrxpdTrEaQn56sUngIRjup1FR3SmHeD75pNN6a7AkcbsCDphwP18BOW0gMf+iW8CaeXMDyTaAz8MiOfeAEBUmU6UxR7mjgLAOwDOOZlusS5Rx4IWUkwios/3y8Q3NLe4ELESetsHQVYuRW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guFI5mRx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dQgeVIqOc8b4/NSZxNpWk2WkEiUC0MdAutsJASzY/UCzyML2YH4QUJgjrd8X7n2xp87U98D2dRLdS0AW8tDMoV9vs6e0OX0niw1lq5QGA56C3r5GrUPucl7AJzeTa5UXaF3X4Njb/gn36REncumVHHCImKlztkTH2T1zt60C5gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SA+8U6rF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guFI5mRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D92C4CECE;
-	Thu, 12 Dec 2024 16:49:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SA+8U6rF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E7BFC4CECE;
+	Thu, 12 Dec 2024 16:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734022156;
-	bh=B91lwocSpDfF6JN/47P6fYhxWvhHF3Okyd130h0q6o4=;
+	s=korg; t=1734022160;
+	bh=l0lYLfOJIBWOAOPHPQNuTmgBogg21RiNmxMKOafr+Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=guFI5mRxsI3wDvhGkpuAMWQOGx4JJ4FIRnHlpxL9GRt/i7A3GazRmuG/5gRnxE4/h
-	 g1HYU7Qp5AvS/nL5/Pg97qWepFJpyDX0EooXCOJMIE+GoxRR564fhOAbWt004yM4Ri
-	 lwB0qUGRn3yfeBQeZkNRtPIzYgr8R7UQs3i+e2X0=
+	b=SA+8U6rFXMcbY0QcVU0u4J4h11qHmm3ujNziHnu3iV7oENsQzkARn/qNLoCoL+b38
+	 XfK0THATvbn2OmGTgs2IO8w+BsEMcTTi4k4UakvfT/EbjuVUwkGCOjhK1QOBLBYKAr
+	 cxGy0rdLOo1SM3lgZBpcSh6hQ1vdEtzQYt3Yjoj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Ambardar <tony.ambardar@gmail.com>,
+	Yuan Chen <chenyuan@kylinos.cn>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/565] libbpf: Fix output .symtab byte-order during linking
-Date: Thu, 12 Dec 2024 15:55:59 +0100
-Message-ID: <20241212144317.960273788@linuxfoundation.org>
+Subject: [PATCH 5.15 165/565] bpf: Fix the xdp_adjust_tail sample prog issue
+Date: Thu, 12 Dec 2024 15:56:00 +0100
+Message-ID: <20241212144318.000035417@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -52,38 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Ambardar <tony.ambardar@gmail.com>
+From: Yuan Chen <chenyuan@kylinos.cn>
 
-[ Upstream commit f896b4a5399e97af0b451fcf04754ed316935674 ]
+[ Upstream commit 4236f114a3ffbbfd217436c08852e94cae372f57 ]
 
-Object linking output data uses the default ELF_T_BYTE type for '.symtab'
-section data, which disables any libelf-based translation. Explicitly set
-the ELF_T_SYM type for output to restore libelf's byte-order conversion,
-noting that input '.symtab' data is already correctly translated.
+During the xdp_adjust_tail test, probabilistic failure occurs and SKB package
+is discarded by the kernel. After checking the issues by tracking SKB package,
+it is identified that they were caused by checksum errors. Refer to checksum
+of the arch/arm64/include/asm/checksum.h for fixing.
 
-Fixes: faf6ed321cf6 ("libbpf: Add BPF static linker APIs")
-Signed-off-by: Tony Ambardar <tony.ambardar@gmail.com>
+v2: Based on Alexei Starovoitov's suggestions, it is necessary to keep the code
+ implementation consistent.
+
+Fixes: c6ffd1ff7856 (bpf: add bpf_xdp_adjust_tail sample prog)
+Signed-off-by: Yuan Chen <chenyuan@kylinos.cn>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/87868bfeccf3f51aec61260073f8778e9077050a.1726475448.git.tony.ambardar@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20240930024115.52841-1-chenyuan_fl@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 2 ++
- 1 file changed, 2 insertions(+)
+ samples/bpf/xdp_adjust_tail_kern.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index bfe0c30841b9b..8907d4238818c 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -397,6 +397,8 @@ static int init_output_elf(struct bpf_linker *linker, const char *file)
- 		pr_warn_elf("failed to create SYMTAB data");
- 		return -EINVAL;
- 	}
-+	/* Ensure libelf translates byte-order of symbol records */
-+	sec->data->d_type = ELF_T_SYM;
+diff --git a/samples/bpf/xdp_adjust_tail_kern.c b/samples/bpf/xdp_adjust_tail_kern.c
+index ffdd548627f0a..da67bcad1c638 100644
+--- a/samples/bpf/xdp_adjust_tail_kern.c
++++ b/samples/bpf/xdp_adjust_tail_kern.c
+@@ -57,6 +57,7 @@ static __always_inline void swap_mac(void *data, struct ethhdr *orig_eth)
  
- 	str_off = strset__add_str(linker->strtab_strs, sec->sec_name);
- 	if (str_off < 0)
+ static __always_inline __u16 csum_fold_helper(__u32 csum)
+ {
++	csum = (csum & 0xffff) + (csum >> 16);
+ 	return ~((csum & 0xffff) + (csum >> 16));
+ }
+ 
 -- 
 2.43.0
 
