@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EF3748A;
-	Thu, 12 Dec 2024 15:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E1F748A;
+	Thu, 12 Dec 2024 15:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734017221; cv=none; b=rjxj/lzftpmQWfRoVQ1BMDEhOYOzf02k6Ys/G7qCuMhr9ZnO1pEpiHsqpxNucnLQlcWz2Rndn5PnS8md46Fz0Mu8uZmxJmGFT8hg8qTu7lC0ize1gJOxMcESd/uTIjaAJzJ875VYvrZxpHZEejqO6XhYYKHcR5L66tJT/GojlNU=
+	t=1734017224; cv=none; b=PRgGBprSfjs6jF5yJUpGijIVZFX4XMnWM2Xd4ElOWBK54DnYsRAhLthbxKs84jFKjwhsFV2af5mxfoZ8sQbypHoGYdXEXK/w4OcoulgC/WsyqzNRykM8iFE7bVFP4NC30R/DYEQuHiLhb2tHz5LNZn4YBdrmqiW/aZ1vZRROKKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734017221; c=relaxed/simple;
-	bh=/jUeg3adNwtd/vuL52HbNs0sbfIH9WQ+dfU6+Qdv4a8=;
+	s=arc-20240116; t=1734017224; c=relaxed/simple;
+	bh=ZTJfR4Yf7gEDF4myWI1PqLy01pWS2ULkkzLZx9h6rn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OgesO6CZ8LTmaS6vRzVSXBc53LT8a24pk6VLM+k/wzuJ4aKb7Labq33sDr27gdrKzKiiDBK7SQo0LVJ+hQWxtfFhK9DVCCrlu222kFSXDzFfsQiW3jkBVBvcvccsbBmWSOjW4ngqEJkm6HC69ThDoW9rXNs+JLhxF69GcAsQoAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cdr5X+06; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JEXKmpaAsCOWBzjsQjssAd3gUDeNBo1rnv1MyBOcGYNbH/5IPmqvakgnmN5S3mIpHNE7amX/hZH+BWtAVkIyhFwDl6P6PRbZv8uLhegX/S4xK1nUWS5IcuQvuyli3QtJbwPG4lczNM/DObK2Neq92cBjRegsgYFeiilDsZ54FNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFGdbTnO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cdr5X+06"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44DFAC4CECE;
-	Thu, 12 Dec 2024 15:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFGdbTnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED94CC4CECE;
+	Thu, 12 Dec 2024 15:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734017220;
-	bh=/jUeg3adNwtd/vuL52HbNs0sbfIH9WQ+dfU6+Qdv4a8=;
+	s=korg; t=1734017224;
+	bh=ZTJfR4Yf7gEDF4myWI1PqLy01pWS2ULkkzLZx9h6rn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cdr5X+06KUy8r72jmvHfcKehyi4EEVapsWyUzREdm3KkxkXeNC8T61F1e2zdcvmfb
-	 8cHH/KVxQck1EePRuBZcjk9urHMAFOQZ9EUFG9xBIkUXoLH/VeMr2+JnJ1QwtjY6RR
-	 QE0+8VWsFDyyzbWKQ8kMP3VX7jBdHF8kHacJc1Q8=
+	b=rFGdbTnO8YulfHs43DE3uPSkY+PnbMDHtP5cWF60qBBAEsdfhk4wUEbxYSvzHWQGg
+	 CDkJDrnbnTIuSLdanE3Qssebi8D5vp54Bw5EsO+qeaFYkg9qRbUqS7CaoXE/sbeIQV
+	 k0vBS5ocT5BRClrT+3TuSBAaiPKaNtewhOJ2ynqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Alex Far <anf1980@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 416/466] usb: typec: ucsi: glink: be more precise on orientation-aware ports
-Date: Thu, 12 Dec 2024 15:59:45 +0100
-Message-ID: <20241212144323.191494929@linuxfoundation.org>
+Subject: [PATCH 6.12 417/466] ASoC: amd: yc: fix internal mic on Redmi G 2022
+Date: Thu, 12 Dec 2024 15:59:46 +0100
+Message-ID: <20241212144323.230826030@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -53,50 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Alex Far <anf1980@gmail.com>
 
-[ Upstream commit de9df030ccb5d3e31ee0c715d74cd77c619748f8 ]
+[ Upstream commit 67a0463d339059eeeead9cd015afa594659cfdaf ]
 
-Instead of checking if any of the USB-C ports have orientation GPIO and
-thus is orientation-aware, check for the GPIO for the port being
-registered. There are no boards that are affected by this change at this
-moment, so the patch is not marked as a fix, but it might affect other
-boards in future.
+This laptop model requires an additional detection quirk to enable the
+internal microphone
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241109-ucsi-glue-fixes-v2-2-8b21ff4f9fbe@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alex Far <anf1980@gmail.com>
+Link: https://patch.msgid.link/ZzjrZY3sImcqTtGx@RedmiG
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index f7000d383a4e6..9b6cb76e63280 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -172,12 +172,12 @@ static int pmic_glink_ucsi_async_control(struct ucsi *__ucsi, u64 command)
- static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
- {
- 	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
--	int i;
- 
--	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
--		if (ucsi->port_orientation[i])
--			con->typec_cap.orientation_aware = true;
--	}
-+	if (con->num > PMIC_GLINK_MAX_PORTS ||
-+	    !ucsi->port_orientation[con->num - 1])
-+		return;
-+
-+	con->typec_cap.orientation_aware = true;
- }
- 
- static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 5153a68d8c079..37820753ab09c 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -416,6 +416,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Xiaomi Book Pro 14 2022"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "TIMI"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Redmi G 2022"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.43.0
 
