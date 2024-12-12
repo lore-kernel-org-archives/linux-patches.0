@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D98215764;
-	Thu, 12 Dec 2024 17:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A17215762;
+	Thu, 12 Dec 2024 17:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734024390; cv=none; b=itrMDiyNL5iCdzA2JHUUyaSUVPG9E4zjFjeiFp4k60kBMiSpklGW1ptXQixdT42vkl/TJSndVlI2Ta2Dxxgka+wtbr2cssVQF8ST/VggymfdSYUwHm5sAW6Fg4I7KpmzJE/Lh2myKUGlbpL8Dlv18XwN88fuJhwwkOAc4Jywy0Q=
+	t=1734024394; cv=none; b=a0EExqLjgPFytVeTmM6L7Sn4KDiBtmBANEnCvAXrTjlsZKB/f2L/wWlU1DR0EW5ekfFzG7wQaySUTaVrOeFF2eJifLU4h7W50k8BU6BJVj8/1JMjn7T5HpXtsISEeFE6O4hseOHGt6zp8Giid5k3IXaegZxpjciWk9v5Rd9GrGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734024390; c=relaxed/simple;
-	bh=62NNRZFHQmo40hFSGvOtd//d9jJBBMxlJXBiGjvW+Jg=;
+	s=arc-20240116; t=1734024394; c=relaxed/simple;
+	bh=yrL2Oa24zoHF6t1hiKGYiDSEam+FBt41xUfQ9rMoCG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VncAeD6YVdk0gPK2wp/MTbpQNvklq5a2tcOkkbojCgwhmTlwK5qawdTTie6sUoxzxfJDMeDdBiqSedltQgHg0GG5HC4WCFBk4XlK78LOcP7Jg6auvhqIye5jl8bloSEVq3SsDzu2cOGXoqyCGMhZeqiUlhg70/69OCvpQGk2928=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfNv9XoS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mu1JZgtoFspi/lPNQHQ3BJH4FVfn0FHcevw5/COsBabyZJ38ivlPASr6n0xyti3vmfQVnOgWuunXH9paBIG3IHnhQxu8t12J86llltcUaOy/t59Ls3W9l9a9DHXFyP6FTFebdCm9717xuMVvuQcOsaKtsRzfdSebcUk9YzhmU0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YRYbUKcw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfNv9XoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D778C4CED0;
-	Thu, 12 Dec 2024 17:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YRYbUKcw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A231C4CED0;
+	Thu, 12 Dec 2024 17:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734024390;
-	bh=62NNRZFHQmo40hFSGvOtd//d9jJBBMxlJXBiGjvW+Jg=;
+	s=korg; t=1734024393;
+	bh=yrL2Oa24zoHF6t1hiKGYiDSEam+FBt41xUfQ9rMoCG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfNv9XoS00s83f5WueyibpNMsZ3yOu7h4MUtlJQ117rT/VXusQRpRX/gN0anEwFRg
-	 il5qcOSmQWbUzQqfusi3XNuCGpna5D0DHmWz2chCuvLStD/4wr+j8KruAjCGn997gL
-	 lS+FNKL8z9/AgX8bvKdk4VHHLhoCdP0gDD/tX2z8=
+	b=YRYbUKcw+aucV/FyMQb7roccvOG38m8ykICkcjkcoGNf1O5xoFLmtWrOphSEU++sY
+	 LlDSa8jzCgt+ZXeYY5u1ECSOhFVx/vex9xSzh0DXrIumgZuBbFrGUhFB7Aojsvittw
+	 Anu5s9KZM2KeIH+svrABI7sN7msbRfaT2Dyo/+8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raghavendra Rao Ananta <rananta@google.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 5.10 251/459] KVM: arm64: Ignore PMCNTENSET_EL0 while checking for overflow status
-Date: Thu, 12 Dec 2024 15:59:49 +0100
-Message-ID: <20241212144303.508684223@linuxfoundation.org>
+	Dennis Wassenberg <Dennis.Wassenberg@secunet.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.10 252/459] PCI: Fix use-after-free of slot->bus on hot remove
+Date: Thu, 12 Dec 2024 15:59:50 +0100
+Message-ID: <20241212144303.547441537@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144253.511169641@linuxfoundation.org>
 References: <20241212144253.511169641@linuxfoundation.org>
@@ -51,43 +52,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raghavendra Rao Ananta <rananta@google.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 54bbee190d42166209185d89070c58a343bf514b upstream.
+commit c7acef99642b763ba585f4a43af999fcdbcc3dc4 upstream.
 
-DDI0487K.a D13.3.1 describes the PMU overflow condition, which evaluates
-to true if any counter's global enable (PMCR_EL0.E), overflow flag
-(PMOVSSET_EL0[n]), and interrupt enable (PMINTENSET_EL1[n]) are all 1.
-Of note, this does not require a counter to be enabled
-(i.e. PMCNTENSET_EL0[n] = 1) to generate an overflow.
+Dennis reports a boot crash on recent Lenovo laptops with a USB4 dock.
 
-Align kvm_pmu_overflow_status() with the reality of the architecture
-and stop using PMCNTENSET_EL0 as part of the overflow condition. The
-bug was discovered while running an SBSA PMU test [*], which only sets
-PMCR.E, PMOVSSET<0>, PMINTENSET<0>, and expects an overflow interrupt.
+Since commit 0fc70886569c ("thunderbolt: Reset USB4 v2 host router") and
+commit 59a54c5f3dbd ("thunderbolt: Reset topology created by the boot
+firmware"), USB4 v2 and v1 Host Routers are reset on probe of the
+thunderbolt driver.
 
+The reset clears the Presence Detect State and Data Link Layer Link Active
+bits at the USB4 Host Router's Root Port and thus causes hot removal of the
+dock.
+
+The crash occurs when pciehp is unbound from one of the dock's Downstream
+Ports:  pciehp creates a pci_slot on bind and destroys it on unbind.  The
+pci_slot contains a pointer to the pci_bus below the Downstream Port, but
+a reference on that pci_bus is never acquired.  The pci_bus is destroyed
+before the pci_slot, so a use-after-free ensues when pci_slot_release()
+accesses slot->bus.
+
+In principle this should not happen because pci_stop_bus_device() unbinds
+pciehp (and therefore destroys the pci_slot) before the pci_bus is
+destroyed by pci_remove_bus_device().
+
+However the stacktrace provided by Dennis shows that pciehp is unbound from
+pci_remove_bus_device() instead of pci_stop_bus_device().  To understand
+the significance of this, one needs to know that the PCI core uses a two
+step process to remove a portion of the hierarchy:  It first unbinds all
+drivers in the sub-hierarchy in pci_stop_bus_device() and then actually
+removes the devices in pci_remove_bus_device().  There is no precaution to
+prevent driver binding in-between pci_stop_bus_device() and
+pci_remove_bus_device().
+
+In Dennis' case, it seems removal of the hierarchy by pciehp races with
+driver binding by pci_bus_add_devices().  pciehp is bound to the
+Downstream Port after pci_stop_bus_device() has run, so it is unbound by
+pci_remove_bus_device() instead of pci_stop_bus_device().  Because the
+pci_bus has already been destroyed at that point, accesses to it result in
+a use-after-free.
+
+One might conclude that driver binding needs to be prevented after
+pci_stop_bus_device() has run.  However it seems risky that pci_slot points
+to pci_bus without holding a reference.  Solely relying on correct ordering
+of driver unbind versus pci_bus destruction is certainly not defensive
+programming.
+
+If pci_slot has a need to access data in pci_bus, it ought to acquire a
+reference.  Amend pci_create_slot() accordingly.  Dennis reports that the
+crash is not reproducible with this change.
+
+Abridged stacktrace:
+
+  pcieport 0000:00:07.0: PME: Signaling with IRQ 156
+  pcieport 0000:00:07.0: pciehp: Slot #12 AttnBtn- PwrCtrl- MRL- AttnInd- PwrInd- HotPlug+ Surprise+ Interlock- NoCompl+ IbPresDis- LLActRep+
+  pci_bus 0000:20: dev 00, created physical slot 12
+  pcieport 0000:00:07.0: pciehp: Slot(12): Card not present
+  ...
+  pcieport 0000:21:02.0: pciehp: pcie_disable_notification: SLOTCTRL d8 write cmd 0
+  Oops: general protection fault, probably for non-canonical address 0x6b6b6b6b6b6b6b6b: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 13 UID: 0 PID: 134 Comm: irq/156-pciehp Not tainted 6.11.0-devel+ #1
+  RIP: 0010:dev_driver_string+0x12/0x40
+  pci_destroy_slot
+  pciehp_remove
+  pcie_port_remove_service
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  device_unregister
+  remove_iter
+  device_for_each_child
+  pcie_portdrv_remove
+  pci_device_remove
+  device_release_driver_internal
+  bus_remove_device
+  device_del
+  pci_remove_bus_device (recursive invocation)
+  pci_remove_bus_device
+  pciehp_unconfigure_device
+  pciehp_disable_slot
+  pciehp_handle_presence_or_link_change
+  pciehp_ist
+
+Link: https://lore.kernel.org/r/4bfd4c0e976c1776cd08e76603903b338cf25729.1728579288.git.lukas@wunner.de
+Reported-by: Dennis Wassenberg <Dennis.Wassenberg@secunet.com>
+Closes: https://lore.kernel.org/r/6de4b45ff2b32dd91a805ec02ec8ec73ef411bf6.camel@secunet.com/
+Tested-by: Dennis Wassenberg <Dennis.Wassenberg@secunet.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Cc: stable@vger.kernel.org
-Fixes: 76d883c4e640 ("arm64: KVM: Add access handler for PMOVSSET and PMOVSCLR register")
-Link: https://github.com/ARM-software/sbsa-acs/blob/master/test_pool/pmu/operating_system/test_pmu001.c
-Signed-off-by: Raghavendra Rao Ananta <rananta@google.com>
-[ oliver: massaged changelog ]
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241120005230.2335682-2-oliver.upton@linux.dev
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/pmu-emul.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pci/slot.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -371,7 +371,6 @@ static u64 kvm_pmu_overflow_status(struc
+--- a/drivers/pci/slot.c
++++ b/drivers/pci/slot.c
+@@ -79,6 +79,7 @@ static void pci_slot_release(struct kobj
+ 	up_read(&pci_bus_sem);
  
- 	if ((__vcpu_sys_reg(vcpu, PMCR_EL0) & ARMV8_PMU_PMCR_E)) {
- 		reg = __vcpu_sys_reg(vcpu, PMOVSSET_EL0);
--		reg &= __vcpu_sys_reg(vcpu, PMCNTENSET_EL0);
- 		reg &= __vcpu_sys_reg(vcpu, PMINTENSET_EL1);
- 		reg &= kvm_pmu_valid_counter_mask(vcpu);
+ 	list_del(&slot->list);
++	pci_bus_put(slot->bus);
+ 
+ 	kfree(slot);
+ }
+@@ -260,7 +261,7 @@ placeholder:
+ 		goto err;
+ 	}
+ 
+-	slot->bus = parent;
++	slot->bus = pci_bus_get(parent);
+ 	slot->number = slot_nr;
+ 
+ 	slot->kobj.kset = pci_slots_kset;
+@@ -268,6 +269,7 @@ placeholder:
+ 	slot_name = make_slot_name(name);
+ 	if (!slot_name) {
+ 		err = -ENOMEM;
++		pci_bus_put(slot->bus);
+ 		kfree(slot);
+ 		goto err;
  	}
 
 
