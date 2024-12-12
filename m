@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD8C222D4C;
-	Thu, 12 Dec 2024 17:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7B81487CD;
+	Thu, 12 Dec 2024 17:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734023480; cv=none; b=VJzvojFgTwdy94kkaB6LDPL4e/0VPgZ9OemsXlr9FDWO5eQI9YPJZ7Hs1t3aJPpkJVCPl2OhNbsIGAP7+xQlW6cf6SMS/orc8oIBXUFKY9aq/0Hwh8+SGrKZC4PNkXA4kXMk/+nl2pw+HTWHy9zRkEPbkrQe2ym/D2cKNiDKczQ=
+	t=1734023483; cv=none; b=C+3aJsp6VVxBgMDlRwaj8Y8j5Onp8rFn0zOQ2OHsHscrjAgS3WXA2Jv4gn8jtbv5JgkE08QZsUtZ9A0hWuO1ZUHN99Sug83yI8nEpSH5C1Ilfpu6/RG3sSdM30TFyZlI/QftJGF2eDbkLHFiFQbaxtTTkuN65jx56fANxAy/u5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734023480; c=relaxed/simple;
-	bh=LJyTdlAi2Imbgwlz8Jfk9EZ/7G+FXyQ5LuOm/w7ZGOg=;
+	s=arc-20240116; t=1734023483; c=relaxed/simple;
+	bh=L/Z2Icr8/DoFwmf6WAGG0MBT2frV89OSiUZJoe+TRUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oaBlHgcqGIZlWpGrfe2lIEV0XcxL4YnPLb80qZU/ttT8beP6vDDwhLPbMs1trKb5JXze8LWAdzB7TOBP3FFa3my1ovZEmB3i3BtHRXLs/Av/ZTu0cxcpNVcPUxVoyiwTCjWm8UD0pGRhwLjmXPuAh7wuN9dr+qPhrADYmhIEP+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZfEroq61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CQuRK7It7nMS4jjrVysD0keByZ0ijhACwj8RZTSy+8H54IWN8IjAZgpUOrR7cg4CWFvB37NF3DKgFnf6jrCvI1aj6yPCoPcIkxyAuWlqP2uJcpdpiQ8onRi59nFHC3/zVMAUC6cXTvBLY6KwVYcMRZfzUJaGkco59/hsFgYM618=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfefeyaQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZfEroq61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90432C4CED3;
-	Thu, 12 Dec 2024 17:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfefeyaQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FF4C4CECE;
+	Thu, 12 Dec 2024 17:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734023480;
-	bh=LJyTdlAi2Imbgwlz8Jfk9EZ/7G+FXyQ5LuOm/w7ZGOg=;
+	s=korg; t=1734023483;
+	bh=L/Z2Icr8/DoFwmf6WAGG0MBT2frV89OSiUZJoe+TRUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZfEroq61vNCC/P9K1h1QGPkFIrkrTeDzoZQTS0sEmV3t8GoQBnrKfL9KkasITN2MF
-	 LhBFFTM1CBgZ4hndkWsQYl1aoU3Cg9qc3l5W1r6Nuqm787XmjwH6UtmKkTOmO+qMoN
-	 PDODsK3RpaiAgjBgoiL2Z34wLJPEjQUBtfcUnJL8=
+	b=IfefeyaQD2YUmKDe7WjvwJagM8wOlqJkUnXB9Be0xixCIiAjRIZIzi+/X8j65pOXX
+	 rnpAsVxZu5WT2GN3m8MeXt8Ny4nHUgdkl1Ak8RCRdiW3U1AxzYqvHzpdGb0HWH8Ild
+	 fyPbC1CJFkVj42PXl2PDQx8WrUjm6uY1Gr0sKrxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
-	John Meneghini <jmeneghi@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 517/565] scsi: st: Add MTIOCGET and MTLOAD to ioctls allowed after device reset
-Date: Thu, 12 Dec 2024 16:01:52 +0100
-Message-ID: <20241212144332.229772491@linuxfoundation.org>
+Subject: [PATCH 5.15 518/565] pinctrl: qcom-pmic-gpio: add support for PM8937
+Date: Thu, 12 Dec 2024 16:01:53 +0100
+Message-ID: <20241212144332.268252828@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
 References: <20241212144311.432886635@linuxfoundation.org>
@@ -53,84 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+From: Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-[ Upstream commit 0b120edb37dc9dd8ca82893d386922eb6b16f860 ]
+[ Upstream commit 89265a58ff24e3885c2c9ca722bc3aaa47018be9 ]
 
-Most drives rewind the tape when the device is reset. Reading and writing
-are not allowed until something is done to make the tape position match the
-user's expectation (e.g., rewind the tape). Add MTIOCGET and MTLOAD to
-operations allowed after reset. MTIOCGET is modified to not touch the tape
-if pos_unknown is non-zero. The tape location is known after MTLOAD.
+PM8937 has 8 GPIO-s with holes on GPIO3, GPIO4 and GPIO6.
 
-Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219419#c14
-Link: https://lore.kernel.org/r/20241106095723.63254-3-Kai.Makisara@kolumbus.fi
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
-Tested-by: John Meneghini <jmeneghi@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/20241031-msm8917-v2-2-8a075faa89b1@mainlining.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/st.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
-index 861038a1cbd48..1551d533c7196 100644
---- a/drivers/scsi/st.c
-+++ b/drivers/scsi/st.c
-@@ -3501,6 +3501,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
- 	int i, cmd_nr, cmd_type, bt;
- 	int retval = 0;
- 	unsigned int blk;
-+	bool cmd_mtiocget;
- 	struct scsi_tape *STp = file->private_data;
- 	struct st_modedef *STm;
- 	struct st_partstat *STps;
-@@ -3614,6 +3615,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
- 			 */
- 			if (mtc.mt_op != MTREW &&
- 			    mtc.mt_op != MTOFFL &&
-+			    mtc.mt_op != MTLOAD &&
- 			    mtc.mt_op != MTRETEN &&
- 			    mtc.mt_op != MTERASE &&
- 			    mtc.mt_op != MTSEEK &&
-@@ -3727,17 +3729,28 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
- 		goto out;
- 	}
- 
-+	cmd_mtiocget = cmd_type == _IOC_TYPE(MTIOCGET) && cmd_nr == _IOC_NR(MTIOCGET);
-+
- 	if ((i = flush_buffer(STp, 0)) < 0) {
--		retval = i;
--		goto out;
--	}
--	if (STp->can_partitions &&
--	    (i = switch_partition(STp)) < 0) {
--		retval = i;
--		goto out;
-+		if (cmd_mtiocget && STp->pos_unknown) {
-+			/* flush fails -> modify status accordingly */
-+			reset_state(STp);
-+			STp->pos_unknown = 1;
-+		} else { /* return error */
-+			retval = i;
-+			goto out;
-+		}
-+	} else { /* flush_buffer succeeds */
-+		if (STp->can_partitions) {
-+			i = switch_partition(STp);
-+			if (i < 0) {
-+				retval = i;
-+				goto out;
-+			}
-+		}
- 	}
- 
--	if (cmd_type == _IOC_TYPE(MTIOCGET) && cmd_nr == _IOC_NR(MTIOCGET)) {
-+	if (cmd_mtiocget) {
- 		struct mtget mt_status;
- 
- 		if (_IOC_SIZE(cmd_in) != sizeof(struct mtget)) {
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index b2562e8931397..42f8b661f19c0 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1156,6 +1156,8 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
+ 	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
+ 	{ .compatible = "qcom,pm8916-gpio", .data = (void *) 4 },
++	/* pm8937 has 8 GPIOs with holes on 3, 4 and 6 */
++	{ .compatible = "qcom,pm8937-gpio", .data = (void *) 8 },
+ 	{ .compatible = "qcom,pm8941-gpio", .data = (void *) 36 },
+ 	/* pm8950 has 8 GPIOs with holes on 3 */
+ 	{ .compatible = "qcom,pm8950-gpio", .data = (void *) 8 },
 -- 
 2.43.0
 
