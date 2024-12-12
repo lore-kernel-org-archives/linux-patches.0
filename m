@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5AD22654D;
-	Thu, 12 Dec 2024 16:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16792210CF;
+	Thu, 12 Dec 2024 16:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020009; cv=none; b=NfRIMd7QCQZzvbevqQZxbu+n20r+d1HAiBxV8838uyPVv66keXRNUo7tT9pr3kV7A+DWBMBrdvz+RldyPWNW2T7/PjOU+Nlyl1ucBdrvwcg3kaNuhGqnrOZWOwkpMScxa1V7iQ9qsg2W1wd5J4o8cTZkrSGo7hmivRk4TZSW3dQ=
+	t=1734020012; cv=none; b=RYIYwtKNCFyZYmsYdS/9HoluQPleyhsR3leBnvyqldj/Q1+s6arp4HpVZDPSSawvpdFXOjmJI7BMQZCZ1xRTHaeS36K2DkTqB52Uw8FqMi6RcXvjx0c40UkhtMgZ/EGzcFQi1+Xk0ZjtjqMjwYunpEixs6Di5ehloM8O4rpy7T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020009; c=relaxed/simple;
-	bh=M92+gLIDoGhWsnl4sZSpkZgODG8KQ+P0hczHSzuvsn8=;
+	s=arc-20240116; t=1734020012; c=relaxed/simple;
+	bh=PFv/YKq1OLV2mvrgPXF4UQurvSVqEqyOL9bi+/Ef5M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqcR0ZZCPVG7XyTHlFOlIRqAchNmXr8v0FRkIY4j9afLwODQSs89ehY/FitPHUVYnudq0lLzkJ1To6VFYdDJLH/d6jzQR7oeltfp2Lgtrl4zhCVn4AT4BOW0hyHNr/Xj1u+Ruo4/VYjvfNljGc9V17bV1APvp4G3b0ZhzWZnptg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZOHQzne; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+Mm+sXkAjSplRkTimvzawDT5e8uc4cfs0k5QP64EQAZbLa2hcqRw8KGsknojyDVpuaYE3Wow3LLSR7nZChB9PHFgrsn0FWam6f/y0UcTKs442NSRZeuFHdBrB4/DtNMohYl6A3y44UZwHhGQkSGT/EmXm9gKcCwUSaqmk/9fkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0dSyHyur; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZOHQzne"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264CEC4CECE;
-	Thu, 12 Dec 2024 16:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0dSyHyur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8251C4CECE;
+	Thu, 12 Dec 2024 16:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020008;
-	bh=M92+gLIDoGhWsnl4sZSpkZgODG8KQ+P0hczHSzuvsn8=;
+	s=korg; t=1734020012;
+	bh=PFv/YKq1OLV2mvrgPXF4UQurvSVqEqyOL9bi+/Ef5M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ZOHQznedQ2zJ0Rv5szoaZ7B7rtIKTTcexXh7GToAun4AhMoY+IT4R5/nET7MOhhY
-	 b4MHOFiYpnfSiBxO5tt3tmzrcjulpc006hUo8KABNy6QEcQg+nFy+W2zNO1H9XeV8n
-	 +iBFgeTgUaFdF/ATUd6Mxd05F7DWs4z+MCaqkXsg=
+	b=0dSyHyurLHnAm0ivlCFbxYjsaDbQDVKmUr+CKW5fCyrkGLWe9O78TpF+KTTK1awyK
+	 RrcDPoPduEH6zXquXTkCKSRwb+6NZI8KfVKbhh+8fqPV9hAJ0OOVknkGundu7DtsQA
+	 y4RiOrlHHzdR15k7gX2YIQIShkCJRRwU9yxVtFDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Ahern <dsahern@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 324/772] ip6mr: fix tables suspicious RCU usage
-Date: Thu, 12 Dec 2024 15:54:29 +0100
-Message-ID: <20241212144403.290395036@linuxfoundation.org>
+Subject: [PATCH 6.1 325/772] ipmr: fix tables suspicious RCU usage
+Date: Thu, 12 Dec 2024 15:54:30 +0100
+Message-ID: <20241212144403.329740277@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -53,90 +53,139 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit f1553c9894b4dbeb10a2ab15ab1aa113b3b4047c ]
+[ Upstream commit fc9c273d6daaa9866f349bbe8cae25c67764c456 ]
 
-Several places call ip6mr_get_table() with no RCU nor RTNL lock.
-Add RCU protection inside such helper and provide a lockless variant
-for the few callers that already acquired the relevant lock.
+Similar to the previous patch, plumb the RCU lock inside
+the ipmr_get_table(), provided a lockless variant and apply
+the latter in the few spots were the lock is already held.
 
-Note that some users additionally reference the table outside the RCU
-lock. That is actually safe as the table deletion can happen only
-after all table accesses are completed.
-
-Fixes: e2d57766e674 ("net: Provide compat support for SIOCGETMIFCNT_IN6 and SIOCGETSGCNT_IN6.")
-Fixes: d7c31cbde4bc ("net: ip6mr: add RTM_GETROUTE netlink op")
+Fixes: 709b46e8d90b ("net: Add compat ioctl support for the ipv4 multicast ioctl SIOCGETSGCNT")
+Fixes: f0ad0860d01e ("ipv4: ipmr: support multiple tables")
 Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6mr.c | 38 +++++++++++++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 11 deletions(-)
+ net/ipv4/ipmr.c | 42 +++++++++++++++++++++++++++++-------------
+ 1 file changed, 29 insertions(+), 13 deletions(-)
 
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 27fb5479988af..138f6aee70afc 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -125,7 +125,7 @@ static struct mr_table *ip6mr_mr_table_iter(struct net *net,
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 3ed9ed2bffd29..f64651c0dea6c 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -136,7 +136,7 @@ static struct mr_table *ipmr_mr_table_iter(struct net *net,
  	return ret;
  }
  
--static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
-+static struct mr_table *__ip6mr_get_table(struct net *net, u32 id)
+-static struct mr_table *ipmr_get_table(struct net *net, u32 id)
++static struct mr_table *__ipmr_get_table(struct net *net, u32 id)
  {
  	struct mr_table *mrt;
  
-@@ -136,6 +136,16 @@ static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
+@@ -147,6 +147,16 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
  	return NULL;
  }
  
-+static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
++static struct mr_table *ipmr_get_table(struct net *net, u32 id)
 +{
 +	struct mr_table *mrt;
 +
 +	rcu_read_lock();
-+	mrt = __ip6mr_get_table(net, id);
++	mrt = __ipmr_get_table(net, id);
 +	rcu_read_unlock();
 +	return mrt;
 +}
 +
- static int ip6mr_fib_lookup(struct net *net, struct flowi6 *flp6,
- 			    struct mr_table **mrt)
+ static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
+ 			   struct mr_table **mrt)
  {
-@@ -177,7 +187,7 @@ static int ip6mr_rule_action(struct fib_rule *rule, struct flowi *flp,
+@@ -188,7 +198,7 @@ static int ipmr_rule_action(struct fib_rule *rule, struct flowi *flp,
  
  	arg->table = fib_rule_get_table(rule, arg);
  
--	mrt = ip6mr_get_table(rule->fr_net, arg->table);
-+	mrt = __ip6mr_get_table(rule->fr_net, arg->table);
+-	mrt = ipmr_get_table(rule->fr_net, arg->table);
++	mrt = __ipmr_get_table(rule->fr_net, arg->table);
  	if (!mrt)
  		return -EAGAIN;
  	res->mrt = mrt;
-@@ -304,6 +314,8 @@ static struct mr_table *ip6mr_get_table(struct net *net, u32 id)
- 	return net->ipv6.mrt6;
+@@ -314,6 +324,8 @@ static struct mr_table *ipmr_get_table(struct net *net, u32 id)
+ 	return net->ipv4.mrt;
  }
  
-+#define __ip6mr_get_table ip6mr_get_table
++#define __ipmr_get_table ipmr_get_table
 +
- static int ip6mr_fib_lookup(struct net *net, struct flowi6 *flp6,
- 			    struct mr_table **mrt)
+ static int ipmr_fib_lookup(struct net *net, struct flowi4 *flp4,
+ 			   struct mr_table **mrt)
  {
-@@ -382,7 +394,7 @@ static struct mr_table *ip6mr_new_table(struct net *net, u32 id)
- {
- 	struct mr_table *mrt;
+@@ -402,7 +414,7 @@ static struct mr_table *ipmr_new_table(struct net *net, u32 id)
+ 	if (id != RT_TABLE_DEFAULT && id >= 1000000000)
+ 		return ERR_PTR(-EINVAL);
  
--	mrt = ip6mr_get_table(net, id);
-+	mrt = __ip6mr_get_table(net, id);
+-	mrt = ipmr_get_table(net, id);
++	mrt = __ipmr_get_table(net, id);
  	if (mrt)
  		return mrt;
  
-@@ -411,13 +423,15 @@ static void *ip6mr_vif_seq_start(struct seq_file *seq, loff_t *pos)
+@@ -1373,7 +1385,7 @@ int ip_mroute_setsockopt(struct sock *sk, int optname, sockptr_t optval,
+ 		goto out_unlock;
+ 	}
+ 
+-	mrt = ipmr_get_table(net, raw_sk(sk)->ipmr_table ? : RT_TABLE_DEFAULT);
++	mrt = __ipmr_get_table(net, raw_sk(sk)->ipmr_table ? : RT_TABLE_DEFAULT);
+ 	if (!mrt) {
+ 		ret = -ENOENT;
+ 		goto out_unlock;
+@@ -2247,11 +2259,13 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
+ 	struct mr_table *mrt;
+ 	int err;
+ 
+-	mrt = ipmr_get_table(net, RT_TABLE_DEFAULT);
+-	if (!mrt)
++	rcu_read_lock();
++	mrt = __ipmr_get_table(net, RT_TABLE_DEFAULT);
++	if (!mrt) {
++		rcu_read_unlock();
+ 		return -ENOENT;
++	}
+ 
+-	rcu_read_lock();
+ 	cache = ipmr_cache_find(mrt, saddr, daddr);
+ 	if (!cache && skb->dev) {
+ 		int vif = ipmr_find_vif(mrt, skb->dev);
+@@ -2536,7 +2550,7 @@ static int ipmr_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 	grp = tb[RTA_DST] ? nla_get_in_addr(tb[RTA_DST]) : 0;
+ 	tableid = tb[RTA_TABLE] ? nla_get_u32(tb[RTA_TABLE]) : 0;
+ 
+-	mrt = ipmr_get_table(net, tableid ? tableid : RT_TABLE_DEFAULT);
++	mrt = __ipmr_get_table(net, tableid ? tableid : RT_TABLE_DEFAULT);
+ 	if (!mrt) {
+ 		err = -ENOENT;
+ 		goto errout_free;
+@@ -2588,7 +2602,7 @@ static int ipmr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (filter.table_id) {
+ 		struct mr_table *mrt;
+ 
+-		mrt = ipmr_get_table(sock_net(skb->sk), filter.table_id);
++		mrt = __ipmr_get_table(sock_net(skb->sk), filter.table_id);
+ 		if (!mrt) {
+ 			if (rtnl_msg_family(cb->nlh) != RTNL_FAMILY_IPMR)
+ 				return skb->len;
+@@ -2696,7 +2710,7 @@ static int rtm_to_ipmr_mfcc(struct net *net, struct nlmsghdr *nlh,
+ 			break;
+ 		}
+ 	}
+-	mrt = ipmr_get_table(net, tblid);
++	mrt = __ipmr_get_table(net, tblid);
+ 	if (!mrt) {
+ 		ret = -ENOENT;
+ 		goto out;
+@@ -2904,13 +2918,15 @@ static void *ipmr_vif_seq_start(struct seq_file *seq, loff_t *pos)
  	struct net *net = seq_file_net(seq);
  	struct mr_table *mrt;
  
--	mrt = ip6mr_get_table(net, RT6_TABLE_DFLT);
+-	mrt = ipmr_get_table(net, RT_TABLE_DEFAULT);
 -	if (!mrt)
 +	rcu_read_lock();
-+	mrt = __ip6mr_get_table(net, RT6_TABLE_DFLT);
++	mrt = __ipmr_get_table(net, RT_TABLE_DEFAULT);
 +	if (!mrt) {
 +		rcu_read_unlock();
  		return ERR_PTR(-ENOENT);
@@ -148,41 +197,6 @@ index 27fb5479988af..138f6aee70afc 100644
  	return mr_vif_seq_start(seq, pos);
  }
  
-@@ -2288,11 +2302,13 @@ int ip6mr_get_route(struct net *net, struct sk_buff *skb, struct rtmsg *rtm,
- 	struct mfc6_cache *cache;
- 	struct rt6_info *rt = (struct rt6_info *)skb_dst(skb);
- 
--	mrt = ip6mr_get_table(net, RT6_TABLE_DFLT);
--	if (!mrt)
-+	rcu_read_lock();
-+	mrt = __ip6mr_get_table(net, RT6_TABLE_DFLT);
-+	if (!mrt) {
-+		rcu_read_unlock();
- 		return -ENOENT;
-+	}
- 
--	rcu_read_lock();
- 	cache = ip6mr_cache_find(mrt, &rt->rt6i_src.addr, &rt->rt6i_dst.addr);
- 	if (!cache && skb->dev) {
- 		int vif = ip6mr_find_vif(mrt, skb->dev);
-@@ -2573,7 +2589,7 @@ static int ip6mr_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 		grp = nla_get_in6_addr(tb[RTA_DST]);
- 	tableid = tb[RTA_TABLE] ? nla_get_u32(tb[RTA_TABLE]) : 0;
- 
--	mrt = ip6mr_get_table(net, tableid ?: RT_TABLE_DEFAULT);
-+	mrt = __ip6mr_get_table(net, tableid ?: RT_TABLE_DEFAULT);
- 	if (!mrt) {
- 		NL_SET_ERR_MSG_MOD(extack, "MR table does not exist");
- 		return -ENOENT;
-@@ -2618,7 +2634,7 @@ static int ip6mr_rtm_dumproute(struct sk_buff *skb, struct netlink_callback *cb)
- 	if (filter.table_id) {
- 		struct mr_table *mrt;
- 
--		mrt = ip6mr_get_table(sock_net(skb->sk), filter.table_id);
-+		mrt = __ip6mr_get_table(sock_net(skb->sk), filter.table_id);
- 		if (!mrt) {
- 			if (rtnl_msg_family(cb->nlh) != RTNL_FAMILY_IP6MR)
- 				return skb->len;
 -- 
 2.43.0
 
