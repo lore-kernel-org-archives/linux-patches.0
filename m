@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8256223C49;
-	Thu, 12 Dec 2024 16:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B16C2210DB;
+	Thu, 12 Dec 2024 16:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021159; cv=none; b=i9ShYrcZiLiz2gEQNawbOnBnCQeIY3akDSYJGNcNAv2/LLhz3V5ecFkaL/CunoA3wJTnhB3zCWu6M0eiJtAdKA6zhS78k2y0WYCrlaWcuK8O4ANJ5LsQ7O2IAjmXCbrNgQCsU75q3MiMqD0nYCq5spq8AHqFcgeUMxR9bOeygKg=
+	t=1734021163; cv=none; b=OtgBV2cjE4d1J1tIMJtyZyeOS0mLkYfNw6TMaV1qRo6d6WTsgiI64wuCqZG/XChCnxJi0GPE3ZwexfxaxpWbSRvVTa5yKWzatpTGwPXQ9kgUoYlbkXm1qKfoBeTqS/FxxxRhUwHyJcXl+xbleRzveXveld3Jb8zli3fnmbTmrqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021159; c=relaxed/simple;
-	bh=elWaj7ZYSS0zBIfwZN/ArimQJ1UsZuPcwuw8+h3se1w=;
+	s=arc-20240116; t=1734021163; c=relaxed/simple;
+	bh=+nUdeA8gIhlGFfX2tFaALBlDzbcShm6WNq4r/L+SX8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6X9nSziNAkwwGgpxjAmejoG0x0vcGl+2vt/Ypq+DEfR/F9GTciIfIqVLvd84OuSe9mQ+3NmkzCPQziqnvsji7fVW+Of6FTYxV7IsMy3ruHL/+OHJWmdhr8aFoGOiPbZc7wmKoNHPllYmIk5HbpqvxiJrqKLEtBzRXYEOMDQRRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XgsB3B8D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlOOs8nuIdqvuhIWPu//oQTo9ZJKpyQS+5q6OntEz/IsC5ggplf/zeL4fggGEP4QSY0yfcN5CBZf+yZEqQOqYa5zw7ME0jI2gcpIHzDccn5WKZys8hRnL0/tIwERFnTLprXbLJiOGjTPMyoOm5NgxOBleUoo9/V1riyPD7C4iBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zyHHCmP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XgsB3B8D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573FFC4CECE;
-	Thu, 12 Dec 2024 16:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zyHHCmP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D948C4CED0;
+	Thu, 12 Dec 2024 16:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021159;
-	bh=elWaj7ZYSS0zBIfwZN/ArimQJ1UsZuPcwuw8+h3se1w=;
+	s=korg; t=1734021163;
+	bh=+nUdeA8gIhlGFfX2tFaALBlDzbcShm6WNq4r/L+SX8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgsB3B8Due9Q0spBIXKX9Ex89MvgL8LdEyLswUaRK3p+DKiXhvZsMWoVNs35u4jYG
-	 Q0fFG4Lz59qyWvkmPvslsbZIeBWLkfP73KWCuZM0OHgahf7NMFdTrv78nhNueq2Z2R
-	 xxgWttlchpbSW4QBbg2S84V0a/r0YQg1uwELi1dk=
+	b=zyHHCmP1e+i/zRBAMwchiYR821Zn0Sd0CWPHNDf2rjjraTqCOS+DLHZa8I8F5NpQz
+	 uohWt/ZC+g+0gqnOBGvIrbjLhNUUIGkomX3sDDtnKRZc11lKBlGnXY7B2IOzY+P0HQ
+	 OghBhskXjnj40l6Re5BVmFZ65uR1M5wZfJFiuoKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhu Jun <zhujun2@cmss.chinamobile.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 662/772] r8169: dont apply UDP padding quirk on RTL8126A
-Date: Thu, 12 Dec 2024 16:00:07 +0100
-Message-ID: <20241212144417.271073623@linuxfoundation.org>
+Subject: [PATCH 6.1 663/772] samples/bpf: Fix a resource leak
+Date: Thu, 12 Dec 2024 16:00:08 +0100
+Message-ID: <20241212144417.311475037@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,55 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Zhu Jun <zhujun2@cmss.chinamobile.com>
 
-[ Upstream commit 87e26448dbda4523b73a894d96f0f788506d3795 ]
+[ Upstream commit f3ef53174b23246fe9bc2bbc2542f3a3856fa1e2 ]
 
-Vendor drivers r8125/r8126 indicate that this quirk isn't needed
-any longer for RTL8126A. Mimic this in r8169.
+The opened file should be closed in show_sockopts(), otherwise resource
+leak will occur that this problem was discovered by reading code
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/d1317187-aa81-4a69-b831-678436e4de62@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zhu Jun <zhujun2@cmss.chinamobile.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241010014126.2573-1-zhujun2@cmss.chinamobile.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ samples/bpf/test_cgrp2_sock.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index a74e33bf0302e..4b461e93ffe9d 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -4139,8 +4139,8 @@ static unsigned int rtl8125_quirk_udp_padto(struct rtl8169_private *tp,
- {
- 	unsigned int padto = 0, len = skb->len;
+diff --git a/samples/bpf/test_cgrp2_sock.c b/samples/bpf/test_cgrp2_sock.c
+index a0811df888f45..8ca2a445ffa15 100644
+--- a/samples/bpf/test_cgrp2_sock.c
++++ b/samples/bpf/test_cgrp2_sock.c
+@@ -178,8 +178,10 @@ static int show_sockopts(int family)
+ 		return 1;
+ 	}
  
--	if (rtl_is_8125(tp) && len < 128 + RTL_MIN_PATCH_LEN &&
--	    rtl_skb_is_udp(skb) && skb_transport_header_was_set(skb)) {
-+	if (len < 128 + RTL_MIN_PATCH_LEN && rtl_skb_is_udp(skb) &&
-+	    skb_transport_header_was_set(skb)) {
- 		unsigned int trans_data_len = skb_tail_pointer(skb) -
- 					      skb_transport_header(skb);
- 
-@@ -4164,9 +4164,15 @@ static unsigned int rtl8125_quirk_udp_padto(struct rtl8169_private *tp,
- static unsigned int rtl_quirk_packet_padto(struct rtl8169_private *tp,
- 					   struct sk_buff *skb)
- {
--	unsigned int padto;
-+	unsigned int padto = 0;
- 
--	padto = rtl8125_quirk_udp_padto(tp, skb);
-+	switch (tp->mac_version) {
-+	case RTL_GIGA_MAC_VER_61 ... RTL_GIGA_MAC_VER_63:
-+		padto = rtl8125_quirk_udp_padto(tp, skb);
-+		break;
-+	default:
-+		break;
+-	if (get_bind_to_device(sd, name, sizeof(name)) < 0)
++	if (get_bind_to_device(sd, name, sizeof(name)) < 0) {
++		close(sd);
+ 		return 1;
 +	}
  
- 	switch (tp->mac_version) {
- 	case RTL_GIGA_MAC_VER_34:
+ 	mark = get_somark(sd);
+ 	prio = get_priority(sd);
 -- 
 2.43.0
 
