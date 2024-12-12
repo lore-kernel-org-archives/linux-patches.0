@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C91521764F;
-	Thu, 12 Dec 2024 15:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2878A21B91D;
+	Thu, 12 Dec 2024 15:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734016555; cv=none; b=OiFOl1z60looOu9RdT1MxYDwAYe/5qwUR7Bdw2DtXTXFwofIojCeUOIEri4Dlb6O/Eh3zFy2zVs+trnv6GTYoqhRhkCxwAarQKKRrJoN02vwN2cl1kxdIqP93v1L4reCu2BwypglWgFHupJbPO8o6Uyb6+3OrKZsiPifdHmziDo=
+	t=1734016559; cv=none; b=aX5Q9UaRltgqZLBlGx5/dxdPADGPvKd5own3LRSzw0mT+vu/8yezzpXObmOrD41qKP80OM1pg+Z7hTGr0u2wAgNM9f+ol31ENYUpgiIWWppq0YzeXyE4hDr2DcUtKZxReG/qS9IFSiI9jpmlVfVMJ2JxUNyucd6n+avMk9XYPWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734016555; c=relaxed/simple;
-	bh=T3GAmQm2DdNIdMxlGiwB+roJhCIB+VkW39ZwQuPX5Oo=;
+	s=arc-20240116; t=1734016559; c=relaxed/simple;
+	bh=MRBerEFv3EaQJZuDsbobaSa9OHWmR+W48bptJ4ecSTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mWaka8ZTAComI6uDDCfaI53raCsCL6M9LvjilOiIYC/xs/h94brljbW0CqG8wDW02Tp0Y6CtUMVJ+XRLC75XKpkE+lJekTArti159TeQbDcdTJZPoUHoNaCqZvfOZrTwcdT8b0IBoO87hMtVPq0I4K7vP3By+bT2+v8EB4KwGs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHJH1Fkd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oE2sx6tZLNvfMrDgTFxvO+QYZxIFfy9lNff3lB0Ba/mC1NJPKKUWX1sGFxRpXUyWRrWIX5lLsjHLin1IR0hCv7bwmzq5e/v9ggQLJALa8GTGJ/XruepIhmE2vOIgMb7/0Fdi0f+/I19aB3dcJmyU/BBkDHUKZC1TFkC+m1Wk3Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fX0OkJtA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHJH1Fkd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF31DC4CECE;
-	Thu, 12 Dec 2024 15:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fX0OkJtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A333C4CECE;
+	Thu, 12 Dec 2024 15:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734016555;
-	bh=T3GAmQm2DdNIdMxlGiwB+roJhCIB+VkW39ZwQuPX5Oo=;
+	s=korg; t=1734016559;
+	bh=MRBerEFv3EaQJZuDsbobaSa9OHWmR+W48bptJ4ecSTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHJH1FkdeZ2hPhRIkK13Ju8ZUwxWpHWc9J5Eim0GoIsGZp2xMMI3CiQKbIBL/n6BX
-	 XKUcCsmgHXNp6KudZVyubOa+N9XCmSjUZPnry5LeUFMkARLiSJmMhXNicz0czZDXpH
-	 9t4rw96iF+9vaPb6zoC4dREba3XHF0pzVz5zMWMA=
+	b=fX0OkJtAgZFSfcMpw/sqTRR8rtJ7mBBpFsBm6l8ZSkqbbuUUwf1k9gcif4AdqL96C
+	 R+BuGz79UmrwUCTMo3M4Mo30CTUX0eF7wFMRn+PiqTt+NlC/alYXiev50CAz9ji+UT
+	 Lx/XJ83dwzgGpY4c+6CuKUVs+UrgaOUAbSnh2QpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/466] ext4: partial zero eof block on unaligned inode size extension
-Date: Thu, 12 Dec 2024 15:56:33 +0100
-Message-ID: <20241212144315.628883438@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Stephen Rothwell <sfr@canb.auug.org.au>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 233/466] iio: magnetometer: fix if () scoped_guard() formatting
+Date: Thu, 12 Dec 2024 15:56:42 +0100
+Message-ID: <20241212144315.985907188@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,179 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Stephen Rothwell <sfr@canb.auug.org.au>
 
-[ Upstream commit c7fc0366c65628fd69bfc310affec4918199aae2 ]
+commit 9a884bdb6e9560c6da44052d5248e89d78c983a6 upstream.
 
-Using mapped writes, it's technically possible to expose stale
-post-eof data on a truncate up operation. Consider the following
-example:
+Add mising braces after an if condition that contains scoped_guard().
 
-$ xfs_io -fc "pwrite 0 2k" -c "mmap 0 4k" -c "mwrite 2k 2k" \
-	-c "truncate 8k" -c "pread -v 2k 16" <file>
-...
-00000800:  58 58 58 58 58 58 58 58 58 58 58 58 58 58 58 58  XXXXXXXXXXXXXXXX
-...
+This style is both preferred and necessary here, to fix warning after
+scoped_guard() change in commit fcc22ac5baf0 ("cleanup: Adjust
+scoped_guard() macros to avoid potential warning") to have if-else inside
+of the macro. Current (no braces) use in af8133j_set_scale() yields
+the following warnings:
+af8133j.c:315:12: warning: suggest explicit braces to avoid ambiguous 'else' [-Wdangling-else]
+af8133j.c:316:3: warning: add explicit braces to avoid dangling else [-Wdangling-else]
 
-This shows that the post-eof data written via mwrite lands within
-EOF after a truncate up. While this is deliberate of the test case,
-behavior is somewhat unpredictable because writeback does post-eof
-zeroing, and writeback can occur at any time in the background. For
-example, an fsync inserted between the mwrite and truncate causes
-the subsequent read to instead return zeroes. This basically means
-that there is a race window in this situation between any subsequent
-extending operation and writeback that dictates whether post-eof
-data is exposed to the file or zeroed.
-
-To prevent this problem, perform partial block zeroing as part of
-the various inode size extending operations that are susceptible to
-it. For truncate extension, zero around the original eof similar to
-how truncate down does partial zeroing of the new eof. For extension
-via writes and fallocate related operations, zero the newly exposed
-range of the file to cover any partial zeroing that must occur at
-the original and new eof blocks.
-
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Link: https://patch.msgid.link/20240919160741.208162-2-bfoster@redhat.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: fcc22ac5baf0 ("cleanup: Adjust scoped_guard() macros to avoid potential warning")
+Closes: https://lore.kernel.org/oe-kbuild-all/202409270848.tTpyEAR7-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Stephen Rothwell <sfr@canb.auug.org.au>
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20241108154258.21411-1-przemyslaw.kitszel@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |  7 ++++++-
- fs/ext4/inode.c   | 51 +++++++++++++++++++++++++++++++++--------------
- 2 files changed, 42 insertions(+), 16 deletions(-)
+ drivers/iio/magnetometer/af8133j.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 88f98dc440275..60909af2d4a53 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -4482,7 +4482,7 @@ static int ext4_alloc_file_blocks(struct file *file, ext4_lblk_t offset,
- 	int depth = 0;
- 	struct ext4_map_blocks map;
- 	unsigned int credits;
--	loff_t epos;
-+	loff_t epos, old_size = i_size_read(inode);
- 
- 	BUG_ON(!ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS));
- 	map.m_lblk = offset;
-@@ -4541,6 +4541,11 @@ static int ext4_alloc_file_blocks(struct file *file, ext4_lblk_t offset,
- 			if (ext4_update_inode_size(inode, epos) & 0x1)
- 				inode_set_mtime_to_ts(inode,
- 						      inode_get_ctime(inode));
-+			if (epos > old_size) {
-+				pagecache_isize_extended(inode, old_size, epos);
-+				ext4_zero_partial_blocks(handle, inode,
-+						     old_size, epos - old_size);
-+			}
- 		}
- 		ret2 = ext4_mark_inode_dirty(handle, inode);
- 		ext4_update_inode_fsync_trans(handle, inode, 1);
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 99d09cd9c6a37..67a5b937f5a92 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1307,8 +1307,10 @@ static int ext4_write_end(struct file *file,
- 	folio_unlock(folio);
- 	folio_put(folio);
- 
--	if (old_size < pos && !verity)
-+	if (old_size < pos && !verity) {
- 		pagecache_isize_extended(inode, old_size, pos);
-+		ext4_zero_partial_blocks(handle, inode, old_size, pos - old_size);
-+	}
- 	/*
- 	 * Don't mark the inode dirty under folio lock. First, it unnecessarily
- 	 * makes the holding time of folio lock longer. Second, it forces lock
-@@ -1423,8 +1425,10 @@ static int ext4_journalled_write_end(struct file *file,
- 	folio_unlock(folio);
- 	folio_put(folio);
- 
--	if (old_size < pos && !verity)
-+	if (old_size < pos && !verity) {
- 		pagecache_isize_extended(inode, old_size, pos);
-+		ext4_zero_partial_blocks(handle, inode, old_size, pos - old_size);
+--- a/drivers/iio/magnetometer/af8133j.c
++++ b/drivers/iio/magnetometer/af8133j.c
+@@ -312,10 +312,11 @@ static int af8133j_set_scale(struct af81
+ 	 * When suspended, just store the new range to data->range to be
+ 	 * applied later during power up.
+ 	 */
+-	if (!pm_runtime_status_suspended(dev))
++	if (!pm_runtime_status_suspended(dev)) {
+ 		scoped_guard(mutex, &data->mutex)
+ 			ret = regmap_write(data->regmap,
+ 					   AF8133J_REG_RANGE, range);
 +	}
  
- 	if (size_changed) {
- 		ret2 = ext4_mark_inode_dirty(handle, inode);
-@@ -2985,7 +2989,8 @@ static int ext4_da_do_write_end(struct address_space *mapping,
- 	struct inode *inode = mapping->host;
- 	loff_t old_size = inode->i_size;
- 	bool disksize_changed = false;
--	loff_t new_i_size;
-+	loff_t new_i_size, zero_len = 0;
-+	handle_t *handle;
+ 	pm_runtime_enable(dev);
  
- 	if (unlikely(!folio_buffers(folio))) {
- 		folio_unlock(folio);
-@@ -3029,18 +3034,21 @@ static int ext4_da_do_write_end(struct address_space *mapping,
- 	folio_unlock(folio);
- 	folio_put(folio);
- 
--	if (old_size < pos)
-+	if (pos > old_size) {
- 		pagecache_isize_extended(inode, old_size, pos);
-+		zero_len = pos - old_size;
-+	}
- 
--	if (disksize_changed) {
--		handle_t *handle;
-+	if (!disksize_changed && !zero_len)
-+		return copied;
- 
--		handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
--		if (IS_ERR(handle))
--			return PTR_ERR(handle);
--		ext4_mark_inode_dirty(handle, inode);
--		ext4_journal_stop(handle);
--	}
-+	handle = ext4_journal_start(inode, EXT4_HT_INODE, 2);
-+	if (IS_ERR(handle))
-+		return PTR_ERR(handle);
-+	if (zero_len)
-+		ext4_zero_partial_blocks(handle, inode, old_size, zero_len);
-+	ext4_mark_inode_dirty(handle, inode);
-+	ext4_journal_stop(handle);
- 
- 	return copied;
- }
-@@ -5426,6 +5434,14 @@ int ext4_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 		}
- 
- 		if (attr->ia_size != inode->i_size) {
-+			/* attach jbd2 jinode for EOF folio tail zeroing */
-+			if (attr->ia_size & (inode->i_sb->s_blocksize - 1) ||
-+			    oldsize & (inode->i_sb->s_blocksize - 1)) {
-+				error = ext4_inode_attach_jinode(inode);
-+				if (error)
-+					goto err_out;
-+			}
-+
- 			handle = ext4_journal_start(inode, EXT4_HT_INODE, 3);
- 			if (IS_ERR(handle)) {
- 				error = PTR_ERR(handle);
-@@ -5436,12 +5452,17 @@ int ext4_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 				orphan = 1;
- 			}
- 			/*
--			 * Update c/mtime on truncate up, ext4_truncate() will
--			 * update c/mtime in shrink case below
-+			 * Update c/mtime and tail zero the EOF folio on
-+			 * truncate up. ext4_truncate() handles the shrink case
-+			 * below.
- 			 */
--			if (!shrink)
-+			if (!shrink) {
- 				inode_set_mtime_to_ts(inode,
- 						      inode_set_ctime_current(inode));
-+				if (oldsize & (inode->i_sb->s_blocksize - 1))
-+					ext4_block_truncate_page(handle,
-+							inode->i_mapping, oldsize);
-+			}
- 
- 			if (shrink)
- 				ext4_fc_track_range(handle, inode,
--- 
-2.43.0
-
 
 
