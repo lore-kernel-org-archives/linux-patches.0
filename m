@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2B32139C9;
-	Thu, 12 Dec 2024 16:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2AB22145E;
+	Thu, 12 Dec 2024 16:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734020683; cv=none; b=eeb9z6ovLwpCdBrUV1yFvzsnvRNwL9FwuuO0K7j6sxhdKC8DaZ8fVrgsIFZaVoT6aeYORDQnh7F++zBMqJINRhUFESGYrH/DgwwRhCjyAUv6632OeOTEOsgtS2HUzASDaUoBlYP8B+uU518mG4nWWLp1XDFujkk0Dbp8QrsLqEs=
+	t=1734020687; cv=none; b=DQB+kuuzJrXrpvecni9eU9XrhE3CQpY4HdmPxHl9Tb8nsimr97RkjUXh1V+9A+T9R7HNBum6BhSx5EH7lPqLXeRLdNYj1Qt5zMIL0Ll4cz6oq6GQdnTKFMdhi5TV2yuOLBJ+qnhwTAqP8ar5l3ohpO1jHpINiED+wdS/8lkiWO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734020683; c=relaxed/simple;
-	bh=Moxy6q0N61h9SD7ugkjXJcy7vBOkWWfP3yMm3kpaAjE=;
+	s=arc-20240116; t=1734020687; c=relaxed/simple;
+	bh=aOWSuVQx4J00Qo/6MH+DMwKgYibfnBh1/63PXc3EeD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q13X7yciMoSO+qRJaTiB0VNfOwakmJE1nkKAyso4AIFagw9w54U5ThGBc/Yi16pLP//MWmNTDB+bbaY0DG1Uqt7TXcySKXYlfOIFMbOoDi5mV6EhK4dA8jTwwrnfHcc/mozPjufUDI133gyARuxqUHyMlgxE4mf17bYZmeJQPtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4uH5q7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6jFlL1bQ1wVIfb7UzSjfx757pquqpraNQ4rnNCKGGTx7IAiBIercet+h6iQ5VvlycIWuJruOqer301YKhYVsuQTmFEs3sIoayClO2TaUAPgkvC9S9K2lCuVnznzIbRrpZ0yfxwdQQ3bGZzjoeMVnweJwXuo2bisb+a0TjQ1BV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEe1thTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4uH5q7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19A6C4CECE;
-	Thu, 12 Dec 2024 16:24:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEe1thTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC48C4CECE;
+	Thu, 12 Dec 2024 16:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734020683;
-	bh=Moxy6q0N61h9SD7ugkjXJcy7vBOkWWfP3yMm3kpaAjE=;
+	s=korg; t=1734020687;
+	bh=aOWSuVQx4J00Qo/6MH+DMwKgYibfnBh1/63PXc3EeD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4uH5q7X61uvdcmlexI0fN16e/KY0Ihm+p9HGI2K8gX0/qZzxuiAVTql3Ge5iDsIB
-	 cJM8DIWNUpQQ+w1Bx7KYqIIL0mWrj8TDoPNSacM+/GiNC55DwY8GDJ1GYWsI75MWQr
-	 CXvtjKFRlmHGlg//CZcaMkWq/55bdHZLApQS0hAE=
+	b=zEe1thTdTzwjOfc+Wmd5S1icSia618W26mE9y1P/jzPXL0Hm3wil91iuxlj0m2XuY
+	 hbhlR15bGfQNlgZJn9Ew32n4bKVi/+ML/02U/x1PDNmDjIhkuQH/a4SDTEnzQJmFYN
+	 5eFklUvmzI0AvN0KuaEAC4A5Q/Z6sUJhP7GZHz6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Wiesner <jwiesner@suse.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ivan Solodovnikov <solodovnikov.ia@phystech.edu>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 533/772] net/ipv6: release expired exception dst cached in socket
-Date: Thu, 12 Dec 2024 15:57:58 +0100
-Message-ID: <20241212144411.995458821@linuxfoundation.org>
+Subject: [PATCH 6.1 534/772] dccp: Fix memory leak in dccp_feat_change_recv
+Date: Thu, 12 Dec 2024 15:57:59 +0100
+Message-ID: <20241212144412.039073624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -52,83 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Wiesner <jwiesner@suse.de>
+From: Ivan Solodovnikov <solodovnikov.ia@phystech.edu>
 
-[ Upstream commit 3301ab7d5aeb0fe270f73a3d4810c9d1b6a9f045 ]
+[ Upstream commit 22be4727a8f898442066bcac34f8a1ad0bc72e14 ]
 
-Dst objects get leaked in ip6_negative_advice() when this function is
-executed for an expired IPv6 route located in the exception table. There
-are several conditions that must be fulfilled for the leak to occur:
-* an ICMPv6 packet indicating a change of the MTU for the path is received,
-  resulting in an exception dst being created
-* a TCP connection that uses the exception dst for routing packets must
-  start timing out so that TCP begins retransmissions
-* after the exception dst expires, the FIB6 garbage collector must not run
-  before TCP executes ip6_negative_advice() for the expired exception dst
+If dccp_feat_push_confirm() fails after new value for SP feature was accepted
+without reconciliation ('entry == NULL' branch), memory allocated for that value
+with dccp_feat_clone_sp_val() is never freed.
 
-When TCP executes ip6_negative_advice() for an exception dst that has
-expired and if no other socket holds a reference to the exception dst, the
-refcount of the exception dst is 2, which corresponds to the increment
-made by dst_init() and the increment made by the TCP socket for which the
-connection is timing out. The refcount made by the socket is never
-released. The refcount of the dst is decremented in sk_dst_reset() but
-that decrement is counteracted by a dst_hold() intentionally placed just
-before the sk_dst_reset() in ip6_negative_advice(). After
-ip6_negative_advice() has finished, there is no other object tied to the
-dst. The socket lost its reference stored in sk_dst_cache and the dst is
-no longer in the exception table. The exception dst becomes a leaked
-object.
+Here is the kmemleak stack for this:
 
-As a result of this dst leak, an unbalanced refcount is reported for the
-loopback device of a net namespace being destroyed under kernels that do
-not contain e5f80fcf869a ("ipv6: give an IPv6 dev to blackhole_netdev"):
-unregister_netdevice: waiting for lo to become free. Usage count = 2
+unreferenced object 0xffff88801d4ab488 (size 8):
+  comm "syz-executor310", pid 1127, jiffies 4295085598 (age 41.666s)
+  hex dump (first 8 bytes):
+    01 b4 4a 1d 80 88 ff ff                          ..J.....
+  backtrace:
+    [<00000000db7cabfe>] kmemdup+0x23/0x50 mm/util.c:128
+    [<0000000019b38405>] kmemdup include/linux/string.h:465 [inline]
+    [<0000000019b38405>] dccp_feat_clone_sp_val net/dccp/feat.c:371 [inline]
+    [<0000000019b38405>] dccp_feat_clone_sp_val net/dccp/feat.c:367 [inline]
+    [<0000000019b38405>] dccp_feat_change_recv net/dccp/feat.c:1145 [inline]
+    [<0000000019b38405>] dccp_feat_parse_options+0x1196/0x2180 net/dccp/feat.c:1416
+    [<00000000b1f6d94a>] dccp_parse_options+0xa2a/0x1260 net/dccp/options.c:125
+    [<0000000030d7b621>] dccp_rcv_state_process+0x197/0x13d0 net/dccp/input.c:650
+    [<000000001f74c72e>] dccp_v4_do_rcv+0xf9/0x1a0 net/dccp/ipv4.c:688
+    [<00000000a6c24128>] sk_backlog_rcv include/net/sock.h:1041 [inline]
+    [<00000000a6c24128>] __release_sock+0x139/0x3b0 net/core/sock.c:2570
+    [<00000000cf1f3a53>] release_sock+0x54/0x1b0 net/core/sock.c:3111
+    [<000000008422fa23>] inet_wait_for_connect net/ipv4/af_inet.c:603 [inline]
+    [<000000008422fa23>] __inet_stream_connect+0x5d0/0xf70 net/ipv4/af_inet.c:696
+    [<0000000015b6f64d>] inet_stream_connect+0x53/0xa0 net/ipv4/af_inet.c:735
+    [<0000000010122488>] __sys_connect_file+0x15c/0x1a0 net/socket.c:1865
+    [<00000000b4b70023>] __sys_connect+0x165/0x1a0 net/socket.c:1882
+    [<00000000f4cb3815>] __do_sys_connect net/socket.c:1892 [inline]
+    [<00000000f4cb3815>] __se_sys_connect net/socket.c:1889 [inline]
+    [<00000000f4cb3815>] __x64_sys_connect+0x6e/0xb0 net/socket.c:1889
+    [<00000000e7b1e839>] do_syscall_64+0x33/0x40 arch/x86/entry/common.c:46
+    [<0000000055e91434>] entry_SYSCALL_64_after_hwframe+0x67/0xd1
 
-Fix the dst leak by removing the dst_hold() in ip6_negative_advice(). The
-patch that introduced the dst_hold() in ip6_negative_advice() was
-92f1655aa2b22 ("net: fix __dst_negative_advice() race"). But 92f1655aa2b22
-merely refactored the code with regards to the dst refcount so the issue
-was present even before 92f1655aa2b22. The bug was introduced in
-54c1a859efd9f ("ipv6: Don't drop cache route entry unless timer actually
-expired.") where the expired cached route is deleted and the sk_dst_cache
-member of the socket is set to NULL by calling dst_negative_advice() but
-the refcount belonging to the socket is left unbalanced.
+Clean up the allocated memory in case of dccp_feat_push_confirm() failure
+and bail out with an error reset code.
 
-The IPv4 version - ipv4_negative_advice() - is not affected by this bug.
-When the TCP connection times out ipv4_negative_advice() merely resets the
-sk_dst_cache of the socket while decrementing the refcount of the
-exception dst.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Fixes: 92f1655aa2b22 ("net: fix __dst_negative_advice() race")
-Fixes: 54c1a859efd9f ("ipv6: Don't drop cache route entry unless timer actually expired.")
-Link: https://lore.kernel.org/netdev/20241113105611.GA6723@incl/T/#u
-Signed-off-by: Jiri Wiesner <jwiesner@suse.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241128085950.GA4505@incl
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e77b8363b2ea ("dccp: Process incoming Change feature-negotiation options")
+Signed-off-by: Ivan Solodovnikov <solodovnikov.ia@phystech.edu>
+Link: https://patch.msgid.link/20241126143902.190853-1-solodovnikov.ia@phystech.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/dccp/feat.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 5da0c83a3ee8f..5ae3ff6ffb7e9 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -2774,10 +2774,10 @@ static void ip6_negative_advice(struct sock *sk,
- 	if (rt->rt6i_flags & RTF_CACHE) {
- 		rcu_read_lock();
- 		if (rt6_check_expired(rt)) {
--			/* counteract the dst_release() in sk_dst_reset() */
--			dst_hold(dst);
-+			/* rt/dst can not be destroyed yet,
-+			 * because of rcu_read_lock()
-+			 */
- 			sk_dst_reset(sk);
--
- 			rt6_remove_exception_rt(rt);
+diff --git a/net/dccp/feat.c b/net/dccp/feat.c
+index 54086bb05c42c..f7554dcdaaba9 100644
+--- a/net/dccp/feat.c
++++ b/net/dccp/feat.c
+@@ -1166,8 +1166,12 @@ static u8 dccp_feat_change_recv(struct list_head *fn, u8 is_mandatory, u8 opt,
+ 			goto not_valid_or_not_known;
  		}
- 		rcu_read_unlock();
+ 
+-		return dccp_feat_push_confirm(fn, feat, local, &fval);
++		if (dccp_feat_push_confirm(fn, feat, local, &fval)) {
++			kfree(fval.sp.vec);
++			return DCCP_RESET_CODE_TOO_BUSY;
++		}
+ 
++		return 0;
+ 	} else if (entry->state == FEAT_UNSTABLE) {	/* 6.6.2 */
+ 		return 0;
+ 	}
 -- 
 2.43.0
 
