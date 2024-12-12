@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A788720A5EE;
-	Thu, 12 Dec 2024 17:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D55C20A5EE;
+	Thu, 12 Dec 2024 17:37:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734025074; cv=none; b=DWEnECLwQ1Iec+E554QeN4cxzy4zMAQSf3F7cN/Za5OhknJ6F9XCH31JYI5ukxnn1fqiNkt0QLylS59wO1EQ1m+08XrdK9fVYYoiKmHVUp6QNzdjuQFwZwHB3FsOzVgdY61QhSiJbprSpPd0ZuXXJKeen//1yz7KP7LraVVqUyo=
+	t=1734025078; cv=none; b=Kw8aXheLGHXUYH3Cw7ww+iCHpTRba5uug+ZnygVE8y+xigylQ+EtWoQzhF3FQZkt+WgLgXbwRACEFRHqkc2WEhhDguflKrE11Khsyh+54mwowVMlQrNCsjMD04q79MKUL7sD7WxKQ/QdCCeKr1VQbd2oyHngHS053VMXJ6PtIsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734025074; c=relaxed/simple;
-	bh=0a+V0C7iELhgVCoNVvnG+mYWTDhd6PWKX0q1C9P3sfI=;
+	s=arc-20240116; t=1734025078; c=relaxed/simple;
+	bh=x0X75XX+wit+juJuBd+9jf/yQRYKGbuGLL/2gDOWEgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pKABZ36uMJ5hRrZXqzl5z6wJpmQKjZpfEBPcXB1+LRsFsao8zGagCZ/S5t05BEx3Y0VV044F22yZ8AxtcXDyoM7WJFs3i4ptP1nz+206VwtDOF4AXUG78Qlo5qoDkaW3epfA+CS2UR4vX70DvhejEnQM02Zflh57ycDXLZc2hLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyB9bscE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=scHskGdX2r7jBwmk9Sw9rKHqIbMtUH03rpxW/IoX3uppcbeoSc4vYQ35jWduZ3GEMmYWyw3Cxvbhg/17A6mPh3pumdhvt2S0dbxLfNS5q7qUek8zN8RiFahl63EJ0N/ZwwDUzx/yLNaDEt575sG2q+dYj0mfdDjMuZt5YOx57Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MtEV88f+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyB9bscE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307FDC4CECE;
-	Thu, 12 Dec 2024 17:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MtEV88f+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFE3C4CEDD;
+	Thu, 12 Dec 2024 17:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734025074;
-	bh=0a+V0C7iELhgVCoNVvnG+mYWTDhd6PWKX0q1C9P3sfI=;
+	s=korg; t=1734025077;
+	bh=x0X75XX+wit+juJuBd+9jf/yQRYKGbuGLL/2gDOWEgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KyB9bscEvf/MTE6CpNEYtYYC9GQ+CK3IoyOKO87itoRSnNfmoWj7XBsIhUoAVXNQ1
-	 VZ8/XcRQ5UopZUGKx1xQRMWC2LtZqAG+CkoUJJHZq0yYTaRB7sVAXKTFayhNnCV4KQ
-	 r21MayuQWsIGV/OgDaUZD59EaVOmjeZnE0JXnB3Q=
+	b=MtEV88f+2uQL/9FzxYvJnKWTEJ1mavdscR3qv2hKV6k++eeK0G3YubNoEEklYRsJc
+	 6oqDKkz1+QzpNxQwZoje+IiKrG+2R+SVimRvWkGEAdisgIh0GqW0C1256LZjEo5lwv
+	 0shA/C/BOSGcIBdOvJWC31C+eEskuYF6AvKDvxxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+56f7cd1abe4b8e475180@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 007/321] ocfs2: fix UBSAN warning in ocfs2_verify_volume()
-Date: Thu, 12 Dec 2024 15:58:45 +0100
-Message-ID: <20241212144229.937317921@linuxfoundation.org>
+	Priyanka Singh <priyanka.singh@nxp.com>,
+	Li Yang <leoyang.li@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 041/321] EDAC/fsl_ddr: Fix bad bit shift operations
+Date: Thu, 12 Dec 2024 15:59:19 +0100
+Message-ID: <20241212144231.618601356@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144229.291682835@linuxfoundation.org>
 References: <20241212144229.291682835@linuxfoundation.org>
@@ -57,125 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Priyanka Singh <priyanka.singh@nxp.com>
 
-commit 23aab037106d46e6168ce1214a958ce9bf317f2e upstream.
+[ Upstream commit 9ec22ac4fe766c6abba845290d5139a3fbe0153b ]
 
-Syzbot has reported the following splat triggered by UBSAN:
+Fix undefined behavior caused by left-shifting a negative value in the
+expression:
 
-UBSAN: shift-out-of-bounds in fs/ocfs2/super.c:2336:10
-shift exponent 32768 is too large for 32-bit type 'int'
-CPU: 2 UID: 0 PID: 5255 Comm: repro Not tainted 6.12.0-rc4-syzkaller-00047-gc2ee9f594da8 #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-3.fc41 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x241/0x360
- ? __pfx_dump_stack_lvl+0x10/0x10
- ? __pfx__printk+0x10/0x10
- ? __asan_memset+0x23/0x50
- ? lockdep_init_map_type+0xa1/0x910
- __ubsan_handle_shift_out_of_bounds+0x3c8/0x420
- ocfs2_fill_super+0xf9c/0x5750
- ? __pfx_ocfs2_fill_super+0x10/0x10
- ? __pfx_validate_chain+0x10/0x10
- ? __pfx_validate_chain+0x10/0x10
- ? validate_chain+0x11e/0x5920
- ? __lock_acquire+0x1384/0x2050
- ? __pfx_validate_chain+0x10/0x10
- ? string+0x26a/0x2b0
- ? widen_string+0x3a/0x310
- ? string+0x26a/0x2b0
- ? bdev_name+0x2b1/0x3c0
- ? pointer+0x703/0x1210
- ? __pfx_pointer+0x10/0x10
- ? __pfx_format_decode+0x10/0x10
- ? __lock_acquire+0x1384/0x2050
- ? vsnprintf+0x1ccd/0x1da0
- ? snprintf+0xda/0x120
- ? __pfx_lock_release+0x10/0x10
- ? do_raw_spin_lock+0x14f/0x370
- ? __pfx_snprintf+0x10/0x10
- ? set_blocksize+0x1f9/0x360
- ? sb_set_blocksize+0x98/0xf0
- ? setup_bdev_super+0x4e6/0x5d0
- mount_bdev+0x20c/0x2d0
- ? __pfx_ocfs2_fill_super+0x10/0x10
- ? __pfx_mount_bdev+0x10/0x10
- ? vfs_parse_fs_string+0x190/0x230
- ? __pfx_vfs_parse_fs_string+0x10/0x10
- legacy_get_tree+0xf0/0x190
- ? __pfx_ocfs2_mount+0x10/0x10
- vfs_get_tree+0x92/0x2b0
- do_new_mount+0x2be/0xb40
- ? __pfx_do_new_mount+0x10/0x10
- __se_sys_mount+0x2d6/0x3c0
- ? __pfx___se_sys_mount+0x10/0x10
- ? do_syscall_64+0x100/0x230
- ? __x64_sys_mount+0x20/0xc0
- do_syscall_64+0xf3/0x230
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f37cae96fda
-Code: 48 8b 0d 51 ce 0c 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 1e ce 0c 00 f7 d8 64 89 01 48
-RSP: 002b:00007fff6c1aa228 EFLAGS: 00000206 ORIG_RAX: 00000000000000a5
-RAX: ffffffffffffffda RBX: 00007fff6c1aa240 RCX: 00007f37cae96fda
-RDX: 00000000200002c0 RSI: 0000000020000040 RDI: 00007fff6c1aa240
-RBP: 0000000000000004 R08: 00007fff6c1aa280 R09: 0000000000000000
-R10: 00000000000008c0 R11: 0000000000000206 R12: 00000000000008c0
-R13: 00007fff6c1aa280 R14: 0000000000000003 R15: 0000000001000000
- </TASK>
+    cap_high ^ (1 << (bad_data_bit - 32))
 
-For a really damaged superblock, the value of 'i_super.s_blocksize_bits'
-may exceed the maximum possible shift for an underlying 'int'.  So add an
-extra check whether the aforementioned field represents the valid block
-size, which is 512 bytes, 1K, 2K, or 4K.
+The variable bad_data_bit ranges from 0 to 63. When it is less than 32,
+bad_data_bit - 32 becomes negative, and left-shifting by a negative
+value in C is undefined behavior.
 
-Link: https://lkml.kernel.org/r/20241106092100.2661330-1-dmantipov@yandex.ru
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+56f7cd1abe4b8e475180@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=56f7cd1abe4b8e475180
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by combining cap_high and cap_low into a 64-bit variable.
+
+  [ bp: Massage commit message, simplify error bits handling. ]
+
+Fixes: ea2eb9a8b620 ("EDAC, fsl-ddr: Separate FSL DDR driver from MPC85xx")
+Signed-off-by: Priyanka Singh <priyanka.singh@nxp.com>
+Signed-off-by: Li Yang <leoyang.li@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20241016-imx95_edac-v3-3-86ae6fc2756a@nxp.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/super.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/edac/fsl_ddr_edac.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -2329,6 +2329,7 @@ static int ocfs2_verify_volume(struct oc
- 			       struct ocfs2_blockcheck_stats *stats)
- {
- 	int status = -EAGAIN;
-+	u32 blksz_bits;
+diff --git a/drivers/edac/fsl_ddr_edac.c b/drivers/edac/fsl_ddr_edac.c
+index 6d8ea226010d2..61e59341a41f9 100644
+--- a/drivers/edac/fsl_ddr_edac.c
++++ b/drivers/edac/fsl_ddr_edac.c
+@@ -331,21 +331,25 @@ static void fsl_mc_check(struct mem_ctl_info *mci)
+ 	 * TODO: Add support for 32-bit wide buses
+ 	 */
+ 	if ((err_detect & DDR_EDE_SBE) && (bus_width == 64)) {
++		u64 cap = (u64)cap_high << 32 | cap_low;
++		u32 s = syndrome;
++
+ 		sbe_ecc_decode(cap_high, cap_low, syndrome,
+ 				&bad_data_bit, &bad_ecc_bit);
  
- 	if (memcmp(di->i_signature, OCFS2_SUPER_BLOCK_SIGNATURE,
- 		   strlen(OCFS2_SUPER_BLOCK_SIGNATURE)) == 0) {
-@@ -2343,11 +2344,15 @@ static int ocfs2_verify_volume(struct oc
- 				goto out;
- 		}
- 		status = -EINVAL;
--		if ((1 << le32_to_cpu(di->id2.i_super.s_blocksize_bits)) != blksz) {
-+		/* Acceptable block sizes are 512 bytes, 1K, 2K and 4K. */
-+		blksz_bits = le32_to_cpu(di->id2.i_super.s_blocksize_bits);
-+		if (blksz_bits < 9 || blksz_bits > 12) {
- 			mlog(ML_ERROR, "found superblock with incorrect block "
--			     "size: found %u, should be %u\n",
--			     1 << le32_to_cpu(di->id2.i_super.s_blocksize_bits),
--			       blksz);
-+			     "size bits: found %u, should be 9, 10, 11, or 12\n",
-+			     blksz_bits);
-+		} else if ((1 << le32_to_cpu(blksz_bits)) != blksz) {
-+			mlog(ML_ERROR, "found superblock with incorrect block "
-+			     "size: found %u, should be %u\n", 1 << blksz_bits, blksz);
- 		} else if (le16_to_cpu(di->id2.i_super.s_major_rev_level) !=
- 			   OCFS2_MAJOR_REV_LEVEL ||
- 			   le16_to_cpu(di->id2.i_super.s_minor_rev_level) !=
+-		if (bad_data_bit != -1)
+-			fsl_mc_printk(mci, KERN_ERR,
+-				"Faulty Data bit: %d\n", bad_data_bit);
+-		if (bad_ecc_bit != -1)
+-			fsl_mc_printk(mci, KERN_ERR,
+-				"Faulty ECC bit: %d\n", bad_ecc_bit);
++		if (bad_data_bit >= 0) {
++			fsl_mc_printk(mci, KERN_ERR, "Faulty Data bit: %d\n", bad_data_bit);
++			cap ^= 1ULL << bad_data_bit;
++		}
++
++		if (bad_ecc_bit >= 0) {
++			fsl_mc_printk(mci, KERN_ERR, "Faulty ECC bit: %d\n", bad_ecc_bit);
++			s ^= 1 << bad_ecc_bit;
++		}
+ 
+ 		fsl_mc_printk(mci, KERN_ERR,
+ 			"Expected Data / ECC:\t%#8.8x_%08x / %#2.2x\n",
+-			cap_high ^ (1 << (bad_data_bit - 32)),
+-			cap_low ^ (1 << bad_data_bit),
+-			syndrome ^ (1 << bad_ecc_bit));
++			upper_32_bits(cap), lower_32_bits(cap), s);
+ 	}
+ 
+ 	fsl_mc_printk(mci, KERN_ERR,
+-- 
+2.43.0
+
 
 
