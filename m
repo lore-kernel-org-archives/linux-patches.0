@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB03B2336A9;
-	Thu, 12 Dec 2024 16:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5001C223E71;
+	Thu, 12 Dec 2024 16:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734019613; cv=none; b=Iv93NJWr5DS7NkRGsbP8tB52cgcIB1MPi7CGBAyFShSXMUo9Z4ING3Z+CAfY3+/P3HoM8hTtwV/Uz7NZLu3haZ/DDyGHCkJ7ZI8ZebdEFHpzc4NzuTZm1YBQUvxeuM2nDIn9ygwldJJN5zNsIMobawKzDk0PBLZFeGdPyDAtOng=
+	t=1734019617; cv=none; b=Tpj8XgOa8VEKYWMn4VqL0LHbouqYXFDit3NsmWdr2r1XafIH9R88Azdd5lv2M9wd4SUXUhjNuq4xY3EBq1xZsI82NNDnUYdLC/kbjnZOuh8uaLMgwi08zprQhiqroGAOR4R5r/fasIztybQcWwmjMjrc/GeqYjUxx8rLwpDsD80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734019613; c=relaxed/simple;
-	bh=cj22shcpSXWeFyEeYrMQXf7ikurx9PbJtk1IlpoINVo=;
+	s=arc-20240116; t=1734019617; c=relaxed/simple;
+	bh=GcCtPwwXBR3u4f6/yVCLzQPXwa/nVtHGY5NP9DmH9fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o87/AlgEPqzypgBL2u6BvfybY3xsPqJyRZBBTx9q22CIYAWhO6L7Jkcwxk2RsuV29nygv5y3uGcJmfIIXZQbLzNf83gSXF/ERz/40T/lSLpLDJ01daHax83AZrIZhkjG/Rh9NzsbZJ2RdMPS4sbbhRq8jq4p4bzzjS2o76hWNlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1HoGKAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QhIXqrxPc5X/ZYglyGh3scfVGLQroBklJFl48UBcAAP3x6/wKxKi1SHBumiuu/MdBK0VUZZ5xhH9LkvOVOcbW55eO/S8YPH+ghQlVr02Y+SKLERPuNYkABmprdz4O0yJxwUUCkbhwQjCkUNYBS7wRhIov9VjPOTOr+T152J7Ank=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhuzBH2y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1HoGKAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AAEC4CECE;
-	Thu, 12 Dec 2024 16:06:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhuzBH2y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7200C4CECE;
+	Thu, 12 Dec 2024 16:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734019613;
-	bh=cj22shcpSXWeFyEeYrMQXf7ikurx9PbJtk1IlpoINVo=;
+	s=korg; t=1734019617;
+	bh=GcCtPwwXBR3u4f6/yVCLzQPXwa/nVtHGY5NP9DmH9fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1HoGKAF5Qe8K/W65orln0bpjYV0VL1clJ3M9Rg881d61LiB7M4Vk+53yWGP06VLr
-	 HYsFo0PEoRpnLYYBcNGphBc6czyFJSYmqQqhnXF7IQdo+AOMGUwn1nq7LfoSd4CV/W
-	 pNetzNk+wNtPyvHZGXefwp7OGIxfvHvRJx7+AKKw=
+	b=LhuzBH2yUIx9/pp2GHCP6uEyennEbwG2epqMUtGjEq276GNyw4UwZquIdBIqKXq3d
+	 rKN4ovj6otU/0jbqWZUNYYeatrUPVbaLTuZhfo33d9xRU5xKKrfHn0hK0CnoOGFwHX
+	 wDcA7cn1WF5i/MnzDbllJgmsvShik/US/mG7/p8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 252/772] powerpc/kexec: Fix return of uninitialized variable
-Date: Thu, 12 Dec 2024 15:53:17 +0100
-Message-ID: <20241212144400.334198889@linuxfoundation.org>
+Subject: [PATCH 6.1 226/772] RDMA/hns: Remove unnecessary QP type checks
+Date: Thu, 12 Dec 2024 15:52:51 +0100
+Message-ID: <20241212144359.245058715@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -51,47 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 83b5a407fbb73e6965adfb4bd0a803724bf87f96 ]
+[ Upstream commit b9989ab3f61ec459cbaf0a492fea3168bbfa4c7a ]
 
-of_property_read_u64() can fail and leave the variable uninitialized,
-which will then be used. Return error if reading the property failed.
+It is not necessary to check the type of the queue on IO path because
+unsupported QP type cannot be created.
 
-Fixes: 2e6bd221d96f ("powerpc/kexec_file: Enable early kernel OPAL calls")
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://patch.msgid.link/20240930075628.125138-1-zhangzekun11@huawei.com
+Link: https://lore.kernel.org/r/20230523121641.3132102-2-huangjunxian6@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 323275ac2ff1 ("RDMA/hns: Fix cpu stuck caused by printings during reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/file_load_64.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 24 +++-------------------
+ 1 file changed, 3 insertions(+), 21 deletions(-)
 
-diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index 180c1dfe4aa77..04d100ca18b86 100644
---- a/arch/powerpc/kexec/file_load_64.c
-+++ b/arch/powerpc/kexec/file_load_64.c
-@@ -911,13 +911,18 @@ int setup_purgatory_ppc64(struct kimage *image, const void *slave_code,
- 	if (dn) {
- 		u64 val;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 8b371d6ecbac9..b190e0cd86b45 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -373,17 +373,10 @@ static int check_send_valid(struct hns_roce_dev *hr_dev,
+ 			    struct hns_roce_qp *hr_qp)
+ {
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+-	struct ib_qp *ibqp = &hr_qp->ibqp;
  
--		of_property_read_u64(dn, "opal-base-address", &val);
-+		ret = of_property_read_u64(dn, "opal-base-address", &val);
-+		if (ret)
-+			goto out;
-+
- 		ret = kexec_purgatory_get_set_symbol(image, "opal_base", &val,
- 						     sizeof(val), false);
- 		if (ret)
- 			goto out;
+-	if (unlikely(ibqp->qp_type != IB_QPT_RC &&
+-		     ibqp->qp_type != IB_QPT_GSI &&
+-		     ibqp->qp_type != IB_QPT_UD)) {
+-		ibdev_err(ibdev, "not supported QP(0x%x)type!\n",
+-			  ibqp->qp_type);
+-		return -EOPNOTSUPP;
+-	} else if (unlikely(hr_qp->state == IB_QPS_RESET ||
+-		   hr_qp->state == IB_QPS_INIT ||
+-		   hr_qp->state == IB_QPS_RTR)) {
++	if (unlikely(hr_qp->state == IB_QPS_RESET ||
++		     hr_qp->state == IB_QPS_INIT ||
++		     hr_qp->state == IB_QPS_RTR)) {
+ 		ibdev_err(ibdev, "failed to post WQE, QP state %u!\n",
+ 			  hr_qp->state);
+ 		return -EINVAL;
+@@ -777,17 +770,6 @@ static int hns_roce_v2_post_send(struct ib_qp *ibqp,
+ static int check_recv_valid(struct hns_roce_dev *hr_dev,
+ 			    struct hns_roce_qp *hr_qp)
+ {
+-	struct ib_device *ibdev = &hr_dev->ib_dev;
+-	struct ib_qp *ibqp = &hr_qp->ibqp;
+-
+-	if (unlikely(ibqp->qp_type != IB_QPT_RC &&
+-		     ibqp->qp_type != IB_QPT_GSI &&
+-		     ibqp->qp_type != IB_QPT_UD)) {
+-		ibdev_err(ibdev, "unsupported qp type, qp_type = %d.\n",
+-			  ibqp->qp_type);
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	if (unlikely(hr_dev->state >= HNS_ROCE_DEVICE_STATE_RST_DOWN))
+ 		return -EIO;
  
--		of_property_read_u64(dn, "opal-entry-address", &val);
-+		ret = of_property_read_u64(dn, "opal-entry-address", &val);
-+		if (ret)
-+			goto out;
- 		ret = kexec_purgatory_get_set_symbol(image, "opal_entry", &val,
- 						     sizeof(val), false);
- 	}
 -- 
 2.43.0
 
