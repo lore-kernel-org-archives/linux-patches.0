@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811C521764F;
-	Thu, 12 Dec 2024 15:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DDB216E29;
+	Thu, 12 Dec 2024 15:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734015807; cv=none; b=NaB9qY0HxA83BiC53Hi/qzBnVi66DZ41D+UUTfsFNTvYxbIrUgmou3aaWpnAEyYs1F0J8mLDxomZ8TroNEVp+j0vT7FS/Tg9ppiJJ7MkyTojEylJBEAgk0NlTuU9JLx4liW2MsSYn+68hBgeP6u9VPE45FEdkDBVz7ZgIJH2b4c=
+	t=1734015811; cv=none; b=Qio7WI/ECXYnjwntxAELbDuqAADVLb1ShpryASpIwmj6g3IZwOMUp/jLSE5wuSzVLqvSxhFqLr5V0ukCbnP1aR2cEtlwsC3TXfw7nHgVUsaQX4/Wa7IR28SOCAgZuoq4eZFedtSkM0x7yvgJp0sPlIQPKuTh3Oo4jM4+dbBBEp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734015807; c=relaxed/simple;
-	bh=3vBoylLPxaBJf/JF071Dmy8IAQ11S5M9nvokiJ45vvc=;
+	s=arc-20240116; t=1734015811; c=relaxed/simple;
+	bh=77gZattv7NSOyU0rjJjpCPN+j4ZsbCakfAPQojHq6mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QIlLrNL0U20EyUJkWxJXdeYOJ6xm6GtWSONY+n344C/Tp+mxXSri200T+AKkUwOyQnOuvZliP22wNUWmPv4X76VV1bFyO4HmYfVuYOnGxisRpFEiHKDp21KIv3VA2m3rJGV6o+SYv3Z3h+v9vnr0yOiMAkXFWj55M9ttBvxxncw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLj4ImkB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HSOWJZO/fZwwUsMKch6yQthZJ6KHc/hwp06VhPJU/axD5P4XF7yE7DCJeubiaP83a4G9JnT2ybN/5REr8b3T38gkwn7qHYzPBJCuVGrdve1VrZDXCVBwgW2iBt+sO3rd7WRdPybDT6oqWWutwbxo5QKQu7Mk1pTxBv/k5AuHCBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWdccCG8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLj4ImkB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CE3C4CED7;
-	Thu, 12 Dec 2024 15:03:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWdccCG8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A779C4CECE;
+	Thu, 12 Dec 2024 15:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734015807;
-	bh=3vBoylLPxaBJf/JF071Dmy8IAQ11S5M9nvokiJ45vvc=;
+	s=korg; t=1734015810;
+	bh=77gZattv7NSOyU0rjJjpCPN+j4ZsbCakfAPQojHq6mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLj4ImkBnJXhZ4TJYXCId0h2VW2jcaaka911ubEL6NZ/42KrAeu9AQihlj9JorAoA
-	 L4SYzaU6u68r70JLGKT6uYU53uJhL0Mbgncv0QQSHnltE0fTxLtIeXsbAGuAWoj1jO
-	 ahf/XszXVSlmdcwdzmAYnROifDI8rn/RmLZnB7Lg=
+	b=NWdccCG8PBB/hZ6dY71bKNdvOdDpDrkIOF0GGGo3i72cstdftpcTb/hRe3H+LXm2U
+	 Ble88N3juHgUfxOaXh1cRTSjgtmeNHDlrkWGF00sRJrvunc/gGkQJlSqTj+vqIoyFZ
+	 Y+rJA2sRWHQyPPwXCWuq+v75JbjNC3/USEVUAkhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <horms@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/466] ethtool: Fix wrong mod state in case of verbose and no_mask bitset
-Date: Thu, 12 Dec 2024 15:53:39 +0100
-Message-ID: <20241212144308.784772571@linuxfoundation.org>
+Subject: [PATCH 6.12 051/466] mlxsw: spectrum_acl_flex_keys: Constify struct mlxsw_afk_element_inst
+Date: Thu, 12 Dec 2024 15:53:40 +0100
+Message-ID: <20241212144308.825945600@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144306.641051666@linuxfoundation.org>
 References: <20241212144306.641051666@linuxfoundation.org>
@@ -51,125 +53,310 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 910c4788d6155b2202ec88273376cd7ecdc24f0a ]
+[ Upstream commit bec2a32145d5cc066df29182fa0e5b0d4329b1a1 ]
 
-A bitset without mask in a _SET request means we want exactly the bits in
-the bitset to be set. This works correctly for compact format but when
-verbose format is parsed, ethnl_update_bitset32_verbose() only sets the
-bits present in the request bitset but does not clear the rest. The commit
-6699170376ab ("ethtool: fix application of verbose no_mask bitset") fixes
-this issue by clearing the whole target bitmap before we start iterating.
-The solution proposed brought an issue with the behavior of the mod
-variable. As the bitset is always cleared the old value will always
-differ to the new value.
+'struct mlxsw_afk_element_inst' are not modified in these drivers.
 
-Fix it by adding a new function to compare bitmaps and a temporary variable
-which save the state of the old bitmap.
+Constifying these structures moves some data to a read-only section, so
+increases overall security.
 
-Fixes: 6699170376ab ("ethtool: fix application of verbose no_mask bitset")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20241202153358.1142095-1-kory.maincent@bootlin.com
+Update a few functions and struct mlxsw_afk_block accordingly.
+
+On a x86_64, with allmodconfig, as an example:
+Before:
+======
+   text	   data	    bss	    dec	    hex	filename
+   4278	   4032	      0	   8310	   2076	drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.o
+
+After:
+=====
+   text	   data	    bss	    dec	    hex	filename
+   7934	    352	      0	   8286	   205e	drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.o
+
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/8ccfc7bfb2365dcee5b03c81ebe061a927d6da2e.1727541677.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 217bbf156f93 ("mlxsw: spectrum_acl_flex_keys: Use correct key block on Spectrum-4")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/bitset.c | 48 ++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 44 insertions(+), 4 deletions(-)
+ .../mellanox/mlxsw/core_acl_flex_keys.c       |  6 +-
+ .../mellanox/mlxsw/core_acl_flex_keys.h       |  2 +-
+ .../mellanox/mlxsw/spectrum_acl_flex_keys.c   | 66 +++++++++----------
+ 3 files changed, 37 insertions(+), 37 deletions(-)
 
-diff --git a/net/ethtool/bitset.c b/net/ethtool/bitset.c
-index 0515d6604b3b9..f0883357d12e5 100644
---- a/net/ethtool/bitset.c
-+++ b/net/ethtool/bitset.c
-@@ -425,12 +425,32 @@ static int ethnl_parse_bit(unsigned int *index, bool *val, unsigned int nbits,
- 	return 0;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
+index 947500f8ed714..7aa1a462a1035 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.c
+@@ -67,7 +67,7 @@ static bool mlxsw_afk_blocks_check(struct mlxsw_afk *mlxsw_afk)
  
-+/**
-+ * ethnl_bitmap32_equal() - Compare two bitmaps
-+ * @map1:  first bitmap
-+ * @map2:  second bitmap
-+ * @nbits: bit size to compare
-+ *
-+ * Return: true if first @nbits are equal, false if not
-+ */
-+static bool ethnl_bitmap32_equal(const u32 *map1, const u32 *map2,
-+				 unsigned int nbits)
-+{
-+	if (memcmp(map1, map2, nbits / 32 * sizeof(u32)))
-+		return false;
-+	if (nbits % 32 == 0)
-+		return true;
-+	return !((map1[nbits / 32] ^ map2[nbits / 32]) &
-+		 ethnl_lower_bits(nbits % 32));
-+}
-+
- static int
- ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 			      const struct nlattr *attr, struct nlattr **tb,
- 			      ethnl_string_array_t names,
- 			      struct netlink_ext_ack *extack, bool *mod)
- {
-+	u32 *saved_bitmap = NULL;
- 	struct nlattr *bit_attr;
- 	bool no_mask;
- 	int rem;
-@@ -448,8 +468,20 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 	}
+ 		for (j = 0; j < block->instances_count; j++) {
+ 			const struct mlxsw_afk_element_info *elinfo;
+-			struct mlxsw_afk_element_inst *elinst;
++			const struct mlxsw_afk_element_inst *elinst;
  
- 	no_mask = tb[ETHTOOL_A_BITSET_NOMASK];
--	if (no_mask)
--		ethnl_bitmap32_clear(bitmap, 0, nbits, mod);
-+	if (no_mask) {
-+		unsigned int nwords = DIV_ROUND_UP(nbits, 32);
-+		unsigned int nbytes = nwords * sizeof(u32);
-+		bool dummy;
-+
-+		/* The bitmap size is only the size of the map part without
-+		 * its mask part.
-+		 */
-+		saved_bitmap = kcalloc(nwords, sizeof(u32), GFP_KERNEL);
-+		if (!saved_bitmap)
-+			return -ENOMEM;
-+		memcpy(saved_bitmap, bitmap, nbytes);
-+		ethnl_bitmap32_clear(bitmap, 0, nbits, &dummy);
-+	}
+ 			elinst = &block->instances[j];
+ 			elinfo = &mlxsw_afk_element_infos[elinst->element];
+@@ -154,7 +154,7 @@ static void mlxsw_afk_picker_count_hits(struct mlxsw_afk *mlxsw_afk,
+ 		const struct mlxsw_afk_block *block = &mlxsw_afk->blocks[i];
  
- 	nla_for_each_nested(bit_attr, tb[ETHTOOL_A_BITSET_BITS], rem) {
- 		bool old_val, new_val;
-@@ -458,22 +490,30 @@ ethnl_update_bitset32_verbose(u32 *bitmap, unsigned int nbits,
- 		if (nla_type(bit_attr) != ETHTOOL_A_BITSET_BITS_BIT) {
- 			NL_SET_ERR_MSG_ATTR(extack, bit_attr,
- 					    "only ETHTOOL_A_BITSET_BITS_BIT allowed in ETHTOOL_A_BITSET_BITS");
-+			kfree(saved_bitmap);
- 			return -EINVAL;
- 		}
- 		ret = ethnl_parse_bit(&idx, &new_val, nbits, bit_attr, no_mask,
- 				      names, extack);
--		if (ret < 0)
-+		if (ret < 0) {
-+			kfree(saved_bitmap);
- 			return ret;
-+		}
- 		old_val = bitmap[idx / 32] & ((u32)1 << (idx % 32));
- 		if (new_val != old_val) {
- 			if (new_val)
- 				bitmap[idx / 32] |= ((u32)1 << (idx % 32));
- 			else
- 				bitmap[idx / 32] &= ~((u32)1 << (idx % 32));
--			*mod = true;
-+			if (!no_mask)
-+				*mod = true;
- 		}
- 	}
+ 		for (j = 0; j < block->instances_count; j++) {
+-			struct mlxsw_afk_element_inst *elinst;
++			const struct mlxsw_afk_element_inst *elinst;
  
-+	if (no_mask && !ethnl_bitmap32_equal(saved_bitmap, bitmap, nbits))
-+		*mod = true;
-+
-+	kfree(saved_bitmap);
- 	return 0;
- }
+ 			elinst = &block->instances[j];
+ 			if (elinst->element == element) {
+@@ -386,7 +386,7 @@ mlxsw_afk_block_elinst_get(const struct mlxsw_afk_block *block,
+ 	int i;
  
+ 	for (i = 0; i < block->instances_count; i++) {
+-		struct mlxsw_afk_element_inst *elinst;
++		const struct mlxsw_afk_element_inst *elinst;
+ 
+ 		elinst = &block->instances[i];
+ 		if (elinst->element == element)
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h
+index 98a05598178b3..5aa1afb3f2ca8 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h
++++ b/drivers/net/ethernet/mellanox/mlxsw/core_acl_flex_keys.h
+@@ -117,7 +117,7 @@ struct mlxsw_afk_element_inst { /* element instance in actual block */
+ 
+ struct mlxsw_afk_block {
+ 	u16 encoding; /* block ID */
+-	struct mlxsw_afk_element_inst *instances;
++	const struct mlxsw_afk_element_inst *instances;
+ 	unsigned int instances_count;
+ 	bool high_entropy;
+ };
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
+index eaad786056027..6fe185ea6732c 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_flex_keys.c
+@@ -7,7 +7,7 @@
+ #include "item.h"
+ #include "core_acl_flex_keys.h"
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_dmac[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_dmac[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DMAC_32_47, 0x00, 2),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DMAC_0_31, 0x02, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(PCP, 0x08, 13, 3),
+@@ -15,7 +15,7 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_dmac[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(SRC_SYS_PORT, 0x0C, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_smac[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_smac[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SMAC_32_47, 0x00, 2),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SMAC_0_31, 0x02, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(PCP, 0x08, 13, 3),
+@@ -23,27 +23,27 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_smac[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(SRC_SYS_PORT, 0x0C, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_smac_ex[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l2_smac_ex[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SMAC_32_47, 0x02, 2),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SMAC_0_31, 0x04, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(ETHERTYPE, 0x0C, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_sip[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_sip[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_0_31, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(L4_PORT_RANGE, 0x04, 16, 16),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_PROTO, 0x08, 0, 8),
+ 	MLXSW_AFK_ELEMENT_INST_U32(SRC_SYS_PORT, 0x0C, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_dip[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_dip[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_0_31, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(L4_PORT_RANGE, 0x04, 16, 16),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_PROTO, 0x08, 0, 8),
+ 	MLXSW_AFK_ELEMENT_INST_U32(SRC_SYS_PORT, 0x0C, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_0_31, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_ECN, 0x04, 4, 2),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_TTL_, 0x04, 24, 8),
+@@ -51,35 +51,35 @@ static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(TCP_FLAGS, 0x08, 8, 9), /* TCP_CONTROL+TCP_ECN */
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_ex[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_ex[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VID, 0x00, 0, 12),
+ 	MLXSW_AFK_ELEMENT_INST_U32(PCP, 0x08, 29, 3),
+ 	MLXSW_AFK_ELEMENT_INST_U32(SRC_L4_PORT, 0x08, 0, 16),
+ 	MLXSW_AFK_ELEMENT_INST_U32(DST_L4_PORT, 0x0C, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_dip[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_dip[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_32_63, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_0_31, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_ex1[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_ex1[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_96_127, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_64_95, 0x04, 4),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_PROTO, 0x08, 0, 8),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_sip[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_sip[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_32_63, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_0_31, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_sip_ex[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_sip_ex[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_96_127, 0x00, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_64_95, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_packet_type[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_packet_type[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(ETHERTYPE, 0x00, 0, 16),
+ };
+ 
+@@ -124,90 +124,90 @@ const struct mlxsw_afk_ops mlxsw_sp1_afk_ops = {
+ 	.clear_block	= mlxsw_sp1_afk_clear_block,
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_0[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_0[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(FDB_MISS, 0x00, 3, 1),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DMAC_0_31, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_1[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_1[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(FDB_MISS, 0x00, 3, 1),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SMAC_0_31, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_2[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_2[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SMAC_32_47, 0x04, 2),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DMAC_32_47, 0x06, 2),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_3[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_3[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(PCP, 0x00, 0, 3),
+ 	MLXSW_AFK_ELEMENT_INST_U32(VID, 0x04, 16, 12),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DMAC_32_47, 0x06, 2),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_4[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_4[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(PCP, 0x00, 0, 3),
+ 	MLXSW_AFK_ELEMENT_INST_U32(VID, 0x04, 16, 12),
+ 	MLXSW_AFK_ELEMENT_INST_U32(ETHERTYPE, 0x04, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VID, 0x04, 16, 12),
+ 	MLXSW_AFK_ELEMENT_INST_EXT_U32(SRC_SYS_PORT, 0x04, 0, 8, -1, true), /* RX_ACL_SYSTEM_PORT */
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_0[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_0[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_0_31, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_1[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_1[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_0_31, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_2[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_2[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_DSCP, 0x04, 0, 6),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_ECN, 0x04, 6, 2),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_TTL_, 0x04, 8, 8),
+ 	MLXSW_AFK_ELEMENT_INST_U32(IP_PROTO, 0x04, 16, 8),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_5[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_5[] = {
+ 	MLXSW_AFK_ELEMENT_INST_EXT_U32(VIRT_ROUTER, 0x04, 20, 11, 0, true),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_0[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_0[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_0_3, 0x00, 0, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_32_63, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_1[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_1[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_4_7, 0x00, 0, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_64_95, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_2[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_2[] = {
+ 	MLXSW_AFK_ELEMENT_INST_EXT_U32(VIRT_ROUTER_MSB, 0x00, 0, 3, 0, true),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_96_127, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_3[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_3[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_32_63, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_4[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_4[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_64_95, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_5[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_5[] = {
+ 	MLXSW_AFK_ELEMENT_INST_BUF(SRC_IP_96_127, 0x04, 4),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l4_0[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l4_0[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(SRC_L4_PORT, 0x04, 16, 16),
+ 	MLXSW_AFK_ELEMENT_INST_U32(DST_L4_PORT, 0x04, 0, 16),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l4_2[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_l4_2[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(TCP_FLAGS, 0x04, 16, 9), /* TCP_CONTROL + TCP_ECN */
+ 	MLXSW_AFK_ELEMENT_INST_U32(L4_PORT_RANGE, 0x04, 0, 16),
+ };
+@@ -319,16 +319,16 @@ const struct mlxsw_afk_ops mlxsw_sp2_afk_ops = {
+ 	.clear_block	= mlxsw_sp2_afk_clear_block,
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5b[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_mac_5b[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VID, 0x04, 18, 12),
+ 	MLXSW_AFK_ELEMENT_INST_EXT_U32(SRC_SYS_PORT, 0x04, 0, 9, -1, true), /* RX_ACL_SYSTEM_PORT */
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_5b[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv4_5b[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER, 0x04, 20, 12),
+ };
+ 
+-static struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_2b[] = {
++static const struct mlxsw_afk_element_inst mlxsw_sp_afk_element_info_ipv6_2b[] = {
+ 	MLXSW_AFK_ELEMENT_INST_U32(VIRT_ROUTER_MSB, 0x00, 0, 4),
+ 	MLXSW_AFK_ELEMENT_INST_BUF(DST_IP_96_127, 0x04, 4),
+ };
 -- 
 2.43.0
 
