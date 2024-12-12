@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B00223C5C;
-	Thu, 12 Dec 2024 16:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871B8223C5C;
+	Thu, 12 Dec 2024 16:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734021407; cv=none; b=bD5vynMlRt+PYj8VZ1OcSsaqKEH8PYb5+5rGN4LGjLmh/Ph/0tIMacqLjCgeDu4l9PLZJMo3YLJtlGcwmyQtau0D4QCcXV6EnN6QXvJWXHdFyLjSNnT+89mJpAZLx6qLNg3zRUasL9gncs1iGqblWV2+w1lW+ALU4M3eQH4MPmo=
+	t=1734021411; cv=none; b=fo0ivF21rV/YhoFo3S/g/BNXnFbz0d1PTO8vsi5PoNJ5xcT0qnhe24VUynfyul8zuEoSaaK0ckmexjX6G8Cb0F5jygkwQd5cHDy27EE01C9I/d9qK7b9wUEcfRg/PYO5P7XQHwZV5/SJuhY4WintYuN6TZHlWFwABkgzN43SEaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734021407; c=relaxed/simple;
-	bh=CsZGV4bH1w19SIIifY4uEQ1ShfBfp5V1nswZ7Ve3O1A=;
+	s=arc-20240116; t=1734021411; c=relaxed/simple;
+	bh=tCyyaTSL3iPzy/fAluQv9SdqTP/MhluPL5eLvdu5/PI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OsmSTmOeucd+dgV6TpxKk+H320IppsyaQ352enFFbXkWtzv/b5KTVTPHAayITCzo+8/yqHkYjhI9Agpr0Hcf52Q5cqvjRgen/KBQ0ALolsvUrGwybJEjgNulcwnPqIC6prMhz0k8Qbexigx29xHXHJYq28OJ5T2KaGHVIyGlEbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9MKP0Vs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXOk935LNKeh0X9oAVR/g7XkAD/dfuIQLJTUO85AhRVjw94boWVcwiBbLmPwBmMJv1TUIzkej8QMBP/6P8EQjOmzRn8RAKpoiW2AMFlFW4PHkx0izN5KhKxjiE/R6SZlkRIvsyU5JEFO+o32OzplZv5l3naZ1SGsz06xcBby7dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GmTLGOwh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9MKP0Vs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E06C4CECE;
-	Thu, 12 Dec 2024 16:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GmTLGOwh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1744C4CECE;
+	Thu, 12 Dec 2024 16:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734021407;
-	bh=CsZGV4bH1w19SIIifY4uEQ1ShfBfp5V1nswZ7Ve3O1A=;
+	s=korg; t=1734021411;
+	bh=tCyyaTSL3iPzy/fAluQv9SdqTP/MhluPL5eLvdu5/PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9MKP0VsJHkDts2ciEZ/BaHEYjs8/nkxPfcAuBJdnEAMnuJwbM9yGu+eO8i6NchrL
-	 WqOO5Y7kvQzKOy8Ty7zc4ADXkh23D5DK9ObhYSdPxSsAFpxA9fv3OZg662WNr+Zgn6
-	 K4ZWjNRUn5W1geEupBgZ5VTuEXBvpA2MB8aZu5s8=
+	b=GmTLGOwhr/4QZrg5vaQNog8HMusKIXD+HMQompl0Fmd9bNW6+XBdDwMdutfcPjPFW
+	 7SzLh9AtblYAfK4qsiWh86y34y23sjGUu9/in0x+0dT/iLG/NPEru6Wj0PeYGMxDNz
+	 XnozzZIxtlP9EQOg5G5EhQKl5S1E05VSYsZsRLJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Kangas <jkangas@redhat.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 730/772] kasan: make report_lock a raw spinlock
-Date: Thu, 12 Dec 2024 16:01:15 +0100
-Message-ID: <20241212144420.068931417@linuxfoundation.org>
+Subject: [PATCH 6.1 731/772] sched/core: Remove the unnecessary need_resched() check in nohz_csd_func()
+Date: Thu, 12 Dec 2024 16:01:16 +0100
+Message-ID: <20241212144420.116951730@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241212144349.797589255@linuxfoundation.org>
 References: <20241212144349.797589255@linuxfoundation.org>
@@ -56,69 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Kangas <jkangas@redhat.com>
+From: K Prateek Nayak <kprateek.nayak@amd.com>
 
-[ Upstream commit e30a0361b8515d424c73c67de1a43e45a13b8ba2 ]
+[ Upstream commit ea9cffc0a154124821531991d5afdd7e8b20d7aa ]
 
-If PREEMPT_RT is enabled, report_lock is a sleeping spinlock and must not
-be locked when IRQs are disabled.  However, KASAN reports may be triggered
-in such contexts.  For example:
+The need_resched() check currently in nohz_csd_func() can be tracked
+to have been added in scheduler_ipi() back in 2011 via commit
+ca38062e57e9 ("sched: Use resched IPI to kick off the nohz idle balance")
 
-        char *s = kzalloc(1, GFP_KERNEL);
-        kfree(s);
-        local_irq_disable();
-        char c = *s;  /* KASAN report here leads to spin_lock() */
-        local_irq_enable();
+Since then, it has travelled quite a bit but it seems like an idle_cpu()
+check currently is sufficient to detect the need to bail out from an
+idle load balancing. To justify this removal, consider all the following
+case where an idle load balancing could race with a task wakeup:
 
-Make report_spinlock a raw spinlock to prevent rescheduling when
-PREEMPT_RT is enabled.
+o Since commit f3dd3f674555b ("sched: Remove the limitation of WF_ON_CPU
+  on wakelist if wakee cpu is idle") a target perceived to be idle
+  (target_rq->nr_running == 0) will return true for
+  ttwu_queue_cond(target) which will offload the task wakeup to the idle
+  target via an IPI.
 
-Link: https://lkml.kernel.org/r/20241119210234.1602529-1-jkangas@redhat.com
-Fixes: 342a93247e08 ("locking/spinlock: Provide RT variant header: <linux/spinlock_rt.h>")
-Signed-off-by: Jared Kangas <jkangas@redhat.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  In all such cases target_rq->ttwu_pending will be set to 1 before
+  queuing the wake function.
+
+  If an idle load balance races here, following scenarios are possible:
+
+  - The CPU is not in TIF_POLLING_NRFLAG mode in which case an actual
+    IPI is sent to the CPU to wake it out of idle. If the
+    nohz_csd_func() queues before sched_ttwu_pending(), the idle load
+    balance will bail out since idle_cpu(target) returns 0 since
+    target_rq->ttwu_pending is 1. If the nohz_csd_func() is queued after
+    sched_ttwu_pending() it should see rq->nr_running to be non-zero and
+    bail out of idle load balancing.
+
+  - The CPU is in TIF_POLLING_NRFLAG mode and instead of an actual IPI,
+    the sender will simply set TIF_NEED_RESCHED for the target to put it
+    out of idle and flush_smp_call_function_queue() in do_idle() will
+    execute the call function. Depending on the ordering of the queuing
+    of nohz_csd_func() and sched_ttwu_pending(), the idle_cpu() check in
+    nohz_csd_func() should either see target_rq->ttwu_pending = 1 or
+    target_rq->nr_running to be non-zero if there is a genuine task
+    wakeup racing with the idle load balance kick.
+
+o The waker CPU perceives the target CPU to be busy
+  (targer_rq->nr_running != 0) but the CPU is in fact going idle and due
+  to a series of unfortunate events, the system reaches a case where the
+  waker CPU decides to perform the wakeup by itself in ttwu_queue() on
+  the target CPU but target is concurrently selected for idle load
+  balance (XXX: Can this happen? I'm not sure, but we'll consider the
+  mother of all coincidences to estimate the worst case scenario).
+
+  ttwu_do_activate() calls enqueue_task() which would increment
+  "rq->nr_running" post which it calls wakeup_preempt() which is
+  responsible for setting TIF_NEED_RESCHED (via a resched IPI or by
+  setting TIF_NEED_RESCHED on a TIF_POLLING_NRFLAG idle CPU) The key
+  thing to note in this case is that rq->nr_running is already non-zero
+  in case of a wakeup before TIF_NEED_RESCHED is set which would
+  lead to idle_cpu() check returning false.
+
+In all cases, it seems that need_resched() check is unnecessary when
+checking for idle_cpu() first since an impending wakeup racing with idle
+load balancer will either set the "rq->ttwu_pending" or indicate a newly
+woken task via "rq->nr_running".
+
+Chasing the reason why this check might have existed in the first place,
+I came across  Peter's suggestion on the fist iteration of Suresh's
+patch from 2011 [1] where the condition to raise the SCHED_SOFTIRQ was:
+
+	sched_ttwu_do_pending(list);
+
+	if (unlikely((rq->idle == current) &&
+	    rq->nohz_balance_kick &&
+	    !need_resched()))
+		raise_softirq_irqoff(SCHED_SOFTIRQ);
+
+Since the condition to raise the SCHED_SOFIRQ was preceded by
+sched_ttwu_do_pending() (which is equivalent of sched_ttwu_pending()) in
+the current upstream kernel, the need_resched() check was necessary to
+catch a newly queued task. Peter suggested modifying it to:
+
+	if (idle_cpu() && rq->nohz_balance_kick && !need_resched())
+		raise_softirq_irqoff(SCHED_SOFTIRQ);
+
+where idle_cpu() seems to have replaced "rq->idle == current" check.
+
+Even back then, the idle_cpu() check would have been sufficient to catch
+a new task being enqueued. Since commit b2a02fc43a1f ("smp: Optimize
+send_call_function_single_ipi()") overloads the interpretation of
+TIF_NEED_RESCHED for TIF_POLLING_NRFLAG idling, remove the
+need_resched() check in nohz_csd_func() to raise SCHED_SOFTIRQ based
+on Peter's suggestion.
+
+Fixes: b2a02fc43a1f ("smp: Optimize send_call_function_single_ipi()")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241119054432.6405-3-kprateek.nayak@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/kasan/report.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/kasan/report.c b/mm/kasan/report.c
-index 821cd12e8c8a7..6ad986c267b5e 100644
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -173,7 +173,7 @@ static void update_kunit_status(bool sync)
- static void update_kunit_status(bool sync) { }
- #endif
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 8388575759378..860391d057802 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1162,7 +1162,7 @@ static void nohz_csd_func(void *info)
+ 	WARN_ON(!(flags & NOHZ_KICK_MASK));
  
--static DEFINE_SPINLOCK(report_lock);
-+static DEFINE_RAW_SPINLOCK(report_lock);
- 
- static void start_report(unsigned long *flags, bool sync)
- {
-@@ -185,7 +185,7 @@ static void start_report(unsigned long *flags, bool sync)
- 	lockdep_off();
- 	/* Make sure we don't end up in loop. */
- 	report_suppress_start();
--	spin_lock_irqsave(&report_lock, *flags);
-+	raw_spin_lock_irqsave(&report_lock, *flags);
- 	pr_err("==================================================================\n");
- }
- 
-@@ -195,7 +195,7 @@ static void end_report(unsigned long *flags, void *addr)
- 		trace_error_report_end(ERROR_DETECTOR_KASAN,
- 				       (unsigned long)addr);
- 	pr_err("==================================================================\n");
--	spin_unlock_irqrestore(&report_lock, *flags);
-+	raw_spin_unlock_irqrestore(&report_lock, *flags);
- 	if (!test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
- 		check_panic_on_warn("KASAN");
- 	if (kasan_arg_fault == KASAN_ARG_FAULT_PANIC)
+ 	rq->idle_balance = idle_cpu(cpu);
+-	if (rq->idle_balance && !need_resched()) {
++	if (rq->idle_balance) {
+ 		rq->nohz_idle_balance = flags;
+ 		raise_softirq_irqoff(SCHED_SOFTIRQ);
+ 	}
 -- 
 2.43.0
 
