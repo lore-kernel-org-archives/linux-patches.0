@@ -1,199 +1,242 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F6F1B6D0F;
-	Fri, 13 Dec 2024 14:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57921E0DFD
+	for <patches@lists.linux.dev>; Fri, 13 Dec 2024 14:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734100049; cv=none; b=ZbosxH+OC/s7Y/7YxxrXEkKeqwbrgulHR3pZcUPbjcUdzMz5F0JmUym39TPfTeSiJ1UWaoH4Il87T74xt0+NKOYF0F4I30bn15AYoG13vnhcd3Klv+MM98xOVgpZ7BCh3r1wwjp/yBa+8RlP+TPb0z98SshCmQWrgiPxG8YiBbQ=
+	t=1734100053; cv=none; b=Cf+vOAO52U6t2XKWPwOjj4pQvLR3ewMEMiP2qfcgtQ4BDG3e5VtMZMhpQtLXbwkwd66nJKz/3O/y94JKUID12F0Cz0lyri8uZmfZmV92OE1/gccRAVtBAgn1GRkuhPuuDsCanfDZPH4dMrdPASly3BW7umz6wPGhcaebgRhV4Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734100049; c=relaxed/simple;
-	bh=/jUn34ql5mWkVGuueM/i8xNwlJ12UWTb6zHcWJ/zXQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ayYE/lXSqDiFEdVSn7y2tPDl79MFGT8oghVbDmVzvq/LP89xBVTmtSwHzoKmGtrESgdMCFRH1ffYSHJdcajldMx9vFPGGxevKYHW+c2XM2iC7LR9BKAeVuP/3dL3CMx7z4lefM99IJXkDcV29/gAFLD8zXhCMONGmeRMamQYg9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0OZyb6L; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734100053; c=relaxed/simple;
+	bh=Mpm/LRwd7IySOim0PidDsZae2gN8BufbqTdj7uEiDdU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B3KJkcw23roZ6ERaMmcCmZbp8nqSZuY+cJhmOBlbCAAlfX5rFyWfeW418G4InfxiTphWZU1usNMvw4P+TBdntvTu/PB2WsV07h27jvGY1BIvgqvescXmHhqfgReAb1vyOfUr/DiMLiFbL+GQ0GIopTw1quttBwoZtPTXtGVfVX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y/i35OvO; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0OZyb6L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C61C4CED0;
-	Fri, 13 Dec 2024 14:27:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734100048;
-	bh=/jUn34ql5mWkVGuueM/i8xNwlJ12UWTb6zHcWJ/zXQA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C0OZyb6L072XqUbNO/12+4r4hQBZtx/86n6FYNzQWqAjoZtCJnaXQYYm5iyJwCR/X
-	 PGM41hNXw3VP3wLTa2uOozUHtVtMZjAB5VasREpAtB6N+/597jxgZtAr4VPBstMb9l
-	 1JoTSzFg3jYjMJwkXygJT8Pmafifg+uKOzg3j19A=
-Date: Fri, 13 Dec 2024 15:27:25 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: K Prateek Nayak <kprateek.nayak@amd.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 440/466] sched/core: Remove the unnecessary
- need_resched() check in nohz_csd_func()
-Message-ID: <2024121358-essence-condition-3312@gregkh>
-References: <20241212144306.641051666@linuxfoundation.org>
- <20241212144324.242299901@linuxfoundation.org>
- <d21a8129-e982-463f-af8b-07a14b6a674a@amd.com>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y/i35OvO"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-518c46cc6e4so344373e0c.3
+        for <patches@lists.linux.dev>; Fri, 13 Dec 2024 06:27:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734100049; x=1734704849; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jDrucwrqBIUmyUbK2gTGdYC/lYz1YCAOzgB9+QZb9JQ=;
+        b=y/i35OvOuWiVer278zq8Nl5OKSHuTDy2BtoV+s9XrnNU5aMlWMDZTgVFcH+NBs/cRg
+         BIsQMzX7h1w7x4d+EDWgRGtv45YWkpiGptEY4KjU+EvjlOf/opXnj5vCFlEQD4+ANDMy
+         NegiTmjq+SEmQof4nc4oGKvBFhNxjfW4i4v9r7LDMq/lDHZvBGi/oUjzhDxstVElCwL/
+         p51OM4nve4ngi26Q4OhBVCsXhuLR4xJUOAUUtuX6gtYPV5N4BeEg4WNpYBP8rwQYzBEq
+         gP59hwQbqqKu/p/fBonjcVU77t7pTd9Mxts8eY/Mr9VfE+DiowNjBQyqf966nM3wobCz
+         1FhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734100049; x=1734704849;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jDrucwrqBIUmyUbK2gTGdYC/lYz1YCAOzgB9+QZb9JQ=;
+        b=HaPI1Qpb9JoMaRG3xZJZ1eQOSR2+vNFSdvIHsCOl5CowbQUsGmEwjUaTKD0oDPxava
+         QxcBDtwAH/x1ZuvQqYsuEazM4Cb3vwwlpp3eXz3a9WzsMLA9hyrIN6XiRuLQiFuKhr6U
+         WSF8HRL0ztb1Pu0SENiI4DhCae+2+hZ5i5758hOLqV3ltbGIWGI79RqGAwSyzIf6Uw1S
+         5shz04GnRKxlC+s8+OFPI1CLEUNyEYF42HXLLe0Xho7WdIhY8I/KkBre38MosxLglyE7
+         VmhBOekWdMx8ubqsWw5+NZ+/W+x1oxcRAhSZwoLjkjlvY6dPKYF5misgXUFXrTvN+f4/
+         kBoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV91gzsIVzSQU8ZAxJlNiGEYgc/a/bf5A++ieq5JXI7f7FafZ0D2c+esNhmYEFV7NteXjTuOvHj@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTDAfO+QSSYOdO7cFjLTILXshxGFh3SSE/+yyc1KrwRxwgVVbd
+	WtCF1hn1jUWF4nro9xryBFq5ITt3eWsVaPJwt48TIqYe00JCmE9B4KBAEJz+zNA6ZFCUGA2VFaV
+	zVD0DhfD+PlodSaZ9wG5zFUfEisg8XvPg1DyQGA==
+X-Gm-Gg: ASbGncuaWtrl/cinOOy9ArOd/yMbrL4yBhDoL47lC28t+DG9DV2h3rY2k4F7Gsby1gI
+	tIeiUt89GHKudkU7Imhp9E3dC7n4MQKqOAIbBRMk=
+X-Google-Smtp-Source: AGHT+IF9Zpfo6h5y90m06XlevNuAJRPH+b8VWzhOQ2n7NHbhAbY4bKoFRFrDeNJvMZVeIv6vbwAbVLbWpFW8tTRxZf8=
+X-Received: by 2002:a05:6122:a0e:b0:518:a261:adca with SMTP id
+ 71dfb90a1353d-518ca460b50mr2578122e0c.8.1734100049567; Fri, 13 Dec 2024
+ 06:27:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d21a8129-e982-463f-af8b-07a14b6a674a@amd.com>
+References: <20241212144311.432886635@linuxfoundation.org>
+In-Reply-To: <20241212144311.432886635@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 13 Dec 2024 19:57:18 +0530
+Message-ID: <CA+G9fYtbkj_VWQYjPsojO66rRgbcovrWSCDsgcp6PGqWEzGxgw@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/565] 5.15.174-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Dec 12, 2024 at 11:22:25PM +0530, K Prateek Nayak wrote:
-> Hello Greg, Sasha,
-> 
-> On 12/12/2024 8:30 PM, Greg Kroah-Hartman wrote:
-> > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: K Prateek Nayak <kprateek.nayak@amd.com>
-> > 
-> > [ Upstream commit ea9cffc0a154124821531991d5afdd7e8b20d7aa ]
-> > 
-> > The need_resched() check currently in nohz_csd_func() can be tracked
-> > to have been added in scheduler_ipi() back in 2011 via commit
-> > ca38062e57e9 ("sched: Use resched IPI to kick off the nohz idle balance")
-> > 
-> > Since then, it has travelled quite a bit but it seems like an idle_cpu()
-> > check currently is sufficient to detect the need to bail out from an
-> > idle load balancing. To justify this removal, consider all the following
-> > case where an idle load balancing could race with a task wakeup:
-> > 
-> > o Since commit f3dd3f674555b ("sched: Remove the limitation of WF_ON_CPU
-> >    on wakelist if wakee cpu is idle") a target perceived to be idle
-> >    (target_rq->nr_running == 0) will return true for
-> >    ttwu_queue_cond(target) which will offload the task wakeup to the idle
-> >    target via an IPI.
-> > 
-> >    In all such cases target_rq->ttwu_pending will be set to 1 before
-> >    queuing the wake function.
-> > 
-> >    If an idle load balance races here, following scenarios are possible:
-> > 
-> >    - The CPU is not in TIF_POLLING_NRFLAG mode in which case an actual
-> >      IPI is sent to the CPU to wake it out of idle. If the
-> >      nohz_csd_func() queues before sched_ttwu_pending(), the idle load
-> >      balance will bail out since idle_cpu(target) returns 0 since
-> >      target_rq->ttwu_pending is 1. If the nohz_csd_func() is queued after
-> >      sched_ttwu_pending() it should see rq->nr_running to be non-zero and
-> >      bail out of idle load balancing.
-> > 
-> >    - The CPU is in TIF_POLLING_NRFLAG mode and instead of an actual IPI,
-> >      the sender will simply set TIF_NEED_RESCHED for the target to put it
-> >      out of idle and flush_smp_call_function_queue() in do_idle() will
-> >      execute the call function. Depending on the ordering of the queuing
-> >      of nohz_csd_func() and sched_ttwu_pending(), the idle_cpu() check in
-> >      nohz_csd_func() should either see target_rq->ttwu_pending = 1 or
-> >      target_rq->nr_running to be non-zero if there is a genuine task
-> >      wakeup racing with the idle load balance kick.
-> > 
-> > o The waker CPU perceives the target CPU to be busy
-> >    (targer_rq->nr_running != 0) but the CPU is in fact going idle and due
-> >    to a series of unfortunate events, the system reaches a case where the
-> >    waker CPU decides to perform the wakeup by itself in ttwu_queue() on
-> >    the target CPU but target is concurrently selected for idle load
-> >    balance (XXX: Can this happen? I'm not sure, but we'll consider the
-> >    mother of all coincidences to estimate the worst case scenario).
-> > 
-> >    ttwu_do_activate() calls enqueue_task() which would increment
-> >    "rq->nr_running" post which it calls wakeup_preempt() which is
-> >    responsible for setting TIF_NEED_RESCHED (via a resched IPI or by
-> >    setting TIF_NEED_RESCHED on a TIF_POLLING_NRFLAG idle CPU) The key
-> >    thing to note in this case is that rq->nr_running is already non-zero
-> >    in case of a wakeup before TIF_NEED_RESCHED is set which would
-> >    lead to idle_cpu() check returning false.
-> > 
-> > In all cases, it seems that need_resched() check is unnecessary when
-> > checking for idle_cpu() first since an impending wakeup racing with idle
-> > load balancer will either set the "rq->ttwu_pending" or indicate a newly
-> > woken task via "rq->nr_running".
-> > 
-> > Chasing the reason why this check might have existed in the first place,
-> > I came across  Peter's suggestion on the fist iteration of Suresh's
-> > patch from 2011 [1] where the condition to raise the SCHED_SOFTIRQ was:
-> > 
-> > 	sched_ttwu_do_pending(list);
-> > 
-> > 	if (unlikely((rq->idle == current) &&
-> > 	    rq->nohz_balance_kick &&
-> > 	    !need_resched()))
-> > 		raise_softirq_irqoff(SCHED_SOFTIRQ);
-> > 
-> > Since the condition to raise the SCHED_SOFIRQ was preceded by
-> > sched_ttwu_do_pending() (which is equivalent of sched_ttwu_pending()) in
-> > the current upstream kernel, the need_resched() check was necessary to
-> > catch a newly queued task. Peter suggested modifying it to:
-> > 
-> > 	if (idle_cpu() && rq->nohz_balance_kick && !need_resched())
-> > 		raise_softirq_irqoff(SCHED_SOFTIRQ);
-> > 
-> > where idle_cpu() seems to have replaced "rq->idle == current" check.
-> > 
-> > Even back then, the idle_cpu() check would have been sufficient to catch
-> > a new task being enqueued. Since commit b2a02fc43a1f ("smp: Optimize
-> > send_call_function_single_ipi()") overloads the interpretation of
-> > TIF_NEED_RESCHED for TIF_POLLING_NRFLAG idling, remove the
-> > need_resched() check in nohz_csd_func() to raise SCHED_SOFTIRQ based
-> > on Peter's suggestion.
-> 
-> Since v6.12 added support for PREEMPT_RT, you'll see the following
-> warning being triggered when booting with PREEMPT_RT enabled on
-> 6.12.5-rc1:
-> 
->     ------------[ cut here ]------------
->     WARNING: CPU: 40 PID: 0 at kernel/softirq.c:292 do_softirq_post_smp_call_flush+0x1a/0x40
->     Modules linked in:
->     CPU: 40 UID: 0 PID: 0 Comm: swapper/40 Not tainted 6.12.5-rc1-test+ #220
->     Hardware name: Dell Inc. PowerEdge R6525/024PW1, BIOS 2.7.3 03/30/2022
->     RIP: 0010:do_softirq_post_smp_call_flush+0x1a/0x40
->     Code: ...
->     RSP: 0018:ffffad4c405cfeb8 EFLAGS: 00010002
->     RAX: 0000000000000080 RBX: 0000000000000282 RCX: 0000000000000007
->     RDX: 0000000000000000 RSI: 0000000000000083 RDI: 0000000000000000
->     RBP: 0000000000000000 R08: ffff942efc626080 R09: 0000000000000001
->     R10: 7fffffffffffffff R11: ffffffffffd2d2da R12: 0000000000000000
->     R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
->     FS:  0000000000000000(0000) GS:ffff942efc600000(0000) knlGS:0000000000000000
->     CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->     CR2: 0000000000000000 CR3: 000000807da48001 CR4: 0000000000f70ef0
->     PKRU: 55555554
->     Call Trace:
->      <TASK>
->      ? __warn+0x88/0x130
->      ? do_softirq_post_smp_call_flush+0x1a/0x40
->      ? report_bug+0x18e/0x1a0
->      ? handle_bug+0x5b/0xa0
->      ? exc_invalid_op+0x18/0x70
->      ? asm_exc_invalid_op+0x1a/0x20
->      ? do_softirq_post_smp_call_flush+0x1a/0x40
->      ? srso_alias_return_thunk+0x5/0xfbef5
->      flush_smp_call_function_queue+0x65/0x80
->      do_idle+0x149/0x260
->      cpu_startup_entry+0x29/0x30
->      start_secondary+0x12d/0x160
->      common_startup_64+0x13e/0x141
->      </TASK>
->     ---[ end trace 0000000000000000 ]---
-> 
-> Could you please also include upstream commit 6675ce20046d ("softirq:
-> Allow raising SCHED_SOFTIRQ from SMP-call-function on RT kernel") to the
-> 6.12 stable queue to prevent this splat for PREEMPT_RT users.
-> 
-> Full upstream commit SHA1: 6675ce20046d149e1e1ffe7e9577947dee17aad5
-> 
-> The commit can be cleanly cherry-picked on top of v6.12.5-rc1 and I can
-> confirm that it fixes the splat.
+On Thu, 12 Dec 2024 at 22:11, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.174 release.
+> There are 565 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.174-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Thanks, I've now queued that up.  You all should have put a "Fixes:" tag
-on it so that I would have noticed it automatically...
+The following build warnings were noticed on Linux stable-rc linux-5.15.y
+while building parisc.
 
-thanks,
+* parisc, build
+  - gcc-11-allnoconfig
+  - gcc-11-defconfigcd
+  - gcc-11-tinyconfig
 
-greg k-h
+Build log:
+-----------
+arch/parisc/include/asm/cache.h:28: note: this is the location of the
+previous definition
+   28 | #define ARCH_KMALLOC_MINALIGN   16      /* ldcw requires
+16-byte alignment */
+      |
+In file included from include/linux/skbuff.h:31,
+                 from include/net/net_namespace.h:42,
+                 from init/main.c:104:
+include/linux/dma-mapping.h:546:47: error: macro "cache_line_size"
+passed 1 arguments, but takes just 0
+  546 | static inline int dma_get_cache_alignment(void)
+      |                                               ^
+
+Links:
+  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2q7pt39eCahVwI49vKMQD6qe12I/
+  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.173-566-g4b281055ccfb/testrun/26287983/suite/build/test/gcc-11-defconfig/log
+  - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.173-566-g4b281055ccfb/testrun/26287983/suite/build/test/gcc-11-defconfig/history/
+
+ Steps to reproduce:
+  - # tuxmake --runtime podman --target-arch parisc --toolchain gcc-11
+--kconfig defconfig
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 5.15.174-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git commit: 4b281055ccfba614e9358cac95fc81a1e79a5d7e
+* git describe: v5.15.173-566-g4b281055ccfb
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.173-566-g4b281055ccfb
+
+## Test Regressions (compared to v5.15.171-100-g056657e11366)
+
+## Metric Regressions (compared to v5.15.171-100-g056657e11366)
+
+## Test Fixes (compared to v5.15.171-100-g056657e11366)
+
+## Metric Fixes (compared to v5.15.171-100-g056657e11366)
+
+## Test result summary
+total: 54603, pass: 38929, fail: 2776, skip: 12823, xfail: 75
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 101 total, 101 passed, 0 failed
+* arm64: 28 total, 28 passed, 0 failed
+* i386: 22 total, 22 passed, 0 failed
+* mips: 22 total, 22 passed, 0 failed
+* parisc: 3 total, 0 passed, 3 failed
+* powerpc: 22 total, 22 passed, 0 failed
+* riscv: 8 total, 8 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 24 total, 24 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
