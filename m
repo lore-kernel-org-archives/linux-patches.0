@@ -1,99 +1,221 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39EA1AAC9;
-	Fri, 13 Dec 2024 14:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41AC1E1C3A
+	for <patches@lists.linux.dev>; Fri, 13 Dec 2024 14:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734100463; cv=none; b=M34qcp+2oGEowEjIwQcqELXnSt+0X+AZfflQ4bnY+hjK4TnZFy2sqlutLnjFAOYDEnXou1eF0xugULLUb9JV50fbG5GkLG3QsfEPCGG3EKxI7OVn9QDtwfZmIppxiY4+gMd12som+CHqgnqmB2ybtPFcsavsOion8wMUc6Zd1MI=
+	t=1734101370; cv=none; b=Q7S6VGKLQTqqsMCd0/eJkyTpQGxXD65qV7dbZtXZ61N+FCUvSbjH6KlUz6hE7o/36QuxNDUvTz6ULqy7uV8IbdxgWKEmiRLuukawPGQ04lO5MGP+V1AZ1M2kiClIrm2ZDla1lqEJR2mid3ki81kfYgaVNwX1aZ86cVRryYsCaaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734100463; c=relaxed/simple;
-	bh=wHBHWbN8T1dB7vyMnQIgEIpw4tUeOJJZ+ixlT+uAaX4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RxxMRfksDySwZ/YJi4ezWzbUM87tFxr1vxE8b30QEoxiM3cILn3p2Tf2BCdJk9zrg7lbyTBj/rbgEnTZhhybawOZMIyjNKHeIQEPk0MjRCjzhs91vgQqf0f9fFylFgak0FVt73PPFSaalgxIkbN98wnH4nTK8ay9v0sjZz9LiFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuaAGz83; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734101370; c=relaxed/simple;
+	bh=hByqeNYL+TZV1cYmgGYkHNhMiCkV4v9idGQn3nu0lpU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o/lWTVYV4k0Ra9nzR+Am55Zrgbcpm3lHu/FVQU3e2DOZghEsSVedWrULLVKmuYj90JW0QFD2Ym3hPzlyy2YVOb8UrXKrhCzuLgnpMJaYe9b7a6L2F9vmdRsJyfrk3030PDgZrlkrPvRd/OL6L3mpfVdHF8bj/VTMq18MNdafLdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L3dVxN3E; arc=none smtp.client-ip=209.85.222.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuaAGz83"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3457C4CED2;
-	Fri, 13 Dec 2024 14:34:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734100462;
-	bh=wHBHWbN8T1dB7vyMnQIgEIpw4tUeOJJZ+ixlT+uAaX4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=XuaAGz83aBmtU6jNbgdz7rRtuy/2IWP5vzD+SKjot+6aZL9bKyiJ033UzCHfqUs6q
-	 dKLPPanAoPMiIfUBpikU/F3BeDuU9Okp7r946E0tyc8XM/CPJ2PwB/Ma/d4myK2CKz
-	 3x7bhuKZcyl2PjCmCOkpuhEoZqp0N6rO8NLXPOBQ=
-Date: Fri, 13 Dec 2024 15:34:19 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jiri Slaby <jirislaby@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Aric Cyr <aric.cyr@amd.com>, Austin Zheng <Austin.Zheng@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 437/466] drm/amd/display: Update Interface to Check
- UCLK DPM
-Message-ID: <2024121304-reversing-suing-3c51@gregkh>
-References: <20241212144306.641051666@linuxfoundation.org>
- <20241212144324.128679509@linuxfoundation.org>
- <6e25f099-1ba2-4bef-9477-888288270f5d@kernel.org>
- <2024121349-tacky-obstacle-a41b@gregkh>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L3dVxN3E"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-85c61388e68so392558241.3
+        for <patches@lists.linux.dev>; Fri, 13 Dec 2024 06:49:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734101368; x=1734706168; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7bKxIAldnf2WV3uWw0aRPXep5q1Q5wgQLNkyd2UuYH8=;
+        b=L3dVxN3EGY76lBindafT5atacYfXcWXcWIWXgYSkA6oQE6WWkNLi9IBNdTsTA/LB1k
+         x6ytdntVuB0VKHWkMW9ktlrIw6sKNZcsecRD8TPpL2oeK7r5L8yWKORpHxceke3QuX6f
+         POVwBk4BgvYAol2Grdj40yRe+mKeTJzWv3FV7oy0+RvbntwQ8YvDeYrP/T7n4ke3HBJ8
+         xwdQRqQh+uk+d7obyjDVNtUe6gAjK+giyM9UVKqkcAT7tU8gKIPJhvFYPDuw89iCJvZE
+         BhEsGoGe7vsOAaOBiw8ClikwuR9XweUUlZ9zXQx/Gij8GycAEkp3MVO0hFopv/rGjQp4
+         ZI1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734101368; x=1734706168;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7bKxIAldnf2WV3uWw0aRPXep5q1Q5wgQLNkyd2UuYH8=;
+        b=V0uN/cipiucLzRZ/QvIe/apJHGj77GdQd6DveWaTmIVW1R7erwq5iCGvIxutuVuLv1
+         sYWST/mDMEaS6iRFBP9BP3r1jpw3MmBFvosAlBy63AaC3g1scRW6YIUQ7I9BMG5IyA0l
+         Mg/KBhejhr4dfScTsM92SW5kQXspXGi2sjUh2NfL9IDWHXusWrvke5ypkdPpUFksBw6k
+         20Vkhjygrk8a0y9k00YDhUeDsF05Qku5qxcsiIoTtzgzd7npx6cRbLQRsno9ub+AO0Kb
+         SXqAXSyUQ54M74HNXwIR5vFzoUC9t6hReh0fxo5Uh4+FIM3QXdxQxR6greQgeSlZVljD
+         QStQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWf7uGLPRKYPmunrQIzftww9VZJQnmvy+OdCskxOjPgRavWnYNqFvH/Jhp9POlu0O83rLos5k/3@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw6BvSOSGNFRjw1G5abMafvUqf6SeHVLkwk+eAcMlpgJDCm5kza
+	gT7fDhzKJskHlKZW4U4cJ6w+UQPY6b1h5uy9DQrJPKLpAVc/Q30PT8sYtH/S7MeYHjz4sVMh/5g
+	GjQWYXUmZyNB3uZGG2knC02mHFcWaKEdBp5OBr/iCSn5OKGWx5OA=
+X-Gm-Gg: ASbGncsc/xodPB/BLlHtJ3AWh3iNyhAU2y02kkb3OIvMhTtCSyzQ27DBFcESwNcpwRR
+	LdtI2Vx1ZA8gLBMoZRqJi3CbhLF7CL9ZEdldsBEo=
+X-Google-Smtp-Source: AGHT+IFvRz6amg0/LCv795PFdcXSwZFAuHmhc08GDUubo7a8UJkjnqdzDOeeViMLb5gcFryVLpGHBJmY4rTH42n0lRA=
+X-Received: by 2002:a05:6122:8c12:b0:515:c769:9d32 with SMTP id
+ 71dfb90a1353d-518ca399ec3mr3099699e0c.4.1734101367579; Fri, 13 Dec 2024
+ 06:49:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2024121349-tacky-obstacle-a41b@gregkh>
+References: <20241212144244.601729511@linuxfoundation.org>
+In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 13 Dec 2024 20:19:16 +0530
+Message-ID: <CA+G9fYv-qg_TbgP9o_VyBcBAYfecxFvRPjq0w3SFX_PvJWDbkw@mail.gmail.com>
+Subject: Re: [PATCH 6.6 000/356] 6.6.66-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 13, 2024 at 03:28:20PM +0100, Greg Kroah-Hartman wrote:
-> On Thu, Dec 12, 2024 at 06:45:07PM +0100, Jiri Slaby wrote:
-> > On 12. 12. 24, 16:00, Greg Kroah-Hartman wrote:
-> > > 6.12-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Austin Zheng <Austin.Zheng@amd.com>
-> > > 
-> > > [ Upstream commit b8d046985c2dc41a0e264a391da4606099f8d44f ]
-> > > 
-> > > [Why]
-> > > Videos using YUV420 format may result in high power being used.
-> > > Disabling MPO may result in lower power usage.
-> > > Update interface that can be used to check power profile of a dc_state.
-> > > 
-> > > [How]
-> > > Allow pstate switching in VBlank as last entry in strategy candidates.
-> > > Add helper functions that can be used to determine power level:
-> > > -get power profile after a dc_state has undergone full validation
-> > 
-> > FWIW this was reverted in the Linus' tree:
-> > 
-> > commit 0e93b76cf92f229409e8da85c2a143868835fec3
-> > Author: Austin Zheng <Austin.Zheng@amd.com>
-> > Date:   Mon Sep 23 10:07:32 2024 -0400
-> > 
-> >     drm/amd/display: Revert commit Update Interface to Check UCLK DPM
-> > 
-> >     This reverts commit b8d046985c2dc41a0e264a391da4606099f8d44f.
-> > 
-> >     Reverting as regression discovered on certain systems and golden values
-> >     need to updated.
-> > 
-> > 
-> > 
-> > Possibly, there are other fixes queued for 6.12, so the revert is not needed
-> > anymore?
-> 
-> No, you are right, I need this one.  For some reason I thought I had
-> applied it but it failed to apply cleanly and so it was dropped.  I'll
-> go fix it up by hand now...
+On Thu, 12 Dec 2024 at 21:01, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.6.66 release.
+> There are 356 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.66-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Nevermind, I just dropped this commit entirely, that was easier overall.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-thanks for the review!
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-greg k-h
+## Build
+* kernel: 6.6.66-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: ae86bb742fa81e7826a49817e016bf288015f456
+* git describe: v6.6.65-357-gae86bb742fa8
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.6.y/build/v6.6.6=
+5-357-gae86bb742fa8
+
+## Test Regressions (compared to v6.6.63-677-g1415e716e528)
+
+## Metric Regressions (compared to v6.6.63-677-g1415e716e528)
+
+## Test Fixes (compared to v6.6.63-677-g1415e716e528)
+
+## Metric Fixes (compared to v6.6.63-677-g1415e716e528)
+
+## Test result summary
+total: 130339, pass: 106681, fail: 3098, skip: 20494, xfail: 66
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 128 total, 128 passed, 0 failed
+* arm64: 40 total, 40 passed, 0 failed
+* i386: 27 total, 25 passed, 2 failed
+* mips: 26 total, 25 passed, 1 failed
+* parisc: 4 total, 4 passed, 0 failed
+* powerpc: 32 total, 31 passed, 1 failed
+* riscv: 19 total, 19 passed, 0 failed
+* s390: 14 total, 13 passed, 1 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 7 total, 7 passed, 0 failed
+* x86_64: 32 total, 32 passed, 0 failed
+
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
