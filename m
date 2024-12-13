@@ -1,74 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395A81DF746;
-	Fri, 13 Dec 2024 11:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245731DF759;
+	Fri, 13 Dec 2024 12:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734089746; cv=none; b=M/3KWHOFYaiHLY9AjjiDKbvDq3Qnp+hRRx6+uhplUBPzTCDDfxrTTnNi02a4KiFdU5WlLo84A5iyq/QRvPI2aZm8+7GM4jdgk+s/bPaM/QUI8giQ36TdVXWWBaJtqyG8yLlcKvQTFgJrBmH/D6Uhf3/ymoswSfulJv8doYZodA8=
+	t=1734091489; cv=none; b=eOnLQULIVwBUv/TszHq4pJF5bXkDRjm4MCczeAc3xHleS5l17qoG/XQaGQTaAHlsXQ9HKjJHhFYWoBfCVabkOYVvnzDK/xCvdbdgY9Rg7OntHqDCuCubmV1mD7CXpxUSULd/dfsOowRoKjJTerndT3GUFk+Ob5E68obBKJCr6ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734089746; c=relaxed/simple;
-	bh=4K0e3AnjZnOzkDtaYF79h8zjx4loy6ySDiA6j7tZYFY=;
+	s=arc-20240116; t=1734091489; c=relaxed/simple;
+	bh=XRa0NN9ZBGQTVVvZGNqNy2ZYMuXiGE0Xj3UonEHebfo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xuek9VtQ8rCmnVLjqJwxtv1Yjsno4mfiRXodqj/5Mg7atqa+KfIekqXd6ZwRGITtpaAsx/jGwmnWxfFXdHZNWrI8e7ieUeyfe+7dXbgOmiahtr746k3Sg1usjQq3mugk9IhCQMcfy8HHJUXm3y4MpnNifeT446HrvS++V2VAmh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/pYFHN9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=MF2sW/nZpI0pTeJdEsvFifv2QUfZFFAnN8e8IZVFXAtHV77YUj19O/x0QGYNro8hVhrW01rm6nmKWktK2Pqpqd0rIUnHTMwsayKVJ60Q23VJGlIwQALGZ8T3u36Xk/0DOrb9iYBeTh2zW6ctkX7I7qVNF9Asv9au0psEjcxwgZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7Hrek00; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/pYFHN9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45968C4CED0;
-	Fri, 13 Dec 2024 11:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7Hrek00"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F95C4CED6;
+	Fri, 13 Dec 2024 12:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734089745;
-	bh=4K0e3AnjZnOzkDtaYF79h8zjx4loy6ySDiA6j7tZYFY=;
+	s=korg; t=1734091488;
+	bh=XRa0NN9ZBGQTVVvZGNqNy2ZYMuXiGE0Xj3UonEHebfo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=t/pYFHN9EqzcuHH370T1DVvo7eEjGksDgm3fx+CM6UXFGlGzO0OVYxJTm7Qnp65It
-	 FwLQ2nV4hKKWNTBNYDse5IiG6uSL27QoctdbDYu+ukIpSYHFKKM2JSjpXQg+PjT6br
-	 9RmhnhwNFc1eeCENQLiRllb2JP5kLTE9mw1UHJVU=
-Date: Fri, 13 Dec 2024 12:35:42 +0100
+	b=Z7Hrek00UzzT0IRQQnb4IKAGvpLm8IK/ju3Sds0xiGjarmd0t5oYn9x5UaIBOYMWb
+	 VRw2tIXJsPJ19KjZDZke+HF7mFVoQqDLFachlF+3+sKb629BHiLm1QpMar/4TPxbg5
+	 wyZtnlUgkRj3z6yDUBwjILSfGPKHoecAwCUxvW9k=
+Date: Fri, 13 Dec 2024 13:04:45 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Philippe Troin <phil@fifi.org>
+To: Ard Biesheuvel <ardb@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Anders Blomdell <anders.blomdell@gmail.com>,
-	Jan Kara <jack@suse.cz>, Matthew Wilcox <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.12 162/466] Revert "readahead: properly shorten
- readahead when falling back to do_page_cache_ra()"
-Message-ID: <2024121312-caress-wham-39e1@gregkh>
-References: <20241212144306.641051666@linuxfoundation.org>
- <20241212144313.202242815@linuxfoundation.org>
- <4ab51fdc37c39bd077b4bcea281d301af4c3ef1a.camel@fifi.org>
+	Brian Gerst <brgerst@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 051/459] x86/stackprotector: Work around strict
+ Clang TLS symbol requirements
+Message-ID: <2024121337-mutiny-blazing-4636@gregkh>
+References: <20241212144253.511169641@linuxfoundation.org>
+ <20241212144255.537255677@linuxfoundation.org>
+ <CAMj1kXGBhBj0H=vsn7C3POQwhxxqeELjD0+BDi88mySHF+GgEw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4ab51fdc37c39bd077b4bcea281d301af4c3ef1a.camel@fifi.org>
+In-Reply-To: <CAMj1kXGBhBj0H=vsn7C3POQwhxxqeELjD0+BDi88mySHF+GgEw@mail.gmail.com>
 
-On Thu, Dec 12, 2024 at 10:12:54AM -0800, Philippe Troin wrote:
-> On Thu, 2024-12-12 at 15:55 +0100, Greg Kroah-Hartman wrote:
-> > 6.12-stable review patch.  If anyone has any objections, please let
-> > me know.
-> > 
-> > ------------------
-> > 
-> > From: Jan Kara <jack@suse.cz>
-> > 
-> > commit a220d6b95b1ae12c7626283d7609f0a1438e6437 upstream.
-> > 
-> > This reverts commit 7c877586da3178974a8a94577b6045a48377ff25.
+On Fri, Dec 13, 2024 at 08:41:13AM +0100, Ard Biesheuvel wrote:
+> NAK
 > 
-> Isn't that moot now with 0938b1614648d5fbd832449a5a8a1b51d985323d that
-> in Linus's tree? It's not in 6.12 (yet?).
-> It may be worth backporting 0938b1614 to the stable tree, but it's
-> beyond my pay grade.
+> See other replies re this backport
 
-I'll be glad to take it if someone says it is ok to do so (we need an
-ack from mm developers to take anything they don't explicitly tag for
-stable trees.)
-
-thanks,
+Dropped from all queues now, thanks!
 
 greg k-h
