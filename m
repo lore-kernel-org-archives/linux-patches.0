@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245731DF759;
-	Fri, 13 Dec 2024 12:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D7D1DF263;
+	Fri, 13 Dec 2024 12:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734091489; cv=none; b=eOnLQULIVwBUv/TszHq4pJF5bXkDRjm4MCczeAc3xHleS5l17qoG/XQaGQTaAHlsXQ9HKjJHhFYWoBfCVabkOYVvnzDK/xCvdbdgY9Rg7OntHqDCuCubmV1mD7CXpxUSULd/dfsOowRoKjJTerndT3GUFk+Ob5E68obBKJCr6ZY=
+	t=1734092068; cv=none; b=hWNpmoLhbfT8m+WPwLR/PXrQsSsN0c4+aEZ6benbju6mnWFx/AUD1LdTdoXE+JDq5zuv3CG+k1JkujSAUcKTht7U2m9Chx+K4rxlBWEaUotBgikKfbaa6WpcBr/McmWg2NSFQNAOP0yXkhQzcsCKIJs9a8xuDpbvrSyZn3xWGlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734091489; c=relaxed/simple;
-	bh=XRa0NN9ZBGQTVVvZGNqNy2ZYMuXiGE0Xj3UonEHebfo=;
+	s=arc-20240116; t=1734092068; c=relaxed/simple;
+	bh=sDiy10/kD9Kt51SgGl3FtSgXlIXSItrKPlATcZNKpG0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MF2sW/nZpI0pTeJdEsvFifv2QUfZFFAnN8e8IZVFXAtHV77YUj19O/x0QGYNro8hVhrW01rm6nmKWktK2Pqpqd0rIUnHTMwsayKVJ60Q23VJGlIwQALGZ8T3u36Xk/0DOrb9iYBeTh2zW6ctkX7I7qVNF9Asv9au0psEjcxwgZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7Hrek00; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=uZhStXKLPJvnfSqolFQoQslZ0gbf0Ti88OCFzyuOdiWmedbSnlI04GzyqNzlreJLoVtkLIYRTpbz0r6cG9jXTS8IrTH+g/I/hjNyV0w6k59NSlsUnlm7+s0QKutE7lM0pnVevr3Mk8Zh8j7ZAIGq3ZLM8qU7OHdiReVFRBzQWD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqYbLJa4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7Hrek00"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F95C4CED6;
-	Fri, 13 Dec 2024 12:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqYbLJa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708F0C4CED0;
+	Fri, 13 Dec 2024 12:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734091488;
-	bh=XRa0NN9ZBGQTVVvZGNqNy2ZYMuXiGE0Xj3UonEHebfo=;
+	s=korg; t=1734092067;
+	bh=sDiy10/kD9Kt51SgGl3FtSgXlIXSItrKPlATcZNKpG0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z7Hrek00UzzT0IRQQnb4IKAGvpLm8IK/ju3Sds0xiGjarmd0t5oYn9x5UaIBOYMWb
-	 VRw2tIXJsPJ19KjZDZke+HF7mFVoQqDLFachlF+3+sKb629BHiLm1QpMar/4TPxbg5
-	 wyZtnlUgkRj3z6yDUBwjILSfGPKHoecAwCUxvW9k=
-Date: Fri, 13 Dec 2024 13:04:45 +0100
+	b=EqYbLJa4H7fDN/UxVe8N2CnJOQx/9zyjmrsHGDC+u1Sjsw/EhzMk4/YEKaM2zZy1f
+	 xyvDY/fnp5rsV1U+IS2Uc4I/g60opzE/m32ZM8yHWuLQ9Z1BrmUceaAigPC9z8bK0K
+	 n19Pgf1iP9fbZDZz3M+Llcc+ctBymtB1llaOu2dA=
+Date: Fri, 13 Dec 2024 13:14:23 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ard Biesheuvel <ardb@kernel.org>
+To: Eric Biggers <ebiggers@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Brian Gerst <brgerst@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Jiri Slaby <jslaby@suse.cz>, Borislav Petkov <bp@suse.de>,
+	"David S. Miller" <davem@davemloft.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
+	linux-arch@vger.kernel.org, linux-crypto@vger.kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>, x86-ml <x86@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 051/459] x86/stackprotector: Work around strict
- Clang TLS symbol requirements
-Message-ID: <2024121337-mutiny-blazing-4636@gregkh>
-References: <20241212144253.511169641@linuxfoundation.org>
- <20241212144255.537255677@linuxfoundation.org>
- <CAMj1kXGBhBj0H=vsn7C3POQwhxxqeELjD0+BDi88mySHF+GgEw@mail.gmail.com>
+Subject: Re: [PATCH 5.4 243/321] x86/asm/crypto: Annotate local functions
+Message-ID: <2024121300-immerse-gooey-ee4f@gregkh>
+References: <20241212144229.291682835@linuxfoundation.org>
+ <20241212144239.574474355@linuxfoundation.org>
+ <20241212180023.GA112010@google.com>
+ <2024121201-recoup-gumming-92ce@gregkh>
+ <20241212180856.GB112010@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,13 +49,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMj1kXGBhBj0H=vsn7C3POQwhxxqeELjD0+BDi88mySHF+GgEw@mail.gmail.com>
+In-Reply-To: <20241212180856.GB112010@google.com>
 
-On Fri, Dec 13, 2024 at 08:41:13AM +0100, Ard Biesheuvel wrote:
-> NAK
+On Thu, Dec 12, 2024 at 06:08:56PM +0000, Eric Biggers wrote:
+> On Thu, Dec 12, 2024 at 07:05:24PM +0100, Greg Kroah-Hartman wrote:
+> > On Thu, Dec 12, 2024 at 06:00:23PM +0000, Eric Biggers wrote:
+> > > On Thu, Dec 12, 2024 at 04:02:41PM +0100, Greg Kroah-Hartman wrote:
+> > > > 5.4-stable review patch.  If anyone has any objections, please let me know.
+> > > > 
+> > > > ------------------
+> > > > 
+> > > > From: Jiri Slaby <jslaby@suse.cz>
+> > > > 
+> > > > [ Upstream commit 74d8b90a889022e306b543ff2147a6941c99b354 ]
+> > > > 
+> > > > Use the newly added SYM_FUNC_START_LOCAL to annotate beginnings of all
+> > > > functions which do not have ".globl" annotation, but their endings are
+> > > > annotated by ENDPROC. This is needed to balance ENDPROC for tools that
+> > > > generate debuginfo.
+> > > > 
+> > > > These function names are not prepended with ".L" as they might appear in
+> > > > call traces and they wouldn't be visible after such change.
+> > > > 
+> > > > To be symmetric, the functions' ENDPROCs are converted to the new
+> > > > SYM_FUNC_END.
+> > > > 
+> > > > Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+> > > > Signed-off-by: Borislav Petkov <bp@suse.de>
+> > > > Cc: "David S. Miller" <davem@davemloft.net>
+> > > > Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> > > > Cc: "H. Peter Anvin" <hpa@zytor.com>
+> > > > Cc: Ingo Molnar <mingo@redhat.com>
+> > > > Cc: linux-arch@vger.kernel.org
+> > > > Cc: linux-crypto@vger.kernel.org
+> > > > Cc: Thomas Gleixner <tglx@linutronix.de>
+> > > > Cc: x86-ml <x86@kernel.org>
+> > > > Link: https://lkml.kernel.org/r/20191011115108.12392-7-jslaby@suse.cz
+> > > > Stable-dep-of: 3b2f2d22fb42 ("crypto: x86/aegis128 - access 32-bit arguments as 32-bit")
+> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > > ---
+> > > >  arch/x86/crypto/aegis128-aesni-asm.S         |  8 ++--
+> > > >  arch/x86/crypto/aesni-intel_asm.S            | 49 ++++++++------------
+> > > >  arch/x86/crypto/camellia-aesni-avx-asm_64.S  | 20 ++++----
+> > > >  arch/x86/crypto/camellia-aesni-avx2-asm_64.S | 20 ++++----
+> > > >  arch/x86/crypto/cast5-avx-x86_64-asm_64.S    |  8 ++--
+> > > >  arch/x86/crypto/cast6-avx-x86_64-asm_64.S    |  8 ++--
+> > > >  arch/x86/crypto/chacha-ssse3-x86_64.S        |  4 +-
+> > > >  arch/x86/crypto/ghash-clmulni-intel_asm.S    |  4 +-
+> > > >  arch/x86/crypto/serpent-avx-x86_64-asm_64.S  |  8 ++--
+> > > >  arch/x86/crypto/serpent-avx2-asm_64.S        |  8 ++--
+> > > >  arch/x86/crypto/twofish-avx-x86_64-asm_64.S  |  8 ++--
+> > > >  11 files changed, 68 insertions(+), 77 deletions(-)
+> > > 
+> > > Unless the author of this patch acks this I'd rather you skipped this.  It's not
+> > > worth the risk of regressions in the crypto code.
+> > 
+> > It's a dependancy of commit 3b2f2d22fb42 ("crypto: x86/aegis128 - access
+> > 32-bit arguments as 32-bit"), so should we drop that one also?
+> > 
 > 
-> See other replies re this backport
+> Well it is not a dependency if the conflict is properly resolved, but I would
+> just drop it too.  In theory it fixes a bug, but we haven't seen gcc or clang
+> generating code that makes it matter.  Also I've noticed that some other asm
+> files have the same issue...
 
-Dropped from all queues now, thanks!
+Good point, I've fixed up the dependant patch so that it doesn't need
+this one, and dropped this one from the queue.
+
+thanks for the review!
 
 greg k-h
