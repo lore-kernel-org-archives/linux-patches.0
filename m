@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D7D1DF263;
-	Fri, 13 Dec 2024 12:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A701DF256;
+	Fri, 13 Dec 2024 12:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734092068; cv=none; b=hWNpmoLhbfT8m+WPwLR/PXrQsSsN0c4+aEZ6benbju6mnWFx/AUD1LdTdoXE+JDq5zuv3CG+k1JkujSAUcKTht7U2m9Chx+K4rxlBWEaUotBgikKfbaa6WpcBr/McmWg2NSFQNAOP0yXkhQzcsCKIJs9a8xuDpbvrSyZn3xWGlo=
+	t=1734092360; cv=none; b=jaMuQbMQATnyQAXY8cr/VDMvFda9zpR9KI2gfobkF5iIguuE40YjJK0bFSwVW+CDqoZZaP8hRhEaIlLPc2RjzRs3ovYe0BXws1EEA0qCYhXBmterW7hHGMpVxJUSf+IvdHDVK0t1kBLHPXN0C1tbVBsSBklyyBq1WwNciWs/+tk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734092068; c=relaxed/simple;
-	bh=sDiy10/kD9Kt51SgGl3FtSgXlIXSItrKPlATcZNKpG0=;
+	s=arc-20240116; t=1734092360; c=relaxed/simple;
+	bh=V9ONkfSkt72NTj06dq213k8hVFjsmB8vM3cYQuRVE4A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uZhStXKLPJvnfSqolFQoQslZ0gbf0Ti88OCFzyuOdiWmedbSnlI04GzyqNzlreJLoVtkLIYRTpbz0r6cG9jXTS8IrTH+g/I/hjNyV0w6k59NSlsUnlm7+s0QKutE7lM0pnVevr3Mk8Zh8j7ZAIGq3ZLM8qU7OHdiReVFRBzQWD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqYbLJa4; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=kHgowJBChZgIbQO9EfPb91IR0tEju6FXZbzO0lYgDiOxwpVmQg5SMU1GGXA4PUnYPeef1UV6ShVPJZ/m8NKr/HHBiATbEoCWbg8UMQUdCzmqvc7pLQz1aLSeJBmb+Oa+12YKL0l/65IAQCNCNN9Nu3wmp8tD7wtfvmbngVZI3zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nYi1Q7It; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqYbLJa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708F0C4CED0;
-	Fri, 13 Dec 2024 12:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nYi1Q7It"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF41C4CED0;
+	Fri, 13 Dec 2024 12:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734092067;
-	bh=sDiy10/kD9Kt51SgGl3FtSgXlIXSItrKPlATcZNKpG0=;
+	s=korg; t=1734092358;
+	bh=V9ONkfSkt72NTj06dq213k8hVFjsmB8vM3cYQuRVE4A=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EqYbLJa4H7fDN/UxVe8N2CnJOQx/9zyjmrsHGDC+u1Sjsw/EhzMk4/YEKaM2zZy1f
-	 xyvDY/fnp5rsV1U+IS2Uc4I/g60opzE/m32ZM8yHWuLQ9Z1BrmUceaAigPC9z8bK0K
-	 n19Pgf1iP9fbZDZz3M+Llcc+ctBymtB1llaOu2dA=
-Date: Fri, 13 Dec 2024 13:14:23 +0100
+	b=nYi1Q7ItdOhMSEQOxann2ot9ltPpUGpeZQRQtlDBnshsotAQxzbZxDJG2rsatPDSg
+	 XKqomGizaEJByq1KsMbuXSGH6PcwsvhoFnJxVkCJ+uqoDr2pIlDFDU7BCmCrCIS05k
+	 v62AbhGDRF4/LtI1WfPAgnJSEfhsES4/Bx5LBt5w=
+Date: Fri, 13 Dec 2024 13:19:15 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Eric Biggers <ebiggers@kernel.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Jiri Slaby <jslaby@suse.cz>, Borislav Petkov <bp@suse.de>,
-	"David S. Miller" <davem@davemloft.net>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"H. Peter Anvin" <hpa@zytor.com>, Ingo Molnar <mingo@redhat.com>,
-	linux-arch@vger.kernel.org, linux-crypto@vger.kernel.org,
-	Thomas Gleixner <tglx@linutronix.de>, x86-ml <x86@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.4 243/321] x86/asm/crypto: Annotate local functions
-Message-ID: <2024121300-immerse-gooey-ee4f@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>, Arnd Bergmann <arnd@arndb.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 5.4 000/321] 5.4.287-rc1 review
+Message-ID: <2024121303-polyester-entryway-de18@gregkh>
 References: <20241212144229.291682835@linuxfoundation.org>
- <20241212144239.574474355@linuxfoundation.org>
- <20241212180023.GA112010@google.com>
- <2024121201-recoup-gumming-92ce@gregkh>
- <20241212180856.GB112010@google.com>
+ <CA+G9fYv+i=T0KeWvxhiCOFiMSmpUYeUOWwn_YunEaYTi8oA_Ww@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,73 +49,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241212180856.GB112010@google.com>
+In-Reply-To: <CA+G9fYv+i=T0KeWvxhiCOFiMSmpUYeUOWwn_YunEaYTi8oA_Ww@mail.gmail.com>
 
-On Thu, Dec 12, 2024 at 06:08:56PM +0000, Eric Biggers wrote:
-> On Thu, Dec 12, 2024 at 07:05:24PM +0100, Greg Kroah-Hartman wrote:
-> > On Thu, Dec 12, 2024 at 06:00:23PM +0000, Eric Biggers wrote:
-> > > On Thu, Dec 12, 2024 at 04:02:41PM +0100, Greg Kroah-Hartman wrote:
-> > > > 5.4-stable review patch.  If anyone has any objections, please let me know.
-> > > > 
-> > > > ------------------
-> > > > 
-> > > > From: Jiri Slaby <jslaby@suse.cz>
-> > > > 
-> > > > [ Upstream commit 74d8b90a889022e306b543ff2147a6941c99b354 ]
-> > > > 
-> > > > Use the newly added SYM_FUNC_START_LOCAL to annotate beginnings of all
-> > > > functions which do not have ".globl" annotation, but their endings are
-> > > > annotated by ENDPROC. This is needed to balance ENDPROC for tools that
-> > > > generate debuginfo.
-> > > > 
-> > > > These function names are not prepended with ".L" as they might appear in
-> > > > call traces and they wouldn't be visible after such change.
-> > > > 
-> > > > To be symmetric, the functions' ENDPROCs are converted to the new
-> > > > SYM_FUNC_END.
-> > > > 
-> > > > Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-> > > > Signed-off-by: Borislav Petkov <bp@suse.de>
-> > > > Cc: "David S. Miller" <davem@davemloft.net>
-> > > > Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> > > > Cc: "H. Peter Anvin" <hpa@zytor.com>
-> > > > Cc: Ingo Molnar <mingo@redhat.com>
-> > > > Cc: linux-arch@vger.kernel.org
-> > > > Cc: linux-crypto@vger.kernel.org
-> > > > Cc: Thomas Gleixner <tglx@linutronix.de>
-> > > > Cc: x86-ml <x86@kernel.org>
-> > > > Link: https://lkml.kernel.org/r/20191011115108.12392-7-jslaby@suse.cz
-> > > > Stable-dep-of: 3b2f2d22fb42 ("crypto: x86/aegis128 - access 32-bit arguments as 32-bit")
-> > > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > > ---
-> > > >  arch/x86/crypto/aegis128-aesni-asm.S         |  8 ++--
-> > > >  arch/x86/crypto/aesni-intel_asm.S            | 49 ++++++++------------
-> > > >  arch/x86/crypto/camellia-aesni-avx-asm_64.S  | 20 ++++----
-> > > >  arch/x86/crypto/camellia-aesni-avx2-asm_64.S | 20 ++++----
-> > > >  arch/x86/crypto/cast5-avx-x86_64-asm_64.S    |  8 ++--
-> > > >  arch/x86/crypto/cast6-avx-x86_64-asm_64.S    |  8 ++--
-> > > >  arch/x86/crypto/chacha-ssse3-x86_64.S        |  4 +-
-> > > >  arch/x86/crypto/ghash-clmulni-intel_asm.S    |  4 +-
-> > > >  arch/x86/crypto/serpent-avx-x86_64-asm_64.S  |  8 ++--
-> > > >  arch/x86/crypto/serpent-avx2-asm_64.S        |  8 ++--
-> > > >  arch/x86/crypto/twofish-avx-x86_64-asm_64.S  |  8 ++--
-> > > >  11 files changed, 68 insertions(+), 77 deletions(-)
-> > > 
-> > > Unless the author of this patch acks this I'd rather you skipped this.  It's not
-> > > worth the risk of regressions in the crypto code.
-> > 
-> > It's a dependancy of commit 3b2f2d22fb42 ("crypto: x86/aegis128 - access
-> > 32-bit arguments as 32-bit"), so should we drop that one also?
-> > 
+On Fri, Dec 13, 2024 at 01:54:42AM +0530, Naresh Kamboju wrote:
+> On Thu, 12 Dec 2024 at 23:08, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 5.4.287 release.
+> > There are 321 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.287-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
 > 
-> Well it is not a dependency if the conflict is properly resolved, but I would
-> just drop it too.  In theory it fixes a bug, but we haven't seen gcc or clang
-> generating code that makes it matter.  Also I've noticed that some other asm
-> files have the same issue...
+> As others reported,
+> The arm builds failed on Linux stable-rc linux-5.4.y due to following build
+> warnings / errors.
+> 
+> arm:
+>   * build/gcc-12-defconfig
+>   * build/clang-19-defconfig
+> 
+> 
+> First seen on Linux stable-rc v5.4.286-322-g3612365cb6b2.
+>   Good: v5.4.286
+>   Bad:  v5.4.286-322-g3612365cb6b2
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> Build log:
+> -----
+> /builds/linux/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c:173:2: error:
+> use of undeclared identifier 'DRM_GEM_CMA_DRIVER_OPS'
+>   173 |         DRM_GEM_CMA_DRIVER_OPS,
+>       |         ^
+> 1 error generated.
+> make[5]: *** [/builds/linux/scripts/Makefile.build:262:
+> drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.o] Error 1
+> 
+> The commit pointing to,
+>   drm/fsl-dcu: Set GEM CMA functions with DRM_GEM_CMA_DRIVER_OPS
+>   [ Upstream commit 6a32e55d18b34a787f7beaacc912b30b58022646 ]
 
-Good point, I've fixed up the dependant patch so that it doesn't need
-this one, and dropped this one from the queue.
+Now dropped, I'll push out a -rc2 soon.
 
-thanks for the review!
+thanks,
 
 greg k-h
