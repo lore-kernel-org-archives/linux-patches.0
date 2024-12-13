@@ -1,125 +1,74 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC58F1DEFC1;
-	Fri, 13 Dec 2024 11:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395A81DF746;
+	Fri, 13 Dec 2024 11:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734089668; cv=none; b=sliMwfuA1T3bTo747aniZL6pxpJqdRMe24EWag4jvzZufAupjKVkDX/oyGkmpbH4P7jVkm56TwlRSgFnxl3jPRIxxZVRVznV+FCL8Zx6MEbkl4cv7PFbAq82wqwzJXewKFfpmEDk+PDa25riHmrryrduP9tqq8UZAz45DAc+4oo=
+	t=1734089746; cv=none; b=M/3KWHOFYaiHLY9AjjiDKbvDq3Qnp+hRRx6+uhplUBPzTCDDfxrTTnNi02a4KiFdU5WlLo84A5iyq/QRvPI2aZm8+7GM4jdgk+s/bPaM/QUI8giQ36TdVXWWBaJtqyG8yLlcKvQTFgJrBmH/D6Uhf3/ymoswSfulJv8doYZodA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734089668; c=relaxed/simple;
-	bh=aWaCOZ8r5I02327/CVzZfqrLjJphOn1zrnuB5mpBb20=;
+	s=arc-20240116; t=1734089746; c=relaxed/simple;
+	bh=4K0e3AnjZnOzkDtaYF79h8zjx4loy6ySDiA6j7tZYFY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nzm80gZs/fdqmipjAWMei6suFJ15rjtEjj+yMj/f4waUBIqmGHz7AZLwhCKFRgeTYTr+ukbUMZJcfRKmo9LNCKJM9RK3JGOxq5qj92xTVLrOo/mMwn8oGiQ6Xqnmoyb7fsnDgdWkxWAt7dbGWZJgDsBRsRTmtHRkRdjSUT3WsZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rw4RuQip; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xuek9VtQ8rCmnVLjqJwxtv1Yjsno4mfiRXodqj/5Mg7atqa+KfIekqXd6ZwRGITtpaAsx/jGwmnWxfFXdHZNWrI8e7ieUeyfe+7dXbgOmiahtr746k3Sg1usjQq3mugk9IhCQMcfy8HHJUXm3y4MpnNifeT446HrvS++V2VAmh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/pYFHN9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rw4RuQip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD741C4CED0;
-	Fri, 13 Dec 2024 11:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/pYFHN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45968C4CED0;
+	Fri, 13 Dec 2024 11:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734089668;
-	bh=aWaCOZ8r5I02327/CVzZfqrLjJphOn1zrnuB5mpBb20=;
+	s=korg; t=1734089745;
+	bh=4K0e3AnjZnOzkDtaYF79h8zjx4loy6ySDiA6j7tZYFY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rw4RuQipt7TCsn+VAdAai8q+Kw+DJyFPXBg0fKy/th8khbA9d/58bxxZEwvorTlmh
-	 P4Yo6IUUTO9Y9sNWioYGecwpqZzRSa6q1PX+EUBuaIQQKh2oX3ppaVFZ1r+I4W7Plt
-	 s71rsY5DNF9tx8EtTxxQtDL68WjOq48U7mvr8Ob4=
-Date: Fri, 13 Dec 2024 12:34:25 +0100
+	b=t/pYFHN9EqzcuHH370T1DVvo7eEjGksDgm3fx+CM6UXFGlGzO0OVYxJTm7Qnp65It
+	 FwLQ2nV4hKKWNTBNYDse5IiG6uSL27QoctdbDYu+ukIpSYHFKKM2JSjpXQg+PjT6br
+	 9RmhnhwNFc1eeCENQLiRllb2JP5kLTE9mw1UHJVU=
+Date: Fri, 13 Dec 2024 12:35:42 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
+To: Philippe Troin <phil@fifi.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Stultz <jstultz@google.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: Re: [PATCH 6.12 000/466] 6.12.5-rc1 review
-Message-ID: <2024121358-isolation-tanned-6a2d@gregkh>
+	Anders Blomdell <anders.blomdell@gmail.com>,
+	Jan Kara <jack@suse.cz>, Matthew Wilcox <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 6.12 162/466] Revert "readahead: properly shorten
+ readahead when falling back to do_page_cache_ra()"
+Message-ID: <2024121312-caress-wham-39e1@gregkh>
 References: <20241212144306.641051666@linuxfoundation.org>
- <CA+G9fYuX2BsEOCZPC+2aJZ6mEh10kGY69pEQU3oo1rmK-8kTRg@mail.gmail.com>
- <CA+G9fYu3SmdFKRkSDU0UV=bMs69UHx8UOeuniqTSD9haQ2yBvQ@mail.gmail.com>
- <CA+G9fYvV21_-3QYWh_gmKMRZ89AYn-KM99DbmghsLQJEL2+4Nw@mail.gmail.com>
+ <20241212144313.202242815@linuxfoundation.org>
+ <4ab51fdc37c39bd077b4bcea281d301af4c3ef1a.camel@fifi.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYvV21_-3QYWh_gmKMRZ89AYn-KM99DbmghsLQJEL2+4Nw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4ab51fdc37c39bd077b4bcea281d301af4c3ef1a.camel@fifi.org>
 
-On Fri, Dec 13, 2024 at 01:18:07AM +0530, Naresh Kamboju wrote:
-> On Fri, 13 Dec 2024 at 01:04, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> >
-> > On Thu, 12 Dec 2024 at 23:35, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > >
-> > > On Thu, 12 Dec 2024 at 20:30, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > This is the start of the stable review cycle for the 6.12.5 release.
-> > > > There are 466 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.5-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> > > > and the diffstat can be found below.
-> > > >
-> > > > thanks,
-> > > >
-> > > > greg k-h
-> > >
-> > > The riscv builds failed on Linux stable-rc linux-6.12.y due to following build
-> > > warnings / errors.
-> > >
-> > > riscv:
-> > >   * build/gcc-13-defconfig
-> > >   * build/clang-19-defconfig
-> > >   * build/clang-nightly-defconfig
-> > >   * build/gcc-8-defconfig
-> > >
-> > > First seen on Linux stable-rc linux-6.12.y v6.12.4-467-g3f47dc0fd5b1,
-> > >   Good: v6.12.4
-> > >   Bad:  6.12.5-rc1
-> > >
-> > >
-> > > Build log:
-> > > -----------
-> > > kernel/time/timekeeping.c: In function 'timekeeping_debug_get_ns':
-> > > kernel/time/timekeeping.c:263:17: error: too few arguments to function
-> > > 'clocksource_delta'
-> > >   263 |         delta = clocksource_delta(now, last, mask);
-> > >       |                 ^~~~~~~~~~~~~~~~~
-> > > In file included from kernel/time/timekeeping.c:30:
-> > > kernel/time/timekeeping_internal.h:18:19: note: declared here
-> > >    18 | static inline u64 clocksource_delta(u64 now, u64 last, u64
-> > > mask, u64 max_delta)
-> > >       |                   ^~~~~~~~~~~~~~~~~
-> > > make[5]: *** [scripts/Makefile.build:229: kernel/time/timekeeping.o] Error 1
-> >
-> > The bisect log pointing to first bad commit,
-> >
-> >     clocksource: Make negative motion detection more robust
-> >     commit 76031d9536a076bf023bedbdb1b4317fc801dd67 upstream.
+On Thu, Dec 12, 2024 at 10:12:54AM -0800, Philippe Troin wrote:
+> On Thu, 2024-12-12 at 15:55 +0100, Greg Kroah-Hartman wrote:
+> > 6.12-stable review patch.  If anyone has any objections, please let
+> > me know.
+> > 
+> > ------------------
+> > 
+> > From: Jan Kara <jack@suse.cz>
+> > 
+> > commit a220d6b95b1ae12c7626283d7609f0a1438e6437 upstream.
+> > 
+> > This reverts commit 7c877586da3178974a8a94577b6045a48377ff25.
 > 
-> This issue was fixed in the upstream by adding the following patch,
->   timekeeping: Remove CONFIG_DEBUG_TIMEKEEPING
->   commit d44d26987bb3df6d76556827097fc9ce17565cb8 upstream
+> Isn't that moot now with 0938b1614648d5fbd832449a5a8a1b51d985323d that
+> in Linus's tree? It's not in 6.12 (yet?).
+> It may be worth backporting 0938b1614 to the stable tree, but it's
+> beyond my pay grade.
 
-Kind of, it needed another commit as well, I've queued up the needed
-ones and will push out a -rc2 soon.
+I'll be glad to take it if someone says it is ok to do so (we need an
+ack from mm developers to take anything they don't explicitly tag for
+stable trees.)
 
-thanks for testing!
+thanks,
 
 greg k-h
