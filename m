@@ -1,62 +1,116 @@
-Received: from 1wt.eu (ded1.1wt.eu [163.172.96.212])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B11C85270
-	for <patches@lists.linux.dev>; Sat, 14 Dec 2024 07:12:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=163.172.96.212
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734160347; cv=none; b=C+dGN0o9RGNes3+pZK8pBZ3M0OStdKKT0Ye56eN1qNvPpumw8MjJ3I/TfvLkkm/r6biRpS7apT3U0LWcwrISsYqpSTWbG9bzBx7UJ1Ns/vZde3ehnEEAkCw/wmjBkMNwcPtbuJxHVPulOT5HhPxNb0rQ//wH+BFrjkOjYVtNMUE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734160347; c=relaxed/simple;
-	bh=DW85s3K/2RaRQoRpw/TsqtSuThFC5ie2FU5BB6r6MnY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LKlWzcCene8EEZK+eqG07Nv5Hc65jEfbXwX9F5v49TyOlReKkMod0DHYNy8F7lVGFYynvcZ2xkMpl2ZAAv1YO1/fWuCRX+Csw5D59JuhsrmPZzm7MMx6zYYx2jcuifBbrrX8K2f64wKQaepdcUqL0im93ULbE0t6rptXSTht8m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=1wt.eu; spf=pass smtp.mailfrom=1wt.eu; arc=none smtp.client-ip=163.172.96.212
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=1wt.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=1wt.eu
-Received: (from willy@localhost)
-	by pcw.home.local (8.15.2/8.15.2/Submit) id 4BE6urk6029602;
-	Sat, 14 Dec 2024 07:56:53 +0100
-Date: Sat, 14 Dec 2024 07:56:53 +0100
-From: Willy Tarreau <w@1wt.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-        linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-        akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-        patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-        jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-        srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-        hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/467] 6.12.5-rc2 review
-Message-ID: <20241214065653.GA29240@1wt.eu>
-References: <20241213145925.077514874@linuxfoundation.org>
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AAC130A7D
+	for <patches@lists.linux.dev>; Sat, 14 Dec 2024 08:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734165760; cv=pass; b=Uu5saWtdS5BLxMDURqgHeaLthuwr2ViFcpwcH1XnJM6WVFd7y8lxuyJjDDsU27jH4zbuyJKdb4BYqFeZeMgPl5qycxBKk54heMLC/x0998wDiNbTPSu4qoSAQkp+2ksX0uR93b8244UxTnFu4mUXu7afmNvyqcJuXDZNWrtv26I=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734165760; c=relaxed/simple;
+	bh=6AlhKAx/1iHoUMPGCdg5yrqxj9sHnH/tjN/KBU+blDE=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=bvsSqIzsVZyiJNYTHl3ygiUbKYGlO47+03r/6Ha7Ua2cwE19QGlRHJG0oP0l2xOif3G0FkEvISiyFsrzmEpd/nBB4XL62JJs9biLU8sq+XrcQLiYe4SjUBT+Td+RN1AwWexN/Wq7x5cPIyfQwYhV6fVIVmU1WZpVAo4GsQ3HS2k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=b/UOZ7sn; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="b/UOZ7sn"
+ARC-Seal: i=1; a=rsa-sha256; t=1734165743; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=QKfxdgxLjaRYnb2pHBXr1aPg+CCCwuLW0A4tly2uBK4iHuC7DRd/AaTPfTjYXNZuPl1Zf/oJcUh8zcMd/cktlgSxKA6juJYaxbz/t4b3qjw9PdnnI3+u6lJg4NlhOutScJI8dvqF9ftfMs0+bbUHvIzQrRxk4nVC734f2KjWvpw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1734165743; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=n8XHznND3mecvXcSXbHtaGq3xtRw1Tf/k5yZDvCddkA=; 
+	b=C3t0tps2+gD2YnK96Fo5HM6EV0b+eqVuf0RiWHJ72VqAjJLL/+3RCTZHAtcUXcDLjzXHGUAGPFgmstcBGvin7WC8UElsGtluSI/U2+4o8AYaBivHMWjWAD3Iw53PX1w7PRJm2Y6nvtkPXJoq4uhYSYTUDxDTsPQSROn5PKXk1ao=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1734165743;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=n8XHznND3mecvXcSXbHtaGq3xtRw1Tf/k5yZDvCddkA=;
+	b=b/UOZ7snydCggikbfUuVsVrwROwvNJvLxInkVhUl4H8UeuFRNzIS5GR7k6hErIfx
+	6t0XX+XcJVGY6QJPxTd/9rDAs1vpBLqyPmSBuJdmyjT9o06oCUlbG0ATRKfvaPdlaYe
+	loCf3SBlwgCM7oPbum/JAMOzu0Gp+L1Gn+DBiMRg=
+Received: by mx.zohomail.com with SMTPS id 1734165739581496.37692639463216;
+	Sat, 14 Dec 2024 00:42:19 -0800 (PST)
+Message-ID: <64035f44-0ef9-4eaf-b2eb-0a83b0fe3748@collabora.com>
+Date: Sat, 14 Dec 2024 13:42:20 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241213145925.077514874@linuxfoundation.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.6 000/356] 6.6.66-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+References: <20241212144244.601729511@linuxfoundation.org>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20241212144244.601729511@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On Fri, Dec 13, 2024 at 04:03:57PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.5 release.
-> There are 467 patches in this series, all will be posted as a response
+On 12/12/24 7:55 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.66 release.
+> There are 356 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Sun, 15 Dec 2024 14:57:53 +0000.
+> Responses should be made by Sat, 14 Dec 2024 14:41:35 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.5-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.66-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+OVERVIEW
 
-Booted on Radxa E52C (arm64) using pcie, rtl8125b(r8169), eMMC(dwmmc),
-usb(xhci-hcd) + cdc_acm, i2c rtc. Looks good.
+        Builds: 23 passed, 0 failed
 
-Tested-by: Willy Tarreau <w@1wt.eu>
+    Boot tests: 210 passed, 0 failed
 
-Willy
+    CI systems: maestro
+
+REVISION
+
+    Commit
+        name: v6.6.65-357-gae86bb742fa8
+        hash: ae86bb742fa81e7826a49817e016bf288015f456
+    Checked out from
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+
+
+BUILDS
+
+    No build failures found
+
+BOOT TESTS
+
+   No failures found
+
+See complete and up-to-date report at:
+
+    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=ae86bb742fa81e7826a49817e016bf288015f456&var-patchset_hash=
+
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
