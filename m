@@ -1,123 +1,223 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A3F126C10
-	for <patches@lists.linux.dev>; Sat, 14 Dec 2024 09:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734167847; cv=pass; b=fHVdBaCF33/k6v41mzNoyezVFedulpqM9FWLXj2++mQJHiRhhyZVX1qO3BtbqNkD17Hb1eGmxHboDg47Uu88+SmXRahipBeZkI7TxO+n9vMfQqa1SCz973AloQUYm18JSH3hyo8XHsh/f4abSb3IU4P2fQtWd4Z4YsMFEcPjI/Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734167847; c=relaxed/simple;
-	bh=3yQWs93OsT5foCFOxASMVoLXO2ADman8M923fVuDV+U=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DQrCXM5a8K2aexQBlFrLSFYCkFtTMvqkukI59xmXg83m3L9x1qz/8oug4OlyL90eGTdML1g4HkxtHguCSEIsbX1e7N2vDRe+hYl2jwBS7B/2iVDYjKjp4/ch2Wn/hkCMAFK1AQ+tn20rtSjEzHL+lPHmIXR6RWtTU9Pc5lVOBD0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=YktAS6f3; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41B086250
+	for <patches@lists.linux.dev>; Sat, 14 Dec 2024 10:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734170504; cv=none; b=en6Mm1kKEXVqXJ7u1lUOjRwMMhagwgFp967KcotG5ONfPyJS2c15canXIDPeoKXl1HT1l78bD1p5LdhJFMwy5B/NBeftI2nxRrg3NL9VCM+ZhzdS65nbI9ytclAxJe3Fq5/YCyRDbpbRATEI/XoZBJsdgDdoFoZb4Uv8hqTItD0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734170504; c=relaxed/simple;
+	bh=L3Ts2vR1tGcJOhL+7WA7EXHct8W4/evMCyaznAj/8PY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=srljvR93e0rwXB/ojFFBAObFm/yCiTcmJXO3wSKirs/vvQ4GR7QgxE7Te6xAvNpjX5WRYSrFjbGKe9Apz2G5UmyXkPsZuQuuUp8fNjB1MkbzLT1wdIgzj7RYOtmfaoekLSO6cAYHATtkxWKHm3UVY6BsGk5IMucx5FKcDOpU1Ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SFFg6ybS; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="YktAS6f3"
-ARC-Seal: i=1; a=rsa-sha256; t=1734167828; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=MfmXIIJq8HMEE2EkgH6+FVYxhW/hBFSKQlLuj1AKmzyqFaSXy1RJzJ5bv9AbZGSObkAuB/tcaETJI7fwmanxzNYpqgi3hNnNG9QrDkhv0aQ3Vwznh54AyOOSuhFx1KtODZeMHA4Sb7Y4N9AD7E6yZbfER1NHLaCy3EkzRSHqxp0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1734167828; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=UnyxacEJSTEgdFNIKKqgMJvx6u7/uWoG1+Uqtvejpd4=; 
-	b=h9OiLi9ZDGkBRvbqRb8nUR01AdAG7PvxUQMdow8tcBl7KMXmoZCNPCvZLSh9q9aTsB5dVmZD9HSR9fN3yIjGUR48ok/F8U3yPSmzmcP20T0JgnhO0fUucghYzTJhV7edEEp/TfbT17LjaehN4bPSE/oSHfsJDNMBmJt23Apjn6E=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
-	dmarc=pass header.from=<Usama.Anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1734167828;
-	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=UnyxacEJSTEgdFNIKKqgMJvx6u7/uWoG1+Uqtvejpd4=;
-	b=YktAS6f3IGo5UstMWQ2FBk+R/QIX3T0CYdRCYY0K13zifQy0GAkf5G44qNKQz7qo
-	Nrp6hKMZ9LZ4cGQOoe1oDQOtoviUHXKYNdpSvFHHSffsCuJtN7xjJC5xQdQB+aPvpz9
-	inJZ8FRVCbWTJPgNC8py+GvLXTktvSkpdQ/G1d8E=
-Received: by mx.zohomail.com with SMTPS id 17341678253140.36163794351750767;
-	Sat, 14 Dec 2024 01:17:05 -0800 (PST)
-Message-ID: <2a8cd083-46e9-4ba9-bca7-710d743f4e1f@collabora.com>
-Date: Sat, 14 Dec 2024 14:17:08 +0500
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SFFg6ybS"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-5160f80e652so631918e0c.2
+        for <patches@lists.linux.dev>; Sat, 14 Dec 2024 02:01:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1734170500; x=1734775300; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B6iJmqCbGDdzurGz1nq3IkvqP7Qanek/ZA/cXhzDn70=;
+        b=SFFg6ybSHPUgNOgCtEZ/GygINX3VUjl3xKuP7qeR8IrL4sASx/MTXv523mPUOJ4fSd
+         3AfOmJ6G46YI2s/HkS0GbLkd8w4995IFVqGKxGZZxVgbexGqhp2L7+B6/KtMpULnKVg9
+         4cPxYh59yfNdXzjHdfM+cR9nK0FtuBMFbSNY1aZ/OCXCLIcByzbZwmUs2MvZwDce79MI
+         Uan5HIPcLP490p1sQaNDf7MQB7r7bTFQ+BXBFISM4RdEaGPKmBUTp/a+t1HH+JcABaom
+         HlmNy1JTAEKPORroUD5l/joQ7kOE0BiwtFPo1Vlm7rddOj0n2h78CixU4WWzhGzwjdx/
+         7sHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734170500; x=1734775300;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B6iJmqCbGDdzurGz1nq3IkvqP7Qanek/ZA/cXhzDn70=;
+        b=oFAS2aa02m/37Dv/ftJQjZ0cqVrqSeY/9DwM/2bLA6NIU6CZQy2VfWXGcV+CqzXs0E
+         yhKQelZHtOWyIHZ25WBoEAoqujhNZfexwLlNMA31AFcnDPXCL64A9+haZF5e7X2F8e4r
+         /fpNOTtW2GnNlId18uUcDR1zvEMdnEp4fN7ecgTw4BaXkcBR4oFtyoOYg/5YmL4trvvE
+         pM/vOJu0WXpWz5OjVSJPpr6UaYDw6vG3kzrOnXXyWqqjuobMjXsI86PoRrRrrsogd0s6
+         CO+4X55+QXJ5lr0iPV+xLvOzF1UxPAjcqtF29vUjz9gTh/38EoF/83rXgshml35MZKgF
+         PbKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW2RfoqFt16jeXa0pQ74eYilkCGHieEq0qQYPHM+xnSyMNv19ZhDF6Y62BL2TK3NCFL8RcCrYJf@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw8zGMF5q4B2DxU/96RLgG6YVwkuALlDI6puvxiPlqeifCvJZhw
+	h2rmWLIXet14Vo04lvCq/ySJ2ovdf36/657mSYBodASej+tLemdPaHmtHI0GBthp2TapyKfv2X6
+	AQjYiguZIkSuR8ziHlrRIE/XS4cn/DsVMQF/gNg==
+X-Gm-Gg: ASbGncvfc1vO8jy4xhtVe9xjs4GUO7ajO/pV2+1i3yS8NxFIDg2mQ8sDiiNvy5y5efa
+	8YUwYO5it8W0np0WUteNSWTZeGm3EomweXWawnOPpsfLr0GN+/JT2gYgjYsJDDP1U/0pD1aQ=
+X-Google-Smtp-Source: AGHT+IHO7/jmhkLsHDBV3zjlqLwhzO6luE30zeMTItXQRQKMazsXibRYrA6dzCFh5ymyTKClcwpgIAZ6Isq71zlxAg0=
+X-Received: by 2002:a05:6122:2a05:b0:518:6286:87a4 with SMTP id
+ 71dfb90a1353d-518ca251874mr5900037e0c.4.1734170500545; Sat, 14 Dec 2024
+ 02:01:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 5.4 000/316] 5.4.287-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-References: <20241213145847.112340475@linuxfoundation.org>
-Content-Language: en-US
-From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
-In-Reply-To: <20241213145847.112340475@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+References: <20241213145925.077514874@linuxfoundation.org>
+In-Reply-To: <20241213145925.077514874@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Sat, 14 Dec 2024 15:31:29 +0530
+Message-ID: <CA+G9fYtcVtLEWtv3N1e0jtycdSomHEZ8+LV0k-P8weZUnX10dg@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/467] 6.12.5-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 12/13/24 8:03 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.287 release.
-> There are 316 patches in this series, all will be posted as a response
+On Fri, 13 Dec 2024 at 20:34, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.5 release.
+> There are 467 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Sun, 15 Dec 2024 14:57:53 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.287-rc2.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.5-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
-Hi,
-
-Please find the KernelCI report below :-
 
 
-OVERVIEW
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-    Builds: 25 passed, 3 failed
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-    Boot tests: 153 passed, 0 failed
+## Build
+* kernel: 6.12.5-rc2
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git commit: 602e3159e817475bec9784ba359147d8351e90c2
+* git describe: v6.12.4-468-g602e3159e817
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.12.y/build/v6.12=
+.4-468-g602e3159e817
 
-    CI systems: maestro
+## Test Regressions (compared to v6.12.3-147-g91ba615b0f09)
 
-REVISION
+## Metric Regressions (compared to v6.12.3-147-g91ba615b0f09)
 
-    Commit
-        name: 
-        hash: ce5516b3ce83b6b8b6f21d8b972e509420b4b551
-    Checked out from
-        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+## Test Fixes (compared to v6.12.3-147-g91ba615b0f09)
 
-BUILDS
+## Metric Fixes (compared to v6.12.3-147-g91ba615b0f09)
 
-    -arm64(cros://chromeos-5.4/arm64/chromiumos-qualcomm.flavour.config)
-        https://kcidb.kernelci.org/d/build/build?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675c5836ca49c97d299f2a45&var-test-path=boot&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=yes
-    -arm64(defconfig)
-        https://kcidb.kernelci.org/d/build/build?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675c5870ca49c97d299f2a7b&var-test-path=boot&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=yes
-    -i386(i386_defconfig+allmodconfig)
-        https://kcidb.kernelci.org/d/build/build?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675c5877ca49c97d299f2c3c&var-test-path=boot&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=yes
+## Test result summary
+total: 115288, pass: 93226, fail: 3813, skip: 18249, xfail: 0
 
-BOOT TESTS
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 139 total, 137 passed, 2 failed
+* arm64: 54 total, 54 passed, 0 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 34 total, 33 passed, 1 failed
+* parisc: 4 total, 3 passed, 1 failed
+* powerpc: 40 total, 39 passed, 1 failed
+* riscv: 24 total, 23 passed, 1 failed
+* s390: 22 total, 21 passed, 1 failed
+* sh: 5 total, 5 passed, 0 failed
+* sparc: 4 total, 3 passed, 1 failed
+* x86_64: 46 total, 46 passed, 0 failed
 
-    No new boot failures found
+## Test suites summary
+* boot
+* commands
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-filesystems-epoll
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-mptcp
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-rust
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-tc-testing
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
 
-See complete and up-to-date report at:
-    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=ce5516b3ce83b6b8b6f21d8b972e509420b4b551&var-patchset_hash=&from=now-100y&to=now&timezone=browser&var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-test_path=boot
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-Thanks,
-KernelCI team
+--
+Linaro LKFT
+https://lkft.linaro.org
