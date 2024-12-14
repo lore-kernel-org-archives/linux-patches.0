@@ -1,43 +1,43 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE39D11712
-	for <patches@lists.linux.dev>; Sat, 14 Dec 2024 08:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04744188938
+	for <patches@lists.linux.dev>; Sat, 14 Dec 2024 09:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734166467; cv=pass; b=B1oegg+pedYGo+M5N0Um9D+NwZxaLiwTQikCJ5H5hoBD3bgfn9RWx7Zvrp0m0I0jlZs3huPsFHc4bvul7Bb8x9SnRvyPl1ZusFM66vMDTgG2s4vyzDab771GuLdXisY+ILyWUh5Uon0VzjtEgqqd2fTcDo1LgEx/dya5ISEE5aA=
+	t=1734167075; cv=pass; b=mw1bXE4I7JKJ/GKfiXNhpzKJShYgFckXBcIs0mg63GitD98sBHm28Ewbjd4NYgG2hQJ4FNc9XRJHqlqKEdRWuyGZDe5gRPGqEs4+rdWIsTGSfMMWpEORn5Y255tRe8vmuqDBFtvmZqzrqcGIvF78xN/xxHag12h5JX3WtN2QupE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734166467; c=relaxed/simple;
-	bh=+nGlMweKS0GjG+aONxr8C30dAMpD095zIGE0nRMoTu8=;
+	s=arc-20240116; t=1734167075; c=relaxed/simple;
+	bh=1He9VPyzzGAt/8vkD2zd/BuXMB6nP91bLzaUmhS3Gfo=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=EOTuBEMkmhGNLJVoW/OvBtHfS4bpuXVKLRUEji7CDJ9wB3y2f+UsvXY6xHdCCb5Ij7W6JXu2cWYVUTmy7hsXcOLv0GAS5n+Y64K71/NMkBmuYtePE7cUcM3tflZecVCovsKD6GFL5/QcNsdya9xnTwCLVmpJOPXhbctNNc6FY4I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=L1EZv50c; arc=pass smtp.client-ip=136.143.188.112
+	 In-Reply-To:Content-Type; b=ZC7eriHAmY10lze0i2ypjJzR4J/HGQWg8miq31cL9S1BgWVK0EUBbj+Xk9un5eIHGRGCl3EkUP3oXZO6hsJufRAdzkhrFHef54lOD/uwfwidTTMNtav4euPLXGMOyyoL76sXC94cqqvB/TzoC6fsYbSzF8FQ31FbMeQkyDSz7WQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=XBT+EA/G; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="L1EZv50c"
-ARC-Seal: i=1; a=rsa-sha256; t=1734166452; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="XBT+EA/G"
+ARC-Seal: i=1; a=rsa-sha256; t=1734167055; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=bjPK4fwNuBRHpE3QZ9SLMUqoraoCbcguLzbK4ku2VV31bhixbO33FM8mhD3IaLyGBUK3lPrQK4FGloWTHflSQg7Y3Vbe3tcVf5qCuqK5S63OLpkFen81NbYAzfPHKXsy2wVhrYiDtLJThfVf4+/udAbv4HOePZfrOZRAl/pONR0=
+	b=B7l1lH1qKwdSNoYCP1SPZLpKmRmu3FjOpXI/6dtV4zLmsfNoMBSWpcxnXd192LTBIxRKOXU6fm1nHeepgQ2Za1SSYqKe0J9cruJgVuWhmYABGrUp3FYDLiEoYclUhbkcrtES3wlzEEzT+Ie46CfOnhaxxDixARkeQBy3v6L3C0Y=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1734166452; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=YRn+AaPl2Etjuf3mawv4nmRVtWHBXrcE7pK6bx7P4xQ=; 
-	b=cIxm8jzbJixZMcbeM0Ad7MNN6uk8dnzN+u79+Tuf7NwrCaddTKPGlPx35Ntlast37aHEXPaVZay8w4EIKCbEyPiRQschcrBTJgES/YbaObx/V/YtQpv+FizdrKTyc/3ZPssT1wPnolIv0UTAI7X6nxJPNTltW5pK+Aj5P6UFa9M=
+	t=1734167055; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=5X/qMK8uWDwJEEr5QG+O2Mwg4z56SzMX6ttnOEu4AiQ=; 
+	b=JCF0d+uM+SxkSKiuf5MSaSpgxT7VU2oD7U2sxGZr9SipGKpJl+kptXHqB7Ob0NIiIwOGKLi1oxMX15+1npbj760nKkeIqPKrbdGZFuW3fQ/lVZkNrQ+kw38+oFQ3RfL0pYfS4Duu6XOd5DRCV0E6ojO58qkh7OA9Os3hcAvmcLg=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
 	dmarc=pass header.from=<Usama.Anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1734166452;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1734167055;
 	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
 	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=YRn+AaPl2Etjuf3mawv4nmRVtWHBXrcE7pK6bx7P4xQ=;
-	b=L1EZv50c++6prllGmM+cvNDFnYlsIWdCgyV8aOLlDRA4KdwUmmmU7/mYqHIf+GKA
-	HwKYwf8UKF5pQS8PS1LcDgriq+GVp5UyMVDONobLk20LLC9Ra1lJPrzCMeIrvmTHARp
-	zJZeruifpemXvXxUNOt3SSkx6SuD0zgmuo1ghJsY=
-Received: by mx.zohomail.com with SMTPS id 1734166450790568.1956373170367;
-	Sat, 14 Dec 2024 00:54:10 -0800 (PST)
-Message-ID: <a5238336-0439-4a7d-b94d-db78c313153e@collabora.com>
-Date: Sat, 14 Dec 2024 13:54:14 +0500
+	bh=5X/qMK8uWDwJEEr5QG+O2Mwg4z56SzMX6ttnOEu4AiQ=;
+	b=XBT+EA/GhJNqRH+n5xL/nwcZK+PBSUj7zPCoQmwtIkvMXj/JgnbhKelDkYjo1+Gl
+	rYMka6zMZXG5/mxtqTIzS0OPZsKkaAx1aPDroq7rPsTuE5h9BV6xLohFNWOP0NcOx6a
+	yBOQZtMI/x6fKBVjLVbApcBDZtZT7d4eOAdxpoY0=
+Received: by mx.zohomail.com with SMTPS id 1734167053567164.33484110014615;
+	Sat, 14 Dec 2024 01:04:13 -0800 (PST)
+Message-ID: <73fda05b-a89f-4dbd-988f-487f2fb9c773@collabora.com>
+Date: Sat, 14 Dec 2024 14:04:16 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -80,51 +80,37 @@ On 12/12/24 7:55 PM, Greg Kroah-Hartman wrote:
 > thanks,
 > 
 > greg k-h
+Hi,
+
+Please find the KernelCI report below :-
+
+
 OVERVIEW
 
-        Builds: 23 passed, 0 failed
+    Builds: 28 passed, 0 failed
 
-    Boot tests: 186 passed, 5 failed
+    Boot tests: 154 passed, 0 failed
 
-    CI systems: broonie, maestro
+    CI systems: maestro
 
 REVISION
 
     Commit
-        name: v5.10.230-460-g2146a7485c27f
-        hash: 2146a7485c27f6f8373bb5570dee22631a7183a4
+        name: 
+        hash: 26bbc21725ae44d2b10994af6d0fe6b3a2bb9d8b
     Checked out from
-        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 
 BUILDS
 
-    No build failures found
+    No new build failures found
 
 BOOT TESTS
 
-    Failures
-
-      i386:(defconfig)
-      -hp-x360-14a-cb0001xx-zork
-	https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675b11c5ca49c97d299a1b30&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
-      -lenovo-TPad-C13-Yoga-zork
-	https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675b11c6ca49c97d299a1b33&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
-      -asus-CM1400CXA-dalboz
-	https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675b11c4ca49c97d299a1b24&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
-      CI system: maestro
-
-      arm:(multi_v7_defconfig)
-      -multi_v7_defconfig
-	https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675b2f53ca49c97d299ab709&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
-      -imx6q-udoo
-	https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:675b2f54ca49c97d299ab70c&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
-      CI system: maestro
+    No new boot failures found
 
 See complete and up-to-date report at:
-
-    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=2146a7485c27f6f8373bb5570dee22631a7183a4&var-patchset_hash=
-
+    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=26bbc21725ae44d2b10994af6d0fe6b3a2bb9d8b&var-patchset_hash=&from=now-100y&to=now&timezone=browser&var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-test_path=boot
 
 Tested-by: kernelci.org bot <bot@kernelci.org>
 
