@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53D21F8918;
-	Tue, 17 Dec 2024 17:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFFD1FBE9E;
+	Tue, 17 Dec 2024 17:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456665; cv=none; b=VqJBg9cV61oEw2qN7ZJ/f9u/0iOG3y4Iyby3nJQBCg27lE3wrGnUDv5C7Sqyf1BQCxcDQmXwui0OmSi4z63utT1yzTmNsKhvz0byAJZQ+irlPtucVFLmYa11S1OG1OwE4ee6utxsyuPJl7z+yeUuqoRVgclzzp86Q+Ufwa0OiI4=
+	t=1734456670; cv=none; b=AMvlqDw0aiRj9gYk5oz/rDj+dolv21b/HykQTJypliyM+otiSicE0XjYmiHE3LnxL+E1ftACGdZetkTReKgGcNpNMWiBaEera3aYPdUWP7QOdtzrCeOQWomPlUlOXmzpKlk8AJ/vgQf8hOILMILMy97tkLx786y/dnEtlZ1W4W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456665; c=relaxed/simple;
-	bh=k/p+CpvEVGAhkK+7svTft8qyLetDV+Gvs3MvskbCjrw=;
+	s=arc-20240116; t=1734456670; c=relaxed/simple;
+	bh=+osRh5gb6ibLTHH2uOlg44IiadE/APgGlGfDlh0IaD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IvUelSI3WfzljqbR9OaQ7jF/+fN4cylIurlndZ9bMmNry2hFCZ5Qn22WIcNtxoWHO7371Nq/e4+xt56Ghw+UAenqVEKnveu7KTI3EISJLiln7FaTViOSrjUVyflKn2zjBUL9P9/2EsnmyNRVKYt/YlCcAoNALBn6z0sf/XC5azU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7J/SN5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHxmeK/+lPWdl2xKxBEW+9RNp3CGOv/CQU5yfVq6Tg8HA/AESSCS46+NBV2dk2VexdsJw/v71fRyn8dS8A9agCQPwXEee4z4Ft8Sp2LF0Uklgd+Ur4oTDS6hFJSHBTUdbBP7c2ADRd0bo7WUgKotdXHdQAYaeoe6dj4LBAr6l98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVuk73Jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7J/SN5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DED3C4CED3;
-	Tue, 17 Dec 2024 17:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVuk73Jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F5CC4CED7;
+	Tue, 17 Dec 2024 17:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456665;
-	bh=k/p+CpvEVGAhkK+7svTft8qyLetDV+Gvs3MvskbCjrw=;
+	s=korg; t=1734456668;
+	bh=+osRh5gb6ibLTHH2uOlg44IiadE/APgGlGfDlh0IaD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7J/SN5h+jvsvA1T9uNngzHPRv90onZRPocsDgeBrzknEXJEqVd7LB9CK9ZevTPSr
-	 SXyZwe8j+KBBGQQ6Kv9M+29qnscKk6hu99uiv/vH/5BwEKgZK/bAH6U4Ek3+CsWnsG
-	 ijkHOdaQswg3huIc/U54d0XIfLHBKDjGJ0Gs0D9k=
+	b=oVuk73JdUnWSiPAserX+7W5Mgov/wTYd5bRVBz3h26OnYz4Z109o4hPgAoR9+MFGT
+	 Ofij3WlPxeDTOqVfEZFbOaH3c6EnGFX9GOAonV0jPnt2QTvM6jP4dW7v2HFNEpFsUg
+	 ReT8n219HbiUoDq22Z86bY0J8mkzKoMdPcSYUjrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Wei <dw@davidwei.uk>,
+	Michal Luczaj <mhal@rbox.co>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/172] net: sparx5: fix the maximum frame length register
-Date: Tue, 17 Dec 2024 18:07:47 +0100
-Message-ID: <20241217170550.929185013@linuxfoundation.org>
+Subject: [PATCH 6.12 129/172] Bluetooth: Improve setsockopt() handling of malformed user input
+Date: Tue, 17 Dec 2024 18:08:05 +0100
+Message-ID: <20241217170551.689817992@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,37 +52,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit ddd7ba006078a2bef5971b2dc5f8383d47f96207 ]
+[ Upstream commit 3e643e4efa1e87432204b62f9cfdea3b2508c830 ]
 
-On port initialization, we configure the maximum frame length accepted
-by the receive module associated with the port. This value is currently
-written to the MAX_LEN field of the DEV10G_MAC_ENA_CFG register, when in
-fact, it should be written to the DEV10G_MAC_MAXLEN_CFG register. Fix
-this.
+The bt_copy_from_sockptr() return value is being misinterpreted by most
+users: a non-zero result is mistakenly assumed to represent an error code,
+but actually indicates the number of bytes that could not be copied.
 
-Fixes: 946e7fd5053a ("net: sparx5: add port module support")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Remove bt_copy_from_sockptr() and adapt callers to use
+copy_safe_from_sockptr().
+
+For sco_sock_setsockopt() (case BT_CODEC) use copy_struct_from_sockptr() to
+scrub parts of uninitialized buffer.
+
+Opportunistically, rename `len` to `optlen` in hci_sock_setsockopt_old()
+and hci_sock_setsockopt().
+
+Fixes: 51eda36d33e4 ("Bluetooth: SCO: Fix not validating setsockopt user input")
+Fixes: a97de7bff13b ("Bluetooth: RFCOMM: Fix not validating setsockopt user input")
+Fixes: 4f3951242ace ("Bluetooth: L2CAP: Fix not validating setsockopt user input")
+Fixes: 9e8742cdfc4b ("Bluetooth: ISO: Fix not validating setsockopt user input")
+Fixes: b2186061d604 ("Bluetooth: hci_sock: Fix not validating setsockopt user input")
+Reviewed-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reviewed-by: David Wei <dw@davidwei.uk>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_port.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/bluetooth/bluetooth.h |  9 ---------
+ net/bluetooth/hci_sock.c          | 14 +++++++-------
+ net/bluetooth/iso.c               | 10 +++++-----
+ net/bluetooth/l2cap_sock.c        | 20 +++++++++++---------
+ net/bluetooth/rfcomm/sock.c       |  9 ++++-----
+ net/bluetooth/sco.c               | 11 ++++++-----
+ 6 files changed, 33 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
-index 062e486c002c..672508efce5c 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
-@@ -1119,7 +1119,7 @@ int sparx5_port_init(struct sparx5 *sparx5,
- 	spx5_inst_rmw(DEV10G_MAC_MAXLEN_CFG_MAX_LEN_SET(ETH_MAXLEN),
- 		      DEV10G_MAC_MAXLEN_CFG_MAX_LEN,
- 		      devinst,
--		      DEV10G_MAC_ENA_CFG(0));
-+		      DEV10G_MAC_MAXLEN_CFG(0));
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index f66bc85c6411..e6760c11f007 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -590,15 +590,6 @@ static inline struct sk_buff *bt_skb_sendmmsg(struct sock *sk,
+ 	return skb;
+ }
  
- 	/* Handle Signal Detect in 10G PCS */
- 	spx5_inst_wr(PCS10G_BR_PCS_SD_CFG_SD_POL_SET(sd_pol) |
+-static inline int bt_copy_from_sockptr(void *dst, size_t dst_size,
+-				       sockptr_t src, size_t src_size)
+-{
+-	if (dst_size > src_size)
+-		return -EINVAL;
+-
+-	return copy_from_sockptr(dst, src, dst_size);
+-}
+-
+ int bt_to_errno(u16 code);
+ __u8 bt_status(int err);
+ 
+diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
+index 2272e1849ebd..022b86797acd 100644
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1926,7 +1926,7 @@ static int hci_sock_sendmsg(struct socket *sock, struct msghdr *msg,
+ }
+ 
+ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
+-				   sockptr_t optval, unsigned int len)
++				   sockptr_t optval, unsigned int optlen)
+ {
+ 	struct hci_ufilter uf = { .opcode = 0 };
+ 	struct sock *sk = sock->sk;
+@@ -1943,7 +1943,7 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
+ 
+ 	switch (optname) {
+ 	case HCI_DATA_DIR:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, len);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1954,7 +1954,7 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case HCI_TIME_STAMP:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, len);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1974,7 +1974,7 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
+ 			uf.event_mask[1] = *((u32 *) f->event_mask + 1);
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&uf, sizeof(uf), optval, len);
++		err = copy_safe_from_sockptr(&uf, sizeof(uf), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -2005,7 +2005,7 @@ static int hci_sock_setsockopt_old(struct socket *sock, int level, int optname,
+ }
+ 
+ static int hci_sock_setsockopt(struct socket *sock, int level, int optname,
+-			       sockptr_t optval, unsigned int len)
++			       sockptr_t optval, unsigned int optlen)
+ {
+ 	struct sock *sk = sock->sk;
+ 	int err = 0;
+@@ -2015,7 +2015,7 @@ static int hci_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 	if (level == SOL_HCI)
+ 		return hci_sock_setsockopt_old(sock, level, optname, optval,
+-					       len);
++					       optlen);
+ 
+ 	if (level != SOL_BLUETOOTH)
+ 		return -ENOPROTOOPT;
+@@ -2035,7 +2035,7 @@ static int hci_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			goto done;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, len);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 5e2d9758bd3c..7212fd6047b9 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1566,7 +1566,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1577,7 +1577,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_PKT_STATUS:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1596,7 +1596,7 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&qos, sizeof(qos), optval, optlen);
++		err = copy_safe_from_sockptr(&qos, sizeof(qos), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1617,8 +1617,8 @@ static int iso_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(iso_pi(sk)->base, optlen, optval,
+-					   optlen);
++		err = copy_safe_from_sockptr(iso_pi(sk)->base, optlen, optval,
++					     optlen);
+ 		if (err)
+ 			break;
+ 
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 18e89e764f3b..3d2553dcdb1b 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -755,7 +755,8 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 		opts.max_tx   = chan->max_tx;
+ 		opts.txwin_size = chan->tx_win;
+ 
+-		err = bt_copy_from_sockptr(&opts, sizeof(opts), optval, optlen);
++		err = copy_safe_from_sockptr(&opts, sizeof(opts), optval,
++					     optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -800,7 +801,7 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
+ 		break;
+ 
+ 	case L2CAP_LM:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -909,7 +910,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		sec.level = BT_SECURITY_LOW;
+ 
+-		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
++		err = copy_safe_from_sockptr(&sec, sizeof(sec), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -956,7 +957,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -970,7 +971,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_FLUSHABLE:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1004,7 +1005,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		pwr.force_active = BT_POWER_FORCE_ACTIVE_ON;
+ 
+-		err = bt_copy_from_sockptr(&pwr, sizeof(pwr), optval, optlen);
++		err = copy_safe_from_sockptr(&pwr, sizeof(pwr), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1015,7 +1016,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_CHANNEL_POLICY:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1046,7 +1047,7 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&mtu, sizeof(mtu), optval, optlen);
++		err = copy_safe_from_sockptr(&mtu, sizeof(mtu), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -1076,7 +1077,8 @@ static int l2cap_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&mode, sizeof(mode), optval, optlen);
++		err = copy_safe_from_sockptr(&mode, sizeof(mode), optval,
++					     optlen);
+ 		if (err)
+ 			break;
+ 
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index 40766f8119ed..913402806fa0 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -629,10 +629,9 @@ static int rfcomm_sock_setsockopt_old(struct socket *sock, int optname,
+ 
+ 	switch (optname) {
+ 	case RFCOMM_LM:
+-		if (bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen)) {
+-			err = -EFAULT;
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (opt & RFCOMM_LM_FIPS) {
+ 			err = -EINVAL;
+@@ -685,7 +684,7 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		sec.level = BT_SECURITY_LOW;
+ 
+-		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
++		err = copy_safe_from_sockptr(&sec, sizeof(sec), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -703,7 +702,7 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 1c7252a36866..700abb639a55 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -853,7 +853,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -872,8 +872,8 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		voice.setting = sco_pi(sk)->setting;
+ 
+-		err = bt_copy_from_sockptr(&voice, sizeof(voice), optval,
+-					   optlen);
++		err = copy_safe_from_sockptr(&voice, sizeof(voice), optval,
++					     optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -898,7 +898,7 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		break;
+ 
+ 	case BT_PKT_STATUS:
+-		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
++		err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+ 		if (err)
+ 			break;
+ 
+@@ -941,7 +941,8 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			break;
+ 		}
+ 
+-		err = bt_copy_from_sockptr(buffer, optlen, optval, optlen);
++		err = copy_struct_from_sockptr(buffer, sizeof(buffer), optval,
++					       optlen);
+ 		if (err) {
+ 			hci_dev_put(hdev);
+ 			break;
 -- 
 2.39.5
 
