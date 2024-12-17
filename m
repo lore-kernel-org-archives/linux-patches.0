@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C64D13DBB6;
-	Tue, 17 Dec 2024 17:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B071F8688;
+	Tue, 17 Dec 2024 17:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455796; cv=none; b=duImq2YbU5cB58tYK0UB0X2a21e+XJhPOlX/WT/vRaDB6vZakEoNkPQh0/QYKV/MekYeS+UV0eN1ucDyVvBQVDvJegRPl96mlttBbNzgIlRnaYCeuzMmiUrm7rjB40GA3UkOLto7pukq6HlVZVE/Imtr36AsPBotO3fN1PDOQ94=
+	t=1734455799; cv=none; b=OYkBdMbQqr2IOGrccx6dEhpYjPZTXQiD0OO+pNA/aYdPKbzAVtGNbTYOhtMEaShxxK2zKOu9C02pKwG8E2rVJpCv2BIcyU3DwGM96uBh+fisayxv3Y6C8rq/OqRo7aR6PUscce8AsP0iNX7mBYczh9N+uuYYLsmrjfCdlB+Mqw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455796; c=relaxed/simple;
-	bh=wh1nFX4ys9bJFRo1iPt3bwXZIDR7Y98kjiQS5npvVkE=;
+	s=arc-20240116; t=1734455799; c=relaxed/simple;
+	bh=irvoz/QY1ACwgb1Nv/2o37VN42VE2hGB+3z1LaJCfUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MThqL/AXxHu2HkZNF16RYbqFgDtXD82BjTQ5pOY0mXz/2zRAf7MEmMVO0rcnWXtJ9iDCQJDalJmNg9f5t8a1lATs0KkbMhAY8Samhbn7aY9f9n/xKFaXJbI3KhcD02IGIPBEY0LbKkh9Xoo+n/6XrqBHzd3yd/vbmxChbwIyaGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0P8hYBz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CA6dGRIahdFsj5Sz/S4xBeLyJOBqGd6IvS4u7Q1Xz1hbcxQU+EOx13CdmeQ9NA8X2W+EnpFMnIsDtYVzsUiw73naM8hwIT13GWwBLXHwlA1cKqllHQ0L/F4f0qplSbEqFekEqtJNovzXj9D2PRUUFGt7453BjDVKKaaUf62Hjbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HuaAkonu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0P8hYBz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002E3C4CED3;
-	Tue, 17 Dec 2024 17:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HuaAkonu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17A2C4CED7;
+	Tue, 17 Dec 2024 17:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455796;
-	bh=wh1nFX4ys9bJFRo1iPt3bwXZIDR7Y98kjiQS5npvVkE=;
+	s=korg; t=1734455799;
+	bh=irvoz/QY1ACwgb1Nv/2o37VN42VE2hGB+3z1LaJCfUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0P8hYBzH3g0GvU/f0n4DpV6w9x4CW2D+eo7gv8z3qJHTd0vHIQxX8MDEXeafVjCa
-	 5yPE75fWM00Cz59VzOx4sXtPv71zGfb/FRClx1LmHS4wUmlGpFisI63H/zv22VEClT
-	 uaJkH96mEfTY5ChE47PwyH9dxg5AvCr07K5GQZwU=
+	b=HuaAkonuphdFBRg5mZylxctMGOf4yENuDf+qwybuqgUU79BP2AC7vk67H5ZnLPDJm
+	 /BQqfq6UBWk+xqbn9tOXCO1JTtJIF7+EaZJbn1IFHslmAIUpTKrhaZtkwwPnyhvfgL
+	 5tCEqdPHQjJcTOpnbgTnjf+Zq3LnAAojGl9XHe7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+46aa5474f179dacd1a3b@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 35/76] tipc: fix NULL deref in cleanup_bearer()
-Date: Tue, 17 Dec 2024 18:07:15 +0100
-Message-ID: <20241217170527.718665495@linuxfoundation.org>
+Subject: [PATCH 6.1 36/76] net/mlx5: DR, prevent potential error pointer dereference
+Date: Tue, 17 Dec 2024 18:07:16 +0100
+Message-ID: <20241217170527.760465572@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -53,80 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit b04d86fff66b15c07505d226431f808c15b1703c ]
+[ Upstream commit 11776cff0b563c8b8a4fa76cab620bfb633a8cb8 ]
 
-syzbot found [1] that after blamed commit, ub->ubsock->sk
-was NULL when attempting the atomic_dec() :
+The dr_domain_add_vport_cap() function generally returns NULL on error
+but sometimes we want it to return ERR_PTR(-EBUSY) so the caller can
+retry.  The problem here is that "ret" can be either -EBUSY or -ENOMEM
+and if it's and -ENOMEM then the error pointer is propogated back and
+eventually dereferenced in dr_ste_v0_build_src_gvmi_qpn_tag().
 
-atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
-
-Fix this by caching the tipc_net pointer.
-
-[1]
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-CPU: 0 UID: 0 PID: 5896 Comm: kworker/0:3 Not tainted 6.13.0-rc1-next-20241203-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Workqueue: events cleanup_bearer
- RIP: 0010:read_pnet include/net/net_namespace.h:387 [inline]
- RIP: 0010:sock_net include/net/sock.h:655 [inline]
- RIP: 0010:cleanup_bearer+0x1f7/0x280 net/tipc/udp_media.c:820
-Code: 18 48 89 d8 48 c1 e8 03 42 80 3c 28 00 74 08 48 89 df e8 3c f7 99 f6 48 8b 1b 48 83 c3 30 e8 f0 e4 60 00 48 89 d8 48 c1 e8 03 <42> 80 3c 28 00 74 08 48 89 df e8 1a f7 99 f6 49 83 c7 e8 48 8b 1b
-RSP: 0018:ffffc9000410fb70 EFLAGS: 00010206
-RAX: 0000000000000006 RBX: 0000000000000030 RCX: ffff88802fe45a00
-RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffffc9000410f900
-RBP: ffff88807e1f0908 R08: ffffc9000410f907 R09: 1ffff92000821f20
-R10: dffffc0000000000 R11: fffff52000821f21 R12: ffff888031d19980
-R13: dffffc0000000000 R14: dffffc0000000000 R15: ffff88807e1f0918
-FS:  0000000000000000(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000556ca050b000 CR3: 0000000031c0c000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-
-Fixes: 6a2fa13312e5 ("tipc: Fix use-after-free of kernel socket in cleanup_bearer().")
-Reported-by: syzbot+46aa5474f179dacd1a3b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/67508b5f.050a0220.17bd51.0070.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20241204170548.4152658-1-edumazet@google.com
+Fixes: 11a45def2e19 ("net/mlx5: DR, Add support for SF vports")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/07477254-e179-43e2-b1b3-3b9db4674195@stanley.mountain
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 3f5a12b85b2d..f5bd75d931c1 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -811,6 +811,7 @@ static void cleanup_bearer(struct work_struct *work)
- {
- 	struct udp_bearer *ub = container_of(work, struct udp_bearer, work);
- 	struct udp_replicast *rcast, *tmp;
-+	struct tipc_net *tn;
- 
- 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
- 		dst_cache_destroy(&rcast->dst_cache);
-@@ -818,10 +819,14 @@ static void cleanup_bearer(struct work_struct *work)
- 		kfree_rcu(rcast, rcu);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c
+index fc6ae49b5ecc..d462017c6a95 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c
+@@ -195,7 +195,9 @@ dr_domain_add_vport_cap(struct mlx5dr_domain *dmn, u16 vport)
+ 	if (ret) {
+ 		mlx5dr_dbg(dmn, "Couldn't insert new vport into xarray (%d)\n", ret);
+ 		kvfree(vport_caps);
+-		return ERR_PTR(ret);
++		if (ret == -EBUSY)
++			return ERR_PTR(-EBUSY);
++		return NULL;
  	}
  
-+	tn = tipc_net(sock_net(ub->ubsock->sk));
-+
- 	dst_cache_destroy(&ub->rcast.dst_cache);
- 	udp_tunnel_sock_release(ub->ubsock);
-+
-+	/* Note: could use a call_rcu() to avoid another synchronize_net() */
- 	synchronize_net();
--	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
-+	atomic_dec(&tn->wq_count);
- 	kfree(ub);
- }
- 
+ 	return vport_caps;
 -- 
 2.39.5
 
