@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38CC1F4735;
-	Tue, 17 Dec 2024 17:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C64D13DBB6;
+	Tue, 17 Dec 2024 17:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455794; cv=none; b=OIvDrAF8oVaVohimQLNUS/wEFt+uJyfiJMehqM2oY91vXOmBdy4N2ERL86dC2UOuQOQszuz0ThOBYAmoKsABN2LTlyyeXeVBQnHjUILQKKXUEp0dTg+cq9oHRjDnqL1aF1733hC2bJfP/kGT+O+r8lOa9iMnnTFy6TOzWVExTgU=
+	t=1734455796; cv=none; b=duImq2YbU5cB58tYK0UB0X2a21e+XJhPOlX/WT/vRaDB6vZakEoNkPQh0/QYKV/MekYeS+UV0eN1ucDyVvBQVDvJegRPl96mlttBbNzgIlRnaYCeuzMmiUrm7rjB40GA3UkOLto7pukq6HlVZVE/Imtr36AsPBotO3fN1PDOQ94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455794; c=relaxed/simple;
-	bh=OHDRO6YnYkuXogCojNZo4rfRt0NPznwrrveac65IqYc=;
+	s=arc-20240116; t=1734455796; c=relaxed/simple;
+	bh=wh1nFX4ys9bJFRo1iPt3bwXZIDR7Y98kjiQS5npvVkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRFNzYs6FQvbKU3tpuCZs+TYUpxXnB72AaETQY02U66CWpwIvDSPu40OS4GFhzbDJmFU9nvCGweqodH0qdN9nzNIDUcPR+bVzbh2n4EIhpXCK9jeaBFN2uPhE5mg5qwTkv8JWDnqzBBrwO9tbZ1oSwTHHXMd/+451lLBB+VFJHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWY8mrIs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MThqL/AXxHu2HkZNF16RYbqFgDtXD82BjTQ5pOY0mXz/2zRAf7MEmMVO0rcnWXtJ9iDCQJDalJmNg9f5t8a1lATs0KkbMhAY8Samhbn7aY9f9n/xKFaXJbI3KhcD02IGIPBEY0LbKkh9Xoo+n/6XrqBHzd3yd/vbmxChbwIyaGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0P8hYBz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWY8mrIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F0FC4CED3;
-	Tue, 17 Dec 2024 17:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0P8hYBz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002E3C4CED3;
+	Tue, 17 Dec 2024 17:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455793;
-	bh=OHDRO6YnYkuXogCojNZo4rfRt0NPznwrrveac65IqYc=;
+	s=korg; t=1734455796;
+	bh=wh1nFX4ys9bJFRo1iPt3bwXZIDR7Y98kjiQS5npvVkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWY8mrIsFIxFG4tiDwMVgWg1v2l2iO6v4TxDZ+viI5bQ6YLoPsU+bBrtxRIKufufu
-	 +VBHeTYJVltn69fxgGMf+KNN+gGiRojFrDqTH32dON8d2eAVfeY7KI8x+8vuA9S/Zt
-	 hsE3QWgdMMPh22UHeDiqojqOK3CpB3htsDquligo=
+	b=I0P8hYBzH3g0GvU/f0n4DpV6w9x4CW2D+eo7gv8z3qJHTd0vHIQxX8MDEXeafVjCa
+	 5yPE75fWM00Cz59VzOx4sXtPv71zGfb/FRClx1LmHS4wUmlGpFisI63H/zv22VEClT
+	 uaJkH96mEfTY5ChE47PwyH9dxg5AvCr07K5GQZwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.1 17/76] xfs: update btree keys correctly when _insrec splits an inode root block
-Date: Tue, 17 Dec 2024 18:06:57 +0100
-Message-ID: <20241217170526.967428025@linuxfoundation.org>
+	syzbot+46aa5474f179dacd1a3b@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 35/76] tipc: fix NULL deref in cleanup_bearer()
+Date: Tue, 17 Dec 2024 18:07:15 +0100
+Message-ID: <20241217170527.718665495@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -50,79 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6d7b4bc1c3e00b1a25b7a05141a64337b4629337 upstream.
+[ Upstream commit b04d86fff66b15c07505d226431f808c15b1703c ]
 
-In commit 2c813ad66a72, I partially fixed a bug wherein xfs_btree_insrec
-would erroneously try to update the parent's key for a block that had
-been split if we decided to insert the new record into the new block.
-The solution was to detect this situation and update the in-core key
-value that we pass up to the caller so that the caller will (eventually)
-add the new block to the parent level of the tree with the correct key.
+syzbot found [1] that after blamed commit, ub->ubsock->sk
+was NULL when attempting the atomic_dec() :
 
-However, I missed a subtlety about the way inode-rooted btrees work.  If
-the full block was a maximally sized inode root block, we'll solve that
-fullness by moving the root block's records to a new block, resizing the
-root block, and updating the root to point to the new block.  We don't
-pass a pointer to the new block to the caller because that work has
-already been done.  The new record will /always/ land in the new block,
-so in this case we need to use xfs_btree_update_keys to update the keys.
+atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
 
-This bug can theoretically manifest itself in the very rare case that we
-split a bmbt root block and the new record lands in the very first slot
-of the new block, though I've never managed to trigger it in practice.
-However, it is very easy to reproduce by running generic/522 with the
-realtime rmapbt patchset if rtinherit=1.
+Fix this by caching the tipc_net pointer.
 
-Cc: <stable@vger.kernel.org> # v4.8
-Fixes: 2c813ad66a7218 ("xfs: support btrees with overlapping intervals for keys")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1]
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+CPU: 0 UID: 0 PID: 5896 Comm: kworker/0:3 Not tainted 6.13.0-rc1-next-20241203-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Workqueue: events cleanup_bearer
+ RIP: 0010:read_pnet include/net/net_namespace.h:387 [inline]
+ RIP: 0010:sock_net include/net/sock.h:655 [inline]
+ RIP: 0010:cleanup_bearer+0x1f7/0x280 net/tipc/udp_media.c:820
+Code: 18 48 89 d8 48 c1 e8 03 42 80 3c 28 00 74 08 48 89 df e8 3c f7 99 f6 48 8b 1b 48 83 c3 30 e8 f0 e4 60 00 48 89 d8 48 c1 e8 03 <42> 80 3c 28 00 74 08 48 89 df e8 1a f7 99 f6 49 83 c7 e8 48 8b 1b
+RSP: 0018:ffffc9000410fb70 EFLAGS: 00010206
+RAX: 0000000000000006 RBX: 0000000000000030 RCX: ffff88802fe45a00
+RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffffc9000410f900
+RBP: ffff88807e1f0908 R08: ffffc9000410f907 R09: 1ffff92000821f20
+R10: dffffc0000000000 R11: fffff52000821f21 R12: ffff888031d19980
+R13: dffffc0000000000 R14: dffffc0000000000 R15: ffff88807e1f0918
+FS:  0000000000000000(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000556ca050b000 CR3: 0000000031c0c000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+
+Fixes: 6a2fa13312e5 ("tipc: Fix use-after-free of kernel socket in cleanup_bearer().")
+Reported-by: syzbot+46aa5474f179dacd1a3b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67508b5f.050a0220.17bd51.0070.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20241204170548.4152658-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_btree.c |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ net/tipc/udp_media.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -3430,14 +3430,31 @@ xfs_btree_insrec(
- 	xfs_btree_log_block(cur, bp, XFS_BB_NUMRECS);
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index 3f5a12b85b2d..f5bd75d931c1 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -811,6 +811,7 @@ static void cleanup_bearer(struct work_struct *work)
+ {
+ 	struct udp_bearer *ub = container_of(work, struct udp_bearer, work);
+ 	struct udp_replicast *rcast, *tmp;
++	struct tipc_net *tn;
  
- 	/*
--	 * If we just inserted into a new tree block, we have to
--	 * recalculate nkey here because nkey is out of date.
-+	 * Update btree keys to reflect the newly added record or keyptr.
-+	 * There are three cases here to be aware of.  Normally, all we have to
-+	 * do is walk towards the root, updating keys as necessary.
- 	 *
--	 * Otherwise we're just updating an existing block (having shoved
--	 * some records into the new tree block), so use the regular key
--	 * update mechanism.
-+	 * If the caller had us target a full block for the insertion, we dealt
-+	 * with that by calling the _make_block_unfull function.  If the
-+	 * "make unfull" function splits the block, it'll hand us back the key
-+	 * and pointer of the new block.  We haven't yet added the new block to
-+	 * the next level up, so if we decide to add the new record to the new
-+	 * block (bp->b_bn != old_bn), we have to update the caller's pointer
-+	 * so that the caller adds the new block with the correct key.
-+	 *
-+	 * However, there is a third possibility-- if the selected block is the
-+	 * root block of an inode-rooted btree and cannot be expanded further,
-+	 * the "make unfull" function moves the root block contents to a new
-+	 * block and updates the root block to point to the new block.  In this
-+	 * case, no block pointer is passed back because the block has already
-+	 * been added to the btree.  In this case, we need to use the regular
-+	 * key update function, just like the first case.  This is critical for
-+	 * overlapping btrees, because the high key must be updated to reflect
-+	 * the entire tree, not just the subtree accessible through the first
-+	 * child of the root (which is now two levels down from the root).
- 	 */
--	if (bp && xfs_buf_daddr(bp) != old_bn) {
-+	if (!xfs_btree_ptr_is_null(cur, &nptr) &&
-+	    bp && xfs_buf_daddr(bp) != old_bn) {
- 		xfs_btree_get_keys(cur, block, lkey);
- 	} else if (xfs_btree_needs_key_update(cur, optr)) {
- 		error = xfs_btree_update_keys(cur, level);
+ 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+ 		dst_cache_destroy(&rcast->dst_cache);
+@@ -818,10 +819,14 @@ static void cleanup_bearer(struct work_struct *work)
+ 		kfree_rcu(rcast, rcu);
+ 	}
+ 
++	tn = tipc_net(sock_net(ub->ubsock->sk));
++
+ 	dst_cache_destroy(&ub->rcast.dst_cache);
+ 	udp_tunnel_sock_release(ub->ubsock);
++
++	/* Note: could use a call_rcu() to avoid another synchronize_net() */
+ 	synchronize_net();
+-	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
++	atomic_dec(&tn->wq_count);
+ 	kfree(ub);
+ }
+ 
+-- 
+2.39.5
+
 
 
