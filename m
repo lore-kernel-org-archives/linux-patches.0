@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30A91F543C;
-	Tue, 17 Dec 2024 17:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6731F37BE;
+	Tue, 17 Dec 2024 17:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455359; cv=none; b=VeWuYn7MoZeh6VMpM+ZENqzaUYUSYk+nsYbRXG5TXISsYQrle+VjiylF90jyn1KeDvpiIigysz6q3XBgRI5DSxg0B+6QevmmKpTg+Am6t0KlZ6c81y3iIAvDd6IlwTijqKOcCjr+rKkOBVCugCRzIQiWtraXOtNG/91408ElmZw=
+	t=1734455363; cv=none; b=fws+pn8eFP4zO2VH6jhO0otYGAqs9tfQJhtBw/nqOyBks8qWMDNHcYWT7fAbdGHU8+6YHxzNBbRQGD7ZoGtwBz4kGfU2KKVf+aPaz+UQigNyPI6pZjOJYmSVdvqxIFGvW5wXuh03mPafVHZB+wV481wmboh9VqAEJIxmiesgfDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455359; c=relaxed/simple;
-	bh=cR/yf+cOvYWbOKiO5OGNqME1O6mhy4U8S5T6F+Dqc8w=;
+	s=arc-20240116; t=1734455363; c=relaxed/simple;
+	bh=SycOf8asPKFt/ZTQk+lv1FmsNrGa+qZdpXOOYZ32/kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqsM3XdUJEDeej+dqeNPfHhjLMeHbPQHEldTfB+VbdXFwGF6W7UwQwcE9YwgbSmf20FhMvzpseglEDHs+EvWCdwfWIbu/8p+Oamy87olPuOqquXaY02u1UwQON8sq/DBikMtumJN5uBP44gvd49sZouojjVKoHFduaoo3btfcFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2pAeD/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fiUqdWvFYRIc3Ag7yUG08hTfxZKOf/m20X4R5xmoAHKt1Ct2m65DDh9bGXwVS3xX/8zxOn1EhNHkZHN0pVN4Id6z3SURtD9NKn7VwVoixaWK1Dv0UfQQcpsLk8HgLMMW3iuOC3o9vVVmy2NhuP40cXnw+7Io19m9ExXzeOHbrHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XaS057pW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2pAeD/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E053C4CEDD;
-	Tue, 17 Dec 2024 17:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XaS057pW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46251C4CED3;
+	Tue, 17 Dec 2024 17:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455359;
-	bh=cR/yf+cOvYWbOKiO5OGNqME1O6mhy4U8S5T6F+Dqc8w=;
+	s=korg; t=1734455362;
+	bh=SycOf8asPKFt/ZTQk+lv1FmsNrGa+qZdpXOOYZ32/kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2pAeD/UHPj5q3SWEH2GPDtGGAxW7JtEMsAFPnO0vWnjkYROCHredH3LFnnczLT5r
-	 twWtJCXAIwDTMnmlKapALw1prXiXqGw1HbzUo+GqhUdjIL4bx+xfnhuO6uH8ADkVvb
-	 iinGJExvYCEQtRO/TIAHHHXQkJDoBBE1SwwZyous=
+	b=XaS057pWOO7dzJ3hjsb3e2zHieMOZsKyAdNZROQZo2hUH2VQxk08OLm0M2XdHgVYq
+	 MfgYfkTg2yWmkpd0ykDlDZRPk2FW8Q3vZD+IOW+oTrcnUHgQczodf0Un/RHO1uy059
+	 Qugq3vqrOLTX0t6kSFVqQ0VwLd59LY/acBLC131s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Antonio Quartulli <Antonio@mandelbit.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
+	syzbot+46aa5474f179dacd1a3b@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 10/24] batman-adv: Do not let TT changes list grows indefinitely
-Date: Tue, 17 Dec 2024 18:07:08 +0100
-Message-ID: <20241217170519.428230935@linuxfoundation.org>
+Subject: [PATCH 5.4 11/24] tipc: fix NULL deref in cleanup_bearer()
+Date: Tue, 17 Dec 2024 18:07:09 +0100
+Message-ID: <20241217170519.469107476@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170519.006786596@linuxfoundation.org>
 References: <20241217170519.006786596@linuxfoundation.org>
@@ -53,75 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fff8f17c1a6fc802ca23bbd3a276abfde8cc58e6 ]
+[ Upstream commit b04d86fff66b15c07505d226431f808c15b1703c ]
 
-When TT changes list is too big to fit in packet due to MTU size, an
-empty OGM is sent expected other node to send TT request to get the
-changes. The issue is that tt.last_changeset was not built thus the
-originator was responding with previous changes to those TT requests
-(see batadv_send_my_tt_response). Also the changes list was never
-cleaned up effectively never ending growing from this point onwards,
-repeatedly sending the same TT response changes over and over, and
-creating a new empty OGM every OGM interval expecting for the local
-changes to be purged.
+syzbot found [1] that after blamed commit, ub->ubsock->sk
+was NULL when attempting the atomic_dec() :
 
-When there is more TT changes that can fit in packet, drop all changes,
-send empty OGM and wait for TT request so we can respond with a full
-table instead.
+atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
 
-Fixes: e1bf0c14096f ("batman-adv: tvlv - convert tt data sent within OGMs")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Acked-by: Antonio Quartulli <Antonio@mandelbit.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Fix this by caching the tipc_net pointer.
+
+[1]
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000006: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
+CPU: 0 UID: 0 PID: 5896 Comm: kworker/0:3 Not tainted 6.13.0-rc1-next-20241203-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Workqueue: events cleanup_bearer
+ RIP: 0010:read_pnet include/net/net_namespace.h:387 [inline]
+ RIP: 0010:sock_net include/net/sock.h:655 [inline]
+ RIP: 0010:cleanup_bearer+0x1f7/0x280 net/tipc/udp_media.c:820
+Code: 18 48 89 d8 48 c1 e8 03 42 80 3c 28 00 74 08 48 89 df e8 3c f7 99 f6 48 8b 1b 48 83 c3 30 e8 f0 e4 60 00 48 89 d8 48 c1 e8 03 <42> 80 3c 28 00 74 08 48 89 df e8 1a f7 99 f6 49 83 c7 e8 48 8b 1b
+RSP: 0018:ffffc9000410fb70 EFLAGS: 00010206
+RAX: 0000000000000006 RBX: 0000000000000030 RCX: ffff88802fe45a00
+RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffffc9000410f900
+RBP: ffff88807e1f0908 R08: ffffc9000410f907 R09: 1ffff92000821f20
+R10: dffffc0000000000 R11: fffff52000821f21 R12: ffff888031d19980
+R13: dffffc0000000000 R14: dffffc0000000000 R15: ffff88807e1f0918
+FS:  0000000000000000(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000556ca050b000 CR3: 0000000031c0c000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+
+Fixes: 6a2fa13312e5 ("tipc: Fix use-after-free of kernel socket in cleanup_bearer().")
+Reported-by: syzbot+46aa5474f179dacd1a3b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67508b5f.050a0220.17bd51.0070.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20241204170548.4152658-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/tipc/udp_media.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index e6d51d5070aa..0c23df3ea0c3 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -1000,6 +1000,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	int tt_diff_len, tt_change_len = 0;
- 	int tt_diff_entries_num = 0;
- 	int tt_diff_entries_count = 0;
-+	bool drop_changes = false;
- 	size_t tt_extra_len = 0;
- 	u16 tvlv_len;
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index 696a21208b24..5f278c25462e 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -798,6 +798,7 @@ static void cleanup_bearer(struct work_struct *work)
+ {
+ 	struct udp_bearer *ub = container_of(work, struct udp_bearer, work);
+ 	struct udp_replicast *rcast, *tmp;
++	struct tipc_net *tn;
  
-@@ -1007,10 +1008,17 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	tt_diff_len = batadv_tt_len(tt_diff_entries_num);
+ 	list_for_each_entry_safe(rcast, tmp, &ub->rcast.list, list) {
+ 		dst_cache_destroy(&rcast->dst_cache);
+@@ -805,10 +806,14 @@ static void cleanup_bearer(struct work_struct *work)
+ 		kfree_rcu(rcast, rcu);
+ 	}
  
- 	/* if we have too many changes for one packet don't send any
--	 * and wait for the tt table request which will be fragmented
-+	 * and wait for the tt table request so we can reply with the full
-+	 * (fragmented) table.
-+	 *
-+	 * The local change history should still be cleaned up so the next
-+	 * TT round can start again with a clean state.
- 	 */
--	if (tt_diff_len > bat_priv->soft_iface->mtu)
-+	if (tt_diff_len > bat_priv->soft_iface->mtu) {
- 		tt_diff_len = 0;
-+		tt_diff_entries_num = 0;
-+		drop_changes = true;
-+	}
++	tn = tipc_net(sock_net(ub->ubsock->sk));
++
+ 	dst_cache_destroy(&ub->rcast.dst_cache);
+ 	udp_tunnel_sock_release(ub->ubsock);
++
++	/* Note: could use a call_rcu() to avoid another synchronize_net() */
+ 	synchronize_net();
+-	atomic_dec(&tipc_net(sock_net(ub->ubsock->sk))->wq_count);
++	atomic_dec(&tn->wq_count);
+ 	kfree(ub);
+ }
  
- 	tvlv_len = batadv_tt_prepare_tvlv_local_data(bat_priv, &tt_data,
- 						     &tt_change, &tt_diff_len);
-@@ -1019,7 +1027,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 
- 	tt_data->flags = BATADV_TT_OGM_DIFF;
- 
--	if (tt_diff_len == 0)
-+	if (!drop_changes && tt_diff_len == 0)
- 		goto container_register;
- 
- 	spin_lock_bh(&bat_priv->tt.changes_list_lock);
 -- 
 2.39.5
 
