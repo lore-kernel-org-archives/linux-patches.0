@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8082E1F7574;
-	Tue, 17 Dec 2024 17:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC491F76CE;
+	Tue, 17 Dec 2024 17:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456119; cv=none; b=DJbbVduSSn4kfsnmfJUxQAJd7RArIsBMt3aZ8Of5e9+8xo3uY8z4LDHLfiM5D2u4u0dr0wBc539FiInHlAgQWaoyV49FaZP/ZTAIdX6/yKqIxdXr930IxPNBTjDstzzINJ0wOnKlL7iE0wTXqn+7rb+hQ82j7hWTLyTxhvRG1t8=
+	t=1734456122; cv=none; b=gwe1Y/TpJtv6SRw3vzAZkaQIJA+8OBxK2MejxI5QjaEHaUzR+vP2qNVWRdN6E5e9K6YWFBKZ4LeRCE0l1HDB7L6sL9fydIaw3w57etFa5Yk0gOCXMkFHcz3KUzd5KY+fpUgmD6XGOhsJd29j90P/J7Q1u+kBBTDUBidJkxyMUqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456119; c=relaxed/simple;
-	bh=pahjZjCAmm1w/xbMN9/imqVi/xzCu4lYUOTMN6Vene4=;
+	s=arc-20240116; t=1734456122; c=relaxed/simple;
+	bh=6Z/TGMzipaeVOlElqV69XfSs8bllmuuVu+Vs1zHrAf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVprGFj/OQ1BNIpxjgzSPfGt54XEhG9pEBBdJPjMT/dJkpObkcyspklbx9drSmZFDEFrytINCdQAMkGK6pMy2e9vub4g5ndCQRmQUmEfxzMLTj4mL7hjzHIsR2BkTXi1ZA0zfJuT5NIfjBSaLqPuYHN+K7xeaPPUlryB4ge7wH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UMkpbWNQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJupIlz+oLRmoHrHayJPG6ugDkO95zd0Uk/Z2d6/w7gOahgURxtFp3Oq1MhhovaTcsOLmGdX1tIXRFGxSgvA01o5zDbRDrFveR24dgXQz32W6dQPxgJ9N/pqekK2vlS3b51ynG4tmVTjGEZOJq24+CoAxPSE+1De2BsRe8//NaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izussGfs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UMkpbWNQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DFAC4CEDF;
-	Tue, 17 Dec 2024 17:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izussGfs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A4BC4CEDE;
+	Tue, 17 Dec 2024 17:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456119;
-	bh=pahjZjCAmm1w/xbMN9/imqVi/xzCu4lYUOTMN6Vene4=;
+	s=korg; t=1734456122;
+	bh=6Z/TGMzipaeVOlElqV69XfSs8bllmuuVu+Vs1zHrAf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMkpbWNQeQCvTKGJtUSZRiMfJjuyaU4tH3Hpt+ZYDcd7oFxdDOh77Jlqx15uqByVO
-	 oXFgyAhGbrMn3E2mTmVr7hTW+CBp8bOU/ZWsFyjzUCIVf9cYiDgCYbPQCqS5mJR4wf
-	 EE2I8/2BLio3OBggq98L8khxg0b9WA9XibGIL7cA=
+	b=izussGfsWt3LSoD2/cFgGy+nPoZ6Ag2hpk5x/5RK0BlfvZE0/dGzRM+iRFb+wN5iK
+	 iBkF91AncPZpHBDu1t+SfvEc+xiHqXLaPhRKfYH7/+bG5uOlvXWYhS6aEUvq2wBOhX
+	 zR0f9G5gvAUE6kzksy6k1cZQWNo+5e+0qIbp3FjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoyu Li <lihaoyu499@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 036/109] wifi: mac80211: init cnt before accessing elem in ieee80211_copy_mbssid_beacon
-Date: Tue, 17 Dec 2024 18:07:20 +0100
-Message-ID: <20241217170534.882691539@linuxfoundation.org>
+Subject: [PATCH 6.6 037/109] wifi: mac80211: clean up ret in sta_link_apply_parameters()
+Date: Tue, 17 Dec 2024 18:07:21 +0100
+Message-ID: <20241217170534.923654230@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -51,43 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoyu Li <lihaoyu499@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 496db69fd860570145f7c266b31f3af85fca5b00 ]
+[ Upstream commit 642508a42f74d7467aae7c56dff3016db64a25bd ]
 
-With the new __counted_by annocation in cfg80211_mbssid_elems,
-the "cnt" struct member must be set before accessing the "elem"
-array. Failing to do so will trigger a runtime warning when enabling
-CONFIG_UBSAN_BOUNDS and CONFIG_FORTIFY_SOURCE.
+There's no need to have the always-zero ret variable in
+the function scope, move it into the inner scope only.
 
-Fixes: c14679d7005a ("wifi: cfg80211: Annotate struct cfg80211_mbssid_elems with __counted_by")
-Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
-Link: https://patch.msgid.link/20241123172500.311853-1-lihaoyu499@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240605135233.eb7a24632d98.I72d7fe1da89d4b89bcfd0f5fb9057e3e69355cfe@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 819e0f1e58e0 ("wifi: mac80211: fix station NSS capability initialization order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/cfg.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 3da30c991de8..fe4469af3cc9 100644
+index fe4469af3cc9..f9395cd80051 100644
 --- a/net/mac80211/cfg.c
 +++ b/net/mac80211/cfg.c
-@@ -1082,13 +1082,13 @@ ieee80211_copy_mbssid_beacon(u8 *pos, struct cfg80211_mbssid_elems *dst,
+@@ -1795,7 +1795,6 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 				     struct sta_info *sta, bool new_link,
+ 				     struct link_station_parameters *params)
  {
- 	int i, offset = 0;
- 
-+	dst->cnt = src->cnt;
- 	for (i = 0; i < src->cnt; i++) {
- 		memcpy(pos + offset, src->elem[i].data, src->elem[i].len);
- 		dst->elem[i].len = src->elem[i].len;
- 		dst->elem[i].data = pos + offset;
- 		offset += dst->elem[i].len;
+-	int ret = 0;
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee80211_sub_if_data *sdata = sta->sdata;
+ 	u32 link_id = params->link_id < 0 ? 0 : params->link_id;
+@@ -1837,6 +1836,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
  	}
--	dst->cnt = src->cnt;
  
- 	return offset;
+ 	if (params->txpwr_set) {
++		int ret;
++
+ 		link_sta->pub->txpwr.type = params->txpwr.type;
+ 		if (params->txpwr.type == NL80211_TX_POWER_LIMITED)
+ 			link_sta->pub->txpwr.power = params->txpwr.power;
+@@ -1889,7 +1890,7 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 
+ 	ieee80211_sta_init_nss(link_sta);
+ 
+-	return ret;
++	return 0;
  }
+ 
+ static int sta_apply_parameters(struct ieee80211_local *local,
 -- 
 2.39.5
 
