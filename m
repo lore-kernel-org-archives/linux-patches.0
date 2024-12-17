@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DE31F8900;
-	Tue, 17 Dec 2024 17:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC57B1F76DF;
+	Tue, 17 Dec 2024 17:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456842; cv=none; b=IzkIp1Sgy0L9SlawN3sAo+5vFuZjDGvmguJ0q8z7vSVAsRP5vbk5SAUkxPNqPlWC3ZF7w4AAswuFMCrYp0i5uaj5zUs3SNRd1hqP1Yjxksit+4+AzBqk0vWK0gFFJ/7K4CD8RL2uLuQ1QDUIZGJ8aAld0GRX5fxDbMiZKP1RS2A=
+	t=1734456844; cv=none; b=a1MUOWxSn98h3uepIHrZcV13ONM4T+Qg9z2cCGOBmyDM2WrWg9YpfNHIzJu8V59/RS0MubRB2SUMFIgShCM3hH5WQSysbSbRiHRIYH5t5kbyNwts2A8mmiLKJoZrqu4nKQm9DUKa5/0mpg55ZxWslnWzGMLCRr9FR3NGF0wEtfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456842; c=relaxed/simple;
-	bh=8jS8WTj+R1sb5yTJAVxeMdouCGo1PJnCqgsnPrTNsjA=;
+	s=arc-20240116; t=1734456844; c=relaxed/simple;
+	bh=Wwft1SIyKay/QRhp0L+IJhPig0L26x6mqE88/Q5ujb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEGYay+MDZeRQwUeLLpkWisMaSkAc5UumrnygN73yjzCTCk/AcdYdYKJVQMQVaW1h/c65NtzH0FqKTR/SzkYDqsowqEueoRoD9hdHJJYaTFiUYlqOM17l892z/mNz91WezLxCm9u2eDJv3avDqKbWAA92ipYHLejCL1PzCdVm8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6AOUx+E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KxTDgonGWKPpMhQQ1uSK4eS1NuBKd7sSowkn1VrzZfhiZNy5m3c9jPHSGCu4Jf2n1X4hMxCLM+fiI1UWhpwmmyAmdRinQKLg4gw7T5wzM8ZRLR9ATXrk8UgF0EofA55oLO+4Eqq3sxfTRKKR0ifGFTu8CDutCoDo/PaIAfQLHWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjP4DAZ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6AOUx+E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C81BFC4CED3;
-	Tue, 17 Dec 2024 17:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjP4DAZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048E1C4CED7;
+	Tue, 17 Dec 2024 17:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456841;
-	bh=8jS8WTj+R1sb5yTJAVxeMdouCGo1PJnCqgsnPrTNsjA=;
+	s=korg; t=1734456844;
+	bh=Wwft1SIyKay/QRhp0L+IJhPig0L26x6mqE88/Q5ujb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V6AOUx+E1+OSdiHJzkytHFgIszXmau4JJRcqI+8sKdF3ElnVjTxO48pmYwKAlOpLI
-	 q+2dWlC1i9z0U+jlSxIfLswY5Jd3l9h2qfCn2Eg+J0F+gj0nhDHs87EhKTt+M2ylcL
-	 om1j75N9DG3ImsHf2avyTWls67MWfjMlItfUpOH4=
+	b=GjP4DAZ8s+Kc/I1sC415xw3XTRqqrCIitNn8gNu3xPW51/lMGY4XZVLtm2+B4o+IM
+	 Z6cGQZo+Oa6QhAww7liu/9A4yXEX6eCYRZXGf5PPlRrSH73PCRqNRPbnMF4ZDFYto1
+	 qKPUJatv1DugaeGQ0rPrwAOJqExQsGvLig/dukXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	=?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 149/172] Bluetooth: iso: Fix recursive locking warning
-Date: Tue, 17 Dec 2024 18:08:25 +0100
-Message-ID: <20241217170552.512076264@linuxfoundation.org>
+Subject: [PATCH 6.12 150/172] Bluetooth: SCO: Add support for 16 bits transparent voice setting
+Date: Tue, 17 Dec 2024 18:08:26 +0100
+Message-ID: <20241217170552.552088819@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -45,81 +45,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+From: Frédéric Danis <frederic.danis@collabora.com>
 
-[ Upstream commit 9bde7c3b3ad0e1f39d6df93dd1c9caf63e19e50f ]
+[ Upstream commit 29a651451e6c264f58cd9d9a26088e579d17b242 ]
 
-This updates iso_sock_accept to use nested locking for the parent
-socket, to avoid lockdep warnings caused because the parent and
-child sockets are locked by the same thread:
+The voice setting is used by sco_connect() or sco_conn_defer_accept()
+after being set by sco_sock_setsockopt().
 
-[   41.585683] ============================================
-[   41.585688] WARNING: possible recursive locking detected
-[   41.585694] 6.12.0-rc6+ #22 Not tainted
-[   41.585701] --------------------------------------------
-[   41.585705] iso-tester/3139 is trying to acquire lock:
-[   41.585711] ffff988b29530a58 (sk_lock-AF_BLUETOOTH)
-               at: bt_accept_dequeue+0xe3/0x280 [bluetooth]
-[   41.585905]
-               but task is already holding lock:
-[   41.585909] ffff988b29533a58 (sk_lock-AF_BLUETOOTH)
-               at: iso_sock_accept+0x61/0x2d0 [bluetooth]
-[   41.586064]
-               other info that might help us debug this:
-[   41.586069]  Possible unsafe locking scenario:
+The PCM part of the voice setting is used for offload mode through PCM
+chipset port.
+This commits add support for mSBC 16 bits offloading, i.e. audio data
+not transported over HCI.
 
-[   41.586072]        CPU0
-[   41.586076]        ----
-[   41.586079]   lock(sk_lock-AF_BLUETOOTH);
-[   41.586086]   lock(sk_lock-AF_BLUETOOTH);
-[   41.586093]
-                *** DEADLOCK ***
+The BCM4349B1 supports 16 bits transparent data on its I2S port.
+If BT_VOICE_TRANSPARENT is used when accepting a SCO connection, this
+gives only garbage audio while using BT_VOICE_TRANSPARENT_16BIT gives
+correct audio.
+This has been tested with connection to iPhone 14 and Samsung S24.
 
-[   41.586097]  May be due to missing lock nesting notation
-
-[   41.586101] 1 lock held by iso-tester/3139:
-[   41.586107]  #0: ffff988b29533a58 (sk_lock-AF_BLUETOOTH)
-                at: iso_sock_accept+0x61/0x2d0 [bluetooth]
-
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Fixes: ad10b1a48754 ("Bluetooth: Add Bluetooth socket voice option")
+Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/net/bluetooth/bluetooth.h |  1 +
+ net/bluetooth/sco.c               | 29 +++++++++++++++--------------
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 34eade4b0587..269ce0bb73a1 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1225,7 +1225,11 @@ static int iso_sock_accept(struct socket *sock, struct socket *newsock,
- 	long timeo;
- 	int err = 0;
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index e6760c11f007..435250c72d56 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -123,6 +123,7 @@ struct bt_voice {
  
--	lock_sock(sk);
-+	/* Use explicit nested locking to avoid lockdep warnings generated
-+	 * because the parent socket and the child socket are locked on the
-+	 * same thread.
-+	 */
-+	lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
+ #define BT_VOICE_TRANSPARENT			0x0003
+ #define BT_VOICE_CVSD_16BIT			0x0060
++#define BT_VOICE_TRANSPARENT_16BIT		0x0063
  
- 	timeo = sock_rcvtimeo(sk, arg->flags & O_NONBLOCK);
+ #define BT_SNDMTU		12
+ #define BT_RCVMTU		13
+diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
+index 700abb639a55..b872a2ca3ff3 100644
+--- a/net/bluetooth/sco.c
++++ b/net/bluetooth/sco.c
+@@ -267,10 +267,13 @@ static int sco_connect(struct sock *sk)
+ 	else
+ 		type = SCO_LINK;
  
-@@ -1256,7 +1260,7 @@ static int iso_sock_accept(struct socket *sock, struct socket *newsock,
- 		release_sock(sk);
- 
- 		timeo = wait_woken(&wait, TASK_INTERRUPTIBLE, timeo);
--		lock_sock(sk);
-+		lock_sock_nested(sk, SINGLE_DEPTH_NESTING);
+-	if (sco_pi(sk)->setting == BT_VOICE_TRANSPARENT &&
+-	    (!lmp_transp_capable(hdev) || !lmp_esco_capable(hdev))) {
+-		err = -EOPNOTSUPP;
+-		goto unlock;
++	switch (sco_pi(sk)->setting & SCO_AIRMODE_MASK) {
++	case SCO_AIRMODE_TRANSP:
++		if (!lmp_transp_capable(hdev) || !lmp_esco_capable(hdev)) {
++			err = -EOPNOTSUPP;
++			goto unlock;
++		}
++		break;
  	}
- 	remove_wait_queue(sk_sleep(sk), &wait);
+ 
+ 	hcon = hci_connect_sco(hdev, type, &sco_pi(sk)->dst,
+@@ -877,13 +880,6 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 		if (err)
+ 			break;
+ 
+-		/* Explicitly check for these values */
+-		if (voice.setting != BT_VOICE_TRANSPARENT &&
+-		    voice.setting != BT_VOICE_CVSD_16BIT) {
+-			err = -EINVAL;
+-			break;
+-		}
+-
+ 		sco_pi(sk)->setting = voice.setting;
+ 		hdev = hci_get_route(&sco_pi(sk)->dst, &sco_pi(sk)->src,
+ 				     BDADDR_BREDR);
+@@ -891,9 +887,14 @@ static int sco_sock_setsockopt(struct socket *sock, int level, int optname,
+ 			err = -EBADFD;
+ 			break;
+ 		}
+-		if (enhanced_sync_conn_capable(hdev) &&
+-		    voice.setting == BT_VOICE_TRANSPARENT)
+-			sco_pi(sk)->codec.id = BT_CODEC_TRANSPARENT;
++
++		switch (sco_pi(sk)->setting & SCO_AIRMODE_MASK) {
++		case SCO_AIRMODE_TRANSP:
++			if (enhanced_sync_conn_capable(hdev))
++				sco_pi(sk)->codec.id = BT_CODEC_TRANSPARENT;
++			break;
++		}
++
+ 		hci_dev_put(hdev);
+ 		break;
  
 -- 
 2.39.5
