@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0A71448DC;
-	Tue, 17 Dec 2024 17:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1641448DC;
+	Tue, 17 Dec 2024 17:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456628; cv=none; b=XSnr6jPrI7UP8TW7LLVKP3hZ/Dqx6g8adcAxuZbupDB9NKA46Re81lIF/Oj3RzysSgE9hGn2sYiVTVThbwyEzO84G4283RQGocmie0Yqz9LCU77uotfdHv4BGgW1e+AQYUMWYMWUmkjb5gIlux9/jntd0tDLsuVriX+z9acQ/68=
+	t=1734456631; cv=none; b=fEpu/g/KcGDgG7/1/AHodLVSmLJnFGiya4v6PS5Bf2oHTy0lb5qWBjZ04d5UQSxmVrFflkpzk7aMZyZJL3wwUsC7v55cgkkDziPt93eW4DSOSPSoTpDto4Fx+3oBPMJ0w1spaiWGoPzmoErvnuLPjqM6k3JjPXl+pOQmQ9AWdMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456628; c=relaxed/simple;
-	bh=/zUQp37d/BTjwZgtDb48t3e0QqDpWeyAqpUh6iVgx/4=;
+	s=arc-20240116; t=1734456631; c=relaxed/simple;
+	bh=A5c5n31/GVaBsAvaI6thg35ZFLBwJRbSkNnS2t5SEwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWbn0Gb9Fh0T7161GR6wcAz+RjuJreEBGpVRDVpQTnTamnKCxpirmmEOnwT/qHsia7tv+DJ2aTnQwwfTt5weA8QQoEMmOd+NbWeoJWgzQ4DV9hSMPITy29jULgUDqze1pw/fzLEQ/PoNu+GlhyuKSaYLOWjMInRWfa2rpjbGuH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVS3sY9K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJN/Ujc5WOG9mxABAHJf51kMpWL0gzhwGcKjdJiLUBUX3x2Jy4ajxB6GF180Uyvxe5pLs9ilI8MyXQHHbWWg/uYYMA+6Oer9OmzhTmlDizbrbhRRVGTtWl9EngwhUEyu541/ki6MRtykPK3zi81hcOUpSmoyIUZo59DZa5DFStI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+7KudjA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVS3sY9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54405C4CED3;
-	Tue, 17 Dec 2024 17:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+7KudjA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2081C4CED3;
+	Tue, 17 Dec 2024 17:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456628;
-	bh=/zUQp37d/BTjwZgtDb48t3e0QqDpWeyAqpUh6iVgx/4=;
+	s=korg; t=1734456631;
+	bh=A5c5n31/GVaBsAvaI6thg35ZFLBwJRbSkNnS2t5SEwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IVS3sY9KHD42Y4800SAMHvnyyLJlMiK9Sh77DsX2IrkzIMsqbaIHzgiBscJ3CMMVy
-	 cA0byudFHh+sdNs3VwUBCcyLsxo7k8N4EWNLJK/D4GF6cri1nUAX+w5TKjPhZM7Ejh
-	 MLNpIxQLYhVK5A3QBf2LKadJ2flLJlY83FjXgZj0=
+	b=T+7KudjA3SkJj/UKAqLq+uasjF+wKoZv4fI4EGSxsZOtnQ+AXY/2+AmmyyKK0vKeA
+	 wFcuZfqWo+X4jLonXRWTBa1SbeamLHOICSIrNPvhx+fWhThRIm/EmrYqlVzlxf7aTa
+	 Fs1FcgKhzgVE3bvauOFaRxF9DWfsPRo6lDIPtudM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.12 077/172] bpf: Fix theoretical prog_array UAF in __uprobe_perf_func()
-Date: Tue, 17 Dec 2024 18:07:13 +0100
-Message-ID: <20241217170549.482299462@linuxfoundation.org>
+	Daniel Machon <daniel.machon@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 110/172] net: sparx5: fix FDMA performance issue
+Date: Tue, 17 Dec 2024 18:07:46 +0100
+Message-ID: <20241217170550.886881529@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,99 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-commit 7d0d673627e20cfa3b21a829a896ce03b58a4f1c upstream.
+[ Upstream commit f004f2e535e2b66ccbf5ac35f8eaadeac70ad7b7 ]
 
-Currently, the pointer stored in call->prog_array is loaded in
-__uprobe_perf_func(), with no RCU annotation and no immediately visible
-RCU protection, so it looks as if the loaded pointer can immediately be
-dangling.
-Later, bpf_prog_run_array_uprobe() starts a RCU-trace read-side critical
-section, but this is too late. It then uses rcu_dereference_check(), but
-this use of rcu_dereference_check() does not actually dereference anything.
+The FDMA handler is responsible for scheduling a NAPI poll, which will
+eventually fetch RX packets from the FDMA queue. Currently, the FDMA
+handler is run in a threaded context. For some reason, this kills
+performance.  Admittedly, I did not do a thorough investigation to see
+exactly what causes the issue, however, I noticed that in the other
+driver utilizing the same FDMA engine, we run the FDMA handler in hard
+IRQ context.
 
-Fix it by aligning the semantics to bpf_prog_run_array(): Let the caller
-provide rcu_read_lock_trace() protection and then load call->prog_array
-with rcu_dereference_check().
+Fix this performance issue, by  running the FDMA handler in hard IRQ
+context, not deferring any work to a thread.
 
-This issue seems to be theoretical: I don't know of any way to reach this
-code without having handle_swbp() further up the stack, which is already
-holding a rcu_read_lock_trace() lock, so where we take
-rcu_read_lock_trace() in __uprobe_perf_func()/bpf_prog_run_array_uprobe()
-doesn't actually have any effect.
+Prior to this change, the RX UDP performance was:
 
-Fixes: 8c7dcb84e3b7 ("bpf: implement sleepable uprobes by chaining gps")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241210-bpf-fix-uprobe-uaf-v4-1-5fc8959b2b74@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Interval           Transfer     Bitrate         Jitter
+0.00-10.20  sec    44.6 MBytes  36.7 Mbits/sec  0.027 ms
+
+After this change, the rx UDP performance is:
+
+Interval           Transfer     Bitrate         Jitter
+0.00-9.12   sec    1.01 GBytes  953 Mbits/sec   0.020 ms
+
+Fixes: 10615907e9b5 ("net: sparx5: switchdev: adding frame DMA functionality")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf.h         |   13 +++++--------
- kernel/trace/trace_uprobe.c |    6 +++++-
- 2 files changed, 10 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -2157,26 +2157,25 @@ bpf_prog_run_array(const struct bpf_prog
-  * rcu-protected dynamically sized maps.
-  */
- static __always_inline u32
--bpf_prog_run_array_uprobe(const struct bpf_prog_array __rcu *array_rcu,
-+bpf_prog_run_array_uprobe(const struct bpf_prog_array *array,
- 			  const void *ctx, bpf_prog_run_fn run_prog)
- {
- 	const struct bpf_prog_array_item *item;
- 	const struct bpf_prog *prog;
--	const struct bpf_prog_array *array;
- 	struct bpf_run_ctx *old_run_ctx;
- 	struct bpf_trace_run_ctx run_ctx;
- 	u32 ret = 1;
- 
- 	might_fault();
-+	RCU_LOCKDEP_WARN(!rcu_read_lock_trace_held(), "no rcu lock held");
-+
-+	if (unlikely(!array))
-+		return ret;
- 
--	rcu_read_lock_trace();
- 	migrate_disable();
- 
- 	run_ctx.is_uprobe = true;
- 
--	array = rcu_dereference_check(array_rcu, rcu_read_lock_trace_held());
--	if (unlikely(!array))
--		goto out;
- 	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
- 	item = &array->items[0];
- 	while ((prog = READ_ONCE(item->prog))) {
-@@ -2191,9 +2190,7 @@ bpf_prog_run_array_uprobe(const struct b
- 			rcu_read_unlock();
- 	}
- 	bpf_reset_run_ctx(old_run_ctx);
--out:
- 	migrate_enable();
--	rcu_read_unlock_trace();
- 	return ret;
- }
- 
---- a/kernel/trace/trace_uprobe.c
-+++ b/kernel/trace/trace_uprobe.c
-@@ -1400,9 +1400,13 @@ static void __uprobe_perf_func(struct tr
- 
- #ifdef CONFIG_BPF_EVENTS
- 	if (bpf_prog_array_valid(call)) {
-+		const struct bpf_prog_array *array;
- 		u32 ret;
- 
--		ret = bpf_prog_run_array_uprobe(call->prog_array, regs, bpf_prog_run);
-+		rcu_read_lock_trace();
-+		array = rcu_dereference_check(call->prog_array, rcu_read_lock_trace_held());
-+		ret = bpf_prog_run_array_uprobe(array, regs, bpf_prog_run);
-+		rcu_read_unlock_trace();
- 		if (!ret)
- 			return;
- 	}
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index b64c814eac11..0c4c75b3682f 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -693,12 +693,11 @@ static int sparx5_start(struct sparx5 *sparx5)
+ 	err = -ENXIO;
+ 	if (sparx5->fdma_irq >= 0) {
+ 		if (GCB_CHIP_ID_REV_ID_GET(sparx5->chip_id) > 0)
+-			err = devm_request_threaded_irq(sparx5->dev,
+-							sparx5->fdma_irq,
+-							NULL,
+-							sparx5_fdma_handler,
+-							IRQF_ONESHOT,
+-							"sparx5-fdma", sparx5);
++			err = devm_request_irq(sparx5->dev,
++					       sparx5->fdma_irq,
++					       sparx5_fdma_handler,
++					       0,
++					       "sparx5-fdma", sparx5);
+ 		if (!err)
+ 			err = sparx5_fdma_start(sparx5);
+ 		if (err)
+-- 
+2.39.5
+
 
 
