@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED10B1F8910;
-	Tue, 17 Dec 2024 17:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDCB8615A;
+	Tue, 17 Dec 2024 17:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455808; cv=none; b=jWuyUYdXtWzbt+0sowYuaA7p3XJpuO3PEZaWoZFmc/+eDbQFHzy1xVzHenvKWX13wrVHx6tntzXAQXReSVRk5x6ZH80pWyePzLh8LH3n8XIr9q0RmQDQiqyrif4YzT8VF6wFtBuWKfavSShQNdtcB1qtOFOceLAHvgt+Ed637UM=
+	t=1734455810; cv=none; b=qpUkoV8dlG6EHXXkZURDee7sVlvkpnowabESZthwTgWG8GuMh6FweQpLMt3khE5EBhh5jgwgJF//ebYa8Hi2DNiRf6aR3hNvJ5EaeYlhmrvO1JSiimA2xM+togk1EaxGwzlSEykWIxZFicJKBcse4YVcnzlRWScRF80QWylHX1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455808; c=relaxed/simple;
-	bh=AkykeuV0K8KB23c/9sOjoDwS7f3U4yrMcffr01UPDDU=;
+	s=arc-20240116; t=1734455810; c=relaxed/simple;
+	bh=zLZPaUYW8unGQF7amhDycN3vUutEymZdk7RT2JWC56E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b+MBbc1Kd0DgiqY8RgCxJ+pAiS74XL4FooUpOFk/pP5seowLE1X3uVxUciTaiMvqvpK3ULfTNgFYfmNEvLXLRUAFAUFM/7Pxqlws0/5HdeprHofvPmBvNK8DIxMFf2LavNyym9cyx9PLmjh4/wg70u9cTX4pifQk/Js91dWg8UA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TejBFpyy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JAtAp4y1dZ4hjxAR23LjCM2mTS2garUSxSl9vLqqh6BwlWdpxBIu+DUwe9MDyemGvOOY2bCuA/Vj/pBk5RonMpCLOX1zKdGkyjRbV0/Rf4JYYJ2qTlkj44HMtVASbwNVC+dKndbqkGJAO69K7wtgMl9ZfoMLjkxCsfeiHzktnDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcZ++XZR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TejBFpyy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B02C4CED3;
-	Tue, 17 Dec 2024 17:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcZ++XZR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A11AC4CED3;
+	Tue, 17 Dec 2024 17:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455807;
-	bh=AkykeuV0K8KB23c/9sOjoDwS7f3U4yrMcffr01UPDDU=;
+	s=korg; t=1734455810;
+	bh=zLZPaUYW8unGQF7amhDycN3vUutEymZdk7RT2JWC56E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TejBFpyyR3DwzSAhfEE3wsF+jYEVv8czltKruuJe7Dvu9F6O/4oJnFTnFVNhg6kIJ
-	 jXE27ol+y45enDAw24Vwf6rRSn0XUEflv/qbk24KssiiQKIZ6OJPuaw1I/bFvvzGGn
-	 I3GgAsSjNHfWiRJHctk4Fdqmnip2/imPuVl6dSls=
+	b=LcZ++XZRoR7KYLBytyx9PGMZ7+ejl/HZRZ0hZUagSN1SY+Q8XDfViitCwGZqv7J1W
+	 dW/8AOWtDIrnZduZXd8qrUV9SPxb4x2tpmVGCX7sxG3Fono2/yEy/6U9wm+TA6VmUM
+	 z2sIqLI0N40PCSPDYZVKqy6+vxdGR1zrqoZtvWvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Ratson <danieller@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
+	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 39/76] selftests: mlxsw: sharedbuffer: Ensure no extra packets are counted
-Date: Tue, 17 Dec 2024 18:07:19 +0100
-Message-ID: <20241217170527.890400158@linuxfoundation.org>
+Subject: [PATCH 6.1 40/76] ptp: kvm: Use decrypted memory in confidential guest on x86
+Date: Tue, 17 Dec 2024 18:07:20 +0100
+Message-ID: <20241217170527.931749107@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -53,138 +51,171 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Ratson <danieller@nvidia.com>
+From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
 
-[ Upstream commit 5f2c7ab15fd806043db1a7d54b5ec36be0bd93b1 ]
+[ Upstream commit 6365ba64b4dbe8b59ddaeaa724b281f3787715d5 ]
 
-The test assumes that the packet it is sending is the only packet being
-passed to the device.
+KVM_HC_CLOCK_PAIRING currently fails inside SEV-SNP guests because the
+guest passes an address to static data to the host. In confidential
+computing the host can't access arbitrary guest memory so handling the
+hypercall runs into an "rmpfault". To make the hypercall work, the guest
+needs to explicitly mark the memory as decrypted. Do that in
+kvm_arch_ptp_init(), but retain the previous behavior for
+non-confidential guests to save us from having to allocate memory.
 
-However, it is not the case and so other packets are filling the buffers
-as well. Therefore, the test sometimes fails because it is reading a
-maximum occupancy that is larger than expected.
+Add a new arch-specific function (kvm_arch_ptp_exit()) to free the
+allocation and mark the memory as encrypted again.
 
-Add egress filters on $h1 and $h2 that will guarantee the above.
-
-Fixes: a865ad999603 ("selftests: mlxsw: Add shared buffer traffic test")
-Signed-off-by: Danielle Ratson <danieller@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/64c28bc9b1cc1d78c4a73feda7cedbe9526ccf8b.1733414773.git.petrm@nvidia.com
+Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20230308150531.477741-1-jpiotrowski@linux.microsoft.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 5e7aa97c7acf ("ptp: kvm: x86: Return EOPNOTSUPP instead of ENODEV from kvm_arch_ptp_init()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drivers/net/mlxsw/sharedbuffer.sh         | 40 +++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ drivers/ptp/ptp_kvm_arm.c    |  4 +++
+ drivers/ptp/ptp_kvm_common.c |  1 +
+ drivers/ptp/ptp_kvm_x86.c    | 59 +++++++++++++++++++++++++++++-------
+ include/linux/ptp_kvm.h      |  1 +
+ 4 files changed, 54 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
-index 21bebc5726f6..c068e6c2a580 100755
---- a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
-+++ b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
-@@ -22,20 +22,34 @@ SB_ITC=0
- h1_create()
+diff --git a/drivers/ptp/ptp_kvm_arm.c b/drivers/ptp/ptp_kvm_arm.c
+index b7d28c8dfb84..e68e6943167b 100644
+--- a/drivers/ptp/ptp_kvm_arm.c
++++ b/drivers/ptp/ptp_kvm_arm.c
+@@ -22,6 +22,10 @@ int kvm_arch_ptp_init(void)
+ 	return 0;
+ }
+ 
++void kvm_arch_ptp_exit(void)
++{
++}
++
+ int kvm_arch_ptp_get_clock(struct timespec64 *ts)
  {
- 	simple_if_init $h1 192.0.1.1/24
-+	tc qdisc add dev $h1 clsact
-+
-+	# Add egress filter on $h1 that will guarantee that the packet sent,
-+	# will be the only packet being passed to the device.
-+	tc filter add dev $h1 egress pref 2 handle 102 matchall action drop
- }
- 
- h1_destroy()
+ 	return kvm_arch_ptp_get_crosststamp(NULL, ts, NULL);
+diff --git a/drivers/ptp/ptp_kvm_common.c b/drivers/ptp/ptp_kvm_common.c
+index fcae32f56f25..051114a59286 100644
+--- a/drivers/ptp/ptp_kvm_common.c
++++ b/drivers/ptp/ptp_kvm_common.c
+@@ -130,6 +130,7 @@ static struct kvm_ptp_clock kvm_ptp_clock;
+ static void __exit ptp_kvm_exit(void)
  {
-+	tc filter del dev $h1 egress pref 2 handle 102 matchall action drop
-+	tc qdisc del dev $h1 clsact
- 	simple_if_fini $h1 192.0.1.1/24
+ 	ptp_clock_unregister(kvm_ptp_clock.ptp_clock);
++	kvm_arch_ptp_exit();
  }
  
- h2_create()
+ static int __init ptp_kvm_init(void)
+diff --git a/drivers/ptp/ptp_kvm_x86.c b/drivers/ptp/ptp_kvm_x86.c
+index 4991054a2135..902844cc1a17 100644
+--- a/drivers/ptp/ptp_kvm_x86.c
++++ b/drivers/ptp/ptp_kvm_x86.c
+@@ -14,27 +14,64 @@
+ #include <uapi/linux/kvm_para.h>
+ #include <linux/ptp_clock_kernel.h>
+ #include <linux/ptp_kvm.h>
++#include <linux/set_memory.h>
+ 
+ static phys_addr_t clock_pair_gpa;
+-static struct kvm_clock_pairing clock_pair;
++static struct kvm_clock_pairing clock_pair_glbl;
++static struct kvm_clock_pairing *clock_pair;
+ 
+ int kvm_arch_ptp_init(void)
  {
- 	simple_if_init $h2 192.0.1.2/24
-+	tc qdisc add dev $h2 clsact
++	struct page *p;
+ 	long ret;
+ 
+ 	if (!kvm_para_available())
+ 		return -ENODEV;
+ 
+-	clock_pair_gpa = slow_virt_to_phys(&clock_pair);
+-	if (!pvclock_get_pvti_cpu0_va())
+-		return -ENODEV;
++	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
++		p = alloc_page(GFP_KERNEL | __GFP_ZERO);
++		if (!p)
++			return -ENOMEM;
 +
-+	# Add egress filter on $h2 that will guarantee that the packet sent,
-+	# will be the only packet being passed to the device.
-+	tc filter add dev $h2 egress pref 1 handle 101 matchall action drop
++		clock_pair = page_address(p);
++		ret = set_memory_decrypted((unsigned long)clock_pair, 1);
++		if (ret) {
++			__free_page(p);
++			clock_pair = NULL;
++			goto nofree;
++		}
++	} else {
++		clock_pair = &clock_pair_glbl;
++	}
++
++	clock_pair_gpa = slow_virt_to_phys(clock_pair);
++	if (!pvclock_get_pvti_cpu0_va()) {
++		ret = -ENODEV;
++		goto err;
++	}
+ 
+ 	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING, clock_pair_gpa,
+ 			     KVM_CLOCK_PAIRING_WALLCLOCK);
+-	if (ret == -KVM_ENOSYS)
+-		return -ENODEV;
++	if (ret == -KVM_ENOSYS) {
++		ret = -ENODEV;
++		goto err;
++	}
+ 
+ 	return ret;
++
++err:
++	kvm_arch_ptp_exit();
++nofree:
++	return ret;
++}
++
++void kvm_arch_ptp_exit(void)
++{
++	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
++		WARN_ON(set_memory_encrypted((unsigned long)clock_pair, 1));
++		free_page((unsigned long)clock_pair);
++		clock_pair = NULL;
++	}
  }
  
- h2_destroy()
- {
-+	tc filter del dev $h2 egress pref 1 handle 101 matchall action drop
-+	tc qdisc del dev $h2 clsact
- 	simple_if_fini $h2 192.0.1.2/24
+ int kvm_arch_ptp_get_clock(struct timespec64 *ts)
+@@ -49,8 +86,8 @@ int kvm_arch_ptp_get_clock(struct timespec64 *ts)
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+-	ts->tv_sec = clock_pair.sec;
+-	ts->tv_nsec = clock_pair.nsec;
++	ts->tv_sec = clock_pair->sec;
++	ts->tv_nsec = clock_pair->nsec;
+ 
+ 	return 0;
  }
+@@ -81,9 +118,9 @@ int kvm_arch_ptp_get_crosststamp(u64 *cycle, struct timespec64 *tspec,
+ 			pr_err_ratelimited("clock pairing hypercall ret %lu\n", ret);
+ 			return -EOPNOTSUPP;
+ 		}
+-		tspec->tv_sec = clock_pair.sec;
+-		tspec->tv_nsec = clock_pair.nsec;
+-		*cycle = __pvclock_read_cycles(src, clock_pair.tsc);
++		tspec->tv_sec = clock_pair->sec;
++		tspec->tv_nsec = clock_pair->nsec;
++		*cycle = __pvclock_read_cycles(src, clock_pair->tsc);
+ 	} while (pvclock_read_retry(src, version));
  
-@@ -101,6 +115,11 @@ port_pool_test()
- 	local exp_max_occ=$(devlink_cell_size_get)
- 	local max_occ
+ 	*cs = &kvm_clock;
+diff --git a/include/linux/ptp_kvm.h b/include/linux/ptp_kvm.h
+index c2e28deef33a..746fd67c3480 100644
+--- a/include/linux/ptp_kvm.h
++++ b/include/linux/ptp_kvm.h
+@@ -14,6 +14,7 @@ struct timespec64;
+ struct clocksource;
  
-+	tc filter add dev $h1 egress protocol ip pref 1 handle 101 flower \
-+		src_mac $h1mac dst_mac $h2mac \
-+		src_ip 192.0.1.1 dst_ip 192.0.1.2 \
-+		action pass
-+
- 	devlink sb occupancy clearmax $DEVLINK_DEV
- 
- 	$MZ $h1 -c 1 -p 10 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
-@@ -117,6 +136,11 @@ port_pool_test()
- 	max_occ=$(sb_occ_pool_check $cpu_dl_port $SB_POOL_EGR_CPU $exp_max_occ)
- 	check_err $? "Expected ePool($SB_POOL_EGR_CPU) max occupancy to be $exp_max_occ, but got $max_occ"
- 	log_test "CPU port's egress pool"
-+
-+	tc filter del dev $h1 egress protocol ip pref 1 handle 101 flower \
-+		src_mac $h1mac dst_mac $h2mac \
-+		src_ip 192.0.1.1 dst_ip 192.0.1.2 \
-+		action pass
- }
- 
- port_tc_ip_test()
-@@ -124,6 +148,11 @@ port_tc_ip_test()
- 	local exp_max_occ=$(devlink_cell_size_get)
- 	local max_occ
- 
-+	tc filter add dev $h1 egress protocol ip pref 1 handle 101 flower \
-+		src_mac $h1mac dst_mac $h2mac \
-+		src_ip 192.0.1.1 dst_ip 192.0.1.2 \
-+		action pass
-+
- 	devlink sb occupancy clearmax $DEVLINK_DEV
- 
- 	$MZ $h1 -c 1 -p 10 -a $h1mac -b $h2mac -A 192.0.1.1 -B 192.0.1.2 \
-@@ -140,6 +169,11 @@ port_tc_ip_test()
- 	max_occ=$(sb_occ_etc_check $cpu_dl_port $SB_ITC_CPU_IP $exp_max_occ)
- 	check_err $? "Expected egress TC($SB_ITC_CPU_IP) max occupancy to be $exp_max_occ, but got $max_occ"
- 	log_test "CPU port's egress TC - IP packet"
-+
-+	tc filter del dev $h1 egress protocol ip pref 1 handle 101 flower \
-+		src_mac $h1mac dst_mac $h2mac \
-+		src_ip 192.0.1.1 dst_ip 192.0.1.2 \
-+		action pass
- }
- 
- port_tc_arp_test()
-@@ -147,6 +181,9 @@ port_tc_arp_test()
- 	local exp_max_occ=$(devlink_cell_size_get)
- 	local max_occ
- 
-+	tc filter add dev $h1 egress protocol arp pref 1 handle 101 flower \
-+		src_mac $h1mac action pass
-+
- 	devlink sb occupancy clearmax $DEVLINK_DEV
- 
- 	$MZ $h1 -c 1 -p 10 -a $h1mac -A 192.0.1.1 -t arp -q
-@@ -162,6 +199,9 @@ port_tc_arp_test()
- 	max_occ=$(sb_occ_etc_check $cpu_dl_port $SB_ITC_CPU_ARP $exp_max_occ)
- 	check_err $? "Expected egress TC($SB_ITC_IP2ME) max occupancy to be $exp_max_occ, but got $max_occ"
- 	log_test "CPU port's egress TC - ARP packet"
-+
-+	tc filter del dev $h1 egress protocol arp pref 1 handle 101 flower \
-+		src_mac $h1mac action pass
- }
- 
- setup_prepare()
+ int kvm_arch_ptp_init(void);
++void kvm_arch_ptp_exit(void);
+ int kvm_arch_ptp_get_clock(struct timespec64 *ts);
+ int kvm_arch_ptp_get_crosststamp(u64 *cycle,
+ 		struct timespec64 *tspec, struct clocksource **cs);
 -- 
 2.39.5
 
