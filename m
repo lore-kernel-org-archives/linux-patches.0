@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548478615A;
-	Tue, 17 Dec 2024 17:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B14142E77;
+	Tue, 17 Dec 2024 17:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455934; cv=none; b=BVGn4N7sGTjqdNQ3HhsUCWVzbJ9UnQIegKQCzIkdwyRs2OMaL9DM9dw0zNHJae9GtMFXQYlGyV47B+iPdH/FNcgymOmUzudohbYpimaeXn8PSSZInOeBt99GwC8sondUiddxRXlxdx90TTeP3OYlT5P9Rb0bAXLnEs1Nrehz/LI=
+	t=1734455937; cv=none; b=FctLzTPrh/+yVWeLCSqEUo1rKlIgbaftGPJwDzcofSgp9Ic5xyjz1/lBPY2vmeNnfCzmCYkIM59GOPbafIFUsxiE5Y7/8r9LkDkHtjEkQO6VlwsNa3X6cGETTX35aolJuf2rl800Zd6r05sLXD5rGoZ57x5DJmwiyZAS2ARva60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455934; c=relaxed/simple;
-	bh=QC9DbPRl3icZYCfy83rSD3uMayi3J5tPKyYrmvXdFck=;
+	s=arc-20240116; t=1734455937; c=relaxed/simple;
+	bh=4J6jtz2Cd37FlJrFCeU1YSPxiof6f+HrStldQdgfqdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0DcYFHPHiabj/qKGZ9qd4tvGxjFXMtH4dT1Z1SWlTpPluqtm+Ed4icqkMofdXJpCHgct06j9ZJ0VTvDsAaWmanCs0tytoMk/WNqpkaFIpdgJrt0LSHtXSQXIzuXmf/H81CUu3TOQLXkbd4MI8Wl/asUrI+eMMWLhilZuspbKj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENR1JiAa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXPSgM4ZnyS5LQOLlSwR8Zu0ZMwHahV6PYWfL227e0G7x9j9ovrhBdJ3SBABnhSOgmUDtk635/UEbAvS41rtlnkaAxbWdK/hOuTruOTw8yX2qOFuwMGmuF9efZymnjjvqr5tNuKrDxJJdx9ZFHpzUnLDYC1ZaUEdmY9B/Vkb6O8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsMnCAA2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENR1JiAa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFCA8C4CED3;
-	Tue, 17 Dec 2024 17:18:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsMnCAA2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFB8C4CED7;
+	Tue, 17 Dec 2024 17:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455934;
-	bh=QC9DbPRl3icZYCfy83rSD3uMayi3J5tPKyYrmvXdFck=;
+	s=korg; t=1734455937;
+	bh=4J6jtz2Cd37FlJrFCeU1YSPxiof6f+HrStldQdgfqdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENR1JiAaZqXYPX1gWn+VysTJAeBPIYuV2RSlza/OKDPUQr1HV2iIAk6v4hOleDva/
-	 flW/QrNMVBw/agcKwM4rlhZ9J++AcZ5vRqGNHCMnsIvJTTqhp6Ks87oV8gsohEjkMi
-	 97AdO3MBIUKZSH0Oi0wduwm3BKR5CKW50plfvbSU=
+	b=EsMnCAA2OHUfAilyF82pQaE4IBa9XP5JAXOLTd011ZX8cB9uycBlPJAXx/9SMVbve
+	 2rYlczTk6v19QqvNaKoc8sI1H/9H9s2gwyim6qKJdvs4SaK2O90VsE/G1gsWehlB6+
+	 sroCQRIKLQLZ0yktqv8Mi+WtCLrWiTAG6pi/wHzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 55/76] qca_spi: Make driver probing reliable
-Date: Tue, 17 Dec 2024 18:07:35 +0100
-Message-ID: <20241217170528.550471334@linuxfoundation.org>
+Subject: [PATCH 6.1 56/76] ASoC: amd: yc: Fix the wrong return value
+Date: Tue, 17 Dec 2024 18:07:36 +0100
+Message-ID: <20241217170528.593400005@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -51,38 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
 
-[ Upstream commit becc6399ce3b724cffe9ccb7ef0bff440bb1b62b ]
+[ Upstream commit 984795e76def5c903724b8d6a8228e356bbdf2af ]
 
-The module parameter qcaspi_pluggable controls if QCA7000 signature
-should be checked at driver probe (current default) or not. Unfortunately
-this could fail in case the chip is temporary in reset, which isn't under
-total control by the Linux host. So disable this check per default
-in order to avoid unexpected probe failures.
+With the current implementation, when ACP driver fails to read
+ACPI _WOV entry then the DMI overrides code won't invoke,
+may cause regressions for some BIOS versions.
 
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20241206184643.123399-3-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add a condition check to jump to check the DMI entries incase of
+ACP driver fail to read ACPI _WOV method.
+
+Fixes: 4095cf872084 (ASoC: amd: yc: Fix for enabling DMIC on acp6x via _DSD entry)
+
+Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+Link: https://patch.msgid.link/20241210091026.996860-1-venkataprasad.potturu@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/qca_spi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index 95e0a5237359..b7af824116ea 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -67,7 +67,7 @@ MODULE_PARM_DESC(qcaspi_burst_len, "Number of data bytes per burst. Use 1-5000."
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index af9601bea275..9c1bf0eb2deb 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -473,14 +473,19 @@ static int acp6x_probe(struct platform_device *pdev)
  
- #define QCASPI_PLUGGABLE_MIN 0
- #define QCASPI_PLUGGABLE_MAX 1
--static int qcaspi_pluggable = QCASPI_PLUGGABLE_MIN;
-+static int qcaspi_pluggable = QCASPI_PLUGGABLE_MAX;
- module_param(qcaspi_pluggable, int, 0);
- MODULE_PARM_DESC(qcaspi_pluggable, "Pluggable SPI connection (yes/no).");
+ 	handle = ACPI_HANDLE(pdev->dev.parent);
+ 	ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
+-	if (!ACPI_FAILURE(ret))
++	if (!ACPI_FAILURE(ret)) {
+ 		wov_en = dmic_status;
++		if (!wov_en)
++			return -ENODEV;
++	} else {
++		/* Incase of ACPI method read failure then jump to check_dmi_entry */
++		goto check_dmi_entry;
++	}
  
+-	if (is_dmic_enable && wov_en)
++	if (is_dmic_enable)
+ 		platform_set_drvdata(pdev, &acp6x_card);
+-	else
+-		return 0;
+ 
++check_dmi_entry:
+ 	/* check for any DMI overrides */
+ 	dmi_id = dmi_first_match(yc_acp_quirk_table);
+ 	if (dmi_id)
 -- 
 2.39.5
 
