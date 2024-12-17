@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D95C1F63D5;
-	Tue, 17 Dec 2024 17:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F2B1F63D5;
+	Tue, 17 Dec 2024 17:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456054; cv=none; b=tuTaEdSIW18sutazfJ5uMndjVTw0UMB33RTQHDN2uD49PmpAYpkVTWEIIVy39ntPnE0QKIFTR/mcXoOCDk0e1UHMa+CTcl0V3NMymbm1pFZXysZJWBBHs2FOkzBKKF6MzFqzQ6UT+n9XhjeLDzvo2tgZP8mgbe58mpJD7bXxLy8=
+	t=1734456058; cv=none; b=lGijSyD332j0rlQtTVpT7jFd4oHEx5xQdICMWb/O4P0ryCYCi6tnts6uujM03rhPrhklbBd6mWLFxfiFv/aE4+zncdyeY7a/bLydjLbbgDi3Xtz6M2aUp2m4wB02K3ppZMPge+IH6koPfSTQePdP2jKJOhnEkMcnFl+XwmbSrxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456054; c=relaxed/simple;
-	bh=8dUcsO5a+tWCIX7y7fCeDP9Z/31kiXx8UxGrJyQppY0=;
+	s=arc-20240116; t=1734456058; c=relaxed/simple;
+	bh=99bjrKFi/BON++OmUxG/4DudaeggpksqlZuH6fCTm8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uZxPbTFqmEaPJ22OE/0d/bYojDrY8nm8agHtpSX/BgkyqZ1rUT3GgxZXL9gzvTPdVHB2JAjf1ETQdvV30jcl3QC4Bt3OBu3mYroxWOqPLfHBlXZ59S2zwQrhlCE29jU71nfPc3xM3KbMHct7D3i6cgu3wZAI3P3JQzmXB1Mdouw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgPLpFSM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TaucQxFNvoGsftRJ8yLNH2pyDydVj0PdE36LJIVJ9h12TB+LORG7LspFFyE4U6LXVN1vbBfxTiojO+EaBgQfD2pl63RxTdLOz/cIrxxVywefi1vhhfeCv/N6+JEX9n2XfzadAB2x8srD2Dk6gXzt1xi+0NxwBR5WmypFBVYdJi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsgKQPu/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgPLpFSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181E8C4CED3;
-	Tue, 17 Dec 2024 17:20:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsgKQPu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15337C4CEE8;
+	Tue, 17 Dec 2024 17:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456054;
-	bh=8dUcsO5a+tWCIX7y7fCeDP9Z/31kiXx8UxGrJyQppY0=;
+	s=korg; t=1734456057;
+	bh=99bjrKFi/BON++OmUxG/4DudaeggpksqlZuH6fCTm8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgPLpFSM2oobl49ejtrjKBMsKcW+lGBwTQeNfp5NkrsAryUaaNhGfKYuB1YvMUG++
-	 KBjLuRZOmoYY8++c2RkgcqCboRZy25a4qv7y9bhXqAMi7PaYg9oeitmyEqV/a5HokY
-	 FFZnMA+hhjS1H0k11k6rM5TaUOf2AENd38HVEPRw=
+	b=IsgKQPu/CFwWv+thZuKtt3z8M28XguGt8LphCc/hP4CmF8VA048BQIZ0xKUN0cxQ6
+	 w98cp9lx70Zi+NCg0RYz0ZxBJt2EMnRFGhEKABS+vYOlv2njubDrPFUi83j4z05431
+	 DyQhEEq/taBxHG7EM/XRwPBGvqnvVEfGbWvaEsgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoyu Li <lihaoyu499@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Danielle Ratson <danieller@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 046/109] wifi: cfg80211: sme: init n_channels before channels[] access
-Date: Tue, 17 Dec 2024 18:07:30 +0100
-Message-ID: <20241217170535.299140448@linuxfoundation.org>
+Subject: [PATCH 6.6 047/109] selftests: mlxsw: sharedbuffer: Remove h1 ingress test case
+Date: Tue, 17 Dec 2024 18:07:31 +0100
+Message-ID: <20241217170535.340834265@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -51,36 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoyu Li <lihaoyu499@gmail.com>
+From: Danielle Ratson <danieller@nvidia.com>
 
-[ Upstream commit f1d3334d604cc32db63f6e2b3283011e02294e54 ]
+[ Upstream commit cf3515c556907b4da290967a2a6cbbd9ee0ee723 ]
 
-With the __counted_by annocation in cfg80211_scan_request struct,
-the "n_channels" struct member must be set before accessing the
-"channels" array. Failing to do so will trigger a runtime warning
-when enabling CONFIG_UBSAN_BOUNDS and CONFIG_FORTIFY_SOURCE.
+The test is sending only one packet generated with mausezahn from $h1 to
+$h2. However, for some reason, it is testing for non-zero maximum occupancy
+in both the ingress pool of $h1 and $h2. The former only passes when $h2
+happens to send a packet.
 
-Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
-Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
-Link: https://patch.msgid.link/20241203152049.348806-1-lihaoyu499@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Avoid intermittent failures by removing unintentional test case
+regarding the ingress pool of $h1.
+
+Fixes: a865ad999603 ("selftests: mlxsw: Add shared buffer traffic test")
+Signed-off-by: Danielle Ratson <danieller@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/5b7344608d5e06f38209e48d8af8c92fa11b6742.1733414773.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/sme.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index 591cda99d72f..70881782c25c 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -83,6 +83,7 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
- 	if (!request)
- 		return -ENOMEM;
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+index 0c47faff9274..a7b3d6cf3185 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+@@ -108,11 +108,6 @@ port_pool_test()
  
-+	request->n_channels = n_channels;
- 	if (wdev->conn->params.channel) {
- 		enum nl80211_band band = wdev->conn->params.channel->band;
- 		struct ieee80211_supported_band *sband =
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+ 
+-	RET=0
+-	max_occ=$(sb_occ_pool_check $dl_port1 $SB_POOL_ING $exp_max_occ)
+-	check_err $? "Expected iPool($SB_POOL_ING) max occupancy to be $exp_max_occ, but got $max_occ"
+-	log_test "physical port's($h1) ingress pool"
+-
+ 	RET=0
+ 	max_occ=$(sb_occ_pool_check $dl_port2 $SB_POOL_ING $exp_max_occ)
+ 	check_err $? "Expected iPool($SB_POOL_ING) max occupancy to be $exp_max_occ, but got $max_occ"
 -- 
 2.39.5
 
