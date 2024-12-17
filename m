@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501931F8F17;
-	Tue, 17 Dec 2024 17:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5291F9EA6;
+	Tue, 17 Dec 2024 17:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456643; cv=none; b=cGgi0WTzSslhJPPVo7W0kJbTDxvXoBwl2FD8cbevv2DnZE+sxx27bkX4ughpQ9WjC+Ndvw7KoVuQ6wWgYpb3k1X2URJhK3/EG2DGzgDxxDwqeE5hFczONNYkDf+6lFY5h90hu+2EOnG0S3CZ1IOIivCU8SBVXxb9Fc/4hycFqK4=
+	t=1734456646; cv=none; b=D6pu0SClfHgARDMY/CakI554kNsVKNFr541AulWCs56sGETZbYEKIcDvT1pXTN1vtWBWAdvN6qWm8FQayKT1orqebmojl7l6YiftM21eoZGm3v0N6oBjb2oBsUaLId29T2kWTN/qAWbU0uNsNc/Izete97f6WULV4os93g9fwNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456643; c=relaxed/simple;
-	bh=tTve6jmv6a7QTCCQ45wocrrPtqChJHiXIX15NyGbte0=;
+	s=arc-20240116; t=1734456646; c=relaxed/simple;
+	bh=nUdM9ia1Ea0pcPwjTJlmW6nIcckpzyuAuYK4q0i78Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWcA62e+7WpI9BFkJ2QWY3CT1D+5p2nM4WNhzD3jxE37fUe7SiAQJO/yQou1opMJB8Pd89g0k37a7K+6OuPpI6v4u1R2PgCizvMJ2GJQC6Chzh+7Se4FfkAIlmCF5RISr3HW5/KOIOFVeBvk8zn27yLmmmNdlsbCP2ICTE/gpe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dguw94iC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1t5jFKi8SMTb63p1A9eXvZWnxOuTp+oAAiR/QZ0ihLniQ5FE89ezvbu4B7oSc93asMawKdHOOg2f4qM5M882YGfARGYOE0NYT4P1pA862bxX7nSAR0BqiH7StTsazY4+6DYVNtM62xVq7YSzfCAVEMOA37F1xZbK00BOJ5IzbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mymD5x/3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dguw94iC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538DDC4CEEC;
-	Tue, 17 Dec 2024 17:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mymD5x/3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58833C4CED3;
+	Tue, 17 Dec 2024 17:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456642;
-	bh=tTve6jmv6a7QTCCQ45wocrrPtqChJHiXIX15NyGbte0=;
+	s=korg; t=1734456645;
+	bh=nUdM9ia1Ea0pcPwjTJlmW6nIcckpzyuAuYK4q0i78Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dguw94iCkuly+aE2ahi87SdbbWRG1Zfk49bDOSmBMIOWlGpyV8wfkRRwJwR7lo5Mn
-	 03QT2h8PjU92AQ3m/tvtCcAti5YyCgQpstAIkNe6fmzbrfs1vtUfecX4AqspWndhT3
-	 HzR/AWdLNxDoc+HFGiu6uTNk4KhwwCZw0rjSE4wg=
+	b=mymD5x/3V4F0pFCBktKac8fukem6/SuV+g0ZRjM/tQz9AIdwkDA1NRgTwdJS7inN+
+	 B36niIarPVuUZqcnehMGrmzHchhoIS2l4QHJxBdQY9/f3wOMYnIQZYUappuvky6oRZ
+	 Dl8vMfetzvZu1MKIxtxFfWhOSD9UeDn35a1O/x2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	Nikita Yushchenko <nikita.yoush@cogentembedded.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/172] cifs: Fix rmdir failure due to ongoing I/O on deleted file
-Date: Tue, 17 Dec 2024 18:07:58 +0100
-Message-ID: <20241217170551.394460766@linuxfoundation.org>
+Subject: [PATCH 6.12 123/172] net: renesas: rswitch: fix possible early skb release
+Date: Tue, 17 Dec 2024 18:07:59 +0100
+Message-ID: <20241217170551.443154267@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -56,68 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
 
-[ Upstream commit bb57c81e97e0082abfb0406ed6f67c615c3d206c ]
+[ Upstream commit 5cb099902b6b6292b3a85ffa1bb844e0ba195945 ]
 
-The cifs_io_request struct (a wrapper around netfs_io_request) holds open
-the file on the server, even beyond the local Linux file being closed.
-This can cause problems with Windows-based filesystems as the file's name
-still exists after deletion until the file is closed, preventing the parent
-directory from being removed and causing spurious test failures in xfstests
-due to inability to remove a directory.  The symptom looks something like
-this in the test output:
+When sending frame split into multiple descriptors, hardware processes
+descriptors one by one, including writing back DT values. The first
+descriptor could be already marked as completed when processing of
+next descriptors for the same frame is still in progress.
 
-   rm: cannot remove '/mnt/scratch/test/p0/d3': Directory not empty
-   rm: cannot remove '/mnt/scratch/test/p1/dc/dae': Directory not empty
+Although only the last descriptor is configured to generate interrupt,
+completion of the first descriptor could be noticed by the driver when
+handling interrupt for the previous frame.
 
-Fix this by waiting in unlink and rename for any outstanding I/O requests
-to be completed on the target file before removing that file.
+Currently, driver stores skb in the entry that corresponds to the first
+descriptor. This results into skb could be unmapped and freed when
+hardware did not complete the send yet. This opens a window for
+corrupting the data being sent.
 
-Note that this doesn't prevent Linux from trying to start new requests
-after deletion if it still has the file open locally - something that's
-perfectly acceptable on a UNIX system.
+Fix this by saving skb in the entry that corresponds to the last
+descriptor used to send the frame.
 
-Note also that whilst I've marked this as fixing the commit to make cifs
-use netfslib, I don't know that it won't occur before that.
-
-Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: d2c96b9d5f83 ("net: rswitch: Add jumbo frames handling for TX")
+Signed-off-by: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://patch.msgid.link/20241208095004.69468-2-nikita.yoush@cogentembedded.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/rswitch.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index b35fe1075503..fafc07e38663 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -1925,6 +1925,7 @@ int cifs_unlink(struct inode *dir, struct dentry *dentry)
- 		goto unlink_out;
- 	}
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index b80aa27a7214..32b32aa7e01f 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -1681,8 +1681,9 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
+ 	if (dma_mapping_error(ndev->dev.parent, dma_addr_orig))
+ 		goto err_kfree;
  
-+	netfs_wait_for_outstanding_io(inode);
- 	cifs_close_deferred_file_under_dentry(tcon, full_path);
- #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
- 	if (cap_unix(tcon->ses) && (CIFS_UNIX_POSIX_PATH_OPS_CAP &
-@@ -2442,8 +2443,10 @@ cifs_rename2(struct mnt_idmap *idmap, struct inode *source_dir,
- 	}
+-	gq->skbs[gq->cur] = skb;
+-	gq->unmap_addrs[gq->cur] = dma_addr_orig;
++	/* Stored the skb at the last descriptor to avoid skb free before hardware completes send */
++	gq->skbs[(gq->cur + nr_desc - 1) % gq->ring_size] = skb;
++	gq->unmap_addrs[(gq->cur + nr_desc - 1) % gq->ring_size] = dma_addr_orig;
  
- 	cifs_close_deferred_file_under_dentry(tcon, from_name);
--	if (d_inode(target_dentry) != NULL)
-+	if (d_inode(target_dentry) != NULL) {
-+		netfs_wait_for_outstanding_io(d_inode(target_dentry));
- 		cifs_close_deferred_file_under_dentry(tcon, to_name);
-+	}
- 
- 	rc = cifs_do_rename(xid, source_dentry, from_name, target_dentry,
- 			    to_name);
+ 	/* DT_FSTART should be set at last. So, this is reverse order. */
+ 	for (i = nr_desc; i-- > 0; ) {
 -- 
 2.39.5
 
