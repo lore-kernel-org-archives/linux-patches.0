@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7BB1E0493;
-	Tue, 17 Dec 2024 17:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AECC1F867E;
+	Tue, 17 Dec 2024 17:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455967; cv=none; b=TJ+lwVHbjIQyTx7m7WIvZVNs923eNb7/hlPKF4Pcp2VnmPaPca8TuJk/Jh+7HFvMp0Dpq0Qn8BEL2Z/a60J1zbIbNLDUzt5RcGsBn+czQTKfvpYfacFSMB9djJWRiz1ugN1TdL+L6M2WW0eiEa3104UEzQ6AfDwCFrsT3YM1qbU=
+	t=1734455970; cv=none; b=PT56zAZrBxtrqqbzU3VuQR/Xdt38FD3OxegVPjkQlnQzWgTg7bAqCgSvQZng/7Qs4pcmsFLQQhsuGGcwJI5iEEJosPPlijgtX06vPHN5sUkYbYq8m4WrcoTU6/9zpCqiVUQLQMCmZwy6qMVaSmZ5IBki5FbCuplCkNFZA/J4cEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455967; c=relaxed/simple;
-	bh=FlllF0p7PZ7hPjskBP826RrMVA6qwiv/jhxB35i6eSQ=;
+	s=arc-20240116; t=1734455970; c=relaxed/simple;
+	bh=vQaR7CX3jcChKkithcyMaCl6zR3cQGk5MZFoplh/ilo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YCrDADFsWjDj0/jE1IFsI6pFAUFqSeFyxUXJuvPkvGpM1nxZHen14426jBCFQDXJzD9K/UN/+UzJjdo0XBQPoDlTaCHH+eYtcrzYB0u6O2RPvlvK3ZCQPX5GxlQ484Kn0CJ9d76ae2lnDiHehISTfKj6zxEQqIJi/jf4hRPL8MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gn2q3tB7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eryW9f7uvW2whjAVLsqEVDrx36y1bhxxJfuRwLU5oYNK9BYxTmZjsVDIOhqX2cPWM0EqSPixRbx39mC5Qr2F8vfp9obdOVq0yJOoShqnS/P2D+riAnogqmZTIhaTq+er9MboMRXi0Vk+2yajFydFsRKERHQRBHyJ9+N+hF3Knak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HTTAhZYC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gn2q3tB7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8120C4CED3;
-	Tue, 17 Dec 2024 17:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HTTAhZYC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851F3C4CED3;
+	Tue, 17 Dec 2024 17:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455967;
-	bh=FlllF0p7PZ7hPjskBP826RrMVA6qwiv/jhxB35i6eSQ=;
+	s=korg; t=1734455969;
+	bh=vQaR7CX3jcChKkithcyMaCl6zR3cQGk5MZFoplh/ilo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gn2q3tB7G0rwbN9jdJv5LkREOZZgmf+MXbWRPrEJuo0rxFdERxVdrjypbGLyt0/1O
-	 6dsGK4Q9hojz61WCOi/PMTliScxExGiJ4BCFnY++zY6o9+hgFMSunBCH4ASqEhXLcJ
-	 1lPJy4g9yKaNFPlDy51vQnsROI1xOhaUornxYpoI=
+	b=HTTAhZYCNmit2Eay8TvASSPn6VYSdyB7cZXmsNKpdN2IPJ39cruicX+TtYOhmH50D
+	 65MYwrSKMG7bglyMuETXzkAKFJTBj6p/t06x+0A4sLm7zYn9vA22U0y4QBdrauHF+k
+	 BGoo+mxxKDZHf+ZOMTz0yfGBb67R3c69kfCa7g1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 016/109] usb: gadget: midi2: Fix interpretation of is_midi1 bits
-Date: Tue, 17 Dec 2024 18:07:00 +0100
-Message-ID: <20241217170534.039626313@linuxfoundation.org>
+	Vitalii Mordan <mordan@ispras.ru>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 017/109] usb: ehci-hcd: fix call balance of clocks handling routines
+Date: Tue, 17 Dec 2024 18:07:01 +0100
+Message-ID: <20241217170534.078381234@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -49,40 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-commit 82937056967da052cbc04b4435c13db84192dc52 upstream.
+commit 97264eaaba0122a5b7e8ddd7bf4ff3ac57c2b170 upstream.
 
-The UMP Function Block info m1.0 field (represented by is_midi1 sysfs
-entry) is an enumeration from 0 to 2, while the midi2 gadget driver
-incorrectly copies it to the corresponding snd_ump_block_info.flags
-bits as-is.  This made the wrong bit flags set when m1.0 = 2.
+If the clocks priv->iclk and priv->fclk were not enabled in ehci_hcd_sh_probe,
+they should not be disabled in any path.
 
-This patch corrects the wrong interpretation of is_midi1 bits.
+Conversely, if they was enabled in ehci_hcd_sh_probe, they must be disabled
+in all error paths to ensure proper cleanup.
 
-Fixes: 29ee7a4dddd5 ("usb: gadget: midi2: Add configfs support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20241127070213.8232-1-tiwai@suse.de
+Found by Linux Verification Center (linuxtesting.org) with Klever.
+
+Fixes: 63c845522263 ("usb: ehci-hcd: Add support for SuperH EHCI.")
+Cc: stable@vger.kernel.org # ff30bd6a6618: sh: clk: Fix clk_enable() to return 0 on NULL clk
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241121114700.2100520-1-mordan@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_midi2.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/host/ehci-sh.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_midi2.c
-+++ b/drivers/usb/gadget/function/f_midi2.c
-@@ -1593,7 +1593,11 @@ static int f_midi2_create_card(struct f_
- 			fb->info.midi_ci_version = b->midi_ci_version;
- 			fb->info.ui_hint = reverse_dir(b->ui_hint);
- 			fb->info.sysex8_streams = b->sysex8_streams;
--			fb->info.flags |= b->is_midi1;
-+			if (b->is_midi1 < 2)
-+				fb->info.flags |= b->is_midi1;
-+			else
-+				fb->info.flags |= SNDRV_UMP_BLOCK_IS_MIDI1 |
-+					SNDRV_UMP_BLOCK_IS_LOWSPEED;
- 			strscpy(fb->info.name, ump_fb_name(b),
- 				sizeof(fb->info.name));
- 		}
+--- a/drivers/usb/host/ehci-sh.c
++++ b/drivers/usb/host/ehci-sh.c
+@@ -119,8 +119,12 @@ static int ehci_hcd_sh_probe(struct plat
+ 	if (IS_ERR(priv->iclk))
+ 		priv->iclk = NULL;
+ 
+-	clk_enable(priv->fclk);
+-	clk_enable(priv->iclk);
++	ret = clk_enable(priv->fclk);
++	if (ret)
++		goto fail_request_resource;
++	ret = clk_enable(priv->iclk);
++	if (ret)
++		goto fail_iclk;
+ 
+ 	ret = usb_add_hcd(hcd, irq, IRQF_SHARED);
+ 	if (ret != 0) {
+@@ -136,6 +140,7 @@ static int ehci_hcd_sh_probe(struct plat
+ 
+ fail_add_hcd:
+ 	clk_disable(priv->iclk);
++fail_iclk:
+ 	clk_disable(priv->fclk);
+ 
+ fail_request_resource:
 
 
