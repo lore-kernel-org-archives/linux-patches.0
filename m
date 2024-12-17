@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60F31F943F;
-	Tue, 17 Dec 2024 17:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146D61F943F;
+	Tue, 17 Dec 2024 17:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456781; cv=none; b=BV9dxivFp3mYfPD6G8BOcwPY8qcJWA/KfZbxBedTAsGWBQKlS6Jb/qs4vkpYiqNwduRDSUMO/tinG+6QK7pI9wiEKzw0JLyoxVQE5Gq9lrsNIyPTSfblXt3Qj2XYPixtQQSqbZdp2w5AzBHbDV1iaIPuRMgrx3c2i4nQ6oZBFxo=
+	t=1734456787; cv=none; b=LlrTGWOpxeeMUoaoWW+3U8AjX9toH58E6Ful3PKip2J8vb8jFI9xIRb+EIUTvTKhtUziKC9x5ovRNTPq8PHuV6mRrWX3C8GMZ2juAw62RxcDKq24e/w/v/i+xbiQGW6CNIk4mde7rVazLIngyt91TjWPebcQneW/u9NPFIG8YHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456781; c=relaxed/simple;
-	bh=JOhfd4fjlxyqH7xDTcf9QTKnphS5r+LjgVzNgDrm2pg=;
+	s=arc-20240116; t=1734456787; c=relaxed/simple;
+	bh=OnNupL93NxJd4F1z0oFx7T9LBi96pOZtRiAz4EV9Bfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PbqwiEP7p1xp1hC83vIE4OfXibGMrpTjbCG0FovZaTawuGiixDW8gZf996BJf68EzCp1njfiIg1dfnq6aaklmd2W7xJg6s1015DTghQDSj3828I6XDgJSE78DLHxp+uSi1BuidcZvWPt3KslUqF8ByCZQIFoMuZNvRHVj7yC0H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrnPO4xX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k5uz+qLsGw4G5SJbBPWM/+R3CsEnFDvdbeh1PeDhVP2tOCXua3ydvkBFQk2WvX+OzhEsu76RkwaYU4ErW3v+pvsbXJzr3YQWQ2nilDDCnAsvDDR3ZfsLC8apE6hQMpcHOFZRI7F11lWm6hncKMyExtPg7NNjwScGKllX2bRyefY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRrvX2su; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrnPO4xX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52925C4CED7;
-	Tue, 17 Dec 2024 17:33:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRrvX2su"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7560CC4CED3;
+	Tue, 17 Dec 2024 17:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456781;
-	bh=JOhfd4fjlxyqH7xDTcf9QTKnphS5r+LjgVzNgDrm2pg=;
+	s=korg; t=1734456786;
+	bh=OnNupL93NxJd4F1z0oFx7T9LBi96pOZtRiAz4EV9Bfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrnPO4xXTu+l0OR0FFYe2/8d1ZaTvk97sp8Bw+wJA7owIH/M8RpRJuk/NxzOgBDVM
-	 I3jZFjPb9KLKXJPqcywMxXRtsUWWIYb0+T7GTjC43aw5bylQqdAHaFYgyn6+3EgUHl
-	 14Ya/Bb8jmhpGOk6gBar+vK7hskQxOcUY3Rv811M=
+	b=KRrvX2suLkDAdGosXQB9i28tlrcefM/jDPEPo8FcsmM+uZxXaP5k+0/aqYhTZy6jE
+	 iA3kQoY541oUorwzTOuQeJtkOZLrXPLkk2j7Vbc9w6dZ467QWw19IBddGVHhPwX53h
+	 DnGg2l23jn8f+5MEb+6Oh3POwzMwDxklun/G6luY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Poveda <git@pvdrz.com>,
-	=?UTF-8?q?Emilio=20Cobos=20=C3=81lvarez?= <emilio@crisal.io>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 163/172] rust: kbuild: set `bindgen`s Rust target version
-Date: Tue, 17 Dec 2024 18:08:39 +0100
-Message-ID: <20241217170553.090087629@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.12 164/172] KVM: arm64: Disable MPAM visibility by default and ignore VMM writes
+Date: Tue, 17 Dec 2024 18:08:40 +0100
+Message-ID: <20241217170553.134121713@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -46,120 +48,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: James Morse <james.morse@arm.com>
 
-commit 7a5f93ea5862da91488975acaa0c7abd508f192b upstream.
+commit 6685f5d572c22e1003e7c0d089afe1c64340ab1f upstream.
 
-Each `bindgen` release may upgrade the list of Rust targets. For instance,
-currently, in their master branch [1], the latest ones are:
+commit 011e5f5bf529f ("arm64/cpufeature: Add remaining feature bits in
+ID_AA64PFR0 register") exposed the MPAM field of AA64PFR0_EL1 to guests,
+but didn't add trap handling. A previous patch supplied the missing trap
+handling.
 
-    Nightly => {
-        vectorcall_abi: #124485,
-        ptr_metadata: #81513,
-        layout_for_ptr: #69835,
-    },
-    Stable_1_77(77) => { offset_of: #106655 },
-    Stable_1_73(73) => { thiscall_abi: #42202 },
-    Stable_1_71(71) => { c_unwind_abi: #106075 },
-    Stable_1_68(68) => { abi_efiapi: #105795 },
+Existing VMs that have the MPAM field of ID_AA64PFR0_EL1 set need to
+be migratable, but there is little point enabling the MPAM CPU
+interface on new VMs until there is something a guest can do with it.
 
-By default, the highest stable release in their list is used, and users
-are expected to set one if they need to support older Rust versions
-(e.g. see [2]).
+Clear the MPAM field from the guest's ID_AA64PFR0_EL1 and on hardware
+that supports MPAM, politely ignore the VMMs attempts to set this bit.
 
-Thus, over time, new Rust features are used by default, and at some
-point, it is likely that `bindgen` will emit Rust code that requires a
-Rust version higher than our minimum (or perhaps enabling an unstable
-feature). Currently, there is no problem because the maximum they have,
-as seen above, is Rust 1.77.0, and our current minimum is Rust 1.78.0.
+Guests exposed to this bug have the sanitised value of the MPAM field,
+so only the correct value needs to be ignored. This means the field
+can continue to be used to block migration to incompatible hardware
+(between MPAM=1 and MPAM=5), and the VMM can't rely on the field
+being ignored.
 
-Therefore, set a Rust target explicitly now to prevent going forward in
-time too much and thus getting potential build failures at some point.
-
-Since we also support a minimum `bindgen` version, and since `bindgen`
-does not support passing unknown Rust target versions, we need to use
-the list of our minimum `bindgen` version, rather than the latest. So,
-since `bindgen` 0.65.1 had this list [3], we need to use Rust 1.68.0:
-
-    /// Rust stable 1.64
-    ///  * `core_ffi_c` ([Tracking issue](https://github.com/rust-lang/rust/issues/94501))
-    => Stable_1_64 => 1.64;
-    /// Rust stable 1.68
-    ///  * `abi_efiapi` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/65815))
-    => Stable_1_68 => 1.68;
-    /// Nightly rust
-    ///  * `thiscall` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/42202))
-    ///  * `vectorcall` calling convention (no tracking issue)
-    ///  * `c_unwind` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/74990))
-    => Nightly => nightly;
-
-    ...
-
-    /// Latest stable release of Rust
-    pub const LATEST_STABLE_RUST: RustTarget = RustTarget::Stable_1_68;
-
-Thus add the `--rust-target 1.68` parameter. Add a comment as well
-explaining this.
-
-An alternative would be to use the currently running (i.e. actual) `rustc`
-and `bindgen` versions to pick a "better" Rust target version. However,
-that would introduce more moving parts depending on the user setup and
-is also more complex to implement.
-
-Starting with `bindgen` 0.71.0 [4], we will be able to set any future
-Rust version instead, i.e. we will be able to set here our minimum
-supported Rust version. Christian implemented it [5] after seeing this
-patch. Thanks!
-
-Cc: Christian Poveda <git@pvdrz.com>
-Cc: Emilio Cobos Álvarez <emilio@crisal.io>
-Cc: stable@vger.kernel.org # needed for 6.12.y; unneeded for 6.6.y; do not apply to 6.1.y
-Fixes: c844fa64a2d4 ("rust: start supporting several `bindgen` versions")
-Link: https://github.com/rust-lang/rust-bindgen/blob/21c60f473f4e824d4aa9b2b508056320d474b110/bindgen/features.rs#L97-L105 [1]
-Link: https://github.com/rust-lang/rust-bindgen/issues/2960 [2]
-Link: https://github.com/rust-lang/rust-bindgen/blob/7d243056d335fdc4537f7bca73c06d01aae24ddc/bindgen/features.rs#L131-L150 [3]
-Link: https://github.com/rust-lang/rust-bindgen/blob/main/CHANGELOG.md#0710-2024-12-06 [4]
-Link: https://github.com/rust-lang/rust-bindgen/pull/2993 [5]
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://lore.kernel.org/r/20241123180323.255997-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: James Morse <james.morse@arm.com>
+Co-developed-by: Joey Gouly <joey.gouly@arm.com>
+Signed-off-by: Joey Gouly <joey.gouly@arm.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241030160317.2528209-7-joey.gouly@arm.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+[maz: adapted to lack of ID_FILTERED()]
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/Makefile |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ arch/arm64/kvm/sys_regs.c |   55 +++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 52 insertions(+), 3 deletions(-)
 
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -267,9 +267,22 @@ endif
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1535,6 +1535,7 @@ static u64 __kvm_read_sanitised_id_reg(c
+ 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_MTEX);
+ 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_DF2);
+ 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_PFAR);
++		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_MPAM_frac);
+ 		break;
+ 	case SYS_ID_AA64PFR2_EL1:
+ 		/* We only expose FPMR */
+@@ -1724,6 +1725,13 @@ static u64 read_sanitised_id_aa64pfr0_el
  
- bindgen_c_flags_final = $(bindgen_c_flags_lto) -D__BINDGEN__
+ 	val &= ~ID_AA64PFR0_EL1_AMU_MASK;
  
-+# Each `bindgen` release may upgrade the list of Rust target versions. By
-+# default, the highest stable release in their list is used. Thus we need to set
-+# a `--rust-target` to avoid future `bindgen` releases emitting code that
-+# `rustc` may not understand. On top of that, `bindgen` does not support passing
-+# an unknown Rust target version.
-+#
-+# Therefore, the Rust target for `bindgen` can be only as high as the minimum
-+# Rust version the kernel supports and only as high as the greatest stable Rust
-+# target supported by the minimum `bindgen` version the kernel supports (that
-+# is, if we do not test the actual `rustc`/`bindgen` versions running).
-+#
-+# Starting with `bindgen` 0.71.0, we will be able to set any future Rust version
-+# instead, i.e. we will be able to set here our minimum supported Rust version.
- quiet_cmd_bindgen = BINDGEN $@
-       cmd_bindgen = \
--	$(BINDGEN) $< $(bindgen_target_flags) \
-+	$(BINDGEN) $< $(bindgen_target_flags) --rust-target 1.68 \
- 		--use-core --with-derive-default --ctypes-prefix core::ffi --no-layout-tests \
- 		--no-debug '.*' --enable-function-attribute-detection \
- 		-o $@ -- $(bindgen_c_flags_final) -DMODULE \
++	/*
++	 * MPAM is disabled by default as KVM also needs a set of PARTID to
++	 * program the MPAMVPMx_EL2 PARTID remapping registers with. But some
++	 * older kernels let the guest see the ID bit.
++	 */
++	val &= ~ID_AA64PFR0_EL1_MPAM_MASK;
++
+ 	return val;
+ }
+ 
+@@ -1834,6 +1842,42 @@ static int set_id_dfr0_el1(struct kvm_vc
+ 	return set_id_reg(vcpu, rd, val);
+ }
+ 
++static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
++			       const struct sys_reg_desc *rd, u64 user_val)
++{
++	u64 hw_val = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
++	u64 mpam_mask = ID_AA64PFR0_EL1_MPAM_MASK;
++
++	/*
++	 * Commit 011e5f5bf529f ("arm64/cpufeature: Add remaining feature bits
++	 * in ID_AA64PFR0 register") exposed the MPAM field of AA64PFR0_EL1 to
++	 * guests, but didn't add trap handling. KVM doesn't support MPAM and
++	 * always returns an UNDEF for these registers. The guest must see 0
++	 * for this field.
++	 *
++	 * But KVM must also accept values from user-space that were provided
++	 * by KVM. On CPUs that support MPAM, permit user-space to write
++	 * the sanitizied value to ID_AA64PFR0_EL1.MPAM, but ignore this field.
++	 */
++	if ((hw_val & mpam_mask) == (user_val & mpam_mask))
++		user_val &= ~ID_AA64PFR0_EL1_MPAM_MASK;
++
++	return set_id_reg(vcpu, rd, user_val);
++}
++
++static int set_id_aa64pfr1_el1(struct kvm_vcpu *vcpu,
++			       const struct sys_reg_desc *rd, u64 user_val)
++{
++	u64 hw_val = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
++	u64 mpam_mask = ID_AA64PFR1_EL1_MPAM_frac_MASK;
++
++	/* See set_id_aa64pfr0_el1 for comment about MPAM */
++	if ((hw_val & mpam_mask) == (user_val & mpam_mask))
++		user_val &= ~ID_AA64PFR1_EL1_MPAM_frac_MASK;
++
++	return set_id_reg(vcpu, rd, user_val);
++}
++
+ /*
+  * cpufeature ID register user accessors
+  *
+@@ -2377,7 +2421,7 @@ static const struct sys_reg_desc sys_reg
+ 	{ SYS_DESC(SYS_ID_AA64PFR0_EL1),
+ 	  .access = access_id_reg,
+ 	  .get_user = get_id_reg,
+-	  .set_user = set_id_reg,
++	  .set_user = set_id_aa64pfr0_el1,
+ 	  .reset = read_sanitised_id_aa64pfr0_el1,
+ 	  .val = ~(ID_AA64PFR0_EL1_AMU |
+ 		   ID_AA64PFR0_EL1_MPAM |
+@@ -2385,7 +2429,12 @@ static const struct sys_reg_desc sys_reg
+ 		   ID_AA64PFR0_EL1_RAS |
+ 		   ID_AA64PFR0_EL1_AdvSIMD |
+ 		   ID_AA64PFR0_EL1_FP), },
+-	ID_WRITABLE(ID_AA64PFR1_EL1, ~(ID_AA64PFR1_EL1_PFAR |
++	{ SYS_DESC(SYS_ID_AA64PFR1_EL1),
++	  .access	= access_id_reg,
++	  .get_user	= get_id_reg,
++	  .set_user	= set_id_aa64pfr1_el1,
++	  .reset	= kvm_read_sanitised_id_reg,
++	  .val		=	     ~(ID_AA64PFR1_EL1_PFAR |
+ 				       ID_AA64PFR1_EL1_DF2 |
+ 				       ID_AA64PFR1_EL1_MTEX |
+ 				       ID_AA64PFR1_EL1_THE |
+@@ -2397,7 +2446,7 @@ static const struct sys_reg_desc sys_reg
+ 				       ID_AA64PFR1_EL1_RES0 |
+ 				       ID_AA64PFR1_EL1_MPAM_frac |
+ 				       ID_AA64PFR1_EL1_RAS_frac |
+-				       ID_AA64PFR1_EL1_MTE)),
++				       ID_AA64PFR1_EL1_MTE), },
+ 	ID_WRITABLE(ID_AA64PFR2_EL1, ID_AA64PFR2_EL1_FPMR),
+ 	ID_UNALLOCATED(4,3),
+ 	ID_WRITABLE(ID_AA64ZFR0_EL1, ~ID_AA64ZFR0_EL1_RES0),
 
 
