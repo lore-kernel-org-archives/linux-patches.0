@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159481F37BE;
-	Tue, 17 Dec 2024 17:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984DA1F4735;
+	Tue, 17 Dec 2024 17:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455388; cv=none; b=otCIeJvTi4QmZFSXrhoJxjTNgZfkstvT0E39GxRxcNv/mNksvY70MeWS/bqk6rmtxWmdya90uWNnieUsJT/nW+cGrJgr0ntgZlw3kXMUiNjOwKTjWg0iY+SyTZ/fLd6cNYaux2z7kVy6dl0TBUhde1e2FuHg6+4I982ji9oMGPw=
+	t=1734455390; cv=none; b=u7t/VUzsjWKGo+YcjxVDg8N/9j1CWDOKeNfZ19El717aq7Zy7uXmeNGy/DCiLFmN1BzaOZMKJvXrNnang2KG6sNiOqk4zawSOO9k29xHrgOR+U/KpfqZb1SzkeNfjQ1sDYmMHc9WZclqtpoU59eOVJgDkl2Ig7vQhwvlUdouoXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455388; c=relaxed/simple;
-	bh=+O4KtCBgwlrJ5eNPsRJ1+rVcubwMggyhddHQ00Fd66Y=;
+	s=arc-20240116; t=1734455390; c=relaxed/simple;
+	bh=fz1ZH4HQs8Tqr6QSZzKy2bEjgigoVLetit03pGd+vgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COgRQjs+qnIZGY+h0nQP5EjA+gMlJ8UXbMdZowy+nJw9Jen27NhrAhfkgQiK/dMXPmu+7iMmjPlRS4xLpoSwIRg/ZqbHY5L9PJsiNCCYkWAIFiQrnYrOdXdL1UAcmpJpbaEHAKBL2yAFv6xfhGdOJKNEAJIjOhqB0bfqIee2KGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JK5dxFKr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KGMQiIxZiIW7WH4dk7l0OCeImP2/NvWdYmJznIGjyqbEpWhe+ntyIvZ3CgVf/LsA9tm9V1Y90n4entMW813l4aC27lvU8T31FHOdZNcW0wta/I9aWApL1DMewaS0gKhdMbtrvSsXdZPbhjI96S2kzKVSv3fWdKOQjGsyqPhYKVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QqdjhhEY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JK5dxFKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416E1C4CED3;
-	Tue, 17 Dec 2024 17:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QqdjhhEY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20FEEC4CED3;
+	Tue, 17 Dec 2024 17:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455387;
-	bh=+O4KtCBgwlrJ5eNPsRJ1+rVcubwMggyhddHQ00Fd66Y=;
+	s=korg; t=1734455390;
+	bh=fz1ZH4HQs8Tqr6QSZzKy2bEjgigoVLetit03pGd+vgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JK5dxFKrU6M9j8ACvFVBH0qkCllUUNX1i3C1gzETzgFXro4p9Co0D+KBpnouLMjHh
-	 R4jKfKuHrWaTIBb0T9xYPZo19D1M3O9MrONbSih7f4SnGODQTtXhNIkIQcPKdvNw0v
-	 0OSmbFfaS+EhwAQVfDoKra3ZiJyV1N1RuX2BxgOY=
+	b=QqdjhhEY7XArqfWu0APeY6XGoUGsM9zXl28rMVJkTikzHK3sgGkzaNauduMKEO8EO
+	 +TeUqWgh9dbOILu9sxNvBxUsDiDuszya+L1Na+TFOftiBxPxf6pPHLCvGo6ZKngz+S
+	 FxQHSAcVziZtuf/MfkUHvAUzP+cTWC2Gn9niR1Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 5.4 06/24] xfs: dont drop errno values when we fail to ficlone the entire range
-Date: Tue, 17 Dec 2024 18:07:04 +0100
-Message-ID: <20241217170519.266209623@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>
+Subject: [PATCH 5.4 07/24] bpf, sockmap: Fix update element with same
+Date: Tue, 17 Dec 2024 18:07:05 +0100
+Message-ID: <20241217170519.307875750@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170519.006786596@linuxfoundation.org>
 References: <20241217170519.006786596@linuxfoundation.org>
@@ -50,61 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 7ce31f20a0771d71779c3b0ec9cdf474cc3c8e9a upstream.
+commit 75e072a390da9a22e7ae4a4e8434dfca5da499fb upstream.
 
-Way back when we first implemented FICLONE for XFS, life was simple --
-either the the entire remapping completed, or something happened and we
-had to return an errno explaining what happened.  Neither of those
-ioctls support returning partial results, so it's all or nothing.
+Consider a sockmap entry being updated with the same socket:
 
-Then things got complicated when copy_file_range came along, because it
-actually can return the number of bytes copied, so commit 3f68c1f562f1e4
-tried to make it so that we could return a partial result if the
-REMAP_FILE_CAN_SHORTEN flag is set.  This is also how FIDEDUPERANGE can
-indicate that the kernel performed a partial deduplication.
+	osk = stab->sks[idx];
+	sock_map_add_link(psock, link, map, &stab->sks[idx]);
+	stab->sks[idx] = sk;
+	if (osk)
+		sock_map_unref(osk, &stab->sks[idx]);
 
-Unfortunately, the logic is wrong if an error stops the remapping and
-CAN_SHORTEN is not set.  Because those callers cannot return partial
-results, it is an error for ->remap_file_range to return a positive
-quantity that is less than the @len passed in.  Implementations really
-should be returning a negative errno in this case, because that's what
-btrfs (which introduced FICLONE{,RANGE}) did.
+Due to sock_map_unref(), which invokes sock_map_del_link(), all the
+psock's links for stab->sks[idx] are torn:
 
-Therefore, ->remap_range implementations cannot silently drop an errno
-that they might have when the number of bytes remapped is less than the
-number of bytes requested and CAN_SHORTEN is not set.
+	list_for_each_entry_safe(link, tmp, &psock->link, list) {
+		if (link->link_raw == link_raw) {
+			...
+			list_del(&link->list);
+			sk_psock_free_link(link);
+		}
+	}
 
-Found by running generic/562 on a 64k fsblock filesystem and wondering
-why it reported corrupt files.
+And that includes the new link sock_map_add_link() added just before
+the unref.
 
-Cc: <stable@vger.kernel.org> # v4.20
-Fixes: 3fc9f5e409319e ("xfs: remove xfs_reflink_remap_range")
-Really-Fixes: 3f68c1f562f1e4 ("xfs: support returning partial reflink results")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+This results in a sockmap holding a socket, but without the respective
+link. This in turn means that close(sock) won't trigger the cleanup,
+i.e. a closed socket will not be automatically removed from the sockmap.
+
+Stop tearing the links when a matching link_raw is found.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241202-sockmap-replace-v1-1-1e88579e7bd5@rbox.co
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_file.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/sock_map.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -1068,6 +1068,14 @@ out_unlock:
- 	xfs_reflink_remap_unlock(file_in, file_out);
- 	if (ret)
- 		trace_xfs_reflink_remap_range_error(dest, ret, _RET_IP_);
-+	/*
-+	 * If the caller did not set CAN_SHORTEN, then it is not prepared to
-+	 * handle partial results -- either the whole remap succeeds, or we
-+	 * must say why it did not.  In this case, any error should be returned
-+	 * to the caller.
-+	 */
-+	if (ret && remapped < len && !(remap_flags & REMAP_FILE_CAN_SHORTEN))
-+		return ret;
- 	return remapped > 0 ? remapped : ret;
- }
- 
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -152,6 +152,7 @@ static void sock_map_del_link(struct soc
+ 				strp_stop = true;
+ 			list_del(&link->list);
+ 			sk_psock_free_link(link);
++			break;
+ 		}
+ 	}
+ 	spin_unlock_bh(&psock->link_lock);
 
 
