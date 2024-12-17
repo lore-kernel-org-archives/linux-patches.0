@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36651F76D6;
-	Tue, 17 Dec 2024 17:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FA41F76DA;
+	Tue, 17 Dec 2024 17:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456619; cv=none; b=FGPJ6T+JtIf6Th/6jJfsA75B9v6H6gurZiZJJiAkiqzuPLdFyYbx1jJAiRmlLv5oIqvuCtBweeLibDCPw2lh8Swnc6QenerlDE/VhA7SHvt8Nsn1Y9aZm5yD/fZqzaByR2PbQvwVhBidnzrDkz23K/D3cdVBGCEl9kmBnY0bmtE=
+	t=1734456621; cv=none; b=pV9c5E8r32y3m6Z1oFBli/W5hi2V0g1weMD8rtS/hz7+2LvjFV5aoiZE0uJ36Qokn8nrMlfcahRLw4fZ39reG1lFEUGZiCneViI3LMYx3dxwN5xHIExcL+vBokpzpM6lpV9hJaHjenfo2mDDoTxV916Y6nygLs0VQb2kQ7oxv0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456619; c=relaxed/simple;
-	bh=GzkD5cXdr53tyOOkGHw10RDyqJzTxDgMT/cuJ6SXeqA=;
+	s=arc-20240116; t=1734456621; c=relaxed/simple;
+	bh=6WJSTnsWsnn4ILtB7MIL3lR8xpH9FrxYQ4CzMxlitsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d1CPbv8rarOPmB6eTv4LmyU9vMNsKfSnfgPPkgD+YSxxQkQq1QZ5LN7yOCg5iBKqbFEl2HANLTPOWUFR9s2sDde+PGGdfAm6Hf014lDIg8hjtvjOov/tC3SBZkp2j2ZvIrcPevRCfFP0FoWdY/dgrS6Dxw8tTv00UwisE5NRpbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=be+Azut/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fY6i4dLt7BPglYJL7j2skkulmAAWCnG8TAGgTanop8FoCSe8NAXYC/p/Mr3qw3FfffBOTq+tVREc+yF/LapBEftGp8hw3P4yzCaM/rPuJ07lBT0EMHU3pGU9k32ebJ28nOXY/YqNqtu8yTI9pEwUbF822U9PxW05KVGZhiI51LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzB8LjuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="be+Azut/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6DCC4CED3;
-	Tue, 17 Dec 2024 17:30:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzB8LjuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F2DC4CED3;
+	Tue, 17 Dec 2024 17:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456618;
-	bh=GzkD5cXdr53tyOOkGHw10RDyqJzTxDgMT/cuJ6SXeqA=;
+	s=korg; t=1734456621;
+	bh=6WJSTnsWsnn4ILtB7MIL3lR8xpH9FrxYQ4CzMxlitsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=be+Azut/j3O6CAcrTQpK92qshOCY2BiqwcynF7SM2IIx4e/cy5hz25sMLbtx+08Uh
-	 QVikzvQ7WfULjwwQMS+R86/vuqESByGaDtPWrMVIEKKD1WIs732Huu4svqbg4BlUYE
-	 +zN9bjQfpLDobBkDZ3hkkc95a2ETyagSO92CYZJI=
+	b=wzB8LjuAmRVDiOrE/Jo2R+f3KLhSfe3blt6QQ263N8k1qNdV3ISDOrILaHlvyKrvv
+	 z6qb/unGMVY5Mgp90XYq+G19M+CCFYL1xJyh4ZIYg2SM90mU2IrbWGW6WIIUOveS1P
+	 Mrz1ukI4bLRLTullop6Vxb3XDwuJ5itq0B8+UPpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/172] wifi: mac80211: fix a queue stall in certain cases of CSA
-Date: Tue, 17 Dec 2024 18:07:21 +0100
-Message-ID: <20241217170549.812761118@linuxfoundation.org>
+Subject: [PATCH 6.12 086/172] wifi: mac80211: fix station NSS capability initialization order
+Date: Tue, 17 Dec 2024 18:07:22 +0100
+Message-ID: <20241217170549.854519813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,257 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit 11ac0d7c3b5ba58232fb7dacb54371cbe75ec183 ]
+[ Upstream commit 819e0f1e58e0ba3800cd9eb96b2a39e44e49df97 ]
 
-If we got an unprotected action frame with CSA and then we heard the
-beacon with the CSA IE, we'll block the queues with the CSA reason
-twice. Since this reason is refcounted, we won't wake up the queues
-since we wake them up only once and the ref count will never reach 0.
-This led to blocked queues that prevented any activity (even
-disconnection wouldn't reset the queue state and the only way to recover
-would be to reload the kernel module.
+Station's spatial streaming capability should be initialized before
+handling VHT OMN, because the handling requires the capability information.
 
-Fix this by not refcounting the CSA reason.
-It becomes now pointless to maintain the csa_blocked_queues state.
-Remove it.
-
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Fixes: 414e090bc41d ("wifi: mac80211: restrict public action ECSA frame handling")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219447
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241119173108.5ea90828c2cc.I4f89e58572fb71ae48e47a81e74595cac410fbac@changeid
+Fixes: a8bca3e9371d ("wifi: mac80211: track capability/opmode NSS separately")
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Link: https://patch.msgid.link/20241118080722.9603-1-benjamin-jw.lin@mediatek.com
+[rewrite subject]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/intel/iwlwifi/mvm/mac-ctxt.c |  2 +-
- include/net/mac80211.h                        |  4 +-
- net/mac80211/cfg.c                            |  3 +-
- net/mac80211/ieee80211_i.h                    | 49 +++++++++++++++----
- net/mac80211/iface.c                          | 12 ++---
- net/mac80211/mlme.c                           |  2 -
- net/mac80211/util.c                           | 23 ++-------
- 7 files changed, 50 insertions(+), 45 deletions(-)
+ net/mac80211/cfg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-index a7a10e716e65..e96ddaeeeeff 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac-ctxt.c
-@@ -1967,7 +1967,7 @@ void iwl_mvm_channel_switch_error_notif(struct iwl_mvm *mvm,
- 	if (csa_err_mask & (CS_ERR_COUNT_ERROR |
- 			    CS_ERR_LONG_DELAY_AFTER_CS |
- 			    CS_ERR_TX_BLOCK_TIMER_EXPIRED))
--		ieee80211_channel_switch_disconnect(vif, true);
-+		ieee80211_channel_switch_disconnect(vif);
- 	rcu_read_unlock();
- }
- 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 333e0fae6796..5b712582f9a9 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -6770,14 +6770,12 @@ void ieee80211_chswitch_done(struct ieee80211_vif *vif, bool success,
- /**
-  * ieee80211_channel_switch_disconnect - disconnect due to channel switch error
-  * @vif: &struct ieee80211_vif pointer from the add_interface callback.
-- * @block_tx: if %true, do not send deauth frame.
-  *
-  * Instruct mac80211 to disconnect due to a channel switch error. The channel
-  * switch can request to block the tx and so, we need to make sure we do not send
-  * a deauth frame in this case.
-  */
--void ieee80211_channel_switch_disconnect(struct ieee80211_vif *vif,
--					 bool block_tx);
-+void ieee80211_channel_switch_disconnect(struct ieee80211_vif *vif);
- 
- /**
-  * ieee80211_request_smps - request SM PS transition
 diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 242b718b1cd9..16d47123a73c 100644
+index 16d47123a73c..1b1bf044378d 100644
 --- a/net/mac80211/cfg.c
 +++ b/net/mac80211/cfg.c
-@@ -3674,13 +3674,12 @@ void ieee80211_csa_finish(struct ieee80211_vif *vif, unsigned int link_id)
- }
- EXPORT_SYMBOL(ieee80211_csa_finish);
+@@ -1911,6 +1911,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 						    params->eht_capa_len,
+ 						    link_sta);
  
--void ieee80211_channel_switch_disconnect(struct ieee80211_vif *vif, bool block_tx)
-+void ieee80211_channel_switch_disconnect(struct ieee80211_vif *vif)
- {
- 	struct ieee80211_sub_if_data *sdata = vif_to_sdata(vif);
- 	struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
- 	struct ieee80211_local *local = sdata->local;
- 
--	sdata->csa_blocked_queues = block_tx;
- 	sdata_info(sdata, "channel switch failed, disconnecting\n");
- 	wiphy_work_queue(local->hw.wiphy, &ifmgd->csa_connection_drop_work);
- }
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 3d3c9139ff5e..7a0242e937d3 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1106,8 +1106,6 @@ struct ieee80211_sub_if_data {
- 
- 	unsigned long state;
- 
--	bool csa_blocked_queues;
--
- 	char name[IFNAMSIZ];
- 
- 	struct ieee80211_fragment_cache frags;
-@@ -2411,17 +2409,13 @@ void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
- 				   struct ieee80211_sub_if_data *sdata);
- void ieee80211_sta_tx_notify(struct ieee80211_sub_if_data *sdata,
- 			     struct ieee80211_hdr *hdr, bool ack, u16 tx_time);
--
-+unsigned int
-+ieee80211_get_vif_queues(struct ieee80211_local *local,
-+			 struct ieee80211_sub_if_data *sdata);
- void ieee80211_wake_queues_by_reason(struct ieee80211_hw *hw,
- 				     unsigned long queues,
- 				     enum queue_stop_reason reason,
- 				     bool refcounted);
--void ieee80211_stop_vif_queues(struct ieee80211_local *local,
--			       struct ieee80211_sub_if_data *sdata,
--			       enum queue_stop_reason reason);
--void ieee80211_wake_vif_queues(struct ieee80211_local *local,
--			       struct ieee80211_sub_if_data *sdata,
--			       enum queue_stop_reason reason);
- void ieee80211_stop_queues_by_reason(struct ieee80211_hw *hw,
- 				     unsigned long queues,
- 				     enum queue_stop_reason reason,
-@@ -2432,6 +2426,43 @@ void ieee80211_wake_queue_by_reason(struct ieee80211_hw *hw, int queue,
- void ieee80211_stop_queue_by_reason(struct ieee80211_hw *hw, int queue,
- 				    enum queue_stop_reason reason,
- 				    bool refcounted);
-+static inline void
-+ieee80211_stop_vif_queues(struct ieee80211_local *local,
-+			  struct ieee80211_sub_if_data *sdata,
-+			  enum queue_stop_reason reason)
-+{
-+	ieee80211_stop_queues_by_reason(&local->hw,
-+					ieee80211_get_vif_queues(local, sdata),
-+					reason, true);
-+}
++	ieee80211_sta_init_nss(link_sta);
 +
-+static inline void
-+ieee80211_wake_vif_queues(struct ieee80211_local *local,
-+			  struct ieee80211_sub_if_data *sdata,
-+			  enum queue_stop_reason reason)
-+{
-+	ieee80211_wake_queues_by_reason(&local->hw,
-+					ieee80211_get_vif_queues(local, sdata),
-+					reason, true);
-+}
-+static inline void
-+ieee80211_stop_vif_queues_norefcount(struct ieee80211_local *local,
-+				     struct ieee80211_sub_if_data *sdata,
-+				     enum queue_stop_reason reason)
-+{
-+	ieee80211_stop_queues_by_reason(&local->hw,
-+					ieee80211_get_vif_queues(local, sdata),
-+					reason, false);
-+}
-+static inline void
-+ieee80211_wake_vif_queues_norefcount(struct ieee80211_local *local,
-+				     struct ieee80211_sub_if_data *sdata,
-+				     enum queue_stop_reason reason)
-+{
-+	ieee80211_wake_queues_by_reason(&local->hw,
-+					ieee80211_get_vif_queues(local, sdata),
-+					reason, false);
-+}
- void ieee80211_add_pending_skb(struct ieee80211_local *local,
- 			       struct sk_buff *skb);
- void ieee80211_add_pending_skbs(struct ieee80211_local *local,
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 6ef0990d3d29..af9055252e6d 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -2364,18 +2364,14 @@ void ieee80211_vif_block_queues_csa(struct ieee80211_sub_if_data *sdata)
- 	if (ieee80211_hw_check(&local->hw, HANDLES_QUIET_CSA))
- 		return;
+ 	if (params->opmode_notif_used) {
+ 		/* returned value is only needed for rc update, but the
+ 		 * rc isn't initialized here yet, so ignore it
+@@ -1920,8 +1922,6 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 					      sband->band);
+ 	}
  
--	ieee80211_stop_vif_queues(local, sdata,
--				  IEEE80211_QUEUE_STOP_REASON_CSA);
--	sdata->csa_blocked_queues = true;
-+	ieee80211_stop_vif_queues_norefcount(local, sdata,
-+					     IEEE80211_QUEUE_STOP_REASON_CSA);
- }
- 
- void ieee80211_vif_unblock_queues_csa(struct ieee80211_sub_if_data *sdata)
- {
- 	struct ieee80211_local *local = sdata->local;
- 
--	if (sdata->csa_blocked_queues) {
--		ieee80211_wake_vif_queues(local, sdata,
--					  IEEE80211_QUEUE_STOP_REASON_CSA);
--		sdata->csa_blocked_queues = false;
--	}
-+	ieee80211_wake_vif_queues_norefcount(local, sdata,
-+					     IEEE80211_QUEUE_STOP_REASON_CSA);
- }
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 0303972c23e4..111066928b96 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -2636,8 +2636,6 @@ ieee80211_sta_process_chanswitch(struct ieee80211_link_data *link,
- 	 */
- 	link->conf->csa_active = true;
- 	link->u.mgd.csa.blocked_tx = csa_ie.mode;
--	sdata->csa_blocked_queues =
--		csa_ie.mode && !ieee80211_hw_check(&local->hw, HANDLES_QUIET_CSA);
- 
- 	wiphy_work_queue(sdata->local->hw.wiphy,
- 			 &ifmgd->csa_connection_drop_work);
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index f94faa86ba8a..b4814e97cf74 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -657,7 +657,7 @@ void ieee80211_wake_queues(struct ieee80211_hw *hw)
- }
- EXPORT_SYMBOL(ieee80211_wake_queues);
- 
--static unsigned int
-+unsigned int
- ieee80211_get_vif_queues(struct ieee80211_local *local,
- 			 struct ieee80211_sub_if_data *sdata)
- {
-@@ -669,7 +669,8 @@ ieee80211_get_vif_queues(struct ieee80211_local *local,
- 		queues = 0;
- 
- 		for (ac = 0; ac < IEEE80211_NUM_ACS; ac++)
--			queues |= BIT(sdata->vif.hw_queue[ac]);
-+			if (sdata->vif.hw_queue[ac] != IEEE80211_INVAL_HW_QUEUE)
-+				queues |= BIT(sdata->vif.hw_queue[ac]);
- 		if (sdata->vif.cab_queue != IEEE80211_INVAL_HW_QUEUE)
- 			queues |= BIT(sdata->vif.cab_queue);
- 	} else {
-@@ -724,24 +725,6 @@ void ieee80211_flush_queues(struct ieee80211_local *local,
- 	__ieee80211_flush_queues(local, sdata, 0, drop);
- }
- 
--void ieee80211_stop_vif_queues(struct ieee80211_local *local,
--			       struct ieee80211_sub_if_data *sdata,
--			       enum queue_stop_reason reason)
--{
--	ieee80211_stop_queues_by_reason(&local->hw,
--					ieee80211_get_vif_queues(local, sdata),
--					reason, true);
--}
+-	ieee80211_sta_init_nss(link_sta);
 -
--void ieee80211_wake_vif_queues(struct ieee80211_local *local,
--			       struct ieee80211_sub_if_data *sdata,
--			       enum queue_stop_reason reason)
--{
--	ieee80211_wake_queues_by_reason(&local->hw,
--					ieee80211_get_vif_queues(local, sdata),
--					reason, true);
--}
--
- static void __iterate_interfaces(struct ieee80211_local *local,
- 				 u32 iter_flags,
- 				 void (*iterator)(void *data, u8 *mac,
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
