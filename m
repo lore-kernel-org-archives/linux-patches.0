@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7496C1F76DF;
-	Tue, 17 Dec 2024 17:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64ECD1F76DF;
+	Tue, 17 Dec 2024 17:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456826; cv=none; b=NJNoQ2jCRuOCuj5pb5954cw2woU54CgSN2IjE2JFV82pGfKP8vHWwixbmXkr/huYLOW3U7JiKnCxknnm19vhfphOTdYq1KaUA2jT4awHy74PuYn+d5XPzEwkboht8E9t39/cKvohAxEmB6U0glbWgVX91jBTaMeKZDQJwe8mzZY=
+	t=1734456829; cv=none; b=V2jHcj7ivpK6k4GtlyRn9DI/zc7hORHj428c2hjRewipmZOc7CUQ6q5DNXm7MaROOYZEBogL7P2924Sk51XeyO1S7w8CYBAIDN9JpZnE6tX9ItkCla401PGIlPwi/ymOY3y6TXjbKCbf0Hv8tEn/jYAFPUn3/K9jp2PVwD9aJ7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456826; c=relaxed/simple;
-	bh=tCtLnYBs1Uxewu1ky2znIcdzi4MQn+sJ448eKI+SKh8=;
+	s=arc-20240116; t=1734456829; c=relaxed/simple;
+	bh=f4mVSYpu15NVGTJGEAatjHwBR/xizC9Mffjnbvk3c5k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dqJJBdOe4PcIQXAHyl5DDPSqb3SoE2Mu4XXQskegzUSV7DmUoy9oBRGov7e7tjaLL0E+q+S+fTw/tJ2B8EyEqY1uWGZUujzqOiP8JhRWwdF5jl67bdk8TSG15sUTZ/e2qXZ1hXKrOOdLWyp4L2/VbsmZpar+ACLRqAxa+RZ+Ga8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMovYu0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hw64/DoRY/FFRKIwko00CV4HFwn4qfrIzehtNtdyUkSy0cho35McIM6XPgx6Ii+uKZQ4Lq9m7Jdhf1tmSHZu5zqCy5G168M0h40/lQH73LT8Y6RVwHSmHxqlqhrLD1q5elEJwfHwYcvZpRT8fpuMukgWX66vn/+fugVwcnXcxZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyUFPWk1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMovYu0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6BFC4CED3;
-	Tue, 17 Dec 2024 17:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyUFPWk1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D878CC4CED3;
+	Tue, 17 Dec 2024 17:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456826;
-	bh=tCtLnYBs1Uxewu1ky2znIcdzi4MQn+sJ448eKI+SKh8=;
+	s=korg; t=1734456829;
+	bh=f4mVSYpu15NVGTJGEAatjHwBR/xizC9Mffjnbvk3c5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMovYu0pp3ysvGORp54gxYKO8oDq+BWJSaO8/gsV2oPNqBAkOzJQdZj6bx6J6Owo1
-	 uA+zlIJqBKu/WQT3P0dSN16On33smDAaG/Y9YEhaBOSHHxPUVR73hJGkYdkmQpFr/v
-	 zfOesQm4M0GjCNXVNzOOLOeRbADfc/6gnDReW29g=
+	b=gyUFPWk1r9ewugQQ9qrFw9K9/cTLTt324KYWLAJsJthXFToW1V9pKKvTnGQsE0tjM
+	 89V6bDUbp5aq7ZfItfaXNaonPtreJYv5C2cWnp5WiYO0bIKrpg1fguOmDptwgr4L1+
+	 9it3gwNXeQUgz5l5lvp434On68imwI8wBHww+O5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 145/172] ASoC: Intel: sof_sdw: Add space for a terminator into DAIs array
-Date: Tue, 17 Dec 2024 18:08:21 +0100
-Message-ID: <20241217170552.346897612@linuxfoundation.org>
+Subject: [PATCH 6.12 146/172] ACPICA: events/evxfregn: dont release the ContextMutex that was never acquired
+Date: Tue, 17 Dec 2024 18:08:22 +0100
+Message-ID: <20241217170552.386520209@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -47,53 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit 255cc582e6e16191a20d54bcdbca6c91d3e90c5e ]
+[ Upstream commit c53d96a4481f42a1635b96d2c1acbb0a126bfd54 ]
 
-The code uses the initialised member of the asoc_sdw_dailink struct to
-determine if a member of the array is in use. However in the case the
-array is completely full this will lead to an access 1 past the end of
-the array, expand the array by one entry to include a space for a
-terminator.
+This bug was first introduced in c27f3d011b08, where the author of the
+patch probably meant to do DeleteMutex instead of ReleaseMutex. The
+mutex leak was noticed later on and fixed in e4dfe108371, but the bogus
+MutexRelease line was never removed, so do it now.
 
-Fixes: 27fd36aefa00 ("ASoC: Intel: sof-sdw: Add new code for parsing the snd_soc_acpi structs")
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20241212105742.1508574-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://github.com/acpica/acpica/pull/982
+Fixes: c27f3d011b08 ("ACPICA: Fix race in generic_serial_bus (I2C) and GPIO op_region parameter handling")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Link: https://patch.msgid.link/20241122082954.658356-1-d-tatianin@yandex-team.ru
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/evxfregn.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index a58842a8c8a6..db57292c00ca 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -1003,8 +1003,12 @@ static int sof_card_dai_links_create(struct snd_soc_card *card)
- 		return ret;
- 	}
+diff --git a/drivers/acpi/acpica/evxfregn.c b/drivers/acpi/acpica/evxfregn.c
+index 95f78383bbdb..bff2d099f469 100644
+--- a/drivers/acpi/acpica/evxfregn.c
++++ b/drivers/acpi/acpica/evxfregn.c
+@@ -232,8 +232,6 @@ acpi_remove_address_space_handler(acpi_handle device,
  
--	/* One per DAI link, worst case is a DAI link for every endpoint */
--	sof_dais = kcalloc(num_ends, sizeof(*sof_dais), GFP_KERNEL);
-+	/*
-+	 * One per DAI link, worst case is a DAI link for every endpoint, also
-+	 * add one additional to act as a terminator such that code can iterate
-+	 * until it hits an uninitialised DAI.
-+	 */
-+	sof_dais = kcalloc(num_ends + 1, sizeof(*sof_dais), GFP_KERNEL);
- 	if (!sof_dais)
- 		return -ENOMEM;
+ 			/* Now we can delete the handler object */
  
+-			acpi_os_release_mutex(handler_obj->address_space.
+-					      context_mutex);
+ 			acpi_ut_remove_reference(handler_obj);
+ 			goto unlock_and_exit;
+ 		}
 -- 
 2.39.5
 
