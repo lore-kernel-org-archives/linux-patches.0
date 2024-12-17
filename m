@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8CF1F76B2;
-	Tue, 17 Dec 2024 17:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E931F76C3;
+	Tue, 17 Dec 2024 17:15:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455732; cv=none; b=avRwJjUMM8pncuvdbr7Doi7Qt/O7aTJBhCG5fDzlfLe+ZP/zGPZCQsBlzyPdJUsUaEwqqBuBbMzmgaHxEr9digaWIzjLpiytpla2IkbU/fxD7/RImrLcCPokmXOLLQBi64Mj4uT4D5LIxvRaEeaRlRnA27H4Smc5I+XQFL2VJ00=
+	t=1734455735; cv=none; b=GUcAaLCj3nmdXUz9xcrS9TItbErlu+jQw3vMPp0sUhuTkc4XKH2VoeeKFENqlG9iW9yGAJvR0TFda+yuP5OLtXR4N0J9aTiPYNgLUy6N6TF/HMqTWJJ0jncsLW3glY1GHnIWjx/H9L3Db7/tS55rem01hIVmA7oElp9fCcRuXeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455732; c=relaxed/simple;
-	bh=w69nFz20Ig6fLWkOnicIzcEqxkupVlrVzOhm6zcWn80=;
+	s=arc-20240116; t=1734455735; c=relaxed/simple;
+	bh=3MdYlA+ZPy/ObZVo01+5NCSIxDkmEb2ZgXrsx9fs9MA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+yAb9Pqlcnca03yIYBvQWE0oOPV5BBKC8k8kkTvlfN8QP8hZfkPCcfKeHaipK3Bdcr/bhfqH7Nl7Tzi3QMbzKs5SJynQ7M7CLWe2YtUChj8IXBxZs21HOfj4bNOdvRuaKks1tf/cbM+2nRK6wkENvj5zgE7p6BrYadvlk43iIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVz2ss40; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XB+j+sr97KXu6aHp16kyVIWp2CTv5GWDSwVnADrpYWJ2cwUxMttbFsW3ZsNGWWcqj3rIQaK3ock/BnkPA9QC5ERVGvsX2P7wrD3ehsCD4I9SBenN1ppHPNAlgaCJbajiLtg2iaUiU+Fjin9tQgzDEohZ0v3I1/3EmQOoYjBnNDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yEm+jR2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVz2ss40"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F48C4CED3;
-	Tue, 17 Dec 2024 17:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yEm+jR2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F198C4CED3;
+	Tue, 17 Dec 2024 17:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455732;
-	bh=w69nFz20Ig6fLWkOnicIzcEqxkupVlrVzOhm6zcWn80=;
+	s=korg; t=1734455735;
+	bh=3MdYlA+ZPy/ObZVo01+5NCSIxDkmEb2ZgXrsx9fs9MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVz2ss40S4qFUo1Mdpd5UkmWb3vdQJ7X4Em71vbOv2tTp01OvmrBlaUG9pRpsQNi7
-	 Gsl9Yge+QdbqXDqfnzhHu2NxBcQ9G4EM5SKIzNZD+ZgYgm80o+m4IOixS+2o3G8KAH
-	 zmjoAaI8dRc1LeEGIb5CRRrpeqeoijskLROeEVBs=
+	b=yEm+jR2nBWy32m0qCtj4gmZ+W3a4hGoX4V4kp35HvI9JF8q3YKnUdx1OyBJrgKCLF
+	 VC0t6u5nj62AFbxUX7ELI81YVvtIDyrXYGnrGbmIMswOdaLNp7Ucgr136eU5Ti0QmW
+	 5D14XkuDmwjO58gDXlT9ODNdSSR2QG2Wg+SX6nDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Lianqin Hu <hulianqin@vivo.com>
-Subject: [PATCH 6.1 14/76] usb: gadget: u_serial: Fix the issue that gs_start_io crashed due to accessing null pointer
-Date: Tue, 17 Dec 2024 18:06:54 +0100
-Message-ID: <20241217170526.843172120@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.1 02/76] ksmbd: fix racy issue from session lookup and expire
+Date: Tue, 17 Dec 2024 18:06:42 +0100
+Message-ID: <20241217170526.341049487@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -50,81 +51,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 4cfbca86f6a8b801f3254e0e3c8f2b1d2d64be2b upstream.
+commit b95629435b84b9ecc0c765995204a4d8a913ed52 upstream.
 
-Considering that in some extreme cases,
-when u_serial driver is accessed by multiple threads,
-Thread A is executing the open operation and calling the gs_open,
-Thread B is executing the disconnect operation and calling the
-gserial_disconnect function,The port->port_usb pointer will be set to NULL.
+Increment the session reference count within the lock for lookup to avoid
+racy issue with session expire.
 
-E.g.
-    Thread A                                 Thread B
-    gs_open()                                gadget_unbind_driver()
-    gs_start_io()                            composite_disconnect()
-    gs_start_rx()                            gserial_disconnect()
-    ...                                      ...
-    spin_unlock(&port->port_lock)
-    status = usb_ep_queue()                  spin_lock(&port->port_lock)
-    spin_lock(&port->port_lock)              port->port_usb = NULL
-    gs_free_requests(port->port_usb->in)     spin_unlock(&port->port_lock)
-    Crash
-
-This causes thread A to access a null pointer (port->port_usb is null)
-when calling the gs_free_requests function, causing a crash.
-
-If port_usb is NULL, the release request will be skipped as it
-will be done by gserial_disconnect.
-
-So add a null pointer check to gs_start_io before attempting
-to access the value of the pointer port->port_usb.
-
-Call trace:
- gs_start_io+0x164/0x25c
- gs_open+0x108/0x13c
- tty_open+0x314/0x638
- chrdev_open+0x1b8/0x258
- do_dentry_open+0x2c4/0x700
- vfs_open+0x2c/0x3c
- path_openat+0xa64/0xc60
- do_filp_open+0xb8/0x164
- do_sys_openat2+0x84/0xf0
- __arm64_sys_openat+0x70/0x9c
- invoke_syscall+0x58/0x114
- el0_svc_common+0x80/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x38/0x68
-
-Fixes: c1dca562be8a ("usb gadget: split out serial core")
 Cc: stable@vger.kernel.org
-Suggested-by: Prashanth K <quic_prashk@quicinc.com>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Acked-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/TYUPR06MB62178DC3473F9E1A537DCD02D2362@TYUPR06MB6217.apcprd06.prod.outlook.com
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-25737
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/smb/server/auth.c              |    2 ++
+ fs/smb/server/mgmt/user_session.c |    6 +++++-
+ fs/smb/server/server.c            |    4 ++--
+ fs/smb/server/smb2pdu.c           |   27 ++++++++++++++-------------
+ 4 files changed, 23 insertions(+), 16 deletions(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -570,9 +570,12 @@ static int gs_start_io(struct gs_port *p
- 		 * we didn't in gs_start_tx() */
- 		tty_wakeup(port->port.tty);
- 	} else {
--		gs_free_requests(ep, head, &port->read_allocated);
--		gs_free_requests(port->port_usb->in, &port->write_pool,
--			&port->write_allocated);
-+		/* Free reqs only if we are still connected */
-+		if (port->port_usb) {
-+			gs_free_requests(ep, head, &port->read_allocated);
-+			gs_free_requests(port->port_usb->in, &port->write_pool,
-+				&port->write_allocated);
-+		}
- 		status = -EIO;
- 	}
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -1010,6 +1010,8 @@ static int ksmbd_get_encryption_key(stru
  
+ 	ses_enc_key = enc ? sess->smb3encryptionkey :
+ 		sess->smb3decryptionkey;
++	if (enc)
++		ksmbd_user_session_get(sess);
+ 	memcpy(key, ses_enc_key, SMB3_ENC_DEC_KEY_SIZE);
+ 
+ 	return 0;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -262,8 +262,10 @@ struct ksmbd_session *ksmbd_session_look
+ 
+ 	down_read(&conn->session_lock);
+ 	sess = xa_load(&conn->sessions, id);
+-	if (sess)
++	if (sess) {
+ 		sess->last_active = jiffies;
++		ksmbd_user_session_get(sess);
++	}
+ 	up_read(&conn->session_lock);
+ 	return sess;
+ }
+@@ -274,6 +276,8 @@ struct ksmbd_session *ksmbd_session_look
+ 
+ 	down_read(&sessions_table_lock);
+ 	sess = __session_lookup(id);
++	if (sess)
++		ksmbd_user_session_get(sess);
+ 	up_read(&sessions_table_lock);
+ 
+ 	return sess;
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -241,14 +241,14 @@ send:
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
+-	if (work->sess)
+-		ksmbd_user_session_put(work->sess);
+ 	if (work->sess && work->sess->enc && work->encrypted &&
+ 	    conn->ops->encrypt_resp) {
+ 		rc = conn->ops->encrypt_resp(work);
+ 		if (rc < 0)
+ 			conn->ops->set_rsp_status(work, STATUS_DATA_ERROR);
+ 	}
++	if (work->sess)
++		ksmbd_user_session_put(work->sess);
+ 
+ 	ksmbd_conn_write(work);
+ }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -66,8 +66,10 @@ static inline bool check_session_id(stru
+ 		return false;
+ 
+ 	sess = ksmbd_session_lookup_all(conn, id);
+-	if (sess)
++	if (sess) {
++		ksmbd_user_session_put(sess);
+ 		return true;
++	}
+ 	pr_err("Invalid user session id: %llu\n", id);
+ 	return false;
+ }
+@@ -604,10 +606,8 @@ int smb2_check_user_session(struct ksmbd
+ 
+ 	/* Check for validity of user session */
+ 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
+-	if (work->sess) {
+-		ksmbd_user_session_get(work->sess);
++	if (work->sess)
+ 		return 1;
+-	}
+ 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
+ 	return -ENOENT;
+ }
+@@ -1720,29 +1720,35 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 
+ 		if (conn->dialect != sess->dialect) {
+ 			rc = -EINVAL;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
+ 			rc = -EINVAL;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (strncmp(conn->ClientGUID, sess->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			rc = -ENOENT;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (sess->state == SMB2_SESSION_IN_PROGRESS) {
+ 			rc = -EACCES;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (sess->state == SMB2_SESSION_EXPIRED) {
+ 			rc = -EFAULT;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
++		ksmbd_user_session_put(sess);
+ 
+ 		if (ksmbd_conn_need_reconnect(conn)) {
+ 			rc = -EFAULT;
+@@ -1750,7 +1756,8 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 			goto out_err;
+ 		}
+ 
+-		if (ksmbd_session_lookup(conn, sess_id)) {
++		sess = ksmbd_session_lookup(conn, sess_id);
++		if (!sess) {
+ 			rc = -EACCES;
+ 			goto out_err;
+ 		}
+@@ -1761,7 +1768,6 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = true;
+-		ksmbd_user_session_get(sess);
+ 	} else if ((conn->dialect < SMB30_PROT_ID ||
+ 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   (req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
+@@ -1788,7 +1794,6 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = false;
+-		ksmbd_user_session_get(sess);
+ 	}
+ 	work->sess = sess;
+ 
+@@ -2207,9 +2212,9 @@ err_out:
+ int smb2_session_logoff(struct ksmbd_work *work)
+ {
+ 	struct ksmbd_conn *conn = work->conn;
++	struct ksmbd_session *sess = work->sess;
+ 	struct smb2_logoff_req *req;
+ 	struct smb2_logoff_rsp *rsp;
+-	struct ksmbd_session *sess;
+ 	u64 sess_id;
+ 	int err;
+ 
+@@ -2231,11 +2236,6 @@ int smb2_session_logoff(struct ksmbd_wor
+ 	ksmbd_close_session_fds(work);
+ 	ksmbd_conn_wait_idle(conn, sess_id);
+ 
+-	/*
+-	 * Re-lookup session to validate if session is deleted
+-	 * while waiting request complete
+-	 */
+-	sess = ksmbd_session_lookup_all(conn, sess_id);
+ 	if (ksmbd_tree_conn_session_logoff(sess)) {
+ 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+@@ -8682,6 +8682,7 @@ int smb3_decrypt_req(struct ksmbd_work *
+ 		       le64_to_cpu(tr_hdr->SessionId));
+ 		return -ECONNABORTED;
+ 	}
++	ksmbd_user_session_put(sess);
+ 
+ 	iov[0].iov_base = buf;
+ 	iov[0].iov_len = sizeof(struct smb2_transform_hdr) + 4;
 
 
