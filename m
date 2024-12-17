@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC491F76CE;
-	Tue, 17 Dec 2024 17:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CEB1F7574;
+	Tue, 17 Dec 2024 17:22:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456122; cv=none; b=gwe1Y/TpJtv6SRw3vzAZkaQIJA+8OBxK2MejxI5QjaEHaUzR+vP2qNVWRdN6E5e9K6YWFBKZ4LeRCE0l1HDB7L6sL9fydIaw3w57etFa5Yk0gOCXMkFHcz3KUzd5KY+fpUgmD6XGOhsJd29j90P/J7Q1u+kBBTDUBidJkxyMUqE=
+	t=1734456125; cv=none; b=Itd0rxVTT7M/ETAxnC0DijIThWEx76ogn2Yrxs9v7oF37xOUvUb1bOwNdxcfENub/2RcxVN87qrblXgb65RKZpApza/BxNk8LsQ9jxy7TN1dFWt7HCfUITgO4YaV0iQ8nVGgf6xFER/GcVxUcRGuT2oWK38KP9MiSw/z5I7Ohjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456122; c=relaxed/simple;
-	bh=6Z/TGMzipaeVOlElqV69XfSs8bllmuuVu+Vs1zHrAf0=;
+	s=arc-20240116; t=1734456125; c=relaxed/simple;
+	bh=XRD+xlUTndTdbeIhIBqF9v7cdn/7joRQCABBAhsfDWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eJupIlz+oLRmoHrHayJPG6ugDkO95zd0Uk/Z2d6/w7gOahgURxtFp3Oq1MhhovaTcsOLmGdX1tIXRFGxSgvA01o5zDbRDrFveR24dgXQz32W6dQPxgJ9N/pqekK2vlS3b51ynG4tmVTjGEZOJq24+CoAxPSE+1De2BsRe8//NaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izussGfs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEGN9JkjPQurh82bohDDE6wupbu00DyKZo7ySUIJc+BWvNi3cugF/efB6j2Y409WVX40fWkH/IrdQrJdixraBYn1mZIEMToAsMc9J8u4tboh/hgoW0ARftWFg/d3S0p+ukWYOcn5+wSk8yAdfbKIB1xPj9ogu6m/lehCxWIfZfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep5LZGtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izussGfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A4BC4CEDE;
-	Tue, 17 Dec 2024 17:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep5LZGtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DDEC4CED3;
+	Tue, 17 Dec 2024 17:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456122;
-	bh=6Z/TGMzipaeVOlElqV69XfSs8bllmuuVu+Vs1zHrAf0=;
+	s=korg; t=1734456125;
+	bh=XRD+xlUTndTdbeIhIBqF9v7cdn/7joRQCABBAhsfDWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izussGfsWt3LSoD2/cFgGy+nPoZ6Ag2hpk5x/5RK0BlfvZE0/dGzRM+iRFb+wN5iK
-	 iBkF91AncPZpHBDu1t+SfvEc+xiHqXLaPhRKfYH7/+bG5uOlvXWYhS6aEUvq2wBOhX
-	 zR0f9G5gvAUE6kzksy6k1cZQWNo+5e+0qIbp3FjM=
+	b=ep5LZGtDOcyRzaDYhpacaWZl2N2+TEyLvuBUQAyr5t98O4OTUTUUGMoi0bAhG51Pg
+	 Jk54YWA5+PlSItXW61woYYwlCXps5lsUUQWW4EhfSX+OZJXPseZ+L5OnGsetJcJGji
+	 +nf6cp9nOblW2aRXviZsys2+n+GRLx1YkW3Ig0aY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 037/109] wifi: mac80211: clean up ret in sta_link_apply_parameters()
-Date: Tue, 17 Dec 2024 18:07:21 +0100
-Message-ID: <20241217170534.923654230@linuxfoundation.org>
+Subject: [PATCH 6.6 038/109] wifi: mac80211: fix station NSS capability initialization order
+Date: Tue, 17 Dec 2024 18:07:22 +0100
+Message-ID: <20241217170534.966315982@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -51,53 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit 642508a42f74d7467aae7c56dff3016db64a25bd ]
+[ Upstream commit 819e0f1e58e0ba3800cd9eb96b2a39e44e49df97 ]
 
-There's no need to have the always-zero ret variable in
-the function scope, move it into the inner scope only.
+Station's spatial streaming capability should be initialized before
+handling VHT OMN, because the handling requires the capability information.
 
+Fixes: a8bca3e9371d ("wifi: mac80211: track capability/opmode NSS separately")
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Link: https://patch.msgid.link/20241118080722.9603-1-benjamin-jw.lin@mediatek.com
+[rewrite subject]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240605135233.eb7a24632d98.I72d7fe1da89d4b89bcfd0f5fb9057e3e69355cfe@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 819e0f1e58e0 ("wifi: mac80211: fix station NSS capability initialization order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/mac80211/cfg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index fe4469af3cc9..f9395cd80051 100644
+index f9395cd80051..a3c5d4d995db 100644
 --- a/net/mac80211/cfg.c
 +++ b/net/mac80211/cfg.c
-@@ -1795,7 +1795,6 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
- 				     struct sta_info *sta, bool new_link,
- 				     struct link_station_parameters *params)
- {
--	int ret = 0;
- 	struct ieee80211_supported_band *sband;
- 	struct ieee80211_sub_if_data *sdata = sta->sdata;
- 	u32 link_id = params->link_id < 0 ? 0 : params->link_id;
-@@ -1837,6 +1836,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+@@ -1879,6 +1879,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 						    params->eht_capa_len,
+ 						    link_sta);
+ 
++	ieee80211_sta_init_nss(link_sta);
++
+ 	if (params->opmode_notif_used) {
+ 		/* returned value is only needed for rc update, but the
+ 		 * rc isn't initialized here yet, so ignore it
+@@ -1888,8 +1890,6 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 					      sband->band);
  	}
  
- 	if (params->txpwr_set) {
-+		int ret;
-+
- 		link_sta->pub->txpwr.type = params->txpwr.type;
- 		if (params->txpwr.type == NL80211_TX_POWER_LIMITED)
- 			link_sta->pub->txpwr.power = params->txpwr.power;
-@@ -1889,7 +1890,7 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
- 
- 	ieee80211_sta_init_nss(link_sta);
- 
--	return ret;
-+	return 0;
+-	ieee80211_sta_init_nss(link_sta);
+-
+ 	return 0;
  }
  
- static int sta_apply_parameters(struct ieee80211_local *local,
 -- 
 2.39.5
 
