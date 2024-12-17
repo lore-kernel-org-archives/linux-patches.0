@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD071E0493;
-	Tue, 17 Dec 2024 17:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC3F1F8925;
+	Tue, 17 Dec 2024 17:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455888; cv=none; b=d5t84SPMffPCy1ZRcw/kPXf9+mm7ey+0uvf4iIgFoJULf1lczICS7CNtySFEQzsHfAOrfX+NUqgb4JVYszCGoI+rJ+lihyP4c/um9dLx3CY2pfyaUGC19emMRRgVyUh9+mKyuhCyEAiZcA+113STpLc2ss/YBF2RyxW+V7mstag=
+	t=1734455891; cv=none; b=jaJUe3mfGHlg8LB60YsLz9LLMZgzcOJLapGRodyOcDSMpgu6dKeGCZtEpGzHZ+TtlLny0VEXYOSzrxmLBX2KaMoDONidRcYmJpTvEOewMEh+ClHkeanx2fDdAdVcik4L47M258oBxugfAQIhoKPI437Ad/2tValVXlrlpfYiJs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455888; c=relaxed/simple;
-	bh=yPU5n+5gIzaVC6W+CoZvW0/B5EyRJUaubsa2bwfea1c=;
+	s=arc-20240116; t=1734455891; c=relaxed/simple;
+	bh=xa01LEecnjssHj4DKZGUOhP1KMvs1U/rNRvmRxV1da4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eB84pMJsHL+bar8JSwKRWNTJk0Kgu3oknmNg/MJWgBdguSSyEzPD+50CCCGJSr46GldfadvvpBc6BuJcu/fBem5ox6idLGBq82YTkfCO7OqlCWrY01p//aMd9T+//PRwBJFSEXqOQR7XCI4ViVxd+YXWyj+fomNnafCsEEIjVm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWG3NPfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=INXJyn7+imZEy1y/7c+nhLfik8lyjR/alqHEV8ueXBAO8a+zL8N/RSqJnECVPvP9lrgDp0xZr0hdnuDbFXzb6rU3r9s/dhiPNq+dgv7Bv7LqvaXVnmxuniUnok+BIw4aDqrcE7NKtgyMK+/l4MVBRBjWOUv3b41/1B2yRDxZLzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTWCLTQt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWG3NPfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D94BDC4CED3;
-	Tue, 17 Dec 2024 17:18:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTWCLTQt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C860EC4CED3;
+	Tue, 17 Dec 2024 17:18:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455888;
-	bh=yPU5n+5gIzaVC6W+CoZvW0/B5EyRJUaubsa2bwfea1c=;
+	s=korg; t=1734455891;
+	bh=xa01LEecnjssHj4DKZGUOhP1KMvs1U/rNRvmRxV1da4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWG3NPfpGoXKemB5mXvVja5asgCYrY96YgZ8ckEGsTUprIPQjN7laT6Njbkq08fAr
-	 n27MosZIZWiq9ZxWojqf1Db6Vk5+uJTk7cB4zMmtCRyo3qtLCk6JRRKqhXfX149Nlu
-	 c6+NxgEIFcrH537a/6ftu7Q408APUw3rbSLKcvKY=
+	b=QTWCLTQtgwAMQ5YUrjjZskAS9q6qFjwbmyLzz6OVWf0X+hFDA+QSP6SrzOS0gj7p1
+	 n7Mo0keoHo/S6+Aw/zLP1o8Zij0hmQiO6wIzGIxH43EQHQW/4d4V/rAIBvi6LVkQyD
+	 DoBVaolbgJMtI1E7q1MLV8qEAqJIO4acEr182As4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>
-Subject: [PATCH 6.1 67/76] tracing/kprobes: Skip symbol counting logic for module symbols in create_local_trace_kprobe()
-Date: Tue, 17 Dec 2024 18:07:47 +0100
-Message-ID: <20241217170529.191400017@linuxfoundation.org>
+	Daniel Machon <daniel.machon@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 50/76] net: sparx5: fix FDMA performance issue
+Date: Tue, 17 Dec 2024 18:07:30 +0100
+Message-ID: <20241217170528.345587492@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -49,39 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Daniel Machon <daniel.machon@microchip.com>
 
-commit b022f0c7e404 ("tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols")
-avoids checking number_of_same_symbols() for module symbol in
-__trace_kprobe_create(), but create_local_trace_kprobe() should avoid this
-check too. Doing this check leads to ENOENT for module_name:symbol_name
-constructions passed over perf_event_open.
+[ Upstream commit f004f2e535e2b66ccbf5ac35f8eaadeac70ad7b7 ]
 
-No bug in newer kernels as it was fixed more generally by
-commit 9d8616034f16 ("tracing/kprobes: Add symbol counting check when module loads")
+The FDMA handler is responsible for scheduling a NAPI poll, which will
+eventually fetch RX packets from the FDMA queue. Currently, the FDMA
+handler is run in a threaded context. For some reason, this kills
+performance.  Admittedly, I did not do a thorough investigation to see
+exactly what causes the issue, however, I noticed that in the other
+driver utilizing the same FDMA engine, we run the FDMA handler in hard
+IRQ context.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20240705161030.b3ddb33a8167013b9b1da202@kernel.org
-Fixes: b022f0c7e404 ("tracing/kprobes: Return EADDRNOTAVAIL when func matches several symbols")
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this performance issue, by  running the FDMA handler in hard IRQ
+context, not deferring any work to a thread.
+
+Prior to this change, the RX UDP performance was:
+
+Interval           Transfer     Bitrate         Jitter
+0.00-10.20  sec    44.6 MBytes  36.7 Mbits/sec  0.027 ms
+
+After this change, the rx UDP performance is:
+
+Interval           Transfer     Bitrate         Jitter
+0.00-9.12   sec    1.01 GBytes  953 Mbits/sec   0.020 ms
+
+Fixes: 10615907e9b5 ("net: sparx5: switchdev: adding frame DMA functionality")
+Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
-v1 -> v2:
- * Reword commit title and message
- * Send for stable instead of mainline
+ drivers/net/ethernet/microchip/sparx5/sparx5_main.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
- kernel/trace/trace_kprobe.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+index 7031f41287e0..1ed69e77b895 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_main.c
+@@ -680,12 +680,11 @@ static int sparx5_start(struct sparx5 *sparx5)
+ 	err = -ENXIO;
+ 	if (sparx5->fdma_irq >= 0) {
+ 		if (GCB_CHIP_ID_REV_ID_GET(sparx5->chip_id) > 0)
+-			err = devm_request_threaded_irq(sparx5->dev,
+-							sparx5->fdma_irq,
+-							NULL,
+-							sparx5_fdma_handler,
+-							IRQF_ONESHOT,
+-							"sparx5-fdma", sparx5);
++			err = devm_request_irq(sparx5->dev,
++					       sparx5->fdma_irq,
++					       sparx5_fdma_handler,
++					       0,
++					       "sparx5-fdma", sparx5);
+ 		if (!err)
+ 			err = sparx5_fdma_start(sparx5);
+ 		if (err)
+-- 
+2.39.5
 
---- a/kernel/trace/trace_kprobe.c
-+++ b/kernel/trace/trace_kprobe.c
-@@ -1816,7 +1816,7 @@ create_local_trace_kprobe(char *func, vo
- 	int ret;
- 	char *event;
- 
--	if (func) {
-+	if (func && !strchr(func, ':')) {
- 		unsigned int count;
- 
- 		count = number_of_same_symbols(func);
 
 
