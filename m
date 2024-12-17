@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E981DE2AC;
-	Tue, 17 Dec 2024 17:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35B08615A;
+	Tue, 17 Dec 2024 17:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456233; cv=none; b=QdvM7XiT097vn4FmC1KlHiQXWZ7BPmvsiLTTR9y5dR1/mg6iK1px8YUuDcFmc1uEndD2hFtM0llFNPE6fQqw3Ss3Xi6nP6cX+tVDIWI++8NHKFh5NpIuTTGcya26EsVpzcYpxQPWeOK3Fio4HWuHNkJK/3krptj3YREOlRVdKN4=
+	t=1734456236; cv=none; b=CZI6Psx1SInvgBmFmo61RMc4hlWMYVPNF/xw1aw2t/vRusR93Kpsho40aUIHjzhMD8iCSdpk6XHSY4I6yc1x2jfOJZFxZ8clHkP/sW8NgYRkc2j4EKZlPHsaYG7HH+fLNqB9qPnlTRIV9AHvJrxzqWEP/9tpatnfWhz1yKeF6sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456233; c=relaxed/simple;
-	bh=Z+L5sIdSJCZuBo0Kojl4m+xYoVBPoI0p5dlXFyw1P6w=;
+	s=arc-20240116; t=1734456236; c=relaxed/simple;
+	bh=u9ItzheF7vMvo2U9nOdAaxEKozQ/bMUlxoO0qjYCB6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WULT+fjXcoATLtcct0En41pCB/dURPYFAo6l2W3T5HOFg/mSGlwRm+FKZYXqZIrFbbqdVxzOAjNcJlFR4K6YSEmWqcIlGrEoqFJJRwjfDH62IlXHUGFrWCanwy0InVy3AgIxK43YJlih/3eCK+AkMMUkztH/49RYp4cHQ0SEFfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cme0OZBX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OysZYT91HKWtUBP199XItnqKiP2Ox3bg/gEhLTgp7mwlFGAHa36AcmTa40OImbJVOLtSlWHmRt8O2SEfr4zHJBXTRjPB8Tczi1/mhFknpeq4+7B+ZTOXHJBOHO8Slc/fbTjV/v5+4pm3bwD661V1zODAIKzhjZEwG9e1hcotrYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUxv8PA/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cme0OZBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C3C4CED3;
-	Tue, 17 Dec 2024 17:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUxv8PA/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0A6C4CED3;
+	Tue, 17 Dec 2024 17:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456232;
-	bh=Z+L5sIdSJCZuBo0Kojl4m+xYoVBPoI0p5dlXFyw1P6w=;
+	s=korg; t=1734456235;
+	bh=u9ItzheF7vMvo2U9nOdAaxEKozQ/bMUlxoO0qjYCB6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cme0OZBXeIO1JNksHZlW6REtUis2D0HGtOXPSYxEmEcOP9tvKKsgRZWZ15YZOIUam
-	 Un96SlKE6JVB42o6S9L2yTA+A4Us/As8RPixpk/Cpen987duXtJyOzmpPS63G5aytB
-	 lOjmJBEXDTmdzDVzmpdFVFrBhyWTrv02W3W0mGps=
+	b=pUxv8PA/M1mzdCewIYzI2dyD+75R/netNBi5qUdms3zNpcqBvaWt/GJ1LXt3oeQK4
+	 Te15jwb//vjI0H9DxGymyMtuMlurXcLWxNARSZhuJEMGRBacpXL2fUOmz+4i2W7tb5
+	 ALVVntm+XUpxmqoMtttE147fh7yagkUX0YruU6pM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/109] qca_spi: Fix clock speed for multiple QCA7000
-Date: Tue, 17 Dec 2024 18:07:47 +0100
-Message-ID: <20241217170536.011903892@linuxfoundation.org>
+	Lonial Con <kongln9170@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.6 096/109] bpf: sync_linked_regs() must preserve subreg_def
+Date: Tue, 17 Dec 2024 18:08:20 +0100
+Message-ID: <20241217170537.401138912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -51,98 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 4dba406fac06b009873fe7a28231b9b7e4288b09 ]
+commit e9bd9c498cb0f5843996dbe5cbce7a1836a83c70 upstream.
 
-Storing the maximum clock speed in module parameter qcaspi_clkspeed
-has the unintended side effect that the first probed instance
-defines the value for all other instances. Fix this issue by storing
-it in max_speed_hz of the relevant SPI device.
+Range propagation must not affect subreg_def marks, otherwise the
+following example is rewritten by verifier incorrectly when
+BPF_F_TEST_RND_HI32 flag is set:
 
-This fix keeps the priority of the speed parameter (module parameter,
-device tree property, driver default). Btw this uses the opportunity
-to get the rid of the unused member clkspeed.
+  0: call bpf_ktime_get_ns                   call bpf_ktime_get_ns
+  1: r0 &= 0x7fffffff       after verifier   r0 &= 0x7fffffff
+  2: w1 = w0                rewrites         w1 = w0
+  3: if w0 < 10 goto +0     -------------->  r11 = 0x2f5674a6     (r)
+  4: r1 >>= 32                               r11 <<= 32           (r)
+  5: r0 = r1                                 r1 |= r11            (r)
+  6: exit;                                   if w0 < 0xa goto pc+0
+                                             r1 >>= 32
+                                             r0 = r1
+                                             exit
 
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20241206184643.123399-2-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+(or zero extension of w1 at (2) is missing for architectures that
+ require zero extension for upper register half).
+
+The following happens w/o this patch:
+- r0 is marked as not a subreg at (0);
+- w1 is marked as subreg at (2);
+- w1 subreg_def is overridden at (3) by copy_register_state();
+- w1 is read at (5) but mark_insn_zext() does not mark (2)
+  for zero extension, because w1 subreg_def is not set;
+- because of BPF_F_TEST_RND_HI32 flag verifier inserts random
+  value for hi32 bits of (2) (marked (r));
+- this random value is read at (5).
+
+Fixes: 75748837b7e5 ("bpf: Propagate scalar ranges through register assignments.")
+Reported-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://lore.kernel.org/bpf/7e2aa30a62d740db182c170fdd8f81c596df280d.camel@gmail.com
+Link: https://lore.kernel.org/bpf/20240924210844.1758441-1-eddyz87@gmail.com
+[ shung-hsi.yu: sync_linked_regs() was called find_equal_scalars() before commit
+  4bf79f9be434 ("bpf: Track equal scalars history on per-instruction level"), and
+  modification is done because there is only a single call to
+  copy_register_state() before commit 98d7ca374ba4 ("bpf: Track delta between
+  "linked" registers."). ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qualcomm/qca_spi.c | 24 ++++++++++--------------
- drivers/net/ethernet/qualcomm/qca_spi.h |  1 -
- 2 files changed, 10 insertions(+), 15 deletions(-)
+ kernel/bpf/verifier.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index b697a9e6face..78200c1b5ba9 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -828,7 +828,6 @@ qcaspi_netdev_init(struct net_device *dev)
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14497,8 +14497,11 @@ static void find_equal_scalars(struct bp
+ 	struct bpf_reg_state *reg;
  
- 	dev->mtu = QCAFRM_MAX_MTU;
- 	dev->type = ARPHRD_ETHER;
--	qca->clkspeed = qcaspi_clkspeed;
- 	qca->burst_len = qcaspi_burst_len;
- 	qca->spi_thread = NULL;
- 	qca->buffer_size = (dev->mtu + VLAN_ETH_HLEN + QCAFRM_HEADER_LEN +
-@@ -917,17 +916,15 @@ qca_spi_probe(struct spi_device *spi)
- 	legacy_mode = of_property_read_bool(spi->dev.of_node,
- 					    "qca,legacy-mode");
+ 	bpf_for_each_reg_in_vstate(vstate, state, reg, ({
+-		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id)
++		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id) {
++			s32 saved_subreg_def = reg->subreg_def;
+ 			copy_register_state(reg, known_reg);
++			reg->subreg_def = saved_subreg_def;
++		}
+ 	}));
+ }
  
--	if (qcaspi_clkspeed == 0) {
--		if (spi->max_speed_hz)
--			qcaspi_clkspeed = spi->max_speed_hz;
--		else
--			qcaspi_clkspeed = QCASPI_CLK_SPEED;
--	}
-+	if (qcaspi_clkspeed)
-+		spi->max_speed_hz = qcaspi_clkspeed;
-+	else if (!spi->max_speed_hz)
-+		spi->max_speed_hz = QCASPI_CLK_SPEED;
- 
--	if ((qcaspi_clkspeed < QCASPI_CLK_SPEED_MIN) ||
--	    (qcaspi_clkspeed > QCASPI_CLK_SPEED_MAX)) {
--		dev_err(&spi->dev, "Invalid clkspeed: %d\n",
--			qcaspi_clkspeed);
-+	if (spi->max_speed_hz < QCASPI_CLK_SPEED_MIN ||
-+	    spi->max_speed_hz > QCASPI_CLK_SPEED_MAX) {
-+		dev_err(&spi->dev, "Invalid clkspeed: %u\n",
-+			spi->max_speed_hz);
- 		return -EINVAL;
- 	}
- 
-@@ -952,14 +949,13 @@ qca_spi_probe(struct spi_device *spi)
- 		return -EINVAL;
- 	}
- 
--	dev_info(&spi->dev, "ver=%s, clkspeed=%d, burst_len=%d, pluggable=%d\n",
-+	dev_info(&spi->dev, "ver=%s, clkspeed=%u, burst_len=%d, pluggable=%d\n",
- 		 QCASPI_DRV_VERSION,
--		 qcaspi_clkspeed,
-+		 spi->max_speed_hz,
- 		 qcaspi_burst_len,
- 		 qcaspi_pluggable);
- 
- 	spi->mode = SPI_MODE_3;
--	spi->max_speed_hz = qcaspi_clkspeed;
- 	if (spi_setup(spi) < 0) {
- 		dev_err(&spi->dev, "Unable to setup SPI device\n");
- 		return -EFAULT;
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.h b/drivers/net/ethernet/qualcomm/qca_spi.h
-index 58ad910068d4..b3b17bd46e12 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.h
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.h
-@@ -101,7 +101,6 @@ struct qcaspi {
- #endif
- 
- 	/* user configurable options */
--	u32 clkspeed;
- 	u8 legacy_mode;
- 	u16 burst_len;
- };
--- 
-2.39.5
-
 
 
