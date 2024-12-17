@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288D31F7577;
-	Tue, 17 Dec 2024 17:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5BE1F7577;
+	Tue, 17 Dec 2024 17:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455940; cv=none; b=CVoOhMlE8cc3G+rX8BUNjGME7UuJxj1zhe8sOhFT3Tw+9guwP9UxJc/2Elz6DUEKGbAU02X+zjYYM0oI9wNbqeBZEr8MHQDWgZCZ1+RxqqozHm7Iu+0/FY2f3U+dHp8relNsp8O2HtAm1FrqOn/F99TNuTnHl+WPjsod7Auf/K4=
+	t=1734455943; cv=none; b=YwK54fjbr9j8Xx/xqFbmFJPBcFZyDzc3ZXZZx8rtAX4Y+PCN9D74sGtfDxP74J2hrLFpgsKJ3BbcjAkCbTiLoBS9aMmqxul6u7uUkuef47GkGzNIZKdv7GsAguAfmu+ZJF4/0ZZTRlqJlgvXZJQdsEk1sh/ZET3wjMUOnBX6c2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455940; c=relaxed/simple;
-	bh=45sUZx4PU4nsgaAVHQUna2XVd5zmhews/dgK/8nRmBw=;
+	s=arc-20240116; t=1734455943; c=relaxed/simple;
+	bh=2FAKj98RKFau3ZF9QCI7FzbvAtU0StcIPL+gTSjfv/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5+e2Fbyojapm3urwUly7d8EL12bqEWo9yrLRaPz9Sph9ZtUAJtrbWWKvdVc/crYlnfGDkU8+v+nCSLOaEvgFr5xtK3NPrZNtRv8ov6Ibpq6OeMTTJNtipu3Sff1FJA6mAK8YIn/nagnTVdf7vlUfruKjhB2c7zdF81IJyP8EGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=edVWcSui; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qihFOFsfRdKCLnZ8hQjJ1wDh2WicVPdJ2oRAfh6pvVxCpj0jD3uEy1DZ3//yjjKOjNm8f3JO1PqNuwZC24isTgLhH7A9a3XXJr9XnoGOsrUgfqLHqhSrBUxuOgQEnXOPIaXfrGshZ5R12Hyu0Rw1JCCg4LJT7KkkuzMBZDnRu18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CqJm1TVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="edVWcSui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D4E8C4CED3;
-	Tue, 17 Dec 2024 17:18:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CqJm1TVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739B1C4CED3;
+	Tue, 17 Dec 2024 17:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455940;
-	bh=45sUZx4PU4nsgaAVHQUna2XVd5zmhews/dgK/8nRmBw=;
+	s=korg; t=1734455942;
+	bh=2FAKj98RKFau3ZF9QCI7FzbvAtU0StcIPL+gTSjfv/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=edVWcSuidhP1tHo1durqtqBHafwNIQf6M75FRpyOnY2r6N3+OGLSpEdYX5v72nUKx
-	 1CXFUYvYX4nl8vW9vYNaAxufxLxXN8qyjmBofzXwNCkDyfBlYO6LUx2CYC0IASuQWl
-	 n3xo24paGrFZN+0+mLqf5vrHH2PryUHX8pJI5m5E=
+	b=CqJm1TVlw5x9Cfn14hfvc/D2RxavWpkmiJpWr2/4KJaRaDDHqirIqorDOSyL8zcxJ
+	 J2jcwFo7NG0MEcPq0KB2rFBczpU1Jjj1wAfWG/CLIQzJAOX+vrtpZ80+M3W8bYIIPb
+	 yBcH99i0DBaszGdhAgfWET2r/ij3Ep8DD9cCeTR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 57/76] Documentation: PM: Clarify pm_runtime_resume_and_get() return value
-Date: Tue, 17 Dec 2024 18:07:37 +0100
-Message-ID: <20241217170528.635784508@linuxfoundation.org>
+Subject: [PATCH 6.1 48/76] net: mscc: ocelot: perform error cleanup in ocelot_hwstamp_set()
+Date: Tue, 17 Dec 2024 18:07:28 +0100
+Message-ID: <20241217170528.257809720@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -51,40 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Barker <paul.barker.ct@bp.renesas.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit ccb84dc8f4a02e7d30ffd388522996546b4d00e1 ]
+[ Upstream commit 43a4166349a254446e7a3db65f721c6a30daccf3 ]
 
-Update the documentation to match the behaviour of the code.
+An unsupported RX filter will leave the port with TX timestamping still
+applied as per the new request, rather than the old setting. When
+parsing the tx_type, don't apply it just yet, but delay that until after
+we've parsed the rx_filter as well (and potentially returned -ERANGE for
+that).
 
-pm_runtime_resume_and_get() always returns 0 on success, even if
-__pm_runtime_resume() returns 1.
+Similarly, copy_to_user() may fail, which is a rare occurrence, but
+should still be treated by unwinding what was done.
 
-Fixes: 2c412337cfe6 ("PM: runtime: Add documentation for pm_runtime_resume_and_get()")
-Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Link: https://patch.msgid.link/20241203143729.478-1-paul.barker.ct@bp.renesas.com
-[ rjw: Subject and changelog edits, adjusted new comment formatting ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 96ca08c05838 ("net: mscc: ocelot: set up traps for PTP packets")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20241205145519.1236778-6-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/power/runtime_pm.rst | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mscc/ocelot_ptp.c | 59 ++++++++++++++++++--------
+ 1 file changed, 42 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/power/runtime_pm.rst b/Documentation/power/runtime_pm.rst
-index 65b86e487afe..b6d5a3a8febc 100644
---- a/Documentation/power/runtime_pm.rst
-+++ b/Documentation/power/runtime_pm.rst
-@@ -347,7 +347,9 @@ drivers/base/power/runtime.c and include/linux/pm_runtime.h:
+diff --git a/drivers/net/ethernet/mscc/ocelot_ptp.c b/drivers/net/ethernet/mscc/ocelot_ptp.c
+index bc44aa635d49..34a2d8ea3b2d 100644
+--- a/drivers/net/ethernet/mscc/ocelot_ptp.c
++++ b/drivers/net/ethernet/mscc/ocelot_ptp.c
+@@ -497,6 +497,28 @@ static int ocelot_traps_to_ptp_rx_filter(unsigned int proto)
+ 	return HWTSTAMP_FILTER_NONE;
+ }
  
-   `int pm_runtime_resume_and_get(struct device *dev);`
-     - run pm_runtime_resume(dev) and if successful, increment the device's
--      usage counter; return the result of pm_runtime_resume
-+      usage counter; returns 0 on success (whether or not the device's
-+      runtime PM status was already 'active') or the error code from
-+      pm_runtime_resume() on failure.
++static int ocelot_ptp_tx_type_to_cmd(int tx_type, int *ptp_cmd)
++{
++	switch (tx_type) {
++	case HWTSTAMP_TX_ON:
++		*ptp_cmd = IFH_REW_OP_TWO_STEP_PTP;
++		break;
++	case HWTSTAMP_TX_ONESTEP_SYNC:
++		/* IFH_REW_OP_ONE_STEP_PTP updates the correctionField,
++		 * what we need to update is the originTimestamp.
++		 */
++		*ptp_cmd = IFH_REW_OP_ORIGIN_PTP;
++		break;
++	case HWTSTAMP_TX_OFF:
++		*ptp_cmd = 0;
++		break;
++	default:
++		return -ERANGE;
++	}
++
++	return 0;
++}
++
+ int ocelot_hwstamp_get(struct ocelot *ocelot, int port, struct ifreq *ifr)
+ {
+ 	struct ocelot_port *ocelot_port = ocelot->ports[port];
+@@ -523,30 +545,19 @@ EXPORT_SYMBOL(ocelot_hwstamp_get);
+ int ocelot_hwstamp_set(struct ocelot *ocelot, int port, struct ifreq *ifr)
+ {
+ 	struct ocelot_port *ocelot_port = ocelot->ports[port];
++	int ptp_cmd, old_ptp_cmd = ocelot_port->ptp_cmd;
+ 	bool l2 = false, l4 = false;
+ 	struct hwtstamp_config cfg;
++	bool old_l2, old_l4;
+ 	int err;
  
-   `int pm_request_idle(struct device *dev);`
-     - submit a request to execute the subsystem-level idle callback for the
+ 	if (copy_from_user(&cfg, ifr->ifr_data, sizeof(cfg)))
+ 		return -EFAULT;
+ 
+ 	/* Tx type sanity check */
+-	switch (cfg.tx_type) {
+-	case HWTSTAMP_TX_ON:
+-		ocelot_port->ptp_cmd = IFH_REW_OP_TWO_STEP_PTP;
+-		break;
+-	case HWTSTAMP_TX_ONESTEP_SYNC:
+-		/* IFH_REW_OP_ONE_STEP_PTP updates the correctional field, we
+-		 * need to update the origin time.
+-		 */
+-		ocelot_port->ptp_cmd = IFH_REW_OP_ORIGIN_PTP;
+-		break;
+-	case HWTSTAMP_TX_OFF:
+-		ocelot_port->ptp_cmd = 0;
+-		break;
+-	default:
+-		return -ERANGE;
+-	}
++	err = ocelot_ptp_tx_type_to_cmd(cfg.tx_type, &ptp_cmd);
++	if (err)
++		return err;
+ 
+ 	switch (cfg.rx_filter) {
+ 	case HWTSTAMP_FILTER_NONE:
+@@ -571,13 +582,27 @@ int ocelot_hwstamp_set(struct ocelot *ocelot, int port, struct ifreq *ifr)
+ 		return -ERANGE;
+ 	}
+ 
++	old_l2 = ocelot_port->trap_proto & OCELOT_PROTO_PTP_L2;
++	old_l4 = ocelot_port->trap_proto & OCELOT_PROTO_PTP_L4;
++
+ 	err = ocelot_setup_ptp_traps(ocelot, port, l2, l4);
+ 	if (err)
+ 		return err;
+ 
++	ocelot_port->ptp_cmd = ptp_cmd;
++
+ 	cfg.rx_filter = ocelot_traps_to_ptp_rx_filter(ocelot_port->trap_proto);
+ 
+-	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
++	if (copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg))) {
++		err = -EFAULT;
++		goto out_restore_ptp_traps;
++	}
++
++	return 0;
++out_restore_ptp_traps:
++	ocelot_setup_ptp_traps(ocelot, port, old_l2, old_l4);
++	ocelot_port->ptp_cmd = old_ptp_cmd;
++	return err;
+ }
+ EXPORT_SYMBOL(ocelot_hwstamp_set);
+ 
 -- 
 2.39.5
 
