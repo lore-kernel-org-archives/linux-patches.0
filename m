@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211061F7574;
-	Tue, 17 Dec 2024 17:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2231F6661;
+	Tue, 17 Dec 2024 17:28:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456524; cv=none; b=SOihquZdKnCEi9tx1DgYY7j8tkwtAPyFnZfIKydmFG3lY43UwrYe/3Zpoya+VOryePZgEOBVpmDUPIPxj20oBHanFZ1vQ/TiN2DuY0Mhzm13RJRvByjH9oUAYwdPMzvGtDeqJ+LHDz8d9MTL7ujGoMCJKRT1vKwvLWOtDBPLBHA=
+	t=1734456526; cv=none; b=V8VdEElQZJ59XKclrCLQrd2FRzFVIpQMmCfxuf01lN2pOEwr9+VnFW47p2qSeeGfwoMDEmT9ZUXyhH0+C36DVR/tZ/CuBV3bnLR9hmzFUEwcTudjsR27KmUoqd/nbCtk0oXyBJMIo0I8lPQZIpYy5oM5TZ3cRMCLNBu2kRlzzU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456524; c=relaxed/simple;
-	bh=kpslnGk57HAh923wo0VZ7CoH0OAwGNpA3WVt3lM3hg4=;
+	s=arc-20240116; t=1734456526; c=relaxed/simple;
+	bh=q+/rrRRkL2Vos38fZR153iBZV/TPyW7As0mxmXVdWfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RpwDEmuvgzOftmjiNIazStoKSDRWrAAvB3DYp0y29yWtIXGNkDzR2xgWnjoUICa3iPrFey3yNttl7ffvKmBvfG0vk4BSZnkWu8Okrz9EMXiS215TV1KMUpZCSMdeyLNVPOh6WUYpjFmTQe9lWSORvGcOrhnBuO0/dSTQbl6/Hrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKScSr58; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YV2C3BlsSV7awqwRLlw5OOChPk0kt5HE1GyQNWxfURGrsoqf5ZmezxE7dN4Gz91BrvBMEcNLi6XPjnzqD8bV4S/fwB//U/HZhorkRO3mGOywZCLfroUUfninSSm2X+95CBoY0A+Nr8uuWcgs2c62/6eym1AtwbYae007KqBPDZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJNtkpg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKScSr58"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F412C4CED3;
-	Tue, 17 Dec 2024 17:28:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJNtkpg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47588C4CED3;
+	Tue, 17 Dec 2024 17:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456523;
-	bh=kpslnGk57HAh923wo0VZ7CoH0OAwGNpA3WVt3lM3hg4=;
+	s=korg; t=1734456526;
+	bh=q+/rrRRkL2Vos38fZR153iBZV/TPyW7As0mxmXVdWfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKScSr58RkKXn8f2tvIjBW5TK8Kjq/pFhN9X6qkLjSpu+T/ZhmjrSsi9WFlRyBxwC
-	 EAOASirYzDDbvg2liq9af57tB+kgoAh2NW9RPEW+ivmyoP/er8lDxOF9rDA0itQCkO
-	 l1iW7vyKgIlLWrntacdPSwdWpe/Dw3h81OtEjr2Y=
+	b=IJNtkpg/o7MLu6OuFJgX0r183+52F9DsG+CA1vQgiBejbGtTrZGRFtf0hZKqS6q+2
+	 nM2V7bAsPYNpdtX2ByJiN1aKfiEH8xuEuRjP/9g8szcT2NMYNT9G77gWNlTKvYL+bU
+	 34ZBYYkSmBJwlbOI1cvrBoA3eY7wZyBnU2BPDE7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e0d2840414ce817aaac@syzkaller.appspotmail.com,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 6.12 078/172] bpf,perf: Fix invalid prog_array access in perf_event_detach_bpf_prog
-Date: Tue, 17 Dec 2024 18:07:14 +0100
-Message-ID: <20241217170549.524270906@linuxfoundation.org>
+	Veronika Molnarova <vmolnaro@redhat.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 087/172] perf machine: Initialize machine->env to address a segfault
+Date: Tue, 17 Dec 2024 18:07:23 +0100
+Message-ID: <20241217170549.897533822@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,58 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Arnaldo Carvalho de Melo <acme@kernel.org>
 
-commit 978c4486cca5c7b9253d3ab98a88c8e769cb9bbd upstream.
+[ Upstream commit 88a6e2f67cc94f751a74409ab4c21e5fc8ea6757 ]
 
-Syzbot reported [1] crash that happens for following tracing scenario:
+Its used from trace__run(), for the 'perf trace' live mode, i.e. its
+strace-like, non-perf.data file processing mode, the most common one.
 
-  - create tracepoint perf event with attr.inherit=1, attach it to the
-    process and set bpf program to it
-  - attached process forks -> chid creates inherited event
+The trace__run() function will set trace->host using machine__new_host()
+that is supposed to give a machine instance representing the running
+machine, and since we'll use perf_env__arch_strerrno() to get the right
+errno -> string table, we need to use machine->env, so initialize it in
+machine__new_host().
 
-    the new child event shares the parent's bpf program and tp_event
-    (hence prog_array) which is global for tracepoint
+Before the patch:
 
-  - exit both process and its child -> release both events
-  - first perf_event_detach_bpf_prog call will release tp_event->prog_array
-    and second perf_event_detach_bpf_prog will crash, because
-    tp_event->prog_array is NULL
+  (gdb) run trace --errno-summary -a sleep 1
+  <SNIP>
+   Summary of events:
 
-The fix makes sure the perf_event_detach_bpf_prog checks prog_array
-is valid before it tries to remove the bpf program from it.
+   gvfs-afc-volume (3187), 2 events, 0.0%
 
-[1] https://lore.kernel.org/bpf/Z1MR6dCIKajNS6nU@krava/T/#m91dbf0688221ec7a7fc95e896a7ef9ff93b0b8ad
+     syscall            calls  errors  total       min       avg       max       stddev
+                                       (msec)    (msec)    (msec)    (msec)        (%)
+     --------------- --------  ------ -------- --------- --------- ---------     ------
+     pselect6               1      0     0.000     0.000     0.000     0.000      0.00%
 
-Fixes: 0ee288e69d03 ("bpf,perf: Fix perf_event_detach_bpf_prog error handling")
-Reported-by: syzbot+2e0d2840414ce817aaac@syzkaller.appspotmail.com
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241208142507.1207698-1-jolsa@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+   GUsbEventThread (3519), 2 events, 0.0%
+
+     syscall            calls  errors  total       min       avg       max       stddev
+                                       (msec)    (msec)    (msec)    (msec)        (%)
+     --------------- --------  ------ -------- --------- --------- ---------     ------
+     poll                   1      0     0.000     0.000     0.000     0.000      0.00%
+  <SNIP>
+  Program received signal SIGSEGV, Segmentation fault.
+  0x00000000005caba0 in perf_env__arch_strerrno (env=0x0, err=110) at util/env.c:478
+  478		if (env->arch_strerrno == NULL)
+  (gdb) bt
+  #0  0x00000000005caba0 in perf_env__arch_strerrno (env=0x0, err=110) at util/env.c:478
+  #1  0x00000000004b75d2 in thread__dump_stats (ttrace=0x14f58f0, trace=0x7fffffffa5b0, fp=0x7ffff6ff74e0 <_IO_2_1_stderr_>) at builtin-trace.c:4673
+  #2  0x00000000004b78bf in trace__fprintf_thread (fp=0x7ffff6ff74e0 <_IO_2_1_stderr_>, thread=0x10fa0b0, trace=0x7fffffffa5b0) at builtin-trace.c:4708
+  #3  0x00000000004b7ad9 in trace__fprintf_thread_summary (trace=0x7fffffffa5b0, fp=0x7ffff6ff74e0 <_IO_2_1_stderr_>) at builtin-trace.c:4747
+  #4  0x00000000004b656e in trace__run (trace=0x7fffffffa5b0, argc=2, argv=0x7fffffffde60) at builtin-trace.c:4456
+  #5  0x00000000004ba43e in cmd_trace (argc=2, argv=0x7fffffffde60) at builtin-trace.c:5487
+  #6  0x00000000004c0414 in run_builtin (p=0xec3068 <commands+648>, argc=5, argv=0x7fffffffde60) at perf.c:351
+  #7  0x00000000004c06bb in handle_internal_command (argc=5, argv=0x7fffffffde60) at perf.c:404
+  #8  0x00000000004c0814 in run_argv (argcp=0x7fffffffdc4c, argv=0x7fffffffdc40) at perf.c:448
+  #9  0x00000000004c0b5d in main (argc=5, argv=0x7fffffffde60) at perf.c:560
+  (gdb)
+
+After:
+
+  root@number:~# perf trace -a --errno-summary sleep 1
+  <SNIP>
+     pw-data-loop (2685), 1410 events, 16.0%
+
+     syscall            calls  errors  total       min       avg       max       stddev
+                                       (msec)    (msec)    (msec)    (msec)        (%)
+     --------------- --------  ------ -------- --------- --------- ---------     ------
+     epoll_wait           188      0   983.428     0.000     5.231    15.595      8.68%
+     ioctl                 94      0     0.811     0.004     0.009     0.016      2.82%
+     read                 188      0     0.322     0.001     0.002     0.006      5.15%
+     write                141      0     0.280     0.001     0.002     0.018      8.39%
+     timerfd_settime       94      0     0.138     0.001     0.001     0.007      6.47%
+
+   gnome-control-c (179406), 1848 events, 20.9%
+
+     syscall            calls  errors  total       min       avg       max       stddev
+                                       (msec)    (msec)    (msec)    (msec)        (%)
+     --------------- --------  ------ -------- --------- --------- ---------     ------
+     poll                 222      0   959.577     0.000     4.322    21.414     11.40%
+     recvmsg              150      0     0.539     0.001     0.004     0.013      5.12%
+     write                300      0     0.442     0.001     0.001     0.007      3.29%
+     read                 150      0     0.183     0.001     0.001     0.009      5.53%
+     getpid               102      0     0.101     0.000     0.001     0.008      7.82%
+
+  root@number:~#
+
+Fixes: 54373b5d53c1f6aa ("perf env: Introduce perf_env__arch_strerrno()")
+Reported-by: Veronika Molnarova <vmolnaro@redhat.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Veronika Molnarova <vmolnaro@redhat.com>
+Acked-by: Michael Petlan <mpetlan@redhat.com>
+Tested-by: Michael Petlan <mpetlan@redhat.com>
+Link: https://lore.kernel.org/r/Z0XffUgNSv_9OjOi@x1
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/util/machine.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2215,6 +2215,9 @@ void perf_event_detach_bpf_prog(struct p
- 		goto unlock;
+diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
+index 4f0ac998b0cc..27d5345d2b30 100644
+--- a/tools/perf/util/machine.c
++++ b/tools/perf/util/machine.c
+@@ -134,6 +134,8 @@ struct machine *machine__new_host(void)
  
- 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
-+	if (!old_array)
-+		goto put;
+ 		if (machine__create_kernel_maps(machine) < 0)
+ 			goto out_delete;
 +
- 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
- 	if (ret < 0) {
- 		bpf_prog_array_delete_safe(old_array, event->prog);
-@@ -2223,6 +2226,7 @@ void perf_event_detach_bpf_prog(struct p
- 		bpf_prog_array_free_sleepable(old_array);
++		machine->env = &perf_env;
  	}
  
-+put:
- 	/*
- 	 * It could be that the bpf_prog is not sleepable (and will be freed
- 	 * via normal RCU), but is called from a point that supports sleepable
+ 	return machine;
+-- 
+2.39.5
+
 
 
