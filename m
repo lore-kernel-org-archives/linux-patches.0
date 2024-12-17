@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1E41E0493;
-	Tue, 17 Dec 2024 17:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E53F1F76A1;
+	Tue, 17 Dec 2024 17:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455981; cv=none; b=HXIX+XMOfFgYbIAB4m4OFsv6V1kW3FgLWh2JZps02qYiEldLNe5A6ivMzbIgFhdPcOroZWAHkWtAlJMujy/B13e/FzJPlNEhXS22/Rw7FuCW2J3CzB/WGhlrxAvzn04SZj2E3cYdKY6uAsWFAeBU3z3+ueqd3ciZ0PnWCz076u0=
+	t=1734455984; cv=none; b=szAqy7DoWu1VOKb2gaJPt9PVQOcx5nVtavJXK554JrdkUgy1Lj4wp4A+qEZ4SPlTC9JTb3XEgmOyvWstjcpDtvt4l+ICdABCwVIRdJq35KoM96xxK8EpaHlOT4ybvmQ3w45WRhykExL/vcTy4SeZhWeDzMrzDl71ZgJMcIpAFaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455981; c=relaxed/simple;
-	bh=YvgkGSOIUPZPAjVAmVTLneCpn60v/ecP/DjsdePH8B0=;
+	s=arc-20240116; t=1734455984; c=relaxed/simple;
+	bh=A+8b1x9nWRv5Zg8NTr5aRbtu10/QfqdgdqJbI5AIf6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLqWKSDIOFE3YJRioFGNXaIAiJP99URr5Jml8ykK4H1NjY08lYTOz5Bzi9SX4XpISKgLi4ILRIBANNBZOSSUDy1Izjuyj96FI3J5bQI70aoYLXD/fL5+KszoUgJqDtWxg5jX1GZcpnMpi6z1hMyZWNKFXL2Ew5A3mvOb9MpPWVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qG8q4F41; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSuX1IY9LUMwrHUuco7IueQPmdj0lzqTLccpEnd40ie9b4arST1doc51SSALjDLZO5A8J4MMlTdovUXbyfyE84kKh7h9u3VccWDQImR9Dd1+/keS1Vx+T6a/c8c1GTVg5gRZHYO/zpX5/Z90Mc4OOPB4BKARlpBVb0f25rHHU8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZm78Qc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qG8q4F41"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F3CC4CED3;
-	Tue, 17 Dec 2024 17:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZm78Qc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4B5C4CED7;
+	Tue, 17 Dec 2024 17:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455981;
-	bh=YvgkGSOIUPZPAjVAmVTLneCpn60v/ecP/DjsdePH8B0=;
+	s=korg; t=1734455984;
+	bh=A+8b1x9nWRv5Zg8NTr5aRbtu10/QfqdgdqJbI5AIf6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qG8q4F41L32PZhZC3ps5Eeik+OgxUOsScY47blII9oAP1OIbeQqD4A1TEXA72W8B9
-	 sm25W5DD9kdIWUSwMYbJcZLukoDNRHjomnku8m73Ol85n52KcAfKkxog03o2SCG0oy
-	 bLaNADAoQJPWp4Jbf9J2Ro9dvEbW0+csnHhyUH5E=
+	b=DZm78Qc7XiQiSWGt4isvEUh0DhDDA9POUfb9RvunJnMXLi0mUQovMMg2PssO84jy1
+	 VmDOzLlxcpTRWC9IJtgyzxKTArUjs2AImKuQ4/7S5ZmbbClUDuHp0gJprSm+FG/mQZ
+	 h8u/QYg16Z70uQKlCFgChawfFBPFUcvm1rMILYp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Lianqin Hu <hulianqin@vivo.com>
-Subject: [PATCH 6.6 020/109] usb: gadget: u_serial: Fix the issue that gs_start_io crashed due to accessing null pointer
-Date: Tue, 17 Dec 2024 18:07:04 +0100
-Message-ID: <20241217170534.204374960@linuxfoundation.org>
+	Neal Frager <neal.frager@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Peter Korsgaard <peter@korsgaard.com>
+Subject: [PATCH 6.6 021/109] usb: dwc3: xilinx: make sure pipe clock is deselected in usb2 only mode
+Date: Tue, 17 Dec 2024 18:07:05 +0100
+Message-ID: <20241217170534.250374414@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -50,81 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Neal Frager <neal.frager@amd.com>
 
-commit 4cfbca86f6a8b801f3254e0e3c8f2b1d2d64be2b upstream.
+commit a48f744bef9ee74814a9eccb030b02223e48c76c upstream.
 
-Considering that in some extreme cases,
-when u_serial driver is accessed by multiple threads,
-Thread A is executing the open operation and calling the gs_open,
-Thread B is executing the disconnect operation and calling the
-gserial_disconnect function,The port->port_usb pointer will be set to NULL.
+When the USB3 PHY is not defined in the Linux device tree, there could
+still be a case where there is a USB3 PHY active on the board and enabled
+by the first stage bootloader. If serdes clock is being used then the USB
+will fail to enumerate devices in 2.0 only mode.
 
-E.g.
-    Thread A                                 Thread B
-    gs_open()                                gadget_unbind_driver()
-    gs_start_io()                            composite_disconnect()
-    gs_start_rx()                            gserial_disconnect()
-    ...                                      ...
-    spin_unlock(&port->port_lock)
-    status = usb_ep_queue()                  spin_lock(&port->port_lock)
-    spin_lock(&port->port_lock)              port->port_usb = NULL
-    gs_free_requests(port->port_usb->in)     spin_unlock(&port->port_lock)
-    Crash
+To solve this, make sure that the PIPE clock is deselected whenever the
+USB3 PHY is not defined and guarantees that the USB2 only mode will work
+in all cases.
 
-This causes thread A to access a null pointer (port->port_usb is null)
-when calling the gs_free_requests function, causing a crash.
-
-If port_usb is NULL, the release request will be skipped as it
-will be done by gserial_disconnect.
-
-So add a null pointer check to gs_start_io before attempting
-to access the value of the pointer port->port_usb.
-
-Call trace:
- gs_start_io+0x164/0x25c
- gs_open+0x108/0x13c
- tty_open+0x314/0x638
- chrdev_open+0x1b8/0x258
- do_dentry_open+0x2c4/0x700
- vfs_open+0x2c/0x3c
- path_openat+0xa64/0xc60
- do_filp_open+0xb8/0x164
- do_sys_openat2+0x84/0xf0
- __arm64_sys_openat+0x70/0x9c
- invoke_syscall+0x58/0x114
- el0_svc_common+0x80/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x38/0x68
-
-Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Fixes: 9678f3361afc ("usb: dwc3: xilinx: Skip resets and USB3 register settings for USB2.0 mode")
 Cc: stable@vger.kernel.org
-Suggested-by: Prashanth K <quic_prashk@quicinc.com>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Acked-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/TYUPR06MB62178DC3473F9E1A537DCD02D2362@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Neal Frager <neal.frager@amd.com>
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/1733163111-1414816-1-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/dwc3-xilinx.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -575,9 +575,12 @@ static int gs_start_io(struct gs_port *p
- 		 * we didn't in gs_start_tx() */
- 		tty_wakeup(port->port.tty);
- 	} else {
--		gs_free_requests(ep, head, &port->read_allocated);
--		gs_free_requests(port->port_usb->in, &port->write_pool,
--			&port->write_allocated);
-+		/* Free reqs only if we are still connected */
-+		if (port->port_usb) {
-+			gs_free_requests(ep, head, &port->read_allocated);
-+			gs_free_requests(port->port_usb->in, &port->write_pool,
-+				&port->write_allocated);
-+		}
- 		status = -EIO;
- 	}
+--- a/drivers/usb/dwc3/dwc3-xilinx.c
++++ b/drivers/usb/dwc3/dwc3-xilinx.c
+@@ -121,8 +121,11 @@ static int dwc3_xlnx_init_zynqmp(struct
+ 	 * in use but the usb3-phy entry is missing from the device tree.
+ 	 * Therefore, skip these operations in this case.
+ 	 */
+-	if (!priv_data->usb3_phy)
++	if (!priv_data->usb3_phy) {
++		/* Deselect the PIPE Clock Select bit in FPD PIPE Clock register */
++		writel(PIPE_CLK_DESELECT, priv_data->regs + XLNX_USB_FPD_PIPE_CLK);
+ 		goto skip_usb3_phy;
++	}
  
+ 	crst = devm_reset_control_get_exclusive(dev, "usb_crst");
+ 	if (IS_ERR(crst)) {
 
 
