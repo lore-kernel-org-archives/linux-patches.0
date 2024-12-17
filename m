@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F741F7582;
-	Tue, 17 Dec 2024 17:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C01F429B;
+	Tue, 17 Dec 2024 17:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455770; cv=none; b=aX/rVcjCpz5kI5sBj3sQIm3Xb1SA7+Dbl+iKnKFCvMKGXcXpH0CYRkyJa2PKw7o80ocTTdVgBSAq7yJDwvrwBBcUmQAo8udCoRZij4mgiJioQmdnmFRzYp68QcBoIkI0dlYI0xNrpeGAt1deqbAWn9DN25phvfIuPCJILioKMK4=
+	t=1734455772; cv=none; b=NIZ6zVWjzpj/0Q3KcPmb93RGf1HzMY+2gc8tRJMC7fqr2/WkOwQOW/qwow0Jq8pLIsOaMqi66uy2zlkWDvcFWpyTjtwekVlzFwEBIvDwILzePERpB+F5253spLXDlVFiYpzkW7YSvpkFU2sP9FHaWwPTZKsbww+v6k7qhpUHLPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455770; c=relaxed/simple;
-	bh=4F1rZBUW5R9N3K+oUd7GmDpSeAk0QZcZUu4O5FxAl0A=;
+	s=arc-20240116; t=1734455772; c=relaxed/simple;
+	bh=4il20ni1N1kg0/g0aOirNNJsx5jOc3JwVvk0hG48+BI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwUIXSbLYanyZ7Chv1gJ+owh5Td6wvZJNimAxxa+Toby6Q1RNhqKfAArg5EtJZi/2mem3JRkfa/PSkkn9Sp0g/e3l+GIcGTV4zaP1tLp6pa7msoa4s7V8VAJeTi728ARRypr38iNMAtFGm1MusKOFXmK0yjJyDdYPYhK2vVtMDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aImStsVD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPKqg1AVYQgOx/y76rli1oHzqCj39acowQVKfmt+qrwMlN9kTFSYyOBsDAOxUfnHHTpC/5SGEwoU6Rrw3NxMFITQ+FPPh64caLGesRd+WU9o2QjTXRCpG/BSa0uiTvXHqKOdlJqiztxNyHYF0dX09QXJpvI9eWzfOTHuKpXE5Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=auz4JxWB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aImStsVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3417EC4CED3;
-	Tue, 17 Dec 2024 17:16:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="auz4JxWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6B7C4CED3;
+	Tue, 17 Dec 2024 17:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455769;
-	bh=4F1rZBUW5R9N3K+oUd7GmDpSeAk0QZcZUu4O5FxAl0A=;
+	s=korg; t=1734455772;
+	bh=4il20ni1N1kg0/g0aOirNNJsx5jOc3JwVvk0hG48+BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aImStsVDAdpiF66iZVF8GDtfVdU81iTX1n3BwfpgVIBOi5cCOR4zUNKQzDuHdLa0R
-	 dF5Cb1dnQ2IPLWo5ze5pwBcNwJvisUH9WDIj2I7xs3sCie4D+o2W73/ODDE1/ltArh
-	 +NrM+f2aNVIShJkRDOGbgTdHEXy/rnT0ytxfTi6k=
+	b=auz4JxWBO6ohrT8lJ8NIMSSdDW6hPV5oPGg51wyLDtjzPdFtXzirGtPDZdGrEKIJe
+	 qD08tYD92oDNxI6CSgB+Gq/i5/FyAUbYz2us06qz1SRZtI6BIGt0iiEKxQqlrGvTh7
+	 7UTC6lEIwJOEAxLOWlTOih+4TIa8VS7oYyJG5KYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Cengiz Can <cengiz.can@canonical.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/76] wifi: nl80211: fix NL80211_ATTR_MLO_LINK_ID off-by-one
-Date: Tue, 17 Dec 2024 18:07:07 +0100
-Message-ID: <20241217170527.389786197@linuxfoundation.org>
+Subject: [PATCH 6.1 28/76] wifi: mac80211: clean up ret in sta_link_apply_parameters()
+Date: Tue, 17 Dec 2024 18:07:08 +0100
+Message-ID: <20241217170527.430760898@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -52,75 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2e3dbf938656986cce73ac4083500d0bcfbffe24 ]
+[ Upstream commit 642508a42f74d7467aae7c56dff3016db64a25bd ]
 
-Since the netlink attribute range validation provides inclusive
-checking, the *max* of attribute NL80211_ATTR_MLO_LINK_ID should be
-IEEE80211_MLD_MAX_NUM_LINKS - 1 otherwise causing an off-by-one.
+There's no need to have the always-zero ret variable in
+the function scope, move it into the inner scope only.
 
-One crash stack for demonstration:
-==================================================================
-BUG: KASAN: wild-memory-access in ieee80211_tx_control_port+0x3b6/0xca0 net/mac80211/tx.c:5939
-Read of size 6 at addr 001102080000000c by task fuzzer.386/9508
-
-CPU: 1 PID: 9508 Comm: syz.1.386 Not tainted 6.1.70 #2
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x177/0x231 lib/dump_stack.c:106
- print_report+0xe0/0x750 mm/kasan/report.c:398
- kasan_report+0x139/0x170 mm/kasan/report.c:495
- kasan_check_range+0x287/0x290 mm/kasan/generic.c:189
- memcpy+0x25/0x60 mm/kasan/shadow.c:65
- ieee80211_tx_control_port+0x3b6/0xca0 net/mac80211/tx.c:5939
- rdev_tx_control_port net/wireless/rdev-ops.h:761 [inline]
- nl80211_tx_control_port+0x7b3/0xc40 net/wireless/nl80211.c:15453
- genl_family_rcv_msg_doit+0x22e/0x320 net/netlink/genetlink.c:756
- genl_family_rcv_msg net/netlink/genetlink.c:833 [inline]
- genl_rcv_msg+0x539/0x740 net/netlink/genetlink.c:850
- netlink_rcv_skb+0x1de/0x420 net/netlink/af_netlink.c:2508
- genl_rcv+0x24/0x40 net/netlink/genetlink.c:861
- netlink_unicast_kernel net/netlink/af_netlink.c:1326 [inline]
- netlink_unicast+0x74b/0x8c0 net/netlink/af_netlink.c:1352
- netlink_sendmsg+0x882/0xb90 net/netlink/af_netlink.c:1874
- sock_sendmsg_nosec net/socket.c:716 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x5cc/0x8f0 net/socket.c:2499
- ___sys_sendmsg+0x21c/0x290 net/socket.c:2553
- __sys_sendmsg net/socket.c:2582 [inline]
- __do_sys_sendmsg net/socket.c:2591 [inline]
- __se_sys_sendmsg+0x19e/0x270 net/socket.c:2589
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x45/0x90 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Update the policy to ensure correct validation.
-
-Fixes: 7b0a0e3c3a88 ("wifi: cfg80211: do some rework towards MLO link APIs")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Suggested-by: Cengiz Can <cengiz.can@canonical.com>
-Link: https://patch.msgid.link/20241130170526.96698-1-linma@zju.edu.cn
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240605135233.eb7a24632d98.I72d7fe1da89d4b89bcfd0f5fb9057e3e69355cfe@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Stable-dep-of: 819e0f1e58e0 ("wifi: mac80211: fix station NSS capability initialization order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/cfg.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 3e1c4e23484d..0ba824c3fd1b 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -806,7 +806,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 	[NL80211_ATTR_MLO_LINKS] =
- 		NLA_POLICY_NESTED_ARRAY(nl80211_policy),
- 	[NL80211_ATTR_MLO_LINK_ID] =
--		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS),
-+		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS - 1),
- 	[NL80211_ATTR_MLD_ADDR] = NLA_POLICY_EXACT_LEN(ETH_ALEN),
- 	[NL80211_ATTR_MLO_SUPPORT] = { .type = NLA_FLAG },
- 	[NL80211_ATTR_MAX_NUM_AKM_SUITES] = { .type = NLA_REJECT },
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index c0dccaceb05e..aa5daa2fad11 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1683,7 +1683,6 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 				     struct sta_info *sta, bool new_link,
+ 				     struct link_station_parameters *params)
+ {
+-	int ret = 0;
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee80211_sub_if_data *sdata = sta->sdata;
+ 	u32 link_id = params->link_id < 0 ? 0 : params->link_id;
+@@ -1725,6 +1724,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 	}
+ 
+ 	if (params->txpwr_set) {
++		int ret;
++
+ 		link_sta->pub->txpwr.type = params->txpwr.type;
+ 		if (params->txpwr.type == NL80211_TX_POWER_LIMITED)
+ 			link_sta->pub->txpwr.power = params->txpwr.power;
+@@ -1777,7 +1778,7 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
+ 
+ 	ieee80211_sta_init_nss(link_sta);
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int sta_apply_parameters(struct ieee80211_local *local,
 -- 
 2.39.5
 
