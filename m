@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE57E1F8923;
-	Tue, 17 Dec 2024 17:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11781F8901;
+	Tue, 17 Dec 2024 17:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456550; cv=none; b=TUT7Wfr78XZC2oQEmWIYB03RpSrYGOM5AXM/v1RRgAHwvlQe0LQAQpSSqnsqx4oVEjp9Z69D4/mM75jz4Dy+L5cg7jbb5Rd3xfYEjvv3glKpzVpFLTedv8ISc2z3uOcLLPsgp12EB+s5SI+YZqU5HWL6AD016E4HS4DrACAYY9M=
+	t=1734456552; cv=none; b=nJB/YgVmHXgoZvfBSvJHwgWw3bgEqL7E7e9K7LxTYY36bAZaeCZXu7HCjTHVaTIevfPMAtezNpSTxU5SXRz/SX+PFFyrCxSkLg/6WtY8Fn8s9HAUV0R0g8xDNF66sc8g1ErinSubE6SLu6+9o+oyyINtIbFLYWhby/QZ5CWruNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456550; c=relaxed/simple;
-	bh=YNNTmUMn+cKLsvx7qeLrOhOw1PqnqY7PYkO+uEYEBpU=;
+	s=arc-20240116; t=1734456552; c=relaxed/simple;
+	bh=L2rccWd8bLigoPzwt3t2GhPZdFIIjpfhsYLUpXvMEMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PpxbfOv9XrXoAu6HeskhxvjL5XpiK2Zxz43LNj1qKSrVkcf5MB5j+1DEjGZDb8Wp7//twbbQgekfhLKQsyybEFDyUOZ7wGTDgnenZ7Q4Eo+3OD0WglkJPKiN27oRGZCjp68WQNruWfocJ5ynB/a1/QajHpG6SBpUf+9iWVRgSxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWdaZfH2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c2QM7Gi6tdW4kCx6vZPTJ1cDdA5hSaEXpcvD4OvEdP4nxj/HeWIrsWVTFC2qbIg2ZSaUAySFnVcdYh0TzrjAU1gVf6nMBvK+VG3DyP+ORVcYX/KRoxQR7wGm5TD6jE73Ium992uDli7s+NmwZW3bfjl40FhyHvAdA0s4TmQ5cvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOJZiFHF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWdaZfH2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A8AC4CED3;
-	Tue, 17 Dec 2024 17:29:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOJZiFHF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154B2C4CED3;
+	Tue, 17 Dec 2024 17:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456548;
-	bh=YNNTmUMn+cKLsvx7qeLrOhOw1PqnqY7PYkO+uEYEBpU=;
+	s=korg; t=1734456551;
+	bh=L2rccWd8bLigoPzwt3t2GhPZdFIIjpfhsYLUpXvMEMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWdaZfH2vp8qAwRpf11uDo33/8aT3NJtumk+H1asuBBdr5ELntC+CooAZVtOpipIp
-	 b2cGcS2y+6OhbGfUnBwjlJgV14ih6iXQBErYIHxdSfsn6QrVFov5QH+BHE9b7rUO0u
-	 VdSu3bm0Dp9dmDFSE/t4NQfTMSSFEsxCSGaph3JQ=
+	b=fOJZiFHFA4OcqQQw/IXpoBL6i9yOYnsGrHyaTrIPit53DqLjFVbOEuYTVXwrAGRb+
+	 M1/6TL5pAbuhZ9qLd/LCPHitdDmM/1cWysI9a7np7NIYxNtFwzM5+efQOhnjxiYNjX
+	 piMwAxaHT/j+MWvLoMktWeeTlWo0lkkL6+D52Zdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haoyu Li <lihaoyu499@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/172] net/mlx5: DR, prevent potential error pointer dereference
-Date: Tue, 17 Dec 2024 18:07:30 +0100
-Message-ID: <20241217170550.192259041@linuxfoundation.org>
+Subject: [PATCH 6.12 095/172] wifi: cfg80211: sme: init n_channels before channels[] access
+Date: Tue, 17 Dec 2024 18:07:31 +0100
+Message-ID: <20241217170550.232771744@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,41 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Haoyu Li <lihaoyu499@gmail.com>
 
-[ Upstream commit 11776cff0b563c8b8a4fa76cab620bfb633a8cb8 ]
+[ Upstream commit f1d3334d604cc32db63f6e2b3283011e02294e54 ]
 
-The dr_domain_add_vport_cap() function generally returns NULL on error
-but sometimes we want it to return ERR_PTR(-EBUSY) so the caller can
-retry.  The problem here is that "ret" can be either -EBUSY or -ENOMEM
-and if it's and -ENOMEM then the error pointer is propogated back and
-eventually dereferenced in dr_ste_v0_build_src_gvmi_qpn_tag().
+With the __counted_by annocation in cfg80211_scan_request struct,
+the "n_channels" struct member must be set before accessing the
+"channels" array. Failing to do so will trigger a runtime warning
+when enabling CONFIG_UBSAN_BOUNDS and CONFIG_FORTIFY_SOURCE.
 
-Fixes: 11a45def2e19 ("net/mlx5: DR, Add support for SF vports")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/07477254-e179-43e2-b1b3-3b9db4674195@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e3eac9f32ec0 ("wifi: cfg80211: Annotate struct cfg80211_scan_request with __counted_by")
+Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
+Link: https://patch.msgid.link/20241203152049.348806-1-lihaoyu499@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/wireless/sme.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c
-index 3d74109f8230..49f22cad92bf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_domain.c
-@@ -297,7 +297,9 @@ dr_domain_add_vport_cap(struct mlx5dr_domain *dmn, u16 vport)
- 	if (ret) {
- 		mlx5dr_dbg(dmn, "Couldn't insert new vport into xarray (%d)\n", ret);
- 		kvfree(vport_caps);
--		return ERR_PTR(ret);
-+		if (ret == -EBUSY)
-+			return ERR_PTR(-EBUSY);
-+		return NULL;
- 	}
+diff --git a/net/wireless/sme.c b/net/wireless/sme.c
+index 431da30817a6..268171600087 100644
+--- a/net/wireless/sme.c
++++ b/net/wireless/sme.c
+@@ -83,6 +83,7 @@ static int cfg80211_conn_scan(struct wireless_dev *wdev)
+ 	if (!request)
+ 		return -ENOMEM;
  
- 	return vport_caps;
++	request->n_channels = n_channels;
+ 	if (wdev->conn->params.channel) {
+ 		enum nl80211_band band = wdev->conn->params.channel->band;
+ 		struct ieee80211_supported_band *sband =
 -- 
 2.39.5
 
