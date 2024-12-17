@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC261EF085;
-	Tue, 17 Dec 2024 17:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683BA140E38;
+	Tue, 17 Dec 2024 17:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456273; cv=none; b=NjML0Ffz501PrjxkX+B061Rr5s6AOrwoRZD3yBa164+Ty3t8eDxzG5Wl3hZ7fRehIDqE5r56XePmePGjhz22GcfL6WlqhYbkwGxxOo2aVdMCJebUCG1d8tNOp7tlgGypt605qzl/Sos1e8WMSzyzkTe9bOQ+EtgMkCoOF5c5/AQ=
+	t=1734456276; cv=none; b=JnGeR/HW9P92JwboYt+J1qEKCTXiJA2PRq19tkfwmvfOk7kog8MiHVGw63sOCSlwxfg+XWWkDljucDtW/dlExL+GCHgphp0y0N+iJqOerOGgTVaPECaHJen+EZGCuKJARgF0fcNhBE6Ecep3aNH/4jmEamOr7CTL8kp1IxF1DCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456273; c=relaxed/simple;
-	bh=18xLHDrYE6Y9AjJ3aD/By7eXh2+PbKjUd99aQHHZn+c=;
+	s=arc-20240116; t=1734456276; c=relaxed/simple;
+	bh=Hr+yb+nQDjZrIWsNxiDc2egF7yVS2oqUqKTqFpHQhyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QNG/7FPtEbu7pXPWHQ7yCqnYHSCfR1p30n6cTxuEoW3n426CmD3HhnAmKagpzJ0x+eW2cyavppyf7Db6BAEUtvM8tiap1H4On8MmWz0vc3HXpS3xDyloog2rozDH/eTicIV1Y9yBKSX/BVT/7qWOQpvawmBsyHQFsZOd4VzI6lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9g6k1b2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b3x5xwpxABnkRBH8BjZ1HJa4YDt5eNbe4kD/cLn/3sUWHnENLcAM+CcW/kLAl34Xo/+oJjtMBIZ7uVqkC3isB3rZ3WOlkwQxDFj78hy7rHFNuFKBMys5cuidTCi6dtuAbhqDfKPGauLiyNEL2Z7jzF8fM6FG6yJhbJkuBBFxv3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LY14fcFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9g6k1b2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8F6C4CED7;
-	Tue, 17 Dec 2024 17:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LY14fcFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E50C4CED3;
+	Tue, 17 Dec 2024 17:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456273;
-	bh=18xLHDrYE6Y9AjJ3aD/By7eXh2+PbKjUd99aQHHZn+c=;
+	s=korg; t=1734456276;
+	bh=Hr+yb+nQDjZrIWsNxiDc2egF7yVS2oqUqKTqFpHQhyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e9g6k1b2DDoyGMK9FkC02oAVrV6g1OMEfzuLsXCP7VxjB7zstSqod7Qy1FpnhJY2F
-	 UUl6SLTGJvELkDHr/Skv61RGUKGQkFvYf87JMKHB3Mm+/ZCWRklbeZewl7c+n/IjGu
-	 9xo33L8fgmaw42ufNxUOedCinBfa54mIjJSMaR+Y=
+	b=LY14fcFLH9cykkhF685EGb3N62kFfu5fBrjg8X6Gu0uc9qNZCYzClWyHrVf90jhSP
+	 pCMoVg2j7B/m6Her4BVDEGqyaV2Ra3MswhagQ+bPsBNMBlcxZmDFPVrqAGpAR+8TJt
+	 0ejWa8em6QmXXMoKxvtaUirgn3wxMZsDxFz4FjHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Josh Poimboeuf <jpoimboe@redhat.com>
-Subject: [PATCH 6.6 104/109] x86/static-call: provide a way to do very early static-call updates
-Date: Tue, 17 Dec 2024 18:08:28 +0100
-Message-ID: <20241217170537.748652732@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Gavin Shan <gshan@redhat.com>,
+	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.6 095/109] KVM: arm64: Disable MPAM visibility by default and ignore VMM writes
+Date: Tue, 17 Dec 2024 18:08:19 +0100
+Message-ID: <20241217170537.356830188@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -52,178 +54,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: James Morse <james.morse@arm.com>
 
-commit 0ef8047b737d7480a5d4c46d956e97c190f13050 upstream.
+commit 6685f5d572c22e1003e7c0d089afe1c64340ab1f upstream.
 
-Add static_call_update_early() for updating static-call targets in
-very early boot.
+commit 011e5f5bf529f ("arm64/cpufeature: Add remaining feature bits in
+ID_AA64PFR0 register") exposed the MPAM field of AA64PFR0_EL1 to guests,
+but didn't add trap handling. A previous patch supplied the missing trap
+handling.
 
-This will be needed for support of Xen guest type specific hypercall
-functions.
+Existing VMs that have the MPAM field of ID_AA64PFR0_EL1 set need to
+be migratable, but there is little point enabling the MPAM CPU
+interface on new VMs until there is something a guest can do with it.
 
-This is part of XSA-466 / CVE-2024-53241.
+Clear the MPAM field from the guest's ID_AA64PFR0_EL1 and on hardware
+that supports MPAM, politely ignore the VMMs attempts to set this bit.
 
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Co-developed-by: Peter Zijlstra <peterz@infradead.org>
-Co-developed-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Guests exposed to this bug have the sanitised value of the MPAM field,
+so only the correct value needs to be ignored. This means the field
+can continue to be used to block migration to incompatible hardware
+(between MPAM=1 and MPAM=5), and the VMM can't rely on the field
+being ignored.
+
+Signed-off-by: James Morse <james.morse@arm.com>
+Co-developed-by: Joey Gouly <joey.gouly@arm.com>
+Signed-off-by: Joey Gouly <joey.gouly@arm.com>
+Reviewed-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241030160317.2528209-7-joey.gouly@arm.com
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Acked-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/static_call.h |   15 +++++++++++++++
- arch/x86/include/asm/sync_core.h   |    6 +++---
- arch/x86/kernel/static_call.c      |    9 +++++++++
- include/linux/compiler.h           |   37 ++++++++++++++++++++++++++-----------
- include/linux/static_call.h        |    1 +
- kernel/static_call_inline.c        |    2 +-
- 6 files changed, 55 insertions(+), 15 deletions(-)
+ arch/arm64/kvm/sys_regs.c |   52 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/static_call.h
-+++ b/arch/x86/include/asm/static_call.h
-@@ -65,4 +65,19 @@
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -1330,6 +1330,7 @@ static u64 __kvm_read_sanitised_id_reg(c
+ 			val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_MTE);
  
- extern bool __static_call_fixup(void *tramp, u8 op, void *dest);
+ 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_SME);
++		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_MPAM_frac);
+ 		break;
+ 	case SYS_ID_AA64ISAR1_EL1:
+ 		if (!vcpu_has_ptrauth(vcpu))
+@@ -1472,6 +1473,13 @@ static u64 read_sanitised_id_aa64pfr0_el
  
-+extern void __static_call_update_early(void *tramp, void *func);
+ 	val &= ~ID_AA64PFR0_EL1_AMU_MASK;
+ 
++	/*
++	 * MPAM is disabled by default as KVM also needs a set of PARTID to
++	 * program the MPAMVPMx_EL2 PARTID remapping registers with. But some
++	 * older kernels let the guest see the ID bit.
++	 */
++	val &= ~ID_AA64PFR0_EL1_MPAM_MASK;
 +
-+#define static_call_update_early(name, _func)				\
-+({									\
-+	typeof(&STATIC_CALL_TRAMP(name)) __F = (_func);			\
-+	if (static_call_initialized) {					\
-+		__static_call_update(&STATIC_CALL_KEY(name),		\
-+				     STATIC_CALL_TRAMP_ADDR(name), __F);\
-+	} else {							\
-+		WRITE_ONCE(STATIC_CALL_KEY(name).func, _func);		\
-+		__static_call_update_early(STATIC_CALL_TRAMP_ADDR(name),\
-+					   __F);			\
-+	}								\
-+})
-+
- #endif /* _ASM_STATIC_CALL_H */
---- a/arch/x86/include/asm/sync_core.h
-+++ b/arch/x86/include/asm/sync_core.h
-@@ -8,7 +8,7 @@
- #include <asm/special_insns.h>
- 
- #ifdef CONFIG_X86_32
--static inline void iret_to_self(void)
-+static __always_inline void iret_to_self(void)
- {
- 	asm volatile (
- 		"pushfl\n\t"
-@@ -19,7 +19,7 @@ static inline void iret_to_self(void)
- 		: ASM_CALL_CONSTRAINT : : "memory");
+ 	return val;
  }
- #else
--static inline void iret_to_self(void)
-+static __always_inline void iret_to_self(void)
- {
- 	unsigned int tmp;
  
-@@ -55,7 +55,7 @@ static inline void iret_to_self(void)
-  * Like all of Linux's memory ordering operations, this is a
-  * compiler barrier as well.
-  */
--static inline void sync_core(void)
-+static __always_inline void sync_core(void)
- {
- 	/*
- 	 * The SERIALIZE instruction is the most straightforward way to
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -172,6 +172,15 @@ void arch_static_call_transform(void *si
+@@ -1560,6 +1568,42 @@ static int set_id_dfr0_el1(struct kvm_vc
+ 	return set_id_reg(vcpu, rd, val);
  }
- EXPORT_SYMBOL_GPL(arch_static_call_transform);
  
-+noinstr void __static_call_update_early(void *tramp, void *func)
++static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
++			       const struct sys_reg_desc *rd, u64 user_val)
 +{
-+	BUG_ON(system_state != SYSTEM_BOOTING);
-+	BUG_ON(!early_boot_irqs_disabled);
-+	BUG_ON(static_call_initialized);
-+	__text_gen_insn(tramp, JMP32_INSN_OPCODE, tramp, func, JMP32_INSN_SIZE);
-+	sync_core();
++	u64 hw_val = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
++	u64 mpam_mask = ID_AA64PFR0_EL1_MPAM_MASK;
++
++	/*
++	 * Commit 011e5f5bf529f ("arm64/cpufeature: Add remaining feature bits
++	 * in ID_AA64PFR0 register") exposed the MPAM field of AA64PFR0_EL1 to
++	 * guests, but didn't add trap handling. KVM doesn't support MPAM and
++	 * always returns an UNDEF for these registers. The guest must see 0
++	 * for this field.
++	 *
++	 * But KVM must also accept values from user-space that were provided
++	 * by KVM. On CPUs that support MPAM, permit user-space to write
++	 * the sanitizied value to ID_AA64PFR0_EL1.MPAM, but ignore this field.
++	 */
++	if ((hw_val & mpam_mask) == (user_val & mpam_mask))
++		user_val &= ~ID_AA64PFR0_EL1_MPAM_MASK;
++
++	return set_id_reg(vcpu, rd, user_val);
 +}
 +
- #ifdef CONFIG_RETHUNK
- /*
-  * This is called by apply_returns() to fix up static call trampolines,
---- a/include/linux/compiler.h
-+++ b/include/linux/compiler.h
-@@ -204,28 +204,43 @@ void ftrace_likely_update(struct ftrace_
- 
- #endif /* __KERNEL__ */
- 
-+/**
-+ * offset_to_ptr - convert a relative memory offset to an absolute pointer
-+ * @off:	the address of the 32-bit offset value
-+ */
-+static inline void *offset_to_ptr(const int *off)
++static int set_id_aa64pfr1_el1(struct kvm_vcpu *vcpu,
++			       const struct sys_reg_desc *rd, u64 user_val)
 +{
-+	return (void *)((unsigned long)off + *off);
++	u64 hw_val = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
++	u64 mpam_mask = ID_AA64PFR1_EL1_MPAM_frac_MASK;
++
++	/* See set_id_aa64pfr0_el1 for comment about MPAM */
++	if ((hw_val & mpam_mask) == (user_val & mpam_mask))
++		user_val &= ~ID_AA64PFR1_EL1_MPAM_frac_MASK;
++
++	return set_id_reg(vcpu, rd, user_val);
 +}
 +
-+#endif /* __ASSEMBLY__ */
-+
-+#ifdef CONFIG_64BIT
-+#define ARCH_SEL(a,b) a
-+#else
-+#define ARCH_SEL(a,b) b
-+#endif
-+
  /*
-  * Force the compiler to emit 'sym' as a symbol, so that we can reference
-  * it from inline assembler. Necessary in case 'sym' could be inlined
-  * otherwise, or eliminated entirely due to lack of references that are
-  * visible to the compiler.
-  */
--#define ___ADDRESSABLE(sym, __attrs) \
--	static void * __used __attrs \
-+#define ___ADDRESSABLE(sym, __attrs)						\
-+	static void * __used __attrs						\
- 		__UNIQUE_ID(__PASTE(__addressable_,sym)) = (void *)&sym;
-+
- #define __ADDRESSABLE(sym) \
- 	___ADDRESSABLE(sym, __section(".discard.addressable"))
- 
--/**
-- * offset_to_ptr - convert a relative memory offset to an absolute pointer
-- * @off:	the address of the 32-bit offset value
-- */
--static inline void *offset_to_ptr(const int *off)
--{
--	return (void *)((unsigned long)off + *off);
--}
-+#define __ADDRESSABLE_ASM(sym)						\
-+	.pushsection .discard.addressable,"aw";				\
-+	.align ARCH_SEL(8,4);						\
-+	ARCH_SEL(.quad, .long) __stringify(sym);			\
-+	.popsection;
- 
--#endif /* __ASSEMBLY__ */
-+#define __ADDRESSABLE_ASM_STR(sym) __stringify(__ADDRESSABLE_ASM(sym))
- 
- /* &a[0] degrades to a pointer: a different type from an array */
- #define __must_be_array(a)	BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
---- a/include/linux/static_call.h
-+++ b/include/linux/static_call.h
-@@ -138,6 +138,7 @@
- #ifdef CONFIG_HAVE_STATIC_CALL
- #include <asm/static_call.h>
- 
-+extern int static_call_initialized;
- /*
-  * Either @site or @tramp can be NULL.
-  */
---- a/kernel/static_call_inline.c
-+++ b/kernel/static_call_inline.c
-@@ -15,7 +15,7 @@ extern struct static_call_site __start_s
- extern struct static_call_tramp_key __start_static_call_tramp_key[],
- 				    __stop_static_call_tramp_key[];
- 
--static int static_call_initialized;
-+int static_call_initialized;
- 
- /*
-  * Must be called before early_initcall() to be effective.
+  * cpufeature ID register user accessors
+  *
+@@ -2018,10 +2062,14 @@ static const struct sys_reg_desc sys_reg
+ 	{ SYS_DESC(SYS_ID_AA64PFR0_EL1),
+ 	  .access = access_id_reg,
+ 	  .get_user = get_id_reg,
+-	  .set_user = set_id_reg,
++	  .set_user = set_id_aa64pfr0_el1,
+ 	  .reset = read_sanitised_id_aa64pfr0_el1,
+ 	  .val = ID_AA64PFR0_EL1_CSV2_MASK | ID_AA64PFR0_EL1_CSV3_MASK, },
+-	ID_SANITISED(ID_AA64PFR1_EL1),
++	{ SYS_DESC(SYS_ID_AA64PFR1_EL1),
++	  .access = access_id_reg,
++	  .get_user = get_id_reg,
++	  .set_user = set_id_aa64pfr1_el1,
++	  .reset = kvm_read_sanitised_id_reg, },
+ 	ID_UNALLOCATED(4,2),
+ 	ID_UNALLOCATED(4,3),
+ 	ID_SANITISED(ID_AA64ZFR0_EL1),
 
 
