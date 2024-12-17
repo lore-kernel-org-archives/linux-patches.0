@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994A71F868E;
-	Tue, 17 Dec 2024 17:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C201F8693;
+	Tue, 17 Dec 2024 17:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456501; cv=none; b=tfvo1sfbbUGxTEGnAL4SYuBOqAcStMi7CqcQ8qO49ly6ZfvR4DMtndxkEKu6jMNOiCU+v7wixUkf9239QKEPTVe3zg/iygL5q5PtKlOfqjiTp7YjQogDad67bmICRQ8LSzAn2zTuDmdxNt0IyG9+5z6HvT/lWzlFri9VabkYU+s=
+	t=1734456504; cv=none; b=AWAed3Yp3KRn3e7SgPw/C2AJDh0GiTmvWs9IDbbY+pbXOpD6K8Diecg8xPVdqL0XNp7S83FjJyEDQpfkRM1pCSqw64Y34zAJ75N5NMXiaBIItsSDI07NyiB5/HyIQhIx+W8Yp29fBccLQXraXJtztvJw/6uOC8Z0pZEqbPtT+2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456501; c=relaxed/simple;
-	bh=FSYK5fT9/9qtb1izu4KDeCalibAm9d65b/A/8P4x3JI=;
+	s=arc-20240116; t=1734456504; c=relaxed/simple;
+	bh=N3NRll7jaEG9cwJ5UmBwUB0dsd32RLrA9tF0I9+RHZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ETkXaQbqqhIGfCYet63uW/2uJ78oXOnp4wVsiELzeeqYS2r/dQM4N6Z7TekvAnDzrPbQ4dd+7/T5/87T4+Bl76ga/Sp4HUpEGm4IDTmyBGUDYNKgeLM4LGopVBXMY2fk3xbaXQsmq6zDZi7SAWRycc57OFuBcRSLvWTSLDt8uUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1V3h+DC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ledw4+Sx27Nq+5SnGPbDJZVptz4//45g2Wbx95F2mbhS4UdvRJOKZNqENW+Zapck1MfzI927IHl/F55Y5ejV4Ie2t9K2gS369TCmYjaH9jykFm4gy2G2Ee3d8thfMztu7hT85T+FTXi1EE7hIacEDX9jnUPxxF6qjEuAV8OjKwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZq6bVtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1V3h+DC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AEE4C4CED7;
-	Tue, 17 Dec 2024 17:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZq6bVtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02614C4CED3;
+	Tue, 17 Dec 2024 17:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456501;
-	bh=FSYK5fT9/9qtb1izu4KDeCalibAm9d65b/A/8P4x3JI=;
+	s=korg; t=1734456504;
+	bh=N3NRll7jaEG9cwJ5UmBwUB0dsd32RLrA9tF0I9+RHZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1V3h+DCQLIPt3bA3PwJHEYIzqfM1p1uaV2xuhuEXlLhcerdIoBJbZAmDjjVwerVQ
-	 dhZ9ctswVPJ+X1S+Lx72ipIEI/wTC2uMG50ojnNibeQLNw3IS5FWVthbJCYHCYH2Qh
-	 +x80LVkvghCj4e0xIuPY1JnaK6UqZlthQzkczC/8=
+	b=BZq6bVtDvSTM0ARENCWM54UG5l/BwgBTtlLlYTO63lhlruZgviw3ySihAAtgmqL5j
+	 Q43lEktFwIlWoMcO9JE1E7lfbccSGmUjYUw4nMjaquLP3bgaBE++6h96KOTdCFaB3E
+	 s7tygqXPAyO/EoVwroZyj284qISDUTeACV68pw98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.12 049/172] usb: typec: anx7411: fix OF node reference leaks in anx7411_typec_switch_probe()
-Date: Tue, 17 Dec 2024 18:06:45 +0100
-Message-ID: <20241217170548.300534131@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>,
+	Lianqin Hu <hulianqin@vivo.com>
+Subject: [PATCH 6.12 050/172] usb: gadget: u_serial: Fix the issue that gs_start_io crashed due to accessing null pointer
+Date: Tue, 17 Dec 2024 18:06:46 +0100
+Message-ID: <20241217170548.341159223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,90 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit ef42b906df5c57d0719b69419df9dfd25f25c161 upstream.
+commit 4cfbca86f6a8b801f3254e0e3c8f2b1d2d64be2b upstream.
 
-The refcounts of the OF nodes obtained by of_get_child_by_name() calls
-in anx7411_typec_switch_probe() are not decremented. Replace them with
-device_get_named_child_node() calls and store the return values to the
-newly created fwnode_handle fields in anx7411_data, and call
-fwnode_handle_put() on them in the error path and in the unregister
-functions.
+Considering that in some extreme cases,
+when u_serial driver is accessed by multiple threads,
+Thread A is executing the open operation and calling the gs_open,
+Thread B is executing the disconnect operation and calling the
+gserial_disconnect function,The port->port_usb pointer will be set to NULL.
 
-Fixes: e45d7337dc0e ("usb: typec: anx7411: Use of_get_child_by_name() instead of of_find_node_by_name()")
+E.g.
+    Thread A                                 Thread B
+    gs_open()                                gadget_unbind_driver()
+    gs_start_io()                            composite_disconnect()
+    gs_start_rx()                            gserial_disconnect()
+    ...                                      ...
+    spin_unlock(&port->port_lock)
+    status = usb_ep_queue()                  spin_lock(&port->port_lock)
+    spin_lock(&port->port_lock)              port->port_usb = NULL
+    gs_free_requests(port->port_usb->in)     spin_unlock(&port->port_lock)
+    Crash
+
+This causes thread A to access a null pointer (port->port_usb is null)
+when calling the gs_free_requests function, causing a crash.
+
+If port_usb is NULL, the release request will be skipped as it
+will be done by gserial_disconnect.
+
+So add a null pointer check to gs_start_io before attempting
+to access the value of the pointer port->port_usb.
+
+Call trace:
+ gs_start_io+0x164/0x25c
+ gs_open+0x108/0x13c
+ tty_open+0x314/0x638
+ chrdev_open+0x1b8/0x258
+ do_dentry_open+0x2c4/0x700
+ vfs_open+0x2c/0x3c
+ path_openat+0xa64/0xc60
+ do_filp_open+0xb8/0x164
+ do_sys_openat2+0x84/0xf0
+ __arm64_sys_openat+0x70/0x9c
+ invoke_syscall+0x58/0x114
+ el0_svc_common+0x80/0xe0
+ do_el0_svc+0x1c/0x28
+ el0_svc+0x38/0x68
+
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20241126014909.3687917-1-joe@pf.is.s.u-tokyo.ac.jp
+Suggested-by: Prashanth K <quic_prashk@quicinc.com>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Acked-by: Prashanth K <quic_prashk@quicinc.com>
+Link: https://lore.kernel.org/r/TYUPR06MB62178DC3473F9E1A537DCD02D2362@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/anx7411.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/function/u_serial.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/anx7411.c
-+++ b/drivers/usb/typec/anx7411.c
-@@ -290,6 +290,8 @@ struct anx7411_data {
- 	struct power_supply *psy;
- 	struct power_supply_desc psy_desc;
- 	struct device *dev;
-+	struct fwnode_handle *switch_node;
-+	struct fwnode_handle *mux_node;
- };
- 
- static u8 snk_identity[] = {
-@@ -1099,6 +1101,7 @@ static void anx7411_unregister_mux(struc
- 	if (ctx->typec.typec_mux) {
- 		typec_mux_unregister(ctx->typec.typec_mux);
- 		ctx->typec.typec_mux = NULL;
-+		fwnode_handle_put(ctx->mux_node);
- 	}
- }
- 
-@@ -1107,6 +1110,7 @@ static void anx7411_unregister_switch(st
- 	if (ctx->typec.typec_switch) {
- 		typec_switch_unregister(ctx->typec.typec_switch);
- 		ctx->typec.typec_switch = NULL;
-+		fwnode_handle_put(ctx->switch_node);
- 	}
- }
- 
-@@ -1114,28 +1118,29 @@ static int anx7411_typec_switch_probe(st
- 				      struct device *dev)
- {
- 	int ret;
--	struct device_node *node;
- 
--	node = of_get_child_by_name(dev->of_node, "orientation_switch");
--	if (!node)
-+	ctx->switch_node = device_get_named_child_node(dev, "orientation_switch");
-+	if (!ctx->switch_node)
- 		return 0;
- 
--	ret = anx7411_register_switch(ctx, dev, &node->fwnode);
-+	ret = anx7411_register_switch(ctx, dev, ctx->switch_node);
- 	if (ret) {
- 		dev_err(dev, "failed register switch");
-+		fwnode_handle_put(ctx->switch_node);
- 		return ret;
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -579,9 +579,12 @@ static int gs_start_io(struct gs_port *p
+ 		 * we didn't in gs_start_tx() */
+ 		tty_wakeup(port->port.tty);
+ 	} else {
+-		gs_free_requests(ep, head, &port->read_allocated);
+-		gs_free_requests(port->port_usb->in, &port->write_pool,
+-			&port->write_allocated);
++		/* Free reqs only if we are still connected */
++		if (port->port_usb) {
++			gs_free_requests(ep, head, &port->read_allocated);
++			gs_free_requests(port->port_usb->in, &port->write_pool,
++				&port->write_allocated);
++		}
+ 		status = -EIO;
  	}
  
--	node = of_get_child_by_name(dev->of_node, "mode_switch");
--	if (!node) {
-+	ctx->mux_node = device_get_named_child_node(dev, "mode_switch");
-+	if (!ctx->mux_node) {
- 		dev_err(dev, "no typec mux exist");
- 		ret = -ENODEV;
- 		goto unregister_switch;
- 	}
- 
--	ret = anx7411_register_mux(ctx, dev, &node->fwnode);
-+	ret = anx7411_register_mux(ctx, dev, ctx->mux_node);
- 	if (ret) {
- 		dev_err(dev, "failed register mode switch");
-+		fwnode_handle_put(ctx->mux_node);
- 		ret = -ENODEV;
- 		goto unregister_switch;
- 	}
 
 
