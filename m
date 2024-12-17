@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EDF140E38;
-	Tue, 17 Dec 2024 17:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6A71F866E;
+	Tue, 17 Dec 2024 17:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456355; cv=none; b=idhNUtAlkPT6HmCr1U3rEv0o9tnDUvs5jjvVo7z+BeGEF+AGz96LBvoYr3pi5G7w4EdvU4qM++9icVSKJ8TbbQ7b8fs+hp61KJUWufapepcEA09qZ3vVMDKvkZK+FtFhYOfGj5AgaQSgZJIfvpltr92JT8cDwzWinwVznUeKjtE=
+	t=1734456357; cv=none; b=W1LQCBkrP37cHFdKc1uKSc6NWNVOYVvwYqidLuOzTgDo4KPsMmcpomEv3ny5E8v7xVrL94KxOrZNySYlQlQ/PRQsz8JxaOkj5Ud0cD64NWNpc9AdXp2d4qtXEMS98KThTDTdlgJE5/f5yyjhWiRpDRH60C25HV1IlGxAt8XJ78E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456355; c=relaxed/simple;
-	bh=Fxav36wyEyWd7Yyaa7BCsAB9rgGUVMsPWsyialfVVHI=;
+	s=arc-20240116; t=1734456357; c=relaxed/simple;
+	bh=2Sk97q94lSbUDhrS5t8QbR5anYjciXmjrYOcYOE/pOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YmFerxwBJ3WBGpVVVJ173nOf46w4UfDHnmWA1p6BDSz+dE542WnpFumkhpTkiTfT4wDa8yHTb7QKv9GXaus/vRAXoUnFeAcG7y3uYVfP9QIneQyjtGvqgvxQIIpKMrswgljlKy92QKm8cbLJ7szX5Wnsl6lo9STSqPJQAeuJbGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjvoewL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tvkye6lELngR9n/2FpJnxVChZwxXMZfnnjdXfpYZnrQqlscyWVINTxgqU+i4nKD1qXzAxvi0mhmJ5fxYAIUFwa1UiOqwHhqkjqA0rJBRLLtdi+RUtooetmB2wNL+8QX4SdGOlIuVloqbLO+eRQw4f71SeXAlzuXD/jbtJjfqHfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkZFkGDa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjvoewL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C199C4CED3;
-	Tue, 17 Dec 2024 17:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkZFkGDa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18ADBC4CED3;
+	Tue, 17 Dec 2024 17:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456354;
-	bh=Fxav36wyEyWd7Yyaa7BCsAB9rgGUVMsPWsyialfVVHI=;
+	s=korg; t=1734456357;
+	bh=2Sk97q94lSbUDhrS5t8QbR5anYjciXmjrYOcYOE/pOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjvoewL5fIZ3vicftCZYNUp73JygBs+SgdeATIpr8AsyuobwkDDYu9TpCPH+xIPfz
-	 KAOVG9KHMAFWdYwZ6X5SNlgQATHyE1kbVXABple8GQeJd25SN/h0U5f74Cxab8ITzF
-	 +RXfQMmdr2ucHRqNAsMnNMze1rRF3wYNHdjglh6A=
+	b=dkZFkGDaPjPswB8hg6vM0QxV67MoArEbzcYm7ihMx/GedLXMQQGoX2YniWBQg2V5W
+	 5VXs7FQIC+aJTpBxXuze9+ljX9Y2PMF0qcM29uQ/SiqKmwSVadLN7fFLDGrHnR0SbC
+	 JtYwBFi2XA4AqyPj+Db7GX8LEbR7kECoTWrtNbEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Andy Shevchenko <andy@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 032/172] gpio: graniterapids: Fix vGPIO driver crash
-Date: Tue, 17 Dec 2024 18:06:28 +0100
-Message-ID: <20241217170547.594930447@linuxfoundation.org>
+Subject: [PATCH 6.12 033/172] gpio: graniterapids: Fix incorrect BAR assignment
+Date: Tue, 17 Dec 2024 18:06:29 +0100
+Message-ID: <20241217170547.634909293@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -54,54 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-commit eb9640fd1ce666610b77f5997596e9570a36378f upstream.
+commit 7382d2f0e802077c36495e325da8d253a15fb441 upstream.
 
-Move setting irq_chip.name from probe() function to the initialization
-of "irq_chip" struct in order to fix vGPIO driver crash during bootup.
-
-Crash was caused by unauthorized modification of irq_chip.name field
-where irq_chip struct was initialized as const.
-
-This behavior is a consequence of suboptimal implementation of
-gpio_irq_chip_set_chip(), which should be changed to avoid
-casting away const qualifier.
-
-Crash log:
-BUG: unable to handle page fault for address: ffffffffc0ba81c0
-/#PF: supervisor write access in kernel mode
-/#PF: error_code(0x0003) - permissions violation
-CPU: 33 UID: 0 PID: 1075 Comm: systemd-udevd Not tainted 6.12.0-rc6-00077-g2e1b3cc9d7f7 #1
-Hardware name: Intel Corporation Kaseyville RP/Kaseyville RP, BIOS KVLDCRB1.PGS.0026.D73.2410081258 10/08/2024
-RIP: 0010:gnr_gpio_probe+0x171/0x220 [gpio_graniterapids]
+Base Address of vGPIO MMIO register is provided directly by the BIOS
+instead of using offsets. Update address assignment to reflect this
+change in driver.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Acked-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20241204070415.1034449-2-mika.westerberg@linux.intel.com
+Link: https://lore.kernel.org/r/20241204070415.1034449-3-mika.westerberg@linux.intel.com
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-graniterapids.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-graniterapids.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
 --- a/drivers/gpio/gpio-graniterapids.c
 +++ b/drivers/gpio/gpio-graniterapids.c
-@@ -234,6 +234,7 @@ static int gnr_gpio_irq_set_type(struct
+@@ -32,7 +32,7 @@
+ #define GNR_PINS_PER_REG 32
+ #define GNR_NUM_REGS DIV_ROUND_UP(GNR_NUM_PINS, GNR_PINS_PER_REG)
+ 
+-#define GNR_CFG_BAR		0x00
++#define GNR_CFG_PADBAR		0x00
+ #define GNR_CFG_LOCK_OFFSET	0x04
+ #define GNR_GPI_STATUS_OFFSET	0x20
+ #define GNR_GPI_ENABLE_OFFSET	0x24
+@@ -50,6 +50,7 @@
+  * struct gnr_gpio - Intel Granite Rapids-D vGPIO driver state
+  * @gc: GPIO controller interface
+  * @reg_base: base address of the GPIO registers
++ * @pad_base: base address of the vGPIO pad configuration registers
+  * @ro_bitmap: bitmap of read-only pins
+  * @lock: guard the registers
+  * @pad_backup: backup of the register state for suspend
+@@ -57,6 +58,7 @@
+ struct gnr_gpio {
+ 	struct gpio_chip gc;
+ 	void __iomem *reg_base;
++	void __iomem *pad_base;
+ 	DECLARE_BITMAP(ro_bitmap, GNR_NUM_PINS);
+ 	raw_spinlock_t lock;
+ 	u32 pad_backup[];
+@@ -65,7 +67,7 @@ struct gnr_gpio {
+ static void __iomem *gnr_gpio_get_padcfg_addr(const struct gnr_gpio *priv,
+ 					      unsigned int gpio)
+ {
+-	return priv->reg_base + gpio * sizeof(u32);
++	return priv->pad_base + gpio * sizeof(u32);
  }
  
- static const struct irq_chip gnr_gpio_irq_chip = {
-+	.name		= "gpio-graniterapids",
- 	.irq_ack	= gnr_gpio_irq_ack,
- 	.irq_mask	= gnr_gpio_irq_mask,
- 	.irq_unmask	= gnr_gpio_irq_unmask,
-@@ -324,7 +325,6 @@ static int gnr_gpio_probe(struct platfor
+ static int gnr_gpio_configure_line(struct gpio_chip *gc, unsigned int gpio,
+@@ -292,6 +294,7 @@ static int gnr_gpio_probe(struct platfor
+ 	struct gnr_gpio *priv;
+ 	void __iomem *regs;
+ 	int irq, ret;
++	u32 offset;
  
- 	girq = &priv->gc.irq;
- 	gpio_irq_chip_set_chip(girq, &gnr_gpio_irq_chip);
--	girq->chip->name	= dev_name(dev);
- 	girq->parent_handler	= NULL;
- 	girq->num_parents	= 0;
- 	girq->parents		= NULL;
+ 	priv = devm_kzalloc(dev, struct_size(priv, pad_backup, num_backup_pins), GFP_KERNEL);
+ 	if (!priv)
+@@ -303,6 +306,10 @@ static int gnr_gpio_probe(struct platfor
+ 	if (IS_ERR(regs))
+ 		return PTR_ERR(regs);
+ 
++	priv->reg_base = regs;
++	offset = readl(priv->reg_base + GNR_CFG_PADBAR);
++	priv->pad_base = priv->reg_base + offset;
++
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		return irq;
+@@ -312,8 +319,6 @@ static int gnr_gpio_probe(struct platfor
+ 	if (ret)
+ 		return dev_err_probe(dev, ret, "failed to request interrupt\n");
+ 
+-	priv->reg_base = regs + readl(regs + GNR_CFG_BAR);
+-
+ 	gnr_gpio_init_pin_ro_bits(dev, priv->reg_base + GNR_CFG_LOCK_OFFSET,
+ 				  priv->ro_bitmap);
+ 
 
 
