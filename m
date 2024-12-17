@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E131E0493;
-	Tue, 17 Dec 2024 17:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128021F7577;
+	Tue, 17 Dec 2024 17:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456128; cv=none; b=DAyFxVbd4/ihEbuzqQgBDGpTmfsT8dY4Mjgula5lbBoLgDbjAXsvQtbxI/yoW+QuNv1pxl4otxnrDpzL8kemwJvdmj7xl3EmT4PKiSK8EtyfUnHXytt42KeDxbqZKImVAW4/qfIZannyaCBzKrltCMWhJk5SmSCPPRhkMbX2EQc=
+	t=1734456131; cv=none; b=AjRR/jlZ+osoHH2fNaWjqfWAxUo8aFlO2PshAUBuwG96NWnBgTeyY+T8nWevBWLlNaNKMq14s94YkJxDDOED4Fu9uGY8sC+imtJdKvizEupQCoxrtyoU1W4fO0/jPlIQyDBkp8rgwMcE10GGra6Na8JUT5VEYbO913wVlakN0yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456128; c=relaxed/simple;
-	bh=RfG76ZPFFzy9X0ZJ0mNYBn6wQ/ngg8LhUJoUNcefcO0=;
+	s=arc-20240116; t=1734456131; c=relaxed/simple;
+	bh=fgrEIEaD+pc1gI4uMU4Plb1IlqsHZ/bqzm5vR9oNDjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J2UHlaeJONCDlhGB7NsDTy7OKD5SwsDDJb5RF9KXGZ+CERJ3y+UFhJLEbxYtV8tU5F6WRoJ/qiwQbIF1RxmZXXe+nspF/xXYHU5P2Rvfn5ElniHJfr+hcjD7WlRNW6g05XfL6VILelHZFKuXy52QEmTb+dj2vs+rwmBF3nSZcuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5gkz+r4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EqoN6BEoesE8zO/kRqPVq87WKwk2ur3zQOXyLiJEpd7MDGQ4a+fItg1ARxPDZNO78Rw+AlzeS2TRxbrRJWBRADKIkTRAJcMHbfs3ZYutxPgRJ+1c04qezCOijOqC/HYm4ryqB5lOILJ9ZUpTbnx3yt53DNCoZ0pBlzWUlxWclg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Db4DpOyA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5gkz+r4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE6C4CED3;
-	Tue, 17 Dec 2024 17:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Db4DpOyA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE97C4CED3;
+	Tue, 17 Dec 2024 17:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456128;
-	bh=RfG76ZPFFzy9X0ZJ0mNYBn6wQ/ngg8LhUJoUNcefcO0=;
+	s=korg; t=1734456130;
+	bh=fgrEIEaD+pc1gI4uMU4Plb1IlqsHZ/bqzm5vR9oNDjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5gkz+r4S+Nb4pUQMZeBAq0EbeFhLOLV4dKp6GtRTRDKQWo6V8eQHL6NTkZvTOlEo
-	 jZ9ii6wAVDsFsnC1c5CaKPBjuTQLNKQ7ZTce7Hx+GiquUD2Qcr0DkBsHOYH4wnjLHA
-	 gPgnElWxBjGjRSJV/noUYBe9BN/AOpvrImGcNnPA=
+	b=Db4DpOyAJE06WK5BdDh9JzMun9DFgHbTvPFabksd1vz1hu0aJbSM7aRUjfG3dbFSr
+	 LD6qcBqr6Lvbnw0pjKwrtbJhNcxeOgVdKGCjH5x+cJfSr681SraNuPih2e8N4SN7Cv
+	 mpKEjfxCYMG5Bt7CBKBEWsijWKncjubQXryblDaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com,
-	Suraj Sonawane <surajsonawane0215@gmail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/109] acpi: nfit: vmalloc-out-of-bounds Read in acpi_nfit_ctl
-Date: Tue, 17 Dec 2024 18:07:23 +0100
-Message-ID: <20241217170535.005426341@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jann Horn <jannh@google.com>
+Subject: [PATCH 6.6 030/109] bpf: Fix theoretical prog_array UAF in __uprobe_perf_func()
+Date: Tue, 17 Dec 2024 18:07:14 +0100
+Message-ID: <20241217170534.639987921@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -54,63 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Sonawane <surajsonawane0215@gmail.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 265e98f72bac6c41a4492d3e30a8e5fd22fe0779 ]
+commit 7d0d673627e20cfa3b21a829a896ce03b58a4f1c upstream.
 
-Fix an issue detected by syzbot with KASAN:
+Currently, the pointer stored in call->prog_array is loaded in
+__uprobe_perf_func(), with no RCU annotation and no immediately visible
+RCU protection, so it looks as if the loaded pointer can immediately be
+dangling.
+Later, bpf_prog_run_array_uprobe() starts a RCU-trace read-side critical
+section, but this is too late. It then uses rcu_dereference_check(), but
+this use of rcu_dereference_check() does not actually dereference anything.
 
-BUG: KASAN: vmalloc-out-of-bounds in cmd_to_func drivers/acpi/nfit/
-core.c:416 [inline]
-BUG: KASAN: vmalloc-out-of-bounds in acpi_nfit_ctl+0x20e8/0x24a0
-drivers/acpi/nfit/core.c:459
+Fix it by aligning the semantics to bpf_prog_run_array(): Let the caller
+provide rcu_read_lock_trace() protection and then load call->prog_array
+with rcu_dereference_check().
 
-The issue occurs in cmd_to_func when the call_pkg->nd_reserved2
-array is accessed without verifying that call_pkg points to a buffer
-that is appropriately sized as a struct nd_cmd_pkg. This can lead
-to out-of-bounds access and undefined behavior if the buffer does not
-have sufficient space.
+This issue seems to be theoretical: I don't know of any way to reach this
+code without having handle_swbp() further up the stack, which is already
+holding a rcu_read_lock_trace() lock, so where we take
+rcu_read_lock_trace() in __uprobe_perf_func()/bpf_prog_run_array_uprobe()
+doesn't actually have any effect.
 
-To address this, a check was added in acpi_nfit_ctl() to ensure that
-buf is not NULL and that buf_len is less than sizeof(*call_pkg)
-before accessing it. This ensures safe access to the members of
-call_pkg, including the nd_reserved2 array.
-
-Reported-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7534f060ebda6b8b51b3
-Tested-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
-Fixes: ebe9f6f19d80 ("acpi/nfit: Fix bus command validation")
-Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20241118162609.29063-1-surajsonawane0215@gmail.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8c7dcb84e3b7 ("bpf: implement sleepable uprobes by chaining gps")
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241210-bpf-fix-uprobe-uaf-v4-1-5fc8959b2b74@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/bpf.h         |   13 +++++--------
+ kernel/trace/trace_uprobe.c |    6 +++++-
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
-index 7d88db451cfb..7918923e3b74 100644
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -454,8 +454,13 @@ int acpi_nfit_ctl(struct nvdimm_bus_descriptor *nd_desc, struct nvdimm *nvdimm,
- 	if (cmd_rc)
- 		*cmd_rc = -EINVAL;
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -1988,26 +1988,25 @@ bpf_prog_run_array(const struct bpf_prog
+  * rcu-protected dynamically sized maps.
+  */
+ static __always_inline u32
+-bpf_prog_run_array_uprobe(const struct bpf_prog_array __rcu *array_rcu,
++bpf_prog_run_array_uprobe(const struct bpf_prog_array *array,
+ 			  const void *ctx, bpf_prog_run_fn run_prog)
+ {
+ 	const struct bpf_prog_array_item *item;
+ 	const struct bpf_prog *prog;
+-	const struct bpf_prog_array *array;
+ 	struct bpf_run_ctx *old_run_ctx;
+ 	struct bpf_trace_run_ctx run_ctx;
+ 	u32 ret = 1;
  
--	if (cmd == ND_CMD_CALL)
-+	if (cmd == ND_CMD_CALL) {
-+		if (!buf || buf_len < sizeof(*call_pkg))
-+			return -EINVAL;
+ 	might_fault();
++	RCU_LOCKDEP_WARN(!rcu_read_lock_trace_held(), "no rcu lock held");
 +
- 		call_pkg = buf;
-+	}
-+
- 	func = cmd_to_func(nfit_mem, cmd, call_pkg, &family);
- 	if (func < 0)
- 		return func;
--- 
-2.39.5
-
++	if (unlikely(!array))
++		return ret;
+ 
+-	rcu_read_lock_trace();
+ 	migrate_disable();
+ 
+ 	run_ctx.is_uprobe = true;
+ 
+-	array = rcu_dereference_check(array_rcu, rcu_read_lock_trace_held());
+-	if (unlikely(!array))
+-		goto out;
+ 	old_run_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
+ 	item = &array->items[0];
+ 	while ((prog = READ_ONCE(item->prog))) {
+@@ -2022,9 +2021,7 @@ bpf_prog_run_array_uprobe(const struct b
+ 			rcu_read_unlock();
+ 	}
+ 	bpf_reset_run_ctx(old_run_ctx);
+-out:
+ 	migrate_enable();
+-	rcu_read_unlock_trace();
+ 	return ret;
+ }
+ 
+--- a/kernel/trace/trace_uprobe.c
++++ b/kernel/trace/trace_uprobe.c
+@@ -1383,9 +1383,13 @@ static void __uprobe_perf_func(struct tr
+ 
+ #ifdef CONFIG_BPF_EVENTS
+ 	if (bpf_prog_array_valid(call)) {
++		const struct bpf_prog_array *array;
+ 		u32 ret;
+ 
+-		ret = bpf_prog_run_array_uprobe(call->prog_array, regs, bpf_prog_run);
++		rcu_read_lock_trace();
++		array = rcu_dereference_check(call->prog_array, rcu_read_lock_trace_held());
++		ret = bpf_prog_run_array_uprobe(array, regs, bpf_prog_run);
++		rcu_read_unlock_trace();
+ 		if (!ret)
+ 			return;
+ 	}
 
 
