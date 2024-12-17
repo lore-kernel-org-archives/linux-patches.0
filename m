@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A3D1F8AF5;
-	Tue, 17 Dec 2024 17:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D981F8697;
+	Tue, 17 Dec 2024 17:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455844; cv=none; b=eykD2HwAiXHA78a5i0qtVnDZbJn3eG/oar9CfwrLU3CyTVzxwBD2A0cURdeeRWkJoFuuNRA5wthSn7y3jnp46eN0hUhKlu/8OJFqk+pbMpDgMCEsEn5Fr/ThFDNcygDMTCWILwpgwj+UkUx5od6++tbibGBCTF/1h3JTK18PbRs=
+	t=1734455847; cv=none; b=F+ne3ghdUJBs6JnMD9pRmwXyrGQ2w6cWcSUiLKDrY/7lgFTOTn8IoY/1z6zYLcYBf3CwnCvqQDZWm55VoUDvw6JQm04Tr5qSJ42RtOCS9S41aoJvMWV89dRdx+3gSQysdxOMUmI//bBAFu9QJAWgAUnD7Ni6NKl/O1zGY7I5Smg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455844; c=relaxed/simple;
-	bh=Lj5TI1rZ0zc7E4JU+wJTgw3G6HBlPlkU1UoRIeKP5uc=;
+	s=arc-20240116; t=1734455847; c=relaxed/simple;
+	bh=usTuaXtWzKR0I+Ph6tTOD512XnpE7+Tz6dVtwAtat68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ssb2fQ6vnVxkZ8mX3USWF4FlYNHHnHZXXEyPIbqivEZyuPwFThtmv0A0pHBk6CvHEjemlVVMJPEoYe0xp3YThz3lHADWD/bm3yzuglJO76inTbs+5oBPAsBk6h6gvvIqjJf4zDNJJOIaruGZSVSYQwqLMQqTM6aAbjKPSufomv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DX+WNO/L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H3qY1/LWL0/B6ioSjmBw0Ra0F0c0n7EEPrM8ecNVGjzMaP5HN49Cl5KdaxIcvz1q6BrLwvyb6lObdf/NvngKdSdz84pLHUtaae3hmWf/nfedIOW6uGk5U2UKinSObueOzbp56eqdsw7gKgTMnwpusU4EVH/T9cN5j/vM7XqojI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boW3j7zv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DX+WNO/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C384C4CEDE;
-	Tue, 17 Dec 2024 17:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boW3j7zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE01C4CEDF;
+	Tue, 17 Dec 2024 17:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455844;
-	bh=Lj5TI1rZ0zc7E4JU+wJTgw3G6HBlPlkU1UoRIeKP5uc=;
+	s=korg; t=1734455847;
+	bh=usTuaXtWzKR0I+Ph6tTOD512XnpE7+Tz6dVtwAtat68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DX+WNO/LGAbujtiq2OgCxvz89Jzt+7csnWcys7a7MFAHgUY7EGWPTrxo3mguVlQoy
-	 lMuCholPgSmRRtHAfxQaUyc1jkPvGoDkjw9XcVADIzFZmqWhxH9kWJapabe8nmZp3q
-	 ZFrffPKJkJQQBYKEULLR6Quo77w/RxaB69+NHQcA=
+	b=boW3j7zvoDWASpv5fHC+/oRAzsGdtL+4iGdHGYIJfIjHsE90XeLTeZaYb+YUsDHcv
+	 OmVx/fd86Fx7IFiN6ghlHiz7Ps9RGR58QR0IK1KDC3Xp6x/8tqh7yKKvfUjOyV/Y2X
+	 3chEPrF7bwyg76EJ+qg8GHiND5CHXfemeAj0pmlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.1 21/76] xfs: only run precommits once per transaction object
-Date: Tue, 17 Dec 2024 18:07:01 +0100
-Message-ID: <20241217170527.136885799@linuxfoundation.org>
+	syzbot+2e0d2840414ce817aaac@syzkaller.appspotmail.com,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>
+Subject: [PATCH 6.1 22/76] bpf,perf: Fix invalid prog_array access in perf_event_detach_bpf_prog
+Date: Tue, 17 Dec 2024 18:07:02 +0100
+Message-ID: <20241217170527.177279973@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -50,84 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Jiri Olsa <jolsa@kernel.org>
 
-commit 44d9b07e52db25035680713c3428016cadcd2ea1 upstream.
+commit 978c4486cca5c7b9253d3ab98a88c8e769cb9bbd upstream.
 
-Committing a transaction tx0 with a defer ops chain of (A, B, C)
-creates a chain of transactions that looks like this:
+Syzbot reported [1] crash that happens for following tracing scenario:
 
-tx0 -> txA -> txB -> txC
+  - create tracepoint perf event with attr.inherit=1, attach it to the
+    process and set bpf program to it
+  - attached process forks -> chid creates inherited event
 
-Prior to commit cb042117488dbf, __xfs_trans_commit would run precommits
-on tx0, then call xfs_defer_finish_noroll to convert A-C to tx[A-C].
-Unfortunately, after the finish_noroll loop we forgot to run precommits
-on txC.  That was fixed by adding the second precommit call.
+    the new child event shares the parent's bpf program and tp_event
+    (hence prog_array) which is global for tracepoint
 
-Unfortunately, none of us remembered that xfs_defer_finish_noroll
-calls __xfs_trans_commit a second time to commit tx0 before finishing
-work A in txA and committing that.  In other words, we run precommits
-twice on tx0:
+  - exit both process and its child -> release both events
+  - first perf_event_detach_bpf_prog call will release tp_event->prog_array
+    and second perf_event_detach_bpf_prog will crash, because
+    tp_event->prog_array is NULL
 
-xfs_trans_commit(tx0)
-    __xfs_trans_commit(tx0, false)
-        xfs_trans_run_precommits(tx0)
-        xfs_defer_finish_noroll(tx0)
-            xfs_trans_roll(tx0)
-                txA = xfs_trans_dup(tx0)
-                __xfs_trans_commit(tx0, true)
-                xfs_trans_run_precommits(tx0)
+The fix makes sure the perf_event_detach_bpf_prog checks prog_array
+is valid before it tries to remove the bpf program from it.
 
-This currently isn't an issue because the inode item precommit is
-idempotent; the iunlink item precommit deletes itself so it can't be
-called again; and the buffer/dquot item precommits only check the incore
-objects for corruption.  However, it doesn't make sense to run
-precommits twice.
+[1] https://lore.kernel.org/bpf/Z1MR6dCIKajNS6nU@krava/T/#m91dbf0688221ec7a7fc95e896a7ef9ff93b0b8ad
 
-Fix this situation by only running precommits after finish_noroll.
-
-Cc: <stable@vger.kernel.org> # v6.4
-Fixes: cb042117488dbf ("xfs: defered work could create precommits")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 0ee288e69d03 ("bpf,perf: Fix perf_event_detach_bpf_prog error handling")
+Reported-by: syzbot+2e0d2840414ce817aaac@syzkaller.appspotmail.com
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241208142507.1207698-1-jolsa@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_trans.c |   16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ kernel/trace/bpf_trace.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/xfs/xfs_trans.c
-+++ b/fs/xfs/xfs_trans.c
-@@ -955,13 +955,6 @@ __xfs_trans_commit(
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2180,6 +2180,9 @@ void perf_event_detach_bpf_prog(struct p
+ 		goto unlock;
  
- 	trace_xfs_trans_commit(tp, _RET_IP_);
- 
--	error = xfs_trans_run_precommits(tp);
--	if (error) {
--		if (tp->t_flags & XFS_TRANS_PERM_LOG_RES)
--			xfs_defer_cancel(tp);
--		goto out_unreserve;
--	}
--
- 	/*
- 	 * Finish deferred items on final commit. Only permanent transactions
- 	 * should ever have deferred ops.
-@@ -972,13 +965,12 @@ __xfs_trans_commit(
- 		error = xfs_defer_finish_noroll(&tp);
- 		if (error)
- 			goto out_unreserve;
--
--		/* Run precommits from final tx in defer chain. */
--		error = xfs_trans_run_precommits(tp);
--		if (error)
--			goto out_unreserve;
+ 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
++	if (!old_array)
++		goto put;
++
+ 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
+ 	if (ret < 0) {
+ 		bpf_prog_array_delete_safe(old_array, event->prog);
+@@ -2188,6 +2191,7 @@ void perf_event_detach_bpf_prog(struct p
+ 		bpf_prog_array_free_sleepable(old_array);
  	}
  
-+	error = xfs_trans_run_precommits(tp);
-+	if (error)
-+		goto out_unreserve;
-+
++put:
  	/*
- 	 * If there is nothing to be logged by the transaction,
- 	 * then unlock all of the items associated with the
+ 	 * It could be that the bpf_prog is not sleepable (and will be freed
+ 	 * via normal RCU), but is called from a point that supports sleepable
 
 
