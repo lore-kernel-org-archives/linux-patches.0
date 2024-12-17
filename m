@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4981F8F16;
-	Tue, 17 Dec 2024 17:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B811F8F16;
+	Tue, 17 Dec 2024 17:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456740; cv=none; b=HWCWJ3ais3wzrUj3wgPhHlhuejVmvwP0lzVmh329OBFVo2Dx8uEEhtOjP+oCz9p22py+vaeYJuqbP6CpQ56FUWBM+JfRcTqrzIeKJKl0OZDfF1EkH+Ctmg9hmp/UUtTFzTKUVD5ACny72bxlgvsrdEUw7dMM5P4YIb7Bhaq+KOc=
+	t=1734456744; cv=none; b=tkhw6bgeziIZSWCi85VUli5DppzhweJglQr0YNd5efpUH23ku+ax3Sc/6zmphZY/W6ZP5/r4AC2a5IELdL1jGySeTuIyNZII1CTqn9kc5U0nadiJEDWOe0lq/Cm3LBCsuhKDhiSnRbufddkyBK7AKP5XeCr3Pw1uPkgms+08C1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456740; c=relaxed/simple;
-	bh=ugHlXcEckKn7PmZ4urfYRK/1swh3BkCA5CN3kJ0v8fk=;
+	s=arc-20240116; t=1734456744; c=relaxed/simple;
+	bh=SdVr5qGS7U9aMGlEFEFsUBnTPPdbdD42o+zj8Wk7U1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=geXQOtoyIdl7LPZxIg/0Q7YB88Xb+TvxZ5ER9svrCUcIzsh67wPpJQBKIqb22MyLhBVwxjfETgcE39A6CGM+zbP0riD1X7fKPHNPQfYa8ChwSpuedFcxY9yapcGuWgzvYWLYXMNAhbSCToFtCgB0tNf4Fn1xFwoS9l5p99rKcFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmfWQbz0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c1z8uXeZw+o2LlqPLWWlnF+ND4sQpm/Gwff2L3qgsfQBsjA0ISpPoyTCls6NU5D8o1L9y/I17vdwfI4EHbvjLwehYXgpDQFfZWSGlZH8ziciD96TnliNMwZ1EUKIf8xxx01MpAxLv/dimDMhCnrADalkwPhF9ojuKlyKjt3UAxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUu945Gs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmfWQbz0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893FAC4CED3;
-	Tue, 17 Dec 2024 17:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUu945Gs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B3BC4CED3;
+	Tue, 17 Dec 2024 17:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456740;
-	bh=ugHlXcEckKn7PmZ4urfYRK/1swh3BkCA5CN3kJ0v8fk=;
+	s=korg; t=1734456744;
+	bh=SdVr5qGS7U9aMGlEFEFsUBnTPPdbdD42o+zj8Wk7U1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AmfWQbz0JsUdYjxqO7SwVDDI0UvB0aSNQrTgJq5O7pyoAIlNHFqrLBKalRsjGt6tK
-	 lA8e3PWWk91ATOzCwXmes3W+ObZNgpqiOkrW8UyXnYixF72CETVSteKk3tVDBs5ROR
-	 jrrVXqXlcInsHlJSi24rGwhkA7RH9KliI4Oo/C34=
+	b=pUu945GsKiHXqyqbYKQuDSRJkfYOUCd4i3u3FUYk2/6K0CQSPi7IB+e2NDk1NiJWQ
+	 fVpSi1Z4C+5UwM6hPN+Dv7jtobQ64wZ7N3ll4THdHxdIQb87JdYT4spYSnz4fgEugI
+	 mPOWuf1jKXWvMI1mljWQLLuNynot4T9mjiF3movE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 152/172] Bluetooth: iso: Fix circular lock in iso_conn_big_sync
-Date: Tue, 17 Dec 2024 18:08:28 +0100
-Message-ID: <20241217170552.631719590@linuxfoundation.org>
+Subject: [PATCH 6.12 153/172] Bluetooth: btmtk: avoid UAF in btmtk_process_coredump
+Date: Tue, 17 Dec 2024 18:08:29 +0100
+Message-ID: <20241217170552.672472742@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,180 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 7a17308c17880d259105f6e591eb1bc77b9612f0 ]
+[ Upstream commit b548f5e9456c568155499d9ebac675c0d7a296e8 ]
 
-This fixes the circular locking dependency warning below, by reworking
-iso_sock_recvmsg, to ensure that the socket lock is always released
-before calling a function that locks hdev.
+hci_devcd_append may lead to the release of the skb, so it cannot be
+accessed once it is called.
 
-[  561.670344] ======================================================
-[  561.670346] WARNING: possible circular locking dependency detected
-[  561.670349] 6.12.0-rc6+ #26 Not tainted
-[  561.670351] ------------------------------------------------------
-[  561.670353] iso-tester/3289 is trying to acquire lock:
-[  561.670355] ffff88811f600078 (&hdev->lock){+.+.}-{3:3},
-               at: iso_conn_big_sync+0x73/0x260 [bluetooth]
-[  561.670405]
-               but task is already holding lock:
-[  561.670407] ffff88815af58258 (sk_lock-AF_BLUETOOTH){+.+.}-{0:0},
-               at: iso_sock_recvmsg+0xbf/0x500 [bluetooth]
-[  561.670450]
-               which lock already depends on the new lock.
+==================================================================
+BUG: KASAN: slab-use-after-free in btmtk_process_coredump+0x2a7/0x2d0 [btmtk]
+Read of size 4 at addr ffff888033cfabb0 by task kworker/0:3/82
 
-[  561.670452]
-               the existing dependency chain (in reverse order) is:
-[  561.670453]
-               -> #2 (sk_lock-AF_BLUETOOTH){+.+.}-{0:0}:
-[  561.670458]        lock_acquire+0x7c/0xc0
-[  561.670463]        lock_sock_nested+0x3b/0xf0
-[  561.670467]        bt_accept_dequeue+0x1a5/0x4d0 [bluetooth]
-[  561.670510]        iso_sock_accept+0x271/0x830 [bluetooth]
-[  561.670547]        do_accept+0x3dd/0x610
-[  561.670550]        __sys_accept4+0xd8/0x170
-[  561.670553]        __x64_sys_accept+0x74/0xc0
-[  561.670556]        x64_sys_call+0x17d6/0x25f0
-[  561.670559]        do_syscall_64+0x87/0x150
-[  561.670563]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  561.670567]
-               -> #1 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO){+.+.}-{0:0}:
-[  561.670571]        lock_acquire+0x7c/0xc0
-[  561.670574]        lock_sock_nested+0x3b/0xf0
-[  561.670577]        iso_sock_listen+0x2de/0xf30 [bluetooth]
-[  561.670617]        __sys_listen_socket+0xef/0x130
-[  561.670620]        __x64_sys_listen+0xe1/0x190
-[  561.670623]        x64_sys_call+0x2517/0x25f0
-[  561.670626]        do_syscall_64+0x87/0x150
-[  561.670629]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  561.670632]
-               -> #0 (&hdev->lock){+.+.}-{3:3}:
-[  561.670636]        __lock_acquire+0x32ad/0x6ab0
-[  561.670639]        lock_acquire.part.0+0x118/0x360
-[  561.670642]        lock_acquire+0x7c/0xc0
-[  561.670644]        __mutex_lock+0x18d/0x12f0
-[  561.670647]        mutex_lock_nested+0x1b/0x30
-[  561.670651]        iso_conn_big_sync+0x73/0x260 [bluetooth]
-[  561.670687]        iso_sock_recvmsg+0x3e9/0x500 [bluetooth]
-[  561.670722]        sock_recvmsg+0x1d5/0x240
-[  561.670725]        sock_read_iter+0x27d/0x470
-[  561.670727]        vfs_read+0x9a0/0xd30
-[  561.670731]        ksys_read+0x1a8/0x250
-[  561.670733]        __x64_sys_read+0x72/0xc0
-[  561.670736]        x64_sys_call+0x1b12/0x25f0
-[  561.670738]        do_syscall_64+0x87/0x150
-[  561.670741]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  561.670744]
-               other info that might help us debug this:
+CPU: 0 PID: 82 Comm: kworker/0:3 Tainted: G     U             6.6.40-lockdep-03464-g1d8b4eb3060e #1 b0b3c1cc0c842735643fb411799d97921d1f688c
+Hardware name: Google Yaviks_Ufs/Yaviks_Ufs, BIOS Google_Yaviks_Ufs.15217.552.0 05/07/2024
+Workqueue: events btusb_rx_work [btusb]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xfd/0x150
+ print_report+0x131/0x780
+ kasan_report+0x177/0x1c0
+ btmtk_process_coredump+0x2a7/0x2d0 [btmtk 03edd567dd71a65958807c95a65db31d433e1d01]
+ btusb_recv_acl_mtk+0x11c/0x1a0 [btusb 675430d1e87c4f24d0c1f80efe600757a0f32bec]
+ btusb_rx_work+0x9e/0xe0 [btusb 675430d1e87c4f24d0c1f80efe600757a0f32bec]
+ worker_thread+0xe44/0x2cc0
+ kthread+0x2ff/0x3a0
+ ret_from_fork+0x51/0x80
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
 
-[  561.670745] Chain exists of:
-&hdev->lock --> sk_lock-AF_BLUETOOTH-BTPROTO_ISO --> sk_lock-AF_BLUETOOTH
+Allocated by task 82:
+ stack_trace_save+0xdc/0x190
+ kasan_set_track+0x4e/0x80
+ __kasan_slab_alloc+0x4e/0x60
+ kmem_cache_alloc+0x19f/0x360
+ skb_clone+0x132/0xf70
+ btusb_recv_acl_mtk+0x104/0x1a0 [btusb]
+ btusb_rx_work+0x9e/0xe0 [btusb]
+ worker_thread+0xe44/0x2cc0
+ kthread+0x2ff/0x3a0
+ ret_from_fork+0x51/0x80
+ ret_from_fork_asm+0x1b/0x30
 
-[  561.670751]  Possible unsafe locking scenario:
+Freed by task 1733:
+ stack_trace_save+0xdc/0x190
+ kasan_set_track+0x4e/0x80
+ kasan_save_free_info+0x28/0xb0
+ ____kasan_slab_free+0xfd/0x170
+ kmem_cache_free+0x183/0x3f0
+ hci_devcd_rx+0x91a/0x2060 [bluetooth]
+ worker_thread+0xe44/0x2cc0
+ kthread+0x2ff/0x3a0
+ ret_from_fork+0x51/0x80
+ ret_from_fork_asm+0x1b/0x30
 
-[  561.670753]        CPU0                    CPU1
-[  561.670754]        ----                    ----
-[  561.670756]   lock(sk_lock-AF_BLUETOOTH);
-[  561.670758]                                lock(sk_lock
-                                              AF_BLUETOOTH-BTPROTO_ISO);
-[  561.670761]                                lock(sk_lock-AF_BLUETOOTH);
-[  561.670764]   lock(&hdev->lock);
-[  561.670767]
-                *** DEADLOCK ***
+The buggy address belongs to the object at ffff888033cfab40
+ which belongs to the cache skbuff_head_cache of size 232
+The buggy address is located 112 bytes inside of
+ freed 232-byte region [ffff888033cfab40, ffff888033cfac28)
 
-Fixes: 07a9342b94a9 ("Bluetooth: ISO: Send BIG Create Sync via hci_sync")
-Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+The buggy address belongs to the physical page:
+page:00000000a174ba93 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x33cfa
+head:00000000a174ba93 order:1 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+anon flags: 0x4000000000000840(slab|head|zone=1)
+page_type: 0xffffffff()
+raw: 4000000000000840 ffff888100848a00 0000000000000000 0000000000000001
+raw: 0000000000000000 0000000080190019 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888033cfaa80: fb fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc
+ ffff888033cfab00: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+>ffff888033cfab80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                     ^
+ ffff888033cfac00: fb fb fb fb fb fc fc fc fc fc fc fc fc fc fc fc
+ ffff888033cfac80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+==================================================================
+
+Check if we need to call hci_devcd_complete before calling
+hci_devcd_append. That requires that we check data->cd_info.cnt >=
+MTK_COREDUMP_NUM instead of data->cd_info.cnt > MTK_COREDUMP_NUM, as we
+increment data->cd_info.cnt only once the call to hci_devcd_append
+succeeds.
+
+Fixes: 0b7015132878 ("Bluetooth: btusb: mediatek: add MediaTek devcoredump support")
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ drivers/bluetooth/btmtk.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 809e88fd3fcb..644b606743e2 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1411,6 +1411,7 @@ static void iso_conn_big_sync(struct sock *sk)
- 	 * change.
- 	 */
- 	hci_dev_lock(hdev);
-+	lock_sock(sk);
- 
- 	if (!test_and_set_bit(BT_SK_BIG_SYNC, &iso_pi(sk)->flags)) {
- 		err = hci_le_big_create_sync(hdev, iso_pi(sk)->conn->hcon,
-@@ -1423,6 +1424,7 @@ static void iso_conn_big_sync(struct sock *sk)
- 				   err);
- 	}
- 
-+	release_sock(sk);
- 	hci_dev_unlock(hdev);
- }
- 
-@@ -1431,39 +1433,57 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 480e4adba9fa..85e99641eaae 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -395,6 +395,7 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
  {
- 	struct sock *sk = sock->sk;
- 	struct iso_pinfo *pi = iso_pi(sk);
-+	bool early_ret = false;
-+	int err = 0;
+ 	struct btmtk_data *data = hci_get_priv(hdev);
+ 	int err;
++	bool complete = false;
  
- 	BT_DBG("sk %p", sk);
- 
- 	if (test_and_clear_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
-+		sock_hold(sk);
- 		lock_sock(sk);
+ 	if (!IS_ENABLED(CONFIG_DEV_COREDUMP)) {
+ 		kfree_skb(skb);
+@@ -416,19 +417,22 @@ int btmtk_process_coredump(struct hci_dev *hdev, struct sk_buff *skb)
+ 		fallthrough;
+ 	case HCI_DEVCOREDUMP_ACTIVE:
+ 	default:
++		/* Mediatek coredump data would be more than MTK_COREDUMP_NUM */
++		if (data->cd_info.cnt >= MTK_COREDUMP_NUM &&
++		    skb->len > MTK_COREDUMP_END_LEN)
++			if (!memcmp((char *)&skb->data[skb->len - MTK_COREDUMP_END_LEN],
++				    MTK_COREDUMP_END, MTK_COREDUMP_END_LEN - 1))
++				complete = true;
 +
- 		switch (sk->sk_state) {
- 		case BT_CONNECT2:
- 			if (test_bit(BT_SK_PA_SYNC, &pi->flags)) {
-+				release_sock(sk);
- 				iso_conn_big_sync(sk);
-+				lock_sock(sk);
-+
- 				sk->sk_state = BT_LISTEN;
- 			} else {
- 				iso_conn_defer_accept(pi->conn->hcon);
- 				sk->sk_state = BT_CONFIG;
- 			}
--			release_sock(sk);
--			return 0;
-+
-+			early_ret = true;
-+			break;
- 		case BT_CONNECTED:
- 			if (test_bit(BT_SK_PA_SYNC, &iso_pi(sk)->flags)) {
-+				release_sock(sk);
- 				iso_conn_big_sync(sk);
-+				lock_sock(sk);
-+
- 				sk->sk_state = BT_LISTEN;
--				release_sock(sk);
--				return 0;
-+				early_ret = true;
- 			}
- 
--			release_sock(sk);
+ 		err = hci_devcd_append(hdev, skb);
+ 		if (err < 0)
  			break;
- 		case BT_CONNECT:
- 			release_sock(sk);
--			return iso_connect_cis(sk);
-+			err = iso_connect_cis(sk);
-+			lock_sock(sk);
-+
-+			early_ret = true;
-+			break;
- 		default:
--			release_sock(sk);
- 			break;
- 		}
-+
-+		release_sock(sk);
-+		sock_put(sk);
-+
-+		if (early_ret)
-+			return err;
+ 		data->cd_info.cnt++;
+ 
+-		/* Mediatek coredump data would be more than MTK_COREDUMP_NUM */
+-		if (data->cd_info.cnt > MTK_COREDUMP_NUM &&
+-		    skb->len > MTK_COREDUMP_END_LEN)
+-			if (!memcmp((char *)&skb->data[skb->len - MTK_COREDUMP_END_LEN],
+-				    MTK_COREDUMP_END, MTK_COREDUMP_END_LEN - 1)) {
+-				bt_dev_info(hdev, "Mediatek coredump end");
+-				hci_devcd_complete(hdev);
+-			}
++		if (complete) {
++			bt_dev_info(hdev, "Mediatek coredump end");
++			hci_devcd_complete(hdev);
++		}
+ 
+ 		break;
  	}
- 
- 	return bt_sock_recvmsg(sock, msg, len, flags);
 -- 
 2.39.5
 
