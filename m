@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8655A1EF085;
-	Tue, 17 Dec 2024 17:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24171F757B;
+	Tue, 17 Dec 2024 17:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456489; cv=none; b=htXjVz2deavHNBUJpzldhCPQjq6yHYiXAT7qplc9QiWr0z4jTr0Xzak7IPQOtiy40U7peY8VUzN45I+pE8lHyF54ayahxPMPpgBXQnt+HmubPyZvpUK/iQl4+1nABadL4uYGeIaqzyp7Rqu5e4wRFN+c5RMd2idOXjf+Z+pPts0=
+	t=1734456495; cv=none; b=hUVQL5xN8K+w5QuiBxFgv8V6EL2yt49zj92FJnay+0sO6qdgO7lXnJoDnDNXK9gVskIT3V9P8JA93oudSDv7gIz05h3rLMWvLh3cHN1stsK9rsQrxleBUCPzCB2xNqyE/kreYFN333fJrfl0xlLkWOovn+/yOli+wlZNeMMXzXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456489; c=relaxed/simple;
-	bh=ZhvhM+57g5lAfUG46HRebv2jBC7SFWJrDsX154Wy504=;
+	s=arc-20240116; t=1734456495; c=relaxed/simple;
+	bh=v8fooYekdOnDpuktoxxQ15CZTXeCoMeTiAvp+HP/ghE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7SLi/HiHEpLgfPVpNZeH0HlAiAui/IB/7RYqwd38bfbSqajhKGtXtteMEg10EgTZ/AgqcKgu4QlQmHS0fPcGSTEF8/mZknRibOEBjjM5B5n2+VWcIoipWRSciZvT8XhT+R3T9yktvVE9bNasf6l091YXLj5WT9b/Te74gq8q6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py1X/pO8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0fSkU0aTKezC1Ud0c3nvnoD2wcmXXAkD1+OaHmd00oDF+WfDY83B+UMC0Gxm543EiWua57k8SIOIcguOhrHx2xDFSKaQ9NnfsGk4xeWz+MLrF8vHzDhRaz7oA0l4L/qMvlteyxaeq+dDLNd2fGWzf+yeNQOnr3PvUQs6HPmfPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGze18Qi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py1X/pO8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 091DDC4CED7;
-	Tue, 17 Dec 2024 17:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGze18Qi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEACC4CED3;
+	Tue, 17 Dec 2024 17:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456489;
-	bh=ZhvhM+57g5lAfUG46HRebv2jBC7SFWJrDsX154Wy504=;
+	s=korg; t=1734456495;
+	bh=v8fooYekdOnDpuktoxxQ15CZTXeCoMeTiAvp+HP/ghE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=py1X/pO8i3GKkwC+1FkQAbiuSZd53JX126d85b3a3e1WWX7L8RXStdlIJzzF2ZxzQ
-	 /HOO5nMQ529YgZYn6XUf8vuDcwLzKi4u/oDq1KKhsOaiwYnBym1EM7RnNoSEXj49eT
-	 32PhujsZADzY6noK9g1/wIv5F+o3Hr8LCJcuBRvc=
+	b=FGze18Qi9kCQKvmJKlB/ImcWEuWeAWTOLoWyGfOJ8ZMHeUnXzpaAZX9lV8eAANgVP
+	 kk0Xd772A90JT94hgJVvZjNLt5GqwDA9slQr/B9PrEwOHKkBhdKEESAeC/pq5G9txh
+	 oAg+ftA7oXWh07Q+tVY5wQWO5SxXu0oLvBA7Iot0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.12 075/172] xfs: unlock inodes when erroring out of xfs_trans_alloc_dir
-Date: Tue, 17 Dec 2024 18:07:11 +0100
-Message-ID: <20241217170549.397904854@linuxfoundation.org>
+	Robert Morris <rtm@mit.edu>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.12 076/172] bpf: Check size for BTF-based ctx access of pointer members
+Date: Tue, 17 Dec 2024 18:07:12 +0100
+Message-ID: <20241217170549.439469551@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,49 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-commit 53b001a21c9dff73b64e8c909c41991f01d5d00f upstream.
+commit 659b9ba7cb2d7adb64618b87ddfaa528a143766e upstream.
 
-Debugging a filesystem patch with generic/475 caused the system to hang
-after observing the following sequences in dmesg:
+Robert Morris reported the following program type which passes the
+verifier in [0]:
 
- XFS (dm-0): metadata I/O error in "xfs_imap_to_bp+0x61/0xe0 [xfs]" at daddr 0x491520 len 32 error 5
- XFS (dm-0): metadata I/O error in "xfs_btree_read_buf_block+0xba/0x160 [xfs]" at daddr 0x3445608 len 8 error 5
- XFS (dm-0): metadata I/O error in "xfs_imap_to_bp+0x61/0xe0 [xfs]" at daddr 0x138e1c0 len 32 error 5
- XFS (dm-0): log I/O error -5
- XFS (dm-0): Metadata I/O Error (0x1) detected at xfs_trans_read_buf_map+0x1ea/0x4b0 [xfs] (fs/xfs/xfs_trans_buf.c:311).  Shutting down filesystem.
- XFS (dm-0): Please unmount the filesystem and rectify the problem(s)
- XFS (dm-0): Internal error dqp->q_ino.reserved < dqp->q_ino.count at line 869 of file fs/xfs/xfs_trans_dquot.c.  Caller xfs_trans_dqresv+0x236/0x440 [xfs]
- XFS (dm-0): Corruption detected. Unmount and run xfs_repair
- XFS (dm-0): Unmounting Filesystem be6bcbcc-9921-4deb-8d16-7cc94e335fa7
+SEC("struct_ops/bpf_cubic_init")
+void BPF_PROG(bpf_cubic_init, struct sock *sk)
+{
+	asm volatile("r2 = *(u16*)(r1 + 0)");     // verifier should demand u64
+	asm volatile("*(u32 *)(r2 +1504) = 0");   // 1280 in some configs
+}
 
-The system is stuck in unmount trying to lock a couple of inodes so that
-they can be purged.  The dquot corruption notice above is a clue to what
-happened -- a link() call tried to set up a transaction to link a child
-into a directory.  Quota reservation for the transaction failed after IO
-errors shut down the filesystem, but then we forgot to unlock the inodes
-on our way out.  Fix that.
+The second line may or may not work, but the first instruction shouldn't
+pass, as it's a narrow load into the context structure of the struct ops
+callback. The code falls back to btf_ctx_access to ensure correctness
+and obtaining the types of pointers. Ensure that the size of the access
+is correctly checked to be 8 bytes, otherwise the verifier thinks the
+narrow load obtained a trusted BTF pointer and will permit loads/stores
+as it sees fit.
 
-Cc: <stable@vger.kernel.org> # v6.10
-Fixes: bd5562111d5839 ("xfs: Hold inode locks in xfs_trans_alloc_dir")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Perform the check on size after we've verified that the load is for a
+pointer field, as for scalar values narrow loads are fine. Access to
+structs passed as arguments to a BPF program are also treated as
+scalars, therefore no adjustment is needed in their case.
+
+Existing verifier selftests are broken by this change, but because they
+were incorrect. Verifier tests for d_path were performing narrow load
+into context to obtain path pointer, had this program actually run it
+would cause a crash. The same holds for verifier_btf_ctx_access tests.
+
+  [0]: https://lore.kernel.org/bpf/51338.1732985814@localhost
+
+Fixes: 9e15db66136a ("bpf: Implement accurate raw_tp context access via BTF")
+Reported-by: Robert Morris <rtm@mit.edu>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241212092050.3204165-2-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_trans.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/bpf/btf.c                                            |    6 ++++++
+ tools/testing/selftests/bpf/progs/verifier_btf_ctx_access.c |    4 ++--
+ tools/testing/selftests/bpf/progs/verifier_d_path.c         |    4 ++--
+ 3 files changed, 10 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/xfs_trans.c
-+++ b/fs/xfs/xfs_trans.c
-@@ -1374,5 +1374,8 @@ done:
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6519,6 +6519,12 @@ bool btf_ctx_access(int off, int size, e
+ 		return false;
+ 	}
  
- out_cancel:
- 	xfs_trans_cancel(tp);
-+	xfs_iunlock(dp, XFS_ILOCK_EXCL);
-+	if (dp != ip)
-+		xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 	return error;
- }
++	if (size != sizeof(u64)) {
++		bpf_log(log, "func '%s' size %d must be 8\n",
++			tname, size);
++		return false;
++	}
++
+ 	/* check for PTR_TO_RDONLY_BUF_OR_NULL or PTR_TO_RDWR_BUF_OR_NULL */
+ 	for (i = 0; i < prog->aux->ctx_arg_info_size; i++) {
+ 		const struct bpf_ctx_arg_aux *ctx_arg_info = &prog->aux->ctx_arg_info[i];
+--- a/tools/testing/selftests/bpf/progs/verifier_btf_ctx_access.c
++++ b/tools/testing/selftests/bpf/progs/verifier_btf_ctx_access.c
+@@ -11,7 +11,7 @@ __success __retval(0)
+ __naked void btf_ctx_access_accept(void)
+ {
+ 	asm volatile ("					\
+-	r2 = *(u32*)(r1 + 8);		/* load 2nd argument value (int pointer) */\
++	r2 = *(u64 *)(r1 + 8);		/* load 2nd argument value (int pointer) */\
+ 	r0 = 0;						\
+ 	exit;						\
+ "	::: __clobber_all);
+@@ -23,7 +23,7 @@ __success __retval(0)
+ __naked void ctx_access_u32_pointer_accept(void)
+ {
+ 	asm volatile ("					\
+-	r2 = *(u32*)(r1 + 0);		/* load 1nd argument value (u32 pointer) */\
++	r2 = *(u64 *)(r1 + 0);		/* load 1nd argument value (u32 pointer) */\
+ 	r0 = 0;						\
+ 	exit;						\
+ "	::: __clobber_all);
+--- a/tools/testing/selftests/bpf/progs/verifier_d_path.c
++++ b/tools/testing/selftests/bpf/progs/verifier_d_path.c
+@@ -11,7 +11,7 @@ __success __retval(0)
+ __naked void d_path_accept(void)
+ {
+ 	asm volatile ("					\
+-	r1 = *(u32*)(r1 + 0);				\
++	r1 = *(u64 *)(r1 + 0);				\
+ 	r2 = r10;					\
+ 	r2 += -8;					\
+ 	r6 = 0;						\
+@@ -31,7 +31,7 @@ __failure __msg("helper call is not allo
+ __naked void d_path_reject(void)
+ {
+ 	asm volatile ("					\
+-	r1 = *(u32*)(r1 + 0);				\
++	r1 = *(u64 *)(r1 + 0);				\
+ 	r2 = r10;					\
+ 	r2 += -8;					\
+ 	r6 = 0;						\
 
 
