@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8338B14A4E7;
-	Tue, 17 Dec 2024 17:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A12D1F75B5;
+	Tue, 17 Dec 2024 17:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456516; cv=none; b=HFEC33dxOvazehJLlHFly2z/2GEUgtWblmQnjs6RT5ptjxWISTcnkqerwYdFtDktnMLX0lArox4UbHqYDeGS3d/OhofD5W6bAVD1e2VzeUfhKexQAbUqwLaKMzkgSalT7i/o/PFLPZ7D932YeCcvzrRntJviZXFLCcgOThBf4rw=
+	t=1734456519; cv=none; b=fNbV1aCsgo7VvMPcyg1mO6OJ1GMxe8qEexMygsEzfTv2w7rA2ejopa7DvR13pZXr54pMH+f2rg3BwGoeiKdemCwmZUdI5sp3I3Q4KA4FluCcm9wn6/PyZDBGN5cB9ZmWQeNklHOWPZUtYBFN/2P5FuyRDdG72OXTzJRhdY+NUPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456516; c=relaxed/simple;
-	bh=G/kSGlkRXvMo1cb6Tc7oMDI8qZbkYUb1NC9SDl115QE=;
+	s=arc-20240116; t=1734456519; c=relaxed/simple;
+	bh=17TcA64umqNhMDXWzk5Heo21Hwr4nWMC7Er/Ww55ltI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YA1Gh4HL/t8Hc51zAgIi+ubXxH23/glMf31levqU6NVUyvpdW7K290SlarMb7lordadjg9DfROuz4hPG+0u8kOtKqslxK9sst/hQTHx1JmPQKUchrYHEwiYosusuJ9s77G8rTCMCDTKxzlla7nU4hBySUg9DDhq6kMcDmV5nqlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqKSq1oH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mUru10u5yhIWXe9bKi9AXlB1nRBjz2Py7g1pwgv56K5w73yExkI6AVRwG7EWUKlnI9yq0SBYj8T2niAde0bYGWOVcLW0fwFs3BQKZnbZ5fVVpdOK9l2O5wSE3wGTisHJivZw+wCDDdMNbwICH3oA5KF24EFwqVcFCzHWjXwpFIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1vwGi+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqKSq1oH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEDAC4CED3;
-	Tue, 17 Dec 2024 17:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1vwGi+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01099C4CED7;
+	Tue, 17 Dec 2024 17:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456516;
-	bh=G/kSGlkRXvMo1cb6Tc7oMDI8qZbkYUb1NC9SDl115QE=;
+	s=korg; t=1734456519;
+	bh=17TcA64umqNhMDXWzk5Heo21Hwr4nWMC7Er/Ww55ltI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqKSq1oHS8zmMrq55An2LW93bedccir16nr/ozTAGEfHGGl8woJiDnQLvjO7uMdHC
-	 +N3MmIMn9h33lH5hr4Mq4KLnDrx94h8oy5nkzjdSOrSsZoxXP1tJ3+LA5yrxvnY5Nl
-	 j+nUodRAV5i9/bExenOuzUFz5g+dLaTnFjuyfcSE=
+	b=j1vwGi+oiKT8F34bGxWUxDcB285eLYC48VQNbXMbubsc1kCULuHyazxoMzYq6bz8y
+	 4hlgxSzpH45B5rigL4jXtEx7qzkJ+LdJI+GBc1zbAtjdPpLHpR94XnHw0FMQrvvijt
+	 Oa3EAvuo6zPU2lnHedijcNqotSEx0xT4ClSmOjeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luis Claudio R. Goncalves" <lgoncalv@redhat.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.12 053/172] iommu/tegra241-cmdqv: do not use smp_processor_id in preemptible context
-Date: Tue, 17 Dec 2024 18:06:49 +0100
-Message-ID: <20241217170548.470697178@linuxfoundation.org>
+	Bean Huo <beanhuo@micron.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	liuderong <liuderong@oppo.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 044/172] scsi: ufs: core: Update compl_time_stamp_local_clock after completing a cqe
+Date: Tue, 17 Dec 2024 18:06:40 +0100
+Message-ID: <20241217170548.093665571@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,47 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
+From: liuderong <liuderong@oppo.com>
 
-commit 1f806218164d1bb93f3db21eaf61254b08acdf03 upstream.
+commit f103396ae31851d00b561ff9f8a32a441953ff8b upstream.
 
-During boot some of the calls to tegra241_cmdqv_get_cmdq() will happen
-in preemptible context. As this function calls smp_processor_id(), if
-CONFIG_DEBUG_PREEMPT is enabled, these calls will trigger a series of
-"BUG: using smp_processor_id() in preemptible" backtraces.
+lrbp->compl_time_stamp_local_clock is set to zero after sending a sqe
+but it is not updated after completing a cqe.  Thus the printed
+information in ufshcd_print_tr() will always be zero.
 
-As tegra241_cmdqv_get_cmdq() only calls smp_processor_id() to use the
-CPU number as a factor to balance out traffic on cmdq usage, it is safe
-to use raw_smp_processor_id() here.
+Update lrbp->cmpl_time_stamp_local_clock after completing a cqe.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 918eb5c856f6 ("iommu/arm-smmu-v3: Add in-kernel support for NVIDIA Tegra241 (Grace) CMDQV")
-Signed-off-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Link: https://lore.kernel.org/r/Z1L1mja3nXzsJ0Pk@uudg.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Log sample:
+
+ufshcd-qcom 1d84000.ufshc: UPIU[8] - issue time 8750227249 us
+ufshcd-qcom 1d84000.ufshc: UPIU[8] - complete time 0 us
+
+Fixes: c30d8d010b5e ("scsi: ufs: core: Prepare for completion in MCQ")
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: liuderong <liuderong@oppo.com>
+Link: https://lore.kernel.org/r/1733470182-220841-1-git-send-email-liuderong@oppo.com
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index c8ec74f089f3..6e41ddaa24d6 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -339,7 +339,7 @@ tegra241_cmdqv_get_cmdq(struct arm_smmu_device *smmu,
- 	 * one CPU at a time can enter the process, while the others
- 	 * will be spinning at the same lock.
- 	 */
--	lidx = smp_processor_id() % cmdqv->num_lvcmdqs_per_vintf;
-+	lidx = raw_smp_processor_id() % cmdqv->num_lvcmdqs_per_vintf;
- 	vcmdq = vintf->lvcmdqs[lidx];
- 	if (!vcmdq || !READ_ONCE(vcmdq->enabled))
- 		return NULL;
--- 
-2.47.1
-
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5566,6 +5566,7 @@ void ufshcd_compl_one_cqe(struct ufs_hba
+ 
+ 	lrbp = &hba->lrb[task_tag];
+ 	lrbp->compl_time_stamp = ktime_get();
++	lrbp->compl_time_stamp_local_clock = local_clock();
+ 	cmd = lrbp->cmd;
+ 	if (cmd) {
+ 		if (unlikely(ufshcd_should_inform_monitor(hba, lrbp)))
 
 
