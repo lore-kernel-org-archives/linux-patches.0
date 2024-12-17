@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D9B142E77;
-	Tue, 17 Dec 2024 17:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC6E1F75B5;
+	Tue, 17 Dec 2024 17:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456158; cv=none; b=Bmrk9706X/ar4IclkT6CB4qojz/UDj7gtQ++E7IbVVHZ+BIoTDjX5mZCNEHCHUtwPtA2WGsk22JVGE86ZmeyaaGWvPoxUAe2kjHhNNLlZ04zTOwNOoAhHICTN1Z92vRcvu73QhD3YJbTBOzj44Wtdp31hsX/oFgHQduBvr7yP0A=
+	t=1734456161; cv=none; b=byW96RkvZcin7ve0w7Ph4JYXYtoOkBvBlTqKvxB+q5TFLy39z9BvZej39EHOS1MjPw+Cd8pxxMuW8RJQgAVv7xOxY2J1IqrroKOF9rBqbW1p36N1Lx8+9UQt0iI63G4zo4f5GvTlyCeRnUHuoLLE0qdmqwgS7BIY185p62Ad8+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456158; c=relaxed/simple;
-	bh=8nZqrno8Kh0w94MZBpTtmYW9A8u+K+btNyFSWMvqsCM=;
+	s=arc-20240116; t=1734456161; c=relaxed/simple;
+	bh=olxB5N+YoHo6WlCt+sOodmXHgEsWp7fP0gYu9zK7EG0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ljJiE5wsdGznppXoW4upjYWgi9ZG1Kj+bO2ONpKPKLfRjZQjvd1+75PdRmxuTguFIUTpq02eOSrFRX8MWZJufuXvqYTuC/7MYoon82SoTdzXrpzXpa/upiyjd0/xSYhL75euILIKkjAnLPGfcIjzEXMSxwewTsWtwZQ75GDPBOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjvsQOLs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a72Boa3PyMwcK481/g7azgbLkz3KikKlC3Frt4LYRSX2yOagPeaxgF3PKdFNrPexlvEsCtbm7GPoFR4bP/es7MwkY4McGoybS/xv/iSVObt5va7mWLXNtN3id6i82nslzwwyro/5MbXG/CcOtaO1RnCtrswoKXVxhj9aMHWrehE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsJo6dSC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjvsQOLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD7EC4CED3;
-	Tue, 17 Dec 2024 17:22:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsJo6dSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62216C4CED7;
+	Tue, 17 Dec 2024 17:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456157;
-	bh=8nZqrno8Kh0w94MZBpTtmYW9A8u+K+btNyFSWMvqsCM=;
+	s=korg; t=1734456160;
+	bh=olxB5N+YoHo6WlCt+sOodmXHgEsWp7fP0gYu9zK7EG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjvsQOLs9TWCtxKaRehm9y2yXfRoHkuQ+ZYi3f/NVM5sZSueoGMB4g/N8JV0xHU3s
-	 hz0meIPwXfvkktaSK910iQ4f0P9kt5SQtad2Eo9rquZsIfjXOGy/kHb2E1Cg37EghP
-	 UkWwN3cPoXabcwrBqY+l+QQOOl7s9BWR5XtJLhng=
+	b=fsJo6dSCpAhrQVCPPe4J8Rc/Ma2hvUDUY8AFIa6S1rhQItNfhPZj0OMeb79rqbXWc
+	 cZSmjpUt19Ihk7YK8oHHKNjj+YsDm/XnBBd0AN5x3FhbnFK1xAx/5viopb9LLDr7te
+	 PdxwirE913GnzQmwoPJmVTmbZCDEnpmaGLX6FY54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b26935466701e56cfdc2@syzkaller.appspotmail.com,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 080/109] netfilter: nf_tables: do not defer rule destruction via call_rcu
-Date: Tue, 17 Dec 2024 18:08:04 +0100
-Message-ID: <20241217170536.723596029@linuxfoundation.org>
+Subject: [PATCH 6.6 081/109] net: dsa: felix: fix stuck CPU-injected packets with short taprio windows
+Date: Tue, 17 Dec 2024 18:08:05 +0100
+Message-ID: <20241217170536.765092577@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -52,165 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit b04df3da1b5c6f6dc7cdccc37941740c078c4043 ]
+[ Upstream commit acfcdb78d5d4cdb78e975210c8825b9a112463f6 ]
 
-nf_tables_chain_destroy can sleep, it can't be used from call_rcu
-callbacks.
+With this port schedule:
 
-Moreover, nf_tables_rule_release() is only safe for error unwinding,
-while transaction mutex is held and the to-be-desroyed rule was not
-exposed to either dataplane or dumps, as it deactives+frees without
-the required synchronize_rcu() in-between.
+tc qdisc replace dev $send_if parent root handle 100 taprio \
+	num_tc 8 queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 \
+	map 0 1 2 3 4 5 6 7 \
+	base-time 0 cycle-time 10000 \
+	sched-entry S 01 1250 \
+	sched-entry S 02 1250 \
+	sched-entry S 04 1250 \
+	sched-entry S 08 1250 \
+	sched-entry S 10 1250 \
+	sched-entry S 20 1250 \
+	sched-entry S 40 1250 \
+	sched-entry S 80 1250 \
+	flags 2
 
-nft_rule_expr_deactivate() callbacks will change ->use counters
-of other chains/sets, see e.g. nft_lookup .deactivate callback, these
-must be serialized via transaction mutex.
+ptp4l would fail to take TX timestamps of Pdelay_Resp messages like this:
 
-Also add a few lockdep asserts to make this more explicit.
+increasing tx_timestamp_timeout may correct this issue, but it is likely caused by a driver bug
+ptp4l[4134.168]: port 2: send peer delay response failed
 
-Calling synchronize_rcu() isn't ideal, but fixing this without is hard
-and way more intrusive.  As-is, we can get:
+It turns out that the driver can't take their TX timestamps because it
+can't transmit them in the first place. And there's nothing special
+about the Pdelay_Resp packets - they're just regular 68 byte packets.
+But with this taprio configuration, the switch would refuse to send even
+the ETH_ZLEN minimum packet size.
 
-WARNING: .. net/netfilter/nf_tables_api.c:5515 nft_set_destroy+0x..
-Workqueue: events nf_tables_trans_destroy_work
-RIP: 0010:nft_set_destroy+0x3fe/0x5c0
-Call Trace:
- <TASK>
- nf_tables_trans_destroy_work+0x6b7/0xad0
- process_one_work+0x64a/0xce0
- worker_thread+0x613/0x10d0
+This should have definitely not been the case. When applying the taprio
+config, the driver prints:
 
-In case the synchronize_rcu becomes an issue, we can explore alternatives.
+mscc_felix 0000:00:00.5: port 0 tc 0 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 1 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 2 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 3 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 4 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 5 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 6 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 7 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
 
-One way would be to allocate nft_trans_rule objects + one nft_trans_chain
-object, deactivate the rules + the chain and then defer the freeing to the
-nft destroy workqueue.  We'd still need to keep the synchronize_rcu path as
-a fallback to handle -ENOMEM corner cases though.
+and thus, everything under 132 bytes - ETH_FCS_LEN should have been sent
+without problems. Yet it's not.
 
-Reported-by: syzbot+b26935466701e56cfdc2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/67478d92.050a0220.253251.0062.GAE@google.com/T/
-Fixes: c03d278fdf35 ("netfilter: nf_tables: wait for rcu grace period on net_device removal")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+For the forwarding path, the configuration is fine, yet packets injected
+from Linux get stuck with this schedule no matter what.
+
+The first hint that the static guard bands are the cause of the problem
+is that reverting Michael Walle's commit 297c4de6f780 ("net: dsa: felix:
+re-enable TAS guard band mode") made things work. It must be that the
+guard bands are calculated incorrectly.
+
+I remembered that there is a magic constant in the driver, set to 33 ns
+for no logical reason other than experimentation, which says "never let
+the static guard bands get so large as to leave less than this amount of
+remaining space in the time slot, because the queue system will refuse
+to schedule packets otherwise, and they will get stuck". I had a hunch
+that my previous experimentally-determined value was only good for
+packets coming from the forwarding path, and that the CPU injection path
+needed more.
+
+I came to the new value of 35 ns through binary search, after seeing
+that with 544 ns (the bit time required to send the Pdelay_Resp packet
+at gigabit) it works. Again, this is purely experimental, there's no
+logic and the manual doesn't say anything.
+
+The new driver prints for this schedule look like this:
+
+mscc_felix 0000:00:00.5: port 0 tc 0 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 1 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 2 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 3 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 4 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 5 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 6 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+mscc_felix 0000:00:00.5: port 0 tc 7 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
+
+So yes, the maximum MTU is now even smaller by 1 byte than before.
+This is maybe counter-intuitive, but makes more sense with a diagram of
+one time slot.
+
+Before:
+
+ Gate open                                   Gate close
+ |                                                    |
+ v           1250 ns total time slot duration         v
+ <---------------------------------------------------->
+ <----><---------------------------------------------->
+  33 ns            1217 ns static guard band
+  useful
+
+ Gate open                                   Gate close
+ |                                                    |
+ v           1250 ns total time slot duration         v
+ <---------------------------------------------------->
+ <-----><--------------------------------------------->
+  35 ns            1215 ns static guard band
+  useful
+
+The static guard band implemented by this switch hardware directly
+determines the maximum allowable MTU for that traffic class. The larger
+it is, the earlier the switch will stop scheduling frames for
+transmission, because otherwise they might overrun the gate close time
+(and avoiding that is the entire purpose of Michael's patch).
+So, we now have guard bands smaller by 2 ns, thus, in this particular
+case, we lose a byte of the maximum MTU.
+
+Fixes: 11afdc6526de ("net: dsa: felix: tc-taprio intervals smaller than MTU should send at least one packet")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Link: https://patch.msgid.link/20241210132640.3426788-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  4 ----
- net/netfilter/nf_tables_api.c     | 32 +++++++++++++++----------------
- 2 files changed, 15 insertions(+), 21 deletions(-)
+ drivers/net/dsa/ocelot/felix_vsc9959.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 804dcd3a7d8f..b5f9ee5810a3 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1080,7 +1080,6 @@ struct nft_rule_blob {
-  *	@name: name of the chain
-  *	@udlen: user data length
-  *	@udata: user data in the chain
-- *	@rcu_head: rcu head for deferred release
-  *	@blob_next: rule blob pointer to the next in the chain
+diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
+index afb5dae4439c..8d27933c3733 100644
+--- a/drivers/net/dsa/ocelot/felix_vsc9959.c
++++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
+@@ -24,7 +24,7 @@
+ #define VSC9959_NUM_PORTS		6
+ 
+ #define VSC9959_TAS_GCL_ENTRY_MAX	63
+-#define VSC9959_TAS_MIN_GATE_LEN_NS	33
++#define VSC9959_TAS_MIN_GATE_LEN_NS	35
+ #define VSC9959_VCAP_POLICER_BASE	63
+ #define VSC9959_VCAP_POLICER_MAX	383
+ #define VSC9959_SWITCH_PCI_BAR		4
+@@ -1056,11 +1056,15 @@ static void vsc9959_mdio_bus_free(struct ocelot *ocelot)
+ 	mdiobus_free(felix->imdio);
+ }
+ 
+-/* The switch considers any frame (regardless of size) as eligible for
+- * transmission if the traffic class gate is open for at least 33 ns.
++/* The switch considers any frame (regardless of size) as eligible
++ * for transmission if the traffic class gate is open for at least
++ * VSC9959_TAS_MIN_GATE_LEN_NS.
++ *
+  * Overruns are prevented by cropping an interval at the end of the gate time
+- * slot for which egress scheduling is blocked, but we need to still keep 33 ns
+- * available for one packet to be transmitted, otherwise the port tc will hang.
++ * slot for which egress scheduling is blocked, but we need to still keep
++ * VSC9959_TAS_MIN_GATE_LEN_NS available for one packet to be transmitted,
++ * otherwise the port tc will hang.
++ *
+  * This function returns the size of a gate interval that remains available for
+  * setting the guard band, after reserving the space for one egress frame.
   */
- struct nft_chain {
-@@ -1098,7 +1097,6 @@ struct nft_chain {
- 	char				*name;
- 	u16				udlen;
- 	u8				*udata;
--	struct rcu_head			rcu_head;
- 
- 	/* Only used during control plane commit phase: */
- 	struct nft_rule_blob		*blob_next;
-@@ -1242,7 +1240,6 @@ static inline void nft_use_inc_restore(u32 *use)
-  *	@sets: sets in the table
-  *	@objects: stateful objects in the table
-  *	@flowtables: flow tables in the table
-- *	@net: netnamespace this table belongs to
-  *	@hgenerator: handle generator state
-  *	@handle: table handle
-  *	@use: number of chain references to this table
-@@ -1259,7 +1256,6 @@ struct nft_table {
- 	struct list_head		sets;
- 	struct list_head		objects;
- 	struct list_head		flowtables;
--	possible_net_t			net;
- 	u64				hgenerator;
- 	u64				handle;
- 	u32				use;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index eee7997048fb..a110aad45fe4 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1431,7 +1431,6 @@ static int nf_tables_newtable(struct sk_buff *skb, const struct nfnl_info *info,
- 	INIT_LIST_HEAD(&table->sets);
- 	INIT_LIST_HEAD(&table->objects);
- 	INIT_LIST_HEAD(&table->flowtables);
--	write_pnet(&table->net, net);
- 	table->family = family;
- 	table->flags = flags;
- 	table->handle = ++nft_net->table_handle;
-@@ -3784,8 +3783,11 @@ void nf_tables_rule_destroy(const struct nft_ctx *ctx, struct nft_rule *rule)
- 	kfree(rule);
- }
- 
-+/* can only be used if rule is no longer visible to dumps */
- static void nf_tables_rule_release(const struct nft_ctx *ctx, struct nft_rule *rule)
- {
-+	lockdep_commit_lock_is_held(ctx->net);
-+
- 	nft_rule_expr_deactivate(ctx, rule, NFT_TRANS_RELEASE);
- 	nf_tables_rule_destroy(ctx, rule);
- }
-@@ -5561,6 +5563,8 @@ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
-+	lockdep_commit_lock_is_held(ctx->net);
-+
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE_ERROR:
- 		nft_set_trans_unbind(ctx, set);
-@@ -11182,19 +11186,6 @@ static void __nft_release_basechain_now(struct nft_ctx *ctx)
- 	nf_tables_chain_destroy(ctx->chain);
- }
- 
--static void nft_release_basechain_rcu(struct rcu_head *head)
--{
--	struct nft_chain *chain = container_of(head, struct nft_chain, rcu_head);
--	struct nft_ctx ctx = {
--		.family	= chain->table->family,
--		.chain	= chain,
--		.net	= read_pnet(&chain->table->net),
--	};
--
--	__nft_release_basechain_now(&ctx);
--	put_net(ctx.net);
--}
--
- int __nft_release_basechain(struct nft_ctx *ctx)
- {
- 	struct nft_rule *rule;
-@@ -11209,11 +11200,18 @@ int __nft_release_basechain(struct nft_ctx *ctx)
- 	nft_chain_del(ctx->chain);
- 	nft_use_dec(&ctx->table->use);
- 
--	if (maybe_get_net(ctx->net))
--		call_rcu(&ctx->chain->rcu_head, nft_release_basechain_rcu);
--	else
-+	if (!maybe_get_net(ctx->net)) {
- 		__nft_release_basechain_now(ctx);
-+		return 0;
-+	}
-+
-+	/* wait for ruleset dumps to complete.  Owning chain is no longer in
-+	 * lists, so new dumps can't find any of these rules anymore.
-+	 */
-+	synchronize_rcu();
- 
-+	__nft_release_basechain_now(ctx);
-+	put_net(ctx->net);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(__nft_release_basechain);
+@@ -1303,7 +1307,8 @@ static void vsc9959_tas_guard_bands_update(struct ocelot *ocelot, int port)
+ 			 * per-tc static guard band lengths, so it reduces the
+ 			 * useful gate interval length. Therefore, be careful
+ 			 * to calculate a guard band (and therefore max_sdu)
+-			 * that still leaves 33 ns available in the time slot.
++			 * that still leaves VSC9959_TAS_MIN_GATE_LEN_NS
++			 * available in the time slot.
+ 			 */
+ 			max_sdu = div_u64(remaining_gate_len_ps, picos_per_byte);
+ 			/* A TC gate may be completely closed, which is a
 -- 
 2.39.5
 
