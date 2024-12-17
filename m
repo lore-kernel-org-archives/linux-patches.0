@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1884F140E38;
-	Tue, 17 Dec 2024 17:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030221F8689;
+	Tue, 17 Dec 2024 17:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456375; cv=none; b=CFlIXvYoOAVEXcbUJ9QG1ruTwzTNZrwPSvrCYazVxHsGe++UhIvka4/RuzuP/OwnSCHDRtMYl2UHGgf1Fk+CaY7E5+XpmmlppRFEpYeT1695KTbaMna4dF6iTv/DA6aUKUqE8WgL5woG8niySTw+GFjsFmlWsx4P6W4u8bDhJk8=
+	t=1734456378; cv=none; b=BUS283c73QY7dV62P21trNRoK9OGUZhAxJWVvMmbsVckNChBfjiBG2AOxEGFozzz/cnsR1+5Zqg/oKRvkJV8PJhk7JaC10ZpgQ1ABWXHlWx5xtMJFk8yEzw8u6bCJHcA2GgtxyuBcphGztynGGv8MpaULzqDmJzgGnrp0gEekoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456375; c=relaxed/simple;
-	bh=hBa/n+INXvNiomyHwVbcgDFdLuSyepNSgGuYSIfnbFw=;
+	s=arc-20240116; t=1734456378; c=relaxed/simple;
+	bh=3i3jqqdzPxz6q1NGbgM/thnl5p04VRJDzSYBqLjwm/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwFZKY4qB+XswR/DDrj4Y2/ERf8HIVuQTCQeFGrhr8CUor5SBh3nyb1bmgh9AHqFPJzptUcvQIOMgcF4nLyQihPuJjbLMBIdpdLr0tyc+aeChdVJ/cNbGQUdV3vtW2Mxe2G/bkowD5CKXqOQFgtEkk8rOYI/rAshr0O/XeLIqrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBsGlJTW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R7ljY3FpoHXn01Glz02YN33k0g7WOmnVSEPRrBVSGDVnkCuSGrVXcuoRejOA+fdFH7x84oz9SGaNh1hB13p1JkRxbvqtxuoVY8RrXxlVzsfJx7Dfj5WBMh6Pl0OdFIljCBUAhebrP9VsCJGCJoj8HN1UpLZARj1hZzQfsu7vt1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQdtIIgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBsGlJTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FDDC4CED3;
-	Tue, 17 Dec 2024 17:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQdtIIgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D440C4CED3;
+	Tue, 17 Dec 2024 17:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456375;
-	bh=hBa/n+INXvNiomyHwVbcgDFdLuSyepNSgGuYSIfnbFw=;
+	s=korg; t=1734456377;
+	bh=3i3jqqdzPxz6q1NGbgM/thnl5p04VRJDzSYBqLjwm/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBsGlJTWczdSZpG8xpvz921LJaL8Uwy6UnO2P2E5m4eUX+U4p+ISj21z4kg9gNJ8o
-	 nwW300/GaQZtY15nKpX4qnLCG3vInWib/lkx2iDOAfnGi78nIQ9SgU+IX5/PAzrom8
-	 rZDXuQN3Vzfv5S51rtsRzjccosH1WaAvuqwIG9ng=
+	b=eQdtIIgroRmNeGPjnXHjgdFXz9YzwCnJh0UXUmh+lKPTkJhA3GMe0nt169BNuQDuj
+	 3bCPaA3b8wW7u3xniNQRwl6Rf9r4MUYHCe6wc1T/DzeGqkN4sI13Hyc+R790cp4FW9
+	 2nkVUZIX0+vlbt/Zm2Wa7SvhIGgUGcrswdi4Pm3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manu Bretelle <chantra@meta.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.12 039/172] bpf: Revert "bpf: Mark raw_tp arguments with PTR_MAYBE_NULL"
-Date: Tue, 17 Dec 2024 18:06:35 +0100
-Message-ID: <20241217170547.884494864@linuxfoundation.org>
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.12 040/172] ata: sata_highbank: fix OF node reference leak in highbank_initialize_phys()
+Date: Tue, 17 Dec 2024 18:06:36 +0100
+Message-ID: <20241217170547.927977990@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,331 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit c00d738e1673ab801e1577e4e3c780ccf88b1a5b upstream.
+commit 676fe1f6f74db988191dab5df3bf256908177072 upstream.
 
-This patch reverts commit
-cb4158ce8ec8 ("bpf: Mark raw_tp arguments with PTR_MAYBE_NULL"). The
-patch was well-intended and meant to be as a stop-gap fixing branch
-prediction when the pointer may actually be NULL at runtime. Eventually,
-it was supposed to be replaced by an automated script or compiler pass
-detecting possibly NULL arguments and marking them accordingly.
+The OF node reference obtained by of_parse_phandle_with_args() is not
+released on early return. Add a of_node_put() call before returning.
 
-However, it caused two main issues observed for production programs and
-failed to preserve backwards compatibility. First, programs relied on
-the verifier not exploring == NULL branch when pointer is not NULL, thus
-they started failing with a 'dereference of scalar' error.  Next,
-allowing raw_tp arguments to be modified surfaced the warning in the
-verifier that warns against reg->off when PTR_MAYBE_NULL is set.
-
-More information, context, and discusson on both problems is available
-in [0]. Overall, this approach had several shortcomings, and the fixes
-would further complicate the verifier's logic, and the entire masking
-scheme would have to be removed eventually anyway.
-
-Hence, revert the patch in preparation of a better fix avoiding these
-issues to replace this commit.
-
-  [0]: https://lore.kernel.org/bpf/20241206161053.809580-1-memxor@gmail.com
-
-Reported-by: Manu Bretelle <chantra@meta.com>
-Fixes: cb4158ce8ec8 ("bpf: Mark raw_tp arguments with PTR_MAYBE_NULL")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241213221929.3495062-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 8996b89d6bc9 ("ata: add platform driver for Calxeda AHCI controller")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf.h                                      |    6 -
- kernel/bpf/btf.c                                         |    5 
- kernel/bpf/verifier.c                                    |   79 +--------------
- tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c |    6 -
- 4 files changed, 9 insertions(+), 87 deletions(-)
+ drivers/ata/sata_highbank.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/include/linux/bpf.h
-+++ b/include/linux/bpf.h
-@@ -3471,10 +3471,4 @@ static inline bool bpf_is_subprog(const
- 	return prog->aux->func_idx != 0;
- }
- 
--static inline bool bpf_prog_is_raw_tp(const struct bpf_prog *prog)
--{
--	return prog->type == BPF_PROG_TYPE_TRACING &&
--	       prog->expected_attach_type == BPF_TRACE_RAW_TP;
--}
--
- #endif /* _LINUX_BPF_H */
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6564,10 +6564,7 @@ bool btf_ctx_access(int off, int size, e
- 	if (prog_args_trusted(prog))
- 		info->reg_type |= PTR_TRUSTED;
- 
--	/* Raw tracepoint arguments always get marked as maybe NULL */
--	if (bpf_prog_is_raw_tp(prog))
--		info->reg_type |= PTR_MAYBE_NULL;
--	else if (btf_param_match_suffix(btf, &args[arg], "__nullable"))
-+	if (btf_param_match_suffix(btf, &args[arg], "__nullable"))
- 		info->reg_type |= PTR_MAYBE_NULL;
- 
- 	if (tgt_prog) {
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -418,25 +418,6 @@ static struct btf_record *reg_btf_record
- 	return rec;
- }
- 
--static bool mask_raw_tp_reg_cond(const struct bpf_verifier_env *env, struct bpf_reg_state *reg) {
--	return reg->type == (PTR_TO_BTF_ID | PTR_TRUSTED | PTR_MAYBE_NULL) &&
--	       bpf_prog_is_raw_tp(env->prog) && !reg->ref_obj_id;
--}
--
--static bool mask_raw_tp_reg(const struct bpf_verifier_env *env, struct bpf_reg_state *reg)
--{
--	if (!mask_raw_tp_reg_cond(env, reg))
--		return false;
--	reg->type &= ~PTR_MAYBE_NULL;
--	return true;
--}
--
--static void unmask_raw_tp_reg(struct bpf_reg_state *reg, bool result)
--{
--	if (result)
--		reg->type |= PTR_MAYBE_NULL;
--}
--
- static bool subprog_is_global(const struct bpf_verifier_env *env, int subprog)
- {
- 	struct bpf_func_info_aux *aux = env->prog->aux->func_info_aux;
-@@ -6618,7 +6599,6 @@ static int check_ptr_to_btf_access(struc
- 	const char *field_name = NULL;
- 	enum bpf_type_flag flag = 0;
- 	u32 btf_id = 0;
--	bool mask;
- 	int ret;
- 
- 	if (!env->allow_ptr_leaks) {
-@@ -6690,21 +6670,7 @@ static int check_ptr_to_btf_access(struc
- 
- 	if (ret < 0)
- 		return ret;
--	/* For raw_tp progs, we allow dereference of PTR_MAYBE_NULL
--	 * trusted PTR_TO_BTF_ID, these are the ones that are possibly
--	 * arguments to the raw_tp. Since internal checks in for trusted
--	 * reg in check_ptr_to_btf_access would consider PTR_MAYBE_NULL
--	 * modifier as problematic, mask it out temporarily for the
--	 * check. Don't apply this to pointers with ref_obj_id > 0, as
--	 * those won't be raw_tp args.
--	 *
--	 * We may end up applying this relaxation to other trusted
--	 * PTR_TO_BTF_ID with maybe null flag, since we cannot
--	 * distinguish PTR_MAYBE_NULL tagged for arguments vs normal
--	 * tagging, but that should expand allowed behavior, and not
--	 * cause regression for existing behavior.
--	 */
--	mask = mask_raw_tp_reg(env, reg);
-+
- 	if (ret != PTR_TO_BTF_ID) {
- 		/* just mark; */
- 
-@@ -6765,13 +6731,8 @@ static int check_ptr_to_btf_access(struc
- 		clear_trusted_flags(&flag);
- 	}
- 
--	if (atype == BPF_READ && value_regno >= 0) {
-+	if (atype == BPF_READ && value_regno >= 0)
- 		mark_btf_ld_reg(env, regs, value_regno, ret, reg->btf, btf_id, flag);
--		/* We've assigned a new type to regno, so don't undo masking. */
--		if (regno == value_regno)
--			mask = false;
--	}
--	unmask_raw_tp_reg(reg, mask);
- 
- 	return 0;
- }
-@@ -7146,7 +7107,7 @@ static int check_mem_access(struct bpf_v
- 		if (!err && t == BPF_READ && value_regno >= 0)
- 			mark_reg_unknown(env, regs, value_regno);
- 	} else if (base_type(reg->type) == PTR_TO_BTF_ID &&
--		   (mask_raw_tp_reg_cond(env, reg) || !type_may_be_null(reg->type))) {
-+		   !type_may_be_null(reg->type)) {
- 		err = check_ptr_to_btf_access(env, regs, regno, off, size, t,
- 					      value_regno);
- 	} else if (reg->type == CONST_PTR_TO_MAP) {
-@@ -8844,7 +8805,6 @@ static int check_func_arg(struct bpf_ver
- 	enum bpf_reg_type type = reg->type;
- 	u32 *arg_btf_id = NULL;
- 	int err = 0;
--	bool mask;
- 
- 	if (arg_type == ARG_DONTCARE)
- 		return 0;
-@@ -8885,11 +8845,11 @@ static int check_func_arg(struct bpf_ver
- 	    base_type(arg_type) == ARG_PTR_TO_SPIN_LOCK)
- 		arg_btf_id = fn->arg_btf_id[arg];
- 
--	mask = mask_raw_tp_reg(env, reg);
- 	err = check_reg_type(env, regno, arg_type, arg_btf_id, meta);
-+	if (err)
-+		return err;
- 
--	err = err ?: check_func_arg_reg_off(env, reg, regno, arg_type);
--	unmask_raw_tp_reg(reg, mask);
-+	err = check_func_arg_reg_off(env, reg, regno, arg_type);
- 	if (err)
- 		return err;
- 
-@@ -9684,17 +9644,14 @@ static int btf_check_func_arg_match(stru
- 				return ret;
- 		} else if (base_type(arg->arg_type) == ARG_PTR_TO_BTF_ID) {
- 			struct bpf_call_arg_meta meta;
--			bool mask;
- 			int err;
- 
- 			if (register_is_null(reg) && type_may_be_null(arg->arg_type))
- 				continue;
- 
- 			memset(&meta, 0, sizeof(meta)); /* leave func_id as zero */
--			mask = mask_raw_tp_reg(env, reg);
- 			err = check_reg_type(env, regno, arg->arg_type, &arg->btf_id, &meta);
- 			err = err ?: check_func_arg_reg_off(env, reg, regno, arg->arg_type);
--			unmask_raw_tp_reg(reg, mask);
- 			if (err)
- 				return err;
- 		} else {
-@@ -12009,7 +11966,6 @@ static int check_kfunc_args(struct bpf_v
- 		enum bpf_arg_type arg_type = ARG_DONTCARE;
- 		u32 regno = i + 1, ref_id, type_size;
- 		bool is_ret_buf_sz = false;
--		bool mask = false;
- 		int kf_arg_type;
- 
- 		t = btf_type_skip_modifiers(btf, args[i].type, NULL);
-@@ -12068,15 +12024,12 @@ static int check_kfunc_args(struct bpf_v
- 			return -EINVAL;
- 		}
- 
--		mask = mask_raw_tp_reg(env, reg);
- 		if ((is_kfunc_trusted_args(meta) || is_kfunc_rcu(meta)) &&
- 		    (register_is_null(reg) || type_may_be_null(reg->type)) &&
- 			!is_kfunc_arg_nullable(meta->btf, &args[i])) {
- 			verbose(env, "Possibly NULL pointer passed to trusted arg%d\n", i);
--			unmask_raw_tp_reg(reg, mask);
- 			return -EACCES;
- 		}
--		unmask_raw_tp_reg(reg, mask);
- 
- 		if (reg->ref_obj_id) {
- 			if (is_kfunc_release(meta) && meta->ref_obj_id) {
-@@ -12134,24 +12087,16 @@ static int check_kfunc_args(struct bpf_v
- 			if (!is_kfunc_trusted_args(meta) && !is_kfunc_rcu(meta))
- 				break;
- 
--			/* Allow passing maybe NULL raw_tp arguments to
--			 * kfuncs for compatibility. Don't apply this to
--			 * arguments with ref_obj_id > 0.
--			 */
--			mask = mask_raw_tp_reg(env, reg);
- 			if (!is_trusted_reg(reg)) {
- 				if (!is_kfunc_rcu(meta)) {
- 					verbose(env, "R%d must be referenced or trusted\n", regno);
--					unmask_raw_tp_reg(reg, mask);
- 					return -EINVAL;
- 				}
- 				if (!is_rcu_reg(reg)) {
- 					verbose(env, "R%d must be a rcu pointer\n", regno);
--					unmask_raw_tp_reg(reg, mask);
- 					return -EINVAL;
- 				}
+--- a/drivers/ata/sata_highbank.c
++++ b/drivers/ata/sata_highbank.c
+@@ -348,6 +348,7 @@ static int highbank_initialize_phys(stru
+ 			phy_nodes[phy] = phy_data.np;
+ 			cphy_base[phy] = of_iomap(phy_nodes[phy], 0);
+ 			if (cphy_base[phy] == NULL) {
++				of_node_put(phy_data.np);
+ 				return 0;
  			}
--			unmask_raw_tp_reg(reg, mask);
- 			fallthrough;
- 		case KF_ARG_PTR_TO_CTX:
- 		case KF_ARG_PTR_TO_DYNPTR:
-@@ -12174,9 +12119,7 @@ static int check_kfunc_args(struct bpf_v
- 
- 		if (is_kfunc_release(meta) && reg->ref_obj_id)
- 			arg_type |= OBJ_RELEASE;
--		mask = mask_raw_tp_reg(env, reg);
- 		ret = check_func_arg_reg_off(env, reg, regno, arg_type);
--		unmask_raw_tp_reg(reg, mask);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -12353,7 +12296,6 @@ static int check_kfunc_args(struct bpf_v
- 			ref_tname = btf_name_by_offset(btf, ref_t->name_off);
- 			fallthrough;
- 		case KF_ARG_PTR_TO_BTF_ID:
--			mask = mask_raw_tp_reg(env, reg);
- 			/* Only base_type is checked, further checks are done here */
- 			if ((base_type(reg->type) != PTR_TO_BTF_ID ||
- 			     (bpf_type_has_unsafe_modifiers(reg->type) && !is_rcu_reg(reg))) &&
-@@ -12362,11 +12304,9 @@ static int check_kfunc_args(struct bpf_v
- 				verbose(env, "expected %s or socket\n",
- 					reg_type_str(env, base_type(reg->type) |
- 							  (type_flag(reg->type) & BPF_REG_TRUSTED_MODIFIERS)));
--				unmask_raw_tp_reg(reg, mask);
- 				return -EINVAL;
- 			}
- 			ret = process_kf_arg_ptr_to_btf_id(env, reg, ref_t, ref_tname, ref_id, meta, i);
--			unmask_raw_tp_reg(reg, mask);
- 			if (ret < 0)
- 				return ret;
- 			break;
-@@ -13336,7 +13276,7 @@ static int sanitize_check_bounds(struct
-  */
- static int adjust_ptr_min_max_vals(struct bpf_verifier_env *env,
- 				   struct bpf_insn *insn,
--				   struct bpf_reg_state *ptr_reg,
-+				   const struct bpf_reg_state *ptr_reg,
- 				   const struct bpf_reg_state *off_reg)
- {
- 	struct bpf_verifier_state *vstate = env->cur_state;
-@@ -13350,7 +13290,6 @@ static int adjust_ptr_min_max_vals(struc
- 	struct bpf_sanitize_info info = {};
- 	u8 opcode = BPF_OP(insn->code);
- 	u32 dst = insn->dst_reg;
--	bool mask;
- 	int ret;
- 
- 	dst_reg = &regs[dst];
-@@ -13377,14 +13316,11 @@ static int adjust_ptr_min_max_vals(struc
- 		return -EACCES;
- 	}
- 
--	mask = mask_raw_tp_reg(env, ptr_reg);
- 	if (ptr_reg->type & PTR_MAYBE_NULL) {
- 		verbose(env, "R%d pointer arithmetic on %s prohibited, null-check it first\n",
- 			dst, reg_type_str(env, ptr_reg->type));
--		unmask_raw_tp_reg(ptr_reg, mask);
- 		return -EACCES;
- 	}
--	unmask_raw_tp_reg(ptr_reg, mask);
- 
- 	switch (base_type(ptr_reg->type)) {
- 	case PTR_TO_CTX:
-@@ -19934,7 +19870,6 @@ static int convert_ctx_accesses(struct b
- 		 * for this case.
- 		 */
- 		case PTR_TO_BTF_ID | MEM_ALLOC | PTR_UNTRUSTED:
--		case PTR_TO_BTF_ID | PTR_TRUSTED | PTR_MAYBE_NULL:
- 			if (type == BPF_READ) {
- 				if (BPF_MODE(insn->code) == BPF_MEM)
- 					insn->code = BPF_LDX | BPF_PROBE_MEM |
---- a/tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c
-+++ b/tools/testing/selftests/bpf/progs/test_tp_btf_nullable.c
-@@ -7,11 +7,7 @@
- #include "bpf_misc.h"
- 
- SEC("tp_btf/bpf_testmod_test_nullable_bare")
--/* This used to be a failure test, but raw_tp nullable arguments can now
-- * directly be dereferenced, whether they have nullable annotation or not,
-- * and don't need to be explicitly checked.
-- */
--__success
-+__failure __msg("R1 invalid mem access 'trusted_ptr_or_null_'")
- int BPF_PROG(handle_tp_btf_nullable_bare1, struct bpf_testmod_test_read_ctx *nullable_ctx)
- {
- 	return nullable_ctx->len;
+ 			phy_count += 1;
 
 
