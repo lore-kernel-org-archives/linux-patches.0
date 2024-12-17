@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6591DE2AC;
-	Tue, 17 Dec 2024 17:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66FD14A4E7;
+	Tue, 17 Dec 2024 17:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456008; cv=none; b=DSzCnIfhXeGaAKnGLLp4erPEW8smdcj3OYaQG4inZF8VYWo0uDq40CyJqbkhGi7Je2Akxcpq/IvCIxFmk31dQWtLnlvSZQiIpT8PBlPJXK1UB3jE9JoEemDboy3yjlD77roJJM619FX1p9Fb1R/5oZL0jGRJ9rUMC1sOUQcFw0M=
+	t=1734456010; cv=none; b=DL1eZCWK8m8qNQC8eM4/VQHsBeCHvTtD8Q2wch9v1ECgdGqZWfM6DTXlP2BjAnZOZcbnVVk1AcfaN9PMnIYjQnE+OxAEx3S7skSaVc2Eyu0gL5roFb2ucCaZdGbPZong3iinnUrpHEuoglKYJGRReVlNYbRKVSVNhaeqfaxqXqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456008; c=relaxed/simple;
-	bh=g/7GqLOal8Xo/g7ytjEsArVFPu2Ywj/8S0OysEBe0Fk=;
+	s=arc-20240116; t=1734456010; c=relaxed/simple;
+	bh=xxBHVPpskiOqfYFb/1oUlSz4NZZl0paqgQAPTcBL2DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9+AxVpCLoVqHo6JxY/sS433KBkilsX31BQ6CkXmZopMQDYeIjt4BDxQQelp6rtzA5bojEoNxCzPGNJrTa4PxF1Sck8FlVzoVSjLilympt8yPYVTPzE4y4gCWFxzpyr3ejcpZb3Ft5RkNQaDbu0nN41uGPJ6X3NZ+1oG54/4nPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nzl5C80F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qgO9jgmUM3IYSaoU3DAIQpHXWMLumvqt4sHiNiRevsXLKCSRjthqUeXOldQHmtA6Lk9vsm22KdhJOMXZAkzwkcu6jJN/n0l4LcV8bvVbqKwWjAd6P7EV3T7tm3f6QOCTDllQfAC0HhnYMVYh76Fj4oWu7vy8rbvwmP3jCFaLDS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxUpXKCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nzl5C80F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DEFC4CED3;
-	Tue, 17 Dec 2024 17:20:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxUpXKCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB8DC4CED3;
+	Tue, 17 Dec 2024 17:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456007;
-	bh=g/7GqLOal8Xo/g7ytjEsArVFPu2Ywj/8S0OysEBe0Fk=;
+	s=korg; t=1734456010;
+	bh=xxBHVPpskiOqfYFb/1oUlSz4NZZl0paqgQAPTcBL2DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nzl5C80FfuTr44vDECpqJoCO2Xxm70VGUmPTvFXXrQSsm9CimlBxBGpVamUxTO/B2
-	 sf/jcAqzf8G1TkxtTFfvjYaaiWcvXS4u+8b0TNkpnrKKLhQqxfA8dTwCQ9DSI8bve8
-	 HjM1GzlOAK6sVLqNDi74bg+ONfRDNjhnVwLeER3M=
+	b=vxUpXKCVGAxxO2Szk7FZsONasWaDenbm8dti8rtec15PtiLr1MN0j8XYWPpulN/vn
+	 1F+CdTVZjnNnvYINssWeycaGLNTf8UQAAcI4YO5V6wC6opKUQ74RGw1WuUiwiXBqd7
+	 V867RMkKxw/LlLrp4qSrh0XGOxJFJx4iUb64z1i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@mit.edu>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.6 029/109] bpf: Check size for BTF-based ctx access of pointer members
-Date: Tue, 17 Dec 2024 18:07:13 +0100
-Message-ID: <20241217170534.599927096@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.6 003/109] ksmbd: fix racy issue from session lookup and expire
+Date: Tue, 17 Dec 2024 18:06:47 +0100
+Message-ID: <20241217170533.474857362@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -51,106 +51,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 659b9ba7cb2d7adb64618b87ddfaa528a143766e upstream.
+commit b95629435b84b9ecc0c765995204a4d8a913ed52 upstream.
 
-Robert Morris reported the following program type which passes the
-verifier in [0]:
+Increment the session reference count within the lock for lookup to avoid
+racy issue with session expire.
 
-SEC("struct_ops/bpf_cubic_init")
-void BPF_PROG(bpf_cubic_init, struct sock *sk)
-{
-	asm volatile("r2 = *(u16*)(r1 + 0)");     // verifier should demand u64
-	asm volatile("*(u32 *)(r2 +1504) = 0");   // 1280 in some configs
-}
-
-The second line may or may not work, but the first instruction shouldn't
-pass, as it's a narrow load into the context structure of the struct ops
-callback. The code falls back to btf_ctx_access to ensure correctness
-and obtaining the types of pointers. Ensure that the size of the access
-is correctly checked to be 8 bytes, otherwise the verifier thinks the
-narrow load obtained a trusted BTF pointer and will permit loads/stores
-as it sees fit.
-
-Perform the check on size after we've verified that the load is for a
-pointer field, as for scalar values narrow loads are fine. Access to
-structs passed as arguments to a BPF program are also treated as
-scalars, therefore no adjustment is needed in their case.
-
-Existing verifier selftests are broken by this change, but because they
-were incorrect. Verifier tests for d_path were performing narrow load
-into context to obtain path pointer, had this program actually run it
-would cause a crash. The same holds for verifier_btf_ctx_access tests.
-
-  [0]: https://lore.kernel.org/bpf/51338.1732985814@localhost
-
-Fixes: 9e15db66136a ("bpf: Implement accurate raw_tp context access via BTF")
-Reported-by: Robert Morris <rtm@mit.edu>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20241212092050.3204165-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-25737
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/btf.c                                            |    6 ++++++
- tools/testing/selftests/bpf/progs/verifier_btf_ctx_access.c |    4 ++--
- tools/testing/selftests/bpf/progs/verifier_d_path.c         |    4 ++--
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ fs/smb/server/auth.c              |    2 ++
+ fs/smb/server/mgmt/user_session.c |    6 +++++-
+ fs/smb/server/server.c            |    4 ++--
+ fs/smb/server/smb2pdu.c           |   27 ++++++++++++++-------------
+ 4 files changed, 23 insertions(+), 16 deletions(-)
 
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -6024,6 +6024,12 @@ bool btf_ctx_access(int off, int size, e
- 		return false;
- 	}
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -1012,6 +1012,8 @@ static int ksmbd_get_encryption_key(stru
  
-+	if (size != sizeof(u64)) {
-+		bpf_log(log, "func '%s' size %d must be 8\n",
-+			tname, size);
-+		return false;
+ 	ses_enc_key = enc ? sess->smb3encryptionkey :
+ 		sess->smb3decryptionkey;
++	if (enc)
++		ksmbd_user_session_get(sess);
+ 	memcpy(key, ses_enc_key, SMB3_ENC_DEC_KEY_SIZE);
+ 
+ 	return 0;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -262,8 +262,10 @@ struct ksmbd_session *ksmbd_session_look
+ 
+ 	down_read(&conn->session_lock);
+ 	sess = xa_load(&conn->sessions, id);
+-	if (sess)
++	if (sess) {
+ 		sess->last_active = jiffies;
++		ksmbd_user_session_get(sess);
 +	}
-+
- 	/* check for PTR_TO_RDONLY_BUF_OR_NULL or PTR_TO_RDWR_BUF_OR_NULL */
- 	for (i = 0; i < prog->aux->ctx_arg_info_size; i++) {
- 		const struct bpf_ctx_arg_aux *ctx_arg_info = &prog->aux->ctx_arg_info[i];
---- a/tools/testing/selftests/bpf/progs/verifier_btf_ctx_access.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_btf_ctx_access.c
-@@ -11,7 +11,7 @@ __success __retval(0)
- __naked void btf_ctx_access_accept(void)
+ 	up_read(&conn->session_lock);
+ 	return sess;
+ }
+@@ -274,6 +276,8 @@ struct ksmbd_session *ksmbd_session_look
+ 
+ 	down_read(&sessions_table_lock);
+ 	sess = __session_lookup(id);
++	if (sess)
++		ksmbd_user_session_get(sess);
+ 	up_read(&sessions_table_lock);
+ 
+ 	return sess;
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -241,14 +241,14 @@ send:
+ 	if (work->tcon)
+ 		ksmbd_tree_connect_put(work->tcon);
+ 	smb3_preauth_hash_rsp(work);
+-	if (work->sess)
+-		ksmbd_user_session_put(work->sess);
+ 	if (work->sess && work->sess->enc && work->encrypted &&
+ 	    conn->ops->encrypt_resp) {
+ 		rc = conn->ops->encrypt_resp(work);
+ 		if (rc < 0)
+ 			conn->ops->set_rsp_status(work, STATUS_DATA_ERROR);
+ 	}
++	if (work->sess)
++		ksmbd_user_session_put(work->sess);
+ 
+ 	ksmbd_conn_write(work);
+ }
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -67,8 +67,10 @@ static inline bool check_session_id(stru
+ 		return false;
+ 
+ 	sess = ksmbd_session_lookup_all(conn, id);
+-	if (sess)
++	if (sess) {
++		ksmbd_user_session_put(sess);
+ 		return true;
++	}
+ 	pr_err("Invalid user session id: %llu\n", id);
+ 	return false;
+ }
+@@ -605,10 +607,8 @@ int smb2_check_user_session(struct ksmbd
+ 
+ 	/* Check for validity of user session */
+ 	work->sess = ksmbd_session_lookup_all(conn, sess_id);
+-	if (work->sess) {
+-		ksmbd_user_session_get(work->sess);
++	if (work->sess)
+ 		return 1;
+-	}
+ 	ksmbd_debug(SMB, "Invalid user session, Uid %llu\n", sess_id);
+ 	return -ENOENT;
+ }
+@@ -1704,29 +1704,35 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 
+ 		if (conn->dialect != sess->dialect) {
+ 			rc = -EINVAL;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (!(req->hdr.Flags & SMB2_FLAGS_SIGNED)) {
+ 			rc = -EINVAL;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (strncmp(conn->ClientGUID, sess->ClientGUID,
+ 			    SMB2_CLIENT_GUID_SIZE)) {
+ 			rc = -ENOENT;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (sess->state == SMB2_SESSION_IN_PROGRESS) {
+ 			rc = -EACCES;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
+ 
+ 		if (sess->state == SMB2_SESSION_EXPIRED) {
+ 			rc = -EFAULT;
++			ksmbd_user_session_put(sess);
+ 			goto out_err;
+ 		}
++		ksmbd_user_session_put(sess);
+ 
+ 		if (ksmbd_conn_need_reconnect(conn)) {
+ 			rc = -EFAULT;
+@@ -1734,7 +1740,8 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 			goto out_err;
+ 		}
+ 
+-		if (ksmbd_session_lookup(conn, sess_id)) {
++		sess = ksmbd_session_lookup(conn, sess_id);
++		if (!sess) {
+ 			rc = -EACCES;
+ 			goto out_err;
+ 		}
+@@ -1745,7 +1752,6 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = true;
+-		ksmbd_user_session_get(sess);
+ 	} else if ((conn->dialect < SMB30_PROT_ID ||
+ 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
+ 		   (req->Flags & SMB2_SESSION_REQ_FLAG_BINDING)) {
+@@ -1772,7 +1778,6 @@ int smb2_sess_setup(struct ksmbd_work *w
+ 		}
+ 
+ 		conn->binding = false;
+-		ksmbd_user_session_get(sess);
+ 	}
+ 	work->sess = sess;
+ 
+@@ -2196,9 +2201,9 @@ err_out:
+ int smb2_session_logoff(struct ksmbd_work *work)
  {
- 	asm volatile ("					\
--	r2 = *(u32*)(r1 + 8);		/* load 2nd argument value (int pointer) */\
-+	r2 = *(u64 *)(r1 + 8);		/* load 2nd argument value (int pointer) */\
- 	r0 = 0;						\
- 	exit;						\
- "	::: __clobber_all);
-@@ -23,7 +23,7 @@ __success __retval(0)
- __naked void ctx_access_u32_pointer_accept(void)
- {
- 	asm volatile ("					\
--	r2 = *(u32*)(r1 + 0);		/* load 1nd argument value (u32 pointer) */\
-+	r2 = *(u64 *)(r1 + 0);		/* load 1nd argument value (u32 pointer) */\
- 	r0 = 0;						\
- 	exit;						\
- "	::: __clobber_all);
---- a/tools/testing/selftests/bpf/progs/verifier_d_path.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_d_path.c
-@@ -11,7 +11,7 @@ __success __retval(0)
- __naked void d_path_accept(void)
- {
- 	asm volatile ("					\
--	r1 = *(u32*)(r1 + 0);				\
-+	r1 = *(u64 *)(r1 + 0);				\
- 	r2 = r10;					\
- 	r2 += -8;					\
- 	r6 = 0;						\
-@@ -31,7 +31,7 @@ __failure __msg("helper call is not allo
- __naked void d_path_reject(void)
- {
- 	asm volatile ("					\
--	r1 = *(u32*)(r1 + 0);				\
-+	r1 = *(u64 *)(r1 + 0);				\
- 	r2 = r10;					\
- 	r2 += -8;					\
- 	r6 = 0;						\
+ 	struct ksmbd_conn *conn = work->conn;
++	struct ksmbd_session *sess = work->sess;
+ 	struct smb2_logoff_req *req;
+ 	struct smb2_logoff_rsp *rsp;
+-	struct ksmbd_session *sess;
+ 	u64 sess_id;
+ 	int err;
+ 
+@@ -2220,11 +2225,6 @@ int smb2_session_logoff(struct ksmbd_wor
+ 	ksmbd_close_session_fds(work);
+ 	ksmbd_conn_wait_idle(conn);
+ 
+-	/*
+-	 * Re-lookup session to validate if session is deleted
+-	 * while waiting request complete
+-	 */
+-	sess = ksmbd_session_lookup_all(conn, sess_id);
+ 	if (ksmbd_tree_conn_session_logoff(sess)) {
+ 		ksmbd_debug(SMB, "Invalid tid %d\n", req->hdr.Id.SyncId.TreeId);
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+@@ -8964,6 +8964,7 @@ int smb3_decrypt_req(struct ksmbd_work *
+ 		       le64_to_cpu(tr_hdr->SessionId));
+ 		return -ECONNABORTED;
+ 	}
++	ksmbd_user_session_put(sess);
+ 
+ 	iov[0].iov_base = buf;
+ 	iov[0].iov_len = sizeof(struct smb2_transform_hdr) + 4;
 
 
