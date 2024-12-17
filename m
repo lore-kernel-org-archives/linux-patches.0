@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1DD1F8AD4;
-	Tue, 17 Dec 2024 17:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DDD1F8AE4;
+	Tue, 17 Dec 2024 17:31:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456701; cv=none; b=jLdX7jItUSaKaxvXUBbFBtMAnwmA/wDZvxHUnS05vamVqdUZe2t8kanDVsTaCt3LMJE1m1ij9FpNgUHk4Tj1tNl7sQgVHe09+KcA4ynIHbvkF1OPoDVb0CG7b+FBNgs5uQ+Bqf5WLDxyDNd/sMt7vi98ucEQmsxEMTL4d7lAJrc=
+	t=1734456705; cv=none; b=KU/4B7IZOTX2azDjNtdwR4otvBO1+ySvL2Dc6ygZSCCtNfcWr0kDx4ODnu6xSPVqyGchZA8nRLQX5uYaTj/o4XGfCIcmai6ZXCjBIjCuOMEfusN4SHMLIXuRV33BYfU0NLu1h/gbU0j/TCpSRncwmk1LCuhmNpXzSt/KcZmICDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456701; c=relaxed/simple;
-	bh=K5z6YgM4UDap0tTYfGcTIe3/mbKLfa6NrGs6xnkVKdA=;
+	s=arc-20240116; t=1734456705; c=relaxed/simple;
+	bh=LAy7dNM609o0hbROs+gQhf0tmAyZZpy/S/8fA9IhJbQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgAJRrVimmi2LyfyIV2+huB+IGK3H3+UBM2Nxu8+tFsRQRoayKxd8Wo2zyZ5iDdB1CzSBpj8mKDlY5Z+4GMXBdmwb3oEg9Fhe5YmqBNR+2CzCgnZ/ZbCYNfV34uXI1U9kZp+uxoTwuvWbVpXMxjtTiA//EGIALLPeokEsBBO8f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeN4JXvo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sn5vHeWJuKXAI+hu+/mkUD9cx5fOwRSaQtmjXajycEvKIOosVt28NABT/6j0p4vpJSVqXpjNJFpV+S7Evrqe0CiHn7NYr9VgstL/Kj87FW9lL72sUpvOfSibTuqU7WxF3PUD3dcQOpV9VRtHnh0Og8qaP0WOdzA5REUHveWT0aM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWyvfKyr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeN4JXvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E377C4CED3;
-	Tue, 17 Dec 2024 17:31:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWyvfKyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0713DC4CED3;
+	Tue, 17 Dec 2024 17:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456701;
-	bh=K5z6YgM4UDap0tTYfGcTIe3/mbKLfa6NrGs6xnkVKdA=;
+	s=korg; t=1734456704;
+	bh=LAy7dNM609o0hbROs+gQhf0tmAyZZpy/S/8fA9IhJbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CeN4JXvobINuM9g3M2ZHv4OhS5HTNNgF0KXcORlF+GDFzLWliNl+bNWPSfOgfqkX9
-	 3zAG9znBuJFYXoy9YeqX+N7AWVPbE5ctCJ8yJmKDG1CGSJQ9sssYJn/PGihSADmpef
-	 0RWWb4Zc/8laYLFk59aCZ7s5j55nGr0pNpc8xFqc=
+	b=uWyvfKyrJglPYnCqUyZoc1OyUTLzucZ4YHkU01OdDkg8hNdoTct0fyy7BMz0r0o7K
+	 3/0IJ0e/FmDO1SRBwupaRFW0aTZaNDBa3pfozbntbq4MJp1tj7xJ7gbkss05DLKXzI
+	 1j6CdrPcwu4QKonZ/baA01egj8nEroQzfF0Smagw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Ottens <martin.ottens@fau.de>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@idosch.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 139/172] net/sched: netem: account for backlog updates from child qdisc
-Date: Tue, 17 Dec 2024 18:08:15 +0100
-Message-ID: <20241217170552.103933128@linuxfoundation.org>
+Subject: [PATCH 6.12 140/172] net, team, bonding: Add netdev_base_features helper
+Date: Tue, 17 Dec 2024 18:08:16 +0100
+Message-ID: <20241217170552.145444595@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,169 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Ottens <martin.ottens@fau.de>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit f8d4bc455047cf3903cd6f85f49978987dbb3027 ]
+[ Upstream commit d2516c3a53705f783bb6868df0f4a2b977898a71 ]
 
-In general, 'qlen' of any classful qdisc should keep track of the
-number of packets that the qdisc itself and all of its children holds.
-In case of netem, 'qlen' only accounts for the packets in its internal
-tfifo. When netem is used with a child qdisc, the child qdisc can use
-'qdisc_tree_reduce_backlog' to inform its parent, netem, about created
-or dropped SKBs. This function updates 'qlen' and the backlog statistics
-of netem, but netem does not account for changes made by a child qdisc.
-'qlen' then indicates the wrong number of packets in the tfifo.
-If a child qdisc creates new SKBs during enqueue and informs its parent
-about this, netem's 'qlen' value is increased. When netem dequeues the
-newly created SKBs from the child, the 'qlen' in netem is not updated.
-If 'qlen' reaches the configured sch->limit, the enqueue function stops
-working, even though the tfifo is not full.
+Both bonding and team driver have logic to derive the base feature
+flags before iterating over their slave devices to refine the set
+via netdev_increment_features().
 
-Reproduce the bug:
-Ensure that the sender machine has GSO enabled. Configure netem as root
-qdisc and tbf as its child on the outgoing interface of the machine
-as follows:
-$ tc qdisc add dev <oif> root handle 1: netem delay 100ms limit 100
-$ tc qdisc add dev <oif> parent 1:0 tbf rate 50Mbit burst 1542 latency 50ms
+Add a small helper netdev_base_features() so this can be reused
+instead of having it open-coded multiple times.
 
-Send bulk TCP traffic out via this interface, e.g., by running an iPerf3
-client on the machine. Check the qdisc statistics:
-$ tc -s qdisc show dev <oif>
-
-Statistics after 10s of iPerf3 TCP test before the fix (note that
-netem's backlog > limit, netem stopped accepting packets):
-qdisc netem 1: root refcnt 2 limit 1000 delay 100ms
- Sent 2767766 bytes 1848 pkt (dropped 652, overlimits 0 requeues 0)
- backlog 4294528236b 1155p requeues 0
-qdisc tbf 10: parent 1:1 rate 50Mbit burst 1537b lat 50ms
- Sent 2767766 bytes 1848 pkt (dropped 327, overlimits 7601 requeues 0)
- backlog 0b 0p requeues 0
-
-Statistics after the fix:
-qdisc netem 1: root refcnt 2 limit 1000 delay 100ms
- Sent 37766372 bytes 24974 pkt (dropped 9, overlimits 0 requeues 0)
- backlog 0b 0p requeues 0
-qdisc tbf 10: parent 1:1 rate 50Mbit burst 1537b lat 50ms
- Sent 37766372 bytes 24974 pkt (dropped 327, overlimits 96017 requeues 0)
- backlog 0b 0p requeues 0
-
-tbf segments the GSO SKBs (tbf_segment) and updates the netem's 'qlen'.
-The interface fully stops transferring packets and "locks". In this case,
-the child qdisc and tfifo are empty, but 'qlen' indicates the tfifo is at
-its limit and no more packets are accepted.
-
-This patch adds a counter for the entries in the tfifo. Netem's 'qlen' is
-only decreased when a packet is returned by its dequeue function, and not
-during enqueuing into the child qdisc. External updates to 'qlen' are thus
-accounted for and only the behavior of the backlog statistics changes. As
-in other qdiscs, 'qlen' then keeps track of  how many packets are held in
-netem and all of its children. As before, sch->limit remains as the
-maximum number of packets in the tfifo. The same applies to netem's
-backlog statistics.
-
-Fixes: 50612537e9ab ("netem: fix classful handling")
-Signed-off-by: Martin Ottens <martin.ottens@fau.de>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20241210131412.1837202-1-martin.ottens@fau.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Ido Schimmel <idosch@idosch.org>
+Cc: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20241210141245.327886-1-daniel@iogearbox.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: d064ea7fe2a2 ("bonding: Fix initial {vlan,mpls}_feature set in bond_compute_features")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 4 +---
+ drivers/net/team/team_core.c    | 3 +--
+ include/linux/netdev_features.h | 7 +++++++
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 39382ee1e331..3b519adc0125 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -78,6 +78,8 @@ struct netem_sched_data {
- 	struct sk_buff	*t_head;
- 	struct sk_buff	*t_tail;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 15e0f14d0d49..166910693fd7 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1520,9 +1520,7 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+ 	struct slave *slave;
  
-+	u32 t_len;
+ 	mask = features;
+-
+-	features &= ~NETIF_F_ONE_FOR_ALL;
+-	features |= NETIF_F_ALL_FOR_ALL;
++	features = netdev_base_features(features);
+ 
+ 	bond_for_each_slave(bond, slave, iter) {
+ 		features = netdev_increment_features(features,
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 18191d5a8bd4..481c8df8842f 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -2012,8 +2012,7 @@ static netdev_features_t team_fix_features(struct net_device *dev,
+ 	netdev_features_t mask;
+ 
+ 	mask = features;
+-	features &= ~NETIF_F_ONE_FOR_ALL;
+-	features |= NETIF_F_ALL_FOR_ALL;
++	features = netdev_base_features(features);
+ 
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(port, &team->port_list, list) {
+diff --git a/include/linux/netdev_features.h b/include/linux/netdev_features.h
+index 66e7d26b70a4..11be70a7929f 100644
+--- a/include/linux/netdev_features.h
++++ b/include/linux/netdev_features.h
+@@ -253,4 +253,11 @@ static inline int find_next_netdev_feature(u64 feature, unsigned long start)
+ 				 NETIF_F_GSO_UDP_TUNNEL |		\
+ 				 NETIF_F_GSO_UDP_TUNNEL_CSUM)
+ 
++static inline netdev_features_t netdev_base_features(netdev_features_t features)
++{
++	features &= ~NETIF_F_ONE_FOR_ALL;
++	features |= NETIF_F_ALL_FOR_ALL;
++	return features;
++}
 +
- 	/* optional qdisc for classful handling (NULL at netem init) */
- 	struct Qdisc	*qdisc;
- 
-@@ -382,6 +384,7 @@ static void tfifo_reset(struct Qdisc *sch)
- 	rtnl_kfree_skbs(q->t_head, q->t_tail);
- 	q->t_head = NULL;
- 	q->t_tail = NULL;
-+	q->t_len = 0;
- }
- 
- static void tfifo_enqueue(struct sk_buff *nskb, struct Qdisc *sch)
-@@ -411,6 +414,7 @@ static void tfifo_enqueue(struct sk_buff *nskb, struct Qdisc *sch)
- 		rb_link_node(&nskb->rbnode, parent, p);
- 		rb_insert_color(&nskb->rbnode, &q->t_root);
- 	}
-+	q->t_len++;
- 	sch->q.qlen++;
- }
- 
-@@ -517,7 +521,7 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			1<<get_random_u32_below(8);
- 	}
- 
--	if (unlikely(sch->q.qlen >= sch->limit)) {
-+	if (unlikely(q->t_len >= sch->limit)) {
- 		/* re-link segs, so that qdisc_drop_all() frees them all */
- 		skb->next = segs;
- 		qdisc_drop_all(skb, sch, to_free);
-@@ -701,8 +705,8 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- tfifo_dequeue:
- 	skb = __qdisc_dequeue_head(&sch->q);
- 	if (skb) {
--		qdisc_qstats_backlog_dec(sch, skb);
- deliver:
-+		qdisc_qstats_backlog_dec(sch, skb);
- 		qdisc_bstats_update(sch, skb);
- 		return skb;
- 	}
-@@ -718,8 +722,7 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- 
- 		if (time_to_send <= now && q->slot.slot_next <= now) {
- 			netem_erase_head(q, skb);
--			sch->q.qlen--;
--			qdisc_qstats_backlog_dec(sch, skb);
-+			q->t_len--;
- 			skb->next = NULL;
- 			skb->prev = NULL;
- 			/* skb->dev shares skb->rbnode area,
-@@ -746,16 +749,21 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- 					if (net_xmit_drop_count(err))
- 						qdisc_qstats_drop(sch);
- 					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
-+					sch->qstats.backlog -= pkt_len;
-+					sch->q.qlen--;
- 				}
- 				goto tfifo_dequeue;
- 			}
-+			sch->q.qlen--;
- 			goto deliver;
- 		}
- 
- 		if (q->qdisc) {
- 			skb = q->qdisc->ops->dequeue(q->qdisc);
--			if (skb)
-+			if (skb) {
-+				sch->q.qlen--;
- 				goto deliver;
-+			}
- 		}
- 
- 		qdisc_watchdog_schedule_ns(&q->watchdog,
-@@ -765,8 +773,10 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- 
- 	if (q->qdisc) {
- 		skb = q->qdisc->ops->dequeue(q->qdisc);
--		if (skb)
-+		if (skb) {
-+			sch->q.qlen--;
- 			goto deliver;
-+		}
- 	}
- 	return NULL;
- }
+ #endif	/* _LINUX_NETDEV_FEATURES_H */
 -- 
 2.39.5
 
