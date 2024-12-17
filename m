@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A7A1F8685;
-	Tue, 17 Dec 2024 17:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389751F869F;
+	Tue, 17 Dec 2024 17:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456602; cv=none; b=YCI2I7pW7VLIqAEyN1bCenrd3i8zgkSzrx7q822KvxgRhFyqgEQpD7YQbJnRfNbh9ahcqjhFo8nlPvNZc2BoNfYWYde/mW7n0lAfqBeFT3Xa41vk2ttkFgj7BbIITt75gMqBFx1J8u4d/HcEraLMbS6BztMK9yzteyi/0B80VfU=
+	t=1734456605; cv=none; b=GIvcR0q4/qe1h+LdHobB/HKyzw0IJvHpLwYE0sxj8onHelgFTpc09JF9Pwcnoqr0LZ5i96hA2/brG3XNv47u8H5PzoSrw9yTCQ+cM70YAVB8NEkcE4BIOgjHmODIxbU2tgkjs7m+wqaO8lee+utM+psqfxvn4m3pjSMYPCJxbus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456602; c=relaxed/simple;
-	bh=oTnbVSmDAFk+yTNjgzMnBq/0VfWUq6OBu+G8AduxG4g=;
+	s=arc-20240116; t=1734456605; c=relaxed/simple;
+	bh=gCj2yY9hV3b9a3q9p6d+pcKeYCLjHroyalQgwodX5rQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAKWPyPPRZHMgKkWwKIKAv24pJED2TFlC3oaOheNosVvyDZ9JlG13pME/Whwt0oMlQA5ojbb+hOR3bBR8hX155MxuKwBSyMH7znGa7pXrUvWLsI8NmwF7s6PVOvfKFrdOSbdUeUogaxGxQrLz/UVfAbjROwcT5RDf35nw+vSRtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vp8xSX2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oj58YpVtirpCryOeAzwVliscXv64XLqmf5nFFoTZSoe+57DvuKbzx5828eWalscLJfh/rpdMuucVbapUnk07zFWWbsu4C0qm4STfTU6ymiog5ANhZG/9UkwrYpx4QNii8S84/BlMNuV/dtjhutymlVw6sGp1WHN0eEJtLQb0rGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+ItfhRn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vp8xSX2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AAAC4CED3;
-	Tue, 17 Dec 2024 17:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+ItfhRn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7924C4CED3;
+	Tue, 17 Dec 2024 17:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456602;
-	bh=oTnbVSmDAFk+yTNjgzMnBq/0VfWUq6OBu+G8AduxG4g=;
+	s=korg; t=1734456605;
+	bh=gCj2yY9hV3b9a3q9p6d+pcKeYCLjHroyalQgwodX5rQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vp8xSX2PA/RFJRXQ20PUZrd6JtzxUqMY6B8nGr5vH1eU0wOexUkdzXLe5nD5aZrhd
-	 r8+gM1p9aZVKb0syP6C7SmYPs2AaKtvYNrmIxOZ5cUuRKRWxq+L7I9/wd6H7KwhdA3
-	 QgKGvcUaVXphqXECkEuUUFgaPDubKLmat8EBkTGw=
+	b=U+ItfhRnQ2X/exn0yPymz5LvVFLHjgVhGjkh0iFZf62huNQK/HVOp9Az+b68wggEF
+	 PMWMa+Gdp3RbIVPtlymBaCEDlRYpHwtzIt6XDGOEeqC2LB5PJQQHoRD7Q5szmx/sGj
+	 +X16k73ASMvimsCMrVVOYa2MYLDLgfKsLp3eehWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Simons <simons.philippe@gmail.com>,
-	Hironori KIKUCHI <kikuchan98@gmail.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/172] regulator: axp20x: AXP717: set ramp_delay
-Date: Tue, 17 Dec 2024 18:07:44 +0100
-Message-ID: <20241217170550.804520752@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Manu Bretelle <chantra@meta.com>
+Subject: [PATCH 6.12 081/172] bpf: Augment raw_tp arguments with PTR_MAYBE_NULL
+Date: Tue, 17 Dec 2024 18:07:17 +0100
+Message-ID: <20241217170549.646884318@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -54,125 +54,248 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philippe Simons <simons.philippe@gmail.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit f07ae52f5cf6a5584fdf7c8c652f027d90bc8b74 ]
+commit 838a10bd2ebfe11a60dd67687533a7cfc220cc86 upstream.
 
-AXP717 datasheet says that regulator ramp delay is 15.625 us/step,
-which is 10mV in our case.
+Arguments to a raw tracepoint are tagged as trusted, which carries the
+semantics that the pointer will be non-NULL.  However, in certain cases,
+a raw tracepoint argument may end up being NULL. More context about this
+issue is available in [0].
 
-Add a AXP_DESC_RANGES_DELAY macro and update AXP_DESC_RANGES macro to
-expand to AXP_DESC_RANGES_DELAY with ramp_delay = 0
+Thus, there is a discrepancy between the reality, that raw_tp arguments can
+actually be NULL, and the verifier's knowledge, that they are never NULL,
+causing explicit NULL check branch to be dead code eliminated.
 
-For DCDC4, steps is 100mv
+A previous attempt [1], i.e. the second fixed commit, was made to
+simulate symbolic execution as if in most accesses, the argument is a
+non-NULL raw_tp, except for conditional jumps.  This tried to suppress
+branch prediction while preserving compatibility, but surfaced issues
+with production programs that were difficult to solve without increasing
+verifier complexity. A more complete discussion of issues and fixes is
+available at [2].
 
-Add a AXP_DESC_DELAY macro and update AXP_DESC macro to
-expand to AXP_DESC_DELAY with ramp_delay = 0
+Fix this by maintaining an explicit list of tracepoints where the
+arguments are known to be NULL, and mark the positional arguments as
+PTR_MAYBE_NULL. Additionally, capture the tracepoints where arguments
+are known to be ERR_PTR, and mark these arguments as scalar values to
+prevent potential dereference.
 
-This patch fix crashes when using CPU DVFS.
+Each hex digit is used to encode NULL-ness (0x1) or ERR_PTR-ness (0x2),
+shifted by the zero-indexed argument number x 4. This can be represented
+as follows:
+1st arg: 0x1
+2nd arg: 0x10
+3rd arg: 0x100
+... and so on (likewise for ERR_PTR case).
 
-Signed-off-by: Philippe Simons <simons.philippe@gmail.com>
-Tested-by: Hironori KIKUCHI <kikuchan98@gmail.com>
-Tested-by: Chris Morgan <macromorgan@hotmail.com>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Fixes: d2ac3df75c3a ("regulator: axp20x: add support for the AXP717")
-Link: https://patch.msgid.link/20241208124308.5630-1-simons.philippe@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In the future, an automated pass will be used to produce such a list, or
+insert __nullable annotations automatically for tracepoints. Each
+compilation unit will be analyzed and results will be collated to find
+whether a tracepoint pointer is definitely not null, maybe null, or an
+unknown state where verifier conservatively marks it PTR_MAYBE_NULL.
+A proof of concept of this tool from Eduard is available at [3].
+
+Note that in case we don't find a specification in the raw_tp_null_args
+array and the tracepoint belongs to a kernel module, we will
+conservatively mark the arguments as PTR_MAYBE_NULL. This is because
+unlike for in-tree modules, out-of-tree module tracepoints may pass NULL
+freely to the tracepoint. We don't protect against such tracepoints
+passing ERR_PTR (which is uncommon anyway), lest we mark all such
+arguments as SCALAR_VALUE.
+
+While we are it, let's adjust the test raw_tp_null to not perform
+dereference of the skb->mark, as that won't be allowed anymore, and make
+it more robust by using inline assembly to test the dead code
+elimination behavior, which should still stay the same.
+
+  [0]: https://lore.kernel.org/bpf/ZrCZS6nisraEqehw@jlelli-thinkpadt14gen4.remote.csb
+  [1]: https://lore.kernel.org/all/20241104171959.2938862-1-memxor@gmail.com
+  [2]: https://lore.kernel.org/bpf/20241206161053.809580-1-memxor@gmail.com
+  [3]: https://github.com/eddyz87/llvm-project/tree/nullness-for-tracepoint-params
+
+Reported-by: Juri Lelli <juri.lelli@redhat.com> # original bug
+Reported-by: Manu Bretelle <chantra@meta.com> # bugs in masking fix
+Fixes: 3f00c5239344 ("bpf: Allow trusted pointers to be passed to KF_TRUSTED_ARGS kfuncs")
+Fixes: cb4158ce8ec8 ("bpf: Mark raw_tp arguments with PTR_MAYBE_NULL")
+Reviewed-by: Eduard Zingerman <eddyz87@gmail.com>
+Co-developed-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241213221929.3495062-3-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/regulator/axp20x-regulator.c | 36 ++++++++++++++++++----------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ kernel/bpf/btf.c |  138 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 138 insertions(+)
 
-diff --git a/drivers/regulator/axp20x-regulator.c b/drivers/regulator/axp20x-regulator.c
-index a8e91d9d028b..945d2917b91b 100644
---- a/drivers/regulator/axp20x-regulator.c
-+++ b/drivers/regulator/axp20x-regulator.c
-@@ -371,8 +371,8 @@
- 		.ops		= &axp20x_ops,					\
- 	}
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -6415,6 +6415,101 @@ int btf_ctx_arg_offset(const struct btf
+ 	return off;
+ }
  
--#define AXP_DESC(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
--		 _vmask, _ereg, _emask) 					\
-+#define AXP_DESC_DELAY(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
-+		 _vmask, _ereg, _emask, _ramp_delay) 				\
- 	[_family##_##_id] = {							\
- 		.name		= (_match),					\
- 		.supply_name	= (_supply),					\
-@@ -388,9 +388,15 @@
- 		.vsel_mask	= (_vmask),					\
- 		.enable_reg	= (_ereg),					\
- 		.enable_mask	= (_emask),					\
-+		.ramp_delay = (_ramp_delay),					\
- 		.ops		= &axp20x_ops,					\
- 	}
- 
-+#define AXP_DESC(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
-+		 _vmask, _ereg, _emask) 					\
-+	AXP_DESC_DELAY(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
-+		 _vmask, _ereg, _emask, 0)
++struct bpf_raw_tp_null_args {
++	const char *func;
++	u64 mask;
++};
 +
- #define AXP_DESC_SW(_family, _id, _match, _supply, _ereg, _emask)		\
- 	[_family##_##_id] = {							\
- 		.name		= (_match),					\
-@@ -419,8 +425,8 @@
- 		.ops		= &axp20x_ops_fixed				\
- 	}
- 
--#define AXP_DESC_RANGES(_family, _id, _match, _supply, _ranges, _n_voltages,	\
--			_vreg, _vmask, _ereg, _emask)				\
-+#define AXP_DESC_RANGES_DELAY(_family, _id, _match, _supply, _ranges, _n_voltages,	\
-+			_vreg, _vmask, _ereg, _emask, _ramp_delay)	\
- 	[_family##_##_id] = {							\
- 		.name		= (_match),					\
- 		.supply_name	= (_supply),					\
-@@ -436,9 +442,15 @@
- 		.enable_mask	= (_emask),					\
- 		.linear_ranges	= (_ranges),					\
- 		.n_linear_ranges = ARRAY_SIZE(_ranges),				\
-+		.ramp_delay = (_ramp_delay),					\
- 		.ops		= &axp20x_ops_range,				\
- 	}
- 
-+#define AXP_DESC_RANGES(_family, _id, _match, _supply, _ranges, _n_voltages,	\
-+			_vreg, _vmask, _ereg, _emask)				\
-+	AXP_DESC_RANGES_DELAY(_family, _id, _match, _supply, _ranges,		\
-+		 _n_voltages, _vreg, _vmask, _ereg, _emask, 0)
++static const struct bpf_raw_tp_null_args raw_tp_null_args[] = {
++	/* sched */
++	{ "sched_pi_setprio", 0x10 },
++	/* ... from sched_numa_pair_template event class */
++	{ "sched_stick_numa", 0x100 },
++	{ "sched_swap_numa", 0x100 },
++	/* afs */
++	{ "afs_make_fs_call", 0x10 },
++	{ "afs_make_fs_calli", 0x10 },
++	{ "afs_make_fs_call1", 0x10 },
++	{ "afs_make_fs_call2", 0x10 },
++	{ "afs_protocol_error", 0x1 },
++	{ "afs_flock_ev", 0x10 },
++	/* cachefiles */
++	{ "cachefiles_lookup", 0x1 | 0x200 },
++	{ "cachefiles_unlink", 0x1 },
++	{ "cachefiles_rename", 0x1 },
++	{ "cachefiles_prep_read", 0x1 },
++	{ "cachefiles_mark_active", 0x1 },
++	{ "cachefiles_mark_failed", 0x1 },
++	{ "cachefiles_mark_inactive", 0x1 },
++	{ "cachefiles_vfs_error", 0x1 },
++	{ "cachefiles_io_error", 0x1 },
++	{ "cachefiles_ondemand_open", 0x1 },
++	{ "cachefiles_ondemand_copen", 0x1 },
++	{ "cachefiles_ondemand_close", 0x1 },
++	{ "cachefiles_ondemand_read", 0x1 },
++	{ "cachefiles_ondemand_cread", 0x1 },
++	{ "cachefiles_ondemand_fd_write", 0x1 },
++	{ "cachefiles_ondemand_fd_release", 0x1 },
++	/* ext4, from ext4__mballoc event class */
++	{ "ext4_mballoc_discard", 0x10 },
++	{ "ext4_mballoc_free", 0x10 },
++	/* fib */
++	{ "fib_table_lookup", 0x100 },
++	/* filelock */
++	/* ... from filelock_lock event class */
++	{ "posix_lock_inode", 0x10 },
++	{ "fcntl_setlk", 0x10 },
++	{ "locks_remove_posix", 0x10 },
++	{ "flock_lock_inode", 0x10 },
++	/* ... from filelock_lease event class */
++	{ "break_lease_noblock", 0x10 },
++	{ "break_lease_block", 0x10 },
++	{ "break_lease_unblock", 0x10 },
++	{ "generic_delete_lease", 0x10 },
++	{ "time_out_leases", 0x10 },
++	/* host1x */
++	{ "host1x_cdma_push_gather", 0x10000 },
++	/* huge_memory */
++	{ "mm_khugepaged_scan_pmd", 0x10 },
++	{ "mm_collapse_huge_page_isolate", 0x1 },
++	{ "mm_khugepaged_scan_file", 0x10 },
++	{ "mm_khugepaged_collapse_file", 0x10 },
++	/* kmem */
++	{ "mm_page_alloc", 0x1 },
++	{ "mm_page_pcpu_drain", 0x1 },
++	/* .. from mm_page event class */
++	{ "mm_page_alloc_zone_locked", 0x1 },
++	/* netfs */
++	{ "netfs_failure", 0x10 },
++	/* power */
++	{ "device_pm_callback_start", 0x10 },
++	/* qdisc */
++	{ "qdisc_dequeue", 0x1000 },
++	/* rxrpc */
++	{ "rxrpc_recvdata", 0x1 },
++	{ "rxrpc_resend", 0x10 },
++	/* sunrpc */
++	{ "xs_stream_read_data", 0x1 },
++	/* ... from xprt_cong_event event class */
++	{ "xprt_reserve_cong", 0x10 },
++	{ "xprt_release_cong", 0x10 },
++	{ "xprt_get_cong", 0x10 },
++	{ "xprt_put_cong", 0x10 },
++	/* tcp */
++	{ "tcp_send_reset", 0x11 },
++	/* tegra_apb_dma */
++	{ "tegra_dma_tx_status", 0x100 },
++	/* timer_migration */
++	{ "tmigr_update_events", 0x1 },
++	/* writeback, from writeback_folio_template event class */
++	{ "writeback_dirty_folio", 0x10 },
++	{ "folio_wait_writeback", 0x10 },
++	/* rdma */
++	{ "mr_integ_alloc", 0x2000 },
++	/* bpf_testmod */
++	{ "bpf_testmod_test_read", 0x0 },
++};
 +
- static const int axp209_dcdc2_ldo3_slew_rates[] = {
- 	1600,
- 	 800,
-@@ -781,21 +793,21 @@ static const struct linear_range axp717_dcdc3_ranges[] = {
- };
+ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
+ 		    const struct bpf_prog *prog,
+ 		    struct bpf_insn_access_aux *info)
+@@ -6425,6 +6520,7 @@ bool btf_ctx_access(int off, int size, e
+ 	const char *tname = prog->aux->attach_func_name;
+ 	struct bpf_verifier_log *log = info->log;
+ 	const struct btf_param *args;
++	bool ptr_err_raw_tp = false;
+ 	const char *tag_value;
+ 	u32 nr_args, arg;
+ 	int i, ret;
+@@ -6573,6 +6669,39 @@ bool btf_ctx_access(int off, int size, e
+ 	if (btf_param_match_suffix(btf, &args[arg], "__nullable"))
+ 		info->reg_type |= PTR_MAYBE_NULL;
  
- static const struct regulator_desc axp717_regulators[] = {
--	AXP_DESC_RANGES(AXP717, DCDC1, "dcdc1", "vin1",
-+	AXP_DESC_RANGES_DELAY(AXP717, DCDC1, "dcdc1", "vin1",
- 			axp717_dcdc1_ranges, AXP717_DCDC1_NUM_VOLTAGES,
- 			AXP717_DCDC1_CONTROL, AXP717_DCDC_V_OUT_MASK,
--			AXP717_DCDC_OUTPUT_CONTROL, BIT(0)),
--	AXP_DESC_RANGES(AXP717, DCDC2, "dcdc2", "vin2",
-+			AXP717_DCDC_OUTPUT_CONTROL, BIT(0), 640),
-+	AXP_DESC_RANGES_DELAY(AXP717, DCDC2, "dcdc2", "vin2",
- 			axp717_dcdc2_ranges, AXP717_DCDC2_NUM_VOLTAGES,
- 			AXP717_DCDC2_CONTROL, AXP717_DCDC_V_OUT_MASK,
--			AXP717_DCDC_OUTPUT_CONTROL, BIT(1)),
--	AXP_DESC_RANGES(AXP717, DCDC3, "dcdc3", "vin3",
-+			AXP717_DCDC_OUTPUT_CONTROL, BIT(1), 640),
-+	AXP_DESC_RANGES_DELAY(AXP717, DCDC3, "dcdc3", "vin3",
- 			axp717_dcdc3_ranges, AXP717_DCDC3_NUM_VOLTAGES,
- 			AXP717_DCDC3_CONTROL, AXP717_DCDC_V_OUT_MASK,
--			AXP717_DCDC_OUTPUT_CONTROL, BIT(2)),
--	AXP_DESC(AXP717, DCDC4, "dcdc4", "vin4", 1000, 3700, 100,
-+			AXP717_DCDC_OUTPUT_CONTROL, BIT(2), 640),
-+	AXP_DESC_DELAY(AXP717, DCDC4, "dcdc4", "vin4", 1000, 3700, 100,
- 		 AXP717_DCDC4_CONTROL, AXP717_DCDC_V_OUT_MASK,
--		 AXP717_DCDC_OUTPUT_CONTROL, BIT(3)),
-+		 AXP717_DCDC_OUTPUT_CONTROL, BIT(3), 6400),
- 	AXP_DESC(AXP717, ALDO1, "aldo1", "aldoin", 500, 3500, 100,
- 		 AXP717_ALDO1_CONTROL, AXP717_LDO_V_OUT_MASK,
- 		 AXP717_LDO0_OUTPUT_CONTROL, BIT(0)),
--- 
-2.39.5
-
++	if (prog->expected_attach_type == BPF_TRACE_RAW_TP) {
++		struct btf *btf = prog->aux->attach_btf;
++		const struct btf_type *t;
++		const char *tname;
++
++		/* BTF lookups cannot fail, return false on error */
++		t = btf_type_by_id(btf, prog->aux->attach_btf_id);
++		if (!t)
++			return false;
++		tname = btf_name_by_offset(btf, t->name_off);
++		if (!tname)
++			return false;
++		/* Checked by bpf_check_attach_target */
++		tname += sizeof("btf_trace_") - 1;
++		for (i = 0; i < ARRAY_SIZE(raw_tp_null_args); i++) {
++			/* Is this a func with potential NULL args? */
++			if (strcmp(tname, raw_tp_null_args[i].func))
++				continue;
++			if (raw_tp_null_args[i].mask & (0x1 << (arg * 4)))
++				info->reg_type |= PTR_MAYBE_NULL;
++			/* Is the current arg IS_ERR? */
++			if (raw_tp_null_args[i].mask & (0x2 << (arg * 4)))
++				ptr_err_raw_tp = true;
++			break;
++		}
++		/* If we don't know NULL-ness specification and the tracepoint
++		 * is coming from a loadable module, be conservative and mark
++		 * argument as PTR_MAYBE_NULL.
++		 */
++		if (i == ARRAY_SIZE(raw_tp_null_args) && btf_is_module(btf))
++			info->reg_type |= PTR_MAYBE_NULL;
++	}
++
+ 	if (tgt_prog) {
+ 		enum bpf_prog_type tgt_type;
+ 
+@@ -6617,6 +6746,15 @@ bool btf_ctx_access(int off, int size, e
+ 	bpf_log(log, "func '%s' arg%d has btf_id %d type %s '%s'\n",
+ 		tname, arg, info->btf_id, btf_type_str(t),
+ 		__btf_name_by_offset(btf, t->name_off));
++
++	/* Perform all checks on the validity of type for this argument, but if
++	 * we know it can be IS_ERR at runtime, scrub pointer type and mark as
++	 * scalar.
++	 */
++	if (ptr_err_raw_tp) {
++		bpf_log(log, "marking pointer arg%d as scalar as it may encode error", arg);
++		info->reg_type = SCALAR_VALUE;
++	}
+ 	return true;
+ }
+ EXPORT_SYMBOL_GPL(btf_ctx_access);
 
 
