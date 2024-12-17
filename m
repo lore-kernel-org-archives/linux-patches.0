@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826301F75BE;
-	Tue, 17 Dec 2024 17:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC091F890A;
+	Tue, 17 Dec 2024 17:25:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456326; cv=none; b=VCsqmnpa/5CLjC6LCiS4Vr7YUwiYcUNdrbZLssbU8yGMvR0xmkZzVpFk6rtPSCz4ByXqgavYcsBYHHhU99mFSTRw4Cz+KIYVHZUKz1Y3CD7USDzZe3rma00R/bLKZrkYNkj/nAkg9c4ZBSIDRDXehZ3FGRs4hWQocPN9nMXnkD0=
+	t=1734456330; cv=none; b=FXJqZUMW+6mAkW/q99xbAGB0WrP8LoQMOKdJRoS689UQoizdq0EEMn5n/v3fv1A/8rJfFOeTjKqsE/M80hunaR6Ll/JFoQbxMmArXfyGebYZutmFeGitfrZL+MArFh1LyTJUIZdeMGk0LL07quBEXGNYmf0IQzvwvmiLGmecr8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456326; c=relaxed/simple;
-	bh=Nrn7N4lvfgaJUKjj+XdD47HdYkAtJdwM7zY1mu3UI7k=;
+	s=arc-20240116; t=1734456330; c=relaxed/simple;
+	bh=4jPoor+D+na11J9DamygzIdmn1Q6GX19sykb9hrhzIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9Sjx5Y7w+UirgW+IseKJz82sXjKr7ERvdbaQFn+RLL6PlNmWdDjQaqDd1QLUc6rpteCqtdpXD/1lywsgA37O1HEUts57Ok/PNnf8k3+TCauFpI+7E4A2DHVGDUO8z0VpLG68r36hqRnCta53DeRYUTpn79a1Jl5vjyIJM8SwoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WoMwC41Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I93o+EfjwHrlgfvCoraOqaqIHqCjlMHC5Hz0iQfuehaEgVUQy+xidU1ueCGtZCef07bjjfvPf/xoRNv1UglwpX5pnLz5mlM1bdnoKz8vSSIpxVCUb0BmhV0NT0sezHbsJhOCLEVXPa5Vx5ELouhoqhPDfD6PM7qqqR00cB1nh2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0q61+wB8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WoMwC41Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50FAC4CED3;
-	Tue, 17 Dec 2024 17:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0q61+wB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02743C4CED3;
+	Tue, 17 Dec 2024 17:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456326;
-	bh=Nrn7N4lvfgaJUKjj+XdD47HdYkAtJdwM7zY1mu3UI7k=;
+	s=korg; t=1734456329;
+	bh=4jPoor+D+na11J9DamygzIdmn1Q6GX19sykb9hrhzIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WoMwC41ZmVeELb2VpfEFZVpE36OVa1GgShNp0oeZL4NUp0YnITieaKWVbCnO9eIDA
-	 tzeP1Xtggu2a7Q0HM8hjy7peiVGQm8o8pJjre+aHbBY2uXf5rIxRRmEzcJgsCJwwH6
-	 qQR2htUokyUDiR38ABThPulXsJkvIpszI08YoMi8=
+	b=0q61+wB8kwvVZ0KDcWQzvQeqsPnsjTgEwpfc9aBe01afT3PYodCOR2RsDebhGSDPF
+	 y7E4L3Vq9G6YIVb61IG5Y1lNxs/HJNvNS2f1FYKGGpRLWIFKNu3RkuZpROHkusF6jf
+	 1puBwQYR5oDeAm9zD1yDmupbGb4rSBCQdmNIrM/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoyu Li <lihaoyu499@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 024/172] gpio: ljca: Initialize num before accessing item in ljca_gpio_config
-Date: Tue, 17 Dec 2024 18:06:20 +0100
-Message-ID: <20241217170547.264018454@linuxfoundation.org>
+	Jaakko Salo <jaakkos@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 025/172] ALSA: usb-audio: Add implicit feedback quirk for Yamaha THR5
+Date: Tue, 17 Dec 2024 18:06:21 +0100
+Message-ID: <20241217170547.304134488@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,42 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoyu Li <lihaoyu499@gmail.com>
+From: Jaakko Salo <jaakkos@gmail.com>
 
-commit 3396995f9fb6bcbe0004a68118a22f98bab6e2b9 upstream.
+commit 82fdcf9b518b205da040046fbe7747fb3fd18657 upstream.
 
-With the new __counted_by annocation in ljca_gpio_packet, the "num"
-struct member must be set before accessing the "item" array. Failing to
-do so will trigger a runtime warning when enabling CONFIG_UBSAN_BOUNDS
-and CONFIG_FORTIFY_SOURCE.
+Use implicit feedback from the capture endpoint to fix popping
+sounds during playback.
 
-Fixes: 1034cc423f1b ("gpio: update Intel LJCA USB GPIO driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
-Link: https://lore.kernel.org/stable/20241203141451.342316-1-lihaoyu499%40gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219567
+Signed-off-by: Jaakko Salo <jaakkos@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241206164448.8136-1-jaakkos@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-ljca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/gpio-ljca.c b/drivers/gpio/gpio-ljca.c
-index d67b912d884d..c6c31e6146c7 100644
---- a/drivers/gpio/gpio-ljca.c
-+++ b/drivers/gpio/gpio-ljca.c
-@@ -82,9 +82,9 @@ static int ljca_gpio_config(struct ljca_gpio_dev *ljca_gpio, u8 gpio_id,
- 	int ret;
- 
- 	mutex_lock(&ljca_gpio->trans_lock);
-+	packet->num = 1;
- 	packet->item[0].index = gpio_id;
- 	packet->item[0].value = config | ljca_gpio->connect_mode[gpio_id];
--	packet->num = 1;
- 
- 	ret = ljca_transfer(ljca_gpio->ljca, LJCA_GPIO_CONFIG, (u8 *)packet,
- 			    struct_size(packet, item, packet->num), NULL, 0);
--- 
-2.47.1
-
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2179,6 +2179,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
+ 	DEVICE_FLG(0x046d, 0x09a4, /* Logitech QuickCam E 3500 */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_IGNORE_CTL_ERROR),
++	DEVICE_FLG(0x0499, 0x1506, /* Yamaha THR5 */
++		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x0499, 0x1509, /* Steinberg UR22 */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x0499, 0x3108, /* Yamaha YIT-W12TX */
 
 
