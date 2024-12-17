@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B90E1F37BE;
-	Tue, 17 Dec 2024 17:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614071EF085;
+	Tue, 17 Dec 2024 17:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455993; cv=none; b=A0UL93nzVtzqoAHBqcJng22yosaI9WgTW7uohj45pGu7spfTHBtDvsxlIEzbXEBs8JzZcZCdlULA5gU7jtjewtHVOOSmWLCyzFo0heNsdFCu0+ZVe43vz+3/h5Iv5o/4BnCdfn+6W80sLMRA/YxtkFW5pKozS7/d2ZVpkGHL3W0=
+	t=1734455996; cv=none; b=D2XJ5zt3JgL2tnxENoi/i5yI5nByMNWxs0bM4v/t4Jndr9fzaytaF+15+7uUBIfVdsUyzz6o7jN7QFVBNCJgtdc8uB4w77iLzkLMk2UTOBOW0uar8bEwaimisLMMsHo0Tpph6sgauTd1VSb+M1jkMaIPgfubSvlUZq05hwsH5Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455993; c=relaxed/simple;
-	bh=wyPWCV69bP/GAMJGxgkPHRIvj6+W3RZfhy8E/9ET9Vc=;
+	s=arc-20240116; t=1734455996; c=relaxed/simple;
+	bh=IbCNB+1A+aTe5UQ/zGhn6B6QkKXv0bcGZ8fsLSNKq+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dtZFG5YYNrmYKNXFAuN69amq27hHqH5buu4yn5hYUGGAX0+9XqZ0D+nLL03UmFBGma2ri/Nh1Al4yYRjnrRA+TnECCf9erY+03F4WaShUnljdjQkHBVSfIJ+8zutACFpTNMZhRHaY0V5pWwIPnKO62imizi58TwdYjXeoEYRy3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15NprSBM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nb20umg91grPMxXIlR7qHYpwyxgWqpIeIRy7g3o+jzp9zJZqkCcIu6MYwVCuVFwHlSyk7t1hgrPKOaiiX0ERTTPouEPJ3UkSArx38nDNp3SVDGpvHq5yuN5KfAH4XsOgdjmQ43BBHLuvx0UDLHp+LY7tTL+qeWoNZQN/M1FVJLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eoQ0iW1K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15NprSBM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BB0C4CED3;
-	Tue, 17 Dec 2024 17:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eoQ0iW1K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDFD4C4CED3;
+	Tue, 17 Dec 2024 17:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455993;
-	bh=wyPWCV69bP/GAMJGxgkPHRIvj6+W3RZfhy8E/9ET9Vc=;
+	s=korg; t=1734455996;
+	bh=IbCNB+1A+aTe5UQ/zGhn6B6QkKXv0bcGZ8fsLSNKq+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15NprSBMJzALbXDca9KHT0rU6rDwG5Sc1qzhAwhEReUFC3gTdBkNsrhyAIWV0Da18
-	 zn8LWnOtp5Ih8nCvPmxpbwWmyLseJ8LZ6GANEgFqxrn5iUeqvZKipkdvBobQKOFkK3
-	 ctPiSgjHnbyp8+Xf2XRuoHdQIwkANYnZANUhFOtM=
+	b=eoQ0iW1K6vo6lGOI5pUdldHkPHo7+LCNpHFmos4TxP8b0UfduMIQ3ECCVUf8r/Dcy
+	 eJqLTcQ0Y99A9fnG8bHITEEnMMZ0ZHQabHRv+TvPpXxH7H4Vv5aOVt4vKV474G78j+
+	 6cwImzpOUOEQdXi1stXPpRk0Q8SdjzUIdHAQGcCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.6 024/109] xfs: update btree keys correctly when _insrec splits an inode root block
-Date: Tue, 17 Dec 2024 18:07:08 +0100
-Message-ID: <20241217170534.378093911@linuxfoundation.org>
+Subject: [PATCH 6.6 025/109] xfs: dont drop errno values when we fail to ficlone the entire range
+Date: Tue, 17 Dec 2024 18:07:09 +0100
+Message-ID: <20241217170534.423695068@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -52,77 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 6d7b4bc1c3e00b1a25b7a05141a64337b4629337 upstream.
+commit 7ce31f20a0771d71779c3b0ec9cdf474cc3c8e9a upstream.
 
-In commit 2c813ad66a72, I partially fixed a bug wherein xfs_btree_insrec
-would erroneously try to update the parent's key for a block that had
-been split if we decided to insert the new record into the new block.
-The solution was to detect this situation and update the in-core key
-value that we pass up to the caller so that the caller will (eventually)
-add the new block to the parent level of the tree with the correct key.
+Way back when we first implemented FICLONE for XFS, life was simple --
+either the the entire remapping completed, or something happened and we
+had to return an errno explaining what happened.  Neither of those
+ioctls support returning partial results, so it's all or nothing.
 
-However, I missed a subtlety about the way inode-rooted btrees work.  If
-the full block was a maximally sized inode root block, we'll solve that
-fullness by moving the root block's records to a new block, resizing the
-root block, and updating the root to point to the new block.  We don't
-pass a pointer to the new block to the caller because that work has
-already been done.  The new record will /always/ land in the new block,
-so in this case we need to use xfs_btree_update_keys to update the keys.
+Then things got complicated when copy_file_range came along, because it
+actually can return the number of bytes copied, so commit 3f68c1f562f1e4
+tried to make it so that we could return a partial result if the
+REMAP_FILE_CAN_SHORTEN flag is set.  This is also how FIDEDUPERANGE can
+indicate that the kernel performed a partial deduplication.
 
-This bug can theoretically manifest itself in the very rare case that we
-split a bmbt root block and the new record lands in the very first slot
-of the new block, though I've never managed to trigger it in practice.
-However, it is very easy to reproduce by running generic/522 with the
-realtime rmapbt patchset if rtinherit=1.
+Unfortunately, the logic is wrong if an error stops the remapping and
+CAN_SHORTEN is not set.  Because those callers cannot return partial
+results, it is an error for ->remap_file_range to return a positive
+quantity that is less than the @len passed in.  Implementations really
+should be returning a negative errno in this case, because that's what
+btrfs (which introduced FICLONE{,RANGE}) did.
 
-Cc: <stable@vger.kernel.org> # v4.8
-Fixes: 2c813ad66a7218 ("xfs: support btrees with overlapping intervals for keys")
+Therefore, ->remap_range implementations cannot silently drop an errno
+that they might have when the number of bytes remapped is less than the
+number of bytes requested and CAN_SHORTEN is not set.
+
+Found by running generic/562 on a 64k fsblock filesystem and wondering
+why it reported corrupt files.
+
+Cc: <stable@vger.kernel.org> # v4.20
+Fixes: 3fc9f5e409319e ("xfs: remove xfs_reflink_remap_range")
+Really-Fixes: 3f68c1f562f1e4 ("xfs: support returning partial reflink results")
 Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_btree.c |   29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ fs/xfs/xfs_file.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -3429,14 +3429,31 @@ xfs_btree_insrec(
- 	xfs_btree_log_block(cur, bp, XFS_BB_NUMRECS);
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -1220,6 +1220,14 @@ out_unlock:
+ 	xfs_iunlock2_remapping(src, dest);
+ 	if (ret)
+ 		trace_xfs_reflink_remap_range_error(dest, ret, _RET_IP_);
++	/*
++	 * If the caller did not set CAN_SHORTEN, then it is not prepared to
++	 * handle partial results -- either the whole remap succeeds, or we
++	 * must say why it did not.  In this case, any error should be returned
++	 * to the caller.
++	 */
++	if (ret && remapped < len && !(remap_flags & REMAP_FILE_CAN_SHORTEN))
++		return ret;
+ 	return remapped > 0 ? remapped : ret;
+ }
  
- 	/*
--	 * If we just inserted into a new tree block, we have to
--	 * recalculate nkey here because nkey is out of date.
-+	 * Update btree keys to reflect the newly added record or keyptr.
-+	 * There are three cases here to be aware of.  Normally, all we have to
-+	 * do is walk towards the root, updating keys as necessary.
- 	 *
--	 * Otherwise we're just updating an existing block (having shoved
--	 * some records into the new tree block), so use the regular key
--	 * update mechanism.
-+	 * If the caller had us target a full block for the insertion, we dealt
-+	 * with that by calling the _make_block_unfull function.  If the
-+	 * "make unfull" function splits the block, it'll hand us back the key
-+	 * and pointer of the new block.  We haven't yet added the new block to
-+	 * the next level up, so if we decide to add the new record to the new
-+	 * block (bp->b_bn != old_bn), we have to update the caller's pointer
-+	 * so that the caller adds the new block with the correct key.
-+	 *
-+	 * However, there is a third possibility-- if the selected block is the
-+	 * root block of an inode-rooted btree and cannot be expanded further,
-+	 * the "make unfull" function moves the root block contents to a new
-+	 * block and updates the root block to point to the new block.  In this
-+	 * case, no block pointer is passed back because the block has already
-+	 * been added to the btree.  In this case, we need to use the regular
-+	 * key update function, just like the first case.  This is critical for
-+	 * overlapping btrees, because the high key must be updated to reflect
-+	 * the entire tree, not just the subtree accessible through the first
-+	 * child of the root (which is now two levels down from the root).
- 	 */
--	if (bp && xfs_buf_daddr(bp) != old_bn) {
-+	if (!xfs_btree_ptr_is_null(cur, &nptr) &&
-+	    bp && xfs_buf_daddr(bp) != old_bn) {
- 		xfs_btree_get_keys(cur, block, lkey);
- 	} else if (xfs_btree_needs_key_update(cur, optr)) {
- 		error = xfs_btree_update_keys(cur, level);
 
 
