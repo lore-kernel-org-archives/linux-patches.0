@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC6E1F75B5;
-	Tue, 17 Dec 2024 17:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2FF1EF085;
+	Tue, 17 Dec 2024 17:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456161; cv=none; b=byW96RkvZcin7ve0w7Ph4JYXYtoOkBvBlTqKvxB+q5TFLy39z9BvZej39EHOS1MjPw+Cd8pxxMuW8RJQgAVv7xOxY2J1IqrroKOF9rBqbW1p36N1Lx8+9UQt0iI63G4zo4f5GvTlyCeRnUHuoLLE0qdmqwgS7BIY185p62Ad8+U=
+	t=1734456168; cv=none; b=giScrwdk4NfCM/Sk8jRbro+YIw5UMuQZU67z6n1savzBdQFjsikbaIDzkO0WFP9oyXEOgJsQ4XCjeAQvX5kUB6r3T/U8JDgrckIy/YRb4JXv+qWhZcbO5Bt3hF/YmhoPRHExsijmQyulpP7ew1JG/AiIk44s0qRqlrIsnhXFGYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456161; c=relaxed/simple;
-	bh=olxB5N+YoHo6WlCt+sOodmXHgEsWp7fP0gYu9zK7EG0=;
+	s=arc-20240116; t=1734456168; c=relaxed/simple;
+	bh=xga7InLJOqNVD2WhVBUpbb+k4Ddx+fMufKj7cEnz4fM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a72Boa3PyMwcK481/g7azgbLkz3KikKlC3Frt4LYRSX2yOagPeaxgF3PKdFNrPexlvEsCtbm7GPoFR4bP/es7MwkY4McGoybS/xv/iSVObt5va7mWLXNtN3id6i82nslzwwyro/5MbXG/CcOtaO1RnCtrswoKXVxhj9aMHWrehE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsJo6dSC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzsVgw0zrXSGsbMYSKGEVguqK8aROpKkCuq/8jGm2fHPn6ovMR0ZxZ+NIHc3/9H8Gp1ULrFQCOYEwy0JL1yG1AcPz46oT2PGHTNJ7qUpdNAN/uYIeIZKcSsO04BDpSsS0P3YuS7fDb1jCJA/vUpjy5iLy6ym6DE9haI04Xp7QV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3AfUKJp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsJo6dSC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62216C4CED7;
-	Tue, 17 Dec 2024 17:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3AfUKJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A77C4CEDD;
+	Tue, 17 Dec 2024 17:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456160;
-	bh=olxB5N+YoHo6WlCt+sOodmXHgEsWp7fP0gYu9zK7EG0=;
+	s=korg; t=1734456168;
+	bh=xga7InLJOqNVD2WhVBUpbb+k4Ddx+fMufKj7cEnz4fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fsJo6dSCpAhrQVCPPe4J8Rc/Ma2hvUDUY8AFIa6S1rhQItNfhPZj0OMeb79rqbXWc
-	 cZSmjpUt19Ihk7YK8oHHKNjj+YsDm/XnBBd0AN5x3FhbnFK1xAx/5viopb9LLDr7te
-	 PdxwirE913GnzQmwoPJmVTmbZCDEnpmaGLX6FY54=
+	b=t3AfUKJpWlYRF5rCMgWbhzgoCDkZwuYdLSknWdEpjR3FaiZDQ1pB05tnIy7AysBmI
+	 CtYWYus136QIaztu3vW7Rbc3vTLCdxiUgSF7BVJND9+kav2EbjQaM2DMCsDlKZLvSW
+	 6q9Frv54WsEQBsoFXhiNjPesPqBcMmiF97TBvmDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Michael Walle <mwalle@kernel.org>,
+	Martin Ottens <martin.ottens@fau.de>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/109] net: dsa: felix: fix stuck CPU-injected packets with short taprio windows
-Date: Tue, 17 Dec 2024 18:08:05 +0100
-Message-ID: <20241217170536.765092577@linuxfoundation.org>
+Subject: [PATCH 6.6 082/109] net/sched: netem: account for backlog updates from child qdisc
+Date: Tue, 17 Dec 2024 18:08:06 +0100
+Message-ID: <20241217170536.806928432@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -52,168 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Martin Ottens <martin.ottens@fau.de>
 
-[ Upstream commit acfcdb78d5d4cdb78e975210c8825b9a112463f6 ]
+[ Upstream commit f8d4bc455047cf3903cd6f85f49978987dbb3027 ]
 
-With this port schedule:
+In general, 'qlen' of any classful qdisc should keep track of the
+number of packets that the qdisc itself and all of its children holds.
+In case of netem, 'qlen' only accounts for the packets in its internal
+tfifo. When netem is used with a child qdisc, the child qdisc can use
+'qdisc_tree_reduce_backlog' to inform its parent, netem, about created
+or dropped SKBs. This function updates 'qlen' and the backlog statistics
+of netem, but netem does not account for changes made by a child qdisc.
+'qlen' then indicates the wrong number of packets in the tfifo.
+If a child qdisc creates new SKBs during enqueue and informs its parent
+about this, netem's 'qlen' value is increased. When netem dequeues the
+newly created SKBs from the child, the 'qlen' in netem is not updated.
+If 'qlen' reaches the configured sch->limit, the enqueue function stops
+working, even though the tfifo is not full.
 
-tc qdisc replace dev $send_if parent root handle 100 taprio \
-	num_tc 8 queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 \
-	map 0 1 2 3 4 5 6 7 \
-	base-time 0 cycle-time 10000 \
-	sched-entry S 01 1250 \
-	sched-entry S 02 1250 \
-	sched-entry S 04 1250 \
-	sched-entry S 08 1250 \
-	sched-entry S 10 1250 \
-	sched-entry S 20 1250 \
-	sched-entry S 40 1250 \
-	sched-entry S 80 1250 \
-	flags 2
+Reproduce the bug:
+Ensure that the sender machine has GSO enabled. Configure netem as root
+qdisc and tbf as its child on the outgoing interface of the machine
+as follows:
+$ tc qdisc add dev <oif> root handle 1: netem delay 100ms limit 100
+$ tc qdisc add dev <oif> parent 1:0 tbf rate 50Mbit burst 1542 latency 50ms
 
-ptp4l would fail to take TX timestamps of Pdelay_Resp messages like this:
+Send bulk TCP traffic out via this interface, e.g., by running an iPerf3
+client on the machine. Check the qdisc statistics:
+$ tc -s qdisc show dev <oif>
 
-increasing tx_timestamp_timeout may correct this issue, but it is likely caused by a driver bug
-ptp4l[4134.168]: port 2: send peer delay response failed
+Statistics after 10s of iPerf3 TCP test before the fix (note that
+netem's backlog > limit, netem stopped accepting packets):
+qdisc netem 1: root refcnt 2 limit 1000 delay 100ms
+ Sent 2767766 bytes 1848 pkt (dropped 652, overlimits 0 requeues 0)
+ backlog 4294528236b 1155p requeues 0
+qdisc tbf 10: parent 1:1 rate 50Mbit burst 1537b lat 50ms
+ Sent 2767766 bytes 1848 pkt (dropped 327, overlimits 7601 requeues 0)
+ backlog 0b 0p requeues 0
 
-It turns out that the driver can't take their TX timestamps because it
-can't transmit them in the first place. And there's nothing special
-about the Pdelay_Resp packets - they're just regular 68 byte packets.
-But with this taprio configuration, the switch would refuse to send even
-the ETH_ZLEN minimum packet size.
+Statistics after the fix:
+qdisc netem 1: root refcnt 2 limit 1000 delay 100ms
+ Sent 37766372 bytes 24974 pkt (dropped 9, overlimits 0 requeues 0)
+ backlog 0b 0p requeues 0
+qdisc tbf 10: parent 1:1 rate 50Mbit burst 1537b lat 50ms
+ Sent 37766372 bytes 24974 pkt (dropped 327, overlimits 96017 requeues 0)
+ backlog 0b 0p requeues 0
 
-This should have definitely not been the case. When applying the taprio
-config, the driver prints:
+tbf segments the GSO SKBs (tbf_segment) and updates the netem's 'qlen'.
+The interface fully stops transferring packets and "locks". In this case,
+the child qdisc and tfifo are empty, but 'qlen' indicates the tfifo is at
+its limit and no more packets are accepted.
 
-mscc_felix 0000:00:00.5: port 0 tc 0 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 1 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 2 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 3 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 4 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 5 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 6 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 7 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 132 octets including FCS
+This patch adds a counter for the entries in the tfifo. Netem's 'qlen' is
+only decreased when a packet is returned by its dequeue function, and not
+during enqueuing into the child qdisc. External updates to 'qlen' are thus
+accounted for and only the behavior of the backlog statistics changes. As
+in other qdiscs, 'qlen' then keeps track of  how many packets are held in
+netem and all of its children. As before, sch->limit remains as the
+maximum number of packets in the tfifo. The same applies to netem's
+backlog statistics.
 
-and thus, everything under 132 bytes - ETH_FCS_LEN should have been sent
-without problems. Yet it's not.
-
-For the forwarding path, the configuration is fine, yet packets injected
-from Linux get stuck with this schedule no matter what.
-
-The first hint that the static guard bands are the cause of the problem
-is that reverting Michael Walle's commit 297c4de6f780 ("net: dsa: felix:
-re-enable TAS guard band mode") made things work. It must be that the
-guard bands are calculated incorrectly.
-
-I remembered that there is a magic constant in the driver, set to 33 ns
-for no logical reason other than experimentation, which says "never let
-the static guard bands get so large as to leave less than this amount of
-remaining space in the time slot, because the queue system will refuse
-to schedule packets otherwise, and they will get stuck". I had a hunch
-that my previous experimentally-determined value was only good for
-packets coming from the forwarding path, and that the CPU injection path
-needed more.
-
-I came to the new value of 35 ns through binary search, after seeing
-that with 544 ns (the bit time required to send the Pdelay_Resp packet
-at gigabit) it works. Again, this is purely experimental, there's no
-logic and the manual doesn't say anything.
-
-The new driver prints for this schedule look like this:
-
-mscc_felix 0000:00:00.5: port 0 tc 0 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 1 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 2 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 3 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 4 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 5 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 6 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-mscc_felix 0000:00:00.5: port 0 tc 7 min gate length 1250 ns not enough for max frame size 1526 at 1000 Mbps, dropping frames over 131 octets including FCS
-
-So yes, the maximum MTU is now even smaller by 1 byte than before.
-This is maybe counter-intuitive, but makes more sense with a diagram of
-one time slot.
-
-Before:
-
- Gate open                                   Gate close
- |                                                    |
- v           1250 ns total time slot duration         v
- <---------------------------------------------------->
- <----><---------------------------------------------->
-  33 ns            1217 ns static guard band
-  useful
-
- Gate open                                   Gate close
- |                                                    |
- v           1250 ns total time slot duration         v
- <---------------------------------------------------->
- <-----><--------------------------------------------->
-  35 ns            1215 ns static guard band
-  useful
-
-The static guard band implemented by this switch hardware directly
-determines the maximum allowable MTU for that traffic class. The larger
-it is, the earlier the switch will stop scheduling frames for
-transmission, because otherwise they might overrun the gate close time
-(and avoiding that is the entire purpose of Michael's patch).
-So, we now have guard bands smaller by 2 ns, thus, in this particular
-case, we lose a byte of the maximum MTU.
-
-Fixes: 11afdc6526de ("net: dsa: felix: tc-taprio intervals smaller than MTU should send at least one packet")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Link: https://patch.msgid.link/20241210132640.3426788-1-vladimir.oltean@nxp.com
+Fixes: 50612537e9ab ("netem: fix classful handling")
+Signed-off-by: Martin Ottens <martin.ottens@fau.de>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20241210131412.1837202-1-martin.ottens@fau.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/ocelot/felix_vsc9959.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ net/sched/sch_netem.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/ocelot/felix_vsc9959.c b/drivers/net/dsa/ocelot/felix_vsc9959.c
-index afb5dae4439c..8d27933c3733 100644
---- a/drivers/net/dsa/ocelot/felix_vsc9959.c
-+++ b/drivers/net/dsa/ocelot/felix_vsc9959.c
-@@ -24,7 +24,7 @@
- #define VSC9959_NUM_PORTS		6
+diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
+index d36eeb7b0502..152dbbe8fd31 100644
+--- a/net/sched/sch_netem.c
++++ b/net/sched/sch_netem.c
+@@ -78,6 +78,8 @@ struct netem_sched_data {
+ 	struct sk_buff	*t_head;
+ 	struct sk_buff	*t_tail;
  
- #define VSC9959_TAS_GCL_ENTRY_MAX	63
--#define VSC9959_TAS_MIN_GATE_LEN_NS	33
-+#define VSC9959_TAS_MIN_GATE_LEN_NS	35
- #define VSC9959_VCAP_POLICER_BASE	63
- #define VSC9959_VCAP_POLICER_MAX	383
- #define VSC9959_SWITCH_PCI_BAR		4
-@@ -1056,11 +1056,15 @@ static void vsc9959_mdio_bus_free(struct ocelot *ocelot)
- 	mdiobus_free(felix->imdio);
++	u32 t_len;
++
+ 	/* optional qdisc for classful handling (NULL at netem init) */
+ 	struct Qdisc	*qdisc;
+ 
+@@ -382,6 +384,7 @@ static void tfifo_reset(struct Qdisc *sch)
+ 	rtnl_kfree_skbs(q->t_head, q->t_tail);
+ 	q->t_head = NULL;
+ 	q->t_tail = NULL;
++	q->t_len = 0;
  }
  
--/* The switch considers any frame (regardless of size) as eligible for
-- * transmission if the traffic class gate is open for at least 33 ns.
-+/* The switch considers any frame (regardless of size) as eligible
-+ * for transmission if the traffic class gate is open for at least
-+ * VSC9959_TAS_MIN_GATE_LEN_NS.
-+ *
-  * Overruns are prevented by cropping an interval at the end of the gate time
-- * slot for which egress scheduling is blocked, but we need to still keep 33 ns
-- * available for one packet to be transmitted, otherwise the port tc will hang.
-+ * slot for which egress scheduling is blocked, but we need to still keep
-+ * VSC9959_TAS_MIN_GATE_LEN_NS available for one packet to be transmitted,
-+ * otherwise the port tc will hang.
-+ *
-  * This function returns the size of a gate interval that remains available for
-  * setting the guard band, after reserving the space for one egress frame.
-  */
-@@ -1303,7 +1307,8 @@ static void vsc9959_tas_guard_bands_update(struct ocelot *ocelot, int port)
- 			 * per-tc static guard band lengths, so it reduces the
- 			 * useful gate interval length. Therefore, be careful
- 			 * to calculate a guard band (and therefore max_sdu)
--			 * that still leaves 33 ns available in the time slot.
-+			 * that still leaves VSC9959_TAS_MIN_GATE_LEN_NS
-+			 * available in the time slot.
- 			 */
- 			max_sdu = div_u64(remaining_gate_len_ps, picos_per_byte);
- 			/* A TC gate may be completely closed, which is a
+ static void tfifo_enqueue(struct sk_buff *nskb, struct Qdisc *sch)
+@@ -411,6 +414,7 @@ static void tfifo_enqueue(struct sk_buff *nskb, struct Qdisc *sch)
+ 		rb_link_node(&nskb->rbnode, parent, p);
+ 		rb_insert_color(&nskb->rbnode, &q->t_root);
+ 	}
++	q->t_len++;
+ 	sch->q.qlen++;
+ }
+ 
+@@ -517,7 +521,7 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 			1<<get_random_u32_below(8);
+ 	}
+ 
+-	if (unlikely(sch->q.qlen >= sch->limit)) {
++	if (unlikely(q->t_len >= sch->limit)) {
+ 		/* re-link segs, so that qdisc_drop_all() frees them all */
+ 		skb->next = segs;
+ 		qdisc_drop_all(skb, sch, to_free);
+@@ -701,8 +705,8 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
+ tfifo_dequeue:
+ 	skb = __qdisc_dequeue_head(&sch->q);
+ 	if (skb) {
+-		qdisc_qstats_backlog_dec(sch, skb);
+ deliver:
++		qdisc_qstats_backlog_dec(sch, skb);
+ 		qdisc_bstats_update(sch, skb);
+ 		return skb;
+ 	}
+@@ -718,8 +722,7 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
+ 
+ 		if (time_to_send <= now && q->slot.slot_next <= now) {
+ 			netem_erase_head(q, skb);
+-			sch->q.qlen--;
+-			qdisc_qstats_backlog_dec(sch, skb);
++			q->t_len--;
+ 			skb->next = NULL;
+ 			skb->prev = NULL;
+ 			/* skb->dev shares skb->rbnode area,
+@@ -746,16 +749,21 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
+ 					if (net_xmit_drop_count(err))
+ 						qdisc_qstats_drop(sch);
+ 					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
++					sch->qstats.backlog -= pkt_len;
++					sch->q.qlen--;
+ 				}
+ 				goto tfifo_dequeue;
+ 			}
++			sch->q.qlen--;
+ 			goto deliver;
+ 		}
+ 
+ 		if (q->qdisc) {
+ 			skb = q->qdisc->ops->dequeue(q->qdisc);
+-			if (skb)
++			if (skb) {
++				sch->q.qlen--;
+ 				goto deliver;
++			}
+ 		}
+ 
+ 		qdisc_watchdog_schedule_ns(&q->watchdog,
+@@ -765,8 +773,10 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
+ 
+ 	if (q->qdisc) {
+ 		skb = q->qdisc->ops->dequeue(q->qdisc);
+-		if (skb)
++		if (skb) {
++			sch->q.qlen--;
+ 			goto deliver;
++		}
+ 	}
+ 	return NULL;
+ }
 -- 
 2.39.5
 
