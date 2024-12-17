@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95321F7577;
-	Tue, 17 Dec 2024 17:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB3C14A4E7;
+	Tue, 17 Dec 2024 17:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455949; cv=none; b=qwoSV4E9ASPlLGbZfjDuZdcRdFsyWYd+hj38F8AWd8ARsYLuSqqQY1QdKV73AD6CxVzqwulDsRK/RxG5wvwB2iRB6/D96IDVaH34BZIZFUKclODE+lGPT8UYLTBfgoSTj1vz28VkvV43hd9rF5kBznVH3wzub5FIx6xcQPvloQk=
+	t=1734455952; cv=none; b=KIQJ761OiYwhjXlJB98UbQZMFFVUGG5bCzgcg0XNJErKG3U3Cxfw7xOaamJ+IarNgj4T5gZN7VlP/tzYxihDfOd9KKmjCM9CoCmJPcCSyCqiySbXeWvwG0j2SqUMrwbkRD4QHL3Lg46OD8fz1lShMvVOulkwLSn1ZH50UwwNwx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455949; c=relaxed/simple;
-	bh=SZ35sFwWeAx5QqGV6l47DNMlB0Rv9yUkg2I1Kw+skeE=;
+	s=arc-20240116; t=1734455952; c=relaxed/simple;
+	bh=BV2BEor9/zGHC/zk+XAKOUBajCxN30vfmmqVe/VIcx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPRwksI/DC+3pB2dMHPGH/VGeKKitigGGecKT+ytkOcGo7m6llhA1wFa8S1cbjXo5EUsi3j/50nGDoA2lirk+NCWKppcZtQgFAXS1lombqWJCQ0KSR8rDZp2Rnp/SXB1AndUNleRJMWJ1Kv2CnZMA7KkosDaa3kkBjFHwclnK0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOwnL3nT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sAqAtubhgYg/aTlAesx4yfsl3bpH0qHWlA84QE8te9hPZqZGDbxZ/Z4/I0kyrpN/pYBedfDtjcuxO2zR6+2hZYyZKB62/C1MghSgZzgQe9ISWdUmZfSb4dN59bgd6BxFSTYcXNWNQkpkyC9dmzgEw+0cY+aqir187vJXocyOlZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZLZlctN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOwnL3nT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECBAC4CED3;
-	Tue, 17 Dec 2024 17:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZLZlctN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AD2C4CED3;
+	Tue, 17 Dec 2024 17:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455949;
-	bh=SZ35sFwWeAx5QqGV6l47DNMlB0Rv9yUkg2I1Kw+skeE=;
+	s=korg; t=1734455952;
+	bh=BV2BEor9/zGHC/zk+XAKOUBajCxN30vfmmqVe/VIcx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOwnL3nTxTZ9tPaPNIqMBSk4FjZ5GxQN42kNL4bkrJZMgs7lMNRCL3EHe6D4wyMdP
-	 lox/DFkNybd7zySnGMxoybTkogL016RARRsNt0bKa7vDaXFF22sz+aH0Vd/vR/MTRl
-	 5ErRjsqJc4ekAPe/Z4InOiyrTSyOD+6ARx9kXfzw=
+	b=mZLZlctN/28v5RNuYzPofqHXyCjE7Ed0Bl3VhvISN8RoMYPBmU6svY0DlLqLQGrHR
+	 +J35l96wulnKIv0crQ5CgPVfpXsOIM/tJlwef4gSsho1iZGbmJmBPi0fJGVrjofWFe
+	 Btl2n4FMgVbgmzuHNhYsuL4QIAfuui/vSTsvrzdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Subject: [PATCH 6.6 010/109] usb: host: max3421-hcd: Correctly abort a USB request.
-Date: Tue, 17 Dec 2024 18:06:54 +0100
-Message-ID: <20241217170533.782226769@linuxfoundation.org>
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: [PATCH 6.6 011/109] ata: sata_highbank: fix OF node reference leak in highbank_initialize_phys()
+Date: Tue, 17 Dec 2024 18:06:55 +0100
+Message-ID: <20241217170533.825420889@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -50,50 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit 0d2ada05227881f3d0722ca2364e3f7a860a301f upstream.
+commit 676fe1f6f74db988191dab5df3bf256908177072 upstream.
 
-If the current USB request was aborted, the spi thread would not respond
-to any further requests. This is because the "curr_urb" pointer would
-not become NULL, so no further requests would be taken off the queue.
-The solution here is to set the "urb_done" flag, as this will cause the
-correct handling of the URB. Also clear interrupts that should only be
-expected if an URB is in progress.
+The OF node reference obtained by of_parse_phandle_with_args() is not
+released on early return. Add a of_node_put() call before returning.
 
-Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20241124221430.1106080-1-mark.tomlinson@alliedtelesis.co.nz
+Fixes: 8996b89d6bc9 ("ata: add platform driver for Calxeda AHCI controller")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/max3421-hcd.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/ata/sata_highbank.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -779,11 +779,17 @@ max3421_check_unlink(struct usb_hcd *hcd
- 				retval = 1;
- 				dev_dbg(&spi->dev, "%s: URB %p unlinked=%d",
- 					__func__, urb, urb->unlinked);
--				usb_hcd_unlink_urb_from_ep(hcd, urb);
--				spin_unlock_irqrestore(&max3421_hcd->lock,
--						       flags);
--				usb_hcd_giveback_urb(hcd, urb, 0);
--				spin_lock_irqsave(&max3421_hcd->lock, flags);
-+				if (urb == max3421_hcd->curr_urb) {
-+					max3421_hcd->urb_done = 1;
-+					max3421_hcd->hien &= ~(BIT(MAX3421_HI_HXFRDN_BIT) |
-+							       BIT(MAX3421_HI_RCVDAV_BIT));
-+				} else {
-+					usb_hcd_unlink_urb_from_ep(hcd, urb);
-+					spin_unlock_irqrestore(&max3421_hcd->lock,
-+							       flags);
-+					usb_hcd_giveback_urb(hcd, urb, 0);
-+					spin_lock_irqsave(&max3421_hcd->lock, flags);
-+				}
+--- a/drivers/ata/sata_highbank.c
++++ b/drivers/ata/sata_highbank.c
+@@ -348,6 +348,7 @@ static int highbank_initialize_phys(stru
+ 			phy_nodes[phy] = phy_data.np;
+ 			cphy_base[phy] = of_iomap(phy_nodes[phy], 0);
+ 			if (cphy_base[phy] == NULL) {
++				of_node_put(phy_data.np);
+ 				return 0;
  			}
- 		}
- 	}
+ 			phy_count += 1;
 
 
