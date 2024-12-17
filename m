@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4F01F76B1;
-	Tue, 17 Dec 2024 17:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECE51F76B1;
+	Tue, 17 Dec 2024 17:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456339; cv=none; b=OhcBayrK9e2nh9svnJPVQakKV/UU6W9HhDzmxapMVsy9oHKhwQ5Ub1HFvUVkLZi1QLFW5vjUPE7kRMANHscmlO13uYW8xtG7S2/R5JIrWohlj5lyO5a8IxyskCxX+FLq7SvMk4oXpi7xqxeoLhUfyCWijUk+7o7lx/rBIZFJrM8=
+	t=1734456343; cv=none; b=hkr0Ffz+aA5nufepSslPEGLHnOuJ3VCYOx/hm/IlnIVaezh/qyz8NGXUf5HoWje3X9z+hof0cQ/DGqCim5L4H/Dxvyx+AXoGIhD3lS9LWl8ASzPG2MfHwBIzNmmyB+4lPZX4HnhE58jM4g1uIT5sipW+TyHccTpWYcMsUIPEIhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456339; c=relaxed/simple;
-	bh=yCXPeFzwNVx/xsrpt6FdmQTNGQIxmlV4J9q7pWGWkKA=;
+	s=arc-20240116; t=1734456343; c=relaxed/simple;
+	bh=Sj8fkh/lMRUtgPX5O5gbYQHj6iyWvPrUjFJDi/jSxeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZShh+LwWO81izWubp3ofKDxb36WdqSfgWHYws0j1bT6DEIS7xHDk0QScXAV+IuEkk4s5tPLfOXABUVxNpCYPnWQNU2LuheBZ1QS+YVOwKHkKk22jIqFcVDJaPprqYKU3+Kx1hKvinkpy4fvU0SBL33WhqBGXrj+62L5bXP/DPAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pL8rczPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bVB2aU0+5BDPAZDIadawjqn19MBUD6EkZYVrxlzaBNHzONU5VEB5+5JoV0eGNpjXB2ILly+ppDAhOYdGL+rdNFA28sflkWTr8sPPePXh/YbwKa3ZnsNpnPVR9X847adM0HswSQfE8jS/PxBSR0h06E2w7wkCHJkUVPFXRV5dtGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL2Y+T3e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pL8rczPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79023C4CED3;
-	Tue, 17 Dec 2024 17:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL2Y+T3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD40C4CED3;
+	Tue, 17 Dec 2024 17:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456338;
-	bh=yCXPeFzwNVx/xsrpt6FdmQTNGQIxmlV4J9q7pWGWkKA=;
+	s=korg; t=1734456342;
+	bh=Sj8fkh/lMRUtgPX5O5gbYQHj6iyWvPrUjFJDi/jSxeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pL8rczPx/ofzQShUOlYJdh7DeOiIE6ktwD+TdtP0pWcrJY0sV8IfsuSwTM9fr1BHg
-	 WgAxdZk5uRIbpEFGikqYvb3oe+NnEjs4/Z47kfdrwXjhyzqPihd7dpVdbTMM8PAk9U
-	 D7TSOfZ2onbaFDxwmh3Jo/5yhJw6f3GR+ZJOb1EI=
+	b=wL2Y+T3eazJvUf08F0t2hfyx9QZj+6s8K4JlKjEnl2gzVs27LJ/3XFmn3dliZQBgF
+	 Z+vHC+ww0hODA4s6jHXlfRYbE9BHsaWTDY2t3xV7hEeDHY55oiUp/Kz7/5ZOGjxCP1
+	 3kSANa8XajZdeLOe6HDtEg9+JSaqtJFXawliIp3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.12 028/172] crypto: hisilicon/debugfs - fix the struct pointer incorrectly offset problem
-Date: Tue, 17 Dec 2024 18:06:24 +0100
-Message-ID: <20241217170547.431916732@linuxfoundation.org>
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 029/172] drm/panic: remove spurious empty line to clean warning
+Date: Tue, 17 Dec 2024 18:06:25 +0100
+Message-ID: <20241217170547.472689754@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,44 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit cd26cd65476711e2c69e0a049c0eeef4b743f5ac upstream.
+commit 4011b351b1b5a953aaa7c6b3915f908b3cc1be96 upstream.
 
-Offset based on (id * size) is wrong for sqc and cqc.
-(*sqc/*cqc + 1) can already offset sizeof(struct(Xqc)) length.
+Clippy in the upcoming Rust 1.83.0 spots a spurious empty line since the
+`clippy::empty_line_after_doc_comments` warning is now enabled by default
+given it is part of the `suspicious` group [1]:
 
-Fixes: 15f112f9cef5 ("crypto: hisilicon/debugfs - mask the unnecessary info from the dump")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+    error: empty line after doc comment
+       --> drivers/gpu/drm/drm_panic_qr.rs:931:1
+        |
+    931 | / /// They must remain valid for the duration of the function call.
+    932 | |
+        | |_
+    933 |   #[no_mangle]
+    934 | / pub unsafe extern "C" fn drm_panic_qr_generate(
+    935 | |     url: *const i8,
+    936 | |     data: *mut u8,
+    937 | |     data_len: usize,
+    ...   |
+    940 | |     tmp_size: usize,
+    941 | | ) -> u8 {
+        | |_______- the comment documents this function
+        |
+        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
+        = note: `-D clippy::empty-line-after-doc-comments` implied by `-D warnings`
+        = help: to override `-D warnings` add `#[allow(clippy::empty_line_after_doc_comments)]`
+        = help: if the empty line is unintentional remove it
+
+Thus remove the empty line.
+
+Cc: stable@vger.kernel.org
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Link: https://github.com/rust-lang/rust-clippy/pull/13091 [1]
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://lore.kernel.org/r/20241125233332.697497-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/hisilicon/debugfs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_panic_qr.rs | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/debugfs.c b/drivers/crypto/hisilicon/debugfs.c
-index 1b9b7bccdeff..45e130b901eb 100644
---- a/drivers/crypto/hisilicon/debugfs.c
-+++ b/drivers/crypto/hisilicon/debugfs.c
-@@ -192,7 +192,7 @@ static int qm_sqc_dump(struct hisi_qm *qm, char *s, char *name)
- 
- 	down_read(&qm->qps_lock);
- 	if (qm->sqc) {
--		memcpy(&sqc, qm->sqc + qp_id * sizeof(struct qm_sqc), sizeof(struct qm_sqc));
-+		memcpy(&sqc, qm->sqc + qp_id, sizeof(struct qm_sqc));
- 		sqc.base_h = cpu_to_le32(QM_XQC_ADDR_MASK);
- 		sqc.base_l = cpu_to_le32(QM_XQC_ADDR_MASK);
- 		dump_show(qm, &sqc, sizeof(struct qm_sqc), "SOFT SQC");
-@@ -229,7 +229,7 @@ static int qm_cqc_dump(struct hisi_qm *qm, char *s, char *name)
- 
- 	down_read(&qm->qps_lock);
- 	if (qm->cqc) {
--		memcpy(&cqc, qm->cqc + qp_id * sizeof(struct qm_cqc), sizeof(struct qm_cqc));
-+		memcpy(&cqc, qm->cqc + qp_id, sizeof(struct qm_cqc));
- 		cqc.base_h = cpu_to_le32(QM_XQC_ADDR_MASK);
- 		cqc.base_l = cpu_to_le32(QM_XQC_ADDR_MASK);
- 		dump_show(qm, &cqc, sizeof(struct qm_cqc), "SOFT CQC");
+diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
+index 09500cddc009..ef2d490965ba 100644
+--- a/drivers/gpu/drm/drm_panic_qr.rs
++++ b/drivers/gpu/drm/drm_panic_qr.rs
+@@ -929,7 +929,6 @@ impl QrImage<'_> {
+ /// * `tmp` must be valid for reading and writing for `tmp_size` bytes.
+ ///
+ /// They must remain valid for the duration of the function call.
+-
+ #[no_mangle]
+ pub unsafe extern "C" fn drm_panic_qr_generate(
+     url: *const i8,
 -- 
 2.47.1
 
