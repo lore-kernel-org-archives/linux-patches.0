@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5348615A;
-	Tue, 17 Dec 2024 17:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08128615A;
+	Tue, 17 Dec 2024 17:24:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456259; cv=none; b=g8BbkzfUsnaKUeGvC9jsfcybNs9DRSvKH7mJtu6FiDdvfZzlZWdoqdIBRzKFN0w2cNHJ1hIFHoeT4zBCJR5Jx1+EDpZQGTo+40es2zaOyi2g1TjHA7qu6N3N/GlSLERSXKlnuqySdLUWqcSRFCmHaqP8U/tAsqBeWoXoz72Ll1o=
+	t=1734456262; cv=none; b=qxj/yQsCtPfY9206gZcWGH9CdtQPVw9EJRSkydmHwqop+YOghkX0tw/UcMK+k3hbi09sYcigl/Php3QmjLUN1rLeRVzYENbQESHY/juZ9GbtAIoThW5BC6fAhmdnStdg2KjMqysqwXYb3io1yVZa9uKzeg7nZO18DDmdSjCcSMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456259; c=relaxed/simple;
-	bh=X6WMRdyizDCDzs/xFtI0hHucoTuCVA2dNQP2DC+vzuQ=;
+	s=arc-20240116; t=1734456262; c=relaxed/simple;
+	bh=yxym0isy+6ZJhyw3P+QReoHHYdZkTkZDUOgLJ25/A9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTP+/ygRACMtmRv9NJd7fu3ANcdnxOTq4Yuvxs1UXas2QW5HQHWbqWLfNrDrJwV1ztPDzGLwPC17AiwPQyYISkwT47so9zKtstshz5T28oUr1moMFFnlSCNwzIfLvHlQjgEoU1GUEZcwccoaqDStjzE6Qcl0qoiB/j1I5FnvQnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Lk1d50S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Qlvc+Kd7vF21RZcUXkyQzIVBFlUEtXG4kJHqSCvEnmry7AfP+4EQjpINNcwBB3Z+BB8+RwtROc6GboA2rkW7j46n4EjV8yn0zGpnB8UwgcNTLOYwP5vBPARH3XFu/xSvkKvFevgi/PaW1gbXyygGEbtmTnURPKUBXdzkq04xRsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTcSimqN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Lk1d50S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855A2C4CEDD;
-	Tue, 17 Dec 2024 17:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTcSimqN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A9FC4CEDD;
+	Tue, 17 Dec 2024 17:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456258;
-	bh=X6WMRdyizDCDzs/xFtI0hHucoTuCVA2dNQP2DC+vzuQ=;
+	s=korg; t=1734456261;
+	bh=yxym0isy+6ZJhyw3P+QReoHHYdZkTkZDUOgLJ25/A9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Lk1d50SbsVc2BW8IOqdNwJxs5B2WAPFIiXF7Z5b+lus9y76N3tr/H0HHnrEBn13/
-	 Xt7Ah2wrBBR8Na9F64svLQrAxX4dMnrlNl+eyj+ri1DihcWpAAniFDvuCGiml1OnYu
-	 3xB3ev/bFPaRVwYtemocnNw/D0taLXoNYqBodFZ8=
+	b=bTcSimqNzBKz6LfdBmAI+E/NSjhMN2Ctg5lBULH7pd2OAGRgD2qZCS7jieZ/HmOCu
+	 pKkP0r49KmGI0TFcQuqjIRpafRQGncEmFdx1iDcM/4Om705ZTtsG/ynO9/wJhYsTsl
+	 Gvk1Cm/ZEEaj7azci2xzrSWZDcUwNQyktcWn6uzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Sasha Levin" <sashal@kernel.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.6 099/109] selftests/bpf: remove use of __xlated()
-Date: Tue, 17 Dec 2024 18:08:23 +0100
-Message-ID: <20241217170537.522869858@linuxfoundation.org>
+	Radu Rendec <rrendec@redhat.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 100/109] net: rswitch: Avoid use-after-free in rswitch_poll()
+Date: Tue, 17 Dec 2024 18:08:24 +0100
+Message-ID: <20241217170537.573479659@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -46,56 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+From: Radu Rendec <rrendec@redhat.com>
 
-Commit 68ec5395bc24, backport of mainline commit a41b3828ec05 ("selftests/bpf:
-Verify that sync_linked_regs preserves subreg_def") uses the __xlated() that
-wasn't in the v6.6 code-base, and causes BPF selftests to fail compilation.
+commit 9a0c28efeec6383ef22e97437616b920e7320b67 upstream.
 
-Remove the use of the __xlated() macro in
-tools/testing/selftests/bpf/progs/verifier_scalar_ids.c to fix compilation
-failure. Without the __xlated() checks the coverage is reduced, however the
-test case still functions just fine.
+The use-after-free is actually in rswitch_tx_free(), which is inlined in
+rswitch_poll(). Since `skb` and `gq->skbs[gq->dirty]` are in fact the
+same pointer, the skb is first freed using dev_kfree_skb_any(), then the
+value in skb->len is used to update the interface statistics.
 
-Fixes: 68ec5395bc24 ("selftests/bpf: Verify that sync_linked_regs preserves subreg_def")
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Let's move around the instructions to use skb->len before the skb is
+freed.
+
+This bug is trivial to reproduce using KFENCE. It will trigger a splat
+every few packets. A simple ARP request or ICMP echo request is enough.
+
+Fixes: 271e015b9153 ("net: rswitch: Add unmap_addrs instead of dma address in each desc")
+Signed-off-by: Radu Rendec <rrendec@redhat.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://patch.msgid.link/20240702210838.2703228-1-rrendec@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/verifier_scalar_ids.c |   16 ----------------
- 1 file changed, 16 deletions(-)
+ drivers/net/ethernet/renesas/rswitch.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-+++ b/tools/testing/selftests/bpf/progs/verifier_scalar_ids.c
-@@ -682,22 +682,6 @@ __msg("from 3 to 4")
- __msg("4: (77) r1 >>= 32                     ; R1_w=0")
- __msg("5: (bf) r0 = r1                       ; R0_w=0 R1_w=0")
- __msg("6: (95) exit")
--/* Verify that statements to randomize upper half of r1 had not been
-- * generated.
-- */
--__xlated("call unknown")
--__xlated("r0 &= 2147483647")
--__xlated("w1 = w0")
--/* This is how disasm.c prints BPF_ZEXT_REG at the moment, x86 and arm
-- * are the only CI archs that do not need zero extension for subregs.
-- */
--#if !defined(__TARGET_ARCH_x86) && !defined(__TARGET_ARCH_arm64)
--__xlated("w1 = w1")
--#endif
--__xlated("if w0 < 0xa goto pc+0")
--__xlated("r1 >>= 32")
--__xlated("r0 = r1")
--__xlated("exit")
- __naked void linked_regs_and_subreg_def(void)
- {
- 	asm volatile (
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -799,13 +799,13 @@ static void rswitch_tx_free(struct net_d
+ 
+ 		skb = gq->skbs[gq->dirty];
+ 		if (skb) {
++			rdev->ndev->stats.tx_packets++;
++			rdev->ndev->stats.tx_bytes += skb->len;
+ 			dma_unmap_single(ndev->dev.parent,
+ 					 gq->unmap_addrs[gq->dirty],
+ 					 skb->len, DMA_TO_DEVICE);
+ 			dev_kfree_skb_any(gq->skbs[gq->dirty]);
+ 			gq->skbs[gq->dirty] = NULL;
+-			rdev->ndev->stats.tx_packets++;
+-			rdev->ndev->stats.tx_bytes += skb->len;
+ 		}
+ 
+ 		desc->desc.die_dt = DT_EEMPTY;
 
 
