@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E051F867C;
-	Tue, 17 Dec 2024 17:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A7A1F8685;
+	Tue, 17 Dec 2024 17:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456599; cv=none; b=fB3xft26XsDpgflYnyhxH6xoKDxFNMMtKkNenciQKHJgM39C7yk3AuJ7HZDU9FhipF4lH9obg7YP/PFHxDnH6cvddzRHykBNj/M/ohK6mDRYv1gjUWtV6GWzlRJhxKYguAR5sj/6HBeAGoVyycekfaJKkJeIhlI1ppyTbLR541Y=
+	t=1734456602; cv=none; b=YCI2I7pW7VLIqAEyN1bCenrd3i8zgkSzrx7q822KvxgRhFyqgEQpD7YQbJnRfNbh9ahcqjhFo8nlPvNZc2BoNfYWYde/mW7n0lAfqBeFT3Xa41vk2ttkFgj7BbIITt75gMqBFx1J8u4d/HcEraLMbS6BztMK9yzteyi/0B80VfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456599; c=relaxed/simple;
-	bh=5kKBIaWjW3xZmdFEbcEB6LjNCw2G62FaqIiKrgflLgE=;
+	s=arc-20240116; t=1734456602; c=relaxed/simple;
+	bh=oTnbVSmDAFk+yTNjgzMnBq/0VfWUq6OBu+G8AduxG4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLllo0IDrr61p5YHZDsDA117TnoOtuuSAo5N4PuMWyyGGgZo+T9iqSIvM1+7pU9pW5c/8WDwne5DQH4aPQ4HBBnmAZ1kRGnY+qD+Jsh5Nc1w3Amvyyz0zcZgkT8i9kIS1UVaKTMIgWob6xOJI+qUPG3KmB/TJNsKe5R4W/uQ85Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1eEigBE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qAKWPyPPRZHMgKkWwKIKAv24pJED2TFlC3oaOheNosVvyDZ9JlG13pME/Whwt0oMlQA5ojbb+hOR3bBR8hX155MxuKwBSyMH7znGa7pXrUvWLsI8NmwF7s6PVOvfKFrdOSbdUeUogaxGxQrLz/UVfAbjROwcT5RDf35nw+vSRtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vp8xSX2P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1eEigBE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3C1C4CED3;
-	Tue, 17 Dec 2024 17:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vp8xSX2P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AAAC4CED3;
+	Tue, 17 Dec 2024 17:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456599;
-	bh=5kKBIaWjW3xZmdFEbcEB6LjNCw2G62FaqIiKrgflLgE=;
+	s=korg; t=1734456602;
+	bh=oTnbVSmDAFk+yTNjgzMnBq/0VfWUq6OBu+G8AduxG4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1eEigBEH2dDdjdqH8kJ+CgMbxBRNVaHnfnBoLa9NP+oJRFhsmjWjPO0KnvWBLX+h
-	 UNWawkxbKHvCh0tQGArvoNfU7a1pGpNUdcZAwCFanSCOxhcJlWCaU2l7mVKvd+AJWB
-	 c9QTCGKe8Vyh06CQQr9KW67zmaUEgj7kt4/c+0Eg=
+	b=Vp8xSX2PA/RFJRXQ20PUZrd6JtzxUqMY6B8nGr5vH1eU0wOexUkdzXLe5nD5aZrhd
+	 r8+gM1p9aZVKb0syP6C7SmYPs2AaKtvYNrmIxOZ5cUuRKRWxq+L7I9/wd6H7KwhdA3
+	 QgKGvcUaVXphqXECkEuUUFgaPDubKLmat8EBkTGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Philippe Simons <simons.philippe@gmail.com>,
+	Hironori KIKUCHI <kikuchan98@gmail.com>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/172] net: mscc: ocelot: perform error cleanup in ocelot_hwstamp_set()
-Date: Tue, 17 Dec 2024 18:07:43 +0100
-Message-ID: <20241217170550.764085409@linuxfoundation.org>
+Subject: [PATCH 6.12 108/172] regulator: axp20x: AXP717: set ramp_delay
+Date: Tue, 17 Dec 2024 18:07:44 +0100
+Message-ID: <20241217170550.804520752@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,126 +54,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Philippe Simons <simons.philippe@gmail.com>
 
-[ Upstream commit 43a4166349a254446e7a3db65f721c6a30daccf3 ]
+[ Upstream commit f07ae52f5cf6a5584fdf7c8c652f027d90bc8b74 ]
 
-An unsupported RX filter will leave the port with TX timestamping still
-applied as per the new request, rather than the old setting. When
-parsing the tx_type, don't apply it just yet, but delay that until after
-we've parsed the rx_filter as well (and potentially returned -ERANGE for
-that).
+AXP717 datasheet says that regulator ramp delay is 15.625 us/step,
+which is 10mV in our case.
 
-Similarly, copy_to_user() may fail, which is a rare occurrence, but
-should still be treated by unwinding what was done.
+Add a AXP_DESC_RANGES_DELAY macro and update AXP_DESC_RANGES macro to
+expand to AXP_DESC_RANGES_DELAY with ramp_delay = 0
 
-Fixes: 96ca08c05838 ("net: mscc: ocelot: set up traps for PTP packets")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20241205145519.1236778-6-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For DCDC4, steps is 100mv
+
+Add a AXP_DESC_DELAY macro and update AXP_DESC macro to
+expand to AXP_DESC_DELAY with ramp_delay = 0
+
+This patch fix crashes when using CPU DVFS.
+
+Signed-off-by: Philippe Simons <simons.philippe@gmail.com>
+Tested-by: Hironori KIKUCHI <kikuchan98@gmail.com>
+Tested-by: Chris Morgan <macromorgan@hotmail.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: d2ac3df75c3a ("regulator: axp20x: add support for the AXP717")
+Link: https://patch.msgid.link/20241208124308.5630-1-simons.philippe@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot_ptp.c | 59 ++++++++++++++++++--------
- 1 file changed, 42 insertions(+), 17 deletions(-)
+ drivers/regulator/axp20x-regulator.c | 36 ++++++++++++++++++----------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot_ptp.c b/drivers/net/ethernet/mscc/ocelot_ptp.c
-index 7eb01d1e1ecd..808ce8e68d39 100644
---- a/drivers/net/ethernet/mscc/ocelot_ptp.c
-+++ b/drivers/net/ethernet/mscc/ocelot_ptp.c
-@@ -497,6 +497,28 @@ static int ocelot_traps_to_ptp_rx_filter(unsigned int proto)
- 	return HWTSTAMP_FILTER_NONE;
- }
- 
-+static int ocelot_ptp_tx_type_to_cmd(int tx_type, int *ptp_cmd)
-+{
-+	switch (tx_type) {
-+	case HWTSTAMP_TX_ON:
-+		*ptp_cmd = IFH_REW_OP_TWO_STEP_PTP;
-+		break;
-+	case HWTSTAMP_TX_ONESTEP_SYNC:
-+		/* IFH_REW_OP_ONE_STEP_PTP updates the correctionField,
-+		 * what we need to update is the originTimestamp.
-+		 */
-+		*ptp_cmd = IFH_REW_OP_ORIGIN_PTP;
-+		break;
-+	case HWTSTAMP_TX_OFF:
-+		*ptp_cmd = 0;
-+		break;
-+	default:
-+		return -ERANGE;
-+	}
-+
-+	return 0;
-+}
-+
- int ocelot_hwstamp_get(struct ocelot *ocelot, int port, struct ifreq *ifr)
- {
- 	struct ocelot_port *ocelot_port = ocelot->ports[port];
-@@ -523,30 +545,19 @@ EXPORT_SYMBOL(ocelot_hwstamp_get);
- int ocelot_hwstamp_set(struct ocelot *ocelot, int port, struct ifreq *ifr)
- {
- 	struct ocelot_port *ocelot_port = ocelot->ports[port];
-+	int ptp_cmd, old_ptp_cmd = ocelot_port->ptp_cmd;
- 	bool l2 = false, l4 = false;
- 	struct hwtstamp_config cfg;
-+	bool old_l2, old_l4;
- 	int err;
- 
- 	if (copy_from_user(&cfg, ifr->ifr_data, sizeof(cfg)))
- 		return -EFAULT;
- 
- 	/* Tx type sanity check */
--	switch (cfg.tx_type) {
--	case HWTSTAMP_TX_ON:
--		ocelot_port->ptp_cmd = IFH_REW_OP_TWO_STEP_PTP;
--		break;
--	case HWTSTAMP_TX_ONESTEP_SYNC:
--		/* IFH_REW_OP_ONE_STEP_PTP updates the correctional field, we
--		 * need to update the origin time.
--		 */
--		ocelot_port->ptp_cmd = IFH_REW_OP_ORIGIN_PTP;
--		break;
--	case HWTSTAMP_TX_OFF:
--		ocelot_port->ptp_cmd = 0;
--		break;
--	default:
--		return -ERANGE;
--	}
-+	err = ocelot_ptp_tx_type_to_cmd(cfg.tx_type, &ptp_cmd);
-+	if (err)
-+		return err;
- 
- 	switch (cfg.rx_filter) {
- 	case HWTSTAMP_FILTER_NONE:
-@@ -571,13 +582,27 @@ int ocelot_hwstamp_set(struct ocelot *ocelot, int port, struct ifreq *ifr)
- 		return -ERANGE;
+diff --git a/drivers/regulator/axp20x-regulator.c b/drivers/regulator/axp20x-regulator.c
+index a8e91d9d028b..945d2917b91b 100644
+--- a/drivers/regulator/axp20x-regulator.c
++++ b/drivers/regulator/axp20x-regulator.c
+@@ -371,8 +371,8 @@
+ 		.ops		= &axp20x_ops,					\
  	}
  
-+	old_l2 = ocelot_port->trap_proto & OCELOT_PROTO_PTP_L2;
-+	old_l4 = ocelot_port->trap_proto & OCELOT_PROTO_PTP_L4;
-+
- 	err = ocelot_setup_ptp_traps(ocelot, port, l2, l4);
- 	if (err)
- 		return err;
+-#define AXP_DESC(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
+-		 _vmask, _ereg, _emask) 					\
++#define AXP_DESC_DELAY(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
++		 _vmask, _ereg, _emask, _ramp_delay) 				\
+ 	[_family##_##_id] = {							\
+ 		.name		= (_match),					\
+ 		.supply_name	= (_supply),					\
+@@ -388,9 +388,15 @@
+ 		.vsel_mask	= (_vmask),					\
+ 		.enable_reg	= (_ereg),					\
+ 		.enable_mask	= (_emask),					\
++		.ramp_delay = (_ramp_delay),					\
+ 		.ops		= &axp20x_ops,					\
+ 	}
  
-+	ocelot_port->ptp_cmd = ptp_cmd;
++#define AXP_DESC(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
++		 _vmask, _ereg, _emask) 					\
++	AXP_DESC_DELAY(_family, _id, _match, _supply, _min, _max, _step, _vreg,	\
++		 _vmask, _ereg, _emask, 0)
 +
- 	cfg.rx_filter = ocelot_traps_to_ptp_rx_filter(ocelot_port->trap_proto);
+ #define AXP_DESC_SW(_family, _id, _match, _supply, _ereg, _emask)		\
+ 	[_family##_##_id] = {							\
+ 		.name		= (_match),					\
+@@ -419,8 +425,8 @@
+ 		.ops		= &axp20x_ops_fixed				\
+ 	}
  
--	return copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg)) ? -EFAULT : 0;
-+	if (copy_to_user(ifr->ifr_data, &cfg, sizeof(cfg))) {
-+		err = -EFAULT;
-+		goto out_restore_ptp_traps;
-+	}
+-#define AXP_DESC_RANGES(_family, _id, _match, _supply, _ranges, _n_voltages,	\
+-			_vreg, _vmask, _ereg, _emask)				\
++#define AXP_DESC_RANGES_DELAY(_family, _id, _match, _supply, _ranges, _n_voltages,	\
++			_vreg, _vmask, _ereg, _emask, _ramp_delay)	\
+ 	[_family##_##_id] = {							\
+ 		.name		= (_match),					\
+ 		.supply_name	= (_supply),					\
+@@ -436,9 +442,15 @@
+ 		.enable_mask	= (_emask),					\
+ 		.linear_ranges	= (_ranges),					\
+ 		.n_linear_ranges = ARRAY_SIZE(_ranges),				\
++		.ramp_delay = (_ramp_delay),					\
+ 		.ops		= &axp20x_ops_range,				\
+ 	}
+ 
++#define AXP_DESC_RANGES(_family, _id, _match, _supply, _ranges, _n_voltages,	\
++			_vreg, _vmask, _ereg, _emask)				\
++	AXP_DESC_RANGES_DELAY(_family, _id, _match, _supply, _ranges,		\
++		 _n_voltages, _vreg, _vmask, _ereg, _emask, 0)
 +
-+	return 0;
-+out_restore_ptp_traps:
-+	ocelot_setup_ptp_traps(ocelot, port, old_l2, old_l4);
-+	ocelot_port->ptp_cmd = old_ptp_cmd;
-+	return err;
- }
- EXPORT_SYMBOL(ocelot_hwstamp_set);
+ static const int axp209_dcdc2_ldo3_slew_rates[] = {
+ 	1600,
+ 	 800,
+@@ -781,21 +793,21 @@ static const struct linear_range axp717_dcdc3_ranges[] = {
+ };
  
+ static const struct regulator_desc axp717_regulators[] = {
+-	AXP_DESC_RANGES(AXP717, DCDC1, "dcdc1", "vin1",
++	AXP_DESC_RANGES_DELAY(AXP717, DCDC1, "dcdc1", "vin1",
+ 			axp717_dcdc1_ranges, AXP717_DCDC1_NUM_VOLTAGES,
+ 			AXP717_DCDC1_CONTROL, AXP717_DCDC_V_OUT_MASK,
+-			AXP717_DCDC_OUTPUT_CONTROL, BIT(0)),
+-	AXP_DESC_RANGES(AXP717, DCDC2, "dcdc2", "vin2",
++			AXP717_DCDC_OUTPUT_CONTROL, BIT(0), 640),
++	AXP_DESC_RANGES_DELAY(AXP717, DCDC2, "dcdc2", "vin2",
+ 			axp717_dcdc2_ranges, AXP717_DCDC2_NUM_VOLTAGES,
+ 			AXP717_DCDC2_CONTROL, AXP717_DCDC_V_OUT_MASK,
+-			AXP717_DCDC_OUTPUT_CONTROL, BIT(1)),
+-	AXP_DESC_RANGES(AXP717, DCDC3, "dcdc3", "vin3",
++			AXP717_DCDC_OUTPUT_CONTROL, BIT(1), 640),
++	AXP_DESC_RANGES_DELAY(AXP717, DCDC3, "dcdc3", "vin3",
+ 			axp717_dcdc3_ranges, AXP717_DCDC3_NUM_VOLTAGES,
+ 			AXP717_DCDC3_CONTROL, AXP717_DCDC_V_OUT_MASK,
+-			AXP717_DCDC_OUTPUT_CONTROL, BIT(2)),
+-	AXP_DESC(AXP717, DCDC4, "dcdc4", "vin4", 1000, 3700, 100,
++			AXP717_DCDC_OUTPUT_CONTROL, BIT(2), 640),
++	AXP_DESC_DELAY(AXP717, DCDC4, "dcdc4", "vin4", 1000, 3700, 100,
+ 		 AXP717_DCDC4_CONTROL, AXP717_DCDC_V_OUT_MASK,
+-		 AXP717_DCDC_OUTPUT_CONTROL, BIT(3)),
++		 AXP717_DCDC_OUTPUT_CONTROL, BIT(3), 6400),
+ 	AXP_DESC(AXP717, ALDO1, "aldo1", "aldoin", 500, 3500, 100,
+ 		 AXP717_ALDO1_CONTROL, AXP717_LDO_V_OUT_MASK,
+ 		 AXP717_LDO0_OUTPUT_CONTROL, BIT(0)),
 -- 
 2.39.5
 
