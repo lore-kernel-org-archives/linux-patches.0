@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2631F758F;
-	Tue, 17 Dec 2024 17:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DB41F75BC;
+	Tue, 17 Dec 2024 17:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455429; cv=none; b=t6CwvUpdasHG154vkOxWTY/pcu55IBonuhH5S8kcx2NWwTcDv+ZlUMkLGsejpqxrIEtfJYPUp1/vm6iOtsBirhVNSHTYO2XxF0sVcmltUBGTZPi/NN4lz0ERmvZxAt9CRDvy4O0EjaszOYCAe3fs9WFFslPrRnCQrOW6zKPn8j0=
+	t=1734455429; cv=none; b=GuA7M9ySgl0iZLxhEp0JCCFrwiK4PSGqU9q/vpFMVtE6q3bJo0ABt5UsPDaYmO2MQSrznlksU1+iRZjp6ZjfIoRYSWZ7I0LSc3mNoYBnxCgwsBlU9II2cN35ApdF9XlF3/y0mOtOOCelqW+KYTAlfAYVXAM15vEAB3/OyhaO0Ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1734455429; c=relaxed/simple;
-	bh=LV9MS8uEQvUGP15oX98Rwdv7fx3h41OiiEWNoGY0q1E=;
+	bh=jB7QXOWmYp7jilID6xwlBWou2uSVSesqOaKpAv/gGTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GF/IfvcXxnydZc1V4dw63gvNKmRSSpo8aRo8fuPwFEVOqlwtkGRU/aI5qbliiiVDaRXbDdgYGdU50ozgDweNLdnW2tv3V4+aQUibnA1gyQCw4fraNb1DNprf7R6KwZXoOGESP0ooesif65mYNq6BMA+3b4yPiZxCDc8gNmKR3lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SEw/YDnT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GqB9C1zX4J0/bbsrcS/MiG6QDVUpxQkSqaiwWewKTogXFswuYiJFkuFRTUALng4V88K2uHqdCW8kD/zWtENEIKoYGMNTjW5uaQg9FiaN3o8BPMNSkfmmaCkOd1PtC920UWJTmXsyyppMd0ogypB/fxUBMRi2mwA+ZVo164GP674=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIQR1Ydl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SEw/YDnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 145BAC4CED3;
-	Tue, 17 Dec 2024 17:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIQR1Ydl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB44C4CED7;
+	Tue, 17 Dec 2024 17:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455426;
-	bh=LV9MS8uEQvUGP15oX98Rwdv7fx3h41OiiEWNoGY0q1E=;
+	s=korg; t=1734455429;
+	bh=jB7QXOWmYp7jilID6xwlBWou2uSVSesqOaKpAv/gGTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SEw/YDnTGayDtoX3PxtyykmNMOcwY8k1OH6y+T/ZGLrg/KvUSEduNkx4gp7zNLQf8
-	 LGBQPubJi+XCxZ+q6BZ1jZ2hkAGE7xaLvtSdYlKLn0KXHNxyi1RZXHyIRYkKti+mJz
-	 r0fdDSaLsxFnkjairJXNXx31CCunlbrISVDSYzw4=
+	b=TIQR1YdlWZuB1vOUyIQXTMIfWffwYiuZX67zD9zHh5fopDYbsXs3FgquIVesOZvKl
+	 NZfeDu1FdRcygPZ331TtF3CCmSFaAmIcpwtkX21Umbdwpztj1b6n5cGRvUpqEq4/3w
+	 4xZ2n7dYaBpPKIzfQu2MR3qDEtPnNEgPmB80GHEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Takashi Iwai <tiwai@suse.de>,
-	=?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>
-Subject: [PATCH 5.4 24/24] ALSA: usb-audio: Fix a DMA to stack memory bug
-Date: Tue, 17 Dec 2024 18:07:22 +0100
-Message-ID: <20241217170519.990243495@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 15/24] qca_spi: Make driver probing reliable
+Date: Tue, 17 Dec 2024 18:07:13 +0100
+Message-ID: <20241217170519.631370817@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170519.006786596@linuxfoundation.org>
 References: <20241217170519.006786596@linuxfoundation.org>
@@ -46,103 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit f7d306b47a24367302bd4fe846854e07752ffcd9 upstream.
+[ Upstream commit becc6399ce3b724cffe9ccb7ef0bff440bb1b62b ]
 
-The usb_get_descriptor() function does DMA so we're not allowed
-to use a stack buffer for that.  Doing DMA to the stack is not portable
-all architectures.  Move the "new_device_descriptor" from being stored
-on the stack and allocate it with kmalloc() instead.
+The module parameter qcaspi_pluggable controls if QCA7000 signature
+should be checked at driver probe (current default) or not. Unfortunately
+this could fail in case the chip is temporary in reset, which isn't under
+total control by the Linux host. So disable this check per default
+in order to avoid unexpected probe failures.
 
-Fixes: b909df18ce2a ("ALSA: usb-audio: Fix potential out-of-bound accesses for Extigy and Mbox devices")
-Cc: stable@kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/60e3aa09-039d-46d2-934c-6f123026c2eb@stanley.mountain
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Benoît Sevens <bsevens@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20241206184643.123399-3-wahrenst@gmx.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c |   31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/qualcomm/qca_spi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -585,7 +585,7 @@ int snd_usb_create_quirk(struct snd_usb_
- static int snd_usb_extigy_boot_quirk(struct usb_device *dev, struct usb_interface *intf)
- {
- 	struct usb_host_config *config = dev->actconfig;
--	struct usb_device_descriptor new_device_descriptor;
-+	struct usb_device_descriptor *new_device_descriptor = NULL;
- 	int err;
+diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
+index ff477e27a3fe..f051086074a9 100644
+--- a/drivers/net/ethernet/qualcomm/qca_spi.c
++++ b/drivers/net/ethernet/qualcomm/qca_spi.c
+@@ -65,7 +65,7 @@ MODULE_PARM_DESC(qcaspi_burst_len, "Number of data bytes per burst. Use 1-5000."
  
- 	if (le16_to_cpu(get_cfg_desc(config)->wTotalLength) == EXTIGY_FIRMWARE_SIZE_OLD ||
-@@ -596,15 +596,20 @@ static int snd_usb_extigy_boot_quirk(str
- 				      0x10, 0x43, 0x0001, 0x000a, NULL, 0);
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error sending boot message: %d\n", err);
-+
-+		new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
-+		if (!new_device_descriptor)
-+			return -ENOMEM;
- 		err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--				&new_device_descriptor, sizeof(new_device_descriptor));
-+				new_device_descriptor, sizeof(*new_device_descriptor));
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
--		if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+		if (new_device_descriptor->bNumConfigurations > dev->descriptor.bNumConfigurations)
- 			dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
--				new_device_descriptor.bNumConfigurations);
-+				new_device_descriptor->bNumConfigurations);
- 		else
--			memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
-+			memcpy(&dev->descriptor, new_device_descriptor, sizeof(dev->descriptor));
-+		kfree(new_device_descriptor);
- 		err = usb_reset_configuration(dev);
- 		if (err < 0)
- 			dev_dbg(&dev->dev, "error usb_reset_configuration: %d\n", err);
-@@ -938,7 +943,7 @@ static void mbox2_setup_48_24_magic(stru
- static int snd_usb_mbox2_boot_quirk(struct usb_device *dev)
- {
- 	struct usb_host_config *config = dev->actconfig;
--	struct usb_device_descriptor new_device_descriptor;
-+	struct usb_device_descriptor *new_device_descriptor = NULL;
- 	int err;
- 	u8 bootresponse[0x12];
- 	int fwsize;
-@@ -973,15 +978,21 @@ static int snd_usb_mbox2_boot_quirk(stru
+ #define QCASPI_PLUGGABLE_MIN 0
+ #define QCASPI_PLUGGABLE_MAX 1
+-static int qcaspi_pluggable = QCASPI_PLUGGABLE_MIN;
++static int qcaspi_pluggable = QCASPI_PLUGGABLE_MAX;
+ module_param(qcaspi_pluggable, int, 0);
+ MODULE_PARM_DESC(qcaspi_pluggable, "Pluggable SPI connection (yes/no).");
  
- 	dev_dbg(&dev->dev, "device initialised!\n");
- 
-+	new_device_descriptor = kmalloc(sizeof(*new_device_descriptor), GFP_KERNEL);
-+	if (!new_device_descriptor)
-+		return -ENOMEM;
-+
- 	err = usb_get_descriptor(dev, USB_DT_DEVICE, 0,
--		&new_device_descriptor, sizeof(new_device_descriptor));
-+		new_device_descriptor, sizeof(*new_device_descriptor));
- 	if (err < 0)
- 		dev_dbg(&dev->dev, "error usb_get_descriptor: %d\n", err);
--	if (new_device_descriptor.bNumConfigurations > dev->descriptor.bNumConfigurations)
-+	if (new_device_descriptor->bNumConfigurations > dev->descriptor.bNumConfigurations)
- 		dev_dbg(&dev->dev, "error too large bNumConfigurations: %d\n",
--			new_device_descriptor.bNumConfigurations);
-+			new_device_descriptor->bNumConfigurations);
- 	else
--		memcpy(&dev->descriptor, &new_device_descriptor, sizeof(dev->descriptor));
-+		memcpy(&dev->descriptor, new_device_descriptor, sizeof(dev->descriptor));
-+
-+	kfree(new_device_descriptor);
- 
- 	err = usb_reset_configuration(dev);
- 	if (err < 0)
+-- 
+2.39.5
+
 
 
