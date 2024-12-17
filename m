@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD13B1F8906;
-	Tue, 17 Dec 2024 17:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7C11F75B5;
+	Tue, 17 Dec 2024 17:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455575; cv=none; b=N47GLpq8MEMKIow+UKOkWjL5mZl734zTZv0CAQ8v3o7eVJ9Ov/ZCUpBN7YIThZngfJuV6REyo0TX0UwijjfGp92bC2M1iupDO9GMdg+dh/zCgndWuS6uyof9N9lNTEqsvW2Y0Nlfa7qiAx8u+PHK5BFLimKI6TvLhElzhqT2lLU=
+	t=1734455578; cv=none; b=BS+YuVtBrLJIvMazdVvxNs0S4LxFoV3X3QwsASdSPgHEj9ENA0gJYLvgtucC4l+8S3COYKkpBy7r77+WcBXfsVSkwrI4VsopRgt7k55qHJTSqpBeM/o9klWGvKug1cS+9NfjSNxSPiqbKUVURbgS3QN/2sxnF6kZdlo/j3ELwDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455575; c=relaxed/simple;
-	bh=KVClIpPJqMJS6pKl646sdHvwBnPmP/yTF5NYt2mXL1I=;
+	s=arc-20240116; t=1734455578; c=relaxed/simple;
+	bh=R2GdWe1nnYYw10XjBxRy4QEln66khI6ueZXelvqZXWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPasSu2cZa6gSnvNPcZpNytT5W7tuG3MPfv4Ozv34ec6ViIaKUN0NNpDPajv+HS59qmlFXCnJ2y/E1C3XEmkTRmleEz4p2pZ0pmH35/V8G95tcuc/KCg3pHRoyw+oCQg3YxKD7lq3lZxbSp90vcwqi/bihVOT67k9Mr2BaDWnhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YgZJbVlb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKYYCfMgZZ9rVsK+5iN3DFCpf7LQKyErLQCVniKEtoZ0qPzkA4I9ybRXFYBN++BxJ56qx/KtN1h+q1YR3EtQQQ5tQOqwweBMwY2s/A1dPIFq1yzhnnj4VBXiG0REO/rjtYrjJlpC8dy4JW3TKdamVcVlb8sNYS8d83cxkYd+HB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sh+eeNek; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YgZJbVlb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F54BC4CEDD;
-	Tue, 17 Dec 2024 17:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sh+eeNek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B057C4CED3;
+	Tue, 17 Dec 2024 17:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455575;
-	bh=KVClIpPJqMJS6pKl646sdHvwBnPmP/yTF5NYt2mXL1I=;
+	s=korg; t=1734455578;
+	bh=R2GdWe1nnYYw10XjBxRy4QEln66khI6ueZXelvqZXWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgZJbVlbrh3B4oSwwojWvhBBUVmebdBwmJJJaDygOOzXRMUxEtuI+1BMCFM4cJg9R
-	 eCPnEXR5pFPdKYfxb9oozY4xPuPkTkEF2Sg6ZjQn/sx/BbELx3kioCQzAoSx86PFdP
-	 5VDnbLvdwtoZ6PlaReG1KHO1fueGR/auiUTW+jx0=
+	b=sh+eeNekSjsROnK5tNAdVHsAw+EI4Fcl9nm8y+GALcrq1y9A/xXl91Dovp7UE7Vxo
+	 xPtLtectuQGpPwk2pyDQuV6w/zXVf4LPywv1YI4zCRB25Kw0akwgGf8GlrCz+vs62n
+	 ejp8vuBhqFdbG4anHGnEyOZ3IA1PPMzBpAYsKXbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaakko Salo <jaakkos@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 02/51] ALSA: usb-audio: Add implicit feedback quirk for Yamaha THR5
-Date: Tue, 17 Dec 2024 18:06:55 +0100
-Message-ID: <20241217170520.407162057@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Subject: [PATCH 5.15 03/51] usb: host: max3421-hcd: Correctly abort a USB request.
+Date: Tue, 17 Dec 2024 18:06:56 +0100
+Message-ID: <20241217170520.448427686@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
 References: <20241217170520.301972474@linuxfoundation.org>
@@ -50,33 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaakko Salo <jaakkos@gmail.com>
+From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
 
-commit 82fdcf9b518b205da040046fbe7747fb3fd18657 upstream.
+commit 0d2ada05227881f3d0722ca2364e3f7a860a301f upstream.
 
-Use implicit feedback from the capture endpoint to fix popping
-sounds during playback.
+If the current USB request was aborted, the spi thread would not respond
+to any further requests. This is because the "curr_urb" pointer would
+not become NULL, so no further requests would be taken off the queue.
+The solution here is to set the "urb_done" flag, as this will cause the
+correct handling of the URB. Also clear interrupts that should only be
+expected if an URB is in progress.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219567
-Signed-off-by: Jaakko Salo <jaakkos@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241206164448.8136-1-jaakkos@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Link: https://lore.kernel.org/r/20241124221430.1106080-1-mark.tomlinson@alliedtelesis.co.nz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/max3421-hcd.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1768,6 +1768,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x046d, 0x09a4, /* Logitech QuickCam E 3500 */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_IGNORE_CTL_ERROR),
-+	DEVICE_FLG(0x0499, 0x1506, /* Yamaha THR5 */
-+		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x0499, 0x1509, /* Steinberg UR22 */
- 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
- 	DEVICE_FLG(0x0499, 0x3108, /* Yamaha YIT-W12TX */
+--- a/drivers/usb/host/max3421-hcd.c
++++ b/drivers/usb/host/max3421-hcd.c
+@@ -785,11 +785,17 @@ max3421_check_unlink(struct usb_hcd *hcd
+ 				retval = 1;
+ 				dev_dbg(&spi->dev, "%s: URB %p unlinked=%d",
+ 					__func__, urb, urb->unlinked);
+-				usb_hcd_unlink_urb_from_ep(hcd, urb);
+-				spin_unlock_irqrestore(&max3421_hcd->lock,
+-						       flags);
+-				usb_hcd_giveback_urb(hcd, urb, 0);
+-				spin_lock_irqsave(&max3421_hcd->lock, flags);
++				if (urb == max3421_hcd->curr_urb) {
++					max3421_hcd->urb_done = 1;
++					max3421_hcd->hien &= ~(BIT(MAX3421_HI_HXFRDN_BIT) |
++							       BIT(MAX3421_HI_RCVDAV_BIT));
++				} else {
++					usb_hcd_unlink_urb_from_ep(hcd, urb);
++					spin_unlock_irqrestore(&max3421_hcd->lock,
++							       flags);
++					usb_hcd_giveback_urb(hcd, urb, 0);
++					spin_lock_irqsave(&max3421_hcd->lock, flags);
++				}
+ 			}
+ 		}
+ 	}
 
 
