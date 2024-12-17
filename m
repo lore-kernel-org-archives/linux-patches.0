@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CEB1F7574;
-	Tue, 17 Dec 2024 17:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E131E0493;
+	Tue, 17 Dec 2024 17:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456125; cv=none; b=Itd0rxVTT7M/ETAxnC0DijIThWEx76ogn2Yrxs9v7oF37xOUvUb1bOwNdxcfENub/2RcxVN87qrblXgb65RKZpApza/BxNk8LsQ9jxy7TN1dFWt7HCfUITgO4YaV0iQ8nVGgf6xFER/GcVxUcRGuT2oWK38KP9MiSw/z5I7Ohjw=
+	t=1734456128; cv=none; b=DAyFxVbd4/ihEbuzqQgBDGpTmfsT8dY4Mjgula5lbBoLgDbjAXsvQtbxI/yoW+QuNv1pxl4otxnrDpzL8kemwJvdmj7xl3EmT4PKiSK8EtyfUnHXytt42KeDxbqZKImVAW4/qfIZannyaCBzKrltCMWhJk5SmSCPPRhkMbX2EQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456125; c=relaxed/simple;
-	bh=XRD+xlUTndTdbeIhIBqF9v7cdn/7joRQCABBAhsfDWE=;
+	s=arc-20240116; t=1734456128; c=relaxed/simple;
+	bh=RfG76ZPFFzy9X0ZJ0mNYBn6wQ/ngg8LhUJoUNcefcO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEGN9JkjPQurh82bohDDE6wupbu00DyKZo7ySUIJc+BWvNi3cugF/efB6j2Y409WVX40fWkH/IrdQrJdixraBYn1mZIEMToAsMc9J8u4tboh/hgoW0ARftWFg/d3S0p+ukWYOcn5+wSk8yAdfbKIB1xPj9ogu6m/lehCxWIfZfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ep5LZGtD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2UHlaeJONCDlhGB7NsDTy7OKD5SwsDDJb5RF9KXGZ+CERJ3y+UFhJLEbxYtV8tU5F6WRoJ/qiwQbIF1RxmZXXe+nspF/xXYHU5P2Rvfn5ElniHJfr+hcjD7WlRNW6g05XfL6VILelHZFKuXy52QEmTb+dj2vs+rwmBF3nSZcuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5gkz+r4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ep5LZGtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DDEC4CED3;
-	Tue, 17 Dec 2024 17:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5gkz+r4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DE6C4CED3;
+	Tue, 17 Dec 2024 17:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456125;
-	bh=XRD+xlUTndTdbeIhIBqF9v7cdn/7joRQCABBAhsfDWE=;
+	s=korg; t=1734456128;
+	bh=RfG76ZPFFzy9X0ZJ0mNYBn6wQ/ngg8LhUJoUNcefcO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ep5LZGtDOcyRzaDYhpacaWZl2N2+TEyLvuBUQAyr5t98O4OTUTUUGMoi0bAhG51Pg
-	 Jk54YWA5+PlSItXW61woYYwlCXps5lsUUQWW4EhfSX+OZJXPseZ+L5OnGsetJcJGji
-	 +nf6cp9nOblW2aRXviZsys2+n+GRLx1YkW3Ig0aY=
+	b=m5gkz+r4S+Nb4pUQMZeBAq0EbeFhLOLV4dKp6GtRTRDKQWo6V8eQHL6NTkZvTOlEo
+	 jZ9ii6wAVDsFsnC1c5CaKPBjuTQLNKQ7ZTce7Hx+GiquUD2Qcr0DkBsHOYH4wnjLHA
+	 gPgnElWxBjGjRSJV/noUYBe9BN/AOpvrImGcNnPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com,
+	Suraj Sonawane <surajsonawane0215@gmail.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/109] wifi: mac80211: fix station NSS capability initialization order
-Date: Tue, 17 Dec 2024 18:07:22 +0100
-Message-ID: <20241217170534.966315982@linuxfoundation.org>
+Subject: [PATCH 6.6 039/109] acpi: nfit: vmalloc-out-of-bounds Read in acpi_nfit_ctl
+Date: Tue, 17 Dec 2024 18:07:23 +0100
+Message-ID: <20241217170535.005426341@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -51,45 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+From: Suraj Sonawane <surajsonawane0215@gmail.com>
 
-[ Upstream commit 819e0f1e58e0ba3800cd9eb96b2a39e44e49df97 ]
+[ Upstream commit 265e98f72bac6c41a4492d3e30a8e5fd22fe0779 ]
 
-Station's spatial streaming capability should be initialized before
-handling VHT OMN, because the handling requires the capability information.
+Fix an issue detected by syzbot with KASAN:
 
-Fixes: a8bca3e9371d ("wifi: mac80211: track capability/opmode NSS separately")
-Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
-Link: https://patch.msgid.link/20241118080722.9603-1-benjamin-jw.lin@mediatek.com
-[rewrite subject]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+BUG: KASAN: vmalloc-out-of-bounds in cmd_to_func drivers/acpi/nfit/
+core.c:416 [inline]
+BUG: KASAN: vmalloc-out-of-bounds in acpi_nfit_ctl+0x20e8/0x24a0
+drivers/acpi/nfit/core.c:459
+
+The issue occurs in cmd_to_func when the call_pkg->nd_reserved2
+array is accessed without verifying that call_pkg points to a buffer
+that is appropriately sized as a struct nd_cmd_pkg. This can lead
+to out-of-bounds access and undefined behavior if the buffer does not
+have sufficient space.
+
+To address this, a check was added in acpi_nfit_ctl() to ensure that
+buf is not NULL and that buf_len is less than sizeof(*call_pkg)
+before accessing it. This ensures safe access to the members of
+call_pkg, including the nd_reserved2 array.
+
+Reported-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7534f060ebda6b8b51b3
+Tested-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
+Fixes: ebe9f6f19d80 ("acpi/nfit: Fix bus command validation")
+Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20241118162609.29063-1-surajsonawane0215@gmail.com
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/nfit/core.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index f9395cd80051..a3c5d4d995db 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1879,6 +1879,8 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
- 						    params->eht_capa_len,
- 						    link_sta);
+diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
+index 7d88db451cfb..7918923e3b74 100644
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -454,8 +454,13 @@ int acpi_nfit_ctl(struct nvdimm_bus_descriptor *nd_desc, struct nvdimm *nvdimm,
+ 	if (cmd_rc)
+ 		*cmd_rc = -EINVAL;
  
-+	ieee80211_sta_init_nss(link_sta);
+-	if (cmd == ND_CMD_CALL)
++	if (cmd == ND_CMD_CALL) {
++		if (!buf || buf_len < sizeof(*call_pkg))
++			return -EINVAL;
 +
- 	if (params->opmode_notif_used) {
- 		/* returned value is only needed for rc update, but the
- 		 * rc isn't initialized here yet, so ignore it
-@@ -1888,8 +1890,6 @@ static int sta_link_apply_parameters(struct ieee80211_local *local,
- 					      sband->band);
- 	}
- 
--	ieee80211_sta_init_nss(link_sta);
--
- 	return 0;
- }
- 
+ 		call_pkg = buf;
++	}
++
+ 	func = cmd_to_func(nfit_mem, cmd, call_pkg, &family);
+ 	if (func < 0)
+ 		return func;
 -- 
 2.39.5
 
