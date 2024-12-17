@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E0B149DFA;
-	Tue, 17 Dec 2024 17:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF93E1F75BC;
+	Tue, 17 Dec 2024 17:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455513; cv=none; b=FqLONh5PSL+q2ZLGAo4lNg/Pn7O1TVgYcsC93QXXqK4LOX0SxFBBCFwS5Fm5Jd3CnJ7QjqTp4okN+ZWR4M0vW6ZojUdZ9gU6LZtWc2H2iilmBIx7AbwC17rzIde3T0yVKLMyBwPivHgFUUYo44RHsu8oYEI5qLUpltNJWEH6Pf4=
+	t=1734455516; cv=none; b=kjPqwJJbhyk5M90O7J5g+iGGW1rEf8Z87kkS7ZfWQm5bJR4FdxkDgDr9c/IdzD3ncp/rPKM8FuaEXbOZc72I/10PCWQZlr3/gXFcQIfWZEuLRHpEotWSJsweTi0dBqzdjNyNVO9KgLNGtPYa7I4Vb+bcGQEkGVpyZVFkb5qc9bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455513; c=relaxed/simple;
-	bh=6tPE9WjwPKot8zTtAVed5a8br6mdcpSCL6EE9Qo11sM=;
+	s=arc-20240116; t=1734455516; c=relaxed/simple;
+	bh=73c3pb2qukl4dMPMbYXrwxugJic+6AQq541cGwnh6QE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OsnIHpUT7W1trM3adyTy8hvnXbkckbpTzXmRA6sQfzkX7ux9+/2wdduOGCSWZZCwTlBJwlNJaZsHVBZeEi6XZ+1fZ4yktdeH3dhtJv7picEHiRzGiU3/+BlOu2usoPv/J4zDYajVRSKRiWgvzp9LEyJi3B18Klh1LGlTxRfK2fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zmsY1xXF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDNKow/ATIkNI3S+ONh3PmJjF0W7wpu9IhLz1ZgTwaoQEHs+UheXMU3BXI4HPscTXheL2YaImExtGcA71CNy3gpPeZs9z0Vnz2qKHZ/CiXKKeOez5i0/XxBbXi4DtFpxPzflPa1TALA9qT9azZ4h0Buj5b9FypiCVY8AgeNFmdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4yfhlw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zmsY1xXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16730C4CED3;
-	Tue, 17 Dec 2024 17:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4yfhlw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91C3C4CED3;
+	Tue, 17 Dec 2024 17:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455513;
-	bh=6tPE9WjwPKot8zTtAVed5a8br6mdcpSCL6EE9Qo11sM=;
+	s=korg; t=1734455516;
+	bh=73c3pb2qukl4dMPMbYXrwxugJic+6AQq541cGwnh6QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zmsY1xXFIqeF7u1Un6U/fkBPbi7zPHelp+RHJu2cjgd5Dih+nnZ9SQIbqVo4qKdDN
-	 YRmCSe0ynT22HIG9MIgXJM27eNHlk7s2CQawEdvFrND7nDWb1aL6+JRmhhMLc09f+1
-	 f/oAt1cpXQDJtStTpwW+usrjyFtneS3YC1UVUKD4=
+	b=o4yfhlw2hn9iCeC1I+Rp12d6+AOp3X/bMhRO4+iZ3YkZ+7jT8MYPqqCEL3LMrTOIl
+	 CiBdra41zg/jzdHADHEnCKRzAafLrYbqHUFeI0Ws+qsjHd59Xd2MDrE1/uTkeOQ0DD
+	 S4rFhRtMJu72OibUTaXiwEOWo6m3XUpj1VbkLM9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 5.10 08/43] xfs: fix scrub tracepoints when inode-rooted btrees are involved
-Date: Tue, 17 Dec 2024 18:06:59 +0100
-Message-ID: <20241217170520.796148961@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>
+Subject: [PATCH 5.10 09/43] bpf, sockmap: Fix update element with same
+Date: Tue, 17 Dec 2024 18:07:00 +0100
+Message-ID: <20241217170520.835246441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.459491270@linuxfoundation.org>
 References: <20241217170520.459491270@linuxfoundation.org>
@@ -50,33 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit ffc3ea4f3c1cc83a86b7497b0c4b0aee7de5480d upstream.
+commit 75e072a390da9a22e7ae4a4e8434dfca5da499fb upstream.
 
-Fix a minor mistakes in the scrub tracepoints that can manifest when
-inode-rooted btrees are enabled.  The existing code worked fine for bmap
-btrees, but we should tighten the code up to be less sloppy.
+Consider a sockmap entry being updated with the same socket:
 
-Cc: <stable@vger.kernel.org> # v5.7
-Fixes: 92219c292af8dd ("xfs: convert btree cursor inode-private member names")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+	osk = stab->sks[idx];
+	sock_map_add_link(psock, link, map, &stab->sks[idx]);
+	stab->sks[idx] = sk;
+	if (osk)
+		sock_map_unref(osk, &stab->sks[idx]);
+
+Due to sock_map_unref(), which invokes sock_map_del_link(), all the
+psock's links for stab->sks[idx] are torn:
+
+	list_for_each_entry_safe(link, tmp, &psock->link, list) {
+		if (link->link_raw == link_raw) {
+			...
+			list_del(&link->list);
+			sk_psock_free_link(link);
+		}
+	}
+
+And that includes the new link sock_map_add_link() added just before
+the unref.
+
+This results in a sockmap holding a socket, but without the respective
+link. This in turn means that close(sock) won't trigger the cleanup,
+i.e. a closed socket will not be automatically removed from the sockmap.
+
+Stop tearing the links when a matching link_raw is found.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241202-sockmap-replace-v1-1-1e88579e7bd5@rbox.co
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/trace.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/sock_map.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -458,7 +458,7 @@ TRACE_EVENT(xchk_ifork_btree_error,
- 	TP_fast_assign(
- 		xfs_fsblock_t fsbno = xchk_btree_cur_fsbno(cur, level);
- 		__entry->dev = sc->mp->m_super->s_dev;
--		__entry->ino = sc->ip->i_ino;
-+		__entry->ino = cur->bc_ino.ip->i_ino;
- 		__entry->whichfork = cur->bc_ino.whichfork;
- 		__entry->type = sc->sm->sm_type;
- 		__entry->btnum = cur->bc_btnum;
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -161,6 +161,7 @@ static void sock_map_del_link(struct soc
+ 				verdict_stop = true;
+ 			list_del(&link->list);
+ 			sk_psock_free_link(link);
++			break;
+ 		}
+ 	}
+ 	spin_unlock_bh(&psock->link_lock);
 
 
