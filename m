@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C19140E38;
-	Tue, 17 Dec 2024 17:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4B08615A;
+	Tue, 17 Dec 2024 17:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456241; cv=none; b=NHIoTnIEgwJSIqkatzcCLXutJKxTHSVDn9U+lB2PhUw4EiY1iSphO6qUQrLPKYazRwKJGegadjnEVhuB0nwn5jM820Mbb2/kWv6/2jaiQthTBEs9Su+CVRMcQNjwc5FzcvkN1nGuBFUlZWTOkMCgBiVAwWEXKBv/X//uQg4hdT0=
+	t=1734456244; cv=none; b=O0pw2VpMvYJuf2LUvL5BOZUTXXDrck8a/JYoJ5yFNy1S0g0WV2Qt1EC/fN8KhLMAqj/qHBzMCqwFuQ4/+X2UZdC2BGTaMEgyR/hlT/2bfH6P34+tpzDU9XmOnG/UWKoA9GzpEnZuI5RQ79zLlRfzUVdL08OPt3kBzjnBmqsO0z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456241; c=relaxed/simple;
-	bh=XqbyhtW6Slf5og3/Uhy4F5JVbDojXReuaBKBYSOp3+k=;
+	s=arc-20240116; t=1734456244; c=relaxed/simple;
+	bh=xtYVzo21dtN4vdLOCAWakhqxBrZzssqJ5Tbngbh1/IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HgP1+D54SVUXZ1MhtmzOqmy41Uzhr7ZaXfCMa6G/aWtN6EG5OQ9+wNjG8CCQfqLsoG6sD/a+JDTcgvRq2vS6p0/IHWe2hzytroNQ1OjOohpymWm/okUSnEi1oo++I2xX6Xx2plkSCVU+RlD/CciFx/pzSGzZVutJb2C+WInCP48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3/5yqsO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qSfoYhkmvLhdcuimop3duxZ5GCSrBiHkzdIsY0NMFXDqpcoj31dclY4xjRySDBEZN/oP4MYKhuGcfuFvJO9RJ/u5A/bth+E85Eajk10Wr/88b3j6V6HeTak9tXyGYaHn1QU54OJG5dImAY/HZZ7n4RUp+CHEdw0jW8QB4p2bSIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lABtF0p2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3/5yqsO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F22C4CED3;
-	Tue, 17 Dec 2024 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lABtF0p2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C72C4CED3;
+	Tue, 17 Dec 2024 17:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456241;
-	bh=XqbyhtW6Slf5og3/Uhy4F5JVbDojXReuaBKBYSOp3+k=;
+	s=korg; t=1734456244;
+	bh=xtYVzo21dtN4vdLOCAWakhqxBrZzssqJ5Tbngbh1/IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3/5yqsO2mTAS18gHrvbxdlOeDK89FyjfQk7YHIiCGK0PZIXywK3FDV7l3mVt+cZI
-	 tyOcmMlw5dY8qSeyvo9aDWrcQCqLqSyJt/pG3l1P+BNvBdCl0JZ4VjmlORoYGMA6wu
-	 Qo/2sZSJUANCvwg84dTG1JdGp8yj97uqkV06csL0=
+	b=lABtF0p2zLAx5r2LHhuwYWqIq36bgW6Swtnly5wfsyQDrcJj28bYEzJ/RJE0ngsCv
+	 l3X60kiqDG8MfKkOtth/71k3FFbmPhkfwgdGQ1LJUQkJy83+UxugxY02AfxrySJBcB
+	 SRK17AfewWJ3+ZLIKGDYrfLvENAe6agA/2KL6F/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Juergen Gross <jgross@suse.com>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.6 106/109] x86/xen: add central hypercall functions
-Date: Tue, 17 Dec 2024 18:08:30 +0100
-Message-ID: <20241217170537.829046741@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>
+Subject: [PATCH 6.6 107/109] x86/xen: use new hypercall functions instead of hypercall page
+Date: Tue, 17 Dec 2024 18:08:31 +0100
+Message-ID: <20241217170537.872732328@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -53,324 +54,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-commit b4845bb6383821a9516ce30af3a27dc873e37fd4 upstream.
+commit b1c2cb86f4a7861480ad54bb9a58df3cbebf8e92 upstream.
 
-Add generic hypercall functions usable for all normal (i.e. not iret)
-hypercalls. Depending on the guest type and the processor vendor
-different functions need to be used due to the to be used instruction
-for entering the hypervisor:
-
-- PV guests need to use syscall
-- HVM/PVH guests on Intel need to use vmcall
-- HVM/PVH guests on AMD and Hygon need to use vmmcall
-
-As PVH guests need to issue hypercalls very early during boot, there
-is a 4th hypercall function needed for HVM/PVH which can be used on
-Intel and AMD processors. It will check the vendor type and then set
-the Intel or AMD specific function to use via static_call().
+Call the Xen hypervisor via the new xen_hypercall_func static-call
+instead of the hypercall page.
 
 This is part of XSA-466 / CVE-2024-53241.
 
 Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Co-developed-by: Peter Zijlstra <peterz@infradead.org>
+Co-developed-by: Josh Poimboeuf <jpoimboe@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/xen/hypercall.h |    3 +
- arch/x86/xen/enlighten.c             |   65 +++++++++++++++++++++++++++
- arch/x86/xen/enlighten_hvm.c         |    4 +
- arch/x86/xen/enlighten_pv.c          |    4 +
- arch/x86/xen/xen-asm.S               |   23 +++++++++
- arch/x86/xen/xen-head.S              |   83 +++++++++++++++++++++++++++++++++++
- arch/x86/xen/xen-ops.h               |    9 +++
- 7 files changed, 190 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/xen/hypercall.h |   33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
 --- a/arch/x86/include/asm/xen/hypercall.h
 +++ b/arch/x86/include/asm/xen/hypercall.h
-@@ -88,6 +88,9 @@ struct xen_dm_op_buf;
- 
- extern struct { char _entry[32]; } hypercall_page[];
- 
-+void xen_hypercall_func(void);
-+DECLARE_STATIC_CALL(xen_hypercall, xen_hypercall_func);
-+
- #define __HYPERCALL		"call hypercall_page+%c[offset]"
- #define __HYPERCALL_ENTRY(x)						\
- 	[offset] "i" (__HYPERVISOR_##x * sizeof(hypercall_page[0]))
---- a/arch/x86/xen/enlighten.c
-+++ b/arch/x86/xen/enlighten.c
-@@ -5,6 +5,7 @@
- #endif
- #include <linux/console.h>
- #include <linux/cpu.h>
-+#include <linux/instrumentation.h>
- #include <linux/kexec.h>
- #include <linux/memblock.h>
- #include <linux/slab.h>
-@@ -28,6 +29,9 @@
- 
- EXPORT_SYMBOL_GPL(hypercall_page);
- 
-+DEFINE_STATIC_CALL(xen_hypercall, xen_hypercall_hvm);
-+EXPORT_STATIC_CALL_TRAMP(xen_hypercall);
-+
- /*
-  * Pointer to the xen_vcpu_info structure or
-  * &HYPERVISOR_shared_info->vcpu_info[cpu]. See xen_hvm_init_shared_info
-@@ -73,6 +77,67 @@ EXPORT_SYMBOL(xen_start_flags);
-  */
- struct shared_info *HYPERVISOR_shared_info = &xen_dummy_shared_info;
- 
-+static __ref void xen_get_vendor(void)
-+{
-+	init_cpu_devs();
-+	cpu_detect(&boot_cpu_data);
-+	get_cpu_vendor(&boot_cpu_data);
-+}
-+
-+void xen_hypercall_setfunc(void)
-+{
-+	if (static_call_query(xen_hypercall) != xen_hypercall_hvm)
-+		return;
-+
-+	if ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+	     boot_cpu_data.x86_vendor == X86_VENDOR_HYGON))
-+		static_call_update(xen_hypercall, xen_hypercall_amd);
-+	else
-+		static_call_update(xen_hypercall, xen_hypercall_intel);
-+}
-+
-+/*
-+ * Evaluate processor vendor in order to select the correct hypercall
-+ * function for HVM/PVH guests.
-+ * Might be called very early in boot before vendor has been set by
-+ * early_cpu_init().
-+ */
-+noinstr void *__xen_hypercall_setfunc(void)
-+{
-+	void (*func)(void);
-+
-+	/*
-+	 * Xen is supported only on CPUs with CPUID, so testing for
-+	 * X86_FEATURE_CPUID is a test for early_cpu_init() having been
-+	 * run.
-+	 *
-+	 * Note that __xen_hypercall_setfunc() is noinstr only due to a nasty
-+	 * dependency chain: it is being called via the xen_hypercall static
-+	 * call when running as a PVH or HVM guest. Hypercalls need to be
-+	 * noinstr due to PV guests using hypercalls in noinstr code. So we
-+	 * can safely tag the function body as "instrumentation ok", since
-+	 * the PV guest requirement is not of interest here (xen_get_vendor()
-+	 * calls noinstr functions, and static_call_update_early() might do
-+	 * so, too).
-+	 */
-+	instrumentation_begin();
-+
-+	if (!boot_cpu_has(X86_FEATURE_CPUID))
-+		xen_get_vendor();
-+
-+	if ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+	     boot_cpu_data.x86_vendor == X86_VENDOR_HYGON))
-+		func = xen_hypercall_amd;
-+	else
-+		func = xen_hypercall_intel;
-+
-+	static_call_update_early(xen_hypercall, func);
-+
-+	instrumentation_end();
-+
-+	return func;
-+}
-+
- static int xen_cpu_up_online(unsigned int cpu)
- {
- 	xen_init_lock_cpu(cpu);
---- a/arch/x86/xen/enlighten_hvm.c
-+++ b/arch/x86/xen/enlighten_hvm.c
-@@ -298,6 +298,10 @@ static uint32_t __init xen_platform_hvm(
- 	if (xen_pv_domain())
- 		return 0;
- 
-+	/* Set correct hypercall function. */
-+	if (xen_domain)
-+		xen_hypercall_setfunc();
-+
- 	if (xen_pvh_domain() && nopv) {
- 		/* Guest booting via the Xen-PVH boot entry goes here */
- 		pr_info("\"nopv\" parameter is ignored in PVH guest\n");
---- a/arch/x86/xen/enlighten_pv.c
-+++ b/arch/x86/xen/enlighten_pv.c
-@@ -1329,6 +1329,9 @@ asmlinkage __visible void __init xen_sta
- 
- 	xen_domain_type = XEN_PV_DOMAIN;
- 	xen_start_flags = xen_start_info->flags;
-+	/* Interrupts are guaranteed to be off initially. */
-+	early_boot_irqs_disabled = true;
-+	static_call_update_early(xen_hypercall, xen_hypercall_pv);
- 
- 	xen_setup_features();
- 
-@@ -1419,7 +1422,6 @@ asmlinkage __visible void __init xen_sta
- 	WARN_ON(xen_cpuhp_setup(xen_cpu_up_prepare_pv, xen_cpu_dead_pv));
- 
- 	local_irq_disable();
--	early_boot_irqs_disabled = true;
- 
- 	xen_raw_console_write("mapping kernel into physical memory\n");
- 	xen_setup_kernel_pagetable((pgd_t *)xen_start_info->pt_base,
---- a/arch/x86/xen/xen-asm.S
-+++ b/arch/x86/xen/xen-asm.S
-@@ -20,10 +20,33 @@
- 
- #include <linux/init.h>
- #include <linux/linkage.h>
-+#include <linux/objtool.h>
- #include <../entry/calling.h>
- 
- .pushsection .noinstr.text, "ax"
- /*
-+ * PV hypercall interface to the hypervisor.
-+ *
-+ * Called via inline asm(), so better preserve %rcx and %r11.
-+ *
-+ * Input:
-+ *	%eax: hypercall number
-+ *	%rdi, %rsi, %rdx, %r10, %r8: args 1..5 for the hypercall
-+ * Output: %rax
-+ */
-+SYM_FUNC_START(xen_hypercall_pv)
-+	ANNOTATE_NOENDBR
-+	push %rcx
-+	push %r11
-+	UNWIND_HINT_SAVE
-+	syscall
-+	UNWIND_HINT_RESTORE
-+	pop %r11
-+	pop %rcx
-+	RET
-+SYM_FUNC_END(xen_hypercall_pv)
-+
-+/*
-  * Disabling events is simply a matter of making the event mask
-  * non-zero.
-  */
---- a/arch/x86/xen/xen-head.S
-+++ b/arch/x86/xen/xen-head.S
-@@ -6,9 +6,11 @@
- 
- #include <linux/elfnote.h>
- #include <linux/init.h>
+@@ -39,9 +39,11 @@
+ #include <linux/string.h>
+ #include <linux/types.h>
+ #include <linux/pgtable.h>
 +#include <linux/instrumentation.h>
  
- #include <asm/boot.h>
- #include <asm/asm.h>
-+#include <asm/frame.h>
- #include <asm/msr.h>
- #include <asm/page_types.h>
- #include <asm/percpu.h>
-@@ -87,6 +89,87 @@ SYM_CODE_END(xen_cpu_bringup_again)
- #endif
- #endif
+ #include <trace/events/xen.h>
  
-+	.pushsection .noinstr.text, "ax"
-+/*
-+ * Xen hypercall interface to the hypervisor.
-+ *
-+ * Input:
-+ *     %eax: hypercall number
-+ *   32-bit:
-+ *     %ebx, %ecx, %edx, %esi, %edi: args 1..5 for the hypercall
-+ *   64-bit:
-+ *     %rdi, %rsi, %rdx, %r10, %r8: args 1..5 for the hypercall
-+ * Output: %[er]ax
-+ */
-+SYM_FUNC_START(xen_hypercall_hvm)
-+	ENDBR
-+	FRAME_BEGIN
-+	/* Save all relevant registers (caller save and arguments). */
-+#ifdef CONFIG_X86_32
-+	push %eax
-+	push %ebx
-+	push %ecx
-+	push %edx
-+	push %esi
-+	push %edi
++#include <asm/alternative.h>
+ #include <asm/page.h>
+ #include <asm/smap.h>
+ #include <asm/nospec-branch.h>
+@@ -91,9 +93,17 @@ extern struct { char _entry[32]; } hyper
+ void xen_hypercall_func(void);
+ DECLARE_STATIC_CALL(xen_hypercall, xen_hypercall_func);
+ 
+-#define __HYPERCALL		"call hypercall_page+%c[offset]"
+-#define __HYPERCALL_ENTRY(x)						\
+-	[offset] "i" (__HYPERVISOR_##x * sizeof(hypercall_page[0]))
++#ifdef MODULE
++#define __ADDRESSABLE_xen_hypercall
 +#else
-+	push %rax
-+	push %rcx
-+	push %rdx
-+	push %rdi
-+	push %rsi
-+	push %r11
-+	push %r10
-+	push %r9
-+	push %r8
-+#ifdef CONFIG_FRAME_POINTER
-+	pushq $0	/* Dummy push for stack alignment. */
++#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
 +#endif
-+#endif
-+	/* Set the vendor specific function. */
-+	call __xen_hypercall_setfunc
-+	/* Set ZF = 1 if AMD, Restore saved registers. */
-+#ifdef CONFIG_X86_32
-+	lea xen_hypercall_amd, %ebx
-+	cmp %eax, %ebx
-+	pop %edi
-+	pop %esi
-+	pop %edx
-+	pop %ecx
-+	pop %ebx
-+	pop %eax
-+#else
-+	lea xen_hypercall_amd(%rip), %rbx
-+	cmp %rax, %rbx
-+#ifdef CONFIG_FRAME_POINTER
-+	pop %rax	/* Dummy pop. */
-+#endif
-+	pop %r8
-+	pop %r9
-+	pop %r10
-+	pop %r11
-+	pop %rsi
-+	pop %rdi
-+	pop %rdx
-+	pop %rcx
-+	pop %rax
-+#endif
-+	/* Use correct hypercall function. */
-+	jz xen_hypercall_amd
-+	jmp xen_hypercall_intel
-+SYM_FUNC_END(xen_hypercall_hvm)
 +
-+SYM_FUNC_START(xen_hypercall_amd)
-+	vmmcall
-+	RET
-+SYM_FUNC_END(xen_hypercall_amd)
++#define __HYPERCALL					\
++	__ADDRESSABLE_xen_hypercall			\
++	"call __SCT__xen_hypercall"
 +
-+SYM_FUNC_START(xen_hypercall_intel)
-+	vmcall
-+	RET
-+SYM_FUNC_END(xen_hypercall_intel)
-+	.popsection
-+
- 	ELFNOTE(Xen, XEN_ELFNOTE_GUEST_OS,       .asciz "linux")
- 	ELFNOTE(Xen, XEN_ELFNOTE_GUEST_VERSION,  .asciz "2.6")
- 	ELFNOTE(Xen, XEN_ELFNOTE_XEN_VERSION,    .asciz "xen-3.0")
---- a/arch/x86/xen/xen-ops.h
-+++ b/arch/x86/xen/xen-ops.h
-@@ -181,4 +181,13 @@ static inline void xen_hvm_post_suspend(
++#define __HYPERCALL_ENTRY(x)	"a" (x)
  
- void xen_add_extra_mem(unsigned long start_pfn, unsigned long n_pfns);
+ #ifdef CONFIG_X86_32
+ #define __HYPERCALL_RETREG	"eax"
+@@ -151,7 +161,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_0ARG();						\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_0PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER0);				\
+ 	(type)__res;							\
+ })
+@@ -162,7 +172,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_1ARG(a1);						\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_1PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER1);				\
+ 	(type)__res;							\
+ })
+@@ -173,7 +183,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_2ARG(a1, a2);					\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_2PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER2);				\
+ 	(type)__res;							\
+ })
+@@ -184,7 +194,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_3ARG(a1, a2, a3);					\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_3PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER3);				\
+ 	(type)__res;							\
+ })
+@@ -195,7 +205,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_4ARG(a1, a2, a3, a4);				\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_4PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER4);				\
+ 	(type)__res;							\
+ })
+@@ -209,12 +219,9 @@ xen_single_call(unsigned int call,
+ 	__HYPERCALL_DECLS;
+ 	__HYPERCALL_5ARG(a1, a2, a3, a4, a5);
  
-+#ifdef CONFIG_XEN_PV
-+void xen_hypercall_pv(void);
-+#endif
-+void xen_hypercall_hvm(void);
-+void xen_hypercall_amd(void);
-+void xen_hypercall_intel(void);
-+void xen_hypercall_setfunc(void);
-+void *__xen_hypercall_setfunc(void);
-+
- #endif /* XEN_OPS_H */
+-	if (call >= PAGE_SIZE / sizeof(hypercall_page[0]))
+-		return -EINVAL;
+-
+-	asm volatile(CALL_NOSPEC
++	asm volatile(__HYPERCALL
+ 		     : __HYPERCALL_5PARAM
+-		     : [thunk_target] "a" (&hypercall_page[call])
++		     : __HYPERCALL_ENTRY(call)
+ 		     : __HYPERCALL_CLOBBER5);
+ 
+ 	return (long)__res;
 
 
