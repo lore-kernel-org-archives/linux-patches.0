@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01971F758F;
-	Tue, 17 Dec 2024 17:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DE214A4E7;
+	Tue, 17 Dec 2024 17:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456013; cv=none; b=kMdORlzVxuX/sCPvacOGT57oGrrbXQqU++fqQz9Fn1VgCLD5yGCFTORnoyqL/aBMka7/aX9WY9kktzntSq6r+iYSPnVOvCSE9sDF5i41eyeMTHv0CdahNw9NU5f3Gar2+J9scCIw8AzW1pEdUf0917TVr9WeQHlEpTO155iUTQ4=
+	t=1734456016; cv=none; b=tt6H4ItFqolBJbASoaT/rjWqr/IMgnN/wq4ltWWljsJn8Uv8V1O/36nG3ZGxN1KlXUmkdZa39kW5qQjJGHMwJtRaH2/ZYx10HGtVaowx78wNJrJMlgs/ue2AohtAPf8ma5dWNxT0EEHklZ6/NTnjrpdr/tHiv5gtphjYrYCRymo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456013; c=relaxed/simple;
-	bh=MJ17NB/K/jMqToE1PI9s2vDUVumdyjDXGgkI4BZZmac=;
+	s=arc-20240116; t=1734456016; c=relaxed/simple;
+	bh=b+SLI/HPOfCbCjBlXtLSjLQr0P6KefI39CPLDV75Iz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UJFw7ElY2QQPXiTTDTDyD1pIZlxr2qXpxerDRucqfWfW/vKtbIbC/WbyxNXJ3lHr1ls4igt3J0omoX4Isu4een9oRLcYfhwnBmarUxe5TllevTNvO3FXSLPzTsR1IrS2tSLFpfxCU3SnE9RyCFko+L8NlVyHjAOgQUV2VeNzPBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIyZ2o/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WgkMr58tTGnugJwmvra0XBIajM+Y3XkmF0bIoiG545OK/BVP2blAc+hGz/+/elxgHV65bYJCDRZl8p/SwQoKPkCiJ7l/q0DMByxrymLj1NpVq2iTMlOv7RolYrvVVC0+6A0Gc7SJuB4lNY6wHgODaqllAQIsI4AqGVTfyeXr6Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ubf3X62A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIyZ2o/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473D8C4CED3;
-	Tue, 17 Dec 2024 17:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ubf3X62A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD7BC4CED3;
+	Tue, 17 Dec 2024 17:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456013;
-	bh=MJ17NB/K/jMqToE1PI9s2vDUVumdyjDXGgkI4BZZmac=;
+	s=korg; t=1734456016;
+	bh=b+SLI/HPOfCbCjBlXtLSjLQr0P6KefI39CPLDV75Iz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIyZ2o/YKvWTL5VWdAwLnvVkG6jC84B5e/VXH+lUiLyPQ6LvjCMTpJcZk+manGZfn
-	 3SdBLdLTFMlvHYAngjawEw8rwQcolJOOdmLUXs0rjrXM0AOirF0T7f0aVPHBO6q1Fd
-	 o3en2FceZH+2BJ2d/xF9y3NBeNt1nsEfsjjmNj+0=
+	b=Ubf3X62Aldwi1BQ+2BzK46fxp9GMbCvbGBoyTVOvc7C5GQm6D8TXC9QDxJvoFZJch
+	 Aa0DDqRMGqUpUGu53meWhyfRMnmtUYdSk7t03oi3BhkuFRHnYceFxe4cVFaUy8/W6R
+	 64gY8qZIFmWyOOA7PJt3zprXcnfR7IniXupXYqsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederik Deweerdt <deweerdt.lkml@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	MoYuanhao <moyuanhao3676@163.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Eric Dumazet <edumazet@google.com>,
-	Joe Damato <jdamato@fastly.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 004/109] splice: do not checksum AF_UNIX sockets
-Date: Tue, 17 Dec 2024 18:06:48 +0100
-Message-ID: <20241217170533.519565933@linuxfoundation.org>
+Subject: [PATCH 6.6 005/109] tcp: check space before adding MPTCP SYN options
+Date: Tue, 17 Dec 2024 18:06:49 +0100
+Message-ID: <20241217170533.559975757@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -53,44 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederik Deweerdt <deweerdt.lkml@gmail.com>
+From: MoYuanhao <moyuanhao3676@163.com>
 
-commit 6bd8614fc2d076fc21b7488c9f279853960964e2 upstream.
+commit 06d64ab46f19ac12f59a1d2aa8cd196b2e4edb5b upstream.
 
-When `skb_splice_from_iter` was introduced, it inadvertently added
-checksumming for AF_UNIX sockets. This resulted in significant
-slowdowns, for example when using sendfile over unix sockets.
+Ensure there is enough space before adding MPTCP options in
+tcp_syn_options().
 
-Using the test code in [1] in my test setup (2G single core qemu),
-the client receives a 1000M file in:
-- without the patch: 1482ms (+/- 36ms)
-- with the patch: 652.5ms (+/- 22.9ms)
+Without this check, 'remaining' could underflow, and causes issues. If
+there is not enough space, MPTCP should not be used.
 
-This commit addresses the issue by marking checksumming as unnecessary in
-`unix_stream_sendmsg`
-
+Signed-off-by: MoYuanhao <moyuanhao3676@163.com>
+Fixes: cec37a6e41aa ("mptcp: Handle MP_CAPABLE options for outgoing connections")
 Cc: stable@vger.kernel.org
-Signed-off-by: Frederik Deweerdt <deweerdt.lkml@gmail.com>
-Fixes: 2e910b95329c ("net: Add a function to splice pages into an skbuff for MSG_SPLICE_PAGES")
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+[ Matt: Add Fixes, cc Stable, update Description ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/Z1fMaHkRf8cfubuE@xiberoa
+Link: https://patch.msgid.link/20241209-net-mptcp-check-space-syn-v1-1-2da992bb6f74@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/unix/af_unix.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/ipv4/tcp_output.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2219,6 +2219,7 @@ static int unix_stream_sendmsg(struct so
- 		fds_sent = true;
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -837,8 +837,10 @@ static unsigned int tcp_syn_options(stru
+ 		unsigned int size;
  
- 		if (unlikely(msg->msg_flags & MSG_SPLICE_PAGES)) {
-+			skb->ip_summed = CHECKSUM_UNNECESSARY;
- 			err = skb_splice_from_iter(skb, &msg->msg_iter, size,
- 						   sk->sk_allocation);
- 			if (err < 0) {
+ 		if (mptcp_syn_options(sk, skb, &size, &opts->mptcp)) {
+-			opts->options |= OPTION_MPTCP;
+-			remaining -= size;
++			if (remaining >= size) {
++				opts->options |= OPTION_MPTCP;
++				remaining -= size;
++			}
+ 		}
+ 	}
+ 
 
 
