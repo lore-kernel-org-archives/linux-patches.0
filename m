@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAA41F8927;
-	Tue, 17 Dec 2024 17:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B691F7545;
+	Tue, 17 Dec 2024 17:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456681; cv=none; b=qJmgUSRVURyjqoRHbROiYQoxb3d9Msq0TO1qpDsLHMRBA+XPUU2fkkxsHec7zKPVledgNreY3VFsJcZpHRyTQ7vHiAkACil6VgXFHYPBxf8OTEHdRvrwI7SLssuEI/efFQFNd7uRnmrLTCHNuTp/uBeAzo5y7ibhvPng4BwEAsg=
+	t=1734456684; cv=none; b=ooZt9p9euVJ386zpO5YGctOk6eM/8kx/qQQE87Qf9rSQdO2Br/dGyDoZThreremEtSZoq1m8TUe7V1+jQSxNdKCH67DZY7Q5jYmmF0nXM0DZEh31jnTdmo5Radhxb+qVglcIxR2mOAZb8TX2vheLKo2QF9ueGWtjZLmrGGxn9Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456681; c=relaxed/simple;
-	bh=66sTYsW7AL9o3YitKHafXmKX9trXH7QAR9BBx6W0E3Y=;
+	s=arc-20240116; t=1734456684; c=relaxed/simple;
+	bh=m6BLWQXsb8YL9/P83ZXG4R3aAvT9OE46IuFX2UKrhnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucYjUJFRbaJv9b5lmcpJzQy3QOQC0CHKL072FIBeEtPKzDY4hEYJlMOacxQi3w5COgCVD07cv6rSkzYuI63JmKafiwDMzGLDeuEV7Bo2uA4aJlN66cGr0Gvrph6HdfI3pF4VtsiqJwTxlYgGkpnL0zqzYhO4O5IHL+YCqcsXuOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp2EC+BG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bCyElgQuyipgsiy0vJ/5pwQnl6fYqbopeoNNhgx3PcHtPaJwuSA5z7Ifte+ri7atIryVHXwwLmncChBXTbMZWKh0L3h+YvIc4swQ8HJ0tBJgxyvP6oqTBIz2UnpqYJTN7+2f2j3AxdbQRk8N+jrJuSlYJ0TqduE1T/HQiqUDL2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAoK3u5M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp2EC+BG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B20CC4CED3;
-	Tue, 17 Dec 2024 17:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAoK3u5M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 889ABC4CED3;
+	Tue, 17 Dec 2024 17:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456681;
-	bh=66sTYsW7AL9o3YitKHafXmKX9trXH7QAR9BBx6W0E3Y=;
+	s=korg; t=1734456683;
+	bh=m6BLWQXsb8YL9/P83ZXG4R3aAvT9OE46IuFX2UKrhnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qp2EC+BGfuxt8R3ebJPRAgDGrVoNfAVp6TnWJlmX5v+MU5p4xlDEohkodg2GV/47u
-	 41MmQT3cgz1u0CS55GwDPVe3MgMj1p1cIhmxdBtB6pkGa5qtDYwnTN19uanirfyWD+
-	 jTc0dNgcCPzmdULihCabBY0uPkkTYZuhDO6lt5Y8=
+	b=IAoK3u5MjIP4XKFeEhf6FpB+uwViYjVBqrvRGMYnVu2s2feOXk4QmEqKVPUjjzz2m
+	 uFUGjGogvtTYS4SApouyTjQTDv6wLmqLMRt/c4y+xovmKcWttwyyFXTEWkXQ27ezHR
+	 st6lJYIylj1wSNtSz5zUrmU2VNKheyUDXgqkIx6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Phil Sutter <phil@nwl.cc>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/172] selftests: netfilter: Stabilize rpath.sh
-Date: Tue, 17 Dec 2024 18:08:09 +0100
-Message-ID: <20241217170551.855032464@linuxfoundation.org>
+Subject: [PATCH 6.12 134/172] netfilter: IDLETIMER: Fix for possible ABBA deadlock
+Date: Tue, 17 Dec 2024 18:08:10 +0100
+Message-ID: <20241217170551.896544562@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -53,74 +53,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Phil Sutter <phil@nwl.cc>
 
-[ Upstream commit d92906fd1b940681b4509f7bb8ae737789fb4695 ]
+[ Upstream commit f36b01994d68ffc253c8296e2228dfe6e6431c03 ]
 
-On some systems, neighbor discoveries from ns1 for fec0:42::1 (i.e., the
-martian trap address) would happen at the wrong time and cause
-false-negative test result.
+Deletion of the last rule referencing a given idletimer may happen at
+the same time as a read of its file in sysfs:
 
-Problem analysis also discovered that IPv6 martian ping test was broken
-in that sent neighbor discoveries, not echo requests were inadvertently
-trapped
+| ======================================================
+| WARNING: possible circular locking dependency detected
+| 6.12.0-rc7-01692-g5e9a28f41134-dirty #594 Not tainted
+| ------------------------------------------------------
+| iptables/3303 is trying to acquire lock:
+| ffff8881057e04b8 (kn->active#48){++++}-{0:0}, at: __kernfs_remove+0x20
+|
+| but task is already holding lock:
+| ffffffffa0249068 (list_mutex){+.+.}-{3:3}, at: idletimer_tg_destroy_v]
+|
+| which lock already depends on the new lock.
 
-Avoid the race condition by introducing the neighbors to each other
-upfront. Also pin down the firewall rules to matching on echo requests
-only.
+A simple reproducer is:
 
-Fixes: efb056e5f1f0 ("netfilter: ip6t_rpfilter: Fix regression with VRF interfaces")
+| #!/bin/bash
+|
+| while true; do
+|         iptables -A INPUT -i foo -j IDLETIMER --timeout 10 --label "testme"
+|         iptables -D INPUT -i foo -j IDLETIMER --timeout 10 --label "testme"
+| done &
+| while true; do
+|         cat /sys/class/xt_idletimer/timers/testme >/dev/null
+| done
+
+Avoid this by freeing list_mutex right after deleting the element from
+the list, then continuing with the teardown.
+
+Fixes: 0902b469bd25 ("netfilter: xtables: idletimer target implementation")
 Signed-off-by: Phil Sutter <phil@nwl.cc>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/netfilter/rpath.sh | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/netfilter/xt_IDLETIMER.c | 52 +++++++++++++++++++-----------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/rpath.sh b/tools/testing/selftests/net/netfilter/rpath.sh
-index 4485fd7675ed..86ec4e68594d 100755
---- a/tools/testing/selftests/net/netfilter/rpath.sh
-+++ b/tools/testing/selftests/net/netfilter/rpath.sh
-@@ -61,9 +61,20 @@ ip -net "$ns2" a a 192.168.42.1/24 dev d0
- ip -net "$ns1" a a fec0:42::2/64 dev v0 nodad
- ip -net "$ns2" a a fec0:42::1/64 dev d0 nodad
+diff --git a/net/netfilter/xt_IDLETIMER.c b/net/netfilter/xt_IDLETIMER.c
+index f8b25b6f5da7..9869ef3c2ab3 100644
+--- a/net/netfilter/xt_IDLETIMER.c
++++ b/net/netfilter/xt_IDLETIMER.c
+@@ -409,21 +409,23 @@ static void idletimer_tg_destroy(const struct xt_tgdtor_param *par)
  
-+# avoid neighbor lookups and enable martian IPv6 pings
-+ns2_hwaddr=$(ip -net "$ns2" link show dev v0 | \
-+	     sed -n 's, *link/ether \([^ ]*\) .*,\1,p')
-+ns1_hwaddr=$(ip -net "$ns1" link show dev v0 | \
-+	     sed -n 's, *link/ether \([^ ]*\) .*,\1,p')
-+ip -net "$ns1" neigh add fec0:42::1 lladdr "$ns2_hwaddr" nud permanent dev v0
-+ip -net "$ns1" neigh add fec0:23::1 lladdr "$ns2_hwaddr" nud permanent dev v0
-+ip -net "$ns2" neigh add fec0:42::2 lladdr "$ns1_hwaddr" nud permanent dev d0
-+ip -net "$ns2" neigh add fec0:23::2 lladdr "$ns1_hwaddr" nud permanent dev v0
-+
- # firewall matches to test
- [ -n "$iptables" ] && {
- 	common='-t raw -A PREROUTING -s 192.168.0.0/16'
-+	common+=' -p icmp --icmp-type echo-request'
- 	if ! ip netns exec "$ns2" "$iptables" $common -m rpfilter;then
- 		echo "Cannot add rpfilter rule"
- 		exit $ksft_skip
-@@ -72,6 +83,7 @@ ip -net "$ns2" a a fec0:42::1/64 dev d0 nodad
- }
- [ -n "$ip6tables" ] && {
- 	common='-t raw -A PREROUTING -s fec0::/16'
-+	common+=' -p icmpv6 --icmpv6-type echo-request'
- 	if ! ip netns exec "$ns2" "$ip6tables" $common -m rpfilter;then
- 		echo "Cannot add rpfilter rule"
- 		exit $ksft_skip
-@@ -82,8 +94,10 @@ ip -net "$ns2" a a fec0:42::1/64 dev d0 nodad
- table inet t {
- 	chain c {
- 		type filter hook prerouting priority raw;
--		ip saddr 192.168.0.0/16 fib saddr . iif oif exists counter
--		ip6 saddr fec0::/16 fib saddr . iif oif exists counter
-+		ip saddr 192.168.0.0/16 icmp type echo-request \
-+			fib saddr . iif oif exists counter
-+		ip6 saddr fec0::/16 icmpv6 type echo-request \
-+			fib saddr . iif oif exists counter
+ 	mutex_lock(&list_mutex);
+ 
+-	if (--info->timer->refcnt == 0) {
+-		pr_debug("deleting timer %s\n", info->label);
+-
+-		list_del(&info->timer->entry);
+-		timer_shutdown_sync(&info->timer->timer);
+-		cancel_work_sync(&info->timer->work);
+-		sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
+-		kfree(info->timer->attr.attr.name);
+-		kfree(info->timer);
+-	} else {
++	if (--info->timer->refcnt > 0) {
+ 		pr_debug("decreased refcnt of timer %s to %u\n",
+ 			 info->label, info->timer->refcnt);
++		mutex_unlock(&list_mutex);
++		return;
  	}
+ 
++	pr_debug("deleting timer %s\n", info->label);
++
++	list_del(&info->timer->entry);
+ 	mutex_unlock(&list_mutex);
++
++	timer_shutdown_sync(&info->timer->timer);
++	cancel_work_sync(&info->timer->work);
++	sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
++	kfree(info->timer->attr.attr.name);
++	kfree(info->timer);
  }
- EOF
+ 
+ static void idletimer_tg_destroy_v1(const struct xt_tgdtor_param *par)
+@@ -434,25 +436,27 @@ static void idletimer_tg_destroy_v1(const struct xt_tgdtor_param *par)
+ 
+ 	mutex_lock(&list_mutex);
+ 
+-	if (--info->timer->refcnt == 0) {
+-		pr_debug("deleting timer %s\n", info->label);
+-
+-		list_del(&info->timer->entry);
+-		if (info->timer->timer_type & XT_IDLETIMER_ALARM) {
+-			alarm_cancel(&info->timer->alarm);
+-		} else {
+-			timer_shutdown_sync(&info->timer->timer);
+-		}
+-		cancel_work_sync(&info->timer->work);
+-		sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
+-		kfree(info->timer->attr.attr.name);
+-		kfree(info->timer);
+-	} else {
++	if (--info->timer->refcnt > 0) {
+ 		pr_debug("decreased refcnt of timer %s to %u\n",
+ 			 info->label, info->timer->refcnt);
++		mutex_unlock(&list_mutex);
++		return;
+ 	}
+ 
++	pr_debug("deleting timer %s\n", info->label);
++
++	list_del(&info->timer->entry);
+ 	mutex_unlock(&list_mutex);
++
++	if (info->timer->timer_type & XT_IDLETIMER_ALARM) {
++		alarm_cancel(&info->timer->alarm);
++	} else {
++		timer_shutdown_sync(&info->timer->timer);
++	}
++	cancel_work_sync(&info->timer->work);
++	sysfs_remove_file(idletimer_tg_kobj, &info->timer->attr.attr);
++	kfree(info->timer->attr.attr.name);
++	kfree(info->timer);
+ }
+ 
+ 
 -- 
 2.39.5
 
