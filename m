@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3F01F7577;
-	Tue, 17 Dec 2024 17:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EED1F76B1;
+	Tue, 17 Dec 2024 17:13:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455602; cv=none; b=pPnVTmFytjebPkJHnfbGTzRujKWEzjS4F6XSlbN+cxHK60xVJiQqcmdKIdIiNhfZSTMJr+TJkGli5N69urKBUnXM1WwkNqFhX0GELfVKeTI/KJRUbX1HL+GklS7PSeAdYYDAU1u5Y6+Z0SdcFpacTheXipN+0Zu+fWCAlG6BGtI=
+	t=1734455604; cv=none; b=rjF4QUeMRq7cXDqfBgKAiMtzaQMdEhXuimfk6SIoWkZT1yYfVQeFgXaCzguNDLmvRChv2Q9t+HcJwJmeIXQPvjy74UtqvYhjSCASNhQ532RhCq+jjTcYTxcAOQDxkhQIrs+z4YjgmOKHo8FcdoduG5RMHdZzM/5i8VmIFNUJE0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455602; c=relaxed/simple;
-	bh=vlo23bj0Bbqvg7lzEqxgyxOnvYhRjOHBG93xLUpY2Jg=;
+	s=arc-20240116; t=1734455604; c=relaxed/simple;
+	bh=0tp0O3eUur7Xf284WnHgYnMuAuKqHP6Y4dkm5iMH0GU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IeVp0Krzj9YRtmdUha3i4C0K6vpzAjzMwW2PJ7mCuAQ8gjXCZjsolYORlQ/2Lq2244d6UrX1FRe9iUJ1cJh/6DhIY6Y+1p3KSLwFCQboMVsY+RihEAolus/8i7vh9nlcOtjbvVkhBnWbL1rc+j8BHSTjG0HWABSaaJVgvE152aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9KTgx6Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dNhqtY69NG76miBkh4TlW4MyL4Palc+isVYe1uJl8rfiG4NHByr4B/GSQ6uaKYom8m0BU/K2sJyobezvLVcJtfnSel9gyj/MTOShe1yR7TUiiX63DIfWKEkannD3nDtTY8VjJs9l0ki+8lJffq3VgiK/6K0hCGwrGJFI+yMOdWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wanXAVF8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9KTgx6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45275C4CED3;
-	Tue, 17 Dec 2024 17:13:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wanXAVF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B813C4CED3;
+	Tue, 17 Dec 2024 17:13:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455601;
-	bh=vlo23bj0Bbqvg7lzEqxgyxOnvYhRjOHBG93xLUpY2Jg=;
+	s=korg; t=1734455604;
+	bh=0tp0O3eUur7Xf284WnHgYnMuAuKqHP6Y4dkm5iMH0GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9KTgx6QAG/VF4TD1yxh9HLHNw9t51Oh5HlNMOhHC0G0zSBFXytLqVSRvSQPW0MYj
-	 Tke05IYu1Oq7+Q5zPobmhq4S9hu7U2nzZPDqBLveSa4sdYrmo5zs+wa52O1uWvSgOQ
-	 rEcBN0g+U2xOnffde+xTLnVxvr/VQZ63bSYMpTY4=
+	b=wanXAVF82V4FRPk1s92qPxkCNLaGaNruLQrQo53JauwZGP4kMUtlfw2QVyzYDubde
+	 QkyQGqJvLnlpugMAMPk3RS73XOS+I/1s2frL+Dx928nzxozuQ1KinFFVgKJO2tEeJv
+	 fEIVqfZ+P5+Immc/GXezrDmuDWAh9f9dcFAjYQm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 5.15 14/51] xfs: fix scrub tracepoints when inode-rooted btrees are involved
-Date: Tue, 17 Dec 2024 18:07:07 +0100
-Message-ID: <20241217170520.888915508@linuxfoundation.org>
+	Danielle Ratson <danieller@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 23/51] selftests: mlxsw: sharedbuffer: Remove h1 ingress test case
+Date: Tue, 17 Dec 2024 18:07:16 +0100
+Message-ID: <20241217170521.244335543@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
 References: <20241217170520.301972474@linuxfoundation.org>
@@ -50,33 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Danielle Ratson <danieller@nvidia.com>
 
-commit ffc3ea4f3c1cc83a86b7497b0c4b0aee7de5480d upstream.
+[ Upstream commit cf3515c556907b4da290967a2a6cbbd9ee0ee723 ]
 
-Fix a minor mistakes in the scrub tracepoints that can manifest when
-inode-rooted btrees are enabled.  The existing code worked fine for bmap
-btrees, but we should tighten the code up to be less sloppy.
+The test is sending only one packet generated with mausezahn from $h1 to
+$h2. However, for some reason, it is testing for non-zero maximum occupancy
+in both the ingress pool of $h1 and $h2. The former only passes when $h2
+happens to send a packet.
 
-Cc: <stable@vger.kernel.org> # v5.7
-Fixes: 92219c292af8dd ("xfs: convert btree cursor inode-private member names")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Avoid intermittent failures by removing unintentional test case
+regarding the ingress pool of $h1.
+
+Fixes: a865ad999603 ("selftests: mlxsw: Add shared buffer traffic test")
+Signed-off-by: Danielle Ratson <danieller@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/5b7344608d5e06f38209e48d8af8c92fa11b6742.1733414773.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/trace.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh | 5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/fs/xfs/scrub/trace.h
-+++ b/fs/xfs/scrub/trace.h
-@@ -464,7 +464,7 @@ TRACE_EVENT(xchk_ifork_btree_error,
- 	TP_fast_assign(
- 		xfs_fsblock_t fsbno = xchk_btree_cur_fsbno(cur, level);
- 		__entry->dev = sc->mp->m_super->s_dev;
--		__entry->ino = sc->ip->i_ino;
-+		__entry->ino = cur->bc_ino.ip->i_ino;
- 		__entry->whichfork = cur->bc_ino.whichfork;
- 		__entry->type = sc->sm->sm_type;
- 		__entry->btnum = cur->bc_btnum;
+diff --git a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+index 7d9e73a43a49..f6f5e2090891 100755
+--- a/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
++++ b/tools/testing/selftests/drivers/net/mlxsw/sharedbuffer.sh
+@@ -108,11 +108,6 @@ port_pool_test()
+ 
+ 	devlink sb occupancy snapshot $DEVLINK_DEV
+ 
+-	RET=0
+-	max_occ=$(sb_occ_pool_check $dl_port1 $SB_POOL_ING $exp_max_occ)
+-	check_err $? "Expected iPool($SB_POOL_ING) max occupancy to be $exp_max_occ, but got $max_occ"
+-	log_test "physical port's($h1) ingress pool"
+-
+ 	RET=0
+ 	max_occ=$(sb_occ_pool_check $dl_port2 $SB_POOL_ING $exp_max_occ)
+ 	check_err $? "Expected iPool($SB_POOL_ING) max occupancy to be $exp_max_occ, but got $max_occ"
+-- 
+2.39.5
+
 
 
