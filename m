@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD531F8697;
-	Tue, 17 Dec 2024 17:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F741F7582;
+	Tue, 17 Dec 2024 17:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455766; cv=none; b=sZl7VvxhPlz8VzapFPtKj1ImcPAb67EYXdh/cNOgIvSP1tl1I9sjFB1bGpZpTeB+ecEaZSJdhJ8Iq+RH9q7cFcuT+F3S6yfxkezlDi78nCoBRKSoI6YnUWS65GiDNUXWc+NirGxoelrhBrwF9LvB5Tyz05h0yaHpcLIq+0a09B4=
+	t=1734455770; cv=none; b=aX/rVcjCpz5kI5sBj3sQIm3Xb1SA7+Dbl+iKnKFCvMKGXcXpH0CYRkyJa2PKw7o80ocTTdVgBSAq7yJDwvrwBBcUmQAo8udCoRZij4mgiJioQmdnmFRzYp68QcBoIkI0dlYI0xNrpeGAt1deqbAWn9DN25phvfIuPCJILioKMK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455766; c=relaxed/simple;
-	bh=HuUAIlXDU6Q7dykYoO4U2rcBAXNztwJOSxKUhVAfB8s=;
+	s=arc-20240116; t=1734455770; c=relaxed/simple;
+	bh=4F1rZBUW5R9N3K+oUd7GmDpSeAk0QZcZUu4O5FxAl0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KkGJeCziwhWjAjQ5/gA+Bo2nIPOFhB5FZINrZ+G8yYRBC/+JZYDdMMOVvq6WN1vgqIdWIEurGvYQ+KR/KlvGk+bQeeKwhIB3sYZHkMN1qPuvZ/n08Axc38mVGFLaWhDeAfi2WUo52BXJq32euNlIusquuoqV04Yg/PbCQZ9dFxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W7BrVZck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jwUIXSbLYanyZ7Chv1gJ+owh5Td6wvZJNimAxxa+Toby6Q1RNhqKfAArg5EtJZi/2mem3JRkfa/PSkkn9Sp0g/e3l+GIcGTV4zaP1tLp6pa7msoa4s7V8VAJeTi728ARRypr38iNMAtFGm1MusKOFXmK0yjJyDdYPYhK2vVtMDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aImStsVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W7BrVZck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435B4C4CED3;
-	Tue, 17 Dec 2024 17:16:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aImStsVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3417EC4CED3;
+	Tue, 17 Dec 2024 17:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455766;
-	bh=HuUAIlXDU6Q7dykYoO4U2rcBAXNztwJOSxKUhVAfB8s=;
+	s=korg; t=1734455769;
+	bh=4F1rZBUW5R9N3K+oUd7GmDpSeAk0QZcZUu4O5FxAl0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7BrVZckxkgfm11tRPUhM39spN0s7kmakGUxGyWooAlvRBNgjpwj7Qfmm08tAfJnC
-	 lRgG0eF/kVnOtH0r+5NxpKye+dWqtC2gI/zlw3b4W+NGU21FMAF9eiM87MN65kP2H2
-	 9MKsUS/Hi9Kd1vzf3hn/6dKfPeJsl0aRwiztWclY=
+	b=aImStsVDAdpiF66iZVF8GDtfVdU81iTX1n3BwfpgVIBOi5cCOR4zUNKQzDuHdLa0R
+	 dF5Cb1dnQ2IPLWo5ze5pwBcNwJvisUH9WDIj2I7xs3sCie4D+o2W73/ODDE1/ltArh
+	 +NrM+f2aNVIShJkRDOGbgTdHEXy/rnT0ytxfTi6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+412a392a2cd4a65e71db@syzkaller.appspotmail.com,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 6.1 26/76] exfat: fix potential deadlock on __exfat_get_dentry_set
-Date: Tue, 17 Dec 2024 18:07:06 +0100
-Message-ID: <20241217170527.349247823@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 27/76] wifi: nl80211: fix NL80211_ATTR_MLO_LINK_ID off-by-one
+Date: Tue, 17 Dec 2024 18:07:07 +0100
+Message-ID: <20241217170527.389786197@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -52,58 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 89fc548767a2155231128cb98726d6d2ea1256c9 upstream.
+[ Upstream commit 2e3dbf938656986cce73ac4083500d0bcfbffe24 ]
 
-When accessing a file with more entries than ES_MAX_ENTRY_NUM, the bh-array
-is allocated in __exfat_get_entry_set. The problem is that the bh-array is
-allocated with GFP_KERNEL. It does not make sense. In the following cases,
-a deadlock for sbi->s_lock between the two processes may occur.
+Since the netlink attribute range validation provides inclusive
+checking, the *max* of attribute NL80211_ATTR_MLO_LINK_ID should be
+IEEE80211_MLD_MAX_NUM_LINKS - 1 otherwise causing an off-by-one.
 
-       CPU0                CPU1
-       ----                ----
-  kswapd
-   balance_pgdat
-    lock(fs_reclaim)
-                      exfat_iterate
-                       lock(&sbi->s_lock)
-                       exfat_readdir
-                        exfat_get_uniname_from_ext_entry
-                         exfat_get_dentry_set
-                          __exfat_get_dentry_set
-                           kmalloc_array
-                            ...
-                            lock(fs_reclaim)
-    ...
-    evict
-     exfat_evict_inode
-      lock(&sbi->s_lock)
+One crash stack for demonstration:
+==================================================================
+BUG: KASAN: wild-memory-access in ieee80211_tx_control_port+0x3b6/0xca0 net/mac80211/tx.c:5939
+Read of size 6 at addr 001102080000000c by task fuzzer.386/9508
 
-To fix this, let's allocate bh-array with GFP_NOFS.
+CPU: 1 PID: 9508 Comm: syz.1.386 Not tainted 6.1.70 #2
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x177/0x231 lib/dump_stack.c:106
+ print_report+0xe0/0x750 mm/kasan/report.c:398
+ kasan_report+0x139/0x170 mm/kasan/report.c:495
+ kasan_check_range+0x287/0x290 mm/kasan/generic.c:189
+ memcpy+0x25/0x60 mm/kasan/shadow.c:65
+ ieee80211_tx_control_port+0x3b6/0xca0 net/mac80211/tx.c:5939
+ rdev_tx_control_port net/wireless/rdev-ops.h:761 [inline]
+ nl80211_tx_control_port+0x7b3/0xc40 net/wireless/nl80211.c:15453
+ genl_family_rcv_msg_doit+0x22e/0x320 net/netlink/genetlink.c:756
+ genl_family_rcv_msg net/netlink/genetlink.c:833 [inline]
+ genl_rcv_msg+0x539/0x740 net/netlink/genetlink.c:850
+ netlink_rcv_skb+0x1de/0x420 net/netlink/af_netlink.c:2508
+ genl_rcv+0x24/0x40 net/netlink/genetlink.c:861
+ netlink_unicast_kernel net/netlink/af_netlink.c:1326 [inline]
+ netlink_unicast+0x74b/0x8c0 net/netlink/af_netlink.c:1352
+ netlink_sendmsg+0x882/0xb90 net/netlink/af_netlink.c:1874
+ sock_sendmsg_nosec net/socket.c:716 [inline]
+ __sock_sendmsg net/socket.c:728 [inline]
+ ____sys_sendmsg+0x5cc/0x8f0 net/socket.c:2499
+ ___sys_sendmsg+0x21c/0x290 net/socket.c:2553
+ __sys_sendmsg net/socket.c:2582 [inline]
+ __do_sys_sendmsg net/socket.c:2591 [inline]
+ __se_sys_sendmsg+0x19e/0x270 net/socket.c:2589
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x45/0x90 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: a3ff29a95fde ("exfat: support dynamic allocate bh for exfat_entry_set_cache")
-Cc: stable@vger.kernel.org # v6.2+
-Reported-by: syzbot+412a392a2cd4a65e71db@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/000000000000fef47e0618c0327f@google.com
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Update the policy to ensure correct validation.
+
+Fixes: 7b0a0e3c3a88 ("wifi: cfg80211: do some rework towards MLO link APIs")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Suggested-by: Cengiz Can <cengiz.can@canonical.com>
+Link: https://patch.msgid.link/20241130170526.96698-1-linma@zju.edu.cn
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/dir.c |    2 +-
+ net/wireless/nl80211.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -870,7 +870,7 @@ struct exfat_entry_set_cache *exfat_get_
- 
- 	num_bh = EXFAT_B_TO_BLK_ROUND_UP(off + num_entries * DENTRY_SIZE, sb);
- 	if (num_bh > ARRAY_SIZE(es->__bh)) {
--		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_KERNEL);
-+		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_NOFS);
- 		if (!es->bh) {
- 			brelse(bh);
- 			kfree(es);
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 3e1c4e23484d..0ba824c3fd1b 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -806,7 +806,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
+ 	[NL80211_ATTR_MLO_LINKS] =
+ 		NLA_POLICY_NESTED_ARRAY(nl80211_policy),
+ 	[NL80211_ATTR_MLO_LINK_ID] =
+-		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS),
++		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS - 1),
+ 	[NL80211_ATTR_MLD_ADDR] = NLA_POLICY_EXACT_LEN(ETH_ALEN),
+ 	[NL80211_ATTR_MLO_SUPPORT] = { .type = NLA_FLAG },
+ 	[NL80211_ATTR_MAX_NUM_AKM_SUITES] = { .type = NLA_REJECT },
+-- 
+2.39.5
+
 
 
