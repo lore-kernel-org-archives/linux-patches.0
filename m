@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D9E1F8AD4;
-	Tue, 17 Dec 2024 17:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415251F8AD4;
+	Tue, 17 Dec 2024 17:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456713; cv=none; b=t0HELCe8O3Md5HbtpqeGeVwpqQw+B/LWK0iIXeksaTOGCqKtsdAtR6tGpMNGVeroqR6ajM8OEzdEcDz3RI/ePSMielH/HfdfL6Yh5Kx/oLFjN4bOZ1ECsqUV6Jcq9a6ugOY38BmFOAcNems3A1z4P9P0gr1OAc1P053oMi8aIGo=
+	t=1734456716; cv=none; b=mkMDmeamag9UOEoghDbm4FKJcIdOBvYTDIBKHumiA6NzbmBw2V7kvwZpJ3FjouZYIHO0i9s3dFMAuzfF/EAprDuELEs4ug68QYg4Vd/RitvDdpLKRPrV9yIkRNMIXCdX9xwwWV6oc/SsZ42W2djpDQwFE9WvEBs47q5HduolgOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456713; c=relaxed/simple;
-	bh=+YS/Fc8edvNCUuag61CWUjrEMTEYt6l57S7a4tvBLpg=;
+	s=arc-20240116; t=1734456716; c=relaxed/simple;
+	bh=CpqqMMH3x5iQxUnu5pQQHqkfFjEqG00xqUgPGBIHH+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcZEWqD4BSwYus5l6Af7+V78Qv57eYLJyCLFBVCukse7qSvWZ+ZAEUwi0rnaC0lGTwpRNA5WUkC6csQvSNt/lnqRYBnAsD5ChhwiuwPX7vE6JgWFjpGgdLw+jUtccMKVdhM+CAlo1Fsk6/sklKKTT7n+h9YY+G2Iwwmc61EfSH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bieFW+pl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VfF0K3MPWF6Obfwk7M/AXsk+Pj8agPfsF+awkAOpEH0nofkLtZdfx9b/3uSnBbzEEYdML/pJEobmL1GShhQYigtcBsEE7UrOrIcCMfVJVscB4kqWhx3dJjqJwYY+93B/tWQHpVcDgoc0+34HKR9XtOVlAMIrTajbf72nVhKj5kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQ3b0QeG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bieFW+pl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB96AC4CED3;
-	Tue, 17 Dec 2024 17:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQ3b0QeG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D70C4CED7;
+	Tue, 17 Dec 2024 17:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456713;
-	bh=+YS/Fc8edvNCUuag61CWUjrEMTEYt6l57S7a4tvBLpg=;
+	s=korg; t=1734456716;
+	bh=CpqqMMH3x5iQxUnu5pQQHqkfFjEqG00xqUgPGBIHH+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bieFW+pllz0aC6P5dOBUPdrdcyQCKHefxqvOIZpU7HqAN5ey8oq73sKchDcbCm92u
-	 9sI2ADMVReWOLQithUL3bC/hYCJEGiUfYr1nb83stntDYWtNnOOfTwQAScR8PCgYa3
-	 UfIQeiSG0digsbp9Utf3PrB8TQlUgelotqcqzI10=
+	b=kQ3b0QeGTWpnYDj6wnUoyEZBApJ2FjprLDNlQpubmj9HUgvK1EHULQaNhw+KnPI/+
+	 YsSvfM2576RYZMoiubObtYY2ODcwyHWGdEJiOTVDTc5vEWo0P1juH5fq7QAR2lUWgw
+	 YfBLR5qY3WKNkAICPv/QxGYvfoT2hcqHlRgQDhnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+4e7919b09c67ffd198ae@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/172] qca_spi: Make driver probing reliable
-Date: Tue, 17 Dec 2024 18:07:51 +0100
-Message-ID: <20241217170551.101438859@linuxfoundation.org>
+Subject: [PATCH 6.12 116/172] ALSA: control: Avoid WARN() for symlink errors
+Date: Tue, 17 Dec 2024 18:07:52 +0100
+Message-ID: <20241217170551.141353555@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,38 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit becc6399ce3b724cffe9ccb7ef0bff440bb1b62b ]
+[ Upstream commit b2e538a9827dd04ab5273bf4be8eb2edb84357b0 ]
 
-The module parameter qcaspi_pluggable controls if QCA7000 signature
-should be checked at driver probe (current default) or not. Unfortunately
-this could fail in case the chip is temporary in reset, which isn't under
-total control by the Linux host. So disable this check per default
-in order to avoid unexpected probe failures.
+Using WARN() for showing the error of symlink creations don't give
+more information than telling that something goes wrong, since the
+usual code path is a lregister callback from each control element
+creation.  More badly, the use of WARN() rather confuses fuzzer as if
+it were serious issues.
 
-Fixes: 291ab06ecf67 ("net: qualcomm: new Ethernet over SPI driver for QCA7000")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20241206184643.123399-3-wahrenst@gmx.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch downgrades the warning messages to use the normal dev_err()
+instead of WARN().  For making it clearer, add the function name to
+the prefix, too.
+
+Fixes: a135dfb5de15 ("ALSA: led control - add sysfs kcontrol LED marking layer")
+Reported-by: syzbot+4e7919b09c67ffd198ae@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/675664c7.050a0220.a30f1.018c.GAE@google.com
+Link: https://patch.msgid.link/20241209095614.4273-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qualcomm/qca_spi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/control_led.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/qualcomm/qca_spi.c b/drivers/net/ethernet/qualcomm/qca_spi.c
-index a73426a8c429..6b4b40c6e1fe 100644
---- a/drivers/net/ethernet/qualcomm/qca_spi.c
-+++ b/drivers/net/ethernet/qualcomm/qca_spi.c
-@@ -53,7 +53,7 @@ MODULE_PARM_DESC(qcaspi_burst_len, "Number of data bytes per burst. Use 1-5000."
+diff --git a/sound/core/control_led.c b/sound/core/control_led.c
+index 65a1ebe87776..e33dfcf863cf 100644
+--- a/sound/core/control_led.c
++++ b/sound/core/control_led.c
+@@ -668,10 +668,16 @@ static void snd_ctl_led_sysfs_add(struct snd_card *card)
+ 			goto cerr;
+ 		led->cards[card->number] = led_card;
+ 		snprintf(link_name, sizeof(link_name), "led-%s", led->name);
+-		WARN(sysfs_create_link(&card->ctl_dev->kobj, &led_card->dev.kobj, link_name),
+-			"can't create symlink to controlC%i device\n", card->number);
+-		WARN(sysfs_create_link(&led_card->dev.kobj, &card->card_dev.kobj, "card"),
+-			"can't create symlink to card%i\n", card->number);
++		if (sysfs_create_link(&card->ctl_dev->kobj, &led_card->dev.kobj,
++				      link_name))
++			dev_err(card->dev,
++				"%s: can't create symlink to controlC%i device\n",
++				 __func__, card->number);
++		if (sysfs_create_link(&led_card->dev.kobj, &card->card_dev.kobj,
++				      "card"))
++			dev_err(card->dev,
++				"%s: can't create symlink to card%i\n",
++				__func__, card->number);
  
- #define QCASPI_PLUGGABLE_MIN 0
- #define QCASPI_PLUGGABLE_MAX 1
--static int qcaspi_pluggable = QCASPI_PLUGGABLE_MIN;
-+static int qcaspi_pluggable = QCASPI_PLUGGABLE_MAX;
- module_param(qcaspi_pluggable, int, 0);
- MODULE_PARM_DESC(qcaspi_pluggable, "Pluggable SPI connection (yes/no).");
- 
+ 		continue;
+ cerr:
 -- 
 2.39.5
 
