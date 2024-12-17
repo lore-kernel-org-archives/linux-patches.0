@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221231F75A6;
-	Tue, 17 Dec 2024 17:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179581F8EE8;
+	Tue, 17 Dec 2024 17:32:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456722; cv=none; b=miwuOt94wCuJzrRVNMCq4CXhovtsJWeJHiMyVK4TEdH36QXwehU8w1rrOfe0XMHuv+Mx1CCDou9HMhBaLTk9GCJH3nIfUH6IJNymZ6pF812U46Hk253j6amLGuPiGHn9BgKigM3F095lMq081anx6tYan41zgzRp6vPcHGVuVoU=
+	t=1734456725; cv=none; b=huoD7igsFW/BQbKtmosW9eN5597FsPDbDU8PBMUwl2BzP+IgZ5wWNzs/k7qli82D0xFnNzhlNY0nWBMPZLgU/l/xgzZF+ZS2e0bzRa2lOLirOnhJ+RzV0pYbM4VTxs/APSTmTFsQcIjxPaK3CRUxZw3m9WhTx57QJ69/3rzBYxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456722; c=relaxed/simple;
-	bh=iML2ElUzDJPqPSNgKzrvhf+/2XSD4lPLQtSUT+qHcRE=;
+	s=arc-20240116; t=1734456725; c=relaxed/simple;
+	bh=xU78/m6yYehiIphW9PDlJNV3xbqnscOs7CCAffhcFzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfa3WZ3ro0MIpXKuLfZc199n4eJlzXc7NTbyc217jjy58tZLThhCVQlEZv/OFCQbpsLuMGj9ojPVmDWfTbJb56LknSCodkyy1kf6VVROzfiQ1H3AaL1uB+uF/U0oJgqcqfVL3Y8vIGXBuUdJk8nJb42OT+v8y6N+07GZ4VBakK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i5+7D7Qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLXjQ+duPgZPJhC8wiiVco2reciHQldI9WPko7Y2KkPK58Ozbh0KKMYBcyvBYmbmbFaOHNFaXVgFlqIQNvfHUTCD0E1GjtkKxd+J/ut9n5kWwboyQoeDqLZaclWjrB2fvqZqe9y4LeLVAuaaLiLg2eA9+RmYVGu5cW/VVG8bMVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bai5BILm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i5+7D7Qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D583C4CED3;
-	Tue, 17 Dec 2024 17:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bai5BILm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B16C4CED3;
+	Tue, 17 Dec 2024 17:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456722;
-	bh=iML2ElUzDJPqPSNgKzrvhf+/2XSD4lPLQtSUT+qHcRE=;
+	s=korg; t=1734456724;
+	bh=xU78/m6yYehiIphW9PDlJNV3xbqnscOs7CCAffhcFzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5+7D7Qw7eymVgQ21NnpJr/m4489TpwEBsJFicF8J7yzMaKMpriOyt9tARlxFuHTe
-	 6yO55xHpXCEIcv2MXnTtU8GBcpr0GQwhXT7i8gJfVbrtW6Nto79ognw6cksFTA34I5
-	 LuXevhJOKQotwJb5Br103zinLNeZiDEKjsAM+/ic=
+	b=bai5BILmLQFlyDUWKp8WPqr963qPD9NlBHqs5JYW+00hW7Rf11Z0shkyduOLSu8nf
+	 ccH+Laa2bvcye9J0E9iL1wGOuD89S6UVXV0dEJesQZVgsadbisq84wMxwxifQSMabm
+	 WSq2QlXyH3XzgHAqX0ecfDvr23OVTwT1hBKkSGAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Barker <paul.barker.ct@bp.renesas.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/172] Documentation: PM: Clarify pm_runtime_resume_and_get() return value
-Date: Tue, 17 Dec 2024 18:07:54 +0100
-Message-ID: <20241217170551.221268834@linuxfoundation.org>
+Subject: [PATCH 6.12 109/172] spi: aspeed: Fix an error handling path in aspeed_spi_[read|write]_user()
+Date: Tue, 17 Dec 2024 18:07:45 +0100
+Message-ID: <20241217170550.844947115@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,40 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Barker <paul.barker.ct@bp.renesas.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit ccb84dc8f4a02e7d30ffd388522996546b4d00e1 ]
+[ Upstream commit c84dda3751e945a67d71cbe3af4474aad24a5794 ]
 
-Update the documentation to match the behaviour of the code.
+A aspeed_spi_start_user() is not balanced by a corresponding
+aspeed_spi_stop_user().
+Add the missing call.
 
-pm_runtime_resume_and_get() always returns 0 on success, even if
-__pm_runtime_resume() returns 1.
-
-Fixes: 2c412337cfe6 ("PM: runtime: Add documentation for pm_runtime_resume_and_get()")
-Signed-off-by: Paul Barker <paul.barker.ct@bp.renesas.com>
-Link: https://patch.msgid.link/20241203143729.478-1-paul.barker.ct@bp.renesas.com
-[ rjw: Subject and changelog edits, adjusted new comment formatting ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/4052aa2f9a9ea342fa6af83fa991b55ce5d5819e.1732051814.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/power/runtime_pm.rst | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-aspeed-smc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/power/runtime_pm.rst b/Documentation/power/runtime_pm.rst
-index 53d1996460ab..12f429359a82 100644
---- a/Documentation/power/runtime_pm.rst
-+++ b/Documentation/power/runtime_pm.rst
-@@ -347,7 +347,9 @@ drivers/base/power/runtime.c and include/linux/pm_runtime.h:
+diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
+index bbd417c55e7f..b0e3f307b283 100644
+--- a/drivers/spi/spi-aspeed-smc.c
++++ b/drivers/spi/spi-aspeed-smc.c
+@@ -239,7 +239,7 @@ static ssize_t aspeed_spi_read_user(struct aspeed_spi_chip *chip,
  
-   `int pm_runtime_resume_and_get(struct device *dev);`
-     - run pm_runtime_resume(dev) and if successful, increment the device's
--      usage counter; return the result of pm_runtime_resume
-+      usage counter; returns 0 on success (whether or not the device's
-+      runtime PM status was already 'active') or the error code from
-+      pm_runtime_resume() on failure.
+ 	ret = aspeed_spi_send_cmd_addr(chip, op->addr.nbytes, offset, op->cmd.opcode);
+ 	if (ret < 0)
+-		return ret;
++		goto stop_user;
  
-   `int pm_request_idle(struct device *dev);`
-     - submit a request to execute the subsystem-level idle callback for the
+ 	if (op->dummy.buswidth && op->dummy.nbytes) {
+ 		for (i = 0; i < op->dummy.nbytes / op->dummy.buswidth; i++)
+@@ -249,8 +249,9 @@ static ssize_t aspeed_spi_read_user(struct aspeed_spi_chip *chip,
+ 	aspeed_spi_set_io_mode(chip, io_mode);
+ 
+ 	aspeed_spi_read_from_ahb(buf, chip->ahb_base, len);
++stop_user:
+ 	aspeed_spi_stop_user(chip);
+-	return 0;
++	return ret;
+ }
+ 
+ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
+@@ -261,10 +262,11 @@ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
+ 	aspeed_spi_start_user(chip);
+ 	ret = aspeed_spi_send_cmd_addr(chip, op->addr.nbytes, op->addr.val, op->cmd.opcode);
+ 	if (ret < 0)
+-		return ret;
++		goto stop_user;
+ 	aspeed_spi_write_to_ahb(chip->ahb_base, op->data.buf.out, op->data.nbytes);
++stop_user:
+ 	aspeed_spi_stop_user(chip);
+-	return 0;
++	return ret;
+ }
+ 
+ /* support for 1-1-1, 1-1-2 or 1-1-4 */
 -- 
 2.39.5
 
