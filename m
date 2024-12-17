@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6351F76C3;
-	Tue, 17 Dec 2024 17:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F112E1F76C3;
+	Tue, 17 Dec 2024 17:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456770; cv=none; b=j162iIZDcl7Dt3pH1uVuEjgUmAa+g/IgDYGsE2wi8ntrpVEq0bV1hSlkd3Y3BfTIhCcCCfb91NISlBgWQvCqiY32DP5PvX2o5P6MM2bMdvq/GXFAo/8Smc9K/Qzq5crYfs7TzdA0dHl81Msl+mItpT4RuyXBHiZ2wh0TrbSvWMg=
+	t=1734456773; cv=none; b=nSqHvKjgpItol334VRj5sQkF2KL76Ce5LO4H15hjc/e7DDpAuLxU6DhdLpmD0fifcGdKSDO25WGCEBo7677N2uHuQVokAe2FtFlWF3mBHlBxFGrIzVhlr0ga5wGLy2fqicg+7KIWShGuPXgNa0Bbpg909OwnwPu3Pef+Zqe3c/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456770; c=relaxed/simple;
-	bh=hbI+wDu29hvPeY4huTBkmbnUJm3in6n7GzJ+jTBxCm0=;
+	s=arc-20240116; t=1734456773; c=relaxed/simple;
+	bh=W4Ku+uVlX5wBD4eEsE7PqvyV/Mk42O8RNSr5UgXAYzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rv7lzyMmz2JDa00BjJ8KTzaPhvP1laexw3s35YN7JnNsvgntiY31OKQZyMQ9WsB+xwPJ4J2QZ5LMddDwK+pOZnJWw0JheccKF7pnNIo3hUJxs9HiPMFoHrTPdlPDhwXigUuzkr3s8a9O7xVbvcZbok4KEl3Yk21AKjICOdbZqHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pf9C+DNU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L8+kbBRPUDKM3QWuC5qCu5Q7J+EDwiMaD5xpbbXDgBxZLn+K0jTSyCL9n7lVqblhq4o5QdWrknXo5bz592yLKYuTzx7o9cSox9Dh7GNj0PltloS1EZDgQ/EAi6MJfmwx4yWXHjh+8SscDHG6Fop6CUbc6tElg6FPif1p/KnJwP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyNr0Xy9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pf9C+DNU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80610C4CED3;
-	Tue, 17 Dec 2024 17:32:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyNr0Xy9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74443C4CED7;
+	Tue, 17 Dec 2024 17:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456769;
-	bh=hbI+wDu29hvPeY4huTBkmbnUJm3in6n7GzJ+jTBxCm0=;
+	s=korg; t=1734456772;
+	bh=W4Ku+uVlX5wBD4eEsE7PqvyV/Mk42O8RNSr5UgXAYzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pf9C+DNUWyGCn/1xgtBgSTG1FWop4gFBOBk4iS3UTCYrcr2b62bjHXjgTxvG1f7Ww
-	 otT2GAeC11B/qttzih927II6RANboujLZXymIUCIxB6LR4EbwJ223VrOknSWvTa07c
-	 mKkQRbWPo0/ZGJ3bTXrYqcygnE1tsdNIgAvY3CaM=
+	b=tyNr0Xy9tlcM2TI6wmVsaLqRMH/kB+g/scwMgqhZ7kCyj08VSU0K9oj/iWAeq/5d1
+	 I1q156GRk8tFrVWrPmBj0AVfGYG8J/rvAWgOvmEweHYKBu6BwIWZtomTuWh1fpgmkq
+	 lsEhu4VrLDjmcPWQzVRiZdj8fNJ4NgP5Q+96XlaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weizhao Ouyang <o451686892@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@idosch.org>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/172] kselftest/arm64: abi: fix SVCR detection
-Date: Tue, 17 Dec 2024 18:08:36 +0100
-Message-ID: <20241217170552.966621483@linuxfoundation.org>
+Subject: [PATCH 6.12 143/172] team: Fix initial vlan_feature set in __team_compute_features
+Date: Tue, 17 Dec 2024 18:08:19 +0100
+Message-ID: <20241217170552.265073152@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,128 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weizhao Ouyang <o451686892@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit ce03573a1917532da06057da9f8e74a2ee9e2ac9 ]
+[ Upstream commit 396699ac2cb1bc4e3485abb48a1e3e41956de0cd ]
 
-When using svcr_in to check ZA and Streaming Mode, we should make sure
-that the value in x2 is correct, otherwise it may trigger an Illegal
-instruction if FEAT_SVE and !FEAT_SME.
+Similarly as with bonding, fix the calculation of vlan_features to reuse
+netdev_base_features() in order derive the set in the same way as
+ndo_fix_features before iterating through the slave devices to refine the
+feature set.
 
-Fixes: 43e3f85523e4 ("kselftest/arm64: Add SME support to syscall ABI test")
-Signed-off-by: Weizhao Ouyang <o451686892@gmail.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20241211111639.12344-1-o451686892@gmail.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 3625920b62c3 ("teaming: fix vlan_features computing")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Nikolay Aleksandrov <razor@blackwall.org>
+Cc: Ido Schimmel <idosch@idosch.org>
+Cc: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20241210141245.327886-4-daniel@iogearbox.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/arm64/abi/syscall-abi-asm.S     | 32 +++++++++----------
- 1 file changed, 15 insertions(+), 17 deletions(-)
+ drivers/net/team/team_core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/arm64/abi/syscall-abi-asm.S b/tools/testing/selftests/arm64/abi/syscall-abi-asm.S
-index df3230fdac39..66ab2e0bae5f 100644
---- a/tools/testing/selftests/arm64/abi/syscall-abi-asm.S
-+++ b/tools/testing/selftests/arm64/abi/syscall-abi-asm.S
-@@ -81,32 +81,31 @@ do_syscall:
- 	stp	x27, x28, [sp, #96]
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 481c8df8842f..ddd9ae7085c7 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -991,13 +991,14 @@ static void team_port_disable(struct team *team,
+ static void __team_compute_features(struct team *team)
+ {
+ 	struct team_port *port;
+-	netdev_features_t vlan_features = TEAM_VLAN_FEATURES &
+-					  NETIF_F_ALL_FOR_ALL;
++	netdev_features_t vlan_features = TEAM_VLAN_FEATURES;
+ 	netdev_features_t enc_features  = TEAM_ENC_FEATURES;
+ 	unsigned short max_hard_header_len = ETH_HLEN;
+ 	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE |
+ 					IFF_XMIT_DST_RELEASE_PERM;
  
- 	// Set SVCR if we're doing SME
--	cbz	x1, 1f
-+	cbz	x1, load_gpr
- 	adrp	x2, svcr_in
- 	ldr	x2, [x2, :lo12:svcr_in]
- 	msr	S3_3_C4_C2_2, x2
--1:
- 
- 	// Load ZA and ZT0 if enabled - uses x12 as scratch due to SME LDR
--	tbz	x2, #SVCR_ZA_SHIFT, 1f
-+	tbz	x2, #SVCR_ZA_SHIFT, load_gpr
- 	mov	w12, #0
- 	ldr	x2, =za_in
--2:	_ldr_za 12, 2
-+1:	_ldr_za 12, 2
- 	add	x2, x2, x1
- 	add	x12, x12, #1
- 	cmp	x1, x12
--	bne	2b
-+	bne	1b
- 
- 	// ZT0
- 	mrs	x2, S3_0_C0_C4_5	// ID_AA64SMFR0_EL1
- 	ubfx	x2, x2, #ID_AA64SMFR0_EL1_SMEver_SHIFT, \
- 			 #ID_AA64SMFR0_EL1_SMEver_WIDTH
--	cbz	x2, 1f
-+	cbz	x2, load_gpr
- 	adrp	x2, zt_in
- 	add	x2, x2, :lo12:zt_in
- 	_ldr_zt 2
--1:
- 
-+load_gpr:
- 	// Load GPRs x8-x28, and save our SP/FP for later comparison
- 	ldr	x2, =gpr_in
- 	add	x2, x2, #64
-@@ -125,9 +124,9 @@ do_syscall:
- 	str	x30, [x2], #8		// LR
- 
- 	// Load FPRs if we're not doing neither SVE nor streaming SVE
--	cbnz	x0, 1f
-+	cbnz	x0, check_sve_in
- 	ldr	x2, =svcr_in
--	tbnz	x2, #SVCR_SM_SHIFT, 1f
-+	tbnz	x2, #SVCR_SM_SHIFT, check_sve_in
- 
- 	ldr	x2, =fpr_in
- 	ldp	q0, q1, [x2]
-@@ -148,8 +147,8 @@ do_syscall:
- 	ldp	q30, q31, [x2, #16 * 30]
- 
- 	b	2f
--1:
- 
-+check_sve_in:
- 	// Load the SVE registers if we're doing SVE/SME
- 
- 	ldr	x2, =z_in
-@@ -256,32 +255,31 @@ do_syscall:
- 	stp	q30, q31, [x2, #16 * 30]
- 
- 	// Save SVCR if we're doing SME
--	cbz	x1, 1f
-+	cbz	x1, check_sve_out
- 	mrs	x2, S3_3_C4_C2_2
- 	adrp	x3, svcr_out
- 	str	x2, [x3, :lo12:svcr_out]
--1:
- 
- 	// Save ZA if it's enabled - uses x12 as scratch due to SME STR
--	tbz	x2, #SVCR_ZA_SHIFT, 1f
-+	tbz	x2, #SVCR_ZA_SHIFT, check_sve_out
- 	mov	w12, #0
- 	ldr	x2, =za_out
--2:	_str_za 12, 2
-+1:	_str_za 12, 2
- 	add	x2, x2, x1
- 	add	x12, x12, #1
- 	cmp	x1, x12
--	bne	2b
-+	bne	1b
- 
- 	// ZT0
- 	mrs	x2, S3_0_C0_C4_5	// ID_AA64SMFR0_EL1
- 	ubfx	x2, x2, #ID_AA64SMFR0_EL1_SMEver_SHIFT, \
- 			#ID_AA64SMFR0_EL1_SMEver_WIDTH
--	cbz	x2, 1f
-+	cbz	x2, check_sve_out
- 	adrp	x2, zt_out
- 	add	x2, x2, :lo12:zt_out
- 	_str_zt 2
--1:
- 
-+check_sve_out:
- 	// Save the SVE state if we have some
- 	cbz	x0, 1f
- 
++	vlan_features = netdev_base_features(vlan_features);
++
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(port, &team->port_list, list) {
+ 		vlan_features = netdev_increment_features(vlan_features,
 -- 
 2.39.5
 
