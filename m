@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F57E1F8AC4;
-	Tue, 17 Dec 2024 17:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F66E1F8ACE;
+	Tue, 17 Dec 2024 17:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456409; cv=none; b=EWUVo+68dnFVU8Zcp2LA9wFCfeYp/vTglCfiXGBcEL8T6yzcc10NNxhZRRv3baBTTsUs/nzzmouoa7eVkD5RpyGPJfwxR1gtIlUf7JU4g/rs3j9kExaw+DIZ5x8pk40mHppT9SWRODXat0CYJVZh1cc13zs4jlAFF85x9JDIZKs=
+	t=1734456412; cv=none; b=qP5SJrmGA8btO0JHYGDNQ4g+rlna0DOuG4srQfzjwI4ulvfpZ8ntA8JU6fibHBwTMpQ2vot/a/+5aixg3Ph6aWpSeUGbWbVPbAsE80SBkjqmYdge04br1lGcSwqwCHWhkI+ejTIOjUPkhRkfaKd+z5L0MofqUOIhTn/52UwK9Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456409; c=relaxed/simple;
-	bh=S6Flm1JVuK8UP64UGHSRqfzuWQIcpno5H9OII3GK2iA=;
+	s=arc-20240116; t=1734456412; c=relaxed/simple;
+	bh=w2VYmqVQJIkPS1I/+C1TmKdEetm26WY5AI4q85iFVUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQ/n3UuRcmRcEElR1F7U/PaZ6AHp/wXCjZ42rSE71K09eMwhilYU7TONE+7P57AYYJuhzoMnNW9pzXKKqqwynQZfmgIj8xAxy8QqaUlZg5w0pqRR0Acmk98aSoI9GDo1rvJcelzeJ72WLbvaUnfNFIaffKh4qf6se9lxMyKtawY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAk3X+gh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ziar4tiQjCImK7zrTy05C3xwfUwi0l5VJQvU7a9ylY/+/YU0huotmrAJvvdnb+FaGtbT3/GCP4qEb1ud3iGgDUTrtnyZE8QJct06lR0VPfynHownP05Llt3otL/vxORJnLyyi1HyzOwHBkvF4h2XwOZQXPMGcO9UdWic5LVCblE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EcBXxL7c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAk3X+gh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF4AC4CEE0;
-	Tue, 17 Dec 2024 17:26:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EcBXxL7c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BF0C4CED3;
+	Tue, 17 Dec 2024 17:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456409;
-	bh=S6Flm1JVuK8UP64UGHSRqfzuWQIcpno5H9OII3GK2iA=;
+	s=korg; t=1734456412;
+	bh=w2VYmqVQJIkPS1I/+C1TmKdEetm26WY5AI4q85iFVUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAk3X+ghPOvaULtA9rprJFDxmPWQyojLFw5OzXcm0xYJzsYCNNC1naSluqBvNfnjY
-	 Y7TB9VI2CWcN+CwVkGuF4BJmAdFegWktCn11h3UgGrLCd316PbhWgSP04wKz2lsxiH
-	 Bu1maHerCulrKn1iJzIRWBBY7o/AZovs8pb5J2gA=
+	b=EcBXxL7cY3v9M/ZauLZ9xbFd60oNDK9vPClZQnhIg0rD3HWOA1DKXjhIwQr86geFy
+	 ZXjaj0fxQSJbZuv5fYXgFCnfWm6JmLKWn7CRTm7aP3mh68kxtKRo4QLJdA439aoY2B
+	 KnKLxuOrUVtmDGlbambJiJwj+6NTzatwpiWg608Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 021/172] gpio: graniterapids: Fix GPIO Ack functionality
-Date: Tue, 17 Dec 2024 18:06:17 +0100
-Message-ID: <20241217170547.138246948@linuxfoundation.org>
+	Koichiro Den <koichiro.den@canonical.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.12 012/172] virtio_ring: add a func argument recycle_done to virtqueue_resize()
+Date: Tue, 17 Dec 2024 18:06:08 +0100
+Message-ID: <20241217170546.758116437@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,33 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Koichiro Den <koichiro.den@canonical.com>
 
-commit 0bb18e34abdde7bf58fca8542e2dcf621924ea19 upstream.
+commit 8d6712c892019b9b9dc5c7039edd3c9d770b510b upstream.
 
-Interrupt status (GPI_IS) register is cleared by writing 1 to it, not 0.
+When virtqueue_resize() has actually recycled all unused buffers,
+additional work may be required in some cases. Relying solely on its
+return status is fragile, so introduce a new function argument
+'recycle_done', which is invoked when the recycle really occurs.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Acked-by: Andy Shevchenko <andy@kernel.org>
-Link: https://lore.kernel.org/r/20241204070415.1034449-8-mika.westerberg@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: <stable@vger.kernel.org> # v6.11+
+Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-graniterapids.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/virtio_net.c     |    4 ++--
+ drivers/virtio/virtio_ring.c |    6 +++++-
+ include/linux/virtio.h       |    3 ++-
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/gpio/gpio-graniterapids.c
-+++ b/drivers/gpio/gpio-graniterapids.c
-@@ -166,7 +166,7 @@ static void gnr_gpio_irq_ack(struct irq_
- 	guard(raw_spinlock_irqsave)(&priv->lock);
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3165,7 +3165,7 @@ static int virtnet_rx_resize(struct virt
  
- 	reg = readl(addr);
--	reg &= ~BIT(bit_idx);
-+	reg |= BIT(bit_idx);
- 	writel(reg, addr);
- }
+ 	virtnet_rx_pause(vi, rq);
+ 
+-	err = virtqueue_resize(rq->vq, ring_num, virtnet_rq_unmap_free_buf);
++	err = virtqueue_resize(rq->vq, ring_num, virtnet_rq_unmap_free_buf, NULL);
+ 	if (err)
+ 		netdev_err(vi->dev, "resize rx fail: rx queue index: %d err: %d\n", qindex, err);
+ 
+@@ -3228,7 +3228,7 @@ static int virtnet_tx_resize(struct virt
+ 
+ 	virtnet_tx_pause(vi, sq);
+ 
+-	err = virtqueue_resize(sq->vq, ring_num, virtnet_sq_free_unused_buf);
++	err = virtqueue_resize(sq->vq, ring_num, virtnet_sq_free_unused_buf, NULL);
+ 	if (err)
+ 		netdev_err(vi->dev, "resize tx fail: tx queue index: %d err: %d\n", qindex, err);
+ 
+--- a/drivers/virtio/virtio_ring.c
++++ b/drivers/virtio/virtio_ring.c
+@@ -2716,6 +2716,7 @@ EXPORT_SYMBOL_GPL(vring_create_virtqueue
+  * @_vq: the struct virtqueue we're talking about.
+  * @num: new ring num
+  * @recycle: callback to recycle unused buffers
++ * @recycle_done: callback to be invoked when recycle for all unused buffers done
+  *
+  * When it is really necessary to create a new vring, it will set the current vq
+  * into the reset state. Then call the passed callback to recycle the buffer
+@@ -2736,7 +2737,8 @@ EXPORT_SYMBOL_GPL(vring_create_virtqueue
+  *
+  */
+ int virtqueue_resize(struct virtqueue *_vq, u32 num,
+-		     void (*recycle)(struct virtqueue *vq, void *buf))
++		     void (*recycle)(struct virtqueue *vq, void *buf),
++		     void (*recycle_done)(struct virtqueue *vq))
+ {
+ 	struct vring_virtqueue *vq = to_vvq(_vq);
+ 	int err;
+@@ -2753,6 +2755,8 @@ int virtqueue_resize(struct virtqueue *_
+ 	err = virtqueue_disable_and_recycle(_vq, recycle);
+ 	if (err)
+ 		return err;
++	if (recycle_done)
++		recycle_done(_vq);
+ 
+ 	if (vq->packed_ring)
+ 		err = virtqueue_resize_packed(_vq, num);
+--- a/include/linux/virtio.h
++++ b/include/linux/virtio.h
+@@ -100,7 +100,8 @@ dma_addr_t virtqueue_get_avail_addr(cons
+ dma_addr_t virtqueue_get_used_addr(const struct virtqueue *vq);
+ 
+ int virtqueue_resize(struct virtqueue *vq, u32 num,
+-		     void (*recycle)(struct virtqueue *vq, void *buf));
++		     void (*recycle)(struct virtqueue *vq, void *buf),
++		     void (*recycle_done)(struct virtqueue *vq));
+ int virtqueue_reset(struct virtqueue *vq,
+ 		    void (*recycle)(struct virtqueue *vq, void *buf));
  
 
 
