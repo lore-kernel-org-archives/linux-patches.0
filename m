@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4D71F4735;
-	Tue, 17 Dec 2024 17:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F849149DFA;
+	Tue, 17 Dec 2024 17:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455479; cv=none; b=HESY9QhWUqxqzsaXu6tanCjURbwpxn0x6EneStpoX1N+Y3w1XWYJOrJ6KZv/+Q3eNAM88yqEQiRrVSi/YgWtSJdf1sdpgobBKRSxRaa3+0mP2CW18xMoR6MO/tnI5+eerCzMIPZflPxOwtRESHonyyrC4cghwg7R6sND1TVbPX4=
+	t=1734455482; cv=none; b=kKmAhv8Fv9R/r1OxXUpKqa0DIWrknd20PRdBUyJslCzYuFe3dfl7UTjTGCPFvZ1gdkhWxrfcXObtS/2zVuJ9KQqx46LeQy4U/HsBn3wZIeJwxaRamkjQO+S6ye9MXht8iMxxxZij8bwrjaBTtvYzTB3LmWSqDI/MQDvMd+5F5Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455479; c=relaxed/simple;
-	bh=hckc3Tw83fWCB7NHL2R5IDJ+cxblsWlHjFPYfk4KjEA=;
+	s=arc-20240116; t=1734455482; c=relaxed/simple;
+	bh=QYrpriJKzJqFq1VS6k4DSBz3U9dI3B3M8y1c0+XMg6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gu13ERrkIYVT7nFYI1CsgG1Rf4hFclsVgK21Sd/lgDcTBKnBGkmQKNlC5/NP+kT68wegRKLPIfdcHe07lhWfbIboUKoNPaBO45Gy8XdDy7AaZJUCC1I4HBIFbi0ShkiSC7gSrag093pzdrPZK4hf89gJO9R2nk+xIB+s6+Wkyto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7KR/Gfd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uOicD9FhsBOi+SN96IqnQhhYSubSJE7qVehz/2dwPdynN5XuA0qFxF30stTAZfEPatnWs7absnOweVHR2u3oI+AINKlmiCMaNyyu5/iW01xF9ETzuUbQKG8iFz9jno1YYPQeaipFyzy6dERNQICCDRy9wEHdjd1Ap1IYreeYHwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5lTWxw5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7KR/Gfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460D0C4CED3;
-	Tue, 17 Dec 2024 17:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5lTWxw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5ADC4CED3;
+	Tue, 17 Dec 2024 17:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455479;
-	bh=hckc3Tw83fWCB7NHL2R5IDJ+cxblsWlHjFPYfk4KjEA=;
+	s=korg; t=1734455482;
+	bh=QYrpriJKzJqFq1VS6k4DSBz3U9dI3B3M8y1c0+XMg6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7KR/GfdxTWZ54dyYolhjbhIReosFfUPGPsnSQXOQfScvwRd7LfVNYPH0ZFF+nDpt
-	 o3+O7O5apes7oT1kxGoCeEOzVNFOowwVNAN6HkM8bTpQ+UbaqvujqQ7Mtk6JgJtaXt
-	 Tu7S9ZOT8ScyrZ7HeEzRTxk/FWrsCDACcgu5fGk8=
+	b=R5lTWxw5hNWFKAM+aKi3U6Bk4X9vo3XcIfL3nYNjz7DVJzplp5orx0iKlgtxqxGS3
+	 u3aKVzE/YHJsBwbFy/eYqE8NBo9IjFuiV5s99KSBYiZiM582Wpj3IbKLpgqZHglhel
+	 H81jLfkbJPjRDY7dhvVym8Q2HBGi/65wKr6wL+2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Ottens <martin.ottens@fau.de>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Alexander Lobakin <alobakin@pm.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/43] net/sched: netem: account for backlog updates from child qdisc
-Date: Tue, 17 Dec 2024 18:07:15 +0100
-Message-ID: <20241217170521.429015129@linuxfoundation.org>
+Subject: [PATCH 5.10 25/43] net: bonding, dummy, ifb, team: advertise NETIF_F_GSO_SOFTWARE
+Date: Tue, 17 Dec 2024 18:07:16 +0100
+Message-ID: <20241217170521.467835851@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.459491270@linuxfoundation.org>
 References: <20241217170520.459491270@linuxfoundation.org>
@@ -52,168 +52,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Ottens <martin.ottens@fau.de>
+From: Alexander Lobakin <alobakin@pm.me>
 
-[ Upstream commit f8d4bc455047cf3903cd6f85f49978987dbb3027 ]
+[ Upstream commit ecb8fed408b6454606bbb3cd0edb083bf0ad162a ]
 
-In general, 'qlen' of any classful qdisc should keep track of the
-number of packets that the qdisc itself and all of its children holds.
-In case of netem, 'qlen' only accounts for the packets in its internal
-tfifo. When netem is used with a child qdisc, the child qdisc can use
-'qdisc_tree_reduce_backlog' to inform its parent, netem, about created
-or dropped SKBs. This function updates 'qlen' and the backlog statistics
-of netem, but netem does not account for changes made by a child qdisc.
-'qlen' then indicates the wrong number of packets in the tfifo.
-If a child qdisc creates new SKBs during enqueue and informs its parent
-about this, netem's 'qlen' value is increased. When netem dequeues the
-newly created SKBs from the child, the 'qlen' in netem is not updated.
-If 'qlen' reaches the configured sch->limit, the enqueue function stops
-working, even though the tfifo is not full.
+Virtual netdevs should use NETIF_F_GSO_SOFTWARE to forward GSO skbs
+as-is and let the final drivers deal with them when supported.
+Also remove NETIF_F_GSO_UDP_L4 from bonding and team drivers as it's
+now included in the "software" list.
 
-Reproduce the bug:
-Ensure that the sender machine has GSO enabled. Configure netem as root
-qdisc and tbf as its child on the outgoing interface of the machine
-as follows:
-$ tc qdisc add dev <oif> root handle 1: netem delay 100ms limit 100
-$ tc qdisc add dev <oif> parent 1:0 tbf rate 50Mbit burst 1542 latency 50ms
-
-Send bulk TCP traffic out via this interface, e.g., by running an iPerf3
-client on the machine. Check the qdisc statistics:
-$ tc -s qdisc show dev <oif>
-
-Statistics after 10s of iPerf3 TCP test before the fix (note that
-netem's backlog > limit, netem stopped accepting packets):
-qdisc netem 1: root refcnt 2 limit 1000 delay 100ms
- Sent 2767766 bytes 1848 pkt (dropped 652, overlimits 0 requeues 0)
- backlog 4294528236b 1155p requeues 0
-qdisc tbf 10: parent 1:1 rate 50Mbit burst 1537b lat 50ms
- Sent 2767766 bytes 1848 pkt (dropped 327, overlimits 7601 requeues 0)
- backlog 0b 0p requeues 0
-
-Statistics after the fix:
-qdisc netem 1: root refcnt 2 limit 1000 delay 100ms
- Sent 37766372 bytes 24974 pkt (dropped 9, overlimits 0 requeues 0)
- backlog 0b 0p requeues 0
-qdisc tbf 10: parent 1:1 rate 50Mbit burst 1537b lat 50ms
- Sent 37766372 bytes 24974 pkt (dropped 327, overlimits 96017 requeues 0)
- backlog 0b 0p requeues 0
-
-tbf segments the GSO SKBs (tbf_segment) and updates the netem's 'qlen'.
-The interface fully stops transferring packets and "locks". In this case,
-the child qdisc and tfifo are empty, but 'qlen' indicates the tfifo is at
-its limit and no more packets are accepted.
-
-This patch adds a counter for the entries in the tfifo. Netem's 'qlen' is
-only decreased when a packet is returned by its dequeue function, and not
-during enqueuing into the child qdisc. External updates to 'qlen' are thus
-accounted for and only the behavior of the backlog statistics changes. As
-in other qdiscs, 'qlen' then keeps track of  how many packets are held in
-netem and all of its children. As before, sch->limit remains as the
-maximum number of packets in the tfifo. The same applies to netem's
-backlog statistics.
-
-Fixes: 50612537e9ab ("netem: fix classful handling")
-Signed-off-by: Martin Ottens <martin.ottens@fau.de>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20241210131412.1837202-1-martin.ottens@fau.de
+Suggested-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Alexander Lobakin <alobakin@pm.me>
+Acked-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 77b11c8bf3a2 ("bonding: Fix feature propagation of NETIF_F_GSO_ENCAP_ALL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_netem.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 11 +++++------
+ drivers/net/dummy.c             |  2 +-
+ drivers/net/ifb.c               |  3 +--
+ drivers/net/team/team.c         |  9 ++++-----
+ 4 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/net/sched/sch_netem.c b/net/sched/sch_netem.c
-index 93ed7bac9ee6..f459e34684ad 100644
---- a/net/sched/sch_netem.c
-+++ b/net/sched/sch_netem.c
-@@ -77,6 +77,8 @@ struct netem_sched_data {
- 	struct sk_buff	*t_head;
- 	struct sk_buff	*t_tail;
- 
-+	u32 t_len;
-+
- 	/* optional qdisc for classful handling (NULL at netem init) */
- 	struct Qdisc	*qdisc;
- 
-@@ -373,6 +375,7 @@ static void tfifo_reset(struct Qdisc *sch)
- 	rtnl_kfree_skbs(q->t_head, q->t_tail);
- 	q->t_head = NULL;
- 	q->t_tail = NULL;
-+	q->t_len = 0;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 506b6d1cc27d..88d031b0ec14 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1342,14 +1342,14 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
  }
  
- static void tfifo_enqueue(struct sk_buff *nskb, struct Qdisc *sch)
-@@ -402,6 +405,7 @@ static void tfifo_enqueue(struct sk_buff *nskb, struct Qdisc *sch)
- 		rb_link_node(&nskb->rbnode, parent, p);
- 		rb_insert_color(&nskb->rbnode, &q->t_root);
- 	}
-+	q->t_len++;
- 	sch->q.qlen++;
+ #define BOND_VLAN_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_FRAGLIST | NETIF_F_ALL_TSO | \
++				 NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
+ 				 NETIF_F_HIGHDMA | NETIF_F_LRO)
+ 
+ #define BOND_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_RXCSUM | NETIF_F_ALL_TSO)
++				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE)
+ 
+ #define BOND_MPLS_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_ALL_TSO)
++				 NETIF_F_GSO_SOFTWARE)
+ 
+ 
+ static void bond_compute_features(struct bonding *bond)
+@@ -1405,8 +1405,7 @@ static void bond_compute_features(struct bonding *bond)
+ 	bond_dev->vlan_features = vlan_features;
+ 	bond_dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
+ 				    NETIF_F_HW_VLAN_CTAG_TX |
+-				    NETIF_F_HW_VLAN_STAG_TX |
+-				    NETIF_F_GSO_UDP_L4;
++				    NETIF_F_HW_VLAN_STAG_TX;
+ #ifdef CONFIG_XFRM_OFFLOAD
+ 	bond_dev->hw_enc_features |= xfrm_features;
+ #endif /* CONFIG_XFRM_OFFLOAD */
+@@ -4922,7 +4921,7 @@ void bond_setup(struct net_device *bond_dev)
+ 				NETIF_F_HW_VLAN_STAG_RX |
+ 				NETIF_F_HW_VLAN_STAG_FILTER;
+ 
+-	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
++	bond_dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
+ #ifdef CONFIG_XFRM_OFFLOAD
+ 	bond_dev->hw_features |= BOND_XFRM_FEATURES;
+ #endif /* CONFIG_XFRM_OFFLOAD */
+diff --git a/drivers/net/dummy.c b/drivers/net/dummy.c
+index bab3a9bb5e6f..f82ad7419508 100644
+--- a/drivers/net/dummy.c
++++ b/drivers/net/dummy.c
+@@ -124,7 +124,7 @@ static void dummy_setup(struct net_device *dev)
+ 	dev->flags &= ~IFF_MULTICAST;
+ 	dev->priv_flags |= IFF_LIVE_ADDR_CHANGE | IFF_NO_QUEUE;
+ 	dev->features	|= NETIF_F_SG | NETIF_F_FRAGLIST;
+-	dev->features	|= NETIF_F_ALL_TSO;
++	dev->features	|= NETIF_F_GSO_SOFTWARE;
+ 	dev->features	|= NETIF_F_HW_CSUM | NETIF_F_HIGHDMA | NETIF_F_LLTX;
+ 	dev->features	|= NETIF_F_GSO_ENCAP_ALL;
+ 	dev->hw_features |= dev->features;
+diff --git a/drivers/net/ifb.c b/drivers/net/ifb.c
+index db3a9b93d4db..f9eb95b44022 100644
+--- a/drivers/net/ifb.c
++++ b/drivers/net/ifb.c
+@@ -189,8 +189,7 @@ static const struct net_device_ops ifb_netdev_ops = {
+ };
+ 
+ #define IFB_FEATURES (NETIF_F_HW_CSUM | NETIF_F_SG  | NETIF_F_FRAGLIST	| \
+-		      NETIF_F_TSO_ECN | NETIF_F_TSO | NETIF_F_TSO6	| \
+-		      NETIF_F_GSO_ENCAP_ALL 				| \
++		      NETIF_F_GSO_SOFTWARE | NETIF_F_GSO_ENCAP_ALL	| \
+ 		      NETIF_F_HIGHDMA | NETIF_F_HW_VLAN_CTAG_TX		| \
+ 		      NETIF_F_HW_VLAN_STAG_TX)
+ 
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 49d7030ddc1b..e455e526b774 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -977,11 +977,11 @@ static void team_port_disable(struct team *team,
  }
  
-@@ -508,7 +512,7 @@ static int netem_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 			1<<(prandom_u32() % 8);
- 	}
+ #define TEAM_VLAN_FEATURES (NETIF_F_HW_CSUM | NETIF_F_SG | \
+-			    NETIF_F_FRAGLIST | NETIF_F_ALL_TSO | \
++			    NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
+ 			    NETIF_F_HIGHDMA | NETIF_F_LRO)
  
--	if (unlikely(sch->q.qlen >= sch->limit)) {
-+	if (unlikely(q->t_len >= sch->limit)) {
- 		/* re-link segs, so that qdisc_drop_all() frees them all */
- 		skb->next = segs;
- 		qdisc_drop_all(skb, sch, to_free);
-@@ -692,8 +696,8 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- tfifo_dequeue:
- 	skb = __qdisc_dequeue_head(&sch->q);
- 	if (skb) {
--		qdisc_qstats_backlog_dec(sch, skb);
- deliver:
-+		qdisc_qstats_backlog_dec(sch, skb);
- 		qdisc_bstats_update(sch, skb);
- 		return skb;
- 	}
-@@ -709,8 +713,7 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
+ #define TEAM_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_RXCSUM | NETIF_F_ALL_TSO)
++				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE)
  
- 		if (time_to_send <= now && q->slot.slot_next <= now) {
- 			netem_erase_head(q, skb);
--			sch->q.qlen--;
--			qdisc_qstats_backlog_dec(sch, skb);
-+			q->t_len--;
- 			skb->next = NULL;
- 			skb->prev = NULL;
- 			/* skb->dev shares skb->rbnode area,
-@@ -737,16 +740,21 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- 					if (net_xmit_drop_count(err))
- 						qdisc_qstats_drop(sch);
- 					qdisc_tree_reduce_backlog(sch, 1, pkt_len);
-+					sch->qstats.backlog -= pkt_len;
-+					sch->q.qlen--;
- 				}
- 				goto tfifo_dequeue;
- 			}
-+			sch->q.qlen--;
- 			goto deliver;
- 		}
+ static void __team_compute_features(struct team *team)
+ {
+@@ -1013,8 +1013,7 @@ static void __team_compute_features(struct team *team)
+ 	team->dev->vlan_features = vlan_features;
+ 	team->dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
+ 				     NETIF_F_HW_VLAN_CTAG_TX |
+-				     NETIF_F_HW_VLAN_STAG_TX |
+-				     NETIF_F_GSO_UDP_L4;
++				     NETIF_F_HW_VLAN_STAG_TX;
+ 	team->dev->hard_header_len = max_hard_header_len;
  
- 		if (q->qdisc) {
- 			skb = q->qdisc->ops->dequeue(q->qdisc);
--			if (skb)
-+			if (skb) {
-+				sch->q.qlen--;
- 				goto deliver;
-+			}
- 		}
+ 	team->dev->priv_flags &= ~IFF_XMIT_DST_RELEASE;
+@@ -2209,7 +2208,7 @@ static void team_setup(struct net_device *dev)
+ 			   NETIF_F_HW_VLAN_STAG_RX |
+ 			   NETIF_F_HW_VLAN_STAG_FILTER;
  
- 		qdisc_watchdog_schedule_ns(&q->watchdog,
-@@ -756,8 +764,10 @@ static struct sk_buff *netem_dequeue(struct Qdisc *sch)
- 
- 	if (q->qdisc) {
- 		skb = q->qdisc->ops->dequeue(q->qdisc);
--		if (skb)
-+		if (skb) {
-+			sch->q.qlen--;
- 			goto deliver;
-+		}
- 	}
- 	return NULL;
+-	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL | NETIF_F_GSO_UDP_L4;
++	dev->hw_features |= NETIF_F_GSO_ENCAP_ALL;
+ 	dev->features |= dev->hw_features;
+ 	dev->features |= NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_STAG_TX;
  }
 -- 
 2.39.5
