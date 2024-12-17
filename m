@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683BA140E38;
-	Tue, 17 Dec 2024 17:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342941F6661;
+	Tue, 17 Dec 2024 17:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456276; cv=none; b=JnGeR/HW9P92JwboYt+J1qEKCTXiJA2PRq19tkfwmvfOk7kog8MiHVGw63sOCSlwxfg+XWWkDljucDtW/dlExL+GCHgphp0y0N+iJqOerOGgTVaPECaHJen+EZGCuKJARgF0fcNhBE6Ecep3aNH/4jmEamOr7CTL8kp1IxF1DCo=
+	t=1734456280; cv=none; b=iSLfZyhmKgrV0s23En5O16xohYnB1mDm+0C1f4Rn1maAsSzdXfw+eGSh+Q3KqkFvbg+Lwt5Kw/KkzVl5yNzLmWuIfJdQOxgXAPWuCevpteE55IxSY+07mK25ZH5iILmUWjrTkY8Tc+x5nzoK2URxMUQ4pJnC7EgqDXnQn8nWgi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456276; c=relaxed/simple;
-	bh=Hr+yb+nQDjZrIWsNxiDc2egF7yVS2oqUqKTqFpHQhyQ=;
+	s=arc-20240116; t=1734456280; c=relaxed/simple;
+	bh=s+6cprey8fkprWzCr+rGjhYrteS//Oy/M/Twz68Fz7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b3x5xwpxABnkRBH8BjZ1HJa4YDt5eNbe4kD/cLn/3sUWHnENLcAM+CcW/kLAl34Xo/+oJjtMBIZ7uVqkC3isB3rZ3WOlkwQxDFj78hy7rHFNuFKBMys5cuidTCi6dtuAbhqDfKPGauLiyNEL2Z7jzF8fM6FG6yJhbJkuBBFxv3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LY14fcFL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZeRZJiPcB9BrZn9dBWyx/EfdPUnMzAFf/HFGJdM8mFaB2TucDCP/WwLtrXtUogPcbA5AHxkC/blodSNVWWhv3bCMvpe1vZQYdFXZ/RO/rJK2O+HqCdtEe4A4bg2VWTxXxI/AB+KiqgvhzsQ5PzxpaoMpUadEh+XYgx+aTBtCKhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKeAYVEd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LY14fcFL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E50C4CED3;
-	Tue, 17 Dec 2024 17:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKeAYVEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91977C4CEDD;
+	Tue, 17 Dec 2024 17:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456276;
-	bh=Hr+yb+nQDjZrIWsNxiDc2egF7yVS2oqUqKTqFpHQhyQ=;
+	s=korg; t=1734456280;
+	bh=s+6cprey8fkprWzCr+rGjhYrteS//Oy/M/Twz68Fz7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LY14fcFLH9cykkhF685EGb3N62kFfu5fBrjg8X6Gu0uc9qNZCYzClWyHrVf90jhSP
-	 pCMoVg2j7B/m6Her4BVDEGqyaV2Ra3MswhagQ+bPsBNMBlcxZmDFPVrqAGpAR+8TJt
-	 0ejWa8em6QmXXMoKxvtaUirgn3wxMZsDxFz4FjHo=
+	b=jKeAYVEd5XmF3VhfLg+yOHnxThZ2tDSby3L5wRrN+AS2uSuKhM9BNLhme5CiuaDaR
+	 ZQuknfsDUVZthxoR6vJ8dHZamch2gT9uhvVQbMm6vsSGrV9ue/wj2vVNPG62l//MfX
+	 bCFoLvksEC8wCgTwA3dbSRfUFHPhl/hKK1xHT/zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Joey Gouly <joey.gouly@arm.com>,
-	Gavin Shan <gshan@redhat.com>,
-	Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Oliver Upton <oliver.upton@linux.dev>
-Subject: [PATCH 6.6 095/109] KVM: arm64: Disable MPAM visibility by default and ignore VMM writes
-Date: Tue, 17 Dec 2024 18:08:19 +0100
-Message-ID: <20241217170537.356830188@linuxfoundation.org>
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Subject: [PATCH 6.12 001/172] usb: misc: onboard_usb_dev: skip suspend/resume sequence for USB5744 SMBus support
+Date: Tue, 17 Dec 2024 18:05:57 +0100
+Message-ID: <20241217170546.274593605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
-References: <20241217170533.329523616@linuxfoundation.org>
+In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
+References: <20241217170546.209657098@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,129 +45,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Morse <james.morse@arm.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-commit 6685f5d572c22e1003e7c0d089afe1c64340ab1f upstream.
+commit ce15d6b3d5c3c6f78290066be0f0a4fd89cdeb5b upstream.
 
-commit 011e5f5bf529f ("arm64/cpufeature: Add remaining feature bits in
-ID_AA64PFR0 register") exposed the MPAM field of AA64PFR0_EL1 to guests,
-but didn't add trap handling. A previous patch supplied the missing trap
-handling.
+USB5744 SMBus initialization is done once in probe() and doing it in resume
+is not supported so avoid going into suspend and reset the HUB.
 
-Existing VMs that have the MPAM field of ID_AA64PFR0_EL1 set need to
-be migratable, but there is little point enabling the MPAM CPU
-interface on new VMs until there is something a guest can do with it.
+There is a sysfs property 'always_powered_in_suspend' to implement this
+feature but since default state should be set to a working configuration
+so override this property value.
 
-Clear the MPAM field from the guest's ID_AA64PFR0_EL1 and on hardware
-that supports MPAM, politely ignore the VMMs attempts to set this bit.
+It fixes the suspend/resume testcase on Kria KR260 Robotics Starter Kit.
 
-Guests exposed to this bug have the sanitised value of the MPAM field,
-so only the correct value needs to be ignored. This means the field
-can continue to be used to block migration to incompatible hardware
-(between MPAM=1 and MPAM=5), and the VMM can't rely on the field
-being ignored.
-
-Signed-off-by: James Morse <james.morse@arm.com>
-Co-developed-by: Joey Gouly <joey.gouly@arm.com>
-Signed-off-by: Joey Gouly <joey.gouly@arm.com>
-Reviewed-by: Gavin Shan <gshan@redhat.com>
-Tested-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241030160317.2528209-7-joey.gouly@arm.com
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Acked-by: Marc Zyngier <maz@kernel.org>
+Fixes: 6782311d04df ("usb: misc: onboard_usb_dev: add Microchip usb5744 SMBus programming support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Link: https://lore.kernel.org/r/1733165302-1694891-1-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/sys_regs.c |   52 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 50 insertions(+), 2 deletions(-)
+ drivers/usb/misc/onboard_usb_dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -1330,6 +1330,7 @@ static u64 __kvm_read_sanitised_id_reg(c
- 			val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_MTE);
+diff --git a/drivers/usb/misc/onboard_usb_dev.c b/drivers/usb/misc/onboard_usb_dev.c
+index 36b11127280f..75ac3c6aa92d 100644
+--- a/drivers/usb/misc/onboard_usb_dev.c
++++ b/drivers/usb/misc/onboard_usb_dev.c
+@@ -407,8 +407,10 @@ static int onboard_dev_probe(struct platform_device *pdev)
+ 		}
  
- 		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_SME);
-+		val &= ~ARM64_FEATURE_MASK(ID_AA64PFR1_EL1_MPAM_frac);
- 		break;
- 	case SYS_ID_AA64ISAR1_EL1:
- 		if (!vcpu_has_ptrauth(vcpu))
-@@ -1472,6 +1473,13 @@ static u64 read_sanitised_id_aa64pfr0_el
+ 		if (of_device_is_compatible(pdev->dev.of_node, "usb424,2744") ||
+-		    of_device_is_compatible(pdev->dev.of_node, "usb424,5744"))
++		    of_device_is_compatible(pdev->dev.of_node, "usb424,5744")) {
+ 			err = onboard_dev_5744_i2c_init(client);
++			onboard_dev->always_powered_in_suspend = true;
++		}
  
- 	val &= ~ID_AA64PFR0_EL1_AMU_MASK;
- 
-+	/*
-+	 * MPAM is disabled by default as KVM also needs a set of PARTID to
-+	 * program the MPAMVPMx_EL2 PARTID remapping registers with. But some
-+	 * older kernels let the guest see the ID bit.
-+	 */
-+	val &= ~ID_AA64PFR0_EL1_MPAM_MASK;
-+
- 	return val;
- }
- 
-@@ -1560,6 +1568,42 @@ static int set_id_dfr0_el1(struct kvm_vc
- 	return set_id_reg(vcpu, rd, val);
- }
- 
-+static int set_id_aa64pfr0_el1(struct kvm_vcpu *vcpu,
-+			       const struct sys_reg_desc *rd, u64 user_val)
-+{
-+	u64 hw_val = read_sanitised_ftr_reg(SYS_ID_AA64PFR0_EL1);
-+	u64 mpam_mask = ID_AA64PFR0_EL1_MPAM_MASK;
-+
-+	/*
-+	 * Commit 011e5f5bf529f ("arm64/cpufeature: Add remaining feature bits
-+	 * in ID_AA64PFR0 register") exposed the MPAM field of AA64PFR0_EL1 to
-+	 * guests, but didn't add trap handling. KVM doesn't support MPAM and
-+	 * always returns an UNDEF for these registers. The guest must see 0
-+	 * for this field.
-+	 *
-+	 * But KVM must also accept values from user-space that were provided
-+	 * by KVM. On CPUs that support MPAM, permit user-space to write
-+	 * the sanitizied value to ID_AA64PFR0_EL1.MPAM, but ignore this field.
-+	 */
-+	if ((hw_val & mpam_mask) == (user_val & mpam_mask))
-+		user_val &= ~ID_AA64PFR0_EL1_MPAM_MASK;
-+
-+	return set_id_reg(vcpu, rd, user_val);
-+}
-+
-+static int set_id_aa64pfr1_el1(struct kvm_vcpu *vcpu,
-+			       const struct sys_reg_desc *rd, u64 user_val)
-+{
-+	u64 hw_val = read_sanitised_ftr_reg(SYS_ID_AA64PFR1_EL1);
-+	u64 mpam_mask = ID_AA64PFR1_EL1_MPAM_frac_MASK;
-+
-+	/* See set_id_aa64pfr0_el1 for comment about MPAM */
-+	if ((hw_val & mpam_mask) == (user_val & mpam_mask))
-+		user_val &= ~ID_AA64PFR1_EL1_MPAM_frac_MASK;
-+
-+	return set_id_reg(vcpu, rd, user_val);
-+}
-+
- /*
-  * cpufeature ID register user accessors
-  *
-@@ -2018,10 +2062,14 @@ static const struct sys_reg_desc sys_reg
- 	{ SYS_DESC(SYS_ID_AA64PFR0_EL1),
- 	  .access = access_id_reg,
- 	  .get_user = get_id_reg,
--	  .set_user = set_id_reg,
-+	  .set_user = set_id_aa64pfr0_el1,
- 	  .reset = read_sanitised_id_aa64pfr0_el1,
- 	  .val = ID_AA64PFR0_EL1_CSV2_MASK | ID_AA64PFR0_EL1_CSV3_MASK, },
--	ID_SANITISED(ID_AA64PFR1_EL1),
-+	{ SYS_DESC(SYS_ID_AA64PFR1_EL1),
-+	  .access = access_id_reg,
-+	  .get_user = get_id_reg,
-+	  .set_user = set_id_aa64pfr1_el1,
-+	  .reset = kvm_read_sanitised_id_reg, },
- 	ID_UNALLOCATED(4,2),
- 	ID_UNALLOCATED(4,3),
- 	ID_SANITISED(ID_AA64ZFR0_EL1),
+ 		put_device(&client->dev);
+ 		if (err < 0)
+-- 
+2.47.1
+
 
 
