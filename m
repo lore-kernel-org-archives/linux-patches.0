@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3287142E77;
-	Tue, 17 Dec 2024 17:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C9B8615A;
+	Tue, 17 Dec 2024 17:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456209; cv=none; b=Pxf69yPAEQwVW9hqphnvR/W2wm0qq3ufeSTfuqC7r9oJFX+h5Pqv9RKpAAyV3qVCCh37/7G96T13y/JKmCdeAOMB6O3vwZgOOMxKmlZpyt0C+Gt0MXnVQrNyVk36/a/tggapMu+45seueFEvISfreOXddiLAdvm+Bei+V1XTsyI=
+	t=1734456211; cv=none; b=YbaatlRwOd1MygLFg2qEVLCwImnkeSLeZHEp4hpvLfzfs9zIZ7A6RwkyCQsLPbQVHOcbDOxjpPSFhJLKbvJhtjMTH/AdscpTu4r3jrSGMj2R2GsX2CRUkbX6rtnpU/W1IOXx9/8KlhBA0BKqLw29B40AQSRVJLTxNI2Iqod3Dr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456209; c=relaxed/simple;
-	bh=Js9aHD8CwdfhY25GF6JUHtKE0gtm+DvjZLw6y7B3ql0=;
+	s=arc-20240116; t=1734456211; c=relaxed/simple;
+	bh=3vkH6jsu4UiviGJmYhVLVb9GjhUck3ujvxUFru2vGuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OpMuki9aq4oY+nARjyEBPSOS2Bytv+E8nJDt5rA88DBbo7lIbdZiRJnCQvnpqc+IEwAkizQgobst4TwtzEDwAIjhDpE8yFdp5iMyhI36gQ1SL2VpikCHnrfDq6w2xvyaK4p2iGC+cBrwQF79eFax+LcA3HjA+mtFynOhRYyFDXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JFnOBFTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bpwUF89xcojeY3H46VbAATiUHNUzOftqxnf0Y1vGFmqSTXbkXd/ClKUX8Uw5ba5WM7t42gSyVHY3TlolvSJovmSccQC4nsjP8x8tlkh/l5kddzDK/DhcI4ONwwqqz/jYFWl6vE7WXmpl4yiB2kMgb6Tarne8Gj2Tg0GY3z67j3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfRI5o1W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JFnOBFTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26928C4CED3;
-	Tue, 17 Dec 2024 17:23:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfRI5o1W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02786C4CED3;
+	Tue, 17 Dec 2024 17:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456208;
-	bh=Js9aHD8CwdfhY25GF6JUHtKE0gtm+DvjZLw6y7B3ql0=;
+	s=korg; t=1734456211;
+	bh=3vkH6jsu4UiviGJmYhVLVb9GjhUck3ujvxUFru2vGuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFnOBFTXB1QngMgzPJcot2AQY970A1ecfe2CudXWjRhvmtDBX0a+/KZ0uxC49zza9
-	 t5SgwY1i6JYx6Y2TA9RA8mhgY3j18TvdqV+FCtN0s+rysgwxkIrErYmvsaxLximjDE
-	 0vWIiMrIRnGqmvJzzI4jIRWr4aYZDG7PkCBlTOqA=
+	b=BfRI5o1WEHi1+Hkc29fQciWuhX6e1HHOSMzb6ro6XmLaV+t7TtMEIQYm3WOiHCh+8
+	 Kv9+YzCavutjhyuN9lr7tpBoZ18Vr5loXQEljBF+/NqZxmQwYCdxXO+Wo243X8uCKx
+	 t9IoHP7WBVr1IpPY1YskXjO0FS7xb4T+o1qVmIjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Weizhao Ouyang <o451686892@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/109] blk-iocost: Avoid using clamp() on inuse in __propagate_weights()
-Date: Tue, 17 Dec 2024 18:08:17 +0100
-Message-ID: <20241217170537.276060261@linuxfoundation.org>
+Subject: [PATCH 6.6 094/109] kselftest/arm64: abi: fix SVCR detection
+Date: Tue, 17 Dec 2024 18:08:18 +0100
+Message-ID: <20241217170537.317241481@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -55,75 +52,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Weizhao Ouyang <o451686892@gmail.com>
 
-[ Upstream commit 57e420c84f9ab55ba4c5e2ae9c5f6c8e1ea834d2 ]
+[ Upstream commit ce03573a1917532da06057da9f8e74a2ee9e2ac9 ]
 
-After a recent change to clamp() and its variants [1] that increases the
-coverage of the check that high is greater than low because it can be
-done through inlining, certain build configurations (such as s390
-defconfig) fail to build with clang with:
+When using svcr_in to check ZA and Streaming Mode, we should make sure
+that the value in x2 is correct, otherwise it may trigger an Illegal
+instruction if FEAT_SVE and !FEAT_SME.
 
-  block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
-   1101 |                 inuse = clamp_t(u32, inuse, 1, active);
-        |                         ^
-  include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
-    218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
-        |                                    ^
-  include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
-    195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
-        |         ^
-  include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
-    188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
-        |         ^
-
-__propagate_weights() is called with an active value of zero in
-ioc_check_iocgs(), which results in the high value being less than the
-low value, which is undefined because the value returned depends on the
-order of the comparisons.
-
-The purpose of this expression is to ensure inuse is not more than
-active and at least 1. This could be written more simply with a ternary
-expression that uses min(inuse, active) as the condition so that the
-value of that condition can be used if it is not zero and one if it is.
-Do this conversion to resolve the error and add a comment to deter
-people from turning this back into clamp().
-
-Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
-Suggested-by: David Laight <david.laight@aculab.com>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 43e3f85523e4 ("kselftest/arm64: Add SME support to syscall ABI test")
+Signed-off-by: Weizhao Ouyang <o451686892@gmail.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20241211111639.12344-1-o451686892@gmail.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ .../selftests/arm64/abi/syscall-abi-asm.S     | 32 +++++++++----------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index c3cb9c20b306..129732a8d0dd 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1098,7 +1098,14 @@ static void __propagate_weights(struct ioc_gq *iocg, u32 active, u32 inuse,
- 		inuse = DIV64_U64_ROUND_UP(active * iocg->child_inuse_sum,
- 					   iocg->child_active_sum);
- 	} else {
--		inuse = clamp_t(u32, inuse, 1, active);
-+		/*
-+		 * It may be tempting to turn this into a clamp expression with
-+		 * a lower limit of 1 but active may be 0, which cannot be used
-+		 * as an upper limit in that situation. This expression allows
-+		 * active to clamp inuse unless it is 0, in which case inuse
-+		 * becomes 1.
-+		 */
-+		inuse = min(inuse, active) ?: 1;
- 	}
+diff --git a/tools/testing/selftests/arm64/abi/syscall-abi-asm.S b/tools/testing/selftests/arm64/abi/syscall-abi-asm.S
+index df3230fdac39..66ab2e0bae5f 100644
+--- a/tools/testing/selftests/arm64/abi/syscall-abi-asm.S
++++ b/tools/testing/selftests/arm64/abi/syscall-abi-asm.S
+@@ -81,32 +81,31 @@ do_syscall:
+ 	stp	x27, x28, [sp, #96]
  
- 	iocg->last_inuse = iocg->inuse;
+ 	// Set SVCR if we're doing SME
+-	cbz	x1, 1f
++	cbz	x1, load_gpr
+ 	adrp	x2, svcr_in
+ 	ldr	x2, [x2, :lo12:svcr_in]
+ 	msr	S3_3_C4_C2_2, x2
+-1:
+ 
+ 	// Load ZA and ZT0 if enabled - uses x12 as scratch due to SME LDR
+-	tbz	x2, #SVCR_ZA_SHIFT, 1f
++	tbz	x2, #SVCR_ZA_SHIFT, load_gpr
+ 	mov	w12, #0
+ 	ldr	x2, =za_in
+-2:	_ldr_za 12, 2
++1:	_ldr_za 12, 2
+ 	add	x2, x2, x1
+ 	add	x12, x12, #1
+ 	cmp	x1, x12
+-	bne	2b
++	bne	1b
+ 
+ 	// ZT0
+ 	mrs	x2, S3_0_C0_C4_5	// ID_AA64SMFR0_EL1
+ 	ubfx	x2, x2, #ID_AA64SMFR0_EL1_SMEver_SHIFT, \
+ 			 #ID_AA64SMFR0_EL1_SMEver_WIDTH
+-	cbz	x2, 1f
++	cbz	x2, load_gpr
+ 	adrp	x2, zt_in
+ 	add	x2, x2, :lo12:zt_in
+ 	_ldr_zt 2
+-1:
+ 
++load_gpr:
+ 	// Load GPRs x8-x28, and save our SP/FP for later comparison
+ 	ldr	x2, =gpr_in
+ 	add	x2, x2, #64
+@@ -125,9 +124,9 @@ do_syscall:
+ 	str	x30, [x2], #8		// LR
+ 
+ 	// Load FPRs if we're not doing neither SVE nor streaming SVE
+-	cbnz	x0, 1f
++	cbnz	x0, check_sve_in
+ 	ldr	x2, =svcr_in
+-	tbnz	x2, #SVCR_SM_SHIFT, 1f
++	tbnz	x2, #SVCR_SM_SHIFT, check_sve_in
+ 
+ 	ldr	x2, =fpr_in
+ 	ldp	q0, q1, [x2]
+@@ -148,8 +147,8 @@ do_syscall:
+ 	ldp	q30, q31, [x2, #16 * 30]
+ 
+ 	b	2f
+-1:
+ 
++check_sve_in:
+ 	// Load the SVE registers if we're doing SVE/SME
+ 
+ 	ldr	x2, =z_in
+@@ -256,32 +255,31 @@ do_syscall:
+ 	stp	q30, q31, [x2, #16 * 30]
+ 
+ 	// Save SVCR if we're doing SME
+-	cbz	x1, 1f
++	cbz	x1, check_sve_out
+ 	mrs	x2, S3_3_C4_C2_2
+ 	adrp	x3, svcr_out
+ 	str	x2, [x3, :lo12:svcr_out]
+-1:
+ 
+ 	// Save ZA if it's enabled - uses x12 as scratch due to SME STR
+-	tbz	x2, #SVCR_ZA_SHIFT, 1f
++	tbz	x2, #SVCR_ZA_SHIFT, check_sve_out
+ 	mov	w12, #0
+ 	ldr	x2, =za_out
+-2:	_str_za 12, 2
++1:	_str_za 12, 2
+ 	add	x2, x2, x1
+ 	add	x12, x12, #1
+ 	cmp	x1, x12
+-	bne	2b
++	bne	1b
+ 
+ 	// ZT0
+ 	mrs	x2, S3_0_C0_C4_5	// ID_AA64SMFR0_EL1
+ 	ubfx	x2, x2, #ID_AA64SMFR0_EL1_SMEver_SHIFT, \
+ 			#ID_AA64SMFR0_EL1_SMEver_WIDTH
+-	cbz	x2, 1f
++	cbz	x2, check_sve_out
+ 	adrp	x2, zt_out
+ 	add	x2, x2, :lo12:zt_out
+ 	_str_zt 2
+-1:
+ 
++check_sve_out:
+ 	// Save the SVE state if we have some
+ 	cbz	x0, 1f
+ 
 -- 
 2.39.5
 
