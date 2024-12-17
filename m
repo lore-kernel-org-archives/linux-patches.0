@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74C914A4E7;
-	Tue, 17 Dec 2024 17:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38CC1F4735;
+	Tue, 17 Dec 2024 17:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455791; cv=none; b=JkxGIpAteXZME6cJSJ0D+ELt4qPP2tvfJ7siVY8NvYszyi5616rBMfQBNwGxbHo2EtTkjIMwLPz1YUvKjc4RYSJP7UhQsIi87ClVPHoeWMPUOS0vyetEm2pNhCfoyJCXg/nNt6VlgeD/6kvHPmz8Q46w1ZejIF1peNdE4LBM2EA=
+	t=1734455794; cv=none; b=OIvDrAF8oVaVohimQLNUS/wEFt+uJyfiJMehqM2oY91vXOmBdy4N2ERL86dC2UOuQOQszuz0ThOBYAmoKsABN2LTlyyeXeVBQnHjUILQKKXUEp0dTg+cq9oHRjDnqL1aF1733hC2bJfP/kGT+O+r8lOa9iMnnTFy6TOzWVExTgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455791; c=relaxed/simple;
-	bh=QLTaWLU4/K8VdXOzY2Q4WawzWrGmXT2grzqintEIKFc=;
+	s=arc-20240116; t=1734455794; c=relaxed/simple;
+	bh=OHDRO6YnYkuXogCojNZo4rfRt0NPznwrrveac65IqYc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDrW6b+Ly0Y/pGyAdl+APSkCdzU2joZ4dGo8PX2qbQYYwJhsSs8GXodNSoMaEM5+rjdBv7sm/YUmxNvWNZx4NhDt42q4/hEZIaxF5PRrC9xkAzHhaiFOA+HNkU9NylwoH2fkX5OEXmnzokVeCXlm6p/gH1YzWllJ79fM2dzkfbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k959zYe8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WRFNzYs6FQvbKU3tpuCZs+TYUpxXnB72AaETQY02U66CWpwIvDSPu40OS4GFhzbDJmFU9nvCGweqodH0qdN9nzNIDUcPR+bVzbh2n4EIhpXCK9jeaBFN2uPhE5mg5qwTkv8JWDnqzBBrwO9tbZ1oSwTHHXMd/+451lLBB+VFJHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWY8mrIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k959zYe8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC1B1C4CED3;
-	Tue, 17 Dec 2024 17:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWY8mrIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F0FC4CED3;
+	Tue, 17 Dec 2024 17:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455790;
-	bh=QLTaWLU4/K8VdXOzY2Q4WawzWrGmXT2grzqintEIKFc=;
+	s=korg; t=1734455793;
+	bh=OHDRO6YnYkuXogCojNZo4rfRt0NPznwrrveac65IqYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k959zYe82WVOGPtePd+Dh4gJnR3oXNLgDweOC8l839x08d+GehJOmVCtio5TgHE+4
-	 x1sLolbb10ov+0A1fdI+mmupLqvN583MiA9xoub0AYrB/UtcXe+o9uPr1af8CYxLEP
-	 jRrPPweZBLbLKiFMfix/rWVnGpQCUx5fU8WwP0dI=
+	b=AWY8mrIsFIxFG4tiDwMVgWg1v2l2iO6v4TxDZ+viI5bQ6YLoPsU+bBrtxRIKufufu
+	 +VBHeTYJVltn69fxgGMf+KNN+gGiRojFrDqTH32dON8d2eAVfeY7KI8x+8vuA9S/Zt
+	 hsE3QWgdMMPh22UHeDiqojqOK3CpB3htsDquligo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Remi Pommarel <repk@triplefau.lt>,
-	Antonio Quartulli <Antonio@mandelbit.com>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 34/76] batman-adv: Do not let TT changes list grows indefinitely
-Date: Tue, 17 Dec 2024 18:07:14 +0100
-Message-ID: <20241217170527.679527546@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.1 17/76] xfs: update btree keys correctly when _insrec splits an inode root block
+Date: Tue, 17 Dec 2024 18:06:57 +0100
+Message-ID: <20241217170526.967428025@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -53,77 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Remi Pommarel <repk@triplefau.lt>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit fff8f17c1a6fc802ca23bbd3a276abfde8cc58e6 ]
+commit 6d7b4bc1c3e00b1a25b7a05141a64337b4629337 upstream.
 
-When TT changes list is too big to fit in packet due to MTU size, an
-empty OGM is sent expected other node to send TT request to get the
-changes. The issue is that tt.last_changeset was not built thus the
-originator was responding with previous changes to those TT requests
-(see batadv_send_my_tt_response). Also the changes list was never
-cleaned up effectively never ending growing from this point onwards,
-repeatedly sending the same TT response changes over and over, and
-creating a new empty OGM every OGM interval expecting for the local
-changes to be purged.
+In commit 2c813ad66a72, I partially fixed a bug wherein xfs_btree_insrec
+would erroneously try to update the parent's key for a block that had
+been split if we decided to insert the new record into the new block.
+The solution was to detect this situation and update the in-core key
+value that we pass up to the caller so that the caller will (eventually)
+add the new block to the parent level of the tree with the correct key.
 
-When there is more TT changes that can fit in packet, drop all changes,
-send empty OGM and wait for TT request so we can respond with a full
-table instead.
+However, I missed a subtlety about the way inode-rooted btrees work.  If
+the full block was a maximally sized inode root block, we'll solve that
+fullness by moving the root block's records to a new block, resizing the
+root block, and updating the root to point to the new block.  We don't
+pass a pointer to the new block to the caller because that work has
+already been done.  The new record will /always/ land in the new block,
+so in this case we need to use xfs_btree_update_keys to update the keys.
 
-Fixes: e1bf0c14096f ("batman-adv: tvlv - convert tt data sent within OGMs")
-Signed-off-by: Remi Pommarel <repk@triplefau.lt>
-Acked-by: Antonio Quartulli <Antonio@mandelbit.com>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This bug can theoretically manifest itself in the very rare case that we
+split a bmbt root block and the new record lands in the very first slot
+of the new block, though I've never managed to trigger it in practice.
+However, it is very easy to reproduce by running generic/522 with the
+realtime rmapbt patchset if rtinherit=1.
+
+Cc: <stable@vger.kernel.org> # v4.8
+Fixes: 2c813ad66a7218 ("xfs: support btrees with overlapping intervals for keys")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/translation-table.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ fs/xfs/libxfs/xfs_btree.c |   29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index d7f874ff1a70..2b5453801bf0 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -990,6 +990,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	int tt_diff_len, tt_change_len = 0;
- 	int tt_diff_entries_num = 0;
- 	int tt_diff_entries_count = 0;
-+	bool drop_changes = false;
- 	size_t tt_extra_len = 0;
- 	u16 tvlv_len;
+--- a/fs/xfs/libxfs/xfs_btree.c
++++ b/fs/xfs/libxfs/xfs_btree.c
+@@ -3430,14 +3430,31 @@ xfs_btree_insrec(
+ 	xfs_btree_log_block(cur, bp, XFS_BB_NUMRECS);
  
-@@ -997,10 +998,17 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	tt_diff_len = batadv_tt_len(tt_diff_entries_num);
- 
- 	/* if we have too many changes for one packet don't send any
--	 * and wait for the tt table request which will be fragmented
-+	 * and wait for the tt table request so we can reply with the full
-+	 * (fragmented) table.
+ 	/*
+-	 * If we just inserted into a new tree block, we have to
+-	 * recalculate nkey here because nkey is out of date.
++	 * Update btree keys to reflect the newly added record or keyptr.
++	 * There are three cases here to be aware of.  Normally, all we have to
++	 * do is walk towards the root, updating keys as necessary.
+ 	 *
+-	 * Otherwise we're just updating an existing block (having shoved
+-	 * some records into the new tree block), so use the regular key
+-	 * update mechanism.
++	 * If the caller had us target a full block for the insertion, we dealt
++	 * with that by calling the _make_block_unfull function.  If the
++	 * "make unfull" function splits the block, it'll hand us back the key
++	 * and pointer of the new block.  We haven't yet added the new block to
++	 * the next level up, so if we decide to add the new record to the new
++	 * block (bp->b_bn != old_bn), we have to update the caller's pointer
++	 * so that the caller adds the new block with the correct key.
 +	 *
-+	 * The local change history should still be cleaned up so the next
-+	 * TT round can start again with a clean state.
++	 * However, there is a third possibility-- if the selected block is the
++	 * root block of an inode-rooted btree and cannot be expanded further,
++	 * the "make unfull" function moves the root block contents to a new
++	 * block and updates the root block to point to the new block.  In this
++	 * case, no block pointer is passed back because the block has already
++	 * been added to the btree.  In this case, we need to use the regular
++	 * key update function, just like the first case.  This is critical for
++	 * overlapping btrees, because the high key must be updated to reflect
++	 * the entire tree, not just the subtree accessible through the first
++	 * child of the root (which is now two levels down from the root).
  	 */
--	if (tt_diff_len > bat_priv->soft_iface->mtu)
-+	if (tt_diff_len > bat_priv->soft_iface->mtu) {
- 		tt_diff_len = 0;
-+		tt_diff_entries_num = 0;
-+		drop_changes = true;
-+	}
- 
- 	tvlv_len = batadv_tt_prepare_tvlv_local_data(bat_priv, &tt_data,
- 						     &tt_change, &tt_diff_len);
-@@ -1009,7 +1017,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 
- 	tt_data->flags = BATADV_TT_OGM_DIFF;
- 
--	if (tt_diff_len == 0)
-+	if (!drop_changes && tt_diff_len == 0)
- 		goto container_register;
- 
- 	spin_lock_bh(&bat_priv->tt.changes_list_lock);
--- 
-2.39.5
-
+-	if (bp && xfs_buf_daddr(bp) != old_bn) {
++	if (!xfs_btree_ptr_is_null(cur, &nptr) &&
++	    bp && xfs_buf_daddr(bp) != old_bn) {
+ 		xfs_btree_get_keys(cur, block, lkey);
+ 	} else if (xfs_btree_needs_key_update(cur, optr)) {
+ 		error = xfs_btree_update_keys(cur, level);
 
 
