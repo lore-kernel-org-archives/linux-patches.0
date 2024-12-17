@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9444714A4E7;
-	Tue, 17 Dec 2024 17:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8CBB1527B1;
+	Tue, 17 Dec 2024 17:16:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455781; cv=none; b=dvvrypKIS1oDewReSJkN24Fz1Wcfmzuwb8Jf1PuGhlwDP2ixI1SIeuiVeUD5uHzBKcKZ7IZbjM2qVn+bahLuEvVML+Hh0Yyp8zVs2rbqQ2Sibl1iwAg+0R94lCUkT3x7JPBaphNVSP4JtoGxmuJAIv0zsY14qfdxSulABgcOAV4=
+	t=1734455784; cv=none; b=os2SnLCKwGMDn67uzOinW5MvZyKyWSl+kxGB8hjGdI9wWaJvP40v9jXk0HAB4tlpGckp8/bUdWQKEnPEPcRJdkMJ+2x+7VgJrZXH0nRtfLT9G4491AdEbfivKdbQk34Qi3lEafmwxs0xOuAkqe8BbDTPdIr7tXWj9ukVQlDJ8f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455781; c=relaxed/simple;
-	bh=ZToC6hT4o0srGvftp1Pc2GkauFnY+c4XQv7vXaiG9Ls=;
+	s=arc-20240116; t=1734455784; c=relaxed/simple;
+	bh=GK03mYDeaoy4CWqYN17Ea5heXsmH7QX8hvVIxAXDwc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uwzZQXByf/F9g/y8UfsOGI9kSvDBlYeauyRtfvUfqQad0/n6bP2F+0JZL5HapdwrAV4uFyuDOepEHbI5x85bAk60AqOnSHx/dIsJIeNpBB+4MtLfYNr6rf5mkie0P61NtoeMMSOtc2Wg67qeBxTSdB7/A+BHHOF8MIJbkh+jAg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu5BEkUJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mfzitbA18XFRxTZ2b41lQ178A2/JqgL3DvYCEo6oIc7NcXN8kbmvTkrMtChdUeGHVvQKuWpRnmMt4UuHZC0lbSUmD0j7sktJ/WG/1rUovL9OMqTZqzqdVdu4/Zqbqm1elboW0v6PeGLEbQQSSvNSsFjCYZLPEZpCVaX8of71BQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2yA4fSQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu5BEkUJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF98C4CED3;
-	Tue, 17 Dec 2024 17:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2yA4fSQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067F6C4CED3;
+	Tue, 17 Dec 2024 17:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455781;
-	bh=ZToC6hT4o0srGvftp1Pc2GkauFnY+c4XQv7vXaiG9Ls=;
+	s=korg; t=1734455784;
+	bh=GK03mYDeaoy4CWqYN17Ea5heXsmH7QX8hvVIxAXDwc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cu5BEkUJoISx2oqblRT9Mt0pzorAKsp9zJ+o6VqwBt77ojXd9eC8jDdw7Gmm2ijch
-	 frJuJjitSSpvFktSgmHQtj1pEek4OM6rLGmLdm/cJ3e9DRbwZbNFKn9gWChvTBoM8I
-	 VLRF7+1ANQr5BWfLw6AGOQTiT0SBbiJ7D+WnF1pg=
+	b=F2yA4fSQxyEJPQjMUuB641+ovRBn8wm1DirugExe584hnz8IZQ5FgGpIV/ZPp23Z1
+	 QjT2hSx9EohZSzdLLF4J4SQuYpHZqyl3H++ELI6Mf5aSnwkZev6QQ6SOj/Ia/bTJbr
+	 baXVH+PlKpbQ5hV8ECakcgbQ1J0lmz/EfXB2z13c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/76] amdgpu/uvd: get ring reference from rq scheduler
-Date: Tue, 17 Dec 2024 18:07:11 +0100
-Message-ID: <20241217170527.557636449@linuxfoundation.org>
+Subject: [PATCH 6.1 32/76] batman-adv: Do not send uninitialized TT changes
+Date: Tue, 17 Dec 2024 18:07:12 +0100
+Message-ID: <20241217170527.598832499@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -46,42 +46,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David (Ming Qiang) Wu <David.Wu3@amd.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 47f402a3e08113e0f5d8e1e6fcc197667a16022f ]
+[ Upstream commit f2f7358c3890e7366cbcb7512b4bc8b4394b2d61 ]
 
-base.sched may not be set for each instance and should not
-be used for cases such as non-IB tests.
+The number of TT changes can be less than initially expected in
+batadv_tt_tvlv_container_update() (changes can be removed by
+batadv_tt_local_event() in ADD+DEL sequence between reading
+tt_diff_entries_num and actually iterating the change list under lock).
 
-Fixes: 2320c9e6a768 ("drm/sched: memset() 'job' in drm_sched_job_init()")
-Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Thus tt_diff_len could be bigger than the actual changes size that need
+to be sent. Because batadv_send_my_tt_response sends the whole
+packet, uninitialized data can be interpreted as TT changes on other
+nodes leading to weird TT global entries on those nodes such as:
+
+ * 00:00:00:00:00:00   -1 [....] (  0) 88:12:4e:ad:7e:ba (179) (0x45845380)
+ * 00:00:00:00:78:79 4092 [.W..] (  0) 88:12:4e:ad:7e:3c (145) (0x8ebadb8b)
+
+All of the above also applies to OGM tvlv container buffer's tvlv_len.
+
+Remove the extra allocated space to avoid sending uninitialized TT
+changes in batadv_send_my_tt_response() and batadv_v_ogm_send_softif().
+
+Fixes: e1bf0c14096f ("batman-adv: tvlv - convert tt data sent within OGMs")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/batman-adv/translation-table.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-index e668b3baa8c6..1c5d79528ca7 100644
---- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
-@@ -1284,7 +1284,7 @@ static int uvd_v7_0_ring_patch_cs_in_place(struct amdgpu_cs_parser *p,
- 					   struct amdgpu_job *job,
- 					   struct amdgpu_ib *ib)
- {
--	struct amdgpu_ring *ring = to_amdgpu_ring(job->base.sched);
-+	struct amdgpu_ring *ring = amdgpu_job_ring(job);
- 	unsigned i;
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 4fc66cd95dc4..7711f87397d5 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -990,6 +990,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	int tt_diff_len, tt_change_len = 0;
+ 	int tt_diff_entries_num = 0;
+ 	int tt_diff_entries_count = 0;
++	size_t tt_extra_len = 0;
+ 	u16 tvlv_len;
  
- 	/* No patching necessary for the first instance */
+ 	tt_diff_entries_num = atomic_read(&bat_priv->tt.local_changes);
+@@ -1027,6 +1028,9 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	}
+ 	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
+ 
++	tt_extra_len = batadv_tt_len(tt_diff_entries_num -
++				     tt_diff_entries_count);
++
+ 	/* Keep the buffer for possible tt_request */
+ 	spin_lock_bh(&bat_priv->tt.last_changeset_lock);
+ 	kfree(bat_priv->tt.last_changeset);
+@@ -1035,6 +1039,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	tt_change_len = batadv_tt_len(tt_diff_entries_count);
+ 	/* check whether this new OGM has no changes due to size problems */
+ 	if (tt_diff_entries_count > 0) {
++		tt_diff_len -= tt_extra_len;
+ 		/* if kmalloc() fails we will reply with the full table
+ 		 * instead of providing the diff
+ 		 */
+@@ -1047,6 +1052,8 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	}
+ 	spin_unlock_bh(&bat_priv->tt.last_changeset_lock);
+ 
++	/* Remove extra packet space for OGM */
++	tvlv_len -= tt_extra_len;
+ container_register:
+ 	batadv_tvlv_container_register(bat_priv, BATADV_TVLV_TT, 1, tt_data,
+ 				       tvlv_len);
 -- 
 2.39.5
 
