@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82941F9ECC;
-	Tue, 17 Dec 2024 17:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F98B1F9A99;
+	Tue, 17 Dec 2024 17:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456817; cv=none; b=e1GarOz13VVO621uTLN7aucE5kg7Vk6P19c+fMOLEjMXL6GYjdAutgn3ff/AooC84DYlCPLSRLZmU56PI4xNFx8bRY5ExO52Rz3V4wjtcSWQs5o1I/mlim461DN8tXRtBMpKI9+F2uSAcf4cln1e/xoxLqF6JTgrzPLt1D6hSr4=
+	t=1734456820; cv=none; b=WCS075xv18OzSiOz+rMZoOxjIu2FIhDAlfTf29SaRjY8cDRGVVqWHcpXAd8f6iJhZSYRifRbeJap6F8UKearue/m9Q6SEWX7QcUzieg/Mu3feS+j9kqszNfD8JUxHcWAmQYQdASipE2dgJ2Vh95SmRkAgJez22kXjHd6sWgMhgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456817; c=relaxed/simple;
-	bh=8rreOfCQSGrEKCA2gnmlZfn8O7b8z7WbGF13qsmFT1k=;
+	s=arc-20240116; t=1734456820; c=relaxed/simple;
+	bh=gz6KlJ3mv9/R84pcCMEH2C9p38IaiqDAhrNILLrIyW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AlYKdg+g3YTLm92mOUhNtQWWUHU+4O/AVIY5GksE442IuPs5uwtAUtCP4z8LssOj7OD0NKj5EyYCMQx/12wqsaoEkquEefDUj9y1aI5ZzsnLe1CwyZchAzrVLuzJiK3Xm+DkhhYfUdRcW+G5J/5cuXai0iGVbXhhO2sYU3ZMe+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emui6svX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qJIdo+iJrDrZ+xNWb1V7h67WCVirypAQKe4ZiveJRUtHnC2MQc11uYXxY/9jpaYrsnZtH2OFzm0oI0A6zu+0wwXjGxu+33lB/C+hxICpacIA+i18tdmPASDVwicQ9IFCBeKYGFGJzrq7EF8eknKK11XjanBkKERg46j0xw86LkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5ByJKME; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emui6svX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5DAC4CED7;
-	Tue, 17 Dec 2024 17:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5ByJKME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4DBC4CED3;
+	Tue, 17 Dec 2024 17:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456817;
-	bh=8rreOfCQSGrEKCA2gnmlZfn8O7b8z7WbGF13qsmFT1k=;
+	s=korg; t=1734456820;
+	bh=gz6KlJ3mv9/R84pcCMEH2C9p38IaiqDAhrNILLrIyW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emui6svXEmkWDl9BPoURCSIdjmkv1Q++i4NjbUsJP9+PEY7E9wou5U3m6Te01f2kN
-	 GEmuN8agQ+NIjtCa+jRSzu/vqMDUv6Dvww+My6WsxWSP6Af7oOsbNNTEYczUHgg0/T
-	 qUQWovegqBG1PV2e+TlxSpb7PXnoQ5+c9Z4M81iw=
+	b=d5ByJKME2emelasq+ofB8HHnptxNIkzlRyyVHTpdfWlIOFDQ5anE8nHS6K5n3W0zd
+	 JOmGbBJaP0EH1vxcOHzoOiXJc5WJe+NqAbNhNJGshlgwyHPcpOgJY/zs8OWrSuM004
+	 1I/QZH4CgmK3zAYlDV97JzGAQ1a/0WoPaSMp9sNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@idosch.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 144/172] team: Fix feature propagation of NETIF_F_GSO_ENCAP_ALL
-Date: Tue, 17 Dec 2024 18:08:20 +0100
-Message-ID: <20241217170552.304443740@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Josh Poimboeuf <jpoimboe@redhat.com>
+Subject: [PATCH 6.12 171/172] x86/xen: use new hypercall functions instead of hypercall page
+Date: Tue, 17 Dec 2024 18:08:47 +0100
+Message-ID: <20241217170553.433157820@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -55,44 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 98712844589e06d9aa305b5077169942139fd75c ]
+commit b1c2cb86f4a7861480ad54bb9a58df3cbebf8e92 upstream.
 
-Similar to bonding driver, add NETIF_F_GSO_ENCAP_ALL to TEAM_VLAN_FEATURES
-in order to support slave devices which propagate NETIF_F_GSO_UDP_TUNNEL &
-NETIF_F_GSO_UDP_TUNNEL_CSUM as vlan_features.
+Call the Xen hypervisor via the new xen_hypercall_func static-call
+instead of the hypercall page.
 
-Fixes: 3625920b62c3 ("teaming: fix vlan_features computing")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Ido Schimmel <idosch@idosch.org>
-Cc: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20241210141245.327886-5-daniel@iogearbox.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is part of XSA-466 / CVE-2024-53241.
+
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Co-developed-by: Peter Zijlstra <peterz@infradead.org>
+Co-developed-by: Josh Poimboeuf <jpoimboe@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/team/team_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/xen/hypercall.h |   33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index ddd9ae7085c7..6ace5a74cddb 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -983,7 +983,8 @@ static void team_port_disable(struct team *team,
+--- a/arch/x86/include/asm/xen/hypercall.h
++++ b/arch/x86/include/asm/xen/hypercall.h
+@@ -39,9 +39,11 @@
+ #include <linux/string.h>
+ #include <linux/types.h>
+ #include <linux/pgtable.h>
++#include <linux/instrumentation.h>
  
- #define TEAM_VLAN_FEATURES (NETIF_F_HW_CSUM | NETIF_F_SG | \
- 			    NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
--			    NETIF_F_HIGHDMA | NETIF_F_LRO)
-+			    NETIF_F_HIGHDMA | NETIF_F_LRO | \
-+			    NETIF_F_GSO_ENCAP_ALL)
+ #include <trace/events/xen.h>
  
- #define TEAM_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
- 				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE)
--- 
-2.39.5
-
++#include <asm/alternative.h>
+ #include <asm/page.h>
+ #include <asm/smap.h>
+ #include <asm/nospec-branch.h>
+@@ -91,9 +93,17 @@ extern struct { char _entry[32]; } hyper
+ void xen_hypercall_func(void);
+ DECLARE_STATIC_CALL(xen_hypercall, xen_hypercall_func);
+ 
+-#define __HYPERCALL		"call hypercall_page+%c[offset]"
+-#define __HYPERCALL_ENTRY(x)						\
+-	[offset] "i" (__HYPERVISOR_##x * sizeof(hypercall_page[0]))
++#ifdef MODULE
++#define __ADDRESSABLE_xen_hypercall
++#else
++#define __ADDRESSABLE_xen_hypercall __ADDRESSABLE_ASM_STR(__SCK__xen_hypercall)
++#endif
++
++#define __HYPERCALL					\
++	__ADDRESSABLE_xen_hypercall			\
++	"call __SCT__xen_hypercall"
++
++#define __HYPERCALL_ENTRY(x)	"a" (x)
+ 
+ #ifdef CONFIG_X86_32
+ #define __HYPERCALL_RETREG	"eax"
+@@ -151,7 +161,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_0ARG();						\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_0PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER0);				\
+ 	(type)__res;							\
+ })
+@@ -162,7 +172,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_1ARG(a1);						\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_1PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER1);				\
+ 	(type)__res;							\
+ })
+@@ -173,7 +183,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_2ARG(a1, a2);					\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_2PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER2);				\
+ 	(type)__res;							\
+ })
+@@ -184,7 +194,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_3ARG(a1, a2, a3);					\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_3PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER3);				\
+ 	(type)__res;							\
+ })
+@@ -195,7 +205,7 @@ DECLARE_STATIC_CALL(xen_hypercall, xen_h
+ 	__HYPERCALL_4ARG(a1, a2, a3, a4);				\
+ 	asm volatile (__HYPERCALL					\
+ 		      : __HYPERCALL_4PARAM				\
+-		      : __HYPERCALL_ENTRY(name)				\
++		      : __HYPERCALL_ENTRY(__HYPERVISOR_ ## name)	\
+ 		      : __HYPERCALL_CLOBBER4);				\
+ 	(type)__res;							\
+ })
+@@ -209,12 +219,9 @@ xen_single_call(unsigned int call,
+ 	__HYPERCALL_DECLS;
+ 	__HYPERCALL_5ARG(a1, a2, a3, a4, a5);
+ 
+-	if (call >= PAGE_SIZE / sizeof(hypercall_page[0]))
+-		return -EINVAL;
+-
+-	asm volatile(CALL_NOSPEC
++	asm volatile(__HYPERCALL
+ 		     : __HYPERCALL_5PARAM
+-		     : [thunk_target] "a" (&hypercall_page[call])
++		     : __HYPERCALL_ENTRY(call)
+ 		     : __HYPERCALL_CLOBBER5);
+ 
+ 	return (long)__res;
 
 
