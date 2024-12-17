@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECE51F76B1;
-	Tue, 17 Dec 2024 17:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E21F76CB;
+	Tue, 17 Dec 2024 17:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456343; cv=none; b=hkr0Ffz+aA5nufepSslPEGLHnOuJ3VCYOx/hm/IlnIVaezh/qyz8NGXUf5HoWje3X9z+hof0cQ/DGqCim5L4H/Dxvyx+AXoGIhD3lS9LWl8ASzPG2MfHwBIzNmmyB+4lPZX4HnhE58jM4g1uIT5sipW+TyHccTpWYcMsUIPEIhY=
+	t=1734456346; cv=none; b=nNkcYWBrsXOxgO6wmvl4OGWX1Yv8U9rdKqQPkNVHeSd/tp0ANPlf0aruzL7sUBUa7R3RCPzJcHKGLvKaUKgO0t7d3aYgj9e29qPzp0P4WdclrZ3QYOLj4Nv6yJqXU+yixm6xiiYbRoksGx1BBIR6fKtPmV96Sn9kwZHiO/06fwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456343; c=relaxed/simple;
-	bh=Sj8fkh/lMRUtgPX5O5gbYQHj6iyWvPrUjFJDi/jSxeU=;
+	s=arc-20240116; t=1734456346; c=relaxed/simple;
+	bh=GGAptu4lVlCUaajzUSE8ftMMMcI9MkRsIzGlz6rZB38=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVB2aU0+5BDPAZDIadawjqn19MBUD6EkZYVrxlzaBNHzONU5VEB5+5JoV0eGNpjXB2ILly+ppDAhOYdGL+rdNFA28sflkWTr8sPPePXh/YbwKa3ZnsNpnPVR9X847adM0HswSQfE8jS/PxBSR0h06E2w7wkCHJkUVPFXRV5dtGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wL2Y+T3e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OSyHQGE3gMc9868C5UxAzlYdLdBqwfW3RjZB4NcJGNzaB1U4hv91oObJn4p1t6BIewhaS23hkhEBNHyKy/mIiJEjt+Teh2aSaMLRRb6SFLcXSUn3efcEif8mrDHWjTGYasB6MbaT8USWb3VKWKbYcZhRSwpZ1VDd+A4maxz8VLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETESTR7M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wL2Y+T3e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD40C4CED3;
-	Tue, 17 Dec 2024 17:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETESTR7M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E37AC4CED7;
+	Tue, 17 Dec 2024 17:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456342;
-	bh=Sj8fkh/lMRUtgPX5O5gbYQHj6iyWvPrUjFJDi/jSxeU=;
+	s=korg; t=1734456345;
+	bh=GGAptu4lVlCUaajzUSE8ftMMMcI9MkRsIzGlz6rZB38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wL2Y+T3eazJvUf08F0t2hfyx9QZj+6s8K4JlKjEnl2gzVs27LJ/3XFmn3dliZQBgF
-	 Z+vHC+ww0hODA4s6jHXlfRYbE9BHsaWTDY2t3xV7hEeDHY55oiUp/Kz7/5ZOGjxCP1
-	 3kSANa8XajZdeLOe6HDtEg9+JSaqtJFXawliIp3s=
+	b=ETESTR7M0XJEAybyGg+EObvTYpeL7C3wg7/94TpZWLWSmvKUfytNG7iH0y+O2LwT1
+	 j7k49W5ZaNjnPy/Ze0gwSzBefXevvDuy1le6DSfdy8sPtH4FxN8QnN6OitIzCjaYOf
+	 GZp+/nLZ659BWi3/PiT3x9AGO4UH1cQiCf4xATxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 029/172] drm/panic: remove spurious empty line to clean warning
-Date: Tue, 17 Dec 2024 18:06:25 +0100
-Message-ID: <20241217170547.472689754@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Subject: [PATCH 6.12 030/172] usb: host: max3421-hcd: Correctly abort a USB request.
+Date: Tue, 17 Dec 2024 18:06:26 +0100
+Message-ID: <20241217170547.512761829@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,62 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
 
-commit 4011b351b1b5a953aaa7c6b3915f908b3cc1be96 upstream.
+commit 0d2ada05227881f3d0722ca2364e3f7a860a301f upstream.
 
-Clippy in the upcoming Rust 1.83.0 spots a spurious empty line since the
-`clippy::empty_line_after_doc_comments` warning is now enabled by default
-given it is part of the `suspicious` group [1]:
+If the current USB request was aborted, the spi thread would not respond
+to any further requests. This is because the "curr_urb" pointer would
+not become NULL, so no further requests would be taken off the queue.
+The solution here is to set the "urb_done" flag, as this will cause the
+correct handling of the URB. Also clear interrupts that should only be
+expected if an URB is in progress.
 
-    error: empty line after doc comment
-       --> drivers/gpu/drm/drm_panic_qr.rs:931:1
-        |
-    931 | / /// They must remain valid for the duration of the function call.
-    932 | |
-        | |_
-    933 |   #[no_mangle]
-    934 | / pub unsafe extern "C" fn drm_panic_qr_generate(
-    935 | |     url: *const i8,
-    936 | |     data: *mut u8,
-    937 | |     data_len: usize,
-    ...   |
-    940 | |     tmp_size: usize,
-    941 | | ) -> u8 {
-        | |_______- the comment documents this function
-        |
-        = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#empty_line_after_doc_comments
-        = note: `-D clippy::empty-line-after-doc-comments` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(clippy::empty_line_after_doc_comments)]`
-        = help: if the empty line is unintentional remove it
-
-Thus remove the empty line.
-
-Cc: stable@vger.kernel.org
-Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
-Link: https://github.com/rust-lang/rust-clippy/pull/13091 [1]
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://lore.kernel.org/r/20241125233332.697497-1-ojeda@kernel.org
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+Link: https://lore.kernel.org/r/20241124221430.1106080-1-mark.tomlinson@alliedtelesis.co.nz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_panic_qr.rs | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/usb/host/max3421-hcd.c |   16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_panic_qr.rs b/drivers/gpu/drm/drm_panic_qr.rs
-index 09500cddc009..ef2d490965ba 100644
---- a/drivers/gpu/drm/drm_panic_qr.rs
-+++ b/drivers/gpu/drm/drm_panic_qr.rs
-@@ -929,7 +929,6 @@ impl QrImage<'_> {
- /// * `tmp` must be valid for reading and writing for `tmp_size` bytes.
- ///
- /// They must remain valid for the duration of the function call.
--
- #[no_mangle]
- pub unsafe extern "C" fn drm_panic_qr_generate(
-     url: *const i8,
--- 
-2.47.1
-
+--- a/drivers/usb/host/max3421-hcd.c
++++ b/drivers/usb/host/max3421-hcd.c
+@@ -779,11 +779,17 @@ max3421_check_unlink(struct usb_hcd *hcd
+ 				retval = 1;
+ 				dev_dbg(&spi->dev, "%s: URB %p unlinked=%d",
+ 					__func__, urb, urb->unlinked);
+-				usb_hcd_unlink_urb_from_ep(hcd, urb);
+-				spin_unlock_irqrestore(&max3421_hcd->lock,
+-						       flags);
+-				usb_hcd_giveback_urb(hcd, urb, 0);
+-				spin_lock_irqsave(&max3421_hcd->lock, flags);
++				if (urb == max3421_hcd->curr_urb) {
++					max3421_hcd->urb_done = 1;
++					max3421_hcd->hien &= ~(BIT(MAX3421_HI_HXFRDN_BIT) |
++							       BIT(MAX3421_HI_RCVDAV_BIT));
++				} else {
++					usb_hcd_unlink_urb_from_ep(hcd, urb);
++					spin_unlock_irqrestore(&max3421_hcd->lock,
++							       flags);
++					usb_hcd_giveback_urb(hcd, urb, 0);
++					spin_lock_irqsave(&max3421_hcd->lock, flags);
++				}
+ 			}
+ 		}
+ 	}
 
 
