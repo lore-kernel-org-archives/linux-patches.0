@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42C01F866C;
-	Tue, 17 Dec 2024 17:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F42E1DE2AC;
+	Tue, 17 Dec 2024 17:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455653; cv=none; b=SP7EiwVydG4mPVs4oLgcoe1x895o9qi+SeuaFe3hCr/Kr/dXUWqi2MP94K9qmBbfnzD/3GOemIu5ydQdVvYmo4F07zdsGfJt5VBaRkCWqZo9ok3XDnvACEGkObSdGd5LQ+BtQRbvuttkQot85OFhyicpELuCHWUEn7GGfRIMkdg=
+	t=1734455655; cv=none; b=XHyLYSFdaCqTVJ8P23TTR6dRHmCTty73ZqiGebWMSEJ+kYlipJjrZQ9sSn6ksXPOij3J40UwJNWznRqtZgh2MK+eZpUjMHBAKMP+f1GnteT5jySqmuuyTy+qAf0HXmEtWEW1w27iDagab5ZzM4P35WNIHNz6dZIBG5qsEP+GrgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455653; c=relaxed/simple;
-	bh=+yel2INbR3+9kJNB2wWjkylhx6oTlT26YhFF2cV3g68=;
+	s=arc-20240116; t=1734455655; c=relaxed/simple;
+	bh=dL4hEDXwhYJuRrLSAFISUVB4GUA7Fe8udc/jIK9g950=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1uthAjFIt5RLdd1vaOnoQWmwol7b3YUEzd7CxcADNuem2FOLp5je/srHZ5nsOS8PpnBeAJZTQftatVZWbbnvgCFDuZQ+z53RLVlPyTRSLDh7929MJXo4g1TgUc9oOz/DVQta6KCVo/vQ6oFWWzx2W7jTp40QBbbMRV5tXKLtlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1q8Sy1sF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhree6qSNgh3t9mcq7Q7H8B67jH6s5t1yOj4xD7FpfPpyoBhdjtejXCp5A8mU97veoNNSsyhKWdLeHko5uvdrAVMl3fh1eD0/JXklANcXyThxR6OJXmM2UOARRz7jnBIp2ULHe5cwRznnKwcwEwSXIqVLlZdDUOoaUyimf+ofuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfwNopAm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1q8Sy1sF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C33C4CED3;
-	Tue, 17 Dec 2024 17:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfwNopAm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA541C4CED3;
+	Tue, 17 Dec 2024 17:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455652;
-	bh=+yel2INbR3+9kJNB2wWjkylhx6oTlT26YhFF2cV3g68=;
+	s=korg; t=1734455655;
+	bh=dL4hEDXwhYJuRrLSAFISUVB4GUA7Fe8udc/jIK9g950=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1q8Sy1sF7EWwLtgFLUkaAcX+CIan/sa8VRwnVyoZnn+2T0/DOVrokhTmXlksR+bqJ
-	 ns8vdfjHuRukpIWO1B+whJBUsV0N5YDZnLaj0r9eLCjcuyW89NUiTQ2wYTss+1j7jH
-	 p9QHXv5K80zKYf8bRGi17RFZ8ITYc9U1jnWsFAfI=
+	b=KfwNopAm9CvGci+t0zuNGpa+cE1XvbGv0u1s3JppZ8IIC8R3t6qcPKVM2ACZfcDC1
+	 d4OJzddhB+aMYPM0N2YznOqDDSujaGykCbLK52c8So5TVqQyKL7Fsw2JiL8DcZcYPL
+	 1szrLGThcLLEdjuqua9N3TJFop4UBeSRe981a58U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	David Laight <david.laight@aculab.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 38/51] ACPICA: events/evxfregn: dont release the ContextMutex that was never acquired
-Date: Tue, 17 Dec 2024 18:07:31 +0100
-Message-ID: <20241217170521.983384828@linuxfoundation.org>
+Subject: [PATCH 5.15 39/51] blk-iocost: Avoid using clamp() on inuse in __propagate_weights()
+Date: Tue, 17 Dec 2024 18:07:32 +0100
+Message-ID: <20241217170522.080207114@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
 References: <20241217170520.301972474@linuxfoundation.org>
@@ -51,38 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit c53d96a4481f42a1635b96d2c1acbb0a126bfd54 ]
+[ Upstream commit 57e420c84f9ab55ba4c5e2ae9c5f6c8e1ea834d2 ]
 
-This bug was first introduced in c27f3d011b08, where the author of the
-patch probably meant to do DeleteMutex instead of ReleaseMutex. The
-mutex leak was noticed later on and fixed in e4dfe108371, but the bogus
-MutexRelease line was never removed, so do it now.
+After a recent change to clamp() and its variants [1] that increases the
+coverage of the check that high is greater than low because it can be
+done through inlining, certain build configurations (such as s390
+defconfig) fail to build with clang with:
 
-Link: https://github.com/acpica/acpica/pull/982
-Fixes: c27f3d011b08 ("ACPICA: Fix race in generic_serial_bus (I2C) and GPIO op_region parameter handling")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Link: https://patch.msgid.link/20241122082954.658356-1-d-tatianin@yandex-team.ru
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+  block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
+   1101 |                 inuse = clamp_t(u32, inuse, 1, active);
+        |                         ^
+  include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
+    218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
+        |                                    ^
+  include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
+    195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
+        |         ^
+  include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
+    188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
+        |         ^
+
+__propagate_weights() is called with an active value of zero in
+ioc_check_iocgs(), which results in the high value being less than the
+low value, which is undefined because the value returned depends on the
+order of the comparisons.
+
+The purpose of this expression is to ensure inuse is not more than
+active and at least 1. This could be written more simply with a ternary
+expression that uses min(inuse, active) as the condition so that the
+value of that condition can be used if it is not zero and one if it is.
+Do this conversion to resolve the error and add a comment to deter
+people from turning this back into clamp().
+
+Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
+Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
+Suggested-by: David Laight <david.laight@aculab.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/evxfregn.c | 2 --
- 1 file changed, 2 deletions(-)
+ block/blk-iocost.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/evxfregn.c b/drivers/acpi/acpica/evxfregn.c
-index b1ff0a8f9c14..7672d70da850 100644
---- a/drivers/acpi/acpica/evxfregn.c
-+++ b/drivers/acpi/acpica/evxfregn.c
-@@ -201,8 +201,6 @@ acpi_remove_address_space_handler(acpi_handle device,
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 9654d1c2c20f..ba23562abc80 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -1087,7 +1087,14 @@ static void __propagate_weights(struct ioc_gq *iocg, u32 active, u32 inuse,
+ 		inuse = DIV64_U64_ROUND_UP(active * iocg->child_inuse_sum,
+ 					   iocg->child_active_sum);
+ 	} else {
+-		inuse = clamp_t(u32, inuse, 1, active);
++		/*
++		 * It may be tempting to turn this into a clamp expression with
++		 * a lower limit of 1 but active may be 0, which cannot be used
++		 * as an upper limit in that situation. This expression allows
++		 * active to clamp inuse unless it is 0, in which case inuse
++		 * becomes 1.
++		 */
++		inuse = min(inuse, active) ?: 1;
+ 	}
  
- 			/* Now we can delete the handler object */
- 
--			acpi_os_release_mutex(handler_obj->address_space.
--					      context_mutex);
- 			acpi_ut_remove_reference(handler_obj);
- 			goto unlock_and_exit;
- 		}
+ 	iocg->last_inuse = iocg->inuse;
 -- 
 2.39.5
 
