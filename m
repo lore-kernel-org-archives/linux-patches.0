@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC87C1F37BE;
-	Tue, 17 Dec 2024 17:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30A91F543C;
+	Tue, 17 Dec 2024 17:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455357; cv=none; b=QtZTXhAuyBuPkE0wIhIHci177sLvz8xKWVi0rbxXyx/mmoR/jWSEWqbRDdD82eYgrmdUQ9Wc0bWa6Quav8tQ8MxA63EMLymsBa3jjzzdEge54ynZpIvlc7+TSFVjOUORICS5GBbTjh42xbrgbOHrDtOz7P4/pXVYfeFqfzHCnhI=
+	t=1734455359; cv=none; b=VeWuYn7MoZeh6VMpM+ZENqzaUYUSYk+nsYbRXG5TXISsYQrle+VjiylF90jyn1KeDvpiIigysz6q3XBgRI5DSxg0B+6QevmmKpTg+Am6t0KlZ6c81y3iIAvDd6IlwTijqKOcCjr+rKkOBVCugCRzIQiWtraXOtNG/91408ElmZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455357; c=relaxed/simple;
-	bh=Iann/wFmLIj9xWof4Ztst2ntKja20OXa6BE3zEZslqk=;
+	s=arc-20240116; t=1734455359; c=relaxed/simple;
+	bh=cR/yf+cOvYWbOKiO5OGNqME1O6mhy4U8S5T6F+Dqc8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuwR7GuSf+ckJuiwgspTpiMzy4amlRf1dilK6QCLiVKQ/SUCIk72AfQot7crj4Wk6wM1TedW0zi9WBRLrO5ehNYqIjfIrpK0pEGpRt0vlkXpDyr6nRtAu7hoU437PlVmS5naCKa2hx7Pey4NEmEipkV5/aQ5bs6mBzu0SLoByVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WczKGPXM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqsM3XdUJEDeej+dqeNPfHhjLMeHbPQHEldTfB+VbdXFwGF6W7UwQwcE9YwgbSmf20FhMvzpseglEDHs+EvWCdwfWIbu/8p+Oamy87olPuOqquXaY02u1UwQON8sq/DBikMtumJN5uBP44gvd49sZouojjVKoHFduaoo3btfcFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z2pAeD/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WczKGPXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA032C4CED7;
-	Tue, 17 Dec 2024 17:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z2pAeD/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E053C4CEDD;
+	Tue, 17 Dec 2024 17:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455356;
-	bh=Iann/wFmLIj9xWof4Ztst2ntKja20OXa6BE3zEZslqk=;
+	s=korg; t=1734455359;
+	bh=cR/yf+cOvYWbOKiO5OGNqME1O6mhy4U8S5T6F+Dqc8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WczKGPXMCsqSkvstZPvelNh9YkMmSaxKjWQDr6OgbjGmAWjTUvb0tgVGeNdWEcxUd
-	 QkDOqhlwTxDt/LcJ0Upa7xSOrpgi44LSdsthPV7R3fD0xQeHRQXHcXD3Fu9NSflF+5
-	 Oc35Q9CvFzO3V55p/62cmMkWORdvx96ITwHS1EZU=
+	b=Z2pAeD/UHPj5q3SWEH2GPDtGGAxW7JtEMsAFPnO0vWnjkYROCHredH3LFnnczLT5r
+	 twWtJCXAIwDTMnmlKapALw1prXiXqGw1HbzUo+GqhUdjIL4bx+xfnhuO6uH8ADkVvb
+	 iinGJExvYCEQtRO/TIAHHHXQkJDoBBE1SwwZyous=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Subject: [PATCH 5.4 01/24] usb: host: max3421-hcd: Correctly abort a USB request.
-Date: Tue, 17 Dec 2024 18:06:59 +0100
-Message-ID: <20241217170519.070064694@linuxfoundation.org>
+	Remi Pommarel <repk@triplefau.lt>,
+	Antonio Quartulli <Antonio@mandelbit.com>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 10/24] batman-adv: Do not let TT changes list grows indefinitely
+Date: Tue, 17 Dec 2024 18:07:08 +0100
+Message-ID: <20241217170519.428230935@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170519.006786596@linuxfoundation.org>
 References: <20241217170519.006786596@linuxfoundation.org>
@@ -50,50 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Remi Pommarel <repk@triplefau.lt>
 
-commit 0d2ada05227881f3d0722ca2364e3f7a860a301f upstream.
+[ Upstream commit fff8f17c1a6fc802ca23bbd3a276abfde8cc58e6 ]
 
-If the current USB request was aborted, the spi thread would not respond
-to any further requests. This is because the "curr_urb" pointer would
-not become NULL, so no further requests would be taken off the queue.
-The solution here is to set the "urb_done" flag, as this will cause the
-correct handling of the URB. Also clear interrupts that should only be
-expected if an URB is in progress.
+When TT changes list is too big to fit in packet due to MTU size, an
+empty OGM is sent expected other node to send TT request to get the
+changes. The issue is that tt.last_changeset was not built thus the
+originator was responding with previous changes to those TT requests
+(see batadv_send_my_tt_response). Also the changes list was never
+cleaned up effectively never ending growing from this point onwards,
+repeatedly sending the same TT response changes over and over, and
+creating a new empty OGM every OGM interval expecting for the local
+changes to be purged.
 
-Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20241124221430.1106080-1-mark.tomlinson@alliedtelesis.co.nz
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When there is more TT changes that can fit in packet, drop all changes,
+send empty OGM and wait for TT request so we can respond with a full
+table instead.
+
+Fixes: e1bf0c14096f ("batman-adv: tvlv - convert tt data sent within OGMs")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Acked-by: Antonio Quartulli <Antonio@mandelbit.com>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/max3421-hcd.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ net/batman-adv/translation-table.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -785,11 +785,17 @@ max3421_check_unlink(struct usb_hcd *hcd
- 				retval = 1;
- 				dev_dbg(&spi->dev, "%s: URB %p unlinked=%d",
- 					__func__, urb, urb->unlinked);
--				usb_hcd_unlink_urb_from_ep(hcd, urb);
--				spin_unlock_irqrestore(&max3421_hcd->lock,
--						       flags);
--				usb_hcd_giveback_urb(hcd, urb, 0);
--				spin_lock_irqsave(&max3421_hcd->lock, flags);
-+				if (urb == max3421_hcd->curr_urb) {
-+					max3421_hcd->urb_done = 1;
-+					max3421_hcd->hien &= ~(BIT(MAX3421_HI_HXFRDN_BIT) |
-+							       BIT(MAX3421_HI_RCVDAV_BIT));
-+				} else {
-+					usb_hcd_unlink_urb_from_ep(hcd, urb);
-+					spin_unlock_irqrestore(&max3421_hcd->lock,
-+							       flags);
-+					usb_hcd_giveback_urb(hcd, urb, 0);
-+					spin_lock_irqsave(&max3421_hcd->lock, flags);
-+				}
- 			}
- 		}
- 	}
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index e6d51d5070aa..0c23df3ea0c3 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -1000,6 +1000,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	int tt_diff_len, tt_change_len = 0;
+ 	int tt_diff_entries_num = 0;
+ 	int tt_diff_entries_count = 0;
++	bool drop_changes = false;
+ 	size_t tt_extra_len = 0;
+ 	u16 tvlv_len;
+ 
+@@ -1007,10 +1008,17 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	tt_diff_len = batadv_tt_len(tt_diff_entries_num);
+ 
+ 	/* if we have too many changes for one packet don't send any
+-	 * and wait for the tt table request which will be fragmented
++	 * and wait for the tt table request so we can reply with the full
++	 * (fragmented) table.
++	 *
++	 * The local change history should still be cleaned up so the next
++	 * TT round can start again with a clean state.
+ 	 */
+-	if (tt_diff_len > bat_priv->soft_iface->mtu)
++	if (tt_diff_len > bat_priv->soft_iface->mtu) {
+ 		tt_diff_len = 0;
++		tt_diff_entries_num = 0;
++		drop_changes = true;
++	}
+ 
+ 	tvlv_len = batadv_tt_prepare_tvlv_local_data(bat_priv, &tt_data,
+ 						     &tt_change, &tt_diff_len);
+@@ -1019,7 +1027,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 
+ 	tt_data->flags = BATADV_TT_OGM_DIFF;
+ 
+-	if (tt_diff_len == 0)
++	if (!drop_changes && tt_diff_len == 0)
+ 		goto container_register;
+ 
+ 	spin_lock_bh(&bat_priv->tt.changes_list_lock);
+-- 
+2.39.5
+
 
 
