@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4461F76B2;
-	Tue, 17 Dec 2024 17:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B486A148850;
+	Tue, 17 Dec 2024 17:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455721; cv=none; b=BawEOJllQzpB27BQRDaPVrLOhHQWJ0A6JD2wDbZlBpdssFr+jcvr6RfquVtbdfOPujEnsyvf4KD/GvNyAXnHhAUD3kxnijK2ucQgjNqgYGWyfMDVCgpSgsC1u6MsEj9pOTaWoXf6VLakL0fSKrv4KJl9dFv3edSMkkXqQLP3Bp8=
+	t=1734455723; cv=none; b=GyGeDhSAS/irzN6Hq1mN2NApnMvRnC5wWpR3sEZVemzhKeB+2yQrTYgivOhjwlz7Hd3mbTabcAGGzOqrvS5jpB9vmci5wyT2zU1w1UlQpt3HMF8C+CTjrlT0c31J9WMeCIuQbN6E045C3VfxbBFMOOthKlh8UMvYrvDCz+pnxks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455721; c=relaxed/simple;
-	bh=QNnmArYG0W3Xv+53c2hYe+bHClL5OY6Y55o+YbrB+yQ=;
+	s=arc-20240116; t=1734455723; c=relaxed/simple;
+	bh=kHMqqIsmkFvSWHjNseVgQFevvE4AGRUcocViyBnSmLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFeFgXgxIqyMqoqd+FVs9pG0fJ9rpZxaNFsmTte2P8AMx8kpJ68JIbevLR3cNOgViaWPt2u74T/U1CIcmXWb89mdSUQQVraApKJzFmLCULPHsWLdtAlMvgTbDZsmlCyA/4031XDPTlbnAZpVg4N+wNZxppu88RnA3HMRy1SNw84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amVU5/JI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mH/M+DU3nZktuLgQkZUA8h2cC1RYJ0zzz0yQWLrYbE5RZaCyg0Zb10FvpQCsT7ncK6J9PP9lbLbiUCUE1UUZsZdYP1Tzqg+7tWVT5f8yHGWR121NhPXkUEaRNxT2TORzgS8HV17jzUTg1EWjCrj2ixebPKfJRDzbKY3TFX87dkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7XD/2Rq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amVU5/JI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72303C4CED3;
-	Tue, 17 Dec 2024 17:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7XD/2Rq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F7D5C4CED3;
+	Tue, 17 Dec 2024 17:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455720;
-	bh=QNnmArYG0W3Xv+53c2hYe+bHClL5OY6Y55o+YbrB+yQ=;
+	s=korg; t=1734455723;
+	bh=kHMqqIsmkFvSWHjNseVgQFevvE4AGRUcocViyBnSmLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amVU5/JIBq3U5TIiekXWuD4pNRvHhTV58GWjhR1s3FQMsXIAoYsIZLDGA6wUnAjVS
-	 oOqR2qj4kRQpxwJTgv62m1jPXMwFPKfYlz6qjaYsXF7+JncWAEOyobnJsK0C9wm0k8
-	 Lxkr63b2pVTdWeoClDcW6BY3l0emAKKKnNXccQ9k=
+	b=q7XD/2RqS0j2CxlWGrnRAhsvHOtkhU80WxN3eEheBtPE4VdeJLNT2m56HMizfrz3Z
+	 kPzEVnKFR040xa4Cxgn0xxnFmWVG2Sjv6rulMv7Qn0t//WFMqtuXfPvAMJp9wd241a
+	 BU+Am/G5a6vou0C/nnOmNd0NGpVP8Ua6WL0kHwDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>
-Subject: [PATCH 6.1 10/76] usb: dwc2: Fix HCD port connection race
-Date: Tue, 17 Dec 2024 18:06:50 +0100
-Message-ID: <20241217170526.675436988@linuxfoundation.org>
+	Vitalii Mordan <mordan@ispras.ru>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 11/76] usb: ehci-hcd: fix call balance of clocks handling routines
+Date: Tue, 17 Dec 2024 18:06:51 +0100
+Message-ID: <20241217170526.717701172@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -49,68 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Vitalii Mordan <mordan@ispras.ru>
 
-commit 1cf1bd88f129f3bd647fead4dca270a5894274bb upstream.
+commit 97264eaaba0122a5b7e8ddd7bf4ff3ac57c2b170 upstream.
 
-On Raspberry Pis without onboard USB hub frequent device reconnects
-can trigger a interrupt storm after DWC2 entered host clock gating.
-This is caused by a race between _dwc2_hcd_suspend() and the port
-interrupt, which sets port_connect_status. The issue occurs if
-port_connect_status is still 1, but there is no connection anymore:
+If the clocks priv->iclk and priv->fclk were not enabled in ehci_hcd_sh_probe,
+they should not be disabled in any path.
 
-usb 1-1: USB disconnect, device number 25
-dwc2 3f980000.usb: _dwc2_hcd_suspend: port_connect_status: 1
-dwc2 3f980000.usb: Entering host clock gating.
-Disabling IRQ #66
-irq 66: nobody cared (try booting with the "irqpoll" option)
-CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.0-gc1bb81b13202-dirty #322
-Hardware name: BCM2835
-Call trace:
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x50/0x64
- dump_stack_lvl from __report_bad_irq+0x38/0xc0
- __report_bad_irq from note_interrupt+0x2ac/0x2f4
- note_interrupt from handle_irq_event+0x88/0x8c
- handle_irq_event from handle_level_irq+0xb4/0x1ac
- handle_level_irq from generic_handle_domain_irq+0x24/0x34
- generic_handle_domain_irq from bcm2836_chained_handle_irq+0x24/0x28
- bcm2836_chained_handle_irq from generic_handle_domain_irq+0x24/0x34
- generic_handle_domain_irq from generic_handle_arch_irq+0x34/0x44
- generic_handle_arch_irq from __irq_svc+0x88/0xb0
- Exception stack(0xc1d01f20 to 0xc1d01f68)
- 1f20: 0004ef3c 00000001 00000000 00000000 c1d09780 c1f6bb5c c1d04e54 c1c60ca8
- 1f40: c1d04e94 00000000 00000000 c1d092a8 c1f6af20 c1d01f70 c1211b98 c1212f40
- 1f60: 60000013 ffffffff
- __irq_svc from default_idle_call+0x1c/0xb0
- default_idle_call from do_idle+0x21c/0x284
- do_idle from cpu_startup_entry+0x28/0x2c
- cpu_startup_entry from kernel_init+0x0/0x12c
-handlers:
- [<e3a25c00>] dwc2_handle_common_intr
- [<58bf98a3>] usb_hcd_irq
-Disabling IRQ #66
+Conversely, if they was enabled in ehci_hcd_sh_probe, they must be disabled
+in all error paths to ensure proper cleanup.
 
-So avoid this by reading the connection status directly.
+Found by Linux Verification Center (linuxtesting.org) with Klever.
 
-Fixes: 113f86d0c302 ("usb: dwc2: Update partial power down entering by system suspend")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://lore.kernel.org/r/20241202001631.75473-4-wahrenst@gmx.net
+Fixes: 63c845522263 ("usb: ehci-hcd: Add support for SuperH EHCI.")
+Cc: stable@vger.kernel.org # ff30bd6a6618: sh: clk: Fix clk_enable() to return 0 on NULL clk
+Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241121114700.2100520-1-mordan@ispras.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc2/hcd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/ehci-sh.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc2/hcd.c
-+++ b/drivers/usb/dwc2/hcd.c
-@@ -4345,7 +4345,7 @@ static int _dwc2_hcd_suspend(struct usb_
- 	if (hsotg->bus_suspended)
- 		goto skip_power_saving;
+--- a/drivers/usb/host/ehci-sh.c
++++ b/drivers/usb/host/ehci-sh.c
+@@ -120,8 +120,12 @@ static int ehci_hcd_sh_probe(struct plat
+ 	if (IS_ERR(priv->iclk))
+ 		priv->iclk = NULL;
  
--	if (hsotg->flags.b.port_connect_status == 0)
-+	if (!(dwc2_read_hprt0(hsotg) & HPRT0_CONNSTS))
- 		goto skip_power_saving;
+-	clk_enable(priv->fclk);
+-	clk_enable(priv->iclk);
++	ret = clk_enable(priv->fclk);
++	if (ret)
++		goto fail_request_resource;
++	ret = clk_enable(priv->iclk);
++	if (ret)
++		goto fail_iclk;
  
- 	switch (hsotg->params.power_down) {
+ 	ret = usb_add_hcd(hcd, irq, IRQF_SHARED);
+ 	if (ret != 0) {
+@@ -137,6 +141,7 @@ static int ehci_hcd_sh_probe(struct plat
+ 
+ fail_add_hcd:
+ 	clk_disable(priv->iclk);
++fail_iclk:
+ 	clk_disable(priv->fclk);
+ 
+ fail_request_resource:
 
 
