@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F316F1F8F0C;
-	Tue, 17 Dec 2024 17:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DB4D1FC7F1;
+	Tue, 17 Dec 2024 17:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456728; cv=none; b=poiGGKwCQxgcZA82T13tdqV/59Kot8MSxIM7yaLiIVGVImArOujbi6ZLY36w/lHUK103VkZUTlbN+9rkg8HL6HZEJd7m7Um7I+mAbGQ6SoXfMJlFKYW9hd/7dVLQU5fCwc/0NwVsrP00qNkl/CTqBY/R5jFY8PEuoLwNfP2l9dU=
+	t=1734456733; cv=none; b=gMXacCgCFA1mIBeBLIrchvFcfzpva7BrqTbD1Jl/MRQ1cHL/lo+ST5LhsPvzmG6EX7kPL+O/Acst2KQgJcdKtQMGtcchyUBJOWRVuNLcQLIqkLVRV4PgNCpdVLD41k8iVLiJ/2jUyhICXlyd46k1Jn+9nUKhxB1qqBM9rqYRyys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456728; c=relaxed/simple;
-	bh=XMgx/Ga+ivC7bhYF2eVO6LMViIKLIFDGprLp1moXitI=;
+	s=arc-20240116; t=1734456733; c=relaxed/simple;
+	bh=HuPdAK1kKRtRgVFoGQqq5/+R7XjLesBspl2GrnN1K0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktwu1tFOQQIYzE2JqzWxtCjwZqwa2hK9F13ECO3qwR0IZyEfOVB7S2Pp1UmlW7gOYKzLBGbkvOqHUJVrYMPzuAbVRwsT78yPnjkFS/zX3F+d65mlHQ3Gl2yoOnwCFzJw9tAjYhDlbZxSUl1l581HQMTaajx+eO+Z5syKWOqxIvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDc8llaS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8vLV9m+LDDzvKmpOeq21o/A3VHFzuzJpiqfNPe6mwyxC/3OfjpGwhQGEPzrkYSNh9/aBXafykiLqiVpGt/2P5Hd5mwMQDHwFzNB49CLYEzUWTZuNp+t4ByJZMmA/+itLqyDqhTo0JL3HZyqMeB09Uo/DPsQW8G4wZ5EOC83PXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tAXfXkrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDc8llaS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788ADC4CEF4;
-	Tue, 17 Dec 2024 17:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAXfXkrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BBEC4CEDD;
+	Tue, 17 Dec 2024 17:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456727;
-	bh=XMgx/Ga+ivC7bhYF2eVO6LMViIKLIFDGprLp1moXitI=;
+	s=korg; t=1734456733;
+	bh=HuPdAK1kKRtRgVFoGQqq5/+R7XjLesBspl2GrnN1K0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDc8llaS0dQ03e/wc4ojZzjVQd03BtoXd8RILZrGtoTVuO368N+3+lJ/kf1wMf2mw
-	 uEKZig5ZlnxXBlBz3vsBKdunMPlsRg+JEvD02/Wiqwzm7VUmuLz4vmWUGFdIMKRfmw
-	 vP2fTtGD8bBm2lS9RPpMp+viGKI0lKGmuq8WaEMs=
+	b=tAXfXkrzBxtO+g0+ERH/lmYwYLA4sd4cjx6moDGsIQ8nXPUO6YXabaGRWL9qs2Nep
+	 50Fipi4pRpwnykiPAXBxLKK81MtnuJWlE25W5+PP3XTTEbwpVQg1zmYIcG46EiOR+w
+	 94tj7gQve3h74JAZPZgkNc8xbPFMQifFTVwcs3UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@idosch.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 142/172] bonding: Fix feature propagation of NETIF_F_GSO_ENCAP_ALL
-Date: Tue, 17 Dec 2024 18:08:18 +0100
-Message-ID: <20241217170552.225423484@linuxfoundation.org>
+Subject: [PATCH 6.12 151/172] Bluetooth: iso: Fix circular lock in iso_listen_bis
+Date: Tue, 17 Dec 2024 18:08:27 +0100
+Message-ID: <20241217170552.592264303@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -55,99 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 
-[ Upstream commit 77b11c8bf3a228d1c63464534c2dcc8d9c8bf7ff ]
+[ Upstream commit 168e28305b871d8ec604a8f51f35467b8d7ba05b ]
 
-Drivers like mlx5 expose NIC's vlan_features such as
-NETIF_F_GSO_UDP_TUNNEL & NETIF_F_GSO_UDP_TUNNEL_CSUM which are
-later not propagated when the underlying devices are bonded and
-a vlan device created on top of the bond.
+This fixes the circular locking dependency warning below, by
+releasing the socket lock before enterning iso_listen_bis, to
+avoid any potential deadlock with hdev lock.
 
-Right now, the more cumbersome workaround for this is to create
-the vlan on top of the mlx5 and then enslave the vlan devices
-to a bond.
+[   75.307983] ======================================================
+[   75.307984] WARNING: possible circular locking dependency detected
+[   75.307985] 6.12.0-rc6+ #22 Not tainted
+[   75.307987] ------------------------------------------------------
+[   75.307987] kworker/u81:2/2623 is trying to acquire lock:
+[   75.307988] ffff8fde1769da58 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO)
+               at: iso_connect_cfm+0x253/0x840 [bluetooth]
+[   75.308021]
+               but task is already holding lock:
+[   75.308022] ffff8fdd61a10078 (&hdev->lock)
+               at: hci_le_per_adv_report_evt+0x47/0x2f0 [bluetooth]
+[   75.308053]
+               which lock already depends on the new lock.
 
-To fix this, add NETIF_F_GSO_ENCAP_ALL to BOND_VLAN_FEATURES
-such that bond_compute_features() can probe and propagate the
-vlan_features from the slave devices up to the vlan device.
+[   75.308054]
+               the existing dependency chain (in reverse order) is:
+[   75.308055]
+               -> #1 (&hdev->lock){+.+.}-{3:3}:
+[   75.308057]        __mutex_lock+0xad/0xc50
+[   75.308061]        mutex_lock_nested+0x1b/0x30
+[   75.308063]        iso_sock_listen+0x143/0x5c0 [bluetooth]
+[   75.308085]        __sys_listen_socket+0x49/0x60
+[   75.308088]        __x64_sys_listen+0x4c/0x90
+[   75.308090]        x64_sys_call+0x2517/0x25f0
+[   75.308092]        do_syscall_64+0x87/0x150
+[   75.308095]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   75.308098]
+               -> #0 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO){+.+.}-{0:0}:
+[   75.308100]        __lock_acquire+0x155e/0x25f0
+[   75.308103]        lock_acquire+0xc9/0x300
+[   75.308105]        lock_sock_nested+0x32/0x90
+[   75.308107]        iso_connect_cfm+0x253/0x840 [bluetooth]
+[   75.308128]        hci_connect_cfm+0x6c/0x190 [bluetooth]
+[   75.308155]        hci_le_per_adv_report_evt+0x27b/0x2f0 [bluetooth]
+[   75.308180]        hci_le_meta_evt+0xe7/0x200 [bluetooth]
+[   75.308206]        hci_event_packet+0x21f/0x5c0 [bluetooth]
+[   75.308230]        hci_rx_work+0x3ae/0xb10 [bluetooth]
+[   75.308254]        process_one_work+0x212/0x740
+[   75.308256]        worker_thread+0x1bd/0x3a0
+[   75.308258]        kthread+0xe4/0x120
+[   75.308259]        ret_from_fork+0x44/0x70
+[   75.308261]        ret_from_fork_asm+0x1a/0x30
+[   75.308263]
+               other info that might help us debug this:
 
-Given the following bond:
+[   75.308264]  Possible unsafe locking scenario:
 
-  # ethtool -i enp2s0f{0,1}np{0,1}
-  driver: mlx5_core
-  [...]
+[   75.308264]        CPU0                CPU1
+[   75.308265]        ----                ----
+[   75.308265]   lock(&hdev->lock);
+[   75.308267]                            lock(sk_lock-
+                                                AF_BLUETOOTH-BTPROTO_ISO);
+[   75.308268]                            lock(&hdev->lock);
+[   75.308269]   lock(sk_lock-AF_BLUETOOTH-BTPROTO_ISO);
+[   75.308270]
+                *** DEADLOCK ***
 
-  # ethtool -k enp2s0f0np0 | grep udp
-  tx-udp_tnl-segmentation: on
-  tx-udp_tnl-csum-segmentation: on
-  tx-udp-segmentation: on
-  rx-udp_tunnel-port-offload: on
-  rx-udp-gro-forwarding: off
+[   75.308271] 4 locks held by kworker/u81:2/2623:
+[   75.308272]  #0: ffff8fdd66e52148 ((wq_completion)hci0#2){+.+.}-{0:0},
+                at: process_one_work+0x443/0x740
+[   75.308276]  #1: ffffafb488b7fe48 ((work_completion)(&hdev->rx_work)),
+                at: process_one_work+0x1ce/0x740
+[   75.308280]  #2: ffff8fdd61a10078 (&hdev->lock){+.+.}-{3:3}
+                at: hci_le_per_adv_report_evt+0x47/0x2f0 [bluetooth]
+[   75.308304]  #3: ffffffffb6ba4900 (rcu_read_lock){....}-{1:2},
+                at: hci_connect_cfm+0x29/0x190 [bluetooth]
 
-  # ethtool -k enp2s0f1np1 | grep udp
-  tx-udp_tnl-segmentation: on
-  tx-udp_tnl-csum-segmentation: on
-  tx-udp-segmentation: on
-  rx-udp_tunnel-port-offload: on
-  rx-udp-gro-forwarding: off
-
-  # ethtool -k bond0 | grep udp
-  tx-udp_tnl-segmentation: on
-  tx-udp_tnl-csum-segmentation: on
-  tx-udp-segmentation: on
-  rx-udp_tunnel-port-offload: off [fixed]
-  rx-udp-gro-forwarding: off
-
-Before:
-
-  # ethtool -k bond0.100 | grep udp
-  tx-udp_tnl-segmentation: off [requested on]
-  tx-udp_tnl-csum-segmentation: off [requested on]
-  tx-udp-segmentation: on
-  rx-udp_tunnel-port-offload: off [fixed]
-  rx-udp-gro-forwarding: off
-
-After:
-
-  # ethtool -k bond0.100 | grep udp
-  tx-udp_tnl-segmentation: on
-  tx-udp_tnl-csum-segmentation: on
-  tx-udp-segmentation: on
-  rx-udp_tunnel-port-offload: off [fixed]
-  rx-udp-gro-forwarding: off
-
-Various users have run into this reporting performance issues when
-configuring Cilium in vxlan tunneling mode and having the combination
-of bond & vlan for the core devices connecting the Kubernetes cluster
-to the outside world.
-
-Fixes: a9b3ace44c7d ("bonding: fix vlan_features computing")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Ido Schimmel <idosch@idosch.org>
-Cc: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20241210141245.327886-3-daniel@iogearbox.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 02171da6e86a ("Bluetooth: ISO: Add hcon for listening bis sk")
+Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/iso.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index dfad7b6f9f35..4d73abae503d 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1534,6 +1534,7 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index 269ce0bb73a1..809e88fd3fcb 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1129,6 +1129,7 @@ static int iso_listen_bis(struct sock *sk)
+ 		return -EHOSTUNREACH;
  
- #define BOND_VLAN_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
- 				 NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
-+				 NETIF_F_GSO_ENCAP_ALL | \
- 				 NETIF_F_HIGHDMA | NETIF_F_LRO)
+ 	hci_dev_lock(hdev);
++	lock_sock(sk);
  
- #define BOND_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+ 	/* Fail if user set invalid QoS */
+ 	if (iso_pi(sk)->qos_user_set && !check_bcast_qos(&iso_pi(sk)->qos)) {
+@@ -1159,6 +1160,7 @@ static int iso_listen_bis(struct sock *sk)
+ 	}
+ 
+ unlock:
++	release_sock(sk);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+ 	return err;
+@@ -1187,6 +1189,7 @@ static int iso_sock_listen(struct socket *sock, int backlog)
+ 
+ 	BT_DBG("sk %p backlog %d", sk, backlog);
+ 
++	sock_hold(sk);
+ 	lock_sock(sk);
+ 
+ 	if (sk->sk_state != BT_BOUND) {
+@@ -1199,10 +1202,16 @@ static int iso_sock_listen(struct socket *sock, int backlog)
+ 		goto done;
+ 	}
+ 
+-	if (!bacmp(&iso_pi(sk)->dst, BDADDR_ANY))
++	if (!bacmp(&iso_pi(sk)->dst, BDADDR_ANY)) {
+ 		err = iso_listen_cis(sk);
+-	else
++	} else {
++		/* Drop sock lock to avoid potential
++		 * deadlock with the hdev lock.
++		 */
++		release_sock(sk);
+ 		err = iso_listen_bis(sk);
++		lock_sock(sk);
++	}
+ 
+ 	if (err)
+ 		goto done;
+@@ -1214,6 +1223,7 @@ static int iso_sock_listen(struct socket *sock, int backlog)
+ 
+ done:
+ 	release_sock(sk);
++	sock_put(sk);
+ 	return err;
+ }
+ 
 -- 
 2.39.5
 
