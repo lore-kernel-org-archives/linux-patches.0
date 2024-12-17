@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752518615A;
-	Tue, 17 Dec 2024 17:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4F01F76B1;
+	Tue, 17 Dec 2024 17:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456336; cv=none; b=RnzPgbebKU2PRzWbarde9XhyfKrNz+xQCOTZqnZY04S+IdbW0rLw6333HSgMg1v5VSWAJYYb5EgrMWQgzn9qeOhcz8CzPjrXADuV3uBI5D0Hnnp8KZvLiT27Ocm3zP+SNoHxCIvcaV00+LwpC/4V0oq1BbaaUt6k5dzhhJ6HlEk=
+	t=1734456339; cv=none; b=OhcBayrK9e2nh9svnJPVQakKV/UU6W9HhDzmxapMVsy9oHKhwQ5Ub1HFvUVkLZi1QLFW5vjUPE7kRMANHscmlO13uYW8xtG7S2/R5JIrWohlj5lyO5a8IxyskCxX+FLq7SvMk4oXpi7xqxeoLhUfyCWijUk+7o7lx/rBIZFJrM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456336; c=relaxed/simple;
-	bh=ANM/uXaCPB25FpZ2Sq7CwdmRg/aQ0kmlC1B+N2Iu4UM=;
+	s=arc-20240116; t=1734456339; c=relaxed/simple;
+	bh=yCXPeFzwNVx/xsrpt6FdmQTNGQIxmlV4J9q7pWGWkKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5NQsOwhVoElTZkhSPw3Xhiq3nr03tJFn0jhlgb88esEtdKkCffL6eiBqInPjk5E1nsdRseiJO2kBpw1XD3oYyofQljmTkt8+v49n0WQmzyLoKhyARBRIH2v3VMGXht/2CpKg13WJF44DGAzibv71iuKeAi30W4SroEbhIbI874=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b990+oRe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZShh+LwWO81izWubp3ofKDxb36WdqSfgWHYws0j1bT6DEIS7xHDk0QScXAV+IuEkk4s5tPLfOXABUVxNpCYPnWQNU2LuheBZ1QS+YVOwKHkKk22jIqFcVDJaPprqYKU3+Kx1hKvinkpy4fvU0SBL33WhqBGXrj+62L5bXP/DPAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pL8rczPx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b990+oRe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC820C4CED3;
-	Tue, 17 Dec 2024 17:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pL8rczPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79023C4CED3;
+	Tue, 17 Dec 2024 17:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456336;
-	bh=ANM/uXaCPB25FpZ2Sq7CwdmRg/aQ0kmlC1B+N2Iu4UM=;
+	s=korg; t=1734456338;
+	bh=yCXPeFzwNVx/xsrpt6FdmQTNGQIxmlV4J9q7pWGWkKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b990+oReTw8ydomMjayAUXAtBghQY0AJvrsW7r2grcs3caESuPiiKS+cYI7PGGAbk
-	 37G5MddEBHpG9Y2lOH1N2rowaiHHURx3lz7/MtEmQTSXscTWhzYK6/qLAJst6B4ZIo
-	 7qxghMUkkMMVswLPROJUgEBB2rES8cMLIxCSShRI=
+	b=pL8rczPx/ofzQShUOlYJdh7DeOiIE6ktwD+TdtP0pWcrJY0sV8IfsuSwTM9fr1BHg
+	 WgAxdZk5uRIbpEFGikqYvb3oe+NnEjs4/Z47kfdrwXjhyzqPihd7dpVdbTMM8PAk9U
+	 D7TSOfZ2onbaFDxwmh3Jo/5yhJw6f3GR+ZJOb1EI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.12 027/172] riscv: Fix IPIs usage in kfence_protect_page()
-Date: Tue, 17 Dec 2024 18:06:23 +0100
-Message-ID: <20241217170547.391519511@linuxfoundation.org>
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.12 028/172] crypto: hisilicon/debugfs - fix the struct pointer incorrectly offset problem
+Date: Tue, 17 Dec 2024 18:06:24 +0100
+Message-ID: <20241217170547.431916732@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,81 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-commit b3431a8bb336cece8adc452437befa7d4534b2fd upstream.
+commit cd26cd65476711e2c69e0a049c0eeef4b743f5ac upstream.
 
-flush_tlb_kernel_range() may use IPIs to flush the TLBs of all the
-cores, which triggers the following warning when the irqs are disabled:
+Offset based on (id * size) is wrong for sqc and cqc.
+(*sqc/*cqc + 1) can already offset sizeof(struct(Xqc)) length.
 
-[    3.455330] WARNING: CPU: 1 PID: 0 at kernel/smp.c:815 smp_call_function_many_cond+0x452/0x520
-[    3.456647] Modules linked in:
-[    3.457218] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Not tainted 6.12.0-rc7-00010-g91d3de7240b8 #1
-[    3.457416] Hardware name: QEMU QEMU Virtual Machine, BIOS
-[    3.457633] epc : smp_call_function_many_cond+0x452/0x520
-[    3.457736]  ra : on_each_cpu_cond_mask+0x1e/0x30
-[    3.457786] epc : ffffffff800b669a ra : ffffffff800b67c2 sp : ff2000000000bb50
-[    3.457824]  gp : ffffffff815212b8 tp : ff6000008014f080 t0 : 000000000000003f
-[    3.457859]  t1 : ffffffff815221e0 t2 : 000000000000000f s0 : ff2000000000bc10
-[    3.457920]  s1 : 0000000000000040 a0 : ffffffff815221e0 a1 : 0000000000000001
-[    3.457953]  a2 : 0000000000010000 a3 : 0000000000000003 a4 : 0000000000000000
-[    3.458006]  a5 : 0000000000000000 a6 : ffffffffffffffff a7 : 0000000000000000
-[    3.458042]  s2 : ffffffff815223be s3 : 00fffffffffff000 s4 : ff600001ffe38fc0
-[    3.458076]  s5 : ff600001ff950d00 s6 : 0000000200000120 s7 : 0000000000000001
-[    3.458109]  s8 : 0000000000000001 s9 : ff60000080841ef0 s10: 0000000000000001
-[    3.458141]  s11: ffffffff81524812 t3 : 0000000000000001 t4 : ff60000080092bc0
-[    3.458172]  t5 : 0000000000000000 t6 : ff200000000236d0
-[    3.458203] status: 0000000200000100 badaddr: ffffffff800b669a cause: 0000000000000003
-[    3.458373] [<ffffffff800b669a>] smp_call_function_many_cond+0x452/0x520
-[    3.458593] [<ffffffff800b67c2>] on_each_cpu_cond_mask+0x1e/0x30
-[    3.458625] [<ffffffff8000e4ca>] __flush_tlb_range+0x118/0x1ca
-[    3.458656] [<ffffffff8000e6b2>] flush_tlb_kernel_range+0x1e/0x26
-[    3.458683] [<ffffffff801ea56a>] kfence_protect+0xc0/0xce
-[    3.458717] [<ffffffff801e9456>] kfence_guarded_free+0xc6/0x1c0
-[    3.458742] [<ffffffff801e9d6c>] __kfence_free+0x62/0xc6
-[    3.458764] [<ffffffff801c57d8>] kfree+0x106/0x32c
-[    3.458786] [<ffffffff80588cf2>] detach_buf_split+0x188/0x1a8
-[    3.458816] [<ffffffff8058708c>] virtqueue_get_buf_ctx+0xb6/0x1f6
-[    3.458839] [<ffffffff805871da>] virtqueue_get_buf+0xe/0x16
-[    3.458880] [<ffffffff80613d6a>] virtblk_done+0x5c/0xe2
-[    3.458908] [<ffffffff8058766e>] vring_interrupt+0x6a/0x74
-[    3.458930] [<ffffffff800747d8>] __handle_irq_event_percpu+0x7c/0xe2
-[    3.458956] [<ffffffff800748f0>] handle_irq_event+0x3c/0x86
-[    3.458978] [<ffffffff800786cc>] handle_simple_irq+0x9e/0xbe
-[    3.459004] [<ffffffff80073934>] generic_handle_domain_irq+0x1c/0x2a
-[    3.459027] [<ffffffff804bf87c>] imsic_handle_irq+0xba/0x120
-[    3.459056] [<ffffffff80073934>] generic_handle_domain_irq+0x1c/0x2a
-[    3.459080] [<ffffffff804bdb76>] riscv_intc_aia_irq+0x24/0x34
-[    3.459103] [<ffffffff809d0452>] handle_riscv_irq+0x2e/0x4c
-[    3.459133] [<ffffffff809d923e>] call_on_irq_stack+0x32/0x40
-
-So only flush the local TLB and let the lazy kfence page fault handling
-deal with the faults which could happen when a core has an old protected
-pte version cached in its TLB. That leads to potential inaccuracies which
-can be tolerated when using kfence.
-
-Fixes: 47513f243b45 ("riscv: Enable KFENCE for riscv64")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241209074125.52322-1-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 15f112f9cef5 ("crypto: hisilicon/debugfs - mask the unnecessary info from the dump")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/kfence.h |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/crypto/hisilicon/debugfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/include/asm/kfence.h
-+++ b/arch/riscv/include/asm/kfence.h
-@@ -22,7 +22,9 @@ static inline bool kfence_protect_page(u
- 	else
- 		set_pte(pte, __pte(pte_val(ptep_get(pte)) | _PAGE_PRESENT));
+diff --git a/drivers/crypto/hisilicon/debugfs.c b/drivers/crypto/hisilicon/debugfs.c
+index 1b9b7bccdeff..45e130b901eb 100644
+--- a/drivers/crypto/hisilicon/debugfs.c
++++ b/drivers/crypto/hisilicon/debugfs.c
+@@ -192,7 +192,7 @@ static int qm_sqc_dump(struct hisi_qm *qm, char *s, char *name)
  
--	flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
-+	preempt_disable();
-+	local_flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
-+	preempt_enable();
+ 	down_read(&qm->qps_lock);
+ 	if (qm->sqc) {
+-		memcpy(&sqc, qm->sqc + qp_id * sizeof(struct qm_sqc), sizeof(struct qm_sqc));
++		memcpy(&sqc, qm->sqc + qp_id, sizeof(struct qm_sqc));
+ 		sqc.base_h = cpu_to_le32(QM_XQC_ADDR_MASK);
+ 		sqc.base_l = cpu_to_le32(QM_XQC_ADDR_MASK);
+ 		dump_show(qm, &sqc, sizeof(struct qm_sqc), "SOFT SQC");
+@@ -229,7 +229,7 @@ static int qm_cqc_dump(struct hisi_qm *qm, char *s, char *name)
  
- 	return true;
- }
+ 	down_read(&qm->qps_lock);
+ 	if (qm->cqc) {
+-		memcpy(&cqc, qm->cqc + qp_id * sizeof(struct qm_cqc), sizeof(struct qm_cqc));
++		memcpy(&cqc, qm->cqc + qp_id, sizeof(struct qm_cqc));
+ 		cqc.base_h = cpu_to_le32(QM_XQC_ADDR_MASK);
+ 		cqc.base_l = cpu_to_le32(QM_XQC_ADDR_MASK);
+ 		dump_show(qm, &cqc, sizeof(struct qm_cqc), "SOFT CQC");
+-- 
+2.47.1
+
 
 
