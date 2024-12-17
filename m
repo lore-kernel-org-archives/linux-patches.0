@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352481F429B;
-	Tue, 17 Dec 2024 17:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1437E1F429B;
+	Tue, 17 Dec 2024 17:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456292; cv=none; b=aWZIAAKnr9eDw7Z6Cdi8t+DMPR4RNX7NQ3rSLOME+l/nJOU2UgM+anBfuDslScyVZwsmzyugExmsGfhKgbwXNl2ElrEFXeyWDF9tHtWi1tt5qb1lQcJv8kk95n/SlCH6upHN0IpF7QQsm9HfOcPvJQeCeV+J1rZfUC1yqMGtKTo=
+	t=1734456295; cv=none; b=nEdfsCc4+05DKkcOE+o5q2PvJrmI078Im3YG/+slfpiSasHuyEfehT5jBSe6KzlSue5JlnFmdr4FFUUCbOX+Gwb2S5MeZiY5pGw9vi0wdbqbwyU1wHVsqYaXKcsFrY6AD+fm1NY3ZkPzTHpqERUHD2AXK2R8lrbk2NZtnJyev4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456292; c=relaxed/simple;
-	bh=NVBFJm6BdlpBOpJdU6yRsjG7SOX3+FmzNmgxaRhU7Vg=;
+	s=arc-20240116; t=1734456295; c=relaxed/simple;
+	bh=yUlWImonp6WTqAZLjUgyp5yyUpcwF+75okfTcv7PkR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dX+sbeeS072hH6tQ1PidBuk0XFOzNidLEyizcyVjK9hEU6/XTye5zp1B5tn3gAsU+wwrswLEbipcuqrqp4IK7PT5Df5ygKwiSbfZdCl32LHDFiigFbptV9KNvua3JVsjZLD0U6AojW7dQNwzoVW6jM4X4+jYBVbgEaw02X3DICU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2A1kF7E9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lg5Dxa9/nPk9kgAgZBfsJ9mcabv4ht0BiOJ/4T0t59IqJITMqvyTYDDsnIxIBoEO1mubrZkTGG1tWfKKIhH9Cm8MLRYcycz0keGOQaWpQbxYwYmOxbFRSEow9zQLgcPQ5htTWOi/e1iQMlndDieEB69WDxeGiMtZvx4fdOi2PsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fttmwNWB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2A1kF7E9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B075EC4CED3;
-	Tue, 17 Dec 2024 17:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fttmwNWB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FCB4C4CED3;
+	Tue, 17 Dec 2024 17:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456292;
-	bh=NVBFJm6BdlpBOpJdU6yRsjG7SOX3+FmzNmgxaRhU7Vg=;
+	s=korg; t=1734456295;
+	bh=yUlWImonp6WTqAZLjUgyp5yyUpcwF+75okfTcv7PkR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2A1kF7E9cPngLnCMPT6kbW8MV/FKzl/Ei9+knPgPqcu3htAmh1X/JxPzt7mTsuNYm
-	 4citzlf+5Oj1Sph6/5JY72fuBXivw6HJzREwA3gQGJiA9Pnl3QmRY8rlu00o9P6Szu
-	 hS2QpC3Z7e/+zYrX/FNQDXZ/eslBMk6JEP/eiIrg=
+	b=fttmwNWBaDXwCLAbVXno0pbiwYS9M2aIIaO//Le2GenkAYkUZ0toEvJLolUYlLWHp
+	 D8CGOe5e/frRe1eIMJfZvHUrDhpL9aejYsu0zzh3OnBhe0PxfSdRYyj99hk/QJi0yo
+	 D916ktVOZ0QmpEOY1/SM/v0idtbwRZV9ce0Y8f/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Jann Horn <jannh@google.com>
-Subject: [PATCH 6.12 003/172] bpf: Fix UAF via mismatching bpf_prog/attachment RCU flavors
-Date: Tue, 17 Dec 2024 18:05:59 +0100
-Message-ID: <20241217170546.368891741@linuxfoundation.org>
+	Juri Lelli <juri.lelli@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.12 004/172] sched/deadline: Fix replenish_dl_new_period dl_server condition
+Date: Tue, 17 Dec 2024 18:06:00 +0100
+Message-ID: <20241217170546.412075790@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -51,46 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Juri Lelli <juri.lelli@redhat.com>
 
-commit ef1b808e3b7c98612feceedf985c2fbbeb28f956 upstream.
+commit 22368fe1f9bbf39db2b5b52859589883273e80ce upstream.
 
-Uprobes always use bpf_prog_run_array_uprobe() under tasks-trace-RCU
-protection. But it is possible to attach a non-sleepable BPF program to a
-uprobe, and non-sleepable BPF programs are freed via normal RCU (see
-__bpf_prog_put_noref()). This leads to UAF of the bpf_prog because a normal
-RCU grace period does not imply a tasks-trace-RCU grace period.
+The condition in replenish_dl_new_period() that checks if a reservation
+(dl_server) is deferred and is not handling a starvation case is
+obviously wrong.
 
-Fix it by explicitly waiting for a tasks-trace-RCU grace period after
-removing the attachment of a bpf_prog to a perf_event.
+Fix it.
 
-Fixes: 8c7dcb84e3b7 ("bpf: implement sleepable uprobes by chaining gps")
-Suggested-by: Andrii Nakryiko <andrii@kernel.org>
-Suggested-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
+Signed-off-by: Juri Lelli <juri.lelli@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/bpf/20241210-bpf-fix-actual-uprobe-uaf-v1-1-19439849dd44@google.com
+Link: https://lkml.kernel.org/r/20241127063740.8278-1-juri.lelli@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/sched/deadline.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2223,6 +2223,13 @@ void perf_event_detach_bpf_prog(struct p
- 		bpf_prog_array_free_sleepable(old_array);
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index d9d5a702f1a6..206691d35b7d 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -781,7 +781,7 @@ static inline void replenish_dl_new_period(struct sched_dl_entity *dl_se,
+ 	 * If it is a deferred reservation, and the server
+ 	 * is not handling an starvation case, defer it.
+ 	 */
+-	if (dl_se->dl_defer & !dl_se->dl_defer_running) {
++	if (dl_se->dl_defer && !dl_se->dl_defer_running) {
+ 		dl_se->dl_throttled = 1;
+ 		dl_se->dl_defer_armed = 1;
  	}
- 
-+	/*
-+	 * It could be that the bpf_prog is not sleepable (and will be freed
-+	 * via normal RCU), but is called from a point that supports sleepable
-+	 * programs and uses tasks-trace-RCU.
-+	 */
-+	synchronize_rcu_tasks_trace();
-+
- 	bpf_prog_put(event->prog);
- 	event->prog = NULL;
- 
+-- 
+2.47.1
+
 
 
