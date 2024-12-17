@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425671F8913;
-	Tue, 17 Dec 2024 17:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3891F76C3;
+	Tue, 17 Dec 2024 17:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456613; cv=none; b=MOcOhM/xnBsLbDe4TMxZ6ChyUJj8LCTfi7wqz4baLy9TwqsMrq13uv+RRMxUNGj9JzrrSQx6OGXzcL38PBgXURzEbei6wQ/o3GLXC4DG5UiJykk3NTjUgfRCXoBeVsNf+Tg2gq7i0Qj05HcsTLYBUwth9+KR6fmuLUOQ8x4rpZw=
+	t=1734456616; cv=none; b=R02WY11RAqf65bVq4k+2P5jHE4x2fPuYWBupI7h1VTNNbDzHmkDWRGzrkCANyF2v96TwwtfCAafTAGa+dkPrI/yUxk/Kj+vtAX8MEDZn0BhhvfyhDAyo2TSSsoVw7WtR3uT5O4/puzOl/lKvdpvkQU/GoODT53KrYu+mmG0ubiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456613; c=relaxed/simple;
-	bh=zIJQtW/BBaaQF4J/u3k8KVV7i2m16wDmcJDC+s7+Ia0=;
+	s=arc-20240116; t=1734456616; c=relaxed/simple;
+	bh=hV2vwkCqK/5jiJQQP37Nj4byzqrhkuOyLYqzhRLkr3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvbMAYfpQ2AKIwn2kK9Obqe++Kk+e+5but60YjjfCh2rZ6kWkgWRhpgvPxhcMT0qahNL04xPaL9zCG8KDMHkIxKuAPqobXdKlkbMG4WUWaRSUaHhDHeZ1E+t3pkkO9/8HOjdP7nNThEiNRNGkcEoYn8v3v0DLFLQqP0RTmvnv7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L2oe3wK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DrF4O+yUCWaUeCKBO3n/71Gcp0WyyXs1wDjniYf8CWC+iuZfxMuGit9ohFD7JaPsva5TREZ6ft2SJ5MPtJNpdoxq99YVozdOZSQzn7clXq95jzFUhBaZic4mCEvIy86mVP1sSMIuIMPHHHpcvo/jhta9QkSfHC22PcTSzxG0SuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCBDp33P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L2oe3wK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB57C4CED7;
-	Tue, 17 Dec 2024 17:30:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCBDp33P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C02C4CEDD;
+	Tue, 17 Dec 2024 17:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456613;
-	bh=zIJQtW/BBaaQF4J/u3k8KVV7i2m16wDmcJDC+s7+Ia0=;
+	s=korg; t=1734456616;
+	bh=hV2vwkCqK/5jiJQQP37Nj4byzqrhkuOyLYqzhRLkr3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0L2oe3wKPe33KeQDnQMewwWqev6nO0Vfb+zkmjHh7DbUDE8EtWb52DYxiH4eB/u53
-	 mfDWSDSI5ID3rjsUb3HV4BFDl0WvChQfgZggZVIcOktSuXnnm8ViIYjIxXqjFvz+AZ
-	 NbC6BWH2QjKJg/tqyIGgB22IqVd9IOl5MiYbAqjg=
+	b=LCBDp33PGMwF9ZQ65JlqzWYdMrLraaTDrG6S2CEKvCVVoMBqEQWycSrUU2+jwg6zK
+	 0p/nbYdstJwr2QC5IBL0c2VdsCw0Wd9AoY1BhVuEexfBEMvOu6tWYg2dMr3ZlHnp+q
+	 +i+5kQws9MvTnkkm9r/5iE1DosETSJ1L1aJ1Nik4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	Cengiz Can <cengiz.can@canonical.com>,
+	Haoyu Li <lihaoyu499@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/172] wifi: nl80211: fix NL80211_ATTR_MLO_LINK_ID off-by-one
-Date: Tue, 17 Dec 2024 18:07:19 +0100
-Message-ID: <20241217170549.731118286@linuxfoundation.org>
+Subject: [PATCH 6.12 084/172] wifi: mac80211: init cnt before accessing elem in ieee80211_copy_mbssid_beacon
+Date: Tue, 17 Dec 2024 18:07:20 +0100
+Message-ID: <20241217170549.773340400@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -52,75 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Haoyu Li <lihaoyu499@gmail.com>
 
-[ Upstream commit 2e3dbf938656986cce73ac4083500d0bcfbffe24 ]
+[ Upstream commit 496db69fd860570145f7c266b31f3af85fca5b00 ]
 
-Since the netlink attribute range validation provides inclusive
-checking, the *max* of attribute NL80211_ATTR_MLO_LINK_ID should be
-IEEE80211_MLD_MAX_NUM_LINKS - 1 otherwise causing an off-by-one.
+With the new __counted_by annocation in cfg80211_mbssid_elems,
+the "cnt" struct member must be set before accessing the "elem"
+array. Failing to do so will trigger a runtime warning when enabling
+CONFIG_UBSAN_BOUNDS and CONFIG_FORTIFY_SOURCE.
 
-One crash stack for demonstration:
-==================================================================
-BUG: KASAN: wild-memory-access in ieee80211_tx_control_port+0x3b6/0xca0 net/mac80211/tx.c:5939
-Read of size 6 at addr 001102080000000c by task fuzzer.386/9508
-
-CPU: 1 PID: 9508 Comm: syz.1.386 Not tainted 6.1.70 #2
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x177/0x231 lib/dump_stack.c:106
- print_report+0xe0/0x750 mm/kasan/report.c:398
- kasan_report+0x139/0x170 mm/kasan/report.c:495
- kasan_check_range+0x287/0x290 mm/kasan/generic.c:189
- memcpy+0x25/0x60 mm/kasan/shadow.c:65
- ieee80211_tx_control_port+0x3b6/0xca0 net/mac80211/tx.c:5939
- rdev_tx_control_port net/wireless/rdev-ops.h:761 [inline]
- nl80211_tx_control_port+0x7b3/0xc40 net/wireless/nl80211.c:15453
- genl_family_rcv_msg_doit+0x22e/0x320 net/netlink/genetlink.c:756
- genl_family_rcv_msg net/netlink/genetlink.c:833 [inline]
- genl_rcv_msg+0x539/0x740 net/netlink/genetlink.c:850
- netlink_rcv_skb+0x1de/0x420 net/netlink/af_netlink.c:2508
- genl_rcv+0x24/0x40 net/netlink/genetlink.c:861
- netlink_unicast_kernel net/netlink/af_netlink.c:1326 [inline]
- netlink_unicast+0x74b/0x8c0 net/netlink/af_netlink.c:1352
- netlink_sendmsg+0x882/0xb90 net/netlink/af_netlink.c:1874
- sock_sendmsg_nosec net/socket.c:716 [inline]
- __sock_sendmsg net/socket.c:728 [inline]
- ____sys_sendmsg+0x5cc/0x8f0 net/socket.c:2499
- ___sys_sendmsg+0x21c/0x290 net/socket.c:2553
- __sys_sendmsg net/socket.c:2582 [inline]
- __do_sys_sendmsg net/socket.c:2591 [inline]
- __se_sys_sendmsg+0x19e/0x270 net/socket.c:2589
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x45/0x90 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Update the policy to ensure correct validation.
-
-Fixes: 7b0a0e3c3a88 ("wifi: cfg80211: do some rework towards MLO link APIs")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Suggested-by: Cengiz Can <cengiz.can@canonical.com>
-Link: https://patch.msgid.link/20241130170526.96698-1-linma@zju.edu.cn
+Fixes: c14679d7005a ("wifi: cfg80211: Annotate struct cfg80211_mbssid_elems with __counted_by")
+Signed-off-by: Haoyu Li <lihaoyu499@gmail.com>
+Link: https://patch.msgid.link/20241123172500.311853-1-lihaoyu499@gmail.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 2 +-
+ net/mac80211/cfg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 9b1b9dc5a7eb..1e78f575fb56 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -814,7 +814,7 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 	[NL80211_ATTR_MLO_LINKS] =
- 		NLA_POLICY_NESTED_ARRAY(nl80211_policy),
- 	[NL80211_ATTR_MLO_LINK_ID] =
--		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS),
-+		NLA_POLICY_RANGE(NLA_U8, 0, IEEE80211_MLD_MAX_NUM_LINKS - 1),
- 	[NL80211_ATTR_MLD_ADDR] = NLA_POLICY_EXACT_LEN(ETH_ALEN),
- 	[NL80211_ATTR_MLO_SUPPORT] = { .type = NLA_FLAG },
- 	[NL80211_ATTR_MAX_NUM_AKM_SUITES] = { .type = NLA_REJECT },
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index 6dfc61a9acd4..242b718b1cd9 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1061,13 +1061,13 @@ ieee80211_copy_mbssid_beacon(u8 *pos, struct cfg80211_mbssid_elems *dst,
+ {
+ 	int i, offset = 0;
+ 
++	dst->cnt = src->cnt;
+ 	for (i = 0; i < src->cnt; i++) {
+ 		memcpy(pos + offset, src->elem[i].data, src->elem[i].len);
+ 		dst->elem[i].len = src->elem[i].len;
+ 		dst->elem[i].data = pos + offset;
+ 		offset += dst->elem[i].len;
+ 	}
+-	dst->cnt = src->cnt;
+ 
+ 	return offset;
+ }
 -- 
 2.39.5
 
