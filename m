@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4501F8697;
-	Tue, 17 Dec 2024 17:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DD71F8911;
+	Tue, 17 Dec 2024 17:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455683; cv=none; b=sQBvhpWSQ/W6OH5yoFwqAUN8KTN86tI1o9vKey3VgjEHV35vTipXQubAx3ktY1JFICZ8149m0twyzeVT20gz2V+SXLwjad60jSWPUZn+lXlYuznfzIrf3YljQKyGhP0nbF0EOcuaMp9EwNcJvMgkz83je8g0zsJeelG/hvpWZ38=
+	t=1734455686; cv=none; b=Pq5Jd3euHpDw2Vt5pjIRylWPkJscA7iebgS9WAo+Cg6DKfz7haLNxxnGhiJDZLGbIswuv0e4Jv1hpoCwOr39vg7iksveXY4FCYoUauJBPV9rh47iTPKqKqqE5DkAFpVtNU5c6mr5tZQt/Mi/LKLGB4f6FSK3FNIcT8TLP4jxFpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455683; c=relaxed/simple;
-	bh=L7BLg9OWlRO6WjSK45wUyCKkMFBUrWYAMd/DdknJ2+o=;
+	s=arc-20240116; t=1734455686; c=relaxed/simple;
+	bh=kX3YvymP7L0gwKDmnypial//P7cf7B3/Fbud8rlSDDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIvUzibBiYyfaXUXQKtwOc9xDvuJfA30841nQCT3X3bbYtFXdsyYWxTIzUiivzbzRgeZDq3OFk2LofWgB13vFnc7ZHcRYJrI8gpqWq8M9y3GQ3hlX2LaLdYAgjmdlWceI+FJ97D2k58yzML1kYXe+LU6pgnRXvZjMqyQyY1EffA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjiPn+Xp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T0ZLsWbP69HuoXVQNyb1/xhT2eFuLWufm6jYZvgh2pzjzfwco1f7vocjBoaAolKZt4F5Lj6D7tizOTKMsDDgh4eNGG1nwKN5QmnWj9+ODxkkG7dbFjD0Zx06VnR5KGN6v6NMfgcGPT4oM9mD867ua4oY91Z47+mSCYDagD60hto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGMYIm91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjiPn+Xp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3C6C4CED3;
-	Tue, 17 Dec 2024 17:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGMYIm91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E26EC4CED3;
+	Tue, 17 Dec 2024 17:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455682;
-	bh=L7BLg9OWlRO6WjSK45wUyCKkMFBUrWYAMd/DdknJ2+o=;
+	s=korg; t=1734455685;
+	bh=kX3YvymP7L0gwKDmnypial//P7cf7B3/Fbud8rlSDDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjiPn+Xp8vouGKlfraa9xZq9EPCW4PNSF4a9OZHS3shwc38NhTlrBtAk10GHZjCY6
-	 cRGD0E4vvBwX4XghUp4jmcZ4QUFhzc1QBwTAlAdXntNqiY2D1E08t27gjwyYOtLikJ
-	 xkPGNlGrJu0DQLkZ8IF3VQrBHXYQJNFau7XScddM=
+	b=wGMYIm91DNTBkiW2Ms5aeazY2DWEhGfH3buk9VnIThWaWw8u7zqS6djdFs8oUCN8z
+	 hzgsLrgrUdO/E7fMg0TIa3plCak9/C9i+XzHQ3IS/mhrqcFsYfKglUF4XqiuHaPMIl
+	 Wc+qQNht+lvgolcq71QfCu1ELvn0VFSRQMkjev/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com,
-	Suraj Sonawane <surajsonawane0215@gmail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Remi Pommarel <repk@triplefau.lt>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/51] acpi: nfit: vmalloc-out-of-bounds Read in acpi_nfit_ctl
-Date: Tue, 17 Dec 2024 18:07:11 +0100
-Message-ID: <20241217170521.046106964@linuxfoundation.org>
+Subject: [PATCH 5.15 19/51] batman-adv: Do not send uninitialized TT changes
+Date: Tue, 17 Dec 2024 18:07:12 +0100
+Message-ID: <20241217170521.084365209@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
 References: <20241217170520.301972474@linuxfoundation.org>
@@ -54,61 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Sonawane <surajsonawane0215@gmail.com>
+From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit 265e98f72bac6c41a4492d3e30a8e5fd22fe0779 ]
+[ Upstream commit f2f7358c3890e7366cbcb7512b4bc8b4394b2d61 ]
 
-Fix an issue detected by syzbot with KASAN:
+The number of TT changes can be less than initially expected in
+batadv_tt_tvlv_container_update() (changes can be removed by
+batadv_tt_local_event() in ADD+DEL sequence between reading
+tt_diff_entries_num and actually iterating the change list under lock).
 
-BUG: KASAN: vmalloc-out-of-bounds in cmd_to_func drivers/acpi/nfit/
-core.c:416 [inline]
-BUG: KASAN: vmalloc-out-of-bounds in acpi_nfit_ctl+0x20e8/0x24a0
-drivers/acpi/nfit/core.c:459
+Thus tt_diff_len could be bigger than the actual changes size that need
+to be sent. Because batadv_send_my_tt_response sends the whole
+packet, uninitialized data can be interpreted as TT changes on other
+nodes leading to weird TT global entries on those nodes such as:
 
-The issue occurs in cmd_to_func when the call_pkg->nd_reserved2
-array is accessed without verifying that call_pkg points to a buffer
-that is appropriately sized as a struct nd_cmd_pkg. This can lead
-to out-of-bounds access and undefined behavior if the buffer does not
-have sufficient space.
+ * 00:00:00:00:00:00   -1 [....] (  0) 88:12:4e:ad:7e:ba (179) (0x45845380)
+ * 00:00:00:00:78:79 4092 [.W..] (  0) 88:12:4e:ad:7e:3c (145) (0x8ebadb8b)
 
-To address this, a check was added in acpi_nfit_ctl() to ensure that
-buf is not NULL and that buf_len is less than sizeof(*call_pkg)
-before accessing it. This ensures safe access to the members of
-call_pkg, including the nd_reserved2 array.
+All of the above also applies to OGM tvlv container buffer's tvlv_len.
 
-Reported-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7534f060ebda6b8b51b3
-Tested-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
-Fixes: ebe9f6f19d80 ("acpi/nfit: Fix bus command validation")
-Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20241118162609.29063-1-surajsonawane0215@gmail.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Remove the extra allocated space to avoid sending uninitialized TT
+changes in batadv_send_my_tt_response() and batadv_v_ogm_send_softif().
+
+Fixes: e1bf0c14096f ("batman-adv: tvlv - convert tt data sent within OGMs")
+Signed-off-by: Remi Pommarel <repk@triplefau.lt>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/nfit/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/batman-adv/translation-table.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
-index 2575d6c51f89..9cc83df22de4 100644
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -454,8 +454,13 @@ int acpi_nfit_ctl(struct nvdimm_bus_descriptor *nd_desc, struct nvdimm *nvdimm,
- 	if (cmd_rc)
- 		*cmd_rc = -EINVAL;
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index 660a5594a647..ec30c1d36160 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -990,6 +990,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	int tt_diff_len, tt_change_len = 0;
+ 	int tt_diff_entries_num = 0;
+ 	int tt_diff_entries_count = 0;
++	size_t tt_extra_len = 0;
+ 	u16 tvlv_len;
  
--	if (cmd == ND_CMD_CALL)
-+	if (cmd == ND_CMD_CALL) {
-+		if (!buf || buf_len < sizeof(*call_pkg))
-+			return -EINVAL;
+ 	tt_diff_entries_num = atomic_read(&bat_priv->tt.local_changes);
+@@ -1027,6 +1028,9 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	}
+ 	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
+ 
++	tt_extra_len = batadv_tt_len(tt_diff_entries_num -
++				     tt_diff_entries_count);
 +
- 		call_pkg = buf;
-+	}
-+
- 	func = cmd_to_func(nfit_mem, cmd, call_pkg, &family);
- 	if (func < 0)
- 		return func;
+ 	/* Keep the buffer for possible tt_request */
+ 	spin_lock_bh(&bat_priv->tt.last_changeset_lock);
+ 	kfree(bat_priv->tt.last_changeset);
+@@ -1035,6 +1039,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	tt_change_len = batadv_tt_len(tt_diff_entries_count);
+ 	/* check whether this new OGM has no changes due to size problems */
+ 	if (tt_diff_entries_count > 0) {
++		tt_diff_len -= tt_extra_len;
+ 		/* if kmalloc() fails we will reply with the full table
+ 		 * instead of providing the diff
+ 		 */
+@@ -1047,6 +1052,8 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	}
+ 	spin_unlock_bh(&bat_priv->tt.last_changeset_lock);
+ 
++	/* Remove extra packet space for OGM */
++	tvlv_len -= tt_extra_len;
+ container_register:
+ 	batadv_tvlv_container_register(bat_priv, BATADV_TVLV_TT, 1, tt_data,
+ 				       tvlv_len);
 -- 
 2.39.5
 
