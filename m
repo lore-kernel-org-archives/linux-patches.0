@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4058F1F76C3;
-	Tue, 17 Dec 2024 17:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60F31F943F;
+	Tue, 17 Dec 2024 17:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456779; cv=none; b=C5J5Ej4uncEI4Pwh48IlQhM/vHq36hRg7qQcE9ZxxLu49daL2P1uXKvVRRL+x8ISXtBzGfsYDyojCsKif+z4zXG6gyX/h1i2EEgSTydknOHxQAGD0wHvgj+HDd+VeOQ9sFZjnOEvFvk3ia+75jR+lH9e3Y5DA/hKXG8Ipq61m8c=
+	t=1734456781; cv=none; b=BV9dxivFp3mYfPD6G8BOcwPY8qcJWA/KfZbxBedTAsGWBQKlS6Jb/qs4vkpYiqNwduRDSUMO/tinG+6QK7pI9wiEKzw0JLyoxVQE5Gq9lrsNIyPTSfblXt3Qj2XYPixtQQSqbZdp2w5AzBHbDV1iaIPuRMgrx3c2i4nQ6oZBFxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456779; c=relaxed/simple;
-	bh=nPGsaNkHmfhEJfaErgUYNQyKFXQf/wldJctSLi1WkjY=;
+	s=arc-20240116; t=1734456781; c=relaxed/simple;
+	bh=JOhfd4fjlxyqH7xDTcf9QTKnphS5r+LjgVzNgDrm2pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jnr5BpVEyqNWqfysEUlxPZNRFOYL6GFoBmsF/uXWyQO/vfSuXVI+129vzOBQGzhRCJOgF5ELmok8uXXHmrTzKAIL5V47qb1Tv60+t1gQzuAgay2853fAEEOq6g+oLL1JkebUsKwgfsZea7bTRUfZUepB20KwTjVVbJuLiIQVrkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hakFBMtu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PbqwiEP7p1xp1hC83vIE4OfXibGMrpTjbCG0FovZaTawuGiixDW8gZf996BJf68EzCp1njfiIg1dfnq6aaklmd2W7xJg6s1015DTghQDSj3828I6XDgJSE78DLHxp+uSi1BuidcZvWPt3KslUqF8ByCZQIFoMuZNvRHVj7yC0H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrnPO4xX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hakFBMtu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B61C4CED3;
-	Tue, 17 Dec 2024 17:32:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrnPO4xX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52925C4CED7;
+	Tue, 17 Dec 2024 17:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456778;
-	bh=nPGsaNkHmfhEJfaErgUYNQyKFXQf/wldJctSLi1WkjY=;
+	s=korg; t=1734456781;
+	bh=JOhfd4fjlxyqH7xDTcf9QTKnphS5r+LjgVzNgDrm2pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hakFBMtunBqc/TtPmdyHjWriTqePg9YS9AHSC6RJz4ZmkENBO2dhmX4f5pFLLgdm1
-	 NAH0+7ArHgjtz1RdICJaV6JLBmGZxTrKiTbn5sUzSg/p0+7vGU01qwNZ23e+Xs+yl1
-	 rwlfeVzb8hpTGvi61jCQIzD3/68H3iptbd33P+8A=
+	b=CrnPO4xXTu+l0OR0FFYe2/8d1ZaTvk97sp8Bw+wJA7owIH/M8RpRJuk/NxzOgBDVM
+	 I3jZFjPb9KLKXJPqcywMxXRtsUWWIYb0+T7GTjC43aw5bylQqdAHaFYgyn6+3EgUHl
+	 14Ya/Bb8jmhpGOk6gBar+vK7hskQxOcUY3Rv811M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kjain@linux.ibm.com,
-	hch@lst.de,
-	axboe@kernel.dk,
-	ritesh.list@gmail.com,
-	ming.lei@redhat.com,
-	gjoyce@linux.ibm.com,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 162/172] block: Fix potential deadlock while freezing queue and acquiring sysfs_lock
-Date: Tue, 17 Dec 2024 18:08:38 +0100
-Message-ID: <20241217170553.049517888@linuxfoundation.org>
+	Christian Poveda <git@pvdrz.com>,
+	=?UTF-8?q?Emilio=20Cobos=20=C3=81lvarez?= <emilio@crisal.io>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.12 163/172] rust: kbuild: set `bindgen`s Rust target version
+Date: Tue, 17 Dec 2024 18:08:39 +0100
+Message-ID: <20241217170553.090087629@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,339 +46,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-[ Upstream commit be26ba96421ab0a8fa2055ccf7db7832a13c44d2 ]
+commit 7a5f93ea5862da91488975acaa0c7abd508f192b upstream.
 
-For storing a value to a queue attribute, the queue_attr_store function
-first freezes the queue (->q_usage_counter(io)) and then acquire
-->sysfs_lock. This seems not correct as the usual ordering should be to
-acquire ->sysfs_lock before freezing the queue. This incorrect ordering
-causes the following lockdep splat which we are able to reproduce always
-simply by accessing /sys/kernel/debug file using ls command:
+Each `bindgen` release may upgrade the list of Rust targets. For instance,
+currently, in their master branch [1], the latest ones are:
 
-[   57.597146] WARNING: possible circular locking dependency detected
-[   57.597154] 6.12.0-10553-gb86545e02e8c #20 Tainted: G        W
-[   57.597162] ------------------------------------------------------
-[   57.597168] ls/4605 is trying to acquire lock:
-[   57.597176] c00000003eb56710 (&mm->mmap_lock){++++}-{4:4}, at: __might_fault+0x58/0xc0
-[   57.597200]
-               but task is already holding lock:
-[   57.597207] c0000018e27c6810 (&sb->s_type->i_mutex_key#3){++++}-{4:4}, at: iterate_dir+0x94/0x1d4
-[   57.597226]
-               which lock already depends on the new lock.
+    Nightly => {
+        vectorcall_abi: #124485,
+        ptr_metadata: #81513,
+        layout_for_ptr: #69835,
+    },
+    Stable_1_77(77) => { offset_of: #106655 },
+    Stable_1_73(73) => { thiscall_abi: #42202 },
+    Stable_1_71(71) => { c_unwind_abi: #106075 },
+    Stable_1_68(68) => { abi_efiapi: #105795 },
 
-[   57.597233]
-               the existing dependency chain (in reverse order) is:
-[   57.597241]
-               -> #5 (&sb->s_type->i_mutex_key#3){++++}-{4:4}:
-[   57.597255]        down_write+0x6c/0x18c
-[   57.597264]        start_creating+0xb4/0x24c
-[   57.597274]        debugfs_create_dir+0x2c/0x1e8
-[   57.597283]        blk_register_queue+0xec/0x294
-[   57.597292]        add_disk_fwnode+0x2e4/0x548
-[   57.597302]        brd_alloc+0x2c8/0x338
-[   57.597309]        brd_init+0x100/0x178
-[   57.597317]        do_one_initcall+0x88/0x3e4
-[   57.597326]        kernel_init_freeable+0x3cc/0x6e0
-[   57.597334]        kernel_init+0x34/0x1cc
-[   57.597342]        ret_from_kernel_user_thread+0x14/0x1c
-[   57.597350]
-               -> #4 (&q->debugfs_mutex){+.+.}-{4:4}:
-[   57.597362]        __mutex_lock+0xfc/0x12a0
-[   57.597370]        blk_register_queue+0xd4/0x294
-[   57.597379]        add_disk_fwnode+0x2e4/0x548
-[   57.597388]        brd_alloc+0x2c8/0x338
-[   57.597395]        brd_init+0x100/0x178
-[   57.597402]        do_one_initcall+0x88/0x3e4
-[   57.597410]        kernel_init_freeable+0x3cc/0x6e0
-[   57.597418]        kernel_init+0x34/0x1cc
-[   57.597426]        ret_from_kernel_user_thread+0x14/0x1c
-[   57.597434]
-               -> #3 (&q->sysfs_lock){+.+.}-{4:4}:
-[   57.597446]        __mutex_lock+0xfc/0x12a0
-[   57.597454]        queue_attr_store+0x9c/0x110
-[   57.597462]        sysfs_kf_write+0x70/0xb0
-[   57.597471]        kernfs_fop_write_iter+0x1b0/0x2ac
-[   57.597480]        vfs_write+0x3dc/0x6e8
-[   57.597488]        ksys_write+0x84/0x140
-[   57.597495]        system_call_exception+0x130/0x360
-[   57.597504]        system_call_common+0x160/0x2c4
-[   57.597516]
-               -> #2 (&q->q_usage_counter(io)#21){++++}-{0:0}:
-[   57.597530]        __submit_bio+0x5ec/0x828
-[   57.597538]        submit_bio_noacct_nocheck+0x1e4/0x4f0
-[   57.597547]        iomap_readahead+0x2a0/0x448
-[   57.597556]        xfs_vm_readahead+0x28/0x3c
-[   57.597564]        read_pages+0x88/0x41c
-[   57.597571]        page_cache_ra_unbounded+0x1ac/0x2d8
-[   57.597580]        filemap_get_pages+0x188/0x984
-[   57.597588]        filemap_read+0x13c/0x4bc
-[   57.597596]        xfs_file_buffered_read+0x88/0x17c
-[   57.597605]        xfs_file_read_iter+0xac/0x158
-[   57.597614]        vfs_read+0x2d4/0x3b4
-[   57.597622]        ksys_read+0x84/0x144
-[   57.597629]        system_call_exception+0x130/0x360
-[   57.597637]        system_call_common+0x160/0x2c4
-[   57.597647]
-               -> #1 (mapping.invalidate_lock#2){++++}-{4:4}:
-[   57.597661]        down_read+0x6c/0x220
-[   57.597669]        filemap_fault+0x870/0x100c
-[   57.597677]        xfs_filemap_fault+0xc4/0x18c
-[   57.597684]        __do_fault+0x64/0x164
-[   57.597693]        __handle_mm_fault+0x1274/0x1dac
-[   57.597702]        handle_mm_fault+0x248/0x484
-[   57.597711]        ___do_page_fault+0x428/0xc0c
-[   57.597719]        hash__do_page_fault+0x30/0x68
-[   57.597727]        do_hash_fault+0x90/0x35c
-[   57.597736]        data_access_common_virt+0x210/0x220
-[   57.597745]        _copy_from_user+0xf8/0x19c
-[   57.597754]        sel_write_load+0x178/0xd54
-[   57.597762]        vfs_write+0x108/0x6e8
-[   57.597769]        ksys_write+0x84/0x140
-[   57.597777]        system_call_exception+0x130/0x360
-[   57.597785]        system_call_common+0x160/0x2c4
-[   57.597794]
-               -> #0 (&mm->mmap_lock){++++}-{4:4}:
-[   57.597806]        __lock_acquire+0x17cc/0x2330
-[   57.597814]        lock_acquire+0x138/0x400
-[   57.597822]        __might_fault+0x7c/0xc0
-[   57.597830]        filldir64+0xe8/0x390
-[   57.597839]        dcache_readdir+0x80/0x2d4
-[   57.597846]        iterate_dir+0xd8/0x1d4
-[   57.597855]        sys_getdents64+0x88/0x2d4
-[   57.597864]        system_call_exception+0x130/0x360
-[   57.597872]        system_call_common+0x160/0x2c4
-[   57.597881]
-               other info that might help us debug this:
+By default, the highest stable release in their list is used, and users
+are expected to set one if they need to support older Rust versions
+(e.g. see [2]).
 
-[   57.597888] Chain exists of:
-                 &mm->mmap_lock --> &q->debugfs_mutex --> &sb->s_type->i_mutex_key#3
+Thus, over time, new Rust features are used by default, and at some
+point, it is likely that `bindgen` will emit Rust code that requires a
+Rust version higher than our minimum (or perhaps enabling an unstable
+feature). Currently, there is no problem because the maximum they have,
+as seen above, is Rust 1.77.0, and our current minimum is Rust 1.78.0.
 
-[   57.597905]  Possible unsafe locking scenario:
+Therefore, set a Rust target explicitly now to prevent going forward in
+time too much and thus getting potential build failures at some point.
 
-[   57.597911]        CPU0                    CPU1
-[   57.597917]        ----                    ----
-[   57.597922]   rlock(&sb->s_type->i_mutex_key#3);
-[   57.597932]                                lock(&q->debugfs_mutex);
-[   57.597940]                                lock(&sb->s_type->i_mutex_key#3);
-[   57.597950]   rlock(&mm->mmap_lock);
-[   57.597958]
-                *** DEADLOCK ***
+Since we also support a minimum `bindgen` version, and since `bindgen`
+does not support passing unknown Rust target versions, we need to use
+the list of our minimum `bindgen` version, rather than the latest. So,
+since `bindgen` 0.65.1 had this list [3], we need to use Rust 1.68.0:
 
-[   57.597965] 2 locks held by ls/4605:
-[   57.597971]  #0: c0000000137c12f8 (&f->f_pos_lock){+.+.}-{4:4}, at: fdget_pos+0xcc/0x154
-[   57.597989]  #1: c0000018e27c6810 (&sb->s_type->i_mutex_key#3){++++}-{4:4}, at: iterate_dir+0x94/0x1d4
+    /// Rust stable 1.64
+    ///  * `core_ffi_c` ([Tracking issue](https://github.com/rust-lang/rust/issues/94501))
+    => Stable_1_64 => 1.64;
+    /// Rust stable 1.68
+    ///  * `abi_efiapi` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/65815))
+    => Stable_1_68 => 1.68;
+    /// Nightly rust
+    ///  * `thiscall` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/42202))
+    ///  * `vectorcall` calling convention (no tracking issue)
+    ///  * `c_unwind` calling convention ([Tracking issue](https://github.com/rust-lang/rust/issues/74990))
+    => Nightly => nightly;
 
-Prevent the above lockdep warning by acquiring ->sysfs_lock before
-freezing the queue while storing a queue attribute in queue_attr_store
-function. Later, we also found[1] another function __blk_mq_update_nr_
-hw_queues where we first freeze queue and then acquire the ->sysfs_lock.
-So we've also updated lock ordering in __blk_mq_update_nr_hw_queues
-function and ensured that in all code paths we follow the correct lock
-ordering i.e. acquire ->sysfs_lock before freezing the queue.
+    ...
 
-[1] https://lore.kernel.org/all/CAFj5m9Ke8+EHKQBs_Nk6hqd=LGXtk4mUxZUN5==ZcCjnZSBwHw@mail.gmail.com/
+    /// Latest stable release of Rust
+    pub const LATEST_STABLE_RUST: RustTarget = RustTarget::Stable_1_68;
 
-Reported-by: kjain@linux.ibm.com
-Fixes: af2814149883 ("block: freeze the queue in queue_attr_store")
-Tested-by: kjain@linux.ibm.com
-Cc: hch@lst.de
-Cc: axboe@kernel.dk
-Cc: ritesh.list@gmail.com
-Cc: ming.lei@redhat.com
-Cc: gjoyce@linux.ibm.com
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241210144222.1066229-1-nilay@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Thus add the `--rust-target 1.68` parameter. Add a comment as well
+explaining this.
+
+An alternative would be to use the currently running (i.e. actual) `rustc`
+and `bindgen` versions to pick a "better" Rust target version. However,
+that would introduce more moving parts depending on the user setup and
+is also more complex to implement.
+
+Starting with `bindgen` 0.71.0 [4], we will be able to set any future
+Rust version instead, i.e. we will be able to set here our minimum
+supported Rust version. Christian implemented it [5] after seeing this
+patch. Thanks!
+
+Cc: Christian Poveda <git@pvdrz.com>
+Cc: Emilio Cobos Álvarez <emilio@crisal.io>
+Cc: stable@vger.kernel.org # needed for 6.12.y; unneeded for 6.6.y; do not apply to 6.1.y
+Fixes: c844fa64a2d4 ("rust: start supporting several `bindgen` versions")
+Link: https://github.com/rust-lang/rust-bindgen/blob/21c60f473f4e824d4aa9b2b508056320d474b110/bindgen/features.rs#L97-L105 [1]
+Link: https://github.com/rust-lang/rust-bindgen/issues/2960 [2]
+Link: https://github.com/rust-lang/rust-bindgen/blob/7d243056d335fdc4537f7bca73c06d01aae24ddc/bindgen/features.rs#L131-L150 [3]
+Link: https://github.com/rust-lang/rust-bindgen/blob/main/CHANGELOG.md#0710-2024-12-06 [4]
+Link: https://github.com/rust-lang/rust-bindgen/pull/2993 [5]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://lore.kernel.org/r/20241123180323.255997-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq-sysfs.c | 16 ++++++----------
- block/blk-mq.c       | 29 ++++++++++++++++++-----------
- block/blk-sysfs.c    |  4 ++--
- 3 files changed, 26 insertions(+), 23 deletions(-)
+ rust/Makefile |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-mq-sysfs.c b/block/blk-mq-sysfs.c
-index 156e9bb07abf..cd5ea6eaa76b 100644
---- a/block/blk-mq-sysfs.c
-+++ b/block/blk-mq-sysfs.c
-@@ -275,15 +275,13 @@ void blk_mq_sysfs_unregister_hctxs(struct request_queue *q)
- 	struct blk_mq_hw_ctx *hctx;
- 	unsigned long i;
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -267,9 +267,22 @@ endif
  
--	mutex_lock(&q->sysfs_dir_lock);
-+	lockdep_assert_held(&q->sysfs_dir_lock);
-+
- 	if (!q->mq_sysfs_init_done)
--		goto unlock;
-+		return;
+ bindgen_c_flags_final = $(bindgen_c_flags_lto) -D__BINDGEN__
  
- 	queue_for_each_hw_ctx(q, hctx, i)
- 		blk_mq_unregister_hctx(hctx);
--
--unlock:
--	mutex_unlock(&q->sysfs_dir_lock);
- }
- 
- int blk_mq_sysfs_register_hctxs(struct request_queue *q)
-@@ -292,9 +290,10 @@ int blk_mq_sysfs_register_hctxs(struct request_queue *q)
- 	unsigned long i;
- 	int ret = 0;
- 
--	mutex_lock(&q->sysfs_dir_lock);
-+	lockdep_assert_held(&q->sysfs_dir_lock);
-+
- 	if (!q->mq_sysfs_init_done)
--		goto unlock;
-+		return ret;
- 
- 	queue_for_each_hw_ctx(q, hctx, i) {
- 		ret = blk_mq_register_hctx(hctx);
-@@ -302,8 +301,5 @@ int blk_mq_sysfs_register_hctxs(struct request_queue *q)
- 			break;
- 	}
- 
--unlock:
--	mutex_unlock(&q->sysfs_dir_lock);
--
- 	return ret;
- }
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 1030875a3e95..cc1b32023838 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4462,7 +4462,8 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
- 	unsigned long i, j;
- 
- 	/* protect against switching io scheduler  */
--	mutex_lock(&q->sysfs_lock);
-+	lockdep_assert_held(&q->sysfs_lock);
-+
- 	for (i = 0; i < set->nr_hw_queues; i++) {
- 		int old_node;
- 		int node = blk_mq_get_hctx_node(set, i);
-@@ -4495,7 +4496,6 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
- 
- 	xa_for_each_start(&q->hctx_table, j, hctx, j)
- 		blk_mq_exit_hctx(q, set, hctx, j);
--	mutex_unlock(&q->sysfs_lock);
- 
- 	/* unregister cpuhp callbacks for exited hctxs */
- 	blk_mq_remove_hw_queues_cpuhp(q);
-@@ -4527,10 +4527,14 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
- 
- 	xa_init(&q->hctx_table);
- 
-+	mutex_lock(&q->sysfs_lock);
-+
- 	blk_mq_realloc_hw_ctxs(set, q);
- 	if (!q->nr_hw_queues)
- 		goto err_hctxs;
- 
-+	mutex_unlock(&q->sysfs_lock);
-+
- 	INIT_WORK(&q->timeout_work, blk_mq_timeout_work);
- 	blk_queue_rq_timeout(q, set->timeout ? set->timeout : 30 * HZ);
- 
-@@ -4549,6 +4553,7 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
- 	return 0;
- 
- err_hctxs:
-+	mutex_unlock(&q->sysfs_lock);
- 	blk_mq_release(q);
- err_exit:
- 	q->mq_ops = NULL;
-@@ -4929,12 +4934,12 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
- 		return false;
- 
- 	/* q->elevator needs protection from ->sysfs_lock */
--	mutex_lock(&q->sysfs_lock);
-+	lockdep_assert_held(&q->sysfs_lock);
- 
- 	/* the check has to be done with holding sysfs_lock */
- 	if (!q->elevator) {
- 		kfree(qe);
--		goto unlock;
-+		goto out;
- 	}
- 
- 	INIT_LIST_HEAD(&qe->node);
-@@ -4944,9 +4949,7 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
- 	__elevator_get(qe->type);
- 	list_add(&qe->node, head);
- 	elevator_disable(q);
--unlock:
--	mutex_unlock(&q->sysfs_lock);
--
-+out:
- 	return true;
- }
- 
-@@ -4975,11 +4978,9 @@ static void blk_mq_elv_switch_back(struct list_head *head,
- 	list_del(&qe->node);
- 	kfree(qe);
- 
--	mutex_lock(&q->sysfs_lock);
- 	elevator_switch(q, t);
- 	/* drop the reference acquired in blk_mq_elv_switch_none */
- 	elevator_put(t);
--	mutex_unlock(&q->sysfs_lock);
- }
- 
- static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
-@@ -4999,8 +5000,11 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	if (set->nr_maps == 1 && nr_hw_queues == set->nr_hw_queues)
- 		return;
- 
--	list_for_each_entry(q, &set->tag_list, tag_set_list)
-+	list_for_each_entry(q, &set->tag_list, tag_set_list) {
-+		mutex_lock(&q->sysfs_dir_lock);
-+		mutex_lock(&q->sysfs_lock);
- 		blk_mq_freeze_queue(q);
-+	}
- 	/*
- 	 * Switch IO scheduler to 'none', cleaning up the data associated
- 	 * with the previous scheduler. We will switch back once we are done
-@@ -5056,8 +5060,11 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_elv_switch_back(&head, q);
- 
--	list_for_each_entry(q, &set->tag_list, tag_set_list)
-+	list_for_each_entry(q, &set->tag_list, tag_set_list) {
- 		blk_mq_unfreeze_queue(q);
-+		mutex_unlock(&q->sysfs_lock);
-+		mutex_unlock(&q->sysfs_dir_lock);
-+	}
- 
- 	/* Free the excess tags when nr_hw_queues shrink. */
- 	for (i = set->nr_hw_queues; i < prev_nr_hw_queues; i++)
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 207577145c54..42c2cb97d778 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -690,11 +690,11 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
- 			return res;
- 	}
- 
--	blk_mq_freeze_queue(q);
- 	mutex_lock(&q->sysfs_lock);
-+	blk_mq_freeze_queue(q);
- 	res = entry->store(disk, page, length);
--	mutex_unlock(&q->sysfs_lock);
- 	blk_mq_unfreeze_queue(q);
-+	mutex_unlock(&q->sysfs_lock);
- 	return res;
- }
- 
--- 
-2.39.5
-
++# Each `bindgen` release may upgrade the list of Rust target versions. By
++# default, the highest stable release in their list is used. Thus we need to set
++# a `--rust-target` to avoid future `bindgen` releases emitting code that
++# `rustc` may not understand. On top of that, `bindgen` does not support passing
++# an unknown Rust target version.
++#
++# Therefore, the Rust target for `bindgen` can be only as high as the minimum
++# Rust version the kernel supports and only as high as the greatest stable Rust
++# target supported by the minimum `bindgen` version the kernel supports (that
++# is, if we do not test the actual `rustc`/`bindgen` versions running).
++#
++# Starting with `bindgen` 0.71.0, we will be able to set any future Rust version
++# instead, i.e. we will be able to set here our minimum supported Rust version.
+ quiet_cmd_bindgen = BINDGEN $@
+       cmd_bindgen = \
+-	$(BINDGEN) $< $(bindgen_target_flags) \
++	$(BINDGEN) $< $(bindgen_target_flags) --rust-target 1.68 \
+ 		--use-core --with-derive-default --ctypes-prefix core::ffi --no-layout-tests \
+ 		--no-debug '.*' --enable-function-attribute-detection \
+ 		-o $@ -- $(bindgen_c_flags_final) -DMODULE \
 
 
