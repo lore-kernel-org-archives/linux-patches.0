@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28DB1F4735;
-	Tue, 17 Dec 2024 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E001F543C;
+	Tue, 17 Dec 2024 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455375; cv=none; b=IgQkhRVGk3aL+CsJlrrd42gP2XXmvyqxLwab5KPQ0hnH5GHvKXqcV2haJu4ldMkT/WIkUr1S97HI5JRjDP860SduxzEiXu7S5g/s0sEXG+ckRoHYJ26tkmtsbZopMeeFldxUOb6Bx4xFQPoaVPijGGwo0Irk00Ur0p6pO2/w0R8=
+	t=1734455380; cv=none; b=p2vVs62CYx1KDM5HZcxFJE8jBuY2XRyperLSk0VzxuXk11xQLei9BJC9gLkjQtG/QMVYpbAcbOQONNIZqklwhK7g8u1bclPcGExJGmAdX/W7KIPM7lGXus8N+si8C38P3zI0LrjqMm1IXuYdwCevJ5VJW5kYO+jirx4hNkGVIqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455375; c=relaxed/simple;
-	bh=ReG75ygnHQkDyCF3DuJDwCNva0VU9aYF9HAMrSFZxcQ=;
+	s=arc-20240116; t=1734455380; c=relaxed/simple;
+	bh=zOp5xy00V2OdJioiWoieNUQt0tDPxr7eHMoe5vZOOUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqN5Ag/Jjg24AE9u+w81EWPJXwfBF/QGIVoizpzQ9tX11S0HqYscZAr5XmQior+0bT7Zng04IqtIQ6w+1HnCVIcapjsBF2Lo1FYhuAMjCpfpwe9wWoNcXbqERVsksmPM2QQuf6yr2YUh5P/FUdlhjFBtRgxKsm9SV5k6pVv69J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsRdlWKR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M3pFKcVs6HAGLlAVSkM5BIDd3DsmydaX2xA1S8w32vDbqt6eZNtG/Fiab8/dnJ+UY669ruh8oQuvJfeFkUq0BTDaPq25j1ojCW4YkIyOup8dVMS6UUJU8rlH4HKwwH31xRv044r+9FYEjgaCKqxx/vNVuPJtoycnX7Y0r5LDRT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fUHIPOgs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsRdlWKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AC83C4CED3;
-	Tue, 17 Dec 2024 17:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fUHIPOgs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B422C4CED3;
+	Tue, 17 Dec 2024 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455375;
-	bh=ReG75ygnHQkDyCF3DuJDwCNva0VU9aYF9HAMrSFZxcQ=;
+	s=korg; t=1734455378;
+	bh=zOp5xy00V2OdJioiWoieNUQt0tDPxr7eHMoe5vZOOUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jsRdlWKRdqB6FakKcNqHvuN8D8bLEYhMFvMXhw3ZP0Yg6b2Pg1b3RSTY1vnKpNGi9
-	 U5haxSXIskjHHiROJP//eTd7Qva8hVpcoFvl/efLx+oEjbZvQZpf+XcbKQCcpkkt/5
-	 ecNFdLkiPUi1a9byllOHup7gVeuhMEdOWyN3iLRc=
+	b=fUHIPOgs6Q344zewfkxzY0JcIy92WPpo7rRsMZ5R2IagqURUyFh218Nd0whHTw7aZ
+	 AdeUKrYOLbX1wrvNB3KeUlkA4RokCMhVOFdSiSUpGj2F4xveriLO0tSK8NW5wQszGz
+	 hVbuKvJjhSeH/EaXa9df6pi5MdYNSGIMwSN4c3nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Damien Le Moal <dlemoal@kernel.org>
-Subject: [PATCH 5.4 02/24] ata: sata_highbank: fix OF node reference leak in highbank_initialize_phys()
-Date: Tue, 17 Dec 2024 18:07:00 +0100
-Message-ID: <20241217170519.109248253@linuxfoundation.org>
+	Stefan Wahren <wahrenst@gmx.net>
+Subject: [PATCH 5.4 03/24] usb: dwc2: hcd: Fix GetPortStatus & SetPortFeature
+Date: Tue, 17 Dec 2024 18:07:01 +0100
+Message-ID: <20241217170519.148324615@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170519.006786596@linuxfoundation.org>
 References: <20241217170519.006786596@linuxfoundation.org>
@@ -50,30 +49,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-commit 676fe1f6f74db988191dab5df3bf256908177072 upstream.
+commit a8d3e4a734599c7d0f6735f8db8a812e503395dd upstream.
 
-The OF node reference obtained by of_parse_phandle_with_args() is not
-released on early return. Add a of_node_put() call before returning.
+On Rasperry Pis without onboard USB hub the power cycle during
+power connect init only disable the port but never enabled it again:
 
-Fixes: 8996b89d6bc9 ("ata: add platform driver for Calxeda AHCI controller")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+  usb usb1-port1: attempt power cycle
+
+The port relevant part in dwc2_hcd_hub_control() is skipped in case
+port_connect_status = 0 under the assumption the core is or will be soon
+in device mode. But this assumption is wrong, because after ClearPortFeature
+USB_PORT_FEAT_POWER the port_connect_status will also be 0 and
+SetPortFeature (incl. USB_PORT_FEAT_POWER) will be a no-op.
+
+Fix the behavior of dwc2_hcd_hub_control() by replacing the
+port_connect_status check with dwc2_is_device_mode().
+
+Link: https://github.com/raspberrypi/linux/issues/6247
+Fixes: 7359d482eb4d ("staging: HCD files for the DWC2 driver")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://lore.kernel.org/r/20241202001631.75473-3-wahrenst@gmx.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/sata_highbank.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc2/hcd.c |   16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
---- a/drivers/ata/sata_highbank.c
-+++ b/drivers/ata/sata_highbank.c
-@@ -348,6 +348,7 @@ static int highbank_initialize_phys(stru
- 			phy_nodes[phy] = phy_data.np;
- 			cphy_base[phy] = of_iomap(phy_nodes[phy], 0);
- 			if (cphy_base[phy] == NULL) {
-+				of_node_put(phy_data.np);
- 				return 0;
- 			}
- 			phy_count += 1;
+--- a/drivers/usb/dwc2/hcd.c
++++ b/drivers/usb/dwc2/hcd.c
+@@ -3544,11 +3544,9 @@ static int dwc2_hcd_hub_control(struct d
+ 			port_status |= USB_PORT_STAT_C_OVERCURRENT << 16;
+ 		}
+ 
+-		if (!hsotg->flags.b.port_connect_status) {
++		if (dwc2_is_device_mode(hsotg)) {
+ 			/*
+-			 * The port is disconnected, which means the core is
+-			 * either in device mode or it soon will be. Just
+-			 * return 0's for the remainder of the port status
++			 * Just return 0's for the remainder of the port status
+ 			 * since the port register can't be read if the core
+ 			 * is in device mode.
+ 			 */
+@@ -3618,13 +3616,11 @@ static int dwc2_hcd_hub_control(struct d
+ 		if (wvalue != USB_PORT_FEAT_TEST && (!windex || windex > 1))
+ 			goto error;
+ 
+-		if (!hsotg->flags.b.port_connect_status) {
++		if (dwc2_is_device_mode(hsotg)) {
+ 			/*
+-			 * The port is disconnected, which means the core is
+-			 * either in device mode or it soon will be. Just
+-			 * return without doing anything since the port
+-			 * register can't be written if the core is in device
+-			 * mode.
++			 * Just return 0's for the remainder of the port status
++			 * since the port register can't be read if the core
++			 * is in device mode.
+ 			 */
+ 			break;
+ 		}
 
 
