@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5A01F9F79;
-	Tue, 17 Dec 2024 17:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BB31FA24A;
+	Tue, 17 Dec 2024 17:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456649; cv=none; b=Mkt6tuVdrIdprrI0czpu7cidVa2N9ZiwF24GNDSxgkiI2Xn7gIxKbnwvlzXNIYV/LsY/bL1B+CV3EVd98KWOZWjTlOdDBcCDWKcRmCTSovcyZBZz/h+p7iF//nNkGmFH3ru3mVkLec5r+wnlWJlVbn2buJYh8dm8iQ69Kl1hARk=
+	t=1734456651; cv=none; b=SGD9dTbrramlNhvK/bGoIC+x63bHMHrr8nKyDn7k/kJRSuLhCma0Sx80ttsDYXHc3YUuj295jCgdr7vQHIDTJzs8WP/sIA3W4m2K2C2tM50xLgycBywxeRX8/POeT2VsXtsGBC6vUzdlz3Xck6ydDjGsYqnprEv2jvB46+NuIfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456649; c=relaxed/simple;
-	bh=HmqSiW5z1WEwZkpn+cNl5o+PAHtBaMZDsfGeD72+0zA=;
+	s=arc-20240116; t=1734456651; c=relaxed/simple;
+	bh=vJQTn2eotknXEYMM/KLywWO90eW2TYtjS3qDr4cEX+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PmKKbycJWcgVbjTtqAYJj4yROXl+vowZy1KE46Xe63wAU5xZfDrisRtaJXN2L4B5kNhI1O77qn7S7P6rgUb9i068Tw/A5aHubmhEIBmxPUcsHqFMbEauvH8zam30vDukdSWujPgJxNqpCxZOwhC5YhRB1OQxeS3slhg5SGjlyno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpFOGll1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FL2F+FnGo/Nm0psXXuGk2/yHZ1s8tn9+sAxzq325j4DTjG3Ym5ATsig6xjYVtJOafEhcdq6u8JNAaM2MelGN+dqqlaAwMuv/VJgSf3+5zKPC2a9nbxWX8sVFKD408ZgdDS5WL7Qro8jXgj0ejgRHIrQCs4zqkV9Hv6PdskciPzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hs6nFBF2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpFOGll1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533D3C4CED3;
-	Tue, 17 Dec 2024 17:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hs6nFBF2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47044C4CED3;
+	Tue, 17 Dec 2024 17:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456648;
-	bh=HmqSiW5z1WEwZkpn+cNl5o+PAHtBaMZDsfGeD72+0zA=;
+	s=korg; t=1734456651;
+	bh=vJQTn2eotknXEYMM/KLywWO90eW2TYtjS3qDr4cEX+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SpFOGll102DDUS/RL81gbF/EhCT+K55qbGeFsOvpSp4DTjsSO/zPpP7O6dVvjvb9S
-	 uz/lnTvpn0Kvuin4s7nJgC6kivBL1LwwXO5UT1LFIu8B7Rt8+0UJi8IQCW3isc0R0m
-	 mqwmm/NfZtPcrlw953A5ruR3fa4zh4erBDy8vTQQ=
+	b=Hs6nFBF2r9fruv1ccRw3es5KF5wTojWvBSZisYiE+mNa3dtL98PN7lkuCkKJYoLhI
+	 G+hemO7o0Eyh1uDPaNMoLkvfZDd5oYmmSxft0PHhjNHedj1sRGP/yK6d5COdVyITZe
+	 1gyTXUeqb4++zNn9G1VF8ZllvM+WHRh6AjJged9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 124/172] net: renesas: rswitch: fix race window between tx start and complete
-Date: Tue, 17 Dec 2024 18:08:00 +0100
-Message-ID: <20241217170551.485239451@linuxfoundation.org>
+Subject: [PATCH 6.12 125/172] net: renesas: rswitch: fix leaked pointer on error path
+Date: Tue, 17 Dec 2024 18:08:01 +0100
+Message-ID: <20241217170551.526549059@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -54,80 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
 
-[ Upstream commit 0c9547e6ccf40455b0574cf589be3b152a3edf5b ]
+[ Upstream commit bb617328bafa1023d8e9c25a25345a564c66c14f ]
 
-If hardware is already transmitting, it can start handling the
-descriptor being written to immediately after it observes updated DT
-field, before the queue is kicked by a write to GWTRC.
+If error path is taken while filling descriptor for a frame, skb
+pointer is left in the entry. Later, on the ring entry reuse, the
+same entry could be used as a part of a multi-descriptor frame,
+and skb for that new frame could be stored in a different entry.
 
-If the start_xmit() execution is preempted at unfortunate moment, this
-transmission can complete, and interrupt handled, before gq->cur gets
-updated. With the current implementation of completion, this will cause
-the last entry not completed.
+Then, the stale pointer will reach the completion routine, and passed
+to the release operation.
 
-Fix that by changing completion loop to check DT values directly, instead
-of depending on gq->cur.
+Fix that by clearing the saved skb pointer at the error path.
 
-Fixes: 3590918b5d07 ("net: ethernet: renesas: Add support for "Ethernet Switch"")
+Fixes: d2c96b9d5f83 ("net: rswitch: Add jumbo frames handling for TX")
 Signed-off-by: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
 Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://patch.msgid.link/20241208095004.69468-3-nikita.yoush@cogentembedded.com
+Link: https://patch.msgid.link/20241208095004.69468-4-nikita.yoush@cogentembedded.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/rswitch.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/renesas/rswitch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
-index 32b32aa7e01f..c251becef6f8 100644
+index c251becef6f8..af0bc95ad6ae 100644
 --- a/drivers/net/ethernet/renesas/rswitch.c
 +++ b/drivers/net/ethernet/renesas/rswitch.c
-@@ -862,13 +862,10 @@ static void rswitch_tx_free(struct net_device *ndev)
- 	struct rswitch_ext_desc *desc;
- 	struct sk_buff *skb;
+@@ -1703,6 +1703,7 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
+ 	return ret;
  
--	for (; rswitch_get_num_cur_queues(gq) > 0;
--	     gq->dirty = rswitch_next_queue_index(gq, false, 1)) {
--		desc = &gq->tx_ring[gq->dirty];
--		if ((desc->desc.die_dt & DT_MASK) != DT_FEMPTY)
--			break;
--
-+	desc = &gq->tx_ring[gq->dirty];
-+	while ((desc->desc.die_dt & DT_MASK) == DT_FEMPTY) {
- 		dma_rmb();
-+
- 		skb = gq->skbs[gq->dirty];
- 		if (skb) {
- 			rdev->ndev->stats.tx_packets++;
-@@ -879,7 +876,10 @@ static void rswitch_tx_free(struct net_device *ndev)
- 			dev_kfree_skb_any(gq->skbs[gq->dirty]);
- 			gq->skbs[gq->dirty] = NULL;
- 		}
-+
- 		desc->desc.die_dt = DT_EEMPTY;
-+		gq->dirty = rswitch_next_queue_index(gq, false, 1);
-+		desc = &gq->tx_ring[gq->dirty];
- 	}
- }
+ err_unmap:
++	gq->skbs[(gq->cur + nr_desc - 1) % gq->ring_size] = NULL;
+ 	dma_unmap_single(ndev->dev.parent, dma_addr_orig, skb->len, DMA_TO_DEVICE);
  
-@@ -1685,6 +1685,8 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
- 	gq->skbs[(gq->cur + nr_desc - 1) % gq->ring_size] = skb;
- 	gq->unmap_addrs[(gq->cur + nr_desc - 1) % gq->ring_size] = dma_addr_orig;
- 
-+	dma_wmb();
-+
- 	/* DT_FSTART should be set at last. So, this is reverse order. */
- 	for (i = nr_desc; i-- > 0; ) {
- 		desc = &gq->tx_ring[rswitch_next_queue_index(gq, true, i)];
-@@ -1695,8 +1697,6 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
- 			goto err_unmap;
- 	}
- 
--	wmb();	/* gq->cur must be incremented after die_dt was set */
--
- 	gq->cur = rswitch_next_queue_index(gq, true, nr_desc);
- 	rswitch_modify(rdev->addr, GWTRC(gq->index), 0, BIT(gq->index % 32));
- 
+ err_kfree:
 -- 
 2.39.5
 
