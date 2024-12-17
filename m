@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD13E1F755B;
-	Tue, 17 Dec 2024 17:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8C41F7577;
+	Tue, 17 Dec 2024 17:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456439; cv=none; b=jPl5xb2tKxBWWydRA7tafoh7lhY1D5k/NY2zCVwhKmChQBlJgdRWQA+/JRa3+cMYaRtYYqtL0nitBjl+fk0ES5HftnEFyAxdJtEF4AXZioP0FQxsjWQ1ioE3NNS9ECOMz6hGihUpL6fUtD+NGZvx0CVPdVN2nQMLaypa/Rf+Dso=
+	t=1734456441; cv=none; b=I/fP0PNpofH5FL5lrhDezQfgXpUger7zs44BmcYLmsRLhfeM40/j9wDPb13CUa7K0LqjL+LvogCKGmi5Rhrzz8qRK6CK55Sq7EKhAANVI3KxfRw/STqSQragcjBQARnnhO7728rD45jzTA+sBqC3QaUTdXgEJ/bc7UveEncAHAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456439; c=relaxed/simple;
-	bh=TzWhIK9mazOQLGbVOX2N2SEfysuRMBpT+u/leVTVNp4=;
+	s=arc-20240116; t=1734456441; c=relaxed/simple;
+	bh=MgCMVRIxgButlAGM1jq4uzLK9G1lL2e8Yym2V1K6HLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sL+2DVomTyampukmCNk/Yb4w6LR/bBC2cYJyLQbuZ0TTLKIBG0/emuWdUd6NT+LLFtLnADZfXgl0xX4dPM4FMDK5i8otScGpciDy9pBkxDuWEydIRoglDQU9lc0Zqbj/HAewkfLkjvlJt6bB7ObnnO5N9ywZ4Hd7CXUPqPbz6j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgxjSZfy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dck5O1zD8BDKF8IdQH5Ib+2Geczp7aL0dnLfTilyKpvZ2lfAh0nmF6ulWK7NyW5MxavaGYL8vP2BItoqbYMBwerLGVOz3sEw3XcOp00zQoYGHSmEpNDCrhEG57AuO8wZ+en1fjlSuD9yqLLG+WaVkAIlj33GOb8OdhiX1+wqMag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCOvjQNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgxjSZfy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E418C4CED3;
-	Tue, 17 Dec 2024 17:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCOvjQNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512D7C4CEDD;
+	Tue, 17 Dec 2024 17:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456438;
-	bh=TzWhIK9mazOQLGbVOX2N2SEfysuRMBpT+u/leVTVNp4=;
+	s=korg; t=1734456441;
+	bh=MgCMVRIxgButlAGM1jq4uzLK9G1lL2e8Yym2V1K6HLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bgxjSZfyqWR/6uNSUaYLaOB4rnamTp5zNW1GVP7gEfTphz//VI0lPsz9DsaBR1mL4
-	 d+hbR7hySqX6i5fLiHk6mwdgb0UHsuF1vNDYjmdvYBWWPEa7Zsi4EurqkoBJBsq9do
-	 Sj6z6XxpY3uK9uwONenrcom3BlZo+0MJWtrTNSnw=
+	b=rCOvjQNPC/95o994thL+lxLEZnv9PnDWMzcBbzG/nAhuxBQxQOmTjESMluLYSFe86
+	 bfNeL8+Z24Xd7+dSn9i/44Y8hvijejGjuN/I07zlV1CVbEfyLp265PVkT5I7mwYwPy
+	 roHfsCaPq45z5helSVXIRXELRUuTrY3zpzIgXlq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 061/172] drm/amdgpu: fix UVD contiguous CS mapping problem
-Date: Tue, 17 Dec 2024 18:06:57 +0100
-Message-ID: <20241217170548.807885550@linuxfoundation.org>
+Subject: [PATCH 6.12 062/172] drm/amd/pm: Set SMU v13.0.7 default workload type
+Date: Tue, 17 Dec 2024 18:06:58 +0100
+Message-ID: <20241217170548.850313382@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -45,86 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Kenneth Feng <kenneth.feng@amd.com>
 
-commit 12f325bcd2411e571dbb500bf6862c812c479735 upstream.
+commit 3912a78cf72eb45f8153a395162b08fef9c5ec3d upstream.
 
-When starting the mpv player, Radeon R9 users are observing
-the below error in dmesg.
+Set the default workload type to bootup type on smu v13.0.7.
+This is because of the constraint on smu v13.0.7.
+Gfx activity has an even higher set point on 3D fullscreen
+mode than the one on bootup mode. This causes the 3D fullscreen
+mode's performance is worse than the bootup mode's performance
+for the lightweighted/medium workload. For the high workload,
+the performance is the same between 3D fullscreen mode and bootup
+mode.
 
-[drm:amdgpu_uvd_cs_pass2 [amdgpu]]
-*ERROR* msg/fb buffer ff00f7c000-ff00f7e000 out of 256MB segment!
+v2: set the default workload in ASIC specific file
 
-The patch tries to set the TTM_PL_FLAG_CONTIGUOUS for both user
-flag(AMDGPU_GEM_CREATE_VRAM_CONTIGUOUS) set and not set cases.
-
-v2: Make the TTM_PL_FLAG_CONTIGUOUS mandatory for user BO's.
-v3: revert back to v1, but fix the check instead (chk).
-
-Closes:https://gitlab.freedesktop.org/drm/amd/-/issues/3599
-Closes:https://gitlab.freedesktop.org/drm/amd/-/issues/3501
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.10+
+Cc: stable@vger.kernel.org # 6.11.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c  | 17 +++++++++++------
- drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c |  2 ++
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index d891ab779ca7..5df21529b3b1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1801,13 +1801,18 @@ int amdgpu_cs_find_mapping(struct amdgpu_cs_parser *parser,
- 	if (dma_resv_locking_ctx((*bo)->tbo.base.resv) != &parser->exec.ticket)
- 		return -EINVAL;
- 
-+	/* Make sure VRAM is allocated contigiously */
- 	(*bo)->flags |= AMDGPU_GEM_CREATE_VRAM_CONTIGUOUS;
--	amdgpu_bo_placement_from_domain(*bo, (*bo)->allowed_domains);
--	for (i = 0; i < (*bo)->placement.num_placement; i++)
--		(*bo)->placements[i].flags |= TTM_PL_FLAG_CONTIGUOUS;
--	r = ttm_bo_validate(&(*bo)->tbo, &(*bo)->placement, &ctx);
--	if (r)
--		return r;
-+	if ((*bo)->tbo.resource->mem_type == TTM_PL_VRAM &&
-+	    !((*bo)->tbo.resource->placement & TTM_PL_FLAG_CONTIGUOUS)) {
-+
-+		amdgpu_bo_placement_from_domain(*bo, (*bo)->allowed_domains);
-+		for (i = 0; i < (*bo)->placement.num_placement; i++)
-+			(*bo)->placements[i].flags |= TTM_PL_FLAG_CONTIGUOUS;
-+		r = ttm_bo_validate(&(*bo)->tbo, &(*bo)->placement, &ctx);
-+		if (r)
-+			return r;
-+	}
- 
- 	return amdgpu_ttm_alloc_gart(&(*bo)->tbo);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2717,4 +2717,5 @@ void smu_v13_0_7_set_ppt_funcs(struct sm
+ 	smu->workload_map = smu_v13_0_7_workload_map;
+ 	smu->smc_driver_if_version = SMU13_0_7_DRIVER_IF_VERSION;
+ 	smu_v13_0_set_smu_mailbox_registers(smu);
++	smu->power_profile_mode = PP_SMC_POWER_PROFILE_BOOTUP_DEFAULT;
  }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-index 31fd30dcd593..65bb26215e86 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_uvd.c
-@@ -551,6 +551,8 @@ static void amdgpu_uvd_force_into_uvd_segment(struct amdgpu_bo *abo)
- 	for (i = 0; i < abo->placement.num_placement; ++i) {
- 		abo->placements[i].fpfn = 0 >> PAGE_SHIFT;
- 		abo->placements[i].lpfn = (256 * 1024 * 1024) >> PAGE_SHIFT;
-+		if (abo->placements[i].mem_type == TTM_PL_VRAM)
-+			abo->placements[i].flags |= TTM_PL_FLAG_CONTIGUOUS;
- 	}
- }
- 
--- 
-2.47.1
-
 
 
