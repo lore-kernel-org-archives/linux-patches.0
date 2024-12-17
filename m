@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557BD152787;
-	Tue, 17 Dec 2024 17:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80565148850;
+	Tue, 17 Dec 2024 17:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456070; cv=none; b=Hk+F+OmMsmzjy3afaOMnuZW9SProGgPys6aaVv9uof3Owq+Tlm6LdkqUArWSmI7QKWvaBN8PP89NAlCBMeWFDJZtP2vIR2d0fTTrwnRv3AqlPg64s16QLV8XBJrAHKQVJbjXtEPHiCEgKQNsc2z2F16KylTMlGCsfleE+FR8sT4=
+	t=1734456073; cv=none; b=r5nlupWKxksmfDpeyd9NEkvSWGdwSrWCRd0QDslLvrPkywM0coBLIwdDOT4cS/FsEWMXDYEafoEzBe3dcLiEJPVfhwFyuNRDeETyebk8JpI0/Tju1jRPtF24Gpv6nMfN8nYfGA/UEU8wdK16BEWBRCP+UNOl1TaYF5NgbQP3Ja4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456070; c=relaxed/simple;
-	bh=2S6O3pKeA9hbgMv4wMUT1krsvZPpCteljtzb1lnYhJk=;
+	s=arc-20240116; t=1734456073; c=relaxed/simple;
+	bh=/J9MMjZOmRG0AA+KKjp9xnh6QfBUYez5/cr54GGZR3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hedo2Ht2hhCeYFCqSlmQCvHyRldRUX6KESxYyIr+gJu4aS0TQZ6aZrt5IFDlPmVz4J+A8aqH7Me+5ZC/1cdx9gSV28nLeLauLqwxZdsWtNDCX8V5avk0qISLbP5fNp3+Jlfb2SUr3xQwrOYtaPtCTsUQeuomjN2DaHAA7ur9oE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laRfPVRC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sWzRL1R0nbZaWFZrLmp4DT6/JSf3iWeeQZB5Ec6Yhqk4rOn0h4U0QkvMLWKJ7kNpd1o5c24PLruqmhNQbShBXYvcjWUZVM+wDNAW/SzjEmJ2pgU8/aJvyEzMDTe9FqbFyBAA+zPqjknJ8GtWbCPKyYprApa3bE0tc3BsTE7ZeDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsdX2VmA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laRfPVRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D521CC4CED3;
-	Tue, 17 Dec 2024 17:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsdX2VmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2464C4CEE0;
+	Tue, 17 Dec 2024 17:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456070;
-	bh=2S6O3pKeA9hbgMv4wMUT1krsvZPpCteljtzb1lnYhJk=;
+	s=korg; t=1734456073;
+	bh=/J9MMjZOmRG0AA+KKjp9xnh6QfBUYez5/cr54GGZR3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laRfPVRC9QslPTOAXc65O06tMsfLAMTnFuZBMzW+ZUQwu7nDxxd8VlWmN6QHR3RQc
-	 c6yApzQxmbpbrGLMrDxL0tkmjks+EcNn6KPuqm0qxtlHCkZHMouxG9B82Ja1RluF1t
-	 QURjUEP9A6vB+J2PfUYE2SXEWmIT88EocbyAkTnw=
+	b=BsdX2VmA+09lA6UtxKJcQFSne7UESUvBqr7fSsyq8/gvKQnDVB1X920PKPmkW7FIB
+	 22rC3o+V9sD+kAxYuwetzX0iXVHA7f8I3KSJkysOJ3le6jb7ob7DyxHchBCd1Z/Cx0
+	 MS6T/w3SHNLw1ue4lI3grBVrnfx0mv6hUOA/Y/z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	syzbot+fb99d1b0c0f81d94a5e2@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/109] ptp: kvm: x86: Return EOPNOTSUPP instead of ENODEV from kvm_arch_ptp_init()
-Date: Tue, 17 Dec 2024 18:07:34 +0100
-Message-ID: <20241217170535.463375298@linuxfoundation.org>
+Subject: [PATCH 6.6 051/109] net: lapb: increase LAPB_HEADER_LEN
+Date: Tue, 17 Dec 2024 18:07:35 +0100
+Message-ID: <20241217170535.504090550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -45,64 +47,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5e7aa97c7acf171275ac02a8bb018c31b8918d13 ]
+[ Upstream commit a6d75ecee2bf828ac6a1b52724aba0a977e4eaf4 ]
 
-The caller, ptp_kvm_init(), emits a warning if kvm_arch_ptp_init() exits
-with any error which is not EOPNOTSUPP:
+It is unclear if net/lapb code is supposed to be ready for 8021q.
 
-	"fail to initialize ptp_kvm"
+We can at least avoid crashes like the following :
 
-Replace ENODEV with EOPNOTSUPP to avoid this spurious warning,
-aligning with the ARM implementation.
+skbuff: skb_under_panic: text:ffffffff8aabe1f6 len:24 put:20 head:ffff88802824a400 data:ffff88802824a3fe tail:0x16 end:0x140 dev:nr0.2
+------------[ cut here ]------------
+ kernel BUG at net/core/skbuff.c:206 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 1 UID: 0 PID: 5508 Comm: dhcpcd Not tainted 6.12.0-rc7-syzkaller-00144-g66418447d27b #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/30/2024
+ RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
+ RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
+Code: 0d 8d 48 c7 c6 2e 9e 29 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 1a 6f 37 02 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
+RSP: 0018:ffffc90002ddf638 EFLAGS: 00010282
+RAX: 0000000000000086 RBX: dffffc0000000000 RCX: 7a24750e538ff600
+RDX: 0000000000000000 RSI: 0000000000000201 RDI: 0000000000000000
+RBP: ffff888034a86650 R08: ffffffff8174b13c R09: 1ffff920005bbe60
+R10: dffffc0000000000 R11: fffff520005bbe61 R12: 0000000000000140
+R13: ffff88802824a400 R14: ffff88802824a3fe R15: 0000000000000016
+FS:  00007f2a5990d740(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000000110c2631fd CR3: 0000000029504000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  skb_push+0xe5/0x100 net/core/skbuff.c:2636
+  nr_header+0x36/0x320 net/netrom/nr_dev.c:69
+  dev_hard_header include/linux/netdevice.h:3148 [inline]
+  vlan_dev_hard_header+0x359/0x480 net/8021q/vlan_dev.c:83
+  dev_hard_header include/linux/netdevice.h:3148 [inline]
+  lapbeth_data_transmit+0x1f6/0x2a0 drivers/net/wan/lapbether.c:257
+  lapb_data_transmit+0x91/0xb0 net/lapb/lapb_iface.c:447
+  lapb_transmit_buffer+0x168/0x1f0 net/lapb/lapb_out.c:149
+ lapb_establish_data_link+0x84/0xd0
+ lapb_device_event+0x4e0/0x670
+  notifier_call_chain+0x19f/0x3e0 kernel/notifier.c:93
+ __dev_notify_flags+0x207/0x400
+  dev_change_flags+0xf0/0x1a0 net/core/dev.c:8922
+  devinet_ioctl+0xa4e/0x1aa0 net/ipv4/devinet.c:1188
+  inet_ioctl+0x3d7/0x4f0 net/ipv4/af_inet.c:1003
+  sock_do_ioctl+0x158/0x460 net/socket.c:1227
+  sock_ioctl+0x626/0x8e0 net/socket.c:1346
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:907 [inline]
+  __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
 
-Fixes: a86ed2cfa13c ("ptp: Don't print an error if ptp_kvm is not supported")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://patch.msgid.link/20241203-kvm_ptp-eopnotsuppp-v2-1-d1d060f27aa6@weissschuh.net
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+fb99d1b0c0f81d94a5e2@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/67506220.050a0220.17bd51.006c.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241204141031.4030267-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_kvm_x86.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/lapb.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_kvm_x86.c b/drivers/ptp/ptp_kvm_x86.c
-index 902844cc1a17..5e5b2ef78547 100644
---- a/drivers/ptp/ptp_kvm_x86.c
-+++ b/drivers/ptp/ptp_kvm_x86.c
-@@ -26,7 +26,7 @@ int kvm_arch_ptp_init(void)
- 	long ret;
+diff --git a/include/net/lapb.h b/include/net/lapb.h
+index 124ee122f2c8..6c07420644e4 100644
+--- a/include/net/lapb.h
++++ b/include/net/lapb.h
+@@ -4,7 +4,7 @@
+ #include <linux/lapb.h>
+ #include <linux/refcount.h>
  
- 	if (!kvm_para_available())
--		return -ENODEV;
-+		return -EOPNOTSUPP;
+-#define	LAPB_HEADER_LEN	20		/* LAPB over Ethernet + a bit more */
++#define	LAPB_HEADER_LEN MAX_HEADER		/* LAPB over Ethernet + a bit more */
  
- 	if (cc_platform_has(CC_ATTR_GUEST_MEM_ENCRYPT)) {
- 		p = alloc_page(GFP_KERNEL | __GFP_ZERO);
-@@ -46,14 +46,14 @@ int kvm_arch_ptp_init(void)
- 
- 	clock_pair_gpa = slow_virt_to_phys(clock_pair);
- 	if (!pvclock_get_pvti_cpu0_va()) {
--		ret = -ENODEV;
-+		ret = -EOPNOTSUPP;
- 		goto err;
- 	}
- 
- 	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING, clock_pair_gpa,
- 			     KVM_CLOCK_PAIRING_WALLCLOCK);
- 	if (ret == -KVM_ENOSYS) {
--		ret = -ENODEV;
-+		ret = -EOPNOTSUPP;
- 		goto err;
- 	}
- 
+ #define	LAPB_ACK_PENDING_CONDITION	0x01
+ #define	LAPB_REJECT_CONDITION		0x02
 -- 
 2.39.5
 
