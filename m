@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9C91F6661;
-	Tue, 17 Dec 2024 17:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297008615A;
+	Tue, 17 Dec 2024 17:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456531; cv=none; b=KELtZLAlR08RVNt9C6f+cBNk5C9uNfFqhELUbG1tg845Zjfn2KmaBK3GxbQoa3xITyGss8tMrDTeaHdoeK2Y8he6jyrutOfVWpT5SpEd3PsRYQyT2gUfAf+69O+lP8s8Bo8iC30bcKQKXk/1YI1chU9+bRL9zgjWICdQ61bHJ3Y=
+	t=1734456534; cv=none; b=Wcyb5JIossuJO8KRakE2LmHYz7oKf186hShAubTf0lhStM+8YMqVWIMBh20YEYuGff942yETZ1P2lKJEtbKvOeiF4FfVv5b3y0Og1wiqbd9Vcm9NQBjqdUCtL/7leGalx+gGyH9HLCE78r1I/JYitBCOkMGcfHEX3BCVRTsbN3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456531; c=relaxed/simple;
-	bh=0gq/DyNNNrCDCY5XgPoh91ciXPl72xpiQpc1zZB/q/s=;
+	s=arc-20240116; t=1734456534; c=relaxed/simple;
+	bh=taLJPHvg4EAMX8etQ9Wr4tMiN5VQVletPkgcKvM58YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PjNR6/15bwzaoXIcCCeN3EzrLTudaSNMwAE3Sf1kMcycuXbmTCkOsgWFhY5mL1d3n4MoCmT1iAucH2YMync93rij8u4fWUeyggYbWtwWEiIkdlMDTrkCkVeZEAQEdpcSV/Khbiw5yFmXUHgm9mREBdJ8aiNC1JA6FFyJlq7kB7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NMk97waP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OhVFHCYExhLaiIKwlHlHTFEI7Azv93f1nhU+V8bollZ8o1eS9LlZjzOAZRqN7ArvXdClkq6fJl2g5nPCj2WDE30DDsCRQx/rU1ZVJVLMIzsI7sUeN7emFHoG6mGfS8UMQXh4h8mfqAdEEJq7e3IqHciQJdF6/tEaVvwkmSWaU5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ibty/sj6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NMk97waP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68581C4CED3;
-	Tue, 17 Dec 2024 17:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ibty/sj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A60EEC4CED3;
+	Tue, 17 Dec 2024 17:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456531;
-	bh=0gq/DyNNNrCDCY5XgPoh91ciXPl72xpiQpc1zZB/q/s=;
+	s=korg; t=1734456534;
+	bh=taLJPHvg4EAMX8etQ9Wr4tMiN5VQVletPkgcKvM58YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMk97waPEMnXGMpobElfaIbxJ3XOLcFWnuuSiYOsc+PB8wS9b2lVKQ9ucESf2TOuQ
-	 emQbh8F3Jy7wZHqg6BsLbaVoNBPyW2z26vEf5BTbTehxxVYGy+SVqUlXnOY44+JhRE
-	 BDujlDk/bGBJAUCM4hBF01xFgFWV62garZ2Ss9j4=
+	b=Ibty/sj6He/2Y8Gxb72HIXdQ+mQd2kd4dVv/qAIw9u+VudOw3w8kuvoUX1z5gerI/
+	 wJCzUJeSAGSGr521GPa+drnbnUUgDWUmYNcBU1U6bC8sxIs/QnbXoIHaPA0Cu6WD0Q
+	 mLCZCIYEMC3AgmYlV/45hD5wxb6jxZjhfkl8BwNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com,
-	Suraj Sonawane <surajsonawane0215@gmail.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
+	"David (Ming Qiang) Wu" <David.Wu3@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 088/172] acpi: nfit: vmalloc-out-of-bounds Read in acpi_nfit_ctl
-Date: Tue, 17 Dec 2024 18:07:24 +0100
-Message-ID: <20241217170549.938883051@linuxfoundation.org>
+Subject: [PATCH 6.12 089/172] amdgpu/uvd: get ring reference from rq scheduler
+Date: Tue, 17 Dec 2024 18:07:25 +0100
+Message-ID: <20241217170549.987508811@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -48,67 +46,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suraj Sonawane <surajsonawane0215@gmail.com>
+From: David (Ming Qiang) Wu <David.Wu3@amd.com>
 
-[ Upstream commit 265e98f72bac6c41a4492d3e30a8e5fd22fe0779 ]
+[ Upstream commit 47f402a3e08113e0f5d8e1e6fcc197667a16022f ]
 
-Fix an issue detected by syzbot with KASAN:
+base.sched may not be set for each instance and should not
+be used for cases such as non-IB tests.
 
-BUG: KASAN: vmalloc-out-of-bounds in cmd_to_func drivers/acpi/nfit/
-core.c:416 [inline]
-BUG: KASAN: vmalloc-out-of-bounds in acpi_nfit_ctl+0x20e8/0x24a0
-drivers/acpi/nfit/core.c:459
-
-The issue occurs in cmd_to_func when the call_pkg->nd_reserved2
-array is accessed without verifying that call_pkg points to a buffer
-that is appropriately sized as a struct nd_cmd_pkg. This can lead
-to out-of-bounds access and undefined behavior if the buffer does not
-have sufficient space.
-
-To address this, a check was added in acpi_nfit_ctl() to ensure that
-buf is not NULL and that buf_len is less than sizeof(*call_pkg)
-before accessing it. This ensures safe access to the members of
-call_pkg, including the nd_reserved2 array.
-
-Reported-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7534f060ebda6b8b51b3
-Tested-by: syzbot+7534f060ebda6b8b51b3@syzkaller.appspotmail.com
-Fixes: ebe9f6f19d80 ("acpi/nfit: Fix bus command validation")
-Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20241118162609.29063-1-surajsonawane0215@gmail.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: 2320c9e6a768 ("drm/sched: memset() 'job' in drm_sched_job_init()")
+Signed-off-by: David (Ming Qiang) Wu <David.Wu3@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/nfit/core.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
-index 5429ec9ef06f..a5d47819b3a4 100644
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -454,8 +454,13 @@ int acpi_nfit_ctl(struct nvdimm_bus_descriptor *nd_desc, struct nvdimm *nvdimm,
- 	if (cmd_rc)
- 		*cmd_rc = -EINVAL;
+diff --git a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
+index 6068b784dc69..9a30b8c10838 100644
+--- a/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/uvd_v7_0.c
+@@ -1289,7 +1289,7 @@ static int uvd_v7_0_ring_patch_cs_in_place(struct amdgpu_cs_parser *p,
+ 					   struct amdgpu_job *job,
+ 					   struct amdgpu_ib *ib)
+ {
+-	struct amdgpu_ring *ring = to_amdgpu_ring(job->base.sched);
++	struct amdgpu_ring *ring = amdgpu_job_ring(job);
+ 	unsigned i;
  
--	if (cmd == ND_CMD_CALL)
-+	if (cmd == ND_CMD_CALL) {
-+		if (!buf || buf_len < sizeof(*call_pkg))
-+			return -EINVAL;
-+
- 		call_pkg = buf;
-+	}
-+
- 	func = cmd_to_func(nfit_mem, cmd, call_pkg, &family);
- 	if (func < 0)
- 		return func;
+ 	/* No patching necessary for the first instance */
 -- 
 2.39.5
 
