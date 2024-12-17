@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F42E1DE2AC;
-	Tue, 17 Dec 2024 17:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A7E1F866C;
+	Tue, 17 Dec 2024 17:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455655; cv=none; b=XHyLYSFdaCqTVJ8P23TTR6dRHmCTty73ZqiGebWMSEJ+kYlipJjrZQ9sSn6ksXPOij3J40UwJNWznRqtZgh2MK+eZpUjMHBAKMP+f1GnteT5jySqmuuyTy+qAf0HXmEtWEW1w27iDagab5ZzM4P35WNIHNz6dZIBG5qsEP+GrgM=
+	t=1734455658; cv=none; b=CFZdavUOoNgm41CJGJ0uCSCfR98J5rbfkx+czWZvdlwA5ULJLDOc2QIkrGL1IFFrk74v9WMJ4J+mfSCCBuN5ulLN5zuinWyMZy3j8NFWCevv8I9yaz0QddOAG0e5xsT3G1knaCai5YF21hXwr5pA6oX23yhxVRoIizf5vAA5gbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455655; c=relaxed/simple;
-	bh=dL4hEDXwhYJuRrLSAFISUVB4GUA7Fe8udc/jIK9g950=;
+	s=arc-20240116; t=1734455658; c=relaxed/simple;
+	bh=Xju3wOKtVoDNagCLfQbI+cyrDYtfq6pKVK/Mq/pUu0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nhree6qSNgh3t9mcq7Q7H8B67jH6s5t1yOj4xD7FpfPpyoBhdjtejXCp5A8mU97veoNNSsyhKWdLeHko5uvdrAVMl3fh1eD0/JXklANcXyThxR6OJXmM2UOARRz7jnBIp2ULHe5cwRznnKwcwEwSXIqVLlZdDUOoaUyimf+ofuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfwNopAm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rVVADOMgbtBqd3ON/4eHmxl5ARb+ShvILYABGLRj88vojJ5tPVIf9PNnWNpyRdOpvVAPOmcQitVAuu14FyMUfiKcHQC7jJ7v2xa5zYCLSJp+Ez5qkhGQsZjzqwLRBxbr1gzQVFoEdllA0MGGSfeOODC1bSq5E4F5470/ma8vrio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHjCg6oU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfwNopAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA541C4CED3;
-	Tue, 17 Dec 2024 17:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHjCg6oU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEE8C4CED3;
+	Tue, 17 Dec 2024 17:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455655;
-	bh=dL4hEDXwhYJuRrLSAFISUVB4GUA7Fe8udc/jIK9g950=;
+	s=korg; t=1734455658;
+	bh=Xju3wOKtVoDNagCLfQbI+cyrDYtfq6pKVK/Mq/pUu0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KfwNopAm9CvGci+t0zuNGpa+cE1XvbGv0u1s3JppZ8IIC8R3t6qcPKVM2ACZfcDC1
-	 d4OJzddhB+aMYPM0N2YznOqDDSujaGykCbLK52c8So5TVqQyKL7Fsw2JiL8DcZcYPL
-	 1szrLGThcLLEdjuqua9N3TJFop4UBeSRe981a58U=
+	b=AHjCg6oU6aUVBl9QJiezZ7pwtBN1QSG2fru/EG9mj593kLDth8Ug9gReyhkVdZkxM
+	 2ZSgRz+vFDyaN1FzG/y4R85gyPiYvT8pxcj65PDfB1Nim0SWcpNt5qfQHPrjXy9uXB
+	 MS5nPBletsfyjRraqTGhUQ7Qz9pGlTO4525rukE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Laight <david.laight@aculab.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/51] blk-iocost: Avoid using clamp() on inuse in __propagate_weights()
-Date: Tue, 17 Dec 2024 18:07:32 +0100
-Message-ID: <20241217170522.080207114@linuxfoundation.org>
+	Lonial Con <kongln9170@gmail.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 5.15 40/51] bpf: sync_linked_regs() must preserve subreg_def
+Date: Tue, 17 Dec 2024 18:07:33 +0100
+Message-ID: <20241217170522.120712077@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
 References: <20241217170520.301972474@linuxfoundation.org>
@@ -55,77 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 57e420c84f9ab55ba4c5e2ae9c5f6c8e1ea834d2 ]
+commit e9bd9c498cb0f5843996dbe5cbce7a1836a83c70 upstream.
 
-After a recent change to clamp() and its variants [1] that increases the
-coverage of the check that high is greater than low because it can be
-done through inlining, certain build configurations (such as s390
-defconfig) fail to build with clang with:
+Range propagation must not affect subreg_def marks, otherwise the
+following example is rewritten by verifier incorrectly when
+BPF_F_TEST_RND_HI32 flag is set:
 
-  block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
-   1101 |                 inuse = clamp_t(u32, inuse, 1, active);
-        |                         ^
-  include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
-    218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
-        |                                    ^
-  include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
-    195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
-        |         ^
-  include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
-    188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
-        |         ^
+  0: call bpf_ktime_get_ns                   call bpf_ktime_get_ns
+  1: r0 &= 0x7fffffff       after verifier   r0 &= 0x7fffffff
+  2: w1 = w0                rewrites         w1 = w0
+  3: if w0 < 10 goto +0     -------------->  r11 = 0x2f5674a6     (r)
+  4: r1 >>= 32                               r11 <<= 32           (r)
+  5: r0 = r1                                 r1 |= r11            (r)
+  6: exit;                                   if w0 < 0xa goto pc+0
+                                             r1 >>= 32
+                                             r0 = r1
+                                             exit
 
-__propagate_weights() is called with an active value of zero in
-ioc_check_iocgs(), which results in the high value being less than the
-low value, which is undefined because the value returned depends on the
-order of the comparisons.
+(or zero extension of w1 at (2) is missing for architectures that
+ require zero extension for upper register half).
 
-The purpose of this expression is to ensure inuse is not more than
-active and at least 1. This could be written more simply with a ternary
-expression that uses min(inuse, active) as the condition so that the
-value of that condition can be used if it is not zero and one if it is.
-Do this conversion to resolve the error and add a comment to deter
-people from turning this back into clamp().
+The following happens w/o this patch:
+- r0 is marked as not a subreg at (0);
+- w1 is marked as subreg at (2);
+- w1 subreg_def is overridden at (3) by copy_register_state();
+- w1 is read at (5) but mark_insn_zext() does not mark (2)
+  for zero extension, because w1 subreg_def is not set;
+- because of BPF_F_TEST_RND_HI32 flag verifier inserts random
+  value for hi32 bits of (2) (marked (r));
+- this random value is read at (5).
 
-Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
-Suggested-by: David Laight <david.laight@aculab.com>
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 75748837b7e5 ("bpf: Propagate scalar ranges through register assignments.")
+Reported-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Lonial Con <kongln9170@gmail.com>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Closes: https://lore.kernel.org/bpf/7e2aa30a62d740db182c170fdd8f81c596df280d.camel@gmail.com
+Link: https://lore.kernel.org/bpf/20240924210844.1758441-1-eddyz87@gmail.com
+[ shung-hsi.yu: sync_linked_regs() was called find_equal_scalars() before commit
+  4bf79f9be434 ("bpf: Track equal scalars history on per-instruction level"), and
+  modification is done because there is only a single call to
+  copy_register_state() before commit 98d7ca374ba4 ("bpf: Track delta between
+  "linked" registers."). ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-iocost.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 9654d1c2c20f..ba23562abc80 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -1087,7 +1087,14 @@ static void __propagate_weights(struct ioc_gq *iocg, u32 active, u32 inuse,
- 		inuse = DIV64_U64_ROUND_UP(active * iocg->child_inuse_sum,
- 					   iocg->child_active_sum);
- 	} else {
--		inuse = clamp_t(u32, inuse, 1, active);
-+		/*
-+		 * It may be tempting to turn this into a clamp expression with
-+		 * a lower limit of 1 but active may be 0, which cannot be used
-+		 * as an upper limit in that situation. This expression allows
-+		 * active to clamp inuse unless it is 0, in which case inuse
-+		 * becomes 1.
-+		 */
-+		inuse = min(inuse, active) ?: 1;
- 	}
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9223,8 +9223,11 @@ static void find_equal_scalars(struct bp
+ 	struct bpf_reg_state *reg;
  
- 	iocg->last_inuse = iocg->inuse;
--- 
-2.39.5
-
+ 	bpf_for_each_reg_in_vstate(vstate, state, reg, ({
+-		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id)
++		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id) {
++			s32 saved_subreg_def = reg->subreg_def;
+ 			copy_register_state(reg, known_reg);
++			reg->subreg_def = saved_subreg_def;
++		}
+ 	}));
+ }
+ 
 
 
