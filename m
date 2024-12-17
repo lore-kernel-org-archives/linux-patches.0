@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E21F76CB;
-	Tue, 17 Dec 2024 17:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA9C8615A;
+	Tue, 17 Dec 2024 17:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456346; cv=none; b=nNkcYWBrsXOxgO6wmvl4OGWX1Yv8U9rdKqQPkNVHeSd/tp0ANPlf0aruzL7sUBUa7R3RCPzJcHKGLvKaUKgO0t7d3aYgj9e29qPzp0P4WdclrZ3QYOLj4Nv6yJqXU+yixm6xiiYbRoksGx1BBIR6fKtPmV96Sn9kwZHiO/06fwY=
+	t=1734456349; cv=none; b=nabZvA2n6HRHlmbHetzdLwDWL6tavLrnjdsvSqapOA2qxIEyHzCr0ocxDrMr8EqCCm8af5KF+r41gtfaJCOd1Yc7N9MDMpefgT1vuXfl8AkgOt0bMcEbeD93YqYBbXOmkD3u6Kq7ePgR0LZL+7tsd0eR1YjGDmMN3Yuh10ZCRgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456346; c=relaxed/simple;
-	bh=GGAptu4lVlCUaajzUSE8ftMMMcI9MkRsIzGlz6rZB38=;
+	s=arc-20240116; t=1734456349; c=relaxed/simple;
+	bh=72OrcYTbqlKYVwS+SNbFdBBhdEfaE6iUr6J+EMwWPBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OSyHQGE3gMc9868C5UxAzlYdLdBqwfW3RjZB4NcJGNzaB1U4hv91oObJn4p1t6BIewhaS23hkhEBNHyKy/mIiJEjt+Teh2aSaMLRRb6SFLcXSUn3efcEif8mrDHWjTGYasB6MbaT8USWb3VKWKbYcZhRSwpZ1VDd+A4maxz8VLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETESTR7M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ci+L/a+FLc/5MSS0GrfjxZ44qGL3rvTUSGNILnzE/M9lJvUiF49DoHMfATJFrn1jP76UtQNtTSijlfnKy5nlW0RfaKCnmXIA3agb1ZX25gO35y02Jy3fmGM9OBLDHhQ+2/Hkxxy/IUNi5j7o7a/4PquLJISYHaDXPcSX01qMXXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAdnqHmA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETESTR7M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E37AC4CED7;
-	Tue, 17 Dec 2024 17:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAdnqHmA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49FB3C4CED3;
+	Tue, 17 Dec 2024 17:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456345;
-	bh=GGAptu4lVlCUaajzUSE8ftMMMcI9MkRsIzGlz6rZB38=;
+	s=korg; t=1734456348;
+	bh=72OrcYTbqlKYVwS+SNbFdBBhdEfaE6iUr6J+EMwWPBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ETESTR7M0XJEAybyGg+EObvTYpeL7C3wg7/94TpZWLWSmvKUfytNG7iH0y+O2LwT1
-	 j7k49W5ZaNjnPy/Ze0gwSzBefXevvDuy1le6DSfdy8sPtH4FxN8QnN6OitIzCjaYOf
-	 GZp+/nLZ659BWi3/PiT3x9AGO4UH1cQiCf4xATxE=
+	b=wAdnqHmANRnYPXgRPjcB+c5RfgLLbX0sh4XXTgk8YuGD4+dhgSixd1vVN8sK/BhnP
+	 BIPXCtmUS9PrJQK6hqW9XlRfpBru3UzIL3qnKvhIBk38dRT5oiRrYX7hV7XxZJR+ZW
+	 Sop3Phd5ry4spYrIEd8cQXMCph7XGqn2MuZNtJNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Subject: [PATCH 6.12 030/172] usb: host: max3421-hcd: Correctly abort a USB request.
-Date: Tue, 17 Dec 2024 18:06:26 +0100
-Message-ID: <20241217170547.512761829@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 031/172] block: Ignore REQ_NOWAIT for zone reset and zone finish operations
+Date: Tue, 17 Dec 2024 18:06:27 +0100
+Message-ID: <20241217170547.551963598@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,50 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 0d2ada05227881f3d0722ca2364e3f7a860a301f upstream.
+commit 5eb3317aa5a2ffe4574ab1a12cf9bc9447ca26c0 upstream.
 
-If the current USB request was aborted, the spi thread would not respond
-to any further requests. This is because the "curr_urb" pointer would
-not become NULL, so no further requests would be taken off the queue.
-The solution here is to set the "urb_done" flag, as this will cause the
-correct handling of the URB. Also clear interrupts that should only be
-expected if an URB is in progress.
+There are currently any issuer of REQ_OP_ZONE_RESET and
+REQ_OP_ZONE_FINISH operations that set REQ_NOWAIT. However, as we cannot
+handle this flag correctly due to the potential request allocation
+failure that may happen in blk_mq_submit_bio() after blk_zone_plug_bio()
+has handled the zone write plug write pointer updates for the targeted
+zones, modify blk_zone_wplug_handle_reset_or_finish() to warn if this
+flag is set and ignore it.
 
-Fixes: 2d53139f3162 ("Add support for using a MAX3421E chip as a host driver.")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Mark Tomlinson <mark.tomlinson@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20241124221430.1106080-1-mark.tomlinson@alliedtelesis.co.nz
+Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20241209122357.47838-3-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/max3421-hcd.c |   16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ block/blk-zoned.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/host/max3421-hcd.c
-+++ b/drivers/usb/host/max3421-hcd.c
-@@ -779,11 +779,17 @@ max3421_check_unlink(struct usb_hcd *hcd
- 				retval = 1;
- 				dev_dbg(&spi->dev, "%s: URB %p unlinked=%d",
- 					__func__, urb, urb->unlinked);
--				usb_hcd_unlink_urb_from_ep(hcd, urb);
--				spin_unlock_irqrestore(&max3421_hcd->lock,
--						       flags);
--				usb_hcd_giveback_urb(hcd, urb, 0);
--				spin_lock_irqsave(&max3421_hcd->lock, flags);
-+				if (urb == max3421_hcd->curr_urb) {
-+					max3421_hcd->urb_done = 1;
-+					max3421_hcd->hien &= ~(BIT(MAX3421_HI_HXFRDN_BIT) |
-+							       BIT(MAX3421_HI_RCVDAV_BIT));
-+				} else {
-+					usb_hcd_unlink_urb_from_ep(hcd, urb);
-+					spin_unlock_irqrestore(&max3421_hcd->lock,
-+							       flags);
-+					usb_hcd_giveback_urb(hcd, urb, 0);
-+					spin_lock_irqsave(&max3421_hcd->lock, flags);
-+				}
- 			}
- 		}
+--- a/block/blk-zoned.c
++++ b/block/blk-zoned.c
+@@ -704,6 +704,15 @@ static bool blk_zone_wplug_handle_reset_
  	}
+ 
+ 	/*
++	 * No-wait reset or finish BIOs do not make much sense as the callers
++	 * issue these as blocking operations in most cases. To avoid issues
++	 * the BIO execution potentially failing with BLK_STS_AGAIN, warn about
++	 * REQ_NOWAIT being set and ignore that flag.
++	 */
++	if (WARN_ON_ONCE(bio->bi_opf & REQ_NOWAIT))
++		bio->bi_opf &= ~REQ_NOWAIT;
++
++	/*
+ 	 * If we have a zone write plug, set its write pointer offset to 0
+ 	 * (reset case) or to the zone size (finish case). This will abort all
+ 	 * BIOs plugged for the target zone. It is fine as resetting or
 
 
