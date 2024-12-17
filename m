@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D981F8697;
-	Tue, 17 Dec 2024 17:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C151F8903;
+	Tue, 17 Dec 2024 17:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455847; cv=none; b=F+ne3ghdUJBs6JnMD9pRmwXyrGQ2w6cWcSUiLKDrY/7lgFTOTn8IoY/1z6zYLcYBf3CwnCvqQDZWm55VoUDvw6JQm04Tr5qSJ42RtOCS9S41aoJvMWV89dRdx+3gSQysdxOMUmI//bBAFu9QJAWgAUnD7Ni6NKl/O1zGY7I5Smg=
+	t=1734455850; cv=none; b=p98rZ2aPxbzptAkbn7bvgtH654mdAfPl6kCsZ0n/6m2tH4MohB/LUYmxE9arOxs8MZiekH8BaJmjr5FTJuBzhsND9tROpeQetK09tlv4W03GRDQpQ1gKZ9nRDCcFGr6BiEB21TjUeWnk/pVa44OPMScFwOJYe0S3bP5hH/rYcSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455847; c=relaxed/simple;
-	bh=usTuaXtWzKR0I+Ph6tTOD512XnpE7+Tz6dVtwAtat68=;
+	s=arc-20240116; t=1734455850; c=relaxed/simple;
+	bh=j5T5DHnwUjuNSQY0OxS0xu173u57+jYrntXQC+3mHq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3qY1/LWL0/B6ioSjmBw0Ra0F0c0n7EEPrM8ecNVGjzMaP5HN49Cl5KdaxIcvz1q6BrLwvyb6lObdf/NvngKdSdz84pLHUtaae3hmWf/nfedIOW6uGk5U2UKinSObueOzbp56eqdsw7gKgTMnwpusU4EVH/T9cN5j/vM7XqojI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boW3j7zv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDBWgF9E8GM0rZ+t7wWJSpnihZwZ/YjCXUreVmR7e8qwADlKPsds76EpSnfO95O7qQiVm1TgG0fITSXByTdX0sTjHJA0ZdjattlXuqAQ5fAM2+v8KUV8kSNDz0ppo8lA56LhsYj4C8cf4McKenAOSnmT6kZrrPyLdu8bPq+Zt4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n1KOTNUP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boW3j7zv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE01C4CEDF;
-	Tue, 17 Dec 2024 17:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n1KOTNUP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB680C4CEDD;
+	Tue, 17 Dec 2024 17:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455847;
-	bh=usTuaXtWzKR0I+Ph6tTOD512XnpE7+Tz6dVtwAtat68=;
+	s=korg; t=1734455850;
+	bh=j5T5DHnwUjuNSQY0OxS0xu173u57+jYrntXQC+3mHq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=boW3j7zvoDWASpv5fHC+/oRAzsGdtL+4iGdHGYIJfIjHsE90XeLTeZaYb+YUsDHcv
-	 OmVx/fd86Fx7IFiN6ghlHiz7Ps9RGR58QR0IK1KDC3Xp6x/8tqh7yKKvfUjOyV/Y2X
-	 3chEPrF7bwyg76EJ+qg8GHiND5CHXfemeAj0pmlw=
+	b=n1KOTNUPiV6vXjeqMG0PY6UsFj9MB7pE3hfFr/kpAF84NNyaI1yZnDD3qraEmwW73
+	 tqqRmmY/yWZRpUngJTEdHHCZvLyxCUBn7aCbxiIUrHvrSKjYF82cJjC9fclFe07kmM
+	 C0PWYNfYfaA4ETnkgrvZpFaNDjr646WCpjA6xRS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2e0d2840414ce817aaac@syzkaller.appspotmail.com,
-	Jiri Olsa <jolsa@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>
-Subject: [PATCH 6.1 22/76] bpf,perf: Fix invalid prog_array access in perf_event_detach_bpf_prog
-Date: Tue, 17 Dec 2024 18:07:02 +0100
-Message-ID: <20241217170527.177279973@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>
+Subject: [PATCH 6.1 23/76] bpf, sockmap: Fix update element with same
+Date: Tue, 17 Dec 2024 18:07:03 +0100
+Message-ID: <20241217170527.220668771@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -51,58 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 978c4486cca5c7b9253d3ab98a88c8e769cb9bbd upstream.
+commit 75e072a390da9a22e7ae4a4e8434dfca5da499fb upstream.
 
-Syzbot reported [1] crash that happens for following tracing scenario:
+Consider a sockmap entry being updated with the same socket:
 
-  - create tracepoint perf event with attr.inherit=1, attach it to the
-    process and set bpf program to it
-  - attached process forks -> chid creates inherited event
+	osk = stab->sks[idx];
+	sock_map_add_link(psock, link, map, &stab->sks[idx]);
+	stab->sks[idx] = sk;
+	if (osk)
+		sock_map_unref(osk, &stab->sks[idx]);
 
-    the new child event shares the parent's bpf program and tp_event
-    (hence prog_array) which is global for tracepoint
+Due to sock_map_unref(), which invokes sock_map_del_link(), all the
+psock's links for stab->sks[idx] are torn:
 
-  - exit both process and its child -> release both events
-  - first perf_event_detach_bpf_prog call will release tp_event->prog_array
-    and second perf_event_detach_bpf_prog will crash, because
-    tp_event->prog_array is NULL
+	list_for_each_entry_safe(link, tmp, &psock->link, list) {
+		if (link->link_raw == link_raw) {
+			...
+			list_del(&link->list);
+			sk_psock_free_link(link);
+		}
+	}
 
-The fix makes sure the perf_event_detach_bpf_prog checks prog_array
-is valid before it tries to remove the bpf program from it.
+And that includes the new link sock_map_add_link() added just before
+the unref.
 
-[1] https://lore.kernel.org/bpf/Z1MR6dCIKajNS6nU@krava/T/#m91dbf0688221ec7a7fc95e896a7ef9ff93b0b8ad
+This results in a sockmap holding a socket, but without the respective
+link. This in turn means that close(sock) won't trigger the cleanup,
+i.e. a closed socket will not be automatically removed from the sockmap.
 
-Fixes: 0ee288e69d03 ("bpf,perf: Fix perf_event_detach_bpf_prog error handling")
-Reported-by: syzbot+2e0d2840414ce817aaac@syzkaller.appspotmail.com
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241208142507.1207698-1-jolsa@kernel.org
+Stop tearing the links when a matching link_raw is found.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241202-sockmap-replace-v1-1-1e88579e7bd5@rbox.co
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/core/sock_map.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2180,6 +2180,9 @@ void perf_event_detach_bpf_prog(struct p
- 		goto unlock;
- 
- 	old_array = bpf_event_rcu_dereference(event->tp_event->prog_array);
-+	if (!old_array)
-+		goto put;
-+
- 	ret = bpf_prog_array_copy(old_array, event->prog, NULL, 0, &new_array);
- 	if (ret < 0) {
- 		bpf_prog_array_delete_safe(old_array, event->prog);
-@@ -2188,6 +2191,7 @@ void perf_event_detach_bpf_prog(struct p
- 		bpf_prog_array_free_sleepable(old_array);
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -158,6 +158,7 @@ static void sock_map_del_link(struct soc
+ 				verdict_stop = true;
+ 			list_del(&link->list);
+ 			sk_psock_free_link(link);
++			break;
+ 		}
  	}
- 
-+put:
- 	/*
- 	 * It could be that the bpf_prog is not sleepable (and will be freed
- 	 * via normal RCU), but is called from a point that supports sleepable
+ 	spin_unlock_bh(&psock->link_lock);
 
 
