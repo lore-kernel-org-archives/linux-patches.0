@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3B31FC0EC;
-	Tue, 17 Dec 2024 17:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385751FBCB8;
+	Tue, 17 Dec 2024 17:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456672; cv=none; b=AHcMU+KqPghbMfks05vCSwu6RivDnjrKqxFia53u49v4vjputSkIdXBt0G+TqL14IKPnAbVaME/ch2o4DM8oFviSGB2Obw8UH5uIlhZzqS9yrFiPpTAogwUvsJsvrU0BTmBljE0r3DZIh0pT3wjOoMKfmOEgBAHUpbyzZ4kImyw=
+	t=1734456675; cv=none; b=XhEGnfMwQevKzXjBeXLQAagfo5IOYqvajn19tXtlAhZBAGl2zyn5obZ9HlXEoc9HlfYoKOOSeeJLFXDC5HY5Nd30cQlTIw5F0W+44EUzMy+ajd/WVoaOTPbxytbyvXQI8HgWfniFOdpkMwz9PzilU8IiGpl0jZ9ej2wGYmZxrTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456672; c=relaxed/simple;
-	bh=W36Wk2kzdUdAvcDBjKJg76WHbYxY13jvOb3bTOA+6Uw=;
+	s=arc-20240116; t=1734456675; c=relaxed/simple;
+	bh=LjW2CBRogzRiVu5NBUemnJRxeygiwI5jSYZD8iMTh50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tqK8gjISI1n2T95FlzqKohs4YRPzYXC9tVtvO5wSXu928ZD/fIWJv+lcr2cAqY0YKSuodOJjAGRqlOmUAJzzIJchmCHxt9jsJn2lVqwaUEo90fiHBHPEUYgiWC00hKLTlGU/xG3uKrJp1CDzuB/rZkb1sO3umdv3vZVLMLQw754=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcTnxyxl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gFUeESVXu/3bRdcF1aSOA5gX7fWfU0ea1REyV4Ne4Sh87OSLp6vbdfgNDfkI5woJqXxyv8NU7pHDE3oP4NZnLo4QryVNZa62VK8APvmkMqAFhnahO3Xo2M0XuUYgEzWO7Tr+1tZF5W+j6IXg4wI4yNigNzap91W31nGO4haf+mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ekCu73ig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcTnxyxl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60EAC4CED3;
-	Tue, 17 Dec 2024 17:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ekCu73ig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CD7C4CED3;
+	Tue, 17 Dec 2024 17:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456672;
-	bh=W36Wk2kzdUdAvcDBjKJg76WHbYxY13jvOb3bTOA+6Uw=;
+	s=korg; t=1734456675;
+	bh=LjW2CBRogzRiVu5NBUemnJRxeygiwI5jSYZD8iMTh50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcTnxyxlEhEAHhyK98ryueupvSN+q0PCwx+okyyQtrXddoKfSvFyzi9QHRtE3uvKp
-	 9JB568t+sr0uonUlYb9x2h5PksyQe1/km4oMZZfuJ+kLAsn4D05gNmQ8UI1IAD1CGM
-	 tNmajVhDiVSPhqW3bBQ9secpqGcwSfbFgRFV+SJo=
+	b=ekCu73igb/KbtonQ+BjN2wSCOTnj+9Qa8ONF3X3wSn2orEXGJ4okNL+HkUB6l281s
+	 vvmuH/vspZx+1/hAgNg/vMkLohbnYvRdoPX6AMJsuBDD1KhCC8iQMTWPjQTO7kDejN
+	 4se/RwQhmye8tv3/hysL+Byk+p1e154D0uoGoZtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Thomas Falcon <thomas.falcon@intel.com>,
-	James Clark <james.clark@linaro.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 130/172] libperf: evlist: Fix --cpu argument on hybrid platform
-Date: Tue, 17 Dec 2024 18:08:06 +0100
-Message-ID: <20241217170551.730535063@linuxfoundation.org>
+Subject: [PATCH 6.12 131/172] ASoC: fsl_xcvr: change IFACE_PCM to IFACE_MIXER
+Date: Tue, 17 Dec 2024 18:08:07 +0100
+Message-ID: <20241217170551.774586888@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -54,91 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Clark <james.clark@linaro.org>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit f7e36d02d771ee14acae1482091718460cffb321 ]
+[ Upstream commit 7c17f7780a48b5ed36b6d13a06004fac993e75af ]
 
-Since the linked fixes: commit, specifying a CPU on hybrid platforms
-results in an error because Perf tries to open an extended type event
-on "any" CPU which isn't valid. Extended type events can only be opened
-on CPUs that match the type.
+As the snd_soc_card_get_kcontrol() is updated to use
+snd_ctl_find_id_mixer() in
+commit 897cc72b0837 ("ASoC: soc-card: Use
+snd_ctl_find_id_mixer() instead of open-coding")
+which make the iface fix to be IFACE_MIXER.
 
-Before (working):
-
-  $ perf record --cpu 1 -- true
-  [ perf record: Woken up 1 times to write data ]
-  [ perf record: Captured and wrote 2.385 MB perf.data (7 samples) ]
-
-After (not working):
-
-  $ perf record -C 1 -- true
-  WARNING: A requested CPU in '1' is not supported by PMU 'cpu_atom' (CPUs 16-27) for event 'cycles:P'
-  Error:
-  The sys_perf_event_open() syscall returned with 22 (Invalid argument) for event (cpu_atom/cycles:P/).
-  /bin/dmesg | grep -i perf may provide additional information.
-
-(Ignore the warning message, that's expected and not particularly
-relevant to this issue).
-
-This is because perf_cpu_map__intersect() of the user specified CPU (1)
-and one of the PMU's CPUs (16-27) correctly results in an empty (NULL)
-CPU map. However for the purposes of opening an event, libperf converts
-empty CPU maps into an any CPU (-1) which the kernel rejects.
-
-Fix it by deleting evsels with empty CPU maps in the specific case where
-user requested CPU maps are evaluated.
-
-Fixes: 251aa040244a ("perf parse-events: Wildcard most "numeric" events")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Thomas Falcon <thomas.falcon@intel.com>
-Signed-off-by: James Clark <james.clark@linaro.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Link: https://lore.kernel.org/r/20241114160450.295844-2-james.clark@linaro.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: 897cc72b0837 ("ASoC: soc-card: Use snd_ctl_find_id_mixer() instead of open-coding")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20241126053254.3657344-2-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/perf/evlist.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_xcvr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/perf/evlist.c b/tools/lib/perf/evlist.c
-index c6d67fc9e57e..83c43dc13313 100644
---- a/tools/lib/perf/evlist.c
-+++ b/tools/lib/perf/evlist.c
-@@ -47,6 +47,20 @@ static void __perf_evlist__propagate_maps(struct perf_evlist *evlist,
- 		 */
- 		perf_cpu_map__put(evsel->cpus);
- 		evsel->cpus = perf_cpu_map__intersect(evlist->user_requested_cpus, evsel->own_cpus);
-+
-+		/*
-+		 * Empty cpu lists would eventually get opened as "any" so remove
-+		 * genuinely empty ones before they're opened in the wrong place.
-+		 */
-+		if (perf_cpu_map__is_empty(evsel->cpus)) {
-+			struct perf_evsel *next = perf_evlist__next(evlist, evsel);
-+
-+			perf_evlist__remove(evlist, evsel);
-+			/* Keep idx contiguous */
-+			if (next)
-+				list_for_each_entry_from(next, &evlist->entries, node)
-+					next->idx--;
-+		}
- 	} else if (!evsel->own_cpus || evlist->has_user_cpus ||
- 		(!evsel->requires_cpu && perf_cpu_map__has_any_cpu(evlist->user_requested_cpus))) {
- 		/*
-@@ -80,11 +94,11 @@ static void __perf_evlist__propagate_maps(struct perf_evlist *evlist,
- 
- static void perf_evlist__propagate_maps(struct perf_evlist *evlist)
- {
--	struct perf_evsel *evsel;
-+	struct perf_evsel *evsel, *n;
- 
- 	evlist->needs_map_propagation = true;
- 
--	perf_evlist__for_each_evsel(evlist, evsel)
-+	list_for_each_entry_safe(evsel, n, &evlist->entries, node)
- 		__perf_evlist__propagate_maps(evlist, evsel);
+diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
+index beede7344efd..4341269eb977 100644
+--- a/sound/soc/fsl/fsl_xcvr.c
++++ b/sound/soc/fsl/fsl_xcvr.c
+@@ -169,7 +169,7 @@ static int fsl_xcvr_capds_put(struct snd_kcontrol *kcontrol,
  }
  
+ static struct snd_kcontrol_new fsl_xcvr_earc_capds_kctl = {
+-	.iface = SNDRV_CTL_ELEM_IFACE_PCM,
++	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
+ 	.name = "Capabilities Data Structure",
+ 	.access = SNDRV_CTL_ELEM_ACCESS_READWRITE,
+ 	.info = fsl_xcvr_type_capds_bytes_info,
 -- 
 2.39.5
 
