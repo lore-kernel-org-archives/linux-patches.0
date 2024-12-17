@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C677814A4E7;
-	Tue, 17 Dec 2024 17:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6226814A4E7;
+	Tue, 17 Dec 2024 17:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456022; cv=none; b=DZD7ERgZDxgcfD5Ge+yZkBYEWLcEE1Qd0RMPHzhzZARSXmRzorOVXmSs4VmR0ZeQVo40dRqV3Oqm1QZYc7rvVAfofJ6nC8Wi+Yc7y++LW8A1rEd/v+xpTbCYLYoafJLhN3p5iGx23uFBDeBOhJvxEFjhL4XX51Pq4A2mFAqyITE=
+	t=1734456025; cv=none; b=NB+AgOpS12JCHKvXU2c2c6S//nEXUqJpgFdneqoRrvCn7Gs0Kw5PjPMB2jFzJtogvhr2qWg5NS/aJODSqxETanH+8OhRG4G2Azd0wDpzoaGW+DO3NSRzQSKNgZt+GR0bPevtsqZsAiKLvGKs4fAoe7CdeFnuhf34KbzB8i5g+f0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456022; c=relaxed/simple;
-	bh=+XQjbhdQR4LleK7VflGxp6safgyJIkJC4yRJ9m6xd/Q=;
+	s=arc-20240116; t=1734456025; c=relaxed/simple;
+	bh=QDWlfXNB7+9uC6bGGutk4vJ8F34B7aG/Sg27rAID8/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXbYKoSxvjPc0VLHSY8x/HxTwtNn7dqL8gNZuMDqUeLWNEzd2LXIKR6PQZG9EcTuMhPqbpJnkviuh9igoSdQs+iRTk5KATleUMe3HlWbOvgpG8wyLE+ajbUMCjgZZnL0ySBJhFX4mGKGo/kmBUFauXB2Qgi/rOWZCxJRQYRu4fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ui52zWbB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejZKlNiEjf4A+VFicURUIGdLPIfrO1w0FK1GthoUJ4P9P7nvNep1j7LSL7ismOUfBN1BjXqusinRH3WfPyU0vDLPEQmUaLLTddpj24gPOKPPe2OKMFT8a678iPIDkeZwFbq+zFJeKMJ9QgJSwQkcuS/LLoZYelTJBVfLBkW0pbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZ5FxVQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ui52zWbB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94EAC4CED3;
-	Tue, 17 Dec 2024 17:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZ5FxVQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A87C4CED3;
+	Tue, 17 Dec 2024 17:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456022;
-	bh=+XQjbhdQR4LleK7VflGxp6safgyJIkJC4yRJ9m6xd/Q=;
+	s=korg; t=1734456025;
+	bh=QDWlfXNB7+9uC6bGGutk4vJ8F34B7aG/Sg27rAID8/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ui52zWbBEgFLb2QsQx/N+YjaPoFVSh8jZLLJaLTtY/fLhHQcrmB4WUC/5QgOUjaz9
-	 os5aHDqeL90MmcaSWsaDR3nml10sLVEz+P97H1F5kZ0AmbiKMtoSMfzdPI501BPfWg
-	 q6bSKJoPI9SnMbRNBm1fErrJa+U97jTd10dFBzxw=
+	b=JZ5FxVQOTPiEbQaPWz9Q+0qCSTw4r224uop2tcRPgtXhANqxV2sWIA26CwNDgOQZz
+	 AmRjqk78Y/87Ri04+ygbXlYAzwyRhZ3sc4YQUDFZGMMha7oJegrsrhCRc4kY0QNyZ0
+	 kDj58mc/sS0/VDq+d5lXd0/iJEfdZw7GGJYlHWl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Abagail ren <renzezhongucas@gmail.com>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 007/109] blk-cgroup: Fix UAF in blkcg_unpin_online()
-Date: Tue, 17 Dec 2024 18:06:51 +0100
-Message-ID: <20241217170533.659452967@linuxfoundation.org>
+	Jaakko Salo <jaakkos@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 008/109] ALSA: usb-audio: Add implicit feedback quirk for Yamaha THR5
+Date: Tue, 17 Dec 2024 18:06:52 +0100
+Message-ID: <20241217170533.702486768@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -52,82 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jaakko Salo <jaakkos@gmail.com>
 
-commit 86e6ca55b83c575ab0f2e105cf08f98e58d3d7af upstream.
+commit 82fdcf9b518b205da040046fbe7747fb3fd18657 upstream.
 
-blkcg_unpin_online() walks up the blkcg hierarchy putting the online pin. To
-walk up, it uses blkcg_parent(blkcg) but it was calling that after
-blkcg_destroy_blkgs(blkcg) which could free the blkcg, leading to the
-following UAF:
+Use implicit feedback from the capture endpoint to fix popping
+sounds during playback.
 
-  ==================================================================
-  BUG: KASAN: slab-use-after-free in blkcg_unpin_online+0x15a/0x270
-  Read of size 8 at addr ffff8881057678c0 by task kworker/9:1/117
-
-  CPU: 9 UID: 0 PID: 117 Comm: kworker/9:1 Not tainted 6.13.0-rc1-work-00182-gb8f52214c61a-dirty #48
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 02/02/2022
-  Workqueue: cgwb_release cgwb_release_workfn
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x27/0x80
-   print_report+0x151/0x710
-   kasan_report+0xc0/0x100
-   blkcg_unpin_online+0x15a/0x270
-   cgwb_release_workfn+0x194/0x480
-   process_scheduled_works+0x71b/0xe20
-   worker_thread+0x82a/0xbd0
-   kthread+0x242/0x2c0
-   ret_from_fork+0x33/0x70
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-  ...
-  Freed by task 1944:
-   kasan_save_track+0x2b/0x70
-   kasan_save_free_info+0x3c/0x50
-   __kasan_slab_free+0x33/0x50
-   kfree+0x10c/0x330
-   css_free_rwork_fn+0xe6/0xb30
-   process_scheduled_works+0x71b/0xe20
-   worker_thread+0x82a/0xbd0
-   kthread+0x242/0x2c0
-   ret_from_fork+0x33/0x70
-   ret_from_fork_asm+0x1a/0x30
-
-Note that the UAF is not easy to trigger as the free path is indirected
-behind a couple RCU grace periods and a work item execution. I could only
-trigger it with artifical msleep() injected in blkcg_unpin_online().
-
-Fix it by reading the parent pointer before destroying the blkcg's blkg's.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reported-by: Abagail ren <renzezhongucas@gmail.com>
-Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
-Fixes: 4308a434e5e0 ("blkcg: don't offline parent blkcg first")
-Cc: stable@vger.kernel.org # v5.7+
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219567
+Signed-off-by: Jaakko Salo <jaakkos@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241206164448.8136-1-jaakkos@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-cgroup.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -1325,10 +1325,14 @@ void blkcg_unpin_online(struct cgroup_su
- 	struct blkcg *blkcg = css_to_blkcg(blkcg_css);
- 
- 	do {
-+		struct blkcg *parent;
-+
- 		if (!refcount_dec_and_test(&blkcg->online_pin))
- 			break;
-+
-+		parent = blkcg_parent(blkcg);
- 		blkcg_destroy_blkgs(blkcg);
--		blkcg = blkcg_parent(blkcg);
-+		blkcg = parent;
- 	} while (blkcg);
- }
- 
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2067,6 +2067,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIC_RES_384),
+ 	DEVICE_FLG(0x046d, 0x09a4, /* Logitech QuickCam E 3500 */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_IGNORE_CTL_ERROR),
++	DEVICE_FLG(0x0499, 0x1506, /* Yamaha THR5 */
++		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x0499, 0x1509, /* Steinberg UR22 */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x0499, 0x3108, /* Yamaha YIT-W12TX */
 
 
