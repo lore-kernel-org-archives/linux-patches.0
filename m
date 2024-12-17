@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB711F943F;
-	Tue, 17 Dec 2024 17:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4058F1F76C3;
+	Tue, 17 Dec 2024 17:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456776; cv=none; b=K6ZBdk2UChAGN+vPAcvtJhRg6JvTDCzsZz0zt07+GCGUrRzjveRxHYELRExoOCgci11yU7deQGFu/QZVXLzOcZHDRF/iLvhXqhnYOfHdtrKf3lzthC6Q4ssBq5OyALZp32fadYu+D5PIkXMkJDfs1QDAKujcTYvsGLJ7nu5KTAc=
+	t=1734456779; cv=none; b=C5J5Ej4uncEI4Pwh48IlQhM/vHq36hRg7qQcE9ZxxLu49daL2P1uXKvVRRL+x8ISXtBzGfsYDyojCsKif+z4zXG6gyX/h1i2EEgSTydknOHxQAGD0wHvgj+HDd+VeOQ9sFZjnOEvFvk3ia+75jR+lH9e3Y5DA/hKXG8Ipq61m8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456776; c=relaxed/simple;
-	bh=3h18GEkKqDlDlBhZk+CtxGEQpJOUeD1NCA+/eYfzThg=;
+	s=arc-20240116; t=1734456779; c=relaxed/simple;
+	bh=nPGsaNkHmfhEJfaErgUYNQyKFXQf/wldJctSLi1WkjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bzc/Is9ATCfTHB9dULinZRXLxj+eETwKj/IYzLS3n0Y4oU5nEiI4ibsForhUdHnt6yhU6MH7lYHT6o61oYGJxj10ScQxlJWb0YuBowes1TqG1QVlpjGX/5lt8vdn5bnNWj1H6KGsjC7WMkP4Jy+2AkS3IqZkn3cJdJAS3kGbH4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MdEPjG7S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jnr5BpVEyqNWqfysEUlxPZNRFOYL6GFoBmsF/uXWyQO/vfSuXVI+129vzOBQGzhRCJOgF5ELmok8uXXHmrTzKAIL5V47qb1Tv60+t1gQzuAgay2853fAEEOq6g+oLL1JkebUsKwgfsZea7bTRUfZUepB20KwTjVVbJuLiIQVrkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hakFBMtu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MdEPjG7S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61D18C4CED3;
-	Tue, 17 Dec 2024 17:32:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hakFBMtu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B61C4CED3;
+	Tue, 17 Dec 2024 17:32:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456775;
-	bh=3h18GEkKqDlDlBhZk+CtxGEQpJOUeD1NCA+/eYfzThg=;
+	s=korg; t=1734456778;
+	bh=nPGsaNkHmfhEJfaErgUYNQyKFXQf/wldJctSLi1WkjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MdEPjG7S/CmOCUR0GMFwRo16WE7xqhWnhC0wRxwMrCzu5xjJLHWyKW9esnQTQvcfT
-	 rJjQyDwroRdI+s/aiF64jgkn7XRMo8LgfaIcf0zeda/DH8y4IaOp8gE7xZhCASqeCg
-	 zRheDgX6wyq4v8qm3/+CJt1r1+LK8dh/nnmpn5KQ=
+	b=hakFBMtunBqc/TtPmdyHjWriTqePg9YS9AHSC6RJz4ZmkENBO2dhmX4f5pFLLgdm1
+	 NAH0+7ArHgjtz1RdICJaV6JLBmGZxTrKiTbn5sUzSg/p0+7vGU01qwNZ23e+Xs+yl1
+	 rwlfeVzb8hpTGvi61jCQIzD3/68H3iptbd33P+8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Luck Tony <tony.luck@intel.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	kjain@linux.ibm.com,
+	hch@lst.de,
+	axboe@kernel.dk,
+	ritesh.list@gmail.com,
+	ming.lei@redhat.com,
+	gjoyce@linux.ibm.com,
+	Nilay Shroff <nilay@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 161/172] blk-mq: move cpuhp callback registering out of q->sysfs_lock
-Date: Tue, 17 Dec 2024 18:08:37 +0100
-Message-ID: <20241217170553.007478693@linuxfoundation.org>
+Subject: [PATCH 6.12 162/172] block: Fix potential deadlock while freezing queue and acquiring sysfs_lock
+Date: Tue, 17 Dec 2024 18:08:38 +0100
+Message-ID: <20241217170553.049517888@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -56,185 +56,331 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit 22465bbac53c821319089016f268a2437de9b00a ]
+[ Upstream commit be26ba96421ab0a8fa2055ccf7db7832a13c44d2 ]
 
-Registering and unregistering cpuhp callback requires global cpu hotplug lock,
-which is used everywhere. Meantime q->sysfs_lock is used in block layer
-almost everywhere.
+For storing a value to a queue attribute, the queue_attr_store function
+first freezes the queue (->q_usage_counter(io)) and then acquire
+->sysfs_lock. This seems not correct as the usual ordering should be to
+acquire ->sysfs_lock before freezing the queue. This incorrect ordering
+causes the following lockdep splat which we are able to reproduce always
+simply by accessing /sys/kernel/debug file using ls command:
 
-It is easy to trigger lockdep warning[1] by connecting the two locks.
+[   57.597146] WARNING: possible circular locking dependency detected
+[   57.597154] 6.12.0-10553-gb86545e02e8c #20 Tainted: G        W
+[   57.597162] ------------------------------------------------------
+[   57.597168] ls/4605 is trying to acquire lock:
+[   57.597176] c00000003eb56710 (&mm->mmap_lock){++++}-{4:4}, at: __might_fault+0x58/0xc0
+[   57.597200]
+               but task is already holding lock:
+[   57.597207] c0000018e27c6810 (&sb->s_type->i_mutex_key#3){++++}-{4:4}, at: iterate_dir+0x94/0x1d4
+[   57.597226]
+               which lock already depends on the new lock.
 
-Fix the warning by moving blk-mq's cpuhp callback registering out of
-q->sysfs_lock. Add one dedicated global lock for covering registering &
-unregistering hctx's cpuhp, and it is safe to do so because hctx is
-guaranteed to be live if our request_queue is live.
+[   57.597233]
+               the existing dependency chain (in reverse order) is:
+[   57.597241]
+               -> #5 (&sb->s_type->i_mutex_key#3){++++}-{4:4}:
+[   57.597255]        down_write+0x6c/0x18c
+[   57.597264]        start_creating+0xb4/0x24c
+[   57.597274]        debugfs_create_dir+0x2c/0x1e8
+[   57.597283]        blk_register_queue+0xec/0x294
+[   57.597292]        add_disk_fwnode+0x2e4/0x548
+[   57.597302]        brd_alloc+0x2c8/0x338
+[   57.597309]        brd_init+0x100/0x178
+[   57.597317]        do_one_initcall+0x88/0x3e4
+[   57.597326]        kernel_init_freeable+0x3cc/0x6e0
+[   57.597334]        kernel_init+0x34/0x1cc
+[   57.597342]        ret_from_kernel_user_thread+0x14/0x1c
+[   57.597350]
+               -> #4 (&q->debugfs_mutex){+.+.}-{4:4}:
+[   57.597362]        __mutex_lock+0xfc/0x12a0
+[   57.597370]        blk_register_queue+0xd4/0x294
+[   57.597379]        add_disk_fwnode+0x2e4/0x548
+[   57.597388]        brd_alloc+0x2c8/0x338
+[   57.597395]        brd_init+0x100/0x178
+[   57.597402]        do_one_initcall+0x88/0x3e4
+[   57.597410]        kernel_init_freeable+0x3cc/0x6e0
+[   57.597418]        kernel_init+0x34/0x1cc
+[   57.597426]        ret_from_kernel_user_thread+0x14/0x1c
+[   57.597434]
+               -> #3 (&q->sysfs_lock){+.+.}-{4:4}:
+[   57.597446]        __mutex_lock+0xfc/0x12a0
+[   57.597454]        queue_attr_store+0x9c/0x110
+[   57.597462]        sysfs_kf_write+0x70/0xb0
+[   57.597471]        kernfs_fop_write_iter+0x1b0/0x2ac
+[   57.597480]        vfs_write+0x3dc/0x6e8
+[   57.597488]        ksys_write+0x84/0x140
+[   57.597495]        system_call_exception+0x130/0x360
+[   57.597504]        system_call_common+0x160/0x2c4
+[   57.597516]
+               -> #2 (&q->q_usage_counter(io)#21){++++}-{0:0}:
+[   57.597530]        __submit_bio+0x5ec/0x828
+[   57.597538]        submit_bio_noacct_nocheck+0x1e4/0x4f0
+[   57.597547]        iomap_readahead+0x2a0/0x448
+[   57.597556]        xfs_vm_readahead+0x28/0x3c
+[   57.597564]        read_pages+0x88/0x41c
+[   57.597571]        page_cache_ra_unbounded+0x1ac/0x2d8
+[   57.597580]        filemap_get_pages+0x188/0x984
+[   57.597588]        filemap_read+0x13c/0x4bc
+[   57.597596]        xfs_file_buffered_read+0x88/0x17c
+[   57.597605]        xfs_file_read_iter+0xac/0x158
+[   57.597614]        vfs_read+0x2d4/0x3b4
+[   57.597622]        ksys_read+0x84/0x144
+[   57.597629]        system_call_exception+0x130/0x360
+[   57.597637]        system_call_common+0x160/0x2c4
+[   57.597647]
+               -> #1 (mapping.invalidate_lock#2){++++}-{4:4}:
+[   57.597661]        down_read+0x6c/0x220
+[   57.597669]        filemap_fault+0x870/0x100c
+[   57.597677]        xfs_filemap_fault+0xc4/0x18c
+[   57.597684]        __do_fault+0x64/0x164
+[   57.597693]        __handle_mm_fault+0x1274/0x1dac
+[   57.597702]        handle_mm_fault+0x248/0x484
+[   57.597711]        ___do_page_fault+0x428/0xc0c
+[   57.597719]        hash__do_page_fault+0x30/0x68
+[   57.597727]        do_hash_fault+0x90/0x35c
+[   57.597736]        data_access_common_virt+0x210/0x220
+[   57.597745]        _copy_from_user+0xf8/0x19c
+[   57.597754]        sel_write_load+0x178/0xd54
+[   57.597762]        vfs_write+0x108/0x6e8
+[   57.597769]        ksys_write+0x84/0x140
+[   57.597777]        system_call_exception+0x130/0x360
+[   57.597785]        system_call_common+0x160/0x2c4
+[   57.597794]
+               -> #0 (&mm->mmap_lock){++++}-{4:4}:
+[   57.597806]        __lock_acquire+0x17cc/0x2330
+[   57.597814]        lock_acquire+0x138/0x400
+[   57.597822]        __might_fault+0x7c/0xc0
+[   57.597830]        filldir64+0xe8/0x390
+[   57.597839]        dcache_readdir+0x80/0x2d4
+[   57.597846]        iterate_dir+0xd8/0x1d4
+[   57.597855]        sys_getdents64+0x88/0x2d4
+[   57.597864]        system_call_exception+0x130/0x360
+[   57.597872]        system_call_common+0x160/0x2c4
+[   57.597881]
+               other info that might help us debug this:
 
-[1] https://lore.kernel.org/lkml/Z04pz3AlvI4o0Mr8@agluck-desk3/
+[   57.597888] Chain exists of:
+                 &mm->mmap_lock --> &q->debugfs_mutex --> &sb->s_type->i_mutex_key#3
 
-Cc: Reinette Chatre <reinette.chatre@intel.com>
-Cc: Fenghua Yu <fenghua.yu@intel.com>
-Cc: Peter Newman <peternewman@google.com>
-Cc: Babu Moger <babu.moger@amd.com>
-Reported-by: Luck Tony <tony.luck@intel.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20241206111611.978870-3-ming.lei@redhat.com
+[   57.597905]  Possible unsafe locking scenario:
+
+[   57.597911]        CPU0                    CPU1
+[   57.597917]        ----                    ----
+[   57.597922]   rlock(&sb->s_type->i_mutex_key#3);
+[   57.597932]                                lock(&q->debugfs_mutex);
+[   57.597940]                                lock(&sb->s_type->i_mutex_key#3);
+[   57.597950]   rlock(&mm->mmap_lock);
+[   57.597958]
+                *** DEADLOCK ***
+
+[   57.597965] 2 locks held by ls/4605:
+[   57.597971]  #0: c0000000137c12f8 (&f->f_pos_lock){+.+.}-{4:4}, at: fdget_pos+0xcc/0x154
+[   57.597989]  #1: c0000018e27c6810 (&sb->s_type->i_mutex_key#3){++++}-{4:4}, at: iterate_dir+0x94/0x1d4
+
+Prevent the above lockdep warning by acquiring ->sysfs_lock before
+freezing the queue while storing a queue attribute in queue_attr_store
+function. Later, we also found[1] another function __blk_mq_update_nr_
+hw_queues where we first freeze queue and then acquire the ->sysfs_lock.
+So we've also updated lock ordering in __blk_mq_update_nr_hw_queues
+function and ensured that in all code paths we follow the correct lock
+ordering i.e. acquire ->sysfs_lock before freezing the queue.
+
+[1] https://lore.kernel.org/all/CAFj5m9Ke8+EHKQBs_Nk6hqd=LGXtk4mUxZUN5==ZcCjnZSBwHw@mail.gmail.com/
+
+Reported-by: kjain@linux.ibm.com
+Fixes: af2814149883 ("block: freeze the queue in queue_attr_store")
+Tested-by: kjain@linux.ibm.com
+Cc: hch@lst.de
+Cc: axboe@kernel.dk
+Cc: ritesh.list@gmail.com
+Cc: ming.lei@redhat.com
+Cc: gjoyce@linux.ibm.com
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241210144222.1066229-1-nilay@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: be26ba96421a ("block: Fix potential deadlock while freezing queue and acquiring sysfs_lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 98 ++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 92 insertions(+), 6 deletions(-)
+ block/blk-mq-sysfs.c | 16 ++++++----------
+ block/blk-mq.c       | 29 ++++++++++++++++++-----------
+ block/blk-sysfs.c    |  4 ++--
+ 3 files changed, 26 insertions(+), 23 deletions(-)
 
+diff --git a/block/blk-mq-sysfs.c b/block/blk-mq-sysfs.c
+index 156e9bb07abf..cd5ea6eaa76b 100644
+--- a/block/blk-mq-sysfs.c
++++ b/block/blk-mq-sysfs.c
+@@ -275,15 +275,13 @@ void blk_mq_sysfs_unregister_hctxs(struct request_queue *q)
+ 	struct blk_mq_hw_ctx *hctx;
+ 	unsigned long i;
+ 
+-	mutex_lock(&q->sysfs_dir_lock);
++	lockdep_assert_held(&q->sysfs_dir_lock);
++
+ 	if (!q->mq_sysfs_init_done)
+-		goto unlock;
++		return;
+ 
+ 	queue_for_each_hw_ctx(q, hctx, i)
+ 		blk_mq_unregister_hctx(hctx);
+-
+-unlock:
+-	mutex_unlock(&q->sysfs_dir_lock);
+ }
+ 
+ int blk_mq_sysfs_register_hctxs(struct request_queue *q)
+@@ -292,9 +290,10 @@ int blk_mq_sysfs_register_hctxs(struct request_queue *q)
+ 	unsigned long i;
+ 	int ret = 0;
+ 
+-	mutex_lock(&q->sysfs_dir_lock);
++	lockdep_assert_held(&q->sysfs_dir_lock);
++
+ 	if (!q->mq_sysfs_init_done)
+-		goto unlock;
++		return ret;
+ 
+ 	queue_for_each_hw_ctx(q, hctx, i) {
+ 		ret = blk_mq_register_hctx(hctx);
+@@ -302,8 +301,5 @@ int blk_mq_sysfs_register_hctxs(struct request_queue *q)
+ 			break;
+ 	}
+ 
+-unlock:
+-	mutex_unlock(&q->sysfs_dir_lock);
+-
+ 	return ret;
+ }
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index b4fba7b398e5..1030875a3e95 100644
+index 1030875a3e95..cc1b32023838 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -43,6 +43,7 @@
+@@ -4462,7 +4462,8 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
+ 	unsigned long i, j;
  
- static DEFINE_PER_CPU(struct llist_head, blk_cpu_done);
- static DEFINE_PER_CPU(call_single_data_t, blk_cpu_csd);
-+static DEFINE_MUTEX(blk_mq_cpuhp_lock);
+ 	/* protect against switching io scheduler  */
+-	mutex_lock(&q->sysfs_lock);
++	lockdep_assert_held(&q->sysfs_lock);
++
+ 	for (i = 0; i < set->nr_hw_queues; i++) {
+ 		int old_node;
+ 		int node = blk_mq_get_hctx_node(set, i);
+@@ -4495,7 +4496,6 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
  
- static void blk_mq_insert_request(struct request *rq, blk_insert_t flags);
- static void blk_mq_request_bypass_insert(struct request *rq,
-@@ -3740,13 +3741,91 @@ static int blk_mq_hctx_notify_dead(unsigned int cpu, struct hlist_node *node)
- 	return 0;
- }
- 
--static void blk_mq_remove_cpuhp(struct blk_mq_hw_ctx *hctx)
-+static void __blk_mq_remove_cpuhp(struct blk_mq_hw_ctx *hctx)
- {
--	if (!(hctx->flags & BLK_MQ_F_STACKING))
-+	lockdep_assert_held(&blk_mq_cpuhp_lock);
-+
-+	if (!(hctx->flags & BLK_MQ_F_STACKING) &&
-+	    !hlist_unhashed(&hctx->cpuhp_online)) {
- 		cpuhp_state_remove_instance_nocalls(CPUHP_AP_BLK_MQ_ONLINE,
- 						    &hctx->cpuhp_online);
--	cpuhp_state_remove_instance_nocalls(CPUHP_BLK_MQ_DEAD,
--					    &hctx->cpuhp_dead);
-+		INIT_HLIST_NODE(&hctx->cpuhp_online);
-+	}
-+
-+	if (!hlist_unhashed(&hctx->cpuhp_dead)) {
-+		cpuhp_state_remove_instance_nocalls(CPUHP_BLK_MQ_DEAD,
-+						    &hctx->cpuhp_dead);
-+		INIT_HLIST_NODE(&hctx->cpuhp_dead);
-+	}
-+}
-+
-+static void blk_mq_remove_cpuhp(struct blk_mq_hw_ctx *hctx)
-+{
-+	mutex_lock(&blk_mq_cpuhp_lock);
-+	__blk_mq_remove_cpuhp(hctx);
-+	mutex_unlock(&blk_mq_cpuhp_lock);
-+}
-+
-+static void __blk_mq_add_cpuhp(struct blk_mq_hw_ctx *hctx)
-+{
-+	lockdep_assert_held(&blk_mq_cpuhp_lock);
-+
-+	if (!(hctx->flags & BLK_MQ_F_STACKING) &&
-+	    hlist_unhashed(&hctx->cpuhp_online))
-+		cpuhp_state_add_instance_nocalls(CPUHP_AP_BLK_MQ_ONLINE,
-+				&hctx->cpuhp_online);
-+
-+	if (hlist_unhashed(&hctx->cpuhp_dead))
-+		cpuhp_state_add_instance_nocalls(CPUHP_BLK_MQ_DEAD,
-+				&hctx->cpuhp_dead);
-+}
-+
-+static void __blk_mq_remove_cpuhp_list(struct list_head *head)
-+{
-+	struct blk_mq_hw_ctx *hctx;
-+
-+	lockdep_assert_held(&blk_mq_cpuhp_lock);
-+
-+	list_for_each_entry(hctx, head, hctx_list)
-+		__blk_mq_remove_cpuhp(hctx);
-+}
-+
-+/*
-+ * Unregister cpuhp callbacks from exited hw queues
-+ *
-+ * Safe to call if this `request_queue` is live
-+ */
-+static void blk_mq_remove_hw_queues_cpuhp(struct request_queue *q)
-+{
-+	LIST_HEAD(hctx_list);
-+
-+	spin_lock(&q->unused_hctx_lock);
-+	list_splice_init(&q->unused_hctx_list, &hctx_list);
-+	spin_unlock(&q->unused_hctx_lock);
-+
-+	mutex_lock(&blk_mq_cpuhp_lock);
-+	__blk_mq_remove_cpuhp_list(&hctx_list);
-+	mutex_unlock(&blk_mq_cpuhp_lock);
-+
-+	spin_lock(&q->unused_hctx_lock);
-+	list_splice(&hctx_list, &q->unused_hctx_list);
-+	spin_unlock(&q->unused_hctx_lock);
-+}
-+
-+/*
-+ * Register cpuhp callbacks from all hw queues
-+ *
-+ * Safe to call if this `request_queue` is live
-+ */
-+static void blk_mq_add_hw_queues_cpuhp(struct request_queue *q)
-+{
-+	struct blk_mq_hw_ctx *hctx;
-+	unsigned long i;
-+
-+	mutex_lock(&blk_mq_cpuhp_lock);
-+	queue_for_each_hw_ctx(q, hctx, i)
-+		__blk_mq_add_cpuhp(hctx);
-+	mutex_unlock(&blk_mq_cpuhp_lock);
- }
- 
- /*
-@@ -3797,8 +3876,6 @@ static void blk_mq_exit_hctx(struct request_queue *q,
- 	if (set->ops->exit_hctx)
- 		set->ops->exit_hctx(hctx, hctx_idx);
- 
--	blk_mq_remove_cpuhp(hctx);
--
- 	xa_erase(&q->hctx_table, hctx_idx);
- 
- 	spin_lock(&q->unused_hctx_lock);
-@@ -3815,6 +3892,7 @@ static void blk_mq_exit_hw_queues(struct request_queue *q,
- 	queue_for_each_hw_ctx(q, hctx, i) {
- 		if (i == nr_queue)
- 			break;
-+		blk_mq_remove_cpuhp(hctx);
- 		blk_mq_exit_hctx(q, set, hctx, i);
- 	}
- }
-@@ -3878,6 +3956,8 @@ blk_mq_alloc_hctx(struct request_queue *q, struct blk_mq_tag_set *set,
- 	INIT_DELAYED_WORK(&hctx->run_work, blk_mq_run_work_fn);
- 	spin_lock_init(&hctx->lock);
- 	INIT_LIST_HEAD(&hctx->dispatch);
-+	INIT_HLIST_NODE(&hctx->cpuhp_dead);
-+	INIT_HLIST_NODE(&hctx->cpuhp_online);
- 	hctx->queue = q;
- 	hctx->flags = set->flags & ~BLK_MQ_F_TAG_QUEUE_SHARED;
- 
-@@ -4416,6 +4496,12 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
  	xa_for_each_start(&q->hctx_table, j, hctx, j)
  		blk_mq_exit_hctx(q, set, hctx, j);
- 	mutex_unlock(&q->sysfs_lock);
+-	mutex_unlock(&q->sysfs_lock);
+ 
+ 	/* unregister cpuhp callbacks for exited hctxs */
+ 	blk_mq_remove_hw_queues_cpuhp(q);
+@@ -4527,10 +4527,14 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+ 
+ 	xa_init(&q->hctx_table);
+ 
++	mutex_lock(&q->sysfs_lock);
 +
-+	/* unregister cpuhp callbacks for exited hctxs */
-+	blk_mq_remove_hw_queues_cpuhp(q);
+ 	blk_mq_realloc_hw_ctxs(set, q);
+ 	if (!q->nr_hw_queues)
+ 		goto err_hctxs;
+ 
++	mutex_unlock(&q->sysfs_lock);
 +
-+	/* register cpuhp for new initialized hctxs */
-+	blk_mq_add_hw_queues_cpuhp(q);
+ 	INIT_WORK(&q->timeout_work, blk_mq_timeout_work);
+ 	blk_queue_rq_timeout(q, set->timeout ? set->timeout : 30 * HZ);
+ 
+@@ -4549,6 +4553,7 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+ 	return 0;
+ 
+ err_hctxs:
++	mutex_unlock(&q->sysfs_lock);
+ 	blk_mq_release(q);
+ err_exit:
+ 	q->mq_ops = NULL;
+@@ -4929,12 +4934,12 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
+ 		return false;
+ 
+ 	/* q->elevator needs protection from ->sysfs_lock */
+-	mutex_lock(&q->sysfs_lock);
++	lockdep_assert_held(&q->sysfs_lock);
+ 
+ 	/* the check has to be done with holding sysfs_lock */
+ 	if (!q->elevator) {
+ 		kfree(qe);
+-		goto unlock;
++		goto out;
+ 	}
+ 
+ 	INIT_LIST_HEAD(&qe->node);
+@@ -4944,9 +4949,7 @@ static bool blk_mq_elv_switch_none(struct list_head *head,
+ 	__elevator_get(qe->type);
+ 	list_add(&qe->node, head);
+ 	elevator_disable(q);
+-unlock:
+-	mutex_unlock(&q->sysfs_lock);
+-
++out:
+ 	return true;
  }
  
- int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
+@@ -4975,11 +4978,9 @@ static void blk_mq_elv_switch_back(struct list_head *head,
+ 	list_del(&qe->node);
+ 	kfree(qe);
+ 
+-	mutex_lock(&q->sysfs_lock);
+ 	elevator_switch(q, t);
+ 	/* drop the reference acquired in blk_mq_elv_switch_none */
+ 	elevator_put(t);
+-	mutex_unlock(&q->sysfs_lock);
+ }
+ 
+ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+@@ -4999,8 +5000,11 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 	if (set->nr_maps == 1 && nr_hw_queues == set->nr_hw_queues)
+ 		return;
+ 
+-	list_for_each_entry(q, &set->tag_list, tag_set_list)
++	list_for_each_entry(q, &set->tag_list, tag_set_list) {
++		mutex_lock(&q->sysfs_dir_lock);
++		mutex_lock(&q->sysfs_lock);
+ 		blk_mq_freeze_queue(q);
++	}
+ 	/*
+ 	 * Switch IO scheduler to 'none', cleaning up the data associated
+ 	 * with the previous scheduler. We will switch back once we are done
+@@ -5056,8 +5060,11 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
+ 	list_for_each_entry(q, &set->tag_list, tag_set_list)
+ 		blk_mq_elv_switch_back(&head, q);
+ 
+-	list_for_each_entry(q, &set->tag_list, tag_set_list)
++	list_for_each_entry(q, &set->tag_list, tag_set_list) {
+ 		blk_mq_unfreeze_queue(q);
++		mutex_unlock(&q->sysfs_lock);
++		mutex_unlock(&q->sysfs_dir_lock);
++	}
+ 
+ 	/* Free the excess tags when nr_hw_queues shrink. */
+ 	for (i = set->nr_hw_queues; i < prev_nr_hw_queues; i++)
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 207577145c54..42c2cb97d778 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -690,11 +690,11 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
+ 			return res;
+ 	}
+ 
+-	blk_mq_freeze_queue(q);
+ 	mutex_lock(&q->sysfs_lock);
++	blk_mq_freeze_queue(q);
+ 	res = entry->store(disk, page, length);
+-	mutex_unlock(&q->sysfs_lock);
+ 	blk_mq_unfreeze_queue(q);
++	mutex_unlock(&q->sysfs_lock);
+ 	return res;
+ }
+ 
 -- 
 2.39.5
 
