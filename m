@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279541F76BC;
-	Tue, 17 Dec 2024 17:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E1418D63A;
+	Tue, 17 Dec 2024 17:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455412; cv=none; b=XfoT79yl7kAWKTD6pTKGK8jtn1cuuD/Sn1wVMVYBED4YydPegpQ9d3goSvxNfhJ1xXxL5Qc0Mik4FhaXSbFKCZ1rB03l7YYYU0oXA1cyjiOCgN8I6qbprqH6Nz/ygylwS5gV6aGGC2pqoShFJEyhOZMmt3E9gsS3hCqFWwlkpMg=
+	t=1734455415; cv=none; b=vCeIf1BwwI0wM4Jspx/yZS7G0bz+qRFA7Y0hyYPXWYxOe4Vdrhrx/FbYCHtY/b2FIZAtTzMdhGJuviZj30e7UhXmPQxKZRLSrvBHsFMdFl6Q5hoSntKadpdx/h8hQhBrPm7cBPV/ahuEvBC4P09eOmjhnJLwXxbO9donfu/gf7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455412; c=relaxed/simple;
-	bh=elGTsfMEDWpDJ17t6/2pYCl5722U4uYwVzPxWI+S6qk=;
+	s=arc-20240116; t=1734455415; c=relaxed/simple;
+	bh=HCY/BnLHm7Ol8jyNd2eV3dwHUJDxXDWqHI/Ku8P4SbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZhOIpyZ4BV21O73wwC4W6HYbZaP4Wci94gWItAMFKNqqcqnbr60/vGpsK8IQ/Q0dH9YlLIKEakXT6QmAnJMlnSVOl/Pqqyl2OweMEEs+TMMXeAPl2CF3KgRCuvbhwFDOP4HNYOiPUjSOgkIjmpNtJ14XP3mXy3BKNl8/9t8YlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osYj290e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QDEc/PV34fCeY/3r3xtSbojZTOpS3E9A4J98pID+YrjrDpPmWPCflL69pwrbCbPC0y3DVYq2fn6tYJKDg3O6NwWKvlEyRhhVFqpU/6S1q3JMcriuwJ+I5olSNhuRtVxBr5YgU0xgAfHQZNgAr0G/f6C8LqxfflqEFpo4rJIoDU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4/uPuFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osYj290e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614C2C4CED3;
-	Tue, 17 Dec 2024 17:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4/uPuFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE41C4CED3;
+	Tue, 17 Dec 2024 17:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455411;
-	bh=elGTsfMEDWpDJ17t6/2pYCl5722U4uYwVzPxWI+S6qk=;
+	s=korg; t=1734455415;
+	bh=HCY/BnLHm7Ol8jyNd2eV3dwHUJDxXDWqHI/Ku8P4SbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osYj290ezvE0ArAcR0XJLi8/r82n/DbpUkdBLG5KZfQ9EtMrTl4DKTixQSjJcwqNj
-	 h079/OUHne2BwYjUE6U3YQjdWpAxJ28oQqva/bqDfA4CFZNFJZVSeMK1rEzxDAx8vq
-	 UTuDmvAb9UQxS9y+Z4GcZWoKibyeSn1bf/9L4ci4=
+	b=h4/uPuFC7visrD8eZgg/69oy2ahA7DtahL7/OV6sg2U0hyxRS2tZp7BUKyzrPmE6j
+	 Outz79UdM4XsoMvrYt0YcUePX5TZjLl5kuUG5xSgCmQYS17e8FsGz1pcwZC9uUQJrx
+	 OsYJ7YNlR0+Zt1tFa5ZBpx7lYCMOyq0o+wRO0LuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	David Laight <david.laight@aculab.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Tejun Heo <tj@kernel.org>,
-	Dan Schatzberg <dschatzberg@fb.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 19/24] blk-iocost: fix weight updates of inner active iocgs
-Date: Tue, 17 Dec 2024 18:07:17 +0100
-Message-ID: <20241217170519.790791205@linuxfoundation.org>
+Subject: [PATCH 5.4 20/24] blk-iocost: Avoid using clamp() on inuse in __propagate_weights()
+Date: Tue, 17 Dec 2024 18:07:18 +0100
+Message-ID: <20241217170519.833130458@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170519.006786596@linuxfoundation.org>
 References: <20241217170519.006786596@linuxfoundation.org>
@@ -52,94 +55,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit e9f4eee9a0023ba22db9560d4cc6ee63f933dae8 ]
+[ Upstream commit 57e420c84f9ab55ba4c5e2ae9c5f6c8e1ea834d2 ]
 
-When the weight of an active iocg is updated, weight_updated() is called
-which in turn calls __propagate_weights() to update the active and inuse
-weights so that the effective hierarchical weights are update accordingly.
+After a recent change to clamp() and its variants [1] that increases the
+coverage of the check that high is greater than low because it can be
+done through inlining, certain build configurations (such as s390
+defconfig) fail to build with clang with:
 
-The current implementation is incorrect for inner active nodes. For an
-active leaf iocg, inuse can be any value between 1 and active and the
-difference represents how much the iocg is donating. When weight is updated,
-as long as inuse is clamped between 1 and the new weight, we're alright and
-this is what __propagate_weights() currently implements.
+  block/blk-iocost.c:1101:11: error: call to '__compiletime_assert_557' declared with 'error' attribute: clamp() low limit 1 greater than high limit active
+   1101 |                 inuse = clamp_t(u32, inuse, 1, active);
+        |                         ^
+  include/linux/minmax.h:218:36: note: expanded from macro 'clamp_t'
+    218 | #define clamp_t(type, val, lo, hi) __careful_clamp(type, val, lo, hi)
+        |                                    ^
+  include/linux/minmax.h:195:2: note: expanded from macro '__careful_clamp'
+    195 |         __clamp_once(type, val, lo, hi, __UNIQUE_ID(v_), __UNIQUE_ID(l_), __UNIQUE_ID(h_))
+        |         ^
+  include/linux/minmax.h:188:2: note: expanded from macro '__clamp_once'
+    188 |         BUILD_BUG_ON_MSG(statically_true(ulo > uhi),                            \
+        |         ^
 
-However, that's not how an active inner node's inuse is set. An inner node's
-inuse is solely determined by the ratio between the sums of inuse's and
-active's of its children - ie. they're results of propagating the leaves'
-active and inuse weights upwards. __propagate_weights() incorrectly applies
-the same clamping as for a leaf when an active inner node's weight is
-updated. Consider a hierarchy which looks like the following with saturating
-workloads in AA and BB.
+__propagate_weights() is called with an active value of zero in
+ioc_check_iocgs(), which results in the high value being less than the
+low value, which is undefined because the value returned depends on the
+order of the comparisons.
 
-     R
-   /   \
-  A     B
-  |     |
- AA     BB
+The purpose of this expression is to ensure inuse is not more than
+active and at least 1. This could be written more simply with a ternary
+expression that uses min(inuse, active) as the condition so that the
+value of that condition can be used if it is not zero and one if it is.
+Do this conversion to resolve the error and add a comment to deter
+people from turning this back into clamp().
 
-1. For both A and B, active=100, inuse=100, hwa=0.5, hwi=0.5.
-
-2. echo 200 > A/io.weight
-
-3. __propagate_weights() update A's active to 200 and leave inuse at 100 as
-   it's already between 1 and the new active, making A:active=200,
-   A:inuse=100. As R's active_sum is updated along with A's active,
-   A:hwa=2/3, B:hwa=1/3. However, because the inuses didn't change, the
-   hwi's remain unchanged at 0.5.
-
-4. The weight of A is now twice that of B but AA and BB still have the same
-   hwi of 0.5 and thus are doing the same amount of IOs.
-
-Fix it by making __propgate_weights() always calculate the inuse of an
-active inner iocg based on the ratio of child_inuse_sum to child_active_sum.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reported-by: Dan Schatzberg <dschatzberg@fb.com>
 Fixes: 7caa47151ab2 ("blkcg: implement blk-iocost")
-Cc: stable@vger.kernel.org # v5.4+
-Link: https://lore.kernel.org/r/YJsxnLZV1MnBcqjj@slm.duckdns.org
+Link: https://lore.kernel.org/r/34d53778977747f19cce2abb287bb3e6@AcuMS.aculab.com/ [1]
+Suggested-by: David Laight <david.laight@aculab.com>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/llvm/CA+G9fYsD7mw13wredcZn0L-KBA3yeoVSTuxnss-AEWMN3ha0cA@mail.gmail.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412120322.3GfVe3vF-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 57e420c84f9a ("blk-iocost: Avoid using clamp() on inuse in __propagate_weights()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ block/blk-iocost.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 75eb90b3241e..1acd96c9d5c0 100644
+index 1acd96c9d5c0..642b16e59dd0 100644
 --- a/block/blk-iocost.c
 +++ b/block/blk-iocost.c
-@@ -907,7 +907,17 @@ static void __propagate_active_weight(struct ioc_gq *iocg, u32 active, u32 inuse
- 
- 	lockdep_assert_held(&ioc->lock);
- 
--	inuse = clamp_t(u32, inuse, 1, active);
-+	/*
-+	 * For an active leaf node, its inuse shouldn't be zero or exceed
-+	 * @active. An active internal node's inuse is solely determined by the
-+	 * inuse to active ratio of its children regardless of @inuse.
-+	 */
-+	if (list_empty(&iocg->active_list) && iocg->child_active_sum) {
-+		inuse = DIV64_U64_ROUND_UP(active * iocg->child_inuse_sum,
-+					   iocg->child_active_sum);
-+	} else {
-+		inuse = clamp_t(u32, inuse, 1, active);
-+	}
+@@ -916,7 +916,14 @@ static void __propagate_active_weight(struct ioc_gq *iocg, u32 active, u32 inuse
+ 		inuse = DIV64_U64_ROUND_UP(active * iocg->child_inuse_sum,
+ 					   iocg->child_active_sum);
+ 	} else {
+-		inuse = clamp_t(u32, inuse, 1, active);
++		/*
++		 * It may be tempting to turn this into a clamp expression with
++		 * a lower limit of 1 but active may be 0, which cannot be used
++		 * as an upper limit in that situation. This expression allows
++		 * active to clamp inuse unless it is 0, in which case inuse
++		 * becomes 1.
++		 */
++		inuse = min(inuse, active) ?: 1;
+ 	}
  
  	if (active == iocg->active && inuse == iocg->inuse)
- 		return;
-@@ -920,7 +930,7 @@ static void __propagate_active_weight(struct ioc_gq *iocg, u32 active, u32 inuse
- 		/* update the level sums */
- 		parent->child_active_sum += (s32)(active - child->active);
- 		parent->child_inuse_sum += (s32)(inuse - child->inuse);
--		/* apply the udpates */
-+		/* apply the updates */
- 		child->active = active;
- 		child->inuse = inuse;
- 
 -- 
 2.39.5
 
