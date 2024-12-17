@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DDD1F8AE4;
-	Tue, 17 Dec 2024 17:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2B71F8AD4;
+	Tue, 17 Dec 2024 17:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456705; cv=none; b=KU/4B7IZOTX2azDjNtdwR4otvBO1+ySvL2Dc6ygZSCCtNfcWr0kDx4ODnu6xSPVqyGchZA8nRLQX5uYaTj/o4XGfCIcmai6ZXCjBIjCuOMEfusN4SHMLIXuRV33BYfU0NLu1h/gbU0j/TCpSRncwmk1LCuhmNpXzSt/KcZmICDU=
+	t=1734456707; cv=none; b=leALbn54zoUbSh3QyymDq1u4tXbvvZF+yEdR6uqT1qpMdDSSK3l7GMrD2c6LbY4wS+R67TcJX6fc1xNQQx3uqdJIRtcs7L+sZ6KmukQl1+80cWc92elCCJ1vTiW4QpiEAQ3OhnzmCkwlZd6gMe/uBT/2EsZgvF4B7/Rg+EQAaAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456705; c=relaxed/simple;
-	bh=LAy7dNM609o0hbROs+gQhf0tmAyZZpy/S/8fA9IhJbQ=;
+	s=arc-20240116; t=1734456707; c=relaxed/simple;
+	bh=opZX3tgAv0Iyp3iaufPxWah/eYbjm9ivosCCrnCYICg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sn5vHeWJuKXAI+hu+/mkUD9cx5fOwRSaQtmjXajycEvKIOosVt28NABT/6j0p4vpJSVqXpjNJFpV+S7Evrqe0CiHn7NYr9VgstL/Kj87FW9lL72sUpvOfSibTuqU7WxF3PUD3dcQOpV9VRtHnh0Og8qaP0WOdzA5REUHveWT0aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWyvfKyr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDbxyG1+Y5ryOgA14TjegOpZnvCo9cPvivIU7tc5vGy3+QluAax10l0xMxyRSUhkb9/ffK3WwhygAngTDCwWHMARHa4rwBFgwIiweWbgERenKor/rX5bzip3W4dHnhF5i+7YQcqr4+lJCoB/PB74kotfgU723jv6yP0hCEMy9GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvcD9g8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWyvfKyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0713DC4CED3;
-	Tue, 17 Dec 2024 17:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvcD9g8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD265C4CED3;
+	Tue, 17 Dec 2024 17:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456704;
-	bh=LAy7dNM609o0hbROs+gQhf0tmAyZZpy/S/8fA9IhJbQ=;
+	s=korg; t=1734456707;
+	bh=opZX3tgAv0Iyp3iaufPxWah/eYbjm9ivosCCrnCYICg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWyvfKyrJglPYnCqUyZoc1OyUTLzucZ4YHkU01OdDkg8hNdoTct0fyy7BMz0r0o7K
-	 3/0IJ0e/FmDO1SRBwupaRFW0aTZaNDBa3pfozbntbq4MJp1tj7xJ7gbkss05DLKXzI
-	 1j6CdrPcwu4QKonZ/baA01egj8nEroQzfF0Smagw=
+	b=dvcD9g8JXQqYsU1r+jaX21baSgfRCu3c9uW5mNZ20GcPJNLYG/aJ5vkFO1UR1fLxA
+	 LqkE88YHOICc2ml7MoFWBq7dhDj6dWKom/Nt2QbMKOgrRMPkqmMG1Hk+nyHlHnR5rB
+	 wSHeKU33F/MYbKbzbxEr3y8/O2JLu4OcM9YaFM8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Ido Schimmel <idosch@idosch.org>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 140/172] net, team, bonding: Add netdev_base_features helper
-Date: Tue, 17 Dec 2024 18:08:16 +0100
-Message-ID: <20241217170552.145444595@linuxfoundation.org>
+Subject: [PATCH 6.12 113/172] cxgb4: use port number to set mac addr
+Date: Tue, 17 Dec 2024 18:07:49 +0100
+Message-ID: <20241217170551.011588060@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -55,78 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
 
-[ Upstream commit d2516c3a53705f783bb6868df0f4a2b977898a71 ]
+[ Upstream commit 356983f569c1f5991661fc0050aa263792f50616 ]
 
-Both bonding and team driver have logic to derive the base feature
-flags before iterating over their slave devices to refine the set
-via netdev_increment_features().
+t4_set_vf_mac_acl() uses pf to set mac addr, but t4vf_get_vf_mac_acl()
+uses port number to get mac addr, this leads to error when an attempt
+to set MAC address on VF's of PF2 and PF3.
+This patch fixes the issue by using port number to set mac address.
 
-Add a small helper netdev_base_features() so this can be reused
-instead of having it open-coded multiple times.
-
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Cc: Ido Schimmel <idosch@idosch.org>
-Cc: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20241210141245.327886-1-daniel@iogearbox.net
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: d064ea7fe2a2 ("bonding: Fix initial {vlan,mpls}_feature set in bond_compute_features")
+Fixes: e0cdac65ba26 ("cxgb4vf: configure ports accessible by the VF")
+Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241206062014.49414-1-anumula@chelsio.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 4 +---
- drivers/net/team/team_core.c    | 3 +--
- include/linux/netdev_features.h | 7 +++++++
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/chelsio/cxgb4/cxgb4.h      | 2 +-
+ drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c | 2 +-
+ drivers/net/ethernet/chelsio/cxgb4/t4_hw.c      | 5 +++--
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 15e0f14d0d49..166910693fd7 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1520,9 +1520,7 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
- 	struct slave *slave;
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4.h b/drivers/net/ethernet/chelsio/cxgb4/cxgb4.h
+index bbf7641a0fc7..7e13cd69f68a 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4.h
++++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4.h
+@@ -2077,7 +2077,7 @@ void t4_idma_monitor(struct adapter *adapter,
+ 		     struct sge_idma_monitor_state *idma,
+ 		     int hz, int ticks);
+ int t4_set_vf_mac_acl(struct adapter *adapter, unsigned int vf,
+-		      unsigned int naddr, u8 *addr);
++		      u8 start, unsigned int naddr, u8 *addr);
+ void t4_tp_pio_read(struct adapter *adap, u32 *buff, u32 nregs,
+ 		    u32 start_index, bool sleep_ok);
+ void t4_tp_tm_pio_read(struct adapter *adap, u32 *buff, u32 nregs,
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c
+index 2418645c8823..fb3933fbb842 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/cxgb4_main.c
+@@ -3246,7 +3246,7 @@ static int cxgb4_mgmt_set_vf_mac(struct net_device *dev, int vf, u8 *mac)
  
- 	mask = features;
--
--	features &= ~NETIF_F_ONE_FOR_ALL;
--	features |= NETIF_F_ALL_FOR_ALL;
-+	features = netdev_base_features(features);
+ 	dev_info(pi->adapter->pdev_dev,
+ 		 "Setting MAC %pM on VF %d\n", mac, vf);
+-	ret = t4_set_vf_mac_acl(adap, vf + 1, 1, mac);
++	ret = t4_set_vf_mac_acl(adap, vf + 1, pi->lport, 1, mac);
+ 	if (!ret)
+ 		ether_addr_copy(adap->vfinfo[vf].vf_mac_addr, mac);
+ 	return ret;
+diff --git a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+index 76de55306c4d..175bf9b13058 100644
+--- a/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
++++ b/drivers/net/ethernet/chelsio/cxgb4/t4_hw.c
+@@ -10215,11 +10215,12 @@ int t4_load_cfg(struct adapter *adap, const u8 *cfg_data, unsigned int size)
+  *	t4_set_vf_mac_acl - Set MAC address for the specified VF
+  *	@adapter: The adapter
+  *	@vf: one of the VFs instantiated by the specified PF
++ *	@start: The start port id associated with specified VF
+  *	@naddr: the number of MAC addresses
+  *	@addr: the MAC address(es) to be set to the specified VF
+  */
+ int t4_set_vf_mac_acl(struct adapter *adapter, unsigned int vf,
+-		      unsigned int naddr, u8 *addr)
++		      u8 start, unsigned int naddr, u8 *addr)
+ {
+ 	struct fw_acl_mac_cmd cmd;
  
- 	bond_for_each_slave(bond, slave, iter) {
- 		features = netdev_increment_features(features,
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 18191d5a8bd4..481c8df8842f 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -2012,8 +2012,7 @@ static netdev_features_t team_fix_features(struct net_device *dev,
- 	netdev_features_t mask;
+@@ -10234,7 +10235,7 @@ int t4_set_vf_mac_acl(struct adapter *adapter, unsigned int vf,
+ 	cmd.en_to_len16 = cpu_to_be32((unsigned int)FW_LEN16(cmd));
+ 	cmd.nmac = naddr;
  
- 	mask = features;
--	features &= ~NETIF_F_ONE_FOR_ALL;
--	features |= NETIF_F_ALL_FOR_ALL;
-+	features = netdev_base_features(features);
- 
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(port, &team->port_list, list) {
-diff --git a/include/linux/netdev_features.h b/include/linux/netdev_features.h
-index 66e7d26b70a4..11be70a7929f 100644
---- a/include/linux/netdev_features.h
-+++ b/include/linux/netdev_features.h
-@@ -253,4 +253,11 @@ static inline int find_next_netdev_feature(u64 feature, unsigned long start)
- 				 NETIF_F_GSO_UDP_TUNNEL |		\
- 				 NETIF_F_GSO_UDP_TUNNEL_CSUM)
- 
-+static inline netdev_features_t netdev_base_features(netdev_features_t features)
-+{
-+	features &= ~NETIF_F_ONE_FOR_ALL;
-+	features |= NETIF_F_ALL_FOR_ALL;
-+	return features;
-+}
-+
- #endif	/* _LINUX_NETDEV_FEATURES_H */
+-	switch (adapter->pf) {
++	switch (start) {
+ 	case 3:
+ 		memcpy(cmd.macaddr3, addr, sizeof(cmd.macaddr3));
+ 		break;
 -- 
 2.39.5
 
