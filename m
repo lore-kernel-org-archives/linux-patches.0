@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2358E1F76CB;
-	Tue, 17 Dec 2024 17:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0911F1F6661;
+	Tue, 17 Dec 2024 17:29:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456537; cv=none; b=BgMBYSpZ0cde1Xrc8mMfbnWKWDWT2+H+1NnyuiH5h2lNw1GVjQgqNqeQ60rlo+f9fa1r9RjenCXzbmu8LXtshPz8V3SvYdZmPvi11zNVofQ0u0Ctrq23NDT/coPkSoZDjMmu7Toi+GTZqmKTykpOZb65WBaAD82pLmZIeVkeUUY=
+	t=1734456540; cv=none; b=O/3h3kwDqrx07k3XrkDUE4/7UoUeHKDAVdB/YcCy7itYO4IFcfoTu/09KTPnymFD7qfe83s5JpJdqnmRapVlL+r7OlPTpfBFEvU5psoTOw4UmNEBQrmdR+iFoPnPBoH2D3iZUXXct7voCG8eyaazen4DD3+WJRqcsz/VkVXRynw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456537; c=relaxed/simple;
-	bh=6PczD+ATbH2gUjp43mtKFGRamMZQ79I1JP7fT7JXsZ8=;
+	s=arc-20240116; t=1734456540; c=relaxed/simple;
+	bh=3d2TWROIxMj/epBPtSmou2WdqqWSM31JB44BELmTT18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fM9GWGxdvUmVfbVBPJYb8MloVUk/G1kKws3/N0zqK8lvES9ibUkYIugjoOYdJoFJK15/TO2TW7O7I//7ewwGKORRtZJpgWI8i0RDBJbZl/spOjQPTwKhnXqoOw1lCVIUeUSY+/P3sWK7p8t7mnywvUpa/9gRlFLKSsGL906CUUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dx0Nf2Qw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Efj1Sk478KBSsBEOHFD7le9rZFXghTc3cMALJYjztDtWuM73TAMH80VSjnHHtyCah1BlU/43uq2epD+FIVDRSl/Q4hFkVk8XMFGaIMfAZKMVKKpTFn/jqP6x3dwIgbaBwi09QbEXcfDDEUmKNdbY6PBNxCx8wsXcD+48atYcMNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8MHzWld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dx0Nf2Qw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C75C4CED3;
-	Tue, 17 Dec 2024 17:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8MHzWld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80AB7C4CED3;
+	Tue, 17 Dec 2024 17:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456537;
-	bh=6PczD+ATbH2gUjp43mtKFGRamMZQ79I1JP7fT7JXsZ8=;
+	s=korg; t=1734456539;
+	bh=3d2TWROIxMj/epBPtSmou2WdqqWSM31JB44BELmTT18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dx0Nf2QwTRbqP1fgTIB5VfPk8NXBWQEZ4oVhnaqkgGQqlthwTZs++KtjNlyQX6TTY
-	 YY0JPrP2TNu+CiI7bftsFLg5WEJL4T5XttDzs6z6ZfbNiMzX9eiXjamraWdue1tVC6
-	 SBHGYVSCe3GXN0tbLXBIKXOydeRSSXZAMeO7pjJI=
+	b=B8MHzWldu/CM/S9tCl9SRygkg3qE4c4ZHWi13fssIvW3JrqSHuudZp9jQ//56TIKE
+	 W9NJb3kQCRO6zK0Z82fosvkkJPQj7Lu7mbaV7v8qurd6DH6PetpR1F/z9S6czeBJlZ
+	 q3Z7CESAC+Qrq8jz0OlZUH/BkcdR5l8a6/pLmLfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/172] batman-adv: Do not send uninitialized TT changes
-Date: Tue, 17 Dec 2024 18:07:26 +0100
-Message-ID: <20241217170550.027989384@linuxfoundation.org>
+Subject: [PATCH 6.12 091/172] batman-adv: Remove uninitialized data in full table TT response
+Date: Tue, 17 Dec 2024 18:07:27 +0100
+Message-ID: <20241217170550.068700626@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -54,74 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Remi Pommarel <repk@triplefau.lt>
 
-[ Upstream commit f2f7358c3890e7366cbcb7512b4bc8b4394b2d61 ]
+[ Upstream commit 8038806db64da15721775d6b834990cacbfcf0b2 ]
 
-The number of TT changes can be less than initially expected in
-batadv_tt_tvlv_container_update() (changes can be removed by
-batadv_tt_local_event() in ADD+DEL sequence between reading
-tt_diff_entries_num and actually iterating the change list under lock).
+The number of entries filled by batadv_tt_tvlv_generate() can be less
+than initially expected in batadv_tt_prepare_tvlv_{global,local}_data()
+(changes can be removed by batadv_tt_local_event() in ADD+DEL sequence
+in the meantime as the lock held during the whole tvlv global/local data
+generation).
 
-Thus tt_diff_len could be bigger than the actual changes size that need
-to be sent. Because batadv_send_my_tt_response sends the whole
-packet, uninitialized data can be interpreted as TT changes on other
-nodes leading to weird TT global entries on those nodes such as:
+Thus tvlv_len could be bigger than the actual TT entry size that need
+to be sent so full table TT_RESPONSE could hold invalid TT entries such
+as below.
 
  * 00:00:00:00:00:00   -1 [....] (  0) 88:12:4e:ad:7e:ba (179) (0x45845380)
  * 00:00:00:00:78:79 4092 [.W..] (  0) 88:12:4e:ad:7e:3c (145) (0x8ebadb8b)
 
-All of the above also applies to OGM tvlv container buffer's tvlv_len.
+Remove the extra allocated space to avoid sending uninitialized entries
+for full table TT_RESPONSE in both batadv_send_other_tt_response() and
+batadv_send_my_tt_response().
 
-Remove the extra allocated space to avoid sending uninitialized TT
-changes in batadv_send_my_tt_response() and batadv_v_ogm_send_softif().
-
-Fixes: e1bf0c14096f ("batman-adv: tvlv - convert tt data sent within OGMs")
+Fixes: 7ea7b4a14275 ("batman-adv: make the TT CRC logic VLAN specific")
 Signed-off-by: Remi Pommarel <repk@triplefau.lt>
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/batman-adv/translation-table.c | 37 ++++++++++++++++++------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
 diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 2243cec18ecc..f0590f9bc2b1 100644
+index f0590f9bc2b1..bbab7491c83f 100644
 --- a/net/batman-adv/translation-table.c
 +++ b/net/batman-adv/translation-table.c
-@@ -990,6 +990,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	int tt_diff_len, tt_change_len = 0;
- 	int tt_diff_entries_num = 0;
- 	int tt_diff_entries_count = 0;
-+	size_t tt_extra_len = 0;
- 	u16 tvlv_len;
+@@ -2754,14 +2754,16 @@ static bool batadv_tt_global_valid(const void *entry_ptr,
+  *
+  * Fills the tvlv buff with the tt entries from the specified hash. If valid_cb
+  * is not provided then this becomes a no-op.
++ *
++ * Return: Remaining unused length in tvlv_buff.
+  */
+-static void batadv_tt_tvlv_generate(struct batadv_priv *bat_priv,
+-				    struct batadv_hashtable *hash,
+-				    void *tvlv_buff, u16 tt_len,
+-				    bool (*valid_cb)(const void *,
+-						     const void *,
+-						     u8 *flags),
+-				    void *cb_data)
++static u16 batadv_tt_tvlv_generate(struct batadv_priv *bat_priv,
++				   struct batadv_hashtable *hash,
++				   void *tvlv_buff, u16 tt_len,
++				   bool (*valid_cb)(const void *,
++						    const void *,
++						    u8 *flags),
++				   void *cb_data)
+ {
+ 	struct batadv_tt_common_entry *tt_common_entry;
+ 	struct batadv_tvlv_tt_change *tt_change;
+@@ -2775,7 +2777,7 @@ static void batadv_tt_tvlv_generate(struct batadv_priv *bat_priv,
+ 	tt_change = tvlv_buff;
  
- 	tt_diff_entries_num = atomic_read(&bat_priv->tt.local_changes);
-@@ -1027,6 +1028,9 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 	if (!valid_cb)
+-		return;
++		return tt_len;
+ 
+ 	rcu_read_lock();
+ 	for (i = 0; i < hash->size; i++) {
+@@ -2801,6 +2803,8 @@ static void batadv_tt_tvlv_generate(struct batadv_priv *bat_priv,
+ 		}
  	}
- 	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
- 
-+	tt_extra_len = batadv_tt_len(tt_diff_entries_num -
-+				     tt_diff_entries_count);
+ 	rcu_read_unlock();
 +
- 	/* Keep the buffer for possible tt_request */
- 	spin_lock_bh(&bat_priv->tt.last_changeset_lock);
- 	kfree(bat_priv->tt.last_changeset);
-@@ -1035,6 +1039,7 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	tt_change_len = batadv_tt_len(tt_diff_entries_count);
- 	/* check whether this new OGM has no changes due to size problems */
- 	if (tt_diff_entries_count > 0) {
-+		tt_diff_len -= tt_extra_len;
- 		/* if kmalloc() fails we will reply with the full table
- 		 * instead of providing the diff
- 		 */
-@@ -1047,6 +1052,8 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
- 	}
- 	spin_unlock_bh(&bat_priv->tt.last_changeset_lock);
++	return batadv_tt_len(tt_tot - tt_num_entries);
+ }
  
-+	/* Remove extra packet space for OGM */
-+	tvlv_len -= tt_extra_len;
- container_register:
- 	batadv_tvlv_container_register(bat_priv, BATADV_TVLV_TT, 1, tt_data,
- 				       tvlv_len);
+ /**
+@@ -3076,10 +3080,11 @@ static bool batadv_send_other_tt_response(struct batadv_priv *bat_priv,
+ 			goto out;
+ 
+ 		/* fill the rest of the tvlv with the real TT entries */
+-		batadv_tt_tvlv_generate(bat_priv, bat_priv->tt.global_hash,
+-					tt_change, tt_len,
+-					batadv_tt_global_valid,
+-					req_dst_orig_node);
++		tvlv_len -= batadv_tt_tvlv_generate(bat_priv,
++						    bat_priv->tt.global_hash,
++						    tt_change, tt_len,
++						    batadv_tt_global_valid,
++						    req_dst_orig_node);
+ 	}
+ 
+ 	/* Don't send the response, if larger than fragmented packet. */
+@@ -3203,9 +3208,11 @@ static bool batadv_send_my_tt_response(struct batadv_priv *bat_priv,
+ 			goto out;
+ 
+ 		/* fill the rest of the tvlv with the real TT entries */
+-		batadv_tt_tvlv_generate(bat_priv, bat_priv->tt.local_hash,
+-					tt_change, tt_len,
+-					batadv_tt_local_valid, NULL);
++		tvlv_len -= batadv_tt_tvlv_generate(bat_priv,
++						    bat_priv->tt.local_hash,
++						    tt_change, tt_len,
++						    batadv_tt_local_valid,
++						    NULL);
+ 	}
+ 
+ 	tvlv_tt_data->flags = BATADV_TT_RESPONSE;
 -- 
 2.39.5
 
