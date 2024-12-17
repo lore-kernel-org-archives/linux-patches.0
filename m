@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C201F8693;
-	Tue, 17 Dec 2024 17:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FC71F8684;
+	Tue, 17 Dec 2024 17:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456504; cv=none; b=AWAed3Yp3KRn3e7SgPw/C2AJDh0GiTmvWs9IDbbY+pbXOpD6K8Diecg8xPVdqL0XNp7S83FjJyEDQpfkRM1pCSqw64Y34zAJ75N5NMXiaBIItsSDI07NyiB5/HyIQhIx+W8Yp29fBccLQXraXJtztvJw/6uOC8Z0pZEqbPtT+2s=
+	t=1734456507; cv=none; b=U70QmmZRumCWlsnelG2jXxrbg3jg0pPJlLrCdTDpshhnuVKw0P7rI+6+ZV0QlGvVBaLLYiBrHvSgFUE2Vls0FSignfGA/B/O6eNaidWK8ur3h/3hDhieHSQfpDdJVpFRHxv2+wTRufWmA9dSJ+M1Ug7xoqDkZp1NtkMeI5C9Y94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456504; c=relaxed/simple;
-	bh=N3NRll7jaEG9cwJ5UmBwUB0dsd32RLrA9tF0I9+RHZE=;
+	s=arc-20240116; t=1734456507; c=relaxed/simple;
+	bh=nYYH3dKO7ecUtYEP5soDNg7kTa8eyhKXTv+yvqKwWcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ledw4+Sx27Nq+5SnGPbDJZVptz4//45g2Wbx95F2mbhS4UdvRJOKZNqENW+Zapck1MfzI927IHl/F55Y5ejV4Ie2t9K2gS369TCmYjaH9jykFm4gy2G2Ee3d8thfMztu7hT85T+FTXi1EE7hIacEDX9jnUPxxF6qjEuAV8OjKwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZq6bVtD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FXx4kQjT1gmn8NQEnmyTXYztraFDhe2IgOSPF1tlxsYbevo/NrICoKTApUGYLwtOKF6fFvuVdoT/hLx32IqprW7FFLsDNNPwaEZvLE7UVoV5Oi3syhbYgp/6i71JCmuoRVCx4nfNNmHZLqMk1Z2HkF5RN4nT44lUJLEUxb3wB/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HlNlFNPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZq6bVtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02614C4CED3;
-	Tue, 17 Dec 2024 17:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HlNlFNPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FA7C4CED7;
+	Tue, 17 Dec 2024 17:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456504;
-	bh=N3NRll7jaEG9cwJ5UmBwUB0dsd32RLrA9tF0I9+RHZE=;
+	s=korg; t=1734456507;
+	bh=nYYH3dKO7ecUtYEP5soDNg7kTa8eyhKXTv+yvqKwWcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZq6bVtDvSTM0ARENCWM54UG5l/BwgBTtlLlYTO63lhlruZgviw3ySihAAtgmqL5j
-	 Q43lEktFwIlWoMcO9JE1E7lfbccSGmUjYUw4nMjaquLP3bgaBE++6h96KOTdCFaB3E
-	 s7tygqXPAyO/EoVwroZyj284qISDUTeACV68pw98=
+	b=HlNlFNPSVqlE7tIGoyR9eNN4IXcZh1gQ9JFss0Im21MOsolDLPb5jnbOGDWP8QdO0
+	 c/nB2/KD1Up9sacGYUVO6hRHM+5QbKCPDVQ4ldphrB6CXKLlw2qwp7nXJdXVQtLJti
+	 NlR9sps5pI5U8nIpJ/a7O8KEtxoYgcaE7pV9evrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Lianqin Hu <hulianqin@vivo.com>
-Subject: [PATCH 6.12 050/172] usb: gadget: u_serial: Fix the issue that gs_start_io crashed due to accessing null pointer
-Date: Tue, 17 Dec 2024 18:06:46 +0100
-Message-ID: <20241217170548.341159223@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Benson Leung <bleung@chromium.org>
+Subject: [PATCH 6.12 051/172] usb: typec: ucsi: Fix completion notifications
+Date: Tue, 17 Dec 2024 18:06:47 +0100
+Message-ID: <20241217170548.384791168@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -44,87 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Łukasz Bartosik <ukaszb@chromium.org>
 
-commit 4cfbca86f6a8b801f3254e0e3c8f2b1d2d64be2b upstream.
+commit e37b383df91ba9bde9c6a31bf3ea9072561c5126 upstream.
 
-Considering that in some extreme cases,
-when u_serial driver is accessed by multiple threads,
-Thread A is executing the open operation and calling the gs_open,
-Thread B is executing the disconnect operation and calling the
-gserial_disconnect function,The port->port_usb pointer will be set to NULL.
+OPM                         PPM                         LPM
+ |        1.send cmd         |                           |
+ |-------------------------->|                           |
+ |                           |--                         |
+ |                           |  | 2.set busy bit in CCI  |
+ |                           |<-                         |
+ |      3.notify the OPM     |                           |
+ |<--------------------------|                           |
+ |                           | 4.send cmd to be executed |
+ |                           |-------------------------->|
+ |                           |                           |
+ |                           |      5.cmd completed      |
+ |                           |<--------------------------|
+ |                           |                           |
+ |                           |--                         |
+ |                           |  | 6.set cmd completed    |
+ |                           |<-       bit in CCI        |
+ |                           |                           |
+ |     7.notify the OPM      |                           |
+ |<--------------------------|                           |
+ |                           |                           |
+ |   8.handle notification   |                           |
+ |   from point 3, read CCI  |                           |
+ |<--------------------------|                           |
+ |                           |                           |
 
-E.g.
-    Thread A                                 Thread B
-    gs_open()                                gadget_unbind_driver()
-    gs_start_io()                            composite_disconnect()
-    gs_start_rx()                            gserial_disconnect()
-    ...                                      ...
-    spin_unlock(&port->port_lock)
-    status = usb_ep_queue()                  spin_lock(&port->port_lock)
-    spin_lock(&port->port_lock)              port->port_usb = NULL
-    gs_free_requests(port->port_usb->in)     spin_unlock(&port->port_lock)
-    Crash
+When the PPM receives command from the OPM (p.1) it sets the busy bit
+in the CCI (p.2), sends notification to the OPM (p.3) and forwards the
+command to be executed by the LPM (p.4). When the PPM receives command
+completion from the LPM (p.5) it sets command completion bit in the CCI
+(p.6) and sends notification to the OPM (p.7). If command execution by
+the LPM is fast enough then when the OPM starts handling the notification
+from p.3 in p.8 and reads the CCI value it will see command completion bit
+set and will call complete(). Then complete() might be called again when
+the OPM handles notification from p.7.
 
-This causes thread A to access a null pointer (port->port_usb is null)
-when calling the gs_free_requests function, causing a crash.
+This fix replaces test_bit() with test_and_clear_bit()
+in ucsi_notify_common() in order to call complete() only
+once per request.
 
-If port_usb is NULL, the release request will be skipped as it
-will be done by gserial_disconnect.
+This fix also reinitializes completion variable in
+ucsi_sync_control_common() before a command is sent.
 
-So add a null pointer check to gs_start_io before attempting
-to access the value of the pointer port->port_usb.
-
-Call trace:
- gs_start_io+0x164/0x25c
- gs_open+0x108/0x13c
- tty_open+0x314/0x638
- chrdev_open+0x1b8/0x258
- do_dentry_open+0x2c4/0x700
- vfs_open+0x2c/0x3c
- path_openat+0xa64/0xc60
- do_filp_open+0xb8/0x164
- do_sys_openat2+0x84/0xf0
- __arm64_sys_openat+0x70/0x9c
- invoke_syscall+0x58/0x114
- el0_svc_common+0x80/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x38/0x68
-
-Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Fixes: 584e8df58942 ("usb: typec: ucsi: extract common code for command handling")
 Cc: stable@vger.kernel.org
-Suggested-by: Prashanth K <quic_prashk@quicinc.com>
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Acked-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/TYUPR06MB62178DC3473F9E1A537DCD02D2362@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Łukasz Bartosik <ukaszb@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Link: https://lore.kernel.org/r/20241203102318.3386345-1-ukaszb@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/typec/ucsi/ucsi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -579,9 +579,12 @@ static int gs_start_io(struct gs_port *p
- 		 * we didn't in gs_start_tx() */
- 		tty_wakeup(port->port.tty);
- 	} else {
--		gs_free_requests(ep, head, &port->read_allocated);
--		gs_free_requests(port->port_usb->in, &port->write_pool,
--			&port->write_allocated);
-+		/* Free reqs only if we are still connected */
-+		if (port->port_usb) {
-+			gs_free_requests(ep, head, &port->read_allocated);
-+			gs_free_requests(port->port_usb->in, &port->write_pool,
-+				&port->write_allocated);
-+		}
- 		status = -EIO;
- 	}
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index c435c0835744..7a65a7672e18 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -46,11 +46,11 @@ void ucsi_notify_common(struct ucsi *ucsi, u32 cci)
+ 		ucsi_connector_change(ucsi, UCSI_CCI_CONNECTOR(cci));
  
+ 	if (cci & UCSI_CCI_ACK_COMPLETE &&
+-	    test_bit(ACK_PENDING, &ucsi->flags))
++	    test_and_clear_bit(ACK_PENDING, &ucsi->flags))
+ 		complete(&ucsi->complete);
+ 
+ 	if (cci & UCSI_CCI_COMMAND_COMPLETE &&
+-	    test_bit(COMMAND_PENDING, &ucsi->flags))
++	    test_and_clear_bit(COMMAND_PENDING, &ucsi->flags))
+ 		complete(&ucsi->complete);
+ }
+ EXPORT_SYMBOL_GPL(ucsi_notify_common);
+@@ -65,6 +65,8 @@ int ucsi_sync_control_common(struct ucsi *ucsi, u64 command)
+ 	else
+ 		set_bit(COMMAND_PENDING, &ucsi->flags);
+ 
++	reinit_completion(&ucsi->complete);
++
+ 	ret = ucsi->ops->async_control(ucsi, command);
+ 	if (ret)
+ 		goto out_clear_bit;
+-- 
+2.47.1
+
 
 
