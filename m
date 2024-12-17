@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E351F757B;
-	Tue, 17 Dec 2024 17:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E04A1DE2AC;
+	Tue, 17 Dec 2024 17:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455856; cv=none; b=mmdaAMKTJ0tzhTDXPQt7X5v2fWuFngP1i8hm4Jw8/sT7unyV4zJ/UrhYYTaVvcfaBZfOtbNm1/z4FS2ICVaIGovvDD3ov8+74THvm6CZCEUmNSJNoj9WAPI9I3yS3UxgIcwJd3Eojq4pkDZU8hHUnnRLd6fQ0bUEjD8hJ++7FBs=
+	t=1734455859; cv=none; b=ewMWff3Y8W1V8Clb9iXZgG269HczTcoFpE5zTnoDsfF1Dfo1SOFC9+gEf4doAN4QU25/W3uwHQ/MbdyuOx6LRmtMPJrwAHmqi4m/apvHrqeEQcNn5uHBMxk6k49xSzscEY28rxTHayWdp/SnMR3yB98F7Y4E7UWYojjGRjCKgUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455856; c=relaxed/simple;
-	bh=9kcD7CdzqRwENBPKPLpVxc+/sXVvg6wVzhB2jFfzVKY=;
+	s=arc-20240116; t=1734455859; c=relaxed/simple;
+	bh=1eMJYr5w/USfbaK7dwD2VOrKyow9IaB7lniFRuPD7Es=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGA8/eu54CLGXY3hb5LGOOZ7IJNgrhV+SXcxaAOqI95EKCPUsdDIgyT6fXRmHnJfrsa6djGZW04Vav41XnQk+QLVF+0IqiSOH/hHiuJSjlZQLOx93BsW+d1Fj3vT/0b0SCvvhR0Hg+O6qlLOEKWWFO/OKspHDaUcBNlBL9kyBNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g2BLVCrm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IbP8M8osGfAL/gBcGUA3mZjShuVAmdRcC5G0llrkXIUu2iW5pS5FMtTuw9WJZcpIYr7Hy/EvWrWlko8IrhBtL3gnMgDjQxBqJhjwd0mRj1NHB+iD1ydKkHlTWUwziWLjzMSUN1CMBeemVWRmP9ei2vF4BblFnRrDjUPr+J7cWjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDZxN29/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g2BLVCrm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02B5C4CED3;
-	Tue, 17 Dec 2024 17:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDZxN29/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A953C4CED3;
+	Tue, 17 Dec 2024 17:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455856;
-	bh=9kcD7CdzqRwENBPKPLpVxc+/sXVvg6wVzhB2jFfzVKY=;
+	s=korg; t=1734455859;
+	bh=1eMJYr5w/USfbaK7dwD2VOrKyow9IaB7lniFRuPD7Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2BLVCrm6Nf/kzJ9sgpei2g2B+t1RDjN029lZAFGkesSg7ocHuo6Oyf3PuS8jPT7x
-	 tf86QAwOjcZxg1QDENu3nPz4GANeEKdcgIwanpPRfJ+NPqiyf8M4ESbJZurJyOapLq
-	 bzOvKJy9GO4qBkNtDilG9SiX4yZbe3A7Aci6zR6Y=
+	b=GDZxN29/OibAD6o1nAH2PkHBzwvTWJ8DsdhtqvkbIcrDW1n3Mdlsq9w6CgjC2Z5qs
+	 VFgL5dhpWjLRwSqTlAy1xWeYMDpyW2JM4McgHJinEPJjmF7HprZpU0yw53cQH+t9rv
+	 TNXHsFqpLWl6N+1xznOWp6BBjEZGYPmUtdQDLEyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Frager <neal.frager@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Peter Korsgaard <peter@korsgaard.com>
-Subject: [PATCH 6.1 15/76] usb: dwc3: xilinx: make sure pipe clock is deselected in usb2 only mode
-Date: Tue, 17 Dec 2024 18:06:55 +0100
-Message-ID: <20241217170526.883498744@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 49/76] spi: aspeed: Fix an error handling path in aspeed_spi_[read|write]_user()
+Date: Tue, 17 Dec 2024 18:07:29 +0100
+Message-ID: <20241217170528.304392161@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -51,44 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neal Frager <neal.frager@amd.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit a48f744bef9ee74814a9eccb030b02223e48c76c upstream.
+[ Upstream commit c84dda3751e945a67d71cbe3af4474aad24a5794 ]
 
-When the USB3 PHY is not defined in the Linux device tree, there could
-still be a case where there is a USB3 PHY active on the board and enabled
-by the first stage bootloader. If serdes clock is being used then the USB
-will fail to enumerate devices in 2.0 only mode.
+A aspeed_spi_start_user() is not balanced by a corresponding
+aspeed_spi_stop_user().
+Add the missing call.
 
-To solve this, make sure that the PIPE clock is deselected whenever the
-USB3 PHY is not defined and guarantees that the USB2 only mode will work
-in all cases.
-
-Fixes: 9678f3361afc ("usb: dwc3: xilinx: Skip resets and USB3 register settings for USB2.0 mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Neal Frager <neal.frager@amd.com>
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/1733163111-1414816-1-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e3228ed92893 ("spi: spi-mem: Convert Aspeed SMC driver to spi-mem")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://patch.msgid.link/4052aa2f9a9ea342fa6af83fa991b55ce5d5819e.1732051814.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-aspeed-smc.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -122,8 +122,11 @@ static int dwc3_xlnx_init_zynqmp(struct
- 	 * in use but the usb3-phy entry is missing from the device tree.
- 	 * Therefore, skip these operations in this case.
- 	 */
--	if (!priv_data->usb3_phy)
-+	if (!priv_data->usb3_phy) {
-+		/* Deselect the PIPE Clock Select bit in FPD PIPE Clock register */
-+		writel(PIPE_CLK_DESELECT, priv_data->regs + XLNX_USB_FPD_PIPE_CLK);
- 		goto skip_usb3_phy;
-+	}
+diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
+index b90571396a60..5015c2f6fd9f 100644
+--- a/drivers/spi/spi-aspeed-smc.c
++++ b/drivers/spi/spi-aspeed-smc.c
+@@ -239,7 +239,7 @@ static ssize_t aspeed_spi_read_user(struct aspeed_spi_chip *chip,
  
- 	crst = devm_reset_control_get_exclusive(dev, "usb_crst");
- 	if (IS_ERR(crst)) {
+ 	ret = aspeed_spi_send_cmd_addr(chip, op->addr.nbytes, offset, op->cmd.opcode);
+ 	if (ret < 0)
+-		return ret;
++		goto stop_user;
+ 
+ 	if (op->dummy.buswidth && op->dummy.nbytes) {
+ 		for (i = 0; i < op->dummy.nbytes / op->dummy.buswidth; i++)
+@@ -249,8 +249,9 @@ static ssize_t aspeed_spi_read_user(struct aspeed_spi_chip *chip,
+ 	aspeed_spi_set_io_mode(chip, io_mode);
+ 
+ 	aspeed_spi_read_from_ahb(buf, chip->ahb_base, len);
++stop_user:
+ 	aspeed_spi_stop_user(chip);
+-	return 0;
++	return ret;
+ }
+ 
+ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
+@@ -261,10 +262,11 @@ static ssize_t aspeed_spi_write_user(struct aspeed_spi_chip *chip,
+ 	aspeed_spi_start_user(chip);
+ 	ret = aspeed_spi_send_cmd_addr(chip, op->addr.nbytes, op->addr.val, op->cmd.opcode);
+ 	if (ret < 0)
+-		return ret;
++		goto stop_user;
+ 	aspeed_spi_write_to_ahb(chip->ahb_base, op->data.buf.out, op->data.nbytes);
++stop_user:
+ 	aspeed_spi_stop_user(chip);
+-	return 0;
++	return ret;
+ }
+ 
+ /* support for 1-1-1, 1-1-2 or 1-1-4 */
+-- 
+2.39.5
+
 
 
