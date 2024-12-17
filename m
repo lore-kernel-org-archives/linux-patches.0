@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB8B1F75BE;
-	Tue, 17 Dec 2024 17:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752518615A;
+	Tue, 17 Dec 2024 17:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456333; cv=none; b=u3w4lNiqk+PcqO1kyPKnww3VPC8dmQxAO9nZBEIes8AuCSvkJmfcgB5lbxTC21evY22IrcMh1zrdSgTCiFzjNCjwcIpCMhwc1ErwyQPmrUWlHWBLF2lSG1RhM4JqiN/V0JDtHJFEZlCvLrh58Ra5cnGQkbmjrCT0ntGkjkOOJLU=
+	t=1734456336; cv=none; b=RnzPgbebKU2PRzWbarde9XhyfKrNz+xQCOTZqnZY04S+IdbW0rLw6333HSgMg1v5VSWAJYYb5EgrMWQgzn9qeOhcz8CzPjrXADuV3uBI5D0Hnnp8KZvLiT27Ocm3zP+SNoHxCIvcaV00+LwpC/4V0oq1BbaaUt6k5dzhhJ6HlEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456333; c=relaxed/simple;
-	bh=OkZuZX+oiDrusezrOTYEI4L4CeQhEdouxp5EPJhHZy0=;
+	s=arc-20240116; t=1734456336; c=relaxed/simple;
+	bh=ANM/uXaCPB25FpZ2Sq7CwdmRg/aQ0kmlC1B+N2Iu4UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SOtdgeHbM6QTyEYC5h3iFYa3utfSXlC7IPJyksScaTmh6q6A0IGnlUEaCY+wJec06x2y4TskCo1qjdmAa1kRktU6r8RUzIde2WD4p2x0NPpT4SWciLGJNZzAR0BAd+71KNfmRuhJDQymp7dOoPEl7r/ZS8+fzPv5Q4lnvfCcgtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qzn0Md7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C5NQsOwhVoElTZkhSPw3Xhiq3nr03tJFn0jhlgb88esEtdKkCffL6eiBqInPjk5E1nsdRseiJO2kBpw1XD3oYyofQljmTkt8+v49n0WQmzyLoKhyARBRIH2v3VMGXht/2CpKg13WJF44DGAzibv71iuKeAi30W4SroEbhIbI874=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b990+oRe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qzn0Md7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18E2C4CED3;
-	Tue, 17 Dec 2024 17:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b990+oRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC820C4CED3;
+	Tue, 17 Dec 2024 17:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456333;
-	bh=OkZuZX+oiDrusezrOTYEI4L4CeQhEdouxp5EPJhHZy0=;
+	s=korg; t=1734456336;
+	bh=ANM/uXaCPB25FpZ2Sq7CwdmRg/aQ0kmlC1B+N2Iu4UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qzn0Md7dg+k+OMo7iAad7r5mVGOqL0jIw3bdUoKkR9k4UNXhHjvWEjvMv+v1L5YkZ
-	 xtS0K1kHz9r17lkRTcrFJ7T8KrpiHrjizyvnWBw37fRHYIF5Si7lsqAL/q/B0vEtg4
-	 69ayERTQvPIJpjzQVS7xQ6YYsxL2h5xfl/YdBFVs=
+	b=b990+oReTw8ydomMjayAUXAtBghQY0AJvrsW7r2grcs3caESuPiiKS+cYI7PGGAbk
+	 37G5MddEBHpG9Y2lOH1N2rowaiHHURx3lz7/MtEmQTSXscTWhzYK6/qLAJst6B4ZIo
+	 7qxghMUkkMMVswLPROJUgEBB2rES8cMLIxCSShRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hridesh MG <hridesh699@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 026/172] ALSA: hda/realtek: Fix headset mic on Acer Nitro 5
-Date: Tue, 17 Dec 2024 18:06:22 +0100
-Message-ID: <20241217170547.346630440@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.12 027/172] riscv: Fix IPIs usage in kfence_protect_page()
+Date: Tue, 17 Dec 2024 18:06:23 +0100
+Message-ID: <20241217170547.391519511@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170546.209657098@linuxfoundation.org>
 References: <20241217170546.209657098@linuxfoundation.org>
@@ -50,31 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hridesh MG <hridesh699@gmail.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-commit 5a69e3d0a1b0f07e58c353560cfcb1ea20a6f040 upstream.
+commit b3431a8bb336cece8adc452437befa7d4534b2fd upstream.
 
-Add a PCI quirk to enable microphone input on the headphone jack on
-the Acer Nitro 5 AN515-58 laptop.
+flush_tlb_kernel_range() may use IPIs to flush the TLBs of all the
+cores, which triggers the following warning when the irqs are disabled:
 
-Signed-off-by: Hridesh MG <hridesh699@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241205171843.7787-1-hridesh699@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[    3.455330] WARNING: CPU: 1 PID: 0 at kernel/smp.c:815 smp_call_function_many_cond+0x452/0x520
+[    3.456647] Modules linked in:
+[    3.457218] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Not tainted 6.12.0-rc7-00010-g91d3de7240b8 #1
+[    3.457416] Hardware name: QEMU QEMU Virtual Machine, BIOS
+[    3.457633] epc : smp_call_function_many_cond+0x452/0x520
+[    3.457736]  ra : on_each_cpu_cond_mask+0x1e/0x30
+[    3.457786] epc : ffffffff800b669a ra : ffffffff800b67c2 sp : ff2000000000bb50
+[    3.457824]  gp : ffffffff815212b8 tp : ff6000008014f080 t0 : 000000000000003f
+[    3.457859]  t1 : ffffffff815221e0 t2 : 000000000000000f s0 : ff2000000000bc10
+[    3.457920]  s1 : 0000000000000040 a0 : ffffffff815221e0 a1 : 0000000000000001
+[    3.457953]  a2 : 0000000000010000 a3 : 0000000000000003 a4 : 0000000000000000
+[    3.458006]  a5 : 0000000000000000 a6 : ffffffffffffffff a7 : 0000000000000000
+[    3.458042]  s2 : ffffffff815223be s3 : 00fffffffffff000 s4 : ff600001ffe38fc0
+[    3.458076]  s5 : ff600001ff950d00 s6 : 0000000200000120 s7 : 0000000000000001
+[    3.458109]  s8 : 0000000000000001 s9 : ff60000080841ef0 s10: 0000000000000001
+[    3.458141]  s11: ffffffff81524812 t3 : 0000000000000001 t4 : ff60000080092bc0
+[    3.458172]  t5 : 0000000000000000 t6 : ff200000000236d0
+[    3.458203] status: 0000000200000100 badaddr: ffffffff800b669a cause: 0000000000000003
+[    3.458373] [<ffffffff800b669a>] smp_call_function_many_cond+0x452/0x520
+[    3.458593] [<ffffffff800b67c2>] on_each_cpu_cond_mask+0x1e/0x30
+[    3.458625] [<ffffffff8000e4ca>] __flush_tlb_range+0x118/0x1ca
+[    3.458656] [<ffffffff8000e6b2>] flush_tlb_kernel_range+0x1e/0x26
+[    3.458683] [<ffffffff801ea56a>] kfence_protect+0xc0/0xce
+[    3.458717] [<ffffffff801e9456>] kfence_guarded_free+0xc6/0x1c0
+[    3.458742] [<ffffffff801e9d6c>] __kfence_free+0x62/0xc6
+[    3.458764] [<ffffffff801c57d8>] kfree+0x106/0x32c
+[    3.458786] [<ffffffff80588cf2>] detach_buf_split+0x188/0x1a8
+[    3.458816] [<ffffffff8058708c>] virtqueue_get_buf_ctx+0xb6/0x1f6
+[    3.458839] [<ffffffff805871da>] virtqueue_get_buf+0xe/0x16
+[    3.458880] [<ffffffff80613d6a>] virtblk_done+0x5c/0xe2
+[    3.458908] [<ffffffff8058766e>] vring_interrupt+0x6a/0x74
+[    3.458930] [<ffffffff800747d8>] __handle_irq_event_percpu+0x7c/0xe2
+[    3.458956] [<ffffffff800748f0>] handle_irq_event+0x3c/0x86
+[    3.458978] [<ffffffff800786cc>] handle_simple_irq+0x9e/0xbe
+[    3.459004] [<ffffffff80073934>] generic_handle_domain_irq+0x1c/0x2a
+[    3.459027] [<ffffffff804bf87c>] imsic_handle_irq+0xba/0x120
+[    3.459056] [<ffffffff80073934>] generic_handle_domain_irq+0x1c/0x2a
+[    3.459080] [<ffffffff804bdb76>] riscv_intc_aia_irq+0x24/0x34
+[    3.459103] [<ffffffff809d0452>] handle_riscv_irq+0x2e/0x4c
+[    3.459133] [<ffffffff809d923e>] call_on_irq_stack+0x32/0x40
+
+So only flush the local TLB and let the lazy kfence page fault handling
+deal with the faults which could happen when a core has an old protected
+pte version cached in its TLB. That leads to potential inaccuracies which
+can be tolerated when using kfence.
+
+Fixes: 47513f243b45 ("riscv: Enable KFENCE for riscv64")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20241209074125.52322-1-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/include/asm/kfence.h |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10127,6 +10127,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
- 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
- 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
+--- a/arch/riscv/include/asm/kfence.h
++++ b/arch/riscv/include/asm/kfence.h
+@@ -22,7 +22,9 @@ static inline bool kfence_protect_page(u
+ 	else
+ 		set_pte(pte, __pte(pte_val(ptep_get(pte)) | _PAGE_PRESENT));
+ 
+-	flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
++	preempt_disable();
++	local_flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
++	preempt_enable();
+ 
+ 	return true;
+ }
 
 
