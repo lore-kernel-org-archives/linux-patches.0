@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444C7149DFA;
-	Tue, 17 Dec 2024 17:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F16B1F755F;
+	Tue, 17 Dec 2024 17:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455561; cv=none; b=rkq8cKZdVxIsYNbFbh33AkAZoc/2Bjre/azvusDzvHpFm+R4HcA/Pz+8dm6VLp5yCniA4yIicqt/8XnYM8VoGc78JQROQTB9BBJ9lt0AyPHHiZtdNjbZnbzlRAIEZGkRQ81uIOg+ciFJqYWoDRtFQU6Ldu0vFmx7cClQGRBvBRg=
+	t=1734455564; cv=none; b=HvshBHM2bDoZSoGy+9JBcCZ91M5S9NbYoimE4D/pS0O8ORIc23wz3AbCuDYdEnWsKVOFv2jzjhij28fAwFsgA7kw6gZfBsd3h/IcpDdX2je7TeaxkVTMRjx4BBgSdW8AGfmnsCEJH5RYJcz26F8L5uNiwKkeSQMYX8e0kdtPe4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455561; c=relaxed/simple;
-	bh=CLgZs1KvKkymlTokGZDanRvPhBOuSEE6nVBZnxYSYlI=;
+	s=arc-20240116; t=1734455564; c=relaxed/simple;
+	bh=YgdPfSqCw5b6pqiiAJ9VU3dv7Ea2irDV6WdhwwLC1+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5nBHPogv1yr1Z1701+Om9cnl0ZIJRSF/1IEyqH4ldnQgey3o3A2FE2X+4Q7nnUErmacwHgr9WCGci2gI/DGH9cp9IxrwJGkep6fOwpUlFCPJ4KuOny6omRqSAo3In4QD39Wycun0HeLDk0HXx8rj8+MejZnItTounDn1Y9TmIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Du38a+hj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LrVOnSxkBWyateJCC+DbEUju8JvIJWdvcL+YQbYCq+9SDNyZujyJnHv9cxSHyhwvcaJFgrSJa/gQMWRK0RmEjE7CG3uU3ebMjqRPVdwqKGD0cXSdhCJKjL1EbpWTgnvKPUabySa0XGh08hVlofDDEp+XdmItVoXFbsSvYbLZzvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RNDFbqkb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Du38a+hj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961D5C4CED3;
-	Tue, 17 Dec 2024 17:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RNDFbqkb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B10AC4CED3;
+	Tue, 17 Dec 2024 17:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455561;
-	bh=CLgZs1KvKkymlTokGZDanRvPhBOuSEE6nVBZnxYSYlI=;
+	s=korg; t=1734455564;
+	bh=YgdPfSqCw5b6pqiiAJ9VU3dv7Ea2irDV6WdhwwLC1+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Du38a+hjhRegj5xEjTpUN3fz9i7XqbIhwuCuSqhKjNDGZZFOG0loT54vCscZJ9+YS
-	 kkoOb8UYFCi3iC8zRvotZOw6fGynqY/AHyTJ9kQTb9cKwdImmRYFhZHWr91g7447ZV
-	 Dy6PUack+QCg0sBKwgrVfiVmnMJpZbySQP1nox7A=
+	b=RNDFbqkbxZj2dSxkXN3kXdCt9Zm+nwUSVcbznim8JI8Wetw/nAcsEcc3EO10Ikh8k
+	 tVWEDVE93FLforQySSR16X61ztd2svh7HoEMPR1cdMVMjDcGPBpOlxvSf5Zc74wYyx
+	 PtI7q0xj56tdVALDEHLYwqIx2swM4yQNpph0mVto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lonial Con <kongln9170@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 5.10 30/43] bpf: sync_linked_regs() must preserve subreg_def
-Date: Tue, 17 Dec 2024 18:07:21 +0100
-Message-ID: <20241217170521.666678246@linuxfoundation.org>
+	MoYuanhao <moyuanhao3676@163.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 01/51] tcp: check space before adding MPTCP SYN options
+Date: Tue, 17 Dec 2024 18:06:54 +0100
+Message-ID: <20241217170520.365840428@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241217170520.459491270@linuxfoundation.org>
-References: <20241217170520.459491270@linuxfoundation.org>
+In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
+References: <20241217170520.301972474@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,76 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: MoYuanhao <moyuanhao3676@163.com>
 
-commit e9bd9c498cb0f5843996dbe5cbce7a1836a83c70 upstream.
+commit 06d64ab46f19ac12f59a1d2aa8cd196b2e4edb5b upstream.
 
-Range propagation must not affect subreg_def marks, otherwise the
-following example is rewritten by verifier incorrectly when
-BPF_F_TEST_RND_HI32 flag is set:
+Ensure there is enough space before adding MPTCP options in
+tcp_syn_options().
 
-  0: call bpf_ktime_get_ns                   call bpf_ktime_get_ns
-  1: r0 &= 0x7fffffff       after verifier   r0 &= 0x7fffffff
-  2: w1 = w0                rewrites         w1 = w0
-  3: if w0 < 10 goto +0     -------------->  r11 = 0x2f5674a6     (r)
-  4: r1 >>= 32                               r11 <<= 32           (r)
-  5: r0 = r1                                 r1 |= r11            (r)
-  6: exit;                                   if w0 < 0xa goto pc+0
-                                             r1 >>= 32
-                                             r0 = r1
-                                             exit
+Without this check, 'remaining' could underflow, and causes issues. If
+there is not enough space, MPTCP should not be used.
 
-(or zero extension of w1 at (2) is missing for architectures that
- require zero extension for upper register half).
-
-The following happens w/o this patch:
-- r0 is marked as not a subreg at (0);
-- w1 is marked as subreg at (2);
-- w1 subreg_def is overridden at (3) by copy_register_state();
-- w1 is read at (5) but mark_insn_zext() does not mark (2)
-  for zero extension, because w1 subreg_def is not set;
-- because of BPF_F_TEST_RND_HI32 flag verifier inserts random
-  value for hi32 bits of (2) (marked (r));
-- this random value is read at (5).
-
-Fixes: 75748837b7e5 ("bpf: Propagate scalar ranges through register assignments.")
-Reported-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Lonial Con <kongln9170@gmail.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Closes: https://lore.kernel.org/bpf/7e2aa30a62d740db182c170fdd8f81c596df280d.camel@gmail.com
-Link: https://lore.kernel.org/bpf/20240924210844.1758441-1-eddyz87@gmail.com
-[ shung-hsi.yu: sync_linked_regs() was called find_equal_scalars() before commit
-  4bf79f9be434 ("bpf: Track equal scalars history on per-instruction level"), and
-  modification is done because there is only a single call to
-  copy_register_state() before commit 98d7ca374ba4 ("bpf: Track delta between
-  "linked" registers."). ]
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: MoYuanhao <moyuanhao3676@163.com>
+Fixes: cec37a6e41aa ("mptcp: Handle MP_CAPABLE options for outgoing connections")
+Cc: stable@vger.kernel.org
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+[ Matt: Add Fixes, cc Stable, update Description ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241209-net-mptcp-check-space-syn-v1-1-2da992bb6f74@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_output.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -8168,8 +8168,11 @@ static void find_equal_scalars(struct bp
- 	struct bpf_reg_state *reg;
+--- a/net/ipv4/tcp_output.c
++++ b/net/ipv4/tcp_output.c
+@@ -824,8 +824,10 @@ static unsigned int tcp_syn_options(stru
+ 		unsigned int size;
  
- 	bpf_for_each_reg_in_vstate(vstate, state, reg, ({
--		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id)
-+		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id) {
-+			s32 saved_subreg_def = reg->subreg_def;
- 			copy_register_state(reg, known_reg);
-+			reg->subreg_def = saved_subreg_def;
-+		}
- 	}));
- }
+ 		if (mptcp_syn_options(sk, skb, &size, &opts->mptcp)) {
+-			opts->options |= OPTION_MPTCP;
+-			remaining -= size;
++			if (remaining >= size) {
++				opts->options |= OPTION_MPTCP;
++				remaining -= size;
++			}
+ 		}
+ 	}
  
 
 
