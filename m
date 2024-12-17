@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5811F7568;
-	Tue, 17 Dec 2024 17:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE9A142E77;
+	Tue, 17 Dec 2024 17:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456104; cv=none; b=mFoevwuSV+cLvtB2yZMDrsWLNFN6UnpsOnRu+9UEKk2wXiWPFAowYvypkBq7/cwiE0B1SqDJQCh4MfwBPrZUxpx0N5QE0uwBaRGiuTfj998H5jNjv/1Wqu8mmLk1WRn4byZuo6imSzP/aTL9TafM2lflpDY8YdrB9wGgJd76pLw=
+	t=1734456107; cv=none; b=uDPiLHXa9HJgSuJZNGvdbet9VK9oUj/iD/PEmko96pEgOp28jesGrtv5wyzl2PLkJFyI9Cv9Jytrzi3swvz6XZtsUv5+Q1xsfPvnUKZIBs9QmtBjk7sEw6KGTXa6HY0cYiPxNxA5Mq/f+U50rkp8TncLjOC5YgQnR1l4LadD1qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456104; c=relaxed/simple;
-	bh=+TInIydtzLgoMpmZPLYGacVHJaZBHH2eDJ0foHqxV9M=;
+	s=arc-20240116; t=1734456107; c=relaxed/simple;
+	bh=BN92/hscj3vuBwLSLEzVTugkgk9PVhWVcfPiA5D2AVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9rYGOJknWSawXrYmVxtpVCqrhbj3L5OK+f2/WE4vI4H+mes2vqXNAMFQgTL549b7nipOdORyCFEPBtElqmBKk2S7A0kGZ63b5Ns6dhPZshZGODFNNA1Mxf3xd64RYQHzwXgEkuflYcAL2eN8OIACsOxvChCcL/c4oC4Njbtyws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zrtyCmTe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U59VZj8uYP0YTXjwMBbMDPSDOpEvPr5wXo/Z7MZy8h5sS01mnhRzW/kNcrp8YutQl6XKwbBF2vMQswscCZ1egVa3fGGE55Pb6SwdeUUZakLJ47sYnoibRhGjzn1BcaV+ZzlvujOyeila2jqtQoLQQ6uaJwMMI8FMd9su42k5HZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sx5WJiHt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zrtyCmTe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E318EC4CED3;
-	Tue, 17 Dec 2024 17:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sx5WJiHt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6D2C4CED3;
+	Tue, 17 Dec 2024 17:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734456104;
-	bh=+TInIydtzLgoMpmZPLYGacVHJaZBHH2eDJ0foHqxV9M=;
+	s=korg; t=1734456107;
+	bh=BN92/hscj3vuBwLSLEzVTugkgk9PVhWVcfPiA5D2AVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zrtyCmTeJaSY8sEP+GawX0FEJobuGAg19Asla8VgiihH1LguaBIh2FDR1T9iRkgnG
-	 KCD7209Cc2aaqeyl9JayS7ZL953Wkx+2gFwds2p8mGzHRIi+z0S24ED1g/ob6Zd1sS
-	 cGZmED1mJbeOjlegsAvGk3Gafnv8kTfn5cxCbkRA=
+	b=Sx5WJiHt59TGMPw1xM2Gql3Zy6CRzv5GUqrp+lunzNy/OxQSa+S5qeNG8wzM2smsI
+	 /gdV8E0XiJE4McjNT1m3cIHpI/kdZYAc8N6juL0H5714qy9J2FKg8r///MRJIrJLna
+	 bD3CYcL4uwylUEU+AaZnCTl/3Meb7B+gaQy2iars=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/109] net: sparx5: fix the maximum frame length register
-Date: Tue, 17 Dec 2024 18:07:44 +0100
-Message-ID: <20241217170535.878833053@linuxfoundation.org>
+Subject: [PATCH 6.6 061/109] ACPI: resource: Fix memory resource type union access
+Date: Tue, 17 Dec 2024 18:07:45 +0100
+Message-ID: <20241217170535.924361969@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170533.329523616@linuxfoundation.org>
 References: <20241217170533.329523616@linuxfoundation.org>
@@ -45,43 +45,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit ddd7ba006078a2bef5971b2dc5f8383d47f96207 ]
+[ Upstream commit 7899ca9f3bd2b008e9a7c41f2a9f1986052d7e96 ]
 
-On port initialization, we configure the maximum frame length accepted
-by the receive module associated with the port. This value is currently
-written to the MAX_LEN field of the DEV10G_MAC_ENA_CFG register, when in
-fact, it should be written to the DEV10G_MAC_MAXLEN_CFG register. Fix
-this.
+In acpi_decode_space() addr->info.mem.caching is checked on main level
+for any resource type but addr->info.mem is part of union and thus
+valid only if the resource type is memory range.
 
-Fixes: 946e7fd5053a ("net: sparx5: add port module support")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Move the check inside the preceeding switch/case to only execute it
+when the union is of correct type.
+
+Fixes: fcb29bbcd540 ("ACPI: Add prefetch decoding to the address space parser")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20241202100614.20731-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/sparx5/sparx5_port.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/resource.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
-index 60dd2fd603a8..fcdaa37879f7 100644
---- a/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
-+++ b/drivers/net/ethernet/microchip/sparx5/sparx5_port.c
-@@ -1119,7 +1119,7 @@ int sparx5_port_init(struct sparx5 *sparx5,
- 	spx5_inst_rmw(DEV10G_MAC_MAXLEN_CFG_MAX_LEN_SET(ETH_MAXLEN),
- 		      DEV10G_MAC_MAXLEN_CFG_MAX_LEN,
- 		      devinst,
--		      DEV10G_MAC_ENA_CFG(0));
-+		      DEV10G_MAC_MAXLEN_CFG(0));
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index d3d776d4fb5a..df598de0cb18 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -250,6 +250,9 @@ static bool acpi_decode_space(struct resource_win *win,
+ 	switch (addr->resource_type) {
+ 	case ACPI_MEMORY_RANGE:
+ 		acpi_dev_memresource_flags(res, len, wp);
++
++		if (addr->info.mem.caching == ACPI_PREFETCHABLE_MEMORY)
++			res->flags |= IORESOURCE_PREFETCH;
+ 		break;
+ 	case ACPI_IO_RANGE:
+ 		acpi_dev_ioresource_flags(res, len, iodec,
+@@ -265,9 +268,6 @@ static bool acpi_decode_space(struct resource_win *win,
+ 	if (addr->producer_consumer == ACPI_PRODUCER)
+ 		res->flags |= IORESOURCE_WINDOW;
  
- 	/* Handle Signal Detect in 10G PCS */
- 	spx5_inst_wr(PCS10G_BR_PCS_SD_CFG_SD_POL_SET(sd_pol) |
+-	if (addr->info.mem.caching == ACPI_PREFETCHABLE_MEMORY)
+-		res->flags |= IORESOURCE_PREFETCH;
+-
+ 	return !(res->flags & IORESOURCE_DISABLED);
+ }
+ 
 -- 
 2.39.5
 
