@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B5821F76A1;
-	Tue, 17 Dec 2024 17:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4394E1F8930;
+	Tue, 17 Dec 2024 17:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734455894; cv=none; b=M4aBQH/bFtpOgpHGkzm3U6bJyo9gmtndLkAyzFwzmi4cHKjKee10Yd5kvxQfEGZGUnhq8XQI8+ll8wBQb1JMux/VYXaEM6lO/amjcRyTrCf2PC0Y06Vkhy/zUsi8rlpAQcxBHHBd/8qybtoB+zVRTdN5hajh911dX7kYJcbmJKs=
+	t=1734455898; cv=none; b=PX4upbcXRjVgN0j3vWs1JwLKkrRdKY3zj7Rg2aE1QF8pw2qprXdMeUk3fi32s3Bhn7tPAOtGG4I1IFl/93nOTCX+E7pOqAqZY4FbQbnwS0cJgBek6iV0VLvXvRx435KNGyHLEZMmVOhybnTVPIMW5pZyKQ6AzmQ/F2KQvqtPZRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734455894; c=relaxed/simple;
-	bh=M01v46qBCIW2Bv+gvZMBXp4LuVMSl0UkSpHq5Ukm70g=;
+	s=arc-20240116; t=1734455898; c=relaxed/simple;
+	bh=44eCIYLC5kT7LOiVnJ+HN3PDRLqLl+imq1/Er1m0sy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qb1dTBJ4c0hYkKS7S+0Wru6rKM73UGIFnnkKf2im4kFViAi59om/o9Y+T40prtvdfjoAg2F+nK2mB1cpD5pl6bSf6z0AoaQ/YTkbH2ggJMaybj2nabNoHkAew0cSafUVhT4hIgve0N/X/mGk3INjMe0eXkPOnc7Dlq8lDwuxtp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=beE+A0mB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgFzfPievAfETXwuRPyikRF+tsawoq5Gi4X2DAqFA/oEO2fXNqz7XJzZdSH250UK/H50rjt8CpbQB1laUZl+p0paW2/iaw3mXhzBM7O2O5VuTYm81z7r0wtBUSgZCeUIq+hDpKJ6aTb5ks1dLgfpZ+lf1Cq78liEJ5ea/3KXnZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H35EvozC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="beE+A0mB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79B0C4CED3;
-	Tue, 17 Dec 2024 17:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H35EvozC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73B5C4CED3;
+	Tue, 17 Dec 2024 17:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734455894;
-	bh=M01v46qBCIW2Bv+gvZMBXp4LuVMSl0UkSpHq5Ukm70g=;
+	s=korg; t=1734455897;
+	bh=44eCIYLC5kT7LOiVnJ+HN3PDRLqLl+imq1/Er1m0sy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beE+A0mBNo12guneLvQETzT7PrmJ0At+KecTsD+/W3tkhaCgTqx1X4N4UkkjfHkGi
-	 pbQgOlTyaA6cTBs3CT+DWA/Wg9f6Ch/s+/yKxvFNAV5dS95i69FVfj40TffvU+9g2E
-	 HwzGHywcasSezxPRk1AtZzSpQEHxU5HYQRB92ZL4=
+	b=H35EvozCBnt6szzKd5eR4KcESR3t17cPMfn51LvifrPhweIee+ohEgcF98q+CAIiw
+	 5R71Jd7B4TF82StwBoRe5RiVMaKipT06rzI9Fb+3f4FXjv2lD4k4jz8knLEUjM7wvi
+	 ETuHSFfVcU9E/fnfNC1XVmgVs9kpp/PUdpYp7sEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
 	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 6.1 68/76] xen/netfront: fix crash when removing device
-Date: Tue, 17 Dec 2024 18:07:48 +0100
-Message-ID: <20241217170529.266783762@linuxfoundation.org>
+Subject: [PATCH 6.1 69/76] x86: make get_cpu_vendor() accessible from Xen code
+Date: Tue, 17 Dec 2024 18:07:49 +0100
+Message-ID: <20241217170529.331267942@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241217170526.232803729@linuxfoundation.org>
 References: <20241217170526.232803729@linuxfoundation.org>
@@ -44,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
@@ -53,45 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 From: Juergen Gross <jgross@suse.com>
 
-commit f9244fb55f37356f75c739c57323d9422d7aa0f8 upstream.
+commit efbcd61d9bebb771c836a3b8bfced8165633db7c upstream.
 
-When removing a netfront device directly after a suspend/resume cycle
-it might happen that the queues have not been setup again, causing a
-crash during the attempt to stop the queues another time.
+In order to be able to differentiate between AMD and Intel based
+systems for very early hypercalls without having to rely on the Xen
+hypercall page, make get_cpu_vendor() non-static.
 
-Fix that by checking the queues are existing before trying to stop
-them.
+Refactor early_cpu_init() for the same reason by splitting out the
+loop initializing cpu_devs() into an externally callable function.
 
-This is XSA-465 / CVE-2024-53240.
+This is part of XSA-466 / CVE-2024-53241.
 
-Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-Fixes: d50b7914fae0 ("xen-netfront: Fix NULL sring after live migration")
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
 Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/xen-netfront.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/processor.h |    2 ++
+ arch/x86/kernel/cpu/common.c     |   36 +++++++++++++++++++++---------------
+ 2 files changed, 23 insertions(+), 15 deletions(-)
 
---- a/drivers/net/xen-netfront.c
-+++ b/drivers/net/xen-netfront.c
-@@ -867,7 +867,7 @@ static netdev_tx_t xennet_start_xmit(str
- static int xennet_close(struct net_device *dev)
- {
- 	struct netfront_info *np = netdev_priv(dev);
--	unsigned int num_queues = dev->real_num_tx_queues;
-+	unsigned int num_queues = np->queues ? dev->real_num_tx_queues : 0;
- 	unsigned int i;
- 	struct netfront_queue *queue;
- 	netif_tx_stop_all_queues(np->netdev);
-@@ -882,6 +882,9 @@ static void xennet_destroy_queues(struct
- {
- 	unsigned int i;
+--- a/arch/x86/include/asm/processor.h
++++ b/arch/x86/include/asm/processor.h
+@@ -199,6 +199,8 @@ static inline unsigned long long l1tf_pf
+ 	return BIT_ULL(boot_cpu_data.x86_cache_bits - 1 - PAGE_SHIFT);
+ }
  
-+	if (!info->queues)
-+		return;
++void init_cpu_devs(void);
++void get_cpu_vendor(struct cpuinfo_x86 *c);
+ extern void early_cpu_init(void);
+ extern void identify_boot_cpu(void);
+ extern void identify_secondary_cpu(struct cpuinfo_x86 *);
+--- a/arch/x86/kernel/cpu/common.c
++++ b/arch/x86/kernel/cpu/common.c
+@@ -906,7 +906,7 @@ void detect_ht(struct cpuinfo_x86 *c)
+ #endif
+ }
+ 
+-static void get_cpu_vendor(struct cpuinfo_x86 *c)
++void get_cpu_vendor(struct cpuinfo_x86 *c)
+ {
+ 	char *v = c->x86_vendor_id;
+ 	int i;
+@@ -1672,15 +1672,11 @@ static void __init early_identify_cpu(st
+ 	detect_nopl();
+ }
+ 
+-void __init early_cpu_init(void)
++void __init init_cpu_devs(void)
+ {
+ 	const struct cpu_dev *const *cdev;
+ 	int count = 0;
+ 
+-#ifdef CONFIG_PROCESSOR_SELECT
+-	pr_info("KERNEL supported cpus:\n");
+-#endif
+-
+ 	for (cdev = __x86_cpu_dev_start; cdev < __x86_cpu_dev_end; cdev++) {
+ 		const struct cpu_dev *cpudev = *cdev;
+ 
+@@ -1688,20 +1684,30 @@ void __init early_cpu_init(void)
+ 			break;
+ 		cpu_devs[count] = cpudev;
+ 		count++;
++	}
++}
+ 
++void __init early_cpu_init(void)
++{
+ #ifdef CONFIG_PROCESSOR_SELECT
+-		{
+-			unsigned int j;
++	unsigned int i, j;
+ 
+-			for (j = 0; j < 2; j++) {
+-				if (!cpudev->c_ident[j])
+-					continue;
+-				pr_info("  %s %s\n", cpudev->c_vendor,
+-					cpudev->c_ident[j]);
+-			}
+-		}
++	pr_info("KERNEL supported cpus:\n");
+ #endif
 +
- 	for (i = 0; i < info->netdev->real_num_tx_queues; i++) {
- 		struct netfront_queue *queue = &info->queues[i];
++	init_cpu_devs();
++
++#ifdef CONFIG_PROCESSOR_SELECT
++	for (i = 0; i < X86_VENDOR_NUM && cpu_devs[i]; i++) {
++		for (j = 0; j < 2; j++) {
++			if (!cpu_devs[i]->c_ident[j])
++				continue;
++			pr_info("  %s %s\n", cpu_devs[i]->c_vendor,
++				cpu_devs[i]->c_ident[j]);
++		}
+ 	}
++#endif
++
+ 	early_identify_cpu(&boot_cpu_data);
+ }
  
 
 
