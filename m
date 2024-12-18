@@ -1,52 +1,33 @@
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B3215574E
-	for <patches@lists.linux.dev>; Wed, 18 Dec 2024 07:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C0E16A92E;
+	Wed, 18 Dec 2024 08:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734505439; cv=none; b=GYakJX3ieS5HsPgxrVTEGsh308BwXrwjUJvSlaVWOlyliGKytIH3kQxI4l4nj6Y/MZIM0wZ8x6H8TegNpg/XHW7ZzwZw7/4nq2SKLUn8j3j1azh2t9iOgB1OoZrQcdpwZvb3Z75j8fzySr/ycJnuTumsyorJ/B1Dd6HJaT2tHgQ=
+	t=1734511036; cv=none; b=P1Q5Jwz3yGGY2m1gMzJtK04zozK9PuFRO1Lct5BmvjufNJGO9eGFQ+LIrs5M2NvhG3BjY1mG8VR0e/g0FFQKfnA73IGDZxsvwHcnp+EPBr3mFE1jBKOVjfIJ2A8O0OWmuhrn0JiJq4KqSWs6edKljux0hGup5jkhSDtp/31y2Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734505439; c=relaxed/simple;
-	bh=sUcBJUsNMeKQIIZkO3oTA6xEX5BgklADmyfNp2/njwk=;
+	s=arc-20240116; t=1734511036; c=relaxed/simple;
+	bh=wPKUFldiuNqBjG0a/xOpQu9J75D96Hlp5eFVsjWyL2I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hHVsvk+we0dJGmRLCt1MM9r5rZmYisagscN+DxOWwzPo3+gs6vpEvZvGDgWIQpi1MIbeyZ9LpAH6P+KP6jAixuQ0hq/Bb0/bIa1GeMpTmzVh7gMbSb1sweHMNiQsPgPVZK0vDwB3tUdBUoMLIxXN/ydlWsAxim1JQV7du8Tc9E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=CFRNXyMa; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=GoOMhX2F23Itqopj8wZtO25QUSgzi7rQBN7YT7B9npBOpenfQbC/o2xWtWfhX0R2KqommmJ8BUthidFPtW7h3MrgIghzU75x8MRsgpK5GaP/RleKU/c4lL+CKbiU+Y2dDcQa7vWboGTxQOrrQPSMtEGoznxvdWgWuD0lI+7Oxlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ALlvMlZK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="CFRNXyMa"
-Received: from eig-obgw-5004a.ext.cloudfilter.net ([10.0.29.221])
-	by cmsmtp with ESMTPS
-	id Njmit6qMZnNFGNo67tdQr6; Wed, 18 Dec 2024 07:03:55 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id No66tx2vRWvXpNo67tHDVq; Wed, 18 Dec 2024 07:03:55 +0000
-X-Authority-Analysis: v=2.4 cv=LtdZyWdc c=1 sm=1 tr=0 ts=676273db
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=RZcAm9yDv7YA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=HPvIB9lQppeJS2B-OsoA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ITj9AQwEJVLEfP6hCL8kUAQ9IaOgMQ6NDvJ3Ar8BAi8=; b=CFRNXyMaU4u5v9x3n2Y/D63WwW
-	kdOvwHNfUwUMQXSVcfVT1Ar6LvIRMT1yz6XoJRwzZ3Xr2jWL8HoGRXfrsZJmJHGxVI5Ok9bAWUlko
-	cDCjyIP7b8Si994tq3EN16zbOrQaweg4duWiDCINAYeC+6FxsV5aXCFNbwsFwyq141Qp3lfsEGQTF
-	gnB7q9Up/tLdHdEJobnVk3J75Fgtwx86BE0vDA9HZyorJ2jwUclpjtFwDhtx8T8JzI0d3cyqXM7pZ
-	neKN1OlHnOEaraAF52EBdgjs8ivQjiwssD+q1VLmR/Tf609TANXozvD4+/OaVxiGCmwwa4Qt3XH2a
-	zx1pw1rA==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:32838 helo=[10.0.1.115])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1tNo65-000C6c-30;
-	Wed, 18 Dec 2024 00:03:53 -0700
-Message-ID: <3fb2f3cc-2323-4cd1-8473-e17ab8a2efad@w6rz.net>
-Date: Tue, 17 Dec 2024 23:03:51 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ALlvMlZK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DD5C4CECE;
+	Wed, 18 Dec 2024 08:37:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734511035;
+	bh=wPKUFldiuNqBjG0a/xOpQu9J75D96Hlp5eFVsjWyL2I=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ALlvMlZK326BgI07QkmV9tdYg0zBEZ63n08FX+ZjBSkH6lE6Az2NWW5uT8MrjFvs2
+	 D5HIaeBD38raBvxcHlby9nAS1DsVwgBn7Cb7DELZLzH6rcCxhaCxl7XrD6eV0XUWkY
+	 nmeD1OzPHSaY6wfA8c0we7bd1KFsxmeXhMjrdzsNxlTUNzYTofIl8CZXlDV2xVtBVz
+	 rT1y/t8HRkAuBUirYV/GrZdNN1V83UKk163oAXQv7ompcNAeu4MYjcl8vO6BNJnVJb
+	 nFm9fcHzyaB9D2q8r4IdbfeH6EZPu8bMMLBqIyXHi23cubudbSUvcD+Q/X8+BjLlzg
+	 jd4XDRJRKwMiA==
+Message-ID: <bf593d44-c59e-4158-b2c6-112372ab45d1@kernel.org>
+Date: Wed, 18 Dec 2024 09:37:12 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,61 +35,140 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 00/51] 5.15.175-rc1 review
+Subject: Re: [PATCH 6.12 168/172] x86/static-call: provide a way to do very
+ early static-call updates
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241217170520.301972474@linuxfoundation.org>
+Cc: patches@lists.linux.dev, Andrew Cooper <andrew.cooper3@citrix.com>,
+ Juergen Gross <jgross@suse.com>, Peter Zijlstra <peterz@infradead.org>,
+ Josh Poimboeuf <jpoimboe@redhat.com>
+References: <20241217170546.209657098@linuxfoundation.org>
+ <20241217170553.299136607@linuxfoundation.org>
 Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20241217170520.301972474@linuxfoundation.org>
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20241217170553.299136607@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1tNo65-000C6c-30
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.115]) [73.223.253.157]:32838
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 17
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfLnh70RZMkijcTeNWsupafuKlGnw7sb7eNkUs4stXKElAlHsHIyD5rRHnFBg4elXQ7eBVVRKXJeYLTZmUCUBsrXgbszKgVGbkh+Zv0FQpxBPAxb7a20m
- AFxt93hkcHaxTgMfVR5M+PZ5WJWnoqnjIyXc+YgU38fKsFp55jGa/olA1fzQ7NKuC6l56uFNKbBSsw==
 
-On 12/17/24 09:06, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.175 release.
-> There are 51 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 19 Dec 2024 17:05:03 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.175-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 17. 12. 24, 18:08, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Juergen Gross <jgross@suse.com>
+> 
+> commit 0ef8047b737d7480a5d4c46d956e97c190f13050 upstream.
+> 
+> Add static_call_update_early() for updating static-call targets in
+> very early boot.
+> 
+> This will be needed for support of Xen guest type specific hypercall
+> functions.
+> 
+> This is part of XSA-466 / CVE-2024-53241.
+> 
+> Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+> Signed-off-by: Juergen Gross <jgross@suse.com>
+> Co-developed-by: Peter Zijlstra <peterz@infradead.org>
+> Co-developed-by: Josh Poimboeuf <jpoimboe@redhat.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   arch/x86/include/asm/static_call.h |   15 +++++++++++++++
+>   arch/x86/include/asm/sync_core.h   |    6 +++---
+>   arch/x86/kernel/static_call.c      |    9 +++++++++
+>   include/linux/compiler.h           |   37 ++++++++++++++++++++++++++-----------
+>   include/linux/static_call.h        |    1 +
+>   kernel/static_call_inline.c        |    2 +-
+>   6 files changed, 55 insertions(+), 15 deletions(-)
+> 
+> --- a/arch/x86/include/asm/static_call.h
+> +++ b/arch/x86/include/asm/static_call.h
+> @@ -65,4 +65,19 @@
+>   
+>   extern bool __static_call_fixup(void *tramp, u8 op, void *dest);
+>   
+> +extern void __static_call_update_early(void *tramp, void *func);
+> +
+> +#define static_call_update_early(name, _func)				\
+> +({									\
+> +	typeof(&STATIC_CALL_TRAMP(name)) __F = (_func);			\
+> +	if (static_call_initialized) {					\
+> +		__static_call_update(&STATIC_CALL_KEY(name),		\
+> +				     STATIC_CALL_TRAMP_ADDR(name), __F);\
+> +	} else {							\
+> +		WRITE_ONCE(STATIC_CALL_KEY(name).func, _func);		\
+> +		__static_call_update_early(STATIC_CALL_TRAMP_ADDR(name),\
+> +					   __F);			\
+> +	}								\
+> +})
+...
+> --- a/kernel/static_call_inline.c
+> +++ b/kernel/static_call_inline.c
+> @@ -15,7 +15,7 @@ extern struct static_call_site __start_s
+>   extern struct static_call_tramp_key __start_static_call_tramp_key[],
+>   				    __stop_static_call_tramp_key[];
+>   
+> -static int static_call_initialized;
+> +int static_call_initialized;
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+This breaks the build on i386:
+> ld: arch/x86/xen/enlighten.o: in function `__xen_hypercall_setfunc':
+> enlighten.c:(.noinstr.text+0x2a): undefined reference to `static_call_initialized'
+> ld: enlighten.c:(.noinstr.text+0x62): undefined reference to `static_call_initialized'
+> ld: arch/x86/kernel/static_call.o: in function `__static_call_update_early':
+> static_call.c:(.noinstr.text+0x15): undefined reference to `static_call_initialized'
 
-Tested-by: Ron Economos <re@w6rz.net>
+kernel/static_call_inline.c containing this `static_call_initialized` is 
+not built there as:
+HAVE_STATIC_CALL_INLINE=n
+  -> HAVE_OBJTOOL=n
+     -> X86_64=n
+
+This is broken in upstream too.
+
+thanks,
+-- 
+js
+suse labs
 
