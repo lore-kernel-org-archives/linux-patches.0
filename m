@@ -1,157 +1,140 @@
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2053.outbound.protection.outlook.com [40.107.243.53])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC90C1D7E54;
-	Thu, 19 Dec 2024 22:32:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734647539; cv=fail; b=jrKvbBkZasHLyTKP41uV15CxtuneuM+e7cfrJPukfuQzXpzvwwxj2uZvXcPl3kk2HQksfBTKXk58aTP29b7z3C6U8n246cEdFyGJiKkRn1r8hCiXnp5eVbXW3nXSZH1WjgmPpkZkYfF/R34rjKhgZgpQyWVxm7QafwfyZmdTECo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734647539; c=relaxed/simple;
-	bh=cBx1b6LWcDGDBXtlleSZL8sVVkDZvQTARqftYzBlGI0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MZeI/HpieoXSNXsIq6YTDje7PVMmCyEq7OHxZsCU/HVJYeDA4mvxCMN9CHWAQqfX85sQlh2Rx3Ph2RsXaYiTsDkDFk8PiINtxblDVGthghrJrNc8plFJ6VcQop8KHwP24ezJ9FvuU4bsAOSZXZRgzWpVxXLv5SkoDJ/fM6nvWAU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=CloL2Oqy; arc=fail smtp.client-ip=40.107.243.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E721EE7D3;
+	Thu, 19 Dec 2024 23:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734652009; cv=none; b=mkQEG6P0vdMSmdduW+TAeAolocKUL8VvuskcbhJfESXr7Krj/HDFasKN7g2vAz4eQOYQsHpamuC8Cz3MIu5OFnwctEXs7eX2AX3zQYVDkJdCuZJlGGzx9OVh/+8J1U9l6j3WxCUo3F9kr0Q2Nur4NsH8V9clwnUedPENdFZ/Mp0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734652009; c=relaxed/simple;
+	bh=VlgIxjX59zEAgQYr06DoizAEZuBLCR+PtLTOfL+NXJw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=AyxCrJ7XTlTBRlrITDF4P8N31AvRKcHbaVbMxAu4nhX3OMfy1C5C7l19f8gGaYha2QhrxbAy8tl3lM79+BzPOvAwBSXz/BKA8x+b9uAzsC3qmD33e1FOFb3UQQot6dcT5FC9TzdeKrZ8bUWSz13tCW1ydiy4sQwXWtXqGRiysd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uziCFrfE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="CloL2Oqy"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CwzoCe8mnJUTMXjQsoUizrJLILQMvuvlMSkjJJWbWJXEDVNLonpdWKx6odyT5ppcQewBOvz500NTcKhSn5Jayof1pxZKsKJYXSM0nBA+T8b0BeWFl3UNisa/dSq3iGJprTrOnSZx0JyIdvBSf1jPmokC2v5xy4QmXZyC0mQMJ0lSw6ncGo0qrzKs2kbamcGanIOPS9q59u3nZ1bieSecfFtqR1bb7nFeVslg7FSNtgx0KD4ZWB/8PJCHzptt/5NkyrJZUf+eNikdri4uzbSIyF5YuPv7w3wyq8qAJ15zn4x8gvUq1z97A6u5GGPccoZyHLlFz3CXEFQ0iZZGwM4yzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v1Hyaz7Dh9fSpEzpXbCt0ThRzwJVyvl/2jhnPWAJgqY=;
- b=fcuvRLpSgeFmKn0tGt+GzKpDjPqMSdnk+Qi1+9zlgkmZdZU7XDNN/rsalq5XCffGafJoJP/ExLkVbQNgmcXs8cvO918uFVJZURMtuP5ZReYjxdxctkjrHei+yAwuwqjEwKbvnwEzZjudYiU6ugNNRSlBnNCafUJVdvPjhEp3n9aeHpA+b6T+ziiAhgookf9Ng59MDl8c3Z28UZslyzBYeLPcbEdEy4YcpAa4FcxJbd0qvD21/LLTzLZLFI1xK+J5UNLoQqCXFfDWoFDP/ZCQIgJx2Phw1EPTx6K5mtEk1OtoAsfFO4GqM4bestsDbBhQfKXYQmuCUSF0gfDJNXcNxQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v1Hyaz7Dh9fSpEzpXbCt0ThRzwJVyvl/2jhnPWAJgqY=;
- b=CloL2OqyPAu0jhKJ9JYaLUAEwrF+Gac6BEnAB9cGVEZQuhkuBnO6F4o+3dt30JW9ZA7c/3Eds9by3IAWAKY/Br8WHQ0DQ3nIY210exPZevLOmDHlZOTioJqWWb0tsJEFmnc/1t+x80A0OKJ2k/qaiyUbmFarmdxUvN/t833ITp6GXNec9rM/1MWQi0A/zm0vvDqF96FkL/bss6rnKZaLIPl3Lt2OfxgO04CI9uwlh7QFkTJOmRMOtyg//XsincRwLi9SjDc9+MuyLHKwwDatFnfWZb7Eh8FUXzx8g+zmdF6aydhdRpgfy3EzIuFlJM7hj0ajuG5UvfHgWfDPiqDn1g==
-Received: from CH0PR03CA0088.namprd03.prod.outlook.com (2603:10b6:610:cc::33)
- by MN2PR12MB4189.namprd12.prod.outlook.com (2603:10b6:208:1d8::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.13; Thu, 19 Dec
- 2024 22:32:11 +0000
-Received: from DS3PEPF000099DB.namprd04.prod.outlook.com
- (2603:10b6:610:cc:cafe::5c) by CH0PR03CA0088.outlook.office365.com
- (2603:10b6:610:cc::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.23 via Frontend Transport; Thu,
- 19 Dec 2024 22:32:10 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- DS3PEPF000099DB.mail.protection.outlook.com (10.167.17.197) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8251.15 via Frontend Transport; Thu, 19 Dec 2024 22:32:10 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 19 Dec
- 2024 14:31:59 -0800
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Thu, 19 Dec 2024 14:31:58 -0800
-Received: from Asurada-Nvidia (10.127.8.10) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Thu, 19 Dec 2024 14:31:57 -0800
-Date: Thu, 19 Dec 2024 14:31:55 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: <jgg@nvidia.com>, <kevin.tian@intel.com>, <will@kernel.org>
-CC: <corbet@lwn.net>, <joro@8bytes.org>, <suravee.suthikulpanit@amd.com>,
-	<robin.murphy@arm.com>, <dwmw2@infradead.org>, <baolu.lu@linux.intel.com>,
-	<shuah@kernel.org>, <linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>, <eric.auger@redhat.com>,
-	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
-	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>,
-	<ddutile@redhat.com>, <yi.l.liu@intel.com>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v3 06/14] iommufd: Add IOMMUFD_OBJ_VIRQ and
- IOMMUFD_CMD_VIRQ_ALLOC
-Message-ID: <Z2Se2/IVKgXSXH5M@Asurada-Nvidia>
-References: <cover.1734477608.git.nicolinc@nvidia.com>
- <dc1252de7ff06c944cb7d91c91b4f61c25182f91.1734477608.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uziCFrfE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86459C4CED4;
+	Thu, 19 Dec 2024 23:46:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1734652009;
+	bh=VlgIxjX59zEAgQYr06DoizAEZuBLCR+PtLTOfL+NXJw=;
+	h=From:Date:Subject:To:Cc:From;
+	b=uziCFrfEeAh8k+2m+V9C/N36gBo4Jn29A1NYTu9fcDAa87m9o7r/n/1+Fi1NwypHy
+	 Emv/qVcNACtrMkU/P3KKu2mxfSs0pk3gF0ARII+rR0O8uIWKFNS4ot8y7lduqhRhO4
+	 msmOe95d7sTkRcgIiKyRLBDwF9etdrLDA9CS0s+gEkAAVqbFTpD4BVKcoEwPM8ke3V
+	 8AmQhxPE0BQFV4+iicZ7Ff+mfWJDEc8y2u4R/rO6t0JN2Od3PtCX7hEgr/xKZEbumC
+	 sPrgN+xqxHn76GNwsjqubiHp7lLC0/cVqVJd49viYdg1r9nKF4cN2CBWdG2QZCPTWm
+	 oUkMuhIbyKW/A==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Thu, 19 Dec 2024 16:46:35 -0700
+Subject: [PATCH] drm/amd/display: Increase sanitizer frame larger than
+ limit when compile testing with clang
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <dc1252de7ff06c944cb7d91c91b4f61c25182f91.1734477608.git.nicolinc@nvidia.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099DB:EE_|MN2PR12MB4189:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7c61e0ae-73e4-490b-8eb8-08dd207cfa98
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|7416014|1800799024|376014|36860700013;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?OW0ZnTbF9sl1mgnnzSPpjQRHITD5G1gxh3RCD5+DCi2ggLYln6J8tXLIgj5T?=
- =?us-ascii?Q?YxrmuS1d6wchdev7XWmjXQ0kFIX3kMFnk8fSjjp4qDe+99EeeeYeYinAO9Is?=
- =?us-ascii?Q?U8LeRRxaKHIRtGV1FuZhS6hC03kEYkN3dv+e5z5QWYHvK+wrHRPd6Qt6qESM?=
- =?us-ascii?Q?nWPZzeaelycKahZAU5HApW/AXNOW+9BsRTTZgZwB+XAQyvG5ExN5xCqcydS3?=
- =?us-ascii?Q?csfuhIlg3gQQJo81JvBh2ity6nynzBI+wUJ2cBDAguO09OFp+DydBPyq/zDW?=
- =?us-ascii?Q?q8JB7c75BCHcNeiE5PyElGbm4Eu9aZ44yMZlOphZBGm+Y7Wh6YIMruTtrFQb?=
- =?us-ascii?Q?2UwI2hC7z7MONktb+lm+kfR5agfp9Hlfnwo+2xhXxBs8uQ3OR8nsEgBz6k+b?=
- =?us-ascii?Q?pLLmlZtJemeWrkNzJRfV5gu9JruDol+caLK6gtfHiIl7MfRhxaewVBoNosli?=
- =?us-ascii?Q?dlSaD1FO5lWsPuOgWMW+oay6lx6XHWj1St0iOxC3t3oqAMTqXKbJyKIABesm?=
- =?us-ascii?Q?HmlfUUXM6rrWXLJSvp4vCM7sRge3WiYmlUV5lGU45pHHIT8Y0FzK3aA+PF/l?=
- =?us-ascii?Q?xN0suTbASKkfraaG9bw0G9NFrt+rnZqUaUIeBChPddkYZzghQGbZybkFeUV0?=
- =?us-ascii?Q?xM7Tr9RcwhgVGr65LDWqook9OHrxotEBvWsw9LhO5W+BQ4DzTpZ9Rdx0srwb?=
- =?us-ascii?Q?MOXz9x+BMOjixv2Nyja9JYis7CI/8JneLc1OL8gU+KMxrpIqfm/h8lwVvDp6?=
- =?us-ascii?Q?Yw/mBKawJDBpngbNxCN0nR/GZ0CusdVVulyppJAms+WWCs0um6Xmc4ZVeUzy?=
- =?us-ascii?Q?cgpJ4LhisNsjVbWmXCb3YjVY6MfgzC8peGJ76U3hZxppqgA22N56vuE5p6dp?=
- =?us-ascii?Q?7RwRrAjZ2aq7o+Y0wSEv6BQqYqM4M6MpjfRt5vsOg6XQo/hQj5zfH31ve8zu?=
- =?us-ascii?Q?4UXwOz241PKM5FPDkCuBYOpw03FUJ5TKWoY345HkWiTx/NAr83PnrlWWXjmF?=
- =?us-ascii?Q?BCNFwipa8Xp6uc7vH2ffcHtgGD8//645AE1G/6CycPbKFGtO8olM7by5db4E?=
- =?us-ascii?Q?LtEh5zU8wjIHjpo5UGbVeteobqiE8aqk9pzhOMZcgdGACmruxvSZjCs9Qa+c?=
- =?us-ascii?Q?DT4UGpKkw5iDiv1Wel9WnuBD5MRxXS++cbCD97KA7k+4B0V53e0r9i1puPm3?=
- =?us-ascii?Q?teR9HgMZQZpCKtM3qDgFqvlHfTdxf25bo8Bb28OO15tWQhxzZ5AGVgHQKodJ?=
- =?us-ascii?Q?HP/rJQuY974xbNkQHuybUCqbFCAEvxFRGhI4QgeTuO7pwzfOV9Tac7InCfhV?=
- =?us-ascii?Q?jzecZ0+zDF7pSKFYs0dYVyAe1C3MlQJ74lgY0/MzQShkSpgFOOu6EQ6bF1k/?=
- =?us-ascii?Q?odvzXB2V8PoYQqxYgBqR5wqFrOioyh8+v9e7PSRENF6Kr+gRGrvPd/C3am44?=
- =?us-ascii?Q?hPeZ5mJaAMuxqswfCSDKQgFh8BDQj2nAICtww57lWq6E2lwD2yVfnsZbdHb/?=
- =?us-ascii?Q?FFgWXRK7Zdue5XQ=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(1800799024)(376014)(36860700013);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Dec 2024 22:32:10.7407
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7c61e0ae-73e4-490b-8eb8-08dd207cfa98
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS3PEPF000099DB.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4189
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241219-amdgpu-dml2-address-clang-frame-larger-than-allconfig-v1-1-8c53a644d486@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAFqwZGcC/x2N0QrCMAxFf2Xk2cBaJzh/RXwITVoD7TZSFWHs3
+ w0+Hu499+7QxVQ63IYdTD7adV0cwmmA9KSlCCo7QxzjFGKYkRqX7Y3cakRiNukdU/UmZqMmWMm
+ KGL5cRqo1rUtWz8bzxHO6hHAV8O3NJOv3/3t/HMcPwaEKSYcAAAA=
+X-Change-ID: 20241219-amdgpu-dml2-address-clang-frame-larger-than-allconfig-f034d9c5118e
+To: Chaitanya Dhere <chaitanya.dhere@amd.com>, Jun Lei <jun.lei@amd.com>, 
+ Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
+ Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>, 
+ Alex Deucher <alexander.deucher@amd.com>, 
+ =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Xinhui Pan <Xinhui.Pan@amd.com>
+Cc: amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3854; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=VlgIxjX59zEAgQYr06DoizAEZuBLCR+PtLTOfL+NXJw=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDOkpG9KSRZ5tMNrsnDf3up++trOTeLpqh/b+034S29esU
+ VWS33G4o5SFQYyLQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAExk6m9Ghlu3bC5ZOf9kclF0
+ OsFnqnljfdjd+YILG/j7orwNrjw0lWX4X/45xv60ZWn0bG4dBaX5Kf/Y5d9OKLy0/832A+FnD/+
+ qZgQA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Tue, Dec 17, 2024 at 09:00:19PM -0800, Nicolin Chen wrote:
-> diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-> index cfbdf7b0e3c1..9d15978ef882 100644
-> --- a/drivers/iommu/iommufd/main.c
-> +++ b/drivers/iommu/iommufd/main.c
-> @@ -367,6 +367,8 @@ static const struct iommufd_ioctl_op iommufd_ioctl_ops[] = {
->  		 __reserved),
->  	IOCTL_OP(IOMMU_VIOMMU_ALLOC, iommufd_viommu_alloc_ioctl,
->  		 struct iommu_viommu_alloc, out_viommu_id),
-> +	IOCTL_OP(IOMMU_VIRQ_ALLOC, iommufd_virq_alloc, struct iommu_virq_alloc,
-> +		 out_virq_fd),
+Commit 24909d9ec7c3 ("drm/amd/display: Overwriting dualDPP UBF values
+before usage") added a new warning in dml2/display_mode_core.c when
+building allmodconfig with clang:
 
-This is missing the "struct iommu_virq_alloc" in union ucmd_buffer.
-Will include in v4.
+  drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/display_mode_core.c:6268:13: error: stack frame size (3128) exceeds limit (3072) in 'dml_prefetch_check' [-Werror,-Wframe-larger-than]
+   6268 | static void dml_prefetch_check(struct display_mode_lib_st *mode_lib)
+        |             ^
 
-Nicolin
+Commit be4e3509314a ("drm/amd/display: DML21 Reintegration For Various
+Fixes") introduced one in dml2_core/dml2_core_dcn4_calcs.c with the same
+configuration:
+
+  drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c:7236:13: error: stack frame size (3256) exceeds limit (3072) in 'dml_core_mode_support' [-Werror,-Wframe-larger-than]
+   7236 | static bool dml_core_mode_support(struct dml2_core_calcs_mode_support_ex *in_out_params)
+        |             ^
+
+In the case of the first warning, the stack usage was already at the
+limit at the parent change, so the offending change was rather
+innocuous. In the case of the second warning, there was a rather
+dramatic increase in stack usage compared to the parent:
+
+  drivers/gpu/drm/amd/amdgpu/../display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c:7032:13: error: stack frame size (2696) exceeds limit (2048) in 'dml_core_mode_support' [-Werror,-Wframe-larger-than]
+   7032 | static bool dml_core_mode_support(struct dml2_core_calcs_mode_support_ex *in_out_params)
+        |             ^
+
+This is an unfortunate interaction between an issue with stack slot
+reuse in LLVM that gets exacerbated by sanitization (which gets enabled
+with all{mod,yes}config) and function calls using a much higher number
+of parameters than is typical in the kernel, necessitating passing most
+of these values on the stack.
+
+While it is possible that there should be source code changes to address
+these warnings, this code is difficult to modify for various reasons, as
+has been noted in other changes that have occurred for similar reasons,
+such as commit 6740ec97bcdb ("drm/amd/display: Increase frame warning
+limit with KASAN or KCSAN in dml2").
+
+Increase the frame larger than limit when compile testing with clang and
+the sanitizers enabled to avoid this breakage in all{mod,yes}config, as
+they are commonly used and valuable testing targets. While it is not the
+best to hide this issue, it is not really relevant when compile testing,
+as the sanitizers are commonly stressful on optimizations and they are
+only truly useful at runtime, which COMPILE_TEST states will not occur
+with the current build.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412121748.chuX4sap-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/display/dc/dml2/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/dml2/Makefile b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
+index d9c27ebe12ee08d6330eb199cd8ca9c8489fa5b2..91c4f3b4bd5f46ac5c1c74f665b06dbe61081917 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml2/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
+@@ -29,7 +29,11 @@ dml2_rcflags := $(CC_FLAGS_NO_FPU)
+ 
+ ifneq ($(CONFIG_FRAME_WARN),0)
+ ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
++ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
++frame_warn_flag := -Wframe-larger-than=4096
++else
+ frame_warn_flag := -Wframe-larger-than=3072
++endif
+ else
+ frame_warn_flag := -Wframe-larger-than=2048
+ endif
+
+---
+base-commit: 695c2c745e5dff201b75da8a1d237ce403600d04
+change-id: 20241219-amdgpu-dml2-address-clang-frame-larger-than-allconfig-f034d9c5118e
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
