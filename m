@@ -1,138 +1,116 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8D71F7096;
-	Wed, 18 Dec 2024 20:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E86B41C79;
+	Thu, 19 Dec 2024 02:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734552791; cv=none; b=Hqzokc9bw6tnYA3KCcKz2WrPVlv4C1cTxVtshOEp5IML1NnTq8VImD1JAnrrSYeKIZY/2GA7Tu8NaVptoJa/08q5ASlmZ+yaNtozef+HfachyeiRBsqNp+uBkMrRIYpoSFD23gpUTZ1BFk752s1jBGOEi4PeL8bW/khIyXfEvZE=
+	t=1734574059; cv=none; b=U051iFMgvWSyun68ufVaMY3dFqqT/qM3gPKaJuKO903XOB1rHVgyE+jK+lhF0UHuAkcRfU8+0CSDEByoK/bexOCN5f+IgS3fJ54IEhxXFSMZrOU0YbN8BvjTVRlCOiX/iRtsW8lwIE9HxgghS+q21AL5fcUWaEZuXC2MZbOYlGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734552791; c=relaxed/simple;
-	bh=Zu1wkLlLpFxiSSSSnwPt2KRCeanwRhzomPiVjRGTZdo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=vA8Rx2NAauFDGjSmMLis/i+qJClgu6zASjxUjar4opKJrWAV+Xxv8SjT1qZuK8Y4bP602TRs/yG4jdHTQNg3XHyHkrgR0kt2HISAJVDqw5O0hbtR9T4MJJ3HBnRjTXcObZeVxsldENU0AdW6VyQv+75JvFx1pNMBD30qTkPIm3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l0Yw0bHl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734574059; c=relaxed/simple;
+	bh=u9RKb7yTKqQPGL6ESkRUFOfnECFsgIrUnpYAIzAyl1Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k08vjNBSvNktYBmWKOfxbs6l3U3qfizl0vr49TvUDJamF8IFVvGM3ik4PCx/AKgtTvyBqsVktMCCr+h2FDaxEDxicN99H2cpm5XvJoS7i5LbD4gtrPF1TNBuoy0GJriJ0k+Jh6jg0yx05a2gsCIisqYHhYXYNzRqHuDSREaIcR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NVTkSXsf; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l0Yw0bHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E6BC4CECD;
-	Wed, 18 Dec 2024 20:13:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734552791;
-	bh=Zu1wkLlLpFxiSSSSnwPt2KRCeanwRhzomPiVjRGTZdo=;
-	h=From:Date:Subject:To:Cc:From;
-	b=l0Yw0bHlNyBpXe+Bbr+Hc4t2LVQHXYOLBLhfiwDcMOPA3iTXKQc6gb4eHdyM+1tNm
-	 7cohx3wtAe9LKNXTOjxUhg7Oc+IV8hImwHt7cJ8j4B+hjEe9gE92UNXA+iA4xZ2Hqi
-	 cBJrOFoOyYN9pCTpMhsQJXb5dX4rXzG4H7Jxkctox2h2cg/+yx71yAYHEDwFSgjcbI
-	 Nv63qs3A0UrfC1PVvmcqzoNaEd/fGq+urlpCrL2G08211YXllfMegfesSuY9qBDveI
-	 2yCmxRNwNEQ03Cfo+WDSXqscec88EnaxgAV5mu8Fx/iH0+OgpZcUY6+snosYC5nDHP
-	 0iRloX47FCUEw==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 18 Dec 2024 13:11:17 -0700
-Subject: [PATCH] crypto: qce - revert "use __free() for a buffer that's
- always freed"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NVTkSXsf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1734574057; x=1766110057;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=u9RKb7yTKqQPGL6ESkRUFOfnECFsgIrUnpYAIzAyl1Y=;
+  b=NVTkSXsf7t00dEecaADWF+S+OiFIGTZ8ZiNhrtghH/QQVHqNI3rkJC6e
+   egXj3APkAnPuhL3sMlB/q/9nxQ5w0xj4RLL2gtSEY/ALhuds+LB8Ueodh
+   ugn0X0wLrQPu9uXZSR99i12uuZsEyNJIhgdcQD7/0YdSXsJg/phddgYYU
+   AXFCqbI6gjoapEdJnOtg1RmHYWgP67ztYXyhqwK7Wg7JiHUookRP0tyRy
+   xDAkLsZP9rx3ZmUWi8px4IhTDvC1/Y0fwZxRZ1XSLAa1u1wzii96rcKtR
+   4Oj5Qoi8HB0gWuGwpFz7Cr+1PhDuYY7nQsRhDE3MmsD2Xcs7UCpu03sAy
+   A==;
+X-CSE-ConnectionGUID: 2v/SEs5MTpuEKa74pppc9w==
+X-CSE-MsgGUID: 7Vi0EL3pRA2WpQa8bUv4Kg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="35101033"
+X-IronPort-AV: E=Sophos;i="6.12,246,1728975600"; 
+   d="scan'208";a="35101033"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Dec 2024 18:07:37 -0800
+X-CSE-ConnectionGUID: BUEwx9zdRY+0awZQGNEcJQ==
+X-CSE-MsgGUID: Mwq7DUNKQP+Q7w80W636Fg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,246,1728975600"; 
+   d="scan'208";a="98449984"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Dec 2024 18:07:32 -0800
+Message-ID: <56c65e50-5890-42af-85b7-85f8a1bf5cf5@linux.intel.com>
+Date: Thu, 19 Dec 2024 10:05:53 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/14] iommufd/viommu: Add iommufd_viommu_get_vdev_id
+ helper
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ will@kernel.org
+Cc: corbet@lwn.net, joro@8bytes.org, suravee.suthikulpanit@amd.com,
+ robin.murphy@arm.com, dwmw2@infradead.org, shuah@kernel.org,
+ linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-kselftest@vger.kernel.org,
+ linux-doc@vger.kernel.org, eric.auger@redhat.com, jean-philippe@linaro.org,
+ mdf@kernel.org, mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+ smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+ patches@lists.linux.dev
+References: <cover.1734477608.git.nicolinc@nvidia.com>
+ <21d7e63b97d81d0acf9127418a67efe386787261.1734477608.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <21d7e63b97d81d0acf9127418a67efe386787261.1734477608.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241218-crypto-qce-sha-fix-clang-cleanup-error-v1-1-7e6c6dcca345@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAGQsY2cC/x2N0QrCMBAEf6XcswdJWqL4K+JDSFd7IEm8WFFK/
- 93Dl4WBYXajDhV0Og8bKd7SpRYDfxgoL6ncwTIbU3Bh8sGfOOu3vSo/M7gviW/y4fww0RaprI2
- hWpUdJneMMY7jHMhiTWHq/+hy3fcfqCGl+3gAAAA=
-X-Change-ID: 20241218-crypto-qce-sha-fix-clang-cleanup-error-0e40766633d2
-To: Thara Gopinath <thara.gopinath@gmail.com>, 
- Herbert Xu <herbert@gondor.apana.org.au>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
- linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
- Linux Kernel Functional Testing <lkft@linaro.org>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2945; i=nathan@kernel.org;
- h=from:subject:message-id; bh=Zu1wkLlLpFxiSSSSnwPt2KRCeanwRhzomPiVjRGTZdo=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOnJOldScnuvagWpbr02rd7DkXciq1+G75PimRHVReyhi
- 6xYH97rKGVhEONikBVTZKl+rHrc0HDOWcYbpybBzGFlAhnCwMUpABNpOcrIsKDwWaTPjD7bdmGb
- qsWLDG7tsnbcP3d/kM5tE30J0/S2HIZ/CoJO++Lv+nxj71/7wuxTmGrGhv4JJ2ouMrFcfSbHfD+
- bDwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Commit ce8fd0500b74 ("crypto: qce - use __free() for a buffer that's
-always freed") introduced a buggy use of __free(), which clang
-rightfully points out:
+On 12/18/24 13:00, Nicolin Chen wrote:
+> This is a reverse search v.s. iommufd_viommu_find_dev, as drivers may want
+> to convert a struct device pointer (physical) to its virtual device ID for
+> an event injection to the user space VM.
+> 
+> Again, this avoids exposing more core structures to the drivers, than the
+> iommufd_viommu alone.
+> 
+> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> ---
+>   include/linux/iommufd.h        |  8 ++++++++
+>   drivers/iommu/iommufd/driver.c | 20 ++++++++++++++++++++
+>   2 files changed, 28 insertions(+)
+> 
+> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+> index b082676c9e43..ac1f1897d290 100644
+> --- a/include/linux/iommufd.h
+> +++ b/include/linux/iommufd.h
+> @@ -190,6 +190,8 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
+>   					     enum iommufd_object_type type);
+>   struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+>   				       unsigned long vdev_id);
+> +unsigned long iommufd_viommu_get_vdev_id(struct iommufd_viommu *viommu,
+> +					 struct device *dev);
 
-  drivers/crypto/qce/sha.c:365:3: error: cannot jump from this goto statement to its label
-    365 |                 goto err_free_ahash;
-        |                 ^
-  drivers/crypto/qce/sha.c:373:6: note: jump bypasses initialization of variable with __attribute__((cleanup))
-    373 |         u8 *buf __free(kfree) = kzalloc(keylen + QCE_MAX_ALIGN_SIZE,
-        |             ^
+Hi Nicolin,
 
-Jumping over a variable declared with the cleanup attribute does not
-prevent the cleanup function from running; instead, the cleanup function
-is called with an uninitialized value.
+This series overall looks good to me. But I have a question that might
+be irrelevant to this series itself.
 
-Moving the declaration back to the top function with __free() and a NULL
-initialization would resolve the bug but that is really not much
-different from the original code. Since the function is so simple and
-there is no functional reason to use __free() here, just revert the
-original change to resolve the issue.
+The iommufd provides both IOMMUFD_OBJ_DEVICE and IOMMUFD_OBJ_VDEVICE
+objects. What is the essential difference between these two from
+userspace's perspective? And, which object ID should the IOMMU device
+driver provide when reporting other events in the future?
 
-Fixes: ce8fd0500b74 ("crypto: qce - use __free() for a buffer that's always freed")
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Closes: https://lore.kernel.org/CA+G9fYtpAwXa5mUQ5O7vDLK2xN4t-kJoxgUe1ZFRT=AGqmLSRA@mail.gmail.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/crypto/qce/sha.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Currently, the IOMMUFD uAPI reports IOMMUFD_OBJ_DEVICE in the page
+fault message, and IOMMUFD_OBJ_VDEVICE (if I understand it correctly) in
+the vIRQ message. It will be more future-proof if this could be defined
+clearly.
 
-diff --git a/drivers/crypto/qce/sha.c b/drivers/crypto/qce/sha.c
-index c4ddc3b265eedecfd048662dc8935aa3e20fc646..71b748183cfa86fb850487374dcc24c4b0b8143f 100644
---- a/drivers/crypto/qce/sha.c
-+++ b/drivers/crypto/qce/sha.c
-@@ -3,7 +3,6 @@
-  * Copyright (c) 2010-2014, The Linux Foundation. All rights reserved.
-  */
- 
--#include <linux/cleanup.h>
- #include <linux/device.h>
- #include <linux/dma-mapping.h>
- #include <linux/interrupt.h>
-@@ -337,6 +336,7 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
- 	struct scatterlist sg;
- 	unsigned int blocksize;
- 	struct crypto_ahash *ahash_tfm;
-+	u8 *buf;
- 	int ret;
- 	const char *alg_name;
- 
-@@ -370,8 +370,7 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
- 				   crypto_req_done, &wait);
- 	crypto_ahash_clear_flags(ahash_tfm, ~0);
- 
--	u8 *buf __free(kfree) = kzalloc(keylen + QCE_MAX_ALIGN_SIZE,
--					GFP_KERNEL);
-+	buf = kzalloc(keylen + QCE_MAX_ALIGN_SIZE, GFP_KERNEL);
- 	if (!buf) {
- 		ret = -ENOMEM;
- 		goto err_free_req;
-@@ -383,6 +382,7 @@ static int qce_ahash_hmac_setkey(struct crypto_ahash *tfm, const u8 *key,
- 
- 	ret = crypto_wait_req(crypto_ahash_digest(req), &wait);
- 
-+	kfree(buf);
- err_free_req:
- 	ahash_request_free(req);
- err_free_ahash:
-
----
-base-commit: f916e44487f56df4827069ff3a2070c0746dc511
-change-id: 20241218-crypto-qce-sha-fix-clang-cleanup-error-0e40766633d2
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks,
+baolu
