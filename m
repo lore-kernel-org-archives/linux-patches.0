@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFB98827;
-	Mon, 23 Dec 2024 16:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18898827;
+	Mon, 23 Dec 2024 16:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970786; cv=none; b=YBgWb8c4LfM4/xiwLidkKYLZCVLn6CgHUfKf15V94xk2Eb1E9OHpCJOGvlym9VIZXcOPTjYQYGgamqzOY/KmekS6MBVzj5+dH+U2MeP5hkw8tA+Ugu55aKvrTRoQSfQFqovWY/RoeSv3nNcZbbh4O5D3wtxYUfgRLCzpRTpSOtI=
+	t=1734970789; cv=none; b=Yi47ozZj1OLQiUph5JI0woQN66x4mprJAo14Oa+EHfOJiExM2CWCIqZ1W9HKr5OEh6b1j4kjrP57cCntISCZ5llzSzeiMIWnXXDhhzYud2209E9zJ3tHCTATSYYGsE8t0OCgJEcrvGEnQASUg59eNXZlbKHTpAe6cZS8WoFz0A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970786; c=relaxed/simple;
-	bh=RSraYGG/gShY3M8+zFgK76Fpqq3OAbspxwhMzKRaypI=;
+	s=arc-20240116; t=1734970789; c=relaxed/simple;
+	bh=o1jtFKMqMzuWwuuZJxcErmAJV/TZ0/7IKpGFv3B+nTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukHs6RFFQ6hAeMlma0iaPhTgeBMFd9APsv/yXQ8zKZjnVaAN8wccoeQv2Z0qJtP259Xdi7DSb9dfo/gBszcqM5SfLvOxAcag+Dsy+WDDsO1WG0JllzwcNw5aBlRU+S7yDq1RECJ4VDK83C1Tsun6CsnLjE6d+sPHo+lRXSdJ1Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sr0+7H/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=myqJbgsWPunTPC+/AzWvLV1n0xwlz10BJ3evIAjzSAFbFffwm/whW4+btZ8d0q5Kn9x5WKUlA/xXMofwukjEkBnSzd2QOWmeQTYdo7pphfsFnfn01xZVgtjIak6vDqzougFT12ntLhkpIepV87jtr2dxnfhZfbyW6QVY1SciH+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axpe8Adh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sr0+7H/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921B1C4CED3;
-	Mon, 23 Dec 2024 16:19:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axpe8Adh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CBCC4CED3;
+	Mon, 23 Dec 2024 16:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970786;
-	bh=RSraYGG/gShY3M8+zFgK76Fpqq3OAbspxwhMzKRaypI=;
+	s=korg; t=1734970789;
+	bh=o1jtFKMqMzuWwuuZJxcErmAJV/TZ0/7IKpGFv3B+nTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sr0+7H/1I+rF8vGtGcV7jLxj7G1lsMhGwtKm0im4q1U+p+kLBFZ1aASHZI/MNvNfq
-	 d3Dx8ixUplJXws7xHUXEyneDY94yeieOiBZbqyA4iH5c7OBdL0gtP/us5J1L9dJ19o
-	 BKJYt9HwyQOvSx59ldL3r7goKvqJmSx8tuGI3FS0=
+	b=Axpe8AdhzHS3+mfOQFd5T9YqzUKHOQc+g7plwArEuOaPtW2N0VmYPMqv9bFJFmbTA
+	 N0ePLnYm16VImmVbNA9V0RK/8Hw7ZZzLCzzDZKbmorX103mcYIMGdGsEwDvItrlzSB
+	 upwJ9dQBQqcT5z7utCedi3ez8SZPZgj6dIJ3cYOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Swanemar <d.swanemar@gmail.com>,
+	Michal Hrusecky <michal.hrusecky@turris.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 38/83] USB: serial: option: add TCL IK512 MBIM & ECM
-Date: Mon, 23 Dec 2024 16:59:17 +0100
-Message-ID: <20241223155355.120857043@linuxfoundation.org>
+Subject: [PATCH 6.1 39/83] USB: serial: option: add MeiG Smart SLM770A
+Date: Mon, 23 Dec 2024 16:59:18 +0100
+Message-ID: <20241223155355.156656995@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -50,82 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Swanemar <d.swanemar@gmail.com>
+From: Michal Hrusecky <michal.hrusecky@turris.com>
 
-commit fdad4fb7c506bea8b419f70ff2163d99962e8ede upstream.
+commit 724d461e44dfc0815624d2a9792f2f2beb7ee46d upstream.
 
-Add the following TCL IK512 compositions:
+Update the USB serial option driver to support MeiG Smart SLM770A.
 
-0x0530: Modem + Diag + AT + MBIM
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=10000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1bbb ProdID=0530 Rev=05.04
-S:  Manufacturer=TCL
-S:  Product=TCL 5G USB Dongle
-S:  SerialNumber=3136b91a
-C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 4 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+ID 2dee:4d57 Marvell Mobile Composite Device Bus
 
-0x0640: ECM + Modem + Diag + AT
-T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  4 Spd=10000 MxCh= 0
-D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
-P:  Vendor=1bbb ProdID=0640 Rev=05.04
-S:  Manufacturer=TCL
-S:  Product=TCL 5G USB Dongle
-S:  SerialNumber=3136b91a
-C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d57 Rev= 1.00
+S:  Manufacturer=Marvell
+S:  Product=Mobile Composite Device Bus
+C:* #Ifs= 6 Cfg#= 1 Atr=c0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
+E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0e(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Daniel Swanemar <d.swanemar@gmail.com>
+Tested successfully connecting to the Internet via rndis interface after
+dialing via AT commands on If#=3 or If#=4.
+Not sure of the purpose of the other serial interfaces.
+
+Signed-off-by: Michal Hrusecky <michal.hrusecky@turris.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -2385,6 +2385,10 @@ static const struct usb_device_id option
+@@ -625,6 +625,8 @@ static void option_instat_callback(struc
+ #define MEIGSMART_PRODUCT_SRM825L		0x4d22
+ /* MeiG Smart SLM320 based on UNISOC UIS8910 */
+ #define MEIGSMART_PRODUCT_SLM320		0x4d41
++/* MeiG Smart SLM770A based on ASR1803 */
++#define MEIGSMART_PRODUCT_SLM770A		0x4d57
+ 
+ /* Device flags */
+ 
+@@ -2382,6 +2384,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
  	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
  	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
  	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
-+	  .driver_info = NCTRL(1) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
-+	  .driver_info = NCTRL(3) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
 
 
