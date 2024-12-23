@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257C78827;
-	Mon, 23 Dec 2024 16:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA931865EB;
+	Mon, 23 Dec 2024 16:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970594; cv=none; b=Nt3JRrIn9ryRplaT+KSL5DK9EAhNJQ/ftQBrZkTZ8PTSJSlZEJKQkmUGQ//axRrAd5CsnN5dEL22adl9Nb9SNazvMR5cEYmMcHUpYPAmFl8PxrwHAMQ9G45gLohpXKgQUTWGcuSCoCbrB0ZwIluDEGFb6HNrG6iw39cmpKiK5G4=
+	t=1734970597; cv=none; b=V0cgvN1A5KuIfsw9KsVS9ButqKJ3EtR2G+m3uhvnEhX9KfQltxHG8nlwXMR8MgTr3N1ADMGyIOOqEpo5wsSXrwG6oiCUgbVweI+w+w5eW+z3FhdvdMZKATZelTQ/O+L1cKksvKs4gVPZ3cpaUUprxpaapjJEiwJDjiLJRYojKCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970594; c=relaxed/simple;
-	bh=0/gjQt8QUuPuSjRkwlz8VjrCDQmd6k/U+PnlW8r5VxM=;
+	s=arc-20240116; t=1734970597; c=relaxed/simple;
+	bh=6+UTFMO3bDCU4LVXY1q8BvRr9k66IIYkY/gwML6A03E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdWPL52RCG+S07JPCiXSYUoDcUecCV9KaXl2wliDmsZK0/Ot1Eu8ImZDcqEA/NTafves8DzSFJFa3GIW/uIwkvt3VUyK7gvJFmkkK5QWFfeWRl5jQY4EwT2fSWCpkTvjT0XFfl53d8vDG5o9EbW8faGSBt33KLz36FQ2vgOERVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2dWd44n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TnCVF5Nl3IlLCcrvwKPLGCbq7FXHraLPLu4dr+O5zwqf4up9W9fJpPm0uzjm5U4l9vQdF70JBN9ulwZUk+NTaVVIad4Ib8nVHM1yg9i1gU4q/AsPvXYIMJ2fbF1p7Cj5XDBtclo8xbMNxIS5s/9mmwQTckBTLvdk+upmZHCTBUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5Bly1nB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2dWd44n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3DFC4CED3;
-	Mon, 23 Dec 2024 16:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5Bly1nB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A758BC4CED3;
+	Mon, 23 Dec 2024 16:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970593;
-	bh=0/gjQt8QUuPuSjRkwlz8VjrCDQmd6k/U+PnlW8r5VxM=;
+	s=korg; t=1734970597;
+	bh=6+UTFMO3bDCU4LVXY1q8BvRr9k66IIYkY/gwML6A03E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2dWd44nISY2oHoK0e+8w70DgkMcRneAfUTagxlgBfTYeFLAB5umHsktEtreGeOdD
-	 AOlWOsu0G+KKHkZQOWVCTX8tyU0nKB58va/DcDj+iWRPovCp3qCKefA2MFC02ZRir+
-	 +V3oFkLYQNWg4JYLZCQTzwCaBIIKSNhSu6BVG5BY=
+	b=B5Bly1nBQwGIfFJE7n6ZpMZ+cGcfCUMMAaGVdtwfVe60MYgE9bZCJ9YA5IfPtq2k2
+	 6+qAmQFFILZSaTBJOWempAfGWGUENzEUliE/uPoI8Z7pd697jqlnn0nZu/hEYT1kGx
+	 Rpsy6AOnbE0QiPyPtJhDF9RRRfPbDz3T3Uv4mdHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
 	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 12/83] platform/x86: p2sb: Make p2sb_get_devfn() return void
-Date: Mon, 23 Dec 2024 16:58:51 +0100
-Message-ID: <20241223155354.108627618@linuxfoundation.org>
+Subject: [PATCH 6.1 13/83] p2sb: Factor out p2sb_read_from_cache()
+Date: Mon, 23 Dec 2024 16:58:52 +0100
+Message-ID: <20241223155354.145767605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -45,80 +46,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 3ff5873602a874035ba28826852bd45393002a08 ]
+[ Upstream commit 9244524d60ddea55f4df54c51200e8fef2032447 ]
 
-p2sb_get_devfn() always succeeds, make it return void and
-remove error checking from its callers.
+To prepare for the following fix, factor out the code to read the P2SB
+resource from the cache to the new function p2sb_read_from_cache().
 
-Reviewed-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240305094500.23778-1-hdegoede@redhat.com
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241128002836.373745-2-shinichiro.kawasaki@wdc.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Stable-dep-of: 360c400d0f56 ("p2sb: Do not scan and remove the P2SB device when it is unhidden")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/p2sb.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/platform/x86/p2sb.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/platform/x86/p2sb.c b/drivers/platform/x86/p2sb.c
-index 053be5c5e0ca..687e341e3206 100644
+index 687e341e3206..d6ee4b34f911 100644
 --- a/drivers/platform/x86/p2sb.c
 +++ b/drivers/platform/x86/p2sb.c
-@@ -43,7 +43,7 @@ struct p2sb_res_cache {
- 
- static struct p2sb_res_cache p2sb_resources[NR_P2SB_RES_CACHE];
- 
--static int p2sb_get_devfn(unsigned int *devfn)
-+static void p2sb_get_devfn(unsigned int *devfn)
- {
- 	unsigned int fn = P2SB_DEVFN_DEFAULT;
- 	const struct x86_cpu_id *id;
-@@ -53,7 +53,6 @@ static int p2sb_get_devfn(unsigned int *devfn)
- 		fn = (unsigned int)id->driver_data;
- 
- 	*devfn = fn;
--	return 0;
+@@ -171,6 +171,22 @@ static int p2sb_cache_resources(void)
+ 	return ret;
  }
  
- static bool p2sb_valid_resource(const struct resource *res)
-@@ -132,9 +131,7 @@ static int p2sb_cache_resources(void)
- 	int ret;
- 
- 	/* Get devfn for P2SB device itself */
--	ret = p2sb_get_devfn(&devfn_p2sb);
--	if (ret)
--		return ret;
-+	p2sb_get_devfn(&devfn_p2sb);
- 
- 	bus = p2sb_get_bus(NULL);
- 	if (!bus)
-@@ -191,17 +188,13 @@ static int p2sb_cache_resources(void)
++static int p2sb_read_from_cache(struct pci_bus *bus, unsigned int devfn,
++				struct resource *mem)
++{
++	struct p2sb_res_cache *cache = &p2sb_resources[PCI_FUNC(devfn)];
++
++	if (cache->bus_dev_id != bus->dev.id)
++		return -ENODEV;
++
++	if (!p2sb_valid_resource(&cache->res))
++		return -ENOENT;
++
++	memcpy(mem, &cache->res, sizeof(*mem));
++
++	return 0;
++}
++
+ /**
+  * p2sb_bar - Get Primary to Sideband (P2SB) bridge device BAR
+  * @bus: PCI bus to communicate with
+@@ -187,8 +203,6 @@ static int p2sb_cache_resources(void)
+  */
  int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
  {
- 	struct p2sb_res_cache *cache;
--	int ret;
- 
+-	struct p2sb_res_cache *cache;
+-
  	bus = p2sb_get_bus(bus);
  	if (!bus)
  		return -ENODEV;
+@@ -196,15 +210,7 @@ int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
+ 	if (!devfn)
+ 		p2sb_get_devfn(&devfn);
  
--	if (!devfn) {
--		ret = p2sb_get_devfn(&devfn);
--		if (ret)
--			return ret;
--	}
-+	if (!devfn)
-+		p2sb_get_devfn(&devfn);
+-	cache = &p2sb_resources[PCI_FUNC(devfn)];
+-	if (cache->bus_dev_id != bus->dev.id)
+-		return -ENODEV;
+-
+-	if (!p2sb_valid_resource(&cache->res))
+-		return -ENOENT;
+-
+-	memcpy(mem, &cache->res, sizeof(*mem));
+-	return 0;
++	return p2sb_read_from_cache(bus, devfn, mem);
+ }
+ EXPORT_SYMBOL_GPL(p2sb_bar);
  
- 	cache = &p2sb_resources[PCI_FUNC(devfn)];
- 	if (cache->bus_dev_id != bus->dev.id)
 -- 
 2.39.5
 
