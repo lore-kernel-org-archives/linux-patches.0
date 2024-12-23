@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA7E189B94;
-	Mon, 23 Dec 2024 16:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133112EAE6;
+	Mon, 23 Dec 2024 16:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969765; cv=none; b=IGT/Vinb1yp6QML44Oyg2tT7ZJrqKKzej01K/Kdw/bUEKqIPiCdjhbmDxR4qsbv/t5CzRCQ+LWUDmltZoInp3To+QurBhfC8r9XZZ1CXHDQnq2eA5zW6GWXgIgRHhHGcDsiDhv8gCLw5a8RTYqAKN7hozTOlNaLNbn1lmu6G2Vg=
+	t=1734969769; cv=none; b=psPm/+MpcdS7DUulG6sKDxkUJZpjJek6IpfpDolJW0JcdrRHmXL7tl74S/22GJx+Zt+mF7RFGwgZHv9zOxc+kLCI+lC4qoLwJzo9wQhClS/fFvWlfB312G2bI16Od2ZSuWCuRa2myrnPXJH1RZT21P0LtXtMTp56jgT2UOnWGcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969765; c=relaxed/simple;
-	bh=JvpgFXFBOO1KsQkPALCs3Qj+FfEp/taAFLahPZ9pEZo=;
+	s=arc-20240116; t=1734969769; c=relaxed/simple;
+	bh=P21sjDcEsTxE8jrxaeg/3nRJHlRh1qvv1bl7JHLGs5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nc4xFfdmKh9hBG/m+YPs14wMpWdoRXBZ2NandI3d+SsiE36qdWANe3m3QSw1qw92Epy5CLZaUECKESOJvX5GJqlWv62OIVVlrYkzN5bRrJ6M9jxxfFTnfDE3CXZ7b8uvISJT6N86itLA5r+9pQ0fu1Pef//0kJ5xPnuc6sT34pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KpWAIlAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XUdBzW/atFn/+wxQMKiHOn37bQnSkVVnjc3xTWiJ/GE4aGFasv+kWPItk1A1T/8uGv4hkC1wCbpvxSqTbQb9BAUfILROGaqrfKINL9c4kgNbKDVesVaT23xfure2yGqJwFEHDrIAoqpmEvng8Kn+VR1MUhHDUPtABA06LGy2HAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMAuuRHW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KpWAIlAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A3E8C4CED3;
-	Mon, 23 Dec 2024 16:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMAuuRHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5DEC4CED3;
+	Mon, 23 Dec 2024 16:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969765;
-	bh=JvpgFXFBOO1KsQkPALCs3Qj+FfEp/taAFLahPZ9pEZo=;
+	s=korg; t=1734969768;
+	bh=P21sjDcEsTxE8jrxaeg/3nRJHlRh1qvv1bl7JHLGs5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KpWAIlAe4UBbJG8I6yMIJx3DAA66LwkyafoIaeCIDGJ9vZpTmi0H77FOehRTF2two
-	 VVgbKtk4oEDZ5F5xJlvypIyb0DQWDvlOInPiudql1FTQzYvkTDZQeA94Z35lALPGXx
-	 sihxGF0TrKby+ifodkcb1UYPzAvaon8u9MmZgyC8=
+	b=vMAuuRHWDjsssrAToF60dFkanDleHtxgOaisHukeSCZU1nCNI7TwDvHbSW1oilbaT
+	 sa6tVpFhsJCNLRDz4Db9sw0oobkLol+ugmbbmtJaCjUkIWelxrmE1VfVtqGUV6IBMQ
+	 bajnTOH54LXFk3JcBZDo8MpwrZ3aKwmWVZlgAcXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Marcel Ziswiler <marcel.ziswiler@codethink.co.uk>
-Subject: [PATCH 6.12 017/160] sched/dlserver: Fix dlserver time accounting
-Date: Mon, 23 Dec 2024 16:57:08 +0100
-Message-ID: <20241223155409.311065249@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 018/160] s390/mm: Consider KMSAN modules metadata for paging levels
+Date: Mon, 23 Dec 2024 16:57:09 +0100
+Message-ID: <20241223155409.350253318@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,67 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+From: Vasily Gorbik <gor@linux.ibm.com>
 
-[ Upstream commit c7f7e9c73178e0e342486fd31e7f363ef60e3f83 ]
+[ Upstream commit 282da38b465395c930687974627c24f47ddce5ff ]
 
-dlserver time is accounted when:
- - dlserver is active and the dlserver proxies the cfs task.
- - dlserver is active but deferred and cfs task runs after being picked
-   through the normal fair class pick.
+The calculation determining whether to use three- or four-level paging
+didn't account for KMSAN modules metadata. Include this metadata in the
+virtual memory size calculation to ensure correct paging mode selection
+and avoiding potentially unnecessary physical memory size limitations.
 
-dl_server_update is called in two places to make sure that both the
-above times are accounted for. But it doesn't check if dlserver is
-active or not. Now that we have this dl_server_active flag, we can
-consolidate dl_server_update into one place and all we need to check is
-whether dlserver is active or not. When dlserver is active there is only
-two possible conditions:
- - dlserver is deferred.
- - cfs task is running on behalf of dlserver.
-
-Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
-Signed-off-by: "Vineeth Pillai (Google)" <vineeth@bitbyteword.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Marcel Ziswiler <marcel.ziswiler@codethink.co.uk> # ROCK 5B
-Link: https://lore.kernel.org/r/20241213032244.877029-2-vineeth@bitbyteword.org
+Fixes: 65ca73f9fb36 ("s390/mm: define KMSAN metadata for vmalloc and modules")
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ arch/s390/boot/startup.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 93142f9077c7..1ca96c99872f 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -1159,8 +1159,6 @@ static inline void update_curr_task(struct task_struct *p, s64 delta_exec)
- 	trace_sched_stat_runtime(p, delta_exec);
- 	account_group_exec_runtime(p, delta_exec);
- 	cgroup_account_cputime(p, delta_exec);
--	if (p->dl_server)
--		dl_server_update(p->dl_server, delta_exec);
+diff --git a/arch/s390/boot/startup.c b/arch/s390/boot/startup.c
+index c8f149ad77e5..c2ee0745f59e 100644
+--- a/arch/s390/boot/startup.c
++++ b/arch/s390/boot/startup.c
+@@ -231,6 +231,8 @@ static unsigned long get_vmem_size(unsigned long identity_size,
+ 	vsize = round_up(SZ_2G + max_mappable, rte_size) +
+ 		round_up(vmemmap_size, rte_size) +
+ 		FIXMAP_SIZE + MODULES_LEN + KASLR_LEN;
++	if (IS_ENABLED(CONFIG_KMSAN))
++		vsize += MODULES_LEN * 2;
+ 	return size_add(vsize, vmalloc_size);
  }
- 
- static inline bool did_preempt_short(struct cfs_rq *cfs_rq, struct sched_entity *curr)
-@@ -1237,11 +1235,16 @@ static void update_curr(struct cfs_rq *cfs_rq)
- 		update_curr_task(p, delta_exec);
- 
- 		/*
--		 * Any fair task that runs outside of fair_server should
--		 * account against fair_server such that it can account for
--		 * this time and possibly avoid running this period.
-+		 * If the fair_server is active, we need to account for the
-+		 * fair_server time whether or not the task is running on
-+		 * behalf of fair_server or not:
-+		 *  - If the task is running on behalf of fair_server, we need
-+		 *    to limit its time based on the assigned runtime.
-+		 *  - Fair task that runs outside of fair_server should account
-+		 *    against fair_server such that it can account for this time
-+		 *    and possibly avoid running this period.
- 		 */
--		if (p->dl_server != &rq->fair_server)
-+		if (dl_server_active(&rq->fair_server))
- 			dl_server_update(&rq->fair_server, delta_exec);
- 	}
  
 -- 
 2.39.5
