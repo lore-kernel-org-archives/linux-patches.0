@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C98F12C544;
-	Mon, 23 Dec 2024 16:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7CC1865EB;
+	Mon, 23 Dec 2024 16:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970556; cv=none; b=STD/Uy+PvCXqKSOmoA2isNEEZzuo7CqVppKFHs0htS0BAXROMZKirQKaEUeITMA1/e3K6NU1BvOILbcwFCuQcvLFv1R3NvZKeh/Y78GjHEPYMKgfU3cTgk7wad5nE+q31ck5nO7HzXfmVnT8fdTgkkXX09Xg5gG3iUflJQ5/lqk=
+	t=1734970559; cv=none; b=j54JgbRWyBGXpFyKTS909jtanv7FrhjXQBHso5GBUO3eF16YKsaTUUMeFzy06KGUb8Tlw6WqLmMkSvE46Fczcfn0mKbQUXTh9awb3abi01qbMBLtKtr5a4+0saPS8UXUjrEHJMr0NZY0YpsiCuvO9fdIf3zU/M+8b5p3wwjhCS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970556; c=relaxed/simple;
-	bh=izV76XIKgDDhOZWP7qWKc4guhlsmm3WMrnEZ7QcLwrA=;
+	s=arc-20240116; t=1734970559; c=relaxed/simple;
+	bh=tCs2QTdFlBnGlcjaZ/C4nCfmyMkxl5yDYCYq0hIJZ1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=anzszTTMDH9Z6c1MEQILHxHjY3i6TvEtEVUi4ZFtYy98UBROqpSM/Kv3jSwk+NeLo7DB9d5kuq8uMqVrr6C0PCMYnflmZ2SB96TS6oJ3liUen6H8RVMBZdeIwhAiN14SaSGXjVhIP54ON0JHVMExyNGesnbiLHZt4Cq2zMj2wks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEltHLG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WFsbstSB2Zb0kkX1lNzBy6tmH4rkNbTq6jzGDswcpE2GDv6z6a1FXzQALXBS3oVBwR3z4RFqGj+tTeqc1TlFItEqPq/B7Iej6TKKNbVNB69vgw/oSXlyG6xs02lxd08YVpF3WCvKDvKoSxDOLWeNXQuiHn0Q7KXdFU9R/ZDWP3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S43ohEro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEltHLG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E62C4CED3;
-	Mon, 23 Dec 2024 16:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S43ohEro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15132C4CED3;
+	Mon, 23 Dec 2024 16:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970556;
-	bh=izV76XIKgDDhOZWP7qWKc4guhlsmm3WMrnEZ7QcLwrA=;
+	s=korg; t=1734970559;
+	bh=tCs2QTdFlBnGlcjaZ/C4nCfmyMkxl5yDYCYq0hIJZ1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEltHLG38+rfd3FCfZQkJO19vaSE4o61vr4bm+noRkwGnJDDkBxO7//WjwThw2e6l
-	 u++2n7GG0LHa75Gy34aFb/M270OKSVkI8WC+rAqiL5tXYozpH9RYaRFL76htrcGYyw
-	 GXpXqDke/qxrmadG7XDEzDPxubewjWCT3MsYeWCU=
+	b=S43ohErojOpAFKFLmmO2SK+9CvHyfBsHrhrUcvU5Kbty6WnUolksIKwuc8gAaRHJi
+	 Q8BpblFYRBm6+OezRC5+LhcD6m2JdvLtAQjb+j0s9hVQbOKNaZaGckrUSXpcSp3a16
+	 DWOE8xYv+0Blor/MGR7k1K7R3f8dbpXz4YAXiQmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 6.6 099/116] NFS/pnfs: Fix a live lock between recalled layouts and layoutget
-Date: Mon, 23 Dec 2024 16:59:29 +0100
-Message-ID: <20241223155403.409744429@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.6 100/116] of/irq: Fix interrupt-map cell length check in of_irq_parse_imap_parent()
+Date: Mon, 23 Dec 2024 16:59:30 +0100
+Message-ID: <20241223155403.447783249@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -49,35 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 62e2a47ceab8f3f7d2e3f0e03fdd1c5e0059fd8b upstream.
+commit fec3edc47d5cfc2dd296a5141df887bf567944db upstream.
 
-When the server is recalling a layout, we should ignore the count of
-outstanding layoutget calls, since the server is expected to return
-either NFS4ERR_RECALLCONFLICT or NFS4ERR_RETURNCONFLICT for as long as
-the recall is outstanding.
-Currently, we may end up livelocking, causing the layout to eventually
-be forcibly revoked.
+On a malformed interrupt-map property which is shorter than expected by
+1 cell, we may read bogus data past the end of the property instead of
+returning an error in of_irq_parse_imap_parent().
 
-Fixes: bf0291dd2267 ("pNFS: Ensure LAYOUTGET and LAYOUTRETURN are properly serialised")
+Decrement the remaining length when skipping over the interrupt parent
+phandle cell.
+
+Fixes: 935df1bd40d4 ("of/irq: Factor out parsing of interrupt-map parent phandle+args from of_irq_parse_raw()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241209-of_irq_fix-v1-1-782f1419c8a1@quicinc.com
+[rh: reword commit msg]
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/irq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1196,7 +1196,7 @@ pnfs_prepare_layoutreturn(struct pnfs_la
- 		enum pnfs_iomode *iomode)
- {
- 	/* Serialise LAYOUTGET/LAYOUTRETURN */
--	if (atomic_read(&lo->plh_outstanding) != 0)
-+	if (atomic_read(&lo->plh_outstanding) != 0 && lo->plh_return_seq == 0)
- 		return false;
- 	if (test_and_set_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags))
- 		return false;
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -111,6 +111,7 @@ const __be32 *of_irq_parse_imap_parent(c
+ 	else
+ 		np = of_find_node_by_phandle(be32_to_cpup(imap));
+ 	imap++;
++	len--;
+ 
+ 	/* Check if not found */
+ 	if (!np) {
 
 
