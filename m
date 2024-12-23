@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2A81B3922;
-	Mon, 23 Dec 2024 16:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4C31A8F80;
+	Mon, 23 Dec 2024 16:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970652; cv=none; b=P5+V0jsKi7v56do1vRxSGT+/I8T3msw1U7pHSxggoloaiDpMwXWHTjnmz8K9FSY+Mj3CWiaxhpCu4kXl7vHY71A11uo8nzx6nWiVlWXha0mSNTJ8Ez316kEhYGdwhEMEXg9XtR8AtVA017sJfb6r11MsTiTDPntPZffpM1lPdOg=
+	t=1734970655; cv=none; b=jnElvrQfh+hE1doGB5tb7z7lxb0T7xKMPlS9iMMfxZQyM9KwvF99a93+iVVzwxILcIj/Xto75iEtTCmb04VO2rS2TUV3fIWScvktRnzD0FmtjW7z7cUihm5b3eAnSn2Mry/9Wudp6Z/5pFISF68USEaLkAtkiX/hekCZLP63BwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970652; c=relaxed/simple;
-	bh=PnKpsbxhIOD7i6RN/ExMPdyuCOAFwsfyn5rjg/ETb6E=;
+	s=arc-20240116; t=1734970655; c=relaxed/simple;
+	bh=VBvn5aiNh1xc1Y8rH6GuFUqdLkiQXWaqq0pfyZehzMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+/kdJMHq6p634FyIHql0M8k/fdEDJH4pstTIS+x464LCe3Ah0nJkYM3rS9PHNASjQ9VRt+3RnOsP9vuh73jjC6repVM7VdadKbMfQuF+7Ie/frtg5azk4h09ThuR/bZI2/xx+V8Gw3xavpMlHvhTBkqMdH2QBx847w3YsJi3vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=se0pVvZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DV8SCTukRp18jJNIJPMYMcBsB+j41B70g0RicJwPVjakLYiq1iIf5bqqEmWTPfFQXi3n1NXjWy3xnzThDGlnYQ9buygZAF+cj15dEHgOIOfMQX1CZbLmooSXYbIQZgMggL47p3ANgdQC9NMaj/+RYxBrnQxvsbGktymiTZpaVFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJYetiyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se0pVvZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A15EC4CED3;
-	Mon, 23 Dec 2024 16:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJYetiyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C65C4CED3;
+	Mon, 23 Dec 2024 16:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970651;
-	bh=PnKpsbxhIOD7i6RN/ExMPdyuCOAFwsfyn5rjg/ETb6E=;
+	s=korg; t=1734970655;
+	bh=VBvn5aiNh1xc1Y8rH6GuFUqdLkiQXWaqq0pfyZehzMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=se0pVvZktJUU1BujtKYXS1OXH7b/flvFrPLtU6wq2tdt2wUDA9mtJ6I1DUxxjb8om
-	 qI/rjID924toVW6s4M5/FywXIwRzzPZnUlZGiMeZVLpmYJ8WmiIEtd2RXqZNeMFxJT
-	 EuEgBD2owgtHNpyYJ8ut04QHZtgTJeANfAS/Ndis=
+	b=AJYetiyW+Wp0R+iFtQycuGkrLZ3X4dFjbSookxPkYLPyDSXT2aW3PhCYtvoxdbfVH
+	 yrB9Y8c6j8gCSYXAJtiylj/ZdSUfem7uAMJs/WWmlHQ62S6LL5wqyzKXUBUEneyMuz
+	 y3nBecCyTQ4Qx6OzkJNNBaVR1wBBFU+KANu12ITg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
 	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/83] net: hinic: Fix cleanup in create_rxqs/txqs()
-Date: Mon, 23 Dec 2024 16:59:07 +0100
-Message-ID: <20241223155354.733906034@linuxfoundation.org>
+Subject: [PATCH 6.1 29/83] net: ethernet: bgmac-platform: fix an OF node reference leak
+Date: Mon, 23 Dec 2024 16:59:08 +0100
+Message-ID: <20241223155354.774851160@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -52,52 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 7203d10e93b6e6e1d19481ef7907de6a9133a467 ]
+[ Upstream commit 0cb2c504d79e7caa3abade3f466750c82ad26f01 ]
 
-There is a check for NULL at the start of create_txqs() and
-create_rxqs() which tess if "nic_dev->txqs" is non-NULL.  The
-intention is that if the device is already open and the queues
-are already created then we don't create them a second time.
+The OF node obtained by of_parse_phandle() is not freed. Call
+of_node_put() to balance the refcount.
 
-However, the bug is that if we have an error in the create_txqs()
-then the pointer doesn't get set back to NULL.  The NULL check
-at the start of the function will say that it's already open when
-it's not and the device can't be used.
+This bug was found by an experimental static analysis tool that I am
+developing.
 
-Set ->txqs back to NULL on cleanup on error.
-
-Fixes: c3e79baf1b03 ("net-next/hinic: Add logical Txq and Rxq")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 1676aba5ef7e ("net: ethernet: bgmac: device tree phy enablement")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0cc98faf-a0ed-4565-a55b-0fa2734bc205@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20241214014912.2810315-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bgmac-platform.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-index 2d6906aba2a2..af6100e5d9b9 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-@@ -172,6 +172,7 @@ static int create_txqs(struct hinic_dev *nic_dev)
- 	hinic_sq_dbgfs_uninit(nic_dev);
- 
- 	devm_kfree(&netdev->dev, nic_dev->txqs);
-+	nic_dev->txqs = NULL;
- 	return err;
- }
- 
-@@ -268,6 +269,7 @@ static int create_rxqs(struct hinic_dev *nic_dev)
- 	hinic_rq_dbgfs_uninit(nic_dev);
- 
- 	devm_kfree(&netdev->dev, nic_dev->rxqs);
-+	nic_dev->rxqs = NULL;
- 	return err;
- }
- 
+diff --git a/drivers/net/ethernet/broadcom/bgmac-platform.c b/drivers/net/ethernet/broadcom/bgmac-platform.c
+index b4381cd41979..3f4e8bac40c1 100644
+--- a/drivers/net/ethernet/broadcom/bgmac-platform.c
++++ b/drivers/net/ethernet/broadcom/bgmac-platform.c
+@@ -171,6 +171,7 @@ static int platform_phy_connect(struct bgmac *bgmac)
+ static int bgmac_probe(struct platform_device *pdev)
+ {
+ 	struct device_node *np = pdev->dev.of_node;
++	struct device_node *phy_node;
+ 	struct bgmac *bgmac;
+ 	struct resource *regs;
+ 	int ret;
+@@ -236,7 +237,9 @@ static int bgmac_probe(struct platform_device *pdev)
+ 	bgmac->cco_ctl_maskset = platform_bgmac_cco_ctl_maskset;
+ 	bgmac->get_bus_clock = platform_bgmac_get_bus_clock;
+ 	bgmac->cmn_maskset32 = platform_bgmac_cmn_maskset32;
+-	if (of_parse_phandle(np, "phy-handle", 0)) {
++	phy_node = of_parse_phandle(np, "phy-handle", 0);
++	if (phy_node) {
++		of_node_put(phy_node);
+ 		bgmac->phy_connect = platform_phy_connect;
+ 	} else {
+ 		bgmac->phy_connect = bgmac_phy_connect_direct;
 -- 
 2.39.5
 
