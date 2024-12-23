@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8842EAE6;
-	Mon, 23 Dec 2024 16:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB2012D1F1;
+	Mon, 23 Dec 2024 16:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969630; cv=none; b=jahyp/quY30VWOlbLKn7JoNdnZCP0mBqzJ/xgcWwh/SBRol7m1Sa9or3rilvsu22ATCo8ZpWkYeEJbl7mqaS3fTrFUkyYh7kjdD37KHcvSZPifQvlz2wqyMQ+JAQghzWsRyAA/NuOWp9LsYtZbv1WEdhDZU/8CRwrXzbKqTEB5E=
+	t=1734969635; cv=none; b=HMoqespS/a/eFitgG0KtJc95XhqZ568Ymz1AkoWfYWHlqZC1uT4JYh1c7UO9gWoSFqHJocQ1TETNYVEdyULDcft1J6a5EuRgkPanx+ewdA+3TwhVM2TjOxIZvZ0ihVpJtHgsev3liKLYIC1R6315cNF9VuKFv9apWEHPEG8lFnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969630; c=relaxed/simple;
-	bh=ZxtRQUxYhISmks6XQQZA9YMcu3KRKMm2J2UFOLWq37w=;
+	s=arc-20240116; t=1734969635; c=relaxed/simple;
+	bh=7s8mmow+rCtZHoZLMue2155cW1iBwrXcuimwWBq+D8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PkNeQhW8O6EmpyAkBvbDKafkITwBGdeGePm+WvUFIQyoI1Cz1aQ+4YEW6VJF1oZomh+Zy0qPOoieQJI/71nLKVbRKALBHCMz45HHk9rXA1teAxcJAbqHE22jKGbwwIk3I9Z+fVDR7AWlNZOWX89uvwQ8HxYYCYrhFdXdGIHbs5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TPgq6UNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLIzORVWdhmTeKPwYFdOq0tRyhr3PMpuWi79joSXdLQpJCh+9belif9WbUNij7ssj09kmldKDUO9A0MUTKTon5Fx+pELRrfpjoAmHW7661m+z2XXa2Pmucm+uFzjI5+f2Q8fUkXLeDaItHDcPRBK2JsX+VVemFiGR6adbah/qFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaDJ6T1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TPgq6UNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8368C4CED4;
-	Mon, 23 Dec 2024 16:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaDJ6T1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B83C4CED4;
+	Mon, 23 Dec 2024 16:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969630;
-	bh=ZxtRQUxYhISmks6XQQZA9YMcu3KRKMm2J2UFOLWq37w=;
+	s=korg; t=1734969633;
+	bh=7s8mmow+rCtZHoZLMue2155cW1iBwrXcuimwWBq+D8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPgq6UNafRfNSjd5zO40J4tZqU5FFcaeryY8nmmE+ayyaK5JcwhIbdytu3b45llhN
-	 ueSpn1pmsYkclkvaJJjSpcxp/OPI72BETOqCGbCfw+tK+QlnUmR8Amf94MqK2KWUYe
-	 zfG5MCD42+qj9/UvDdkxqFzSlAR4ryjfbWTcO1II=
+	b=EaDJ6T1PH/+zlekI+r4hRfGQR4KBl8allyzJHfl/Dofgw+btOYZ88ZhICkmGQAMIR
+	 YG2bkJZqjGzilduuP5aJiRwdG5J/kjVi5xBFyu+ZlbKHQrmy0/vVkcldQYI2CCLT2Q
+	 IHAfmz44CLljdPK2RD8CKjCnpYYiVfJ+HGUQ5ht4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Furong Xu <0x1207@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 002/160] net: stmmac: fix TSO DMA API usage causing oops
-Date: Mon, 23 Dec 2024 16:56:53 +0100
-Message-ID: <20241223155408.695093775@linuxfoundation.org>
+Subject: [PATCH 6.12 003/160] firmware: arm_scmi: Fix i.MX build dependency
+Date: Mon, 23 Dec 2024 16:56:54 +0100
+Message-ID: <20241223155408.745357574@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -54,81 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4c49f38e20a57f8abaebdf95b369295b153d1f8e ]
+[ Upstream commit 514b2262ade48a0503ac6aa03c3bfb8c5be69b21 ]
 
-Commit 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap
-for non-paged SKB data") moved the assignment of tx_skbuff_dma[]'s
-members to be later in stmmac_tso_xmit().
+The newly added SCMI vendor driver references functions in the
+protocol driver but needs a Kconfig dependency to ensure it can link,
+essentially the Kconfig dependency needs to be reversed to match the
+link time dependency:
 
-The buf (dma cookie) and len stored in this structure are passed to
-dma_unmap_single() by stmmac_tx_clean(). The DMA API requires that
-the dma cookie passed to dma_unmap_single() is the same as the value
-returned from dma_map_single(). However, by moving the assignment
-later, this is not the case when priv->dma_cap.addr64 > 32 as "des"
-is offset by proto_hdr_len.
+  |  arm-linux-gnueabi-ld: sound/soc/fsl/fsl_mqs.o: in function `fsl_mqs_sm_write':
+  |  	fsl_mqs.c:(.text+0x1aa): undefined reference to `scmi_imx_misc_ctrl_set'
+  |  arm-linux-gnueabi-ld: sound/soc/fsl/fsl_mqs.o: in function `fsl_mqs_sm_read':
+  |  	fsl_mqs.c:(.text+0x1ee): undefined reference to `scmi_imx_misc_ctrl_get'
 
-This causes problems such as:
+This however only works after changing the dependency in the SND_SOC_FSL_MQS
+driver as well, which uses 'select IMX_SCMI_MISC_DRV' to turn on a
+driver it depends on. This is generally a bad idea, so the best solution
+is to change that into a dependency.
 
-  dwc-eth-dwmac 2490000.ethernet eth0: Tx DMA map failed
+To allow the ASoC driver to keep building with the SCMI support, this
+needs to be an optional dependency that enforces the link-time
+dependency if IMX_SCMI_MISC_DRV is a loadable module but not
+depend on it if that is disabled.
 
-and with DMA_API_DEBUG enabled:
-
-  DMA-API: dwc-eth-dwmac 2490000.ethernet: device driver tries to +free DMA memory it has not allocated [device address=0x000000ffffcf65c0] [size=66 bytes]
-
-Fix this by maintaining "des" as the original DMA cookie, and use
-tso_des to pass the offset DMA cookie to stmmac_tso_allocator().
-
-Full details of the crashes can be found at:
-https://lore.kernel.org/all/d8112193-0386-4e14-b516-37c2d838171a@nvidia.com/
-https://lore.kernel.org/all/klkzp5yn5kq5efgtrow6wbvnc46bcqfxs65nz3qy77ujr5turc@bwwhelz2l4dw/
-
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Reported-by: Thierry Reding <thierry.reding@gmail.com>
-Fixes: 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap for non-paged SKB data")
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Furong Xu <0x1207@gmail.com>
-Link: https://patch.msgid.link/E1tJXcx-006N4Z-PC@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 61c9f03e22fc ("firmware: arm_scmi: Add initial support for i.MX MISC protocol")
+Fixes: 101c9023594a ("ASoC: fsl_mqs: Support accessing registers by scmi interface")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Mark Brown <broonie@kernel.org>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Message-Id: <20241115230555.2435004-1-arnd@kernel.org>
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/firmware/arm_scmi/vendors/imx/Kconfig | 1 +
+ drivers/firmware/imx/Kconfig                  | 1 -
+ sound/soc/fsl/Kconfig                         | 1 +
+ 3 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 766213ee82c1..cf7b59b8cc64 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4220,8 +4220,8 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 	struct stmmac_txq_stats *txq_stats;
- 	struct stmmac_tx_queue *tx_q;
- 	u32 pay_len, mss, queue;
-+	dma_addr_t tso_des, des;
- 	u8 proto_hdr_len, hdr;
--	dma_addr_t des;
- 	bool set_ic;
- 	int i;
+diff --git a/drivers/firmware/arm_scmi/vendors/imx/Kconfig b/drivers/firmware/arm_scmi/vendors/imx/Kconfig
+index 2883ed24a84d..a01bf5e47301 100644
+--- a/drivers/firmware/arm_scmi/vendors/imx/Kconfig
++++ b/drivers/firmware/arm_scmi/vendors/imx/Kconfig
+@@ -15,6 +15,7 @@ config IMX_SCMI_BBM_EXT
+ config IMX_SCMI_MISC_EXT
+ 	tristate "i.MX SCMI MISC EXTENSION"
+ 	depends on ARM_SCMI_PROTOCOL || (COMPILE_TEST && OF)
++	depends on IMX_SCMI_MISC_DRV
+ 	default y if ARCH_MXC
+ 	help
+ 	  This enables i.MX System MISC control logic such as gpio expander
+diff --git a/drivers/firmware/imx/Kconfig b/drivers/firmware/imx/Kconfig
+index 477d3f32d99a..907cd149c40a 100644
+--- a/drivers/firmware/imx/Kconfig
++++ b/drivers/firmware/imx/Kconfig
+@@ -25,7 +25,6 @@ config IMX_SCU
  
-@@ -4317,14 +4317,15 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 		/* If needed take extra descriptors to fill the remaining payload */
- 		tmp_pay_len = pay_len - TSO_MAX_BUFF_SIZE;
-+		tso_des = des;
- 	} else {
- 		stmmac_set_desc_addr(priv, first, des);
- 		tmp_pay_len = pay_len;
--		des += proto_hdr_len;
-+		tso_des = des + proto_hdr_len;
- 		pay_len = 0;
- 	}
- 
--	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
-+	stmmac_tso_allocator(priv, tso_des, tmp_pay_len, (nfrags == 0), queue);
- 
- 	/* In case two or more DMA transmit descriptors are allocated for this
- 	 * non-paged SKB data, the DMA buffer address should be saved to
+ config IMX_SCMI_MISC_DRV
+ 	tristate "IMX SCMI MISC Protocol driver"
+-	depends on IMX_SCMI_MISC_EXT || COMPILE_TEST
+ 	default y if ARCH_MXC
+ 	help
+ 	  The System Controller Management Interface firmware (SCMI FW) is
+diff --git a/sound/soc/fsl/Kconfig b/sound/soc/fsl/Kconfig
+index e283751abfef..678540b78280 100644
+--- a/sound/soc/fsl/Kconfig
++++ b/sound/soc/fsl/Kconfig
+@@ -29,6 +29,7 @@ config SND_SOC_FSL_SAI
+ config SND_SOC_FSL_MQS
+ 	tristate "Medium Quality Sound (MQS) module support"
+ 	depends on SND_SOC_FSL_SAI
++	depends on IMX_SCMI_MISC_DRV || !IMX_SCMI_MISC_DRV
+ 	select REGMAP_MMIO
+ 	help
+ 	  Say Y if you want to add Medium Quality Sound (MQS)
 -- 
 2.39.5
 
