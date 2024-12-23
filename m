@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381CC19E98B;
-	Mon, 23 Dec 2024 16:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571331B3928;
+	Mon, 23 Dec 2024 16:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970702; cv=none; b=d1rgbvFfvSrlq+AFk1qr0dH3x099BgxAIacicLP4zLKe9IgFzrt/VQWpWJ/ssV/WnmF5/u+NQx34/KLRSNAr+EBohg99xjIe+joX14EO1EHZ7p9coQEdnT/99MPG788nkx1jmI3amIhQpD0Ji1b2mjHpAvVELD25Bxd2C99lXb0=
+	t=1734970705; cv=none; b=Si1hBMKi7UO5QpyRANh9tsQ0Y9b/f8VZfxA21bE9WBfggNAtXEyBPOD3mIxWyz/6bGnbrry2DSGEaJcE5dlVlOTnLV/sTC92v9t/W8+Z+QVV6KtQy1q/E2/QRBUKh6SNTwyfde6K0h3dBdrjARhUIY+xIykRBrxAh13/CPV6rT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970702; c=relaxed/simple;
-	bh=4lQhN8wIJsNRaoHL8T6VT5JvWbXsyajcPrmgIE2dOfY=;
+	s=arc-20240116; t=1734970705; c=relaxed/simple;
+	bh=mtisTr0MCmSrpP6vcSrQHBeVsXONs1zu/f+1UJVteks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xq69KGZChap9XIczqdBGUwvK83EvtUHIYPo7jnfELfmsMr/nVosBbO3g51nPrZZatZLkAw70h2Le3aRGL45lqnWITWibCIt869dXEnnPObxjIlllJ1xCPaW9plnbefO0xUXyz49b6tnvxr98MZMdQQcs8PnGizK8if5sAbytPIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvWfRg55; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LswpydqgV1wF60q1ydveN7kMQl7Uug975ahTlfCczTUuU5KvFoI3Ocnz1wglQaAnaKQI4mK6vwgPRr/ZZMg5OGgsavAI5KEYvujTpSNtkH7X72T6mDMjTbKoimPfk/XZgeoJENFzlIzCW+RT1hCX5DoBFV7Mnj9XTdMl312fyCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P46Ug9mm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvWfRg55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E32CC4CED3;
-	Mon, 23 Dec 2024 16:18:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P46Ug9mm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0552C4CED3;
+	Mon, 23 Dec 2024 16:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970702;
-	bh=4lQhN8wIJsNRaoHL8T6VT5JvWbXsyajcPrmgIE2dOfY=;
+	s=korg; t=1734970705;
+	bh=mtisTr0MCmSrpP6vcSrQHBeVsXONs1zu/f+1UJVteks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvWfRg555ZGZnWxnO9DHOxlBVky7dwjjB4VVzwl2u8k4UoeWnUNZGn+e6c0Kjg7WM
-	 ntTUIjjONu8MDwXZkbrOcV2BlxA41EFLSHQYEDnWc+QcqFNJbf6C9oDn3IMtH1sOOA
-	 t9SfP4Jv/iOL3Q/Bhk652Khne4nLD9oIWD2yWObo=
+	b=P46Ug9mmlxWWrNu6o7PX7IT3zomvugjcsybCw8KMDOOiCDkek3mJxUFPDyUtGaY4v
+	 IYOuWsA4HfKoGlzgwn/g9mvVWVBX2/YJMkPEurjd7i2rWzwmIn0VKI3kWPmdBCUQLu
+	 1e8AT0VYF33RO0PhbCBQ/8LZV487xtt589gnX6Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 6.1 44/83] drm/modes: Avoid divide by zero harder in drm_mode_vrefresh()
-Date: Mon, 23 Dec 2024 16:59:23 +0100
-Message-ID: <20241223155355.337789834@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 45/83] drm/panel: novatek-nt35950: fix return value check in nt35950_probe()
+Date: Mon, 23 Dec 2024 16:59:24 +0100
+Message-ID: <20241223155355.375873912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -45,62 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 9398332f23fab10c5ec57c168b44e72997d6318e upstream.
+[ Upstream commit f8fd0968eff52cf092c0d517d17507ea2f6e5ea5 ]
 
-drm_mode_vrefresh() is trying to avoid divide by zero
-by checking whether htotal or vtotal are zero. But we may
-still end up with a div-by-zero of vtotal*htotal*...
+mipi_dsi_device_register_full() never returns NULL pointer, it
+will return ERR_PTR() when it fails, so replace the check with
+IS_ERR().
 
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=622bba18029bcde672e1
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241129042629.18280-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 623a3531e9cf ("drm/panel: Add driver for Novatek NT35950 DSI DriverIC panels")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241029123957.1588-1-yangyingliang@huaweicloud.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241029123957.1588-1-yangyingliang@huaweicloud.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_modes.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/drm_modes.c
-+++ b/drivers/gpu/drm/drm_modes.c
-@@ -808,14 +808,11 @@ EXPORT_SYMBOL(drm_mode_set_name);
-  */
- int drm_mode_vrefresh(const struct drm_display_mode *mode)
- {
--	unsigned int num, den;
-+	unsigned int num = 1, den = 1;
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35950.c b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+index ec2780be74d1..a92a7cd697f4 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35950.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+@@ -577,9 +577,9 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
+ 			return dev_err_probe(dev, -EPROBE_DEFER, "Cannot get secondary DSI host\n");
  
- 	if (mode->htotal == 0 || mode->vtotal == 0)
- 		return 0;
- 
--	num = mode->clock;
--	den = mode->htotal * mode->vtotal;
--
- 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
- 		num *= 2;
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
-@@ -823,6 +820,12 @@ int drm_mode_vrefresh(const struct drm_d
- 	if (mode->vscan > 1)
- 		den *= mode->vscan;
- 
-+	if (check_mul_overflow(mode->clock, num, &num))
-+		return 0;
-+
-+	if (check_mul_overflow(mode->htotal * mode->vtotal, den, &den))
-+		return 0;
-+
- 	return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(num, 1000), den);
- }
- EXPORT_SYMBOL(drm_mode_vrefresh);
+ 		nt->dsi[1] = mipi_dsi_device_register_full(dsi_r_host, info);
+-		if (!nt->dsi[1]) {
++		if (IS_ERR(nt->dsi[1])) {
+ 			dev_err(dev, "Cannot get secondary DSI node\n");
+-			return -ENODEV;
++			return PTR_ERR(nt->dsi[1]);
+ 		}
+ 		num_dsis++;
+ 	}
+-- 
+2.39.5
+
 
 
