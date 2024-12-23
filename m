@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B71F13BC0C;
-	Mon, 23 Dec 2024 16:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD33D2EAE6;
+	Mon, 23 Dec 2024 16:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969785; cv=none; b=IdQnYNqaiq1y4IU3yv7mvvQDwX29Q1zsNfForwN/dV1NM3MyeqXaY3jXls0aeVIA8TQHdxJ6dKGDYOaj6vdmclk6+lSCilJXGQh/KgOBtSb3jWG5uHptEKvb6B02Va4xJOREBxaSnN3GtiyWPxO/frmWaalaOsj8xuUMGuvXOkY=
+	t=1734969788; cv=none; b=c28MDqIx3bPHWNNsOyXDZplXS8vTSQiw0e1208Mhli5cwV0p4D3FYHWfwojPXZdN/B3pTdzmoJVKY0JBn7DRpexIQRSpQvKlFV4RzLQRXZWzZE4epacmVpks626wX+4uU3BCCVx7pk1nab/4mNk0W6XY7+gGcfpt0HggQ7U2NkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969785; c=relaxed/simple;
-	bh=eE9YQ5gUDdZx5SSXaKIVhZ7YXMDdkJFDoyBoKv8cYow=;
+	s=arc-20240116; t=1734969788; c=relaxed/simple;
+	bh=bkt52+ptU6E4ZDveSd4EBcJHeEDU3ohTR7sg0uZoJYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BqqV/Vw7EMIn+dnMZ9gonIEOGU1/xQQhWfbEa4UMWRNs9JYrMDSZNDsowLIOAU5IL/9HMB7fwHmF5O9+q/9AaWgaA89l+cWxaT168UWFMKjHrCh86Ndiclfl3XeU9oFM92awaGgFP3yA3tD8/NW/PdgCUdi9shbrsIOeIsRfgTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rm1pm86y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fqJI2Bg8z3W4ZfUhB3t5oJcF2qbDp3NpEn7EsjLgru9dWtR1A0rUI25Y6pJNm5zWwZBlZif3muWLyKT4OWYd6wZHmHXoYvcrKj+KVi532N59thT4TJ+dNdZugu/JhyOx8EazMRFVb7gjbxPH7YlDx03WRu49ikRYMmgXE1aZ4Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amw/hPFl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rm1pm86y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26003C4CED3;
-	Mon, 23 Dec 2024 16:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amw/hPFl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6D5C4CED3;
+	Mon, 23 Dec 2024 16:03:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969784;
-	bh=eE9YQ5gUDdZx5SSXaKIVhZ7YXMDdkJFDoyBoKv8cYow=;
+	s=korg; t=1734969788;
+	bh=bkt52+ptU6E4ZDveSd4EBcJHeEDU3ohTR7sg0uZoJYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rm1pm86yRSHqx/iLo9mmZbTPB/7uOwFIq8v5la5diUsYXKNShNHU9TJou2/qIOS4c
-	 D5InUFzy3X5AAr24Patoc7DiT/GLiHgjj3elbJ9J4g29+2A8kvqBMxPB2oGdmc9Pfg
-	 EdnDLQpEhTKiNUWnEQHar2TdHqvF6Ms4rxaUWPs8=
+	b=amw/hPFl/eZNlP8Sp7NASOSaI/mS0gabu++9mM9Et9fJypOp0FZGikI6xj3QiC0Zc
+	 wUSukQ5w/aEb9dIkqDDTv9BIzHgm2nH2DXCget7aP90PNnjv9QUZ2utvufrSd9HxzH
+	 SC6411l1wk52c8zWx3cVNX6ufGinvxvhZ7Lh/IIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	David Laight <david.laight@aculab.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/160] can: m_can: fix missed interrupts with m_can_pci
-Date: Mon, 23 Dec 2024 16:57:46 +0100
-Message-ID: <20241223155410.809514219@linuxfoundation.org>
+Subject: [PATCH 6.12 056/160] ipvs: Fix clamp() of ip_vs_conn_tab on small memory systems
+Date: Mon, 23 Dec 2024 16:57:47 +0100
+Message-ID: <20241223155410.847437292@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,142 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: David Laight <David.Laight@ACULAB.COM>
 
-[ Upstream commit 743375f8deee360b0e902074bab99b0c9368d42f ]
+[ Upstream commit cf2c97423a4f89c8b798294d3f34ecfe7e7035c3 ]
 
-The interrupt line of PCI devices is interpreted as edge-triggered,
-however the interrupt signal of the m_can controller integrated in Intel
-Elkhart Lake CPUs appears to be generated level-triggered.
+The 'max_avail' value is calculated from the system memory
+size using order_base_2().
+order_base_2(x) is defined as '(x) ? fn(x) : 0'.
+The compiler generates two copies of the code that follows
+and then expands clamp(max, min, PAGE_SHIFT - 12) (11 on 32bit).
+This triggers a compile-time assert since min is 5.
 
-Consider the following sequence of events:
+In reality a system would have to have less than 512MB memory
+for the bounds passed to clamp to be reversed.
 
-- IR register is read, interrupt X is set
-- A new interrupt Y is triggered in the m_can controller
-- IR register is written to acknowledge interrupt X. Y remains set in IR
+Swap the order of the arguments to clamp() to avoid the warning.
 
-As at no point in this sequence no interrupt flag is set in IR, the
-m_can interrupt line will never become deasserted, and no edge will ever
-be observed to trigger another run of the ISR. This was observed to
-result in the TX queue of the EHL m_can to get stuck under high load,
-because frames were queued to the hardware in m_can_start_xmit(), but
-m_can_finish_tx() was never run to account for their successful
-transmission.
+Replace the clamp_val() on the line below with clamp().
+clamp_val() is just 'an accident waiting to happen' and not needed here.
 
-On an Elkhart Lake based board with the two CAN interfaces connected to
-each other, the following script can reproduce the issue:
+Detected by compile time checks added to clamp(), specifically:
+minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()
 
-    ip link set can0 up type can bitrate 1000000
-    ip link set can1 up type can bitrate 1000000
-
-    cangen can0 -g 2 -I 000 -L 8 &
-    cangen can0 -g 2 -I 001 -L 8 &
-    cangen can0 -g 2 -I 002 -L 8 &
-    cangen can0 -g 2 -I 003 -L 8 &
-    cangen can0 -g 2 -I 004 -L 8 &
-    cangen can0 -g 2 -I 005 -L 8 &
-    cangen can0 -g 2 -I 006 -L 8 &
-    cangen can0 -g 2 -I 007 -L 8 &
-
-    cangen can1 -g 2 -I 100 -L 8 &
-    cangen can1 -g 2 -I 101 -L 8 &
-    cangen can1 -g 2 -I 102 -L 8 &
-    cangen can1 -g 2 -I 103 -L 8 &
-    cangen can1 -g 2 -I 104 -L 8 &
-    cangen can1 -g 2 -I 105 -L 8 &
-    cangen can1 -g 2 -I 106 -L 8 &
-    cangen can1 -g 2 -I 107 -L 8 &
-
-    stress-ng --matrix 0 &
-
-To fix the issue, repeatedly read and acknowledge interrupts at the
-start of the ISR until no interrupt flags are set, so the next incoming
-interrupt will also result in an edge on the interrupt line.
-
-While we have received a report that even with this patch, the TX queue
-can become stuck under certain (currently unknown) circumstances on the
-Elkhart Lake, this patch completely fixes the issue with the above
-reproducer, and it is unclear whether the remaining issue has a similar
-cause at all.
-
-Fixes: cab7ffc0324f ("can: m_can: add PCI glue driver for Intel Elkhart Lake")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Link: https://patch.msgid.link/fdf0439c51bcb3a46c21e9fb21c7f1d06363be84.1728288535.git.matthias.schiffer@ew.tq-group.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/all/CA+G9fYsT34UkGFKxus63H6UVpYi5GRZkezT9MRLfAbM3f6ke0g@mail.gmail.com/
+Fixes: 4f325e26277b ("ipvs: dynamically limit the connection hash table")
+Tested-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: David Laight <david.laight@aculab.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/m_can.c     | 22 +++++++++++++++++-----
- drivers/net/can/m_can/m_can.h     |  1 +
- drivers/net/can/m_can/m_can_pci.c |  1 +
- 3 files changed, 19 insertions(+), 5 deletions(-)
+ net/netfilter/ipvs/ip_vs_conn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index 67c404fbe166..97cd8bbf2e32 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -1220,20 +1220,32 @@ static void m_can_coalescing_update(struct m_can_classdev *cdev, u32 ir)
- static int m_can_interrupt_handler(struct m_can_classdev *cdev)
- {
- 	struct net_device *dev = cdev->net;
--	u32 ir;
-+	u32 ir = 0, ir_read;
- 	int ret;
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index 98d7dbe3d787..c0289f83f96d 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -1495,8 +1495,8 @@ int __init ip_vs_conn_init(void)
+ 	max_avail -= 2;		/* ~4 in hash row */
+ 	max_avail -= 1;		/* IPVS up to 1/2 of mem */
+ 	max_avail -= order_base_2(sizeof(struct ip_vs_conn));
+-	max = clamp(max, min, max_avail);
+-	ip_vs_conn_tab_bits = clamp_val(ip_vs_conn_tab_bits, min, max);
++	max = clamp(max_avail, min, max);
++	ip_vs_conn_tab_bits = clamp(ip_vs_conn_tab_bits, min, max);
+ 	ip_vs_conn_tab_size = 1 << ip_vs_conn_tab_bits;
+ 	ip_vs_conn_tab_mask = ip_vs_conn_tab_size - 1;
  
- 	if (pm_runtime_suspended(cdev->dev))
- 		return IRQ_NONE;
- 
--	ir = m_can_read(cdev, M_CAN_IR);
-+	/* The m_can controller signals its interrupt status as a level, but
-+	 * depending in the integration the CPU may interpret the signal as
-+	 * edge-triggered (for example with m_can_pci). For these
-+	 * edge-triggered integrations, we must observe that IR is 0 at least
-+	 * once to be sure that the next interrupt will generate an edge.
-+	 */
-+	while ((ir_read = m_can_read(cdev, M_CAN_IR)) != 0) {
-+		ir |= ir_read;
-+
-+		/* ACK all irqs */
-+		m_can_write(cdev, M_CAN_IR, ir);
-+
-+		if (!cdev->irq_edge_triggered)
-+			break;
-+	}
-+
- 	m_can_coalescing_update(cdev, ir);
- 	if (!ir)
- 		return IRQ_NONE;
- 
--	/* ACK all irqs */
--	m_can_write(cdev, M_CAN_IR, ir);
--
- 	if (cdev->ops->clear_interrupts)
- 		cdev->ops->clear_interrupts(cdev);
- 
-diff --git a/drivers/net/can/m_can/m_can.h b/drivers/net/can/m_can/m_can.h
-index 92b2bd8628e6..ef39e8e527ab 100644
---- a/drivers/net/can/m_can/m_can.h
-+++ b/drivers/net/can/m_can/m_can.h
-@@ -99,6 +99,7 @@ struct m_can_classdev {
- 	int pm_clock_support;
- 	int pm_wake_source;
- 	int is_peripheral;
-+	bool irq_edge_triggered;
- 
- 	// Cached M_CAN_IE register content
- 	u32 active_interrupts;
-diff --git a/drivers/net/can/m_can/m_can_pci.c b/drivers/net/can/m_can/m_can_pci.c
-index d72fe771dfc7..9ad7419f88f8 100644
---- a/drivers/net/can/m_can/m_can_pci.c
-+++ b/drivers/net/can/m_can/m_can_pci.c
-@@ -127,6 +127,7 @@ static int m_can_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
- 	mcan_class->pm_clock_support = 1;
- 	mcan_class->pm_wake_source = 0;
- 	mcan_class->can.clock.freq = id->driver_data;
-+	mcan_class->irq_edge_triggered = true;
- 	mcan_class->ops = &m_can_pci_ops;
- 
- 	pci_set_drvdata(pci, mcan_class);
 -- 
 2.39.5
 
