@@ -1,71 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B7818052;
-	Mon, 23 Dec 2024 21:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E648194AC7
+	for <patches@lists.linux.dev>; Mon, 23 Dec 2024 22:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734988595; cv=none; b=kYFCbKMJLmjLlZIumhL9U3ZDab8cZzp6E6a9xOhd2zXLlz49HUkoDaj+ABQGt9MfKyrr41VItEeiH9/HLO1u7q1VyhYi+MB7m5R6jKahtNfZLZt5hp1lVoHpvcSJJM/L3zLazHzEl7ibY7o0NmIJ35ocd8YJ9T45p8SsuqpdlwI=
+	t=1734993586; cv=none; b=mLUC8ck/qjHUduL0F/i9ZNv/yiHTJl9omg0JF7HdCToujQF3P6mmTLajmOKycLWMNox3ADFeOnkTvsvSQaWct/eIpVirPAPzloGNZgd+E5lUXXCnvH1lsaH668QPatB9RxJN500HzPndPR84TOfkC2xU3RJvrSYipZzYf2bVz3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734988595; c=relaxed/simple;
-	bh=IGOP9yfvBIBFaHDDSesTRcJaNBTU4ih+/wDcw+v9VPM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TrUwQHFCKzQUFoXZpUBGfdtTN6AIzxXIAKUusOQ/jqwlSgOJwz0eY1Qawya4zkv6kz4QknJEr7enq1CYZg1/vwXekaX6Nvjtfr4Ws0BmVHXNksf7bRAgDqKg10/5rS06SkW1aVobPhN7iVZ5xb9qbSPPQ1F0zQ3AAgHRSuVtHD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cb22Tg8o; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734993586; c=relaxed/simple;
+	bh=RiAI0tXdGDHFALVdgJYntF6iUfac1gyKXXGoBqwuDRU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nY3B1waA5JgFGdAmVMpG4xC4Kzs2x4jNcAyEtt+VWVfAtWOPFWtZuijt/2lmkz4UXkrhePUiNZwAN6FY/EtBAEio6EYiQ8LG+Xit2my9U3PtIgSvrzFN+lbYcV1GhCo/TWqXyAC8ZL+pRfH6xVrgEoQc2lWv4GVJ/OJJxLvdrtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I1482FI0; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cb22Tg8o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0362C4CED3;
-	Mon, 23 Dec 2024 21:16:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734988595;
-	bh=IGOP9yfvBIBFaHDDSesTRcJaNBTU4ih+/wDcw+v9VPM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cb22Tg8o4aBGMm01/F3u3fJuVCwQ+nG2IdoVp6UScjM6VcEf+Stq6QbJ4GPBWkX3q
-	 O3B+GZkCqzyDh7RUvyrkNLwsm9gIKagM4IadcYyAToRbR98JzTnObuXidZmBE/JoDs
-	 XsnehTvXSypZItoGvSmb3Z6+boEoFJdfOvfiQQ3bynfIto53fp5TQQoBHrblc76d7q
-	 gquFyrNU9uGMRYPA27raPzX5AaZGBbEgWrG+UkhnhNWka0F5+53n+nulPRzO6XT/Rp
-	 zYXlG2ZwFDcj8Bg54Ow/mk6OjgKmVckgbhX8hs+O5VEdO/TKKhwnUFvVtKT5o5oT2g
-	 a14lHW5jA0gSA==
-From: SeongJae Park <sj@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: SeongJae Park <sj@kernel.org>,
-	stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	damon@lists.linux.dev
-Subject: Re: [PATCH 6.12 000/160] 6.12.7-rc1 review
-Date: Mon, 23 Dec 2024 13:16:33 -0800
-Message-Id: <20241223211633.83422-1-sj@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
-References: 
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I1482FI0"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-844d5444b3dso165354039f.1
+        for <patches@lists.linux.dev>; Mon, 23 Dec 2024 14:39:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1734993583; x=1735598383; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=be7/RonVhjmu08VwAsKg4vuMbBxzDsJ2p7eX93MnT2k=;
+        b=I1482FI0S6oL+y271OtRdkDmWalUiywGDptzlR5qwTv6m7pH+iham1QJLRwXdGQysJ
+         DVhlW81zlskTEuTvC5A5FluIYhFXAfQ4WxOGvs6jovU7lRfcfFGeDaO5oLCzdq3jO3Za
+         Svp24NAvKGi9ODeqmLTRR0BUOhzTj83/pUJ3U=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734993583; x=1735598383;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=be7/RonVhjmu08VwAsKg4vuMbBxzDsJ2p7eX93MnT2k=;
+        b=gdBMdsE4YaCPacUONBSFM3w1u2OoaWFVah7m5gHu1uMfEoAs/mu4Bmj0+bSx7rsjdB
+         zgoaAgVmQtPgBwaNtuKQumbF6otFIiUK0EdjZi11z4lxpw2kQuHYz1eAhsPod1W1J1g2
+         mbMpbQ3229fXEDpDpz23Tv9V3yLmlasGWgIN1XF0D4hMD3ZeRxUbbf8TRqSwEpK+slEn
+         UN3f2aXg0kXO79vXAt+Ka0j660mKWQ+qpcbUiJzBo3MvO5PwreBb/ob//EJGtuyBXVQW
+         3MAH9+xAHFl4TRi5aUYwcDMw27bIwx9yucqgiGkwkslW+sEc97IPjBmmmtGvim9pOJZz
+         435w==
+X-Gm-Message-State: AOJu0YyGNxey/0Uxh/b8a3qaEWOx19uUjLRh7DKdTr4modCgSvuvCAmQ
+	gkOLL7bPRf2xIzwa2DJoqOZE0X3MuXdqbkaKwZJ8fJnFIyj5KhCllmY7FEM8x9c=
+X-Gm-Gg: ASbGncs2fDmrTVz7wHDkEdTQBf0PDFvT18fwVT1oMrOEy5rzU79f3y3KSsTpdHPht43
+	tgfICaL46X6sfP3n3ZF54PE9UaNfCB6wed6h9wgtsXVkucQQK83QmrbaExYUZW1iHnyBlmjGv0y
+	KrhAD1LKe9pUnlAw20DOgWxg/+SRSM21e+VPjx/N7qNUWQUQZ6DvQzfUhHM4yJe5J8iXi1ud42s
+	c59+GJJVRe6h2rlbkyAZdx9fuuDPGi2+90SHCi4cxE8HAHPUB5WK0Fb4ee9XN6lnvul
+X-Google-Smtp-Source: AGHT+IEz+NIDzSEZUcGPPKarHrLAfuW2OviDkOfngOuKgwzh34HNpGJ2TKkOEJkYaXJ9EqsA+Mqy+A==
+X-Received: by 2002:a05:6602:3a86:b0:844:2ef3:a95a with SMTP id ca18e2360f4ac-84988d25967mr1988497939f.7.1734993583027;
+        Mon, 23 Dec 2024 14:39:43 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id ca18e2360f4ac-8498d8eb32asm239386639f.42.2024.12.23.14.39.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Dec 2024 14:39:42 -0800 (PST)
+Message-ID: <33cb0bbb-d6d4-4637-818e-83ba4e7f278f@linuxfoundation.org>
+Date: Mon, 23 Dec 2024 15:39:41 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 000/160] 6.12.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20241223155408.598780301@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
-
-On Mon, 23 Dec 2024 16:56:51 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-
+On 12/23/24 08:56, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.12.7 release.
 > There are 160 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -73,49 +85,22 @@ On Mon, 23 Dec 2024 16:56:51 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.or
 > 
 > Responses should be made by Fri, 27 Dec 2024 15:53:30 +0000.
 > Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-This rc kernel passes DAMON functionality test[1] on my test machine.
-Attaching the test results summary below.  Please note that I retrieved the
-kernel from linux-stable-rc tree[2].
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: SeongJae Park <sj@kernel.org>
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-[1] https://github.com/damonitor/damon-tests/tree/next/corr
-[2] c157915828d8 ("Linux 6.12.7-rc1")
+thanks,
+-- Shuah
 
-Thanks,
-SJ
-
-[...]
-
----
-
-ok 9 selftests: damon: damos_tried_regions.py
-ok 10 selftests: damon: damon_nr_regions.py
-ok 11 selftests: damon: reclaim.sh
-ok 12 selftests: damon: lru_sort.sh
-ok 13 selftests: damon: debugfs_empty_targets.sh
-ok 14 selftests: damon: debugfs_huge_count_read_write.sh
-ok 15 selftests: damon: debugfs_duplicate_context_creation.sh
-ok 16 selftests: damon: debugfs_rm_non_contexts.sh
-ok 17 selftests: damon: debugfs_target_ids_read_before_terminate_race.sh
-ok 18 selftests: damon: debugfs_target_ids_pid_leak.sh
-ok 19 selftests: damon: sysfs_update_removed_scheme_dir.sh
-ok 20 selftests: damon: sysfs_update_schemes_tried_regions_hang.py
-ok 1 selftests: damon-tests: kunit.sh
-ok 2 selftests: damon-tests: huge_count_read_write.sh
-ok 3 selftests: damon-tests: buffer_overflow.sh
-ok 4 selftests: damon-tests: rm_contexts.sh
-ok 5 selftests: damon-tests: record_null_deref.sh
-ok 6 selftests: damon-tests: dbgfs_target_ids_read_before_terminate_race.sh
-ok 7 selftests: damon-tests: dbgfs_target_ids_pid_leak.sh
-ok 8 selftests: damon-tests: damo_tests.sh
-ok 9 selftests: damon-tests: masim-record.sh
-ok 10 selftests: damon-tests: build_i386.sh
-ok 11 selftests: damon-tests: build_arm64.sh # SKIP
-ok 12 selftests: damon-tests: build_m68k.sh # SKIP
-ok 13 selftests: damon-tests: build_i386_idle_flag.sh
-ok 14 selftests: damon-tests: build_i386_highpte.sh
-ok 15 selftests: damon-tests: build_nomemcg.sh
- [33m
- [92mPASS [39m
