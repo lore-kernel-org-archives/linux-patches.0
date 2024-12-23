@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946C317A597;
-	Mon, 23 Dec 2024 16:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFB98827;
+	Mon, 23 Dec 2024 16:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970782; cv=none; b=S62HIs1DakHZRZgaxQPTuNlo6LKeaHwU5qbca4YeHhgzqDdOIgDWxGRJ+Vd0MmZef19rnP+nx8tLH0pggXWBWrZ0tY+U+zsxpmAhrMvwIuj3zyU0Bdpqvf2R3SreNJ8QfSLIKP9jbRVAo1NpnbkBMWe302b1XIhMwo7O9idcOUU=
+	t=1734970786; cv=none; b=YBgWb8c4LfM4/xiwLidkKYLZCVLn6CgHUfKf15V94xk2Eb1E9OHpCJOGvlym9VIZXcOPTjYQYGgamqzOY/KmekS6MBVzj5+dH+U2MeP5hkw8tA+Ugu55aKvrTRoQSfQFqovWY/RoeSv3nNcZbbh4O5D3wtxYUfgRLCzpRTpSOtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970782; c=relaxed/simple;
-	bh=U7agZ1NkBrdoEDtRWKWG0+tmX+e2U8Guyfk4Mm3ukcU=;
+	s=arc-20240116; t=1734970786; c=relaxed/simple;
+	bh=RSraYGG/gShY3M8+zFgK76Fpqq3OAbspxwhMzKRaypI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYbjMef5JXnqYPb7ZgDKsmhUgl58C7LIwUclKdah3++UhX0FV6uGBeTHAx83qkl6y8h6rJpz813plZmWdxp9LaI5zeC/AKIptX7SQJlOq+yHB1K7xLGxVl6ldcwk7DMX6U0QRiw5u01Tp9QIbVdIzdqYZXDaQQQDeK4gkWxAtMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kmpUL/Si; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ukHs6RFFQ6hAeMlma0iaPhTgeBMFd9APsv/yXQ8zKZjnVaAN8wccoeQv2Z0qJtP259Xdi7DSb9dfo/gBszcqM5SfLvOxAcag+Dsy+WDDsO1WG0JllzwcNw5aBlRU+S7yDq1RECJ4VDK83C1Tsun6CsnLjE6d+sPHo+lRXSdJ1Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sr0+7H/1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kmpUL/Si"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BBB4C4CED3;
-	Mon, 23 Dec 2024 16:19:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sr0+7H/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921B1C4CED3;
+	Mon, 23 Dec 2024 16:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970782;
-	bh=U7agZ1NkBrdoEDtRWKWG0+tmX+e2U8Guyfk4Mm3ukcU=;
+	s=korg; t=1734970786;
+	bh=RSraYGG/gShY3M8+zFgK76Fpqq3OAbspxwhMzKRaypI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kmpUL/SiNgmJXHuFBY5xa5MCHYxBrWExi0KZ1hXUoZHBz9KIff3K45j45bQ2svxGN
-	 PEvPU8sgMt4imoAmnQOxrOyzM5vmDm+qmlXeTZvrR7J6E/LzUAZkTsGJRU1W/mpjG7
-	 vv1KjkyNnDMunwEQMli9uK5TPzx0fHplMG3JCg6k=
+	b=Sr0+7H/1I+rF8vGtGcV7jLxj7G1lsMhGwtKm0im4q1U+p+kLBFZ1aASHZI/MNvNfq
+	 d3Dx8ixUplJXws7xHUXEyneDY94yeieOiBZbqyA4iH5c7OBdL0gtP/us5J1L9dJ19o
+	 BKJYt9HwyQOvSx59ldL3r7goKvqJmSx8tuGI3FS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Cain <bcain@quicinc.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.1 37/83] hexagon: Disable constant extender optimization for LLVM prior to 19.1.0
-Date: Mon, 23 Dec 2024 16:59:16 +0100
-Message-ID: <20241223155355.077867408@linuxfoundation.org>
+	Daniel Swanemar <d.swanemar@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 38/83] USB: serial: option: add TCL IK512 MBIM & ECM
+Date: Mon, 23 Dec 2024 16:59:17 +0100
+Message-ID: <20241223155355.120857043@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -51,52 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Daniel Swanemar <d.swanemar@gmail.com>
 
-commit aef25be35d23ec768eed08bfcf7ca3cf9685bc28 upstream.
+commit fdad4fb7c506bea8b419f70ff2163d99962e8ede upstream.
 
-The Hexagon-specific constant extender optimization in LLVM may crash on
-Linux kernel code [1], such as fs/bcache/btree_io.c after
-commit 32ed4a620c54 ("bcachefs: Btree path tracepoints") in 6.12:
+Add the following TCL IK512 compositions:
 
-  clang: llvm/lib/Target/Hexagon/HexagonConstExtenders.cpp:745: bool (anonymous namespace)::HexagonConstExtenders::ExtRoot::operator<(const HCE::ExtRoot &) const: Assertion `ThisB->getParent() == OtherB->getParent()' failed.
-  Stack dump:
-  0.      Program arguments: clang --target=hexagon-linux-musl ... fs/bcachefs/btree_io.c
-  1.      <eof> parser at end of file
-  2.      Code generation
-  3.      Running pass 'Function Pass Manager' on module 'fs/bcachefs/btree_io.c'.
-  4.      Running pass 'Hexagon constant-extender optimization' on function '@__btree_node_lock_nopath'
+0x0530: Modem + Diag + AT + MBIM
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=10000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1bbb ProdID=0530 Rev=05.04
+S:  Manufacturer=TCL
+S:  Product=TCL 5G USB Dongle
+S:  SerialNumber=3136b91a
+C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-Without assertions enabled, there is just a hang during compilation.
+0x0640: ECM + Modem + Diag + AT
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  4 Spd=10000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1bbb ProdID=0640 Rev=05.04
+S:  Manufacturer=TCL
+S:  Product=TCL 5G USB Dongle
+S:  SerialNumber=3136b91a
+C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-This has been resolved in LLVM main (20.0.0) [2] and backported to LLVM
-19.1.0 but the kernel supports LLVM 13.0.1 and newer, so disable the
-constant expander optimization using the '-mllvm' option when using a
-toolchain that is not fixed.
-
+Signed-off-by: Daniel Swanemar <d.swanemar@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/issues/99714 [1]
-Link: https://github.com/llvm/llvm-project/commit/68df06a0b2998765cb0a41353fcf0919bbf57ddb [2]
-Link: https://github.com/llvm/llvm-project/commit/2ab8d93061581edad3501561722ebd5632d73892 [3]
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/hexagon/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/hexagon/Makefile
-+++ b/arch/hexagon/Makefile
-@@ -32,3 +32,9 @@ KBUILD_LDFLAGS += $(ldflags-y)
- TIR_NAME := r19
- KBUILD_CFLAGS += -ffixed-$(TIR_NAME) -DTHREADINFO_REG=$(TIR_NAME) -D__linux__
- KBUILD_AFLAGS += -DTHREADINFO_REG=$(TIR_NAME)
-+
-+# Disable HexagonConstExtenders pass for LLVM versions prior to 19.1.0
-+# https://github.com/llvm/llvm-project/issues/99714
-+ifneq ($(call clang-min-version, 190100),y)
-+KBUILD_CFLAGS += -mllvm -hexagon-cext=false
-+endif
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2385,6 +2385,10 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
++	  .driver_info = NCTRL(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
++	  .driver_info = NCTRL(3) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
