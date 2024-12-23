@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2BF2EAE6;
-	Mon, 23 Dec 2024 16:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2A2188006;
+	Mon, 23 Dec 2024 16:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969669; cv=none; b=eT587D8rhOYYbZYwHpeYYym0kpFa7VIncbjRokAUu1G1JpHesv9LUx2GB461H1ZHGDtsBIycPCxoThDULVw1BdW2BWmcboO7OVgZnQSpB9WS+mYpyBpSLjcyP2Fw3/btSvW0PyxthvPQZG+DTW47mFDsj6j4dhk78KSJEtADiRY=
+	t=1734969672; cv=none; b=Cd3hDZmfxANlKlOLw9yviLHOawK7VFA+BsQSi/Ho0l0jXLUP+JtXI6tYYJgQbbBjl8RRGe5tEtGzITualCw+/UYe4n7lrbzoRyL86TvdfY2c4PfKSdPVEkUr+yeSpuMgUkc7/X+CQSFoNT85fd4v0RVBml5xYSBb5YLu1ZYD5QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969669; c=relaxed/simple;
-	bh=Lzadj4ypt5dpNOiDas35h2op3C6ikQsVRlUCDPsV21M=;
+	s=arc-20240116; t=1734969672; c=relaxed/simple;
+	bh=s2YjAH5kwfeDuFoGzQG1Vyplj1vBSrYdrymVGye65GE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MFq2oNDwmDZWyahYunsD3WnKn+jzUberNx561bihJc0/f4Fyqh5Fbt9174anGn8JkiPypEypTEOsXrFzUnvNSwODZDilr5uNt0AOUAMQO8EkmVctioxLUjOkGF0Z8agHflXdJaJVtT0dbldtlKAZn4ZyRYcHCv3Ei+YrPKkIZGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4dffxlW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=biE5zsR+Z4oTL9o8aefLclC+mUG2xTuWAuULvF8x6lrsdWgscDhCkR+Kjti81pmIlpFvVsmxkfQvf+PY1L5QZHa7tozPQUKtmhHr1jqMwEY95E6U4L+gJUgWNm1E4rpYqcpdE7D6yRqX+mJK7nTkcU0obljrPURYLCO2DhyuN58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCkiaTf8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4dffxlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4819BC4CED4;
-	Mon, 23 Dec 2024 16:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCkiaTf8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0C1C4CED4;
+	Mon, 23 Dec 2024 16:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969668;
-	bh=Lzadj4ypt5dpNOiDas35h2op3C6ikQsVRlUCDPsV21M=;
+	s=korg; t=1734969672;
+	bh=s2YjAH5kwfeDuFoGzQG1Vyplj1vBSrYdrymVGye65GE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4dffxlWBMII+0jSi4zOhRsO3KlUyM/53cR6bYLnwp1itbRLfR+UQyUgU5lz8mfWW
-	 v4eglvw7gD0R4rD3NjiKlFSED+mLrec5t6FbsE6riA8as9w4iQ4QY9Dm1wJzcs07AD
-	 1ETUqPX6sGlWhY1nWeUfJRSYgos4Mc4wXdU32PC4=
+	b=dCkiaTf8xE/FNprQ28NHWO/V0VPNSfptXQwNLr+d3hwe790TontQC88PIg1BT88S+
+	 a0s8js+wziGrM8r29LSlsYm27QdyArHZ2NSQk8kpDu8GXRCFV53eecUxIdXkCc21BY
+	 1kyQzxgdT7WrEJK1WUe0D2pgq6c1xOUgvBHiMr68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Derek McGowan <derek@mcg.dev>,
 	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/160] erofs: reference `struct erofs_device_info` for erofs_map_dev
-Date: Mon, 23 Dec 2024 16:57:12 +0100
-Message-ID: <20241223155409.472948718@linuxfoundation.org>
+Subject: [PATCH 6.12 022/160] erofs: use buffered I/O for file-backed mounts by default
+Date: Mon, 23 Dec 2024 16:57:13 +0100
+Message-ID: <20241223155409.511184188@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,153 +54,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit f8d920a402aec3482931cb5f1539ed438740fc49 ]
+[ Upstream commit 6422cde1b0d5a31b206b263417c1c2b3c80fe82c ]
 
-Record `m_sb` and `m_dif` to replace `m_fscache`, `m_daxdev`, `m_fp`
-and `m_dax_part_off` in order to simplify the codebase.
+For many use cases (e.g. container images are just fetched from remote),
+performance will be impacted if underlay page cache is up-to-date but
+direct i/o flushes dirty pages first.
 
-Note that `m_bdev` is still left since it can be assigned from
-`sb->s_bdev` directly.
+Instead, let's use buffered I/O by default to keep in sync with loop
+devices and add a (re)mount option to explicitly give a try to use
+direct I/O if supported by the underlying files.
 
+The container startup time is improved as below:
+[workload] docker.io/library/workpress:latest
+                                     unpack        1st run  non-1st runs
+EROFS snapshotter buffered I/O file  4.586404265s  0.308s   0.198s
+EROFS snapshotter direct I/O file    4.581742849s  2.238s   0.222s
+EROFS snapshotter loop               4.596023152s  0.346s   0.201s
+Overlayfs snapshotter                5.382851037s  0.206s   0.214s
+
+Fixes: fb176750266a ("erofs: add file-backed mount support")
+Cc: Derek McGowan <derek@mcg.dev>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20241212235401.2857246-1-hsiangkao@linux.alibaba.com
-Stable-dep-of: 6422cde1b0d5 ("erofs: use buffered I/O for file-backed mounts by default")
+Link: https://lore.kernel.org/r/20241212134336.2059899-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/data.c     | 26 ++++++++++----------------
- fs/erofs/fileio.c   |  2 +-
- fs/erofs/fscache.c  |  4 ++--
- fs/erofs/internal.h |  6 ++----
- 4 files changed, 15 insertions(+), 23 deletions(-)
+ fs/erofs/fileio.c   |  7 +++++--
+ fs/erofs/internal.h |  1 +
+ fs/erofs/super.c    | 23 +++++++++++++++--------
+ 3 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/fs/erofs/data.c b/fs/erofs/data.c
-index 365c988262b1..722151d3fee8 100644
---- a/fs/erofs/data.c
-+++ b/fs/erofs/data.c
-@@ -186,19 +186,13 @@ int erofs_map_blocks(struct inode *inode, struct erofs_map_blocks *map)
- }
- 
- static void erofs_fill_from_devinfo(struct erofs_map_dev *map,
--				    struct erofs_device_info *dif)
-+		struct super_block *sb, struct erofs_device_info *dif)
- {
-+	map->m_sb = sb;
-+	map->m_dif = dif;
- 	map->m_bdev = NULL;
--	map->m_fp = NULL;
--	if (dif->file) {
--		if (S_ISBLK(file_inode(dif->file)->i_mode))
--			map->m_bdev = file_bdev(dif->file);
--		else
--			map->m_fp = dif->file;
--	}
--	map->m_daxdev = dif->dax_dev;
--	map->m_dax_part_off = dif->dax_part_off;
--	map->m_fscache = dif->fscache;
-+	if (dif->file && S_ISBLK(file_inode(dif->file)->i_mode))
-+		map->m_bdev = file_bdev(dif->file);
- }
- 
- int erofs_map_dev(struct super_block *sb, struct erofs_map_dev *map)
-@@ -208,7 +202,7 @@ int erofs_map_dev(struct super_block *sb, struct erofs_map_dev *map)
- 	erofs_off_t startoff, length;
- 	int id;
- 
--	erofs_fill_from_devinfo(map, &EROFS_SB(sb)->dif0);
-+	erofs_fill_from_devinfo(map, sb, &EROFS_SB(sb)->dif0);
- 	map->m_bdev = sb->s_bdev;	/* use s_bdev for the primary device */
- 	if (map->m_deviceid) {
- 		down_read(&devs->rwsem);
-@@ -222,7 +216,7 @@ int erofs_map_dev(struct super_block *sb, struct erofs_map_dev *map)
- 			up_read(&devs->rwsem);
- 			return 0;
- 		}
--		erofs_fill_from_devinfo(map, dif);
-+		erofs_fill_from_devinfo(map, sb, dif);
- 		up_read(&devs->rwsem);
- 	} else if (devs->extra_devices && !devs->flatdev) {
- 		down_read(&devs->rwsem);
-@@ -235,7 +229,7 @@ int erofs_map_dev(struct super_block *sb, struct erofs_map_dev *map)
- 			if (map->m_pa >= startoff &&
- 			    map->m_pa < startoff + length) {
- 				map->m_pa -= startoff;
--				erofs_fill_from_devinfo(map, dif);
-+				erofs_fill_from_devinfo(map, sb, dif);
- 				break;
- 			}
- 		}
-@@ -305,7 +299,7 @@ static int erofs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 
- 	iomap->offset = map.m_la;
- 	if (flags & IOMAP_DAX)
--		iomap->dax_dev = mdev.m_daxdev;
-+		iomap->dax_dev = mdev.m_dif->dax_dev;
- 	else
- 		iomap->bdev = mdev.m_bdev;
- 	iomap->length = map.m_llen;
-@@ -334,7 +328,7 @@ static int erofs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
- 		iomap->type = IOMAP_MAPPED;
- 		iomap->addr = mdev.m_pa;
- 		if (flags & IOMAP_DAX)
--			iomap->addr += mdev.m_dax_part_off;
-+			iomap->addr += mdev.m_dif->dax_part_off;
- 	}
- 	return 0;
- }
 diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
-index 3af96b1e2c2a..a61b8faec651 100644
+index a61b8faec651..33f8539dda4a 100644
 --- a/fs/erofs/fileio.c
 +++ b/fs/erofs/fileio.c
-@@ -67,7 +67,7 @@ static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
- 					     GFP_KERNEL | __GFP_NOFAIL);
+@@ -9,6 +9,7 @@ struct erofs_fileio_rq {
+ 	struct bio_vec bvecs[BIO_MAX_VECS];
+ 	struct bio bio;
+ 	struct kiocb iocb;
++	struct super_block *sb;
+ };
+ 
+ struct erofs_fileio {
+@@ -52,8 +53,9 @@ static void erofs_fileio_rq_submit(struct erofs_fileio_rq *rq)
+ 	rq->iocb.ki_pos = rq->bio.bi_iter.bi_sector << SECTOR_SHIFT;
+ 	rq->iocb.ki_ioprio = get_current_ioprio();
+ 	rq->iocb.ki_complete = erofs_fileio_ki_complete;
+-	rq->iocb.ki_flags = (rq->iocb.ki_filp->f_mode & FMODE_CAN_ODIRECT) ?
+-				IOCB_DIRECT : 0;
++	if (test_opt(&EROFS_SB(rq->sb)->opt, DIRECT_IO) &&
++	    rq->iocb.ki_filp->f_mode & FMODE_CAN_ODIRECT)
++		rq->iocb.ki_flags = IOCB_DIRECT;
+ 	iov_iter_bvec(&iter, ITER_DEST, rq->bvecs, rq->bio.bi_vcnt,
+ 		      rq->bio.bi_iter.bi_size);
+ 	ret = vfs_iocb_iter_read(rq->iocb.ki_filp, &rq->iocb, &iter);
+@@ -68,6 +70,7 @@ static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
  
  	bio_init(&rq->bio, NULL, rq->bvecs, BIO_MAX_VECS, REQ_OP_READ);
--	rq->iocb.ki_filp = mdev->m_fp;
-+	rq->iocb.ki_filp = mdev->m_dif->file;
+ 	rq->iocb.ki_filp = mdev->m_dif->file;
++	rq->sb = mdev->m_sb;
  	return rq;
  }
  
-diff --git a/fs/erofs/fscache.c b/fs/erofs/fscache.c
-index ce7e38c82719..ce3d8737df85 100644
---- a/fs/erofs/fscache.c
-+++ b/fs/erofs/fscache.c
-@@ -198,7 +198,7 @@ struct bio *erofs_fscache_bio_alloc(struct erofs_map_dev *mdev)
- 
- 	io = kmalloc(sizeof(*io), GFP_KERNEL | __GFP_NOFAIL);
- 	bio_init(&io->bio, NULL, io->bvecs, BIO_MAX_VECS, REQ_OP_READ);
--	io->io.private = mdev->m_fscache->cookie;
-+	io->io.private = mdev->m_dif->fscache->cookie;
- 	io->io.end_io = erofs_fscache_bio_endio;
- 	refcount_set(&io->io.ref, 1);
- 	return &io->bio;
-@@ -316,7 +316,7 @@ static int erofs_fscache_data_read_slice(struct erofs_fscache_rq *req)
- 	if (!io)
- 		return -ENOMEM;
- 	iov_iter_xarray(&io->iter, ITER_DEST, &mapping->i_pages, pos, count);
--	ret = erofs_fscache_read_io_async(mdev.m_fscache->cookie,
-+	ret = erofs_fscache_read_io_async(mdev.m_dif->fscache->cookie,
- 			mdev.m_pa + (pos - map.m_la), io);
- 	erofs_fscache_req_io_put(io);
- 
 diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index d70aa2410472..3108ece1d709 100644
+index 3108ece1d709..77e785a6dfa7 100644
 --- a/fs/erofs/internal.h
 +++ b/fs/erofs/internal.h
-@@ -366,11 +366,9 @@ enum {
+@@ -182,6 +182,7 @@ struct erofs_sb_info {
+ #define EROFS_MOUNT_POSIX_ACL		0x00000020
+ #define EROFS_MOUNT_DAX_ALWAYS		0x00000040
+ #define EROFS_MOUNT_DAX_NEVER		0x00000080
++#define EROFS_MOUNT_DIRECT_IO		0x00000100
+ 
+ #define clear_opt(opt, option)	((opt)->mount_opt &= ~EROFS_MOUNT_##option)
+ #define set_opt(opt, option)	((opt)->mount_opt |= EROFS_MOUNT_##option)
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 60f7bd43a5a4..5b279977c9d5 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -379,14 +379,8 @@ static void erofs_default_options(struct erofs_sb_info *sbi)
+ }
+ 
+ enum {
+-	Opt_user_xattr,
+-	Opt_acl,
+-	Opt_cache_strategy,
+-	Opt_dax,
+-	Opt_dax_enum,
+-	Opt_device,
+-	Opt_fsid,
+-	Opt_domain_id,
++	Opt_user_xattr, Opt_acl, Opt_cache_strategy, Opt_dax, Opt_dax_enum,
++	Opt_device, Opt_fsid, Opt_domain_id, Opt_directio,
+ 	Opt_err
  };
  
- struct erofs_map_dev {
--	struct erofs_fscache *m_fscache;
-+	struct super_block *m_sb;
-+	struct erofs_device_info *m_dif;
- 	struct block_device *m_bdev;
--	struct dax_device *m_daxdev;
--	struct file *m_fp;
--	u64 m_dax_part_off;
+@@ -413,6 +407,7 @@ static const struct fs_parameter_spec erofs_fs_parameters[] = {
+ 	fsparam_string("device",	Opt_device),
+ 	fsparam_string("fsid",		Opt_fsid),
+ 	fsparam_string("domain_id",	Opt_domain_id),
++	fsparam_flag_no("directio",	Opt_directio),
+ 	{}
+ };
  
- 	erofs_off_t m_pa;
- 	unsigned int m_deviceid;
+@@ -526,6 +521,16 @@ static int erofs_fc_parse_param(struct fs_context *fc,
+ 		errorfc(fc, "%s option not supported", erofs_fs_parameters[opt].name);
+ 		break;
+ #endif
++	case Opt_directio:
++#ifdef CONFIG_EROFS_FS_BACKED_BY_FILE
++		if (result.boolean)
++			set_opt(&sbi->opt, DIRECT_IO);
++		else
++			clear_opt(&sbi->opt, DIRECT_IO);
++#else
++		errorfc(fc, "%s option not supported", erofs_fs_parameters[opt].name);
++#endif
++		break;
+ 	default:
+ 		return -ENOPARAM;
+ 	}
+@@ -963,6 +968,8 @@ static int erofs_show_options(struct seq_file *seq, struct dentry *root)
+ 		seq_puts(seq, ",dax=always");
+ 	if (test_opt(opt, DAX_NEVER))
+ 		seq_puts(seq, ",dax=never");
++	if (erofs_is_fileio_mode(sbi) && test_opt(opt, DIRECT_IO))
++		seq_puts(seq, ",directio");
+ #ifdef CONFIG_EROFS_FS_ONDEMAND
+ 	if (sbi->fsid)
+ 		seq_printf(seq, ",fsid=%s", sbi->fsid);
 -- 
 2.39.5
 
