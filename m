@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4548F1B414B;
-	Mon, 23 Dec 2024 16:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB941B85F6;
+	Mon, 23 Dec 2024 16:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970837; cv=none; b=lWbvcd+8x5+qZgjL+YrHwHbHqzwRIc0VDFPPYqC+KohBoCrGBCCb3KKXHWAlLW5DcKLHmtQjWrgFn0+4PH7z0hkMlg9cGcbr7us5Zw96N8XQLccuvUFQQewmg7MFeex3vvH1H5WLJS/12rcBJqQ0/zn4w1yVVcufUhgQ4MYNidU=
+	t=1734970841; cv=none; b=XWr5/lssT52BANwS7rWoFQ29Q6BBjacJdKiIWJOzOrV5CwqU+s1b6cZEPmBfcNkOeV5DRLs3/VFk/VfKg60ZzQMegxYccsqWri7vteKfFkjBXuFa42U7cBKf44qAAzbepnxUeJEpXAvDkvAlhTSVQgYKBkQ2FcUpjEPVwcytIiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970837; c=relaxed/simple;
-	bh=+eb0ktDtglSjnsemqXuH4MJowr+I5LkbEretDwqoLRM=;
+	s=arc-20240116; t=1734970841; c=relaxed/simple;
+	bh=JrZjyas5v70HvsVDCoEnO36ISGT/pU4YD2mvPPhLhws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VIgLeRE3S1l85CbELJzBTu3EzUULcI6pDq0zWPB/IGlPZPNT0wC0XpIcFFIMKX4KLdNnbTLc8hlQUAdeD5PJTS+jzdQ0uusroOp+9Bf3rxoFRyhFZNxySqyHFAz1m1E4VrD8n1UGWBxJMaCruLp8Q1E0vsa9AWwbzGoEmIF8zWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwTC0pVC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=buDrTfZ41EJfL1icBEICeCH69TK65DLBn9exqjfhA0xohxrbLaFdv0lHZI2+NdzUFuFr3SYD1fn2CI6OOH5RBnWufMfAJ1L50dDFZROf0Is8S2qL3mjlRNa39QXkCqfrZfYODSGuEcuXuZn+VGd8hB8i3KWFchQwNff6dhT1mDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qThIiPHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwTC0pVC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B4EC4CEDF;
-	Mon, 23 Dec 2024 16:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qThIiPHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2EFC4CED3;
+	Mon, 23 Dec 2024 16:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970837;
-	bh=+eb0ktDtglSjnsemqXuH4MJowr+I5LkbEretDwqoLRM=;
+	s=korg; t=1734970840;
+	bh=JrZjyas5v70HvsVDCoEnO36ISGT/pU4YD2mvPPhLhws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwTC0pVCEVd3VxcYfDYUhWQSJWhSxe4+L5bcCvdvmAD3FDGAOvstbngPPX+A0/yPi
-	 qP5RpVJsG8Pz2OGV6q1ZCl3RfPcXCgbYnapIYKMCjDsgu/p6SrBcREo6oyJ6U8W/h9
-	 UxVUiSnqKVpAQ+5s3pn136oNPcXd+c/ryZ2wF5wY=
+	b=qThIiPHTyTh7meCtS0+7G4kLhvP1I6PaSsujn6o+B4LByZbY9UDaOkBaWtBcPN5v6
+	 VxvrIw4UexWTmNxzYpmys/s7ipGr61WjV/HiRQFbpDn3T2xCnGYIrenFXvlp0qIVL3
+	 ZWiI5F7WtYh+rQ4xJuXfg83xBPflYsNdCMKpWYFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 83/83] drm/amdgpu: Handle NULL bo->tbo.resource (again) in amdgpu_vm_bo_update
-Date: Mon, 23 Dec 2024 17:00:02 +0100
-Message-ID: <20241223155356.859496662@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 66/83] io_uring: Fix registered ring file refcount leak
+Date: Mon, 23 Dec 2024 16:59:45 +0100
+Message-ID: <20241223155356.182815286@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -45,46 +44,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Jann Horn <jannh@google.com>
 
-commit 85230ee36d88e7a09fb062d43203035659dd10a5 upstream.
+commit 12d908116f7efd34f255a482b9afc729d7a5fb78 upstream.
 
-Third time's the charm, I hope?
+Currently, io_uring_unreg_ringfd() (which cleans up registered rings) is
+only called on exit, but __io_uring_free (which frees the tctx in which the
+registered ring pointers are stored) is also called on execve (via
+begin_new_exec -> io_uring_task_cancel -> __io_uring_cancel ->
+io_uring_cancel_generic -> __io_uring_free).
 
-Fixes: d3116756a710 ("drm/ttm: rename bo->mem and make it a pointer")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3837
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 695c2c745e5dff201b75da8a1d237ce403600d04)
+This means: A process going through execve while having registered rings
+will leak references to the rings' `struct file`.
+
+Fix it by zapping registered rings on execve(). This is implemented by
+moving the io_uring_unreg_ringfd() from io_uring_files_cancel() into its
+callee __io_uring_cancel(), which is called from io_uring_task_cancel() on
+execve.
+
+This could probably be exploited *on 32-bit kernels* by leaking 2^32
+references to the same ring, because the file refcount is stored in a
+pointer-sized field and get_file() doesn't have protection against
+refcount overflow, just a WARN_ONCE(); but on 64-bit it should have no
+impact beyond a memory leak.
+
 Cc: stable@vger.kernel.org
+Fixes: e7a6c00dc77a ("io_uring: add support for registering ring file descriptors")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20241218-uring-reg-ring-cleanup-v1-1-8f63e999045b@google.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/linux/io_uring.h |    4 +---
+ io_uring/io_uring.c      |    1 +
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1060,10 +1060,9 @@ int amdgpu_vm_bo_update(struct amdgpu_de
- 	 * next command submission.
- 	 */
- 	if (bo && bo->tbo.base.resv == vm->root.bo->tbo.base.resv) {
--		uint32_t mem_type = bo->tbo.resource->mem_type;
--
--		if (!(bo->preferred_domains &
--		      amdgpu_mem_type_to_domain(mem_type)))
-+		if (bo->tbo.resource &&
-+		    !(bo->preferred_domains &
-+		      amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type)))
- 			amdgpu_vm_bo_evicted(&bo_va->base);
- 		else
- 			amdgpu_vm_bo_idle(&bo_va->base);
+--- a/include/linux/io_uring.h
++++ b/include/linux/io_uring.h
+@@ -50,10 +50,8 @@ bool io_is_uring_fops(struct file *file)
+ 
+ static inline void io_uring_files_cancel(void)
+ {
+-	if (current->io_uring) {
+-		io_uring_unreg_ringfd();
++	if (current->io_uring)
+ 		__io_uring_cancel(false);
+-	}
+ }
+ static inline void io_uring_task_cancel(void)
+ {
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3085,6 +3085,7 @@ __cold void io_uring_cancel_generic(bool
+ 
+ void __io_uring_cancel(bool cancel_all)
+ {
++	io_uring_unreg_ringfd();
+ 	io_uring_cancel_generic(cancel_all, NULL);
+ }
+ 
 
 
