@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F212C1865EB;
-	Mon, 23 Dec 2024 16:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767FF17A597;
+	Mon, 23 Dec 2024 16:19:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970748; cv=none; b=ch5cSbOzO9TfQJDEX2LZKpuDjUs909bWyUFq5CHxlFGGwWdIg9/HVpQ7H1Q7bTq+fehrAEB83QFHBkz2YFLyWJQW39PsIYW0Lq2qrSwuhv1JuV6t3rGIBplLk61c8pQSafo3CHeNpKsmRMNL8Nryu+uRaE11w+N+IzW2l48D5Oo=
+	t=1734970751; cv=none; b=X0wQGUQFur5MR6Q4NQGjeQ+184ddhxIIoe8eF6uPR18uOnUEEDNKorNHIPqxts+rqDLrj43tDHgLEoek8akVigHebvaaNg4KvZsy+jk6mW7Uq2CmiSCQMe0Fy0gXULZ+T33wUe0e8tQfNxWVslRlzqMRItXStkjnf8Ue/bOlBJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970748; c=relaxed/simple;
-	bh=lPsuXkat+ODJnCUj9L9CDl0OXaV1E7hWkUIOSPfJwQs=;
+	s=arc-20240116; t=1734970751; c=relaxed/simple;
+	bh=bGrEaQhdqiiIQIBgk9j6V4P/EWQBDZGNBL99afOhy1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWEzwBjEWqk14QjD2dnth3KEVNcywIcOLy6bGWJ2r+MSQAD6yGJu65s666o9+TX/JbcTJA9j4eCR03WS5t2vP8JgobVvdu7BBwjEO7Ulv76lkyU7HK1x1auLS+rYTfnHyXrqEPANfkcSCczViZAjbZGVZWeR47U44ZUCmp+yO1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oS7DpQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TF3XTVSxP6cvePG4bYE/ZLaOg6TrTHh3RfxhGf0fR/eDk1Y0IfuX0Ijy1YgKiH++OnBJ8JY5UBn1QXLZ4Xyw4EsX2juWFIEcNsrR++P032gv5R7wer86lgKD4hw+4UDbACMRge7xyFrDT2P9QF2Yo9kSMK5eiLYjNYv7WHu0Gag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TwQ2kliW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oS7DpQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606E8C4CED3;
-	Mon, 23 Dec 2024 16:19:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TwQ2kliW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6573C4CED3;
+	Mon, 23 Dec 2024 16:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970747;
-	bh=lPsuXkat+ODJnCUj9L9CDl0OXaV1E7hWkUIOSPfJwQs=;
+	s=korg; t=1734970751;
+	bh=bGrEaQhdqiiIQIBgk9j6V4P/EWQBDZGNBL99afOhy1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oS7DpQ+Vykly48t0weWwuYuFz/BcLhlrhU2VmFQC3hx1WJjqEpRuCarLCUgQE4uG
-	 iXXVOOZ/37NgGiD6cmBlSqscC4zIYY4sr80HvWGeXGL73h26h1X5G6Vp3JbkSkVe23
-	 0f8Ig/WFI828qLYeknfoY2NaJ2Ro5pqge7tR2Sd0=
+	b=TwQ2kliWCTT5KSgS8eIfXYu10nDYJYQMsQvusJSMoGebUNseQiR9dh0yvT6oCcqzW
+	 stvJioRt94jkk+lT9sK1BGKjRJrXOZCYsbG4zRjPBDl1FdFg8x6VfAJH9zLlUA+tPr
+	 EdO0BgDimxK5FUncwPo8odktbLxpfWtupqj6LbL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Desheng Wu <deshengwu@tencent.com>,
 	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 57/83] zram: refuse to use zero sized block device as backing device
-Date: Mon, 23 Dec 2024 16:59:36 +0100
-Message-ID: <20241223155355.834709053@linuxfoundation.org>
+Subject: [PATCH 6.1 58/83] zram: fix uninitialized ZRAM not releasing backing device
+Date: Mon, 23 Dec 2024 16:59:37 +0100
+Message-ID: <20241223155355.874444273@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -54,59 +54,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Kairui Song <kasong@tencent.com>
 
-commit be48c412f6ebf38849213c19547bc6d5b692b5e5 upstream.
+commit 74363ec674cb172d8856de25776c8f3103f05e2f upstream.
 
-Patch series "zram: fix backing device setup issue", v2.
+Setting backing device is done before ZRAM initialization.  If we set the
+backing device, then remove the ZRAM module without initializing the
+device, the backing device reference will be leaked and the device will be
+hold forever.
 
-This series fixes two bugs of backing device setting:
+Fix this by always reset the ZRAM fully on rmmod or reset store.
 
-- ZRAM should reject using a zero sized (or the uninitialized ZRAM
-  device itself) as the backing device.
-- Fix backing device leaking when removing a uninitialized ZRAM
-  device.
-
-
-This patch (of 2):
-
-Setting a zero sized block device as backing device is pointless, and one
-can easily create a recursive loop by setting the uninitialized ZRAM
-device itself as its own backing device by (zram0 is uninitialized):
-
-    echo /dev/zram0 > /sys/block/zram0/backing_dev
-
-It's definitely a wrong config, and the module will pin itself, kernel
-should refuse doing so in the first place.
-
-By refusing to use zero sized device we avoided misuse cases including
-this one above.
-
-Link: https://lkml.kernel.org/r/20241209165717.94215-1-ryncsn@gmail.com
-Link: https://lkml.kernel.org/r/20241209165717.94215-2-ryncsn@gmail.com
+Link: https://lkml.kernel.org/r/20241209165717.94215-3-ryncsn@gmail.com
 Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
 Signed-off-by: Kairui Song <kasong@tencent.com>
 Reported-by: Desheng Wu <deshengwu@tencent.com>
+Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/block/zram/zram_drv.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 --- a/drivers/block/zram/zram_drv.c
 +++ b/drivers/block/zram/zram_drv.c
-@@ -530,6 +530,12 @@ static ssize_t backing_dev_store(struct
- 	}
+@@ -1168,12 +1168,16 @@ static void zram_meta_free(struct zram *
+ 	size_t num_pages = disksize >> PAGE_SHIFT;
+ 	size_t index;
  
- 	nr_pages = i_size_read(inode) >> PAGE_SHIFT;
-+	/* Refuse to use zero sized device (also prevents self reference) */
-+	if (!nr_pages) {
-+		err = -EINVAL;
-+		goto out;
-+	}
++	if (!zram->table)
++		return;
 +
- 	bitmap_sz = BITS_TO_LONGS(nr_pages) * sizeof(long);
- 	bitmap = kvzalloc(bitmap_sz, GFP_KERNEL);
- 	if (!bitmap) {
+ 	/* Free all pages that are still in this zram device */
+ 	for (index = 0; index < num_pages; index++)
+ 		zram_free_page(zram, index);
+ 
+ 	zs_destroy_pool(zram->mem_pool);
+ 	vfree(zram->table);
++	zram->table = NULL;
+ }
+ 
+ static bool zram_meta_alloc(struct zram *zram, u64 disksize)
+@@ -1722,11 +1726,6 @@ static void zram_reset_device(struct zra
+ 
+ 	zram->limit_pages = 0;
+ 
+-	if (!init_done(zram)) {
+-		up_write(&zram->init_lock);
+-		return;
+-	}
+-
+ 	set_capacity_and_notify(zram->disk, 0);
+ 	part_stat_set_all(zram->disk->part0, 0);
+ 
 
 
