@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03068827;
-	Mon, 23 Dec 2024 16:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C98F12C544;
+	Mon, 23 Dec 2024 16:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970553; cv=none; b=SCCC2+DROwHj2b8vArVUsNw1tkghbnZYtyPhWYNytEmgNN4ZjprH+PIBvD7WuHo68vgOmfHSEWqRFgx0ceW0EGZvEOnIqPAo4egbYEDzFg7xDPfoZMMiSzfNO9bill1LLVvbQAqpUZXrcjdzdTpVBvFGljwAueICJCxWj9gWftU=
+	t=1734970556; cv=none; b=STD/Uy+PvCXqKSOmoA2isNEEZzuo7CqVppKFHs0htS0BAXROMZKirQKaEUeITMA1/e3K6NU1BvOILbcwFCuQcvLFv1R3NvZKeh/Y78GjHEPYMKgfU3cTgk7wad5nE+q31ck5nO7HzXfmVnT8fdTgkkXX09Xg5gG3iUflJQ5/lqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970553; c=relaxed/simple;
-	bh=F9DjLvZuw4yeqNtQAgcb1BLTUbjIwYtqWWbB85xJWRw=;
+	s=arc-20240116; t=1734970556; c=relaxed/simple;
+	bh=izV76XIKgDDhOZWP7qWKc4guhlsmm3WMrnEZ7QcLwrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r0lGN302VrNByjhBmXPbAWfI8KLyfvuQ7pAzkGlpHJae1XxiEr79eb8s4tuGJ8PH5cQknl9a5wzOuVykqtLrejKt3ZoS3EeUWb27wY1Q7bLm/cNPKbH+R49DXBF+4AZ70Q9mm315qAool6md4GoDEq7TV9h6+Nek+0OMTN2NujI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTs/HkSD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=anzszTTMDH9Z6c1MEQILHxHjY3i6TvEtEVUi4ZFtYy98UBROqpSM/Kv3jSwk+NeLo7DB9d5kuq8uMqVrr6C0PCMYnflmZ2SB96TS6oJ3liUen6H8RVMBZdeIwhAiN14SaSGXjVhIP54ON0JHVMExyNGesnbiLHZt4Cq2zMj2wks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEltHLG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTs/HkSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E83C4CED3;
-	Mon, 23 Dec 2024 16:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEltHLG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E62C4CED3;
+	Mon, 23 Dec 2024 16:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970552;
-	bh=F9DjLvZuw4yeqNtQAgcb1BLTUbjIwYtqWWbB85xJWRw=;
+	s=korg; t=1734970556;
+	bh=izV76XIKgDDhOZWP7qWKc4guhlsmm3WMrnEZ7QcLwrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTs/HkSDJn09vvynGiCLCF4AMTk3WuKFVvc4YzsRfDzcTojgwxCMZluhQ9/xLUZMu
-	 OFeavgPpOPMJ4hNfOQjipsK2UEJ2Hkj7tsPtwJt12w9DPxwr8XG3UPJnex7S04DPvx
-	 DC8vdATVlegjnVp1HrcOTaJkGsmQ1FLDInRiWIqw=
+	b=QEltHLG38+rfd3FCfZQkJO19vaSE4o61vr4bm+noRkwGnJDDkBxO7//WjwThw2e6l
+	 u++2n7GG0LHa75Gy34aFb/M270OKSVkI8WC+rAqiL5tXYozpH9RYaRFL76htrcGYyw
+	 GXpXqDke/qxrmadG7XDEzDPxubewjWCT3MsYeWCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 116/116] drm/amdgpu: Handle NULL bo->tbo.resource (again) in amdgpu_vm_bo_update
-Date: Mon, 23 Dec 2024 16:59:46 +0100
-Message-ID: <20241223155404.062703866@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.6 099/116] NFS/pnfs: Fix a live lock between recalled layouts and layoutget
+Date: Mon, 23 Dec 2024 16:59:29 +0100
+Message-ID: <20241223155403.409744429@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -45,46 +43,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit 85230ee36d88e7a09fb062d43203035659dd10a5 upstream.
+commit 62e2a47ceab8f3f7d2e3f0e03fdd1c5e0059fd8b upstream.
 
-Third time's the charm, I hope?
+When the server is recalling a layout, we should ignore the count of
+outstanding layoutget calls, since the server is expected to return
+either NFS4ERR_RECALLCONFLICT or NFS4ERR_RETURNCONFLICT for as long as
+the recall is outstanding.
+Currently, we may end up livelocking, causing the layout to eventually
+be forcibly revoked.
 
-Fixes: d3116756a710 ("drm/ttm: rename bo->mem and make it a pointer")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3837
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 695c2c745e5dff201b75da8a1d237ce403600d04)
+Fixes: bf0291dd2267 ("pNFS: Ensure LAYOUTGET and LAYOUTRETURN are properly serialised")
 Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/nfs/pnfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1161,10 +1161,9 @@ int amdgpu_vm_bo_update(struct amdgpu_de
- 	 * next command submission.
- 	 */
- 	if (bo && bo->tbo.base.resv == vm->root.bo->tbo.base.resv) {
--		uint32_t mem_type = bo->tbo.resource->mem_type;
--
--		if (!(bo->preferred_domains &
--		      amdgpu_mem_type_to_domain(mem_type)))
-+		if (bo->tbo.resource &&
-+		    !(bo->preferred_domains &
-+		      amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type)))
- 			amdgpu_vm_bo_evicted(&bo_va->base);
- 		else
- 			amdgpu_vm_bo_idle(&bo_va->base);
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1196,7 +1196,7 @@ pnfs_prepare_layoutreturn(struct pnfs_la
+ 		enum pnfs_iomode *iomode)
+ {
+ 	/* Serialise LAYOUTGET/LAYOUTRETURN */
+-	if (atomic_read(&lo->plh_outstanding) != 0)
++	if (atomic_read(&lo->plh_outstanding) != 0 && lo->plh_return_seq == 0)
+ 		return false;
+ 	if (test_and_set_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags))
+ 		return false;
 
 
