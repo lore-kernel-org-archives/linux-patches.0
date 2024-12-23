@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86780188006;
-	Mon, 23 Dec 2024 16:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35311B3922;
+	Mon, 23 Dec 2024 16:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970149; cv=none; b=hXJP1x+1NAgNSbzi9zSOySLo2UTZyjeI1NYONH2HOWPi3MArrFx9zRcVgu66uQzar7TgCZ2/LYTLPCOXfLApuaD8EE+2oGjTmIQRj8EnYr/JwX9uB2u2YMnMwMfstpaqGFTBVE+WEKK+/rceIXvRxgW4hiNJSfVy9uzWYhQ/hDE=
+	t=1734970152; cv=none; b=jzuYxtd6D288DApkX9OMyzkLWKNwr76AGdcZpYLQ49+eXwpl/TCzKyqXzBA1jHdYuqPlpEKHlFY6kXqoiaU7rppzJNYzkG5abZP6buiookRl9KQTMXbj7fHvGj4XbyosJhKGWTVOgbCY37Oq1uwh7NZVH15R1bLs5ME1iZ9Xb38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970149; c=relaxed/simple;
-	bh=eAJsyhHuz2jH1TJ4HhKEX+apdVjQvC9T0nmhPsNqBAo=;
+	s=arc-20240116; t=1734970152; c=relaxed/simple;
+	bh=FLi3OEag2nMlhwJiTtjlx55glieJ4Z7+MFshq2nEC44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCZZF/k010LRo8oeXHM4w4x0g5tVBAr9LHhPzhT3/Ij2GdqZNYTyXEAEcD4TaXQYn+fTVLw4VjFTzUnhmBTOiuxm/gP9CEi2YPpCzF0M8M9ipn4XtwyEBb2g+KzefjLIZ7kXql4ZKmeqU6Kxi9dB7CqRZKU64YyHdvEpu8sr/sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed2V022E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+PiAz33WUE2uSvhSexAFHP0YqXKB7Mh8NpsZGZVrWL8/YnZeYLQj38Am8ESwy0Qo460Xr2Yq3zlJNvSx8XU8I081An9Uam5uhc6EzTgwxw48snwhnhlLOge1ABlIZ0pSDOPq2WmNz51jOyTYAeJ1wvHDiqf1LiVxiEQNNcZrMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOsd3tKH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed2V022E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D252BC4CED3;
-	Mon, 23 Dec 2024 16:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOsd3tKH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B837C4CED3;
+	Mon, 23 Dec 2024 16:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970149;
-	bh=eAJsyhHuz2jH1TJ4HhKEX+apdVjQvC9T0nmhPsNqBAo=;
+	s=korg; t=1734970152;
+	bh=FLi3OEag2nMlhwJiTtjlx55glieJ4Z7+MFshq2nEC44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ed2V022EqoCGJprSTdPzVd82KNDh8SVAtq/MKanA7JikiIRYgDR1/TVXlPS5Xxaot
-	 uuCEi399DbJZ6W8hSqpk7CY4nqZAUOTLhQpDQqb+e2sYyVBN3BZPaDzuxwXnK1PJbO
-	 Bh9M0I5HIvDnPNMkigJT1pn/ht0pL37T6ZAN289U=
+	b=EOsd3tKHakTlDPl1PPl+drPRe5e23ULqEhanJ2Q2q4AjZE9kfssaQJ7D/cOZ2tF4G
+	 ckGzRVK5xImDlflTLedWEfX8rfMDWfDyxXSwKqDz+v7LTfyWdqu++hDjTJYlcd4LTA
+	 PijCPCAcoGIXDg2OVMByhYKV81dq0cZXL+tyT3MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jing Xia <jing.xia@unisoc.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Benoit Lize <lizeb@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 160/160] epoll: Add synchronous wakeup support for ep_poll_callback
-Date: Mon, 23 Dec 2024 16:59:31 +0100
-Message-ID: <20241223155414.998436496@linuxfoundation.org>
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Jann Horn <jannh@google.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>
+Subject: [PATCH 6.12 146/160] udmabuf: also check for F_SEAL_FUTURE_WRITE
+Date: Mon, 23 Dec 2024 16:59:17 +0100
+Message-ID: <20241223155414.454177066@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,55 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Jann Horn <jannh@google.com>
 
-commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
+commit 0a16e24e34f28210f68195259456c73462518597 upstream.
 
-Now, the epoll only use wake_up() interface to wake up task.
-However, sometimes, there are epoll users which want to use
-the synchronous wakeup flag to hint the scheduler, such as
-Android binder driver.
-So add a wake_up_sync() define, and use the wake_up_sync()
-when the sync is true in ep_poll_callback().
+When F_SEAL_FUTURE_WRITE was introduced, it was overlooked that udmabuf
+must reject memfds with this flag, just like ones with F_SEAL_WRITE.
+Fix it by adding F_SEAL_FUTURE_WRITE to SEALS_DENIED.
 
-Co-developed-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
-Tested-by: Brian Geffon <bgeffon@google.com>
-Reviewed-by: Brian Geffon <bgeffon@google.com>
-Reported-by: Benoit Lize <lizeb@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
+Fixes: ab3948f58ff8 ("mm/memfd: add an F_SEAL_FUTURE_WRITE seal to memfd")
+Cc: stable@vger.kernel.org
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241204-udmabuf-fixes-v2-2-23887289de1c@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c       |    5 ++++-
- include/linux/wait.h |    1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma-buf/udmabuf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1373,7 +1373,10 @@ static int ep_poll_callback(wait_queue_e
- 				break;
- 			}
- 		}
--		wake_up(&ep->wq);
-+		if (sync)
-+			wake_up_sync(&ep->wq);
-+		else
-+			wake_up(&ep->wq);
- 	}
- 	if (waitqueue_active(&ep->poll_wait))
- 		pwake++;
---- a/include/linux/wait.h
-+++ b/include/linux/wait.h
-@@ -221,6 +221,7 @@ void __wake_up_pollfree(struct wait_queu
- #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
- #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
- #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
-+#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -256,7 +256,7 @@ static const struct dma_buf_ops udmabuf_
+ };
  
- #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
- #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
+ #define SEALS_WANTED (F_SEAL_SHRINK)
+-#define SEALS_DENIED (F_SEAL_WRITE)
++#define SEALS_DENIED (F_SEAL_WRITE|F_SEAL_FUTURE_WRITE)
+ 
+ static int check_memfd_seals(struct file *memfd)
+ {
 
 
