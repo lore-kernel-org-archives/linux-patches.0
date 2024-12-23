@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672CF1B21BD;
-	Mon, 23 Dec 2024 16:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C17189B94;
+	Mon, 23 Dec 2024 16:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969775; cv=none; b=BegtQTx1NL7uw9R40MJmLv855RDm3VHao9Qshajg9J1+0ZSHo1+RfSktikLAOzrJzk9++wiEtOB/e2sbsuGmNgNEi/KNTbmsVZyCHk/edGbM2WOsVDr5Rx1IzXx24HTsaoiDh49Ey2kfRKwhRew/Ur1a+PmEeXG0p7aLhVuz5Gs=
+	t=1734969778; cv=none; b=qrU24XHwvyvnkrYD/EjLAwZU/Vq/J2qgxaxRelIukf/YQc2JwDk8Z2d70b3nUrU96G5+yBAMrE1XqKyn3QyI1gsFk4z0/DuhDKUpRPcBHI4tnWMKhV/Jmk+xKMvVqkzics++SBgdkrslCpq7nzuleL0OCsNs1oCPIQuhROBO2wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969775; c=relaxed/simple;
-	bh=/sOV36XvVj89C9GufbxpjRJUbTFLZeYE8WZYEvbkhfQ=;
+	s=arc-20240116; t=1734969778; c=relaxed/simple;
+	bh=Jj1MURUGEGNliuTUZOoKLEg0T1kG8Qcs2T8cQmsmsU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NmGnWtiTW3adzGVH9p9OVGD1GDX0nOuKwiV1I4XzsdzGQeMvT5AAB2eDjB60U/hjmv652arjzzwCshbNxcdlJna3Nf51vgSMzKVn2Yai9FagRhqJojKYmERbQMM7pl8fqi8qcVzquBQYMyJf3zsve2dzx5wXOD0juTQKq89RrUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7NRFbj5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dh/bdIeX2DuwWmw/LDhlwtQlMjZ5VTwRcK4x8LMfTmwP75/PKot90619c3ZKVUYhe6UyqAeWV+aMP85eakNj58yPFNHkshr0FcksKQiSkUi46rgaWm5+GE96aJ70qzGzDQm3YGFe3v942XFT3FkzKYF5OphMKai04zm6dZS9QHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTWswjtg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7NRFbj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900A8C4CED3;
-	Mon, 23 Dec 2024 16:02:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTWswjtg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCAB6C4CED6;
+	Mon, 23 Dec 2024 16:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969775;
-	bh=/sOV36XvVj89C9GufbxpjRJUbTFLZeYE8WZYEvbkhfQ=;
+	s=korg; t=1734969778;
+	bh=Jj1MURUGEGNliuTUZOoKLEg0T1kG8Qcs2T8cQmsmsU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7NRFbj5n3QQrcDm7UXDQkowiYtEn3ZPghTSm7ksIscrzaQ6Wnf3sEXBVZn/GN+gJ
-	 uEemTu23srT5PEjLQ7RMg5XD4PIAVVZ5bxVpCL5j/4qqJDFQROQF+V9nEek3MN1B2y
-	 gcJhNVQbVd/iXO8DsAvJJcilEvUivmoyioM4bh7Y=
+	b=BTWswjtgQf7iw5JAViCaMlf0v4iZndNYhBi8QRmjDJbKlvJH8GGj5XhEZoKiBadbE
+	 79oDfUK3f2mpfv/65pzTEZn0p3hyg4I7p6jZ3hZWVtabZXKXhAC5U2lqSBJEPuva36
+	 jIL+syY3dIAqw62ww9M09VNy9iWM67lYSBmhUAjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/160] ksmbd: count all requests in req_running counter
-Date: Mon, 23 Dec 2024 16:57:35 +0100
-Message-ID: <20241223155410.377001668@linuxfoundation.org>
+Subject: [PATCH 6.12 053/160] net: netdevsim: fix nsim_pp_hold_write()
+Date: Mon, 23 Dec 2024 16:57:44 +0100
+Message-ID: <20241223155410.734670223@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,52 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 83c47d9e0ce79b5d7c0b21b9f35402dbde0fa15c ]
+[ Upstream commit b9b8301d369b4c876de5255dbf067b19ba88ac71 ]
 
-This changes the semantics of req_running to count all in-flight
-requests on a given connection, rather than the number of elements
-in the conn->request list. The latter is used only in smb2_cancel,
-and the counter is not used
+nsim_pp_hold_write() has two problems:
 
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 43fb7bce8866 ("ksmbd: fix broken transfers when exceeding max simultaneous operations")
+1) It may return with rtnl held, as found by syzbot.
+
+2) Its return value does not propagate an error if any.
+
+Fixes: 1580cbcbfe77 ("net: netdevsim: add some fake page pool use")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20241216083703.1859921-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/connection.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/netdevsim/netdev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
-index e6a72f75ab94..3980645085ed 100644
---- a/fs/smb/server/connection.c
-+++ b/fs/smb/server/connection.c
-@@ -120,8 +120,8 @@ void ksmbd_conn_enqueue_request(struct ksmbd_work *work)
- 	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE)
- 		requests_queue = &conn->requests;
+diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
+index 017a6102be0a..1b29d1d794a2 100644
+--- a/drivers/net/netdevsim/netdev.c
++++ b/drivers/net/netdevsim/netdev.c
+@@ -596,10 +596,10 @@ nsim_pp_hold_write(struct file *file, const char __user *data,
+ 		page_pool_put_full_page(ns->page->pp, ns->page, false);
+ 		ns->page = NULL;
+ 	}
+-	rtnl_unlock();
  
-+	atomic_inc(&conn->req_running);
- 	if (requests_queue) {
--		atomic_inc(&conn->req_running);
- 		spin_lock(&conn->request_lock);
- 		list_add_tail(&work->request_entry, requests_queue);
- 		spin_unlock(&conn->request_lock);
-@@ -132,11 +132,12 @@ void ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
- {
- 	struct ksmbd_conn *conn = work->conn;
+ exit:
+-	return count;
++	rtnl_unlock();
++	return ret;
+ }
  
-+	atomic_dec(&conn->req_running);
-+
- 	if (list_empty(&work->request_entry) &&
- 	    list_empty(&work->async_request_entry))
- 		return;
- 
--	atomic_dec(&conn->req_running);
- 	spin_lock(&conn->request_lock);
- 	list_del_init(&work->request_entry);
- 	spin_unlock(&conn->request_lock);
+ static const struct file_operations nsim_pp_hold_fops = {
 -- 
 2.39.5
 
