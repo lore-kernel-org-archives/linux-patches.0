@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B6D8827;
-	Mon, 23 Dec 2024 16:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9928827;
+	Mon, 23 Dec 2024 16:17:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970624; cv=none; b=u9X3zJp9KByKtBL01pPeLq0+L8RmvLewAGG7ehXXWlwKQIFZSoarbBvR8DTj2BNMNNGlx7QD/kXoRUElLi9di4DeaxW2mUzxhhsk6Jl0HPmEGYWip47Hg9rCoA4FtRnurLJikrfCXgSCfxsAKN13FmT8krLJy3/VBmm3qyh/DCw=
+	t=1734970628; cv=none; b=RwAo2NRxeUHXB8zyCy4kJYWk4Xm7JuCGGQ13gRyMuzOJ3/x0+Y20sm86twtv6QAN21fAgXFng35De/rcLv2QptDYz0RRjL1L/gL32Vzg36wqMRfKoOr0RSNSbbWOcHx2+/N+Dl5DMmdgDmHUZc3vUjWE5d6hV9Mk+3umNwfv+Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970624; c=relaxed/simple;
-	bh=f44IOrbwDtJJXnE1grl98VTcoxX2Ho9f0hALF76TW6Y=;
+	s=arc-20240116; t=1734970628; c=relaxed/simple;
+	bh=wrCqJCrDNR7us6BAOEX61IibJMSNWuLa+pyLyWwXtYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V66voXo8ofNIOgCbcyJUCcuv1msjhaQqoHW37A921GTYG3/JIxAv+YYWJXhhe5u475xo7p88ZIugtQv9VaAnDhoDjNeaUbX7dR2Us+xL2RseT26j5h6ow0yBabc4AM16lMvsBodqkixleOOX8PYApnx7S4JodejRfpBolb+L/kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHQ+hRr5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DypxqnDr1+dlX4Z2p/zSvXfW/dfSriWevCgMAnZPQWxgypWQDxmbFvVjwenL+gWUHcViSryNzWEAmISCy3tWVdLjjQNR5HyNDjj7ES3w3C40iDgBE0o/E74rT5Xs3mU/WEdkbFu0hDOI5/3kZokddQwmAIjQC8yhxTFWaJCrlao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGG9/JYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHQ+hRr5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2FACC4CED3;
-	Mon, 23 Dec 2024 16:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGG9/JYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79A66C4CED4;
+	Mon, 23 Dec 2024 16:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970624;
-	bh=f44IOrbwDtJJXnE1grl98VTcoxX2Ho9f0hALF76TW6Y=;
+	s=korg; t=1734970627;
+	bh=wrCqJCrDNR7us6BAOEX61IibJMSNWuLa+pyLyWwXtYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHQ+hRr5JhntSF2FaWxFCzWhhdlzIr8Ud44ruB887VkLgU3isWYTxRg+2WR+bA4tS
-	 y2f/vX0oYbBd8EIZH7rfOe+u3NZroVnh93NE+aICgYa5ocIwR3Zk94/tXyTSSDdTfd
-	 vP4ss6H4qIE7z/lPb0wok4zLduJO3qR5mTkdTaGA=
+	b=ZGG9/JYntugl8DKtN4t3FuY4WdD+rbZAJcxuvkwLaY3YMwSQUJF9dtydYZfdbxp5f
+	 1NaLTVeqZuND+K7OStpHlDMgS+gQxPiPAm6l+UbE+1yj7EgJ/K5ZocBxEgRFGVij1y
+	 fq88/AXH85SIrBnOsKLCskCW848Bg+yTawquMoPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 20/83] net/smc: check sndbuf_space again after NOSPACE flag is set in smc_poll
-Date: Mon, 23 Dec 2024 16:58:59 +0100
-Message-ID: <20241223155354.413810252@linuxfoundation.org>
+Subject: [PATCH 6.1 21/83] net/smc: check iparea_offset and ipv6_prefixes_cnt when receiving proposal msg
+Date: Mon, 23 Dec 2024 16:59:00 +0100
+Message-ID: <20241223155354.453180025@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -54,58 +55,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 679e9ddcf90dbdf98aaaa71a492454654b627bcb ]
+[ Upstream commit a29e220d3c8edbf0e1beb0f028878a4a85966556 ]
 
-When application sending data more than sndbuf_space, there have chances
-application will sleep in epoll_wait, and will never be wakeup again. This
-is caused by a race between smc_poll and smc_cdc_tx_handler.
+When receiving proposal msg in server, the field iparea_offset
+and the field ipv6_prefixes_cnt in proposal msg are from the
+remote client and can not be fully trusted. Especially the
+field iparea_offset, once exceed the max value, there has the
+chance to access wrong address, and crash may happen.
 
-application                                      tasklet
-smc_tx_sendmsg(len > sndbuf_space)   |
-epoll_wait for EPOLL_OUT,timeout=0   |
-  smc_poll                           |
-    if (!smc->conn.sndbuf_space)     |
-                                     |  smc_cdc_tx_handler
-                                     |    atomic_add sndbuf_space
-                                     |    smc_tx_sndbuf_nonfull
-                                     |      if (!test_bit SOCK_NOSPACE)
-                                     |        do not sk_write_space;
-      set_bit SOCK_NOSPACE;          |
-    return mask=0;                   |
+This patch checks iparea_offset and ipv6_prefixes_cnt before using them.
 
-Application will sleep in epoll_wait as smc_poll returns 0. And
-smc_cdc_tx_handler will not call sk_write_space because the SOCK_NOSPACE
-has not be set. If there is no inflight cdc msg, sk_write_space will not be
-called any more, and application will sleep in epoll_wait forever.
-So check sndbuf_space again after NOSPACE flag is set to break the race.
-
-Fixes: 8dce2786a290 ("net/smc: smc_poll improvements")
+Fixes: e7b7a64a8493 ("smc: support variable CLC proposal messages")
 Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
+Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/smc/af_smc.c  | 6 +++++-
+ net/smc/smc_clc.c | 4 ++++
+ net/smc/smc_clc.h | 6 +++++-
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 868e722aef06..aeeb6e62361f 100644
+index aeeb6e62361f..889709c35b1f 100644
 --- a/net/smc/af_smc.c
 +++ b/net/smc/af_smc.c
-@@ -2789,6 +2789,13 @@ static __poll_t smc_poll(struct file *file, struct socket *sock,
- 			} else {
- 				sk_set_bit(SOCKWQ_ASYNC_NOSPACE, sk);
- 				set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
+@@ -1988,6 +1988,8 @@ static int smc_listen_prfx_check(struct smc_sock *new_smc,
+ 	if (pclc->hdr.typev1 == SMC_TYPE_N)
+ 		return 0;
+ 	pclc_prfx = smc_clc_proposal_get_prefix(pclc);
++	if (!pclc_prfx)
++		return -EPROTO;
+ 	if (smc_clc_prfx_match(newclcsock, pclc_prfx))
+ 		return SMC_CLC_DECL_DIFFPREFIX;
+ 
+@@ -2153,7 +2155,9 @@ static void smc_find_ism_v1_device_serv(struct smc_sock *new_smc,
+ 	int rc = 0;
+ 
+ 	/* check if ISM V1 is available */
+-	if (!(ini->smcd_version & SMC_V1) || !smcd_indicated(ini->smc_type_v1))
++	if (!(ini->smcd_version & SMC_V1) ||
++	    !smcd_indicated(ini->smc_type_v1) ||
++	    !pclc_smcd)
+ 		goto not_found;
+ 	ini->is_smcd = true; /* prepare ISM check */
+ 	ini->ism_peer_gid[0] = ntohll(pclc_smcd->ism.gid);
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index 867df4522815..f734fdd90c81 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -354,6 +354,10 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
+ 
+ 	v2_ext = smc_get_clc_v2_ext(pclc);
+ 	pclc_prfx = smc_clc_proposal_get_prefix(pclc);
++	if (!pclc_prfx ||
++	    pclc_prfx->ipv6_prefixes_cnt > SMC_CLC_MAX_V6_PREFIX)
++		return false;
 +
-+				if (sk->sk_state != SMC_INIT) {
-+					/* Race breaker the same way as tcp_poll(). */
-+					smp_mb__after_atomic();
-+					if (atomic_read(&smc->conn.sndbuf_space))
-+						mask |= EPOLLOUT | EPOLLWRNORM;
-+				}
- 			}
- 			if (atomic_read(&smc->conn.bytes_to_rcv))
- 				mask |= EPOLLIN | EPOLLRDNORM;
+ 	if (hdr->version == SMC_V1) {
+ 		if (hdr->typev1 == SMC_TYPE_N)
+ 			return false;
+diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
+index 5fee545c9a10..08279081d438 100644
+--- a/net/smc/smc_clc.h
++++ b/net/smc/smc_clc.h
+@@ -303,8 +303,12 @@ struct smc_clc_msg_decline_v2 {	/* clc decline message */
+ static inline struct smc_clc_msg_proposal_prefix *
+ smc_clc_proposal_get_prefix(struct smc_clc_msg_proposal *pclc)
+ {
++	u16 offset = ntohs(pclc->iparea_offset);
++
++	if (offset > sizeof(struct smc_clc_msg_smcd))
++		return NULL;
+ 	return (struct smc_clc_msg_proposal_prefix *)
+-	       ((u8 *)pclc + sizeof(*pclc) + ntohs(pclc->iparea_offset));
++	       ((u8 *)pclc + sizeof(*pclc) + offset);
+ }
+ 
+ static inline bool smcr_indicated(int smc_type)
 -- 
 2.39.5
 
