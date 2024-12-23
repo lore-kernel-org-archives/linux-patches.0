@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E2A2188006;
-	Mon, 23 Dec 2024 16:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B6119D074;
+	Mon, 23 Dec 2024 16:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969672; cv=none; b=Cd3hDZmfxANlKlOLw9yviLHOawK7VFA+BsQSi/Ho0l0jXLUP+JtXI6tYYJgQbbBjl8RRGe5tEtGzITualCw+/UYe4n7lrbzoRyL86TvdfY2c4PfKSdPVEkUr+yeSpuMgUkc7/X+CQSFoNT85fd4v0RVBml5xYSBb5YLu1ZYD5QI=
+	t=1734969675; cv=none; b=ZbMYpYxfH+euzTp//feSgmsH1bR3IPo9m3tbLP/gIIVWQE3VRhFdQdy3v0xHFMVjjCuDN1Qzb5T+xGf0zKXqMXZ9MqSEiB+gi8cPlAfEPgIqqj529Y2kvoiTKBCorjFtjjxlYnTXbGERYmGimyY+hFCbPJQhXIGOKCn+TArHg0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969672; c=relaxed/simple;
-	bh=s2YjAH5kwfeDuFoGzQG1Vyplj1vBSrYdrymVGye65GE=;
+	s=arc-20240116; t=1734969675; c=relaxed/simple;
+	bh=0F0N4P1NWfWg4yDD+8VIg6bcJO4ERANFXJRhCAAdGHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=biE5zsR+Z4oTL9o8aefLclC+mUG2xTuWAuULvF8x6lrsdWgscDhCkR+Kjti81pmIlpFvVsmxkfQvf+PY1L5QZHa7tozPQUKtmhHr1jqMwEY95E6U4L+gJUgWNm1E4rpYqcpdE7D6yRqX+mJK7nTkcU0obljrPURYLCO2DhyuN58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCkiaTf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocR8hETkFZUrGVjp82h8TncOYCsyh+6PWG2xDm498Wdz0JEkzfmgnA1cwGjk9hy5vLguS1oUFmBB992AliNWlLAErF0CEi9pOeMOodagatWvSAZrEMH4SFlPzLo76aTiT62cYhmp9pYXnwjdlUAXRtdJ7wZjsM8OXu4Pr6rG2fI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4pl92I0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCkiaTf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0C1C4CED4;
-	Mon, 23 Dec 2024 16:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4pl92I0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2275BC4CED4;
+	Mon, 23 Dec 2024 16:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969672;
-	bh=s2YjAH5kwfeDuFoGzQG1Vyplj1vBSrYdrymVGye65GE=;
+	s=korg; t=1734969675;
+	bh=0F0N4P1NWfWg4yDD+8VIg6bcJO4ERANFXJRhCAAdGHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCkiaTf8xE/FNprQ28NHWO/V0VPNSfptXQwNLr+d3hwe790TontQC88PIg1BT88S+
-	 a0s8js+wziGrM8r29LSlsYm27QdyArHZ2NSQk8kpDu8GXRCFV53eecUxIdXkCc21BY
-	 1kyQzxgdT7WrEJK1WUe0D2pgq6c1xOUgvBHiMr68=
+	b=x4pl92I0wdfGEkla7YhDCI4yebVOxHFvCpKSzu1z8XnOs2PUjwT/ALZdWBxKd/lhe
+	 50/MwvQyKq7Wqd7UyT6JqpO5LbYKavtRo/TbrjZHFTLm9Uo4034i47N32+cO0o2Jta
+	 eaOB1bW17HlwkzLYLexejwS/Mx4WImb8Z0f4OtUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek McGowan <derek@mcg.dev>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/160] erofs: use buffered I/O for file-backed mounts by default
-Date: Mon, 23 Dec 2024 16:57:13 +0100
-Message-ID: <20241223155409.511184188@linuxfoundation.org>
+Subject: [PATCH 6.12 023/160] xfs: sb_spino_align is not verified
+Date: Mon, 23 Dec 2024 16:57:14 +0100
+Message-ID: <20241223155409.549643983@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,137 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 6422cde1b0d5a31b206b263417c1c2b3c80fe82c ]
+commit 59e43f5479cce106d71c0b91a297c7ad1913176c upstream.
 
-For many use cases (e.g. container images are just fetched from remote),
-performance will be impacted if underlay page cache is up-to-date but
-direct i/o flushes dirty pages first.
+It's just read in from the superblock and used without doing any
+validity checks at all on the value.
 
-Instead, let's use buffered I/O by default to keep in sync with loop
-devices and add a (re)mount option to explicitly give a try to use
-direct I/O if supported by the underlying files.
-
-The container startup time is improved as below:
-[workload] docker.io/library/workpress:latest
-                                     unpack        1st run  non-1st runs
-EROFS snapshotter buffered I/O file  4.586404265s  0.308s   0.198s
-EROFS snapshotter direct I/O file    4.581742849s  2.238s   0.222s
-EROFS snapshotter loop               4.596023152s  0.346s   0.201s
-Overlayfs snapshotter                5.382851037s  0.206s   0.214s
-
-Fixes: fb176750266a ("erofs: add file-backed mount support")
-Cc: Derek McGowan <derek@mcg.dev>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20241212134336.2059899-1-hsiangkao@linux.alibaba.com
+Fixes: fb4f2b4e5a82 ("xfs: add sparse inode chunk alignment superblock field")
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[djwong: actually tag for 6.12 because upstream maintainer ignored cc-stable tag]
+Link: https://lore.kernel.org/linux-xfs/20241024165544.GI21853@frogsfrogsfrogs/
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/fileio.c   |  7 +++++--
- fs/erofs/internal.h |  1 +
- fs/erofs/super.c    | 23 +++++++++++++++--------
- 3 files changed, 21 insertions(+), 10 deletions(-)
+ fs/xfs/libxfs/xfs_sb.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/fs/erofs/fileio.c b/fs/erofs/fileio.c
-index a61b8faec651..33f8539dda4a 100644
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -9,6 +9,7 @@ struct erofs_fileio_rq {
- 	struct bio_vec bvecs[BIO_MAX_VECS];
- 	struct bio bio;
- 	struct kiocb iocb;
-+	struct super_block *sb;
- };
- 
- struct erofs_fileio {
-@@ -52,8 +53,9 @@ static void erofs_fileio_rq_submit(struct erofs_fileio_rq *rq)
- 	rq->iocb.ki_pos = rq->bio.bi_iter.bi_sector << SECTOR_SHIFT;
- 	rq->iocb.ki_ioprio = get_current_ioprio();
- 	rq->iocb.ki_complete = erofs_fileio_ki_complete;
--	rq->iocb.ki_flags = (rq->iocb.ki_filp->f_mode & FMODE_CAN_ODIRECT) ?
--				IOCB_DIRECT : 0;
-+	if (test_opt(&EROFS_SB(rq->sb)->opt, DIRECT_IO) &&
-+	    rq->iocb.ki_filp->f_mode & FMODE_CAN_ODIRECT)
-+		rq->iocb.ki_flags = IOCB_DIRECT;
- 	iov_iter_bvec(&iter, ITER_DEST, rq->bvecs, rq->bio.bi_vcnt,
- 		      rq->bio.bi_iter.bi_size);
- 	ret = vfs_iocb_iter_read(rq->iocb.ki_filp, &rq->iocb, &iter);
-@@ -68,6 +70,7 @@ static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
- 
- 	bio_init(&rq->bio, NULL, rq->bvecs, BIO_MAX_VECS, REQ_OP_READ);
- 	rq->iocb.ki_filp = mdev->m_dif->file;
-+	rq->sb = mdev->m_sb;
- 	return rq;
- }
- 
-diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
-index 3108ece1d709..77e785a6dfa7 100644
---- a/fs/erofs/internal.h
-+++ b/fs/erofs/internal.h
-@@ -182,6 +182,7 @@ struct erofs_sb_info {
- #define EROFS_MOUNT_POSIX_ACL		0x00000020
- #define EROFS_MOUNT_DAX_ALWAYS		0x00000040
- #define EROFS_MOUNT_DAX_NEVER		0x00000080
-+#define EROFS_MOUNT_DIRECT_IO		0x00000100
- 
- #define clear_opt(opt, option)	((opt)->mount_opt &= ~EROFS_MOUNT_##option)
- #define set_opt(opt, option)	((opt)->mount_opt |= EROFS_MOUNT_##option)
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index 60f7bd43a5a4..5b279977c9d5 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -379,14 +379,8 @@ static void erofs_default_options(struct erofs_sb_info *sbi)
- }
- 
- enum {
--	Opt_user_xattr,
--	Opt_acl,
--	Opt_cache_strategy,
--	Opt_dax,
--	Opt_dax_enum,
--	Opt_device,
--	Opt_fsid,
--	Opt_domain_id,
-+	Opt_user_xattr, Opt_acl, Opt_cache_strategy, Opt_dax, Opt_dax_enum,
-+	Opt_device, Opt_fsid, Opt_domain_id, Opt_directio,
- 	Opt_err
- };
- 
-@@ -413,6 +407,7 @@ static const struct fs_parameter_spec erofs_fs_parameters[] = {
- 	fsparam_string("device",	Opt_device),
- 	fsparam_string("fsid",		Opt_fsid),
- 	fsparam_string("domain_id",	Opt_domain_id),
-+	fsparam_flag_no("directio",	Opt_directio),
- 	{}
- };
- 
-@@ -526,6 +521,16 @@ static int erofs_fc_parse_param(struct fs_context *fc,
- 		errorfc(fc, "%s option not supported", erofs_fs_parameters[opt].name);
- 		break;
- #endif
-+	case Opt_directio:
-+#ifdef CONFIG_EROFS_FS_BACKED_BY_FILE
-+		if (result.boolean)
-+			set_opt(&sbi->opt, DIRECT_IO);
-+		else
-+			clear_opt(&sbi->opt, DIRECT_IO);
-+#else
-+		errorfc(fc, "%s option not supported", erofs_fs_parameters[opt].name);
-+#endif
-+		break;
- 	default:
- 		return -ENOPARAM;
- 	}
-@@ -963,6 +968,8 @@ static int erofs_show_options(struct seq_file *seq, struct dentry *root)
- 		seq_puts(seq, ",dax=always");
- 	if (test_opt(opt, DAX_NEVER))
- 		seq_puts(seq, ",dax=never");
-+	if (erofs_is_fileio_mode(sbi) && test_opt(opt, DIRECT_IO))
-+		seq_puts(seq, ",directio");
- #ifdef CONFIG_EROFS_FS_ONDEMAND
- 	if (sbi->fsid)
- 		seq_printf(seq, ",fsid=%s", sbi->fsid);
+diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
+index 02ebcbc4882f..9e0ae312bc80 100644
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -391,6 +391,20 @@ xfs_validate_sb_common(
+ 					 sbp->sb_inoalignmt, align);
+ 				return -EINVAL;
+ 			}
++
++			if (!sbp->sb_spino_align ||
++			    sbp->sb_spino_align > sbp->sb_inoalignmt ||
++			    (sbp->sb_inoalignmt % sbp->sb_spino_align) != 0) {
++				xfs_warn(mp,
++				"Sparse inode alignment (%u) is invalid.",
++					sbp->sb_spino_align);
++				return -EINVAL;
++			}
++		} else if (sbp->sb_spino_align) {
++			xfs_warn(mp,
++				"Sparse inode alignment (%u) should be zero.",
++				sbp->sb_spino_align);
++			return -EINVAL;
+ 		}
+ 	} else if (sbp->sb_qflags & (XFS_PQUOTA_ENFD | XFS_GQUOTA_ENFD |
+ 				XFS_PQUOTA_CHKD | XFS_GQUOTA_CHKD)) {
 -- 
 2.39.5
 
