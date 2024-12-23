@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C7B80C02;
-	Mon, 23 Dec 2024 16:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97FC2EAE6;
+	Mon, 23 Dec 2024 16:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969690; cv=none; b=D+A/aktIb7BK3kn0y9fc5TP3K5oiCHicbl1RVAzGgccNsxv6TZs/LVdauNw5b9xCMU4dfs/xoVP5w2HygB3bHAz3Ddj56LcEHZyeeNgRfgY4GlNGZBZupqDHXFXyXz9tqJV7zf64vD9Y+RSen95/F2dMWoESGCAAyWoBA2fDcS4=
+	t=1734969693; cv=none; b=ageAaI23+juREiLSkbOvhqekD7x1nu+O+FSNQhaxD0kSS9wP0RH8WJkSeJxrebdqt+Ib59+iVhFvx9JWWmlnaWhB8ofrp7sEkitD849R4Mzh4wFhlvkh05nvaxXbvOKn9Nu2WjJuRG1ovCxZH3BUKXkl1tTSaxttik+NmSpshyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969690; c=relaxed/simple;
-	bh=HIkuIRdZ7TXRUc0c0JOPzh7720bi4wyknqSvcoAPCI0=;
+	s=arc-20240116; t=1734969693; c=relaxed/simple;
+	bh=xJdsEaV4xs3YLFMh8xNuiyKARpQB1WcLHcNhn3tXrwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEOVtRHbytnnBEG77bOGbspMRcT12jbp+U7k4eN6mphqtbewgSmvD3qWPpmFQSMva0sVZliTP7IJNrVI6DmFR2ZixEe1TYKvoej3TaMKfhRfuWgXtPZf3tU8P52WtDGJGx+zAkEvg72Cv1ZWMvIF4eM+vC9cUuqjUVzRKun19lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uik0YlUd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bWJi8ZkuybO/e1mzxVrhozlevn11D914kFO9YygaSrjEtZq77pRf46g2mpFhgSe497OaihCMlCyeASd26mp8Cs7CcnRgA2PmxljpExY1SLWYwg3DHSzm6EZz81WtlqTAPPNozXAW43q/uQ9ZAshbCDHCsWcEACVQQiF7LYbkWWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFWTni2z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uik0YlUd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5B9C4CED4;
-	Mon, 23 Dec 2024 16:01:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFWTni2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD12C4CED4;
+	Mon, 23 Dec 2024 16:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969689;
-	bh=HIkuIRdZ7TXRUc0c0JOPzh7720bi4wyknqSvcoAPCI0=;
+	s=korg; t=1734969693;
+	bh=xJdsEaV4xs3YLFMh8xNuiyKARpQB1WcLHcNhn3tXrwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uik0YlUdv6WOqpk7FjzYLYW6DxeFstkhHr6ovnGWFVvHUPgbGpQDNtMSh/FxhljX6
-	 cYBGqG6A3EX1tgT0dktIeEX/E5U/kI158fRIV7PQzB/jwIE5BejoD9RtIf6uUfMw7z
-	 mC3bVlLQDI7l/ASiulGG6pO1jT4rXd76v1V3Pldg=
+	b=UFWTni2zjvFPd7ZPWTyKy0Jvy+g69aa3PMNBKPlPov/41FpxyA2ZDCyxbuPPSbcVQ
+	 Loir48AVe10uqJjXuohro91vWftDCSVItWgFxQyPJdp3ZB9xtuGKCkVP4548Az6y/g
+	 jRwNZyLrXrIxMeq+WRZp4BMgmJmzvtJ1SPg425KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Olaf Hering <olaf@aepfle.de>,
+	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/160] xfs: fix zero byte checking in the superblock scrubber
-Date: Mon, 23 Dec 2024 16:57:18 +0100
-Message-ID: <20241223155409.707896072@linuxfoundation.org>
+Subject: [PATCH 6.12 028/160] tools: hv: change permissions of NetworkManager configuration file
+Date: Mon, 23 Dec 2024 16:57:19 +0100
+Message-ID: <20241223155409.748837631@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,82 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Olaf Hering <olaf@aepfle.de>
 
-commit c004a793e0ec34047c3bd423bcd8966f5fac88dc upstream.
+[ Upstream commit 91ae69c7ed9e262f24240c425ad1eef2cf6639b7 ]
 
-The logic to check that the region past the end of the superblock is all
-zeroes is wrong -- we don't want to check only the bytes past the end of
-the maximally sized ondisk superblock structure as currently defined in
-xfs_format.h; we want to check the bytes beyond the end of the ondisk as
-defined by the feature bits.
+Align permissions of the resulting .nmconnection file, instead of
+the input file from hv_kvp_daemon. To avoid the tiny time frame
+where the output file is world-readable, use umask instead of chmod.
 
-Port the superblock size logic from xfs_repair and then put it to use in
-xfs_scrub.
-
-Cc: <stable@vger.kernel.org> # v4.15
-Fixes: 21fb4cb1981ef7 ("xfs: scrub the secondary superblocks")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 42999c904612 ("hv/hv_kvp_daemon:Support for keyfile based connection profile")
+Signed-off-by: Olaf Hering <olaf@aepfle.de>
+Reviewed-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20241016143521.3735-1-olaf@aepfle.de
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20241016143521.3735-1-olaf@aepfle.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/agheader.c | 29 +++++++++++++++++++++++++++--
- 1 file changed, 27 insertions(+), 2 deletions(-)
+ tools/hv/hv_set_ifconfig.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/xfs/scrub/agheader.c b/fs/xfs/scrub/agheader.c
-index da30f926cbe6..0f2f1852d58f 100644
---- a/fs/xfs/scrub/agheader.c
-+++ b/fs/xfs/scrub/agheader.c
-@@ -59,6 +59,30 @@ xchk_superblock_xref(
- 	/* scrub teardown will take care of sc->sa for us */
- }
+diff --git a/tools/hv/hv_set_ifconfig.sh b/tools/hv/hv_set_ifconfig.sh
+index 440a91b35823..2f8baed2b8f7 100755
+--- a/tools/hv/hv_set_ifconfig.sh
++++ b/tools/hv/hv_set_ifconfig.sh
+@@ -81,7 +81,7 @@ echo "ONBOOT=yes" >> $1
  
-+/*
-+ * Calculate the ondisk superblock size in bytes given the feature set of the
-+ * mounted filesystem (aka the primary sb).  This is subtlely different from
-+ * the logic in xfs_repair, which computes the size of a secondary sb given the
-+ * featureset listed in the secondary sb.
-+ */
-+STATIC size_t
-+xchk_superblock_ondisk_size(
-+	struct xfs_mount	*mp)
-+{
-+	if (xfs_has_metauuid(mp))
-+		return offsetofend(struct xfs_dsb, sb_meta_uuid);
-+	if (xfs_has_crc(mp))
-+		return offsetofend(struct xfs_dsb, sb_lsn);
-+	if (xfs_sb_version_hasmorebits(&mp->m_sb))
-+		return offsetofend(struct xfs_dsb, sb_bad_features2);
-+	if (xfs_has_logv2(mp))
-+		return offsetofend(struct xfs_dsb, sb_logsunit);
-+	if (xfs_has_sector(mp))
-+		return offsetofend(struct xfs_dsb, sb_logsectsize);
-+	/* only support dirv2 or more recent */
-+	return offsetofend(struct xfs_dsb, sb_dirblklog);
-+}
-+
- /*
-  * Scrub the filesystem superblock.
-  *
-@@ -75,6 +99,7 @@ xchk_superblock(
- 	struct xfs_buf		*bp;
- 	struct xfs_dsb		*sb;
- 	struct xfs_perag	*pag;
-+	size_t			sblen;
- 	xfs_agnumber_t		agno;
- 	uint32_t		v2_ok;
- 	__be32			features_mask;
-@@ -350,8 +375,8 @@ xchk_superblock(
- 	}
+ cp $1 /etc/sysconfig/network-scripts/
  
- 	/* Everything else must be zero. */
--	if (memchr_inv(sb + 1, 0,
--			BBTOB(bp->b_length) - sizeof(struct xfs_dsb)))
-+	sblen = xchk_superblock_ondisk_size(mp);
-+	if (memchr_inv((char *)sb + sblen, 0, BBTOB(bp->b_length) - sblen))
- 		xchk_block_set_corrupt(sc, bp);
+-chmod 600 $2
++umask 0177
+ interface=$(echo $2 | awk -F - '{ print $2 }')
+ filename="${2##*/}"
  
- 	xchk_superblock_xref(sc, bp);
 -- 
 2.39.5
 
