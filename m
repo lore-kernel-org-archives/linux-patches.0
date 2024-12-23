@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DEF3D6D;
-	Mon, 23 Dec 2024 16:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27383D6D;
+	Mon, 23 Dec 2024 16:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970089; cv=none; b=phbQn3M+VEctQPcWHTGoZo87e/nDMihVeZCNqforLwD020OqKaKUpPB9skY1gSSqKHixi5/PfpRNVNpiwe17+3bjqh79wbrT2ltyvaPmD9ynCfmSNfNwXXLxuJBXF+NGMCh/QQsftgA802uV5eqlyiV0+XJPwrFvVrQEjEtjthg=
+	t=1734970092; cv=none; b=CyGXk1146iamleCW/DA45MRP4/V28b8ueLjQJWKgkqIl5UYJF1kOqzNmnQhJPilhmNfjKqgI8403jNIKBoznckhvyyJphjIvN+z8ODO+9ENHYBHmq844fMH7QYu1fFqXsJAEjWSNtKCRvQ8rQ/LXftmY057vxBus5XctNHskuMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970089; c=relaxed/simple;
-	bh=Ug6euxqdRtoERdsFM9TI5bIUMUWU9RiWChFVU+MzFR0=;
+	s=arc-20240116; t=1734970092; c=relaxed/simple;
+	bh=zHAg2CIPswuveadFywsQ3Ec3rVvvd3DxwmNrqmcMWSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcdBETKS6f1jro+tydcRppAF/77Fk5zp5W1ul16ViuHdth445ONOnUS3SvBKbfr7MbfytT5naI83r+4quY5+FAuAreYkpt10vrTpFyjpXW+cwABrlwLtIazftDFxE0iyZ3yct78OySq1Rc+3srNG3jRI8+uXYnbhDrY58keyOZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snHrE8bI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p/w+CXjIqR+5h3m1VYIlKzsik33HZkko9i0cyGnkKbZQcAWI/w5BM5uVzkAahdar1wPTmWeZFXcqQ7JvKzkWcYEwHGvYtvFgqw1cF+NGBPiuxYnTKUIrXOg3nGMwtkSTwY41p+S7KzUgmsHXJ+RaJ5gwWsmbZU+1SixZTrpEvVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHWcUgVW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snHrE8bI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC60C4CED3;
-	Mon, 23 Dec 2024 16:08:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHWcUgVW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B3AC4CED3;
+	Mon, 23 Dec 2024 16:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970089;
-	bh=Ug6euxqdRtoERdsFM9TI5bIUMUWU9RiWChFVU+MzFR0=;
+	s=korg; t=1734970092;
+	bh=zHAg2CIPswuveadFywsQ3Ec3rVvvd3DxwmNrqmcMWSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snHrE8bI2J+WPYUuOR568S0b3dMZ+DZd8lJVe8qFq50IRgOpq0ThPKxPtxoJMemLp
-	 V/hf09ba8RHm6jMDU1vwNYLDTv5AG9msZQdbGyaO539TCgLJei4hm7y0CkNht/nEjq
-	 wRY/NCzlcBWUiz/Uu17gxrlvDz3wUirO7eVgYx7E=
+	b=rHWcUgVW0coU832XHMkBJv2E1KZi5pZ/myP7yRM1fsqrmugxsS/Zccq/628I5RWyz
+	 Qv3b0zwIQ3aOtanwxWaSgi31L040HSV66j1ALi2J/f83sBAn8wty/ZsKQNqsQs4YNe
+	 8rz5WLkekHOSQ5LgSLash/12unBaMha4Tb8XZFA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zijun Hu <quic_zijuhu@quicinc.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 140/160] of/irq: Fix interrupt-map cell length check in of_irq_parse_imap_parent()
-Date: Mon, 23 Dec 2024 16:59:11 +0100
-Message-ID: <20241223155414.206845249@linuxfoundation.org>
+Subject: [PATCH 6.12 141/160] of/irq: Fix using uninitialized variable @addr_len in API of_irq_parse_one()
+Date: Mon, 23 Dec 2024 16:59:12 +0100
+Message-ID: <20241223155414.249516921@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,20 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit fec3edc47d5cfc2dd296a5141df887bf567944db upstream.
+commit 0f7ca6f69354e0c3923bbc28c92d0ecab4d50a3e upstream.
 
-On a malformed interrupt-map property which is shorter than expected by
-1 cell, we may read bogus data past the end of the property instead of
-returning an error in of_irq_parse_imap_parent().
+of_irq_parse_one() may use uninitialized variable @addr_len as shown below:
 
-Decrement the remaining length when skipping over the interrupt parent
-phandle cell.
+// @addr_len is uninitialized
+int addr_len;
 
-Fixes: 935df1bd40d4 ("of/irq: Factor out parsing of interrupt-map parent phandle+args from of_irq_parse_raw()")
+// This operation does not touch @addr_len if it fails.
+addr = of_get_property(device, "reg", &addr_len);
+
+// Use uninitialized @addr_len if the operation fails.
+if (addr_len > sizeof(addr_buf))
+	addr_len = sizeof(addr_buf);
+
+// Check the operation result here.
+if (addr)
+	memcpy(addr_buf, addr, addr_len);
+
+Fix by initializing @addr_len before the operation.
+
+Fixes: b739dffa5d57 ("of/irq: Prevent device address out-of-bounds read in interrupt map walk")
 Cc: stable@vger.kernel.org
 Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241209-of_irq_fix-v1-1-782f1419c8a1@quicinc.com
-[rh: reword commit msg]
+Link: https://lore.kernel.org/r/20241209-of_irq_fix-v1-4-782f1419c8a1@quicinc.com
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -74,13 +84,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/of/irq.c
 +++ b/drivers/of/irq.c
-@@ -111,6 +111,7 @@ const __be32 *of_irq_parse_imap_parent(c
- 	else
- 		np = of_find_node_by_phandle(be32_to_cpup(imap));
- 	imap++;
-+	len--;
+@@ -355,6 +355,7 @@ int of_irq_parse_one(struct device_node
+ 		return of_irq_parse_oldworld(device, index, out_irq);
  
- 	/* Check if not found */
- 	if (!np) {
+ 	/* Get the reg property (if any) */
++	addr_len = 0;
+ 	addr = of_get_property(device, "reg", &addr_len);
+ 
+ 	/* Prevent out-of-bounds read in case of longer interrupt parent address size */
 
 
