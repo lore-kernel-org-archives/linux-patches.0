@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6723619E971;
-	Mon, 23 Dec 2024 16:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88305188006;
+	Mon, 23 Dec 2024 16:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970112; cv=none; b=spXySADXAJrl0RQPRaTSVnk7+3HJ2bJT+ZXWdQco4Nwk7m+IVW+PQf5x0uPSxvrG4tU2E+hlxvEwUfgciAqcu5oB4rw7PIa7x+LPTcCzNDiYWpq22QPxBUrVuYUvQ4+o6nQy6tOEKwU1AR6RYMtxitDaGhqusLVZSLWKuQESwEM=
+	t=1734970115; cv=none; b=qN70BqGQSYW46cV2IpmRTMCGFQnCgRBXxDYPJrmu8NjzuWzPQU0Oj5Tei75rgehd38vwQ4436ofrw1pIcnXXN9oEw687Dg1McraciSUlMVe4cXEPSGF/ifjsYbrZn8PN2BvVlahkG0QLK2WtHGjTj3g8+6Ln2i70wTshDdnjib4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970112; c=relaxed/simple;
-	bh=GtFmunejWUNkg8eGRxqepe8mQkDwfbn0XkiJeyVMaqA=;
+	s=arc-20240116; t=1734970115; c=relaxed/simple;
+	bh=Tcxagf8i0yLnTf+6hNMmKYtDcb9/TdUcryd6w16jk5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJ8TL/a6lVAt4P5u5woAV/GaZv/4oNizPe6x7owzjr0UFtIIBVM4psay2G8JrhXEnX3tzLd84dESyk4DeqdJ4d4cg8WcLaJm50gfv2ZVwijf+JKGGYfCtDAv89zNG3czi1CE000lk9CVBP8SKs9SDWA6E/pVdCqPHXOccf/HWr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhIRzvfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=upSSJqZOsFB2NTvE7pUehk0xLrYmCC+6fVRIF4eTRtJMX9G/SxAFmlpr6ovAUJ37QgVDcdGOzI9qR41YUPdYw+cO+yQDPj25L2yVNKwA2kQp2DKGyl5nUW/w5qEJInF8xz4GLaR+xunzhOjuDSpTB3X459njY9IjXdyfEFu/x5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TopBEIIK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhIRzvfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40C8C4CED4;
-	Mon, 23 Dec 2024 16:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TopBEIIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA86DC4CED3;
+	Mon, 23 Dec 2024 16:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970112;
-	bh=GtFmunejWUNkg8eGRxqepe8mQkDwfbn0XkiJeyVMaqA=;
+	s=korg; t=1734970115;
+	bh=Tcxagf8i0yLnTf+6hNMmKYtDcb9/TdUcryd6w16jk5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rhIRzvfm0jm93XFPRXWcfFx72a2AvrObvESjm65RfpFbqWA//KC8OmtZ/JBsSOrmi
-	 ZxqO1fZWtHaefIJPSfHqWpCerpiNPulNbj1suW95jz4xEaj0FnNGwjz0hKImufrDjv
-	 v2j0Y6NLoaOSSnNEr9+D4f8hjOYMVQpbjnDOmNGo=
+	b=TopBEIIKy/x29UEND6IkNt1PXImnesnDPL7dP7NcAaPdN1aD4XNmbeJSU6PZlhOGS
+	 aYvJLsCsTIJuXzipSy4rMn+9o7asldYis7Ju9ei8KAumL8dq6oQewyQlDTNvp9Pz0Y
+	 b7IlBL4MloobJLeqSPZWd8EAjsKb7jhL6jiF5ZEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frankie Fisher <frankie@terrorise.me.uk>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 117/160] btrfs: tree-checker: reject inline extent items with 0 ref count
-Date: Mon, 23 Dec 2024 16:58:48 +0100
-Message-ID: <20241223155413.201795976@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 6.12 118/160] s390/mm: Fix DirectMap accounting
+Date: Mon, 23 Dec 2024 16:58:49 +0100
+Message-ID: <20241223155413.321697218@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,104 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit dfb92681a19e1d5172420baa242806414b3eff6f upstream.
+commit 41856638e6c4ed51d8aa9e54f70059d1e357b46e upstream.
 
-[BUG]
-There is a bug report in the mailing list where btrfs_run_delayed_refs()
-failed to drop the ref count for logical 25870311358464 num_bytes
-2113536.
+With uncoupling of physical and virtual address spaces population of
+the identity mapping was changed to use the type POPULATE_IDENTITY
+instead of POPULATE_DIRECT. This breaks DirectMap accounting:
 
-The involved leaf dump looks like this:
+> cat /proc/meminfo
+DirectMap4k:       55296 kB
+DirectMap1M:    18446744073709496320 kB
 
-  item 166 key (25870311358464 168 2113536) itemoff 10091 itemsize 50
-    extent refs 1 gen 84178 flags 1
-    ref#0: shared data backref parent 32399126528000 count 0 <<<
-    ref#1: shared data backref parent 31808973717504 count 1
+Adjust all locations of update_page_count() in vmem.c to use
+POPULATE_IDENTITY instead of POPULATE_DIRECT as well. With this
+accounting is correct again:
 
-Notice the count number is 0.
+> cat /proc/meminfo
+DirectMap4k:       54264 kB
+DirectMap1M:     8334336 kB
 
-[CAUSE]
-There is no concrete evidence yet, but considering 0 -> 1 is also a
-single bit flipped, it's possible that hardware memory bitflip is
-involved, causing the on-disk extent tree to be corrupted.
-
-[FIX]
-To prevent us reading such corrupted extent item, or writing such
-damaged extent item back to disk, enhance the handling of
-BTRFS_EXTENT_DATA_REF_KEY and BTRFS_SHARED_DATA_REF_KEY keys for both
-inlined and key items, to detect such 0 ref count and reject them.
-
-CC: stable@vger.kernel.org # 5.4+
-Link: https://lore.kernel.org/linux-btrfs/7c69dd49-c346-4806-86e7-e6f863a66f48@app.fastmail.com/
-Reported-by: Frankie Fisher <frankie@terrorise.me.uk>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address spaces")
+Cc: stable@vger.kernel.org
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/s390/boot/vmem.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1527,6 +1527,11 @@ static int check_extent_item(struct exte
- 					   dref_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_extent_data_ref_count(leaf, dref);
- 			break;
- 		/* Contains parent bytenr and ref count */
-@@ -1539,6 +1544,11 @@ static int check_extent_item(struct exte
- 					   inline_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid shared data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_shared_data_ref_count(leaf, sref);
- 			break;
- 		case BTRFS_EXTENT_OWNER_REF_KEY:
-@@ -1611,8 +1621,18 @@ static int check_simple_keyed_refs(struc
- {
- 	u32 expect_item_size = 0;
- 
--	if (key->type == BTRFS_SHARED_DATA_REF_KEY)
-+	if (key->type == BTRFS_SHARED_DATA_REF_KEY) {
-+		struct btrfs_shared_data_ref *sref;
-+
-+		sref = btrfs_item_ptr(leaf, slot, struct btrfs_shared_data_ref);
-+		if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+			extent_err(leaf, slot,
-+		"invalid shared data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
-+
- 		expect_item_size = sizeof(struct btrfs_shared_data_ref);
-+	}
- 
- 	if (unlikely(btrfs_item_size(leaf, slot) != expect_item_size)) {
- 		generic_err(leaf, slot,
-@@ -1689,6 +1709,11 @@ static int check_extent_data_ref(struct
- 				   offset, leaf->fs_info->sectorsize);
- 			return -EUCLEAN;
+--- a/arch/s390/boot/vmem.c
++++ b/arch/s390/boot/vmem.c
+@@ -306,7 +306,7 @@ static void pgtable_pte_populate(pmd_t *
+ 			pages++;
  		}
-+		if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+			extent_err(leaf, slot,
-+	"invalid extent data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
  	}
- 	return 0;
+-	if (mode == POPULATE_DIRECT)
++	if (mode == POPULATE_IDENTITY)
+ 		update_page_count(PG_DIRECT_MAP_4K, pages);
  }
+ 
+@@ -339,7 +339,7 @@ static void pgtable_pmd_populate(pud_t *
+ 		}
+ 		pgtable_pte_populate(pmd, addr, next, mode);
+ 	}
+-	if (mode == POPULATE_DIRECT)
++	if (mode == POPULATE_IDENTITY)
+ 		update_page_count(PG_DIRECT_MAP_1M, pages);
+ }
+ 
+@@ -372,7 +372,7 @@ static void pgtable_pud_populate(p4d_t *
+ 		}
+ 		pgtable_pmd_populate(pud, addr, next, mode);
+ 	}
+-	if (mode == POPULATE_DIRECT)
++	if (mode == POPULATE_IDENTITY)
+ 		update_page_count(PG_DIRECT_MAP_2G, pages);
+ }
+ 
 
 
