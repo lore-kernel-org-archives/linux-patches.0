@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2787E0FF;
-	Mon, 23 Dec 2024 16:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E4419E971;
+	Mon, 23 Dec 2024 16:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970483; cv=none; b=O7OLW5RKFmoDpmQa+HEDliSst4evmrE2AypKISQG2RtvP6e6RluktwvvoCleyNBefR/+oba1aRjQ02NdCvL7Ueg42siqI6niwsZHNMtmGiroS6CRptDp+8DbXoe8hK2XmlGiSU414n02pE4fzoFfML5NFYJxeEgmYbQl0iBWtss=
+	t=1734970487; cv=none; b=JPC2TDhPN80QG4q5xI5sRYT4qw3iVVmPTytSnWaz6outIXktL+1nIx9tx871A7bFOnZFNy3arJj2/7YJrA2V1+eleMlYlibOWyVnlnBWA+2fHrQnhsF0K9C/ysBu3gggfDqVA0FvdW19AOTBLu4eH8xFAj9mykYBycbQBbeaTOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970483; c=relaxed/simple;
-	bh=B3Fopk/dk2mbH4as01KDoT1e7bKOaeRTfpV8Ix1etJU=;
+	s=arc-20240116; t=1734970487; c=relaxed/simple;
+	bh=uVyOVEAIiRL92sVkLAjcipmM2+pKf6YMzk/tjx4MR4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLRzggQK08vHqpUODvqUNAHtMgGQ6bgG3QbIovF4ClmrNVFmrcrALOosC5/1NPBinYtd3kTL8LPwSShstfteXBLDFrwgEusV9pHTCurVDkO+HB5LKvIFziT8b+GGKMtXl82q8/x/zsvul30STCq4nJxE+gSKJS+tT4kVt/s975M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oeODyKog; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TE+Otmk4Pq4vsJRvZ99WbSYL6aULYPJgIf9sSvVfBC7Oz7GvUqZO2xClq5RMPc8F4h0wRO6q7YknuaEoSszCIDDmu8J9Nz0eY7vsX0UG4R7BN9g2wjCtqaMQXPr/GNFFk6cJyq12r0Z2WRND38fzT+MoW+eReRURoKz4CJaB0fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3I4lTMG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oeODyKog"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497C3C4CED3;
-	Mon, 23 Dec 2024 16:14:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3I4lTMG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A4CC4CED3;
+	Mon, 23 Dec 2024 16:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970483;
-	bh=B3Fopk/dk2mbH4as01KDoT1e7bKOaeRTfpV8Ix1etJU=;
+	s=korg; t=1734970487;
+	bh=uVyOVEAIiRL92sVkLAjcipmM2+pKf6YMzk/tjx4MR4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeODyKog/DhZa7K4UXgf+lLcvaK7D5m3LwYMKoGh1gWFeE4+26Qq45FuHZ3tF/uS3
-	 eHHZreKBRGPQEony9P1iivEkQKAsymIv5qKtqLOZsMcjwHVVKyr5g4x6wUeIcnaLwa
-	 9j57EafwAVWo+GLpIhdwCEcA8Txthb4VIFWqmPD8=
+	b=k3I4lTMGxaSutJrrg1pMxaHHQIC5EupwLkoH9wMtbkm4zLrs8zu0VZ56PpZDpSAb+
+	 3qInXxIqLdE+8K2vVZOEhnx+XTMGq+5bu3huEPAMDhp4Ub4hhSI+UqOjUU4+SE572b
+	 70+8t/tdhJ7bi14X+fv6F6TMOLK7qKU4TH8xmDgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Jeff Xu <jeffxu@google.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 095/116] selftests/memfd: run sysctl tests when PID namespace support is enabled
-Date: Mon, 23 Dec 2024 16:59:25 +0100
-Message-ID: <20241223155403.255632420@linuxfoundation.org>
+	Daniel Swanemar <d.swanemar@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 067/116] USB: serial: option: add TCL IK512 MBIM & ECM
+Date: Mon, 23 Dec 2024 16:58:57 +0100
+Message-ID: <20241223155402.172844103@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -53,71 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Daniel Swanemar <d.swanemar@gmail.com>
 
-commit 6a75f19af16ff482cfd6085c77123aa0f464f8dd upstream.
+commit fdad4fb7c506bea8b419f70ff2163d99962e8ede upstream.
 
-The sysctl tests for vm.memfd_noexec rely on the kernel to support PID
-namespaces (i.e.  the kernel is built with CONFIG_PID_NS=y).  If the
-kernel the test runs on does not support PID namespaces, the first sysctl
-test will fail when attempting to spawn a new thread in a new PID
-namespace, abort the test, preventing the remaining tests from being run.
+Add the following TCL IK512 compositions:
 
-This is not desirable, as not all kernels need PID namespaces, but can
-still use the other features provided by memfd.  Therefore, only run the
-sysctl tests if the kernel supports PID namespaces.  Otherwise, skip those
-tests and emit an informative message to let the user know why the sysctl
-tests are not being run.
+0x0530: Modem + Diag + AT + MBIM
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=10000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1bbb ProdID=0530 Rev=05.04
+S:  Manufacturer=TCL
+S:  Product=TCL 5G USB Dongle
+S:  SerialNumber=3136b91a
+C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-Link: https://lkml.kernel.org/r/20241205192943.3228757-1-isaacmanjarres@google.com
-Fixes: 11f75a01448f ("selftests/memfd: add tests for MFD_NOEXEC_SEAL MFD_EXEC")
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Reviewed-by: Jeff Xu <jeffxu@google.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Kalesh Singh <kaleshsingh@google.com>
-Cc: <stable@vger.kernel.org>	[6.6+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+0x0640: ECM + Modem + Diag + AT
+T:  Bus=04 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  4 Spd=10000 MxCh= 0
+D:  Ver= 3.20 Cls=00(>ifc ) Sub=00 Prot=00 MxPS= 9 #Cfgs=  1
+P:  Vendor=1bbb ProdID=0640 Rev=05.04
+S:  Manufacturer=TCL
+S:  Product=TCL 5G USB Dongle
+S:  SerialNumber=3136b91a
+C:  #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=06 Prot=00 Driver=cdc_ether
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E:  Ad=0f(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+
+Signed-off-by: Daniel Swanemar <d.swanemar@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/memfd/memfd_test.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/tools/testing/selftests/memfd/memfd_test.c
-+++ b/tools/testing/selftests/memfd/memfd_test.c
-@@ -9,6 +9,7 @@
- #include <fcntl.h>
- #include <linux/memfd.h>
- #include <sched.h>
-+#include <stdbool.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <signal.h>
-@@ -1567,6 +1568,11 @@ static void test_share_fork(char *banner
- 	close(fd);
- }
- 
-+static bool pid_ns_supported(void)
-+{
-+	return access("/proc/self/ns/pid", F_OK) == 0;
-+}
-+
- int main(int argc, char **argv)
- {
- 	pid_t pid;
-@@ -1601,8 +1607,12 @@ int main(int argc, char **argv)
- 	test_seal_grow();
- 	test_seal_resize();
- 
--	test_sysctl_simple();
--	test_sysctl_nested();
-+	if (pid_ns_supported()) {
-+		test_sysctl_simple();
-+		test_sysctl_nested();
-+	} else {
-+		printf("PID namespaces are not supported; skipping sysctl tests\n");
-+	}
- 
- 	test_share_dup("SHARE-DUP", "");
- 	test_share_mmap("SHARE-MMAP", "");
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2385,6 +2385,10 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0530, 0xff),			/* TCL IK512 MBIM */
++	  .driver_info = NCTRL(1) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
++	  .driver_info = NCTRL(3) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
