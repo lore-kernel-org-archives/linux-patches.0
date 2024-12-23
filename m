@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8DB17A597;
-	Mon, 23 Dec 2024 16:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29321A8F80;
+	Mon, 23 Dec 2024 16:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970813; cv=none; b=A8HoFi+UxRi7B+GtFXACL7UlAAlnQ2kxbQiP3/I5AxKiJim9DZdkahBUeAQSthvNQ1skLyLz7mNH/d5BA66vUT10jK/y5ss1zbvH+zbPncCrefH3NnWQVkIvViYV2Kv1HDyJbYT2Vbo9UYB8P2worWXGHoafXGXijml8KDeytuA=
+	t=1734970816; cv=none; b=ZrDe/9/xDwKtWlYTb7UWwZu5rERwvPcPESkvWpafyS518ZO5NiSEd+tnRmoJLlS/YBwGkxeQcfQW2jx4485SqLfY+PK9yETIacq1xPKlEERVxBf/80YCdjBIGOlbqRVdlNFIJ/OGjY1QCSnC+JMBL7NHr/0vLV3Xgo+yX2yjNvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970813; c=relaxed/simple;
-	bh=QhQN8QXxB+Dv+FP2/tleFLw0lZdaqf4s+pwo6mzRTkI=;
+	s=arc-20240116; t=1734970816; c=relaxed/simple;
+	bh=NabjLuffXMoyjUN4I56XkkodVVX1OC+DdUuAX2jxPsM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rETEFinvIhDhYmgl1wg47ifZ8YuEINqyEwuEM3mxcPSvZIdpB60cBcQbt9Z6Y9+owwrGY9CPEH+VD5fqlkDpVsOctRWcIq7eZbWgZ7l4Q8lNJOPZS6pN1pm03UCR7SRY012gOhLln6JYmab7E3/8crr9lcCOOpCaebsSCTLpUIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1TmQYXr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECTyWYeZHLMDtJaGyNAXkJKIx8q6JO9hUYm2NJUh7avtZC5C0aSLUWI5GwP7jnWZfgYri5zLKdJVvYti4JjUUezt9MravBvT8cXpJUCcnzG7xzVKxq6r/BYrwJnilBm5hFkEMVjxk6uZwL9oV3cGhnQW2iL3JvTHbBnL2qGS9wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+ZkWVn4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1TmQYXr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2349C4CED3;
-	Mon, 23 Dec 2024 16:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+ZkWVn4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32894C4CED3;
+	Mon, 23 Dec 2024 16:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970813;
-	bh=QhQN8QXxB+Dv+FP2/tleFLw0lZdaqf4s+pwo6mzRTkI=;
+	s=korg; t=1734970816;
+	bh=NabjLuffXMoyjUN4I56XkkodVVX1OC+DdUuAX2jxPsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1TmQYXr8P+b2ylWCf+aJGAup7A7zOHfMpUyDgUqV6OxhIMLJK67tzZO9MHO1ur5H
-	 8lRCmE4XRH5x+JmXw/Qs0H3xVvMQUrv9Wu4J6e7q5NN8lD48e06x4UZ+W8eVyZFwht
-	 2aqUyFuoX+3tkQ4rcyGBxK92yaynPb69DE6vwyQo=
+	b=Z+ZkWVn4zLwGlfofh8dDBdZ7rR+xFQIRUOkCTZ5DjlP+dkJIHb5rR4c5ZMiZVXOxD
+	 8G7JoqqGPiOdShvqPWC3luNoVYGSaHwUgQvJbyzKsaGrEUTrBbWhEzjHEF0PSfMGgq
+	 hYTAP+htnfyZS3pSH3qBaeZXk2jX4IyAXfbCo520=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Shreenidhi Shedi <yesshedi@gmail.com>
-Subject: [PATCH 6.1 77/83] udf: Fix directory iteration for longer tail extents
-Date: Mon, 23 Dec 2024 16:59:56 +0100
-Message-ID: <20241223155356.624711093@linuxfoundation.org>
+	Jing Xia <jing.xia@unisoc.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Benoit Lize <lizeb@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 78/83] epoll: Add synchronous wakeup support for ep_poll_callback
+Date: Mon, 23 Dec 2024 16:59:57 +0100
+Message-ID: <20241223155356.669493159@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -50,32 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-commit 1ea1cd11c72d1405a6b98440a9d5ea82dfa07166 upstream.
+commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
 
-When directory's last extent has more that one block and its length is
-not multiple of a block side, the code wrongly decided to move to the
-next extent instead of processing the last partial block. This led to
-directory corruption. Fix the rounding issue.
+Now, the epoll only use wake_up() interface to wake up task.
+However, sometimes, there are epoll users which want to use
+the synchronous wakeup flag to hint the scheduler, such as
+Android binder driver.
+So add a wake_up_sync() define, and use the wake_up_sync()
+when the sync is true in ep_poll_callback().
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Cc: Shreenidhi Shedi <yesshedi@gmail.com>
+Co-developed-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
+Tested-by: Brian Geffon <bgeffon@google.com>
+Reviewed-by: Brian Geffon <bgeffon@google.com>
+Reported-by: Benoit Lize <lizeb@google.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: Brian Geffon <bgeffon@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/directory.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/eventpoll.c       |    5 ++++-
+ include/linux/wait.h |    1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/udf/directory.c
-+++ b/fs/udf/directory.c
-@@ -170,7 +170,7 @@ static struct buffer_head *udf_fiiter_br
- static int udf_fiiter_advance_blk(struct udf_fileident_iter *iter)
- {
- 	iter->loffset++;
--	if (iter->loffset < iter->elen >> iter->dir->i_blkbits)
-+	if (iter->loffset < DIV_ROUND_UP(iter->elen, 1<<iter->dir->i_blkbits))
- 		return 0;
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1237,7 +1237,10 @@ static int ep_poll_callback(wait_queue_e
+ 				break;
+ 			}
+ 		}
+-		wake_up(&ep->wq);
++		if (sync)
++			wake_up_sync(&ep->wq);
++		else
++			wake_up(&ep->wq);
+ 	}
+ 	if (waitqueue_active(&ep->poll_wait))
+ 		pwake++;
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -224,6 +224,7 @@ void __wake_up_pollfree(struct wait_queu
+ #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
+ #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
+ #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
++#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
  
- 	iter->loffset = 0;
+ #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
+ #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
 
 
