@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4C31A8F80;
-	Mon, 23 Dec 2024 16:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C355019E98B;
+	Mon, 23 Dec 2024 16:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970655; cv=none; b=jnElvrQfh+hE1doGB5tb7z7lxb0T7xKMPlS9iMMfxZQyM9KwvF99a93+iVVzwxILcIj/Xto75iEtTCmb04VO2rS2TUV3fIWScvktRnzD0FmtjW7z7cUihm5b3eAnSn2Mry/9Wudp6Z/5pFISF68USEaLkAtkiX/hekCZLP63BwY=
+	t=1734970658; cv=none; b=eIcqQPbM9TrjOX3eKxiRnkKAnOz4MmPl52TYqWkvY699/8koxcAoiuMNpjdSDHaIV/4e8wlLbIRXd/uEZrk6WiMjHi59IhBnP520QNnIlk77JgsnkZ+V1LC5qZAIDE6D237+VAKmxHd/8+woCbIuXHFNCw0Fvr6eG7AEsHc10XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970655; c=relaxed/simple;
-	bh=VBvn5aiNh1xc1Y8rH6GuFUqdLkiQXWaqq0pfyZehzMc=;
+	s=arc-20240116; t=1734970658; c=relaxed/simple;
+	bh=zA6Lf710iUsYQFFrOP+Z7wtSuMrJP7lJUDlUKsZXESY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DV8SCTukRp18jJNIJPMYMcBsB+j41B70g0RicJwPVjakLYiq1iIf5bqqEmWTPfFQXi3n1NXjWy3xnzThDGlnYQ9buygZAF+cj15dEHgOIOfMQX1CZbLmooSXYbIQZgMggL47p3ANgdQC9NMaj/+RYxBrnQxvsbGktymiTZpaVFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJYetiyW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncNUs93kDSjx350NLTfIbvoIbUmvNeVuPugN+guseY3WH/1b3Ubeazg+FM7ekF/BMxBj1sguzLwlpKLOnS7hK4wx4e8pqxWjm7dB3vfpOrumS6+zAPLjjGyr3kcZghs4EYpvYRWBvXD6+lGenpvGzfc6LtIXQFsHegtD3+92nww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/5MP5/Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJYetiyW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C65C4CED3;
-	Mon, 23 Dec 2024 16:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/5MP5/Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31431C4CED3;
+	Mon, 23 Dec 2024 16:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970655;
-	bh=VBvn5aiNh1xc1Y8rH6GuFUqdLkiQXWaqq0pfyZehzMc=;
+	s=korg; t=1734970658;
+	bh=zA6Lf710iUsYQFFrOP+Z7wtSuMrJP7lJUDlUKsZXESY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJYetiyW+Wp0R+iFtQycuGkrLZ3X4dFjbSookxPkYLPyDSXT2aW3PhCYtvoxdbfVH
-	 yrB9Y8c6j8gCSYXAJtiylj/ZdSUfem7uAMJs/WWmlHQ62S6LL5wqyzKXUBUEneyMuz
-	 y3nBecCyTQ4Qx6OzkJNNBaVR1wBBFU+KANu12ITg=
+	b=P/5MP5/QBL0b9T8l4pV1SI6r4cL8NcLHQqD4SKw//fzE2ijIC9bYzFi5BWJAYfHxK
+	 rsYJVsYLUnIdo3TYdu6nKY76XvJtohSt36cyUxecxDrmKzZiuCWvM89UUY0Jv4kEOG
+	 ItWcT5YfaST2SrdgUfsb4+1xbz5pzRbWTI/cye2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/83] net: ethernet: bgmac-platform: fix an OF node reference leak
-Date: Mon, 23 Dec 2024 16:59:08 +0100
-Message-ID: <20241223155354.774851160@linuxfoundation.org>
+Subject: [PATCH 6.1 03/83] PCI: Use preserve_config in place of pci_flags
+Date: Mon, 23 Dec 2024 16:58:42 +0100
+Message-ID: <20241223155353.776934002@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -52,49 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 0cb2c504d79e7caa3abade3f466750c82ad26f01 ]
+[ Upstream commit 7246a4520b4bf1494d7d030166a11b5226f6d508 ]
 
-The OF node obtained by of_parse_phandle() is not freed. Call
-of_node_put() to balance the refcount.
+Use preserve_config in place of checking for PCI_PROBE_ONLY flag to enable
+support for "linux,pci-probe-only" on a per host bridge basis.
 
-This bug was found by an experimental static analysis tool that I am
-developing.
+This also obviates the use of adding PCI_REASSIGN_ALL_BUS flag if
+!PCI_PROBE_ONLY, as pci_assign_unassigned_root_bus_resources() takes care
+of reassigning the resources that are not already claimed.
 
-Fixes: 1676aba5ef7e ("net: ethernet: bgmac: device tree phy enablement")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241214014912.2810315-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240508174138.3630283-5-vidyas@nvidia.com
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac-platform.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pci-host-common.c |  4 ----
+ drivers/pci/probe.c                      | 20 +++++++++-----------
+ 2 files changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac-platform.c b/drivers/net/ethernet/broadcom/bgmac-platform.c
-index b4381cd41979..3f4e8bac40c1 100644
---- a/drivers/net/ethernet/broadcom/bgmac-platform.c
-+++ b/drivers/net/ethernet/broadcom/bgmac-platform.c
-@@ -171,6 +171,7 @@ static int platform_phy_connect(struct bgmac *bgmac)
- static int bgmac_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
-+	struct device_node *phy_node;
- 	struct bgmac *bgmac;
- 	struct resource *regs;
- 	int ret;
-@@ -236,7 +237,9 @@ static int bgmac_probe(struct platform_device *pdev)
- 	bgmac->cco_ctl_maskset = platform_bgmac_cco_ctl_maskset;
- 	bgmac->get_bus_clock = platform_bgmac_get_bus_clock;
- 	bgmac->cmn_maskset32 = platform_bgmac_cmn_maskset32;
--	if (of_parse_phandle(np, "phy-handle", 0)) {
-+	phy_node = of_parse_phandle(np, "phy-handle", 0);
-+	if (phy_node) {
-+		of_node_put(phy_node);
- 		bgmac->phy_connect = platform_phy_connect;
- 	} else {
- 		bgmac->phy_connect = bgmac_phy_connect_direct;
+diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
+index d3924a44db02..fd3020a399cf 100644
+--- a/drivers/pci/controller/pci-host-common.c
++++ b/drivers/pci/controller/pci-host-common.c
+@@ -73,10 +73,6 @@ int pci_host_common_probe(struct platform_device *pdev)
+ 	if (IS_ERR(cfg))
+ 		return PTR_ERR(cfg);
+ 
+-	/* Do not reassign resources if probe only */
+-	if (!pci_has_flag(PCI_PROBE_ONLY))
+-		pci_add_flags(PCI_REASSIGN_ALL_BUS);
+-
+ 	bridge->sysdata = cfg;
+ 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
+ 	bridge->msi_domain = true;
+diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+index 5c1ab9ee65eb..fbb47954a96c 100644
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -3082,20 +3082,18 @@ int pci_host_probe(struct pci_host_bridge *bridge)
+ 
+ 	bus = bridge->bus;
+ 
++	/* If we must preserve the resource configuration, claim now */
++	if (bridge->preserve_config)
++		pci_bus_claim_resources(bus);
++
+ 	/*
+-	 * We insert PCI resources into the iomem_resource and
+-	 * ioport_resource trees in either pci_bus_claim_resources()
+-	 * or pci_bus_assign_resources().
++	 * Assign whatever was left unassigned. If we didn't claim above,
++	 * this will reassign everything.
+ 	 */
+-	if (pci_has_flag(PCI_PROBE_ONLY)) {
+-		pci_bus_claim_resources(bus);
+-	} else {
+-		pci_bus_size_bridges(bus);
+-		pci_bus_assign_resources(bus);
++	pci_assign_unassigned_root_bus_resources(bus);
+ 
+-		list_for_each_entry(child, &bus->children, node)
+-			pcie_bus_configure_settings(child);
+-	}
++	list_for_each_entry(child, &bus->children, node)
++		pcie_bus_configure_settings(child);
+ 
+ 	pci_bus_add_devices(bus);
+ 	return 0;
 -- 
 2.39.5
 
