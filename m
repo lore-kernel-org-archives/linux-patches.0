@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7008013BC0C;
-	Mon, 23 Dec 2024 16:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF54C188006;
+	Mon, 23 Dec 2024 16:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969964; cv=none; b=diR8xb0pEWJLzhwOGmbdm2mQhZxvVv0Yj801hyM1a3Y6qfME47cZ4+xVvy8odXBZRhwRD/PzxJEqdytTFHgK+99PyMD9riTBhT6M8AyGUtKaetLWDR0CiX/tPT3Qnw27df1eGMdZeqjsD55XQDCSFf4kTgYBTLgJgm3m+VNOM4Y=
+	t=1734969967; cv=none; b=MHKuuN7NceGfQp75BKu+4VY7lJkHdnygEjMHvVgqM4yP9W7ZSEGbXmyKd5tRgRWR8zS0kc+TENefTaGGm1c+930q60wzIaTeKB5Xj+/JBOuSMXIQosZzbvijE/IpO6NC32F8TPh6vu4j8RkLdRVUcpP5MAyl6EWuXPzpywqhgdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969964; c=relaxed/simple;
-	bh=rdiHS0AZ1fDpKcfplnNAD9VIXzSVQ9Mx3h3d+wVlxRs=;
+	s=arc-20240116; t=1734969967; c=relaxed/simple;
+	bh=+SKNky6p52CItMrDoyDR0lFQVh4NAS/pFzkizuMG+7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Du5uLGSCrS27Ez8XGYMpkV+eMWR5OQoEUgEjdhHhOYDb36SrW2BwtNY4FjWgfAJ+t6A/eE6FKs5XIhwmwlaRLFJapk8USlelzbAWB1deuiNhApCjGZprInNwHvtXPDgzKRVcnu12EzCxbVBUvweOXAPkMv6aWCGrbaiAPWi/Y9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cizvLaq8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GH66ngQBCQJNpzL6cY81zItfGiDBUYQMEdXILHrCwsca5eJ4xN/x7w4JqegtHpgiXct1S7rIOPBz6GfPHX4jVkXVctYmfEaJOTxw0MqAdJBmoguByJ5JkmyowWu2dkVB/WiMP5CvzLJexxAfqDJOBLgmShTa0ekrZ7a83W/dnvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTx9NbE8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cizvLaq8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0453DC4CED3;
-	Mon, 23 Dec 2024 16:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTx9NbE8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3211BC4CED3;
+	Mon, 23 Dec 2024 16:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969964;
-	bh=rdiHS0AZ1fDpKcfplnNAD9VIXzSVQ9Mx3h3d+wVlxRs=;
+	s=korg; t=1734969967;
+	bh=+SKNky6p52CItMrDoyDR0lFQVh4NAS/pFzkizuMG+7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cizvLaq8FGZISRrSAE0JFnSHlQapHdP6uxzRGT6HRus6b8cGK7AfOEx7IuWVBa/Tk
-	 dXJ5ZjYz4LX6I7krSpP24G7mmcGX8sJTFZzuQrjlBFa4libZyoGoIUqwFFEMd6HhgH
-	 gWBNR+zigkuZDWUVHq7Pxq0hKAuplRYU/Mr6zGf0=
+	b=qTx9NbE8H7Iz0UXXlYplHWbIMo5Ssehj9MKUWMxgrzRl2fzrU1eMedFyCJ+LiCOhm
+	 4T2zChS/Y9/xclhdhnJsQlA6W2FhGEvdPPrfDxNE9AxC4bR8cWdQlZm9PnTDKY50Tq
+	 p5MuBvh7mlOJrCCl1jJ3Yp7/Rn2iY+W053XJOns0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/160] block: avoid to reuse `hctx` not removed from cpuhp callback list
-Date: Mon, 23 Dec 2024 16:58:35 +0100
-Message-ID: <20241223155412.697000695@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 105/160] trace/ring-buffer: Do not use TP_printk() formatting for boot mapped buffers
+Date: Mon, 23 Dec 2024 16:58:36 +0100
+Message-ID: <20241223155412.738603698@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,56 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 85672ca9ceeaa1dcf2777a7048af5f4aee3fd02b ]
+commit 8cd63406d08110c8098e1efda8aef7ddab4db348 upstream.
 
-If the 'hctx' isn't removed from cpuhp callback list, we can't reuse it,
-otherwise use-after-free may be triggered.
+The TP_printk() of a TRACE_EVENT() is a generic printf format that any
+developer can create for their event. It may include pointers to strings
+and such. A boot mapped buffer may contain data from a previous kernel
+where the strings addresses are different.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202412172217.b906db7c-lkp@intel.com
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Fixes: 22465bbac53c ("blk-mq: move cpuhp callback registering out of q->sysfs_lock")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241218101617.3275704-3-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+One solution is to copy the event content and update the pointers by the
+recorded delta, but a simpler solution (for now) is to just use the
+print_fields() function to print these events. The print_fields() function
+just iterates the fields and prints them according to what type they are,
+and ignores the TP_printk() format from the event itself.
+
+To understand the difference, when printing via TP_printk() the output
+looks like this:
+
+  4582.696626: kmem_cache_alloc: call_site=getname_flags+0x47/0x1f0 ptr=00000000e70e10e0 bytes_req=4096 bytes_alloc=4096 gfp_flags=GFP_KERNEL node=-1 accounted=false
+  4582.696629: kmem_cache_alloc: call_site=alloc_empty_file+0x6b/0x110 ptr=0000000095808002 bytes_req=360 bytes_alloc=384 gfp_flags=GFP_KERNEL node=-1 accounted=false
+  4582.696630: kmem_cache_alloc: call_site=security_file_alloc+0x24/0x100 ptr=00000000576339c3 bytes_req=16 bytes_alloc=16 gfp_flags=GFP_KERNEL|__GFP_ZERO node=-1 accounted=false
+  4582.696653: kmem_cache_free: call_site=do_sys_openat2+0xa7/0xd0 ptr=00000000e70e10e0 name=names_cache
+
+But when printing via print_fields() (echo 1 > /sys/kernel/tracing/options/fields)
+the same event output looks like this:
+
+  4582.696626: kmem_cache_alloc: call_site=0xffffffff92d10d97 (-1831793257) ptr=0xffff9e0e8571e000 (-107689771147264) bytes_req=0x1000 (4096) bytes_alloc=0x1000 (4096) gfp_flags=0xcc0 (3264) node=0xffffffff (-1) accounted=(0)
+  4582.696629: kmem_cache_alloc: call_site=0xffffffff92d0250b (-1831852789) ptr=0xffff9e0e8577f800 (-107689770747904) bytes_req=0x168 (360) bytes_alloc=0x180 (384) gfp_flags=0xcc0 (3264) node=0xffffffff (-1) accounted=(0)
+  4582.696630: kmem_cache_alloc: call_site=0xffffffff92efca74 (-1829778828) ptr=0xffff9e0e8d35d3b0 (-107689640864848) bytes_req=0x10 (16) bytes_alloc=0x10 (16) gfp_flags=0xdc0 (3520) node=0xffffffff (-1) accounted=(0)
+  4582.696653: kmem_cache_free: call_site=0xffffffff92cfbea7 (-1831879001) ptr=0xffff9e0e8571e000 (-107689771147264) name=names_cache
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20241218141507.28389a1d@gandalf.local.home
+Fixes: 07714b4bb3f98 ("tracing: Handle old buffer mappings for event strings and functions")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-mq.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 1030875a3e95..d5995021815d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4421,6 +4421,15 @@ struct gendisk *blk_mq_alloc_disk_for_queue(struct request_queue *q,
- }
- EXPORT_SYMBOL(blk_mq_alloc_disk_for_queue);
- 
-+/*
-+ * Only hctx removed from cpuhp list can be reused
-+ */
-+static bool blk_mq_hctx_is_reusable(struct blk_mq_hw_ctx *hctx)
-+{
-+	return hlist_unhashed(&hctx->cpuhp_online) &&
-+		hlist_unhashed(&hctx->cpuhp_dead);
-+}
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -4377,6 +4377,15 @@ static enum print_line_t print_trace_fmt
+ 	if (event) {
+ 		if (tr->trace_flags & TRACE_ITER_FIELDS)
+ 			return print_event_fields(iter, event);
++		/*
++		 * For TRACE_EVENT() events, the print_fmt is not
++		 * safe to use if the array has delta offsets
++		 * Force printing via the fields.
++		 */
++		if ((tr->text_delta || tr->data_delta) &&
++		    event->type > __TRACE_LAST_TYPE)
++			return print_event_fields(iter, event);
 +
- static struct blk_mq_hw_ctx *blk_mq_alloc_and_init_hctx(
- 		struct blk_mq_tag_set *set, struct request_queue *q,
- 		int hctx_idx, int node)
-@@ -4430,7 +4439,7 @@ static struct blk_mq_hw_ctx *blk_mq_alloc_and_init_hctx(
- 	/* reuse dead hctx first */
- 	spin_lock(&q->unused_hctx_lock);
- 	list_for_each_entry(tmp, &q->unused_hctx_list, hctx_list) {
--		if (tmp->numa_node == node) {
-+		if (tmp->numa_node == node && blk_mq_hctx_is_reusable(tmp)) {
- 			hctx = tmp;
- 			break;
- 		}
--- 
-2.39.5
-
+ 		return event->funcs->trace(iter, sym_flags, event);
+ 	}
+ 
 
 
