@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522128827;
-	Mon, 23 Dec 2024 16:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C9617A597;
+	Mon, 23 Dec 2024 16:17:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970672; cv=none; b=pRTZMbqjZ52uy8sZot3KbadeqnsYghechej0/iaDdijyAfWDXlwa4gNAjGTII4YhAs17VzvV+fX84EEBYA3LmBerR01UAcAR3gZZwIaKb1JrIsJgCKWskTkT7CG0g0oM0mBObQxnZ3JmeFizc3RZr5Kh8i9B0REVGtqhKozePyI=
+	t=1734970676; cv=none; b=LZqtpChh7UtbzkWmMSSg+I6DFnmx084VpVYQjpJvM3I+Sun5G/WyyVD0Axh/hVaYY4RniLFv0TotKkrjFJdpcdO8qftwqMsA/3teC4vPv2hc3vP2papLc0HBKI+hThhgSDyVKK7eJ4y5ErqRF2r1jzvqoSCAbsqSSII22CW16eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970672; c=relaxed/simple;
-	bh=p1mGlyIeGlUIzmkCDfRMro/h7WRHlI5UaaAzcAq9+3Y=;
+	s=arc-20240116; t=1734970676; c=relaxed/simple;
+	bh=E+POcQj9O8gUZhC2/2otL8cPM4k7tL6r9A/3/hd4w44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s//QEFmA7IpV1lHJbAftBv65hF3y3uM4tjbWG8UVQHLTwXWbqcsZfFEQBACpfj53uqMN3tgJoXKu0LVq39NJPgBxleTNPnOD822wUKAd7mQRsnD2Kuel7mIWw/8+fqUS05UzyteIGXSf1KNS6DWgZ7iPI7HzLYtS9TqlnSdoZu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFELriv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EKAFi5rFD+5z5yY1xNqFyCQP6dJU7OYdQ9a2tsWnU6oXvhRn+irFOc9MzCstLGbEMTQpsVPh0DpFw8c77HrwjtAJhnpXBRfRJsqnitw9RRar1yUUi9rW71I6nianuTc05gBHqOHiNHuOLW+uo+yzgfUvs46HZV4RZKiHoe+PmzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWh180LD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFELriv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94D1C4CED3;
-	Mon, 23 Dec 2024 16:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWh180LD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A02C4CED3;
+	Mon, 23 Dec 2024 16:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970672;
-	bh=p1mGlyIeGlUIzmkCDfRMro/h7WRHlI5UaaAzcAq9+3Y=;
+	s=korg; t=1734970675;
+	bh=E+POcQj9O8gUZhC2/2otL8cPM4k7tL6r9A/3/hd4w44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFELriv46BcnOhwNFWHZvm7V1ov4uaJp1t7vStqiVkjmgGk6gjjkNH77Nlgt5czt7
-	 KYtGRCH6+EP26gmy+mdSvErv0NR4W6C6pL7+9Oo3d4/HuAt5SUVYIpLRySmFdoYSBn
-	 q26ny9jomDr4OV3hNhGOz4qdLVfbENWaIN8CuS+g=
+	b=BWh180LDIKBapu5t/fYsMTbsQli+KakUPwteHqoNbheDj6zFuO4AIlJI51BuJrEAw
+	 Ykm4d2NSa3EWKx5D8LpGJ9/xifh2ijCw48u4Z4RLJna24sFvXxuv9doa7YlIgTmToG
+	 hyv1/4N5cme+zHZmsLJjtoOckzx3wjRzDPsHRyFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ajit Khaparde <ajit.khaparde@broadcom.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Andy Gospodarek <gospo@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/83] ASoC: Intel: sof_sdw: add quirk for Dell SKU 0B8C
-Date: Mon, 23 Dec 2024 16:58:46 +0100
-Message-ID: <20241223155353.923708441@linuxfoundation.org>
+Subject: [PATCH 6.1 08/83] PCI: Add ACS quirk for Broadcom BCM5760X NIC
+Date: Mon, 23 Dec 2024 16:58:47 +0100
+Message-ID: <20241223155353.964022454@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -54,44 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Ajit Khaparde <ajit.khaparde@broadcom.com>
 
-[ Upstream commit 92d5b5930e7d55ca07b483490d6298eee828bbe4 ]
+[ Upstream commit 524e057b2d66b61f9b63b6db30467ab7b0bb4796 ]
 
-Jack detection needs to rely on JD2, as most other Dell
-AlderLake-based devices.
+The Broadcom BCM5760X NIC may be a multi-function device.
 
-Closes: https://github.com/thesofproject/linux/issues/5021
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20240624121119.91552-4-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+While it does not advertise an ACS capability, peer-to-peer transactions
+are not possible between the individual functions. So it is ok to treat
+them as fully isolated.
+
+Add an ACS quirk for this device so the functions can be in independent
+IOMMU groups and attached individually to userspace applications using
+VFIO.
+
+[kwilczynski: commit log]
+Link: https://lore.kernel.org/linux-pci/20240510204228.73435-1-ajit.khaparde@broadcom.com
+Signed-off-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Andy Gospodarek <gospo@broadcom.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/pci/quirks.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
-index cf501baf6f14..9cd85ab19c55 100644
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -387,6 +387,15 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
- 					RT711_JD2 |
- 					SOF_SDW_FOUR_SPK),
- 	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0B8C"),
-+		},
-+		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
-+					RT711_JD2),
-+	},
- 	{
- 		.callback = sof_sdw_quirk_cb,
- 		.matches = {
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index d0da564ac94b..2b3df65005ca 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -5008,6 +5008,10 @@ static const struct pci_dev_acs_enabled {
+ 	{ PCI_VENDOR_ID_BROADCOM, 0x1750, pci_quirk_mf_endpoint_acs },
+ 	{ PCI_VENDOR_ID_BROADCOM, 0x1751, pci_quirk_mf_endpoint_acs },
+ 	{ PCI_VENDOR_ID_BROADCOM, 0x1752, pci_quirk_mf_endpoint_acs },
++	{ PCI_VENDOR_ID_BROADCOM, 0x1760, pci_quirk_mf_endpoint_acs },
++	{ PCI_VENDOR_ID_BROADCOM, 0x1761, pci_quirk_mf_endpoint_acs },
++	{ PCI_VENDOR_ID_BROADCOM, 0x1762, pci_quirk_mf_endpoint_acs },
++	{ PCI_VENDOR_ID_BROADCOM, 0x1763, pci_quirk_mf_endpoint_acs },
+ 	{ PCI_VENDOR_ID_BROADCOM, 0xD714, pci_quirk_brcm_acs },
+ 	/* Amazon Annapurna Labs */
+ 	{ PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031, pci_quirk_al_acs },
 -- 
 2.39.5
 
