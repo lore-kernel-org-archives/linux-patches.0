@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9017E0FF;
-	Mon, 23 Dec 2024 16:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D771180C02;
+	Mon, 23 Dec 2024 16:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969644; cv=none; b=LgJ0Y9smRKXA9eIo/+Jbbq9wGH4K2XDf/2vq0a56l/g3W3TNqjQPOgSJGioBlwA7DP/TDaxMJSpDQ+PcE3GH3MSCdewJI5j444786AdxVQpfioOPFDyKQwDmZVPpKHpjtq7M0cA5dRcIgCaE5j7ZVT/L/VIvBhmF4t/2TBk1gR0=
+	t=1734969647; cv=none; b=aE+HAUKEon5n+PJpobJZkizHJQSgrhDTsa2+6UcRnvbJaT1c6yTg/BcTLxzTwGFGDNmYTV/9Y+kVF5D07XkIjxG5a6BuJ6vSe5HmJFpNfmhJV3aZt5pJUMExxOfoxCPBD3zYrbwDQz/DEqx4yuV4CSNAvLKTOQe42GNeM9DAgOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969644; c=relaxed/simple;
-	bh=94KQ7euNj0yJyTiobq+U7bpQbFaTgfbdsZCL7JyuFVM=;
+	s=arc-20240116; t=1734969647; c=relaxed/simple;
+	bh=n5bvR1/a0RkF4iJR1Hg1P0s3h+BpEDtyFolr9EavDfM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUOIQXtuE4w6B4LtKDcZoaPn1x7Y3FfbrJTLU4VdBzjY4pK5vovyMRGRpdcEPoBhHl/Wwd+nBwJv6E8O/pC5/fTrzLtlMFfIt7OTtv8dUu+Tv9tht1UqfUTbJZDlS/L92qz2kpR+59QR37NeyHOxt2TqJNgW+W1G0xVrI9CCRZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zus7FdCE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j2RwoYpucPyvFFs+sN/EU8zVebg6lRtB4MHQjISC4LtuscsUReKQpa2+Z+Ndfrm4sV9W6REDK54S6RgVogYOSAhz4BQWcPhn2qECm4gurtlFyjhINhbYlE6aNSLbrs41yaiDW61C6WmKaFXHiZcrsWHsjdaS7dA3l71j1lNJGsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzwDAxM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zus7FdCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873B3C4CED4;
-	Mon, 23 Dec 2024 16:00:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzwDAxM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01234C4CED4;
+	Mon, 23 Dec 2024 16:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969644;
-	bh=94KQ7euNj0yJyTiobq+U7bpQbFaTgfbdsZCL7JyuFVM=;
+	s=korg; t=1734969647;
+	bh=n5bvR1/a0RkF4iJR1Hg1P0s3h+BpEDtyFolr9EavDfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zus7FdCE3O2YjZ9vuV5W/nG4gpWNkV7gmjCc780ag7Ykevd8ljbmvTBUzX16QGioB
-	 h2dycV/rPpyk/huOCnYIDaqBwBbsoXptgh/Dhh9HKZLCzDGvwJ0qoXe56FxziNFX0P
-	 GA3Qa2qtbcAnjJEUV4I3OZGdtxOyKhmoK+br2zR4=
+	b=xzwDAxM7We4SQK7mFFh7hOcLLHNuGevVcQ7z4J6ZepC1xfL3JgKinWqjZFmobnpnZ
+	 IB+l7LYiPoenxbFTIy7RDqJcsOTM0J7TLC7sxuDlhyTRT3JOrlK02L8ALUrOmiLXIV
+	 oSEWrnw9g6Kndu19UqmSFrTengFSAkwMKOfAXg8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Li <adamli@os.amperecomputing.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/160] sched/fair: Fix NEXT_BUDDY
-Date: Mon, 23 Dec 2024 16:56:57 +0100
-Message-ID: <20241223155408.871892223@linuxfoundation.org>
+Subject: [PATCH 6.12 007/160] sched/fair: Fix sched_can_stop_tick() for fair tasks
+Date: Mon, 23 Dec 2024 16:56:58 +0100
+Message-ID: <20241223155408.920415010@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,67 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 493afbd187c4c9cc1642792c0d9ba400c3d6d90d ]
+[ Upstream commit c1f43c342e1f2e32f0620bf2e972e2a9ea0a1e60 ]
 
-Adam reports that enabling NEXT_BUDDY insta triggers a WARN in
-pick_next_entity().
+We can't stop the tick of a rq if there are at least 2 tasks enqueued in
+the whole hierarchy and not only at the root cfs rq.
 
-Moving clear_buddies() up before the delayed dequeue bits ensures
-no ->next buddy becomes delayed. Further ensure no new ->next buddy
-ever starts as delayed.
+rq->cfs.nr_running tracks the number of sched_entity at one level
+whereas rq->cfs.h_nr_running tracks all queued tasks in the
+hierarchy.
 
-Fixes: 152e11f6df29 ("sched/fair: Implement delayed dequeue")
-Reported-by: Adam Li <adamli@os.amperecomputing.com>
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
+Fixes: 11cc374f4643b ("sched_ext: Simplify scx_can_stop_tick() invocation in sched_can_stop_tick()")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Adam Li <adamli@os.amperecomputing.com>
-Link: https://lkml.kernel.org/r/670a0d54-e398-4b1f-8a6e-90784e2fdf89@amd.com
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Link: https://lore.kernel.org/r/20241202174606.4074512-2-vincent.guittot@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ kernel/sched/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 782ce70ebd1b..c467e389cd6f 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5484,6 +5484,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
- 	bool sleep = flags & DEQUEUE_SLEEP;
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 6cc12777bb11..d07dc87787df 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1300,7 +1300,7 @@ bool sched_can_stop_tick(struct rq *rq)
+ 	if (scx_enabled() && !scx_can_stop_tick(rq))
+ 		return false;
  
- 	update_curr(cfs_rq);
-+	clear_buddies(cfs_rq, se);
+-	if (rq->cfs.nr_running > 1)
++	if (rq->cfs.h_nr_running > 1)
+ 		return false;
  
- 	if (flags & DEQUEUE_DELAYED) {
- 		SCHED_WARN_ON(!se->sched_delayed);
-@@ -5500,8 +5501,6 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
- 
- 		if (sched_feat(DELAY_DEQUEUE) && delay &&
- 		    !entity_eligible(cfs_rq, se)) {
--			if (cfs_rq->next == se)
--				cfs_rq->next = NULL;
- 			update_load_avg(cfs_rq, se, 0);
- 			se->sched_delayed = 1;
- 			return false;
-@@ -5526,8 +5525,6 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
- 
- 	update_stats_dequeue_fair(cfs_rq, se, flags);
- 
--	clear_buddies(cfs_rq, se);
--
- 	update_entity_lag(cfs_rq, se);
- 	if (sched_feat(PLACE_REL_DEADLINE) && !sleep) {
- 		se->deadline -= se->vruntime;
-@@ -8786,7 +8783,7 @@ static void check_preempt_wakeup_fair(struct rq *rq, struct task_struct *p, int
- 	if (unlikely(throttled_hierarchy(cfs_rq_of(pse))))
- 		return;
- 
--	if (sched_feat(NEXT_BUDDY) && !(wake_flags & WF_FORK)) {
-+	if (sched_feat(NEXT_BUDDY) && !(wake_flags & WF_FORK) && !pse->sched_delayed) {
- 		set_next_buddy(pse);
- 	}
- 
+ 	/*
 -- 
 2.39.5
 
