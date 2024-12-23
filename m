@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB681AAE0B;
-	Mon, 23 Dec 2024 16:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE26A1B413F;
+	Mon, 23 Dec 2024 16:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970861; cv=none; b=V+AdqeuGvuJ1DIxsgStLoDaBno09NLAw2bQMugnFHP6OuRcERvXc7uJT1Szb88nGUEsj4wxUnxO9a//og5on+ZdAF5v3NepK/Q6cV9SuwgGphZebZwBikgeBTPDE42LAXPnB8AcjPkkUYwjNCzTjVBGwxWGRUIvkrla2yevHVqA=
+	t=1734970864; cv=none; b=M7ayAwRf3KDuTiuE/DpYY5XMKiAvE5PI17QI4HkRaIJjI6adBf4OhmvCM1NbPYl6K9mdZPLC421t5uo1BiyKn+UoA1DqUxR7YHH4LPGZxhY8zkojK6lQSnAZZSYcxEfo4wVaULADCjrQ3EM/5Y0glX+oPsdR70FBYvz8/BCrQJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970861; c=relaxed/simple;
-	bh=ITHgGocubsWl2qZKCulEaacQG2uFCEbORQHhBdbsCCQ=;
+	s=arc-20240116; t=1734970864; c=relaxed/simple;
+	bh=sU/hGM0VSC5OfwWsy+XbMQPlzwK1h240p6tMGWY545k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQezgk49C8b+HOxWDPkO5uXMGx+JhgfI1KrY3nRw74bM2URqGPVIYfsJGGstWtldc48iBP1HeEaDzednxUe7zH8PzF4wghekh5yDUWuGWfuRZBiEgqkFj6sbva45HyO5Ai8xaOaKwsz7tlNGxWe3IaIGIQTFOWNASVRmzwhH+D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hl6TaY1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYLj8CYfvJW/O+E5S1MlM/zqDCf+FwPNdI+1/1xBg+jlMJiDuHmgkqiw5lx4Q3tSR+/C5SRZYDNYQphLC7DJz/YH1n0wFTvUeKVbBGLRiaeKXU9w/BHtAtwfvtfawj6QJ3LgM9IjZle27dwDNXq1wxIoKKd5ZK9oDGvYyLyW9AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2iZn6ALU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hl6TaY1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8CDC4CED3;
-	Mon, 23 Dec 2024 16:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2iZn6ALU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0859BC4CED4;
+	Mon, 23 Dec 2024 16:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970861;
-	bh=ITHgGocubsWl2qZKCulEaacQG2uFCEbORQHhBdbsCCQ=;
+	s=korg; t=1734970864;
+	bh=sU/hGM0VSC5OfwWsy+XbMQPlzwK1h240p6tMGWY545k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hl6TaY1FXvFCIbJlYVoQ9OHJhjErj4dVkG+3Cw4/mdcpC70l61TuftZGMM1ANGCLR
-	 RUK16JGOZ5HZLqgyFusgniejP9t0+AplyYjS2qYm4YhJFk7TNd1qZGnRn9jmPU/Lct
-	 DtrTKLg5AK1KjTUy1v6wEbBSxjHaq/zjpEkt01zs=
+	b=2iZn6ALUH8f3/RMrZnl5jx27vyAu6wLpwIeFL2mOVI7CDZTw+nC8q+w1jNgqtKjb6
+	 rwyIQk29GTCoxQ+KeM4KUbVIoDZ49LW/LWPdv5TPbVutAVR41Dm0/uRRnA1/8zoRoz
+	 Nhgux3lzOcoqMRXcm+LfChkIG03GNVGoM28TvgFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+9260555647a5132edd48@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 72/83] nilfs2: prevent use of deleted inode
-Date: Mon, 23 Dec 2024 16:59:51 +0100
-Message-ID: <20241223155356.426045723@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 63/83] tracing: Add missing helper functions in event pointer dereference check
+Date: Mon, 23 Dec 2024 16:59:42 +0100
+Message-ID: <20241223155356.067401314@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -52,84 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 901ce9705fbb9f330ff1f19600e5daf9770b0175 upstream.
+commit 917110481f6bc1c96b1e54b62bb114137fbc6d17 upstream.
 
-syzbot reported a WARNING in nilfs_rmdir. [1]
+The process_pointer() helper function looks to see if various trace event
+macros are used. These macros are for storing data in the event. This
+makes it safe to dereference as the dereference will then point into the
+event on the ring buffer where the content of the data stays with the
+event itself.
 
-Because the inode bitmap is corrupted, an inode with an inode number that
-should exist as a ".nilfs" file was reassigned by nilfs_mkdir for "file0",
-causing an inode duplication during execution.  And this causes an
-underflow of i_nlink in rmdir operations.
+A few helper functions were missing. Those were:
 
-The inode is used twice by the same task to unmount and remove directories
-".nilfs" and "file0", it trigger warning in nilfs_rmdir.
+  __get_rel_dynamic_array()
+  __get_dynamic_array_len()
+  __get_rel_dynamic_array_len()
+  __get_rel_sockaddr()
 
-Avoid to this issue, check i_nlink in nilfs_iget(), if it is 0, it means
-that this inode has been deleted, and iput is executed to reclaim it.
+Also add a helper function find_print_string() to not need to use a middle
+man variable to test if the string exists.
 
-[1]
-WARNING: CPU: 1 PID: 5824 at fs/inode.c:407 drop_nlink+0xc4/0x110 fs/inode.c:407
-...
-Call Trace:
- <TASK>
- nilfs_rmdir+0x1b0/0x250 fs/nilfs2/namei.c:342
- vfs_rmdir+0x3a3/0x510 fs/namei.c:4394
- do_rmdir+0x3b5/0x580 fs/namei.c:4453
- __do_sys_rmdir fs/namei.c:4472 [inline]
- __se_sys_rmdir fs/namei.c:4470 [inline]
- __x64_sys_rmdir+0x47/0x50 fs/namei.c:4470
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Link: https://lkml.kernel.org/r/20241209065759.6781-1-konishi.ryusuke@gmail.com
-Fixes: d25006523d0b ("nilfs2: pathname operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9260555647a5132edd48
-Tested-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20241217024720.521836792@goodmis.org
+Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |    8 +++++++-
- fs/nilfs2/namei.c |    5 +++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ kernel/trace/trace_events.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -618,8 +618,14 @@ struct inode *nilfs_iget(struct super_bl
- 	inode = nilfs_iget_locked(sb, root, ino);
- 	if (unlikely(!inode))
- 		return ERR_PTR(-ENOMEM);
--	if (!(inode->i_state & I_NEW))
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -272,6 +272,15 @@ static bool test_field(const char *fmt,
+ 	return false;
+ }
+ 
++/* Look for a string within an argument */
++static bool find_print_string(const char *arg, const char *str, const char *end)
++{
++	const char *r;
 +
-+	if (!(inode->i_state & I_NEW)) {
-+		if (!inode->i_nlink) {
-+			iput(inode);
-+			return ERR_PTR(-ESTALE);
-+		}
- 		return inode;
-+	}
- 
- 	err = __nilfs_read_inode(sb, root, ino, inode);
- 	if (unlikely(err)) {
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -67,6 +67,11 @@ nilfs_lookup(struct inode *dir, struct d
- 		inode = NULL;
- 	} else {
- 		inode = nilfs_iget(dir->i_sb, NILFS_I(dir)->i_root, ino);
-+		if (inode == ERR_PTR(-ESTALE)) {
-+			nilfs_error(dir->i_sb,
-+					"deleted inode referenced: %lu", ino);
-+			return ERR_PTR(-EIO);
-+		}
++	r = strstr(arg, str);
++	return r && r < end;
++}
++
+ /* Return true if the argument pointer is safe */
+ static bool process_pointer(const char *fmt, int len, struct trace_event_call *call)
+ {
+@@ -290,9 +299,17 @@ static bool process_pointer(const char *
+ 		a = strchr(fmt, '&');
+ 		if ((a && (a < r)) || test_field(r, call))
+ 			return true;
+-	} else if ((r = strstr(fmt, "__get_dynamic_array(")) && r < e) {
++	} else if (find_print_string(fmt, "__get_dynamic_array(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_rel_dynamic_array(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_dynamic_array_len(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_rel_dynamic_array_len(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_sockaddr(", e)) {
+ 		return true;
+-	} else if ((r = strstr(fmt, "__get_sockaddr(")) && r < e) {
++	} else if (find_print_string(fmt, "__get_rel_sockaddr(", e)) {
+ 		return true;
  	}
- 
- 	return d_splice_alias(inode, dentry);
+ 	return false;
 
 
