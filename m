@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AEB7E0FF;
-	Mon, 23 Dec 2024 16:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D847E0FF;
+	Mon, 23 Dec 2024 16:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970471; cv=none; b=ZnaUICMeX2HSDVgsWKIYyimzVUzEwTb3TxBRfQVh+vVVyv8T4T/2xUcbmFkKD0deYGW9zy69xLAHvpaZeu47E6aO+VRDJdTsqLDK5/5jOS+hxa8dbT+BOk3iBDtf1M945/KD2KBqPlOf+XHwYLHk70q7pVlHGOtbyBu1m8eLw8E=
+	t=1734970475; cv=none; b=ktY7/Gb/2I16WW9U5/msQnjhAQTVe4J3gqlWW9My2iMPmHUeEouOtkfA1sgcY9XdH9c7Ic6HLjkJ3FCfWHfAum+ThhtknXt66YhhntJBShcOm89dFJtfucPwQwMXjAtteiNuduGH8GJEW/1n+9aR6dmynq/j8RtA2MA5Th6kOI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970471; c=relaxed/simple;
-	bh=F5PujeQGoYGJ4kPLuSYT4xVLamYbPvhRYQAqbPlU56c=;
+	s=arc-20240116; t=1734970475; c=relaxed/simple;
+	bh=JL7wiYyfLt60GWvEHjuiynmvzZYTnPeGzSdWIIq+wGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rYXgBzWhWf83O+e0H5qsD961dv9n5xnANGNnL3QTYxjruTIE5mXe7Em7FJbxZhq8NXifIc3MPKYWccJXdPlFm7HWofwuwAYVBBR5Mr4rnIqanInIzGQvYu3Opw8PXEmqMug+SQ8Rspl96JONolGwC2LVIP6ToCFifIr7YWUPKXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOuVbtii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ATvekxaRkS5RT0br7mJNrtG0WCz3+btDKVvb6A1vFxc42yi+9UZ4O456yOgzeLZ18xKZOQjj2CGu9AU++RbJyAW5mPgklE+gPNlZ9/zV0W8ZmeVl62G20V8nw3TwKtF27sJkHIqJWHsooYCKeFh/jNXW1enbqVQjjt1594Wcbbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrFuh2WX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOuVbtii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37EB5C4CED3;
-	Mon, 23 Dec 2024 16:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrFuh2WX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1F2C4CED3;
+	Mon, 23 Dec 2024 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970471;
-	bh=F5PujeQGoYGJ4kPLuSYT4xVLamYbPvhRYQAqbPlU56c=;
+	s=korg; t=1734970475;
+	bh=JL7wiYyfLt60GWvEHjuiynmvzZYTnPeGzSdWIIq+wGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gOuVbtiisR4K3QuI+kzy/M8soZ/wov1eQr9pHuYwiKgDG9ws0dpqTDwu4to2Uj3Hw
-	 LsmZ8tBex6X9P3r0xHbuhoWxCgQTgtd0M6Hffg0mY8ozaWvszmDFM/8UgUwp9c/Jms
-	 ZHsvlX/K6Gw1h0mLMIJBOlRpPgFS+49nSc3X/4+k=
+	b=xrFuh2WX4U0ShT/91TDUa79xuVPKocYgveoUVvldsGV+wjHwEb0/THil7pBrlynqT
+	 SwuUkDZtU5rzagUHaRmilCTIilGOJICdLuwlfOyBBhLYHAlbMinG6X8EfE6nwZ2KQ1
+	 zIW7KLxwQQ3U2OWo99qwYiXp3iXWiAli5yIFvE3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Cain <bcain@quicinc.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 066/116] hexagon: Disable constant extender optimization for LLVM prior to 19.1.0
-Date: Mon, 23 Dec 2024 16:58:56 +0100
-Message-ID: <20241223155402.126710782@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 093/116] tracing: Add missing helper functions in event pointer dereference check
+Date: Mon, 23 Dec 2024 16:59:23 +0100
+Message-ID: <20241223155403.178997458@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -51,52 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit aef25be35d23ec768eed08bfcf7ca3cf9685bc28 upstream.
+commit 917110481f6bc1c96b1e54b62bb114137fbc6d17 upstream.
 
-The Hexagon-specific constant extender optimization in LLVM may crash on
-Linux kernel code [1], such as fs/bcache/btree_io.c after
-commit 32ed4a620c54 ("bcachefs: Btree path tracepoints") in 6.12:
+The process_pointer() helper function looks to see if various trace event
+macros are used. These macros are for storing data in the event. This
+makes it safe to dereference as the dereference will then point into the
+event on the ring buffer where the content of the data stays with the
+event itself.
 
-  clang: llvm/lib/Target/Hexagon/HexagonConstExtenders.cpp:745: bool (anonymous namespace)::HexagonConstExtenders::ExtRoot::operator<(const HCE::ExtRoot &) const: Assertion `ThisB->getParent() == OtherB->getParent()' failed.
-  Stack dump:
-  0.      Program arguments: clang --target=hexagon-linux-musl ... fs/bcachefs/btree_io.c
-  1.      <eof> parser at end of file
-  2.      Code generation
-  3.      Running pass 'Function Pass Manager' on module 'fs/bcachefs/btree_io.c'.
-  4.      Running pass 'Hexagon constant-extender optimization' on function '@__btree_node_lock_nopath'
+A few helper functions were missing. Those were:
 
-Without assertions enabled, there is just a hang during compilation.
+  __get_rel_dynamic_array()
+  __get_dynamic_array_len()
+  __get_rel_dynamic_array_len()
+  __get_rel_sockaddr()
 
-This has been resolved in LLVM main (20.0.0) [2] and backported to LLVM
-19.1.0 but the kernel supports LLVM 13.0.1 and newer, so disable the
-constant expander optimization using the '-mllvm' option when using a
-toolchain that is not fixed.
+Also add a helper function find_print_string() to not need to use a middle
+man variable to test if the string exists.
 
 Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/issues/99714 [1]
-Link: https://github.com/llvm/llvm-project/commit/68df06a0b2998765cb0a41353fcf0919bbf57ddb [2]
-Link: https://github.com/llvm/llvm-project/commit/2ab8d93061581edad3501561722ebd5632d73892 [3]
-Reviewed-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20241217024720.521836792@goodmis.org
+Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/hexagon/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/trace/trace_events.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/arch/hexagon/Makefile
-+++ b/arch/hexagon/Makefile
-@@ -32,3 +32,9 @@ KBUILD_LDFLAGS += $(ldflags-y)
- TIR_NAME := r19
- KBUILD_CFLAGS += -ffixed-$(TIR_NAME) -DTHREADINFO_REG=$(TIR_NAME) -D__linux__
- KBUILD_AFLAGS += -DTHREADINFO_REG=$(TIR_NAME)
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -274,6 +274,15 @@ static bool test_field(const char *fmt,
+ 	return false;
+ }
+ 
++/* Look for a string within an argument */
++static bool find_print_string(const char *arg, const char *str, const char *end)
++{
++	const char *r;
 +
-+# Disable HexagonConstExtenders pass for LLVM versions prior to 19.1.0
-+# https://github.com/llvm/llvm-project/issues/99714
-+ifneq ($(call clang-min-version, 190100),y)
-+KBUILD_CFLAGS += -mllvm -hexagon-cext=false
-+endif
++	r = strstr(arg, str);
++	return r && r < end;
++}
++
+ /* Return true if the argument pointer is safe */
+ static bool process_pointer(const char *fmt, int len, struct trace_event_call *call)
+ {
+@@ -292,9 +301,17 @@ static bool process_pointer(const char *
+ 		a = strchr(fmt, '&');
+ 		if ((a && (a < r)) || test_field(r, call))
+ 			return true;
+-	} else if ((r = strstr(fmt, "__get_dynamic_array(")) && r < e) {
++	} else if (find_print_string(fmt, "__get_dynamic_array(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_rel_dynamic_array(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_dynamic_array_len(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_rel_dynamic_array_len(", e)) {
++		return true;
++	} else if (find_print_string(fmt, "__get_sockaddr(", e)) {
+ 		return true;
+-	} else if ((r = strstr(fmt, "__get_sockaddr(")) && r < e) {
++	} else if (find_print_string(fmt, "__get_rel_sockaddr(", e)) {
+ 		return true;
+ 	}
+ 	return false;
 
 
