@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98BD1B4121;
-	Mon, 23 Dec 2024 16:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9741AF0CE;
+	Mon, 23 Dec 2024 16:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970029; cv=none; b=Beo0DOLGH5vOeAtnN4E4jEykynF374A+xDJtFo4Wj0cK/zfAROuT6UTYxvO9qGvLI3/8mcLcDLil1urBL0oPPuQeq/VskUaPpEWSFoIK6xScUkj4qBaK4ZO5uCCCrlRXV6MAxEfEgD683jJSX3VOgrEEPeB7PGWR5sL9/fxvEZQ=
+	t=1734970033; cv=none; b=guiVlWmMX1StE0a/m9Lm/ZUsWWzNNx+gSMLhbxpVolEe5RN3+BSUn8HTlv2s3IKzDGUlkReBGi/ZKW9SOGHDDoleBw6LbscITFQMkG6zcAMD2ElH9Q4u6bIfOiBVVuCH4psldfGL0avi3g0fIi0KogUSznIhBoSQm0TQr/GK7oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970029; c=relaxed/simple;
-	bh=rgX45OdS9AcwLF1WE9on6tBdQ/QkxP6T6U2XLcRm8io=;
+	s=arc-20240116; t=1734970033; c=relaxed/simple;
+	bh=nIe5WtJt4p6yhaxbcv1p/PPIocH50fkBtfkUXsbnEX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQXLST1XCKU2xHMXfJ271PILGpJi+nNbesgFMUnNYHaJVl2OWIuikE6rhYgsMh+I7+tDJyBXJMdMAanIf9QT7rxmR3rO/jzq3HtPJRfJNGt7LJqfqrCCUUTdcPeKESMPYObB13RIro2f7TKFwEe+Yi/9E8ADBU6QTYlWyA9NBEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWtESyiF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HS9TfPGV7K6d1bDzpfhzJMobUIOoRFSoobcJBV9oWWPKfKmUVr4FYkbnSIG69xb20jtifbl5paj5wEInTNwlOKhGCR3MEeYv8mBVXkZR0y8M/r92vB2e3TaMUMAVckGr95Zq1FJSlgNI8H2VqDGQQ3JgoR6+ywHhf4RMVp9ASyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oixfz5Mu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWtESyiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AFDC4CED6;
-	Mon, 23 Dec 2024 16:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oixfz5Mu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4A8C4CED3;
+	Mon, 23 Dec 2024 16:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970029;
-	bh=rgX45OdS9AcwLF1WE9on6tBdQ/QkxP6T6U2XLcRm8io=;
+	s=korg; t=1734970033;
+	bh=nIe5WtJt4p6yhaxbcv1p/PPIocH50fkBtfkUXsbnEX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hWtESyiFnPdhPcGOY5AlQLCMqR04Ex7cg9TTqs10Tgczf8rFAy2uPbfMUv29ocmHD
-	 9Y7gl3jvGypnGb1vmaFLW3eTYM8oU2WxYiPi4v45sNFlOtuVinT7t7/GWaa955wQM7
-	 BQxVTYWYybFViqqyi3wx89OyJr9IsGAe/qNzpU+E=
+	b=Oixfz5MunwyyV69XTBEfpi1vJ7zEwl2qPtSM0OD54pCKNg3QxY8eAZmxeq/qBjtDt
+	 +eCK005m58S/DMafFYfOhQ6Wd+JXJ9RhFs6VAKRe8S9JBSTQquMyqROqL2y2lBZqEf
+	 bYY7St3v9lyh9hwzgNi4q+0gYfOmw6YqKxPVv91s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dexuan Cui <decui@microsoft.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
 	Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH 6.12 124/160] tools: hv: Fix a complier warning in the fcopy uio daemon
-Date: Mon, 23 Dec 2024 16:58:55 +0100
-Message-ID: <20241223155413.569153203@linuxfoundation.org>
+Subject: [PATCH 6.12 125/160] x86/hyperv: Fix hv tsc page based sched_clock for hibernation
+Date: Mon, 23 Dec 2024 16:58:56 +0100
+Message-ID: <20241223155413.609306252@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,63 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dexuan Cui <decui@microsoft.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-commit cb1b78f1c726c938bd47497c1ab16b01ce967f37 upstream.
+commit bcc80dec91ee745b3d66f3e48f0ec2efdea97149 upstream.
 
-hv_fcopy_uio_daemon.c:436:53: warning: '%s' directive output may be truncated
-writing up to 14 bytes into a region of size 10 [-Wformat-truncation=]
-  436 |  snprintf(uio_dev_path, sizeof(uio_dev_path), "/dev/%s", uio_name);
+read_hv_sched_clock_tsc() assumes that the Hyper-V clock counter is
+bigger than the variable hv_sched_clock_offset, which is cached during
+early boot, but depending on the timing this assumption may be false
+when a hibernated VM starts again (the clock counter starts from 0
+again) and is resuming back (Note: hv_init_tsc_clocksource() is not
+called during hibernation/resume); consequently,
+read_hv_sched_clock_tsc() may return a negative integer (which is
+interpreted as a huge positive integer since the return type is u64)
+and new kernel messages are prefixed with huge timestamps before
+read_hv_sched_clock_tsc() grows big enough (which typically takes
+several seconds).
 
-Also added 'static' for the array 'desc[]'.
+Fix the issue by saving the Hyper-V clock counter just before the
+suspend, and using it to correct the hv_sched_clock_offset in
+resume. This makes hv tsc page based sched_clock continuous and ensures
+that post resume, it starts from where it left off during suspend.
+Override x86_platform.save_sched_clock_state and
+x86_platform.restore_sched_clock_state routines to correct this as soon
+as possible.
 
-Fixes: 82b0945ce2c2 ("tools: hv: Add new fcopy application based on uio driver")
-Cc: stable@vger.kernel.org # 6.10+
+Note: if Invariant TSC is available, the issue doesn't happen because
+1) we don't register read_hv_sched_clock_tsc() for sched clock:
+See commit e5313f1c5404 ("clocksource/drivers/hyper-v: Rework
+clocksource and sched clock setup");
+2) the common x86 code adjusts TSC similarly: see
+__restore_processor_state() ->  tsc_verify_tsc_adjust(true) and
+x86_platform.restore_sched_clock_state().
+
+Cc: stable@vger.kernel.org
+Fixes: 1349401ff1aa ("clocksource/drivers/hyper-v: Suspend/resume Hyper-V clocksource for hibernation")
+Co-developed-by: Dexuan Cui <decui@microsoft.com>
 Signed-off-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20240910004433.50254-1-decui@microsoft.com
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20240917053917.76787-1-namjain@linux.microsoft.com
 Signed-off-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20240910004433.50254-1-decui@microsoft.com>
+Message-ID: <20240917053917.76787-1-namjain@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/hv/hv_fcopy_uio_daemon.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/mshyperv.c     |   58 +++++++++++++++++++++++++++++++++++++
+ drivers/clocksource/hyperv_timer.c |   14 ++++++++
+ include/clocksource/hyperv_timer.h |    2 +
+ 3 files changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/tools/hv/hv_fcopy_uio_daemon.c b/tools/hv/hv_fcopy_uio_daemon.c
-index 7a00f3066a98..12743d7f164f 100644
---- a/tools/hv/hv_fcopy_uio_daemon.c
-+++ b/tools/hv/hv_fcopy_uio_daemon.c
-@@ -35,8 +35,6 @@
- #define WIN8_SRV_MINOR		1
- #define WIN8_SRV_VERSION	(WIN8_SRV_MAJOR << 16 | WIN8_SRV_MINOR)
+--- a/arch/x86/kernel/cpu/mshyperv.c
++++ b/arch/x86/kernel/cpu/mshyperv.c
+@@ -223,6 +223,63 @@ static void hv_machine_crash_shutdown(st
+ 	hyperv_cleanup();
+ }
+ #endif /* CONFIG_CRASH_DUMP */
++
++static u64 hv_ref_counter_at_suspend;
++static void (*old_save_sched_clock_state)(void);
++static void (*old_restore_sched_clock_state)(void);
++
++/*
++ * Hyper-V clock counter resets during hibernation. Save and restore clock
++ * offset during suspend/resume, while also considering the time passed
++ * before suspend. This is to make sure that sched_clock using hv tsc page
++ * based clocksource, proceeds from where it left off during suspend and
++ * it shows correct time for the timestamps of kernel messages after resume.
++ */
++static void save_hv_clock_tsc_state(void)
++{
++	hv_ref_counter_at_suspend = hv_read_reference_counter();
++}
++
++static void restore_hv_clock_tsc_state(void)
++{
++	/*
++	 * Adjust the offsets used by hv tsc clocksource to
++	 * account for the time spent before hibernation.
++	 * adjusted value = reference counter (time) at suspend
++	 *                - reference counter (time) now.
++	 */
++	hv_adj_sched_clock_offset(hv_ref_counter_at_suspend - hv_read_reference_counter());
++}
++
++/*
++ * Functions to override save_sched_clock_state and restore_sched_clock_state
++ * functions of x86_platform. The Hyper-V clock counter is reset during
++ * suspend-resume and the offset used to measure time needs to be
++ * corrected, post resume.
++ */
++static void hv_save_sched_clock_state(void)
++{
++	old_save_sched_clock_state();
++	save_hv_clock_tsc_state();
++}
++
++static void hv_restore_sched_clock_state(void)
++{
++	restore_hv_clock_tsc_state();
++	old_restore_sched_clock_state();
++}
++
++static void __init x86_setup_ops_for_tsc_pg_clock(void)
++{
++	if (!(ms_hyperv.features & HV_MSR_REFERENCE_TSC_AVAILABLE))
++		return;
++
++	old_save_sched_clock_state = x86_platform.save_sched_clock_state;
++	x86_platform.save_sched_clock_state = hv_save_sched_clock_state;
++
++	old_restore_sched_clock_state = x86_platform.restore_sched_clock_state;
++	x86_platform.restore_sched_clock_state = hv_restore_sched_clock_state;
++}
+ #endif /* CONFIG_HYPERV */
  
--#define MAX_FOLDER_NAME		15
--#define MAX_PATH_LEN		15
- #define FCOPY_UIO		"/sys/bus/vmbus/devices/eb765408-105f-49b6-b4aa-c123b64d17d4/uio"
+ static uint32_t  __init ms_hyperv_platform(void)
+@@ -579,6 +636,7 @@ static void __init ms_hyperv_init_platfo
  
- #define FCOPY_VER_COUNT		1
-@@ -51,7 +49,7 @@ static const int fw_versions[] = {
+ 	/* Register Hyper-V specific clocksource */
+ 	hv_init_clocksource();
++	x86_setup_ops_for_tsc_pg_clock();
+ 	hv_vtl_init_platform();
+ #endif
+ 	/*
+--- a/drivers/clocksource/hyperv_timer.c
++++ b/drivers/clocksource/hyperv_timer.c
+@@ -27,7 +27,8 @@
+ #include <asm/mshyperv.h>
  
- #define HV_RING_SIZE		0x4000 /* 16KB ring buffer size */
+ static struct clock_event_device __percpu *hv_clock_event;
+-static u64 hv_sched_clock_offset __ro_after_init;
++/* Note: offset can hold negative values after hibernation. */
++static u64 hv_sched_clock_offset __read_mostly;
  
--unsigned char desc[HV_RING_SIZE];
-+static unsigned char desc[HV_RING_SIZE];
+ /*
+  * If false, we're using the old mechanism for stimer0 interrupts
+@@ -470,6 +471,17 @@ static void resume_hv_clock_tsc(struct c
+ 	hv_set_msr(HV_MSR_REFERENCE_TSC, tsc_msr.as_uint64);
+ }
  
- static int target_fd;
- static char target_fname[PATH_MAX];
-@@ -409,8 +407,8 @@ int main(int argc, char *argv[])
- 	struct vmbus_br txbr, rxbr;
- 	void *ring;
- 	uint32_t len = HV_RING_SIZE;
--	char uio_name[MAX_FOLDER_NAME] = {0};
--	char uio_dev_path[MAX_PATH_LEN] = {0};
-+	char uio_name[NAME_MAX] = {0};
-+	char uio_dev_path[PATH_MAX] = {0};
++/*
++ * Called during resume from hibernation, from overridden
++ * x86_platform.restore_sched_clock_state routine. This is to adjust offsets
++ * used to calculate time for hv tsc page based sched_clock, to account for
++ * time spent before hibernation.
++ */
++void hv_adj_sched_clock_offset(u64 offset)
++{
++	hv_sched_clock_offset -= offset;
++}
++
+ #ifdef HAVE_VDSO_CLOCKMODE_HVCLOCK
+ static int hv_cs_enable(struct clocksource *cs)
+ {
+--- a/include/clocksource/hyperv_timer.h
++++ b/include/clocksource/hyperv_timer.h
+@@ -38,6 +38,8 @@ extern void hv_remap_tsc_clocksource(voi
+ extern unsigned long hv_get_tsc_pfn(void);
+ extern struct ms_hyperv_tsc_page *hv_get_tsc_page(void);
  
- 	static struct option long_options[] = {
- 		{"help",	no_argument,	   0,  'h' },
--- 
-2.47.1
-
++extern void hv_adj_sched_clock_offset(u64 offset);
++
+ static __always_inline bool
+ hv_read_tsc_page_tsc(const struct ms_hyperv_tsc_page *tsc_pg,
+ 		     u64 *cur_tsc, u64 *time)
 
 
