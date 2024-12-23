@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E5B188733;
-	Mon, 23 Dec 2024 16:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889B03D6D;
+	Mon, 23 Dec 2024 16:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970099; cv=none; b=m2W7AESZQPbu/A6JcWOcpMx1X5NHh8tyxD1aYkvVk76nu8Q8kNSUDC7nJFZ+fmRQRLCYKWVaRCS1uy+Z7E6fr3Ddv2TsfP1XoZrKA916C48WySOXuQzp1Pkprv6SHnnuBWveYMcBayRgecFKqmxb9BQIXklYknvv0cBE/tRW5lQ=
+	t=1734970102; cv=none; b=pzOULU8CHIThL2fhdiaqRC35pA5GpzKlCtMSOIz9Ljg+GScwhnLLSKPCW1QU9BplwG5PQG32XAwe9o1mrGgsnLceNGZUTWAAn9H1aK2FX4pPTQojRf9pcAhQ/gdrqPeEe98jT1aBr1KPoxajsYIY/tLSnCJXFzMGxshsPVEmg5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970099; c=relaxed/simple;
-	bh=Ih4eGGy2V14KKukndQNWdqQ3rt70/qHBOuN8GveacTQ=;
+	s=arc-20240116; t=1734970102; c=relaxed/simple;
+	bh=mWNBrBxMau4yJYJn1aYcb7rnzUOiaCe6s984NcT98mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiU4wBuPxg+ScFJ0Xrz7vX3B+Fs4AbBMR38lCqHJWTgfVEhGyknhhn+XD51Qcox6MmFeUMgo3E7ch5gkKPMyGPmhO/8hU4Vql1Gvm7SM9TPygJvSmt+RdwosB36/ExK59+nVTVnywD/zAYCu/cc9x7/5yJerIPErlgo5ASk+c2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeMy70Xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kn7uFUw7wpLSmOVfnmj4XcwFOXua62zvgAAYZIsZXQwfunISDAV9vN8Z3PWdxM/FmvUX6yA//99EYIyN4jdk42s19EJEdsXyQzj52g0w5FyzikuZkFBzNJfEa55AeCy/WVb28Q4M6wpEqdRg8BY2TDXvlaCT3AmXRTN+LZ/lWb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nPQf9R+4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeMy70Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A647AC4CED3;
-	Mon, 23 Dec 2024 16:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nPQf9R+4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA24C4CED3;
+	Mon, 23 Dec 2024 16:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970099;
-	bh=Ih4eGGy2V14KKukndQNWdqQ3rt70/qHBOuN8GveacTQ=;
+	s=korg; t=1734970102;
+	bh=mWNBrBxMau4yJYJn1aYcb7rnzUOiaCe6s984NcT98mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeMy70XhhsfO9P90+C7tJUZ5wO/+h2vdi5PhqCmtgDNK2ZpiJeIaQzgWTy4wZzmBT
-	 D4QPiFSBMEJecvahWv1fTYwrtc7Pl8edmABcSaRGfXdqMhcFfEcYm7UntfdMZNI9hS
-	 J/6HSuxExEXGubE2MxqKCYF+wp8p0Y+FBtvpF0H4=
+	b=nPQf9R+4fBrCC7pj0i7zC5/8N4zKqPNCONXy1gkLaYNdB5JuN3RCc/VcRYkwHlMcF
+	 YzE6+wQpBlpkPSsWxBdpUrMugk0CslUJ2GZ8fnUew9ZIX8l8jXZZa2KZKNb/uphMrv
+	 ZGcGz7JCjpdpqRw1JTCfiBYQIuDJxHPRXMCve3cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	David Wang <00107082@163.com>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Sourav Panda <souravpanda@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 143/160] nilfs2: fix buffer head leaks in calls to truncate_inode_pages()
-Date: Mon, 23 Dec 2024 16:59:14 +0100
-Message-ID: <20241223155414.326972501@linuxfoundation.org>
+Subject: [PATCH 6.12 114/160] alloc_tag: fix set_codetag_empty() when !CONFIG_MEM_ALLOC_PROFILING_DEBUG
+Date: Mon, 23 Dec 2024 16:58:45 +0100
+Message-ID: <20241223155413.077325971@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,99 +56,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-commit 6309b8ce98e9a18390b9fd8f03fc412f3c17aee9 upstream.
+commit 60da7445a142bd15e67f3cda915497781c3f781f upstream.
 
-When block_invalidatepage was converted to block_invalidate_folio, the
-fallback to block_invalidatepage in folio_invalidate() if the
-address_space_operations method invalidatepage (currently
-invalidate_folio) was not set, was removed.
+It was recently noticed that set_codetag_empty() might be used not only to
+mark NULL alloctag references as empty to avoid warnings but also to reset
+valid tags (in clear_page_tag_ref()).  Since set_codetag_empty() is
+defined as NOOP for CONFIG_MEM_ALLOC_PROFILING_DEBUG=n, such use of
+set_codetag_empty() leads to subtle bugs.  Fix set_codetag_empty() for
+CONFIG_MEM_ALLOC_PROFILING_DEBUG=n to reset the tag reference.
 
-Unfortunately, some pseudo-inodes in nilfs2 use empty_aops set by
-inode_init_always_gfp() as is, or explicitly set it to
-address_space_operations.  Therefore, with this change,
-block_invalidatepage() is no longer called from folio_invalidate(), and as
-a result, the buffer_head structures attached to these pages/folios are no
-longer freed via try_to_free_buffers().
-
-Thus, these buffer heads are now leaked by truncate_inode_pages(), which
-cleans up the page cache from inode evict(), etc.
-
-Three types of caches use empty_aops: gc inode caches and the DAT shadow
-inode used by GC, and b-tree node caches.  Of these, b-tree node caches
-explicitly call invalidate_mapping_pages() during cleanup, which involves
-calling try_to_free_buffers(), so the leak was not visible during normal
-operation but worsened when GC was performed.
-
-Fix this issue by using address_space_operations with invalidate_folio set
-to block_invalidate_folio instead of empty_aops, which will ensure the
-same behavior as before.
-
-Link: https://lkml.kernel.org/r/20241212164556.21338-1-konishi.ryusuke@gmail.com
-Fixes: 7ba13abbd31e ("fs: Turn block_invalidatepage into block_invalidate_folio")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>	[5.18+]
+Link: https://lkml.kernel.org/r/20241130001423.1114965-2-surenb@google.com
+Fixes: a8fc28dad6d5 ("alloc_tag: introduce clear_page_tag_ref() helper function")
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Reported-by: David Wang <00107082@163.com>
+Closes: https://lore.kernel.org/lkml/20241124074318.399027-1-00107082@163.com/
+Cc: David Wang <00107082@163.com>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Sourav Panda <souravpanda@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/btnode.c  |    1 +
- fs/nilfs2/gcinode.c |    2 +-
- fs/nilfs2/inode.c   |    5 +++++
- fs/nilfs2/nilfs.h   |    1 +
- 4 files changed, 8 insertions(+), 1 deletion(-)
+ include/linux/alloc_tag.h |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -35,6 +35,7 @@ void nilfs_init_btnc_inode(struct inode
- 	ii->i_flags = 0;
- 	memset(&ii->i_bmap_data, 0, sizeof(struct nilfs_bmap));
- 	mapping_set_gfp_mask(btnc_inode->i_mapping, GFP_NOFS);
-+	btnc_inode->i_mapping->a_ops = &nilfs_buffer_cache_aops;
- }
+--- a/include/linux/alloc_tag.h
++++ b/include/linux/alloc_tag.h
+@@ -48,7 +48,12 @@ static inline void set_codetag_empty(uni
+ #else /* CONFIG_MEM_ALLOC_PROFILING_DEBUG */
  
- void nilfs_btnode_cache_clear(struct address_space *btnc)
---- a/fs/nilfs2/gcinode.c
-+++ b/fs/nilfs2/gcinode.c
-@@ -163,7 +163,7 @@ int nilfs_init_gcinode(struct inode *ino
- 
- 	inode->i_mode = S_IFREG;
- 	mapping_set_gfp_mask(inode->i_mapping, GFP_NOFS);
--	inode->i_mapping->a_ops = &empty_aops;
-+	inode->i_mapping->a_ops = &nilfs_buffer_cache_aops;
- 
- 	ii->i_flags = 0;
- 	nilfs_bmap_init_gc(ii->i_bmap);
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -307,6 +307,10 @@ const struct address_space_operations ni
- 	.is_partially_uptodate  = block_is_partially_uptodate,
- };
- 
-+const struct address_space_operations nilfs_buffer_cache_aops = {
-+	.invalidate_folio	= block_invalidate_folio,
-+};
+ static inline bool is_codetag_empty(union codetag_ref *ref) { return false; }
+-static inline void set_codetag_empty(union codetag_ref *ref) {}
 +
- static int nilfs_insert_inode_locked(struct inode *inode,
- 				     struct nilfs_root *root,
- 				     unsigned long ino)
-@@ -706,6 +710,7 @@ struct inode *nilfs_iget_for_shadow(stru
- 	NILFS_I(s_inode)->i_flags = 0;
- 	memset(NILFS_I(s_inode)->i_bmap, 0, sizeof(struct nilfs_bmap));
- 	mapping_set_gfp_mask(s_inode->i_mapping, GFP_NOFS);
-+	s_inode->i_mapping->a_ops = &nilfs_buffer_cache_aops;
++static inline void set_codetag_empty(union codetag_ref *ref)
++{
++	if (ref)
++		ref->ct = NULL;
++}
  
- 	err = nilfs_attach_btree_node_cache(s_inode);
- 	if (unlikely(err)) {
---- a/fs/nilfs2/nilfs.h
-+++ b/fs/nilfs2/nilfs.h
-@@ -401,6 +401,7 @@ extern const struct file_operations nilf
- extern const struct inode_operations nilfs_file_inode_operations;
- extern const struct file_operations nilfs_file_operations;
- extern const struct address_space_operations nilfs_aops;
-+extern const struct address_space_operations nilfs_buffer_cache_aops;
- extern const struct inode_operations nilfs_dir_inode_operations;
- extern const struct inode_operations nilfs_special_inode_operations;
- extern const struct inode_operations nilfs_symlink_inode_operations;
+ #endif /* CONFIG_MEM_ALLOC_PROFILING_DEBUG */
+ 
 
 
