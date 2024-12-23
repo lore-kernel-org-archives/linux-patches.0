@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3A012D1F1;
-	Mon, 23 Dec 2024 16:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233C312D1F1;
+	Mon, 23 Dec 2024 16:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969924; cv=none; b=d8K3feujLhHlg5Iwl9nGzmqiexrZRIkKekbfjGHvB54vGHfBRz9ahp2iN2C2XdBLc537AG4hS4UjFmXmB0GPna3Jq4xtAOD4b6yufMhaPrYS+ZrhGkRw0hG5Tf+R+1lrZN0uyRmbQ8DQDy5oCuwG0JAA+oLSJVhbZIecLwfT9M4=
+	t=1734969927; cv=none; b=ISb8XekhgBeHvFv9kt7VLIy5k6tGLKQyo63nVcJLoxC9KFixmhRzJiewort0MhrhEgcNIneMeXsplJSgtPIucI1q7tJltoFTDv9YDBLzOECcK2tHABWODy/X+Gy4+xhlBpxbJARV2wfbdnzL2/Gqd0n6KHMSqxHOOBa0DqfzhvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969924; c=relaxed/simple;
-	bh=pUmTjMCXwZNBSStXSwTBgNp19Wz3VECA21ZB+Ppu/lc=;
+	s=arc-20240116; t=1734969927; c=relaxed/simple;
+	bh=h2iJtfjmAA/scvpyJ3gcblJDCXhCn0KUvApTiD/tCN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XosUDYr60rcvvi2i5KSdhDOYuppEg3H/HV4oINyNV8qKIAKSofR09T/VVuAHi3qaQm3Pom6ucN0WJgnDMSF2Z8890kQTSv/WDwNTL2bgj4HOEnNfAfgO/OdRYlpiNhhk8H/dcbfFx301dw60YecMOGVUir85zE+jcGCgydFIhqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oePSCWa2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AZL08l/aaeAX+AkTWmbrTWjfP9xQiZrVJe8CM+kkEeavXxnQKk6vFTIcLScUEzAx+jypAdZgB6aoZ15yolwVvPfvuTkTaJvy6mjjAJc8iqmCLnaRQ9GgT1Mrq0SP1dnItkD+1oVLi6co0VUmpUe7sfIkxyXGyGVdVjp/gayFHUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO4xzqNS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oePSCWa2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7ACC4CEDF;
-	Mon, 23 Dec 2024 16:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO4xzqNS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86076C4CED3;
+	Mon, 23 Dec 2024 16:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969923;
-	bh=pUmTjMCXwZNBSStXSwTBgNp19Wz3VECA21ZB+Ppu/lc=;
+	s=korg; t=1734969927;
+	bh=h2iJtfjmAA/scvpyJ3gcblJDCXhCn0KUvApTiD/tCN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oePSCWa2tDPS0eyza/KWiYNBxGdK3BSP1ePaIghx/cOcyvaFAS59JwcvvBIqorHHv
-	 ye1qHG/oZ7knpFUEY72lZc6w52QAFuoTceSB+RVLTNRKTF4wuDkcuAV6a1luwwhiBK
-	 eoxoQ3uZ6NeQaKpXYDIq2ehugwkmprJtYftEpb9o=
+	b=lO4xzqNS5RQzuaGnJMnDitSjdoEvhbHgyCJgQns5dZ9i7DWbd3rsxzEnBRDA8SC/Z
+	 spcKqNQx3aX7jLIyhlbRVRfhWIWluwuiVavT60maurtbtzJWCHrPWQ3e3qNQgurpLy
+	 qDZbTjP6iScgDq1O+UrFvlVwe1TzIuoTiJoYN9ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/160] drm/panel: himax-hx83102: Add a check to prevent NULL pointer dereference
-Date: Mon, 23 Dec 2024 16:58:24 +0100
-Message-ID: <20241223155412.284821550@linuxfoundation.org>
+Subject: [PATCH 6.12 094/160] drm/panel: novatek-nt35950: fix return value check in nt35950_probe()
+Date: Mon, 23 Dec 2024 16:58:25 +0100
+Message-ID: <20241223155412.321831494@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,38 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e1e1af9148dc4c866eda3fb59cd6ec3c7ea34b1d ]
+[ Upstream commit f8fd0968eff52cf092c0d517d17507ea2f6e5ea5 ]
 
-drm_mode_duplicate() could return NULL due to lack of memory,
-which will then call NULL pointer dereference. Add a check to
-prevent it.
+mipi_dsi_device_register_full() never returns NULL pointer, it
+will return ERR_PTR() when it fails, so replace the check with
+IS_ERR().
 
-Fixes: 0ef94554dc40 ("drm/panel: himax-hx83102: Break out as separate driver")
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Fixes: 623a3531e9cf ("drm/panel: Add driver for Novatek NT35950 DSI DriverIC panels")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241025073408.27481-3-zhangzekun11@huawei.com
+Link: https://lore.kernel.org/r/20241029123957.1588-1-yangyingliang@huaweicloud.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241025073408.27481-3-zhangzekun11@huawei.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241029123957.1588-1-yangyingliang@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-himax-hx83102.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-himax-hx83102.c b/drivers/gpu/drm/panel/panel-himax-hx83102.c
-index 8b48bba18131..3644a7544b93 100644
---- a/drivers/gpu/drm/panel/panel-himax-hx83102.c
-+++ b/drivers/gpu/drm/panel/panel-himax-hx83102.c
-@@ -565,6 +565,8 @@ static int hx83102_get_modes(struct drm_panel *panel,
- 	struct drm_display_mode *mode;
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35950.c b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+index b036208f9356..08b22b592ab0 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35950.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+@@ -481,9 +481,9 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
+ 			return dev_err_probe(dev, -EPROBE_DEFER, "Cannot get secondary DSI host\n");
  
- 	mode = drm_mode_duplicate(connector->dev, m);
-+	if (!mode)
-+		return -ENOMEM;
- 
- 	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
- 	drm_mode_set_name(mode);
+ 		nt->dsi[1] = mipi_dsi_device_register_full(dsi_r_host, info);
+-		if (!nt->dsi[1]) {
++		if (IS_ERR(nt->dsi[1])) {
+ 			dev_err(dev, "Cannot get secondary DSI node\n");
+-			return -ENODEV;
++			return PTR_ERR(nt->dsi[1]);
+ 		}
+ 		num_dsis++;
+ 	}
 -- 
 2.39.5
 
