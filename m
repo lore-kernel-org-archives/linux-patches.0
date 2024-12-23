@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC1512D1F1;
-	Mon, 23 Dec 2024 16:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF0212D1F1;
+	Mon, 23 Dec 2024 16:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969957; cv=none; b=bIb6VmXgBpo+pAv3Oyx0UKf84X0SeMl7DE6A/PCv/6CjjoOhjAtknlwH0/36OBAL3MMePaFG3dFmBsQ6K1rkZoiLvvI59o7cS5HO4bid4c4bnihbs1eNRu3u+YSFWWfOqCJms9u+IhEtqQBAWl7Ef/1prRuCyA4iJOTUOt4sTsQ=
+	t=1734969961; cv=none; b=BBRyWbQ5DCft03DVeIpCwtDwW1EeHJo0SBOqS0cPcbVkACASvWZGmnePamfDeGwiLdbWO3tEHZ9ltb+r/dPovbSka5Npue2WYebWywKHmkpcPnXrHEUWcuNRJr+GvYpFG//sYPLgbAZCXYitU1DKtB3ycDkQ49HrzEmskE13A0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969957; c=relaxed/simple;
-	bh=EndlIIbXvPA06XativTAo1qMnYrJa2HMhyYE1nXHmek=;
+	s=arc-20240116; t=1734969961; c=relaxed/simple;
+	bh=dzAx4GWQHzqgDOdkFbZ/yPvSVdwmBq8BTVLhkOGVhDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MB16TCGGpTXtJtUhLb8ZOo3l6aMDF5/mvk+9WwCl77pH31Rmyty8RdRKeSkRv2SCqaFEhH/rO2aD/imbt/BtMpDq95vd5vdLJ7ehvvwYMflA/lgOYNkA5BhrTZjFyrsIylhpX+DPyU9YHUFZ/k64+5jIxfc86c0lKqreiYqqhc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjdezxJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fS//ss6AkJ7bPxEes77zjXKz/JtRn3W8EBRxwS/RBBhWFQg0rMz1kbm8Tv+mWcxoYeDVWyAy7ZBVF3ZP5zswXYdoJW3+7/0qDSdDPE89Berrw82SzHtFdyqxYKQXPt6ge+JnrSveoQQt1ChSNmf/9wGUjir4rk/8twc2+LSqeF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaBTqItv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjdezxJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA03DC4CED6;
-	Mon, 23 Dec 2024 16:05:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaBTqItv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D971C4CED4;
+	Mon, 23 Dec 2024 16:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969957;
-	bh=EndlIIbXvPA06XativTAo1qMnYrJa2HMhyYE1nXHmek=;
+	s=korg; t=1734969960;
+	bh=dzAx4GWQHzqgDOdkFbZ/yPvSVdwmBq8BTVLhkOGVhDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjdezxJ75xUPMF1BOYupXoWUy2DwgPEhCidkWyjtWsuPPmgUssa9cWLbHSmqWp0na
-	 hnVvcDaqud9y2whWsEKuj7YuLc/df4S2knUSNjnTGBi1yQg44srdS0xRTHxkve3sRD
-	 o34rh0qQNVGC+f/BG5fI69Z/C6EclBRLbaYQvxG8=
+	b=WaBTqItvAZPEMaDVqNIaxGeoA7bwKQ2nQhuLeAnF4om9u7tH+jhcohyMGCEEwFZ/+
+	 EqsP50Nh2FjhpT5ROiGIm6neLSCuuK98LvMEGe/JcgI58xzaKgU/lCsxmlo2QIxl1F
+	 TH2W0aPQMP85TID8Y3I1Yd6/rx/KFun7bzdtdfKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Murad Masimov <m.masimov@maxima.ru>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 102/160] hwmon: (tmp513) Fix Current Register value interpretation
-Date: Mon, 23 Dec 2024 16:58:33 +0100
-Message-ID: <20241223155412.619843643@linuxfoundation.org>
+Subject: [PATCH 6.12 103/160] hwmon: (tmp513) Fix interpretation of values of Temperature Result and Limit Registers
+Date: Mon, 23 Dec 2024 16:58:34 +0100
+Message-ID: <20241223155412.656750747@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,30 +53,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Murad Masimov <m.masimov@maxima.ru>
 
-[ Upstream commit da1d0e6ba211baf6747db74c07700caddfd8a179 ]
+[ Upstream commit dd471e25770e7e632f736b90db1e2080b2171668 ]
 
-The value returned by the driver after processing the contents of the
-Current Register does not correspond to the TMP512/TMP513 specifications.
-A raw register value is converted to a signed integer value by a sign
-extension in accordance with the algorithm provided in the specification,
-but due to the off-by-one error in the sign bit index, the result is
-incorrect. Moreover, negative values will be reported as large positive
-due to missing sign extension from u32 to long.
+The values returned by the driver after processing the contents of the
+Temperature Result and the Temperature Limit Registers do not correspond to
+the TMP512/TMP513 specifications. A raw register value is converted to a
+signed integer value by a sign extension in accordance with the algorithm
+provided in the specification, but due to the off-by-one error in the sign
+bit index, the result is incorrect.
 
-According to the TMP512 and TMP513 datasheets, the Current Register (07h)
-is a 16-bit two's complement integer value. E.g., if regval = 1000 0011
-0000 0000, then the value must be (-32000 * lsb), but the driver will
-return (33536 * lsb).
-
-Fix off-by-one bug, and also cast data->curr_lsb_ua (which is of type u32)
-to long to prevent incorrect cast for negative values.
+According to the TMP512 and TMP513 datasheets, the Temperature Result (08h
+to 0Bh) and Limit (11h to 14h) Registers are 13-bit two's complement
+integer values, shifted left by 3 bits. The value is scaled by 0.0625
+degrees Celsius per bit.  E.g., if regval = 1 1110 0111 0000 000, the
+output should be -25 degrees, but the driver will return +487 degrees.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
 Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
 Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
-Link: https://lore.kernel.org/r/20241216173648.526-3-m.masimov@maxima.ru
-[groeck: Fixed description line length]
+Link: https://lore.kernel.org/r/20241216173648.526-4-m.masimov@maxima.ru
+[groeck: fixed description line length]
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -84,18 +81,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index d87fcea3ef24..2846b1cc515d 100644
+index 2846b1cc515d..1c2cb12071b8 100644
 --- a/drivers/hwmon/tmp513.c
 +++ b/drivers/hwmon/tmp513.c
-@@ -222,7 +222,7 @@ static int tmp51x_get_value(struct tmp51x_data *data, u8 reg, u8 pos,
+@@ -234,7 +234,7 @@ static int tmp51x_get_value(struct tmp51x_data *data, u8 reg, u8 pos,
+ 	case TMP51X_REMOTE_TEMP_LIMIT_2:
+ 	case TMP513_REMOTE_TEMP_LIMIT_3:
+ 		// 1lsb = 0.0625 degrees centigrade
+-		*val = sign_extend32(regval, 16) >> TMP51X_TEMP_SHIFT;
++		*val = sign_extend32(regval, 15) >> TMP51X_TEMP_SHIFT;
+ 		*val = DIV_ROUND_CLOSEST(*val * 625, 10);
  		break;
- 	case TMP51X_BUS_CURRENT_RESULT:
- 		// Current = (ShuntVoltage * CalibrationRegister) / 4096
--		*val = sign_extend32(regval, 16) * data->curr_lsb_ua;
-+		*val = sign_extend32(regval, 15) * (long)data->curr_lsb_ua;
- 		*val = DIV_ROUND_CLOSEST(*val, MILLI);
- 		break;
- 	case TMP51X_LOCAL_TEMP_RESULT:
+ 	case TMP51X_N_FACTOR_AND_HYST_1:
 -- 
 2.39.5
 
