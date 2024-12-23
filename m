@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0421B392B;
-	Mon, 23 Dec 2024 16:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CCB19E98B;
+	Mon, 23 Dec 2024 16:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970399; cv=none; b=tMrClF4RJdRLRbB3BDA27JkGXayGc5RO0yqnTpDyKublqSy/SRAdvEW+5G4HeYMWDY0wbl3cxpzBqx71okTrI8l2Nk6dn+kPcFYdFZF5+j6a4DpJv/ZJnNOrAULCM0sCyNpmIel27SDmT3mdiD+6wYQDklZOcCa+CQmiSYKJIB4=
+	t=1734970402; cv=none; b=PHMGahUnIpz6mI0AuTqMfmHg/IwDKR6wJk+a68FkHPVOEEa7VFJcAPGFTbHjYKmjb6cEHgmuYsc5PfWxNlxA6mU+4mUWKWNaVqD9NIgTGKZ7mrKDSzd5fWa0gRKsacMfGsk2aP85A4ii6MBefNmJKxsqbjfg7Xq1EvlA64ztvZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970399; c=relaxed/simple;
-	bh=ibyE78ACLR26I1AZfJ8/rX7/z3k9VNqNtvo2u1mPGpQ=;
+	s=arc-20240116; t=1734970402; c=relaxed/simple;
+	bh=0/3/DoYOsdoDUtbPUXYVigoKSE0LZmq0uJK4EPRbaJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Znt3F2bafSgug1w3IgCtxeq6rMNNHPWNDlEME7cFjeUgSdjwXlhQPvE7v8gn2d7yynidCLJY+Y9gtBNJn1fly1m9o0oRKFXnziXgtYOSavKX1+smKer2qohiGiaviYbdFQv7a37ITlnKBWyygKhNk/2A4kKtxS2CChpd796zdF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qF0Z2oQX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TNMmQ4T1NIPkqXFUQHbt1mydoUJzwDQT5uQsIMh9EzBPbedn9kPkqLceZqotChq4pDB7Bp5FymD0L91MjdjraN28jVlojLs4m7vYPVTtCVR9PGcq8ASpv1BGZNA6NDWy5EdasvIuBk0ax1IqMWiIC5G1VcC/U/hJ/XuRuKpkyoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cXJcGQfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qF0Z2oQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319EBC4CED3;
-	Mon, 23 Dec 2024 16:13:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cXJcGQfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D8EC4CED3;
+	Mon, 23 Dec 2024 16:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970398;
-	bh=ibyE78ACLR26I1AZfJ8/rX7/z3k9VNqNtvo2u1mPGpQ=;
+	s=korg; t=1734970402;
+	bh=0/3/DoYOsdoDUtbPUXYVigoKSE0LZmq0uJK4EPRbaJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qF0Z2oQXd0EKhzZlzH+pchS1KoR0B1oPlF/wGsQZP+q3x0NIX/A2KTd9QJ3qcRXY1
-	 pMSyp/paMwXaqPg2a9TY1aSDCI6utNaNnEPEDW0ZmWqTuwYQ9klGrXomBG9sNIxnpq
-	 NJuzQefBOH1f6XvEDxPEDtm7OYmoaFIcl/VNutE8=
+	b=cXJcGQfooQOsEt7tjwWsgzb0d7R3niZi278vtG/TN3a2TPORcyPqBi5ILm6fnVDKX
+	 LYZM2lju884T4kaeT9dgR41ueqCMNO+YiA+40zur3XmG4QJc9Dn7w6pYPxjwK9e2qN
+	 neu8qXLxYTnTOk3uA2LvJ3rTJjlxm/PKnZF9E0OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 064/116] i2c: riic: Always round-up when calculating bus period
-Date: Mon, 23 Dec 2024 16:58:54 +0100
-Message-ID: <20241223155402.048713033@linuxfoundation.org>
+	syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.6 073/116] drm/modes: Avoid divide by zero harder in drm_mode_vrefresh()
+Date: Mon, 23 Dec 2024 16:59:03 +0100
+Message-ID: <20241223155402.402267487@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -45,53 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit de6b43798d9043a7c749a0428dbb02d5fff156e5 upstream.
+commit 9398332f23fab10c5ec57c168b44e72997d6318e upstream.
 
-Currently, the RIIC driver may run the I2C bus faster than requested,
-which may cause subtle failures.  E.g. Biju reported a measured bus
-speed of 450 kHz instead of the expected maximum of 400 kHz on RZ/G2L.
+drm_mode_vrefresh() is trying to avoid divide by zero
+by checking whether htotal or vtotal are zero. But we may
+still end up with a div-by-zero of vtotal*htotal*...
 
-The initial calculation of the bus period uses DIV_ROUND_UP(), to make
-sure the actual bus speed never becomes faster than the requested bus
-speed.  However, the subsequent division-by-two steps do not use
-round-up, which may lead to a too-small period, hence a too-fast and
-possible out-of-spec bus speed.  E.g. on RZ/Five, requesting a bus speed
-of 100 resp. 400 kHz will yield too-fast target bus speeds of 100806
-resp. 403226 Hz instead of 97656 resp. 390625 Hz.
-
-Fix this by using DIV_ROUND_UP() in the subsequent divisions, too.
-
-Tested on RZ/A1H, RZ/A2M, and RZ/Five.
-
-Fixes: d982d66514192cdb ("i2c: riic: remove clock and frequency restrictions")
-Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: <stable@vger.kernel.org> # v4.15+
-Link: https://lore.kernel.org/r/c59aea77998dfea1b4456c4b33b55ab216fcbf5e.1732284746.git.geert+renesas@glider.be
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=622bba18029bcde672e1
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241129042629.18280-2-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-riic.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/drm_modes.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-riic.c
-+++ b/drivers/i2c/busses/i2c-riic.c
-@@ -324,7 +324,7 @@ static int riic_init_hw(struct riic_dev
- 		if (brl <= (0x1F + 3))
- 			break;
+--- a/drivers/gpu/drm/drm_modes.c
++++ b/drivers/gpu/drm/drm_modes.c
+@@ -1285,14 +1285,11 @@ EXPORT_SYMBOL(drm_mode_set_name);
+  */
+ int drm_mode_vrefresh(const struct drm_display_mode *mode)
+ {
+-	unsigned int num, den;
++	unsigned int num = 1, den = 1;
  
--		total_ticks /= 2;
-+		total_ticks = DIV_ROUND_UP(total_ticks, 2);
- 		rate /= 2;
- 	}
+ 	if (mode->htotal == 0 || mode->vtotal == 0)
+ 		return 0;
  
+-	num = mode->clock;
+-	den = mode->htotal * mode->vtotal;
+-
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+ 		num *= 2;
+ 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
+@@ -1300,6 +1297,12 @@ int drm_mode_vrefresh(const struct drm_d
+ 	if (mode->vscan > 1)
+ 		den *= mode->vscan;
+ 
++	if (check_mul_overflow(mode->clock, num, &num))
++		return 0;
++
++	if (check_mul_overflow(mode->htotal * mode->vtotal, den, &den))
++		return 0;
++
+ 	return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(num, 1000), den);
+ }
+ EXPORT_SYMBOL(drm_mode_vrefresh);
 
 
