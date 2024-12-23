@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3671917A597;
-	Mon, 23 Dec 2024 16:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AAB12C544;
+	Mon, 23 Dec 2024 16:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970539; cv=none; b=Hi8pSOly3jf5xVm6i6fAzA4xUMkVuh/Qxtpl+PHqF4jxFJGUSFiUvNL1+LO01995aDBp7yvQJQciyBoX9Ws5QIb/rR2CvOW+ebLwv3+q9OU7Ylqd7Zth29OGmSeg/ucg2C02Kiw4DPe1DqG1X8htI+5M5g6bAqz/Vjl/8oLVoSU=
+	t=1734970543; cv=none; b=P/aj+HJhS2eZg52NQZRL9NX5VtlhMqRVyexuKkFKtT/KQI8ri5+EG1sLFE+d5/s69uNWwjjSTYiJxrXQ15TVygQD2Mhqw24nYd++qsbFBz4vk8leKw8SHVeLZTUVzedda7yLQ6R9lcB+ihPfmdlscbw7ISmKR/ZZVmsU2zO7hI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970539; c=relaxed/simple;
-	bh=qt3tqmsbToMmp6J+ObtYB27KZgBJwSXaS0GcUQwzMW4=;
+	s=arc-20240116; t=1734970543; c=relaxed/simple;
+	bh=ejIutn26X5AQxV9BF/9oQzDFIc0/r6X+0NUFuQyi6iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dmy+to3MT13CswmdfIBEMHtMC5fgAFDCX/OaKo5DfLD2kY1naBuaTBD/fK2HrAQeAjLiwRx8/62SEIsCl7TnLHW+GZ92TDIguBNi3Ov5XM7nNYaGFyanHwITh7MYHFt7y98xB1tpuMhr4GK38hdyJmt2N8XhNK39aZemka03drk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSyhNSFp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OMzwz8NIXjEc+AWK3Ae//64KOQQFn7Xk+KVPtlk6/w1+FqM9tL1Bv3E9lt+fMO4R/gPIn7CxtjXhXda4AsOj9WCM5Ehug2wgOUJOM2GtysVNcyGPsle2hJoOqDmybau2rtikK2g5zgxtQFrRaX8nIeP4iIFdwXjGfmBlcyHkwH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsyWwdfM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSyhNSFp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48BDAC4CED3;
-	Mon, 23 Dec 2024 16:15:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsyWwdfM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED0AC4CED3;
+	Mon, 23 Dec 2024 16:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970538;
-	bh=qt3tqmsbToMmp6J+ObtYB27KZgBJwSXaS0GcUQwzMW4=;
+	s=korg; t=1734970542;
+	bh=ejIutn26X5AQxV9BF/9oQzDFIc0/r6X+0NUFuQyi6iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSyhNSFpZ+2SujoKfZTnQ61FXHEztkgEu0fjEtaofqtH6zZl12P8qgm/Cw2DMvcYB
-	 DKhNM2hMSWQ5FSw14u4Ba8ttcRou+xF7Mg8/Df02YuWiqZb1brDF1PYNy03Lsdr5V0
-	 tEwdXzORCFQFk+X5uYvw02vUbwYVU8tRDOJMhQwk=
+	b=vsyWwdfMJ9SXnAcJOr6lKFtnMAU4hy8fGLNsB0DqiglSb7/AQMbHI0RDwN63Flj3N
+	 1T8wYa4JuRIdVjpB7C1YXX1QaaiG5y07Anjk8FJS5ZA9MHwdE8E2vYzQ61Yvx6LuhW
+	 HhoOdIDM1VQZHVWs7OuV9bMp9WxfdoAqsSH2VELs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 113/116] io_uring/rw: avoid punting to io-wq directly
-Date: Mon, 23 Dec 2024 16:59:43 +0100
-Message-ID: <20241223155403.945367852@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 114/116] net: fec: refactor PPS channel configuration
+Date: Mon, 23 Dec 2024 16:59:44 +0100
+Message-ID: <20241223155403.982401783@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -45,103 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-Commit 6e6b8c62120a22acd8cb759304e4cd2e3215d488 upstream.
+commit bf8ca67e21671e7a56e31da45360480b28f185f1 upstream.
 
-kiocb_done() should care to specifically redirecting requests to io-wq.
-Remove the hopping to tw to then queue an io-wq, return -EAGAIN and let
-the core code io_uring handle offloading.
+Preparation patch to allow for PPS channel configuration, no functional
+change intended.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Tested-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/413564e550fe23744a970e1783dfa566291b0e6f.1710799188.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-(cherry picked from commit 6e6b8c62120a22acd8cb759304e4cd2e3215d488)
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Csókás, Bence <csokas.bence@prolan.hu>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    8 ++++----
- io_uring/io_uring.h |    1 -
- io_uring/rw.c       |    8 +-------
- 3 files changed, 5 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/freescale/fec_ptp.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -492,7 +492,7 @@ static void io_prep_async_link(struct io
- 	}
- }
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -84,8 +84,7 @@
+ #define FEC_CC_MULT	(1 << 31)
+ #define FEC_COUNTER_PERIOD	(1 << 31)
+ #define PPS_OUPUT_RELOAD_PERIOD	NSEC_PER_SEC
+-#define FEC_CHANNLE_0		0
+-#define DEFAULT_PPS_CHANNEL	FEC_CHANNLE_0
++#define DEFAULT_PPS_CHANNEL	0
  
--void io_queue_iowq(struct io_kiocb *req, struct io_tw_state *ts_dont_use)
-+static void io_queue_iowq(struct io_kiocb *req)
- {
- 	struct io_kiocb *link = io_prep_linked_timeout(req);
- 	struct io_uring_task *tctx = req->task->io_uring;
-@@ -1479,7 +1479,7 @@ void io_req_task_submit(struct io_kiocb
- 	if (unlikely(req->task->flags & PF_EXITING))
- 		io_req_defer_failed(req, -EFAULT);
- 	else if (req->flags & REQ_F_FORCE_ASYNC)
--		io_queue_iowq(req, ts);
-+		io_queue_iowq(req);
- 	else
- 		io_queue_sqe(req);
- }
-@@ -2044,7 +2044,7 @@ static void io_queue_async(struct io_kio
- 		break;
- 	case IO_APOLL_ABORTED:
- 		io_kbuf_recycle(req, 0);
--		io_queue_iowq(req, NULL);
-+		io_queue_iowq(req);
- 		break;
- 	case IO_APOLL_OK:
- 		break;
-@@ -2093,7 +2093,7 @@ static void io_queue_sqe_fallback(struct
- 		if (unlikely(req->ctx->drain_active))
- 			io_drain_req(req);
- 		else
--			io_queue_iowq(req, NULL);
-+			io_queue_iowq(req);
- 	}
- }
+ #define FEC_PTP_MAX_NSEC_PERIOD		4000000000ULL
+ #define FEC_PTP_MAX_NSEC_COUNTER	0x80000000ULL
+@@ -524,8 +523,9 @@ static int fec_ptp_enable(struct ptp_clo
+ 	unsigned long flags;
+ 	int ret = 0;
  
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -63,7 +63,6 @@ struct file *io_file_get_fixed(struct io
- void __io_req_task_work_add(struct io_kiocb *req, unsigned flags);
- bool io_alloc_async_data(struct io_kiocb *req);
- void io_req_task_queue(struct io_kiocb *req);
--void io_queue_iowq(struct io_kiocb *req, struct io_tw_state *ts_dont_use);
- void io_req_task_complete(struct io_kiocb *req, struct io_tw_state *ts);
- void io_req_task_queue_fail(struct io_kiocb *req, int ret);
- void io_req_task_submit(struct io_kiocb *req, struct io_tw_state *ts);
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -168,12 +168,6 @@ static inline loff_t *io_kiocb_update_po
- 	return NULL;
- }
++	fep->pps_channel = DEFAULT_PPS_CHANNEL;
++
+ 	if (rq->type == PTP_CLK_REQ_PPS) {
+-		fep->pps_channel = DEFAULT_PPS_CHANNEL;
+ 		fep->reload_period = PPS_OUPUT_RELOAD_PERIOD;
  
--static void io_req_task_queue_reissue(struct io_kiocb *req)
--{
--	req->io_task_work.func = io_queue_iowq;
--	io_req_task_work_add(req);
--}
--
- #ifdef CONFIG_BLOCK
- static bool io_resubmit_prep(struct io_kiocb *req)
- {
-@@ -359,7 +353,7 @@ static int kiocb_done(struct io_kiocb *r
- 	if (req->flags & REQ_F_REISSUE) {
- 		req->flags &= ~REQ_F_REISSUE;
- 		if (io_resubmit_prep(req))
--			io_req_task_queue_reissue(req);
-+			return -EAGAIN;
- 		else
- 			io_req_task_queue_fail(req, final_ret);
- 	}
+ 		ret = fec_ptp_enable_pps(fep, on);
+@@ -536,10 +536,9 @@ static int fec_ptp_enable(struct ptp_clo
+ 		if (rq->perout.flags)
+ 			return -EOPNOTSUPP;
+ 
+-		if (rq->perout.index != DEFAULT_PPS_CHANNEL)
++		if (rq->perout.index != fep->pps_channel)
+ 			return -EOPNOTSUPP;
+ 
+-		fep->pps_channel = DEFAULT_PPS_CHANNEL;
+ 		period.tv_sec = rq->perout.period.sec;
+ 		period.tv_nsec = rq->perout.period.nsec;
+ 		period_ns = timespec64_to_ns(&period);
 
 
