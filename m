@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6706A8827;
-	Mon, 23 Dec 2024 16:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E388827;
+	Mon, 23 Dec 2024 16:20:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970830; cv=none; b=UJPYsNmd8aVMDPj6Faro7/8GXg50Wo0vFTHgERdb9R5lrh8cB3Lw6ut25nROrgbk8dqf1Txh4pvtQ5qkhA1SdwRQRY80AvT6dh95Usk6w2gRFEwsisWII/my2LsM51iCL3B6Kx4C8kcKYx7IRCPvXTVVtU8YJylV7O6f7cMEd/Q=
+	t=1734970833; cv=none; b=Yig8uY5jwrvRlTPHzhXZpSPoxzy4qgOCpltxwUinzSDqHZa/18zs40YLoVO7NqDUZAkYuEJGAG2IcIKjqwQpXfvhzNY5Gu5tPeWZcC1CIfAQJzCz5lEvx4roKDh297llE2lu1K7rIIDcew3W2lEcZoZMWdzkJa5qi4A40noDvpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970830; c=relaxed/simple;
-	bh=jFZB2NKHrIVR2p1IP21MxJ86iexnkYzOx54Ki4Dwx0M=;
+	s=arc-20240116; t=1734970833; c=relaxed/simple;
+	bh=6YXyz/solEWs1CY3RlvTI08WHD1gvfrudJ4MIIACxVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Wsl/EwMCh5lYZEse72QLBooq7UZ8VVbyC8yKcmdoYb2WoiQJBHAtYLbHMZ9Lmwd7BwL3suLMMAI95S0c/Bm3v1H8tGDqDadY59e3K4khge8WKDYz/lKTFIVrHpJnEHPvIEKbqD4SL7BSKl7wn/QDdMEYbVTuSUYsITwVWF57KTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKxzbWBG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WpF5gRY0I4j6cB80Oq3f0sUzWMetHaTJ6IFCSwBFVyXduyCAm4deN5gRfQCFJDMX9XD8LxelRCIPBYWNL/n8iXo1SmC1bVzQczgr3Ade+/83do5WwTvuOgidIWUmMEAzkWrKJ4FTn8Hj7siQh2A59fCJfcqu7aGJdMGfxWW5BVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm00i1aZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKxzbWBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA923C4CED4;
-	Mon, 23 Dec 2024 16:20:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm00i1aZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AF8C4CED4;
+	Mon, 23 Dec 2024 16:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970830;
-	bh=jFZB2NKHrIVR2p1IP21MxJ86iexnkYzOx54Ki4Dwx0M=;
+	s=korg; t=1734970833;
+	bh=6YXyz/solEWs1CY3RlvTI08WHD1gvfrudJ4MIIACxVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKxzbWBG3qDHxWWcR3x72GUKLQ4jP/PaqRBlHEOKyW7zttqt2Xw8jWKZaCawZ1pwC
-	 46GQ2IlMUeAPaB+rY+JQBF/Ks+/nYqM3etMfrMAqimjuRsWwc60WJ6VtkAOVPUKQnv
-	 y2OVjX0tiMk9dCl9cq5X5Y3Q/wrtEIcVkEtRYLeQ=
+	b=Fm00i1aZJRfjI8MV98EC3sgbx+KLXAHza4A2RI2nxKB7eGLxIj5fgvZrVzEVf6wIG
+	 15SKH24ZTGW/CLAnZ5nQAgxHe1+PLcf3dfZXrROK0Ytc6WllCMtRxaG1bp04cI7vjj
+	 IcUd9Faps/7Q59atNB+OF0NdNcZ4csyzBTMwh/9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>
-Subject: [PATCH 6.1 82/83] dt-bindings: net: fec: add pps channel property
-Date: Mon, 23 Dec 2024 17:00:01 +0100
-Message-ID: <20241223155356.821894168@linuxfoundation.org>
+	Weining Lu <luweining@loongson.cn>,
+	Li Chen <chenli@loongson.cn>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 65/83] selftests/bpf: Use asm constraint "m" for LoongArch
+Date: Mon, 23 Dec 2024 16:59:44 +0100
+Message-ID: <20241223155356.142240354@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -47,46 +47,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 1aa772be0444a2bd06957f6d31865e80e6ae4244 upstream.
+commit 29d44cce324dab2bd86c447071a596262e7109b6 upstream.
 
-Add fsl,pps-channel property to select where to connect the PPS signal.
-This depends on the internal SoC routing and on the board, for example
-on the i.MX8 SoC it can be connected to an external pin (using channel 1)
-or to internal eDMA as DMA request (channel 0).
+Currently, LoongArch LLVM does not support the constraint "o" and no plan
+to support it, it only supports the similar constraint "m", so change the
+constraints from "nor" in the "else" case to arch-specific "nmr" to avoid
+the build error such as "unexpected asm memory constraint" for LoongArch.
 
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Fixes: 630301b0d59d ("selftests/bpf: Add basic USDT selftests")
+Suggested-by: Weining Lu <luweining@loongson.cn>
+Suggested-by: Li Chen <chenli@loongson.cn>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Cc: stable@vger.kernel.org
+Link: https://llvm.org/docs/LangRef.html#supported-constraint-code-list
+Link: https://github.com/llvm/llvm-project/blob/main/llvm/lib/Target/LoongArch/LoongArchISelDAGToDAG.cpp#L172
+Link: https://lore.kernel.org/bpf/20241219111506.20643-1-yangtiezhu@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/net/fsl,fec.yaml |    7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/testing/selftests/bpf/sdt.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/Documentation/devicetree/bindings/net/fsl,fec.yaml
-+++ b/Documentation/devicetree/bindings/net/fsl,fec.yaml
-@@ -176,6 +176,13 @@ properties:
-     description:
-       Register bits of stop mode control, the format is <&gpr req_gpr req_bit>.
- 
-+  fsl,pps-channel:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    default: 0
-+    description:
-+      Specifies to which timer instance the PPS signal is routed.
-+    enum: [0, 1, 2, 3]
-+
-   mdio:
-     $ref: mdio.yaml#
-     unevaluatedProperties: false
+--- a/tools/testing/selftests/bpf/sdt.h
++++ b/tools/testing/selftests/bpf/sdt.h
+@@ -102,6 +102,8 @@
+ # define STAP_SDT_ARG_CONSTRAINT        nZr
+ # elif defined __arm__
+ # define STAP_SDT_ARG_CONSTRAINT        g
++# elif defined __loongarch__
++# define STAP_SDT_ARG_CONSTRAINT        nmr
+ # else
+ # define STAP_SDT_ARG_CONSTRAINT        nor
+ # endif
 
 
