@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D21A8827;
-	Mon, 23 Dec 2024 16:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C762F17A597;
+	Mon, 23 Dec 2024 16:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970758; cv=none; b=Vu1JH16zcJ968uGTu2jSoxqjPbVw6Yb292jqJfPK3bxzhc4gcqdaTNsOiUxKnkxJVbPV7IzfLQnIRECqa3I+fyWRS+ktoewMtqDBHe+3MZIVj3ZaQk9faUsTLq3SNkEKWb9v5ZTejraFaMaeFoqMjzo+9FabiYcFaVIHWC/55o0=
+	t=1734970761; cv=none; b=Va/xVSgnRirFkksSaBvud+3+CdkxP05ROYN8tW94ehelTeSwQAc/R36EIbFrKbFfdMVcRoLEYeHwYeueTKCJezlEfgY+B31VmqlSd+oc8WnIxQRESJkqk2k5APPbL06TYaDQLqdFcdH+hR1S8RCWFAk0HPmaR6sbevBsBBdhH7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970758; c=relaxed/simple;
-	bh=zobIcUJfhsPmFU6v60otWIwbnVo5Z59Ll8MwsHejf0A=;
+	s=arc-20240116; t=1734970761; c=relaxed/simple;
+	bh=vgoCrlvSW/8GY9U9dbaEHgooTugww803Ag2CQ2HvHV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7uHobSB0FP5MTmFE8YlVGg8ojGThNV89Ee+lEqSJdiHzI7G8Q/BZL6weIYqUiR8Jf3zx+AWy863fP2XtbPTJVsUV9X+yaY6rubY1aw8oadLoO9bVj177BqDA2AwUeWEwDVMGGPnH+RYJbJ9h30gDe7n8JeL+/pnwqWlI9bqeS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lw3u0zpC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G4m0Vbe0ueZD8O9od6SCwWLElJfgTb5gA4TIrjxPjACQ0Sfx5AIo3WCdr5iKH52T0mjsR6LfD+8dulnYWww86ocfsMuyyv1Rei4/JvAP96fM3sdQK6XFK8Ts8xh+e2zfijtjR6+u+1gOQzTmOwee3jLy23Es24VWPis8Sj354LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTCjJWmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lw3u0zpC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B80C4CED3;
-	Mon, 23 Dec 2024 16:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTCjJWmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3501BC4CED3;
+	Mon, 23 Dec 2024 16:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970758;
-	bh=zobIcUJfhsPmFU6v60otWIwbnVo5Z59Ll8MwsHejf0A=;
+	s=korg; t=1734970761;
+	bh=vgoCrlvSW/8GY9U9dbaEHgooTugww803Ag2CQ2HvHV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lw3u0zpCSXVSWAxB2aC4D1mPzX1eRQ4bBuaK+yYsaZ+PBqvUQ5sGTtLGNXxWtDnZ2
-	 xIoye6G0/IC8bUYsqYn/DNcZVe7uM+n/XIquOMcBscDnmAJJMyDc8xuPMiVNv7Gn6W
-	 bhuF9y+obPZT3dP8XoWQV34C+Fg0mRIMqOoYvMtE=
+	b=KTCjJWmPCF0OXaXKLL57i0oM8PNODsq/CVINsUok+glwa+ePeurBFTwKtao7tYlOU
+	 7kaoWZDnpl6B/vPDWs82h7SgRHXUMZCBcPA4XXcc71Qw43ng2kJ6XpYXqAYKLe8Q92
+	 J1DWIRw/aJgUK1sUXLYobUlhB0xKrVy9EJ+kooOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 33/83] KVM: x86: Cache CPUID.0xD XSTATE offsets+sizes during module init
-Date: Mon, 23 Dec 2024 16:59:12 +0100
-Message-ID: <20241223155354.927946291@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 6.1 60/83] Drivers: hv: util: Avoid accessing a ringbuffer not initialized yet
+Date: Mon, 23 Dec 2024 16:59:39 +0100
+Message-ID: <20241223155355.952185182@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -51,161 +51,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit 1201f226c863b7da739f7420ddba818cedf372fc upstream.
+commit 07a756a49f4b4290b49ea46e089cbe6f79ff8d26 upstream.
 
-Snapshot the output of CPUID.0xD.[1..n] during kvm.ko initiliaization to
-avoid the overead of CPUID during runtime.  The offset, size, and metadata
-for CPUID.0xD.[1..n] sub-leaves does not depend on XCR0 or XSS values, i.e.
-is constant for a given CPU, and thus can be cached during module load.
+If the KVP (or VSS) daemon starts before the VMBus channel's ringbuffer is
+fully initialized, we can hit the panic below:
 
-On Intel's Emerald Rapids, CPUID is *wildly* expensive, to the point where
-recomputing XSAVE offsets and sizes results in a 4x increase in latency of
-nested VM-Enter and VM-Exit (nested transitions can trigger
-xstate_required_size() multiple times per transition), relative to using
-cached values.  The issue is easily visible by running `perf top` while
-triggering nested transitions: kvm_update_cpuid_runtime() shows up at a
-whopping 50%.
+hv_utils: Registering HyperV Utility Driver
+hv_vmbus: registering driver hv_utils
+...
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+CPU: 44 UID: 0 PID: 2552 Comm: hv_kvp_daemon Tainted: G E 6.11.0-rc3+ #1
+RIP: 0010:hv_pkt_iter_first+0x12/0xd0
+Call Trace:
+...
+ vmbus_recvpacket
+ hv_kvp_onchannelcallback
+ vmbus_on_event
+ tasklet_action_common
+ tasklet_action
+ handle_softirqs
+ irq_exit_rcu
+ sysvec_hyperv_stimer0
+ </IRQ>
+ <TASK>
+ asm_sysvec_hyperv_stimer0
+...
+ kvp_register_done
+ hvt_op_read
+ vfs_read
+ ksys_read
+ __x64_sys_read
 
-As measured via RDTSC from L2 (using KVM-Unit-Test's CPUID VM-Exit test
-and a slightly modified L1 KVM to handle CPUID in the fastpath), a nested
-roundtrip to emulate CPUID on Skylake (SKX), Icelake (ICX), and Emerald
-Rapids (EMR) takes:
+This can happen because the KVP/VSS channel callback can be invoked
+even before the channel is fully opened:
+1) as soon as hv_kvp_init() -> hvutil_transport_init() creates
+/dev/vmbus/hv_kvp, the kvp daemon can open the device file immediately and
+register itself to the driver by writing a message KVP_OP_REGISTER1 to the
+file (which is handled by kvp_on_msg() ->kvp_handle_handshake()) and
+reading the file for the driver's response, which is handled by
+hvt_op_read(), which calls hvt->on_read(), i.e. kvp_register_done().
 
-  SKX 11650
-  ICX 22350
-  EMR 28850
+2) the problem with kvp_register_done() is that it can cause the
+channel callback to be called even before the channel is fully opened,
+and when the channel callback is starting to run, util_probe()->
+vmbus_open() may have not initialized the ringbuffer yet, so the
+callback can hit the panic of NULL pointer dereference.
 
-Using cached values, the latency drops to:
+To reproduce the panic consistently, we can add a "ssleep(10)" for KVP in
+__vmbus_open(), just before the first hv_ringbuffer_init(), and then we
+unload and reload the driver hv_utils, and run the daemon manually within
+the 10 seconds.
 
-  SKX 6850
-  ICX 9000
-  EMR 7900
+Fix the panic by reordering the steps in util_probe() so the char dev
+entry used by the KVP or VSS daemon is not created until after
+vmbus_open() has completed. This reordering prevents the race condition
+from happening.
 
-The underlying issue is that CPUID itself is slow on ICX, and comically
-slow on EMR.  The problem is exacerbated on CPUs which support XSAVES
-and/or XSAVEC, as KVM invokes xstate_required_size() twice on each
-runtime CPUID update, and because there are more supported XSAVE features
-(CPUID for supported XSAVE feature sub-leafs is significantly slower).
-
- SKX:
-  CPUID.0xD.2  = 348 cycles
-  CPUID.0xD.3  = 400 cycles
-  CPUID.0xD.4  = 276 cycles
-  CPUID.0xD.5  = 236 cycles
-  <other sub-leaves are similar>
-
- EMR:
-  CPUID.0xD.2  = 1138 cycles
-  CPUID.0xD.3  = 1362 cycles
-  CPUID.0xD.4  = 1068 cycles
-  CPUID.0xD.5  = 910 cycles
-  CPUID.0xD.6  = 914 cycles
-  CPUID.0xD.7  = 1350 cycles
-  CPUID.0xD.8  = 734 cycles
-  CPUID.0xD.9  = 766 cycles
-  CPUID.0xD.10 = 732 cycles
-  CPUID.0xD.11 = 718 cycles
-  CPUID.0xD.12 = 734 cycles
-  CPUID.0xD.13 = 1700 cycles
-  CPUID.0xD.14 = 1126 cycles
-  CPUID.0xD.15 = 898 cycles
-  CPUID.0xD.16 = 716 cycles
-  CPUID.0xD.17 = 748 cycles
-  CPUID.0xD.18 = 776 cycles
-
-Note, updating runtime CPUID information multiple times per nested
-transition is itself a flaw, especially since CPUID is a mandotory
-intercept on both Intel and AMD.  E.g. KVM doesn't need to ensure emulated
-CPUID state is up-to-date while running L2.  That flaw will be fixed in a
-future patch, as deferring runtime CPUID updates is more subtle than it
-appears at first glance, the benefits aren't super critical to have once
-the XSAVE issue is resolved, and caching CPUID output is desirable even if
-KVM's updates are deferred.
-
-Cc: Jim Mattson <jmattson@google.com>
+Reported-by: Dexuan Cui <decui@microsoft.com>
+Fixes: e0fa3e5e7df6 ("Drivers: hv: utils: fix a race on userspace daemons registration")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20241211013302.1347853-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Acked-by: Wei Liu <wei.liu@kernel.org>
+Link: https://lore.kernel.org/r/20241106154247.2271-3-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20241106154247.2271-3-mhklinux@outlook.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |   31 ++++++++++++++++++++++++++-----
- arch/x86/kvm/cpuid.h |    1 +
- arch/x86/kvm/x86.c   |    2 ++
- 3 files changed, 29 insertions(+), 5 deletions(-)
+ drivers/hv/hv_kvp.c       |    6 ++++++
+ drivers/hv/hv_snapshot.c  |    6 ++++++
+ drivers/hv/hv_util.c      |    9 +++++++++
+ drivers/hv/hyperv_vmbus.h |    2 ++
+ include/linux/hyperv.h    |    1 +
+ 5 files changed, 24 insertions(+)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -33,6 +33,26 @@
- u32 kvm_cpu_caps[NR_KVM_CPU_CAPS] __read_mostly;
- EXPORT_SYMBOL_GPL(kvm_cpu_caps);
+--- a/drivers/hv/hv_kvp.c
++++ b/drivers/hv/hv_kvp.c
+@@ -767,6 +767,12 @@ hv_kvp_init(struct hv_util_service *srv)
+ 	 */
+ 	kvp_transaction.state = HVUTIL_DEVICE_INIT;
  
-+struct cpuid_xstate_sizes {
-+	u32 eax;
-+	u32 ebx;
-+	u32 ecx;
-+};
-+
-+static struct cpuid_xstate_sizes xstate_sizes[XFEATURE_MAX] __ro_after_init;
-+
-+void __init kvm_init_xstate_sizes(void)
-+{
-+	u32 ign;
-+	int i;
-+
-+	for (i = XFEATURE_YMM; i < ARRAY_SIZE(xstate_sizes); i++) {
-+		struct cpuid_xstate_sizes *xs = &xstate_sizes[i];
-+
-+		cpuid_count(0xD, i, &xs->eax, &xs->ebx, &xs->ecx, &ign);
-+	}
++	return 0;
 +}
 +
- u32 xstate_required_size(u64 xstate_bv, bool compacted)
- {
- 	int feature_bit = 0;
-@@ -41,14 +61,15 @@ u32 xstate_required_size(u64 xstate_bv,
- 	xstate_bv &= XFEATURE_MASK_EXTEND;
- 	while (xstate_bv) {
- 		if (xstate_bv & 0x1) {
--		        u32 eax, ebx, ecx, edx, offset;
--		        cpuid_count(0xD, feature_bit, &eax, &ebx, &ecx, &edx);
-+			struct cpuid_xstate_sizes *xs = &xstate_sizes[feature_bit];
-+			u32 offset;
++int
++hv_kvp_init_transport(void)
++{
+ 	hvt = hvutil_transport_init(kvp_devname, CN_KVP_IDX, CN_KVP_VAL,
+ 				    kvp_on_msg, kvp_on_reset);
+ 	if (!hvt)
+--- a/drivers/hv/hv_snapshot.c
++++ b/drivers/hv/hv_snapshot.c
+@@ -388,6 +388,12 @@ hv_vss_init(struct hv_util_service *srv)
+ 	 */
+ 	vss_transaction.state = HVUTIL_DEVICE_INIT;
+ 
++	return 0;
++}
 +
- 			/* ECX[1]: 64B alignment in compacted form */
- 			if (compacted)
--				offset = (ecx & 0x2) ? ALIGN(ret, 64) : ret;
-+				offset = (xs->ecx & 0x2) ? ALIGN(ret, 64) : ret;
- 			else
--				offset = ebx;
--			ret = max(ret, offset + eax);
-+				offset = xs->ebx;
-+			ret = max(ret, offset + xs->eax);
- 		}
++int
++hv_vss_init_transport(void)
++{
+ 	hvt = hvutil_transport_init(vss_devname, CN_VSS_IDX, CN_VSS_VAL,
+ 				    vss_on_msg, vss_on_reset);
+ 	if (!hvt) {
+--- a/drivers/hv/hv_util.c
++++ b/drivers/hv/hv_util.c
+@@ -141,6 +141,7 @@ static struct hv_util_service util_heart
+ static struct hv_util_service util_kvp = {
+ 	.util_cb = hv_kvp_onchannelcallback,
+ 	.util_init = hv_kvp_init,
++	.util_init_transport = hv_kvp_init_transport,
+ 	.util_pre_suspend = hv_kvp_pre_suspend,
+ 	.util_pre_resume = hv_kvp_pre_resume,
+ 	.util_deinit = hv_kvp_deinit,
+@@ -149,6 +150,7 @@ static struct hv_util_service util_kvp =
+ static struct hv_util_service util_vss = {
+ 	.util_cb = hv_vss_onchannelcallback,
+ 	.util_init = hv_vss_init,
++	.util_init_transport = hv_vss_init_transport,
+ 	.util_pre_suspend = hv_vss_pre_suspend,
+ 	.util_pre_resume = hv_vss_pre_resume,
+ 	.util_deinit = hv_vss_deinit,
+@@ -592,6 +594,13 @@ static int util_probe(struct hv_device *
+ 	if (ret)
+ 		goto error;
  
- 		xstate_bv >>= 1;
---- a/arch/x86/kvm/cpuid.h
-+++ b/arch/x86/kvm/cpuid.h
-@@ -32,6 +32,7 @@ int kvm_vcpu_ioctl_get_cpuid2(struct kvm
- bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
- 	       u32 *ecx, u32 *edx, bool exact_only);
- 
-+void __init kvm_init_xstate_sizes(void);
- u32 xstate_required_size(u64 xstate_bv, bool compacted);
- 
- int cpuid_query_maxphyaddr(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -13820,6 +13820,8 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(kvm_vmgexit
- 
- static int __init kvm_x86_init(void)
- {
-+	kvm_init_xstate_sizes();
-+
- 	kvm_mmu_x86_module_init();
- 	mitigate_smt_rsb &= boot_cpu_has_bug(X86_BUG_SMT_RSB) && cpu_smt_possible();
++	if (srv->util_init_transport) {
++		ret = srv->util_init_transport();
++		if (ret) {
++			vmbus_close(dev->channel);
++			goto error;
++		}
++	}
  	return 0;
+ 
+ error:
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -365,12 +365,14 @@ void vmbus_on_event(unsigned long data);
+ void vmbus_on_msg_dpc(unsigned long data);
+ 
+ int hv_kvp_init(struct hv_util_service *srv);
++int hv_kvp_init_transport(void);
+ void hv_kvp_deinit(void);
+ int hv_kvp_pre_suspend(void);
+ int hv_kvp_pre_resume(void);
+ void hv_kvp_onchannelcallback(void *context);
+ 
+ int hv_vss_init(struct hv_util_service *srv);
++int hv_vss_init_transport(void);
+ void hv_vss_deinit(void);
+ int hv_vss_pre_suspend(void);
+ int hv_vss_pre_resume(void);
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -1567,6 +1567,7 @@ struct hv_util_service {
+ 	void *channel;
+ 	void (*util_cb)(void *);
+ 	int (*util_init)(struct hv_util_service *);
++	int (*util_init_transport)(void);
+ 	void (*util_deinit)(void);
+ 	int (*util_pre_suspend)(void);
+ 	int (*util_pre_resume)(void);
 
 
