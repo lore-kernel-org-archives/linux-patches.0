@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2F38827;
-	Mon, 23 Dec 2024 16:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2A81B3922;
+	Mon, 23 Dec 2024 16:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970648; cv=none; b=WKQ9inBsQk3j1jkdEyHdyLAP7PkmXdDPAUsoU4lTeotJS8VFKu8NdNxriWuGOuzLJwHtc18c1kyE/QvL2yq+HfT+cOJi/MbWzMqQp5gB66DC4tswQx13Z9Km7H2dWcn8jWX7TFrf++Xb7W4snEb5nfO7zM2tmWl9Gx46G0Bbyg0=
+	t=1734970652; cv=none; b=P5+V0jsKi7v56do1vRxSGT+/I8T3msw1U7pHSxggoloaiDpMwXWHTjnmz8K9FSY+Mj3CWiaxhpCu4kXl7vHY71A11uo8nzx6nWiVlWXha0mSNTJ8Ez316kEhYGdwhEMEXg9XtR8AtVA017sJfb6r11MsTiTDPntPZffpM1lPdOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970648; c=relaxed/simple;
-	bh=P9XUX55n61dDVlbD7z4ql4WPjAWzCaQPIG/C4yXWN40=;
+	s=arc-20240116; t=1734970652; c=relaxed/simple;
+	bh=PnKpsbxhIOD7i6RN/ExMPdyuCOAFwsfyn5rjg/ETb6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S2TkASjC9YUiklWQnX5mBUjFAQOlKwU2vTKuf87ierO64+pcnjRR30zdALQQbJjBfTREIytEGbCkhyEVTY7TAi0iZjM8xuQropGR1n2p5CNtP4f3Y4IUzkc4y0BRejUJN+a8ipwwIt/9824MGiOJ56a7iPguIrIUxtvJNYyReQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TL5Ce/fi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+/kdJMHq6p634FyIHql0M8k/fdEDJH4pstTIS+x464LCe3Ah0nJkYM3rS9PHNASjQ9VRt+3RnOsP9vuh73jjC6repVM7VdadKbMfQuF+7Ie/frtg5azk4h09ThuR/bZI2/xx+V8Gw3xavpMlHvhTBkqMdH2QBx847w3YsJi3vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=se0pVvZk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TL5Ce/fi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB2DC4CED4;
-	Mon, 23 Dec 2024 16:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="se0pVvZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A15EC4CED3;
+	Mon, 23 Dec 2024 16:17:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970647;
-	bh=P9XUX55n61dDVlbD7z4ql4WPjAWzCaQPIG/C4yXWN40=;
+	s=korg; t=1734970651;
+	bh=PnKpsbxhIOD7i6RN/ExMPdyuCOAFwsfyn5rjg/ETb6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TL5Ce/fim/EwvywNY5aL7GIIE5C6f+NNORNgz8I9mLF+/RLN5AvhD/Iz/xvC9luk5
-	 p2bVEtoYCUH1p2PiF9pFMvMSLr4FC/w8ske5I3PcJP0w4/2qn5Ttfdm5yZsN4hgzy5
-	 BzbpUlthXWNuj2D49Qw+tLrcNA9mYMpB0iFA1sLk=
+	b=se0pVvZktJUU1BujtKYXS1OXH7b/flvFrPLtU6wq2tdt2wUDA9mtJ6I1DUxxjb8om
+	 qI/rjID924toVW6s4M5/FywXIwRzzPZnUlZGiMeZVLpmYJ8WmiIEtd2RXqZNeMFxJT
+	 EuEgBD2owgtHNpyYJ8ut04QHZtgTJeANfAS/Ndis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/83] ionic: use ee->offset when returning sprom data
-Date: Mon, 23 Dec 2024 16:59:06 +0100
-Message-ID: <20241223155354.686769784@linuxfoundation.org>
+Subject: [PATCH 6.1 28/83] net: hinic: Fix cleanup in create_rxqs/txqs()
+Date: Mon, 23 Dec 2024 16:59:07 +0100
+Message-ID: <20241223155354.733906034@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -52,40 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
+[ Upstream commit 7203d10e93b6e6e1d19481ef7907de6a9133a467 ]
 
-Some calls into ionic_get_module_eeprom() don't use a single
-full buffer size, but instead multiple calls with an offset.
-Teach our driver to use the offset correctly so we can
-respond appropriately to the caller.
+There is a check for NULL at the start of create_txqs() and
+create_rxqs() which tess if "nic_dev->txqs" is non-NULL.  The
+intention is that if the device is already open and the queues
+are already created then we don't create them a second time.
 
-Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
+However, the bug is that if we have an error in the create_txqs()
+then the pointer doesn't get set back to NULL.  The NULL check
+at the start of the function will say that it's already open when
+it's not and the device can't be used.
+
+Set ->txqs back to NULL on cleanup on error.
+
+Fixes: c3e79baf1b03 ("net-next/hinic: Add logical Txq and Rxq")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0cc98faf-a0ed-4565-a55b-0fa2734bc205@stanley.mountain
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/huawei/hinic/hinic_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index d7370fb60a16..928ef2933990 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -828,8 +828,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
- 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+index 2d6906aba2a2..af6100e5d9b9 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+@@ -172,6 +172,7 @@ static int create_txqs(struct hinic_dev *nic_dev)
+ 	hinic_sq_dbgfs_uninit(nic_dev);
  
- 	do {
--		memcpy(data, xcvr->sprom, len);
--		memcpy(tbuf, xcvr->sprom, len);
-+		memcpy(data, &xcvr->sprom[ee->offset], len);
-+		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
+ 	devm_kfree(&netdev->dev, nic_dev->txqs);
++	nic_dev->txqs = NULL;
+ 	return err;
+ }
  
- 		/* Let's make sure we got a consistent copy */
- 		if (!memcmp(data, tbuf, len))
+@@ -268,6 +269,7 @@ static int create_rxqs(struct hinic_dev *nic_dev)
+ 	hinic_rq_dbgfs_uninit(nic_dev);
+ 
+ 	devm_kfree(&netdev->dev, nic_dev->rxqs);
++	nic_dev->rxqs = NULL;
+ 	return err;
+ }
+ 
 -- 
 2.39.5
 
