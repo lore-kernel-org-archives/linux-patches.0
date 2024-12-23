@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C271A8F80;
-	Mon, 23 Dec 2024 16:18:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EB517A597;
+	Mon, 23 Dec 2024 16:18:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970712; cv=none; b=Mbc2jTqY4bF073UHcv8UhX8UESIGrZ17SVl37QRoPIIHo3ml0XlWY4nL4tU1ibj5woXHCZ2cxTlKyEs95wsLhAwrJO+hSyd1Rci49ACRFaz/AJnd/dCTaFN6WNGkfGJmhGrIiHHONj4Mt9c3ETbD+WKjKEyuDVLD9SEqkGWjA5c=
+	t=1734970715; cv=none; b=s17wFJ4HUq82p7Ee4sSa8B7QM0Qk93hwUU8V/smtRUB/J2rzvX8ZaHCEenRz3bV1FPC9X+ku6YrhmcZqG8fAIJb8PKIDFygtm2FJ5XRlsmxvshZ79IGEAmuJ5xsPGi33YuIG/qbQqfNrccnUu3anclu6Y1Hq/z87k11bVwtvzsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970712; c=relaxed/simple;
-	bh=MBws/I1mgIK/yIXaj9d2WRGxSFLtWhzFReNcw8DzXQU=;
+	s=arc-20240116; t=1734970715; c=relaxed/simple;
+	bh=W4ORcxNRKmfo8LzkeigmN+tYYVFeBdyZzcyQj5kel+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MC7N9EY16T9viIr+aZTbmidYorgYQXKjUyB1DID0XlGKeTQpAwHBqyCa8NeewR9mqG86HRDoxIKOwEH/PHA5u7kKPNc8a9zFzheGOySWRF8TIvste+4Yr85WnpWMcduZY4+fMisujsKebBiwONSUfYNQYtvdLYeOEejBTyFhTuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pF/ei8iB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eNLxSDz5rUNKdUs13SJE6LTByVge66amIZtkD0zeJVdV6jMW5k62zc0TUgy8XjnKrxbGJYWhaIZ7stxBNcx0r1WpCnzJrMsdXpWwga53L72lb63l4e3aQ8WZBt0XgmOYGv0VVEMMgJwc4wEcG5C3pxo3NjJG00X+Gpc4/oAiNaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHx3xtId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pF/ei8iB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C75CC4CED3;
-	Mon, 23 Dec 2024 16:18:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHx3xtId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B37F8C4CED3;
+	Mon, 23 Dec 2024 16:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970711;
-	bh=MBws/I1mgIK/yIXaj9d2WRGxSFLtWhzFReNcw8DzXQU=;
+	s=korg; t=1734970715;
+	bh=W4ORcxNRKmfo8LzkeigmN+tYYVFeBdyZzcyQj5kel+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pF/ei8iB3lX9CEtrysecjPp35rtPdnatjfwMb2Y8Rlqeqxtz9iu8k6B9xqCFGV+bB
-	 ovbas4UOli4rMkHioradxaMrraJ0T5owt4zWoERSnT6u0zko2Dt/td9U/Im91I2Lrj
-	 elslsKCFvfIxpAXLY8oCk+YM23RWBLXLrA27/owI=
+	b=dHx3xtId5Hb4pEJ55TmDtsXtXA+d3SWKo0t7bXMvrV0ZtqZtwm2wzmUCrezOeMzdc
+	 XQ0h8OLQlZMxcRIr+fJYv9SqFx4dWX3fSJB3/coeD5QTUm73vonFf6O8L6hmk+eA9q
+	 TxGWzXVYL/A2xOny1q6PAhrkL94WSZDrUIlh3WYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Harrison <John.C.Harrison@Intel.com>,
 	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 47/83] i915/guc: Ensure busyness counter increases motonically
-Date: Mon, 23 Dec 2024 16:59:26 +0100
-Message-ID: <20241223155355.453771248@linuxfoundation.org>
+Subject: [PATCH 6.1 48/83] i915/guc: Accumulate active runtime on gt reset
+Date: Mon, 23 Dec 2024 16:59:27 +0100
+Message-ID: <20241223155355.490648459@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -54,64 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 
-[ Upstream commit 59a0b46788d58fdcee8d2f6b4e619d264a1799bf ]
+[ Upstream commit 1622ed27d26ab4c234476be746aa55bcd39159dd ]
 
-Active busyness of an engine is calculated using gt timestamp and the
-context switch in time. While capturing the gt timestamp, it's possible
-that the context switches out. This race could result in an active
-busyness value that is greater than the actual context runtime value by a
-small amount. This leads to a negative delta and throws off busyness
-calculations for the user.
+On gt reset, if a context is running, then accumulate it's active time
+into the busyness counter since there will be no chance for the context
+to switch out and update it's run time.
 
-If a subsequent count is smaller than the previous one, just return the
-previous one, since we expect the busyness to catch up.
+v2: Move comment right above the if (John)
 
 Fixes: 77cdd054dd2c ("drm/i915/pmu: Connect engine busyness stats from GuC to pmu")
 Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
 Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241127174006.190128-3-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit cf907f6d294217985e9dafd9985dce874e04ca37)
+Link: https://patchwork.freedesktop.org/patch/msgid/20241127174006.190128-4-umesh.nerlige.ramappa@intel.com
+(cherry picked from commit 7ed047da59cfa1acb558b95169d347acc8d85da1)
 Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_types.h      | 5 +++++
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 5 ++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_types.h b/drivers/gpu/drm/i915/gt/intel_engine_types.h
-index 107f465a27b9..458320d28e27 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_types.h
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_types.h
-@@ -339,6 +339,11 @@ struct intel_engine_guc_stats {
- 	 * @start_gt_clk: GT clock time of last idle to active transition.
- 	 */
- 	u64 start_gt_clk;
-+
-+	/**
-+	 * @total: The last value of total returned
-+	 */
-+	u64 total;
- };
- 
- struct intel_engine_cs {
 diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index 4bfc1131b4f0..2cd1f43f8a3c 100644
+index 2cd1f43f8a3c..2e0eb6cb8eab 100644
 --- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
 +++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -1346,9 +1346,12 @@ static ktime_t guc_engine_busyness(struct intel_engine_cs *engine, ktime_t *now)
- 		total += intel_gt_clock_interval_to_ns(gt, clk);
+@@ -1368,8 +1368,21 @@ static void __reset_guc_busyness_stats(struct intel_guc *guc)
+ 
+ 	guc_update_pm_timestamp(guc, &unused);
+ 	for_each_engine(engine, gt, id) {
++		struct intel_engine_guc_stats *stats = &engine->stats.guc;
++
+ 		guc_update_engine_gt_clks(engine);
+-		engine->stats.guc.prev_total = 0;
++
++		/*
++		 * If resetting a running context, accumulate the active
++		 * time as well since there will be no context switch.
++		 */
++		if (stats->running) {
++			u64 clk = guc->timestamp.gt_stamp - stats->start_gt_clk;
++
++			stats->total_gt_clks += clk;
++		}
++		stats->prev_total = 0;
++		stats->running = 0;
  	}
  
-+	if (total > stats->total)
-+		stats->total = total;
-+
  	spin_unlock_irqrestore(&guc->timestamp.lock, flags);
- 
--	return ns_to_ktime(total);
-+	return ns_to_ktime(stats->total);
- }
- 
- static void __reset_guc_busyness_stats(struct intel_guc *guc)
 -- 
 2.39.5
 
