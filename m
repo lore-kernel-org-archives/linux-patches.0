@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5063617A597;
-	Mon, 23 Dec 2024 16:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BD117A597;
+	Mon, 23 Dec 2024 16:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970796; cv=none; b=MscfVvBYu5OEgjZp3SV4wKZVM3jVUAmcJgq/KcUL0WLX/Q8WDeLtgKWts8atx6J7ZVYKQN56+loMSdv7iZPFbT/f9jYdnS1rJ0rgOVSVzhPv9jRt7qS7b8zJQcPq7qIPgjLvWyYtOuGw3b1YbPzMNV9bvG8O0Msf2uttqL+UCyA=
+	t=1734970799; cv=none; b=HjMCW8vnZs4Hj4bP7xGVcM8LRAsBsHDnRwIQ3WxTFCuIvkPQUN0u1/aWO8TMX9Aa1zRJCEg2ejEvhoMtBlteR/VpaEzRt930K/izIPH/lcCo3fI3xUDwKh1wGAL+YDwwQvqyr9n54lTXkBv1l4R1pFGhq60jB9s8dFmVs5NDNHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970796; c=relaxed/simple;
-	bh=lqbCFcPji1zskPH4Fb0i82rIiOE3gZkzq+tI+dkJF5M=;
+	s=arc-20240116; t=1734970799; c=relaxed/simple;
+	bh=mKjHij92LHZuuVLizb4zrXLmo57Z3xbhx1yKW2Uq0Ao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+jSYWkDnjs+fk4z9mnwEUR8pE/bcAY1gr8LfRzwhH0fLwpQ2tRvHU2hJvnWo9W+WuRALKRWsqHtgwmk7zBDb4iCadFrV6QdsWtaq17pBspoUhFSsUJLrGRK/gBIx+TqDtd7TWYvKH4q/Iqc7oRw/4eJWE9ucRWvnmw8tLExb0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHohaCNI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZpGcpubRADdhep3gj4mHdO19hgHZUtzibyW1qxHTvXCAdQSIAcrrvN2BD4Ptkg3VtvBxSt1GiYk3w4mnATgFf3ZJ2WbILOa1w8BAXOpaSa721Rd2yY3seEP4bN0XE/yctmJrdLNcHlhcpkCAM+zrZcJK7M+WDmmv8ROZiduV01c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lo7833yo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHohaCNI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D0CC4CED3;
-	Mon, 23 Dec 2024 16:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lo7833yo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33ACDC4CED3;
+	Mon, 23 Dec 2024 16:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970796;
-	bh=lqbCFcPji1zskPH4Fb0i82rIiOE3gZkzq+tI+dkJF5M=;
+	s=korg; t=1734970799;
+	bh=mKjHij92LHZuuVLizb4zrXLmo57Z3xbhx1yKW2Uq0Ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gHohaCNI7zlcMUf+eHUYCDnyn7SSgd9h/QRWZ8rAFwKM3DJlGZ99cIOIzliIecNY3
-	 NereaA0zZjOaQ2WnR23bCAe4vt1puuoFQbJPDUPvKoObnU07slj1SEdMPtOQwkMSsT
-	 Z4oqjcDkjHOiKAOeggA6tEgmsQRfnSoufHstU/ks=
+	b=Lo7833yoFwpanRKG57LJVk3qeWUymOA9BXSJ6wUacbzMQnV7ZDyyTWJkADoosesIB
+	 OAixOuE+7AnX8jclzO8mj0WkLrMjOMJF5fIswr2+JHXf6/l2m7rAv+SMl35lQVBhjl
+	 2O8lcw/C61mDRrL8UIx0wJc+MLH1XCmInbCmLzqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Al Viro <viro@ZenIV.linux.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 64/83] tracing: Add "%s" check in test_event_printk()
-Date: Mon, 23 Dec 2024 16:59:43 +0100
-Message-ID: <20241223155356.105612221@linuxfoundation.org>
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Jann Horn <jannh@google.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>
+Subject: [PATCH 6.1 73/83] udmabuf: also check for F_SEAL_FUTURE_WRITE
+Date: Mon, 23 Dec 2024 16:59:52 +0100
+Message-ID: <20241223155356.464607755@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -55,206 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jann Horn <jannh@google.com>
 
-commit 65a25d9f7ac02e0cf361356e834d1c71d36acca9 upstream.
+commit 0a16e24e34f28210f68195259456c73462518597 upstream.
 
-The test_event_printk() code makes sure that when a trace event is
-registered, any dereferenced pointers in from the event's TP_printk() are
-pointing to content in the ring buffer. But currently it does not handle
-"%s", as there's cases where the string pointer saved in the ring buffer
-points to a static string in the kernel that will never be freed. As that
-is a valid case, the pointer needs to be checked at runtime.
+When F_SEAL_FUTURE_WRITE was introduced, it was overlooked that udmabuf
+must reject memfds with this flag, just like ones with F_SEAL_WRITE.
+Fix it by adding F_SEAL_FUTURE_WRITE to SEALS_DENIED.
 
-Currently the runtime check is done via trace_check_vprintf(), but to not
-have to replicate everything in vsnprintf() it does some logic with the
-va_list that may not be reliable across architectures. In order to get rid
-of that logic, more work in the test_event_printk() needs to be done. Some
-of the strings can be validated at this time when it is obvious the string
-is valid because the string will be saved in the ring buffer content.
-
-Do all the validation of strings in the ring buffer at boot in
-test_event_printk(), and make sure that the field of the strings that
-point into the kernel are accessible. This will allow adding checks at
-runtime that will validate the fields themselves and not rely on paring
-the TP_printk() format at runtime.
-
+Fixes: ab3948f58ff8 ("mm/memfd: add an F_SEAL_FUTURE_WRITE seal to memfd")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Al Viro <viro@ZenIV.linux.org.uk>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Link: https://lore.kernel.org/20241217024720.685917008@goodmis.org
-Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241204-udmabuf-fixes-v2-2-23887289de1c@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |  104 +++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 89 insertions(+), 15 deletions(-)
+ drivers/dma-buf/udmabuf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -242,19 +242,16 @@ int trace_event_get_offsets(struct trace
- 	return tail->offset + tail->size;
- }
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -164,7 +164,7 @@ static const struct dma_buf_ops udmabuf_
+ };
  
--/*
-- * Check if the referenced field is an array and return true,
-- * as arrays are OK to dereference.
-- */
--static bool test_field(const char *fmt, struct trace_event_call *call)
-+
-+static struct trace_event_fields *find_event_field(const char *fmt,
-+						   struct trace_event_call *call)
- {
- 	struct trace_event_fields *field = call->class->fields_array;
--	const char *array_descriptor;
- 	const char *p = fmt;
- 	int len;
+ #define SEALS_WANTED (F_SEAL_SHRINK)
+-#define SEALS_DENIED (F_SEAL_WRITE)
++#define SEALS_DENIED (F_SEAL_WRITE|F_SEAL_FUTURE_WRITE)
  
- 	if (!(len = str_has_prefix(fmt, "REC->")))
--		return false;
-+		return NULL;
- 	fmt += len;
- 	for (p = fmt; *p; p++) {
- 		if (!isalnum(*p) && *p != '_')
-@@ -265,11 +262,26 @@ static bool test_field(const char *fmt,
- 	for (; field->type; field++) {
- 		if (strncmp(field->name, fmt, len) || field->name[len])
- 			continue;
--		array_descriptor = strchr(field->type, '[');
--		/* This is an array and is OK to dereference. */
--		return array_descriptor != NULL;
-+
-+		return field;
- 	}
--	return false;
-+	return NULL;
-+}
-+
-+/*
-+ * Check if the referenced field is an array and return true,
-+ * as arrays are OK to dereference.
-+ */
-+static bool test_field(const char *fmt, struct trace_event_call *call)
-+{
-+	struct trace_event_fields *field;
-+
-+	field = find_event_field(fmt, call);
-+	if (!field)
-+		return false;
-+
-+	/* This is an array and is OK to dereference. */
-+	return strchr(field->type, '[') != NULL;
- }
- 
- /* Look for a string within an argument */
-@@ -315,6 +327,53 @@ static bool process_pointer(const char *
- 	return false;
- }
- 
-+/* Return true if the string is safe */
-+static bool process_string(const char *fmt, int len, struct trace_event_call *call)
-+{
-+	const char *r, *e, *s;
-+
-+	e = fmt + len;
-+
-+	/*
-+	 * There are several helper functions that return strings.
-+	 * If the argument contains a function, then assume its field is valid.
-+	 * It is considered that the argument has a function if it has:
-+	 *   alphanumeric or '_' before a parenthesis.
-+	 */
-+	s = fmt;
-+	do {
-+		r = strstr(s, "(");
-+		if (!r || r >= e)
-+			break;
-+		for (int i = 1; r - i >= s; i++) {
-+			char ch = *(r - i);
-+			if (isspace(ch))
-+				continue;
-+			if (isalnum(ch) || ch == '_')
-+				return true;
-+			/* Anything else, this isn't a function */
-+			break;
-+		}
-+		/* A function could be wrapped in parethesis, try the next one */
-+		s = r + 1;
-+	} while (s < e);
-+
-+	/*
-+	 * If there's any strings in the argument consider this arg OK as it
-+	 * could be: REC->field ? "foo" : "bar" and we don't want to get into
-+	 * verifying that logic here.
-+	 */
-+	if (find_print_string(fmt, "\"", e))
-+		return true;
-+
-+	/* Dereferenced strings are also valid like any other pointer */
-+	if (process_pointer(fmt, len, call))
-+		return true;
-+
-+	/* Make sure the field is found, and consider it OK for now if it is */
-+	return find_event_field(fmt, call) != NULL;
-+}
-+
- /*
-  * Examine the print fmt of the event looking for unsafe dereference
-  * pointers using %p* that could be recorded in the trace event and
-@@ -324,6 +383,7 @@ static bool process_pointer(const char *
- static void test_event_printk(struct trace_event_call *call)
- {
- 	u64 dereference_flags = 0;
-+	u64 string_flags = 0;
- 	bool first = true;
- 	const char *fmt;
- 	int parens = 0;
-@@ -414,8 +474,16 @@ static void test_event_printk(struct tra
- 						star = true;
- 						continue;
- 					}
--					if ((fmt[i + j] == 's') && star)
--						arg++;
-+					if ((fmt[i + j] == 's')) {
-+						if (star)
-+							arg++;
-+						if (WARN_ONCE(arg == 63,
-+							      "Too many args for event: %s",
-+							      trace_event_name(call)))
-+							return;
-+						dereference_flags |= 1ULL << arg;
-+						string_flags |= 1ULL << arg;
-+					}
- 					break;
- 				}
- 				break;
-@@ -462,7 +530,10 @@ static void test_event_printk(struct tra
- 			}
- 
- 			if (dereference_flags & (1ULL << arg)) {
--				if (process_pointer(fmt + start_arg, e - start_arg, call))
-+				if (string_flags & (1ULL << arg)) {
-+					if (process_string(fmt + start_arg, e - start_arg, call))
-+						dereference_flags &= ~(1ULL << arg);
-+				} else if (process_pointer(fmt + start_arg, e - start_arg, call))
- 					dereference_flags &= ~(1ULL << arg);
- 			}
- 
-@@ -474,7 +545,10 @@ static void test_event_printk(struct tra
- 	}
- 
- 	if (dereference_flags & (1ULL << arg)) {
--		if (process_pointer(fmt + start_arg, i - start_arg, call))
-+		if (string_flags & (1ULL << arg)) {
-+			if (process_string(fmt + start_arg, i - start_arg, call))
-+				dereference_flags &= ~(1ULL << arg);
-+		} else if (process_pointer(fmt + start_arg, i - start_arg, call))
- 			dereference_flags &= ~(1ULL << arg);
- 	}
- 
+ static long udmabuf_create(struct miscdevice *device,
+ 			   struct udmabuf_create_list *head,
 
 
