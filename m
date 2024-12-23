@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29A91A4AAA;
-	Mon, 23 Dec 2024 16:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447221B4140;
+	Mon, 23 Dec 2024 16:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970510; cv=none; b=NA1KcQZ+wFWjJ9GeVl4pKsZVESUc+F4+AwJq6TkefpIfGVrnyCLXUJsIE7WGQx7NgLiZt0UFiue/oRGuk0oj46E9hhreHmWoHeI93Xr3ul/Kv/8KdOaf0DCgZg/Sg2Yna5Nudsn42zDZ4xtFZdpGzs//Dkdml4Uev/zhpjLfOIs=
+	t=1734970514; cv=none; b=tIQ8OCEVFdEGb/LSM1yIUYmH+eb33CyTrMve17zMcHuEviUzkeObJWq+uCED+Uz3fdOD5T+lnZBT/phEOnIVF1ldyMIq8rmjouF3j95TPbw/6oNvxZZg6CFCAyI3M9rM8kJsKTJ0P0zVrn1EI3F/7aqA8DYtIj1VZCV1JYxMF68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970510; c=relaxed/simple;
-	bh=BPurqI2d55VlT3MYFIWPmTFt0OixaK+vlsGoXzskMiY=;
+	s=arc-20240116; t=1734970514; c=relaxed/simple;
+	bh=75WE1c2zJRnbXn4re1N3YxuC0iTF5GS4OfBj+QSY8pg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p+buP5sE4VsEsyaoFTLLkz05CoYgxGVTOed0dIwQ14rbW5mlgcBlewhUKO66iWz+p1iwPdqnfQyhFW3/xLUQKfvvVZ6u24JC5CGAoZU1ctV1VejGChbt3M8kKoT4afvPGgJDjmyfvNPLhbQgZvkqIPsZJZM7c6RFpyHo0/UBIFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjVQfZ7T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BNNRqJgyMPUmJamsSj1DuGlPODCbozvXPchpN8V5Iph4hZ7Wyv0MlTG3kzXnNPllw9lInBkB0n7nbxAWe9S0dg5EVXgoRQtSdUyk6D1HuU/aZvSzPznt1IH/PLNoCZ1rnLVEQ50GHl4TWxTUbgQfVhvKaPxlVOnjsRhXfXW0KBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xz7FKgSG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjVQfZ7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3589CC4CED3;
-	Mon, 23 Dec 2024 16:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xz7FKgSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92899C4CED3;
+	Mon, 23 Dec 2024 16:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970510;
-	bh=BPurqI2d55VlT3MYFIWPmTFt0OixaK+vlsGoXzskMiY=;
+	s=korg; t=1734970514;
+	bh=75WE1c2zJRnbXn4re1N3YxuC0iTF5GS4OfBj+QSY8pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kjVQfZ7T+A0afXv55ANOuRPkWvuoO9Z9ywzqwd/YHhoGVhuo7LLw9EiWmix59KByP
-	 UwQl65uPRVfh8N9wKq6pKmjqMCRIcK/3CJ1x34lrWvnzxdzhDL12lccTFbYzlD7eZp
-	 irm4SkEPcuyordjTGwO17wDQN5wUuNaqlzmlJy1s=
+	b=xz7FKgSGRjRiSL6K0XR/PGzZpV7bsa+RpkXNdrpoo6Zgjme75fdWqNZZxXrvCyXd2
+	 wyhgTFtRrp366QGVHqUQX/R1RuLqCUJbDmpaZVzMHsI2jcwyg0CrnNwQCv0/Lvy7Lh
+	 LXxa8M55uvg5BIcmf1PwOiS6quN/SnkKwsNnGyuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 097/116] io_uring: Fix registered ring file refcount leak
-Date: Mon, 23 Dec 2024 16:59:27 +0100
-Message-ID: <20241223155403.334058885@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.6 106/116] of: Fix refcount leakage for OF node returned by __of_get_dma_parent()
+Date: Mon, 23 Dec 2024 16:59:36 +0100
+Message-ID: <20241223155403.672840601@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -50,64 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 12d908116f7efd34f255a482b9afc729d7a5fb78 upstream.
+commit 5d009e024056ded20c5bb1583146b833b23bbd5a upstream.
 
-Currently, io_uring_unreg_ringfd() (which cleans up registered rings) is
-only called on exit, but __io_uring_free (which frees the tctx in which the
-registered ring pointers are stored) is also called on execve (via
-begin_new_exec -> io_uring_task_cancel -> __io_uring_cancel ->
-io_uring_cancel_generic -> __io_uring_free).
+__of_get_dma_parent() returns OF device node @args.np, but the node's
+refcount is increased twice, by both of_parse_phandle_with_args() and
+of_node_get(), so causes refcount leakage for the node.
 
-This means: A process going through execve while having registered rings
-will leak references to the rings' `struct file`.
+Fix by directly returning the node got by of_parse_phandle_with_args().
 
-Fix it by zapping registered rings on execve(). This is implemented by
-moving the io_uring_unreg_ringfd() from io_uring_files_cancel() into its
-callee __io_uring_cancel(), which is called from io_uring_task_cancel() on
-execve.
-
-This could probably be exploited *on 32-bit kernels* by leaking 2^32
-references to the same ring, because the file refcount is stored in a
-pointer-sized field and get_file() doesn't have protection against
-refcount overflow, just a WARN_ONCE(); but on 64-bit it should have no
-impact beyond a memory leak.
-
+Fixes: f83a6e5dea6c ("of: address: Add support for the parent DMA bus")
 Cc: stable@vger.kernel.org
-Fixes: e7a6c00dc77a ("io_uring: add support for registering ring file descriptors")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20241218-uring-reg-ring-cleanup-v1-1-8f63e999045b@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241206-of_core_fix-v1-4-dc28ed56bec3@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/io_uring.h |    4 +---
- io_uring/io_uring.c      |    1 +
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/of/address.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/io_uring.h
-+++ b/include/linux/io_uring.h
-@@ -65,10 +65,8 @@ static inline void io_uring_cmd_complete
+--- a/drivers/of/address.c
++++ b/drivers/of/address.c
+@@ -653,7 +653,7 @@ struct device_node *__of_get_dma_parent(
+ 	if (ret < 0)
+ 		return of_get_parent(np);
  
- static inline void io_uring_files_cancel(void)
- {
--	if (current->io_uring) {
--		io_uring_unreg_ringfd();
-+	if (current->io_uring)
- 		__io_uring_cancel(false);
--	}
+-	return of_node_get(args.np);
++	return args.np;
  }
- static inline void io_uring_task_cancel(void)
- {
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3431,6 +3431,7 @@ end_wait:
- 
- void __io_uring_cancel(bool cancel_all)
- {
-+	io_uring_unreg_ringfd();
- 	io_uring_cancel_generic(cancel_all, NULL);
- }
+ #endif
  
 
 
