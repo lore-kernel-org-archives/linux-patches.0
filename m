@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E559419E98B;
-	Mon, 23 Dec 2024 16:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381CC19E98B;
+	Mon, 23 Dec 2024 16:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970699; cv=none; b=C0p9bpqK7vPIOVBgRYrSHtefdQK/0lBVGDjk5mj4BvTr7Z7t0KRXLRHVcAuYCGXL2fDxkMiN1CIlkxaeunHYNLB+JRgr70ze3ekkOTZljGLp4pv5bG5P0eo3HLBMMdJWpsJxIeqodCgEGEKGmZ+FnQKD2LngG0E/NmifshuHMHY=
+	t=1734970702; cv=none; b=d1rgbvFfvSrlq+AFk1qr0dH3x099BgxAIacicLP4zLKe9IgFzrt/VQWpWJ/ssV/WnmF5/u+NQx34/KLRSNAr+EBohg99xjIe+joX14EO1EHZ7p9coQEdnT/99MPG788nkx1jmI3amIhQpD0Ji1b2mjHpAvVELD25Bxd2C99lXb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970699; c=relaxed/simple;
-	bh=vfwi1FN0b/p8mTAKqbTrL0xuKsE66V2Vsd1DNG0tf+c=;
+	s=arc-20240116; t=1734970702; c=relaxed/simple;
+	bh=4lQhN8wIJsNRaoHL8T6VT5JvWbXsyajcPrmgIE2dOfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngpzomLzzkwykpLLJnESbHh6CulY/yMk44bxaSxsD2EwQHcv1xClEBgbDr3ZOli7pvqm+MM315ra1721hsByhfKHVF2izMHadX4QxRgwBljjCcn0Xs/wajQNaAmnchwblCmu38wfMnXuBMWrRIDf8j7qCS7hH50OQkKlfYOBh08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2xZd8K0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xq69KGZChap9XIczqdBGUwvK83EvtUHIYPo7jnfELfmsMr/nVosBbO3g51nPrZZatZLkAw70h2Le3aRGL45lqnWITWibCIt869dXEnnPObxjIlllJ1xCPaW9plnbefO0xUXyz49b6tnvxr98MZMdQQcs8PnGizK8if5sAbytPIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvWfRg55; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2xZd8K0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5409AC4CED3;
-	Mon, 23 Dec 2024 16:18:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvWfRg55"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E32CC4CED3;
+	Mon, 23 Dec 2024 16:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970698;
-	bh=vfwi1FN0b/p8mTAKqbTrL0xuKsE66V2Vsd1DNG0tf+c=;
+	s=korg; t=1734970702;
+	bh=4lQhN8wIJsNRaoHL8T6VT5JvWbXsyajcPrmgIE2dOfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o2xZd8K0ea03wi4BymLNStveT+4F0ysf4CWDRyak9FTmp0PsXylQiiSfIDybrrT9q
-	 jopRoFNO6z58b6z7wuFKbcbaVVFLLlclw+o/AGb7Sp8jZctK4jJkjDVmql0wv/moho
-	 T16/jLN20z8fTWwIvEdnrUrzFOtxuZSeKH7gmbsQ=
+	b=VvWfRg555ZGZnWxnO9DHOxlBVky7dwjjB4VVzwl2u8k4UoeWnUNZGn+e6c0Kjg7WM
+	 ntTUIjjONu8MDwXZkbrOcV2BlxA41EFLSHQYEDnWc+QcqFNJbf6C9oDn3IMtH1sOOA
+	 t9SfP4Jv/iOL3Q/Bhk652Khne4nLD9oIWD2yWObo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Rainbolt <arainbolt@kfocus.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 43/83] thunderbolt: Improve redrive mode handling
-Date: Mon, 23 Dec 2024 16:59:22 +0100
-Message-ID: <20241223155355.301981142@linuxfoundation.org>
+	syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>
+Subject: [PATCH 6.1 44/83] drm/modes: Avoid divide by zero harder in drm_mode_vrefresh()
+Date: Mon, 23 Dec 2024 16:59:23 +0100
+Message-ID: <20241223155355.337789834@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -44,130 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 24740385cb0d6d22ab7fa7adf36546d5b3cdcf73 upstream.
+commit 9398332f23fab10c5ec57c168b44e72997d6318e upstream.
 
-When USB-C monitor is connected directly to Intel Barlow Ridge host, it
-goes into "redrive" mode that basically routes the DisplayPort signals
-directly from the GPU to the USB-C monitor without any tunneling needed.
-However, the host router must be powered on for this to work. Aaron
-reported that there are a couple of cases where this will not work with
-the current code:
+drm_mode_vrefresh() is trying to avoid divide by zero
+by checking whether htotal or vtotal are zero. But we may
+still end up with a div-by-zero of vtotal*htotal*...
 
-  - Booting with USB-C monitor plugged in.
-  - Plugging in USB-C monitor when the host router is in sleep state
-    (runtime suspended).
-  - Plugging in USB-C device while the system is in system sleep state.
-
-In all these cases once the host router is runtime suspended the picture
-on the connected USB-C display disappears too. This is certainly not
-what the user expected.
-
-For this reason improve the redrive mode handling to keep the host
-router from runtime suspending when detect that any of the above cases
-is happening.
-
-Fixes: a75e0684efe5 ("thunderbolt: Keep the domain powered when USB4 port is in redrive mode")
-Reported-by: Aaron Rainbolt <arainbolt@kfocus.org>
-Closes: https://lore.kernel.org/linux-usb/20241009220118.70bfedd0@kf-ir16/
 Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reported-by: syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=622bba18029bcde672e1
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241129042629.18280-2-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/gpu/drm/drm_modes.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -1093,6 +1093,37 @@ static void tb_exit_redrive(struct tb_po
- 	}
- }
- 
-+static void tb_switch_enter_redrive(struct tb_switch *sw)
-+{
-+	struct tb_port *port;
-+
-+	tb_switch_for_each_port(sw, port)
-+		tb_enter_redrive(port);
-+}
-+
-+/*
-+ * Called during system and runtime suspend to forcefully exit redrive
-+ * mode without querying whether the resource is available.
-+ */
-+static void tb_switch_exit_redrive(struct tb_switch *sw)
-+{
-+	struct tb_port *port;
-+
-+	if (!(sw->quirks & QUIRK_KEEP_POWER_IN_DP_REDRIVE))
-+		return;
-+
-+	tb_switch_for_each_port(sw, port) {
-+		if (!tb_port_is_dpin(port))
-+			continue;
-+
-+		if (port->redrive) {
-+			port->redrive = false;
-+			pm_runtime_put(&sw->dev);
-+			tb_port_dbg(port, "exit redrive mode\n");
-+		}
-+	}
-+}
-+
- static void tb_dp_resource_unavailable(struct tb *tb, struct tb_port *port)
+--- a/drivers/gpu/drm/drm_modes.c
++++ b/drivers/gpu/drm/drm_modes.c
+@@ -808,14 +808,11 @@ EXPORT_SYMBOL(drm_mode_set_name);
+  */
+ int drm_mode_vrefresh(const struct drm_display_mode *mode)
  {
- 	struct tb_port *in, *out;
-@@ -1548,6 +1579,7 @@ static int tb_start(struct tb *tb)
- 	tb_create_usb3_tunnels(tb->root_switch);
- 	/* Add DP IN resources for the root switch */
- 	tb_add_dp_resources(tb->root_switch);
-+	tb_switch_enter_redrive(tb->root_switch);
- 	/* Make the discovered switches available to the userspace */
- 	device_for_each_child(&tb->root_switch->dev, NULL,
- 			      tb_scan_finalize_switch);
-@@ -1563,6 +1595,7 @@ static int tb_suspend_noirq(struct tb *t
+-	unsigned int num, den;
++	unsigned int num = 1, den = 1;
  
- 	tb_dbg(tb, "suspending...\n");
- 	tb_disconnect_and_release_dp(tb);
-+	tb_switch_exit_redrive(tb->root_switch);
- 	tb_switch_suspend(tb->root_switch, false);
- 	tcm->hotplug_active = false; /* signal tb_handle_hotplug to quit */
- 	tb_dbg(tb, "suspend finished\n");
-@@ -1665,6 +1698,7 @@ static int tb_resume_noirq(struct tb *tb
- 		tb_dbg(tb, "tunnels restarted, sleeping for 100ms\n");
- 		msleep(100);
- 	}
-+	tb_switch_enter_redrive(tb->root_switch);
- 	 /* Allow tb_handle_hotplug to progress events */
- 	tcm->hotplug_active = true;
- 	tb_dbg(tb, "resume finished\n");
-@@ -1728,6 +1762,12 @@ static int tb_runtime_suspend(struct tb
- 	struct tb_cm *tcm = tb_priv(tb);
+ 	if (mode->htotal == 0 || mode->vtotal == 0)
+ 		return 0;
  
- 	mutex_lock(&tb->lock);
-+	/*
-+	 * The below call only releases DP resources to allow exiting and
-+	 * re-entering redrive mode.
-+	 */
-+	tb_disconnect_and_release_dp(tb);
-+	tb_switch_exit_redrive(tb->root_switch);
- 	tb_switch_suspend(tb->root_switch, true);
- 	tcm->hotplug_active = false;
- 	mutex_unlock(&tb->lock);
-@@ -1759,6 +1799,7 @@ static int tb_runtime_resume(struct tb *
- 	tb_restore_children(tb->root_switch);
- 	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list)
- 		tb_tunnel_restart(tunnel);
-+	tb_switch_enter_redrive(tb->root_switch);
- 	tcm->hotplug_active = true;
- 	mutex_unlock(&tb->lock);
+-	num = mode->clock;
+-	den = mode->htotal * mode->vtotal;
+-
+ 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
+ 		num *= 2;
+ 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
+@@ -823,6 +820,12 @@ int drm_mode_vrefresh(const struct drm_d
+ 	if (mode->vscan > 1)
+ 		den *= mode->vscan;
  
++	if (check_mul_overflow(mode->clock, num, &num))
++		return 0;
++
++	if (check_mul_overflow(mode->htotal * mode->vtotal, den, &den))
++		return 0;
++
+ 	return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(num, 1000), den);
+ }
+ EXPORT_SYMBOL(drm_mode_vrefresh);
 
 
