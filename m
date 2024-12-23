@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE45D2EAE6;
-	Mon, 23 Dec 2024 16:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228197E0FF;
+	Mon, 23 Dec 2024 16:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969744; cv=none; b=fNdKgTSEHMjXRAhJfmiiWmfogm6A4n71z+S++WEmHUadgFxO+fdk+vQY5oG4G7eQaEMUgSZPGDIb93nCGIHb/hSxzxA7e/jVkwtJmpoBqAMoeN1JwmXnAu7uEAqlSzvGFlaY5xA6a0v7WThuCXxE6nTXMpCygvNgOOqvlJH4kho=
+	t=1734969748; cv=none; b=mnVMB7CaPivTir3ihtT94+F6rJsBZOVHuNse6Xm9BYEBgfC3b52/uB7kAEL7XsJiBVEXPtvQo8tEUklw00rZ4HMF+aRU7IaKQ3BdOrVA4XwHJMP2BVtw3ZsnLmY9OdClmoQOfrEt99ko/7hwNLy8WM39+YijJPA2WtUN0RN2VLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969744; c=relaxed/simple;
-	bh=mXYEIM50RMXBAE+zTlSfrn2blwdvVa1vXuDS9BviHBU=;
+	s=arc-20240116; t=1734969748; c=relaxed/simple;
+	bh=JjiTqUC53i+/Sjkf7C2nVAdlMo7knkFCuAdbtLBdLQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIPFv+Xs1SRSrYQx7jIYVms2QYCCqxszoyIFI9pFq1Gjyab4wAUeUZC55zeeoxrxLfBsQnW0ZhK+hrGn/PncDdGUVyu3g1f295ZR/+Q7G0jA5RtaYmTT6mnYzPIQFZUAN8OdT5fdet78DAM6LsLgAM7U/pMs9v9cQP7v+GSBpSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avcOoP6p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cEKZnH3Fcvs7AenvVvJZ672O2gy3A3Os2ZhuQoTzmcuX+fDWkrSvj5oI1bJXM2Csjq0kT3vVX2NzVFgvYrXMqHnZZumUCgQEPLMH02jpwvXUEqMfRKCz+KYhH7wJWtg9w8O/UM5LVtdiJ8/QZWE+BD2D9wGCUrvsJJo+eKSW78E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIByoOKD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avcOoP6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA7FC4CED3;
-	Mon, 23 Dec 2024 16:02:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIByoOKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42873C4CED3;
+	Mon, 23 Dec 2024 16:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969744;
-	bh=mXYEIM50RMXBAE+zTlSfrn2blwdvVa1vXuDS9BviHBU=;
+	s=korg; t=1734969747;
+	bh=JjiTqUC53i+/Sjkf7C2nVAdlMo7knkFCuAdbtLBdLQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avcOoP6p6cZfhuuBUfRhtza+orS5uRRq6MR90MFZ/rc2VKhsmfEg1b1x0+Ci8prVm
-	 RzGVhvxb1Q5ZiQf3RZEnNT57b0wNQL0SfSqeb/BsGGZhKQL0SW1KEcBR1yvpawP2mo
-	 IK+K6t6IHozd1r1Xa1L3Wvv9o2w8zyZhcyw/ebY4=
+	b=iIByoOKD/QZDwWknSehPqXgf73NVRqFV4KxcV/s8n0DCKcU71ObMgTMQsGy4c7Wzd
+	 Zw4XSh2gtNlz98p6GG2GWJq/uUoFkAP1fZcYdNsEDIRKgA+E4AkFH44j2FzlhmBm6g
+	 IL4FpGa4DZ2kJInN+8jW7V77WKLv+X8K2dYmDbW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/160] ionic: no double destroy workqueue
-Date: Mon, 23 Dec 2024 16:57:32 +0100
-Message-ID: <20241223155410.257427544@linuxfoundation.org>
+Subject: [PATCH 6.12 042/160] ionic: use ee->offset when returning sprom data
+Date: Mon, 23 Dec 2024 16:57:33 +0100
+Message-ID: <20241223155410.298250605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -54,49 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 746e6ae2e202b062b9deee7bd86d94937997ecd7 ]
+[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
 
-There are some FW error handling paths that can cause us to
-try to destroy the workqueue more than once, so let's be sure
-we're checking for that.
+Some calls into ionic_get_module_eeprom() don't use a single
+full buffer size, but instead multiple calls with an offset.
+Teach our driver to use the offset correctly so we can
+respond appropriately to the caller.
 
-The case where this popped up was in an AER event where the
-handlers got called in such a way that ionic_reset_prepare()
-and thus ionic_dev_teardown() got called twice in a row.
-The second time through the workqueue was already destroyed,
-and destroy_workqueue() choked on the bad wq pointer.
-
-We didn't hit this in AER handler testing before because at
-that time we weren't using a private workqueue.  Later we
-replaced the use of the system workqueue with our own private
-workqueue but hadn't rerun the AER handler testing since then.
-
-Fixes: 9e25450da700 ("ionic: add private workqueue per-device")
+Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
 Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20241212213157.12212-3-shannon.nelson@amd.com
+Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_dev.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-index 9e42d599840d..57edcde9e6f8 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-@@ -277,7 +277,10 @@ void ionic_dev_teardown(struct ionic *ionic)
- 	idev->phy_cmb_pages = 0;
- 	idev->cmb_npages = 0;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index dda22fa4448c..9b7f78b6cdb1 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -961,8 +961,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
+ 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
  
--	destroy_workqueue(ionic->wq);
-+	if (ionic->wq) {
-+		destroy_workqueue(ionic->wq);
-+		ionic->wq = NULL;
-+	}
- 	mutex_destroy(&idev->cmb_inuse_lock);
- }
+ 	do {
+-		memcpy(data, xcvr->sprom, len);
+-		memcpy(tbuf, xcvr->sprom, len);
++		memcpy(data, &xcvr->sprom[ee->offset], len);
++		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
  
+ 		/* Let's make sure we got a consistent copy */
+ 		if (!memcmp(data, tbuf, len))
 -- 
 2.39.5
 
