@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D542EAE6;
-	Mon, 23 Dec 2024 16:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C7B80C02;
+	Mon, 23 Dec 2024 16:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969686; cv=none; b=sqdrFJqu9X88Qw8zhU55tfEtD18r+2kayP3mNDNklp9RynYGidTMHU/XqcVQ5agsW074pUY6oIJiLMroTuJek502JEHVnKfCtY41hDD3YlfjUWUa/b8fUM2ku9U3k+NS8eM/wyyAQVPZuiMzRQorBoU+SazK1q2LmOXnHcKOALY=
+	t=1734969690; cv=none; b=D+A/aktIb7BK3kn0y9fc5TP3K5oiCHicbl1RVAzGgccNsxv6TZs/LVdauNw5b9xCMU4dfs/xoVP5w2HygB3bHAz3Ddj56LcEHZyeeNgRfgY4GlNGZBZupqDHXFXyXz9tqJV7zf64vD9Y+RSen95/F2dMWoESGCAAyWoBA2fDcS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969686; c=relaxed/simple;
-	bh=dqamgX0iWai1mMYUbIJT/qOcYTyFcONctN43hFdRr80=;
+	s=arc-20240116; t=1734969690; c=relaxed/simple;
+	bh=HIkuIRdZ7TXRUc0c0JOPzh7720bi4wyknqSvcoAPCI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKXeR/I2I23AzGyAgg+KX7p0KiJr/yKdD1KCVCBvmd+SJGLnGLHkKbE+bb5KZ+jikNWzTsPDQBGz17DcvVJ2zDy3otIBSWxT3qKuqMADuHf32EM601uZX6CmEZTXS39viGEbayk2yyOTfxbUVBjEckd+t1WkyPa2wi7JqUtOc9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FR/wnEKZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEOVtRHbytnnBEG77bOGbspMRcT12jbp+U7k4eN6mphqtbewgSmvD3qWPpmFQSMva0sVZliTP7IJNrVI6DmFR2ZixEe1TYKvoej3TaMKfhRfuWgXtPZf3tU8P52WtDGJGx+zAkEvg72Cv1ZWMvIF4eM+vC9cUuqjUVzRKun19lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uik0YlUd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FR/wnEKZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD336C4CED4;
-	Mon, 23 Dec 2024 16:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uik0YlUd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5B9C4CED4;
+	Mon, 23 Dec 2024 16:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969686;
-	bh=dqamgX0iWai1mMYUbIJT/qOcYTyFcONctN43hFdRr80=;
+	s=korg; t=1734969689;
+	bh=HIkuIRdZ7TXRUc0c0JOPzh7720bi4wyknqSvcoAPCI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FR/wnEKZtiS7Yc+JDaZRpkALVscO9DKQspQsG20FQrDQilwP2zN3LKnNhUNTTO4G3
-	 3+mCHyaL9lrDnmOQir/2CJXs59QvcUgWEWamLDUOUv/c42oAYRF5RFM/pjDieCsN0U
-	 p9s/pACG39TDYLwo89sCNbyKLXy+oCkotKcV68Wo=
+	b=uik0YlUdv6WOqpk7FjzYLYW6DxeFstkhHr6ovnGWFVvHUPgbGpQDNtMSh/FxhljX6
+	 cYBGqG6A3EX1tgT0dktIeEX/E5U/kI158fRIV7PQzB/jwIE5BejoD9RtIf6uUfMw7z
+	 mC3bVlLQDI7l/ASiulGG6pO1jT4rXd76v1V3Pldg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/160] xfs: fix sb_spino_align checks for large fsblock sizes
-Date: Mon, 23 Dec 2024 16:57:17 +0100
-Message-ID: <20241223155409.670040589@linuxfoundation.org>
+Subject: [PATCH 6.12 027/160] xfs: fix zero byte checking in the superblock scrubber
+Date: Mon, 23 Dec 2024 16:57:18 +0100
+Message-ID: <20241223155409.707896072@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,85 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 7f8a44f37229fc76bfcafa341a4b8862368ef44a upstream.
+commit c004a793e0ec34047c3bd423bcd8966f5fac88dc upstream.
 
-For a sparse inodes filesystem, mkfs.xfs computes the values of
-sb_spino_align and sb_inoalignmt with the following code:
+The logic to check that the region past the end of the superblock is all
+zeroes is wrong -- we don't want to check only the bytes past the end of
+the maximally sized ondisk superblock structure as currently defined in
+xfs_format.h; we want to check the bytes beyond the end of the ondisk as
+defined by the feature bits.
 
-	int     cluster_size = XFS_INODE_BIG_CLUSTER_SIZE;
+Port the superblock size logic from xfs_repair and then put it to use in
+xfs_scrub.
 
-	if (cfg->sb_feat.crcs_enabled)
-		cluster_size *= cfg->inodesize / XFS_DINODE_MIN_SIZE;
-
-	sbp->sb_spino_align = cluster_size >> cfg->blocklog;
-	sbp->sb_inoalignmt = XFS_INODES_PER_CHUNK *
-			cfg->inodesize >> cfg->blocklog;
-
-On a V5 filesystem with 64k fsblocks and 512 byte inodes, this results
-in cluster_size = 8192 * (512 / 256) = 16384.  As a result,
-sb_spino_align and sb_inoalignmt are both set to zero.  Unfortunately,
-this trips the new sb_spino_align check that was just added to
-xfs_validate_sb_common, and the mkfs fails:
-
-# mkfs.xfs -f -b size=64k, /dev/sda
-meta-data=/dev/sda               isize=512    agcount=4, agsize=81136 blks
-         =                       sectsz=512   attr=2, projid32bit=1
-         =                       crc=1        finobt=1, sparse=1, rmapbt=1
-         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
-         =                       exchange=0   metadir=0
-data     =                       bsize=65536  blocks=324544, imaxpct=25
-         =                       sunit=0      swidth=0 blks
-naming   =version 2              bsize=65536  ascii-ci=0, ftype=1, parent=0
-log      =internal log           bsize=65536  blocks=5006, version=2
-         =                       sectsz=512   sunit=0 blks, lazy-count=1
-realtime =none                   extsz=65536  blocks=0, rtextents=0
-         =                       rgcount=0    rgsize=0 extents
-Discarding blocks...Sparse inode alignment (0) is invalid.
-Metadata corruption detected at 0x560ac5a80bbe, xfs_sb block 0x0/0x200
-libxfs_bwrite: write verifier failed on xfs_sb bno 0x0/0x1
-mkfs.xfs: Releasing dirty buffer to free list!
-found dirty buffer (bulk) on free list!
-Sparse inode alignment (0) is invalid.
-Metadata corruption detected at 0x560ac5a80bbe, xfs_sb block 0x0/0x200
-libxfs_bwrite: write verifier failed on xfs_sb bno 0x0/0x1
-mkfs.xfs: writing AG headers failed, err=22
-
-Prior to commit 59e43f5479cce1 this all worked fine, even if "sparse"
-inodes are somewhat meaningless when everything fits in a single
-fsblock.  Adjust the checks to handle existing filesystems.
-
-Cc: <stable@vger.kernel.org> # v6.13-rc1
-Fixes: 59e43f5479cce1 ("xfs: sb_spino_align is not verified")
+Cc: <stable@vger.kernel.org> # v4.15
+Fixes: 21fb4cb1981ef7 ("xfs: scrub the secondary superblocks")
 Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_sb.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ fs/xfs/scrub/agheader.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
-index 9e0ae312bc80..e27b63281d01 100644
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -392,12 +392,13 @@ xfs_validate_sb_common(
- 				return -EINVAL;
- 			}
+diff --git a/fs/xfs/scrub/agheader.c b/fs/xfs/scrub/agheader.c
+index da30f926cbe6..0f2f1852d58f 100644
+--- a/fs/xfs/scrub/agheader.c
++++ b/fs/xfs/scrub/agheader.c
+@@ -59,6 +59,30 @@ xchk_superblock_xref(
+ 	/* scrub teardown will take care of sc->sa for us */
+ }
  
--			if (!sbp->sb_spino_align ||
--			    sbp->sb_spino_align > sbp->sb_inoalignmt ||
--			    (sbp->sb_inoalignmt % sbp->sb_spino_align) != 0) {
-+			if (sbp->sb_spino_align &&
-+			    (sbp->sb_spino_align > sbp->sb_inoalignmt ||
-+			     (sbp->sb_inoalignmt % sbp->sb_spino_align) != 0)) {
- 				xfs_warn(mp,
--				"Sparse inode alignment (%u) is invalid.",
--					sbp->sb_spino_align);
-+"Sparse inode alignment (%u) is invalid, must be integer factor of (%u).",
-+					sbp->sb_spino_align,
-+					sbp->sb_inoalignmt);
- 				return -EINVAL;
- 			}
- 		} else if (sbp->sb_spino_align) {
++/*
++ * Calculate the ondisk superblock size in bytes given the feature set of the
++ * mounted filesystem (aka the primary sb).  This is subtlely different from
++ * the logic in xfs_repair, which computes the size of a secondary sb given the
++ * featureset listed in the secondary sb.
++ */
++STATIC size_t
++xchk_superblock_ondisk_size(
++	struct xfs_mount	*mp)
++{
++	if (xfs_has_metauuid(mp))
++		return offsetofend(struct xfs_dsb, sb_meta_uuid);
++	if (xfs_has_crc(mp))
++		return offsetofend(struct xfs_dsb, sb_lsn);
++	if (xfs_sb_version_hasmorebits(&mp->m_sb))
++		return offsetofend(struct xfs_dsb, sb_bad_features2);
++	if (xfs_has_logv2(mp))
++		return offsetofend(struct xfs_dsb, sb_logsunit);
++	if (xfs_has_sector(mp))
++		return offsetofend(struct xfs_dsb, sb_logsectsize);
++	/* only support dirv2 or more recent */
++	return offsetofend(struct xfs_dsb, sb_dirblklog);
++}
++
+ /*
+  * Scrub the filesystem superblock.
+  *
+@@ -75,6 +99,7 @@ xchk_superblock(
+ 	struct xfs_buf		*bp;
+ 	struct xfs_dsb		*sb;
+ 	struct xfs_perag	*pag;
++	size_t			sblen;
+ 	xfs_agnumber_t		agno;
+ 	uint32_t		v2_ok;
+ 	__be32			features_mask;
+@@ -350,8 +375,8 @@ xchk_superblock(
+ 	}
+ 
+ 	/* Everything else must be zero. */
+-	if (memchr_inv(sb + 1, 0,
+-			BBTOB(bp->b_length) - sizeof(struct xfs_dsb)))
++	sblen = xchk_superblock_ondisk_size(mp);
++	if (memchr_inv((char *)sb + sblen, 0, BBTOB(bp->b_length) - sblen))
+ 		xchk_block_set_corrupt(sc, bp);
+ 
+ 	xchk_superblock_xref(sc, bp);
 -- 
 2.39.5
 
