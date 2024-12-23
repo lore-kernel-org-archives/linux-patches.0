@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC9D13BC0C;
-	Mon, 23 Dec 2024 16:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E5B13BC0C;
+	Mon, 23 Dec 2024 16:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969836; cv=none; b=C70sjQdVPT2xBRHCkLYOuwA/a1TWFstWHOw34wcvaugJY9YSqhbOjfkssdF89tttbTWkyfLA/Kne+mIgiOP4KSw58493a/YcmJZKiRhnFxv1cg8S+6dqFORChYzL6YPD+gS2J1bl/OjWYD/GQgauvho0u4o/Y0n49AcdQDcqbYQ=
+	t=1734969840; cv=none; b=Aj8ZJmbgk4tNfXgsri7fUDVf5J/WEnffsNR29Yt9cAbusio9wAA2pP72dtF2ZZYDzdIcUrXPLl5kW4S/c9EyMGwee8Qs1alfYFGdIhDrDUUHag7JxNHWLguiZgSdJQ97e0JlONTwJHx9tT4O6EpM2I1UNMeTSatguW2BW2BtxLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969836; c=relaxed/simple;
-	bh=B9d16hHyClW+jEc3IwfLlf1wVaJ9iGBbgvLxb6ZCShQ=;
+	s=arc-20240116; t=1734969840; c=relaxed/simple;
+	bh=loOyEvHO5L8u9eCpP/fp9Up7y1s90M3zyQh4/vIH2nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mR/dajgEfmRjvT6qGJRDrgZbFHTSBOyHc5yP8BFgJadOYl8hpsoDFMP7We9XCfs3xPb+Ew+zEgvq0NlxisHrBF9IVAxtkLoUOq5956IkaFqwt3gkf4c3J3tXGThLnJzLvf3Xjd+lGJ3c+guGTs1Q6osAxwF5xQB47MNF61vtLHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGjoPVl/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b7KKjrQl7nD7McJ/SiyedxaVT0QfsYEMlSNndMLYPXFAFMMdw8EttOPWOSU3tT+w0Zm7qSBxGt07c8Rtb1SgkV0dsZrZ2/9UR7c9tk53zsbQQZ+hdgdsLSA1yocCAm0MNbSqmz69t5hSn7tRsDDdn5GTZyT+qZyrxG6VTcGmuog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TuTjr0iF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGjoPVl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3934BC4CED3;
-	Mon, 23 Dec 2024 16:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TuTjr0iF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84EBC4CED3;
+	Mon, 23 Dec 2024 16:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969836;
-	bh=B9d16hHyClW+jEc3IwfLlf1wVaJ9iGBbgvLxb6ZCShQ=;
+	s=korg; t=1734969840;
+	bh=loOyEvHO5L8u9eCpP/fp9Up7y1s90M3zyQh4/vIH2nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGjoPVl/QhwEJHjaGEn8lh9hwyC69sFmHL67zyvspfJZRQXc/Ihb7SJMbjeBjwGIl
-	 YNunvETR8OXktIg0bfedIlCFoJMIh/mGq6nds+5TwzFljzNah+dQ0+8lOCmvelp66f
-	 HPjUZ3DmjSEqmTlOwYehxbFG8+ZIo6K/cLzZpYGg=
+	b=TuTjr0iFoXBA9Ip00M50FkRDy4xTOvl8k7F1c0gwHd8xPr1MSYOAwQjmd+Kced4OC
+	 n/XCcK+9JSGtGGZGciF/Yfy8QV/9WD/gj4YatqDo3EGBgGotxk2Vrl4SmVbHgAlBh2
+	 fIAt2M1z3QicLd+0EsJxHSgXyXn6zAAZ3PCFupH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 068/160] KVM: x86: Cache CPUID.0xD XSTATE offsets+sizes during module init
-Date: Mon, 23 Dec 2024 16:57:59 +0100
-Message-ID: <20241223155411.305728327@linuxfoundation.org>
+	syzbot+4f66250f6663c0c1d67e@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Joe Damato <jdamato@fastly.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 069/160] net: tun: fix tun_napi_alloc_frags()
+Date: Mon, 23 Dec 2024 16:58:00 +0100
+Message-ID: <20241223155411.342176205@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,161 +55,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 1201f226c863b7da739f7420ddba818cedf372fc upstream.
+commit 429fde2d81bcef0ebab002215358955704586457 upstream.
 
-Snapshot the output of CPUID.0xD.[1..n] during kvm.ko initiliaization to
-avoid the overead of CPUID during runtime.  The offset, size, and metadata
-for CPUID.0xD.[1..n] sub-leaves does not depend on XCR0 or XSS values, i.e.
-is constant for a given CPU, and thus can be cached during module load.
+syzbot reported the following crash [1]
 
-On Intel's Emerald Rapids, CPUID is *wildly* expensive, to the point where
-recomputing XSAVE offsets and sizes results in a 4x increase in latency of
-nested VM-Enter and VM-Exit (nested transitions can trigger
-xstate_required_size() multiple times per transition), relative to using
-cached values.  The issue is easily visible by running `perf top` while
-triggering nested transitions: kvm_update_cpuid_runtime() shows up at a
-whopping 50%.
+Issue came with the blamed commit. Instead of going through
+all the iov components, we keep using the first one
+and end up with a malformed skb.
 
-As measured via RDTSC from L2 (using KVM-Unit-Test's CPUID VM-Exit test
-and a slightly modified L1 KVM to handle CPUID in the fastpath), a nested
-roundtrip to emulate CPUID on Skylake (SKX), Icelake (ICX), and Emerald
-Rapids (EMR) takes:
+[1]
 
-  SKX 11650
-  ICX 22350
-  EMR 28850
+kernel BUG at net/core/skbuff.c:2849 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 UID: 0 PID: 6230 Comm: syz-executor132 Not tainted 6.13.0-rc1-syzkaller-00407-g96b6fcc0ee41 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
+ RIP: 0010:__pskb_pull_tail+0x1568/0x1570 net/core/skbuff.c:2848
+Code: 38 c1 0f 8c 32 f1 ff ff 4c 89 f7 e8 92 96 74 f8 e9 25 f1 ff ff e8 e8 ae 09 f8 48 8b 5c 24 08 e9 eb fb ff ff e8 d9 ae 09 f8 90 <0f> 0b 66 0f 1f 44 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+RSP: 0018:ffffc90004cbef30 EFLAGS: 00010293
+RAX: ffffffff8995c347 RBX: 00000000fffffff2 RCX: ffff88802cf45a00
+RDX: 0000000000000000 RSI: 00000000fffffff2 RDI: 0000000000000000
+RBP: ffff88807df0c06a R08: ffffffff8995b084 R09: 1ffff1100fbe185c
+R10: dffffc0000000000 R11: ffffed100fbe185d R12: ffff888076e85d50
+R13: ffff888076e85c80 R14: ffff888076e85cf4 R15: ffff888076e85c80
+FS:  00007f0dca6ea6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f0dca6ead58 CR3: 00000000119da000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  skb_cow_data+0x2da/0xcb0 net/core/skbuff.c:5284
+  tipc_aead_decrypt net/tipc/crypto.c:894 [inline]
+  tipc_crypto_rcv+0x402/0x24e0 net/tipc/crypto.c:1844
+  tipc_rcv+0x57e/0x12a0 net/tipc/node.c:2109
+  tipc_l2_rcv_msg+0x2bd/0x450 net/tipc/bearer.c:668
+  __netif_receive_skb_list_ptype net/core/dev.c:5720 [inline]
+  __netif_receive_skb_list_core+0x8b7/0x980 net/core/dev.c:5762
+  __netif_receive_skb_list net/core/dev.c:5814 [inline]
+  netif_receive_skb_list_internal+0xa51/0xe30 net/core/dev.c:5905
+  gro_normal_list include/net/gro.h:515 [inline]
+  napi_complete_done+0x2b5/0x870 net/core/dev.c:6256
+  napi_complete include/linux/netdevice.h:567 [inline]
+  tun_get_user+0x2ea0/0x4890 drivers/net/tun.c:1982
+  tun_chr_write_iter+0x10d/0x1f0 drivers/net/tun.c:2057
+ do_iter_readv_writev+0x600/0x880
+  vfs_writev+0x376/0xba0 fs/read_write.c:1050
+  do_writev+0x1b6/0x360 fs/read_write.c:1096
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Using cached values, the latency drops to:
-
-  SKX 6850
-  ICX 9000
-  EMR 7900
-
-The underlying issue is that CPUID itself is slow on ICX, and comically
-slow on EMR.  The problem is exacerbated on CPUs which support XSAVES
-and/or XSAVEC, as KVM invokes xstate_required_size() twice on each
-runtime CPUID update, and because there are more supported XSAVE features
-(CPUID for supported XSAVE feature sub-leafs is significantly slower).
-
- SKX:
-  CPUID.0xD.2  = 348 cycles
-  CPUID.0xD.3  = 400 cycles
-  CPUID.0xD.4  = 276 cycles
-  CPUID.0xD.5  = 236 cycles
-  <other sub-leaves are similar>
-
- EMR:
-  CPUID.0xD.2  = 1138 cycles
-  CPUID.0xD.3  = 1362 cycles
-  CPUID.0xD.4  = 1068 cycles
-  CPUID.0xD.5  = 910 cycles
-  CPUID.0xD.6  = 914 cycles
-  CPUID.0xD.7  = 1350 cycles
-  CPUID.0xD.8  = 734 cycles
-  CPUID.0xD.9  = 766 cycles
-  CPUID.0xD.10 = 732 cycles
-  CPUID.0xD.11 = 718 cycles
-  CPUID.0xD.12 = 734 cycles
-  CPUID.0xD.13 = 1700 cycles
-  CPUID.0xD.14 = 1126 cycles
-  CPUID.0xD.15 = 898 cycles
-  CPUID.0xD.16 = 716 cycles
-  CPUID.0xD.17 = 748 cycles
-  CPUID.0xD.18 = 776 cycles
-
-Note, updating runtime CPUID information multiple times per nested
-transition is itself a flaw, especially since CPUID is a mandotory
-intercept on both Intel and AMD.  E.g. KVM doesn't need to ensure emulated
-CPUID state is up-to-date while running L2.  That flaw will be fixed in a
-future patch, as deferring runtime CPUID updates is more subtle than it
-appears at first glance, the benefits aren't super critical to have once
-the XSAVE issue is resolved, and caching CPUID output is desirable even if
-KVM's updates are deferred.
-
-Cc: Jim Mattson <jmattson@google.com>
+Fixes: de4f5fed3f23 ("iov_iter: add iter_iovec() helper")
+Reported-by: syzbot+4f66250f6663c0c1d67e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/675b61aa.050a0220.599f4.00bb.GAE@google.com/T/#u
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20241211013302.1347853-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Joe Damato <jdamato@fastly.com>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Acked-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://patch.msgid.link/20241212222247.724674-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/cpuid.c |   31 ++++++++++++++++++++++++++-----
- arch/x86/kvm/cpuid.h |    1 +
- arch/x86/kvm/x86.c   |    2 ++
- 3 files changed, 29 insertions(+), 5 deletions(-)
+ drivers/net/tun.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -36,6 +36,26 @@
- u32 kvm_cpu_caps[NR_KVM_CPU_CAPS] __read_mostly;
- EXPORT_SYMBOL_GPL(kvm_cpu_caps);
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1481,7 +1481,7 @@ static struct sk_buff *tun_napi_alloc_fr
+ 	skb->truesize += skb->data_len;
  
-+struct cpuid_xstate_sizes {
-+	u32 eax;
-+	u32 ebx;
-+	u32 ecx;
-+};
-+
-+static struct cpuid_xstate_sizes xstate_sizes[XFEATURE_MAX] __ro_after_init;
-+
-+void __init kvm_init_xstate_sizes(void)
-+{
-+	u32 ign;
-+	int i;
-+
-+	for (i = XFEATURE_YMM; i < ARRAY_SIZE(xstate_sizes); i++) {
-+		struct cpuid_xstate_sizes *xs = &xstate_sizes[i];
-+
-+		cpuid_count(0xD, i, &xs->eax, &xs->ebx, &xs->ecx, &ign);
-+	}
-+}
-+
- u32 xstate_required_size(u64 xstate_bv, bool compacted)
- {
- 	int feature_bit = 0;
-@@ -44,14 +64,15 @@ u32 xstate_required_size(u64 xstate_bv,
- 	xstate_bv &= XFEATURE_MASK_EXTEND;
- 	while (xstate_bv) {
- 		if (xstate_bv & 0x1) {
--		        u32 eax, ebx, ecx, edx, offset;
--		        cpuid_count(0xD, feature_bit, &eax, &ebx, &ecx, &edx);
-+			struct cpuid_xstate_sizes *xs = &xstate_sizes[feature_bit];
-+			u32 offset;
-+
- 			/* ECX[1]: 64B alignment in compacted form */
- 			if (compacted)
--				offset = (ecx & 0x2) ? ALIGN(ret, 64) : ret;
-+				offset = (xs->ecx & 0x2) ? ALIGN(ret, 64) : ret;
- 			else
--				offset = ebx;
--			ret = max(ret, offset + eax);
-+				offset = xs->ebx;
-+			ret = max(ret, offset + xs->eax);
- 		}
- 
- 		xstate_bv >>= 1;
---- a/arch/x86/kvm/cpuid.h
-+++ b/arch/x86/kvm/cpuid.h
-@@ -32,6 +32,7 @@ int kvm_vcpu_ioctl_get_cpuid2(struct kvm
- bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
- 	       u32 *ecx, u32 *edx, bool exact_only);
- 
-+void __init kvm_init_xstate_sizes(void);
- u32 xstate_required_size(u64 xstate_bv, bool compacted);
- 
- int cpuid_query_maxphyaddr(struct kvm_vcpu *vcpu);
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -14010,6 +14010,8 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(kvm_rmp_fau
- 
- static int __init kvm_x86_init(void)
- {
-+	kvm_init_xstate_sizes();
-+
- 	kvm_mmu_x86_module_init();
- 	mitigate_smt_rsb &= boot_cpu_has_bug(X86_BUG_SMT_RSB) && cpu_smt_possible();
- 	return 0;
+ 	for (i = 1; i < it->nr_segs; i++) {
+-		const struct iovec *iov = iter_iov(it);
++		const struct iovec *iov = iter_iov(it) + i;
+ 		size_t fragsz = iov->iov_len;
+ 		struct page *page;
+ 		void *frag;
 
 
