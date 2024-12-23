@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2042EAE6;
-	Mon, 23 Dec 2024 16:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2391712D1F1;
+	Mon, 23 Dec 2024 16:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969872; cv=none; b=DAzH/yGGLk6eRorxsCt2U+NIGdwcCtu3TtorYvWywakdJW85k/wZewfJhlfonXHEDM0ALYqauZ6eR6r+MlcYtvjNomqCzTKy80aGzsK5Zo8ixyNSNXsDqwmg4v8bFCeKGYFdsaU4zaMWiw2lIrhoM6S/rp3OdHZXtse5J9GMJTs=
+	t=1734969875; cv=none; b=jlp0mERGIycsPecb9w/T2Nhh4YMRvVUPdEed0T2IfJ3Ls30jbZfmxn473OyHaxMW19m1VC0wfHt9HAhKqZm0MTidKnlMtD86ZbCp3HpFMZcm39r+DckvCvFgQXDB5U61li/jVJ+UxDy9A6cuMiz9UgNN7N19mQgDDFMHqK4xoV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969872; c=relaxed/simple;
-	bh=ezXPhQH5bXEmrkd64IfhExtC+vPiUWcfucS0oYR1f+o=;
+	s=arc-20240116; t=1734969875; c=relaxed/simple;
+	bh=awZQGlq/DJJJwDfjkwccIgHgEvPMnpitzPhxrT6iXsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7MZvUKn5eKOVrruQtMdgO/hrZWpTcfv6b2c5v2tbo78otJqmAeQrwikvuU553YwG8beYvPcrBLEU58uYvwDCUsAQbSPbC38AOxsKsQduAVoBNqolSV7hU/vlKtcUthifh0EUTcrwoaxz4ZPTUTy/1sInlk2nqhTpEgDfeLVDME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=13adsQe4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DvJVLcL+gdWneSx//Cb/jrhX8OfYrrNDgTDde/xTftvHYdwROVMRg2bR5Bt1m8jii73n/HNz8m4MiWQYvsxIeycARFFuWArPczpVYp6wThGW0TgasX+F/XSuoYKF2cqG5hQkEs/HlfxXSFps0L5RrQFsi3y/k9pNmCKlvgkgLRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KfZOdR1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="13adsQe4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB7BC4CED3;
-	Mon, 23 Dec 2024 16:04:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KfZOdR1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A93DC4CED3;
+	Mon, 23 Dec 2024 16:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969871;
-	bh=ezXPhQH5bXEmrkd64IfhExtC+vPiUWcfucS0oYR1f+o=;
+	s=korg; t=1734969875;
+	bh=awZQGlq/DJJJwDfjkwccIgHgEvPMnpitzPhxrT6iXsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13adsQe4AVAq9RgUKxiaO79pUu8gQWujnd/dBGI0OtS1fpAG1W99fd0vENIfAnser
-	 oIbzaTuzW/izP11qGJD7GkanTPr69drDVyxu+VrClH8jAuOS9jJ6AdK23mgyTLVUuO
-	 OSOC4no3S7gsSmDMRyfOJIiWBtZR5JFiox4COyz8=
+	b=KfZOdR1P8DhcAuVY07oJ7CzID3hm4iW6MDdr0EG9sOKcyeSCDraFq/KyA5NyfLEsn
+	 OfrYD5Yj5YO4JByapqn/MxK3RmPsUMNTFTGGoo3bnEmO+yRn343kSZ9Ozv/rjAjBS5
+	 gpFUqQ6m9kBI2fcD0smiZ5akicwJEF5m7vsGmMMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/160] team: Fix feature exposure when no ports are present
-Date: Mon, 23 Dec 2024 16:57:39 +0100
-Message-ID: <20241223155410.543549167@linuxfoundation.org>
+Subject: [PATCH 6.12 049/160] net: hinic: Fix cleanup in create_rxqs/txqs()
+Date: Mon, 23 Dec 2024 16:57:40 +0100
+Message-ID: <20241223155410.581228843@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,61 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e78c20f327bd94dabac68b98218dff069a8780f0 ]
+[ Upstream commit 7203d10e93b6e6e1d19481ef7907de6a9133a467 ]
 
-Small follow-up to align this to an equivalent behavior as the bond driver.
-The change in 3625920b62c3 ("teaming: fix vlan_features computing") removed
-the netdevice vlan_features when there is no team port attached, yet it
-leaves the full set of enc_features intact.
+There is a check for NULL at the start of create_txqs() and
+create_rxqs() which tess if "nic_dev->txqs" is non-NULL.  The
+intention is that if the device is already open and the queues
+are already created then we don't create them a second time.
 
-Instead, leave the default features as pre 3625920b62c3, and recompute once
-we do have ports attached. Also, similarly as in bonding case, call the
-netdev_base_features() helper on the enc_features.
+However, the bug is that if we have an error in the create_txqs()
+then the pointer doesn't get set back to NULL.  The NULL check
+at the start of the function will say that it's already open when
+it's not and the device can't be used.
 
-Fixes: 3625920b62c3 ("teaming: fix vlan_features computing")
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20241213123657.401868-1-daniel@iogearbox.net
+Set ->txqs back to NULL on cleanup on error.
+
+Fixes: c3e79baf1b03 ("net-next/hinic: Add logical Txq and Rxq")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0cc98faf-a0ed-4565-a55b-0fa2734bc205@stanley.mountain
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/huawei/hinic/hinic_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 6ace5a74cddb..1c85dda83825 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -998,9 +998,13 @@ static void __team_compute_features(struct team *team)
- 	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE |
- 					IFF_XMIT_DST_RELEASE_PERM;
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+index 890f213da8d1..ae1f523d6841 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+@@ -172,6 +172,7 @@ static int create_txqs(struct hinic_dev *nic_dev)
+ 	hinic_sq_dbgfs_uninit(nic_dev);
  
-+	rcu_read_lock();
-+	if (list_empty(&team->port_list))
-+		goto done;
-+
- 	vlan_features = netdev_base_features(vlan_features);
-+	enc_features = netdev_base_features(enc_features);
+ 	devm_kfree(&netdev->dev, nic_dev->txqs);
++	nic_dev->txqs = NULL;
+ 	return err;
+ }
  
--	rcu_read_lock();
- 	list_for_each_entry_rcu(port, &team->port_list, list) {
- 		vlan_features = netdev_increment_features(vlan_features,
- 					port->dev->vlan_features,
-@@ -1010,11 +1014,11 @@ static void __team_compute_features(struct team *team)
- 						  port->dev->hw_enc_features,
- 						  TEAM_ENC_FEATURES);
+@@ -268,6 +269,7 @@ static int create_rxqs(struct hinic_dev *nic_dev)
+ 	hinic_rq_dbgfs_uninit(nic_dev);
  
--
- 		dst_release_flag &= port->dev->priv_flags;
- 		if (port->dev->hard_header_len > max_hard_header_len)
- 			max_hard_header_len = port->dev->hard_header_len;
- 	}
-+done:
- 	rcu_read_unlock();
+ 	devm_kfree(&netdev->dev, nic_dev->rxqs);
++	nic_dev->rxqs = NULL;
+ 	return err;
+ }
  
- 	team->dev->vlan_features = vlan_features;
 -- 
 2.39.5
 
