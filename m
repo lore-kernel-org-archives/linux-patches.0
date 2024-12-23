@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EA47E0FF;
-	Mon, 23 Dec 2024 16:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93A519E971;
+	Mon, 23 Dec 2024 16:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970353; cv=none; b=eCJ8WEM0QOXRxPQF98rb5x6R6wSqVR4zfmWyUEu+O09HcM5Jn5pljauL81ZG6qt921GNPmmMVqJOyvz+Et5v3XotN4nHVswApu14OgjpGrik0w00pOFnLgQFeCvxGS7DoAW/IQEb9irdIwrmvKZ7fpZtxBaQPMGfuDDZ15c+oAw=
+	t=1734970356; cv=none; b=is6yiX0kQWrYXrRn0J8I/tbo4m0/JJygiPh9X6L3luZnUkhuXPmI5cM7VdZ16d0ajtYC5sKcORWDZVM/jphgybzApx7mHgkJbPTYapTG06UrBTW1Ynyj94hFgvQODd/mJzUBQoPi3IRCwk6NC5Ld8SadTRqVxjEiHzimEUY6xr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970353; c=relaxed/simple;
-	bh=XHXBChGhzJh5HjFY5vZjjAmrAcgcrtdDYwmymElp/aU=;
+	s=arc-20240116; t=1734970356; c=relaxed/simple;
+	bh=08kyJ0PIHMip0vHw8IEBoA5qVlocd46ihVJsE1rqGrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmsfKVjc6H/JaEGesKhEJXEffeoaoiougzkLpzwM0rTVMO0d6/nay724qwEJfoVuE4oXt28cKeX3O2hHHAq8wCVvOsgTbRL825aS4x5y7aeSRR/W49ooSo3prP985J0HtS/DyyPLPB4cEhn+CvzuB4PL+tfdnxmrJiOa1+Fu9iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlWIRs6/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cvVx6odE+Eoy7lEVbXcsoDXG8qsZypJkC91/ONiRcgau44VdhyRKfolBOt+7iCO6KEaQTniuD8E15apQNgtC6VmjIgMMy0f0u7+NUgeSKermTbHFhA30NpqMUvUQBJ2cqoteHLwGSRnnyc/Xob8qkQxF0wVGbySaqIlB9aw7XxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfAaV91i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlWIRs6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51C5C4CED3;
-	Mon, 23 Dec 2024 16:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfAaV91i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3896FC4CED3;
+	Mon, 23 Dec 2024 16:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970353;
-	bh=XHXBChGhzJh5HjFY5vZjjAmrAcgcrtdDYwmymElp/aU=;
+	s=korg; t=1734970356;
+	bh=08kyJ0PIHMip0vHw8IEBoA5qVlocd46ihVJsE1rqGrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NlWIRs6/gFkmxwLXk1Tf8Co3V3/LtRtBMAgZvvhmCAmTFbAlnAZQeHH794WWj4Lz6
-	 36oINrfTDlQFOV/ccH0mwuILETW7nhZto904KQm4sKhvf/Yy6BQYnf6RN3JXiACK7n
-	 3ndyyLT9S6lO3KaZq0AAU0Az9QVkruGn9Gqg0oIw=
+	b=UfAaV91iTQ7DswZZgVaRQZl96bl20mHjDzlA19eSDEYuVrcc1x0ruMls5xoOIfLo9
+	 ZrV5iVcb5AtFuRohN/ZxtyfTogLsJdKTgvJNXHp+j0m+LDw5qz4oy3LexSlfp/9FZr
+	 8qPtQLu4rnyIZ6juPIViPk543NzODaq/b8giM1eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/116] net: mdiobus: fix an OF node reference leak
-Date: Mon, 23 Dec 2024 16:58:47 +0100
-Message-ID: <20241223155401.780789065@linuxfoundation.org>
+	Prathamesh Shete <pshete@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 058/116] mmc: sdhci-tegra: Remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk
+Date: Mon, 23 Dec 2024 16:58:48 +0100
+Message-ID: <20241223155401.821713984@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -52,61 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit 572af9f284669d31d9175122bbef9bc62cea8ded ]
+commit a56335c85b592cb2833db0a71f7112b7d9f0d56b upstream.
 
-fwnode_find_mii_timestamper() calls of_parse_phandle_with_fixed_args()
-but does not decrement the refcount of the obtained OF node. Add an
-of_node_put() call before returning from the function.
+Value 0 in ADMA length descriptor is interpreted as 65536 on new Tegra
+chips, remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk to make sure max
+ADMA2 length is 65536.
 
-This bug was detected by an experimental static analysis tool that I am
-developing.
-
-Fixes: bc1bee3b87ee ("net: mdiobus: Introduce fwnode_mdiobus_register_phy()")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241218035106.1436405-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4346b7c7941d ("mmc: tegra: Add Tegra186 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Message-ID: <20241209101009.22710-1-pshete@nvidia.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mdio/fwnode_mdio.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/mmc/host/sdhci-tegra.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/mdio/fwnode_mdio.c b/drivers/net/mdio/fwnode_mdio.c
-index 1183ef5e203e..c62f2e85414d 100644
---- a/drivers/net/mdio/fwnode_mdio.c
-+++ b/drivers/net/mdio/fwnode_mdio.c
-@@ -38,6 +38,7 @@ fwnode_find_pse_control(struct fwnode_handle *fwnode)
- static struct mii_timestamper *
- fwnode_find_mii_timestamper(struct fwnode_handle *fwnode)
- {
-+	struct mii_timestamper *mii_ts;
- 	struct of_phandle_args arg;
- 	int err;
- 
-@@ -51,10 +52,16 @@ fwnode_find_mii_timestamper(struct fwnode_handle *fwnode)
- 	else if (err)
- 		return ERR_PTR(err);
- 
--	if (arg.args_count != 1)
--		return ERR_PTR(-EINVAL);
-+	if (arg.args_count != 1) {
-+		mii_ts = ERR_PTR(-EINVAL);
-+		goto put_node;
-+	}
-+
-+	mii_ts = register_mii_timestamper(arg.np, arg.args[0]);
- 
--	return register_mii_timestamper(arg.np, arg.args[0]);
-+put_node:
-+	of_node_put(arg.np);
-+	return mii_ts;
- }
- 
- int fwnode_mdiobus_phy_device_register(struct mii_bus *mdio,
--- 
-2.39.5
-
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -1525,7 +1525,6 @@ static const struct sdhci_pltfm_data sdh
+ 	.quirks = SDHCI_QUIRK_BROKEN_TIMEOUT_VAL |
+ 		  SDHCI_QUIRK_SINGLE_POWER_WRITE |
+ 		  SDHCI_QUIRK_NO_HISPD_BIT |
+-		  SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC |
+ 		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
+ 	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
+ 		   SDHCI_QUIRK2_ISSUE_CMD_DAT_RESET_TOGETHER,
 
 
