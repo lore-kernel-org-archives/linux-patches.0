@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE85188006;
-	Mon, 23 Dec 2024 16:08:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724FE13BC0C;
+	Mon, 23 Dec 2024 16:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970118; cv=none; b=WEJNH6JGGtupJqyM5myaxCKoFU2ZC2rbPkQmQCCgkEWg5iwTFmHE67zb3wmdWiAzZ2ZHu0deVj7VmSoh/i5P6WVpyQS6nJ4AGH4b3vGdcAjphucmiqlOLpAJ4FKn7V04m1zlu5rR+BUzGVuJw11SShGmSLk61ym6LHr9lheOlY0=
+	t=1734970122; cv=none; b=Tvm+NQ00ahfptzKJuXoMH6EKxfo9qzvIJNkexZWIB8rK0zf+rYi37R2xkP3Vt+WdGbw8J4t2ylWoGIJ4PQbGyQz1R73KOFmqZI0uQVwiDXk4B43DPGTsLKOifRS7fZLvgJo/TewU2d6UhTBRmuBeOimXiy/KzOTGNUe86UUJGzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970118; c=relaxed/simple;
-	bh=mtTJbw0rJCG8vaMWdsRs3S3ndik3R4P73P8AV5EVuOk=;
+	s=arc-20240116; t=1734970122; c=relaxed/simple;
+	bh=2bwt6j8e6E0lkvzm+f02ZcP4bYRlU3TCetdIHaUujSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNFK6Qw4jOehXAPa41bR86AWa3IMGbENnhVoN5kE8eS+xaEz/fPRSEqRiuGDGhnoMUdQDAyKHwn8m7Lz7IrB2hdrJZL1miCC1Icmq0eZSb8Afg6cUhMnDXACw27CvK9XTokLg7tkk3IYgfBqQPv/dH0nKvsNP4GDUka7DSh8fCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVnSyEQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQuyOGDSccwdAv8y2BOjYAQzOx17+6ZDPsgu/omylfYAPDbZqydIT1aVJoOk1caXz9HsRvR7d0ATRIFfPVv34ZFLqHFlEbUxlhDHoN9VvwDJtJTjyoWhYaRkNBp3yeaUr4yiqXFpVATOkDhv1Gvg3oi5HgtVM2uWZr5ZYCjSZHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jM2TExU7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVnSyEQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484B4C4CED3;
-	Mon, 23 Dec 2024 16:08:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jM2TExU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1C6C4CED3;
+	Mon, 23 Dec 2024 16:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970118;
-	bh=mtTJbw0rJCG8vaMWdsRs3S3ndik3R4P73P8AV5EVuOk=;
+	s=korg; t=1734970122;
+	bh=2bwt6j8e6E0lkvzm+f02ZcP4bYRlU3TCetdIHaUujSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVnSyEQOfWrybO8LI7KXYcqKFX8zNAgQh16DEHNPhhik4eTZ0LMxteW537EYn8GXv
-	 dvE4qJ2KGjecY38I186oJ3TPgA15TzakywqtEcase//9HPvFRYh/AcB9oLZ8TQyOmn
-	 WV9NgVHWBpZzDV0zHrmEwUtXw2nwpFO0rnt3kK08=
+	b=jM2TExU7ApFsqDHuBT/XMz7uIfLcBuYAKfcSn/H3NIvc0lXHtHpM5H31Fpc5RWy30
+	 B5AFwelvanLtpSKOHuisS9+iA5aDuSAZX/x/BXBdqi9yZpUfazJDOmfiPmadRBVADa
+	 5dPEy8/455zK08CwS1sJc40ZVBvAPL9/tgeNtO34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 119/160] drm/amdgpu/nbio7.0: fix IP version check
-Date: Mon, 23 Dec 2024 16:58:50 +0100
-Message-ID: <20241223155413.362102684@linuxfoundation.org>
+	Kairui Song <kasong@tencent.com>,
+	Desheng Wu <deshengwu@tencent.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 110/160] zram: fix uninitialized ZRAM not releasing backing device
+Date: Mon, 23 Dec 2024 16:58:41 +0100
+Message-ID: <20241223155412.926326153@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,36 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Kairui Song <kasong@tencent.com>
 
-commit 3abb660f9e18925468685591a3702bda05faba4f upstream.
+commit 74363ec674cb172d8856de25776c8f3103f05e2f upstream.
 
-Use the helper function rather than reading it directly.
+Setting backing device is done before ZRAM initialization.  If we set the
+backing device, then remove the ZRAM module without initializing the
+device, the backing device reference will be leaked and the device will be
+hold forever.
 
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0ec43fbece784215d3c4469973e4556d70bce915)
-Cc: stable@vger.kernel.org
+Fix this by always reset the ZRAM fully on rmmod or reset store.
+
+Link: https://lkml.kernel.org/r/20241209165717.94215-3-ryncsn@gmail.com
+Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reported-by: Desheng Wu <deshengwu@tencent.com>
+Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/zram/zram_drv.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c
-index 49e953f86ced..d1032e9992b4 100644
---- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c
-@@ -278,7 +278,7 @@ static void nbio_v7_0_init_registers(struct amdgpu_device *adev)
- {
- 	uint32_t data;
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -1325,12 +1325,16 @@ static void zram_meta_free(struct zram *
+ 	size_t num_pages = disksize >> PAGE_SHIFT;
+ 	size_t index;
  
--	switch (adev->ip_versions[NBIO_HWIP][0]) {
-+	switch (amdgpu_ip_version(adev, NBIO_HWIP, 0)) {
- 	case IP_VERSION(2, 5, 0):
- 		data = RREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF6_STRAP4) & ~BIT(23);
- 		WREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF6_STRAP4, data);
--- 
-2.47.1
-
++	if (!zram->table)
++		return;
++
+ 	/* Free all pages that are still in this zram device */
+ 	for (index = 0; index < num_pages; index++)
+ 		zram_free_page(zram, index);
+ 
+ 	zs_destroy_pool(zram->mem_pool);
+ 	vfree(zram->table);
++	zram->table = NULL;
+ }
+ 
+ static bool zram_meta_alloc(struct zram *zram, u64 disksize)
+@@ -2171,11 +2175,6 @@ static void zram_reset_device(struct zra
+ 
+ 	zram->limit_pages = 0;
+ 
+-	if (!init_done(zram)) {
+-		up_write(&zram->init_lock);
+-		return;
+-	}
+-
+ 	set_capacity_and_notify(zram->disk, 0);
+ 	part_stat_set_all(zram->disk->part0, 0);
+ 
 
 
