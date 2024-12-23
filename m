@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C910A1B4137;
-	Mon, 23 Dec 2024 16:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEDA1B4126;
+	Mon, 23 Dec 2024 16:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970317; cv=none; b=hUwwyZGzUbx/QHCi8lelW3Im6CtojB1W2a/2VLa+vb1O3Munpq9Eg6uzSWU9erwKJuhIiElYVtfQ/nqavjjwAI7vDoBrrn1Xl9i+Vf3Nhb8ipREK1H5jXDAWmFWQ/51Fke076KsLZIkM6xKgWF1F/Ab3K+R4HHDtWAL2OA5/4A4=
+	t=1734970321; cv=none; b=CC03vZZwhpd2OypppJb3819W7AGH053967rkHMY9COS+0RM6ewjfQ05vjK6s+NJ7A76BT3PjwCk0knKZbHNtd2aOCDJVPuiKNdICzSsyTPSTcH0jx4cfwDQTX7Yd2/wDJI9DgfuJCMFDktpwH8GXKfIvuImjx4Zwxu80J6keQKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970317; c=relaxed/simple;
-	bh=l2H2Su30oKKTde4jlFJdPnciDnIkjO2F4g3eig2APo8=;
+	s=arc-20240116; t=1734970321; c=relaxed/simple;
+	bh=YgTlhSzWK2J5dhjCjdNJs3YwZxgRPiF4AvsgS0kA5MM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nCPyOz5/zIuTfKoyxlwAw4aPL6CTpVkZWdZvYcyhAa7dY9k65u+eYBb1ouS4fK0l3Ba4u4z+mSTkzwIP1PIyq+eZj7K5ouA64rizNHt7Rg26VhCObO1KZuSx+sZ+AOfy02av4FMSddvsDBh8CXaW5ZLhw8GRYhS+uT4hqDtQEOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=037kO3Zk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b7YRFxOr4hCG7sMDw4JVtHQxnCeI+Oz6SahgvskpIUyHX6H/R8J8rwHn9X5w4+6QreaO+4reF0vKD5Iy73dGQr0xEpgqgihf9JhqEpEWWXK556Sn86F/tygDXc7FCtO2JHi7jzlci7IIydiXOneVeH7r/h2g5632Jv7rgeZbp8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/NvLHIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="037kO3Zk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 316EAC4CED4;
-	Mon, 23 Dec 2024 16:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/NvLHIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F875C4CED3;
+	Mon, 23 Dec 2024 16:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970317;
-	bh=l2H2Su30oKKTde4jlFJdPnciDnIkjO2F4g3eig2APo8=;
+	s=korg; t=1734970321;
+	bh=YgTlhSzWK2J5dhjCjdNJs3YwZxgRPiF4AvsgS0kA5MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=037kO3ZkQp5jd7v0B6lrjZqc+FJBZGCc+tDGbvMxlmyXpT+TjIqzmfDnHk0DyLrPn
-	 Zf9GYmnmEkjPTmg5L8zioBZBg1mdEh+bmvB6Pp7oxvkqxNm0HivDPDlNPnxms5yV4o
-	 1hf0UiUMmV2gY5jKokeQtNFgaMIh6ZtQgQ3P1fOk=
+	b=C/NvLHIYOt0ZeTC5LTWpWlXtvc3qN9A1N7gErszsvzgkb62clH+iiq8cOaGdvOOx9
+	 Cg44nYAvdSGqgsPU7UhF/I2hGB2N+Vk0N1jAtUqJgDyuhmEuIwZGQcRBtNfat8WaHi
+	 az07/0rfYRudlOy5TynTESSvtqTdsgU+NaQveQ1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/116] ionic: use ee->offset when returning sprom data
-Date: Mon, 23 Dec 2024 16:58:38 +0100
-Message-ID: <20241223155401.424836199@linuxfoundation.org>
+Subject: [PATCH 6.6 031/116] xfs: conditionally allow FS_XFLAG_REALTIME changes if S_DAX is set
+Date: Mon, 23 Dec 2024 16:58:21 +0100
+Message-ID: <20241223155400.790308749@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -52,40 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
+commit 8d16762047c627073955b7ed171a36addaf7b1ff upstream.
 
-Some calls into ionic_get_module_eeprom() don't use a single
-full buffer size, but instead multiple calls with an offset.
-Teach our driver to use the offset correctly so we can
-respond appropriately to the caller.
+If a file has the S_DAX flag (aka fsdax access mode) set, we cannot
+allow users to change the realtime flag unless the datadev and rtdev
+both support fsdax access modes.  Even if there are no extents allocated
+to the file, the setattr thread could be racing with another thread
+that has already started down the write code paths.
 
-Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ba23cba9b3bdc ("fs: allow per-device dax status checking for filesystems")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_ioctl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index 35829a2851fa..d76e63f57ff1 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -945,8 +945,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
- 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
+diff --git a/fs/xfs/xfs_ioctl.c b/fs/xfs/xfs_ioctl.c
+index df4bf0d56aad..32e718043e0e 100644
+--- a/fs/xfs/xfs_ioctl.c
++++ b/fs/xfs/xfs_ioctl.c
+@@ -1128,6 +1128,17 @@ xfs_ioctl_setattr_xflags(
+ 		/* Can't change realtime flag if any extents are allocated. */
+ 		if (ip->i_df.if_nextents || ip->i_delayed_blks)
+ 			return -EINVAL;
++
++		/*
++		 * If S_DAX is enabled on this file, we can only switch the
++		 * device if both support fsdax.  We can't update S_DAX because
++		 * there might be other threads walking down the access paths.
++		 */
++		if (IS_DAX(VFS_I(ip)) &&
++		    (mp->m_ddev_targp->bt_daxdev == NULL ||
++		     (mp->m_rtdev_targp &&
++		      mp->m_rtdev_targp->bt_daxdev == NULL)))
++			return -EINVAL;
+ 	}
  
- 	do {
--		memcpy(data, xcvr->sprom, len);
--		memcpy(tbuf, xcvr->sprom, len);
-+		memcpy(data, &xcvr->sprom[ee->offset], len);
-+		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
- 
- 		/* Let's make sure we got a consistent copy */
- 		if (!memcmp(data, tbuf, len))
+ 	if (rtflag) {
 -- 
 2.39.5
 
