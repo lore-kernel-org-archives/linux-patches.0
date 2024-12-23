@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F8919E971;
-	Mon, 23 Dec 2024 16:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A6D19E971;
+	Mon, 23 Dec 2024 16:14:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970464; cv=none; b=UJvNp3BG1z3mEZ2nm7EEBzTqUs1mQwCRn1mz+P4es85aPgVZUg/sUpK0GbRvn9A/ZXrOJHbgZdkA0a2onsl+sb8RkaD7DR145oHvtlZkNLfpBs9XPh/kj8NYIVK1BHQgTIlnPPwXfrqF22X9vzSwtXCCXxTFaAQ8A+YAbOcyfpM=
+	t=1734970468; cv=none; b=RksqnuD93+w1JjxGhFakA0djnYzH/fu8PIRhvd0tFnRtpDpW/BRS7Ic3f39dOQAP+Zrd60dceo3irZK8TspAWxpzsa2N5SHw3xjmZTQNlAFqtugvfwjmtTgg45NgzfPlzEYxAXstkOe8cIh3rVRVrBzuJvRa8rpG6R67G6/evd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970464; c=relaxed/simple;
-	bh=VHRup6OH8X1k9v18y0N3Bj6v3sWZl5KMHnqrcaMlNFI=;
+	s=arc-20240116; t=1734970468; c=relaxed/simple;
+	bh=56OQmk1jvF9w9zd3xNlHgWCq50pqAcUfa/IJ3TkXvVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MY+4oDB+N4hkHycO3SrSU79b39kzHRH65mhesimhe9Jk2CQJ5/De3FSGQixHibNnI/TGDtvp0AsCiG1m2rKIEcpo4Dn8Mb0HrG9+MqDPY27zddOZIo5Y1VdZLW07M8oDznEnrL2P5QIjKtDoOxs+1zYl4cSVSTdIKLQf083A3Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnWrH+99; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=seLcL5nFxDYtlkk+OXVYQnHVQh79FESsUwwnX/Z72mNPHYz4KNxePPvMABM9bS4ACzPcHF2KWtRiXvJzIfpyzn0kyHIrZ8RuWjH90yBBn2MBwxRVGBH6TEOO9YGerBmYp+BT2RVag2D3DnsWY3qTHQmo5kdB1xSCmxb52UrQbw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yKoCXk+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnWrH+99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5C8C4CED3;
-	Mon, 23 Dec 2024 16:14:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yKoCXk+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6088C4CED3;
+	Mon, 23 Dec 2024 16:14:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970464;
-	bh=VHRup6OH8X1k9v18y0N3Bj6v3sWZl5KMHnqrcaMlNFI=;
+	s=korg; t=1734970468;
+	bh=56OQmk1jvF9w9zd3xNlHgWCq50pqAcUfa/IJ3TkXvVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnWrH+994GG+Y2Ys2nky9xSYt7TKc/TPPnwXpeG3VGI6FAlO2j3ff3IIFMCrLPTfW
-	 5hSO+qgqyh53dnemdtauly9Z2xQPYs1q7z4cONFda21/DyzDBkEbl98Ob+86EjDa/y
-	 wOmM1OGocFL9X8MDLgYjufR+o2IwVcgMEyz/pOUo=
+	b=yKoCXk+Ov9MQvQH2y7/sevkK3MXnPKO+DB4XCCQky6GTdu8ZlXVV9gUV6EgC5LcHC
+	 IJ9RSK4R935Kw3TKYkE0NU1bdPNEDk8YV/7Prtn2u1AT5MPTnzL1P45eX4aShEztJa
+	 8TwgKNvcuvyEb00CjuNWdN6wFLHpcncdlorb5XSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 091/116] smb: client: fix TCP timers deadlock after rmmod
-Date: Mon, 23 Dec 2024 16:59:21 +0100
-Message-ID: <20241223155403.100322726@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Al Viro <viro@ZenIV.linux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 092/116] tracing: Fix test_event_printk() to process entire print argument
+Date: Mon, 23 Dec 2024 16:59:22 +0100
+Message-ID: <20241223155403.142343793@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -50,182 +55,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit e9f2517a3e18a54a3943c098d2226b245d488801 upstream.
+commit a6629626c584200daf495cc9a740048b455addcd upstream.
 
-Commit ef7134c7fc48 ("smb: client: Fix use-after-free of network namespace.")
-fixed a netns UAF by manually enabled socket refcounting
-(sk->sk_net_refcnt=1 and sock_inuse_add(net, 1)).
+The test_event_printk() analyzes print formats of trace events looking for
+cases where it may dereference a pointer that is not in the ring buffer
+which can possibly be a bug when the trace event is read from the ring
+buffer and the content of that pointer no longer exists.
 
-The reason the patch worked for that bug was because we now hold
-references to the netns (get_net_track() gets a ref internally)
-and they're properly released (internally, on __sk_destruct()),
-but only because sk->sk_net_refcnt was set.
+The function needs to accurately go from one print format argument to the
+next. It handles quotes and parenthesis that may be included in an
+argument. When it finds the start of the next argument, it uses a simple
+"c = strstr(fmt + i, ',')" to find the end of that argument!
 
-Problem:
-(this happens regardless of CONFIG_NET_NS_REFCNT_TRACKER and regardless
-if init_net or other)
+In order to include "%s" dereferencing, it needs to process the entire
+content of the print format argument and not just the content of the first
+',' it finds. As there may be content like:
 
-Setting sk->sk_net_refcnt=1 *manually* and *after* socket creation is not
-only out of cifs scope, but also technically wrong -- it's set conditionally
-based on user (=1) vs kernel (=0) sockets.  And net/ implementations
-seem to base their user vs kernel space operations on it.
+ ({ const char *saved_ptr = trace_seq_buffer_ptr(p); static const char
+   *access_str[] = { "---", "--x", "w--", "w-x", "-u-", "-ux", "wu-", "wux"
+   }; union kvm_mmu_page_role role; role.word = REC->role;
+   trace_seq_printf(p, "sp gen %u gfn %llx l%u %u-byte q%u%s %s%s" " %snxe
+   %sad root %u %s%c", REC->mmu_valid_gen, REC->gfn, role.level,
+   role.has_4_byte_gpte ? 4 : 8, role.quadrant, role.direct ? " direct" : "",
+   access_str[role.access], role.invalid ? " invalid" : "", role.efer_nx ? ""
+   : "!", role.ad_disabled ? "!" : "", REC->root_count, REC->unsync ?
+   "unsync" : "sync", 0); saved_ptr; })
 
-e.g. upon TCP socket close, the TCP timers are not cleared because
-sk->sk_net_refcnt=1:
-(cf. commit 151c9c724d05 ("tcp: properly terminate timers for kernel sockets"))
+Which is an example of a full argument of an existing event. As the code
+already handles finding the next print format argument, process the
+argument at the end of it and not the start of it. This way it has both
+the start of the argument as well as the end of it.
 
-net/ipv4/tcp.c:
-    void tcp_close(struct sock *sk, long timeout)
-    {
-    	lock_sock(sk);
-    	__tcp_close(sk, timeout);
-    	release_sock(sk);
-    	if (!sk->sk_net_refcnt)
-    		inet_csk_clear_xmit_timers_sync(sk);
-    	sock_put(sk);
-    }
+Add a helper function "process_pointer()" that will do the processing during
+the loop as well as at the end. It also makes the code cleaner and easier
+to read.
 
-Which will throw a lockdep warning and then, as expected, deadlock on
-tcp_write_timer().
-
-A way to reproduce this is by running the reproducer from ef7134c7fc48
-and then 'rmmod cifs'.  A few seconds later, the deadlock/lockdep
-warning shows up.
-
-Fix:
-We shouldn't mess with socket internals ourselves, so do not set
-sk_net_refcnt manually.
-
-Also change __sock_create() to sock_create_kern() for explicitness.
-
-As for non-init_net network namespaces, we deal with it the best way
-we can -- hold an extra netns reference for server->ssocket and drop it
-when it's released.  This ensures that the netns still exists whenever
-we need to create/destroy server->ssocket, but is not directly tied to
-it.
-
-Fixes: ef7134c7fc48 ("smb: client: Fix use-after-free of network namespace.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Al Viro <viro@ZenIV.linux.org.uk>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Link: https://lore.kernel.org/20241217024720.362271189@goodmis.org
+Fixes: 5013f454a352c ("tracing: Add check of trace event print fmts for dereferencing pointers")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |   36 ++++++++++++++++++++++++++----------
- 1 file changed, 26 insertions(+), 10 deletions(-)
+ kernel/trace/trace_events.c |   82 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 29 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -1003,9 +1003,13 @@ clean_demultiplex_info(struct TCP_Server
- 	msleep(125);
- 	if (cifs_rdma_enabled(server))
- 		smbd_destroy(server);
-+
- 	if (server->ssocket) {
- 		sock_release(server->ssocket);
- 		server->ssocket = NULL;
-+
-+		/* Release netns reference for the socket. */
-+		put_net(cifs_net_ns(server));
- 	}
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -265,8 +265,7 @@ static bool test_field(const char *fmt,
+ 	len = p - fmt;
  
- 	if (!list_empty(&server->pending_mid_q)) {
-@@ -1054,6 +1058,7 @@ clean_demultiplex_info(struct TCP_Server
- 		 */
- 	}
- 
-+	/* Release netns reference for this server. */
- 	put_net(cifs_net_ns(server));
- 	kfree(server->leaf_fullpath);
- 	kfree(server);
-@@ -1726,6 +1731,8 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 
- 	tcp_ses->ops = ctx->ops;
- 	tcp_ses->vals = ctx->vals;
-+
-+	/* Grab netns reference for this server. */
- 	cifs_set_net_ns(tcp_ses, get_net(current->nsproxy->net_ns));
- 
- 	tcp_ses->conn_id = atomic_inc_return(&tcpSesNextId);
-@@ -1857,6 +1864,7 @@ smbd_connected:
- out_err_crypto_release:
- 	cifs_crypto_secmech_release(tcp_ses);
- 
-+	/* Release netns reference for this server. */
- 	put_net(cifs_net_ns(tcp_ses));
- 
- out_err:
-@@ -1865,8 +1873,10 @@ out_err:
- 			cifs_put_tcp_session(tcp_ses->primary_server, false);
- 		kfree(tcp_ses->hostname);
- 		kfree(tcp_ses->leaf_fullpath);
--		if (tcp_ses->ssocket)
-+		if (tcp_ses->ssocket) {
- 			sock_release(tcp_ses->ssocket);
-+			put_net(cifs_net_ns(tcp_ses));
-+		}
- 		kfree(tcp_ses);
- 	}
- 	return ERR_PTR(rc);
-@@ -3120,20 +3130,20 @@ generic_ip_connect(struct TCP_Server_Inf
- 		socket = server->ssocket;
- 	} else {
- 		struct net *net = cifs_net_ns(server);
--		struct sock *sk;
- 
--		rc = __sock_create(net, sfamily, SOCK_STREAM,
--				   IPPROTO_TCP, &server->ssocket, 1);
-+		rc = sock_create_kern(net, sfamily, SOCK_STREAM, IPPROTO_TCP, &server->ssocket);
- 		if (rc < 0) {
- 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
- 			return rc;
- 		}
- 
--		sk = server->ssocket->sk;
--		__netns_tracker_free(net, &sk->ns_tracker, false);
--		sk->sk_net_refcnt = 1;
--		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
--		sock_inuse_add(net, 1);
-+		/*
-+		 * Grab netns reference for the socket.
-+		 *
-+		 * It'll be released here, on error, or in clean_demultiplex_info() upon server
-+		 * teardown.
-+		 */
-+		get_net(net);
- 
- 		/* BB other socket options to set KEEPALIVE, NODELAY? */
- 		cifs_dbg(FYI, "Socket created\n");
-@@ -3147,8 +3157,10 @@ generic_ip_connect(struct TCP_Server_Inf
- 	}
- 
- 	rc = bind_socket(server);
--	if (rc < 0)
-+	if (rc < 0) {
-+		put_net(cifs_net_ns(server));
- 		return rc;
-+	}
- 
- 	/*
- 	 * Eventually check for other socket options to change from
-@@ -3185,6 +3197,7 @@ generic_ip_connect(struct TCP_Server_Inf
- 	if (rc < 0) {
- 		cifs_dbg(FYI, "Error %d connecting to server\n", rc);
- 		trace_smb3_connect_err(server->hostname, server->conn_id, &server->dstaddr, rc);
-+		put_net(cifs_net_ns(server));
- 		sock_release(socket);
- 		server->ssocket = NULL;
- 		return rc;
-@@ -3193,6 +3206,9 @@ generic_ip_connect(struct TCP_Server_Inf
- 	if (sport == htons(RFC1001_PORT))
- 		rc = ip_rfc1001_connect(server);
- 
-+	if (rc < 0)
-+		put_net(cifs_net_ns(server));
-+
- 	return rc;
+ 	for (; field->type; field++) {
+-		if (strncmp(field->name, fmt, len) ||
+-		    field->name[len])
++		if (strncmp(field->name, fmt, len) || field->name[len])
+ 			continue;
+ 		array_descriptor = strchr(field->type, '[');
+ 		/* This is an array and is OK to dereference. */
+@@ -275,6 +274,32 @@ static bool test_field(const char *fmt,
+ 	return false;
  }
  
++/* Return true if the argument pointer is safe */
++static bool process_pointer(const char *fmt, int len, struct trace_event_call *call)
++{
++	const char *r, *e, *a;
++
++	e = fmt + len;
++
++	/* Find the REC-> in the argument */
++	r = strstr(fmt, "REC->");
++	if (r && r < e) {
++		/*
++		 * Addresses of events on the buffer, or an array on the buffer is
++		 * OK to dereference. There's ways to fool this, but
++		 * this is to catch common mistakes, not malicious code.
++		 */
++		a = strchr(fmt, '&');
++		if ((a && (a < r)) || test_field(r, call))
++			return true;
++	} else if ((r = strstr(fmt, "__get_dynamic_array(")) && r < e) {
++		return true;
++	} else if ((r = strstr(fmt, "__get_sockaddr(")) && r < e) {
++		return true;
++	}
++	return false;
++}
++
+ /*
+  * Examine the print fmt of the event looking for unsafe dereference
+  * pointers using %p* that could be recorded in the trace event and
+@@ -285,12 +310,12 @@ static void test_event_printk(struct tra
+ {
+ 	u64 dereference_flags = 0;
+ 	bool first = true;
+-	const char *fmt, *c, *r, *a;
++	const char *fmt;
+ 	int parens = 0;
+ 	char in_quote = 0;
+ 	int start_arg = 0;
+ 	int arg = 0;
+-	int i;
++	int i, e;
+ 
+ 	fmt = call->print_fmt;
+ 
+@@ -403,42 +428,41 @@ static void test_event_printk(struct tra
+ 		case ',':
+ 			if (in_quote || parens)
+ 				continue;
++			e = i;
+ 			i++;
+ 			while (isspace(fmt[i]))
+ 				i++;
+-			start_arg = i;
+-			if (!(dereference_flags & (1ULL << arg)))
+-				goto next_arg;
+ 
+-			/* Find the REC-> in the argument */
+-			c = strchr(fmt + i, ',');
+-			r = strstr(fmt + i, "REC->");
+-			if (r && (!c || r < c)) {
+-				/*
+-				 * Addresses of events on the buffer,
+-				 * or an array on the buffer is
+-				 * OK to dereference.
+-				 * There's ways to fool this, but
+-				 * this is to catch common mistakes,
+-				 * not malicious code.
+-				 */
+-				a = strchr(fmt + i, '&');
+-				if ((a && (a < r)) || test_field(r, call))
++			/*
++			 * If start_arg is zero, then this is the start of the
++			 * first argument. The processing of the argument happens
++			 * when the end of the argument is found, as it needs to
++			 * handle paranthesis and such.
++			 */
++			if (!start_arg) {
++				start_arg = i;
++				/* Balance out the i++ in the for loop */
++				i--;
++				continue;
++			}
++
++			if (dereference_flags & (1ULL << arg)) {
++				if (process_pointer(fmt + start_arg, e - start_arg, call))
+ 					dereference_flags &= ~(1ULL << arg);
+-			} else if ((r = strstr(fmt + i, "__get_dynamic_array(")) &&
+-				   (!c || r < c)) {
+-				dereference_flags &= ~(1ULL << arg);
+-			} else if ((r = strstr(fmt + i, "__get_sockaddr(")) &&
+-				   (!c || r < c)) {
+-				dereference_flags &= ~(1ULL << arg);
+ 			}
+ 
+-		next_arg:
+-			i--;
++			start_arg = i;
+ 			arg++;
++			/* Balance out the i++ in the for loop */
++			i--;
+ 		}
+ 	}
+ 
++	if (dereference_flags & (1ULL << arg)) {
++		if (process_pointer(fmt + start_arg, i - start_arg, call))
++			dereference_flags &= ~(1ULL << arg);
++	}
++
+ 	/*
+ 	 * If you triggered the below warning, the trace event reported
+ 	 * uses an unsafe dereference pointer %p*. As the data stored
 
 
