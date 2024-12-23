@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9B82EAE6;
-	Mon, 23 Dec 2024 16:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048D012D1F1;
+	Mon, 23 Dec 2024 16:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969826; cv=none; b=pmmaepDgQV7JYciq5n7KizkqNrGWYC03YnXcIgj9W8uPVJQ94QxhftRIvvbJ3CcV2mLrTZjNtXq7iEwxHADLUIHHLqzLhIU77s8/h2naAjghBGsVGJ79Dggv8oES2sKif65VF+nW+CNRQx4K+sZgARLiK0mhvPmFpzrubkpZh6Q=
+	t=1734969830; cv=none; b=cH5Yxjo1hWaxALI1JGCjnVEByAx9nvHzBSYTBbKMStkULuGDOPUu5mHG7fyboNX+8fMdhkC5L/gmjfN0IDVSpbiwuW58QUI2HxhmfpVfg5Pi5V1CEP6wrMcF68kNZKU4rK4wqAmby+3d/TT5cqcYu8O3Ftm27tRzxlA1zpaQuzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969826; c=relaxed/simple;
-	bh=maM67o/x2IRaSYxY9kfXT2F8n6Hb7osqrUK6J+64yPU=;
+	s=arc-20240116; t=1734969830; c=relaxed/simple;
+	bh=htIJliPNJbYaKpf26269lnDHkWxSME7Zy3yFtxXelzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tbHTLTZoywMZFjBtPuHdaFw8MwLfj3DCmpXB5qXcMh3E4cJMukuqmo2vG3V+A1Hp/SzAG7GmWX5TKwLAOMcMnd9UBbgewuTtq+6mWwra3ReWkjcY0wDVd722XeyEXdH6fB7EfKc6DWbPJvu/y3YV9Kb2bUHn7ul/UJQ9Ub/FPjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vC9gkXwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yz3q8uZMT2dBG+90Bo0eayfdLYh8V6LqA6ZVSDDVE/xQoYc4sQJ+uhUFM5G00Sa0d5p04MBCNSddSpVqU1fPzT9+e5CBKGJKeATmEiopleDM1gpogPg1Wf7bH9AEBsc6Jcj6c3SkvIcF7KK4UIIwrj+6ldG0FVeGDPWKI+ZoTmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kq2WdqiV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vC9gkXwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F168AC4CED3;
-	Mon, 23 Dec 2024 16:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kq2WdqiV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74557C4CED3;
+	Mon, 23 Dec 2024 16:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969826;
-	bh=maM67o/x2IRaSYxY9kfXT2F8n6Hb7osqrUK6J+64yPU=;
+	s=korg; t=1734969829;
+	bh=htIJliPNJbYaKpf26269lnDHkWxSME7Zy3yFtxXelzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vC9gkXwTRfSJ/uc4J3aSoK8ALz6fSm6sbyK+CyVjYChKXoLV3SjEYLpUXYRVlHA40
-	 i0Yi72hwUzanLXMop3Duuy1uyxyjhL/ryfxddQMrEPSgsUCmZRBU+msjI/oZY0gjFg
-	 27D6HfYEdCAp9HVrjvTgI++GDkHRoLFaMu37VC68=
+	b=Kq2WdqiVEOLfTixMWrzg7QGrtnV9gsxt/mMIAxVpH/3M7FjNPirtRMIDkL228rwjP
+	 yR0zDIvvRLqNC0TFJEHhOvho6XT/+sr+nxpLXjuHUpPUMMhQ/hpY56LSkLaowqtA4A
+	 hJG+ollM8mUEhSpljb+c1b8xtjQcifayrRASg2s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Kettenis <mark.kettenis@xs4all.nl>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 065/160] irqchip/gic-v3: Work around insecure GIC integrations
-Date: Mon, 23 Dec 2024 16:57:56 +0100
-Message-ID: <20241223155411.185829814@linuxfoundation.org>
+	Avadhut Naik <avadhut.naik@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 6.12 066/160] EDAC/amd64: Simplify ECC check on unified memory controllers
+Date: Mon, 23 Dec 2024 16:57:57 +0100
+Message-ID: <20241223155411.223865716@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,71 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-commit 773c05f417fa14e1ac94776619e9c978ec001f0b upstream.
+commit 747367340ca6b5070728b86ae36ad6747f66b2fb upstream.
 
-It appears that the relatively popular RK3399 SoC has been put together
-using a large amount of illicit substances, as experiments reveal that its
-integration of GIC500 exposes the *secure* programming interface to
-non-secure.
+The intent of the check is to see whether at least one UMC has ECC
+enabled. So do that instead of tracking which ones are enabled in masks
+which are too small in size anyway and lead to not loading the driver on
+Zen4 machines with UMCs enabled over UMC8.
 
-This has some pretty bad effects on the way priorities are handled, and
-results in a dead machine if booting with pseudo-NMI enabled
-(irqchip.gicv3_pseudo_nmi=1) if the kernel contains 18fdb6348c480 ("arm64:
-irqchip/gic-v3: Select priorities at boot time"), which relies on the
-priorities being programmed using the NS view.
-
-Let's restore some sanity by going one step further and disable security
-altogether in this case. This is not any worse, and puts us in a mode where
-priorities actually make some sense.
-
-Huge thanks to Mark Kettenis who initially identified this issue on
-OpenBSD, and to Chen-Yu Tsai who reported the problem in Linux.
-
-Fixes: 18fdb6348c480 ("arm64: irqchip/gic-v3: Select priorities at boot time")
-Reported-by: Mark Kettenis <mark.kettenis@xs4all.nl>
-Reported-by: Chen-Yu Tsai <wens@csie.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Chen-Yu Tsai <wens@csie.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241213141037.3995049-1-maz@kernel.org
+Fixes: e2be5955a886 ("EDAC/amd64: Add support for AMD Family 19h Models 10h-1Fh and A0h-AFh")
+Reported-by: Avadhut Naik <avadhut.naik@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Avadhut Naik <avadhut.naik@amd.com>
+Reviewed-by: Avadhut Naik <avadhut.naik@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20241210212054.3895697-1-avadhut.naik@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/edac/amd64_edac.c |   34 +++++++++++-----------------------
+ 1 file changed, 11 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-v3.c b/drivers/irqchip/irq-gic-v3.c
-index 34db379d066a..79d8cc80693c 100644
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -161,7 +161,22 @@ static bool cpus_have_group0 __ro_after_init;
+--- a/drivers/edac/amd64_edac.c
++++ b/drivers/edac/amd64_edac.c
+@@ -3362,36 +3362,24 @@ static bool dct_ecc_enabled(struct amd64
  
- static void __init gic_prio_init(void)
+ static bool umc_ecc_enabled(struct amd64_pvt *pvt)
  {
--	cpus_have_security_disabled = gic_dist_security_disabled();
-+	bool ds;
-+
-+	ds = gic_dist_security_disabled();
-+	if (!ds) {
-+		u32 val;
-+
-+		val = readl_relaxed(gic_data.dist_base + GICD_CTLR);
-+		val |= GICD_CTLR_DS;
-+		writel_relaxed(val, gic_data.dist_base + GICD_CTLR);
-+
-+		ds = gic_dist_security_disabled();
-+		if (ds)
-+			pr_warn("Broken GIC integration, security disabled");
-+	}
-+
-+	cpus_have_security_disabled = ds;
- 	cpus_have_group0 = gic_has_group0();
+-	u8 umc_en_mask = 0, ecc_en_mask = 0;
+-	u16 nid = pvt->mc_node_id;
+ 	struct amd64_umc *umc;
+-	u8 ecc_en = 0, i;
++	bool ecc_en = false;
++	int i;
  
- 	/*
--- 
-2.47.1
-
++	/* Check whether at least one UMC is enabled: */
+ 	for_each_umc(i) {
+ 		umc = &pvt->umc[i];
+ 
+-		/* Only check enabled UMCs. */
+-		if (!(umc->sdp_ctrl & UMC_SDP_INIT))
+-			continue;
+-
+-		umc_en_mask |= BIT(i);
+-
+-		if (umc->umc_cap_hi & UMC_ECC_ENABLED)
+-			ecc_en_mask |= BIT(i);
++		if (umc->sdp_ctrl & UMC_SDP_INIT &&
++		    umc->umc_cap_hi & UMC_ECC_ENABLED) {
++			ecc_en = true;
++			break;
++		}
+ 	}
+ 
+-	/* Check whether at least one UMC is enabled: */
+-	if (umc_en_mask)
+-		ecc_en = umc_en_mask == ecc_en_mask;
+-	else
+-		edac_dbg(0, "Node %d: No enabled UMCs.\n", nid);
+-
+-	edac_dbg(3, "Node %d: DRAM ECC %s.\n", nid, (ecc_en ? "enabled" : "disabled"));
+-
+-	if (!ecc_en)
+-		return false;
+-	else
+-		return true;
++	edac_dbg(3, "Node %d: DRAM ECC %s.\n", pvt->mc_node_id, (ecc_en ? "enabled" : "disabled"));
++
++	return ecc_en;
+ }
+ 
+ static inline void
 
 
