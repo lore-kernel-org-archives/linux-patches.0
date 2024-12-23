@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25121B21BD;
-	Mon, 23 Dec 2024 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275A380C02;
+	Mon, 23 Dec 2024 16:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969701; cv=none; b=MGL8qznfVugXcapasKInEqNSSJIjCtox4slLGLINf87JQczQsStBxzkdfjfeX9Wi3RtRdJe6DWgPPPkNevxVAaGcsUrI8DtCG9KjDD+sYyISV9CVerVbhNEhpJRpnTPcNxsI1QZadRI2OWc9JdOiG3tEVkALQV5+bKrUNz7VzV8=
+	t=1734969704; cv=none; b=bknHPhzzNF4vbAXg7LldpPM6oLJWitdczI9P/Ew4wDV81kwdVTmozlYrluTdKjgw/bh+USmOt4uj1WzdrzOIcUjwFyZ4lacZigRymfUvDEX2pmbPrsv4Mf6OkV+OiLhA1MVUc0airCG4NEEhVtUVY2bvgO4TsLYd4lzk2yhLQUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969701; c=relaxed/simple;
-	bh=Z1lWGHXNFGadE22k3t0Iyj2iq852xu8KNp3x44/pWOE=;
+	s=arc-20240116; t=1734969704; c=relaxed/simple;
+	bh=DMwdxEf6N0Mudi/MS4JTBQB9OVq4uqif7WQBMHJUd1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U6d+jlby2qbUgSpEeYrOc3Dw0QxG35v5mZTLeclQJiXJF+i+9OoKXTGMAizcAI+Qq/WxQJVa/8vulSfTNUyYPNoNMa+EDZvmqWhgDo4aXP7qXUhSVIGR7MAwVdKzzzQfKfDaLRzj7/kfwuNNfSc6XGdajXmgJUT9kGsnf1srPL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qv07NtwD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SDW0d46V7ePBc3mCTgtq7xg3515XQ/gEzpD7C06Vob5fdY702IaVzdrevy3k3fhaQZIpDJSom1fP8WTXBmytJ2BL4U2n5zI+61B8RFZnPQwJ9IsASs8t9Yg1wLnsAbW4D6SCko8L4vGgGlGahZTPjQ+F281F/WPt7/ZlFAvssys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sn3rbYZA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qv07NtwD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF51C4CED4;
-	Mon, 23 Dec 2024 16:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sn3rbYZA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB2FC4CED3;
+	Mon, 23 Dec 2024 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969700;
-	bh=Z1lWGHXNFGadE22k3t0Iyj2iq852xu8KNp3x44/pWOE=;
+	s=korg; t=1734969703;
+	bh=DMwdxEf6N0Mudi/MS4JTBQB9OVq4uqif7WQBMHJUd1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qv07NtwDeO6RRncVVEUI6VHu3J64ajcikRop8lRlIdM0uNFlq8QmFkXZXgYm1D8oS
-	 R06iHWR0jv4Uid8I5Ea6TnrrDf+rjJfFIJIZQtBceNwRC05SN7ZqwFW6fKZ/in3jw+
-	 WjSff/lSiXZexiulpGvnChKvPI8chjcPWCdqLtIc=
+	b=Sn3rbYZAxFgWfIbchoW8azElM6cv5wi2jKnYX5KbbtMlHGxDUJBoEe5s7d7Doy5Yj
+	 I/tvtjvoeBPWOVSZOlRfCyRqloVJ6PVXHhxFo3D1+iABR/mtAElEQ9ov6HRKNEomeJ
+	 WY4eGwbYrEOifYQxh0363MiWm+HFSslP3rz8qH6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ni <fan.ni@samsung.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Ira Weiny <ira.weiny@intel.com>,
+	Huaisheng Ye <huaisheng.ye@intel.com>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 029/160] cxl/pci: Fix potential bogus return value upon successful probing
-Date: Mon, 23 Dec 2024 16:57:20 +0100
-Message-ID: <20241223155409.788180368@linuxfoundation.org>
+Subject: [PATCH 6.12 030/160] cxl/region: Fix region creation for greater than x2 switches
+Date: Mon, 23 Dec 2024 16:57:21 +0100
+Message-ID: <20241223155409.827758333@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,38 +53,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davidlohr Bueso <dave@stgolabs.net>
+From: Huaisheng Ye <huaisheng.ye@intel.com>
 
-[ Upstream commit da4d8c83358163df9a4addaeba0ef8bcb03b22e8 ]
+[ Upstream commit 76467a94810c2aa4dd3096903291ac6df30c399e ]
 
-If cxl_pci_ras_unmask() returns non-zero, cxl_pci_probe() will end up
-returning that value, instead of zero.
+The cxl_port_setup_targets() algorithm fails to identify valid target list
+ordering in the presence of 4-way and above switches resulting in
+'cxl create-region' failures of the form:
 
-Fixes: 248529edc86f ("cxl: add RAS status unmasking for CXL")
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Link: https://patch.msgid.link/20241115170032.108445-1-dave@stgolabs.net
+  $ cxl create-region -d decoder0.0 -g 1024 -s 2G -t ram -w 8 -m mem4 mem1 mem6 mem3 mem2 mem5 mem7 mem0
+  cxl region: create_region: region0: failed to set target7 to mem0
+  cxl region: cmd_create_region: created 0 regions
+
+  [kernel debug message]
+  check_last_peer:1213: cxl region0: pci0000:0c:port1: cannot host mem6:decoder7.0 at 2
+  bus_remove_device:574: bus: 'cxl': remove device region0
+
+QEMU can create this failing topology:
+
+                       ACPI0017:00 [root0]
+                           |
+                         HB_0 [port1]
+                        /             \
+                     RP_0             RP_1
+                      |                 |
+                USP [port2]           USP [port3]
+            /    /    \    \        /   /    \    \
+          DSP   DSP   DSP   DSP   DSP  DSP   DSP  DSP
+           |     |     |     |     |    |     |    |
+          mem4  mem6  mem2  mem7  mem1 mem3  mem5  mem0
+ Pos:      0     2     4     6     1    3     5    7
+
+ HB: Host Bridge
+ RP: Root Port
+ USP: Upstream Port
+ DSP: Downstream Port
+
+...with the following command steps:
+
+$ qemu-system-x86_64 -machine q35,cxl=on,accel=tcg  \
+        -smp cpus=8 \
+        -m 8G \
+        -hda /home/work/vm-images/centos-stream8-02.qcow2 \
+        -object memory-backend-ram,size=4G,id=m0 \
+        -object memory-backend-ram,size=4G,id=m1 \
+        -object memory-backend-ram,size=2G,id=cxl-mem0 \
+        -object memory-backend-ram,size=2G,id=cxl-mem1 \
+        -object memory-backend-ram,size=2G,id=cxl-mem2 \
+        -object memory-backend-ram,size=2G,id=cxl-mem3 \
+        -object memory-backend-ram,size=2G,id=cxl-mem4 \
+        -object memory-backend-ram,size=2G,id=cxl-mem5 \
+        -object memory-backend-ram,size=2G,id=cxl-mem6 \
+        -object memory-backend-ram,size=2G,id=cxl-mem7 \
+        -numa node,memdev=m0,cpus=0-3,nodeid=0 \
+        -numa node,memdev=m1,cpus=4-7,nodeid=1 \
+        -netdev user,id=net0,hostfwd=tcp::2222-:22 \
+        -device virtio-net-pci,netdev=net0 \
+        -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+        -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
+        -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
+        -device cxl-upstream,bus=root_port0,id=us0 \
+        -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
+        -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-vmem0 \
+        -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+        -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-vmem1 \
+        -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
+        -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-vmem2 \
+        -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
+        -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-vmem3 \
+        -device cxl-upstream,bus=root_port1,id=us1 \
+        -device cxl-downstream,port=4,bus=us1,id=swport4,chassis=0,slot=8 \
+        -device cxl-type3,bus=swport4,volatile-memdev=cxl-mem4,id=cxl-vmem4 \
+        -device cxl-downstream,port=5,bus=us1,id=swport5,chassis=0,slot=9 \
+        -device cxl-type3,bus=swport5,volatile-memdev=cxl-mem5,id=cxl-vmem5 \
+        -device cxl-downstream,port=6,bus=us1,id=swport6,chassis=0,slot=10 \
+        -device cxl-type3,bus=swport6,volatile-memdev=cxl-mem6,id=cxl-vmem6 \
+        -device cxl-downstream,port=7,bus=us1,id=swport7,chassis=0,slot=11 \
+        -device cxl-type3,bus=swport7,volatile-memdev=cxl-mem7,id=cxl-vmem7 \
+        -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=32G &
+
+In Guest OS:
+$ cxl create-region -d decoder0.0 -g 1024 -s 2G -t ram -w 8 -m mem4 mem1 mem6 mem3 mem2 mem5 mem7 mem0
+
+Fix the method to calculate @distance by iterativeley multiplying the
+number of targets per switch port. This also follows the algorithm
+recommended here [1].
+
+Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
+Link: http://lore.kernel.org/6538824b52349_7258329466@dwillia2-xfh.jf.intel.com.notmuch [1]
+Signed-off-by: Huaisheng Ye <huaisheng.ye@intel.com>
+Tested-by: Li Zhijian <lizhijian@fujitsu.com>
+[djbw: add a comment explaining 'distance']
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/173378716722.1270362.9546805175813426729.stgit@dwillia2-xfh.jf.intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/pci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/cxl/core/region.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 188412d45e0d..6e553b5752b1 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -942,8 +942,7 @@ static int cxl_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (rc)
- 		return rc;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index dff618c708dc..a0d6e8d7f42c 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1295,6 +1295,7 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+ 	struct cxl_region_params *p = &cxlr->params;
+ 	struct cxl_decoder *cxld = cxl_rr->decoder;
+ 	struct cxl_switch_decoder *cxlsd;
++	struct cxl_port *iter = port;
+ 	u16 eig, peig;
+ 	u8 eiw, peiw;
  
--	rc = cxl_pci_ras_unmask(pdev);
--	if (rc)
-+	if (cxl_pci_ras_unmask(pdev))
- 		dev_dbg(&pdev->dev, "No RAS reporting unmasked\n");
+@@ -1311,16 +1312,26 @@ static int cxl_port_setup_targets(struct cxl_port *port,
  
- 	pci_save_state(pdev);
+ 	cxlsd = to_cxl_switch_decoder(&cxld->dev);
+ 	if (cxl_rr->nr_targets_set) {
+-		int i, distance;
++		int i, distance = 1;
++		struct cxl_region_ref *cxl_rr_iter;
+ 
+ 		/*
+-		 * Passthrough decoders impose no distance requirements between
+-		 * peers
++		 * The "distance" between peer downstream ports represents which
++		 * endpoint positions in the region interleave a given port can
++		 * host.
++		 *
++		 * For example, at the root of a hierarchy the distance is
++		 * always 1 as every index targets a different host-bridge. At
++		 * each subsequent switch level those ports map every Nth region
++		 * position where N is the width of the switch == distance.
+ 		 */
+-		if (cxl_rr->nr_targets == 1)
+-			distance = 0;
+-		else
+-			distance = p->nr_targets / cxl_rr->nr_targets;
++		do {
++			cxl_rr_iter = cxl_rr_load(iter, cxlr);
++			distance *= cxl_rr_iter->nr_targets;
++			iter = to_cxl_port(iter->dev.parent);
++		} while (!is_cxl_root(iter));
++		distance *= cxlrd->cxlsd.cxld.interleave_ways;
++
+ 		for (i = 0; i < cxl_rr->nr_targets_set; i++)
+ 			if (ep->dport == cxlsd->target[i]) {
+ 				rc = check_last_peer(cxled, ep, cxl_rr,
 -- 
 2.39.5
 
