@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24948827;
-	Mon, 23 Dec 2024 16:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE818827;
+	Mon, 23 Dec 2024 16:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970525; cv=none; b=nwPNGZ6A5XlbOfWlN3UTdRB9+FWF7/OfSrsgnO1D3kD7UdwHUJmQerZ9UOqsS7mm2evNntaGbXGJ1APdYwXTizK1pX0Z18bJD+pCHnRpuhUvK4z/c7lgwijkxYV0j4+H+f8WepZ2LjkyIjKYJOwuX+WUbErU6EqAXxlBxa0ujUY=
+	t=1734970528; cv=none; b=VriOrX3CVgOZipNQ2ef31w65DGZsnB4yp2bQQv8/APgbqyDFToRI/idFbO/+Q8g8Nca7ljpZdoTPrj8NKvHo5LAhYMeJ6AIBer55/aihfWmlD369dkzsonVR5LwNbpevGK/vaGLissz43fBuEogb5ZJRGhPfijulyBFiGXJgpkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970525; c=relaxed/simple;
-	bh=dFW/ICnDSSUOqPzpYoMYpuFSw2P0H2QABca84I36p8A=;
+	s=arc-20240116; t=1734970528; c=relaxed/simple;
+	bh=hASRuW5iAUJePfz65Yyp2Zm7vXNLwUmZ18HBl0S8+HU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YI5zTWceh30edm+Km9xiYEKyMiek7LLnM/TdxBvt/wRSlqBiPScw3THIReNYb92DSonQtq1jMzqkKc1U0V2/ZHSN7qW1nr5n8sWhtnPYEktBDDQHVmCHg6VPbqLwW9OxdN3hWWsTpcpg/Isjww8vMYmu9qU5W4R/ob3uQugjqp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Dq0B++r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=izzOGl6avBudCcxP1O6TGAexw2qCdnXaDBbiwS0mLNmejlXBF4mm0HxpcnuszTWaansfgpszo7IVlJJDvS2k1adJysWO0gl4rOt9It3t7RNq9+YfvSyv2LrdsBZs2Pk5eIGwiHqeJxOxqehrfQE4EQwJ2tx0RTtPUscnYspihbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fBCFpX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Dq0B++r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E476C4CED3;
-	Mon, 23 Dec 2024 16:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fBCFpX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F83AC4CED3;
+	Mon, 23 Dec 2024 16:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970524;
-	bh=dFW/ICnDSSUOqPzpYoMYpuFSw2P0H2QABca84I36p8A=;
+	s=korg; t=1734970528;
+	bh=hASRuW5iAUJePfz65Yyp2Zm7vXNLwUmZ18HBl0S8+HU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Dq0B++rzprtBmgZ+ymiNx5EJN0GHImj77JmqfbQVGKqztD3wfvwWB2HSzTI2MzY2
-	 cyEGsHvMcOBVeOPM5VLzOZ7haRKUfeGks5Vl5CgHEE95rQfDituWb+2VhHdklRlX+/
-	 kcQYqyypqUJm9qs7QP0E5/sKKltoV/Z+E/aiVIMs=
+	b=1fBCFpX74zR37iPX1Dtl/kxB5U+3oKDm4Qz8LFX0Jj1t3l1mhV0hLxIjUOVPfER1w
+	 60LeoJACdC5c1sTMz5T2YxICu+ybqsXep5WsCghwFyLA+DFQJb1geITEDUwzKTQARF
+	 xgB1Vyq+chptzlp+MLoA3od2u6WbV43Wcgbl04R4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 109/116] ceph: fix memory leaks in __ceph_sync_read()
-Date: Mon, 23 Dec 2024 16:59:39 +0100
-Message-ID: <20241223155403.785748543@linuxfoundation.org>
+	Jing Xia <jing.xia@unisoc.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Benoit Lize <lizeb@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.6 110/116] epoll: Add synchronous wakeup support for ep_poll_callback
+Date: Mon, 23 Dec 2024 16:59:40 +0100
+Message-ID: <20241223155403.823240589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -50,60 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-commit d6fd6f8280f0257ba93f16900a0d3d3912f32c79 upstream.
+commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
 
-In two `break` statements, the call to ceph_release_page_vector() was
-missing, leaking the allocation from ceph_alloc_page_vector().
+Now, the epoll only use wake_up() interface to wake up task.
+However, sometimes, there are epoll users which want to use
+the synchronous wakeup flag to hint the scheduler, such as
+Android binder driver.
+So add a wake_up_sync() define, and use the wake_up_sync()
+when the sync is true in ep_poll_callback().
 
-Instead of adding the missing ceph_release_page_vector() calls, the
-Ceph maintainers preferred to transfer page ownership to the
-`ceph_osd_request` by passing `own_pages=true` to
-osd_req_op_extent_osd_data_pages().  This requires postponing the
-ceph_osdc_put_request() call until after the block that accesses the
-`pages`.
-
-Cc: stable@vger.kernel.org
-Fixes: 03bc06c7b0bd ("ceph: add new mount option to enable sparse reads")
-Fixes: f0fe1e54cfcf ("ceph: plumb in decryption during reads")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Co-developed-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
+Tested-by: Brian Geffon <bgeffon@google.com>
+Reviewed-by: Brian Geffon <bgeffon@google.com>
+Reported-by: Benoit Lize <lizeb@google.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: Brian Geffon <bgeffon@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/file.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/eventpoll.c       |    5 ++++-
+ include/linux/wait.h |    1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -1036,7 +1036,7 @@ ssize_t __ceph_sync_read(struct inode *i
- 
- 		osd_req_op_extent_osd_data_pages(req, 0, pages, read_len,
- 						 offset_in_page(read_off),
--						 false, false);
-+						 false, true);
- 
- 		op = &req->r_ops[0];
- 		if (sparse) {
-@@ -1101,8 +1101,6 @@ ssize_t __ceph_sync_read(struct inode *i
- 			ret = min_t(ssize_t, fret, len);
- 		}
- 
--		ceph_osdc_put_request(req);
--
- 		/* Short read but not EOF? Zero out the remainder. */
- 		if (ret < len && (off + ret < i_size)) {
- 			int zlen = min(len - ret, i_size - off - ret);
-@@ -1134,7 +1132,8 @@ ssize_t __ceph_sync_read(struct inode *i
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1268,7 +1268,10 @@ static int ep_poll_callback(wait_queue_e
  				break;
  			}
  		}
--		ceph_release_page_vector(pages, num_pages);
-+
-+		ceph_osdc_put_request(req);
+-		wake_up(&ep->wq);
++		if (sync)
++			wake_up_sync(&ep->wq);
++		else
++			wake_up(&ep->wq);
+ 	}
+ 	if (waitqueue_active(&ep->poll_wait))
+ 		pwake++;
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -225,6 +225,7 @@ void __wake_up_pollfree(struct wait_queu
+ #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
+ #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
+ #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
++#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
  
- 		if (off >= i_size || !more)
- 			break;
+ #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
+ #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
 
 
