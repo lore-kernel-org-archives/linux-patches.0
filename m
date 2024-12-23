@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81E2188006;
-	Mon, 23 Dec 2024 16:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE6080C02;
+	Mon, 23 Dec 2024 16:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969720; cv=none; b=Z+zZ+PzwkfkG3F35BwVFaj+1e+xItnwPyJt4AcuyzjXr6KuqiG55IGwvSx1sgoynwb5sxXU0iLsOr1g+ec7JgnxIN119OKsJOGCxufcPHvGK7A2UOS95ZAapvLlNyMn36nEK2XVT+cAmihHruFk6FOVwhmT+J74P7L86jTjtmtU=
+	t=1734969724; cv=none; b=ODxVRMEnDM8vgS+zWVUJi1PpBlrluBxoAHBmwOagz9uGtmX6CNbRxKMKdkUEtrTmGIvY88lQHvHPieSCem1ZC3QS4LGnoZqkYHQwtCFm0Md6nsC061PwfePANsqf1X3YakPq4aCaDDj6VlvZBPWoUc2VZ69IP7ED7Ipl6/D7rS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969720; c=relaxed/simple;
-	bh=9RiqgljtIgIskf4NAHaAV9vm+xwS1eaqdf/SbmUR8zs=;
+	s=arc-20240116; t=1734969724; c=relaxed/simple;
+	bh=OFsZt0sOpbOOLc+7NSDYSnr/6djRvx5B3Y4kSqfvCrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fbkaaEM/LMcFdhAoxcmNmxpAdFIavNI0Ju/Laao8B3Wsz86q3YXnPITg9y3ipjjhG1z9KlKhl9nxzeO5SRdQ9y6Z1rCjJdFUSy9b5xqjIfiKM/cOXnNKqRrzNCP2oeD2XfxP9t/2F5kHzme/mWSXr2pYKn9ZxsbToRw8qu2sj1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdszGWl/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lcQi5uAmNXkGRAgzoQLdTMsc1fqnXAg+8FQFQY3Fzw3XJGv7RgLgOqxZhNai3LmGvrVGCs8Mz06JAWzlmv7ku2D6egyC1Qrp3sbh3Ciaw8eqhvRbfph7M7mp12HBW4uW1dmyIEp0KdT9bIPRzsd5lqDndOMMCstwO6VW3nbJg7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7+GK8Ww; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdszGWl/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB963C4CED6;
-	Mon, 23 Dec 2024 16:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7+GK8Ww"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FCDC4CED3;
+	Mon, 23 Dec 2024 16:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969720;
-	bh=9RiqgljtIgIskf4NAHaAV9vm+xwS1eaqdf/SbmUR8zs=;
+	s=korg; t=1734969723;
+	bh=OFsZt0sOpbOOLc+7NSDYSnr/6djRvx5B3Y4kSqfvCrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdszGWl/hv9D5B18pfkCeEqQBcOZNVq738vWBNW630PmWa+8lHNC1CWEjlSD95zWf
-	 ApDH1Ac8MZehjTE0L2pr45hMJC6kvkuEwzIIlV0JCXbroGXWhbulvOcnz7IFOu5mua
-	 kUO0e6hxK37ZcCVqHUbb2FQo7e1lizwL9ccDK1yw=
+	b=s7+GK8Ww7CX6T4+1jqfzjwdJ33i/3hvmzTOEHjjVMyIYoemfivILhNJDBszUrxvuI
+	 No26D6xPYvvIn3/ane7+JTmQGwG0YHlLQl++Mbq06IE+rkv1jCy4KDoxlV1wJXfUkr
+	 vpuXT1DHFV3XEImN696a8hq+AKLomjX5MWhVRA/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"D. Wythe" <alibuda@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/160] net/smc: check smcd_v2_ext_offset when receiving proposal msg
-Date: Mon, 23 Dec 2024 16:57:26 +0100
-Message-ID: <20241223155410.030094487@linuxfoundation.org>
+Subject: [PATCH 6.12 036/160] net/smc: check return value of sock_recvmsg when draining clc data
+Date: Mon, 23 Dec 2024 16:57:27 +0100
+Message-ID: <20241223155410.071647841@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -55,60 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 9ab332deb671d8f7e66d82a2ff2b3f715bc3a4ad ]
+[ Upstream commit c5b8ee5022a19464783058dc6042e8eefa34e8cd ]
 
-When receiving proposal msg in server, the field smcd_v2_ext_offset in
-proposal msg is from the remote client and can not be fully trusted.
-Once the value of smcd_v2_ext_offset exceed the max value, there has
-the chance to access wrong address, and crash may happen.
+When receiving clc msg, the field length in smc_clc_msg_hdr indicates the
+length of msg should be received from network and the value should not be
+fully trusted as it is from the network. Once the value of length exceeds
+the value of buflen in function smc_clc_wait_msg it may run into deadloop
+when trying to drain the remaining data exceeding buflen.
 
-This patch checks the value of smcd_v2_ext_offset before using it.
+This patch checks the return value of sock_recvmsg when draining data in
+case of deadloop in draining.
 
-Fixes: 5c21c4ccafe8 ("net/smc: determine accepted ISM devices")
+Fixes: fb4f79264c0f ("net/smc: tolerate future SMCD versions")
 Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
 Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c  | 2 ++
- net/smc/smc_clc.h | 8 +++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ net/smc/smc_clc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 5d96f9de5b5d..6cc7b846cff1 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -2147,6 +2147,8 @@ static void smc_find_ism_v2_device_serv(struct smc_sock *new_smc,
- 	pclc_smcd = smc_get_clc_msg_smcd(pclc);
- 	smc_v2_ext = smc_get_clc_v2_ext(pclc);
- 	smcd_v2_ext = smc_get_clc_smcd_v2_ext(smc_v2_ext);
-+	if (!pclc_smcd || !smc_v2_ext || !smcd_v2_ext)
-+		goto not_found;
- 
- 	mutex_lock(&smcd_dev_list.mutex);
- 	if (pclc_smcd->ism.chid) {
-diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
-index 2ff423224a59..1a7676227f16 100644
---- a/net/smc/smc_clc.h
-+++ b/net/smc/smc_clc.h
-@@ -400,9 +400,15 @@ smc_get_clc_v2_ext(struct smc_clc_msg_proposal *prop)
- static inline struct smc_clc_smcd_v2_extension *
- smc_get_clc_smcd_v2_ext(struct smc_clc_v2_extension *prop_v2ext)
- {
-+	u16 max_offset = offsetof(struct smc_clc_msg_proposal_area, pclc_smcd_v2_ext) -
-+		offsetof(struct smc_clc_msg_proposal_area, pclc_v2_ext) -
-+		offsetof(struct smc_clc_v2_extension, hdr) -
-+		offsetofend(struct smc_clnt_opts_area_hdr, smcd_v2_ext_offset);
-+
- 	if (!prop_v2ext)
- 		return NULL;
--	if (!ntohs(prop_v2ext->hdr.smcd_v2_ext_offset))
-+	if (!ntohs(prop_v2ext->hdr.smcd_v2_ext_offset) ||
-+	    ntohs(prop_v2ext->hdr.smcd_v2_ext_offset) > max_offset)
- 		return NULL;
- 
- 	return (struct smc_clc_smcd_v2_extension *)
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index f721d03efcbd..521f5df80e10 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -774,6 +774,11 @@ int smc_clc_wait_msg(struct smc_sock *smc, void *buf, int buflen,
+ 						SMC_CLC_RECV_BUF_LEN : datlen;
+ 		iov_iter_kvec(&msg.msg_iter, ITER_DEST, &vec, 1, recvlen);
+ 		len = sock_recvmsg(smc->clcsock, &msg, krflags);
++		if (len < recvlen) {
++			smc->sk.sk_err = EPROTO;
++			reason_code = -EPROTO;
++			goto out;
++		}
+ 		datlen -= len;
+ 	}
+ 	if (clcm->type == SMC_CLC_DECLINE) {
 -- 
 2.39.5
 
