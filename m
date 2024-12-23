@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D06189B94;
-	Mon, 23 Dec 2024 16:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9D92EAE6;
+	Mon, 23 Dec 2024 16:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969930; cv=none; b=j/zXTu2zCOqEki4GPy5i2CWPHLXckHMKt3klDT36sXevBYqtuziElsQ75dfvxK/hdF0rQIm7cNuURA6UdUq0qiqYiPQ5ciwJwUv86Nxiaz4F7L7evAYSzYnp74au4SLRygM7ZgSdo4dRhnwgNn71sM8kiEYji3MYS6GGLRD5ozI=
+	t=1734969934; cv=none; b=AybiZ/VlA97CS3kspwRCN5+7xRyYWkYCroeHvNRUgYyVDIxJtCNhRYWH8PL5r1AKoqBWTRPzKEJ748dG8cq52UZxsw2AqXCIkw1nKKlzZkwRrwxoJP00CMbXWQor5a3pTJmO8UkK9/pklGKkIV0yisI1lN2XpxUn/wAp5jZb9Ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969930; c=relaxed/simple;
-	bh=rKVny4zwZIMlQ5Z+zI+7xIePG2O6RM3hTRVtAHuUGh0=;
+	s=arc-20240116; t=1734969934; c=relaxed/simple;
+	bh=npwOb4eTVIzG67bqRKbOhLLlwm7nkJhOhe9Ky7HAfGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jqk0wGHcnvtoJOFEbHvhgRTLyX59bv8Z9/P6LGEPi3ZIA36nirAZIMs+1quAuq1ilULoPF/0f/peHZ5e21VQyzkQxwoCKmy0avY0b+AmquFGhhSP8N/OtTA2QbKMPB3A5xiw5MHf1u3nOP/VLEo13qMCSpSlRKkdgWySvyoGCak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGFIPKtw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HV6yQq71EfJPSjqgpEvUgZV2GinBV3zP/0vMD89FyQnUMk5CC71DgaiGrxr9I1GEkPgBzHJIokJ6dwELE0yZjzQODNY75kWWt7UZlv23QJsIwnk1cTA5fcDxa3sLg8EcU+cMZQSWJHDxEo0DE8Y2nHbTVQDH7F3H9TBYvchBSWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ol3updmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGFIPKtw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B6BC4CED3;
-	Mon, 23 Dec 2024 16:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ol3updmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D079C4CED3;
+	Mon, 23 Dec 2024 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969930;
-	bh=rKVny4zwZIMlQ5Z+zI+7xIePG2O6RM3hTRVtAHuUGh0=;
+	s=korg; t=1734969934;
+	bh=npwOb4eTVIzG67bqRKbOhLLlwm7nkJhOhe9Ky7HAfGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGFIPKtw7gP5MK4blNkltSbhkIMUKWbzWI2HUuJbK2cZJh8fKCgp4iKD9BuJba0w3
-	 23q7pnC4o0sDP1DhnFa13lAJOq04OFrH5LvaghXRCCMUsON6VorO4xIRBAq1yfhEyM
-	 5zmSTYQiOso2uNZzSNzgkIeVzaz1LdiUnqzSAB64=
+	b=Ol3updmEO9G75G/GjUIi4UNIIIbLLjPHC2w4QOHjzD3rOHpb3c66s7FUsSXpa6E3d
+	 G53r6KoPTnQ+5tl9uCtVf3+qiDUmM13HSIUGteCI4RfYI2aW6SIp3JuBtfYlmFmh55
+	 hF4jG9GEPFRnsWoqTTcI6sfJKe0JA5kMiP31FZg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/160] drm/panel: st7701: Add prepare_prev_first flag to drm_panel
-Date: Mon, 23 Dec 2024 16:58:26 +0100
-Message-ID: <20241223155412.358478601@linuxfoundation.org>
+	Mank Wang <mank.wang@netprisma.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 078/160] USB: serial: option: add Netprisma LCUK54 modules for WWAN Ready
+Date: Mon, 23 Dec 2024 16:58:09 +0100
+Message-ID: <20241223155411.709748357@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -52,40 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Mank Wang <mank.wang@netprisma.com>
 
-[ Upstream commit 406dd4c7984a457567ca652455d5efad81983f02 ]
+commit aa954ae08262bb5cd6ab18dd56a0b58c1315db8b upstream.
 
-The DSI host must be enabled for the panel to be initialized in
-prepare(). Set the prepare_prev_first flag to guarantee this.
-This fixes the panel operation on NXP i.MX8MP SoC / Samsung DSIM
-DSI host.
+LCUK54-WRD's pid/vid
+0x3731/0x010a
+0x3731/0x010c
 
-Fixes: 849b2e3ff969 ("drm/panel: Add Sitronix ST7701 panel driver")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Link: https://lore.kernel.org/r/20241124224812.150263-1-marex@denx.de
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241124224812.150263-1-marex@denx.de
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+LCUK54-WWD's pid/vid
+0x3731/0x010b
+0x3731/0x010d
+
+Above products use the exact same interface layout and option
+driver:
+MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=3731 ProdID=0101 Rev= 5.04
+S:  Manufacturer=NetPrisma
+S:  Product=LCUK54-WRD
+S:  SerialNumber=feeba631
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Mank Wang <mank.wang@netprisma.com>
+[ johan: use lower case hex notation ]
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-sitronix-st7701.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/option.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7701.c b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-index eef03d04e0cd..1f72ef7ca74c 100644
---- a/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-+++ b/drivers/gpu/drm/panel/panel-sitronix-st7701.c
-@@ -1177,6 +1177,7 @@ static int st7701_probe(struct device *dev, int connector_type)
- 		return dev_err_probe(dev, ret, "Failed to get orientation\n");
- 
- 	drm_panel_init(&st7701->panel, dev, &st7701_funcs, connector_type);
-+	st7701->panel.prepare_prev_first = true;
- 
- 	/**
- 	 * Once sleep out has been issued, ST7701 IC required to wait 120ms
--- 
-2.39.5
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2377,6 +2377,18 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Golbal EDU */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WRD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WRD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
 
 
