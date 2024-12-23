@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208A817A5A4;
-	Mon, 23 Dec 2024 16:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8CC2EAE6;
+	Mon, 23 Dec 2024 16:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969904; cv=none; b=AcpzsARoYLC7+zrZ00t+dzy2GgfSyqFF6soz3u6xmk+SN12rzkG3bRUjxazk5mU1sPPAU90cbxBcKCdVJCPUWSd8nk59ejx6USzT5sCpPX4fdPBlA8P9WqwGgdgw27be1YCsFXSfvclVBG1jZ5CJemUJmb0QVMvTqTK6KHhufZo=
+	t=1734969907; cv=none; b=OiMJmgDJ7BuU6g9blgXiueYXcbC0BaWg2ujS5YWv33DMFNSjxnnFZ+1n/xABpl/win+ypjGPj5A1PXxd1qr3dqFkPaBTyWzW9TQCsU77Bmf5u5fGLfTzAqusC6jT80szxkn1BaPIal+2NZQvU6/f2fVQ+GQUKxEXisg2nTlZAKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969904; c=relaxed/simple;
-	bh=c99J2B/in0b3FaynEb+6527N2b6SCzIxFOYUCopkYTg=;
+	s=arc-20240116; t=1734969907; c=relaxed/simple;
+	bh=/Yoj6p5Q3DMULVTkLFMOrgEdPYtkXsFXe8RFWWUSHSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sJ8q6pQdcjpc06xDO/lXuS7bHc+JRIi++kD+0CsUxHBxIfDrPGMQ59BQLrvpD4eVjIUDoyYqqT0r8sGw6SW8lX3vIdG5Jqk3MWCFxh63XoDNL5IUTEUJEeRsijK6CPGieloTztUUadmlwAtg0XLGfh86xGra9suvTqoqJ0yUU6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFoUHmae; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U/cgPrDoUdE21ToS4OFnEwJDRZ6FWxoNnjcbeGf6vfvcwAe0zS1/e264WEYsolXjd88xIHwQ0gApmPLuDjGPPz2nE5+V64DBn+9GpLQP7GafpVQ1ORnMUc4/qkIPwfx28ARCB7i9Ib3MXU6jURlQj7td85A/uoeZdI2zFxGldFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VoTnaMGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFoUHmae"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2ECC4CED3;
-	Mon, 23 Dec 2024 16:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VoTnaMGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2007C4CED3;
+	Mon, 23 Dec 2024 16:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969904;
-	bh=c99J2B/in0b3FaynEb+6527N2b6SCzIxFOYUCopkYTg=;
+	s=korg; t=1734969907;
+	bh=/Yoj6p5Q3DMULVTkLFMOrgEdPYtkXsFXe8RFWWUSHSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vFoUHmaeYZwrGKTfSUlSe0qAumG1qNKHmi3Wiq1Vyct104Wys6MW3fNO75puG2aEb
-	 FZREaVu/nIW6ti4m8VivzMuFDH+9rLsRqpJ7xXoUzYSj1QDdBpdNQMSGwG0NdLOqKn
-	 CLlNgvdciTapqf1k9GCmwxbbyRCa9z468IsP9Uh8=
+	b=VoTnaMGATKYIAaxbFFNsWL4oAsMdgp4sU6cr55yazwdHJYwryjHHEqrjfbLrgXkKR
+	 jJJgDwZBjCs9H1JJWeJ84HhNHX+L8ew9reE68ayMEWawdy5oD6S6SA+92a3ZpO7+ev
+	 36yCuLImMLK7eLvL6+AoL4+OBIWCUnfR9UmLvrlo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 088/160] drm/amdgpu: fix amdgpu_coredump
-Date: Mon, 23 Dec 2024 16:58:19 +0100
-Message-ID: <20241223155412.095792901@linuxfoundation.org>
+Subject: [PATCH 6.12 089/160] drm/amdgpu: Handle NULL bo->tbo.resource (again) in amdgpu_vm_bo_update
+Date: Mon, 23 Dec 2024 16:58:20 +0100
+Message-ID: <20241223155412.134024240@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian König <christian.koenig@amd.com>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-commit 8d1a13816e59254bd3b18f5ae0895230922bd120 upstream.
+commit 85230ee36d88e7a09fb062d43203035659dd10a5 upstream.
 
-The VM pointer might already be outdated when that function is called.
-Use the PASID instead to gather the information instead.
+Third time's the charm, I hope?
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: d3116756a710 ("drm/ttm: rename bo->mem and make it a pointer")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3837
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 57f812d171af4ba233d3ed7c94dfa5b8e92dcc04)
+(cherry picked from commit 695c2c745e5dff201b75da8a1d237ce403600d04)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c
-@@ -345,11 +345,10 @@ void amdgpu_coredump(struct amdgpu_devic
- 	coredump->skip_vram_check = skip_vram_check;
- 	coredump->reset_vram_lost = vram_lost;
- 
--	if (job && job->vm) {
--		struct amdgpu_vm *vm = job->vm;
-+	if (job && job->pasid) {
- 		struct amdgpu_task_info *ti;
- 
--		ti = amdgpu_vm_get_task_info_vm(vm);
-+		ti = amdgpu_vm_get_task_info_pasid(adev, job->pasid);
- 		if (ti) {
- 			coredump->reset_task_info = *ti;
- 			amdgpu_vm_put_task_info(ti);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1260,10 +1260,9 @@ int amdgpu_vm_bo_update(struct amdgpu_de
+ 	 * next command submission.
+ 	 */
+ 	if (amdgpu_vm_is_bo_always_valid(vm, bo)) {
+-		uint32_t mem_type = bo->tbo.resource->mem_type;
+-
+-		if (!(bo->preferred_domains &
+-		      amdgpu_mem_type_to_domain(mem_type)))
++		if (bo->tbo.resource &&
++		    !(bo->preferred_domains &
++		      amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type)))
+ 			amdgpu_vm_bo_evicted(&bo_va->base);
+ 		else
+ 			amdgpu_vm_bo_idle(&bo_va->base);
 
 
