@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34A517A597;
-	Mon, 23 Dec 2024 16:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D25615C14B;
+	Mon, 23 Dec 2024 16:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970576; cv=none; b=F6Z70BhzAnIf7yt0st3ajKc1q9Rdfa5VIV1A5jevy/3I2jDfzJmWHzzcR8rnbwcT1hhFMgWrgKtwZC4Tv4mTT4Wgu7eEPg3GMEk3qqjAAy3qlSjos+R9srt9Vc1y5NxJstfrKFPGuUUGHgXB8Pe/oAi8RfviscfUm+uEFd3eoS0=
+	t=1734970580; cv=none; b=YmDYAIGbHRK3kRp+aZOXSXCHmbeqoGm6iBpC3wM7ctlKrUvpAzT1okj9tOxOm5AQXi6EceruX5Ul9+5GUn014qdqo3IB+mAMgf9z/JOM48MklvU/e/cOf4kZ4GK8g8Wg2jwuHu1VDvSt4xSn4gCRXF7Bq7qGHm/cSoWh8NHeiB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970576; c=relaxed/simple;
-	bh=TBljgT/Q5qv42jGW6MDn/3TtydqfJYDfi1AqnDFQe+I=;
+	s=arc-20240116; t=1734970580; c=relaxed/simple;
+	bh=tTb+TFVTD0INmTuqT7feVXs3QrIOeNKG0WjwUye2hss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjFmiFnRtly45xriKqohzs2v+W/eJdqlUW3N8YyOMrjnDs/pn1f76E/xy9hMMgjXF8fuxy0JtzRfnhL11EyrK0tDp7G8v3tN4rUDJhlZFvrWKbAINE8lquPc8cjq7DxP7VXPediE3+Wiimkgqu2BA3MgWRuzflioL+qAHuaOr6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdVoQu7d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPnFdr6xE3D2IR/fwbcFmlESYZtAmgEhXoHmCzY8BHUPtWl+CRnUuau0KUQGxa3a8vEs+zFlspQP1rxVgPRNWKR5dO15gcj2wpuQLp+9J6Wev+EyO835bFgVW2QynvBZIEgg+r+2C1vJ55AHncs0rp5lkKGwEXf2OC8qJzvKiJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPzaJ6RD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdVoQu7d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1338CC4CED3;
-	Mon, 23 Dec 2024 16:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPzaJ6RD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9F5C4CED3;
+	Mon, 23 Dec 2024 16:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970576;
-	bh=TBljgT/Q5qv42jGW6MDn/3TtydqfJYDfi1AqnDFQe+I=;
+	s=korg; t=1734970579;
+	bh=tTb+TFVTD0INmTuqT7feVXs3QrIOeNKG0WjwUye2hss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdVoQu7dhLP1IIz/r8F0kSJgn94J0FhPAyFw73uoRoRYZd+LYG8ve/BF9clVZ+NfS
-	 LRE0y28n0Q/zeY+OclJUdpBV4TFdC2poT4dwT6B0SRAQkb+p3yJ7ST4gFtcGng6jqC
-	 v7rNJlJx+MigEsYoDkOK1wRyyB8E/hMTVaDYyb4E=
+	b=pPzaJ6RDn4z9Wzu54HFJnmoEupULHvQZeuQfi5ZEyKH/bMumooJtm07NuZIy5h60B
+	 yMOEAfBQy3IZ97ykzO1LiJSHUYcU2MohaDqEi2y2QgsWgOsao85wdo+nO71GisxITM
+	 q8O01/pNycS6hjKU/BMzOr/Es62slfVYBImMEFHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.6 105/116] of: Fix error path in of_parse_phandle_with_args_map()
-Date: Mon, 23 Dec 2024 16:59:35 +0100
-Message-ID: <20241223155403.633543985@linuxfoundation.org>
+	Weining Lu <luweining@loongson.cn>,
+	Li Chen <chenli@loongson.cn>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 096/116] selftests/bpf: Use asm constraint "m" for LoongArch
+Date: Mon, 23 Dec 2024 16:59:26 +0100
+Message-ID: <20241223155403.296882886@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -50,72 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit d7dfa7fde63dde4d2ec0083133efe2c6686c03ff upstream.
+commit 29d44cce324dab2bd86c447071a596262e7109b6 upstream.
 
-The current code uses some 'goto put;' to cancel the parsing operation
-and can lead to a return code value of 0 even on error cases.
+Currently, LoongArch LLVM does not support the constraint "o" and no plan
+to support it, it only supports the similar constraint "m", so change the
+constraints from "nor" in the "else" case to arch-specific "nmr" to avoid
+the build error such as "unexpected asm memory constraint" for LoongArch.
 
-Indeed, some goto calls are done from a loop without setting the ret
-value explicitly before the goto call and so the ret value can be set to
-0 due to operation done in previous loop iteration. For instance match
-can be set to 0 in the previous loop iteration (leading to a new
-iteration) but ret can also be set to 0 it the of_property_read_u32()
-call succeed. In that case if no match are found or if an error is
-detected the new iteration, the return value can be wrongly 0.
-
-Avoid those cases setting the ret value explicitly before the goto
-calls.
-
-Fixes: bd6f2fd5a1d5 ("of: Support parsing phandle argument lists through a nexus node")
+Fixes: 630301b0d59d ("selftests/bpf: Add basic USDT selftests")
+Suggested-by: Weining Lu <luweining@loongson.cn>
+Suggested-by: Li Chen <chenli@loongson.cn>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20241202165819.158681-1-herve.codina@bootlin.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://llvm.org/docs/LangRef.html#supported-constraint-code-list
+Link: https://github.com/llvm/llvm-project/blob/main/llvm/lib/Target/LoongArch/LoongArchISelDAGToDAG.cpp#L172
+Link: https://lore.kernel.org/bpf/20241219111506.20643-1-yangtiezhu@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/sdt.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -1415,8 +1415,10 @@ int of_parse_phandle_with_args_map(const
- 			map_len--;
- 
- 			/* Check if not found */
--			if (!new)
-+			if (!new) {
-+				ret = -EINVAL;
- 				goto put;
-+			}
- 
- 			if (!of_device_is_available(new))
- 				match = 0;
-@@ -1426,17 +1428,20 @@ int of_parse_phandle_with_args_map(const
- 				goto put;
- 
- 			/* Check for malformed properties */
--			if (WARN_ON(new_size > MAX_PHANDLE_ARGS))
--				goto put;
--			if (map_len < new_size)
-+			if (WARN_ON(new_size > MAX_PHANDLE_ARGS) ||
-+			    map_len < new_size) {
-+				ret = -EINVAL;
- 				goto put;
-+			}
- 
- 			/* Move forward by new node's #<list>-cells amount */
- 			map += new_size;
- 			map_len -= new_size;
- 		}
--		if (!match)
-+		if (!match) {
-+			ret = -ENOENT;
- 			goto put;
-+		}
- 
- 		/* Get the <list>-map-pass-thru property (optional) */
- 		pass = of_get_property(cur, pass_name, NULL);
+--- a/tools/testing/selftests/bpf/sdt.h
++++ b/tools/testing/selftests/bpf/sdt.h
+@@ -102,6 +102,8 @@
+ # define STAP_SDT_ARG_CONSTRAINT        nZr
+ # elif defined __arm__
+ # define STAP_SDT_ARG_CONSTRAINT        g
++# elif defined __loongarch__
++# define STAP_SDT_ARG_CONSTRAINT        nmr
+ # else
+ # define STAP_SDT_ARG_CONSTRAINT        nor
+ # endif
 
 
