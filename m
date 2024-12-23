@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE15417A5A4;
-	Mon, 23 Dec 2024 16:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9485112D1F1;
+	Mon, 23 Dec 2024 16:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969854; cv=none; b=YAaxItwoRqTfSkNTqJLRtJW2sWgCjejRRCrb+Yhad7WgwjOfEUDuV3n0eANcS/5VY3JT2VH2NR7L2fcAhgtPIPv8iL+eD8f0P1JU9iDAFXekH3g0wfI5hPa60xHkhr95jzd9iBQw+ZPq7tN1+RGLyrGyiNW918kEKvIULxXK5Gg=
+	t=1734969858; cv=none; b=oboDgXRBShkneM4DeHG9J7k4H2AQ1KLp6+jQgBOJZjb/y54IyzuUr+C2SWAAO3TIjVxGs822UrFcYColjMokWvdqMiYVXGy7lMkdgvVR+HmuGCYTfkmNMw6znCVli8jjTLM393yUKJ9tnfzg/goeIxFvfaHr2Z9EA1RwijbAuX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969854; c=relaxed/simple;
-	bh=A8wnwEOch3UngFRKmblDYPgQHvkRI1dxpZxoJsyI5zk=;
+	s=arc-20240116; t=1734969858; c=relaxed/simple;
+	bh=KZrhOPLOu4l41oix0Dt81NRuS1yUFhXigN0hMrdbltY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9fd+a5CM2GFN9EzcR2vtkWT1VgaPt4omLIxEWo584qRlQ6qW/1f7Dr2mkCdoFWXZf/nqN/LjpE9fxUSH3/tTOmUvD44hxyv1abFc6oeUoRFQ01Id5OpoWqSCROfbwLCHnMdwg2R3IcnCqH69k2LLuZyVqF1TQiqfMWaVZnQDrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAZh5JgN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eJ9lmDeg/d04iVpxhy0DwxbndsbQgPT7BJ0D6nlZovHNxUH75emD7o8/LHnysERb8/TJUo0TfHbkDpZXYrUljNMiFd+7aFspAyVeNJ8Y35/hQLDnUCUWqp27aYvkhrpY2LrBKI5VTv+4Gg6bGo5RYUINpbJrCD55/UajVJblVfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cb8bn1wD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAZh5JgN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D15EC4CED3;
-	Mon, 23 Dec 2024 16:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cb8bn1wD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A89C4CED3;
+	Mon, 23 Dec 2024 16:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969854;
-	bh=A8wnwEOch3UngFRKmblDYPgQHvkRI1dxpZxoJsyI5zk=;
+	s=korg; t=1734969858;
+	bh=KZrhOPLOu4l41oix0Dt81NRuS1yUFhXigN0hMrdbltY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAZh5JgNB/ofq2Oq/HB9lbul8yPqpril1HS8YHOXWAfYw4eKJwOAUuZTf8ApPiIiA
-	 gvAEIGmWUnPSp97hvHRGfXidxU6ed/JDoBVqwEQyt/vb5IN4xqE0hoLlkNk0e+KAdj
-	 k35vTHYLogo1koqliQINF62l515QPuZlJi2do+B8=
+	b=Cb8bn1wDb06fiz1Tv5NfrBV21v3Jy/QM3zCVnhHaWhnZL8rtLrLGkwKNL0JAE4kfq
+	 VtcCuVsYuO8Tt4tevC1djHccj4yqGrqk2axJM1E2XrNPasypx/jMauOIZtCcn5YQa8
+	 dnX+ZJUFDxvEs7XM1hyvy05gIXvl+pnH8YfRjKi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/160] netdev: fix repeated netlink messages in queue dump
-Date: Mon, 23 Dec 2024 16:57:37 +0100
-Message-ID: <20241223155410.455879601@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 073/160] i2c: riic: Always round-up when calculating bus period
+Date: Mon, 23 Dec 2024 16:58:04 +0100
+Message-ID: <20241223155411.507576309@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,88 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b1f3a2f5a742c1e939a73031bd31b9e557a2d77d ]
+commit de6b43798d9043a7c749a0428dbb02d5fff156e5 upstream.
 
-The context is supposed to record the next queue to dump,
-not last dumped. If the dump doesn't fit we will restart
-from the already-dumped queue, duplicating the message.
+Currently, the RIIC driver may run the I2C bus faster than requested,
+which may cause subtle failures.  E.g. Biju reported a measured bus
+speed of 450 kHz instead of the expected maximum of 400 kHz on RZ/G2L.
 
-Before this fix and with the selftest improvements later
-in this series we see:
+The initial calculation of the bus period uses DIV_ROUND_UP(), to make
+sure the actual bus speed never becomes faster than the requested bus
+speed.  However, the subsequent division-by-two steps do not use
+round-up, which may lead to a too-small period, hence a too-fast and
+possible out-of-spec bus speed.  E.g. on RZ/Five, requesting a bus speed
+of 100 resp. 400 kHz will yield too-fast target bus speeds of 100806
+resp. 403226 Hz instead of 97656 resp. 390625 Hz.
 
-  # ./run_kselftest.sh -t drivers/net:queues.py
-  timeout set to 45
-  selftests: drivers/net: queues.py
-  KTAP version 1
-  1..2
-  # Check| At /root/ksft-net-drv/drivers/net/./queues.py, line 32, in get_queues:
-  # Check|     ksft_eq(queues, expected)
-  # Check failed 102 != 100
-  # Check| At /root/ksft-net-drv/drivers/net/./queues.py, line 32, in get_queues:
-  # Check|     ksft_eq(queues, expected)
-  # Check failed 101 != 100
-  not ok 1 queues.get_queues
-  ok 2 queues.addremove_queues
-  # Totals: pass:1 fail:1 xfail:0 xpass:0 skip:0 error:0
-  not ok 1 selftests: drivers/net: queues.py # exit=1
+Fix this by using DIV_ROUND_UP() in the subsequent divisions, too.
 
-With the fix:
+Tested on RZ/A1H, RZ/A2M, and RZ/Five.
 
-  # ./ksft-net-drv/run_kselftest.sh -t drivers/net:queues.py
-  timeout set to 45
-  selftests: drivers/net: queues.py
-  KTAP version 1
-  1..2
-  ok 1 queues.get_queues
-  ok 2 queues.addremove_queues
-  # Totals: pass:2 fail:0 xfail:0 xpass:0 skip:0 error:0
-
-Fixes: 6b6171db7fc8 ("netdev-genl: Add netlink framework functions for queue")
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20241213152244.3080955-2-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d982d66514192cdb ("i2c: riic: remove clock and frequency restrictions")
+Reported-by: Biju Das <biju.das.jz@bp.renesas.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: <stable@vger.kernel.org> # v4.15+
+Link: https://lore.kernel.org/r/c59aea77998dfea1b4456c4b33b55ab216fcbf5e.1732284746.git.geert+renesas@glider.be
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netdev-genl.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/i2c/busses/i2c-riic.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
-index d2baa1af9df0..71359922ae8b 100644
---- a/net/core/netdev-genl.c
-+++ b/net/core/netdev-genl.c
-@@ -417,24 +417,21 @@ netdev_nl_queue_dump_one(struct net_device *netdev, struct sk_buff *rsp,
- 			 struct netdev_nl_dump_ctx *ctx)
- {
- 	int err = 0;
--	int i;
+--- a/drivers/i2c/busses/i2c-riic.c
++++ b/drivers/i2c/busses/i2c-riic.c
+@@ -352,7 +352,7 @@ static int riic_init_hw(struct riic_dev
+ 		if (brl <= (0x1F + 3))
+ 			break;
  
- 	if (!(netdev->flags & IFF_UP))
- 		return err;
- 
--	for (i = ctx->rxq_idx; i < netdev->real_num_rx_queues;) {
--		err = netdev_nl_queue_fill_one(rsp, netdev, i,
-+	for (; ctx->rxq_idx < netdev->real_num_rx_queues; ctx->rxq_idx++) {
-+		err = netdev_nl_queue_fill_one(rsp, netdev, ctx->rxq_idx,
- 					       NETDEV_QUEUE_TYPE_RX, info);
- 		if (err)
- 			return err;
--		ctx->rxq_idx = i++;
- 	}
--	for (i = ctx->txq_idx; i < netdev->real_num_tx_queues;) {
--		err = netdev_nl_queue_fill_one(rsp, netdev, i,
-+	for (; ctx->txq_idx < netdev->real_num_tx_queues; ctx->txq_idx++) {
-+		err = netdev_nl_queue_fill_one(rsp, netdev, ctx->txq_idx,
- 					       NETDEV_QUEUE_TYPE_TX, info);
- 		if (err)
- 			return err;
--		ctx->txq_idx = i++;
+-		total_ticks /= 2;
++		total_ticks = DIV_ROUND_UP(total_ticks, 2);
+ 		rate /= 2;
  	}
  
- 	return err;
--- 
-2.39.5
-
 
 
