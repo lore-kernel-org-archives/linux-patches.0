@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A9A187848;
-	Mon, 23 Dec 2024 16:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4998412C544;
+	Mon, 23 Dec 2024 16:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970587; cv=none; b=t6UinJOHDvuh5w6f4RPiT3YjCYLmkCmgrMro1gKNZAEtfGPaufV2Yp+go+St54k76DmsEaNOi7x6oyVLOkDPfKQVtEwQ5eaMzRcwgyMc3nOhbANVU2ncMyTSOicjHhNwSlMbzQ++4ksZdpV+ty0ayZnkw+BROD5ZXizwsN2pdIU=
+	t=1734970590; cv=none; b=AJIcsMaQV8g6QlqqwXh4/A8zevuvaI8e7zGo3UCCaRa1QhOBWvFDYw18R+wES3GNKZxTpKnYBFgb5bCUGg3gGmvTT302q0+6zxTnMN7JQr+OJqT6IOde1xUCyHpOV/yO9y4GiAGvhqOZSse8VWsU9rHkxfeLtMJbVdRtT7y0MnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970587; c=relaxed/simple;
-	bh=VTK5gpArHGL531g7wvqyj2tl3ZFxM2GXGv5enwgFiBI=;
+	s=arc-20240116; t=1734970590; c=relaxed/simple;
+	bh=m7Ji/F3kZODuJRynJRVsgp9UyTaZY+q7488w0/jSk6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WpjghY/UbxvfmXb6newr4xkATpLQVtVkegqekZnHkNSCJjC0TUHIxY9KqgONioLM/Z81rbgqc1Ff3RAA3c1q9OZDaSf8Em61hC0rXhUwf6mLnlyUftWIUHHPCrgr16BOgHo4+EcCmHiKKX/DLTuOVXVeR8fbnaCUVwPblIIFVPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIcYe1UD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r2fRqq25U2zkzvBCiGxNdET9mUTQDgmzOZ/s/yjZywySzW/VAT4xPw0Fo8H61TMvdaHgW8DGps3PAaTLQiQ7sgBMoEABANlNQZX1SjVbxA4F6cutcWy8ALAUERyb3GQGvaKcWTnDbK7Pcs/JYTCOOWxyK8jgl35QbCUeOY3gDuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJ+gZlKe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIcYe1UD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3487AC4CED3;
-	Mon, 23 Dec 2024 16:16:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJ+gZlKe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA92C4CED3;
+	Mon, 23 Dec 2024 16:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970586;
-	bh=VTK5gpArHGL531g7wvqyj2tl3ZFxM2GXGv5enwgFiBI=;
+	s=korg; t=1734970590;
+	bh=m7Ji/F3kZODuJRynJRVsgp9UyTaZY+q7488w0/jSk6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIcYe1UDrxDZ6USQHgIBpiaBwAwpcz6cYVkQuVdJm99h83CP9ayuJ8rQMJp2n2+3k
-	 6lhbCF+AHwaidIAIT44aGCBFONtPuIGsZ3kScYPsfjsUKTZ0MV1wv3dtgv7jIOZoMd
-	 EEFmZq++coSy7gXPjTHgO4YJCPXG9by1Zoxtb/H8=
+	b=wJ+gZlKe43c+zF5o4/k49tmaWmQdQSjLSWKmxiUWRT/noQKblfOKJYvZ49Xx4IJ2i
+	 eEAip/8Uw8oW8ODYMG22SsSlm5MDEQxPkISPoyX/piLTLH1XrKNmGrhjCUf0WOQ0bn
+	 6RPwIWeV1LX/bRh2jkPXd2AJd5EPt067TCkbq+ZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Hongchi <hongchi.peng@siengine.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/83] usb: dwc2: gadget: Dont write invalid mapped sg entries into dma_desc with iommu enabled
-Date: Mon, 23 Dec 2024 16:58:49 +0100
-Message-ID: <20241223155354.036963004@linuxfoundation.org>
+Subject: [PATCH 6.1 11/83] PCI: Introduce pci_resource_n()
+Date: Mon, 23 Dec 2024 16:58:50 +0100
+Message-ID: <20241223155354.072348941@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -44,59 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Hongchi <hongchi.peng@siengine.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1134289b6b93d73721340b66c310fd985385e8fa ]
+[ Upstream commit 144d204df78e40e6250201e71ef7d0e42d2a13fc ]
 
-When using dma_map_sg() to map the scatterlist with iommu enabled,
-the entries in the scatterlist can be mergerd into less but longer
-entries in the function __finalise_sg(). So that the number of
-valid mapped entries is actually smaller than ureq->num_reqs,and
-there are still some invalid entries in the scatterlist with
-dma_addr=0xffffffff and len=0. Writing these invalid sg entries
-into the dma_desc can cause a data transmission error.
+Introduce pci_resource_n() and replace open-coded implementations of it
+in pci.h.
 
-The function dma_map_sg() returns the number of valid map entries
-and the return value is assigned to usb_request::num_mapped_sgs in
-function usb_gadget_map_request_by_dev(). So that just write valid
-mapped entries into dma_desc according to the usb_request::num_mapped_sgs,
-and set the IOC bit if it's the last valid mapped entry.
-
-This patch poses no risk to no-iommu situation, cause
-ureq->num_mapped_sgs equals ureq->num_sgs while using dma_direct_map_sg()
-to map the scatterlist whith iommu disabled.
-
-Signed-off-by: Peng Hongchi <hongchi.peng@siengine.com>
-Link: https://lore.kernel.org/r/20240523100315.7226-1-hongchi.peng@siengine.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230330162434.35055-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Stable-dep-of: 360c400d0f56 ("p2sb: Do not scan and remove the P2SB device when it is unhidden")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/gadget.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/pci.h | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index cb29f9fae2f2..1c8141d80e25 100644
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -886,10 +886,10 @@ static void dwc2_gadget_config_nonisoc_xfer_ddma(struct dwc2_hsotg_ep *hs_ep,
- 	}
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 9e58e5400d78..28f91982402a 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1996,14 +1996,13 @@ int pci_iobar_pfn(struct pci_dev *pdev, int bar, struct vm_area_struct *vma);
+  * These helpers provide future and backwards compatibility
+  * for accessing popular PCI BAR info
+  */
+-#define pci_resource_start(dev, bar)	((dev)->resource[(bar)].start)
+-#define pci_resource_end(dev, bar)	((dev)->resource[(bar)].end)
+-#define pci_resource_flags(dev, bar)	((dev)->resource[(bar)].flags)
+-#define pci_resource_len(dev,bar) \
+-	((pci_resource_end((dev), (bar)) == 0) ? 0 :	\
+-							\
+-	 (pci_resource_end((dev), (bar)) -		\
+-	  pci_resource_start((dev), (bar)) + 1))
++#define pci_resource_n(dev, bar)	(&(dev)->resource[(bar)])
++#define pci_resource_start(dev, bar)	(pci_resource_n(dev, bar)->start)
++#define pci_resource_end(dev, bar)	(pci_resource_n(dev, bar)->end)
++#define pci_resource_flags(dev, bar)	(pci_resource_n(dev, bar)->flags)
++#define pci_resource_len(dev,bar)					\
++	(pci_resource_end((dev), (bar)) ? 				\
++	 resource_size(pci_resource_n((dev), (bar))) : 0)
  
- 	/* DMA sg buffer */
--	for_each_sg(ureq->sg, sg, ureq->num_sgs, i) {
-+	for_each_sg(ureq->sg, sg, ureq->num_mapped_sgs, i) {
- 		dwc2_gadget_fill_nonisoc_xfer_ddma_one(hs_ep, &desc,
- 			sg_dma_address(sg) + sg->offset, sg_dma_len(sg),
--			sg_is_last(sg));
-+			(i == (ureq->num_mapped_sgs - 1)));
- 		desc_count += hs_ep->desc_count;
- 	}
- 
+ /*
+  * Similar to the helpers above, these manipulate per-pci_dev
 -- 
 2.39.5
 
