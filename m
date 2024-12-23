@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29321A8F80;
-	Mon, 23 Dec 2024 16:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB3F8827;
+	Mon, 23 Dec 2024 16:20:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970816; cv=none; b=ZrDe/9/xDwKtWlYTb7UWwZu5rERwvPcPESkvWpafyS518ZO5NiSEd+tnRmoJLlS/YBwGkxeQcfQW2jx4485SqLfY+PK9yETIacq1xPKlEERVxBf/80YCdjBIGOlbqRVdlNFIJ/OGjY1QCSnC+JMBL7NHr/0vLV3Xgo+yX2yjNvM=
+	t=1734970820; cv=none; b=KIhTH/GD3KQvJWlK/W0iib9LuypgS3uhiPIe1atB210TIcdx9bazhlZ1cHmUYO62D3hU4iBOXoih5L5iPZD2xhlp+mo5Ne8HLMBP2gFFry5awxz2nEhdgvzwTk+Pc/gVcR4KVqkZcUCigsuEedSO4rF4XnQLFRCPCIpBW9g7uU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970816; c=relaxed/simple;
-	bh=NabjLuffXMoyjUN4I56XkkodVVX1OC+DdUuAX2jxPsM=;
+	s=arc-20240116; t=1734970820; c=relaxed/simple;
+	bh=tTiFYyMnZIiiHmGKiqNwjlsZKrv2gBesEXWlLqH6dRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECTyWYeZHLMDtJaGyNAXkJKIx8q6JO9hUYm2NJUh7avtZC5C0aSLUWI5GwP7jnWZfgYri5zLKdJVvYti4JjUUezt9MravBvT8cXpJUCcnzG7xzVKxq6r/BYrwJnilBm5hFkEMVjxk6uZwL9oV3cGhnQW2iL3JvTHbBnL2qGS9wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z+ZkWVn4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HAIJ0TgwWMvjglUK4Ctvh+Hb/pbWNeBgIoBCQDq5pcjSbCps2zYn1QdHphIZC3WkwOY+ME26S/3gMDR0bj2X09SrnoRVepnDeeGO/OsPFfHQr5aukkugh+71kPuwYWzLClWkqs4n8itf4h/CA2hM2WbfGMImLPaHhC+/ZfNgUcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHmT2Oso; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z+ZkWVn4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32894C4CED3;
-	Mon, 23 Dec 2024 16:20:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHmT2Oso"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8B5C4CED3;
+	Mon, 23 Dec 2024 16:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970816;
-	bh=NabjLuffXMoyjUN4I56XkkodVVX1OC+DdUuAX2jxPsM=;
+	s=korg; t=1734970820;
+	bh=tTiFYyMnZIiiHmGKiqNwjlsZKrv2gBesEXWlLqH6dRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z+ZkWVn4zLwGlfofh8dDBdZ7rR+xFQIRUOkCTZ5DjlP+dkJIHb5rR4c5ZMiZVXOxD
-	 8G7JoqqGPiOdShvqPWC3luNoVYGSaHwUgQvJbyzKsaGrEUTrBbWhEzjHEF0PSfMGgq
-	 hYTAP+htnfyZS3pSH3qBaeZXk2jX4IyAXfbCo520=
+	b=ZHmT2OsoMZl5OvuWFoO1VLN0UVKyqMhXzrxg9vMxl0t8c45qe9aTZ8u0ZP5GwnFNe
+	 TnE/EgA5Hs/oUbOhVw15EWahGrGwpAsWgEbma8phJZ+b7IRrPe0QkS5QHzgZTI4ctP
+	 8+ZNNMK1mkOvbdES71yQf6nXgFEsQtaXatIjdFZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jing Xia <jing.xia@unisoc.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Benoit Lize <lizeb@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.1 78/83] epoll: Add synchronous wakeup support for ep_poll_callback
-Date: Mon, 23 Dec 2024 16:59:57 +0100
-Message-ID: <20241223155356.669493159@linuxfoundation.org>
+	Gabriel Krisman Bertazi <krisman@suse.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 79/83] io_uring/rw: split io_read() into a helper
+Date: Mon, 23 Dec 2024 16:59:58 +0100
+Message-ID: <20241223155356.709486805@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -53,55 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
+Commit a08d195b586a217d76b42062f88f375a3eedda4d upstream.
 
-Now, the epoll only use wake_up() interface to wake up task.
-However, sometimes, there are epoll users which want to use
-the synchronous wakeup flag to hint the scheduler, such as
-Android binder driver.
-So add a wake_up_sync() define, and use the wake_up_sync()
-when the sync is true in ep_poll_callback().
+Add __io_read() which does the grunt of the work, leaving the completion
+side to the new io_read(). No functional changes in this patch.
 
-Co-developed-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
-Tested-by: Brian Geffon <bgeffon@google.com>
-Reviewed-by: Brian Geffon <bgeffon@google.com>
-Reported-by: Benoit Lize <lizeb@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
+Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+(cherry picked from commit a08d195b586a217d76b42062f88f375a3eedda4d)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c       |    5 ++++-
- include/linux/wait.h |    1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ io_uring/rw.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1237,7 +1237,10 @@ static int ep_poll_callback(wait_queue_e
- 				break;
- 			}
- 		}
--		wake_up(&ep->wq);
-+		if (sync)
-+			wake_up_sync(&ep->wq);
-+		else
-+			wake_up(&ep->wq);
- 	}
- 	if (waitqueue_active(&ep->poll_wait))
- 		pwake++;
---- a/include/linux/wait.h
-+++ b/include/linux/wait.h
-@@ -224,6 +224,7 @@ void __wake_up_pollfree(struct wait_queu
- #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
- #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
- #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
-+#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -691,7 +691,7 @@ static int io_rw_init_file(struct io_kio
+ 	return 0;
+ }
  
- #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
- #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
+-int io_read(struct io_kiocb *req, unsigned int issue_flags)
++static int __io_read(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
+ 	struct io_rw_state __s, *s = &__s;
+@@ -836,7 +836,18 @@ done:
+ 	/* it's faster to check here then delegate to kfree */
+ 	if (iovec)
+ 		kfree(iovec);
+-	return kiocb_done(req, ret, issue_flags);
++	return ret;
++}
++
++int io_read(struct io_kiocb *req, unsigned int issue_flags)
++{
++	int ret;
++
++	ret = __io_read(req, issue_flags);
++	if (ret >= 0)
++		return kiocb_done(req, ret, issue_flags);
++
++	return ret;
+ }
+ 
+ static bool io_kiocb_start_write(struct io_kiocb *req, struct kiocb *kiocb)
 
 
