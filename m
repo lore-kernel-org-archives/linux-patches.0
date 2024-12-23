@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F611BBBEE;
-	Mon, 23 Dec 2024 16:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4221C303E;
+	Mon, 23 Dec 2024 16:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970844; cv=none; b=ilKRVmhEQeHWhHoRcLzevQCv2yKAFjtbYyAJFqHW/cv7tdoh2Q9Pr3WsTThdowU0zwx0AEP5Z+YYnSJAYmPzwgJVEvPMT7uhmERJxBmAc/g6NweXj8oAshNINB8l9RDIiiqnLtvYk62ACRjKCZmcN0LGNhEDH+/Ig8P1qYyUQyI=
+	t=1734970847; cv=none; b=kSY7jl+hrUQ2ChiFdlyvR30OTrBYlQK22Fk/kD6AHoqD0LdACCn3Y3KnfYM7qPY0OnZ+Nu0THFomCIm4A/seS+cWmY2DeV+a8DjHK0zWiOGZNCJShcETqcpo5v9XK5HvTHzALOl9EnuYmraKYyJdx71m6QLWYQF78smPMkM4eek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970844; c=relaxed/simple;
-	bh=+xh5w9aZBjaKSue1qs48gHlTIXOXGaXb4BdsYXUZpPM=;
+	s=arc-20240116; t=1734970847; c=relaxed/simple;
+	bh=Zh8iPR7bgn3xw5tDcFMWmr8dbMiq45XVXfX00ExTVuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1IFfIUqkUfyF1hulW5hn4soXM0Pm7Cj+lw5LTIMkgwRQOVOERZJ/VfFLp5nx4Tcu8jWO7Bp+nNOal2qQNa2o6rgasrOObo3NdIG1BM1BhK1lBRB1Lh6vrIeJTYa7kvbOOdx82aaQKJ42qPvTVAA3Jq0P8+4pRc1H+XN1MXSJ1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNIz63+c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TSO5lz21dh574o2bexV2LPOWqGCFdJZw1gAtk/tz5sRUACSz+1O8mf/HapSyYfnKAIaRVEg7co57AklKUFZrHQWPdmnV3NTqCWiDRDjs/ckty4id21X3K7N24XJeVTA6J640SQ7KUk+wf4DJEl8Vma0+EjY4mYptvtXOiOIOyOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O0tYmG2A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNIz63+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B957CC4CED7;
-	Mon, 23 Dec 2024 16:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O0tYmG2A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E64DC4CED6;
+	Mon, 23 Dec 2024 16:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970844;
-	bh=+xh5w9aZBjaKSue1qs48gHlTIXOXGaXb4BdsYXUZpPM=;
+	s=korg; t=1734970847;
+	bh=Zh8iPR7bgn3xw5tDcFMWmr8dbMiq45XVXfX00ExTVuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNIz63+ccGlqYjD+4c0jehckyHpfSGoy6ggU3X/2rFqe6vBKibxPFM8POMPvTsMqa
-	 T5OYPaViTaX3Lk3fYSEJNJ7BDHDNas8rW3VYe+3dAbhKp0K7oI5PvzDqmATMWHBKRj
-	 UVxMGYDGv/i98ldOb4aIccnhxAc0ukJuq7QPiGrU=
+	b=O0tYmG2A1AgnaLHvwTwZc42iSx2W9dJjMDwgAMln4RtO3txlaFfEr70+iXfJcBUnv
+	 PMh3TOylnZdVSrrz6Z43IoRjS8dmD6K1KsBn7E5vMq2UloCCgoFGEWw4ajwZCcOCMz
+	 cHE0qxKTYtwOP7T047cvOzkw/hzgM+qgyPXHDWHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will <willsroot@protonmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 67/83] io_uring: check if iowq is killed before queuing
-Date: Mon, 23 Dec 2024 16:59:46 +0100
-Message-ID: <20241223155356.220129272@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 6.1 68/83] NFS/pnfs: Fix a live lock between recalled layouts and layoutget
+Date: Mon, 23 Dec 2024 16:59:47 +0100
+Message-ID: <20241223155356.256283059@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -51,46 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit dbd2ca9367eb19bc5e269b8c58b0b1514ada9156 upstream.
+commit 62e2a47ceab8f3f7d2e3f0e03fdd1c5e0059fd8b upstream.
 
-task work can be executed after the task has gone through io_uring
-termination, whether it's the final task_work run or the fallback path.
-In this case, task work will find ->io_wq being already killed and
-null'ed, which is a problem if it then tries to forward the request to
-io_queue_iowq(). Make io_queue_iowq() fail requests in this case.
+When the server is recalling a layout, we should ignore the count of
+outstanding layoutget calls, since the server is expected to return
+either NFS4ERR_RECALLCONFLICT or NFS4ERR_RETURNCONFLICT for as long as
+the recall is outstanding.
+Currently, we may end up livelocking, causing the layout to eventually
+be forcibly revoked.
 
-Note that it also checks PF_KTHREAD, because the user can first close
-a DEFER_TASKRUN ring and shortly after kill the task, in which case
-->iowq check would race.
-
+Fixes: bf0291dd2267 ("pNFS: Ensure LAYOUTGET and LAYOUTRETURN are properly serialised")
 Cc: stable@vger.kernel.org
-Fixes: 50c52250e2d74 ("block: implement async io_uring discard cmd")
-Fixes: 773af69121ecc ("io_uring: always reissue from task_work context")
-Reported-by: Will <willsroot@protonmail.com>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/63312b4a2c2bb67ad67b857d17a300e1d3b078e8.1734637909.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/nfs/pnfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -440,7 +440,11 @@ void io_queue_iowq(struct io_kiocb *req,
- 	struct io_uring_task *tctx = req->task->io_uring;
- 
- 	BUG_ON(!tctx);
--	BUG_ON(!tctx->io_wq);
-+
-+	if ((current->flags & PF_KTHREAD) || !tctx->io_wq) {
-+		io_req_task_queue_fail(req, -ECANCELED);
-+		return;
-+	}
- 
- 	/* init ->work of the whole link before punting */
- 	io_prep_async_link(req);
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1196,7 +1196,7 @@ pnfs_prepare_layoutreturn(struct pnfs_la
+ 		enum pnfs_iomode *iomode)
+ {
+ 	/* Serialise LAYOUTGET/LAYOUTRETURN */
+-	if (atomic_read(&lo->plh_outstanding) != 0)
++	if (atomic_read(&lo->plh_outstanding) != 0 && lo->plh_return_seq == 0)
+ 		return false;
+ 	if (test_and_set_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags))
+ 		return false;
 
 
