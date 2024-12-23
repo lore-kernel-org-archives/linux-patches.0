@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7878812D1F1;
-	Mon, 23 Dec 2024 16:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED3A012D1F1;
+	Mon, 23 Dec 2024 16:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969920; cv=none; b=H1rOFZbfoC4l0Uczh5h8qZnRWuL3EcgQE61B2jKbr72cyU9YSNWXMmVyguz+81HgwZ3mCpA6Mb5M6nF+MRUYgJaWbTl52Aj7dhZIPaSj7n6bEaVoIAr1YEW7Lz3MzShMmJ3d+UCEs9BeQfXGyzjP0c9rlcaVw+NXPonUjUk5Yjk=
+	t=1734969924; cv=none; b=d8K3feujLhHlg5Iwl9nGzmqiexrZRIkKekbfjGHvB54vGHfBRz9ahp2iN2C2XdBLc537AG4hS4UjFmXmB0GPna3Jq4xtAOD4b6yufMhaPrYS+ZrhGkRw0hG5Tf+R+1lrZN0uyRmbQ8DQDy5oCuwG0JAA+oLSJVhbZIecLwfT9M4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969920; c=relaxed/simple;
-	bh=jilrfThkiWKeO/nHX6uhQf7bcdaqJ2VwDg3itSA3ORE=;
+	s=arc-20240116; t=1734969924; c=relaxed/simple;
+	bh=pUmTjMCXwZNBSStXSwTBgNp19Wz3VECA21ZB+Ppu/lc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WDVSkQ0T8DB5jR5ZYpg1k4UfJBQ7srdp0bx4KB0+ngnai5P/wuvuy8h+Co65FkSLRt5TZuqSNaiyU1kLBe3kMU3R2Ae9Cl81tu9ZYNMp1+TO5GBXoBNOOWapk8sN37Z2qLAYSy3mXTvndRaSdlyEq/edm66uvUPp7z7BM4cA3aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adOLRZsY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XosUDYr60rcvvi2i5KSdhDOYuppEg3H/HV4oINyNV8qKIAKSofR09T/VVuAHi3qaQm3Pom6ucN0WJgnDMSF2Z8890kQTSv/WDwNTL2bgj4HOEnNfAfgO/OdRYlpiNhhk8H/dcbfFx301dw60YecMOGVUir85zE+jcGCgydFIhqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oePSCWa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adOLRZsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE59C4CED3;
-	Mon, 23 Dec 2024 16:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oePSCWa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7ACC4CEDF;
+	Mon, 23 Dec 2024 16:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969920;
-	bh=jilrfThkiWKeO/nHX6uhQf7bcdaqJ2VwDg3itSA3ORE=;
+	s=korg; t=1734969923;
+	bh=pUmTjMCXwZNBSStXSwTBgNp19Wz3VECA21ZB+Ppu/lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adOLRZsY1ohALSWmEwWFVlpBod7elGnzwYuK4F+NJASEyZlRB2LesS8rzBvKg/J8P
-	 2DBr6WxnS9pKKEmKeMttFJ3N40LRXqmqBZWRMkTTfuf3fxhgMu6tsaI8/1wuM+45dE
-	 /wAcatqMpb2uIylw7OpDDkOR4Vg3IwP9od23bL3A=
+	b=oePSCWa2tDPS0eyza/KWiYNBxGdK3BSP1ePaIghx/cOcyvaFAS59JwcvvBIqorHHv
+	 ye1qHG/oZ7knpFUEY72lZc6w52QAFuoTceSB+RVLTNRKTF4wuDkcuAV6a1luwwhiBK
+	 eoxoQ3uZ6NeQaKpXYDIq2ehugwkmprJtYftEpb9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/160] dma-buf: Fix __dma_buf_debugfs_list_del argument for !CONFIG_DEBUG_FS
-Date: Mon, 23 Dec 2024 16:58:23 +0100
-Message-ID: <20241223155412.245133937@linuxfoundation.org>
+Subject: [PATCH 6.12 093/160] drm/panel: himax-hx83102: Add a check to prevent NULL pointer dereference
+Date: Mon, 23 Dec 2024 16:58:24 +0100
+Message-ID: <20241223155412.284821550@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -46,52 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 0cff90dec63da908fb16d9ea2872ebbcd2d18e6a ]
+[ Upstream commit e1e1af9148dc4c866eda3fb59cd6ec3c7ea34b1d ]
 
-The arguments for __dma_buf_debugfs_list_del do not match for both the
-CONFIG_DEBUG_FS case and the !CONFIG_DEBUG_FS case. The !CONFIG_DEBUG_FS
-case should take a struct dma_buf *, but it's currently struct file *.
-This can lead to the build error:
+drm_mode_duplicate() could return NULL due to lack of memory,
+which will then call NULL pointer dereference. Add a check to
+prevent it.
 
-error: passing argument 1 of ‘__dma_buf_debugfs_list_del’ from
-incompatible pointer type [-Werror=incompatible-pointer-types]
-
-dma-buf.c:63:53: note: expected ‘struct file *’ but argument is of
-type ‘struct dma_buf *’
-   63 | static void __dma_buf_debugfs_list_del(struct file *file)
-
-Fixes: bfc7bc539392 ("dma-buf: Do not build debugfs related code when !CONFIG_DEBUG_FS")
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241117170326.1971113-1-tjmercier@google.com
+Fixes: 0ef94554dc40 ("drm/panel: himax-hx83102: Break out as separate driver")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241025073408.27481-3-zhangzekun11@huawei.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241025073408.27481-3-zhangzekun11@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-buf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-himax-hx83102.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
-index 8892bc701a66..afb8c1c50107 100644
---- a/drivers/dma-buf/dma-buf.c
-+++ b/drivers/dma-buf/dma-buf.c
-@@ -60,7 +60,7 @@ static void __dma_buf_debugfs_list_add(struct dma_buf *dmabuf)
- {
- }
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx83102.c b/drivers/gpu/drm/panel/panel-himax-hx83102.c
+index 8b48bba18131..3644a7544b93 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx83102.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx83102.c
+@@ -565,6 +565,8 @@ static int hx83102_get_modes(struct drm_panel *panel,
+ 	struct drm_display_mode *mode;
  
--static void __dma_buf_debugfs_list_del(struct file *file)
-+static void __dma_buf_debugfs_list_del(struct dma_buf *dmabuf)
- {
- }
- #endif
+ 	mode = drm_mode_duplicate(connector->dev, m);
++	if (!mode)
++		return -ENOMEM;
+ 
+ 	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
+ 	drm_mode_set_name(mode);
 -- 
 2.39.5
 
