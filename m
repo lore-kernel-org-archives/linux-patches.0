@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18898827;
-	Mon, 23 Dec 2024 16:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43CC8827;
+	Mon, 23 Dec 2024 16:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970789; cv=none; b=Yi47ozZj1OLQiUph5JI0woQN66x4mprJAo14Oa+EHfOJiExM2CWCIqZ1W9HKr5OEh6b1j4kjrP57cCntISCZ5llzSzeiMIWnXXDhhzYud2209E9zJ3tHCTATSYYGsE8t0OCgJEcrvGEnQASUg59eNXZlbKHTpAe6cZS8WoFz0A0=
+	t=1734970793; cv=none; b=i6qAQ8z/7KaiDAdp88Ce7w8ToFV+7f3897ttgK2XM+p70qiRVqHVsc0DYts6lTNfgZKtOfPKBofrQPvaIZaOmKg4gTUswjIgndgRlaE752aGahCLwAvCbxSs21IIq8TbNUwRKsQvuVlbBAMWf/2UsrUQO7VhfI2gcWtKr4hAwyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970789; c=relaxed/simple;
-	bh=o1jtFKMqMzuWwuuZJxcErmAJV/TZ0/7IKpGFv3B+nTQ=;
+	s=arc-20240116; t=1734970793; c=relaxed/simple;
+	bh=8szpj+rodcWfb/HJOKgSnfTuBuBOSbQYDbzT/ouRPsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=myqJbgsWPunTPC+/AzWvLV1n0xwlz10BJ3evIAjzSAFbFffwm/whW4+btZ8d0q5Kn9x5WKUlA/xXMofwukjEkBnSzd2QOWmeQTYdo7pphfsFnfn01xZVgtjIak6vDqzougFT12ntLhkpIepV87jtr2dxnfhZfbyW6QVY1SciH+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axpe8Adh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXTRYI45+aJu6iFgNcyhPfCafUajOasw/UmvD/+4dmiLvtgeH7PMEVegG+1wavDdWdpmy+vGvwrq070z4yVln4Ic8UUa/k6OaHM5QoOrN1h7AA0nzBPvmgagt7m2oIQkOTXu6XsCOcfJjynwz7vNmLscemLGdhLsQte54KGBvqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHCoOudg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axpe8Adh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CBCC4CED3;
-	Mon, 23 Dec 2024 16:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHCoOudg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C6C4CED3;
+	Mon, 23 Dec 2024 16:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970789;
-	bh=o1jtFKMqMzuWwuuZJxcErmAJV/TZ0/7IKpGFv3B+nTQ=;
+	s=korg; t=1734970792;
+	bh=8szpj+rodcWfb/HJOKgSnfTuBuBOSbQYDbzT/ouRPsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Axpe8AdhzHS3+mfOQFd5T9YqzUKHOQc+g7plwArEuOaPtW2N0VmYPMqv9bFJFmbTA
-	 N0ePLnYm16VImmVbNA9V0RK/8Hw7ZZzLCzzDZKbmorX103mcYIMGdGsEwDvItrlzSB
-	 upwJ9dQBQqcT5z7utCedi3ez8SZPZgj6dIJ3cYOM=
+	b=GHCoOudg5btFH/mSfxqFZdpIfg1xUQnTwudT1S7HGYAcctkL8SRkVhltODE+0RwDn
+	 CyW2DyGWGeTRji4QNan+dPjwD4KjZ5MYFp1oWyLfFNf+rL65ZptYF4qww7bsvUGGLB
+	 VfLWrllw9M38WheSlXRYpwhOALvM13/17WzCIwIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hrusecky <michal.hrusecky@turris.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 39/83] USB: serial: option: add MeiG Smart SLM770A
-Date: Mon, 23 Dec 2024 16:59:18 +0100
-Message-ID: <20241223155355.156656995@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 30/83] netfilter: ipset: Fix for recursive locking warning
+Date: Mon, 23 Dec 2024 16:59:09 +0100
+Message-ID: <20241223155354.818610026@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -50,71 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Hrusecky <michal.hrusecky@turris.com>
+From: Phil Sutter <phil@nwl.cc>
 
-commit 724d461e44dfc0815624d2a9792f2f2beb7ee46d upstream.
+[ Upstream commit 70b6f46a4ed8bd56c85ffff22df91e20e8c85e33 ]
 
-Update the USB serial option driver to support MeiG Smart SLM770A.
+With CONFIG_PROVE_LOCKING, when creating a set of type bitmap:ip, adding
+it to a set of type list:set and populating it from iptables SET target
+triggers a kernel warning:
 
-ID 2dee:4d57 Marvell Mobile Composite Device Bus
+| WARNING: possible recursive locking detected
+| 6.12.0-rc7-01692-g5e9a28f41134-dirty #594 Not tainted
+| --------------------------------------------
+| ping/4018 is trying to acquire lock:
+| ffff8881094a6848 (&set->lock){+.-.}-{2:2}, at: ip_set_add+0x28c/0x360 [ip_set]
+|
+| but task is already holding lock:
+| ffff88811034c048 (&set->lock){+.-.}-{2:2}, at: ip_set_add+0x28c/0x360 [ip_set]
 
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d57 Rev= 1.00
-S:  Manufacturer=Marvell
-S:  Product=Mobile Composite Device Bus
-C:* #Ifs= 6 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0e(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+This is a false alarm: ipset does not allow nested list:set type, so the
+loop in list_set_kadd() can never encounter the outer set itself. No
+other set type supports embedded sets, so this is the only case to
+consider.
 
-Tested successfully connecting to the Internet via rndis interface after
-dialing via AT commands on If#=3 or If#=4.
-Not sure of the purpose of the other serial interfaces.
+To avoid the false report, create a distinct lock class for list:set
+type ipset locks.
 
-Signed-off-by: Michal Hrusecky <michal.hrusecky@turris.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f830837f0eed ("netfilter: ipset: list:set set type support")
+Signed-off-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    3 +++
+ net/netfilter/ipset/ip_set_list_set.c | 3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -625,6 +625,8 @@ static void option_instat_callback(struc
- #define MEIGSMART_PRODUCT_SRM825L		0x4d22
- /* MeiG Smart SLM320 based on UNISOC UIS8910 */
- #define MEIGSMART_PRODUCT_SLM320		0x4d41
-+/* MeiG Smart SLM770A based on ASR1803 */
-+#define MEIGSMART_PRODUCT_SLM770A		0x4d57
+diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
+index 902ff2f3bc72..5cc35b553a04 100644
+--- a/net/netfilter/ipset/ip_set_list_set.c
++++ b/net/netfilter/ipset/ip_set_list_set.c
+@@ -611,6 +611,8 @@ init_list_set(struct net *net, struct ip_set *set, u32 size)
+ 	return true;
+ }
  
- /* Device flags */
++static struct lock_class_key list_set_lockdep_key;
++
+ static int
+ list_set_create(struct net *net, struct ip_set *set, struct nlattr *tb[],
+ 		u32 flags)
+@@ -627,6 +629,7 @@ list_set_create(struct net *net, struct ip_set *set, struct nlattr *tb[],
+ 	if (size < IP_SET_LIST_MIN_SIZE)
+ 		size = IP_SET_LIST_MIN_SIZE;
  
-@@ -2382,6 +2384,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
++	lockdep_set_class(&set->lock, &list_set_lockdep_key);
+ 	set->variant = &set_variant;
+ 	set->dsize = ip_set_elem_len(set, tb, sizeof(struct set_elem),
+ 				     __alignof__(struct set_elem));
+-- 
+2.39.5
+
 
 
