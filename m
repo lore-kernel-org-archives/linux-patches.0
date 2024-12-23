@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FF613BC0C;
-	Mon, 23 Dec 2024 16:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C841AF0CE;
+	Mon, 23 Dec 2024 16:08:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970132; cv=none; b=ofYnt7B3AvMdaBF+c7Otx6trJoOW9jCVwXVyKaWL4lGdrMlaoQlZfUDfpBLGnh09vTP9gdHcMPS9hGNqrD7aDt7Wq7r0w0d4u+ACdU6iMPRBKee2Pah+SF6qgpmRT/dHk4K56Uqr4J9wnZowGy7+adsLyPQC8r1ge14+z/ZWqCY=
+	t=1734970136; cv=none; b=twzuvbDllg1XPKJLxGFhhftMvnVV7sPBXLWqmxeuDAl1YphiTdheZxHRULmyTVjtw9A+9EndF/oAirOV6ilbmh1Pb+TJhprap088QKbZ3BjkIYUm0b58LOcHB/axp1hk1/KIO+MrtlPOz2OCq625ssoQwkDE5x9J7cLCmz4c8Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970132; c=relaxed/simple;
-	bh=VwPfrVcEePlL6nSJAsOo+XyzbiQwtkybrvArzW1AB/Y=;
+	s=arc-20240116; t=1734970136; c=relaxed/simple;
+	bh=BzStACEq2xd8MfVTsEoNkTBxzYQZQv0yMyVV8A/Qk18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gkVFxgnTUUYJFWGr4LTOc/GqSFBQ5KHAADVMKqi/ShU/zUSaW/v7hStDKtarbEjsLoP/HIytcPjiLzbrHUvVDYqCQ6DLuit6OpXxG8Rrxon3M7fzUTu+HtS4c87rWgGnHLrM1EWI8wvkEEy5Zoh6pqxO9vtJ/VDcoOwa7aJbbPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9WGx4nc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPUx6thrW/eTINkqb/4TWSVjjdwFBMC1m0N2Tz3hPxBib9M2TrIi+6OEVt29FE2vnoa6zRSKrDzsAfA0u2ldmpLhoL4KXPW5e1k4slCP6AHK4CXD0BDnw1LVjscBwecYRnT7pd5nmzdfU8fTWB1qbEPRET2lVM9b2aPlpvqdVaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRYCG++a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9WGx4nc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6185DC4CED3;
-	Mon, 23 Dec 2024 16:08:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRYCG++a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FC0C4CED3;
+	Mon, 23 Dec 2024 16:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970131;
-	bh=VwPfrVcEePlL6nSJAsOo+XyzbiQwtkybrvArzW1AB/Y=;
+	s=korg; t=1734970135;
+	bh=BzStACEq2xd8MfVTsEoNkTBxzYQZQv0yMyVV8A/Qk18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9WGx4ncwFyNYkAUkoMez9NYRk9wa893h5VmWvlWp/1zRv8tnjuhwOD7h1ykPO1MC
-	 Xl/Xu2IDW0qhGjDmQCZysS7RK+3+hrYKOAp6bP6jAWtroFqQEBS22g00256rguTAyj
-	 GKyngcVP/dLqa8NuMe0ufaU8kYgyeVskpchgCtHk=
+	b=lRYCG++a2FQjD1UYsNLryh62aiYyNEqeU7YUon/aJjWIAdB1HIEsuV+ShNAqgocYf
+	 TDXjBhd3plx5h+SIrx2fgUfXFnKXeU/+tKmBlleDilL9c8ewfictGFmLpwZ7K0cf3C
+	 OmYMvpn0nfVptbbXygPVIFUsnCpM+8lgTkBd3xEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>
-Subject: [PATCH 6.12 155/160] ceph: fix memory leak in ceph_direct_read_write()
-Date: Mon, 23 Dec 2024 16:59:26 +0100
-Message-ID: <20241223155414.806006311@linuxfoundation.org>
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 156/160] mm: use aligned address in clear_gigantic_page()
+Date: Mon, 23 Dec 2024 16:59:27 +0100
+Message-ID: <20241223155414.842344061@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,107 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-commit 66e0c4f91461d17d48071695271c824620bed4ef upstream.
+commit 8aca2bc96c833ba695ede7a45ad7784c836a262e upstream.
 
-The bvecs array which is allocated in iter_get_bvecs_alloc() is leaked
-and pages remain pinned if ceph_alloc_sparse_ext_map() fails.
+In current kernel, hugetlb_no_page() calls folio_zero_user() with the
+fault address.  Where the fault address may be not aligned with the huge
+page size.  Then, folio_zero_user() may call clear_gigantic_page() with
+the address, while clear_gigantic_page() requires the address to be huge
+page size aligned.  So, this may cause memory corruption or information
+leak, addtional, use more obvious naming 'addr_hint' instead of 'addr' for
+clear_gigantic_page().
 
-There is no need to delay the allocation of sparse_ext map until after
-the bvecs array is set up, so fix this by moving sparse_ext allocation
-a bit earlier.  Also, make a similar adjustment in __ceph_sync_read()
-for consistency (a leak of the same kind in __ceph_sync_read() has been
-addressed differently).
-
-Cc: stable@vger.kernel.org
-Fixes: 03bc06c7b0bd ("ceph: add new mount option to enable sparse reads")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Link: https://lkml.kernel.org/r/20241028145656.932941-1-wangkefeng.wang@huawei.com
+Fixes: 78fefd04c123 ("mm: memory: convert clear_huge_page() to folio_zero_user()")
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/file.c |   43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ fs/hugetlbfs/inode.c |    2 +-
+ mm/memory.c          |    3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -1116,6 +1116,16 @@ ssize_t __ceph_sync_read(struct inode *i
- 			len = read_off + read_len - off;
- 		more = len < iov_iter_count(to);
- 
-+		op = &req->r_ops[0];
-+		if (sparse) {
-+			extent_cnt = __ceph_sparse_read_ext_count(inode, read_len);
-+			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
-+			if (ret) {
-+				ceph_osdc_put_request(req);
-+				break;
-+			}
-+		}
-+
- 		num_pages = calc_pages_for(read_off, read_len);
- 		page_off = offset_in_page(off);
- 		pages = ceph_alloc_page_vector(num_pages, GFP_KERNEL);
-@@ -1129,16 +1139,6 @@ ssize_t __ceph_sync_read(struct inode *i
- 						 offset_in_page(read_off),
- 						 false, true);
- 
--		op = &req->r_ops[0];
--		if (sparse) {
--			extent_cnt = __ceph_sparse_read_ext_count(inode, read_len);
--			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
--			if (ret) {
--				ceph_osdc_put_request(req);
--				break;
--			}
--		}
--
- 		ceph_osdc_start_request(osdc, req);
- 		ret = ceph_osdc_wait_request(osdc, req);
- 
-@@ -1551,6 +1551,16 @@ ceph_direct_read_write(struct kiocb *ioc
- 			break;
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -893,7 +893,7 @@ static long hugetlbfs_fallocate(struct f
+ 			error = PTR_ERR(folio);
+ 			goto out;
  		}
+-		folio_zero_user(folio, ALIGN_DOWN(addr, hpage_size));
++		folio_zero_user(folio, addr);
+ 		__folio_mark_uptodate(folio);
+ 		error = hugetlb_add_to_page_cache(folio, mapping, index);
+ 		if (unlikely(error)) {
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -6780,9 +6780,10 @@ static inline int process_huge_page(
+ 	return 0;
+ }
  
-+		op = &req->r_ops[0];
-+		if (sparse) {
-+			extent_cnt = __ceph_sparse_read_ext_count(inode, size);
-+			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
-+			if (ret) {
-+				ceph_osdc_put_request(req);
-+				break;
-+			}
-+		}
-+
- 		len = iter_get_bvecs_alloc(iter, size, &bvecs, &num_pages);
- 		if (len < 0) {
- 			ceph_osdc_put_request(req);
-@@ -1560,6 +1570,8 @@ ceph_direct_read_write(struct kiocb *ioc
- 		if (len != size)
- 			osd_req_op_extent_update(req, 0, len);
+-static void clear_gigantic_page(struct folio *folio, unsigned long addr,
++static void clear_gigantic_page(struct folio *folio, unsigned long addr_hint,
+ 				unsigned int nr_pages)
+ {
++	unsigned long addr = ALIGN_DOWN(addr_hint, folio_size(folio));
+ 	int i;
  
-+		osd_req_op_extent_osd_data_bvecs(req, 0, bvecs, num_pages, len);
-+
- 		/*
- 		 * To simplify error handling, allow AIO when IO within i_size
- 		 * or IO can be satisfied by single OSD request.
-@@ -1591,17 +1603,6 @@ ceph_direct_read_write(struct kiocb *ioc
- 			req->r_mtime = mtime;
- 		}
- 
--		osd_req_op_extent_osd_data_bvecs(req, 0, bvecs, num_pages, len);
--		op = &req->r_ops[0];
--		if (sparse) {
--			extent_cnt = __ceph_sparse_read_ext_count(inode, size);
--			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
--			if (ret) {
--				ceph_osdc_put_request(req);
--				break;
--			}
--		}
--
- 		if (aio_req) {
- 			aio_req->total_len += len;
- 			aio_req->num_reqs++;
+ 	might_sleep();
 
 
