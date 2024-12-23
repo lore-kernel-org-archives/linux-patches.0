@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90B4188733;
-	Mon, 23 Dec 2024 16:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D542EAE6;
+	Mon, 23 Dec 2024 16:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969682; cv=none; b=dw75eAMu4KzzIlD7pR1D+lXXXtFYHpxN/vSrTF1F27chOtZ07GlQBzeUaNqz/yg+fzclBWINWEdDPcynS6OzR9crKIEFpF8FcD1pjDy5N8t2vTfgLfOSJFSCyzy72gBuQXWPQHt4misowyhE6WFd3VKOViNEWtOr0JqJ+VeQ0q4=
+	t=1734969686; cv=none; b=sqdrFJqu9X88Qw8zhU55tfEtD18r+2kayP3mNDNklp9RynYGidTMHU/XqcVQ5agsW074pUY6oIJiLMroTuJek502JEHVnKfCtY41hDD3YlfjUWUa/b8fUM2ku9U3k+NS8eM/wyyAQVPZuiMzRQorBoU+SazK1q2LmOXnHcKOALY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969682; c=relaxed/simple;
-	bh=znJ892EyyrGRjZ2sffeC1oSCdR0vjn524HNC7KqnKj8=;
+	s=arc-20240116; t=1734969686; c=relaxed/simple;
+	bh=dqamgX0iWai1mMYUbIJT/qOcYTyFcONctN43hFdRr80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlTBubPtHvb4xm9du+P3SxbMwxxVud8wsvoW+QkUs7pvr0oylz8YUEc7z90IathSM5GQ4UhbyNQdzqjIIq1i8j1E5PwT46O47mNbId7uAtn2ROHOBdjdurqcgnVXFL4tpByoFTMJbfYwSm5IFRQUO0ueEfFEd/7uuhByha+3wtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TT7TsY/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SKXeR/I2I23AzGyAgg+KX7p0KiJr/yKdD1KCVCBvmd+SJGLnGLHkKbE+bb5KZ+jikNWzTsPDQBGz17DcvVJ2zDy3otIBSWxT3qKuqMADuHf32EM601uZX6CmEZTXS39viGEbayk2yyOTfxbUVBjEckd+t1WkyPa2wi7JqUtOc9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FR/wnEKZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TT7TsY/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34586C4CED4;
-	Mon, 23 Dec 2024 16:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FR/wnEKZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD336C4CED4;
+	Mon, 23 Dec 2024 16:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969682;
-	bh=znJ892EyyrGRjZ2sffeC1oSCdR0vjn524HNC7KqnKj8=;
+	s=korg; t=1734969686;
+	bh=dqamgX0iWai1mMYUbIJT/qOcYTyFcONctN43hFdRr80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TT7TsY/UxqCdtzYyFb1GX+G4Uj2xJLjNjyIyvl0eauZZvUJmJHndHUBjyTFoAh6ZG
-	 aKzJ0wyXN7Y7h2gfvYB2uLQL2QYHYdlMfYtx5wHxyMGWwthZerPqS0PJ7CqiEeeqtQ
-	 mRSVuC5g+h8CLOFhHHBv32alLibaidQYLS4lIBYI=
+	b=FR/wnEKZtiS7Yc+JDaZRpkALVscO9DKQspQsG20FQrDQilwP2zN3LKnNhUNTTO4G3
+	 3+mCHyaL9lrDnmOQir/2CJXs59QvcUgWEWamLDUOUv/c42oAYRF5RFM/pjDieCsN0U
+	 p9s/pACG39TDYLwo89sCNbyKLXy+oCkotKcV68Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Zizhi Wo <wozizhi@huawei.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/160] xfs: fix off-by-one error in fsmaps end_daddr usage
-Date: Mon, 23 Dec 2024 16:57:16 +0100
-Message-ID: <20241223155409.631662862@linuxfoundation.org>
+Subject: [PATCH 6.12 026/160] xfs: fix sb_spino_align checks for large fsblock sizes
+Date: Mon, 23 Dec 2024 16:57:17 +0100
+Message-ID: <20241223155409.670040589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -54,110 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit a440a28ddbdcb861150987b4d6e828631656b92f upstream.
+commit 7f8a44f37229fc76bfcafa341a4b8862368ef44a upstream.
 
-In commit ca6448aed4f10a, we created an "end_daddr" variable to fix
-fsmap reporting when the end of the range requested falls in the middle
-of an unknown (aka free on the rmapbt) region.  Unfortunately, I didn't
-notice that the the code sets end_daddr to the last sector of the device
-but then uses that quantity to compute the length of the synthesized
-mapping.
+For a sparse inodes filesystem, mkfs.xfs computes the values of
+sb_spino_align and sb_inoalignmt with the following code:
 
-Zizhi Wo later observed that when end_daddr isn't set, we still don't
-report the last fsblock on a device because in that case (aka when
-info->last is true), the info->high mapping that we pass to
-xfs_getfsmap_group_helper has a startblock that points to the last
-fsblock.  This is also wrong because the code uses startblock to
-compute the length of the synthesized mapping.
+	int     cluster_size = XFS_INODE_BIG_CLUSTER_SIZE;
 
-Fix the second problem by setting end_daddr unconditionally, and fix the
-first problem by setting start_daddr to one past the end of the range to
-query.
+	if (cfg->sb_feat.crcs_enabled)
+		cluster_size *= cfg->inodesize / XFS_DINODE_MIN_SIZE;
 
-Cc: <stable@vger.kernel.org> # v6.11
-Fixes: ca6448aed4f10a ("xfs: Fix missing interval for missing_owner in xfs fsmap")
+	sbp->sb_spino_align = cluster_size >> cfg->blocklog;
+	sbp->sb_inoalignmt = XFS_INODES_PER_CHUNK *
+			cfg->inodesize >> cfg->blocklog;
+
+On a V5 filesystem with 64k fsblocks and 512 byte inodes, this results
+in cluster_size = 8192 * (512 / 256) = 16384.  As a result,
+sb_spino_align and sb_inoalignmt are both set to zero.  Unfortunately,
+this trips the new sb_spino_align check that was just added to
+xfs_validate_sb_common, and the mkfs fails:
+
+# mkfs.xfs -f -b size=64k, /dev/sda
+meta-data=/dev/sda               isize=512    agcount=4, agsize=81136 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=1
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
+         =                       exchange=0   metadir=0
+data     =                       bsize=65536  blocks=324544, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=65536  ascii-ci=0, ftype=1, parent=0
+log      =internal log           bsize=65536  blocks=5006, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=65536  blocks=0, rtextents=0
+         =                       rgcount=0    rgsize=0 extents
+Discarding blocks...Sparse inode alignment (0) is invalid.
+Metadata corruption detected at 0x560ac5a80bbe, xfs_sb block 0x0/0x200
+libxfs_bwrite: write verifier failed on xfs_sb bno 0x0/0x1
+mkfs.xfs: Releasing dirty buffer to free list!
+found dirty buffer (bulk) on free list!
+Sparse inode alignment (0) is invalid.
+Metadata corruption detected at 0x560ac5a80bbe, xfs_sb block 0x0/0x200
+libxfs_bwrite: write verifier failed on xfs_sb bno 0x0/0x1
+mkfs.xfs: writing AG headers failed, err=22
+
+Prior to commit 59e43f5479cce1 this all worked fine, even if "sparse"
+inodes are somewhat meaningless when everything fits in a single
+fsblock.  Adjust the checks to handle existing filesystems.
+
+Cc: <stable@vger.kernel.org> # v6.13-rc1
+Fixes: 59e43f5479cce1 ("xfs: sb_spino_align is not verified")
 Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reported-by: Zizhi Wo <wozizhi@huawei.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_fsmap.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ fs/xfs/libxfs/xfs_sb.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/fs/xfs/xfs_fsmap.c b/fs/xfs/xfs_fsmap.c
-index ae18ab86e608..8712b891defb 100644
---- a/fs/xfs/xfs_fsmap.c
-+++ b/fs/xfs/xfs_fsmap.c
-@@ -162,7 +162,8 @@ struct xfs_getfsmap_info {
- 	xfs_daddr_t		next_daddr;	/* next daddr we expect */
- 	/* daddr of low fsmap key when we're using the rtbitmap */
- 	xfs_daddr_t		low_daddr;
--	xfs_daddr_t		end_daddr;	/* daddr of high fsmap key */
-+	/* daddr of high fsmap key, or the last daddr on the device */
-+	xfs_daddr_t		end_daddr;
- 	u64			missing_owner;	/* owner of holes */
- 	u32			dev;		/* device id */
- 	/*
-@@ -306,7 +307,7 @@ xfs_getfsmap_helper(
- 	 * Note that if the btree query found a mapping, there won't be a gap.
- 	 */
- 	if (info->last && info->end_daddr != XFS_BUF_DADDR_NULL)
--		rec_daddr = info->end_daddr;
-+		rec_daddr = info->end_daddr + 1;
+diff --git a/fs/xfs/libxfs/xfs_sb.c b/fs/xfs/libxfs/xfs_sb.c
+index 9e0ae312bc80..e27b63281d01 100644
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -392,12 +392,13 @@ xfs_validate_sb_common(
+ 				return -EINVAL;
+ 			}
  
- 	/* Are we just counting mappings? */
- 	if (info->head->fmh_count == 0) {
-@@ -898,7 +899,10 @@ xfs_getfsmap(
- 	struct xfs_trans		*tp = NULL;
- 	struct xfs_fsmap		dkeys[2];	/* per-dev keys */
- 	struct xfs_getfsmap_dev		handlers[XFS_GETFSMAP_DEVS];
--	struct xfs_getfsmap_info	info = { NULL };
-+	struct xfs_getfsmap_info	info = {
-+		.fsmap_recs		= fsmap_recs,
-+		.head			= head,
-+	};
- 	bool				use_rmap;
- 	int				i;
- 	int				error = 0;
-@@ -963,9 +967,6 @@ xfs_getfsmap(
- 
- 	info.next_daddr = head->fmh_keys[0].fmr_physical +
- 			  head->fmh_keys[0].fmr_length;
--	info.end_daddr = XFS_BUF_DADDR_NULL;
--	info.fsmap_recs = fsmap_recs;
--	info.head = head;
- 
- 	/* For each device we support... */
- 	for (i = 0; i < XFS_GETFSMAP_DEVS; i++) {
-@@ -978,17 +979,23 @@ xfs_getfsmap(
- 			break;
- 
- 		/*
--		 * If this device number matches the high key, we have
--		 * to pass the high key to the handler to limit the
--		 * query results.  If the device number exceeds the
--		 * low key, zero out the low key so that we get
--		 * everything from the beginning.
-+		 * If this device number matches the high key, we have to pass
-+		 * the high key to the handler to limit the query results, and
-+		 * set the end_daddr so that we can synthesize records at the
-+		 * end of the query range or device.
- 		 */
- 		if (handlers[i].dev == head->fmh_keys[1].fmr_device) {
- 			dkeys[1] = head->fmh_keys[1];
- 			info.end_daddr = min(handlers[i].nr_sectors - 1,
- 					     dkeys[1].fmr_physical);
-+		} else {
-+			info.end_daddr = handlers[i].nr_sectors - 1;
- 		}
-+
-+		/*
-+		 * If the device number exceeds the low key, zero out the low
-+		 * key so that we get everything from the beginning.
-+		 */
- 		if (handlers[i].dev > head->fmh_keys[0].fmr_device)
- 			memset(&dkeys[0], 0, sizeof(struct xfs_fsmap));
- 
+-			if (!sbp->sb_spino_align ||
+-			    sbp->sb_spino_align > sbp->sb_inoalignmt ||
+-			    (sbp->sb_inoalignmt % sbp->sb_spino_align) != 0) {
++			if (sbp->sb_spino_align &&
++			    (sbp->sb_spino_align > sbp->sb_inoalignmt ||
++			     (sbp->sb_inoalignmt % sbp->sb_spino_align) != 0)) {
+ 				xfs_warn(mp,
+-				"Sparse inode alignment (%u) is invalid.",
+-					sbp->sb_spino_align);
++"Sparse inode alignment (%u) is invalid, must be integer factor of (%u).",
++					sbp->sb_spino_align,
++					sbp->sb_inoalignmt);
+ 				return -EINVAL;
+ 			}
+ 		} else if (sbp->sb_spino_align) {
 -- 
 2.39.5
 
