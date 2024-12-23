@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048D012D1F1;
-	Mon, 23 Dec 2024 16:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D92812D1F1;
+	Mon, 23 Dec 2024 16:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969830; cv=none; b=cH5Yxjo1hWaxALI1JGCjnVEByAx9nvHzBSYTBbKMStkULuGDOPUu5mHG7fyboNX+8fMdhkC5L/gmjfN0IDVSpbiwuW58QUI2HxhmfpVfg5Pi5V1CEP6wrMcF68kNZKU4rK4wqAmby+3d/TT5cqcYu8O3Ftm27tRzxlA1zpaQuzI=
+	t=1734969833; cv=none; b=dqklNZ/Pi3YHtUJ8qXWX/xRiGDapUugV5uuimokNUm8xZFrG/ux1nfKc4CyD1Tquu9CD9zw4ho/ccun5CxnPvyJQqJivSVCjmoMXrkF9X2aISDyxRmSAX5tIQRhszenF505X6jv8a+hqESwzr3asvPjMEPuD8+Po6cHHZI8+G5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969830; c=relaxed/simple;
-	bh=htIJliPNJbYaKpf26269lnDHkWxSME7Zy3yFtxXelzA=;
+	s=arc-20240116; t=1734969833; c=relaxed/simple;
+	bh=apeAc3CvGqqqCct7uG+Tui3jlV1ueaNZ779EQcIgsuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yz3q8uZMT2dBG+90Bo0eayfdLYh8V6LqA6ZVSDDVE/xQoYc4sQJ+uhUFM5G00Sa0d5p04MBCNSddSpVqU1fPzT9+e5CBKGJKeATmEiopleDM1gpogPg1Wf7bH9AEBsc6Jcj6c3SkvIcF7KK4UIIwrj+6ldG0FVeGDPWKI+ZoTmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kq2WdqiV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n/SvCzsz9+hPHKUrYpiv2s7Pfg/ymt+pdxvUlAU0ODSh+v6GykwUcNfwUn32H3o0xj+VNlSvINTG4nxJLOsVHRDn1WCYfhr0h43CkOluGcb1iPQOgWWHgUB5joO5ev95p1ORDb+Y3En16EJ37idtRPpFFV3Fzao4O4LVbWBatdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S28rKmmn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kq2WdqiV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74557C4CED3;
-	Mon, 23 Dec 2024 16:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S28rKmmn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14B8C4CED3;
+	Mon, 23 Dec 2024 16:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969829;
-	bh=htIJliPNJbYaKpf26269lnDHkWxSME7Zy3yFtxXelzA=;
+	s=korg; t=1734969833;
+	bh=apeAc3CvGqqqCct7uG+Tui3jlV1ueaNZ779EQcIgsuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kq2WdqiVEOLfTixMWrzg7QGrtnV9gsxt/mMIAxVpH/3M7FjNPirtRMIDkL228rwjP
-	 yR0zDIvvRLqNC0TFJEHhOvho6XT/+sr+nxpLXjuHUpPUMMhQ/hpY56LSkLaowqtA4A
-	 hJG+ollM8mUEhSpljb+c1b8xtjQcifayrRASg2s8=
+	b=S28rKmmn3rti2QqI1WOFobwxGROL5BMEcnQtZzMU9cNnWfBxDxIb9o0QHcfgGM6/L
+	 XGSwRUHyRNiqQ9x1d+r16LLuYoVtybDFkQTlqaSO5Qlpp9jRVOlB4cYqMFDgyBIw5l
+	 dOK5EcoUwEyRhNk+tvBuDHF9sc9bea20fsYyucUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avadhut Naik <avadhut.naik@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.12 066/160] EDAC/amd64: Simplify ECC check on unified memory controllers
-Date: Mon, 23 Dec 2024 16:57:57 +0100
-Message-ID: <20241223155411.223865716@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Oliver Upton <oliver.upton@linux.dev>
+Subject: [PATCH 6.12 067/160] KVM: arm64: Do not allow ID_AA64MMFR0_EL1.ASIDbits to be overridden
+Date: Mon, 23 Dec 2024 16:57:58 +0100
+Message-ID: <20241223155411.267211510@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,76 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 747367340ca6b5070728b86ae36ad6747f66b2fb upstream.
+commit 03c7527e97f73081633d773f9f8c2373f9854b25 upstream.
 
-The intent of the check is to see whether at least one UMC has ECC
-enabled. So do that instead of tracking which ones are enabled in masks
-which are too small in size anyway and lead to not loading the driver on
-Zen4 machines with UMCs enabled over UMC8.
+Catalin reports that a hypervisor lying to a guest about the size
+of the ASID field may result in unexpected issues:
 
-Fixes: e2be5955a886 ("EDAC/amd64: Add support for AMD Family 19h Models 10h-1Fh and A0h-AFh")
-Reported-by: Avadhut Naik <avadhut.naik@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Avadhut Naik <avadhut.naik@amd.com>
-Reviewed-by: Avadhut Naik <avadhut.naik@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20241210212054.3895697-1-avadhut.naik@amd.com
+- if the underlying HW does only supports 8 bit ASIDs, the ASID
+  field in a TLBI VAE1* operation is only 8 bits, and the HW will
+  ignore the other 8 bits
+
+- if on the contrary the HW is 16 bit capable, the ASID field
+  in the same TLBI operation is always 16 bits, irrespective of
+  the value of TCR_ELx.AS.
+
+This could lead to missed invalidations if the guest was lead to
+assume that the HW had 8 bit ASIDs while they really are 16 bit wide.
+
+In order to avoid any potential disaster that would be hard to debug,
+prenent the migration between a host with 8 bit ASIDs to one with
+wider ASIDs (the converse was obviously always forbidden). This is
+also consistent with what we already do for VMIDs.
+
+If it becomes absolutely mandatory to support such a migration path
+in the future, we will have to trap and emulate all TLBIs, something
+that nobody should look forward to.
+
+Fixes: d5a32b60dc18 ("KVM: arm64: Allow userspace to change ID_AA64MMFR{0-2}_EL1")
+Reported-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: James Morse <james.morse@arm.com>
+Cc: Oliver Upton <oliver.upton@linux.dev>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20241203190236.505759-1-maz@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/amd64_edac.c |   34 +++++++++++-----------------------
- 1 file changed, 11 insertions(+), 23 deletions(-)
+ arch/arm64/kvm/sys_regs.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/edac/amd64_edac.c
-+++ b/drivers/edac/amd64_edac.c
-@@ -3362,36 +3362,24 @@ static bool dct_ecc_enabled(struct amd64
- 
- static bool umc_ecc_enabled(struct amd64_pvt *pvt)
- {
--	u8 umc_en_mask = 0, ecc_en_mask = 0;
--	u16 nid = pvt->mc_node_id;
- 	struct amd64_umc *umc;
--	u8 ecc_en = 0, i;
-+	bool ecc_en = false;
-+	int i;
- 
-+	/* Check whether at least one UMC is enabled: */
- 	for_each_umc(i) {
- 		umc = &pvt->umc[i];
- 
--		/* Only check enabled UMCs. */
--		if (!(umc->sdp_ctrl & UMC_SDP_INIT))
--			continue;
--
--		umc_en_mask |= BIT(i);
--
--		if (umc->umc_cap_hi & UMC_ECC_ENABLED)
--			ecc_en_mask |= BIT(i);
-+		if (umc->sdp_ctrl & UMC_SDP_INIT &&
-+		    umc->umc_cap_hi & UMC_ECC_ENABLED) {
-+			ecc_en = true;
-+			break;
-+		}
- 	}
- 
--	/* Check whether at least one UMC is enabled: */
--	if (umc_en_mask)
--		ecc_en = umc_en_mask == ecc_en_mask;
--	else
--		edac_dbg(0, "Node %d: No enabled UMCs.\n", nid);
--
--	edac_dbg(3, "Node %d: DRAM ECC %s.\n", nid, (ecc_en ? "enabled" : "disabled"));
--
--	if (!ecc_en)
--		return false;
--	else
--		return true;
-+	edac_dbg(3, "Node %d: DRAM ECC %s.\n", pvt->mc_node_id, (ecc_en ? "enabled" : "disabled"));
-+
-+	return ecc_en;
- }
- 
- static inline void
+--- a/arch/arm64/kvm/sys_regs.c
++++ b/arch/arm64/kvm/sys_regs.c
+@@ -2503,7 +2503,8 @@ static const struct sys_reg_desc sys_reg
+ 	ID_WRITABLE(ID_AA64MMFR0_EL1, ~(ID_AA64MMFR0_EL1_RES0 |
+ 					ID_AA64MMFR0_EL1_TGRAN4_2 |
+ 					ID_AA64MMFR0_EL1_TGRAN64_2 |
+-					ID_AA64MMFR0_EL1_TGRAN16_2)),
++					ID_AA64MMFR0_EL1_TGRAN16_2 |
++					ID_AA64MMFR0_EL1_ASIDBITS)),
+ 	ID_WRITABLE(ID_AA64MMFR1_EL1, ~(ID_AA64MMFR1_EL1_RES0 |
+ 					ID_AA64MMFR1_EL1_HCX |
+ 					ID_AA64MMFR1_EL1_TWED |
 
 
