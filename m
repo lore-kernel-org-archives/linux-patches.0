@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7D21AF0CE;
-	Mon, 23 Dec 2024 16:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E75F1AF0CE;
+	Mon, 23 Dec 2024 16:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970036; cv=none; b=nyCWhBk1JGvpSKqyHh0EA0JJKo4XrTrnpgbzMYn5MTECRNFBa/3ecuznHMl1lqPMQ/vXBfSOlZ4GRhhp8Yo06aJNzwlry9SknnVPSN3NLcM1IhYaFkFXzkF7dswfH00Pz1/xaCY1BF/8TQMhnj5+1A+01S83EXa1sVgB4/k/bYg=
+	t=1734970040; cv=none; b=QT0EY6RTt93ZK3d7H9D5FzmPbUYTE038q2+A1UG1xiUsdJSnoYzw03Wban/Pt7rCMVCJWcVxKTltVCni1XIfC1skVEPz/PFDx2aYEhhR41tRojv7qDcxOEDJRZKxNKrazhQYcbATc6d5vGDyLPoeIo/N7XqnlLe7tL3D8/ME6Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970036; c=relaxed/simple;
-	bh=yXWNdhvbIbDByB0w3u6GupKASKs71yVVi2Pr8xNxYqk=;
+	s=arc-20240116; t=1734970040; c=relaxed/simple;
+	bh=E1UYldQU5bd7bDpcDwOn9Pes/LPKmJWuBtkQlVbLPeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mi15d7ST8zvY49E/hb5zHIPidG0vrFeUevWox9hGLLLhsfmfnTpfv4fL3P61MSnlsXmJH6EUD+rw92xzQVcsbwIdJAKoaKrd1kTfNbrxptRnTEHS+q0n/0vcuUdLp3SFg6ytPnq8XP1cN1RefZtb19LovbWaW6MwklXbfJOcrMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MeaRphgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaFxUihk5h74/xDPIk153o5BKo63VRA4x9iPXmwfeLXXKhuw45mhGD4WctCzj7TVmfxo3vnhOyQOs/SJjwmfrAgEIYfgXac8wX5BxSDFXxtYoAdrjISCOlBXN0c1QOdpoEyH7bjAKpIQ520+X9mUsj/cYSs3NY3wTHC6X164dSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBOOHoBh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MeaRphgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7A2C4CED3;
-	Mon, 23 Dec 2024 16:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBOOHoBh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E2BC4CED6;
+	Mon, 23 Dec 2024 16:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970036;
-	bh=yXWNdhvbIbDByB0w3u6GupKASKs71yVVi2Pr8xNxYqk=;
+	s=korg; t=1734970040;
+	bh=E1UYldQU5bd7bDpcDwOn9Pes/LPKmJWuBtkQlVbLPeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MeaRphghwdh6e3FWGJ1YH60Qd7oOlZHis4ZvLWr+gau+VNAw56VuZXr+6ywznB4B8
-	 I6R+xcg+fP6LsnKKvE1Y0StP+fWt/1Vaxz8bdrrw4XHoygZWO42OcWKV2NApVOfy+3
-	 apeKPgyaWZwIg9+p3w2CdRzs6cB8aO7/uoUVljNs=
+	b=tBOOHoBhbfMsNBKfWslcXam4pzZa2QS3Kl79KxXpgxZ6vaDe543iZrMYv1/yK4+rT
+	 YCeoGcv4eLQtjYjHr5Ae/+eIPQ/g38JIyVFo0b1tZ5EUbi9dO8yk6elDylP3Z2tn5k
+	 fKUG01+t/KjRBGFJ54Vujtpi0X354zaW/PKnFzmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 126/160] KVM: x86: Play nice with protected guests in complete_hypercall_exit()
-Date: Mon, 23 Dec 2024 16:58:57 +0100
-Message-ID: <20241223155413.647977826@linuxfoundation.org>
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 127/160] smb: client: fix TCP timers deadlock after rmmod
+Date: Mon, 23 Dec 2024 16:58:58 +0100
+Message-ID: <20241223155413.693229180@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -54,59 +50,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-commit 9b42d1e8e4fe9dc631162c04caa69b0d1860b0f0 upstream.
+commit e9f2517a3e18a54a3943c098d2226b245d488801 upstream.
 
-Use is_64_bit_hypercall() instead of is_64_bit_mode() to detect a 64-bit
-hypercall when completing said hypercall.  For guests with protected state,
-e.g. SEV-ES and SEV-SNP, KVM must assume the hypercall was made in 64-bit
-mode as the vCPU state needed to detect 64-bit mode is unavailable.
+Commit ef7134c7fc48 ("smb: client: Fix use-after-free of network namespace.")
+fixed a netns UAF by manually enabled socket refcounting
+(sk->sk_net_refcnt=1 and sock_inuse_add(net, 1)).
 
-Hacking the sev_smoke_test selftest to generate a KVM_HC_MAP_GPA_RANGE
-hypercall via VMGEXIT trips the WARN:
+The reason the patch worked for that bug was because we now hold
+references to the netns (get_net_track() gets a ref internally)
+and they're properly released (internally, on __sk_destruct()),
+but only because sk->sk_net_refcnt was set.
 
-  ------------[ cut here ]------------
-  WARNING: CPU: 273 PID: 326626 at arch/x86/kvm/x86.h:180 complete_hypercall_exit+0x44/0xe0 [kvm]
-  Modules linked in: kvm_amd kvm ... [last unloaded: kvm]
-  CPU: 273 UID: 0 PID: 326626 Comm: sev_smoke_test Not tainted 6.12.0-smp--392e932fa0f3-feat #470
-  Hardware name: Google Astoria/astoria, BIOS 0.20240617.0-0 06/17/2024
-  RIP: 0010:complete_hypercall_exit+0x44/0xe0 [kvm]
-  Call Trace:
-   <TASK>
-   kvm_arch_vcpu_ioctl_run+0x2400/0x2720 [kvm]
-   kvm_vcpu_ioctl+0x54f/0x630 [kvm]
-   __se_sys_ioctl+0x6b/0xc0
-   do_syscall_64+0x83/0x160
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+Problem:
+(this happens regardless of CONFIG_NET_NS_REFCNT_TRACKER and regardless
+if init_net or other)
 
-Fixes: b5aead0064f3 ("KVM: x86: Assume a 64-bit hypercall for guests with protected state")
+Setting sk->sk_net_refcnt=1 *manually* and *after* socket creation is not
+only out of cifs scope, but also technically wrong -- it's set conditionally
+based on user (=1) vs kernel (=0) sockets.  And net/ implementations
+seem to base their user vs kernel space operations on it.
+
+e.g. upon TCP socket close, the TCP timers are not cleared because
+sk->sk_net_refcnt=1:
+(cf. commit 151c9c724d05 ("tcp: properly terminate timers for kernel sockets"))
+
+net/ipv4/tcp.c:
+    void tcp_close(struct sock *sk, long timeout)
+    {
+    	lock_sock(sk);
+    	__tcp_close(sk, timeout);
+    	release_sock(sk);
+    	if (!sk->sk_net_refcnt)
+    		inet_csk_clear_xmit_timers_sync(sk);
+    	sock_put(sk);
+    }
+
+Which will throw a lockdep warning and then, as expected, deadlock on
+tcp_write_timer().
+
+A way to reproduce this is by running the reproducer from ef7134c7fc48
+and then 'rmmod cifs'.  A few seconds later, the deadlock/lockdep
+warning shows up.
+
+Fix:
+We shouldn't mess with socket internals ourselves, so do not set
+sk_net_refcnt manually.
+
+Also change __sock_create() to sock_create_kern() for explicitness.
+
+As for non-init_net network namespaces, we deal with it the best way
+we can -- hold an extra netns reference for server->ssocket and drop it
+when it's released.  This ensures that the netns still exists whenever
+we need to create/destroy server->ssocket, but is not directly tied to
+it.
+
+Fixes: ef7134c7fc48 ("smb: client: Fix use-after-free of network namespace.")
 Cc: stable@vger.kernel.org
-Cc: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://lore.kernel.org/r/20241128004344.4072099-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/connect.c |   36 ++++++++++++++++++++++++++----------
+ 1 file changed, 26 insertions(+), 10 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9991,7 +9991,7 @@ static int complete_hypercall_exit(struc
- {
- 	u64 ret = vcpu->run->hypercall.ret;
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -987,9 +987,13 @@ clean_demultiplex_info(struct TCP_Server
+ 	msleep(125);
+ 	if (cifs_rdma_enabled(server))
+ 		smbd_destroy(server);
++
+ 	if (server->ssocket) {
+ 		sock_release(server->ssocket);
+ 		server->ssocket = NULL;
++
++		/* Release netns reference for the socket. */
++		put_net(cifs_net_ns(server));
+ 	}
  
--	if (!is_64_bit_mode(vcpu))
-+	if (!is_64_bit_hypercall(vcpu))
- 		ret = (u32)ret;
- 	kvm_rax_write(vcpu, ret);
- 	++vcpu->stat.hypercalls;
+ 	if (!list_empty(&server->pending_mid_q)) {
+@@ -1037,6 +1041,7 @@ clean_demultiplex_info(struct TCP_Server
+ 		 */
+ 	}
+ 
++	/* Release netns reference for this server. */
+ 	put_net(cifs_net_ns(server));
+ 	kfree(server->leaf_fullpath);
+ 	kfree(server);
+@@ -1713,6 +1718,8 @@ cifs_get_tcp_session(struct smb3_fs_cont
+ 
+ 	tcp_ses->ops = ctx->ops;
+ 	tcp_ses->vals = ctx->vals;
++
++	/* Grab netns reference for this server. */
+ 	cifs_set_net_ns(tcp_ses, get_net(current->nsproxy->net_ns));
+ 
+ 	tcp_ses->conn_id = atomic_inc_return(&tcpSesNextId);
+@@ -1844,6 +1851,7 @@ smbd_connected:
+ out_err_crypto_release:
+ 	cifs_crypto_secmech_release(tcp_ses);
+ 
++	/* Release netns reference for this server. */
+ 	put_net(cifs_net_ns(tcp_ses));
+ 
+ out_err:
+@@ -1852,8 +1860,10 @@ out_err:
+ 			cifs_put_tcp_session(tcp_ses->primary_server, false);
+ 		kfree(tcp_ses->hostname);
+ 		kfree(tcp_ses->leaf_fullpath);
+-		if (tcp_ses->ssocket)
++		if (tcp_ses->ssocket) {
+ 			sock_release(tcp_ses->ssocket);
++			put_net(cifs_net_ns(tcp_ses));
++		}
+ 		kfree(tcp_ses);
+ 	}
+ 	return ERR_PTR(rc);
+@@ -3111,20 +3121,20 @@ generic_ip_connect(struct TCP_Server_Inf
+ 		socket = server->ssocket;
+ 	} else {
+ 		struct net *net = cifs_net_ns(server);
+-		struct sock *sk;
+ 
+-		rc = __sock_create(net, sfamily, SOCK_STREAM,
+-				   IPPROTO_TCP, &server->ssocket, 1);
++		rc = sock_create_kern(net, sfamily, SOCK_STREAM, IPPROTO_TCP, &server->ssocket);
+ 		if (rc < 0) {
+ 			cifs_server_dbg(VFS, "Error %d creating socket\n", rc);
+ 			return rc;
+ 		}
+ 
+-		sk = server->ssocket->sk;
+-		__netns_tracker_free(net, &sk->ns_tracker, false);
+-		sk->sk_net_refcnt = 1;
+-		get_net_track(net, &sk->ns_tracker, GFP_KERNEL);
+-		sock_inuse_add(net, 1);
++		/*
++		 * Grab netns reference for the socket.
++		 *
++		 * It'll be released here, on error, or in clean_demultiplex_info() upon server
++		 * teardown.
++		 */
++		get_net(net);
+ 
+ 		/* BB other socket options to set KEEPALIVE, NODELAY? */
+ 		cifs_dbg(FYI, "Socket created\n");
+@@ -3138,8 +3148,10 @@ generic_ip_connect(struct TCP_Server_Inf
+ 	}
+ 
+ 	rc = bind_socket(server);
+-	if (rc < 0)
++	if (rc < 0) {
++		put_net(cifs_net_ns(server));
+ 		return rc;
++	}
+ 
+ 	/*
+ 	 * Eventually check for other socket options to change from
+@@ -3176,6 +3188,7 @@ generic_ip_connect(struct TCP_Server_Inf
+ 	if (rc < 0) {
+ 		cifs_dbg(FYI, "Error %d connecting to server\n", rc);
+ 		trace_smb3_connect_err(server->hostname, server->conn_id, &server->dstaddr, rc);
++		put_net(cifs_net_ns(server));
+ 		sock_release(socket);
+ 		server->ssocket = NULL;
+ 		return rc;
+@@ -3184,6 +3197,9 @@ generic_ip_connect(struct TCP_Server_Inf
+ 	if (sport == htons(RFC1001_PORT))
+ 		rc = ip_rfc1001_connect(server);
+ 
++	if (rc < 0)
++		put_net(cifs_net_ns(server));
++
+ 	return rc;
+ }
+ 
 
 
