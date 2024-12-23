@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88305188006;
-	Mon, 23 Dec 2024 16:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDE85188006;
+	Mon, 23 Dec 2024 16:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970115; cv=none; b=qN70BqGQSYW46cV2IpmRTMCGFQnCgRBXxDYPJrmu8NjzuWzPQU0Oj5Tei75rgehd38vwQ4436ofrw1pIcnXXN9oEw687Dg1McraciSUlMVe4cXEPSGF/ifjsYbrZn8PN2BvVlahkG0QLK2WtHGjTj3g8+6Ln2i70wTshDdnjib4=
+	t=1734970118; cv=none; b=WEJNH6JGGtupJqyM5myaxCKoFU2ZC2rbPkQmQCCgkEWg5iwTFmHE67zb3wmdWiAzZ2ZHu0deVj7VmSoh/i5P6WVpyQS6nJ4AGH4b3vGdcAjphucmiqlOLpAJ4FKn7V04m1zlu5rR+BUzGVuJw11SShGmSLk61ym6LHr9lheOlY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970115; c=relaxed/simple;
-	bh=Tcxagf8i0yLnTf+6hNMmKYtDcb9/TdUcryd6w16jk5o=;
+	s=arc-20240116; t=1734970118; c=relaxed/simple;
+	bh=mtTJbw0rJCG8vaMWdsRs3S3ndik3R4P73P8AV5EVuOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upSSJqZOsFB2NTvE7pUehk0xLrYmCC+6fVRIF4eTRtJMX9G/SxAFmlpr6ovAUJ37QgVDcdGOzI9qR41YUPdYw+cO+yQDPj25L2yVNKwA2kQp2DKGyl5nUW/w5qEJInF8xz4GLaR+xunzhOjuDSpTB3X459njY9IjXdyfEFu/x5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TopBEIIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNFK6Qw4jOehXAPa41bR86AWa3IMGbENnhVoN5kE8eS+xaEz/fPRSEqRiuGDGhnoMUdQDAyKHwn8m7Lz7IrB2hdrJZL1miCC1Icmq0eZSb8Afg6cUhMnDXACw27CvK9XTokLg7tkk3IYgfBqQPv/dH0nKvsNP4GDUka7DSh8fCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVnSyEQO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TopBEIIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA86DC4CED3;
-	Mon, 23 Dec 2024 16:08:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVnSyEQO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484B4C4CED3;
+	Mon, 23 Dec 2024 16:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970115;
-	bh=Tcxagf8i0yLnTf+6hNMmKYtDcb9/TdUcryd6w16jk5o=;
+	s=korg; t=1734970118;
+	bh=mtTJbw0rJCG8vaMWdsRs3S3ndik3R4P73P8AV5EVuOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TopBEIIKy/x29UEND6IkNt1PXImnesnDPL7dP7NcAaPdN1aD4XNmbeJSU6PZlhOGS
-	 aYvJLsCsTIJuXzipSy4rMn+9o7asldYis7Ju9ei8KAumL8dq6oQewyQlDTNvp9Pz0Y
-	 b7IlBL4MloobJLeqSPZWd8EAjsKb7jhL6jiF5ZEY=
+	b=kVnSyEQOfWrybO8LI7KXYcqKFX8zNAgQh16DEHNPhhik4eTZ0LMxteW537EYn8GXv
+	 dvE4qJ2KGjecY38I186oJ3TPgA15TzakywqtEcase//9HPvFRYh/AcB9oLZ8TQyOmn
+	 WV9NgVHWBpZzDV0zHrmEwUtXw2nwpFO0rnt3kK08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 118/160] s390/mm: Fix DirectMap accounting
-Date: Mon, 23 Dec 2024 16:58:49 +0100
-Message-ID: <20241223155413.321697218@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 119/160] drm/amdgpu/nbio7.0: fix IP version check
+Date: Mon, 23 Dec 2024 16:58:50 +0100
+Message-ID: <20241223155413.362102684@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,64 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 41856638e6c4ed51d8aa9e54f70059d1e357b46e upstream.
+commit 3abb660f9e18925468685591a3702bda05faba4f upstream.
 
-With uncoupling of physical and virtual address spaces population of
-the identity mapping was changed to use the type POPULATE_IDENTITY
-instead of POPULATE_DIRECT. This breaks DirectMap accounting:
+Use the helper function rather than reading it directly.
 
-> cat /proc/meminfo
-DirectMap4k:       55296 kB
-DirectMap1M:    18446744073709496320 kB
-
-Adjust all locations of update_page_count() in vmem.c to use
-POPULATE_IDENTITY instead of POPULATE_DIRECT as well. With this
-accounting is correct again:
-
-> cat /proc/meminfo
-DirectMap4k:       54264 kB
-DirectMap1M:     8334336 kB
-
-Fixes: c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address spaces")
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0ec43fbece784215d3c4469973e4556d70bce915)
 Cc: stable@vger.kernel.org
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/boot/vmem.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/boot/vmem.c
-+++ b/arch/s390/boot/vmem.c
-@@ -306,7 +306,7 @@ static void pgtable_pte_populate(pmd_t *
- 			pages++;
- 		}
- 	}
--	if (mode == POPULATE_DIRECT)
-+	if (mode == POPULATE_IDENTITY)
- 		update_page_count(PG_DIRECT_MAP_4K, pages);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c
+index 49e953f86ced..d1032e9992b4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c
+@@ -278,7 +278,7 @@ static void nbio_v7_0_init_registers(struct amdgpu_device *adev)
+ {
+ 	uint32_t data;
  
-@@ -339,7 +339,7 @@ static void pgtable_pmd_populate(pud_t *
- 		}
- 		pgtable_pte_populate(pmd, addr, next, mode);
- 	}
--	if (mode == POPULATE_DIRECT)
-+	if (mode == POPULATE_IDENTITY)
- 		update_page_count(PG_DIRECT_MAP_1M, pages);
- }
- 
-@@ -372,7 +372,7 @@ static void pgtable_pud_populate(p4d_t *
- 		}
- 		pgtable_pmd_populate(pud, addr, next, mode);
- 	}
--	if (mode == POPULATE_DIRECT)
-+	if (mode == POPULATE_IDENTITY)
- 		update_page_count(PG_DIRECT_MAP_2G, pages);
- }
- 
+-	switch (adev->ip_versions[NBIO_HWIP][0]) {
++	switch (amdgpu_ip_version(adev, NBIO_HWIP, 0)) {
+ 	case IP_VERSION(2, 5, 0):
+ 		data = RREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF6_STRAP4) & ~BIT(23);
+ 		WREG32_SOC15(NBIO, 0, regRCC_DEV0_EPF6_STRAP4, data);
+-- 
+2.47.1
+
 
 
