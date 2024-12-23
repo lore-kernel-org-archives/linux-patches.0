@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275A380C02;
-	Mon, 23 Dec 2024 16:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F4513BC0C;
+	Mon, 23 Dec 2024 16:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969704; cv=none; b=bknHPhzzNF4vbAXg7LldpPM6oLJWitdczI9P/Ew4wDV81kwdVTmozlYrluTdKjgw/bh+USmOt4uj1WzdrzOIcUjwFyZ4lacZigRymfUvDEX2pmbPrsv4Mf6OkV+OiLhA1MVUc0airCG4NEEhVtUVY2bvgO4TsLYd4lzk2yhLQUc=
+	t=1734969707; cv=none; b=m2UiHtru0WQA1dlZ2EHDmQggjqJQOOAmWzrOH7umzLiZzYt1V6YCIS790apQbAeKY+7aCCBoFJj5Wj9LijoRPrMvWBV1CXBWA5e/1kTU49Z+4RumEkJllOBqTitbjSQq2TJJreFaP3hcWIuQjCWe6S2mWbqyw4sx9oigl49rBCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969704; c=relaxed/simple;
-	bh=DMwdxEf6N0Mudi/MS4JTBQB9OVq4uqif7WQBMHJUd1c=;
+	s=arc-20240116; t=1734969707; c=relaxed/simple;
+	bh=WxiZ9nvoHSg1Uy5dlVxQrEaKq3xLcjGEWkesioGhZJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SDW0d46V7ePBc3mCTgtq7xg3515XQ/gEzpD7C06Vob5fdY702IaVzdrevy3k3fhaQZIpDJSom1fP8WTXBmytJ2BL4U2n5zI+61B8RFZnPQwJ9IsASs8t9Yg1wLnsAbW4D6SCko8L4vGgGlGahZTPjQ+F281F/WPt7/ZlFAvssys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sn3rbYZA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zgms2xhSgoN7G8XkNNJfvoMTnIKdr8j5c+w/FgjCdJL3MmXpu8rxPaXfxzA6AFIOqPMrRxl/nrVfn1j+42bzIT963YOk/m0lWIlOWFP60WzVHFP2XjEvk5dgHTuCAR/nzH5VSN0Zz7X233PVgfgCDYFbNzTKXTi3WaCGIqqaEpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/XS10w7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sn3rbYZA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB2FC4CED3;
-	Mon, 23 Dec 2024 16:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/XS10w7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B860C4CED3;
+	Mon, 23 Dec 2024 16:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969703;
-	bh=DMwdxEf6N0Mudi/MS4JTBQB9OVq4uqif7WQBMHJUd1c=;
+	s=korg; t=1734969707;
+	bh=WxiZ9nvoHSg1Uy5dlVxQrEaKq3xLcjGEWkesioGhZJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sn3rbYZAxFgWfIbchoW8azElM6cv5wi2jKnYX5KbbtMlHGxDUJBoEe5s7d7Doy5Yj
-	 I/tvtjvoeBPWOVSZOlRfCyRqloVJ6PVXHhxFo3D1+iABR/mtAElEQ9ov6HRKNEomeJ
-	 WY4eGwbYrEOifYQxh0363MiWm+HFSslP3rz8qH6I=
+	b=x/XS10w742oYvuLYX/PFm2Ntes/TukWQUtNi606CUf1E40v3oYpiF+xjokTDMdaKs
+	 +GIgFUjg4b92XQ+USNjTaJxe6Rtvq85OMpQOqo1lkOHHqomEe7HmxMsBqUU2S7Q5pn
+	 MJ9vI/x4tquNff2dDTtva7ZaujYkHIbAR0usIPqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huaisheng Ye <huaisheng.ye@intel.com>,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Tony Lu <tonylu@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/160] cxl/region: Fix region creation for greater than x2 switches
-Date: Mon, 23 Dec 2024 16:57:21 +0100
-Message-ID: <20241223155409.827758333@linuxfoundation.org>
+Subject: [PATCH 6.12 031/160] net/smc: protect link down work from execute after lgr freed
+Date: Mon, 23 Dec 2024 16:57:22 +0100
+Message-ID: <20241223155409.873125634@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,151 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huaisheng Ye <huaisheng.ye@intel.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 76467a94810c2aa4dd3096903291ac6df30c399e ]
+[ Upstream commit 2b33eb8f1b3e8c2f87cfdbc8cc117f6bdfabc6ec ]
 
-The cxl_port_setup_targets() algorithm fails to identify valid target list
-ordering in the presence of 4-way and above switches resulting in
-'cxl create-region' failures of the form:
+link down work may be scheduled before lgr freed but execute
+after lgr freed, which may result in crash. So it is need to
+hold a reference before shedule link down work, and put the
+reference after work executed or canceled.
 
-  $ cxl create-region -d decoder0.0 -g 1024 -s 2G -t ram -w 8 -m mem4 mem1 mem6 mem3 mem2 mem5 mem7 mem0
-  cxl region: create_region: region0: failed to set target7 to mem0
-  cxl region: cmd_create_region: created 0 regions
+The relevant crash call stack as follows:
+ list_del corruption. prev->next should be ffffb638c9c0fe20,
+    but was 0000000000000000
+ ------------[ cut here ]------------
+ kernel BUG at lib/list_debug.c:51!
+ invalid opcode: 0000 [#1] SMP NOPTI
+ CPU: 6 PID: 978112 Comm: kworker/6:119 Kdump: loaded Tainted: G #1
+ Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS 2221b89 04/01/2014
+ Workqueue: events smc_link_down_work [smc]
+ RIP: 0010:__list_del_entry_valid.cold+0x31/0x47
+ RSP: 0018:ffffb638c9c0fdd8 EFLAGS: 00010086
+ RAX: 0000000000000054 RBX: ffff942fb75e5128 RCX: 0000000000000000
+ RDX: ffff943520930aa0 RSI: ffff94352091fc80 RDI: ffff94352091fc80
+ RBP: 0000000000000000 R08: 0000000000000000 R09: ffffb638c9c0fc38
+ R10: ffffb638c9c0fc30 R11: ffffffffa015eb28 R12: 0000000000000002
+ R13: ffffb638c9c0fe20 R14: 0000000000000001 R15: ffff942f9cd051c0
+ FS:  0000000000000000(0000) GS:ffff943520900000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f4f25214000 CR3: 000000025fbae004 CR4: 00000000007706e0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ PKRU: 55555554
+ Call Trace:
+  rwsem_down_write_slowpath+0x17e/0x470
+  smc_link_down_work+0x3c/0x60 [smc]
+  process_one_work+0x1ac/0x350
+  worker_thread+0x49/0x2f0
+  ? rescuer_thread+0x360/0x360
+  kthread+0x118/0x140
+  ? __kthread_bind_mask+0x60/0x60
+  ret_from_fork+0x1f/0x30
 
-  [kernel debug message]
-  check_last_peer:1213: cxl region0: pci0000:0c:port1: cannot host mem6:decoder7.0 at 2
-  bus_remove_device:574: bus: 'cxl': remove device region0
-
-QEMU can create this failing topology:
-
-                       ACPI0017:00 [root0]
-                           |
-                         HB_0 [port1]
-                        /             \
-                     RP_0             RP_1
-                      |                 |
-                USP [port2]           USP [port3]
-            /    /    \    \        /   /    \    \
-          DSP   DSP   DSP   DSP   DSP  DSP   DSP  DSP
-           |     |     |     |     |    |     |    |
-          mem4  mem6  mem2  mem7  mem1 mem3  mem5  mem0
- Pos:      0     2     4     6     1    3     5    7
-
- HB: Host Bridge
- RP: Root Port
- USP: Upstream Port
- DSP: Downstream Port
-
-...with the following command steps:
-
-$ qemu-system-x86_64 -machine q35,cxl=on,accel=tcg  \
-        -smp cpus=8 \
-        -m 8G \
-        -hda /home/work/vm-images/centos-stream8-02.qcow2 \
-        -object memory-backend-ram,size=4G,id=m0 \
-        -object memory-backend-ram,size=4G,id=m1 \
-        -object memory-backend-ram,size=2G,id=cxl-mem0 \
-        -object memory-backend-ram,size=2G,id=cxl-mem1 \
-        -object memory-backend-ram,size=2G,id=cxl-mem2 \
-        -object memory-backend-ram,size=2G,id=cxl-mem3 \
-        -object memory-backend-ram,size=2G,id=cxl-mem4 \
-        -object memory-backend-ram,size=2G,id=cxl-mem5 \
-        -object memory-backend-ram,size=2G,id=cxl-mem6 \
-        -object memory-backend-ram,size=2G,id=cxl-mem7 \
-        -numa node,memdev=m0,cpus=0-3,nodeid=0 \
-        -numa node,memdev=m1,cpus=4-7,nodeid=1 \
-        -netdev user,id=net0,hostfwd=tcp::2222-:22 \
-        -device virtio-net-pci,netdev=net0 \
-        -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-        -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
-        -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
-        -device cxl-upstream,bus=root_port0,id=us0 \
-        -device cxl-downstream,port=0,bus=us0,id=swport0,chassis=0,slot=4 \
-        -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-vmem0 \
-        -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
-        -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-vmem1 \
-        -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
-        -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-vmem2 \
-        -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
-        -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-vmem3 \
-        -device cxl-upstream,bus=root_port1,id=us1 \
-        -device cxl-downstream,port=4,bus=us1,id=swport4,chassis=0,slot=8 \
-        -device cxl-type3,bus=swport4,volatile-memdev=cxl-mem4,id=cxl-vmem4 \
-        -device cxl-downstream,port=5,bus=us1,id=swport5,chassis=0,slot=9 \
-        -device cxl-type3,bus=swport5,volatile-memdev=cxl-mem5,id=cxl-vmem5 \
-        -device cxl-downstream,port=6,bus=us1,id=swport6,chassis=0,slot=10 \
-        -device cxl-type3,bus=swport6,volatile-memdev=cxl-mem6,id=cxl-vmem6 \
-        -device cxl-downstream,port=7,bus=us1,id=swport7,chassis=0,slot=11 \
-        -device cxl-type3,bus=swport7,volatile-memdev=cxl-mem7,id=cxl-vmem7 \
-        -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=32G &
-
-In Guest OS:
-$ cxl create-region -d decoder0.0 -g 1024 -s 2G -t ram -w 8 -m mem4 mem1 mem6 mem3 mem2 mem5 mem7 mem0
-
-Fix the method to calculate @distance by iterativeley multiplying the
-number of targets per switch port. This also follows the algorithm
-recommended here [1].
-
-Fixes: 27b3f8d13830 ("cxl/region: Program target lists")
-Link: http://lore.kernel.org/6538824b52349_7258329466@dwillia2-xfh.jf.intel.com.notmuch [1]
-Signed-off-by: Huaisheng Ye <huaisheng.ye@intel.com>
-Tested-by: Li Zhijian <lizhijian@fujitsu.com>
-[djbw: add a comment explaining 'distance']
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/173378716722.1270362.9546805175813426729.stgit@dwillia2-xfh.jf.intel.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fixes: 541afa10c126 ("net/smc: add smcr_port_err() and smcr_link_down() processing")
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Reviewed-by: Tony Lu <tonylu@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/region.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ net/smc/smc_core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index dff618c708dc..a0d6e8d7f42c 100644
---- a/drivers/cxl/core/region.c
-+++ b/drivers/cxl/core/region.c
-@@ -1295,6 +1295,7 @@ static int cxl_port_setup_targets(struct cxl_port *port,
- 	struct cxl_region_params *p = &cxlr->params;
- 	struct cxl_decoder *cxld = cxl_rr->decoder;
- 	struct cxl_switch_decoder *cxlsd;
-+	struct cxl_port *iter = port;
- 	u16 eig, peig;
- 	u8 eiw, peiw;
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index 4e694860ece4..68515a41d776 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1818,7 +1818,9 @@ void smcr_link_down_cond_sched(struct smc_link *lnk)
+ {
+ 	if (smc_link_downing(&lnk->state)) {
+ 		trace_smcr_link_down(lnk, __builtin_return_address(0));
+-		schedule_work(&lnk->link_down_wrk);
++		smcr_link_hold(lnk); /* smcr_link_put in link_down_wrk */
++		if (!schedule_work(&lnk->link_down_wrk))
++			smcr_link_put(lnk);
+ 	}
+ }
  
-@@ -1311,16 +1312,26 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+@@ -1850,11 +1852,14 @@ static void smc_link_down_work(struct work_struct *work)
+ 	struct smc_link_group *lgr = link->lgr;
  
- 	cxlsd = to_cxl_switch_decoder(&cxld->dev);
- 	if (cxl_rr->nr_targets_set) {
--		int i, distance;
-+		int i, distance = 1;
-+		struct cxl_region_ref *cxl_rr_iter;
- 
- 		/*
--		 * Passthrough decoders impose no distance requirements between
--		 * peers
-+		 * The "distance" between peer downstream ports represents which
-+		 * endpoint positions in the region interleave a given port can
-+		 * host.
-+		 *
-+		 * For example, at the root of a hierarchy the distance is
-+		 * always 1 as every index targets a different host-bridge. At
-+		 * each subsequent switch level those ports map every Nth region
-+		 * position where N is the width of the switch == distance.
- 		 */
--		if (cxl_rr->nr_targets == 1)
--			distance = 0;
--		else
--			distance = p->nr_targets / cxl_rr->nr_targets;
-+		do {
-+			cxl_rr_iter = cxl_rr_load(iter, cxlr);
-+			distance *= cxl_rr_iter->nr_targets;
-+			iter = to_cxl_port(iter->dev.parent);
-+		} while (!is_cxl_root(iter));
-+		distance *= cxlrd->cxlsd.cxld.interleave_ways;
+ 	if (list_empty(&lgr->list))
+-		return;
++		goto out;
+ 	wake_up_all(&lgr->llc_msg_waiter);
+ 	down_write(&lgr->llc_conf_mutex);
+ 	smcr_link_down(link);
+ 	up_write(&lgr->llc_conf_mutex);
 +
- 		for (i = 0; i < cxl_rr->nr_targets_set; i++)
- 			if (ep->dport == cxlsd->target[i]) {
- 				rc = check_last_peer(cxled, ep, cxl_rr,
++out:
++	smcr_link_put(link); /* smcr_link_hold by schedulers of link_down_work */
+ }
+ 
+ static int smc_vlan_by_tcpsk_walk(struct net_device *lower_dev,
 -- 
 2.39.5
 
