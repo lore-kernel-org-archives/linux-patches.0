@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F497E0FF;
-	Mon, 23 Dec 2024 16:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EA47E0FF;
+	Mon, 23 Dec 2024 16:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970348; cv=none; b=EhsH0Ldd9IB8noIrvaWEu3bbcHrY9e4ujrR6w0TZjoZMa/BiIFhaZBLl1Bhb4+RG/fAxNiVJlYNILIvHl23ekH7pxEjFTezOx0GQhq0MLJHE/mYSxcKghg9k3V7+yWHJobYBtODQbsXJdehqw3RwRk3MNb5OZKiFNe4QvnfX4Ag=
+	t=1734970353; cv=none; b=eCJ8WEM0QOXRxPQF98rb5x6R6wSqVR4zfmWyUEu+O09HcM5Jn5pljauL81ZG6qt921GNPmmMVqJOyvz+Et5v3XotN4nHVswApu14OgjpGrik0w00pOFnLgQFeCvxGS7DoAW/IQEb9irdIwrmvKZ7fpZtxBaQPMGfuDDZ15c+oAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970348; c=relaxed/simple;
-	bh=SWIpKXi145m9gcXspmBaZCS42bYaAnUyocuhH7C/wWA=;
+	s=arc-20240116; t=1734970353; c=relaxed/simple;
+	bh=XHXBChGhzJh5HjFY5vZjjAmrAcgcrtdDYwmymElp/aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjGCB2zuIwDs+/+arWY7KjZd9Ts4PtD4tUY7/MMjX9vI7lEcEtEgodmVbK9MHRw3NzvOH7kXAZCy5y7bYfOHGL1iXxURiULejji2E6LEZomKOWyNdwd+3OhpIzOOUaYax86XNzi4NN7dLH+BD18G6zZBd56+ucs5sCR6zJdL0Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJZgLkoN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nmsfKVjc6H/JaEGesKhEJXEffeoaoiougzkLpzwM0rTVMO0d6/nay724qwEJfoVuE4oXt28cKeX3O2hHHAq8wCVvOsgTbRL825aS4x5y7aeSRR/W49ooSo3prP985J0HtS/DyyPLPB4cEhn+CvzuB4PL+tfdnxmrJiOa1+Fu9iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlWIRs6/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJZgLkoN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B7DC4CED3;
-	Mon, 23 Dec 2024 16:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlWIRs6/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51C5C4CED3;
+	Mon, 23 Dec 2024 16:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970348;
-	bh=SWIpKXi145m9gcXspmBaZCS42bYaAnUyocuhH7C/wWA=;
+	s=korg; t=1734970353;
+	bh=XHXBChGhzJh5HjFY5vZjjAmrAcgcrtdDYwmymElp/aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJZgLkoNe3n9b6KFtVXqkRfGTTcGzWgFi6PNPBv102WO4W7iXOAYCYb0SdMcRwaGH
-	 2sqpfA19UFjg1uXDjvHeRr84k2FbzWONtENkh12xgZilpTrN5Oq62YcJGuWqGn3fa9
-	 wDyBtyM6j03ORzA/CCod2IZQ+1wwa+GcUPiBXXaM=
+	b=NlWIRs6/gFkmxwLXk1Tf8Co3V3/LtRtBMAgZvvhmCAmTFbAlnAZQeHH794WWj4Lz6
+	 36oINrfTDlQFOV/ccH0mwuILETW7nhZto904KQm4sKhvf/Yy6BQYnf6RN3JXiACK7n
+	 3ndyyLT9S6lO3KaZq0AAU0Az9QVkruGn9Gqg0oIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Moreno <amorenoz@redhat.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/116] selftests: openvswitch: fix tcpdump execution
-Date: Mon, 23 Dec 2024 16:58:46 +0100
-Message-ID: <20241223155401.744217061@linuxfoundation.org>
+Subject: [PATCH 6.6 057/116] net: mdiobus: fix an OF node reference leak
+Date: Mon, 23 Dec 2024 16:58:47 +0100
+Message-ID: <20241223155401.780789065@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -52,46 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Moreno <amorenoz@redhat.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit a17975992cc11588767175247ccaae1213a8b582 ]
+[ Upstream commit 572af9f284669d31d9175122bbef9bc62cea8ded ]
 
-Fix the way tcpdump is executed by:
-- Using the right variable for the namespace. Currently the use of the
-  empty "ns" makes the command fail.
-- Waiting until it starts to capture to ensure the interesting traffic
-  is caught on slow systems.
-- Using line-buffered output to ensure logs are available when the test
-  is paused with "-p". Otherwise the last chunk of data might only be
-  written when tcpdump is killed.
+fwnode_find_mii_timestamper() calls of_parse_phandle_with_fixed_args()
+but does not decrement the refcount of the obtained OF node. Add an
+of_node_put() call before returning from the function.
 
-Fixes: 74cc26f416b9 ("selftests: openvswitch: add interface support")
-Signed-off-by: Adrian Moreno <amorenoz@redhat.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Link: https://patch.msgid.link/20241217211652.483016-1-amorenoz@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This bug was detected by an experimental static analysis tool that I am
+developing.
+
+Fixes: bc1bee3b87ee ("net: mdiobus: Introduce fwnode_mdiobus_register_phy()")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241218035106.1436405-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/openvswitch/openvswitch.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/mdio/fwnode_mdio.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/openvswitch/openvswitch.sh b/tools/testing/selftests/net/openvswitch/openvswitch.sh
-index bab7436c6834..a0f4764ad0af 100755
---- a/tools/testing/selftests/net/openvswitch/openvswitch.sh
-+++ b/tools/testing/selftests/net/openvswitch/openvswitch.sh
-@@ -128,8 +128,10 @@ ovs_add_netns_and_veths () {
- 		ovs_add_if "$1" "$2" "$4" -u || return 1
- 	fi
+diff --git a/drivers/net/mdio/fwnode_mdio.c b/drivers/net/mdio/fwnode_mdio.c
+index 1183ef5e203e..c62f2e85414d 100644
+--- a/drivers/net/mdio/fwnode_mdio.c
++++ b/drivers/net/mdio/fwnode_mdio.c
+@@ -38,6 +38,7 @@ fwnode_find_pse_control(struct fwnode_handle *fwnode)
+ static struct mii_timestamper *
+ fwnode_find_mii_timestamper(struct fwnode_handle *fwnode)
+ {
++	struct mii_timestamper *mii_ts;
+ 	struct of_phandle_args arg;
+ 	int err;
  
--	[ $TRACING -eq 1 ] && ovs_netns_spawn_daemon "$1" "$ns" \
--			tcpdump -i any -s 65535
-+	if [ $TRACING -eq 1 ]; then
-+		ovs_netns_spawn_daemon "$1" "$3" tcpdump -l -i any -s 6553
-+		ovs_wait grep -q "listening on any" ${ovs_dir}/stderr
-+	fi
+@@ -51,10 +52,16 @@ fwnode_find_mii_timestamper(struct fwnode_handle *fwnode)
+ 	else if (err)
+ 		return ERR_PTR(err);
  
- 	return 0
+-	if (arg.args_count != 1)
+-		return ERR_PTR(-EINVAL);
++	if (arg.args_count != 1) {
++		mii_ts = ERR_PTR(-EINVAL);
++		goto put_node;
++	}
++
++	mii_ts = register_mii_timestamper(arg.np, arg.args[0]);
+ 
+-	return register_mii_timestamper(arg.np, arg.args[0]);
++put_node:
++	of_node_put(arg.np);
++	return mii_ts;
  }
+ 
+ int fwnode_mdiobus_phy_device_register(struct mii_bus *mdio,
 -- 
 2.39.5
 
