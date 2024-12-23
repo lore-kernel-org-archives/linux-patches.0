@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315813BC0C;
-	Mon, 23 Dec 2024 16:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84B813BC0C;
+	Mon, 23 Dec 2024 16:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970228; cv=none; b=qPpTCeUAnM1fUxcupYOqPuQE4VzsTF5z1HxPFm9CNKEwSKNMIazArNrYCcG8qSrlcX875LxPvWHC6IV64MbERqf0UmC+p90opD25u2lwsJahSgfrGWMAqEXIk2cxt3+chCmwEdQP82j+5xVGUL41DMHty9+Jb54y/Rjed+juAs8=
+	t=1734970231; cv=none; b=nSJtYEPJRqJCXj2fW55Ci8JDuHSWNDt2DWww59F3y8wekbpKvhOYXvqdqTdRABKuJTguhDUkMzJuH9pEhX/QJd8EUV1EOqIys1VpGWjM39F026cNOpsJAMeSXkDGBFViQ5lZB+h8DeRcZwfuzsHpcpUp6DafGj4NRpwZH+CqOW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970228; c=relaxed/simple;
-	bh=K1rKnZPHyntkAiBdGtI63CwiQZMUvsQwia/SJlpGeJw=;
+	s=arc-20240116; t=1734970231; c=relaxed/simple;
+	bh=k4OQzXeYOi61151aLC3fjg+TDFOY9ReH/XcCveMmgE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGtIPI3ny2yfT2/chOmv7yIMU+/eUiQ5elQyZVEA7AFAbpppJKUiLSZYhTTF4/E7ZBYy1GIOKUzSIFqgnxoQtEYcHvT2sXl8fhDJvXHoloOFkdJEJVXlivof2o8Pp5Rzo07gqNMCPwomxXtSBi/dKTGsoC0sNOAUqzZIWeVlPo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVxySnUI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AT94C7F3QSB1ha45DZ0Pixsrb2BvEUwdc/kozVicoUusD5OHodg3Mh9LuAGDpplVmfAiIUKwxrhqi7bm+4frudkR1kO2uXTXicmbsQa8ZpJiWeKukEPG4/0+nWB99/og8FMts0rQhJzeyR8YtmVkG2xQO8UPiWDqh6lS0tZtQdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zPn1CIG7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVxySnUI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB40C4CED3;
-	Mon, 23 Dec 2024 16:10:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zPn1CIG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D75C4CED4;
+	Mon, 23 Dec 2024 16:10:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970228;
-	bh=K1rKnZPHyntkAiBdGtI63CwiQZMUvsQwia/SJlpGeJw=;
+	s=korg; t=1734970231;
+	bh=k4OQzXeYOi61151aLC3fjg+TDFOY9ReH/XcCveMmgE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVxySnUIrI256oHXW6ZPaS1DymzW22UKKXu9JD8FGPxcXZt8kvVJUzEDfxQzSjU17
-	 5zXu8SHsFV5C7HOu+/Zi4AvfxccenqLKX7EKtBR1yH0hhHJhI/tYy2KkPfag3iklU5
-	 /keCGm65xBfnzJexFtpV8qqEPSQnrl3WzQYWR0Dk=
+	b=zPn1CIG71EYZ5sVJz1oW3EYbql1CWZl4EPHiwyQh/zUmBIZ7bQulnqinyUejmoZVv
+	 wrdlld2El+QWHm29rl24ChkP0ywAULDi5l4Sec/hIdoFldNvPYd6Uc01t7Web8rWKP
+	 Yg9Tckm6Zxz+NF1YJeBIyPF36gNmQRnamcTKbQ9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Catherine Hoang <catherine.hoang@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/116] xfs: use consistent uid/gid when grabbing dquots for inodes
-Date: Mon, 23 Dec 2024 16:58:11 +0100
-Message-ID: <20241223155400.387736628@linuxfoundation.org>
+Subject: [PATCH 6.6 022/116] xfs: declare xfs_file.c symbols in xfs_file.h
+Date: Mon, 23 Dec 2024 16:58:12 +0100
+Message-ID: <20241223155400.424893516@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155359.534468176@linuxfoundation.org>
 References: <20241223155359.534468176@linuxfoundation.org>
@@ -54,95 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-commit 24a4e1cb322e2bf0f3a1afd1978b610a23aa8f36 upstream.
+commit 00acb28d96746f78389f23a7b5309a917b45c12f upstream.
 
-I noticed that callers of xfs_qm_vop_dqalloc use the following code to
-compute the anticipated uid of the new file:
+[backport: dependency of d3b689d and f23660f]
 
-	mapped_fsuid(idmap, &init_user_ns);
+Move the two public symbols in xfs_file.c to xfs_file.h.  We're about to
+add more public symbols in that source file, so let's finally create the
+header file.
 
-whereas the VFS uses a slightly different computation for actually
-assigning i_uid:
-
-	mapped_fsuid(idmap, i_user_ns(inode));
-
-Technically, these are not the same things.  According to Christian
-Brauner, the only time that inode->i_sb->s_user_ns != &init_user_ns is
-when the filesystem was mounted in a new mount namespace by an
-unpriviledged user.  XFS does not allow this, which is why we've never
-seen bug reports about quotas being incorrect or the uid checks in
-xfs_qm_vop_create_dqattach tripping debug assertions.
-
-However, this /is/ a logic bomb, so let's make the code consistent.
-
-Link: https://lore.kernel.org/linux-fsdevel/20240617-weitblick-gefertigt-4a41f37119fa@brauner/
-Fixes: c14329d39f2d ("fs: port fs{g,u}id helpers to mnt_idmap")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_inode.c   | 16 ++++++++++------
- fs/xfs/xfs_symlink.c |  8 +++++---
- 2 files changed, 15 insertions(+), 9 deletions(-)
+ fs/xfs/xfs_file.c  |  1 +
+ fs/xfs/xfs_file.h  | 12 ++++++++++++
+ fs/xfs/xfs_ioctl.c |  1 +
+ fs/xfs/xfs_iops.c  |  1 +
+ fs/xfs/xfs_iops.h  |  3 ---
+ 5 files changed, 15 insertions(+), 3 deletions(-)
+ create mode 100644 fs/xfs/xfs_file.h
 
-diff --git a/fs/xfs/xfs_inode.c b/fs/xfs/xfs_inode.c
-index 7aa73855fab6..1e50cc9a29db 100644
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -982,10 +982,12 @@ xfs_create(
- 	prid = xfs_get_initial_prid(dp);
+diff --git a/fs/xfs/xfs_file.c b/fs/xfs/xfs_file.c
+index 16769c22c070..8dcbcf965b2c 100644
+--- a/fs/xfs/xfs_file.c
++++ b/fs/xfs/xfs_file.c
+@@ -24,6 +24,7 @@
+ #include "xfs_pnfs.h"
+ #include "xfs_iomap.h"
+ #include "xfs_reflink.h"
++#include "xfs_file.h"
  
- 	/*
--	 * Make sure that we have allocated dquot(s) on disk.
-+	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
-+	 * computation code must match what the VFS uses to assign i_[ug]id.
-+	 * INHERIT adjusts the gid computation for setgid/grpid systems.
- 	 */
--	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(idmap, &init_user_ns),
--			mapped_fsgid(idmap, &init_user_ns), prid,
-+	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(idmap, i_user_ns(VFS_I(dp))),
-+			mapped_fsgid(idmap, i_user_ns(VFS_I(dp))), prid,
- 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
- 			&udqp, &gdqp, &pdqp);
- 	if (error)
-@@ -1131,10 +1133,12 @@ xfs_create_tmpfile(
- 	prid = xfs_get_initial_prid(dp);
+ #include <linux/dax.h>
+ #include <linux/falloc.h>
+diff --git a/fs/xfs/xfs_file.h b/fs/xfs/xfs_file.h
+new file mode 100644
+index 000000000000..7d39e3eca56d
+--- /dev/null
++++ b/fs/xfs/xfs_file.h
+@@ -0,0 +1,12 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2000-2005 Silicon Graphics, Inc.
++ * All Rights Reserved.
++ */
++#ifndef __XFS_FILE_H__
++#define __XFS_FILE_H__
++
++extern const struct file_operations xfs_file_operations;
++extern const struct file_operations xfs_dir_file_operations;
++
++#endif /* __XFS_FILE_H__ */
+diff --git a/fs/xfs/xfs_ioctl.c b/fs/xfs/xfs_ioctl.c
+index 535f6d38cdb5..df4bf0d56aad 100644
+--- a/fs/xfs/xfs_ioctl.c
++++ b/fs/xfs/xfs_ioctl.c
+@@ -38,6 +38,7 @@
+ #include "xfs_reflink.h"
+ #include "xfs_ioctl.h"
+ #include "xfs_xattr.h"
++#include "xfs_file.h"
  
- 	/*
--	 * Make sure that we have allocated dquot(s) on disk.
-+	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
-+	 * computation code must match what the VFS uses to assign i_[ug]id.
-+	 * INHERIT adjusts the gid computation for setgid/grpid systems.
- 	 */
--	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(idmap, &init_user_ns),
--			mapped_fsgid(idmap, &init_user_ns), prid,
-+	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(idmap, i_user_ns(VFS_I(dp))),
-+			mapped_fsgid(idmap, i_user_ns(VFS_I(dp))), prid,
- 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
- 			&udqp, &gdqp, &pdqp);
- 	if (error)
-diff --git a/fs/xfs/xfs_symlink.c b/fs/xfs/xfs_symlink.c
-index 85e433df6a3f..b08be64dd10b 100644
---- a/fs/xfs/xfs_symlink.c
-+++ b/fs/xfs/xfs_symlink.c
-@@ -191,10 +191,12 @@ xfs_symlink(
- 	prid = xfs_get_initial_prid(dp);
+ #include <linux/mount.h>
+ #include <linux/namei.h>
+diff --git a/fs/xfs/xfs_iops.c b/fs/xfs/xfs_iops.c
+index b8ec045708c3..f9466311dfea 100644
+--- a/fs/xfs/xfs_iops.c
++++ b/fs/xfs/xfs_iops.c
+@@ -25,6 +25,7 @@
+ #include "xfs_error.h"
+ #include "xfs_ioctl.h"
+ #include "xfs_xattr.h"
++#include "xfs_file.h"
  
- 	/*
--	 * Make sure that we have allocated dquot(s) on disk.
-+	 * Make sure that we have allocated dquot(s) on disk.  The uid/gid
-+	 * computation code must match what the VFS uses to assign i_[ug]id.
-+	 * INHERIT adjusts the gid computation for setgid/grpid systems.
- 	 */
--	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(idmap, &init_user_ns),
--			mapped_fsgid(idmap, &init_user_ns), prid,
-+	error = xfs_qm_vop_dqalloc(dp, mapped_fsuid(idmap, i_user_ns(VFS_I(dp))),
-+			mapped_fsgid(idmap, i_user_ns(VFS_I(dp))), prid,
- 			XFS_QMOPT_QUOTALL | XFS_QMOPT_INHERIT,
- 			&udqp, &gdqp, &pdqp);
- 	if (error)
+ #include <linux/posix_acl.h>
+ #include <linux/security.h>
+diff --git a/fs/xfs/xfs_iops.h b/fs/xfs/xfs_iops.h
+index 7f84a0843b24..52d6d510a21d 100644
+--- a/fs/xfs/xfs_iops.h
++++ b/fs/xfs/xfs_iops.h
+@@ -8,9 +8,6 @@
+ 
+ struct xfs_inode;
+ 
+-extern const struct file_operations xfs_file_operations;
+-extern const struct file_operations xfs_dir_file_operations;
+-
+ extern ssize_t xfs_vn_listxattr(struct dentry *, char *data, size_t size);
+ 
+ int xfs_vn_setattr_size(struct mnt_idmap *idmap,
 -- 
 2.39.5
 
