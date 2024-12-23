@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D12EAE6;
-	Mon, 23 Dec 2024 16:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672CF1B21BD;
+	Mon, 23 Dec 2024 16:02:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969772; cv=none; b=L1GgGBF/FDtCGJyNf06EluMBK04+ux/uMmtKYWYFQgIOf731OiHBpjgqcQf9IvHyaDhkG3auOx0n9hQ7mRFPZNegvNzx7tYzSMKRYLUHZgZP7F9Ox5MB2GzM2SeR2QBB0U2BMA6cxysiqaMpvhU/FzsedgurRuZVekhrCJRZE5U=
+	t=1734969775; cv=none; b=BegtQTx1NL7uw9R40MJmLv855RDm3VHao9Qshajg9J1+0ZSHo1+RfSktikLAOzrJzk9++wiEtOB/e2sbsuGmNgNEi/KNTbmsVZyCHk/edGbM2WOsVDr5Rx1IzXx24HTsaoiDh49Ey2kfRKwhRew/Ur1a+PmEeXG0p7aLhVuz5Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969772; c=relaxed/simple;
-	bh=vPcpSzNwUokAxg+KG05mgZh2qQcldibrB28cVAsa/x0=;
+	s=arc-20240116; t=1734969775; c=relaxed/simple;
+	bh=/sOV36XvVj89C9GufbxpjRJUbTFLZeYE8WZYEvbkhfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kzz4wC1aIrJJUlFj0huzkJRouBGh1AekdqpTcS9qoFd1LVddeu+aNRCFxlbYUOvWBZX7xsYEoMmM/5qFaM9B69b6atUnSSCSVlJRPSRwhuXm5s6GjhaqqnNs695abwTQF0o5if8Ji9j3I9H7fd7fawCmbtDLL1EiYdNiwOeHvhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/zYk6Pu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NmGnWtiTW3adzGVH9p9OVGD1GDX0nOuKwiV1I4XzsdzGQeMvT5AAB2eDjB60U/hjmv652arjzzwCshbNxcdlJna3Nf51vgSMzKVn2Yai9FagRhqJojKYmERbQMM7pl8fqi8qcVzquBQYMyJf3zsve2dzx5wXOD0juTQKq89RrUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7NRFbj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/zYk6Pu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D09EC4CED3;
-	Mon, 23 Dec 2024 16:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7NRFbj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900A8C4CED3;
+	Mon, 23 Dec 2024 16:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969771;
-	bh=vPcpSzNwUokAxg+KG05mgZh2qQcldibrB28cVAsa/x0=;
+	s=korg; t=1734969775;
+	bh=/sOV36XvVj89C9GufbxpjRJUbTFLZeYE8WZYEvbkhfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/zYk6Puko2g6dqDXyfPgSf3Qt3nzT+WdHqQ1fwytZLxPduz/fO+tBu30g3WfOjIS
-	 markolNFV8hMCss1xl4S7rg1u984L1/pC8jxHAMjioOtaawx+nf2Eaeupw8DD7lvw9
-	 4LL59HhL8LfgilURuW3Wp5nE7A3PKnAgKc3mmESM=
+	b=D7NRFbj5n3QQrcDm7UXDQkowiYtEn3ZPghTSm7ksIscrzaQ6Wnf3sEXBVZn/GN+gJ
+	 uEemTu23srT5PEjLQ7RMg5XD4PIAVVZ5bxVpCL5j/4qqJDFQROQF+V9nEek3MN1B2y
+	 gcJhNVQbVd/iXO8DsAvJJcilEvUivmoyioM4bh7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Marios Makassikis <mmakassikis@freebox.fr>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 009/160] p2sb: Factor out p2sb_read_from_cache()
-Date: Mon, 23 Dec 2024 16:57:00 +0100
-Message-ID: <20241223155409.000918054@linuxfoundation.org>
+Subject: [PATCH 6.12 044/160] ksmbd: count all requests in req_running counter
+Date: Mon, 23 Dec 2024 16:57:35 +0100
+Message-ID: <20241223155410.377001668@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -46,84 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-[ Upstream commit 9244524d60ddea55f4df54c51200e8fef2032447 ]
+[ Upstream commit 83c47d9e0ce79b5d7c0b21b9f35402dbde0fa15c ]
 
-To prepare for the following fix, factor out the code to read the P2SB
-resource from the cache to the new function p2sb_read_from_cache().
+This changes the semantics of req_running to count all in-flight
+requests on a given connection, rather than the number of elements
+in the conn->request list. The latter is used only in smb2_cancel,
+and the counter is not used
 
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241128002836.373745-2-shinichiro.kawasaki@wdc.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Stable-dep-of: 360c400d0f56 ("p2sb: Do not scan and remove the P2SB device when it is unhidden")
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 43fb7bce8866 ("ksmbd: fix broken transfers when exceeding max simultaneous operations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/p2sb.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ fs/smb/server/connection.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/p2sb.c b/drivers/platform/x86/p2sb.c
-index 31f38309b389..aa34b8a69bc1 100644
---- a/drivers/platform/x86/p2sb.c
-+++ b/drivers/platform/x86/p2sb.c
-@@ -171,6 +171,22 @@ static int p2sb_cache_resources(void)
- 	return ret;
- }
+diff --git a/fs/smb/server/connection.c b/fs/smb/server/connection.c
+index e6a72f75ab94..3980645085ed 100644
+--- a/fs/smb/server/connection.c
++++ b/fs/smb/server/connection.c
+@@ -120,8 +120,8 @@ void ksmbd_conn_enqueue_request(struct ksmbd_work *work)
+ 	if (conn->ops->get_cmd_val(work) != SMB2_CANCEL_HE)
+ 		requests_queue = &conn->requests;
  
-+static int p2sb_read_from_cache(struct pci_bus *bus, unsigned int devfn,
-+				struct resource *mem)
-+{
-+	struct p2sb_res_cache *cache = &p2sb_resources[PCI_FUNC(devfn)];
-+
-+	if (cache->bus_dev_id != bus->dev.id)
-+		return -ENODEV;
-+
-+	if (!p2sb_valid_resource(&cache->res))
-+		return -ENOENT;
-+
-+	memcpy(mem, &cache->res, sizeof(*mem));
-+
-+	return 0;
-+}
-+
- /**
-  * p2sb_bar - Get Primary to Sideband (P2SB) bridge device BAR
-  * @bus: PCI bus to communicate with
-@@ -187,8 +203,6 @@ static int p2sb_cache_resources(void)
-  */
- int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
++	atomic_inc(&conn->req_running);
+ 	if (requests_queue) {
+-		atomic_inc(&conn->req_running);
+ 		spin_lock(&conn->request_lock);
+ 		list_add_tail(&work->request_entry, requests_queue);
+ 		spin_unlock(&conn->request_lock);
+@@ -132,11 +132,12 @@ void ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
  {
--	struct p2sb_res_cache *cache;
--
- 	bus = p2sb_get_bus(bus);
- 	if (!bus)
- 		return -ENODEV;
-@@ -196,15 +210,7 @@ int p2sb_bar(struct pci_bus *bus, unsigned int devfn, struct resource *mem)
- 	if (!devfn)
- 		p2sb_get_devfn(&devfn);
+ 	struct ksmbd_conn *conn = work->conn;
  
--	cache = &p2sb_resources[PCI_FUNC(devfn)];
--	if (cache->bus_dev_id != bus->dev.id)
--		return -ENODEV;
--
--	if (!p2sb_valid_resource(&cache->res))
--		return -ENOENT;
--
--	memcpy(mem, &cache->res, sizeof(*mem));
--	return 0;
-+	return p2sb_read_from_cache(bus, devfn, mem);
- }
- EXPORT_SYMBOL_GPL(p2sb_bar);
++	atomic_dec(&conn->req_running);
++
+ 	if (list_empty(&work->request_entry) &&
+ 	    list_empty(&work->async_request_entry))
+ 		return;
  
+-	atomic_dec(&conn->req_running);
+ 	spin_lock(&conn->request_lock);
+ 	list_del_init(&work->request_entry);
+ 	spin_unlock(&conn->request_lock);
 -- 
 2.39.5
 
