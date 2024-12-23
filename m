@@ -1,40 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76941B0F30;
-	Mon, 23 Dec 2024 16:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DC01AD41F;
+	Mon, 23 Dec 2024 16:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970142; cv=none; b=Bsn2PxNwqmUcZ7oYXOeHkUvbMFNGNs5+YTgY/JTaDOYpDS2NNi3bXawDugYDod2Xpu2dWsiyMpRPcMOKlQehtpt4LtpcbRc5qTr/qLu+l6sltCt1sXEytCcolaHF1MA+sgin9Z2AqTIAmnjAclT/AEWQ1a+qmd/ox/vL9DUsMRI=
+	t=1734970146; cv=none; b=NvYKrMtZzUrpjoibCF5Vx14DHRuvHsqnbRTnk+vxE4QMPA9C/Z6I33fo8pXuFarx9/DC7krchBVhAb8OIDZcOwd0qNyKvD8V7oVSzrx341T/Wiwni14AD+kGJ1nhzeyNDqPh6qYDCD0NVLHJxGl8afFpiav2J5Np5Vvf1pQv+oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970142; c=relaxed/simple;
-	bh=NsZR7XyCx93oX5pX4NKgkNebQB7EYtKnspcnBuWJCqw=;
+	s=arc-20240116; t=1734970146; c=relaxed/simple;
+	bh=DztSW4tuK+jZUd5XqJ77zciMSgB6KR3YawOXRJwqm8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsSY0PUThQdeRURnM2lNk+PyTuz0R7Z3ikUt3Ivyka3jjVEFBS9jK08RYFF/79e+jDFf4WxsyGI7UeKxKkqNLfu5aNQ/6eAE83N55ucaXaS5gT223zkcGNzPGTurX8Ni6Uz2HZ7saxAhePle0NrfMTglnQdb4zHDcB8AgnEwJec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSYQKCBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ucbIpNbhN0LDob+BPbcpXMvw5OQPrwXQdnVrewhKmG2MiIMXofufu8KkkR05UI+iyt3UJguzeMNSU1rI2P58ojTNgzkfk/B8tvJ/ic0YUoPYd0AhgkMQDfVMgfmY/7B8RCY3TWAx0VoduYH3NgxYedzAIaiQC7D/Eu1DKu2M7ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ER1ZCYbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSYQKCBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF583C4CED3;
-	Mon, 23 Dec 2024 16:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ER1ZCYbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39524C4CED3;
+	Mon, 23 Dec 2024 16:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970142;
-	bh=NsZR7XyCx93oX5pX4NKgkNebQB7EYtKnspcnBuWJCqw=;
+	s=korg; t=1734970145;
+	bh=DztSW4tuK+jZUd5XqJ77zciMSgB6KR3YawOXRJwqm8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSYQKCBxLVidGebNgUoYUUlnNnPC5RPOCvnLFrtP4rO2h1V3g9NHiOgi3UFfSQNcD
-	 ebaVfr7CerqC/cvvuuXDf9/SqMjenu1l1OOCihvtFEV6uZHGVCaPEVUZYr+s0DzR03
-	 YD718Wq6xQtmBQPiBKc0wORbd/1u9TZ5yCgN9BgQ=
+	b=ER1ZCYbPBMA/q2KXi+9/3jP5+FNOQyE/7Qh0CDJUoCQoqYUiwh8r1NLutmklaf6wR
+	 zNJ8QAZLkLqTu7nD21rPWHWT1YGLJre83n9JgYs9LAOqkoowtdUWJPKQzVtq1rRGuF
+	 /ua6S2tjpkm/MLo8lf92TPVKaE4mkWMKU51iV340=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hugh Dickins <hughd@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Matthew Wilcox <willy@infradead.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Nico Pache <npache@redhat.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
 	Shakeel Butt <shakeel.butt@linux.dev>,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 158/160] mm: shmem: fix ShmemHugePages at swapout
-Date: Mon, 23 Dec 2024 16:59:29 +0100
-Message-ID: <20241223155414.924886846@linuxfoundation.org>
+Subject: [PATCH 6.12 159/160] mm: convert partially_mapped set/clear operations to be atomic
+Date: Mon, 23 Dec 2024 16:59:30 +0100
+Message-ID: <20241223155414.961764620@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,84 +63,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugh Dickins <hughd@google.com>
+From: Usama Arif <usamaarif642@gmail.com>
 
-commit dad2dc9c92e0f93f33cebcb0595b8daa3d57473f upstream.
+commit 42b2eb69835b0fda797f70eb5b4fc213dbe3a7ea upstream.
 
-/proc/meminfo ShmemHugePages has been showing overlarge amounts (more than
-Shmem) after swapping out THPs: we forgot to update NR_SHMEM_THPS.
+Other page flags in the 2nd page, like PG_hwpoison and PG_anon_exclusive
+can get modified concurrently.  Changes to other page flags might be lost
+if they are happening at the same time as non-atomic partially_mapped
+operations.  Hence, make partially_mapped operations atomic.
 
-Add shmem_update_stats(), to avoid repetition, and risk of making that
-mistake again: the call from shmem_delete_from_page_cache() is the bugfix;
-the call from shmem_replace_folio() is reassuring, but not really a bugfix
-(replace corrects misplaced swapin readahead, but huge swapin readahead
-would be a mistake).
-
-Link: https://lkml.kernel.org/r/5ba477c8-a569-70b5-923e-09ab221af45b@google.com
-Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
-Signed-off-by: Hugh Dickins <hughd@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lkml.kernel.org/r/20241212183351.1345389-1-usamaarif642@gmail.com
+Fixes: 8422acdc97ed ("mm: introduce a pageflag for partially mapped folios")
+Reported-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/all/e53b04ad-1827-43a2-a1ab-864c7efecf6e@redhat.com/
+Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Yu Zhao <yuzhao@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |   22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ include/linux/page-flags.h |   12 ++----------
+ mm/huge_memory.c           |    8 ++++----
+ 2 files changed, 6 insertions(+), 14 deletions(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -779,6 +779,14 @@ static bool shmem_huge_global_enabled(st
+--- a/include/linux/page-flags.h
++++ b/include/linux/page-flags.h
+@@ -860,18 +860,10 @@ static inline void ClearPageCompound(str
+ 	ClearPageHead(page);
  }
- #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
+ FOLIO_FLAG(large_rmappable, FOLIO_SECOND_PAGE)
+-FOLIO_TEST_FLAG(partially_mapped, FOLIO_SECOND_PAGE)
+-/*
+- * PG_partially_mapped is protected by deferred_split split_queue_lock,
+- * so its safe to use non-atomic set/clear.
+- */
+-__FOLIO_SET_FLAG(partially_mapped, FOLIO_SECOND_PAGE)
+-__FOLIO_CLEAR_FLAG(partially_mapped, FOLIO_SECOND_PAGE)
++FOLIO_FLAG(partially_mapped, FOLIO_SECOND_PAGE)
+ #else
+ FOLIO_FLAG_FALSE(large_rmappable)
+-FOLIO_TEST_FLAG_FALSE(partially_mapped)
+-__FOLIO_SET_FLAG_NOOP(partially_mapped)
+-__FOLIO_CLEAR_FLAG_NOOP(partially_mapped)
++FOLIO_FLAG_FALSE(partially_mapped)
+ #endif
  
-+static void shmem_update_stats(struct folio *folio, int nr_pages)
-+{
-+	if (folio_test_pmd_mappable(folio))
-+		__lruvec_stat_mod_folio(folio, NR_SHMEM_THPS, nr_pages);
-+	__lruvec_stat_mod_folio(folio, NR_FILE_PAGES, nr_pages);
-+	__lruvec_stat_mod_folio(folio, NR_SHMEM, nr_pages);
-+}
-+
- /*
-  * Somewhat like filemap_add_folio, but error if expected item has gone.
-  */
-@@ -813,10 +821,7 @@ static int shmem_add_to_page_cache(struc
- 		xas_store(&xas, folio);
- 		if (xas_error(&xas))
- 			goto unlock;
--		if (folio_test_pmd_mappable(folio))
--			__lruvec_stat_mod_folio(folio, NR_SHMEM_THPS, nr);
--		__lruvec_stat_mod_folio(folio, NR_FILE_PAGES, nr);
--		__lruvec_stat_mod_folio(folio, NR_SHMEM, nr);
-+		shmem_update_stats(folio, nr);
- 		mapping->nrpages += nr;
- unlock:
- 		xas_unlock_irq(&xas);
-@@ -844,8 +849,7 @@ static void shmem_delete_from_page_cache
- 	error = shmem_replace_entry(mapping, folio->index, folio, radswap);
- 	folio->mapping = NULL;
- 	mapping->nrpages -= nr;
--	__lruvec_stat_mod_folio(folio, NR_FILE_PAGES, -nr);
--	__lruvec_stat_mod_folio(folio, NR_SHMEM, -nr);
-+	shmem_update_stats(folio, -nr);
- 	xa_unlock_irq(&mapping->i_pages);
- 	folio_put_refs(folio, nr);
- 	BUG_ON(error);
-@@ -1944,10 +1948,8 @@ static int shmem_replace_folio(struct fo
- 	}
- 	if (!error) {
- 		mem_cgroup_replace_folio(old, new);
--		__lruvec_stat_mod_folio(new, NR_FILE_PAGES, nr_pages);
--		__lruvec_stat_mod_folio(new, NR_SHMEM, nr_pages);
--		__lruvec_stat_mod_folio(old, NR_FILE_PAGES, -nr_pages);
--		__lruvec_stat_mod_folio(old, NR_SHMEM, -nr_pages);
-+		shmem_update_stats(new, nr_pages);
-+		shmem_update_stats(old, -nr_pages);
- 	}
- 	xa_unlock_irq(&swap_mapping->i_pages);
- 
+ #define PG_head_mask ((1UL << PG_head))
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3503,7 +3503,7 @@ int split_huge_page_to_list_to_order(str
+ 		    !list_empty(&folio->_deferred_list)) {
+ 			ds_queue->split_queue_len--;
+ 			if (folio_test_partially_mapped(folio)) {
+-				__folio_clear_partially_mapped(folio);
++				folio_clear_partially_mapped(folio);
+ 				mod_mthp_stat(folio_order(folio),
+ 					      MTHP_STAT_NR_ANON_PARTIALLY_MAPPED, -1);
+ 			}
+@@ -3615,7 +3615,7 @@ bool __folio_unqueue_deferred_split(stru
+ 	if (!list_empty(&folio->_deferred_list)) {
+ 		ds_queue->split_queue_len--;
+ 		if (folio_test_partially_mapped(folio)) {
+-			__folio_clear_partially_mapped(folio);
++			folio_clear_partially_mapped(folio);
+ 			mod_mthp_stat(folio_order(folio),
+ 				      MTHP_STAT_NR_ANON_PARTIALLY_MAPPED, -1);
+ 		}
+@@ -3659,7 +3659,7 @@ void deferred_split_folio(struct folio *
+ 	spin_lock_irqsave(&ds_queue->split_queue_lock, flags);
+ 	if (partially_mapped) {
+ 		if (!folio_test_partially_mapped(folio)) {
+-			__folio_set_partially_mapped(folio);
++			folio_set_partially_mapped(folio);
+ 			if (folio_test_pmd_mappable(folio))
+ 				count_vm_event(THP_DEFERRED_SPLIT_PAGE);
+ 			count_mthp_stat(folio_order(folio), MTHP_STAT_SPLIT_DEFERRED);
+@@ -3752,7 +3752,7 @@ static unsigned long deferred_split_scan
+ 		} else {
+ 			/* We lost race with folio_put() */
+ 			if (folio_test_partially_mapped(folio)) {
+-				__folio_clear_partially_mapped(folio);
++				folio_clear_partially_mapped(folio);
+ 				mod_mthp_stat(folio_order(folio),
+ 					      MTHP_STAT_NR_ANON_PARTIALLY_MAPPED, -1);
+ 			}
 
 
