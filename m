@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02FF8827;
-	Mon, 23 Dec 2024 16:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D21A8827;
+	Mon, 23 Dec 2024 16:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970754; cv=none; b=PsfC4b3FaFWkwuuudIswlNPxAU0QqJqp890/C90p7iMo3DVw2nlpEO3+1N4azoi09PTxp5DnhafE/k1+OACBFaa1TFCXhHHxjX7ZmMept4ReCtCV9TO/xcYt6GlzKfh71MJO6djZPnWlB6DeJ9YG+RmATn+qCqfD8iJkv+XPVHg=
+	t=1734970758; cv=none; b=Vu1JH16zcJ968uGTu2jSoxqjPbVw6Yb292jqJfPK3bxzhc4gcqdaTNsOiUxKnkxJVbPV7IzfLQnIRECqa3I+fyWRS+ktoewMtqDBHe+3MZIVj3ZaQk9faUsTLq3SNkEKWb9v5ZTejraFaMaeFoqMjzo+9FabiYcFaVIHWC/55o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970754; c=relaxed/simple;
-	bh=cQ0SMc4L2LeoM2dRRgDtCzHYp6tYXh39w1yEXgLvgok=;
+	s=arc-20240116; t=1734970758; c=relaxed/simple;
+	bh=zobIcUJfhsPmFU6v60otWIwbnVo5Z59Ll8MwsHejf0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arl0yc8/LqRuQS8KFfl075WGEftSvLcR7BSPgZQQaj28ReD2upIoGwzwlWa/KrBlmZS0NDvaWNggsx35rFxF84x5qxA8J/Qft0nxdnj7E6flxBuMCB1Ww6AmQqyeyw2NjFeJGY1tsRjjEAs7anM7MR6b51ZbiDK/IbB76zVKIEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGRDzzP1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h7uHobSB0FP5MTmFE8YlVGg8ojGThNV89Ee+lEqSJdiHzI7G8Q/BZL6weIYqUiR8Jf3zx+AWy863fP2XtbPTJVsUV9X+yaY6rubY1aw8oadLoO9bVj177BqDA2AwUeWEwDVMGGPnH+RYJbJ9h30gDe7n8JeL+/pnwqWlI9bqeS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lw3u0zpC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGRDzzP1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3CAC4CED3;
-	Mon, 23 Dec 2024 16:19:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lw3u0zpC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B80C4CED3;
+	Mon, 23 Dec 2024 16:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970754;
-	bh=cQ0SMc4L2LeoM2dRRgDtCzHYp6tYXh39w1yEXgLvgok=;
+	s=korg; t=1734970758;
+	bh=zobIcUJfhsPmFU6v60otWIwbnVo5Z59Ll8MwsHejf0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGRDzzP15THzOZNufwgpW88l1hguV+xYJJeWdOmflv1U8zMMVSVxDRGayksC/SkE5
-	 A9mS0ykSanqz85POev7b5u33DbKQ4RSSweizkVhD0mq9X4z4Tly5MOoGr1WhC2twrt
-	 Y5wcKLUtsAIro0/1DWWgLNQ2lWEHtQzJO7ZoBbw0=
+	b=Lw3u0zpCSXVSWAxB2aC4D1mPzX1eRQ4bBuaK+yYsaZ+PBqvUQ5sGTtLGNXxWtDnZ2
+	 xIoye6G0/IC8bUYsqYn/DNcZVe7uM+n/XIquOMcBscDnmAJJMyDc8xuPMiVNv7Gn6W
+	 bhuF9y+obPZT3dP8XoWQV34C+Fg0mRIMqOoYvMtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frankie Fisher <frankie@terrorise.me.uk>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 59/83] btrfs: tree-checker: reject inline extent items with 0 ref count
-Date: Mon, 23 Dec 2024 16:59:38 +0100
-Message-ID: <20241223155355.913897046@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.1 33/83] KVM: x86: Cache CPUID.0xD XSTATE offsets+sizes during module init
+Date: Mon, 23 Dec 2024 16:59:12 +0100
+Message-ID: <20241223155354.927946291@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -52,104 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit dfb92681a19e1d5172420baa242806414b3eff6f upstream.
+commit 1201f226c863b7da739f7420ddba818cedf372fc upstream.
 
-[BUG]
-There is a bug report in the mailing list where btrfs_run_delayed_refs()
-failed to drop the ref count for logical 25870311358464 num_bytes
-2113536.
+Snapshot the output of CPUID.0xD.[1..n] during kvm.ko initiliaization to
+avoid the overead of CPUID during runtime.  The offset, size, and metadata
+for CPUID.0xD.[1..n] sub-leaves does not depend on XCR0 or XSS values, i.e.
+is constant for a given CPU, and thus can be cached during module load.
 
-The involved leaf dump looks like this:
+On Intel's Emerald Rapids, CPUID is *wildly* expensive, to the point where
+recomputing XSAVE offsets and sizes results in a 4x increase in latency of
+nested VM-Enter and VM-Exit (nested transitions can trigger
+xstate_required_size() multiple times per transition), relative to using
+cached values.  The issue is easily visible by running `perf top` while
+triggering nested transitions: kvm_update_cpuid_runtime() shows up at a
+whopping 50%.
 
-  item 166 key (25870311358464 168 2113536) itemoff 10091 itemsize 50
-    extent refs 1 gen 84178 flags 1
-    ref#0: shared data backref parent 32399126528000 count 0 <<<
-    ref#1: shared data backref parent 31808973717504 count 1
+As measured via RDTSC from L2 (using KVM-Unit-Test's CPUID VM-Exit test
+and a slightly modified L1 KVM to handle CPUID in the fastpath), a nested
+roundtrip to emulate CPUID on Skylake (SKX), Icelake (ICX), and Emerald
+Rapids (EMR) takes:
 
-Notice the count number is 0.
+  SKX 11650
+  ICX 22350
+  EMR 28850
 
-[CAUSE]
-There is no concrete evidence yet, but considering 0 -> 1 is also a
-single bit flipped, it's possible that hardware memory bitflip is
-involved, causing the on-disk extent tree to be corrupted.
+Using cached values, the latency drops to:
 
-[FIX]
-To prevent us reading such corrupted extent item, or writing such
-damaged extent item back to disk, enhance the handling of
-BTRFS_EXTENT_DATA_REF_KEY and BTRFS_SHARED_DATA_REF_KEY keys for both
-inlined and key items, to detect such 0 ref count and reject them.
+  SKX 6850
+  ICX 9000
+  EMR 7900
 
-CC: stable@vger.kernel.org # 5.4+
-Link: https://lore.kernel.org/linux-btrfs/7c69dd49-c346-4806-86e7-e6f863a66f48@app.fastmail.com/
-Reported-by: Frankie Fisher <frankie@terrorise.me.uk>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The underlying issue is that CPUID itself is slow on ICX, and comically
+slow on EMR.  The problem is exacerbated on CPUs which support XSAVES
+and/or XSAVEC, as KVM invokes xstate_required_size() twice on each
+runtime CPUID update, and because there are more supported XSAVE features
+(CPUID for supported XSAVE feature sub-leafs is significantly slower).
+
+ SKX:
+  CPUID.0xD.2  = 348 cycles
+  CPUID.0xD.3  = 400 cycles
+  CPUID.0xD.4  = 276 cycles
+  CPUID.0xD.5  = 236 cycles
+  <other sub-leaves are similar>
+
+ EMR:
+  CPUID.0xD.2  = 1138 cycles
+  CPUID.0xD.3  = 1362 cycles
+  CPUID.0xD.4  = 1068 cycles
+  CPUID.0xD.5  = 910 cycles
+  CPUID.0xD.6  = 914 cycles
+  CPUID.0xD.7  = 1350 cycles
+  CPUID.0xD.8  = 734 cycles
+  CPUID.0xD.9  = 766 cycles
+  CPUID.0xD.10 = 732 cycles
+  CPUID.0xD.11 = 718 cycles
+  CPUID.0xD.12 = 734 cycles
+  CPUID.0xD.13 = 1700 cycles
+  CPUID.0xD.14 = 1126 cycles
+  CPUID.0xD.15 = 898 cycles
+  CPUID.0xD.16 = 716 cycles
+  CPUID.0xD.17 = 748 cycles
+  CPUID.0xD.18 = 776 cycles
+
+Note, updating runtime CPUID information multiple times per nested
+transition is itself a flaw, especially since CPUID is a mandotory
+intercept on both Intel and AMD.  E.g. KVM doesn't need to ensure emulated
+CPUID state is up-to-date while running L2.  That flaw will be fixed in a
+future patch, as deferring runtime CPUID updates is more subtle than it
+appears at first glance, the benefits aren't super critical to have once
+the XSAVE issue is resolved, and caching CPUID output is desirable even if
+KVM's updates are deferred.
+
+Cc: Jim Mattson <jmattson@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20241211013302.1347853-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ arch/x86/kvm/cpuid.c |   31 ++++++++++++++++++++++++++-----
+ arch/x86/kvm/cpuid.h |    1 +
+ arch/x86/kvm/x86.c   |    2 ++
+ 3 files changed, 29 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1433,6 +1433,11 @@ static int check_extent_item(struct exte
- 					   dref_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_extent_data_ref_count(leaf, dref);
- 			break;
- 		/* Contains parent bytenr and ref count */
-@@ -1445,6 +1450,11 @@ static int check_extent_item(struct exte
- 					   inline_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid shared data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_shared_data_ref_count(leaf, sref);
- 			break;
- 		default:
-@@ -1496,8 +1506,18 @@ static int check_simple_keyed_refs(struc
- {
- 	u32 expect_item_size = 0;
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -33,6 +33,26 @@
+ u32 kvm_cpu_caps[NR_KVM_CPU_CAPS] __read_mostly;
+ EXPORT_SYMBOL_GPL(kvm_cpu_caps);
  
--	if (key->type == BTRFS_SHARED_DATA_REF_KEY)
-+	if (key->type == BTRFS_SHARED_DATA_REF_KEY) {
-+		struct btrfs_shared_data_ref *sref;
++struct cpuid_xstate_sizes {
++	u32 eax;
++	u32 ebx;
++	u32 ecx;
++};
 +
-+		sref = btrfs_item_ptr(leaf, slot, struct btrfs_shared_data_ref);
-+		if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+			extent_err(leaf, slot,
-+		"invalid shared data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
++static struct cpuid_xstate_sizes xstate_sizes[XFEATURE_MAX] __ro_after_init;
 +
- 		expect_item_size = sizeof(struct btrfs_shared_data_ref);
++void __init kvm_init_xstate_sizes(void)
++{
++	u32 ign;
++	int i;
++
++	for (i = XFEATURE_YMM; i < ARRAY_SIZE(xstate_sizes); i++) {
++		struct cpuid_xstate_sizes *xs = &xstate_sizes[i];
++
++		cpuid_count(0xD, i, &xs->eax, &xs->ebx, &xs->ecx, &ign);
 +	}
- 
- 	if (unlikely(btrfs_item_size(leaf, slot) != expect_item_size)) {
- 		generic_err(leaf, slot,
-@@ -1557,6 +1577,11 @@ static int check_extent_data_ref(struct
- 				   offset, leaf->fs_info->sectorsize);
- 			return -EUCLEAN;
++}
++
+ u32 xstate_required_size(u64 xstate_bv, bool compacted)
+ {
+ 	int feature_bit = 0;
+@@ -41,14 +61,15 @@ u32 xstate_required_size(u64 xstate_bv,
+ 	xstate_bv &= XFEATURE_MASK_EXTEND;
+ 	while (xstate_bv) {
+ 		if (xstate_bv & 0x1) {
+-		        u32 eax, ebx, ecx, edx, offset;
+-		        cpuid_count(0xD, feature_bit, &eax, &ebx, &ecx, &edx);
++			struct cpuid_xstate_sizes *xs = &xstate_sizes[feature_bit];
++			u32 offset;
++
+ 			/* ECX[1]: 64B alignment in compacted form */
+ 			if (compacted)
+-				offset = (ecx & 0x2) ? ALIGN(ret, 64) : ret;
++				offset = (xs->ecx & 0x2) ? ALIGN(ret, 64) : ret;
+ 			else
+-				offset = ebx;
+-			ret = max(ret, offset + eax);
++				offset = xs->ebx;
++			ret = max(ret, offset + xs->eax);
  		}
-+		if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+			extent_err(leaf, slot,
-+	"invalid extent data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
- 	}
+ 
+ 		xstate_bv >>= 1;
+--- a/arch/x86/kvm/cpuid.h
++++ b/arch/x86/kvm/cpuid.h
+@@ -32,6 +32,7 @@ int kvm_vcpu_ioctl_get_cpuid2(struct kvm
+ bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
+ 	       u32 *ecx, u32 *edx, bool exact_only);
+ 
++void __init kvm_init_xstate_sizes(void);
+ u32 xstate_required_size(u64 xstate_bv, bool compacted);
+ 
+ int cpuid_query_maxphyaddr(struct kvm_vcpu *vcpu);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13820,6 +13820,8 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(kvm_vmgexit
+ 
+ static int __init kvm_x86_init(void)
+ {
++	kvm_init_xstate_sizes();
++
+ 	kvm_mmu_x86_module_init();
+ 	mitigate_smt_rsb &= boot_cpu_has_bug(X86_BUG_SMT_RSB) && cpu_smt_possible();
  	return 0;
- }
 
 
