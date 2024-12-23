@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081861B4120;
-	Mon, 23 Dec 2024 16:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEC61865EB;
+	Mon, 23 Dec 2024 16:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970686; cv=none; b=g0XuJ/GCDIo7YHahFi9Ivje7o9HvIgyid05qR2d1qV6eEI++BJBf9wWGmCJ04j9coYb/X97RWJIecN5UDnWOCyQ8iEfHturKuskfD3wy7pJq7pbKmNr6CniLeQq2JswPrp01CF8dpnMz8T+a5N5dZGY32E1iKcsLpafAZbnuDnw=
+	t=1734970689; cv=none; b=SsnG/KQI5MV7n+RMf4+1BdyIUYHuznWetEz+E+XtJAhjKGziTqj5JB8JUSLUWK3232uBSqik4q2umqTFDu5BG7pIX1dK6ZO7z5RhEoO6RFrpzZ7DmMnpySugCSIRiXGQaz+ldUlcqCzbs8adBxP36ZKRr8vPexFUccrhow3NSxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970686; c=relaxed/simple;
-	bh=PxjRoWHyQ66bQWifQkZ9B9uAkaq8O5xQc/if2pmi/Lk=;
+	s=arc-20240116; t=1734970689; c=relaxed/simple;
+	bh=mItcYr1kzRt+n1d7ZB4QkUyhPbs4WOM8Rqfx8ZAnZUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aS606gvWdeuDLktK+KbS5J4diBHqQqNwKUwFpfm2aAjUvFLICeIihlhi0HgerocViDf+NvexuwRAZf/w1iV9D/KoiQiOPssIrrNP/I/0hMab+8Jril/6F1adR6oE7uNhn/N0ggOpgSfVDXzd55IfTBF+dJvVjHMcMgxiy1h+lm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/IgZfy6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hehw5Z+ARai1eGSDxMb0CjHGbbUl1uY4L6CmDWbISfMaEVuRuHOpTWicLlqVypeE/rdparrlCoxFluC1xEATNxn+XMDytGlPKlieEIaHjLF5/mR0sinMZu/mVgVogdPTfQixIvPJSk6epgSIHW+4gDuWon3vy02C6qAlSTecQcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/E2UqQj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/IgZfy6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CABBC4CEDC;
-	Mon, 23 Dec 2024 16:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/E2UqQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 976F4C4CED3;
+	Mon, 23 Dec 2024 16:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970685;
-	bh=PxjRoWHyQ66bQWifQkZ9B9uAkaq8O5xQc/if2pmi/Lk=;
+	s=korg; t=1734970689;
+	bh=mItcYr1kzRt+n1d7ZB4QkUyhPbs4WOM8Rqfx8ZAnZUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/IgZfy6UB3wA7+v3yVE1WdPgO3b8MHIOUOO6+iWBzCeHx2uPYhkcYBfACnHMZYnh
-	 UlS7Y9eCF1iErZQt+hzIRbNAiqiW2QEJ6fMy8cKUHAzUDW20cwQbc+fP8jV3rF36Wm
-	 JC5lVOl/XGwRUl7guaLeS+NRIfRntKqGP+UHvqNI=
+	b=U/E2UqQj6mdUb1neXW8RiFNt3X0K6mbPiCgBsh9UQN2G8FvilhC8PC5l3l9q1xDSF
+	 qc5MBAVomBPRaGh/JjgVvKV5ct2WxncKJ4N6nC1N6G4zOWZjXsauaWZeVVwVynXtnv
+	 M+mhs4s1SSGtVL0epYhdeIMjlgoaW+VzDYuA6ywQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/83] net: mdiobus: fix an OF node reference leak
-Date: Mon, 23 Dec 2024 16:59:10 +0100
-Message-ID: <20241223155354.855533926@linuxfoundation.org>
+	Mank Wang <mank.wang@netprisma.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 40/83] USB: serial: option: add Netprisma LCUK54 modules for WWAN Ready
+Date: Mon, 23 Dec 2024 16:59:19 +0100
+Message-ID: <20241223155355.192696334@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
 References: <20241223155353.641267612@linuxfoundation.org>
@@ -52,61 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Mank Wang <mank.wang@netprisma.com>
 
-[ Upstream commit 572af9f284669d31d9175122bbef9bc62cea8ded ]
+commit aa954ae08262bb5cd6ab18dd56a0b58c1315db8b upstream.
 
-fwnode_find_mii_timestamper() calls of_parse_phandle_with_fixed_args()
-but does not decrement the refcount of the obtained OF node. Add an
-of_node_put() call before returning from the function.
+LCUK54-WRD's pid/vid
+0x3731/0x010a
+0x3731/0x010c
 
-This bug was detected by an experimental static analysis tool that I am
-developing.
+LCUK54-WWD's pid/vid
+0x3731/0x010b
+0x3731/0x010d
 
-Fixes: bc1bee3b87ee ("net: mdiobus: Introduce fwnode_mdiobus_register_phy()")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241218035106.1436405-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Above products use the exact same interface layout and option
+driver:
+MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=3731 ProdID=0101 Rev= 5.04
+S:  Manufacturer=NetPrisma
+S:  Product=LCUK54-WRD
+S:  SerialNumber=feeba631
+C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Mank Wang <mank.wang@netprisma.com>
+[ johan: use lower case hex notation ]
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mdio/fwnode_mdio.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/usb/serial/option.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/mdio/fwnode_mdio.c b/drivers/net/mdio/fwnode_mdio.c
-index b782c35c4ac1..8ada397bc357 100644
---- a/drivers/net/mdio/fwnode_mdio.c
-+++ b/drivers/net/mdio/fwnode_mdio.c
-@@ -38,6 +38,7 @@ fwnode_find_pse_control(struct fwnode_handle *fwnode)
- static struct mii_timestamper *
- fwnode_find_mii_timestamper(struct fwnode_handle *fwnode)
- {
-+	struct mii_timestamper *mii_ts;
- 	struct of_phandle_args arg;
- 	int err;
- 
-@@ -51,10 +52,16 @@ fwnode_find_mii_timestamper(struct fwnode_handle *fwnode)
- 	else if (err)
- 		return ERR_PTR(err);
- 
--	if (arg.args_count != 1)
--		return ERR_PTR(-EINVAL);
-+	if (arg.args_count != 1) {
-+		mii_ts = ERR_PTR(-EINVAL);
-+		goto put_node;
-+	}
-+
-+	mii_ts = register_mii_timestamper(arg.np, arg.args[0]);
- 
--	return register_mii_timestamper(arg.np, arg.args[0]);
-+put_node:
-+	of_node_put(arg.np);
-+	return mii_ts;
- }
- 
- int fwnode_mdiobus_phy_device_register(struct mii_bus *mdio,
--- 
-2.39.5
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2377,6 +2377,18 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Golbal EDU */
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0x00, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WRD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WRD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0xff, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for WWAN Ready */
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0x00, 0x40) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
 
 
