@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB2012D1F1;
-	Mon, 23 Dec 2024 16:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5E380C02;
+	Mon, 23 Dec 2024 16:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969635; cv=none; b=HMoqespS/a/eFitgG0KtJc95XhqZ568Ymz1AkoWfYWHlqZC1uT4JYh1c7UO9gWoSFqHJocQ1TETNYVEdyULDcft1J6a5EuRgkPanx+ewdA+3TwhVM2TjOxIZvZ0ihVpJtHgsev3liKLYIC1R6315cNF9VuKFv9apWEHPEG8lFnk=
+	t=1734969637; cv=none; b=i2oVYhJgdVWIUZUb6IzBcBZDAFlpKP8EP5HuJ0E0QnWj7tZsjEBb4hD/KPcqT9kGeFxtNgRZQz6dSbNy55+dE8TNLRoFhUmRkGbH8b4/EdAgxq91tDpu0LlqzGx5x8xNK3CgT4xIf85qqq9U2Y8KHTqYPDhnDbk9/jbYVDQdoE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969635; c=relaxed/simple;
-	bh=7s8mmow+rCtZHoZLMue2155cW1iBwrXcuimwWBq+D8U=;
+	s=arc-20240116; t=1734969637; c=relaxed/simple;
+	bh=m4htr7CnUkUN6SzQH9QxXXGMXqDZUYeSK0WrOnIim0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OLIzORVWdhmTeKPwYFdOq0tRyhr3PMpuWi79joSXdLQpJCh+9belif9WbUNij7ssj09kmldKDUO9A0MUTKTon5Fx+pELRrfpjoAmHW7661m+z2XXa2Pmucm+uFzjI5+f2Q8fUkXLeDaItHDcPRBK2JsX+VVemFiGR6adbah/qFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EaDJ6T1P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZ2Cyfmm2c9QwTfl4P6bhb/6eywEOoLGvB5rVO1u9zzw5nEPbLL3H5o64MaNgG+yIb8p3S2dqpKH+Fmz6qGy2E+GpfY8IhCZXeXu0cEQpIpeWn+rmURsDKQniumA6wHbf9lrsw9pe+wio9ON/0VTI2gdW+gefZ2D1gHMyw9V294=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IAxwb6wC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EaDJ6T1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B83C4CED4;
-	Mon, 23 Dec 2024 16:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IAxwb6wC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4A4C4CED7;
+	Mon, 23 Dec 2024 16:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969633;
-	bh=7s8mmow+rCtZHoZLMue2155cW1iBwrXcuimwWBq+D8U=;
+	s=korg; t=1734969637;
+	bh=m4htr7CnUkUN6SzQH9QxXXGMXqDZUYeSK0WrOnIim0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EaDJ6T1PH/+zlekI+r4hRfGQR4KBl8allyzJHfl/Dofgw+btOYZ88ZhICkmGQAMIR
-	 YG2bkJZqjGzilduuP5aJiRwdG5J/kjVi5xBFyu+ZlbKHQrmy0/vVkcldQYI2CCLT2Q
-	 IHAfmz44CLljdPK2RD8CKjCnpYYiVfJ+HGUQ5ht4=
+	b=IAxwb6wCHqd8IdBBG8NfmdiS1NPEk8cMaaaZpSokr7IIvuL0Vnvi+04xfMea23y31
+	 l6EWOeXXfw6KIHPjR/KauAVosn7214Fqlc5F+gzVs10wkeQEC9STqiYngR7cuqPkQ/
+	 YBfaguc+/dghNsYIq0ukqNeajO/VpEP7flxUc+CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Mark Brown <broonie@kernel.org>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Levi Yun <yeoreum.yun@arm.com>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 003/160] firmware: arm_scmi: Fix i.MX build dependency
-Date: Mon, 23 Dec 2024 16:56:54 +0100
-Message-ID: <20241223155408.745357574@linuxfoundation.org>
+Subject: [PATCH 6.12 004/160] firmware: arm_ffa: Fix the race around setting ffa_dev->properties
+Date: Mon, 23 Dec 2024 16:56:55 +0100
+Message-ID: <20241223155408.793772374@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,80 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Levi Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 514b2262ade48a0503ac6aa03c3bfb8c5be69b21 ]
+[ Upstream commit 6fe437cfe2cdc797b03f63b338a13fac96ed6a08 ]
 
-The newly added SCMI vendor driver references functions in the
-protocol driver but needs a Kconfig dependency to ensure it can link,
-essentially the Kconfig dependency needs to be reversed to match the
-link time dependency:
+Currently, ffa_dev->properties is set after the ffa_device_register()
+call return in ffa_setup_partitions(). This could potentially result in
+a race where the partition's properties is accessed while probing
+struct ffa_device before it is set.
 
-  |  arm-linux-gnueabi-ld: sound/soc/fsl/fsl_mqs.o: in function `fsl_mqs_sm_write':
-  |  	fsl_mqs.c:(.text+0x1aa): undefined reference to `scmi_imx_misc_ctrl_set'
-  |  arm-linux-gnueabi-ld: sound/soc/fsl/fsl_mqs.o: in function `fsl_mqs_sm_read':
-  |  	fsl_mqs.c:(.text+0x1ee): undefined reference to `scmi_imx_misc_ctrl_get'
+Update the ffa_device_register() to receive ffa_partition_info so all
+the data from the partition information received from the firmware can
+be updated into the struct ffa_device before the calling device_register()
+in ffa_device_register().
 
-This however only works after changing the dependency in the SND_SOC_FSL_MQS
-driver as well, which uses 'select IMX_SCMI_MISC_DRV' to turn on a
-driver it depends on. This is generally a bad idea, so the best solution
-is to change that into a dependency.
-
-To allow the ASoC driver to keep building with the SCMI support, this
-needs to be an optional dependency that enforces the link-time
-dependency if IMX_SCMI_MISC_DRV is a loadable module but not
-depend on it if that is disabled.
-
-Fixes: 61c9f03e22fc ("firmware: arm_scmi: Add initial support for i.MX MISC protocol")
-Fixes: 101c9023594a ("ASoC: fsl_mqs: Support accessing registers by scmi interface")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Mark Brown <broonie@kernel.org>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Message-Id: <20241115230555.2435004-1-arnd@kernel.org>
+Fixes: e781858488b9 ("firmware: arm_ffa: Add initial FFA bus support for device enumeration")
+Signed-off-by: Levi Yun <yeoreum.yun@arm.com>
+Message-Id: <20241203143109.1030514-2-yeoreum.yun@arm.com>
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/vendors/imx/Kconfig | 1 +
- drivers/firmware/imx/Kconfig                  | 1 -
- sound/soc/fsl/Kconfig                         | 1 +
- 3 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/bus.c    | 15 +++++++++++----
+ drivers/firmware/arm_ffa/driver.c |  7 +------
+ include/linux/arm_ffa.h           | 13 ++++++++-----
+ 3 files changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/vendors/imx/Kconfig b/drivers/firmware/arm_scmi/vendors/imx/Kconfig
-index 2883ed24a84d..a01bf5e47301 100644
---- a/drivers/firmware/arm_scmi/vendors/imx/Kconfig
-+++ b/drivers/firmware/arm_scmi/vendors/imx/Kconfig
-@@ -15,6 +15,7 @@ config IMX_SCMI_BBM_EXT
- config IMX_SCMI_MISC_EXT
- 	tristate "i.MX SCMI MISC EXTENSION"
- 	depends on ARM_SCMI_PROTOCOL || (COMPILE_TEST && OF)
-+	depends on IMX_SCMI_MISC_DRV
- 	default y if ARCH_MXC
- 	help
- 	  This enables i.MX System MISC control logic such as gpio expander
-diff --git a/drivers/firmware/imx/Kconfig b/drivers/firmware/imx/Kconfig
-index 477d3f32d99a..907cd149c40a 100644
---- a/drivers/firmware/imx/Kconfig
-+++ b/drivers/firmware/imx/Kconfig
-@@ -25,7 +25,6 @@ config IMX_SCU
+diff --git a/drivers/firmware/arm_ffa/bus.c b/drivers/firmware/arm_ffa/bus.c
+index eb17d03b66fe..dfda5ffc14db 100644
+--- a/drivers/firmware/arm_ffa/bus.c
++++ b/drivers/firmware/arm_ffa/bus.c
+@@ -187,13 +187,18 @@ bool ffa_device_is_valid(struct ffa_device *ffa_dev)
+ 	return valid;
+ }
  
- config IMX_SCMI_MISC_DRV
- 	tristate "IMX SCMI MISC Protocol driver"
--	depends on IMX_SCMI_MISC_EXT || COMPILE_TEST
- 	default y if ARCH_MXC
- 	help
- 	  The System Controller Management Interface firmware (SCMI FW) is
-diff --git a/sound/soc/fsl/Kconfig b/sound/soc/fsl/Kconfig
-index e283751abfef..678540b78280 100644
---- a/sound/soc/fsl/Kconfig
-+++ b/sound/soc/fsl/Kconfig
-@@ -29,6 +29,7 @@ config SND_SOC_FSL_SAI
- config SND_SOC_FSL_MQS
- 	tristate "Medium Quality Sound (MQS) module support"
- 	depends on SND_SOC_FSL_SAI
-+	depends on IMX_SCMI_MISC_DRV || !IMX_SCMI_MISC_DRV
- 	select REGMAP_MMIO
- 	help
- 	  Say Y if you want to add Medium Quality Sound (MQS)
+-struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
+-				       const struct ffa_ops *ops)
++struct ffa_device *
++ffa_device_register(const struct ffa_partition_info *part_info,
++		    const struct ffa_ops *ops)
+ {
+ 	int id, ret;
++	uuid_t uuid;
+ 	struct device *dev;
+ 	struct ffa_device *ffa_dev;
+ 
++	if (!part_info)
++		return NULL;
++
+ 	id = ida_alloc_min(&ffa_bus_id, 1, GFP_KERNEL);
+ 	if (id < 0)
+ 		return NULL;
+@@ -210,9 +215,11 @@ struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
+ 	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
+ 
+ 	ffa_dev->id = id;
+-	ffa_dev->vm_id = vm_id;
++	ffa_dev->vm_id = part_info->id;
++	ffa_dev->properties = part_info->properties;
+ 	ffa_dev->ops = ops;
+-	uuid_copy(&ffa_dev->uuid, uuid);
++	import_uuid(&uuid, (u8 *)part_info->uuid);
++	uuid_copy(&ffa_dev->uuid, &uuid);
+ 
+ 	ret = device_register(&ffa_dev->dev);
+ 	if (ret) {
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index b14cbdae94e8..2c2ec3c35f15 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -1387,7 +1387,6 @@ static struct notifier_block ffa_bus_nb = {
+ static int ffa_setup_partitions(void)
+ {
+ 	int count, idx, ret;
+-	uuid_t uuid;
+ 	struct ffa_device *ffa_dev;
+ 	struct ffa_dev_part_info *info;
+ 	struct ffa_partition_info *pbuf, *tpbuf;
+@@ -1406,23 +1405,19 @@ static int ffa_setup_partitions(void)
+ 
+ 	xa_init(&drv_info->partition_info);
+ 	for (idx = 0, tpbuf = pbuf; idx < count; idx++, tpbuf++) {
+-		import_uuid(&uuid, (u8 *)tpbuf->uuid);
+-
+ 		/* Note that if the UUID will be uuid_null, that will require
+ 		 * ffa_bus_notifier() to find the UUID of this partition id
+ 		 * with help of ffa_device_match_uuid(). FF-A v1.1 and above
+ 		 * provides UUID here for each partition as part of the
+ 		 * discovery API and the same is passed.
+ 		 */
+-		ffa_dev = ffa_device_register(&uuid, tpbuf->id, &ffa_drv_ops);
++		ffa_dev = ffa_device_register(tpbuf, &ffa_drv_ops);
+ 		if (!ffa_dev) {
+ 			pr_err("%s: failed to register partition ID 0x%x\n",
+ 			       __func__, tpbuf->id);
+ 			continue;
+ 		}
+ 
+-		ffa_dev->properties = tpbuf->properties;
+-
+ 		if (drv_info->version > FFA_VERSION_1_0 &&
+ 		    !(tpbuf->properties & FFA_PARTITION_AARCH64_EXEC))
+ 			ffa_mode_32bit_set(ffa_dev);
+diff --git a/include/linux/arm_ffa.h b/include/linux/arm_ffa.h
+index a28e2a6a13d0..74169dd0f659 100644
+--- a/include/linux/arm_ffa.h
++++ b/include/linux/arm_ffa.h
+@@ -166,9 +166,12 @@ static inline void *ffa_dev_get_drvdata(struct ffa_device *fdev)
+ 	return dev_get_drvdata(&fdev->dev);
+ }
+ 
++struct ffa_partition_info;
++
+ #if IS_REACHABLE(CONFIG_ARM_FFA_TRANSPORT)
+-struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
+-				       const struct ffa_ops *ops);
++struct ffa_device *
++ffa_device_register(const struct ffa_partition_info *part_info,
++		    const struct ffa_ops *ops);
+ void ffa_device_unregister(struct ffa_device *ffa_dev);
+ int ffa_driver_register(struct ffa_driver *driver, struct module *owner,
+ 			const char *mod_name);
+@@ -176,9 +179,9 @@ void ffa_driver_unregister(struct ffa_driver *driver);
+ bool ffa_device_is_valid(struct ffa_device *ffa_dev);
+ 
+ #else
+-static inline
+-struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
+-				       const struct ffa_ops *ops)
++static inline struct ffa_device *
++ffa_device_register(const struct ffa_partition_info *part_info,
++		    const struct ffa_ops *ops)
+ {
+ 	return NULL;
+ }
 -- 
 2.39.5
 
