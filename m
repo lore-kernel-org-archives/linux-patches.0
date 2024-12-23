@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031B4188006;
-	Mon, 23 Dec 2024 16:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6723619E971;
+	Mon, 23 Dec 2024 16:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970109; cv=none; b=Y+O8ImCKxOZzuHoYFyxB/B3eda6YwQW4Ix1jyYR5w1PH3zASk6QWAoNx2lQunPocAA6meL8Wsrvb4yw6fshbpPDUB+Nv+5PN3qKjkbnuPRyre+Vvq4ohR9rIlWbB3Pp7HX6AQAeGkScqgAZg+yHUZM5TQ6sYsphK5Hn7YeSH4zc=
+	t=1734970112; cv=none; b=spXySADXAJrl0RQPRaTSVnk7+3HJ2bJT+ZXWdQco4Nwk7m+IVW+PQf5x0uPSxvrG4tU2E+hlxvEwUfgciAqcu5oB4rw7PIa7x+LPTcCzNDiYWpq22QPxBUrVuYUvQ4+o6nQy6tOEKwU1AR6RYMtxitDaGhqusLVZSLWKuQESwEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970109; c=relaxed/simple;
-	bh=XkuSMfvNFh8X0iZH8KD0bUZuePpgPtTt2Hfe/epT99A=;
+	s=arc-20240116; t=1734970112; c=relaxed/simple;
+	bh=GtFmunejWUNkg8eGRxqepe8mQkDwfbn0XkiJeyVMaqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1DEitUFEVbuQevU3BQ2aG04Mn3Esa2xbVJTmFblAbTha5J5hs8fhMaVJwQ9mXwxAz8VfBySNSAGV3Tx/HQeMAKqE+esdXwTGsncz48wOKVqem3UqpJaecCtcIDAmMZz8+vQYebKKyUNH2Pvvy5CEtrrSWXcJLuzC5SDpmasjw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d+e8uMeb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJ8TL/a6lVAt4P5u5woAV/GaZv/4oNizPe6x7owzjr0UFtIIBVM4psay2G8JrhXEnX3tzLd84dESyk4DeqdJ4d4cg8WcLaJm50gfv2ZVwijf+JKGGYfCtDAv89zNG3czi1CE000lk9CVBP8SKs9SDWA6E/pVdCqPHXOccf/HWr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rhIRzvfm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d+e8uMeb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65283C4CED3;
-	Mon, 23 Dec 2024 16:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rhIRzvfm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40C8C4CED4;
+	Mon, 23 Dec 2024 16:08:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970108;
-	bh=XkuSMfvNFh8X0iZH8KD0bUZuePpgPtTt2Hfe/epT99A=;
+	s=korg; t=1734970112;
+	bh=GtFmunejWUNkg8eGRxqepe8mQkDwfbn0XkiJeyVMaqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+e8uMebod3fbI2lTbRUuMLmDeGi23K7hpxpiHK3fIwAvIcRMbEu0W/Spz+S6lxKr
-	 nNmI+C/rHqS4AOSi09wAe2IjTsjufS6wGwQNJH61INIUq6nZFyV8GobjWwDBjTBNJ8
-	 tN4MEL+6PgLJeM7AUH/rw4iPszBG7nSnNvcPFTSc=
+	b=rhIRzvfm0jm93XFPRXWcfFx72a2AvrObvESjm65RfpFbqWA//KC8OmtZ/JBsSOrmi
+	 ZxqO1fZWtHaefIJPSfHqWpCerpiNPulNbj1suW95jz4xEaj0FnNGwjz0hKImufrDjv
+	 v2j0Y6NLoaOSSnNEr9+D4f8hjOYMVQpbjnDOmNGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Frankie Fisher <frankie@terrorise.me.uk>,
 	Filipe Manana <fdmanana@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 116/160] btrfs: fix improper generation check in snapshot delete
-Date: Mon, 23 Dec 2024 16:58:47 +0100
-Message-ID: <20241223155413.160452328@linuxfoundation.org>
+Subject: [PATCH 6.12 117/160] btrfs: tree-checker: reject inline extent items with 0 ref count
+Date: Mon, 23 Dec 2024 16:58:48 +0100
+Message-ID: <20241223155413.201795976@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,127 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit d75d72a858f0c00ca8ae161b48cdb403807be4de upstream.
+commit dfb92681a19e1d5172420baa242806414b3eff6f upstream.
 
-We have been using the following check
+[BUG]
+There is a bug report in the mailing list where btrfs_run_delayed_refs()
+failed to drop the ref count for logical 25870311358464 num_bytes
+2113536.
 
-   if (generation <= root->root_key.offset)
+The involved leaf dump looks like this:
 
-to make decisions about whether or not to visit a node during snapshot
-delete.  This is because for normal subvolumes this is set to 0, and for
-snapshots it's set to the creation generation.  The idea being that if
-the generation of the node is less than or equal to our creation
-generation then we don't need to visit that node, because it doesn't
-belong to us, we can simply drop our reference and move on.
+  item 166 key (25870311358464 168 2113536) itemoff 10091 itemsize 50
+    extent refs 1 gen 84178 flags 1
+    ref#0: shared data backref parent 32399126528000 count 0 <<<
+    ref#1: shared data backref parent 31808973717504 count 1
 
-However reloc roots don't have their generation stored in
-root->root_key.offset, instead that is the objectid of their
-corresponding fs root.  This means we can incorrectly not walk into
-nodes that need to be dropped when deleting a reloc root.
+Notice the count number is 0.
 
-There are a variety of consequences to making the wrong choice in two
-distinct areas.
+[CAUSE]
+There is no concrete evidence yet, but considering 0 -> 1 is also a
+single bit flipped, it's possible that hardware memory bitflip is
+involved, causing the on-disk extent tree to be corrupted.
 
-visit_node_for_delete()
+[FIX]
+To prevent us reading such corrupted extent item, or writing such
+damaged extent item back to disk, enhance the handling of
+BTRFS_EXTENT_DATA_REF_KEY and BTRFS_SHARED_DATA_REF_KEY keys for both
+inlined and key items, to detect such 0 ref count and reject them.
 
-1. False positive.  We think we are newer than the block when we really
-   aren't.  We don't visit the node and drop our reference to the node
-   and carry on.  This would result in leaked space.
-2. False negative.  We do decide to walk down into a block that we
-   should have just dropped our reference to.  However this means that
-   the child node will have refs > 1, so we will switch to
-   UPDATE_BACKREF, and then the subsequent walk_down_proc() will notice
-   that btrfs_header_owner(node) != root->root_key.objectid and it'll
-   break out of the loop, and then walk_up_proc() will drop our reference,
-   so this appears to be ok.
-
-do_walk_down()
-
-1. False positive.  We are in UPDATE_BACKREF and incorrectly decide that
-   we are done and don't need to update the backref for our lower nodes.
-   This is another case that simply won't happen with relocation, as we
-   only have to do UPDATE_BACKREF if the node below us was shared and
-   didn't have FULL_BACKREF set, and since we don't own that node
-   because we're a reloc root we actually won't end up in this case.
-2. False negative.  Again this is tricky because as described above, we
-   simply wouldn't be here from relocation, because we don't own any of
-   the nodes because we never set btrfs_header_owner() to the reloc root
-   objectid, and we always use FULL_BACKREF, we never actually need to
-   set FULL_BACKREF on any children.
-
-Having spent a lot of time stressing relocation/snapshot delete recently
-I've not seen this pop in practice.  But this is objectively incorrect,
-so fix this to get the correct starting generation based on the root
-we're dropping to keep me from thinking there's a problem here.
-
-CC: stable@vger.kernel.org
+CC: stable@vger.kernel.org # 5.4+
+Link: https://lore.kernel.org/linux-btrfs/7c69dd49-c346-4806-86e7-e6f863a66f48@app.fastmail.com/
+Reported-by: Frankie Fisher <frankie@terrorise.me.uk>
 Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h       |   19 +++++++++++++++++++
- fs/btrfs/extent-tree.c |    6 +++---
- 2 files changed, 22 insertions(+), 3 deletions(-)
+ fs/btrfs/tree-checker.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -371,6 +371,25 @@ static inline void btrfs_set_root_last_t
- }
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1527,6 +1527,11 @@ static int check_extent_item(struct exte
+ 					   dref_offset, fs_info->sectorsize);
+ 				return -EUCLEAN;
+ 			}
++			if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
++				extent_err(leaf, slot,
++			"invalid data ref count, should have non-zero value");
++				return -EUCLEAN;
++			}
+ 			inline_refs += btrfs_extent_data_ref_count(leaf, dref);
+ 			break;
+ 		/* Contains parent bytenr and ref count */
+@@ -1539,6 +1544,11 @@ static int check_extent_item(struct exte
+ 					   inline_offset, fs_info->sectorsize);
+ 				return -EUCLEAN;
+ 			}
++			if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
++				extent_err(leaf, slot,
++			"invalid shared data ref count, should have non-zero value");
++				return -EUCLEAN;
++			}
+ 			inline_refs += btrfs_shared_data_ref_count(leaf, sref);
+ 			break;
+ 		case BTRFS_EXTENT_OWNER_REF_KEY:
+@@ -1611,8 +1621,18 @@ static int check_simple_keyed_refs(struc
+ {
+ 	u32 expect_item_size = 0;
  
- /*
-+ * Return the generation this root started with.
-+ *
-+ * Every normal root that is created with root->root_key.offset set to it's
-+ * originating generation.  If it is a snapshot it is the generation when the
-+ * snapshot was created.
-+ *
-+ * However for TREE_RELOC roots root_key.offset is the objectid of the owning
-+ * tree root.  Thankfully we copy the root item of the owning tree root, which
-+ * has it's last_snapshot set to what we would have root_key.offset set to, so
-+ * return that if this is a TREE_RELOC root.
-+ */
-+static inline u64 btrfs_root_origin_generation(const struct btrfs_root *root)
-+{
-+	if (btrfs_root_id(root) == BTRFS_TREE_RELOC_OBJECTID)
-+		return btrfs_root_last_snapshot(&root->root_item);
-+	return root->root_key.offset;
-+}
+-	if (key->type == BTRFS_SHARED_DATA_REF_KEY)
++	if (key->type == BTRFS_SHARED_DATA_REF_KEY) {
++		struct btrfs_shared_data_ref *sref;
 +
-+/*
-  * Structure that conveys information about an extent that is going to replace
-  * all the extents in a file range.
-  */
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -5308,7 +5308,7 @@ static bool visit_node_for_delete(struct
- 	 * reference to it.
- 	 */
- 	generation = btrfs_node_ptr_generation(eb, slot);
--	if (!wc->update_ref || generation <= root->root_key.offset)
-+	if (!wc->update_ref || generation <= btrfs_root_origin_generation(root))
- 		return false;
++		sref = btrfs_item_ptr(leaf, slot, struct btrfs_shared_data_ref);
++		if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
++			extent_err(leaf, slot,
++		"invalid shared data backref count, should have non-zero value");
++			return -EUCLEAN;
++		}
++
+ 		expect_item_size = sizeof(struct btrfs_shared_data_ref);
++	}
  
- 	/*
-@@ -5363,7 +5363,7 @@ static noinline void reada_walk_down(str
- 			goto reada;
- 
- 		if (wc->stage == UPDATE_BACKREF &&
--		    generation <= root->root_key.offset)
-+		    generation <= btrfs_root_origin_generation(root))
- 			continue;
- 
- 		/* We don't lock the tree block, it's OK to be racy here */
-@@ -5706,7 +5706,7 @@ static noinline int do_walk_down(struct
- 	 * for the subtree
- 	 */
- 	if (wc->stage == UPDATE_BACKREF &&
--	    generation <= root->root_key.offset) {
-+	    generation <= btrfs_root_origin_generation(root)) {
- 		wc->lookup_info = 1;
- 		return 1;
+ 	if (unlikely(btrfs_item_size(leaf, slot) != expect_item_size)) {
+ 		generic_err(leaf, slot,
+@@ -1689,6 +1709,11 @@ static int check_extent_data_ref(struct
+ 				   offset, leaf->fs_info->sectorsize);
+ 			return -EUCLEAN;
+ 		}
++		if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
++			extent_err(leaf, slot,
++	"invalid extent data backref count, should have non-zero value");
++			return -EUCLEAN;
++		}
  	}
+ 	return 0;
+ }
 
 
