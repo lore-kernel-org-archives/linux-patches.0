@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D36E189B94;
-	Mon, 23 Dec 2024 16:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9490188006;
+	Mon, 23 Dec 2024 16:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969998; cv=none; b=Tp89t8W/XVCGfMgVmEtaWgUR3NsSE1QMOZzNAuH8/d8JSaLsBwBNeHnWxI0Uneskw7+/obCnG7EEcHjl4oq2uQ+ikr3qVxV3QmkPevXUSX7cXFXKbuB23vDIIYBSPaRgcEiID5/MgBbCrqkseZxqxTPng7pLLO5AQ3kYE30EwYU=
+	t=1734970001; cv=none; b=C2CbmP/k9p2URdLSO4CcSwx9vfmKdYTx1k3Brmil47huVdkWFQjwLjNs4Prh+qaUEuEI5lYyEc7ndI6kNKm6fg2lUq0B+Fj1rzeY4sF9YHhPdGhimyKCUvTi/9jeu1M3nEw7undC4xvLCl+L6WO6L2BFmQbWbNrthO0xQQkvJbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969998; c=relaxed/simple;
-	bh=7yH6SpUiQv7n2bvwZDryvnymHuqi/lA4kJR8C6P/beA=;
+	s=arc-20240116; t=1734970001; c=relaxed/simple;
+	bh=3fCJUcY8idZHLO0A9v8tfaV4ztUvPWik3UzDClEoJ6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BNtuTaFrdzrYq/s5hdX1yBMVtJ1N6aeMnu2tG07cfQv2G3LAOtTM8ZNWEgm23WcPJtSoKGpjlYUh6l3CWZ69tT6CSY3xCxFuKcDFItvxJ8qZL4TazVqYGroCEAnMd0vyZdILKV7pqEKnb1O+6Q/McDN/IGz6exzCNaoMOaeFgbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyCSsQwf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3KmCd7AqP85T0BYGh/IDCQArRxUoIaceXgB071fXHMCMeX5jlbN/ERb8zUb1HDJvn44lJA+q0FZNyVPb3h4EnT4oDUzA+KA/RcdrnPVLCKFBbXKmoXx5XiMoutvB8mbjdDqE0ehVJaVxGlCz0i8ONeA8y/M7Xi12k7Sulf87KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ntVS+UqM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyCSsQwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11DFC4CED3;
-	Mon, 23 Dec 2024 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ntVS+UqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62C2FC4CED3;
+	Mon, 23 Dec 2024 16:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969998;
-	bh=7yH6SpUiQv7n2bvwZDryvnymHuqi/lA4kJR8C6P/beA=;
+	s=korg; t=1734970001;
+	bh=3fCJUcY8idZHLO0A9v8tfaV4ztUvPWik3UzDClEoJ6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NyCSsQwfKsP5zQRHUrP+VNciZa1mtFWJTduJbim4Om3Jh/nHLt8ewUiyQ4dm3wnmN
-	 CT4mgUeGxkvAcxjpHp3zR6DAFfbhSzGam8fpekA13CFRSltPuf8FM1S5M6TfbC6UiE
-	 xYfERziiRoUI6aNO8rdYBqELZB4RDHLdJpBPiZdI=
+	b=ntVS+UqMkQPZgR6kg1QlDg2xPc3kGWLe8Jbu2cDbdkM5jzf1APbJiAej0P9MEtcXy
+	 m9zQlhHVigV+rG/LKj7GDJMye+Y44tJt3BqHJuIBCbYaPTcB3GTHsHD2cgaGOv9YUW
+	 vdqB4+1FRkUgPbv7kGCvzC1jwYweiVeF05UeSzcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Rainbolt <arainbolt@kfocus.org>,
+	Richard Hughes <hughsient@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.12 083/160] thunderbolt: Improve redrive mode handling
-Date: Mon, 23 Dec 2024 16:58:14 +0100
-Message-ID: <20241223155411.905971358@linuxfoundation.org>
+Subject: [PATCH 6.12 084/160] thunderbolt: Dont display nvm_version unless upgrade supported
+Date: Mon, 23 Dec 2024 16:58:15 +0100
+Message-ID: <20241223155411.942334827@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,124 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 24740385cb0d6d22ab7fa7adf36546d5b3cdcf73 upstream.
+commit e34f1717ef0632fcec5cb827e5e0e9f223d70c9b upstream.
 
-When USB-C monitor is connected directly to Intel Barlow Ridge host, it
-goes into "redrive" mode that basically routes the DisplayPort signals
-directly from the GPU to the USB-C monitor without any tunneling needed.
-However, the host router must be powered on for this to work. Aaron
-reported that there are a couple of cases where this will not work with
-the current code:
+The read will never succeed if NVM wasn't initialized due to an unknown
+format.
 
-  - Booting with USB-C monitor plugged in.
-  - Plugging in USB-C monitor when the host router is in sleep state
-    (runtime suspended).
-  - Plugging in USB-C device while the system is in system sleep state.
+Add a new callback for visibility to only show when supported.
 
-In all these cases once the host router is runtime suspended the picture
-on the connected USB-C display disappears too. This is certainly not
-what the user expected.
-
-For this reason improve the redrive mode handling to keep the host
-router from runtime suspending when detect that any of the above cases
-is happening.
-
-Fixes: a75e0684efe5 ("thunderbolt: Keep the domain powered when USB4 port is in redrive mode")
-Reported-by: Aaron Rainbolt <arainbolt@kfocus.org>
-Closes: https://lore.kernel.org/linux-usb/20241009220118.70bfedd0@kf-ir16/
 Cc: stable@vger.kernel.org
+Fixes: aef9c693e7e5 ("thunderbolt: Move vendor specific NVM handling into nvm.c")
+Reported-by: Richard Hughes <hughsient@gmail.com>
+Closes: https://github.com/fwupd/fwupd/issues/8200
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.c |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/thunderbolt/retimer.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -2059,6 +2059,37 @@ static void tb_exit_redrive(struct tb_po
- 	}
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -103,6 +103,7 @@ static int tb_retimer_nvm_add(struct tb_
+ 
+ err_nvm:
+ 	dev_dbg(&rt->dev, "NVM upgrade disabled\n");
++	rt->no_nvm_upgrade = true;
+ 	if (!IS_ERR(nvm))
+ 		tb_nvm_free(nvm);
+ 
+@@ -182,8 +183,6 @@ static ssize_t nvm_authenticate_show(str
+ 
+ 	if (!rt->nvm)
+ 		ret = -EAGAIN;
+-	else if (rt->no_nvm_upgrade)
+-		ret = -EOPNOTSUPP;
+ 	else
+ 		ret = sysfs_emit(buf, "%#x\n", rt->auth_status);
+ 
+@@ -323,8 +322,6 @@ static ssize_t nvm_version_show(struct d
+ 
+ 	if (!rt->nvm)
+ 		ret = -EAGAIN;
+-	else if (rt->no_nvm_upgrade)
+-		ret = -EOPNOTSUPP;
+ 	else
+ 		ret = sysfs_emit(buf, "%x.%x\n", rt->nvm->major, rt->nvm->minor);
+ 
+@@ -342,6 +339,19 @@ static ssize_t vendor_show(struct device
  }
+ static DEVICE_ATTR_RO(vendor);
  
-+static void tb_switch_enter_redrive(struct tb_switch *sw)
++static umode_t retimer_is_visible(struct kobject *kobj, struct attribute *attr,
++				  int n)
 +{
-+	struct tb_port *port;
++	struct device *dev = kobj_to_dev(kobj);
++	struct tb_retimer *rt = tb_to_retimer(dev);
 +
-+	tb_switch_for_each_port(sw, port)
-+		tb_enter_redrive(port);
++	if (attr == &dev_attr_nvm_authenticate.attr ||
++	    attr == &dev_attr_nvm_version.attr)
++		return rt->no_nvm_upgrade ? 0 : attr->mode;
++
++	return attr->mode;
 +}
 +
-+/*
-+ * Called during system and runtime suspend to forcefully exit redrive
-+ * mode without querying whether the resource is available.
-+ */
-+static void tb_switch_exit_redrive(struct tb_switch *sw)
-+{
-+	struct tb_port *port;
-+
-+	if (!(sw->quirks & QUIRK_KEEP_POWER_IN_DP_REDRIVE))
-+		return;
-+
-+	tb_switch_for_each_port(sw, port) {
-+		if (!tb_port_is_dpin(port))
-+			continue;
-+
-+		if (port->redrive) {
-+			port->redrive = false;
-+			pm_runtime_put(&sw->dev);
-+			tb_port_dbg(port, "exit redrive mode\n");
-+		}
-+	}
-+}
-+
- static void tb_dp_resource_unavailable(struct tb *tb, struct tb_port *port)
- {
- 	struct tb_port *in, *out;
-@@ -2909,6 +2940,7 @@ static int tb_start(struct tb *tb, bool
- 	tb_create_usb3_tunnels(tb->root_switch);
- 	/* Add DP IN resources for the root switch */
- 	tb_add_dp_resources(tb->root_switch);
-+	tb_switch_enter_redrive(tb->root_switch);
- 	/* Make the discovered switches available to the userspace */
- 	device_for_each_child(&tb->root_switch->dev, NULL,
- 			      tb_scan_finalize_switch);
-@@ -2924,6 +2956,7 @@ static int tb_suspend_noirq(struct tb *t
+ static struct attribute *retimer_attrs[] = {
+ 	&dev_attr_device.attr,
+ 	&dev_attr_nvm_authenticate.attr,
+@@ -351,6 +361,7 @@ static struct attribute *retimer_attrs[]
+ };
  
- 	tb_dbg(tb, "suspending...\n");
- 	tb_disconnect_and_release_dp(tb);
-+	tb_switch_exit_redrive(tb->root_switch);
- 	tb_switch_suspend(tb->root_switch, false);
- 	tcm->hotplug_active = false; /* signal tb_handle_hotplug to quit */
- 	tb_dbg(tb, "suspend finished\n");
-@@ -3016,6 +3049,7 @@ static int tb_resume_noirq(struct tb *tb
- 		tb_dbg(tb, "tunnels restarted, sleeping for 100ms\n");
- 		msleep(100);
- 	}
-+	tb_switch_enter_redrive(tb->root_switch);
- 	 /* Allow tb_handle_hotplug to progress events */
- 	tcm->hotplug_active = true;
- 	tb_dbg(tb, "resume finished\n");
-@@ -3079,6 +3113,12 @@ static int tb_runtime_suspend(struct tb
- 	struct tb_cm *tcm = tb_priv(tb);
- 
- 	mutex_lock(&tb->lock);
-+	/*
-+	 * The below call only releases DP resources to allow exiting and
-+	 * re-entering redrive mode.
-+	 */
-+	tb_disconnect_and_release_dp(tb);
-+	tb_switch_exit_redrive(tb->root_switch);
- 	tb_switch_suspend(tb->root_switch, true);
- 	tcm->hotplug_active = false;
- 	mutex_unlock(&tb->lock);
-@@ -3110,6 +3150,7 @@ static int tb_runtime_resume(struct tb *
- 	tb_restore_children(tb->root_switch);
- 	list_for_each_entry_safe(tunnel, n, &tcm->tunnel_list, list)
- 		tb_tunnel_restart(tunnel);
-+	tb_switch_enter_redrive(tb->root_switch);
- 	tcm->hotplug_active = true;
- 	mutex_unlock(&tb->lock);
+ static const struct attribute_group retimer_group = {
++	.is_visible = retimer_is_visible,
+ 	.attrs = retimer_attrs,
+ };
  
 
 
