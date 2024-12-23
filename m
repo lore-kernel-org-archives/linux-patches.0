@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020CC13BC0C;
-	Mon, 23 Dec 2024 16:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7B19E971;
+	Mon, 23 Dec 2024 16:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970173; cv=none; b=UdoyKVwGCCH7m6f+1xteNpXIcrfD5PjqGuYybBfVJVMrplGQfPGig4MyDv1Z0xORJpzZYuC5LArqAFBi9mok63wmzmaypaD853biK+uLZi16Tz5H6s3KZqJoowa/2kTFy+/pCRbTvoCyidX58/cmKdjNi8V/VWdgnKOIPSqYfy0=
+	t=1734970176; cv=none; b=Qo2qzY3JiU58A6wOnThYRsGF4sCR6aFzQZ1qMlWZcuc6xfb10b+HUSjS+aQj+GGIwKixSgCA1BTOeHTe9Eo9OLvm1zYrXs7tPslT5y+aEOIxwDkxYMV/maQnJurqNr6pfY8TNta86gdP5Up7sCjHauc+nla8/IvbgdRh5Sc6sgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970173; c=relaxed/simple;
-	bh=TREnlopG9E78IQuC1ZDbtk8+7fP1gj6ptCkVXKAq70w=;
+	s=arc-20240116; t=1734970176; c=relaxed/simple;
+	bh=6nytv55gEgzgeFhznbnEEVuuZHhmKQMf0xK/XozFAkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHN1+7b2n+OC1I9AkYvKXJMMIDNK/YKHrQR7MW0s1FMoVVnpz+zE8TZU/4QTAMchctqglNcnlOocgFTeTnavqULgIJ1eFW3azo2cEZ4LXZ4qyPk7zGDGZVpf5kBglsKEKc6zaAhJqRXgrFCqTCS2wrERJb7bBgpjz2E7qGjGD0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9XG7JsI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B6YiPnVa621a6isAnmjL0LZHwMMsgSiabmAuBqZfMMc48TGyzMHpUyOXLSUunJ8C+cpxmmsyWoUxRCtsougvKUT5qmanNxOMuEvGfsd+T9sG1LbSgrm1PXvG8vGjsnM163qkhcaNJlt20Rp9ekKDwwffzliBNiAG3T7PDUt7YuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SK8k0vb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9XG7JsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64242C4CED3;
-	Mon, 23 Dec 2024 16:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SK8k0vb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDAC9C4CED3;
+	Mon, 23 Dec 2024 16:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970172;
-	bh=TREnlopG9E78IQuC1ZDbtk8+7fP1gj6ptCkVXKAq70w=;
+	s=korg; t=1734970176;
+	bh=6nytv55gEgzgeFhznbnEEVuuZHhmKQMf0xK/XozFAkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9XG7JsIYb5V/+WSovqdstf2VXGpmkBp4sHMAzZJ4pStPI1TgIPUzq4bujVbhkjWY
-	 ZqMmjnuRaKn420L2afhe02fkLPHOudluzOEk4R5AdfmGXb2xYpG7lJH7WD1xMs1mug
-	 A5PYslGS6BmvkJXE5fsYw+wt10CzrbFIOFORSsE4=
+	b=SK8k0vb/iMJLsXpRsTqUrhHcSm/AVmjpM2y+hT7cdLHaEFhalyxR/GOide681r3eG
+	 uElrWlw8lRRBa2sEb+7F52wJozBM65JpuGsxnB3ueHBoaGOXJGQde7J7Z6C6a7k70R
+	 fS8PhBAcavPHw5QEPw+MKrwLRthucHHfN0ouRwgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>
-Subject: [PATCH 6.12 152/160] ceph: validate snapdirname option length when mounting
-Date: Mon, 23 Dec 2024 16:59:23 +0100
-Message-ID: <20241223155414.688078976@linuxfoundation.org>
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 153/160] ceph: improve error handling and short/overflow-read logic in __ceph_sync_read()
+Date: Mon, 23 Dec 2024 16:59:24 +0100
+Message-ID: <20241223155414.726767191@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,33 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Alex Markuze <amarkuze@redhat.com>
 
-commit 12eb22a5a609421b380c3c6ca887474fb2089b2c upstream.
+commit 9abee475803fab6ad59d4f4fc59c6a75374a7d9d upstream.
 
-It becomes a path component, so it shouldn't exceed NAME_MAX
-characters.  This was hardened in commit c152737be22b ("ceph: Use
-strscpy() instead of strcpy() in __get_snap_name()"), but no actual
-check was put in place.
+This patch refines the read logic in __ceph_sync_read() to ensure more
+predictable and efficient behavior in various edge cases.
+
+- Return early if the requested read length is zero or if the file size
+  (`i_size`) is zero.
+- Initialize the index variable (`idx`) where needed and reorder some
+  code to ensure it is always set before use.
+- Improve error handling by checking for negative return values earlier.
+- Remove redundant encrypted file checks after failures. Only attempt
+  filesystem-level decryption if the read succeeded.
+- Simplify leftover calculations to correctly handle cases where the
+  read extends beyond the end of the file or stops short.  This can be
+  hit by continuously reading a file while, on another client, we keep
+  truncating and writing new data into it.
+- This resolves multiple issues caused by integer and consequent buffer
+  overflow (`pages` array being accessed beyond `num_pages`):
+  - https://tracker.ceph.com/issues/67524
+  - https://tracker.ceph.com/issues/68980
+  - https://tracker.ceph.com/issues/68981
 
 Cc: stable@vger.kernel.org
+Fixes: 1065da21e5df ("ceph: stop copying to iter at EOF on sync reads")
+Reported-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Signed-off-by: Alex Markuze <amarkuze@redhat.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/super.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ceph/file.c |   29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -431,6 +431,8 @@ static int ceph_parse_mount_param(struct
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -1066,7 +1066,7 @@ ssize_t __ceph_sync_read(struct inode *i
+ 	if (ceph_inode_is_shutdown(inode))
+ 		return -EIO;
  
- 	switch (token) {
- 	case Opt_snapdirname:
-+		if (strlen(param->string) > NAME_MAX)
-+			return invalfc(fc, "snapdirname too long");
- 		kfree(fsopt->snapdir_name);
- 		fsopt->snapdir_name = param->string;
- 		param->string = NULL;
+-	if (!len)
++	if (!len || !i_size)
+ 		return 0;
+ 	/*
+ 	 * flush any page cache pages in this range.  this
+@@ -1086,7 +1086,7 @@ ssize_t __ceph_sync_read(struct inode *i
+ 		int num_pages;
+ 		size_t page_off;
+ 		bool more;
+-		int idx;
++		int idx = 0;
+ 		size_t left;
+ 		struct ceph_osd_req_op *op;
+ 		u64 read_off = off;
+@@ -1160,7 +1160,14 @@ ssize_t __ceph_sync_read(struct inode *i
+ 		else if (ret == -ENOENT)
+ 			ret = 0;
+ 
+-		if (ret > 0 && IS_ENCRYPTED(inode)) {
++		if (ret < 0) {
++			ceph_osdc_put_request(req);
++			if (ret == -EBLOCKLISTED)
++				fsc->blocklisted = true;
++			break;
++		}
++
++		if (IS_ENCRYPTED(inode)) {
+ 			int fret;
+ 
+ 			fret = ceph_fscrypt_decrypt_extents(inode, pages,
+@@ -1189,7 +1196,7 @@ ssize_t __ceph_sync_read(struct inode *i
+ 		ceph_osdc_put_request(req);
+ 
+ 		/* Short read but not EOF? Zero out the remainder. */
+-		if (ret >= 0 && ret < len && (off + ret < i_size)) {
++		if (ret < len && (off + ret < i_size)) {
+ 			int zlen = min(len - ret, i_size - off - ret);
+ 			int zoff = page_off + ret;
+ 
+@@ -1199,13 +1206,11 @@ ssize_t __ceph_sync_read(struct inode *i
+ 			ret += zlen;
+ 		}
+ 
+-		idx = 0;
+-		if (ret <= 0)
+-			left = 0;
+-		else if (off + ret > i_size)
+-			left = i_size - off;
++		if (off + ret > i_size)
++			left = (i_size > off) ? i_size - off : 0;
+ 		else
+ 			left = ret;
++
+ 		while (left > 0) {
+ 			size_t plen, copied;
+ 
+@@ -1223,12 +1228,6 @@ ssize_t __ceph_sync_read(struct inode *i
+ 		}
+ 		ceph_release_page_vector(pages, num_pages);
+ 
+-		if (ret < 0) {
+-			if (ret == -EBLOCKLISTED)
+-				fsc->blocklisted = true;
+-			break;
+-		}
+-
+ 		if (off >= i_size || !more)
+ 			break;
+ 	}
 
 
