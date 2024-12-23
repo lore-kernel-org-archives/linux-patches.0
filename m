@@ -1,94 +1,155 @@
-Received: from abb.hmeau.com (abb.hmeau.com [144.6.53.87])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733813D0D5;
-	Sun, 22 Dec 2024 04:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.6.53.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A2638DE0;
+	Mon, 23 Dec 2024 02:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734841224; cv=none; b=l25MMCDO3FT+QekUfmNolaRD1mKD6UEPAM84NzjKdw+O9hxgeJKvOOveosjRvlywjitcsGDIrn320UovZL3RPhzScgcZ5ZIUdkcj4GzkZkORplDfzRo4aCU8p2qQqk8fMy7fz/pexoTMG1Us9KiPFgkU595NKuA1R73MhbfLpQg=
+	t=1734921022; cv=none; b=kc0pW4oHfRmvHC4w6ecQfQuX69CasN1YhNva7vjnmwlwQKPzeAd64gLUtaZc9swb5WvO7wbu/z+gdNdI+BsWMAOdaEcumhVGeW6iYy2R+nFQPm5DmvxM9Jur4H04gKvAAYAoDhijeRM6XLCZSApuUgYwq0lhHykAw22NoUYyIdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734841224; c=relaxed/simple;
-	bh=SBC2ST+0oancyUzYEiO7UG8jJgvoTf7tnOHYco9n8zQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DvNXqFFa4xRKnTl6AqiAKe30USyRB4/uongg9ZfjHvoaEXJVPb2wnMwhsXZ5uw0sLfjsKmV33OZvbfNJqAwZ1eWkWJ5THcBRbxxP7dMzx4FVMm4YcMqDP/6HYZCW7gcL6Cs9O99SBXXy6IXaoEuo6M60vV18YF5urFdZVH1/UTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b=BlEgm4jl; arc=none smtp.client-ip=144.6.53.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+	s=arc-20240116; t=1734921022; c=relaxed/simple;
+	bh=846d+cRFBoDrFep8BfHDhcE6RYZkZKHKE60fLL1H0x4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Z5qhZdszUKtdB5GS2anMD0XvKWb4PyOOzDzJMgM77wfNy1/C04HIrqlzi6mn/2qgpCpsnRiYG21WqEHBL3VXf+mY75UbO29UYQnTMUXAW2sd9Nya4sBVxRmji+kJ8lYhzdoX8fEFWf8DAzfTWhsIwHtgqlJbYH9UFMT7R35+tMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Jylnz1wZ; arc=none smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hmeau.com header.i=@hmeau.com header.b="BlEgm4jl"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=hmeau.com;
-	s=formenos; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=PAAd2U1Mp2pW+AoJOC/H/IFSldcHWpdu/VmyCU+eH3w=; b=BlEgm4jle0e9B/s4fVnh1aja63
-	dkjJ6cIZsgYOJoLGpzYbMvLucRCumWe5WKT86eTIynhYM2cehE+E6KzMxxgTZwoWK6rKvzTjQ850m
-	ocftoGJvIWtabc1KFxDKMyfgYCiREgP08y9OlIDsRhoeC6zJxFp2K4CQ8iIQjIt9c3QyxS2TqzCx0
-	SDue+VWhAdRxfPaFgBTyqe+wnS9GoeQfnkEGx2jVCo9u4X6dgeNp/2WNXn7hKfIvVzqHhZP+hvz1O
-	AJ23Qah8K+6MMXr1k6YA0+8Xo6WSXE8RRNnzrZaeuhEwLbaW60zRUezYMvinmqq1hT6tVkhedLuq3
-	2nnvKUmw==;
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
-	id 1tPDF4-002Uev-0y;
-	Sun, 22 Dec 2024 12:20:20 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sun, 22 Dec 2024 12:20:19 +0800
-Date: Sun, 22 Dec 2024 12:20:19 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Thara Gopinath <thara.gopinath@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-crypto@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev,
-	Linux Kernel Functional Testing <lkft@linaro.org>
-Subject: Re: [PATCH] crypto: qce - revert "use __free() for a buffer that's
- always freed"
-Message-ID: <Z2eTg29H703vaiNc@gondor.apana.org.au>
-References: <20241218-crypto-qce-sha-fix-clang-cleanup-error-v1-1-7e6c6dcca345@kernel.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Jylnz1wZ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1734921020; x=1766457020;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=846d+cRFBoDrFep8BfHDhcE6RYZkZKHKE60fLL1H0x4=;
+  b=Jylnz1wZfontQF03VHvyrKc1XCHjfWQByCsgwiUD80iClThSAm2/zo4p
+   H6Y0e780mBOcOn3NLXAl5LwxiekA/tVcKrcwFjmWsLvBy+qs2VxzVX1H2
+   9LrJVHjHUxFqGU8FD8Tdty01HFTPCb9jnah88dencyXoKJA9rTUa/Dhtx
+   2bQ2kXlYy6Ieob7UJtJk5wckdFulgwKalZidOB6MDqAdgvPi2j/pU0tbJ
+   oAR+fuFkPsWHWC77u5zVLxQtLAe4CzD2fbDD4073H644O62jk6FaO60n/
+   s1FUnnsOJKpQQ5v1P+mQpL7ULScnngQrjUAKSeFY9lx6yzU0dKIdyzP+m
+   w==;
+X-CSE-ConnectionGUID: 5du6UpswSfa7I9fLJWY4JQ==
+X-CSE-MsgGUID: Xp2K1KdgT9qJuVZlbV7t1w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11294"; a="39320710"
+X-IronPort-AV: E=Sophos;i="6.12,256,1728975600"; 
+   d="scan'208";a="39320710"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Dec 2024 18:30:19 -0800
+X-CSE-ConnectionGUID: WxF/1ytIQjSsv80o60rM8A==
+X-CSE-MsgGUID: FxLvu3rfS3Gtu8sDqEny9w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="103189883"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Dec 2024 18:30:14 -0800
+Message-ID: <74bc9dbe-3420-4f0c-9e32-db49327a723d@linux.intel.com>
+Date: Mon, 23 Dec 2024 10:28:32 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241218-crypto-qce-sha-fix-clang-cleanup-error-v1-1-7e6c6dcca345@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/14] iommufd/viommu: Add iommufd_viommu_get_vdev_id
+ helper
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, will@kernel.org, corbet@lwn.net,
+ joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+ dwmw2@infradead.org, shuah@kernel.org, linux-kernel@vger.kernel.org,
+ iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+ eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+ mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+ smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+ patches@lists.linux.dev
+References: <cover.1734477608.git.nicolinc@nvidia.com>
+ <21d7e63b97d81d0acf9127418a67efe386787261.1734477608.git.nicolinc@nvidia.com>
+ <56c65e50-5890-42af-85b7-85f8a1bf5cf5@linux.intel.com>
+ <Z2OpylDlhLXoo3dt@Asurada-Nvidia>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <Z2OpylDlhLXoo3dt@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Dec 18, 2024 at 01:11:17PM -0700, Nathan Chancellor wrote:
-> Commit ce8fd0500b74 ("crypto: qce - use __free() for a buffer that's
-> always freed") introduced a buggy use of __free(), which clang
-> rightfully points out:
+On 12/19/24 13:06, Nicolin Chen wrote:
+> On Thu, Dec 19, 2024 at 10:05:53AM +0800, Baolu Lu wrote:
+>> On 12/18/24 13:00, Nicolin Chen wrote:
+>>> This is a reverse search v.s. iommufd_viommu_find_dev, as drivers may want
+>>> to convert a struct device pointer (physical) to its virtual device ID for
+>>> an event injection to the user space VM.
+>>>
+>>> Again, this avoids exposing more core structures to the drivers, than the
+>>> iommufd_viommu alone.
+>>>
+>>> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+>>> ---
+>>>    include/linux/iommufd.h        |  8 ++++++++
+>>>    drivers/iommu/iommufd/driver.c | 20 ++++++++++++++++++++
+>>>    2 files changed, 28 insertions(+)
+>>>
+>>> diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+>>> index b082676c9e43..ac1f1897d290 100644
+>>> --- a/include/linux/iommufd.h
+>>> +++ b/include/linux/iommufd.h
+>>> @@ -190,6 +190,8 @@ struct iommufd_object *_iommufd_object_alloc(struct iommufd_ctx *ictx,
+>>>    					     enum iommufd_object_type type);
+>>>    struct device *iommufd_viommu_find_dev(struct iommufd_viommu *viommu,
+>>>    				       unsigned long vdev_id);
+>>> +unsigned long iommufd_viommu_get_vdev_id(struct iommufd_viommu *viommu,
+>>> +					 struct device *dev);
+>> Hi Nicolin,
+>>
+>> This series overall looks good to me. But I have a question that might
+>> be irrelevant to this series itself.
+>>
+>> The iommufd provides both IOMMUFD_OBJ_DEVICE and IOMMUFD_OBJ_VDEVICE
+>> objects. What is the essential difference between these two from
+>> userspace's perspective?
+> A quick answer is an IOMMUFD_OBJ_DEVICE being a host physical
+> device and an IOMMUFD_OBJ_VDEVICE being an IOMMUFD_OBJ_DEVICE
+> related to IOMMUFD_OBJ_VIOMMU. Two of them can be seen in two
+> different layers. May refer to this graph:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/ 
+> Documentation/userspace-api/iommufd.rst?h=v6.13-rc3#n150
 > 
->   drivers/crypto/qce/sha.c:365:3: error: cannot jump from this goto statement to its label
->     365 |                 goto err_free_ahash;
->         |                 ^
->   drivers/crypto/qce/sha.c:373:6: note: jump bypasses initialization of variable with __attribute__((cleanup))
->     373 |         u8 *buf __free(kfree) = kzalloc(keylen + QCE_MAX_ALIGN_SIZE,
->         |             ^
+>> And, which object ID should the IOMMU device
+>> driver provide when reporting other events in the future?
+>>
+>> Currently, the IOMMUFD uAPI reports IOMMUFD_OBJ_DEVICE in the page
+>> fault message, and IOMMUFD_OBJ_VDEVICE (if I understand it correctly) in
+>> the vIRQ message. It will be more future-proof if this could be defined
+>> clearly.
+> A vIRQ is actually reported per-vIOMMU in this design. Although
+> in the this series the SMMU driver seems to report a per-device
+> vIRQ, it internally converts the vDEVICE to a virtual device ID
+> and packs the virtual device ID into a per-vIOMMU event:
 > 
-> Jumping over a variable declared with the cleanup attribute does not
-> prevent the cleanup function from running; instead, the cleanup function
-> is called with an uninitialized value.
-> 
-> Moving the declaration back to the top function with __free() and a NULL
-> initialization would resolve the bug but that is really not much
-> different from the original code. Since the function is so simple and
-> there is no functional reason to use __free() here, just revert the
-> original change to resolve the issue.
-> 
-> Fixes: ce8fd0500b74 ("crypto: qce - use __free() for a buffer that's always freed")
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> Closes: https://lore.kernel.org/CA+G9fYtpAwXa5mUQ5O7vDLK2xN4t-kJoxgUe1ZFRT=AGqmLSRA@mail.gmail.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/crypto/qce/sha.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> +/**
+> + * struct iommu_virq_arm_smmuv3 - ARM SMMUv3 Virtual IRQ
+> + *                                (IOMMU_VIRQ_TYPE_ARM_SMMUV3)
+> + * @evt: 256-bit ARM SMMUv3 Event record, little-endian.
+> + *       (Refer to "7.3 Event records" in SMMUv3 HW Spec)
+> + *
+> + * StreamID field reports a virtual device ID. To receive a virtual IRQ for a
+> + * device, a vDEVICE must be allocated via IOMMU_VDEVICE_ALLOC.
+> + */
+> +struct iommu_virq_arm_smmuv3 {
+> +	__aligned_le64 evt[4];
+>   };
 
-Patch applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Thanks for the explanation. Maybe I am a bit over-considering here.
+
+Initially, my understanding is to report a virtual device ID when the
+object originates from a vIOMMU, and an iommufd device ID otherwise.
+
+However, considering page fault scenarios, which are self-contained but
+linked to a hardware page table (hwpt), introduces ambiguity. Hwpt can
+be created with or without a vIOMMU. This raises the question: should
+the page fault message always report the iommufd device ID, or should
+the reporting depend on whether the hwpt was created from a vIOMMU?
+
+Thanks,
+baolu
