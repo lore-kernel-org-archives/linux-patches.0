@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7551AD41F;
-	Mon, 23 Dec 2024 16:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A66913BC0C;
+	Mon, 23 Dec 2024 16:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734970163; cv=none; b=NRPaIJFak747Vo20i6zZj7TqzbGCmTxsD+/DJ/daEn7Ylaauf97i85HpSFv3GTLQUwYI6PcpsjgvyEE7MyWvxGIxBHpw4RZr/o66t/FwPJvaxpzjJGTlFgve/E+vsOYid7gnIexk8IFXYSHG/gy8GBWxGnxxEMOw8ZUKNQAOqtM=
+	t=1734970166; cv=none; b=GazG+2aV7HQABIPFZ+VkY6vBDO9WT2JbVPiIXJ+3z7Gb39E/6C0zeJIu6w/rK+1gryM9kmy/LRQ6d8W4CSnqwMyBKCoGCIxKjWKWWytNYw++cTWoRo/j9xCBqXDmPaAAX56W61HkHVeH+VAr0gW9ZPhwwIUyfvOboqJL7Gs1Mq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734970163; c=relaxed/simple;
-	bh=W/3vEo4RdNa6ObLKZv6/wXYoPvItUABB6ZglPzTAyJQ=;
+	s=arc-20240116; t=1734970166; c=relaxed/simple;
+	bh=gaFTTgUJnDucW5Mx8DaHZOpv1YSgwuBNjT49GMMCigs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RwR24DbtO4rC+rCO7ldHLC51cdsBfqi0LDI/NIkk5RMBZ4Suzg/FlqjStLcXEfDMBdf58sT8daR1dmDRK8j7dFm53EO//8M2tV+BI8nvMRWlIKWMumYyBS8yheWeajfcWP5HEPICoTk2UMSDGCLcYg0rXWPwTHgreq9e3lBFPCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9x7WGgr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oiAD9EMbA2z70xYBHLnhztHRmKpRhlBPaJRI+X6/y2VkF3ztdlHpip+pYG84IcYV5lJSK5G853CLh0P/zelXyXWpNBktwCaFehJePI7/k8mVzS85P5w34JjEOrOT2tws145u1NQpgAlbZyqDVRaLXVH744fUkMQRpm8t8I7r3PY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKnioB2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9x7WGgr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722F1C4CED3;
-	Mon, 23 Dec 2024 16:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKnioB2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3E7C4CED3;
+	Mon, 23 Dec 2024 16:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734970162;
-	bh=W/3vEo4RdNa6ObLKZv6/wXYoPvItUABB6ZglPzTAyJQ=;
+	s=korg; t=1734970166;
+	bh=gaFTTgUJnDucW5Mx8DaHZOpv1YSgwuBNjT49GMMCigs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9x7WGgrw4pv5wRhuoGc5qm6CjshWXhpa87I4xaiMsn3JMPdSjUg4ANkRXnT1i4SM
-	 Mm+ABc2g3ejBIisnoms2DZh0QQtINrGgeMWlXLbf3LQ+6u700Kt6uWjYmrH+e+YMbh
-	 YtD0sN0S1Yd74C8X0KZ2diTeLZBHUUXbICeiUkJ8=
+	b=SKnioB2OegAx4894pcyFnse6SalcvJlhlwTPwXgrRvvOJxmUBBh+NQtvvktMQ6+K7
+	 V23OqNKYZACEKGC/2lbTBOxSPmGAAdRG47bzD8K9kra0iPunRh95zyX1DfvtTGXCBO
+	 JlSd4Nt4cTWhdp38BG96s1D2UTa83bxvjA9E8otE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 149/160] of: Fix error path in of_parse_phandle_with_args_map()
-Date: Mon, 23 Dec 2024 16:59:20 +0100
-Message-ID: <20241223155414.569259131@linuxfoundation.org>
+Subject: [PATCH 6.12 150/160] of: Fix refcount leakage for OF node returned by __of_get_dma_parent()
+Date: Mon, 23 Dec 2024 16:59:21 +0100
+Message-ID: <20241223155414.608028005@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -50,72 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit d7dfa7fde63dde4d2ec0083133efe2c6686c03ff upstream.
+commit 5d009e024056ded20c5bb1583146b833b23bbd5a upstream.
 
-The current code uses some 'goto put;' to cancel the parsing operation
-and can lead to a return code value of 0 even on error cases.
+__of_get_dma_parent() returns OF device node @args.np, but the node's
+refcount is increased twice, by both of_parse_phandle_with_args() and
+of_node_get(), so causes refcount leakage for the node.
 
-Indeed, some goto calls are done from a loop without setting the ret
-value explicitly before the goto call and so the ret value can be set to
-0 due to operation done in previous loop iteration. For instance match
-can be set to 0 in the previous loop iteration (leading to a new
-iteration) but ret can also be set to 0 it the of_property_read_u32()
-call succeed. In that case if no match are found or if an error is
-detected the new iteration, the return value can be wrongly 0.
+Fix by directly returning the node got by of_parse_phandle_with_args().
 
-Avoid those cases setting the ret value explicitly before the goto
-calls.
-
-Fixes: bd6f2fd5a1d5 ("of: Support parsing phandle argument lists through a nexus node")
+Fixes: f83a6e5dea6c ("of: address: Add support for the parent DMA bus")
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://lore.kernel.org/r/20241202165819.158681-1-herve.codina@bootlin.com
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241206-of_core_fix-v1-4-dc28ed56bec3@quicinc.com
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/of/address.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -1455,8 +1455,10 @@ int of_parse_phandle_with_args_map(const
- 			map_len--;
+--- a/drivers/of/address.c
++++ b/drivers/of/address.c
+@@ -616,7 +616,7 @@ struct device_node *__of_get_dma_parent(
+ 	if (ret < 0)
+ 		return of_get_parent(np);
  
- 			/* Check if not found */
--			if (!new)
-+			if (!new) {
-+				ret = -EINVAL;
- 				goto put;
-+			}
+-	return of_node_get(args.np);
++	return args.np;
+ }
+ #endif
  
- 			if (!of_device_is_available(new))
- 				match = 0;
-@@ -1466,17 +1468,20 @@ int of_parse_phandle_with_args_map(const
- 				goto put;
- 
- 			/* Check for malformed properties */
--			if (WARN_ON(new_size > MAX_PHANDLE_ARGS))
--				goto put;
--			if (map_len < new_size)
-+			if (WARN_ON(new_size > MAX_PHANDLE_ARGS) ||
-+			    map_len < new_size) {
-+				ret = -EINVAL;
- 				goto put;
-+			}
- 
- 			/* Move forward by new node's #<list>-cells amount */
- 			map += new_size;
- 			map_len -= new_size;
- 		}
--		if (!match)
-+		if (!match) {
-+			ret = -ENOENT;
- 			goto put;
-+		}
- 
- 		/* Get the <list>-map-pass-thru property (optional) */
- 		pass = of_get_property(cur, pass_name, NULL);
 
 
