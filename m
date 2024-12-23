@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1616380C02;
-	Mon, 23 Dec 2024 16:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE45D2EAE6;
+	Mon, 23 Dec 2024 16:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969741; cv=none; b=PEUQ+NCUG0oDfetXQeSjdIRo4dj7rV1f0gbzHVsdL0WbtR0dU3gjHpZLO4+nLO2TkG1dq5u4VD99BCKqp2XQYcqMkul/TYD325sYmDrTxYoEe8YC8TApy+ZxDg+8XHQwQLmAM85KUxDGcqf9buLZdKM3qnurCSEoH3A2pMeVMok=
+	t=1734969744; cv=none; b=fNdKgTSEHMjXRAhJfmiiWmfogm6A4n71z+S++WEmHUadgFxO+fdk+vQY5oG4G7eQaEMUgSZPGDIb93nCGIHb/hSxzxA7e/jVkwtJmpoBqAMoeN1JwmXnAu7uEAqlSzvGFlaY5xA6a0v7WThuCXxE6nTXMpCygvNgOOqvlJH4kho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969741; c=relaxed/simple;
-	bh=3adDSsdXE+W/TNoMGgyw7dwr1Gxb3JR49CIzTC0l01Q=;
+	s=arc-20240116; t=1734969744; c=relaxed/simple;
+	bh=mXYEIM50RMXBAE+zTlSfrn2blwdvVa1vXuDS9BviHBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q9wktMigt5IHTmescZY2ahLCi1ND2F0iCKRL5JaNzhXc7nLmLf3J4NhMtvKMnLfPU552C32ySBl7SD1sKFDaf30Rki/5AlVuhtX+rjannOyVk+SOAQDYiBBOMKpOMNI9gswFlyiISb4VPI6KKnhyl1kt4H3V/3IbvaP89TgM2/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0+sDBUP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oIPFv+Xs1SRSrYQx7jIYVms2QYCCqxszoyIFI9pFq1Gjyab4wAUeUZC55zeeoxrxLfBsQnW0ZhK+hrGn/PncDdGUVyu3g1f295ZR/+Q7G0jA5RtaYmTT6mnYzPIQFZUAN8OdT5fdet78DAM6LsLgAM7U/pMs9v9cQP7v+GSBpSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avcOoP6p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0+sDBUP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E98C4CED3;
-	Mon, 23 Dec 2024 16:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avcOoP6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA7FC4CED3;
+	Mon, 23 Dec 2024 16:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969741;
-	bh=3adDSsdXE+W/TNoMGgyw7dwr1Gxb3JR49CIzTC0l01Q=;
+	s=korg; t=1734969744;
+	bh=mXYEIM50RMXBAE+zTlSfrn2blwdvVa1vXuDS9BviHBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0+sDBUPXQU3JPZlyKc4yTXSpMvzKyDWlVYhV7LEfTqBNSAdJNQEtCdvcQDAMZAZI
-	 m1BBuKoFaWHYZgmeeW+vdR3Cy7pO7ZSOyWzHN8FajyvAhSCB/LVYqVpQYl/ucQZ5Rr
-	 1ykFTixWDpSdqstv9nsFF+1yiWbjEG1lqq48vJCA=
+	b=avcOoP6p6cZfhuuBUfRhtza+orS5uRRq6MR90MFZ/rc2VKhsmfEg1b1x0+Ci8prVm
+	 RzGVhvxb1Q5ZiQf3RZEnNT57b0wNQL0SfSqeb/BsGGZhKQL0SW1KEcBR1yvpawP2mo
+	 IK+K6t6IHozd1r1Xa1L3Wvv9o2w8zyZhcyw/ebY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
 	Shannon Nelson <shannon.nelson@amd.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/160] ionic: Fix netdev notifier unregister on failure
-Date: Mon, 23 Dec 2024 16:57:31 +0100
-Message-ID: <20241223155410.221208833@linuxfoundation.org>
+Subject: [PATCH 6.12 041/160] ionic: no double destroy workqueue
+Date: Mon, 23 Dec 2024 16:57:32 +0100
+Message-ID: <20241223155410.257427544@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -53,40 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 9590d32e090ea2751e131ae5273859ca22f5ac14 ]
+[ Upstream commit 746e6ae2e202b062b9deee7bd86d94937997ecd7 ]
 
-If register_netdev() fails, then the driver leaks the netdev notifier.
-Fix this by calling ionic_lif_unregister() on register_netdev()
-failure. This will also call ionic_lif_unregister_phc() if it has
-already been registered.
+There are some FW error handling paths that can cause us to
+try to destroy the workqueue more than once, so let's be sure
+we're checking for that.
 
-Fixes: 30b87ab4c0b3 ("ionic: remove lif list concept")
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+The case where this popped up was in an AER event where the
+handlers got called in such a way that ionic_reset_prepare()
+and thus ionic_dev_teardown() got called twice in a row.
+The second time through the workqueue was already destroyed,
+and destroy_workqueue() choked on the bad wq pointer.
+
+We didn't hit this in AER handler testing before because at
+that time we weren't using a private workqueue.  Later we
+replaced the use of the system workqueue with our own private
+workqueue but hadn't rerun the AER handler testing since then.
+
+Fixes: 9e25450da700 ("ionic: add private workqueue per-device")
 Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20241212213157.12212-2-shannon.nelson@amd.com
+Link: https://patch.msgid.link/20241212213157.12212-3-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_dev.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 40496587b2b3..3d3f936779f7 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -3869,8 +3869,8 @@ int ionic_lif_register(struct ionic_lif *lif)
- 	/* only register LIF0 for now */
- 	err = register_netdev(lif->netdev);
- 	if (err) {
--		dev_err(lif->ionic->dev, "Cannot register net device, aborting\n");
--		ionic_lif_unregister_phc(lif);
-+		dev_err(lif->ionic->dev, "Cannot register net device: %d, aborting\n", err);
-+		ionic_lif_unregister(lif);
- 		return err;
- 	}
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+index 9e42d599840d..57edcde9e6f8 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
+@@ -277,7 +277,10 @@ void ionic_dev_teardown(struct ionic *ionic)
+ 	idev->phy_cmb_pages = 0;
+ 	idev->cmb_npages = 0;
+ 
+-	destroy_workqueue(ionic->wq);
++	if (ionic->wq) {
++		destroy_workqueue(ionic->wq);
++		ionic->wq = NULL;
++	}
+ 	mutex_destroy(&idev->cmb_inuse_lock);
+ }
  
 -- 
 2.39.5
