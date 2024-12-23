@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58206186E58;
-	Mon, 23 Dec 2024 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE15417A5A4;
+	Mon, 23 Dec 2024 16:04:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734969851; cv=none; b=nR7Aj3XotQkoG3XulPrUryF0ghwvgpHRus2eKXf34GtGYoYolLvMy0zyw3f0wncUBxcl+QY3tVxdDziz3k36vxUdtIw0uqP2WV5a+SlZEED4v82rc5Q7ItPQ2xCmc04EPOW6SdVBcQg89wPBodorS+PG0Wap8ZNDpqtfWVMD0OA=
+	t=1734969854; cv=none; b=YAaxItwoRqTfSkNTqJLRtJW2sWgCjejRRCrb+Yhad7WgwjOfEUDuV3n0eANcS/5VY3JT2VH2NR7L2fcAhgtPIPv8iL+eD8f0P1JU9iDAFXekH3g0wfI5hPa60xHkhr95jzd9iBQw+ZPq7tN1+RGLyrGyiNW918kEKvIULxXK5Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734969851; c=relaxed/simple;
-	bh=idORojhTFVd2UldjYHzwxsddX+GLMvDJtl5Mo4kvMpE=;
+	s=arc-20240116; t=1734969854; c=relaxed/simple;
+	bh=A8wnwEOch3UngFRKmblDYPgQHvkRI1dxpZxoJsyI5zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m4iREXdJJQMSMydSZClqWYLRWTnjxhhAe2O3lWTQptvxXKqRs5qjJzf7EFqY/iTbQtbIeulmCtPKvdTadl+/7Nkz7AbbW+0wcqtZ0Jm+7dQP6feQabNxLCxRs6FKU5tiTOSyWwp2BcuPq6L17LWkNOLGihAAGxjkYevEa1OKPHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7hoYYMN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9fd+a5CM2GFN9EzcR2vtkWT1VgaPt4omLIxEWo584qRlQ6qW/1f7Dr2mkCdoFWXZf/nqN/LjpE9fxUSH3/tTOmUvD44hxyv1abFc6oeUoRFQ01Id5OpoWqSCROfbwLCHnMdwg2R3IcnCqH69k2LLuZyVqF1TQiqfMWaVZnQDrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAZh5JgN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7hoYYMN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AF0C4CED3;
-	Mon, 23 Dec 2024 16:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAZh5JgN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D15EC4CED3;
+	Mon, 23 Dec 2024 16:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1734969851;
-	bh=idORojhTFVd2UldjYHzwxsddX+GLMvDJtl5Mo4kvMpE=;
+	s=korg; t=1734969854;
+	bh=A8wnwEOch3UngFRKmblDYPgQHvkRI1dxpZxoJsyI5zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7hoYYMNupX9U2EpqgfU7kHVLI4kzXsabACxGPYclxFTvaauJ6qO6YXzyBuQpw0WQ
-	 zT9cA2HcLSav+dofPRg2SEx/kJ3nscrRiOZhlnaWz2iGtc7rVfmrAelhRuhFjlEjPY
-	 s77LcYHlrXx/Pc3HmeXs4p4sC61K4wJSxT7b3Kkk=
+	b=XAZh5JgNB/ofq2Oq/HB9lbul8yPqpril1HS8YHOXWAfYw4eKJwOAUuZTf8ApPiIiA
+	 gvAEIGmWUnPSp97hvHRGfXidxU6ed/JDoBVqwEQyt/vb5IN4xqE0hoLlkNk0e+KAdj
+	 k35vTHYLogo1koqliQINF62l515QPuZlJi2do+B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 072/160] block: Revert "block: Fix potential deadlock while freezing queue and acquiring sysfs_lock"
-Date: Mon, 23 Dec 2024 16:58:03 +0100
-Message-ID: <20241223155411.468118682@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 046/160] netdev: fix repeated netlink messages in queue dump
+Date: Mon, 23 Dec 2024 16:57:37 +0100
+Message-ID: <20241223155410.455879601@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
 References: <20241223155408.598780301@linuxfoundation.org>
@@ -51,196 +51,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 224749be6c23efe7fb8a030854f4fc5d1dd813b3 upstream.
+[ Upstream commit b1f3a2f5a742c1e939a73031bd31b9e557a2d77d ]
 
-This reverts commit be26ba96421ab0a8fa2055ccf7db7832a13c44d2.
+The context is supposed to record the next queue to dump,
+not last dumped. If the dump doesn't fit we will restart
+from the already-dumped queue, duplicating the message.
 
-Commit be26ba96421a ("block: Fix potential deadlock while freezing queue and
-acquiring sysfs_loc") actually reverts commit 22465bbac53c ("blk-mq: move cpuhp
-callback registering out of q->sysfs_lock"), and causes the original resctrl
-lockdep warning.
+Before this fix and with the selftest improvements later
+in this series we see:
 
-So revert it and we need to fix the issue in another way.
+  # ./run_kselftest.sh -t drivers/net:queues.py
+  timeout set to 45
+  selftests: drivers/net: queues.py
+  KTAP version 1
+  1..2
+  # Check| At /root/ksft-net-drv/drivers/net/./queues.py, line 32, in get_queues:
+  # Check|     ksft_eq(queues, expected)
+  # Check failed 102 != 100
+  # Check| At /root/ksft-net-drv/drivers/net/./queues.py, line 32, in get_queues:
+  # Check|     ksft_eq(queues, expected)
+  # Check failed 101 != 100
+  not ok 1 queues.get_queues
+  ok 2 queues.addremove_queues
+  # Totals: pass:1 fail:1 xfail:0 xpass:0 skip:0 error:0
+  not ok 1 selftests: drivers/net: queues.py # exit=1
 
-Cc: Nilay Shroff <nilay@linux.ibm.com>
-Fixes: be26ba96421a ("block: Fix potential deadlock while freezing queue and acquiring sysfs_loc")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241218101617.3275704-2-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With the fix:
+
+  # ./ksft-net-drv/run_kselftest.sh -t drivers/net:queues.py
+  timeout set to 45
+  selftests: drivers/net: queues.py
+  KTAP version 1
+  1..2
+  ok 1 queues.get_queues
+  ok 2 queues.addremove_queues
+  # Totals: pass:2 fail:0 xfail:0 xpass:0 skip:0 error:0
+
+Fixes: 6b6171db7fc8 ("netdev-genl: Add netlink framework functions for queue")
+Reviewed-by: Joe Damato <jdamato@fastly.com>
+Link: https://patch.msgid.link/20241213152244.3080955-2-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq-sysfs.c |   16 ++++++++++------
- block/blk-mq.c       |   29 +++++++++++------------------
- block/blk-sysfs.c    |    4 ++--
- 3 files changed, 23 insertions(+), 26 deletions(-)
+ net/core/netdev-genl.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/block/blk-mq-sysfs.c
-+++ b/block/blk-mq-sysfs.c
-@@ -275,13 +275,15 @@ void blk_mq_sysfs_unregister_hctxs(struc
- 	struct blk_mq_hw_ctx *hctx;
- 	unsigned long i;
+diff --git a/net/core/netdev-genl.c b/net/core/netdev-genl.c
+index d2baa1af9df0..71359922ae8b 100644
+--- a/net/core/netdev-genl.c
++++ b/net/core/netdev-genl.c
+@@ -417,24 +417,21 @@ netdev_nl_queue_dump_one(struct net_device *netdev, struct sk_buff *rsp,
+ 			 struct netdev_nl_dump_ctx *ctx)
+ {
+ 	int err = 0;
+-	int i;
  
--	lockdep_assert_held(&q->sysfs_dir_lock);
--
-+	mutex_lock(&q->sysfs_dir_lock);
- 	if (!q->mq_sysfs_init_done)
--		return;
-+		goto unlock;
+ 	if (!(netdev->flags & IFF_UP))
+ 		return err;
  
- 	queue_for_each_hw_ctx(q, hctx, i)
- 		blk_mq_unregister_hctx(hctx);
-+
-+unlock:
-+	mutex_unlock(&q->sysfs_dir_lock);
- }
- 
- int blk_mq_sysfs_register_hctxs(struct request_queue *q)
-@@ -290,10 +292,9 @@ int blk_mq_sysfs_register_hctxs(struct r
- 	unsigned long i;
- 	int ret = 0;
- 
--	lockdep_assert_held(&q->sysfs_dir_lock);
--
-+	mutex_lock(&q->sysfs_dir_lock);
- 	if (!q->mq_sysfs_init_done)
--		return ret;
-+		goto unlock;
- 
- 	queue_for_each_hw_ctx(q, hctx, i) {
- 		ret = blk_mq_register_hctx(hctx);
-@@ -301,5 +302,8 @@ int blk_mq_sysfs_register_hctxs(struct r
- 			break;
+-	for (i = ctx->rxq_idx; i < netdev->real_num_rx_queues;) {
+-		err = netdev_nl_queue_fill_one(rsp, netdev, i,
++	for (; ctx->rxq_idx < netdev->real_num_rx_queues; ctx->rxq_idx++) {
++		err = netdev_nl_queue_fill_one(rsp, netdev, ctx->rxq_idx,
+ 					       NETDEV_QUEUE_TYPE_RX, info);
+ 		if (err)
+ 			return err;
+-		ctx->rxq_idx = i++;
+ 	}
+-	for (i = ctx->txq_idx; i < netdev->real_num_tx_queues;) {
+-		err = netdev_nl_queue_fill_one(rsp, netdev, i,
++	for (; ctx->txq_idx < netdev->real_num_tx_queues; ctx->txq_idx++) {
++		err = netdev_nl_queue_fill_one(rsp, netdev, ctx->txq_idx,
+ 					       NETDEV_QUEUE_TYPE_TX, info);
+ 		if (err)
+ 			return err;
+-		ctx->txq_idx = i++;
  	}
  
-+unlock:
-+	mutex_unlock(&q->sysfs_dir_lock);
-+
- 	return ret;
- }
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4462,8 +4462,7 @@ static void blk_mq_realloc_hw_ctxs(struc
- 	unsigned long i, j;
- 
- 	/* protect against switching io scheduler  */
--	lockdep_assert_held(&q->sysfs_lock);
--
-+	mutex_lock(&q->sysfs_lock);
- 	for (i = 0; i < set->nr_hw_queues; i++) {
- 		int old_node;
- 		int node = blk_mq_get_hctx_node(set, i);
-@@ -4496,6 +4495,7 @@ static void blk_mq_realloc_hw_ctxs(struc
- 
- 	xa_for_each_start(&q->hctx_table, j, hctx, j)
- 		blk_mq_exit_hctx(q, set, hctx, j);
-+	mutex_unlock(&q->sysfs_lock);
- 
- 	/* unregister cpuhp callbacks for exited hctxs */
- 	blk_mq_remove_hw_queues_cpuhp(q);
-@@ -4527,14 +4527,10 @@ int blk_mq_init_allocated_queue(struct b
- 
- 	xa_init(&q->hctx_table);
- 
--	mutex_lock(&q->sysfs_lock);
--
- 	blk_mq_realloc_hw_ctxs(set, q);
- 	if (!q->nr_hw_queues)
- 		goto err_hctxs;
- 
--	mutex_unlock(&q->sysfs_lock);
--
- 	INIT_WORK(&q->timeout_work, blk_mq_timeout_work);
- 	blk_queue_rq_timeout(q, set->timeout ? set->timeout : 30 * HZ);
- 
-@@ -4553,7 +4549,6 @@ int blk_mq_init_allocated_queue(struct b
- 	return 0;
- 
- err_hctxs:
--	mutex_unlock(&q->sysfs_lock);
- 	blk_mq_release(q);
- err_exit:
- 	q->mq_ops = NULL;
-@@ -4934,12 +4929,12 @@ static bool blk_mq_elv_switch_none(struc
- 		return false;
- 
- 	/* q->elevator needs protection from ->sysfs_lock */
--	lockdep_assert_held(&q->sysfs_lock);
-+	mutex_lock(&q->sysfs_lock);
- 
- 	/* the check has to be done with holding sysfs_lock */
- 	if (!q->elevator) {
- 		kfree(qe);
--		goto out;
-+		goto unlock;
- 	}
- 
- 	INIT_LIST_HEAD(&qe->node);
-@@ -4949,7 +4944,9 @@ static bool blk_mq_elv_switch_none(struc
- 	__elevator_get(qe->type);
- 	list_add(&qe->node, head);
- 	elevator_disable(q);
--out:
-+unlock:
-+	mutex_unlock(&q->sysfs_lock);
-+
- 	return true;
- }
- 
-@@ -4978,9 +4975,11 @@ static void blk_mq_elv_switch_back(struc
- 	list_del(&qe->node);
- 	kfree(qe);
- 
-+	mutex_lock(&q->sysfs_lock);
- 	elevator_switch(q, t);
- 	/* drop the reference acquired in blk_mq_elv_switch_none */
- 	elevator_put(t);
-+	mutex_unlock(&q->sysfs_lock);
- }
- 
- static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
-@@ -5000,11 +4999,8 @@ static void __blk_mq_update_nr_hw_queues
- 	if (set->nr_maps == 1 && nr_hw_queues == set->nr_hw_queues)
- 		return;
- 
--	list_for_each_entry(q, &set->tag_list, tag_set_list) {
--		mutex_lock(&q->sysfs_dir_lock);
--		mutex_lock(&q->sysfs_lock);
-+	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_freeze_queue(q);
--	}
- 	/*
- 	 * Switch IO scheduler to 'none', cleaning up the data associated
- 	 * with the previous scheduler. We will switch back once we are done
-@@ -5060,11 +5056,8 @@ switch_back:
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_elv_switch_back(&head, q);
- 
--	list_for_each_entry(q, &set->tag_list, tag_set_list) {
-+	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_unfreeze_queue(q);
--		mutex_unlock(&q->sysfs_lock);
--		mutex_unlock(&q->sysfs_dir_lock);
--	}
- 
- 	/* Free the excess tags when nr_hw_queues shrink. */
- 	for (i = set->nr_hw_queues; i < prev_nr_hw_queues; i++)
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -690,11 +690,11 @@ queue_attr_store(struct kobject *kobj, s
- 			return res;
- 	}
- 
--	mutex_lock(&q->sysfs_lock);
- 	blk_mq_freeze_queue(q);
-+	mutex_lock(&q->sysfs_lock);
- 	res = entry->store(disk, page, length);
--	blk_mq_unfreeze_queue(q);
- 	mutex_unlock(&q->sysfs_lock);
-+	blk_mq_unfreeze_queue(q);
- 	return res;
- }
- 
+ 	return err;
+-- 
+2.39.5
+
 
 
