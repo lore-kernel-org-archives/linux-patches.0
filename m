@@ -1,808 +1,183 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2067.outbound.protection.outlook.com [40.107.102.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC2319D074
-	for <patches@lists.linux.dev>; Tue, 24 Dec 2024 12:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735043125; cv=none; b=I8pbPNpPeN2SFF2GAyZlkClpghJJCUxZDv9IOeXv+VyXEhfmWykyR9pJRdfKv0Yxz0ZDegdv+Na61SKZF4gAA1wNLTaShO5of4a8kNvOcsAnmdBzCaLgFo3EO45S9HyWPBUQjyoukuJRt4593vj7L4E59WBkyn0R/G+XnXCyJ1s=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735043125; c=relaxed/simple;
-	bh=2aLJNU+5xghvnLAhZvE29TCWx+lIoPFTEjkD6x2zhes=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bzH5g1UrnMVBLlOLMV47Q625b6wTnJoQvm5KCy3V2jyxfPY2Z3dRHHNQ7mNf9JT4eMyfzPHMJyVXDvKLoEX1DJufma/FvOwKHg9gY2VYuLVj8SO7dpxA9Fm65vYllrQpnVeM46qhbWlXM9bBxCKxlcrOWnZBCRyjgyV8zZjbkFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mk5Somja; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E0BCA6B
+	for <patches@lists.linux.dev>; Tue, 24 Dec 2024 13:26:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.102.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1735046806; cv=fail; b=Q+RVUFyk2Br/sVOruW+gUgnkRjdG0ibaCnu3O3R5rofWEsjJnK9Y6f0ad7GQaHHMETETL/RyAmsgY2pnBMm66fpbWT84Mrt/iHkw08QXJglxfSJh5IrwTnn814N0sjJuz5cyr4B5DAsvbaBJNKZ7Cn1b0pIXeyItgx4j1gLxIKM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1735046806; c=relaxed/simple;
+	bh=kW83zEeBcDWliLQM1XC5JRu6QQrbFCzv9WYDOeTF3oU=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=ro5rQ4ZebQGH67eP/Xcv2pimCzcGRHqSIwbFaFWx++6src9V/BLBVSBjJ9v/mp9NRYau1rM47dNv0Wbphv09+zLtCFaPbzwzQTEJEjE1Gh9vCMimAAICOB6S44Ci7+ZGXQJZNJya8LikFfqHdYMHabsebDAj/BEHEqycSxBtMWU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=C/bozshp; arc=fail smtp.client-ip=40.107.102.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mk5Somja"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2f441791e40so4490075a91.3
-        for <patches@lists.linux.dev>; Tue, 24 Dec 2024 04:25:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735043122; x=1735647922; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2I7isWHcR2yTMcQX+2cVvXFndCbXWvOMDAYmwt374Tc=;
-        b=Mk5SomjabEGDu/YDgLrcGLzKPFZ2qmzbPNoZ5liOFTH7e8yc6redfbFklUWqFyHf/g
-         AEg0SmASlJvyt+gJjN+zaXo0PM41LjJgMX+78F9ItCRNE9fmkClnB2NFP6xOzocU2bhY
-         hjpP4wdspOu/OvbEi8TeHUbByq3WOlC5Yc3HBAaRQGNYrLInc+Xbu7C+GLnjUSJJkAYA
-         SRjYr12C1nMyr9xFOHB6xUYOpitHx7wwThCSguNc44vuQrHozoGqSJKD5HIbf6k/rpKY
-         V7TrPv4YpSAYNYbBz9CBnZNwSm24InwQA4EVyOarCFJ4UZIXlWeJ67lu45i535mz1XfT
-         KTRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735043122; x=1735647922;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2I7isWHcR2yTMcQX+2cVvXFndCbXWvOMDAYmwt374Tc=;
-        b=bXoCDou/5J3T62yG4jALZ9AmhfEupxfTCOXPW1KghMw0ymCfPKXrxPgRbET0iVfwje
-         tUb04saZPtn9JQN0h4f/c65OXfrzB77fc0eCAKVepvcSrQUIrq0B7Zy7rMlKzKkjbbDY
-         cuaqQwLK89UEz1OYfvRXF1nVmCXI1buEqgzEhl6Xz7dtLqta661QPXf7t9J6bEE+P9xo
-         pSAiosq2EwnuX3s4bxGYQohKFRgS0s/FbLG+9G9EwKd2oUTiN70EHXsmx/ZhXr3TkhTM
-         nbeI0DZiEJIQ/8zWy8OzHV8yzlU9T5EztfXvDQoQuzEaprd2ifeT73zc8fe9S9NzTeij
-         9LJA==
-X-Forwarded-Encrypted: i=1; AJvYcCV9aLvVwbbm323ZjOQ9H86vDr3X8lp1h6GGfSjtfvV68GH5BZqhzhf/tYhqempy4EPEUifw4FKe@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzm5amR/HIgjy/mQcsZNyhImqZR0rEaEt/2/zuiHteQ1/ftNiHI
-	XtCzRSBhIe1aQZ5CzvJJHRBF9ZNSxvWdfrgBzSKMDzFXSW+Sd363ZktpmxLfhGDw94AD9FDPxPc
-	QmWdBzhQx3KM66ZICAKNIuhNZoCc=
-X-Gm-Gg: ASbGncuvwjJ0JABdqtSwj2gczrqXHSSsYxcWep3/rknfz9gUSIUIvJzhtWkmHVaxFeR
-	/Q4BrRblF2IF8Z65VRbiY2Addcva52Y+RsJdkfapFGwnip4XviXqQ
-X-Google-Smtp-Source: AGHT+IHpijoR8a67tpmyGVLBIVxScnKfAq3qec7GLPUQLHdsFr9CJ3e4WQXxVHVXrEWL/Ditk4+k2rUFWTFDKXapKQE=
-X-Received: by 2002:a17:90b:5347:b0:2ee:3fa7:ef4d with SMTP id
- 98e67ed59e1d1-2f452ec37bamr24840526a91.24.1735043122184; Tue, 24 Dec 2024
- 04:25:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="C/bozshp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hv3gHSUTlq3d3JkVzSP/oqVUepvKBtsYCkX9jFKEMdYlI/Irb9Etp+4K3Lv1UVqQT5V+c/vc5DMlUxgbTo5WHlaQ/W/iCDJBSXM7TXRP6uo2htvp+7i2d8ZoZSYPGmRLvuct/tRQr5TpjSwJWSIfGpk1RuvIyFBUXoWC/pB12cXu3vu8fDA/n6TZT0NNSFOYJL2EpX17oGpF58IiPgDNA3kKJuU4fzHLlNZryEe8RP7TR6FlCeTXsw5GDXJUK2tCGfMzX9rITZxou3x9z7DVZN7CBz4txaBzlm+7uS/NSw/EYDjggB31uTYFIWkM5Th+K9cobO+FkIuomnGu8Vloug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dwhiEz2TV7W04y+MtGD3Y2T3UJQGai1zq9YJp5JyLSI=;
+ b=UEA8h9eRKq0pEwMq8HcbkYCLAuvXnQmonHaDS0doVRYy0Y6CEbhZV41Vg9h5okbfB7M3xuQIo3lSJI643054eRp+saZq9azVYdGoUCYpmzh+X3auDt500KAH+9lpYR3uClL9uJZnGi8aJV7s6NaGI9AmDMkwpIHg6dGhW47kADLx2g0qdRQ5mXTu2gBDxS6iqRMHFqOT1B2i4doeOuQ6UqTBLMg6zut+4sM8si8RfRwIpwaw5lA02twaI7sRSdpW9Eqq+tp2apa2vXFBnO9r656xotolQhXW84nu0n1ZYkrSWdoo6m1Qws1SXpRkBMs5nTaRvv8gQ3KXCE7GlgFcfg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dwhiEz2TV7W04y+MtGD3Y2T3UJQGai1zq9YJp5JyLSI=;
+ b=C/bozshpDylRdV/tPCv2KIySc9fbpsHQXjNoZvxE+BmP0sWmDRw1VCVRkNzMglBjnNKLPuaplKwvacy4j1EFWzmQP2Qf8VEnY81tOy+iZzHFaZMoLSKCtNy4UrRTFf72P5sjI40CMnIg/IuT/SQl3aDe5ZPYdbHEvVYq19m3YJiB2DvvNR7HtWQUP7ycQa9bmFY4qbOyazUDXSjVF9hFtsNthAZrHAArFayxJkNF16VHqgcEHD2xZBnKjhx3N+DbTQtkxrWcEQhUDQKhRRzgrVnYxAojjGQUFft0yozJNCvHwHyzIlXv7VgznB1MHuT1Kxy0u1moEJ4W6HpZlV4b4A==
+Received: from CY8P222CA0008.NAMP222.PROD.OUTLOOK.COM (2603:10b6:930:6b::13)
+ by IA1PR12MB8586.namprd12.prod.outlook.com (2603:10b6:208:44e::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.14; Tue, 24 Dec
+ 2024 13:26:36 +0000
+Received: from CY4PEPF0000E9CD.namprd03.prod.outlook.com
+ (2603:10b6:930:6b:cafe::59) by CY8P222CA0008.outlook.office365.com
+ (2603:10b6:930:6b::13) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8272.22 via Frontend Transport; Tue,
+ 24 Dec 2024 13:26:36 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CY4PEPF0000E9CD.mail.protection.outlook.com (10.167.241.132) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8293.12 via Frontend Transport; Tue, 24 Dec 2024 13:26:36 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 24 Dec
+ 2024 05:26:24 -0800
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 24 Dec
+ 2024 05:26:23 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 24 Dec 2024 05:26:23 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <hargar@microsoft.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 00/83] 6.1.122-rc1 review
+In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
+References: <20241223155353.641267612@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241223155408.598780301@linuxfoundation.org>
-In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
-From: Luna Jernberg <droidbittin@gmail.com>
-Date: Tue, 24 Dec 2024 13:25:09 +0100
-Message-ID: <CADo9pHg3F=tTR6X-udAELorHYSOC3hA61RzGaWFBFQjSLCR0Mg@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/160] 6.12.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <dfcd1027-c6ee-4817-b9ef-c6c629d40c24@rnnvmail203.nvidia.com>
+Date: Tue, 24 Dec 2024 05:26:23 -0800
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000E9CD:EE_|IA1PR12MB8586:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97d0384c-5247-41e5-c2b1-08dd241e973c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|7416014|376014|36860700013|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aXZUaWp2Wmgva1FvMktqUExublp2bXdsUnpWc1FaZGgvT0ZMZHYrYWNMNDZh?=
+ =?utf-8?B?VzE3SE5RMCtmQmxIV0FPTVRIRlNOQk90UkVvRlJWSUhTMlU3eVN3T1B6TEhv?=
+ =?utf-8?B?QTZSeG0wUlFQME5RdnI0cjdNc1loNExwOS9pdzVlY2xsbmN1Y0xtc2dkem96?=
+ =?utf-8?B?cktRd09EcUFjRElYWFNEdlF0K1hEUDNXQ2VNazVqZEZiQ0RaSVdiUk9pNUMr?=
+ =?utf-8?B?bk1tZ2dZSStzTjlrUWltYlhERHBGcXVUNElQYmhRRXZIL3BKdC9UVU0yOUVi?=
+ =?utf-8?B?bVYrYkVBUndKSlU1TENESkl0YUx2RmtrT0t6bHR5c2loVXJYdUs0eWdaenV5?=
+ =?utf-8?B?NFl1N1luL2hxTnYrbWRWRGRIZEV5UytzSEFQV0tidkN3dkNyZHl4WEhEM2R5?=
+ =?utf-8?B?ejAvSlo1VlQ4YmVZOVJ4dGlGL2ltZkJvNmYxbDQ5VjVhdjNLRzgxYmxpaFRU?=
+ =?utf-8?B?aWRQU0UwaS8wZVNac2hRRjlYQ080L1ZTVGRtU2NPNTd3ZUd2ZEE0dWtXNWg3?=
+ =?utf-8?B?UFVKYWt2UkN6aWw2N0paZFlvSDZVRWpnMHRHd0V0a3VIWVFtcno5R1BKYXl4?=
+ =?utf-8?B?ek5TcjE1b3pNWTh1elVYem9CMnNsOXEyaS9TU0tMMU44d1o4ejV6OFdsaEZm?=
+ =?utf-8?B?TkJ1Qm9DTVBNbFlTRmRMamJ2T2VkYnlRU1FUSTJXc0RtZEJvYXFEekZZL2d4?=
+ =?utf-8?B?LzdPdHJRdXBMRTZnRCtkaXdCZ2ZLOFZEK2pUMlY2bjd6Q1FLcWhGQ2NhbUlE?=
+ =?utf-8?B?TkxOcXZyTnhldTFtS1EzTjFpVHFKMm9kTUQ2ekhBNFdiWXdicU80YkR5ekZY?=
+ =?utf-8?B?U0I2SmdJbGtYSHAzSlJLYjRZNHFEei91ckNyNlRaTHZETklQcmZ4c2Zwd1k1?=
+ =?utf-8?B?RDJJaWgvWEUrSUswL2IrK1ZxbVlxWmZmem9CNm5sTkwzd05WdU9nSWc1WjBs?=
+ =?utf-8?B?NVZEQ0NKYStudzdSeHpzWVo1bmhyd0p5enJWRk5TU2VMR093NmpDd0pVcDVz?=
+ =?utf-8?B?VXRHQkV0dEhVUU1aY0ZxTUtyM3hDV2ZkUEJObUtaYTZkN1pqaUYxTGRId3M0?=
+ =?utf-8?B?SWd3aTljV1FhOU5DcTJNS0R3R0NsbnRLVm42aTZNK2dESXNicnZWa0JHY3d2?=
+ =?utf-8?B?YjY5S05ISXF3cXZRTUgyTWxrRzkrd28zdmNyV3ptWnc3dlJ1N0dLVWI1Qllj?=
+ =?utf-8?B?N1JTa2U3S05JR1BBVHBIblVyYlhWTXh5NzZzNjdMVGFSR0FVdHYyR2JvOS9W?=
+ =?utf-8?B?aDFtYUEwakc5alRQVGxyK3JWbjhmMmFOWm0vN3F1clVRLzVCQm43Q0VKVjFp?=
+ =?utf-8?B?NjJpUC9mbWN5bTMvekRPcHh4amlBa2swOFFhd3RUN0JBVVlsMnBIdlRCMTZQ?=
+ =?utf-8?B?Z0JKZTY0VFpXcy83TE0vc0swTVQ4MmJUWVJIVVdyM1ozUFhJUmR5eDlUUE9k?=
+ =?utf-8?B?VHZ3bzdvL1NVRitwK1R6bnIyaTNVbkdOZGtBLzVXTWlBL3k4TmNhSXJPeHRw?=
+ =?utf-8?B?NUdBS1A2NEphTm04KzAxbUdlek82NFBNR1JYdHRRSHRVZHROd1hqNmtMQWpO?=
+ =?utf-8?B?dEQvbG9ETjRLWXlNT3ZoS0lHdzRwcy9jc3JYSzBwMG5oaElmWFh3VzhZSExQ?=
+ =?utf-8?B?MUpLUHM3WUZwVGk4QXlmZzVVVVV5TlY4TU1uUmgxZVU5Sm9MOTdYYTNaUXpT?=
+ =?utf-8?B?b1ZyZnpSMnJJUXR4NkdxUGFFQ1VpOUkrTWl5K1kwNU5abzdZUnFrRnVlZVpv?=
+ =?utf-8?B?cEJSTk5uM3l6RXVuRGNuanF4TEQ1bEkzM25PakV6MnNKYkJ5cHpiUzd0NGNH?=
+ =?utf-8?B?NURaaVNleG5nNVJDczdzd0ZnOURCZzUrZWd6aHFNL1hkTVNBUUg4OTJNY2Nt?=
+ =?utf-8?B?Wm1TQnNiV2szd05iSURoY0FTVUcxVWZNUFM4NjNsL3Z6S3BoRmJMSk4yeS9Z?=
+ =?utf-8?B?Mis3MVBJOWl0WEVON25BV2NvOWU0NTErS2pKZUlSczZYUjlHMVZ3blVSM3V6?=
+ =?utf-8?Q?6AX+Ya2OvCXF6MNPDztibI8cFyxCTw=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(7416014)(376014)(36860700013)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Dec 2024 13:26:36.0345
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97d0384c-5247-41e5-c2b1-08dd241e973c
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000E9CD.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8586
 
-Works as it should
-
-Tested-by: Luna Jernberg <droidbittin@gmail.com>
-
-AMD Ryzen 5 5600 6-Core Processor:
-https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
-https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
-https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
-motherboard :)
-
-running Arch Linux with the testing repos enabled:
-https://archlinux.org/ https://archboot.com/
-https://wiki.archlinux.org/title/Arch_Testing_Team
-
-and merry xmas here from Sweden :)
-
-Den m=C3=A5n 23 dec. 2024 kl 17:00 skrev Greg Kroah-Hartman
-<gregkh@linuxfoundation.org>:
->
-> This is the start of the stable review cycle for the 6.12.7 release.
-> There are 160 patches in this series, all will be posted as a response
+On Mon, 23 Dec 2024 16:58:39 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.122 release.
+> There are 83 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Fri, 27 Dec 2024 15:53:30 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.7-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.122-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
->
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 6.12.7-rc1
->
-> Xuewen Yan <xuewen.yan@unisoc.com>
->     epoll: Add synchronous wakeup support for ep_poll_callback
->
-> Usama Arif <usamaarif642@gmail.com>
->     mm: convert partially_mapped set/clear operations to be atomic
->
-> Hugh Dickins <hughd@google.com>
->     mm: shmem: fix ShmemHugePages at swapout
->
-> Kefeng Wang <wangkefeng.wang@huawei.com>
->     mm: use aligned address in copy_user_gigantic_page()
->
-> Kefeng Wang <wangkefeng.wang@huawei.com>
->     mm: use aligned address in clear_gigantic_page()
->
-> Ilya Dryomov <idryomov@gmail.com>
->     ceph: fix memory leak in ceph_direct_read_write()
->
-> Max Kellermann <max.kellermann@ionos.com>
->     ceph: fix memory leaks in __ceph_sync_read()
->
-> Alex Markuze <amarkuze@redhat.com>
->     ceph: improve error handling and short/overflow-read logic in __ceph_=
-sync_read()
->
-> Ilya Dryomov <idryomov@gmail.com>
->     ceph: validate snapdirname option length when mounting
->
-> Max Kellermann <max.kellermann@ionos.com>
->     ceph: give up on paths longer than PATH_MAX
->
-> Zijun Hu <quic_zijuhu@quicinc.com>
->     of: Fix refcount leakage for OF node returned by __of_get_dma_parent(=
-)
->
-> Herve Codina <herve.codina@bootlin.com>
->     of: Fix error path in of_parse_phandle_with_args_map()
->
-> Andrea della Porta <andrea.porta@suse.com>
->     of: address: Preserve the flags portion on 1:1 dma-ranges mapping
->
-> Samuel Holland <samuel.holland@sifive.com>
->     of: property: fw_devlink: Do not use interrupt-parent directly
->
-> Jann Horn <jannh@google.com>
->     udmabuf: also check for F_SEAL_FUTURE_WRITE
->
-> Jann Horn <jannh@google.com>
->     udmabuf: fix racy memfd sealing check
->
-> Edward Adam Davis <eadavis@qq.com>
->     nilfs2: prevent use of deleted inode
->
-> Ryusuke Konishi <konishi.ryusuke@gmail.com>
->     nilfs2: fix buffer head leaks in calls to truncate_inode_pages()
->
-> Heming Zhao <heming.zhao@suse.com>
->     ocfs2: fix the space leak in LA when releasing LA
->
-> Zijun Hu <quic_zijuhu@quicinc.com>
->     of/irq: Fix using uninitialized variable @addr_len in API of_irq_pars=
-e_one()
->
-> Zijun Hu <quic_zijuhu@quicinc.com>
->     of/irq: Fix interrupt-map cell length check in of_irq_parse_imap_pare=
-nt()
->
-> Sean Christopherson <seanjc@google.com>
->     KVM: SVM: Allow guest writes to set MSR_AMD64_DE_CFG bits
->
-> Trond Myklebust <trond.myklebust@hammerspace.com>
->     NFS/pnfs: Fix a live lock between recalled layouts and layoutget
->
-> Pavel Begunkov <asml.silence@gmail.com>
->     io_uring: check if iowq is killed before queuing
->
-> Jann Horn <jannh@google.com>
->     io_uring: Fix registered ring file refcount leak
->
-> Tiezhu Yang <yangtiezhu@loongson.cn>
->     selftests/bpf: Use asm constraint "m" for LoongArch
->
-> Isaac J. Manjarres <isaacmanjarres@google.com>
->     selftests/memfd: run sysctl tests when PID namespace support is enabl=
-ed
->
-> Steven Rostedt <rostedt@goodmis.org>
->     tracing: Check "%s" dereference via the field and not the TP_printk f=
-ormat
->
-> Steven Rostedt <rostedt@goodmis.org>
->     tracing: Add "%s" check in test_event_printk()
->
-> Steven Rostedt <rostedt@goodmis.org>
->     tracing: Add missing helper functions in event pointer dereference ch=
-eck
->
-> Steven Rostedt <rostedt@goodmis.org>
->     tracing: Fix test_event_printk() to process entire print argument
->
-> Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
->     accel/ivpu: Fix WARN in ivpu_ipc_send_receive_internal()
->
-> Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
->     accel/ivpu: Fix general protection fault in ivpu_bo_list()
->
-> Enzo Matsumiya <ematsumiya@suse.de>
->     smb: client: fix TCP timers deadlock after rmmod
->
-> Sean Christopherson <seanjc@google.com>
->     KVM: x86: Play nice with protected guests in complete_hypercall_exit(=
-)
->
-> Naman Jain <namjain@linux.microsoft.com>
->     x86/hyperv: Fix hv tsc page based sched_clock for hibernation
->
-> Dexuan Cui <decui@microsoft.com>
->     tools: hv: Fix a complier warning in the fcopy uio daemon
->
-> Michael Kelley <mhklinux@outlook.com>
->     Drivers: hv: util: Avoid accessing a ringbuffer not initialized yet
->
-> Steven Rostedt <rostedt@goodmis.org>
->     fgraph: Still initialize idle shadow stacks when starting
->
-> Alex Deucher <alexander.deucher@amd.com>
->     drm/amdgpu/mmhub4.1: fix IP version check
->
-> Alex Deucher <alexander.deucher@amd.com>
->     drm/amdgpu/gfx12: fix IP version check
->
-> Alex Deucher <alexander.deucher@amd.com>
->     drm/amdgpu/nbio7.0: fix IP version check
->
-> Heiko Carstens <hca@linux.ibm.com>
->     s390/mm: Fix DirectMap accounting
->
-> Qu Wenruo <wqu@suse.com>
->     btrfs: tree-checker: reject inline extent items with 0 ref count
->
-> Josef Bacik <josef@toxicpanda.com>
->     btrfs: fix improper generation check in snapshot delete
->
-> Christoph Hellwig <hch@lst.de>
->     btrfs: split bios to the fs sector size boundary
->
-> Suren Baghdasaryan <surenb@google.com>
->     alloc_tag: fix set_codetag_empty() when !CONFIG_MEM_ALLOC_PROFILING_D=
-EBUG
->
-> Edward Adam Davis <eadavis@qq.com>
->     ring-buffer: Fix overflow in __rb_map_vma
->
-> David Hildenbrand <david@redhat.com>
->     mm/page_alloc: don't call pfn_to_page() on possibly non-existent PFN =
-in split_large_buddy()
->
-> Matthew Wilcox (Oracle) <willy@infradead.org>
->     vmalloc: fix accounting with i915
->
-> Kairui Song <kasong@tencent.com>
->     zram: fix uninitialized ZRAM not releasing backing device
->
-> Kairui Song <kasong@tencent.com>
->     zram: refuse to use zero sized block device as backing device
->
-> Alex Deucher <alexander.deucher@amd.com>
->     drm/amdgpu/smu14.0.2: fix IP version check
->
-> Alex Deucher <alexander.deucher@amd.com>
->     drm/amdgpu/nbio7.7: fix IP version check
->
-> Alex Deucher <alexander.deucher@amd.com>
->     drm/amdgpu/nbio7.11: fix IP version check
->
-> Steven Rostedt <rostedt@goodmis.org>
->     trace/ring-buffer: Do not use TP_printk() formatting for boot mapped =
-buffers
->
-> Ming Lei <ming.lei@redhat.com>
->     block: avoid to reuse `hctx` not removed from cpuhp callback list
->
-> Murad Masimov <m.masimov@maxima.ru>
->     hwmon: (tmp513) Fix interpretation of values of Temperature Result an=
-d Limit Registers
->
-> Murad Masimov <m.masimov@maxima.ru>
->     hwmon: (tmp513) Fix Current Register value interpretation
->
-> Murad Masimov <m.masimov@maxima.ru>
->     hwmon: (tmp513) Fix interpretation of values of Shunt Voltage and Lim=
-it Registers
->
-> Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
->     drm/amdgpu: don't access invalid sched
->
-> Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
->     i915/guc: Accumulate active runtime on gt reset
->
-> Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
->     i915/guc: Ensure busyness counter increases motonically
->
-> Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
->     i915/guc: Reset engine utilization buffer before registration
->
-> Michael Trimarchi <michael@amarulasolutions.com>
->     drm/panel: synaptics-r63353: Fix regulator unbalance
->
-> Marek Vasut <marex@denx.de>
->     drm/panel: st7701: Add prepare_prev_first flag to drm_panel
->
-> Yang Yingliang <yangyingliang@huawei.com>
->     drm/panel: novatek-nt35950: fix return value check in nt35950_probe()
->
-> Zhang Zekun <zhangzekun11@huawei.com>
->     drm/panel: himax-hx83102: Add a check to prevent NULL pointer derefer=
-ence
->
-> T.J. Mercier <tjmercier@google.com>
->     dma-buf: Fix __dma_buf_debugfs_list_del argument for !CONFIG_DEBUG_FS
->
-> Jann Horn <jannh@google.com>
->     udmabuf: fix memory leak on last export_udmabuf() error path
->
-> Huan Yang <link@vivo.com>
->     udmabuf: udmabuf_create pin folio codestyle cleanup
->
-> Michel D=C3=A4nzer <mdaenzer@redhat.com>
->     drm/amdgpu: Handle NULL bo->tbo.resource (again) in amdgpu_vm_bo_upda=
-te
->
-> Christian K=C3=B6nig <christian.koenig@amd.com>
->     drm/amdgpu: fix amdgpu_coredump
->
-> Ville Syrj=C3=A4l=C3=A4 <ville.syrjala@linux.intel.com>
->     drm/modes: Avoid divide by zero harder in drm_mode_vrefresh()
->
-> Mario Limonciello <mario.limonciello@amd.com>
->     drm/amd: Update strapping for NBIO 2.5.0
->
-> Krzysztof Karas <krzysztof.karas@intel.com>
->     drm/display: use ERR_PTR on DP tunnel manager creation fail
->
-> Mario Limonciello <mario.limonciello@amd.com>
->     thunderbolt: Don't display nvm_version unless upgrade supported
->
-> Mika Westerberg <mika.westerberg@linux.intel.com>
->     thunderbolt: Improve redrive mode handling
->
-> Mika Westerberg <mika.westerberg@linux.intel.com>
->     thunderbolt: Add support for Intel Panther Lake-M/P
->
-> Mathias Nyman <mathias.nyman@linux.intel.com>
->     xhci: Turn NEC specific quirk for handling Stop Endpoint errors gener=
-ic
->
-> Daniele Palmas <dnlplm@gmail.com>
->     USB: serial: option: add Telit FE910C04 rmnet compositions
->
-> Jack Wu <wojackbb@gmail.com>
->     USB: serial: option: add MediaTek T7XX compositions
->
-> Mank Wang <mank.wang@netprisma.com>
->     USB: serial: option: add Netprisma LCUK54 modules for WWAN Ready
->
-> Michal Hrusecky <michal.hrusecky@turris.com>
->     USB: serial: option: add MeiG Smart SLM770A
->
-> Daniel Swanemar <d.swanemar@gmail.com>
->     USB: serial: option: add TCL IK512 MBIM & ECM
->
-> Nathan Chancellor <nathan@kernel.org>
->     hexagon: Disable constant extender optimization for LLVM prior to 19.=
-1.0
->
-> James Bottomley <James.Bottomley@HansenPartnership.com>
->     efivarfs: Fix error on non-existent file
->
-> Geert Uytterhoeven <geert+renesas@glider.be>
->     i2c: riic: Always round-up when calculating bus period
->
-> Ming Lei <ming.lei@redhat.com>
->     block: Revert "block: Fix potential deadlock while freezing queue and=
- acquiring sysfs_lock"
->
-> Jeremy Kerr <jk@codeconstruct.com.au>
->     net: mctp: handle skb cleanup on sock_queue failures
->
-> Dan Carpenter <dan.carpenter@linaro.org>
->     chelsio/chtls: prevent potential integer overflow on 32bit
->
-> Eric Dumazet <edumazet@google.com>
->     net: tun: fix tun_napi_alloc_frags()
->
-> Sean Christopherson <seanjc@google.com>
->     KVM: x86: Cache CPUID.0xD XSTATE offsets+sizes during module init
->
-> Marc Zyngier <maz@kernel.org>
->     KVM: arm64: Do not allow ID_AA64MMFR0_EL1.ASIDbits to be overridden
->
-> Borislav Petkov (AMD) <bp@alien8.de>
->     EDAC/amd64: Simplify ECC check on unified memory controllers
->
-> Marc Zyngier <maz@kernel.org>
->     irqchip/gic-v3: Work around insecure GIC integrations
->
-> Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
->     mmc: mtk-sd: disable wakeup in .remove() and in the error path of .pr=
-obe()
->
-> Prathamesh Shete <pshete@nvidia.com>
->     mmc: sdhci-tegra: Remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk
->
-> Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
->     net: mdiobus: fix an OF node reference leak
->
-> Adrian Moreno <amorenoz@redhat.com>
->     psample: adjust size if rate_as_probability is set
->
-> Jakub Kicinski <kuba@kernel.org>
->     netdev-genl: avoid empty messages in queue dump
->
-> Vladimir Oltean <vladimir.oltean@nxp.com>
->     net: dsa: restore dsa_software_vlan_untag() ability to operate on VLA=
-N-untagged traffic
->
-> Adrian Moreno <amorenoz@redhat.com>
->     selftests: openvswitch: fix tcpdump execution
->
-> Phil Sutter <phil@nwl.cc>
->     netfilter: ipset: Fix for recursive locking warning
->
-> David Laight <David.Laight@ACULAB.COM>
->     ipvs: Fix clamp() of ip_vs_conn_tab on small memory systems
->
-> Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
->     can: m_can: fix missed interrupts with m_can_pci
->
-> Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
->     can: m_can: set init flag earlier in probe
->
-> Eric Dumazet <edumazet@google.com>
->     net: netdevsim: fix nsim_pp_hold_write()
->
-> Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
->     net: ethernet: bgmac-platform: fix an OF node reference leak
->
-> Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
->     net: ethernet: oa_tc6: fix tx skb race condition between reference po=
-inters
->
-> Parthiban Veerasooran <parthiban.veerasooran@microchip.com>
->     net: ethernet: oa_tc6: fix infinite loop error when tx credits become=
-s 0
->
-> Dan Carpenter <dan.carpenter@linaro.org>
->     net: hinic: Fix cleanup in create_rxqs/txqs()
->
-> Daniel Borkmann <daniel@iogearbox.net>
->     team: Fix feature exposure when no ports are present
->
-> Jakub Kicinski <kuba@kernel.org>
->     netdev: fix repeated netlink messages in queue stats
->
-> Jakub Kicinski <kuba@kernel.org>
->     netdev: fix repeated netlink messages in queue dump
->
-> Marios Makassikis <mmakassikis@freebox.fr>
->     ksmbd: fix broken transfers when exceeding max simultaneous operation=
-s
->
-> Marios Makassikis <mmakassikis@freebox.fr>
->     ksmbd: count all requests in req_running counter
->
-> Nikita Yushchenko <nikita.yoush@cogentembedded.com>
->     net: renesas: rswitch: rework ts tags management
->
-> Shannon Nelson <shannon.nelson@amd.com>
->     ionic: use ee->offset when returning sprom data
->
-> Shannon Nelson <shannon.nelson@amd.com>
->     ionic: no double destroy workqueue
->
-> Brett Creeley <brett.creeley@amd.com>
->     ionic: Fix netdev notifier unregister on failure
->
-> Donald Hunter <donald.hunter@gmail.com>
->     tools/net/ynl: fix sub-message key lookup for nested attributes
->
-> Eric Dumazet <edumazet@google.com>
->     netdevsim: prevent bad user input in nsim_dev_health_break_write()
->
-> Vladimir Oltean <vladimir.oltean@nxp.com>
->     net: mscc: ocelot: fix incorrect IFH SRC_PORT field in ocelot_ifh_set=
-_basic()
->
-> Guangguan Wang <guangguan.wang@linux.alibaba.com>
->     net/smc: check return value of sock_recvmsg when draining clc data
->
-> Guangguan Wang <guangguan.wang@linux.alibaba.com>
->     net/smc: check smcd_v2_ext_offset when receiving proposal msg
->
-> Guangguan Wang <guangguan.wang@linux.alibaba.com>
->     net/smc: check v2_ext_offset/eid_cnt/ism_gid_cnt when receiving propo=
-sal msg
->
-> Guangguan Wang <guangguan.wang@linux.alibaba.com>
->     net/smc: check iparea_offset and ipv6_prefixes_cnt when receiving pro=
-posal msg
->
-> Guangguan Wang <guangguan.wang@linux.alibaba.com>
->     net/smc: check sndbuf_space again after NOSPACE flag is set in smc_po=
-ll
->
-> Guangguan Wang <guangguan.wang@linux.alibaba.com>
->     net/smc: protect link down work from execute after lgr freed
->
-> Huaisheng Ye <huaisheng.ye@intel.com>
->     cxl/region: Fix region creation for greater than x2 switches
->
-> Davidlohr Bueso <dave@stgolabs.net>
->     cxl/pci: Fix potential bogus return value upon successful probing
->
-> Olaf Hering <olaf@aepfle.de>
->     tools: hv: change permissions of NetworkManager configuration file
->
-> Darrick J. Wong <djwong@kernel.org>
->     xfs: fix zero byte checking in the superblock scrubber
->
-> Darrick J. Wong <djwong@kernel.org>
->     xfs: fix sb_spino_align checks for large fsblock sizes
->
-> Darrick J. Wong <djwong@kernel.org>
->     xfs: fix off-by-one error in fsmap's end_daddr usage
->
-> Dave Chinner <dchinner@redhat.com>
->     xfs: fix sparse inode limits on runt AG
->
-> Dave Chinner <dchinner@redhat.com>
->     xfs: sb_spino_align is not verified
->
-> Gao Xiang <xiang@kernel.org>
->     erofs: use buffered I/O for file-backed mounts by default
->
-> Gao Xiang <xiang@kernel.org>
->     erofs: reference `struct erofs_device_info` for erofs_map_dev
->
-> Gao Xiang <xiang@kernel.org>
->     erofs: use `struct erofs_device_info` for the primary device
->
-> Gao Xiang <xiang@kernel.org>
->     erofs: add erofs_sb_free() helper
->
-> Vasily Gorbik <gor@linux.ibm.com>
->     s390/mm: Consider KMSAN modules metadata for paging levels
->
-> Vineeth Pillai (Google) <vineeth@bitbyteword.org>
->     sched/dlserver: Fix dlserver time accounting
->
-> Vineeth Pillai (Google) <vineeth@bitbyteword.org>
->     sched/dlserver: Fix dlserver double enqueue
->
-> Gao Xiang <xiang@kernel.org>
->     erofs: fix PSI memstall accounting
->
-> Alexander Gordeev <agordeev@linux.ibm.com>
->     s390/ipl: Fix never less than zero warning
->
-> Vladimir Riabchun <ferr.lambarginio@gmail.com>
->     i2c: pnx: Fix timeout in wait functions
->
-> Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
->     p2sb: Do not scan and remove the P2SB device when it is unhidden
->
-> Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
->     p2sb: Move P2SB hide and unhide code to p2sb_scan_and_cache()
->
-> Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
->     p2sb: Introduce the global flag p2sb_hidden_by_bios
->
-> Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
->     p2sb: Factor out p2sb_read_from_cache()
->
-> Peter Zijlstra <peterz@infradead.org>
->     sched/eevdf: More PELT vs DELAYED_DEQUEUE
->
-> Vincent Guittot <vincent.guittot@linaro.org>
->     sched/fair: Fix sched_can_stop_tick() for fair tasks
->
-> K Prateek Nayak <kprateek.nayak@amd.com>
->     sched/fair: Fix NEXT_BUDDY
->
-> Michael Neuling <michaelneuling@tenstorrent.com>
->     RISC-V: KVM: Fix csr_write -> csr_set for HVIEN PMU overflow bit
->
-> Levi Yun <yeoreum.yun@arm.com>
->     firmware: arm_ffa: Fix the race around setting ffa_dev->properties
->
-> Arnd Bergmann <arnd@arndb.de>
->     firmware: arm_scmi: Fix i.MX build dependency
->
-> Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
->     net: stmmac: fix TSO DMA API usage causing oops
->
-> Lion Ackermann <nnamrec@gmail.com>
->     net: sched: fix ordering of qlen adjustment
->
->
-> -------------
->
-> Diffstat:
->
->  Makefile                                           |   4 +-
->  arch/arm64/kvm/sys_regs.c                          |   3 +-
->  arch/hexagon/Makefile                              |   6 +
->  arch/riscv/kvm/aia.c                               |   2 +-
->  arch/s390/boot/startup.c                           |   2 +
->  arch/s390/boot/vmem.c                              |   6 +-
->  arch/s390/kernel/ipl.c                             |   2 +-
->  arch/x86/kernel/cpu/mshyperv.c                     |  58 +++++
->  arch/x86/kvm/cpuid.c                               |  31 ++-
->  arch/x86/kvm/cpuid.h                               |   1 +
->  arch/x86/kvm/svm/svm.c                             |   9 -
->  arch/x86/kvm/x86.c                                 |   4 +-
->  block/blk-mq-sysfs.c                               |  16 +-
->  block/blk-mq.c                                     |  40 ++--
->  block/blk-sysfs.c                                  |   4 +-
->  drivers/accel/ivpu/ivpu_gem.c                      |   2 +-
->  drivers/accel/ivpu/ivpu_pm.c                       |   2 +-
->  drivers/block/zram/zram_drv.c                      |  15 +-
->  drivers/clocksource/hyperv_timer.c                 |  14 +-
->  drivers/cxl/core/region.c                          |  25 +-
->  drivers/cxl/pci.c                                  |   3 +-
->  drivers/dma-buf/dma-buf.c                          |   2 +-
->  drivers/dma-buf/udmabuf.c                          | 180 ++++++++------
->  drivers/edac/amd64_edac.c                          |  32 +--
->  drivers/firmware/arm_ffa/bus.c                     |  15 +-
->  drivers/firmware/arm_ffa/driver.c                  |   7 +-
->  drivers/firmware/arm_scmi/vendors/imx/Kconfig      |   1 +
->  drivers/firmware/imx/Kconfig                       |   1 -
->  drivers/gpu/drm/amd/amdgpu/amdgpu_dev_coredump.c   |   5 +-
->  drivers/gpu/drm/amd/amdgpu/amdgpu_job.c            |   3 +-
->  drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c             |   7 +-
->  drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c             |   2 +-
->  drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c          |   2 +-
->  drivers/gpu/drm/amd/amdgpu/nbio_v7_0.c             |  11 +
->  drivers/gpu/drm/amd/amdgpu/nbio_v7_11.c            |   2 +-
->  drivers/gpu/drm/amd/amdgpu/nbio_v7_7.c             |   2 +-
->  .../gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c   |   2 +-
->  drivers/gpu/drm/display/drm_dp_tunnel.c            |  10 +-
->  drivers/gpu/drm/drm_modes.c                        |  11 +-
->  drivers/gpu/drm/i915/gt/intel_engine_types.h       |   5 +
->  drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c  |  41 +++-
->  drivers/gpu/drm/panel/panel-himax-hx83102.c        |   2 +
->  drivers/gpu/drm/panel/panel-novatek-nt35950.c      |   4 +-
->  drivers/gpu/drm/panel/panel-sitronix-st7701.c      |   1 +
->  drivers/gpu/drm/panel/panel-synaptics-r63353.c     |   2 +-
->  drivers/hv/hv_kvp.c                                |   6 +
->  drivers/hv/hv_snapshot.c                           |   6 +
->  drivers/hv/hv_util.c                               |   9 +
->  drivers/hv/hyperv_vmbus.h                          |   2 +
->  drivers/hwmon/tmp513.c                             |  10 +-
->  drivers/i2c/busses/i2c-pnx.c                       |   4 +-
->  drivers/i2c/busses/i2c-riic.c                      |   2 +-
->  drivers/irqchip/irq-gic-v3.c                       |  17 +-
->  drivers/mmc/host/mtk-sd.c                          |   2 +
->  drivers/mmc/host/sdhci-tegra.c                     |   1 -
->  drivers/net/can/m_can/m_can.c                      |  36 ++-
->  drivers/net/can/m_can/m_can.h                      |   1 +
->  drivers/net/can/m_can/m_can_pci.c                  |   1 +
->  drivers/net/ethernet/broadcom/bgmac-platform.c     |   5 +-
->  .../chelsio/inline_crypto/chtls/chtls_main.c       |   5 +-
->  drivers/net/ethernet/huawei/hinic/hinic_main.c     |   2 +
->  drivers/net/ethernet/mscc/ocelot.c                 |   2 +-
->  drivers/net/ethernet/oa_tc6.c                      |  11 +-
->  drivers/net/ethernet/pensando/ionic/ionic_dev.c    |   5 +-
->  .../net/ethernet/pensando/ionic/ionic_ethtool.c    |   4 +-
->  drivers/net/ethernet/pensando/ionic/ionic_lif.c    |   4 +-
->  drivers/net/ethernet/renesas/rswitch.c             |  68 +++---
->  drivers/net/ethernet/renesas/rswitch.h             |  13 +-
->  drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |   7 +-
->  drivers/net/mdio/fwnode_mdio.c                     |  13 +-
->  drivers/net/netdevsim/health.c                     |   2 +
->  drivers/net/netdevsim/netdev.c                     |   4 +-
->  drivers/net/team/team_core.c                       |  10 +-
->  drivers/net/tun.c                                  |   2 +-
->  drivers/of/address.c                               |   5 +-
->  drivers/of/base.c                                  |  15 +-
->  drivers/of/irq.c                                   |   2 +
->  drivers/of/property.c                              |   2 -
->  drivers/platform/x86/p2sb.c                        |  79 ++++--
->  drivers/thunderbolt/nhi.c                          |   8 +
->  drivers/thunderbolt/nhi.h                          |   4 +
->  drivers/thunderbolt/retimer.c                      |  19 +-
->  drivers/thunderbolt/tb.c                           |  41 ++++
->  drivers/usb/host/xhci-ring.c                       |   2 -
->  drivers/usb/serial/option.c                        |  27 +++
->  fs/btrfs/bio.c                                     |  10 +-
->  fs/btrfs/ctree.h                                   |  19 ++
->  fs/btrfs/extent-tree.c                             |   6 +-
->  fs/btrfs/tree-checker.c                            |  27 ++-
->  fs/ceph/file.c                                     |  77 +++---
->  fs/ceph/mds_client.c                               |   9 +-
->  fs/ceph/super.c                                    |   2 +
->  fs/efivarfs/inode.c                                |   2 +-
->  fs/efivarfs/internal.h                             |   1 -
->  fs/efivarfs/super.c                                |   3 -
->  fs/erofs/data.c                                    |  36 +--
->  fs/erofs/fileio.c                                  |   9 +-
->  fs/erofs/fscache.c                                 |  10 +-
->  fs/erofs/internal.h                                |  15 +-
->  fs/erofs/super.c                                   |  80 ++++---
->  fs/erofs/zdata.c                                   |   4 +-
->  fs/eventpoll.c                                     |   5 +-
->  fs/hugetlbfs/inode.c                               |   2 +-
->  fs/nfs/pnfs.c                                      |   2 +-
->  fs/nilfs2/btnode.c                                 |   1 +
->  fs/nilfs2/gcinode.c                                |   2 +-
->  fs/nilfs2/inode.c                                  |  13 +-
->  fs/nilfs2/namei.c                                  |   5 +
->  fs/nilfs2/nilfs.h                                  |   1 +
->  fs/ocfs2/localalloc.c                              |   8 +-
->  fs/smb/client/connect.c                            |  36 ++-
->  fs/smb/server/connection.c                         |  18 +-
->  fs/smb/server/connection.h                         |   1 -
->  fs/smb/server/server.c                             |   7 +-
->  fs/smb/server/server.h                             |   1 +
->  fs/smb/server/transport_ipc.c                      |   5 +-
->  fs/xfs/libxfs/xfs_ialloc.c                         |  16 +-
->  fs/xfs/libxfs/xfs_sb.c                             |  15 ++
->  fs/xfs/scrub/agheader.c                            |  29 ++-
->  fs/xfs/xfs_fsmap.c                                 |  29 ++-
->  include/clocksource/hyperv_timer.h                 |   2 +
->  include/linux/alloc_tag.h                          |   7 +-
->  include/linux/arm_ffa.h                            |  13 +-
->  include/linux/hyperv.h                             |   1 +
->  include/linux/io_uring.h                           |   4 +-
->  include/linux/page-flags.h                         |  12 +-
->  include/linux/sched.h                              |   7 +
->  include/linux/trace_events.h                       |   6 +-
->  include/linux/wait.h                               |   1 +
->  io_uring/io_uring.c                                |   7 +-
->  kernel/sched/core.c                                |   2 +-
->  kernel/sched/deadline.c                            |   8 +-
->  kernel/sched/debug.c                               |   1 +
->  kernel/sched/fair.c                                |  73 ++++--
->  kernel/sched/pelt.c                                |   2 +-
->  kernel/sched/sched.h                               |  13 +-
->  kernel/trace/fgraph.c                              |   8 +-
->  kernel/trace/ring_buffer.c                         |   6 +-
->  kernel/trace/trace.c                               | 264 +++++----------=
-------
->  kernel/trace/trace.h                               |   6 +-
->  kernel/trace/trace_events.c                        | 227 ++++++++++++++-=
----
->  kernel/trace/trace_output.c                        |   6 +-
->  mm/huge_memory.c                                   |   8 +-
->  mm/hugetlb.c                                       |   5 +-
->  mm/memory.c                                        |   8 +-
->  mm/page_alloc.c                                    |   6 +-
->  mm/shmem.c                                         |  22 +-
->  mm/vmalloc.c                                       |   6 +-
->  net/core/netdev-genl.c                             |  19 +-
->  net/dsa/tag.h                                      |  16 +-
->  net/mctp/route.c                                   |  36 ++-
->  net/mctp/test/route-test.c                         |  86 +++++++
->  net/netfilter/ipset/ip_set_list_set.c              |   3 +
->  net/netfilter/ipvs/ip_vs_conn.c                    |   4 +-
->  net/psample/psample.c                              |   9 +-
->  net/sched/sch_cake.c                               |   2 +-
->  net/sched/sch_choke.c                              |   2 +-
->  net/smc/af_smc.c                                   |  18 +-
->  net/smc/smc_clc.c                                  |  17 +-
->  net/smc/smc_clc.h                                  |  22 +-
->  net/smc/smc_core.c                                 |   9 +-
->  sound/soc/fsl/Kconfig                              |   1 +
->  tools/hv/hv_fcopy_uio_daemon.c                     |   8 +-
->  tools/hv/hv_set_ifconfig.sh                        |   2 +-
->  tools/net/ynl/lib/ynl.py                           |   6 +-
->  tools/testing/selftests/bpf/sdt.h                  |   2 +
->  tools/testing/selftests/memfd/memfd_test.c         |  14 +-
->  .../selftests/net/openvswitch/openvswitch.sh       |   6 +-
->  168 files changed, 1685 insertions(+), 891 deletions(-)
->
->
->
+
+All tests passing for Tegra ...
+
+Test results for stable-v6.1:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    115 tests:	115 pass, 0 fail
+
+Linux version:	6.1.122-rc1-g7823105d258c
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
