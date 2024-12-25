@@ -1,85 +1,69 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B98B1AA1C4
-	for <patches@lists.linux.dev>; Tue, 24 Dec 2024 21:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C7D2581
+	for <patches@lists.linux.dev>; Wed, 25 Dec 2024 01:50:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735076215; cv=none; b=bTMDtMG/aQqJ9PystHsdqwFdEsZTR4Weao+HW1EMEVWMVSC3bL8DFWm0bVC+PCRy/ZbJ8EoddfcDoXiQ5e7jqrK+Z4JcgWzfAJcMd+4WVvi5lNhB/UG/m2sNSv1QFHM5sf7MapI4SAIkgY4k7DHmBP39UeZXAMkYSR2MWuIzM08=
+	t=1735091416; cv=none; b=UXQ7jOykLzrW6C2i4TX6Z8I28JL4MaEZ8zWjw58iIgo/5vADDZjpRCteZ+zc66BX7rKRi3CXCDJyBkpH7TsVPoRzx9r5h0YnDg1NwJFs6Qa30XcumKpegAIoLHl0MocltUhwN0O2drDzvYZFLsPomgwg09594uzKqV+P1mb44iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735076215; c=relaxed/simple;
-	bh=Z/C4yeb04ozX1TxmiYdpEkCwU4dnpvCayOdhi0T1hsw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YPsSHTXRsAwQT2cAqFOV56KXFXkWttce5VTVey2fv55C1jzhXHq7KJ1AwabOjKUzKGkCou1SaQuH1Mgd6YImVmVUsjHUlVTZgYD/0JDeEUt27sRF8aFSpRqBdS8opEGzQNHjdla1NoeRcK+dqSidGqzL5K2p5f7oUbwyJ5+qVgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=hsPiWvSe; arc=none smtp.client-ip=209.85.166.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="hsPiWvSe"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3a9c9f2a569so41379285ab.0
-        for <patches@lists.linux.dev>; Tue, 24 Dec 2024 13:36:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1735076212; x=1735681012; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eNqO5U1WzlHShdnDjDb2XoqFLabx4/jHbSlMuTmZVMg=;
-        b=hsPiWvSeXxVjd9i+3b60PQ4hF0EfKGziSP7QhG+O30E810jXyeyt5WkLWrS3j0Dg6Z
-         10uKEp1EDpJx6MrdTVYZn3VZmGMK/BmIVOBfVJSNPFdtpX4Qm4dFtTlrTSIeL0IBJn+2
-         MPMmIXmHq8ctzFYc17d/VisyM3Rr6Gko2K81c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735076212; x=1735681012;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eNqO5U1WzlHShdnDjDb2XoqFLabx4/jHbSlMuTmZVMg=;
-        b=lhH2JCtwUacOr+yT+rDHj9+jH2tMo0oVpjFrEEMFdcLiFrcfLzMiQoh03uWsMuqMUQ
-         zd0VVixhOCPvPjQGq8+K0hLC2SDOCmC1fVVP1Jqu57ZT7ctB+rpCinUcIb1wSZuRQtsg
-         kdQ7QcPI/1rijKeMYDMov4Os4MoMWBVoJh6f5IYOvRWzIxspljJEm5fjdlDLMkhGlcmq
-         kfYjthvrvlSekSCBZWTNJdq3DVtNRW5uFJd3p/nnch/KPb0eXggUHr/Jv8z046q48GqP
-         dUmtvXVdvSAhfNhFCn1y6D0+0D8v0sfYziobxROV1hAesJrqa4Mkt+ucqLSCp4RboA3h
-         wCMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUj80Hm3ABbx/n2h+KsmG8PJAVHzE90QWeERTiu4EbdWBA8pFEpqsaGcUYQ4wiReNfcEWghyGVc@lists.linux.dev
-X-Gm-Message-State: AOJu0YzWwGzLsnJXKY4gwaNL30/12rY3Mp4SU+jUDcGZz9fCOQGtpRKI
-	E89Yvlx5ISu+uVHSV1dTp0AKIBucHzTlTVBfu9cs0cwKHP8eGRxM1uHZAF03qg==
-X-Gm-Gg: ASbGncszbGwfZKmvf2oJruUMTFdnm8YYnyoiWnvyw/D9BnMmmYPUiaJb1qyIZ0nwNZE
-	3puJ/5Xgnt+RvjtwVXEtTv6hmT4WDpgckfpWLP45+n0wppiU6ZFFLFwB+dRU9hI6I+GW8nHEZwb
-	yoh4fsDTEHN1pReu1hpEJNdV6HtXNRtNXarL8Vae7M6vZqZDYDfqGTXvXPNoUI9aEgWXEz1Bk+m
-	sIE/M9L2aT9e9AUymiX326nIDpSbalNOxUx5Q/y5zNfgV/LvkLVQqOfbVZIHy+jcLpxVgqKYg==
-X-Google-Smtp-Source: AGHT+IHY2P5R+AePcGV8ct1KgQ+2uPfWkyNQjgRvyqnpymCxfEYA4Mr32SNFFzLUYrJbNemzvvdc4A==
-X-Received: by 2002:a05:6e02:20e9:b0:3a3:4175:79da with SMTP id e9e14a558f8ab-3c2d2d5164bmr151609315ab.13.1735076212445;
-        Tue, 24 Dec 2024 13:36:52 -0800 (PST)
-Received: from fedora64.linuxtx.org ([72.42.103.70])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3c0e411e85dsm30983275ab.60.2024.12.24.13.36.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2024 13:36:52 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Tue, 24 Dec 2024 14:36:50 -0700
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/160] 6.12.7-rc1 review
-Message-ID: <Z2spcofeNaxm3RGe@fedora64.linuxtx.org>
-References: <20241223155408.598780301@linuxfoundation.org>
+	s=arc-20240116; t=1735091416; c=relaxed/simple;
+	bh=EdaUEwtMp14tYaHw5JolGOjmyDZbWdJgQVblhV5qGvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VPpHCAVChIclg/XI/XLussRKh6+fMd8nql8UuaISel6/KHUNSYjXcL+9f39i8ZnelXGOHaLjmKUUkPpoPOdj0MYHUby2FAAGuX753YuW2AeeuNSK1arp+NnxjoNUVJPKYAtgfZjh8/1CHBgg+hRZZ/b/O7DSdlgingwtwBdpuno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 92922892c26211efa216b1d71e6e1362-20241225
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.1.41,REQID:3ea3fa0b-20a0-401c-9156-22e5864dba5a,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTION
+	:release,TS:-9
+X-CID-INFO: VERSION:1.1.41,REQID:3ea3fa0b-20a0-401c-9156-22e5864dba5a,IP:0,URL
+	:0,TC:0,Content:0,EDM:0,RT:0,SF:-9,FILE:0,BULK:0,RULE:Release_Ham,ACTION:r
+	elease,TS:-9
+X-CID-META: VersionHash:6dc6a47,CLOUDID:86630b22780dc18832a319ea0a9c4226,BulkI
+	D:2412250950104SCDE6W8,BulkQuantity:0,Recheck:0,SF:17|19|24|38|45|64|66|78
+	|80|81|82|83|102|841,TC:nil,Content:0,EDM:-3,IP:1,URL:1,File:nil,RT:nil,Bu
+	lk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:
+	0,BRE:0,ARC:0
+X-CID-BVR: 0,NGT
+X-CID-BAS: 0,NGT,0,_
+X-CID-FACTOR: TF_CID_SPAM_FSD,TF_CID_SPAM_FSI,TF_CID_SPAM_IBB,TF_CID_SPAM_ULS,
+	TF_CID_SPAM_SNR,TF_CID_SPAM_FAS
+X-UUID: 92922892c26211efa216b1d71e6e1362-20241225
+X-User: zhaomengmeng@kylinos.cn
+Received: from [192.168.109.86] [(123.150.8.42)] by mailgw.kylinos.cn
+	(envelope-from <zhaomengmeng@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_128_GCM_SHA256 128/128)
+	with ESMTP id 403518014; Wed, 25 Dec 2024 09:50:09 +0800
+Message-ID: <4b9e8925-4851-4b6f-94ad-ab3f238f7252@kylinos.cn>
+Date: Wed, 25 Dec 2024 09:50:04 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241223155408.598780301@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 00/83] 6.1.122-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Daniel Reichelt <debian@nachtgeist.net>, Zhao Mengmeng <zhaomzhao@126.com>
+References: <20241223155353.641267612@linuxfoundation.org>
+From: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+In-Reply-To: <20241223155353.641267612@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Dec 23, 2024 at 04:56:51PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.7 release.
-> There are 160 patches in this series, all will be posted as a response
+On 2024/12/23 23:58, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.122 release.
+> There are 83 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -87,16 +71,23 @@ On Mon, Dec 23, 2024 at 04:56:51PM +0100, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.7-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.122-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
+> 
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+I have tested this rc kernel in my qemu environment, it fixes the issue of loop-mount Windows
+Setup ISOs can't be readed by executing `ls $mntpt/sources`. Daniel also confirmed that
+udf patch has solved his problem.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Tested-by: Zhao Mengmeng <zhaomengmeng@kylinos.cn>
+
+Links: https://lore.kernel.org/regressions/Z2XKY0f6on1UbwWb@eldamar.lan/
+
+Thanks,
+-- zmm
