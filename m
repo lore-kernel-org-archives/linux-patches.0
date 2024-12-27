@@ -1,113 +1,138 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8751F191D;
-	Fri, 27 Dec 2024 13:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490761F37D0;
+	Fri, 27 Dec 2024 13:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735304655; cv=none; b=bVKMfw6lW+yo+a8V7W0DRCIBg6Ax3Ubdcbbb0RyZeF+llQCw0gmL3+5JVfx2VZiuXo320Re/69zubXiHZOZmBz9qIK48aFB6VYfPw221wTGp29XpBw3orWqaa26yrrLTkWc4F6AGtAuNmUmhVKePPZZjIMQtsHetaxLj5LrN7yA=
+	t=1735305828; cv=none; b=OKdDAAJN2LDnw1Ity0xNnuyMxQdJFgGFGm1XD79H6sl+yYnfwvZPNP0raYGUBvMRCeYZk3wAOYEaIpdrEUxdyzjDuQWlloeXNJm8mAlszHMDjnxTN29a55q/tMiH5jABJCdijBoTGjZSseTypgiwFMV7SKDddXO8vsKvZBCVDkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735304655; c=relaxed/simple;
-	bh=U1YONWOTtZmZ0b6jh7tOLzeJRsqbzqOEKkuhXdCSghI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZzX9wrgjFD9bTcH+q/QssFML2vW5He3r1YJzUJYTm832al1FVVWyGGk+Wgqxjj2vxG/Hm59WlYztjiaVHIsthoz/k4+Qr5UDSmgyk86ODUloT8GmLS6D8uG5mYKbnhMFdeGcJSMf/fKP4vvNa3p0dviqAtP+44HOo9Ko63aFOKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0TXab3t; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1735305828; c=relaxed/simple;
+	bh=LBaC4f1X7XAHGLnvOluQHVEw9SKdaAxwvfqqNiiWrBs=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=IqpEsGzGAcAg2rl9dwy5ll5eqAyzcApHNTDQ0YF4Y+U+RCkVw24OlRbFkPlsTe8ahVdFUznqJnaE3Y/5wieUhFfqczApe9cAY8ePnf433KDeGSNT9ofk0+V5D9VFvtpyF+P+AmGOjIa0DrLr3751f9p/FuQ95Yl6wtzzxZ+hM2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EreDEECb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0TXab3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10CAC4CED0;
-	Fri, 27 Dec 2024 13:04:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735304654;
-	bh=U1YONWOTtZmZ0b6jh7tOLzeJRsqbzqOEKkuhXdCSghI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=w0TXab3t1rG0gVn+7Wmbi14Js+oeiw8q+KoZUhlEq4HJ2inEl1F6vorru3GX0mPSG
-	 CJTSgIwCcw4SRpdqXaXBEDiOtfUGYR7xSJ16MWUKD42nZk/qs9mvJBMVen/oFRHy9r
-	 uxYTkLa3mnjsKquXCfuyFdIB5mLvqeIfooP7IZDg=
-Date: Fri, 27 Dec 2024 14:04:11 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Marc Zyngier <maz@kernel.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anders Roxell <anders.roxell@linaro.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EreDEECb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FA9C4CED0;
+	Fri, 27 Dec 2024 13:23:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1735305827;
+	bh=LBaC4f1X7XAHGLnvOluQHVEw9SKdaAxwvfqqNiiWrBs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=EreDEECbU/WooYs4mBt6TMNdXYG6LQOjLQQMztFdn+4aft7/FuvvVaPuPsMM1dlam
+	 +8I8IPemEBx3AIq1pzeSNLSm1UeqkgBKtffMz7L5RW51u+pezXoP4uRXt8c3qaJOIt
+	 DZ9AE0s7Rbf4YnqwVELnLTq5m+H3thC+VakHafH/AIB2w9W8vZgM96Zyhu4Augsr93
+	 YdC1IxkmFvDnb1Bgz0Ud1CJ2Cw+BTtDs2VMkmW+djjblYHlb8zrDUf4dWqCdAsEd53
+	 ZPXZUveEJNN2eQVwrEKbG1iU3q2MEWYWZFRCD1Hk9YTBBetuyxeJ347/Xs7DxldY9v
+	 Da3N3e7WyJXag==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=wait-a-minute.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1tRAJd-007EK1-0R;
+	Fri, 27 Dec 2024 13:23:45 +0000
+Date: Fri, 27 Dec 2024 13:23:40 +0000
+Message-ID: <87ed1tp8df.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>,	stable@vger.kernel.org,	patches@lists.linux.dev,	linux-kernel@vger.kernel.org,	torvalds@linux-foundation.org,	akpm@linux-foundation.org,	linux@roeck-us.net,	shuah@kernel.org,	patches@kernelci.org,	lkft-triage@lists.linaro.org,	pavel@denx.de,	jonathanh@nvidia.com,	f.fainelli@gmail.com,	sudipm.mukherjee@gmail.com,	srw@sladewatkins.net,	rwarsow@gmx.de,	conor@kernel.org,	hargar@microsoft.com,	broonie@kernel.org,	Catalin Marinas <catalin.marinas@arm.com>,	Oliver Upton <oliver.upton@linux.dev>,	Dan Carpenter <dan.carpenter@linaro.org>,	Arnd Bergmann <arnd@arndb.de>,	Anders Roxell <anders.roxell@linaro.org>
 Subject: Re: [PATCH 6.12 000/160] 6.12.7-rc1 review
-Message-ID: <2024122713-vacant-muppet-06eb@gregkh>
+In-Reply-To: <2024122713-vacant-muppet-06eb@gregkh>
 References: <20241223155408.598780301@linuxfoundation.org>
- <CA+G9fYt+k1m9oTuuZaGyTXqg+EKsSTnmfsc2HYijDWmEjx9xFg@mail.gmail.com>
- <87y102r27e.wl-maz@kernel.org>
+	<CA+G9fYt+k1m9oTuuZaGyTXqg+EKsSTnmfsc2HYijDWmEjx9xFg@mail.gmail.com>
+	<87y102r27e.wl-maz@kernel.org>
+	<2024122713-vacant-muppet-06eb@gregkh>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87y102r27e.wl-maz@kernel.org>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: gregkh@linuxfoundation.org, naresh.kamboju@linaro.org, stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, catalin.marinas@arm.com, oliver.upton@linux.dev, dan.carpenter@linaro.org, arnd@arndb.de, anders.roxell@linaro.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-On Thu, Dec 26, 2024 at 01:41:41PM +0000, Marc Zyngier wrote:
-> On Tue, 24 Dec 2024 19:12:40 +0000,
-> Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> > 
-> > On Mon, 23 Dec 2024 at 21:31, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 6.12.7 release.
-> > > There are 160 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Fri, 27 Dec 2024 15:53:30 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.7-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> > 
-> > The following test regressions found on arm64 selftests
-> > kvm kvm_set_id_regs.
-> > 
-> > This was reported and fixed by a patch [1].
-> > 
-> > * graviton4-metal, kselftest-kvm
-> >   - kvm_set_id_regs
-> > 
-> > * rk3399-rock-pi-4b-nvhe, kselftest-kvm
-> >   - kvm_set_id_regs
-> > 
-> > * rk3399-rock-pi-4b-protected, kselftest-kvm
-> >   - kvm_set_id_regs
-> > 
-> > * rk3399-rock-pi-4b-vhe, kselftest-kvm
-> >   - kvm_set_id_regs
-> > 
-> >  Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+On Fri, 27 Dec 2024 13:04:11 +0000,
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 > 
-> This is totally harmless, and if anything, indicates that the *fix*
-> is doing its job, and that this patch *must* be backported.
+> On Thu, Dec 26, 2024 at 01:41:41PM +0000, Marc Zyngier wrote:
+> > On Tue, 24 Dec 2024 19:12:40 +0000,
+> > Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > > 
+> > > On Mon, 23 Dec 2024 at 21:31, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > This is the start of the stable review cycle for the 6.12.7 release.
+> > > > There are 160 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Fri, 27 Dec 2024 15:53:30 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.7-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > > 
+> > > The following test regressions found on arm64 selftests
+> > > kvm kvm_set_id_regs.
+> > > 
+> > > This was reported and fixed by a patch [1].
+> > > 
+> > > * graviton4-metal, kselftest-kvm
+> > >   - kvm_set_id_regs
+> > > 
+> > > * rk3399-rock-pi-4b-nvhe, kselftest-kvm
+> > >   - kvm_set_id_regs
+> > > 
+> > > * rk3399-rock-pi-4b-protected, kselftest-kvm
+> > >   - kvm_set_id_regs
+> > > 
+> > > * rk3399-rock-pi-4b-vhe, kselftest-kvm
+> > >   - kvm_set_id_regs
+> > > 
+> > >  Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > 
+> > This is totally harmless, and if anything, indicates that the *fix*
+> > is doing its job, and that this patch *must* be backported.
 
-Ok, but for some bizare reason someone stripped OFF the Fixes: tag,
-which causes this problem to now show up.  Hopefully that will not
-happen again in the future, but now I don't know what the git id is in
-Linus's tree to be able to apply here.
+I think I caused the confusion here, as "this patch" refers to the
+original fix which has been queued, rather than the patch to the
+selftest, which I don't consider a candidate for backports.
 
-So, what do I do now?
+> Ok, but for some bizare reason someone stripped OFF the Fixes: tag,
 
-confused,
+"Someone" == we, the KVM/arm64 maintainers.
 
-greg k-h
+And that's on purpose. A selftest patch doesn't fix anything, and I
+really don't want to use the "Fixes:" tag as a type of dependency.
+Additionally, these tests are mostly pointless anyway, specially this
+one, which really should be deleted.
+
+> which causes this problem to now show up.  Hopefully that will not
+> happen again in the future, but now I don't know what the git id is in
+> Linus's tree to be able to apply here.
+> 
+> So, what do I do now?
+
+Nothing, apart from applying the original fix, and blissfully ignoring
+the selftest, unless someone really want to backport it (I don't).
+
+Thanks, and sorry for the confusion.
+
+	M.
+
+-- 
+Without deviation from the norm, progress is not possible.
