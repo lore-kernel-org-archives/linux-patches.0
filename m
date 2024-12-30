@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1337015E8B;
-	Mon, 30 Dec 2024 15:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B742AE68;
+	Mon, 30 Dec 2024 15:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574006; cv=none; b=FAk5D6WhEa/CFReV1Rmj0iyvYgMytxoVA2Kmm9wsopKOO8SQOeFSHpoO2VQRV6CFTbSdhFQQ/XnaZ9dWIaKAztd5SHHTgiQ3BzqOXQgFltDEoOszSpl8tEOtiFlWgRqH9mOsn+NybZYLlfnVUziZln/treDiNbzV4HP9NZ/hnTo=
+	t=1735574009; cv=none; b=LeYL1etPymN2J4cuTAlReDWuSxNXtXvBF5ntjIJd8yeQvzPX+DfhNiU15LT6r4e8783n7lkKIemhLj+7QTJQaqtTjgttnhvLYfk3YH4lZ7GQLymdU4aofIaHtmFPORzgudA7StfIGt6PzOXAOIRA93zQdWdOi0VBTJsh5gi6JJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574006; c=relaxed/simple;
-	bh=iOJm096VGkPwolyqK2rw134RM1Hybi5f6LXed2GphLs=;
+	s=arc-20240116; t=1735574009; c=relaxed/simple;
+	bh=/MzB2fTWO0U52EqiR1p2KFwP5sYPyVhHbf68J1PaPcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dMW7S0jtPRCggZ+sLMGYS0dr87Kzza3rsbJL9FGYg3/GITXBXJmOJ/Y3dooBOQwnlFaX4ApWsmJnmbtHpB5aBDRQ0p1KE4JWtDQxgNaTIlgwiccKriowsAQLWkMYX9c+7EdXC8qSblWthVVdiAKPkVs5mlaiYu2XYzZ6e1rVTxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj/LKtQX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XBaLKmMfs6I003Tu/MVEs9Z5Zyc7At114tGN047JGgFUzeWbQn1ONTR13eyM5Pf3Jk+x9YfjtVuKwcuvnmDrEqLdxsvtjMaKS55Llaezm3cBAczl8CaU6GbtptZN4x+qiC+bWR7YJIlRJsH6cPMPNun4V4tJStuqVU1T9gVltnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ1RwIg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj/LKtQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901F4C4CED0;
-	Mon, 30 Dec 2024 15:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ1RwIg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6047C4CED0;
+	Mon, 30 Dec 2024 15:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574006;
-	bh=iOJm096VGkPwolyqK2rw134RM1Hybi5f6LXed2GphLs=;
+	s=korg; t=1735574009;
+	bh=/MzB2fTWO0U52EqiR1p2KFwP5sYPyVhHbf68J1PaPcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tj/LKtQXGINiV4Wcywl3/7h78Lkw5Jd2W22q0JXxnUf7WPar0owJMR8sbV+w63SoK
-	 lIVBSfVdfH2YOiYaiPdsnzzOzOVWKPamZlWVYr+LLnNbNZb8MpdSQLEFReihBuZsNF
-	 e7wZQJrGrMCX2Etn+hrAu192//rS94br+pcDAWLs=
+	b=aJ1RwIg1ewxI2SWNn993yAryqv/fsA5bQ54KFuVvji3IkYLjvNyMJRPb1QdTYpbml
+	 cB4M/QCDB/L/Uz7k/Nx8onkLmElG7uzNasEIN6pmFSQhrJELEKQGIVDtV23n9CUVjf
+	 aOZEHtUjEfdrhuLIraPnb0EfBdx3X/YslrMsEx4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <cong.wang@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Yang Erkun <yangerkun@huawei.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/114] bpf: Check negative offsets in __bpf_skb_min_len()
-Date: Mon, 30 Dec 2024 16:42:09 +0100
-Message-ID: <20241230154218.531064005@linuxfoundation.org>
+Subject: [PATCH 6.12 013/114] nfsd: Revert "nfsd: release svc_expkey/svc_export with rcu_work"
+Date: Mon, 30 Dec 2024 16:42:10 +0100
+Message-ID: <20241230154218.569240006@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,64 +51,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-[ Upstream commit 9ecc4d858b92c1bb0673ad9c327298e600c55659 ]
+[ Upstream commit 69d803c40edeaf94089fbc8751c9b746cdc35044 ]
 
-skb_network_offset() and skb_transport_offset() can be negative when
-they are called after we pull the transport header, for example, when
-we use eBPF sockmap at the point of ->sk_data_ready().
+This reverts commit f8c989a0c89a75d30f899a7cabdc14d72522bb8d.
 
-__bpf_skb_min_len() uses an unsigned int to get these offsets, this
-leads to a very large number which then causes bpf_skb_change_tail()
-failed unexpectedly.
+Before this commit, svc_export_put or expkey_put will call path_put with
+sync mode. After this commit, path_put will be called with async mode.
+And this can lead the unexpected results show as follow.
 
-Fix this by using a signed int to get these offsets and ensure the
-minimum is at least zero.
+mkfs.xfs -f /dev/sda
+echo "/ *(rw,no_root_squash,fsid=0)" > /etc/exports
+echo "/mnt *(rw,no_root_squash,fsid=1)" >> /etc/exports
+exportfs -ra
+service nfs-server start
+mount -t nfs -o vers=4.0 127.0.0.1:/mnt /mnt1
+mount /dev/sda /mnt/sda
+touch /mnt1/sda/file
+exportfs -r
+umount /mnt/sda # failed unexcepted
 
-Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241213034057.246437-2-xiyou.wangcong@gmail.com
+The touch will finally call nfsd_cross_mnt, add refcount to mount, and
+then add cache_head. Before this commit, exportfs -r will call
+cache_flush to cleanup all cache_head, and path_put in
+svc_export_put/expkey_put will be finished with sync mode. So, the
+latter umount will always success. However, after this commit, path_put
+will be called with async mode, the latter umount may failed, and if
+we add some delay, umount will success too. Personally I think this bug
+and should be fixed. We first revert before bugfix patch, and then fix
+the original bug with a different way.
+
+Fixes: f8c989a0c89a ("nfsd: release svc_expkey/svc_export with rcu_work")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ fs/nfsd/export.c | 31 ++++++-------------------------
+ fs/nfsd/export.h |  4 ++--
+ 2 files changed, 8 insertions(+), 27 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 9a459213d283..55495063621d 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3751,13 +3751,22 @@ static const struct bpf_func_proto bpf_skb_adjust_room_proto = {
+diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
+index 6d0455973d64..49aede376d86 100644
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -40,24 +40,15 @@
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
  
- static u32 __bpf_skb_min_len(const struct sk_buff *skb)
+-static void expkey_put_work(struct work_struct *work)
++static void expkey_put(struct kref *ref)
  {
--	u32 min_len = skb_network_offset(skb);
-+	int offset = skb_network_offset(skb);
-+	u32 min_len = 0;
+-	struct svc_expkey *key =
+-		container_of(to_rcu_work(work), struct svc_expkey, ek_rcu_work);
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
  
--	if (skb_transport_header_was_set(skb))
--		min_len = skb_transport_offset(skb);
--	if (skb->ip_summed == CHECKSUM_PARTIAL)
--		min_len = skb_checksum_start_offset(skb) +
--			  skb->csum_offset + sizeof(__sum16);
-+	if (offset > 0)
-+		min_len = offset;
-+	if (skb_transport_header_was_set(skb)) {
-+		offset = skb_transport_offset(skb);
-+		if (offset > 0)
-+			min_len = offset;
-+	}
-+	if (skb->ip_summed == CHECKSUM_PARTIAL) {
-+		offset = skb_checksum_start_offset(skb) +
-+			 skb->csum_offset + sizeof(__sum16);
-+		if (offset > 0)
-+			min_len = offset;
-+	}
- 	return min_len;
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree(key);
+-}
+-
+-static void expkey_put(struct kref *ref)
+-{
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
+-
+-	INIT_RCU_WORK(&key->ek_rcu_work, expkey_put_work);
+-	queue_rcu_work(system_wq, &key->ek_rcu_work);
++	kfree_rcu(key, ek_rcu);
  }
  
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -364,26 +355,16 @@ static void export_stats_destroy(struct export_stats *stats)
+ 					    EXP_STATS_COUNTERS_NUM);
+ }
+ 
+-static void svc_export_put_work(struct work_struct *work)
++static void svc_export_put(struct kref *ref)
+ {
+-	struct svc_export *exp =
+-		container_of(to_rcu_work(work), struct svc_export, ex_rcu_work);
+-
++	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 	path_put(&exp->ex_path);
+ 	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+ 	kfree(exp->ex_uuid);
+-	kfree(exp);
+-}
+-
+-static void svc_export_put(struct kref *ref)
+-{
+-	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+-
+-	INIT_RCU_WORK(&exp->ex_rcu_work, svc_export_put_work);
+-	queue_rcu_work(system_wq, &exp->ex_rcu_work);
++	kfree_rcu(exp, ex_rcu);
+ }
+ 
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+diff --git a/fs/nfsd/export.h b/fs/nfsd/export.h
+index 081afb68681e..3794ae253a70 100644
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -75,7 +75,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_work		ex_rcu_work;
++	struct rcu_head		ex_rcu;
+ 	unsigned long		ex_xprtsec_modes;
+ 	struct export_stats	*ex_stats;
+ };
+@@ -92,7 +92,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
+ 
+ 	struct path		ek_path;
+-	struct rcu_work		ek_rcu_work;
++	struct rcu_head		ek_rcu;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
 -- 
 2.39.5
 
