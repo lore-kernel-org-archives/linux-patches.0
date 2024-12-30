@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFB8537E9;
-	Mon, 30 Dec 2024 15:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248B82AE68;
+	Mon, 30 Dec 2024 15:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573821; cv=none; b=bw/LRdp+6GLFM3flzO/sXh54cDEzFp5YN+wsAmfpqASwO8RHTJ4AwuAew/E7U95RsIIcKDcc6ovkoIFH6z0oBtmnKJZDC68LGGXALo9xCetjfyGtcvWtRpYzWXD7vwswKA0O/QB4jN3MyNS2IpMGYfAJOkIhAHKn5chdYcm9tCU=
+	t=1735573825; cv=none; b=iyn9vG3XCaDmIonpnJ2QVE3bNWhQ/RygeXp0vbSNrrjF35ghMXY3gQ/UPIXcUhncdcVYmwGBudRHSZr0oXCfkcl5WmS9cl0ZzwtfY7FvL5ETRXKJ3P5OMN8PI/tox6f5f/OoUa/KXYQ0jmFIAYHdJI5wMo9zhyXS+AaaDjUIc1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573821; c=relaxed/simple;
-	bh=t9yQWY+8d6mQQRU1GKdbraVR6/6coRzzSJ0n30g2igs=;
+	s=arc-20240116; t=1735573825; c=relaxed/simple;
+	bh=d6xVKtxC+EiUhPKBbIHOpQH9+UDevNRT1F/xz1BLflY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhcfeDzMJneXB8i1k9108peEvLppdEyB/b2bj9aCUE4aw+fFdU4Hg7hN6bF0sKSanBEtsHLjmPIDzjIAMhzNaLvpT/bFRJt5Yp18YGxntkQPrRDEpqH/ozBBQ+m8InTUeSSHM42Q/EI+iTv0fgRKZmK6qFKEgDeT4YLF8gW5tCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIwpEkVr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZZxtCXNELNT0HVOpkaxSSt0K9p6I2gDBKmJRUWaahs6Ix87LOnu23mtt9m3dfN3W64SVxBAyNCZyEtb6PaK/8JezdwRcMXexKS3Kr5vtnjmySPSxp1GMaUIHT+/trclX7p5dFt98XbbAkOAUzKfsdl4aDCKYAwgqT6QrqNVTvZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w15QUEN5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIwpEkVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8D4C4CED0;
-	Mon, 30 Dec 2024 15:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w15QUEN5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CCFC4CED0;
+	Mon, 30 Dec 2024 15:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573821;
-	bh=t9yQWY+8d6mQQRU1GKdbraVR6/6coRzzSJ0n30g2igs=;
+	s=korg; t=1735573825;
+	bh=d6xVKtxC+EiUhPKBbIHOpQH9+UDevNRT1F/xz1BLflY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIwpEkVrCgzll09YfvsZXkHE2EAeWRkfmY7Da7cVoaAEJy7rLSMXHYB7qLeDTXRUC
-	 iXLjtd+2hDP663gzMQCvB2epaN6+MTGt14ptQqyMB3PRwo1uCFnduQ2jGBKg8Qf4IT
-	 6m1iPTjVF8njbmnSnFH7tx0+0GmihDE4rJR9lW2I=
+	b=w15QUEN5QtN+fb/uvTZlG/TDxM41rpeE9U38iOiSfZqy2OVdKG0kRMW1kd6rDp6JU
+	 QTwd8AWbgPycjoybTgW7nlayBcynnOBP4aS8imgqw8YHY2yh7bImPxT7D9xU/v9DmG
+	 0N735WqiT4Pkejf7nuwCuZsNqs56NDBz5EnO5Mbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aapo Vienamo <aapo.vienamo@iki.fi>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 44/86] spi: intel: Add Panther Lake SPI controller support
-Date: Mon, 30 Dec 2024 16:42:52 +0100
-Message-ID: <20241230154213.386960547@linuxfoundation.org>
+Subject: [PATCH 6.6 45/86] scsi: mpt3sas: Diag-Reset when Doorbell-In-Use bit is set during driver load time
+Date: Mon, 30 Dec 2024 16:42:53 +0100
+Message-ID: <20241230154213.426670877@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -52,38 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aapo Vienamo <aapo.vienamo@iki.fi>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit ceb259e43bf572ba7d766e1679ba73861d16203a ]
+[ Upstream commit 3f5eb062e8aa335643181c480e6c590c6cedfd22 ]
 
-The Panther Lake SPI controllers are compatible with the Cannon Lake
-controllers. Add support for following SPI controller device IDs:
- - H-series: 0xe323
- - P-series: 0xe423
- - U-series: 0xe423
+Issue a Diag-Reset when the "Doorbell-In-Use" bit is set during the
+driver load/initialization.
 
-Signed-off-by: Aapo Vienamo <aapo.vienamo@iki.fi>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://patch.msgid.link/20241204080208.1036537-1-mika.westerberg@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20241110173341.11595-2-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-intel-pci.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
-index 4337ca51d7aa..5c0dec90eec1 100644
---- a/drivers/spi/spi-intel-pci.c
-+++ b/drivers/spi/spi-intel-pci.c
-@@ -86,6 +86,8 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0xa324), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa3a4), (unsigned long)&cnl_info },
- 	{ PCI_VDEVICE(INTEL, 0xa823), (unsigned long)&cnl_info },
-+	{ PCI_VDEVICE(INTEL, 0xe323), (unsigned long)&cnl_info },
-+	{ PCI_VDEVICE(INTEL, 0xe423), (unsigned long)&cnl_info },
- 	{ },
- };
- MODULE_DEVICE_TABLE(pci, intel_spi_pci_ids);
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 8acf586dc8b2..a5d12b95fbd0 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -7050,11 +7050,12 @@ _base_handshake_req_reply_wait(struct MPT3SAS_ADAPTER *ioc, int request_bytes,
+ 	int i;
+ 	u8 failed;
+ 	__le32 *mfp;
++	int ret_val;
+ 
+ 	/* make sure doorbell is not in use */
+ 	if ((ioc->base_readl_ext_retry(&ioc->chip->Doorbell) & MPI2_DOORBELL_USED)) {
+ 		ioc_err(ioc, "doorbell is in use (line=%d)\n", __LINE__);
+-		return -EFAULT;
++		goto doorbell_diag_reset;
+ 	}
+ 
+ 	/* clear pending doorbell interrupts from previous state changes */
+@@ -7144,6 +7145,10 @@ _base_handshake_req_reply_wait(struct MPT3SAS_ADAPTER *ioc, int request_bytes,
+ 			    le32_to_cpu(mfp[i]));
+ 	}
+ 	return 0;
++
++doorbell_diag_reset:
++	ret_val = _base_diag_reset(ioc);
++	return ret_val;
+ }
+ 
+ /**
 -- 
 2.39.5
 
