@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548321ACEA3;
-	Mon, 30 Dec 2024 15:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9823415E8B;
+	Mon, 30 Dec 2024 15:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574216; cv=none; b=N4yjpko4U5LYWb+nHii3GDtU0k8z45AJ8huK5EvR5WbXahuT3GpFofSR6tofposoUxa2jb1yenzeGcjs/J3koetZJVKWu9w5eWpYsgE+RxedPxeX0tAWvM6vSV4Z8PMtvJXdIe3fmDl4ofjVzUN6Zo+3zRUKPsMTKywMZfbkZbM=
+	t=1735574219; cv=none; b=lQ/pDNPeJ8CNAP90aFcMS9hMC8Lh0jZTE7h/+DF1mE37TTad2FhYS7iaLdIZIU3ycBA7fub1r9StOyQnANkuAxQbcn5kJ0b9Z+wKlA9RF3186QA0zSnvgAguqW96/gkUVq9WQX2b8aOETdmWP4NPX4tUCMPkkGNpWR4kvE80y7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574216; c=relaxed/simple;
-	bh=Swr8/+H/38DE/bE1Z7SoZDmmrJdDZA2sEcC9MAyPMrE=;
+	s=arc-20240116; t=1735574219; c=relaxed/simple;
+	bh=RzDYXr4JD0It91Kbc2U+zUpKxmq+E2iH/cDhrMeXwMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQ6I/FMNHsWKh9SE5tRT2hNM2CEE/jRMFqxT59z0gVnSExElN58+DZK9+aevLw5CUMlEdLIK0VvS2OVKtTTn7llNkK/EXgEAjh8KLNVFGCuqp79amaygRY7id0qzZ9jBC4phNC95yO6T3r7MhEJIPEK7EmY9ybBlMdGyohmrY7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrXy5OxU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYEIurxO9yEU9q194MjKU5eIKB6pyTsYsp0p5zhRIL3ZhLhbJUYvVjqyR8XSNLpH2glkahC2rYQ4gW/uPLiqFNY9gXzbv/Y/y7K6SKIY2Q18J9CZY7GGQuGjG+F3+Ij/MkoWyywYKmZBJNRbZpuHAIUgQ/aLMkunWCfJeqELrTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKxMgQko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrXy5OxU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C94C4CED0;
-	Mon, 30 Dec 2024 15:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKxMgQko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF02C4CED0;
+	Mon, 30 Dec 2024 15:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574215;
-	bh=Swr8/+H/38DE/bE1Z7SoZDmmrJdDZA2sEcC9MAyPMrE=;
+	s=korg; t=1735574219;
+	bh=RzDYXr4JD0It91Kbc2U+zUpKxmq+E2iH/cDhrMeXwMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrXy5OxUVWiMu3ra95CO+PqCtOYP05SxlpTraM+tRfBulUHI7lj9qdCCnhfCro+jr
-	 nl6+fnS3P8cT72qULY9wXDweHuhaOB4xaaIayA0CzgWEvMVZEmCNsFttW8z21877RD
-	 Otwh4YG8HO35zlOUy2e9qxHBD9e6IuWBH7lVj7gI=
+	b=bKxMgQkoRa9NdGrGjhPeFevoAeorKMKSGceY2aBJQyZqOTWehwYwMxS61iV0CRAZ6
+	 dmh/KNjfNd4lARhWbFolb0/ImnEvzMXq2+ja/rAC84HzdBAZsgsWvFsiNGX3n62aMc
+	 J9ET8BfPN4D3XZpKmeeOOpiocRuwzGKYhYXnDkJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prayas Patel <prayas.patel@broadcom.com>,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Cathy Avery <cavery@redhat.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/114] scsi: mpi3mr: Handling of fault code for insufficient power
-Date: Mon, 30 Dec 2024 16:43:07 +0100
-Message-ID: <20241230154220.791241305@linuxfoundation.org>
+Subject: [PATCH 6.12 071/114] scsi: storvsc: Do not flag MAINTENANCE_IN return of SRB_STATUS_DATA_OVERRUN as an error
+Date: Mon, 30 Dec 2024 16:43:08 +0100
+Message-ID: <20241230154220.827827226@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,89 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Cathy Avery <cavery@redhat.com>
 
-[ Upstream commit fb6eb98f3965e2ee92cbcb466051d2f2acf552d1 ]
+[ Upstream commit b1aee7f034615b6824d2c70ddb37ef9fc23493b7 ]
 
-Before retrying initialization, check and abort if the fault code
-indicates insufficient power. Also mark the controller as unrecoverable
-instead of issuing reset in the watch dog timer if the fault code
-indicates insufficient power.
+This partially reverts commit 812fe6420a6e ("scsi: storvsc: Handle
+additional SRB status values").
 
-Signed-off-by: Prayas Patel <prayas.patel@broadcom.com>
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20241110194405.10108-5-ranjan.kumar@broadcom.com
+HyperV does not support MAINTENANCE_IN resulting in FC passthrough
+returning the SRB_STATUS_DATA_OVERRUN value. Now that
+SRB_STATUS_DATA_OVERRUN is treated as an error, multipath ALUA paths go
+into a faulty state as multipath ALUA submits RTPG commands via
+MAINTENANCE_IN.
+
+[    3.215560] hv_storvsc 1d69d403-9692-4460-89f9-a8cbcc0f94f3:
+tag#230 cmd 0xa3 status: scsi 0x0 srb 0x12 hv 0xc0000001
+[    3.215572] scsi 1:0:0:32: alua: rtpg failed, result 458752
+
+Make MAINTENANCE_IN return success to avoid the error path as is
+currently done with INQUIRY and MODE_SENSE.
+
+Suggested-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Cathy Avery <cavery@redhat.com>
+Link: https://lore.kernel.org/r/20241127181324.3318443-1-cavery@redhat.com
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Ewan D. Milne <emilne@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 40 +++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ drivers/scsi/storvsc_drv.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 2e6245bd4282..5ed31fe57474 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -1035,6 +1035,36 @@ static const char *mpi3mr_reset_type_name(u16 reset_type)
- 	return name;
- }
+diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
+index 7ceb982040a5..d0b55c1fa908 100644
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -149,6 +149,8 @@ struct hv_fc_wwn_packet {
+ */
+ static int vmstor_proto_version;
  
-+/**
-+ * mpi3mr_is_fault_recoverable - Read fault code and decide
-+ * whether the controller can be recoverable
-+ * @mrioc: Adapter instance reference
-+ * Return: true if fault is recoverable, false otherwise.
-+ */
-+static inline bool mpi3mr_is_fault_recoverable(struct mpi3mr_ioc *mrioc)
-+{
-+	u32 fault;
++static bool hv_dev_is_fc(struct hv_device *hv_dev);
 +
-+	fault = (readl(&mrioc->sysif_regs->fault) &
-+		      MPI3_SYSIF_FAULT_CODE_MASK);
-+
-+	switch (fault) {
-+	case MPI3_SYSIF_FAULT_CODE_COMPLETE_RESET_NEEDED:
-+	case MPI3_SYSIF_FAULT_CODE_POWER_CYCLE_REQUIRED:
-+		ioc_warn(mrioc,
-+		    "controller requires system power cycle, marking controller as unrecoverable\n");
-+		return false;
-+	case MPI3_SYSIF_FAULT_CODE_INSUFFICIENT_PCI_SLOT_POWER:
-+		ioc_warn(mrioc,
-+		    "controller faulted due to insufficient power,\n"
-+		    " try by connecting it to a different slot\n");
-+		return false;
-+	default:
-+		break;
-+	}
-+	return true;
-+}
-+
- /**
-  * mpi3mr_print_fault_info - Display fault information
-  * @mrioc: Adapter instance reference
-@@ -1373,6 +1403,11 @@ static int mpi3mr_bring_ioc_ready(struct mpi3mr_ioc *mrioc)
- 	ioc_info(mrioc, "ioc_status(0x%08x), ioc_config(0x%08x), ioc_info(0x%016llx) at the bringup\n",
- 	    ioc_status, ioc_config, base_info);
+ #define STORVSC_LOGGING_NONE	0
+ #define STORVSC_LOGGING_ERROR	1
+ #define STORVSC_LOGGING_WARN	2
+@@ -1138,6 +1140,7 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
+ 	 * not correctly handle:
+ 	 * INQUIRY command with page code parameter set to 0x80
+ 	 * MODE_SENSE command with cmd[2] == 0x1c
++	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
+ 	 *
+ 	 * Setup srb and scsi status so this won't be fatal.
+ 	 * We do this so we can distinguish truly fatal failues
+@@ -1145,7 +1148,9 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
+ 	 */
  
-+	if (!mpi3mr_is_fault_recoverable(mrioc)) {
-+		mrioc->unrecoverable = 1;
-+		goto out_device_not_present;
-+	}
-+
- 	/*The timeout value is in 2sec unit, changing it to seconds*/
- 	mrioc->ready_timeout =
- 	    ((base_info & MPI3_SYSIF_IOC_INFO_LOW_TIMEOUT_MASK) >>
-@@ -2734,6 +2769,11 @@ static void mpi3mr_watchdog_work(struct work_struct *work)
- 	mpi3mr_print_fault_info(mrioc);
- 	mrioc->diagsave_timeout = 0;
- 
-+	if (!mpi3mr_is_fault_recoverable(mrioc)) {
-+		mrioc->unrecoverable = 1;
-+		goto schedule_work;
-+	}
-+
- 	switch (trigger_data.fault) {
- 	case MPI3_SYSIF_FAULT_CODE_COMPLETE_RESET_NEEDED:
- 	case MPI3_SYSIF_FAULT_CODE_POWER_CYCLE_REQUIRED:
+ 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
+-	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE)) {
++	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
++	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
++	   hv_dev_is_fc(device))) {
+ 		vstor_packet->vm_srb.scsi_status = 0;
+ 		vstor_packet->vm_srb.srb_status = SRB_STATUS_SUCCESS;
+ 	}
 -- 
 2.39.5
 
