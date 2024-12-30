@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B8B15E8B;
-	Mon, 30 Dec 2024 15:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A9915E8B;
+	Mon, 30 Dec 2024 15:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573828; cv=none; b=awjKDQy5oJCLHiH6FWjrVUWLkOVMKKlWj9u9WBd7TstxdZG3Gj2ktyRUgVDCZhUGh8kFBOP1qAlwjnAvCjD4BRMTjhssip1deyfSwLT7BfyBHW/ay6883rQH+cYoJK+OuzzTX9IQgWSTaZYmoW7eJJSdxL8TOqSdD4GmV8t182w=
+	t=1735573831; cv=none; b=KIPxP+Xme/EkrEKlf3q49LCdT+UFFPtZKOzfE6V+KgMIXrDuQe0tc4Gj7Uu1nVSEW+KGmDPIMLBFfMQ8dxQ5auw7FZt0YEQBV11dOL05yUAuLarmEDgrGzom/jk24rc41koL/Z7uUF5GXXlasQAb08ArxcUTe5rLzlpokSZXMxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573828; c=relaxed/simple;
-	bh=mn/1HmaRzpWVk58MMBSqnyTxWwPoT79NwPmkQf72qcw=;
+	s=arc-20240116; t=1735573831; c=relaxed/simple;
+	bh=l+Izp8Ph/j6fIkpA3D5lveFWspkrEMihf+mRbId8kbU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmP4uETUa9VK4CBcfeb2tkB5rEBaQLopb+/1KZAOqawxDUY1nFI1qmCk4T/jJs52BHgIw6h1LEaca0Oz70b0IItyYQkx6hdyV24UG60eaVEVg2/9Mp8gQ9JAb6bvkY2oksubKX7Ai1HhzNdorY+tkjqUs9itpOH/jGmN/VDcizA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1balGL4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SlVN/xnxrGC/XB20wuYgITKiQhQUX6DTED+CUIQcqDSAqpfdc67m1IK8FiFLjqJ2XDxkRetj90t7nM9+64W/X5ynW7jPDz75vb3CPIdeqZmVvm2826smiMF7atPtjOA/AYMziGDBocyyTx/B3gchWoMJXfPyXigb8FFry926Sgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jhz8GbGo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1balGL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D5FC4CED0;
-	Mon, 30 Dec 2024 15:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jhz8GbGo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198DEC4CED0;
+	Mon, 30 Dec 2024 15:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573828;
-	bh=mn/1HmaRzpWVk58MMBSqnyTxWwPoT79NwPmkQf72qcw=;
+	s=korg; t=1735573831;
+	bh=l+Izp8Ph/j6fIkpA3D5lveFWspkrEMihf+mRbId8kbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1balGL4WWyf8AARjLLEOaAcqxjx2XHGbGPnIUBpHBdtHA6EpiWXU+JssClGv/ygo
-	 Hxpg9yV4UZRGYu9l4/J3QSCv/ghFsMnVJDrrEijxhwU/AFJgFBro/pTFwCpFu8bK+2
-	 XOHWPa29bz5sp3ORyxOW/A/ezSe9R4mta2mzdKHo=
+	b=Jhz8GbGo4zm3jxRb5qWm0qAe0Ef6QYc23uXPYGcpJfyKUfrEKZsSlzu7ASAxr9ySj
+	 yFNHiLbc4xAbRxL7E/pGPoydcGi0pYLb8HdheyzO815K35NgeNYoMIWFdBmjJJuo23
+	 qjQb4HbTGNuwVq2SrtmkgylpHWEpcgzwvnmyjhLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Cathy Avery <cavery@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Haren Myneni <haren@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 46/86] scsi: storvsc: Do not flag MAINTENANCE_IN return of SRB_STATUS_DATA_OVERRUN as an error
-Date: Mon, 30 Dec 2024 16:42:54 +0100
-Message-ID: <20241230154213.462968790@linuxfoundation.org>
+Subject: [PATCH 6.6 29/86] powerpc/pseries/vas: Add close() callback in vas_vm_ops struct
+Date: Mon, 30 Dec 2024 16:42:37 +0100
+Message-ID: <20241230154212.827327391@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -53,69 +51,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cathy Avery <cavery@redhat.com>
+From: Haren Myneni <haren@linux.ibm.com>
 
-[ Upstream commit b1aee7f034615b6824d2c70ddb37ef9fc23493b7 ]
+[ Upstream commit 05aa156e156ef3168e7ab8a68721945196495c17 ]
 
-This partially reverts commit 812fe6420a6e ("scsi: storvsc: Handle
-additional SRB status values").
+The mapping VMA address is saved in VAS window struct when the
+paste address is mapped. This VMA address is used during migration
+to unmap the paste address if the window is active. The paste
+address mapping will be removed when the window is closed or with
+the munmap(). But the VMA address in the VAS window is not updated
+with munmap() which is causing invalid access during migration.
 
-HyperV does not support MAINTENANCE_IN resulting in FC passthrough
-returning the SRB_STATUS_DATA_OVERRUN value. Now that
-SRB_STATUS_DATA_OVERRUN is treated as an error, multipath ALUA paths go
-into a faulty state as multipath ALUA submits RTPG commands via
-MAINTENANCE_IN.
+The KASAN report shows:
+[16386.254991] BUG: KASAN: slab-use-after-free in reconfig_close_windows+0x1a0/0x4e8
+[16386.255043] Read of size 8 at addr c00000014a819670 by task drmgr/696928
 
-[    3.215560] hv_storvsc 1d69d403-9692-4460-89f9-a8cbcc0f94f3:
-tag#230 cmd 0xa3 status: scsi 0x0 srb 0x12 hv 0xc0000001
-[    3.215572] scsi 1:0:0:32: alua: rtpg failed, result 458752
+[16386.255096] CPU: 29 UID: 0 PID: 696928 Comm: drmgr Kdump: loaded Tainted: G    B              6.11.0-rc5-nxgzip #2
+[16386.255128] Tainted: [B]=BAD_PAGE
+[16386.255148] Hardware name: IBM,9080-HEX Power11 (architected) 0x820200 0xf000007 of:IBM,FW1110.00 (NH1110_016) hv:phyp pSeries
+[16386.255181] Call Trace:
+[16386.255202] [c00000016b297660] [c0000000018ad0ac] dump_stack_lvl+0x84/0xe8 (unreliable)
+[16386.255246] [c00000016b297690] [c0000000006e8a90] print_report+0x19c/0x764
+[16386.255285] [c00000016b297760] [c0000000006e9490] kasan_report+0x128/0x1f8
+[16386.255309] [c00000016b297880] [c0000000006eb5c8] __asan_load8+0xac/0xe0
+[16386.255326] [c00000016b2978a0] [c00000000013f898] reconfig_close_windows+0x1a0/0x4e8
+[16386.255343] [c00000016b297990] [c000000000140e58] vas_migration_handler+0x3a4/0x3fc
+[16386.255368] [c00000016b297a90] [c000000000128848] pseries_migrate_partition+0x4c/0x4c4
+...
 
-Make MAINTENANCE_IN return success to avoid the error path as is
-currently done with INQUIRY and MODE_SENSE.
+[16386.256136] Allocated by task 696554 on cpu 31 at 16377.277618s:
+[16386.256149]  kasan_save_stack+0x34/0x68
+[16386.256163]  kasan_save_track+0x34/0x80
+[16386.256175]  kasan_save_alloc_info+0x58/0x74
+[16386.256196]  __kasan_slab_alloc+0xb8/0xdc
+[16386.256209]  kmem_cache_alloc_noprof+0x200/0x3d0
+[16386.256225]  vm_area_alloc+0x44/0x150
+[16386.256245]  mmap_region+0x214/0x10c4
+[16386.256265]  do_mmap+0x5fc/0x750
+[16386.256277]  vm_mmap_pgoff+0x14c/0x24c
+[16386.256292]  ksys_mmap_pgoff+0x20c/0x348
+[16386.256303]  sys_mmap+0xd0/0x160
+...
 
-Suggested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Cathy Avery <cavery@redhat.com>
-Link: https://lore.kernel.org/r/20241127181324.3318443-1-cavery@redhat.com
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[16386.256350] Freed by task 0 on cpu 31 at 16386.204848s:
+[16386.256363]  kasan_save_stack+0x34/0x68
+[16386.256374]  kasan_save_track+0x34/0x80
+[16386.256384]  kasan_save_free_info+0x64/0x10c
+[16386.256396]  __kasan_slab_free+0x120/0x204
+[16386.256415]  kmem_cache_free+0x128/0x450
+[16386.256428]  vm_area_free_rcu_cb+0xa8/0xd8
+[16386.256441]  rcu_do_batch+0x2c8/0xcf0
+[16386.256458]  rcu_core+0x378/0x3c4
+[16386.256473]  handle_softirqs+0x20c/0x60c
+[16386.256495]  do_softirq_own_stack+0x6c/0x88
+[16386.256509]  do_softirq_own_stack+0x58/0x88
+[16386.256521]  __irq_exit_rcu+0x1a4/0x20c
+[16386.256533]  irq_exit+0x20/0x38
+[16386.256544]  interrupt_async_exit_prepare.constprop.0+0x18/0x2c
+...
+
+[16386.256717] Last potentially related work creation:
+[16386.256729]  kasan_save_stack+0x34/0x68
+[16386.256741]  __kasan_record_aux_stack+0xcc/0x12c
+[16386.256753]  __call_rcu_common.constprop.0+0x94/0xd04
+[16386.256766]  vm_area_free+0x28/0x3c
+[16386.256778]  remove_vma+0xf4/0x114
+[16386.256797]  do_vmi_align_munmap.constprop.0+0x684/0x870
+[16386.256811]  __vm_munmap+0xe0/0x1f8
+[16386.256821]  sys_munmap+0x54/0x6c
+[16386.256830]  system_call_exception+0x1a0/0x4a0
+[16386.256841]  system_call_vectored_common+0x15c/0x2ec
+
+[16386.256868] The buggy address belongs to the object at c00000014a819670
+                which belongs to the cache vm_area_struct of size 168
+[16386.256887] The buggy address is located 0 bytes inside of
+                freed 168-byte region [c00000014a819670, c00000014a819718)
+
+[16386.256915] The buggy address belongs to the physical page:
+[16386.256928] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14a81
+[16386.256950] memcg:c0000000ba430001
+[16386.256961] anon flags: 0x43ffff800000000(node=4|zone=0|lastcpupid=0x7ffff)
+[16386.256975] page_type: 0xfdffffff(slab)
+[16386.256990] raw: 043ffff800000000 c00000000501c080 0000000000000000 5deadbee00000001
+[16386.257003] raw: 0000000000000000 00000000011a011a 00000001fdffffff c0000000ba430001
+[16386.257018] page dumped because: kasan: bad access detected
+
+This patch adds close() callback in vas_vm_ops vm_operations_struct
+which will be executed during munmap() before freeing VMA. The VMA
+address in the VAS window is set to NULL after holding the window
+mmap_mutex.
+
+Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241214051758.997759-1-haren@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/book3s/vas-api.c | 36 +++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 7ceb982040a5..d0b55c1fa908 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -149,6 +149,8 @@ struct hv_fc_wwn_packet {
- */
- static int vmstor_proto_version;
+diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
+index f381b177ea06..0b6365d85d11 100644
+--- a/arch/powerpc/platforms/book3s/vas-api.c
++++ b/arch/powerpc/platforms/book3s/vas-api.c
+@@ -464,7 +464,43 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
+ 	return VM_FAULT_SIGBUS;
+ }
  
-+static bool hv_dev_is_fc(struct hv_device *hv_dev);
++/*
++ * During mmap() paste address, mapping VMA is saved in VAS window
++ * struct which is used to unmap during migration if the window is
++ * still open. But the user space can remove this mapping with
++ * munmap() before closing the window and the VMA address will
++ * be invalid. Set VAS window VMA to NULL in this function which
++ * is called before VMA free.
++ */
++static void vas_mmap_close(struct vm_area_struct *vma)
++{
++	struct file *fp = vma->vm_file;
++	struct coproc_instance *cp_inst = fp->private_data;
++	struct vas_window *txwin;
 +
- #define STORVSC_LOGGING_NONE	0
- #define STORVSC_LOGGING_ERROR	1
- #define STORVSC_LOGGING_WARN	2
-@@ -1138,6 +1140,7 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
- 	 * not correctly handle:
- 	 * INQUIRY command with page code parameter set to 0x80
- 	 * MODE_SENSE command with cmd[2] == 0x1c
-+	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
- 	 *
- 	 * Setup srb and scsi status so this won't be fatal.
- 	 * We do this so we can distinguish truly fatal failues
-@@ -1145,7 +1148,9 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
- 	 */
++	/* Should not happen */
++	if (!cp_inst || !cp_inst->txwin) {
++		pr_err("No attached VAS window for the paste address mmap\n");
++		return;
++	}
++
++	txwin = cp_inst->txwin;
++	/*
++	 * task_ref.vma is set in coproc_mmap() during mmap paste
++	 * address. So it has to be the same VMA that is getting freed.
++	 */
++	if (WARN_ON(txwin->task_ref.vma != vma)) {
++		pr_err("Invalid paste address mmaping\n");
++		return;
++	}
++
++	mutex_lock(&txwin->task_ref.mmap_mutex);
++	txwin->task_ref.vma = NULL;
++	mutex_unlock(&txwin->task_ref.mmap_mutex);
++}
++
+ static const struct vm_operations_struct vas_vm_ops = {
++	.close = vas_mmap_close,
+ 	.fault = vas_mmap_fault,
+ };
  
- 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
--	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE)) {
-+	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
-+	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
-+	   hv_dev_is_fc(device))) {
- 		vstor_packet->vm_srb.scsi_status = 0;
- 		vstor_packet->vm_srb.srb_status = SRB_STATUS_SUCCESS;
- 	}
 -- 
 2.39.5
 
