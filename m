@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9511B15E8B;
-	Mon, 30 Dec 2024 15:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2AD15E8B;
+	Mon, 30 Dec 2024 15:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574326; cv=none; b=VuN7/qbX+zotyPjxOBuHrg6tGOtlRreNVOrXwflRSMpjYnDQ4A2051OeXNU5+oGsHvPJcd29sWVmy6UV97mIfuIuOEz/ljfMfKMJx3YcDgwTsfyQtUcw9/ZMpDw/CxMr/73W7/UCKHu5dkw6o1kg1RLpGQ6GXHBM+/44kUwhxMc=
+	t=1735574330; cv=none; b=D1f445TRZ4nHtAk+LHu4WApVaY24qVpfQWzk3Cg7B3Y49zV0vGi4KAZ2VkljqPdXFsRh7ASz2TqWtfTlgSmvSkw+FLHcGJNPitH4yfflMHe+nxosy89zes/OTBgGg37t4w2gtFxnR/e6mZAXkPZbbW9xL0WIqONDWT7gvfF8qKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574326; c=relaxed/simple;
-	bh=TR494lIImcEnvUTJXRqQUpOMrTh75kEC+AjvZoI9i4U=;
+	s=arc-20240116; t=1735574330; c=relaxed/simple;
+	bh=ybHqSu1Hb12Hr2Pa5uoccPSL4x/zSGlHweRSgQdN/0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ec0Nw85n7jRm3TQcs4InaO70/0UPuJyoNHvZKwzyR4CjuoxAHsr/lDj2wfCPOGyevCPaHOny2BLDsfuXKuvJIh6GT69n9OvYPEOroVXoiSmMouma3rZ402dcv7811y5hbfmxB+C0QI/buo/qChuV3EtSvkxTH7UE9y4rRFz74YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=klflS+Lt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jBak2RU++MKkZ1phCD8gA/ssqqkE2liNROI7SFFkzg08aZ/nwlEDNLdMpGn3j1vZarzFMzVWbrk5uFBTvkFoeESCLMHGZGFRrjwtie5nD/ldJNO4aAk4yCz1IoUgrrrXeqpFikUUdLvMG+xJQLIY3LEDpKssCu5LHpxUDdGbRNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnLTbrpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="klflS+Lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD70C4CED0;
-	Mon, 30 Dec 2024 15:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnLTbrpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B5DC4CED0;
+	Mon, 30 Dec 2024 15:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574326;
-	bh=TR494lIImcEnvUTJXRqQUpOMrTh75kEC+AjvZoI9i4U=;
+	s=korg; t=1735574329;
+	bh=ybHqSu1Hb12Hr2Pa5uoccPSL4x/zSGlHweRSgQdN/0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klflS+Lt5bbGtamox1UtpAxKsd9WLUetUiuH7xainGv5oeMj9UdiS17z3MicRmrBb
-	 fXpiG/HTk9xycApdNGucJvOr5Ok2Xl4qxUwmB+kDzWbSOjYx7HQBc9zVCXAX1EHjVh
-	 2ckFUZtQYEwPQ6AsTKcgj8hC2AYrP1w/DqtB2iyY=
+	b=jnLTbrppmYqh8DhWIQXgiq+4mXuBAQYgIozOrc0pjOGA8KvlvXPjSlGImmtacWuCj
+	 628QzkBfZQncOvZEMjuNkuznsej2rFEMAagcKjuHo8YSY523NNE+bE1HuVxuDdH3UV
+	 RFWMm8WVzYFq+1LeI4HJl9UDRhKwVu1pzKdpDtHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
+	Julian Sun <sunjunchao2870@gmail.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.12 103/114] btrfs: fix swap file activation failure due to extents that used to be shared
-Date: Mon, 30 Dec 2024 16:43:40 +0100
-Message-ID: <20241230154222.085993452@linuxfoundation.org>
+Subject: [PATCH 6.12 104/114] btrfs: fix transaction atomicity bug when enabling simple quotas
+Date: Mon, 30 Dec 2024 16:43:41 +0100
+Message-ID: <20241230154222.126113339@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,333 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Julian Sun <sunjunchao2870@gmail.com>
 
-commit 03018e5d8508254534511d40fb57bc150e6a87f2 upstream.
+commit f2363e6fcc7938c5f0f6ac066fad0dd247598b51 upstream.
 
-When activating a swap file, to determine if an extent is shared we use
-can_nocow_extent(), which ends up at btrfs_cross_ref_exist(). That helper
-is meant to be quick because it's used in the NOCOW write path, when
-flushing delalloc and when doing a direct IO write, however it does return
-some false positives, meaning it may indicate that an extent is shared
-even if it's no longer the case. For the write path this is fine, we just
-do a unnecessary COW operation instead of doing a more rigorous check
-which would be too heavy (calling btrfs_is_data_extent_shared()).
+Set squota incompat bit before committing the transaction that enables
+the feature.
 
-However when activating a swap file, the false positives simply result
-in a failure, which is confusing for users/applications. One particular
-case where this happens is when a data extent only has 1 reference but
-that reference is not inlined in the extent item located in the extent
-tree - this happens when we create more than 33 references for an extent
-and then delete those 33 references plus every other non-inline reference
-except one. The function check_committed_ref() assumes that if the size
-of an extent item doesn't match the size of struct btrfs_extent_item
-plus the size of an inline reference (plus an owner reference in case
-simple quotas are enabled), then the extent is shared - that is not the
-case however, we can have a single reference but it's not inlined - the
-reason we do this is to be fast and avoid inspecting non-inline references
-which may be located in another leaf of the extent tree, slowing down
-write paths.
+With the config CONFIG_BTRFS_ASSERT enabled, an assertion
+failure occurs regarding the simple quota feature.
 
-The following test script reproduces the bug:
+  [5.596534] assertion failed: btrfs_fs_incompat(fs_info, SIMPLE_QUOTA), in fs/btrfs/qgroup.c:365
+  [5.597098] ------------[ cut here ]------------
+  [5.597371] kernel BUG at fs/btrfs/qgroup.c:365!
+  [5.597946] CPU: 1 UID: 0 PID: 268 Comm: mount Not tainted 6.13.0-rc2-00031-gf92f4749861b #146
+  [5.598450] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-debian-1.16.2-1 04/01/2014
+  [5.599008] RIP: 0010:btrfs_read_qgroup_config+0x74d/0x7a0
+  [5.604303]  <TASK>
+  [5.605230]  ? btrfs_read_qgroup_config+0x74d/0x7a0
+  [5.605538]  ? exc_invalid_op+0x56/0x70
+  [5.605775]  ? btrfs_read_qgroup_config+0x74d/0x7a0
+  [5.606066]  ? asm_exc_invalid_op+0x1f/0x30
+  [5.606441]  ? btrfs_read_qgroup_config+0x74d/0x7a0
+  [5.606741]  ? btrfs_read_qgroup_config+0x74d/0x7a0
+  [5.607038]  ? try_to_wake_up+0x317/0x760
+  [5.607286]  open_ctree+0xd9c/0x1710
+  [5.607509]  btrfs_get_tree+0x58a/0x7e0
+  [5.608002]  vfs_get_tree+0x2e/0x100
+  [5.608224]  fc_mount+0x16/0x60
+  [5.608420]  btrfs_get_tree+0x2f8/0x7e0
+  [5.608897]  vfs_get_tree+0x2e/0x100
+  [5.609121]  path_mount+0x4c8/0xbc0
+  [5.609538]  __x64_sys_mount+0x10d/0x150
 
-   $ cat test.sh
-   #!/bin/bash
+The issue can be easily reproduced using the following reproducer:
 
-   DEV=/dev/sdi
-   MNT=/mnt/sdi
-   NUM_CLONES=50
+  root@q:linux# cat repro.sh
+  set -e
 
-   umount $DEV &> /dev/null
+  mkfs.btrfs -q -f /dev/sdb
+  mount /dev/sdb /mnt/btrfs
+  btrfs quota enable -s /mnt/btrfs
+  umount /mnt/btrfs
+  mount /dev/sdb /mnt/btrfs
 
-   run_test()
-   {
-        local sync_after_add_reflinks=$1
-        local sync_after_remove_reflinks=$2
+The issue is that when enabling quotas, at btrfs_quota_enable(), we set
+BTRFS_QGROUP_STATUS_FLAG_SIMPLE_MODE at fs_info->qgroup_flags and persist
+it in the quota root in the item with the key BTRFS_QGROUP_STATUS_KEY, but
+we only set the incompat bit BTRFS_FEATURE_INCOMPAT_SIMPLE_QUOTA after we
+commit the transaction used to enable simple quotas.
 
-        mkfs.btrfs -f $DEV > /dev/null
-        #mkfs.xfs -f $DEV > /dev/null
-        mount $DEV $MNT
+This means that if after that transaction commit we unmount the filesystem
+without starting and committing any other transaction, or we have a power
+failure, the next time we mount the filesystem we will find the flag
+BTRFS_QGROUP_STATUS_FLAG_SIMPLE_MODE set in the item with the key
+BTRFS_QGROUP_STATUS_KEY but we will not find the incompat bit
+BTRFS_FEATURE_INCOMPAT_SIMPLE_QUOTA set in the superblock, triggering an
+assertion failure at:
 
-        touch $MNT/foo
-        chmod 0600 $MNT/foo
-   	# On btrfs the file must be NOCOW.
-        chattr +C $MNT/foo &> /dev/null
-        xfs_io -s -c "pwrite -b 1M 0 1M" $MNT/foo
-        mkswap $MNT/foo
+  btrfs_read_qgroup_config() -> qgroup_read_enable_gen()
 
-        for ((i = 1; i <= $NUM_CLONES; i++)); do
-            touch $MNT/foo_clone_$i
-            chmod 0600 $MNT/foo_clone_$i
-            # On btrfs the file must be NOCOW.
-            chattr +C $MNT/foo_clone_$i &> /dev/null
-            cp --reflink=always $MNT/foo $MNT/foo_clone_$i
-        done
+To fix this issue, set the BTRFS_FEATURE_INCOMPAT_SIMPLE_QUOTA flag
+immediately after setting the BTRFS_QGROUP_STATUS_FLAG_SIMPLE_MODE.
+This ensures that both flags are flushed to disk within the same
+transaction.
 
-        if [ $sync_after_add_reflinks -ne 0 ]; then
-            # Flush delayed refs and commit current transaction.
-            sync -f $MNT
-        fi
-
-        # Remove the original file and all clones except the last.
-        rm -f $MNT/foo
-        for ((i = 1; i < $NUM_CLONES; i++)); do
-            rm -f $MNT/foo_clone_$i
-        done
-
-        if [ $sync_after_remove_reflinks -ne 0 ]; then
-            # Flush delayed refs and commit current transaction.
-            sync -f $MNT
-        fi
-
-        # Now use the last clone as a swap file. It should work since
-        # its extent are not shared anymore.
-        swapon $MNT/foo_clone_${NUM_CLONES}
-        swapoff $MNT/foo_clone_${NUM_CLONES}
-
-        umount $MNT
-   }
-
-   echo -e "\nTest without sync after creating and removing clones"
-   run_test 0 0
-
-   echo -e "\nTest with sync after creating clones"
-   run_test 1 0
-
-   echo -e "\nTest with sync after removing clones"
-   run_test 0 1
-
-   echo -e "\nTest with sync after creating and removing clones"
-   run_test 1 1
-
-Running the test:
-
-   $ ./test.sh
-   Test without sync after creating and removing clones
-   wrote 1048576/1048576 bytes at offset 0
-   1 MiB, 1 ops; 0.0017 sec (556.793 MiB/sec and 556.7929 ops/sec)
-   Setting up swapspace version 1, size = 1020 KiB (1044480 bytes)
-   no label, UUID=a6b9c29e-5ef4-4689-a8ac-bc199c750f02
-   swapon: /mnt/sdi/foo_clone_50: swapon failed: Invalid argument
-   swapoff: /mnt/sdi/foo_clone_50: swapoff failed: Invalid argument
-
-   Test with sync after creating clones
-   wrote 1048576/1048576 bytes at offset 0
-   1 MiB, 1 ops; 0.0036 sec (271.739 MiB/sec and 271.7391 ops/sec)
-   Setting up swapspace version 1, size = 1020 KiB (1044480 bytes)
-   no label, UUID=5e9008d6-1f7a-4948-a1b4-3f30aba20a33
-   swapon: /mnt/sdi/foo_clone_50: swapon failed: Invalid argument
-   swapoff: /mnt/sdi/foo_clone_50: swapoff failed: Invalid argument
-
-   Test with sync after removing clones
-   wrote 1048576/1048576 bytes at offset 0
-   1 MiB, 1 ops; 0.0103 sec (96.665 MiB/sec and 96.6651 ops/sec)
-   Setting up swapspace version 1, size = 1020 KiB (1044480 bytes)
-   no label, UUID=916c2740-fa9f-4385-9f06-29c3f89e4764
-
-   Test with sync after creating and removing clones
-   wrote 1048576/1048576 bytes at offset 0
-   1 MiB, 1 ops; 0.0031 sec (314.268 MiB/sec and 314.2678 ops/sec)
-   Setting up swapspace version 1, size = 1020 KiB (1044480 bytes)
-   no label, UUID=06aab1dd-4d90-49c0-bd9f-3a8db4e2f912
-   swapon: /mnt/sdi/foo_clone_50: swapon failed: Invalid argument
-   swapoff: /mnt/sdi/foo_clone_50: swapoff failed: Invalid argument
-
-Fix this by reworking btrfs_swap_activate() to instead of using extent
-maps and checking for shared extents with can_nocow_extent(), iterate
-over the inode's file extent items and use the accurate
-btrfs_is_data_extent_shared().
-
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
+Fixes: 182940f4f4db ("btrfs: qgroup: add new quota mode for simple quotas")
+CC: stable@vger.kernel.org # 6.6+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Julian Sun <sunjunchao2870@gmail.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |  102 ++++++++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 72 insertions(+), 30 deletions(-)
+ fs/btrfs/qgroup.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -9782,15 +9782,16 @@ static int btrfs_swap_activate(struct sw
- 	struct btrfs_fs_info *fs_info = root->fs_info;
- 	struct extent_io_tree *io_tree = &BTRFS_I(inode)->io_tree;
- 	struct extent_state *cached_state = NULL;
--	struct extent_map *em = NULL;
- 	struct btrfs_chunk_map *map = NULL;
- 	struct btrfs_device *device = NULL;
- 	struct btrfs_swap_info bsi = {
- 		.lowest_ppage = (sector_t)-1ULL,
- 	};
-+	struct btrfs_backref_share_check_ctx *backref_ctx = NULL;
-+	struct btrfs_path *path = NULL;
- 	int ret = 0;
- 	u64 isize;
--	u64 start;
-+	u64 prev_extent_end = 0;
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1122,6 +1122,7 @@ int btrfs_quota_enable(struct btrfs_fs_i
+ 	fs_info->qgroup_flags = BTRFS_QGROUP_STATUS_FLAG_ON;
+ 	if (simple) {
+ 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_SIMPLE_MODE;
++		btrfs_set_fs_incompat(fs_info, SIMPLE_QUOTA);
+ 		btrfs_set_qgroup_status_enable_gen(leaf, ptr, trans->transid);
+ 	} else {
+ 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+@@ -1255,8 +1256,6 @@ out_add_root:
+ 	spin_lock(&fs_info->qgroup_lock);
+ 	fs_info->quota_root = quota_root;
+ 	set_bit(BTRFS_FS_QUOTA_ENABLED, &fs_info->flags);
+-	if (simple)
+-		btrfs_set_fs_incompat(fs_info, SIMPLE_QUOTA);
+ 	spin_unlock(&fs_info->qgroup_lock);
  
- 	/*
- 	 * Acquire the inode's mmap lock to prevent races with memory mapped
-@@ -9829,6 +9830,13 @@ static int btrfs_swap_activate(struct sw
- 		goto out_unlock_mmap;
- 	}
- 
-+	path = btrfs_alloc_path();
-+	backref_ctx = btrfs_alloc_backref_share_check_ctx();
-+	if (!path || !backref_ctx) {
-+		ret = -ENOMEM;
-+		goto out_unlock_mmap;
-+	}
-+
- 	/*
- 	 * Balance or device remove/replace/resize can move stuff around from
- 	 * under us. The exclop protection makes sure they aren't running/won't
-@@ -9887,24 +9895,39 @@ static int btrfs_swap_activate(struct sw
- 	isize = ALIGN_DOWN(inode->i_size, fs_info->sectorsize);
- 
- 	lock_extent(io_tree, 0, isize - 1, &cached_state);
--	start = 0;
--	while (start < isize) {
--		u64 logical_block_start, physical_block_start;
-+	while (prev_extent_end < isize) {
-+		struct btrfs_key key;
-+		struct extent_buffer *leaf;
-+		struct btrfs_file_extent_item *ei;
- 		struct btrfs_block_group *bg;
--		u64 len = isize - start;
--
--		em = btrfs_get_extent(BTRFS_I(inode), NULL, start, len);
--		if (IS_ERR(em)) {
--			ret = PTR_ERR(em);
--			goto out;
--		}
--
--		if (em->disk_bytenr == EXTENT_MAP_HOLE) {
-+		u64 logical_block_start;
-+		u64 physical_block_start;
-+		u64 extent_gen;
-+		u64 disk_bytenr;
-+		u64 len;
-+
-+		key.objectid = btrfs_ino(BTRFS_I(inode));
-+		key.type = BTRFS_EXTENT_DATA_KEY;
-+		key.offset = prev_extent_end;
-+
-+		ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
-+		if (ret < 0)
-+			goto out;
-+
-+		/*
-+		 * If key not found it means we have an implicit hole (NO_HOLES
-+		 * is enabled).
-+		 */
-+		if (ret > 0) {
- 			btrfs_warn(fs_info, "swapfile must not have holes");
- 			ret = -EINVAL;
- 			goto out;
- 		}
--		if (em->disk_bytenr == EXTENT_MAP_INLINE) {
-+
-+		leaf = path->nodes[0];
-+		ei = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_file_extent_item);
-+
-+		if (btrfs_file_extent_type(leaf, ei) == BTRFS_FILE_EXTENT_INLINE) {
- 			/*
- 			 * It's unlikely we'll ever actually find ourselves
- 			 * here, as a file small enough to fit inline won't be
-@@ -9916,23 +9939,45 @@ static int btrfs_swap_activate(struct sw
- 			ret = -EINVAL;
- 			goto out;
- 		}
--		if (extent_map_is_compressed(em)) {
-+
-+		if (btrfs_file_extent_compression(leaf, ei) != BTRFS_COMPRESS_NONE) {
- 			btrfs_warn(fs_info, "swapfile must not be compressed");
- 			ret = -EINVAL;
- 			goto out;
- 		}
- 
--		logical_block_start = extent_map_block_start(em) + (start - em->start);
--		len = min(len, em->len - (start - em->start));
--		free_extent_map(em);
--		em = NULL;
-+		disk_bytenr = btrfs_file_extent_disk_bytenr(leaf, ei);
-+		if (disk_bytenr == 0) {
-+			btrfs_warn(fs_info, "swapfile must not have holes");
-+			ret = -EINVAL;
-+			goto out;
-+		}
-+
-+		logical_block_start = disk_bytenr + btrfs_file_extent_offset(leaf, ei);
-+		extent_gen = btrfs_file_extent_generation(leaf, ei);
-+		prev_extent_end = btrfs_file_extent_end(path);
-+
-+		if (prev_extent_end > isize)
-+			len = isize - key.offset;
-+		else
-+			len = btrfs_file_extent_num_bytes(leaf, ei);
-+
-+		backref_ctx->curr_leaf_bytenr = leaf->start;
-+
-+		/*
-+		 * Don't need the path anymore, release to avoid deadlocks when
-+		 * calling btrfs_is_data_extent_shared() because when joining a
-+		 * transaction it can block waiting for the current one's commit
-+		 * which in turn may be trying to lock the same leaf to flush
-+		 * delayed items for example.
-+		 */
-+		btrfs_release_path(path);
- 
--		ret = can_nocow_extent(inode, start, &len, NULL, false, true);
-+		ret = btrfs_is_data_extent_shared(BTRFS_I(inode), disk_bytenr,
-+						  extent_gen, backref_ctx);
- 		if (ret < 0) {
- 			goto out;
--		} else if (ret) {
--			ret = 0;
--		} else {
-+		} else if (ret > 0) {
- 			btrfs_warn(fs_info,
- 				   "swapfile must not be copy-on-write");
- 			ret = -EINVAL;
-@@ -9967,7 +10012,6 @@ static int btrfs_swap_activate(struct sw
- 
- 		physical_block_start = (map->stripes[0].physical +
- 					(logical_block_start - map->start));
--		len = min(len, map->chunk_len - (logical_block_start - map->start));
- 		btrfs_free_chunk_map(map);
- 		map = NULL;
- 
-@@ -10008,20 +10052,16 @@ static int btrfs_swap_activate(struct sw
- 				if (ret)
- 					goto out;
- 			}
--			bsi.start = start;
-+			bsi.start = key.offset;
- 			bsi.block_start = physical_block_start;
- 			bsi.block_len = len;
- 		}
--
--		start += len;
- 	}
- 
- 	if (bsi.block_len)
- 		ret = btrfs_add_swap_extent(sis, &bsi);
- 
- out:
--	if (!IS_ERR_OR_NULL(em))
--		free_extent_map(em);
- 	if (!IS_ERR_OR_NULL(map))
- 		btrfs_free_chunk_map(map);
- 
-@@ -10036,6 +10076,8 @@ out:
- 
- out_unlock_mmap:
- 	up_write(&BTRFS_I(inode)->i_mmap_lock);
-+	btrfs_free_backref_share_ctx(backref_ctx);
-+	btrfs_free_path(path);
- 	if (ret)
- 		return ret;
- 
+ 	/* Skip rescan for simple qgroups. */
 
 
