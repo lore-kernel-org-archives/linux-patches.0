@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3D715E8B;
-	Mon, 30 Dec 2024 15:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2536015E8B;
+	Mon, 30 Dec 2024 15:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573911; cv=none; b=TsNwIBPx6XB6lwVnwmvYgDr6CSDio0aZl7J2HLnYStLgU0xpwLUY1psHh39pTfsUL/hyGZez5pNDDr4VdspB36cH7P2l4qs0u0CiJ7UC/+aF5Fx5NaDSqtd+WiM6JAMAzmABKS1B+n/wxW2va+AoFsLd1hcKOkjZM/imW0nJicI=
+	t=1735573915; cv=none; b=uq4d+GKo9MWbN3++QGWQ6XJ8edDPmt/I8+rU0xpWKFl1ExxCU0J1o0OltpMyXZPtaklQX953BjjnPXlxkVxu89KH/MNpYsag1PmYdrU3depoGiOmWAnRkrui5QC3uq6q/4lFCN1zj+XXm9bj9bM/9abRyb+vWARcLYJwTmDtylk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573911; c=relaxed/simple;
-	bh=V1uarwE8A0tlsQUEdVaM6Rpu2TiiS+uSsME8GVRcuhA=;
+	s=arc-20240116; t=1735573915; c=relaxed/simple;
+	bh=jZZ2gs7nlt0ZFtc4fD/5elvz/l9sQdK7S/gffSnjf0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JMqYbJMx6X0rNDefiDKDSwFvoQxJFlgcePlybKG6ZuXPIJVbE10Rg9nWYL0bHg6c+5shiRgRI4OsrTHmE1e+OvNDSJ3GzjwjGGae2P7hqphgxBUuXuQCuUIL/YwbJ9BzjAMTORdGpdmqDLJqoymkWvb5iIHe+6dRT1lXGiEGW8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A3aw12zH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k2YDfcqyk30rICUK7p8SqRopKTkJ+zvcLVbU5InI1iqDsrRCyiGHaoKHJC38K+uxd+flUtoUu1PWwMr7ks6fCAKVJod4VhIZ+DDQMrOei+S+V0iCROiBivLLX5G8iw2Z/L2dUEHV2O4Q+qwNKq5l/fNaFyXfu1Wy3xmCJMRjrMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyYOaCc4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A3aw12zH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45891C4CED0;
-	Mon, 30 Dec 2024 15:51:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyYOaCc4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89062C4CED0;
+	Mon, 30 Dec 2024 15:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573911;
-	bh=V1uarwE8A0tlsQUEdVaM6Rpu2TiiS+uSsME8GVRcuhA=;
+	s=korg; t=1735573915;
+	bh=jZZ2gs7nlt0ZFtc4fD/5elvz/l9sQdK7S/gffSnjf0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3aw12zHrQk6BGnR+R+Y582hGNhfRXXPNseCfk/VWpTV/4DysQl/zZFONhOPfqZrj
-	 yGUTa4ME1vAV9bQvfSJHFsQeFw3+eWJ4hSBIcG3bmQ7ww1vuqmtRxX29t7W5ueP/R5
-	 cDPvCXMPowDBOTnVn5qSeym+4d0SmvRYq5qCVUpQ=
+	b=EyYOaCc4fEjOnnI6UTMDHrxkiALDoNmpJ3lLE46JYGtXhC7ceg0MNJQ33tQibhhhG
+	 m2iyxw8RqxkWOKP3/9V/teh8/Qk3SQBI1hhke4huICtTIgUdlVn1qvI4x/MikMHXd5
+	 wmHatLXwR/xH9F9HlpO86HX+ApPyZdvM4OdGsAho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <jesse.zhang@amd.com>,
-	Yunxiang Li <Yunxiang.Li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chen Ridong <chenridong@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 71/86] drm/amdkfd: pause autosuspend when creating pdd
-Date: Mon, 30 Dec 2024 16:43:19 +0100
-Message-ID: <20241230154214.412434784@linuxfoundation.org>
+Subject: [PATCH 6.6 72/86] freezer, sched: Report frozen tasks as D instead of R
+Date: Mon, 30 Dec 2024 16:43:20 +0100
+Message-ID: <20241230154214.448045423@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -46,116 +48,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse.zhang@amd.com <Jesse.zhang@amd.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit 438b39ac74e2a9dc0a5c9d653b7d8066877e86b1 ]
+[ Upstream commit f718faf3940e95d5d34af9041f279f598396ab7d ]
 
-When using MES creating a pdd will require talking to the GPU to
-setup the relevant context. The code here forgot to wake up the GPU
-in case it was in suspend, this causes KVM to EFAULT for passthrough
-GPU for example. This issue can be masked if the GPU was woken up by
-other things (e.g. opening the KMS node) first and have not yet gone to sleep.
+Before commit:
 
-v4: do the allocation of proc_ctx_bo in a lazy fashion
-when the first queue is created in a process (Felix)
+  f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
 
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Reviewed-by: Yunxiang Li <Yunxiang.Li@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+the frozen task stat was reported as 'D' in cgroup v1.
+
+However, after rewriting the core freezer logic, the frozen task stat is
+reported as 'R'. This is confusing, especially when a task with stat of
+'S' is frozen.
+
+This bug can be reproduced with these steps:
+
+	$ cd /sys/fs/cgroup/freezer/
+	$ mkdir test
+	$ sleep 1000 &
+	[1] 739         // task whose stat is 'S'
+	$ echo 739 > test/cgroup.procs
+	$ echo FROZEN > test/freezer.state
+	$ ps -aux | grep 739
+	root     739  0.1  0.0   8376  1812 pts/0    R    10:56   0:00 sleep 1000
+
+As shown above, a task whose stat is 'S' was changed to 'R' when it was
+frozen.
+
+To solve this regression, simply maintain the same reported state as
+before the rewrite.
+
+[ mingo: Enhanced the changelog and comments ]
+
+Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: Tejun Heo <tj@kernel.org>
+Acked-by: Michal Koutný <mkoutny@suse.com>
+Link: https://lore.kernel.org/r/20241217004818.3200515-1-chenridong@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/amdkfd/kfd_device_queue_manager.c | 15 ++++++++++++
- drivers/gpu/drm/amd/amdkfd/kfd_process.c      | 23 ++-----------------
- 2 files changed, 17 insertions(+), 21 deletions(-)
+ include/linux/sched.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index 4d9a406925e1..43fa260ddbce 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -197,6 +197,21 @@ static int add_queue_mes(struct device_queue_manager *dqm, struct queue *q,
- 	if (dqm->is_hws_hang)
- 		return -EIO;
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 4809f27b5201..d4f9d82c69e0 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1683,8 +1683,9 @@ static inline unsigned int __task_state_index(unsigned int tsk_state,
+ 	 * We're lying here, but rather than expose a completely new task state
+ 	 * to userspace, we can make this appear as if the task has gone through
+ 	 * a regular rt_mutex_lock() call.
++	 * Report frozen tasks as uninterruptible.
+ 	 */
+-	if (tsk_state & TASK_RTLOCK_WAIT)
++	if ((tsk_state & TASK_RTLOCK_WAIT) || (tsk_state & TASK_FROZEN))
+ 		state = TASK_UNINTERRUPTIBLE;
  
-+	if (!pdd->proc_ctx_cpu_ptr) {
-+		r = amdgpu_amdkfd_alloc_gtt_mem(adev,
-+				AMDGPU_MES_PROC_CTX_SIZE,
-+				&pdd->proc_ctx_bo,
-+				&pdd->proc_ctx_gpu_addr,
-+				&pdd->proc_ctx_cpu_ptr,
-+				false);
-+		if (r) {
-+			dev_err(adev->dev,
-+				"failed to allocate process context bo\n");
-+			return r;
-+		}
-+		memset(pdd->proc_ctx_cpu_ptr, 0, AMDGPU_MES_PROC_CTX_SIZE);
-+	}
-+
- 	memset(&queue_input, 0x0, sizeof(struct mes_add_queue_input));
- 	queue_input.process_id = qpd->pqm->process->pasid;
- 	queue_input.page_table_base_addr =  qpd->page_table_base;
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-index 577bdb6a9640..64346c71c62a 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-@@ -1046,7 +1046,8 @@ static void kfd_process_destroy_pdds(struct kfd_process *p)
- 
- 		kfd_free_process_doorbells(pdd->dev->kfd, pdd);
- 
--		if (pdd->dev->kfd->shared_resources.enable_mes)
-+		if (pdd->dev->kfd->shared_resources.enable_mes &&
-+			pdd->proc_ctx_cpu_ptr)
- 			amdgpu_amdkfd_free_gtt_mem(pdd->dev->adev,
- 						   &pdd->proc_ctx_bo);
- 		/*
-@@ -1572,7 +1573,6 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 							struct kfd_process *p)
- {
- 	struct kfd_process_device *pdd = NULL;
--	int retval = 0;
- 
- 	if (WARN_ON_ONCE(p->n_pdds >= MAX_GPU_INSTANCE))
- 		return NULL;
-@@ -1596,21 +1596,6 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 	pdd->user_gpu_id = dev->id;
- 	atomic64_set(&pdd->evict_duration_counter, 0);
- 
--	if (dev->kfd->shared_resources.enable_mes) {
--		retval = amdgpu_amdkfd_alloc_gtt_mem(dev->adev,
--						AMDGPU_MES_PROC_CTX_SIZE,
--						&pdd->proc_ctx_bo,
--						&pdd->proc_ctx_gpu_addr,
--						&pdd->proc_ctx_cpu_ptr,
--						false);
--		if (retval) {
--			dev_err(dev->adev->dev,
--				"failed to allocate process context bo\n");
--			goto err_free_pdd;
--		}
--		memset(pdd->proc_ctx_cpu_ptr, 0, AMDGPU_MES_PROC_CTX_SIZE);
--	}
--
- 	p->pdds[p->n_pdds++] = pdd;
- 	if (kfd_dbg_is_per_vmid_supported(pdd->dev))
- 		pdd->spi_dbg_override = pdd->dev->kfd2kgd->disable_debug_trap(
-@@ -1622,10 +1607,6 @@ struct kfd_process_device *kfd_create_process_device_data(struct kfd_node *dev,
- 	idr_init(&pdd->alloc_idr);
- 
- 	return pdd;
--
--err_free_pdd:
--	kfree(pdd);
--	return NULL;
- }
- 
- /**
+ 	return fls(state);
 -- 
 2.39.5
 
