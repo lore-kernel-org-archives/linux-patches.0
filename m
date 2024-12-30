@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE44D15E8B;
-	Mon, 30 Dec 2024 15:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AAB15E8B;
+	Mon, 30 Dec 2024 15:57:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574252; cv=none; b=Ne/gf9oOyplys6Nj2AH/jQ+XAgleu8jxm8Qm0sebA9ku+2CrU+kl2ZaDNvLrkQ88ufEpBZreh/Jkhx+/xzKctoldIeP44tOzanKq2Nzdha64Wg/UPb/pE1PSg3Pximrx3dvxc+9UHrakCdCDB32nvPCGJa2dbk/bercjYplBky0=
+	t=1735574257; cv=none; b=a0U6K5hD81bVkROP7y3l665pw0ohafWTu2iUmtcj26X5/eAvxP+28mWX37s07E5TgHi5yhxboltPSnT0DZNCU9W7jIYhBSYpMu1AdTAeVFnfb8AU+ezhPr69w7L6V8IDVO+KAbtWoo48n7Q6+HFn4ZkG8pPEMPyKxGdjSaZQp5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574252; c=relaxed/simple;
-	bh=ytWP7xm1N1BYDdL2xV7knjDbUMPzUcgaIdtH8igoumg=;
+	s=arc-20240116; t=1735574257; c=relaxed/simple;
+	bh=w1CJyqOlAW48HwMZSrf5m5Ji5d89fNB5/Z0f0AummUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sN69WRh+CILHnkssLuhlnEoUeatL29uCJBicUL7Qz4v0YRw+3TPFS5GWkVLz+yQkwZaz4z7LAGvN8Xk0nSl0kJDl0axIHT1e4mu0Y19fE3YogZnlxhf3gYuDAMhJ4j6fXFpzn/9a0rI7SGNC6KMhs6w17FSLbzT0TbNFlJxsxs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUGlkkpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Id1foYentW38f5hPFImHGwFO8LxWDb7bt09vm4zj7AvdBmuNpFrzXAIuf3hyVCgg00syR5WbC/h6NM/THmxpuhOsEY5hqtuYBauqB0ALg2KhE6T0eS5GYnbQtL53kI2e/0UvdD/1sD35NcO5WKx8+kMGcbX68Ccmp5j9vzzBRdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/3AuRIX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUGlkkpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5CEC4CED0;
-	Mon, 30 Dec 2024 15:57:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/3AuRIX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB6BAC4CED2;
+	Mon, 30 Dec 2024 15:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574252;
-	bh=ytWP7xm1N1BYDdL2xV7knjDbUMPzUcgaIdtH8igoumg=;
+	s=korg; t=1735574256;
+	bh=w1CJyqOlAW48HwMZSrf5m5Ji5d89fNB5/Z0f0AummUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUGlkkpFcYlpSIW2FGaRQaQYmq6LzPcNgZ9YaXl/LCqbN/xupDlFtzoHzflMoe6Uu
-	 2fhs3uTgT5+9ZdrMwo8jRgEsx40sowK+R95VJ593oFDFcKVAprl9TSM+aCG0lodQJU
-	 nR3Pq09eSCGjDvqLzXgqVWIGeMsJpTPp8C++3zQ0=
+	b=v/3AuRIXDbi7s4diwt805gfx3gfnw/pd8cgHXu8KqqZM5SDmaI5IWFTXEI6m0q5V1
+	 6hOE+TxuBeAPp262bZZwEM3nNqu/VUJO4b1NDqrqk4HgO4AdK7+SODuMph2adou13S
+	 RlRZ4xE+1Hd8G4cJ84eWFg8YXsSvlCEn16XG+a7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Francois Dugast <francois.dugast@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	intel-xe@lists.freedesktop.org,
-	linux-media@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linaro-mm-sig@lists.linaro.org,
-	John Harrison <John.C.Harrison@Intel.com>,
+	chenchangcheng <chenchangcheng@kylinos.cn>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/114] drm/xe: Move the coredump registration to the worker thread
-Date: Mon, 30 Dec 2024 16:43:17 +0100
-Message-ID: <20241230154221.171449150@linuxfoundation.org>
+Subject: [PATCH 6.12 081/114] objtool: Add bch2_trans_unlocked_error() to bcachefs noreturns
+Date: Mon, 30 Dec 2024 16:43:18 +0100
+Message-ID: <20241230154221.212843888@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -57,154 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: chenchangcheng <ccc194101@163.com>
 
-[ Upstream commit 5dce85fecb87751ec94526e1ac516dd7871e2e0c ]
+[ Upstream commit 31ad36a271290648e7c2288a03d7b933d20254d6 ]
 
-Adding lockdep checking to the coredump code showed that there was an
-existing violation. The dev_coredumpm_timeout() call is used to
-register the dump with the base coredump subsystem. However, that
-makes multiple memory allocations, only some of which use the GFP_
-flags passed in. So that also needs to be deferred to the worker
-function where it is safe to allocate with arbitrary flags.
+Fix the following objtool warning during build time:
 
-In order to not add protoypes for the callback functions, moving the
-_timeout call also means moving the worker thread function to later in
-the file.
+    fs/bcachefs/btree_trans_commit.o: warning: objtool: bch2_trans_commit_write_locked.isra.0() falls through to next function do_bch2_trans_commit.isra.0()
+    fs/bcachefs/btree_trans_commit.o: warning: objtool: .text: unexpected end of section
+......
+    fs/bcachefs/btree_update.o: warning: objtool: bch2_trans_update_get_key_cache() falls through to next function flush_new_cached_update()
+    fs/bcachefs/btree_update.o: warning: objtool: flush_new_cached_update() falls through to next function bch2_trans_update_by_path()
 
-v2: Rebased after other changes to the worker function.
+bch2_trans_unlocked_error() is an Obviously Correct (tm) panic() wrapper,
+add it to the list of known noreturns.
 
-Fixes: e799485044cb ("drm/xe: Introduce the dev_coredump infrastructure.")
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Francois Dugast <francois.dugast@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: intel-xe@lists.freedesktop.org
-Cc: linux-media@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: linaro-mm-sig@lists.linaro.org
-Cc: <stable@vger.kernel.org> # v6.8+
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241128210824.3302147-3-John.C.Harrison@Intel.com
-(cherry picked from commit 90f51a7f4ec1004fc4ddfbc6d1f1068d85ef4771)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+[ mingo: Improved the changelog ]
+
+Fixes: fd104e2967b7 ("bcachefs: bch2_trans_verify_not_unlocked()")
+Signed-off-by: chenchangcheng <chenchangcheng@kylinos.cn>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lkml.kernel.org/r/20241220074847.3418134-1-ccc194101@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_devcoredump.c | 73 +++++++++++++++--------------
- 1 file changed, 39 insertions(+), 34 deletions(-)
+ tools/objtool/noreturns.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
-index c40c91e27f71..c18e463092af 100644
---- a/drivers/gpu/drm/xe/xe_devcoredump.c
-+++ b/drivers/gpu/drm/xe/xe_devcoredump.c
-@@ -144,36 +144,6 @@ static void xe_devcoredump_snapshot_free(struct xe_devcoredump_snapshot *ss)
- 	ss->vm = NULL;
- }
- 
--static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
--{
--	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
--	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
--	struct xe_device *xe = coredump_to_xe(coredump);
--	unsigned int fw_ref;
--
--	xe_pm_runtime_get(xe);
--
--	/* keep going if fw fails as we still want to save the memory and SW data */
--	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
--	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
--		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
--	xe_vm_snapshot_capture_delayed(ss->vm);
--	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
--	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
--
--	xe_pm_runtime_put(xe);
--
--	/* Calculate devcoredump size */
--	ss->read.size = __xe_devcoredump_read(NULL, INT_MAX, coredump);
--
--	ss->read.buffer = kvmalloc(ss->read.size, GFP_USER);
--	if (!ss->read.buffer)
--		return;
--
--	__xe_devcoredump_read(ss->read.buffer, ss->read.size, coredump);
--	xe_devcoredump_snapshot_free(ss);
--}
--
- static ssize_t xe_devcoredump_read(char *buffer, loff_t offset,
- 				   size_t count, void *data, size_t datalen)
- {
-@@ -222,6 +192,45 @@ static void xe_devcoredump_free(void *data)
- 		 "Xe device coredump has been deleted.\n");
- }
- 
-+static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
-+{
-+	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
-+	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
-+	struct xe_device *xe = coredump_to_xe(coredump);
-+	unsigned int fw_ref;
-+
-+	/*
-+	 * NB: Despite passing a GFP_ flags parameter here, more allocations are done
-+	 * internally using GFP_KERNEL expliictly. Hence this call must be in the worker
-+	 * thread and not in the initial capture call.
-+	 */
-+	dev_coredumpm_timeout(gt_to_xe(ss->gt)->drm.dev, THIS_MODULE, coredump, 0, GFP_KERNEL,
-+			      xe_devcoredump_read, xe_devcoredump_free,
-+			      XE_COREDUMP_TIMEOUT_JIFFIES);
-+
-+	xe_pm_runtime_get(xe);
-+
-+	/* keep going if fw fails as we still want to save the memory and SW data */
-+	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
-+	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
-+		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
-+	xe_vm_snapshot_capture_delayed(ss->vm);
-+	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
-+	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
-+
-+	xe_pm_runtime_put(xe);
-+
-+	/* Calculate devcoredump size */
-+	ss->read.size = __xe_devcoredump_read(NULL, INT_MAX, coredump);
-+
-+	ss->read.buffer = kvmalloc(ss->read.size, GFP_USER);
-+	if (!ss->read.buffer)
-+		return;
-+
-+	__xe_devcoredump_read(ss->read.buffer, ss->read.size, coredump);
-+	xe_devcoredump_snapshot_free(ss);
-+}
-+
- static void devcoredump_snapshot(struct xe_devcoredump *coredump,
- 				 struct xe_sched_job *job)
- {
-@@ -305,10 +314,6 @@ void xe_devcoredump(struct xe_sched_job *job)
- 	drm_info(&xe->drm, "Xe device coredump has been created\n");
- 	drm_info(&xe->drm, "Check your /sys/class/drm/card%d/device/devcoredump/data\n",
- 		 xe->drm.primary->index);
--
--	dev_coredumpm_timeout(xe->drm.dev, THIS_MODULE, coredump, 0, GFP_KERNEL,
--			      xe_devcoredump_read, xe_devcoredump_free,
--			      XE_COREDUMP_TIMEOUT_JIFFIES);
- }
- 
- static void xe_driver_devcoredump_fini(void *arg)
+diff --git a/tools/objtool/noreturns.h b/tools/objtool/noreturns.h
+index e7da92489167..f98dc0e1c99c 100644
+--- a/tools/objtool/noreturns.h
++++ b/tools/objtool/noreturns.h
+@@ -20,6 +20,7 @@ NORETURN(__x64_sys_exit_group)
+ NORETURN(arch_cpu_idle_dead)
+ NORETURN(bch2_trans_in_restart_error)
+ NORETURN(bch2_trans_restart_error)
++NORETURN(bch2_trans_unlocked_error)
+ NORETURN(cpu_bringup_and_idle)
+ NORETURN(cpu_startup_entry)
+ NORETURN(do_exit)
 -- 
 2.39.5
 
