@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88B642AA6;
-	Mon, 30 Dec 2024 15:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A562AE68;
+	Mon, 30 Dec 2024 15:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574243; cv=none; b=SZlUHpW7+vbK6MEniV42ZkonU+0UMV11+/Sra6Si+qjPmV1p76oHIhkFk07+NXpFPGln+tQ4xncy+b/VaOtMTKT/EIwDud43u1Rs8UMpq65mL6QD+x8gnhjLvTHFyAGKj9hiEYESBLO7pm/brO/0GyZKi0jcktnCNL90xb2SYqI=
+	t=1735574248; cv=none; b=gMS2cWxad8A2161UkL0iqOpVROaxqIbHvvJw1xF4BQ+3R/PYJZWYNT1SnoP+By8VR/rAytw+t4cDZbYcdJ5Kjz9ZgRYKtQ5s+w8c/NA+IkqTBHzZRR/XoEjsJn8Y6RFEpXlzS1mn3WAEj0w27WWNimyGChFcKU3TDP0lAMujNEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574243; c=relaxed/simple;
-	bh=CF/rBW43nwPSCgWsYLeg0DEZmQMDqCTD3tLujpI3qek=;
+	s=arc-20240116; t=1735574248; c=relaxed/simple;
+	bh=i4UT3bK+cOACTd+BPvUAdme6n8ua7hSQlX7SqHgjW0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=indMh8ZyWcFLgQeLQklrhxqM6O/Zq7xMbwnqCyItTIUp9y/qLg6BFiR6u6Rdl0fny/Gf58MVk9P21caKJzHtWClBnDwhulGlfEGsuN5N8yWjHvPrNBavmmnB6pfbLh4kgFtaqxKROx/7de5JhX8o9DMq5k455S2JkbmnL+Bh328=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSeaZwUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pugvVoxURUpSyNqavoddaSsEh7la6Zgjn62JzejVbAD4oaH6vUbfugPoybd3KVADZ4hsSJDP1RbF8jZv6FhjvyA8Kxl+gS7xNwpzAPIbIPPS/jd8qxg7BIt2s4pugDax+XfILjlsIjeukzFRgLcbEuK53mI5//BBnQmPdj6DoYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVtjNjzE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSeaZwUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53007C4CED0;
-	Mon, 30 Dec 2024 15:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVtjNjzE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23A2C4CED2;
+	Mon, 30 Dec 2024 15:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574242;
-	bh=CF/rBW43nwPSCgWsYLeg0DEZmQMDqCTD3tLujpI3qek=;
+	s=korg; t=1735574246;
+	bh=i4UT3bK+cOACTd+BPvUAdme6n8ua7hSQlX7SqHgjW0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WSeaZwUpEGngHIpS3u/Nbd8z091fLHk69qTuQrsUnm1QV5OIOXL3dBwNFctWx79Si
-	 eqzDKqiplGu8bwiywxwicIOgXzBYAyeeqODu2JQ7TXFcObXpwbRUYx3MEiyVM1J1u5
-	 u5N1YeSX3LH3iuMEAjYJIPE4Gymg9wdcudp7Bpgo=
+	b=HVtjNjzEuxcNL4jHBwF8iZpwrd0jAwaT2t6WFGiX/J0+PnyjXEdegssPwJerM39E1
+	 EJlYXD8ra3WVeZcWMIZbmRssDFIuxPIfppCzFKrAKnYDxWmqFtexeOMvOLZn6xc4ms
+	 XKyMndyaSfaNO8H2IbpXvbdlEKcvqs6QGXxf15L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/114] ublk: detach gendisk from ublk device if add_disk() fails
-Date: Mon, 30 Dec 2024 16:43:15 +0100
-Message-ID: <20241230154221.098496785@linuxfoundation.org>
+Subject: [PATCH 6.12 079/114] drm/xe: Take PM ref in delayed snapshot capture worker
+Date: Mon, 30 Dec 2024 16:43:16 +0100
+Message-ID: <20241230154221.135573953@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -45,86 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 75cd4005da5492129917a4a4ee45e81660556104 ]
+[ Upstream commit aef0b4a07277f715bfc2a0d76a16da2bc4e89205 ]
 
-Inside ublk_abort_requests(), gendisk is grabbed for aborting all
-inflight requests. And ublk_abort_requests() is called when exiting
-the uring context or handling timeout.
+The delayed snapshot capture worker can access the GPU or VRAM both of
+which require a PM reference. Take a reference in this worker.
 
-If add_disk() fails, the gendisk may have been freed when calling
-ublk_abort_requests(), so use-after-free can be caused when getting
-disk's reference in ublk_abort_requests().
-
-Fixes the bug by detaching gendisk from ublk device if add_disk() fails.
-
-Fixes: bd23f6c2c2d0 ("ublk: quiesce request queue when aborting queue")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Link: https://lore.kernel.org/r/20241225110640.351531-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Fixes: 4f04d07c0a94 ("drm/xe: Faster devcoredump")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241126174615.2665852-5-matthew.brost@intel.com
+(cherry picked from commit 1c6878af115a4586a40d6c14d530fa9f93e0bd83)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Stable-dep-of: 5dce85fecb87 ("drm/xe: Move the coredump registration to the worker thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/xe/xe_devcoredump.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index 90bc605ff6c2..458ac54e7b20 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1599,6 +1599,21 @@ static void ublk_unquiesce_dev(struct ublk_device *ub)
- 	blk_mq_kick_requeue_list(ub->ub_disk->queue);
- }
+diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
+index 5221ee3f1214..c40c91e27f71 100644
+--- a/drivers/gpu/drm/xe/xe_devcoredump.c
++++ b/drivers/gpu/drm/xe/xe_devcoredump.c
+@@ -20,6 +20,7 @@
+ #include "xe_guc_ct.h"
+ #include "xe_guc_submit.h"
+ #include "xe_hw_engine.h"
++#include "xe_pm.h"
+ #include "xe_sched_job.h"
+ #include "xe_vm.h"
  
-+static struct gendisk *ublk_detach_disk(struct ublk_device *ub)
-+{
-+	struct gendisk *disk;
-+
-+	/* Sync with ublk_abort_queue() by holding the lock */
-+	spin_lock(&ub->lock);
-+	disk = ub->ub_disk;
-+	ub->dev_info.state = UBLK_S_DEV_DEAD;
-+	ub->dev_info.ublksrv_pid = -1;
-+	ub->ub_disk = NULL;
-+	spin_unlock(&ub->lock);
-+
-+	return disk;
-+}
-+
- static void ublk_stop_dev(struct ublk_device *ub)
+@@ -147,8 +148,11 @@ static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
  {
- 	struct gendisk *disk;
-@@ -1612,14 +1627,7 @@ static void ublk_stop_dev(struct ublk_device *ub)
- 		ublk_unquiesce_dev(ub);
- 	}
- 	del_gendisk(ub->ub_disk);
--
--	/* Sync with ublk_abort_queue() by holding the lock */
--	spin_lock(&ub->lock);
--	disk = ub->ub_disk;
--	ub->dev_info.state = UBLK_S_DEV_DEAD;
--	ub->dev_info.ublksrv_pid = -1;
--	ub->ub_disk = NULL;
--	spin_unlock(&ub->lock);
-+	disk = ublk_detach_disk(ub);
- 	put_disk(disk);
-  unlock:
- 	mutex_unlock(&ub->mutex);
-@@ -2295,7 +2303,7 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub, struct io_uring_cmd *cmd)
+ 	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
+ 	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
++	struct xe_device *xe = coredump_to_xe(coredump);
+ 	unsigned int fw_ref;
  
- out_put_cdev:
- 	if (ret) {
--		ub->dev_info.state = UBLK_S_DEV_DEAD;
-+		ublk_detach_disk(ub);
- 		ublk_put_device(ub);
- 	}
- 	if (ret)
++	xe_pm_runtime_get(xe);
++
+ 	/* keep going if fw fails as we still want to save the memory and SW data */
+ 	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
+ 	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
+@@ -157,6 +161,8 @@ static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
+ 	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
+ 	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
+ 
++	xe_pm_runtime_put(xe);
++
+ 	/* Calculate devcoredump size */
+ 	ss->read.size = __xe_devcoredump_read(NULL, INT_MAX, coredump);
+ 
 -- 
 2.39.5
 
