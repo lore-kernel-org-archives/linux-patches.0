@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C0932594B6;
-	Mon, 30 Dec 2024 15:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CB82594B6;
+	Mon, 30 Dec 2024 15:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573531; cv=none; b=cxA9NJFh4iTeJ/g6TlRXOgVLm7kxUR1olpF+3pgtZKj/5CTJVrhzJmHtG+Q3GhggrsGKE8QHfwZUYxGLhWjLKHb3wQfL8rma2Qrctl6WL2nEeEJ7MgH8xGCNH8x4Ymq4rF1HlJLJp/AdoXgI7RxTcC9WS4cihOp13fVOdeNsRNw=
+	t=1735573535; cv=none; b=AXId5EsjcygSRios1CZJ2b27C1+7ceQfCO4YX1aiO3alGrkOFCvIPeIqtPzYi5ClU00puqa5PzAu/sn/j5+eAPDbFXCm806pkvN1i+iOGBBlwohXS13UCCwoMxPwuBmM1ELQz1YBPD6A3mTLYDO/B7bquuuS+/rVrr9YojBgW8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573531; c=relaxed/simple;
-	bh=CFrn99IaPG2YHbw3GGafegaybtZwNWd+gpSXhgwbz38=;
+	s=arc-20240116; t=1735573535; c=relaxed/simple;
+	bh=HEYOgVKSCWSjT8hAtw3IafwLV/8KOY9tj9H1YNFW9+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f1HcCzC8/cc1xJ4gUE2NEo3Bfs8OjWWdmMH8Ma2kx5V9kCtpOK6PsU4sA1wdyQfR1aE18Udsc78LD7MncQ6WdFCkzNA4S9NF/Qu6s/n7y0YeQMeuiW6VtppQ9dALmGxZ6M5+0nurDZvz6PzN5SSb/jVs5v9N+yWZvDdos/izKGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCpj1442; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABWofpzo9V8McIZRKRChvtj6wKHy9B6irIIWND6b0FRauVt+xz5b7TQ/XqNzsmAwG++0naALNRuuXzKx7yLfBiot6S/ju3fn1tzQpkqlndsrCuvPMONHVR1mC6ylmBQhUzRt6LkxFhGocnw1uUq/Cr2n2Z7Q5ej4vWNXqXw9NQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPzB8CS9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCpj1442"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7979C4CED0;
-	Mon, 30 Dec 2024 15:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPzB8CS9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39405C4CED0;
+	Mon, 30 Dec 2024 15:45:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573531;
-	bh=CFrn99IaPG2YHbw3GGafegaybtZwNWd+gpSXhgwbz38=;
+	s=korg; t=1735573534;
+	bh=HEYOgVKSCWSjT8hAtw3IafwLV/8KOY9tj9H1YNFW9+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tCpj14424W42nzR/rHg7SzdrnwzRK8egcXc/AZTUJ8GYa4omzQKObbMqg6qrUhosX
-	 Jj61ii+jpvTNSbQVsaytLYUpp1iSCx1KSOxdMPZPL8x9Tlk0Ry6QiUVFREfZA+dPTU
-	 EUz1qN6hiIkgujE013pAeZPOYh6euP625nP+h1js=
+	b=CPzB8CS9At6NtESorlKDIYiC4hH5iCxWf8cfZNWgs+eCprrs3rz2Chvv3ruTgl1LL
+	 fllSezJ5x18O+zFdouRYeF38Pou3Y0yU4zOy2V/QbGg2VBECivieE8rHFmJs3lr3Yz
+	 X1iDY/X6yGPoH3TWvwLk27e6BYuQEnvWr/UO2XGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Andrzejewski <maciej.andrzejewski@m-works.net>,
+	Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 08/60] mtd: rawnand: arasan: Fix double assertion of chip-select
-Date: Mon, 30 Dec 2024 16:42:18 +0100
-Message-ID: <20241230154207.601229038@linuxfoundation.org>
+Subject: [PATCH 6.1 09/60] mtd: rawnand: arasan: Fix missing de-registration of NAND
+Date: Mon, 30 Dec 2024 16:42:19 +0100
+Message-ID: <20241230154207.638808832@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -52,45 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Maciej Andrzejewski <maciej.andrzejewski@m-works.net>
 
-commit b086a46dae48829e11c0c02580e30d920b76743c upstream.
+commit 11e6831fd81468cf48155b9b3c11295c391da723 upstream.
 
-When two chip-selects are configured in the device tree, and the second is
-a non-native GPIO, both the GPIO-based chip-select and the first native
-chip-select may be asserted simultaneously. This double assertion causes
-incorrect read and write operations.
+The NAND chip-selects are registered for the Arasan driver during
+initialization but are not de-registered when the driver is unloaded. As a
+result, if the driver is loaded again, the chip-selects remain registered
+and busy, making them unavailable for use.
 
-The issue occurs because when nfc->ncs <= 2, nfc->spare_cs is always
-initialized to 0 due to static initialization. Consequently, when the
-second chip-select (GPIO-based) is selected in anfc_assert_cs(), it is
-detected by anfc_is_gpio_cs(), and nfc->native_cs is assigned the value 0.
-This results in both the GPIO-based chip-select being asserted and the
-NAND controller register receiving 0, erroneously selecting the native
-chip-select.
-
-This patch resolves the issue, as confirmed by oscilloscope testing with
-configurations involving two or more chip-selects in the device tree.
-
-Fixes: acbd3d0945f9 ("mtd: rawnand: arasan: Leverage additional GPIO CS")
+Fixes: 197b88fecc50 ("mtd: rawnand: arasan: Add new Arasan NAND controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Maciej Andrzejewski <maciej.andrzejewski@m-works.net>
+Signed-off-by: Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/arasan-nand-controller.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/arasan-nand-controller.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/drivers/mtd/nand/raw/arasan-nand-controller.c
 +++ b/drivers/mtd/nand/raw/arasan-nand-controller.c
-@@ -1425,8 +1425,8 @@ static int anfc_parse_cs(struct arasan_n
- 	 * case, the "not" chosen CS is assigned to nfc->spare_cs and selected
- 	 * whenever a GPIO CS must be asserted.
- 	 */
--	if (nfc->cs_array && nfc->ncs > 2) {
--		if (!nfc->cs_array[0] && !nfc->cs_array[1]) {
-+	if (nfc->cs_array) {
-+		if (nfc->ncs > 2 && !nfc->cs_array[0] && !nfc->cs_array[1]) {
- 			dev_err(nfc->dev,
- 				"Assign a single native CS when using GPIOs\n");
- 			return -EINVAL;
+@@ -1510,8 +1510,15 @@ disable_controller_clk:
+ 
+ static int anfc_remove(struct platform_device *pdev)
+ {
++	int i;
+ 	struct arasan_nfc *nfc = platform_get_drvdata(pdev);
+ 
++	for (i = 0; i < nfc->ncs; i++) {
++		if (nfc->cs_array[i]) {
++			gpiod_put(nfc->cs_array[i]);
++		}
++	}
++
+ 	anfc_chips_cleanup(nfc);
+ 
+ 	clk_disable_unprepare(nfc->bus_clk);
 
 
