@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546E715E8B;
-	Mon, 30 Dec 2024 15:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E2715E8B;
+	Mon, 30 Dec 2024 15:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574358; cv=none; b=elAwD8rdNS5PxImPk22wlKvR4axZ/Zw/OhT6fwxIm1npb0otO2EJ9Jy9Scteerv45sOJ38t3rV0TJeA++R+9iBgiehoiJoj6jsBNlizOLT1vZYlBgkPqUYl2DzkNWAa0hj5mJhDTEN+7MnWIN92at9Y9thLmLROjjkjTU62x0ts=
+	t=1735574361; cv=none; b=f2Y0fLTM9ETjUduXIupQohhHvmc8rmyOE9WiSIfQsSl+XNUychF9LD0tF4BVukxLydB2dBeXqOUNpi+104RctjkluSOUYY3Df8Qhw2FcHtGyKpP+kocZkOPvfuW59ICoecaxsjkRK18wGNN5Bp2Td6+jeqriU+Coh/hDfqduztM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574358; c=relaxed/simple;
-	bh=m5BCvAzgB3S8YhqI1l72qACd/wspZkQyCEBMNMjtuZ8=;
+	s=arc-20240116; t=1735574361; c=relaxed/simple;
+	bh=/PYOcB1HinUFGjDPU8FtSjNrfbO0CqCXzuha4RIqwRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e7b3eQLbmb0gm3UTwtzdjq4WBgQw6YAzhoOhHNsl0c4UQdwpV3wJn3FXbbIeY5yAkyyr+HrJZtv7a6+LMEXm3fictM9jkemVPyU9vgbKJPxsHRNCSIoFejLt9n7iWV5t1JFxBeVkrMTCgByDEgzb/5a/cIXgmr+aRIbfvNJ19fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmLPpSbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2hSK8aXt7FJEce8/chKMGMM0rJHlyqaV0Z9HoxY4WkA38RIA4e5vPqXQicO8GGJFJ6p4dQWRdZMh4yG760wvU6/WjQu11qSIBZQVsSfFIJGYzME7lIuOo32iLoB4lhox1yq52Vog0bp0mTJCkPPQeBiE3c4CzG+uIxH7BYoW28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjQognlJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmLPpSbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CC0C4CED0;
-	Mon, 30 Dec 2024 15:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjQognlJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379B4C4CED0;
+	Mon, 30 Dec 2024 15:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574358;
-	bh=m5BCvAzgB3S8YhqI1l72qACd/wspZkQyCEBMNMjtuZ8=;
+	s=korg; t=1735574361;
+	bh=/PYOcB1HinUFGjDPU8FtSjNrfbO0CqCXzuha4RIqwRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmLPpSbvBCFWmiTA0blBsHKC42oBNFhz04uF7SQFxH6Nu0dSjJn6WvgibApASOGZS
-	 cY/pFnwubsFPajR1QkgtjGxn42WsPktsk1ECGakqNjPDJNScsJmtKgn8ziFWy+WSd2
-	 O7VL7xUEeh8XpxfVBWihxBMBR29/CICwFOLBZ1H0=
+	b=yjQognlJU+Z6NMLNPAPTHwgtkFWI6lICgY3iBeURb+RirruqWZynZQbEf0TYN2ouq
+	 LjnVPKyrR7z8A048NAA4/B1dnOdMai6EPu0QoPiBTZ/PYx+lGaQp4BropDnVD2zkdh
+	 i/yuOQY0gHL0KFz193zYnY/gr8hQn4yNYq1yQp+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Fedor Pchelkin <boddah8794@gmail.com>
-Subject: [PATCH 6.12 112/114] Bluetooth: btusb: mediatek: change the conditions for ISO interface
-Date: Mon, 30 Dec 2024 16:43:49 +0100
-Message-ID: <20241230154222.442678563@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 113/114] ALSA: ump: Shut up truncated string warning
+Date: Mon, 30 Dec 2024 16:43:50 +0100
+Message-ID: <20241230154222.479165396@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,70 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit defc33b5541e0a7e45cc2d99d72fbe80a597afc5 upstream.
+commit ed990c07af70d286f5736021c6e25d8df6f2f7b0 upstream.
 
-Change conditions for Bluetooth driver claiming and releasing usb
-ISO interface for MediaTek ISO data transmission.
+The recent change for the legacy substream name update brought a
+compile warning for some compilers due to the nature of snprintf().
+Use scnprintf() to shut up the warning since the truncation is
+intentional.
 
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Fedor Pchelkin <boddah8794@gmail.com>
+Fixes: e29e504e7890 ("ALSA: ump: Indicate the inactive group in legacy substream names")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202411300103.FrGuTAYp-lkp@intel.com/
+Link: https://patch.msgid.link/20241130090009.19849-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/core/ump.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2648,7 +2648,7 @@ static void btusb_mtk_release_iso_intf(s
- {
- 	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
- 
--	if (btmtk_data->isopkt_intf) {
-+	if (test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
- 		usb_kill_anchored_urbs(&btmtk_data->isopkt_anchor);
- 		clear_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags);
- 
-@@ -2688,8 +2688,8 @@ static int btusb_mtk_reset(struct hci_de
- 	if (err < 0)
- 		return err;
- 
--	if (test_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags))
--		btusb_mtk_release_iso_intf(hdev);
-+	/* Release MediaTek ISO data interface */
-+	btusb_mtk_release_iso_intf(hdev);
- 
- 	btusb_stop_traffic(data);
- 	usb_kill_anchored_urbs(&data->tx_anchor);
-@@ -2734,22 +2734,22 @@ static int btusb_mtk_setup(struct hci_de
- 	btmtk_data->reset_sync = btusb_mtk_reset;
- 
- 	/* Claim ISO data interface and endpoint */
--	btmtk_data->isopkt_intf = usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM);
--	if (btmtk_data->isopkt_intf)
-+	if (!test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
-+		btmtk_data->isopkt_intf = usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM);
- 		btusb_mtk_claim_iso_intf(data);
-+	}
- 
- 	return btmtk_usb_setup(hdev);
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -1262,9 +1262,9 @@ static void fill_substream_names(struct
+ 		name = ump->groups[idx].name;
+ 		if (!*name)
+ 			name = ump->info.name;
+-		snprintf(s->name, sizeof(s->name), "Group %d (%.16s)%s",
+-			 idx + 1, name,
+-			 ump->groups[idx].active ? "" : " [Inactive]");
++		scnprintf(s->name, sizeof(s->name), "Group %d (%.16s)%s",
++			  idx + 1, name,
++			  ump->groups[idx].active ? "" : " [Inactive]");
+ 	}
  }
  
- static int btusb_mtk_shutdown(struct hci_dev *hdev)
- {
--	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
- 	int ret;
- 
- 	ret = btmtk_usb_shutdown(hdev);
- 
--	if (test_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags))
--		btusb_mtk_release_iso_intf(hdev);
-+	/* Release MediaTek iso interface after shutdown */
-+	btusb_mtk_release_iso_intf(hdev);
- 
- 	return ret;
- }
 
 
