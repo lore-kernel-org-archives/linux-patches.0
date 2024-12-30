@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ADE15E8B;
-	Mon, 30 Dec 2024 15:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0307715E8B;
+	Mon, 30 Dec 2024 15:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573713; cv=none; b=pXFPHCTieqe7bp4WlJj9FPvMLG+o3GtfoZnDHs893uFIRpLPiZVc6Zg8Ml725gZ5TFDgdrO29tTPD/dGh2r1RC/sanmxqG1L1+PdhEiof0IfVJ5r+7dKMDCwflRzuqJ6DCixmHljsL0K9480XUpKNdyU98UaVynq7yeW1lXWXsc=
+	t=1735573716; cv=none; b=FueWKbTzw/rKq/8gTQslXCCtnChZ4objf9YLM7en5dq/wGdOMdeQ6w35UNTF/2T+6yRJf00EI94olStm13QFTCXeNyQs8ge1RrYGkSms8+UnDjRiYKl2VkwnCGtqHHN3FTERrhOY3j45150gaMWrVNLbOjnfU1TbMCeySestJEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573713; c=relaxed/simple;
-	bh=gxnDXKjLyv9PfdjryxkQ8vtTYxt6M5Ubwb0ExdJrLgs=;
+	s=arc-20240116; t=1735573716; c=relaxed/simple;
+	bh=xoCljlEtQLjDH2HtzB20r5CBK12DkBXblEtjoLIeTqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k108no8WXHm4WpeDatyOEOMq9R3ztxN70jju0X7mOAyOQXTpmhM2GxbouSLya7RVg0qpSaDZ/qiJjYvqcvQ/Z/2u3QPlLUzWZBhvYbf0tOKiFkUPq+PDMiHjrSg9XGJucB6oERFr4ZHFarQmy72uJAEsG0NitPjlj20Uw14rqJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyxjrgiO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7YdFJEScikY2TN8J3lxi+hc/4OrJdzTBdzBJzaXaaBF/c9P6330E1syHgmh9ZJQvbspvQ5srNeaAOFj8cWtuuQOGEIOMmuVQxzi/k4fCAXrGEzvhywTTgYNoMXewQTSv3YeURuPH4m/jrzEuiqQV6H4yoyH5VUezQz8yYc4JmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CLh5BXK3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyxjrgiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653E4C4CED0;
-	Mon, 30 Dec 2024 15:48:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CLh5BXK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C610C4CED0;
+	Mon, 30 Dec 2024 15:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573712;
-	bh=gxnDXKjLyv9PfdjryxkQ8vtTYxt6M5Ubwb0ExdJrLgs=;
+	s=korg; t=1735573715;
+	bh=xoCljlEtQLjDH2HtzB20r5CBK12DkBXblEtjoLIeTqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyxjrgiOAo1JzuZ+b2oYbwTqhankNaiB+M0fJdDVZvYkU4+fLrK086ad/KPmsfz+Q
-	 XbWss/wN/GKkdRo8E80DXlSqcVjzgj7YVOuesCAdVDO2TmemDB8cUTTOvmV++M+dJK
-	 z9dh1kCPWxFFdPW0OxQF9oTqPeiiwm63ejJdYB0k=
+	b=CLh5BXK3WAFMKISTX7qUN15PppDaKYp7z47x0TiIIvRf5CnkK5qQ+UEk2LOrYHFws
+	 k1YZu3lsCQqbENFy/MV0q8h7XQvkrmcuoITCH6opXEAPZYkhrEgIy41bh+tfZ5mNwl
+	 ikHBIrYrwIpkn1103L1mvbFpUJCCDlpAdrSfgrTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 14/86] phy: qcom-qmp: Fix register name in RX Lane config of SC8280XP
-Date: Mon, 30 Dec 2024 16:42:22 +0100
-Message-ID: <20241230154212.257616264@linuxfoundation.org>
+Subject: [PATCH 6.6 15/86] phy: core: Fix an OF node refcount leakage in _of_phy_get()
+Date: Mon, 30 Dec 2024 16:42:23 +0100
+Message-ID: <20241230154212.295378648@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -51,37 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 8886fb3240931a0afce82dea87edfe46bcb0a586 upstream.
+commit 5ebdc6be16c2000e37fcb8b4072d442d268ad492 upstream.
 
-In RX Lane configuration sequence of SC8280XP, the register
-V5_RX_UCDR_FO_GAIN is incorrectly spelled as RX_UCDR_SO_GAIN and
-hence the programming sequence is wrong. Fix the register sequence
-accordingly to avoid any compliance failures. This has been tested
-on SA8775P by checking device mode enumeration in SuperSpeed.
+_of_phy_get() will directly return when suffers of_device_is_compatible()
+error, but it forgets to decrease refcount of OF node @args.np before error
+return, the refcount was increased by previous of_parse_phandle_with_args()
+so causes the OF node's refcount leakage.
 
+Fix by decreasing the refcount via of_node_put() before the error return.
+
+Fixes: b7563e2796f8 ("phy: work around 'phys' references to usb-nop-xceiv devices")
 Cc: stable@vger.kernel.org
-Fixes: c0c7769cdae2 ("phy: qcom-qmp: Add SC8280XP USB3 UNI phy")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241112092831.4110942-1-quic_kriskura@quicinc.com
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-4-40ae28f5015a@quicinc.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/phy-core.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1088,7 +1088,7 @@ static const struct qmp_phy_init_tbl sc8
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_FO_GAIN, 0x2f),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_COUNT_LOW, 0xff),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FASTLOCK_COUNT_HIGH, 0x0f),
--	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_SO_GAIN, 0x0a),
-+	QMP_PHY_INIT_CFG(QSERDES_V5_RX_UCDR_FO_GAIN, 0x0a),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL1, 0x54),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_VGA_CAL_CNTRL2, 0x0f),
- 	QMP_PHY_INIT_CFG(QSERDES_V5_RX_RX_EQU_ADAPTOR_CNTRL2, 0x0f),
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -577,8 +577,10 @@ static struct phy *_of_phy_get(struct de
+ 		return ERR_PTR(-ENODEV);
+ 
+ 	/* This phy type handled by the usb-phy subsystem for now */
+-	if (of_device_is_compatible(args.np, "usb-nop-xceiv"))
+-		return ERR_PTR(-ENODEV);
++	if (of_device_is_compatible(args.np, "usb-nop-xceiv")) {
++		phy = ERR_PTR(-ENODEV);
++		goto out_put_node;
++	}
+ 
+ 	mutex_lock(&phy_provider_mutex);
+ 	phy_provider = of_phy_provider_lookup(args.np);
+@@ -600,6 +602,7 @@ out_put_module:
+ 
+ out_unlock:
+ 	mutex_unlock(&phy_provider_mutex);
++out_put_node:
+ 	of_node_put(args.np);
+ 
+ 	return phy;
 
 
