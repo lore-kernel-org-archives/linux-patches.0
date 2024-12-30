@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71BA15E8B;
-	Mon, 30 Dec 2024 15:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D7415E8B;
+	Mon, 30 Dec 2024 15:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573894; cv=none; b=Bn7y21KcZx9NMHDE3CNUeWo6MbwltWEC7uZwWzlDjXHFsiN40CGtU7TFlsHp271J8sagkdLBrddBV6yL04Q8zGmEW4QQiKNWGOO2/xCyy+jVKC8GgjljsrCQsNFeto3tNk+YUfBVkv/vLp0iWP827OsPDvgifD0zBqifrT6GIVM=
+	t=1735573898; cv=none; b=IZ9e9OiISx4vjXDHGKdd2EtSM+/MFOZJhUWB/KAlA4+3l4ew8FSWJR2VMGeYPbmqQ+Yru3NO3qOtthR0QwaDbVcdNF+uTJ1o/9mTYB0qBzkqUvk8N+WlIvIJ/Gc2aDZKKjTvhKG1+ZfLwmrxvjGUWtCsEwfhU1o2ciuNFhJvFb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573894; c=relaxed/simple;
-	bh=WpbHiFsaYGpFbC3NAg1s5PEEJkfBrKDnolW4jftFoiU=;
+	s=arc-20240116; t=1735573898; c=relaxed/simple;
+	bh=+7fmk0dPqndlzcA0IPILOv/oew7/1NwiV4ihiJh2QCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8vw1Ykl2hnK0tltpC2EbAdahqKqdA2w2KnbTsn1SiiDL9YwNXNI+NPZHFI1Bg+4ylylrKEfMBRZ76U4tN0wpRsoEOswXGJCR++XjxOwzbvv4LcQi39HpZXZ0nqGWmgKa2NRmbzixnEmTfnGdOVL3NHunJqlBccUilf+eUSoNJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BuO9j2xE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c65xXBaYpR9rQ80QzvmTbkXIOAlY4PnbBvwYtXLcn7EpX1G+b+emrUuAs7+wqAa4YEaKU6Vu53Abh0xjQYxMJV2SLv429Wl6837nEwlwbi0DkV1oeV/qllOcDgIxuFLJeWH2kLA+nBrbYTUQgalc7Hknoa3speZmhOTBQyiwLTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=szbwfLZ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BuO9j2xE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A73C4CED0;
-	Mon, 30 Dec 2024 15:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="szbwfLZ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89835C4CED0;
+	Mon, 30 Dec 2024 15:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573894;
-	bh=WpbHiFsaYGpFbC3NAg1s5PEEJkfBrKDnolW4jftFoiU=;
+	s=korg; t=1735573898;
+	bh=+7fmk0dPqndlzcA0IPILOv/oew7/1NwiV4ihiJh2QCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BuO9j2xEWi6Ne1vsj7bXYzkmCfui2v676ZMQzoegA1DkszAWcgYFu7s7MfISP4xkp
-	 4DzN7o8FXK+VEURWUepIRz0S8lGy7qQPB3n91wyhQLouRETnZZKyoC45vKeDJIrCaW
-	 OWaAv+Fv89+tpexZwQ7dsv02vDqh5AuC4mprQsyE=
+	b=szbwfLZ1NmC2lQO4rQw5W5wffhjHv5ImzUh7O+2YDerDE8GpUBdgXQE0l+wMOk5PV
+	 VIjWxmcQJ5+6MeMiZ5axc+C+fgEOKqroNrE7h82c9CTdpViqBcAJmColAN/E/w3ke5
+	 7lLk7QQQDDcqcN1z830LhPNRodRZlbsuf0ETQwt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 35/86] scsi: megaraid_sas: Fix for a potential deadlock
-Date: Mon, 30 Dec 2024 16:42:43 +0100
-Message-ID: <20241230154213.057016918@linuxfoundation.org>
+Subject: [PATCH 6.6 36/86] udf: Skip parent dir link count update if corrupted
+Date: Mon, 30 Dec 2024 16:42:44 +0100
+Message-ID: <20241230154213.093248691@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -52,46 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 50740f4dc78b41dec7c8e39772619d5ba841ddd7 ]
+[ Upstream commit c5566903af56dd1abb092f18dcb0c770d6cd8dcb ]
 
-This fixes a 'possible circular locking dependency detected' warning
-      CPU0                    CPU1
-      ----                    ----
- lock(&instance->reset_mutex);
-                              lock(&shost->scan_mutex);
-                              lock(&instance->reset_mutex);
- lock(&shost->scan_mutex);
+If the parent directory link count is too low (likely directory inode
+corruption), just skip updating its link count as if it goes to 0 too
+early it can cause unexpected issues.
 
-Fix this by temporarily releasing the reset_mutex.
-
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20240923174833.45345-1-thenzl@redhat.com
-Acked-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/udf/namei.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
-index 3d4f13da1ae8..4cc93cb79b8b 100644
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -8904,8 +8904,11 @@ megasas_aen_polling(struct work_struct *work)
- 						   (ld_target_id / MEGASAS_MAX_DEV_PER_CHANNEL),
- 						   (ld_target_id % MEGASAS_MAX_DEV_PER_CHANNEL),
- 						   0);
--			if (sdev1)
-+			if (sdev1) {
-+				mutex_unlock(&instance->reset_mutex);
- 				megasas_remove_scsi_device(sdev1);
-+				mutex_lock(&instance->reset_mutex);
-+			}
- 
- 			event_type = SCAN_VD_CHANNEL;
- 			break;
+diff --git a/fs/udf/namei.c b/fs/udf/namei.c
+index 605f182da42c..b3f57ad2b869 100644
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -521,7 +521,11 @@ static int udf_rmdir(struct inode *dir, struct dentry *dentry)
+ 			 inode->i_nlink);
+ 	clear_nlink(inode);
+ 	inode->i_size = 0;
+-	inode_dec_link_count(dir);
++	if (dir->i_nlink >= 3)
++		inode_dec_link_count(dir);
++	else
++		udf_warn(inode->i_sb, "parent dir link count too low (%u)\n",
++			 dir->i_nlink);
+ 	udf_add_fid_counter(dir->i_sb, true, -1);
+ 	dir->i_mtime = inode_set_ctime_to_ts(dir,
+ 					     inode_set_ctime_current(inode));
 -- 
 2.39.5
 
