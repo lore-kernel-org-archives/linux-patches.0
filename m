@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EF715E8B;
-	Mon, 30 Dec 2024 15:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1004C15E8B;
+	Mon, 30 Dec 2024 15:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574300; cv=none; b=hkRTg6/GW/Ijw9VqiOZEKbsz4i6zZ90xbAtGkTvKl8KZPvxXxrTrVYRkn+tG8HGQhwTkMwncR50Dbn5sYBIIWhsp9G0WesjfCrj6bljJMIFRZzGZMGpXxSrCXSD342YSBZQqsxYHs1EkSHghXMDoKYhXbphsGBAnHk5FxgwBdOw=
+	t=1735574304; cv=none; b=JwqoZPt6uiy4LhMh87Jz1licvjUESn6b9TLK4dwiMRFgqOw8Qb33XV75GqTQH5jP3eww174O3m5k8x3htfOY/ShIxoyZXZ/CGCKRLoOwZkB3qnr9uAENCKUs2G9imtK8z4DRKNE7d8E7hiTfA/mY727moP9hpIVopSvoHDtRR8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574300; c=relaxed/simple;
-	bh=8U8b6ZZ582ffljalWmb0PGooxF7abQX23dgQ1ppN3Bg=;
+	s=arc-20240116; t=1735574304; c=relaxed/simple;
+	bh=0SAASCfXmpEfBZUvTVwyBywBwpexCcFKVJakRCUN1bk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hzny6JG/M/g47Q5Nyk0Y2BVlcyhb6g9vc6njaQyXxH9B2KSyKsliOqA0yqueqfcqaOsXmmhD4NAP/ENbKXjkp9lvB55OLb06xvbR/oWDgRVIQpdWoTCUFrk1DemdABW81XvCR4jU/vglGX2wG2qE055P2vnSPjHAWqChVI5HBvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2TgEsbA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DKIWEV1bSQdKoZy8K23U0bYh1g+g9Y6NMqUNQ3eLz60adC1VK3W3BJPYJr6Adokm/+vPxnbLoRGRo/Qq9gz1lbImCcCJyO7Fdj9vg0w9WuSh/dfQmpJ35ShRVNiFXYokkv9BG9Gs/V+PYaVluMXr7/fsJKpVbpGNQhOUMQw/sns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+rv7kFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2TgEsbA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1781FC4CED0;
-	Mon, 30 Dec 2024 15:58:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+rv7kFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713C6C4CED0;
+	Mon, 30 Dec 2024 15:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574300;
-	bh=8U8b6ZZ582ffljalWmb0PGooxF7abQX23dgQ1ppN3Bg=;
+	s=korg; t=1735574303;
+	bh=0SAASCfXmpEfBZUvTVwyBywBwpexCcFKVJakRCUN1bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2TgEsbARSVeZa9dzxQpiBaUDzSj3S5SdnRRIYPdUqoAhbzi6JoEbVLSkqTODfaHH
-	 Hw1cLudv9ltErdQUdhgZcF8Ah3Cj9FDTMCY2Ibs1DR/epKOnIYCgrmLKI4LN/fY2Ez
-	 1e9GqvID18O8nnGYqwBU6hnppb9ZzgYgSbOGMo8E=
+	b=x+rv7kFCotUXxrLX0QuOnEoJWIMwaXF1JV9tzt8GDVGMgJUY6l++ykdQWz4NZ9Xlo
+	 2hp6Kjvq2WHtqIRZ6yoK5kJP0LdFhcUDfSCfFRLcR0AOw2wp6rPeVoTlt4ni2WMeiw
+	 sX/xGapaVyaa0mzLohGR5XxwVTRthAQcNgdkYdcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 096/114] perf/x86/intel/ds: Add PEBS format 6
-Date: Mon, 30 Dec 2024 16:43:33 +0100
-Message-ID: <20241230154221.801336182@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.12 097/114] power: supply: cros_charge-control: add mutex for driver data
+Date: Mon, 30 Dec 2024 16:43:34 +0100
+Message-ID: <20241230154221.849530702@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -44,43 +44,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit b8c3a2502a205321fe66c356f4b70cabd8e1a5fc upstream.
+commit e5f84d1cf562f7b45e28d6e5f6490626f870f81c upstream.
 
-The only difference between 5 and 6 is the new counters snapshotting
-group, without the following counters snapshotting enabling patches,
-it's impossible to utilize the feature in a PEBS record. It's safe to
-share the same code path with format 5.
+Concurrent accesses through sysfs may lead to inconsistent state in the
+priv data. Introduce a mutex to avoid this.
 
-Add format 6, so the end user can at least utilize the legacy PEBS
-features.
-
-Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20241216204505.748363-1-kan.liang@linux.intel.com
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20241208-cros_charge-control-v2-v1-1-8d168d0f08a3@weissschuh.net
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/ds.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/power/supply/cros_charge-control.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/ds.c
-+++ b/arch/x86/events/intel/ds.c
-@@ -2496,6 +2496,7 @@ void __init intel_ds_init(void)
- 			x86_pmu.large_pebs_flags |= PERF_SAMPLE_TIME;
- 			break;
+diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
+index 17c53591ce19..58ca6d9ed613 100644
+--- a/drivers/power/supply/cros_charge-control.c
++++ b/drivers/power/supply/cros_charge-control.c
+@@ -7,8 +7,10 @@
+ #include <acpi/battery.h>
+ #include <linux/container_of.h>
+ #include <linux/dmi.h>
++#include <linux/lockdep.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/platform_data/cros_ec_commands.h>
+ #include <linux/platform_data/cros_ec_proto.h>
+ #include <linux/platform_device.h>
+@@ -49,6 +51,7 @@ struct cros_chctl_priv {
+ 	struct attribute *attributes[_CROS_CHCTL_ATTR_COUNT];
+ 	struct attribute_group group;
  
-+		case 6:
- 		case 5:
- 			x86_pmu.pebs_ept = 1;
- 			fallthrough;
++	struct mutex lock; /* protects fields below and cros_ec */
+ 	enum power_supply_charge_behaviour current_behaviour;
+ 	u8 current_start_threshold, current_end_threshold;
+ };
+@@ -85,6 +88,8 @@ static int cros_chctl_configure_ec(struct cros_chctl_priv *priv)
+ {
+ 	struct ec_params_charge_control req = {};
+ 
++	lockdep_assert_held(&priv->lock);
++
+ 	req.cmd = EC_CHARGE_CONTROL_CMD_SET;
+ 
+ 	switch (priv->current_behaviour) {
+@@ -159,6 +164,7 @@ static ssize_t charge_control_start_threshold_show(struct device *dev,
+ 	struct cros_chctl_priv *priv = cros_chctl_attr_to_priv(&attr->attr,
+ 							       CROS_CHCTL_ATTR_START_THRESHOLD);
+ 
++	guard(mutex)(&priv->lock);
+ 	return sysfs_emit(buf, "%u\n", (unsigned int)priv->current_start_threshold);
+ }
+ 
+@@ -169,6 +175,7 @@ static ssize_t charge_control_start_threshold_store(struct device *dev,
+ 	struct cros_chctl_priv *priv = cros_chctl_attr_to_priv(&attr->attr,
+ 							       CROS_CHCTL_ATTR_START_THRESHOLD);
+ 
++	guard(mutex)(&priv->lock);
+ 	return cros_chctl_store_threshold(dev, priv, 0, buf, count);
+ }
+ 
+@@ -178,6 +185,7 @@ static ssize_t charge_control_end_threshold_show(struct device *dev, struct devi
+ 	struct cros_chctl_priv *priv = cros_chctl_attr_to_priv(&attr->attr,
+ 							       CROS_CHCTL_ATTR_END_THRESHOLD);
+ 
++	guard(mutex)(&priv->lock);
+ 	return sysfs_emit(buf, "%u\n", (unsigned int)priv->current_end_threshold);
+ }
+ 
+@@ -187,6 +195,7 @@ static ssize_t charge_control_end_threshold_store(struct device *dev, struct dev
+ 	struct cros_chctl_priv *priv = cros_chctl_attr_to_priv(&attr->attr,
+ 							       CROS_CHCTL_ATTR_END_THRESHOLD);
+ 
++	guard(mutex)(&priv->lock);
+ 	return cros_chctl_store_threshold(dev, priv, 1, buf, count);
+ }
+ 
+@@ -195,6 +204,7 @@ static ssize_t charge_behaviour_show(struct device *dev, struct device_attribute
+ 	struct cros_chctl_priv *priv = cros_chctl_attr_to_priv(&attr->attr,
+ 							       CROS_CHCTL_ATTR_CHARGE_BEHAVIOUR);
+ 
++	guard(mutex)(&priv->lock);
+ 	return power_supply_charge_behaviour_show(dev, EC_CHARGE_CONTROL_BEHAVIOURS,
+ 						  priv->current_behaviour, buf);
+ }
+@@ -210,6 +220,7 @@ static ssize_t charge_behaviour_store(struct device *dev, struct device_attribut
+ 	if (ret < 0)
+ 		return ret;
+ 
++	guard(mutex)(&priv->lock);
+ 	priv->current_behaviour = ret;
+ 
+ 	ret = cros_chctl_configure_ec(priv);
+@@ -290,6 +301,10 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 	if (!priv)
+ 		return -ENOMEM;
+ 
++	ret = devm_mutex_init(dev, &priv->lock);
++	if (ret)
++		return ret;
++
+ 	ret = cros_ec_get_cmd_versions(cros_ec, EC_CMD_CHARGE_CONTROL);
+ 	if (ret < 0)
+ 		return ret;
+@@ -327,7 +342,8 @@ static int cros_chctl_probe(struct platform_device *pdev)
+ 	priv->current_end_threshold = 100;
+ 
+ 	/* Bring EC into well-known state */
+-	ret = cros_chctl_configure_ec(priv);
++	scoped_guard(mutex, &priv->lock)
++		ret = cros_chctl_configure_ec(priv);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-- 
+2.47.1
+
 
 
