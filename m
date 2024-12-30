@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681AE1537C8;
-	Mon, 30 Dec 2024 15:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6252E414;
+	Mon, 30 Dec 2024 15:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574063; cv=none; b=opKFoBrsQt3IwpQwbXKDy2SfS/mBzI6/sUveIbd9LvpN6snF8NaTprmPysQW1LOm3S0TYkhujLNhLOj6hv71CwEDNuDxyYFY+B3rN+Jk2j1YmIgKlSdLuI+f7Y+kK43RMSRWrvMTvObS2M0RZVK59gpnmzQWUTiuJSQgp5Qwn8I=
+	t=1735574066; cv=none; b=gkZWaptaEvbvTAAeaHHOaHTiXi2LC3n4DWZuObLsCT7CkYDiCTI30JcezqXHMc7RIDhD4QiZptqHzQIopXVtwoS9P4BMVuXeRdgugntFms8zx8zXHj1B6iROJB6YCHbDA2c+BclDbldng9NdqL/PsNDVUoRE0ssnCrlAP6kSWN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574063; c=relaxed/simple;
-	bh=q5lmounCd0rx0okzLDFcAuSx3x7cOs3OOvH3FfqLGzE=;
+	s=arc-20240116; t=1735574066; c=relaxed/simple;
+	bh=uFxpRy97zPWd5ISWAQPfj+zfRVUJtX3jvLXGQmVZaqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4dStQRkMDJqvYEhcQ7DPD5/A1PZBJIEPJscLz7dnvBoBZb/8R1TfVsSDjLzoKPZJmAoAwoXfCtWF8XWOvMeeXfngPwrZmMlYOOQ8lIT1l2HcEaE24dNFQ7dGxG83q0rixGTB4akBmSO23fgmDkUyBuWZe1IZL2BDf3fdcsbWF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ez4dNi7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QhUIFYjSGCDcU09WsLkdDAu/eSOjNQpiKzerlF9fmAjSLi+3LKecUEbZ6OVXrtoKdcWRhnq3egFvcsrjdZ/oUjGT6lQ6OuhWPcZM544kFte3nmI7G0JF4+Gm7I1x/fgh9sjrlXW4HhzISTnpJbF1fCULjs8rN1Bnkj0nnkqZvaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuwFGMJs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ez4dNi7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4240C4CED0;
-	Mon, 30 Dec 2024 15:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuwFGMJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ABC1C4CEDD;
+	Mon, 30 Dec 2024 15:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574063;
-	bh=q5lmounCd0rx0okzLDFcAuSx3x7cOs3OOvH3FfqLGzE=;
+	s=korg; t=1735574066;
+	bh=uFxpRy97zPWd5ISWAQPfj+zfRVUJtX3jvLXGQmVZaqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ez4dNi7WYg1ZuN9l1o+ZNCBV4lrhwR9ut5w9EJIOzyQx0Tou4CZZ/tcLM+5FbcnVy
-	 C+39dEG3whujlr5s38gW3VAJw55XLPQZpcXBQCze5i4G6vvq0wW2Ds+AeJc37GSzqe
-	 5XpENfk2mPNBZ0J50YvJVacC42xNX6krhvid0uoY=
+	b=DuwFGMJsAz4OssbkZd0Y7fXN+EEZyb7FqMsGT2PCezrAX8NFt1MYC4s2jH1EhSixn
+	 3kDduzecXICCXVV/w9Jmhh48s0Wy85nE/5NQ6856k1Y7xkH4gzJVXtqMLFsP3Dc/ap
+	 REopG/c0LRsPbY48TfXUOZOUKEYZlJJgRuZDFsMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Ferry Toth <fntoth@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 028/114] dmaengine: mv_xor: fix child node refcount handling in early exit
-Date: Mon, 30 Dec 2024 16:42:25 +0100
-Message-ID: <20241230154219.149310579@linuxfoundation.org>
+Subject: [PATCH 6.12 029/114] dmaengine: dw: Select only supported masters for ACPI devices
+Date: Mon, 30 Dec 2024 16:42:26 +0100
+Message-ID: <20241230154219.185298345@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -50,44 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 362f1bf98a3ecb5a2a4fcbdaa9718c8403beceb2 upstream.
+commit f0e870a0e9c5521f2952ea9f3ea9d3d122631a89 upstream.
 
-The for_each_child_of_node() loop requires explicit calls to
-of_node_put() to decrement the child's refcount upon early exits (break,
-goto, return).
+The recently submitted fix-commit revealed a problem in the iDMA 32-bit
+platform code. Even though the controller supported only a single master
+the dw_dma_acpi_filter() method hard-coded two master interfaces with IDs
+0 and 1. As a result the sanity check implemented in the commit
+b336268dde75 ("dmaengine: dw: Add peripheral bus width verification")
+got incorrect interface data width and thus prevented the client drivers
+from configuring the DMA-channel with the EINVAL error returned. E.g.,
+the next error was printed for the PXA2xx SPI controller driver trying
+to configure the requested channels:
 
-Add the missing calls in the two early exits before the goto
-instructions.
+> [  164.525604] pxa2xx_spi_pci 0000:00:07.1: DMA slave config failed
+> [  164.536105] pxa2xx_spi_pci 0000:00:07.1: failed to get DMA TX descriptor
+> [  164.543213] spidev spi-SPT0001:00: SPI transfer failed: -16
+
+The problem would have been spotted much earlier if the iDMA 32-bit
+controller supported more than one master interfaces. But since it
+supports just a single master and the iDMA 32-bit specific code just
+ignores the master IDs in the CTLLO preparation method, the issue has
+been gone unnoticed so far.
+
+Fix the problem by specifying the default master ID for both memory
+and peripheral devices in the driver data. Thus the issue noticed for
+the iDMA 32-bit controllers will be eliminated and the ACPI-probed
+DW DMA controllers will be configured with the correct master ID by
+default.
 
 Cc: stable@vger.kernel.org
-Fixes: f7d12ef53ddf ("dma: mv_xor: add Device Tree binding")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241011-dma_mv_xor_of_node_put-v1-1-3c2de819f463@gmail.com
+Fixes: b336268dde75 ("dmaengine: dw: Add peripheral bus width verification")
+Fixes: 199244d69458 ("dmaengine: dw: add support of iDMA 32-bit hardware")
+Reported-by: Ferry Toth <fntoth@gmail.com>
+Closes: https://lore.kernel.org/dmaengine/ZuXbCKUs1iOqFu51@black.fi.intel.com/
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/dmaengine/ZuXgI-VcHpMgbZ91@black.fi.intel.com/
+Tested-by: Ferry Toth <fntoth@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241104095142.157925-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mv_xor.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/dw/acpi.c     |    6 ++++--
+ drivers/dma/dw/internal.h |    8 ++++++++
+ drivers/dma/dw/pci.c      |    4 ++--
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1388,6 +1388,7 @@ static int mv_xor_probe(struct platform_
- 			irq = irq_of_parse_and_map(np, 0);
- 			if (!irq) {
- 				ret = -ENODEV;
-+				of_node_put(np);
- 				goto err_channel_add;
- 			}
+--- a/drivers/dma/dw/acpi.c
++++ b/drivers/dma/dw/acpi.c
+@@ -8,13 +8,15 @@
  
-@@ -1396,6 +1397,7 @@ static int mv_xor_probe(struct platform_
- 			if (IS_ERR(chan)) {
- 				ret = PTR_ERR(chan);
- 				irq_dispose_mapping(irq);
-+				of_node_put(np);
- 				goto err_channel_add;
- 			}
+ static bool dw_dma_acpi_filter(struct dma_chan *chan, void *param)
+ {
++	struct dw_dma *dw = to_dw_dma(chan->device);
++	struct dw_dma_chip_pdata *data = dev_get_drvdata(dw->dma.dev);
+ 	struct acpi_dma_spec *dma_spec = param;
+ 	struct dw_dma_slave slave = {
+ 		.dma_dev = dma_spec->dev,
+ 		.src_id = dma_spec->slave_id,
+ 		.dst_id = dma_spec->slave_id,
+-		.m_master = 0,
+-		.p_master = 1,
++		.m_master = data->m_master,
++		.p_master = data->p_master,
+ 	};
+ 
+ 	return dw_dma_filter(chan, &slave);
+--- a/drivers/dma/dw/internal.h
++++ b/drivers/dma/dw/internal.h
+@@ -51,11 +51,15 @@ struct dw_dma_chip_pdata {
+ 	int (*probe)(struct dw_dma_chip *chip);
+ 	int (*remove)(struct dw_dma_chip *chip);
+ 	struct dw_dma_chip *chip;
++	u8 m_master;
++	u8 p_master;
+ };
+ 
+ static __maybe_unused const struct dw_dma_chip_pdata dw_dma_chip_pdata = {
+ 	.probe = dw_dma_probe,
+ 	.remove = dw_dma_remove,
++	.m_master = 0,
++	.p_master = 1,
+ };
+ 
+ static const struct dw_dma_platform_data idma32_pdata = {
+@@ -72,6 +76,8 @@ static __maybe_unused const struct dw_dm
+ 	.pdata = &idma32_pdata,
+ 	.probe = idma32_dma_probe,
+ 	.remove = idma32_dma_remove,
++	.m_master = 0,
++	.p_master = 0,
+ };
+ 
+ static const struct dw_dma_platform_data xbar_pdata = {
+@@ -88,6 +94,8 @@ static __maybe_unused const struct dw_dm
+ 	.pdata = &xbar_pdata,
+ 	.probe = idma32_dma_probe,
+ 	.remove = idma32_dma_remove,
++	.m_master = 0,
++	.p_master = 0,
+ };
+ 
+ #endif /* _DMA_DW_INTERNAL_H */
+--- a/drivers/dma/dw/pci.c
++++ b/drivers/dma/dw/pci.c
+@@ -56,10 +56,10 @@ static int dw_pci_probe(struct pci_dev *
+ 	if (ret)
+ 		return ret;
+ 
+-	dw_dma_acpi_controller_register(chip->dw);
+-
+ 	pci_set_drvdata(pdev, data);
+ 
++	dw_dma_acpi_controller_register(chip->dw);
++
+ 	return 0;
+ }
  
 
 
