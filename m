@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538E82AE68;
-	Mon, 30 Dec 2024 15:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD2A156678;
+	Mon, 30 Dec 2024 15:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574233; cv=none; b=J9f0VebktPRbHzBHROmIom0KFk2/8mGsP1u+LTmZ8aIDWuGNZ56CLsMGRnc/DypJkS7ugE+c3tJhUmIlCkfJQM80TP+CpSecuWHNSqdmN8TuA+BkSmKkXU0UioAgtyuLELDOmhvsdai/aBwNGp4b63WbjPnP7hHMypwCjmqoWe4=
+	t=1735574236; cv=none; b=d1XJXc+hpneD6FZ8lQTDSmbwO5G6lCqsY8YfYfRN98sFAuZLMutP4Pt1K+IaVo9D115PKiPjIL7o57Om7QZ41HfyFiZ062nJfipaApM4HxA+V4sYI003VVgCFiTWSYKd2fTbl5+KuyIzG6vpxcJloKjw3VtLrGBOXRZURTDp4gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574233; c=relaxed/simple;
-	bh=WIuqn3hKiia+3FQQRFC4h6nBs6kLoNQ63mFbJEC76eY=;
+	s=arc-20240116; t=1735574236; c=relaxed/simple;
+	bh=fxOwYAu1P4oziF0EZfttf2FA5Soqd4O+TMyEthBemo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EN2mV3sikJxo85z+QfYawwt6qRc/YS7XwFwBFlHsWLDQKEGxEVu5n3vHbd4o2iEIfvSkMycVjtghDcydCnxpJIL2Y6SwoWzeCep5Pnr4ugTeE7uqDWBw6U/0bs637IDxiKdjZEVUqQh8Wf1HCU2aUK3Er6hEk+YxnSAZb2bYPoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQwjTLnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CZKBbuL7Nf/mnHUsdmVroqooofhkFB1UNZ094nbcrKzdrOMt2fJXBppC1V+b8JXjh1qPrM2oy8Xu1fRBijruG9rcovXc0740A5hkTo8bNF9Y/RcE+0xL7tRJUJ5d3Jyj6HdJKsqD9VJrBDFsCJFJmG/wDgAJpu0VfSlQsdumSVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ3s3f99; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQwjTLnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6213AC4CED0;
-	Mon, 30 Dec 2024 15:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ3s3f99"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B94C4CED2;
+	Mon, 30 Dec 2024 15:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574232;
-	bh=WIuqn3hKiia+3FQQRFC4h6nBs6kLoNQ63mFbJEC76eY=;
+	s=korg; t=1735574236;
+	bh=fxOwYAu1P4oziF0EZfttf2FA5Soqd4O+TMyEthBemo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQwjTLnWbY+RQUrvqaHnOAj7MzgdyNWu3GdmphMahp6jdmur2uX3JVuK7uj3kO9tP
-	 JDRwXBHNJXyFzKzLyi1tcuf/+ReX56LFIRjNXXGKdtE+q+0B3NTtLHrDixezmuvW3d
-	 I+5eZDZzeYZogle6WBnrskeT2xIlzM+bVDtZoBpo=
+	b=sZ3s3f99ZjZPI0KKonHVdCrKTqroVMK0Kp/MKac180/TT7zIodIfQUUSpwjMTMlun
+	 j8lueAd2D8AdujRp5vbqoWsROFL+nrAEvK//qCn2KaXFp0gwozOsGFBYO9NSGNOIx7
+	 qSr/WHNAScxXuQFa7X31oEp02IuQSUiaPBIdJfUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@unisoc.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	virtualization@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Luck Tony <tony.luck@intel.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/114] virtio-blk: dont keep queue frozen during system suspend
-Date: Mon, 30 Dec 2024 16:43:12 +0100
-Message-ID: <20241230154220.983328908@linuxfoundation.org>
+Subject: [PATCH 6.12 076/114] blk-mq: register cpuhp callback after hctx is added to xarray table
+Date: Mon, 30 Dec 2024 16:43:13 +0100
+Message-ID: <20241230154221.020631255@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -59,68 +58,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 7678abee0867e6b7fb89aa40f6e9f575f755fb37 ]
+[ Upstream commit 4bf485a7db5d82ddd0f3ad2b299893199090375e ]
 
-Commit 4ce6e2db00de ("virtio-blk: Ensure no requests in virtqueues before
-deleting vqs.") replaces queue quiesce with queue freeze in virtio-blk's
-PM callbacks. And the motivation is to drain inflight IOs before suspending.
+We need to retrieve 'hctx' from xarray table in the cpuhp callback, so the
+callback should be registered after this 'hctx' is added to xarray table.
 
-block layer's queue freeze looks very handy, but it is also easy to cause
-deadlock, such as, any attempt to call into bio_queue_enter() may run into
-deadlock if the queue is frozen in current context. There are all kinds
-of ->suspend() called in suspend context, so keeping queue frozen in the
-whole suspend context isn't one good idea. And Marek reported lockdep
-warning[1] caused by virtio-blk's freeze queue in virtblk_freeze().
-
-[1] https://lore.kernel.org/linux-block/ca16370e-d646-4eee-b9cc-87277c89c43c@samsung.com/
-
-Given the motivation is to drain in-flight IOs, it can be done by calling
-freeze & unfreeze, meantime restore to previous behavior by keeping queue
-quiesced during suspend.
-
-Cc: Yi Sun <yi.sun@unisoc.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: virtualization@lists.linux.dev
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Reinette Chatre <reinette.chatre@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>
+Cc: Peter Newman <peternewman@google.com>
+Cc: Babu Moger <babu.moger@amd.com>
+Cc: Luck Tony <tony.luck@intel.com>
 Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20241112125821.1475793-1-ming.lei@redhat.com
+Tested-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20241206111611.978870-2-ming.lei@redhat.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ block/blk-mq.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 43c96b73a711..0e50b65e1dbf 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1587,9 +1587,12 @@ static void virtblk_remove(struct virtio_device *vdev)
- static int virtblk_freeze(struct virtio_device *vdev)
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index d5995021815d..4e76651e786d 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3903,16 +3903,11 @@ static int blk_mq_init_hctx(struct request_queue *q,
  {
- 	struct virtio_blk *vblk = vdev->priv;
-+	struct request_queue *q = vblk->disk->queue;
+ 	hctx->queue_num = hctx_idx;
  
- 	/* Ensure no requests in virtqueues before deleting vqs. */
--	blk_mq_freeze_queue(vblk->disk->queue);
-+	blk_mq_freeze_queue(q);
-+	blk_mq_quiesce_queue_nowait(q);
-+	blk_mq_unfreeze_queue(q);
+-	if (!(hctx->flags & BLK_MQ_F_STACKING))
+-		cpuhp_state_add_instance_nocalls(CPUHP_AP_BLK_MQ_ONLINE,
+-				&hctx->cpuhp_online);
+-	cpuhp_state_add_instance_nocalls(CPUHP_BLK_MQ_DEAD, &hctx->cpuhp_dead);
+-
+ 	hctx->tags = set->tags[hctx_idx];
  
- 	/* Ensure we don't receive any more interrupts */
- 	virtio_reset_device(vdev);
-@@ -1613,8 +1616,8 @@ static int virtblk_restore(struct virtio_device *vdev)
- 		return ret;
+ 	if (set->ops->init_hctx &&
+ 	    set->ops->init_hctx(hctx, set->driver_data, hctx_idx))
+-		goto unregister_cpu_notifier;
++		goto fail;
  
- 	virtio_device_ready(vdev);
-+	blk_mq_unquiesce_queue(vblk->disk->queue);
+ 	if (blk_mq_init_request(set, hctx->fq->flush_rq, hctx_idx,
+ 				hctx->numa_node))
+@@ -3921,6 +3916,11 @@ static int blk_mq_init_hctx(struct request_queue *q,
+ 	if (xa_insert(&q->hctx_table, hctx_idx, hctx, GFP_KERNEL))
+ 		goto exit_flush_rq;
  
--	blk_mq_unfreeze_queue(vblk->disk->queue);
++	if (!(hctx->flags & BLK_MQ_F_STACKING))
++		cpuhp_state_add_instance_nocalls(CPUHP_AP_BLK_MQ_ONLINE,
++				&hctx->cpuhp_online);
++	cpuhp_state_add_instance_nocalls(CPUHP_BLK_MQ_DEAD, &hctx->cpuhp_dead);
++
  	return 0;
+ 
+  exit_flush_rq:
+@@ -3929,8 +3929,7 @@ static int blk_mq_init_hctx(struct request_queue *q,
+  exit_hctx:
+ 	if (set->ops->exit_hctx)
+ 		set->ops->exit_hctx(hctx, hctx_idx);
+- unregister_cpu_notifier:
+-	blk_mq_remove_cpuhp(hctx);
++ fail:
+ 	return -1;
  }
- #endif
+ 
 -- 
 2.39.5
 
