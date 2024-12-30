@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FDC15E8B;
-	Mon, 30 Dec 2024 15:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA2215E8B;
+	Mon, 30 Dec 2024 15:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573763; cv=none; b=p10rYZk3I2zTR6u+tHmpIuJ1W5vi9qf6klApYjxiUhsC+WC9Ph1YWLDMad5cz+NCLdisd15LBNesaPUqba4Em7uss6HoxATIL6YHdvDszVWYXWgDkh/pVA4I3SG0IwQgSvgZXRZc3LQybQCyR5l3UPVm8/gHftabamEd5mAHT4Y=
+	t=1735573767; cv=none; b=qcJlWQxFqpYKoWN73WNmwyrrhqgG41Lie4jArklWK4AvOrEGNGccJGGji0UduET1bAdPQnnUvBwL71MegROXrLuRC7XvKWkFypJYfnLsR0tYUgFCAS3FJ/6AjwI464ZpvWljlg+3F9Sv3ewkphWlpFzE+OdTQQaz1BgPbvc6iek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573763; c=relaxed/simple;
-	bh=MtpoaPsKOFSzsV2lh//oDuY9baVhzcOTHK+RbAa2r6E=;
+	s=arc-20240116; t=1735573767; c=relaxed/simple;
+	bh=ooAuMuyPjgUfQRS3N1fRTsoTirH6kr72rxbs/kXuXiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5z4Bbi3VNTgww4T557VsIOqrb2YmjKjflBGSghOJvUmG9WAXOfPNtXP5pQAeifXZFAXqYxuIso2Dyut/fFN4fdOoOU1PSdd1tFqmiqiU9gQNgPaPx2vAgYTIzYJWbEcQuveFafqlbmjhODSEb9+pBVI1NhV7M6obhg+NpvwMYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBgKvV8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IL1RuEIXPpXegFWZlKt+GhL1uwLXLPTlCrXqj0d8NIWIx6x7e9Rx0jcbaicG7VEGtzUSN3toGf2zHjDH0fCdLwi86osXknrhhePJENYXx+64bFRlZeqTP/RFemaIO01qYrES8toB+2RtEgXRk6jM1MAvDrdBAszOWL//w5G5gbw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqKsZhvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBgKvV8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328D1C4CED0;
-	Mon, 30 Dec 2024 15:49:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqKsZhvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E600C4CED0;
+	Mon, 30 Dec 2024 15:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573763;
-	bh=MtpoaPsKOFSzsV2lh//oDuY9baVhzcOTHK+RbAa2r6E=;
+	s=korg; t=1735573767;
+	bh=ooAuMuyPjgUfQRS3N1fRTsoTirH6kr72rxbs/kXuXiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBgKvV8Z757CGz9FKejT1fd7yWjQdSyjIDd8TEjZ5WNaRl2OuqWPADzAeUbZy4+Ts
-	 x6N0aSqNAGiPwfXCWZHiz9MP2qV0ky114mwt1sbzn4CtpRi5kOqllBHFJTDf57h9mB
-	 JNZmDzV+4Uak5KKoIrZsjAjNhGbbLoD/YB9v8h+4=
+	b=AqKsZhvwlrPvDbsa0KYzEOSS+5NlJciBvQp2kiRQ1kbORxhjq73nffgyKl7cMis73
+	 oY+/KxnOK1+W5PpOGhE3bICccecj5bNsFORzxUb252XXupRvb8C+dSVuq663XPhu6E
+	 Otk55os67yGE2H3SXTMqy43cZcI6eBO08T/WEuJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Sasha Finkelstein <fnkl.kernel@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 25/86] dmaengine: fsl-edma: implement the cleanup path of fsl_edma3_attach_pd()
-Date: Mon, 30 Dec 2024 16:42:33 +0100
-Message-ID: <20241230154212.678836719@linuxfoundation.org>
+Subject: [PATCH 6.6 26/86] dmaengine: apple-admac: Avoid accessing registers in probe
+Date: Mon, 30 Dec 2024 16:42:34 +0100
+Message-ID: <20241230154212.714590126@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -50,118 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Sasha Finkelstein <fnkl.kernel@gmail.com>
 
-commit ccfa3131d4a0347988e73638edea5c8281b6d2c7 upstream.
+commit 8d55e8a16f019211163f1180fd9f9fbe05901900 upstream.
 
-Current implementation of fsl_edma3_attach_pd() does not provide a
-cleanup path, resulting in a memory leak. For example,
-dev_pm_domain_detach() is not called after dev_pm_domain_attach_by_id(),
-and the device link created with the DL_FLAG_STATELESS is not released
-explicitly.
+The ADMAC attached to the AOP has complex power sequencing, and is
+power gated when the probe callback runs. Move the register reads
+to other functions, where we can guarantee that the hardware is
+switched on.
 
-Therefore, provide a cleanup function fsl_edma3_detach_pd() and call it
-upon failure. Also add a devm_add_action_or_reset() call with this
-function after a successful fsl_edma3_attach_pd().
-
-Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://lore.kernel.org/r/20241221075712.3297200-1-joe@pf.is.s.u-tokyo.ac.jp
+Fixes: 568aa6dd641f ("dmaengine: apple-admac: Allocate cache SRAM to channels")
+Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20241124-admac-power-v1-1-58f2165a4d55@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/fsl-edma-common.h |    1 +
- drivers/dma/fsl-edma-main.c   |   41 ++++++++++++++++++++++++++++++++++++-----
- 2 files changed, 37 insertions(+), 5 deletions(-)
+ drivers/dma/apple-admac.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/dma/fsl-edma-common.h
-+++ b/drivers/dma/fsl-edma-common.h
-@@ -151,6 +151,7 @@ struct fsl_edma_chan {
- 	struct work_struct		issue_worker;
- 	struct platform_device		*pdev;
- 	struct device			*pd_dev;
-+	struct device_link		*pd_dev_link;
- 	u32				srcid;
- 	struct clk			*clk;
- 	int                             priority;
---- a/drivers/dma/fsl-edma-main.c
-+++ b/drivers/dma/fsl-edma-main.c
-@@ -384,10 +384,33 @@ static const struct of_device_id fsl_edm
- };
- MODULE_DEVICE_TABLE(of, fsl_edma_dt_ids);
- 
-+static void fsl_edma3_detach_pd(struct fsl_edma_engine *fsl_edma)
-+{
-+	struct fsl_edma_chan *fsl_chan;
-+	int i;
-+
-+	for (i = 0; i < fsl_edma->n_chans; i++) {
-+		if (fsl_edma->chan_masked & BIT(i))
-+			continue;
-+		fsl_chan = &fsl_edma->chans[i];
-+		if (fsl_chan->pd_dev_link)
-+			device_link_del(fsl_chan->pd_dev_link);
-+		if (fsl_chan->pd_dev) {
-+			dev_pm_domain_detach(fsl_chan->pd_dev, false);
-+			pm_runtime_dont_use_autosuspend(fsl_chan->pd_dev);
-+			pm_runtime_set_suspended(fsl_chan->pd_dev);
-+		}
-+	}
-+}
-+
-+static void devm_fsl_edma3_detach_pd(void *data)
-+{
-+	fsl_edma3_detach_pd(data);
-+}
-+
- static int fsl_edma3_attach_pd(struct platform_device *pdev, struct fsl_edma_engine *fsl_edma)
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -153,6 +153,8 @@ static int admac_alloc_sram_carveout(str
  {
- 	struct fsl_edma_chan *fsl_chan;
--	struct device_link *link;
- 	struct device *pd_chan;
- 	struct device *dev;
- 	int i;
-@@ -403,15 +426,16 @@ static int fsl_edma3_attach_pd(struct pl
- 		pd_chan = dev_pm_domain_attach_by_id(dev, i);
- 		if (IS_ERR_OR_NULL(pd_chan)) {
- 			dev_err(dev, "Failed attach pd %d\n", i);
--			return -EINVAL;
-+			goto detach;
- 		}
+ 	struct admac_sram *sram;
+ 	int i, ret = 0, nblocks;
++	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
++	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
  
--		link = device_link_add(dev, pd_chan, DL_FLAG_STATELESS |
-+		fsl_chan->pd_dev_link = device_link_add(dev, pd_chan, DL_FLAG_STATELESS |
- 					     DL_FLAG_PM_RUNTIME |
- 					     DL_FLAG_RPM_ACTIVE);
--		if (!link) {
-+		if (!fsl_chan->pd_dev_link) {
- 			dev_err(dev, "Failed to add device_link to %d\n", i);
--			return -EINVAL;
-+			dev_pm_domain_detach(pd_chan, false);
-+			goto detach;
- 		}
- 
- 		fsl_chan->pd_dev = pd_chan;
-@@ -422,6 +446,10 @@ static int fsl_edma3_attach_pd(struct pl
+ 	if (dir == DMA_MEM_TO_DEV)
+ 		sram = &ad->txcache;
+@@ -912,12 +914,7 @@ static int admac_probe(struct platform_d
+ 		goto free_irq;
  	}
+ 
+-	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
+-	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+-
+ 	dev_info(&pdev->dev, "Audio DMA Controller\n");
+-	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
+-		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
  
  	return 0;
-+
-+detach:
-+	fsl_edma3_detach_pd(fsl_edma);
-+	return -EINVAL;
- }
  
- static int fsl_edma_probe(struct platform_device *pdev)
-@@ -522,6 +550,9 @@ static int fsl_edma_probe(struct platfor
- 		ret = fsl_edma3_attach_pd(pdev, fsl_edma);
- 		if (ret)
- 			return ret;
-+		ret = devm_add_action_or_reset(&pdev->dev, devm_fsl_edma3_detach_pd, fsl_edma);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	INIT_LIST_HEAD(&fsl_edma->dma_dev.channels);
 
 
