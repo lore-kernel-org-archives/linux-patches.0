@@ -1,108 +1,112 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D77F13BAEE
-	for <patches@lists.linux.dev>; Fri, 27 Dec 2024 17:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BDA1126C13;
+	Mon, 30 Dec 2024 15:44:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735320472; cv=none; b=rpTIZtmmfIAsY1jfzUmONarpRtS11FdPlorRuQV4Tt5nkszAZCr5jWMtGcGAj9BLy1kbGaLbmOONhcKDvA+JTJ1r1WdZ83hKYyciEBb2OszpFoaC/kSW+WuBBaVPYBmkISjvLrcGT39V38uOIrMEYspJq4EQWqv2Tv8tRfrZucE=
+	t=1735573482; cv=none; b=DacIkbBLEZpQzvBpIrgMOa1e2wnG1bZGIQciyrLLbXBKP0XTPQi/Fp7KNtDt+M9Kahu6m8dOLFjFvkFBrZpg7tMl9qh0LET9FaecfgR4r8DVAr2DnQ2wE6UeFT8ZJNveRbHd9yXjphTPSAfBaakw69MOfSOjbf2qBhGQrRLpClI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735320472; c=relaxed/simple;
-	bh=OVS+8LwDX9Vlv5sgHzcrai/X7AZs0h5bC1ibqLSKIlo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nZIglXFSZexGnRGym1yU1OYukHfxtCTYAPGJcOksW01FdYZ1G0MTUwljCOZoc37F+xdL+1BVvXnjZ/Wybr6iXAz9YG9PkGxLk1+C6iZ6oBoOnfbsY9DEubX7zOJ4KMqJqxG0MrwHlelP6YiShKIsNGpHB5BRVbEswaVwbRfqe64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O03Vqbe2; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735573482; c=relaxed/simple;
+	bh=YeWTYR5MbdbeJU1AZ67jTwGziQcgYd3N7DqNdc/yOZQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IV1H98MRxb46OGciP4VjOfxoZmdjK7Tcw4r7JvhK90FEmdJetrf2r/Tk++6OlfyMbqOcNYB9ws31zOIB1sL4Sp4o5wk6oKXqIiaNaFXZVwCbOMfxKOW0bTdKW8vDHgHGl9xaaF24OlyVVBZViDcVfeP53e9efIRHoMZyaSFSzPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCz6Y+B9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O03Vqbe2"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ee8e8e29f6so7682924a91.0
-        for <patches@lists.linux.dev>; Fri, 27 Dec 2024 09:27:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735320470; x=1735925270; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7+bHJo91EH/ascAZ6YxEM5ft3sinT845bIpMBqq57mQ=;
-        b=O03Vqbe2VFnYlpv5yyXc4cyu6O62hqj/52LQsooKo7n9MIJBsElqD3rVsuP0rj2Arh
-         2j0/46gkm0VEjKMgfPf/Cd2VGjJQdnsfJqJiRFWAE/KkbaV3f8AdOCJIRCfVIkXh3m8Z
-         rcPcaljFmoQ5eEiYsV5z6bmkCOnWDXGUlBXHxvsqzCQiZt1KfdKSkCuw4VmP6T9S/3cY
-         Md3dbJaos/XhpKBQ88qlkwfEPqQprNaVkeTr7m1Qh1d/Ow3LL4suSmWKpdTTKObfjWNh
-         UEpZarSR2WCkaJQq/6Sc7STJlH2vWgsgMSA1SxMIo1NKZIhY0kPY7Aj1abFS9HdmPJvI
-         ZspA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735320470; x=1735925270;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7+bHJo91EH/ascAZ6YxEM5ft3sinT845bIpMBqq57mQ=;
-        b=KfAWqgiM48XVMwnv91rMMPl4EhuhMFpqd5oY7sM7XjrakASNXRBEFHPfBd4wgJ7S9t
-         Sk6OAmXs33IDqf9hkCr8Bx+leSXun+m6Im3QSpNGwUyBlUqDCEfopCBv2u3JKaNXjh+D
-         tcZLh+jpktJRc0UUKQIb3FxTRj6an1Lek4wWWbR7Zg/EKc9gFMkAVD/kz6SIgvxZfPr6
-         SZm0af4itdEmEbD08Mo3YYg+wYigSDCxKWb5vaLfdofmRYilKeHF+upEtVbwzJuU9DU1
-         E1UgRQMnccovRJbI8580KdWSsnV+M/FZzilHhf+L6MbvYxiMN8fhb0Ahz1deTMnhNsMK
-         RNGg==
-X-Forwarded-Encrypted: i=1; AJvYcCWiiuArbssyZic9BhMyC//oVfkUQbtipQa1nFZC8FQAPHVb/YmN0Ev7SIUXLBHUzbuXnKfeHOIH@lists.linux.dev
-X-Gm-Message-State: AOJu0YypKzkPlGU/yluZXgzPmEu9HnnK0ZGQoL9ImbnMd1kv3QCYRv8Q
-	zM60whWZELFVpvM76dW5gzEE4a1KUjlsSUn1k2pco6N8mOHnZNPD
-X-Gm-Gg: ASbGncvqvUKxlxT277hW5Z3niCVG+B5LWxJ+U5tk4XkbQjcz3hvmM2qusMEK5BoorN+
-	JaMbDVU11s7WNtAlwVK/5hx3BXaJHtAt/0u+S61C/KDVocw0vPJxrYlQAwkZTJRAZgyl6nsnFft
-	wM8Twyy+i/x83YTceEzSS2pGoq8qJKQHlbLdn+9JZ0ZaZqdwS+mnJqh7EZOshQeDn4Fisvv4Fn6
-	iYyNem5YR4SMr1f03ODxSGKSo5uhERzrTVe+OyEphsxhV4/bnb52kXIzF9qjPUrOMvMEQ==
-X-Google-Smtp-Source: AGHT+IEcqaWWJIa7cYb3sKuIT0xLunW/WjjlJfvMw/GbWHpzmMh+tksDqSTOoXNet14yhuROqWzULg==
-X-Received: by 2002:a17:90a:d64e:b0:2ee:a4f2:b311 with SMTP id 98e67ed59e1d1-2f452dfae72mr44824483a91.8.1735320468951;
-        Fri, 27 Dec 2024 09:27:48 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f4478a92absm16142935a91.44.2024.12.27.09.27.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2024 09:27:48 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 27 Dec 2024 09:27:47 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Marc Zyngier <maz@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCz6Y+B9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19916C4CED0;
+	Mon, 30 Dec 2024 15:44:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1735573481;
+	bh=YeWTYR5MbdbeJU1AZ67jTwGziQcgYd3N7DqNdc/yOZQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=dCz6Y+B9wFQaIzI1NLB4fB2ttFclZu2MGfq9RXNIG2jRddFRpJNreUSZCYsddCDM5
+	 dznur1+Gl0XqztxBZBBux8iO9TGJiupAT0JHpRw4PfaIOBiWGy+GinnWA486vBXmsL
+	 MXek00pn7nKQAzMBh8raH9QoxF74Ww+215nmHXKI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Anders Roxell <anders.roxell@linaro.org>
-Subject: Re: [PATCH 6.12 000/160] 6.12.7-rc1 review
-Message-ID: <52873782-3b21-4e53-95fd-1288d5dbc024@roeck-us.net>
-References: <20241223155408.598780301@linuxfoundation.org>
- <CA+G9fYt+k1m9oTuuZaGyTXqg+EKsSTnmfsc2HYijDWmEjx9xFg@mail.gmail.com>
- <87y102r27e.wl-maz@kernel.org>
- <2024122713-vacant-muppet-06eb@gregkh>
- <87ed1tp8df.wl-maz@kernel.org>
+	patches@lists.linux.dev,
+	syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 01/60] media: dvb-frontends: dib3000mb: fix uninit-value in dib3000_write_reg
+Date: Mon, 30 Dec 2024 16:42:11 +0100
+Message-ID: <20241230154207.334771371@linuxfoundation.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
+References: <20241230154207.276570972@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87ed1tp8df.wl-maz@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Dec 27, 2024 at 01:23:40PM +0000, Marc Zyngier wrote:
+6.1-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+
+[ Upstream commit 2dd59fe0e19e1ab955259978082b62e5751924c7 ]
+
+Syzbot reports [1] an uninitialized value issue found by KMSAN in
+dib3000_read_reg().
+
+Local u8 rb[2] is used in i2c_transfer() as a read buffer; in case
+that call fails, the buffer may end up with some undefined values.
+
+Since no elaborate error handling is expected in dib3000_write_reg(),
+simply zero out rb buffer to mitigate the problem.
+
+[1] Syzkaller report
+dvb-usb: bulk message failed: -22 (6/0)
+=====================================================
+BUG: KMSAN: uninit-value in dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
+ dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
+ dibusb_dib3000mb_frontend_attach+0x155/0x2f0 drivers/media/usb/dvb-usb/dibusb-mb.c:31
+ dvb_usb_adapter_frontend_init+0xed/0x9a0 drivers/media/usb/dvb-usb/dvb-usb-dvb.c:290
+ dvb_usb_adapter_init drivers/media/usb/dvb-usb/dvb-usb-init.c:90 [inline]
+ dvb_usb_init drivers/media/usb/dvb-usb/dvb-usb-init.c:186 [inline]
+ dvb_usb_device_init+0x25a8/0x3760 drivers/media/usb/dvb-usb/dvb-usb-init.c:310
+ dibusb_probe+0x46/0x250 drivers/media/usb/dvb-usb/dibusb-mb.c:110
 ...
-> Additionally, these tests are mostly pointless anyway, specially this
-> one, which really should be deleted.
-> 
+Local variable rb created at:
+ dib3000_read_reg+0x86/0x4e0 drivers/media/dvb-frontends/dib3000mb.c:54
+ dib3000mb_attach+0x123/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
+...
 
-Would it by any chance be possible to remove such pointless tests, or at
-least mark them as BROKEN ? Having them present suggests that people should
-run them, and feedback such as this one isn't really helpful. If anything,
-it is tremendously frustrating for anyone trying to run those tests and
-getting that kind of feedback when noticing and reporting that they are
-broken.
+Fixes: 74340b0a8bc6 ("V4L/DVB (4457): Remove dib3000-common-module")
+Reported-by: syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20240517155800.9881-1-n.zhandarovich@fintech.ru
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/media/dvb-frontends/dib3000mb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Guenter
+diff --git a/drivers/media/dvb-frontends/dib3000mb.c b/drivers/media/dvb-frontends/dib3000mb.c
+index c598b2a63325..7c452ddd9e40 100644
+--- a/drivers/media/dvb-frontends/dib3000mb.c
++++ b/drivers/media/dvb-frontends/dib3000mb.c
+@@ -51,7 +51,7 @@ MODULE_PARM_DESC(debug, "set debugging level (1=info,2=xfer,4=setfe,8=getfe (|-a
+ static int dib3000_read_reg(struct dib3000_state *state, u16 reg)
+ {
+ 	u8 wb[] = { ((reg >> 8) | 0x80) & 0xff, reg & 0xff };
+-	u8 rb[2];
++	u8 rb[2] = {};
+ 	struct i2c_msg msg[] = {
+ 		{ .addr = state->config.demod_address, .flags = 0,        .buf = wb, .len = 2 },
+ 		{ .addr = state->config.demod_address, .flags = I2C_M_RD, .buf = rb, .len = 2 },
+-- 
+2.39.5
+
+
+
