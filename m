@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3232E414;
-	Mon, 30 Dec 2024 15:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813E22AE68;
+	Mon, 30 Dec 2024 15:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573996; cv=none; b=tI/uErVBE3nZKJy9WLvSY8j40XS2C9A1fqlsDWeu5QdjCHJrKQZlV61Mft9reG13DsSebJ1d0WpZ2V1aqs3CNAdxZdI83t14D9D5T1LGr3JZkJN6f6zyItWiLjUqSVDF6v55hq+0P+ngmPMscs3tvK5QUbT0swzJw4xQrM3sxKo=
+	t=1735573999; cv=none; b=mBh7/VT4hrDm/cF9fVzvUpxhcAn2BrSAJrIDgAsbIstFsofkgwb7tZL1VXZmSxG8qzEgaK1fV2pq18/vEWQTBswueaOSRrJd7FFPCPN+3jbz35PTxbqLRCPqRevFR5Huhv6/0ySATPDxhFpOBBvay5GgoyVk3re2KaB3Kb7WDQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573996; c=relaxed/simple;
-	bh=rnvrhE6Bxwa/E/9GZP+Mpv491H6YkNa159SWQUQ1oqE=;
+	s=arc-20240116; t=1735573999; c=relaxed/simple;
+	bh=U7xnjmB45Gx+d7KBRXgsC5HRwnpX441gQRU87dlPQmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubk4IAJq33GeUh6+p5NfFNfpBSOVkvc7XGUZq2pIyvBrwayR8fZxpOfJBHAs4Nkjgws9vQlWsKNncN8c0T+7R0k+kvyNs+vsEhTK/LCwosBZFUHBsL3JG9n/f3cpGOI1sbq87cYZFa8A9wiLwCJYx8b7DPGh+qsu0Az8JLbJ88I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMZQybyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DdtziR+aW46kJsDKoWxBFaXy9lUSnE5iZi01GEea+JnUAO/8T0SgF2EIohdXxnw/Iy9eWZgj3zf9wzTTS3almHf2T0QnSNXQdWgPpt/jFvcjS3In3d/KKTYf6lhhC8k1eERfIOyAtiFvpgX+jrx3ZkJ6AJWxvOUq7VPMQF4kYX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pA6sybbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMZQybyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C46FC4CED0;
-	Mon, 30 Dec 2024 15:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pA6sybbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BBDC4CED0;
+	Mon, 30 Dec 2024 15:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573996;
-	bh=rnvrhE6Bxwa/E/9GZP+Mpv491H6YkNa159SWQUQ1oqE=;
+	s=korg; t=1735573999;
+	bh=U7xnjmB45Gx+d7KBRXgsC5HRwnpX441gQRU87dlPQmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMZQybywXhZpFnoQCoq6yKHkxVuL3zwJBDLRHx6dRw6pqC3owmS2iP/aWq4PctLOi
-	 HdObyBDREC7YAVQbv7ki9lA+WEITMA498gXIsQ2rFHlyawVUtiPOz7GaC9CXtGyr62
-	 wB5KCHFENI/VSc/j/QDEbSgEuTKRmmtnb/q4iOXA=
+	b=pA6sybbvrRGKDCzN9ADVdMwXgbNyhCIKEjAQmZJu8XDQRNNE3+IW/0+jp29SgFl/q
+	 3ex3fzdjWHpTicIqoLsu9q5iM1gHJmNslqkMSjLsw97jkwPmjj7GlLe86BBrsTPSsw
+	 6w6ejH8pAFv4WRlSF5yxkROG1LUbTFRGP+TZ/X4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/114] media: dvb-frontends: dib3000mb: fix uninit-value in dib3000_write_reg
-Date: Mon, 30 Dec 2024 16:41:58 +0100
-Message-ID: <20241230154218.105240143@linuxfoundation.org>
+Subject: [PATCH 6.12 010/114] tcp_bpf: Charge receive socket buffer in bpf_tcp_ingress()
+Date: Mon, 30 Dec 2024 16:42:07 +0100
+Message-ID: <20241230154218.456926270@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,59 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 2dd59fe0e19e1ab955259978082b62e5751924c7 ]
+[ Upstream commit 54f89b3178d5448dd4457afbb98fc1ab99090a65 ]
 
-Syzbot reports [1] an uninitialized value issue found by KMSAN in
-dib3000_read_reg().
+When bpf_tcp_ingress() is called, the skmsg is being redirected to the
+ingress of the destination socket. Therefore, we should charge its
+receive socket buffer, instead of sending socket buffer.
 
-Local u8 rb[2] is used in i2c_transfer() as a read buffer; in case
-that call fails, the buffer may end up with some undefined values.
+Because sk_rmem_schedule() tests pfmemalloc of skb, we need to
+introduce a wrapper and call it for skmsg.
 
-Since no elaborate error handling is expected in dib3000_write_reg(),
-simply zero out rb buffer to mitigate the problem.
-
-[1] Syzkaller report
-dvb-usb: bulk message failed: -22 (6/0)
-=====================================================
-BUG: KMSAN: uninit-value in dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
- dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
- dibusb_dib3000mb_frontend_attach+0x155/0x2f0 drivers/media/usb/dvb-usb/dibusb-mb.c:31
- dvb_usb_adapter_frontend_init+0xed/0x9a0 drivers/media/usb/dvb-usb/dvb-usb-dvb.c:290
- dvb_usb_adapter_init drivers/media/usb/dvb-usb/dvb-usb-init.c:90 [inline]
- dvb_usb_init drivers/media/usb/dvb-usb/dvb-usb-init.c:186 [inline]
- dvb_usb_device_init+0x25a8/0x3760 drivers/media/usb/dvb-usb/dvb-usb-init.c:310
- dibusb_probe+0x46/0x250 drivers/media/usb/dvb-usb/dibusb-mb.c:110
-...
-Local variable rb created at:
- dib3000_read_reg+0x86/0x4e0 drivers/media/dvb-frontends/dib3000mb.c:54
- dib3000mb_attach+0x123/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
-...
-
-Fixes: 74340b0a8bc6 ("V4L/DVB (4457): Remove dib3000-common-module")
-Reported-by: syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20240517155800.9881-1-n.zhandarovich@fintech.ru
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241210012039.1669389-2-zijianzhang@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib3000mb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sock.h | 10 ++++++++--
+ net/ipv4/tcp_bpf.c |  2 +-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib3000mb.c b/drivers/media/dvb-frontends/dib3000mb.c
-index c598b2a63325..7c452ddd9e40 100644
---- a/drivers/media/dvb-frontends/dib3000mb.c
-+++ b/drivers/media/dvb-frontends/dib3000mb.c
-@@ -51,7 +51,7 @@ MODULE_PARM_DESC(debug, "set debugging level (1=info,2=xfer,4=setfe,8=getfe (|-a
- static int dib3000_read_reg(struct dib3000_state *state, u16 reg)
+diff --git a/include/net/sock.h b/include/net/sock.h
+index f29c14448938..fa055cf1785e 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1521,7 +1521,7 @@ static inline bool sk_wmem_schedule(struct sock *sk, int size)
+ }
+ 
+ static inline bool
+-sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
++__sk_rmem_schedule(struct sock *sk, int size, bool pfmemalloc)
  {
- 	u8 wb[] = { ((reg >> 8) | 0x80) & 0xff, reg & 0xff };
--	u8 rb[2];
-+	u8 rb[2] = {};
- 	struct i2c_msg msg[] = {
- 		{ .addr = state->config.demod_address, .flags = 0,        .buf = wb, .len = 2 },
- 		{ .addr = state->config.demod_address, .flags = I2C_M_RD, .buf = rb, .len = 2 },
+ 	int delta;
+ 
+@@ -1529,7 +1529,13 @@ sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
+ 		return true;
+ 	delta = size - sk->sk_forward_alloc;
+ 	return delta <= 0 || __sk_mem_schedule(sk, delta, SK_MEM_RECV) ||
+-		skb_pfmemalloc(skb);
++	       pfmemalloc;
++}
++
++static inline bool
++sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
++{
++	return __sk_rmem_schedule(sk, size, skb_pfmemalloc(skb));
+ }
+ 
+ static inline int sk_unused_reserved_mem(const struct sock *sk)
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 99cef92e6290..b21ea634909c 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -49,7 +49,7 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 		sge = sk_msg_elem(msg, i);
+ 		size = (apply && apply_bytes < sge->length) ?
+ 			apply_bytes : sge->length;
+-		if (!sk_wmem_schedule(sk, size)) {
++		if (!__sk_rmem_schedule(sk, size, false)) {
+ 			if (!copied)
+ 				ret = -ENOMEM;
+ 			break;
 -- 
 2.39.5
 
