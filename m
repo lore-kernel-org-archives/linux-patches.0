@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA2215E8B;
-	Mon, 30 Dec 2024 15:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5762AE68;
+	Mon, 30 Dec 2024 15:49:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573767; cv=none; b=qcJlWQxFqpYKoWN73WNmwyrrhqgG41Lie4jArklWK4AvOrEGNGccJGGji0UduET1bAdPQnnUvBwL71MegROXrLuRC7XvKWkFypJYfnLsR0tYUgFCAS3FJ/6AjwI464ZpvWljlg+3F9Sv3ewkphWlpFzE+OdTQQaz1BgPbvc6iek=
+	t=1735573770; cv=none; b=s0k86r+QXbw2ieiVvyrVr/4TRlflv276eBZUFwlhkDY/VIB5SdP2/alcaKLsGC3YjyrKTeGchV3gmbCG6IxTTx0BqVpKE8EB3j5t02Dj5saKRxA6WSQL6CTUVwyky52Ayk/1Op4TL8FbfBNxXScHXpm5qy6u9PNf4joCZL10sL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573767; c=relaxed/simple;
-	bh=ooAuMuyPjgUfQRS3N1fRTsoTirH6kr72rxbs/kXuXiU=;
+	s=arc-20240116; t=1735573770; c=relaxed/simple;
+	bh=9xedS9lfiRd8MCux7JJzvrdmxTHh9pbW5311ahOp5mA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IL1RuEIXPpXegFWZlKt+GhL1uwLXLPTlCrXqj0d8NIWIx6x7e9Rx0jcbaicG7VEGtzUSN3toGf2zHjDH0fCdLwi86osXknrhhePJENYXx+64bFRlZeqTP/RFemaIO01qYrES8toB+2RtEgXRk6jM1MAvDrdBAszOWL//w5G5gbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqKsZhvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jLhWkjMWs2gDwbyiMb+Ex6Pp7TUNtLLb/6jbXOJuz/aT/fdiS3VezPKVpYy6fTT6kKnmJkJJizExrXDoT6Ks9WiWXw+rVyg2udxaf0LKUtxtXUar6vt+JFdP7LFKQFAMnaZXAO/YHydj11HaiMDvXUQ8LchTxeE4r+q6RQYHR0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfehfIOx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqKsZhvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E600C4CED0;
-	Mon, 30 Dec 2024 15:49:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfehfIOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B61C4CED0;
+	Mon, 30 Dec 2024 15:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573767;
-	bh=ooAuMuyPjgUfQRS3N1fRTsoTirH6kr72rxbs/kXuXiU=;
+	s=korg; t=1735573770;
+	bh=9xedS9lfiRd8MCux7JJzvrdmxTHh9pbW5311ahOp5mA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqKsZhvwlrPvDbsa0KYzEOSS+5NlJciBvQp2kiRQ1kbORxhjq73nffgyKl7cMis73
-	 oY+/KxnOK1+W5PpOGhE3bICccecj5bNsFORzxUb252XXupRvb8C+dSVuq663XPhu6E
-	 Otk55os67yGE2H3SXTMqy43cZcI6eBO08T/WEuJg=
+	b=JfehfIOxEoB3/N4vROD1EPy3j2gtYvo25j/N3PIDzA7dEVBeSIRVLT73q0tfsPLzr
+	 ZQVPtknKWokjdQtMznJxgwBGLBsSTaDvpiiS57a29rKO6tWDIhkUw2jm9clcv9SDAM
+	 0Hig6Pp9Qy6lQ8YIknGenD5ScWXFt4rC2GQKyK7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Finkelstein <fnkl.kernel@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 26/86] dmaengine: apple-admac: Avoid accessing registers in probe
-Date: Mon, 30 Dec 2024 16:42:34 +0100
-Message-ID: <20241230154212.714590126@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 03/86] ceph: fix memory leak in ceph_direct_read_write()
+Date: Mon, 30 Dec 2024 16:42:11 +0100
+Message-ID: <20241230154211.846130942@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -50,47 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Finkelstein <fnkl.kernel@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 8d55e8a16f019211163f1180fd9f9fbe05901900 upstream.
+[ Upstream commit 66e0c4f91461d17d48071695271c824620bed4ef ]
 
-The ADMAC attached to the AOP has complex power sequencing, and is
-power gated when the probe callback runs. Move the register reads
-to other functions, where we can guarantee that the hardware is
-switched on.
+The bvecs array which is allocated in iter_get_bvecs_alloc() is leaked
+and pages remain pinned if ceph_alloc_sparse_ext_map() fails.
 
-Fixes: 568aa6dd641f ("dmaengine: apple-admac: Allocate cache SRAM to channels")
-Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
-Link: https://lore.kernel.org/r/20241124-admac-power-v1-1-58f2165a4d55@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+There is no need to delay the allocation of sparse_ext map until after
+the bvecs array is set up, so fix this by moving sparse_ext allocation
+a bit earlier.  Also, make a similar adjustment in __ceph_sync_read()
+for consistency (a leak of the same kind in __ceph_sync_read() has been
+addressed differently).
+
+Cc: stable@vger.kernel.org
+Fixes: 03bc06c7b0bd ("ceph: add new mount option to enable sparse reads")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Stable-dep-of: 18d44c5d062b ("ceph: allocate sparse_ext map only for sparse reads")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/apple-admac.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/ceph/file.c | 43 ++++++++++++++++++++++---------------------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
 
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -153,6 +153,8 @@ static int admac_alloc_sram_carveout(str
- {
- 	struct admac_sram *sram;
- 	int i, ret = 0, nblocks;
-+	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
-+	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+diff --git a/fs/ceph/file.c b/fs/ceph/file.c
+index 23dcfb916298..5233bbab8a76 100644
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -1026,6 +1026,16 @@ ssize_t __ceph_sync_read(struct inode *inode, loff_t *ki_pos,
+ 			len = read_off + read_len - off;
+ 		more = len < iov_iter_count(to);
  
- 	if (dir == DMA_MEM_TO_DEV)
- 		sram = &ad->txcache;
-@@ -912,12 +914,7 @@ static int admac_probe(struct platform_d
- 		goto free_irq;
- 	}
++		op = &req->r_ops[0];
++		if (sparse) {
++			extent_cnt = __ceph_sparse_read_ext_count(inode, read_len);
++			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
++			if (ret) {
++				ceph_osdc_put_request(req);
++				break;
++			}
++		}
++
+ 		num_pages = calc_pages_for(read_off, read_len);
+ 		page_off = offset_in_page(off);
+ 		pages = ceph_alloc_page_vector(num_pages, GFP_KERNEL);
+@@ -1039,16 +1049,6 @@ ssize_t __ceph_sync_read(struct inode *inode, loff_t *ki_pos,
+ 						 offset_in_page(read_off),
+ 						 false, true);
  
--	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
--	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+-		op = &req->r_ops[0];
+-		if (sparse) {
+-			extent_cnt = __ceph_sparse_read_ext_count(inode, read_len);
+-			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
+-			if (ret) {
+-				ceph_osdc_put_request(req);
+-				break;
+-			}
+-		}
 -
- 	dev_info(&pdev->dev, "Audio DMA Controller\n");
--	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
--		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
+ 		ceph_osdc_start_request(osdc, req);
+ 		ret = ceph_osdc_wait_request(osdc, req);
  
- 	return 0;
+@@ -1454,6 +1454,16 @@ ceph_direct_read_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			break;
+ 		}
  
++		op = &req->r_ops[0];
++		if (sparse) {
++			extent_cnt = __ceph_sparse_read_ext_count(inode, size);
++			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
++			if (ret) {
++				ceph_osdc_put_request(req);
++				break;
++			}
++		}
++
+ 		len = iter_get_bvecs_alloc(iter, size, &bvecs, &num_pages);
+ 		if (len < 0) {
+ 			ceph_osdc_put_request(req);
+@@ -1463,6 +1473,8 @@ ceph_direct_read_write(struct kiocb *iocb, struct iov_iter *iter,
+ 		if (len != size)
+ 			osd_req_op_extent_update(req, 0, len);
+ 
++		osd_req_op_extent_osd_data_bvecs(req, 0, bvecs, num_pages, len);
++
+ 		/*
+ 		 * To simplify error handling, allow AIO when IO within i_size
+ 		 * or IO can be satisfied by single OSD request.
+@@ -1494,17 +1506,6 @@ ceph_direct_read_write(struct kiocb *iocb, struct iov_iter *iter,
+ 			req->r_mtime = mtime;
+ 		}
+ 
+-		osd_req_op_extent_osd_data_bvecs(req, 0, bvecs, num_pages, len);
+-		op = &req->r_ops[0];
+-		if (sparse) {
+-			extent_cnt = __ceph_sparse_read_ext_count(inode, size);
+-			ret = ceph_alloc_sparse_ext_map(op, extent_cnt);
+-			if (ret) {
+-				ceph_osdc_put_request(req);
+-				break;
+-			}
+-		}
+-
+ 		if (aio_req) {
+ 			aio_req->total_len += len;
+ 			aio_req->num_reqs++;
+-- 
+2.39.5
+
 
 
