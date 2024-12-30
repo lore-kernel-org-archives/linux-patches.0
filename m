@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C445B1AAE33;
-	Mon, 30 Dec 2024 15:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE85215E8B;
+	Mon, 30 Dec 2024 15:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574040; cv=none; b=RC5XjUBA+2r0qYSi4DUbz8eEBDrZxBVIWqQdHz2r1wrwCFqIGDVFb3jReW7ccMod5wtxqB1LBFeEBBJUL0E3OemETZDaWpfTMtFg5eGtz1gQR1Dh4WQ83namJH4b95Bdfw4NcKQfcyuaACRuP5j9MuEOYzJCyNgH2/p8XwARh3E=
+	t=1735574044; cv=none; b=m2xLr2lXt+R1Ovyi5v/1LigwZY8YF5QwII2jaVywWn0UpeBhl1cdm+i/VpcYIGNbhYPRYDPZMKeOG+TrizHirKr6A604mTONhttmWN3ue2+3K00oe9Wjo7AViOZZLotseq1ET4YLVV2pp7q56jzDXNngv5ih0XgwCWMtVjrXCE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574040; c=relaxed/simple;
-	bh=o8G70GdW31WaRPEP/0RAPScGBM/GN1HU7873rRM6J8o=;
+	s=arc-20240116; t=1735574044; c=relaxed/simple;
+	bh=Cio0mgOsxI8XSg+7jNpUkTRUP+z8ss9beLEFmIRozRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwDepWXIM43d26qR5xlv2nokV772v94g1EsQUAO6itBt49R2YHhqZH709Toofwm78VdUJP0HACd29u7f3Pg9tpMLJRiu9pwr2NfTKsoVifgj70HVh1e+OL+BS9qWhKaDfmxqUkOLKXHIpif8xd6UWu7PB++ggKAjPZd87K7hX2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCI7DQeg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z07h2wRmvujeRX0Rbu2DeURRRgBv3FYE7zcuuFEG1aBSchM+JAq9FY67oS66t7zg/kJv1i1jfGeRLiNMfyE2PeN2Lckjc0SR14gTwOjVp1i0hrSRge96s+hFHyTJ+7QnUxClkp/2UJ2FLxsp8DQLJkU6V08SHnr8ic95gK7GT2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+kybC8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCI7DQeg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496B2C4CED2;
-	Mon, 30 Dec 2024 15:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+kybC8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748CEC4CED0;
+	Mon, 30 Dec 2024 15:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574040;
-	bh=o8G70GdW31WaRPEP/0RAPScGBM/GN1HU7873rRM6J8o=;
+	s=korg; t=1735574043;
+	bh=Cio0mgOsxI8XSg+7jNpUkTRUP+z8ss9beLEFmIRozRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCI7DQegt7WBFeg3hzv/cK5Tj7YBq0X41ov5p3UD1CMdS9iw/B87zRQLgZ01AuN1T
-	 AH2EnOVnN+tIYuN30UiVOqymrt4ChPQETHNkZaHCyvtzMfz/NjhG56fhM7IO1UyYZS
-	 5wS+NySkrYcbXqjhGlqPBnO0GCr95/hF6P7159+c=
+	b=r+kybC8g/I3GBYaH+c6Q7FlPsOHERiZyfiZIUEyMejtUsChyrk9wVET317GC4w3vi
+	 vMDL/dIJ2tF3i6H2/+Q9GmyzIkNGfgUsZ+cNh5oDI8jujt5HQ/UDjgo6CQnkWMA713
+	 USlZy0a1oygsFAi1blNfPz6pl+CfBBrGAE9NFTzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Konstantin Khlebnikov <koct9i@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jerome Marchand <jmarchan@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yonghong.song@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/114] mm/vmstat: fix a W=1 clang compiler warning
-Date: Mon, 30 Dec 2024 16:42:03 +0100
-Message-ID: <20241230154218.306448762@linuxfoundation.org>
+Subject: [PATCH 6.12 007/114] selftests/bpf: Fix compilation error in get_uprobe_offset()
+Date: Mon, 30 Dec 2024 16:42:04 +0100
+Message-ID: <20241230154218.343609849@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -53,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Jerome Marchand <jmarchan@redhat.com>
 
-[ Upstream commit 30c2de0a267c04046d89e678cc0067a9cfb455df ]
+[ Upstream commit 716f2bca1ce93bb95364f1fc0555c1650507b588 ]
 
-Fix the following clang compiler warning that is reported if the kernel is
-built with W=1:
+In get_uprobe_offset(), the call to procmap_query() use the constant
+PROCMAP_QUERY_VMA_EXECUTABLE, even if PROCMAP_QUERY is not defined.
 
-./include/linux/vmstat.h:518:36: error: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Werror,-Wenum-enum-conversion]
-  518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-      |                               ~~~~~~~~~~~ ^ ~~~
+Define PROCMAP_QUERY_VMA_EXECUTABLE when PROCMAP_QUERY isn't.
 
-Link: https://lkml.kernel.org/r/20241212213126.1269116-1-bvanassche@acm.org
-Fixes: 9d7ea9a297e6 ("mm/vmstat: add helpers to get vmstat item names for each enum type")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Cc: Konstantin Khlebnikov <koct9i@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4e9e07603ecd ("selftests/bpf: make use of PROCMAP_QUERY ioctl if available")
+Signed-off-by: Jerome Marchand <jmarchan@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/bpf/20241218175724.578884-1-jmarchan@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vmstat.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/trace_helpers.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/vmstat.h b/include/linux/vmstat.h
-index d2761bf8ff32..9f3a04345b86 100644
---- a/include/linux/vmstat.h
-+++ b/include/linux/vmstat.h
-@@ -515,7 +515,7 @@ static inline const char *node_stat_name(enum node_stat_item item)
- 
- static inline const char *lru_list_name(enum lru_list lru)
- {
--	return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-+	return node_stat_name(NR_LRU_BASE + (enum node_stat_item)lru) + 3; // skip "nr_"
+diff --git a/tools/testing/selftests/bpf/trace_helpers.c b/tools/testing/selftests/bpf/trace_helpers.c
+index 2d742fdac6b9..81943c6254e6 100644
+--- a/tools/testing/selftests/bpf/trace_helpers.c
++++ b/tools/testing/selftests/bpf/trace_helpers.c
+@@ -293,6 +293,10 @@ static int procmap_query(int fd, const void *addr, __u32 query_flags, size_t *st
+ 	return 0;
  }
- 
- #if defined(CONFIG_VM_EVENT_COUNTERS) || defined(CONFIG_MEMCG)
+ #else
++# ifndef PROCMAP_QUERY_VMA_EXECUTABLE
++#  define PROCMAP_QUERY_VMA_EXECUTABLE 0x04
++# endif
++
+ static int procmap_query(int fd, const void *addr, __u32 query_flags, size_t *start, size_t *offset, int *flags)
+ {
+ 	return -EOPNOTSUPP;
 -- 
 2.39.5
 
