@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A65715E8B;
-	Mon, 30 Dec 2024 15:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C6B15E8B;
+	Mon, 30 Dec 2024 15:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574118; cv=none; b=mSDzR4y9oid/HgNovDCV/a7hJ306lgjH3uUSG9ku2bs9OFr8bIFjleB6/a06IuExfE1ZA96/0ovBqT8TPTkdEme2jT6TdcEIqEtx5uVR9JnxohiGysnsQ7aIHGNRcoUtgwerqS4zos7r6h/1oB4c4dcr27PYfwxhlxm/9CmEv3Q=
+	t=1735574120; cv=none; b=gWZDGFvEGeBJaDqjTBhBmL9N4J3tJQaDPMIntKfBYl90m7xTYVPYUb0QiotqHEjiaBbIKEYUdgOMMWctbILQm7t3xBI6PzzHH2/SollkqnC//MxsYZBuMTi0jNpPXmSQH3fd3jz3UI8lKLwjqTpJENrraD9vh98DdAdzDKonvxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574118; c=relaxed/simple;
-	bh=B6/afbvMxUQUiGbQG/jtAPYa5WQ7hT9CIizZal7q+CM=;
+	s=arc-20240116; t=1735574120; c=relaxed/simple;
+	bh=jYyZRpvFfyjCw2MGLVBc6/XD7HOZnUn3KyBJLHoDQgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFEn5yf13Ed629OrQawkr6OIpk0HA3zqDqJJG6nQcLpfwC9D598vApddLbXMe2EoAjzD3QzqZG/sF5gypxNXNNz/Bide2FMYIqsFIZwRaUPiWaNId7N0vzyiEM9ezQFxSFbJMV7jQRhUQHS21q1B0efwX/yGwkma03PC84cG+58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q7dHqkBT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ae4Z0TTRIG6UQIoW0N7+S/6vSjwplTZPx2GRjjL2KmYhgMW0BQb9BKJpGfgn5NyW0Aqb9LdxWntcpEOUrpUSbaG1Uh5ngHpptWBjpQjVNn04YCj1Nb24lozFZZ3EsEqT5M9D8B30MkrSU1Gwpf6QAmiayVbCpEJeM+ZKc+1IgbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4uUV00y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q7dHqkBT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77FCAC4CED0;
-	Mon, 30 Dec 2024 15:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4uUV00y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB58DC4CED0;
+	Mon, 30 Dec 2024 15:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574116;
-	bh=B6/afbvMxUQUiGbQG/jtAPYa5WQ7hT9CIizZal7q+CM=;
+	s=korg; t=1735574120;
+	bh=jYyZRpvFfyjCw2MGLVBc6/XD7HOZnUn3KyBJLHoDQgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q7dHqkBTf2yAm0wa8FseVX7otuBqLLjooSDEPH7wO6DazmqIPftbxf+H/qthTDwzP
-	 eShlOBU2q7hU2rXj/dWS1recHdMns+1t7TcbHJJeOWiaUk302ARlNo0mXfbK5Fso0b
-	 d4BOr6ejiqgd2vZbfXVrw63SL1b9ymQyMSgprzKE=
+	b=o4uUV00ySLbHosEbfL2lpwttng6Uo1syopGlqeTw48UK1XFLl+E4W3rZldJDScodJ
+	 /Hu1uNixDIUY9t/Vf0qoAI6LKLu0uNqL9U83XjAMnTuLVUP47iv1F73aXpLAaqOZ0w
+	 rSWJ8FquWVvHyRzqaLNPgN55MMMHjlHebHAsIOBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 041/114] ASoC: Intel: sof_sdw: Fix DMI match for Lenovo 21Q6 and 21Q7
-Date: Mon, 30 Dec 2024 16:42:38 +0100
-Message-ID: <20241230154219.641225146@linuxfoundation.org>
+	Haren Myneni <haren@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 042/114] powerpc/pseries/vas: Add close() callback in vas_vm_ops struct
+Date: Mon, 30 Dec 2024 16:42:39 +0100
+Message-ID: <20241230154219.678679982@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,46 +51,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Haren Myneni <haren@linux.ibm.com>
 
-commit 7c449ef0fdce540bfb235a2d93e7184864c3388b upstream.
+[ Upstream commit 05aa156e156ef3168e7ab8a68721945196495c17 ]
 
-Update the DMI match for a Lenovo laptop to the new DMI identifier.
+The mapping VMA address is saved in VAS window struct when the
+paste address is mapped. This VMA address is used during migration
+to unmap the paste address if the window is active. The paste
+address mapping will be removed when the window is closed or with
+the munmap(). But the VMA address in the VAS window is not updated
+with munmap() which is causing invalid access during migration.
 
-This laptop ships with a different DMI identifier to what was expected,
-and now has two identifiers.
+The KASAN report shows:
+[16386.254991] BUG: KASAN: slab-use-after-free in reconfig_close_windows+0x1a0/0x4e8
+[16386.255043] Read of size 8 at addr c00000014a819670 by task drmgr/696928
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 83c062ae81e8 ("ASoC: Intel: sof_sdw: Add quirks for some new Lenovo laptops")
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://patch.msgid.link/20241216140821.153670-2-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[16386.255096] CPU: 29 UID: 0 PID: 696928 Comm: drmgr Kdump: loaded Tainted: G    B              6.11.0-rc5-nxgzip #2
+[16386.255128] Tainted: [B]=BAD_PAGE
+[16386.255148] Hardware name: IBM,9080-HEX Power11 (architected) 0x820200 0xf000007 of:IBM,FW1110.00 (NH1110_016) hv:phyp pSeries
+[16386.255181] Call Trace:
+[16386.255202] [c00000016b297660] [c0000000018ad0ac] dump_stack_lvl+0x84/0xe8 (unreliable)
+[16386.255246] [c00000016b297690] [c0000000006e8a90] print_report+0x19c/0x764
+[16386.255285] [c00000016b297760] [c0000000006e9490] kasan_report+0x128/0x1f8
+[16386.255309] [c00000016b297880] [c0000000006eb5c8] __asan_load8+0xac/0xe0
+[16386.255326] [c00000016b2978a0] [c00000000013f898] reconfig_close_windows+0x1a0/0x4e8
+[16386.255343] [c00000016b297990] [c000000000140e58] vas_migration_handler+0x3a4/0x3fc
+[16386.255368] [c00000016b297a90] [c000000000128848] pseries_migrate_partition+0x4c/0x4c4
+...
+
+[16386.256136] Allocated by task 696554 on cpu 31 at 16377.277618s:
+[16386.256149]  kasan_save_stack+0x34/0x68
+[16386.256163]  kasan_save_track+0x34/0x80
+[16386.256175]  kasan_save_alloc_info+0x58/0x74
+[16386.256196]  __kasan_slab_alloc+0xb8/0xdc
+[16386.256209]  kmem_cache_alloc_noprof+0x200/0x3d0
+[16386.256225]  vm_area_alloc+0x44/0x150
+[16386.256245]  mmap_region+0x214/0x10c4
+[16386.256265]  do_mmap+0x5fc/0x750
+[16386.256277]  vm_mmap_pgoff+0x14c/0x24c
+[16386.256292]  ksys_mmap_pgoff+0x20c/0x348
+[16386.256303]  sys_mmap+0xd0/0x160
+...
+
+[16386.256350] Freed by task 0 on cpu 31 at 16386.204848s:
+[16386.256363]  kasan_save_stack+0x34/0x68
+[16386.256374]  kasan_save_track+0x34/0x80
+[16386.256384]  kasan_save_free_info+0x64/0x10c
+[16386.256396]  __kasan_slab_free+0x120/0x204
+[16386.256415]  kmem_cache_free+0x128/0x450
+[16386.256428]  vm_area_free_rcu_cb+0xa8/0xd8
+[16386.256441]  rcu_do_batch+0x2c8/0xcf0
+[16386.256458]  rcu_core+0x378/0x3c4
+[16386.256473]  handle_softirqs+0x20c/0x60c
+[16386.256495]  do_softirq_own_stack+0x6c/0x88
+[16386.256509]  do_softirq_own_stack+0x58/0x88
+[16386.256521]  __irq_exit_rcu+0x1a4/0x20c
+[16386.256533]  irq_exit+0x20/0x38
+[16386.256544]  interrupt_async_exit_prepare.constprop.0+0x18/0x2c
+...
+
+[16386.256717] Last potentially related work creation:
+[16386.256729]  kasan_save_stack+0x34/0x68
+[16386.256741]  __kasan_record_aux_stack+0xcc/0x12c
+[16386.256753]  __call_rcu_common.constprop.0+0x94/0xd04
+[16386.256766]  vm_area_free+0x28/0x3c
+[16386.256778]  remove_vma+0xf4/0x114
+[16386.256797]  do_vmi_align_munmap.constprop.0+0x684/0x870
+[16386.256811]  __vm_munmap+0xe0/0x1f8
+[16386.256821]  sys_munmap+0x54/0x6c
+[16386.256830]  system_call_exception+0x1a0/0x4a0
+[16386.256841]  system_call_vectored_common+0x15c/0x2ec
+
+[16386.256868] The buggy address belongs to the object at c00000014a819670
+                which belongs to the cache vm_area_struct of size 168
+[16386.256887] The buggy address is located 0 bytes inside of
+                freed 168-byte region [c00000014a819670, c00000014a819718)
+
+[16386.256915] The buggy address belongs to the physical page:
+[16386.256928] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14a81
+[16386.256950] memcg:c0000000ba430001
+[16386.256961] anon flags: 0x43ffff800000000(node=4|zone=0|lastcpupid=0x7ffff)
+[16386.256975] page_type: 0xfdffffff(slab)
+[16386.256990] raw: 043ffff800000000 c00000000501c080 0000000000000000 5deadbee00000001
+[16386.257003] raw: 0000000000000000 00000000011a011a 00000001fdffffff c0000000ba430001
+[16386.257018] page dumped because: kasan: bad access detected
+
+This patch adds close() callback in vas_vm_ops vm_operations_struct
+which will be executed during munmap() before freeing VMA. The VMA
+address in the VAS window is set to NULL after holding the window
+mmap_mutex.
+
+Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
+Signed-off-by: Haren Myneni <haren@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20241214051758.997759-1-haren@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_sdw.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/book3s/vas-api.c | 36 +++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -626,9 +626,17 @@ static const struct dmi_system_id sof_sd
- 		.callback = sof_sdw_quirk_cb,
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "233B")
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21Q6")
- 		},
--		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS),
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
-+	},
-+	{
-+		.callback = sof_sdw_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21Q7")
-+		},
-+		.driver_data = (void *)(SOC_SDW_SIDECAR_AMPS | SOC_SDW_CODEC_MIC),
- 	},
+diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
+index f381b177ea06..0b6365d85d11 100644
+--- a/arch/powerpc/platforms/book3s/vas-api.c
++++ b/arch/powerpc/platforms/book3s/vas-api.c
+@@ -464,7 +464,43 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
+ 	return VM_FAULT_SIGBUS;
+ }
  
- 	/* ArrowLake devices */
++/*
++ * During mmap() paste address, mapping VMA is saved in VAS window
++ * struct which is used to unmap during migration if the window is
++ * still open. But the user space can remove this mapping with
++ * munmap() before closing the window and the VMA address will
++ * be invalid. Set VAS window VMA to NULL in this function which
++ * is called before VMA free.
++ */
++static void vas_mmap_close(struct vm_area_struct *vma)
++{
++	struct file *fp = vma->vm_file;
++	struct coproc_instance *cp_inst = fp->private_data;
++	struct vas_window *txwin;
++
++	/* Should not happen */
++	if (!cp_inst || !cp_inst->txwin) {
++		pr_err("No attached VAS window for the paste address mmap\n");
++		return;
++	}
++
++	txwin = cp_inst->txwin;
++	/*
++	 * task_ref.vma is set in coproc_mmap() during mmap paste
++	 * address. So it has to be the same VMA that is getting freed.
++	 */
++	if (WARN_ON(txwin->task_ref.vma != vma)) {
++		pr_err("Invalid paste address mmaping\n");
++		return;
++	}
++
++	mutex_lock(&txwin->task_ref.mmap_mutex);
++	txwin->task_ref.vma = NULL;
++	mutex_unlock(&txwin->task_ref.mmap_mutex);
++}
++
+ static const struct vm_operations_struct vas_vm_ops = {
++	.close = vas_mmap_close,
+ 	.fault = vas_mmap_fault,
+ };
+ 
+-- 
+2.39.5
+
 
 
