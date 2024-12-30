@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD0815E8B;
-	Mon, 30 Dec 2024 15:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265CA42AA6;
+	Mon, 30 Dec 2024 15:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574103; cv=none; b=L9L0SyYcnry5te7xmgQLI/Ug7aZs0L15auTt5/O3wqkn2c25vV5pBzhVXj4XIOGuk9o3dASm2VhuNKQ2Xrvg3YRK7+Sn4mFIDXsSLyWHFuQU2G/KYoTTEtKlM4Hqeg2SEskDel5FSxpXryhWj4sQg7a084G8dou8bNUkNYOSguM=
+	t=1735574107; cv=none; b=MSGu4yJ7UmBKP8qcrvuDImxEzmmd2XqmGVgtClr0jCDfVvuxuE4I7MYH/vPmZmP46Yh13aBqZHizCVOndglWG05BSKwV6MZxkJJCAYwIktKDDcRdtXTehTXnRViAMKo+gic2YhmnVg1DYfLeb4rFDPSmuw/uOOP5WSFi+CjZMWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574103; c=relaxed/simple;
-	bh=vXoOTzBZnRmZ6qUJCTLY/ncsE3luWFRHotT0sgbRpMY=;
+	s=arc-20240116; t=1735574107; c=relaxed/simple;
+	bh=2gknVYVkl7yoxO2DFug7mhmSpzcuHvC8kG8ggdPfXbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CdvGpdGWkJOvrjKN26zClIJX1hUxKXr+xBFVoYqKxvghCSLo9RATv16BrUN61lzTHEGLgUNz2mjNeOJxaR2LI2shIHEaM6Go9+plm7ZmcFMv/ixr7zZahFA8EOlkvXms1jpMQJxRujHTEX1HKBAJAQycRaioqe9f5YOcYdaYHc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBQMLVBE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDMnqU9yVRkyNgAVSJ1JO8P0ouz48lGxzzvKiPHH2vmjQ4dmriysC8sG1iPGdRkWlStHqqvdoQmnK2Zp8miJANj/lC1r0WPurmxJug2iD4e96BVR/oXwuU4LvGruv8ZAJgblwjGmElXYQJInzgovGowkvPORdUbRLAUo0JD1hUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZRoSqTA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBQMLVBE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC91CC4CED0;
-	Mon, 30 Dec 2024 15:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZRoSqTA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FD8C4CED0;
+	Mon, 30 Dec 2024 15:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574103;
-	bh=vXoOTzBZnRmZ6qUJCTLY/ncsE3luWFRHotT0sgbRpMY=;
+	s=korg; t=1735574107;
+	bh=2gknVYVkl7yoxO2DFug7mhmSpzcuHvC8kG8ggdPfXbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBQMLVBEhqbc8dFmH9yxd5QZtPmlsHN4+j5ipGEJ8riySbsjy6GOzDj7Xd4zRYDUB
-	 /8DwhPbdhFe2DftXti4MSME0qdVSuMcqheCfEKD96Tkw+BgncDSLsYFZpcrysXQ9Tq
-	 C5L6PujQ9rDkcdd90CReYPkKHHr5DhJDKs3w6vsg=
+	b=gZRoSqTA09Jk5Jy5XCcDxaIUtgS3LMdRMaXGQgMsCTKxC3Dbmaur9dlCDtf5tteiS
+	 jLJLE3G/TN1Agc2h+Gxlk+eEzCEaigv0bEoMh4IOYDvZH9BYPM6FenT8YV5ErP2vkG
+	 /2wbydtdseErEZcCdYvXzN2nyvPFYOuRf1j5WuC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 037/114] mtd: rawnand: fix double free in atmel_pmecc_create_user()
-Date: Mon, 30 Dec 2024 16:42:34 +0100
-Message-ID: <20241230154219.491762732@linuxfoundation.org>
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 038/114] ASoC: amd: ps: Fix for enabling DMIC on acp63 platform via _DSD entry
+Date: Mon, 30 Dec 2024 16:42:35 +0100
+Message-ID: <20241230154219.529617394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -50,35 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
 
-commit d8e4771f99c0400a1873235704b28bb803c83d17 upstream.
+commit 88438444fdddd0244c8b2697713adcca3e71599e upstream.
 
-The "user" pointer was converted from being allocated with kzalloc() to
-being allocated by devm_kzalloc().  Calling kfree(user) will lead to a
-double free.
+Add condition check to register ACP PDM sound card by reading
+_WOV acpi entry.
 
-Fixes: 6d734f1bfc33 ("mtd: rawnand: atmel: Fix possible memory leak")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 0386d765f27a ("ASoC: amd: ps: refactor acp device configuration read logic")
+
+Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+Link: https://patch.msgid.link/20241213061147.1060451-1-venkataprasad.potturu@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/amd/ps/pci-ps.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -380,10 +380,8 @@ atmel_pmecc_create_user(struct atmel_pme
- 	user->delta = user->dmu + req->ecc.strength + 1;
+--- a/sound/soc/amd/ps/pci-ps.c
++++ b/sound/soc/amd/ps/pci-ps.c
+@@ -375,11 +375,18 @@ static int get_acp63_device_config(struc
+ {
+ 	struct acpi_device *pdm_dev;
+ 	const union acpi_object *obj;
++	acpi_handle handle;
++	acpi_integer dmic_status;
+ 	u32 config;
+ 	bool is_dmic_dev = false;
+ 	bool is_sdw_dev = false;
++	bool wov_en, dmic_en;
+ 	int ret;
  
- 	gf_tables = atmel_pmecc_get_gf_tables(req);
--	if (IS_ERR(gf_tables)) {
--		kfree(user);
-+	if (IS_ERR(gf_tables))
- 		return ERR_CAST(gf_tables);
--	}
++	/* IF WOV entry not found, enable dmic based on acp-audio-device-type entry*/
++	wov_en = true;
++	dmic_en = false;
++
+ 	config = readl(acp_data->acp63_base + ACP_PIN_CONFIG);
+ 	switch (config) {
+ 	case ACP_CONFIG_4:
+@@ -412,10 +419,18 @@ static int get_acp63_device_config(struc
+ 			if (!acpi_dev_get_property(pdm_dev, "acp-audio-device-type",
+ 						   ACPI_TYPE_INTEGER, &obj) &&
+ 						   obj->integer.value == ACP_DMIC_DEV)
+-				is_dmic_dev = true;
++				dmic_en = true;
+ 		}
++
++		handle = ACPI_HANDLE(&pci->dev);
++		ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
++		if (!ACPI_FAILURE(ret))
++			wov_en = dmic_status;
+ 	}
  
- 	user->gf_tables = gf_tables;
- 
++	if (dmic_en && wov_en)
++		is_dmic_dev = true;
++
+ 	if (acp_data->is_sdw_config) {
+ 		ret = acp_scan_sdw_devices(&pci->dev, ACP63_SDW_ADDR);
+ 		if (!ret && acp_data->info.link_mask)
 
 
