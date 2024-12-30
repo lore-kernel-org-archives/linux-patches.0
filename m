@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF90415E8B;
-	Mon, 30 Dec 2024 15:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94415E8B;
+	Mon, 30 Dec 2024 15:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574123; cv=none; b=U/thOA3bFLzlDLG/aRJuokCkHmfmU3PjfNdZYczpUqa06ZpCOn/UrsTApPLVtkgBAZvIecprEZH8xoxVq896H1tq5q+aBWPSZgD5mhWgCer0wTZffEysemJoisK1mKrHdp+Ucq63MXocbapBhXFISWf4PugRdFkSXh2TdVr5i1k=
+	t=1735574127; cv=none; b=YoFHXT9U5JpC5GqcFryWBVEVUEg/qVrRN99FrFK99dwlrEOrK5Q7FsHhEcKIJjkMg1HZBG4ceULHRdHBYsxY6pa3qWzX+9e8f7grFpzR4ZbNp1TAnVD1Nn1KhRMqVBprImi7PWKp4rtKwEgmDkdZdc1hPVy5EXUKoo/YS4ry+DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574123; c=relaxed/simple;
-	bh=fkcBS2NI/7tReThK/Bep3y2xSkENaIg5xvqZUSURmxA=;
+	s=arc-20240116; t=1735574127; c=relaxed/simple;
+	bh=nEHTNOy02nRtHq7IGjipe9Uf4f+CIByO9JOz9GZtjZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbbxXsBH9Dt8qAsorz5Rt8ZKdkWBimFGT+d94UkSRHGotTD0ZtKQrkvXjBC8tzluxOB1IB7H5hC+9iUL+wbDAnk01fZ82lqd3Qn0N9t9BOxlSjCehu61Dkv7Rk1gmFtwhkHun1+gHxOIGucJ3xKv6snOm8ix/X2RucUVrEadVp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8gEbSV4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMXjCjqsv2cMbfdOgvq7XBgz/zEUJZKKsg8XtVZ7tTBOGVlOpUzxXKSgWSlYSfYCEbre55Vi2imRmLpY+UD6s++2Js3mjrzqCtS6o3M3Q0unpHEe3VI1LHUY4FPVnO4j4G4aQJjv/ZWsA4igtcseZk5doxFNWGLP0xiHvWVIlIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLo9tKEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8gEbSV4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228D2C4CED0;
-	Mon, 30 Dec 2024 15:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLo9tKEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8130DC4CED0;
+	Mon, 30 Dec 2024 15:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574123;
-	bh=fkcBS2NI/7tReThK/Bep3y2xSkENaIg5xvqZUSURmxA=;
+	s=korg; t=1735574127;
+	bh=nEHTNOy02nRtHq7IGjipe9Uf4f+CIByO9JOz9GZtjZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8gEbSV4yUlKnweFz9ZHq1eWSfKk8zpdCab180F6edacGNrbhlR8ZzoS5p7DYkYHl
-	 WgBk+xCLL5EcnKQo21o11bbaSpYK78/ubiiYNljbYkVMaTiJZt/2/8tCHkqqhbDR5S
-	 teVd7X46G5NQ7FCHzlUUK2aC13KFHKpXQ/byBcC0=
+	b=SLo9tKEyl7LfPAqPEZFSnK5V0ACSw7K3y+AbbuHUPG0Y6FHVtHj6q9e3hXlg50fjw
+	 FNqgBQPFnKbb56Rya6OUi0s96zhizP7RZ4Q9as8uSoNm9ZALLap63vi1I816x1V8F5
+	 Nil/CRgEq++5RsNxx6LLKf3PsKT88zVYHyFDhgRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Christopher Ferris <cferris@google.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/114] power: supply: bq24190: Fix BQ24296 Vbus regulator support
-Date: Mon, 30 Dec 2024 16:42:40 +0100
-Message-ID: <20241230154219.716328045@linuxfoundation.org>
+Subject: [PATCH 6.12 044/114] stddef: make __struct_group() UAPI C++-friendly
+Date: Mon, 30 Dec 2024 16:42:41 +0100
+Message-ID: <20241230154219.754447487@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,64 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit b3ded6072c5600704cfa3ce3a8dc8718d34bda66 ]
+[ Upstream commit 724c6ce38bbaeb4b3f109b0e066d6c0ecd15446c ]
 
-There are 2 issues with bq24296_set_otg_vbus():
+For the most part of the C++ history, it couldn't have type
+declarations inside anonymous unions for different reasons. At the
+same time, __struct_group() relies on the latters, so when the @TAG
+argument is not empty, C++ code doesn't want to build (even under
+`extern "C"`):
 
-1. When writing the OTG_CONFIG bit it uses POC_CHG_CONFIG_SHIFT which
-   should be POC_OTG_CONFIG_SHIFT.
+../linux/include/uapi/linux/pkt_cls.h:25:24: error:
+'struct tc_u32_sel::<unnamed union>::tc_u32_sel_hdr,' invalid;
+an anonymous union may only have public non-static data members
+[-fpermissive]
 
-2. When turning the regulator off it never turns charging back on. Note
-   this must be done through bq24190_charger_set_charge_type(), to ensure
-   that the charge_type property value of none/trickle/fast is honored.
+The safest way to fix this without trying to switch standards (which
+is impossible in UAPI anyway) etc., is to disable tag declaration
+for that language. This won't break anything since for now it's not
+buildable at all.
+Use a separate definition for __struct_group() when __cplusplus is
+defined to mitigate the error, including the version from tools/.
 
-Resolve both issues to fix BQ24296 Vbus regulator support not working.
-
-Fixes: b150a703b56f ("power: supply: bq24190_charger: Add support for BQ24296")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241116203648.169100-2-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 50d7bd38c3aa ("stddef: Introduce struct_group() helper macro")
+Reported-by: Christopher Ferris <cferris@google.com>
+Closes: https://lore.kernel.org/linux-hardening/Z1HZpe3WE5As8UAz@google.com
+Suggested-by: Kees Cook <kees@kernel.org> # __struct_group_tag()
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/20241219135734.2130002-1-aleksander.lobakin@intel.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/uapi/linux/stddef.h       | 13 ++++++++++---
+ tools/include/uapi/linux/stddef.h | 15 +++++++++++----
+ 2 files changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
-index 2b393eb5c282..c47f32f152e6 100644
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -567,6 +567,7 @@ static int bq24190_set_otg_vbus(struct bq24190_dev_info *bdi, bool enable)
+diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
+index 58154117d9b0..a6fce46aeb37 100644
+--- a/include/uapi/linux/stddef.h
++++ b/include/uapi/linux/stddef.h
+@@ -8,6 +8,13 @@
+ #define __always_inline inline
+ #endif
  
- static int bq24296_set_otg_vbus(struct bq24190_dev_info *bdi, bool enable)
- {
-+	union power_supply_propval val = { .intval = bdi->charge_type };
- 	int ret;
- 
- 	ret = pm_runtime_resume_and_get(bdi->dev);
-@@ -587,13 +588,18 @@ static int bq24296_set_otg_vbus(struct bq24190_dev_info *bdi, bool enable)
- 
- 		ret = bq24190_write_mask(bdi, BQ24190_REG_POC,
- 					 BQ24296_REG_POC_OTG_CONFIG_MASK,
--					 BQ24296_REG_POC_CHG_CONFIG_SHIFT,
-+					 BQ24296_REG_POC_OTG_CONFIG_SHIFT,
- 					 BQ24296_REG_POC_OTG_CONFIG_OTG);
--	} else
-+	} else {
- 		ret = bq24190_write_mask(bdi, BQ24190_REG_POC,
- 					 BQ24296_REG_POC_OTG_CONFIG_MASK,
--					 BQ24296_REG_POC_CHG_CONFIG_SHIFT,
-+					 BQ24296_REG_POC_OTG_CONFIG_SHIFT,
- 					 BQ24296_REG_POC_OTG_CONFIG_DISABLE);
-+		if (ret < 0)
-+			goto out;
++/* Not all C++ standards support type declarations inside an anonymous union */
++#ifndef __cplusplus
++#define __struct_group_tag(TAG)		TAG
++#else
++#define __struct_group_tag(TAG)
++#endif
 +
-+		ret = bq24190_charger_set_charge_type(bdi, &val);
-+	}
+ /**
+  * __struct_group() - Create a mirrored named and anonyomous struct
+  *
+@@ -20,13 +27,13 @@
+  * and size: one anonymous and one named. The former's members can be used
+  * normally without sub-struct naming, and the latter can be used to
+  * reason about the start, end, and size of the group of struct members.
+- * The named struct can also be explicitly tagged for layer reuse, as well
+- * as both having struct attributes appended.
++ * The named struct can also be explicitly tagged for layer reuse (C only),
++ * as well as both having struct attributes appended.
+  */
+ #define __struct_group(TAG, NAME, ATTRS, MEMBERS...) \
+ 	union { \
+ 		struct { MEMBERS } ATTRS; \
+-		struct TAG { MEMBERS } ATTRS NAME; \
++		struct __struct_group_tag(TAG) { MEMBERS } ATTRS NAME; \
+ 	} ATTRS
  
- out:
- 	pm_runtime_mark_last_busy(bdi->dev);
+ #ifdef __cplusplus
+diff --git a/tools/include/uapi/linux/stddef.h b/tools/include/uapi/linux/stddef.h
+index bb6ea517efb5..c53cde425406 100644
+--- a/tools/include/uapi/linux/stddef.h
++++ b/tools/include/uapi/linux/stddef.h
+@@ -8,6 +8,13 @@
+ #define __always_inline __inline__
+ #endif
+ 
++/* Not all C++ standards support type declarations inside an anonymous union */
++#ifndef __cplusplus
++#define __struct_group_tag(TAG)		TAG
++#else
++#define __struct_group_tag(TAG)
++#endif
++
+ /**
+  * __struct_group() - Create a mirrored named and anonyomous struct
+  *
+@@ -20,14 +27,14 @@
+  * and size: one anonymous and one named. The former's members can be used
+  * normally without sub-struct naming, and the latter can be used to
+  * reason about the start, end, and size of the group of struct members.
+- * The named struct can also be explicitly tagged for layer reuse, as well
+- * as both having struct attributes appended.
++ * The named struct can also be explicitly tagged for layer reuse (C only),
++ * as well as both having struct attributes appended.
+  */
+ #define __struct_group(TAG, NAME, ATTRS, MEMBERS...) \
+ 	union { \
+ 		struct { MEMBERS } ATTRS; \
+-		struct TAG { MEMBERS } ATTRS NAME; \
+-	}
++		struct __struct_group_tag(TAG) { MEMBERS } ATTRS NAME; \
++	} ATTRS
+ 
+ /**
+  * __DECLARE_FLEX_ARRAY() - Declare a flexible array usable in a union
 -- 
 2.39.5
 
