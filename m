@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F94415E8B;
-	Mon, 30 Dec 2024 15:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D9615E8B;
+	Mon, 30 Dec 2024 15:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574127; cv=none; b=YoFHXT9U5JpC5GqcFryWBVEVUEg/qVrRN99FrFK99dwlrEOrK5Q7FsHhEcKIJjkMg1HZBG4ceULHRdHBYsxY6pa3qWzX+9e8f7grFpzR4ZbNp1TAnVD1Nn1KhRMqVBprImi7PWKp4rtKwEgmDkdZdc1hPVy5EXUKoo/YS4ry+DQ=
+	t=1735574130; cv=none; b=K3SIqBGpg5mYEcK/I/UaiXyVIqXWyUa4QxQ8erSMDBMOLTTG+22dIgHWzObwEgTpNmTR/KPRtsX8PS/CNhiIfN3oGTpDdealNeBTtkKb15eTR5l3EjmbF1+Ek+Th+iNIpQt9ue9HM09R1z2Y+OZEVnbfLX0wJAMY05A5ulvRrYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574127; c=relaxed/simple;
-	bh=nEHTNOy02nRtHq7IGjipe9Uf4f+CIByO9JOz9GZtjZ4=;
+	s=arc-20240116; t=1735574130; c=relaxed/simple;
+	bh=98Hd93qA5wq9xC9Df5pgTI+vDev+Zqnk78i+sS0VsZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMXjCjqsv2cMbfdOgvq7XBgz/zEUJZKKsg8XtVZ7tTBOGVlOpUzxXKSgWSlYSfYCEbre55Vi2imRmLpY+UD6s++2Js3mjrzqCtS6o3M3Q0unpHEe3VI1LHUY4FPVnO4j4G4aQJjv/ZWsA4igtcseZk5doxFNWGLP0xiHvWVIlIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLo9tKEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V5PI2N4sfeYY9wmS7IowYVc0g/7WCDRpwc3aUb4wpVBR49kD4tJvdL3XS/pSCOpjLFVFsvXGzPo1RQ792l/BJuTOe+e7feonAgunQMiuhaTU9pzH7AWXav24JQDmTxHH3tkNaRpI/NRdv0VEAqE7qglQCi2RHjqxT5VRRHF2bDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VnU/1Jrd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLo9tKEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8130DC4CED0;
-	Mon, 30 Dec 2024 15:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VnU/1Jrd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA476C4CED0;
+	Mon, 30 Dec 2024 15:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574127;
-	bh=nEHTNOy02nRtHq7IGjipe9Uf4f+CIByO9JOz9GZtjZ4=;
+	s=korg; t=1735574130;
+	bh=98Hd93qA5wq9xC9Df5pgTI+vDev+Zqnk78i+sS0VsZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLo9tKEyl7LfPAqPEZFSnK5V0ACSw7K3y+AbbuHUPG0Y6FHVtHj6q9e3hXlg50fjw
-	 FNqgBQPFnKbb56Rya6OUi0s96zhizP7RZ4Q9as8uSoNm9ZALLap63vi1I816x1V8F5
-	 Nil/CRgEq++5RsNxx6LLKf3PsKT88zVYHyFDhgRU=
+	b=VnU/1JrdIFRxFXHfTFrYwinX+gaM8ou36C8dcu1ovv6uKeYCNDd/5df3Q2Dl9yON2
+	 lWIQWZ6+DQwjjDX2U6pAe4YQVUzvSXr9mJkUPjOSUojvvoI0Op91iyb1dwmWEyyAhR
+	 FR8JTdQLhqIOv8Ka89UqrS3u+J7RQ5CxbjJEThdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher Ferris <cferris@google.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Kees Cook <kees@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/114] stddef: make __struct_group() UAPI C++-friendly
-Date: Mon, 30 Dec 2024 16:42:41 +0100
-Message-ID: <20241230154219.754447487@linuxfoundation.org>
+Subject: [PATCH 6.12 045/114] tracing/kprobe: Make trace_kprobes module callback called after jump_label update
+Date: Mon, 30 Dec 2024 16:42:42 +0100
+Message-ID: <20241230154219.794067437@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -53,114 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Lobakin <aleksander.lobakin@intel.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 724c6ce38bbaeb4b3f109b0e066d6c0ecd15446c ]
+[ Upstream commit d685d55dfc86b1a4bdcec77c3c1f8a83f181264e ]
 
-For the most part of the C++ history, it couldn't have type
-declarations inside anonymous unions for different reasons. At the
-same time, __struct_group() relies on the latters, so when the @TAG
-argument is not empty, C++ code doesn't want to build (even under
-`extern "C"`):
+Make sure the trace_kprobe's module notifer callback function is called
+after jump_label's callback is called. Since the trace_kprobe's callback
+eventually checks jump_label address during registering new kprobe on
+the loading module, jump_label must be updated before this registration
+happens.
 
-../linux/include/uapi/linux/pkt_cls.h:25:24: error:
-'struct tc_u32_sel::<unnamed union>::tc_u32_sel_hdr,' invalid;
-an anonymous union may only have public non-static data members
-[-fpermissive]
+Link: https://lore.kernel.org/all/173387585556.995044.3157941002975446119.stgit@devnote2/
 
-The safest way to fix this without trying to switch standards (which
-is impossible in UAPI anyway) etc., is to disable tag declaration
-for that language. This won't break anything since for now it's not
-buildable at all.
-Use a separate definition for __struct_group() when __cplusplus is
-defined to mitigate the error, including the version from tools/.
-
-Fixes: 50d7bd38c3aa ("stddef: Introduce struct_group() helper macro")
-Reported-by: Christopher Ferris <cferris@google.com>
-Closes: https://lore.kernel.org/linux-hardening/Z1HZpe3WE5As8UAz@google.com
-Suggested-by: Kees Cook <kees@kernel.org> # __struct_group_tag()
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Link: https://lore.kernel.org/r/20241219135734.2130002-1-aleksander.lobakin@intel.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 614243181050 ("tracing/kprobes: Support module init function probing")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/stddef.h       | 13 ++++++++++---
- tools/include/uapi/linux/stddef.h | 15 +++++++++++----
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ kernel/trace/trace_kprobe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/stddef.h b/include/uapi/linux/stddef.h
-index 58154117d9b0..a6fce46aeb37 100644
---- a/include/uapi/linux/stddef.h
-+++ b/include/uapi/linux/stddef.h
-@@ -8,6 +8,13 @@
- #define __always_inline inline
- #endif
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index 263fac44d3ca..935a886af40c 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -725,7 +725,7 @@ static int trace_kprobe_module_callback(struct notifier_block *nb,
  
-+/* Not all C++ standards support type declarations inside an anonymous union */
-+#ifndef __cplusplus
-+#define __struct_group_tag(TAG)		TAG
-+#else
-+#define __struct_group_tag(TAG)
-+#endif
-+
- /**
-  * __struct_group() - Create a mirrored named and anonyomous struct
-  *
-@@ -20,13 +27,13 @@
-  * and size: one anonymous and one named. The former's members can be used
-  * normally without sub-struct naming, and the latter can be used to
-  * reason about the start, end, and size of the group of struct members.
-- * The named struct can also be explicitly tagged for layer reuse, as well
-- * as both having struct attributes appended.
-+ * The named struct can also be explicitly tagged for layer reuse (C only),
-+ * as well as both having struct attributes appended.
-  */
- #define __struct_group(TAG, NAME, ATTRS, MEMBERS...) \
- 	union { \
- 		struct { MEMBERS } ATTRS; \
--		struct TAG { MEMBERS } ATTRS NAME; \
-+		struct __struct_group_tag(TAG) { MEMBERS } ATTRS NAME; \
- 	} ATTRS
- 
- #ifdef __cplusplus
-diff --git a/tools/include/uapi/linux/stddef.h b/tools/include/uapi/linux/stddef.h
-index bb6ea517efb5..c53cde425406 100644
---- a/tools/include/uapi/linux/stddef.h
-+++ b/tools/include/uapi/linux/stddef.h
-@@ -8,6 +8,13 @@
- #define __always_inline __inline__
- #endif
- 
-+/* Not all C++ standards support type declarations inside an anonymous union */
-+#ifndef __cplusplus
-+#define __struct_group_tag(TAG)		TAG
-+#else
-+#define __struct_group_tag(TAG)
-+#endif
-+
- /**
-  * __struct_group() - Create a mirrored named and anonyomous struct
-  *
-@@ -20,14 +27,14 @@
-  * and size: one anonymous and one named. The former's members can be used
-  * normally without sub-struct naming, and the latter can be used to
-  * reason about the start, end, and size of the group of struct members.
-- * The named struct can also be explicitly tagged for layer reuse, as well
-- * as both having struct attributes appended.
-+ * The named struct can also be explicitly tagged for layer reuse (C only),
-+ * as well as both having struct attributes appended.
-  */
- #define __struct_group(TAG, NAME, ATTRS, MEMBERS...) \
- 	union { \
- 		struct { MEMBERS } ATTRS; \
--		struct TAG { MEMBERS } ATTRS NAME; \
--	}
-+		struct __struct_group_tag(TAG) { MEMBERS } ATTRS NAME; \
-+	} ATTRS
- 
- /**
-  * __DECLARE_FLEX_ARRAY() - Declare a flexible array usable in a union
+ static struct notifier_block trace_kprobe_module_nb = {
+ 	.notifier_call = trace_kprobe_module_callback,
+-	.priority = 1	/* Invoked after kprobe module callback */
++	.priority = 2	/* Invoked after kprobe and jump_label module callback */
+ };
+ static int trace_kprobe_register_module_notifier(void)
+ {
 -- 
 2.39.5
 
