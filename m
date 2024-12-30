@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B742AE68;
-	Mon, 30 Dec 2024 15:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEB72AE68;
+	Mon, 30 Dec 2024 15:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574009; cv=none; b=LeYL1etPymN2J4cuTAlReDWuSxNXtXvBF5ntjIJd8yeQvzPX+DfhNiU15LT6r4e8783n7lkKIemhLj+7QTJQaqtTjgttnhvLYfk3YH4lZ7GQLymdU4aofIaHtmFPORzgudA7StfIGt6PzOXAOIRA93zQdWdOi0VBTJsh5gi6JJk=
+	t=1735574012; cv=none; b=E5ISTZaC4SvqeO9At/YA04Ub+uheau9vQNOZG3YlR5+0vkxDEAHKE37E6RXLi7AWgKQDVA1Dt8u1Ft6n5f/h+rx28qlqiWNQ2yoI0/WMB7MldlvWJE90sRXRnFN3vG8RGbHOwM7VmkASVNIqyxwVyBQRokU6PhfCG2DORe+Uoto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574009; c=relaxed/simple;
-	bh=/MzB2fTWO0U52EqiR1p2KFwP5sYPyVhHbf68J1PaPcw=;
+	s=arc-20240116; t=1735574012; c=relaxed/simple;
+	bh=ssmQDjR4SjEv6k/wjnzsZE9sEie0QZLMt/mv7Jzmf78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBaLKmMfs6I003Tu/MVEs9Z5Zyc7At114tGN047JGgFUzeWbQn1ONTR13eyM5Pf3Jk+x9YfjtVuKwcuvnmDrEqLdxsvtjMaKS55Llaezm3cBAczl8CaU6GbtptZN4x+qiC+bWR7YJIlRJsH6cPMPNun4V4tJStuqVU1T9gVltnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJ1RwIg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ajr7QgOLpVpDj8F0mi3W0g7JJDDKxj80qxShuiJjQU8WafrVZWgB5gyZpQcxDR/R79rCHPfIgAz4FmRg/WWScnKGw6WNmUOnd60MMosYkW4nkEVOHLmABC8CUPqtKNMrKnN5ZAzGvepz8LBjuZYAmX0vHMw83eGBI3VxFEw2bO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p00+CdTM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJ1RwIg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6047C4CED0;
-	Mon, 30 Dec 2024 15:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p00+CdTM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AE3C4CED0;
+	Mon, 30 Dec 2024 15:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574009;
-	bh=/MzB2fTWO0U52EqiR1p2KFwP5sYPyVhHbf68J1PaPcw=;
+	s=korg; t=1735574012;
+	bh=ssmQDjR4SjEv6k/wjnzsZE9sEie0QZLMt/mv7Jzmf78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ1RwIg1ewxI2SWNn993yAryqv/fsA5bQ54KFuVvji3IkYLjvNyMJRPb1QdTYpbml
-	 cB4M/QCDB/L/Uz7k/Nx8onkLmElG7uzNasEIN6pmFSQhrJELEKQGIVDtV23n9CUVjf
-	 aOZEHtUjEfdrhuLIraPnb0EfBdx3X/YslrMsEx4E=
+	b=p00+CdTM2chBwRSo9NumAr2Fr06lY1Zz1x/3lqwhQyG8aFAdwI+L10cWu9Adns5Wu
+	 m6U3PRQT1v1hqvzc8CP0WKmrZStfMlvhdMOIsFe13JmoJS5cr0thbRP5kjBs6kbBfO
+	 R51cMTXdaUEIErtuTPMdk3Csq4KpxG0dXQ30vZ48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/114] nfsd: Revert "nfsd: release svc_expkey/svc_export with rcu_work"
-Date: Mon, 30 Dec 2024 16:42:10 +0100
-Message-ID: <20241230154218.569240006@linuxfoundation.org>
+Subject: [PATCH 6.12 014/114] nfsd: restore callback functionality for NFSv4.0
+Date: Mon, 30 Dec 2024 16:42:11 +0100
+Message-ID: <20241230154218.606301954@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,130 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 69d803c40edeaf94089fbc8751c9b746cdc35044 ]
+[ Upstream commit 7917f01a286ce01e9c085e24468421f596ee1a0c ]
 
-This reverts commit f8c989a0c89a75d30f899a7cabdc14d72522bb8d.
+A recent patch inadvertently broke callbacks for NFSv4.0.
 
-Before this commit, svc_export_put or expkey_put will call path_put with
-sync mode. After this commit, path_put will be called with async mode.
-And this can lead the unexpected results show as follow.
+In the 4.0 case we do not expect a session to be found but still need to
+call setup_callback_client() which will not try to dereference it.
 
-mkfs.xfs -f /dev/sda
-echo "/ *(rw,no_root_squash,fsid=0)" > /etc/exports
-echo "/mnt *(rw,no_root_squash,fsid=1)" >> /etc/exports
-exportfs -ra
-service nfs-server start
-mount -t nfs -o vers=4.0 127.0.0.1:/mnt /mnt1
-mount /dev/sda /mnt/sda
-touch /mnt1/sda/file
-exportfs -r
-umount /mnt/sda # failed unexcepted
+This patch moves the check for failure to find a session into the 4.1+
+branch of setup_callback_client()
 
-The touch will finally call nfsd_cross_mnt, add refcount to mount, and
-then add cache_head. Before this commit, exportfs -r will call
-cache_flush to cleanup all cache_head, and path_put in
-svc_export_put/expkey_put will be finished with sync mode. So, the
-latter umount will always success. However, after this commit, path_put
-will be called with async mode, the latter umount may failed, and if
-we add some delay, umount will success too. Personally I think this bug
-and should be fixed. We first revert before bugfix patch, and then fix
-the original bug with a different way.
-
-Fixes: f8c989a0c89a ("nfsd: release svc_expkey/svc_export with rcu_work")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Fixes: 1e02c641c3a4 ("NFSD: Prevent NULL dereference in nfsd4_process_cb_update()")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/export.c | 31 ++++++-------------------------
- fs/nfsd/export.h |  4 ++--
- 2 files changed, 8 insertions(+), 27 deletions(-)
+ fs/nfsd/nfs4callback.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/export.c b/fs/nfsd/export.c
-index 6d0455973d64..49aede376d86 100644
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -40,24 +40,15 @@
- #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
- #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index b8cbb1556004..de0763652549 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -1058,7 +1058,7 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
+ 		args.authflavor = clp->cl_cred.cr_flavor;
+ 		clp->cl_cb_ident = conn->cb_ident;
+ 	} else {
+-		if (!conn->cb_xprt)
++		if (!conn->cb_xprt || !ses)
+ 			return -EINVAL;
+ 		clp->cl_cb_session = ses;
+ 		args.bc_xprt = conn->cb_xprt;
+@@ -1461,8 +1461,6 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
+ 		ses = c->cn_session;
+ 	}
+ 	spin_unlock(&clp->cl_lock);
+-	if (!c)
+-		return;
  
--static void expkey_put_work(struct work_struct *work)
-+static void expkey_put(struct kref *ref)
- {
--	struct svc_expkey *key =
--		container_of(to_rcu_work(work), struct svc_expkey, ek_rcu_work);
-+	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
- 
- 	if (test_bit(CACHE_VALID, &key->h.flags) &&
- 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
- 		path_put(&key->ek_path);
- 	auth_domain_put(key->ek_client);
--	kfree(key);
--}
--
--static void expkey_put(struct kref *ref)
--{
--	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
--
--	INIT_RCU_WORK(&key->ek_rcu_work, expkey_put_work);
--	queue_rcu_work(system_wq, &key->ek_rcu_work);
-+	kfree_rcu(key, ek_rcu);
- }
- 
- static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -364,26 +355,16 @@ static void export_stats_destroy(struct export_stats *stats)
- 					    EXP_STATS_COUNTERS_NUM);
- }
- 
--static void svc_export_put_work(struct work_struct *work)
-+static void svc_export_put(struct kref *ref)
- {
--	struct svc_export *exp =
--		container_of(to_rcu_work(work), struct svc_export, ex_rcu_work);
--
-+	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
- 	path_put(&exp->ex_path);
- 	auth_domain_put(exp->ex_client);
- 	nfsd4_fslocs_free(&exp->ex_fslocs);
- 	export_stats_destroy(exp->ex_stats);
- 	kfree(exp->ex_stats);
- 	kfree(exp->ex_uuid);
--	kfree(exp);
--}
--
--static void svc_export_put(struct kref *ref)
--{
--	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
--
--	INIT_RCU_WORK(&exp->ex_rcu_work, svc_export_put_work);
--	queue_rcu_work(system_wq, &exp->ex_rcu_work);
-+	kfree_rcu(exp, ex_rcu);
- }
- 
- static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
-diff --git a/fs/nfsd/export.h b/fs/nfsd/export.h
-index 081afb68681e..3794ae253a70 100644
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -75,7 +75,7 @@ struct svc_export {
- 	u32			ex_layout_types;
- 	struct nfsd4_deviceid_map *ex_devid_map;
- 	struct cache_detail	*cd;
--	struct rcu_work		ex_rcu_work;
-+	struct rcu_head		ex_rcu;
- 	unsigned long		ex_xprtsec_modes;
- 	struct export_stats	*ex_stats;
- };
-@@ -92,7 +92,7 @@ struct svc_expkey {
- 	u32			ek_fsid[6];
- 
- 	struct path		ek_path;
--	struct rcu_work		ek_rcu_work;
-+	struct rcu_head		ek_rcu;
- };
- 
- #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
+ 	err = setup_callback_client(clp, &conn, ses);
+ 	if (err) {
 -- 
 2.39.5
 
