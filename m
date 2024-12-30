@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF67715E8B;
-	Mon, 30 Dec 2024 15:52:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B8D15E8B;
+	Mon, 30 Dec 2024 15:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573952; cv=none; b=tUY8OFsKGlJ/7yBdSX8DYdE2yptjASfPks+CsZjvcBXSdCdaUpZ43fAd1yFQzCH1WkhuwVhRM4QpwAhsFqmaj+i2q1lAvqQPxRHCSnEFa8khGy4enrAHqyE4CAq747ey5FWLanAukUBukt+5eve1YBGhyaep38+goPkXn5KiPWM=
+	t=1735573955; cv=none; b=MxUYknBIiFu35pEBsWjEdK/2xEtIChMVFdqOrEGS/igRmnSA9USoIFH96+AqiO10kIRxl5afQOXRrcl5Zz21DwroysQW2qrw5/KBZ6dIykNlpzW3qs2Gg6UinglWZQwt407QuR8kninfqrttvv3e3bqXlJ4OPOHnX7HA+ucHKrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573952; c=relaxed/simple;
-	bh=ba19d27Vo2N/7n13gFdJzpVsmMj/KjcQWT3+QC3ldag=;
+	s=arc-20240116; t=1735573955; c=relaxed/simple;
+	bh=jCuBaEJfhmjsYRWaFB0tHsKJgCEOaviUhdZrBr3PkFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lewQItGDljpJx3lhbY3hqIbyW3KpPF9Cku96QOMN/HcQyE4gmzTvMLpC4MOwaynvZxYWYAwYTDfVk6b06E6Bh+o4ed7U2Ix2FDgr8rVeOyMMdvOWQqTl9+U4j8F1g4PpLVn/cvIXJRH6k71p7Q6GWniR1lruFNDmK4lXLEa8D9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHS5HD05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lrmk8wAE9dmTTKOhLuR4udEfe2OQIeslKXLxo4TtTgNxdemZrQsuQteBhU3543bPEWjcT/lmEYMw05BKyTE1h6WHtKd3Z+9T9dA3sc/dDEKAAps0He1iu5YHHvEqCZ0BY9Oo41PzGtxiO7D/VzMof2+qzjzxs2oJaQu/c0E3MLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GoGeihQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHS5HD05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA63C4CED0;
-	Mon, 30 Dec 2024 15:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GoGeihQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C4AC4CED0;
+	Mon, 30 Dec 2024 15:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573951;
-	bh=ba19d27Vo2N/7n13gFdJzpVsmMj/KjcQWT3+QC3ldag=;
+	s=korg; t=1735573955;
+	bh=jCuBaEJfhmjsYRWaFB0tHsKJgCEOaviUhdZrBr3PkFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHS5HD05KBhPQ3KA5vc3GmfxYddd5pxhl73OqGe+FZhU+0/tj5n0NU4bSyjT4PViV
-	 mMAzPnWqkmUujJXkhwRS/Ipt7KCi7sooFOQZUtmNk3PhUqzvahy9TaCMaL7qaNwYGL
-	 gx3L8PMdrbgn3Guj7zzDq6ndIq0x8TYvZGse4UlU=
+	b=1GoGeihQQluZXfsMAaA+aHIhgiZFqa73ObstNpSc4WhzE2U7qX5PJY15Q6eFGwCAX
+	 /UiCqmb63aSisYVDf/60ewAcUjjTXpqN6OZU2MK630Duw04WOfYvqJu8+mg+buEEFg
+	 VBCS9G+QNhOMHppKbgdFjjsCHQPULGvAhVCepMP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 82/86] btrfs: sysfs: fix direct super block member reads
-Date: Mon, 30 Dec 2024 16:43:30 +0100
-Message-ID: <20241230154214.826853777@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 83/86] ALSA: sh: Fix wrong argument order for copy_from_iter()
+Date: Mon, 30 Dec 2024 16:43:31 +0100
+Message-ID: <20241230154214.863683387@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -52,63 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit fca432e73db2bec0fdbfbf6d98d3ebcd5388a977 upstream.
+commit 66a0a2b0473c39ae85c44628d14e4366fdc0aa0d upstream.
 
-The following sysfs entries are reading super block member directly,
-which can have a different endian and cause wrong values:
+Fix a brown paper bag bug I introduced at converting to the standard
+iter helper; the arguments were wrongly passed and have to be
+swapped.
 
-- sys/fs/btrfs/<uuid>/nodesize
-- sys/fs/btrfs/<uuid>/sectorsize
-- sys/fs/btrfs/<uuid>/clone_alignment
-
-Thankfully those values (nodesize and sectorsize) are always aligned
-inside the btrfs_super_block, so it won't trigger unaligned read errors,
-just endian problems.
-
-Fix them by using the native cached members instead.
-
-Fixes: df93589a1737 ("btrfs: export more from FS_INFO to sysfs")
-CC: stable@vger.kernel.org
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 9b5f8ee43e48 ("ALSA: sh: Use standard helper for buffer accesses")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202412140019.jat5Dofr-lkp@intel.com/
+Link: https://patch.msgid.link/20241220114417.5898-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/sysfs.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/sh/sh_dac_audio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/sysfs.c
-+++ b/fs/btrfs/sysfs.c
-@@ -1022,7 +1022,7 @@ static ssize_t btrfs_nodesize_show(struc
- {
- 	struct btrfs_fs_info *fs_info = to_fs_info(kobj);
+--- a/sound/sh/sh_dac_audio.c
++++ b/sound/sh/sh_dac_audio.c
+@@ -163,7 +163,7 @@ static int snd_sh_dac_pcm_copy(struct sn
+ 	/* channel is not used (interleaved data) */
+ 	struct snd_sh_dac *chip = snd_pcm_substream_chip(substream);
  
--	return sysfs_emit(buf, "%u\n", fs_info->super_copy->nodesize);
-+	return sysfs_emit(buf, "%u\n", fs_info->nodesize);
- }
+-	if (copy_from_iter(chip->data_buffer + pos, src, count) != count)
++	if (copy_from_iter(chip->data_buffer + pos, count, src) != count)
+ 		return -EFAULT;
+ 	chip->buffer_end = chip->data_buffer + pos + count;
  
- BTRFS_ATTR(, nodesize, btrfs_nodesize_show);
-@@ -1032,7 +1032,7 @@ static ssize_t btrfs_sectorsize_show(str
- {
- 	struct btrfs_fs_info *fs_info = to_fs_info(kobj);
- 
--	return sysfs_emit(buf, "%u\n", fs_info->super_copy->sectorsize);
-+	return sysfs_emit(buf, "%u\n", fs_info->sectorsize);
- }
- 
- BTRFS_ATTR(, sectorsize, btrfs_sectorsize_show);
-@@ -1084,7 +1084,7 @@ static ssize_t btrfs_clone_alignment_sho
- {
- 	struct btrfs_fs_info *fs_info = to_fs_info(kobj);
- 
--	return sysfs_emit(buf, "%u\n", fs_info->super_copy->sectorsize);
-+	return sysfs_emit(buf, "%u\n", fs_info->sectorsize);
- }
- 
- BTRFS_ATTR(, clone_alignment, btrfs_clone_alignment_show);
 
 
