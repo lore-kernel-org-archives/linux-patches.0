@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDD315E8B;
-	Mon, 30 Dec 2024 15:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE215537E9;
+	Mon, 30 Dec 2024 15:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574209; cv=none; b=rPgUKWRPTN+fG8qm+ulTcr1U6f1McydglvcFDyoamuX0qr04ULd0YAsAERkt8aghxJirgnp4kLxeOcWNOZS93pto1d5ICWZZpHI4zMY91MfuARAa+EnAwLOJbDT1NPQ6KxjWrI+YvGHNWDp0fWd4oM/xbQ+ik8qjIQ5z+coSGDw=
+	t=1735574213; cv=none; b=lGLNlNlDKDVlNhtpkpLAryKVv1kWIzO7FA3aJJEbu8Nz9tpB7onBTDBfwki0JPXnPx71t3l77pm9UQcuyKpRVh6jR5DW6y7c9RkejzothSbl+cvjtUGQ1FWpRoQE+SEN2ADwF4czVoA/jV9fG8vK3rnfXe+OGrSTcCH8ghHp7gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574209; c=relaxed/simple;
-	bh=pzTbLDdha45kJSBnweAJa0irnAfkyp1i8Ru2gFHqe28=;
+	s=arc-20240116; t=1735574213; c=relaxed/simple;
+	bh=AzqT5sdLyLMM6z3qB4hj/fXy7a1V//94ijxfbKJQoTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RvP5e2DuQhmYqB93LzDN+WL3k7bVj7wC67sAMLKGq95Jc72XtnBKPRkzcC/U4897uPhnsACM0pvK738uu5TkqdZZxK6gdvbv1hiOwdZDJVHRiwdJi7XlqX4nZskcDwOO8HCAih6pCIyl67dBlZbcIkZ4b6NoYm71f5HMCI87BJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CotT5/J0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lieA5q2/iDRVwA551QWQAVkQnGFdKAhtIs+OsUgFU1yS8gXXAA+SPtAdO5dTHWM+p2tz3JWhHvkb2lakHgsckbTVaOgbJalJBEQr4TAMN+4MWLPOsUt5S5tf4mxZPAoaYxzet9BSeYpy3btYh4N8Ld5gmgPPHm6m2RZE47JQp2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FylwTFnI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CotT5/J0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEC7C4CED0;
-	Mon, 30 Dec 2024 15:56:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FylwTFnI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1AE3C4CED0;
+	Mon, 30 Dec 2024 15:56:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574208;
-	bh=pzTbLDdha45kJSBnweAJa0irnAfkyp1i8Ru2gFHqe28=;
+	s=korg; t=1735574212;
+	bh=AzqT5sdLyLMM6z3qB4hj/fXy7a1V//94ijxfbKJQoTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CotT5/J0SIY8ScNXE97SBq+4X2MLJycO4tOR5TqUOErrrmHBKbYpYO/A5am53qPgF
-	 XWkVIZbv5RV/nnlKjVssrulk168yD6bqwv/Ck9s1/6pGQJUswB6aXF3XHXKY2evIgT
-	 s7z84xrH6Vu+kThuWOMyAsyJU0QUL4bAqCMbDoE4=
+	b=FylwTFnIZnsxhrhWRlYjVktSwUSvJzqmvcJhi/yqxDKDbcqSrULZ5mYoLTXMttqss
+	 A8F54tQkrtXNLD2wdELB7YVy8YsPabBiAY5SnX1/5ZabaKAV4YobVdJDhHXrt10E6T
+	 J/B9DW2oimdM0Rz7KzWhg5s5ls5rYP0rpsP74pCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Saxena <sumit.saxena@broadcom.com>,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/114] scsi: mpi3mr: Start controller indexing from 0
-Date: Mon, 30 Dec 2024 16:43:06 +0100
-Message-ID: <20241230154220.754152477@linuxfoundation.org>
+Subject: [PATCH 6.12 052/114] udf: Skip parent dir link count update if corrupted
+Date: Mon, 30 Dec 2024 16:42:49 +0100
+Message-ID: <20241230154220.061388209@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,35 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 0d32014f1e3e7a7adf1583c45387f26b9bb3a49d ]
+[ Upstream commit c5566903af56dd1abb092f18dcb0c770d6cd8dcb ]
 
-Instead of displaying the controller index starting from '1' make the
-driver display the controller index starting from '0'.
+If the parent directory link count is too low (likely directory inode
+corruption), just skip updating its link count as if it goes to 0 too
+early it can cause unexpected issues.
 
-Signed-off-by: Sumit Saxena <sumit.saxena@broadcom.com>
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20241110194405.10108-4-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/namei.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 5f2f67acf8bf..1bef88130d0c 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -5215,7 +5215,7 @@ mpi3mr_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	}
- 
- 	mrioc = shost_priv(shost);
--	retval = ida_alloc_range(&mrioc_ida, 1, U8_MAX, GFP_KERNEL);
-+	retval = ida_alloc_range(&mrioc_ida, 0, U8_MAX, GFP_KERNEL);
- 	if (retval < 0)
- 		goto id_alloc_failed;
- 	mrioc->id = (u8)retval;
+diff --git a/fs/udf/namei.c b/fs/udf/namei.c
+index 78a603129dd5..2be775d30ac1 100644
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -517,7 +517,11 @@ static int udf_rmdir(struct inode *dir, struct dentry *dentry)
+ 			 inode->i_nlink);
+ 	clear_nlink(inode);
+ 	inode->i_size = 0;
+-	inode_dec_link_count(dir);
++	if (dir->i_nlink >= 3)
++		inode_dec_link_count(dir);
++	else
++		udf_warn(inode->i_sb, "parent dir link count too low (%u)\n",
++			 dir->i_nlink);
+ 	udf_add_fid_counter(dir->i_sb, true, -1);
+ 	inode_set_mtime_to_ts(dir,
+ 			      inode_set_ctime_to_ts(dir, inode_set_ctime_current(inode)));
 -- 
 2.39.5
 
