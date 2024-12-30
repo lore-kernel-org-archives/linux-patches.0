@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA6E15E8B;
-	Mon, 30 Dec 2024 15:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8702C15E8B;
+	Mon, 30 Dec 2024 15:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573938; cv=none; b=LP59C20o9RHOIi1EFTC6JuxR26vNaVgusbjYdNAqHuSO+1NXvMsjTwQZkhEwVwZN2bcJk3slwk5BOXDUDCSeEGPXGOsaR/GYrvuOoxJG72zRz+0bu6wan5UzjsvJ67TbCh1I1jRqNu/YU4xX2o8rWukWSLgx+2IhSeIVhXaCttc=
+	t=1735573941; cv=none; b=pgcAdWKTvgLtHrNFvuMS5ggYue0DLwS2cxfq7W2ZjhmAszPbvOflnl1dvpWbF35nlu1/SneGW5B36GJPZcpa2jjFyPK2hzJoLSvPAk+tQQD2VON0Mb0bqn/ykTHr1/+kJVsSMV6A6Vwb06hdA8h9I9rcHd3v/Ykt3fWAX6k7B34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573938; c=relaxed/simple;
-	bh=Zn2iLJMqLoSOiwy+AwROQcsZp0iDZKNsm+WG/O+70Ro=;
+	s=arc-20240116; t=1735573941; c=relaxed/simple;
+	bh=QKLOsFM5D2MmWj1zsSrA7pRrM075yAP5efEMKQPf+EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhVbjMmWCmA+m1BjMuavF+OGcJwY00J3ry0jNDX6Eu3r65Ujppq3NAZHL7RSAV0vqATTs0JYOh2Yz6Xm87gqNpzmv6Yu/ebOsSSNeEfVcmCgYCScDj8d8EH0DvqMUN3lePa+vncTdaDCRO8oo7CwmF+Hg74T8EtbcNMivA6J4TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uuwtlTj+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ljzH+kvXfIqK49tggXDqPOHwNSA/+NkLmvpwqfLAYDBq0C10jaOyjF3jvf7b7cvf/GfCgD9EbctoRfjFRVjzX/09fBvIlSnUgdrvvGHBNBJ4/IUyYMpjjb1BKxoltqMij7iGlIA+IBsdrRtj7U609wp9SXhZyV2kDtsxXNZ8pEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=INaRp3mG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uuwtlTj+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E4BC4CED0;
-	Mon, 30 Dec 2024 15:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="INaRp3mG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC279C4CED0;
+	Mon, 30 Dec 2024 15:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573938;
-	bh=Zn2iLJMqLoSOiwy+AwROQcsZp0iDZKNsm+WG/O+70Ro=;
+	s=korg; t=1735573941;
+	bh=QKLOsFM5D2MmWj1zsSrA7pRrM075yAP5efEMKQPf+EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uuwtlTj+KrOIbiQ75LkRnl8mId0je/IFjNCJmxsqfDuVTg88gTbrAzWY3PIEJAx+r
-	 czWgkSFEy/qlden+lwtdCwK/S/zVmucIzmvDbVny3+HNjV8K1cWX7s4nHKTHr8Pj28
-	 JB0aSpyydlVZTjMsybsiWqna4miLpVeyihZey9c0=
+	b=INaRp3mGm4XoCZVmuZ7lxwcQ5fbnbPKDmU+vrSjjxKJ80l1OQlel66a7D9WYrRU3o
+	 mq0xVL+oSUcRWOanAONY+NeRcpgqZuPBEFfENjgGsU+MnsBQG4i0iiKoeM9iMWVVDX
+	 MrJ87Y2QO8zGyIfJD6b0MBsic05/Vhc1qw1tkCaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.6 79/86] i2c: microchip-core: fix "ghost" detections
-Date: Mon, 30 Dec 2024 16:43:27 +0100
-Message-ID: <20241230154214.712568195@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 62/86] x86/cpu: Add model number for Intel Clearwater Forest processor
+Date: Mon, 30 Dec 2024 16:43:10 +0100
+Message-ID: <20241230154214.074872318@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -50,51 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Tony Luck <tony.luck@intel.com>
 
-commit 49e1f0fd0d4cb03a16b8526c4e683e1958f71490 upstream.
+[ Upstream commit 090e3bec01763e415bccae445f5bfe3d0c61b629 ]
 
-Running i2c-detect currently produces an output akin to:
-    0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:                         08 -- 0a -- 0c -- 0e --
-10: 10 -- 12 -- 14 -- 16 -- UU 19 -- 1b -- 1d -- 1f
-20: -- 21 -- 23 -- 25 -- 27 -- 29 -- 2b -- 2d -- 2f
-30: -- -- -- -- -- -- -- -- 38 -- 3a -- 3c -- 3e --
-40: 40 -- 42 -- 44 -- 46 -- 48 -- 4a -- 4c -- 4e --
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-60: 60 -- 62 -- 64 -- 66 -- 68 -- 6a -- 6c -- 6e --
-70: 70 -- 72 -- 74 -- 76 --
+Server product based on the Atom Darkmont core.
 
-This happens because for an i2c_msg with a len of 0 the driver will
-mark the transmission of the message as a success once the START has
-been sent, without waiting for the devices on the bus to respond with an
-ACK/NAK. Since i2cdetect seems to run in a tight loop over all addresses
-the NAK is treated as part of the next test for the next address.
-
-Delete the fast path that marks a message as complete when idev->msg_len
-is zero after sending a START/RESTART since this isn't a valid scenario.
-
-CC: stable@vger.kernel.org
-Fixes: 64a6f1c4987e ("i2c: add support for microchip fpga i2c controllers")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20241218-outbid-encounter-b2e78b1cc707@spud
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240117191844.56180-1-tony.luck@intel.com
+Stable-dep-of: c9a4b55431e5 ("x86/cpu: Add Lunar Lake to list of CPUs with a broken MONITOR implementation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-microchip-corei2c.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/x86/include/asm/intel-family.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i2c/busses/i2c-microchip-corei2c.c
-+++ b/drivers/i2c/busses/i2c-microchip-corei2c.c
-@@ -287,8 +287,6 @@ static irqreturn_t mchp_corei2c_handle_i
- 		ctrl &= ~CTRL_STA;
- 		writeb(idev->addr, idev->base + CORE_I2C_DATA);
- 		writeb(ctrl, idev->base + CORE_I2C_CTRL);
--		if (idev->msg_len == 0)
--			finished = true;
- 		break;
- 	case STATUS_M_ARB_LOST:
- 		idev->msg_err = -EAGAIN;
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index 197316121f04..b65e9c46b922 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -162,6 +162,8 @@
+ #define INTEL_FAM6_ATOM_CRESTMONT_X	0xAF /* Sierra Forest */
+ #define INTEL_FAM6_ATOM_CRESTMONT	0xB6 /* Grand Ridge */
+ 
++#define INTEL_FAM6_ATOM_DARKMONT_X	0xDD /* Clearwater Forest */
++
+ /* Xeon Phi */
+ 
+ #define INTEL_FAM6_XEON_PHI_KNL		0x57 /* Knights Landing */
+-- 
+2.39.5
+
 
 
