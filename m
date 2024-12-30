@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E2715E8B;
-	Mon, 30 Dec 2024 15:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818F615E8B;
+	Mon, 30 Dec 2024 15:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574361; cv=none; b=f2Y0fLTM9ETjUduXIupQohhHvmc8rmyOE9WiSIfQsSl+XNUychF9LD0tF4BVukxLydB2dBeXqOUNpi+104RctjkluSOUYY3Df8Qhw2FcHtGyKpP+kocZkOPvfuW59ICoecaxsjkRK18wGNN5Bp2Td6+jeqriU+Coh/hDfqduztM=
+	t=1735574370; cv=none; b=nyZw3GzxDOXnsKqMiw2u7UN5R8ItQQWmj5ul96/H3RufmuXZHT22jcOPa7hOEkcSJUy4aygRWUqBUJ0RW2ia0CcP9IlXIhJ1+ZI4Tx5USObZTL/Enqoo8OQTM1u+JNi5yBMnKVteTXTJHl6VuzWhO1W603Feltjq0AucQBaUmyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574361; c=relaxed/simple;
-	bh=/PYOcB1HinUFGjDPU8FtSjNrfbO0CqCXzuha4RIqwRg=;
+	s=arc-20240116; t=1735574370; c=relaxed/simple;
+	bh=MgAbtB6+zKEMApn/z33H01sDSMBj93dVz5qSagjJP2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n2hSK8aXt7FJEce8/chKMGMM0rJHlyqaV0Z9HoxY4WkA38RIA4e5vPqXQicO8GGJFJ6p4dQWRdZMh4yG760wvU6/WjQu11qSIBZQVsSfFIJGYzME7lIuOo32iLoB4lhox1yq52Vog0bp0mTJCkPPQeBiE3c4CzG+uIxH7BYoW28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjQognlJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfLnRMUDJQOnUycax0MOt42SMEs7hzGSP589w7vMyODC2FDN59TKrdi1jeipgGPwzr1yeZHv9cb/UZAUtiuqPCiXc5mPFRMxMMDSiJsL3+U5hhp92uvuk1R0dm0hkGDHSo0srgdgPEfSb68EKnyhcjLQ1LvM5kR20WkwKi/CJSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llNXPUhE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjQognlJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 379B4C4CED0;
-	Mon, 30 Dec 2024 15:59:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llNXPUhE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5098C4CED0;
+	Mon, 30 Dec 2024 15:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574361;
-	bh=/PYOcB1HinUFGjDPU8FtSjNrfbO0CqCXzuha4RIqwRg=;
+	s=korg; t=1735574370;
+	bh=MgAbtB6+zKEMApn/z33H01sDSMBj93dVz5qSagjJP2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yjQognlJU+Z6NMLNPAPTHwgtkFWI6lICgY3iBeURb+RirruqWZynZQbEf0TYN2ouq
-	 LjnVPKyrR7z8A048NAA4/B1dnOdMai6EPu0QoPiBTZ/PYx+lGaQp4BropDnVD2zkdh
-	 i/yuOQY0gHL0KFz193zYnY/gr8hQn4yNYq1yQp+E=
+	b=llNXPUhELH3I/rMN1/r6bupZ165nyXmbi+ilQrWWhS+4pkgRxSpeE8omPjOOEEjgW
+	 xErdipFNEUBco7z4VO3ZPpSR/gQdkXvEWZ4pSVbZWIbals4RIYNEl5r0cLnSQS/1ig
+	 HojRXNcjMXMFCviXkio8diOY4xXJOXtIKwWZJCys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kernel test robot <lkp@intel.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 113/114] ALSA: ump: Shut up truncated string warning
-Date: Mon, 30 Dec 2024 16:43:50 +0100
-Message-ID: <20241230154222.479165396@linuxfoundation.org>
+Subject: [PATCH 6.12 114/114] ALSA: sh: Fix wrong argument order for copy_from_iter()
+Date: Mon, 30 Dec 2024 16:43:51 +0100
+Message-ID: <20241230154222.515529490@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,37 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit ed990c07af70d286f5736021c6e25d8df6f2f7b0 upstream.
+commit 66a0a2b0473c39ae85c44628d14e4366fdc0aa0d upstream.
 
-The recent change for the legacy substream name update brought a
-compile warning for some compilers due to the nature of snprintf().
-Use scnprintf() to shut up the warning since the truncation is
-intentional.
+Fix a brown paper bag bug I introduced at converting to the standard
+iter helper; the arguments were wrongly passed and have to be
+swapped.
 
-Fixes: e29e504e7890 ("ALSA: ump: Indicate the inactive group in legacy substream names")
+Fixes: 9b5f8ee43e48 ("ALSA: sh: Use standard helper for buffer accesses")
 Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202411300103.FrGuTAYp-lkp@intel.com/
-Link: https://patch.msgid.link/20241130090009.19849-1-tiwai@suse.de
+Closes: https://lore.kernel.org/oe-kbuild-all/202412140019.jat5Dofr-lkp@intel.com/
+Link: https://patch.msgid.link/20241220114417.5898-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/ump.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/sh/sh_dac_audio.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -1262,9 +1262,9 @@ static void fill_substream_names(struct
- 		name = ump->groups[idx].name;
- 		if (!*name)
- 			name = ump->info.name;
--		snprintf(s->name, sizeof(s->name), "Group %d (%.16s)%s",
--			 idx + 1, name,
--			 ump->groups[idx].active ? "" : " [Inactive]");
-+		scnprintf(s->name, sizeof(s->name), "Group %d (%.16s)%s",
-+			  idx + 1, name,
-+			  ump->groups[idx].active ? "" : " [Inactive]");
- 	}
- }
+--- a/sound/sh/sh_dac_audio.c
++++ b/sound/sh/sh_dac_audio.c
+@@ -163,7 +163,7 @@ static int snd_sh_dac_pcm_copy(struct sn
+ 	/* channel is not used (interleaved data) */
+ 	struct snd_sh_dac *chip = snd_pcm_substream_chip(substream);
+ 
+-	if (copy_from_iter(chip->data_buffer + pos, src, count) != count)
++	if (copy_from_iter(chip->data_buffer + pos, count, src) != count)
+ 		return -EFAULT;
+ 	chip->buffer_end = chip->data_buffer + pos + count;
  
 
 
