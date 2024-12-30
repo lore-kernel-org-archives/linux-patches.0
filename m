@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265CA42AA6;
-	Mon, 30 Dec 2024 15:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D1F2AE68;
+	Mon, 30 Dec 2024 15:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574107; cv=none; b=MSGu4yJ7UmBKP8qcrvuDImxEzmmd2XqmGVgtClr0jCDfVvuxuE4I7MYH/vPmZmP46Yh13aBqZHizCVOndglWG05BSKwV6MZxkJJCAYwIktKDDcRdtXTehTXnRViAMKo+gic2YhmnVg1DYfLeb4rFDPSmuw/uOOP5WSFi+CjZMWQ=
+	t=1735574110; cv=none; b=OrI9gsjltijMb70z6fnlGTUo8yqLO/j3JGR+uCwvT06LRhD5SyzLWFhhe1QFQ8HLL8aMoo3YdAmWABRkG6ElNsxiC1vnTnZROYm2/0XItnTE9aBF8GeKHw7JngyBQR7nytnPlUXEpT8ORnuYeyRhrkdStImz8ARQyb+y4m4b7RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574107; c=relaxed/simple;
-	bh=2gknVYVkl7yoxO2DFug7mhmSpzcuHvC8kG8ggdPfXbY=;
+	s=arc-20240116; t=1735574110; c=relaxed/simple;
+	bh=4pmSZRdoh1m8bvowR7Bx1KTijlNBezG4FH/l0p6Sd+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WDMnqU9yVRkyNgAVSJ1JO8P0ouz48lGxzzvKiPHH2vmjQ4dmriysC8sG1iPGdRkWlStHqqvdoQmnK2Zp8miJANj/lC1r0WPurmxJug2iD4e96BVR/oXwuU4LvGruv8ZAJgblwjGmElXYQJInzgovGowkvPORdUbRLAUo0JD1hUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZRoSqTA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YpDeu0vmkIrjCk+Ba17PrJ20ynY8oSYycpIDhgaPz6uj7bIzrXv143fE1FUcGK5BxXd10O/hSqrgZZbQ5ZO+eISWydk11KTyaIvVrtYz5EgR6yO2WOaadohbC956/e+RBcn4jM3UHO1idjJmzPwaorjTV40Xzg2wAz0pMnH8OEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/ME/RLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZRoSqTA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FD8C4CED0;
-	Mon, 30 Dec 2024 15:55:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/ME/RLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E549CC4CED0;
+	Mon, 30 Dec 2024 15:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574107;
-	bh=2gknVYVkl7yoxO2DFug7mhmSpzcuHvC8kG8ggdPfXbY=;
+	s=korg; t=1735574110;
+	bh=4pmSZRdoh1m8bvowR7Bx1KTijlNBezG4FH/l0p6Sd+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZRoSqTA09Jk5Jy5XCcDxaIUtgS3LMdRMaXGQgMsCTKxC3Dbmaur9dlCDtf5tteiS
-	 jLJLE3G/TN1Agc2h+Gxlk+eEzCEaigv0bEoMh4IOYDvZH9BYPM6FenT8YV5ErP2vkG
-	 /2wbydtdseErEZcCdYvXzN2nyvPFYOuRf1j5WuC8=
+	b=m/ME/RLwjAgcWxvi52rMjZxF4PDATMBSGX7SChJfV2Qu0GnFVtUpw8IYOeHlyj0nQ
+	 TtrQJr5ScHeENPqk7Y7FFbs95G3EUfsvUnlrMuGeQ6QjGqwz7yBpULZ9pFwdP5xF39
+	 O7X/RAauchWpMoFVYWc//BI/T16JNzF2BlqIh9yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 038/114] ASoC: amd: ps: Fix for enabling DMIC on acp63 platform via _DSD entry
-Date: Mon, 30 Dec 2024 16:42:35 +0100
-Message-ID: <20241230154219.529617394@linuxfoundation.org>
+Subject: [PATCH 6.12 039/114] ASoC: Intel: sof_sdw: Fix DMI match for Lenovo 21QA and 21QB
+Date: Mon, 30 Dec 2024 16:42:36 +0100
+Message-ID: <20241230154219.566935730@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -50,63 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 88438444fdddd0244c8b2697713adcca3e71599e upstream.
+commit ba7d47a54bf23a7201bdd2978e16b04fc1cb1f6e upstream.
 
-Add condition check to register ACP PDM sound card by reading
-_WOV acpi entry.
+Update the DMI match for a Lenovo laptop to the new DMI identifier.
 
-Fixes: 0386d765f27a ("ASoC: amd: ps: refactor acp device configuration read logic")
+This laptop ships with a different DMI identifier to what was expected,
+and now has two identifiers.
 
-Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
-Link: https://patch.msgid.link/20241213061147.1060451-1-venkataprasad.potturu@amd.com
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: ea657f6b24e1 ("ASoC: Intel: sof_sdw: Add quirk for cs42l43 system using host DMICs")
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20241216140821.153670-3-yung-chuan.liao@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/ps/pci-ps.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_sdw.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/sound/soc/amd/ps/pci-ps.c
-+++ b/sound/soc/amd/ps/pci-ps.c
-@@ -375,11 +375,18 @@ static int get_acp63_device_config(struc
- {
- 	struct acpi_device *pdm_dev;
- 	const union acpi_object *obj;
-+	acpi_handle handle;
-+	acpi_integer dmic_status;
- 	u32 config;
- 	bool is_dmic_dev = false;
- 	bool is_sdw_dev = false;
-+	bool wov_en, dmic_en;
- 	int ret;
- 
-+	/* IF WOV entry not found, enable dmic based on acp-audio-device-type entry*/
-+	wov_en = true;
-+	dmic_en = false;
-+
- 	config = readl(acp_data->acp63_base + ACP_PIN_CONFIG);
- 	switch (config) {
- 	case ACP_CONFIG_4:
-@@ -412,10 +419,18 @@ static int get_acp63_device_config(struc
- 			if (!acpi_dev_get_property(pdm_dev, "acp-audio-device-type",
- 						   ACPI_TYPE_INTEGER, &obj) &&
- 						   obj->integer.value == ACP_DMIC_DEV)
--				is_dmic_dev = true;
-+				dmic_en = true;
- 		}
-+
-+		handle = ACPI_HANDLE(&pci->dev);
-+		ret = acpi_evaluate_integer(handle, "_WOV", NULL, &dmic_status);
-+		if (!ACPI_FAILURE(ret))
-+			wov_en = dmic_status;
- 	}
- 
-+	if (dmic_en && wov_en)
-+		is_dmic_dev = true;
-+
- 	if (acp_data->is_sdw_config) {
- 		ret = acp_scan_sdw_devices(&pci->dev, ACP63_SDW_ADDR);
- 		if (!ret && acp_data->info.link_mask)
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -608,7 +608,16 @@ static const struct dmi_system_id sof_sd
+ 		.callback = sof_sdw_quirk_cb,
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "233C")
++			DMI_MATCH(DMI_PRODUCT_NAME, "21QB")
++		},
++		/* Note this quirk excludes the CODEC mic */
++		.driver_data = (void *)(SOC_SDW_CODEC_MIC),
++	},
++	{
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21QA")
+ 		},
+ 		/* Note this quirk excludes the CODEC mic */
+ 		.driver_data = (void *)(SOC_SDW_CODEC_MIC),
 
 
