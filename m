@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B713615E8B;
-	Mon, 30 Dec 2024 15:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57D315E8B;
+	Mon, 30 Dec 2024 15:58:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574289; cv=none; b=Ts+3PKt+D4LVU3Yk1wzJhoaGz1KGy/so9giKkxfSrgICzBW6q95A+T0oqR2Vg4rPeJrcBg2F6m+GRJZuWWWBVQjLDpGQUt90SEGazQx9R0+BzF15xC0eP1zC8dC+dW7A7ExgZK7G7q6ZHyFVpsMwDOi6zm5qRGInriXsnzMWRGo=
+	t=1735574292; cv=none; b=igA69i6RFh7v2KsZQ7k06MtVLJ6QhJ+9jjEAI0NUl8Oq2+oZUEMWRfO+iPfI58OLqKZDqjyKI3ESshkEpFJAb1ewtKD91Z7MSR4ch1M0Pgy2aOg0vDdCikxicj8wZYRqa2IfGRcFKGmq/H++17bn7ONALeAvQ/fYiId6rKkm0y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574289; c=relaxed/simple;
-	bh=HPZysbXXj1O8HffU9W5XYGSwfuOBOQhw0xb/mC4Qo80=;
+	s=arc-20240116; t=1735574292; c=relaxed/simple;
+	bh=pJuRQ8diw1jRmdhyjzynd1IIeoF0Hgf+wNxiLvWeaeE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uJgSiqnopPpOtJFnUeNV50sbW2sKlEkgpVLKi6XjD0Q2VXAANl42VKRzz0UdRkHy2X4y0Dg8T1oxETx6P+gIXddvI7xL/v87UbZdszrPI+3wNnbP5885bgpsGD3j+5LNx1AMPApN50kSaQ3kWYujDQjcV129rsQpUbM8Cdc0ZBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXv95dGD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PH6mKPVBe9JC0HxDS96W+T1Y0tAietXwjJi3j4QCMOo0bWddoQ/VcXVee5YlRM1hAhtrq3v5CcIegqWMaOrvLB8PiBoiVcbB4xNHFHIYblGFuqPT+GjYsxOmV/4guyZXQ5oM391bQlxEZCS0zsI847eFEuWOzwf46syR6SAGrVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjSYaTg4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXv95dGD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24308C4CED0;
-	Mon, 30 Dec 2024 15:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjSYaTg4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A5A8C4CED0;
+	Mon, 30 Dec 2024 15:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574289;
-	bh=HPZysbXXj1O8HffU9W5XYGSwfuOBOQhw0xb/mC4Qo80=;
+	s=korg; t=1735574292;
+	bh=pJuRQ8diw1jRmdhyjzynd1IIeoF0Hgf+wNxiLvWeaeE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXv95dGDWBtwfEag5S5t3zkAVk5LX3o4m00k96HpYT6dZZM6dI80mQ9Q4YllpyZqd
-	 VZPcKMust31VP9c+lEuJbKSpD+TqwBFXNjQxOZPeuVAuq62uQyEUmF49fjs1Z0JOeW
-	 R0FQuvKqfZQ2Fl9a/wvwdUYW141jsVxgSPFksoik=
+	b=cjSYaTg4RZAfOBQEFleelmeCoZrj2qukumdcrW2P/EEYeOVrkMnJPm1fIxdc6nFbQ
+	 A4ccgttpSQP3QmbFeitEUnvsaBS9XwkwKmBO+0Rul4dLH1hjtkQBftcrGNVG36gxLG
+	 8DmsGUahhqTTPbqHoPp9Ih/2bglK+iH/h7QNF2bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Kleen <ak@linux.intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 093/114] perf/x86/intel: Fix bitmask of OCR and FRONTEND events for LNC
-Date: Mon, 30 Dec 2024 16:43:30 +0100
-Message-ID: <20241230154221.675776598@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.12 094/114] i2c: imx: add imx7d compatible string for applying erratum ERR007805
+Date: Mon, 30 Dec 2024 16:43:31 +0100
+Message-ID: <20241230154221.714844672@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,54 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit aa5d2ca7c179c40669edb5e96d931bf9828dea3d upstream.
+commit e0cec363197e41af870613e8e17b30bf0e3d41b5 upstream.
 
-The released OCR and FRONTEND events utilized more bits on Lunar Lake
-p-core. The corresponding mask in the extra_regs has to be extended to
-unblock the extra bits.
+Compatible string "fsl,imx7d-i2c" is not exited at i2c-imx driver
+compatible string table, at the result, "fsl,imx21-i2c" will be
+matched, but it will cause erratum ERR007805 not be applied in fact.
 
-Add a dedicated intel_lnc_extra_regs.
+So Add "fsl,imx7d-i2c" compatible string in i2c-imx driver to apply
+the erratum ERR007805(https://www.nxp.com/docs/en/errata/IMX7DS_3N09P.pdf).
 
-Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
-Reported-by: Andi Kleen <ak@linux.intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20241216160252.430858-1-kan.liang@linux.intel.com
+"
+ERR007805 I2C: When the I2C clock speed is configured for 400 kHz,
+the SCL low period violates the I2C spec of 1.3 uS min
+
+Description: When the I2C module is programmed to operate at the
+maximum clock speed of 400 kHz (as defined by the I2C spec), the SCL
+clock low period violates the I2C spec of 1.3 uS min. The user must
+reduce the clock speed to obtain the SCL low time to meet the 1.3us
+I2C minimum required. This behavior means the SoC is not compliant
+to the I2C spec at 400kHz.
+
+Workaround: To meet the clock low period requirement in fast speed
+mode, SCL must be configured to 384KHz or less.
+"
+
+"fsl,imx7d-i2c" already is documented in binding doc. This erratum
+fix has been included in imx6_i2c_hwdata and it is the same in all
+I.MX6/7/8, so just reuse it.
+
+Fixes: 39c025721d70 ("i2c: imx: Implement errata ERR007805 or e7805 bus frequency limit")
+Cc: stable@vger.kernel.org # v5.18+
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: 39c025721d70 ("i2c: imx: Implement errata ERR007805 or e7805 bus frequency limit")
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/r/20241218044238.143414-1-carlos.song@nxp.com
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-imx.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -429,6 +429,16 @@ static struct event_constraint intel_lnc
- 	EVENT_CONSTRAINT_END
- };
- 
-+static struct extra_reg intel_lnc_extra_regs[] __read_mostly = {
-+	INTEL_UEVENT_EXTRA_REG(0x012a, MSR_OFFCORE_RSP_0, 0xfffffffffffull, RSP_0),
-+	INTEL_UEVENT_EXTRA_REG(0x012b, MSR_OFFCORE_RSP_1, 0xfffffffffffull, RSP_1),
-+	INTEL_UEVENT_PEBS_LDLAT_EXTRA_REG(0x01cd),
-+	INTEL_UEVENT_EXTRA_REG(0x02c6, MSR_PEBS_FRONTEND, 0x9, FE),
-+	INTEL_UEVENT_EXTRA_REG(0x03c6, MSR_PEBS_FRONTEND, 0x7fff1f, FE),
-+	INTEL_UEVENT_EXTRA_REG(0x40ad, MSR_PEBS_FRONTEND, 0xf, FE),
-+	INTEL_UEVENT_EXTRA_REG(0x04c2, MSR_PEBS_FRONTEND, 0x8, FE),
-+	EVENT_EXTRA_END
-+};
- 
- EVENT_ATTR_STR(mem-loads,	mem_ld_nhm,	"event=0x0b,umask=0x10,ldlat=3");
- EVENT_ATTR_STR(mem-loads,	mem_ld_snb,	"event=0xcd,umask=0x1,ldlat=3");
-@@ -6344,7 +6354,7 @@ static __always_inline void intel_pmu_in
- 	intel_pmu_init_glc(pmu);
- 	hybrid(pmu, event_constraints) = intel_lnc_event_constraints;
- 	hybrid(pmu, pebs_constraints) = intel_lnc_pebs_event_constraints;
--	hybrid(pmu, extra_regs) = intel_rwc_extra_regs;
-+	hybrid(pmu, extra_regs) = intel_lnc_extra_regs;
- }
- 
- static __always_inline void intel_pmu_init_skt(struct pmu *pmu)
+--- a/drivers/i2c/busses/i2c-imx.c
++++ b/drivers/i2c/busses/i2c-imx.c
+@@ -282,6 +282,7 @@ static const struct of_device_id i2c_imx
+ 	{ .compatible = "fsl,imx6sll-i2c", .data = &imx6_i2c_hwdata, },
+ 	{ .compatible = "fsl,imx6sx-i2c", .data = &imx6_i2c_hwdata, },
+ 	{ .compatible = "fsl,imx6ul-i2c", .data = &imx6_i2c_hwdata, },
++	{ .compatible = "fsl,imx7d-i2c", .data = &imx6_i2c_hwdata, },
+ 	{ .compatible = "fsl,imx7s-i2c", .data = &imx6_i2c_hwdata, },
+ 	{ .compatible = "fsl,imx8mm-i2c", .data = &imx6_i2c_hwdata, },
+ 	{ .compatible = "fsl,imx8mn-i2c", .data = &imx6_i2c_hwdata, },
 
 
