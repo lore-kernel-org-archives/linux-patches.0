@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8341B15E8B;
-	Mon, 30 Dec 2024 15:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED9815E8B;
+	Mon, 30 Dec 2024 15:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574096; cv=none; b=HEnIfgUfIhsebUnHI/5bGuJV9R2DAifO1nHvTiQWIk2pIpgPNqvsKg592TIBdbfSOzo05HJGdDN7vE9kKZrZIwZycT1ETDIS6AmA24Z9d51SIFUN0nW8V0J2byYmy8Jx0KP7joR/Kd5ba1jvH8ETrBcxIJxPApxASoHHGgih28Y=
+	t=1735574100; cv=none; b=JdRQG6lav8F5vij95JfjqzzaX4rAeg3e3J1bLu+IAH/kKKaEFadxKQFIJud3BJHMKxMavFWtDFSE7wPr8LrpQLCtDLfdyIB/yp36n9ja+vECWtYwyuGHjU+v3tD7QOn1xPYpAwnSkgcCXhs6ag79/wUg32jhc1+H2w9a5010Q2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574096; c=relaxed/simple;
-	bh=mkCl7h5KwHqNay2kp9snkjQbUQsETbgAbpBG5nCbvK4=;
+	s=arc-20240116; t=1735574100; c=relaxed/simple;
+	bh=rB2Nf9vpvsIYpfSvDwJoqrKNc13c9w0zy0lnoPoGTcM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SM6r3UVLR9MqEYVx2vCW9juLRb5mOugyI9lmaORABaD02aaFMv/UVRMFjIWD0LpKJcK5QJTTizS94hU2vCaJKadzQQJJRQyBidZq82IbzzZmGkJHJJMx2Fm1dAU9/VFrXsRQGUBFhbHHCZENVOMxlJOSfkdDl90vGGdFKHWfEug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzkaNmAJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YGtYddCZf0ho68dV5raU21tY8nM8fuvda2077RD1Ob7aZVgJIIGARxZo16hpdJbrvk8Q5HP1sN65piUHWRgZEmfZLzKIeCnEFY76se7dc7+SUBkpRTBpuwZiDNx7moKQxHwD0elSQg1BtTTt6+EfBhRG16dB9Wht6fPpnXpsOXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wHd72Jl5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzkaNmAJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF09C4CED0;
-	Mon, 30 Dec 2024 15:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wHd72Jl5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2ADC4CED0;
+	Mon, 30 Dec 2024 15:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574096;
-	bh=mkCl7h5KwHqNay2kp9snkjQbUQsETbgAbpBG5nCbvK4=;
+	s=korg; t=1735574099;
+	bh=rB2Nf9vpvsIYpfSvDwJoqrKNc13c9w0zy0lnoPoGTcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzkaNmAJxFkAhiGWXWeRn8ZrpQY1ypLo2i6QeY2b504nyfiKtrI40wAgUWCSf0rhL
-	 alI9uoFZJ68Et999xKtW51ubBHktk4IfmCBqOKh/rtf6HuNCeC/jsLtfb4+ojWDx3f
-	 Set97mKrSL9zCN6Bi/LMqtqhisXBqLu2m8DaiG14=
+	b=wHd72Jl5ttlMwL9cU3EG47VpThPhJzAPs8wF/geRX0wm7tpiJ8+FSzAWU/UB0S7k8
+	 ZkDN83kssuPPgDX8ctiFgmm7fYk6vhMUMSGwM+313QqGqo3ISZVGkMoLYcOrRuGzMp
+	 1F4AxeLMM4WCtvGLs2kuYBg1nBkaRvDsZ5tv62Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dustin L. Howett" <dustin@howett.net>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 6.12 036/114] platform/chrome: cros_ec_lpc: fix product identity for early Framework Laptops
-Date: Mon, 30 Dec 2024 16:42:33 +0100
-Message-ID: <20241230154219.450124336@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 019/114] phy: core: Fix an OF node refcount leakage in _of_phy_get()
+Date: Mon, 30 Dec 2024 16:42:16 +0100
+Message-ID: <20241230154218.803299003@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -45,55 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dustin L. Howett <dustin@howett.net>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit dcd59d0d7d51b2a4b768fc132b0d74a97dfd6d6a upstream.
+commit 5ebdc6be16c2000e37fcb8b4072d442d268ad492 upstream.
 
-The product names for the Framework Laptop (12th and 13th Generation
-Intel Core) are incorrect as of 62be134abf42.
+_of_phy_get() will directly return when suffers of_device_is_compatible()
+error, but it forgets to decrease refcount of OF node @args.np before error
+return, the refcount was increased by previous of_parse_phandle_with_args()
+so causes the OF node's refcount leakage.
 
-Fixes: 62be134abf42 ("platform/chrome: cros_ec_lpc: switch primary DMI data for Framework Laptop")
-Cc: stable@vger.kernel.org # 6.12.x
-Signed-off-by: Dustin L. Howett <dustin@howett.net>
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20241224-platform-chrome-cros_ec_lpc-fix-product-identity-for-early-framework-laptops-v1-1-0d31d6e1d22c@howett.net
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fix by decreasing the refcount via of_node_put() before the error return.
+
+Fixes: b7563e2796f8 ("phy: work around 'phys' references to usb-nop-xceiv devices")
+Cc: stable@vger.kernel.org
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-4-40ae28f5015a@quicinc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_lpc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/phy-core.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_lpc.c b/drivers/platform/chrome/cros_ec_lpc.c
-index 924bf4d3cc77..8470b7f2b135 100644
---- a/drivers/platform/chrome/cros_ec_lpc.c
-+++ b/drivers/platform/chrome/cros_ec_lpc.c
-@@ -707,7 +707,7 @@ static const struct dmi_system_id cros_ec_lpc_dmi_table[] __initconst = {
- 		/* Framework Laptop (12th Gen Intel Core) */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Framework"),
--			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "12th Gen Intel Core"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Laptop (12th Gen Intel Core)"),
- 		},
- 		.driver_data = (void *)&framework_laptop_mec_lpc_driver_data,
- 	},
-@@ -715,7 +715,7 @@ static const struct dmi_system_id cros_ec_lpc_dmi_table[] __initconst = {
- 		/* Framework Laptop (13th Gen Intel Core) */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Framework"),
--			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "13th Gen Intel Core"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Laptop (13th Gen Intel Core)"),
- 		},
- 		.driver_data = (void *)&framework_laptop_mec_lpc_driver_data,
- 	},
--- 
-2.47.1
-
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -629,8 +629,10 @@ static struct phy *_of_phy_get(struct de
+ 		return ERR_PTR(-ENODEV);
+ 
+ 	/* This phy type handled by the usb-phy subsystem for now */
+-	if (of_device_is_compatible(args.np, "usb-nop-xceiv"))
+-		return ERR_PTR(-ENODEV);
++	if (of_device_is_compatible(args.np, "usb-nop-xceiv")) {
++		phy = ERR_PTR(-ENODEV);
++		goto out_put_node;
++	}
+ 
+ 	mutex_lock(&phy_provider_mutex);
+ 	phy_provider = of_phy_provider_lookup(args.np);
+@@ -652,6 +654,7 @@ out_put_module:
+ 
+ out_unlock:
+ 	mutex_unlock(&phy_provider_mutex);
++out_put_node:
+ 	of_node_put(args.np);
+ 
+ 	return phy;
 
 
