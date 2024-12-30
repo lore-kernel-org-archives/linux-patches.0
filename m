@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2A32594B6;
-	Mon, 30 Dec 2024 15:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7222594B6;
+	Mon, 30 Dec 2024 15:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573620; cv=none; b=H5we7riMsVtSs0Y2yUWdW4QWA5SvW1zqlmrl1wly8Td//vvuAO1nfD1CHuIv9ZhCIM7cAIF6LCkyxCGTQ0sn4UpP+S9am9iQ0E8705ZrbflXRiQhwDjxXqVuFwRUdll46Xu15/MBZDYhMYMWGic3hEHO586/KTqGiL+/8/9NAzo=
+	t=1735573628; cv=none; b=FosZgnMMqA+jXapn9QERau+qRaKIT5l/j+6+H31FLmENkOZrKNJvLj4oSkt+PGZdphwdznFBzIDlLAQ5wTDsM6vOxf0uuQ1IqzSrlT2gPNawAh92LVQPeXnvYwM6xkZiceHqekvhuICQhQAS4FtyxYg/gjnZ6GnXPy7pTll8RLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573620; c=relaxed/simple;
-	bh=Vi33kJO5hoX1zJZm//bmmuG8e9a9CeTFAwgdxHw/HUQ=;
+	s=arc-20240116; t=1735573628; c=relaxed/simple;
+	bh=7kDBJvA6VlFbDWZx4Wddxkpea3xZ4uIUX9p+tKHGcyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qxf9E27GMlQ4ABAEph8fuIrGIqpAM2y2vXU6Zlf2Y2D/J4kg9+hSScwptYmpt1hQeXQU4M+WGgCvUxLzzq3m/jaXy7N3wpk3NyJhKvgTToKy9/VlGZPxkuUXxFqIWYqNwCYnNB2RqDrHmOa9ejAs1tZyvvtpjrW3pHr5m0ky3Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdt2nDZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mw+ZjHD39eFp42Va5s0PenupjnZK2RKl81gDqj72XwHMv/9yXVWPiv2pX+yZOxD41AqUAznugHY9sxO/5OwwBovi2c7QTT9hj3CE7giSw1rTsvjApOgbglDiHkM5ajDHngJS4zkc8gZN8LDBYZb7qPn+0Fpsy4T6Gv6hCcjG8TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7DCJ+Mi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdt2nDZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0FCC4CED0;
-	Mon, 30 Dec 2024 15:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7DCJ+Mi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC411C4CED0;
+	Mon, 30 Dec 2024 15:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573620;
-	bh=Vi33kJO5hoX1zJZm//bmmuG8e9a9CeTFAwgdxHw/HUQ=;
+	s=korg; t=1735573628;
+	bh=7kDBJvA6VlFbDWZx4Wddxkpea3xZ4uIUX9p+tKHGcyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdt2nDZHQpvs6owY+qyxQvkLq9goMK5pAYZZXiYM+f9MzIwdw0ysoFEKqORxE3yAD
-	 EmJBesp16uf9RzylxQB56uYibICxjPqvQo7Jnr67wsnIX5+MeeJXG2MKkhzeQkKic5
-	 /KfDdGS6ju3ZT4/gk3s0vOeIl//zXSafgwGkBgl0=
+	b=i7DCJ+MirO1LPKhcYJYa1S3gx0Qo0sc45dgNUfNZFRgh/JrpZ7OX8QRfnLgbnDO0L
+	 q4DHKIbMpf/Bn5G8KW1K2YmH3Q01F90C0yd9otQ9DqO0MJmoBOIkfCeXLK938CGqKN
+	 dWfZq0UjSFx20Vh7Z2JhwjrXVhyZ8P/PrvW93MUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Kartik Rajput <kkartik@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 20/60] dmaengine: tegra: Return correct DMA status when paused
-Date: Mon, 30 Dec 2024 16:42:30 +0100
-Message-ID: <20241230154208.055372660@linuxfoundation.org>
+	NeilBrown <neilb@suse.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 47/60] sched/core: Report correct state for TASK_IDLE | TASK_FREEZABLE
+Date: Mon, 30 Dec 2024 16:42:57 +0100
+Message-ID: <20241230154209.060113582@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -51,81 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: NeilBrown <neilb@suse.de>
 
-commit ebc008699fd95701c9af5ebaeb0793eef81a71d5 upstream.
+[ Upstream commit 0d6b35283bcf1a379cf20066544af8e6a6b16b46 ]
 
-Currently, the driver does not return the correct DMA status when a DMA
-pause is issued by the client drivers. This causes GPCDMA users to
-assume that DMA is still running, while in reality, the DMA is paused.
+task_state_index() ignores uninteresting state flags (such as
+TASK_FREEZABLE) for most states, but for TASK_IDLE and TASK_RTLOCK_WAIT
+it does not.
 
-Return DMA_PAUSED for tx_status() if the channel is paused in the middle
-of a transfer.
+So if a task is waiting TASK_IDLE|TASK_FREEZABLE it gets incorrectly
+reported as TASK_UNINTERRUPTIBLE or "D".  (it is planned for nfsd to
+change to use this state).
 
-Fixes: ee17028009d4 ("dmaengine: tegra: Add tegra gpcdma driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Kartik Rajput <kkartik@nvidia.com>
-Link: https://lore.kernel.org/r/20241212124412.5650-1-kkartik@nvidia.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by only testing the interesting bits and not the irrelevant
+bits in __task_state_index()
+
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/169335025927.5133.4781141800413736103@noble.neil.brown.name
+Stable-dep-of: f718faf3940e ("freezer, sched: Report frozen tasks as 'D' instead of 'R'")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra186-gpc-dma.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/linux/sched.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/tegra186-gpc-dma.c
-+++ b/drivers/dma/tegra186-gpc-dma.c
-@@ -228,6 +228,7 @@ struct tegra_dma_channel {
- 	bool config_init;
- 	char name[30];
- 	enum dma_transfer_direction sid_dir;
-+	enum dma_status status;
- 	int id;
- 	int irq;
- 	int slave_id;
-@@ -389,6 +390,8 @@ static int tegra_dma_pause(struct tegra_
- 		tegra_dma_dump_chan_regs(tdc);
- 	}
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 0cac69902ec5..205a00806835 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -1663,7 +1663,7 @@ static inline unsigned int __task_state_index(unsigned int tsk_state,
  
-+	tdc->status = DMA_PAUSED;
-+
- 	return ret;
- }
+ 	BUILD_BUG_ON_NOT_POWER_OF_2(TASK_REPORT_MAX);
  
-@@ -415,6 +418,8 @@ static void tegra_dma_resume(struct tegr
- 	val = tdc_read(tdc, TEGRA_GPCDMA_CHAN_CSRE);
- 	val &= ~TEGRA_GPCDMA_CHAN_CSRE_PAUSE;
- 	tdc_write(tdc, TEGRA_GPCDMA_CHAN_CSRE, val);
-+
-+	tdc->status = DMA_IN_PROGRESS;
- }
+-	if (tsk_state == TASK_IDLE)
++	if ((tsk_state & TASK_IDLE) == TASK_IDLE)
+ 		state = TASK_REPORT_IDLE;
  
- static int tegra_dma_device_resume(struct dma_chan *dc)
-@@ -540,6 +545,7 @@ static void tegra_dma_xfer_complete(stru
+ 	/*
+@@ -1671,7 +1671,7 @@ static inline unsigned int __task_state_index(unsigned int tsk_state,
+ 	 * to userspace, we can make this appear as if the task has gone through
+ 	 * a regular rt_mutex_lock() call.
+ 	 */
+-	if (tsk_state == TASK_RTLOCK_WAIT)
++	if (tsk_state & TASK_RTLOCK_WAIT)
+ 		state = TASK_UNINTERRUPTIBLE;
  
- 	tegra_dma_sid_free(tdc);
- 	tdc->dma_desc = NULL;
-+	tdc->status = DMA_COMPLETE;
- }
- 
- static void tegra_dma_chan_decode_error(struct tegra_dma_channel *tdc,
-@@ -712,6 +718,7 @@ static int tegra_dma_terminate_all(struc
- 		tdc->dma_desc = NULL;
- 	}
- 
-+	tdc->status = DMA_COMPLETE;
- 	tegra_dma_sid_free(tdc);
- 	vchan_get_all_descriptors(&tdc->vc, &head);
- 	spin_unlock_irqrestore(&tdc->vc.lock, flags);
-@@ -765,6 +772,9 @@ static enum dma_status tegra_dma_tx_stat
- 	if (ret == DMA_COMPLETE)
- 		return ret;
- 
-+	if (tdc->status == DMA_PAUSED)
-+		ret = DMA_PAUSED;
-+
- 	spin_lock_irqsave(&tdc->vc.lock, flags);
- 	vd = vchan_find_desc(&tdc->vc, cookie);
- 	if (vd) {
+ 	return fls(state);
+-- 
+2.39.5
+
 
 
