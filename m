@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8727D2594B6;
-	Mon, 30 Dec 2024 15:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45B62594B6;
+	Mon, 30 Dec 2024 15:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573638; cv=none; b=K6Pc9dU1m2TK2D81Pi+pDNdmslUfmvtNyNcmYxu1Fdqs1f8fakOM4m/W4mqynl2zhS7GZqDv0/WFHSlNnWdUr2Ed2SDOxKWYqVYN0vnlodUYbb+/EPLM1w3elo35aSdqE4qYObWK1jPJ/nSkOmYmDsQKXRG+nA+YLSSsan7j8pY=
+	t=1735573641; cv=none; b=HjGdaR/DzwAf01SxYPCvksO3McIOvmhoQIoNBjbLKeEqTQqdsjY6qVf9+KIgCyedIEcvQHLavF8pFr6LmvXOsSfV9+xFQGJZlZGKJy6//1bkeeDIO92gtFgCb/pMLvZdZ3Kq4iF0qQdQYeXkN7sYytZ1J48n3JgwGmi0N/EyJko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573638; c=relaxed/simple;
-	bh=xz5gmXoW9BdPe3/OUSCplyyakmqfKsF5uWspwbj3x0I=;
+	s=arc-20240116; t=1735573641; c=relaxed/simple;
+	bh=8ognPNBH4MztWPtXklsFEuev/HFLMN7AFkZNPtUEZbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZnxCFaUMK5VwqUg/zlp4ynAfnknsKctI57QeH5IMtgnmLv3rZCzb3wUB3LZjnSVwMaIscnLrM0/q6cdmdUR5DLPyTFmhuLjW8hDgJEv61RXEB03jpDm3YBdWAc8Vzxh5VsGLrkxr7x+UDNMkCPSI/gvhlImNQqEWpMzsoQ0FBsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BexURkfJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFyaqy7QABuLo5vwaISHKm/7uC8ET5rbKAmtFbai/8ZGZiYsghEKsfZV4wMu4dGuI46Tr0dREuvJLjdciR0JKKfqxeLWxsimsozs6Bw9vUHChvyTbYVABrBFOJhdvofoU9srkA2mzvDo8ifNS0SPns+kckMnyPST0mBiX/Z0qtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvuzcUXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BexURkfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84668C4CED0;
-	Mon, 30 Dec 2024 15:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvuzcUXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFDFC4CED0;
+	Mon, 30 Dec 2024 15:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573638;
-	bh=xz5gmXoW9BdPe3/OUSCplyyakmqfKsF5uWspwbj3x0I=;
+	s=korg; t=1735573641;
+	bh=8ognPNBH4MztWPtXklsFEuev/HFLMN7AFkZNPtUEZbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BexURkfJ9KxhKJSKQFWC1q/2pCmmea0aw7qUvR1kGvbE+y2jrrsnyOhsnfZtjBlAi
-	 wAwuAAtPGtLhKzo55wxKqTKK1Z0NaLCfsKL4U759v6gYz90oEJjqi2KL3MTLiFHEIG
-	 +I86cUnXEWr89YCBAkeiV/5D9CQap9xBwBOA37Uc=
+	b=yvuzcUXMGlICvODfuibvtksWvavS1yGfPDrREY6JNVj2DZxQjfQygG9wPxbnc2cYU
+	 yOajQbZKJeUi4zMhV6HYeawzqqAbkVo8eG7oO/YpvevuS+2L0QbWYxbTz4fpjtsqLn
+	 Od52BW1OMGkGDdkUnSiGjNkzU1DCL/gtHaBNV8Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Finkelstein <fnkl.kernel@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 21/60] dmaengine: apple-admac: Avoid accessing registers in probe
-Date: Mon, 30 Dec 2024 16:42:31 +0100
-Message-ID: <20241230154208.092028861@linuxfoundation.org>
+Subject: [PATCH 6.1 22/60] dmaengine: at_xdmac: avoid null_prt_deref in at_xdmac_prep_dma_memset
+Date: Mon, 30 Dec 2024 16:42:32 +0100
+Message-ID: <20241230154208.128282504@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -50,47 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sasha Finkelstein <fnkl.kernel@gmail.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-commit 8d55e8a16f019211163f1180fd9f9fbe05901900 upstream.
+commit c43ec96e8d34399bd9dab2f2dc316b904892133f upstream.
 
-The ADMAC attached to the AOP has complex power sequencing, and is
-power gated when the probe callback runs. Move the register reads
-to other functions, where we can guarantee that the hardware is
-switched on.
+The at_xdmac_memset_create_desc may return NULL, which will lead to a
+null pointer dereference. For example, the len input is error, or the
+atchan->free_descs_list is empty and memory is exhausted. Therefore, add
+check to avoid this.
 
-Fixes: 568aa6dd641f ("dmaengine: apple-admac: Allocate cache SRAM to channels")
-Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
-Link: https://lore.kernel.org/r/20241124-admac-power-v1-1-58f2165a4d55@gmail.com
+Fixes: b206d9a23ac7 ("dmaengine: xdmac: Add memset support")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Link: https://lore.kernel.org/r/20241029082845.1185380-1-chenridong@huaweicloud.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/apple-admac.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/dma/at_xdmac.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -152,6 +152,8 @@ static int admac_alloc_sram_carveout(str
- {
- 	struct admac_sram *sram;
- 	int i, ret = 0, nblocks;
-+	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
-+	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -1287,6 +1287,8 @@ at_xdmac_prep_dma_memset(struct dma_chan
+ 		return NULL;
  
- 	if (dir == DMA_MEM_TO_DEV)
- 		sram = &ad->txcache;
-@@ -911,12 +913,7 @@ static int admac_probe(struct platform_d
- 		goto free_irq;
- 	}
+ 	desc = at_xdmac_memset_create_desc(chan, atchan, dest, len, value);
++	if (!desc)
++		return NULL;
+ 	list_add_tail(&desc->desc_node, &desc->descs_list);
  
--	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
--	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
--
- 	dev_info(&pdev->dev, "Audio DMA Controller\n");
--	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
--		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
- 
- 	return 0;
- 
+ 	desc->tx_dma_desc.cookie = -EBUSY;
 
 
