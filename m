@@ -1,64 +1,64 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5631A1ACED2
-	for <patches@lists.linux.dev>; Mon, 30 Dec 2024 17:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0593219DFAB
+	for <patches@lists.linux.dev>; Mon, 30 Dec 2024 17:52:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735580377; cv=none; b=NpHQ/BqQ+jhsoQNS7zxhqB4rJA4uFOLWzvy638UygXSCdxoc14M3dkHK3T4e2jFUt/jipsvASKhABJ+s3h38qDjZ2vGKEWse1lEQFK53yAa7lhMieWL0nPknXuD+9fxYo+anTDzsNXFrYr38LJxQxHyvIopD5COWqoU/VD0+aEo=
+	t=1735581124; cv=none; b=IS34MW10mCSKXknrL7uB6QCqoE2RcVERCflay18wvHEK8EtoQTPzihI6xw5ipn2f7+Sv8CBb3KIHXGxVPKoCblHlbinwtYYvAf/jPjTTqaIuO7RPc82SIqF+c2cTJbHvyKVOePPW41tJqGtmcSHnnYeCFikOw4E0MAQQ+rD38Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735580377; c=relaxed/simple;
-	bh=R/rFrw1P0qSXzaAQb8RgeobbyTyxW1rmHaNO4bwznVc=;
+	s=arc-20240116; t=1735581124; c=relaxed/simple;
+	bh=HIhOlTdMGVlskCBikR4qRKesMCFZR98N2pPB+yB/2cM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nAiVyD1U9Waj4MI6z5U/pHocVDN4Kyfl54j4NJKMvMQBxR/ZtUWW8Pr2mBtymDztfWdvn3Y9AeCbRHJdTusQ6Kb/FPHt+YXovEiyMkN83vhCg1gcI8gvhGgFes/73z3iamGOd0WOoI87YyOBF5dSZTFFRNL9c2n2H8oTCC3r6LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yewr8htD; arc=none smtp.client-ip=209.85.216.48
+	 In-Reply-To:Content-Type; b=hmibGpD2MwuSBCddb6fNXioJ4w21/sle1C4NOpSxTeNJiSDogWdkFqoUHUHGXBofvqlQFdBi/ZGYEY8fgHhVFkkTWnmpX0pB6gjeB513OzjmSxSh/HwnWfcsOv1q5NkVUiCoKUaaPZK7mZsKVAWNnM3P7IvsXZdJuo4VXTGXt78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=il+SYOQl; arc=none smtp.client-ip=209.85.160.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yewr8htD"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2eed82ca5b4so12184445a91.2
-        for <patches@lists.linux.dev>; Mon, 30 Dec 2024 09:39:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="il+SYOQl"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-467838e75ffso113187191cf.3
+        for <patches@lists.linux.dev>; Mon, 30 Dec 2024 09:52:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735580376; x=1736185176; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1735581122; x=1736185922; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=eRNjd4v4g2QfDp9LoTWxtu1DzM2fv4DeraAhhjIxMDk=;
-        b=Yewr8htDpdds2h98yqLrVnMl7/+FZYiEsErptSrODff6YhPxfNvmgtevzmyprrCmqU
-         MbknGT65hO0Yk5HqGnvTHAOVNWkjYxBOhiFGRcEj2KFHSSQUQagg2y8vTO7nhrp5OARj
-         48q0iWYynGYmdxUqJpOn6GQkBTwNC93wsUpwZPEcLxIGpz8AssxulKwuw+PgKIqcuUkz
-         1QdM0XWdteW0JFIWcae6TLHqVr4UwlJVvl0a6EuNgcO7oNGQDwrJoQi3zeKBodoJjWY6
-         eW+Y914/2E+s/5KWNa5+Dn+eXate+W/eM/Um8k3QBuNRWyR074wV3nPfGCBpRX+MSjWB
-         b9dg==
+        bh=IYSd9A7AF3xQpqmlOyuSY8eMHWA0vaOmsSMGJUj6h/Q=;
+        b=il+SYOQloI/T9sVND2Sefs0h4pxLHqcDdiIaUVKfthY7hM6yUJ8sG69H1QfraqWeaF
+         PLcF/SXz0ZKd6FS4hD1ygQ8Y2/B0CIKg2WYQbC6fN8VWdcOasrJ1Zr3Vj8sq7BTKyetw
+         sFyU/67AH9MjY4p+4mNAoBc0btFRLN8C18x2uNIPFhz6EGMi/m5WlUfj2q1q/XK8pJl+
+         zlKtcOoNUn3WUUVugs9jgpYde0ji62ClyQcJ29aHdgCHJt4ASebfpcxRHWB3k8eVoGfc
+         oj/AQmdQMi7omAaytrekv6uUuJR+fBUV/9+859fn4d9Si0GA1ZXo6a78NwUtRWIv9qLv
+         uDiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735580376; x=1736185176;
+        d=1e100.net; s=20230601; t=1735581122; x=1736185922;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eRNjd4v4g2QfDp9LoTWxtu1DzM2fv4DeraAhhjIxMDk=;
-        b=aMMJtkdQ27zLCCSz4vt0HxTDbu4hDJh6n5ZXtWK77omCQy7WdTNac+1269aTzUupBL
-         xrFmzrtlAeBuR9TzEJIdMi7pTKSCx//EKQGJj5DzcEZv8HPhi0KTJ8AlKdJ6HXqatJfz
-         SJ/xNUN1/J18ivPEsEohqrPQiun+rKY4ravmQAJ5z6CP8IJuksyRoPPIxwRUhFs9DD2B
-         xDmvqX7THTAHotCowpXeda2CFYsXvfFR3EQaFiB6j2GmgiIj+dvRYAstn0RR4wKfqMDt
-         8IxDbrOXkv4ZoELQMT3fE3wWuIFL964HPSdFGi65hNyImD7h6MOUgTwgluxLCbPgknO5
-         pn8w==
-X-Gm-Message-State: AOJu0YzSmqivgTvRFxWNKrzkqMN0cAajteJBs038LE1XjQv6+S8XpS0l
-	C00qmsXGos72nj7aupF+/zu1GbnM/AL4ea40DooLcv4FoIcQWqsl
-X-Gm-Gg: ASbGncvZgb+VHvGJylEmlgbNMIjByGGguoQNvqQ9SjZ6cIwPJ7+lJOFcuRihIZ5dr7k
-	UVQjH0D51JkqGEpRnpBAH5bcmNi/8II0fvNtiz2CoBd0TX7U6wOMUN65gR9aqqvY0W2DDqVFwbm
-	FXDkq+gM6Cg0f1mpX4+A7VPuTmJkLaESJxnga5A3YzTtB27rNPM1K0OVIYaCbIIZEhQAsYtgG70
-	jzdrPGbvQYVuwRbO0O/8Yqo8INzXgFU/2evd0AQnoDztt/Sdt28BweeQ0c8SHcXvM6DRyMCj8m0
-	FAK2nuGd
-X-Google-Smtp-Source: AGHT+IFrQfxB3HdGql/7V8HgVRAMiQDLsclWx9AHt89IPyjBG+rNU5xZ/t5zKuT9t+HrCFiu6Ktq/A==
-X-Received: by 2002:a17:90b:534f:b0:2ee:ab29:1482 with SMTP id 98e67ed59e1d1-2f452e2ecc8mr56340416a91.16.1735580375533;
-        Mon, 30 Dec 2024 09:39:35 -0800 (PST)
+        bh=IYSd9A7AF3xQpqmlOyuSY8eMHWA0vaOmsSMGJUj6h/Q=;
+        b=BRdsPLlyMrDBFhugDczn8BBK2ZKXJnHSIsfebkoEAYfsDzDv9xWCATkR6lGGI4sz6I
+         kqg+ky9bxAbNQRgtnPmenPfU8bUJsYR/DBD8rF2aeLdzKjxDMBvFe+jJ7rKhAijSTkA2
+         DC21ZjJdl7WY4yj0x52EVD+7pF/eAqCuzU/v3kgAJCh+Awzma1frtg5uKXDH6eVVshDF
+         zP+Ccp6V6O1H2U9P50+QMJRBk5QtPBWQ3YE7cg9ZlYFFJJIB9YQI2OL/FipqM1z2UKd3
+         A2tgSsktrM9ey/XuXTALK/zO38OlOoopNkch/hw4JqRveiUzym4887+u9fLefi2/me78
+         Dg9Q==
+X-Gm-Message-State: AOJu0Yws9ge639aBaHzY5ceXi6znh+KBNPZnh7iAkke4HRboeYW9nwnT
+	kF8qGZnMyH3AfVddGsuQfS8W7O6SbLbT/tkqPZhzo8O94xBbHF8f
+X-Gm-Gg: ASbGncsUXWcUTX9MndZ2VNgAodgqBmPVjzEvyPbTdr8siko18F1bbGYB8eQMz/lc8XI
+	ecIUwg0mBEP83luHR/spxJccYDsbo7vqoQMe0633id0F+xCJkZRpSZW9y1PdZ4UVmEKC73J1wza
+	wdBe7bqY1EK6GtYm3rgBNCMhy0VQaY3GPEyK7W4LPPtz05KUQX2VSRYdIaAURmSoblfxuGysqP1
+	F4ud71GH/XgEIRickiyi2oCLccxd5YTyHOc8MPuiLcDxKYYOMFsQ6uRefRDnA4GRD1IOmUbMQCW
+	taHwkF+b
+X-Google-Smtp-Source: AGHT+IFHCp+Gz629eJ4WSSf954j66vHSHiT7HV15E5avPD/rA/NBaRA0H5e4/BtJZjRKBCEXUboVYA==
+X-Received: by 2002:ac8:59d3:0:b0:466:b122:5143 with SMTP id d75a77b69052e-46a4a8cc456mr554241721cf.16.1735581121844;
+        Mon, 30 Dec 2024 09:52:01 -0800 (PST)
 Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f44779990csm21235982a91.6.2024.12.30.09.39.33
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46a3e64cb04sm107513581cf.8.2024.12.30.09.51.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Dec 2024 09:39:34 -0800 (PST)
-Message-ID: <0081dbc7-b5cb-4345-9799-8c9ea63e3bb7@gmail.com>
-Date: Mon, 30 Dec 2024 09:39:33 -0800
+        Mon, 30 Dec 2024 09:52:01 -0800 (PST)
+Message-ID: <7b5e04ea-9ccf-45bb-b3e1-51a0fae633c2@gmail.com>
+Date: Mon, 30 Dec 2024 09:51:58 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,7 +66,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/60] 6.1.123-rc1 review
+Subject: Re: [PATCH 6.6 00/86] 6.6.69-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -74,7 +74,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20241230154207.276570972@linuxfoundation.org>
+References: <20241230154211.711515682@linuxfoundation.org>
 Content-Language: en-US
 From: Florian Fainelli <f.fainelli@gmail.com>
 Autocrypt: addr=f.fainelli@gmail.com; keydata=
@@ -110,13 +110,13 @@ Autocrypt: addr=f.fainelli@gmail.com; keydata=
  su5Vgh77ByHL+JcQlpBV5MLLlqsxCiupMVaUQ6BEDw4/jsv2SeX2LjG5HR65XoMKEOuC66nZ
  olVTwmAEGBECACACGwwWIQT+T6FvZSYdi9pXvL1hV5kVtWN2DgUCZ2HDiQAKCRBhV5kVtWN2
  DgrkAJ98QULsgU3kLLkYJZqcTKvwae2c5wCg0j7IN/S1pRioN0kme8oawROu72c=
-In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
+In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 12/30/24 07:42, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.123 release.
-> There are 60 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.6.69 release.
+> There are 86 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -124,9 +124,9 @@ On 12/30/24 07:42, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.123-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.69-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
 > 
 > thanks,
