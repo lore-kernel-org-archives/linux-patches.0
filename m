@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCBD15E8B;
-	Mon, 30 Dec 2024 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE09215E8B;
+	Mon, 30 Dec 2024 15:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574144; cv=none; b=W23xmvDKx6WwILbXmPROSuhyFrO1zSnDv6bmDvhlgvxPImQ9DNNeDNRuCFLL9n0IdNI0YDGgkfbSNmioCsEaUhXybQglDSICVEI2CGufxP/12+7vlnUXKkckpcz+56dqcrSLYkgAdojLJqanBYK31uIB1nS6t4+nFlEbcSC1mTs=
+	t=1735574147; cv=none; b=HtifiT7rbuIxldSkPiYINnBDCX27DJ49ooQZpIx2BfIee6oqmgrAIea9MiD19g0+XKUv1SpTm72SOyODJazlHPlW+F5/BaBt8X7kWgcVLoYCoyMZBw4HLCOFhdtjUWKtNfWtsuIbuOEpLlSdyqKW+8TiKc0e0Y+fa5UxIs2DUDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574144; c=relaxed/simple;
-	bh=RGjpyRQKth7Rh533OVVtiJ1HRNMP0/a+IV2fvfDqeBk=;
+	s=arc-20240116; t=1735574147; c=relaxed/simple;
+	bh=uttXg/h1RudH6gKhkUk1e9as2r/55OzHTg84CvTO/9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QmSU6a3D6Ko5+ZIrqAq/Q/nCqnzh3aGqv/r3Fs3qtWLY8tuigAd3KP7xyJzlS6HVwK0ggI5hjUk41CLBPiFzfufGSVcTzhmFb2UaEGb/nAVixVU3RrxRb/hKxms+G1mezLPaLZAALgXdlXdrNK7Ocng0Knjj7llacJnGnbA5jyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uu/O8A0a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DwaUSf+w4Mzv1hKK+XJkVsVOsxiwVTArDizeZQh5ce2c8wk7JlcyPUQS0/ooS8BKR60wLnw5hiKLXKG8y+8+zulL3xRPn3wXjUgcwA5CFvkbSkXzfQbUPyp+cDPREN7ukzZOGYv1wI2wr0mwpOJ4rqHWky2jrdgh08u7DyQvXEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/muex+i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uu/O8A0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8074CC4CED0;
-	Mon, 30 Dec 2024 15:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/muex+i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03EABC4CED0;
+	Mon, 30 Dec 2024 15:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574144;
-	bh=RGjpyRQKth7Rh533OVVtiJ1HRNMP0/a+IV2fvfDqeBk=;
+	s=korg; t=1735574147;
+	bh=uttXg/h1RudH6gKhkUk1e9as2r/55OzHTg84CvTO/9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uu/O8A0avRBHMbVZt1yrqU0xlU1AEx0KGQ1/X0XkRuAhxawT9nTihMzyePYRwzI2h
-	 ZV8GO3Rs+BE7KnsFqNpMYtyKxAvyOiLhTD+0ff4b4ENtHCKhlnqhgUZxoLw5etC5f5
-	 U3ufDlZVNeLj1bfDMbYXc81pMkz0cM3JIcoaUk80=
+	b=S/muex+iYknxKHJKJysNSv0VqvYUmC3u+P3qj0wNhMB9TUCGlxPC8nS2mQP0RI5Oy
+	 5H3ihVNOCyVlqkt8gXHJ15PcJOetX278xZtMLSAdzXmW9mYlcDXIoMW6mQFrcRnBPe
+	 XZmzL05iurAai3V+lgqsE35jS7ULhc3QDXbb+a/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Sam Protsenko <semen.protsenko@linaro.org>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/114] Revert "watchdog: s3c2410_wdt: use exynos_get_pmu_regmap_by_phandle() for PMU regs"
-Date: Mon, 30 Dec 2024 16:42:45 +0100
-Message-ID: <20241230154219.906501103@linuxfoundation.org>
+Subject: [PATCH 6.12 049/114] watchdog: mediatek: Add support for MT6735 TOPRGU/WDT
+Date: Mon, 30 Dec 2024 16:42:46 +0100
+Message-ID: <20241230154219.945542197@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -53,70 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-[ Upstream commit ccfb765944bb66813398958983cb8141e2624a6b ]
+[ Upstream commit 15ddf704f56f8c95ff74dfd1157ed8646b322fa1 ]
 
-This reverts commit 746f0770f916e6c48e422d6a34e67eae16707f0e.
+Add support for the Top Reset Generation Unit/Watchdog Timer found on
+MT6735.
 
-Now that we can register a SoC specific regmap with syscon using
-of_syscon_register_regmap() api we can switch back to using
-syscon_regmap_lookup_by_phandle() in the client drivers.
-
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Reviewed-by: Sam Protsenko <semen.protsenko@linaro.org>
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20241029191131.2329414-1-peter.griffin@linaro.org
+Link: https://lore.kernel.org/r/20241106104738.195968-3-y.oudjana@protonmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/Kconfig       | 1 +
- drivers/watchdog/s3c2410_wdt.c | 8 ++++----
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/watchdog/mtk_wdt.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index 94c96bcfefe3..0b59c669c26d 100644
---- a/drivers/watchdog/Kconfig
-+++ b/drivers/watchdog/Kconfig
-@@ -549,6 +549,7 @@ config S3C2410_WATCHDOG
- 	tristate "S3C6410/S5Pv210/Exynos Watchdog"
- 	depends on ARCH_S3C64XX || ARCH_S5PV210 || ARCH_EXYNOS || COMPILE_TEST
- 	select WATCHDOG_CORE
-+	select MFD_SYSCON if ARCH_EXYNOS
- 	help
- 	  Watchdog timer block in the Samsung S3C64xx, S5Pv210 and Exynos
- 	  SoCs. This will reboot the system when the timer expires with
-diff --git a/drivers/watchdog/s3c2410_wdt.c b/drivers/watchdog/s3c2410_wdt.c
-index 686cf544d0ae..349d30462c8c 100644
---- a/drivers/watchdog/s3c2410_wdt.c
-+++ b/drivers/watchdog/s3c2410_wdt.c
-@@ -24,9 +24,9 @@
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/of.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/regmap.h>
- #include <linux/delay.h>
--#include <linux/soc/samsung/exynos-pmu.h>
+diff --git a/drivers/watchdog/mtk_wdt.c b/drivers/watchdog/mtk_wdt.c
+index e2d7a57d6ea2..91d110646e16 100644
+--- a/drivers/watchdog/mtk_wdt.c
++++ b/drivers/watchdog/mtk_wdt.c
+@@ -10,6 +10,7 @@
+  */
  
- #define S3C2410_WTCON		0x00
- #define S3C2410_WTDAT		0x04
-@@ -699,11 +699,11 @@ static int s3c2410wdt_probe(struct platform_device *pdev)
- 		return ret;
+ #include <dt-bindings/reset/mt2712-resets.h>
++#include <dt-bindings/reset/mediatek,mt6735-wdt.h>
+ #include <dt-bindings/reset/mediatek,mt6795-resets.h>
+ #include <dt-bindings/reset/mt7986-resets.h>
+ #include <dt-bindings/reset/mt8183-resets.h>
+@@ -87,6 +88,10 @@ static const struct mtk_wdt_data mt2712_data = {
+ 	.toprgu_sw_rst_num = MT2712_TOPRGU_SW_RST_NUM,
+ };
  
- 	if (wdt->drv_data->quirks & QUIRKS_HAVE_PMUREG) {
--		wdt->pmureg = exynos_get_pmu_regmap_by_phandle(dev->of_node,
--						 "samsung,syscon-phandle");
-+		wdt->pmureg = syscon_regmap_lookup_by_phandle(dev->of_node,
-+						"samsung,syscon-phandle");
- 		if (IS_ERR(wdt->pmureg))
- 			return dev_err_probe(dev, PTR_ERR(wdt->pmureg),
--					     "PMU regmap lookup failed.\n");
-+					     "syscon regmap lookup failed.\n");
- 	}
- 
- 	wdt_irq = platform_get_irq(pdev, 0);
++static const struct mtk_wdt_data mt6735_data = {
++	.toprgu_sw_rst_num = MT6735_TOPRGU_RST_NUM,
++};
++
+ static const struct mtk_wdt_data mt6795_data = {
+ 	.toprgu_sw_rst_num = MT6795_TOPRGU_SW_RST_NUM,
+ };
+@@ -489,6 +494,7 @@ static int mtk_wdt_resume(struct device *dev)
+ static const struct of_device_id mtk_wdt_dt_ids[] = {
+ 	{ .compatible = "mediatek,mt2712-wdt", .data = &mt2712_data },
+ 	{ .compatible = "mediatek,mt6589-wdt" },
++	{ .compatible = "mediatek,mt6735-wdt", .data = &mt6735_data },
+ 	{ .compatible = "mediatek,mt6795-wdt", .data = &mt6795_data },
+ 	{ .compatible = "mediatek,mt7986-wdt", .data = &mt7986_data },
+ 	{ .compatible = "mediatek,mt7988-wdt", .data = &mt7988_data },
 -- 
 2.39.5
 
