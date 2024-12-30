@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9007C15E8B;
-	Mon, 30 Dec 2024 15:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED93315E8B;
+	Mon, 30 Dec 2024 15:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574171; cv=none; b=aqpS0BnLvkANlqvBkhMLCu9MdqH81na4cfdsW9tfDkQGYen7ofo5vG1O6fov4da5KEBpY52l9KoquNLb1rI6dVT/Csdx47upuhFHGdKn0mr64qC+UrpQcdHd7+QTN1ZYI45f/FKzFpUsmk3jy9Fi5ii3dnZvyRYleMotOShR0VA=
+	t=1735574175; cv=none; b=kwXm7k7gY3LvbAl4FVLjmSvSxPYxfrIwjQzsmotEqJ67R95JULGEsdQTIYgjFCM4L7deuaunMPKGqr9I0HP0/XaymOHLLyG+Ef4pI/0B/1YQ1mJWKbiF9LxsCikgPPGNkpStCl0NofC/US11LjnwhOZsUnn1zsyYYngge+f7faM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574171; c=relaxed/simple;
-	bh=vBRsL+Lon4rY1ifamegUuxIkxKNd0ShUc6nNZ43ZjPM=;
+	s=arc-20240116; t=1735574175; c=relaxed/simple;
+	bh=6Cn+S3bpybLQAeeFGUIoU2UfD0FRLJF6TnetUx8c3bM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4Kc7h5YaER58Xb/ueR+c1tXEryCjytXHGXT+Uzy8TZOTnBAbg/x39qzJUgTO13nKH9EoiYgT0zg5gkqNws0Dl8ti1a+Johno1OQdzu/QdySyZbm7JO3MdRJIjn8at7FKKg+TvA9MqrdXVyFm60JtgR4dp5e6WiPtzzjQ5EH9sE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHDfKh9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tF1IzMaLd26sYC/tF4pKnOc4aJNmn3NueZc2VPKZy0p93yS4ks1SzLktfVNbCkuTrz+3Gace3lSycvMY+4y4DaVROQA6LCmKJWuLN4FhhvLB8diAQftmUgBC/lVt3BI0toNV0BhmOcHqoszbrB2e95aI2VrP1UywW+ZkiHTjQto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihme74PF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHDfKh9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D17EC4CED0;
-	Mon, 30 Dec 2024 15:56:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihme74PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59FFCC4CED0;
+	Mon, 30 Dec 2024 15:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574171;
-	bh=vBRsL+Lon4rY1ifamegUuxIkxKNd0ShUc6nNZ43ZjPM=;
+	s=korg; t=1735574174;
+	bh=6Cn+S3bpybLQAeeFGUIoU2UfD0FRLJF6TnetUx8c3bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHDfKh9VvsFeUtwCjD5Myi7OyceuG6AAJBZQ7zCSISyh01ZyXQsXjqB0UA/6g/Du3
-	 zb8i+s6J6WucTtpKpYcX1i+Kr7thznzzsNlcDWs3jxYiG/fXRU9eKJNoxHDQNpF0eb
-	 Afu8cJctyIEkBWjPVNAO87JX9uc3vCXnTw8GxN54=
+	b=ihme74PFiMA9+Mz7dcCqVnjAgpZbrPPauqB1d1GWq/EC4amlvXojsApNZX3j+m45n
+	 iQedxVrXoawRwhMmaSMmZV+uagAuIbgIu7JavKP9AHcd7mrj+XM1jDQ3+UwnPciYoQ
+	 Y1Ls/xOV2Ca+ZjsFTkwY3OVEQV8dH5q6Z8JK20L8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.12 017/114] mtd: rawnand: arasan: Fix missing de-registration of NAND
-Date: Mon, 30 Dec 2024 16:42:14 +0100
-Message-ID: <20241230154218.723630776@linuxfoundation.org>
+	Tomas Henzl <thenzl@redhat.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 051/114] scsi: megaraid_sas: Fix for a potential deadlock
+Date: Mon, 30 Dec 2024 16:42:48 +0100
+Message-ID: <20241230154220.023873384@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -50,41 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Andrzejewski <maciej.andrzejewski@m-works.net>
+From: Tomas Henzl <thenzl@redhat.com>
 
-commit 11e6831fd81468cf48155b9b3c11295c391da723 upstream.
+[ Upstream commit 50740f4dc78b41dec7c8e39772619d5ba841ddd7 ]
 
-The NAND chip-selects are registered for the Arasan driver during
-initialization but are not de-registered when the driver is unloaded. As a
-result, if the driver is loaded again, the chip-selects remain registered
-and busy, making them unavailable for use.
+This fixes a 'possible circular locking dependency detected' warning
+      CPU0                    CPU1
+      ----                    ----
+ lock(&instance->reset_mutex);
+                              lock(&shost->scan_mutex);
+                              lock(&instance->reset_mutex);
+ lock(&shost->scan_mutex);
 
-Fixes: 197b88fecc50 ("mtd: rawnand: arasan: Add new Arasan NAND controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by temporarily releasing the reset_mutex.
+
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20240923174833.45345-1-thenzl@redhat.com
+Acked-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/arasan-nand-controller.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/scsi/megaraid/megaraid_sas_base.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/arasan-nand-controller.c
-+++ b/drivers/mtd/nand/raw/arasan-nand-controller.c
-@@ -1478,8 +1478,15 @@ static int anfc_probe(struct platform_de
+diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+index 8e75e2e279a4..50f1dcb6d584 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -8907,8 +8907,11 @@ megasas_aen_polling(struct work_struct *work)
+ 						   (ld_target_id / MEGASAS_MAX_DEV_PER_CHANNEL),
+ 						   (ld_target_id % MEGASAS_MAX_DEV_PER_CHANNEL),
+ 						   0);
+-			if (sdev1)
++			if (sdev1) {
++				mutex_unlock(&instance->reset_mutex);
+ 				megasas_remove_scsi_device(sdev1);
++				mutex_lock(&instance->reset_mutex);
++			}
  
- static void anfc_remove(struct platform_device *pdev)
- {
-+	int i;
- 	struct arasan_nfc *nfc = platform_get_drvdata(pdev);
- 
-+	for (i = 0; i < nfc->ncs; i++) {
-+		if (nfc->cs_array[i]) {
-+			gpiod_put(nfc->cs_array[i]);
-+		}
-+	}
-+
- 	anfc_chips_cleanup(nfc);
- }
- 
+ 			event_type = SCAN_VD_CHANNEL;
+ 			break;
+-- 
+2.39.5
+
 
 
