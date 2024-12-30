@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E782415E8B;
-	Mon, 30 Dec 2024 15:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562A715E8B;
+	Mon, 30 Dec 2024 15:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574158; cv=none; b=slx7dasw95oB4l899fzqeOseTOcOGaG/S6GbVnHAxeeRrrU7Ej6aV8ise/SSGtGFwO3fF68EwSa4ou9H4YCNiwEtmnXsuwDAXF863LNUNndhk98LWas18DA4EQ+JoNQJRSkg8xdyOU1pdEYqyrYo5cD1DzXZqXihtjsN97Q6SFc=
+	t=1735574161; cv=none; b=anmb/d5E2G3oAeU6qszo41VTcI8H5h2IgDQxG/6le80GXMDvp+68JfGX75F7LxQpelqF49bqrXG1uhi3Q+tt916O+cXGL0RNV7+0k5c4Sg4DScDkyUnXr+AYePDbdW5XE9jthbxrrBtgKaj38Pnw7MCApJ4qeqPDK8vPdZFiNVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574158; c=relaxed/simple;
-	bh=Tg4+XpkE7+BO/zeCnoKIAk4kNpbbsY3+qYYFM8LObeY=;
+	s=arc-20240116; t=1735574161; c=relaxed/simple;
+	bh=v+AXN/nnXgpAdJf61DLz6i2lUFurzOV3NtIAOxbKXT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bQjf0Pk14bBDz7r0iuv1KoTHfJROwKE/0qYdX2nAp4D6MZo+PHrrk+ASqmUO3nVMss+40SlzCv/yW6sWiZ+ZP5ckgfwIopCj/Rd96sbJObNag2clAdqCxfZpT+KcqikeLmgVApAZ0AVYz+Sx5m3xZewJnXOMbl/mLj8gEp+nG90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYc+WqOi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eRtkg14v/mXsylGNJ8kWnLywpvP9TbrLUShNBfF77A3GHh4oU29LJHRiJtGn/S8CtXzSCKrO/PFLx21xG9gSDN6kudSgy/9jAI4iX7gPnyhZq7fhGDmi9Y5M0msNlkAVyRL0K+0Y6ro/vFOY9dgezoVh0OI4uL7xsYapkdrMKI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDDIDdWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYc+WqOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5610FC4CED0;
-	Mon, 30 Dec 2024 15:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDDIDdWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD351C4CED0;
+	Mon, 30 Dec 2024 15:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574157;
-	bh=Tg4+XpkE7+BO/zeCnoKIAk4kNpbbsY3+qYYFM8LObeY=;
+	s=korg; t=1735574161;
+	bh=v+AXN/nnXgpAdJf61DLz6i2lUFurzOV3NtIAOxbKXT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYc+WqOimi1QGbQCz6PtK3nSQg3jdsPQqDGExdkzrgm40DcxIwwe65UNdbWxqfqkQ
-	 u3pjqhbccpTWGivO7dIVZNsA8+s1tKRIiwaO5kcytaSiV4pTqm0h5lAwETFbd5P+AM
-	 f74SQx0D4inIWQ0Y2B9THXLa0regsgwIDl4w1C50=
+	b=KDDIDdWx5s4i2N43tizL8dgQtQqbQg/yIoxqM/4YOLc4fJU9ykGIhPlVPPht50IPu
+	 0z+F2TFDHF+9/+43HsODtDhokGOWo8XReGg5nLietseByoRJefrG4hQ+yg0TEuHqSX
+	 edFFRyxjCN1GxwfKrBjeR++FEjo2XAb4uwDAye9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 023/114] phy: core: Fix that API devm_phy_destroy() fails to destroy the phy
-Date: Mon, 30 Dec 2024 16:42:20 +0100
-Message-ID: <20241230154218.956423172@linuxfoundation.org>
+Subject: [PATCH 6.12 024/114] phy: usb: Toggle the PHY power during init
+Date: Mon, 30 Dec 2024 16:42:21 +0100
+Message-ID: <20241230154218.992816114@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-commit 4dc48c88fcf82b89fdebd83a906aaa64f40fb8a9 upstream.
+commit 0a92ea87bdd6f77ca4e17fe19649882cf5209edd upstream.
 
-For devm_phy_destroy(), its comment says it needs to invoke phy_destroy()
-to destroy the phy, but it will not actually invoke the function since
-devres_destroy() does not call devm_phy_consume(), and the missing
-phy_destroy() call will cause that the phy fails to be destroyed.
+When bringing up the PHY, it might be in a bad state if left powered.
+One case is we lose the PLL lock if the PLL is gated while the PHY
+is powered. Toggle the PHY power so we can start from a known state.
 
-Fortunately, the faulty API has not been used by current kernel tree.
-Fix by using devres_release() instead of devres_destroy() within the API.
-
-Fixes: ff764963479a ("drivers: phy: add generic PHY framework")
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-3-40ae28f5015a@quicinc.com
+Fixes: 4e5b9c9a73b3 ("phy: usb: Add support for new Synopsys USB controller on the 7216")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20241024213540.1059412-1-justin.chen@broadcom.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/phy-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -1126,7 +1126,7 @@ void devm_phy_destroy(struct device *dev
- {
- 	int r;
+--- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
++++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+@@ -325,6 +325,12 @@ static void usb_init_common_7216(struct
+ 	void __iomem *ctrl = params->regs[BRCM_REGS_CTRL];
  
--	r = devres_destroy(dev, devm_phy_consume, devm_phy_match, phy);
-+	r = devres_release(dev, devm_phy_consume, devm_phy_match, phy);
- 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
- }
- EXPORT_SYMBOL_GPL(devm_phy_destroy);
+ 	USB_CTRL_UNSET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
++
++	/*
++	 * The PHY might be in a bad state if it is already powered
++	 * up. Toggle the power just in case.
++	 */
++	USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
+ 	USB_CTRL_UNSET(ctrl, USB_PM, USB_PWRDN);
+ 
+ 	/* 1 millisecond - for USB clocks to settle down */
 
 
