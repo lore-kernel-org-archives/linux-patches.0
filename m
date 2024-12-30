@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EC02594B6;
-	Mon, 30 Dec 2024 15:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316442594B6;
+	Mon, 30 Dec 2024 15:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573613; cv=none; b=jpXXTiCYOJSa1ksDv+TeowWU/JM26/weigej8zNrcntQTZhQPg5OwcFIG0irvRu/kNU4IXmUg5HhvL/CCfY+Qb34ov+IrIONvqupeIlU8VlTS70z8waAyNcox6pE7lOH9K6KoeUZocuB5B8cVSWBaSo6Eg4Isj2vmeDncckv6t8=
+	t=1735573617; cv=none; b=moph935LdugQvvmLGy8wdcu09mkZQqncQxu2jv3k/SbZZ8X7GfzgMxHVGvIaeOCycX6Nw+FfvIo+gBIAlOQRXJ+qJ4z0STdwagFPKIjkmubNA+xSJfiB7QkveayRzsFCSW44wtP5vlcIMd9zKvyMbQtJ2OVEzyxvdZtPJLTDQ6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573613; c=relaxed/simple;
-	bh=HeVe36YT5JcswlGg6p0ObO4Kj+5x/Q2vtffDBl9k7YA=;
+	s=arc-20240116; t=1735573617; c=relaxed/simple;
+	bh=YBKW+OGzL/hUdFrpeDXM8dWnr0tUKtWG3sd1LozB2fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eNntrhoYp9LhSLlH6JgKQ/qMdAbQVm1fDuxjQmlkuLCB4Ma4ilSw+uvuRQR+HwyQnqXHiPewCLx6Iaae7iogOFkDLnULRwrpkRJElJRXiXRc4aU+IlfQZPw0dm/o7AP/DOABWsxon9oj4EbAz3inbMK60X2ge46sO5BGyiPgDto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lo7LHg8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uNXR2Tq1iFYxxajBfjbTae/2N14doHzE2smS/ni0jlC3TzEN7FECYygCDiprgHm8481unG+cKffvSzS3SOKvaRiqHadXDlBEGB/oKi6u+TC2EdCbQgvV72OzPOFElDvr/Lcv1JsTPYiVKt1gWzWIjwP4lICS8mBYtCFImZO5+QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQHXzPff; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo7LHg8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1171C4CED0;
-	Mon, 30 Dec 2024 15:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQHXzPff"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D64C4CED0;
+	Mon, 30 Dec 2024 15:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573613;
-	bh=HeVe36YT5JcswlGg6p0ObO4Kj+5x/Q2vtffDBl9k7YA=;
+	s=korg; t=1735573616;
+	bh=YBKW+OGzL/hUdFrpeDXM8dWnr0tUKtWG3sd1LozB2fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lo7LHg8jeixpBhSF3j0AyiBV4yivLVmw4JRma6fixnt1zKbwEm9AxuYc3PKkzv9Lg
-	 qmz8eOGJKAoINcvT885xy6NOuZQJhxMxhq7nnwZWlI3e0Ng9TeAh+Xo5rNoKj24YLt
-	 riGHQ0iZCICUSJfvLBcGurTXdRJULmEZPLxF+/jY=
+	b=DQHXzPff+tInSMbKGc+8e0hV1JWS9EspFUvVH7C/Duys4kebuzLm3h+hPl9A9/Jav
+	 lG+m7Nxx/Ah/FReZOXzwiY5aLkJfeZD4WgUftzOeH2tZvUfn6HLy8uyMTyfaog0cUi
+	 6fUVNtDKHYeHT6YEGxifQ9NfXvbmo9IiPm0ftRpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 45/60] ALSA: hda/realtek: fix micmute LEDs dont work on HP Laptops
-Date: Mon, 30 Dec 2024 16:42:55 +0100
-Message-ID: <20241230154208.985047011@linuxfoundation.org>
+Subject: [PATCH 6.1 46/60] pmdomain: core: Add missing put_device()
+Date: Mon, 30 Dec 2024 16:42:56 +0100
+Message-ID: <20241230154209.021648643@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -52,42 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 0d08f0eec961acdb0424a3e2cfb37cfb89154833 ]
+[ Upstream commit b8f7bbd1f4ecff6d6277b8c454f62bb0a1c6dbe4 ]
 
-These HP laptops use Realtek HDA codec ALC3315 combined CS35L56
-Amplifiers. They need the quirk ALC285_FIXUP_HP_GPIO_LED to get
-the micmute LED working.
+When removing a genpd we don't clean up the genpd->dev correctly. Let's add
+the missing put_device() in genpd_free_data() to fix this.
 
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
-Reviewed-by: Simon Trimmer <simont@opensource.cirrus.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241202144659.1553504-1-chris.chiu@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 401ea1572de9 ("PM / Domain: Add struct device to genpd")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Message-ID: <20241122134207.157283-2-ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/base/power/domain.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index beb182080abc..03fe531f8230 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9898,7 +9898,13 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8ca4, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8ca7, "HP ZBook Fury", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8cf5, "HP ZBook Studio 16", ALC245_FIXUP_CS35L41_SPI_4_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8d01, "HP ZBook Power 14 G12", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8d84, "HP EliteBook X G1i", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8d91, "HP ZBook Firefly 14 G12", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8d92, "HP ZBook Firefly 16 G12", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8e18, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8e19, "HP ZBook Firelfy 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8e1a, "HP ZBook Firefly 14 G12A", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+index e01bb359034b..3c44b0313a10 100644
+--- a/drivers/base/power/domain.c
++++ b/drivers/base/power/domain.c
+@@ -2012,6 +2012,7 @@ static int genpd_alloc_data(struct generic_pm_domain *genpd)
+ 
+ static void genpd_free_data(struct generic_pm_domain *genpd)
+ {
++	put_device(&genpd->dev);
+ 	if (genpd_is_cpu_domain(genpd))
+ 		free_cpumask_var(genpd->cpus);
+ 	if (genpd->free_states)
 -- 
 2.39.5
 
