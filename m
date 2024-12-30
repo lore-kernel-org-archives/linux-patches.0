@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AABB2AE68;
-	Mon, 30 Dec 2024 15:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73D52E414;
+	Mon, 30 Dec 2024 15:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574079; cv=none; b=KSMTo3rhgCMaeIIWCJqU87cQpLzE30+5Ck0ddPyPjs8Ry/k+Fb6kmfFviyW1C0qJWzc73zSiSxGqulHuoia7Rpdfct8zrOGe0HQBjRLbstGyX4UHZKIjDJ47j1u57qe1yZxUQfIMzijhb6Vf3WIPbl61j0SDRreBrsIChFMJCAs=
+	t=1735574082; cv=none; b=SI4auShEogMM9e3s16lnlSMaFgSdFTjtNwLw+5Q1LJvQZBrVv51bPbqwaJ03CHB6KEE2Ol9YixV6NIAku5125+sCUDS05ocpTxPFcTUuSnDgiHe8JTOo/glvyewz4FDU9iYStP7wTqbV0jDKaWpFi0RrOI3RW5uNT6xzhJP1r/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574079; c=relaxed/simple;
-	bh=LKzk322GJa2AJg6VlAJnAhgAn52ukY/dZKPYS+Fn5+c=;
+	s=arc-20240116; t=1735574082; c=relaxed/simple;
+	bh=GQiKbwIauiIXP6mTLObBPag2090l91df87irG5w5N3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvPb/k0RhyRLRWKg7/f0CkpdZD1/6hFI3li19NTpeRb3aPN71BsmNYsOquW+5iBPXNpyGcO02Q8J/rXTY7G6Uvb13594R95E07keMuspznKjo+6rchjU2YqK4I3ZVLBrYQXTSKHGXzktbk5MDZgaS/t3FdmxJo9/JzCYBsNO9eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGA7lz48; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IO1hgE6w8fhp8pCfu7nX780YzrlNBgO0q5STC4wsnAK3Kg8iZIZfq5iaIADdgJySfxHlGKLuzYMW4UvoM2vpBjJbMN1sTHuX+hfWaMKM3JKI+XT3uEtPRoPVHvOuTpOcaE5zuypD7XPF4sPsRj+ZanWYBsTQ7HG02QusAP71MW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkkXiS1R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGA7lz48"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE385C4CED0;
-	Mon, 30 Dec 2024 15:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkkXiS1R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F0AC4CED0;
+	Mon, 30 Dec 2024 15:54:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574079;
-	bh=LKzk322GJa2AJg6VlAJnAhgAn52ukY/dZKPYS+Fn5+c=;
+	s=korg; t=1735574082;
+	bh=GQiKbwIauiIXP6mTLObBPag2090l91df87irG5w5N3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGA7lz484UDQKDrl5cUOzuSbqAXfst/MfGl62PWV3efDs4AMvujVJBFsxomSk9rjI
-	 RXXZPvRnivcTKI3CbqtPxn8y2Q+I+niCHWUbL1XfxFZlnF0/Bhbi/iWQP4OkRIvxnQ
-	 M4SCEMmAp2nW8Lu0y9rf3hTPeVqUtd62co8n6Pb0=
+	b=RkkXiS1RFhkzJr8MQS9hd0Yk4FoUmy7v+ydyheI0gna9YRr+LMqLpSt5ed2S1qJH5
+	 13CEAZljF4CI1pTh1AVbV3iCD4eyEb3EScx/llnub1yfq9TDJkHjUr0MZlhoW8luY4
+	 mWlOGM/r7qtWAbcBXHQzWXZKPIyCLUHOaSYwdCPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 031/114] dmaengine: amd: qdma: Remove using the private get and set dma_ops APIs
-Date: Mon, 30 Dec 2024 16:42:28 +0100
-Message-ID: <20241230154219.262577020@linuxfoundation.org>
+Subject: [PATCH 6.12 032/114] dmaengine: fsl-edma: implement the cleanup path of fsl_edma3_attach_pd()
+Date: Mon, 30 Dec 2024 16:42:29 +0100
+Message-ID: <20241230154219.300675251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,143 +50,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit dcbef0798eb825cd584f7a93f62bed63f7fbbfc9 upstream.
+commit ccfa3131d4a0347988e73638edea5c8281b6d2c7 upstream.
 
-The get_dma_ops and set_dma_ops APIs were never for driver to use. Remove
-these calls from QDMA driver. Instead, pass the DMA device pointer from the
-qdma_platdata structure.
+Current implementation of fsl_edma3_attach_pd() does not provide a
+cleanup path, resulting in a memory leak. For example,
+dev_pm_domain_detach() is not called after dev_pm_domain_attach_by_id(),
+and the device link created with the DL_FLAG_STATELESS is not released
+explicitly.
 
-Fixes: 73d5fc92a11c ("dmaengine: amd: qdma: Add AMD QDMA driver")
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240918181022.2155715-1-lizhi.hou@amd.com
+Therefore, provide a cleanup function fsl_edma3_detach_pd() and call it
+upon failure. Also add a devm_add_action_or_reset() call with this
+function after a successful fsl_edma3_attach_pd().
+
+Fixes: 72f5801a4e2b ("dmaengine: fsl-edma: integrate v3 support")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://lore.kernel.org/r/20241221075712.3297200-1-joe@pf.is.s.u-tokyo.ac.jp
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/amd/qdma/qdma.c            | 28 +++++++++++---------------
- include/linux/platform_data/amd_qdma.h |  2 ++
- 2 files changed, 14 insertions(+), 16 deletions(-)
+ drivers/dma/fsl-edma-common.h |    1 +
+ drivers/dma/fsl-edma-main.c   |   41 ++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/amd/qdma/qdma.c b/drivers/dma/amd/qdma/qdma.c
-index 6d9079458fe9..66f00ad67351 100644
---- a/drivers/dma/amd/qdma/qdma.c
-+++ b/drivers/dma/amd/qdma/qdma.c
-@@ -7,9 +7,9 @@
- #include <linux/bitfield.h>
- #include <linux/bitops.h>
- #include <linux/dmaengine.h>
-+#include <linux/dma-mapping.h>
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
--#include <linux/dma-map-ops.h>
- #include <linux/platform_device.h>
- #include <linux/platform_data/amd_qdma.h>
- #include <linux/regmap.h>
-@@ -492,18 +492,9 @@ static int qdma_device_verify(struct qdma_device *qdev)
+--- a/drivers/dma/fsl-edma-common.h
++++ b/drivers/dma/fsl-edma-common.h
+@@ -166,6 +166,7 @@ struct fsl_edma_chan {
+ 	struct work_struct		issue_worker;
+ 	struct platform_device		*pdev;
+ 	struct device			*pd_dev;
++	struct device_link		*pd_dev_link;
+ 	u32				srcid;
+ 	struct clk			*clk;
+ 	int                             priority;
+--- a/drivers/dma/fsl-edma-main.c
++++ b/drivers/dma/fsl-edma-main.c
+@@ -417,10 +417,33 @@ static const struct of_device_id fsl_edm
+ };
+ MODULE_DEVICE_TABLE(of, fsl_edma_dt_ids);
  
- static int qdma_device_setup(struct qdma_device *qdev)
++static void fsl_edma3_detach_pd(struct fsl_edma_engine *fsl_edma)
++{
++	struct fsl_edma_chan *fsl_chan;
++	int i;
++
++	for (i = 0; i < fsl_edma->n_chans; i++) {
++		if (fsl_edma->chan_masked & BIT(i))
++			continue;
++		fsl_chan = &fsl_edma->chans[i];
++		if (fsl_chan->pd_dev_link)
++			device_link_del(fsl_chan->pd_dev_link);
++		if (fsl_chan->pd_dev) {
++			dev_pm_domain_detach(fsl_chan->pd_dev, false);
++			pm_runtime_dont_use_autosuspend(fsl_chan->pd_dev);
++			pm_runtime_set_suspended(fsl_chan->pd_dev);
++		}
++	}
++}
++
++static void devm_fsl_edma3_detach_pd(void *data)
++{
++	fsl_edma3_detach_pd(data);
++}
++
+ static int fsl_edma3_attach_pd(struct platform_device *pdev, struct fsl_edma_engine *fsl_edma)
  {
--	struct device *dev = &qdev->pdev->dev;
- 	u32 ring_sz = QDMA_DEFAULT_RING_SIZE;
- 	int ret = 0;
+ 	struct fsl_edma_chan *fsl_chan;
+-	struct device_link *link;
+ 	struct device *pd_chan;
+ 	struct device *dev;
+ 	int i;
+@@ -436,15 +459,16 @@ static int fsl_edma3_attach_pd(struct pl
+ 		pd_chan = dev_pm_domain_attach_by_id(dev, i);
+ 		if (IS_ERR_OR_NULL(pd_chan)) {
+ 			dev_err(dev, "Failed attach pd %d\n", i);
+-			return -EINVAL;
++			goto detach;
+ 		}
  
--	while (dev && get_dma_ops(dev))
--		dev = dev->parent;
--	if (!dev) {
--		qdma_err(qdev, "dma device not found");
--		return -EINVAL;
--	}
--	set_dma_ops(&qdev->pdev->dev, get_dma_ops(dev));
--
- 	ret = qdma_setup_fmap_context(qdev);
- 	if (ret) {
- 		qdma_err(qdev, "Failed setup fmap context");
-@@ -548,11 +539,12 @@ static void qdma_free_queue_resources(struct dma_chan *chan)
- {
- 	struct qdma_queue *queue = to_qdma_queue(chan);
- 	struct qdma_device *qdev = queue->qdev;
--	struct device *dev = qdev->dma_dev.dev;
-+	struct qdma_platdata *pdata;
+-		link = device_link_add(dev, pd_chan, DL_FLAG_STATELESS |
++		fsl_chan->pd_dev_link = device_link_add(dev, pd_chan, DL_FLAG_STATELESS |
+ 					     DL_FLAG_PM_RUNTIME |
+ 					     DL_FLAG_RPM_ACTIVE);
+-		if (!link) {
++		if (!fsl_chan->pd_dev_link) {
+ 			dev_err(dev, "Failed to add device_link to %d\n", i);
+-			return -EINVAL;
++			dev_pm_domain_detach(pd_chan, false);
++			goto detach;
+ 		}
  
- 	qdma_clear_queue_context(queue);
- 	vchan_free_chan_resources(&queue->vchan);
--	dma_free_coherent(dev, queue->ring_size * QDMA_MM_DESC_SIZE,
-+	pdata = dev_get_platdata(&qdev->pdev->dev);
-+	dma_free_coherent(pdata->dma_dev, queue->ring_size * QDMA_MM_DESC_SIZE,
- 			  queue->desc_base, queue->dma_desc_base);
+ 		fsl_chan->pd_dev = pd_chan;
+@@ -455,6 +479,10 @@ static int fsl_edma3_attach_pd(struct pl
+ 	}
+ 
+ 	return 0;
++
++detach:
++	fsl_edma3_detach_pd(fsl_edma);
++	return -EINVAL;
  }
  
-@@ -565,6 +557,7 @@ static int qdma_alloc_queue_resources(struct dma_chan *chan)
- 	struct qdma_queue *queue = to_qdma_queue(chan);
- 	struct qdma_device *qdev = queue->qdev;
- 	struct qdma_ctxt_sw_desc desc;
-+	struct qdma_platdata *pdata;
- 	size_t size;
- 	int ret;
- 
-@@ -572,8 +565,9 @@ static int qdma_alloc_queue_resources(struct dma_chan *chan)
- 	if (ret)
- 		return ret;
- 
-+	pdata = dev_get_platdata(&qdev->pdev->dev);
- 	size = queue->ring_size * QDMA_MM_DESC_SIZE;
--	queue->desc_base = dma_alloc_coherent(qdev->dma_dev.dev, size,
-+	queue->desc_base = dma_alloc_coherent(pdata->dma_dev, size,
- 					      &queue->dma_desc_base,
- 					      GFP_KERNEL);
- 	if (!queue->desc_base) {
-@@ -588,7 +582,7 @@ static int qdma_alloc_queue_resources(struct dma_chan *chan)
- 	if (ret) {
- 		qdma_err(qdev, "Failed to setup SW desc ctxt for %s",
- 			 chan->name);
--		dma_free_coherent(qdev->dma_dev.dev, size, queue->desc_base,
-+		dma_free_coherent(pdata->dma_dev, size, queue->desc_base,
- 				  queue->dma_desc_base);
- 		return ret;
+ static int fsl_edma_probe(struct platform_device *pdev)
+@@ -544,6 +572,9 @@ static int fsl_edma_probe(struct platfor
+ 		ret = fsl_edma3_attach_pd(pdev, fsl_edma);
+ 		if (ret)
+ 			return ret;
++		ret = devm_add_action_or_reset(&pdev->dev, devm_fsl_edma3_detach_pd, fsl_edma);
++		if (ret)
++			return ret;
  	}
-@@ -948,8 +942,9 @@ static int qdma_init_error_irq(struct qdma_device *qdev)
  
- static int qdmam_alloc_qintr_rings(struct qdma_device *qdev)
- {
--	u32 ctxt[QDMA_CTXT_REGMAP_LEN];
-+	struct qdma_platdata *pdata = dev_get_platdata(&qdev->pdev->dev);
- 	struct device *dev = &qdev->pdev->dev;
-+	u32 ctxt[QDMA_CTXT_REGMAP_LEN];
- 	struct qdma_intr_ring *ring;
- 	struct qdma_ctxt_intr intr_ctxt;
- 	u32 vector;
-@@ -969,7 +964,8 @@ static int qdmam_alloc_qintr_rings(struct qdma_device *qdev)
- 		ring->msix_id = qdev->err_irq_idx + i + 1;
- 		ring->ridx = i;
- 		ring->color = 1;
--		ring->base = dmam_alloc_coherent(dev, QDMA_INTR_RING_SIZE,
-+		ring->base = dmam_alloc_coherent(pdata->dma_dev,
-+						 QDMA_INTR_RING_SIZE,
- 						 &ring->dev_base, GFP_KERNEL);
- 		if (!ring->base) {
- 			qdma_err(qdev, "Failed to alloc intr ring %d", i);
-diff --git a/include/linux/platform_data/amd_qdma.h b/include/linux/platform_data/amd_qdma.h
-index 576d952f97ed..967a6ef31cf9 100644
---- a/include/linux/platform_data/amd_qdma.h
-+++ b/include/linux/platform_data/amd_qdma.h
-@@ -26,11 +26,13 @@ struct dma_slave_map;
-  * @max_mm_channels: Maximum number of MM DMA channels in each direction
-  * @device_map: DMA slave map
-  * @irq_index: The index of first IRQ
-+ * @dma_dev: The device pointer for dma operations
-  */
- struct qdma_platdata {
- 	u32			max_mm_channels;
- 	u32			irq_index;
- 	struct dma_slave_map	*device_map;
-+	struct device		*dma_dev;
- };
- 
- #endif /* _PLATDATA_AMD_QDMA_H */
--- 
-2.47.1
-
+ 	if (drvdata->flags & FSL_EDMA_DRV_TCD64)
 
 
