@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7320615E8B;
-	Mon, 30 Dec 2024 15:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B713615E8B;
+	Mon, 30 Dec 2024 15:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574286; cv=none; b=D4cAbXZIJ5pKS7JDaWOLm2NWS//yGbP6sm/pT474H8OPHhy/FULOoHd+3uql88QSxIEm1HZu6HzPb8FahA+W8RvyBK8OEh+DjaNZLii+s08HhxOAczmiQYE5tTUvUlwCNJvKKbUgLP9IA6+OQ8az2rMwofkxLvmvP+ZtN6pelRw=
+	t=1735574289; cv=none; b=Ts+3PKt+D4LVU3Yk1wzJhoaGz1KGy/so9giKkxfSrgICzBW6q95A+T0oqR2Vg4rPeJrcBg2F6m+GRJZuWWWBVQjLDpGQUt90SEGazQx9R0+BzF15xC0eP1zC8dC+dW7A7ExgZK7G7q6ZHyFVpsMwDOi6zm5qRGInriXsnzMWRGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574286; c=relaxed/simple;
-	bh=voTdoOKJ1kyCQmN25rxspeoYOTYKQC3N5XSG8RYG8YY=;
+	s=arc-20240116; t=1735574289; c=relaxed/simple;
+	bh=HPZysbXXj1O8HffU9W5XYGSwfuOBOQhw0xb/mC4Qo80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/tZz5SqYjNgIbigju++kogmnXbJj2lbq8NN+JbDLwGPD0unO9kD8jTAfger63O7QdD8Ns+r/yiM2MRppHdawBPzwJAlHDqNA60bab3AYpw+xBgrhEMmisOhbX6jFFbjyqSuCurMNmv9EE8m3KjHmkmnXkoilXwtlFBRfO8ay9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EfAGPDl+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uJgSiqnopPpOtJFnUeNV50sbW2sKlEkgpVLKi6XjD0Q2VXAANl42VKRzz0UdRkHy2X4y0Dg8T1oxETx6P+gIXddvI7xL/v87UbZdszrPI+3wNnbP5885bgpsGD3j+5LNx1AMPApN50kSaQ3kWYujDQjcV129rsQpUbM8Cdc0ZBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bXv95dGD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EfAGPDl+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1ACC4CED0;
-	Mon, 30 Dec 2024 15:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bXv95dGD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24308C4CED0;
+	Mon, 30 Dec 2024 15:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574286;
-	bh=voTdoOKJ1kyCQmN25rxspeoYOTYKQC3N5XSG8RYG8YY=;
+	s=korg; t=1735574289;
+	bh=HPZysbXXj1O8HffU9W5XYGSwfuOBOQhw0xb/mC4Qo80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfAGPDl+E2QJowHY0m30aqDnzR7h2j/gNj/uyi9SgF0+Z/F7dUT+HAilCJ788kWK2
-	 BslwIQ9wmRF5S4czm2FO2r6ojTW5TLND/YN5rLbgKCs8M75CnZs/tf2/nqH3XrWI+f
-	 vZSk43fu3slyxQjQjyBPxz/qcNDG5C8ErZHWrPTo=
+	b=bXv95dGDWBtwfEag5S5t3zkAVk5LX3o4m00k96HpYT6dZZM6dI80mQ9Q4YllpyZqd
+	 VZPcKMust31VP9c+lEuJbKSpD+TqwBFXNjQxOZPeuVAuq62uQyEUmF49fjs1Z0JOeW
+	 R0FQuvKqfZQ2Fl9a/wvwdUYW141jsVxgSPFksoik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 092/114] PCI/MSI: Handle lack of irqdomain gracefully
-Date: Mon, 30 Dec 2024 16:43:29 +0100
-Message-ID: <20241230154221.639890793@linuxfoundation.org>
+	Andi Kleen <ak@linux.intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.12 093/114] perf/x86/intel: Fix bitmask of OCR and FRONTEND events for LNC
+Date: Mon, 30 Dec 2024 16:43:30 +0100
+Message-ID: <20241230154221.675776598@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -50,74 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit a60b990798eb17433d0283788280422b1bd94b18 upstream.
+commit aa5d2ca7c179c40669edb5e96d931bf9828dea3d upstream.
 
-Alexandre observed a warning emitted from pci_msi_setup_msi_irqs() on a
-RISCV platform which does not provide PCI/MSI support:
+The released OCR and FRONTEND events utilized more bits on Lunar Lake
+p-core. The corresponding mask in the extra_regs has to be extended to
+unblock the extra bits.
 
- WARNING: CPU: 1 PID: 1 at drivers/pci/msi/msi.h:121 pci_msi_setup_msi_irqs+0x2c/0x32
- __pci_enable_msix_range+0x30c/0x596
- pci_msi_setup_msi_irqs+0x2c/0x32
- pci_alloc_irq_vectors_affinity+0xb8/0xe2
+Add a dedicated intel_lnc_extra_regs.
 
-RISCV uses hierarchical interrupt domains and correctly does not implement
-the legacy fallback. The warning triggers from the legacy fallback stub.
-
-That warning is bogus as the PCI/MSI layer knows whether a PCI/MSI parent
-domain is associated with the device or not. There is a check for MSI-X,
-which has a legacy assumption. But that legacy fallback assumption is only
-valid when legacy support is enabled, but otherwise the check should simply
-return -ENOTSUPP.
-
-Loongarch tripped over the same problem and blindly enabled legacy support
-without implementing the legacy fallbacks. There are weak implementations
-which return an error, so the problem was papered over.
-
-Correct pci_msi_domain_supports() to evaluate the legacy mode and add
-the missing supported check into the MSI enable path to complete it.
-
-Fixes: d2a463b29741 ("PCI/MSI: Reject multi-MSI early")
-Reported-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Fixes: a932aa0e868f ("perf/x86: Add Lunar Lake and Arrow Lake support")
+Reported-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/87ed2a8ow5.ffs@tglx
+Link: https://lkml.kernel.org/r/20241216160252.430858-1-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/msi/irqdomain.c |    7 +++++--
- drivers/pci/msi/msi.c       |    4 ++++
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/core.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/msi/irqdomain.c
-+++ b/drivers/pci/msi/irqdomain.c
-@@ -350,8 +350,11 @@ bool pci_msi_domain_supports(struct pci_
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -429,6 +429,16 @@ static struct event_constraint intel_lnc
+ 	EVENT_CONSTRAINT_END
+ };
  
- 	domain = dev_get_msi_domain(&pdev->dev);
++static struct extra_reg intel_lnc_extra_regs[] __read_mostly = {
++	INTEL_UEVENT_EXTRA_REG(0x012a, MSR_OFFCORE_RSP_0, 0xfffffffffffull, RSP_0),
++	INTEL_UEVENT_EXTRA_REG(0x012b, MSR_OFFCORE_RSP_1, 0xfffffffffffull, RSP_1),
++	INTEL_UEVENT_PEBS_LDLAT_EXTRA_REG(0x01cd),
++	INTEL_UEVENT_EXTRA_REG(0x02c6, MSR_PEBS_FRONTEND, 0x9, FE),
++	INTEL_UEVENT_EXTRA_REG(0x03c6, MSR_PEBS_FRONTEND, 0x7fff1f, FE),
++	INTEL_UEVENT_EXTRA_REG(0x40ad, MSR_PEBS_FRONTEND, 0xf, FE),
++	INTEL_UEVENT_EXTRA_REG(0x04c2, MSR_PEBS_FRONTEND, 0x8, FE),
++	EVENT_EXTRA_END
++};
  
--	if (!domain || !irq_domain_is_hierarchy(domain))
--		return mode == ALLOW_LEGACY;
-+	if (!domain || !irq_domain_is_hierarchy(domain)) {
-+		if (IS_ENABLED(CONFIG_PCI_MSI_ARCH_FALLBACKS))
-+			return mode == ALLOW_LEGACY;
-+		return false;
-+	}
+ EVENT_ATTR_STR(mem-loads,	mem_ld_nhm,	"event=0x0b,umask=0x10,ldlat=3");
+ EVENT_ATTR_STR(mem-loads,	mem_ld_snb,	"event=0xcd,umask=0x1,ldlat=3");
+@@ -6344,7 +6354,7 @@ static __always_inline void intel_pmu_in
+ 	intel_pmu_init_glc(pmu);
+ 	hybrid(pmu, event_constraints) = intel_lnc_event_constraints;
+ 	hybrid(pmu, pebs_constraints) = intel_lnc_pebs_event_constraints;
+-	hybrid(pmu, extra_regs) = intel_rwc_extra_regs;
++	hybrid(pmu, extra_regs) = intel_lnc_extra_regs;
+ }
  
- 	if (!irq_domain_is_msi_parent(domain)) {
- 		/*
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -433,6 +433,10 @@ int __pci_enable_msi_range(struct pci_de
- 	if (WARN_ON_ONCE(dev->msi_enabled))
- 		return -EINVAL;
- 
-+	/* Test for the availability of MSI support */
-+	if (!pci_msi_domain_supports(dev, 0, ALLOW_LEGACY))
-+		return -ENOTSUPP;
-+
- 	nvec = pci_msi_vec_count(dev);
- 	if (nvec < 0)
- 		return nvec;
+ static __always_inline void intel_pmu_init_skt(struct pmu *pmu)
 
 
