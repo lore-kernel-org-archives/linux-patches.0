@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F83715E8B;
-	Mon, 30 Dec 2024 15:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE44D15E8B;
+	Mon, 30 Dec 2024 15:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574250; cv=none; b=s6p3Wry+pxHRlEj+CJixrrKb/yfyY2zASsT663bPSyJ5nGtj0gi4GWTaD/UslnHA/PVE25PqxVCpgZ2fYewytvhlUOuPHhVCDJxjNmNfNBiUgkDgOmsbeqHIf+jAtUrc0OKzLFmUi4T3QOGG24emWUBr/8cuID0ufvLrmffd/iI=
+	t=1735574252; cv=none; b=Ne/gf9oOyplys6Nj2AH/jQ+XAgleu8jxm8Qm0sebA9ku+2CrU+kl2ZaDNvLrkQ88ufEpBZreh/Jkhx+/xzKctoldIeP44tOzanKq2Nzdha64Wg/UPb/pE1PSg3Pximrx3dvxc+9UHrakCdCDB32nvPCGJa2dbk/bercjYplBky0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574250; c=relaxed/simple;
-	bh=OOsN5NxbPlUyV65cie+jQ+cp1ILpMA8BDFOEneHAbeQ=;
+	s=arc-20240116; t=1735574252; c=relaxed/simple;
+	bh=ytWP7xm1N1BYDdL2xV7knjDbUMPzUcgaIdtH8igoumg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ulCg3/+GoLqefNjWWA0airPK1he+m8QAWX8LYhTA43wH12egC8wSIDMqUWuzowCfbM/ypLsn62Ysnpa40d+G17DBQR+5bdQZ0oPMoOuiJO354USyu4NTdGSncJG4EOzhOKK79DEne3Zi+bI1N2ENqmCk4u2T7TTTK/jQ2/QX4wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mt20f953; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sN69WRh+CILHnkssLuhlnEoUeatL29uCJBicUL7Qz4v0YRw+3TPFS5GWkVLz+yQkwZaz4z7LAGvN8Xk0nSl0kJDl0axIHT1e4mu0Y19fE3YogZnlxhf3gYuDAMhJ4j6fXFpzn/9a0rI7SGNC6KMhs6w17FSLbzT0TbNFlJxsxs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUGlkkpF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mt20f953"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F4DC4CED0;
-	Mon, 30 Dec 2024 15:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUGlkkpF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5CEC4CED0;
+	Mon, 30 Dec 2024 15:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574249;
-	bh=OOsN5NxbPlUyV65cie+jQ+cp1ILpMA8BDFOEneHAbeQ=;
+	s=korg; t=1735574252;
+	bh=ytWP7xm1N1BYDdL2xV7knjDbUMPzUcgaIdtH8igoumg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mt20f9537U+bp66HsQ7WrN44ZXyHxpTSEC2+f87+uR11OGB+reZSyEIzSvkqMljq0
-	 omvnZBOSsvbvfDIHi4grvHHud3w3og5cSAHNzPH9Lg1exT+BoQ59lnvjhwivr/gdjI
-	 14Yu/PYvO03IaO3qD1O0K9K4VcTO6or0tSceymnI=
+	b=ZUGlkkpFcYlpSIW2FGaRQaQYmq6LzPcNgZ9YaXl/LCqbN/xupDlFtzoHzflMoe6Uu
+	 2fhs3uTgT5+9ZdrMwo8jRgEsx40sowK+R95VJ593oFDFcKVAprl9TSM+aCG0lodQJU
+	 nR3Pq09eSCGjDvqLzXgqVWIGeMsJpTPp8C++3zQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3ff7365dc04a6bcafa66@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Francois Dugast <francois.dugast@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	intel-xe@lists.freedesktop.org,
+	linux-media@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org,
+	John Harrison <John.C.Harrison@Intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/114] udf: Verify inode link counts before performing rename
-Date: Mon, 30 Dec 2024 16:42:50 +0100
-Message-ID: <20241230154220.113562460@linuxfoundation.org>
+Subject: [PATCH 6.12 080/114] drm/xe: Move the coredump registration to the worker thread
+Date: Mon, 30 Dec 2024 16:43:17 +0100
+Message-ID: <20241230154221.171449150@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -45,51 +57,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 6756af923e06aa33ad8894aaecbf9060953ba00f ]
+[ Upstream commit 5dce85fecb87751ec94526e1ac516dd7871e2e0c ]
 
-During rename, we are updating link counts of various inodes either when
-rename deletes target or when moving directory across directories.
-Verify involved link counts are sane so that we don't trip warnings in
-VFS.
+Adding lockdep checking to the coredump code showed that there was an
+existing violation. The dev_coredumpm_timeout() call is used to
+register the dump with the base coredump subsystem. However, that
+makes multiple memory allocations, only some of which use the GFP_
+flags passed in. So that also needs to be deferred to the worker
+function where it is safe to allocate with arbitrary flags.
 
-Reported-by: syzbot+3ff7365dc04a6bcafa66@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+In order to not add protoypes for the callback functions, moving the
+_timeout call also means moving the worker thread function to later in
+the file.
+
+v2: Rebased after other changes to the worker function.
+
+Fixes: e799485044cb ("drm/xe: Introduce the dev_coredump infrastructure.")
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Francois Dugast <francois.dugast@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: intel-xe@lists.freedesktop.org
+Cc: linux-media@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: <stable@vger.kernel.org> # v6.8+
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241128210824.3302147-3-John.C.Harrison@Intel.com
+(cherry picked from commit 90f51a7f4ec1004fc4ddfbc6d1f1068d85ef4771)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/namei.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/xe/xe_devcoredump.c | 73 +++++++++++++++--------------
+ 1 file changed, 39 insertions(+), 34 deletions(-)
 
-diff --git a/fs/udf/namei.c b/fs/udf/namei.c
-index 2be775d30ac1..2cb49b6b0716 100644
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -791,8 +791,18 @@ static int udf_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 			retval = -ENOTEMPTY;
- 			if (!empty_dir(new_inode))
- 				goto out_oiter;
-+			retval = -EFSCORRUPTED;
-+			if (new_inode->i_nlink != 2)
-+				goto out_oiter;
- 		}
-+		retval = -EFSCORRUPTED;
-+		if (old_dir->i_nlink < 3)
-+			goto out_oiter;
- 		is_dir = true;
-+	} else if (new_inode) {
-+		retval = -EFSCORRUPTED;
-+		if (new_inode->i_nlink < 1)
-+			goto out_oiter;
- 	}
- 	if (is_dir && old_dir != new_dir) {
- 		retval = udf_fiiter_find_entry(old_inode, &dotdot_name,
+diff --git a/drivers/gpu/drm/xe/xe_devcoredump.c b/drivers/gpu/drm/xe/xe_devcoredump.c
+index c40c91e27f71..c18e463092af 100644
+--- a/drivers/gpu/drm/xe/xe_devcoredump.c
++++ b/drivers/gpu/drm/xe/xe_devcoredump.c
+@@ -144,36 +144,6 @@ static void xe_devcoredump_snapshot_free(struct xe_devcoredump_snapshot *ss)
+ 	ss->vm = NULL;
+ }
+ 
+-static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
+-{
+-	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
+-	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
+-	struct xe_device *xe = coredump_to_xe(coredump);
+-	unsigned int fw_ref;
+-
+-	xe_pm_runtime_get(xe);
+-
+-	/* keep going if fw fails as we still want to save the memory and SW data */
+-	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
+-	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
+-		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
+-	xe_vm_snapshot_capture_delayed(ss->vm);
+-	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
+-	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
+-
+-	xe_pm_runtime_put(xe);
+-
+-	/* Calculate devcoredump size */
+-	ss->read.size = __xe_devcoredump_read(NULL, INT_MAX, coredump);
+-
+-	ss->read.buffer = kvmalloc(ss->read.size, GFP_USER);
+-	if (!ss->read.buffer)
+-		return;
+-
+-	__xe_devcoredump_read(ss->read.buffer, ss->read.size, coredump);
+-	xe_devcoredump_snapshot_free(ss);
+-}
+-
+ static ssize_t xe_devcoredump_read(char *buffer, loff_t offset,
+ 				   size_t count, void *data, size_t datalen)
+ {
+@@ -222,6 +192,45 @@ static void xe_devcoredump_free(void *data)
+ 		 "Xe device coredump has been deleted.\n");
+ }
+ 
++static void xe_devcoredump_deferred_snap_work(struct work_struct *work)
++{
++	struct xe_devcoredump_snapshot *ss = container_of(work, typeof(*ss), work);
++	struct xe_devcoredump *coredump = container_of(ss, typeof(*coredump), snapshot);
++	struct xe_device *xe = coredump_to_xe(coredump);
++	unsigned int fw_ref;
++
++	/*
++	 * NB: Despite passing a GFP_ flags parameter here, more allocations are done
++	 * internally using GFP_KERNEL expliictly. Hence this call must be in the worker
++	 * thread and not in the initial capture call.
++	 */
++	dev_coredumpm_timeout(gt_to_xe(ss->gt)->drm.dev, THIS_MODULE, coredump, 0, GFP_KERNEL,
++			      xe_devcoredump_read, xe_devcoredump_free,
++			      XE_COREDUMP_TIMEOUT_JIFFIES);
++
++	xe_pm_runtime_get(xe);
++
++	/* keep going if fw fails as we still want to save the memory and SW data */
++	fw_ref = xe_force_wake_get(gt_to_fw(ss->gt), XE_FORCEWAKE_ALL);
++	if (!xe_force_wake_ref_has_domain(fw_ref, XE_FORCEWAKE_ALL))
++		xe_gt_info(ss->gt, "failed to get forcewake for coredump capture\n");
++	xe_vm_snapshot_capture_delayed(ss->vm);
++	xe_guc_exec_queue_snapshot_capture_delayed(ss->ge);
++	xe_force_wake_put(gt_to_fw(ss->gt), fw_ref);
++
++	xe_pm_runtime_put(xe);
++
++	/* Calculate devcoredump size */
++	ss->read.size = __xe_devcoredump_read(NULL, INT_MAX, coredump);
++
++	ss->read.buffer = kvmalloc(ss->read.size, GFP_USER);
++	if (!ss->read.buffer)
++		return;
++
++	__xe_devcoredump_read(ss->read.buffer, ss->read.size, coredump);
++	xe_devcoredump_snapshot_free(ss);
++}
++
+ static void devcoredump_snapshot(struct xe_devcoredump *coredump,
+ 				 struct xe_sched_job *job)
+ {
+@@ -305,10 +314,6 @@ void xe_devcoredump(struct xe_sched_job *job)
+ 	drm_info(&xe->drm, "Xe device coredump has been created\n");
+ 	drm_info(&xe->drm, "Check your /sys/class/drm/card%d/device/devcoredump/data\n",
+ 		 xe->drm.primary->index);
+-
+-	dev_coredumpm_timeout(xe->drm.dev, THIS_MODULE, coredump, 0, GFP_KERNEL,
+-			      xe_devcoredump_read, xe_devcoredump_free,
+-			      XE_COREDUMP_TIMEOUT_JIFFIES);
+ }
+ 
+ static void xe_driver_devcoredump_fini(void *arg)
 -- 
 2.39.5
 
