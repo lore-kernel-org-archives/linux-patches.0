@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B90515E8B;
-	Mon, 30 Dec 2024 15:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51BB15E8B;
+	Mon, 30 Dec 2024 15:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574310; cv=none; b=KxzwONgQtb6VqjY6UUQCSWl6rKD5lKo77xrzQPVq4ZYPALXFOjPddWRZ07QV8AEee/O1flJdMZu84rRotUXG1BydQBsTbBJwJ+t7re02igmULIr1iZJm68imEeeCs+pziqa6wFuyyHAp3C0MBoPVFkxfqjXg0Xmk1Qix0KHiZrQ=
+	t=1735574313; cv=none; b=NPZqiftQARTRLci4LW+7WAaLIrGaBXudm0IwwG+jh6/urFg4sTcZ8SV0sxYNAN0fpmebu2vAqnp7tsmSRy6g1jhfonoMnZKss7rsL7Ckyzjr5DfPc5uov5KFCIfe/fhI7HbWLjfr44r5ZHHg11TNPpLanNduguDO3oUhq8Kht0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574310; c=relaxed/simple;
-	bh=iQxWG7pgjBPTsfcWbNLm5zSqCDGGyIcX2MG+Uyeo5mc=;
+	s=arc-20240116; t=1735574313; c=relaxed/simple;
+	bh=1dFCWzORWHWPFKb3+WMe3G+hW81+AyPj+sCoN2JoT44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fv8hAU3EuKzoZr2HPwvaEIXqND7zWIAqvCi60riwoZF2sGlG3QRQydMr7vJmYAojNCxeM+2Ks8uioXVZYCD5Se8bGNypYPuKLC1cU/+k93EdWv51G2YDrZ/hnA+rgfbTk4fjqKJGUB8TwJv+oYBS2C8Tj3DB01Ih/VVOGTI+GOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSD6rSQN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NUQgQHCUkJtC4XKUpP2uzrYnPifbYfFkHF4ArtSNjmrP/r8XTfBKzx9VXh2Oe/1Y4iaCikFkFf5hnjgfEi/oo7hN+uoNhdwIBuyfSTDjRGvUF8XrbOrJq9b6VeMXa+1N+oLZUx5bbrzlLy/6vcEfmwqMdydfPaHGTarioOOrYm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEH3Rrb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSD6rSQN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E104CC4CED0;
-	Mon, 30 Dec 2024 15:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEH3Rrb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179DAC4CED0;
+	Mon, 30 Dec 2024 15:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574310;
-	bh=iQxWG7pgjBPTsfcWbNLm5zSqCDGGyIcX2MG+Uyeo5mc=;
+	s=korg; t=1735574313;
+	bh=1dFCWzORWHWPFKb3+WMe3G+hW81+AyPj+sCoN2JoT44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSD6rSQNiUciMzPsDTP9sbmnTi/YlNRFoe+0wx3JoB245/tz6lc88foisWLZStmrL
-	 EntEwulCLu2Es5Z7YYySqjJmNbiPtuLA5pAGqZA15UjiQaa+1baB9aggbOQ2UZ3uaF
-	 iDB733Xz6xELafoeRzIZD0YUx/JCWGsehqiaTJ0Q=
+	b=fEH3Rrb/9/RjBdOXrUD1ESs+FNmXD9Jf8HFZCzPnklEWSlLc4aMuzSLiBFVqvQvt2
+	 /IXeC2vqQBwqkFd5aLUCM3rIB3BJqYZLYG2uaOuzO/EZ2IEWYL5bOKg+l2F5qX4tsP
+	 6rjYm/6CyRrLzlgyieRNWIi48ijWCo6CMpSgC/P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Koch <linrunner@gmx.net>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.12 099/114] power: supply: cros_charge-control: hide start threshold on v2 cmd
-Date: Mon, 30 Dec 2024 16:43:36 +0100
-Message-ID: <20241230154221.926936315@linuxfoundation.org>
+Subject: [PATCH 6.12 100/114] power: supply: gpio-charger: Fix set charge current limits
+Date: Mon, 30 Dec 2024 16:43:37 +0100
+Message-ID: <20241230154221.963161410@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -45,74 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
 
-commit c28dc9fc24f5fa802d44ef7620a511035bdd803e upstream.
+commit afc6e39e824ad0e44b2af50a97885caec8d213d1 upstream.
 
-ECs implementing the v2 command will not stop charging when the end
-threshold is reached. Instead they will begin discharging until the
-start threshold is reached, leading to permanent charge and discharge
-cycles. This defeats the point of the charge control mechanism.
+Fix set charge current limits for devices which allow to set the lowest
+charge current limit to be greater zero. If requested charge current limit
+is below lowest limit, the index equals current_limit_map_size which leads
+to accessing memory beyond allocated memory.
 
-Avoid the issue by hiding the start threshold on v2 systems.
-Instead on those systems program the EC with start == end which forces
-the EC to reach and stay at that level.
-
-v1 does not support thresholds and v3 works correctly,
-at least judging from the code.
-
-Reported-by: Thomas Koch <linrunner@gmx.net>
-Fixes: c6ed48ef5259 ("power: supply: add ChromeOS EC based charge control driver")
+Fixes: be2919d8355e ("power: supply: gpio-charger: add charge-current-limit feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20241208-cros_charge-control-v2-v1-3-8d168d0f08a3@weissschuh.net
+Signed-off-by: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Link: https://lore.kernel.org/r/20241209-fix-charge-current-limit-v1-1-760d9b8f2af3@liebherr.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/cros_charge-control.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/power/supply/gpio-charger.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/power/supply/cros_charge-control.c b/drivers/power/supply/cros_charge-control.c
-index 108b121db442..9b0a7500296b 100644
---- a/drivers/power/supply/cros_charge-control.c
-+++ b/drivers/power/supply/cros_charge-control.c
-@@ -139,6 +139,10 @@ static ssize_t cros_chctl_store_threshold(struct device *dev, struct cros_chctl_
- 		return -EINVAL;
- 
- 	if (is_end_threshold) {
-+		/* Start threshold is not exposed, use fixed value */
-+		if (priv->cmd_version == 2)
-+			priv->current_start_threshold = val == 100 ? 0 : val;
+--- a/drivers/power/supply/gpio-charger.c
++++ b/drivers/power/supply/gpio-charger.c
+@@ -67,6 +67,14 @@ static int set_charge_current_limit(stru
+ 		if (gpio_charger->current_limit_map[i].limit_ua <= val)
+ 			break;
+ 	}
 +
- 		if (val < priv->current_start_threshold)
- 			return -EINVAL;
- 		priv->current_end_threshold = val;
-@@ -234,12 +238,10 @@ static umode_t cros_chtl_attr_is_visible(struct kobject *kobj, struct attribute
- {
- 	struct cros_chctl_priv *priv = cros_chctl_attr_to_priv(attr, n);
++	/*
++	 * If a valid charge current limit isn't found, default to smallest
++	 * current limitation for safety reasons.
++	 */
++	if (i >= gpio_charger->current_limit_map_size)
++		i = gpio_charger->current_limit_map_size - 1;
++
+ 	mapping = gpio_charger->current_limit_map[i];
  
--	if (priv->cmd_version < 2) {
--		if (n == CROS_CHCTL_ATTR_START_THRESHOLD)
--			return 0;
--		if (n == CROS_CHCTL_ATTR_END_THRESHOLD)
--			return 0;
--	}
-+	if (n == CROS_CHCTL_ATTR_START_THRESHOLD && priv->cmd_version < 3)
-+		return 0;
-+	else if (n == CROS_CHCTL_ATTR_END_THRESHOLD && priv->cmd_version < 2)
-+		return 0;
- 
- 	return attr->mode;
- }
--- 
-2.47.1
-
+ 	for (i = 0; i < ndescs; i++) {
 
 
