@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DF72594B6;
-	Mon, 30 Dec 2024 15:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8727D2594B6;
+	Mon, 30 Dec 2024 15:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573635; cv=none; b=YY/wfhhxAnQ5oxhtCNJPvzVd79MT+M6Y9F9Dqta5ZVyIjxRYE6DfIOMHnWEcwbRAlRf8nBLJQyzA3mUMUlFVUIh+2EoqntxiIZQoZrLvjUNh30szrGnkCaV/xAap8X/1plG0W2P0m0+FD48QrbECAbknIJpWQMXov0buaB6ahRg=
+	t=1735573638; cv=none; b=K6Pc9dU1m2TK2D81Pi+pDNdmslUfmvtNyNcmYxu1Fdqs1f8fakOM4m/W4mqynl2zhS7GZqDv0/WFHSlNnWdUr2Ed2SDOxKWYqVYN0vnlodUYbb+/EPLM1w3elo35aSdqE4qYObWK1jPJ/nSkOmYmDsQKXRG+nA+YLSSsan7j8pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573635; c=relaxed/simple;
-	bh=eilYYmeiTvc5zI4tJ6/LePwtavRThsC11U3XAlwV3AE=;
+	s=arc-20240116; t=1735573638; c=relaxed/simple;
+	bh=xz5gmXoW9BdPe3/OUSCplyyakmqfKsF5uWspwbj3x0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pZfnvBlgsGDUs3eaIxuesUBmDu5tKqcxi8+tKUnlUKBFsu2zVaRnUX4dmmJbo9Oc5GjkXW17peA3no8jA7g2D/aCk5eWV91NFPyDGwMY/H7luTQqILWmniRqWPehwdeYbazBrZBkxdl4WeLt6Za6NcnmCBXE5C0SDB9EcaD4c3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNK0mvWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZnxCFaUMK5VwqUg/zlp4ynAfnknsKctI57QeH5IMtgnmLv3rZCzb3wUB3LZjnSVwMaIscnLrM0/q6cdmdUR5DLPyTFmhuLjW8hDgJEv61RXEB03jpDm3YBdWAc8Vzxh5VsGLrkxr7x+UDNMkCPSI/gvhlImNQqEWpMzsoQ0FBsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BexURkfJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNK0mvWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA7BC4CED0;
-	Mon, 30 Dec 2024 15:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BexURkfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84668C4CED0;
+	Mon, 30 Dec 2024 15:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573634;
-	bh=eilYYmeiTvc5zI4tJ6/LePwtavRThsC11U3XAlwV3AE=;
+	s=korg; t=1735573638;
+	bh=xz5gmXoW9BdPe3/OUSCplyyakmqfKsF5uWspwbj3x0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNK0mvWOGHngkIeLk8MCGbrtRoimEVXc1PZykfdE/n5tAh6EM9Mt5k1jr4SQR77AR
-	 i8SuAqg2GNy/rfg5i7RYHJ2SJtdljnbFpUaOpIrXlPisfZ6xXikdHszkbSUAvA0JXL
-	 G4yE57NHizEVyl6ilsk6dYeWiXfMB6ejq9N6UXTk=
+	b=BexURkfJ9KxhKJSKQFWC1q/2pCmmea0aw7qUvR1kGvbE+y2jrrsnyOhsnfZtjBlAi
+	 wAwuAAtPGtLhKzo55wxKqTKK1Z0NaLCfsKL4U759v6gYz90oEJjqi2KL3MTLiFHEIG
+	 +I86cUnXEWr89YCBAkeiV/5D9CQap9xBwBOA37Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 49/60] tracing: Constify string literal data member in struct trace_event_call
-Date: Mon, 30 Dec 2024 16:42:59 +0100
-Message-ID: <20241230154209.133584613@linuxfoundation.org>
+	Sasha Finkelstein <fnkl.kernel@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 21/60] dmaengine: apple-admac: Avoid accessing registers in probe
+Date: Mon, 30 Dec 2024 16:42:31 +0100
+Message-ID: <20241230154208.092028861@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -52,70 +44,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Sasha Finkelstein <fnkl.kernel@gmail.com>
 
-commit 452f4b31e3f70a52b97890888eeb9eaa9a87139a upstream.
+commit 8d55e8a16f019211163f1180fd9f9fbe05901900 upstream.
 
-The name member of the struct trace_event_call is assigned with
-generated string literals; declare them pointer to read-only.
+The ADMAC attached to the AOP has complex power sequencing, and is
+power gated when the probe callback runs. Move the register reads
+to other functions, where we can guarantee that the hardware is
+switched on.
 
-Reported by clang:
-
-    security/landlock/syscalls.c:179:1: warning: initializing 'char *' with an expression of type 'const char[34]' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-      179 | SYSCALL_DEFINE3(landlock_create_ruleset,
-          | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      180 |                 const struct landlock_ruleset_attr __user *const, attr,
-          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      181 |                 const size_t, size, const __u32, flags)
-          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:226:36: note: expanded from macro 'SYSCALL_DEFINE3'
-      226 | #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
-          |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:234:2: note: expanded from macro 'SYSCALL_DEFINEx'
-      234 |         SYSCALL_METADATA(sname, x, __VA_ARGS__)                 \
-          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:184:2: note: expanded from macro 'SYSCALL_METADATA'
-      184 |         SYSCALL_TRACE_ENTER_EVENT(sname);                       \
-          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:151:30: note: expanded from macro 'SYSCALL_TRACE_ENTER_EVENT'
-      151 |                         .name                   = "sys_enter"#sname,    \
-          |                                                   ^~~~~~~~~~~~~~~~~
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Mickaël Salaün <mic@digikod.net>
-Cc: Günther Noack <gnoack@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Link: https://lore.kernel.org/20241125105028.42807-1-cgoettsche@seltendoof.de
-Fixes: b77e38aa240c3 ("tracing: add event trace infrastructure")
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 568aa6dd641f ("dmaengine: apple-admac: Allocate cache SRAM to channels")
+Signed-off-by: Sasha Finkelstein <fnkl.kernel@gmail.com>
+Link: https://lore.kernel.org/r/20241124-admac-power-v1-1-58f2165a4d55@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/apple-admac.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -355,7 +355,7 @@ struct trace_event_call {
- 	struct list_head	list;
- 	struct trace_event_class *class;
- 	union {
--		char			*name;
-+		const char		*name;
- 		/* Set TRACE_EVENT_FL_TRACEPOINT flag when using "tp" */
- 		struct tracepoint	*tp;
- 	};
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -152,6 +152,8 @@ static int admac_alloc_sram_carveout(str
+ {
+ 	struct admac_sram *sram;
+ 	int i, ret = 0, nblocks;
++	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
++	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+ 
+ 	if (dir == DMA_MEM_TO_DEV)
+ 		sram = &ad->txcache;
+@@ -911,12 +913,7 @@ static int admac_probe(struct platform_d
+ 		goto free_irq;
+ 	}
+ 
+-	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
+-	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
+-
+ 	dev_info(&pdev->dev, "Audio DMA Controller\n");
+-	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
+-		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
+ 
+ 	return 0;
+ 
 
 
