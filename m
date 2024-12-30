@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A447515E8B;
-	Mon, 30 Dec 2024 15:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061602E414;
+	Mon, 30 Dec 2024 15:54:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574089; cv=none; b=MTfdpjOcBgf21+70vSWAkKKCe+S9OUxH4JM83p6kRU+U3qhGdA/llZtl6ZsmrEGHdWZBYb51O0gBsMdmBvkDVMTPrg5fjSB0WlP6vbd8AlSyfR/YwVvMrKRKmG7A1Zc28y3FnAS6RUjhtF3OTDAHvy4NvfW3zBzZGhiQkR+XAbo=
+	t=1735574093; cv=none; b=A+W3RzUzFkuHDXxDjCYv2LA5IqHG2GteilOfrfIuLi88s0fjnAAlfsr0UiRVTv8eSbw54w0HJBjKpJy21jpAA8aet/FeAeN4pIHiHTyH4mrvHBs4xGupxrxFgmcQJ0eXJP7ugqdCP8ql1fK9bdZ293fXs6vR8ZbrVjqS9c5SV1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574089; c=relaxed/simple;
-	bh=6txZf4zqa8+TdVoXsFUMHaqk/gWUFT/jGTUj1395m5E=;
+	s=arc-20240116; t=1735574093; c=relaxed/simple;
+	bh=hjtPhQ8YxlWF2t+fa/HjHqMW6hM0ieB3lWKHs6XxzXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGPIOqw58VITggbangyEMd7IQ8jkfztbe4cBTMz5WXrpISxxl9yjZmxg1AUn//G6kpgFRtxUxP0Q+z/696jBNytdverbN0lAY08dmPAPM69zJ8kh3aJ8dVuzYY2g2MC0x/Bxi7VE5Lkas0hysBx18+6DxmC9KfCe3vF2DjldmcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t34CbgIv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwTv2KOXI6pbXu5SwYO9RtukjpdyHYNEKJ9paXPnDK0Z68jpU4/CFj1DeYjB3SGfuxstadQRjJFIwihXxXYWigNt39l++4rZoGLfAveIszyt3CayRwA0ErOFMgUdLd/PXrIDZ9sFEFuoVeeKPs4JAqNiwy216px/136xfUc2S9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKytHhiK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t34CbgIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC56C4CED0;
-	Mon, 30 Dec 2024 15:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKytHhiK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67797C4CED0;
+	Mon, 30 Dec 2024 15:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574089;
-	bh=6txZf4zqa8+TdVoXsFUMHaqk/gWUFT/jGTUj1395m5E=;
+	s=korg; t=1735574092;
+	bh=hjtPhQ8YxlWF2t+fa/HjHqMW6hM0ieB3lWKHs6XxzXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t34CbgIvQTzU9mPkmtbHGCt15cG44rxG5+Db7yCG1+k8Icfzyfs9tvJbfnyLXBKgM
-	 MtQVbnGLHm91Hnqf+eHSPtP7s+Ab9WQQQ59TJCb/NJy6MYqL/m27150IAfBBsQMB7S
-	 t/n5RMW/eYO39VutSzqPO9w/NtA31uxQWLHHQH0U=
+	b=sKytHhiKci7FUwQplEpYqpn19Gj4EHH8zXDFP/yRVTv2jMx9dbnxnM0lZ0aDSIlmW
+	 safwlFhXi1oN80oR7/FG5+lrrQDLXFkczTVQTlrLMIJAnO2RVqwFuGUucIxogqwnCS
+	 pei+dBv4aWQ7LaKVhIidQKd80RilkKtHgeelIQ+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 034/114] dmaengine: at_xdmac: avoid null_prt_deref in at_xdmac_prep_dma_memset
-Date: Mon, 30 Dec 2024 16:42:31 +0100
-Message-ID: <20241230154219.376242688@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 035/114] ASoC: SOF: Intel: hda-dai: Do not release the link DMA on STOP
+Date: Mon, 30 Dec 2024 16:42:32 +0100
+Message-ID: <20241230154219.413902951@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -50,34 +53,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit c43ec96e8d34399bd9dab2f2dc316b904892133f upstream.
+commit e8d0ba147d901022bcb69da8d8fd817f84e9f3ca upstream.
 
-The at_xdmac_memset_create_desc may return NULL, which will lead to a
-null pointer dereference. For example, the len input is error, or the
-atchan->free_descs_list is empty and memory is exhausted. Therefore, add
-check to avoid this.
+The linkDMA should not be released on stop trigger since a stream re-start
+might happen without closing of the stream. This leaves a short time for
+other streams to 'steal' the linkDMA since it has been released.
 
-Fixes: b206d9a23ac7 ("dmaengine: xdmac: Add memset support")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Link: https://lore.kernel.org/r/20241029082845.1185380-1-chenridong@huaweicloud.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This issue is not easy to reproduce under normal conditions as usually
+after stop the stream is closed, or the same stream is restarted, but if
+another stream got in between the stop and start, like this:
+aplay -Dhw:0,3 -c2 -r48000 -fS32_LE /dev/zero -d 120
+CTRL+z
+aplay -Dhw:0,0 -c2 -r48000 -fS32_LE /dev/zero -d 120
+
+then the link DMA channels will be mixed up, resulting firmware error or
+crash.
+
+Fixes: ab5593793e90 ("ASoC: SOF: Intel: hda: Always clean up link DMA during stop")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/thesofproject/sof/issues/9695
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20241217091019.31798-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_xdmac.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/intel/hda-dai.c |   25 +++++++++++++++++++------
+ sound/soc/sof/intel/hda.h     |    2 --
+ 2 files changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1363,6 +1363,8 @@ at_xdmac_prep_dma_memset(struct dma_chan
- 		return NULL;
+--- a/sound/soc/sof/intel/hda-dai.c
++++ b/sound/soc/sof/intel/hda-dai.c
+@@ -103,8 +103,10 @@ hda_dai_get_ops(struct snd_pcm_substream
+ 	return sdai->platform_private;
+ }
  
- 	desc = at_xdmac_memset_create_desc(chan, atchan, dest, len, value);
-+	if (!desc)
-+		return NULL;
- 	list_add_tail(&desc->desc_node, &desc->descs_list);
+-int hda_link_dma_cleanup(struct snd_pcm_substream *substream, struct hdac_ext_stream *hext_stream,
+-			 struct snd_soc_dai *cpu_dai)
++static int
++hda_link_dma_cleanup(struct snd_pcm_substream *substream,
++		     struct hdac_ext_stream *hext_stream,
++		     struct snd_soc_dai *cpu_dai, bool release)
+ {
+ 	const struct hda_dai_widget_dma_ops *ops = hda_dai_get_ops(substream, cpu_dai);
+ 	struct sof_intel_hda_stream *hda_stream;
+@@ -128,6 +130,17 @@ int hda_link_dma_cleanup(struct snd_pcm_
+ 		snd_hdac_ext_bus_link_clear_stream_id(hlink, stream_tag);
+ 	}
  
- 	desc->tx_dma_desc.cookie = -EBUSY;
++	if (!release) {
++		/*
++		 * Force stream reconfiguration without releasing the channel on
++		 * subsequent stream restart (without free), including LinkDMA
++		 * reset.
++		 * The stream is released via hda_dai_hw_free()
++		 */
++		hext_stream->link_prepared = 0;
++		return 0;
++	}
++
+ 	if (ops->release_hext_stream)
+ 		ops->release_hext_stream(sdev, cpu_dai, substream);
+ 
+@@ -211,7 +224,7 @@ static int __maybe_unused hda_dai_hw_fre
+ 	if (!hext_stream)
+ 		return 0;
+ 
+-	return hda_link_dma_cleanup(substream, hext_stream, cpu_dai);
++	return hda_link_dma_cleanup(substream, hext_stream, cpu_dai, true);
+ }
+ 
+ static int __maybe_unused hda_dai_hw_params_data(struct snd_pcm_substream *substream,
+@@ -304,7 +317,8 @@ static int __maybe_unused hda_dai_trigge
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+-		ret = hda_link_dma_cleanup(substream, hext_stream, dai);
++		ret = hda_link_dma_cleanup(substream, hext_stream, dai,
++					   cmd == SNDRV_PCM_TRIGGER_STOP ? false : true);
+ 		if (ret < 0) {
+ 			dev_err(sdev->dev, "%s: failed to clean up link DMA\n", __func__);
+ 			return ret;
+@@ -656,8 +670,7 @@ static int hda_dai_suspend(struct hdac_b
+ 			}
+ 
+ 			ret = hda_link_dma_cleanup(hext_stream->link_substream,
+-						   hext_stream,
+-						   cpu_dai);
++						   hext_stream, cpu_dai, true);
+ 			if (ret < 0)
+ 				return ret;
+ 		}
+--- a/sound/soc/sof/intel/hda.h
++++ b/sound/soc/sof/intel/hda.h
+@@ -1028,8 +1028,6 @@ const struct hda_dai_widget_dma_ops *
+ hda_select_dai_widget_ops(struct snd_sof_dev *sdev, struct snd_sof_widget *swidget);
+ int hda_dai_config(struct snd_soc_dapm_widget *w, unsigned int flags,
+ 		   struct snd_sof_dai_config_data *data);
+-int hda_link_dma_cleanup(struct snd_pcm_substream *substream, struct hdac_ext_stream *hext_stream,
+-			 struct snd_soc_dai *cpu_dai);
+ 
+ static inline struct snd_sof_dev *widget_to_sdev(struct snd_soc_dapm_widget *w)
+ {
 
 
