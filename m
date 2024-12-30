@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAC72594B6;
-	Mon, 30 Dec 2024 15:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199292594B6;
+	Mon, 30 Dec 2024 15:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573603; cv=none; b=jhEBmy+6d/ML1r5gvAOwhIrXFFaAnEAk8peRy5aeQwgmL2hPp5oBqsz6Wa5OWmugMNKw4cRGqe3X4bJSHDWqWn/3pUOvYssZRrBaUSXTEtbVup+ue4B8tYGAl/jCAovfn1aB5dpEqL0RJlSF2ZjC9DXAOuh/MDFl4sBls+kyIy0=
+	t=1735573607; cv=none; b=uSzPo8XU8+ES+zflQU7nheWkTfW7xUXMrdGS9LePR8pmIguKkxrFFlPj/NbFDVVQ5Qy11v/UCkPmx4zmC6gxEMwJhEeT9p0wSqRA+lxwFMqak5ZIuQZXMYMsGAWkJzPjc8JzGmHUUKTy/WmK2Td5a45UZ4r33drgEL903g9aTmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573603; c=relaxed/simple;
-	bh=o5aJNX5ajcNCDoPNBKG5Pzf+hQ/Ys1uWMmQOGl7vMwY=;
+	s=arc-20240116; t=1735573607; c=relaxed/simple;
+	bh=0rnLNZBwVuRIQhn2taVoN5JhETsX1zgu7RQXZRInUxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shYqCOZQLt9z7Ju9SUTj4k+ezsEq41PeqIZHM/j2pU+LymgJ65KKEQvq6bCdztWc2XBgJEGZVHdjsCwIq5Xtqy2dXHeAiutHKNdWkv3ZrCiJooVlPV+8N7gfgHBcf/1LOZJoe54fzBOATIUQSAM65HPKimziGOzSQNvRdoE44fA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XD39nJve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b0bR4+1VyuDCBt3pQrS7f952H5yuRCP9pC0D57dRoMJ4P2/kNG2E87VIc1cXKMj+AfCbyG+PJrTL1NYLAj83H90TO8CcE2BuW7kPLNfag9OV8eP62vjQ6VC5dcppNwg1Mh/jYM2Hw4hmjI2lWBS2bcQ5wpJxz8SkQISTIqcHn/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtK7CVH9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XD39nJve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACCAC4CED0;
-	Mon, 30 Dec 2024 15:46:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtK7CVH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A66C4CED0;
+	Mon, 30 Dec 2024 15:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573603;
-	bh=o5aJNX5ajcNCDoPNBKG5Pzf+hQ/Ys1uWMmQOGl7vMwY=;
+	s=korg; t=1735573607;
+	bh=0rnLNZBwVuRIQhn2taVoN5JhETsX1zgu7RQXZRInUxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XD39nJve4T9opa1MbPnXW6C7f777z0THwBNU1y6l/3AZLIzRCxRg4nBlIYtMm5aMV
-	 dhdN5+AywmhRK8/IFkkEvYLu+dqTROQ0bj/gSdOQwKMQ88PxavI7ecXsKOmmEM65F5
-	 VfjKp0QxD18o5h7MYYYHuqx2Vstml4RHTY287jR0=
+	b=YtK7CVH9r6SQMC01Ax5cqJKv35KGgqhRfWC0g2no1jE4bnwgURUbyNy17ZsROQxD9
+	 b7wk7Mu2KME2aG5yQMUOmr5kcGkxU4EPMEsDqIEvL5IuMvgnsJqYjoD43i+1odO4am
+	 oRcxbr59jkShgXvfaMrOMDC6DqYE8PihzhdGwwuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jianqi Ren <jianqi.ren.cn@windriver.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/60] net/mlx5e: Dont call cleanup on profile rollback failure
-Date: Mon, 30 Dec 2024 16:42:52 +0100
-Message-ID: <20241230154208.875256617@linuxfoundation.org>
+Subject: [PATCH 6.1 43/60] bpf: Check validity of link->type in bpf_link_show_fdinfo()
+Date: Mon, 30 Dec 2024 16:42:53 +0100
+Message-ID: <20241230154208.912223776@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -54,85 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 4dbc1d1a9f39c3711ad2a40addca04d07d9ab5d0 ]
+commit 8421d4c8762bd022cb491f2f0f7019ef51b4f0a7 upstream.
 
-When profile rollback fails in mlx5e_netdev_change_profile, the netdev
-profile var is left set to NULL. Avoid a crash when unloading the driver
-by not calling profile->cleanup in such a case.
+If a newly-added link type doesn't invoke BPF_LINK_TYPE(), accessing
+bpf_link_type_strs[link->type] may result in an out-of-bounds access.
 
-This was encountered while testing, with the original trigger that
-the wq rescuer thread creation got interrupted (presumably due to
-Ctrl+C-ing modprobe), which gets converted to ENOMEM (-12) by
-mlx5e_priv_init, the profile rollback also fails for the same reason
-(signal still active) so the profile is left as NULL, leading to a crash
-later in _mlx5e_remove.
+To spot such missed invocations early in the future, checking the
+validity of link->type in bpf_link_show_fdinfo() and emitting a warning
+when such invocations are missed.
 
- [  732.473932] mlx5_core 0000:08:00.1: E-Switch: Unload vfs: mode(OFFLOADS), nvfs(2), necvfs(0), active vports(2)
- [  734.525513] workqueue: Failed to create a rescuer kthread for wq "mlx5e": -EINTR
- [  734.557372] mlx5_core 0000:08:00.1: mlx5e_netdev_init_profile:6235:(pid 6086): mlx5e_priv_init failed, err=-12
- [  734.559187] mlx5_core 0000:08:00.1 eth3: mlx5e_netdev_change_profile: new profile init failed, -12
- [  734.560153] workqueue: Failed to create a rescuer kthread for wq "mlx5e": -EINTR
- [  734.589378] mlx5_core 0000:08:00.1: mlx5e_netdev_init_profile:6235:(pid 6086): mlx5e_priv_init failed, err=-12
- [  734.591136] mlx5_core 0000:08:00.1 eth3: mlx5e_netdev_change_profile: failed to rollback to orig profile, -12
- [  745.537492] BUG: kernel NULL pointer dereference, address: 0000000000000008
- [  745.538222] #PF: supervisor read access in kernel mode
-<snipped>
- [  745.551290] Call Trace:
- [  745.551590]  <TASK>
- [  745.551866]  ? __die+0x20/0x60
- [  745.552218]  ? page_fault_oops+0x150/0x400
- [  745.555307]  ? exc_page_fault+0x79/0x240
- [  745.555729]  ? asm_exc_page_fault+0x22/0x30
- [  745.556166]  ? mlx5e_remove+0x6b/0xb0 [mlx5_core]
- [  745.556698]  auxiliary_bus_remove+0x18/0x30
- [  745.557134]  device_release_driver_internal+0x1df/0x240
- [  745.557654]  bus_remove_device+0xd7/0x140
- [  745.558075]  device_del+0x15b/0x3c0
- [  745.558456]  mlx5_rescan_drivers_locked.part.0+0xb1/0x2f0 [mlx5_core]
- [  745.559112]  mlx5_unregister_device+0x34/0x50 [mlx5_core]
- [  745.559686]  mlx5_uninit_one+0x46/0xf0 [mlx5_core]
- [  745.560203]  remove_one+0x4e/0xd0 [mlx5_core]
- [  745.560694]  pci_device_remove+0x39/0xa0
- [  745.561112]  device_release_driver_internal+0x1df/0x240
- [  745.561631]  driver_detach+0x47/0x90
- [  745.562022]  bus_remove_driver+0x84/0x100
- [  745.562444]  pci_unregister_driver+0x3b/0x90
- [  745.562890]  mlx5_cleanup+0xc/0x1b [mlx5_core]
- [  745.563415]  __x64_sys_delete_module+0x14d/0x2f0
- [  745.563886]  ? kmem_cache_free+0x1b0/0x460
- [  745.564313]  ? lockdep_hardirqs_on_prepare+0xe2/0x190
- [  745.564825]  do_syscall_64+0x6d/0x140
- [  745.565223]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
- [  745.565725] RIP: 0033:0x7f1579b1288b
-
-Fixes: 3ef14e463f6e ("net/mlx5e: Separate between netdev objects and mlx5e profiles initialization")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241024013558.1135167-3-houtao@huaweicloud.com
+[ shung-hsi.yu: break up existing seq_printf() call since commit 68b04864ca42
+  ("bpf: Create links for BPF struct_ops maps.") is not present ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/syscall.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 385904502a6b..8ee6a81b42b4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5980,7 +5980,9 @@ static void mlx5e_remove(struct auxiliary_device *adev)
- 	mlx5e_dcbnl_delete_app(priv);
- 	unregister_netdev(priv->netdev);
- 	mlx5e_suspend(adev, state);
--	priv->profile->cleanup(priv);
-+	/* Avoid cleanup if profile rollback failed. */
-+	if (priv->profile)
-+		priv->profile->cleanup(priv);
- 	mlx5e_devlink_port_unregister(priv);
- 	mlx5e_destroy_netdev(priv);
- }
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index f9906e5ad2e5..6455f80099cd 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2816,16 +2816,21 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
+ {
+ 	const struct bpf_link *link = filp->private_data;
+ 	const struct bpf_prog *prog = link->prog;
++	enum bpf_link_type type = link->type;
+ 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
+ 
++	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
++		seq_printf(m, "link_type:\t%s\n", bpf_link_type_strs[type]);
++	} else {
++		WARN_ONCE(1, "missing BPF_LINK_TYPE(...) for link type %u\n", type);
++		seq_printf(m, "link_type:\t<%u>\n", type);
++	}
++	seq_printf(m, "link_id:\t%u\n", link->id);
++
+ 	bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
+ 	seq_printf(m,
+-		   "link_type:\t%s\n"
+-		   "link_id:\t%u\n"
+ 		   "prog_tag:\t%s\n"
+ 		   "prog_id:\t%u\n",
+-		   bpf_link_type_strs[link->type],
+-		   link->id,
+ 		   prog_tag,
+ 		   prog->aux->id);
+ 	if (link->ops->show_fdinfo)
 -- 
 2.39.5
 
