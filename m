@@ -1,293 +1,141 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2074.outbound.protection.outlook.com [40.107.93.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF1A19E83E
-	for <patches@lists.linux.dev>; Mon, 30 Dec 2024 16:04:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.74
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574696; cv=fail; b=J8axt7bcOzb8GBNY+o0jg4nFcntUp69B2dav/M6SVZmNo2j2jaTkNDHc34JdyVZkgAbDirzrLlC0bEUaS2vgS9l8Jcbb1U6C+qTlTvlurIKcO6au+7+V2LBZlX4aaZ0k3r7UNJFQbJBXieCGffcbN6fecPSx5U3SUhIqcVkwtsw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574696; c=relaxed/simple;
-	bh=tCmP1hgNmtDkHT7cWsbbcoFi4idcE2mTs+l+/18xvAE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=FaTbn87nwhTITS+QRKRgXuvOxY3Q+mCfbtm7K95Vy7Z9OWEE65eSAypcNh/AxwEwpTi2cdqFBaXfwrg9ssqN0eN+TGXO50gAFpL4EqjVZxj0tSOgdsTNV4ivawWu9JU5cX7TYLsZk1PBBS32UkYXeA7KqeDWtcmCym7+WKH0J+I=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=bEEbFIcQ; arc=fail smtp.client-ip=40.107.93.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5631A1ACED2
+	for <patches@lists.linux.dev>; Mon, 30 Dec 2024 17:39:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1735580377; cv=none; b=NpHQ/BqQ+jhsoQNS7zxhqB4rJA4uFOLWzvy638UygXSCdxoc14M3dkHK3T4e2jFUt/jipsvASKhABJ+s3h38qDjZ2vGKEWse1lEQFK53yAa7lhMieWL0nPknXuD+9fxYo+anTDzsNXFrYr38LJxQxHyvIopD5COWqoU/VD0+aEo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1735580377; c=relaxed/simple;
+	bh=R/rFrw1P0qSXzaAQb8RgeobbyTyxW1rmHaNO4bwznVc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nAiVyD1U9Waj4MI6z5U/pHocVDN4Kyfl54j4NJKMvMQBxR/ZtUWW8Pr2mBtymDztfWdvn3Y9AeCbRHJdTusQ6Kb/FPHt+YXovEiyMkN83vhCg1gcI8gvhGgFes/73z3iamGOd0WOoI87YyOBF5dSZTFFRNL9c2n2H8oTCC3r6LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yewr8htD; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="bEEbFIcQ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BXnftSdt5Z2Zepvl6bz2oEIvb6eOy6nNafqArGmf6H+1DF166JC7vhOLT7VjmZsOyPgFS56nf/9BPDjKdobsqYG8WLPHWQGp8Jrns0kJ4kVk8kIURez6asYfCC+IRT4O3LXxlORiwSDgdnEiDSoTOmfJYTsJfs6WydMh6zvK12r8G95lTXtTO3LW6bUUvjiV8TRAb6Lj2xzLF//zZpEM4irBn8go5eRXDPhD1Pgn4kv4tV900LIxTgTUAvEFQnKMdr3jjdgvvQXrV8GBzt1G063FelmmTRACGcE7O4piRqtXSQ7mfH9rQsXEwV9w7fvLQVDrF7HrwnP2eUk7yvQ7Ig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uCK7ZTXMoYGL8SXsQvkZyI25kve4VCDmjCb5EcBLx/M=;
- b=EwpVmbXU3lWDjG1VQg7cyb/bESBeV2zamb+S3Jd9BqLXZ9KooApg7IA1X7Klg0trDrO+LkIFb/BdzenAtZMPlKXGrgMlR28wQ7PvdSeoFfpkiC4K0IagB9qC/0npOZWTrgiLiYaVRBXpqPRXTZaUCZ8sazjCPEtyOEzyYOeUeBKaK4+NgWLQJO8vpHZfCmeBHMHrNivJSlaAYHHjQrcnA9kbLjdMJ2YfVtd2thuBNf+Y3pwSO2jr6eTz9NkaZEV4GV/qtUtrDdajEKTIL7AWfX62z8QCIie6wSIiScd9LbIhE7rQt1rCoH3ZAdDEcx5+fwGUzDzJi4fsUA0MDNlGOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uCK7ZTXMoYGL8SXsQvkZyI25kve4VCDmjCb5EcBLx/M=;
- b=bEEbFIcQ4zIKwgtIczSdwA94rD+etFoBfna2I6KAtDg9zJfLylrbczimBI8h0kZNdny3VsHL3/J2SF5cNjyXNb3gDgbZWcmZ+dYTnbKuA+4Ccyx//8lJ5qIYoVwKOhtFF9BhayHQ2HOqf+Sl5TrkeTO9+4llTZcRJaDfnIh6wLE=
-Received: from SA1PR12MB8599.namprd12.prod.outlook.com (2603:10b6:806:254::7)
- by DS0PR12MB8246.namprd12.prod.outlook.com (2603:10b6:8:de::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.19; Mon, 30 Dec
- 2024 16:04:48 +0000
-Received: from SA1PR12MB8599.namprd12.prod.outlook.com
- ([fe80::25da:4b98:9743:616b]) by SA1PR12MB8599.namprd12.prod.outlook.com
- ([fe80::25da:4b98:9743:616b%6]) with mapi id 15.20.8293.000; Mon, 30 Dec 2024
- 16:04:48 +0000
-From: "Li, Yunxiang (Teddy)" <Yunxiang.Li@amd.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>, "Zhang, Jesse(Jie)"
-	<Jesse.Zhang@amd.com>, "Deucher, Alexander" <Alexander.Deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: RE: [PATCH 6.6 71/86] drm/amdkfd: pause autosuspend when creating pdd
-Thread-Topic: [PATCH 6.6 71/86] drm/amdkfd: pause autosuspend when creating
- pdd
-Thread-Index: AQHbWtLBSCwR1K8lVkOEjStOu2H3VLL+8WJA
-Date: Mon, 30 Dec 2024 16:04:48 +0000
-Message-ID:
- <SA1PR12MB85994AA4E100903782A2C8EEED092@SA1PR12MB8599.namprd12.prod.outlook.com>
-References: <20241230154211.711515682@linuxfoundation.org>
- <20241230154214.412434784@linuxfoundation.org>
-In-Reply-To: <20241230154214.412434784@linuxfoundation.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_ActionId=f5ddb4ce-3c86-4fb0-9918-6e0579f3d501;MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_ContentBits=0;MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_Enabled=true;MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_Method=Privileged;MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_Name=Open
- Source;MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_SetDate=2024-12-30T15:57:31Z;MSIP_Label_f265efc6-e181-49d6-80f4-fae95cf838a0_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR12MB8599:EE_|DS0PR12MB8246:EE_
-x-ms-office365-filtering-correlation-id: bb0f4352-9190-41a2-3d45-08dd28ebaf5f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?LjHX4twAaLRGuSwoBibH185QfEgqjPJ7buIiGRA7m9h1OR3hHnBcEZwF6UJD?=
- =?us-ascii?Q?rxvNNl5t+ljut3wrBKra/cT3+d81kk5u1Syuqia4bxr3T8heC+1SfEsu/WsF?=
- =?us-ascii?Q?AgUS9QCg4RaxkIxTIpa7/IxaL9Smmg8et8hXjO4qKXkkpC07Cj9rs/09H1+d?=
- =?us-ascii?Q?SBfIOPFo7ff3Q8c+n8/Z3G22bChqMugJ0VUavqu6500E6MjKf6m5lHbDiKZ8?=
- =?us-ascii?Q?p0+qLU1oFwE9JA7ExcIY4wfc3VLY+a2pLk4KPB7K7vT/U3Tll8PK5Lf7Ih4F?=
- =?us-ascii?Q?nNg415OkfVBzHP6uyH+KM74L8c0i9Uex9yn0UpQstOcR/qb12zOtkykcawfA?=
- =?us-ascii?Q?RsGpvPg4OD+dNKvbtNIPH6icCQuvZSIWeVTec4RRbdpjnMkLTt/xICP6A3Js?=
- =?us-ascii?Q?hv4PB3EezXdPazpXmlapqjCD2o/B9QLpJHcIU6uq1J2yzRzpJz38mEh/PNtV?=
- =?us-ascii?Q?kVYjNPS8+rzeiZuCEcyRnxQqxzZJVSub46wJj14uLDusEc+nJ/VNvHA9XBwx?=
- =?us-ascii?Q?1tnk1QcHhaaHchomF3Wg2+7fKr/NuCfBgPlLexjRrDKYdqzWb0lHsCu099da?=
- =?us-ascii?Q?tJ2W77YDFyrp25MQ3FckpBtFZvHmKkQ9FJnYN86LatILeg8/iPD83VsQrVO+?=
- =?us-ascii?Q?Hge8aszbqRGv4/+tYBBzcm3fAlt3BXBDCjjcPBy4tCiGcQXl6SpbRZaZMRvB?=
- =?us-ascii?Q?higCxlKh6g9R42iHER4t4rv5brsTAnxP2MuDnd+kH6KZjH8eXBJg2VK8HiHQ?=
- =?us-ascii?Q?nNOkx0M5pcp7kg4AurCGD/VAy+NNFFiYxUvYkiShmJTjp8kAkxDfRDbNS3yu?=
- =?us-ascii?Q?ZdaN31S3H043SWI6O/8N5gp05/cpv4Mfklqu4/zVi9o31B7dMBbVsTbPkQWS?=
- =?us-ascii?Q?chWYC5Z54hKZp6zDKK58n00iqxXR1tCsP9PZCf3S1Mkk1v3xZm/3wxkuT+kW?=
- =?us-ascii?Q?T2NUg5SAl5WYtLx5fnCq+SdLtbjXmttUaZXaR+avhBrSkQESt2YT7fbWRlL+?=
- =?us-ascii?Q?u7/rlUWXJEAti6J44xNBax3WLJHSzeIAV9lTSDaDVrZMNCbtjpdvwRokGCMB?=
- =?us-ascii?Q?ViG31bKPHWi0BHcMQ1dQp1oIa/1LWAoZgoiSQMtp7aJQ5zn8mNqU1co8lwxP?=
- =?us-ascii?Q?S+yDqiHe8v8rHsEvWnYJN83kheCjP7j2L+lJiT6Ka2Zyu6L7LzYfbo6obfqY?=
- =?us-ascii?Q?1w3iFuYusSXTeT0DRQv+CimHKS2MhBOLKM+BgtngDzsaz7PTbIXCDtM9mB3S?=
- =?us-ascii?Q?bs+uhbE0cTb+R5gnXGwzj6giYNvrJt11sKQlZdqaUj8EV48jUX7V0bzK2wn3?=
- =?us-ascii?Q?aXsMN8N01yuhcD5j6aEHSaBspqCJdg5MOTkVdag9ghy77jpoHvQjPjYqs33Y?=
- =?us-ascii?Q?Rpe33TtdvBWpr6Q+L+gAYL/8XDfUcafrPI6T0JjVL63kK/BaFA=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR12MB8599.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?C/fZG8+hgVoXH/CD3EKdpEbmXy+AV2sX5di2GZwycqofQ461Qwq8itoL6ad7?=
- =?us-ascii?Q?V9TxLimB2r5uvZw60UFI1/jwXqULVwKTkLygJXgbUbR8pWGGOkXZ35Lv/DjZ?=
- =?us-ascii?Q?0aWioFsu2UCM7gQPX7gkvlhVJbk48+1QaL1xIWllWo3W3Nb9VVbQp+ALdl3h?=
- =?us-ascii?Q?urGvwDFMtX+v8OmacmURrCSzA6thiNv/5uZSY2CJSo9k0MChvO5PoGjaac/p?=
- =?us-ascii?Q?VAGzu4imRYUXFmP0zeGjpwpjxJqmJoG5BRK3L1MHbBJ6fxjOxgyLjJ8KvHrC?=
- =?us-ascii?Q?oTNgoydpLKncknne78wT3EKqUexH94uuCUVnyDujOufdt3kO3JC4381OkMTA?=
- =?us-ascii?Q?zmPwFHnkjP1xENIoy/OLn6w1tK9nVhFg0+FRNdvauLrJCduymvPNLkUzeWPd?=
- =?us-ascii?Q?VW66X4QTHcClDXuFtsVOIXdaaf0urc7UbAdM5V6++OdVog6HEpNfStQUFWAg?=
- =?us-ascii?Q?w1ZgOkP8zfK5f1d4xOUZgIF7vJ2EyZEaf6Ld+/HKG8rbUKiW0fAxKRNeE1l6?=
- =?us-ascii?Q?uMDy7DMt1jzN87gFLNnaq0UDBH33awEzjo8LJZcqe7uRTNah8EN3wTuI3HAH?=
- =?us-ascii?Q?hj7ImTUQMKnhqOjnteuuoxzvJHiSVKOytFnTnocZAUXnwPj09gBY3GnaEM6W?=
- =?us-ascii?Q?X7bPu1Uk+3NRMUVzT7QYHTGrcH7GemHVYYc3v0GPf+ER/4QSE/vBJxgKu2X3?=
- =?us-ascii?Q?jey0qj39SUqaWyiKklCvy/ROmk7ioW7RVpmM9xFO3NkVzgOdcvWxOiiB8BSx?=
- =?us-ascii?Q?sW45M2zZd73xFyi4yyNbtkHyZP/fHCGTa1/X58KBPwZ4pDiz6wxXKpJQYTWJ?=
- =?us-ascii?Q?HlTiY39Nzbv7rYwaqeJWBA3PFMhf5SWGJdXH6Sk4k/Q6b1g/7fLmVy26x17T?=
- =?us-ascii?Q?hcQC6L0ezxxwCDM2ykCgiKvttg9H8vTO5OT1rwQ8x0L1UP6ZOMlgjOs/9TRY?=
- =?us-ascii?Q?vBAZmQgPh4sP4JhuAk6P2lnIhUSMONiAa6Gn8WpO0pgqQt8tQJCrxjhFh9e2?=
- =?us-ascii?Q?NnbAp+lPbhU2pLr9U9H8WYsJ5s5l3fbDaijq1HHLG2IhNkLgBC8LG1Wbzz5D?=
- =?us-ascii?Q?b/T1uzz5U0Ud/GnAw+Wl1f2/D44q7SiCZUTgC9Rc1Ipr9912tdTO3AJRRt7E?=
- =?us-ascii?Q?qbNQirrn+bN/SxqOajUmlnzagyGAMtdlu8v0OMzs7oHKkT5/zKI5khMUezxt?=
- =?us-ascii?Q?RzkKnFZzF/oDLRVwozRogWnp1tW3pOzF0bwJ3AWg3e480yVtMViIMrzJxBrP?=
- =?us-ascii?Q?AmrKFkHgZC0tAXwaQ4Y+f8Um+RPp6NII0XLG36BibttktpR9uu7/qtbPfwxv?=
- =?us-ascii?Q?wEupaW6+bKuMhazZjnu7khn+mS9BhCH+eMc09kehwKUTTnpV/uWI7qxfeL9z?=
- =?us-ascii?Q?k1Vhpxo4HRk1NcqO4i5gSm2Z0P+06YWDPHbAfjcpnkhoLRKdy+RIikHZ9PsU?=
- =?us-ascii?Q?Mf8TMcBX0TygT3SDnWl60nCZ610u3NxjDckVSLdbyg5JGCkC4EO+g/M+LkAd?=
- =?us-ascii?Q?6bQqplgV6TYLfCWW2MsLRGQj1O073uHnXq1pXKyOuKfHT9dkPU+cZ63zRMf4?=
- =?us-ascii?Q?soeTAvYIMimOWgpRK10=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yewr8htD"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2eed82ca5b4so12184445a91.2
+        for <patches@lists.linux.dev>; Mon, 30 Dec 2024 09:39:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735580376; x=1736185176; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=eRNjd4v4g2QfDp9LoTWxtu1DzM2fv4DeraAhhjIxMDk=;
+        b=Yewr8htDpdds2h98yqLrVnMl7/+FZYiEsErptSrODff6YhPxfNvmgtevzmyprrCmqU
+         MbknGT65hO0Yk5HqGnvTHAOVNWkjYxBOhiFGRcEj2KFHSSQUQagg2y8vTO7nhrp5OARj
+         48q0iWYynGYmdxUqJpOn6GQkBTwNC93wsUpwZPEcLxIGpz8AssxulKwuw+PgKIqcuUkz
+         1QdM0XWdteW0JFIWcae6TLHqVr4UwlJVvl0a6EuNgcO7oNGQDwrJoQi3zeKBodoJjWY6
+         eW+Y914/2E+s/5KWNa5+Dn+eXate+W/eM/Um8k3QBuNRWyR074wV3nPfGCBpRX+MSjWB
+         b9dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735580376; x=1736185176;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eRNjd4v4g2QfDp9LoTWxtu1DzM2fv4DeraAhhjIxMDk=;
+        b=aMMJtkdQ27zLCCSz4vt0HxTDbu4hDJh6n5ZXtWK77omCQy7WdTNac+1269aTzUupBL
+         xrFmzrtlAeBuR9TzEJIdMi7pTKSCx//EKQGJj5DzcEZv8HPhi0KTJ8AlKdJ6HXqatJfz
+         SJ/xNUN1/J18ivPEsEohqrPQiun+rKY4ravmQAJ5z6CP8IJuksyRoPPIxwRUhFs9DD2B
+         xDmvqX7THTAHotCowpXeda2CFYsXvfFR3EQaFiB6j2GmgiIj+dvRYAstn0RR4wKfqMDt
+         8IxDbrOXkv4ZoELQMT3fE3wWuIFL964HPSdFGi65hNyImD7h6MOUgTwgluxLCbPgknO5
+         pn8w==
+X-Gm-Message-State: AOJu0YzSmqivgTvRFxWNKrzkqMN0cAajteJBs038LE1XjQv6+S8XpS0l
+	C00qmsXGos72nj7aupF+/zu1GbnM/AL4ea40DooLcv4FoIcQWqsl
+X-Gm-Gg: ASbGncvZgb+VHvGJylEmlgbNMIjByGGguoQNvqQ9SjZ6cIwPJ7+lJOFcuRihIZ5dr7k
+	UVQjH0D51JkqGEpRnpBAH5bcmNi/8II0fvNtiz2CoBd0TX7U6wOMUN65gR9aqqvY0W2DDqVFwbm
+	FXDkq+gM6Cg0f1mpX4+A7VPuTmJkLaESJxnga5A3YzTtB27rNPM1K0OVIYaCbIIZEhQAsYtgG70
+	jzdrPGbvQYVuwRbO0O/8Yqo8INzXgFU/2evd0AQnoDztt/Sdt28BweeQ0c8SHcXvM6DRyMCj8m0
+	FAK2nuGd
+X-Google-Smtp-Source: AGHT+IFrQfxB3HdGql/7V8HgVRAMiQDLsclWx9AHt89IPyjBG+rNU5xZ/t5zKuT9t+HrCFiu6Ktq/A==
+X-Received: by 2002:a17:90b:534f:b0:2ee:ab29:1482 with SMTP id 98e67ed59e1d1-2f452e2ecc8mr56340416a91.16.1735580375533;
+        Mon, 30 Dec 2024 09:39:35 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f44779990csm21235982a91.6.2024.12.30.09.39.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Dec 2024 09:39:34 -0800 (PST)
+Message-ID: <0081dbc7-b5cb-4345-9799-8c9ea63e3bb7@gmail.com>
+Date: Mon, 30 Dec 2024 09:39:33 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR12MB8599.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb0f4352-9190-41a2-3d45-08dd28ebaf5f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Dec 2024 16:04:48.1042
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: rNOUbjy8fd8KCIOOavgHcom22gPkcBZivrfltcl+yTNYX4fvbqui6rKsoIl9rNO7m66Tj5QNTzpsaQpgMW3sOw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8246
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 00/60] 6.1.123-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20241230154207.276570972@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+Autocrypt: addr=f.fainelli@gmail.com; keydata=
+ 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
+In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-[Public]
+On 12/30/24 07:42, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.123 release.
+> There are 60 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 01 Jan 2025 15:41:48 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.123-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Monday, December 30, 2024 10:43
-> Subject: [PATCH 6.6 71/86] drm/amdkfd: pause autosuspend when creating pd=
-d
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Hi Greg,
-
-This patch caused a regression, fix is pending here https://www.mail-archiv=
-e.com/amd-gfx@lists.freedesktop.org/msg116533.html
-
-Regards,
-Teddy
-
-> 6.6-stable review patch.  If anyone has any objections, please let me kno=
-w.
->
-> ------------------
->
-> From: Jesse.zhang@amd.com <Jesse.zhang@amd.com>
->
-> [ Upstream commit 438b39ac74e2a9dc0a5c9d653b7d8066877e86b1 ]
->
-> When using MES creating a pdd will require talking to the GPU to setup th=
-e relevant
-> context. The code here forgot to wake up the GPU in case it was in suspen=
-d, this
-> causes KVM to EFAULT for passthrough GPU for example. This issue can be
-> masked if the GPU was woken up by other things (e.g. opening the KMS node=
-) first
-> and have not yet gone to sleep.
->
-> v4: do the allocation of proc_ctx_bo in a lazy fashion when the first que=
-ue is created
-> in a process (Felix)
->
-> Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-> Reviewed-by: Yunxiang Li <Yunxiang.Li@amd.com>
-> Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  .../drm/amd/amdkfd/kfd_device_queue_manager.c | 15 ++++++++++++
->  drivers/gpu/drm/amd/amdkfd/kfd_process.c      | 23 ++-----------------
->  2 files changed, 17 insertions(+), 21 deletions(-)
->
-> diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-> b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-> index 4d9a406925e1..43fa260ddbce 100644
-> --- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-> +++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-> @@ -197,6 +197,21 @@ static int add_queue_mes(struct device_queue_manager
-> *dqm, struct queue *q,
->       if (dqm->is_hws_hang)
->               return -EIO;
->
-> +     if (!pdd->proc_ctx_cpu_ptr) {
-> +             r =3D amdgpu_amdkfd_alloc_gtt_mem(adev,
-> +                             AMDGPU_MES_PROC_CTX_SIZE,
-> +                             &pdd->proc_ctx_bo,
-> +                             &pdd->proc_ctx_gpu_addr,
-> +                             &pdd->proc_ctx_cpu_ptr,
-> +                             false);
-> +             if (r) {
-> +                     dev_err(adev->dev,
-> +                             "failed to allocate process context bo\n");
-> +                     return r;
-> +             }
-> +             memset(pdd->proc_ctx_cpu_ptr, 0,
-> AMDGPU_MES_PROC_CTX_SIZE);
-> +     }
-> +
->       memset(&queue_input, 0x0, sizeof(struct mes_add_queue_input));
->       queue_input.process_id =3D qpd->pqm->process->pasid;
->       queue_input.page_table_base_addr =3D  qpd->page_table_base; diff --=
-git
-> a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-> b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-> index 577bdb6a9640..64346c71c62a 100644
-> --- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-> +++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
-> @@ -1046,7 +1046,8 @@ static void kfd_process_destroy_pdds(struct
-> kfd_process *p)
->
->               kfd_free_process_doorbells(pdd->dev->kfd, pdd);
->
-> -             if (pdd->dev->kfd->shared_resources.enable_mes)
-> +             if (pdd->dev->kfd->shared_resources.enable_mes &&
-> +                     pdd->proc_ctx_cpu_ptr)
->                       amdgpu_amdkfd_free_gtt_mem(pdd->dev->adev,
->                                                  &pdd->proc_ctx_bo);
->               /*
-> @@ -1572,7 +1573,6 @@ struct kfd_process_device
-> *kfd_create_process_device_data(struct kfd_node *dev,
->                                                       struct kfd_process =
-*p)
->  {
->       struct kfd_process_device *pdd =3D NULL;
-> -     int retval =3D 0;
->
->       if (WARN_ON_ONCE(p->n_pdds >=3D MAX_GPU_INSTANCE))
->               return NULL;
-> @@ -1596,21 +1596,6 @@ struct kfd_process_device
-> *kfd_create_process_device_data(struct kfd_node *dev,
->       pdd->user_gpu_id =3D dev->id;
->       atomic64_set(&pdd->evict_duration_counter, 0);
->
-> -     if (dev->kfd->shared_resources.enable_mes) {
-> -             retval =3D amdgpu_amdkfd_alloc_gtt_mem(dev->adev,
-> -                                             AMDGPU_MES_PROC_CTX_SIZE,
-> -                                             &pdd->proc_ctx_bo,
-> -                                             &pdd->proc_ctx_gpu_addr,
-> -                                             &pdd->proc_ctx_cpu_ptr,
-> -                                             false);
-> -             if (retval) {
-> -                     dev_err(dev->adev->dev,
-> -                             "failed to allocate process context bo\n");
-> -                     goto err_free_pdd;
-> -             }
-> -             memset(pdd->proc_ctx_cpu_ptr, 0,
-> AMDGPU_MES_PROC_CTX_SIZE);
-> -     }
-> -
->       p->pdds[p->n_pdds++] =3D pdd;
->       if (kfd_dbg_is_per_vmid_supported(pdd->dev))
->               pdd->spi_dbg_override =3D pdd->dev->kfd2kgd->disable_debug_=
-trap(
-> @@ -1622,10 +1607,6 @@ struct kfd_process_device
-> *kfd_create_process_device_data(struct kfd_node *dev,
->       idr_init(&pdd->alloc_idr);
->
->       return pdd;
-> -
-> -err_free_pdd:
-> -     kfree(pdd);
-> -     return NULL;
->  }
->
->  /**
-> --
-> 2.39.5
->
->
-
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
