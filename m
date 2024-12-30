@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1150515E8B;
-	Mon, 30 Dec 2024 15:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8892AE68;
+	Mon, 30 Dec 2024 15:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573945; cv=none; b=Rdiuuur05eRVl6uXizCjJa72xjQ8IkYv3LCtXEIHHNsgGH3wBV+tNuglVAlEh0+qRYU/umB57wCmy6pmHg4LERxGyZq/CdlzoSg8YndJ0tQXKMzihWXKTqmzB2n3rTUP/fUNck4KB19GPXryfRPS9G56eBxjK1VLzLI1IKZhDbE=
+	t=1735573948; cv=none; b=sfD/eBEqygy33Ld7mLGppT4LVY2x83HAVO87Z9WI7BD+iEOiDuBsb6gwBhkoIhMYbBa9zpk1t1u5GGXdNF5VmTOBmNiuJfdJVQZfsidEreLvBa0tjyD7gNhYE/j8mDPsKzlZsb6ymFzPcJtFRee9e6MkMjWCE5V0EMUP2CgdlwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573945; c=relaxed/simple;
-	bh=K/2RynNcsq4rLeSuvCLbcH7HLq1pyPzrRIDNhODaWbY=;
+	s=arc-20240116; t=1735573948; c=relaxed/simple;
+	bh=eTViMozMthhlSw3UYzBhgpqIc2jR+pTYChl9RDECKqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0miJJnPZQM3iFkDQvz495cPpBhNRiFkcgmCDg8b9gzI+ezumK1sYi9JijKbnKW1dDn5J8GdAwVDmTEBzJAYaW4njgbK3jL5HV4+d5cKTIlmQFMYpNNVGtsy1aS/7182K4m9UHofvyJWw/vrw3H+0r1HxPvctbBx/bED9N59mlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhlsOgsm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qWSoKVya3l5vq04FiIZPkzUwItgxeqAMp3HnBbAqq1hcjgobXRHci7lo6EfMTWdWGQsqZ0z1RkIengntdSouFBQLdU/nhhQn6CBKy3ltTU/wtIIr2nc4Qi4RIY/zycNntgaUC4Nr1TL3omfDzdAxQHhXFvnmo8UCLh4dLdRwIKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6gpea74; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhlsOgsm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576A4C4CED0;
-	Mon, 30 Dec 2024 15:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6gpea74"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FDFC4CED0;
+	Mon, 30 Dec 2024 15:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573944;
-	bh=K/2RynNcsq4rLeSuvCLbcH7HLq1pyPzrRIDNhODaWbY=;
+	s=korg; t=1735573948;
+	bh=eTViMozMthhlSw3UYzBhgpqIc2jR+pTYChl9RDECKqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UhlsOgsmOdP7nAAjdqBxK+J3tsSQ5LcUxbNcS1npSqtv8BZrsSQ0VM8XE/VNfd7K3
-	 fKZc0yHCnhwf3r7YEnYdRe5hwJXiWrs60a05xDWIGtnPmi3KhArtnX1pwKxoBiFPV+
-	 BXkdcLpQSTKVE48fJrAkSPCPHjEU88AQMm3xZ8YE=
+	b=S6gpea74kuBXHHN6+AsNR8pR3+PdgtblKnAqsAxQTe3/QSeTdcxkkZBL7k6Le05TG
+	 2GGgu5rdDsZDzC82D9nSWyhJj/AbACRlwg0ORgBoXnzTkTYJCEXop2UQiwyjekYGWv
+	 o8xWOaxdFuquBJMHmNi6Zf118/iCTt/Jmf1JbSJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 80/86] power: supply: gpio-charger: Fix set charge current limits
-Date: Mon, 30 Dec 2024 16:43:28 +0100
-Message-ID: <20241230154214.750114619@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 81/86] btrfs: avoid monopolizing a core when activating a swap file
+Date: Mon, 30 Dec 2024 16:43:29 +0100
+Message-ID: <20241230154214.789085983@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154211.711515682@linuxfoundation.org>
 References: <20241230154211.711515682@linuxfoundation.org>
@@ -50,41 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit afc6e39e824ad0e44b2af50a97885caec8d213d1 upstream.
+commit 2c8507c63f5498d4ee4af404a8e44ceae4345056 upstream.
 
-Fix set charge current limits for devices which allow to set the lowest
-charge current limit to be greater zero. If requested charge current limit
-is below lowest limit, the index equals current_limit_map_size which leads
-to accessing memory beyond allocated memory.
+During swap activation we iterate over the extents of a file and we can
+have many thousands of them, so we can end up in a busy loop monopolizing
+a core. Avoid this by doing a voluntary reschedule after processing each
+extent.
 
-Fixes: be2919d8355e ("power: supply: gpio-charger: add charge-current-limit feature")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Link: https://lore.kernel.org/r/20241209-fix-charge-current-limit-v1-1-760d9b8f2af3@liebherr.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/gpio-charger.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/btrfs/inode.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/power/supply/gpio-charger.c
-+++ b/drivers/power/supply/gpio-charger.c
-@@ -67,6 +67,14 @@ static int set_charge_current_limit(stru
- 		if (gpio_charger->current_limit_map[i].limit_ua <= val)
- 			break;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7153,6 +7153,8 @@ noinline int can_nocow_extent(struct ino
+ 			ret = -EAGAIN;
+ 			goto out;
+ 		}
++
++		cond_resched();
  	}
-+
-+	/*
-+	 * If a valid charge current limit isn't found, default to smallest
-+	 * current limitation for safety reasons.
-+	 */
-+	if (i >= gpio_charger->current_limit_map_size)
-+		i = gpio_charger->current_limit_map_size - 1;
-+
- 	mapping = gpio_charger->current_limit_map[i];
  
- 	for (i = 0; i < ndescs; i++) {
+ 	if (orig_start)
 
 
