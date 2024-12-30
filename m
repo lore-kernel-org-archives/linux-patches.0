@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1EB15E8B;
-	Mon, 30 Dec 2024 15:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546E715E8B;
+	Mon, 30 Dec 2024 15:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574355; cv=none; b=Kk7Elrc6OBe8iz3X4mI/i4fT7qdLmHLxqp0gTRD8WBb+M1fr4wQt5wVIX+c1lBLhDD+l8Qz+3kA7NQEfv4+A5Vb/ajD/j/I2UJMNBj2Lb6URb08YFEJzmt2kABrCGr6z5SPgF6s8WMVBtf3ExYWBMcxlOqW4c+0tHeRzf/DW2As=
+	t=1735574358; cv=none; b=elAwD8rdNS5PxImPk22wlKvR4axZ/Zw/OhT6fwxIm1npb0otO2EJ9Jy9Scteerv45sOJ38t3rV0TJeA++R+9iBgiehoiJoj6jsBNlizOLT1vZYlBgkPqUYl2DzkNWAa0hj5mJhDTEN+7MnWIN92at9Y9thLmLROjjkjTU62x0ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574355; c=relaxed/simple;
-	bh=ld7rM/4IB9rEIm5lufNyrbZ6ACTXi5vZ9ivlcBAcg/U=;
+	s=arc-20240116; t=1735574358; c=relaxed/simple;
+	bh=m5BCvAzgB3S8YhqI1l72qACd/wspZkQyCEBMNMjtuZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t/I3vpxBIgmdSRlcFJf5b4WdEuuRe5jixQtuLADXQhJE8RKDZVOtsHbEnRpb1ktzuorsOYaqLaFPysInhdKUoWgDNT8Y6tBQWQLIKslf1i7xqu4YVT6iBW3F4mvWozWI8sE63VZYAphZoAib68CSZMi6XdFouxkZSoV3cClp8Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/jpDm8f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e7b3eQLbmb0gm3UTwtzdjq4WBgQw6YAzhoOhHNsl0c4UQdwpV3wJn3FXbbIeY5yAkyyr+HrJZtv7a6+LMEXm3fictM9jkemVPyU9vgbKJPxsHRNCSIoFejLt9n7iWV5t1JFxBeVkrMTCgByDEgzb/5a/cIXgmr+aRIbfvNJ19fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmLPpSbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/jpDm8f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C0BC4CED0;
-	Mon, 30 Dec 2024 15:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmLPpSbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CC0C4CED0;
+	Mon, 30 Dec 2024 15:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574354;
-	bh=ld7rM/4IB9rEIm5lufNyrbZ6ACTXi5vZ9ivlcBAcg/U=;
+	s=korg; t=1735574358;
+	bh=m5BCvAzgB3S8YhqI1l72qACd/wspZkQyCEBMNMjtuZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/jpDm8fRr5ubrR01C9OQ4iQs6DWNiaV8/kkrqTnMQMp2T3ars4QJEwP+suTwnHP4
-	 GBWhkeRRRe7cakd2sU1DZ1rZRLrwJjEExzZ0aonZX7JcTM0UdCWHtFBdGJ0bkXzY5Y
-	 MHvcbYA5NiqiL5MOyzJ8eHbDatTpSX++8f+q96lg=
+	b=cmLPpSbvBCFWmiTA0blBsHKC42oBNFhz04uF7SQFxH6Nu0dSjJn6WvgibApASOGZS
+	 cY/pFnwubsFPajR1QkgtjGxn42WsPktsk1ECGakqNjPDJNScsJmtKgn8ziFWy+WSd2
+	 O7VL7xUEeh8XpxfVBWihxBMBR29/CICwFOLBZ1H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 085/114] tracing: Constify string literal data member in struct trace_event_call
-Date: Mon, 30 Dec 2024 16:43:22 +0100
-Message-ID: <20241230154221.362324852@linuxfoundation.org>
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fedor Pchelkin <boddah8794@gmail.com>
+Subject: [PATCH 6.12 112/114] Bluetooth: btusb: mediatek: change the conditions for ISO interface
+Date: Mon, 30 Dec 2024 16:43:49 +0100
+Message-ID: <20241230154222.442678563@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,70 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-commit 452f4b31e3f70a52b97890888eeb9eaa9a87139a upstream.
+commit defc33b5541e0a7e45cc2d99d72fbe80a597afc5 upstream.
 
-The name member of the struct trace_event_call is assigned with
-generated string literals; declare them pointer to read-only.
+Change conditions for Bluetooth driver claiming and releasing usb
+ISO interface for MediaTek ISO data transmission.
 
-Reported by clang:
-
-    security/landlock/syscalls.c:179:1: warning: initializing 'char *' with an expression of type 'const char[34]' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-      179 | SYSCALL_DEFINE3(landlock_create_ruleset,
-          | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      180 |                 const struct landlock_ruleset_attr __user *const, attr,
-          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      181 |                 const size_t, size, const __u32, flags)
-          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:226:36: note: expanded from macro 'SYSCALL_DEFINE3'
-      226 | #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
-          |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:234:2: note: expanded from macro 'SYSCALL_DEFINEx'
-      234 |         SYSCALL_METADATA(sname, x, __VA_ARGS__)                 \
-          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:184:2: note: expanded from macro 'SYSCALL_METADATA'
-      184 |         SYSCALL_TRACE_ENTER_EVENT(sname);                       \
-          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:151:30: note: expanded from macro 'SYSCALL_TRACE_ENTER_EVENT'
-      151 |                         .name                   = "sys_enter"#sname,    \
-          |                                                   ^~~~~~~~~~~~~~~~~
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Mickaël Salaün <mic@digikod.net>
-Cc: Günther Noack <gnoack@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Link: https://lore.kernel.org/20241125105028.42807-1-cgoettsche@seltendoof.de
-Fixes: b77e38aa240c3 ("tracing: add event trace infrastructure")
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: Fedor Pchelkin <boddah8794@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -379,7 +379,7 @@ struct trace_event_call {
- 	struct list_head	list;
- 	struct trace_event_class *class;
- 	union {
--		char			*name;
-+		const char		*name;
- 		/* Set TRACE_EVENT_FL_TRACEPOINT flag when using "tp" */
- 		struct tracepoint	*tp;
- 	};
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2648,7 +2648,7 @@ static void btusb_mtk_release_iso_intf(s
+ {
+ 	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
+ 
+-	if (btmtk_data->isopkt_intf) {
++	if (test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
+ 		usb_kill_anchored_urbs(&btmtk_data->isopkt_anchor);
+ 		clear_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags);
+ 
+@@ -2688,8 +2688,8 @@ static int btusb_mtk_reset(struct hci_de
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (test_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags))
+-		btusb_mtk_release_iso_intf(hdev);
++	/* Release MediaTek ISO data interface */
++	btusb_mtk_release_iso_intf(hdev);
+ 
+ 	btusb_stop_traffic(data);
+ 	usb_kill_anchored_urbs(&data->tx_anchor);
+@@ -2734,22 +2734,22 @@ static int btusb_mtk_setup(struct hci_de
+ 	btmtk_data->reset_sync = btusb_mtk_reset;
+ 
+ 	/* Claim ISO data interface and endpoint */
+-	btmtk_data->isopkt_intf = usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM);
+-	if (btmtk_data->isopkt_intf)
++	if (!test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
++		btmtk_data->isopkt_intf = usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM);
+ 		btusb_mtk_claim_iso_intf(data);
++	}
+ 
+ 	return btmtk_usb_setup(hdev);
+ }
+ 
+ static int btusb_mtk_shutdown(struct hci_dev *hdev)
+ {
+-	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
+ 	int ret;
+ 
+ 	ret = btmtk_usb_shutdown(hdev);
+ 
+-	if (test_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags))
+-		btusb_mtk_release_iso_intf(hdev);
++	/* Release MediaTek iso interface after shutdown */
++	btusb_mtk_release_iso_intf(hdev);
+ 
+ 	return ret;
+ }
 
 
