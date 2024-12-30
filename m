@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C6B15E8B;
-	Mon, 30 Dec 2024 15:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF90415E8B;
+	Mon, 30 Dec 2024 15:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574120; cv=none; b=gWZDGFvEGeBJaDqjTBhBmL9N4J3tJQaDPMIntKfBYl90m7xTYVPYUb0QiotqHEjiaBbIKEYUdgOMMWctbILQm7t3xBI6PzzHH2/SollkqnC//MxsYZBuMTi0jNpPXmSQH3fd3jz3UI8lKLwjqTpJENrraD9vh98DdAdzDKonvxA=
+	t=1735574123; cv=none; b=U/thOA3bFLzlDLG/aRJuokCkHmfmU3PjfNdZYczpUqa06ZpCOn/UrsTApPLVtkgBAZvIecprEZH8xoxVq896H1tq5q+aBWPSZgD5mhWgCer0wTZffEysemJoisK1mKrHdp+Ucq63MXocbapBhXFISWf4PugRdFkSXh2TdVr5i1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574120; c=relaxed/simple;
-	bh=jYyZRpvFfyjCw2MGLVBc6/XD7HOZnUn3KyBJLHoDQgE=;
+	s=arc-20240116; t=1735574123; c=relaxed/simple;
+	bh=fkcBS2NI/7tReThK/Bep3y2xSkENaIg5xvqZUSURmxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ae4Z0TTRIG6UQIoW0N7+S/6vSjwplTZPx2GRjjL2KmYhgMW0BQb9BKJpGfgn5NyW0Aqb9LdxWntcpEOUrpUSbaG1Uh5ngHpptWBjpQjVNn04YCj1Nb24lozFZZ3EsEqT5M9D8B30MkrSU1Gwpf6QAmiayVbCpEJeM+ZKc+1IgbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4uUV00y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rbbxXsBH9Dt8qAsorz5Rt8ZKdkWBimFGT+d94UkSRHGotTD0ZtKQrkvXjBC8tzluxOB1IB7H5hC+9iUL+wbDAnk01fZ82lqd3Qn0N9t9BOxlSjCehu61Dkv7Rk1gmFtwhkHun1+gHxOIGucJ3xKv6snOm8ix/X2RucUVrEadVp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8gEbSV4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4uUV00y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB58DC4CED0;
-	Mon, 30 Dec 2024 15:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8gEbSV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 228D2C4CED0;
+	Mon, 30 Dec 2024 15:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574120;
-	bh=jYyZRpvFfyjCw2MGLVBc6/XD7HOZnUn3KyBJLHoDQgE=;
+	s=korg; t=1735574123;
+	bh=fkcBS2NI/7tReThK/Bep3y2xSkENaIg5xvqZUSURmxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4uUV00ySLbHosEbfL2lpwttng6Uo1syopGlqeTw48UK1XFLl+E4W3rZldJDScodJ
-	 /Hu1uNixDIUY9t/Vf0qoAI6LKLu0uNqL9U83XjAMnTuLVUP47iv1F73aXpLAaqOZ0w
-	 rSWJ8FquWVvHyRzqaLNPgN55MMMHjlHebHAsIOBc=
+	b=M8gEbSV4yUlKnweFz9ZHq1eWSfKk8zpdCab180F6edacGNrbhlR8ZzoS5p7DYkYHl
+	 WgBk+xCLL5EcnKQo21o11bbaSpYK78/ubiiYNljbYkVMaTiJZt/2/8tCHkqqhbDR5S
+	 teVd7X46G5NQ7FCHzlUUK2aC13KFHKpXQ/byBcC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haren Myneni <haren@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 042/114] powerpc/pseries/vas: Add close() callback in vas_vm_ops struct
-Date: Mon, 30 Dec 2024 16:42:39 +0100
-Message-ID: <20241230154219.678679982@linuxfoundation.org>
+Subject: [PATCH 6.12 043/114] power: supply: bq24190: Fix BQ24296 Vbus regulator support
+Date: Mon, 30 Dec 2024 16:42:40 +0100
+Message-ID: <20241230154219.716328045@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -51,153 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haren Myneni <haren@linux.ibm.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 05aa156e156ef3168e7ab8a68721945196495c17 ]
+[ Upstream commit b3ded6072c5600704cfa3ce3a8dc8718d34bda66 ]
 
-The mapping VMA address is saved in VAS window struct when the
-paste address is mapped. This VMA address is used during migration
-to unmap the paste address if the window is active. The paste
-address mapping will be removed when the window is closed or with
-the munmap(). But the VMA address in the VAS window is not updated
-with munmap() which is causing invalid access during migration.
+There are 2 issues with bq24296_set_otg_vbus():
 
-The KASAN report shows:
-[16386.254991] BUG: KASAN: slab-use-after-free in reconfig_close_windows+0x1a0/0x4e8
-[16386.255043] Read of size 8 at addr c00000014a819670 by task drmgr/696928
+1. When writing the OTG_CONFIG bit it uses POC_CHG_CONFIG_SHIFT which
+   should be POC_OTG_CONFIG_SHIFT.
 
-[16386.255096] CPU: 29 UID: 0 PID: 696928 Comm: drmgr Kdump: loaded Tainted: G    B              6.11.0-rc5-nxgzip #2
-[16386.255128] Tainted: [B]=BAD_PAGE
-[16386.255148] Hardware name: IBM,9080-HEX Power11 (architected) 0x820200 0xf000007 of:IBM,FW1110.00 (NH1110_016) hv:phyp pSeries
-[16386.255181] Call Trace:
-[16386.255202] [c00000016b297660] [c0000000018ad0ac] dump_stack_lvl+0x84/0xe8 (unreliable)
-[16386.255246] [c00000016b297690] [c0000000006e8a90] print_report+0x19c/0x764
-[16386.255285] [c00000016b297760] [c0000000006e9490] kasan_report+0x128/0x1f8
-[16386.255309] [c00000016b297880] [c0000000006eb5c8] __asan_load8+0xac/0xe0
-[16386.255326] [c00000016b2978a0] [c00000000013f898] reconfig_close_windows+0x1a0/0x4e8
-[16386.255343] [c00000016b297990] [c000000000140e58] vas_migration_handler+0x3a4/0x3fc
-[16386.255368] [c00000016b297a90] [c000000000128848] pseries_migrate_partition+0x4c/0x4c4
-...
+2. When turning the regulator off it never turns charging back on. Note
+   this must be done through bq24190_charger_set_charge_type(), to ensure
+   that the charge_type property value of none/trickle/fast is honored.
 
-[16386.256136] Allocated by task 696554 on cpu 31 at 16377.277618s:
-[16386.256149]  kasan_save_stack+0x34/0x68
-[16386.256163]  kasan_save_track+0x34/0x80
-[16386.256175]  kasan_save_alloc_info+0x58/0x74
-[16386.256196]  __kasan_slab_alloc+0xb8/0xdc
-[16386.256209]  kmem_cache_alloc_noprof+0x200/0x3d0
-[16386.256225]  vm_area_alloc+0x44/0x150
-[16386.256245]  mmap_region+0x214/0x10c4
-[16386.256265]  do_mmap+0x5fc/0x750
-[16386.256277]  vm_mmap_pgoff+0x14c/0x24c
-[16386.256292]  ksys_mmap_pgoff+0x20c/0x348
-[16386.256303]  sys_mmap+0xd0/0x160
-...
+Resolve both issues to fix BQ24296 Vbus regulator support not working.
 
-[16386.256350] Freed by task 0 on cpu 31 at 16386.204848s:
-[16386.256363]  kasan_save_stack+0x34/0x68
-[16386.256374]  kasan_save_track+0x34/0x80
-[16386.256384]  kasan_save_free_info+0x64/0x10c
-[16386.256396]  __kasan_slab_free+0x120/0x204
-[16386.256415]  kmem_cache_free+0x128/0x450
-[16386.256428]  vm_area_free_rcu_cb+0xa8/0xd8
-[16386.256441]  rcu_do_batch+0x2c8/0xcf0
-[16386.256458]  rcu_core+0x378/0x3c4
-[16386.256473]  handle_softirqs+0x20c/0x60c
-[16386.256495]  do_softirq_own_stack+0x6c/0x88
-[16386.256509]  do_softirq_own_stack+0x58/0x88
-[16386.256521]  __irq_exit_rcu+0x1a4/0x20c
-[16386.256533]  irq_exit+0x20/0x38
-[16386.256544]  interrupt_async_exit_prepare.constprop.0+0x18/0x2c
-...
-
-[16386.256717] Last potentially related work creation:
-[16386.256729]  kasan_save_stack+0x34/0x68
-[16386.256741]  __kasan_record_aux_stack+0xcc/0x12c
-[16386.256753]  __call_rcu_common.constprop.0+0x94/0xd04
-[16386.256766]  vm_area_free+0x28/0x3c
-[16386.256778]  remove_vma+0xf4/0x114
-[16386.256797]  do_vmi_align_munmap.constprop.0+0x684/0x870
-[16386.256811]  __vm_munmap+0xe0/0x1f8
-[16386.256821]  sys_munmap+0x54/0x6c
-[16386.256830]  system_call_exception+0x1a0/0x4a0
-[16386.256841]  system_call_vectored_common+0x15c/0x2ec
-
-[16386.256868] The buggy address belongs to the object at c00000014a819670
-                which belongs to the cache vm_area_struct of size 168
-[16386.256887] The buggy address is located 0 bytes inside of
-                freed 168-byte region [c00000014a819670, c00000014a819718)
-
-[16386.256915] The buggy address belongs to the physical page:
-[16386.256928] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x14a81
-[16386.256950] memcg:c0000000ba430001
-[16386.256961] anon flags: 0x43ffff800000000(node=4|zone=0|lastcpupid=0x7ffff)
-[16386.256975] page_type: 0xfdffffff(slab)
-[16386.256990] raw: 043ffff800000000 c00000000501c080 0000000000000000 5deadbee00000001
-[16386.257003] raw: 0000000000000000 00000000011a011a 00000001fdffffff c0000000ba430001
-[16386.257018] page dumped because: kasan: bad access detected
-
-This patch adds close() callback in vas_vm_ops vm_operations_struct
-which will be executed during munmap() before freeing VMA. The VMA
-address in the VAS window is set to NULL after holding the window
-mmap_mutex.
-
-Fixes: 37e6764895ef ("powerpc/pseries/vas: Add VAS migration handler")
-Signed-off-by: Haren Myneni <haren@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20241214051758.997759-1-haren@linux.ibm.com
+Fixes: b150a703b56f ("power: supply: bq24190_charger: Add support for BQ24296")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241116203648.169100-2-hdegoede@redhat.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/book3s/vas-api.c | 36 +++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/power/supply/bq24190_charger.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/platforms/book3s/vas-api.c b/arch/powerpc/platforms/book3s/vas-api.c
-index f381b177ea06..0b6365d85d11 100644
---- a/arch/powerpc/platforms/book3s/vas-api.c
-+++ b/arch/powerpc/platforms/book3s/vas-api.c
-@@ -464,7 +464,43 @@ static vm_fault_t vas_mmap_fault(struct vm_fault *vmf)
- 	return VM_FAULT_SIGBUS;
- }
+diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
+index 2b393eb5c282..c47f32f152e6 100644
+--- a/drivers/power/supply/bq24190_charger.c
++++ b/drivers/power/supply/bq24190_charger.c
+@@ -567,6 +567,7 @@ static int bq24190_set_otg_vbus(struct bq24190_dev_info *bdi, bool enable)
  
-+/*
-+ * During mmap() paste address, mapping VMA is saved in VAS window
-+ * struct which is used to unmap during migration if the window is
-+ * still open. But the user space can remove this mapping with
-+ * munmap() before closing the window and the VMA address will
-+ * be invalid. Set VAS window VMA to NULL in this function which
-+ * is called before VMA free.
-+ */
-+static void vas_mmap_close(struct vm_area_struct *vma)
-+{
-+	struct file *fp = vma->vm_file;
-+	struct coproc_instance *cp_inst = fp->private_data;
-+	struct vas_window *txwin;
-+
-+	/* Should not happen */
-+	if (!cp_inst || !cp_inst->txwin) {
-+		pr_err("No attached VAS window for the paste address mmap\n");
-+		return;
-+	}
-+
-+	txwin = cp_inst->txwin;
-+	/*
-+	 * task_ref.vma is set in coproc_mmap() during mmap paste
-+	 * address. So it has to be the same VMA that is getting freed.
-+	 */
-+	if (WARN_ON(txwin->task_ref.vma != vma)) {
-+		pr_err("Invalid paste address mmaping\n");
-+		return;
-+	}
-+
-+	mutex_lock(&txwin->task_ref.mmap_mutex);
-+	txwin->task_ref.vma = NULL;
-+	mutex_unlock(&txwin->task_ref.mmap_mutex);
-+}
-+
- static const struct vm_operations_struct vas_vm_ops = {
-+	.close = vas_mmap_close,
- 	.fault = vas_mmap_fault,
- };
+ static int bq24296_set_otg_vbus(struct bq24190_dev_info *bdi, bool enable)
+ {
++	union power_supply_propval val = { .intval = bdi->charge_type };
+ 	int ret;
  
+ 	ret = pm_runtime_resume_and_get(bdi->dev);
+@@ -587,13 +588,18 @@ static int bq24296_set_otg_vbus(struct bq24190_dev_info *bdi, bool enable)
+ 
+ 		ret = bq24190_write_mask(bdi, BQ24190_REG_POC,
+ 					 BQ24296_REG_POC_OTG_CONFIG_MASK,
+-					 BQ24296_REG_POC_CHG_CONFIG_SHIFT,
++					 BQ24296_REG_POC_OTG_CONFIG_SHIFT,
+ 					 BQ24296_REG_POC_OTG_CONFIG_OTG);
+-	} else
++	} else {
+ 		ret = bq24190_write_mask(bdi, BQ24190_REG_POC,
+ 					 BQ24296_REG_POC_OTG_CONFIG_MASK,
+-					 BQ24296_REG_POC_CHG_CONFIG_SHIFT,
++					 BQ24296_REG_POC_OTG_CONFIG_SHIFT,
+ 					 BQ24296_REG_POC_OTG_CONFIG_DISABLE);
++		if (ret < 0)
++			goto out;
++
++		ret = bq24190_charger_set_charge_type(bdi, &val);
++	}
+ 
+ out:
+ 	pm_runtime_mark_last_busy(bdi->dev);
 -- 
 2.39.5
 
