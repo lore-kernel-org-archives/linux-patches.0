@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45B62594B6;
-	Mon, 30 Dec 2024 15:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3771A2594B6;
+	Mon, 30 Dec 2024 15:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573641; cv=none; b=HjGdaR/DzwAf01SxYPCvksO3McIOvmhoQIoNBjbLKeEqTQqdsjY6qVf9+KIgCyedIEcvQHLavF8pFr6LmvXOsSfV9+xFQGJZlZGKJy6//1bkeeDIO92gtFgCb/pMLvZdZ3Kq4iF0qQdQYeXkN7sYytZ1J48n3JgwGmi0N/EyJko=
+	t=1735573645; cv=none; b=gdQ/KmDTVGEon+zPT98U3LLS/AuKB4z/LFb7jA8O2uVnyjLj7n44Nklxq5WzJzs8pGWvVobQf02WJ9/0lL0fuoB9bX5nxW0hq4hpFYvEzwsJNoIFSJafv48VFrh+IPZwLtNlgO7U0orCwI55+FKOZYrj8PZuSJnXk5UDze5c1H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573641; c=relaxed/simple;
-	bh=8ognPNBH4MztWPtXklsFEuev/HFLMN7AFkZNPtUEZbk=;
+	s=arc-20240116; t=1735573645; c=relaxed/simple;
+	bh=AA/QYhsQm6mhPUCQRAhvYnjdT6zTvc/DdM+LtZTpDrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFyaqy7QABuLo5vwaISHKm/7uC8ET5rbKAmtFbai/8ZGZiYsghEKsfZV4wMu4dGuI46Tr0dREuvJLjdciR0JKKfqxeLWxsimsozs6Bw9vUHChvyTbYVABrBFOJhdvofoU9srkA2mzvDo8ifNS0SPns+kckMnyPST0mBiX/Z0qtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvuzcUXM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcCbYxIoysvaiwDG6yGiUHA2yi22BNsjNFsYP/z3lxCu6R+PZKbli0Kt83Ccp3py+aWVk+EzP5SSe9ynmaqCxbyoogbwk/Yd2gdAgHoGN6jtFhtgtx0DZqmEFcQlVszEAvMehghjmDTYr8TW67JrpKiGNxKKXjYDdXMvzln0TKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuYPM6I/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvuzcUXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFDFC4CED0;
-	Mon, 30 Dec 2024 15:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuYPM6I/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EC5C4CED0;
+	Mon, 30 Dec 2024 15:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573641;
-	bh=8ognPNBH4MztWPtXklsFEuev/HFLMN7AFkZNPtUEZbk=;
+	s=korg; t=1735573644;
+	bh=AA/QYhsQm6mhPUCQRAhvYnjdT6zTvc/DdM+LtZTpDrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yvuzcUXMGlICvODfuibvtksWvavS1yGfPDrREY6JNVj2DZxQjfQygG9wPxbnc2cYU
-	 yOajQbZKJeUi4zMhV6HYeawzqqAbkVo8eG7oO/YpvevuS+2L0QbWYxbTz4fpjtsqLn
-	 Od52BW1OMGkGDdkUnSiGjNkzU1DCL/gtHaBNV8Uo=
+	b=IuYPM6I/L2UutuyKGLfQEuqqAgCocn+rpUYEimkXabNcwlhUVE6J/+HSyD/D8v4zD
+	 lQmi9/kcLi/I2FnBzxSOpNKHxzckIRQ0myTlyzpwTMn7j1jJLxMXdRjVk1JWWFHdHE
+	 7lr1ZlhuChT0W4lcYzFre4BPiFLv6DkfPWbI1cVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 22/60] dmaengine: at_xdmac: avoid null_prt_deref in at_xdmac_prep_dma_memset
-Date: Mon, 30 Dec 2024 16:42:32 +0100
-Message-ID: <20241230154208.128282504@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 23/60] mtd: rawnand: fix double free in atmel_pmecc_create_user()
+Date: Mon, 30 Dec 2024 16:42:33 +0100
+Message-ID: <20241230154208.164246821@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -50,34 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit c43ec96e8d34399bd9dab2f2dc316b904892133f upstream.
+commit d8e4771f99c0400a1873235704b28bb803c83d17 upstream.
 
-The at_xdmac_memset_create_desc may return NULL, which will lead to a
-null pointer dereference. For example, the len input is error, or the
-atchan->free_descs_list is empty and memory is exhausted. Therefore, add
-check to avoid this.
+The "user" pointer was converted from being allocated with kzalloc() to
+being allocated by devm_kzalloc().  Calling kfree(user) will lead to a
+double free.
 
-Fixes: b206d9a23ac7 ("dmaengine: xdmac: Add memset support")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Link: https://lore.kernel.org/r/20241029082845.1185380-1-chenridong@huaweicloud.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 6d734f1bfc33 ("mtd: rawnand: atmel: Fix possible memory leak")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_xdmac.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/nand/raw/atmel/pmecc.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1287,6 +1287,8 @@ at_xdmac_prep_dma_memset(struct dma_chan
- 		return NULL;
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -380,10 +380,8 @@ atmel_pmecc_create_user(struct atmel_pme
+ 	user->delta = user->dmu + req->ecc.strength + 1;
  
- 	desc = at_xdmac_memset_create_desc(chan, atchan, dest, len, value);
-+	if (!desc)
-+		return NULL;
- 	list_add_tail(&desc->desc_node, &desc->descs_list);
+ 	gf_tables = atmel_pmecc_get_gf_tables(req);
+-	if (IS_ERR(gf_tables)) {
+-		kfree(user);
++	if (IS_ERR(gf_tables))
+ 		return ERR_CAST(gf_tables);
+-	}
  
- 	desc->tx_dma_desc.cookie = -EBUSY;
+ 	user->gf_tables = gf_tables;
+ 
 
 
