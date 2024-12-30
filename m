@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA3515E8B;
-	Mon, 30 Dec 2024 15:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C47E15E8B;
+	Mon, 30 Dec 2024 15:58:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574280; cv=none; b=STAThTpTX5fNc/W4Heg6/fZ/3o1aCrhFOoygM6gI3SQHvPfZcdQ9J/Pa20fhxPPEeaQFej+g5fcA3nuOLXjj2N3Si74tpeVq4Em0eh+g1ka1bd2bWF7rTA2B15pM2yFMPs/Kf6PplbNbVdMAcHMXHHX3VSXydn8GGUtR37EmvOU=
+	t=1735574283; cv=none; b=J2FO/t9faU9tqpnWGy4LLGQGyyG0PzALkriKKkimKModkBHSYBxrfHShBUL96YswSJoTnxDN35nm5hndn/Q0LQYRqzYWyD+MgC93B7ZGW+C4biBzofhTHAEf7yz9RifbGJZQXLwc+HZmGr18T7wx+Io+UyRJ6qGsYJYEwBOgY0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574280; c=relaxed/simple;
-	bh=rdcBR4818dthyo0KhnDi6ZZRhSaFhHahUz6+7ZW5TOc=;
+	s=arc-20240116; t=1735574283; c=relaxed/simple;
+	bh=xbb10+Kd0C8KBA1WGY9LeCosuLE7PYb1LG8LELwkWq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RaxL9bn/3vkFQvWiRp4jUgn46dsREYHnbb3KAyUu883Dd8bZPzEky274smlo+l9oMsSTJi3PnQOY2zdbvoI+hg4NkZ1pM0wv93yLO/+g7IAH1rNKhjL2MC0URe0t00ljuoLtRoY2ikOaMq7tomRFcsYUD6s7rYhK3ymDxstmOww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwLnoRx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IlBQwV/a8m8St8dG6gMdLKDVtlQWCcPys125x5+coZGpEpA7gW7Yku6h4NKbAe6H4gwufRMm/r3aA3qnAaHiM46XLNhrJP4FzTYRw8hmDUp6fGXmcnANRblSe6zwyvlIudz7fvvo2TsY183ZN4L5lLwmvPh1/6lGSU536GKgbeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ew71yk91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwLnoRx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECD1C4CED0;
-	Mon, 30 Dec 2024 15:57:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ew71yk91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C84C4CED0;
+	Mon, 30 Dec 2024 15:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574279;
-	bh=rdcBR4818dthyo0KhnDi6ZZRhSaFhHahUz6+7ZW5TOc=;
+	s=korg; t=1735574283;
+	bh=xbb10+Kd0C8KBA1WGY9LeCosuLE7PYb1LG8LELwkWq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwLnoRx0dO2PPQGrp4og//2MVrhFX58ceypw7pDhfxJ0TYJQrEw22q5DY6iYgdvJk
-	 tueqjUfp8UxdXO8c86yIYr81Aw6563gEBJMPZ3dYMlQBm4Ek8+DBgqjVWZcywjNj6P
-	 jahrPu/otzgaIvlEbRPHTUB8iPyKdYm0TBjkfBtk=
+	b=ew71yk91muD2ujBeKTLiveIaCeB4bKRMd1CUty33EWMs/aA3ywNrQd2iH4UMd7olU
+	 pwFmh4bM97qkh/tdGJCVPPIVOUSWqc8ws4HDma27LIlkrc5DEKXKoAu33RCkMdp192
+	 FmnFHofdBaW62s5TN8PbSwNETh9fN4z0p+FiReJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/114] scsi: qla1280: Fix hw revision numbering for ISP1020/1040
-Date: Mon, 30 Dec 2024 16:42:47 +0100
-Message-ID: <20241230154219.984029435@linuxfoundation.org>
+Subject: [PATCH 6.12 083/114] dmaengine: loongson2-apb: Change GENMASK to GENMASK_ULL
+Date: Mon, 30 Dec 2024 16:43:20 +0100
+Message-ID: <20241230154221.289928584@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -52,47 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-[ Upstream commit c064de86d2a3909222d5996c5047f64c7a8f791b ]
+[ Upstream commit 4b65d5322e1d8994acfdb9b867aa00bdb30d177b ]
 
-Fix the hardware revision numbering for Qlogic ISP1020/1040 boards.  HWMASK
-suggests that the revision number only needs four bits, this is consistent
-with how NetBSD does things in their ISP driver. Verified on a IPS1040B
-which is seen as rev 5 not as BIT_4.
+Fix the following smatch static checker warning:
 
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20241113225636.2276-1-linmag7@gmail.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+drivers/dma/loongson2-apb-dma.c:189 ls2x_dma_write_cmd()
+warn: was expecting a 64 bit value instead of '~(((0)) + (((~((0))) - (((1)) << (0)) + 1) & (~((0)) >> ((8 * 4) - 1 - (4)))))'
+
+The GENMASK macro used "unsigned long", which caused build issues when
+using a 32-bit toolchain because it would try to access bits > 31. This
+patch switches GENMASK to GENMASK_ULL, which uses "unsigned long long".
+
+Fixes: 71e7d3cb6e55 ("dmaengine: ls2x-apb: New driver for the Loongson LS2X APB DMA controller")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/87cdc025-7246-4548-85ca-3d36fdc2be2d@stanley.mountain/
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Link: https://lore.kernel.org/r/20241028093413.1145820-1-zhoubinbin@loongson.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla1280.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma/ls2x-apb-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla1280.h b/drivers/scsi/qla1280.h
-index d309e2ca14de..dea2290b37d4 100644
---- a/drivers/scsi/qla1280.h
-+++ b/drivers/scsi/qla1280.h
-@@ -116,12 +116,12 @@ struct device_reg {
- 	uint16_t id_h;		/* ID high */
- 	uint16_t cfg_0;		/* Configuration 0 */
- #define ISP_CFG0_HWMSK   0x000f	/* Hardware revision mask */
--#define ISP_CFG0_1020    BIT_0	/* ISP1020 */
--#define ISP_CFG0_1020A	 BIT_1	/* ISP1020A */
--#define ISP_CFG0_1040	 BIT_2	/* ISP1040 */
--#define ISP_CFG0_1040A	 BIT_3	/* ISP1040A */
--#define ISP_CFG0_1040B	 BIT_4	/* ISP1040B */
--#define ISP_CFG0_1040C	 BIT_5	/* ISP1040C */
-+#define ISP_CFG0_1020	 1	/* ISP1020 */
-+#define ISP_CFG0_1020A	 2	/* ISP1020A */
-+#define ISP_CFG0_1040	 3	/* ISP1040 */
-+#define ISP_CFG0_1040A	 4	/* ISP1040A */
-+#define ISP_CFG0_1040B	 5	/* ISP1040B */
-+#define ISP_CFG0_1040C	 6	/* ISP1040C */
- 	uint16_t cfg_1;		/* Configuration 1 */
- #define ISP_CFG1_F128    BIT_6  /* 128-byte FIFO threshold */
- #define ISP_CFG1_F64     BIT_4|BIT_5 /* 128-byte FIFO threshold */
+diff --git a/drivers/dma/ls2x-apb-dma.c b/drivers/dma/ls2x-apb-dma.c
+index 9652e8666722..b4f18be62945 100644
+--- a/drivers/dma/ls2x-apb-dma.c
++++ b/drivers/dma/ls2x-apb-dma.c
+@@ -31,7 +31,7 @@
+ #define LDMA_ASK_VALID		BIT(2)
+ #define LDMA_START		BIT(3) /* DMA start operation */
+ #define LDMA_STOP		BIT(4) /* DMA stop operation */
+-#define LDMA_CONFIG_MASK	GENMASK(4, 0) /* DMA controller config bits mask */
++#define LDMA_CONFIG_MASK	GENMASK_ULL(4, 0) /* DMA controller config bits mask */
+ 
+ /* Bitfields in ndesc_addr field of HW descriptor */
+ #define LDMA_DESC_EN		BIT(0) /*1: The next descriptor is valid */
 -- 
 2.39.5
 
