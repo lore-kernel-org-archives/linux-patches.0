@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C7115E8B;
-	Mon, 30 Dec 2024 15:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535AC15E8B;
+	Mon, 30 Dec 2024 15:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735574223; cv=none; b=oApRtMxIQhSU0TNgx0/ja1bS62e4g/HkNrxXfFo/tkozM19abtvaPd2SlUmOD/3SNRxrnn8L0rU0VO25YKuiyW59nUjU97Ie3QLHlfcZ6N9BZg5pbh0pr3hH7CUzhLIOJ+REgc2Mb+01vJVhaSYuUFH8SErIjcKblTVI2U045HM=
+	t=1735574226; cv=none; b=cAq1y1KRcVTerOPDkx/ylFB3DwYT3KihOsRrbBFckmfpUU2rh2JFLuBcT1mjkOLeKwZyIjcTbfkkv/KieQACQpreV3E0wWxAJvEi6iuGVAHfrEeXEK37Kteb0hYQT5QPbaTq1+jqDveM4fNUY/uSGQWHwP3PT2lW3NxWV22Tabw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735574223; c=relaxed/simple;
-	bh=2o4jRgaBR/O2rrc4Liq+JQXlFHTJyvd2AfDPTn5ptLU=;
+	s=arc-20240116; t=1735574226; c=relaxed/simple;
+	bh=Tq2ofGbco3PwTlwrYKeyRoqXuIESnvHrkbyycHJIsXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mOHfm/qCEGmsuoUu0EH04AFT3ftF9Cwk5ZJzjdwBhRSfQHrSTHwhGCyNRnlyFhxloiSwohx2scVMuhxmKnePNXeb7HiW311v/+at9YFLKuikC9oxHu2BF6yCdyaUcpMDencAp4WU++YPFupD/WmRtad2yo4OL9XHcBN0nojTZgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9xuaQj7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIW+bLesjuU854LgXeB1QhqSt+5xuKInZGPw+gjUajfptdmxgBxZ1gL8YL8VnRp+yveJ860L9AfZK3dyXGD+pBBhAtNF/BVAJ2CYJp689c7FalDBEhCulQByB1JH7Fz+KIFr5cN1uYBeLLoFvOmDgke95rn+E6xbwtSBU3JLfVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wud2wmwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9xuaQj7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F7CC4CED0;
-	Mon, 30 Dec 2024 15:57:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wud2wmwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0427C4CED0;
+	Mon, 30 Dec 2024 15:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735574222;
-	bh=2o4jRgaBR/O2rrc4Liq+JQXlFHTJyvd2AfDPTn5ptLU=;
+	s=korg; t=1735574226;
+	bh=Tq2ofGbco3PwTlwrYKeyRoqXuIESnvHrkbyycHJIsXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9xuaQj7nrwZoY+iY5PHyBYKruudQxIWZe4lVhzxu6onOXmsU0bQWsOAuPwFaSZU5
-	 E1UvV8DbuAJokxR6X659HXv5mHqJh7rO6pzpx2z6/iwLndmczf56VuJwykgRDLeh7o
-	 h/LB1TyXQNoWS2w8rDAT33J0pFkeXeB+cMD7gFNM=
+	b=Wud2wmwWMus5bXjtnRDFfvjwn9a2HaapE6/dF3f6YMvD2dYFXevfbDGO8igb8seI/
+	 /NW3aVjnQE4icU0zZoCwYlFCZ5ra9daG5RDe6tQ/KMBSxsyu6HqEWXP7Ex+olDedNG
+	 AfyqaE/r411RMOCxwfEfRgInVOg0GDiWPBQxdWAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Qinxin Xia <xiaqinxin@huawei.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Purushothama Siddaiah <psiddaiah@mvista.com>,
+	Corey Minyard <cminyard@mvista.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/114] ACPI/IORT: Add PMCG platform information for HiSilicon HIP09A
-Date: Mon, 30 Dec 2024 16:43:09 +0100
-Message-ID: <20241230154220.864943684@linuxfoundation.org>
+Subject: [PATCH 6.12 073/114] spi: omap2-mcspi: Fix the IS_ERR() bug for devm_clk_get_optional_enabled()
+Date: Mon, 30 Dec 2024 16:43:10 +0100
+Message-ID: <20241230154220.906132343@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154218.044787220@linuxfoundation.org>
 References: <20241230154218.044787220@linuxfoundation.org>
@@ -53,56 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qinxin Xia <xiaqinxin@huawei.com>
+From: Purushothama Siddaiah <psiddaiah@mvista.com>
 
-[ Upstream commit c2b46ae022704a2d845e59461fa24431ad627022 ]
+[ Upstream commit 4c6ac5446d060f0bf435ccc8bc3aa7b7b5f718ad ]
 
-HiSilicon HIP09A platforms using the same SMMU PMCG with HIP09
-and thus suffers the same erratum. List them in the PMCG platform
-information list without introducing a new SMMU PMCG Model.
+The devm_clk_get_optional_enabled() function returns error
+pointers(PTR_ERR()). So use IS_ERR() to check it.
 
-Update the silicon-errata.rst as well.
+Verified on K3-J7200 EVM board, without clock node mentioned
+in the device tree.
 
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
-Acked-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Qinxin Xia <xiaqinxin@huawei.com>
-Link: https://lore.kernel.org/r/20241205013331.1484017-1-xiaqinxin@huawei.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Purushothama Siddaiah <psiddaiah@mvista.com>
+Reviewed-by: Corey Minyard <cminyard@mvista.com>
+Link: https://patch.msgid.link/20241205070426.1861048-1-psiddaiah@mvista.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/arch/arm64/silicon-errata.rst | 5 +++--
- drivers/acpi/arm64/iort.c                   | 2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ drivers/spi/spi-omap2-mcspi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/arch/arm64/silicon-errata.rst b/Documentation/arch/arm64/silicon-errata.rst
-index 77db10e944f0..b42fea07c5ce 100644
---- a/Documentation/arch/arm64/silicon-errata.rst
-+++ b/Documentation/arch/arm64/silicon-errata.rst
-@@ -255,8 +255,9 @@ stable kernels.
- +----------------+-----------------+-----------------+-----------------------------+
- | Hisilicon      | Hip08 SMMU PMCG | #162001800      | N/A                         |
- +----------------+-----------------+-----------------+-----------------------------+
--| Hisilicon      | Hip{08,09,10,10C| #162001900      | N/A                         |
--|                | ,11} SMMU PMCG  |                 |                             |
-+| Hisilicon      | Hip{08,09,09A,10| #162001900      | N/A                         |
-+|                | ,10C,11}        |                 |                             |
-+|                | SMMU PMCG       |                 |                             |
- +----------------+-----------------+-----------------+-----------------------------+
- | Hisilicon      | Hip09           | #162100801      | HISILICON_ERRATUM_162100801 |
- +----------------+-----------------+-----------------+-----------------------------+
-diff --git a/drivers/acpi/arm64/iort.c b/drivers/acpi/arm64/iort.c
-index 4c745a26226b..bf3be532e089 100644
---- a/drivers/acpi/arm64/iort.c
-+++ b/drivers/acpi/arm64/iort.c
-@@ -1703,6 +1703,8 @@ static struct acpi_platform_list pmcg_plat_info[] __initdata = {
- 	/* HiSilicon Hip09 Platform */
- 	{"HISI  ", "HIP09   ", 0, ACPI_SIG_IORT, greater_than_or_equal,
- 	 "Erratum #162001900", IORT_SMMU_V3_PMCG_HISI_HIP09},
-+	{"HISI  ", "HIP09A  ", 0, ACPI_SIG_IORT, greater_than_or_equal,
-+	 "Erratum #162001900", IORT_SMMU_V3_PMCG_HISI_HIP09},
- 	/* HiSilicon Hip10/11 Platform uses the same SMMU IP with Hip09 */
- 	{"HISI  ", "HIP10   ", 0, ACPI_SIG_IORT, greater_than_or_equal,
- 	 "Erratum #162001900", IORT_SMMU_V3_PMCG_HISI_HIP09},
+diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
+index 2c043817c66a..4a2f84c4d22e 100644
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -1561,10 +1561,10 @@ static int omap2_mcspi_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	mcspi->ref_clk = devm_clk_get_optional_enabled(&pdev->dev, NULL);
+-	if (mcspi->ref_clk)
+-		mcspi->ref_clk_hz = clk_get_rate(mcspi->ref_clk);
+-	else
++	if (IS_ERR(mcspi->ref_clk))
+ 		mcspi->ref_clk_hz = OMAP2_MCSPI_MAX_FREQ;
++	else
++		mcspi->ref_clk_hz = clk_get_rate(mcspi->ref_clk);
+ 	ctlr->max_speed_hz = mcspi->ref_clk_hz;
+ 	ctlr->min_speed_hz = mcspi->ref_clk_hz >> 15;
+ 
 -- 
 2.39.5
 
