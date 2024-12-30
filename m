@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD7E537E9;
-	Mon, 30 Dec 2024 15:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4244A1531C4;
+	Mon, 30 Dec 2024 15:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735573584; cv=none; b=MAP0NL/Uof7xIH930pY6f17jbR8vi1hJN4WIWW52n8csCmkhybpM3iC7pDj/J8ZJ5Lt1RZ7CMc5k+lAWBcHcaU+tL7GksXWG71F4VYO2YbZrKm4sTkSOyKS1qxt8BujudVVOFX9CCpKG7nd/EJ1en2zE8BLKKBz7RMgL+B9ot6U=
+	t=1735573587; cv=none; b=X/JPcl8Yc9y25gOTrXxogq3VeRiIC8WI5Kndo5rgU5VZdrijdrvk5Zx79lehtyiTlOiJi/kCM1mZdd4DMKEF2j02lif+VXB9zC6NmXGHOSG3wdYLb+3AcNuiHFkj7vdkLillDH+BawNWz+NEAIMgYdb6Pudz4rgs7Pn78wg3nFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735573584; c=relaxed/simple;
-	bh=frv26Nc95T++ohfuhiVknhTRqHxL53syBsT8hXs7YfY=;
+	s=arc-20240116; t=1735573587; c=relaxed/simple;
+	bh=JQTYv2uAy9GFTC+16VobO2OYfPDXZuN+YPD7iVektBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2OnssPi40/yxiVCEUBYu7AXXq0+6BjwknK/KBzBfxAqaNMasoRaWQD8Z0tp35pw+WcYijHQRWSZHZokiOvd0qD50DFfhomusG2CamSZD2Xp+JP0E76OmBbVcx8CLwG7DEiFB14Zc5sGevtIVTs05Jotzkie2xS8BaiMZyXaxyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SN/A6SVe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QsJhzWd90T1y2gTKB/yFetyI+a1jBwLW5T+B3nwf6l52C3BRyrbytMMVBh01Nmj3k+DHQQrFD55elKBXwuASNKqFPWL05gPamF/qWEOJbrneyQLb3g3qq2YQYSz73nuE5Abb7wQ0+MVtjmZT8d3/hzlgYcoXIk5Y10OBryuS62M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmIz2+2t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SN/A6SVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CC4C4CED0;
-	Mon, 30 Dec 2024 15:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmIz2+2t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E43C4CED0;
+	Mon, 30 Dec 2024 15:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1735573583;
-	bh=frv26Nc95T++ohfuhiVknhTRqHxL53syBsT8hXs7YfY=;
+	s=korg; t=1735573587;
+	bh=JQTYv2uAy9GFTC+16VobO2OYfPDXZuN+YPD7iVektBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SN/A6SVeIod2y8k4deUdaJ6c5mhGMUUi8zMiJPWHJmFoTHlt6vTl2RyYmcrzCty4K
-	 wtF+Xwi0s/CN4jzhxLqyEVCnr5I4MZO5q6ZXsNVdAw5rmHPdJ1/dhrPsKtpKRJ56P+
-	 Sx8m6igqk2CZl73XR5dheyZKlvt8khWFnCT2N0fI=
+	b=FmIz2+2taR562D+oLldvg2G0LJrgoZpC7ZU083jV+0eC0MzXrWHwyMtCgw6A+c2qo
+	 teixvb0/9k2zW2P9291eSQ1w/URIcUetLa0soLTVsjDEm4rcLeorY3g/8lIbChb/zs
+	 WevYP3ZIHLMcVNTCuXzBc/09Ln9IDL9Y1w2jLfM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ferry Toth <fntoth@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 19/60] dmaengine: dw: Select only supported masters for ACPI devices
-Date: Mon, 30 Dec 2024 16:42:29 +0100
-Message-ID: <20241230154208.016893451@linuxfoundation.org>
+	Yi Sun <yi.sun@unisoc.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	virtualization@lists.linux.dev,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 37/60] virtio-blk: dont keep queue frozen during system suspend
+Date: Mon, 30 Dec 2024 16:42:47 +0100
+Message-ID: <20241230154208.688779495@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241230154207.276570972@linuxfoundation.org>
 References: <20241230154207.276570972@linuxfoundation.org>
@@ -51,124 +57,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit f0e870a0e9c5521f2952ea9f3ea9d3d122631a89 upstream.
+[ Upstream commit 7678abee0867e6b7fb89aa40f6e9f575f755fb37 ]
 
-The recently submitted fix-commit revealed a problem in the iDMA 32-bit
-platform code. Even though the controller supported only a single master
-the dw_dma_acpi_filter() method hard-coded two master interfaces with IDs
-0 and 1. As a result the sanity check implemented in the commit
-b336268dde75 ("dmaengine: dw: Add peripheral bus width verification")
-got incorrect interface data width and thus prevented the client drivers
-from configuring the DMA-channel with the EINVAL error returned. E.g.,
-the next error was printed for the PXA2xx SPI controller driver trying
-to configure the requested channels:
+Commit 4ce6e2db00de ("virtio-blk: Ensure no requests in virtqueues before
+deleting vqs.") replaces queue quiesce with queue freeze in virtio-blk's
+PM callbacks. And the motivation is to drain inflight IOs before suspending.
 
-> [  164.525604] pxa2xx_spi_pci 0000:00:07.1: DMA slave config failed
-> [  164.536105] pxa2xx_spi_pci 0000:00:07.1: failed to get DMA TX descriptor
-> [  164.543213] spidev spi-SPT0001:00: SPI transfer failed: -16
+block layer's queue freeze looks very handy, but it is also easy to cause
+deadlock, such as, any attempt to call into bio_queue_enter() may run into
+deadlock if the queue is frozen in current context. There are all kinds
+of ->suspend() called in suspend context, so keeping queue frozen in the
+whole suspend context isn't one good idea. And Marek reported lockdep
+warning[1] caused by virtio-blk's freeze queue in virtblk_freeze().
 
-The problem would have been spotted much earlier if the iDMA 32-bit
-controller supported more than one master interfaces. But since it
-supports just a single master and the iDMA 32-bit specific code just
-ignores the master IDs in the CTLLO preparation method, the issue has
-been gone unnoticed so far.
+[1] https://lore.kernel.org/linux-block/ca16370e-d646-4eee-b9cc-87277c89c43c@samsung.com/
 
-Fix the problem by specifying the default master ID for both memory
-and peripheral devices in the driver data. Thus the issue noticed for
-the iDMA 32-bit controllers will be eliminated and the ACPI-probed
-DW DMA controllers will be configured with the correct master ID by
-default.
+Given the motivation is to drain in-flight IOs, it can be done by calling
+freeze & unfreeze, meantime restore to previous behavior by keeping queue
+quiesced during suspend.
 
-Cc: stable@vger.kernel.org
-Fixes: b336268dde75 ("dmaengine: dw: Add peripheral bus width verification")
-Fixes: 199244d69458 ("dmaengine: dw: add support of iDMA 32-bit hardware")
-Reported-by: Ferry Toth <fntoth@gmail.com>
-Closes: https://lore.kernel.org/dmaengine/ZuXbCKUs1iOqFu51@black.fi.intel.com/
-Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Closes: https://lore.kernel.org/dmaengine/ZuXgI-VcHpMgbZ91@black.fi.intel.com/
-Tested-by: Ferry Toth <fntoth@gmail.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20241104095142.157925-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Yi Sun <yi.sun@unisoc.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: virtualization@lists.linux.dev
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/20241112125821.1475793-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw/acpi.c     |    6 ++++--
- drivers/dma/dw/internal.h |    8 ++++++++
- drivers/dma/dw/pci.c      |    4 ++--
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/block/virtio_blk.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/dw/acpi.c
-+++ b/drivers/dma/dw/acpi.c
-@@ -8,13 +8,15 @@
- 
- static bool dw_dma_acpi_filter(struct dma_chan *chan, void *param)
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 28644729dc97..0ba56caa41ef 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -1201,9 +1201,12 @@ static void virtblk_remove(struct virtio_device *vdev)
+ static int virtblk_freeze(struct virtio_device *vdev)
  {
-+	struct dw_dma *dw = to_dw_dma(chan->device);
-+	struct dw_dma_chip_pdata *data = dev_get_drvdata(dw->dma.dev);
- 	struct acpi_dma_spec *dma_spec = param;
- 	struct dw_dma_slave slave = {
- 		.dma_dev = dma_spec->dev,
- 		.src_id = dma_spec->slave_id,
- 		.dst_id = dma_spec->slave_id,
--		.m_master = 0,
--		.p_master = 1,
-+		.m_master = data->m_master,
-+		.p_master = data->p_master,
- 	};
+ 	struct virtio_blk *vblk = vdev->priv;
++	struct request_queue *q = vblk->disk->queue;
  
- 	return dw_dma_filter(chan, &slave);
---- a/drivers/dma/dw/internal.h
-+++ b/drivers/dma/dw/internal.h
-@@ -51,11 +51,15 @@ struct dw_dma_chip_pdata {
- 	int (*probe)(struct dw_dma_chip *chip);
- 	int (*remove)(struct dw_dma_chip *chip);
- 	struct dw_dma_chip *chip;
-+	u8 m_master;
-+	u8 p_master;
- };
+ 	/* Ensure no requests in virtqueues before deleting vqs. */
+-	blk_mq_freeze_queue(vblk->disk->queue);
++	blk_mq_freeze_queue(q);
++	blk_mq_quiesce_queue_nowait(q);
++	blk_mq_unfreeze_queue(q);
  
- static __maybe_unused const struct dw_dma_chip_pdata dw_dma_chip_pdata = {
- 	.probe = dw_dma_probe,
- 	.remove = dw_dma_remove,
-+	.m_master = 0,
-+	.p_master = 1,
- };
- 
- static const struct dw_dma_platform_data idma32_pdata = {
-@@ -72,6 +76,8 @@ static __maybe_unused const struct dw_dm
- 	.pdata = &idma32_pdata,
- 	.probe = idma32_dma_probe,
- 	.remove = idma32_dma_remove,
-+	.m_master = 0,
-+	.p_master = 0,
- };
- 
- static const struct dw_dma_platform_data xbar_pdata = {
-@@ -88,6 +94,8 @@ static __maybe_unused const struct dw_dm
- 	.pdata = &xbar_pdata,
- 	.probe = idma32_dma_probe,
- 	.remove = idma32_dma_remove,
-+	.m_master = 0,
-+	.p_master = 0,
- };
- 
- #endif /* _DMA_DW_INTERNAL_H */
---- a/drivers/dma/dw/pci.c
-+++ b/drivers/dma/dw/pci.c
-@@ -56,10 +56,10 @@ static int dw_pci_probe(struct pci_dev *
- 	if (ret)
+ 	/* Ensure we don't receive any more interrupts */
+ 	virtio_reset_device(vdev);
+@@ -1227,8 +1230,8 @@ static int virtblk_restore(struct virtio_device *vdev)
  		return ret;
  
--	dw_dma_acpi_controller_register(chip->dw);
--
- 	pci_set_drvdata(pdev, data);
+ 	virtio_device_ready(vdev);
++	blk_mq_unquiesce_queue(vblk->disk->queue);
  
-+	dw_dma_acpi_controller_register(chip->dw);
-+
+-	blk_mq_unfreeze_queue(vblk->disk->queue);
  	return 0;
  }
- 
+ #endif
+-- 
+2.39.5
+
 
 
