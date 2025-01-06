@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CB91DDA3C;
-	Mon,  6 Jan 2025 15:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CB31DDC2C;
+	Mon,  6 Jan 2025 15:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177140; cv=none; b=Z5y3LglQh7XLsf2zIn9vNAhLeo403Zw2KWOyVFlgRZ/ggB7i8SsTtOfGaeXjtTqohyzrJpDrE8cLx9mDcGTTUgAxzzT+UYSvebjXugD+vlQiFIfCti8AkMV8dIg89IX+5E2L4FRAUBrR4jwt/KlQAvB45O/c684pZCKstnN1vmQ=
+	t=1736177142; cv=none; b=KCiouv7QOpvcQAhhNTDkH/PmvKi2UBdWWQ1PAzzzFLki/W3qbh0oswbfwuLnQdHvaO1d+oCOq5ME/b2aO7geJGktcv3rXgmo1/ix2rjVbl2+ffOZaBIzGdVmwapsrXGRaWpQvZ1EHAxTn1Za5HdP/DPGZhrKb5mBdfrKEJoDWCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177140; c=relaxed/simple;
-	bh=WYk0rakQ4r+iy0WZbbf7uc1e0FEGC8h6d8Jr7sLIkGM=;
+	s=arc-20240116; t=1736177142; c=relaxed/simple;
+	bh=ik8wSQ0g5ox9WZDu9mzsIYx9jkjxmaYH4ZO5oZpRlek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iOOvLK82OjzbP36gzmSO3qAIIkhsP7gYNFJq0VJtblheyvJolzdezRwZ+7ZYUXclDY7Q/zdOQp6OgnTxV8uap3GpdnLIhV8s4mAoR0yh950gUianOwL7qTMSPuw23frAIPu2oXPV9JbDpXWilDaDcztGgne5Zattf118Z4auLLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwn7Bj/n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ubFePp5Uo2spBN8g6vX7INzYLTATMx5bQxvQiGZFCddqyke2F/UrfH0Sbbq7wcSpuruAr5j2VLauc+yw00AKHGjGoViyueevvn3Oc8IYBn+gLJBp3sO1rGzA43V5EKd+wrGczmeMQUWWFqjlJt12Fpkw7td5mk09dIO7JGYVNL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZKNvSKD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwn7Bj/n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693BEC4CED2;
-	Mon,  6 Jan 2025 15:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZKNvSKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 607B2C4CED2;
+	Mon,  6 Jan 2025 15:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177139;
-	bh=WYk0rakQ4r+iy0WZbbf7uc1e0FEGC8h6d8Jr7sLIkGM=;
+	s=korg; t=1736177142;
+	bh=ik8wSQ0g5ox9WZDu9mzsIYx9jkjxmaYH4ZO5oZpRlek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwn7Bj/nh1aoKPrXRBRjjeYusSNOE2FajkqJestOd9YYqF1XUWbWfVa/YG7JicI1c
-	 DVV5n/IwXtAa4JAvbjlGOjOxMcOMht/U2wOrC5K7uzLFT277CCN/Vd4k+kercICFCT
-	 77Eiu87UrAsXZwhPskk6EjlzSI7lq0cdYI44pKVc=
+	b=FZKNvSKDKGSxE2vPPu4PeBTa1spnMgajy3DzzzVhVbyNXhZGhxn73SOfX4eqF9ipg
+	 K+wJSLCAwSX5eFwAjP2fkGkPFF54vqK1BNu8J62E7KWyuB7knrZmFnsXaFq/seDihZ
+	 M6luB84/G3ZCF2vY4dtUGntv4utg6EqcClyEI3Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/222] usb: typec: ucsi: add update_connector callback
-Date: Mon,  6 Jan 2025 16:14:29 +0100
-Message-ID: <20250106151153.067193309@linuxfoundation.org>
+Subject: [PATCH 6.6 066/222] usb: typec: ucsi: glink: set orientation aware if supported
+Date: Mon,  6 Jan 2025 16:14:30 +0100
+Message-ID: <20250106151153.104064946@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,56 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 62866465196228917f233aea68de73be6cdb9fae ]
+[ Upstream commit 3d1b6c9d47707d6a0f80bb5db6473b1f107b5baf ]
 
-Add a callback to allow glue drivers to update the connector before
-registering corresponding power supply and Type-C port. In particular
-this is useful if glue drivers want to touch the connector's Type-C
-capabilities structure.
+If the PMIC-GLINK device has orientation GPIOs declared, then it will
+report connection orientation. In this case set the flag to mark
+registered ports as orientation-aware.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240411-ucsi-orient-aware-v2-4-d4b1cb22a33f@linaro.org
+Link: https://lore.kernel.org/r/20240411-ucsi-orient-aware-v2-5-d4b1cb22a33f@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: de9df030ccb5 ("usb: typec: ucsi: glink: be more precise on orientation-aware ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 3 +++
- drivers/usb/typec/ucsi/ucsi.h | 2 ++
- 2 files changed, 5 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_glink.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 3f7039a711c7..d6a3fd00c3a5 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1261,6 +1261,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
- 	cap->driver_data = con;
- 	cap->ops = &ucsi_ops;
+diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+index 4c9352cdd641..f6c3af5846e6 100644
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -186,6 +186,17 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+ 	return ret;
+ }
  
-+	if (ucsi->ops->update_connector)
-+		ucsi->ops->update_connector(con);
++static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
++{
++	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
++	int i;
 +
- 	ret = ucsi_register_port_psy(con);
- 	if (ret)
- 		goto out;
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index 3d23b52cf5a9..921ef0e115cf 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -53,6 +53,7 @@ struct dentry;
-  * @sync_write: Blocking write operation
-  * @async_write: Non-blocking write operation
-  * @update_altmodes: Squashes duplicate DP altmodes
-+ * @update_connector: Update connector capabilities before registering
-  * @connector_status: Updates connector status, called holding connector lock
-  *
-  * Read and write routines for UCSI interface. @sync_write must wait for the
-@@ -68,6 +69,7 @@ struct ucsi_operations {
- 			   const void *val, size_t val_len);
- 	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
- 				struct ucsi_altmode *updated);
-+	void (*update_connector)(struct ucsi_connector *con);
- 	void (*connector_status)(struct ucsi_connector *con);
++	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
++		if (ucsi->port_orientation[i])
++			con->typec_cap.orientation_aware = true;
++	}
++}
++
+ static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+ {
+ 	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+@@ -207,6 +218,7 @@ static const struct ucsi_operations pmic_glink_ucsi_ops = {
+ 	.read = pmic_glink_ucsi_read,
+ 	.sync_write = pmic_glink_ucsi_sync_write,
+ 	.async_write = pmic_glink_ucsi_async_write,
++	.update_connector = pmic_glink_ucsi_update_connector,
+ 	.connector_status = pmic_glink_ucsi_connector_status,
  };
  
 -- 
