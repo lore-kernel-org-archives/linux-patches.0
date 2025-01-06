@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938761D7999;
-	Mon,  6 Jan 2025 15:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33306155C9E;
+	Mon,  6 Jan 2025 15:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177416; cv=none; b=oET2mKipPmphQX1CLTj/iUZVQMK1UxLuwhXiS1bcOLHGfDxoCAK4cWQBJpivsLFAPWRo6ZyGO4uyinWi4qcZKZkWk/PUDah8SZfnK0H9bPGBDR/GgVx2FTPGvC63+aajVbO+nZGwpSK0f/qraeeRUthX/QpvjKUMerNpYpTWjoU=
+	t=1736177418; cv=none; b=npiJOXKnwOS8QcbWf8aQp9hkp3I87RD2OhKhwxJnuvmubJHkG/4vt4TDLuhZIqJwMqZdunsmhF8k1bHX07P/XuDuJBu98miau7jdHYjbfRNxQ4DW6RScByvPhhesrmZqhigMKL3u2PBbRgQNCN7htm/RuvyRzrMKukPruI52Czo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177416; c=relaxed/simple;
-	bh=szinAZZOiE2PaMoHcWidOhmYIWOJx15C7Tsgd9lPFXE=;
+	s=arc-20240116; t=1736177418; c=relaxed/simple;
+	bh=2RPO8hqDE9Gp9L0619IkNR4Wk2Iyeff+17K4Um9HtgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rEp5Y+4CHP9lcAVF7ox0dBPaXuld9zTx2FEpYApcuufatqIIb+cNTlrHk+mT4Jner00ObaME2h61LqPt56SIpvEAc09PuTHrZ+9yllQJ/5t4ym0CHcUBNgf8pwMW5GbGUPKli+j6WoJBpkKIT1eoeBDpy446GFA5OaFbeL9rly4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfQS2nx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B7P1dr5PKJoyL0hh5U+YWDFHI9eoXEsJb21wTwabkZDFZXrhHNIFmX3I9xAL7V9sE9pZpxC9btHPXEOQl9uF7SvJQn9zbu4OmtFFfSCUsQY6PiiwwutBycaEMz6DC/LcNkZKPC8JwvdF2+HavhNYzGACJ5pI5A9uaIKvPSZGf7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeLxqWQ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfQS2nx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C814CC4CED2;
-	Mon,  6 Jan 2025 15:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeLxqWQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF76C4CED2;
+	Mon,  6 Jan 2025 15:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177415;
-	bh=szinAZZOiE2PaMoHcWidOhmYIWOJx15C7Tsgd9lPFXE=;
+	s=korg; t=1736177418;
+	bh=2RPO8hqDE9Gp9L0619IkNR4Wk2Iyeff+17K4Um9HtgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfQS2nx1rmStMPsE0CQSKxYhzYjpUvK7Vn87UaeKqDWvhiScW14nIblgjOPy0/31n
-	 qmDXeIyIGjXpA59NC2qQOHxADiC+2EZXmPqIKiJHk8nqPxWxNo4lomYWkKEqmDYPtD
-	 EsHF06WWbwl0zk8YbKtUI5b6GDMBu2RVsdpE9Vv4=
+	b=LeLxqWQ0cT/fG2Bk6S/pgAZ+oq9TT2NvfK9jl+M97BfBb70xBc2nnlyUdPMd9JskO
+	 WiwdM0wdq0ELxNgNymyzLYCTSZzYl0y7avI4tRIAsaV8kW4aPqrH34NUbrz04XG1H7
+	 a3OgYexV74SKv5dBQa52bhkeTGxxSdjzB7A21ukU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/222] ipv4: ip_tunnel: Unmask upper DSCP bits in ip_md_tunnel_xmit()
-Date: Mon,  6 Jan 2025 16:15:59 +0100
-Message-ID: <20250106151156.632104207@linuxfoundation.org>
+Subject: [PATCH 6.6 127/222] RDMA/bnxt_re: Allow MSN table capability check
+Date: Mon,  6 Jan 2025 16:15:31 +0100
+Message-ID: <20250106151155.415262813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,52 +51,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit c34cfe72bb260fc49660d9e6a9ba95ba01669ae2 ]
+[ Upstream commit 8d310ba845827a38fcd463d86bfe3b730ce7ab8f ]
 
-Unmask the upper DSCP bits when initializing an IPv4 flow key via
-ip_tunnel_init_flow() before passing it to ip_route_output_key() so that
-in the future we could perform the FIB lookup according to the full DSCP
-value.
+FW reports the HW capability to use PSN table or MSN table and
+driver/library need to select it based on this capability.
+Use the new capability instead of the older capability check for HW
+retransmission while handling the MSN/PSN table. FW report
+zero (PSN table) for older adapters to maintain backward compatibility.
 
-Note that the 'tos' variable includes the full DS field. Either the one
-specified via the tunnel key or the one inherited from the inner packet.
+Also, Updated the FW interface structures to handle the new fields.
 
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b5a7b661a073 ("net: Fix netns for ip_tunnel_init_flow()")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://lore.kernel.org/r/1716876697-25970-2-git-send-email-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: eb867d797d29 ("RDMA/bnxt_re: Remove always true dattr validity check")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_tunnel.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c  | 12 ++++-----
+ drivers/infiniband/hw/bnxt_re/qplib_fp.h  |  2 +-
+ drivers/infiniband/hw/bnxt_re/qplib_res.h |  6 +++++
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c  |  1 +
+ drivers/infiniband/hw/bnxt_re/qplib_sp.h  |  1 +
+ drivers/infiniband/hw/bnxt_re/roce_hsi.h  | 30 ++++++++++++++++++++++-
+ 6 files changed, 44 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
-index 571cf7c2fa28..b5437755365c 100644
---- a/net/ipv4/ip_tunnel.c
-+++ b/net/ipv4/ip_tunnel.c
-@@ -43,6 +43,7 @@
- #include <net/rtnetlink.h>
- #include <net/udp.h>
- #include <net/dst_metadata.h>
-+#include <net/inet_dscp.h>
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index b624c255eee6..3e07500dcbcf 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -981,7 +981,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	u16 nsge;
  
- #if IS_ENABLED(CONFIG_IPV6)
- #include <net/ipv6.h>
-@@ -609,9 +610,9 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
- 			tos = ipv6_get_dsfield((const struct ipv6hdr *)inner_iph);
+ 	if (res->dattr)
+-		qp->dev_cap_flags = res->dattr->dev_cap_flags;
++		qp->is_host_msn_tbl = _is_host_msn_table(res->dattr->dev_cap_flags2);
+ 
+ 	sq->dbinfo.flags = 0;
+ 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
+@@ -999,7 +999,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 			 sizeof(struct sq_psn_search_ext) :
+ 			 sizeof(struct sq_psn_search);
+ 
+-		if (BNXT_RE_HW_RETX(qp->dev_cap_flags)) {
++		if (qp->is_host_msn_tbl) {
+ 			psn_sz = sizeof(struct sq_msn_search);
+ 			qp->msn = 0;
+ 		}
+@@ -1013,7 +1013,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	hwq_attr.aux_depth = psn_sz ? bnxt_qplib_set_sq_size(sq, qp->wqe_mode)
+ 				    : 0;
+ 	/* Update msn tbl size */
+-	if (BNXT_RE_HW_RETX(qp->dev_cap_flags) && psn_sz) {
++	if (qp->is_host_msn_tbl && psn_sz) {
+ 		hwq_attr.aux_depth = roundup_pow_of_two(bnxt_qplib_set_sq_size(sq, qp->wqe_mode));
+ 		qp->msn_tbl_sz = hwq_attr.aux_depth;
+ 		qp->msn = 0;
+@@ -1638,7 +1638,7 @@ static void bnxt_qplib_fill_psn_search(struct bnxt_qplib_qp *qp,
+ 	if (!swq->psn_search)
+ 		return;
+ 	/* Handle MSN differently on cap flags  */
+-	if (BNXT_RE_HW_RETX(qp->dev_cap_flags)) {
++	if (qp->is_host_msn_tbl) {
+ 		bnxt_qplib_fill_msn_search(qp, wqe, swq);
+ 		return;
  	}
- 	ip_tunnel_init_flow(&fl4, proto, key->u.ipv4.dst, key->u.ipv4.src,
--			    tunnel_id_to_key32(key->tun_id), RT_TOS(tos),
--			    dev_net(dev), 0, skb->mark, skb_get_hash(skb),
--			    key->flow_flags);
-+			    tunnel_id_to_key32(key->tun_id),
-+			    tos & INET_DSCP_MASK, dev_net(dev), 0, skb->mark,
-+			    skb_get_hash(skb), key->flow_flags);
+@@ -1820,7 +1820,7 @@ int bnxt_qplib_post_send(struct bnxt_qplib_qp *qp,
+ 	}
  
- 	if (!tunnel_hlen)
- 		tunnel_hlen = ip_encap_hlen(&tun_info->encap);
+ 	swq = bnxt_qplib_get_swqe(sq, &wqe_idx);
+-	bnxt_qplib_pull_psn_buff(qp, sq, swq, BNXT_RE_HW_RETX(qp->dev_cap_flags));
++	bnxt_qplib_pull_psn_buff(qp, sq, swq, qp->is_host_msn_tbl);
+ 
+ 	idx = 0;
+ 	swq->slot_idx = hwq->prod;
+@@ -2010,7 +2010,7 @@ int bnxt_qplib_post_send(struct bnxt_qplib_qp *qp,
+ 		rc = -EINVAL;
+ 		goto done;
+ 	}
+-	if (!BNXT_RE_HW_RETX(qp->dev_cap_flags) || msn_update) {
++	if (!qp->is_host_msn_tbl || msn_update) {
+ 		swq->next_psn = sq->psn & BTH_PSN_MASK;
+ 		bnxt_qplib_fill_psn_search(qp, wqe, swq);
+ 	}
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+index 5d4c49089a20..3a15ca7feb2b 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+@@ -340,7 +340,7 @@ struct bnxt_qplib_qp {
+ 	struct list_head		rq_flush;
+ 	u32				msn;
+ 	u32				msn_tbl_sz;
+-	u16				dev_cap_flags;
++	bool				is_host_msn_tbl;
+ };
+ 
+ #define BNXT_QPLIB_MAX_CQE_ENTRY_SIZE	sizeof(struct cq_base)
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.h b/drivers/infiniband/hw/bnxt_re/qplib_res.h
+index f9e7aa3757cf..c2152122a432 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.h
+@@ -523,6 +523,12 @@ static inline bool _is_hw_retx_supported(u16 dev_cap_flags)
+ 
+ #define BNXT_RE_HW_RETX(a) _is_hw_retx_supported((a))
+ 
++static inline bool _is_host_msn_table(u16 dev_cap_ext_flags2)
++{
++	return (dev_cap_ext_flags2 & CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_MASK) ==
++		CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_HOST_MSN_TABLE;
++}
++
+ static inline u8 bnxt_qplib_dbr_pacing_en(struct bnxt_qplib_chip_ctx *cctx)
+ {
+ 	return cctx->modes.dbr_pacing;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index 0b98577cd708..420f8613bcd5 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -165,6 +165,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw,
+ 	attr->max_sgid = le32_to_cpu(sb->max_gid);
+ 	attr->max_sgid = min_t(u32, BNXT_QPLIB_NUM_GIDS_SUPPORTED, 2 * attr->max_sgid);
+ 	attr->dev_cap_flags = le16_to_cpu(sb->dev_cap_flags);
++	attr->dev_cap_flags2 = le16_to_cpu(sb->dev_cap_ext_flags_2);
+ 
+ 	bnxt_qplib_query_version(rcfw, attr->fw_ver);
+ 
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+index 755765e68eaa..2f16f3db093e 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
+@@ -73,6 +73,7 @@ struct bnxt_qplib_dev_attr {
+ 	u8				tqm_alloc_reqs[MAX_TQM_ALLOC_REQ];
+ 	bool				is_atomic;
+ 	u16                             dev_cap_flags;
++	u16                             dev_cap_flags2;
+ 	u32                             max_dpi;
+ };
+ 
+diff --git a/drivers/infiniband/hw/bnxt_re/roce_hsi.h b/drivers/infiniband/hw/bnxt_re/roce_hsi.h
+index 2909608f4b5d..cb4e7e19fbaf 100644
+--- a/drivers/infiniband/hw/bnxt_re/roce_hsi.h
++++ b/drivers/infiniband/hw/bnxt_re/roce_hsi.h
+@@ -2157,8 +2157,36 @@ struct creq_query_func_resp_sb {
+ 	__le32	tqm_alloc_reqs[12];
+ 	__le32	max_dpi;
+ 	u8	max_sge_var_wqe;
+-	u8	reserved_8;
++	u8	dev_cap_ext_flags;
++	#define CREQ_QUERY_FUNC_RESP_SB_ATOMIC_OPS_NOT_SUPPORTED         0x1UL
++	#define CREQ_QUERY_FUNC_RESP_SB_DRV_VERSION_RGTR_SUPPORTED       0x2UL
++	#define CREQ_QUERY_FUNC_RESP_SB_CREATE_QP_BATCH_SUPPORTED        0x4UL
++	#define CREQ_QUERY_FUNC_RESP_SB_DESTROY_QP_BATCH_SUPPORTED       0x8UL
++	#define CREQ_QUERY_FUNC_RESP_SB_ROCE_STATS_EXT_CTX_SUPPORTED     0x10UL
++	#define CREQ_QUERY_FUNC_RESP_SB_CREATE_SRQ_SGE_SUPPORTED         0x20UL
++	#define CREQ_QUERY_FUNC_RESP_SB_FIXED_SIZE_WQE_DISABLED          0x40UL
++	#define CREQ_QUERY_FUNC_RESP_SB_DCN_SUPPORTED                    0x80UL
+ 	__le16	max_inline_data_var_wqe;
++	__le32	start_qid;
++	u8	max_msn_table_size;
++	u8	reserved8_1;
++	__le16	dev_cap_ext_flags_2;
++	#define CREQ_QUERY_FUNC_RESP_SB_OPTIMIZE_MODIFY_QP_SUPPORTED             0x1UL
++	#define CREQ_QUERY_FUNC_RESP_SB_CHANGE_UDP_SRC_PORT_WQE_SUPPORTED        0x2UL
++	#define CREQ_QUERY_FUNC_RESP_SB_CQ_COALESCING_SUPPORTED                  0x4UL
++	#define CREQ_QUERY_FUNC_RESP_SB_MEMORY_REGION_RO_SUPPORTED               0x8UL
++	#define CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_MASK          0x30UL
++	#define CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_SFT           4
++	#define CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_HOST_PSN_TABLE  (0x0UL << 4)
++	#define CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_HOST_MSN_TABLE  (0x1UL << 4)
++	#define CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_IQM_MSN_TABLE   (0x2UL << 4)
++	#define CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_LAST	\
++			CREQ_QUERY_FUNC_RESP_SB_REQ_RETRANSMISSION_SUPPORT_IQM_MSN_TABLE
++	__le16	max_xp_qp_size;
++	__le16	create_qp_batch_size;
++	__le16	destroy_qp_batch_size;
++	__le16	reserved16;
++	__le64	reserved64;
+ };
+ 
+ /* cmdq_set_func_resources (size:448b/56B) */
 -- 
 2.39.5
 
