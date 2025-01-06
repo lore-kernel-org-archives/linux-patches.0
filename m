@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A0D469D;
-	Mon,  6 Jan 2025 15:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31766146D40;
+	Mon,  6 Jan 2025 15:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177256; cv=none; b=oAXV7fDGRqhuKmri54fCpS1R4vKeuqW0KBGnPXt+AvBCvyLhpH5K8cN+8sSaevu3zQ+POHM4kF6dCumLOJWiUpCaG5Up9sDqFYYjHLWczze4BX1K101C4Ick+wUPPTFQGgF9rHa5kMH6yS7n/DTrUX7mQE/r/aL4Ab7JkWWvYyM=
+	t=1736177259; cv=none; b=OaBDxw399yG36WV087GNfbBOsQskCq5en+n7vFu/BWP9YrTEz8ADHW6SQ5qdjisU/HfXHR1G4VlGRPr+O6kZDh2K2osffMs2E7RUvJ/rGC8Cq3fyDCY4CLkdwEUfjNjoy9LkrVf0AxRWBTm+ubKmjfj7jZ3K/bdDY2OmO5c47rY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177256; c=relaxed/simple;
-	bh=9lXgiqLczTgGNVS1K4ea8A4vfscoXiH5VrKp0hOPMKc=;
+	s=arc-20240116; t=1736177259; c=relaxed/simple;
+	bh=pCVJuX2u6YyFZcngH4cil7LheQ0kS0pb5HJR081cMqg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7+rqUHGCv0slarPyusYJL9pBSxDlcKvBda6qtM+oCvMXgFtVg6udAqXqM0L/y8wmYRLUTh6+aLdvSnJDo3H2xDrBpyizLCJHGTN8F4JlSkIXkE9uQ/R4XDInBpT8yx1bmGXKjsh3mDBc6LMWr5J1Skuat5YOMacIJfqKVaCxp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yl5ggc9S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XqZThrDqMoTlvkF0b6Pgk50Eq1Zm/IPByx9dsjJ9THf7C2Gx6F8EjUwa91h++U3e8wWXIkQGr3QA+9wlJ+zmfClmBS8cUR89vqQ4osYnsdoAVII3yZK56p85oYLkIn/d3us7iUnGER6ccFud7Yu/zy7iYsRWoXCpYFQazrc5hYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ormt3eG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yl5ggc9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AC9C4CEDF;
-	Mon,  6 Jan 2025 15:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ormt3eG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C66C4CED2;
+	Mon,  6 Jan 2025 15:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177256;
-	bh=9lXgiqLczTgGNVS1K4ea8A4vfscoXiH5VrKp0hOPMKc=;
+	s=korg; t=1736177259;
+	bh=pCVJuX2u6YyFZcngH4cil7LheQ0kS0pb5HJR081cMqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yl5ggc9SPQw8kzvIp3C6T13dDR3iWxa8eydnLwJUiGtU0FfeovRIbB6WL7CysOV3b
-	 ok20UNf3shoH6jl/21pH8EXXD/1PHKHSvmLw95KLt5lGvGHY16hf+UL3OhftIB7UCo
-	 DhMIJVXWfp5P3D2LgrCsH5yzFoe78Mwb4Vb37E/Q=
+	b=Ormt3eG3Y6xzxSDVHa64FVO/M79UVgUl73Dr8FUAHqO1iDpyrovxZ0dP/jHZy2rEV
+	 0uTSVk29Gn7CUWyq+RRyq/06+pMvjPVRcQtM8NZQHE4TlSntTHPUq4gURU13b3XFG2
+	 uIL606DqxM5AQBkyKUqQMWVW3v46bViILG9T3GNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/222] memblock: make memblock_set_node() also warn about use of MAX_NUMNODES
-Date: Mon,  6 Jan 2025 16:15:08 +0100
-Message-ID: <20250106151154.534272256@linuxfoundation.org>
+Subject: [PATCH 6.6 105/222] crypto: ecc - Prevent ecc_digits_from_bytes from reading too many bytes
+Date: Mon,  6 Jan 2025 16:15:09 +0100
+Message-ID: <20250106151154.572580943@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,56 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Stefan Berger <stefanb@linux.ibm.com>
 
-[ Upstream commit e0eec24e2e199873f43df99ec39773ad3af2bff7 ]
+[ Upstream commit c6ab5c915da460c0397960af3c308386c3f3247b ]
 
-On an (old) x86 system with SRAT just covering space above 4Gb:
+Prevent ecc_digits_from_bytes from reading too many bytes from the input
+byte array in case an insufficient number of bytes is provided to fill the
+output digit array of ndigits. Therefore, initialize the most significant
+digits with 0 to avoid trying to read too many bytes later on. Convert the
+function into a regular function since it is getting too big for an inline
+function.
 
-    ACPI: SRAT: Node 0 PXM 0 [mem 0x100000000-0xfffffffff] hotplug
+If too many bytes are provided on the input byte array the extra bytes
+are ignored since the input variable 'ndigits' limits the number of digits
+that will be filled.
 
-the commit referenced below leads to this NUMA configuration no longer
-being refused by a CONFIG_NUMA=y kernel (previously
-
-    NUMA: nodes only cover 6144MB of your 8185MB e820 RAM. Not used.
-    No NUMA configuration found
-    Faking a node at [mem 0x0000000000000000-0x000000027fffffff]
-
-was seen in the log directly after the message quoted above), because of
-memblock_validate_numa_coverage() checking for NUMA_NO_NODE (only). This
-in turn led to memblock_alloc_range_nid()'s warning about MAX_NUMNODES
-triggering, followed by a NULL deref in memmap_init() when trying to
-access node 64's (NODE_SHIFT=6) node data.
-
-To compensate said change, make memblock_set_node() warn on and adjust
-a passed in value of MAX_NUMNODES, just like various other functions
-already do.
-
-Fixes: ff6c3d81f2e8 ("NUMA: optimize detection of memory with no node id assigned by firmware")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1c8a058c-5365-4f27-a9f1-3aeb7fb3e7b2@suse.com
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Fixes: d67c96fb97b5 ("crypto: ecdsa - Convert byte arrays with key coordinates to digits")
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memblock.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ crypto/ecc.c                  | 22 ++++++++++++++++++++++
+ include/crypto/internal/ecc.h | 15 ++-------------
+ 2 files changed, 24 insertions(+), 13 deletions(-)
 
-diff --git a/mm/memblock.c b/mm/memblock.c
-index 87a2b4340ce4..ba64b47b7c3b 100644
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -1321,6 +1321,10 @@ int __init_memblock memblock_set_node(phys_addr_t base, phys_addr_t size,
- 	int start_rgn, end_rgn;
- 	int i, ret;
+diff --git a/crypto/ecc.c b/crypto/ecc.c
+index f53fb4d6af99..21504280aca2 100644
+--- a/crypto/ecc.c
++++ b/crypto/ecc.c
+@@ -66,6 +66,28 @@ const struct ecc_curve *ecc_get_curve(unsigned int curve_id)
+ }
+ EXPORT_SYMBOL(ecc_get_curve);
  
-+	if (WARN_ONCE(nid == MAX_NUMNODES,
-+		      "Usage of MAX_NUMNODES is deprecated. Use NUMA_NO_NODE instead\n"))
-+		nid = NUMA_NO_NODE;
++void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
++			   u64 *out, unsigned int ndigits)
++{
++	int diff = ndigits - DIV_ROUND_UP(nbytes, sizeof(u64));
++	unsigned int o = nbytes & 7;
++	__be64 msd = 0;
 +
- 	ret = memblock_isolate_range(type, base, size, &start_rgn, &end_rgn);
- 	if (ret)
- 		return ret;
++	/* diff > 0: not enough input bytes: set most significant digits to 0 */
++	if (diff > 0) {
++		ndigits -= diff;
++		memset(&out[ndigits - 1], 0, diff * sizeof(u64));
++	}
++
++	if (o) {
++		memcpy((u8 *)&msd + sizeof(msd) - o, in, o);
++		out[--ndigits] = be64_to_cpu(msd);
++		in += o;
++	}
++	ecc_swap_digits(in, out, ndigits);
++}
++EXPORT_SYMBOL(ecc_digits_from_bytes);
++
+ static u64 *ecc_alloc_digits_space(unsigned int ndigits)
+ {
+ 	size_t len = ndigits * sizeof(u64);
+diff --git a/include/crypto/internal/ecc.h b/include/crypto/internal/ecc.h
+index ab722a8986b7..c0b8be63cbde 100644
+--- a/include/crypto/internal/ecc.h
++++ b/include/crypto/internal/ecc.h
+@@ -63,19 +63,8 @@ static inline void ecc_swap_digits(const void *in, u64 *out, unsigned int ndigit
+  * @out       Output digits array
+  * @ndigits:  Number of digits to create from byte array
+  */
+-static inline void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
+-					 u64 *out, unsigned int ndigits)
+-{
+-	unsigned int o = nbytes & 7;
+-	__be64 msd = 0;
+-
+-	if (o) {
+-		memcpy((u8 *)&msd + sizeof(msd) - o, in, o);
+-		out[--ndigits] = be64_to_cpu(msd);
+-		in += o;
+-	}
+-	ecc_swap_digits(in, out, ndigits);
+-}
++void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
++			   u64 *out, unsigned int ndigits);
+ 
+ /**
+  * ecc_is_key_valid() - Validate a given ECDH private key
 -- 
 2.39.5
 
