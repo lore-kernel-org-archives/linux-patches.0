@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8BAC7082A;
-	Mon,  6 Jan 2025 15:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E52A7082A;
+	Mon,  6 Jan 2025 15:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178214; cv=none; b=hee+UC+l3FjecW7kHg3Dx2LlkVNhxYmbm4HuZrEZbaM/bKyBGGXnZIk7y5/1+fSybMhVWaA1SJ9J8X13lfbSABPWBk+GK+rB0Bfym49xFo6KA0vdkMZmFGJSwqivTnYs7zTGfUnjBHUvRtax7NaWpSZdyoUlEKCwBs5rREq1PUQ=
+	t=1736178217; cv=none; b=lbHGtEs9m4FvuhUC64q5MarKZ27YjLKRzHpuCcdTmMjqmi/ilgvMHm2lfMzioNDkp2m8jlPmqWtONECb53e61gVfYj8KjWNsvomtbUJiF6jI9TDsJkZ9Oa+LpqkWW+MrPHgFqBh4n5n4fPU2iNzuM53hhrlbskAiAEoIS+EQlw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178214; c=relaxed/simple;
-	bh=+kcneY8FNo3tjJBpoVkDLh/1jURDGmu4JF2MtZZJsUQ=;
+	s=arc-20240116; t=1736178217; c=relaxed/simple;
+	bh=BgYveQgsAF9qJdLHM3ZgMI4bQbgBFL73OZw6woPQ56A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTh5WVJUw7+wEBGPiDUAuk+J3k/+DSF0bzrrIMNxrxuefGL8OUbNZ4WAD3DE1JdG1RlNrheJ6jcXCqGJ3Ep/MT1kXE7aF2Pm3wf11UGXySW9On5toNlShE7saTBkQM4PT86WbU3/WjACW60V/zfWRrth434Fgh0H589/yIV3F24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aeZfaCZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZQG/MLBOb9GX7O59bwXhWuqhQ6kRcXWiy1U5LYIoAuMpY/ZMkBcW1q3WXZnOm4b8xebgQgbE7SrlDBZ281AMDCYkt3chDcKblrOB2VW69VBdSs5LleVx2HO5SCcZsqIlmfa8D6a7xP4wwMQ5Fa0nCflJdTlEFtCKB0KjWotxj6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwWcIGLW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aeZfaCZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAC3C4CED2;
-	Mon,  6 Jan 2025 15:43:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwWcIGLW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B349C4CED2;
+	Mon,  6 Jan 2025 15:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178214;
-	bh=+kcneY8FNo3tjJBpoVkDLh/1jURDGmu4JF2MtZZJsUQ=;
+	s=korg; t=1736178217;
+	bh=BgYveQgsAF9qJdLHM3ZgMI4bQbgBFL73OZw6woPQ56A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aeZfaCZR5EKK2VHcTiwiYBhU/mYkNoWB1KtgKB4Dnnb1C6bFGeNJvfPBT1jlhAM82
-	 /6rzaKuFtDVjozFlR4O06FMya+nTyDIipTELDs8aE09ANC2NjYg8xCfhsKR3y+f5D8
-	 /tQFJpJZsKOc9uBW7UDbGyQ+jojNQUCx69kz03w8=
+	b=OwWcIGLWgk79uuMwgJW7luTrJNpnjBVrUBO1KgvUx1AcW1+lXVEFABwna1LnUhj+C
+	 hCy+FmPEg+d0S4R5WW904w9FB+BIrqM3nX4HsGXRel4FizP0kmdP9a8Zr3gYcoz0s7
+	 odVSvDIu8wbMzoyADPQhvSC2TQkS8DvtXUY//JjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jing Xia <jing.xia@unisoc.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Benoit Lize <lizeb@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 043/138] epoll: Add synchronous wakeup support for ep_poll_callback
-Date: Mon,  6 Jan 2025 16:16:07 +0100
-Message-ID: <20250106151134.868891493@linuxfoundation.org>
+	syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 044/138] media: dvb-frontends: dib3000mb: fix uninit-value in dib3000_write_reg
+Date: Mon,  6 Jan 2025 16:16:08 +0100
+Message-ID: <20250106151134.906713044@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -53,55 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
+[ Upstream commit 2dd59fe0e19e1ab955259978082b62e5751924c7 ]
 
-Now, the epoll only use wake_up() interface to wake up task.
-However, sometimes, there are epoll users which want to use
-the synchronous wakeup flag to hint the scheduler, such as
-Android binder driver.
-So add a wake_up_sync() define, and use the wake_up_sync()
-when the sync is true in ep_poll_callback().
+Syzbot reports [1] an uninitialized value issue found by KMSAN in
+dib3000_read_reg().
 
-Co-developed-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
-Tested-by: Brian Geffon <bgeffon@google.com>
-Reviewed-by: Brian Geffon <bgeffon@google.com>
-Reported-by: Benoit Lize <lizeb@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Local u8 rb[2] is used in i2c_transfer() as a read buffer; in case
+that call fails, the buffer may end up with some undefined values.
+
+Since no elaborate error handling is expected in dib3000_write_reg(),
+simply zero out rb buffer to mitigate the problem.
+
+[1] Syzkaller report
+dvb-usb: bulk message failed: -22 (6/0)
+=====================================================
+BUG: KMSAN: uninit-value in dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
+ dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
+ dibusb_dib3000mb_frontend_attach+0x155/0x2f0 drivers/media/usb/dvb-usb/dibusb-mb.c:31
+ dvb_usb_adapter_frontend_init+0xed/0x9a0 drivers/media/usb/dvb-usb/dvb-usb-dvb.c:290
+ dvb_usb_adapter_init drivers/media/usb/dvb-usb/dvb-usb-init.c:90 [inline]
+ dvb_usb_init drivers/media/usb/dvb-usb/dvb-usb-init.c:186 [inline]
+ dvb_usb_device_init+0x25a8/0x3760 drivers/media/usb/dvb-usb/dvb-usb-init.c:310
+ dibusb_probe+0x46/0x250 drivers/media/usb/dvb-usb/dibusb-mb.c:110
+...
+Local variable rb created at:
+ dib3000_read_reg+0x86/0x4e0 drivers/media/dvb-frontends/dib3000mb.c:54
+ dib3000mb_attach+0x123/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
+...
+
+Fixes: 74340b0a8bc6 ("V4L/DVB (4457): Remove dib3000-common-module")
+Reported-by: syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://lore.kernel.org/r/20240517155800.9881-1-n.zhandarovich@fintech.ru
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c       |    5 ++++-
- include/linux/wait.h |    1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/media/dvb-frontends/dib3000mb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1276,7 +1276,10 @@ static int ep_poll_callback(wait_queue_e
- 				break;
- 			}
- 		}
--		wake_up(&ep->wq);
-+		if (sync)
-+			wake_up_sync(&ep->wq);
-+		else
-+			wake_up(&ep->wq);
- 	}
- 	if (waitqueue_active(&ep->poll_wait))
- 		pwake++;
---- a/include/linux/wait.h
-+++ b/include/linux/wait.h
-@@ -214,6 +214,7 @@ void __wake_up_pollfree(struct wait_queu
- #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
- #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
- #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
-+#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
- 
- #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
- #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
+diff --git a/drivers/media/dvb-frontends/dib3000mb.c b/drivers/media/dvb-frontends/dib3000mb.c
+index c598b2a63325..7c452ddd9e40 100644
+--- a/drivers/media/dvb-frontends/dib3000mb.c
++++ b/drivers/media/dvb-frontends/dib3000mb.c
+@@ -51,7 +51,7 @@ MODULE_PARM_DESC(debug, "set debugging level (1=info,2=xfer,4=setfe,8=getfe (|-a
+ static int dib3000_read_reg(struct dib3000_state *state, u16 reg)
+ {
+ 	u8 wb[] = { ((reg >> 8) | 0x80) & 0xff, reg & 0xff };
+-	u8 rb[2];
++	u8 rb[2] = {};
+ 	struct i2c_msg msg[] = {
+ 		{ .addr = state->config.demod_address, .flags = 0,        .buf = wb, .len = 2 },
+ 		{ .addr = state->config.demod_address, .flags = I2C_M_RD, .buf = rb, .len = 2 },
+-- 
+2.39.5
+
 
 
