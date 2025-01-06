@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CA014D708;
-	Mon,  6 Jan 2025 15:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA862156238;
+	Mon,  6 Jan 2025 15:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176761; cv=none; b=q0dlbi5T0XFEnf4zjMmvTxAAfP6fXsKuv46Id5H/8nc6LJRfiCbhjJ1H1qS+cs4ap6RbesupI8/gGgWSmKIeK56Z96ZuYYJLHuC9pUqhFHICYIYQCvOHU6yFACMbeZ2UTHxqNPK2zeuUqB/QCGvtDbhUsKAOKpxvAS9vL9nSAhM=
+	t=1736176765; cv=none; b=auRsW+fNbA/TN+QBn3q1BQ73s5tnvm2wBBgK2rg0FShTd9cOrM+1pZ3Swfr6MaSe8zvDN7yKqarglkud1NxHU2lxWvyUD7UeRklfREWlcAXFpn0fXc4stXbA7F4qb27T7U74zFIlnFZX4KSvWZPYNCOdMf+ASBdvRMpNvltXU/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176761; c=relaxed/simple;
-	bh=0AU6prH1UHiA0WluoZtgGqihG7bdLOXZju7DWTuh9mo=;
+	s=arc-20240116; t=1736176765; c=relaxed/simple;
+	bh=3nVGG/MO0zyQNLMoiXTsb5YxJMoLrQza/Y0JRyx3Wic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4Ql3208lY6s+E9H8nh/FIMHNMqqhRBY7HvVXF+JljOXraiWWxE3syFDPgFUD7swLiANOQMB8bYcM9YpCMunyJqASYEjIyyuPz1bacepGi+/JqlJ/uG4Jt6Ji0ELix+A+8eLz0SxVuBLFaA3+YeMW82H1auV1WV6D5FsGO6dFHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvGbDVIK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZASUMzofi8E6cb78SS1v4jg5t7cA2RHbXS0mKN5Ppa4MCnG/bROxhWNTO2+OOO7AaHnERVNzwGIIp2UUy+rfR7nlg1dsFRAMQdu4j9lj7a+mkGLF2VO+NhkMYJ/eFjPmVqGTnwp7TewPS+7/kpic1/0MIJflInM0KMLMm2Wev+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6mde+CH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvGbDVIK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14080C4CEE6;
-	Mon,  6 Jan 2025 15:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6mde+CH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C972C4CEE2;
+	Mon,  6 Jan 2025 15:19:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176761;
-	bh=0AU6prH1UHiA0WluoZtgGqihG7bdLOXZju7DWTuh9mo=;
+	s=korg; t=1736176764;
+	bh=3nVGG/MO0zyQNLMoiXTsb5YxJMoLrQza/Y0JRyx3Wic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvGbDVIKgFvRLX7+oRiRoxkUty9KEklx9Ruaoc32aCipARqsKHmyaeeT/P452SkO4
-	 cfS1Looz07FkQppo14MGaxYFaF8okXfZQtGkP8vFgin5pcQDMudM0xf6BC8b+1FSNS
-	 TxEwIhRyrDt9XpfPJaj5YJKj/XGuONo2OoAo/PHk=
+	b=F6mde+CH/fJzIRIG2Jaq71xHhGE4584oMVNDlRUb8YJrkpBWGtscFCtIyNud8pGrU
+	 aLYvc3Zf7mr+onL08zgk5pbVygW/0a5rBVrmAw2u/2h8bRuZvEspzIxfLNJcWMuZXe
+	 fN6tc5hh6K+bKy4PLB+8zhSvuhBRCtMTSrMnx9cU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Richard Hughes <hughsient@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 06/81] thunderbolt: Add support for Intel Panther Lake-M/P
-Date: Mon,  6 Jan 2025 16:15:38 +0100
-Message-ID: <20250106151129.678673157@linuxfoundation.org>
+Subject: [PATCH 6.1 07/81] thunderbolt: Dont display nvm_version unless upgrade supported
+Date: Mon,  6 Jan 2025 16:15:39 +0100
+Message-ID: <20250106151129.715244516@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -50,55 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 8644b48714dca8bf2f42a4ff8311de8efc9bd8c3 ]
+[ Upstream commit e34f1717ef0632fcec5cb827e5e0e9f223d70c9b ]
 
-Intel Panther Lake-M/P has the same integrated Thunderbolt/USB4
-controller as Lunar Lake. Add these PCI IDs to the driver list of
-supported devices.
+The read will never succeed if NVM wasn't initialized due to an unknown
+format.
+
+Add a new callback for visibility to only show when supported.
 
 Cc: stable@vger.kernel.org
+Fixes: aef9c693e7e5 ("thunderbolt: Move vendor specific NVM handling into nvm.c")
+Reported-by: Richard Hughes <hughsient@gmail.com>
+Closes: https://github.com/fwupd/fwupd/issues/8200
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/nhi.c | 8 ++++++++
- drivers/thunderbolt/nhi.h | 4 ++++
- 2 files changed, 12 insertions(+)
+ drivers/thunderbolt/retimer.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thunderbolt/nhi.c b/drivers/thunderbolt/nhi.c
-index 5301effa6ab0..56a9222b439a 100644
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -1483,6 +1483,14 @@ static struct pci_device_id nhi_ids[] = {
- 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_LNL_NHI1),
- 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_M_NHI0),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_M_NHI1),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_P_NHI0),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_P_NHI1),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
+diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
+index edbd92435b41..5bd5c22a5085 100644
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -98,6 +98,7 @@ static int tb_retimer_nvm_add(struct tb_retimer *rt)
  
-diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
-index 7a07c7c1a9c2..16744f25a9a0 100644
---- a/drivers/thunderbolt/nhi.h
-+++ b/drivers/thunderbolt/nhi.h
-@@ -92,6 +92,10 @@ extern const struct tb_nhi_ops icl_nhi_ops;
- #define PCI_DEVICE_ID_INTEL_RPL_NHI1			0xa76d
- #define PCI_DEVICE_ID_INTEL_LNL_NHI0			0xa833
- #define PCI_DEVICE_ID_INTEL_LNL_NHI1			0xa834
-+#define PCI_DEVICE_ID_INTEL_PTL_M_NHI0			0xe333
-+#define PCI_DEVICE_ID_INTEL_PTL_M_NHI1			0xe334
-+#define PCI_DEVICE_ID_INTEL_PTL_P_NHI0			0xe433
-+#define PCI_DEVICE_ID_INTEL_PTL_P_NHI1			0xe434
+ err_nvm:
+ 	dev_dbg(&rt->dev, "NVM upgrade disabled\n");
++	rt->no_nvm_upgrade = true;
+ 	if (!IS_ERR(nvm))
+ 		tb_nvm_free(nvm);
  
- #define PCI_CLASS_SERIAL_USB_USB4			0x0c0340
+@@ -177,8 +178,6 @@ static ssize_t nvm_authenticate_show(struct device *dev,
+ 
+ 	if (!rt->nvm)
+ 		ret = -EAGAIN;
+-	else if (rt->no_nvm_upgrade)
+-		ret = -EOPNOTSUPP;
+ 	else
+ 		ret = sysfs_emit(buf, "%#x\n", rt->auth_status);
+ 
+@@ -304,6 +303,19 @@ static ssize_t vendor_show(struct device *dev, struct device_attribute *attr,
+ }
+ static DEVICE_ATTR_RO(vendor);
+ 
++static umode_t retimer_is_visible(struct kobject *kobj, struct attribute *attr,
++				  int n)
++{
++	struct device *dev = kobj_to_dev(kobj);
++	struct tb_retimer *rt = tb_to_retimer(dev);
++
++	if (attr == &dev_attr_nvm_authenticate.attr ||
++	    attr == &dev_attr_nvm_version.attr)
++		return rt->no_nvm_upgrade ? 0 : attr->mode;
++
++	return attr->mode;
++}
++
+ static struct attribute *retimer_attrs[] = {
+ 	&dev_attr_device.attr,
+ 	&dev_attr_nvm_authenticate.attr,
+@@ -313,6 +325,7 @@ static struct attribute *retimer_attrs[] = {
+ };
+ 
+ static const struct attribute_group retimer_group = {
++	.is_visible = retimer_is_visible,
+ 	.attrs = retimer_attrs,
+ };
  
 -- 
 2.39.5
