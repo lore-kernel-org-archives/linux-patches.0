@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB4B142E7C;
-	Mon,  6 Jan 2025 15:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B9D156237;
+	Mon,  6 Jan 2025 15:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178844; cv=none; b=bt81e+eoYNeifLxIlKshRj4kPH9cz4UwwR2sxYMZy2WkbbJfbzHcV+T8rqQkrqEGI1AB0a5WqLE4vW1HUAZHl7+EWar0Hpi23uhQd22Mp2Wlhgt40ZWTFKgkvn1qMOuiJVVTbJ9x9UINpn610/nYcQIyd0ben/ETq0cPa3LIngg=
+	t=1736178847; cv=none; b=ouPoTSKX1mEIIt4oCNwWIWxR49P4jthz0fZemsS7qmEHwfDgauMMCnnw2Yf+Kn6Qz9DxSWv20lOXAt20nr6rt8+no+gkXT5pGN1fWFCXXZPUTcKJmkd1C594CHxlOLgW0xCIpopuMRc1QTE/m7szWf6mEbh+XXqiyg8UsWKM8tY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178844; c=relaxed/simple;
-	bh=pKvXM3PySC8eKSukmqHTVrtIjc3x3nkk/mUoHA1QWt8=;
+	s=arc-20240116; t=1736178847; c=relaxed/simple;
+	bh=y4zQQlN00NQoaXa6qfbB/EIwxqaNIR5XMiJeF2/MoyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m1pw1oBDLidknwsOSPVvwE5GkfC8n8G+Kxyo11gSoLiHqB5MDJF5olFm/q5Z75dfN3h+qlZPjsYtF24yEhzHyxnQnx3ClUnG5QFDpdPDo5dBqs1mtSU1MQTFuN6FBo7QGPrs+kvexdAr1pMuMzdhiRb7O3I8wuKZ78XMig/tTKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwoke+Om; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7cZk/rSmvyHS7eLdmRLkKnA2O065hNSUerPyiYInUrY24db6qbSnhieBJhwrcaggus8Ezyp28uHgRQoGNIxgJITpN22pMIzXdz6y2Z2ByITKRCwHDFCz94DA7qmaLHrN9SXL70rvrCLRmpne1bdEbSy7Zw8TFq5dGUMFtjCkN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zWqwC26; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwoke+Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4F4C4CED2;
-	Mon,  6 Jan 2025 15:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zWqwC26"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA4FC4CED2;
+	Mon,  6 Jan 2025 15:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178844;
-	bh=pKvXM3PySC8eKSukmqHTVrtIjc3x3nkk/mUoHA1QWt8=;
+	s=korg; t=1736178847;
+	bh=y4zQQlN00NQoaXa6qfbB/EIwxqaNIR5XMiJeF2/MoyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwoke+OmxbH1MRFP2Blw2/EjR7SL0TvblvWzca6i+V+zHKaPoh/R42aer8yyPiC8r
-	 0UaCQB4udgggyt/OQlkkUSB6tf4soNNefqawL+zt+6O56Zs/GsVyKx/40T1Es4todb
-	 KU5fYIgq22dgkub9hQ7tus0TLjQ7AbC7Kwz+P7Ak=
+	b=0zWqwC269dIOoT/hZnRvlFNxzsuLdY/tWuwLKWNgWR/DaA3da8g4iL52z4JZD9qY0
+	 G0M4jGITyrNi+cNpwGafIpFIN2rf7ZCcRKuB01k2R252SP83OXhP8nEYPeqL3s7mis
+	 9pOkW5CwCAiZ1Ss3UiMpNx6CwBcQb1t0AuOFu8AI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michal Pecio <michal.pecio@gmail.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/168] xhci: retry Stop Endpoint on buggy NEC controllers
-Date: Mon,  6 Jan 2025 16:17:00 +0100
-Message-ID: <20250106151142.685184232@linuxfoundation.org>
+Subject: [PATCH 5.15 113/168] usb: xhci: Limit Stop Endpoint retries
+Date: Mon,  6 Jan 2025 16:17:01 +0100
+Message-ID: <20250106151142.722095819@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -53,53 +53,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit fd9d55d190c0e5fefd3a9165ea361809427885a1 ]
+[ Upstream commit 42b7581376015c1bbcbe5831f043cd0ac119d028 ]
 
-Two NEC uPD720200 adapters have been observed to randomly misbehave:
-a Stop Endpoint command fails with Context Error, the Output Context
-indicates Stopped state, and the endpoint keeps running. Very often,
-Set TR Dequeue Pointer is seen to fail next with Context Error too,
-in addition to problems from unexpectedly completed cancelled work.
+Some host controllers fail to atomically transition an endpoint to the
+Running state on a doorbell ring and enter a hidden "Restarting" state,
+which looks very much like Stopped, with the important difference that
+it will spontaneously transition to Running anytime soon.
 
-The pathology is common on fast running isoc endpoints like uvcvideo,
-but has also been reproduced on a full-speed bulk endpoint of pl2303.
-It seems all EPs are affected, with risk proportional to their load.
+A Stop Endpoint command queued in the Restarting state typically fails
+with Context State Error and the completion handler sees the Endpoint
+Context State as either still Stopped or already Running. Even a case
+of Halted was observed, when an error occurred right after the restart.
 
-Reproduction involves receiving any kind of stream and closing it to
-make the device driver cancel URBs already queued in advance.
+The Halted state is already recovered from by resetting the endpoint.
+The Running state is handled by retrying Stop Endpoint.
 
-Deal with it by retrying the command like in the Running state.
+The Stopped state was recognized as a problem on NEC controllers and
+worked around also by retrying, because the endpoint soon restarts and
+then stops for good. But there is a risk: the command may fail if the
+endpoint is "stopped for good" already, and retries will fail forever.
 
+The possibility of this was not realized at the time, but a number of
+cases were discovered later and reproduced. Some proved difficult to
+deal with, and it is outright impossible to predict if an endpoint may
+fail to ever start at all due to a hardware bug. One such bug (albeit
+on ASM3142, not on NEC) was found to be reliably triggered simply by
+toggling an AX88179 NIC up/down in a tight loop for a few seconds.
+
+An endless retries storm is quite nasty. Besides putting needless load
+on the xHC and CPU, it causes URBs never to be given back, paralyzing
+the device and connection/disconnection logic for the whole bus if the
+device is unplugged. User processes waiting for URBs become unkillable,
+drivers and kworker threads lock up and xhci_hcd cannot be reloaded.
+
+For peace of mind, impose a timeout on Stop Endpoint retries in this
+case. If they don't succeed in 100ms, consider the endpoint stopped
+permanently for some reason and just give back the unlinked URBs. This
+failure case is rare already and work is under way to make it rarer.
+
+Start this work today by also handling one simple case of race with
+Reset Endpoint, because it costs just two lines to implement.
+
+Fixes: fd9d55d190c0 ("xhci: retry Stop Endpoint on buggy NEC controllers")
+CC: stable@vger.kernel.org
 Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20240229141438.619372-8-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20241106101459.775897-32-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: e21ebe51af68 ("xhci: Turn NEC specific quirk for handling Stop Endpoint errors generic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/host/xhci-ring.c | 28 ++++++++++++++++++++++++----
+ drivers/usb/host/xhci.c      |  2 ++
+ drivers/usb/host/xhci.h      |  1 +
+ 3 files changed, 27 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 5e880f0bdd8a..29faa2d5c766 100644
+index 29faa2d5c766..2694d7bf48a7 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -1148,6 +1148,15 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 				break;
- 			xhci_stop_watchdog_timer_in_irq(xhci, ep);
+@@ -52,6 +52,7 @@
+  *   endpoint rings; it generates events on the event ring for these.
+  */
+ 
++#include <linux/jiffies.h>
+ #include <linux/scatterlist.h>
+ #include <linux/slab.h>
+ #include <linux/dma-mapping.h>
+@@ -1150,16 +1151,35 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
  			return;
-+		case EP_STATE_STOPPED:
-+			/*
-+			 * NEC uPD720200 sometimes sets this state and fails with
-+			 * Context Error while continuing to process TRBs.
-+			 * Be conservative and trust EP_CTX_STATE on other chips.
+ 		case EP_STATE_STOPPED:
+ 			/*
+-			 * NEC uPD720200 sometimes sets this state and fails with
+-			 * Context Error while continuing to process TRBs.
+-			 * Be conservative and trust EP_CTX_STATE on other chips.
++			 * Per xHCI 4.6.9, Stop Endpoint command on a Stopped
++			 * EP is a Context State Error, and EP stays Stopped.
++			 *
++			 * But maybe it failed on Halted, and somebody ran Reset
++			 * Endpoint later. EP state is now Stopped and EP_HALTED
++			 * still set because Reset EP handler will run after us.
 +			 */
-+			if (!(xhci->quirks & XHCI_NEC_HOST))
++			if (ep->ep_state & EP_HALTED)
 +				break;
-+			fallthrough;
++			/*
++			 * On some HCs EP state remains Stopped for some tens of
++			 * us to a few ms or more after a doorbell ring, and any
++			 * new Stop Endpoint fails without aborting the restart.
++			 * This handler may run quickly enough to still see this
++			 * Stopped state, but it will soon change to Running.
++			 *
++			 * Assume this bug on unexpected Stop Endpoint failures.
++			 * Keep retrying until the EP starts and stops again, on
++			 * chips where this is known to help. Wait for 100ms.
+ 			 */
+ 			if (!(xhci->quirks & XHCI_NEC_HOST))
+ 				break;
++			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
++				break;
+ 			fallthrough;
  		case EP_STATE_RUNNING:
  			/* Race, HW handled stop ep cmd before ep was running */
- 			xhci_dbg(xhci, "Stop ep completion ctx error, ep is running\n");
+-			xhci_dbg(xhci, "Stop ep completion ctx error, ep is running\n");
++			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
++					GET_EP_CTX_STATE(ep_ctx));
+ 
+ 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
+ 			if (!command)
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index eb12e4c174ea..58483d1e5d3f 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -8,6 +8,7 @@
+  * Some code borrowed from the Linux EHCI driver.
+  */
+ 
++#include <linux/jiffies.h>
+ #include <linux/pci.h>
+ #include <linux/iommu.h>
+ #include <linux/iopoll.h>
+@@ -1891,6 +1892,7 @@ static int xhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
+ 			ret = -ENOMEM;
+ 			goto done;
+ 		}
++		ep->stop_time = jiffies;
+ 		ep->ep_state |= EP_STOP_CMD_PENDING;
+ 		ep->stop_cmd_timer.expires = jiffies +
+ 			XHCI_STOP_EP_CMD_TIMEOUT * HZ;
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index 298938eca163..67d5ef952d6a 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -717,6 +717,7 @@ struct xhci_virt_ep {
+ 	/* Bandwidth checking storage */
+ 	struct xhci_bw_info	bw_info;
+ 	struct list_head	bw_endpoint_list;
++	unsigned long		stop_time;
+ 	/* Isoch Frame ID checking storage */
+ 	int			next_frame_id;
+ 	/* Use new Isoch TRB layout needed for extended TBC support */
 -- 
 2.39.5
 
