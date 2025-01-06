@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D6816A930;
-	Mon,  6 Jan 2025 15:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8351F1DE883;
+	Mon,  6 Jan 2025 15:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178631; cv=none; b=lzBKkPUdDQX0coHnOId13JG0dRO7Bb7Lpkh/s49RKAGR0QK44BUmwGdE1b0JaYvokpyTAmI2mE4nP0tjhzddoDrh7RBHHxYwsFiv3CAQZyhVnX6FeEx5irB4MF9EhieIZtNj3gKovNiJX8ZAHwGFP5I076VUCTw33mxNetDRgV4=
+	t=1736178634; cv=none; b=Rry4z+3F7CvHtntyffgzsPXy9h01YdHsqsr/p0U+hWq70737dZmGrkX/2SI6FfUxbvLFptnjOMX1MptDHIUG4T5AqTVb5M0xftp+Xn7l5ipweWM0BzWq0+2uML+iykvmqSf636m3RZ3g5x5QXRd4ROWwP3Acd3QdVO8qVb/UZQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178631; c=relaxed/simple;
-	bh=d2n4IAHoQQWPZPNxrKsge0KSGpTaLKd4CZbFpL+SAkU=;
+	s=arc-20240116; t=1736178634; c=relaxed/simple;
+	bh=lzKTMzMxe+YoxaQw+R/oVz0ogdAw+I1enjhi2pmtMUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrJ/qnt82gcNN3/7QMS6V5eB6KuBPVFgWmMsGYRWx8GkXnFzGOMIg98ggoqgK8yTpuEfBlYc4ZX+Ab0dkbSDcOErGGkhnxX0kwk5phH7I2L5zQrKpQ4eIxPm4w04ip77EqnAz5hQaMNnDSlyoYhfgmfRaj3uJCFgIbfnb/39hCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0fLycAO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OK0JRlcahmeZJYZtIe1stPDC275/AWDwFMZPAvJn782lD8joNz1otURdhUMEENQVF0dmqz7JDNQIL8S0G6wwhMRRvftgKtFaGJjbeiVV+xQ3AubjS4wHHce4yeLYFIIHZMsp9Cx3SaRIa+WYiXTEgZio1mj58bcglBrm62LPpM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kumhe+NB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0fLycAO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B676AC4CED2;
-	Mon,  6 Jan 2025 15:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kumhe+NB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5AF0C4CEDF;
+	Mon,  6 Jan 2025 15:50:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178631;
-	bh=d2n4IAHoQQWPZPNxrKsge0KSGpTaLKd4CZbFpL+SAkU=;
+	s=korg; t=1736178634;
+	bh=lzKTMzMxe+YoxaQw+R/oVz0ogdAw+I1enjhi2pmtMUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0fLycAOWyiCXQHeJ31jasyIhia1PDVJX1uLzbmmiEbzNhmXHIyYWqWzjVu+qXXa3
-	 4Yy6tUvzhCkvp/qi9JOt+cdQ4PsbNpnEOt0/gBlwKRlUU7bpGa3Qxe9azMpkT/SrNN
-	 hUt8ua169GcyCHkuPcUGj2/D2Vopm0cjVX7WI9l8=
+	b=Kumhe+NB5wZh5yYMIBR0RF7JNerZYvfDC57DP8HT+rFiSMjA02JK//UO49T/BvgUy
+	 74k5EiOa5iovHYBlaim5ChQ6X3VSTGq6dbUAWSPXaRQ2CStux7CDKlck9suiuNb7hc
+	 4j/Rk/acAkFvG5hGUqhP0/r6DdxJQRiz2+nWOXwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/168] hwmon: (tmp513) Dont use "proxy" headers
-Date: Mon,  6 Jan 2025 16:15:42 +0100
-Message-ID: <20250106151139.751420846@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 5.15 043/168] Drivers: hv: util: Avoid accessing a ringbuffer not initialized yet
+Date: Mon,  6 Jan 2025 16:15:51 +0100
+Message-ID: <20250106151140.091042768@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,51 +51,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 5d9ad4e0fa7cc27199fdb94beb6ec5f655ba9489 ]
+commit 07a756a49f4b4290b49ea46e089cbe6f79ff8d26 upstream.
 
-The driver uses math.h and not util_macros.h.
+If the KVP (or VSS) daemon starts before the VMBus channel's ringbuffer is
+fully initialized, we can hit the panic below:
 
-All the same for the kernel.h, replace it with what the driver is using.
+hv_utils: Registering HyperV Utility Driver
+hv_vmbus: registering driver hv_utils
+...
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+CPU: 44 UID: 0 PID: 2552 Comm: hv_kvp_daemon Tainted: G E 6.11.0-rc3+ #1
+RIP: 0010:hv_pkt_iter_first+0x12/0xd0
+Call Trace:
+...
+ vmbus_recvpacket
+ hv_kvp_onchannelcallback
+ vmbus_on_event
+ tasklet_action_common
+ tasklet_action
+ handle_softirqs
+ irq_exit_rcu
+ sysvec_hyperv_stimer0
+ </IRQ>
+ <TASK>
+ asm_sysvec_hyperv_stimer0
+...
+ kvp_register_done
+ hvt_op_read
+ vfs_read
+ ksys_read
+ __x64_sys_read
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231128180654.395692-2-andriy.shevchenko@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 74d7e038fd07 ("hwmon: (tmp513) Fix interpretation of values of Shunt Voltage and Limit Registers")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This can happen because the KVP/VSS channel callback can be invoked
+even before the channel is fully opened:
+1) as soon as hv_kvp_init() -> hvutil_transport_init() creates
+/dev/vmbus/hv_kvp, the kvp daemon can open the device file immediately and
+register itself to the driver by writing a message KVP_OP_REGISTER1 to the
+file (which is handled by kvp_on_msg() ->kvp_handle_handshake()) and
+reading the file for the driver's response, which is handled by
+hvt_op_read(), which calls hvt->on_read(), i.e. kvp_register_done().
+
+2) the problem with kvp_register_done() is that it can cause the
+channel callback to be called even before the channel is fully opened,
+and when the channel callback is starting to run, util_probe()->
+vmbus_open() may have not initialized the ringbuffer yet, so the
+callback can hit the panic of NULL pointer dereference.
+
+To reproduce the panic consistently, we can add a "ssleep(10)" for KVP in
+__vmbus_open(), just before the first hv_ringbuffer_init(), and then we
+unload and reload the driver hv_utils, and run the daemon manually within
+the 10 seconds.
+
+Fix the panic by reordering the steps in util_probe() so the char dev
+entry used by the KVP or VSS daemon is not created until after
+vmbus_open() has completed. This reordering prevents the race condition
+from happening.
+
+Reported-by: Dexuan Cui <decui@microsoft.com>
+Fixes: e0fa3e5e7df6 ("Drivers: hv: utils: fix a race on userspace daemons registration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Acked-by: Wei Liu <wei.liu@kernel.org>
+Link: https://lore.kernel.org/r/20241106154247.2271-3-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20241106154247.2271-3-mhklinux@outlook.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/tmp513.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/hv/hv_kvp.c       |    6 ++++++
+ drivers/hv/hv_snapshot.c  |    6 ++++++
+ drivers/hv/hv_util.c      |    9 +++++++++
+ drivers/hv/hyperv_vmbus.h |    2 ++
+ include/linux/hyperv.h    |    1 +
+ 5 files changed, 24 insertions(+)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index b9a93ee9c236..fe3f1113b64e 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -19,15 +19,19 @@
-  * the Free Software Foundation; version 2 of the License.
-  */
+--- a/drivers/hv/hv_kvp.c
++++ b/drivers/hv/hv_kvp.c
+@@ -767,6 +767,12 @@ hv_kvp_init(struct hv_util_service *srv)
+ 	 */
+ 	kvp_transaction.state = HVUTIL_DEVICE_INIT;
  
-+#include <linux/bitops.h>
-+#include <linux/bug.h>
-+#include <linux/device.h>
- #include <linux/err.h>
- #include <linux/hwmon.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
--#include <linux/kernel.h>
-+#include <linux/math.h>
- #include <linux/module.h>
-+#include <linux/property.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
--#include <linux/util_macros.h>
-+#include <linux/types.h>
++	return 0;
++}
++
++int
++hv_kvp_init_transport(void)
++{
+ 	hvt = hvutil_transport_init(kvp_devname, CN_KVP_IDX, CN_KVP_VAL,
+ 				    kvp_on_msg, kvp_on_reset);
+ 	if (!hvt)
+--- a/drivers/hv/hv_snapshot.c
++++ b/drivers/hv/hv_snapshot.c
+@@ -385,6 +385,12 @@ hv_vss_init(struct hv_util_service *srv)
+ 	 */
+ 	vss_transaction.state = HVUTIL_DEVICE_INIT;
  
- // Common register definition
- #define TMP51X_SHUNT_CONFIG		0x00
--- 
-2.39.5
-
++	return 0;
++}
++
++int
++hv_vss_init_transport(void)
++{
+ 	hvt = hvutil_transport_init(vss_devname, CN_VSS_IDX, CN_VSS_VAL,
+ 				    vss_on_msg, vss_on_reset);
+ 	if (!hvt) {
+--- a/drivers/hv/hv_util.c
++++ b/drivers/hv/hv_util.c
+@@ -141,6 +141,7 @@ static struct hv_util_service util_heart
+ static struct hv_util_service util_kvp = {
+ 	.util_cb = hv_kvp_onchannelcallback,
+ 	.util_init = hv_kvp_init,
++	.util_init_transport = hv_kvp_init_transport,
+ 	.util_pre_suspend = hv_kvp_pre_suspend,
+ 	.util_pre_resume = hv_kvp_pre_resume,
+ 	.util_deinit = hv_kvp_deinit,
+@@ -149,6 +150,7 @@ static struct hv_util_service util_kvp =
+ static struct hv_util_service util_vss = {
+ 	.util_cb = hv_vss_onchannelcallback,
+ 	.util_init = hv_vss_init,
++	.util_init_transport = hv_vss_init_transport,
+ 	.util_pre_suspend = hv_vss_pre_suspend,
+ 	.util_pre_resume = hv_vss_pre_resume,
+ 	.util_deinit = hv_vss_deinit,
+@@ -592,6 +594,13 @@ static int util_probe(struct hv_device *
+ 	if (ret)
+ 		goto error;
+ 
++	if (srv->util_init_transport) {
++		ret = srv->util_init_transport();
++		if (ret) {
++			vmbus_close(dev->channel);
++			goto error;
++		}
++	}
+ 	return 0;
+ 
+ error:
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -356,12 +356,14 @@ void vmbus_on_event(unsigned long data);
+ void vmbus_on_msg_dpc(unsigned long data);
+ 
+ int hv_kvp_init(struct hv_util_service *srv);
++int hv_kvp_init_transport(void);
+ void hv_kvp_deinit(void);
+ int hv_kvp_pre_suspend(void);
+ int hv_kvp_pre_resume(void);
+ void hv_kvp_onchannelcallback(void *context);
+ 
+ int hv_vss_init(struct hv_util_service *srv);
++int hv_vss_init_transport(void);
+ void hv_vss_deinit(void);
+ int hv_vss_pre_suspend(void);
+ int hv_vss_pre_resume(void);
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -1526,6 +1526,7 @@ struct hv_util_service {
+ 	void *channel;
+ 	void (*util_cb)(void *);
+ 	int (*util_init)(struct hv_util_service *);
++	int (*util_init_transport)(void);
+ 	void (*util_deinit)(void);
+ 	int (*util_pre_suspend)(void);
+ 	int (*util_pre_resume)(void);
 
 
