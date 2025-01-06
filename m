@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D9F282F5;
-	Mon,  6 Jan 2025 15:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D97DBA34;
+	Mon,  6 Jan 2025 15:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179128; cv=none; b=DDdQKgZe7IW5mxoP/FTr/i4ZL2UCtMYgst1d3xcWaryyt+9LpAsHm6L7jWsldlVoqGMX2MT+oMhntEn7GinQutaGc7Kf/EwLM2y+r/BHABSOsSpIg5jaJRSzHzbQWKkgu3kmbKkgGGIurxcyzuxr136P6CQ40Kvj3JiFc4VdfEE=
+	t=1736179131; cv=none; b=fdhpfGsW+UadQ5OlLjKZRjfTpv6F/Fw1TVlp079KeuBJ1L5ufI9/oeDyTvrEDyguqcCRx8A0zQCz5XxTDLZ2CLtstLnLdzNuZHUqZ8qa+3ty1OM5wTUirrmNPYPxmNLWa5g7q4wnnnJrESZPnDC/U6CavvvzP+WOvhKKp5v0Qc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179128; c=relaxed/simple;
-	bh=Xd1jWLXuuBhq3N1d+m91S8F3dTdckB2HQMV54yUw/B0=;
+	s=arc-20240116; t=1736179131; c=relaxed/simple;
+	bh=/U8NJTAwZQMZmxUU97oEYdbfOvsh+km0LtNaMolrYWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CN6My+C0fR2vAx4zOEWjNQdappI86Z3czouOvohLX2gsSWm5RWUWeyj3z4PMCmKxY5FqPtSykqhGBIx+3oC8/cUMWCa/abiOJJRqewhwXRblraQ9FUdAWfSIEupxqsIenvmV4og+PrNTlpPWweLTch0o8O0EzL23+vvf4u2aPQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crrvzxfr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a1VV4bABhyvAre1oz3SXEBOyoLSKJrn2Vfxp4TrIITNHspnHpC73sBVhc1VZHXGV7SMRAFyI2YD1GHNOEX7w1QtRSRZSJp6LY6MwHkl9GUMi7/ZUpuQzUp9jiJGQQ0qaFkDJOdmaL7LKJ2EWVpG+D367xUeXH7OdrIuaNe2joLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxMc6QdB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crrvzxfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84976C4CED6;
-	Mon,  6 Jan 2025 15:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxMc6QdB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D294C4CEEB;
+	Mon,  6 Jan 2025 15:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179127;
-	bh=Xd1jWLXuuBhq3N1d+m91S8F3dTdckB2HQMV54yUw/B0=;
+	s=korg; t=1736179130;
+	bh=/U8NJTAwZQMZmxUU97oEYdbfOvsh+km0LtNaMolrYWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crrvzxfrEmH75sxPJrgcFySlvJeocVP0PbZIymBzwZY4Z+qjPm7MhXNp3VoxWHYC/
-	 Gu5pNTjVzgphWr3dyl1+AA1loyI/2rZ8oDO3t9Z52PNTbb9WRT6WJUbQWzsNaAs02S
-	 czH9ZA8kp8UaPTfI0Emgo8FWOT7gRGTItx4NPYhg=
+	b=CxMc6QdBLNX+UnMAe6saIZyMS/O0/RgshwStfq7RxqSZ4hvWVyfUV8w5ZDZ9lLXX5
+	 PT5+Jc1pHmERp1+HZ9iT66UwfzGB7D7H+vIv9HA6EIqwCrFc6I8MwET0DizfHVrMsF
+	 ijHuxi4Ve0OYcKtLlZmetJAoE9yr/nDAPpV9bIaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 35/93] nfsd: restore callback functionality for NFSv4.0
-Date: Mon,  6 Jan 2025 16:17:11 +0100
-Message-ID: <20250106151130.028513493@linuxfoundation.org>
+	Zichen Xie <zichenxie0106@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.4 36/93] mtd: diskonchip: Cast an operand to prevent potential overflow
+Date: Mon,  6 Jan 2025 16:17:12 +0100
+Message-ID: <20250106151130.064855333@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,51 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Zichen Xie <zichenxie0106@gmail.com>
 
-[ Upstream commit 7917f01a286ce01e9c085e24468421f596ee1a0c ]
+commit 9b458e8be0d13e81ed03fffa23f8f9b528bbd786 upstream.
 
-A recent patch inadvertently broke callbacks for NFSv4.0.
+There may be a potential integer overflow issue in inftl_partscan().
+parts[0].size is defined as "uint64_t"  while mtd->erasesize and
+ip->firstUnit are defined as 32-bit unsigned integer. The result of
+the calculation will be limited to 32 bits without correct casting.
 
-In the 4.0 case we do not expect a session to be found but still need to
-call setup_callback_client() which will not try to dereference it.
-
-This patch moves the check for failure to find a session into the 4.1+
-branch of setup_callback_client()
-
-Fixes: 1e02c641c3a4 ("NFSD: Prevent NULL dereference in nfsd4_process_cb_update()")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4callback.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/mtd/nand/raw/diskonchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 55128de1a89d..d490f28aa7f6 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -878,7 +878,7 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
- 		args.authflavor = clp->cl_cred.cr_flavor;
- 		clp->cl_cb_ident = conn->cb_ident;
- 	} else {
--		if (!conn->cb_xprt)
-+		if (!conn->cb_xprt || !ses)
- 			return -EINVAL;
- 		clp->cl_cb_session = ses;
- 		args.bc_xprt = conn->cb_xprt;
-@@ -1229,8 +1229,6 @@ static void nfsd4_process_cb_update(struct nfsd4_callback *cb)
- 		ses = c->cn_session;
- 	}
- 	spin_unlock(&clp->cl_lock);
--	if (!c)
--		return;
+--- a/drivers/mtd/nand/raw/diskonchip.c
++++ b/drivers/mtd/nand/raw/diskonchip.c
+@@ -1221,7 +1221,7 @@ static inline int __init inftl_partscan(
+ 		    (i == 0) && (ip->firstUnit > 0)) {
+ 			parts[0].name = " DiskOnChip IPL / Media Header partition";
+ 			parts[0].offset = 0;
+-			parts[0].size = mtd->erasesize * ip->firstUnit;
++			parts[0].size = (uint64_t)mtd->erasesize * ip->firstUnit;
+ 			numparts = 1;
+ 		}
  
- 	err = setup_callback_client(clp, &conn, ses);
- 	if (err) {
--- 
-2.39.5
-
 
 
