@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA652AF06;
-	Mon,  6 Jan 2025 15:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C03914A098;
+	Mon,  6 Jan 2025 15:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178747; cv=none; b=d6LAP0z2F6PO3K3vdvHddgM8N+IL+TDpfk4UvtdlWWsrxxRcpfSdDExlRaPHmFIqW42kTb12rY6Dv1EgWcbZP1ynHg9sBIs2YuMN7g4sHkLGirne5veuS9R2xv/fpz6+8Tt5uraDwIdAfpM0qBTPqLi9QpwbAPYBUh9nqSOUFj8=
+	t=1736178750; cv=none; b=OAxocI01+MAme45LYJmU40BhpDYeP4hrY6cn5JXegqo5fDd162Kcci6jJfO0oeaIMYInSb51uWk7ijHlBnnQkgu68mnMOrHp/IxN6yS/ykreNQQASjFMDFIOhcCN06K5zmAeUoArlw3/lYqO5GgyjtLsTggYDUqrsVpTCkzd5oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178747; c=relaxed/simple;
-	bh=7mfIxkNqBAz9J8Kv1zWlKeeFsNKLen7CCi+enO33U78=;
+	s=arc-20240116; t=1736178750; c=relaxed/simple;
+	bh=SE8L8v6lbyVQyRJW+E8UwvDUJoZliry8OSQ/R904uaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIGeTEdEVE/XKqOytoRhL1T3bTT+M1sJn2sWg8YfNeiwkTjMLQuEVxb4EVKi4iLYQovgQjuktrgVO22fTsHQADWnoDB7KEqze+ZC1M7mc/s6YVEioTzBrIgO7KJKSTMSJ8vN8sbnGWtWHlgR7ldMq8i/2losvDz1np54hQ2L0hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/O6CDYQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P547NigZv5Rm3UTRPkTpyEyyj6tgP5WuHfQSoH00KqXtzIWcMB00AZ6UGGGQ8rxEyMKFmy0Vrt4sljTd4cf1DTGSgB9XoSv6zeOKAZ8qIp8j4t23vDgWyvmwQrDKCWRgnpuqnrCuvlHqbgnm6KKUlAeE1jgjt7IAdw2ffb3tBt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0At68a5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/O6CDYQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96986C4CED2;
-	Mon,  6 Jan 2025 15:52:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0At68a5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89425C4CED2;
+	Mon,  6 Jan 2025 15:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178747;
-	bh=7mfIxkNqBAz9J8Kv1zWlKeeFsNKLen7CCi+enO33U78=;
+	s=korg; t=1736178749;
+	bh=SE8L8v6lbyVQyRJW+E8UwvDUJoZliry8OSQ/R904uaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/O6CDYQC6bWC6RVJReRuoPaTVTyu+5LcNRNCH2nBabrJJkriUmCMdDq9GHIYTv1K
-	 xokf15FaBZD/XnKQIa02Cc47CeuMuH0Vx+ZxBYXsDt4qonwz6JyuezdfxYVWRXh825
-	 +DgZ6xEXu9zo03kj3+5YiX1P//x+HQC9I9B3kgQE=
+	b=x0At68a5Txx7W0eDdfcFJ+rq1U2xsqtBfYsk8JS0/HfMfVZDgEMFNHNpvvNfjrgcT
+	 gaZXjSQeBtbzVn2yxXU+dwW9za645H73jCi3iqHpdDjfYmgqo1dEz5Yt/3W/fF7aLL
+	 qYxC869UPpuOn5/RyCj2oKqoAQta+DPWmbK20Gec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bo liu <bo.liu@senarytech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/168] ALSA: hda/conexant: fix Z60MR100 startup pop issue
-Date: Mon,  6 Jan 2025 16:16:27 +0100
-Message-ID: <20250106151141.449193873@linuxfoundation.org>
+Subject: [PATCH 5.15 080/168] regmap: Use correct format specifier for logging range errors
+Date: Mon,  6 Jan 2025 16:16:28 +0100
+Message-ID: <20250106151141.486861096@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,98 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bo liu <bo.liu@senarytech.com>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 947c4012f8f03a8bb946beb6e5294d5e32817d67 ]
+[ Upstream commit 3f1aa0c533d9dd8a835caf9a6824449c463ee7e2 ]
 
-When Z60MR100 startup, speaker will output a pop. To fix this issue,
-we mute codec by init verbs in bios when system startup, and set GPIO
-to low to unmute codec in codec driver when it loaded .
+The register addresses are unsigned ints so we should use %u not %d to
+log them.
 
-[ white space fixes and compile warning fix by tiwai ]
-
-Signed-off-by: bo liu <bo.liu@senarytech.com>
-Link: https://patch.msgid.link/20241129014441.437205-1-bo.liu@senarytech.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20241127-regmap-test-high-addr-v1-1-74a48a9e0dc5@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/base/regmap/regmap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index 8bc0dce59263..520144df0174 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -311,6 +311,7 @@ enum {
- 	CXT_FIXUP_HP_MIC_NO_PRESENCE,
- 	CXT_PINCFG_SWS_JS201D,
- 	CXT_PINCFG_TOP_SPEAKER,
-+	CXT_FIXUP_HP_A_U,
- };
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index faa4f7ad45a7..00437ed9d5e0 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -1153,13 +1153,13 @@ struct regmap *__regmap_init(struct device *dev,
  
- /* for hda_fixup_thinkpad_acpi() */
-@@ -778,6 +779,18 @@ static void cxt_setup_mute_led(struct hda_codec *codec,
- 	}
- }
+ 		/* Sanity check */
+ 		if (range_cfg->range_max < range_cfg->range_min) {
+-			dev_err(map->dev, "Invalid range %d: %d < %d\n", i,
++			dev_err(map->dev, "Invalid range %d: %u < %u\n", i,
+ 				range_cfg->range_max, range_cfg->range_min);
+ 			goto err_range;
+ 		}
  
-+static void cxt_setup_gpio_unmute(struct hda_codec *codec,
-+				  unsigned int gpio_mute_mask)
-+{
-+	if (gpio_mute_mask) {
-+		// set gpio data to 0.
-+		snd_hda_codec_write(codec, 0x01, 0, AC_VERB_SET_GPIO_DATA, 0);
-+		snd_hda_codec_write(codec, 0x01, 0, AC_VERB_SET_GPIO_MASK, gpio_mute_mask);
-+		snd_hda_codec_write(codec, 0x01, 0, AC_VERB_SET_GPIO_DIRECTION, gpio_mute_mask);
-+		snd_hda_codec_write(codec, 0x01, 0, AC_VERB_SET_GPIO_STICKY_MASK, 0);
-+	}
-+}
-+
- static void cxt_fixup_mute_led_gpio(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
- {
-@@ -792,6 +805,15 @@ static void cxt_fixup_hp_zbook_mute_led(struct hda_codec *codec,
- 		cxt_setup_mute_led(codec, 0x10, 0x20);
- }
- 
-+static void cxt_fixup_hp_a_u(struct hda_codec *codec,
-+			     const struct hda_fixup *fix, int action)
-+{
-+	// Init vers in BIOS mute the spk/hp by set gpio high to avoid pop noise,
-+	// so need to unmute once by clearing the gpio data when runs into the system.
-+	if (action == HDA_FIXUP_ACT_INIT)
-+		cxt_setup_gpio_unmute(codec, 0x2);
-+}
-+
- /* ThinkPad X200 & co with cxt5051 */
- static const struct hda_pintbl cxt_pincfg_lenovo_x200[] = {
- 	{ 0x16, 0x042140ff }, /* HP (seq# overridden) */
-@@ -1016,6 +1038,10 @@ static const struct hda_fixup cxt_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = cxt_fixup_sirius_top_speaker,
- 	},
-+	[CXT_FIXUP_HP_A_U] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = cxt_fixup_hp_a_u,
-+	},
- };
- 
- static const struct snd_pci_quirk cxt5045_fixups[] = {
-@@ -1090,6 +1116,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8457, "HP Z2 G4 mini", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x8458, "HP Z2 G4 mini premium", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x138d, "Asus", CXT_FIXUP_HEADPHONE_MIC_PIN),
-+	SND_PCI_QUIRK(0x14f1, 0x0252, "MBX-Z60MR100", CXT_FIXUP_HP_A_U),
- 	SND_PCI_QUIRK(0x14f1, 0x0265, "SWS JS201D", CXT_PINCFG_SWS_JS201D),
- 	SND_PCI_QUIRK(0x152d, 0x0833, "OLPC XO-1.5", CXT_FIXUP_OLPC_XO),
- 	SND_PCI_QUIRK(0x17aa, 0x20f2, "Lenovo T400", CXT_PINCFG_LENOVO_TP410),
-@@ -1135,6 +1162,7 @@ static const struct hda_model_fixup cxt5066_fixup_models[] = {
- 	{ .id = CXT_PINCFG_LENOVO_NOTEBOOK, .name = "lenovo-20149" },
- 	{ .id = CXT_PINCFG_SWS_JS201D, .name = "sws-js201d" },
- 	{ .id = CXT_PINCFG_TOP_SPEAKER, .name = "sirius-top-speaker" },
-+	{ .id = CXT_FIXUP_HP_A_U, .name = "HP-U-support" },
- 	{}
- };
- 
+ 		if (range_cfg->range_max > map->max_register) {
+-			dev_err(map->dev, "Invalid range %d: %d > %d\n", i,
++			dev_err(map->dev, "Invalid range %d: %u > %u\n", i,
+ 				range_cfg->range_max, map->max_register);
+ 			goto err_range;
+ 		}
 -- 
 2.39.5
 
