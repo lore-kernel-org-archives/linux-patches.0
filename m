@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577B9BA34;
-	Mon,  6 Jan 2025 15:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A220FBA34;
+	Mon,  6 Jan 2025 15:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179069; cv=none; b=fr6bAxTG3O3M+K2EkdztWei1NSMQUxKg4GAQKDoJdJY7yA48sAQ/8wmB1PKgiBSDHX1xSQtCn5v9q4dHERu8EJvSC3vbt7oTKFcmZRdY+Qq2nll21yHItU9sKjgrdUJ68u2JE1RwoOed7xkdo/vimDHwTKqFb/GGKnKIIbxLukQ=
+	t=1736179072; cv=none; b=r80E6Mx45xTALapSQ1x0duJPf4I4AK2yrEJHw72r/CM88LS61606DLHySS6rcDas8Z+hg8AA+tYd8kNnSoiuuDhmh42Ht7gKm+7y+dQDO3Zygm9lPeKt879Df39CSQk3hQxCvKx/hnMxm86qiIsK8hFx4nwC2iSYADBcNnKGQRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179069; c=relaxed/simple;
-	bh=EVuctLCK9ZVq5IQQpbZxBBN73V6ePcmp32+nLslKnA4=;
+	s=arc-20240116; t=1736179072; c=relaxed/simple;
+	bh=lQg0ozWEqk820Qo5qcY1S8BUMMy0yUYq9C3WaSXtHzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhuThNLYqVFxGTBMJUqWE7NL2qaRa7/ey9z57s8oCmbCHPt9C1iCgTmVVDtpWq5WTOfXsE31L5HbJLmpF93v05fB+3T0Q7bgG5equMfxEcdHACxR90zFZQak8XM+Z0D4F3nNNpdpE13VIkeKY/nRPmOPaFa0jIhTspS73x1vXgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLDjYJBi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vrk9kgtR9BVgUoIXk/KBLJUPJQzoV+786Rb1GIhbdTB+AD2dcvK2p6FgJIBBem8X8Pr8owKQJLbmpdPtatNtbvDooYK8e53ifPz+eFCrrCXEocc9iEL3iX9fZjo8teX/iHxbN7zG4yr2/h2pnG0uQZqGtuOGGOcJayWZn2F8M1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFMS9D36; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLDjYJBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D194AC4CED2;
-	Mon,  6 Jan 2025 15:57:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFMS9D36"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1021C4CED2;
+	Mon,  6 Jan 2025 15:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179069;
-	bh=EVuctLCK9ZVq5IQQpbZxBBN73V6ePcmp32+nLslKnA4=;
+	s=korg; t=1736179072;
+	bh=lQg0ozWEqk820Qo5qcY1S8BUMMy0yUYq9C3WaSXtHzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wLDjYJBiBglcFrxTG+LG0czkXGWpsHjareZxWMfZJKd4EPI085Tl65bp7lOaVDJRg
-	 ol20GIPNk4PnoOyPsgjeOwYlNtzPvL4Hd+07e5K+dzfaqRtAOGzwXv9x8fgFG5Ueuq
-	 j1CYxtkOx2ID4Zvdq8/Ihf4zLGoL0EKQijLfSVso=
+	b=OFMS9D36p9/ABFc2rXXsaLjcpg4lQILCcdIGyfP5cDQ+hQyY5gmsdNxmpzH3YdEWH
+	 jy7QBkBEJlzOgYw+z/q982ketA0O41+35ApMiCa9ECbIv96c7Fi+eJQklmuIsYfola
+	 cCoON493jZRdvptyrq5tVjzDUKxk5cJqPVJ5B/rw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@outlook.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/93] i2c: pnx: Fix timeout in wait functions
-Date: Mon,  6 Jan 2025 16:16:42 +0100
-Message-ID: <20250106151128.935219293@linuxfoundation.org>
+Subject: [PATCH 5.4 07/93] drm/i915: Fix memory leak by correcting cache object name in error handler
+Date: Mon,  6 Jan 2025 16:16:43 +0100
+Message-ID: <20250106151128.973196173@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -51,46 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 7363f2d4c18557c99c536b70489187bb4e05c412 ]
+[ Upstream commit 9bc5e7dc694d3112bbf0fa4c46ef0fa0f114937a ]
 
-Since commit f63b94be6942 ("i2c: pnx: Fix potential deadlock warning
-from del_timer_sync() call in isr") jiffies are stored in
-i2c_pnx_algo_data.timeout, but wait_timeout and wait_reset are still
-using it as milliseconds. Convert jiffies back to milliseconds to wait
-for the expected amount of time.
+Replace "slab_priorities" with "slab_dependencies" in the error handler
+to avoid memory leak.
 
-Fixes: f63b94be6942 ("i2c: pnx: Fix potential deadlock warning from del_timer_sync() call in isr")
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Fixes: 32eb6bcfdda9 ("drm/i915: Make request allocation caches global")
+Cc: <stable@vger.kernel.org> # v5.2+
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@outlook.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241127201042.29620-1-jiashengjiangcool@gmail.com
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-pnx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_scheduler.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-pnx.c b/drivers/i2c/busses/i2c-pnx.c
-index 4d09665a72e5..6ba534c983de 100644
---- a/drivers/i2c/busses/i2c-pnx.c
-+++ b/drivers/i2c/busses/i2c-pnx.c
-@@ -95,7 +95,7 @@ enum {
+diff --git a/drivers/gpu/drm/i915/i915_scheduler.c b/drivers/gpu/drm/i915/i915_scheduler.c
+index 0ef205fe5e29..7ef068dcc48b 100644
+--- a/drivers/gpu/drm/i915/i915_scheduler.c
++++ b/drivers/gpu/drm/i915/i915_scheduler.c
+@@ -533,6 +533,6 @@ int __init i915_global_scheduler_init(void)
+ 	return 0;
  
- static inline int wait_timeout(struct i2c_pnx_algo_data *data)
- {
--	long timeout = data->timeout;
-+	long timeout = jiffies_to_msecs(data->timeout);
- 	while (timeout > 0 &&
- 			(ioread32(I2C_REG_STS(data)) & mstatus_active)) {
- 		mdelay(1);
-@@ -106,7 +106,7 @@ static inline int wait_timeout(struct i2c_pnx_algo_data *data)
- 
- static inline int wait_reset(struct i2c_pnx_algo_data *data)
- {
--	long timeout = data->timeout;
-+	long timeout = jiffies_to_msecs(data->timeout);
- 	while (timeout > 0 &&
- 			(ioread32(I2C_REG_CTL(data)) & mcntrl_reset)) {
- 		mdelay(1);
+ err_priorities:
+-	kmem_cache_destroy(global.slab_priorities);
++	kmem_cache_destroy(global.slab_dependencies);
+ 	return -ENOMEM;
+ }
 -- 
 2.39.5
 
