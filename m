@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45ED9DF71;
-	Mon,  6 Jan 2025 15:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7333214F12D;
+	Mon,  6 Jan 2025 15:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177906; cv=none; b=UHvz1bmg2i52woQ31KNBIxjS29lTbYUaxuBfIa0Rx+wEyTa3Bcux4iCeycdD91kpUh3cDo+Wmpa0TNI03D8ZwIl/f1oYuwvqpcT8sxI5OL7R2VO6vxGak7fbbHs+IE0tBMIlZsPOfSddwJh0Kkf5GIDPphWwHQSsVaViQMkzAYo=
+	t=1736177909; cv=none; b=ZUetCjsSWDqwHZJIPeNB02MpTdOtikhRRb/BkaHG8TzuQi8KAidX6G6DE6CP56NG4Y00c7pVaIIRSTA4U5bP3t9Q+e3xZAYT+C9YDidjttD7l91Q81Gl9vCxXi9FQl6knBcdL47F1Y5UB4Tk6PXp2VUKafnyAgio90OqBChJzHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177906; c=relaxed/simple;
-	bh=LTj8nTSQ3QHfN3aQyDwgwCQ+5AquuJvTBGjox1KkLOo=;
+	s=arc-20240116; t=1736177909; c=relaxed/simple;
+	bh=lR48r2y0RoPmQ8arpCzlHZv0IT0gXzKTiQAYULl3vho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eVABM4UE/HHBVF8hnqq/7VoPYKIjd/Mbij/Tq/QCX4QVG7YUu4fnZvJ8gPWHEtMQsmRNhyfDJ27ifZEW0qkRdGSspp6t7bJ/BZfTesWSxoOvKKpGLBnTr0vMKNbqpOG99bPw3rehfTlKttq37+BygcxOVXvhEp9SM7MWUMbjJp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMF4PU9K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jE1KpNyapwhu2kb2ZWscaSDcAOeEwesUVdc9dSSEQNsTldWLsdFziiBseS3blDKScOaIaeYgOvxI56B8rvaHmO7cnH8XmfvYTW9KWj0D9UjqWzcGh0ndlMZJskM7cY/23CDcejRyoq+ErbWDDqgcxH83XJCLkfJUGrp8eH0Na6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdqo3FhG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMF4PU9K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9B8C4CED2;
-	Mon,  6 Jan 2025 15:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdqo3FhG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63A4C4CEDF;
+	Mon,  6 Jan 2025 15:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177906;
-	bh=LTj8nTSQ3QHfN3aQyDwgwCQ+5AquuJvTBGjox1KkLOo=;
+	s=korg; t=1736177909;
+	bh=lR48r2y0RoPmQ8arpCzlHZv0IT0gXzKTiQAYULl3vho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMF4PU9KW3j97tAIrchdJ3cq0dBgC3EjM2K4Sss+h9Vl6AedMWfLgnftT6r/f5au8
-	 V3woi5xVjnJMgQrCydqJJ2/dU8ZH9snV/gyHSbZfzwNrqvd10ceVEXGEuEsqxBcRR7
-	 QPUS15CmNrnj/tonj32K4Qq1xoRGK0+9HsbB1lm4=
+	b=pdqo3FhGiGovhcgDa1lCbHh3n44lqO6FxGswTkugV1zSH1meJNJWCiOg6Peu5ZJQg
+	 5JD+AJKIuklE5L526Xo+gb26c+EVi/pRbNEG6BZaEjB+0SjMQVJ32P91nLpX5gnjxk
+	 vo+a3PEp2LUexYnNVVidVFAclcNOtaJBp72SCXrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hobin Woo <hobin.woo@samsung.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
+	David Disseldorp <ddiss@suse.de>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Yoonho Shin <yoonho.shin@samsung.com>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/156] ksmbd: retry iterate_dir in smb2_query_dir
-Date: Mon,  6 Jan 2025 16:16:23 +0100
-Message-ID: <20250106151145.380808157@linuxfoundation.org>
+Subject: [PATCH 6.12 098/156] ksmbd: set ATTR_CTIME flags when setting mtime
+Date: Mon,  6 Jan 2025 16:16:24 +0100
+Message-ID: <20250106151145.417260128@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -54,73 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hobin Woo <hobin.woo@samsung.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 2b904d61a97e8ba79e3bc216ba290fd7e1d85028 ]
+[ Upstream commit 21e46a79bbe6c4e1aa73b3ed998130f2ff07b128 ]
 
-Some file systems do not ensure that the single call of iterate_dir
-reaches the end of the directory. For example, FUSE fetches entries from
-a daemon using 4KB buffer and stops fetching if entries exceed the
-buffer. And then an actor of caller, KSMBD, is used to fill the entries
-from the buffer.
-Thus, pattern searching on FUSE, files located after the 4KB could not
-be found and STATUS_NO_SUCH_FILE was returned.
+David reported that the new warning from setattr_copy_mgtime is coming
+like the following.
 
-Signed-off-by: Hobin Woo <hobin.woo@samsung.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Tested-by: Yoonho Shin <yoonho.shin@samsung.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+[  113.215316] ------------[ cut here ]------------
+[  113.215974] WARNING: CPU: 1 PID: 31 at fs/attr.c:300 setattr_copy+0x1ee/0x200
+[  113.219192] CPU: 1 UID: 0 PID: 31 Comm: kworker/1:1 Not tainted 6.13.0-rc1+ #234
+[  113.220127] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
+[  113.221530] Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
+[  113.222220] RIP: 0010:setattr_copy+0x1ee/0x200
+[  113.222833] Code: 24 28 49 8b 44 24 30 48 89 53 58 89 43 6c 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 48 89 df e8 77 d6 ff ff e9 cd fe ff ff <0f> 0b e9 be fe ff ff 66 0
+[  113.225110] RSP: 0018:ffffaf218010fb68 EFLAGS: 00010202
+[  113.225765] RAX: 0000000000000120 RBX: ffffa446815f8568 RCX: 0000000000000003
+[  113.226667] RDX: ffffaf218010fd38 RSI: ffffa446815f8568 RDI: ffffffff94eb03a0
+[  113.227531] RBP: ffffaf218010fb90 R08: 0000001a251e217d R09: 00000000675259fa
+[  113.228426] R10: 0000000002ba8a6d R11: ffffa4468196c7a8 R12: ffffaf218010fd38
+[  113.229304] R13: 0000000000000120 R14: ffffffff94eb03a0 R15: 0000000000000000
+[  113.230210] FS:  0000000000000000(0000) GS:ffffa44739d00000(0000) knlGS:0000000000000000
+[  113.231215] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  113.232055] CR2: 00007efe0053d27e CR3: 000000000331a000 CR4: 00000000000006b0
+[  113.232926] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[  113.233812] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[  113.234797] Call Trace:
+[  113.235116]  <TASK>
+[  113.235393]  ? __warn+0x73/0xd0
+[  113.235802]  ? setattr_copy+0x1ee/0x200
+[  113.236299]  ? report_bug+0xf3/0x1e0
+[  113.236757]  ? handle_bug+0x4d/0x90
+[  113.237202]  ? exc_invalid_op+0x13/0x60
+[  113.237689]  ? asm_exc_invalid_op+0x16/0x20
+[  113.238185]  ? setattr_copy+0x1ee/0x200
+[  113.238692]  btrfs_setattr+0x80/0x820 [btrfs]
+[  113.239285]  ? get_stack_info_noinstr+0x12/0xf0
+[  113.239857]  ? __module_address+0x22/0xa0
+[  113.240368]  ? handle_ksmbd_work+0x6e/0x460 [ksmbd]
+[  113.240993]  ? __module_text_address+0x9/0x50
+[  113.241545]  ? __module_address+0x22/0xa0
+[  113.242033]  ? unwind_next_frame+0x10e/0x920
+[  113.242600]  ? __pfx_stack_trace_consume_entry+0x10/0x10
+[  113.243268]  notify_change+0x2c2/0x4e0
+[  113.243746]  ? stack_depot_save_flags+0x27/0x730
+[  113.244339]  ? set_file_basic_info+0x130/0x2b0 [ksmbd]
+[  113.244993]  set_file_basic_info+0x130/0x2b0 [ksmbd]
+[  113.245613]  ? process_scheduled_works+0xbe/0x310
+[  113.246181]  ? worker_thread+0x100/0x240
+[  113.246696]  ? kthread+0xc8/0x100
+[  113.247126]  ? ret_from_fork+0x2b/0x40
+[  113.247606]  ? ret_from_fork_asm+0x1a/0x30
+[  113.248132]  smb2_set_info+0x63f/0xa70 [ksmbd]
+
+ksmbd is trying to set the atime and mtime via notify_change without also
+setting the ctime. so This patch add ATTR_CTIME flags when setting mtime
+to avoid a warning.
+
+Reported-by: David Disseldorp <ddiss@suse.de>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 12 +++++++++++-
- fs/smb/server/vfs.h     |  1 +
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 7d01dd313351..aef5a1b7c490 100644
+index aef5a1b7c490..04ffc5b158c3 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -4224,6 +4224,7 @@ static bool __query_dir(struct dir_context *ctx, const char *name, int namlen,
- 	/* dot and dotdot entries are already reserved */
- 	if (!strcmp(".", name) || !strcmp("..", name))
- 		return true;
-+	d_info->num_scan++;
- 	if (ksmbd_share_veto_filename(priv->work->tcon->share_conf, name))
- 		return true;
- 	if (!match_pattern(name, namlen, priv->search_pattern))
-@@ -4384,8 +4385,17 @@ int smb2_query_dir(struct ksmbd_work *work)
- 	query_dir_private.info_level		= req->FileInformationClass;
- 	dir_fp->readdir_data.private		= &query_dir_private;
- 	set_ctx_actor(&dir_fp->readdir_data.ctx, __query_dir);
--
-+again:
-+	d_info.num_scan = 0;
- 	rc = iterate_dir(dir_fp->filp, &dir_fp->readdir_data.ctx);
-+	/*
-+	 * num_entry can be 0 if the directory iteration stops before reaching
-+	 * the end of the directory and no file is matched with the search
-+	 * pattern.
-+	 */
-+	if (rc >= 0 && !d_info.num_entry && d_info.num_scan &&
-+	    d_info.out_buf_len > 0)
-+		goto again;
- 	/*
- 	 * req->OutputBufferLength is too small to contain even one entry.
- 	 * In this case, it immediately returns OutputBufferLength 0 to client.
-diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
-index cb76f4b5bafe..06903024a2d8 100644
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -43,6 +43,7 @@ struct ksmbd_dir_info {
- 	char		*rptr;
- 	int		name_len;
- 	int		out_buf_len;
-+	int		num_scan;
- 	int		num_entry;
- 	int		data_count;
- 	int		last_entry_offset;
+@@ -6016,15 +6016,13 @@ static int set_file_basic_info(struct ksmbd_file *fp,
+ 		attrs.ia_valid |= (ATTR_ATIME | ATTR_ATIME_SET);
+ 	}
+ 
+-	attrs.ia_valid |= ATTR_CTIME;
+ 	if (file_info->ChangeTime)
+-		attrs.ia_ctime = ksmbd_NTtimeToUnix(file_info->ChangeTime);
+-	else
+-		attrs.ia_ctime = inode_get_ctime(inode);
++		inode_set_ctime_to_ts(inode,
++				ksmbd_NTtimeToUnix(file_info->ChangeTime));
+ 
+ 	if (file_info->LastWriteTime) {
+ 		attrs.ia_mtime = ksmbd_NTtimeToUnix(file_info->LastWriteTime);
+-		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET);
++		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET | ATTR_CTIME);
+ 	}
+ 
+ 	if (file_info->Attributes) {
+@@ -6066,8 +6064,6 @@ static int set_file_basic_info(struct ksmbd_file *fp,
+ 			return -EACCES;
+ 
+ 		inode_lock(inode);
+-		inode_set_ctime_to_ts(inode, attrs.ia_ctime);
+-		attrs.ia_valid &= ~ATTR_CTIME;
+ 		rc = notify_change(idmap, dentry, &attrs, NULL);
+ 		inode_unlock(inode);
+ 	}
 -- 
 2.39.5
 
