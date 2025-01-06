@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E8281728;
-	Mon,  6 Jan 2025 15:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F24013B59A;
+	Mon,  6 Jan 2025 15:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178938; cv=none; b=ptWXRAJsTbazL4QK2j6MGbGGZ4cgnm+Dmv5nfGVWVdl6wkHE3NcDoOwvD+/ADvfnIWVwd8YeTjWgm/5M3DXdRAi2ybe0D8m/5rJ5IAFeggMRM6wXvQiEK/3Tbk1g27WniIYrQjy1K6GWxaiRS1R+b1fKS4WVim8zvyEduxyiMbc=
+	t=1736178941; cv=none; b=dZbbnlqPJuP2FUZQoYYfl3p6qTTBfmYMa1crvfZ3V7HaVTPfIaD8bFME70VhhKjgtcTp9D4mM+7ptY+8jPqcQSL1jdEGlYC8h8fQSL2k74IE/0F+oQsVWWXhZ6uMBAG6eZPTK+FxOXOIi/0qN5DO5MvcKEss4cGAUyHf5sSPYXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178938; c=relaxed/simple;
-	bh=kD1qptJ70lq2fMYj23fVK04ZJKJmTSfHm0DkXqgEZPg=;
+	s=arc-20240116; t=1736178941; c=relaxed/simple;
+	bh=vZcG2qUVvpil5sqQnqGomtdB3/poxVF1rcBhy5jP3UI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugToW3UmV7VH8Or1CzNOfFqKhEcJ+9Zcn6zvV3s48gNJuFZgOLtKyr0gY215rDuil3xprdTRGH1Jzw0FcGy44c64aBJrhRpbvuxUhRfRSSvYhPpAIuFinqvjYXeQZTsgBAmBdjafyrnoR5SxXh/RWBNqNDlvL0QX5xlmIJvr/po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NiACMWMu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxDUZXt7pszI/WrCqKUckcAZUB8N5E3uLOfm33PW508MjZkqOr4pluiKeFNw8Z0BnnNOm3M2skYz56zDLSLVj6yi7dOhSyGLS2jFr+0SBqsNVGf4u++XZk3dKnW6Q+2uaIuowxeCXYewaMib3Rwdv/xKFZR3ZRTyG2pQcjr3bdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrMUZ88b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NiACMWMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48533C4CED2;
-	Mon,  6 Jan 2025 15:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrMUZ88b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EFDC4CED2;
+	Mon,  6 Jan 2025 15:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178937;
-	bh=kD1qptJ70lq2fMYj23fVK04ZJKJmTSfHm0DkXqgEZPg=;
+	s=korg; t=1736178941;
+	bh=vZcG2qUVvpil5sqQnqGomtdB3/poxVF1rcBhy5jP3UI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NiACMWMuFcaAly5UfSfWcswQ2Ejv71IwS0C92+D33XzB8hb4P8SDOac3P8kkD7EwR
-	 jnusYe9hsadK1hoK7kbCiNBbdFSivMcG1r6qwEITgu20oAISM+XGenWdB0/gYv7VTq
-	 wlG6yN/wTfTdbJTF6Ji1vYSH/ozk9IU8kRk2QZS8=
+	b=GrMUZ88bHSlrEXAXlj0+UxGgXmE9vZeZhv/UMlU+wuAAE7vIgi3Y3hsFMUkKnmGbK
+	 e5I2FsyfPIIyx+/tbqtKxqSNjjFACPDRGQQ9Htf3nBHkZO+aiBQKBdJKgFA4VRcOrA
+	 1Ibo5xwvetcc8ArqK24vGnakq5qtCKNG332H9Mr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Xu <pengfei.xu@intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/168] thunderbolt: Add support for Intel Lunar Lake
-Date: Mon,  6 Jan 2025 16:16:58 +0100
-Message-ID: <20250106151142.611431989@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 101/168] btrfs: avoid monopolizing a core when activating a swap file
+Date: Mon,  6 Jan 2025 16:16:49 +0100
+Message-ID: <20250106151142.276177407@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,54 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 2cd3da4e37453019e21a486d9de3144f46b4fdf7 ]
+commit 2c8507c63f5498d4ee4af404a8e44ceae4345056 upstream.
 
-Intel Lunar Lake has similar integrated Thunderbolt/USB4 controller as
-Intel Meteor Lake with some small differences in the host router (it has
-3 DP IN adapters for instance). Add the Intel Lunar Lake PCI IDs to the
-driver list of supported devices.
+During swap activation we iterate over the extents of a file and we can
+have many thousands of them, so we can end up in a busy loop monopolizing
+a core. Avoid this by doing a voluntary reschedule after processing each
+extent.
 
-Tested-by: Pengfei Xu <pengfei.xu@intel.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Stable-dep-of: 8644b48714dc ("thunderbolt: Add support for Intel Panther Lake-M/P")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/nhi.c | 4 ++++
- drivers/thunderbolt/nhi.h | 2 ++
- 2 files changed, 6 insertions(+)
+ fs/btrfs/inode.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/thunderbolt/nhi.c b/drivers/thunderbolt/nhi.c
-index 1350223088d8..ed028b01f14f 100644
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -1447,6 +1447,10 @@ static struct pci_device_id nhi_ids[] = {
- 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTL_P_NHI1),
- 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_LNL_NHI0),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_LNL_NHI1),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -7698,6 +7698,8 @@ noinline int can_nocow_extent(struct ino
+ 			ret = -EAGAIN;
+ 			goto out;
+ 		}
++
++		cond_resched();
+ 	}
  
-diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
-index c15a0c46c9cf..4b0fccf033e1 100644
---- a/drivers/thunderbolt/nhi.h
-+++ b/drivers/thunderbolt/nhi.h
-@@ -88,6 +88,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
- #define PCI_DEVICE_ID_INTEL_TGL_H_NHI1			0x9a21
- #define PCI_DEVICE_ID_INTEL_RPL_NHI0			0xa73e
- #define PCI_DEVICE_ID_INTEL_RPL_NHI1			0xa76d
-+#define PCI_DEVICE_ID_INTEL_LNL_NHI0			0xa833
-+#define PCI_DEVICE_ID_INTEL_LNL_NHI1			0xa834
- 
- #define PCI_CLASS_SERIAL_USB_USB4			0x0c0340
- 
--- 
-2.39.5
-
+ 	btrfs_release_path(path);
 
 
