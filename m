@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E1B14900B;
-	Mon,  6 Jan 2025 15:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297F349652;
+	Mon,  6 Jan 2025 15:21:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176908; cv=none; b=pHqHdXkejDyy5Q7lu88KVCbiGvz325T3SdYKWAPb27bL3AlTqOproqKBp14wz37ADyIZupfL4kg8VSvRf7j5fP+tR+NALUoBSPQRhV+3Nfm5zOmOX7Dr/kpaKtVZZ0Liis+g6YkkqIs7QRWt6T3kqYK250FuWRlniyfrRCjUGt4=
+	t=1736176912; cv=none; b=pXDb2y1bdwsmZJ0GsZiBmEBdMt2BeASm04+Ecxg0rQQREs9XC5eLEpZ0QHttCyEQ5EqDQlcgEWK0ayyDxZI5tL+YiE1WV/SjR1s59ZwIM2UeolEdwWKrTFM/a/Y8qmXJs0g1k3P2OG/8g0si4qnxMMynnIwdIDEed1hMHKhbfxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176908; c=relaxed/simple;
-	bh=OPpt48QnJNAFASUL122AL3UBvkkjFQBlQT/sYymk9Mw=;
+	s=arc-20240116; t=1736176912; c=relaxed/simple;
+	bh=1NLlNAvkCqBorTOdPefM10e8U6Yxa+eG9X34gtjurQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rJFRNIU3q0nc7E9A+aziMO8EJzT/6C4ZHoQwThaXBSoXxFs1NWIyNA0mJ5mXdf5UnvH3EYej6n9oislwEvZMQ5hHUPWRIH+NKDMbotTdF27NioNJW88mI6no30lnbttN6tjOEoCW34BPtqN+h5Hr7nm+qN8hYqwyESOP4VCz5kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpdimR/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S0Xy34iYzYiJfQfXsJnxJIVH3vSCGPRQKgm0EWfUwDskGwhrT2P2+8zD7AVO0f/2/331sj6pPnO075yEf2RSuvWvYr1b9wrdLnXYmz2V/57wPBrYqqJlCm63F5AwxDaYAIzT+idukztKi2Nq/Cw7hKFPQYhyZGwi0QVe//ja1yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEjvTRwk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpdimR/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6821C4CED2;
-	Mon,  6 Jan 2025 15:21:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEjvTRwk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D5E5C4CED2;
+	Mon,  6 Jan 2025 15:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176908;
-	bh=OPpt48QnJNAFASUL122AL3UBvkkjFQBlQT/sYymk9Mw=;
+	s=korg; t=1736176911;
+	bh=1NLlNAvkCqBorTOdPefM10e8U6Yxa+eG9X34gtjurQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpdimR/p+Q3mXbScBGg+lZ0RIzodumTQ6EdMoZA5ZGVclvhX4Omu/HE8RSRQNRT9D
-	 GbBmUXAcOfeOSveQH769fG1YqNqh4fWOkLXnBV2Ecwg2hPHnlFpFETQsA0GyT6BThb
-	 P1C5yo17oyQtzimF2gAcVZmTj/CMTf/7hcKp0fJ8=
+	b=qEjvTRwkeC8W5Ixoy37QY5Wyd6VQSgY8WZkV0JQODjN3YFWhZlXKW2wCVJN6njs4q
+	 xVSL5crrADldev6mdCMBVUFc8KtWvOSpjtKrklb8x4zqXOU1stCnLOeEaA4cXj1bgv
+	 2fOUmOqoFS6OODmQ2EBNNRJDlMZZUyR6joL2lSes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Marco Elver <elver@google.com>,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 70/81] kcov: mark in_softirq_really() as __always_inline
-Date: Mon,  6 Jan 2025 16:16:42 +0100
-Message-ID: <20250106151132.072897008@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 71/81] RDMA/uverbs: Prevent integer overflow issue
+Date: Mon,  6 Jan 2025 16:16:43 +0100
+Message-ID: <20250106151132.110649689@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -56,44 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit cb0ca08b326aa03f87fe94bb91872ce8d2ef1ed8 upstream.
+commit d0257e089d1bbd35c69b6c97ff73e3690ab149a9 upstream.
 
-If gcc decides not to inline in_softirq_really(), objtool warns about a
-function call with UACCESS enabled:
+In the expression "cmd.wqe_size * cmd.wr_count", both variables are u32
+values that come from the user so the multiplication can lead to integer
+wrapping.  Then we pass the result to uverbs_request_next_ptr() which also
+could potentially wrap.  The "cmd.sge_count * sizeof(struct ib_uverbs_sge)"
+multiplication can also overflow on 32bit systems although it's fine on
+64bit systems.
 
-kernel/kcov.o: warning: objtool: __sanitizer_cov_trace_pc+0x1e: call to in_softirq_really() with UACCESS enabled
-kernel/kcov.o: warning: objtool: check_kcov_mode+0x11: call to in_softirq_really() with UACCESS enabled
+This patch does two things.  First, I've re-arranged the condition in
+uverbs_request_next_ptr() so that the use controlled variable "len" is on
+one side of the comparison by itself without any math.  Then I've modified
+all the callers to use size_mul() for the multiplications.
 
-Mark this as __always_inline to avoid the problem.
-
-Link: https://lkml.kernel.org/r/20241217071814.2261620-1-arnd@kernel.org
-Fixes: 7d4df2dad312 ("kcov: properly check for softirq context")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Aleksandr Nogikh <nogikh@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 67cdb40ca444 ("[IB] uverbs: Implement more commands")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/b8765ab3-c2da-4611-aae0-ddd6ba173d23@stanley.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcov.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/uverbs_cmd.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -165,7 +165,7 @@ static void kcov_remote_area_put(struct
-  * Unlike in_serving_softirq(), this function returns false when called during
-  * a hardirq or an NMI that happened in the softirq context.
-  */
--static inline bool in_softirq_really(void)
-+static __always_inline bool in_softirq_really(void)
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -161,7 +161,7 @@ static const void __user *uverbs_request
  {
- 	return in_serving_softirq() && !in_hardirq() && !in_nmi();
- }
+ 	const void __user *res = iter->cur;
+ 
+-	if (iter->cur + len > iter->end)
++	if (len > iter->end - iter->cur)
+ 		return (void __force __user *)ERR_PTR(-ENOSPC);
+ 	iter->cur += len;
+ 	return res;
+@@ -2009,11 +2009,13 @@ static int ib_uverbs_post_send(struct uv
+ 	ret = uverbs_request_start(attrs, &iter, &cmd, sizeof(cmd));
+ 	if (ret)
+ 		return ret;
+-	wqes = uverbs_request_next_ptr(&iter, cmd.wqe_size * cmd.wr_count);
++	wqes = uverbs_request_next_ptr(&iter, size_mul(cmd.wqe_size,
++						       cmd.wr_count));
+ 	if (IS_ERR(wqes))
+ 		return PTR_ERR(wqes);
+-	sgls = uverbs_request_next_ptr(
+-		&iter, cmd.sge_count * sizeof(struct ib_uverbs_sge));
++	sgls = uverbs_request_next_ptr(&iter,
++				       size_mul(cmd.sge_count,
++						sizeof(struct ib_uverbs_sge)));
+ 	if (IS_ERR(sgls))
+ 		return PTR_ERR(sgls);
+ 	ret = uverbs_request_finish(&iter);
+@@ -2199,11 +2201,11 @@ ib_uverbs_unmarshall_recv(struct uverbs_
+ 	if (wqe_size < sizeof(struct ib_uverbs_recv_wr))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	wqes = uverbs_request_next_ptr(iter, wqe_size * wr_count);
++	wqes = uverbs_request_next_ptr(iter, size_mul(wqe_size, wr_count));
+ 	if (IS_ERR(wqes))
+ 		return ERR_CAST(wqes);
+-	sgls = uverbs_request_next_ptr(
+-		iter, sge_count * sizeof(struct ib_uverbs_sge));
++	sgls = uverbs_request_next_ptr(iter, size_mul(sge_count,
++						      sizeof(struct ib_uverbs_sge)));
+ 	if (IS_ERR(sgls))
+ 		return ERR_CAST(sgls);
+ 	ret = uverbs_request_finish(iter);
 
 
