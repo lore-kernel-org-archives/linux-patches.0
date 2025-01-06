@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C1513BC39;
-	Mon,  6 Jan 2025 15:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08BA142E7C;
+	Mon,  6 Jan 2025 15:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178835; cv=none; b=rCmzyjQKuzY1T67dzo+SZYfkx//Bj4U/2PpyRau1LZnTtolcdFua5Y94ruv/rptIi0mT/Y4FDYDqAxSZBgYqhoqF7t2WUbfcWCuzHjUuu1ZyBjW9DF0n8v1E9WLXC2A1BXELn2JMX2zUctv9f96i5kmv/9i0Maa6aNptP7g34hY=
+	t=1736178840; cv=none; b=QK7tTRHH+oRN25CexRppiQcjgSc5fFOTFnZw9CCKy7JugR9w4H4lgn0LP+fPPahjIYFEjYMxNRjNEmHGi36xxH5QoCwBy2u/8yl7wFIR0U4W7IMOfRtYuN7hM8jvSpIGJ7+WNqjZ3xLlXKnePUfkRjFxxkJiigmDPplIDmTxdz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178835; c=relaxed/simple;
-	bh=cLFIzJcPaWNTsKrrXTPxFsBJZQM9/Gh10AToL68T7BQ=;
+	s=arc-20240116; t=1736178840; c=relaxed/simple;
+	bh=sNKe+WcmOp0plCTLlkgCO1FAlM0dIf7BdrANhru6jJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn0F8CzveS+WIV9Y3xX5fgE1dh04EFbVV1cVL4kmOoLh10wVXrPW3PHNkQH/ohZMyglgSRs7jY1pydtEFwhpwHN4X3QndBEu3l6CY+rja7j7T3hT99OpaH9tZRbrbveMmCUUH8tJZ1F+R82qy7K9pFKyW85LkuNrF1QyDYMY9sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqpZrMdN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JqKZ+QblDyf0tD8rlTHgs6pWJCFqgvXIsJBxoNNc8HNxJoVIXsPojwvDc0RKhFo5+BIXa16ZGZfdkfRrL3qhdUOBozpLTs5T4vq6dbeWOS+r6TyNQrLUVx0CyoXhyhmER2C5GfPSWYouhOTFULeppk4dfpqGdDPeLU2inDtLpnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+IbhBgz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqpZrMdN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3314FC4CED6;
-	Mon,  6 Jan 2025 15:53:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+IbhBgz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2198BC4CED2;
+	Mon,  6 Jan 2025 15:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178835;
-	bh=cLFIzJcPaWNTsKrrXTPxFsBJZQM9/Gh10AToL68T7BQ=;
+	s=korg; t=1736178838;
+	bh=sNKe+WcmOp0plCTLlkgCO1FAlM0dIf7BdrANhru6jJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqpZrMdNiNzcbH4xEiUwPfYPKffyhf3dJ5SBb7veiXA2gpNk6+6KEoOkq/jCTaLg9
-	 fqoZJ6CtOLT8zyAQ7dP8+T+37VT4XjZcFeQAV7KmD6JDUx71uo9DVPtYa2WVQvnCC/
-	 GA+JkQ3bDHzj3NQsRLF+KB9ntGwN+ugnugiaRNZU=
+	b=s+IbhBgzoQe9n0IrQpovrjqaePPr41Mb0gV1mHl5mg1EG5iJv1Q9z/SFPkMCuD7NP
+	 qICxDk9VA9m3OVCPEMTcuV9ZRfDf06n65CMjTeZVL0C9SBgFheAHBxXuXbaTMSUoWG
+	 FiFUUWFAMrQtzOi9p6Lodq2SMwqFezBzfoLXccH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 067/168] phy: core: Fix an OF node refcount leakage in of_phy_provider_lookup()
-Date: Mon,  6 Jan 2025 16:16:15 +0100
-Message-ID: <20250106151140.992696801@linuxfoundation.org>
+	Yang Erkun <yangerkun@huaweicloud.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 102/168] nfsd: cancel nfsd_shrinker_work using sync mode in nfs4_state_shutdown_net
+Date: Mon,  6 Jan 2025 16:16:50 +0100
+Message-ID: <20250106151142.314133866@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,52 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Yang Erkun <yangerkun@huaweicloud.com>
 
-commit a2d633cb1421e679b56f1a9fe1f42f089706f1ed upstream.
+commit d5ff2fb2e7167e9483846e34148e60c0c016a1f6 upstream.
 
-For macro for_each_child_of_node(parent, child), refcount of @child has
-been increased before entering its loop body, so normally needs to call
-of_node_put(@child) before returning from the loop body to avoid refcount
-leakage.
+In the normal case, when we excute `echo 0 > /proc/fs/nfsd/threads`, the
+function `nfs4_state_destroy_net` in `nfs4_state_shutdown_net` will
+release all resources related to the hashed `nfs4_client`. If the
+`nfsd_client_shrinker` is running concurrently, the `expire_client`
+function will first unhash this client and then destroy it. This can
+lead to the following warning. Additionally, numerous use-after-free
+errors may occur as well.
 
-of_phy_provider_lookup() has such usage but does not call of_node_put()
-before returning, so cause leakage of the OF node refcount.
+nfsd_client_shrinker         echo 0 > /proc/fs/nfsd/threads
 
-Fix by simply calling of_node_put() before returning from the loop body.
+expire_client                nfsd_shutdown_net
+  unhash_client                ...
+                               nfs4_state_shutdown_net
+                                 /* won't wait shrinker exit */
+  /*                             cancel_work(&nn->nfsd_shrinker_work)
+   * nfsd_file for this          /* won't destroy unhashed client1 */
+   * client1 still alive         nfs4_state_destroy_net
+   */
 
-The APIs affected by this issue are shown below since they indirectly
-invoke problematic of_phy_provider_lookup().
-phy_get()
-of_phy_get()
-devm_phy_get()
-devm_of_phy_get()
-devm_of_phy_get_by_index()
+                               nfsd_file_cache_shutdown
+                                 /* trigger warning */
+                                 kmem_cache_destroy(nfsd_file_slab)
+                                 kmem_cache_destroy(nfsd_file_mark_slab)
+  /* release nfsd_file and mark */
+  __destroy_client
 
-Fixes: 2a4c37016ca9 ("phy: core: Fix of_phy_provider_lookup to return PHY provider for sub node")
-Cc: stable@vger.kernel.org
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-5-40ae28f5015a@quicinc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+====================================================================
+BUG nfsd_file (Not tainted): Objects remaining in nfsd_file on
+__kmem_cache_shutdown()
+--------------------------------------------------------------------
+CPU: 4 UID: 0 PID: 764 Comm: sh Not tainted 6.12.0-rc3+ #1
+
+ dump_stack_lvl+0x53/0x70
+ slab_err+0xb0/0xf0
+ __kmem_cache_shutdown+0x15c/0x310
+ kmem_cache_destroy+0x66/0x160
+ nfsd_file_cache_shutdown+0xac/0x210 [nfsd]
+ nfsd_destroy_serv+0x251/0x2a0 [nfsd]
+ nfsd_svc+0x125/0x1e0 [nfsd]
+ write_threads+0x16a/0x2a0 [nfsd]
+ nfsctl_transaction_write+0x74/0xa0 [nfsd]
+ vfs_write+0x1a5/0x6d0
+ ksys_write+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+====================================================================
+BUG nfsd_file_mark (Tainted: G    B   W         ): Objects remaining
+nfsd_file_mark on __kmem_cache_shutdown()
+--------------------------------------------------------------------
+
+ dump_stack_lvl+0x53/0x70
+ slab_err+0xb0/0xf0
+ __kmem_cache_shutdown+0x15c/0x310
+ kmem_cache_destroy+0x66/0x160
+ nfsd_file_cache_shutdown+0xc8/0x210 [nfsd]
+ nfsd_destroy_serv+0x251/0x2a0 [nfsd]
+ nfsd_svc+0x125/0x1e0 [nfsd]
+ write_threads+0x16a/0x2a0 [nfsd]
+ nfsctl_transaction_write+0x74/0xa0 [nfsd]
+ vfs_write+0x1a5/0x6d0
+ ksys_write+0xc1/0x160
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+To resolve this issue, cancel `nfsd_shrinker_work` using synchronous
+mode in nfs4_state_shutdown_net.
+
+Fixes: 7c24fa225081 ("NFSD: replace delayed_work with work_struct for nfsd_client_shrinker")
+Signed-off-by: Yang Erkun <yangerkun@huaweicloud.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/phy-core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -138,8 +138,10 @@ static struct phy_provider *of_phy_provi
- 			return phy_provider;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -8211,7 +8211,7 @@ nfs4_state_shutdown_net(struct net *net)
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- 		for_each_child_of_node(phy_provider->children, child)
--			if (child == node)
-+			if (child == node) {
-+				of_node_put(child);
- 				return phy_provider;
-+			}
- 	}
+ 	unregister_shrinker(&nn->nfsd_client_shrinker);
+-	cancel_work(&nn->nfsd_shrinker_work);
++	cancel_work_sync(&nn->nfsd_shrinker_work);
+ 	cancel_delayed_work_sync(&nn->laundromat_work);
+ 	locks_end_grace(&nn->nfsd4_manager);
  
- 	return ERR_PTR(-EPROBE_DEFER);
 
 
