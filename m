@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BD11DDC08;
-	Mon,  6 Jan 2025 15:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9BA1DB92A;
+	Mon,  6 Jan 2025 15:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178280; cv=none; b=tp8ocMY75ngycELx1gN+h0kcigp8kyN2gxweWqM6R3vr1XX0yqbhG7GbGk20LNiCmRfThy+QrWupunH1Eq6rObwaDdYpspByNV7qv5n9LAcklnb2Z7bctebdZWCAX+aG+WeOrjumnLwungMkXodxexjj9uYP+2heylBpMp04fF4=
+	t=1736178283; cv=none; b=Z93Lug0CQlNJyw5PcAEMBwFjJHT77+hF3lBrB92gUxgBfKxEU+umwXcLyIwq6d6s332sLOh7Snquotth9jAxUmFBN2agiEhPfAUc4+CTgKUEU9RR2eK+bOfKz/KkdzkITdvJ+uWMttkQEzJMx6lajRvV+UgaTMX3r0fTxQbnjiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178280; c=relaxed/simple;
-	bh=wHHt7PeFC6TRrmirSe0KOfH1bLWONDg9BLerTNrhs6Y=;
+	s=arc-20240116; t=1736178283; c=relaxed/simple;
+	bh=5pEu7Acu9NAktVozHjcmnHpkbp8MFtpAsBqMbLGJRiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5XsXF6wYjASsVG0DlK8Fiyn9wlLBdWsoYuvKKR/m8elYs5YO2+aPltnvitqAeAU8prva38yeIkIEZw3cV3pstud9BI6KK+y7MiVIjKDy3eLt/DC4YbUGbdkDrDlyNwB3lZQpnwM+mtAdsZqkLpXWn98ellq2BWJeFwQdmbuFHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qtM6ACqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kea/ZLaPbKfEYtGGkhOL+caAAumxeY0dkARuGCCzNe8/b5996byTM3HWWOAy5kURxXyh0EGFh9RR2DRfJlA9P78r081fUcl37QNpoticgCysgZZNdWdPE9cDA5VFpi512F+FuCsmoKgqcjm620+qPNbRtDSp4axnHGbkF5dBOVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrQhk0Dn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qtM6ACqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A803C4CEDF;
-	Mon,  6 Jan 2025 15:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrQhk0Dn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F72C4CED2;
+	Mon,  6 Jan 2025 15:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178279;
-	bh=wHHt7PeFC6TRrmirSe0KOfH1bLWONDg9BLerTNrhs6Y=;
+	s=korg; t=1736178283;
+	bh=5pEu7Acu9NAktVozHjcmnHpkbp8MFtpAsBqMbLGJRiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtM6ACqoSFMMXZpulPt/qNx2mHSF6A7YTmmJR7wWTSmcLcERAvRkrz8eRxLytwi7f
-	 hEfBC/P1TzFBb+YUvBKCuaZ6gJqTCvfVcKaF2YWZ90nHlF3W+Vws7xaqmaNSbsiY7d
-	 tbDeU9si4KD21QU1Es52Arsji2uncr+1XGOdMPRY=
+	b=wrQhk0DnA2t9dnM8Q0i76BTN0G1Fwzdj3UCCcfcPIxmcspB0PR/97R457v6B9yWNr
+	 xHpQuiUfsryCG9b7NJE69CxEfAKDsNCRcEPWMbx+8qIulcZG7wFPkgp7+7YNuHU79f
+	 3qL4NH79eJAwLvoW6DzvW4+gWlevyODQfq8lFL1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Cathy Avery <cavery@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yi Sun <yi.sun@unisoc.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	virtualization@lists.linux.dev,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/138] scsi: storvsc: Do not flag MAINTENANCE_IN return of SRB_STATUS_DATA_OVERRUN as an error
-Date: Mon,  6 Jan 2025 16:16:30 +0100
-Message-ID: <20250106151135.733059211@linuxfoundation.org>
+Subject: [PATCH 5.10 067/138] virtio-blk: dont keep queue frozen during system suspend
+Date: Mon,  6 Jan 2025 16:16:31 +0100
+Message-ID: <20250106151135.770816233@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -53,69 +57,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cathy Avery <cavery@redhat.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit b1aee7f034615b6824d2c70ddb37ef9fc23493b7 ]
+[ Upstream commit 7678abee0867e6b7fb89aa40f6e9f575f755fb37 ]
 
-This partially reverts commit 812fe6420a6e ("scsi: storvsc: Handle
-additional SRB status values").
+Commit 4ce6e2db00de ("virtio-blk: Ensure no requests in virtqueues before
+deleting vqs.") replaces queue quiesce with queue freeze in virtio-blk's
+PM callbacks. And the motivation is to drain inflight IOs before suspending.
 
-HyperV does not support MAINTENANCE_IN resulting in FC passthrough
-returning the SRB_STATUS_DATA_OVERRUN value. Now that
-SRB_STATUS_DATA_OVERRUN is treated as an error, multipath ALUA paths go
-into a faulty state as multipath ALUA submits RTPG commands via
-MAINTENANCE_IN.
+block layer's queue freeze looks very handy, but it is also easy to cause
+deadlock, such as, any attempt to call into bio_queue_enter() may run into
+deadlock if the queue is frozen in current context. There are all kinds
+of ->suspend() called in suspend context, so keeping queue frozen in the
+whole suspend context isn't one good idea. And Marek reported lockdep
+warning[1] caused by virtio-blk's freeze queue in virtblk_freeze().
 
-[    3.215560] hv_storvsc 1d69d403-9692-4460-89f9-a8cbcc0f94f3:
-tag#230 cmd 0xa3 status: scsi 0x0 srb 0x12 hv 0xc0000001
-[    3.215572] scsi 1:0:0:32: alua: rtpg failed, result 458752
+[1] https://lore.kernel.org/linux-block/ca16370e-d646-4eee-b9cc-87277c89c43c@samsung.com/
 
-Make MAINTENANCE_IN return success to avoid the error path as is
-currently done with INQUIRY and MODE_SENSE.
+Given the motivation is to drain in-flight IOs, it can be done by calling
+freeze & unfreeze, meantime restore to previous behavior by keeping queue
+quiesced during suspend.
 
-Suggested-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Cathy Avery <cavery@redhat.com>
-Link: https://lore.kernel.org/r/20241127181324.3318443-1-cavery@redhat.com
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Yi Sun <yi.sun@unisoc.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: virtualization@lists.linux.dev
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/20241112125821.1475793-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/block/virtio_blk.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 37ad5f525647..7dc916ce0c3c 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -155,6 +155,8 @@ static int sense_buffer_size = PRE_WIN8_STORVSC_SENSE_BUFFER_SIZE;
- */
- static int vmstor_proto_version;
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 7eae3f373233..28ea9b511fd0 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -951,9 +951,12 @@ static void virtblk_remove(struct virtio_device *vdev)
+ static int virtblk_freeze(struct virtio_device *vdev)
+ {
+ 	struct virtio_blk *vblk = vdev->priv;
++	struct request_queue *q = vblk->disk->queue;
  
-+static bool hv_dev_is_fc(struct hv_device *hv_dev);
-+
- #define STORVSC_LOGGING_NONE	0
- #define STORVSC_LOGGING_ERROR	1
- #define STORVSC_LOGGING_WARN	2
-@@ -1153,6 +1155,7 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
- 	 * not correctly handle:
- 	 * INQUIRY command with page code parameter set to 0x80
- 	 * MODE_SENSE command with cmd[2] == 0x1c
-+	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
- 	 *
- 	 * Setup srb and scsi status so this won't be fatal.
- 	 * We do this so we can distinguish truly fatal failues
-@@ -1160,7 +1163,9 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
- 	 */
+ 	/* Ensure no requests in virtqueues before deleting vqs. */
+-	blk_mq_freeze_queue(vblk->disk->queue);
++	blk_mq_freeze_queue(q);
++	blk_mq_quiesce_queue_nowait(q);
++	blk_mq_unfreeze_queue(q);
  
- 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
--	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE)) {
-+	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
-+	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
-+	   hv_dev_is_fc(device))) {
- 		vstor_packet->vm_srb.scsi_status = 0;
- 		vstor_packet->vm_srb.srb_status = SRB_STATUS_SUCCESS;
- 	}
+ 	/* Ensure we don't receive any more interrupts */
+ 	vdev->config->reset(vdev);
+@@ -977,8 +980,8 @@ static int virtblk_restore(struct virtio_device *vdev)
+ 		return ret;
+ 
+ 	virtio_device_ready(vdev);
++	blk_mq_unquiesce_queue(vblk->disk->queue);
+ 
+-	blk_mq_unfreeze_queue(vblk->disk->queue);
+ 	return 0;
+ }
+ #endif
 -- 
 2.39.5
 
