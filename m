@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDE516A930;
-	Mon,  6 Jan 2025 15:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E121DDC04;
+	Mon,  6 Jan 2025 15:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178428; cv=none; b=j1VuvPN9mcb4+UR8EhXRNBVpKu7YdgALZRYi62VcmsUKhPOrWwwA7MVeN5LQizX7SNKYYy6Ogz97OHiwNbq8QhhvkDDfMm19r96QQ/T7O9Dzk02V12aDcLON716GnBS4mTwXYnBrTrmdHfS0R2/pOceb1lVYfd/y7+9GTNpPdMY=
+	t=1736178431; cv=none; b=R89w9CWchiWg/WbMbMZyR9xVlr6zEM78jXpkGJFXVGXGM7XN+A1xfLgLOIcgZduD63xzoKT/YF+Jko8CT2lMFStY4FhjavFDm8OpVmRsWSySI4uZZvg5mVL+S2hud1/IThZyU5tlSi2u9zuXsw89v9yCPTfFsDrbqiJUJeu7Fe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178428; c=relaxed/simple;
-	bh=ZftIdPbLbT84aAKexhdkTFwF6IdSUeStxz+CzGYkqm8=;
+	s=arc-20240116; t=1736178431; c=relaxed/simple;
+	bh=oMBDuNv069ZhYzXCETGOVSatY3O6wSEfVVeTQzH/djE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTBi1aknBJUTUSgSgFG2YDR6S7ZewquTWf2cNkMxLCRYLyyeOIwHHNZ3gkiIgbEKOydtQ73L4UeZUyUYAPudRTXZF1dofrSp1Z85yXNEFb3LiKoej6/gjv2NfF+tFr+483yYCSWUJqLkdZr0yAHTAwgJfvsCe5t/onTmXxXVlCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHR4mA5U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbQq+gvn8JFd2+mofTCHzK2ZgWKWKXXKkrbWLGjrl5g829yero06//wimZuO+3L00GD1StMH7zv8Z6X3VFulGC0Kw5LQtxorMHMFS3Fus3BT42gyxVGezr0isxee0a8fHrjw60w9S1OurVK+ndipS6QA6cIUsMe1M5B4LHPjlJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ALJs+9R6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHR4mA5U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C1F5C4CED6;
-	Mon,  6 Jan 2025 15:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ALJs+9R6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD0CC4CED2;
+	Mon,  6 Jan 2025 15:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178427;
-	bh=ZftIdPbLbT84aAKexhdkTFwF6IdSUeStxz+CzGYkqm8=;
+	s=korg; t=1736178430;
+	bh=oMBDuNv069ZhYzXCETGOVSatY3O6wSEfVVeTQzH/djE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHR4mA5UA0tf5on/npdJCuj8p3kkMdGODuYNrRyNNbUpLaEZqXNXluxz3A9ymsSrA
-	 8zBbxRaFXI95y1KconKS39ZxPXrlvCsE+2rJubSpQxbX51ZiCr2uwYX/i/h2S4MClz
-	 81CctYO7l2TG9X9ZjFA+GuNu4CpSB451LRyWAgdI=
+	b=ALJs+9R6YYhZ5MnWIusVsgu/mN4IP4FTjqRq5dyGJyLkBQ4MKYmSGW8i59Ywz/838
+	 RYsV9a2OTI856nce5ROOuHSxCuZK2p3pkdkYKM89LA6hPxXFMlqbD+Nb23zN0f5Jxn
+	 tF4oqEtBpx/H2a12Dxb4nv78bpwhXgMgnpftqSlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Tom Herbert <tom@herbertland.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ferry Toth <fntoth@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/138] ila: serialize calls to nf_register_net_hooks()
-Date: Mon,  6 Jan 2025 16:17:18 +0100
-Message-ID: <20250106151137.545340825@linuxfoundation.org>
+Subject: [PATCH 5.10 115/138] dmaengine: dw: Select only supported masters for ACPI devices
+Date: Mon,  6 Jan 2025 16:17:19 +0100
+Message-ID: <20250106151137.582499651@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -54,111 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 260466b576bca0081a7d4acecc8e93687aa22d0e ]
+[ Upstream commit f0e870a0e9c5521f2952ea9f3ea9d3d122631a89 ]
 
-syzbot found a race in ila_add_mapping() [1]
+The recently submitted fix-commit revealed a problem in the iDMA 32-bit
+platform code. Even though the controller supported only a single master
+the dw_dma_acpi_filter() method hard-coded two master interfaces with IDs
+0 and 1. As a result the sanity check implemented in the commit
+b336268dde75 ("dmaengine: dw: Add peripheral bus width verification")
+got incorrect interface data width and thus prevented the client drivers
+from configuring the DMA-channel with the EINVAL error returned. E.g.,
+the next error was printed for the PXA2xx SPI controller driver trying
+to configure the requested channels:
 
-commit 031ae72825ce ("ila: call nf_unregister_net_hooks() sooner")
-attempted to fix a similar issue.
+> [  164.525604] pxa2xx_spi_pci 0000:00:07.1: DMA slave config failed
+> [  164.536105] pxa2xx_spi_pci 0000:00:07.1: failed to get DMA TX descriptor
+> [  164.543213] spidev spi-SPT0001:00: SPI transfer failed: -16
 
-Looking at the syzbot repro, we have concurrent ILA_CMD_ADD commands.
+The problem would have been spotted much earlier if the iDMA 32-bit
+controller supported more than one master interfaces. But since it
+supports just a single master and the iDMA 32-bit specific code just
+ignores the master IDs in the CTLLO preparation method, the issue has
+been gone unnoticed so far.
 
-Add a mutex to make sure at most one thread is calling nf_register_net_hooks().
+Fix the problem by specifying the default master ID for both memory
+and peripheral devices in the driver data. Thus the issue noticed for
+the iDMA 32-bit controllers will be eliminated and the ACPI-probed
+DW DMA controllers will be configured with the correct master ID by
+default.
 
-[1]
- BUG: KASAN: slab-use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
- BUG: KASAN: slab-use-after-free in __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
-Read of size 4 at addr ffff888028f40008 by task dhcpcd/5501
-
-CPU: 1 UID: 0 PID: 5501 Comm: dhcpcd Not tainted 6.13.0-rc4-syzkaller-00054-gd6ef8b40d075 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <IRQ>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0xc3/0x620 mm/kasan/report.c:489
-  kasan_report+0xd9/0x110 mm/kasan/report.c:602
-  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
-  __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
-  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
-  rhashtable_lookup_fast include/linux/rhashtable.h:672 [inline]
-  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:127 [inline]
-  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
-  ila_nf_input+0x1ee/0x620 net/ipv6/ila/ila_xlat.c:185
-  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
-  nf_hook_slow+0xbb/0x200 net/netfilter/core.c:626
-  nf_hook.constprop.0+0x42e/0x750 include/linux/netfilter.h:269
-  NF_HOOK include/linux/netfilter.h:312 [inline]
-  ipv6_rcv+0xa4/0x680 net/ipv6/ip6_input.c:309
-  __netif_receive_skb_one_core+0x12e/0x1e0 net/core/dev.c:5672
-  __netif_receive_skb+0x1d/0x160 net/core/dev.c:5785
-  process_backlog+0x443/0x15f0 net/core/dev.c:6117
-  __napi_poll.constprop.0+0xb7/0x550 net/core/dev.c:6883
-  napi_poll net/core/dev.c:6952 [inline]
-  net_rx_action+0xa94/0x1010 net/core/dev.c:7074
-  handle_softirqs+0x213/0x8f0 kernel/softirq.c:561
-  __do_softirq kernel/softirq.c:595 [inline]
-  invoke_softirq kernel/softirq.c:435 [inline]
-  __irq_exit_rcu+0x109/0x170 kernel/softirq.c:662
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
-  sysvec_apic_timer_interrupt+0xa4/0xc0 arch/x86/kernel/apic/apic.c:1049
-
-Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
-Reported-by: syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6772c9ae.050a0220.2f3838.04c7.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Florian Westphal <fw@strlen.de>
-Cc: Tom Herbert <tom@herbertland.com>
-Link: https://patch.msgid.link/20241230162849.2795486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b336268dde75 ("dmaengine: dw: Add peripheral bus width verification")
+Fixes: 199244d69458 ("dmaengine: dw: add support of iDMA 32-bit hardware")
+Reported-by: Ferry Toth <fntoth@gmail.com>
+Closes: https://lore.kernel.org/dmaengine/ZuXbCKUs1iOqFu51@black.fi.intel.com/
+Reported-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Closes: https://lore.kernel.org/dmaengine/ZuXgI-VcHpMgbZ91@black.fi.intel.com/
+Tested-by: Ferry Toth <fntoth@gmail.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20241104095142.157925-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ila/ila_xlat.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/dma/dw/acpi.c     | 6 ++++--
+ drivers/dma/dw/internal.h | 6 ++++++
+ drivers/dma/dw/pci.c      | 4 ++--
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ila/ila_xlat.c b/net/ipv6/ila/ila_xlat.c
-index 1f7b674b7c58..31ad5ac74ee7 100644
---- a/net/ipv6/ila/ila_xlat.c
-+++ b/net/ipv6/ila/ila_xlat.c
-@@ -201,6 +201,8 @@ static const struct nf_hook_ops ila_nf_hook_ops[] = {
- 	},
+diff --git a/drivers/dma/dw/acpi.c b/drivers/dma/dw/acpi.c
+index c510c109d2c3..b6452fffa657 100644
+--- a/drivers/dma/dw/acpi.c
++++ b/drivers/dma/dw/acpi.c
+@@ -8,13 +8,15 @@
+ 
+ static bool dw_dma_acpi_filter(struct dma_chan *chan, void *param)
+ {
++	struct dw_dma *dw = to_dw_dma(chan->device);
++	struct dw_dma_chip_pdata *data = dev_get_drvdata(dw->dma.dev);
+ 	struct acpi_dma_spec *dma_spec = param;
+ 	struct dw_dma_slave slave = {
+ 		.dma_dev = dma_spec->dev,
+ 		.src_id = dma_spec->slave_id,
+ 		.dst_id = dma_spec->slave_id,
+-		.m_master = 0,
+-		.p_master = 1,
++		.m_master = data->m_master,
++		.p_master = data->p_master,
+ 	};
+ 
+ 	return dw_dma_filter(chan, &slave);
+diff --git a/drivers/dma/dw/internal.h b/drivers/dma/dw/internal.h
+index 2e1c52eefdeb..8c79a1d015cd 100644
+--- a/drivers/dma/dw/internal.h
++++ b/drivers/dma/dw/internal.h
+@@ -51,11 +51,15 @@ struct dw_dma_chip_pdata {
+ 	int (*probe)(struct dw_dma_chip *chip);
+ 	int (*remove)(struct dw_dma_chip *chip);
+ 	struct dw_dma_chip *chip;
++	u8 m_master;
++	u8 p_master;
  };
  
-+static DEFINE_MUTEX(ila_mutex);
-+
- static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
- {
- 	struct ila_net *ilan = net_generic(net, ila_net_id);
-@@ -208,16 +210,20 @@ static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
- 	spinlock_t *lock = ila_get_lock(ilan, xp->ip.locator_match);
- 	int err = 0, order;
+ static __maybe_unused const struct dw_dma_chip_pdata dw_dma_chip_pdata = {
+ 	.probe = dw_dma_probe,
+ 	.remove = dw_dma_remove,
++	.m_master = 0,
++	.p_master = 1,
+ };
  
--	if (!ilan->xlat.hooks_registered) {
-+	if (!READ_ONCE(ilan->xlat.hooks_registered)) {
- 		/* We defer registering net hooks in the namespace until the
- 		 * first mapping is added.
- 		 */
--		err = nf_register_net_hooks(net, ila_nf_hook_ops,
--					    ARRAY_SIZE(ila_nf_hook_ops));
-+		mutex_lock(&ila_mutex);
-+		if (!ilan->xlat.hooks_registered) {
-+			err = nf_register_net_hooks(net, ila_nf_hook_ops,
-+						ARRAY_SIZE(ila_nf_hook_ops));
-+			if (!err)
-+				WRITE_ONCE(ilan->xlat.hooks_registered, true);
-+		}
-+		mutex_unlock(&ila_mutex);
- 		if (err)
- 			return err;
+ static const struct dw_dma_platform_data idma32_pdata = {
+@@ -72,6 +76,8 @@ static __maybe_unused const struct dw_dma_chip_pdata idma32_chip_pdata = {
+ 	.pdata = &idma32_pdata,
+ 	.probe = idma32_dma_probe,
+ 	.remove = idma32_dma_remove,
++	.m_master = 0,
++	.p_master = 0,
+ };
+ 
+ #endif /* _DMA_DW_INTERNAL_H */
+diff --git a/drivers/dma/dw/pci.c b/drivers/dma/dw/pci.c
+index 1142aa6f8c4a..47f0bbe8b1fe 100644
+--- a/drivers/dma/dw/pci.c
++++ b/drivers/dma/dw/pci.c
+@@ -60,10 +60,10 @@ static int dw_pci_probe(struct pci_dev *pdev, const struct pci_device_id *pid)
+ 	if (ret)
+ 		return ret;
+ 
+-	dw_dma_acpi_controller_register(chip->dw);
 -
--		ilan->xlat.hooks_registered = true;
- 	}
+ 	pci_set_drvdata(pdev, data);
  
- 	ila = kzalloc(sizeof(*ila), GFP_KERNEL);
++	dw_dma_acpi_controller_register(chip->dw);
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
