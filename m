@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E5C1DE3AA;
-	Mon,  6 Jan 2025 15:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3C01DDA2E;
+	Mon,  6 Jan 2025 15:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178376; cv=none; b=rDKrJZXRFp31fx8T+/qV2NmP4K8M2vRhqu+aDNldn+en1JKjW+e0pGoSfcNEhCxQ98kuTN96Y/9cTGNxwcHfca3/Pp9wjMBJKj1IUY1h4oXoecaKqRliBDIwZmvOf7F16+ZQCKQBWLz7Ihr8XEf6qmFbKiMjZz87evqLhFU/1hE=
+	t=1736178379; cv=none; b=FdV5DamcWkkoPauVktvgYJxtsSx8thjcQ60rqNNNMtUg6vvNQ7afd5j9NolxP68nhh6OpotGewdC+uNOtsHY8Xyd0rCpDHHSam+t+rn+DJhi7xmPMDEPKDb1fa+9wZgW37s8td6CeGNnTp9zSj+T+HQGWpIQ3teWTftb5+BCUcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178376; c=relaxed/simple;
-	bh=uNFalZ4QVssxYausFBSWmeBh6Kpw/WaUvSBoXiaBFx8=;
+	s=arc-20240116; t=1736178379; c=relaxed/simple;
+	bh=v6vV8t3+5Ljm8YKn6GsqJdDCBLd1PPIfSKjhtXibaBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDzYGppv4EbqPag0uPXQmE6mqAO5GLo6p/CcbN6YRj53hqWy8CNCU/Fv0qNwLnJUNeG2aXRmkPJgN/w5Sp8kDmSyhfm7hXCfm/ImwjW82RRgt0iK781w58Kuy8NglHq6vOkMJbRM7dzusShsaHgvf7Sg4JRdjicMDPWDNHcfcU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGOXP35b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dj2Et6YYWzuSYCHxWCIqhwfAmABd7u25ElF1BQj3Rvsq+3gJf4svRcwP70KXJW/O/OiNAy/zRX3mJC3qOib6ap8lU4B0yeB0eSzkN/1O3eEXFodXEpVMcxGQjRppmbJ12R6Fx3YGn2QcAEE56ojqTKRrZZmLd6onkbCHiqsbcQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5VS13Qn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGOXP35b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261C6C4CEE4;
-	Mon,  6 Jan 2025 15:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5VS13Qn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211AAC4CEE2;
+	Mon,  6 Jan 2025 15:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178376;
-	bh=uNFalZ4QVssxYausFBSWmeBh6Kpw/WaUvSBoXiaBFx8=;
+	s=korg; t=1736178379;
+	bh=v6vV8t3+5Ljm8YKn6GsqJdDCBLd1PPIfSKjhtXibaBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KGOXP35bZZlr6a/K09puWbRNFCM2roUTk/cXiR/gb5Q9I1VY4AX3E/1l/4+9hPxJ9
-	 99c8kDff7LNGlv7b5kOkvAO78aNX+f7IhbtTcTcPy/dYB/m3VVcZV+0hAewekGxLv2
-	 zk45Td5V0HPP4EKyGLbW/psqLiCKPURNhGbbBaAM=
+	b=z5VS13QnjZa8KOevhYh+wIzBQl6o/1ZsBtEy/RJ72cfRvemxkAP0BBzjE5GJOTVXM
+	 5H8SrjuzdGsAHBPsobyLD9XEy97HFWZZ7DTIh5AZHVbEm6uMKEGwg++TAgVmnOXTMN
+	 WlqdbXGUHozGloX6nFWy51oOsDLD1Tx+rRcJrpcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Desheng Wu <deshengwu@tencent.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Parav Pandit <parav@nvidia.com>,
+	Bodong Wang <bodong@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/138] zram: fix uninitialized ZRAM not releasing backing device
-Date: Mon,  6 Jan 2025 16:17:02 +0100
-Message-ID: <20250106151136.941319893@linuxfoundation.org>
+Subject: [PATCH 5.10 099/138] net/mlx5: Make API mlx5_core_is_ecpf accept const pointer
+Date: Mon,  6 Jan 2025 16:17:03 +0100
+Message-ID: <20250106151136.980890753@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -53,63 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 74363ec674cb172d8856de25776c8f3103f05e2f ]
+[ Upstream commit 3b1e58aa832ed537289be6a51a2015309688a90c ]
 
-Setting backing device is done before ZRAM initialization.  If we set the
-backing device, then remove the ZRAM module without initializing the
-device, the backing device reference will be leaked and the device will be
-hold forever.
+Subsequent patch implements helper API which has mlx5_core_dev
+as const pointer, make its caller API too const *.
 
-Fix this by always reset the ZRAM fully on rmmod or reset store.
-
-Link: https://lkml.kernel.org/r/20241209165717.94215-3-ryncsn@gmail.com
-Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reported-by: Desheng Wu <deshengwu@tencent.com>
-Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Reviewed-by: Bodong Wang <bodong@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: e05feab22fd7 ("RDMA/mlx5: Enforce same type port association for multiport RoCE")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ include/linux/mlx5/driver.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index 8e13586be8c9..05a46fbe0ea9 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1146,12 +1146,16 @@ static void zram_meta_free(struct zram *zram, u64 disksize)
- 	size_t num_pages = disksize >> PAGE_SHIFT;
- 	size_t index;
- 
-+	if (!zram->table)
-+		return;
-+
- 	/* Free all pages that are still in this zram device */
- 	for (index = 0; index < num_pages; index++)
- 		zram_free_page(zram, index);
- 
- 	zs_destroy_pool(zram->mem_pool);
- 	vfree(zram->table);
-+	zram->table = NULL;
+diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
+index 2cd89af4dbf6..30d7716675b4 100644
+--- a/include/linux/mlx5/driver.h
++++ b/include/linux/mlx5/driver.h
+@@ -1142,7 +1142,7 @@ static inline bool mlx5_core_is_vf(const struct mlx5_core_dev *dev)
+ 	return dev->coredev_type == MLX5_COREDEV_VF;
  }
  
- static bool zram_meta_alloc(struct zram *zram, u64 disksize)
-@@ -1694,11 +1698,6 @@ static void zram_reset_device(struct zram *zram)
- 
- 	zram->limit_pages = 0;
- 
--	if (!init_done(zram)) {
--		up_write(&zram->init_lock);
--		return;
--	}
--
- 	set_capacity_and_notify(zram->disk, 0);
- 	part_stat_set_all(&zram->disk->part0, 0);
- 
+-static inline bool mlx5_core_is_ecpf(struct mlx5_core_dev *dev)
++static inline bool mlx5_core_is_ecpf(const struct mlx5_core_dev *dev)
+ {
+ 	return dev->caps.embedded_cpu;
+ }
 -- 
 2.39.5
 
