@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF121514F6;
-	Mon,  6 Jan 2025 15:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410061422DD;
+	Mon,  6 Jan 2025 15:43:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178226; cv=none; b=Sjh20QDSKYEAw7oHhooCcqJPAmSd8aXjDtUyHC98ZPaaRF4rin1Bj6VDmpc37yJ2m7qXqcDvjpd/z83lLkmwlR1TG1Ea95gnga68awbC9BdHJ/fVCusTCiTGMGnoSSc1PJ5MHbMMeCwTDGfqRvOod/OialNNULCTvx1xBczIBVY=
+	t=1736178229; cv=none; b=NEx0s0sTdwRJ0Fq9hWb89CY1KYhtcQHGb/pHMv7uhTLkl8nYtGkQDJul95zKrq+rJx78VjndfDMUh9gb6AXr3NLXamK9CDYAmuwVpO7jDgG41tO8lp0cMGy1UOhfzDeNSbj9iMjYfGrMXiQcld/b+EtGW4qaKckAilTgR0oPyNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178226; c=relaxed/simple;
-	bh=tDvckh5ptd/CzVXwzS4ByGFqPEWwN3eF16+K9J3HiuI=;
+	s=arc-20240116; t=1736178229; c=relaxed/simple;
+	bh=oCZDH7FzNQt5J3WxPc/r/fbG+tPSqgc6pntVHebNDNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SD6KuQp1HHu+1bi1QEna9Z1Vy2U73eIOGiMH0gahhgrfYxT4uFy7Q6zRVddnIj8AfPbB6I5oKD3iojLIZisXJkTse+tk4xkXEB7Nni9M+dquaQSrosfOQcTjrNXpSXSWiwMlsAyxW655eKatjY792qWWKrl6vNzWwbXMhVtpAwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQMZ6AQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1SE05DKc0Blvdx20ngxX2lfDEHUpgZp2FLu6Wairltm9f6Ctll1ZrEPO7O1W5Wq3uqMLpRhMrcY38kZ83D5LCKPS+qGLQZXv+yPiulenPlR1byof49Np+nqm0pBRRQK5nalhpYDQyz4WR56GN5j8eJ7q7Py5l/K5Ap1qVVpBAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLE+FG8u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQMZ6AQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A3EC4CED6;
-	Mon,  6 Jan 2025 15:43:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLE+FG8u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0545C4CED2;
+	Mon,  6 Jan 2025 15:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178226;
-	bh=tDvckh5ptd/CzVXwzS4ByGFqPEWwN3eF16+K9J3HiuI=;
+	s=korg; t=1736178229;
+	bh=oCZDH7FzNQt5J3WxPc/r/fbG+tPSqgc6pntVHebNDNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jQMZ6AQqiQwyosbrI8cvCWpTioSGR3+tBT6i7hplhXaY41FOio1MqiTB5i8VLKiYJ
-	 Lt/jJ7B/opS648G156ZvvxnG7BLfxyTEmnx74LZrvV54FTsOQUkjKqqo6k6RvMndHL
-	 grhfW3adbhyUFpNheo7XL576wnwtaR6WMY5cpsZU=
+	b=gLE+FG8uMM4nNY0REQLQTwPmNb6Hzns37qwcupKD0riotlviGsk8MAO6kPRVU+m2g
+	 8S8pIPTRaP8+lMe0jQKI5Zu5O0Jc+5QV93PBYLr6EJgTmgNbz6bILwOKW5Ad4/TOGY
+	 O6zmGDY2rgPzWYNRrZwFowqnMwDJPljlaw9tcjo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <cong.wang@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 047/138] bpf: Check negative offsets in __bpf_skb_min_len()
-Date: Mon,  6 Jan 2025 16:16:11 +0100
-Message-ID: <20250106151135.018737467@linuxfoundation.org>
+	Prathamesh Shete <pshete@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 021/138] mmc: sdhci-tegra: Remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk
+Date: Mon,  6 Jan 2025 16:15:45 +0100
+Message-ID: <20250106151134.020780579@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,66 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-[ Upstream commit 9ecc4d858b92c1bb0673ad9c327298e600c55659 ]
+commit a56335c85b592cb2833db0a71f7112b7d9f0d56b upstream.
 
-skb_network_offset() and skb_transport_offset() can be negative when
-they are called after we pull the transport header, for example, when
-we use eBPF sockmap at the point of ->sk_data_ready().
+Value 0 in ADMA length descriptor is interpreted as 65536 on new Tegra
+chips, remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk to make sure max
+ADMA2 length is 65536.
 
-__bpf_skb_min_len() uses an unsigned int to get these offsets, this
-leads to a very large number which then causes bpf_skb_change_tail()
-failed unexpectedly.
-
-Fix this by using a signed int to get these offsets and ensure the
-minimum is at least zero.
-
-Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241213034057.246437-2-xiyou.wangcong@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4346b7c7941d ("mmc: tegra: Add Tegra186 support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Message-ID: <20241209101009.22710-1-pshete@nvidia.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/mmc/host/sdhci-tegra.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 0b61575df86e..b80203274d3f 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3710,13 +3710,22 @@ static const struct bpf_func_proto bpf_skb_adjust_room_proto = {
- 
- static u32 __bpf_skb_min_len(const struct sk_buff *skb)
- {
--	u32 min_len = skb_network_offset(skb);
-+	int offset = skb_network_offset(skb);
-+	u32 min_len = 0;
- 
--	if (skb_transport_header_was_set(skb))
--		min_len = skb_transport_offset(skb);
--	if (skb->ip_summed == CHECKSUM_PARTIAL)
--		min_len = skb_checksum_start_offset(skb) +
--			  skb->csum_offset + sizeof(__sum16);
-+	if (offset > 0)
-+		min_len = offset;
-+	if (skb_transport_header_was_set(skb)) {
-+		offset = skb_transport_offset(skb);
-+		if (offset > 0)
-+			min_len = offset;
-+	}
-+	if (skb->ip_summed == CHECKSUM_PARTIAL) {
-+		offset = skb_checksum_start_offset(skb) +
-+			 skb->csum_offset + sizeof(__sum16);
-+		if (offset > 0)
-+			min_len = offset;
-+	}
- 	return min_len;
- }
- 
--- 
-2.39.5
-
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -1379,7 +1379,6 @@ static const struct sdhci_pltfm_data sdh
+ 		  SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
+ 		  SDHCI_QUIRK_SINGLE_POWER_WRITE |
+ 		  SDHCI_QUIRK_NO_HISPD_BIT |
+-		  SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC |
+ 		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
+ 	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
+ 		   SDHCI_QUIRK2_BROKEN_HS200 |
 
 
