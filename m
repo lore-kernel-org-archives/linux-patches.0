@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295F11DDC3C;
-	Mon,  6 Jan 2025 16:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046B81DACBB;
+	Mon,  6 Jan 2025 16:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179234; cv=none; b=Z8f+EgZI4/LR++wAMY8EpsMk8Sg5YR7lN5A9yrcTMyFQTdcQ1z4uHl3zfV7hHsnhW4+W4Z4qCyV2PuERFJo2o5r3mG+wzZ/73MjbkqVDrMa2u5cxE9CWqrfgHalZScaYCYnA7P1jN5qrxIOAAYIzskDKnW4CjeaKPe2yAUyQh+w=
+	t=1736179237; cv=none; b=IOuHQS+l11tOqWhF6rbjq13kf/+FRiqLIjmSwxc7ybCwg+EYYC+6TaORC4oDilYpxMSSJT7zqJhyePzcVs7HuLyDFHEvOWlgweIl6dixwplyTYqHvc0nMPNk1fye8YAw/hsgrvkfF5eaEaunxo10fg7prYgO+SvWIMR9xPzWHJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179234; c=relaxed/simple;
-	bh=kcNb69z0vbkFBmF2Ms05vNs2fEP/XZNbbB+BCktxxro=;
+	s=arc-20240116; t=1736179237; c=relaxed/simple;
+	bh=piRadL81f02npEo/sLs6rBYKiy2p5ZvwQGOmE5crvrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CYM8GcqN+OEa9THE91Qagxa8ykRE1QzEsTvP6j5fYeW962D8qwCQSravxJ0QkHlebaytoRj6WKuF571cBzl3oDBaj7kEJa/q+LBBLVwSFsN7arZ6KNMfWvmHrxkbnItC6Alo8NbrXO4GT0FWqHR3fjQ9N5IjkFiph1s1ozTCF6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krKfnWb+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7UDjn527SH3fG02Wb+Gtejwg0TxyOGjjCcDARcGeSGmXqzXika6FjALcv0ba8/YB+k9D9jWZjvcYQjYSMHZiQAVIOErBN3lZ9oGSEZeoa2f2AC+60A+3Q1Is3ns5hibI/5HZRIgmnWOOwt4Ix/n+T8DAGMZ6fNQl/2jFwUgdgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zI9PJBx+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krKfnWb+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCECC4CEE1;
-	Mon,  6 Jan 2025 16:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zI9PJBx+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840DDC4CED6;
+	Mon,  6 Jan 2025 16:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179233;
-	bh=kcNb69z0vbkFBmF2Ms05vNs2fEP/XZNbbB+BCktxxro=;
+	s=korg; t=1736179236;
+	bh=piRadL81f02npEo/sLs6rBYKiy2p5ZvwQGOmE5crvrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krKfnWb++QGFME2KGLzBiTDyU125Hlk9OuxP0aomHmDqrJpxqnG7kBHCPvyx/e6BK
-	 C8iDlLjx/PpOwmwEx5CAuyNTxyITgUYxlYOeYrG7IpcSQRE5yU4DYvq4wUOXJiYUPi
-	 vuJTEUtd6Q1iAaEPoIYYHlqZkFasa2997ygD2plk=
+	b=zI9PJBx+0KwSzRa1sShp6l4UVMVCoi0bKxBMmcUIh9vf+9e2FJ6kfsftmdxFlOBLc
+	 heHun3iKlfTX3xcdIR72yRv/0wFWpGgAR2UseaGbYJhFnytzGdaRHEsRaZSBvr9gLb
+	 gRhtYO6sZ0ku/HUc7piCvsZVOGdnNnGIIIZQztBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bogdan Togorean <bogdan.togorean@analog.com>,
-	Andrzej Hajda <a.hajda@samsung.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Stefan Ekenberg <stefan.ekenberg@axis.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 70/93] drm: bridge: adv7511: Enable SPDIF DAI
-Date: Mon,  6 Jan 2025 16:17:46 +0100
-Message-ID: <20250106151131.347097888@linuxfoundation.org>
+Subject: [PATCH 5.4 71/93] drm/bridge: adv7511_audio: Update Audio InfoFrame properly
+Date: Mon,  6 Jan 2025 16:17:47 +0100
+Message-ID: <20250106151131.384120424@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -51,67 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bogdan Togorean <bogdan.togorean@analog.com>
+From: Stefan Ekenberg <stefan.ekenberg@axis.com>
 
-[ Upstream commit f7f436b99364a3904387eba613fc69853cc2f220 ]
+[ Upstream commit 902806baf3c1e8383c1fe3ff0b6042b8cb5c2707 ]
 
-ADV7511 support I2S or SPDIF as audio input interfaces. This commit
-enable support for SPDIF.
+AUDIO_UPDATE bit (Bit 5 of MAIN register 0x4A) needs to be set to 1
+while updating Audio InfoFrame information and then set to 0 when done.
+Otherwise partially updated Audio InfoFrames could be sent out. Two
+cases where this rule were not followed are fixed:
+ - In adv7511_hdmi_hw_params() make sure AUDIO_UPDATE bit is updated
+   before/after setting ADV7511_REG_AUDIO_INFOFRAME.
+ - In audio_startup() use the correct register for clearing
+   AUDIO_UPDATE bit.
 
-Signed-off-by: Bogdan Togorean <bogdan.togorean@analog.com>
-Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
-Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20200413113513.86091-1-bogdan.togorean@analog.com
-Stable-dep-of: 902806baf3c1 ("drm/bridge: adv7511_audio: Update Audio InfoFrame properly")
+The problem with corrupted audio infoframes were discovered by letting
+a HDMI logic analyser check the output of ADV7535.
+
+Note that this patchs replaces writing REG_GC(1) with
+REG_INFOFRAME_UPDATE. Bit 5 of REG_GC(1) is positioned within field
+GC_PP[3:0] and that field doesn't control audio infoframe and is read-
+only. My conclusion therefore was that the author if this code meant to
+clear bit 5 of REG_INFOFRAME_UPDATE from the very beginning.
+
+Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Fixes: 53c515befe28 ("drm/bridge: adv7511: Add Audio support")
+Signed-off-by: Stefan Ekenberg <stefan.ekenberg@axis.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241119-adv7511-audio-info-frame-v4-1-4ae68e76c89c@axis.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-index d05b3033b510..f101dd2819b5 100644
+index f101dd2819b5..0a1ac11e2e4f 100644
 --- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
 +++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-@@ -121,6 +121,9 @@ int adv7511_hdmi_hw_params(struct device *dev, void *data,
- 		audio_source = ADV7511_AUDIO_SOURCE_I2S;
- 		i2s_format = ADV7511_I2S_FORMAT_LEFT_J;
- 		break;
-+	case HDMI_SPDIF:
-+		audio_source = ADV7511_AUDIO_SOURCE_SPDIF;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-@@ -177,11 +180,21 @@ static int audio_startup(struct device *dev, void *data)
- 	/* use Audio infoframe updated info */
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(1),
- 				BIT(5), 0);
-+	/* enable SPDIF receiver */
-+	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
-+		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
-+				   BIT(7), BIT(7));
+@@ -147,7 +147,16 @@ int adv7511_hdmi_hw_params(struct device *dev, void *data,
+ 			   ADV7511_AUDIO_CFG3_LEN_MASK, len);
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_I2C_FREQ_ID_CFG,
+ 			   ADV7511_I2C_FREQ_ID_CFG_RATE_MASK, rate << 4);
+-	regmap_write(adv7511->regmap, 0x73, 0x1);
 +
++	/* send current Audio infoframe values while updating */
++	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
++			   BIT(5), BIT(5));
++
++	regmap_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME(0), 0x1);
++
++	/* use Audio infoframe updated info */
++	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
++			   BIT(5), 0);
+ 
  	return 0;
  }
- 
- static void audio_shutdown(struct device *dev, void *data)
- {
-+	struct adv7511 *adv7511 = dev_get_drvdata(dev);
+@@ -178,8 +187,9 @@ static int audio_startup(struct device *dev, void *data)
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(0),
+ 				BIT(7) | BIT(6), BIT(7));
+ 	/* use Audio infoframe updated info */
+-	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(1),
++	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
+ 				BIT(5), 0);
 +
-+	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
-+		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
-+				   BIT(7), 0);
- }
- 
- static int adv7511_hdmi_i2s_get_dai_id(struct snd_soc_component *component,
-@@ -215,6 +228,7 @@ static const struct hdmi_codec_pdata codec_data = {
- 	.ops = &adv7511_codec_ops,
- 	.max_i2s_channels = 2,
- 	.i2s = 1,
-+	.spdif = 1,
- };
- 
- int adv7511_audio_init(struct device *dev, struct adv7511 *adv7511)
+ 	/* enable SPDIF receiver */
+ 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
+ 		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
 -- 
 2.39.5
 
