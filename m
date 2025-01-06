@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2208E155352;
-	Mon,  6 Jan 2025 15:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3477200A3;
+	Mon,  6 Jan 2025 15:39:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177945; cv=none; b=u4Z12Weoa/PXvRyc9H3Ke+vXY2BTWpGRK/ffy4dpk8WZc8j83s/M4I3vMw3xNEHsvr95jbRHdV3eEfGq/nwunmu4H8u0N5LAGWiFwj5Gc0e7ESgr8GI8ZLAF6sDmE3t8FxmjKPb4Tfc3ovoalVZNB0KgDe9/ZAA0PKMzLPSgFuA=
+	t=1736177947; cv=none; b=vGaFB3l2SXT5Cj6UQaA9CYwXzieN7zAJ1lMqGh+TZAO0k0YcXrsZyhJo0+mhqgvkpuzMsd2Ec/h5Kj2NBYQhAoP3qaTOSOsStc8NtcphAf//kxhgN85WZ1F1zQfF6JDNhQLQJhqdWyq2V3+GRD76GsrRy1XzIeUgl+arfk3nbkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177945; c=relaxed/simple;
-	bh=8xnX6lzT+zuu5m6aJe96Cf7pkGRciPydmfpWMs3mkBc=;
+	s=arc-20240116; t=1736177947; c=relaxed/simple;
+	bh=GYstxlJ9kALKFrB9U9pPGwsyzENcrQIXic+Un5ykbdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K5XU9H3ZV/XgApO2gWCVlA4pyARuhv5rZ9GrlU8/paCjr/dv7qmYHeY/HtuCavn0DzzWgM22JTZxLpJP47vpLdq5Hi4I6ZIaixjjAoNR3QmKjxQuXQx8+8KEbzmH1/ZmaPg5RoJh7EZOJoU5mHVHykQSSvO/z+smke8fC34iemE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwMkkA5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ICMJFV2q2G+OObkfKhlBtiWDylezvVzVRy84Hc57mtU9F86CNYGbQ6kDzhdvh7REh+IJ36SoYc4IRGEqe2J/+0jDceLZQOMLUNg11eSnXo9gBen/1ACKunHaYQWG1vHFVL5/GgPU9C615qOKQtUqfuNHLpwMjDUzobKX9UBOmtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM+WjXv5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwMkkA5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FBCC4CED2;
-	Mon,  6 Jan 2025 15:39:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM+WjXv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDB2C4CED2;
+	Mon,  6 Jan 2025 15:39:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177944;
-	bh=8xnX6lzT+zuu5m6aJe96Cf7pkGRciPydmfpWMs3mkBc=;
+	s=korg; t=1736177947;
+	bh=GYstxlJ9kALKFrB9U9pPGwsyzENcrQIXic+Un5ykbdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwMkkA5YuuIVx6eFQ/bIDT1sDlmIzwpwIhNZq/Uf+PHWJ2cJsbFk5rGBHDCCgvJY2
-	 1u/xnF5U3aghf++5sN+1gkBCKbbppQltovx6L8XnEDtckHUAWyNGmJ80XQ6wHOjtnL
-	 KTZCiemUpGbieo0wtA/ECM4T8nl1zL4IgjYFiOq8=
+	b=qM+WjXv59eyCBCCoEknCrvp5jJTPm0RgRquAkPB5LwSnFWDjp+e1UeBPWNarO+84h
+	 GQdacqBUrG1TEyr9wfPY4oCxswKYODFss70XyAnVD8A8OAZ/0SisfYM/HSrQtFVHBP
+	 nb0seu3gII0z5AwrLY3mJY3dnwQDQiqkiv6bKD9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 109/156] kbuild: pacman-pkg: provide versioned linux-api-headers package
-Date: Mon,  6 Jan 2025 16:16:35 +0100
-Message-ID: <20250106151145.833430706@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 110/156] Revert "ALSA: ump: Dont enumeration invalid groups for legacy rawmidi"
+Date: Mon,  6 Jan 2025 16:16:36 +0100
+Message-ID: <20250106151145.871036269@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -46,47 +43,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 385443057f475e775fe1c66e77d4be9727f40973 ]
+commit abbff41b6932cde359589fd51f4024b7c85f366b upstream.
 
-The Arch Linux glibc package contains a versioned dependency on
-"linux-api-headers". If the linux-api-headers package provided by
-pacman-pkg does not specify an explicit version this dependency is not
-satisfied.
-Fix the dependency by providing an explicit version.
+This reverts commit c2d188e137e77294323132a760a4608321a36a70.
 
-Fixes: c8578539deba ("kbuild: add script and target to generate pacman package")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Although it's fine to filter the invalid UMP groups at the first probe
+time, this will become a problem when UMP groups are updated and
+(re-)activated.  Then there is no way to re-add the substreams
+properly for the legacy rawmidi, and the new active groups will be
+still invisible.
+
+So let's revert the change.  This will move back to showing the full
+16 groups, but it's better than forever lost.
+
+Link: https://patch.msgid.link/20241230114023.3787-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/package/PKGBUILD | 2 +-
+ sound/core/ump.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/package/PKGBUILD b/scripts/package/PKGBUILD
-index f83493838cf9..dca706617adc 100644
---- a/scripts/package/PKGBUILD
-+++ b/scripts/package/PKGBUILD
-@@ -103,7 +103,7 @@ _package-headers() {
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index fe4d39ae1159..9198bff4768c 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -1244,7 +1244,7 @@ static int fill_legacy_mapping(struct snd_ump_endpoint *ump)
  
- _package-api-headers() {
- 	pkgdesc="Kernel headers sanitized for use in userspace"
--	provides=(linux-api-headers)
-+	provides=(linux-api-headers="${pkgver}")
- 	conflicts=(linux-api-headers)
+ 	num = 0;
+ 	for (i = 0; i < SNDRV_UMP_MAX_GROUPS; i++)
+-		if ((group_maps & (1U << i)) && ump->groups[i].valid)
++		if (group_maps & (1U << i))
+ 			ump->legacy_mapping[num++] = i;
  
- 	_prologue
+ 	return num;
 -- 
-2.39.5
+2.47.1
 
 
 
