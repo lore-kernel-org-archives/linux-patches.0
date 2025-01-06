@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C445D42040;
-	Mon,  6 Jan 2025 15:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8407BBA34;
+	Mon,  6 Jan 2025 15:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178480; cv=none; b=XgD7RG08kzjgwcS4NsOfKKXCT6VykdbeF2P5fvYwso/MtkLSJZQCDF1NLL0MEzO+AB8D19Pg8foGoFAewnaQOLUyTH76IuwlCIgl2mqrr/ukYRITe5L41ftDk0gFxsnUe0FM2XfcCq8GluzSICwJod/0vwZQ8cBcJWvlGseEMeM=
+	t=1736178483; cv=none; b=Y10XmoonYLPkRT4fxjtZkTwliRbwvrdq5LOAJ25LRlCTnxsBRHZAWhxp2WMzV5ts560E6O1jqCjAw5YU+OLc1bLHuF1Z//+v7xY0eUPFD/USZrA+hbuNLQSlDRrxdP3+Nkqwx5Qk+VK+It61IqhvjUFgu2Z4yRHHVV2zuYPM3X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178480; c=relaxed/simple;
-	bh=5Le5pmZUgGeRmp9P23/rfgcGx/ZiQrLNyDxTUPVCAy4=;
+	s=arc-20240116; t=1736178483; c=relaxed/simple;
+	bh=m4pq9fJKIf+y0nV7hA/ot3CdhVNCcY4akJDfUiuxRz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RsxMNXP5SE6Y5iQ/+NmPZE7YroCZJAmGqfEC1sU+7pRML67oJ2iIRnHF0Cj9bIp0Gf+ZnyN3EpM1K+BdVuDqURmY1cxYIxuyE6C4aiT5Dtl4MUhWH8ZAFO4jt2vSojwFay9QavdwhnRgJXZBDfJtJ4+EY5G7VPZs0IznUxtcDCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Qk1IHu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEtHSPZE9MoFrDX+EDzYkeJ+XoOu44Mx6srkOGVundGCvZJfHrs2CLdJSJ80C3I10V/GNIiiX+iaBJovV9sFGUU5DecorTPxvpBqqn9XYCM5pNwycW7i7FfNDZnaa436pSlwNswcvZnAtEHWh/UCQbQmzFC6b8/h3QHQhyEPw3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js8+mwj+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Qk1IHu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED24BC4CED2;
-	Mon,  6 Jan 2025 15:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js8+mwj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F170FC4CED2;
+	Mon,  6 Jan 2025 15:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178480;
-	bh=5Le5pmZUgGeRmp9P23/rfgcGx/ZiQrLNyDxTUPVCAy4=;
+	s=korg; t=1736178483;
+	bh=m4pq9fJKIf+y0nV7hA/ot3CdhVNCcY4akJDfUiuxRz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Qk1IHu5de/1d0/NAhaRB4xVERjFcdnopTteGMYy/TueSAdsHi1LRou9kN+/t6gxj
-	 TW5EMqcnupBaCBxzKnZZZeznYPbVCrVKkwg2OQZ5C1Zd8dgcrda2pEUoFzZfzuFPFM
-	 XUfxOHVTsxxlQtyIDDcWYHOUlwg8W+qOBOS/PI18=
+	b=js8+mwj+AcOwzwlfIMMJ19f4la1S+pdgVIXwZCucPIj/SglckwKq2YoyrlVs7D2e0
+	 sFcE69d0VQ38xse7WLQ08FrtVxSg/SR8fZ+jEtXpLRMAHhpxsSRd64aWCYYNnm7mHR
+	 cUMhxlI7TARdoN4vMmbTRt46QiX65hXKnh5NiCbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 133/138] RDMA/uverbs: Prevent integer overflow issue
-Date: Mon,  6 Jan 2025 16:17:37 +0100
-Message-ID: <20250106151138.268701511@linuxfoundation.org>
+	Evgenii Shatokhin <e.shatokhin@yadro.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.10 134/138] pinctrl: mcp23s08: Fix sleeping in atomic context due to regmap locking
+Date: Mon,  6 Jan 2025 16:17:38 +0100
+Message-ID: <20250106151138.306225254@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -50,74 +50,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Evgenii Shatokhin <e.shatokhin@yadro.com>
 
-commit d0257e089d1bbd35c69b6c97ff73e3690ab149a9 upstream.
+commit a37eecb705f33726f1fb7cd2a67e514a15dfe693 upstream.
 
-In the expression "cmd.wqe_size * cmd.wr_count", both variables are u32
-values that come from the user so the multiplication can lead to integer
-wrapping.  Then we pass the result to uverbs_request_next_ptr() which also
-could potentially wrap.  The "cmd.sge_count * sizeof(struct ib_uverbs_sge)"
-multiplication can also overflow on 32bit systems although it's fine on
-64bit systems.
+If a device uses MCP23xxx IO expander to receive IRQs, the following
+bug can happen:
 
-This patch does two things.  First, I've re-arranged the condition in
-uverbs_request_next_ptr() so that the use controlled variable "len" is on
-one side of the comparison by itself without any math.  Then I've modified
-all the callers to use size_mul() for the multiplications.
+  BUG: sleeping function called from invalid context
+    at kernel/locking/mutex.c:283
+  in_atomic(): 1, irqs_disabled(): 1, non_block: 0, ...
+  preempt_count: 1, expected: 0
+  ...
+  Call Trace:
+  ...
+  __might_resched+0x104/0x10e
+  __might_sleep+0x3e/0x62
+  mutex_lock+0x20/0x4c
+  regmap_lock_mutex+0x10/0x18
+  regmap_update_bits_base+0x2c/0x66
+  mcp23s08_irq_set_type+0x1ae/0x1d6
+  __irq_set_trigger+0x56/0x172
+  __setup_irq+0x1e6/0x646
+  request_threaded_irq+0xb6/0x160
+  ...
 
-Fixes: 67cdb40ca444 ("[IB] uverbs: Implement more commands")
+We observed the problem while experimenting with a touchscreen driver which
+used MCP23017 IO expander (I2C).
+
+The regmap in the pinctrl-mcp23s08 driver uses a mutex for protection from
+concurrent accesses, which is the default for regmaps without .fast_io,
+.disable_locking, etc.
+
+mcp23s08_irq_set_type() calls regmap_update_bits_base(), and the latter
+locks the mutex.
+
+However, __setup_irq() locks desc->lock spinlock before calling these
+functions. As a result, the system tries to lock the mutex whole holding
+the spinlock.
+
+It seems, the internal regmap locks are not needed in this driver at all.
+mcp->lock seems to protect the regmap from concurrent accesses already,
+except, probably, in mcp_pinconf_get/set.
+
+mcp23s08_irq_set_type() and mcp23s08_irq_mask/unmask() are called under
+chip_bus_lock(), which calls mcp23s08_irq_bus_lock(). The latter takes
+mcp->lock and enables regmap caching, so that the potentially slow I2C
+accesses are deferred until chip_bus_unlock().
+
+The accesses to the regmap from mcp23s08_probe_one() do not need additional
+locking.
+
+In all remaining places where the regmap is accessed, except
+mcp_pinconf_get/set(), the driver already takes mcp->lock.
+
+This patch adds locking in mcp_pinconf_get/set() and disables internal
+locking in the regmap config. Among other things, it fixes the sleeping
+in atomic context described above.
+
+Fixes: 8f38910ba4f6 ("pinctrl: mcp23s08: switch to regmap caching")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/b8765ab3-c2da-4611-aae0-ddd6ba173d23@stanley.mountain
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Evgenii Shatokhin <e.shatokhin@yadro.com>
+Link: https://lore.kernel.org/20241209074659.1442898-1-e.shatokhin@yadro.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/uverbs_cmd.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/pinctrl/pinctrl-mcp23s08.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/infiniband/core/uverbs_cmd.c
-+++ b/drivers/infiniband/core/uverbs_cmd.c
-@@ -161,7 +161,7 @@ static const void __user *uverbs_request
- {
- 	const void __user *res = iter->cur;
+--- a/drivers/pinctrl/pinctrl-mcp23s08.c
++++ b/drivers/pinctrl/pinctrl-mcp23s08.c
+@@ -84,6 +84,7 @@ const struct regmap_config mcp23x08_regm
+ 	.num_reg_defaults = ARRAY_SIZE(mcp23x08_defaults),
+ 	.cache_type = REGCACHE_FLAT,
+ 	.max_register = MCP_OLAT,
++	.disable_locking = true, /* mcp->lock protects the regmap */
+ };
+ EXPORT_SYMBOL_GPL(mcp23x08_regmap);
  
--	if (iter->cur + len > iter->end)
-+	if (len > iter->end - iter->cur)
- 		return (void __force __user *)ERR_PTR(-ENOSPC);
- 	iter->cur += len;
- 	return res;
-@@ -2004,11 +2004,13 @@ static int ib_uverbs_post_send(struct uv
- 	ret = uverbs_request_start(attrs, &iter, &cmd, sizeof(cmd));
- 	if (ret)
- 		return ret;
--	wqes = uverbs_request_next_ptr(&iter, cmd.wqe_size * cmd.wr_count);
-+	wqes = uverbs_request_next_ptr(&iter, size_mul(cmd.wqe_size,
-+						       cmd.wr_count));
- 	if (IS_ERR(wqes))
- 		return PTR_ERR(wqes);
--	sgls = uverbs_request_next_ptr(
--		&iter, cmd.sge_count * sizeof(struct ib_uverbs_sge));
-+	sgls = uverbs_request_next_ptr(&iter,
-+				       size_mul(cmd.sge_count,
-+						sizeof(struct ib_uverbs_sge)));
- 	if (IS_ERR(sgls))
- 		return PTR_ERR(sgls);
- 	ret = uverbs_request_finish(&iter);
-@@ -2194,11 +2196,11 @@ ib_uverbs_unmarshall_recv(struct uverbs_
- 	if (wqe_size < sizeof (struct ib_uverbs_recv_wr))
- 		return ERR_PTR(-EINVAL);
+@@ -130,6 +131,7 @@ const struct regmap_config mcp23x17_regm
+ 	.num_reg_defaults = ARRAY_SIZE(mcp23x17_defaults),
+ 	.cache_type = REGCACHE_FLAT,
+ 	.val_format_endian = REGMAP_ENDIAN_LITTLE,
++	.disable_locking = true, /* mcp->lock protects the regmap */
+ };
+ EXPORT_SYMBOL_GPL(mcp23x17_regmap);
  
--	wqes = uverbs_request_next_ptr(iter, wqe_size * wr_count);
-+	wqes = uverbs_request_next_ptr(iter, size_mul(wqe_size, wr_count));
- 	if (IS_ERR(wqes))
- 		return ERR_CAST(wqes);
--	sgls = uverbs_request_next_ptr(
--		iter, sge_count * sizeof(struct ib_uverbs_sge));
-+	sgls = uverbs_request_next_ptr(iter, size_mul(sge_count,
-+						      sizeof(struct ib_uverbs_sge)));
- 	if (IS_ERR(sgls))
- 		return ERR_CAST(sgls);
- 	ret = uverbs_request_finish(iter);
+@@ -227,7 +229,9 @@ static int mcp_pinconf_get(struct pinctr
+ 
+ 	switch (param) {
+ 	case PIN_CONFIG_BIAS_PULL_UP:
++		mutex_lock(&mcp->lock);
+ 		ret = mcp_read(mcp, MCP_GPPU, &data);
++		mutex_unlock(&mcp->lock);
+ 		if (ret < 0)
+ 			return ret;
+ 		status = (data & BIT(pin)) ? 1 : 0;
+@@ -256,7 +260,9 @@ static int mcp_pinconf_set(struct pinctr
+ 
+ 		switch (param) {
+ 		case PIN_CONFIG_BIAS_PULL_UP:
++			mutex_lock(&mcp->lock);
+ 			ret = mcp_set_bit(mcp, MCP_GPPU, pin, arg);
++			mutex_unlock(&mcp->lock);
+ 			break;
+ 		default:
+ 			dev_dbg(mcp->dev, "Invalid config param %04x\n", param);
 
 
