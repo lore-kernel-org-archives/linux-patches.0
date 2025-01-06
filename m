@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12738155389;
-	Mon,  6 Jan 2025 15:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184BB16DEBB;
+	Mon,  6 Jan 2025 15:32:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177528; cv=none; b=HPBYKnJiGjAyNc2vQ46az9nhsNx/k+y8NIp0gqcSGCkJWGfVyK2rTbhIT6bXDc3pvgUE1BANQg0lBCo/hOVsBumCwIdn9p13Wx9fpVXOzxqv8Cvb+gRjWnjspgBUlbtuH/rwiNUoUFwFgY5XEwGjMzBA9R343y+NDXOdmHHLG1M=
+	t=1736177529; cv=none; b=VQZi99G4V/rxbAwc0fWBD+INK5g97CsjhhLkNAL2ouYeSiWbpYVod8ooAkXj8oh+1ngTO8vmm5PMFcXLNRIuTy3NkOfctkLyyZjPU+fdemiKgBzYWCGRX87cFdzIrvR6o0I6KDhpoHAawT3aMmcPeATgMvrkihFFB7umijGtBR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177528; c=relaxed/simple;
-	bh=GfvMgxDZdqEabQCnGEQBSUYIbrLA3OwS32YELzmLD9A=;
+	s=arc-20240116; t=1736177529; c=relaxed/simple;
+	bh=DUa6QxOCtMLT0pFMz60PRkv1xvDMJ8lV13DRv6+vi+Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=brZ+cauZyPxW6Y7g3Gk99GYwLJdezRjz+eKcMjP2S6IQXRuuGSh9aivEDeGQxR/RDXhH0XiWOjE+cD0RjSebtpEi3xDAV4f2EgveGpxLneCCaGikUwpFQPwiS8fBCL8TxAVBGw/aw2aY88C0E9NrQwu/ApDbhmyJcuvLAziS3SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9oMSBDv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZPpn9whJ1ceLndhIwsOjBH19Eg8Vv/8rjCinOioUfyyVI8Vdl2EPZNaboLBj0Bd6TqAMeAPdS3IQvXaTa2OTaM19IlVib7rn37Cy8rlxQClbiyLdkX46IDReEaGmMFyvnyqfFT+t9t5TrkcxSy4JlIhludQIxljG3OYMr14J2q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hWhqeyvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9oMSBDv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7668AC4CED6;
-	Mon,  6 Jan 2025 15:32:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hWhqeyvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E20AC4CEDF;
+	Mon,  6 Jan 2025 15:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177524;
-	bh=GfvMgxDZdqEabQCnGEQBSUYIbrLA3OwS32YELzmLD9A=;
+	s=korg; t=1736177527;
+	bh=DUa6QxOCtMLT0pFMz60PRkv1xvDMJ8lV13DRv6+vi+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j9oMSBDvF0fHDxvpmCCl6VxI83bWIX02oCC73PzAEkepBZdKLvTYdQT+mP0P7axlO
-	 jEoM+BdNIVfne+8wHDx8IfPIblbsJu0loHT8wJ8lQ7+xSZFGg14HtJcOBSvIVoZYXO
-	 bUsX+7NUEyywqLT9ElQ6RIra/nulrpQB4WdDXy3U=
+	b=hWhqeyvEZLAMbM9YbqJl00JVj8wu8BBbj7QUiza1kraCTkH8RpBozIwneeHgdfIno
+	 fRic2n9h5VuHjYDE0VbBb+8uFNMUxzzcqZvLZSZk9fa4ksorfN7iUib1FXbelCyUNn
+	 ZnHnQb7Pql/KPDk9YKzsZEn0giMwiaK8WaQEoiHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Lior Nahmanson <liorna@nvidia.com>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 160/222] net/mlx5e: macsec: Maintain TX SA from encoding_sa
-Date: Mon,  6 Jan 2025 16:16:04 +0100
-Message-ID: <20250106151156.817864274@linuxfoundation.org>
+Subject: [PATCH 6.6 161/222] net/mlx5e: Skip restore TC rules for vport rep without loaded flag
+Date: Mon,  6 Jan 2025 16:16:05 +0100
+Message-ID: <20250106151156.856331380@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -54,61 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 8c6254479b3d5bd788d2b5fefaa48fb194331ed0 ]
+[ Upstream commit 5a03b368562a7ff5f5f1f63b5adf8309cbdbd5be ]
 
-In MACsec, it is possible to create multiple active TX SAs on a SC,
-but only one such SA can be used at a time for transmission. This SA
-is selected through the encoding_sa link parameter.
+During driver unload, unregister_netdev is called after unloading
+vport rep. So, the mlx5e_rep_priv is already freed while trying to get
+rpriv->netdev, or walk rpriv->tc_ht, which results in use-after-free.
+So add the checking to make sure access the data of vport rep which is
+still loaded.
 
-When there are 2 or more active TX SAs configured (encoding_sa=0):
-  ip macsec add macsec0 tx sa 0 pn 1 on key 00 <KEY1>
-  ip macsec add macsec0 tx sa 1 pn 1 on key 00 <KEY2>
-
-... the traffic should be still sent via TX SA 0 as the encoding_sa was
-not changed. However, the driver ignores the encoding_sa and overrides
-it to SA 1 by installing the flow steering id of the newly created TX SA
-into the SCI -> flow steering id hash map. The future packet tx
-descriptors will point to the incorrect flow steering rule (SA 1).
-
-This patch fixes the issue by avoiding the creation of the flow steering
-rule for an active TX SA that is not the encoding_sa. The driver side
-tx_sa object and the FW side macsec object are still created. When the
-encoding_sa link parameter is changed to another active TX SA, only the
-new flow steering rule will be created in the mlx5e_macsec_upd_txsa()
-handler.
-
-Fixes: 8ff0ac5be144 ("net/mlx5: Add MACsec offload Tx command support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Lior Nahmanson <liorna@nvidia.com>
+Fixes: d1569537a837 ("net/mlx5e: Modify and restore TC rules for IPSec TX rules")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241220081505.1286093-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20241220081505.1286093-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c     | 6 +++---
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch.h          | 3 +++
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 3 ---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-index cc9bcc420032..6ab02f3fc291 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-@@ -339,9 +339,13 @@ static int mlx5e_macsec_init_sa_fs(struct macsec_context *ctx,
- {
- 	struct mlx5e_priv *priv = macsec_netdev_priv(ctx->netdev);
- 	struct mlx5_macsec_fs *macsec_fs = priv->mdev->macsec_fs;
-+	const struct macsec_tx_sc *tx_sc = &ctx->secy->tx_sc;
- 	struct mlx5_macsec_rule_attrs rule_attrs;
- 	union mlx5_macsec_rule *macsec_rule;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
+index 13b5916b64e2..eed8fcde2613 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/ipsec_fs.c
+@@ -150,11 +150,11 @@ void mlx5_esw_ipsec_restore_dest_uplink(struct mlx5_core_dev *mdev)
+ 	unsigned long i;
+ 	int err;
  
-+	if (is_tx && tx_sc->encoding_sa != sa->assoc_num)
-+		return 0;
+-	xa_for_each(&esw->offloads.vport_reps, i, rep) {
+-		rpriv = rep->rep_data[REP_ETH].priv;
+-		if (!rpriv || !rpriv->netdev)
++	mlx5_esw_for_each_rep(esw, i, rep) {
++		if (atomic_read(&rep->rep_data[REP_ETH].state) != REP_LOADED)
+ 			continue;
+ 
++		rpriv = rep->rep_data[REP_ETH].priv;
+ 		rhashtable_walk_enter(&rpriv->tc_ht, &iter);
+ 		rhashtable_walk_start(&iter);
+ 		while ((flow = rhashtable_walk_next(&iter)) != NULL) {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 9b771b572593..3e58e731b569 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -713,6 +713,9 @@ void mlx5e_tc_clean_fdb_peer_flows(struct mlx5_eswitch *esw);
+ 			  MLX5_CAP_GEN_2((esw->dev), ec_vf_vport_base) +\
+ 			  (last) - 1)
+ 
++#define mlx5_esw_for_each_rep(esw, i, rep) \
++	xa_for_each(&((esw)->offloads.vport_reps), i, rep)
 +
- 	rule_attrs.macsec_obj_id = sa->macsec_obj_id;
- 	rule_attrs.sci = sa->sci;
- 	rule_attrs.assoc_num = sa->assoc_num;
+ struct mlx5_eswitch *__must_check
+ mlx5_devlink_eswitch_get(struct devlink *devlink);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 58529d1a98b3..7eba3a5bb97c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -52,9 +52,6 @@
+ #include "lag/lag.h"
+ #include "en/tc/post_meter.h"
+ 
+-#define mlx5_esw_for_each_rep(esw, i, rep) \
+-	xa_for_each(&((esw)->offloads.vport_reps), i, rep)
+-
+ /* There are two match-all miss flows, one for unicast dst mac and
+  * one for multicast.
+  */
 -- 
 2.39.5
 
