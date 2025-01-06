@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B6D14900B;
-	Mon,  6 Jan 2025 15:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD54F146D6B;
+	Mon,  6 Jan 2025 15:27:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177226; cv=none; b=XiwtTh7dMwMS5jgZzOXf4DajlLJG2RRRAX8rgEVx91bg58mjtNFnW/ldCjW3faFbg37nTiozYfppKxSgsGCQQiKZf9lwOq6J6JVLjdrRfomALzDGVk3ehFWDY232uMtLE1e51ggAMttGnMJ0paBypTcUcnaQC0j64//EnqTJx38=
+	t=1736177229; cv=none; b=TI5v++wREPXF3oBQ41uZxJylLAalT4NbSDp4vt+Nl9yFh779xtQ9VPgwAgrkYYyyN8Kz1D903NQk9Q0ffSYAxQjV9O8PLww+2MNzBhCIkMFOlRKvBDfVihExOpFzgDJb2jqsgjkW1luREjFdL3PmzIWmvoCzmTmAMyK6kVvD/EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177226; c=relaxed/simple;
-	bh=MBxd3thoNJtQTIRqIjiT5Vb9I0hLhRSwYNItWIE5WC4=;
+	s=arc-20240116; t=1736177229; c=relaxed/simple;
+	bh=0nZzcW+NKu3IAyR93dr2ebOP5UXptWyX8oG8Ovw7gpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mt3noQskARxD4g/5ttPtsRTrunCqCtte8t1bvBwAhbRtMt7/et69tJ04Y2jlFkFKahjdsielg20FmZMEzn3ima+10nf9HlDwYwTGEdXRm9TdXjVELrKIA6RDFqc3IFL39SzOFD4o4KycjHDxr3U+2hg4igXiw7Tn0xKfYKs/6NI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHRoBlPI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYAL59ZyuvnNPyZ2NOhIrBSHU4IoHzsUMR6o4bXvVaHQE32n/wi5OVFxYCQJOxKcCFmY7PR+f553xM26y5wcWIBC54VA/nczfB1EaGItkLS1vXVMoc7DdtL+8lRjcjtlgEi1+347AMOB+ZbefwejYyj9XKA9A0l1KSLpRLv9iIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfEu6hsO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHRoBlPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A86C4CED2;
-	Mon,  6 Jan 2025 15:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfEu6hsO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60BDC4CEE3;
+	Mon,  6 Jan 2025 15:27:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177226;
-	bh=MBxd3thoNJtQTIRqIjiT5Vb9I0hLhRSwYNItWIE5WC4=;
+	s=korg; t=1736177229;
+	bh=0nZzcW+NKu3IAyR93dr2ebOP5UXptWyX8oG8Ovw7gpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHRoBlPIMveptkhuaFz8AmYJenFCycZr3kwlF6jy6bI/qzPLJaE5gHjpsM2Ld5c3L
-	 Oss/VW+MmI8GrAdtcQKJ9haeTXYbJBnQ/27+jd07jY2nTFGOH6iQF6ZOP8CedltNUV
-	 MW8dI4sLcStqk2M9xpYDZBQoNtYZwKXJoz2HYDRo=
+	b=hfEu6hsO4JJpKwS+qLDeh62WDBve4hXkbNOphpvyiYjL/mCHmLEEpv5f2DXg+Kuy0
+	 3T8DuvTfOIvZ8S8R8E44SqjwtWCNmHH8BM5lyGR5olLHZ8cXhu+Ao00R+g3y3e8tMj
+	 RzlGka1RrXdJfXsz+cMY/zlDaZUzF0g3GOFZuVxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/222] iio: adc: ad7192: properly check spi_get_device_match_data()
-Date: Mon,  6 Jan 2025 16:14:26 +0100
-Message-ID: <20250106151152.955618405@linuxfoundation.org>
+Subject: [PATCH 6.6 063/222] usb: typec: ucsi: add callback for connector status updates
+Date: Mon,  6 Jan 2025 16:14:27 +0100
+Message-ID: <20250106151152.993794503@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,35 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit b7f99fa1b64af2f696b13cec581cb4cd7d3982b8 ]
+[ Upstream commit 24bce22d09ec8e67022aab9a888acb56fb7a996a ]
 
-spi_get_device_match_data() can return a NULL pointer. Hence, let's
-check for it.
+Allow UCSI glue driver to perform addtional work to update connector
+status. For example, it might check the cable orientation.  This call is
+performed after reading new connector statatus, so the platform driver
+can peek at new connection status bits.
 
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20241014-fix-error-check-v1-1-089e1003d12f@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The callback is called both when registering the port and when the
+connector change event is being handled.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20240411-ucsi-orient-aware-v2-1-d4b1cb22a33f@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: de9df030ccb5 ("usb: typec: ucsi: glink: be more precise on orientation-aware ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+ drivers/usb/typec/ucsi/ucsi.h | 3 +++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
-index ecaf87af539b..fa6810aa6a4a 100644
---- a/drivers/iio/adc/ad7192.c
-+++ b/drivers/iio/adc/ad7192.c
-@@ -1039,6 +1039,9 @@ static int ad7192_probe(struct spi_device *spi)
- 	st->int_vref_mv = ret / 1000;
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index f6fb5575d4f0..3f7039a711c7 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -903,6 +903,9 @@ static void ucsi_handle_connector_change(struct work_struct *work)
  
- 	st->chip_info = spi_get_device_match_data(spi);
-+	if (!st->chip_info)
-+		return -ENODEV;
+ 	trace_ucsi_connector_change(con->num, &con->status);
+ 
++	if (ucsi->ops->connector_status)
++		ucsi->ops->connector_status(con);
 +
- 	indio_dev->name = st->chip_info->name;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
  
+ 	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
+@@ -1322,6 +1325,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
+ 	}
+ 	ret = 0; /* ucsi_send_command() returns length on success */
+ 
++	if (ucsi->ops->connector_status)
++		ucsi->ops->connector_status(con);
++
+ 	switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
+ 	case UCSI_CONSTAT_PARTNER_TYPE_UFP:
+ 	case UCSI_CONSTAT_PARTNER_TYPE_CABLE_AND_UFP:
+diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
+index 42c60eba5fb6..3d23b52cf5a9 100644
+--- a/drivers/usb/typec/ucsi/ucsi.h
++++ b/drivers/usb/typec/ucsi/ucsi.h
+@@ -15,6 +15,7 @@
+ 
+ struct ucsi;
+ struct ucsi_altmode;
++struct ucsi_connector;
+ struct dentry;
+ 
+ /* UCSI offsets (Bytes) */
+@@ -52,6 +53,7 @@ struct dentry;
+  * @sync_write: Blocking write operation
+  * @async_write: Non-blocking write operation
+  * @update_altmodes: Squashes duplicate DP altmodes
++ * @connector_status: Updates connector status, called holding connector lock
+  *
+  * Read and write routines for UCSI interface. @sync_write must wait for the
+  * Command Completion Event from the PPM before returning, and @async_write must
+@@ -66,6 +68,7 @@ struct ucsi_operations {
+ 			   const void *val, size_t val_len);
+ 	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
+ 				struct ucsi_altmode *updated);
++	void (*connector_status)(struct ucsi_connector *con);
+ };
+ 
+ struct ucsi *ucsi_create(struct device *dev, const struct ucsi_operations *ops);
 -- 
 2.39.5
 
