@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC326146D40;
-	Mon,  6 Jan 2025 15:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B28DF71;
+	Mon,  6 Jan 2025 15:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178133; cv=none; b=sWZvK6G3p1yJ59DXYi3VU0c7s8NhyQWLQBu8AemJT9n6Non3imw+S3dIKGZ8zGbE+Rc1j7K1c1GSNvcaG2jmciU+Aa0u+ULbrE4SVgLAL8gwU1TfQh605f9ORvlk2nb4Klu/8Biz/Hc4h9RP9L0jqcCx811G19Q/aoU42miQvjw=
+	t=1736178135; cv=none; b=lG4z6+OolJ/pEIsBPcO+cCNVPZ3P+ECdUKXIhq/8pWkhl10MvRMzRVsLTa47m+I9NKX4C+OA8E7XBDhDRZFcHnG40v191n31GXi0tW1kjqN0iI4CtXJJE3ip8eqk8tZxUivWWn49CexP6RH/lLZWCDv464DK16Hdxyj6K4ieQl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178133; c=relaxed/simple;
-	bh=AZjbOWTy4+TWmIPF7wDqQeF/Xx5fMVVZKGRasbHCs2g=;
+	s=arc-20240116; t=1736178135; c=relaxed/simple;
+	bh=0lSMRdDokC6BuvealOXeLMSDPnHLhm9W4Tf2NWjnxCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fS4W+CEV5fHu/bVRMe7IrX1Jm0pnJLd3kCRAZX8oH07f17N9tzGzfBiccIFhpmwf+pqo7O1R6Hx33B13tnD01GfdKQ3JcYPtmr4FD2h58S5c1seOJp/zD+pYrqgwI1sxLBRYo3ufEElfH/K4LS+6qA7nAb1cTCuw0O2QgDpzmv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b9Lee43a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iX3vs6oRLm7p8g4qBPaux1bN9yJSbpGbQwpDhuYDoH4OPCq+x4KG17jxz+95hMaaewDToBTU9Z2VoQPGSqVizdCHijbw86mGrociakBOC95SinL/bIBTCDbKslzjBoRngj8fC8sOzlnndOZ9c86zVVfoUhwlg7ltHpHx9OgKw0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8c/wtJe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b9Lee43a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B025C4CED2;
-	Mon,  6 Jan 2025 15:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8c/wtJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AC1C4CED2;
+	Mon,  6 Jan 2025 15:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178132;
-	bh=AZjbOWTy4+TWmIPF7wDqQeF/Xx5fMVVZKGRasbHCs2g=;
+	s=korg; t=1736178135;
+	bh=0lSMRdDokC6BuvealOXeLMSDPnHLhm9W4Tf2NWjnxCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9Lee43aECBWonW1ZKwLy+zDNRWF9v2HSqXzREy2ZERrdIsl1qdi1DO28pyqcZCTq
-	 1aLYlICwVwPW3Lx8ddYlK1X05feIhq4fVH25kymD4NF9hvLzZLfbY9t3Xj2WY9SAif
-	 HEXswBWujwZ+Sms1th9gIHmMUiAvVl7ruemBiRac=
+	b=I8c/wtJePVJRH0N1kvtz1Lei32mWqEjmw99rKaUIXBD10ubyEjMdu17sOtwzLjEvc
+	 0qLG6TLwEMvmfbihp2EMRF8/75CVVW2sXrRi5pYRcSGHGkLFRONGlG1btoR3bAOeym
+	 BTv0TXkqvyloa3wPVdZnCRWv3d+wOJxJaJz8IVAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ea40e4294e58b0292f74@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Joe Damato <jdamato@fastly.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/138] netdevsim: prevent bad user input in nsim_dev_health_break_write()
-Date: Mon,  6 Jan 2025 16:15:40 +0100
-Message-ID: <20250106151133.833077935@linuxfoundation.org>
+Subject: [PATCH 5.10 017/138] ionic: use ee->offset when returning sprom data
+Date: Mon,  6 Jan 2025 16:15:41 +0100
+Message-ID: <20250106151133.871862360@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -54,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit ee76746387f6233bdfa93d7406990f923641568f ]
+[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
 
-If either a zero count or a large one is provided, kernel can crash.
+Some calls into ionic_get_module_eeprom() don't use a single
+full buffer size, but instead multiple calls with an offset.
+Teach our driver to use the offset correctly so we can
+respond appropriately to the caller.
 
-Fixes: 82c93a87bf8b ("netdevsim: implement couple of testing devlink health reporters")
-Reported-by: syzbot+ea40e4294e58b0292f74@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/675c6862.050a0220.37aaf.00b1.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20241213172518.2415666-1-edumazet@google.com
+Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/health.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/netdevsim/health.c b/drivers/net/netdevsim/health.c
-index 04aebdf85747..c9306506b741 100644
---- a/drivers/net/netdevsim/health.c
-+++ b/drivers/net/netdevsim/health.c
-@@ -235,6 +235,8 @@ static ssize_t nsim_dev_health_break_write(struct file *file,
- 	char *break_msg;
- 	int err;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index 8e5b01af85ed..d0a613fac9ff 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -835,8 +835,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
+ 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
  
-+	if (count == 0 || count > PAGE_SIZE)
-+		return -EINVAL;
- 	break_msg = memdup_user_nul(data, count);
- 	if (IS_ERR(break_msg))
- 		return PTR_ERR(break_msg);
+ 	do {
+-		memcpy(data, xcvr->sprom, len);
+-		memcpy(tbuf, xcvr->sprom, len);
++		memcpy(data, &xcvr->sprom[ee->offset], len);
++		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
+ 
+ 		/* Let's make sure we got a consistent copy */
+ 		if (!memcmp(data, tbuf, len))
 -- 
 2.39.5
 
