@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6C0157E82;
-	Mon,  6 Jan 2025 15:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631A27082A;
+	Mon,  6 Jan 2025 15:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178010; cv=none; b=L6vC4MTFye1L2PDpr5xt72DwDRDWZwG6fQC9j2SwvsDZQPknmJSO5iFEs1MS8PO0viipGgobkJuZqh6hD+Nzwyc7UuVpM9k4ABRk9PVluMjCrC3MNnxtVzc79N2D6UDkbAqGqtoW/Cp1ph3A79lOIx9BV5okgub2/AoDK1O9suo=
+	t=1736178013; cv=none; b=jxep0qj/1KqN8mzjjVzOWVdrYxXVPOi5ai/asz9jA3dypjWc1hbNrdB+ZwJb7c+Jh/AnUa3msdSOrs0z1WYKzamQDVEJGPjy8oOQHTh4Z1beHkxg+Hm4J9YWwOuaipPwYp2gjmnRsD4tjqqVXeZwvB5j3tvPDBQ0YmoxeQI2mKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178010; c=relaxed/simple;
-	bh=SwTW9BYDPMSacZtJVTNCWmJhT4mHBqUZjeAm/nfqiCM=;
+	s=arc-20240116; t=1736178013; c=relaxed/simple;
+	bh=unxugj1gCE5RUTeJ6zfEUlTgcLw9+/eYUlyavBllaWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sl2li5d31avJLs6RCtZhsi2lp6IXPEnM/zho3rfDHVN5iVyiRwbci0nw2KZVoMwF+P8yD6d+1JgouLGgNB+ZGEee43j7SWfz+up1T6UYn6RRiZm3KcWVqcQbdE6N4MP/r5VMuGoavwIECbCOf/eghns8dQBuq2f4eKgSwxGOQ4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qh9ugpO/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KXgCaPl2oKDkrZ5440VWAWg43Kdk60QFsGjI5gLbA3O2KJWxArdMZN6wHSq5OOhjmebdp2mScl+GoodBXTDud4r/R4ananmKIjs85yvqHlgVMZnYHARKOf5O6PTiLJ0ElarQ7ywW4tejng+VLFxUcM3uVxhOY2vhFm7DuXSJ1sI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCiRe7EJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qh9ugpO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC46AC4CED2;
-	Mon,  6 Jan 2025 15:40:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCiRe7EJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEADC4CED2;
+	Mon,  6 Jan 2025 15:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178010;
-	bh=SwTW9BYDPMSacZtJVTNCWmJhT4mHBqUZjeAm/nfqiCM=;
+	s=korg; t=1736178013;
+	bh=unxugj1gCE5RUTeJ6zfEUlTgcLw9+/eYUlyavBllaWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qh9ugpO/j3XmCgiqo6FLV8z3Dxfze8ziFCvCd49qJpHDAd0GECX1fu8xzBReQBUOY
-	 ZwCxyEa0TqPzoP7Fikw3wtGMz6vnTOsp5++pU6sOYbVIF8J9LaEHWXpI4h05CJsQ8w
-	 5/XzwRmMEa5fSzi7eFhcnR50Jv7wDJf6kUkUY5sw=
+	b=sCiRe7EJm9d6QlpW/ypkq+UPuY8fVpuvgMWufPM8IVC0eDo2izz7KzaNLEeWYU+L0
+	 BYBjpfFtB1PD+Hr0FJt36LVI6cB4udZp3AFeft3Ojbsh7St1XiSd6DJXMifWP3m769
+	 CpCQvJojh17ygRtzZ6yiSEy0+dLswwGuWgacaFYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hien Huynh <hien.huynh.px@renesas.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Adam Ford <aford173@gmail.com>,
 	Biju Das <biju.das.jz@bp.renesas.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.12 132/156] drm: adv7511: Drop dsi single lane support
-Date: Mon,  6 Jan 2025 16:16:58 +0100
-Message-ID: <20250106151146.704017162@linuxfoundation.org>
+Subject: [PATCH 6.12 133/156] dt-bindings: display: adi,adv7533: Drop single lane support
+Date: Mon,  6 Jan 2025 16:16:59 +0100
+Message-ID: <20250106151146.741440385@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -55,37 +55,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 79d67c499c3f886202a40c5cb27e747e4fa4d738 upstream.
+commit ee8f9ed57a397605434caeef351bafa3ec4dfdd4 upstream.
 
 As per [1] and [2], ADV7535/7533 supports only 2-, 3-, or 4-lane. Drop
-unsupported 1-lane.
+unsupported 1-lane from bindings.
 
 [1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7535.pdf
 [2] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7533.pdf
 
 Fixes: 1e4d58cd7f88 ("drm/bridge: adv7533: Create a MIPI DSI device")
-Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
 Cc: stable@vger.kernel.org
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Adam Ford <aford173@gmail.com>
 Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-4-biju.das.jz@bp.renesas.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-3-biju.das.jz@bp.renesas.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7533.c |    2 +-
+ Documentation/devicetree/bindings/display/bridge/adi,adv7533.yaml |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -172,7 +172,7 @@ int adv7533_parse_dt(struct device_node
+--- a/Documentation/devicetree/bindings/display/bridge/adi,adv7533.yaml
++++ b/Documentation/devicetree/bindings/display/bridge/adi,adv7533.yaml
+@@ -90,7 +90,7 @@ properties:
+   adi,dsi-lanes:
+     description: Number of DSI data lanes connected to the DSI host.
+     $ref: /schemas/types.yaml#/definitions/uint32
+-    enum: [ 1, 2, 3, 4 ]
++    enum: [ 2, 3, 4 ]
  
- 	of_property_read_u32(np, "adi,dsi-lanes", &num_lanes);
- 
--	if (num_lanes < 1 || num_lanes > 4)
-+	if (num_lanes < 2 || num_lanes > 4)
- 		return -EINVAL;
- 
- 	adv->num_dsi_lanes = num_lanes;
+   "#sound-dai-cells":
+     const: 0
 
 
