@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF601D7E21;
-	Mon,  6 Jan 2025 15:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F051DA31F;
+	Mon,  6 Jan 2025 15:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177042; cv=none; b=FU4qiJ3MdLgduYu5O42mjW25fcX7m4nFbC049cnaGNOaaFQbZIp9cxSSV3gpmI/wsJCvvP+gQR+3oK0RskH2mPrulab9MzarmDP+cxsdeSHe/daGZS8b8ulXAxCidcUBqqMDT1Brcsi/df8J7x6f/d2eU527m6Zd0/GwBOQhEpI=
+	t=1736177045; cv=none; b=T26JEw5sCvMGy1iZDuPpELYxbG0SqkaTjWxFIb1i7f08WMEnpd1DCM0JWGFEP0XTXOgat/+rv30myQonk1dXnOwEeyZmUf5oxbl7EzyPXMXNk+fRAc9BuuGSW4+PKpYdEgYXCt5ZhfaKEkKJX98nhHsmCq4MQunJR0PYOXZBb0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177042; c=relaxed/simple;
-	bh=PqFZ3qrXx2EBdhvuqtI0aJZmFkw3f+MlwUWRzD516bE=;
+	s=arc-20240116; t=1736177045; c=relaxed/simple;
+	bh=/uGj4sqkh6Ol7Gp9CawK7fDAf4n0SwImLoty8ipM1c0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7YuParwFyJDVH9fe/3GdLARUbAG6DsacqH09owwEoA9xsvI8PnHdym+pNl+uddqXo7+Yx5Vudyzf7cwM7HzOaW1fMi2L6BBo5LCDa7veEw8J3VG7Xz7r1bi/ek39AVY0PWYBoIfPYg1RTg4PX82WPq3E62+oGhLhsQzGVLNUZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCxoeCMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7kwic8pabiyqUDTVpn7q5V8bsPfyRAdrvuCBKNUDns9Cp87yX6Wl/vU7bhywV7oKUyJK8zHc6XKkdBhedjyLvzzLlVAgodupusiSEyB0qduUzoblaB2/MOs4thpv1y949LTW4Kwo2v9FdsdZehPqh97duALRboxqmKnnD4uM3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9DjoIpa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCxoeCMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEC0C4CED2;
-	Mon,  6 Jan 2025 15:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9DjoIpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E23C4CED2;
+	Mon,  6 Jan 2025 15:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177042;
-	bh=PqFZ3qrXx2EBdhvuqtI0aJZmFkw3f+MlwUWRzD516bE=;
+	s=korg; t=1736177045;
+	bh=/uGj4sqkh6Ol7Gp9CawK7fDAf4n0SwImLoty8ipM1c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCxoeCMZxQNXtyGmEaT/JeVsQIuXUXNUvKktZOFzndc5WSAF5RCAMkam6fOCITwRd
-	 Gj6nvciJ/iz6NLScMcKIswJLa0hs7Cg0f2DTepPhOc1i8KVMotdKJTsfip9XZJFkRs
-	 Ipcb4uBASgMDotDnSExSA8C7LiFnd695vEeCm3CI=
+	b=G9DjoIpam4ThD0FxR5Tk7O9FRqXimJbn1JDRke8MlRGLjvHeop377JZ/FmVeG9NNi
+	 fzTdoDMvNxzrXKY2QtWiMIlVLPSFjUFQs3ZUTjYrDOFLDPpy5GYlee8LqZXyciZ4np
+	 cEDkIkJnbARj47sg9HECJeD7GUH7K9gq9y4XOsAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Rory Little <rory@candelatech.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/222] wifi: ath12k: Optimize the mac80211 hw data access
-Date: Mon,  6 Jan 2025 16:13:56 +0100
-Message-ID: <20250106151151.819581527@linuxfoundation.org>
+Subject: [PATCH 6.6 033/222] wifi: mac80211: Add non-atomic station iterator
+Date: Mon,  6 Jan 2025 16:13:57 +0100
+Message-ID: <20250106151151.857834175@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,121 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: Rory Little <rory@candelatech.com>
 
-[ Upstream commit 842addae02089fce4731be1c8d7d539449d4d009 ]
+[ Upstream commit 7c3b69eadea9e57c28bf914b0fd70f268f3682e1 ]
 
-Currently mac80211 hw data is accessed by convert the hw to radio (ar)
-structure and then radio to hw structure which is not necessary in some
-places where mac80211 hw data is already present. So in that kind of
-places avoid the conversion and directly access the mac80211 hw data.
+Drivers may at times want to iterate their stations with a function
+which requires some non-atomic operations.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+ieee80211_iterate_stations_mtx() introduces an API to iterate stations
+while holding that wiphy's mutex. This allows the iterating function to
+do non-atomic operations safely.
 
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231120235812.2602198-2-quic_periyasa@quicinc.com
+Signed-off-by: Rory Little <rory@candelatech.com>
+Link: https://patch.msgid.link/20240806004024.2014080-2-rory@candelatech.com
+[unify internal list iteration functions]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Stable-dep-of: 8fac3266c68a ("wifi: ath12k: fix atomic calls in ath12k_mac_op_set_bitrate_mask()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 14 +++++++-------
- drivers/net/wireless/ath/ath12k/reg.c |  6 +++---
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ include/net/mac80211.h | 18 ++++++++++++++++++
+ net/mac80211/util.c    | 16 +++++++++++++++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index f90191a290c2..e4b8c45898d2 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -4945,7 +4945,7 @@ static void ath12k_mac_op_tx(struct ieee80211_hw *hw,
- 		if (ret) {
- 			ath12k_warn(ar->ab, "failed to queue management frame %d\n",
- 				    ret);
--			ieee80211_free_txskb(ar->hw, skb);
-+			ieee80211_free_txskb(hw, skb);
- 		}
- 		return;
- 	}
-@@ -4953,7 +4953,7 @@ static void ath12k_mac_op_tx(struct ieee80211_hw *hw,
- 	ret = ath12k_dp_tx(ar, arvif, skb);
- 	if (ret) {
- 		ath12k_warn(ar->ab, "failed to transmit frame %d\n", ret);
--		ieee80211_free_txskb(ar->hw, skb);
-+		ieee80211_free_txskb(hw, skb);
- 	}
- }
- 
-@@ -5496,7 +5496,7 @@ static int ath12k_mac_op_add_interface(struct ieee80211_hw *hw,
- 		goto err_peer_del;
- 
- 	param_id = WMI_VDEV_PARAM_RTS_THRESHOLD;
--	param_value = ar->hw->wiphy->rts_threshold;
-+	param_value = hw->wiphy->rts_threshold;
- 	ret = ath12k_wmi_vdev_set_param_cmd(ar, arvif->vdev_id,
- 					    param_id, param_value);
- 	if (ret) {
-@@ -6676,7 +6676,7 @@ ath12k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
- 				    arvif->vdev_id, ret);
- 			return ret;
- 		}
--		ieee80211_iterate_stations_atomic(ar->hw,
-+		ieee80211_iterate_stations_atomic(hw,
- 						  ath12k_mac_disable_peer_fixed_rate,
- 						  arvif);
- 	} else if (ath12k_mac_bitrate_mask_get_single_nss(ar, band, mask,
-@@ -6722,14 +6722,14 @@ ath12k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
- 			return -EINVAL;
- 		}
- 
--		ieee80211_iterate_stations_atomic(ar->hw,
-+		ieee80211_iterate_stations_atomic(hw,
- 						  ath12k_mac_disable_peer_fixed_rate,
- 						  arvif);
- 
- 		mutex_lock(&ar->conf_mutex);
- 
- 		arvif->bitrate_mask = *mask;
--		ieee80211_iterate_stations_atomic(ar->hw,
-+		ieee80211_iterate_stations_atomic(hw,
- 						  ath12k_mac_set_bitrate_mask_iter,
- 						  arvif);
- 
-@@ -6767,7 +6767,7 @@ ath12k_mac_op_reconfig_complete(struct ieee80211_hw *hw,
- 		ath12k_warn(ar->ab, "pdev %d successfully recovered\n",
- 			    ar->pdev->pdev_id);
- 		ar->state = ATH12K_STATE_ON;
--		ieee80211_wake_queues(ar->hw);
-+		ieee80211_wake_queues(hw);
- 
- 		if (ab->is_reset) {
- 			recovery_count = atomic_inc_return(&ab->recovery_count);
-diff --git a/drivers/net/wireless/ath/ath12k/reg.c b/drivers/net/wireless/ath/ath12k/reg.c
-index 32bdefeccc24..837a3e1ec3a4 100644
---- a/drivers/net/wireless/ath/ath12k/reg.c
-+++ b/drivers/net/wireless/ath/ath12k/reg.c
-@@ -28,11 +28,11 @@ static const struct ieee80211_regdomain ath12k_world_regd = {
- 	}
- };
- 
--static bool ath12k_regdom_changes(struct ath12k *ar, char *alpha2)
-+static bool ath12k_regdom_changes(struct ieee80211_hw *hw, char *alpha2)
+diff --git a/include/net/mac80211.h b/include/net/mac80211.h
+index 901fe3ac139e..835a58ce9ca5 100644
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -6080,6 +6080,24 @@ void ieee80211_iterate_stations_atomic(struct ieee80211_hw *hw,
+ 				       void (*iterator)(void *data,
+ 						struct ieee80211_sta *sta),
+ 				       void *data);
++
++/**
++ * ieee80211_iterate_stations_mtx - iterate stations
++ *
++ * This function iterates over all stations associated with a given
++ * hardware that are currently uploaded to the driver and calls the callback
++ * function for them. This version can only be used while holding the wiphy
++ * mutex.
++ *
++ * @hw: the hardware struct of which the interfaces should be iterated over
++ * @iterator: the iterator function to call
++ * @data: first argument of the iterator function
++ */
++void ieee80211_iterate_stations_mtx(struct ieee80211_hw *hw,
++				    void (*iterator)(void *data,
++						     struct ieee80211_sta *sta),
++				    void *data);
++
+ /**
+  * ieee80211_queue_work - add work onto the mac80211 workqueue
+  *
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index d682c32821a1..cc3c46a82077 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -827,7 +827,8 @@ static void __iterate_stations(struct ieee80211_local *local,
  {
- 	const struct ieee80211_regdomain *regd;
+ 	struct sta_info *sta;
  
--	regd = rcu_dereference_rtnl(ar->hw->wiphy->regd);
-+	regd = rcu_dereference_rtnl(hw->wiphy->regd);
- 	/* This can happen during wiphy registration where the previous
- 	 * user request is received before we update the regd received
- 	 * from firmware.
-@@ -71,7 +71,7 @@ ath12k_reg_notifier(struct wiphy *wiphy, struct regulatory_request *request)
- 		return;
- 	}
+-	list_for_each_entry_rcu(sta, &local->sta_list, list) {
++	list_for_each_entry_rcu(sta, &local->sta_list, list,
++				lockdep_is_held(&local->hw.wiphy->mtx)) {
+ 		if (!sta->uploaded)
+ 			continue;
  
--	if (!ath12k_regdom_changes(ar, request->alpha2)) {
-+	if (!ath12k_regdom_changes(hw, request->alpha2)) {
- 		ath12k_dbg(ar->ab, ATH12K_DBG_REG, "Country is already set\n");
- 		return;
- 	}
+@@ -848,6 +849,19 @@ void ieee80211_iterate_stations_atomic(struct ieee80211_hw *hw,
+ }
+ EXPORT_SYMBOL_GPL(ieee80211_iterate_stations_atomic);
+ 
++void ieee80211_iterate_stations_mtx(struct ieee80211_hw *hw,
++				    void (*iterator)(void *data,
++						     struct ieee80211_sta *sta),
++				    void *data)
++{
++	struct ieee80211_local *local = hw_to_local(hw);
++
++	lockdep_assert_wiphy(local->hw.wiphy);
++
++	__iterate_stations(local, iterator, data);
++}
++EXPORT_SYMBOL_GPL(ieee80211_iterate_stations_mtx);
++
+ struct ieee80211_vif *wdev_to_ieee80211_vif(struct wireless_dev *wdev)
+ {
+ 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
 -- 
 2.39.5
 
