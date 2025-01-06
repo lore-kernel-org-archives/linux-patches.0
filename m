@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D74C1DE2DE;
-	Mon,  6 Jan 2025 16:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D2B1D88AC;
+	Mon,  6 Jan 2025 16:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179225; cv=none; b=a3gCAmIGbXEXPmDNWZlBTE+Cr79NsLsPoGaNKUljsMc22Ejo6Vb7OBOp9JCnjSriy13Sk1g5qz59xPP81bK1ogCw3QIJFzOHmI+T+x+6hif+4EW7jL3Ct3ZOIRd/1MuYyxLjTJOaoLthlWsSATDeVyr0UKyQMbcomd2mppyrLk0=
+	t=1736179228; cv=none; b=fQ3UXZ+ZwKKrRGgxMt4I3nU7eRz07zxVXIe4e/6tH66UZsmjWzgWJHBqfENweA6nNZ1oDNLasMpVVO3tVFN1NhxztphQYW94G0h8URJ6KW4L1eR08kONN4AXHM4+xSyUcBffM34PPkHKOljl3arNKCksCJ570pTFIg06wGOv6hA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179225; c=relaxed/simple;
-	bh=PIzKEPpTIHeTvV5ieL1L+LSNbIvIPGiHZLATKIgEz/Q=;
+	s=arc-20240116; t=1736179228; c=relaxed/simple;
+	bh=Ude5wyPEZRM88mk+A1eT7ZAFgSUde46XvYYijZU3tA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=flCZpuRYZj5Nc6VitDL4A1LlTUodY5ssR0HmRARvBn5YDTaJK0XKYh8gOyAtPhK8dOQfLwVNticRKMu1sfzdIuFKB6tbyj2m3eAzsqTmEQGwuquWdpQp9LwVYOHM56Ub7+9d/wfUtaUsmmZTLdQmCal+4qOKpD/vkS01AN4+Dtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XER0N2cV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A6iHmrDOc8E1Bl2p8D6VvmrmzXnt01S4/y1Dlu9Z6dP8q975XWkD1bMQ9alll0OALJ8Dm6JLJHhgOGLcPY6KSN2F8YpwW9BShTpQYdHlp5zZ7ICs29wjhVt+BgfUxbzxH0TIVuA6jOXMsZI6zDpxfi8EKJiCCMEPdWa7oZF7x5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SdchLh2M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XER0N2cV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95692C4CED2;
-	Mon,  6 Jan 2025 16:00:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SdchLh2M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1176C4CED2;
+	Mon,  6 Jan 2025 16:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179225;
-	bh=PIzKEPpTIHeTvV5ieL1L+LSNbIvIPGiHZLATKIgEz/Q=;
+	s=korg; t=1736179228;
+	bh=Ude5wyPEZRM88mk+A1eT7ZAFgSUde46XvYYijZU3tA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XER0N2cVAhOSMhxnBeEgOjCOLUTwpwRVbVl1UpRamLz6UwbP8tOFxYKhppXi0y/hT
-	 1gob8etiyT+0Feuz+U6wC24Dtw37jDvN2g1HRtbw84dyLbYYKNYdnSnA6H12CY7wbY
-	 qSZwgpLUwylVZWi6Qmj/ck6Cskv/allBSBOt/cUU=
+	b=SdchLh2MvAJw4bFYKWtLj2j0FzueOAiuwYgSjSy//jG9TdoCl/7K2g9c3o9TRcHrP
+	 LK/by6ck1pPx4AVVS3RMlChn1zSiNwlEYlikAf6cxbk+fDh2j3mo/nNkc3ll5JfF1q
+	 7O6kXCVGWbxWM53gghE8hB2PXTXcOkVHy9POHThg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Preethi G <preethi.gurusiddalingeswaraswamy@broadcom.com>,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 67/93] RDMA/bnxt_re: Add check for path mtu in modify_qp
-Date: Mon,  6 Jan 2025 16:17:43 +0100
-Message-ID: <20250106151131.232667312@linuxfoundation.org>
+Subject: [PATCH 5.4 68/93] RDMA/bnxt_re: Fix reporting hw_ver in query_device
+Date: Mon,  6 Jan 2025 16:17:44 +0100
+Message-ID: <20250106151131.270838981@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -53,62 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 798653a0ee30d3cd495099282751c0f248614ae7 ]
+[ Upstream commit 7179fe0074a3c962e43a9e51169304c4911989ed ]
 
-When RDMA app configures path MTU, add a check in modify_qp verb
-to make sure that it doesn't go beyond interface MTU. If this
-check fails, driver will fail the modify_qp verb.
+Driver currently populates subsystem_device id in the
+"hw_ver" field of ib_attr structure in query_device.
+
+Updated to populate PCI revision ID.
 
 Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Reviewed-by: Preethi G <preethi.gurusiddalingeswaraswamy@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20241211083931.968831-3-kalesh-anakkur.purayil@broadcom.com
+Link: https://patch.msgid.link/20241211083931.968831-6-kalesh-anakkur.purayil@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 26 +++++++++++++-----------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index eca36da7f9d4..d0ed8e14e3da 100644
+index d0ed8e14e3da..563a0f37810d 100644
 --- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
 +++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -1852,18 +1852,20 @@ int bnxt_re_modify_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
- 		}
- 	}
+@@ -137,7 +137,7 @@ int bnxt_re_query_device(struct ib_device *ibdev,
  
--	if (qp_attr_mask & IB_QP_PATH_MTU) {
--		qp->qplib_qp.modify_flags |=
--				CMDQ_MODIFY_QP_MODIFY_MASK_PATH_MTU;
--		qp->qplib_qp.path_mtu = __from_ib_mtu(qp_attr->path_mtu);
--		qp->qplib_qp.mtu = ib_mtu_enum_to_int(qp_attr->path_mtu);
--	} else if (qp_attr->qp_state == IB_QPS_RTR) {
--		qp->qplib_qp.modify_flags |=
--			CMDQ_MODIFY_QP_MODIFY_MASK_PATH_MTU;
--		qp->qplib_qp.path_mtu =
--			__from_ib_mtu(iboe_get_mtu(rdev->netdev->mtu));
--		qp->qplib_qp.mtu =
--			ib_mtu_enum_to_int(iboe_get_mtu(rdev->netdev->mtu));
-+	if (qp_attr->qp_state == IB_QPS_RTR) {
-+		enum ib_mtu qpmtu;
-+
-+		qpmtu = iboe_get_mtu(rdev->netdev->mtu);
-+		if (qp_attr_mask & IB_QP_PATH_MTU) {
-+			if (ib_mtu_enum_to_int(qp_attr->path_mtu) >
-+			    ib_mtu_enum_to_int(qpmtu))
-+				return -EINVAL;
-+			qpmtu = qp_attr->path_mtu;
-+		}
-+
-+		qp->qplib_qp.modify_flags |= CMDQ_MODIFY_QP_MODIFY_MASK_PATH_MTU;
-+		qp->qplib_qp.path_mtu = __from_ib_mtu(qpmtu);
-+		qp->qplib_qp.mtu = ib_mtu_enum_to_int(qpmtu);
- 	}
- 
- 	if (qp_attr_mask & IB_QP_TIMEOUT) {
+ 	ib_attr->vendor_id = rdev->en_dev->pdev->vendor;
+ 	ib_attr->vendor_part_id = rdev->en_dev->pdev->device;
+-	ib_attr->hw_ver = rdev->en_dev->pdev->subsystem_device;
++	ib_attr->hw_ver = rdev->en_dev->pdev->revision;
+ 	ib_attr->max_qp = dev_attr->max_qp;
+ 	ib_attr->max_qp_wr = dev_attr->max_qp_wqes;
+ 	ib_attr->device_cap_flags =
 -- 
 2.39.5
 
