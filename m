@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD12BA34;
-	Mon,  6 Jan 2025 15:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429CBBA34;
+	Mon,  6 Jan 2025 15:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179154; cv=none; b=GNmDNkzFyGnflUJIf/d4HlqRDxDzz51iHXiMcnuFFXVzCIjmgx0VQAuYvB/npEMOVXCn+yHOZ9x+glSAIaSPI5s+tMu4otkrnHNBTmx1iELfKIDLZ9Kifcol1A1VN0taJmIpgPYyNGQcvRC8tkakz9nonjD36MCcYOZ2DTJubZE=
+	t=1736179158; cv=none; b=ZyPDGihD/UQrqvba6Ze0qSMMxAj6AuiDvcahZTgLIb2SimwlK7TbjEDN8+gSikxwRMSwwEne16KZ8kwTBIKLWDi5aIQRi6zdwVAnN6kP3xSq5NLQkzs4BXPkQoZNRiOkJKhX4+m7QgGIbjSkv5v9kFnaSmoUl+XOAo/nc0ZWCaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179154; c=relaxed/simple;
-	bh=A+4yphVHcP1nphcRRrISWtnh8u8sj7SPv2K0dAy3lww=;
+	s=arc-20240116; t=1736179158; c=relaxed/simple;
+	bh=ttV53ShuZYi347xMFp1gVPU/a3wIBnlqrPQZkHMdiEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cwsklx0iZusNTMh3Vfpn2nzzqBSqbcmp/Bo5G2jd2qqIL4bshHoYxrrwtFcEyV+VzzbleJ5vnqzyKXJfkfIdT3261ERn9j8FphkXQHqOonmWqRkmSTuwr0mm+8Vkk49G8pUsBYGrMY5QN73mZ5K0ahppgDbhF4X9C6qpchb8B2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQZPpVNV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qRa1yCFlSEBvIlkZGIWxBOwZ7075W/TgmkxMNdkWtVSmPJiivffGClx7ajCgdKsk8fWg+2IOZvjbsCxi+ABKbRfSRH1u4ffgqlQMUR7szgZ9si46Bvc9P2ngEAb8jCXf1b9DeljgzVks6oJkkDEm7MZA8hUfnStcH9y0OOuYc50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpa5O/js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQZPpVNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6323EC4CED2;
-	Mon,  6 Jan 2025 15:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpa5O/js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9C7C4CED2;
+	Mon,  6 Jan 2025 15:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179153;
-	bh=A+4yphVHcP1nphcRRrISWtnh8u8sj7SPv2K0dAy3lww=;
+	s=korg; t=1736179156;
+	bh=ttV53ShuZYi347xMFp1gVPU/a3wIBnlqrPQZkHMdiEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qQZPpVNVlx0Wb9jCksODVq1c79bdPuoUrmtqMeU42hPoZsSu8EHKnCNqpgye2K8oW
-	 bnsxACYkcu/dOXunqKW2JxdHuMap6DovkaJhFuUiYS96uyV7k3nxHjTSjElDqd2crW
-	 2xwyhnCAKVCWGJJTmimdKCp/oLlntYdmuksZ0LGw=
+	b=dpa5O/jscnE+iDC8LMhHt7Z318SiCQawKTGd+zUhTaivDMb0CaCKpR6vnYuoP0a3t
+	 N11ovi6DwSDLCoRWq6a0IsF9fwW7F/+CWih75EKJ0P+RLPxYX92Q5eaUQzd8js7B//
+	 9K7nCK+JheYU9mUSMKtRJNBAlZ6H9Kb/839J7qUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 16/93] chelsio/chtls: prevent potential integer overflow on 32bit
-Date: Mon,  6 Jan 2025 16:16:52 +0100
-Message-ID: <20250106151129.315396369@linuxfoundation.org>
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.4 43/93] mtd: rawnand: fix double free in atmel_pmecc_create_user()
+Date: Mon,  6 Jan 2025 16:17:19 +0100
+Message-ID: <20250106151130.327133696@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -53,37 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit fbbd84af6ba70334335bdeba3ae536cf751c14c6 upstream.
+commit d8e4771f99c0400a1873235704b28bb803c83d17 upstream.
 
-The "gl->tot_len" variable is controlled by the user.  It comes from
-process_responses().  On 32bit systems, the "gl->tot_len +
-sizeof(struct cpl_pass_accept_req) + sizeof(struct rss_header)" addition
-could have an integer wrapping bug.  Use size_add() to prevent this.
+The "user" pointer was converted from being allocated with kzalloc() to
+being allocated by devm_kzalloc().  Calling kfree(user) will lead to a
+double free.
 
-Fixes: a08943947873 ("crypto: chtls - Register chtls with net tls")
-Cc: stable@vger.kernel.org
+Fixes: 6d734f1bfc33 ("mtd: rawnand: atmel: Fix possible memory leak")
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/c6bfb23c-2db2-4e1b-b8ab-ba3925c82ef5@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/chelsio/chtls/chtls_main.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/atmel/pmecc.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/crypto/chelsio/chtls/chtls_main.c
-+++ b/drivers/crypto/chelsio/chtls/chtls_main.c
-@@ -339,8 +339,9 @@ static struct sk_buff *copy_gl_to_skb_pk
- 	 * driver. Once driver synthesizes cpl_pass_accpet_req the skb will go
- 	 * through the regular cpl_pass_accept_req processing in TOM.
- 	 */
--	skb = alloc_skb(gl->tot_len + sizeof(struct cpl_pass_accept_req)
--			- pktshift, GFP_ATOMIC);
-+	skb = alloc_skb(size_add(gl->tot_len,
-+				 sizeof(struct cpl_pass_accept_req)) -
-+			pktshift, GFP_ATOMIC);
- 	if (unlikely(!skb))
- 		return NULL;
- 	__skb_put(skb, gl->tot_len + sizeof(struct cpl_pass_accept_req)
+--- a/drivers/mtd/nand/raw/atmel/pmecc.c
++++ b/drivers/mtd/nand/raw/atmel/pmecc.c
+@@ -380,10 +380,8 @@ atmel_pmecc_create_user(struct atmel_pme
+ 	user->delta = user->dmu + req->ecc.strength + 1;
+ 
+ 	gf_tables = atmel_pmecc_get_gf_tables(req);
+-	if (IS_ERR(gf_tables)) {
+-		kfree(user);
++	if (IS_ERR(gf_tables))
+ 		return ERR_CAST(gf_tables);
+-	}
+ 
+ 	user->gf_tables = gf_tables;
+ 
 
 
