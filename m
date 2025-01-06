@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F0B146D40;
-	Mon,  6 Jan 2025 15:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1249F15252D;
+	Mon,  6 Jan 2025 15:26:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177184; cv=none; b=PXG7bBW0wKhGMiX3LXtwgrHjIN80fb3gkDTUpWyuBP9cowAW0HDeJc1rD0M633IyV1HqL04Kn0wJxFFqkymjtkA3soa9/TVvKqZC+L9JEdIloLgURiAk4ZMh3qt9V4WfgiZXJgUm1zsdq+aKTw+1StmIwUgbW1wQmmkAbiBjJIw=
+	t=1736177187; cv=none; b=rspYrltNNjhariZmV1qWcxOAsYNy8ogf18Q+bOZEHfMFxQ8rMuVC6nKVIs8JvSRpn4M6MaOo6orpv3IsxOma/g3coQ6ZxJYUIaR2xbbmDcjJ84X54K/9o6+rYxG7RDyGK1U9anDb3o3QFgOdJRr1xcTXjzVUBsGT0NghSp1ekz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177184; c=relaxed/simple;
-	bh=X/UTaE8QtDptJTK1UQHkxEJpYN1yrTnrHsWeItXdiUU=;
+	s=arc-20240116; t=1736177187; c=relaxed/simple;
+	bh=41dqOlT8Y0nTpzkuo50RG7wugLRnevFRMueHb79qsMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PA/rtpUMPArDESEmbe0zmv5BosmOZN7fdLLMfHt7wPnvRwo2M+U2+z6kXI17zhnGO0d+0PF6Gln7g5A0RU8QO0bsa4J/e3N5pCapY6F7DdLroIMWs6iCHt2fssDDyQsul/pLvBwcbnSSakUmJvtFK4U9aAPoUSzi8D2VPX2nVGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RM85LVLu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OeLoVlkdUxfOwRqwwB6W1Y7U3hOfXNE+BndNCQ0sK1HLtbH7MLgAuDqRrp74zmDarIno69nJsqba1NsPKc5I1xw60tEwl+aohQDOlW5rgqQy6fYwc+OOJkWEdyLQREXzKDd8eoXq38Et6EjDM8QY0ysywwHgPdoUrd1sixwncu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXEzcRWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RM85LVLu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D22FC4CED2;
-	Mon,  6 Jan 2025 15:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXEzcRWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BC3C4CED2;
+	Mon,  6 Jan 2025 15:26:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177183;
-	bh=X/UTaE8QtDptJTK1UQHkxEJpYN1yrTnrHsWeItXdiUU=;
+	s=korg; t=1736177186;
+	bh=41dqOlT8Y0nTpzkuo50RG7wugLRnevFRMueHb79qsMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RM85LVLu+FuUd1MSJvb05P3xGkHjHtkJsCvbr0y80lCfvIXa7DsFDoBfeiB1pmQiZ
-	 vZCvEhS1G8wvfM03VwTYoMsLGcJCu5BB57e2zdi16R6qhDdDQczuwaFdcw/OBT5NYs
-	 HCl3shl7aO4VV7nYGpI1rwOQfB98p3pAgWrCtf28=
+	b=eXEzcRWRFtJEUYlcbzSW2pk0EuyQ9G6XwgPgPZkOgtJu1GpZnzm83erIYAi1HTQl/
+	 Kt2AZoXYyOZsKSs+rxj28HmKmKgEOY1r2m7X7bywklpeIBvbuXOqgSzMn5q6RrFcYk
+	 zmhiJhWp4PQ/030U3WlQo0GRm6OG1FS2KJzNI0vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Pingfan Liu <piliu@redhat.com>,
-	Klara Modin <klarasmodin@gmail.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>,
 	Michael Kelley <mhklinux@outlook.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Yang Li <yang.lee@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/222] x86, crash: wrap crash dumping code into crash related ifdefs
-Date: Mon,  6 Jan 2025 16:14:43 +0100
-Message-ID: <20250106151153.592449889@linuxfoundation.org>
+Subject: [PATCH 6.6 080/222] x86/hyperv: Fix hv tsc page based sched_clock for hibernation
+Date: Mon,  6 Jan 2025 16:14:44 +0100
+Message-ID: <20250106151153.630666128@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -60,262 +53,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baoquan He <bhe@redhat.com>
+From: Naman Jain <namjain@linux.microsoft.com>
 
-[ Upstream commit a4eeb2176d89fdf2785851521577b94b31690a60 ]
+[ Upstream commit bcc80dec91ee745b3d66f3e48f0ec2efdea97149 ]
 
-Now crash codes under kernel/ folder has been split out from kexec
-code, crash dumping can be separated from kexec reboot in config
-items on x86 with some adjustments.
+read_hv_sched_clock_tsc() assumes that the Hyper-V clock counter is
+bigger than the variable hv_sched_clock_offset, which is cached during
+early boot, but depending on the timing this assumption may be false
+when a hibernated VM starts again (the clock counter starts from 0
+again) and is resuming back (Note: hv_init_tsc_clocksource() is not
+called during hibernation/resume); consequently,
+read_hv_sched_clock_tsc() may return a negative integer (which is
+interpreted as a huge positive integer since the return type is u64)
+and new kernel messages are prefixed with huge timestamps before
+read_hv_sched_clock_tsc() grows big enough (which typically takes
+several seconds).
 
-Here, also change some ifdefs or IS_ENABLED() check to more appropriate
-ones, e,g
- - #ifdef CONFIG_KEXEC_CORE -> #ifdef CONFIG_CRASH_DUMP
- - (!IS_ENABLED(CONFIG_KEXEC_CORE)) - > (!IS_ENABLED(CONFIG_CRASH_RESERVE))
+Fix the issue by saving the Hyper-V clock counter just before the
+suspend, and using it to correct the hv_sched_clock_offset in
+resume. This makes hv tsc page based sched_clock continuous and ensures
+that post resume, it starts from where it left off during suspend.
+Override x86_platform.save_sched_clock_state and
+x86_platform.restore_sched_clock_state routines to correct this as soon
+as possible.
 
-[bhe@redhat.com: don't nest CONFIG_CRASH_DUMP ifdef inside CONFIG_KEXEC_CODE ifdef scope]
-  Link: https://lore.kernel.org/all/SN6PR02MB4157931105FA68D72E3D3DB8D47B2@SN6PR02MB4157.namprd02.prod.outlook.com/T/#u
-Link: https://lkml.kernel.org/r/20240124051254.67105-7-bhe@redhat.com
-Signed-off-by: Baoquan He <bhe@redhat.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Eric W. Biederman <ebiederm@xmission.com>
-Cc: Hari Bathini <hbathini@linux.ibm.com>
-Cc: Pingfan Liu <piliu@redhat.com>
-Cc: Klara Modin <klarasmodin@gmail.com>
-Cc: Michael Kelley <mhklinux@outlook.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: Yang Li <yang.lee@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: bcc80dec91ee ("x86/hyperv: Fix hv tsc page based sched_clock for hibernation")
+Note: if Invariant TSC is available, the issue doesn't happen because
+1) we don't register read_hv_sched_clock_tsc() for sched clock:
+See commit e5313f1c5404 ("clocksource/drivers/hyper-v: Rework
+clocksource and sched clock setup");
+2) the common x86 code adjusts TSC similarly: see
+__restore_processor_state() ->  tsc_verify_tsc_adjust(true) and
+x86_platform.restore_sched_clock_state().
+
+Cc: stable@vger.kernel.org
+Fixes: 1349401ff1aa ("clocksource/drivers/hyper-v: Suspend/resume Hyper-V clocksource for hibernation")
+Co-developed-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Dexuan Cui <decui@microsoft.com>
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://lore.kernel.org/r/20240917053917.76787-1-namjain@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20240917053917.76787-1-namjain@linux.microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/Makefile           |  4 ++--
- arch/x86/kernel/cpu/mshyperv.c     | 10 ++++++++--
- arch/x86/kernel/kexec-bzimage64.c  |  4 ++++
- arch/x86/kernel/kvm.c              |  4 ++--
- arch/x86/kernel/machine_kexec_64.c |  3 +++
- arch/x86/kernel/reboot.c           |  4 ++--
- arch/x86/kernel/setup.c            |  2 +-
- arch/x86/kernel/smp.c              |  2 +-
- arch/x86/xen/enlighten_hvm.c       |  4 ++++
- arch/x86/xen/mmu_pv.c              |  2 +-
- 10 files changed, 28 insertions(+), 11 deletions(-)
+ arch/x86/kernel/cpu/mshyperv.c     | 58 ++++++++++++++++++++++++++++++
+ drivers/clocksource/hyperv_timer.c | 14 +++++++-
+ include/clocksource/hyperv_timer.h |  2 ++
+ 3 files changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
-index 3269a0e23d3a..15fc9fc3dcf0 100644
---- a/arch/x86/kernel/Makefile
-+++ b/arch/x86/kernel/Makefile
-@@ -99,9 +99,9 @@ obj-$(CONFIG_TRACING)		+= trace.o
- obj-$(CONFIG_RETHOOK)		+= rethook.o
- obj-$(CONFIG_CRASH_CORE)	+= crash_core_$(BITS).o
- obj-$(CONFIG_KEXEC_CORE)	+= machine_kexec_$(BITS).o
--obj-$(CONFIG_KEXEC_CORE)	+= relocate_kernel_$(BITS).o crash.o
-+obj-$(CONFIG_KEXEC_CORE)	+= relocate_kernel_$(BITS).o
- obj-$(CONFIG_KEXEC_FILE)	+= kexec-bzimage64.o
--obj-$(CONFIG_CRASH_DUMP)	+= crash_dump_$(BITS).o
-+obj-$(CONFIG_CRASH_DUMP)	+= crash_dump_$(BITS).o crash.o
- obj-y				+= kprobes/
- obj-$(CONFIG_MODULES)		+= module.o
- obj-$(CONFIG_X86_32)		+= doublefault_32.o
 diff --git a/arch/x86/kernel/cpu/mshyperv.c b/arch/x86/kernel/cpu/mshyperv.c
-index bcb2d640a0cd..93e1cb4f7ff1 100644
+index 93e1cb4f7ff1..6328cf56e59b 100644
 --- a/arch/x86/kernel/cpu/mshyperv.c
 +++ b/arch/x86/kernel/cpu/mshyperv.c
-@@ -209,7 +209,9 @@ static void hv_machine_shutdown(void)
- 	if (kexec_in_progress)
- 		hyperv_cleanup();
- }
-+#endif /* CONFIG_KEXEC_CORE */
- 
-+#ifdef CONFIG_CRASH_DUMP
- static void hv_machine_crash_shutdown(struct pt_regs *regs)
- {
- 	if (hv_crash_handler)
-@@ -221,7 +223,7 @@ static void hv_machine_crash_shutdown(struct pt_regs *regs)
- 	/* Disable the hypercall page when there is only 1 active CPU. */
+@@ -224,6 +224,63 @@ static void hv_machine_crash_shutdown(struct pt_regs *regs)
  	hyperv_cleanup();
  }
--#endif /* CONFIG_KEXEC_CORE */
-+#endif /* CONFIG_CRASH_DUMP */
+ #endif /* CONFIG_CRASH_DUMP */
++
++static u64 hv_ref_counter_at_suspend;
++static void (*old_save_sched_clock_state)(void);
++static void (*old_restore_sched_clock_state)(void);
++
++/*
++ * Hyper-V clock counter resets during hibernation. Save and restore clock
++ * offset during suspend/resume, while also considering the time passed
++ * before suspend. This is to make sure that sched_clock using hv tsc page
++ * based clocksource, proceeds from where it left off during suspend and
++ * it shows correct time for the timestamps of kernel messages after resume.
++ */
++static void save_hv_clock_tsc_state(void)
++{
++	hv_ref_counter_at_suspend = hv_read_reference_counter();
++}
++
++static void restore_hv_clock_tsc_state(void)
++{
++	/*
++	 * Adjust the offsets used by hv tsc clocksource to
++	 * account for the time spent before hibernation.
++	 * adjusted value = reference counter (time) at suspend
++	 *                - reference counter (time) now.
++	 */
++	hv_adj_sched_clock_offset(hv_ref_counter_at_suspend - hv_read_reference_counter());
++}
++
++/*
++ * Functions to override save_sched_clock_state and restore_sched_clock_state
++ * functions of x86_platform. The Hyper-V clock counter is reset during
++ * suspend-resume and the offset used to measure time needs to be
++ * corrected, post resume.
++ */
++static void hv_save_sched_clock_state(void)
++{
++	old_save_sched_clock_state();
++	save_hv_clock_tsc_state();
++}
++
++static void hv_restore_sched_clock_state(void)
++{
++	restore_hv_clock_tsc_state();
++	old_restore_sched_clock_state();
++}
++
++static void __init x86_setup_ops_for_tsc_pg_clock(void)
++{
++	if (!(ms_hyperv.features & HV_MSR_REFERENCE_TSC_AVAILABLE))
++		return;
++
++	old_save_sched_clock_state = x86_platform.save_sched_clock_state;
++	x86_platform.save_sched_clock_state = hv_save_sched_clock_state;
++
++	old_restore_sched_clock_state = x86_platform.restore_sched_clock_state;
++	x86_platform.restore_sched_clock_state = hv_restore_sched_clock_state;
++}
  #endif /* CONFIG_HYPERV */
  
  static uint32_t  __init ms_hyperv_platform(void)
-@@ -493,9 +495,13 @@ static void __init ms_hyperv_init_platform(void)
- 	no_timer_check = 1;
+@@ -578,6 +635,7 @@ static void __init ms_hyperv_init_platform(void)
+ 
+ 	/* Register Hyper-V specific clocksource */
+ 	hv_init_clocksource();
++	x86_setup_ops_for_tsc_pg_clock();
+ 	hv_vtl_init_platform();
  #endif
- 
--#if IS_ENABLED(CONFIG_HYPERV) && defined(CONFIG_KEXEC_CORE)
-+#if IS_ENABLED(CONFIG_HYPERV)
-+#if defined(CONFIG_KEXEC_CORE)
- 	machine_ops.shutdown = hv_machine_shutdown;
-+#endif
-+#if defined(CONFIG_CRASH_DUMP)
- 	machine_ops.crash_shutdown = hv_machine_crash_shutdown;
-+#endif
- #endif
- 	if (ms_hyperv.features & HV_ACCESS_TSC_INVARIANT) {
- 		/*
-diff --git a/arch/x86/kernel/kexec-bzimage64.c b/arch/x86/kernel/kexec-bzimage64.c
-index a61c12c01270..0de509c02d18 100644
---- a/arch/x86/kernel/kexec-bzimage64.c
-+++ b/arch/x86/kernel/kexec-bzimage64.c
-@@ -263,11 +263,13 @@ setup_boot_parameters(struct kimage *image, struct boot_params *params,
- 	memset(&params->hd0_info, 0, sizeof(params->hd0_info));
- 	memset(&params->hd1_info, 0, sizeof(params->hd1_info));
- 
-+#ifdef CONFIG_CRASH_DUMP
- 	if (image->type == KEXEC_TYPE_CRASH) {
- 		ret = crash_setup_memmap_entries(image, params);
- 		if (ret)
- 			return ret;
- 	} else
-+#endif
- 		setup_e820_entries(params);
- 
- 	nr_e820_entries = params->e820_entries;
-@@ -428,12 +430,14 @@ static void *bzImage64_load(struct kimage *image, char *kernel,
- 		return ERR_PTR(-EINVAL);
- 	}
- 
-+#ifdef CONFIG_CRASH_DUMP
- 	/* Allocate and load backup region */
- 	if (image->type == KEXEC_TYPE_CRASH) {
- 		ret = crash_load_segments(image);
- 		if (ret)
- 			return ERR_PTR(ret);
- 	}
-+#endif
- 
  	/*
- 	 * Load purgatory. For 64bit entry point, purgatory  code can be
-diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
-index b8ab9ee5896c..38d88c8b56ec 100644
---- a/arch/x86/kernel/kvm.c
-+++ b/arch/x86/kernel/kvm.c
-@@ -769,7 +769,7 @@ static struct notifier_block kvm_pv_reboot_nb = {
-  * won't be valid. In cases like kexec, in which you install a new kernel, this
-  * means a random memory location will be kept being written.
-  */
--#ifdef CONFIG_KEXEC_CORE
-+#ifdef CONFIG_CRASH_DUMP
- static void kvm_crash_shutdown(struct pt_regs *regs)
- {
- 	kvm_guest_cpu_offline(true);
-@@ -852,7 +852,7 @@ static void __init kvm_guest_init(void)
- 	kvm_guest_cpu_init();
- #endif
+diff --git a/drivers/clocksource/hyperv_timer.c b/drivers/clocksource/hyperv_timer.c
+index 8ff7cd4e20bb..5eec1457e139 100644
+--- a/drivers/clocksource/hyperv_timer.c
++++ b/drivers/clocksource/hyperv_timer.c
+@@ -27,7 +27,8 @@
+ #include <asm/mshyperv.h>
  
--#ifdef CONFIG_KEXEC_CORE
-+#ifdef CONFIG_CRASH_DUMP
- 	machine_ops.crash_shutdown = kvm_crash_shutdown;
- #endif
- 
-diff --git a/arch/x86/kernel/machine_kexec_64.c b/arch/x86/kernel/machine_kexec_64.c
-index 2fa12d1dc676..aaeac2deb85d 100644
---- a/arch/x86/kernel/machine_kexec_64.c
-+++ b/arch/x86/kernel/machine_kexec_64.c
-@@ -545,6 +545,8 @@ int arch_kimage_file_post_load_cleanup(struct kimage *image)
- }
- #endif /* CONFIG_KEXEC_FILE */
- 
-+#ifdef CONFIG_CRASH_DUMP
-+
- static int
- kexec_mark_range(unsigned long start, unsigned long end, bool protect)
- {
-@@ -589,6 +591,7 @@ void arch_kexec_unprotect_crashkres(void)
- {
- 	kexec_mark_crashkres(false);
- }
-+#endif
+ static struct clock_event_device __percpu *hv_clock_event;
+-static u64 hv_sched_clock_offset __ro_after_init;
++/* Note: offset can hold negative values after hibernation. */
++static u64 hv_sched_clock_offset __read_mostly;
  
  /*
-  * During a traditional boot under SME, SME will encrypt the kernel,
-diff --git a/arch/x86/kernel/reboot.c b/arch/x86/kernel/reboot.c
-index 830425e6d38e..f3130f762784 100644
---- a/arch/x86/kernel/reboot.c
-+++ b/arch/x86/kernel/reboot.c
-@@ -796,7 +796,7 @@ struct machine_ops machine_ops __ro_after_init = {
- 	.emergency_restart = native_machine_emergency_restart,
- 	.restart = native_machine_restart,
- 	.halt = native_machine_halt,
--#ifdef CONFIG_KEXEC_CORE
-+#ifdef CONFIG_CRASH_DUMP
- 	.crash_shutdown = native_machine_crash_shutdown,
- #endif
- };
-@@ -826,7 +826,7 @@ void machine_halt(void)
- 	machine_ops.halt();
+  * If false, we're using the old mechanism for stimer0 interrupts
+@@ -456,6 +457,17 @@ static void resume_hv_clock_tsc(struct clocksource *arg)
+ 	hv_set_register(HV_REGISTER_REFERENCE_TSC, tsc_msr.as_uint64);
  }
  
--#ifdef CONFIG_KEXEC_CORE
-+#ifdef CONFIG_CRASH_DUMP
- void machine_crash_shutdown(struct pt_regs *regs)
++/*
++ * Called during resume from hibernation, from overridden
++ * x86_platform.restore_sched_clock_state routine. This is to adjust offsets
++ * used to calculate time for hv tsc page based sched_clock, to account for
++ * time spent before hibernation.
++ */
++void hv_adj_sched_clock_offset(u64 offset)
++{
++	hv_sched_clock_offset -= offset;
++}
++
+ #ifdef HAVE_VDSO_CLOCKMODE_HVCLOCK
+ static int hv_cs_enable(struct clocksource *cs)
  {
- 	machine_ops.crash_shutdown(regs);
-diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
-index eb129277dcdd..8bcecabd475b 100644
---- a/arch/x86/kernel/setup.c
-+++ b/arch/x86/kernel/setup.c
-@@ -547,7 +547,7 @@ static void __init reserve_crashkernel(void)
- 	bool high = false;
- 	int ret;
+diff --git a/include/clocksource/hyperv_timer.h b/include/clocksource/hyperv_timer.h
+index 6cdc873ac907..aa5233b1eba9 100644
+--- a/include/clocksource/hyperv_timer.h
++++ b/include/clocksource/hyperv_timer.h
+@@ -38,6 +38,8 @@ extern void hv_remap_tsc_clocksource(void);
+ extern unsigned long hv_get_tsc_pfn(void);
+ extern struct ms_hyperv_tsc_page *hv_get_tsc_page(void);
  
--	if (!IS_ENABLED(CONFIG_KEXEC_CORE))
-+	if (!IS_ENABLED(CONFIG_CRASH_RESERVE))
- 		return;
- 
- 	total_mem = memblock_phys_mem_size();
-diff --git a/arch/x86/kernel/smp.c b/arch/x86/kernel/smp.c
-index 96a771f9f930..52c3823b7211 100644
---- a/arch/x86/kernel/smp.c
-+++ b/arch/x86/kernel/smp.c
-@@ -282,7 +282,7 @@ struct smp_ops smp_ops = {
- 	.smp_cpus_done		= native_smp_cpus_done,
- 
- 	.stop_other_cpus	= native_stop_other_cpus,
--#if defined(CONFIG_KEXEC_CORE)
-+#if defined(CONFIG_CRASH_DUMP)
- 	.crash_stop_other_cpus	= kdump_nmi_shootdown_cpus,
- #endif
- 	.smp_send_reschedule	= native_smp_send_reschedule,
-diff --git a/arch/x86/xen/enlighten_hvm.c b/arch/x86/xen/enlighten_hvm.c
-index 70be57e8f51c..ade22feee7ae 100644
---- a/arch/x86/xen/enlighten_hvm.c
-+++ b/arch/x86/xen/enlighten_hvm.c
-@@ -141,7 +141,9 @@ static void xen_hvm_shutdown(void)
- 	if (kexec_in_progress)
- 		xen_reboot(SHUTDOWN_soft_reset);
- }
-+#endif
- 
-+#ifdef CONFIG_CRASH_DUMP
- static void xen_hvm_crash_shutdown(struct pt_regs *regs)
- {
- 	native_machine_crash_shutdown(regs);
-@@ -229,6 +231,8 @@ static void __init xen_hvm_guest_init(void)
- 
- #ifdef CONFIG_KEXEC_CORE
- 	machine_ops.shutdown = xen_hvm_shutdown;
-+#endif
-+#ifdef CONFIG_CRASH_DUMP
- 	machine_ops.crash_shutdown = xen_hvm_crash_shutdown;
- #endif
- }
-diff --git a/arch/x86/xen/mmu_pv.c b/arch/x86/xen/mmu_pv.c
-index 6b201e64d8ab..bfd57d07f4b5 100644
---- a/arch/x86/xen/mmu_pv.c
-+++ b/arch/x86/xen/mmu_pv.c
-@@ -2517,7 +2517,7 @@ int xen_remap_pfn(struct vm_area_struct *vma, unsigned long addr,
- }
- EXPORT_SYMBOL_GPL(xen_remap_pfn);
- 
--#ifdef CONFIG_KEXEC_CORE
-+#ifdef CONFIG_VMCORE_INFO
- phys_addr_t paddr_vmcoreinfo_note(void)
- {
- 	if (xen_pv_domain())
++extern void hv_adj_sched_clock_offset(u64 offset);
++
+ static __always_inline bool
+ hv_read_tsc_page_tsc(const struct ms_hyperv_tsc_page *tsc_pg,
+ 		     u64 *cur_tsc, u64 *time)
 -- 
 2.39.5
 
