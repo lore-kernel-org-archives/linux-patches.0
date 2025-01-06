@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCEA159565;
-	Mon,  6 Jan 2025 15:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B173C15C120;
+	Mon,  6 Jan 2025 15:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177873; cv=none; b=Y/Hv/holPVocy3v7LJvV8ZosMV62RMjzCES3vQHtFp+zUthD9YCGgkeapWf4bINGDiqb26lONwHsgj9u/TbJ57yhmwMHN1bqllE7e/yBeadh6pSXEUOLdv6T+FD0KAFH1zPknbGQ/X17elxYeaRnl0LJvkAwZNi2I8RpKPjgsmU=
+	t=1736177876; cv=none; b=oAdLlksfiZ2Z6TLi0mbrhMbkmlg17sHYOMOpIKiPiA4h0toqF4EYO9UggWs6xu+EWb568sdoQjq/8xnMHS00vNxRxk1zoWGBaQS5/SNWqqbWJL6Lsq5ommUqrFoc8Hc1C0xpDKeITyTYU/BGf4ucjGqJ1Qy2cYA7nrH9fFxj5io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177873; c=relaxed/simple;
-	bh=YuCFp/nDjjqq6jZxFJV23gDaOIFPIfce1SJs7aDQeB4=;
+	s=arc-20240116; t=1736177876; c=relaxed/simple;
+	bh=ZRGya5HBifPt1E4veVLcb+SwKYOYajOlxbFf4ujFgRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q6nWxDLr3gzJ527BrWQ4s6Z99b7nLHAdduE0xHs7c9vLBVFZP/POTdWxxEQH9Vci09xpLh3Ps5at2Hyqma/vJrNb6KZbEeiARvgs46Aj8G5IV9xsRHb4pObCCC2mk39rmSG5p5iyaZ7Bqt6XBX2AkUX8a/6kZ3DyXcCFtGgCjHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVaZyfST; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ezZojPIC0/RpaXb/xph0rzJDfdXxTw5Gvuc1W1h7Jr1ggtTC768Y4VJxblSDAhGfDw2O8SJ2AlxEzhoVQsskfEQKzkx8wuJ49WT+y6VV4X+ekdO9kW1MCsPwaQE55Xb6/fErVFjuNOs9D59nKntIXliwvmE3vHwXSaVNbfe7GEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBE1STig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVaZyfST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32441C4CED2;
-	Mon,  6 Jan 2025 15:37:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBE1STig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C41C4CED2;
+	Mon,  6 Jan 2025 15:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177873;
-	bh=YuCFp/nDjjqq6jZxFJV23gDaOIFPIfce1SJs7aDQeB4=;
+	s=korg; t=1736177876;
+	bh=ZRGya5HBifPt1E4veVLcb+SwKYOYajOlxbFf4ujFgRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVaZyfSTyFsgtK7+js143X9a1R1Z0NfgMFO3nCxF4QwWvyme1qzLgfkrjvualeMY6
-	 2dyOUBdSs9HJnvL8K6UfqJmASTzoGukWW7g8zKI2p14eO1vtmKUSyCNg4UHtKKGRwJ
-	 P207g4SGfGqz0qRV/qYAgvCzufoCg+V31Tvjvzd4=
+	b=YBE1STigOP9a4xGLQ07M2HaWXs6jjNKH+liAagO/rw3tHLhOyejnDwPRGn61DreNy
+	 uhXyWuPZ9qtAZBVJPekNS4Gi7YDXixY0BHS702TDwTZe9ogwOmPZ1MoeZguP9voVWP
+	 fhgWaDceyD+lA9KhsVtTLOo0YyH1TkeA1lRlU80w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 054/156] drm/i915/cx0_phy: Fix C10 pll programming sequence
-Date: Mon,  6 Jan 2025 16:15:40 +0100
-Message-ID: <20250106151143.770157126@linuxfoundation.org>
+Subject: [PATCH 6.12 055/156] drm/i915/dg1: Fix power gate sequence.
+Date: Mon,  6 Jan 2025 16:15:41 +0100
+Message-ID: <20250106151143.807239302@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,57 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Kandpal <suraj.kandpal@intel.com>
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-[ Upstream commit 385a95cc72941c7f88630a7bc4176048cc03b395 ]
+[ Upstream commit 20e7c5313ffbf11c34a46395345677adbe890bee ]
 
-According to spec VDR_CUSTOM_WIDTH register gets programmed after pll
-specific VDR registers and TX Lane programming registers are done.
-Moreover we only program into C10_VDR_CONTROL1 to update config and
-setup master lane once all VDR registers are written into.
+sub-pipe PG is not present on DG1. Setting these bits can disable
+other power gates and cause GPU hangs on video playbacks.
 
-Bspec: 67636
-Fixes: 51390cc0e00a ("drm/i915/mtl: Add Support for C10 PHY message bus and pll programming")
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241216181554.2861381-1-suraj.kandpal@intel.com
-(cherry picked from commit f9d418552ba1e3a0e92487ff82eb515dab7516c0)
+VLK: 16314, 4304
+
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13381
+Fixes: 85a12d7eb8fe ("drm/i915/tgl: Fix Media power gate sequence.")
+Cc: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241219210019.70532-1-rodrigo.vivi@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit de7061947b4ed4be857d452c60d5fb795831d79e)
 Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_cx0_phy.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_rc6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_cx0_phy.c b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-index 4a6c3040ca15..f11309efff33 100644
---- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-+++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
-@@ -2084,14 +2084,6 @@ static void intel_c10_pll_program(struct drm_i915_private *i915,
- 		      0, C10_VDR_CTRL_MSGBUS_ACCESS,
- 		      MB_WRITE_COMMITTED);
+diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
+index c864d101faf9..9378d5901c49 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rc6.c
++++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
+@@ -133,7 +133,7 @@ static void gen11_rc6_enable(struct intel_rc6 *rc6)
+ 			GEN9_MEDIA_PG_ENABLE |
+ 			GEN11_MEDIA_SAMPLER_PG_ENABLE;
  
--	/* Custom width needs to be programmed to 0 for both the phy lanes */
--	intel_cx0_rmw(encoder, INTEL_CX0_BOTH_LANES, PHY_C10_VDR_CUSTOM_WIDTH,
--		      C10_VDR_CUSTOM_WIDTH_MASK, C10_VDR_CUSTOM_WIDTH_8_10,
--		      MB_WRITE_COMMITTED);
--	intel_cx0_rmw(encoder, INTEL_CX0_BOTH_LANES, PHY_C10_VDR_CONTROL(1),
--		      0, C10_VDR_CTRL_UPDATE_CFG,
--		      MB_WRITE_COMMITTED);
--
- 	/* Program the pll values only for the master lane */
- 	for (i = 0; i < ARRAY_SIZE(pll_state->pll); i++)
- 		intel_cx0_write(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_PLL(i),
-@@ -2101,6 +2093,10 @@ static void intel_c10_pll_program(struct drm_i915_private *i915,
- 	intel_cx0_write(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_CMN(0), pll_state->cmn, MB_WRITE_COMMITTED);
- 	intel_cx0_write(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_TX(0), pll_state->tx, MB_WRITE_COMMITTED);
- 
-+	/* Custom width needs to be programmed to 0 for both the phy lanes */
-+	intel_cx0_rmw(encoder, INTEL_CX0_BOTH_LANES, PHY_C10_VDR_CUSTOM_WIDTH,
-+		      C10_VDR_CUSTOM_WIDTH_MASK, C10_VDR_CUSTOM_WIDTH_8_10,
-+		      MB_WRITE_COMMITTED);
- 	intel_cx0_rmw(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_CONTROL(1),
- 		      0, C10_VDR_CTRL_MASTER_LANE | C10_VDR_CTRL_UPDATE_CFG,
- 		      MB_WRITE_COMMITTED);
+-	if (GRAPHICS_VER(gt->i915) >= 12) {
++	if (GRAPHICS_VER(gt->i915) >= 12 && !IS_DG1(gt->i915)) {
+ 		for (i = 0; i < I915_MAX_VCS; i++)
+ 			if (HAS_ENGINE(gt, _VCS(i)))
+ 				pg_enable |= (VDN_HCP_POWERGATE_ENABLE(i) |
 -- 
 2.39.5
 
