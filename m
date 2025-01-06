@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46D282D98;
-	Mon,  6 Jan 2025 15:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A956A146D40;
+	Mon,  6 Jan 2025 15:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177367; cv=none; b=IssLzWlRVPdNj0CLbCuZo3+86LkaP0WAvcoqGyKAPWjCEWlBe/YYYTiNAbCb6r+ycKIC/3Va3pBmvvDV1CNY9Y0sbx0Q1DWmC1VLVBVgm3HdSbfSxNXisbfrenAUeKqhTgMOAWhTJ3YLs4y23gd1M4npmFj38TE7qRLyeILrJcU=
+	t=1736177370; cv=none; b=UyUFFDK0yCu6g8zotjmRXjjXo+G0Cf5dAJAZN917TchEEeReSoRqeP7FcVRBdTiq+VBOtF8gxNfETtQlrUjKMA7MFL/R+RZZBAGXtU36wmn9OHAiGsNAreBBLC+p9CZ91iY2AB/Zx9Jg8JF5tHguPtxtlltFa0CRKcwgXWGchEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177367; c=relaxed/simple;
-	bh=3G0T8udXNz47pG1AanLYMgOUHA+AsLx9O/tG6MOliJs=;
+	s=arc-20240116; t=1736177370; c=relaxed/simple;
+	bh=76iYJ/grmIxY4bACiJ4brKPno8vrCrelHVVRSSy9jUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+52En6epG13ytOxF9scJqD0y32x5ft7um13C4NDRKUVikHK7fvxDjJInDbttiThl8gYUpLzbGGd52xBJGbs2s2UQkWJZcuWR5B8fcrDxJ+FCHq3ZNumq7nq3AclGXcQeHAABHFbs3DGSlb1FuFJTAKkdhuGEfmwJGNG9Ip1jjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JepwRjql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJh9HM27hDOVOcA5Qduw8ptnGhhyTL0S74cUrn9XROFsqwRFa7sdsT71aj3myXNu6VBYGuq9/yoLvO0IbLdw+BYJz/gmf9P3KGH482WUfvnVy/Xct+GrEc5IHuu3TaLNbfY6JlbaCQSqqs9jXFe3f9ZR2ixyuFT21gYLV94CSBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfFbTXrJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JepwRjql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487FFC4CED2;
-	Mon,  6 Jan 2025 15:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfFbTXrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322D7C4CED2;
+	Mon,  6 Jan 2025 15:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177367;
-	bh=3G0T8udXNz47pG1AanLYMgOUHA+AsLx9O/tG6MOliJs=;
+	s=korg; t=1736177370;
+	bh=76iYJ/grmIxY4bACiJ4brKPno8vrCrelHVVRSSy9jUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JepwRjqlH6dvOcBDPKzi9VimVCSVwy4R/NI1za20i+M2alBBVR6opLKk3ER4WwUnk
-	 RYyCteI1ArNZ51QN4hB6vqOeuczL/yBL2DR+rMrWKTupIWci4yfIs8qPq68gA++bee
-	 v6LWiduK2vPHJBIe/nKQcQ4sZaAiCUJpmw+4J2VY=
+	b=NfFbTXrJc/CVBRmUbouG8sUNYYPk0PSmraySA8fF3PHVUdTpYCEfLOFdHoDEs80tz
+	 cnxKoCET2fwfILPVOFgYpgDBBAjE5UtqeeJ7/MmlsBEa/EmVKpE5T6hY4l6KBxucKx
+	 7qTZvMONhxTIENYsKp6zwfmn8Y7yp4lBdjs4cvaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Stefan Ekenberg <stefan.ekenberg@axis.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 141/222] RDMA/bnxt_re: Fix the locking while accessing the QP table
-Date: Mon,  6 Jan 2025 16:15:45 +0100
-Message-ID: <20250106151156.104943600@linuxfoundation.org>
+Subject: [PATCH 6.6 142/222] drm/bridge: adv7511_audio: Update Audio InfoFrame properly
+Date: Mon,  6 Jan 2025 16:15:46 +0100
+Message-ID: <20250106151156.142057796@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,41 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Stefan Ekenberg <stefan.ekenberg@axis.com>
 
-[ Upstream commit 9272cba0ded71b5a2084da3004ec7806b8cb7fd2 ]
+[ Upstream commit 902806baf3c1e8383c1fe3ff0b6042b8cb5c2707 ]
 
-QP table handling is synchronized with destroy QP and Async
-event from the HW. The same needs to be synchronized
-during create_qp also. Use the same lock in create_qp also.
+AUDIO_UPDATE bit (Bit 5 of MAIN register 0x4A) needs to be set to 1
+while updating Audio InfoFrame information and then set to 0 when done.
+Otherwise partially updated Audio InfoFrames could be sent out. Two
+cases where this rule were not followed are fixed:
+ - In adv7511_hdmi_hw_params() make sure AUDIO_UPDATE bit is updated
+   before/after setting ADV7511_REG_AUDIO_INFOFRAME.
+ - In audio_startup() use the correct register for clearing
+   AUDIO_UPDATE bit.
 
-Fixes: 76d3ddff7153 ("RDMA/bnxt_re: synchronize the qp-handle table array")
-Fixes: f218d67ef004 ("RDMA/bnxt_re: Allow posting when QPs are in error")
-Fixes: 84cf229f4001 ("RDMA/bnxt_re: Fix the qp table indexing")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20241217102649.1377704-6-kalesh-anakkur.purayil@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+The problem with corrupted audio infoframes were discovered by letting
+a HDMI logic analyser check the output of ADV7535.
+
+Note that this patchs replaces writing REG_GC(1) with
+REG_INFOFRAME_UPDATE. Bit 5 of REG_GC(1) is positioned within field
+GC_PP[3:0] and that field doesn't control audio infoframe and is read-
+only. My conclusion therefore was that the author if this code meant to
+clear bit 5 of REG_INFOFRAME_UPDATE from the very beginning.
+
+Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+Fixes: 53c515befe28 ("drm/bridge: adv7511: Add Audio support")
+Signed-off-by: Stefan Ekenberg <stefan.ekenberg@axis.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241119-adv7511-audio-info-frame-v4-1-4ae68e76c89c@axis.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 1355061d698d..871a49315c88 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -1161,9 +1161,11 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 		rq->dbinfo.db = qp->dpi->dbr;
- 		rq->dbinfo.max_slot = bnxt_qplib_set_rq_max_slot(rq->wqe_size);
- 	}
-+	spin_lock_bh(&rcfw->tbl_lock);
- 	tbl_indx = map_qp_id_to_tbl_indx(qp->id, rcfw);
- 	rcfw->qp_tbl[tbl_indx].qp_id = qp->id;
- 	rcfw->qp_tbl[tbl_indx].qp_handle = (void *)qp;
-+	spin_unlock_bh(&rcfw->tbl_lock);
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+index 61f4a38e7d2b..8f786592143b 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+@@ -153,7 +153,16 @@ static int adv7511_hdmi_hw_params(struct device *dev, void *data,
+ 			   ADV7511_AUDIO_CFG3_LEN_MASK, len);
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_I2C_FREQ_ID_CFG,
+ 			   ADV7511_I2C_FREQ_ID_CFG_RATE_MASK, rate << 4);
+-	regmap_write(adv7511->regmap, 0x73, 0x1);
++
++	/* send current Audio infoframe values while updating */
++	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
++			   BIT(5), BIT(5));
++
++	regmap_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME(0), 0x1);
++
++	/* use Audio infoframe updated info */
++	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
++			   BIT(5), 0);
  
  	return 0;
- fail:
+ }
+@@ -184,8 +193,9 @@ static int audio_startup(struct device *dev, void *data)
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(0),
+ 				BIT(7) | BIT(6), BIT(7));
+ 	/* use Audio infoframe updated info */
+-	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(1),
++	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
+ 				BIT(5), 0);
++
+ 	/* enable SPDIF receiver */
+ 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
+ 		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
 -- 
 2.39.5
 
