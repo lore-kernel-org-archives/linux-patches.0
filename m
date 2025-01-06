@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0B314A617;
-	Mon,  6 Jan 2025 15:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09481547D8;
+	Mon,  6 Jan 2025 15:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179114; cv=none; b=YUn0VbIKFqgv8Q8oKV6ULAZvg6gNjAvTJe2Ya1+BMgGj0o5DSWeDtG3f4Or0TZX8StELsectrW7b18TFgA4wsddFr1adBGqzTQOd6YHA2mClr51At74x/8/gnNVa4egBSeBx4JZcbGjhh+5Da3wW4NQbAIZZgKyTxKFajDrBcpU=
+	t=1736179118; cv=none; b=Dx/3lHbkWiGT9Q6n3g4/QSV41HTgsffepOekGwv/gQL4eAJjolAeV12Z3/I8xXC8Z6rmiRATzbP282a0ir0SiM7XH+oQk4v1q1i7NlwsfU8uWrMDEIj5WM0kQq2ks1GCncbc0KqbTXUTBHFNQ4Z0xylxDLZ8QjnQ4nNhq1tjpO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179114; c=relaxed/simple;
-	bh=IXpEwY+W9QqbqL+Pc+wozfbK5hbpy3LGwr5sZC/2pek=;
+	s=arc-20240116; t=1736179118; c=relaxed/simple;
+	bh=kjLvfA7QA+a0FPtJEmtGUdl5GWTDYLsjp0jISYxvvAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=el3ui26z65eS6umXJSef2Rvo3E2AtFWI/p1IhChoC9L1/txbbS1VqnNt8isEcideP9I2cnZO+R8tfizNRjBruF+9urTYPXa7+cPZAM9pp1bHxhTuBxEFagrFnXna5eAwl/c7izUPZPjOyzPFWKgRsxxBnt1VslX7tlCRdyxxJ9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XhiNQIQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nOzDpAo48nlet2hz6/adxHBUP3y32H8B6zlK/F5EVd+HLP4ikxxww2GnAfBz5aW3o4MowcYdF8u+V4omCctRXfoJE2non034YboC8xLWaXUyr59DUgJTQKV6K3gR76oWBXxTRAxmxVvgIxyfYpNzAmQPkPTU4NuDCVIQthYe8iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1ZShuFrV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XhiNQIQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F90C4CED2;
-	Mon,  6 Jan 2025 15:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1ZShuFrV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB6A3C4CEE1;
+	Mon,  6 Jan 2025 15:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179114;
-	bh=IXpEwY+W9QqbqL+Pc+wozfbK5hbpy3LGwr5sZC/2pek=;
+	s=korg; t=1736179117;
+	bh=kjLvfA7QA+a0FPtJEmtGUdl5GWTDYLsjp0jISYxvvAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhiNQIQWespY1UYQ094/8KYbjiB2zQXN39+gBoc7rXUGPSDS1TTB1wK7ZtMQvV1xC
-	 zhQBiAIYD5rChWu9qWGajpTn3viMBYoE27sLZTGpeplXELZqCn7W2UmZZ2/s+P14Or
-	 iESAvQwNp+SivZEoQX2IMEH054hakfs896P5ZhOA=
+	b=1ZShuFrVlyPBxU/7LXGArKRxKQCH7qJYfKRz+t49qGjZcg9MRTFJSIritq3TKaKiW
+	 OzqpIzWy30rCd1GmhE/mvidgaLqCNhrZ4Wj5KdTxDcZx2/4JYcjEInB/fxsyfFsTU5
+	 dOdYsN0eERhsz2dAPrSAhry9EiyZCtK5jIxs9/mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.4 32/93] of: Fix refcount leakage for OF node returned by __of_get_dma_parent()
-Date: Mon,  6 Jan 2025 16:17:08 +0100
-Message-ID: <20250106151129.916579709@linuxfoundation.org>
+	Prathamesh Shete <pshete@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 15/93] mmc: sdhci-tegra: Remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk
+Date: Mon,  6 Jan 2025 16:16:51 +0100
+Message-ID: <20250106151129.277975076@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -50,36 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Prathamesh Shete <pshete@nvidia.com>
 
-commit 5d009e024056ded20c5bb1583146b833b23bbd5a upstream.
+commit a56335c85b592cb2833db0a71f7112b7d9f0d56b upstream.
 
-__of_get_dma_parent() returns OF device node @args.np, but the node's
-refcount is increased twice, by both of_parse_phandle_with_args() and
-of_node_get(), so causes refcount leakage for the node.
+Value 0 in ADMA length descriptor is interpreted as 65536 on new Tegra
+chips, remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk to make sure max
+ADMA2 length is 65536.
 
-Fix by directly returning the node got by of_parse_phandle_with_args().
-
-Fixes: f83a6e5dea6c ("of: address: Add support for the parent DMA bus")
+Fixes: 4346b7c7941d ("mmc: tegra: Add Tegra186 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241206-of_core_fix-v1-4-dc28ed56bec3@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Message-ID: <20241209101009.22710-1-pshete@nvidia.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/address.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-tegra.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/of/address.c
-+++ b/drivers/of/address.c
-@@ -692,7 +692,7 @@ static struct device_node *__of_get_dma_
- 	if (ret < 0)
- 		return of_get_parent(np);
- 
--	return of_node_get(args.np);
-+	return args.np;
- }
- 
- u64 of_translate_dma_address(struct device_node *dev, const __be32 *in_addr)
+--- a/drivers/mmc/host/sdhci-tegra.c
++++ b/drivers/mmc/host/sdhci-tegra.c
+@@ -1300,7 +1300,6 @@ static const struct sdhci_pltfm_data sdh
+ 		  SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
+ 		  SDHCI_QUIRK_SINGLE_POWER_WRITE |
+ 		  SDHCI_QUIRK_NO_HISPD_BIT |
+-		  SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC |
+ 		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
+ 	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
+ 		   SDHCI_QUIRK2_BROKEN_HS200 |
 
 
