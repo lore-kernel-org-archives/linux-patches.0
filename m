@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDD5146D40;
-	Mon,  6 Jan 2025 15:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E480481AF;
+	Mon,  6 Jan 2025 15:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177292; cv=none; b=sZKW7lRw7DprFnOOGrnxDuAPGzJha6lp4KZk+zg6he9GOhd17o2/Xn1qElGs0PS7CbPzSaWd1pqXAb6LQfJy0xvKSo+bMDZeQbiD3nNHN4XJZke9NrplSt6ODm22A+JesiqSlbW9Um/eK1AvLXmO5metgh9M9xS9sEW4JFykFrk=
+	t=1736177295; cv=none; b=ou25P8KGrBgx/sLCT8gHW82kaLF9adIwJ7qyahzbzA389Fd49dUiEGaFCV+fHmLEp3KnViMnrh/GamAxYXuWYmYeOqkye7LWkGqA/FACKdc+cKEc8LXtaWCdN3U6IEbs9U5sKOozxxwvrOKhiwBVbC6bL8txeMemaRay6TACGzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177292; c=relaxed/simple;
-	bh=e57js/CbqmSbMNgXSq1XnQclkXMIwKBjP/RfDyvimd4=;
+	s=arc-20240116; t=1736177295; c=relaxed/simple;
+	bh=7lH+6zf4kQDsYiizOgSmjbdJIonvN5TkV5P9y5aEPkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KtuxAp0ahpFEebmnBqme16h5JCLykQKX4svsc1etLr7STyp8Wi3HQES4QFlMMKyyMDPCOxF5LXFbQCz9p1KUy70MPmYt3xKJ/yC0Z1VT3MZWPHo7coyg29I/UqepDLKt8c6+B5BbgsaLQbxbc8NUEIBV0zk0o7MdtlhuZh9tAcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+VwcfeK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrCWOd9Yx6k+XI4vtrCYPds4RIuvAljtvupqpmMQNxlUL7scIpHsEPtYqnMUquYkAPZNtstTfTE3PQn+9ZiR/OdnrCHAWNRD78zAGiJHbs3bBvT9aZVR759j7wwlJshe++BX1TSOMWO+ZP8VrnpmR4lWyvLgwN83WC+WoIef6Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyH/JskC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+VwcfeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AFFC4CED2;
-	Mon,  6 Jan 2025 15:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyH/JskC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E4AC4CED2;
+	Mon,  6 Jan 2025 15:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177291;
-	bh=e57js/CbqmSbMNgXSq1XnQclkXMIwKBjP/RfDyvimd4=;
+	s=korg; t=1736177295;
+	bh=7lH+6zf4kQDsYiizOgSmjbdJIonvN5TkV5P9y5aEPkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+VwcfeKr9tb6U7gH0PIAG90ZEKYZlZLbJV2sySE7LCp0oltaLwq0KLXQ5Tq+nRWs
-	 2Fi+8AxiVwHLnlkNCNzBz4A1E2E/n/0qkvMNyv4/eKJFxNHzzwFD3U2xx/AlrT6fEN
-	 qoAyfIH8ZbXgYmaKVfXGD3r6cmWyWhBlHGk5sM1k=
+	b=cyH/JskCFzci2xt/WTmauMJu+oRAJY+kmS/yUjj2cPZxfy470ngoqjzGHn3GDp+P+
+	 5ezIWm+9NJpTppKMOIgtXgATCWtPJEbIcUWq4gK+qyKRaeaawMEIn1f9yaipyYtBg4
+	 GQeE1NZntEQGqeOjSFXqwlNqgZgfcwMbnLAveaD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 115/222] mmc: sdhci-msm: fix crypto key eviction
-Date: Mon,  6 Jan 2025 16:15:19 +0100
-Message-ID: <20250106151154.950809293@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Genes Lists <lists@sapience.com>,
+	Gene C <arch@sapience.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 116/222] tracing: Have process_string() also allow arrays
+Date: Mon,  6 Jan 2025 16:15:20 +0100
+Message-ID: <20250106151154.987834299@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,55 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 8d90a86ed053226a297ce062f4d9f4f521e05c4c upstream.
+commit afc6717628f959941d7b33728570568b4af1c4b8 upstream.
 
-Commit c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
-introduced an incorrect check of the algorithm ID into the key eviction
-path, and thus qcom_ice_evict_key() is no longer ever called.  Fix it.
+In order to catch a common bug where a TRACE_EVENT() TP_fast_assign()
+assigns an address of an allocated string to the ring buffer and then
+references it in TP_printk(), which can be executed hours later when the
+string is free, the function test_event_printk() runs on all events as
+they are registered to make sure there's no unwanted dereferencing.
 
-Fixes: c7eed31e235c ("mmc: sdhci-msm: Switch to the new ICE API")
+It calls process_string() to handle cases in TP_printk() format that has
+"%s". It returns whether or not the string is safe. But it can have some
+false positives.
+
+For instance, xe_bo_move() has:
+
+ TP_printk("move_lacks_source:%s, migrate object %p [size %zu] from %s to %s device_id:%s",
+            __entry->move_lacks_source ? "yes" : "no", __entry->bo, __entry->size,
+            xe_mem_type_to_name[__entry->old_placement],
+            xe_mem_type_to_name[__entry->new_placement], __get_str(device_id))
+
+Where the "%s" references into xe_mem_type_to_name[]. This is an array of
+pointers that should be safe for the event to access. Instead of flagging
+this as a bad reference, if a reference points to an array, where the
+record field is the index, consider it safe.
+
+Link: https://lore.kernel.org/all/9dee19b6185d325d0e6fa5f7cbba81d007d99166.camel@sapience.com/
+
 Cc: stable@vger.kernel.org
-Cc: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Message-ID: <20241213041958.202565-6-ebiggers@kernel.org>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241231000646.324fb5f7@gandalf.local.home
+Fixes: 65a25d9f7ac02 ("tracing: Add "%s" check in test_event_printk()")
+Reported-by: Genes Lists <lists@sapience.com>
+Tested-by: Gene C <arch@sapience.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-msm.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ kernel/trace/trace_events.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1867,20 +1867,20 @@ static int sdhci_msm_program_key(struct
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
- 	union cqhci_crypto_cap_entry cap;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -361,6 +361,18 @@ static bool process_string(const char *f
+ 	} while (s < e);
  
-+	if (!(cfg->config_enable & CQHCI_CRYPTO_CONFIGURATION_ENABLE))
-+		return qcom_ice_evict_key(msm_host->ice, slot);
+ 	/*
++	 * Check for arrays. If the argument has: foo[REC->val]
++	 * then it is very likely that foo is an array of strings
++	 * that are safe to use.
++	 */
++	r = strstr(s, "[");
++	if (r && r < e) {
++		r = strstr(r, "REC->");
++		if (r && r < e)
++			return true;
++	}
 +
- 	/* Only AES-256-XTS has been tested so far. */
- 	cap = cq_host->crypto_cap_array[cfg->crypto_cap_idx];
- 	if (cap.algorithm_id != CQHCI_CRYPTO_ALG_AES_XTS ||
- 		cap.key_size != CQHCI_CRYPTO_KEY_SIZE_256)
- 		return -EINVAL;
- 
--	if (cfg->config_enable & CQHCI_CRYPTO_CONFIGURATION_ENABLE)
--		return qcom_ice_program_key(msm_host->ice,
--					    QCOM_ICE_CRYPTO_ALG_AES_XTS,
--					    QCOM_ICE_CRYPTO_KEY_SIZE_256,
--					    cfg->crypto_key,
--					    cfg->data_unit_size, slot);
--	else
--		return qcom_ice_evict_key(msm_host->ice, slot);
-+	return qcom_ice_program_key(msm_host->ice,
-+				    QCOM_ICE_CRYPTO_ALG_AES_XTS,
-+				    QCOM_ICE_CRYPTO_KEY_SIZE_256,
-+				    cfg->crypto_key,
-+				    cfg->data_unit_size, slot);
- }
- 
- #else /* CONFIG_MMC_CRYPTO */
++	/*
+ 	 * If there's any strings in the argument consider this arg OK as it
+ 	 * could be: REC->field ? "foo" : "bar" and we don't want to get into
+ 	 * verifying that logic here.
 
 
