@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417D41DE2DF;
-	Mon,  6 Jan 2025 16:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC85F1DE2DF;
+	Mon,  6 Jan 2025 16:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179304; cv=none; b=DXqOiUvQjo6fxSpsTEF7IXO21fox4e/1K2L329B/dblOMH2LODnEd6Cty8WvXoAQQC66sqf7MWn70H9vLmtB4SX82Ng+itOFn/9Exgwu3I1PM3hySlDnuT5pbeLwN6205qHoy1kIbRDQPIMDjCdO6thY+wC2B7CxbnXF+p2UJaA=
+	t=1736179307; cv=none; b=JHAvG3+11KMWjV5cPiViUS0JeSLqn6mrDfKB0WWQTNN9K0toZLOSPJf92TBVW7Q52CFHD0kBLm4LwTKL5+c9OyMKcr8K0tC/JAWG2qhcQO28CS7JFYpoYFgRtGYHyDdiy379skb3B5wsVnxr3Q7LzC7nHjUIZyryfq92vN8Gvj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179304; c=relaxed/simple;
-	bh=+DSHQup9JeFlUFWuxj2MKW6iJdsQzkaufo2XGLCiX24=;
+	s=arc-20240116; t=1736179307; c=relaxed/simple;
+	bh=jnMm1fcdw2w1cMU97vZMjW+eRBDE/mad1MuJnUf5q0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuJQJvU8CFPp2smXQBYshzRITaH0s/dCqE/FWvmZHSh3YoFAkeP5+eL1SyQOtxihRPxqxXirceVuiXF9sF71g1eDKnOOXwto8Fgs7u0BHDQcQYILGp1rkYSdGEiG7RWf6lxOXSp39ShYB4YQbi9rzT4LHceuwkEoEW2pmfVr/CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhTYYQu0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Te/ySHIFhPE4wmvGJr2csGCY9TNS+Spd9wugz2t5tJnO9TM7Oehbu8MR0yr54//piDxTwaC0oTrUMj0f4x2O3sjYE5ABpgCj051mptlbDrEB9k1MfnblkKaDGjpRusvEdIKbImRn1A7mTnXoJBrW6/dTEVR8lN8ILdF4HdF3NXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZT2SwUG0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhTYYQu0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EA5C4CED2;
-	Mon,  6 Jan 2025 16:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZT2SwUG0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59166C4CED2;
+	Mon,  6 Jan 2025 16:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179303;
-	bh=+DSHQup9JeFlUFWuxj2MKW6iJdsQzkaufo2XGLCiX24=;
+	s=korg; t=1736179306;
+	bh=jnMm1fcdw2w1cMU97vZMjW+eRBDE/mad1MuJnUf5q0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhTYYQu0mRhTE+klBwnD6Xs+st/C3C0DcH4ojTsMzXhC00nRpPgS0Iz2XLQR4nMxH
-	 SnXs3ihQUy+XVv6sNdycPmfZFo+bz2qJSh8YAK4PNqrA37oX9ifNtvpJbBIa2cKME1
-	 ebKNko3UfA6PwPUzy7fzFeGbd/9fZt7q1Am70YPk=
+	b=ZT2SwUG04FHyKcRN7lFb/ZFhxwuGI6GIXF9KPtyX42LiXht+3ackQdMCwhhLa1mXR
+	 Z1Rk8iOdwYdrSy0G5pKXKxJ0H+iJmrHwIcNK+FUKTQ7O6WqD3KE/kUE7PPg1mnIeVr
+	 cDbptOWlhsu1ZfbU1bpvtN8qYJS4AvFtaC0ZHh4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 93/93] mm: vmscan: account for free pages to prevent infinite Loop in throttle_direct_reclaim()
-Date: Mon,  6 Jan 2025 16:18:09 +0100
-Message-ID: <20250106151132.213551251@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 83/93] net: usb: qmi_wwan: add Telit FE910C04 compositions
+Date: Mon,  6 Jan 2025 16:17:59 +0100
+Message-ID: <20250106151131.838099194@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -51,144 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seiji Nishikawa <snishika@redhat.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-commit 6aaced5abd32e2a57cd94fd64f824514d0361da8 upstream.
+[ Upstream commit 3b58b53a26598209a7ad8259a5114ce71f7c3d64 ]
 
-The task sometimes continues looping in throttle_direct_reclaim() because
-allow_direct_reclaim(pgdat) keeps returning false.
+Add the following Telit FE910C04 compositions:
 
- #0 [ffff80002cb6f8d0] __switch_to at ffff8000080095ac
- #1 [ffff80002cb6f900] __schedule at ffff800008abbd1c
- #2 [ffff80002cb6f990] schedule at ffff800008abc50c
- #3 [ffff80002cb6f9b0] throttle_direct_reclaim at ffff800008273550
- #4 [ffff80002cb6fa20] try_to_free_pages at ffff800008277b68
- #5 [ffff80002cb6fae0] __alloc_pages_nodemask at ffff8000082c4660
- #6 [ffff80002cb6fc50] alloc_pages_vma at ffff8000082e4a98
- #7 [ffff80002cb6fca0] do_anonymous_page at ffff80000829f5a8
- #8 [ffff80002cb6fce0] __handle_mm_fault at ffff8000082a5974
- #9 [ffff80002cb6fd90] handle_mm_fault at ffff8000082a5bd4
+0x10c0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 13 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-At this point, the pgdat contains the following two zones:
+0x10c4: rmnet + tty (AT) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 14 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c4 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-        NODE: 4  ZONE: 0  ADDR: ffff00817fffe540  NAME: "DMA32"
-          SIZE: 20480  MIN/LOW/HIGH: 11/28/45
-          VM_STAT:
-                NR_FREE_PAGES: 359
-        NR_ZONE_INACTIVE_ANON: 18813
-          NR_ZONE_ACTIVE_ANON: 0
-        NR_ZONE_INACTIVE_FILE: 50
-          NR_ZONE_ACTIVE_FILE: 0
-          NR_ZONE_UNEVICTABLE: 0
-        NR_ZONE_WRITE_PENDING: 0
-                     NR_MLOCK: 0
-                    NR_BOUNCE: 0
-                   NR_ZSPAGES: 0
-            NR_FREE_CMA_PAGES: 0
+0x10c8: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c8 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-        NODE: 4  ZONE: 1  ADDR: ffff00817fffec00  NAME: "Normal"
-          SIZE: 8454144  PRESENT: 98304  MIN/LOW/HIGH: 68/166/264
-          VM_STAT:
-                NR_FREE_PAGES: 146
-        NR_ZONE_INACTIVE_ANON: 94668
-          NR_ZONE_ACTIVE_ANON: 3
-        NR_ZONE_INACTIVE_FILE: 735
-          NR_ZONE_ACTIVE_FILE: 78
-          NR_ZONE_UNEVICTABLE: 0
-        NR_ZONE_WRITE_PENDING: 0
-                     NR_MLOCK: 0
-                    NR_BOUNCE: 0
-                   NR_ZSPAGES: 0
-            NR_FREE_CMA_PAGES: 0
-
-In allow_direct_reclaim(), while processing ZONE_DMA32, the sum of
-inactive/active file-backed pages calculated in zone_reclaimable_pages()
-based on the result of zone_page_state_snapshot() is zero.
-
-Additionally, since this system lacks swap, the calculation of inactive/
-active anonymous pages is skipped.
-
-        crash> p nr_swap_pages
-        nr_swap_pages = $1937 = {
-          counter = 0
-        }
-
-As a result, ZONE_DMA32 is deemed unreclaimable and skipped, moving on to
-the processing of the next zone, ZONE_NORMAL, despite ZONE_DMA32 having
-free pages significantly exceeding the high watermark.
-
-The problem is that the pgdat->kswapd_failures hasn't been incremented.
-
-        crash> px ((struct pglist_data *) 0xffff00817fffe540)->kswapd_failures
-        $1935 = 0x0
-
-This is because the node deemed balanced.  The node balancing logic in
-balance_pgdat() evaluates all zones collectively.  If one or more zones
-(e.g., ZONE_DMA32) have enough free pages to meet their watermarks, the
-entire node is deemed balanced.  This causes balance_pgdat() to exit early
-before incrementing the kswapd_failures, as it considers the overall
-memory state acceptable, even though some zones (like ZONE_NORMAL) remain
-under significant pressure.
-
-
-The patch ensures that zone_reclaimable_pages() includes free pages
-(NR_FREE_PAGES) in its calculation when no other reclaimable pages are
-available (e.g., file-backed or anonymous pages).  This change prevents
-zones like ZONE_DMA32, which have sufficient free pages, from being
-mistakenly deemed unreclaimable.  By doing so, the patch ensures proper
-node balancing, avoids masking pressure on other zones like ZONE_NORMAL,
-and prevents infinite loops in throttle_direct_reclaim() caused by
-allow_direct_reclaim(pgdat) repeatedly returning false.
-
-
-The kernel hangs due to a task stuck in throttle_direct_reclaim(), caused
-by a node being incorrectly deemed balanced despite pressure in certain
-zones, such as ZONE_NORMAL.  This issue arises from
-zone_reclaimable_pages() returning 0 for zones without reclaimable file-
-backed or anonymous pages, causing zones like ZONE_DMA32 with sufficient
-free pages to be skipped.
-
-The lack of swap or reclaimable pages results in ZONE_DMA32 being ignored
-during reclaim, masking pressure in other zones.  Consequently,
-pgdat->kswapd_failures remains 0 in balance_pgdat(), preventing fallback
-mechanisms in allow_direct_reclaim() from being triggered, leading to an
-infinite loop in throttle_direct_reclaim().
-
-This patch modifies zone_reclaimable_pages() to account for free pages
-(NR_FREE_PAGES) when no other reclaimable pages exist.  This ensures zones
-with sufficient free pages are not skipped, enabling proper balancing and
-reclaim behavior.
-
-[akpm@linux-foundation.org: coding-style cleanups]
-Link: https://lkml.kernel.org/r/20241130164346.436469-1-snishika@redhat.com
-Link: https://lkml.kernel.org/r/20241130161236.433747-2-snishika@redhat.com
-Fixes: 5a1c84b404a7 ("mm: remove reclaim and compaction retry approximations")
-Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Link: https://patch.msgid.link/20241209151821.3688829-1-dnlplm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/usb/qmi_wwan.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -342,7 +342,14 @@ unsigned long zone_reclaimable_pages(str
- 	if (get_nr_swap_pages() > 0)
- 		nr += zone_page_state_snapshot(zone, NR_ZONE_INACTIVE_ANON) +
- 			zone_page_state_snapshot(zone, NR_ZONE_ACTIVE_ANON);
--
-+	/*
-+	 * If there are no reclaimable file-backed or anonymous pages,
-+	 * ensure zones with sufficient free pages are not skipped.
-+	 * This prevents zones like DMA32 from being ignored in reclaim
-+	 * scenarios where they can still help alleviate memory pressure.
-+	 */
-+	if (nr == 0)
-+		nr = zone_page_state_snapshot(zone, NR_FREE_PAGES);
- 	return nr;
- }
- 
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index af787088f1ae..347521ec52c3 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1328,6 +1328,9 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
+-- 
+2.39.5
+
 
 
