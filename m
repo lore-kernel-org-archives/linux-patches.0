@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8346D158525;
-	Mon,  6 Jan 2025 15:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F040158525;
+	Mon,  6 Jan 2025 15:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178097; cv=none; b=TAiN/ZpB0KUJGdkCv5anByWpe5EnYYOoMTXLe/vy4tTZMxUJtQL/yeTL2NqOyVG50RvzuZX6XJ055TbdJXd2MlPbRv6BAzd74jWCI5AwD6m6aE2Rdo3SOKXc/CGum/PSfbPROM9IF6NIEwtFu5Xtx5qmnecX/70xhwYXFaSJAKo=
+	t=1736178100; cv=none; b=M6TUHupuC5LrbS4X53PLk3JXvpXDbum4G+tn6SIe3rRQENC7LREC24K6owLPGIhXQ3ClN9KMuDt61rQhinjtxBpFXSQYb7MFTHSzYvydnvzbIM6C4+NJAPDzaYrAzp0drljQHilMq8KMjFwIgkysSG5LMpQvlckiAC7e3+lXHt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178097; c=relaxed/simple;
-	bh=eDbAv4Rcyu/prvxe4brltpbijkTobDBq+NoBP7wTkJ8=;
+	s=arc-20240116; t=1736178100; c=relaxed/simple;
+	bh=q7zJO9kyE5xblEN+bhWJi+KqzvC3ARjkAjFmpRxGAv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NeOLhKeLSKZ/lmcpdDcXvL55Op6+FlAT4oQs5dbS3WIBoQOMoV/M6Qc+tLi+UJGhNeRZyr3jqVUc3o52BbMJkcUxYWJktKU/IxSkm/A2GMAPgUTrlQPcBksun7sXqrMhtvJhPwpcYYnN0h2/THzJ1Wa1Z62+CclAirr9uRjfVFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LctpTZsF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i47HraK5x3fauORCjB4cJzQpZgFVr4ba6LBNJYtd+W2OXl5/HSgYBHplRqRN/oJNXH3F6F8aWGXNLETb+jShvCN5WjwsIxtPO/RxZcYHzCaPkthfNKxmT2BCyOiX6dC4sQbNDq0cIvlKTR2gBNYyq85j/NtfE75XYxODyw2pVfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y7mZMuRa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LctpTZsF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72FFC4CED2;
-	Mon,  6 Jan 2025 15:41:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y7mZMuRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93A0C4CED2;
+	Mon,  6 Jan 2025 15:41:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178097;
-	bh=eDbAv4Rcyu/prvxe4brltpbijkTobDBq+NoBP7wTkJ8=;
+	s=korg; t=1736178100;
+	bh=q7zJO9kyE5xblEN+bhWJi+KqzvC3ARjkAjFmpRxGAv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LctpTZsFb8iX7THqnVMwJKTHWA/5rOMdbaClxr6QQBp/57hqTtNzPW5rGO6q9jsqg
-	 pPm7kzulXGSz9+BCvXJw47ecEIHPboy9WnW0ZrqT/a5OxfywbY7X55SffcnBf6iFlV
-	 BpBT0G7aUM+kh0jSg6qqIiGRTV7D/jy5E87BrSKw=
+	b=Y7mZMuRajOUh7r61NRX9MWWYjKfE0xEM5Cg5i2SbldMop3NcVf+vNawaCNW/rMnvO
+	 ZN7cSgquWryEcf3stqSGwHmz6ohhFZyFCtOylvPH/nfn4fGKIW9SCcA7cpOXz8UtEe
+	 UN7QAInjRXeo2AdTAAzln9WFNxyqctn7hIotLqpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Ken Chen <kenneth.w.chen@intel.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 153/156] mm: hugetlb: independent PMD page table shared count
-Date: Mon,  6 Jan 2025 16:17:19 +0100
-Message-ID: <20250106151147.493335782@linuxfoundation.org>
+	syzbot+38a095a81f30d82884c1@syzkaller.appspotmail.com,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 154/156] mptcp: fix TCP options overflow.
+Date: Mon,  6 Jan 2025 16:17:20 +0100
+Message-ID: <20250106151147.530702817@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -55,197 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 59d9094df3d79443937add8700b2ef1a866b1081 upstream.
+commit cbb26f7d8451fe56ccac802c6db48d16240feebd upstream.
 
-The folio refcount may be increased unexpectly through try_get_folio() by
-caller such as split_huge_pages.  In huge_pmd_unshare(), we use refcount
-to check whether a pmd page table is shared.  The check is incorrect if
-the refcount is increased by the above caller, and this can cause the page
-table leaked:
+Syzbot reported the following splat:
 
- BUG: Bad page state in process sh  pfn:109324
- page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x66 pfn:0x109324
- flags: 0x17ffff800000000(node=0|zone=2|lastcpupid=0xfffff)
- page_type: f2(table)
- raw: 017ffff800000000 0000000000000000 0000000000000000 0000000000000000
- raw: 0000000000000066 0000000000000000 00000000f2000000 0000000000000000
- page dumped because: nonzero mapcount
- ...
- CPU: 31 UID: 0 PID: 7515 Comm: sh Kdump: loaded Tainted: G    B              6.13.0-rc2master+ #7
- Tainted: [B]=BAD_PAGE
- Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
- Call trace:
-  show_stack+0x20/0x38 (C)
-  dump_stack_lvl+0x80/0xf8
-  dump_stack+0x18/0x28
-  bad_page+0x8c/0x130
-  free_page_is_bad_report+0xa4/0xb0
-  free_unref_page+0x3cc/0x620
-  __folio_put+0xf4/0x158
-  split_huge_pages_all+0x1e0/0x3e8
-  split_huge_pages_write+0x25c/0x2d8
-  full_proxy_write+0x64/0xd8
-  vfs_write+0xcc/0x280
-  ksys_write+0x70/0x110
-  __arm64_sys_write+0x24/0x38
-  invoke_syscall+0x50/0x120
-  el0_svc_common.constprop.0+0xc8/0xf0
-  do_el0_svc+0x24/0x38
-  el0_svc+0x34/0x128
-  el0t_64_sync_handler+0xc8/0xd0
-  el0t_64_sync+0x190/0x198
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 UID: 0 PID: 5836 Comm: sshd Not tainted 6.13.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
+RIP: 0010:_compound_head include/linux/page-flags.h:242 [inline]
+RIP: 0010:put_page+0x23/0x260 include/linux/mm.h:1552
+Code: 90 90 90 90 90 90 90 55 41 57 41 56 53 49 89 fe 48 bd 00 00 00 00 00 fc ff df e8 f8 5e 12 f8 49 8d 5e 08 48 89 d8 48 c1 e8 03 <80> 3c 28 00 74 08 48 89 df e8 8f c7 78 f8 48 8b 1b 48 89 de 48 83
+RSP: 0000:ffffc90003916c90 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: 0000000000000008 RCX: ffff888030458000
+RDX: 0000000000000100 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffffffff898ca81d R09: 1ffff110054414ac
+R10: dffffc0000000000 R11: ffffed10054414ad R12: 0000000000000007
+R13: ffff88802a20a542 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f34f496e800(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f9d6ec9ec28 CR3: 000000004d260000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ skb_page_unref include/linux/skbuff_ref.h:43 [inline]
+ __skb_frag_unref include/linux/skbuff_ref.h:56 [inline]
+ skb_release_data+0x483/0x8a0 net/core/skbuff.c:1119
+ skb_release_all net/core/skbuff.c:1190 [inline]
+ __kfree_skb+0x55/0x70 net/core/skbuff.c:1204
+ tcp_clean_rtx_queue net/ipv4/tcp_input.c:3436 [inline]
+ tcp_ack+0x2442/0x6bc0 net/ipv4/tcp_input.c:4032
+ tcp_rcv_state_process+0x8eb/0x44e0 net/ipv4/tcp_input.c:6805
+ tcp_v4_do_rcv+0x77d/0xc70 net/ipv4/tcp_ipv4.c:1939
+ tcp_v4_rcv+0x2dc0/0x37f0 net/ipv4/tcp_ipv4.c:2351
+ ip_protocol_deliver_rcu+0x22e/0x440 net/ipv4/ip_input.c:205
+ ip_local_deliver_finish+0x341/0x5f0 net/ipv4/ip_input.c:233
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ __netif_receive_skb_one_core net/core/dev.c:5672 [inline]
+ __netif_receive_skb+0x2bf/0x650 net/core/dev.c:5785
+ process_backlog+0x662/0x15b0 net/core/dev.c:6117
+ __napi_poll+0xcb/0x490 net/core/dev.c:6883
+ napi_poll net/core/dev.c:6952 [inline]
+ net_rx_action+0x89b/0x1240 net/core/dev.c:7074
+ handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:561
+ __do_softirq kernel/softirq.c:595 [inline]
+ invoke_softirq kernel/softirq.c:435 [inline]
+ __irq_exit_rcu+0xf7/0x220 kernel/softirq.c:662
+ irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+ instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+ sysvec_apic_timer_interrupt+0x57/0xc0 arch/x86/kernel/apic/apic.c:1049
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+RIP: 0033:0x7f34f4519ad5
+Code: 85 d2 74 0d 0f 10 02 48 8d 54 24 20 0f 11 44 24 20 64 8b 04 25 18 00 00 00 85 c0 75 27 41 b8 08 00 00 00 b8 0f 01 00 00 0f 05 <48> 3d 00 f0 ff ff 76 75 48 8b 15 24 73 0d 00 f7 d8 64 89 02 48 83
+RSP: 002b:00007ffec5b32ce0 EFLAGS: 00000246
+RAX: 0000000000000001 RBX: 00000000000668a0 RCX: 00007f34f4519ad5
+RDX: 00007ffec5b32d00 RSI: 0000000000000004 RDI: 0000564f4bc6cae0
+RBP: 0000564f4bc6b5a0 R08: 0000000000000008 R09: 0000000000000000
+R10: 00007ffec5b32de8 R11: 0000000000000246 R12: 0000564f48ea8aa4
+R13: 0000000000000001 R14: 0000564f48ea93e8 R15: 00007ffec5b32d68
+ </TASK>
 
-The issue may be triggered by damon, offline_page, page_idle, etc, which
-will increase the refcount of page table.
+Eric noted a probable shinfo->nr_frags corruption, which indeed
+occurs.
 
-1. The page table itself will be discarded after reporting the
-   "nonzero mapcount".
+The root cause is a buggy MPTCP option len computation in some
+circumstances: the ADD_ADDR option should be mutually exclusive
+with DSS since the blamed commit.
 
-2. The HugeTLB page mapped by the page table miss freeing since we
-   treat the page table as shared and a shared page table will not be
-   unmapped.
+Still, mptcp_established_options_add_addr() tries to set the
+relevant info in mptcp_out_options, if the remaining space is
+large enough even when DSS is present.
 
-Fix it by introducing independent PMD page table shared count.  As
-described by comment, pt_index/pt_mm/pt_frag_refcount are used for s390
-gmap, x86 pgds and powerpc, pt_share_count is used for x86/arm64/riscv
-pmds, so we can reuse the field as pt_share_count.
+Since the ADD_ADDR infos and the DSS share the same union
+fields, adding first corrupts the latter. In the worst-case
+scenario, such corruption increases the DSS binary layout,
+exceeding the computed length and possibly overwriting the
+skb shared info.
 
-Link: https://lkml.kernel.org/r/20241216071147.3984217-1-liushixin2@huawei.com
-Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Ken Chen <kenneth.w.chen@intel.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Address the issue by enforcing mutual exclusion in
+mptcp_established_options_add_addr(), too.
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+38a095a81f30d82884c1@syzkaller.appspotmail.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/538
+Fixes: 1bff1e43a30e ("mptcp: optimize out option generation")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/025d9df8cde3c9a557befc47e9bc08fbbe3476e5.1734771049.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h       |    1 +
- include/linux/mm_types.h |   30 ++++++++++++++++++++++++++++++
- mm/hugetlb.c             |   16 +++++++---------
- 3 files changed, 38 insertions(+), 9 deletions(-)
+ net/mptcp/options.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3100,6 +3100,7 @@ static inline bool pagetable_pmd_ctor(st
- 	if (!pmd_ptlock_init(ptdesc))
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -667,8 +667,15 @@ static bool mptcp_established_options_ad
+ 		    &echo, &drop_other_suboptions))
  		return false;
- 	__folio_set_pgtable(folio);
-+	ptdesc_pmd_pts_init(ptdesc);
- 	lruvec_stat_add_folio(folio, NR_PAGETABLE);
- 	return true;
- }
---- a/include/linux/mm_types.h
-+++ b/include/linux/mm_types.h
-@@ -445,6 +445,7 @@ FOLIO_MATCH(compound_head, _head_2a);
-  * @pt_index:         Used for s390 gmap.
-  * @pt_mm:            Used for x86 pgds.
-  * @pt_frag_refcount: For fragmented page table tracking. Powerpc only.
-+ * @pt_share_count:   Used for HugeTLB PMD page table share count.
-  * @_pt_pad_2:        Padding to ensure proper alignment.
-  * @ptl:              Lock for the page table.
-  * @__page_type:      Same as page->page_type. Unused for page tables.
-@@ -471,6 +472,9 @@ struct ptdesc {
- 		pgoff_t pt_index;
- 		struct mm_struct *pt_mm;
- 		atomic_t pt_frag_refcount;
-+#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
-+		atomic_t pt_share_count;
-+#endif
- 	};
  
- 	union {
-@@ -516,6 +520,32 @@ static_assert(sizeof(struct ptdesc) <= s
- 	const struct page *:		(const struct ptdesc *)(p),	\
- 	struct page *:			(struct ptdesc *)(p)))
- 
-+#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
-+static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
-+{
-+	atomic_set(&ptdesc->pt_share_count, 0);
-+}
++	/*
++	 * Later on, mptcp_write_options() will enforce mutually exclusion with
++	 * DSS, bail out if such option is set and we can't drop it.
++	 */
+ 	if (drop_other_suboptions)
+ 		remaining += opt_size;
++	else if (opts->suboptions & OPTION_MPTCP_DSS)
++		return false;
 +
-+static inline void ptdesc_pmd_pts_inc(struct ptdesc *ptdesc)
-+{
-+	atomic_inc(&ptdesc->pt_share_count);
-+}
-+
-+static inline void ptdesc_pmd_pts_dec(struct ptdesc *ptdesc)
-+{
-+	atomic_dec(&ptdesc->pt_share_count);
-+}
-+
-+static inline int ptdesc_pmd_pts_count(struct ptdesc *ptdesc)
-+{
-+	return atomic_read(&ptdesc->pt_share_count);
-+}
-+#else
-+static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
-+{
-+}
-+#endif
-+
- /*
-  * Used for sizing the vmemmap region on some architectures
-  */
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -7200,7 +7200,7 @@ pte_t *huge_pmd_share(struct mm_struct *
- 			spte = hugetlb_walk(svma, saddr,
- 					    vma_mmu_pagesize(svma));
- 			if (spte) {
--				get_page(virt_to_page(spte));
-+				ptdesc_pmd_pts_inc(virt_to_ptdesc(spte));
- 				break;
- 			}
- 		}
-@@ -7215,7 +7215,7 @@ pte_t *huge_pmd_share(struct mm_struct *
- 				(pmd_t *)((unsigned long)spte & PAGE_MASK));
- 		mm_inc_nr_pmds(mm);
- 	} else {
--		put_page(virt_to_page(spte));
-+		ptdesc_pmd_pts_dec(virt_to_ptdesc(spte));
- 	}
- 	spin_unlock(&mm->page_table_lock);
- out:
-@@ -7227,10 +7227,6 @@ out:
- /*
-  * unmap huge page backed by shared pte.
-  *
-- * Hugetlb pte page is ref counted at the time of mapping.  If pte is shared
-- * indicated by page_count > 1, unmap is achieved by clearing pud and
-- * decrementing the ref count. If count == 1, the pte page is not shared.
-- *
-  * Called with page table lock held.
-  *
-  * returns: 1 successfully unmapped a shared pte page
-@@ -7239,18 +7235,20 @@ out:
- int huge_pmd_unshare(struct mm_struct *mm, struct vm_area_struct *vma,
- 					unsigned long addr, pte_t *ptep)
- {
-+	unsigned long sz = huge_page_size(hstate_vma(vma));
- 	pgd_t *pgd = pgd_offset(mm, addr);
- 	p4d_t *p4d = p4d_offset(pgd, addr);
- 	pud_t *pud = pud_offset(p4d, addr);
- 
- 	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
- 	hugetlb_vma_assert_locked(vma);
--	BUG_ON(page_count(virt_to_page(ptep)) == 0);
--	if (page_count(virt_to_page(ptep)) == 1)
-+	if (sz != PMD_SIZE)
-+		return 0;
-+	if (!ptdesc_pmd_pts_count(virt_to_ptdesc(ptep)))
- 		return 0;
- 
- 	pud_clear(pud);
--	put_page(virt_to_page(ptep));
-+	ptdesc_pmd_pts_dec(virt_to_ptdesc(ptep));
- 	mm_dec_nr_pmds(mm);
- 	return 1;
- }
+ 	len = mptcp_add_addr_len(opts->addr.family, echo, !!opts->addr.port);
+ 	if (remaining < len)
+ 		return false;
 
 
