@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1A41D86F1;
-	Mon,  6 Jan 2025 15:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E6B132103;
+	Mon,  6 Jan 2025 15:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177557; cv=none; b=EJ+gpPyJ6PIhSMYPRKiBFMXmvJw5/Q0Q7UiAxuJpqDKliOt0ufjMfTKX9k3+fGyJjrlV2A9NuavXVrhgpg5dJTGXiu//ueFuo5Nb+20QkK/mTZBoaBnOcrHSslqXMfiErmnLvz5T579WhGrsMHeAXGJUwx+9KImDXUG/J+TUd5k=
+	t=1736177560; cv=none; b=ZOF/O1+vTggoqpn4zVJsukDoy7c9/limh38LkV0XV6/bZ2rwS/8mRK5zTjxGAb/Nw/GK+WkJehA8zsPVmPNPMLDWMnbcqeAnwgGn5j1QlQn/HKYHuzUYhOPFvoxLfRFMCJES44wxnaMWV6dPEgPFc/oELtACrDa4RX5pvEqS1xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177557; c=relaxed/simple;
-	bh=ELo5rd5fPRUf9o/SwScdwtOPggdyRAqZlHABHpBbJcg=;
+	s=arc-20240116; t=1736177560; c=relaxed/simple;
+	bh=+1xoZMOkCD1p+spJyh7JeXPDy6MsdXnUgqQtTssSTOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEbyQA599PNiSiUqIkBR0c59ER6cRyPsRQJOuybcvCl1YYIYKb73qUtO66iCOr5jIimHMu8RNhWVURG42UTAMNvCLXzH/UcFoc2GlxzFFrSE1ONXofq49DzfzZSdOkPsTzIYYArKKoA+7yFLskHu9bL8GP/Xkldgy9y1V1HgwME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdfMOWSB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W+24mGAtI7IIUaGGYbuSbI5mBpeZPpwsaQBsRxI0Pt9aTnwKHmGXFO9K2K4VsA8RJ5niNgn9rFyo26ce0V4Gp5PGpBz5o6JkWvQBn8j4FKJf69YfmPSVLRatwWnNMRANlr+RfT739S3yLnKLKOQ9bo+P1jitCiXwER7lesbRZzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bk7Yr4Wo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdfMOWSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE437C4CED6;
-	Mon,  6 Jan 2025 15:32:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bk7Yr4Wo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B776C4CED2;
+	Mon,  6 Jan 2025 15:32:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177557;
-	bh=ELo5rd5fPRUf9o/SwScdwtOPggdyRAqZlHABHpBbJcg=;
+	s=korg; t=1736177560;
+	bh=+1xoZMOkCD1p+spJyh7JeXPDy6MsdXnUgqQtTssSTOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cdfMOWSBCp+bFiOjpe0m66j7Sm2zhve7QQ1VV9brpT+Kf2KMq0oH4+rnbdb1vMttP
-	 /8DFpxCujBUE7CdL3BO3YK1tpAhM56Bspmk/Hg+P4J3vFdhlqv1atb+MmezR1e+V1E
-	 WJVDE8614+wNdafideZz/BfKJa+7y+bIkPziEEL0=
+	b=Bk7Yr4WofBMSGqAsIYN/j8KS48lPy5tVKex34uh/WrIzrZhnr/nIX1COktdAHp1gR
+	 fj3ItxBe5MI4xXvAZT9DINThOVyzG+cz/qd/MRPYI0NfaucnKFNfrK31EquCSSyWEl
+	 7RE/N77AupX8QYffoQ4kAnGz7f1/8426SbOeSPGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Marco Elver <elver@google.com>,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	"Ching-Chun (Jim) Huang" <jserv@ccns.ncku.edu.tw>,
+	chuang@cs.nycu.edu.tw,
+	Ingo Molnar <mingo@kernel.org>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
+	Shile Zhang <shile.zhang@linux.alibaba.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 203/222] kcov: mark in_softirq_really() as __always_inline
-Date: Mon,  6 Jan 2025 16:16:47 +0100
-Message-ID: <20250106151158.446580657@linuxfoundation.org>
+Subject: [PATCH 6.6 204/222] scripts/sorttable: fix orc_sort_cmp() to maintain symmetry and transitivity
+Date: Mon,  6 Jan 2025 16:16:48 +0100
+Message-ID: <20250106151158.485595159@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -56,44 +57,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-commit cb0ca08b326aa03f87fe94bb91872ce8d2ef1ed8 upstream.
+commit 0210d251162f4033350a94a43f95b1c39ec84a90 upstream.
 
-If gcc decides not to inline in_softirq_really(), objtool warns about a
-function call with UACCESS enabled:
+The orc_sort_cmp() function, used with qsort(), previously violated the
+symmetry and transitivity rules required by the C standard.  Specifically,
+when both entries are ORC_TYPE_UNDEFINED, it could result in both a < b
+and b < a, which breaks the required symmetry and transitivity.  This can
+lead to undefined behavior and incorrect sorting results, potentially
+causing memory corruption in glibc implementations [1].
 
-kernel/kcov.o: warning: objtool: __sanitizer_cov_trace_pc+0x1e: call to in_softirq_really() with UACCESS enabled
-kernel/kcov.o: warning: objtool: check_kcov_mode+0x11: call to in_softirq_really() with UACCESS enabled
+Symmetry: If x < y, then y > x.
+Transitivity: If x < y and y < z, then x < z.
 
-Mark this as __always_inline to avoid the problem.
+Fix the comparison logic to return 0 when both entries are
+ORC_TYPE_UNDEFINED, ensuring compliance with qsort() requirements.
 
-Link: https://lkml.kernel.org/r/20241217071814.2261620-1-arnd@kernel.org
-Fixes: 7d4df2dad312 ("kcov: properly check for softirq context")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Aleksandr Nogikh <nogikh@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
+Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
+Link: https://lkml.kernel.org/r/20241226140332.2670689-1-visitorckw@gmail.com
+Fixes: 57fa18994285 ("scripts/sorttable: Implement build-time ORC unwind table sorting")
+Fixes: fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in two")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
+Cc: <chuang@cs.nycu.edu.tw>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: Josh Poimboeuf <jpoimboe@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Shile Zhang <shile.zhang@linux.alibaba.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcov.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/sorttable.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -165,7 +165,7 @@ static void kcov_remote_area_put(struct
-  * Unlike in_serving_softirq(), this function returns false when called during
-  * a hardirq or an NMI that happened in the softirq context.
-  */
--static inline bool in_softirq_really(void)
-+static __always_inline bool in_softirq_really(void)
+--- a/scripts/sorttable.h
++++ b/scripts/sorttable.h
+@@ -110,7 +110,7 @@ static inline unsigned long orc_ip(const
+ 
+ static int orc_sort_cmp(const void *_a, const void *_b)
  {
- 	return in_serving_softirq() && !in_hardirq() && !in_nmi();
+-	struct orc_entry *orc_a;
++	struct orc_entry *orc_a, *orc_b;
+ 	const int *a = g_orc_ip_table + *(int *)_a;
+ 	const int *b = g_orc_ip_table + *(int *)_b;
+ 	unsigned long a_val = orc_ip(a);
+@@ -128,6 +128,9 @@ static int orc_sort_cmp(const void *_a,
+ 	 * whitelisted .o files which didn't get objtool generation.
+ 	 */
+ 	orc_a = g_orc_table + (a - g_orc_ip_table);
++	orc_b = g_orc_table + (b - g_orc_ip_table);
++	if (orc_a->type == ORC_TYPE_UNDEFINED && orc_b->type == ORC_TYPE_UNDEFINED)
++		return 0;
+ 	return orc_a->type == ORC_TYPE_UNDEFINED ? -1 : 1;
  }
+ 
 
 
