@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0820F39FCE;
-	Mon,  6 Jan 2025 15:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AF8282F5;
+	Mon,  6 Jan 2025 15:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179148; cv=none; b=V+FjEViWRuY88ZS44wg+QH7D1pJWwl9vGZXxM+aU50t9+k1oLZvKoNQS0qVANhm2BJgYAyL9ZeE3/WYMdU06sCMsiZ0/JdbHhy5ZpZKtTs0udHMwIN7QA4y0yX6+EdU5IwATqe73nlYMVzIGqDC389gP93QqbwfzatLMPyuBZN0=
+	t=1736179151; cv=none; b=QsLV2tmluliEF8AUwh+AFeCCc1w/M5irriO1JGAeTu169bkIsydgPdzuSqj5aTDzCFELMY9FD4NPRb9aOQn0/iX0D9P3RPwwUeX0IFeEbvY7fpV/ErKxQrI3c8LefTij1SI1XWiiAiwfjZLmnDc4+DJCLq7BRuvBjJzuIM7kFfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179148; c=relaxed/simple;
-	bh=oXJa8OruSNOHXOZ9c/gQY9tUYHgdEfiRJub8irG4x+w=;
+	s=arc-20240116; t=1736179151; c=relaxed/simple;
+	bh=n+k7v4ss1fOjdm8EVEcxPU61MEiW6Iy3mEi5HNrR+0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2IDIznBN/rOHDncjfzQsKDLNcNW+gvDKMH2D79fxFp3vfoCITB/YrV8LmyAaTbg/TD0bc34nJN0cZbP/lhaaRf4aR597GaEDyd0ge0pZBfQ81aVb0pf4g35pgRJqs0Jegli97lo7qC7K/xliIddplH0tUJ67fznxa9UTX/QPPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns2i2b9+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dw6ADFvg68adriJ2NR/kaMdAEPqlsDyyCA7HebT+o2eP+Krar03SvJRHkPkVL0OJOeVpdhilIyvvL93Obp5toOEAhexmGSMgIrXVeIMNU0bQUBcyHTmChTdCYnRALkLMwe2j/+LZAm8BSsVmXxEtWhiVrSLE/uSmxmY4ObTO6CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7ctVQPz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns2i2b9+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BE6C4CED2;
-	Mon,  6 Jan 2025 15:59:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7ctVQPz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC15C4CED2;
+	Mon,  6 Jan 2025 15:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179147;
-	bh=oXJa8OruSNOHXOZ9c/gQY9tUYHgdEfiRJub8irG4x+w=;
+	s=korg; t=1736179150;
+	bh=n+k7v4ss1fOjdm8EVEcxPU61MEiW6Iy3mEi5HNrR+0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ns2i2b9+lfYqKz9urldRdKnsb3qd9idXxig5kt1prFX20TZsNQY2vvvO0hi9CkWnw
-	 66GUwJJIIvXsEBovAaUG+0J5xXCmOATLXf4MtPNiPJ+V8jconY7JwJ6iNACdR3qB4o
-	 7Zj57Hw1CpbgW0fXYMmGXrwhG/uvwTAyFE107Cdw=
+	b=u7ctVQPzanc3wabQoVnUdXWuw1aUjOHY6+TKjn3wYgO0Rcl1zUvCHD5+qlLnBIFkM
+	 Yi6SDBAe5ItjIewudARHhPH3GQYIs4+bWuQWXuDmJR8UJFgX8OQcrsL9lMXAhnAU+9
+	 H50lflOk4pJZTbDWzKoBsscHPbb/IG+6h5s9HWIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Chen Ridong <chenridong@huawei.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.4 41/93] dmaengine: mv_xor: fix child node refcount handling in early exit
-Date: Mon,  6 Jan 2025 16:17:17 +0100
-Message-ID: <20250106151130.252193949@linuxfoundation.org>
+Subject: [PATCH 5.4 42/93] dmaengine: at_xdmac: avoid null_prt_deref in at_xdmac_prep_dma_memset
+Date: Mon,  6 Jan 2025 16:17:18 +0100
+Message-ID: <20250106151130.289797671@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -50,44 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-commit 362f1bf98a3ecb5a2a4fcbdaa9718c8403beceb2 upstream.
+commit c43ec96e8d34399bd9dab2f2dc316b904892133f upstream.
 
-The for_each_child_of_node() loop requires explicit calls to
-of_node_put() to decrement the child's refcount upon early exits (break,
-goto, return).
+The at_xdmac_memset_create_desc may return NULL, which will lead to a
+null pointer dereference. For example, the len input is error, or the
+atchan->free_descs_list is empty and memory is exhausted. Therefore, add
+check to avoid this.
 
-Add the missing calls in the two early exits before the goto
-instructions.
-
-Cc: stable@vger.kernel.org
-Fixes: f7d12ef53ddf ("dma: mv_xor: add Device Tree binding")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241011-dma_mv_xor_of_node_put-v1-1-3c2de819f463@gmail.com
+Fixes: b206d9a23ac7 ("dmaengine: xdmac: Add memset support")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Link: https://lore.kernel.org/r/20241029082845.1185380-1-chenridong@huaweicloud.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mv_xor.c |    2 ++
+ drivers/dma/at_xdmac.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1394,6 +1394,7 @@ static int mv_xor_probe(struct platform_
- 			irq = irq_of_parse_and_map(np, 0);
- 			if (!irq) {
- 				ret = -ENODEV;
-+				of_node_put(np);
- 				goto err_channel_add;
- 			}
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -1214,6 +1214,8 @@ at_xdmac_prep_dma_memset(struct dma_chan
+ 		return NULL;
  
-@@ -1402,6 +1403,7 @@ static int mv_xor_probe(struct platform_
- 			if (IS_ERR(chan)) {
- 				ret = PTR_ERR(chan);
- 				irq_dispose_mapping(irq);
-+				of_node_put(np);
- 				goto err_channel_add;
- 			}
+ 	desc = at_xdmac_memset_create_desc(chan, atchan, dest, len, value);
++	if (!desc)
++		return NULL;
+ 	list_add_tail(&desc->desc_node, &desc->descs_list);
  
+ 	desc->tx_dma_desc.cookie = -EBUSY;
 
 
