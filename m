@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578AB1DC046;
-	Mon,  6 Jan 2025 16:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A111DC9AD;
+	Mon,  6 Jan 2025 16:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179249; cv=none; b=GykSu1zm8YF3FbUzQKdWN2xKRgTlae0mfJi7JlLeINRDm1wyfGTqPncwQKIoql0sBiU85W4fK6jm+YH9PoVC+DR1EaVol+DQts5oH7Pv4eOOMYb9jalkEuOb7jS+jtg3qNQGUYo7YbU6u8SqVAAw9n1qW0/Jw5zHhAelBmhJFWU=
+	t=1736179252; cv=none; b=IjSnjYikdoO46C5fa8OUTHgCF3Rpq4Z+V9G4edEj6hvLd4AApbt/aIy/pU2O5lqAYSQrbE1Ye1AjOnCwZkoc/IZzn+Ruy8yYAZPCzSl+WeJK6gfqzlzFFbMO10wsIjs4FMHMxCV5Uuld87ZNauG7GD7syUCaD9U2ba6ny5cCpTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179249; c=relaxed/simple;
-	bh=I2dZvzn9LjfaETG873FoE5S4ba+BI/aQox+IszPQNFo=;
+	s=arc-20240116; t=1736179252; c=relaxed/simple;
+	bh=6ExPja9xjAAO43dvHJYU+yzvrvUJxs/Ga+MPv6SmRj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hjkVCAwwb5Pv27yba83eSRFSWJcnwY2ePJb2vTw6TW7HUH5pkP3MZij+5H23MjNEhq4a4nouIqLdEMHIyF6mY1sN8NRkYLPA44wFiSPXx29vbodEMcl4wLTocqRaOqzafJOPq9ubdcafXPIxX3cIfvF2+7fuMwNybIps06khexg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opnsMEpF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BIh0Z64fclQKjKHDH7C2vIURzx67b4EcWksi/HEiS18FKoC5KQ9TcBQwp+xVwiVns08Q5Vz04+9Hs7rPBStmiLHpBOqtckH7fT00OuRFvpyjnqMhQV4iIsnIDPmk3XyRUd3gH3ckb70ArawvoZKIwlwp9hnQgYp91OfMScrara0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vByPSDS+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opnsMEpF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962ADC4CED2;
-	Mon,  6 Jan 2025 16:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vByPSDS+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B187EC4CEE1;
+	Mon,  6 Jan 2025 16:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179249;
-	bh=I2dZvzn9LjfaETG873FoE5S4ba+BI/aQox+IszPQNFo=;
+	s=korg; t=1736179252;
+	bh=6ExPja9xjAAO43dvHJYU+yzvrvUJxs/Ga+MPv6SmRj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opnsMEpF0Ql3XSK5ovWbDvYAjqVP3UqYMfXYgSkfnXynqWLPzMLt9cdcjuXXDlVsX
-	 6a3+VOsNbxPTsvmfB/Xy5azzgQMEsdtuGWkxCjy/sS4Ylz0wz5XKi5KRnstVJCvjSv
-	 bNPz1tD9/gM1p2NZcYHhdJEvkB9/wSpD//C4f4+E=
+	b=vByPSDS+Ddv5JIVOVsR9rqQtBlA0h4+thMck2XvaPCzmNnsRWQrrWsOePWzWc1CeI
+	 e/1gFJ9l252AZmzjfgKGYLsGenC6cH/DmggTyl7KRrJS6S1OLC8T3N8uFnGM4cbGgc
+	 DQtY1ybRGdK+soF+C7rhJFZrZjJDEuwXPfgjZMXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Pastor <antonio.pastor@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 75/93] net: llc: reset skb->transport_header
-Date: Mon,  6 Jan 2025 16:17:51 +0100
-Message-ID: <20250106151131.537192076@linuxfoundation.org>
+Subject: [PATCH 5.4 76/93] ALSA: usb-audio: US16x08: Initialize array before use
+Date: Mon,  6 Jan 2025 16:17:52 +0100
+Message-ID: <20250106151131.574445041@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,60 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Pastor <antonio.pastor@gmail.com>
+From: Tanya Agarwal <tanyaagarwal25699@gmail.com>
 
-[ Upstream commit a024e377efed31ecfb39210bed562932321345b3 ]
+[ Upstream commit b06a6187ef983f501e93faa56209169752d3bde3 ]
 
-802.2+LLC+SNAP frames received by napi_complete_done with GRO and DSA
-have skb->transport_header set two bytes short, or pointing 2 bytes
-before network_header & skb->data. As snap_rcv expects transport_header
-to point to SNAP header (OID:PID) after LLC processing advances offset
-over LLC header (llc_rcv & llc_fixup_skb), code doesn't find a match
-and packet is dropped.
+Initialize meter_urb array before use in mixer_us16x08.c.
 
-Between napi_complete_done and snap_rcv, transport_header is not used
-until __netif_receive_skb_core, where originally it was being reset.
-Commit fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-only does so if not set, on the assumption the value was set correctly
-by GRO (and also on assumption that "network stacks usually reset the
-transport header anyway"). Afterwards it is moved forward by
-llc_fixup_skb.
+CID 1410197: (#1 of 1): Uninitialized scalar variable (UNINIT)
+uninit_use_in_call: Using uninitialized value *meter_urb when
+calling get_meter_levels_from_urb.
 
-Locally generated traffic shows up at __netif_receive_skb_core with no
-transport_header set and is processed without issue. On a setup with
-GRO but no DSA, transport_header and network_header are both set to
-point to skb->data which is also correct.
+Coverity Link:
+https://scan7.scan.coverity.com/#/project-view/52849/11354?selectedIssue=1410197
 
-As issue is LLC specific, to avoid impacting non-LLC traffic, and to
-follow up on original assumption made on previous code change,
-llc_fixup_skb to reset the offset after skb pull. llc_fixup_skb
-assumes the LLC header is at skb->data, and by definition SNAP header
-immediately follows.
-
-Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241225010723.2830290-1-antonio.pastor@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Signed-off-by: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+Link: https://patch.msgid.link/20241229060240.1642-1-tanyaagarwal25699@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/llc/llc_input.c | 2 +-
+ sound/usb/mixer_us16x08.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
-index f4fb309185ce..4229c349651d 100644
---- a/net/llc/llc_input.c
-+++ b/net/llc/llc_input.c
-@@ -124,8 +124,8 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
- 	if (unlikely(!pskb_may_pull(skb, llc_len)))
- 		return 0;
+diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
+index c6c834ac83ac..eb59a59dcdbf 100644
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -687,7 +687,7 @@ static int snd_us16x08_meter_get(struct snd_kcontrol *kcontrol,
+ 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
+ 	struct snd_usb_audio *chip = elem->head.mixer->chip;
+ 	struct snd_us16x08_meter_store *store = elem->private_data;
+-	u8 meter_urb[64];
++	u8 meter_urb[64] = {0};
  
--	skb->transport_header += llc_len;
- 	skb_pull(skb, llc_len);
-+	skb_reset_transport_header(skb);
- 	if (skb->protocol == htons(ETH_P_802_2)) {
- 		__be16 pdulen;
- 		s32 data_size;
+ 	switch (kcontrol->private_value) {
+ 	case 0: {
 -- 
 2.39.5
 
