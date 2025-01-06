@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDF314D28C;
-	Mon,  6 Jan 2025 15:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E93C1DC991;
+	Mon,  6 Jan 2025 15:41:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178106; cv=none; b=N5LyaAHjuJjjBoIgtvJdNikOoyeBhoanwYJUoERVauWEiAj1sPZ+9hwzZccs684KHIJoWcFafMZJVCOD8KFp4qXXobu0w27DMTWoR6Jz7Q8HQJ+Tt1Sdz2GIO72/l+3lSXOBAciNzsWJ4fQP7qipSLN4l9bHgAdqI80JTuQJ1xc=
+	t=1736178109; cv=none; b=l+u0HxRij+XpXj+ScZdVarTPzn0Ea94Dmfa7FOWJRDvkJGckuipanjFpEXUcSTQpKqyQK8uKL1RIDZ9adfvt3i0qZCqEed3uXTXuCDOTy47SGycSdDT9hDKB1N4/e6JKIcTkmgGodXP5hXSMsrgjZrnJ1SgwS5CI/3ge5vPLxyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178106; c=relaxed/simple;
-	bh=Pxmrj4PYUuOmtiN933OK7T65F09BJMZ9ToRw2B8nyzM=;
+	s=arc-20240116; t=1736178109; c=relaxed/simple;
+	bh=LY0HngiNfZSTAFBIAx/34OC3+3tUnwz42gVYLujm/GQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqCIXCpLQFwW9ACivvENjMi8dYNPuNiHHaNh6N/5L+r4jdRSEo44MjHkTo39sn9Y7eJOdklyUDWqmLQEeSNAc91R/f31oBlbPAvlwC8G8xUeQTmu5l7YScNwHCzwHZNJkkOENPQhjdC5dsl210Dxb4e/ruiyIL71rHGe2U9UzRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhmaFEFg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M+yO2gdWQ2kBT2V6M9BRVI8Xduo5oWzClwd8Lff5v5CZAgBzwTxlHyzMqUadL0yNgCC/kXOW/CaJjctk0bBz3J2bLkCTfazUtXsRs+0ASk50Y8Yn5XTphQ7TPm6PRCb6Q1S2u9SeeDbXvMb9AQpc9zm5cyhNQMxI3S8Vwqyd7O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJeOGIoQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhmaFEFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D67BC4CEDF;
-	Mon,  6 Jan 2025 15:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJeOGIoQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89481C4CED6;
+	Mon,  6 Jan 2025 15:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178106;
-	bh=Pxmrj4PYUuOmtiN933OK7T65F09BJMZ9ToRw2B8nyzM=;
+	s=korg; t=1736178108;
+	bh=LY0HngiNfZSTAFBIAx/34OC3+3tUnwz42gVYLujm/GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhmaFEFgsRK5wxNDsKtdIMY8HZimxDTI0ejKzP70ht68MWOA4xQ1TPtWAKecX8KLu
-	 QN1eil92uV2gn1qQdbjkCmeB03c90IsZPhQ+8T7r3C5HAHJsCYN8HS4sRJvIB0r7Y/
-	 gcweZvK+xEWsh32+XK9JOK+LkzqloLpPu6cDWx3M=
+	b=MJeOGIoQk+L7yOilnW7NKG1SC4UI3oR4Go4AU0FTCQfdictZfnR38NKzg7OnyQYVj
+	 lzVr4n4J8w0mPaQcs4RiONQzgvU2zVF5Tb72LXej/0cGWMcjcGCtKRKyTN177lab29
+	 nSTB0siuebqcgctKiWT1d0K1Glh3ZWJLIP5u/uRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 156/156] mptcp: dont always assume copied data in mptcp_cleanup_rbuf()
-Date: Mon,  6 Jan 2025 16:17:22 +0100
-Message-ID: <20250106151147.605381335@linuxfoundation.org>
+	Yafang Shao <laoar.shao@gmail.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 149/156] mm/readahead: fix large folio support in async readahead
+Date: Mon,  6 Jan 2025 16:17:15 +0100
+Message-ID: <20250106151147.340891217@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,100 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-commit 551844f26da2a9f76c0a698baaffa631d1178645 upstream.
+commit 158cdce87c8c172787063998ad5dd3e2f658b963 upstream.
 
-Under some corner cases the MPTCP protocol can end-up invoking
-mptcp_cleanup_rbuf() when no data has been copied, but such helper
-assumes the opposite condition.
+When testing large folio support with XFS on our servers, we observed that
+only a few large folios are mapped when reading large files via mmap.
+After a thorough analysis, I identified it was caused by the
+`/sys/block/*/queue/read_ahead_kb` setting.  On our test servers, this
+parameter is set to 128KB.  After I tune it to 2MB, the large folio can
+work as expected.  However, I believe the large folio behavior should not
+be dependent on the value of read_ahead_kb.  It would be more robust if
+the kernel can automatically adopt to it.
 
-Explicitly drop such assumption and performs the costly call only
-when strictly needed - before releasing the msk socket lock.
+With /sys/block/*/queue/read_ahead_kb set to 128KB and performing a
+sequential read on a 1GB file using MADV_HUGEPAGE, the differences in
+/proc/meminfo are as follows:
 
-Fixes: fd8976790a6c ("mptcp: be careful on MPTCP-level ack.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241230-net-mptcp-rbuf-fixes-v1-2-8608af434ceb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+- before this patch
+  FileHugePages:     18432 kB
+  FilePmdMapped:      4096 kB
+
+- after this patch
+  FileHugePages:   1067008 kB
+  FilePmdMapped:   1048576 kB
+
+This shows that after applying the patch, the entire 1GB file is mapped to
+huge pages.  The stable list is CCed, as without this patch, large folios
+don't function optimally in the readahead path.
+
+It's worth noting that if read_ahead_kb is set to a larger value that
+isn't aligned with huge page sizes (e.g., 4MB + 128KB), it may still fail
+to map to hugepages.
+
+Link: https://lkml.kernel.org/r/20241108141710.9721-1-laoar.shao@gmail.com
+Link: https://lkml.kernel.org/r/20241206083025.3478-1-laoar.shao@gmail.com
+Fixes: 4687fdbb805a ("mm/filemap: Support VM_HUGEPAGE for file mappings")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Tested-by: kernel test robot <oliver.sang@intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ mm/readahead.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -528,13 +528,13 @@ static void mptcp_send_ack(struct mptcp_
- 		mptcp_subflow_send_ack(mptcp_subflow_tcp_sock(subflow));
- }
- 
--static void mptcp_subflow_cleanup_rbuf(struct sock *ssk)
-+static void mptcp_subflow_cleanup_rbuf(struct sock *ssk, int copied)
- {
- 	bool slow;
- 
- 	slow = lock_sock_fast(ssk);
- 	if (tcp_can_send_ack(ssk))
--		tcp_cleanup_rbuf(ssk, 1);
-+		tcp_cleanup_rbuf(ssk, copied);
- 	unlock_sock_fast(ssk, slow);
- }
- 
-@@ -551,7 +551,7 @@ static bool mptcp_subflow_could_cleanup(
- 			      (ICSK_ACK_PUSHED2 | ICSK_ACK_PUSHED)));
- }
- 
--static void mptcp_cleanup_rbuf(struct mptcp_sock *msk)
-+static void mptcp_cleanup_rbuf(struct mptcp_sock *msk, int copied)
- {
- 	int old_space = READ_ONCE(msk->old_wspace);
- 	struct mptcp_subflow_context *subflow;
-@@ -559,14 +559,14 @@ static void mptcp_cleanup_rbuf(struct mp
- 	int space =  __mptcp_space(sk);
- 	bool cleanup, rx_empty;
- 
--	cleanup = (space > 0) && (space >= (old_space << 1));
--	rx_empty = !__mptcp_rmem(sk);
-+	cleanup = (space > 0) && (space >= (old_space << 1)) && copied;
-+	rx_empty = !__mptcp_rmem(sk) && copied;
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 
- 		if (cleanup || mptcp_subflow_could_cleanup(ssk, rx_empty))
--			mptcp_subflow_cleanup_rbuf(ssk);
-+			mptcp_subflow_cleanup_rbuf(ssk, copied);
+--- a/mm/readahead.c
++++ b/mm/readahead.c
+@@ -641,7 +641,11 @@ void page_cache_async_ra(struct readahea
+ 			1UL << order);
+ 	if (index == expected) {
+ 		ra->start += ra->size;
+-		ra->size = get_next_ra_size(ra, max_pages);
++		/*
++		 * In the case of MADV_HUGEPAGE, the actual size might exceed
++		 * the readahead window.
++		 */
++		ra->size = max(ra->size, get_next_ra_size(ra, max_pages));
+ 		ra->async_size = ra->size;
+ 		goto readit;
  	}
- }
- 
-@@ -2220,9 +2220,6 @@ static int mptcp_recvmsg(struct sock *sk
- 
- 		copied += bytes_read;
- 
--		/* be sure to advertise window change */
--		mptcp_cleanup_rbuf(msk);
--
- 		if (skb_queue_empty(&msk->receive_queue) && __mptcp_move_skbs(msk))
- 			continue;
- 
-@@ -2271,6 +2268,7 @@ static int mptcp_recvmsg(struct sock *sk
- 		}
- 
- 		pr_debug("block timeout %ld\n", timeo);
-+		mptcp_cleanup_rbuf(msk, copied);
- 		err = sk_wait_data(sk, &timeo, NULL);
- 		if (err < 0) {
- 			err = copied ? : err;
-@@ -2278,6 +2276,8 @@ static int mptcp_recvmsg(struct sock *sk
- 		}
- 	}
- 
-+	mptcp_cleanup_rbuf(msk, copied);
-+
- out_err:
- 	if (cmsg_flags && copied >= 0) {
- 		if (cmsg_flags & MPTCP_CMSG_TS)
 
 
