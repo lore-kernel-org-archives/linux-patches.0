@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5CF1DDC3A;
-	Mon,  6 Jan 2025 15:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BEE14884C;
+	Mon,  6 Jan 2025 15:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177283; cv=none; b=tUdvAMJjA70pdj33dkwkkLAZMCwe3jdf6jYVmlH3dB08sVdofbWBbePZm6o6JmHL+/ApjnIyX+AxiMzCe9u/HRoQxl7aQo1O0Oj1ucHFrbzkfPyA0jBwUjP69AL5ygFlJG6DhWhZzb5Yyuf1pyUOzcr6ccG0gn3a+DdO1VZkJXU=
+	t=1736177287; cv=none; b=OKveGL0F+DDQ2P8pjzeWvdIHnDutPoD233bHEnUlBFMQm4RagsqixM3mPfWS9sXR/IgvpFa4HAqyhyq9H6D47ry/cz/ffKY+hLf7EXwCOLvQ2HD1MOTczA4/kJCbC3vTmudmr/ULs22Qm3tNO0uA1ugMmrPeF2iX4S4/lzCXe6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177283; c=relaxed/simple;
-	bh=pzZ4fW/sWFLMHjGJemz4kyXf20n0jHUjg04/Ane9CWg=;
+	s=arc-20240116; t=1736177287; c=relaxed/simple;
+	bh=j7jvoKRjZlD0zjOUa5jKACBlda7nowEt1P1Q/KV6fcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ivZQczFWpdYzSan2+EVKR13gdf8px+o9+me2I/uGcwAAOjbrrYo/cmJ2x8t44rp208VkvIUV7DEEZbkSOOQfijIV8WgNpSlROM0ccsLvk/a/EczSuQtwz0sggRoYZ83d3ZyWPfbvRQR6S9cwunulSWA40J27QJZq9FmwATe/RGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwYJLjQL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AXUI+tP2DV3v6kyeQ+bh/pfeXjtnU5BgTLtgC3hJ11hVlG+hy5jQX5hu37sm7Ung8XF7j5/uWfwxG5ZgW9GUUZpb+ZBMhUCavattC8MqrYzVehYYaF+6K7pUtQN2J9C5SbJqtVJLVaAubZuH2pk9nq91p9jmxD6sbVqTp7jyPQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdjBSGq7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwYJLjQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7780EC4CEE3;
-	Mon,  6 Jan 2025 15:28:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdjBSGq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B10AC4CED2;
+	Mon,  6 Jan 2025 15:28:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177282;
-	bh=pzZ4fW/sWFLMHjGJemz4kyXf20n0jHUjg04/Ane9CWg=;
+	s=korg; t=1736177286;
+	bh=j7jvoKRjZlD0zjOUa5jKACBlda7nowEt1P1Q/KV6fcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwYJLjQL+GTImKm1brW34YB5DcLsTyRsX4Wyl2BJjmcJURfkuDNOU2Sp4irDSB9qb
-	 7vq9iSqL964pAPyUf0TxZw3ko9aTq4oGWte2KGuVSMBYdcPOqhZhWkuHSq57uBxPYT
-	 jD6EilNpOWQLqFTlAci6yollIuG6G8Kgi7C//VcA=
+	b=QdjBSGq74kTZf7HjMWTnkRU+ZfBERUIkp9DbkKUGRwb5HC6GhFgupDQSq4igWdIwV
+	 SPvLNoMRdNY1FMLi/7glvHZtjz8HF+yoiagNOUtqWTPEjP4xAa5RtzA6MSmM9VzZ+f
+	 WkF9wUhodXbPghD5hHMG67Xrso7ubSbdxqxGMiYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.6 112/222] f2fs: fix to wait dio completion
-Date: Mon,  6 Jan 2025 16:15:16 +0100
-Message-ID: <20250106151154.835164614@linuxfoundation.org>
+	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.6 113/222] selinux: ignore unknown extended permissions
+Date: Mon,  6 Jan 2025 16:15:17 +0100
+Message-ID: <20250106151154.873405262@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -45,58 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Thiébaud Weksteen <tweek@google.com>
 
-commit 96cfeb0389530ae32ade8a48ae3ae1ac3b6c009d upstream.
+commit 900f83cf376bdaf798b6f5dcb2eae0c822e908b6 upstream.
 
-It should wait all existing dio write IOs before block removal,
-otherwise, previous direct write IO may overwrite data in the
-block which may be reused by other inode.
+When evaluating extended permissions, ignore unknown permissions instead
+of calling BUG(). This commit ensures that future permissions can be
+added without interfering with older kernels.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ Resolve line conflicts to make it work on 6.6.y ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Fixes: fa1aa143ac4a ("selinux: extended permissions for ioctls")
+Signed-off-by: Thiébaud Weksteen <tweek@google.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ security/selinux/ss/services.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1037,6 +1037,13 @@ int f2fs_setattr(struct mnt_idmap *idmap
- 				return err;
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -956,7 +956,10 @@ void services_compute_xperms_decision(st
+ 					xpermd->driver))
+ 			return;
+ 	} else {
+-		BUG();
++		pr_warn_once(
++			"SELinux: unknown extended permission (%u) will be ignored\n",
++			node->datum.u.xperms->specified);
++		return;
+ 	}
+ 
+ 	if (node->key.specified == AVTAB_XPERMS_ALLOWED) {
+@@ -993,7 +996,8 @@ void services_compute_xperms_decision(st
+ 					node->datum.u.xperms->perms.p[i];
  		}
+ 	} else {
+-		BUG();
++		pr_warn_once("SELinux: unknown specified key (%u)\n",
++			     node->key.specified);
+ 	}
+ }
  
-+		/*
-+		 * wait for inflight dio, blocks should be removed after
-+		 * IO completion.
-+		 */
-+		if (attr->ia_size < old_size)
-+			inode_dio_wait(inode);
-+
- 		f2fs_down_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
- 		filemap_invalidate_lock(inode->i_mapping);
- 
-@@ -1873,6 +1880,12 @@ static long f2fs_fallocate(struct file *
- 	if (ret)
- 		goto out;
- 
-+	/*
-+	 * wait for inflight dio, blocks should be removed after IO
-+	 * completion.
-+	 */
-+	inode_dio_wait(inode);
-+
- 	if (mode & FALLOC_FL_PUNCH_HOLE) {
- 		if (offset >= inode->i_size)
- 			goto out;
 
 
