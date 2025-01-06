@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2E51ADFE3;
-	Mon,  6 Jan 2025 15:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B238373451;
+	Mon,  6 Jan 2025 15:36:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177799; cv=none; b=ql5cta+H0pzmCSCUaOM+Db1qNll5Yi2F7/kI3tMQlIKz+YLGqTKXwrBuz82tE+tBYqvHIyxUZnoxjgDEZVov1VY9bouCuRH7sHL9LUZXBb+/q9VqZwrtkrm/lXpVMIOx0lzjkfjM+NX0oyKWf5FrjuDXZ9TGlniVOkvO2ng5W68=
+	t=1736177801; cv=none; b=r0Eg0OrvM75Gw0Ym/AgzMkdTZpodEEKN5H0KKWgyzu40VHpSKsbKLq/GU82siBqT0mT0tmBRn4QZZlU4p7UmctYSadrlfn5T9RkJXHde+oUQw96da1GXaq73J02L4acC5pzGZlwk8mBadl95M8kdKOwZXysV3G1GkoTP9zcDPnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177799; c=relaxed/simple;
-	bh=M/YkEiBbp7+RFIqVCGLEq5HOsp1G9JY80LhWH62UoL8=;
+	s=arc-20240116; t=1736177801; c=relaxed/simple;
+	bh=zTdUG3kb7wOfWDnYx3RiyB2Tiu+Gla85rEtWF1NpGto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H++ALMKLU1n9E5yuH/hJ9yONpyowlV8J1gbumk40M/L+BDXkOUT/Uy/RsNlH877UxcDvubxILway+TgHleFlBGxiTRWMT3v0XXr2v5Zs4aNrvIc4ck9YaIqYFZube+Ba78DCQD/xAH2L83C9bzFpxLYCUa2FcFDrrFSR44qU13U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aus9Pvm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZkPcjq+PKOxtF8GiZ8g947X+CBvAzfn4vAM+z2Lfdsb+kQSMe2V1xS3/IrG4/+ZljE/ORq+k7zHFGAe+uxZrMfDLRSkOVx9iBRt+oAbNa1D9MQyYrERckVxxPEGjYSr+4mV+6NcHqZkjAZS+jMVa6F1Stc6OINxPwe+OoLJH8Y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQiFX3Kq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aus9Pvm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3D3C4CED2;
-	Mon,  6 Jan 2025 15:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQiFX3Kq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E28C4CED2;
+	Mon,  6 Jan 2025 15:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177798;
-	bh=M/YkEiBbp7+RFIqVCGLEq5HOsp1G9JY80LhWH62UoL8=;
+	s=korg; t=1736177801;
+	bh=zTdUG3kb7wOfWDnYx3RiyB2Tiu+Gla85rEtWF1NpGto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aus9Pvm8T/7L+mJhJd/JVAVuSnQCri2tVOvZ0ED+X21oBGKL6Mdns8VrcEWybulTO
-	 BxQ6vcg2ZcOKCqMV9hPUKTJ0gMxBzxYPqo3pk+8zVlGGWBbPL04wGZgmJSRYosDoR9
-	 uw+Tl4DrlDTH1zONf0ALHo9q2nr2pk/3Qulkf/ZU=
+	b=CQiFX3KqHn1qIYGTwQaGYHwSWIiV1rnKwOuN9A+OmVnltLV4xCaX7HoaHTjlmuuDD
+	 YEdy9a/KAFWZnbr3Tnf77FO9SnvS5UKgUKRa/i55ndkwYRmjvyt/g0SzwAyForRT4u
+	 DdrN3fRED0/PfLPySSABGFiiUVp79k0cDmXRc60U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/156] eth: bcmsysport: fix call balance of priv->clk handling routines
-Date: Mon,  6 Jan 2025 16:15:47 +0100
-Message-ID: <20250106151144.035858767@linuxfoundation.org>
+Subject: [PATCH 6.12 062/156] net: mv643xx_eth: fix an OF node reference leak
+Date: Mon,  6 Jan 2025 16:15:48 +0100
+Message-ID: <20250106151144.072228806@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,79 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit b255ef45fcc2141c1bf98456796abb956d843a27 ]
+[ Upstream commit ad5c318086e2e23b577eca33559c5ebf89bc7eb9 ]
 
-Check the return value of clk_prepare_enable to ensure that priv->clk has
-been successfully enabled.
+Current implementation of mv643xx_eth_shared_of_add_port() calls
+of_parse_phandle(), but does not release the refcount on error. Call
+of_node_put() in the error path and in mv643xx_eth_shared_of_remove().
 
-If priv->clk was not enabled during bcm_sysport_probe, bcm_sysport_resume,
-or bcm_sysport_open, it must not be disabled in any subsequent execution
-paths.
+This bug was found by an experimental verification tool that I am
+developing.
 
-Fixes: 31bc72d97656 ("net: systemport: fetch and use clock resources")
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20241227123007.2333397-1-mordan@ispras.ru
+Fixes: 76723bca2802 ("net: mv643xx_eth: add DT parsing support")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20241221081448.3313163-1-joe@pf.is.s.u-tokyo.ac.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bcmsysport.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/mv643xx_eth.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
-index 0a68b526e4a8..2b784ced0645 100644
---- a/drivers/net/ethernet/broadcom/bcmsysport.c
-+++ b/drivers/net/ethernet/broadcom/bcmsysport.c
-@@ -1967,7 +1967,11 @@ static int bcm_sysport_open(struct net_device *dev)
- 	unsigned int i;
- 	int ret;
+diff --git a/drivers/net/ethernet/marvell/mv643xx_eth.c b/drivers/net/ethernet/marvell/mv643xx_eth.c
+index 9e80899546d9..83b9905666e2 100644
+--- a/drivers/net/ethernet/marvell/mv643xx_eth.c
++++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
+@@ -2708,9 +2708,15 @@ static struct platform_device *port_platdev[3];
  
--	clk_prepare_enable(priv->clk);
-+	ret = clk_prepare_enable(priv->clk);
-+	if (ret) {
-+		netdev_err(dev, "could not enable priv clock\n");
-+		return ret;
-+	}
+ static void mv643xx_eth_shared_of_remove(void)
+ {
++	struct mv643xx_eth_platform_data *pd;
+ 	int n;
  
- 	/* Reset UniMAC */
- 	umac_reset(priv);
-@@ -2625,7 +2629,11 @@ static int bcm_sysport_probe(struct platform_device *pdev)
- 		goto err_deregister_notifier;
+ 	for (n = 0; n < 3; n++) {
++		if (!port_platdev[n])
++			continue;
++		pd = dev_get_platdata(&port_platdev[n]->dev);
++		if (pd)
++			of_node_put(pd->phy_node);
+ 		platform_device_del(port_platdev[n]);
+ 		port_platdev[n] = NULL;
+ 	}
+@@ -2773,8 +2779,10 @@ static int mv643xx_eth_shared_of_add_port(struct platform_device *pdev,
  	}
  
--	clk_prepare_enable(priv->clk);
-+	ret = clk_prepare_enable(priv->clk);
-+	if (ret) {
-+		dev_err(&pdev->dev, "could not enable priv clock\n");
-+		goto err_deregister_netdev;
+ 	ppdev = platform_device_alloc(MV643XX_ETH_NAME, dev_num);
+-	if (!ppdev)
+-		return -ENOMEM;
++	if (!ppdev) {
++		ret = -ENOMEM;
++		goto put_err;
 +	}
+ 	ppdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
+ 	ppdev->dev.of_node = pnp;
  
- 	priv->rev = topctrl_readl(priv, REV_CNTL) & REV_MASK;
- 	dev_info(&pdev->dev,
-@@ -2639,6 +2647,8 @@ static int bcm_sysport_probe(struct platform_device *pdev)
+@@ -2796,6 +2804,8 @@ static int mv643xx_eth_shared_of_add_port(struct platform_device *pdev,
  
- 	return 0;
- 
-+err_deregister_netdev:
-+	unregister_netdev(dev);
- err_deregister_notifier:
- 	unregister_netdevice_notifier(&priv->netdev_notifier);
- err_deregister_fixed_link:
-@@ -2808,7 +2818,12 @@ static int __maybe_unused bcm_sysport_resume(struct device *d)
- 	if (!netif_running(dev))
- 		return 0;
- 
--	clk_prepare_enable(priv->clk);
-+	ret = clk_prepare_enable(priv->clk);
-+	if (ret) {
-+		netdev_err(dev, "could not enable priv clock\n");
-+		return ret;
-+	}
-+
- 	if (priv->wolopts)
- 		clk_disable_unprepare(priv->wol_clk);
+ port_err:
+ 	platform_device_put(ppdev);
++put_err:
++	of_node_put(ppd.phy_node);
+ 	return ret;
+ }
  
 -- 
 2.39.5
