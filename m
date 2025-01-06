@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC78634A;
-	Mon,  6 Jan 2025 15:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0281148838;
+	Mon,  6 Jan 2025 15:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177093; cv=none; b=W1JpquVXQnxoe1s2JZA2yyfpK4MNAbVrZttlH3GFk95lZ+DHvC/XiypwNuTzoHYCsvTpxu5scBwImWfBd0+bz6HeSOvm2am3vu4lQmC0qJkmMxWNJFhi6iIOLTHBbqOWvgaT3A4YE6sH0GHjZwN5xV/cFwDmiqaiH5+aMn2XbDU=
+	t=1736177095; cv=none; b=parVI4ZA6CxJuE/8Qq3FRIGClDI9lK975/2zWeiwogBnxMkRw9sUQKVfxAew2z6CEpoemMi0kbySR2/Q3WRcqZW5U73XQ7QcF75DtQztw+WkuLdQIEllYTkGk1NqqJrlWil49q364jqrrFqrdE8dpbUJq/exVFcVAuUE2mGvp1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177093; c=relaxed/simple;
-	bh=4rrgcV37V8rc3qMHzSgSgQPOS6kVDDHNdVauC5BhUAc=;
+	s=arc-20240116; t=1736177095; c=relaxed/simple;
+	bh=iH24OBNBOSsZCwXCAWVD/dWZM2Fx9pMbctkddw+f71E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5Dmo3KgEqGrYXU1/8nqPRbp1PQk6igGfjQzA7at0JCfkpycXYCC0sweAFcRZp/R6p4Qav/6F/mOAHChr0R0rURsgK24J2wO3F5dWvIiSXJKGb6vswg0oRqzJCWWp+5ZHfho/P4/sgzdtSUpPZuZzmW1Ah4cTK+yufkTaDeGAkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lbB6DmE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGuVVFDgXI67yHeBxt7WPCX+80+pYhg3KCzUF0R+bI920nTs4sQ3JbXYmHvRm14+ZG+rMcmH6ynywLhgl+wedLnN7wsSPZuVdNR3NoU+dNBCJU9f4H/eAlvvf+NEss5H7T0rFrxYKCwEH26+uYpuLxq4ljxWT/fq8r+Jwuor1qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuSULpID; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lbB6DmE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42520C4CED2;
-	Mon,  6 Jan 2025 15:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuSULpID"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB04C4CED6;
+	Mon,  6 Jan 2025 15:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177092;
-	bh=4rrgcV37V8rc3qMHzSgSgQPOS6kVDDHNdVauC5BhUAc=;
+	s=korg; t=1736177095;
+	bh=iH24OBNBOSsZCwXCAWVD/dWZM2Fx9pMbctkddw+f71E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lbB6DmEqAgA3rYRm+V62lQK96djHiVNpLOcUdJiCbH9eUp+ZNToLq7htqGAg59F9
-	 54khsvugqZsrHle3zKPz+tA57XjFIbxHGBLJft6ZfqHAStArG0AA02YG07RCDxzy3X
-	 mK036VNTx4vV3RAGdeUSQAwy/OJ+2evdywFBbfNs=
+	b=vuSULpIDz7MSUW5r9ZUoEZuKQ6OhAjEhExrdZgLYGjil7KvjuvTjqkrNlpmdsnjs3
+	 SOmDwwTsnGB1/O7VUK1bKCB3bZ9DQSVOi77DgfxAoCBou4qgpI9OlxZhouOU8kQXcA
+	 ljaDw9puwSGzbHNGKF4dKhFs01LViySEyRPSeQJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Devi Priya <quic_devipriy@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Huisong Li <lihuisong@huawei.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/222] clk: qcom: clk-alpha-pll: Add NSS HUAYRA ALPHA PLL support for ipq9574
-Date: Mon,  6 Jan 2025 16:14:12 +0100
-Message-ID: <20250106151152.422766925@linuxfoundation.org>
+Subject: [PATCH 6.6 049/222] mailbox: pcc: Add support for platform notification handling
+Date: Mon,  6 Jan 2025 16:14:13 +0100
+Message-ID: <20250106151152.460891793@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,58 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devi Priya <quic_devipriy@quicinc.com>
+From: Huisong Li <lihuisong@huawei.com>
 
-[ Upstream commit 79dfed29aa3f714e0a94a39b2bfe9ac14ce19a6a ]
+[ Upstream commit 60c40b06fa68694dd08a1a0038ea8b9de3f3b1ca ]
 
-Add support for NSS Huayra alpha pll found on ipq9574 SoCs.
-Programming sequence is the same as that of Huayra type Alpha PLL,
-so we can re-use the same.
+Currently, PCC driver doesn't support the processing of platform
+notification for type 4 PCC subspaces.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-Link: https://lore.kernel.org/r/20241028060506.246606-2-quic_srichara@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+According to ACPI specification, if platform sends a notification
+to OSPM, it must clear the command complete bit and trigger platform
+interrupt. OSPM needs to check whether the command complete bit is
+cleared, clear platform interrupt, process command, and then set the
+command complete and ring doorbell to the Platform.
+
+Let us stash the value of the pcc type and use the same while processing
+the interrupt of the channel. We also need to set the command complete
+bit and ring doorbell in the interrupt handler for the type 4 channel to
+complete the communication flow after processing the notification from
+the Platform.
+
+Signed-off-by: Huisong Li <lihuisong@huawei.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Link: https://lore.kernel.org/r/20230801063827.25336-2-lihuisong@huawei.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Stable-dep-of: 7f9e19f207be ("mailbox: pcc: Check before sending MCTP PCC response ACK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 11 +++++++++++
- drivers/clk/qcom/clk-alpha-pll.h |  1 +
- 2 files changed, 12 insertions(+)
+ drivers/mailbox/pcc.c | 50 +++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 41 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 87040b949eb4..ce44dbfd47e2 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -243,6 +243,17 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
- 		[PLL_OFF_OPMODE] = 0x30,
- 		[PLL_OFF_STATUS] = 0x3c,
- 	},
-+	[CLK_ALPHA_PLL_TYPE_NSS_HUAYRA] =  {
-+		[PLL_OFF_L_VAL] = 0x04,
-+		[PLL_OFF_ALPHA_VAL] = 0x08,
-+		[PLL_OFF_TEST_CTL] = 0x0c,
-+		[PLL_OFF_TEST_CTL_U] = 0x10,
-+		[PLL_OFF_USER_CTL] = 0x14,
-+		[PLL_OFF_CONFIG_CTL] = 0x18,
-+		[PLL_OFF_CONFIG_CTL_U] = 0x1c,
-+		[PLL_OFF_STATUS] = 0x20,
-+	},
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index a44d4b3e5beb..80310b48bfb6 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -91,6 +91,7 @@ struct pcc_chan_reg {
+  * @cmd_update: PCC register bundle for the command complete update register
+  * @error: PCC register bundle for the error status register
+  * @plat_irq: platform interrupt
++ * @type: PCC subspace type
+  */
+ struct pcc_chan_info {
+ 	struct pcc_mbox_chan chan;
+@@ -100,12 +101,15 @@ struct pcc_chan_info {
+ 	struct pcc_chan_reg cmd_update;
+ 	struct pcc_chan_reg error;
+ 	int plat_irq;
++	u8 type;
+ };
+ 
+ #define to_pcc_chan_info(c) container_of(c, struct pcc_chan_info, chan)
+ static struct pcc_chan_info *chan_info;
+ static int pcc_chan_count;
+ 
++static int pcc_send_data(struct mbox_chan *chan, void *data);
 +
- };
- EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+ /*
+  * PCC can be used with perf critical drivers such as CPPC
+  * So it makes sense to locally cache the virtual address and
+@@ -221,6 +225,34 @@ static int pcc_map_interrupt(u32 interrupt, u32 flags)
+ 	return acpi_register_gsi(NULL, interrupt, trigger, polarity);
+ }
  
-diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-index f50de33a045d..52dc5b9b546a 100644
---- a/drivers/clk/qcom/clk-alpha-pll.h
-+++ b/drivers/clk/qcom/clk-alpha-pll.h
-@@ -29,6 +29,7 @@ enum {
- 	CLK_ALPHA_PLL_TYPE_BRAMMO_EVO,
- 	CLK_ALPHA_PLL_TYPE_STROMER,
- 	CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
-+	CLK_ALPHA_PLL_TYPE_NSS_HUAYRA,
- 	CLK_ALPHA_PLL_TYPE_MAX,
- };
++static bool pcc_mbox_cmd_complete_check(struct pcc_chan_info *pchan)
++{
++	u64 val;
++	int ret;
++
++	ret = pcc_chan_reg_read(&pchan->cmd_complete, &val);
++	if (ret)
++		return false;
++
++	if (!pchan->cmd_complete.gas)
++		return true;
++
++	/*
++	 * Judge if the channel respond the interrupt based on the value of
++	 * command complete.
++	 */
++	val &= pchan->cmd_complete.status_mask;
++	/*
++	 * If this is PCC slave subspace channel, and the command complete
++	 * bit 0 indicates that Platform is sending a notification and OSPM
++	 * needs to respond this interrupt to process this command.
++	 */
++	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE)
++		return !val;
++
++	return !!val;
++}
++
+ /**
+  * pcc_mbox_irq - PCC mailbox interrupt handler
+  * @irq:	interrupt number
+@@ -236,17 +268,9 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 	int ret;
  
+ 	pchan = chan->con_priv;
+-
+-	ret = pcc_chan_reg_read(&pchan->cmd_complete, &val);
+-	if (ret)
++	if (!pcc_mbox_cmd_complete_check(pchan))
+ 		return IRQ_NONE;
+ 
+-	if (val) { /* Ensure GAS exists and value is non-zero */
+-		val &= pchan->cmd_complete.status_mask;
+-		if (!val)
+-			return IRQ_NONE;
+-	}
+-
+ 	ret = pcc_chan_reg_read(&pchan->error, &val);
+ 	if (ret)
+ 		return IRQ_NONE;
+@@ -262,6 +286,13 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 
+ 	mbox_chan_received_data(chan, NULL);
+ 
++	/*
++	 * The PCC slave subspace channel needs to set the command complete bit
++	 * and ring doorbell after processing message.
++	 */
++	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE)
++		pcc_send_data(chan, NULL);
++
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -698,6 +729,7 @@ static int pcc_mbox_probe(struct platform_device *pdev)
+ 
+ 		pcc_parse_subspace_shmem(pchan, pcct_entry);
+ 
++		pchan->type = pcct_entry->type;
+ 		pcct_entry = (struct acpi_subtable_header *)
+ 			((unsigned long) pcct_entry + pcct_entry->length);
+ 	}
 -- 
 2.39.5
 
