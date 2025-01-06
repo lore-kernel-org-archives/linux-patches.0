@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCAE1DEFDA;
-	Mon,  6 Jan 2025 15:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A0811DEFE9;
+	Mon,  6 Jan 2025 15:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178418; cv=none; b=JdTvAUqTIUciYKd8vi9HCvKSZy2YWYVihD9dA1GxXrLAuhtvdlenpPIW7Q7QcKs6QyWg4QLJIgRj4+GQak1VZC6Tp3Ov5/KtIITWGnt437cERWcVFpIcSXPo270o+iVLBNI5us7kCw6YivxCqooV8W7QRJJvCjuLGFbuGELcl9o=
+	t=1736178422; cv=none; b=BVcs3vwDzmxeL395W7uBrEMfpPYezcCAd2A49ML8mvUOaRHsoSPpCeiF2C6FYGrm7vBWT33DmF/asdzyTE1UB5YsAmZbK12K/KPh+Pnxr2nw1X63TKmHqTR1AKBrfSvR5YhdQtQtvF/Ay4v+maYKl3D+/+J4ioregZlBTWlpq1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178418; c=relaxed/simple;
-	bh=yAGYYyZCxdvAU4I9SGs9j5EK7LGots+tMmwrE6ZTqlg=;
+	s=arc-20240116; t=1736178422; c=relaxed/simple;
+	bh=cEpw7gfDV55CP4zT0/GBcXTzlkDwWnJNBz1ZzdMENmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTTh3DA7GTII7VK+YFftgd/dcHEthC9CkfDVZjmK+uild+pzMfQa7eCDXrWpzSUtgsNZSyrAbOrziiXZllhw/+uwQd4RZAqqd2Cp1OydVw4GwTeQwoKtuxKJdX2KR3xCeBnwr750C6d/vzA/gkkTGpKiapcfQJCO/EvFWvyziR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrEYYxpW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNiDZ/hf3ClLCdxqtS7Na/eFfNLvj639V5PRoFWC6rPlKRbBKYbSppI8MjU3xyzZ/FCJYni346ediChycvMmQa+swKvx3UTTpm+C63L0gkwPtgxL0AUWlbhUfw+Kpd3FjvZaZanYlT3Fm6lUWMQwEeS9SykfSPTczP89htI2kRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1M6iiR9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrEYYxpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55EBC4CED2;
-	Mon,  6 Jan 2025 15:46:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1M6iiR9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1214C4CED2;
+	Mon,  6 Jan 2025 15:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178418;
-	bh=yAGYYyZCxdvAU4I9SGs9j5EK7LGots+tMmwrE6ZTqlg=;
+	s=korg; t=1736178421;
+	bh=cEpw7gfDV55CP4zT0/GBcXTzlkDwWnJNBz1ZzdMENmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrEYYxpWwcnNKB3r+M1XwIpNFHPnUVs+p583K0vZo/PZPTpMPbS/VMZGnXTIiSeID
-	 V+2qG4Q0mKL9BmLstV1jrtkjYONLJgLciQxsOxCYMZkNYGGZl7N8RoAxIr5kQcxwR0
-	 S/3GXzONl/9VxihhJ2+g/DM6yxfIPuI8c9A/7S38=
+	b=P1M6iiR9fHmUtC8YJptdmHcyAsrNXr3Y9khO8FxKhUPITEvLMB97Jp17cyhUR7/in
+	 u9Vi9wAJVSxaTK5u2qPShuhUXLlHciuid+b4c39lZ3xKZiS3F8ppNjrLxE+ev46yBE
+	 Ci1hy3yUMaHUQ++koKd3pPxW3ZH8+paDVBlxhoCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	syzbot+8400677f3fd43f37d3bc@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Chengen Du <chengen.du@canonical.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/138] RDMA/rtrs: Ensure ib_sge list is accessible
-Date: Mon,  6 Jan 2025 16:17:15 +0100
-Message-ID: <20250106151137.430529782@linuxfoundation.org>
+Subject: [PATCH 5.10 112/138] af_packet: fix vlan_get_tci() vs MSG_PEEK
+Date: Mon,  6 Jan 2025 16:17:16 +0100
+Message-ID: <20250106151137.468976639@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -51,69 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fb514b31395946022f13a08e06a435f53cf9e8b3 ]
+[ Upstream commit 77ee7a6d16b6ec07b5c3ae2b6b60a24c1afbed09 ]
 
-Move the declaration of the 'ib_sge list' variable outside the
-'always_invalidate' block to ensure it remains accessible for use
-throughout the function.
+Blamed commit forgot MSG_PEEK case, allowing a crash [1] as found
+by syzbot.
 
-Previously, 'ib_sge list' was declared within the 'always_invalidate'
-block, limiting its accessibility, then caused a
-'BUG: kernel NULL pointer dereference'[1].
- ? __die_body.cold+0x19/0x27
- ? page_fault_oops+0x15a/0x2d0
- ? search_module_extables+0x19/0x60
- ? search_bpf_extables+0x5f/0x80
- ? exc_page_fault+0x7e/0x180
- ? asm_exc_page_fault+0x26/0x30
- ? memcpy_orig+0xd5/0x140
- rxe_mr_copy+0x1c3/0x200 [rdma_rxe]
- ? rxe_pool_get_index+0x4b/0x80 [rdma_rxe]
- copy_data+0xa5/0x230 [rdma_rxe]
- rxe_requester+0xd9b/0xf70 [rdma_rxe]
- ? finish_task_switch.isra.0+0x99/0x2e0
- rxe_sender+0x13/0x40 [rdma_rxe]
- do_task+0x68/0x1e0 [rdma_rxe]
- process_one_work+0x177/0x330
- worker_thread+0x252/0x390
- ? __pfx_worker_thread+0x10/0x10
+Rework vlan_get_tci() to not touch skb at all,
+so that it can be used from many cpus on the same skb.
 
-This change ensures the variable is available for subsequent operations
-that require it.
+Add a const qualifier to skb argument.
 
-[1] https://lore.kernel.org/linux-rdma/6a1f3e8f-deb0-49f9-bc69-a9b03ecfcda7@fujitsu.com/
+[1]
+skbuff: skb_under_panic: text:ffffffff8a8da482 len:32 put:14 head:ffff88807a1d5800 data:ffff88807a1d5810 tail:0x14 end:0x140 dev:<NULL>
+------------[ cut here ]------------
+ kernel BUG at net/core/skbuff.c:206 !
+Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 UID: 0 PID: 5880 Comm: syz-executor172 Not tainted 6.13.0-rc3-syzkaller-00762-g9268abe611b0 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+ RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
+ RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
+Code: 0b 8d 48 c7 c6 9e 6c 26 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 3a 5a 79 f7 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
+RSP: 0018:ffffc90003baf5b8 EFLAGS: 00010286
+RAX: 0000000000000087 RBX: dffffc0000000000 RCX: 8565c1eec37aa000
+RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
+RBP: ffff88802616fb50 R08: ffffffff817f0a4c R09: 1ffff92000775e50
+R10: dffffc0000000000 R11: fffff52000775e51 R12: 0000000000000140
+R13: ffff88807a1d5800 R14: ffff88807a1d5810 R15: 0000000000000014
+FS:  00007fa03261f6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffd65753000 CR3: 0000000031720000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+  skb_push+0xe5/0x100 net/core/skbuff.c:2636
+  vlan_get_tci+0x272/0x550 net/packet/af_packet.c:565
+  packet_recvmsg+0x13c9/0x1ef0 net/packet/af_packet.c:3616
+  sock_recvmsg_nosec net/socket.c:1044 [inline]
+  sock_recvmsg+0x22f/0x280 net/socket.c:1066
+  ____sys_recvmsg+0x1c6/0x480 net/socket.c:2814
+  ___sys_recvmsg net/socket.c:2856 [inline]
+  do_recvmmsg+0x426/0xab0 net/socket.c:2951
+  __sys_recvmmsg net/socket.c:3025 [inline]
+  __do_sys_recvmmsg net/socket.c:3048 [inline]
+  __se_sys_recvmmsg net/socket.c:3041 [inline]
+  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3041
+  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
 
-Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://patch.msgid.link/20241231013416.1290920-1-lizhijian@fujitsu.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 79eecf631c14 ("af_packet: Handle outgoing VLAN packets without hardware offloading")
+Reported-by: syzbot+8400677f3fd43f37d3bc@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6772c485.050a0220.2f3838.04c6.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Chengen Du <chengen.du@canonical.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20241230161004.2681892-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-srv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-index b152a742cd3c..2b315974f478 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
-@@ -381,6 +381,7 @@ static int send_io_resp_imm(struct rtrs_srv_con *con, struct rtrs_srv_op *id,
- 	struct rtrs_srv_mr *srv_mr;
- 	bool need_inval = false;
- 	enum ib_send_flags flags;
-+	struct ib_sge list;
- 	u32 imm;
- 	int err;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 01a191c8194b..49baa5924d74 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -503,10 +503,8 @@ static void *packet_current_frame(struct packet_sock *po,
+ 	return packet_lookup_frame(po, rb, rb->head, status);
+ }
  
-@@ -431,7 +432,6 @@ static int send_io_resp_imm(struct rtrs_srv_con *con, struct rtrs_srv_op *id,
- 	imm = rtrs_to_io_rsp_imm(id->msg_id, errno, need_inval);
- 	imm_wr.wr.next = NULL;
- 	if (always_invalidate) {
--		struct ib_sge list;
- 		struct rtrs_msg_rkey_rsp *msg;
+-static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
++static u16 vlan_get_tci(const struct sk_buff *skb, struct net_device *dev)
+ {
+-	u8 *skb_orig_data = skb->data;
+-	int skb_orig_len = skb->len;
+ 	struct vlan_hdr vhdr, *vh;
+ 	unsigned int header_len;
  
- 		srv_mr = &sess->mrs[id->msg_id];
+@@ -527,12 +525,8 @@ static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
+ 	else
+ 		return 0;
+ 
+-	skb_push(skb, skb->data - skb_mac_header(skb));
+-	vh = skb_header_pointer(skb, header_len, sizeof(vhdr), &vhdr);
+-	if (skb_orig_data != skb->data) {
+-		skb->data = skb_orig_data;
+-		skb->len = skb_orig_len;
+-	}
++	vh = skb_header_pointer(skb, skb_mac_offset(skb) + header_len,
++				sizeof(vhdr), &vhdr);
+ 	if (unlikely(!vh))
+ 		return 0;
+ 
 -- 
 2.39.5
 
