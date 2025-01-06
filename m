@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF49F15855C;
-	Mon,  6 Jan 2025 15:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0174126C05;
+	Mon,  6 Jan 2025 15:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176779; cv=none; b=SWHoi4qdeX+uRQKJoLkIhVbjY461+y3RKWwomyl0BYPJ7dbi61+dvGq6uOEqFGHCpg3qJC0mp3Tretyjy3jzAEehGbL9YnC8OesHk6HS0hOmYD4hReJGhfJKPLJWb71Fa5yJ3tBOTXI/uxZQgdKAAfK75TLniTsSpnu+s72lsWM=
+	t=1736176783; cv=none; b=Jo25P+9RMh00hIYTP1V/5zbsyfj6ctaBFABWFsq0bhIJCPjMzwQmzGgQR5ShswNpAZLnOzqxHe2oWSpLLuJ79AH6Mg+YidcvsJ+jsoYYeuk0T0Abh1YQ9F+W6S+EZVkCWXU/p2oPcFTJv3l2w/x06bBWFmwmk9id9AEX17wGmHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176779; c=relaxed/simple;
-	bh=yFXu3k5VPx+9Z6SDPQP5fQDKgH5SdWuXRIuMZ/OjcR8=;
+	s=arc-20240116; t=1736176783; c=relaxed/simple;
+	bh=EDT1iShB3RdI4amnnh9dYTEIBtzQlPH6ag6z/enN5VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoZTSJtlS8UmkKBQxGVtsiKjE94RQPMtZYzlqO4lgwifvTz0mK2g9GtdjnFWWk2Diut0hr3kyp5izzFgEMTVgmdPUnOmq5wkKI43ylqqQZDOx9k1LJRgwnc01r+3/LvK7aCfy9n0npwICNSmN5NxPpaMBT1iHOTiCAjioCgrOJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsJW7fFs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hkVd/s4po1kyDwMme2AKVSaEN4Rmd2SVpy1aHyB1C8SuMSXkdhL6etgjJGHuSuwny6C7r4oM1x+zrkmQKK1VSnG86NntIXYTuFYqe3BfzFGHhHrmpdL32FT70nd7HxAF+L6DzZyHIZmbj/lOneADB5gsA/JSQiEBuhjWotH0wEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zd8ANuVT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsJW7fFs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05945C4CEE3;
-	Mon,  6 Jan 2025 15:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zd8ANuVT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E3EC4CED6;
+	Mon,  6 Jan 2025 15:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176779;
-	bh=yFXu3k5VPx+9Z6SDPQP5fQDKgH5SdWuXRIuMZ/OjcR8=;
+	s=korg; t=1736176782;
+	bh=EDT1iShB3RdI4amnnh9dYTEIBtzQlPH6ag6z/enN5VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsJW7fFs5ZbQJeoAfSAcS61n94Euc3WDG1GnI2lj3fn0O8eik67rwNbGMMinDWh04
-	 UGBUk9nYL0mVeJWLrvjh5oUoivTc+QHpxNXsdDk56pUh7rsaCPTnbVFQIDvyGtEybz
-	 Ci6vnQZzURJr13+PLId3jSYVObDmRhZ1iE2ZIMS4=
+	b=zd8ANuVTCtR4HZaGi459plKlE3iQA1xWkgUyCkQCpgfVMaBfB4Uz24KI0XXYu0pl+
+	 6gJlXyqGMktPOXZYiN15EAAlr45/p6/b/mn+GYonlq2KB54wcc9/H/ln9NP3Ukvdy3
+	 5fbfTgW3lCoFvlT74rO2YJeIrN5JUsMRFx0KHImo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Ehrig <cehrig@cloudflare.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/81] net: fix memory leak in tcp_conn_request()
-Date: Mon,  6 Jan 2025 16:16:01 +0100
-Message-ID: <20250106151130.538634463@linuxfoundation.org>
+Subject: [PATCH 6.1 30/81] ipip,ip_tunnel,sit: Add FOU support for externally controlled ipip devices
+Date: Mon,  6 Jan 2025 16:16:02 +0100
+Message-ID: <20250106151130.576363524@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -51,62 +51,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Christian Ehrig <cehrig@cloudflare.com>
 
-[ Upstream commit 4f4aa4aa28142d53f8b06585c478476cfe325cfc ]
+[ Upstream commit ac931d4cdec3df8b6eac3bc40a6871123021f078 ]
 
-If inet_csk_reqsk_queue_hash_add() return false, tcp_conn_request() will
-return without free the dst memory, which allocated in af_ops->route_req.
+Today ipip devices in collect-metadata mode don't allow for sending FOU
+or GUE encapsulated packets. This patch lifts the restriction by adding
+a struct ip_tunnel_encap to the tunnel metadata.
 
-Here is the kmemleak stack:
+On the egress path, the members of this struct can be set by the
+bpf_skb_set_fou_encap kfunc via a BPF tc-hook. Instead of dropping packets
+wishing to use additional UDP encapsulation, ip_md_tunnel_xmit now
+evaluates the contents of this struct and adds the corresponding FOU or
+GUE header. Furthermore, it is making sure that additional header bytes
+are taken into account for PMTU discovery.
 
-unreferenced object 0xffff8881198631c0 (size 240):
-  comm "softirq", pid 0, jiffies 4299266571 (age 1802.392s)
-  hex dump (first 32 bytes):
-    00 10 9b 03 81 88 ff ff 80 98 da bc ff ff ff ff  ................
-    81 55 18 bb ff ff ff ff 00 00 00 00 00 00 00 00  .U..............
-  backtrace:
-    [<ffffffffb93e8d4c>] kmem_cache_alloc+0x60c/0xa80
-    [<ffffffffba11b4c5>] dst_alloc+0x55/0x250
-    [<ffffffffba227bf6>] rt_dst_alloc+0x46/0x1d0
-    [<ffffffffba23050a>] __mkroute_output+0x29a/0xa50
-    [<ffffffffba23456b>] ip_route_output_key_hash+0x10b/0x240
-    [<ffffffffba2346bd>] ip_route_output_flow+0x1d/0x90
-    [<ffffffffba254855>] inet_csk_route_req+0x2c5/0x500
-    [<ffffffffba26b331>] tcp_conn_request+0x691/0x12c0
-    [<ffffffffba27bd08>] tcp_rcv_state_process+0x3c8/0x11b0
-    [<ffffffffba2965c6>] tcp_v4_do_rcv+0x156/0x3b0
-    [<ffffffffba299c98>] tcp_v4_rcv+0x1cf8/0x1d80
-    [<ffffffffba239656>] ip_protocol_deliver_rcu+0xf6/0x360
-    [<ffffffffba2399a6>] ip_local_deliver_finish+0xe6/0x1e0
-    [<ffffffffba239b8e>] ip_local_deliver+0xee/0x360
-    [<ffffffffba239ead>] ip_rcv+0xad/0x2f0
-    [<ffffffffba110943>] __netif_receive_skb_one_core+0x123/0x140
+On the ingress path, an ipip device in collect-metadata mode will fill this
+struct and a BPF tc-hook can obtain the information via a call to the
+bpf_skb_get_fou_encap kfunc.
 
-Call dst_release() to free the dst memory when
-inet_csk_reqsk_queue_hash_add() return false in tcp_conn_request().
+The minor change to ip_tunnel_encap, which now takes a pointer to
+struct ip_tunnel_encap instead of struct ip_tunnel, allows us to control
+FOU encap type and parameters on a per packet-level.
 
-Fixes: ff46e3b44219 ("Fix race for duplicate reqsk on identical SYN")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Link: https://patch.msgid.link/20241219072859.3783576-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian Ehrig <cehrig@cloudflare.com>
+Link: https://lore.kernel.org/r/cfea47de655d0f870248abf725932f851b53960a.1680874078.git.cehrig@cloudflare.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: b5a7b661a073 ("net: Fix netns for ip_tunnel_init_flow()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/ip_tunnels.h | 28 +++++++++++++++-------------
+ net/ipv4/ip_tunnel.c     | 22 ++++++++++++++++++++--
+ net/ipv4/ipip.c          |  1 +
+ net/ipv6/sit.c           |  2 +-
+ 4 files changed, 37 insertions(+), 16 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 9ac47ccfe120..2379ee551164 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7124,6 +7124,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 			if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req,
- 								    req->timeout))) {
- 				reqsk_free(req);
-+				dst_release(dst);
- 				return 0;
- 			}
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index f1ba369306fe..84751313b826 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -57,6 +57,13 @@ struct ip_tunnel_key {
+ 	__u8			flow_flags;
+ };
  
++struct ip_tunnel_encap {
++	u16			type;
++	u16			flags;
++	__be16			sport;
++	__be16			dport;
++};
++
+ /* Flags for ip_tunnel_info mode. */
+ #define IP_TUNNEL_INFO_TX	0x01	/* represents tx tunnel parameters */
+ #define IP_TUNNEL_INFO_IPV6	0x02	/* key contains IPv6 addresses */
+@@ -66,9 +73,9 @@ struct ip_tunnel_key {
+ #define IP_TUNNEL_OPTS_MAX					\
+ 	GENMASK((sizeof_field(struct ip_tunnel_info,		\
+ 			      options_len) * BITS_PER_BYTE) - 1, 0)
+-
+ struct ip_tunnel_info {
+ 	struct ip_tunnel_key	key;
++	struct ip_tunnel_encap	encap;
+ #ifdef CONFIG_DST_CACHE
+ 	struct dst_cache	dst_cache;
+ #endif
+@@ -86,13 +93,6 @@ struct ip_tunnel_6rd_parm {
+ };
+ #endif
+ 
+-struct ip_tunnel_encap {
+-	u16			type;
+-	u16			flags;
+-	__be16			sport;
+-	__be16			dport;
+-};
+-
+ struct ip_tunnel_prl_entry {
+ 	struct ip_tunnel_prl_entry __rcu *next;
+ 	__be32				addr;
+@@ -293,6 +293,7 @@ struct ip_tunnel *ip_tunnel_lookup(struct ip_tunnel_net *itn,
+ 				   __be32 remote, __be32 local,
+ 				   __be32 key);
+ 
++void ip_tunnel_md_udp_encap(struct sk_buff *skb, struct ip_tunnel_info *info);
+ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
+ 		  const struct tnl_ptk_info *tpi, struct metadata_dst *tun_dst,
+ 		  bool log_ecn_error);
+@@ -405,22 +406,23 @@ static inline int ip_encap_hlen(struct ip_tunnel_encap *e)
+ 	return hlen;
+ }
+ 
+-static inline int ip_tunnel_encap(struct sk_buff *skb, struct ip_tunnel *t,
++static inline int ip_tunnel_encap(struct sk_buff *skb,
++				  struct ip_tunnel_encap *e,
+ 				  u8 *protocol, struct flowi4 *fl4)
+ {
+ 	const struct ip_tunnel_encap_ops *ops;
+ 	int ret = -EINVAL;
+ 
+-	if (t->encap.type == TUNNEL_ENCAP_NONE)
++	if (e->type == TUNNEL_ENCAP_NONE)
+ 		return 0;
+ 
+-	if (t->encap.type >= MAX_IPTUN_ENCAP_OPS)
++	if (e->type >= MAX_IPTUN_ENCAP_OPS)
+ 		return -EINVAL;
+ 
+ 	rcu_read_lock();
+-	ops = rcu_dereference(iptun_encaps[t->encap.type]);
++	ops = rcu_dereference(iptun_encaps[e->type]);
+ 	if (likely(ops && ops->build_header))
+-		ret = ops->build_header(skb, &t->encap, protocol, fl4);
++		ret = ops->build_header(skb, e, protocol, fl4);
+ 	rcu_read_unlock();
+ 
+ 	return ret;
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 3445e576b05b..d56cfb6c3da4 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -359,6 +359,20 @@ static struct ip_tunnel *ip_tunnel_create(struct net *net,
+ 	return ERR_PTR(err);
+ }
+ 
++void ip_tunnel_md_udp_encap(struct sk_buff *skb, struct ip_tunnel_info *info)
++{
++	const struct iphdr *iph = ip_hdr(skb);
++	const struct udphdr *udph;
++
++	if (iph->protocol != IPPROTO_UDP)
++		return;
++
++	udph = (struct udphdr *)((__u8 *)iph + (iph->ihl << 2));
++	info->encap.sport = udph->source;
++	info->encap.dport = udph->dest;
++}
++EXPORT_SYMBOL(ip_tunnel_md_udp_encap);
++
+ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
+ 		  const struct tnl_ptk_info *tpi, struct metadata_dst *tun_dst,
+ 		  bool log_ecn_error)
+@@ -599,7 +613,11 @@ void ip_md_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 			    tunnel_id_to_key32(key->tun_id), RT_TOS(tos),
+ 			    dev_net(dev), 0, skb->mark, skb_get_hash(skb),
+ 			    key->flow_flags);
+-	if (tunnel->encap.type != TUNNEL_ENCAP_NONE)
++
++	if (!tunnel_hlen)
++		tunnel_hlen = ip_encap_hlen(&tun_info->encap);
++
++	if (ip_tunnel_encap(skb, &tun_info->encap, &proto, &fl4) < 0)
+ 		goto tx_error;
+ 
+ 	use_cache = ip_tunnel_dst_cache_usable(skb, tun_info);
+@@ -759,7 +777,7 @@ void ip_tunnel_xmit(struct sk_buff *skb, struct net_device *dev,
+ 			    dev_net(dev), tunnel->parms.link,
+ 			    tunnel->fwmark, skb_get_hash(skb), 0);
+ 
+-	if (ip_tunnel_encap(skb, tunnel, &protocol, &fl4) < 0)
++	if (ip_tunnel_encap(skb, &tunnel->encap, &protocol, &fl4) < 0)
+ 		goto tx_error;
+ 
+ 	if (connected && md) {
+diff --git a/net/ipv4/ipip.c b/net/ipv4/ipip.c
+index 180f9daf5bec..1cf35c50cdf4 100644
+--- a/net/ipv4/ipip.c
++++ b/net/ipv4/ipip.c
+@@ -241,6 +241,7 @@ static int ipip_tunnel_rcv(struct sk_buff *skb, u8 ipproto)
+ 			tun_dst = ip_tun_rx_dst(skb, 0, 0, 0);
+ 			if (!tun_dst)
+ 				return 0;
++			ip_tunnel_md_udp_encap(skb, &tun_dst->u.tun_info);
+ 		}
+ 		skb_reset_mac_header(skb);
+ 
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 3ffb6a5b1f82..cc24cefdb85c 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1024,7 +1024,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		ttl = iph6->hop_limit;
+ 	tos = INET_ECN_encapsulate(tos, ipv6_get_dsfield(iph6));
+ 
+-	if (ip_tunnel_encap(skb, tunnel, &protocol, &fl4) < 0) {
++	if (ip_tunnel_encap(skb, &tunnel->encap, &protocol, &fl4) < 0) {
+ 		ip_rt_put(rt);
+ 		goto tx_error;
+ 	}
 -- 
 2.39.5
 
