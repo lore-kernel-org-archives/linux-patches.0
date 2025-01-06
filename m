@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480C7DF71;
-	Mon,  6 Jan 2025 15:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EA38634A;
+	Mon,  6 Jan 2025 15:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178016; cv=none; b=irTkW2Q3FGIqtqtXPuIylVYl/VDeetwc6ZOye2KZL2VA1yNhFAHLUaLf+ef6Ii+CFNwg3LwJIJGhC5MJAYahEjcGoJfWnkqpqDyDH0HSO5GFOeKvCs4SHpfEQlMQ9TMyLG4acryU9LyOTtNr6iVsIb0lojteWswy537ppBDxUlk=
+	t=1736178019; cv=none; b=sTMs9B7H+krLR4l25QFPKCwiNJ5c08XaDpLU4MYj9bOuj2tVceVPSji8aMaLCtBmlwp9biu5KLnMnTrPeVmVN2HONh0Hu5Xtov+4CDz0dj9LnzTx9XIcCOtKkNbglCEEPPEKlMX++P0E4KNrJEhhV4kRdSlIo/7A23XhnKjXsGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178016; c=relaxed/simple;
-	bh=yxXgGizMDGX5qOCc5+YwPVtSk6fpzsCuoK907s1y4Rg=;
+	s=arc-20240116; t=1736178019; c=relaxed/simple;
+	bh=DClIQo+eFk7yeNUrxXP6R04+liYAJzAT5sepG3dgI2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VFsxjcSkCgVFjgSIvwMS71lq+TYw4BL81q1/3moSvxMU+uxphxHCCJBaFuF60598/CAP5Jj2MXCQGcirzJVDSPrpRJGUs2PZ2He+UJoxjSEPZ1EhPeq59hFQNEIymJjerUBymy5V4ornyhxbPDmsgX/13eLcVKFCf4bYiRNa744=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXQRohLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FZVwqClF7bSPJK4BxpJNE1T7joO4QQztbGlV4d7S1xdpRWudrJ8q8vPZPV2w8O0N9UfbJhv2Y+i0x1XZS6W/iVLI8f98uS04tsxInbZZ5F2WFpkqz7SjRcTvz7qfBesoOEDZA1N7VzoAhluppraZIaWCHF64yWoFeOxSwp0qv+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGDuxoT0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXQRohLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BA5C4CED2;
-	Mon,  6 Jan 2025 15:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGDuxoT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB14C4CED2;
+	Mon,  6 Jan 2025 15:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178016;
-	bh=yxXgGizMDGX5qOCc5+YwPVtSk6fpzsCuoK907s1y4Rg=;
+	s=korg; t=1736178019;
+	bh=DClIQo+eFk7yeNUrxXP6R04+liYAJzAT5sepG3dgI2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXQRohLmKhgqCOHwaWk00PhDaDyv/H0t1lHlYQjUCmVk6ZHhKjskVfPLffI+0eL3V
-	 8bWWXGIlep9yzoAuPFB3Ln7gDgHhh6zNOAGM0VNTeP1/kPr8eo8KuWhMgZaCC/COIR
-	 doUH1jTXDRoWc1Dt2tRqTcQOFq46jJMGL5qUi+7k=
+	b=VGDuxoT0ozpoxA7JPzjpndhZu6pSYAC5AtahITMNEfvFRKk5jCj2fL+BldnmtJ91w
+	 ty5Zox9QOnSfA9Q5exczdZGfhHujYOou+qgAguRHG0V132nXyBahmsiXamaPEbnUWO
+	 ZkSmZoT2wr/OEvXYUHuViPmsyTNrqOgsMvrdRUoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.12 134/156] drm: adv7511: Fix use-after-free in adv7533_attach_dsi()
-Date: Mon,  6 Jan 2025 16:17:00 +0100
-Message-ID: <20250106151146.779896302@linuxfoundation.org>
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux@frame.work,
+	"Dustin L. Howett" <dustin@howett.net>,
+	Daniel Schaefer <dhs@frame.work>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 117/156] ALSA hda/realtek: Add quirk for Framework F111:000C
+Date: Mon,  6 Jan 2025 16:16:43 +0100
+Message-ID: <20250106151146.135016830@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -45,77 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Daniel Schaefer <dhs@frame.work>
 
-commit 81adbd3ff21c1182e06aa02c6be0bfd9ea02d8e8 upstream.
+commit 7b509910b3ad6d7aacead24c8744de10daf8715d upstream.
 
-The host_node pointer was assigned and freed in adv7533_parse_dt(), and
-later, adv7533_attach_dsi() uses the same. Fix this use-after-free issue
-by dropping of_node_put() in adv7533_parse_dt() and calling of_node_put()
-in error path of probe() and also in the remove().
+Similar to commit eb91c456f371
+("ALSA: hda/realtek: Add Framework Laptop 13 (Intel Core Ultra) to quirks")
+and previous quirks for Framework systems with
+Realtek codecs.
 
-Fixes: 1e4d58cd7f88 ("drm/bridge: adv7533: Create a MIPI DSI device")
-Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-2-biju.das.jz@bp.renesas.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+000C is a new platform that will also have an ALC285 codec and needs the
+same quirk.
+
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: linux@frame.work
+Cc: Dustin L. Howett <dustin@howett.net>
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241231045958.14545-1-dhs@frame.work
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |   10 ++++++++--
- drivers/gpu/drm/bridge/adv7511/adv7533.c     |    2 --
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-@@ -1241,8 +1241,10 @@ static int adv7511_probe(struct i2c_clie
- 		return ret;
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10993,6 +10993,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0xf111, 0x000c, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
  
- 	ret = adv7511_init_regulators(adv7511);
--	if (ret)
--		return dev_err_probe(dev, ret, "failed to init regulators\n");
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to init regulators\n");
-+		goto err_of_node_put;
-+	}
- 
- 	/*
- 	 * The power down GPIO is optional. If present, toggle it from active to
-@@ -1363,6 +1365,8 @@ err_i2c_unregister_edid:
- 	i2c_unregister_device(adv7511->i2c_edid);
- uninit_regulators:
- 	adv7511_uninit_regulators(adv7511);
-+err_of_node_put:
-+	of_node_put(adv7511->host_node);
- 
- 	return ret;
- }
-@@ -1371,6 +1375,8 @@ static void adv7511_remove(struct i2c_cl
- {
- 	struct adv7511 *adv7511 = i2c_get_clientdata(i2c);
- 
-+	of_node_put(adv7511->host_node);
-+
- 	adv7511_uninit_regulators(adv7511);
- 
- 	drm_bridge_remove(&adv7511->bridge);
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -181,8 +181,6 @@ int adv7533_parse_dt(struct device_node
- 	if (!adv->host_node)
- 		return -ENODEV;
- 
--	of_node_put(adv->host_node);
--
- 	adv->use_timing_gen = !of_property_read_bool(np,
- 						"adi,disable-timing-generator");
- 
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 
 
