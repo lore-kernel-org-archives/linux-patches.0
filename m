@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCB286347;
-	Mon,  6 Jan 2025 15:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECC986347;
+	Mon,  6 Jan 2025 15:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177379; cv=none; b=ouFb6VkxN9egae6GD9kL7k2ADFe8DC6g3pJHBYAKoxv4drKCSfiluJDOXF1sh78+1ksWpxP5hFGjs/05GSndDwb9b3geSKh7jsdvmffW5a/H7GLFXQ2oeRLf3a3Pm0DWK3XDPdEa/yQDO+96obF5pw+/dTGMgZKII98sFuDkCzo=
+	t=1736177382; cv=none; b=u0US1miesnYtIcXN7TVxgDerjEujd2Skm9e+hg2Ejjy2BSjLnTz2tVGSZcsG5pbRqxCSCawKOp8JZA129gru2Mdj5qwiM/l1d7IebT/MXn4SNJu8BX7Ijoo8o7OQqdAtnuj7rgLWnnSZ2uGkgXTec7+ROGuJMbEFR7ApEQpuLws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177379; c=relaxed/simple;
-	bh=mabODHF5bsDObjbA0GFOx5iaQ6yB+kZQPVHTRj0CUtU=;
+	s=arc-20240116; t=1736177382; c=relaxed/simple;
+	bh=578/IGTnGOo4oFaZkhR1JrBf/Gvy9srEmbCiE25UZSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtww3RI0NDsgEOEfvLnLApNf6K8Zy/rdHag1t3quAhEVTIsMVBn4+uYwcF3j+Fkdhz8InYFxEnDvLwRU+oi4+pEH8jJhOZZGy5H6c5a+YX2lyojqY92WB6dFM1h1DqlakJ9636PNyWvWNJDjuoqh+NKPoj395HAQIWXpHwRNHYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHlDEJee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/Smm1lP1d1ESJ2ZqUEokqxPHwwVwiFD904ukGU6HuMTyrpOYLpzbhyANqijADKpBGyuGlrX0xi6AINbiOP/Bp249ndahrdOVaLpOaSoMio9SCHSzJrNos165DnlrUvUJtJlvja602+80sdpFidbip3o0yZkuGMk1Og33Ryc4jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4VJoUVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHlDEJee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC02CC4CED2;
-	Mon,  6 Jan 2025 15:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4VJoUVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0BBC4CED2;
+	Mon,  6 Jan 2025 15:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177379;
-	bh=mabODHF5bsDObjbA0GFOx5iaQ6yB+kZQPVHTRj0CUtU=;
+	s=korg; t=1736177382;
+	bh=578/IGTnGOo4oFaZkhR1JrBf/Gvy9srEmbCiE25UZSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHlDEJeeyEe9kKo8+yuttnL+RWIVBJx52itXLp5f6r0rux4VyN+Zd99WLxhhFQfcO
-	 s7qVEKbCCHuilSS3kbOEcLYsKcI2b5WE47d5Q/GlFHpY5BMOCdaul7UMdWyJsYDjHp
-	 D6uie/naIVPGObpO6pp8GPCB4dMmPIDYRt+xVx0E=
+	b=m4VJoUVxCJl+dI0nMUj/K9bTFI33VOQaFoEEThtYg1sWd2iABd3MnKYbx0Ox86ksh
+	 PRCApaqFe4ooTCy9Jp50fVjTTOTCaQJ6m+PgLlnYrLxBcL2g1zmANYmIQ++zIR3UVx
+	 OJOApXVfBjUTW8Es7irCcPCy0X4cT5t3BVgtAVTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram Ha <tristram.ha@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/222] net: dsa: microchip: Fix LAN937X set_ageing_time function
-Date: Mon,  6 Jan 2025 16:15:48 +0100
-Message-ID: <20250106151156.217153441@linuxfoundation.org>
+Subject: [PATCH 6.6 145/222] RDMA/hns: Refactor mtr find
+Date: Mon,  6 Jan 2025 16:15:49 +0100
+Message-ID: <20250106151156.255307900@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,143 +52,404 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristram Ha <tristram.ha@microchip.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit bb9869043438af5b94230f94fb4c39206525d758 ]
+[ Upstream commit a4ca341080758d847db155b97887bff6f84016a4 ]
 
-The aging count is not a simple 20-bit value but comprises a 3-bit
-multiplier and a 20-bit second time.  The code tries to use the
-original multiplier which is 4 as the second count is still 300 seconds
-by default.
+hns_roce_mtr_find() is a collection of multiple functions, and the
+return value is also difficult to understand, which is not conducive
+to modification and maintenance.
 
-As the 20-bit number is now too large for practical use there is an option
-to interpret it as microseconds instead of seconds.
+Separate the function of obtaining MTR root BA from this function.
+And some adjustments has been made to improve readability.
 
-Fixes: 2c119d9982b1 ("net: dsa: microchip: add the support for set_ageing_time")
-Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20241218020224.70590-3-Tristram.Ha@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240113085935.2838701-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 8673a6c2d9e4 ("RDMA/hns: Fix mapping error of zero-hop WQE buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/lan937x_main.c | 62 ++++++++++++++++++++++--
- drivers/net/dsa/microchip/lan937x_reg.h  |  9 ++--
- 2 files changed, 65 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_cq.c     |  11 +--
+ drivers/infiniband/hw/hns/hns_roce_device.h |   7 +-
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 102 ++++++++++----------
+ drivers/infiniband/hw/hns/hns_roce_mr.c     |  86 +++++++++++------
+ 4 files changed, 121 insertions(+), 85 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/lan937x_main.c b/drivers/net/dsa/microchip/lan937x_main.c
-index b479a628b1ae..dde37e61faa3 100644
---- a/drivers/net/dsa/microchip/lan937x_main.c
-+++ b/drivers/net/dsa/microchip/lan937x_main.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Microchip LAN937X switch driver main logic
-- * Copyright (C) 2019-2022 Microchip Technology Inc.
-+ * Copyright (C) 2019-2024 Microchip Technology Inc.
-  */
- #include <linux/kernel.h>
- #include <linux/module.h>
-@@ -257,10 +257,66 @@ int lan937x_change_mtu(struct ksz_device *dev, int port, int new_mtu)
- 
- int lan937x_set_ageing_time(struct ksz_device *dev, unsigned int msecs)
- {
--	u32 secs = msecs / 1000;
--	u32 value;
-+	u8 data, mult, value8;
-+	bool in_msec = false;
-+	u32 max_val, value;
-+	u32 secs = msecs;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
+index 9b91731a6207..5e0d78f4e545 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_cq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
+@@ -133,14 +133,12 @@ static int alloc_cqc(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq)
+ 	struct hns_roce_cq_table *cq_table = &hr_dev->cq_table;
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	u64 mtts[MTT_MIN_COUNT] = {};
+-	dma_addr_t dma_handle;
  	int ret;
  
-+#define MAX_TIMER_VAL	((1 << 20) - 1)
-+
-+	/* The aging timer comprises a 3-bit multiplier and a 20-bit second
-+	 * value.  Either of them cannot be zero.  The maximum timer is then
-+	 * 7 * 1048575 = 7340025 seconds.  As this value is too large for
-+	 * practical use it can be interpreted as microseconds, making the
-+	 * maximum timer 7340 seconds with finer control.  This allows for
-+	 * maximum 122 minutes compared to 29 minutes in KSZ9477 switch.
-+	 */
-+	if (msecs % 1000)
-+		in_msec = true;
-+	else
-+		secs /= 1000;
-+	if (!secs)
-+		secs = 1;
-+
-+	/* Return error if too large. */
-+	else if (secs > 7 * MAX_TIMER_VAL)
-+		return -EINVAL;
-+
-+	/* Configure how to interpret the number value. */
-+	ret = ksz_rmw8(dev, REG_SW_LUE_CTRL_2, SW_AGE_CNT_IN_MICROSEC,
-+		       in_msec ? SW_AGE_CNT_IN_MICROSEC : 0);
-+	if (ret < 0)
+-	ret = hns_roce_mtr_find(hr_dev, &hr_cq->mtr, 0, mtts, ARRAY_SIZE(mtts),
+-				&dma_handle);
+-	if (!ret) {
++	ret = hns_roce_mtr_find(hr_dev, &hr_cq->mtr, 0, mtts, ARRAY_SIZE(mtts));
++	if (ret) {
+ 		ibdev_err(ibdev, "failed to find CQ mtr, ret = %d.\n", ret);
+-		return -EINVAL;
 +		return ret;
+ 	}
+ 
+ 	/* Get CQC memory HEM(Hardware Entry Memory) table */
+@@ -157,7 +155,8 @@ static int alloc_cqc(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq)
+ 		goto err_put;
+ 	}
+ 
+-	ret = hns_roce_create_cqc(hr_dev, hr_cq, mtts, dma_handle);
++	ret = hns_roce_create_cqc(hr_dev, hr_cq, mtts,
++				  hns_roce_get_mtr_ba(&hr_cq->mtr));
+ 	if (ret)
+ 		goto err_xa;
+ 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 21ef00fdb656..a835368548e5 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -1129,8 +1129,13 @@ void hns_roce_cmd_use_polling(struct hns_roce_dev *hr_dev);
+ 
+ /* hns roce hw need current block and next block addr from mtt */
+ #define MTT_MIN_COUNT	 2
++static inline dma_addr_t hns_roce_get_mtr_ba(struct hns_roce_mtr *mtr)
++{
++	return mtr->hem_cfg.root_ba;
++}
 +
-+	ret = ksz_read8(dev, REG_SW_LUE_CTRL_0, &value8);
-+	if (ret < 0)
+ int hns_roce_mtr_find(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+-		      u32 offset, u64 *mtt_buf, int mtt_max, u64 *base_addr);
++		      u32 offset, u64 *mtt_buf, int mtt_max);
+ int hns_roce_mtr_create(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 			struct hns_roce_buf_attr *buf_attr,
+ 			unsigned int page_shift, struct ib_udata *udata,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 2824d390ec31..a396ba85cdce 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -3181,21 +3181,22 @@ static int set_mtpt_pbl(struct hns_roce_dev *hr_dev,
+ 	u64 pages[HNS_ROCE_V2_MAX_INNER_MTPT_NUM] = { 0 };
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	dma_addr_t pbl_ba;
+-	int i, count;
++	int ret;
++	int i;
+ 
+-	count = hns_roce_mtr_find(hr_dev, &mr->pbl_mtr, 0, pages,
+-				  min_t(int, ARRAY_SIZE(pages), mr->npages),
+-				  &pbl_ba);
+-	if (count < 1) {
+-		ibdev_err(ibdev, "failed to find PBL mtr, count = %d.\n",
+-			  count);
+-		return -ENOBUFS;
++	ret = hns_roce_mtr_find(hr_dev, &mr->pbl_mtr, 0, pages,
++				min_t(int, ARRAY_SIZE(pages), mr->npages));
++	if (ret) {
++		ibdev_err(ibdev, "failed to find PBL mtr, ret = %d.\n", ret);
 +		return ret;
+ 	}
+ 
+ 	/* Aligned to the hardware address access unit */
+-	for (i = 0; i < count; i++)
++	for (i = 0; i < ARRAY_SIZE(pages); i++)
+ 		pages[i] >>= 6;
+ 
++	pbl_ba = hns_roce_get_mtr_ba(&mr->pbl_mtr);
 +
-+	/* Check whether there is need to update the multiplier. */
-+	mult = FIELD_GET(SW_AGE_CNT_M, value8);
-+	max_val = MAX_TIMER_VAL;
-+	if (mult > 0) {
-+		/* Try to use the same multiplier already in the register as
-+		 * the hardware default uses multiplier 4 and 75 seconds for
-+		 * 300 seconds.
-+		 */
-+		max_val = DIV_ROUND_UP(secs, mult);
-+		if (max_val > MAX_TIMER_VAL || max_val * mult != secs)
-+			max_val = MAX_TIMER_VAL;
-+	}
+ 	mpt_entry->pbl_size = cpu_to_le32(mr->npages);
+ 	mpt_entry->pbl_ba_l = cpu_to_le32(pbl_ba >> 3);
+ 	hr_reg_write(mpt_entry, MPT_PBL_BA_H, upper_32_bits(pbl_ba >> 3));
+@@ -3294,18 +3295,12 @@ static int hns_roce_v2_rereg_write_mtpt(struct hns_roce_dev *hr_dev,
+ static int hns_roce_v2_frmr_write_mtpt(struct hns_roce_dev *hr_dev,
+ 				       void *mb_buf, struct hns_roce_mr *mr)
+ {
+-	struct ib_device *ibdev = &hr_dev->ib_dev;
++	dma_addr_t pbl_ba = hns_roce_get_mtr_ba(&mr->pbl_mtr);
+ 	struct hns_roce_v2_mpt_entry *mpt_entry;
+-	dma_addr_t pbl_ba = 0;
+ 
+ 	mpt_entry = mb_buf;
+ 	memset(mpt_entry, 0, sizeof(*mpt_entry));
+ 
+-	if (hns_roce_mtr_find(hr_dev, &mr->pbl_mtr, 0, NULL, 0, &pbl_ba) < 0) {
+-		ibdev_err(ibdev, "failed to find frmr mtr.\n");
+-		return -ENOBUFS;
+-	}
+-
+ 	hr_reg_write(mpt_entry, MPT_ST, V2_MPT_ST_FREE);
+ 	hr_reg_write(mpt_entry, MPT_PD, mr->pd);
+ 
+@@ -4333,17 +4328,20 @@ static int config_qp_rq_buf(struct hns_roce_dev *hr_dev,
+ {
+ 	u64 mtts[MTT_MIN_COUNT] = { 0 };
+ 	u64 wqe_sge_ba;
+-	int count;
++	int ret;
+ 
+ 	/* Search qp buf's mtts */
+-	count = hns_roce_mtr_find(hr_dev, &hr_qp->mtr, hr_qp->rq.offset, mtts,
+-				  MTT_MIN_COUNT, &wqe_sge_ba);
+-	if (hr_qp->rq.wqe_cnt && count < 1) {
++	ret = hns_roce_mtr_find(hr_dev, &hr_qp->mtr, hr_qp->rq.offset, mtts,
++				MTT_MIN_COUNT);
++	if (hr_qp->rq.wqe_cnt && ret) {
+ 		ibdev_err(&hr_dev->ib_dev,
+-			  "failed to find RQ WQE, QPN = 0x%lx.\n", hr_qp->qpn);
+-		return -EINVAL;
++			  "failed to find QP(0x%lx) RQ WQE buf, ret = %d.\n",
++			  hr_qp->qpn, ret);
++		return ret;
+ 	}
+ 
++	wqe_sge_ba = hns_roce_get_mtr_ba(&hr_qp->mtr);
 +
-+	data = DIV_ROUND_UP(secs, max_val);
-+	if (mult != data) {
-+		value8 &= ~SW_AGE_CNT_M;
-+		value8 |= FIELD_PREP(SW_AGE_CNT_M, data);
-+		ret = ksz_write8(dev, REG_SW_LUE_CTRL_0, value8);
-+		if (ret < 0)
+ 	context->wqe_sge_ba = cpu_to_le32(wqe_sge_ba >> 3);
+ 	qpc_mask->wqe_sge_ba = 0;
+ 
+@@ -4407,23 +4405,23 @@ static int config_qp_sq_buf(struct hns_roce_dev *hr_dev,
+ 	struct ib_device *ibdev = &hr_dev->ib_dev;
+ 	u64 sge_cur_blk = 0;
+ 	u64 sq_cur_blk = 0;
+-	int count;
++	int ret;
+ 
+ 	/* search qp buf's mtts */
+-	count = hns_roce_mtr_find(hr_dev, &hr_qp->mtr, 0, &sq_cur_blk, 1, NULL);
+-	if (count < 1) {
+-		ibdev_err(ibdev, "failed to find QP(0x%lx) SQ buf.\n",
+-			  hr_qp->qpn);
+-		return -EINVAL;
++	ret = hns_roce_mtr_find(hr_dev, &hr_qp->mtr, hr_qp->sq.offset,
++				&sq_cur_blk, 1);
++	if (ret) {
++		ibdev_err(ibdev, "failed to find QP(0x%lx) SQ WQE buf, ret = %d.\n",
++			  hr_qp->qpn, ret);
++		return ret;
+ 	}
+ 	if (hr_qp->sge.sge_cnt > 0) {
+-		count = hns_roce_mtr_find(hr_dev, &hr_qp->mtr,
+-					  hr_qp->sge.offset,
+-					  &sge_cur_blk, 1, NULL);
+-		if (count < 1) {
+-			ibdev_err(ibdev, "failed to find QP(0x%lx) SGE buf.\n",
+-				  hr_qp->qpn);
+-			return -EINVAL;
++		ret = hns_roce_mtr_find(hr_dev, &hr_qp->mtr,
++					hr_qp->sge.offset, &sge_cur_blk, 1);
++		if (ret) {
++			ibdev_err(ibdev, "failed to find QP(0x%lx) SGE buf, ret = %d.\n",
++				  hr_qp->qpn, ret);
 +			return ret;
+ 		}
+ 	}
+ 
+@@ -5550,18 +5548,20 @@ static int hns_roce_v2_write_srqc_index_queue(struct hns_roce_srq *srq,
+ 	struct ib_device *ibdev = srq->ibsrq.device;
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibdev);
+ 	u64 mtts_idx[MTT_MIN_COUNT] = {};
+-	dma_addr_t dma_handle_idx = 0;
++	dma_addr_t dma_handle_idx;
+ 	int ret;
+ 
+ 	/* Get physical address of idx que buf */
+ 	ret = hns_roce_mtr_find(hr_dev, &idx_que->mtr, 0, mtts_idx,
+-				ARRAY_SIZE(mtts_idx), &dma_handle_idx);
+-	if (ret < 1) {
++				ARRAY_SIZE(mtts_idx));
++	if (ret) {
+ 		ibdev_err(ibdev, "failed to find mtr for SRQ idx, ret = %d.\n",
+ 			  ret);
+-		return -ENOBUFS;
++		return ret;
+ 	}
+ 
++	dma_handle_idx = hns_roce_get_mtr_ba(&idx_que->mtr);
++
+ 	hr_reg_write(ctx, SRQC_IDX_HOP_NUM,
+ 		     to_hr_hem_hopnum(hr_dev->caps.idx_hop_num, srq->wqe_cnt));
+ 
+@@ -5593,20 +5593,22 @@ static int hns_roce_v2_write_srqc(struct hns_roce_srq *srq, void *mb_buf)
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibdev);
+ 	struct hns_roce_srq_context *ctx = mb_buf;
+ 	u64 mtts_wqe[MTT_MIN_COUNT] = {};
+-	dma_addr_t dma_handle_wqe = 0;
++	dma_addr_t dma_handle_wqe;
+ 	int ret;
+ 
+ 	memset(ctx, 0, sizeof(*ctx));
+ 
+ 	/* Get the physical address of srq buf */
+ 	ret = hns_roce_mtr_find(hr_dev, &srq->buf_mtr, 0, mtts_wqe,
+-				ARRAY_SIZE(mtts_wqe), &dma_handle_wqe);
+-	if (ret < 1) {
++				ARRAY_SIZE(mtts_wqe));
++	if (ret) {
+ 		ibdev_err(ibdev, "failed to find mtr for SRQ WQE, ret = %d.\n",
+ 			  ret);
+-		return -ENOBUFS;
++		return ret;
+ 	}
+ 
++	dma_handle_wqe = hns_roce_get_mtr_ba(&srq->buf_mtr);
++
+ 	hr_reg_write(ctx, SRQC_SRQ_ST, 1);
+ 	hr_reg_write_bool(ctx, SRQC_SRQ_TYPE,
+ 			  srq->ibsrq.srq_type == IB_SRQT_XRC);
+@@ -6327,7 +6329,7 @@ static int config_eqc(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq,
+ 	u64 eqe_ba[MTT_MIN_COUNT] = { 0 };
+ 	struct hns_roce_eq_context *eqc;
+ 	u64 bt_ba = 0;
+-	int count;
++	int ret;
+ 
+ 	eqc = mb_buf;
+ 	memset(eqc, 0, sizeof(struct hns_roce_eq_context));
+@@ -6335,13 +6337,15 @@ static int config_eqc(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq,
+ 	init_eq_config(hr_dev, eq);
+ 
+ 	/* if not multi-hop, eqe buffer only use one trunk */
+-	count = hns_roce_mtr_find(hr_dev, &eq->mtr, 0, eqe_ba, MTT_MIN_COUNT,
+-				  &bt_ba);
+-	if (count < 1) {
+-		dev_err(hr_dev->dev, "failed to find EQE mtr\n");
+-		return -ENOBUFS;
++	ret = hns_roce_mtr_find(hr_dev, &eq->mtr, 0, eqe_ba,
++				ARRAY_SIZE(eqe_ba));
++	if (ret) {
++		dev_err(hr_dev->dev, "failed to find EQE mtr, ret = %d\n", ret);
++		return ret;
+ 	}
+ 
++	bt_ba = hns_roce_get_mtr_ba(&eq->mtr);
++
+ 	hr_reg_write(eqc, EQC_EQ_ST, HNS_ROCE_V2_EQ_STATE_VALID);
+ 	hr_reg_write(eqc, EQC_EQE_HOP_NUM, eq->hop_num);
+ 	hr_reg_write(eqc, EQC_OVER_IGNORE, eq->over_ignore);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 7f29a55d378f..7b59b95f87c2 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -802,47 +802,53 @@ int hns_roce_mtr_map(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 	return ret;
+ }
+ 
+-int hns_roce_mtr_find(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+-		      u32 offset, u64 *mtt_buf, int mtt_max, u64 *base_addr)
++static int hns_roce_get_direct_addr_mtt(struct hns_roce_hem_cfg *cfg,
++					u32 start_index, u64 *mtt_buf,
++					int mtt_cnt)
+ {
+-	struct hns_roce_hem_cfg *cfg = &mtr->hem_cfg;
+-	int mtt_count, left;
+-	u32 start_index;
++	int mtt_count;
+ 	int total = 0;
+-	__le64 *mtts;
+ 	u32 npage;
+ 	u64 addr;
+ 
+-	if (!mtt_buf || mtt_max < 1)
+-		goto done;
+-
+-	/* no mtt memory in direct mode, so just return the buffer address */
+-	if (cfg->is_direct) {
+-		start_index = offset >> HNS_HW_PAGE_SHIFT;
+-		for (mtt_count = 0; mtt_count < cfg->region_count &&
+-		     total < mtt_max; mtt_count++) {
+-			npage = cfg->region[mtt_count].offset;
+-			if (npage < start_index)
+-				continue;
++	if (mtt_cnt > cfg->region_count)
++		return -EINVAL;
+ 
+-			addr = cfg->root_ba + (npage << HNS_HW_PAGE_SHIFT);
+-			mtt_buf[total] = addr;
++	for (mtt_count = 0; mtt_count < cfg->region_count && total < mtt_cnt;
++	     mtt_count++) {
++		npage = cfg->region[mtt_count].offset;
++		if (npage < start_index)
++			continue;
+ 
+-			total++;
+-		}
++		addr = cfg->root_ba + (npage << HNS_HW_PAGE_SHIFT);
++		mtt_buf[total] = addr;
+ 
+-		goto done;
++		total++;
+ 	}
+ 
+-	start_index = offset >> cfg->buf_pg_shift;
+-	left = mtt_max;
++	if (!total)
++		return -ENOENT;
++
++	return 0;
++}
++
++static int hns_roce_get_mhop_mtt(struct hns_roce_dev *hr_dev,
++				 struct hns_roce_mtr *mtr, u32 start_index,
++				 u64 *mtt_buf, int mtt_cnt)
++{
++	int left = mtt_cnt;
++	int total = 0;
++	int mtt_count;
++	__le64 *mtts;
++	u32 npage;
++
+ 	while (left > 0) {
+ 		mtt_count = 0;
+ 		mtts = hns_roce_hem_list_find_mtt(hr_dev, &mtr->hem_list,
+ 						  start_index + total,
+ 						  &mtt_count);
+ 		if (!mtts || !mtt_count)
+-			goto done;
++			break;
+ 
+ 		npage = min(mtt_count, left);
+ 		left -= npage;
+@@ -850,11 +856,33 @@ int hns_roce_mtr_find(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 			mtt_buf[total++] = le64_to_cpu(mtts[mtt_count]);
+ 	}
+ 
+-done:
+-	if (base_addr)
+-		*base_addr = cfg->root_ba;
++	if (!total)
++		return -ENOENT;
++
++	return 0;
++}
++
++int hns_roce_mtr_find(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
++		      u32 offset, u64 *mtt_buf, int mtt_max)
++{
++	struct hns_roce_hem_cfg *cfg = &mtr->hem_cfg;
++	u32 start_index;
++	int ret;
++
++	if (!mtt_buf || mtt_max < 1)
++		return -EINVAL;
+ 
+-	return total;
++	/* no mtt memory in direct mode, so just return the buffer address */
++	if (cfg->is_direct) {
++		start_index = offset >> HNS_HW_PAGE_SHIFT;
++		ret = hns_roce_get_direct_addr_mtt(cfg, start_index,
++						   mtt_buf, mtt_max);
++	} else {
++		start_index = offset >> cfg->buf_pg_shift;
++		ret = hns_roce_get_mhop_mtt(hr_dev, mtr, start_index,
++					    mtt_buf, mtt_max);
 +	}
-+
-+	secs = DIV_ROUND_UP(secs, data);
-+
- 	value = FIELD_GET(SW_AGE_PERIOD_7_0_M, secs);
++	return ret;
+ }
  
- 	ret = ksz_write8(dev, REG_SW_AGE_PERIOD__1, value);
-diff --git a/drivers/net/dsa/microchip/lan937x_reg.h b/drivers/net/dsa/microchip/lan937x_reg.h
-index 45b606b6429f..b3e536e7c686 100644
---- a/drivers/net/dsa/microchip/lan937x_reg.h
-+++ b/drivers/net/dsa/microchip/lan937x_reg.h
-@@ -1,6 +1,6 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /* Microchip LAN937X switch register definitions
-- * Copyright (C) 2019-2021 Microchip Technology Inc.
-+ * Copyright (C) 2019-2024 Microchip Technology Inc.
-  */
- #ifndef __LAN937X_REG_H
- #define __LAN937X_REG_H
-@@ -48,8 +48,7 @@
- 
- #define SW_VLAN_ENABLE			BIT(7)
- #define SW_DROP_INVALID_VID		BIT(6)
--#define SW_AGE_CNT_M			0x7
--#define SW_AGE_CNT_S			3
-+#define SW_AGE_CNT_M			GENMASK(5, 3)
- #define SW_RESV_MCAST_ENABLE		BIT(2)
- 
- #define REG_SW_LUE_CTRL_1		0x0311
-@@ -62,6 +61,10 @@
- #define SW_FAST_AGING			BIT(1)
- #define SW_LINK_AUTO_AGING		BIT(0)
- 
-+#define REG_SW_LUE_CTRL_2		0x0312
-+
-+#define SW_AGE_CNT_IN_MICROSEC		BIT(7)
-+
- #define REG_SW_AGE_PERIOD__1		0x0313
- #define SW_AGE_PERIOD_7_0_M		GENMASK(7, 0)
- 
+ static int mtr_init_buf_cfg(struct hns_roce_dev *hr_dev,
 -- 
 2.39.5
 
