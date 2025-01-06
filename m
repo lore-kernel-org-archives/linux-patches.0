@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03061DD874;
-	Mon,  6 Jan 2025 15:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A00A15B0E2;
+	Mon,  6 Jan 2025 15:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178046; cv=none; b=h+VwA0ea83a169HGD6CHSk6mYY1LVg2jaVOACmFlvq55PcOfnYzys6wZjlurDD0MsSjsnkXxpG+12iBnQ9JrMPGWzAnaFr41lO7w6/C165q1EJZDVJBotOEFQ6PlxoM9fzBfNKSKbpAKQAIwru417EdPJdW5CGmkBIOGzzHadTk=
+	t=1736178050; cv=none; b=XroFKMG/Utnz/HDUUd6RnL1RKBlSeWFF0VXx8l0A+QjrjlegqELPDj06GK0/G6+6fRzpaPC3oSE9ar9r6bPEEfvZAeRFy2QlWHnJFE0yLCHUAyqX59t1FAjUV6NJDjcYAsWJCxYCWB/RVjMOA+fbhv7FZTeiNEx/61NF2E5K5xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178046; c=relaxed/simple;
-	bh=z9voKzu9woem0Bh6EGCEoS0vsiDnKzboS4CDdIxu9Ao=;
+	s=arc-20240116; t=1736178050; c=relaxed/simple;
+	bh=QSrENc8jtfykIgF19ETI++dh2oR71v8SvqiwNajIXL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7y3MqxeANKWcVl7MUgsfchNnI3UA1hjQYI7FDiAB+P6lE2hDxNOesSxUCp43XtMneq+FtNGjLDl6MrapjbuyhhsXHNephQZb0ZTYV6R7FpqZrMPWlL6yfxKiVjMh3XRBGex7926G6ANhoZh3rI1f9FCgnPCTs6xySLPFWYmayE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfL8BK0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t0tPn9sYeRy44k+m0oiToTpb3HuoN1DgeZvA3AL0SZnDbEb3oHkB72mbiyZLNIOq6XEnpQKBSZrPUWUYljIlxk+nMRAWflMH0GTfZcEbwRbrZRs6y/D8A+IZtHVYQL6/vJqwJBtK91Tvh5LB5NborYSvUcfX+cOWT26BpPsZDzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kRH7WoXR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfL8BK0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDD5C4CEDF;
-	Mon,  6 Jan 2025 15:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kRH7WoXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566C6C4CED2;
+	Mon,  6 Jan 2025 15:40:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178045;
-	bh=z9voKzu9woem0Bh6EGCEoS0vsiDnKzboS4CDdIxu9Ao=;
+	s=korg; t=1736178048;
+	bh=QSrENc8jtfykIgF19ETI++dh2oR71v8SvqiwNajIXL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfL8BK0OUPffVSmz1tHrI4e9vp6MQiovOkCRfWzFwrqTozpq2HphHmpvyHIsgcyf0
-	 gA+rabtcXaefIlKLO7GhhWaeh0xUWnu810tEwSVy70iWL2Q5mUOegVrkgp04hspHbI
-	 r6woFLDkDRJpKzoeD1x1L5NfPVOLWPGvnmG9xLBs=
+	b=kRH7WoXRPcmQD7GVoJVp6RsBRnViQMKNJjtCttxLBSWpNJpwWLWIIx+4GgaVbagjT
+	 qHuEHJlvwdlpBffwmY7QkWP4Q2vSc6PU5vUkFzGzIuoirA5mvzTXcbnQEZCz+HOOjW
+	 26Dupg1yyPDQLxW/6A8uM70mpDDBW1KBY3o6Nx/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
 	Joshua Washington <joshwash@google.com>,
+	Praveen Kaligineedi <pkaligineedi@google.com>,
 	Willem de Bruijn <willemb@google.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.12 143/156] gve: process XSK TX descriptors as part of RX NAPI
-Date: Mon,  6 Jan 2025 16:17:09 +0100
-Message-ID: <20250106151147.114670497@linuxfoundation.org>
+Subject: [PATCH 6.12 144/156] gve: clean XDP queues in gve_tx_stop_ring_gqi
+Date: Mon,  6 Jan 2025 16:17:10 +0100
+Message-ID: <20250106151147.152636217@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -54,117 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Washington <joshwash@google.com>
 
-commit ba0925c34e0fa6fe02d3d642bc02ab099ab312c7 upstream.
+commit 6321f5fb70d502d95de8a212a7b484c297ec9644 upstream.
 
-When busy polling is enabled, xsk_sendmsg for AF_XDP zero copy marks
-the NAPI ID corresponding to the memory pool allocated for the socket.
-In GVE, this NAPI ID will never correspond to a NAPI ID of one of the
-dedicated XDP TX queues registered with the umem because XDP TX is not
-set up to share a NAPI with a corresponding RX queue.
+When stopping XDP TX rings, the XDP clean function needs to be called to
+clean out the entire queue, similar to what happens in the normal TX
+queue case. Otherwise, the FIFO won't be cleared correctly, and
+xsk_tx_completed won't be reported.
 
-This patch moves XSK TX descriptor processing from the TX NAPI to the RX
-NAPI, and the gve_xsk_wakeup callback is updated to use the RX NAPI
-instead of the TX NAPI, accordingly. The branch on if the wakeup is for
-TX is removed, as the NAPI poll should be invoked whether the wakeup is
-for TX or for RX.
-
-Fixes: fd8e40321a12 ("gve: Add AF_XDP zero-copy support for GQI-QPL format")
+Fixes: 75eaae158b1b ("gve: Add XDP DROP and TX support for GQI-QPL format")
 Cc: stable@vger.kernel.org
-Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
 Signed-off-by: Joshua Washington <joshwash@google.com>
+Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
+Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve.h      |    1 
- drivers/net/ethernet/google/gve/gve_main.c |    8 ++++++
- drivers/net/ethernet/google/gve/gve_tx.c   |   36 +++++++++++++++++------------
- 3 files changed, 31 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/google/gve/gve_tx.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve.h
-+++ b/drivers/net/ethernet/google/gve/gve.h
-@@ -1134,6 +1134,7 @@ int gve_xdp_xmit_one(struct gve_priv *pr
- void gve_xdp_tx_flush(struct gve_priv *priv, u32 xdp_qid);
- bool gve_tx_poll(struct gve_notify_block *block, int budget);
- bool gve_xdp_poll(struct gve_notify_block *block, int budget);
-+int gve_xsk_tx_poll(struct gve_notify_block *block, int budget);
- int gve_tx_alloc_rings_gqi(struct gve_priv *priv,
- 			   struct gve_tx_alloc_rings_cfg *cfg);
- void gve_tx_free_rings_gqi(struct gve_priv *priv,
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -333,6 +333,14 @@ int gve_napi_poll(struct napi_struct *na
- 
- 	if (block->rx) {
- 		work_done = gve_rx_poll(block, budget);
-+
-+		/* Poll XSK TX as part of RX NAPI. Setup re-poll based on max of
-+		 * TX and RX work done.
-+		 */
-+		if (priv->xdp_prog)
-+			work_done = max_t(int, work_done,
-+					  gve_xsk_tx_poll(block, budget));
-+
- 		reschedule |= work_done == budget;
- 	}
- 
 --- a/drivers/net/ethernet/google/gve/gve_tx.c
 +++ b/drivers/net/ethernet/google/gve/gve_tx.c
-@@ -975,33 +975,41 @@ out:
- 	return sent;
+@@ -206,7 +206,10 @@ void gve_tx_stop_ring_gqi(struct gve_pri
+ 		return;
+ 
+ 	gve_remove_napi(priv, ntfy_idx);
+-	gve_clean_tx_done(priv, tx, priv->tx_desc_cnt, false);
++	if (tx->q_num < priv->tx_cfg.num_queues)
++		gve_clean_tx_done(priv, tx, priv->tx_desc_cnt, false);
++	else
++		gve_clean_xdp_done(priv, tx, priv->tx_desc_cnt);
+ 	netdev_tx_reset_queue(tx->netdev_txq);
+ 	gve_tx_remove_from_block(priv, idx);
  }
- 
-+int gve_xsk_tx_poll(struct gve_notify_block *rx_block, int budget)
-+{
-+	struct gve_rx_ring *rx = rx_block->rx;
-+	struct gve_priv *priv = rx->gve;
-+	struct gve_tx_ring *tx;
-+	int sent = 0;
-+
-+	tx = &priv->tx[gve_xdp_tx_queue_id(priv, rx->q_num)];
-+	if (tx->xsk_pool) {
-+		sent = gve_xsk_tx(priv, tx, budget);
-+
-+		u64_stats_update_begin(&tx->statss);
-+		tx->xdp_xsk_sent += sent;
-+		u64_stats_update_end(&tx->statss);
-+		if (xsk_uses_need_wakeup(tx->xsk_pool))
-+			xsk_set_tx_need_wakeup(tx->xsk_pool);
-+	}
-+
-+	return sent;
-+}
-+
- bool gve_xdp_poll(struct gve_notify_block *block, int budget)
- {
- 	struct gve_priv *priv = block->priv;
- 	struct gve_tx_ring *tx = block->tx;
- 	u32 nic_done;
--	bool repoll;
- 	u32 to_do;
- 
- 	/* Find out how much work there is to be done */
- 	nic_done = gve_tx_load_event_counter(priv, tx);
- 	to_do = min_t(u32, (nic_done - tx->done), budget);
- 	gve_clean_xdp_done(priv, tx, to_do);
--	repoll = nic_done != tx->done;
--
--	if (tx->xsk_pool) {
--		int sent = gve_xsk_tx(priv, tx, budget);
--
--		u64_stats_update_begin(&tx->statss);
--		tx->xdp_xsk_sent += sent;
--		u64_stats_update_end(&tx->statss);
--		repoll |= (sent == budget);
--		if (xsk_uses_need_wakeup(tx->xsk_pool))
--			xsk_set_tx_need_wakeup(tx->xsk_pool);
--	}
- 
- 	/* If we still have work we want to repoll */
--	return repoll;
-+	return nic_done != tx->done;
- }
- 
- bool gve_tx_poll(struct gve_notify_block *block, int budget)
 
 
