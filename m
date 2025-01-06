@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094C242040;
-	Mon,  6 Jan 2025 15:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A5D38F9C;
+	Mon,  6 Jan 2025 15:47:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178463; cv=none; b=SoqgfuiFMeIJzP47ZwmrTekFABBhNsLrTR8m+ODNyK7wqG8DvuBhIN/pF7NDh+h0NlKdz2m5F4M9fkELFr498DUrqDzCcK1s9pmObP83vaZH2EK7xzl7cRHrReNHcVdVYVpByIZoqQy8ClUXU9O9fy9p+ajW6I6T+txrDG6bhQw=
+	t=1736178465; cv=none; b=LnwpLEUv3gv3fuPm0+hXGTioXZtbzOiSpwifm/zXc0wA+Y46KDhvYyj3TRspd7McwB6RULR4GyN6IDF/g1bAx+YNfSEMQN5UnV5Ui1flGgNUUkL2AFaMpanVjS4+gujZRfyBzCFzCOIcGMDkhWpKsSRB1VD20R+w6LJp/sRGrTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178463; c=relaxed/simple;
-	bh=0lJNERQVA8Ne8I31etI0XB4d9BVK2yMFBzVtMe6+hX8=;
+	s=arc-20240116; t=1736178465; c=relaxed/simple;
+	bh=FP6wNnsVBP5Q+fDf/BlL/OVUjiLXfdpcPcDsFAClJK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIx9ZY0OQ3CHdo+mhN8xFKJgfpd51+9bLhlNXNS2R/o+xc+S/0tQaXPAnB0GtMjWarCCUsuLQEiUkFjIIoJzAenaRcqX9etkZVhWynu1xSw1olwUDZTFI8B7BuxCWeG93CtkQtxZCfiz/iMR0c7saU9jaktQWhXKxP+OiBk+l4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+ZXP0WL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hJZph5KhFNn2U5fOzh/+lQ0C+7ek/bG0v2qMNkpKrh9KFsMVdr8IjRvxTDgEDRY6T3unsP3b+PMpLnGBVjy17Z8RbYUq5m7Tyn4yFdhlveGQ9l+rK6LeQV7m+Tu4tLwyFmlH1dYg8+zMS0VhshKUTsu26inkg/8OK8v/3hFvpNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CUs2FnnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+ZXP0WL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE93C4CED2;
-	Mon,  6 Jan 2025 15:47:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CUs2FnnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B4BBC4CED2;
+	Mon,  6 Jan 2025 15:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178462;
-	bh=0lJNERQVA8Ne8I31etI0XB4d9BVK2yMFBzVtMe6+hX8=;
+	s=korg; t=1736178465;
+	bh=FP6wNnsVBP5Q+fDf/BlL/OVUjiLXfdpcPcDsFAClJK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+ZXP0WL/kzUGIqrOxTAszJlsFOYQv/pP3hK/ICYaIkmZPTReZ11ZRVrmv5trXiy6
-	 rECUspV6cuk6hkglDS626Tr89g2/6QeOf4461HzS1tMlKSqu+huE/eNj/wnhM5EjnZ
-	 zBq6jzYGyrWmzoGJTsTyqWFrvEZ5r/gTQnm3dFwI=
+	b=CUs2FnnJ2sWgf83NS7eHvL8EuqT8WERu8AkFO2/t8Py1OHOm/DELDqqdyRLhOQjKM
+	 qF+lm2fYp/8Vjc8N5he98ly263LsqZSFSx8rf6IUiwqhbJtb2mfYWtvtKIZp9WQP5l
+	 s/teSenpi5q/vCr9e/PeVjowMrX+jZcMNfnqIqgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Petr Vorel <pvorel@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Azhar Shaikh <azhar.shaikh@intel.com>,
+	Yehezkel Bernat <YehezkelShB@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/138] block: remove the update_bdev parameter to set_capacity_revalidate_and_notify
-Date: Mon,  6 Jan 2025 16:16:59 +0100
-Message-ID: <20250106151136.828437447@linuxfoundation.org>
+Subject: [PATCH 5.10 086/138] thunderbolt: Add support for Intel Alder Lake
+Date: Mon,  6 Jan 2025 16:16:50 +0100
+Message-ID: <20250106151136.489429019@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -53,156 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Azhar Shaikh <azhar.shaikh@intel.com>
 
-[ Upstream commit 449f4ec9892ebc2f37a7eae6d97db2cf7c65e09a ]
+[ Upstream commit 135794868ad83d0327cdd78df469e118f1fe7cc4 ]
 
-The update_bdev argument is always set to true, so remove it.  Also
-rename the function to the slighly less verbose set_capacity_and_notify,
-as propagating the disk size to the block device isn't really
-revalidation.
+Alder Lake has the same integrated Thunderbolt/USB4 controller as
+Intel Tiger Lake. By default it is still using firmware based connection
+manager so we can use most of the Tiger Lake flows.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing device")
+Add the Alder Lake PCI IDs to the driver list of supported devices.
+
+Signed-off-by: Azhar Shaikh <azhar.shaikh@intel.com>
+Reviewed-by: Yehezkel Bernat <YehezkelShB@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Stable-dep-of: 8644b48714dc ("thunderbolt: Add support for Intel Panther Lake-M/P")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c                | 13 +++++--------
- drivers/block/loop.c         |  2 +-
- drivers/block/virtio_blk.c   |  2 +-
- drivers/block/xen-blkfront.c |  2 +-
- drivers/nvme/host/core.c     |  2 +-
- drivers/scsi/sd.c            |  5 ++---
- include/linux/genhd.h        |  3 +--
- 7 files changed, 12 insertions(+), 17 deletions(-)
+ drivers/thunderbolt/icm.c | 2 ++
+ drivers/thunderbolt/nhi.c | 4 ++++
+ drivers/thunderbolt/nhi.h | 2 ++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index 796baf761202..768a49460bf1 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -46,17 +46,15 @@ static void disk_del_events(struct gendisk *disk);
- static void disk_release_events(struct gendisk *disk);
+diff --git a/drivers/thunderbolt/icm.c b/drivers/thunderbolt/icm.c
+index 90f1d9a53461..b038e530d6cb 100644
+--- a/drivers/thunderbolt/icm.c
++++ b/drivers/thunderbolt/icm.c
+@@ -2290,6 +2290,8 @@ struct tb *icm_probe(struct tb_nhi *nhi)
+ 	case PCI_DEVICE_ID_INTEL_TGL_NHI1:
+ 	case PCI_DEVICE_ID_INTEL_TGL_H_NHI0:
+ 	case PCI_DEVICE_ID_INTEL_TGL_H_NHI1:
++	case PCI_DEVICE_ID_INTEL_ADL_NHI0:
++	case PCI_DEVICE_ID_INTEL_ADL_NHI1:
+ 		icm->is_supported = icm_tgl_is_supported;
+ 		icm->driver_ready = icm_icl_driver_ready;
+ 		icm->set_uuid = icm_icl_set_uuid;
+diff --git a/drivers/thunderbolt/nhi.c b/drivers/thunderbolt/nhi.c
+index fd1b59397c70..1e732d2d15ad 100644
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1349,6 +1349,10 @@ static struct pci_device_id nhi_ids[] = {
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_TGL_H_NHI1),
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_ADL_NHI0),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_ADL_NHI1),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
  
- /*
-- * Set disk capacity and notify if the size is not currently
-- * zero and will not be set to zero
-+ * Set disk capacity and notify if the size is not currently zero and will not
-+ * be set to zero.  Returns true if a uevent was sent, otherwise false.
-  */
--bool set_capacity_revalidate_and_notify(struct gendisk *disk, sector_t size,
--					bool update_bdev)
-+bool set_capacity_and_notify(struct gendisk *disk, sector_t size)
- {
- 	sector_t capacity = get_capacity(disk);
- 
- 	set_capacity(disk, size);
--	if (update_bdev)
--		revalidate_disk_size(disk, true);
-+	revalidate_disk_size(disk, true);
- 
- 	if (capacity != size && capacity != 0 && size != 0) {
- 		char *envp[] = { "RESIZE=1", NULL };
-@@ -67,8 +65,7 @@ bool set_capacity_revalidate_and_notify(struct gendisk *disk, sector_t size,
- 
- 	return false;
- }
--
--EXPORT_SYMBOL_GPL(set_capacity_revalidate_and_notify);
-+EXPORT_SYMBOL_GPL(set_capacity_and_notify);
- 
- /*
-  * Format the device name of the indicated disk into the supplied buffer and
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index 198f7ce3234b..b30f4d525bc8 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -238,7 +238,7 @@ static void __loop_update_dio(struct loop_device *lo, bool dio)
-  */
- static void loop_set_size(struct loop_device *lo, loff_t size)
- {
--	if (!set_capacity_revalidate_and_notify(lo->lo_disk, size, true))
-+	if (!set_capacity_and_notify(lo->lo_disk, size))
- 		kobject_uevent(&disk_to_dev(lo->lo_disk)->kobj, KOBJ_CHANGE);
- }
- 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 28ea9b511fd0..c87c6a4eb3b3 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -470,7 +470,7 @@ static void virtblk_update_capacity(struct virtio_blk *vblk, bool resize)
- 		   cap_str_10,
- 		   cap_str_2);
- 
--	set_capacity_revalidate_and_notify(vblk->disk, capacity, true);
-+	set_capacity_and_notify(vblk->disk, capacity);
- }
- 
- static void virtblk_config_changed_work(struct work_struct *work)
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index d68a8ca2161f..19ddbf977d28 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -2443,7 +2443,7 @@ static void blkfront_connect(struct blkfront_info *info)
- 			return;
- 		printk(KERN_INFO "Setting capacity to %Lu\n",
- 		       sectors);
--		set_capacity_revalidate_and_notify(info->gd, sectors, true);
-+		set_capacity_and_notify(info->gd, sectors);
- 
- 		return;
- 	case BLKIF_STATE_SUSPENDED:
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index c8e64a1e2fc0..c739ac1761ba 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2132,7 +2132,7 @@ static void nvme_update_disk_info(struct gendisk *disk,
- 			capacity = 0;
- 	}
- 
--	set_capacity_revalidate_and_notify(disk, capacity, true);
-+	set_capacity_and_notify(disk, capacity);
- 
- 	nvme_config_discard(disk, ns);
- 	nvme_config_write_zeroes(disk->queue, ns->ctrl);
-diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
-index 355d38cab862..da6df9809b0c 100644
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -3292,8 +3292,7 @@ static int sd_revalidate_disk(struct gendisk *disk)
- 
- 	sdkp->first_scan = 0;
- 
--	set_capacity_revalidate_and_notify(disk,
--		logical_to_sectors(sdp, sdkp->capacity), true);
-+	set_capacity_and_notify(disk, logical_to_sectors(sdp, sdkp->capacity));
- 	sd_config_write_same(sdkp);
- 	kfree(buffer);
- 
-@@ -3303,7 +3302,7 @@ static int sd_revalidate_disk(struct gendisk *disk)
- 	 * capacity to 0.
- 	 */
- 	if (sd_zbc_revalidate_zones(sdkp))
--		set_capacity_revalidate_and_notify(disk, 0, true);
-+		set_capacity_and_notify(disk, 0);
- 
-  out:
- 	return 0;
-diff --git a/include/linux/genhd.h b/include/linux/genhd.h
-index 03da3f603d30..4b22bfd9336e 100644
---- a/include/linux/genhd.h
-+++ b/include/linux/genhd.h
-@@ -315,8 +315,7 @@ static inline int get_disk_ro(struct gendisk *disk)
- extern void disk_block_events(struct gendisk *disk);
- extern void disk_unblock_events(struct gendisk *disk);
- extern void disk_flush_events(struct gendisk *disk, unsigned int mask);
--bool set_capacity_revalidate_and_notify(struct gendisk *disk, sector_t size,
--		bool update_bdev);
-+bool set_capacity_and_notify(struct gendisk *disk, sector_t size);
- 
- /* drivers/char/random.c */
- extern void add_disk_randomness(struct gendisk *disk) __latent_entropy;
+ 	/* Any USB4 compliant host */
+ 	{ PCI_DEVICE_CLASS(PCI_CLASS_SERIAL_USB_USB4, ~0) },
+diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
+index 7ad6d3f0583b..5091677b3f4b 100644
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -73,6 +73,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_4C_BRIDGE	0x15ea
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_4C_NHI		0x15eb
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE	0x15ef
++#define PCI_DEVICE_ID_INTEL_ADL_NHI0			0x463e
++#define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
+ #define PCI_DEVICE_ID_INTEL_ICL_NHI1			0x8a0d
+ #define PCI_DEVICE_ID_INTEL_ICL_NHI0			0x8a17
+ #define PCI_DEVICE_ID_INTEL_TGL_NHI0			0x9a1b
 -- 
 2.39.5
 
