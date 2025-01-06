@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8506156C5E;
-	Mon,  6 Jan 2025 15:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B9518B46A;
+	Mon,  6 Jan 2025 15:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177712; cv=none; b=a/BJKy6cGrCzTZ7CohS5Ow567VBJw+0CYKcSO2Wd2sVTztD67NsWMRh3KdMQAEmbAsd07BSRQKoPBgJ9yhUbh/0WDKE45bButiImvaDG1JA7MzI/q9EPggzBLvmPZqzU1TfXSV90/A/paMv5FEkNY3OWu5iQbVq58XNTzs55+L0=
+	t=1736177715; cv=none; b=EdZhFhfoyVG+JfeBsWKS2Qw73LqeiuOZYVTIVNzSmapG8lgocCOQvCC/IhbkMzYedu2Fvdkni2JocSkFvL9R3pgCUFT8MBu/4Twb8a4ZzAfQPi+jLBqjy4skZA4FupbwNumRcmCZU6JEsqc3Rd/IRBB4auMmTfb8jxIwlPOlXkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177712; c=relaxed/simple;
-	bh=bQHIWGTOf10DSctQyPd6Q5LWEOOavA+msEQd4G/kp5c=;
+	s=arc-20240116; t=1736177715; c=relaxed/simple;
+	bh=oIWvipO4yqxBocHLCrOHzRW5vvIpeR/xgqrqJW9LwO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exCF1G8ftVXfMSAVMuY9gB7iXzMwkLuet+dkfO1KNKkmHhS/iaciueltQVEX4AZl/nK5ED4uax7JIQA4QCanpTj5LpPUL9G1XD50k6+OX6aPFnXCsJ2ZlfezU93+fzRYRYa4Ac5oAZ248uc029ZUpH4/iLdzJKa0K/fQHYaGsAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFwow7mP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HlfjgFP6s8WHyJNiymuC7WD9HXCGnk9YXsEQc06W427U4VU+upMhCPeRB0OV/UJJf2M71UYjIKGg4NY+wbw8jkKc/E5A9k071/x2PKvTeQcNJwx6GpFkyPFS9QOWi1GF4eUAnhWEYGGdDrkbXO7SK5TYy8ONzWr6+oT48C1isdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X6GYdU91; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFwow7mP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F122AC4CED2;
-	Mon,  6 Jan 2025 15:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X6GYdU91"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FCBC4CED2;
+	Mon,  6 Jan 2025 15:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177712;
-	bh=bQHIWGTOf10DSctQyPd6Q5LWEOOavA+msEQd4G/kp5c=;
+	s=korg; t=1736177715;
+	bh=oIWvipO4yqxBocHLCrOHzRW5vvIpeR/xgqrqJW9LwO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFwow7mPgbHlCPI9nIWmfA7kYDqF+jUdiXaHJ0/E17Ru/bFwNsdgSXqVh4On3efMi
-	 2FyhUNiU7aDchk2E2nBtInNd2jV944Db+BmlvzCizaFWB+XCuMOrM6oNj7Pl/gLLMQ
-	 u6fXbOY4irW2eAW1TBRU6mtpf33/AEV7NmkjX6Hw=
+	b=X6GYdU91p5gSN8kdjdksJ4VVskOOjCVxImDljAAFE8+ZspoCkwa/SFd1hEJTCTd08
+	 b+kQgiiMlR665pCS4Vl0ra62/Ibt1txTRPTL7pbGw3E2nlyZfLW9549Wkt+Hj35IVm
+	 hkDsclS+baDEWZlA9PFFchRBoWSbv3xC2NweI8B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Stefan Ekenberg <stefan.ekenberg@axis.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/156] drm/bridge: adv7511_audio: Update Audio InfoFrame properly
-Date: Mon,  6 Jan 2025 16:15:18 +0100
-Message-ID: <20250106151142.947968882@linuxfoundation.org>
+Subject: [PATCH 6.12 015/156] RDMA/bnxt_re: Fix max SGEs for the Work Request
+Date: Mon,  6 Jan 2025 16:15:01 +0100
+Message-ID: <20250106151142.317719843@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,72 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Ekenberg <stefan.ekenberg@axis.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 902806baf3c1e8383c1fe3ff0b6042b8cb5c2707 ]
+[ Upstream commit 79d330fbdffd8cee06d8bdf38d82cb62d8363a27 ]
 
-AUDIO_UPDATE bit (Bit 5 of MAIN register 0x4A) needs to be set to 1
-while updating Audio InfoFrame information and then set to 0 when done.
-Otherwise partially updated Audio InfoFrames could be sent out. Two
-cases where this rule were not followed are fixed:
- - In adv7511_hdmi_hw_params() make sure AUDIO_UPDATE bit is updated
-   before/after setting ADV7511_REG_AUDIO_INFOFRAME.
- - In audio_startup() use the correct register for clearing
-   AUDIO_UPDATE bit.
+Gen P7 supports up to 13 SGEs for now. WQE software structure
+can hold only 6 now. Since the max send sge is reported as
+13, the stack can give requests up to 13 SGEs. This is causing
+traffic failures and system crashes.
 
-The problem with corrupted audio infoframes were discovered by letting
-a HDMI logic analyser check the output of ADV7535.
+Use the define for max SGE supported for variable size. This
+will work for both static and variable WQEs.
 
-Note that this patchs replaces writing REG_GC(1) with
-REG_INFOFRAME_UPDATE. Bit 5 of REG_GC(1) is positioned within field
-GC_PP[3:0] and that field doesn't control audio infoframe and is read-
-only. My conclusion therefore was that the author if this code meant to
-clear bit 5 of REG_INFOFRAME_UPDATE from the very beginning.
-
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Fixes: 53c515befe28 ("drm/bridge: adv7511: Add Audio support")
-Signed-off-by: Stefan Ekenberg <stefan.ekenberg@axis.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119-adv7511-audio-info-frame-v4-1-4ae68e76c89c@axis.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 227f51743b61 ("RDMA/bnxt_re: Fix the max WQE size for static WQE support")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/20241204075416.478431-2-kalesh-anakkur.purayil@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-index 61f4a38e7d2b..8f786592143b 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-@@ -153,7 +153,16 @@ static int adv7511_hdmi_hw_params(struct device *dev, void *data,
- 			   ADV7511_AUDIO_CFG3_LEN_MASK, len);
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_I2C_FREQ_ID_CFG,
- 			   ADV7511_I2C_FREQ_ID_CFG_RATE_MASK, rate << 4);
--	regmap_write(adv7511->regmap, 0x73, 0x1);
-+
-+	/* send current Audio infoframe values while updating */
-+	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
-+			   BIT(5), BIT(5));
-+
-+	regmap_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME(0), 0x1);
-+
-+	/* use Audio infoframe updated info */
-+	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
-+			   BIT(5), 0);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+index f55958e5fddb..d8c71c024613 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+@@ -114,7 +114,6 @@ struct bnxt_qplib_sge {
+ 	u32				size;
+ };
  
- 	return 0;
- }
-@@ -184,8 +193,9 @@ static int audio_startup(struct device *dev, void *data)
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(0),
- 				BIT(7) | BIT(6), BIT(7));
- 	/* use Audio infoframe updated info */
--	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(1),
-+	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
- 				BIT(5), 0);
-+
- 	/* enable SPDIF receiver */
- 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
- 		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
+-#define BNXT_QPLIB_QP_MAX_SGL	6
+ struct bnxt_qplib_swq {
+ 	u64				wr_id;
+ 	int				next_idx;
+@@ -154,7 +153,7 @@ struct bnxt_qplib_swqe {
+ #define BNXT_QPLIB_SWQE_FLAGS_UC_FENCE			BIT(2)
+ #define BNXT_QPLIB_SWQE_FLAGS_SOLICIT_EVENT		BIT(3)
+ #define BNXT_QPLIB_SWQE_FLAGS_INLINE			BIT(4)
+-	struct bnxt_qplib_sge		sg_list[BNXT_QPLIB_QP_MAX_SGL];
++	struct bnxt_qplib_sge		sg_list[BNXT_VAR_MAX_SGE];
+ 	int				num_sge;
+ 	/* Max inline data is 96 bytes */
+ 	u32				inline_len;
 -- 
 2.39.5
 
