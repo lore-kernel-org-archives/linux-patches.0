@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE57814F9F3;
-	Mon,  6 Jan 2025 15:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08621DE4C7;
+	Mon,  6 Jan 2025 15:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178361; cv=none; b=GzqFb+fobdqEIaw0tnxfI6y6pKFQ/cr2qAqqC6AsE+jGBQJcqb8EFV5qUbOHA5fmZlOH0jb1masT8AhxMkjL8oLnRoovicDTnJQUtc9zFrRU0hejHeoNp1zRvR8RoLmeBbKROMnQt4Qx2Sp3FB9av5b8G8KesU+FH8miwoyt9Zo=
+	t=1736178365; cv=none; b=ryrl4AYKyZ5Wulx+ZpQLMSeGSGu2VVHSniZYm6LDCtaC01fGPkPWpH4G0u50StC+5/2pmAY9iWiE4jF3t9bpw8ZGlCqzC5EBYloLSfT6+P2Q+pcIFWGuf12WiNOkOUDrBhfZPUnQMID3fuzXdDugoW/wMvYYAZKXfZXTMy/PAog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178361; c=relaxed/simple;
-	bh=+dr2bzZve6BnVk44+8iMrujNZpb+WVOWC/aQZ6BEL9w=;
+	s=arc-20240116; t=1736178365; c=relaxed/simple;
+	bh=um6bsh4EH+WwIldYpJO8w7M+DkMMivOi7+eeABMLYKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEgUQicTp4J652Rm6N7r22p+ct4RAB4ENUwPkPs/f3ATQ9PEOY7tXYNRlw+SN9mtVQsK8iLm6ZZ2Vhf95d1MOESDA3EpdJ2TPVXxI5ZJ0spPFVXLl8v/308uI1XkHjm5zJVbswOLQ165hb98mnV8f/v7hh2GmpdlqUmB9VD+kGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWMe2jNx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FiinXl0wifkhcMXVGm2zUX7yzKbLyMTuoGTL+wkZ4C4F06gi25YjbvLg3Q8jJCZ3XxQxH/mduKOm3k+mK0cKzQCJWJc9QnXmqpnK6glP8190TvHFDFU6anNyMnWnTMSQCKoQSE0cwSwSM2Am6p2Srib8Aek12SfU2ht7m+qE4XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oy6T7swS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWMe2jNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A741C4CED2;
-	Mon,  6 Jan 2025 15:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oy6T7swS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B61EC4CED2;
+	Mon,  6 Jan 2025 15:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178361;
-	bh=+dr2bzZve6BnVk44+8iMrujNZpb+WVOWC/aQZ6BEL9w=;
+	s=korg; t=1736178364;
+	bh=um6bsh4EH+WwIldYpJO8w7M+DkMMivOi7+eeABMLYKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FWMe2jNx+TpvHEFkZ3dQ8dG1u8019oBI+ZzyA90iDTO1Invab9TL+nQCe8is12Sog
-	 041k5WNUrWD95UqqMBJFtDkd77j6SpTaJxEF+VBpMG8sFR1jB136iQ1Qu5o3/qqF4L
-	 m0OBSl4O3YHbDxGVNo+Mas3t2G+g2bWgYg5a8Qqw=
+	b=Oy6T7swSamoYdwzI3504Fm1b9AbyOAe1sPfKVEu7g3Ve6Q27wRkZZJ+IGYU/O417b
+	 PYWrsB+LWYMvVdf85L039QuE6RP2P3fBcOXuj9zxLXnYsbh/vjsZOIcbi0sI2I6pcI
+	 i4vYCAk+Z0hIBEiHHbsTPwChb+c/GF7YY2Wvp3OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomas Henzl <thenzl@redhat.com>,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/138] scsi: megaraid_sas: Fix for a potential deadlock
-Date: Mon,  6 Jan 2025 16:16:25 +0100
-Message-ID: <20250106151135.545816255@linuxfoundation.org>
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 052/138] phy: core: Fix that API devm_phy_put() fails to release the phy
+Date: Mon,  6 Jan 2025 16:16:16 +0100
+Message-ID: <20250106151135.205103339@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -46,54 +52,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 50740f4dc78b41dec7c8e39772619d5ba841ddd7 ]
+commit fe4bfa9b6d7bd752bfe4700c937f235aa8ce997b upstream.
 
-This fixes a 'possible circular locking dependency detected' warning
-      CPU0                    CPU1
-      ----                    ----
- lock(&instance->reset_mutex);
-                              lock(&shost->scan_mutex);
-                              lock(&instance->reset_mutex);
- lock(&shost->scan_mutex);
+For devm_phy_put(), its comment says it needs to invoke phy_put() to
+release the phy, but it will not actually invoke the function since
+devres_destroy() does not call devm_phy_release(), and the missing
+phy_put() call will cause:
 
-Fix this by temporarily releasing the reset_mutex.
+- The phy fails to be released.
+- devm_phy_put() can not fully undo what API devm_phy_get() does.
+- Leak refcount of both the module and device for below typical usage:
 
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://lore.kernel.org/r/20240923174833.45345-1-thenzl@redhat.com
-Acked-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  devm_phy_get(); // or its variant
+  ...
+  err = do_something();
+  if (err)
+      goto err_out;
+  ...
+  err_out:
+  devm_phy_put(); // leak refcount here
+
+  The file(s) affected by this issue are shown below since they have such
+  typical usage.
+  drivers/pci/controller/cadence/pcie-cadence.c
+  drivers/net/ethernet/ti/am65-cpsw-nuss.c
+
+Fix by using devres_release() instead of devres_destroy() within the API.
+
+Fixes: ff764963479a ("drivers: phy: add generic PHY framework")
+Cc: stable@vger.kernel.org
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Krzysztof Wilczyński <kw@linux.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-1-40ae28f5015a@quicinc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/megaraid/megaraid_sas_base.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/phy-core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
-index 365279d7c982..d709d261d0ad 100644
---- a/drivers/scsi/megaraid/megaraid_sas_base.c
-+++ b/drivers/scsi/megaraid/megaraid_sas_base.c
-@@ -8868,8 +8868,11 @@ megasas_aen_polling(struct work_struct *work)
- 						   (ld_target_id / MEGASAS_MAX_DEV_PER_CHANNEL),
- 						   (ld_target_id - MEGASAS_MAX_DEV_PER_CHANNEL),
- 						   0);
--			if (sdev1)
-+			if (sdev1) {
-+				mutex_unlock(&instance->reset_mutex);
- 				megasas_remove_scsi_device(sdev1);
-+				mutex_lock(&instance->reset_mutex);
-+			}
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -620,7 +620,7 @@ void devm_phy_put(struct device *dev, st
+ 	if (!phy)
+ 		return;
  
- 			event_type = SCAN_VD_CHANNEL;
- 			break;
--- 
-2.39.5
-
+-	r = devres_destroy(dev, devm_phy_release, devm_phy_match, phy);
++	r = devres_release(dev, devm_phy_release, devm_phy_match, phy);
+ 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
+ }
+ EXPORT_SYMBOL_GPL(devm_phy_put);
 
 
