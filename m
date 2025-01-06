@@ -1,110 +1,84 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE95E184F
-	for <patches@lists.linux.dev>; Mon,  6 Jan 2025 02:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.178.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D36223A0;
+	Mon,  6 Jan 2025 02:50:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736130601; cv=none; b=n5J1S7i2Zxv7Dwc8VY9WBxLp7V7vJiNlb2l0FW33oBGjY8zhIS/vzBHbpCxj3hFHfQJBuzBSQiuel1piQnT2rtPrc9weu+c+e5DEzoV8pygfaeweBoUA+gyZEqQa+UzpyOpek3iWsTQOOp+J/ogIboFMRiMIQBlV2urg/mBcmyo=
+	t=1736131812; cv=none; b=beHLhIMGQLW9yMYUGUnI+QPqWnsMTOcC4RvNa6c/ozAWyyqTcLQX+Sl7IGGR3InQOGssecBeMmb2OnberCeCPLXKwDjlwajxL84e6ZOkbDHpMk/M6NjiK/ggRbECw56rUvh65fQFULAnk1Pc8mKudJ+1Vk7wc/o0NC+mnArhR7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736130601; c=relaxed/simple;
-	bh=gGuMJ92PYZy3HEuYFvppELisL4T31dzQN/iD8h7ITY4=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EZF3B1kaP4XjwI/hvAERvTRWL/fWfBlRqlsJueaS0I+36k7WXn0PfmphcpkBG9tiQmL7X3TmjF8QGVqkIUpHyAFB8eQ2yqmxTYAuzi/Ouxab9pFpKlAnO+puU8jYZ+ELSA48sgK36HO+3p+2vv8XiM0MoRg3RkOaeceuVzHqknU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=none smtp.client-ip=205.220.178.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5062IFhS024094;
-	Mon, 6 Jan 2025 02:29:44 GMT
-Received: from ala-exchng02.corp.ad.wrs.com (ala-exchng02.wrs.com [147.11.82.254])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 43xuy8hbn7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Mon, 06 Jan 2025 02:29:43 +0000 (GMT)
-Received: from ala-exchng01.corp.ad.wrs.com (147.11.82.252) by
- ALA-EXCHNG02.corp.ad.wrs.com (147.11.82.254) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.43; Sun, 5 Jan 2025 18:29:42 -0800
-Received: from pek-lpg-core1.wrs.com (147.11.136.210) by
- ala-exchng01.corp.ad.wrs.com (147.11.82.252) with Microsoft SMTP Server id
- 15.1.2507.43 via Frontend Transport; Sun, 5 Jan 2025 18:29:40 -0800
-From: <jianqi.ren.cn@windriver.com>
-To: <stable@vger.kernel.org>
-CC: <kxwang23@m.fudan.edu.cn>, <alexandre.belloni@bootlin.com>,
-        <patches@lists.linux.dev>, <pgaj@cadence.com>,
-        <linux-i3c@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.1.y] i3c: master: cdns: Fix use after free vulnerability in cdns_i3c_master Driver Due to Race Condition
-Date: Mon, 6 Jan 2025 10:29:39 +0800
-Message-ID: <20250106022939.2197708-1-jianqi.ren.cn@windriver.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1736131812; c=relaxed/simple;
+	bh=pxVIE5U9doYqO1gtr5NtmGoE9CiEo7WfZB90wEQeGPk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tcAor3vIVPikmPRUi19ttqb/Z00i3zdzICnmQ3kJv10CXSPwUbPzR+uePQ+2PgZgTo6G/Jy67pljydQq6gr8ZzFTpjJjt7LccV73U/r1BLME4AkhbVijjaLCsCMGyKNQxc7OBgpueiMSIM4+qX3sD/rcAARprObG5yYo6AxioBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EcCB7Yq3; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EcCB7Yq3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1736131810; x=1767667810;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=pxVIE5U9doYqO1gtr5NtmGoE9CiEo7WfZB90wEQeGPk=;
+  b=EcCB7Yq3wMw0QijJp67DiiksyppgftytIqcUWO3E2lJveesI6+PyLi07
+   QbC4FUdbvXsrjndnUMtQR5Yx7ytNyspYxMINuv3NqwDvbvV1LLVz5eUBM
+   wajcQ6T2rtk0g6s7ImM8BMrn3aJ/xtwERwDCA7TZTeNFNV0FHlhiZdHLQ
+   HMxRRlCbqyn2JdNYmkB4hxMAoXyWFKWKREgRjz2fgwU7VSRWZnMBogLhz
+   LV15FoMRmftPbG3o3kCQYofgYCvnhd04sgjA395Rmtht6HuYbpjr0hnIm
+   CaHrzEuNqfIcR8mLkGvflS6dk5Bw5ZHqud9O4QWbETawKK68Va2ypCbPa
+   w==;
+X-CSE-ConnectionGUID: aYozoOP5StmfNDkMwxC61Q==
+X-CSE-MsgGUID: DC/HFdKkTJeI3gZFBC99Kw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11306"; a="53690603"
+X-IronPort-AV: E=Sophos;i="6.12,292,1728975600"; 
+   d="scan'208";a="53690603"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2025 18:50:10 -0800
+X-CSE-ConnectionGUID: pJzxby5TQBapEJrT6rfaGw==
+X-CSE-MsgGUID: oskUF8ejTMuiZEUNj5l2lw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="125599941"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jan 2025 18:49:50 -0800
+Message-ID: <821ed0c7-20ef-4695-9da8-a8f206f4318b@linux.intel.com>
+Date: Mon, 6 Jan 2025 10:47:44 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Proofpoint-GUID: e0ho8VlNoWscS696RmN_Fol9-_JgStdR
-X-Authority-Analysis: v=2.4 cv=NpYrc9dJ c=1 sm=1 tr=0 ts=677b4017 cx=c_pps a=K4BcnWQioVPsTJd46EJO2w==:117 a=K4BcnWQioVPsTJd46EJO2w==:17 a=VdSt8ZQiCzkA:10 a=VwQbUJbxAAAA:8 a=P-IC7800AAAA:8 a=t7CeM3EgAAAA:8 a=7vRtop612t4TABFKEpQA:9 a=d3PnA9EDa4IxuAV0gXij:22
- a=FdTzh2GWekK77mhwV6Dw:22
-X-Proofpoint-ORIG-GUID: e0ho8VlNoWscS696RmN_Fol9-_JgStdR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2025-01-02_03,2025-01-02_01,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
- malwarescore=0 mlxscore=0 adultscore=0 priorityscore=1501 spamscore=0
- mlxlogscore=798 bulkscore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 classifier=spam authscore=0 adjust=0 reason=mlx
- scancount=1 engine=8.21.0-2411120000 definitions=main-2501060020
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 01/14] iommufd: Keep IOCTL list in an alphabetical
+ order
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com, kevin.tian@intel.com,
+ corbet@lwn.net, will@kernel.org
+Cc: joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+ dwmw2@infradead.org, shuah@kernel.org, linux-kernel@vger.kernel.org,
+ iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+ eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+ mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+ smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+ patches@lists.linux.dev
+References: <cover.1735933254.git.nicolinc@nvidia.com>
+ <32abff935ee97fb0be3f675a2a61b535492e242c.1735933254.git.nicolinc@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <32abff935ee97fb0be3f675a2a61b535492e242c.1735933254.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Kaixin Wang <kxwang23@m.fudan.edu.cn>
+On 1/4/25 03:43, Nicolin Chen wrote:
+> Move VDEVICE upward to keep the order. Also run clang-format for the same
+> coding style at line wrappings. No functional change.
+> 
+> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
+> ---
+>   drivers/iommu/iommufd/main.c | 16 +++++++---------
+>   1 file changed, 7 insertions(+), 9 deletions(-)
 
-[ Upstream commit 609366e7a06d035990df78f1562291c3bf0d4a12 ]
-
-In the cdns_i3c_master_probe function, &master->hj_work is bound with
-cdns_i3c_master_hj. And cdns_i3c_master_interrupt can call
-cnds_i3c_master_demux_ibis function to start the work.
-
-If we remove the module which will call cdns_i3c_master_remove to
-make cleanup, it will free master->base through i3c_master_unregister
-while the work mentioned above will be used. The sequence of operations
-that may lead to a UAF bug is as follows:
-
-CPU0                                      CPU1
-
-                                     | cdns_i3c_master_hj
-cdns_i3c_master_remove               |
-i3c_master_unregister(&master->base) |
-device_unregister(&master->dev)      |
-device_release                       |
-//free master->base                  |
-                                     | i3c_master_do_daa(&master->base)
-                                     | //use master->base
-
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in cdns_i3c_master_remove.
-
-Signed-off-by: Kaixin Wang <kxwang23@m.fudan.edu.cn>
-Link: https://lore.kernel.org/r/20240911153544.848398-1-kxwang23@m.fudan.edu.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Jianqi Ren <jianqi.ren.cn@windriver.com>
----
- drivers/i3c/master/i3c-master-cdns.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/i3c/master/i3c-master-cdns.c b/drivers/i3c/master/i3c-master-cdns.c
-index 35b90bb686ad..c5a37f58079a 100644
---- a/drivers/i3c/master/i3c-master-cdns.c
-+++ b/drivers/i3c/master/i3c-master-cdns.c
-@@ -1667,6 +1667,7 @@ static int cdns_i3c_master_remove(struct platform_device *pdev)
- {
- 	struct cdns_i3c_master *master = platform_get_drvdata(pdev);
- 
-+	cancel_work_sync(&master->hj_work);
- 	i3c_master_unregister(&master->base);
- 
- 	clk_disable_unprepare(master->sysclk);
--- 
-2.25.1
-
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
