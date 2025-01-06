@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E3986332;
-	Mon,  6 Jan 2025 15:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397FFBA34;
+	Mon,  6 Jan 2025 15:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179097; cv=none; b=MRaB+1bY7eHZusVDOIyUfoZVZwosMsyAaxWdMPq8L0PCe6+SpVp2KTaWum3P0SNWOhXvFbVjdYImCrmcbZZ9XaFmyOOQD9BUt6wu9YpBhOh8CCe2o8vIxBkLioC8XmVErqnUxv7Hh+XG6cGBi5AuAk0iAxQWKZZ18dPLfLeb1Sk=
+	t=1736179099; cv=none; b=SOP3hqVnts8g953I8xGvwjH1S8moBTppChCddQ+BE8n9ylWT+N7CFl0vwpa67AGXEJdZyrweIY4GyXu8GgC1bm6MfMHTp5RDcw/b13ZFI7ZaSqRinZRJYDn1qZ3YzYFJ0Dw3ZEqyhJ/8ldAhB6y58WWVRwVnwrCMMkcfqPx1qB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179097; c=relaxed/simple;
-	bh=5goWiEKjOpymaK/LuXNhRo46El5EYrj7INzxYnn7/kI=;
+	s=arc-20240116; t=1736179099; c=relaxed/simple;
+	bh=qDl9ms0F4w2tKOzOraDqnEJ7qwuqQnLfJIvKZeKOdLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fG//KCgUB0s7Ny7q665NXJGFM1An887o0qP45kk1mwYkr9AAJU/fnwqIUYIqeZ70vVgL4fVVgo6uoApd4KdCtHf+Qgo5ja7/BHNdP4WPWJursoYV6oul08w0zEOoMqLeUaCT71ZKR83i9Edz6TEBM8PcwmoxKtbV5UX/y71s68E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8FIHdEf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LNTcEgKM31FXsncsNIDXzDVH4SRgjO5M5hHpNx5OV7crT+kU5mhkN8jzm3ZSzCGpsTpt+zLwAhVMtiJz9B3LqwSGQ2k4Rlf5D2C65T4WMEKRLm6U+oFh0g5jiHf92g/Pmco9uoezG+cUz08awaqGzFsy+WHQuBoRM4Wx3UAq3v8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sv8OLmjh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8FIHdEf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA33C4CED2;
-	Mon,  6 Jan 2025 15:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sv8OLmjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4AA9C4CED2;
+	Mon,  6 Jan 2025 15:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179096;
-	bh=5goWiEKjOpymaK/LuXNhRo46El5EYrj7INzxYnn7/kI=;
+	s=korg; t=1736179099;
+	bh=qDl9ms0F4w2tKOzOraDqnEJ7qwuqQnLfJIvKZeKOdLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8FIHdEfMR2qgyhzo35WKnXrcDfbp/lIosS7VbC0Y710zCuau2WZfeJVq7v/3p45j
-	 iA9LYMp08rIh2IbjcA08oar2KbZxi+20zxOalV5HgnJi/4esJe7Ma3Dmfq87ebxWsi
-	 0JkD/hyTRRYw5v0vfzjADEjPNP5JEksqE7r+bgEQ=
+	b=sv8OLmjhUVhLVp3GDaPgXoFsTOul5I/FFuF346dw2ihGzHcd4lborBV80pNkH1PAV
+	 0GxmKKM2bqYxhp62sLsZzpbxlqmzXN1d1pWe42EykfdYPDL+RQhIaRr+K7pjFJAMdM
+	 Kew9byxrZCDJhRIJpTKFD5/J8dhuCOs2T8Nw1Wwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frankie Fisher <frankie@terrorise.me.uk>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 26/93] btrfs: tree-checker: reject inline extent items with 0 ref count
-Date: Mon,  6 Jan 2025 16:17:02 +0100
-Message-ID: <20250106151129.691640811@linuxfoundation.org>
+	Trond Myklebust <trond.myklebust@hammerspace.com>
+Subject: [PATCH 5.4 27/93] NFS/pnfs: Fix a live lock between recalled layouts and layoutget
+Date: Mon,  6 Jan 2025 16:17:03 +0100
+Message-ID: <20250106151129.730529105@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,104 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-commit dfb92681a19e1d5172420baa242806414b3eff6f upstream.
+commit 62e2a47ceab8f3f7d2e3f0e03fdd1c5e0059fd8b upstream.
 
-[BUG]
-There is a bug report in the mailing list where btrfs_run_delayed_refs()
-failed to drop the ref count for logical 25870311358464 num_bytes
-2113536.
+When the server is recalling a layout, we should ignore the count of
+outstanding layoutget calls, since the server is expected to return
+either NFS4ERR_RECALLCONFLICT or NFS4ERR_RETURNCONFLICT for as long as
+the recall is outstanding.
+Currently, we may end up livelocking, causing the layout to eventually
+be forcibly revoked.
 
-The involved leaf dump looks like this:
-
-  item 166 key (25870311358464 168 2113536) itemoff 10091 itemsize 50
-    extent refs 1 gen 84178 flags 1
-    ref#0: shared data backref parent 32399126528000 count 0 <<<
-    ref#1: shared data backref parent 31808973717504 count 1
-
-Notice the count number is 0.
-
-[CAUSE]
-There is no concrete evidence yet, but considering 0 -> 1 is also a
-single bit flipped, it's possible that hardware memory bitflip is
-involved, causing the on-disk extent tree to be corrupted.
-
-[FIX]
-To prevent us reading such corrupted extent item, or writing such
-damaged extent item back to disk, enhance the handling of
-BTRFS_EXTENT_DATA_REF_KEY and BTRFS_SHARED_DATA_REF_KEY keys for both
-inlined and key items, to detect such 0 ref count and reject them.
-
-CC: stable@vger.kernel.org # 5.4+
-Link: https://lore.kernel.org/linux-btrfs/7c69dd49-c346-4806-86e7-e6f863a66f48@app.fastmail.com/
-Reported-by: Frankie Fisher <frankie@terrorise.me.uk>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: bf0291dd2267 ("pNFS: Ensure LAYOUTGET and LAYOUTRETURN are properly serialised")
+Cc: stable@vger.kernel.org
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ fs/nfs/pnfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1197,6 +1197,11 @@ static int check_extent_item(struct exte
- 					   dref_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_extent_data_ref_count(leaf, dref);
- 			break;
- 		/* Contains parent bytenr and ref count */
-@@ -1208,6 +1213,11 @@ static int check_extent_item(struct exte
- 					   inline_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid shared data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_shared_data_ref_count(leaf, sref);
- 			break;
- 		default:
-@@ -1259,8 +1269,18 @@ static int check_simple_keyed_refs(struc
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1165,7 +1165,7 @@ pnfs_prepare_layoutreturn(struct pnfs_la
+ 		enum pnfs_iomode *iomode)
  {
- 	u32 expect_item_size = 0;
- 
--	if (key->type == BTRFS_SHARED_DATA_REF_KEY)
-+	if (key->type == BTRFS_SHARED_DATA_REF_KEY) {
-+		struct btrfs_shared_data_ref *sref;
-+
-+		sref = btrfs_item_ptr(leaf, slot, struct btrfs_shared_data_ref);
-+		if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+			extent_err(leaf, slot,
-+		"invalid shared data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
-+
- 		expect_item_size = sizeof(struct btrfs_shared_data_ref);
-+	}
- 
- 	if (btrfs_item_size_nr(leaf, slot) != expect_item_size) {
- 		generic_err(leaf, slot,
-@@ -1320,6 +1340,11 @@ static int check_extent_data_ref(struct
- 				   offset, leaf->fs_info->sectorsize);
- 			return -EUCLEAN;
- 		}
-+		if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+			extent_err(leaf, slot,
-+	"invalid extent data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
- 	}
- 	return 0;
- }
+ 	/* Serialise LAYOUTGET/LAYOUTRETURN */
+-	if (atomic_read(&lo->plh_outstanding) != 0)
++	if (atomic_read(&lo->plh_outstanding) != 0 && lo->plh_return_seq == 0)
+ 		return false;
+ 	if (test_and_set_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags))
+ 		return false;
 
 
