@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C79B13B59A;
-	Mon,  6 Jan 2025 15:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8942186332;
+	Mon,  6 Jan 2025 15:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178989; cv=none; b=aFy3r11K8NF7s2HfQ6/hDYJqCVhFdg8cSlPndZjl0yDHkUONBmlcrrEL74PdSTi0LZDCChWr/T/5g4/FPRrau19WqxpUCWXHwTDu8kYvHonOBtg71WCPJ/8vbdcMqtMemYkvPnfE1bb9EPJPS2+esw3Dt12A2P2Ol6sCLzzsv68=
+	t=1736178992; cv=none; b=jmcFoKoqTuE/moJzEAzX2MAo1zOHrmHhU/Y4yWhETFVvgQuyiY8+QHhkczbWNi5i30XgT3DiLKsl9rfnNPKLym8KDZuaj9onehFnxBKdjQzh2NUVKAATKeVsbhSGubvQrvHnuG1hNnvVyxsCsL6NVyPi0tTQoDPRzWXhbg+SmdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178989; c=relaxed/simple;
-	bh=zJMca8GRdRbViePqEGkQ4G4R/u10WoINmJrvLhoLCyE=;
+	s=arc-20240116; t=1736178992; c=relaxed/simple;
+	bh=V9f0zbSmswK12sNXLvuM43kKBuj6R7JYlPqbiJy85O0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2tBNAfQEAXy8jkfSMu38s4d5Yjy5kDdxzJ2tJj1OGgwASRrZxkIRjnG145Tr1UnumQF71G04sxUG5VOoEeeYPINnc4hWXRQjGeABbtSfpB/zLPcKg34lyJF2jhQdf6q0bwCO2zKkUZ5jancz6+z/Gi3HYQ8x8lKtSLkVFAdtiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2EZzpaO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/DfuwpUHMt0eOb0UjriAVpTdXjP+APIwVZRwABGy1TGAHL6LP20VPLcUd7iK6wp7KotMtmXNWbjKF48FYkYOfEhF2gzJqxbZ1m8kRUmV5fmbR2L50Bx6rUTOv7uPeI4MhlqZXKjj6Opw5nEOd/zVfsgZVbpilC7138P5Z3S9VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvDVsr9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2EZzpaO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F37C4CED2;
-	Mon,  6 Jan 2025 15:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvDVsr9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3A9C4CED2;
+	Mon,  6 Jan 2025 15:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178989;
-	bh=zJMca8GRdRbViePqEGkQ4G4R/u10WoINmJrvLhoLCyE=;
+	s=korg; t=1736178992;
+	bh=V9f0zbSmswK12sNXLvuM43kKBuj6R7JYlPqbiJy85O0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2EZzpaOoW27XCweYPJPr2Y/Ez0wzEcOfjjUZwOP6NpW8UJW7TnEMh7iIUi5k7BKz
-	 PMZBAt3khiA1KJWfdMU1zuO1/pfWUa5SszQt2ce9YvOzVTTwFbtDvGZgEU2d4Y3hKc
-	 VVLRNggejOIiLdBCIeJT8ZKXYR9WHSiaCu3hxcHw=
+	b=ZvDVsr9bQEefuqZT9jCHIbPY2bGDhRyKqUvBhwFjD9+bpFmATg9O4bAYFctzikL4Z
+	 7/Tw1Wk9Eo1GoxDjqpk+RJbn7uQNmWLE/SkhfsrnyQmy03wFym7cqwIwEQhv4WxyN8
+	 zeI0IGwK7JoMHhMozBPtb6e4PBZ4atw7T2Y1x/H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 158/168] usb: xhci: Avoid queuing redundant Stop Endpoint commands
-Date: Mon,  6 Jan 2025 16:17:46 +0100
-Message-ID: <20250106151144.399904468@linuxfoundation.org>
+Subject: [PATCH 5.15 159/168] modpost: fix input MODULE_DEVICE_TABLE() built for 64-bit on 32-bit host
+Date: Mon,  6 Jan 2025 16:17:47 +0100
+Message-ID: <20250106151144.436251029@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,119 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 474538b8dd1cd9c666e56cfe8ef60fbb0fb513f4 ]
+[ Upstream commit 77dc55a978e69625f9718460012e5ef0172dc4de ]
 
-Stop Endpoint command on an already stopped endpoint fails and may be
-misinterpreted as a known hardware bug by the completion handler. This
-results in an unnecessary delay with repeated retries of the command.
+When building a 64-bit kernel on a 32-bit build host, incorrect
+input MODULE_ALIAS() entries may be generated.
 
-Avoid queuing this command when endpoint state flags indicate that it's
-stopped or halted and the command will fail. If commands are pending on
-the endpoint, their completion handlers will process cancelled TDs so
-it's done. In case of waiting for external operations like clearing TT
-buffer, the endpoint is stopped and cancelled TDs can be processed now.
+For example, when compiling a 64-bit kernel with CONFIG_INPUT_MOUSEDEV=m
+on a 64-bit build machine, you will get the correct output:
 
-This eliminates practically all unnecessary retries because an endpoint
-with pending URBs is maintained in Running state by the driver, unless
-aforementioned commands or other operations are pending on it. This is
-guaranteed by xhci_ring_ep_doorbell() and by the fact that it is called
-every time any of those operations completes.
+  $ grep MODULE_ALIAS drivers/input/mousedev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*110,*r*0,*1,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*r*8,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*14A,*r*a*0,*1,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*145,*r*a*0,*1,*18,*1C,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*110,*r*a*0,*1,*m*l*s*f*w*");
 
-The only known exceptions are hardware bugs (the endpoint never starts
-at all) and Stream Protocol errors not associated with any TRB, which
-cause an endpoint reset not followed by restart. Sounds like a bug.
+However, building the same kernel on a 32-bit machine results in
+incorrect output:
 
-Generally, these retries are only expected to happen when the endpoint
-fails to start for unknown/no reason, which is a worse problem itself,
-and fixing the bug eliminates the retries too.
+  $ grep MODULE_ALIAS drivers/input/mousedev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*110,*130,*r*0,*1,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*r*8,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*14A,*16A,*r*a*0,*1,*20,*21,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*145,*165,*r*a*0,*1,*18,*1C,*20,*21,*38,*3C,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*110,*130,*r*a*0,*1,*20,*21,*m*l*s*f*w*");
 
-All cases were tested and found to work as expected. SET_DEQ_PENDING
-was produced by patching uvcvideo to unlink URBs in 100us intervals,
-which then runs into this case very often. EP_HALTED was produced by
-restarting 'cat /dev/ttyUSB0' on a serial dongle with broken cable.
-EP_CLEARING_TT by the same, with the dongle on an external hub.
+A similar issue occurs with CONFIG_INPUT_JOYDEV=m. On a 64-bit build
+machine, the output is:
 
-Fixes: fd9d55d190c0 ("xhci: retry Stop Endpoint on buggy NEC controllers")
-CC: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241106101459.775897-34-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  $ grep MODULE_ALIAS drivers/input/joydev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*0,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*2,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*8,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*6,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*120,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*130,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*2C0,*r*a*m*l*s*f*w*");
+
+However, on a 32-bit machine, the output is incorrect:
+
+  $ grep MODULE_ALIAS drivers/input/joydev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*0,*20,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*2,*22,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*8,*28,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*6,*26,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*11F,*13F,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*11F,*13F,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*2C0,*2E0,*r*a*m*l*s*f*w*");
+
+When building a 64-bit kernel, BITS_PER_LONG is defined as 64. However,
+on a 32-bit build machine, the constant 1L is a signed 32-bit value.
+Left-shifting it beyond 32 bits causes wraparound, and shifting by 31
+or 63 bits makes it a negative value.
+
+The fix in commit e0e92632715f ("[PATCH] PATCH: 1 line 2.6.18 bugfix:
+modpost-64bit-fix.patch") is incorrect; it only addresses cases where
+a 64-bit kernel is built on a 64-bit build machine, overlooking cases
+on a 32-bit build machine.
+
+Using 1ULL ensures a 64-bit width on both 32-bit and 64-bit machines,
+avoiding the wraparound issue.
+
+Fixes: e0e92632715f ("[PATCH] PATCH: 1 line 2.6.18 bugfix: modpost-64bit-fix.patch")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: bf36b4bf1b9a ("modpost: fix the missed iteration for the max bit in do_input()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 13 +++++++++++++
- drivers/usb/host/xhci.c      | 19 +++++++++++++++----
- drivers/usb/host/xhci.h      |  1 +
- 3 files changed, 29 insertions(+), 4 deletions(-)
+ scripts/mod/file2alias.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 0ff70c859f14..f2b86872aa6b 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1059,6 +1059,19 @@ static int xhci_invalidate_cancelled_tds(struct xhci_virt_ep *ep)
- 	return 0;
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index d911485646c5..68a6b029397a 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -733,7 +733,7 @@ static void do_input(char *alias,
+ 	for (i = min / BITS_PER_LONG; i < max / BITS_PER_LONG + 1; i++)
+ 		arr[i] = TO_NATIVE(arr[i]);
+ 	for (i = min; i < max; i++)
+-		if (arr[i / BITS_PER_LONG] & (1L << (i%BITS_PER_LONG)))
++		if (arr[i / BITS_PER_LONG] & (1ULL << (i%BITS_PER_LONG)))
+ 			sprintf(alias + strlen(alias), "%X,*", i);
  }
  
-+/*
-+ * Erase queued TDs from transfer ring(s) and give back those the xHC didn't
-+ * stop on. If necessary, queue commands to move the xHC off cancelled TDs it
-+ * stopped on. Those will be given back later when the commands complete.
-+ *
-+ * Call under xhci->lock on a stopped endpoint.
-+ */
-+void xhci_process_cancelled_tds(struct xhci_virt_ep *ep)
-+{
-+	xhci_invalidate_cancelled_tds(ep);
-+	xhci_giveback_invalidated_tds(ep);
-+}
-+
- /*
-  * Returns the TD the endpoint ring halted on.
-  * Only call for non-running rings without streams.
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 58483d1e5d3f..c145a1ac1aba 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -1883,10 +1883,21 @@ static int xhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
- 		}
- 	}
- 
--	/* Queue a stop endpoint command, but only if this is
--	 * the first cancellation to be handled.
--	 */
--	if (!(ep->ep_state & EP_STOP_CMD_PENDING)) {
-+	/* These completion handlers will sort out cancelled TDs for us */
-+	if (ep->ep_state & (EP_STOP_CMD_PENDING | EP_HALTED | SET_DEQ_PENDING)) {
-+		xhci_dbg(xhci, "Not queuing Stop Endpoint on slot %d ep %d in state 0x%x\n",
-+				urb->dev->slot_id, ep_index, ep->ep_state);
-+		goto done;
-+	}
-+
-+	/* In this case no commands are pending but the endpoint is stopped */
-+	if (ep->ep_state & EP_CLEARING_TT) {
-+		/* and cancelled TDs can be given back right away */
-+		xhci_dbg(xhci, "Invalidating TDs instantly on slot %d ep %d in state 0x%x\n",
-+				urb->dev->slot_id, ep_index, ep->ep_state);
-+		xhci_process_cancelled_tds(ep);
-+	} else {
-+		/* Otherwise, queue a new Stop Endpoint command */
- 		command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
- 		if (!command) {
- 			ret = -ENOMEM;
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 67d5ef952d6a..f76dae4ea429 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1928,6 +1928,7 @@ void xhci_ring_doorbell_for_active_rings(struct xhci_hcd *xhci,
- void xhci_cleanup_command_queue(struct xhci_hcd *xhci);
- void inc_deq(struct xhci_hcd *xhci, struct xhci_ring *ring);
- unsigned int count_trbs(u64 addr, u64 len);
-+void xhci_process_cancelled_tds(struct xhci_virt_ep *ep);
- 
- /* xHCI roothub code */
- void xhci_set_link_state(struct xhci_hcd *xhci, struct xhci_port *port,
 -- 
 2.39.5
 
