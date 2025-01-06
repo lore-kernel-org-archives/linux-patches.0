@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC41DC9BC;
-	Mon,  6 Jan 2025 15:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743671DA112;
+	Mon,  6 Jan 2025 15:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178191; cv=none; b=WscD7+T+1eVA10gUw3l2yexv0VxNJeX0/AemmLBIV5fUeb9ntovPLkfDVLd9azuSVo9VhG3IWqf1dQae6jSr8rhU/Kvt6z2oTbdbeJS2FKPQbZ6GAH5XfmPr7DLErYuEHmDMmPiffqkdJoZ1guHBuNU8IZTGAgiPdjg69WM1K5g=
+	t=1736178194; cv=none; b=TxMs9BOwq13LkAZ0ofJ/eEsS5ukwCpul7Ble6KBp27/20N/74VSitPe9SGbyYtFWth/jxdLOeGhOpcD6Gv5qWknDds0kFetzKCFtrgIuAKPXDKWdbtlcqAZWAIfVQoQ7/Cj0puFC/TAnZvLU+ItQAJFeIF+Mls1SYO0YRqmpw/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178191; c=relaxed/simple;
-	bh=fKei1Berpkx42oMk2US6QrF0/qz+aF6Saa1wRpSk0BQ=;
+	s=arc-20240116; t=1736178194; c=relaxed/simple;
+	bh=zX2rj+K6gbZF6TSQ7S0McaNEQZX8yDTfPMFYb3qkiWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mo6BS0eGGwQW4B4ut282ZLh2E0GxZ/UGSnVptswhIUxo2lUrW9eha/4pPmjGrLms1Z8/zudf88eUGESorTG3DynpMB7TYh2g661FzAqFEWHGOwdIfF83XusF3UJRH2H3fya+zywZaCFjc9Fi7d7qpVseL23rZuwzJUmZC6hIEEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWhMMVkg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reyLSyKwL4AD7SDxS2yfGg26O1lRT13G21ymp0LaIUbfAoXyqyrycD0ek2WiA/JTs+wf9E5qaV4oRRe1mrnv9tRiqhypp/NUn++YSfY41f6aYsUvYJGlZweV7U5+wLOv1OPJBvNYeTENBS0zAt1jZuu7qZuNQ+/ZamuO9fydEvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHTz2UeL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWhMMVkg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DACC4CED6;
-	Mon,  6 Jan 2025 15:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHTz2UeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FB2C4CED2;
+	Mon,  6 Jan 2025 15:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178191;
-	bh=fKei1Berpkx42oMk2US6QrF0/qz+aF6Saa1wRpSk0BQ=;
+	s=korg; t=1736178194;
+	bh=zX2rj+K6gbZF6TSQ7S0McaNEQZX8yDTfPMFYb3qkiWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uWhMMVkgQwF29Q8OSqoyBKY93kPMJGLOcSNi7kp287w2FhjZswgj/M8RCRULdvOBB
-	 c5/oft7SXjAlCLMjm3EahA5r52ILvwrt5vy3x0CanZJ+5XaDRG6SfCKbkCd9j0Wacf
-	 1RjJXfxjTtFLVRy9CZGU0+6UK0zPbWi1pAEo3CaM=
+	b=kHTz2UeLTv3nzwYbfK15Zv0eBsnlsVJbXrHciNaIsHaXmDUc3Fm4xebsWjZExQlHz
+	 /D2ZuN1uCTXeS6ytzT2d6f6GHH+WZDHLgS3jiFrpclO366HghTEpU07/J6VhVMBLvJ
+	 1NwwthJODFSNr1ejeW954UjlSFzBCbQ1YAFQKr+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.10 036/138] NFS/pnfs: Fix a live lock between recalled layouts and layoutget
-Date: Mon,  6 Jan 2025 16:16:00 +0100
-Message-ID: <20250106151134.590757025@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.10 037/138] of/irq: Fix using uninitialized variable @addr_len in API of_irq_parse_one()
+Date: Mon,  6 Jan 2025 16:16:01 +0100
+Message-ID: <20250106151134.627624112@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -49,35 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-commit 62e2a47ceab8f3f7d2e3f0e03fdd1c5e0059fd8b upstream.
+commit 0f7ca6f69354e0c3923bbc28c92d0ecab4d50a3e upstream.
 
-When the server is recalling a layout, we should ignore the count of
-outstanding layoutget calls, since the server is expected to return
-either NFS4ERR_RECALLCONFLICT or NFS4ERR_RETURNCONFLICT for as long as
-the recall is outstanding.
-Currently, we may end up livelocking, causing the layout to eventually
-be forcibly revoked.
+of_irq_parse_one() may use uninitialized variable @addr_len as shown below:
 
-Fixes: bf0291dd2267 ("pNFS: Ensure LAYOUTGET and LAYOUTRETURN are properly serialised")
+// @addr_len is uninitialized
+int addr_len;
+
+// This operation does not touch @addr_len if it fails.
+addr = of_get_property(device, "reg", &addr_len);
+
+// Use uninitialized @addr_len if the operation fails.
+if (addr_len > sizeof(addr_buf))
+	addr_len = sizeof(addr_buf);
+
+// Check the operation result here.
+if (addr)
+	memcpy(addr_buf, addr, addr_len);
+
+Fix by initializing @addr_len before the operation.
+
+Fixes: b739dffa5d57 ("of/irq: Prevent device address out-of-bounds read in interrupt map walk")
 Cc: stable@vger.kernel.org
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241209-of_irq_fix-v1-4-782f1419c8a1@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/pnfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/irq.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/nfs/pnfs.c
-+++ b/fs/nfs/pnfs.c
-@@ -1199,7 +1199,7 @@ pnfs_prepare_layoutreturn(struct pnfs_la
- 		enum pnfs_iomode *iomode)
- {
- 	/* Serialise LAYOUTGET/LAYOUTRETURN */
--	if (atomic_read(&lo->plh_outstanding) != 0)
-+	if (atomic_read(&lo->plh_outstanding) != 0 && lo->plh_return_seq == 0)
- 		return false;
- 	if (test_and_set_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags))
- 		return false;
+--- a/drivers/of/irq.c
++++ b/drivers/of/irq.c
+@@ -298,6 +298,7 @@ int of_irq_parse_one(struct device_node
+ 		return of_irq_parse_oldworld(device, index, out_irq);
+ 
+ 	/* Get the reg property (if any) */
++	addr_len = 0;
+ 	addr = of_get_property(device, "reg", &addr_len);
+ 
+ 	/* Prevent out-of-bounds read in case of longer interrupt parent address size */
 
 
