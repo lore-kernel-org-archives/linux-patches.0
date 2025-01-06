@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9902D156C5E;
-	Mon,  6 Jan 2025 15:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A0F14D28C;
+	Mon,  6 Jan 2025 15:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178057; cv=none; b=JNRg6htqfZBNdgd1Str1EjIDHG5Us25+gKQ/tz0zJYJbJqC/xtPomSomymtaKje7dSFlnmuiLo/x6dGQPOOVlCa0xTxdbBK4yJr54afIuJRstSa5WRglAg/uclJNVlc0/bTdfotV9/aQDu3AWuxKLvMnPa9vBls8BLBVQTGIJLk=
+	t=1736178061; cv=none; b=Xc8k1Q+//V3NWPYWYYU0nRdysA7nl62DJEd4wrDNpeJewIGUEVkHxcwrY6MD0reA067owooTD4C2SilGsSi49gPF2SgcnxMl0uc7DiLUR3LOW5bNo77SXsRZX3yJzgfgRQM7eBUv4ggaUqKkRHiE6zJviij30FUG179Tsct81XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178057; c=relaxed/simple;
-	bh=tWfOdCm46Ku3flze02GJx8ZWvB6lwLrcKOlMs0GXe7M=;
+	s=arc-20240116; t=1736178061; c=relaxed/simple;
+	bh=WXq8ZSSv45DBk4S/mVfJMPJ5pn94N2rkEzADTcBhUfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kzkSbuwSSazbJUYPq2bdYoBZdsKAa9s7SeuJC9TRgaFTZnb+5A3iylPXH/M9ntCQaWdN+SKB+0b0zPCaBDqS2a8OQCn31CQWJelXC36MXegWCP5PEv3H5KWwttb0T0uNGPd0CT4cnDbH1/pVDY0BLNrJ2ixxQOpjhFm6Z0rKTmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDRA7I3P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T5kenBag06TxbPCa9pVceyPRLeruQpmHzdcygAMl0YxylCrJWiCC22RIi3Cj2n+h64G9uSq0wCvb2XgaKhsSQbM1BQ/jGjK9iHQTX8u3ipekabeveQnMoIx15sH+7Zn9G+CF+RqPOE2COUxVjvct4K61zr6tuzNaUd2dIqvSCUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qF93mY/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDRA7I3P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DA0C4CED2;
-	Mon,  6 Jan 2025 15:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qF93mY/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35EA1C4CED2;
+	Mon,  6 Jan 2025 15:41:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178057;
-	bh=tWfOdCm46Ku3flze02GJx8ZWvB6lwLrcKOlMs0GXe7M=;
+	s=korg; t=1736178060;
+	bh=WXq8ZSSv45DBk4S/mVfJMPJ5pn94N2rkEzADTcBhUfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDRA7I3PkGyhQYo71Cx5btkibz+iF0JgoC4jbQeHcGIcVwRUHx7VeGjWZcMUOZgRN
-	 hjAQDxVyqa3zudM7FHp/L4Nrw0HcxRU4ru4uDOMJa9b6c3WhuapAXGgCdwiFZBPI7V
-	 GDdbiZY7NpJOkf63QacKGtyj7ojhY0KXM+NUS7fA=
+	b=qF93mY/VkjIga1jFGinaAF5TovGN5LFFsRMWcNGnlmit/xmz3hOvhyFaO57miepMO
+	 8w5GzKxGcDtNSeB8V7/n12A41AULQsJYEWdajDhdA+gFBKqbosIeqLlXQmbXf2CT50
+	 YEcv6lSm0F8rGkCIF2tstv2KxF1NykVrTVh/YgAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shailend Chand <shailend@google.com>,
 	Willem de Bruijn <willemb@google.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.12 146/156] gve: fix XDP allocation path in edge cases
-Date: Mon,  6 Jan 2025 16:17:12 +0100
-Message-ID: <20250106151147.227373805@linuxfoundation.org>
+Subject: [PATCH 6.12 147/156] gve: guard XDP xmit NDO on existence of xdp queues
+Date: Mon,  6 Jan 2025 16:17:13 +0100
+Message-ID: <20250106151147.264656389@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -55,49 +55,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Washington <joshwash@google.com>
 
-commit de63ac44a527b2c5067551dbd70d939fe151325a upstream.
+commit ff7c2dea9dd1a436fc79d6273adffdcc4a7ffea3 upstream.
 
-This patch fixes a number of consistency issues in the queue allocation
-path related to XDP.
+In GVE, dedicated XDP queues only exist when an XDP program is installed
+and the interface is up. As such, the NDO XDP XMIT callback should
+return early if either of these conditions are false.
 
-As it stands, the number of allocated XDP queues changes in three
-different scenarios.
-1) Adding an XDP program while the interface is up via
-   gve_add_xdp_queues
-2) Removing an XDP program while the interface is up via
-   gve_remove_xdp_queues
-3) After queues have been allocated and the old queue memory has been
-   removed in gve_queues_start.
+In the case of no loaded XDP program, priv->num_xdp_queues=0 which can
+cause a divide-by-zero error, and in the case of interface down,
+num_xdp_queues remains untouched to persist XDP queue count for the next
+interface up, but the TX pointer itself would be NULL.
 
-However, the requirement for the interface to be up for
-gve_(add|remove)_xdp_queues to be called, in conjunction with the fact
-that the number of queues stored in priv isn't updated until _after_ XDP
-queues have been allocated in the normal queue allocation path means
-that if an XDP program is added while the interface is down, XDP queues
-won't be added until the _second_ if_up, not the first.
+The XDP xmit callback also needs to synchronize with a device
+transitioning from open to close. This synchronization will happen via
+the GVE_PRIV_FLAGS_NAPI_ENABLED bit along with a synchronize_net() call,
+which waits for any RCU critical sections at call-time to complete.
 
-Given the expectation that the number of XDP queues is equal to the
-number of RX queues, scenario (3) has another problematic implication.
-When changing the number of queues while an XDP program is loaded, the
-number of XDP queues must be updated as well, as there is logic in the
-driver (gve_xdp_tx_queue_id()) which relies on every RX queue having a
-corresponding XDP TX queue. However, the number of XDP queues stored in
-priv would not be updated until _after_ a close/open leading to a
-mismatch in the number of XDP queues reported vs the number of XDP
-queues which actually exist after the queue count update completes.
-
-This patch remedies these issues by doing the following:
-1) The allocation config getter function is set up to retrieve the
-   _expected_ number of XDP queues to allocate instead of relying
-   on the value stored in `priv` which is only updated once the queues
-   have been allocated.
-2) When adjusting queues, XDP queues are adjusted to match the number of
-   RX queues when XDP is enabled. This only works in the case when
-   queues are live, so part (1) of the fix must still be available in
-   the case that queues are adjusted when there is an XDP program and
-   the interface is down.
-
-Fixes: 5f08cd3d6423 ("gve: Alloc before freeing when adjusting queues")
+Fixes: 39a7f4aa3e4a ("gve: Add XDP REDIRECT support for GQI-QPL format")
 Cc: stable@vger.kernel.org
 Signed-off-by: Joshua Washington <joshwash@google.com>
 Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
@@ -107,44 +81,37 @@ Reviewed-by: Willem de Bruijn <willemb@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_main.c |    3 +++
+ drivers/net/ethernet/google/gve/gve_tx.c   |    5 ++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
 --- a/drivers/net/ethernet/google/gve/gve_main.c
 +++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -930,11 +930,13 @@ static void gve_init_sync_stats(struct g
- static void gve_tx_get_curr_alloc_cfg(struct gve_priv *priv,
- 				      struct gve_tx_alloc_rings_cfg *cfg)
- {
-+	int num_xdp_queues = priv->xdp_prog ? priv->rx_cfg.num_queues : 0;
+@@ -1904,6 +1904,9 @@ static void gve_turndown(struct gve_priv
+ 
+ 	gve_clear_napi_enabled(priv);
+ 	gve_clear_report_stats(priv);
 +
- 	cfg->qcfg = &priv->tx_cfg;
- 	cfg->raw_addressing = !gve_is_qpl(priv);
- 	cfg->ring_size = priv->tx_desc_cnt;
- 	cfg->start_idx = 0;
--	cfg->num_rings = gve_num_tx_queues(priv);
-+	cfg->num_rings = priv->tx_cfg.num_queues + num_xdp_queues;
- 	cfg->tx = priv->tx;
++	/* Make sure that all traffic is finished processing. */
++	synchronize_net();
  }
  
-@@ -1843,6 +1845,7 @@ int gve_adjust_queues(struct gve_priv *p
- {
- 	struct gve_tx_alloc_rings_cfg tx_alloc_cfg = {0};
- 	struct gve_rx_alloc_rings_cfg rx_alloc_cfg = {0};
-+	int num_xdp_queues;
- 	int err;
+ static void gve_turnup(struct gve_priv *priv)
+--- a/drivers/net/ethernet/google/gve/gve_tx.c
++++ b/drivers/net/ethernet/google/gve/gve_tx.c
+@@ -837,9 +837,12 @@ int gve_xdp_xmit(struct net_device *dev,
+ 	struct gve_tx_ring *tx;
+ 	int i, err = 0, qid;
  
- 	gve_get_curr_alloc_cfgs(priv, &tx_alloc_cfg, &rx_alloc_cfg);
-@@ -1853,6 +1856,10 @@ int gve_adjust_queues(struct gve_priv *p
- 	rx_alloc_cfg.qcfg = &new_rx_config;
- 	tx_alloc_cfg.num_rings = new_tx_config.num_queues;
+-	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK))
++	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK) || !priv->xdp_prog)
+ 		return -EINVAL;
  
-+	/* Add dedicated XDP TX queues if enabled. */
-+	num_xdp_queues = priv->xdp_prog ? new_rx_config.num_queues : 0;
-+	tx_alloc_cfg.num_rings += num_xdp_queues;
++	if (!gve_get_napi_enabled(priv))
++		return -ENETDOWN;
 +
- 	if (netif_running(priv->dev)) {
- 		err = gve_adjust_config(priv, &tx_alloc_cfg, &rx_alloc_cfg);
- 		return err;
+ 	qid = gve_xdp_tx_queue_id(priv,
+ 				  smp_processor_id() % priv->num_xdp_queues);
+ 
 
 
