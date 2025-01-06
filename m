@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B7115252D;
-	Mon,  6 Jan 2025 15:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBA68634A;
+	Mon,  6 Jan 2025 15:22:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176918; cv=none; b=GwpbNR9RJiyyJQUvBfuBUVtlgUO31K4z0BR0MlkPpHc74bet1Ko4ucpjZSzj2Me5RU2Gy2TC7FmX62fCm9edPrj0AoUF02MrfBD+jc6gMwyDgqzWhhq1oG1zJwy8vd3uLMqErFBA3/bpSi8WHs276o6K5KoK1NsE+Bq98GAB9V0=
+	t=1736176921; cv=none; b=K5fmcqqyJDp8ZtUxMUbNBH2IUcxm78MjtJurnMseT5JzpNKp92gbNvFTkKZkHRjjpzcDSW79mBBfDltbzRCWWuHeiwoHhZbwCdh+hWFWS2/7rMMOIKOqgTq28Ec9osgtG5gybnWirdguN9u+7PfhxFUC5EoUnfPUUX1T9zjsjok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176918; c=relaxed/simple;
-	bh=kjDK/e+ucr5k0QtZzPUK9z9wSUO9YJjWI7RQjq0xNsg=;
+	s=arc-20240116; t=1736176921; c=relaxed/simple;
+	bh=VLfdelL64jX6mq3q8BxiKQxZ+KtrrDVp6+EeGXyNHAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bURjHJBQzMTSzzI0fRQ3dmBA5LV+rtJQ7mLGufCLq/838Xx/vEh2DU+ImUideSR08jm5loE4ZCKnTh9YsOKT8DJvYpyiZRJ/ULGjbK7DCITdvXIhFEDMrI8n0+NVcMHYIz2Zpgh/HJTpkjGDoL4no8JLqDv1nkAy/Cx2WgSivCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QK5XCKcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kr1mlBv49U+hJrdgmY4INaHOE2bRKte4Ih1uxQRQh+R2C7be3cl27GiVvxcZwQrtHB5ALCTi0RyU8PGBQHkUIWuIEz4iDrG38Bp3g+molLCtMD0wi+JwjiK7DJttZwLp2FMbS+g2V+fQHrXgNsm3XsLkp91Skobi0Tag7qk6sPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U1gXQxx2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QK5XCKcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5C1C4CED2;
-	Mon,  6 Jan 2025 15:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U1gXQxx2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43245C4CED2;
+	Mon,  6 Jan 2025 15:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176918;
-	bh=kjDK/e+ucr5k0QtZzPUK9z9wSUO9YJjWI7RQjq0xNsg=;
+	s=korg; t=1736176921;
+	bh=VLfdelL64jX6mq3q8BxiKQxZ+KtrrDVp6+EeGXyNHAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QK5XCKcT8DNSkfO8YygBUslv7Y97qw2drsimrzfa9mcF/KX8B/aYYPfo7oY/bq3SS
-	 RV5jpIoNYgJeoDNkarV8GmFG/uN1reQCRDeD+KenvHwxo+Py5MBY2w2O+b2Z57BT/a
-	 rnnkVoi28I+rf86m3hJY6+lWEZLvuutBjL3wX4pU=
+	b=U1gXQxx2KS92kkogtlLwAogebBxlXHlJkoxYkk3s6Kq+gbMhcrXiY4mudhMe1PLmV
+	 XGulkB4I5yz0mssJnjtU68t0u3KRp9YnAsVPiJmka1/k/zFwu/0OKI0hpnZxd5JEZu
+	 XXYSCyLLGJ9l2VhXooKRf9WcmJqyJdOUZmJ/m4qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b7cf50a0c173770dcb14@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 55/81] btrfs: flush delalloc workers queue before stopping cleaner kthread during unmount
-Date: Mon,  6 Jan 2025 16:16:27 +0100
-Message-ID: <20250106151131.514004559@linuxfoundation.org>
+	Pascal Hambourg <pascal@plouf.fr.eu.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 73/81] sky2: Add device ID 11ab:4373 for Marvell 88E8075
+Date: Mon,  6 Jan 2025 16:16:45 +0100
+Message-ID: <20250106151132.184584703@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -53,212 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Pascal Hambourg <pascal@plouf.fr.eu.org>
 
-[ Upstream commit f10bef73fb355e3fc85e63a50386798be68ff486 ]
+commit 03c8d0af2e409e15c16130b185e12b5efba0a6b9 upstream.
 
-During the unmount path, at close_ctree(), we first stop the cleaner
-kthread, using kthread_stop() which frees the associated task_struct, and
-then stop and destroy all the work queues. However after we stopped the
-cleaner we may still have a worker from the delalloc_workers queue running
-inode.c:submit_compressed_extents(), which calls btrfs_add_delayed_iput(),
-which in turn tries to wake up the cleaner kthread - which was already
-destroyed before, resulting in a use-after-free on the task_struct.
+A Marvell 88E8075 ethernet controller has this device ID instead of
+11ab:4370 and works fine with the sky2 driver.
 
-Syzbot reported this with the following stack traces:
-
-  BUG: KASAN: slab-use-after-free in __lock_acquire+0x78/0x2100 kernel/locking/lockdep.c:5089
-  Read of size 8 at addr ffff8880259d2818 by task kworker/u8:3/52
-
-  CPU: 1 UID: 0 PID: 52 Comm: kworker/u8:3 Not tainted 6.13.0-rc1-syzkaller-00002-gcdd30ebb1b9f #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-  Workqueue: btrfs-delalloc btrfs_work_helper
-  Call Trace:
-   <TASK>
-   __dump_stack lib/dump_stack.c:94 [inline]
-   dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
-   print_address_description mm/kasan/report.c:378 [inline]
-   print_report+0x169/0x550 mm/kasan/report.c:489
-   kasan_report+0x143/0x180 mm/kasan/report.c:602
-   __lock_acquire+0x78/0x2100 kernel/locking/lockdep.c:5089
-   lock_acquire+0x1ed/0x550 kernel/locking/lockdep.c:5849
-   __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
-   _raw_spin_lock_irqsave+0xd5/0x120 kernel/locking/spinlock.c:162
-   class_raw_spinlock_irqsave_constructor include/linux/spinlock.h:551 [inline]
-   try_to_wake_up+0xc2/0x1470 kernel/sched/core.c:4205
-   submit_compressed_extents+0xdf/0x16e0 fs/btrfs/inode.c:1615
-   run_ordered_work fs/btrfs/async-thread.c:288 [inline]
-   btrfs_work_helper+0x96f/0xc40 fs/btrfs/async-thread.c:324
-   process_one_work kernel/workqueue.c:3229 [inline]
-   process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3310
-   worker_thread+0x870/0xd30 kernel/workqueue.c:3391
-   kthread+0x2f0/0x390 kernel/kthread.c:389
-   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-   </TASK>
-
-  Allocated by task 2:
-   kasan_save_stack mm/kasan/common.c:47 [inline]
-   kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-   unpoison_slab_object mm/kasan/common.c:319 [inline]
-   __kasan_slab_alloc+0x66/0x80 mm/kasan/common.c:345
-   kasan_slab_alloc include/linux/kasan.h:250 [inline]
-   slab_post_alloc_hook mm/slub.c:4104 [inline]
-   slab_alloc_node mm/slub.c:4153 [inline]
-   kmem_cache_alloc_node_noprof+0x1d9/0x380 mm/slub.c:4205
-   alloc_task_struct_node kernel/fork.c:180 [inline]
-   dup_task_struct+0x57/0x8c0 kernel/fork.c:1113
-   copy_process+0x5d1/0x3d50 kernel/fork.c:2225
-   kernel_clone+0x223/0x870 kernel/fork.c:2807
-   kernel_thread+0x1bc/0x240 kernel/fork.c:2869
-   create_kthread kernel/kthread.c:412 [inline]
-   kthreadd+0x60d/0x810 kernel/kthread.c:767
-   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-  Freed by task 24:
-   kasan_save_stack mm/kasan/common.c:47 [inline]
-   kasan_save_track+0x3f/0x80 mm/kasan/common.c:68
-   kasan_save_free_info+0x40/0x50 mm/kasan/generic.c:582
-   poison_slab_object mm/kasan/common.c:247 [inline]
-   __kasan_slab_free+0x59/0x70 mm/kasan/common.c:264
-   kasan_slab_free include/linux/kasan.h:233 [inline]
-   slab_free_hook mm/slub.c:2338 [inline]
-   slab_free mm/slub.c:4598 [inline]
-   kmem_cache_free+0x195/0x410 mm/slub.c:4700
-   put_task_struct include/linux/sched/task.h:144 [inline]
-   delayed_put_task_struct+0x125/0x300 kernel/exit.c:227
-   rcu_do_batch kernel/rcu/tree.c:2567 [inline]
-   rcu_core+0xaaa/0x17a0 kernel/rcu/tree.c:2823
-   handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:554
-   run_ksoftirqd+0xca/0x130 kernel/softirq.c:943
-   smpboot_thread_fn+0x544/0xa30 kernel/smpboot.c:164
-   kthread+0x2f0/0x390 kernel/kthread.c:389
-   ret_from_fork+0x4b/0x80 arch/x86/kernel/process.c:147
-   ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
-
-  Last potentially related work creation:
-   kasan_save_stack+0x3f/0x60 mm/kasan/common.c:47
-   __kasan_record_aux_stack+0xac/0xc0 mm/kasan/generic.c:544
-   __call_rcu_common kernel/rcu/tree.c:3086 [inline]
-   call_rcu+0x167/0xa70 kernel/rcu/tree.c:3190
-   context_switch kernel/sched/core.c:5372 [inline]
-   __schedule+0x1803/0x4be0 kernel/sched/core.c:6756
-   __schedule_loop kernel/sched/core.c:6833 [inline]
-   schedule+0x14b/0x320 kernel/sched/core.c:6848
-   schedule_timeout+0xb0/0x290 kernel/time/sleep_timeout.c:75
-   do_wait_for_common kernel/sched/completion.c:95 [inline]
-   __wait_for_common kernel/sched/completion.c:116 [inline]
-   wait_for_common kernel/sched/completion.c:127 [inline]
-   wait_for_completion+0x355/0x620 kernel/sched/completion.c:148
-   kthread_stop+0x19e/0x640 kernel/kthread.c:712
-   close_ctree+0x524/0xd60 fs/btrfs/disk-io.c:4328
-   generic_shutdown_super+0x139/0x2d0 fs/super.c:642
-   kill_anon_super+0x3b/0x70 fs/super.c:1237
-   btrfs_kill_super+0x41/0x50 fs/btrfs/super.c:2112
-   deactivate_locked_super+0xc4/0x130 fs/super.c:473
-   cleanup_mnt+0x41f/0x4b0 fs/namespace.c:1373
-   task_work_run+0x24f/0x310 kernel/task_work.c:239
-   ptrace_notify+0x2d2/0x380 kernel/signal.c:2503
-   ptrace_report_syscall include/linux/ptrace.h:415 [inline]
-   ptrace_report_syscall_exit include/linux/ptrace.h:477 [inline]
-   syscall_exit_work+0xc7/0x1d0 kernel/entry/common.c:173
-   syscall_exit_to_user_mode_prepare kernel/entry/common.c:200 [inline]
-   __syscall_exit_to_user_mode_work kernel/entry/common.c:205 [inline]
-   syscall_exit_to_user_mode+0x24a/0x340 kernel/entry/common.c:218
-   do_syscall_64+0x100/0x230 arch/x86/entry/common.c:89
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-  The buggy address belongs to the object at ffff8880259d1e00
-   which belongs to the cache task_struct of size 7424
-  The buggy address is located 2584 bytes inside of
-   freed 7424-byte region [ffff8880259d1e00, ffff8880259d3b00)
-
-  The buggy address belongs to the physical page:
-  page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x259d0
-  head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-  memcg:ffff88802f4b56c1
-  flags: 0xfff00000000040(head|node=0|zone=1|lastcpupid=0x7ff)
-  page_type: f5(slab)
-  raw: 00fff00000000040 ffff88801bafe500 dead000000000100 dead000000000122
-  raw: 0000000000000000 0000000000040004 00000001f5000000 ffff88802f4b56c1
-  head: 00fff00000000040 ffff88801bafe500 dead000000000100 dead000000000122
-  head: 0000000000000000 0000000000040004 00000001f5000000 ffff88802f4b56c1
-  head: 00fff00000000003 ffffea0000967401 ffffffffffffffff 0000000000000000
-  head: 0000000000000008 0000000000000000 00000000ffffffff 0000000000000000
-  page dumped because: kasan: bad access detected
-  page_owner tracks the page as allocated
-  page last allocated via order 3, migratetype Unmovable, gfp_mask 0xd20c0(__GFP_IO|__GFP_FS|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP|__GFP_NOMEMALLOC), pid 12, tgid 12 (kworker/u8:1), ts 7328037942, free_ts 0
-   set_page_owner include/linux/page_owner.h:32 [inline]
-   post_alloc_hook+0x1f3/0x230 mm/page_alloc.c:1556
-   prep_new_page mm/page_alloc.c:1564 [inline]
-   get_page_from_freelist+0x3651/0x37a0 mm/page_alloc.c:3474
-   __alloc_pages_noprof+0x292/0x710 mm/page_alloc.c:4751
-   alloc_pages_mpol_noprof+0x3e8/0x680 mm/mempolicy.c:2265
-   alloc_slab_page+0x6a/0x140 mm/slub.c:2408
-   allocate_slab+0x5a/0x2f0 mm/slub.c:2574
-   new_slab mm/slub.c:2627 [inline]
-   ___slab_alloc+0xcd1/0x14b0 mm/slub.c:3815
-   __slab_alloc+0x58/0xa0 mm/slub.c:3905
-   __slab_alloc_node mm/slub.c:3980 [inline]
-   slab_alloc_node mm/slub.c:4141 [inline]
-   kmem_cache_alloc_node_noprof+0x269/0x380 mm/slub.c:4205
-   alloc_task_struct_node kernel/fork.c:180 [inline]
-   dup_task_struct+0x57/0x8c0 kernel/fork.c:1113
-   copy_process+0x5d1/0x3d50 kernel/fork.c:2225
-   kernel_clone+0x223/0x870 kernel/fork.c:2807
-   user_mode_thread+0x132/0x1a0 kernel/fork.c:2885
-   call_usermodehelper_exec_work+0x5c/0x230 kernel/umh.c:171
-   process_one_work kernel/workqueue.c:3229 [inline]
-   process_scheduled_works+0xa66/0x1840 kernel/workqueue.c:3310
-   worker_thread+0x870/0xd30 kernel/workqueue.c:3391
-  page_owner free stack trace missing
-
-  Memory state around the buggy address:
-   ffff8880259d2700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   ffff8880259d2780: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  >ffff8880259d2800: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                              ^
-   ffff8880259d2880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   ffff8880259d2900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ==================================================================
-
-Fix this by flushing the delalloc workers queue before stopping the
-cleaner kthread.
-
-Reported-by: syzbot+b7cf50a0c173770dcb14@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/674ed7e8.050a0220.48a03.0031.GAE@google.com/
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pascal Hambourg <pascal@plouf.fr.eu.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/10165a62-99fb-4be6-8c64-84afd6234085@plouf.fr.eu.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/marvell/sky2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index b7ec38f7e4b9..30fe5ebc3650 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -4651,6 +4651,15 @@ void __cold close_ctree(struct btrfs_fs_info *fs_info)
- 	 * already the cleaner, but below we run all pending delayed iputs.
- 	 */
- 	btrfs_flush_workqueue(fs_info->fixup_workers);
-+	/*
-+	 * Similar case here, we have to wait for delalloc workers before we
-+	 * proceed below and stop the cleaner kthread, otherwise we trigger a
-+	 * use-after-tree on the cleaner kthread task_struct when a delalloc
-+	 * worker running submit_compressed_extents() adds a delayed iput, which
-+	 * does a wake up on the cleaner kthread, which was already freed below
-+	 * when we call kthread_stop().
-+	 */
-+	btrfs_flush_workqueue(fs_info->delalloc_workers);
- 
- 	/*
- 	 * After we parked the cleaner kthread, ordered extents may have
--- 
-2.39.5
-
+--- a/drivers/net/ethernet/marvell/sky2.c
++++ b/drivers/net/ethernet/marvell/sky2.c
+@@ -130,6 +130,7 @@ static const struct pci_device_id sky2_i
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x436C) }, /* 88E8072 */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x436D) }, /* 88E8055 */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x4370) }, /* 88E8075 */
++	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x4373) }, /* 88E8075 */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x4380) }, /* 88E8057 */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x4381) }, /* 88E8059 */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_MARVELL, 0x4382) }, /* 88E8079 */
 
 
