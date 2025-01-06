@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1064165F1F;
-	Mon,  6 Jan 2025 15:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E5F1DDA2E;
+	Mon,  6 Jan 2025 15:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178300; cv=none; b=dbc2Yn8hm7RUEPCrr/1ifLdbyeFQ/1q0RnPb8g+RHj8QO7kDPa2St8QYPGmFVNBSR4XNvFw1+mG9rXuXLPeBjE+oLYC5NE3VjUbdkjBqWk+XlYu7eq8uR7zwIkznCNexll//3cyIGNSQQUOV6CNpOM1Ywq5EMKaRc4pe1nxz8Yg=
+	t=1736178304; cv=none; b=PKPK8vUrvCBScvuy1x7v4vnVSxrF5N/W9gu3HAaYA8Y72YkmVnkS3uY14vTV51YM0JzkTGTRSBot34UfcLLLa5D28GE+aVYEUuy8VK6OT1NoSy6okZwun4fp5WZ2Eilgl7RFJlK+QvEA9GlnaSxRVAwGh8W/wZn89EghxiHWvFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178300; c=relaxed/simple;
-	bh=c73qR9VOS9SF/xIZlVbgWWlKaBjK2KF/kptHgr0uZ2I=;
+	s=arc-20240116; t=1736178304; c=relaxed/simple;
+	bh=FnCt3aD5DFsQUuGLGdKSLn5LwaDMc9MjWB9hHwzdyc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=igO6oEokxAKEK98qbWQBBB0B8q+QHF4lxRtpL3U03Ys+xnBwROQ/BiDFbRTXWHJAzZI3ScBulVOIVft8vZKpBks/uTlhcTTcBE+XsBC/RJxpip++nW5FsI45kn15OmxnRb8KK+6pmBxCYvaQcXHuwh8aYYiGEuYxvuWrZ6cdj5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zufBtSEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sV4cgndUz5DUW4Q6Ka2sMdsPmNlyReVize3SGzYmgy6clFZIfVPGGhl+3ldL/vxsu8fYkrTEltPJtjC0V05/hIfbsZJiA7dB9u91rs12GROaWWYcoOR9chCzajwlo8F/qfl9aISNNRJosM8XEUjcV/S+/jMRXO28H5vuPfK5tQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EcIXDNwj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zufBtSEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05601C4CED6;
-	Mon,  6 Jan 2025 15:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EcIXDNwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E15C4CED2;
+	Mon,  6 Jan 2025 15:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178300;
-	bh=c73qR9VOS9SF/xIZlVbgWWlKaBjK2KF/kptHgr0uZ2I=;
+	s=korg; t=1736178303;
+	bh=FnCt3aD5DFsQUuGLGdKSLn5LwaDMc9MjWB9hHwzdyc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zufBtSEy3oQ4sJ2EYcstEOfkj1pc1n4mm1ba91R3Js9YxVi4AqPRUF17xxulW3tiS
-	 2GXtwtz2cGeF0z8CgFfdmiYLwUAxVT3fpJG9mfAMcQoL8pvWOlq+jZEU0Pn1dSCQXg
-	 4E3mp99/i6f0OpUPauwjFfpghu7TiiyhUlwvI5mg=
+	b=EcIXDNwj6Qvu+7lTds99pPjKIcw2Scp2vfLZrZEnuS2qth/wcKFWVhhzsjzOmPY7/
+	 7GNDZaz9O9kdyj/O9KBYvM1EV2Sy9WCyazNdXb0FOJ2lmqQzXnFz9Ik6ZY96OmI9kU
+	 urZlyBLuWD3ySoJ2b0rlQdB3xiCccRCYMrKws0mA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Vasily Averin <vasily.averin@linux.dev>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Subject: [PATCH 5.10 072/138] ipv6: fix possible UAF in ip6_finish_output2()
-Date: Mon,  6 Jan 2025 16:16:36 +0100
-Message-ID: <20250106151135.960460894@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 073/138] bpf: Check validity of link->type in bpf_link_show_fdinfo()
+Date: Mon,  6 Jan 2025 16:16:37 +0100
+Message-ID: <20250106151135.998158145@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -54,50 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit e891b36de161fcd96f12ff83667473e5067b9037 ]
+commit 8421d4c8762bd022cb491f2f0f7019ef51b4f0a7 upstream.
 
-If skb_expand_head() returns NULL, skb has been freed
-and associated dst/idev could also have been freed.
+If a newly-added link type doesn't invoke BPF_LINK_TYPE(), accessing
+bpf_link_type_strs[link->type] may result in an out-of-bounds access.
 
-We need to hold rcu_read_lock() to make sure the dst and
-associated idev are alive.
+To spot such missed invocations early in the future, checking the
+validity of link->type in bpf_link_show_fdinfo() and emitting a warning
+when such invocations are missed.
 
-Fixes: 5796015fa968 ("ipv6: allocate enough headroom in ip6_finish_output2()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Vasily Averin <vasily.averin@linux.dev>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20240820160859.3786976-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-(cherry picked from commit e891b36de161fcd96f12ff83667473e5067b9037)
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241024013558.1135167-3-houtao@huaweicloud.com
+[ shung-hsi.yu: break up existing seq_printf() call since commit 68b04864ca42
+  ("bpf: Create links for BPF struct_ops maps.") is not present ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_output.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/bpf/syscall.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
-index a8475848d038..48f926157ef8 100644
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -69,11 +69,15 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index fbe7f8e2b022..b5d9bba73834 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2427,16 +2427,21 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
+ {
+ 	const struct bpf_link *link = filp->private_data;
+ 	const struct bpf_prog *prog = link->prog;
++	enum bpf_link_type type = link->type;
+ 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
  
- 	/* Be paranoid, rather than too clever. */
- 	if (unlikely(hh_len > skb_headroom(skb)) && dev->header_ops) {
-+		/* Make sure idev stays alive */
-+		rcu_read_lock();
- 		skb = skb_expand_head(skb, hh_len);
- 		if (!skb) {
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
-+			rcu_read_unlock();
- 			return -ENOMEM;
- 		}
-+		rcu_read_unlock();
- 	}
- 
- 	hdr = ipv6_hdr(skb);
++	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
++		seq_printf(m, "link_type:\t%s\n", bpf_link_type_strs[type]);
++	} else {
++		WARN_ONCE(1, "missing BPF_LINK_TYPE(...) for link type %u\n", type);
++		seq_printf(m, "link_type:\t<%u>\n", type);
++	}
++	seq_printf(m, "link_id:\t%u\n", link->id);
++
+ 	bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
+ 	seq_printf(m,
+-		   "link_type:\t%s\n"
+-		   "link_id:\t%u\n"
+ 		   "prog_tag:\t%s\n"
+ 		   "prog_id:\t%u\n",
+-		   bpf_link_type_strs[link->type],
+-		   link->id,
+ 		   prog_tag,
+ 		   prog->aux->id);
+ 	if (link->ops->show_fdinfo)
 -- 
 2.39.5
 
