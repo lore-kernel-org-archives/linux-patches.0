@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2A573451;
-	Mon,  6 Jan 2025 15:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB35A1DC9BC;
+	Mon,  6 Jan 2025 15:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177476; cv=none; b=aaF9J7a+eUFnx25/5Wz+RaH6R0JOz2fkbwNtt1KURudRgfawuoKbbwo/XH1oLurvOFzstXvh9fx0hEVR+UZcsKetjA7fz8iDuRgEjNsWdgqiWUHZ/rk8qk6SjLVLuJLLzWbqzOFq2/y8SsXzKiCtcxhNa3tJAGMA8Gj63wD1oV0=
+	t=1736177480; cv=none; b=n/j6y17wb4xvWPWyKbmA/Q3PetCNORBFKKk80hAFZ1DpdB+WISi2fvj4WNdjJgPQBFWF6hyzv4st/V+rIqYP3AbNwFxb8M5OXSIy9Hvngsm+0lFyIycVxYrtmffPnKMHuKMx235R+QCkIdbw2HzR8VN/+vNAPmXTZunZL0KsOfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177476; c=relaxed/simple;
-	bh=UeS1ENEZfRuIAj1HnGOPGviUBGwAxN9ioLCWcbvQLbM=;
+	s=arc-20240116; t=1736177480; c=relaxed/simple;
+	bh=BtmpgpG6aTgmrD/VfyF+IZ/4cEyAh9REbD5EDm7JcPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q27V682bGddaRZT1+F5YO5W+4c+G5xKHwDlYM+m3Ioe8cNd+2punHeILktkJad7EoB2SsQQh58K3Zr7briDUQB7rdSzsxsSfQDZhAWc1FVPxqYWym6uis0PsvPik/i/yXUIsakgXMU3ZJhbUW5/oJfDVx5Js+bcB4OWlAtmbRN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ky+YnfeV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=talCiabaSi4O9+zkjM6lDg0hAPkw8sDpL7lmuWQgkKlqoUCm6YtYW3/kekcuBZr1fsZBqzIeVhxVhupGDcj79YpmDHezjHcgZDZHZR1Kfi3Sk7RO1YLAps6a+mAiLubT8spnbRWCQw95e5baLWu4atgfv+Gtyo8qGKCZfD9ZwJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbtJwow8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ky+YnfeV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A68C4CED2;
-	Mon,  6 Jan 2025 15:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbtJwow8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83821C4CED2;
+	Mon,  6 Jan 2025 15:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177476;
-	bh=UeS1ENEZfRuIAj1HnGOPGviUBGwAxN9ioLCWcbvQLbM=;
+	s=korg; t=1736177480;
+	bh=BtmpgpG6aTgmrD/VfyF+IZ/4cEyAh9REbD5EDm7JcPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ky+YnfeVh0c1KKdE9LZFdBof2h+ugg4UBwutrYIGth8mn8k9i/VhqFOldI3xM9trU
-	 jdpJmc9lgrEAzjGD23h6pZ6kTwtMhSxVTb9NUfnWbkhfdjM9CbyNeEBraLtqbzJea3
-	 P1rmjMJtFYXggfteq1qdWwXt7Jk4eFNtyvD/kryI=
+	b=RbtJwow8Q0wdBm9ykNuDwdLjbLQVVa2Hv+7Mq9pJds7ewpboKXA/WOwtKTA7ctKKO
+	 9hKbIMc4Dx8CZ5Cpj/5uUZHagflJxP5gTZC1AqkMDbbFb0w0H6aHkHYlgaIt547kT8
+	 Tn11mhqPQN49U8CLpFI43zRMSlRBPsP04u8IF54k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Marushkin <hfggklm@gmail.com>,
-	Ilya Shchipletsov <rabbelkin@mail.ru>,
+	syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Tom Herbert <tom@herbertland.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 158/222] netrom: check buffer length before accessing it
-Date: Mon,  6 Jan 2025 16:16:02 +0100
-Message-ID: <20250106151156.743452864@linuxfoundation.org>
+Subject: [PATCH 6.6 176/222] ila: serialize calls to nf_register_net_hooks()
+Date: Mon,  6 Jan 2025 16:16:20 +0100
+Message-ID: <20250106151157.426596975@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,103 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Shchipletsov <rabbelkin@mail.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a4fd163aed2edd967a244499754dec991d8b4c7d ]
+[ Upstream commit 260466b576bca0081a7d4acecc8e93687aa22d0e ]
 
-Syzkaller reports an uninit value read from ax25cmp when sending raw message
-through ieee802154 implementation.
+syzbot found a race in ila_add_mapping() [1]
 
-=====================================================
-BUG: KMSAN: uninit-value in ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
- ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
- nr_dev_get+0x20e/0x450 net/netrom/nr_route.c:601
- nr_route_frame+0x1a2/0xfc0 net/netrom/nr_route.c:774
- nr_xmit+0x5a/0x1c0 net/netrom/nr_dev.c:144
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3548 [inline]
- dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3564
- __dev_queue_xmit+0x33b8/0x5130 net/core/dev.c:4349
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- raw_sendmsg+0x654/0xc10 net/ieee802154/socket.c:299
- ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+commit 031ae72825ce ("ila: call nf_unregister_net_hooks() sooner")
+attempted to fix a similar issue.
 
-Uninit was created at:
- slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
- kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
- __alloc_skb+0x318/0x740 net/core/skbuff.c:651
- alloc_skb include/linux/skbuff.h:1286 [inline]
- alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
- sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2780
- sock_alloc_send_skb include/net/sock.h:1884 [inline]
- raw_sendmsg+0x36d/0xc10 net/ieee802154/socket.c:282
- ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+Looking at the syzbot repro, we have concurrent ILA_CMD_ADD commands.
 
-CPU: 0 PID: 5037 Comm: syz-executor166 Not tainted 6.7.0-rc7-syzkaller-00003-gfbafc3e621c3 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-=====================================================
+Add a mutex to make sure at most one thread is calling nf_register_net_hooks().
 
-This issue occurs because the skb buffer is too small, and it's actual
-allocation is aligned. This hides an actual issue, which is that nr_route_frame
-does not validate the buffer size before using it.
+[1]
+ BUG: KASAN: slab-use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+ BUG: KASAN: slab-use-after-free in __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
+Read of size 4 at addr ffff888028f40008 by task dhcpcd/5501
 
-Fix this issue by checking skb->len before accessing any fields in skb->data.
+CPU: 1 UID: 0 PID: 5501 Comm: dhcpcd Not tainted 6.13.0-rc4-syzkaller-00054-gd6ef8b40d075 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <IRQ>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0xc3/0x620 mm/kasan/report.c:489
+  kasan_report+0xd9/0x110 mm/kasan/report.c:602
+  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+  __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
+  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
+  rhashtable_lookup_fast include/linux/rhashtable.h:672 [inline]
+  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:127 [inline]
+  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
+  ila_nf_input+0x1ee/0x620 net/ipv6/ila/ila_xlat.c:185
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xbb/0x200 net/netfilter/core.c:626
+  nf_hook.constprop.0+0x42e/0x750 include/linux/netfilter.h:269
+  NF_HOOK include/linux/netfilter.h:312 [inline]
+  ipv6_rcv+0xa4/0x680 net/ipv6/ip6_input.c:309
+  __netif_receive_skb_one_core+0x12e/0x1e0 net/core/dev.c:5672
+  __netif_receive_skb+0x1d/0x160 net/core/dev.c:5785
+  process_backlog+0x443/0x15f0 net/core/dev.c:6117
+  __napi_poll.constprop.0+0xb7/0x550 net/core/dev.c:6883
+  napi_poll net/core/dev.c:6952 [inline]
+  net_rx_action+0xa94/0x1010 net/core/dev.c:7074
+  handle_softirqs+0x213/0x8f0 kernel/softirq.c:561
+  __do_softirq kernel/softirq.c:595 [inline]
+  invoke_softirq kernel/softirq.c:435 [inline]
+  __irq_exit_rcu+0x109/0x170 kernel/softirq.c:662
+  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+  sysvec_apic_timer_interrupt+0xa4/0xc0 arch/x86/kernel/apic/apic.c:1049
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Nikita Marushkin <hfggklm@gmail.com>
-Signed-off-by: Nikita Marushkin <hfggklm@gmail.com>
-Signed-off-by: Ilya Shchipletsov <rabbelkin@mail.ru>
-Link: https://patch.msgid.link/20241219082308.3942-1-rabbelkin@mail.ru
+Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
+Reported-by: syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6772c9ae.050a0220.2f3838.04c7.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Florian Westphal <fw@strlen.de>
+Cc: Tom Herbert <tom@herbertland.com>
+Link: https://patch.msgid.link/20241230162849.2795486-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ipv6/ila/ila_xlat.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index bd2b17b219ae..0b270893ee14 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -754,6 +754,12 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	int ret;
- 	struct sk_buff *skbn;
+diff --git a/net/ipv6/ila/ila_xlat.c b/net/ipv6/ila/ila_xlat.c
+index 534a4498e280..fff09f5a796a 100644
+--- a/net/ipv6/ila/ila_xlat.c
++++ b/net/ipv6/ila/ila_xlat.c
+@@ -200,6 +200,8 @@ static const struct nf_hook_ops ila_nf_hook_ops[] = {
+ 	},
+ };
  
-+	/*
-+	 * Reject malformed packets early. Check that it contains at least 2
-+	 * addresses and 1 byte more for Time-To-Live
-+	 */
-+	if (skb->len < 2 * sizeof(ax25_address) + 1)
-+		return 0;
++static DEFINE_MUTEX(ila_mutex);
++
+ static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
+ {
+ 	struct ila_net *ilan = net_generic(net, ila_net_id);
+@@ -207,16 +209,20 @@ static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
+ 	spinlock_t *lock = ila_get_lock(ilan, xp->ip.locator_match);
+ 	int err = 0, order;
  
- 	nr_src  = (ax25_address *)(skb->data + 0);
- 	nr_dest = (ax25_address *)(skb->data + 7);
+-	if (!ilan->xlat.hooks_registered) {
++	if (!READ_ONCE(ilan->xlat.hooks_registered)) {
+ 		/* We defer registering net hooks in the namespace until the
+ 		 * first mapping is added.
+ 		 */
+-		err = nf_register_net_hooks(net, ila_nf_hook_ops,
+-					    ARRAY_SIZE(ila_nf_hook_ops));
++		mutex_lock(&ila_mutex);
++		if (!ilan->xlat.hooks_registered) {
++			err = nf_register_net_hooks(net, ila_nf_hook_ops,
++						ARRAY_SIZE(ila_nf_hook_ops));
++			if (!err)
++				WRITE_ONCE(ilan->xlat.hooks_registered, true);
++		}
++		mutex_unlock(&ila_mutex);
+ 		if (err)
+ 			return err;
+-
+-		ilan->xlat.hooks_registered = true;
+ 	}
+ 
+ 	ila = kzalloc(sizeof(*ila), GFP_KERNEL);
 -- 
 2.39.5
 
