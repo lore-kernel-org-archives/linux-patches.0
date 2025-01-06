@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD54F146D6B;
-	Mon,  6 Jan 2025 15:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A05158DC5;
+	Mon,  6 Jan 2025 15:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177229; cv=none; b=TI5v++wREPXF3oBQ41uZxJylLAalT4NbSDp4vt+Nl9yFh779xtQ9VPgwAgrkYYyyN8Kz1D903NQk9Q0ffSYAxQjV9O8PLww+2MNzBhCIkMFOlRKvBDfVihExOpFzgDJb2jqsgjkW1luREjFdL3PmzIWmvoCzmTmAMyK6kVvD/EY=
+	t=1736177232; cv=none; b=n4p5+vJui+Oej8KXJaMk+pntJ2QmM1L4AB6Ks9/TpGsg+t0aCIwVZ9hpiNK23vYFKVYkPNybfVkvGpCmBaySbtHL4sXgWmLgHILli6Fdvt1Z1pGAlxT0OPHiiMGpK5dwRNNp17sLhepD9JVy9pupkCHL1b9JzR3zqKlpEUfCjBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177229; c=relaxed/simple;
-	bh=0nZzcW+NKu3IAyR93dr2ebOP5UXptWyX8oG8Ovw7gpY=;
+	s=arc-20240116; t=1736177232; c=relaxed/simple;
+	bh=e2V1pPi16vYLXtTaHqldlYjrS77pt1ahuLDjeHyyJTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYAL59ZyuvnNPyZ2NOhIrBSHU4IoHzsUMR6o4bXvVaHQE32n/wi5OVFxYCQJOxKcCFmY7PR+f553xM26y5wcWIBC54VA/nczfB1EaGItkLS1vXVMoc7DdtL+8lRjcjtlgEi1+347AMOB+ZbefwejYyj9XKA9A0l1KSLpRLv9iIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hfEu6hsO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjVXt9Pi0HpIHwpE7NFF8gYF/qJB5bJ9Pk9zf7lhmrdLRG1L7F3w50rXMLLg6uETv5wQBdya1i3ZxsXajoLnMFYtcJaZ2kUVzCQjNBNHVmO3dys6hFmRncEmufkuQ8Vwr1evAOZHk+F7S6/3zWVFEAMNs9AFxPcxas8Y8XfxA/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp2JnUsQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hfEu6hsO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60BDC4CEE3;
-	Mon,  6 Jan 2025 15:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp2JnUsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BD0C4CED2;
+	Mon,  6 Jan 2025 15:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177229;
-	bh=0nZzcW+NKu3IAyR93dr2ebOP5UXptWyX8oG8Ovw7gpY=;
+	s=korg; t=1736177232;
+	bh=e2V1pPi16vYLXtTaHqldlYjrS77pt1ahuLDjeHyyJTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hfEu6hsO4JJpKwS+qLDeh62WDBve4hXkbNOphpvyiYjL/mCHmLEEpv5f2DXg+Kuy0
-	 3T8DuvTfOIvZ8S8R8E44SqjwtWCNmHH8BM5lyGR5olLHZ8cXhu+Ao00R+g3y3e8tMj
-	 RzlGka1RrXdJfXsz+cMY/zlDaZUzF0g3GOFZuVxI=
+	b=xp2JnUsQtqcm0qBYwnWXgxxtHBnlS3CbFNRUg7ykFMURdV33kL9rH06W7xrAASCdS
+	 fEpsa6AwGMb+EP90nLLdBKjdAs8fXit1uoiVrzWEH3KsvOKMLXNtMOtxVYa10YPg2w
+	 6JRIe1LVvrRDbLQzyZ48ADA7KJsZDT7Zmk/YaqXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Heikki Krogerus <heikki.krogeurs@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 063/222] usb: typec: ucsi: add callback for connector status updates
-Date: Mon,  6 Jan 2025 16:14:27 +0100
-Message-ID: <20250106151152.993794503@linuxfoundation.org>
+Subject: [PATCH 6.6 064/222] usb: typec: ucsi: glink: move GPIO reading into connector_status callback
+Date: Mon,  6 Jan 2025 16:14:28 +0100
+Message-ID: <20250106151153.030448892@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,79 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 24bce22d09ec8e67022aab9a888acb56fb7a996a ]
+[ Upstream commit 76716fd5bf09725c2c6825264147f16c21e56853 ]
 
-Allow UCSI glue driver to perform addtional work to update connector
-status. For example, it might check the cable orientation.  This call is
-performed after reading new connector statatus, so the platform driver
-can peek at new connection status bits.
+To simplify the platform code move Type-C orientation handling into the
+connector_status callback. As it is called both during connector
+registration and on connector change events, duplicated code from
+pmic_glink_ucsi_register() can be dropped.
 
-The callback is called both when registering the port and when the
-connector change event is being handled.
+Also this moves operations that can sleep into a worker thread,
+removing the only sleeping operation from pmic_glink_ucsi_notify().
 
+Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240411-ucsi-orient-aware-v2-1-d4b1cb22a33f@linaro.org
+Reviewed-by: Heikki Krogerus <heikki.krogeurs@linux.intel.com>
+Link: https://lore.kernel.org/r/20240411-ucsi-orient-aware-v2-2-d4b1cb22a33f@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: de9df030ccb5 ("usb: typec: ucsi: glink: be more precise on orientation-aware ports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
- drivers/usb/typec/ucsi/ucsi.h | 3 +++
- 2 files changed, 9 insertions(+)
+ drivers/usb/typec/ucsi/ucsi_glink.c | 48 ++++++++++++-----------------
+ 1 file changed, 20 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index f6fb5575d4f0..3f7039a711c7 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -903,6 +903,9 @@ static void ucsi_handle_connector_change(struct work_struct *work)
+diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+index 94f2df02f06e..4c9352cdd641 100644
+--- a/drivers/usb/typec/ucsi/ucsi_glink.c
++++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+@@ -186,10 +186,28 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
+ 	return ret;
+ }
  
- 	trace_ucsi_connector_change(con->num, &con->status);
- 
-+	if (ucsi->ops->connector_status)
-+		ucsi->ops->connector_status(con);
++static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
++{
++	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
++	int orientation;
 +
- 	role = !!(con->status.flags & UCSI_CONSTAT_PWR_DIR);
- 
- 	if (con->status.change & UCSI_CONSTAT_POWER_DIR_CHANGE) {
-@@ -1322,6 +1325,9 @@ static int ucsi_register_port(struct ucsi *ucsi, struct ucsi_connector *con)
- 	}
- 	ret = 0; /* ucsi_send_command() returns length on success */
- 
-+	if (ucsi->ops->connector_status)
-+		ucsi->ops->connector_status(con);
++	if (con->num >= PMIC_GLINK_MAX_PORTS ||
++	    !ucsi->port_orientation[con->num - 1])
++		return;
 +
- 	switch (UCSI_CONSTAT_PARTNER_TYPE(con->status.flags)) {
- 	case UCSI_CONSTAT_PARTNER_TYPE_UFP:
- 	case UCSI_CONSTAT_PARTNER_TYPE_CABLE_AND_UFP:
-diff --git a/drivers/usb/typec/ucsi/ucsi.h b/drivers/usb/typec/ucsi/ucsi.h
-index 42c60eba5fb6..3d23b52cf5a9 100644
---- a/drivers/usb/typec/ucsi/ucsi.h
-+++ b/drivers/usb/typec/ucsi/ucsi.h
-@@ -15,6 +15,7 @@
- 
- struct ucsi;
- struct ucsi_altmode;
-+struct ucsi_connector;
- struct dentry;
- 
- /* UCSI offsets (Bytes) */
-@@ -52,6 +53,7 @@ struct dentry;
-  * @sync_write: Blocking write operation
-  * @async_write: Non-blocking write operation
-  * @update_altmodes: Squashes duplicate DP altmodes
-+ * @connector_status: Updates connector status, called holding connector lock
-  *
-  * Read and write routines for UCSI interface. @sync_write must wait for the
-  * Command Completion Event from the PPM before returning, and @async_write must
-@@ -66,6 +68,7 @@ struct ucsi_operations {
- 			   const void *val, size_t val_len);
- 	bool (*update_altmodes)(struct ucsi *ucsi, struct ucsi_altmode *orig,
- 				struct ucsi_altmode *updated);
-+	void (*connector_status)(struct ucsi_connector *con);
++	orientation = gpiod_get_value(ucsi->port_orientation[con->num - 1]);
++	if (orientation >= 0) {
++		typec_switch_set(ucsi->port_switch[con->num - 1],
++				 orientation ? TYPEC_ORIENTATION_REVERSE
++				 : TYPEC_ORIENTATION_NORMAL);
++	}
++}
++
+ static const struct ucsi_operations pmic_glink_ucsi_ops = {
+ 	.read = pmic_glink_ucsi_read,
+ 	.sync_write = pmic_glink_ucsi_sync_write,
+-	.async_write = pmic_glink_ucsi_async_write
++	.async_write = pmic_glink_ucsi_async_write,
++	.connector_status = pmic_glink_ucsi_connector_status,
  };
  
- struct ucsi *ucsi_create(struct device *dev, const struct ucsi_operations *ops);
+ static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
+@@ -228,20 +246,8 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+ 	}
+ 
+ 	con_num = UCSI_CCI_CONNECTOR(cci);
+-	if (con_num) {
+-		if (con_num <= PMIC_GLINK_MAX_PORTS &&
+-		    ucsi->port_orientation[con_num - 1]) {
+-			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
+-
+-			if (orientation >= 0) {
+-				typec_switch_set(ucsi->port_switch[con_num - 1],
+-						 orientation ? TYPEC_ORIENTATION_REVERSE
+-							     : TYPEC_ORIENTATION_NORMAL);
+-			}
+-		}
+-
++	if (con_num)
+ 		ucsi_connector_change(ucsi->ucsi, con_num);
+-	}
+ 
+ 	if (ucsi->sync_pending &&
+ 		   (cci & (UCSI_CCI_ACK_COMPLETE | UCSI_CCI_COMMAND_COMPLETE))) {
+@@ -252,20 +258,6 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
+ static void pmic_glink_ucsi_register(struct work_struct *work)
+ {
+ 	struct pmic_glink_ucsi *ucsi = container_of(work, struct pmic_glink_ucsi, register_work);
+-	int orientation;
+-	int i;
+-
+-	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
+-		if (!ucsi->port_orientation[i])
+-			continue;
+-		orientation = gpiod_get_value(ucsi->port_orientation[i]);
+-
+-		if (orientation >= 0) {
+-			typec_switch_set(ucsi->port_switch[i],
+-					 orientation ? TYPEC_ORIENTATION_REVERSE
+-					     : TYPEC_ORIENTATION_NORMAL);
+-		}
+-	}
+ 
+ 	ucsi_register(ucsi->ucsi);
+ }
 -- 
 2.39.5
 
