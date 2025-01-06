@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DE61422DD;
-	Mon,  6 Jan 2025 15:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31A11422DD;
+	Mon,  6 Jan 2025 15:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178262; cv=none; b=ndVsTG/i8GK3H2bgZSG0Lk7yls90W/pN43syyYnIdg96JUxtYYT5II/du5/BOOiq/z0SEzinIElXVx2qBG8l64fsNAWVUYImr3uCCcp43kSL3rRvcQHsquklgf8UYERKDaaAK3BKMHx8pEuYFV4g+D2I13hSW9ANavRhWnpEa6g=
+	t=1736178265; cv=none; b=FBXN8b7GKaZz/dwFUBaV5gqJkAdjye6DX/asNfaJUmU4+fa3e9qogvqqehKsoV0Iy4VBSddYuiEotfLMVVYQC0/Shtwc2OaSP5JCdwWsY08z3jwMiEQ0CJwS80GRzM548n2r8BDx1xvrZasLkufhUZLmqPdAr1BaySO5jiovC/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178262; c=relaxed/simple;
-	bh=D1QCr3MVALaYdh/8VEgMbVSOFCtGfmYaHekajkLgsgg=;
+	s=arc-20240116; t=1736178265; c=relaxed/simple;
+	bh=HiAoptANd6z++l4LfwqFo9luHBVeFptZGAO06L+Rxm4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhsLUMU5k6FJjO7WrfDukXE44XrRySF4Swb3NnrILk53pRUzXYkpkk5ApDbg6J6GRpcBr+I7EVySvjMtobSMS0jt9qXxwKDgbEy3S0kHgGHgEquMQmJAmVDhapR8elPO3GjZXqnTgu54bSboIAmTwGVs3iivyWR7Yv5j6JnsguU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amVu90Nh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzvxnrbnINz70/cAvqvclJ8IpgNhFKmh9mzjYu88xPQqTBntBl8uhFWbT3bDpYjik+aEuzu5ok4LeBNNONnlp7drzma0RY+K2kfcm7GXN/Z9h8d2DQJPuTJZG/qPn85OQZgIOW+IrMFXGkIFw7z4C0N6gyQKBXuv/aXjIf/NDTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JMSRLZOU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amVu90Nh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E355C4CED2;
-	Mon,  6 Jan 2025 15:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JMSRLZOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B345C4CED2;
+	Mon,  6 Jan 2025 15:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178261;
-	bh=D1QCr3MVALaYdh/8VEgMbVSOFCtGfmYaHekajkLgsgg=;
+	s=korg; t=1736178264;
+	bh=HiAoptANd6z++l4LfwqFo9luHBVeFptZGAO06L+Rxm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amVu90Nh9ZvczJj2Upi4krSYV73V+X2ZHKcpfGHmumejSuUw7vHsdSWxFXPiOxgXt
-	 e21HEep/YC0L+eIrgPb2LzXQtMaVz7MAoS3Z6qQ0njnUyXDWAkLjw1zTt77q1o715m
-	 ynE8BfdPf9QFSTQm6KiAz2grkyfKuA0VwjiZAHcg=
+	b=JMSRLZOUg9vYoqaPua9aTVHqZjTfmgsgFvE09Tz+yr24HZQiqPWPBEhONe306BNrk
+	 BrefqL7y1WuNWH7hDVFsC0kX0J6e767uIV1xllWjmjkHUqAUTI7VxzYVWRJSC6bz7Z
+	 JhCw63deLSch2XsvNC8KXAxO71QBgQeJkFggGIls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/138] net: hinic: Fix cleanup in create_rxqs/txqs()
-Date: Mon,  6 Jan 2025 16:15:42 +0100
-Message-ID: <20250106151133.909134015@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 053/138] phy: core: Fix that API devm_of_phy_provider_unregister() fails to unregister the phy provider
+Date: Mon,  6 Jan 2025 16:16:17 +0100
+Message-ID: <20250106151135.243375637@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,54 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 7203d10e93b6e6e1d19481ef7907de6a9133a467 ]
+commit c0b82ab95b4f1fbc3e3aeab9d829d012669524b6 upstream.
 
-There is a check for NULL at the start of create_txqs() and
-create_rxqs() which tess if "nic_dev->txqs" is non-NULL.  The
-intention is that if the device is already open and the queues
-are already created then we don't create them a second time.
+For devm_of_phy_provider_unregister(), its comment says it needs to invoke
+of_phy_provider_unregister() to unregister the phy provider, but it will
+not actually invoke the function since devres_destroy() does not call
+devm_phy_provider_release(), and the missing of_phy_provider_unregister()
+call will cause:
 
-However, the bug is that if we have an error in the create_txqs()
-then the pointer doesn't get set back to NULL.  The NULL check
-at the start of the function will say that it's already open when
-it's not and the device can't be used.
+- The phy provider fails to be unregistered.
+- Leak both memory and the OF node refcount.
 
-Set ->txqs back to NULL on cleanup on error.
+Fortunately, the faulty API has not been used by current kernel tree.
+Fix by using devres_release() instead of devres_destroy() within the API.
 
-Fixes: c3e79baf1b03 ("net-next/hinic: Add logical Txq and Rxq")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0cc98faf-a0ed-4565-a55b-0fa2734bc205@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ff764963479a ("drivers: phy: add generic PHY framework")
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/stable/20241213-phy_core_fix-v6-2-40ae28f5015a%40quicinc.com
+Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-2-40ae28f5015a@quicinc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/phy-core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-index 6ec042d48cd1..dd5c96557976 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-@@ -173,6 +173,7 @@ static int create_txqs(struct hinic_dev *nic_dev)
- 	hinic_sq_dbgfs_uninit(nic_dev);
+--- a/drivers/phy/phy-core.c
++++ b/drivers/phy/phy-core.c
+@@ -1129,12 +1129,12 @@ EXPORT_SYMBOL_GPL(of_phy_provider_unregi
+  * of_phy_provider_unregister to unregister the phy provider.
+  */
+ void devm_of_phy_provider_unregister(struct device *dev,
+-	struct phy_provider *phy_provider)
++				     struct phy_provider *phy_provider)
+ {
+ 	int r;
  
- 	devm_kfree(&netdev->dev, nic_dev->txqs);
-+	nic_dev->txqs = NULL;
- 	return err;
+-	r = devres_destroy(dev, devm_phy_provider_release, devm_phy_match,
+-		phy_provider);
++	r = devres_release(dev, devm_phy_provider_release, devm_phy_match,
++			   phy_provider);
+ 	dev_WARN_ONCE(dev, r, "couldn't find PHY provider device resource\n");
  }
- 
-@@ -269,6 +270,7 @@ static int create_rxqs(struct hinic_dev *nic_dev)
- 	hinic_rq_dbgfs_uninit(nic_dev);
- 
- 	devm_kfree(&netdev->dev, nic_dev->rxqs);
-+	nic_dev->rxqs = NULL;
- 	return err;
- }
- 
--- 
-2.39.5
-
+ EXPORT_SYMBOL_GPL(devm_of_phy_provider_unregister);
 
 
