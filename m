@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6A9145A03;
-	Mon,  6 Jan 2025 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2F213B59A;
+	Mon,  6 Jan 2025 15:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179102; cv=none; b=rFlaLAPnD6kGyzcWzrGuHAyDqlLhHUd1EbtYfRvJKOWiho32l7gqEJxBasb1242+fDrdpUk7RnjOSEpZQqrgOjN0QcgioEDKGWH7duzRHVXpKtR8hjbwh8Axt1k1o7ns0LwSC8NPXnmysse8sXn4MG6PLvVSJ8mgHHb0xFviBQU=
+	t=1736179105; cv=none; b=DImlROLL4PK7rBJ7FbuPjVVYeDA3ni4ggPW0boRsQRRTJCgC6B0raWhBkgaHzVsHXIzJfKHUt1dDNm3kPA1ZnJicBW61QO0LRkxIKwhD/gvTCULTBecfwztfvgbl6WaL25M9WXm5J00JUrrGiQ8KJOCLLV48ImgOHRn1XQfcOEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179102; c=relaxed/simple;
-	bh=ttUpGoJQ2yZ91pzZg4Wy/mybMq60E09iAIidur2o56w=;
+	s=arc-20240116; t=1736179105; c=relaxed/simple;
+	bh=iIC7x5KBhKPXMuQKCquahJrIqHsSTCuldCCugjwxqRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3u4DZ7kilNoikRUr/ZTibMHn5GmcOVA0CHjhindMofnFLdbmGTgb0/fcGhACkIDqn4/L0E6sYQQWWBWtjZZwSWBO3WtjP5fsGW28V+fGG63mDsiSsWx6Wzvx4AsoykgvrLGDUZGzbQ4jehA/FzGMdT3vsSw6LuAOOsRMbp1KhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WApqBn2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k0WDHsZZKoa146/TWs613utd4V+aLOU/nWL6rsIWIvttaBjFGKvR/3oQ7x+DnWGvlxE+I0yHYktncLT4Je4tYVc9GbHnqb5fqNHoldeAm4Jr+aWXJZLXHwRJAvBtwtIHMXomCuH4izEdmaygSc5E3P35LS8f/3H+vCynYYFdK90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxJmsf6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WApqBn2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5BDC4CED2;
-	Mon,  6 Jan 2025 15:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxJmsf6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4672C4CED2;
+	Mon,  6 Jan 2025 15:58:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179102;
-	bh=ttUpGoJQ2yZ91pzZg4Wy/mybMq60E09iAIidur2o56w=;
+	s=korg; t=1736179105;
+	bh=iIC7x5KBhKPXMuQKCquahJrIqHsSTCuldCCugjwxqRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WApqBn2CpnCBymTegH8pXGL6L7PBX7N32ioCjPpEBNtlQXzvf5QW07pFtZi4X6oyg
-	 T9kBBM0AWNZ3kKNNyzD79aGY1/NK1UN7O4r2ivX9ZWJY8dWbmkuaGSXyj0ORHzLX5e
-	 2dkBN2AFoBvxIIckIq7q1oAZMSyKKIcp4HRVK0Do=
+	b=nxJmsf6DzcQ/C6r4Q8X7KMAEDGznCpCmX20mYieu85P6Wjko/YHLHGQ3o3LKe8y/v
+	 GcLwlwQiN8ADdd5OOxwECnXr1fyjpH9spKY+KvDO+MFhCw7uYkDpcN5QPMKryhDdp/
+	 jkcKMn0rfKFss1fPViLewfx4GzmPfQqoIkYP9/4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.4 28/93] of/irq: Fix using uninitialized variable @addr_len in API of_irq_parse_one()
-Date: Mon,  6 Jan 2025 16:17:04 +0100
-Message-ID: <20250106151129.767781559@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+9260555647a5132edd48@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 29/93] nilfs2: prevent use of deleted inode
+Date: Mon,  6 Jan 2025 16:17:05 +0100
+Message-ID: <20250106151129.804797405@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -50,47 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 0f7ca6f69354e0c3923bbc28c92d0ecab4d50a3e upstream.
+commit 901ce9705fbb9f330ff1f19600e5daf9770b0175 upstream.
 
-of_irq_parse_one() may use uninitialized variable @addr_len as shown below:
+syzbot reported a WARNING in nilfs_rmdir. [1]
 
-// @addr_len is uninitialized
-int addr_len;
+Because the inode bitmap is corrupted, an inode with an inode number that
+should exist as a ".nilfs" file was reassigned by nilfs_mkdir for "file0",
+causing an inode duplication during execution.  And this causes an
+underflow of i_nlink in rmdir operations.
 
-// This operation does not touch @addr_len if it fails.
-addr = of_get_property(device, "reg", &addr_len);
+The inode is used twice by the same task to unmount and remove directories
+".nilfs" and "file0", it trigger warning in nilfs_rmdir.
 
-// Use uninitialized @addr_len if the operation fails.
-if (addr_len > sizeof(addr_buf))
-	addr_len = sizeof(addr_buf);
+Avoid to this issue, check i_nlink in nilfs_iget(), if it is 0, it means
+that this inode has been deleted, and iput is executed to reclaim it.
 
-// Check the operation result here.
-if (addr)
-	memcpy(addr_buf, addr, addr_len);
+[1]
+WARNING: CPU: 1 PID: 5824 at fs/inode.c:407 drop_nlink+0xc4/0x110 fs/inode.c:407
+...
+Call Trace:
+ <TASK>
+ nilfs_rmdir+0x1b0/0x250 fs/nilfs2/namei.c:342
+ vfs_rmdir+0x3a3/0x510 fs/namei.c:4394
+ do_rmdir+0x3b5/0x580 fs/namei.c:4453
+ __do_sys_rmdir fs/namei.c:4472 [inline]
+ __se_sys_rmdir fs/namei.c:4470 [inline]
+ __x64_sys_rmdir+0x47/0x50 fs/namei.c:4470
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fix by initializing @addr_len before the operation.
-
-Fixes: b739dffa5d57 ("of/irq: Prevent device address out-of-bounds read in interrupt map walk")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241209-of_irq_fix-v1-4-782f1419c8a1@quicinc.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Link: https://lkml.kernel.org/r/20241209065759.6781-1-konishi.ryusuke@gmail.com
+Fixes: d25006523d0b ("nilfs2: pathname operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9260555647a5132edd48
+Tested-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/irq.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/inode.c |    8 +++++++-
+ fs/nilfs2/namei.c |    5 +++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -298,6 +298,7 @@ int of_irq_parse_one(struct device_node
- 		return of_irq_parse_oldworld(device, index, out_irq);
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -626,8 +626,14 @@ struct inode *nilfs_iget(struct super_bl
+ 	inode = nilfs_iget_locked(sb, root, ino);
+ 	if (unlikely(!inode))
+ 		return ERR_PTR(-ENOMEM);
+-	if (!(inode->i_state & I_NEW))
++
++	if (!(inode->i_state & I_NEW)) {
++		if (!inode->i_nlink) {
++			iput(inode);
++			return ERR_PTR(-ESTALE);
++		}
+ 		return inode;
++	}
  
- 	/* Get the reg property (if any) */
-+	addr_len = 0;
- 	addr = of_get_property(device, "reg", &addr_len);
+ 	err = __nilfs_read_inode(sb, root, ino, inode);
+ 	if (unlikely(err)) {
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -67,6 +67,11 @@ nilfs_lookup(struct inode *dir, struct d
+ 		inode = NULL;
+ 	} else {
+ 		inode = nilfs_iget(dir->i_sb, NILFS_I(dir)->i_root, ino);
++		if (inode == ERR_PTR(-ESTALE)) {
++			nilfs_error(dir->i_sb,
++					"deleted inode referenced: %lu", ino);
++			return ERR_PTR(-EIO);
++		}
+ 	}
  
- 	/* Prevent out-of-bounds read in case of longer interrupt parent address size */
+ 	return d_splice_alias(inode, dentry);
 
 
