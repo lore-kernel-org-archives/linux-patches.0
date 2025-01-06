@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA862156238;
-	Mon,  6 Jan 2025 15:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A705D145335;
+	Mon,  6 Jan 2025 15:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176765; cv=none; b=auRsW+fNbA/TN+QBn3q1BQ73s5tnvm2wBBgK2rg0FShTd9cOrM+1pZ3Swfr6MaSe8zvDN7yKqarglkud1NxHU2lxWvyUD7UeRklfREWlcAXFpn0fXc4stXbA7F4qb27T7U74zFIlnFZX4KSvWZPYNCOdMf+ASBdvRMpNvltXU/4=
+	t=1736176767; cv=none; b=Z3UYGlHVH8ucvw9UrBn7EgXa547Q0y5v+v4fj6Fu88/WyWc16sj/FvczsamDqjYMzU96HzBzuMhZhIoenmD9uUyViqorh9nxh6DyzFWUg32PgZEBqBYINIb4ZpG3sTIq6OeaVfCl/xrnjKKoLtxYgy6nqk33ooAiUyCJwkRVdBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176765; c=relaxed/simple;
-	bh=3nVGG/MO0zyQNLMoiXTsb5YxJMoLrQza/Y0JRyx3Wic=;
+	s=arc-20240116; t=1736176767; c=relaxed/simple;
+	bh=SPKhKYjyQoFWZdZLEgaayk9thiKmR7iTxH8TZ8ePZAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZASUMzofi8E6cb78SS1v4jg5t7cA2RHbXS0mKN5Ppa4MCnG/bROxhWNTO2+OOO7AaHnERVNzwGIIp2UUy+rfR7nlg1dsFRAMQdu4j9lj7a+mkGLF2VO+NhkMYJ/eFjPmVqGTnwp7TewPS+7/kpic1/0MIJflInM0KMLMm2Wev+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6mde+CH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tHlfIJ0/YKnqgwAPexu4HI+ILlPuuM4rfo5EOJKqw1phAFSY+CsPKqxOVv9LpJHURppcHZ6RBICFG+pJ9hghxwvUlU1tx4AQHfwaFQkJbszXoyPgg5spZQDw1blo4oYd4oUFND/qYE6j5C7Yq4d8EGAXuXyxrpoxuzNsM1WyXS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKkt0BP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6mde+CH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C972C4CEE2;
-	Mon,  6 Jan 2025 15:19:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKkt0BP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247B8C4CED2;
+	Mon,  6 Jan 2025 15:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176764;
-	bh=3nVGG/MO0zyQNLMoiXTsb5YxJMoLrQza/Y0JRyx3Wic=;
+	s=korg; t=1736176767;
+	bh=SPKhKYjyQoFWZdZLEgaayk9thiKmR7iTxH8TZ8ePZAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6mde+CH/fJzIRIG2Jaq71xHhGE4584oMVNDlRUb8YJrkpBWGtscFCtIyNud8pGrU
-	 aLYvc3Zf7mr+onL08zgk5pbVygW/0a5rBVrmAw2u/2h8bRuZvEspzIxfLNJcWMuZXe
-	 fN6tc5hh6K+bKy4PLB+8zhSvuhBRCtMTSrMnx9cU=
+	b=AKkt0BP1AV5bbRkVVyOD4HFuQzqsozHif+r9SUOyFl1P+kHmLMOG/x2tim8FrC7Qf
+	 scTTRdiU0NF1hXLcMZvsNheCmF8uo2XpBshOVQsofHSAcACMLKcMZo2qMoDCxtMaXb
+	 T4m/p2gznXgiB3Zw6nk3p1S8UVhMO2/NTLO5vvh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Hughes <hughsient@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 07/81] thunderbolt: Dont display nvm_version unless upgrade supported
-Date: Mon,  6 Jan 2025 16:15:39 +0100
-Message-ID: <20250106151129.715244516@linuxfoundation.org>
+Subject: [PATCH 6.1 08/81] xhci: retry Stop Endpoint on buggy NEC controllers
+Date: Mon,  6 Jan 2025 16:15:40 +0100
+Message-ID: <20250106151129.753656143@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -52,75 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit e34f1717ef0632fcec5cb827e5e0e9f223d70c9b ]
+[ Upstream commit fd9d55d190c0e5fefd3a9165ea361809427885a1 ]
 
-The read will never succeed if NVM wasn't initialized due to an unknown
-format.
+Two NEC uPD720200 adapters have been observed to randomly misbehave:
+a Stop Endpoint command fails with Context Error, the Output Context
+indicates Stopped state, and the endpoint keeps running. Very often,
+Set TR Dequeue Pointer is seen to fail next with Context Error too,
+in addition to problems from unexpectedly completed cancelled work.
 
-Add a new callback for visibility to only show when supported.
+The pathology is common on fast running isoc endpoints like uvcvideo,
+but has also been reproduced on a full-speed bulk endpoint of pl2303.
+It seems all EPs are affected, with risk proportional to their load.
 
-Cc: stable@vger.kernel.org
-Fixes: aef9c693e7e5 ("thunderbolt: Move vendor specific NVM handling into nvm.c")
-Reported-by: Richard Hughes <hughsient@gmail.com>
-Closes: https://github.com/fwupd/fwupd/issues/8200
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reproduction involves receiving any kind of stream and closing it to
+make the device driver cancel URBs already queued in advance.
+
+Deal with it by retrying the command like in the Running state.
+
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240229141438.619372-8-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: e21ebe51af68 ("xhci: Turn NEC specific quirk for handling Stop Endpoint errors generic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thunderbolt/retimer.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-ring.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/thunderbolt/retimer.c b/drivers/thunderbolt/retimer.c
-index edbd92435b41..5bd5c22a5085 100644
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -98,6 +98,7 @@ static int tb_retimer_nvm_add(struct tb_retimer *rt)
- 
- err_nvm:
- 	dev_dbg(&rt->dev, "NVM upgrade disabled\n");
-+	rt->no_nvm_upgrade = true;
- 	if (!IS_ERR(nvm))
- 		tb_nvm_free(nvm);
- 
-@@ -177,8 +178,6 @@ static ssize_t nvm_authenticate_show(struct device *dev,
- 
- 	if (!rt->nvm)
- 		ret = -EAGAIN;
--	else if (rt->no_nvm_upgrade)
--		ret = -EOPNOTSUPP;
- 	else
- 		ret = sysfs_emit(buf, "%#x\n", rt->auth_status);
- 
-@@ -304,6 +303,19 @@ static ssize_t vendor_show(struct device *dev, struct device_attribute *attr,
- }
- static DEVICE_ATTR_RO(vendor);
- 
-+static umode_t retimer_is_visible(struct kobject *kobj, struct attribute *attr,
-+				  int n)
-+{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct tb_retimer *rt = tb_to_retimer(dev);
-+
-+	if (attr == &dev_attr_nvm_authenticate.attr ||
-+	    attr == &dev_attr_nvm_version.attr)
-+		return rt->no_nvm_upgrade ? 0 : attr->mode;
-+
-+	return attr->mode;
-+}
-+
- static struct attribute *retimer_attrs[] = {
- 	&dev_attr_device.attr,
- 	&dev_attr_nvm_authenticate.attr,
-@@ -313,6 +325,7 @@ static struct attribute *retimer_attrs[] = {
- };
- 
- static const struct attribute_group retimer_group = {
-+	.is_visible = retimer_is_visible,
- 	.attrs = retimer_attrs,
- };
- 
+diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
+index 975d825091cb..d193d5ad8789 100644
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1141,6 +1141,15 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
+ 				break;
+ 			ep->ep_state &= ~EP_STOP_CMD_PENDING;
+ 			return;
++		case EP_STATE_STOPPED:
++			/*
++			 * NEC uPD720200 sometimes sets this state and fails with
++			 * Context Error while continuing to process TRBs.
++			 * Be conservative and trust EP_CTX_STATE on other chips.
++			 */
++			if (!(xhci->quirks & XHCI_NEC_HOST))
++				break;
++			fallthrough;
+ 		case EP_STATE_RUNNING:
+ 			/* Race, HW handled stop ep cmd before ep was running */
+ 			xhci_dbg(xhci, "Stop ep completion ctx error, ep is running\n");
 -- 
 2.39.5
 
