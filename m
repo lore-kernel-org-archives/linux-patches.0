@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AF8282F5;
-	Mon,  6 Jan 2025 15:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD12BA34;
+	Mon,  6 Jan 2025 15:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179151; cv=none; b=QsLV2tmluliEF8AUwh+AFeCCc1w/M5irriO1JGAeTu169bkIsydgPdzuSqj5aTDzCFELMY9FD4NPRb9aOQn0/iX0D9P3RPwwUeX0IFeEbvY7fpV/ErKxQrI3c8LefTij1SI1XWiiAiwfjZLmnDc4+DJCLq7BRuvBjJzuIM7kFfI=
+	t=1736179154; cv=none; b=GNmDNkzFyGnflUJIf/d4HlqRDxDzz51iHXiMcnuFFXVzCIjmgx0VQAuYvB/npEMOVXCn+yHOZ9x+glSAIaSPI5s+tMu4otkrnHNBTmx1iELfKIDLZ9Kifcol1A1VN0taJmIpgPYyNGQcvRC8tkakz9nonjD36MCcYOZ2DTJubZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179151; c=relaxed/simple;
-	bh=n+k7v4ss1fOjdm8EVEcxPU61MEiW6Iy3mEi5HNrR+0I=;
+	s=arc-20240116; t=1736179154; c=relaxed/simple;
+	bh=A+4yphVHcP1nphcRRrISWtnh8u8sj7SPv2K0dAy3lww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dw6ADFvg68adriJ2NR/kaMdAEPqlsDyyCA7HebT+o2eP+Krar03SvJRHkPkVL0OJOeVpdhilIyvvL93Obp5toOEAhexmGSMgIrXVeIMNU0bQUBcyHTmChTdCYnRALkLMwe2j/+LZAm8BSsVmXxEtWhiVrSLE/uSmxmY4ObTO6CU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7ctVQPz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cwsklx0iZusNTMh3Vfpn2nzzqBSqbcmp/Bo5G2jd2qqIL4bshHoYxrrwtFcEyV+VzzbleJ5vnqzyKXJfkfIdT3261ERn9j8FphkXQHqOonmWqRkmSTuwr0mm+8Vkk49G8pUsBYGrMY5QN73mZ5K0ahppgDbhF4X9C6qpchb8B2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qQZPpVNV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7ctVQPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC15C4CED2;
-	Mon,  6 Jan 2025 15:59:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qQZPpVNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6323EC4CED2;
+	Mon,  6 Jan 2025 15:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179150;
-	bh=n+k7v4ss1fOjdm8EVEcxPU61MEiW6Iy3mEi5HNrR+0I=;
+	s=korg; t=1736179153;
+	bh=A+4yphVHcP1nphcRRrISWtnh8u8sj7SPv2K0dAy3lww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7ctVQPzanc3wabQoVnUdXWuw1aUjOHY6+TKjn3wYgO0Rcl1zUvCHD5+qlLnBIFkM
-	 Yi6SDBAe5ItjIewudARHhPH3GQYIs4+bWuQWXuDmJR8UJFgX8OQcrsL9lMXAhnAU+9
-	 H50lflOk4pJZTbDWzKoBsscHPbb/IG+6h5s9HWIk=
+	b=qQZPpVNVlx0Wb9jCksODVq1c79bdPuoUrmtqMeU42hPoZsSu8EHKnCNqpgye2K8oW
+	 bnsxACYkcu/dOXunqKW2JxdHuMap6DovkaJhFuUiYS96uyV7k3nxHjTSjElDqd2crW
+	 2xwyhnCAKVCWGJJTmimdKCp/oLlntYdmuksZ0LGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.4 42/93] dmaengine: at_xdmac: avoid null_prt_deref in at_xdmac_prep_dma_memset
-Date: Mon,  6 Jan 2025 16:17:18 +0100
-Message-ID: <20250106151130.289797671@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 16/93] chelsio/chtls: prevent potential integer overflow on 32bit
+Date: Mon,  6 Jan 2025 16:16:52 +0100
+Message-ID: <20250106151129.315396369@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -50,34 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit c43ec96e8d34399bd9dab2f2dc316b904892133f upstream.
+commit fbbd84af6ba70334335bdeba3ae536cf751c14c6 upstream.
 
-The at_xdmac_memset_create_desc may return NULL, which will lead to a
-null pointer dereference. For example, the len input is error, or the
-atchan->free_descs_list is empty and memory is exhausted. Therefore, add
-check to avoid this.
+The "gl->tot_len" variable is controlled by the user.  It comes from
+process_responses().  On 32bit systems, the "gl->tot_len +
+sizeof(struct cpl_pass_accept_req) + sizeof(struct rss_header)" addition
+could have an integer wrapping bug.  Use size_add() to prevent this.
 
-Fixes: b206d9a23ac7 ("dmaengine: xdmac: Add memset support")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Link: https://lore.kernel.org/r/20241029082845.1185380-1-chenridong@huaweicloud.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: a08943947873 ("crypto: chtls - Register chtls with net tls")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/c6bfb23c-2db2-4e1b-b8ab-ba3925c82ef5@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_xdmac.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/chelsio/chtls/chtls_main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -1214,6 +1214,8 @@ at_xdmac_prep_dma_memset(struct dma_chan
+--- a/drivers/crypto/chelsio/chtls/chtls_main.c
++++ b/drivers/crypto/chelsio/chtls/chtls_main.c
+@@ -339,8 +339,9 @@ static struct sk_buff *copy_gl_to_skb_pk
+ 	 * driver. Once driver synthesizes cpl_pass_accpet_req the skb will go
+ 	 * through the regular cpl_pass_accept_req processing in TOM.
+ 	 */
+-	skb = alloc_skb(gl->tot_len + sizeof(struct cpl_pass_accept_req)
+-			- pktshift, GFP_ATOMIC);
++	skb = alloc_skb(size_add(gl->tot_len,
++				 sizeof(struct cpl_pass_accept_req)) -
++			pktshift, GFP_ATOMIC);
+ 	if (unlikely(!skb))
  		return NULL;
- 
- 	desc = at_xdmac_memset_create_desc(chan, atchan, dest, len, value);
-+	if (!desc)
-+		return NULL;
- 	list_add_tail(&desc->desc_node, &desc->descs_list);
- 
- 	desc->tx_dma_desc.cookie = -EBUSY;
+ 	__skb_put(skb, gl->tot_len + sizeof(struct cpl_pass_accept_req)
 
 
