@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E351086332;
-	Mon,  6 Jan 2025 15:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4608155352;
+	Mon,  6 Jan 2025 15:37:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177850; cv=none; b=MBD80sqMpk9ynShWvE5rL6rSe5p46IqVrheNZiXBTGvcMTaYs8EygiNq/2ABBQhM2DH98tWA8460+b1Blp8GANW3yekXVxSfLbmKEQG9k6rGg2bZAopDtyRRv52mLWKO27t+io7n9ze/lDRb7mVkmer8+l/exRHFmjZjLw3ucps=
+	t=1736177853; cv=none; b=kEQ0Q/qkrxNxFAez3ZicYJSGz5zqtjLyNX1rk9bj9V/YO7vmRKsAmOYKbTKPQr6XeqEgfa2n1EeZjhOM1VNmwTYsK1h0zN3kI7QOLRO8E6T7jtzgr53tyr9zwBGlgWf5ZCDvntkG7WwSJcfkyqugGVt9ShGLrsU8tjFXbW2QNRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177850; c=relaxed/simple;
-	bh=rQbmZ7VXEhmVil3ZdxFcrTeWNZtGXT7rllsJtCrGaGU=;
+	s=arc-20240116; t=1736177853; c=relaxed/simple;
+	bh=dyRFPv79fwQs5GNFLl+0OdWB9B/GDm1r5ZyHQMKpMzQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGqeWc6WMobuZfcwnA6QRAUg6Y/tj8GXEBslg8C4OCiRK79sksbSbz2/ZPBR5MeZKZuMsZJOe8AUAN6OPWQ1r4pHsN5xbdUAzsFwp+LR6E5yHOgqWVLTfkb9aBXUQEfWXWjcXdx1trbUFFhaKM/JjS0trfkcDhtkC3ySOAmAR+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IR0qvtyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdAf/BI8EmcTBNyDEzcfbW0xSJ/ZF/V0cRNQJ2HdQzyulAYLYus8JZIzYaTmNeLLHJftyiMsHWrQywIvnh26DXx1dN4q8EmzkfyGF4o6waYPrFRmEiAuLmXM10fygN54dNf+D5e/UP+/exreDKibfNho/N81HFBlReyD3CUhTfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pcGDx7uy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IR0qvtyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66ECFC4CED2;
-	Mon,  6 Jan 2025 15:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pcGDx7uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CB0C4CED2;
+	Mon,  6 Jan 2025 15:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177849;
-	bh=rQbmZ7VXEhmVil3ZdxFcrTeWNZtGXT7rllsJtCrGaGU=;
+	s=korg; t=1736177852;
+	bh=dyRFPv79fwQs5GNFLl+0OdWB9B/GDm1r5ZyHQMKpMzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IR0qvtyvzLiDgJbaf1TicSNJ/hJcVlSADUgJb6lEHedYv0z4+rtyYktqPOz1IzIkC
-	 MSihSc7dVVLdfN3eEVfLVZfVBiD0xbAr0pZ9H4GwIhEEbHX0DFGHR01jNFAlFhfh0w
-	 tPdTUq65uGPb+Zz6lH62EEhMNB0NdrolUG56Mp+0=
+	b=pcGDx7uyBbKbxlJTLcvCXN5Did/fvg6gizyLkWlpvKI+yLjhaAzKw9+kTmV4Z9E4J
+	 ZiLjC43U4jNx8VWqrfKXlIZkameAfmnIihjCxZemNd6JHFbcnf1chqPuenYJ/MvhRV
+	 U/GW3+zj+b91O4qPreFSNso7MvC61FBWlR3AAaNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Lior Nahmanson <liorna@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/156] net/mlx5e: macsec: Maintain TX SA from encoding_sa
-Date: Mon,  6 Jan 2025 16:15:36 +0100
-Message-ID: <20250106151143.618749843@linuxfoundation.org>
+Subject: [PATCH 6.12 077/156] perf/x86/intel: Add Arrow Lake U support
+Date: Mon,  6 Jan 2025 16:16:03 +0100
+Message-ID: <20250106151144.632646266@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -54,61 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 8c6254479b3d5bd788d2b5fefaa48fb194331ed0 ]
+[ Upstream commit 4e54ed496343702837ddca5f5af720161c6a5407 ]
 
-In MACsec, it is possible to create multiple active TX SAs on a SC,
-but only one such SA can be used at a time for transmission. This SA
-is selected through the encoding_sa link parameter.
+>From PMU's perspective, the new Arrow Lake U is the same as the
+Meteor Lake.
 
-When there are 2 or more active TX SAs configured (encoding_sa=0):
-  ip macsec add macsec0 tx sa 0 pn 1 on key 00 <KEY1>
-  ip macsec add macsec0 tx sa 1 pn 1 on key 00 <KEY2>
-
-... the traffic should be still sent via TX SA 0 as the encoding_sa was
-not changed. However, the driver ignores the encoding_sa and overrides
-it to SA 1 by installing the flow steering id of the newly created TX SA
-into the SCI -> flow steering id hash map. The future packet tx
-descriptors will point to the incorrect flow steering rule (SA 1).
-
-This patch fixes the issue by avoiding the creation of the flow steering
-rule for an active TX SA that is not the encoding_sa. The driver side
-tx_sa object and the FW side macsec object are still created. When the
-encoding_sa link parameter is changed to another active TX SA, only the
-new flow steering rule will be created in the mlx5e_macsec_upd_txsa()
-handler.
-
-Fixes: 8ff0ac5be144 ("net/mlx5: Add MACsec offload Tx command support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Lior Nahmanson <liorna@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241220081505.1286093-3-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20241121180526.2364759-1-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/events/intel/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-index cc9bcc420032..6ab02f3fc291 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-@@ -339,9 +339,13 @@ static int mlx5e_macsec_init_sa_fs(struct macsec_context *ctx,
- {
- 	struct mlx5e_priv *priv = macsec_netdev_priv(ctx->netdev);
- 	struct mlx5_macsec_fs *macsec_fs = priv->mdev->macsec_fs;
-+	const struct macsec_tx_sc *tx_sc = &ctx->secy->tx_sc;
- 	struct mlx5_macsec_rule_attrs rule_attrs;
- 	union mlx5_macsec_rule *macsec_rule;
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 28b4312f2563..f558be868a50 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -7067,6 +7067,7 @@ __init int intel_pmu_init(void)
  
-+	if (is_tx && tx_sc->encoding_sa != sa->assoc_num)
-+		return 0;
-+
- 	rule_attrs.macsec_obj_id = sa->macsec_obj_id;
- 	rule_attrs.sci = sa->sci;
- 	rule_attrs.assoc_num = sa->assoc_num;
+ 	case INTEL_METEORLAKE:
+ 	case INTEL_METEORLAKE_L:
++	case INTEL_ARROWLAKE_U:
+ 		intel_pmu_init_hybrid(hybrid_big_small);
+ 
+ 		x86_pmu.pebs_latency_data = cmt_latency_data;
 -- 
 2.39.5
 
