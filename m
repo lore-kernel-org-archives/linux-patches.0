@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2D860890;
-	Mon,  6 Jan 2025 15:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93C8B14600C;
+	Mon,  6 Jan 2025 15:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177882; cv=none; b=ZwQIUhjsTRPu+2mKh8STuSl+CzsxcpUtDAWW7HQ/H5u9RBSEfKOd0a2nYFQ9CN9jv+iKW6zDG+g2qVP4rqQwwY2jYQDVUcQhGc6QGYooOtphFlVMrjculXihRwvpfHlDZsL2/FDZuL9Y6gQT3eEHe6MrEoaVxy32mqtsTG3nPTs=
+	t=1736177885; cv=none; b=suEnM+fYVQmBzuHbliLMfE/NqtrsT0F0A8FvYY+RDdPWfKPnJJtfjeFLiA+8D/NgA/qsA+3ys3ddY09Js0HbunB/jGX0A5fw81owUDrApTpDSDlGhp60uMG/h+BwMPpTPCgh+ZX0fR3/WeHiakk06gKaVa42o4PBYEILv7ixy2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177882; c=relaxed/simple;
-	bh=xZzIdfBRu9nI/PcrGzxeXUXLpbcHpVpSkm+LkGvnbVw=;
+	s=arc-20240116; t=1736177885; c=relaxed/simple;
+	bh=N2yOVeLLphApHm+NWCvXuxGuafPbVgthkY4pBwOHnLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUaq05z79kPA8/17LMs6LWADhAvzI5n6w+Qwz60xN6R6XSpCP3QzB3KEoua+Q8gqdcZkCaMxULSOqdHpcKUOjV7t6DzyK/5H8zjABhsTlRIMj0WPiMPhSyzQaJHukknwIQ9ItI2fuHin7NXKnRxcXL08FibEIrAWaXArAq8FqxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvCP53MY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WGxFnB1YQ86NIeJtL5MgHD4f8g5OE/J5+89I/9M7n6BlemA9Reqe81itr24AgRNAjBNekO+HknQTqW4v00e8ChCuK0sWPx0Pt4URN0Jlc2ZfcNIWRnESTOa+ByeFQUMx2VgQYInu2xcrWKVYT1EASc1RFesYoFtnrxKYkGzi8pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icg3kHTe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvCP53MY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFDDC4CED6;
-	Mon,  6 Jan 2025 15:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icg3kHTe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C579C4CED2;
+	Mon,  6 Jan 2025 15:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177882;
-	bh=xZzIdfBRu9nI/PcrGzxeXUXLpbcHpVpSkm+LkGvnbVw=;
+	s=korg; t=1736177885;
+	bh=N2yOVeLLphApHm+NWCvXuxGuafPbVgthkY4pBwOHnLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvCP53MYCkQeppI97C052rr4dd42wz8zVkFPboIWsFTFHk/UMfYDfMiluMIoAJWpZ
-	 sCAPbO2rLpwkBxWzS1YY10YdPi11dCtlYOw9S5JRneZCNPmZggHY+K2rSxi28sUOlj
-	 Vkpg7q1NNNryeu4oyzrwU00DbfIE3lbsOgKso8Gc=
+	b=icg3kHTeoOd4/dUxDbOmxWhY49yPNfUipiIDKsK7lptvByLJHkqD8kUoCSo4OZcej
+	 Rv3HnPP8ObipGgdoKAIBy/q8yP8CbAB8UyaR8fAU44Mvsx45GExTknbLvXTas9Qc/d
+	 a4Ban/5gQQ43E5ZLVcu2HO5AfQL0KMHaPGXgCl60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Marushkin <hfggklm@gmail.com>,
-	Ilya Shchipletsov <rabbelkin@mail.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/156] netrom: check buffer length before accessing it
-Date: Mon,  6 Jan 2025 16:15:33 +0100
-Message-ID: <20250106151143.507354887@linuxfoundation.org>
+Subject: [PATCH 6.12 082/156] drm/amdkfd: Correct the migration DMA map direction
+Date: Mon,  6 Jan 2025 16:16:08 +0100
+Message-ID: <20250106151144.821138734@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -46,110 +46,161 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Shchipletsov <rabbelkin@mail.ru>
+From: Prike Liang <Prike.Liang@amd.com>
 
-[ Upstream commit a4fd163aed2edd967a244499754dec991d8b4c7d ]
+[ Upstream commit 5c3de6b02d38eb9386edf50490e050bb44398e40 ]
 
-Syzkaller reports an uninit value read from ax25cmp when sending raw message
-through ieee802154 implementation.
+The SVM DMA device map direction should be set the same as
+the DMA unmap setting, otherwise the DMA core will report
+the following warning.
 
-=====================================================
-BUG: KMSAN: uninit-value in ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
- ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
- nr_dev_get+0x20e/0x450 net/netrom/nr_route.c:601
- nr_route_frame+0x1a2/0xfc0 net/netrom/nr_route.c:774
- nr_xmit+0x5a/0x1c0 net/netrom/nr_dev.c:144
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3548 [inline]
- dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3564
- __dev_queue_xmit+0x33b8/0x5130 net/core/dev.c:4349
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- raw_sendmsg+0x654/0xc10 net/ieee802154/socket.c:299
- ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+Before finialize this solution, there're some discussion on
+the DMA mapping type(stream-based or coherent) in this KFD
+migration case, followed by https://lore.kernel.org/all/04d4ab32
+-45a1-4b88-86ee-fb0f35a0ca40@amd.com/T/.
 
-Uninit was created at:
- slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
- kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
- __alloc_skb+0x318/0x740 net/core/skbuff.c:651
- alloc_skb include/linux/skbuff.h:1286 [inline]
- alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
- sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2780
- sock_alloc_send_skb include/net/sock.h:1884 [inline]
- raw_sendmsg+0x36d/0xc10 net/ieee802154/socket.c:282
- ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+As there's no dma_sync_single_for_*() in the DMA buffer accessed
+that because this migration operation should be sync properly and
+automatically. Give that there's might not be a performance problem
+in various cache sync policy of DMA sync. Therefore, in order to
+simplify the DMA direction setting alignment, let's set the DMA map
+direction as BIDIRECTIONAL.
 
-CPU: 0 PID: 5037 Comm: syz-executor166 Not tainted 6.7.0-rc7-syzkaller-00003-gfbafc3e621c3 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-=====================================================
+[  150.834218] WARNING: CPU: 8 PID: 1812 at kernel/dma/debug.c:1028 check_u=
+nmap+0x1cc/0x930
+[  150.834225] Modules linked in: amdgpu(OE) amdxcp drm_exec(OE) gpu_sched =
+drm_buddy(OE) drm_ttm_helper(OE) ttm(OE) drm_suballoc_helper(OE) drm_displa=
+y_helper(OE) drm_kms_helper(OE) i2c_algo_bit rpcsec_gss_krb5 auth_rpcgss nf=
+sv4 nfs lockd grace netfs xt_conntrack xt_MASQUERADE nf_conntrack_netlink x=
+frm_user xfrm_algo iptable_nat xt_addrtype iptable_filter br_netfilter nvme=
+_fabrics overlay nfnetlink_cttimeout nfnetlink openvswitch nsh nf_conncount=
+ nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 libcrc32c bridge stp llc=
+ sch_fq_codel intel_rapl_msr amd_atl intel_rapl_common snd_hda_codec_realte=
+k snd_hda_codec_generic snd_hda_scodec_component snd_hda_codec_hdmi snd_hda=
+_intel snd_intel_dspcfg edac_mce_amd snd_pci_acp6x snd_hda_codec snd_acp_co=
+nfig snd_hda_core snd_hwdep snd_soc_acpi kvm_amd sunrpc snd_pcm kvm binfmt_=
+misc snd_seq_midi crct10dif_pclmul snd_seq_midi_event ghash_clmulni_intel s=
+ha512_ssse3 snd_rawmidi nls_iso8859_1 sha256_ssse3 sha1_ssse3 snd_seq aesni=
+_intel snd_seq_device crypto_simd snd_timer cryptd input_leds
+[  150.834310]  wmi_bmof serio_raw k10temp rapl snd sp5100_tco ipmi_devintf=
+ soundcore ccp ipmi_msghandler cm32181 industrialio mac_hid msr parport_pc =
+ppdev lp parport efi_pstore drm(OE) ip_tables x_tables pci_stub crc32_pclmu=
+l nvme ahci libahci i2c_piix4 r8169 nvme_core i2c_designware_pci realtek i2=
+c_ccgx_ucsi video wmi hid_generic cdc_ether usbnet usbhid hid r8152 mii
+[  150.834354] CPU: 8 PID: 1812 Comm: rocrtst64 Tainted: G           OE    =
+  6.10.0-custom #492
+[  150.834358] Hardware name: AMD Majolica-RN/Majolica-RN, BIOS RMJ1009A 06=
+/13/2021
+[  150.834360] RIP: 0010:check_unmap+0x1cc/0x930
+[  150.834363] Code: c0 4c 89 4d c8 e8 34 bf 86 00 4c 8b 4d c8 4c 8b 45 c0 =
+48 8b 4d b8 48 89 c6 41 57 4c 89 ea 48 c7 c7 80 49 b4 84 e8 b4 81 f3 ff <0f=
+> 0b 48 c7 c7 04 83 ac 84 e8 76 ba fc ff 41 8b 76 4c 49 8d 7e 50
+[  150.834365] RSP: 0018:ffffaac5023739e0 EFLAGS: 00010086
+[  150.834368] RAX: 0000000000000000 RBX: ffffffff8566a2e0 RCX: 00000000000=
+00027
+[  150.834370] RDX: ffff8f6a8f621688 RSI: 0000000000000001 RDI: ffff8f6a8f6=
+21680
+[  150.834372] RBP: ffffaac502373a30 R08: 00000000000000c9 R09: ffffaac5023=
+73850
+[  150.834373] R10: ffffaac502373848 R11: ffffffff84f46328 R12: ffffaac5023=
+73a40
+[  150.834375] R13: ffff8f6741045330 R14: ffff8f6741a77700 R15: ffffffff84a=
+c831b
+[  150.834377] FS:  00007faf0fc94c00(0000) GS:ffff8f6a8f600000(0000) knlGS:=
+0000000000000000
+[  150.834379] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  150.834381] CR2: 00007faf0b600020 CR3: 000000010a52e000 CR4: 00000000003=
+50ef0
+[  150.834383] Call Trace:
+[  150.834385]  <TASK>
+[  150.834387]  ? show_regs+0x6d/0x80
+[  150.834393]  ? __warn+0x8c/0x140
+[  150.834397]  ? check_unmap+0x1cc/0x930
+[  150.834400]  ? report_bug+0x193/0x1a0
+[  150.834406]  ? handle_bug+0x46/0x80
+[  150.834410]  ? exc_invalid_op+0x1d/0x80
+[  150.834413]  ? asm_exc_invalid_op+0x1f/0x30
+[  150.834420]  ? check_unmap+0x1cc/0x930
+[  150.834425]  debug_dma_unmap_page+0x86/0x90
+[  150.834431]  ? srso_return_thunk+0x5/0x5f
+[  150.834435]  ? rmap_walk+0x28/0x50
+[  150.834438]  ? srso_return_thunk+0x5/0x5f
+[  150.834441]  ? remove_migration_ptes+0x79/0x80
+[  150.834445]  ? srso_return_thunk+0x5/0x5f
+[  150.834448]  dma_unmap_page_attrs+0xfa/0x1d0
+[  150.834453]  svm_range_dma_unmap_dev+0x8a/0xf0 [amdgpu]
+[  150.834710]  svm_migrate_ram_to_vram+0x361/0x740 [amdgpu]
+[  150.834914]  svm_migrate_to_vram+0xa8/0xe0 [amdgpu]
+[  150.835111]  svm_range_set_attr+0xff2/0x1450 [amdgpu]
+[  150.835311]  svm_ioctl+0x4a/0x50 [amdgpu]
+[  150.835510]  kfd_ioctl_svm+0x54/0x90 [amdgpu]
+[  150.835701]  kfd_ioctl+0x3c2/0x530 [amdgpu]
+[  150.835888]  ? __pfx_kfd_ioctl_svm+0x10/0x10 [amdgpu]
+[  150.836075]  ? srso_return_thunk+0x5/0x5f
+[  150.836080]  ? tomoyo_file_ioctl+0x20/0x30
+[  150.836086]  __x64_sys_ioctl+0x9c/0xd0
+[  150.836091]  x64_sys_call+0x1219/0x20d0
+[  150.836095]  do_syscall_64+0x51/0x120
+[  150.836098]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  150.836102] RIP: 0033:0x7faf0f11a94f
+[  150.836105] Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 =
+00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <41=
+> 89 c0 3d 00 f0 ff ff 77 1f 48 8b 44 24 18 64 48 2b 04 25 28 00
+[  150.836107] RSP: 002b:00007ffeced26bc0 EFLAGS: 00000246 ORIG_RAX: 000000=
+0000000010
+[  150.836110] RAX: ffffffffffffffda RBX: 000055c683528fb0 RCX: 00007faf0f1=
+1a94f
+[  150.836112] RDX: 00007ffeced26c60 RSI: 00000000c0484b20 RDI: 00000000000=
+00003
+[  150.836114] RBP: 00007ffeced26c50 R08: 0000000000000000 R09: 00000000000=
+00001
+[  150.836115] R10: 0000000000000032 R11: 0000000000000246 R12: 000055c6835=
+28bd0
+[  150.836117] R13: 0000000000000000 R14: 0000000000000021 R15: 00000000000=
+00000
+[  150.836122]  </TASK>
+[  150.836124] ---[ end trace 0000000000000000 ]---
 
-This issue occurs because the skb buffer is too small, and it's actual
-allocation is aligned. This hides an actual issue, which is that nr_route_frame
-does not validate the buffer size before using it.
-
-Fix this issue by checking skb->len before accessing any fields in skb->data.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Nikita Marushkin <hfggklm@gmail.com>
-Signed-off-by: Nikita Marushkin <hfggklm@gmail.com>
-Signed-off-by: Ilya Shchipletsov <rabbelkin@mail.ru>
-Link: https://patch.msgid.link/20241219082308.3942-1-rabbelkin@mail.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_migrate.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index 2b5e246b8d9a..b94cb2ffbaf8 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -754,6 +754,12 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	int ret;
- 	struct sk_buff *skbn;
- 
-+	/*
-+	 * Reject malformed packets early. Check that it contains at least 2
-+	 * addresses and 1 byte more for Time-To-Live
-+	 */
-+	if (skb->len < 2 * sizeof(ax25_address) + 1)
-+		return 0;
- 
- 	nr_src  = (ax25_address *)(skb->data + 0);
- 	nr_dest = (ax25_address *)(skb->data + 7);
--- 
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c b/drivers/gpu/drm/amd=
+/amdkfd/kfd_migrate.c
+index 8ee3d07ffbdf..f31e9fbf634a 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_migrate.c
+@@ -306,7 +306,7 @@ svm_migrate_copy_to_vram(struct kfd_node *node, struct =
+svm_range *prange,
+ 		spage =3D migrate_pfn_to_page(migrate->src[i]);
+ 		if (spage && !is_zone_device_page(spage)) {
+ 			src[i] =3D dma_map_page(dev, spage, 0, PAGE_SIZE,
+-					      DMA_TO_DEVICE);
++					      DMA_BIDIRECTIONAL);
+ 			r =3D dma_mapping_error(dev, src[i]);
+ 			if (r) {
+ 				dev_err(dev, "%s: fail %d dma_map_page\n",
+@@ -630,7 +630,7 @@ svm_migrate_copy_to_ram(struct amdgpu_device *adev, str=
+uct svm_range *prange,
+ 			goto out_oom;
+ 		}
+=20
+-		dst[i] =3D dma_map_page(dev, dpage, 0, PAGE_SIZE, DMA_FROM_DEVICE);
++		dst[i] =3D dma_map_page(dev, dpage, 0, PAGE_SIZE, DMA_BIDIRECTIONAL);
+ 		r =3D dma_mapping_error(dev, dst[i]);
+ 		if (r) {
+ 			dev_err(adev->dev, "%s: fail %d dma_map_page\n", __func__, r);
+--=20
 2.39.5
 
 
