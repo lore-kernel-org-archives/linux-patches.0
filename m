@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C22313AD20;
-	Mon,  6 Jan 2025 15:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871B5135A63;
+	Mon,  6 Jan 2025 15:52:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178770; cv=none; b=CZ9xtr6ht2gefOQlI2M4Qk6HJxbF+OizymFMRWSLg5xwsew4/cN1tFFbxXZjwfV/rF4MRtaoXbgfBIr8lzrwEHaqNjBRBoBV1Nf3XHgycemwT40Zwm3PRAg+Dtnjd15Rcq3SRpFooYmqVNj4IecIQPPBAwo8XoAQ6feDIjHDGiU=
+	t=1736178773; cv=none; b=NOTnJqPTDLLGuI2mQ38ClNDB7GPhir8smOlrigc8V4FaYZeVbLifwbkk5orevmG7Krx0iYz/GIPphmAyg7CBsAQut3BRoTNms+pVKUADpluxtywC1XXfmi6LUYSRRuYKq2Rp2eExFlDrni8+nljV/ZKlfQl2vD5KitRO295DOhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178770; c=relaxed/simple;
-	bh=JlJAr6dug6TzWwhSbjxu6h1U5GciBd6wa/fWBWec4nI=;
+	s=arc-20240116; t=1736178773; c=relaxed/simple;
+	bh=mBdnFvSRqCzquQq0yguWfh27+GA0IooVzV1ASz1UnoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XBv40qNiKpRcQ6+AL1QCbNgVXEDawY4X2lyIt5jsKHApkD6KJoBuv9C2xw9C3jdRhT/pT3sQGmXjlAaDyjOCcq6Y8u1KftuHk3Mxh8XQIPQ4w2UlMrBJTtihf9R4/ctM4k+HK370jzvuXE3p0YKfSGb9zJepQJl4AnjC8RWjLGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y4zrQKBZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9T55qPB1F3CcnwsK2VO9pzGtswrjBxz86NNL2SFm7b/cmfYmB1NeOVzR2a1SlnLmCOxLS/PPRY33FVuSLvEFqbN/8jCxt0P16ywbXxNgmvIPSQVA8SWc4AvzGOtP5J795H1G3KIYfGTvu6FWKLLx10/ceqADb6tjLEBjBE8pQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axcaLRtU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y4zrQKBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13362C4CED2;
-	Mon,  6 Jan 2025 15:52:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axcaLRtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FF88C4CED2;
+	Mon,  6 Jan 2025 15:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178770;
-	bh=JlJAr6dug6TzWwhSbjxu6h1U5GciBd6wa/fWBWec4nI=;
+	s=korg; t=1736178773;
+	bh=mBdnFvSRqCzquQq0yguWfh27+GA0IooVzV1ASz1UnoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4zrQKBZr8h5fmBPk7d0RdxaT6eIzZei2Y9T8G7TYfanVSfLrUqypqG9+h9ZsQs7B
-	 vh1/01/vOZUtVGrN8ZBt/k46Mnw6jgluH6IVLgXKhR+JjjHnqf/wuBrUFu58LuVaXU
-	 gfe14buVNKaA4LymXawZBh4ipFKatRJT4iVqXLiQ=
+	b=axcaLRtUQnFgarC2nWCVwS2H9ebQY2DrEMuigbHURnRlo9V38hbKN8bwBXbIkLhvj
+	 uPn8/rt21Ml7yqYoiysm4NfKejwimzHD1hJrFP4fFpr/oBspG80KoKyO0xRdu3wmrl
+	 O6drtasELwlr4UUtaCDkwGavYSqX1TIvH4Y4bw5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 069/168] phy: core: Fix that API devm_of_phy_provider_unregister() fails to unregister the phy provider
-Date: Mon,  6 Jan 2025 16:16:17 +0100
-Message-ID: <20250106151141.072343226@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 087/168] bpf: Check validity of link->type in bpf_link_show_fdinfo()
+Date: Mon,  6 Jan 2025 16:16:35 +0100
+Message-ID: <20250106151141.748646381@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,50 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Hou Tao <houtao1@huawei.com>
 
-commit c0b82ab95b4f1fbc3e3aeab9d829d012669524b6 upstream.
+commit 8421d4c8762bd022cb491f2f0f7019ef51b4f0a7 upstream.
 
-For devm_of_phy_provider_unregister(), its comment says it needs to invoke
-of_phy_provider_unregister() to unregister the phy provider, but it will
-not actually invoke the function since devres_destroy() does not call
-devm_phy_provider_release(), and the missing of_phy_provider_unregister()
-call will cause:
+If a newly-added link type doesn't invoke BPF_LINK_TYPE(), accessing
+bpf_link_type_strs[link->type] may result in an out-of-bounds access.
 
-- The phy provider fails to be unregistered.
-- Leak both memory and the OF node refcount.
+To spot such missed invocations early in the future, checking the
+validity of link->type in bpf_link_show_fdinfo() and emitting a warning
+when such invocations are missed.
 
-Fortunately, the faulty API has not been used by current kernel tree.
-Fix by using devres_release() instead of devres_destroy() within the API.
-
-Fixes: ff764963479a ("drivers: phy: add generic PHY framework")
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/stable/20241213-phy_core_fix-v6-2-40ae28f5015a%40quicinc.com
-Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-2-40ae28f5015a@quicinc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241024013558.1135167-3-houtao@huaweicloud.com
+[ shung-hsi.yu: break up existing seq_printf() call since commit 68b04864ca42
+  ("bpf: Create links for BPF struct_ops maps.") is not present ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/bpf/syscall.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -1161,12 +1161,12 @@ EXPORT_SYMBOL_GPL(of_phy_provider_unregi
-  * of_phy_provider_unregister to unregister the phy provider.
-  */
- void devm_of_phy_provider_unregister(struct device *dev,
--	struct phy_provider *phy_provider)
-+				     struct phy_provider *phy_provider)
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index d4b4a47081b5..37aa1e319165 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -2522,16 +2522,21 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
  {
- 	int r;
+ 	const struct bpf_link *link = filp->private_data;
+ 	const struct bpf_prog *prog = link->prog;
++	enum bpf_link_type type = link->type;
+ 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
  
--	r = devres_destroy(dev, devm_phy_provider_release, devm_phy_match,
--		phy_provider);
-+	r = devres_release(dev, devm_phy_provider_release, devm_phy_match,
-+			   phy_provider);
- 	dev_WARN_ONCE(dev, r, "couldn't find PHY provider device resource\n");
- }
- EXPORT_SYMBOL_GPL(devm_of_phy_provider_unregister);
++	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
++		seq_printf(m, "link_type:\t%s\n", bpf_link_type_strs[type]);
++	} else {
++		WARN_ONCE(1, "missing BPF_LINK_TYPE(...) for link type %u\n", type);
++		seq_printf(m, "link_type:\t<%u>\n", type);
++	}
++	seq_printf(m, "link_id:\t%u\n", link->id);
++
+ 	bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
+ 	seq_printf(m,
+-		   "link_type:\t%s\n"
+-		   "link_id:\t%u\n"
+ 		   "prog_tag:\t%s\n"
+ 		   "prog_id:\t%u\n",
+-		   bpf_link_type_strs[link->type],
+-		   link->id,
+ 		   prog_tag,
+ 		   prog->aux->id);
+ 	if (link->ops->show_fdinfo)
+-- 
+2.39.5
+
 
 
