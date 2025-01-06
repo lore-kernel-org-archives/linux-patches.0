@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CA6DF71;
-	Mon,  6 Jan 2025 15:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F45A14D28C;
+	Mon,  6 Jan 2025 15:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177575; cv=none; b=Fg1bqvrkeGLoTrLx4z39hkpWVsbJo9dDoNNatD2oXwZbhKzhd70SRcfdxdMlltGbznDR7ky8j6EMMVJEZXFPRsxep24BU7N3P6kF4+a6x5WpjW7+MxBaqdqhfn16TAW0yfr2jZg607STN7gEcYHLPMoN9CIkvjZp+Q2I28VBHck=
+	t=1736177579; cv=none; b=c59Lqg+DqUcP/wb1gY70zG8eCjgMo2swZdFnbm/RGOS1T5eCuaW0iZmNpy5SffqIC/IyDbHDjjBgbHpGuPa0xiup5KsKeuS3p2VJxyCf8VVaU3wSs5UCQ9egtr6AC3UfBNDMJsnE5GXd8SdZw8UI8f/hiJA77Dwm8q85/tuin9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177575; c=relaxed/simple;
-	bh=VLeKeYUiuMVW7bzfJGKDj5tqGE8QYVXbxlUiIXvoa4g=;
+	s=arc-20240116; t=1736177579; c=relaxed/simple;
+	bh=+7UO2/SYzFzGQdQjSqtXZS5NM3+5X4u1+zeD4Pb1IeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSZm42z1O223jntCn1NeyUvuMOcvdamHD7qgXpWiBMptfaF9ZfPOO1SeV6p7zS9Rl94kDnx+wj3TMZdDAuGMwGfSZy4d4/aBZYcbNPj048zeX/zAZWtu6rTaaJg77n2321pn5zv9WYuGdRsQ+4Q+CSSGSH8LA1PUzfKx992rHEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRTJOj+i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MMfmzgk0+RFSrzwwxK7zAi7n7NL3aH3jErC06Mc1lQHUSeByBLPNuKVlFXfrF43Ed00dfVI0ZQIeUyTvyEZ1vEs+CIXCxcwRvEyA93ktR++sBKdTg7gdGxQLl/YDco0HqATJtarrR2qMrBlXSIbIwAYR9BObk3kCWa0Lhlw9CHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfxCZhXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRTJOj+i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01093C4CED2;
-	Mon,  6 Jan 2025 15:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfxCZhXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09B7C4CED2;
+	Mon,  6 Jan 2025 15:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177575;
-	bh=VLeKeYUiuMVW7bzfJGKDj5tqGE8QYVXbxlUiIXvoa4g=;
+	s=korg; t=1736177578;
+	bh=+7UO2/SYzFzGQdQjSqtXZS5NM3+5X4u1+zeD4Pb1IeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRTJOj+ii0CeAwIykx1w1pnaI5zHnM1C/Bv7+/nO+l9tIMI1/CHEs7pDLpVP/45BM
-	 oze6rPUv1D2mBKRwhV+yElggUGAHIkOI5R+Pi7de6/OAp8PZmPoYMeXzOjgwp2/W6H
-	 U1fZZmwPvzFmgpCFBuAh9mTOMl+hgyK0l+Mktc0U=
+	b=pfxCZhXg4Wdpy9LIObgMsmuFUg1cQa7tqCLWYa5gwCHCNfI5pQOSRvyXPGV9az/ct
+	 1/GWhOfmikhtfYiRWa077Z8iseUdGr/91HSTwmaVQX+Vuj5siZCYOMtfPHt+xp+lH6
+	 84krInG+NeYNqUXE73FQhT218RB8HdoNIoNoG9MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hien Huynh <hien.huynh.px@renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Adam Ford <aford173@gmail.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.6 209/222] drm: adv7511: Drop dsi single lane support
-Date: Mon,  6 Jan 2025 16:16:53 +0100
-Message-ID: <20250106151158.676143713@linuxfoundation.org>
+	Uros Bizjak <ubizjak@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 192/222] irqchip/gic: Correct declaration of *percpu_base pointer in union gic_base
+Date: Mon,  6 Jan 2025 16:16:36 +0100
+Message-ID: <20250106151158.030408407@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,39 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-commit 79d67c499c3f886202a40c5cb27e747e4fa4d738 upstream.
+[ Upstream commit a1855f1b7c33642c9f7a01991fb763342a312e9b ]
 
-As per [1] and [2], ADV7535/7533 supports only 2-, 3-, or 4-lane. Drop
-unsupported 1-lane.
+percpu_base is used in various percpu functions that expect variable in
+__percpu address space. Correct the declaration of percpu_base to
 
-[1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7535.pdf
-[2] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7533.pdf
+void __iomem * __percpu *percpu_base;
 
-Fixes: 1e4d58cd7f88 ("drm/bridge: adv7533: Create a MIPI DSI device")
-Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Adam Ford <aford173@gmail.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-4-biju.das.jz@bp.renesas.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+to declare the variable as __percpu pointer.
+
+The patch fixes several sparse warnings:
+
+irq-gic.c:1172:44: warning: incorrect type in assignment (different address spaces)
+irq-gic.c:1172:44:    expected void [noderef] __percpu *[noderef] __iomem *percpu_base
+irq-gic.c:1172:44:    got void [noderef] __iomem *[noderef] __percpu *
+...
+irq-gic.c:1231:43: warning: incorrect type in argument 1 (different address spaces)
+irq-gic.c:1231:43:    expected void [noderef] __percpu *__pdata
+irq-gic.c:1231:43:    got void [noderef] __percpu *[noderef] __iomem *percpu_base
+
+There were no changes in the resulting object files.
+
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/all/20241213145809.2918-2-ubizjak@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7533.c |    2 +-
+ drivers/irqchip/irq-gic.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -175,7 +175,7 @@ int adv7533_parse_dt(struct device_node
+diff --git a/drivers/irqchip/irq-gic.c b/drivers/irqchip/irq-gic.c
+index 412196a7dad5..2c6c50348afd 100644
+--- a/drivers/irqchip/irq-gic.c
++++ b/drivers/irqchip/irq-gic.c
+@@ -64,7 +64,7 @@ static void gic_check_cpu_features(void)
  
- 	of_property_read_u32(np, "adi,dsi-lanes", &num_lanes);
+ union gic_base {
+ 	void __iomem *common_base;
+-	void __percpu * __iomem *percpu_base;
++	void __iomem * __percpu *percpu_base;
+ };
  
--	if (num_lanes < 1 || num_lanes > 4)
-+	if (num_lanes < 2 || num_lanes > 4)
- 		return -EINVAL;
- 
- 	adv->num_dsi_lanes = num_lanes;
+ struct gic_chip_data {
+-- 
+2.39.5
+
 
 
