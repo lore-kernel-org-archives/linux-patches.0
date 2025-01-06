@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCEA11D9595;
-	Mon,  6 Jan 2025 16:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295F11DDC3C;
+	Mon,  6 Jan 2025 16:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179232; cv=none; b=OggTV4gTCiSlfpa/fbI/fSalbWGL3VXM2rzZ+Is3ssHWmWoNcMTAm1x76ygP2V2dSiZjHMU9jEaYqQ+PgZOsG7wo9p3aSEwWjbc2XT1Ln+oL/EYgI/jCFxbkX76JQOIYIyDENMmS9cRNhFqAkJ4Ls9oH5ZYtphRPu5urzHFYz6M=
+	t=1736179234; cv=none; b=Z8f+EgZI4/LR++wAMY8EpsMk8Sg5YR7lN5A9yrcTMyFQTdcQ1z4uHl3zfV7hHsnhW4+W4Z4qCyV2PuERFJo2o5r3mG+wzZ/73MjbkqVDrMa2u5cxE9CWqrfgHalZScaYCYnA7P1jN5qrxIOAAYIzskDKnW4CjeaKPe2yAUyQh+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179232; c=relaxed/simple;
-	bh=KfAuWX5Gey273nbhFBRHn9bIITgQ/14n2lZVtgDRISE=;
+	s=arc-20240116; t=1736179234; c=relaxed/simple;
+	bh=kcNb69z0vbkFBmF2Ms05vNs2fEP/XZNbbB+BCktxxro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OazO36a98Upf5YbgZyRWIa4TbA1fpO5MvnTW+uOPdq6w5IyxVHKbJ9wIWG6CzDUtnyq9M1K5AaOWh4jjarH4zkRerpOVFoy9cI9X+HrpeFGewgfhemjcOClO6BAt6MtbDTKYVwXgTD0YglwZGhaqH7uip/dv/wASnOhVKgNKa+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcPKG9Dd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CYM8GcqN+OEa9THE91Qagxa8ykRE1QzEsTvP6j5fYeW962D8qwCQSravxJ0QkHlebaytoRj6WKuF571cBzl3oDBaj7kEJa/q+LBBLVwSFsN7arZ6KNMfWvmHrxkbnItC6Alo8NbrXO4GT0FWqHR3fjQ9N5IjkFiph1s1ozTCF6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krKfnWb+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcPKG9Dd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F16C4CED2;
-	Mon,  6 Jan 2025 16:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krKfnWb+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCECC4CEE1;
+	Mon,  6 Jan 2025 16:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179231;
-	bh=KfAuWX5Gey273nbhFBRHn9bIITgQ/14n2lZVtgDRISE=;
+	s=korg; t=1736179233;
+	bh=kcNb69z0vbkFBmF2Ms05vNs2fEP/XZNbbB+BCktxxro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcPKG9Dd/B17gWClN1aE064RNgnX5YFiEnxrt3E7bFMwKlh574JYNZO5lCm6ZM3sL
-	 dmR2EgyAnljc1H/x23UkfLnN2pllOuMh1VHgJCPl8jh2Bi3yIsbhVuR8UK4BbquPUo
-	 tqJ24chNO6yW9PZcxMxo+s+JxaLGg4JQI2PNnOFM=
+	b=krKfnWb++QGFME2KGLzBiTDyU125Hlk9OuxP0aomHmDqrJpxqnG7kBHCPvyx/e6BK
+	 C8iDlLjx/PpOwmwEx5CAuyNTxyITgUYxlYOeYrG7IpcSQRE5yU4DYvq4wUOXJiYUPi
+	 vuJTEUtd6Q1iAaEPoIYYHlqZkFasa2997ygD2plk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devesh Sharma <devesh.sharma@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Bogdan Togorean <bogdan.togorean@analog.com>,
+	Andrzej Hajda <a.hajda@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 69/93] RDMA/bnxt_re: Fix max_qp_wrs reported
-Date: Mon,  6 Jan 2025 16:17:45 +0100
-Message-ID: <20250106151131.308991599@linuxfoundation.org>
+Subject: [PATCH 5.4 70/93] drm: bridge: adv7511: Enable SPDIF DAI
+Date: Mon,  6 Jan 2025 16:17:46 +0100
+Message-ID: <20250106151131.347097888@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,38 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Bogdan Togorean <bogdan.togorean@analog.com>
 
-[ Upstream commit c63e1c4dfc33d1bdae395ee8fbcbfad4830b12c0 ]
+[ Upstream commit f7f436b99364a3904387eba613fc69853cc2f220 ]
 
-While creating qps, the driver adds one extra entry to the sq size passed
-by the ULPs in order to avoid queue full condition.  When ULPs creates QPs
-with max_qp_wr reported, driver creates QP with 1 more than the max_wqes
-supported by HW. Create QP fails in this case. To avoid this error, reduce
-1 entry in max_qp_wqes and report it to the stack.
+ADV7511 support I2S or SPDIF as audio input interfaces. This commit
+enable support for SPDIF.
 
-Link: https://lore.kernel.org/r/1606741986-16477-1-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Devesh Sharma <devesh.sharma@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Bogdan Togorean <bogdan.togorean@analog.com>
+Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+Signed-off-by: Andrzej Hajda <a.hajda@samsung.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200413113513.86091-1-bogdan.togorean@analog.com
+Stable-dep-of: 902806baf3c1 ("drm/bridge: adv7511_audio: Update Audio InfoFrame properly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index 079aaaaffec7..f623f881a95b 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -118,7 +118,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw,
- 	 * 128 WQEs needs to be reserved for the HW (8916). Prevent
- 	 * reporting the max number
- 	 */
--	attr->max_qp_wqes -= BNXT_QPLIB_RESERVED_QP_WRS;
-+	attr->max_qp_wqes -= BNXT_QPLIB_RESERVED_QP_WRS + 1;
- 	attr->max_qp_sges = bnxt_qplib_is_chip_gen_p5(rcfw->res->cctx) ?
- 			    6 : sb->max_sge;
- 	attr->max_cq = le32_to_cpu(sb->max_cq);
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+index d05b3033b510..f101dd2819b5 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
+@@ -121,6 +121,9 @@ int adv7511_hdmi_hw_params(struct device *dev, void *data,
+ 		audio_source = ADV7511_AUDIO_SOURCE_I2S;
+ 		i2s_format = ADV7511_I2S_FORMAT_LEFT_J;
+ 		break;
++	case HDMI_SPDIF:
++		audio_source = ADV7511_AUDIO_SOURCE_SPDIF;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -177,11 +180,21 @@ static int audio_startup(struct device *dev, void *data)
+ 	/* use Audio infoframe updated info */
+ 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(1),
+ 				BIT(5), 0);
++	/* enable SPDIF receiver */
++	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
++		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
++				   BIT(7), BIT(7));
++
+ 	return 0;
+ }
+ 
+ static void audio_shutdown(struct device *dev, void *data)
+ {
++	struct adv7511 *adv7511 = dev_get_drvdata(dev);
++
++	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
++		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
++				   BIT(7), 0);
+ }
+ 
+ static int adv7511_hdmi_i2s_get_dai_id(struct snd_soc_component *component,
+@@ -215,6 +228,7 @@ static const struct hdmi_codec_pdata codec_data = {
+ 	.ops = &adv7511_codec_ops,
+ 	.max_i2s_channels = 2,
+ 	.i2s = 1,
++	.spdif = 1,
+ };
+ 
+ int adv7511_audio_init(struct device *dev, struct adv7511 *adv7511)
 -- 
 2.39.5
 
