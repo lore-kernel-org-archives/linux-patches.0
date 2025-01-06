@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A2749652;
-	Mon,  6 Jan 2025 15:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5326049652;
+	Mon,  6 Jan 2025 15:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176901; cv=none; b=fn7bulhWxWKawQy1F81BecRRVqo0qBNTLXgnkhpPCfH+nWPnVrsuCoM6IJGIvB+8iUPzkoTcG3GnwFhRh9EbeE5pu7bLDrhywU2OJiKk0UwDgfW4yhuEGT8K+oI6LZYkmwaKPSfmQzCnIa5SZt7bYDMVlZX5kESE5+6LPYSwIeU=
+	t=1736176905; cv=none; b=eYIzM15IEruY89eFPPf6C+L3VT8bojvgX1JBUwAE2wkdPEgEweLXvDAkzsrCVPLp//ei84cNWgloHgohXxUJSrBSXTDfWnp+jTnh5ZMrLDf8++gV/dl0LklLame7U1Fp18p7NUAVsRtV2FTAgP4X1zu356WuMqHkMVG55XFlH1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176901; c=relaxed/simple;
-	bh=fzgahdhZiOhLr5d+7ne+ZZx4f/7LMu9b+O2OUwYiFVg=;
+	s=arc-20240116; t=1736176905; c=relaxed/simple;
+	bh=grSTh48NVO20ZKkbK3hWZFEbDmgyI30nw84X7Ab6QAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cw78mvQv+WGctpRfbCI2D7Waog1ILtITTzJlFiNJMc3liUcJTebUwbmv+KYcyZ8T4ihXmGfuYIvk1zCTs0cmuRnHWsXLoz+CleSSjMhVdPiPuz2ll3UdgbWLqbn9fa29ffrXAqq9SL/rlbsiFab/uPiSjq1fZp5v8VGpNMNqf6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7BGPQc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=awt63tFtPYygPT1JudbTOcRmFzSQW0Gscp6y5YGtRVHf21ndDRSkpDiTb1dv/pGYqMgEUImstGa8drfdTFbFq9gE/g7uV1xGNFkRVVoRpc/2hknBCxYrCty2efCf5X5qTP9AxFBY0hVX25pWgBi5VgnL/GKGOdLWEU4AlgLnDBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubLoky/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7BGPQc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E100C4CEE2;
-	Mon,  6 Jan 2025 15:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubLoky/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77689C4CED2;
+	Mon,  6 Jan 2025 15:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176901;
-	bh=fzgahdhZiOhLr5d+7ne+ZZx4f/7LMu9b+O2OUwYiFVg=;
+	s=korg; t=1736176904;
+	bh=grSTh48NVO20ZKkbK3hWZFEbDmgyI30nw84X7Ab6QAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7BGPQc5DO47NgfauWnKkDOebHnvhU5jHX87uV2xDEgJH0dZlk+XeKZ9xTDw73IMF
-	 FmsWQ9gxxdrvz1x2RYcN/XB5o3z1fxPCnYWZUIHlEgf8KEVIbyjmzbWoYlOzhSAI9y
-	 9VGi29IrBs+sdn2RF5lV4SlyLY1HrlICwjUPzjqo=
+	b=ubLoky/dBEbm4f3PZDjzLtrWSx9ZLw8lxLzgmZf1uncE3Np8B13GvXFPz+9flTh20
+	 d3zsAKJ1zXMpx4t/sZOSCC7Fus9Bnfhvkod8leutYu+0dvXYxG1akRAgQgwKSqrKkw
+	 c7C1N7aNLxb2vaciLjIHc5w4hpiLdZBHPn4yD8ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux@frame.work,
-	"Dustin L. Howett" <dustin@howett.net>,
-	Daniel Schaefer <dhs@frame.work>,
+	Kun Hu <huk23@m.fudan.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 68/81] ALSA hda/realtek: Add quirk for Framework F111:000C
-Date: Mon,  6 Jan 2025 16:16:40 +0100
-Message-ID: <20250106151131.998741497@linuxfoundation.org>
+Subject: [PATCH 6.1 69/81] ALSA: seq: oss: Fix races at processing SysEx messages
+Date: Mon,  6 Jan 2025 16:16:41 +0100
+Message-ID: <20250106151132.035686733@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -54,40 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 7b509910b3ad6d7aacead24c8744de10daf8715d upstream.
+commit 0179488ca992d79908b8e26b9213f1554fc5bacc upstream.
 
-Similar to commit eb91c456f371
-("ALSA: hda/realtek: Add Framework Laptop 13 (Intel Core Ultra) to quirks")
-and previous quirks for Framework systems with
-Realtek codecs.
+OSS sequencer handles the SysEx messages split in 6 bytes packets, and
+ALSA sequencer OSS layer tries to combine those.  It stores the data
+in the internal buffer and this access is racy as of now, which may
+lead to the out-of-bounds access.
 
-000C is a new platform that will also have an ALC285 codec and needs the
-same quirk.
+As a temporary band-aid fix, introduce a mutex for serializing the
+process of the SysEx message packets.
 
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: linux@frame.work
-Cc: Dustin L. Howett <dustin@howett.net>
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Reported-by: Kun Hu <huk23@m.fudan.edu.cn>
+Closes: https://lore.kernel.org/2B7E93E4-B13A-4AE4-8E87-306A8EE9BBB7@m.fudan.edu.cn
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241231045958.14545-1-dhs@frame.work
+Link: https://patch.msgid.link/20241230110543.32454-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/core/seq/oss/seq_oss_synth.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10255,6 +10255,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
-+	SND_PCI_QUIRK(0xf111, 0x000c, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+--- a/sound/core/seq/oss/seq_oss_synth.c
++++ b/sound/core/seq/oss/seq_oss_synth.c
+@@ -66,6 +66,7 @@ static struct seq_oss_synth midi_synth_d
+ };
  
- #if 0
- 	/* Below is a quirk table taken from the old code.
+ static DEFINE_SPINLOCK(register_lock);
++static DEFINE_MUTEX(sysex_mutex);
+ 
+ /*
+  * prototypes
+@@ -497,6 +498,7 @@ snd_seq_oss_synth_sysex(struct seq_oss_d
+ 	if (!info)
+ 		return -ENXIO;
+ 
++	guard(mutex)(&sysex_mutex);
+ 	sysex = info->sysex;
+ 	if (sysex == NULL) {
+ 		sysex = kzalloc(sizeof(*sysex), GFP_KERNEL);
 
 
