@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ECC82D98;
-	Mon,  6 Jan 2025 15:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECF61487F4;
+	Mon,  6 Jan 2025 15:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176867; cv=none; b=h0DgDH52VznwkM+48XiiBoQ0pVZMko+TGZZsklo4Vu2+RJAJ57NFqBxzeOPSvTcrMalQVlepBnxAhttfsYTum7J4BnVO9TvhDjmcfhLabYnGELVDKOrYx5qsR9+dswm7ErovHZmIbVubmikuuOPV/7hVd3/u+a/Ifr8R/QAAPRg=
+	t=1736176870; cv=none; b=F+Ziuidl+hmDnvLOWeTTbqZfI2tZDXMkrb/dKOTAeIX4Z/s45ARr6/kBXKxJnX6OBTBLnMcjVk8ElfqbI5s9j0sO5jWzuhz7Xt094EYV6QxGfPpYD9TVekyn15VXiFF6GoR9tGN2qIJkHM/5gMOHr69F9Y2gwbV9VOAKYhwG/e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176867; c=relaxed/simple;
-	bh=UZRWx4blYcya9mO+GZYqNODrE8m2M2Q2huN3gCJQd5Q=;
+	s=arc-20240116; t=1736176870; c=relaxed/simple;
+	bh=EY39v9bDx1+4qNStfO7XeaQxWnfVOWqrQfTW7v7Xltw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UR61ljqRnPv8KNrWUZN57zm+Shqp8W76N3h+x86Y33mixa/jSd3TQqW7gjalSeFBbLIzLJC8DnMO3TBuSniPr7ALbwtzz1Rs7SmtzfLXisp/eEmufpfUy957lo8z3cmQeiTtbK346CQkucqJwfUCPyozD/Q/1ugUrclh0PK/oyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWaGf6pW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KWEeIL9w7kFsvrAw6RoG3ltKuJhjKa4YQN9tbRR5N1b50hX30wQRoSXn/MV56uF+MMuVr1NSlgT+OILo3YZ8p7YzkDPGhkgO7QmC6JD7GPNU/oTcGMUDoCQnTN6/zBY5naxRwyz274+DFdR+PD2YmBciJfrugxVvh+r0Vi4trVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zb8DoPHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWaGf6pW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBD3C4CED2;
-	Mon,  6 Jan 2025 15:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zb8DoPHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13CE4C4CED2;
+	Mon,  6 Jan 2025 15:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176867;
-	bh=UZRWx4blYcya9mO+GZYqNODrE8m2M2Q2huN3gCJQd5Q=;
+	s=korg; t=1736176870;
+	bh=EY39v9bDx1+4qNStfO7XeaQxWnfVOWqrQfTW7v7Xltw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWaGf6pWT24di3mRzOtPBGwzZCwJ8XnTRYwDQiT4qm9wabjCKO/pJsJaFYH4unCCr
-	 XUg430M//avoE+FMYt0lRSI5+TIhzMCOXXqd1FbJZ2gmhsdzAjFqo53TPDo80pL5jW
-	 oC5zb7VGL/B/ETnIx0JnfqY4cCLrRKy7d4bSK/Uw=
+	b=Zb8DoPHRoXNRFFLvQM/7TW4XyOJKcNt58MEAfi/DV+lpxBE8+hIaYvADR4r4tnLal
+	 FG4Tx3ALa2c4zSsDADgIZdRgceVISI4Xak2ghv7MYHSmepg1i+AE5vrQ5nhtrdWrcV
+	 ArLoCydxb/sSVDSLXKWme9uz0ihLIKgxt9roni8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/81] RDMA/hns: Fix missing flush CQE for DWQE
-Date: Mon,  6 Jan 2025 16:15:57 +0100
-Message-ID: <20250106151130.387781357@linuxfoundation.org>
+Subject: [PATCH 6.1 26/81] net: stmmac: platform: provide devm_stmmac_probe_config_dt()
+Date: Mon,  6 Jan 2025 16:15:58 +0100
+Message-ID: <20250106151130.426193634@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -52,56 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit e3debdd48423d3d75b9d366399228d7225d902cd ]
+[ Upstream commit d74065427374da6659a2d7fad4ec55c8926d43c4 ]
 
-Flush CQE handler has not been called if QP state gets into errored
-mode in DWQE path. So, the new added outstanding WQEs will never be
-flushed.
+Provide a devres variant of stmmac_probe_config_dt() that allows users to
+skip calling stmmac_remove_config_dt() at driver detach.
 
-It leads to a hung task timeout when using NFS over RDMA:
-    __switch_to+0x7c/0xd0
-    __schedule+0x350/0x750
-    schedule+0x50/0xf0
-    schedule_timeout+0x2c8/0x340
-    wait_for_common+0xf4/0x2b0
-    wait_for_completion+0x20/0x40
-    __ib_drain_sq+0x140/0x1d0 [ib_core]
-    ib_drain_sq+0x98/0xb0 [ib_core]
-    rpcrdma_xprt_disconnect+0x68/0x270 [rpcrdma]
-    xprt_rdma_close+0x20/0x60 [rpcrdma]
-    xprt_autoclose+0x64/0x1cc [sunrpc]
-    process_one_work+0x1d8/0x4e0
-    worker_thread+0x154/0x420
-    kthread+0x108/0x150
-    ret_from_fork+0x10/0x18
-
-Fixes: 01584a5edcc4 ("RDMA/hns: Add support of direct wqe")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20241220055249.146943-5-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230623100417.93592-9-brgl@bgdev.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2b6ffcd7873b ("net: stmmac: restructure the error path of stmmac_probe_config_dt()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../ethernet/stmicro/stmmac/stmmac_platform.c | 41 +++++++++++++++++++
+ .../ethernet/stmicro/stmmac/stmmac_platform.h |  2 +
+ 2 files changed, 43 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 23667cfbf8e7..ab0dca9d199a 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -673,6 +673,10 @@ static void write_dwqe(struct hns_roce_dev *hr_dev, struct hns_roce_qp *qp,
- #define HNS_ROCE_SL_SHIFT 2
- 	struct hns_roce_v2_rc_send_wqe *rc_sq_wqe = wqe;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index 0046a4ee6e64..5b4517b0ca08 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -8,6 +8,7 @@
+   Author: Giuseppe Cavallaro <peppe.cavallaro@st.com>
+ *******************************************************************************/
  
-+	if (unlikely(qp->state == IB_QPS_ERR)) {
-+		flush_cqe(hr_dev, qp);
-+		return;
-+	}
- 	/* All kinds of DirectWQE have the same header field layout */
- 	hr_reg_enable(rc_sq_wqe, RC_SEND_WQE_FLAG);
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_DB_SL_L, qp->sl);
++#include <linux/device.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/module.h>
+@@ -628,6 +629,39 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
+ 	return ret;
+ }
+ 
++static void devm_stmmac_remove_config_dt(void *data)
++{
++	struct plat_stmmacenet_data *plat = data;
++
++	/* Platform data argument is unused */
++	stmmac_remove_config_dt(NULL, plat);
++}
++
++/**
++ * devm_stmmac_probe_config_dt
++ * @pdev: platform_device structure
++ * @mac: MAC address to use
++ * Description: Devres variant of stmmac_probe_config_dt(). Does not require
++ * the user to call stmmac_remove_config_dt() at driver detach.
++ */
++struct plat_stmmacenet_data *
++devm_stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
++{
++	struct plat_stmmacenet_data *plat;
++	int ret;
++
++	plat = stmmac_probe_config_dt(pdev, mac);
++	if (IS_ERR(plat))
++		return plat;
++
++	ret = devm_add_action_or_reset(&pdev->dev,
++				       devm_stmmac_remove_config_dt, plat);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return plat;
++}
++
+ /**
+  * stmmac_remove_config_dt - undo the effects of stmmac_probe_config_dt()
+  * @pdev: platform_device structure
+@@ -650,12 +684,19 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
++struct plat_stmmacenet_data *
++devm_stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
++{
++	return ERR_PTR(-EINVAL);
++}
++
+ void stmmac_remove_config_dt(struct platform_device *pdev,
+ 			     struct plat_stmmacenet_data *plat)
+ {
+ }
+ #endif /* CONFIG_OF */
+ EXPORT_SYMBOL_GPL(stmmac_probe_config_dt);
++EXPORT_SYMBOL_GPL(devm_stmmac_probe_config_dt);
+ EXPORT_SYMBOL_GPL(stmmac_remove_config_dt);
+ 
+ int stmmac_get_platform_resources(struct platform_device *pdev,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h
+index 3fff3f59d73d..2102c6d41464 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.h
+@@ -13,6 +13,8 @@
+ 
+ struct plat_stmmacenet_data *
+ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac);
++struct plat_stmmacenet_data *
++devm_stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac);
+ void stmmac_remove_config_dt(struct platform_device *pdev,
+ 			     struct plat_stmmacenet_data *plat);
+ 
 -- 
 2.39.5
 
