@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67998634A;
-	Mon,  6 Jan 2025 15:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868308634A;
+	Mon,  6 Jan 2025 15:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176936; cv=none; b=d7oKvjatlhYh7kDnM68L9finK37HXoDG2ZiHLPBGBX2JSbb/CJoOPO3df56TktzHQ6AJV7sYEvVUFe0LRzzJ6WIAr7k6SzA2ziPifmy+m0fuGo72qVWz9ExDZmQt0+eGk54qSgymtex0OJfaFsZ3E7jxruS3gJPQUHGxq3+IL70=
+	t=1736176939; cv=none; b=qwcde3ePUR0duxzrxROaholMrqHce+R+/IutRxA/ZTXPy9b1ro6BvrHSQqkrkDFkaKeu4f+5y4pGx+nWDqTmwlrgo0Ve6Qt9pHcixoFG2rKX18md3UBNeDNT7CCpW4FaM0nOwh+J+nV2puz1juTtXgmL781y9afnBpF2J+PAt90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176936; c=relaxed/simple;
-	bh=1M/8KYmoWapeK3+T++xPjPtY4NWPu005eXMIkSSuTgE=;
+	s=arc-20240116; t=1736176939; c=relaxed/simple;
+	bh=VRzyi+4KNFW0E6xojgcXjswsfrVjWyuJlvXr97es+Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVP9nf1z/0ZMmxBgNzhTzxWbehwAruFC4wZNOGmIPoSneqrSZTh5xFV+DHIyyLsS0gruq+7lwvJbqpa3fXJIfShOlyrAqazuGLEL2BKvIQV5iusgtBdHGXruOLdWnE9bwnjVup6vZWrg12Lx37pZsEW2HOXOzh9uz3SeCBcJC3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dZ480xvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alIyqA0KAq4xABwhEzjvuPeMPuqSfM5UnmYzkdSnQzmnZ2Efn81VgqGOSARCj87yRg42vTqWZ9z7jwgB9VnyU2YIjc85qGfmYgq4QWKshTBsIckDzBTa+/N1oPh36i7fvYy1n4ZWQvWbP/3sxXQGqyewYAaF17CTeQYG/mpfjlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQL8+KN8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dZ480xvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF5AC4CEDF;
-	Mon,  6 Jan 2025 15:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQL8+KN8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064EBC4CEDF;
+	Mon,  6 Jan 2025 15:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176936;
-	bh=1M/8KYmoWapeK3+T++xPjPtY4NWPu005eXMIkSSuTgE=;
+	s=korg; t=1736176939;
+	bh=VRzyi+4KNFW0E6xojgcXjswsfrVjWyuJlvXr97es+Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dZ480xvLq6wHggCBDoX6aScLiYFpLbR+vHaXARwc6m+uWI7G0Ppi+tfsyVz1nHi8w
-	 EnICc3WE/+SVhIVmvUMsA1s1a9hj+i1pr5US5HdB9Y1P/8JS782ny1M5Ej+1elKf5n
-	 5YMydKpZdxBIm9IXVlsHVRzDi6RStP5Jo/Orm+XI=
+	b=oQL8+KN8OUEldMdUsKjoxkAbBLWQj+wWi2gAkt6fbk+byuXWfskvgtMJEL2uFWmzY
+	 aSSdlu4ysSn6JhE1dgwuVdqk1fvEnEN8VUwKh6Z5/MEhpYI6KqjGYr/VbviV6lXTUo
+	 YPQv68e9Dfb0sJOTOUQn6WjqvRhm2ia9dKrXEKcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seiji Nishikawa <snishika@redhat.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 78/81] mm: vmscan: account for free pages to prevent infinite Loop in throttle_direct_reclaim()
-Date: Mon,  6 Jan 2025 16:16:50 +0100
-Message-ID: <20250106151132.371873989@linuxfoundation.org>
+	syzbot+38a095a81f30d82884c1@syzkaller.appspotmail.com,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 79/81] mptcp: fix TCP options overflow.
+Date: Mon,  6 Jan 2025 16:16:51 +0100
+Message-ID: <20250106151132.409280652@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -51,144 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seiji Nishikawa <snishika@redhat.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 6aaced5abd32e2a57cd94fd64f824514d0361da8 upstream.
+commit cbb26f7d8451fe56ccac802c6db48d16240feebd upstream.
 
-The task sometimes continues looping in throttle_direct_reclaim() because
-allow_direct_reclaim(pgdat) keeps returning false.
+Syzbot reported the following splat:
 
- #0 [ffff80002cb6f8d0] __switch_to at ffff8000080095ac
- #1 [ffff80002cb6f900] __schedule at ffff800008abbd1c
- #2 [ffff80002cb6f990] schedule at ffff800008abc50c
- #3 [ffff80002cb6f9b0] throttle_direct_reclaim at ffff800008273550
- #4 [ffff80002cb6fa20] try_to_free_pages at ffff800008277b68
- #5 [ffff80002cb6fae0] __alloc_pages_nodemask at ffff8000082c4660
- #6 [ffff80002cb6fc50] alloc_pages_vma at ffff8000082e4a98
- #7 [ffff80002cb6fca0] do_anonymous_page at ffff80000829f5a8
- #8 [ffff80002cb6fce0] __handle_mm_fault at ffff8000082a5974
- #9 [ffff80002cb6fd90] handle_mm_fault at ffff8000082a5bd4
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 UID: 0 PID: 5836 Comm: sshd Not tainted 6.13.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
+RIP: 0010:_compound_head include/linux/page-flags.h:242 [inline]
+RIP: 0010:put_page+0x23/0x260 include/linux/mm.h:1552
+Code: 90 90 90 90 90 90 90 55 41 57 41 56 53 49 89 fe 48 bd 00 00 00 00 00 fc ff df e8 f8 5e 12 f8 49 8d 5e 08 48 89 d8 48 c1 e8 03 <80> 3c 28 00 74 08 48 89 df e8 8f c7 78 f8 48 8b 1b 48 89 de 48 83
+RSP: 0000:ffffc90003916c90 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: 0000000000000008 RCX: ffff888030458000
+RDX: 0000000000000100 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffffffff898ca81d R09: 1ffff110054414ac
+R10: dffffc0000000000 R11: ffffed10054414ad R12: 0000000000000007
+R13: ffff88802a20a542 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f34f496e800(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f9d6ec9ec28 CR3: 000000004d260000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ skb_page_unref include/linux/skbuff_ref.h:43 [inline]
+ __skb_frag_unref include/linux/skbuff_ref.h:56 [inline]
+ skb_release_data+0x483/0x8a0 net/core/skbuff.c:1119
+ skb_release_all net/core/skbuff.c:1190 [inline]
+ __kfree_skb+0x55/0x70 net/core/skbuff.c:1204
+ tcp_clean_rtx_queue net/ipv4/tcp_input.c:3436 [inline]
+ tcp_ack+0x2442/0x6bc0 net/ipv4/tcp_input.c:4032
+ tcp_rcv_state_process+0x8eb/0x44e0 net/ipv4/tcp_input.c:6805
+ tcp_v4_do_rcv+0x77d/0xc70 net/ipv4/tcp_ipv4.c:1939
+ tcp_v4_rcv+0x2dc0/0x37f0 net/ipv4/tcp_ipv4.c:2351
+ ip_protocol_deliver_rcu+0x22e/0x440 net/ipv4/ip_input.c:205
+ ip_local_deliver_finish+0x341/0x5f0 net/ipv4/ip_input.c:233
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ __netif_receive_skb_one_core net/core/dev.c:5672 [inline]
+ __netif_receive_skb+0x2bf/0x650 net/core/dev.c:5785
+ process_backlog+0x662/0x15b0 net/core/dev.c:6117
+ __napi_poll+0xcb/0x490 net/core/dev.c:6883
+ napi_poll net/core/dev.c:6952 [inline]
+ net_rx_action+0x89b/0x1240 net/core/dev.c:7074
+ handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:561
+ __do_softirq kernel/softirq.c:595 [inline]
+ invoke_softirq kernel/softirq.c:435 [inline]
+ __irq_exit_rcu+0xf7/0x220 kernel/softirq.c:662
+ irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+ instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+ sysvec_apic_timer_interrupt+0x57/0xc0 arch/x86/kernel/apic/apic.c:1049
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+RIP: 0033:0x7f34f4519ad5
+Code: 85 d2 74 0d 0f 10 02 48 8d 54 24 20 0f 11 44 24 20 64 8b 04 25 18 00 00 00 85 c0 75 27 41 b8 08 00 00 00 b8 0f 01 00 00 0f 05 <48> 3d 00 f0 ff ff 76 75 48 8b 15 24 73 0d 00 f7 d8 64 89 02 48 83
+RSP: 002b:00007ffec5b32ce0 EFLAGS: 00000246
+RAX: 0000000000000001 RBX: 00000000000668a0 RCX: 00007f34f4519ad5
+RDX: 00007ffec5b32d00 RSI: 0000000000000004 RDI: 0000564f4bc6cae0
+RBP: 0000564f4bc6b5a0 R08: 0000000000000008 R09: 0000000000000000
+R10: 00007ffec5b32de8 R11: 0000000000000246 R12: 0000564f48ea8aa4
+R13: 0000000000000001 R14: 0000564f48ea93e8 R15: 00007ffec5b32d68
+ </TASK>
 
-At this point, the pgdat contains the following two zones:
+Eric noted a probable shinfo->nr_frags corruption, which indeed
+occurs.
 
-        NODE: 4  ZONE: 0  ADDR: ffff00817fffe540  NAME: "DMA32"
-          SIZE: 20480  MIN/LOW/HIGH: 11/28/45
-          VM_STAT:
-                NR_FREE_PAGES: 359
-        NR_ZONE_INACTIVE_ANON: 18813
-          NR_ZONE_ACTIVE_ANON: 0
-        NR_ZONE_INACTIVE_FILE: 50
-          NR_ZONE_ACTIVE_FILE: 0
-          NR_ZONE_UNEVICTABLE: 0
-        NR_ZONE_WRITE_PENDING: 0
-                     NR_MLOCK: 0
-                    NR_BOUNCE: 0
-                   NR_ZSPAGES: 0
-            NR_FREE_CMA_PAGES: 0
+The root cause is a buggy MPTCP option len computation in some
+circumstances: the ADD_ADDR option should be mutually exclusive
+with DSS since the blamed commit.
 
-        NODE: 4  ZONE: 1  ADDR: ffff00817fffec00  NAME: "Normal"
-          SIZE: 8454144  PRESENT: 98304  MIN/LOW/HIGH: 68/166/264
-          VM_STAT:
-                NR_FREE_PAGES: 146
-        NR_ZONE_INACTIVE_ANON: 94668
-          NR_ZONE_ACTIVE_ANON: 3
-        NR_ZONE_INACTIVE_FILE: 735
-          NR_ZONE_ACTIVE_FILE: 78
-          NR_ZONE_UNEVICTABLE: 0
-        NR_ZONE_WRITE_PENDING: 0
-                     NR_MLOCK: 0
-                    NR_BOUNCE: 0
-                   NR_ZSPAGES: 0
-            NR_FREE_CMA_PAGES: 0
+Still, mptcp_established_options_add_addr() tries to set the
+relevant info in mptcp_out_options, if the remaining space is
+large enough even when DSS is present.
 
-In allow_direct_reclaim(), while processing ZONE_DMA32, the sum of
-inactive/active file-backed pages calculated in zone_reclaimable_pages()
-based on the result of zone_page_state_snapshot() is zero.
+Since the ADD_ADDR infos and the DSS share the same union
+fields, adding first corrupts the latter. In the worst-case
+scenario, such corruption increases the DSS binary layout,
+exceeding the computed length and possibly overwriting the
+skb shared info.
 
-Additionally, since this system lacks swap, the calculation of inactive/
-active anonymous pages is skipped.
+Address the issue by enforcing mutual exclusion in
+mptcp_established_options_add_addr(), too.
 
-        crash> p nr_swap_pages
-        nr_swap_pages = $1937 = {
-          counter = 0
-        }
-
-As a result, ZONE_DMA32 is deemed unreclaimable and skipped, moving on to
-the processing of the next zone, ZONE_NORMAL, despite ZONE_DMA32 having
-free pages significantly exceeding the high watermark.
-
-The problem is that the pgdat->kswapd_failures hasn't been incremented.
-
-        crash> px ((struct pglist_data *) 0xffff00817fffe540)->kswapd_failures
-        $1935 = 0x0
-
-This is because the node deemed balanced.  The node balancing logic in
-balance_pgdat() evaluates all zones collectively.  If one or more zones
-(e.g., ZONE_DMA32) have enough free pages to meet their watermarks, the
-entire node is deemed balanced.  This causes balance_pgdat() to exit early
-before incrementing the kswapd_failures, as it considers the overall
-memory state acceptable, even though some zones (like ZONE_NORMAL) remain
-under significant pressure.
-
-
-The patch ensures that zone_reclaimable_pages() includes free pages
-(NR_FREE_PAGES) in its calculation when no other reclaimable pages are
-available (e.g., file-backed or anonymous pages).  This change prevents
-zones like ZONE_DMA32, which have sufficient free pages, from being
-mistakenly deemed unreclaimable.  By doing so, the patch ensures proper
-node balancing, avoids masking pressure on other zones like ZONE_NORMAL,
-and prevents infinite loops in throttle_direct_reclaim() caused by
-allow_direct_reclaim(pgdat) repeatedly returning false.
-
-
-The kernel hangs due to a task stuck in throttle_direct_reclaim(), caused
-by a node being incorrectly deemed balanced despite pressure in certain
-zones, such as ZONE_NORMAL.  This issue arises from
-zone_reclaimable_pages() returning 0 for zones without reclaimable file-
-backed or anonymous pages, causing zones like ZONE_DMA32 with sufficient
-free pages to be skipped.
-
-The lack of swap or reclaimable pages results in ZONE_DMA32 being ignored
-during reclaim, masking pressure in other zones.  Consequently,
-pgdat->kswapd_failures remains 0 in balance_pgdat(), preventing fallback
-mechanisms in allow_direct_reclaim() from being triggered, leading to an
-infinite loop in throttle_direct_reclaim().
-
-This patch modifies zone_reclaimable_pages() to account for free pages
-(NR_FREE_PAGES) when no other reclaimable pages exist.  This ensures zones
-with sufficient free pages are not skipped, enabling proper balancing and
-reclaim behavior.
-
-[akpm@linux-foundation.org: coding-style cleanups]
-Link: https://lkml.kernel.org/r/20241130164346.436469-1-snishika@redhat.com
-Link: https://lkml.kernel.org/r/20241130161236.433747-2-snishika@redhat.com
-Fixes: 5a1c84b404a7 ("mm: remove reclaim and compaction retry approximations")
-Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+38a095a81f30d82884c1@syzkaller.appspotmail.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/538
+Fixes: 1bff1e43a30e ("mptcp: optimize out option generation")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/025d9df8cde3c9a557befc47e9bc08fbbe3476e5.1734771049.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ net/mptcp/options.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -588,7 +588,14 @@ unsigned long zone_reclaimable_pages(str
- 	if (can_reclaim_anon_pages(NULL, zone_to_nid(zone), NULL))
- 		nr += zone_page_state_snapshot(zone, NR_ZONE_INACTIVE_ANON) +
- 			zone_page_state_snapshot(zone, NR_ZONE_ACTIVE_ANON);
--
-+	/*
-+	 * If there are no reclaimable file-backed or anonymous pages,
-+	 * ensure zones with sufficient free pages are not skipped.
-+	 * This prevents zones like DMA32 from being ignored in reclaim
-+	 * scenarios where they can still help alleviate memory pressure.
-+	 */
-+	if (nr == 0)
-+		nr = zone_page_state_snapshot(zone, NR_FREE_PAGES);
- 	return nr;
- }
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -665,8 +665,15 @@ static bool mptcp_established_options_ad
+ 		    &echo, &drop_other_suboptions))
+ 		return false;
  
++	/*
++	 * Later on, mptcp_write_options() will enforce mutually exclusion with
++	 * DSS, bail out if such option is set and we can't drop it.
++	 */
+ 	if (drop_other_suboptions)
+ 		remaining += opt_size;
++	else if (opts->suboptions & OPTION_MPTCP_DSS)
++		return false;
++
+ 	len = mptcp_add_addr_len(opts->addr.family, echo, !!opts->addr.port);
+ 	if (remaining < len)
+ 		return false;
 
 
