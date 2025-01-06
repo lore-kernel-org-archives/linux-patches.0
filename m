@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9541DE2DF;
-	Mon,  6 Jan 2025 16:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAF6145A03;
+	Mon,  6 Jan 2025 16:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179267; cv=none; b=QjbW/WCcleIc2oxAVIqDfWekGK9BulEpxCnUF/8QGy7bTOGDMnICUuF2VquhTrs/JO+c3bPp2Ov95ekirE+JLu5uRIgabP0wTZQufkvLGFZ8olTR+VO9Wx9X09YVcqxZz7KjalXMzdg9uCEXFqmWomPIX5dC0wsJqynw2ih4cNs=
+	t=1736179271; cv=none; b=HzomfEZ97KUs54wQ/evhv8zcXy+6/S+2SealPKWpgDonGsTBNS2mTLSqC7gEbFI7dlsfTNR51WHxEizT+HzKxnA0sK1wDJKsD6Nw1urCuykbMzMcFoHvcf6EUpLgksYq7VSLaP14NqUYH21aIc0g+9SXxh20jWjJ248z/S60Q1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179267; c=relaxed/simple;
-	bh=ayy9sHKIz4t7rcNtczLtogwQ4NhLZxITWSZy4oZPtiE=;
+	s=arc-20240116; t=1736179271; c=relaxed/simple;
+	bh=ZAGO//mKrutHZTyD2FD9td5XCTnZ5TIGvcOLFYIGsQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Evp97kfiPP1LFI/ERy90QGgTx+V3b/krFifGdehEItiDo2qX2NpE0Bkjs4sYn6yiXcW/I34aQbbwRzvbMSFxh9ppmQSI+XuRdT/Fwy5Ke0ZUuJMeeUz/3uvgWIoUHnpXgqSAK12CYm654QN+4vzCdIbBcaH/Jc6kDc7aziEY+4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wz6r7mNx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CBu8NTRWzSlgTYRgXsUqQp9OLmPSg7j7B1thSW6zywFinhvC9P2rKavLg+QAYSyMF/wSwFV1GIYUNpUjF0Qn2sYBK7MMJ1ejk3thsovcj8x5S2llMMOfGzTa/NUAwP+dofC3LioCNO6rUkgQ4/ZU8r1yGVZMDunrkUKw2PDeTN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hq0DzcqZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wz6r7mNx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC86C4CED2;
-	Mon,  6 Jan 2025 16:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hq0DzcqZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0D4C4CED2;
+	Mon,  6 Jan 2025 16:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179267;
-	bh=ayy9sHKIz4t7rcNtczLtogwQ4NhLZxITWSZy4oZPtiE=;
+	s=korg; t=1736179270;
+	bh=ZAGO//mKrutHZTyD2FD9td5XCTnZ5TIGvcOLFYIGsQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wz6r7mNx4lKY+NDsook9VxT0/QeASpPFYfNowaoO4ybUCNGFMXubKzAGwr68D6K9A
-	 lSeSEvd9UXHy73cyFpnwopGQjeSvv/AHtzohUxm1yepeU0ZcYkJYKLyFf10s+/38HV
-	 2EvYDjhIZdhsioaBTAbXbIWA5rxHfZAdSDLfGCN0=
+	b=hq0DzcqZhqzhEGlKHFUdBdmfl4U45r7IubVO8K1QQbsPQheaI2tZzZks/8pAWMOIS
+	 dLQYuCKlpDwk8EdsU7obCaYqLmXEVPw7fOqjxwMtPguqsmz+qMQqPbeu93/O4N9N8a
+	 6DNdsLfRoJ9/foaRGbKp8r4ArLr7LE0WIsSQbIPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jing Xia <jing.xia@unisoc.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Benoit Lize <lizeb@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 80/93] wifi: mac80211: wake the queues in case of failure in resume
-Date: Mon,  6 Jan 2025 16:17:56 +0100
-Message-ID: <20250106151131.726531309@linuxfoundation.org>
+Subject: [PATCH 5.4 51/93] epoll: Add synchronous wakeup support for ep_poll_callback
+Date: Mon,  6 Jan 2025 16:17:27 +0100
+Message-ID: <20250106151130.629862442@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,42 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-[ Upstream commit 220bf000530f9b1114fa2a1022a871c7ce8a0b38 ]
+[ Upstream commit 900bbaae67e980945dec74d36f8afe0de7556d5a ]
 
-In case we fail to resume, we'll WARN with
-"Hardware became unavailable during restart." and we'll wait until user
-space does something. It'll typically bring the interface down and up to
-recover. This won't work though because the queues are still stopped on
-IEEE80211_QUEUE_STOP_REASON_SUSPEND reason.
-Make sure we clear that reason so that we give a chance to the recovery
-to succeed.
+Now, the epoll only use wake_up() interface to wake up task.
+However, sometimes, there are epoll users which want to use
+the synchronous wakeup flag to hint the scheduler, such as
+Android binder driver.
+So add a wake_up_sync() define, and use the wake_up_sync()
+when the sync is true in ep_poll_callback().
 
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219447
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20241119173108.cd628f560f97.I76a15fdb92de450e5329940125f3c58916be3942@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Co-developed-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
+Tested-by: Brian Geffon <bgeffon@google.com>
+Reviewed-by: Brian Geffon <bgeffon@google.com>
+Reported-by: Benoit Lize <lizeb@google.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ Redefine wake_up_sync(x) as __wake_up_sync(x, TASK_NORMAL, 1) to
+  make it work on 5.4.y ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/util.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/eventpoll.c       | 5 ++++-
+ include/linux/wait.h | 1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 63b66fd0a1ce..515fe1d539b4 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -2209,6 +2209,9 @@ int ieee80211_reconfig(struct ieee80211_local *local)
- 			WARN(1, "Hardware became unavailable upon resume. This could be a software issue prior to suspend or a hardware issue.\n");
- 		else
- 			WARN(1, "Hardware became unavailable during restart.\n");
-+		ieee80211_wake_queues_by_reason(hw, IEEE80211_MAX_QUEUE_MAP,
-+						IEEE80211_QUEUE_STOP_REASON_SUSPEND,
-+						false);
- 		ieee80211_handle_reconfig_failure(local);
- 		return res;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 8c0e94183186..569bfff280e4 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1273,7 +1273,10 @@ static int ep_poll_callback(wait_queue_entry_t *wait, unsigned mode, int sync, v
+ 				break;
+ 			}
+ 		}
+-		wake_up(&ep->wq);
++		if (sync)
++			wake_up_sync(&ep->wq);
++		else
++			wake_up(&ep->wq);
  	}
+ 	if (waitqueue_active(&ep->poll_wait))
+ 		pwake++;
+diff --git a/include/linux/wait.h b/include/linux/wait.h
+index 03bff85e365f..5b65f720261a 100644
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -213,6 +213,7 @@ void __wake_up_pollfree(struct wait_queue_head *wq_head);
+ #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
+ #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
+ #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
++#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL, 1)
+ 
+ #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
+ #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
 -- 
 2.39.5
 
