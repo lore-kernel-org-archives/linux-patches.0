@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F807082A;
-	Mon,  6 Jan 2025 15:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F501607AA;
+	Mon,  6 Jan 2025 15:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178156; cv=none; b=rKH730TWEV1RVAMfXt+iAbIXSheqPkKJyB5s+E7BXqqVzJ7rLyWgNDmlPdiZ5LPZSpl+my8ShJ3xNbu9SJNEM3cixsjEBwQS/AhR3W2ANrTuI1Bs4nrHaJNpQE0g6R2M+PN435auz3K0kO8vXcrHn+5TFeWRhSqo4aTUtvH7PjI=
+	t=1736178159; cv=none; b=IdUvTnKdWUTBm2TjxcYZn+2Cix4k3BUyzJ9DUUmTZXDrkJo5PlcQyeDv7NVspHKtQXkz/23F90oCA8WJ/Ih17NvqV1PF8D3o5riKyKZ24tUXJTX6JFN1kSwPu5Z65/DUIIM4qdejr9jmwnmBzI5H4cx9Mye6HUg92l5j3pyIBO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178156; c=relaxed/simple;
-	bh=tX6NjFJ+IBsbk+BC+ZX9Mjk7W5Ac28QP7I92BwMXU58=;
+	s=arc-20240116; t=1736178159; c=relaxed/simple;
+	bh=SjYFVGVoMx1ky94z2kOaCpbHewG3Xg6I+lgTkvsJ6mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JA0dQbfdN2SbbbYBwK4ZXVJQa7H3Megi6AsJ0MuaNgaDgYRtr6N0ic+7NvVObXj4AMNlyj0Pe3RyNYf1CubSoB6VXVpuudrbTI1PPYLKlv6nNirMCtTwH48vL7iMLWTj5WO/pwRw6FJKD+j9t5q9sCpgC533UgIynV+zQCcctJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxB6WHh4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cjuGhWGIBk1L2meJNUz3+1F9GA651Lkg4DZ6v7tQ82kMhJCpYZxQoxk3bckl9VB5jFDoyY4IhMHL1MpoGwSKHbmle/k0NhVdUMYwt3wrSNfPm6FQKiyzmjocLW6bvxKT+VmTlDZ/DuecdhFhPZCosUPHS7je29Ssm5xPixCuFGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7zc2QTb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxB6WHh4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FB6C4CED2;
-	Mon,  6 Jan 2025 15:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7zc2QTb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB67FC4CED2;
+	Mon,  6 Jan 2025 15:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178156;
-	bh=tX6NjFJ+IBsbk+BC+ZX9Mjk7W5Ac28QP7I92BwMXU58=;
+	s=korg; t=1736178159;
+	bh=SjYFVGVoMx1ky94z2kOaCpbHewG3Xg6I+lgTkvsJ6mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxB6WHh4Se4J3aYV8FVCoM0yTv7ai/3GGYbNU4ydmVwxpTQhI4gmO61u+NplYxdke
-	 cMAMohXhgQqZsMJniL177j9o4T7nHqnGkUKEQ8AXwW0bSHkSSYqYmTl4VmQDGTO4QQ
-	 i46M2ulzyZmnBPoulIVr/FMLZb6nTaT8a4Mh/MIA=
+	b=K7zc2QTbL/XlA0fMBDjjwWJCV35S0ZcCF47q/9P4eEKEd1sT+l0hpUD4LgQ7VOfGX
+	 dbFM2EZ/uqq+z074oA/pZcoIWrLOwgIRhY2VlIRTRpD/buspCJkzdAN9kn/x7T855B
+	 F8PGWSOITf1SSdAYWUp7npRC/xE6Zh2tV1UTe1l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Hongchi <hongchi.peng@siengine.com>,
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/138] usb: dwc2: gadget: Dont write invalid mapped sg entries into dma_desc with iommu enabled
-Date: Mon,  6 Jan 2025 16:15:32 +0100
-Message-ID: <20250106151133.532746864@linuxfoundation.org>
+Subject: [PATCH 5.10 009/138] i2c: pnx: Fix timeout in wait functions
+Date: Mon,  6 Jan 2025 16:15:33 +0100
+Message-ID: <20250106151133.569427341@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -50,53 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Hongchi <hongchi.peng@siengine.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-[ Upstream commit 1134289b6b93d73721340b66c310fd985385e8fa ]
+[ Upstream commit 7363f2d4c18557c99c536b70489187bb4e05c412 ]
 
-When using dma_map_sg() to map the scatterlist with iommu enabled,
-the entries in the scatterlist can be mergerd into less but longer
-entries in the function __finalise_sg(). So that the number of
-valid mapped entries is actually smaller than ureq->num_reqs,and
-there are still some invalid entries in the scatterlist with
-dma_addr=0xffffffff and len=0. Writing these invalid sg entries
-into the dma_desc can cause a data transmission error.
+Since commit f63b94be6942 ("i2c: pnx: Fix potential deadlock warning
+from del_timer_sync() call in isr") jiffies are stored in
+i2c_pnx_algo_data.timeout, but wait_timeout and wait_reset are still
+using it as milliseconds. Convert jiffies back to milliseconds to wait
+for the expected amount of time.
 
-The function dma_map_sg() returns the number of valid map entries
-and the return value is assigned to usb_request::num_mapped_sgs in
-function usb_gadget_map_request_by_dev(). So that just write valid
-mapped entries into dma_desc according to the usb_request::num_mapped_sgs,
-and set the IOC bit if it's the last valid mapped entry.
-
-This patch poses no risk to no-iommu situation, cause
-ureq->num_mapped_sgs equals ureq->num_sgs while using dma_direct_map_sg()
-to map the scatterlist whith iommu disabled.
-
-Signed-off-by: Peng Hongchi <hongchi.peng@siengine.com>
-Link: https://lore.kernel.org/r/20240523100315.7226-1-hongchi.peng@siengine.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f63b94be6942 ("i2c: pnx: Fix potential deadlock warning from del_timer_sync() call in isr")
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc2/gadget.c | 4 ++--
+ drivers/i2c/busses/i2c-pnx.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index d8b83665581f..af8a0bb5c508 100644
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -886,10 +886,10 @@ static void dwc2_gadget_config_nonisoc_xfer_ddma(struct dwc2_hsotg_ep *hs_ep,
- 	}
+diff --git a/drivers/i2c/busses/i2c-pnx.c b/drivers/i2c/busses/i2c-pnx.c
+index b6b5a65efcbb..5ff9218b4a62 100644
+--- a/drivers/i2c/busses/i2c-pnx.c
++++ b/drivers/i2c/busses/i2c-pnx.c
+@@ -95,7 +95,7 @@ enum {
  
- 	/* DMA sg buffer */
--	for_each_sg(ureq->sg, sg, ureq->num_sgs, i) {
-+	for_each_sg(ureq->sg, sg, ureq->num_mapped_sgs, i) {
- 		dwc2_gadget_fill_nonisoc_xfer_ddma_one(hs_ep, &desc,
- 			sg_dma_address(sg) + sg->offset, sg_dma_len(sg),
--			sg_is_last(sg));
-+			(i == (ureq->num_mapped_sgs - 1)));
- 		desc_count += hs_ep->desc_count;
- 	}
+ static inline int wait_timeout(struct i2c_pnx_algo_data *data)
+ {
+-	long timeout = data->timeout;
++	long timeout = jiffies_to_msecs(data->timeout);
+ 	while (timeout > 0 &&
+ 			(ioread32(I2C_REG_STS(data)) & mstatus_active)) {
+ 		mdelay(1);
+@@ -106,7 +106,7 @@ static inline int wait_timeout(struct i2c_pnx_algo_data *data)
  
+ static inline int wait_reset(struct i2c_pnx_algo_data *data)
+ {
+-	long timeout = data->timeout;
++	long timeout = jiffies_to_msecs(data->timeout);
+ 	while (timeout > 0 &&
+ 			(ioread32(I2C_REG_CTL(data)) & mcntrl_reset)) {
+ 		mdelay(1);
 -- 
 2.39.5
 
