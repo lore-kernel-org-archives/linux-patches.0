@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46FF1ADFE3;
-	Mon,  6 Jan 2025 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD21318A6C1;
+	Mon,  6 Jan 2025 15:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177145; cv=none; b=Xjdi8PkNvD4x9Hr/zHf9NHHrgGV6CuDssr3+DziTDyYWMwQpWZrwAjQisJQlITlHsdMyw2MMr+Dbb17Z9qhcTwVIyQC/S65lPATwtt2a70/FCeKp+3v+HfHm0XBnbWwEisfapi0tmAm5mA7btewgQJCYu5M726wQXFiZ/1fSW5g=
+	t=1736177148; cv=none; b=krvM6FWMXXojNhqnXLs6qlOTJZbzmvXY/rX4FjaKEOxXKt5WucmLM4LR2/VX0+EvaJ16Z2HMe+yFcbHPPEjmByKtdzVle5NLElS7wF17h2Ky9DXhyhyHX9aL9uejfOQDssc9kRHuG/RiwvxJon3gjo3Mbb23hKSnANpxdDn0F54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177145; c=relaxed/simple;
-	bh=L+r9SSjrix5tx2N4a1HKVrE5kdsLgULA3UCT0ekXHW4=;
+	s=arc-20240116; t=1736177148; c=relaxed/simple;
+	bh=Urc6ynmAmOtQLoLuWWhcgYYnvHa7Stpnu7NxEQYZ4v8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uxeMubJS8bkSIYICPoRXO8FjG9xHHvTgrZj0ZeBrZqBbr3Olb95FmQohkgwtbh/Yjql3JWwD8mPvBj9qh0pLjIl/LmDAxHmVDDS1oApkRtyIqzSsQbMpYLcIxd4TMenukL6FCMzYZTKH3YnqjRUj4T9CA5MsMhkBqVCDK2xVyA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gb3f7oOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jPEM4ZGW1EilDq2lIEShLYYDnqGY600w5FL781QEwzz+p1KHFeqW3nfGuw86ClpTPZR8FxSw4ZuKGgCg+MnGhbd/a2vM8HPF2NIELczfw/8o4t2BonoFjr6wngGs2azm4tSl8kjVhLFAuXsAB9u/iJR9G0UngcxXVRUMLa4tsDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZX5I4B2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gb3f7oOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3ADC4CED2;
-	Mon,  6 Jan 2025 15:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZX5I4B2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6BAC4CED2;
+	Mon,  6 Jan 2025 15:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177145;
-	bh=L+r9SSjrix5tx2N4a1HKVrE5kdsLgULA3UCT0ekXHW4=;
+	s=korg; t=1736177148;
+	bh=Urc6ynmAmOtQLoLuWWhcgYYnvHa7Stpnu7NxEQYZ4v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gb3f7oOrs4M9M4oqhrpqDg/fINcULT0gmsjLbCgwZ1LQFnp9c1QQr8736vZ2SLGDb
-	 /UUTLMM5Hn7EA20+Q/tvqP/vUMS5bqTfWCG62s9Kh4b7MXhYi/kUODH/bDVMLHXF8q
-	 x+IiDYNwFbYHdN//lCwPVyCWTdjlt7IrHm0jckeA=
+	b=XZX5I4B2CWPKrdaZxijF7BCRdQvThlXF99HiqjUaTGRemv2S6PqiRA+u5PuM/sGVs
+	 8NHDxx5NT4f+kILL1KhOCCBeE1XER1SSBVFq+j8cPpQdddKdEGOo91NSwkvSq6iZpq
+	 55VD59HixGaMuGAZZWUpucyC51Ms8dQGlxlCttpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/222] usb: typec: ucsi: glink: be more precise on orientation-aware ports
-Date: Mon,  6 Jan 2025 16:14:31 +0100
-Message-ID: <20250106151153.142247225@linuxfoundation.org>
+Subject: [PATCH 6.6 068/222] nvme: use helper nvme_ctrl_state in nvme_keep_alive_finish function
+Date: Mon,  6 Jan 2025 16:14:32 +0100
+Message-ID: <20250106151153.179664139@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,50 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-[ Upstream commit de9df030ccb5d3e31ee0c715d74cd77c619748f8 ]
+[ Upstream commit 599d9f3a10eec69ef28a90161763e4bd7c9c02bf ]
 
-Instead of checking if any of the USB-C ports have orientation GPIO and
-thus is orientation-aware, check for the GPIO for the port being
-registered. There are no boards that are affected by this change at this
-moment, so the patch is not marked as a fix, but it might affect other
-boards in future.
+We no more need acquiring ctrl->lock before accessing the
+NVMe controller state and instead we can now use the helper
+nvme_ctrl_state. So replace the use of ctrl->lock from
+nvme_keep_alive_finish function with nvme_ctrl_state call.
 
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241109-ucsi-glue-fixes-v2-2-8b21ff4f9fbe@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 84488282166d ("Revert "nvme: make keep-alive synchronous operation"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/nvme/host/core.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index f6c3af5846e6..f0b4d0a4bb19 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -189,12 +189,12 @@ static int pmic_glink_ucsi_sync_write(struct ucsi *__ucsi, unsigned int offset,
- static void pmic_glink_ucsi_update_connector(struct ucsi_connector *con)
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 5b6a6bd4e6e8..ae494c799fc5 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1181,10 +1181,9 @@ static void nvme_queue_keep_alive_work(struct nvme_ctrl *ctrl)
+ static void nvme_keep_alive_finish(struct request *rq,
+ 		blk_status_t status, struct nvme_ctrl *ctrl)
  {
- 	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
--	int i;
+-	unsigned long flags;
+-	bool startka = false;
+ 	unsigned long rtt = jiffies - (rq->deadline - rq->timeout);
+ 	unsigned long delay = nvme_keep_alive_work_period(ctrl);
++	enum nvme_ctrl_state state = nvme_ctrl_state(ctrl);
  
--	for (i = 0; i < PMIC_GLINK_MAX_PORTS; i++) {
--		if (ucsi->port_orientation[i])
--			con->typec_cap.orientation_aware = true;
--	}
-+	if (con->num > PMIC_GLINK_MAX_PORTS ||
-+	    !ucsi->port_orientation[con->num - 1])
-+		return;
-+
-+	con->typec_cap.orientation_aware = true;
+ 	/*
+ 	 * Subtract off the keepalive RTT so nvme_keep_alive_work runs
+@@ -1207,12 +1206,7 @@ static void nvme_keep_alive_finish(struct request *rq,
+ 
+ 	ctrl->ka_last_check_time = jiffies;
+ 	ctrl->comp_seen = false;
+-	spin_lock_irqsave(&ctrl->lock, flags);
+-	if (ctrl->state == NVME_CTRL_LIVE ||
+-	    ctrl->state == NVME_CTRL_CONNECTING)
+-		startka = true;
+-	spin_unlock_irqrestore(&ctrl->lock, flags);
+-	if (startka)
++	if (state == NVME_CTRL_LIVE || state == NVME_CTRL_CONNECTING)
+ 		queue_delayed_work(nvme_wq, &ctrl->ka_work, delay);
  }
  
- static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
 -- 
 2.39.5
 
