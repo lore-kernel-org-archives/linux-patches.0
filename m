@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA081DACBB;
-	Mon,  6 Jan 2025 16:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C221DDC0F;
+	Mon,  6 Jan 2025 16:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179243; cv=none; b=CoC6eYn4XhceBDmeK2ZHRmu6myn1bwbPjEkdES8QgyMqCq9Kj/f9dvEQrPLX4JjKg5fgBsDXk/zt0+H1UxDJBTwRexDIogtIOVCYny9q4+7TxJmSuWpZm9NPS208WFghy5u+2FYUw1WNeKyamDOtwiixjCxdGKGas70lMdRkCuQ=
+	t=1736179246; cv=none; b=kMz01wXjv9nNkWZdtC/fYpUN4c9gN1NWnVXgYj2UmO0njp+1D8g22IfzCVneJNCvqirFkeizVU/hX9XzawXEQEvuVJkkIpKo8aUNi3htk50XpjH7jvBmAVwDKNrOTQpTQsJY5PZjPaXY7QRqX5d8zVT8+6FeJQy51U+VwstC6w8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179243; c=relaxed/simple;
-	bh=fIxty27YL3jwC7C9SC/YNQwTvgD8OfeOVPAkl6qlfDo=;
+	s=arc-20240116; t=1736179246; c=relaxed/simple;
+	bh=EIf4j58T22LTkPhkQPs8G5iArnaH6khw+IInm54aWP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJ5JRfvDhXChH29Va9U2JqbslYrJINU+0EXFPDXPnf4B6Sb6WbU+9nNxZb/kNp5R6HiGCrokj1cNlKpyYdKLkIV6+/ZKSYUwRRBlAtFbJiqxVKB+C3B+3FXERg6RZUbkI1wRgDKKgdJLtreRVQIdMvP2lOPq29yrflmM/eU3sRo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAyz1+Cx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fS5orKR74T6ewHXLaKZv/VN4+TxNJyluDGoF1fm7hrmvPb03KzvjN6ZJjHiIFui3ZJ2tA6u/cOMdhemzapVzcCPaudWMi4QcxpVGf8sx2mBTLQyhuZSAmRwfXZsN0o03YbX5Xws6FEHi8D7EWPac9syTkRF+dRo/2lXD48XLYyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiG3/SU2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAyz1+Cx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAB7C4CED2;
-	Mon,  6 Jan 2025 16:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiG3/SU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75202C4CED6;
+	Mon,  6 Jan 2025 16:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179242;
-	bh=fIxty27YL3jwC7C9SC/YNQwTvgD8OfeOVPAkl6qlfDo=;
+	s=korg; t=1736179245;
+	bh=EIf4j58T22LTkPhkQPs8G5iArnaH6khw+IInm54aWP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kAyz1+CxDBE7ox3q31nqs9NyQYtSWiEDZf58Hsnxy/SWAlIBZuHvg0k+BSNXMGPaU
-	 cpwSgXI3KRUrOh+MqtBa8LCcMeFJh6LQ0uRf1mi+wXCMWhIbsITq0ohsQjGWo1teWV
-	 hR6hnjPs5Dmg8i8gMnTq2XqTCMlgaA2EJLfc7yxM=
+	b=hiG3/SU2W4lzfrnxXQh8dbbknBUD8s7NrtUiHgIp2ofQOvdAuN8RHpUVqC2V9yOyO
+	 AJqVObYBsx2P9z9gJ/mD0wDR0OvXX7rkxCQgaaIJHHqjrkL38emEVaGv9zed1bONpn
+	 poLA24CRhQDVNMYXFpDivQDrEGQtVGPjAmoJ8Ojc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavo@embeddedor.com>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 73/93] netfilter: Replace zero-length array with flexible-array member
-Date: Mon,  6 Jan 2025 16:17:49 +0100
-Message-ID: <20250106151131.460592311@linuxfoundation.org>
+Subject: [PATCH 5.4 74/93] netfilter: nft_set_hash: unaligned atomic read on struct nft_set_ext
+Date: Mon,  6 Jan 2025 16:17:50 +0100
+Message-ID: <20250106151131.498482861@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -51,433 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gustavo A. R. Silva <gustavo@embeddedor.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6daf14140129d30207ed6a0a69851fa6a3636bda ]
+[ Upstream commit 542ed8145e6f9392e3d0a86a0e9027d2ffd183e4 ]
 
-The current codebase makes use of the zero-length array language
-extension to the C90 standard, but the preferred mechanism to declare
-variable-length types such as these ones is a flexible array member[1][2],
-introduced in C99:
+Access to genmask field in struct nft_set_ext results in unaligned
+atomic read:
 
-struct foo {
-        int stuff;
-        struct boo array[];
-};
+[   72.130109] Unable to handle kernel paging request at virtual address ffff0000c2bb708c
+[   72.131036] Mem abort info:
+[   72.131213]   ESR = 0x0000000096000021
+[   72.131446]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   72.132209]   SET = 0, FnV = 0
+[   72.133216]   EA = 0, S1PTW = 0
+[   72.134080]   FSC = 0x21: alignment fault
+[   72.135593] Data abort info:
+[   72.137194]   ISV = 0, ISS = 0x00000021, ISS2 = 0x00000000
+[   72.142351]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   72.145989]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   72.150115] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000237d27000
+[   72.154893] [ffff0000c2bb708c] pgd=0000000000000000, p4d=180000023ffff403, pud=180000023f84b403, pmd=180000023f835403,
++pte=0068000102bb7707
+[   72.163021] Internal error: Oops: 0000000096000021 [#1] SMP
+[...]
+[   72.170041] CPU: 7 UID: 0 PID: 54 Comm: kworker/7:0 Tainted: G            E      6.13.0-rc3+ #2
+[   72.170509] Tainted: [E]=UNSIGNED_MODULE
+[   72.170720] Hardware name: QEMU QEMU Virtual Machine, BIOS edk2-stable202302-for-qemu 03/01/2023
+[   72.171192] Workqueue: events_power_efficient nft_rhash_gc [nf_tables]
+[   72.171552] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   72.171915] pc : nft_rhash_gc+0x200/0x2d8 [nf_tables]
+[   72.172166] lr : nft_rhash_gc+0x128/0x2d8 [nf_tables]
+[   72.172546] sp : ffff800081f2bce0
+[   72.172724] x29: ffff800081f2bd40 x28: ffff0000c2bb708c x27: 0000000000000038
+[   72.173078] x26: ffff0000c6780ef0 x25: ffff0000c643df00 x24: ffff0000c6778f78
+[   72.173431] x23: 000000000000001a x22: ffff0000c4b1f000 x21: ffff0000c6780f78
+[   72.173782] x20: ffff0000c2bb70dc x19: ffff0000c2bb7080 x18: 0000000000000000
+[   72.174135] x17: ffff0000c0a4e1c0 x16: 0000000000003000 x15: 0000ac26d173b978
+[   72.174485] x14: ffffffffffffffff x13: 0000000000000030 x12: ffff0000c6780ef0
+[   72.174841] x11: 0000000000000000 x10: ffff800081f2bcf8 x9 : ffff0000c3000000
+[   72.175193] x8 : 00000000000004be x7 : 0000000000000000 x6 : 0000000000000000
+[   72.175544] x5 : 0000000000000040 x4 : ffff0000c3000010 x3 : 0000000000000000
+[   72.175871] x2 : 0000000000003a98 x1 : ffff0000c2bb708c x0 : 0000000000000004
+[   72.176207] Call trace:
+[   72.176316]  nft_rhash_gc+0x200/0x2d8 [nf_tables] (P)
+[   72.176653]  process_one_work+0x178/0x3d0
+[   72.176831]  worker_thread+0x200/0x3f0
+[   72.176995]  kthread+0xe8/0xf8
+[   72.177130]  ret_from_fork+0x10/0x20
+[   72.177289] Code: 54fff984 d503201f d2800080 91003261 (f820303f)
+[   72.177557] ---[ end trace 0000000000000000 ]---
 
-By making use of the mechanism above, we will get a compiler warning
-in case the flexible array does not occur last in the structure, which
-will help us prevent some kind of undefined behavior bugs from being
-inadvertently introduced[3] to the codebase from now on.
+Align struct nft_set_ext to word size to address this and
+documentation it.
 
-Also, notice that, dynamic memory allocations won't be affected by
-this change:
+pahole reports that this increases the size of elements for rhash and
+pipapo in 8 bytes on x86_64.
 
-"Flexible array members have incomplete type, and so the sizeof operator
-may not be applied. As a quirk of the original implementation of
-zero-length arrays, sizeof evaluates to zero."[1]
-
-Lastly, fix checkpatch.pl warning
-WARNING: __aligned(size) is preferred over __attribute__((aligned(size)))
-in net/bridge/netfilter/ebtables.c
-
-This issue was found with the help of Coccinelle.
-
-[1] https://gcc.gnu.org/onlinedocs/gcc/Zero-Length.html
-[2] https://github.com/KSPP/linux/issues/21
-[3] commit 76497732932f ("cxgb3/l2t: Fix undefined behaviour")
-
-Signed-off-by: Gustavo A. R. Silva <gustavo@embeddedor.com>
+Fixes: 7ffc7481153b ("netfilter: nft_set_hash: skip duplicated elements pending gc run")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 542ed8145e6f ("netfilter: nft_set_hash: unaligned atomic read on struct nft_set_ext")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter/ipset/ip_set.h          | 2 +-
- include/linux/netfilter/x_tables.h              | 8 ++++----
- include/linux/netfilter_arp/arp_tables.h        | 2 +-
- include/linux/netfilter_bridge/ebtables.h       | 2 +-
- include/linux/netfilter_ipv4/ip_tables.h        | 2 +-
- include/linux/netfilter_ipv6/ip6_tables.h       | 2 +-
- include/net/netfilter/nf_conntrack_extend.h     | 2 +-
- include/net/netfilter/nf_conntrack_timeout.h    | 2 +-
- include/net/netfilter/nf_tables.h               | 6 +++---
- include/uapi/linux/netfilter_bridge/ebt_among.h | 2 +-
- net/bridge/netfilter/ebtables.c                 | 2 +-
- net/ipv4/netfilter/arp_tables.c                 | 4 ++--
- net/ipv4/netfilter/ip_tables.c                  | 4 ++--
- net/ipv6/netfilter/ip6_tables.c                 | 4 ++--
- net/netfilter/ipset/ip_set_bitmap_ip.c          | 2 +-
- net/netfilter/ipset/ip_set_bitmap_ipmac.c       | 2 +-
- net/netfilter/ipset/ip_set_bitmap_port.c        | 2 +-
- net/netfilter/ipset/ip_set_hash_gen.h           | 4 ++--
- net/netfilter/nfnetlink_acct.c                  | 2 +-
- net/netfilter/xt_hashlimit.c                    | 2 +-
- net/netfilter/xt_recent.c                       | 4 ++--
- 21 files changed, 31 insertions(+), 31 deletions(-)
+ include/net/netfilter/nf_tables.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/netfilter/ipset/ip_set.h b/include/linux/netfilter/ipset/ip_set.h
-index 35342fb48866..ef6a9d082c2c 100644
---- a/include/linux/netfilter/ipset/ip_set.h
-+++ b/include/linux/netfilter/ipset/ip_set.h
-@@ -98,7 +98,7 @@ struct ip_set_counter {
- 
- struct ip_set_comment_rcu {
- 	struct rcu_head rcu;
--	char str[0];
-+	char str[];
- };
- 
- struct ip_set_comment {
-diff --git a/include/linux/netfilter/x_tables.h b/include/linux/netfilter/x_tables.h
-index 04e7f5630509..e66ef9bf6ff3 100644
---- a/include/linux/netfilter/x_tables.h
-+++ b/include/linux/netfilter/x_tables.h
-@@ -264,7 +264,7 @@ struct xt_table_info {
- 	unsigned int stacksize;
- 	void ***jumpstack;
- 
--	unsigned char entries[0] __aligned(8);
-+	unsigned char entries[] __aligned(8);
- };
- 
- int xt_register_target(struct xt_target *target);
-@@ -464,7 +464,7 @@ struct compat_xt_entry_match {
- 		} kernel;
- 		u_int16_t match_size;
- 	} u;
--	unsigned char data[0];
-+	unsigned char data[];
- };
- 
- struct compat_xt_entry_target {
-@@ -480,7 +480,7 @@ struct compat_xt_entry_target {
- 		} kernel;
- 		u_int16_t target_size;
- 	} u;
--	unsigned char data[0];
-+	unsigned char data[];
- };
- 
- /* FIXME: this works only on 32 bit tasks
-@@ -494,7 +494,7 @@ struct compat_xt_counters {
- struct compat_xt_counters_info {
- 	char name[XT_TABLE_MAXNAMELEN];
- 	compat_uint_t num_counters;
--	struct compat_xt_counters counters[0];
-+	struct compat_xt_counters counters[];
- };
- 
- struct _compat_xt_align {
-diff --git a/include/linux/netfilter_arp/arp_tables.h b/include/linux/netfilter_arp/arp_tables.h
-index 6988cf9ffe3a..26a13294318c 100644
---- a/include/linux/netfilter_arp/arp_tables.h
-+++ b/include/linux/netfilter_arp/arp_tables.h
-@@ -68,7 +68,7 @@ struct compat_arpt_entry {
- 	__u16 next_offset;
- 	compat_uint_t comefrom;
- 	struct compat_xt_counters counters;
--	unsigned char elems[0];
-+	unsigned char elems[];
- };
- 
- static inline struct xt_entry_target *
-diff --git a/include/linux/netfilter_bridge/ebtables.h b/include/linux/netfilter_bridge/ebtables.h
-index f0d846df3a42..a18fb73a2b77 100644
---- a/include/linux/netfilter_bridge/ebtables.h
-+++ b/include/linux/netfilter_bridge/ebtables.h
-@@ -85,7 +85,7 @@ struct ebt_table_info {
- 	/* room to maintain the stack used for jumping from and into udc */
- 	struct ebt_chainstack **chainstack;
- 	char *entries;
--	struct ebt_counter counters[0] ____cacheline_aligned;
-+	struct ebt_counter counters[] ____cacheline_aligned;
- };
- 
- struct ebt_table {
-diff --git a/include/linux/netfilter_ipv4/ip_tables.h b/include/linux/netfilter_ipv4/ip_tables.h
-index e9e1ed74cdf1..b394bd4f68a3 100644
---- a/include/linux/netfilter_ipv4/ip_tables.h
-+++ b/include/linux/netfilter_ipv4/ip_tables.h
-@@ -76,7 +76,7 @@ struct compat_ipt_entry {
- 	__u16 next_offset;
- 	compat_uint_t comefrom;
- 	struct compat_xt_counters counters;
--	unsigned char elems[0];
-+	unsigned char elems[];
- };
- 
- /* Helper functions */
-diff --git a/include/linux/netfilter_ipv6/ip6_tables.h b/include/linux/netfilter_ipv6/ip6_tables.h
-index 78ab959c4575..8225f7821a29 100644
---- a/include/linux/netfilter_ipv6/ip6_tables.h
-+++ b/include/linux/netfilter_ipv6/ip6_tables.h
-@@ -43,7 +43,7 @@ struct compat_ip6t_entry {
- 	__u16 next_offset;
- 	compat_uint_t comefrom;
- 	struct compat_xt_counters counters;
--	unsigned char elems[0];
-+	unsigned char elems[];
- };
- 
- static inline struct xt_entry_target *
-diff --git a/include/net/netfilter/nf_conntrack_extend.h b/include/net/netfilter/nf_conntrack_extend.h
-index 112a6f40dfaf..d0e87120d2f4 100644
---- a/include/net/netfilter/nf_conntrack_extend.h
-+++ b/include/net/netfilter/nf_conntrack_extend.h
-@@ -46,7 +46,7 @@ struct nf_ct_ext {
- 	struct rcu_head rcu;
- 	u8 offset[NF_CT_EXT_NUM];
- 	u8 len;
--	char data[0];
-+	char data[];
- };
- 
- static inline bool __nf_ct_ext_exist(const struct nf_ct_ext *ext, u8 id)
-diff --git a/include/net/netfilter/nf_conntrack_timeout.h b/include/net/netfilter/nf_conntrack_timeout.h
-index 6dd72396f534..659b0ea25b4d 100644
---- a/include/net/netfilter/nf_conntrack_timeout.h
-+++ b/include/net/netfilter/nf_conntrack_timeout.h
-@@ -14,7 +14,7 @@
- struct nf_ct_timeout {
- 	__u16			l3num;
- 	const struct nf_conntrack_l4proto *l4proto;
--	char			data[0];
-+	char			data[];
- };
- 
- struct ctnl_timeout {
 diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 648aac42dfec..c50dee30a70c 100644
+index c50dee30a70c..92551a765a44 100644
 --- a/include/net/netfilter/nf_tables.h
 +++ b/include/net/netfilter/nf_tables.h
-@@ -226,7 +226,7 @@ int nft_parse_register_store(const struct nft_ctx *ctx,
-  */
- struct nft_userdata {
- 	u8			len;
--	unsigned char		data[0];
-+	unsigned char		data[];
- };
- 
+@@ -571,15 +571,18 @@ struct nft_set_ext_tmpl {
  /**
-@@ -578,7 +578,7 @@ struct nft_set_ext_tmpl {
+  *	struct nft_set_ext - set extensions
+  *
+- *	@genmask: generation mask
++ *	@genmask: generation mask, but also flags (see NFT_SET_ELEM_DEAD_BIT)
+  *	@offset: offsets of individual extension types
+  *	@data: beginning of extension data
++ *
++ *	This structure must be aligned to word size, otherwise atomic bitops
++ *	on genmask field can cause alignment failure on some archs.
+  */
  struct nft_set_ext {
  	u8	genmask;
  	u8	offset[NFT_SET_EXT_NUM];
--	char	data[0];
-+	char	data[];
- };
+ 	char	data[];
+-};
++} __aligned(BITS_PER_LONG / 8);
  
  static inline void nft_set_ext_prepare(struct nft_set_ext_tmpl *tmpl)
-@@ -1357,7 +1357,7 @@ struct nft_trans {
- 	int				msg_type;
- 	bool				put_net;
- 	struct nft_ctx			ctx;
--	char				data[0];
-+	char				data[];
- };
- 
- struct nft_trans_rule {
-diff --git a/include/uapi/linux/netfilter_bridge/ebt_among.h b/include/uapi/linux/netfilter_bridge/ebt_among.h
-index 9acf757bc1f7..73b26a280c4f 100644
---- a/include/uapi/linux/netfilter_bridge/ebt_among.h
-+++ b/include/uapi/linux/netfilter_bridge/ebt_among.h
-@@ -40,7 +40,7 @@ struct ebt_mac_wormhash_tuple {
- struct ebt_mac_wormhash {
- 	int table[257];
- 	int poolsize;
--	struct ebt_mac_wormhash_tuple pool[0];
-+	struct ebt_mac_wormhash_tuple pool[];
- };
- 
- #define ebt_mac_wormhash_size(x) ((x) ? sizeof(struct ebt_mac_wormhash) \
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index f6853fc0fcc0..9d07cf277759 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1581,7 +1581,7 @@ struct compat_ebt_entry_mwt {
- 		compat_uptr_t ptr;
- 	} u;
- 	compat_uint_t match_size;
--	compat_uint_t data[0] __attribute__ ((aligned (__alignof__(struct compat_ebt_replace))));
-+	compat_uint_t data[] __aligned(__alignof__(struct compat_ebt_replace));
- };
- 
- /* account for possible padding between match_size and ->data */
-diff --git a/net/ipv4/netfilter/arp_tables.c b/net/ipv4/netfilter/arp_tables.c
-index a6f2e5bf7045..c62c9713e7dd 100644
---- a/net/ipv4/netfilter/arp_tables.c
-+++ b/net/ipv4/netfilter/arp_tables.c
-@@ -1057,7 +1057,7 @@ struct compat_arpt_replace {
- 	u32				underflow[NF_ARP_NUMHOOKS];
- 	u32				num_counters;
- 	compat_uptr_t			counters;
--	struct compat_arpt_entry	entries[0];
-+	struct compat_arpt_entry	entries[];
- };
- 
- static inline void compat_release_entry(struct compat_arpt_entry *e)
-@@ -1385,7 +1385,7 @@ static int compat_copy_entries_to_user(unsigned int total_size,
- struct compat_arpt_get_entries {
- 	char name[XT_TABLE_MAXNAMELEN];
- 	compat_uint_t size;
--	struct compat_arpt_entry entrytable[0];
-+	struct compat_arpt_entry entrytable[];
- };
- 
- static int compat_get_entries(struct net *net,
-diff --git a/net/ipv4/netfilter/ip_tables.c b/net/ipv4/netfilter/ip_tables.c
-index 0076449eea35..c21ba5e62fff 100644
---- a/net/ipv4/netfilter/ip_tables.c
-+++ b/net/ipv4/netfilter/ip_tables.c
-@@ -1211,7 +1211,7 @@ struct compat_ipt_replace {
- 	u32			underflow[NF_INET_NUMHOOKS];
- 	u32			num_counters;
- 	compat_uptr_t		counters;	/* struct xt_counters * */
--	struct compat_ipt_entry	entries[0];
-+	struct compat_ipt_entry	entries[];
- };
- 
- static int
-@@ -1564,7 +1564,7 @@ compat_do_ipt_set_ctl(struct sock *sk,	int cmd, void __user *user,
- struct compat_ipt_get_entries {
- 	char name[XT_TABLE_MAXNAMELEN];
- 	compat_uint_t size;
--	struct compat_ipt_entry entrytable[0];
-+	struct compat_ipt_entry entrytable[];
- };
- 
- static int
-diff --git a/net/ipv6/netfilter/ip6_tables.c b/net/ipv6/netfilter/ip6_tables.c
-index 41268612bdd4..010a70402828 100644
---- a/net/ipv6/netfilter/ip6_tables.c
-+++ b/net/ipv6/netfilter/ip6_tables.c
-@@ -1228,7 +1228,7 @@ struct compat_ip6t_replace {
- 	u32			underflow[NF_INET_NUMHOOKS];
- 	u32			num_counters;
- 	compat_uptr_t		counters;	/* struct xt_counters * */
--	struct compat_ip6t_entry entries[0];
-+	struct compat_ip6t_entry entries[];
- };
- 
- static int
-@@ -1574,7 +1574,7 @@ compat_do_ip6t_set_ctl(struct sock *sk, int cmd, void __user *user,
- struct compat_ip6t_get_entries {
- 	char name[XT_TABLE_MAXNAMELEN];
- 	compat_uint_t size;
--	struct compat_ip6t_entry entrytable[0];
-+	struct compat_ip6t_entry entrytable[];
- };
- 
- static int
-diff --git a/net/netfilter/ipset/ip_set_bitmap_ip.c b/net/netfilter/ipset/ip_set_bitmap_ip.c
-index e758b8120020..8fb170c7327f 100644
---- a/net/netfilter/ipset/ip_set_bitmap_ip.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
-@@ -46,7 +46,7 @@ struct bitmap_ip {
- 	u8 netmask;		/* subnet netmask */
- 	struct timer_list gc;	/* garbage collection */
- 	struct ip_set *set;	/* attached to this ip_set */
--	unsigned char extensions[0]	/* data extensions */
-+	unsigned char extensions[]	/* data extensions */
- 		__aligned(__alignof__(u64));
- };
- 
-diff --git a/net/netfilter/ipset/ip_set_bitmap_ipmac.c b/net/netfilter/ipset/ip_set_bitmap_ipmac.c
-index ae7cdc0d0f29..ebbcb9a16fe9 100644
---- a/net/netfilter/ipset/ip_set_bitmap_ipmac.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_ipmac.c
-@@ -49,7 +49,7 @@ struct bitmap_ipmac {
- 	size_t memsize;		/* members size */
- 	struct timer_list gc;	/* garbage collector */
- 	struct ip_set *set;	/* attached to this ip_set */
--	unsigned char extensions[0]	/* MAC + data extensions */
-+	unsigned char extensions[]	/* MAC + data extensions */
- 		__aligned(__alignof__(u64));
- };
- 
-diff --git a/net/netfilter/ipset/ip_set_bitmap_port.c b/net/netfilter/ipset/ip_set_bitmap_port.c
-index d4a14750f5c4..1993f2783774 100644
---- a/net/netfilter/ipset/ip_set_bitmap_port.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_port.c
-@@ -37,7 +37,7 @@ struct bitmap_port {
- 	size_t memsize;		/* members size */
- 	struct timer_list gc;	/* garbage collection */
- 	struct ip_set *set;	/* attached to this ip_set */
--	unsigned char extensions[0]	/* data extensions */
-+	unsigned char extensions[]	/* data extensions */
- 		__aligned(__alignof__(u64));
- };
- 
-diff --git a/net/netfilter/ipset/ip_set_hash_gen.h b/net/netfilter/ipset/ip_set_hash_gen.h
-index 4346cae25a4a..30b8b3fad150 100644
---- a/net/netfilter/ipset/ip_set_hash_gen.h
-+++ b/net/netfilter/ipset/ip_set_hash_gen.h
-@@ -76,7 +76,7 @@ struct hbucket {
- 	DECLARE_BITMAP(used, AHASH_MAX_TUNED);
- 	u8 size;		/* size of the array */
- 	u8 pos;			/* position of the first free entry */
--	unsigned char value[0]	/* the array of the values */
-+	unsigned char value[]	/* the array of the values */
- 		__aligned(__alignof__(u64));
- };
- 
-@@ -109,7 +109,7 @@ struct htable {
- 	u8 htable_bits;		/* size of hash table == 2^htable_bits */
- 	u32 maxelem;		/* Maxelem per region */
- 	struct ip_set_region *hregion;	/* Region locks and ext sizes */
--	struct hbucket __rcu *bucket[0]; /* hashtable buckets */
-+	struct hbucket __rcu *bucket[]; /* hashtable buckets */
- };
- 
- #define hbucket(h, i)		((h)->bucket[i])
-diff --git a/net/netfilter/nfnetlink_acct.c b/net/netfilter/nfnetlink_acct.c
-index 4b46421c5e17..ed4bde3c8850 100644
---- a/net/netfilter/nfnetlink_acct.c
-+++ b/net/netfilter/nfnetlink_acct.c
-@@ -33,7 +33,7 @@ struct nf_acct {
- 	refcount_t		refcnt;
- 	char			name[NFACCT_NAME_MAX];
- 	struct rcu_head		rcu_head;
--	char			data[0];
-+	char			data[];
- };
- 
- struct nfacct_filter {
-diff --git a/net/netfilter/xt_hashlimit.c b/net/netfilter/xt_hashlimit.c
-index 8c835ad63729..9c5cfd74a0ee 100644
---- a/net/netfilter/xt_hashlimit.c
-+++ b/net/netfilter/xt_hashlimit.c
-@@ -132,7 +132,7 @@ struct xt_hashlimit_htable {
- 	const char *name;
- 	struct net *net;
- 
--	struct hlist_head hash[0];	/* hashtable itself */
-+	struct hlist_head hash[];	/* hashtable itself */
- };
- 
- static int
-diff --git a/net/netfilter/xt_recent.c b/net/netfilter/xt_recent.c
-index 6fc0deb11aff..dae284e0ed15 100644
---- a/net/netfilter/xt_recent.c
-+++ b/net/netfilter/xt_recent.c
-@@ -71,7 +71,7 @@ struct recent_entry {
- 	u_int8_t		ttl;
- 	u_int8_t		index;
- 	u_int16_t		nstamps;
--	unsigned long		stamps[0];
-+	unsigned long		stamps[];
- };
- 
- struct recent_table {
-@@ -82,7 +82,7 @@ struct recent_table {
- 	unsigned int		entries;
- 	u8			nstamps_max_mask;
- 	struct list_head	lru_list;
--	struct list_head	iphash[0];
-+	struct list_head	iphash[];
- };
- 
- struct recent_net {
+ {
 -- 
 2.39.5
 
