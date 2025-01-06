@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D29E1DACBE;
-	Mon,  6 Jan 2025 15:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5731DACBB;
+	Mon,  6 Jan 2025 15:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177427; cv=none; b=lJ9A0B8TIURoYu4iVPxP9PcaznRDu3HOM0esCmJPu6sz89FyYx4qqcaZmfoKSSDkeQzxQSlEM9FwfKjYlKmRkYWhdzkdpqqHjsvxjSpZ+nM5Dqiwks8CKgWyNdDvFgujcdS2rqQUu4opyDq1Mi/vI+GZoYmAQNLrQ/Doec6A8ng=
+	t=1736177430; cv=none; b=ghPUNWzu8h2Iy4V4e8tZpCroAaw+JIWXpE8BZDhgsBQvnrsbWBk8rOnONtu1AkUNODkCh/9lFJ0ltBDStIirrfCPJl07gyy+wU6sNciZwhabP2eaIbP+To/aeIGalsJ/UBrlv5hV+podOezIpkhW1R97a3SjUY0LQYIf6CCotb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177427; c=relaxed/simple;
-	bh=PdCbs0dDKhuRwxEXpfNMgP+lSTjKnlNLAPFzy7mEC8o=;
+	s=arc-20240116; t=1736177430; c=relaxed/simple;
+	bh=SQj9LxqHhvbCb1QxE0pqoEeXUDLxTTo1ltJ4TfRKrME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLpTkMvTtL6KZWCWQGxdf0OgRBqsG0RHKTij+Yf3x/FE0kXFph74+HOOERDZUb5WJlwwvLW9F3ngT/Ke2nO3itLk4iRmaeP6Nqc20N5+zjGE5cdOErzr7+cqoarcKefhafVzdhwLR1rDBazjRU7gozZftqPYRgftjHV27DTWPFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocf8GjeL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGjxZZPRkvfKIBBg3dKDAMbznxklIb6cixRtKepY1BAM6QyrMp0+cqnyVXqT0sv0Kvx5QISAxD/lIYIoE5ZTnvEh7nXd9e5Xsf59Qdb3jMt4pXQueu/WiDJ5jV1juabAs7hzE2CEWqxnDtchpDniBaSKpWmvzrfsWh7gzZadsSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZLfHeEK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocf8GjeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5258C4CED2;
-	Mon,  6 Jan 2025 15:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZLfHeEK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D03DC4CED6;
+	Mon,  6 Jan 2025 15:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177427;
-	bh=PdCbs0dDKhuRwxEXpfNMgP+lSTjKnlNLAPFzy7mEC8o=;
+	s=korg; t=1736177430;
+	bh=SQj9LxqHhvbCb1QxE0pqoEeXUDLxTTo1ltJ4TfRKrME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocf8GjeLjDvsfPhAzPcNtH4T87cynG2B9m3OfM35R9rE97PieWdizVOL1GlqLVKuw
-	 jqPQR+rtGqQCYgR0uBcfMI/nuC3H89xqGxYXoHubwaZzccYeRrlGLwzielVoZzPCe6
-	 LbVzcPYnAJkg1aEd8buxl/kJq0wNzyKvulTeH0Zk=
+	b=sZLfHeEKn6ceVY/tYxNFyOfBVcDwBq9A9MFbe6BoIZgzSwa6eS+BgAyMw+qIzkgrp
+	 YO87ICz51SyReOzQILLlWZscxMXDkwa0A72y4lUT4GdCpqvo5+abL2/4t5ro3iEEwJ
+	 m34nH6GinliNcgu50HFwnktMqYRdQdotR/Ia3/J0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
 	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/222] RDMA/bnxt_re: Avoid initializing the software queue for user queues
-Date: Mon,  6 Jan 2025 16:15:34 +0100
-Message-ID: <20250106151155.691176546@linuxfoundation.org>
+Subject: [PATCH 6.6 131/222] RDMA/bnxt_re: Avoid sending the modify QP workaround for latest adapters
+Date: Mon,  6 Jan 2025 16:15:35 +0100
+Message-ID: <20250106151155.728051333@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,99 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Kashyap Desai <kashyap.desai@broadcom.com>
 
-[ Upstream commit 5effcacc8a8f3eb2a9f069d7e81a9ac793598dfb ]
+[ Upstream commit 064c22408a73b9e945139b64614c534cbbefb591 ]
 
-Software Queues to hold the WRs needs to be created
-for only kernel queues. Avoid allocating the unnecessary
-memory for user Queues.
+The workaround to modify the UD QP from RTS to RTS is required
+only for older adapters. Issuing this for latest adapters can caus
+some unexpected behavior. Fix it
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Fixes: 159fb4ceacd7 ("RDMA/bnxt_re: introduce a function to allocate swq")
+Fixes: 1801d87b3598 ("RDMA/bnxt_re: Support new 5760X P7 devices")
+Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
 Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20241204075416.478431-3-kalesh-anakkur.purayil@broadcom.com
+Link: https://patch.msgid.link/20241204075416.478431-4-kalesh-anakkur.purayil@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 42 +++++++++++++-----------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 4098e01666d1..d38e7880cebb 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -639,13 +639,6 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 	rc = bnxt_qplib_alloc_init_hwq(&srq->hwq, &hwq_attr);
- 	if (rc)
- 		return rc;
--
--	srq->swq = kcalloc(srq->hwq.max_elements, sizeof(*srq->swq),
--			   GFP_KERNEL);
--	if (!srq->swq) {
--		rc = -ENOMEM;
--		goto fail;
--	}
- 	srq->dbinfo.flags = 0;
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_CREATE_SRQ,
-@@ -674,9 +667,17 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
- 	spin_lock_init(&srq->lock);
- 	srq->start_idx = 0;
- 	srq->last_idx = srq->hwq.max_elements - 1;
--	for (idx = 0; idx < srq->hwq.max_elements; idx++)
--		srq->swq[idx].next_idx = idx + 1;
--	srq->swq[srq->last_idx].next_idx = -1;
-+	if (!srq->hwq.is_user) {
-+		srq->swq = kcalloc(srq->hwq.max_elements, sizeof(*srq->swq),
-+				   GFP_KERNEL);
-+		if (!srq->swq) {
-+			rc = -ENOMEM;
-+			goto fail;
-+		}
-+		for (idx = 0; idx < srq->hwq.max_elements; idx++)
-+			srq->swq[idx].next_idx = idx + 1;
-+		srq->swq[srq->last_idx].next_idx = -1;
-+	}
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index df5897260601..fb6f15bb9d4f 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -2710,7 +2710,8 @@ static int bnxt_re_post_send_shadow_qp(struct bnxt_re_dev *rdev,
+ 		wr = wr->next;
+ 	}
+ 	bnxt_qplib_post_send_db(&qp->qplib_qp);
+-	bnxt_ud_qp_hw_stall_workaround(qp);
++	if (!bnxt_qplib_is_chip_gen_p5_p7(qp->rdev->chip_ctx))
++		bnxt_ud_qp_hw_stall_workaround(qp);
+ 	spin_unlock_irqrestore(&qp->sq_lock, flags);
+ 	return rc;
+ }
+@@ -2822,7 +2823,8 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
+ 		wr = wr->next;
+ 	}
+ 	bnxt_qplib_post_send_db(&qp->qplib_qp);
+-	bnxt_ud_qp_hw_stall_workaround(qp);
++	if (!bnxt_qplib_is_chip_gen_p5_p7(qp->rdev->chip_ctx))
++		bnxt_ud_qp_hw_stall_workaround(qp);
+ 	spin_unlock_irqrestore(&qp->sq_lock, flags);
  
- 	srq->id = le32_to_cpu(resp.xid);
- 	srq->dbinfo.hwq = &srq->hwq;
-@@ -1022,13 +1023,14 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 	if (rc)
- 		return rc;
- 
--	rc = bnxt_qplib_alloc_init_swq(sq);
--	if (rc)
--		goto fail_sq;
--
--	if (psn_sz)
--		bnxt_qplib_init_psn_ptr(qp, psn_sz);
-+	if (!sq->hwq.is_user) {
-+		rc = bnxt_qplib_alloc_init_swq(sq);
-+		if (rc)
-+			goto fail_sq;
- 
-+		if (psn_sz)
-+			bnxt_qplib_init_psn_ptr(qp, psn_sz);
-+	}
- 	req.sq_size = cpu_to_le32(bnxt_qplib_set_sq_size(sq, qp->wqe_mode));
- 	pbl = &sq->hwq.pbl[PBL_LVL_0];
- 	req.sq_pbl = cpu_to_le64(pbl->pg_map_arr[0]);
-@@ -1054,9 +1056,11 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 		rc = bnxt_qplib_alloc_init_hwq(&rq->hwq, &hwq_attr);
- 		if (rc)
- 			goto sq_swq;
--		rc = bnxt_qplib_alloc_init_swq(rq);
--		if (rc)
--			goto fail_rq;
-+		if (!rq->hwq.is_user) {
-+			rc = bnxt_qplib_alloc_init_swq(rq);
-+			if (rc)
-+				goto fail_rq;
-+		}
- 
- 		req.rq_size = cpu_to_le32(rq->max_wqe);
- 		pbl = &rq->hwq.pbl[PBL_LVL_0];
+ 	return rc;
 -- 
 2.39.5
 
