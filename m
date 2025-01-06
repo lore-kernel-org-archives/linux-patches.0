@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E889DF71;
-	Mon,  6 Jan 2025 15:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7E155352;
+	Mon,  6 Jan 2025 15:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177927; cv=none; b=Vi3uXS/ZWuYDZPgF5jlTOvgE9fgIZY8LHf+yJHwFiaDYGS6rQshm/auyNrbGBVJi62Y0SCAhsevRnNv5hn3gmXeMEQaEL3TeIyXJtFNn/7G+iwA5N+qQ65sGqQ1ogf0qo7JEs+G67sqbY5UopKvxTvjmha2YnBwMZ5nI8aGCCUY=
+	t=1736177930; cv=none; b=OunhxMm/ZHQT1SeE07FUC3RN9fuI0uoCZUr2ClymmLSRkgov0BN3eABzJUJYF4BoEtPR9uAx4J6nQ6DZ0XfkJFXG7TC67z2qkD1vbH+0/wNwH16/53N7MXlwX8gDS0oBXIxsyViqgGYLmW1VdUYqFfr0JprvbWn1aWRJlnomnT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177927; c=relaxed/simple;
-	bh=C9euzmH2iumJKiN7wGCmXTwDeHZkuuJo+I3tiK8NJkQ=;
+	s=arc-20240116; t=1736177930; c=relaxed/simple;
+	bh=e2WT5aWhLAjePag7sYc6QrnXmwhLdWYVpLvMzsqOJTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FdPhtZzb41j6yhvH45EAyVZj0G16aYUncO9DVcK1WpX5syrVaOYqmdv8EQ5F/seBCryyvxNnKZmRKpHbyLFerGZdjHA3eGZ4pGbXBHZjkOzJL59jBfZZNeQCky+3kDrz/79zTKPAgIx1pMWyWOHIGQZNBOAQKN1PrdmkqcMukqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k1GDXVHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sGHpGxq5fow97jbongdvG2Ga6+8y+Q5LWF7ZMrmOdevhl5XwfBIAUKiPyKDNTD+DFy63Ww+xZHwIxTspyaxWgfl4AwD45nwoAMY0SdRzuaCe1qxlauw72gvbIuGr1iJaB71J56JxweBoI8UfOrgeu7B8bCAmFaPcTctK4sh9yuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f07OioM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k1GDXVHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC1A7C4CED2;
-	Mon,  6 Jan 2025 15:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f07OioM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36A8C4CED2;
+	Mon,  6 Jan 2025 15:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177927;
-	bh=C9euzmH2iumJKiN7wGCmXTwDeHZkuuJo+I3tiK8NJkQ=;
+	s=korg; t=1736177930;
+	bh=e2WT5aWhLAjePag7sYc6QrnXmwhLdWYVpLvMzsqOJTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k1GDXVHez/o8ujAYuQIuv4Gh5/0yVukQjnULCWoWvoErufiTZ9nKnsoWLkTjzLiUY
-	 Lk5xCfMmJLcxsoTX/15H3w1Zr4A4l7J+4HxJazbxU/WWMRPBjKMQ8ZQf+J3mkSGryP
-	 1umfQTB4QfykGKq7lH+1ev44gNjoWTsoXzEzduUc=
+	b=f07OioM7L7MeMoJBYNI6TFyL6LU2v2kbjdFSxb9DxdPTGp3Ue6iUPipL+RLk3u0oc
+	 +cb7E6wEsKBdXSZuOEJlr1A168DKnn91W3PTjjtBtp8yvsG3gsmuLHIf0XcqJS3aAS
+	 RfBlATfngUIr/l/+hTAscYxt2bAaO4H6R2YWzkpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Vineet Gupta <vgupta@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 103/156] ARC: build: Try to guess GCC variant of cross compiler
-Date: Mon,  6 Jan 2025 16:16:29 +0100
-Message-ID: <20250106151145.606813219@linuxfoundation.org>
+Subject: [PATCH 6.12 104/156] bpf: refactor bpf_helper_changes_pkt_data to use helper number
+Date: Mon,  6 Jan 2025 16:16:30 +0100
+Message-ID: <20250106151145.643394379@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -45,52 +45,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-[ Upstream commit 824927e88456331c7a999fdf5d9d27923b619590 ]
+[ Upstream commit b238e187b4a2d3b54d80aec05a9cab6466b79dde ]
 
-ARC GCC compiler is packaged starting from Fedora 39i and the GCC
-variant of cross compile tools has arc-linux-gnu- prefix and not
-arc-linux-. This is causing that CROSS_COMPILE variable is left unset.
+Use BPF helper number instead of function pointer in
+bpf_helper_changes_pkt_data(). This would simplify usage of this
+function in verifier.c:check_cfg() (in a follow-up patch),
+where only helper number is easily available and there is no real need
+to lookup helper proto.
 
-This change allows builds without need to supply CROSS_COMPILE argument
-if distro package is used.
-
-Before this change:
-$ make -j 128 ARCH=arc W=1 drivers/infiniband/hw/mlx4/
-  gcc: warning: ‘-mcpu=’ is deprecated; use ‘-mtune=’ or ‘-march=’ instead
-  gcc: error: unrecognized command-line option ‘-mmedium-calls’
-  gcc: error: unrecognized command-line option ‘-mlock’
-  gcc: error: unrecognized command-line option ‘-munaligned-access’
-
-[1] https://packages.fedoraproject.org/pkgs/cross-gcc/gcc-arc-linux-gnu/index.html
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20241210041100.1898468-3-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 1a4607ffba35 ("bpf: consider that tail calls invalidate packet pointers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/filter.h |  2 +-
+ kernel/bpf/core.c      |  2 +-
+ kernel/bpf/verifier.c  |  2 +-
+ net/core/filter.c      | 63 +++++++++++++++++++-----------------------
+ 4 files changed, 31 insertions(+), 38 deletions(-)
 
-diff --git a/arch/arc/Makefile b/arch/arc/Makefile
-index 2390dd042e36..fb98478ed1ab 100644
---- a/arch/arc/Makefile
-+++ b/arch/arc/Makefile
-@@ -6,7 +6,7 @@
- KBUILD_DEFCONFIG := haps_hs_smp_defconfig
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 7d7578a8eac1..5118caf8aa1c 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -1121,7 +1121,7 @@ bool bpf_jit_supports_arena(void);
+ bool bpf_jit_supports_insn(struct bpf_insn *insn, bool in_arena);
+ u64 bpf_arch_uaddress_limit(void);
+ void arch_bpf_stack_walk(bool (*consume_fn)(void *cookie, u64 ip, u64 sp, u64 bp), void *cookie);
+-bool bpf_helper_changes_pkt_data(void *func);
++bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id);
  
- ifeq ($(CROSS_COMPILE),)
--CROSS_COMPILE := $(call cc-cross-prefix, arc-linux- arceb-linux-)
-+CROSS_COMPILE := $(call cc-cross-prefix, arc-linux- arceb-linux- arc-linux-gnu-)
- endif
+ static inline bool bpf_dump_raw_ok(const struct cred *cred)
+ {
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 3af5f42ea791..2b9c8c168a0b 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -2940,7 +2940,7 @@ void __weak bpf_jit_compile(struct bpf_prog *prog)
+ {
+ }
  
- cflags-y	+= -fno-common -pipe -fno-builtin -mmedium-calls -D__linux__
+-bool __weak bpf_helper_changes_pkt_data(void *func)
++bool __weak bpf_helper_changes_pkt_data(enum bpf_func_id func_id)
+ {
+ 	return false;
+ }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 767f1cb8c27e..a0cab0d0252f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10476,7 +10476,7 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
+ 	}
+ 
+ 	/* With LD_ABS/IND some JITs save/restore skb from r1. */
+-	changes_data = bpf_helper_changes_pkt_data(fn->func);
++	changes_data = bpf_helper_changes_pkt_data(func_id);
+ 	if (changes_data && fn->arg1_type != ARG_PTR_TO_CTX) {
+ 		verbose(env, "kernel subsystem misconfigured func %s#%d: r1 != ctx\n",
+ 			func_id_name(func_id), func_id);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 55495063621d..4b0ad74cfff5 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -7918,42 +7918,35 @@ static const struct bpf_func_proto bpf_tcp_raw_check_syncookie_ipv6_proto = {
+ 
+ #endif /* CONFIG_INET */
+ 
+-bool bpf_helper_changes_pkt_data(void *func)
+-{
+-	if (func == bpf_skb_vlan_push ||
+-	    func == bpf_skb_vlan_pop ||
+-	    func == bpf_skb_store_bytes ||
+-	    func == bpf_skb_change_proto ||
+-	    func == bpf_skb_change_head ||
+-	    func == sk_skb_change_head ||
+-	    func == bpf_skb_change_tail ||
+-	    func == sk_skb_change_tail ||
+-	    func == bpf_skb_adjust_room ||
+-	    func == sk_skb_adjust_room ||
+-	    func == bpf_skb_pull_data ||
+-	    func == sk_skb_pull_data ||
+-	    func == bpf_clone_redirect ||
+-	    func == bpf_l3_csum_replace ||
+-	    func == bpf_l4_csum_replace ||
+-	    func == bpf_xdp_adjust_head ||
+-	    func == bpf_xdp_adjust_meta ||
+-	    func == bpf_msg_pull_data ||
+-	    func == bpf_msg_push_data ||
+-	    func == bpf_msg_pop_data ||
+-	    func == bpf_xdp_adjust_tail ||
+-#if IS_ENABLED(CONFIG_IPV6_SEG6_BPF)
+-	    func == bpf_lwt_seg6_store_bytes ||
+-	    func == bpf_lwt_seg6_adjust_srh ||
+-	    func == bpf_lwt_seg6_action ||
+-#endif
+-#ifdef CONFIG_INET
+-	    func == bpf_sock_ops_store_hdr_opt ||
+-#endif
+-	    func == bpf_lwt_in_push_encap ||
+-	    func == bpf_lwt_xmit_push_encap)
++bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id)
++{
++	switch (func_id) {
++	case BPF_FUNC_clone_redirect:
++	case BPF_FUNC_l3_csum_replace:
++	case BPF_FUNC_l4_csum_replace:
++	case BPF_FUNC_lwt_push_encap:
++	case BPF_FUNC_lwt_seg6_action:
++	case BPF_FUNC_lwt_seg6_adjust_srh:
++	case BPF_FUNC_lwt_seg6_store_bytes:
++	case BPF_FUNC_msg_pop_data:
++	case BPF_FUNC_msg_pull_data:
++	case BPF_FUNC_msg_push_data:
++	case BPF_FUNC_skb_adjust_room:
++	case BPF_FUNC_skb_change_head:
++	case BPF_FUNC_skb_change_proto:
++	case BPF_FUNC_skb_change_tail:
++	case BPF_FUNC_skb_pull_data:
++	case BPF_FUNC_skb_store_bytes:
++	case BPF_FUNC_skb_vlan_pop:
++	case BPF_FUNC_skb_vlan_push:
++	case BPF_FUNC_store_hdr_opt:
++	case BPF_FUNC_xdp_adjust_head:
++	case BPF_FUNC_xdp_adjust_meta:
++	case BPF_FUNC_xdp_adjust_tail:
+ 		return true;
+-
+-	return false;
++	default:
++		return false;
++	}
+ }
+ 
+ const struct bpf_func_proto bpf_event_output_data_proto __weak;
 -- 
 2.39.5
 
