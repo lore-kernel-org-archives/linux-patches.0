@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A05D49652;
-	Mon,  6 Jan 2025 15:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98970132117;
+	Mon,  6 Jan 2025 15:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176829; cv=none; b=TfXaxD8crXK2+oT2ieXauQSXOZfr76erf1ej5cFuZeJ4JreC4MSMDagjJ2AJE+5HKApbiwsjEHncqY13fLj1+9Bat5vGuk5sW+3WiZ3IKmWs99xEiT2EEeFylS62Y+7dk9fd9BEXAuM+WUbWMOmZyIzL1ADa9Nugwl7Wxq/2uPQ=
+	t=1736176832; cv=none; b=V2ELjiPC6KccNzs1ANWAze41vldJJNPMPNd7FTQTPi2tQzJ7YdfCsXAhlvVo8G22M3hAMxWRFXNA0ju89HDGgzpksUKhKpGMAjSa625PoXzpfobghUkrSGuJoCZYIeDkaDQt1vdwG+RkMSyb5liAZ6fFPdG9aSReuUcwXVAqUpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176829; c=relaxed/simple;
-	bh=eiwFIlDrbqQuAdg9TNNSWJyC4B02DHGUbid0ad0q6mk=;
+	s=arc-20240116; t=1736176832; c=relaxed/simple;
+	bh=llaxGU5nJubqKnUqK/oH2tXvyR1E+h7JKap7pcn4KqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m9BtFpt+Q8Y1aCzhl8ERmB/2PQVh1vjaP1pVF1Mpvgs85t9PGMB7EJhjSL7Qd2IbqIvFHV9reUIH1G6VvriMfK2qUc0UKzx1A9BgPGKDJ+xNzvBWwIh8A/+KfBE9NXwdzeRpPjWj3mLfV/AtvNd1MOunwJ6LNawDAfqhLVB6FgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rhq6PJR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgOJvsTZhxI0ITBgi8ScbLe3S9uzmjuZzXBItFNwJeA3YUcMimYjMwZJjxdoeLhHFZJCc8Isjd7b/SN6w2sp284kQlYgxdLOjHo5rCLqCuF+pUA9tpvug0RlX4UoSrMsWa1CNdEiWRf7Vr6s1ebp68dNA4ZyCmeNHA/f3Nd+g74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeUfuk8I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rhq6PJR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 783BDC4CED2;
-	Mon,  6 Jan 2025 15:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeUfuk8I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F7DC4CED2;
+	Mon,  6 Jan 2025 15:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176826;
-	bh=eiwFIlDrbqQuAdg9TNNSWJyC4B02DHGUbid0ad0q6mk=;
+	s=korg; t=1736176832;
+	bh=llaxGU5nJubqKnUqK/oH2tXvyR1E+h7JKap7pcn4KqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rhq6PJR/Wmk3QLCTHFBKap6LIaALU63SPLS/RpXo9ZS9WSuUPnzeILxqtMvGFNtaC
-	 6+/u0thw2+AUg+dc/Gqp5XnEUGTDjacvj0t1LBFskuQzD6nTAbYvmo3z3id/ZmzlBY
-	 Gmmq570IjlJWq/rV7URU/6PmXvUNkbZ1pRPAIo0E=
+	b=SeUfuk8IMPWtG30AphqhLSvuSpHfhoPLhUcayPSxeqWEPn7OvPFyDs37AQwSZhWmK
+	 DHSjo8xEvgTntAUlVGKNJw7lEW16C1b1VGSgj9lM1PhBlhwfOSNCQQ2tF+Hno2+axG
+	 1rjXW51KQXB8CrCDxCOpQb+S7aIAFZ3k9bv4f5MA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjian Song <jinjian.song@fibocom.com>,
-	Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 43/81] net: wwan: t7xx: Fix FSM command timeout issue
-Date: Mon,  6 Jan 2025 16:16:15 +0100
-Message-ID: <20250106151131.062864731@linuxfoundation.org>
+Subject: [PATCH 6.1 45/81] net: reenable NETIF_F_IPV6_CSUM offload for BIG TCP packets
+Date: Mon,  6 Jan 2025 16:16:17 +0100
+Message-ID: <20250106151131.136553415@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -52,139 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjian Song <jinjian.song@fibocom.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit 4f619d518db9cd1a933c3a095a5f95d0c1584ae8 ]
+[ Upstream commit 68e068cabd2c6c533ef934c2e5151609cf6ecc6d ]
 
-When driver processes the internal state change command, it use an
-asynchronous thread to process the command operation. If the main
-thread detects that the task has timed out, the asynchronous thread
-will panic when executing the completion notification because the
-main thread completion object has been released.
+The blamed commit disabled hardware offoad of IPv6 packets with
+extension headers on devices that advertise NETIF_F_IPV6_CSUM,
+based on the definition of that feature in skbuff.h:
 
-BUG: unable to handle page fault for address: fffffffffffffff8
-PGD 1f283a067 P4D 1f283a067 PUD 1f283c067 PMD 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-RIP: 0010:complete_all+0x3e/0xa0
-[...]
-Call Trace:
- <TASK>
- ? __die_body+0x68/0xb0
- ? page_fault_oops+0x379/0x3e0
- ? exc_page_fault+0x69/0xa0
- ? asm_exc_page_fault+0x22/0x30
- ? complete_all+0x3e/0xa0
- fsm_main_thread+0xa3/0x9c0 [mtk_t7xx (HASH:1400 5)]
- ? __pfx_autoremove_wake_function+0x10/0x10
- kthread+0xd8/0x110
- ? __pfx_fsm_main_thread+0x10/0x10 [mtk_t7xx (HASH:1400 5)]
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x38/0x50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1b/0x30
- </TASK>
-[...]
-CR2: fffffffffffffff8
----[ end trace 0000000000000000 ]---
+ *   * - %NETIF_F_IPV6_CSUM
+ *     - Driver (device) is only able to checksum plain
+ *       TCP or UDP packets over IPv6. These are specifically
+ *       unencapsulated packets of the form IPv6|TCP or
+ *       IPv6|UDP where the Next Header field in the IPv6
+ *       header is either TCP or UDP. IPv6 extension headers
+ *       are not supported with this feature. This feature
+ *       cannot be set in features for a device with
+ *       NETIF_F_HW_CSUM also set. This feature is being
+ *       DEPRECATED (see below).
 
-Use the reference counter to ensure safe release as Sergey suggests:
-https://lore.kernel.org/all/da90f64c-260a-4329-87bf-1f9ff20a5951@gmail.com/
+The change causes skb_warn_bad_offload to fire for BIG TCP
+packets.
 
-Fixes: 13e920d93e37 ("net: wwan: t7xx: Add core components")
-Signed-off-by: Jinjian Song <jinjian.song@fibocom.com>
-Acked-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Link: https://patch.msgid.link/20241224041552.8711-1-jinjian.song@fibocom.com
+[  496.310233] WARNING: CPU: 13 PID: 23472 at net/core/dev.c:3129 skb_warn_bad_offload+0xc4/0xe0
+
+[  496.310297]  ? skb_warn_bad_offload+0xc4/0xe0
+[  496.310300]  skb_checksum_help+0x129/0x1f0
+[  496.310303]  skb_csum_hwoffload_help+0x150/0x1b0
+[  496.310306]  validate_xmit_skb+0x159/0x270
+[  496.310309]  validate_xmit_skb_list+0x41/0x70
+[  496.310312]  sch_direct_xmit+0x5c/0x250
+[  496.310317]  __qdisc_run+0x388/0x620
+
+BIG TCP introduced an IPV6_TLV_JUMBO IPv6 extension header to
+communicate packet length, as this is an IPv6 jumbogram. But, the
+feature is only enabled on devices that support BIG TCP TSO. The
+header is only present for PF_PACKET taps like tcpdump, and not
+transmitted by physical devices.
+
+For this specific case of extension headers that are not
+transmitted, return to the situation before the blamed commit
+and support hardware offload.
+
+ipv6_has_hopopt_jumbo() tests not only whether this header is present,
+but also that it is the only extension header before a terminal (L4)
+header.
+
+Fixes: 04c20a9356f2 ("net: skip offload for NETIF_F_IPV6_CSUM if ipv6 header contains extension")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reported-by: Eric Dumazet <edumazet@google.com>
+Closes: https://lore.kernel.org/netdev/CANn89iK1hdC3Nt8KPhOtTF8vCPc1AHDCtse_BTNki1pWxAByTQ@mail.gmail.com/
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250101164909.1331680-1-willemdebruijn.kernel@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_state_monitor.c | 26 ++++++++++++++--------
- drivers/net/wwan/t7xx/t7xx_state_monitor.h |  5 +++--
- 2 files changed, 20 insertions(+), 11 deletions(-)
+ net/core/dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_state_monitor.c b/drivers/net/wwan/t7xx/t7xx_state_monitor.c
-index 0bcca08ff2bd..44a2081c5249 100644
---- a/drivers/net/wwan/t7xx/t7xx_state_monitor.c
-+++ b/drivers/net/wwan/t7xx/t7xx_state_monitor.c
-@@ -97,14 +97,21 @@ void t7xx_fsm_broadcast_state(struct t7xx_fsm_ctl *ctl, enum md_state state)
- 	fsm_state_notify(ctl->md, state);
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 2ee1a535b3cb..90559cb66803 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3679,8 +3679,10 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
  
-+static void fsm_release_command(struct kref *ref)
-+{
-+	struct t7xx_fsm_command *cmd = container_of(ref, typeof(*cmd), refcnt);
+ 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
+ 		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
+-		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
++		    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
++		    !ipv6_has_hopopt_jumbo(skb))
+ 			goto sw_checksum;
 +
-+	kfree(cmd);
-+}
-+
- static void fsm_finish_command(struct t7xx_fsm_ctl *ctl, struct t7xx_fsm_command *cmd, int result)
- {
- 	if (cmd->flag & FSM_CMD_FLAG_WAIT_FOR_COMPLETION) {
--		*cmd->ret = result;
--		complete_all(cmd->done);
-+		cmd->result = result;
-+		complete_all(&cmd->done);
- 	}
- 
--	kfree(cmd);
-+	kref_put(&cmd->refcnt, fsm_release_command);
- }
- 
- static void fsm_del_kf_event(struct t7xx_fsm_event *event)
-@@ -387,7 +394,6 @@ static int fsm_main_thread(void *data)
- 
- int t7xx_fsm_append_cmd(struct t7xx_fsm_ctl *ctl, enum t7xx_fsm_cmd_state cmd_id, unsigned int flag)
- {
--	DECLARE_COMPLETION_ONSTACK(done);
- 	struct t7xx_fsm_command *cmd;
- 	unsigned long flags;
- 	int ret;
-@@ -399,11 +405,13 @@ int t7xx_fsm_append_cmd(struct t7xx_fsm_ctl *ctl, enum t7xx_fsm_cmd_state cmd_id
- 	INIT_LIST_HEAD(&cmd->entry);
- 	cmd->cmd_id = cmd_id;
- 	cmd->flag = flag;
-+	kref_init(&cmd->refcnt);
- 	if (flag & FSM_CMD_FLAG_WAIT_FOR_COMPLETION) {
--		cmd->done = &done;
--		cmd->ret = &ret;
-+		init_completion(&cmd->done);
-+		kref_get(&cmd->refcnt);
- 	}
- 
-+	kref_get(&cmd->refcnt);
- 	spin_lock_irqsave(&ctl->command_lock, flags);
- 	list_add_tail(&cmd->entry, &ctl->command_queue);
- 	spin_unlock_irqrestore(&ctl->command_lock, flags);
-@@ -413,11 +421,11 @@ int t7xx_fsm_append_cmd(struct t7xx_fsm_ctl *ctl, enum t7xx_fsm_cmd_state cmd_id
- 	if (flag & FSM_CMD_FLAG_WAIT_FOR_COMPLETION) {
- 		unsigned long wait_ret;
- 
--		wait_ret = wait_for_completion_timeout(&done,
-+		wait_ret = wait_for_completion_timeout(&cmd->done,
- 						       msecs_to_jiffies(FSM_CMD_TIMEOUT_MS));
--		if (!wait_ret)
--			return -ETIMEDOUT;
- 
-+		ret = wait_ret ? cmd->result : -ETIMEDOUT;
-+		kref_put(&cmd->refcnt, fsm_release_command);
- 		return ret;
- 	}
- 
-diff --git a/drivers/net/wwan/t7xx/t7xx_state_monitor.h b/drivers/net/wwan/t7xx/t7xx_state_monitor.h
-index b1af0259d4c5..d9f2522e6b2c 100644
---- a/drivers/net/wwan/t7xx/t7xx_state_monitor.h
-+++ b/drivers/net/wwan/t7xx/t7xx_state_monitor.h
-@@ -107,8 +107,9 @@ struct t7xx_fsm_command {
- 	struct list_head	entry;
- 	enum t7xx_fsm_cmd_state	cmd_id;
- 	unsigned int		flag;
--	struct completion	*done;
--	int			*ret;
-+	struct completion	done;
-+	int			result;
-+	struct kref		refcnt;
- };
- 
- struct t7xx_fsm_notifier {
+ 		switch (skb->csum_offset) {
+ 		case offsetof(struct tcphdr, check):
+ 		case offsetof(struct udphdr, check):
 -- 
 2.39.5
 
