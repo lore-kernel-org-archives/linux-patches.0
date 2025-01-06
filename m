@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4E014B07E;
-	Mon,  6 Jan 2025 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519AE6088F;
+	Mon,  6 Jan 2025 15:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178445; cv=none; b=Lg6LreUDsJswyWBHkVgDLy6EADNVeJJL3rr0fxflZp4QncILKMiIhMp4Ih/R/wW5UArZVqYNhAdsMWYPIJ9CNexV0FTvd5FYV6RcLrnIYeqBOkccXFpTHSJmAXsJfJSKIT5pHgREFfi4wbI9yiNsEkmB5VCqnxiKqCsZu7R7TFo=
+	t=1736178448; cv=none; b=gpYUQPV1Icbhn/gv7BV4qiETy2778GT5mG/wlpbThZjLnTUIbiDbuDVYntfWDS8iSVUCwP80kjcU3FYaFZ6krJztcy1RtrGOaOEhBtIoCPRU9RsHLneJV+sPrzFqdbgoGU1AKEjp7Bqf7VAFreg/2+ufReHN7u9A5UoamC9kbdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178445; c=relaxed/simple;
-	bh=Vyg9Dr/pXUv3JvQEIn3fvb4EW5B3mNoUi1finDrOep8=;
+	s=arc-20240116; t=1736178448; c=relaxed/simple;
+	bh=hZamCHXmpHxfMX+spi48T4Zf2u8FgBwLPhhveDF5+oU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pb6Eqx4V7TP+RC+WeKj0Biq1cssgmfnmr2A7XvCjSJ/mPBzGZPzzICISDqRd0ebOgB8HWvvP02debVZsM8EC1gFToESIvheeRpl9u906qpYcVKs+dU5+OEKkePY0weOo+USa5A5+fFd4D6Qu39JIHlSpbPMXEQ8Dq4ZqTafsMnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2MP9KYW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J4hleFrhdwS0VHBSZfWPJKH2oGn10u6/AhVlxmty/b6wmEYIHBISodPRFxqc1nXnRwI6XxjOfsj/QU5vAtjuF+q7Np7ZIeLu9VaVWEkeEPiBezA4UXluI1qaSCnhqvHkPS9sMSnONoGxWil+/ngyo/l0MMYef9mbMQUv9O6pHPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF+mcd/X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2MP9KYW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0E8C4CED2;
-	Mon,  6 Jan 2025 15:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF+mcd/X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B6DC4CED2;
+	Mon,  6 Jan 2025 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178445;
-	bh=Vyg9Dr/pXUv3JvQEIn3fvb4EW5B3mNoUi1finDrOep8=;
+	s=korg; t=1736178448;
+	bh=hZamCHXmpHxfMX+spi48T4Zf2u8FgBwLPhhveDF5+oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D2MP9KYWM5EgM1GFREGfM02ZTPHpkNXqLa8PJWlVG0kJKxa/4La2Cp3DT8oob0/3h
-	 m5b1fH9eqwUw6AY5AM1Ndl+tjERcIqSJ+nS0QOytFldBRBdrDTSqhBcuOHAGeifY1Z
-	 jwrXZUDTnKArvkYec7+l6CxhzBwoopFUHVcx+b3w=
+	b=wF+mcd/Xc7WTlBmK2ds9Og0jCZaWdscIS+SFRKsK3HGFXjUofR1YYT5xV3MQHwhx1
+	 WvOXDcRuTY67pNQkov9BOlkt2cq+69NtomhOsjOCnEr6npjNphNp3qz1l6p8vG2ita
+	 /C1sf5oWIeP8fMtttiXnAOFiq7fyClb2vsPdsEIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8517da8635307182c8a5@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Pengfei Xu <pengfei.xu@intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 119/138] btrfs: fix use-after-free when COWing tree bock and tracing is enabled
-Date: Mon,  6 Jan 2025 16:17:23 +0100
-Message-ID: <20250106151137.734398470@linuxfoundation.org>
+Subject: [PATCH 5.10 090/138] thunderbolt: Add support for Intel Lunar Lake
+Date: Mon,  6 Jan 2025 16:16:54 +0100
+Message-ID: <20250106151136.640961912@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -53,76 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 44f52bbe96dfdbe4aca3818a2534520082a07040 ]
+[ Upstream commit 2cd3da4e37453019e21a486d9de3144f46b4fdf7 ]
 
-When a COWing a tree block, at btrfs_cow_block(), and we have the
-tracepoint trace_btrfs_cow_block() enabled and preemption is also enabled
-(CONFIG_PREEMPT=y), we can trigger a use-after-free in the COWed extent
-buffer while inside the tracepoint code. This is because in some paths
-that call btrfs_cow_block(), such as btrfs_search_slot(), we are holding
-the last reference on the extent buffer @buf so btrfs_force_cow_block()
-drops the last reference on the @buf extent buffer when it calls
-free_extent_buffer_stale(buf), which schedules the release of the extent
-buffer with RCU. This means that if we are on a kernel with preemption,
-the current task may be preempted before calling trace_btrfs_cow_block()
-and the extent buffer already released by the time trace_btrfs_cow_block()
-is called, resulting in a use-after-free.
+Intel Lunar Lake has similar integrated Thunderbolt/USB4 controller as
+Intel Meteor Lake with some small differences in the host router (it has
+3 DP IN adapters for instance). Add the Intel Lunar Lake PCI IDs to the
+driver list of supported devices.
 
-Fix this by moving the trace_btrfs_cow_block() from btrfs_cow_block() to
-btrfs_force_cow_block() before the COWed extent buffer is freed.
-This also has a side effect of invoking the tracepoint in the tree defrag
-code, at defrag.c:btrfs_realloc_node(), since btrfs_force_cow_block() is
-called there, but this is fine and it was actually missing there.
-
-Reported-by: syzbot+8517da8635307182c8a5@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/6759a9b9.050a0220.1ac542.000d.GAE@google.com/
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Stable-dep-of: 8644b48714dc ("thunderbolt: Add support for Intel Panther Lake-M/P")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/thunderbolt/nhi.c | 4 ++++
+ drivers/thunderbolt/nhi.h | 2 ++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index a376e42de9b2..5db0e078f68a 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -1119,6 +1119,8 @@ int btrfs_force_cow_block(struct btrfs_trans_handle *trans,
- 		btrfs_free_tree_block(trans, root, buf, parent_start,
- 				      last_ref);
- 	}
-+
-+	trace_btrfs_cow_block(root, buf, cow);
- 	if (unlock_orig)
- 		btrfs_tree_unlock(buf);
- 	free_extent_buffer_stale(buf);
-@@ -1481,7 +1483,6 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
- {
- 	struct btrfs_fs_info *fs_info = root->fs_info;
- 	u64 search_start;
--	int ret;
+diff --git a/drivers/thunderbolt/nhi.c b/drivers/thunderbolt/nhi.c
+index 331157b99e24..ada11c239e73 100644
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1363,6 +1363,10 @@ static struct pci_device_id nhi_ids[] = {
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTL_P_NHI1),
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_LNL_NHI0),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_LNL_NHI1),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
  
- 	if (test_bit(BTRFS_ROOT_DELETING, &root->state))
- 		btrfs_err(fs_info,
-@@ -1511,12 +1512,8 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
- 	 * Also We don't care about the error, as it's handled internally.
- 	 */
- 	btrfs_qgroup_trace_subtree_after_cow(trans, root, buf);
--	ret = btrfs_force_cow_block(trans, root, buf, parent, parent_slot,
--				    cow_ret, search_start, 0, nest);
--
--	trace_btrfs_cow_block(root, buf, *cow_ret);
--
--	return ret;
-+	return btrfs_force_cow_block(trans, root, buf, parent, parent_slot,
-+				     cow_ret, search_start, 0, nest);
- }
+diff --git a/drivers/thunderbolt/nhi.h b/drivers/thunderbolt/nhi.h
+index c15a0c46c9cf..4b0fccf033e1 100644
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -88,6 +88,8 @@ extern const struct tb_nhi_ops icl_nhi_ops;
+ #define PCI_DEVICE_ID_INTEL_TGL_H_NHI1			0x9a21
+ #define PCI_DEVICE_ID_INTEL_RPL_NHI0			0xa73e
+ #define PCI_DEVICE_ID_INTEL_RPL_NHI1			0xa76d
++#define PCI_DEVICE_ID_INTEL_LNL_NHI0			0xa833
++#define PCI_DEVICE_ID_INTEL_LNL_NHI1			0xa834
  
- /*
+ #define PCI_CLASS_SERIAL_USB_USB4			0x0c0340
+ 
 -- 
 2.39.5
 
