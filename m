@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351DC182D2;
-	Mon,  6 Jan 2025 15:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFC2DF71;
+	Mon,  6 Jan 2025 15:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178920; cv=none; b=bA4hDx3ktcEmLoTHpmtgO0K+XX23oUQQGiNGk7qhnZM3chOt2jWC1Akc6gDVYmzX/gHefqKM+nC39eO0lbb0nRRpz5ztiGsw5UwXyuYt2oXACVUMFt3kuxzJvt4abkx+GbR9BE24Wt3jlH3Pu7Ma0BLperdUIynEjKawuQIDPso=
+	t=1736178923; cv=none; b=TdPEm1EVOsUsPvcDQuMx9t9FbqEinZE+8tUBUuE1ZGZgNQ2OJWy6oyT9+Sh9qpi7qMaUw6cIC6hGDodHSqW7MUfiPLVHCh+kZcZdXAGbNNd0DEAP2zo5HWRrbQIUAix3c6cRdE5NhxBHNmHx9X0nEkdwSk7rKdoVRSntszCLDZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178920; c=relaxed/simple;
-	bh=q+LN5V/CaskauJlHXa1mhSCfiOd3cTidjeg/IWSA2Zg=;
+	s=arc-20240116; t=1736178923; c=relaxed/simple;
+	bh=CCzfWJHzhCbY459WQGJy20IryTDHQwWnrY86r+qfPMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h3SbPya6CtT44yEPErk9tBZHbH+cIStSQ0VdlrsJp71FgiDZ7m+NGk1rK+lF1NZHRIy1mHXnMPU7jgDSKYiVQK9E3yyIBJ+cp6gst/RNa4CW9/aZLXhdcd6rASuY3Y8PRpcTxbKENYIcqeObNXpR9/AERep/4fcdjeelm++l2yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9w8TSgZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d2PeEw30kkGwr/YiU3G5i5RbC6dyeMjggG2IgSni6h83tC32SVfJH6DWe593FP35Yku6rsl+psverfiXPxzFiG1QQ9ekLUHwvJvY52lmk97Qoemvmrj7deA3naLeW013oz6OmxsgIzUAr5g7d0HFeYiy2NR0fB/Vj1rnBq3yYD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCyvedRe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9w8TSgZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFC0C4CED2;
-	Mon,  6 Jan 2025 15:55:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCyvedRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D02C4CED2;
+	Mon,  6 Jan 2025 15:55:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178920;
-	bh=q+LN5V/CaskauJlHXa1mhSCfiOd3cTidjeg/IWSA2Zg=;
+	s=korg; t=1736178923;
+	bh=CCzfWJHzhCbY459WQGJy20IryTDHQwWnrY86r+qfPMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9w8TSgZlgYfoqjR/HjXXO64xRbcjrrUbnRpa2eoFWUXcUebcJmW7ctW4rr95I0Pq
-	 KnSOCd6mhUt82pXcfnhisBGU6NjVBesdiKf/XHb0MeE1B2B35kiaKF1KMgnzCz+azX
-	 pm40xmy5L2qwUi/wkmMk6+5biAMc4knWcy9p4f28=
+	b=TCyvedReK08spgA3zae7LRuwwf7sft0azlmVRQcCTlMd0dIQ5NWgC6qUJbPpi/Ew/
+	 WNJa2W6vSpmss27mqrIRbQ8C714CWgtzDd2r5K8fiiJKcQPN/ilSPvpWj7RdMQzAaF
+	 XLtKAwhtQ6Kiu7EPFr2iNyYsZUh5SwDDiTM+23LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.15 105/168] selinux: ignore unknown extended permissions
-Date: Mon,  6 Jan 2025 16:16:53 +0100
-Message-ID: <20250106151142.426144809@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Genes Lists <lists@sapience.com>,
+	Gene C <arch@sapience.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 106/168] tracing: Have process_string() also allow arrays
+Date: Mon,  6 Jan 2025 16:16:54 +0100
+Message-ID: <20250106151142.463396393@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -44,54 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thiébaud Weksteen <tweek@google.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 900f83cf376bdaf798b6f5dcb2eae0c822e908b6 upstream.
+commit afc6717628f959941d7b33728570568b4af1c4b8 upstream.
 
-When evaluating extended permissions, ignore unknown permissions instead
-of calling BUG(). This commit ensures that future permissions can be
-added without interfering with older kernels.
+In order to catch a common bug where a TRACE_EVENT() TP_fast_assign()
+assigns an address of an allocated string to the ring buffer and then
+references it in TP_printk(), which can be executed hours later when the
+string is free, the function test_event_printk() runs on all events as
+they are registered to make sure there's no unwanted dereferencing.
+
+It calls process_string() to handle cases in TP_printk() format that has
+"%s". It returns whether or not the string is safe. But it can have some
+false positives.
+
+For instance, xe_bo_move() has:
+
+ TP_printk("move_lacks_source:%s, migrate object %p [size %zu] from %s to %s device_id:%s",
+            __entry->move_lacks_source ? "yes" : "no", __entry->bo, __entry->size,
+            xe_mem_type_to_name[__entry->old_placement],
+            xe_mem_type_to_name[__entry->new_placement], __get_str(device_id))
+
+Where the "%s" references into xe_mem_type_to_name[]. This is an array of
+pointers that should be safe for the event to access. Instead of flagging
+this as a bad reference, if a reference points to an array, where the
+record field is the index, consider it safe.
+
+Link: https://lore.kernel.org/all/9dee19b6185d325d0e6fa5f7cbba81d007d99166.camel@sapience.com/
 
 Cc: stable@vger.kernel.org
-Fixes: fa1aa143ac4a ("selinux: extended permissions for ioctls")
-Signed-off-by: Thiébaud Weksteen <tweek@google.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Acked-by: Paul Moore <paul@paul-moore.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241231000646.324fb5f7@gandalf.local.home
+Fixes: 65a25d9f7ac02 ("tracing: Add "%s" check in test_event_printk()")
+Reported-by: Genes Lists <lists@sapience.com>
+Tested-by: Gene C <arch@sapience.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/ss/services.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/security/selinux/ss/services.c
-+++ b/security/selinux/ss/services.c
-@@ -971,7 +971,10 @@ void services_compute_xperms_decision(st
- 					xpermd->driver))
- 			return;
- 	} else {
--		BUG();
-+		pr_warn_once(
-+			"SELinux: unknown extended permission (%u) will be ignored\n",
-+			node->datum.u.xperms->specified);
-+		return;
- 	}
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -346,6 +346,18 @@ static bool process_string(const char *f
+ 	} while (s < e);
  
- 	if (node->key.specified == AVTAB_XPERMS_ALLOWED) {
-@@ -1008,7 +1011,8 @@ void services_compute_xperms_decision(st
- 					node->datum.u.xperms->perms.p[i];
- 		}
- 	} else {
--		BUG();
-+		pr_warn_once("SELinux: unknown specified key (%u)\n",
-+			     node->key.specified);
- 	}
- }
- 
+ 	/*
++	 * Check for arrays. If the argument has: foo[REC->val]
++	 * then it is very likely that foo is an array of strings
++	 * that are safe to use.
++	 */
++	r = strstr(s, "[");
++	if (r && r < e) {
++		r = strstr(r, "REC->");
++		if (r && r < e)
++			return true;
++	}
++
++	/*
+ 	 * If there's any strings in the argument consider this arg OK as it
+ 	 * could be: REC->field ? "foo" : "bar" and we don't want to get into
+ 	 * verifying that logic here.
 
 
