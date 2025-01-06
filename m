@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02766166F07;
-	Mon,  6 Jan 2025 15:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F9C1DDC06;
+	Mon,  6 Jan 2025 15:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177078; cv=none; b=unbD8IFJ5NrnorFlN7dpqwPbCFMHlhtWdBYmGuHRNKIR/BqHeL0c/IER7Z+LCbAf6NjS245XtE87hpJD8f7F6OiXNHV0ti6FfK9seERElHUZCMoAj3zSLiD8yU2tpoaYRgvl2c+UmRGf4vxqP1kFXyUbczdq/wXtE5Ri8LynXco=
+	t=1736177081; cv=none; b=Zwj+1+jjp/UGLeoItx59/BcwzLSwPM45O51JM6xPHywPQdH+YepBEjssmwtASxohNaMJ811HrtEC/V2tlad6C5qBE3YgZu0SIhtZSsKvnus4iNq3f9PTdS7RyMRqFmc/7TKdFjv4Og4oVbQLDTM9I8d0e9j6360Daa8+XZvnqjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177078; c=relaxed/simple;
-	bh=4IP3IYcZdHRcgMFHO36n5xCX2F24/lLkmv886q6v2Sk=;
+	s=arc-20240116; t=1736177081; c=relaxed/simple;
+	bh=tH0nMG00KQvBM1JMR07Iar4dSYlmPgQUt/Pv20MPQik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E90FxUE0EsRwgcRcnQ3DCMcH6rDNtYh1ITSjjMo/Wld5dCAUJjVj0OOB5nSicRCdDe687MjBKQghFgdSr5UGaW7ucFuLxsg1YqtWZm9uVdfAabHvBX+Z84CxodfgdCm++X23B83h3aoHP+BSKRyHTCZZVI2np3HaM+xl0lNfua4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNj1n6oR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZcK3kj0olZK9101U/lbTzC2t8RK9j955mvg1jI6USTtSpBvUtxL/rBBuH6cy1FdgU3mtKiCVU9wr4CzCa8w7iqdklIYjTUNtQ88TXaVQPLvWgBSpT4rYb6RZ5qHMNBDj8h34FXY+Elipc0hpD3KfSmT2iOWVyfubGxg2LTs9HZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcFzOBMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNj1n6oR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53545C4CED2;
-	Mon,  6 Jan 2025 15:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcFzOBMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF7BC4CED6;
+	Mon,  6 Jan 2025 15:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177077;
-	bh=4IP3IYcZdHRcgMFHO36n5xCX2F24/lLkmv886q6v2Sk=;
+	s=korg; t=1736177080;
+	bh=tH0nMG00KQvBM1JMR07Iar4dSYlmPgQUt/Pv20MPQik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNj1n6oRqD80qmjFiHPFVbflMoJqCXvOOQlWFfvF6Ew+mzw0b5DIOZqBA+Q8DfQAJ
-	 p5aQx2hL9j6S84uEZlA69XeXkRpjj9wZe5NdOZ8uSI6TkcdpaoobcmzxwW/LFjtOiz
-	 j1hq9NtABxIaDTT8IV7bB8dP6B0Kn/B43Cp/Qy2I=
+	b=IcFzOBMw4JgqAe2Xw/mG/DOglMQwrCU231EeazLMPf/2gjRRBLHdNYbfIX6Y4nHmY
+	 B7t5KVEDZF58CrVrt0F9AH/biOxZl55vArcAZCiwH/31ERbxkrjv8/vWbRjdoKfFdm
+	 p2cc6ft6QXjkh/NR0suG71EuS0vdCbSaeQgh+1ZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Qin <hao.qin@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Yihang Li <liyihang9@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/222] Bluetooth: btusb: Add new VID/PID 0489/e111 for MT7925
-Date: Mon,  6 Jan 2025 16:14:07 +0100
-Message-ID: <20250106151152.233581290@linuxfoundation.org>
+Subject: [PATCH 6.6 044/222] scsi: hisi_sas: Directly call register snapshot instead of using workqueue
+Date: Mon,  6 Jan 2025 16:14:08 +0100
+Message-ID: <20250106151152.270962225@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,75 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Qin <hao.qin@mediatek.com>
+From: Yihang Li <liyihang9@huawei.com>
 
-[ Upstream commit faa5fd605d2081b6c9fa2355b59582d4ccd24b16 ]
+[ Upstream commit 2ff07b5c6fe9173e7a7de3b23f300d71ad4d8fde ]
 
-Add VID 0489 & PID e111 for MediaTek MT7925 USB Bluetooth chip.
+Currently, register information dump is performed via workqueue, regardless
+of the trigger mode (automatic or manual). There is a delay in dumping
+register through workqueue, the exact register information at trigger time
+cannot be obtained.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+Call register snapshot directly instead of through a workqueue.
 
-T:  Bus=02 Lev=02 Prnt=02 Port=04 Cnt=02 Dev#=  4 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e111 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Hao Qin <hao.qin@mediatek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1694571327-78697-3-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 9f564f15f884 ("scsi: hisi_sas: Create all dump files during debugfs initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/hisi_sas/hisi_sas.h       |  1 -
+ drivers/scsi/hisi_sas/hisi_sas_main.c  |  7 +++++--
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 14 +++-----------
+ 3 files changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index dc0bba7f4028..67577933835f 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -681,6 +681,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_VALID_LE_STATES },
+diff --git a/drivers/scsi/hisi_sas/hisi_sas.h b/drivers/scsi/hisi_sas/hisi_sas.h
+index 9e73e9cbbcfc..3d511c44c02d 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas.h
++++ b/drivers/scsi/hisi_sas/hisi_sas.h
+@@ -451,7 +451,6 @@ struct hisi_hba {
+ 	const struct hisi_sas_hw *hw;	/* Low level hw interface */
+ 	unsigned long sata_dev_bitmap[BITS_TO_LONGS(HISI_SAS_MAX_DEVICES)];
+ 	struct work_struct rst_work;
+-	struct work_struct debugfs_work;
+ 	u32 phy_state;
+ 	u32 intr_coal_ticks;	/* Time of interrupt coalesce in us */
+ 	u32 intr_coal_count;	/* Interrupt count to coalesce */
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index db9ae206974c..5fdba7b39a1b 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1967,8 +1967,11 @@ static bool hisi_sas_internal_abort_timeout(struct sas_task *task,
+ 	struct hisi_hba *hisi_hba = dev_to_hisi_hba(device);
+ 	struct hisi_sas_internal_abort_data *timeout = data;
  
- 	/* Additional MediaTek MT7925 Bluetooth devices */
-+	{ USB_DEVICE(0x0489, 0xe111), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe113), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH |
- 						     BTUSB_VALID_LE_STATES },
+-	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct)
+-		queue_work(hisi_hba->wq, &hisi_hba->debugfs_work);
++	if (hisi_sas_debugfs_enable && hisi_hba->debugfs_itct[0].itct) {
++		down(&hisi_hba->sem);
++		hisi_hba->hw->debugfs_snapshot_regs(hisi_hba);
++		up(&hisi_hba->sem);
++	}
+ 
+ 	if (task->task_state_flags & SAS_TASK_STATE_DONE) {
+ 		pr_err("Internal abort: timeout %016llx\n",
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 4054659d48f7..10f048b5a489 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -558,7 +558,6 @@ static int experimental_iopoll_q_cnt;
+ module_param(experimental_iopoll_q_cnt, int, 0444);
+ MODULE_PARM_DESC(experimental_iopoll_q_cnt, "number of queues to be used as poll mode, def=0");
+ 
+-static void debugfs_work_handler_v3_hw(struct work_struct *work);
+ static void debugfs_snapshot_regs_v3_hw(struct hisi_hba *hisi_hba);
+ 
+ static u32 hisi_sas_read32(struct hisi_hba *hisi_hba, u32 off)
+@@ -3397,7 +3396,6 @@ hisi_sas_shost_alloc_pci(struct pci_dev *pdev)
+ 	hisi_hba = shost_priv(shost);
+ 
+ 	INIT_WORK(&hisi_hba->rst_work, hisi_sas_rst_work_handler);
+-	INIT_WORK(&hisi_hba->debugfs_work, debugfs_work_handler_v3_hw);
+ 	hisi_hba->hw = &hisi_sas_v3_hw;
+ 	hisi_hba->pci_dev = pdev;
+ 	hisi_hba->dev = dev;
+@@ -3919,7 +3917,9 @@ static ssize_t debugfs_trigger_dump_v3_hw_write(struct file *file,
+ 	if (buf[0] != '1')
+ 		return -EFAULT;
+ 
+-	queue_work(hisi_hba->wq, &hisi_hba->debugfs_work);
++	down(&hisi_hba->sem);
++	debugfs_snapshot_regs_v3_hw(hisi_hba);
++	up(&hisi_hba->sem);
+ 
+ 	return count;
+ }
+@@ -4670,14 +4670,6 @@ static void debugfs_fifo_init_v3_hw(struct hisi_hba *hisi_hba)
+ 	}
+ }
+ 
+-static void debugfs_work_handler_v3_hw(struct work_struct *work)
+-{
+-	struct hisi_hba *hisi_hba =
+-		container_of(work, struct hisi_hba, debugfs_work);
+-
+-	debugfs_snapshot_regs_v3_hw(hisi_hba);
+-}
+-
+ static void debugfs_release_v3_hw(struct hisi_hba *hisi_hba, int dump_index)
+ {
+ 	struct device *dev = hisi_hba->dev;
 -- 
 2.39.5
 
