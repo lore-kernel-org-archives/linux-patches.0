@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAB6158DC5;
-	Mon,  6 Jan 2025 15:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BE3224CC;
+	Mon,  6 Jan 2025 15:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177235; cv=none; b=TLC5l1eeEuh4UO/l0+Dd/Q0RLjFPG9usJIn4RuykEi9IlGATbe25JMbm0U4eVC+v80uumFj9+m3yLn/q0rycm9X+9P/ToXpAyeRc9tUlew4xcBDHaf0K6poEyYFlmj24s7A2d8a0CkGdt031fgEuqg8ol35QUTgl8vLVAD58pTI=
+	t=1736177238; cv=none; b=rm4rstU07vtYsHfAfRSA5/RvuDmKVv8K+ZQ0GL/Oxelb5HXx4IIHS7SRotXwUn0I5KHFUzfOO6GjqzeK0dkGSyr6GFhw5nwkCKUIHvSFN4xZB88gy9pOxSY/DVXZg0Mh4JJ2HyUeHBwLyBqh+Zow6RiqX8zjZJ2zkv2D6UrvCpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177235; c=relaxed/simple;
-	bh=3RpcHIG7XfOn/5mWJdQL3PalmblX5norgdtZjdfk7io=;
+	s=arc-20240116; t=1736177238; c=relaxed/simple;
+	bh=/C1cncUrT/iE8eIYdI53trrj8H7RPEHw+tXXvppg4cU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8FL4V/CgM4/4X7RARG92n+1fqZJS3gJy/DnV+Nf9n3JEfKqMQ0Z0bs6jbDC3vIfvXlYBCN8iT0GbaPxAtUxqWzH3xafoew8vwQuXqNEURAO1I8qiwuKXPby9x9cePqU72jMvoa/QHmYYOODh5AEP5XA2UvZRO/6qnrN15Fjs5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptGZrCF+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CVZuyUwmwg7kZuApVXAFZOxZ9mmVMVjXUUxRAVa4clOT6RjQSMXGi+7LB82VGeuAXRiFzDD5wOANdiz/dkkHUvpdoHmkjn6nwgVRSEX5EC7YvJIv7lPhWw4WaxjqIQp4HGF+EvzIFPk5rlttS0svqjO93nGlVAujz+MB6JBvfgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cprk83t3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptGZrCF+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB05C4CED2;
-	Mon,  6 Jan 2025 15:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cprk83t3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AF0C4CEE5;
+	Mon,  6 Jan 2025 15:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177235;
-	bh=3RpcHIG7XfOn/5mWJdQL3PalmblX5norgdtZjdfk7io=;
+	s=korg; t=1736177238;
+	bh=/C1cncUrT/iE8eIYdI53trrj8H7RPEHw+tXXvppg4cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptGZrCF+dBNgw8iFrn8gAQ7+DBDPwdmufc9iNnkO0msxvYRVjgS62XSJIl7qH5+gT
-	 VxrYiP8kXwlQxZQMn4mXcLceuP6VE+WyLc8ctzTrSNFppRXrgmpDtWrJQkUxmkXZe2
-	 qmrYSCuVoGZplMztdumQQUZdqxxaNRgK6+AMohgg=
+	b=Cprk83t39Op56uTBNA4XhLfzLTuqzfEbTZZPjDKuH2MDqWNZqndF8S8Chm4T6rvki
+	 IJLoPIMzNZFay+s7fPItfD9icTHUjCfOdu+X3JpcbUZUj9vJpy6kVDdyOV9swHw9Lb
+	 QKliGxPypDpHm85L274URiyN/zdrU6FkEZwJ+BOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/222] remoteproc: qcom: pas: enable SAR2130P audio DSP support
-Date: Mon,  6 Jan 2025 16:14:19 +0100
-Message-ID: <20250106151152.688374795@linuxfoundation.org>
+Subject: [PATCH 6.6 090/222] ALSA: ump: Dont open legacy substream for an inactive group
+Date: Mon,  6 Jan 2025 16:14:54 +0100
+Message-ID: <20250106151154.004118628@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,34 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 009e288c989b3fe548a45c82da407d7bd00418a9 ]
+[ Upstream commit 3978d53df7236f0a517c2abeb43ddf6ac162cdd8 ]
 
-Enable support for the Audio DSP on the Qualcomm SAR2130P platform,
-reusing the SM8350 resources.
+When a UMP Group is inactive, we shouldn't allow users to access it
+via the legacy MIDI access.  Add the group active flag check and
+return -ENODEV if it's inactive.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20241027-sar2130p-adsp-v1-3-bd204e39d24e@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://patch.msgid.link/20241129094546.32119-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/core/ump.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 4a73723e375a..fd6bf9e77afc 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1255,6 +1255,7 @@ static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,sa8775p-cdsp1-pas", .data = &sa8775p_cdsp1_resource},
- 	{ .compatible = "qcom,sa8775p-gpdsp0-pas", .data = &sa8775p_gpdsp0_resource},
- 	{ .compatible = "qcom,sa8775p-gpdsp1-pas", .data = &sa8775p_gpdsp1_resource},
-+	{ .compatible = "qcom,sar2130p-adsp-pas", .data = &sm8350_adsp_resource},
- 	{ .compatible = "qcom,sc7180-adsp-pas", .data = &sm8250_adsp_resource},
- 	{ .compatible = "qcom,sc7180-mpss-pas", .data = &mpss_resource_init},
- 	{ .compatible = "qcom,sc7280-mpss-pas", .data = &mpss_resource_init},
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index ada2625ce78f..5a4a7d0b7cca 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -1081,6 +1081,8 @@ static int snd_ump_legacy_open(struct snd_rawmidi_substream *substream)
+ 	guard(mutex)(&ump->open_mutex);
+ 	if (ump->legacy_substreams[dir][group])
+ 		return -EBUSY;
++	if (!ump->groups[group].active)
++		return -ENODEV;
+ 	if (dir == SNDRV_RAWMIDI_STREAM_OUTPUT) {
+ 		if (!ump->legacy_out_opens) {
+ 			err = snd_rawmidi_kernel_open(&ump->core, 0,
 -- 
 2.39.5
 
