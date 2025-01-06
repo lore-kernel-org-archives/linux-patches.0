@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558261DED5B;
-	Mon,  6 Jan 2025 15:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3E11DED46;
+	Mon,  6 Jan 2025 15:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178675; cv=none; b=DMgZ8D39l3qKVU35xZd9mmfdHDaA8MK1+pI/l6i8N9+4g8ubM2NvWsTR89EbAybth7qXDmBB09ptrvVpwRjHQJXPseQzmCSFJTAhlXTcHG53b3mcpcRZkWGXRePjKJjjZVSydfpIIdMyttG4CEdjGh4jgf7lUtVE9df7KeYarms=
+	t=1736178678; cv=none; b=LgufThN1xkL7zSOoXgtFs+s4FyFx3pODQPjVZ1MaX13Tu7MiwLuzT4dqb/9lYn9fX4gw1gRuQu8VHE4CUtBDgiQrg9jr9W8jXk4vP3ieezMWmhdTu/zEOgByUpuLQj5g1oWfkbVOvVMAuX/xT95wX/nIQZCQTcAy1MJPggpqgic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178675; c=relaxed/simple;
-	bh=9rdJNO4wsFtvrVF/mvZkfRQk04uN1aC9m0wmGD4qjgM=;
+	s=arc-20240116; t=1736178678; c=relaxed/simple;
+	bh=w1eM1FPwAiPoqmpkP6xClGVfmPtwrhBBUv/VAO7FsTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVJfhwI3y8W5j1ndKcaFBWl9iOLMWFXr4xjj4sO2cGy7prf4wZ+OgNwMAKXVozXF69t5oh+yyxC1n1MtrkcMOIQMvQ7PUDwxcEV26nqb29BtzXov+IjilawPyHcG2dCC2ick1DXrEC8614fd2UQB8ntVwWW4I9c2V4OyuF96Tj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paybwzKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plV3c3t8JrSgjt4P6eBIbuhxVmglJRhhhJgigS7qKqARmtp8oR8rus06ggXB2bOGM/xCiUEbis83QFkx4CLKEXtspX9QCmMGBTcst7zs8DrN5zF5wv7mGuCaIfKygx66MCKiGJrmGj65Zol1R87A4Ydo842c8AFU37Z8lC+N+0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCcfHFHM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paybwzKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEF4C4CED6;
-	Mon,  6 Jan 2025 15:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCcfHFHM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DE1C4CED2;
+	Mon,  6 Jan 2025 15:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178675;
-	bh=9rdJNO4wsFtvrVF/mvZkfRQk04uN1aC9m0wmGD4qjgM=;
+	s=korg; t=1736178678;
+	bh=w1eM1FPwAiPoqmpkP6xClGVfmPtwrhBBUv/VAO7FsTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paybwzKS1S9gSqWfB3zCOJPA82sd2RtBOE8+o+8CuwhQWQxxA9y509Gu9fXohhetF
-	 3Zr3eX6ijvb+iN088wkTqBziuubXIpwSWNdDvlp3w/kJ+rMR8I7q5xrvJqxs4cA5zQ
-	 66EMBgu8GsPxiKMlS9X2YuFyHCL7zWWgr0+UPfpo=
+	b=YCcfHFHMFaDxRInVZ0wM5c85cddZjfuX122oYX55SMIepx5T0ZeOYdhAVSAxxEuWf
+	 snkIFy8BM3NxFEE41iXvT42xKbhmbSKTfpwzfp8iFmbFeAaKQ/IcQ/nAy354xHLICT
+	 lJiODHJFuxOpsuHTyBJsWbemwGsi9BSFiflDCk3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>
-Subject: [PATCH 5.15 054/168] ceph: validate snapdirname option length when mounting
-Date: Mon,  6 Jan 2025 16:16:02 +0100
-Message-ID: <20250106151140.503755990@linuxfoundation.org>
+	Jing Xia <jing.xia@unisoc.com>,
+	Xuewen Yan <xuewen.yan@unisoc.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Benoit Lize <lizeb@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.15 055/168] epoll: Add synchronous wakeup support for ep_poll_callback
+Date: Mon,  6 Jan 2025 16:16:03 +0100
+Message-ID: <20250106151140.541375193@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -50,33 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Xuewen Yan <xuewen.yan@unisoc.com>
 
-commit 12eb22a5a609421b380c3c6ca887474fb2089b2c upstream.
+commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
 
-It becomes a path component, so it shouldn't exceed NAME_MAX
-characters.  This was hardened in commit c152737be22b ("ceph: Use
-strscpy() instead of strcpy() in __get_snap_name()"), but no actual
-check was put in place.
+Now, the epoll only use wake_up() interface to wake up task.
+However, sometimes, there are epoll users which want to use
+the synchronous wakeup flag to hint the scheduler, such as
+Android binder driver.
+So add a wake_up_sync() define, and use the wake_up_sync()
+when the sync is true in ep_poll_callback().
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Co-developed-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Jing Xia <jing.xia@unisoc.com>
+Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
+Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
+Tested-by: Brian Geffon <bgeffon@google.com>
+Reviewed-by: Brian Geffon <bgeffon@google.com>
+Reported-by: Benoit Lize <lizeb@google.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: Brian Geffon <bgeffon@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/super.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/eventpoll.c       |    5 ++++-
+ include/linux/wait.h |    1 +
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -301,6 +301,8 @@ static int ceph_parse_mount_param(struct
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1230,7 +1230,10 @@ static int ep_poll_callback(wait_queue_e
+ 				break;
+ 			}
+ 		}
+-		wake_up(&ep->wq);
++		if (sync)
++			wake_up_sync(&ep->wq);
++		else
++			wake_up(&ep->wq);
+ 	}
+ 	if (waitqueue_active(&ep->poll_wait))
+ 		pwake++;
+--- a/include/linux/wait.h
++++ b/include/linux/wait.h
+@@ -224,6 +224,7 @@ void __wake_up_pollfree(struct wait_queu
+ #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
+ #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
+ #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
++#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
  
- 	switch (token) {
- 	case Opt_snapdirname:
-+		if (strlen(param->string) > NAME_MAX)
-+			return invalfc(fc, "snapdirname too long");
- 		kfree(fsopt->snapdir_name);
- 		fsopt->snapdir_name = param->string;
- 		param->string = NULL;
+ #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
+ #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
 
 
