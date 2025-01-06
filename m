@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA85D6088F;
-	Mon,  6 Jan 2025 15:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCD3BA34;
+	Mon,  6 Jan 2025 15:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178531; cv=none; b=RTW/CifxjThn6z7/IUbLmaqI/fNSUgoLiox4/NL/lhXb87ZpQbLt5+yi23yHwYUbSZCn+SiuX3v1IAmcEGE6kh1uBzBoYjzcFwh/kgj2wwGjTP8SVtvQHQCK18DWnhCE/sX8fY+lAsH+D57wmCfBa66LFi8Mlh4KkcKHTb3dlmE=
+	t=1736178535; cv=none; b=bzexttOUrfACYJSEk341JTA03ZT7tbqeQbKqqrNrB3G4jIoLCPXZi2vOPxaaMBOc+CH6L4TK+XdYuZDrsOUddckz2bmpRXyb25XO4rYYUMTTNND60O/eJ/xA1HuP8B9EqvusggY8UUzE1z+3ZT6DiNFbkT+KHyLWR13cMDq6nzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178531; c=relaxed/simple;
-	bh=n+FHlN0IMS75guDQCM7ZZgcvrBS39JI6nq9gthr2bJ4=;
+	s=arc-20240116; t=1736178535; c=relaxed/simple;
+	bh=hQowDun4hc9/WMaNIlg6J3YCXYYD704tl7QncQJEFAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7IsW7Ngv/OTNgyzwLJzlOHXOYRjrdYHCD0TnW/La9hTPnzWB8zlo2h1Zo9im9z/ZacaU88lbvK71w+btxzdswppKwVfZNuCnEQebnmtCUuHOOvrOxscXSkAHdejxpfhRc1EJ081YqTkaEo9GOhOjAlTjRy1EoNGzmCEw2rSiMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zua8DBF3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CXHSTQJaEu+bt1qOKr4QlbHVMQWMIrkfnjZVFHzSfwB75f6vkI3DvIAaTHBvbPmxoinLJHKdP1cqQM/Sz6+J7HkcRZQSDoQQ3OBPTtAS/ScUhn6W08w1/Gnc932+Zy167UmnTt2q/odsKTxAtsTEyd/OEqU1Ygc5rj45GE4ZXNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjoKyi6l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zua8DBF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A55C4CED2;
-	Mon,  6 Jan 2025 15:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjoKyi6l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43825C4CEE2;
+	Mon,  6 Jan 2025 15:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178531;
-	bh=n+FHlN0IMS75guDQCM7ZZgcvrBS39JI6nq9gthr2bJ4=;
+	s=korg; t=1736178534;
+	bh=hQowDun4hc9/WMaNIlg6J3YCXYYD704tl7QncQJEFAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zua8DBF3D7h/lTalwt8qxtcDXjFJAWzCGDuWr+JVlWjKyZ6MjA1f0sgcBKTW4MUKd
-	 K3TpQnVkPhbzDEnjgV0YNIF9q5cX51dfQvaJ7i86u3fbNRY8zAwTpGsAqTuDos9+xA
-	 DtfPIBnuqMVF0KyVX1/jJVWpxOYaLUaX1JTurv+A=
+	b=HjoKyi6lpGQe7EGDxQ9lS/eTi+dLbIZdEwfIHjUipmxPasveHo8XZ2J/Jr5xcWxOb
+	 tVyytXLg43mChhfVMiZrmQ3g7MbsacJ0ZnDMU1IRAfaFWPbeIoMYND7Nm8IYhkWvOC
+	 CqHwD4g403sgJoOa53BXzVagQ3ilHIWZXsY699s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Colin Walters <walters@verbum.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/168] i2c: pnx: Fix timeout in wait functions
-Date: Mon,  6 Jan 2025 16:15:19 +0100
-Message-ID: <20250106151138.889110855@linuxfoundation.org>
+Subject: [PATCH 5.15 012/168] erofs: fix incorrect symlink detection in fast symlink
+Date: Mon,  6 Jan 2025 16:15:20 +0100
+Message-ID: <20250106151138.926592798@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -45,52 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 7363f2d4c18557c99c536b70489187bb4e05c412 ]
+commit 9ed50b8231e37b1ae863f5dec8153b98d9f389b4 upstream.
 
-Since commit f63b94be6942 ("i2c: pnx: Fix potential deadlock warning
-from del_timer_sync() call in isr") jiffies are stored in
-i2c_pnx_algo_data.timeout, but wait_timeout and wait_reset are still
-using it as milliseconds. Convert jiffies back to milliseconds to wait
-for the expected amount of time.
+Fast symlink can be used if the on-disk symlink data is stored
+in the same block as the on-disk inode, so we don’t need to trigger
+another I/O for symlink data.  However, currently fs correction could be
+reported _incorrectly_ if inode xattrs are too large.
 
-Fixes: f63b94be6942 ("i2c: pnx: Fix potential deadlock warning from del_timer_sync() call in isr")
-Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+In fact, these should be valid images although they cannot be handled as
+fast symlinks.
+
+Many thanks to Colin for reporting this!
+
+Reported-by: Colin Walters <walters@verbum.org>
+Reported-by: https://honggfuzz.dev/
+Link: https://lore.kernel.org/r/bb2dd430-7de0-47da-ae5b-82ab2dd4d945@app.fastmail.com
+Fixes: 431339ba9042 ("staging: erofs: add inode operations")
+[ Note that it's a runtime misbehavior instead of a security issue. ]
+Link: https://lore.kernel.org/r/20240909031911.1174718-1-hsiangkao@linux.alibaba.com
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-pnx.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/inode.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-pnx.c b/drivers/i2c/busses/i2c-pnx.c
-index d2c09b0fdf52..ab87bef50402 100644
---- a/drivers/i2c/busses/i2c-pnx.c
-+++ b/drivers/i2c/busses/i2c-pnx.c
-@@ -95,7 +95,7 @@ enum {
- 
- static inline int wait_timeout(struct i2c_pnx_algo_data *data)
+diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
+index 638bb70d0d65..c68258ae70d3 100644
+--- a/fs/erofs/inode.c
++++ b/fs/erofs/inode.c
+@@ -219,11 +219,14 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
+ 			      unsigned int m_pofs)
  {
--	long timeout = data->timeout;
-+	long timeout = jiffies_to_msecs(data->timeout);
- 	while (timeout > 0 &&
- 			(ioread32(I2C_REG_STS(data)) & mstatus_active)) {
- 		mdelay(1);
-@@ -106,7 +106,7 @@ static inline int wait_timeout(struct i2c_pnx_algo_data *data)
+ 	struct erofs_inode *vi = EROFS_I(inode);
++	loff_t off;
+ 	char *lnk;
  
- static inline int wait_reset(struct i2c_pnx_algo_data *data)
- {
--	long timeout = data->timeout;
-+	long timeout = jiffies_to_msecs(data->timeout);
- 	while (timeout > 0 &&
- 			(ioread32(I2C_REG_CTL(data)) & mcntrl_reset)) {
- 		mdelay(1);
+-	/* if it cannot be handled with fast symlink scheme */
+-	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
+-	    inode->i_size >= PAGE_SIZE || inode->i_size < 0) {
++	m_pofs += vi->xattr_isize;
++	/* check if it cannot be handled with fast symlink scheme */
++	if (vi->datalayout != EROFS_INODE_FLAT_INLINE || inode->i_size < 0 ||
++	    check_add_overflow(m_pofs, inode->i_size, &off) ||
++	    off > i_blocksize(inode)) {
+ 		inode->i_op = &erofs_symlink_iops;
+ 		return 0;
+ 	}
+@@ -232,17 +235,6 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
+ 	if (!lnk)
+ 		return -ENOMEM;
+ 
+-	m_pofs += vi->xattr_isize;
+-	/* inline symlink data shouldn't cross page boundary as well */
+-	if (m_pofs + inode->i_size > PAGE_SIZE) {
+-		kfree(lnk);
+-		erofs_err(inode->i_sb,
+-			  "inline data cross block boundary @ nid %llu",
+-			  vi->nid);
+-		DBG_BUGON(1);
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	memcpy(lnk, data + m_pofs, inode->i_size);
+ 	lnk[inode->i_size] = '\0';
+ 
 -- 
 2.39.5
 
