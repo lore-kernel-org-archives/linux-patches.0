@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD571514F6;
-	Mon,  6 Jan 2025 15:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F3B14A617;
+	Mon,  6 Jan 2025 15:44:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178274; cv=none; b=JSX7GFbQvaiZjRY57n+8ZqeQbgz+fEt6d3Zq/byRqn7E9ucc5shoqlvsfcHn/QvDutNBgpF3myntvfwDduTQ9XHz46akfwvIyghSKDBWv5zit5so7nY2r5DxM81A0kmpGm67D+oZmay8Bp4ZjOYbb33Ol0ViGWev2GKfrVBv55Y=
+	t=1736178277; cv=none; b=PfHxuVj4qZ3dEpoxvf8XYrpnTR6ron7qB9gWHfKkgZMz62IULR4AIE95Peyt3eRiaeG3581LXoe/IX7A0GfdCUTPqgPlrKKtE08o7oi5NsNPEjVoI3hrIyaBEL340PvYNu0nVzX1kLSwl3UtHhwBKm0L8K50CY1WyI/KCHNVwEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178274; c=relaxed/simple;
-	bh=/Ik1wLDW3LRa929s/edNU3vypNr2S34NnEUJ6kU2h4g=;
+	s=arc-20240116; t=1736178277; c=relaxed/simple;
+	bh=WJ9HQzIZABhFuiV0mb2jNMfBMyZ3BvNYjaWmt/7bJ0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lkf/oJrwNfbX8n+shVo23jmjmlZGde6UfgH/D6qkfUblh1xbV/JuWVtRWwKxpfVIxwQZ/pt/qakKcGSGgNDcDjS3PKes5KqVJzucVVbixWKIYkuKxk4BtfhbENYuG3qta0VpKX0w/AVEHyr53ZRsgQshFdg7CV81BcjnzesmdL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVgSq3T/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cw6E5fgL+WlFdGEnFrpwNGLzuTDrg+C+HFIfvkuSRFmRFW8P9VrVUwB0Tn3z8ZpH8W5TwA2xlCEHz/IZ2bCgM8mqM6lObhLk438JOjE10MtRaZ5bGfjw8rgiGYpnE26AGpYhBp5oP7R6YPn/xsjJNqtnlBZXmIT7bwsnHWBSB6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3YoCSW6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVgSq3T/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 867D7C4CED2;
-	Mon,  6 Jan 2025 15:44:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3YoCSW6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B9BC4CEDF;
+	Mon,  6 Jan 2025 15:44:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178273;
-	bh=/Ik1wLDW3LRa929s/edNU3vypNr2S34NnEUJ6kU2h4g=;
+	s=korg; t=1736178277;
+	bh=WJ9HQzIZABhFuiV0mb2jNMfBMyZ3BvNYjaWmt/7bJ0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVgSq3T/NI9zKJCWj4UuKieXe3bA/fFAHBi+/aDi2BrjOV7NByFouJpRZF23GMdI7
-	 nIWBmFWMv2uA9sizdx7AoDauLB2E2PmwcpN1s/V7/Duw4tNWGGl4DMrV7ZQB+Uqq++
-	 chfzfZ1M+domK/0BEzLqTnxNwHoWGQXbYVQ+MaLE=
+	b=v3YoCSW6zH3YTBJEjLmcH1xAIdPr+fy64uF6n8DHM1EaQTridqthwNM/6WM8YZsSa
+	 C8NBOFbTUORG0ViU+B/1MAgb0hBhOHlmMbXWHH1qLs5ADWpIcw8GBZBu20427WREti
+	 rtIruwJ/Y+JiX+MbnJgWIhtroHCJQqAvZ7MQnJ3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pau Espin Pedrol <pespin@espeweb.net>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/138] platform/x86: asus-nb-wmi: Ignore unknown event 0xCF
-Date: Mon,  6 Jan 2025 16:16:28 +0100
-Message-ID: <20250106151135.658074856@linuxfoundation.org>
+Subject: [PATCH 5.10 065/138] scsi: mpt3sas: Diag-Reset when Doorbell-In-Use bit is set during driver load time
+Date: Mon,  6 Jan 2025 16:16:29 +0100
+Message-ID: <20250106151135.695148411@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -47,72 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit e9fba20c29e27dc99e55e1c550573a114561bf8c ]
+[ Upstream commit 3f5eb062e8aa335643181c480e6c590c6cedfd22 ]
 
-On the Asus X541UAK an unknown event 0xCF is emited when the charger
-is plugged in. This is caused by the following AML code:
+Issue a Diag-Reset when the "Doorbell-In-Use" bit is set during the
+driver load/initialization.
 
-    If (ACPS ())
-    {
-        ACPF = One
-        Local0 = 0x58
-        If (ATKP)
-        {
-            ^^^^ATKD.IANE (0xCF)
-        }
-    }
-    Else
-    {
-        ACPF = Zero
-        Local0 = 0x57
-    }
-
-    Notify (AC0, 0x80) // Status Change
-    If (ATKP)
-    {
-        ^^^^ATKD.IANE (Local0)
-    }
-
-    Sleep (0x64)
-    PNOT ()
-    Sleep (0x0A)
-    NBAT (0x80)
-
-Ignore the 0xCF event to silence the unknown event warning.
-
-Reported-by: Pau Espin Pedrol <pespin@espeweb.net>
-Closes: https://lore.kernel.org/platform-driver-x86/54d4860b-ec9c-4992-acf6-db3f90388293@espeweb.net
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20241123224700.18530-1-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20241110173341.11595-2-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-nb-wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/mpt3sas/mpt3sas_base.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
-index 49505939352a..224c1f1c271b 100644
---- a/drivers/platform/x86/asus-nb-wmi.c
-+++ b/drivers/platform/x86/asus-nb-wmi.c
-@@ -574,6 +574,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
- 	{ KE_KEY, 0xC4, { KEY_KBDILLUMUP } },
- 	{ KE_KEY, 0xC5, { KEY_KBDILLUMDOWN } },
- 	{ KE_IGNORE, 0xC6, },  /* Ambient Light Sensor notification */
-+	{ KE_IGNORE, 0xCF, },	/* AC mode */
- 	{ KE_KEY, 0xFA, { KEY_PROG2 } },           /* Lid flip action */
- 	{ KE_KEY, 0xBD, { KEY_PROG2 } },           /* Lid flip action on ROG xflow laptops */
- 	{ KE_END, 0},
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
+index 53528711dac1..768635de93da 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -6008,11 +6008,12 @@ _base_handshake_req_reply_wait(struct MPT3SAS_ADAPTER *ioc, int request_bytes,
+ 	int i;
+ 	u8 failed;
+ 	__le32 *mfp;
++	int ret_val;
+ 
+ 	/* make sure doorbell is not in use */
+ 	if ((ioc->base_readl_ext_retry(&ioc->chip->Doorbell) & MPI2_DOORBELL_USED)) {
+ 		ioc_err(ioc, "doorbell is in use (line=%d)\n", __LINE__);
+-		return -EFAULT;
++		goto doorbell_diag_reset;
+ 	}
+ 
+ 	/* clear pending doorbell interrupts from previous state changes */
+@@ -6102,6 +6103,10 @@ _base_handshake_req_reply_wait(struct MPT3SAS_ADAPTER *ioc, int request_bytes,
+ 			    le32_to_cpu(mfp[i]));
+ 	}
+ 	return 0;
++
++doorbell_diag_reset:
++	ret_val = _base_diag_reset(ioc);
++	return ret_val;
+ }
+ 
+ /**
 -- 
 2.39.5
 
