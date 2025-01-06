@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C91DDC36;
-	Mon,  6 Jan 2025 15:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB8078F2B;
+	Mon,  6 Jan 2025 15:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178791; cv=none; b=mdrx3gStMiMR9+cwpfBApS8soDR/vp/X8uZIeN17T8FJCWpD3B+1B27lcJlYaZJd5ZRqlAyUOKz5eV7i1vphC0ngonT8GHpym33ZXOU3oJ9zTZOVuZZfJYAJHhyIzZVVZnjYFl+X3/Rcmpf8485sCjL/miFEp1prd/rTJkqKWrQ=
+	t=1736178794; cv=none; b=jbBk0ETmX6657ufQ+TAruYaGquDuFECnPYjnSRBTRX03xjEw2oFO46hraDJTnjF6cuxHTD32qDXgnb+GSDxbtcRqcnTl8yoTQH3yPexxFPFji2lnl+w8yQ+s133MurSgfNqsS+nBRTAPdwcCL7waLaSq/GPuV+YVK8DPHXTFuZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178791; c=relaxed/simple;
-	bh=ccsDKME1LCsX1XmeMxGeVLKBlnmxULuHU3KsQvSQhuc=;
+	s=arc-20240116; t=1736178794; c=relaxed/simple;
+	bh=OEtd23vVEDGMGnGe5nj95wHZqwoB0EQALp/Y6clt3io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QB6BHC2q4hCKpQXjHXL7ej2mgBIFEkYQ0nVygfa3Sh+7328I2CoSvdsBHpbkMdLtvvMjtOQYl9kDRJ/neLn61t8U+tgPZAhi3Xz4aRVPuEv5ST+loZopSuNyrkW6D3m4P/+Lg8+K1mIas/m7TQYAbwvsKip/rk+riheuwh2KeAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJ7i3Q5h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VLJN8N7d4Qr5eUaBuS5BKRtn0VFTneMOVPcMfU83udhufpkDbS3+l6oBjbIuOI8x0vBM48aJPhUsstLqYu5dYCL/2j7rJyH6MH4+STLWF12YKX041+rk9lUv6wCG0qU3uc8g/FSlLBz46okIVT2VjAFAfy/65WZilpevjL476kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrdiWpE7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJ7i3Q5h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76D8C4CED2;
-	Mon,  6 Jan 2025 15:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrdiWpE7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF162C4CED2;
+	Mon,  6 Jan 2025 15:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178791;
-	bh=ccsDKME1LCsX1XmeMxGeVLKBlnmxULuHU3KsQvSQhuc=;
+	s=korg; t=1736178794;
+	bh=OEtd23vVEDGMGnGe5nj95wHZqwoB0EQALp/Y6clt3io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJ7i3Q5hVH6DZbVMV1QgZgXHeJUX+ElxAFfLIGkhHSFGNA+F38S+kA2z56UGd7VO2
-	 QKgddEyRCfbuZLh9QhqzuxrodSAb8EHt6T8pPrM4gM3Ou+1ItGfvHaCqJYg95Tc3bz
-	 X/gX9cUylxEqCxn57AazKR/yKCw0eFgRuLhKVLGg=
+	b=XrdiWpE7w0wlQkiUhTdcdccdMS3o16c0ZFJR1xkpv8Sb7s8eUViQiTri4QXTc7MnQ
+	 tL1MSykDhzsFnGmQOvdO6TOaZdZVTD4UYw3IwI/ogTAWR/jWPGwmKrr7Z6rzEvpDrE
+	 k1gDUul7gKyw/VFukxgBGKadOE4xD7LYVwl/hP98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 093/168] arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs
-Date: Mon,  6 Jan 2025 16:16:41 +0100
-Message-ID: <20250106151141.976873488@linuxfoundation.org>
+Subject: [PATCH 5.15 094/168] drm/dp_mst: Verify request type in the corresponding down message reply
+Date: Mon,  6 Jan 2025 16:16:42 +0100
+Message-ID: <20250106151142.014171922@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -54,62 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit c0900d15d31c2597dd9f634c8be2b71762199890 ]
+[ Upstream commit 4d49e77a973d3b5d1881663c3f122906a0702940 ]
 
-Linux currently sets the TCR_EL1.AS bit unconditionally during CPU
-bring-up. On an 8-bit ASID CPU, this is RES0 and ignored, otherwise
-16-bit ASIDs are enabled. However, if running in a VM and the hypervisor
-reports 8-bit ASIDs (ID_AA64MMFR0_EL1.ASIDBits == 0) on a 16-bit ASIDs
-CPU, Linux uses bits 8 to 63 as a generation number for tracking old
-process ASIDs. The bottom 8 bits of this generation end up being written
-to TTBR1_EL1 and also used for the ASID-based TLBI operations as the
-upper 8 bits of the ASID. Following an ASID roll-over event we can have
-threads of the same application with the same 8-bit ASID but different
-generation numbers running on separate CPUs. Both TLB caching and the
-TLBI operations will end up using different actual 16-bit ASIDs for the
-same process.
+After receiving the response for an MST down request message, the
+response should be accepted/parsed only if the response type matches
+that of the request. Ensure this by checking if the request type code
+stored both in the request and the reply match, dropping the reply in
+case of a mismatch.
 
-A similar scenario can happen in a big.LITTLE configuration if the boot
-CPU only uses 8-bit ASIDs while secondary CPUs have 16-bit ASIDs.
+This fixes the topology detection for an MST hub, as described in the
+Closes link below, where the hub sends an incorrect reply message after
+a CLEAR_PAYLOAD_TABLE -> LINK_ADDRESS down request message sequence.
 
-Ensure that the ASID generation is only tracked by bits 16 and up,
-leaving bits 15:8 as 0 if the kernel uses 8-bit ASIDs. Note that
-clearing TCR_EL1.AS is not sufficient since the architecture requires
-that the top 8 bits of the ASID passed to TLBI instructions are 0 rather
-than ignored in such configuration.
-
-Cc: stable@vger.kernel.org
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241203151941.353796-1-catalin.marinas@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: <stable@vger.kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/12804
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241203160223.2926014-3-imre.deak@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/context.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 31 +++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/arch/arm64/mm/context.c b/arch/arm64/mm/context.c
-index bbc2708fe928..d160100c8dab 100644
---- a/arch/arm64/mm/context.c
-+++ b/arch/arm64/mm/context.c
-@@ -32,9 +32,9 @@ static unsigned long nr_pinned_asids;
- static unsigned long *pinned_asid_map;
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index f72b4ff169a8..86e1a61b6b6d 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -3993,6 +3993,34 @@ drm_dp_get_one_sb_msg(struct drm_dp_mst_topology_mgr *mgr, bool up,
+ 	return true;
+ }
  
- #define ASID_MASK		(~GENMASK(asid_bits - 1, 0))
--#define ASID_FIRST_VERSION	(1UL << asid_bits)
-+#define ASID_FIRST_VERSION	(1UL << 16)
++static int get_msg_request_type(u8 data)
++{
++	return data & 0x7f;
++}
++
++static bool verify_rx_request_type(struct drm_dp_mst_topology_mgr *mgr,
++				   const struct drm_dp_sideband_msg_tx *txmsg,
++				   const struct drm_dp_sideband_msg_rx *rxmsg)
++{
++	const struct drm_dp_sideband_msg_hdr *hdr = &rxmsg->initial_hdr;
++	const struct drm_dp_mst_branch *mstb = txmsg->dst;
++	int tx_req_type = get_msg_request_type(txmsg->msg[0]);
++	int rx_req_type = get_msg_request_type(rxmsg->msg[0]);
++	char rad_str[64];
++
++	if (tx_req_type == rx_req_type)
++		return true;
++
++	drm_dp_mst_rad_to_str(mstb->rad, mstb->lct, rad_str, sizeof(rad_str));
++	drm_dbg_kms(mgr->dev,
++		    "Got unexpected MST reply, mstb: %p seqno: %d lct: %d rad: %s rx_req_type: %s (%02x) != tx_req_type: %s (%02x)\n",
++		    mstb, hdr->seqno, mstb->lct, rad_str,
++		    drm_dp_mst_req_type_str(rx_req_type), rx_req_type,
++		    drm_dp_mst_req_type_str(tx_req_type), tx_req_type);
++
++	return false;
++}
++
+ static int drm_dp_mst_handle_down_rep(struct drm_dp_mst_topology_mgr *mgr)
+ {
+ 	struct drm_dp_sideband_msg_tx *txmsg;
+@@ -4022,6 +4050,9 @@ static int drm_dp_mst_handle_down_rep(struct drm_dp_mst_topology_mgr *mgr)
+ 		goto out_clear_reply;
+ 	}
  
--#define NUM_USER_ASIDS		ASID_FIRST_VERSION
-+#define NUM_USER_ASIDS		(1UL << asid_bits)
- #define ctxid2asid(asid)	((asid) & ~ASID_MASK)
- #define asid2ctxid(asid, genid)	((asid) | (genid))
++	if (!verify_rx_request_type(mgr, txmsg, msg))
++		goto out_clear_reply;
++
+ 	drm_dp_sideband_parse_reply(mgr, msg, &txmsg->reply);
  
+ 	if (txmsg->reply.reply_type == DP_SIDEBAND_REPLY_NAK) {
 -- 
 2.39.5
 
