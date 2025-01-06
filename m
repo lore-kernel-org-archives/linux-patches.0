@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CAA481AF;
-	Mon,  6 Jan 2025 15:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCEA159565;
+	Mon,  6 Jan 2025 15:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177870; cv=none; b=Qw00yGkblRbvw+ceWjrJQ1oL2ANLDaOpuuUJPlIjnf3m8oMWFHtI5XIGSI6RZA0MKomXQf/xgwWWZoakyohcppqXQlfmILV0tX/xIhdpKPmGPRHuk8v1j8R1SEE6mHT9FuywCXbuE0sklMDo8m1w4uj4Alxcqpk3n1j7A1NQe5M=
+	t=1736177873; cv=none; b=Y/Hv/holPVocy3v7LJvV8ZosMV62RMjzCES3vQHtFp+zUthD9YCGgkeapWf4bINGDiqb26lONwHsgj9u/TbJ57yhmwMHN1bqllE7e/yBeadh6pSXEUOLdv6T+FD0KAFH1zPknbGQ/X17elxYeaRnl0LJvkAwZNi2I8RpKPjgsmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177870; c=relaxed/simple;
-	bh=Q/nKH04GGL/3bEgaAibuRPWx5awMT1OMdrNEotIQvQo=;
+	s=arc-20240116; t=1736177873; c=relaxed/simple;
+	bh=YuCFp/nDjjqq6jZxFJV23gDaOIFPIfce1SJs7aDQeB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iYRrzyO0mKhx7LkGutL3y2Qake3Gj9r4UXkRrwH4pDmDesjp4d5Ajf0dJKvhZOH56soq+OprPS/XwOLLqxDYKXW+scQjuFJ5hRA8CGkh2MXSGr52w/xh99cp0R65D/dEPR/WEnI+8dJN4H5OzAYGsSgxsd4Vbf17ir9lFyWLPt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ixd29vO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6nWxDLr3gzJ527BrWQ4s6Z99b7nLHAdduE0xHs7c9vLBVFZP/POTdWxxEQH9Vci09xpLh3Ps5at2Hyqma/vJrNb6KZbEeiARvgs46Aj8G5IV9xsRHb4pObCCC2mk39rmSG5p5iyaZ7Bqt6XBX2AkUX8a/6kZ3DyXcCFtGgCjHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVaZyfST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ixd29vO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B69EC4CED2;
-	Mon,  6 Jan 2025 15:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVaZyfST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32441C4CED2;
+	Mon,  6 Jan 2025 15:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177870;
-	bh=Q/nKH04GGL/3bEgaAibuRPWx5awMT1OMdrNEotIQvQo=;
+	s=korg; t=1736177873;
+	bh=YuCFp/nDjjqq6jZxFJV23gDaOIFPIfce1SJs7aDQeB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixd29vO0Wh+QryTB128ugGq0t0gwB++Xk2pLGTMBI42xtw19NGV/cjdXyBpH3WShQ
-	 EAW+w8gMa7MzP6PEFUVMQ8Jk9sMoq3noUitgv1+pxATdnA4uAdPn4ShpZI5PkBRm1V
-	 Fhq6yklGDDAvVGa3oZ/mr/I+5iviJTNGQE+EIThI=
+	b=CVaZyfSTyFsgtK7+js143X9a1R1Z0NfgMFO3nCxF4QwWvyme1qzLgfkrjvualeMY6
+	 2dyOUBdSs9HJnvL8K6UfqJmASTzoGukWW7g8zKI2p14eO1vtmKUSyCNg4UHtKKGRwJ
+	 P207g4SGfGqz0qRV/qYAgvCzufoCg+V31Tvjvzd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/156] RDMA/rxe: Remove the direct link to net_device
-Date: Mon,  6 Jan 2025 16:15:39 +0100
-Message-ID: <20250106151143.732303306@linuxfoundation.org>
+Subject: [PATCH 6.12 054/156] drm/i915/cx0_phy: Fix C10 pll programming sequence
+Date: Mon,  6 Jan 2025 16:15:40 +0100
+Message-ID: <20250106151143.770157126@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,401 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Suraj Kandpal <suraj.kandpal@intel.com>
 
-[ Upstream commit 2ac5415022d16d63d912a39a06f32f1f51140261 ]
+[ Upstream commit 385a95cc72941c7f88630a7bc4176048cc03b395 ]
 
-The similar patch in siw is in the link:
-https://git.kernel.org/rdma/rdma/c/16b87037b48889
+According to spec VDR_CUSTOM_WIDTH register gets programmed after pll
+specific VDR registers and TX Lane programming registers are done.
+Moreover we only program into C10_VDR_CONTROL1 to update config and
+setup master lane once all VDR registers are written into.
 
-This problem also occurred in RXE. The following analyze this problem.
-In the following Call Traces:
-"
-BUG: KASAN: slab-use-after-free in dev_get_flags+0x188/0x1d0 net/core/dev.c:8782
-Read of size 4 at addr ffff8880554640b0 by task kworker/1:4/5295
-
-CPU: 1 UID: 0 PID: 5295 Comm: kworker/1:4 Not tainted
-6.12.0-rc3-syzkaller-00399-g9197b73fd7bb #0
-Hardware name: Google Compute Engine/Google Compute Engine,
-BIOS Google 09/13/2024
-Workqueue: infiniband ib_cache_event_task
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:488
- kasan_report+0x143/0x180 mm/kasan/report.c:601
- dev_get_flags+0x188/0x1d0 net/core/dev.c:8782
- rxe_query_port+0x12d/0x260 drivers/infiniband/sw/rxe/rxe_verbs.c:60
- __ib_query_port drivers/infiniband/core/device.c:2111 [inline]
- ib_query_port+0x168/0x7d0 drivers/infiniband/core/device.c:2143
- ib_cache_update+0x1a9/0xb80 drivers/infiniband/core/cache.c:1494
- ib_cache_event_task+0xf3/0x1e0 drivers/infiniband/core/cache.c:1568
- process_one_work kernel/workqueue.c:3229 [inline]
- process_scheduled_works+0xa65/0x1850 kernel/workqueue.c:3310
- worker_thread+0x870/0xd30 kernel/workqueue.c:3391
- kthread+0x2f2/0x390 kernel/kthread.c:389
- ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:244
- </TASK>
-"
-
-1). In the link [1],
-
-"
- infiniband syz2: set down
-"
-
-This means that on 839.350575, the event ib_cache_event_task was sent andi
-queued in ib_wq.
-
-2). In the link [1],
-
-"
- team0 (unregistering): Port device team_slave_0 removed
-"
-
-It indicates that before 843.251853, the net device should be freed.
-
-3). In the link [1],
-
-"
- BUG: KASAN: slab-use-after-free in dev_get_flags+0x188/0x1d0
-"
-
-This means that on 850.559070, this slab-use-after-free problem occurred.
-
-In all, on 839.350575, the event ib_cache_event_task was sent and queued
-in ib_wq,
-
-before 843.251853, the net device veth was freed.
-
-on 850.559070, this event was executed, and the mentioned freed net device
-was called. Thus, the above call trace occurred.
-
-[1] https://syzkaller.appspot.com/x/log.txt?x=12e7025f980000
-
-Reported-by: syzbot+4b87489410b4efd181bf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=4b87489410b4efd181bf
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20241220222325.2487767-1-yanjun.zhu@linux.dev
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Bspec: 67636
+Fixes: 51390cc0e00a ("drm/i915/mtl: Add Support for C10 PHY message bus and pll programming")
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241216181554.2861381-1-suraj.kandpal@intel.com
+(cherry picked from commit f9d418552ba1e3a0e92487ff82eb515dab7516c0)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe.c       | 23 +++++++++++++++++++----
- drivers/infiniband/sw/rxe/rxe.h       |  3 ++-
- drivers/infiniband/sw/rxe/rxe_mcast.c | 22 ++++++++++++++++++++--
- drivers/infiniband/sw/rxe/rxe_net.c   | 24 ++++++++++++++++++++----
- drivers/infiniband/sw/rxe/rxe_verbs.c | 26 +++++++++++++++++++++-----
- drivers/infiniband/sw/rxe/rxe_verbs.h | 11 ++++++++---
- 6 files changed, 90 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/i915/display/intel_cx0_phy.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
-index 255677bc12b2..1ba4a0c8726a 100644
---- a/drivers/infiniband/sw/rxe/rxe.c
-+++ b/drivers/infiniband/sw/rxe/rxe.c
-@@ -40,6 +40,8 @@ void rxe_dealloc(struct ib_device *ib_dev)
- /* initialize rxe device parameters */
- static void rxe_init_device_param(struct rxe_dev *rxe)
- {
-+	struct net_device *ndev;
-+
- 	rxe->max_inline_data			= RXE_MAX_INLINE_DATA;
+diff --git a/drivers/gpu/drm/i915/display/intel_cx0_phy.c b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
+index 4a6c3040ca15..f11309efff33 100644
+--- a/drivers/gpu/drm/i915/display/intel_cx0_phy.c
++++ b/drivers/gpu/drm/i915/display/intel_cx0_phy.c
+@@ -2084,14 +2084,6 @@ static void intel_c10_pll_program(struct drm_i915_private *i915,
+ 		      0, C10_VDR_CTRL_MSGBUS_ACCESS,
+ 		      MB_WRITE_COMMITTED);
  
- 	rxe->attr.vendor_id			= RXE_VENDOR_ID;
-@@ -71,8 +73,15 @@ static void rxe_init_device_param(struct rxe_dev *rxe)
- 	rxe->attr.max_fast_reg_page_list_len	= RXE_MAX_FMR_PAGE_LIST_LEN;
- 	rxe->attr.max_pkeys			= RXE_MAX_PKEYS;
- 	rxe->attr.local_ca_ack_delay		= RXE_LOCAL_CA_ACK_DELAY;
-+
-+	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
-+	if (!ndev)
-+		return;
-+
- 	addrconf_addr_eui48((unsigned char *)&rxe->attr.sys_image_guid,
--			rxe->ndev->dev_addr);
-+			ndev->dev_addr);
-+
-+	dev_put(ndev);
- 
- 	rxe->max_ucontext			= RXE_MAX_UCONTEXT;
- }
-@@ -109,10 +118,15 @@ static void rxe_init_port_param(struct rxe_port *port)
- static void rxe_init_ports(struct rxe_dev *rxe)
- {
- 	struct rxe_port *port = &rxe->port;
-+	struct net_device *ndev;
- 
- 	rxe_init_port_param(port);
-+	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
-+	if (!ndev)
-+		return;
- 	addrconf_addr_eui48((unsigned char *)&port->port_guid,
--			    rxe->ndev->dev_addr);
-+			    ndev->dev_addr);
-+	dev_put(ndev);
- 	spin_lock_init(&port->port_lock);
- }
- 
-@@ -167,12 +181,13 @@ void rxe_set_mtu(struct rxe_dev *rxe, unsigned int ndev_mtu)
- /* called by ifc layer to create new rxe device.
-  * The caller should allocate memory for rxe by calling ib_alloc_device.
-  */
--int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name)
-+int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name,
-+			struct net_device *ndev)
- {
- 	rxe_init(rxe);
- 	rxe_set_mtu(rxe, mtu);
- 
--	return rxe_register_device(rxe, ibdev_name);
-+	return rxe_register_device(rxe, ibdev_name, ndev);
- }
- 
- static int rxe_newlink(const char *ibdev_name, struct net_device *ndev)
-diff --git a/drivers/infiniband/sw/rxe/rxe.h b/drivers/infiniband/sw/rxe/rxe.h
-index d8fb2c7af30a..fe7f97066732 100644
---- a/drivers/infiniband/sw/rxe/rxe.h
-+++ b/drivers/infiniband/sw/rxe/rxe.h
-@@ -139,7 +139,8 @@ enum resp_states {
- 
- void rxe_set_mtu(struct rxe_dev *rxe, unsigned int dev_mtu);
- 
--int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name);
-+int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name,
-+			struct net_device *ndev);
- 
- void rxe_rcv(struct sk_buff *skb);
- 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mcast.c b/drivers/infiniband/sw/rxe/rxe_mcast.c
-index 86cc2e18a7fd..07ff47bae31d 100644
---- a/drivers/infiniband/sw/rxe/rxe_mcast.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mcast.c
-@@ -31,10 +31,19 @@
- static int rxe_mcast_add(struct rxe_dev *rxe, union ib_gid *mgid)
- {
- 	unsigned char ll_addr[ETH_ALEN];
-+	struct net_device *ndev;
-+	int ret;
-+
-+	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
-+	if (!ndev)
-+		return -ENODEV;
- 
- 	ipv6_eth_mc_map((struct in6_addr *)mgid->raw, ll_addr);
- 
--	return dev_mc_add(rxe->ndev, ll_addr);
-+	ret = dev_mc_add(ndev, ll_addr);
-+	dev_put(ndev);
-+
-+	return ret;
- }
- 
- /**
-@@ -47,10 +56,19 @@ static int rxe_mcast_add(struct rxe_dev *rxe, union ib_gid *mgid)
- static int rxe_mcast_del(struct rxe_dev *rxe, union ib_gid *mgid)
- {
- 	unsigned char ll_addr[ETH_ALEN];
-+	struct net_device *ndev;
-+	int ret;
-+
-+	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
-+	if (!ndev)
-+		return -ENODEV;
- 
- 	ipv6_eth_mc_map((struct in6_addr *)mgid->raw, ll_addr);
- 
--	return dev_mc_del(rxe->ndev, ll_addr);
-+	ret = dev_mc_del(ndev, ll_addr);
-+	dev_put(ndev);
-+
-+	return ret;
- }
- 
- /**
-diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
-index 75d1407db52d..8cc64ceeb356 100644
---- a/drivers/infiniband/sw/rxe/rxe_net.c
-+++ b/drivers/infiniband/sw/rxe/rxe_net.c
-@@ -524,7 +524,16 @@ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
-  */
- const char *rxe_parent_name(struct rxe_dev *rxe, unsigned int port_num)
- {
--	return rxe->ndev->name;
-+	struct net_device *ndev;
-+	char *ndev_name;
-+
-+	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
-+	if (!ndev)
-+		return NULL;
-+	ndev_name = ndev->name;
-+	dev_put(ndev);
-+
-+	return ndev_name;
- }
- 
- int rxe_net_add(const char *ibdev_name, struct net_device *ndev)
-@@ -536,10 +545,9 @@ int rxe_net_add(const char *ibdev_name, struct net_device *ndev)
- 	if (!rxe)
- 		return -ENOMEM;
- 
--	rxe->ndev = ndev;
- 	ib_mark_name_assigned_by_user(&rxe->ib_dev);
- 
--	err = rxe_add(rxe, ndev->mtu, ibdev_name);
-+	err = rxe_add(rxe, ndev->mtu, ibdev_name, ndev);
- 	if (err) {
- 		ib_dealloc_device(&rxe->ib_dev);
- 		return err;
-@@ -587,10 +595,18 @@ void rxe_port_down(struct rxe_dev *rxe)
- 
- void rxe_set_port_state(struct rxe_dev *rxe)
- {
--	if (netif_running(rxe->ndev) && netif_carrier_ok(rxe->ndev))
-+	struct net_device *ndev;
-+
-+	ndev = rxe_ib_device_get_netdev(&rxe->ib_dev);
-+	if (!ndev)
-+		return;
-+
-+	if (netif_running(ndev) && netif_carrier_ok(ndev))
- 		rxe_port_up(rxe);
- 	else
- 		rxe_port_down(rxe);
-+
-+	dev_put(ndev);
- }
- 
- static int rxe_notify(struct notifier_block *not_blk,
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index 5c18f7e342f2..8a5fc20fd186 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.c
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -41,6 +41,7 @@ static int rxe_query_port(struct ib_device *ibdev,
- 			  u32 port_num, struct ib_port_attr *attr)
- {
- 	struct rxe_dev *rxe = to_rdev(ibdev);
-+	struct net_device *ndev;
- 	int err, ret;
- 
- 	if (port_num != 1) {
-@@ -49,6 +50,12 @@ static int rxe_query_port(struct ib_device *ibdev,
- 		goto err_out;
- 	}
- 
-+	ndev = rxe_ib_device_get_netdev(ibdev);
-+	if (!ndev) {
-+		err = -ENODEV;
-+		goto err_out;
-+	}
-+
- 	memcpy(attr, &rxe->port.attr, sizeof(*attr));
- 
- 	mutex_lock(&rxe->usdev_lock);
-@@ -57,13 +64,14 @@ static int rxe_query_port(struct ib_device *ibdev,
- 
- 	if (attr->state == IB_PORT_ACTIVE)
- 		attr->phys_state = IB_PORT_PHYS_STATE_LINK_UP;
--	else if (dev_get_flags(rxe->ndev) & IFF_UP)
-+	else if (dev_get_flags(ndev) & IFF_UP)
- 		attr->phys_state = IB_PORT_PHYS_STATE_POLLING;
- 	else
- 		attr->phys_state = IB_PORT_PHYS_STATE_DISABLED;
- 
- 	mutex_unlock(&rxe->usdev_lock);
- 
-+	dev_put(ndev);
- 	return ret;
- 
- err_out:
-@@ -1425,9 +1433,16 @@ static const struct attribute_group rxe_attr_group = {
- static int rxe_enable_driver(struct ib_device *ib_dev)
- {
- 	struct rxe_dev *rxe = container_of(ib_dev, struct rxe_dev, ib_dev);
-+	struct net_device *ndev;
-+
-+	ndev = rxe_ib_device_get_netdev(ib_dev);
-+	if (!ndev)
-+		return -ENODEV;
- 
- 	rxe_set_port_state(rxe);
--	dev_info(&rxe->ib_dev.dev, "added %s\n", netdev_name(rxe->ndev));
-+	dev_info(&rxe->ib_dev.dev, "added %s\n", netdev_name(ndev));
-+
-+	dev_put(ndev);
- 	return 0;
- }
- 
-@@ -1495,7 +1510,8 @@ static const struct ib_device_ops rxe_dev_ops = {
- 	INIT_RDMA_OBJ_SIZE(ib_mw, rxe_mw, ibmw),
- };
- 
--int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
-+int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name,
-+						struct net_device *ndev)
- {
- 	int err;
- 	struct ib_device *dev = &rxe->ib_dev;
-@@ -1507,13 +1523,13 @@ int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
- 	dev->num_comp_vectors = num_possible_cpus();
- 	dev->local_dma_lkey = 0;
- 	addrconf_addr_eui48((unsigned char *)&dev->node_guid,
--			    rxe->ndev->dev_addr);
-+			    ndev->dev_addr);
- 
- 	dev->uverbs_cmd_mask |= BIT_ULL(IB_USER_VERBS_CMD_POST_SEND) |
- 				BIT_ULL(IB_USER_VERBS_CMD_REQ_NOTIFY_CQ);
- 
- 	ib_set_device_ops(dev, &rxe_dev_ops);
--	err = ib_device_set_netdev(&rxe->ib_dev, rxe->ndev, 1);
-+	err = ib_device_set_netdev(&rxe->ib_dev, ndev, 1);
- 	if (err)
- 		return err;
- 
-diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
-index 3c1354f82283..6573ceec0ef5 100644
---- a/drivers/infiniband/sw/rxe/rxe_verbs.h
-+++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
-@@ -370,6 +370,7 @@ struct rxe_port {
- 	u32			qp_gsi_index;
- };
- 
-+#define	RXE_PORT	1
- struct rxe_dev {
- 	struct ib_device	ib_dev;
- 	struct ib_device_attr	attr;
-@@ -377,8 +378,6 @@ struct rxe_dev {
- 	int			max_inline_data;
- 	struct mutex	usdev_lock;
- 
--	struct net_device	*ndev;
+-	/* Custom width needs to be programmed to 0 for both the phy lanes */
+-	intel_cx0_rmw(encoder, INTEL_CX0_BOTH_LANES, PHY_C10_VDR_CUSTOM_WIDTH,
+-		      C10_VDR_CUSTOM_WIDTH_MASK, C10_VDR_CUSTOM_WIDTH_8_10,
+-		      MB_WRITE_COMMITTED);
+-	intel_cx0_rmw(encoder, INTEL_CX0_BOTH_LANES, PHY_C10_VDR_CONTROL(1),
+-		      0, C10_VDR_CTRL_UPDATE_CFG,
+-		      MB_WRITE_COMMITTED);
 -
- 	struct rxe_pool		uc_pool;
- 	struct rxe_pool		pd_pool;
- 	struct rxe_pool		ah_pool;
-@@ -406,6 +405,11 @@ struct rxe_dev {
- 	struct crypto_shash	*tfm;
- };
+ 	/* Program the pll values only for the master lane */
+ 	for (i = 0; i < ARRAY_SIZE(pll_state->pll); i++)
+ 		intel_cx0_write(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_PLL(i),
+@@ -2101,6 +2093,10 @@ static void intel_c10_pll_program(struct drm_i915_private *i915,
+ 	intel_cx0_write(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_CMN(0), pll_state->cmn, MB_WRITE_COMMITTED);
+ 	intel_cx0_write(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_TX(0), pll_state->tx, MB_WRITE_COMMITTED);
  
-+static inline struct net_device *rxe_ib_device_get_netdev(struct ib_device *dev)
-+{
-+	return ib_device_get_netdev(dev, RXE_PORT);
-+}
-+
- static inline void rxe_counter_inc(struct rxe_dev *rxe, enum rxe_counters index)
- {
- 	atomic64_inc(&rxe->stats_counters[index]);
-@@ -471,6 +475,7 @@ static inline struct rxe_pd *rxe_mw_pd(struct rxe_mw *mw)
- 	return to_rpd(mw->ibmw.pd);
- }
- 
--int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name);
-+int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name,
-+						struct net_device *ndev);
- 
- #endif /* RXE_VERBS_H */
++	/* Custom width needs to be programmed to 0 for both the phy lanes */
++	intel_cx0_rmw(encoder, INTEL_CX0_BOTH_LANES, PHY_C10_VDR_CUSTOM_WIDTH,
++		      C10_VDR_CUSTOM_WIDTH_MASK, C10_VDR_CUSTOM_WIDTH_8_10,
++		      MB_WRITE_COMMITTED);
+ 	intel_cx0_rmw(encoder, INTEL_CX0_LANE0, PHY_C10_VDR_CONTROL(1),
+ 		      0, C10_VDR_CTRL_MASTER_LANE | C10_VDR_CTRL_UPDATE_CFG,
+ 		      MB_WRITE_COMMITTED);
 -- 
 2.39.5
 
