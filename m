@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC857BA34;
-	Mon,  6 Jan 2025 15:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95DC143C7E;
+	Mon,  6 Jan 2025 15:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177792; cv=none; b=tQ9JceOwOiH6frzvQnvKrt/PwdYBJHiiqU5JRX7VVH2sUgrmyhrsDex49ajBJnuzqzlp/d0pS/Zj4qqf8aGtPc+SvfnPJgwPw9rywkUTxkXyrEK6uGUxPI6JdnDakDNNQua5UGlUX2nAJHg9Cdsf+RXe5RWh98rnZ+JwUbXQP4U=
+	t=1736177795; cv=none; b=X8QZ0PuvGIkod0LJr2MX6tICM55n1e7kQAptjdWgA9K9i+jYqMunpQvVgOX/zQo/b7mdQ4IClSSHtV0g4yerdvS9f32wltAvS/6pgQA6OQBbJdL2+uwKF1NcmG850BSRQC4B5amIlGci32cFhC9fmw5t0JUW84Q3bPsetCMi1lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177792; c=relaxed/simple;
-	bh=Cj6vnfH/NVht5W2SNqSNQBhhCt4YQn2eRWHyf9o/DTs=;
+	s=arc-20240116; t=1736177795; c=relaxed/simple;
+	bh=O7SDQ9Devqd4j8qamhd5OoPUcUFw4KAFe3JqlA3wvjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5HRVJgpOzRzQxpV0AbKeIpBjujUsS2qI0WTAZoDDIkV4ZZg/SjNiIJ8B6K8OWDxCBnI3tMgc3HnrlWNJcysOeAoY5+T+vjMx3BoYYyDigbTbJT/zqFhy7USGquJFuP8VEmGT2KgfxAcYrGnnPKAoaUeJWGu7Vfi5XKxiNWvTLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwCxTovz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KN0w0t3a3KZwuUcYfmafQq+CB74KOY7eJwH4pAQmo0ElbVlYTt1Fv/pBMyfD9rpfOJzMu7tqgsL0ncDYszNcLDSKJpYZA88YElgXH5H0X7ITKNEM7a7p7SPDg3UH2XbcgNOuGfBZsoXdxRjufvMnexzsuXT5vSLi2F5niB9bDqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm2mQ2yJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwCxTovz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A30C4CED2;
-	Mon,  6 Jan 2025 15:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm2mQ2yJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C4CC4CED6;
+	Mon,  6 Jan 2025 15:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177792;
-	bh=Cj6vnfH/NVht5W2SNqSNQBhhCt4YQn2eRWHyf9o/DTs=;
+	s=korg; t=1736177795;
+	bh=O7SDQ9Devqd4j8qamhd5OoPUcUFw4KAFe3JqlA3wvjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwCxTovzmuVypaBhKB7TEaZsTUKDxzyhL/a0aRh/8mctrOALTfX2uMrX2Wm9b6747
-	 rFE3GdhtboxOx4y7PDIAQRSHbOjTmBObeRhbqecLU5HBXOhmBboGsZqQ0/qcdEIuNx
-	 Z6JJHKeQ5P3GzmKDyC5Ar0M3+DQcJBQMnsf7+a0w=
+	b=Fm2mQ2yJBPdJZFUM05rroS3DIb3OM6d41JTNQglxs74aTIhqYm6ZwnnyPIArgD6s6
+	 ZVR1hOQ+9vHoEnFAD+feukaTMtlQIuyw6o4OiboGO+T1MQq6T1D2OZVEJn4i/ArwvK
+	 Tvj7ij9wHFlKrZBv6FDejlNgYCq5LeyREWgROt00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ff4aab278fa7e27e0f9e@syzkaller.appspotmail.com,
-	Leo Stone <leocstone@gmail.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Tanya Agarwal <tanyaagarwal25699@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/156] nvmet: Dont overflow subsysnqn
-Date: Mon,  6 Jan 2025 16:15:45 +0100
-Message-ID: <20250106151143.961380497@linuxfoundation.org>
+Subject: [PATCH 6.12 060/156] ALSA: usb-audio: US16x08: Initialize array before use
+Date: Mon,  6 Jan 2025 16:15:46 +0100
+Message-ID: <20250106151143.998161485@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -54,68 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Stone <leocstone@gmail.com>
+From: Tanya Agarwal <tanyaagarwal25699@gmail.com>
 
-[ Upstream commit 4db3d750ac7e894278ef1cb1c53cc7d883060496 ]
+[ Upstream commit b06a6187ef983f501e93faa56209169752d3bde3 ]
 
-nvmet_root_discovery_nqn_store treats the subsysnqn string like a fixed
-size buffer, even though it is dynamically allocated to the size of the
-string.
+Initialize meter_urb array before use in mixer_us16x08.c.
 
-Create a new string with kstrndup instead of using the old buffer.
+CID 1410197: (#1 of 1): Uninitialized scalar variable (UNINIT)
+uninit_use_in_call: Using uninitialized value *meter_urb when
+calling get_meter_levels_from_urb.
 
-Reported-by: syzbot+ff4aab278fa7e27e0f9e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ff4aab278fa7e27e0f9e
-Fixes: 95409e277d83 ("nvmet: implement unique discovery NQN")
-Signed-off-by: Leo Stone <leocstone@gmail.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Coverity Link:
+https://scan7.scan.coverity.com/#/project-view/52849/11354?selectedIssue=1410197
+
+Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
+Signed-off-by: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+Link: https://patch.msgid.link/20241229060240.1642-1-tanyaagarwal25699@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ sound/usb/mixer_us16x08.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 685e89b35d33..cfbab198693b 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -2227,12 +2227,17 @@ static ssize_t nvmet_root_discovery_nqn_store(struct config_item *item,
- 		const char *page, size_t count)
- {
- 	struct list_head *entry;
-+	char *old_nqn, *new_nqn;
- 	size_t len;
+diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
+index 6eb7d93b358d..20ac32635f1f 100644
+--- a/sound/usb/mixer_us16x08.c
++++ b/sound/usb/mixer_us16x08.c
+@@ -687,7 +687,7 @@ static int snd_us16x08_meter_get(struct snd_kcontrol *kcontrol,
+ 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
+ 	struct snd_usb_audio *chip = elem->head.mixer->chip;
+ 	struct snd_us16x08_meter_store *store = elem->private_data;
+-	u8 meter_urb[64];
++	u8 meter_urb[64] = {0};
  
- 	len = strcspn(page, "\n");
- 	if (!len || len > NVMF_NQN_FIELD_LEN - 1)
- 		return -EINVAL;
- 
-+	new_nqn = kstrndup(page, len, GFP_KERNEL);
-+	if (!new_nqn)
-+		return -ENOMEM;
-+
- 	down_write(&nvmet_config_sem);
- 	list_for_each(entry, &nvmet_subsystems_group.cg_children) {
- 		struct config_item *item =
-@@ -2241,13 +2246,15 @@ static ssize_t nvmet_root_discovery_nqn_store(struct config_item *item,
- 		if (!strncmp(config_item_name(item), page, len)) {
- 			pr_err("duplicate NQN %s\n", config_item_name(item));
- 			up_write(&nvmet_config_sem);
-+			kfree(new_nqn);
- 			return -EINVAL;
- 		}
- 	}
--	memset(nvmet_disc_subsys->subsysnqn, 0, NVMF_NQN_FIELD_LEN);
--	memcpy(nvmet_disc_subsys->subsysnqn, page, len);
-+	old_nqn = nvmet_disc_subsys->subsysnqn;
-+	nvmet_disc_subsys->subsysnqn = new_nqn;
- 	up_write(&nvmet_config_sem);
- 
-+	kfree(old_nqn);
- 	return len;
- }
- 
+ 	switch (kcontrol->private_value) {
+ 	case 0: {
 -- 
 2.39.5
 
