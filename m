@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF4078F49;
-	Mon,  6 Jan 2025 15:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD6978F49;
+	Mon,  6 Jan 2025 15:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177638; cv=none; b=dAvx7N8bczvtT9LNWSQFzNqIOUKlqpDQdynFB14nZjZ2c6Ri53lSXlHcUPPnGqEM0nqbIno7DvG87ZIYtjkhPhZ5duwZhSQNiWenjZJuSzBaG6m8tS69YDt3XdHFtePjlmwbIXbFQp7+qxwhQ+wFM7YgFQz18Pj7BSOZM3zp/cU=
+	t=1736177641; cv=none; b=PT8Kx4RQkQZhjnMU3l38CO6rShbFgKIppkrGDcYjy8FXAAHrQU+6Xa/9DYcpIWCAHZgs55bsgvgHE1jcXTr2HVuISplwreKlTmTphfJva8vYmdhJ+gfba+o5gFnTKQ7EJFjtHfPFCLpwHQy8FnwZ7Y175ylyQziAsgVq2AnixPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177638; c=relaxed/simple;
-	bh=TQM1ztHqiiMG0mT45+SbmJGlJdK/CbpcyJ/QjX98qEs=;
+	s=arc-20240116; t=1736177641; c=relaxed/simple;
+	bh=TcXNcXHruhNiuL1wvWy6zVR2rBENDiv2yV9wybd05CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1nqwDwZJdpSWZziU4dzeks9VeG1DDRq2H+Col6G9uLryEkHxmQZ2y5pX0EPWEy1ErLWc1abgFjtQ9KxCiirEIiOVjn2nBdD1TirLM/X3bbQQrxjje0cNtueuAVYkbQRvWFURHt0mcPEXEBMt1Lieghq3awCndroWcY8Ve/+RCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNgQfLkV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iIu7Fb3B0N33JgLB4r5YZqM0SPudYO3sytuAuYaH1YlWQahKl3ceSI+RY4we7MyTNgQxqIIgFoL04w/Uj3qI2xwHq2xNXcjJDFNXML5iy/j4dR4tUuu9LJA/DWM98yMdb4r1ijA1L6E5S9f8w7zebJ1+6LPQ9Vustp+6nFkMb8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4G/5nFg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNgQfLkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3360C4CED2;
-	Mon,  6 Jan 2025 15:33:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4G/5nFg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7186C4CED2;
+	Mon,  6 Jan 2025 15:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177638;
-	bh=TQM1ztHqiiMG0mT45+SbmJGlJdK/CbpcyJ/QjX98qEs=;
+	s=korg; t=1736177641;
+	bh=TcXNcXHruhNiuL1wvWy6zVR2rBENDiv2yV9wybd05CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNgQfLkVoC5rJpK+d4JapvqK1qq9fPPr0xPMrqQsTsu5ggp2GupWfBadzxy7P0CT2
-	 YC0HsTkXm4gQ4PhVvohdMfLni8jgjdFjB2dimUOIhpYC61pWewO546VeVHS9fYEkxy
-	 gvf7MwpYNUgq4ANVe3pxM8CCKBPapE1lRVTkx1is=
+	b=Z4G/5nFg6ZkHRJSTDjsI+RQSn8/oT62cnbpdXL3aIeggAMIF70aQmIBOeF5E/4ZyO
+	 nfKycWSB3dsN5VodfjMlwDy5jTBLahsR/lPR7MF0WJk3n5lT4B6ZBr7XZN7fxZfn0D
+	 LuWLjLp21ly3QZn1OLm2ngaJueYz4d7S6u9bX6ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 199/222] ALSA: seq: Check UMP support for midi_version change
-Date: Mon,  6 Jan 2025 16:16:43 +0100
-Message-ID: <20250106151158.294548157@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 190/222] net: usb: qmi_wwan: add Telit FE910C04 compositions
+Date: Mon,  6 Jan 2025 16:16:34 +0100
+Message-ID: <20250106151157.955722479@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -49,46 +51,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-commit 8765429279e7d3d68d39ace5f84af2815174bb1e upstream.
+[ Upstream commit 3b58b53a26598209a7ad8259a5114ce71f7c3d64 ]
 
-When the kernel is built without UMP support but a user-space app
-requires the midi_version > 0, the kernel should return an error.
-Otherwise user-space assumes as if it were possible to deal,
-eventually hitting serious errors later.
+Add the following Telit FE910C04 compositions:
 
-Fixes: 46397622a3fa ("ALSA: seq: Add UMP support")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241231145358.21946-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+0x10c0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 13 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10c4: rmnet + tty (AT) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 14 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c4 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10c8: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c8 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Link: https://patch.msgid.link/20241209151821.3688829-1-dnlplm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/seq/seq_clientmgr.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/core/seq/seq_clientmgr.c
-+++ b/sound/core/seq/seq_clientmgr.c
-@@ -1280,10 +1280,16 @@ static int snd_seq_ioctl_set_client_info
- 	if (client->type != client_info->type)
- 		return -EINVAL;
- 
--	/* check validity of midi_version field */
--	if (client->user_pversion >= SNDRV_PROTOCOL_VERSION(1, 0, 3) &&
--	    client_info->midi_version > SNDRV_SEQ_CLIENT_UMP_MIDI_2_0)
--		return -EINVAL;
-+	if (client->user_pversion >= SNDRV_PROTOCOL_VERSION(1, 0, 3)) {
-+		/* check validity of midi_version field */
-+		if (client_info->midi_version > SNDRV_SEQ_CLIENT_UMP_MIDI_2_0)
-+			return -EINVAL;
-+
-+		/* check if UMP is supported in kernel */
-+		if (!IS_ENABLED(CONFIG_SND_SEQ_UMP) &&
-+		    client_info->midi_version > 0)
-+			return -EINVAL;
-+	}
- 
- 	/* fill the info fields */
- 	if (client_info->name[0])
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 89775b6d0699..8e30df676ede 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1373,6 +1373,9 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
+-- 
+2.39.5
+
 
 
