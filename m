@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ADB1DE3D6;
-	Mon,  6 Jan 2025 15:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE57814F9F3;
+	Mon,  6 Jan 2025 15:46:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178358; cv=none; b=O+z7JsChhVYJ3gs4RRreowmIqvFuOTG656HFDpmHTvmCVysv9Xso4cBy3JSiaPjax2NW8zp9ZkJRd25O7r9QyKm618AbLJtLbU1ULJNsiNzVcwUO64URg3UuaXHrqSGsy7W/tZre7RaXSkJZbs71rH6Igof9pg9iNCMQ4ExRoUM=
+	t=1736178361; cv=none; b=GzqFb+fobdqEIaw0tnxfI6y6pKFQ/cr2qAqqC6AsE+jGBQJcqb8EFV5qUbOHA5fmZlOH0jb1masT8AhxMkjL8oLnRoovicDTnJQUtc9zFrRU0hejHeoNp1zRvR8RoLmeBbKROMnQt4Qx2Sp3FB9av5b8G8KesU+FH8miwoyt9Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178358; c=relaxed/simple;
-	bh=UL9vKwMLtUvmpzpyNcVfnY5F2ENuqBAOoA7cOqb37yY=;
+	s=arc-20240116; t=1736178361; c=relaxed/simple;
+	bh=+dr2bzZve6BnVk44+8iMrujNZpb+WVOWC/aQZ6BEL9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i8u6qo3inv4etE1jU5rMr8j+4bqbLbTw3OvAgDZCMf2jQjyxRtDpANybYBDDOzNIRiTOmGY71m9t1dgjjp95nJU1Ws0piqURa6aevAId4/adj6lx7y6GoeTAtQGqfHFtgN/q9wOcTpmaJD4ICCRnkJB200CQkCbJ0pPWMdh7e9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtmW1C2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEgUQicTp4J652Rm6N7r22p+ct4RAB4ENUwPkPs/f3ATQ9PEOY7tXYNRlw+SN9mtVQsK8iLm6ZZ2Vhf95d1MOESDA3EpdJ2TPVXxI5ZJ0spPFVXLl8v/308uI1XkHjm5zJVbswOLQ165hb98mnV8f/v7hh2GmpdlqUmB9VD+kGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWMe2jNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtmW1C2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E81EC4CED6;
-	Mon,  6 Jan 2025 15:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWMe2jNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A741C4CED2;
+	Mon,  6 Jan 2025 15:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178358;
-	bh=UL9vKwMLtUvmpzpyNcVfnY5F2ENuqBAOoA7cOqb37yY=;
+	s=korg; t=1736178361;
+	bh=+dr2bzZve6BnVk44+8iMrujNZpb+WVOWC/aQZ6BEL9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtmW1C2KgzFQ9PC+wL4BEd+RANkYwJ6Hb9kcLvT4HfbqJrLMaPEmI/LkgmhUBhJQl
-	 BLzWkF7BxzjuzBMU0dtPpnSuvcbb2VSFg/jZQWtkZl/REIzoGjiCOkFtExyBWDsYDc
-	 zgM+u9unD5AS2AL34xKN5jj1j8ZLYUQgWfvWX/r4=
+	b=FWMe2jNx+TpvHEFkZ3dQ8dG1u8019oBI+ZzyA90iDTO1Invab9TL+nQCe8is12Sog
+	 041k5WNUrWD95UqqMBJFtDkd77j6SpTaJxEF+VBpMG8sFR1jB136iQ1Qu5o3/qqF4L
+	 m0OBSl4O3YHbDxGVNo+Mas3t2G+g2bWgYg5a8Qqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Tomas Henzl <thenzl@redhat.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 060/138] scsi: qla1280: Fix hw revision numbering for ISP1020/1040
-Date: Mon,  6 Jan 2025 16:16:24 +0100
-Message-ID: <20250106151135.508523640@linuxfoundation.org>
+Subject: [PATCH 5.10 061/138] scsi: megaraid_sas: Fix for a potential deadlock
+Date: Mon,  6 Jan 2025 16:16:25 +0100
+Message-ID: <20250106151135.545816255@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,47 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magnus Lindholm <linmag7@gmail.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit c064de86d2a3909222d5996c5047f64c7a8f791b ]
+[ Upstream commit 50740f4dc78b41dec7c8e39772619d5ba841ddd7 ]
 
-Fix the hardware revision numbering for Qlogic ISP1020/1040 boards.  HWMASK
-suggests that the revision number only needs four bits, this is consistent
-with how NetBSD does things in their ISP driver. Verified on a IPS1040B
-which is seen as rev 5 not as BIT_4.
+This fixes a 'possible circular locking dependency detected' warning
+      CPU0                    CPU1
+      ----                    ----
+ lock(&instance->reset_mutex);
+                              lock(&shost->scan_mutex);
+                              lock(&instance->reset_mutex);
+ lock(&shost->scan_mutex);
 
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/20241113225636.2276-1-linmag7@gmail.com
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fix this by temporarily releasing the reset_mutex.
+
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://lore.kernel.org/r/20240923174833.45345-1-thenzl@redhat.com
+Acked-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla1280.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/scsi/megaraid/megaraid_sas_base.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qla1280.h b/drivers/scsi/qla1280.h
-index e7820b5bca38..c0a9251b2bed 100644
---- a/drivers/scsi/qla1280.h
-+++ b/drivers/scsi/qla1280.h
-@@ -117,12 +117,12 @@ struct device_reg {
- 	uint16_t id_h;		/* ID high */
- 	uint16_t cfg_0;		/* Configuration 0 */
- #define ISP_CFG0_HWMSK   0x000f	/* Hardware revision mask */
--#define ISP_CFG0_1020    BIT_0	/* ISP1020 */
--#define ISP_CFG0_1020A	 BIT_1	/* ISP1020A */
--#define ISP_CFG0_1040	 BIT_2	/* ISP1040 */
--#define ISP_CFG0_1040A	 BIT_3	/* ISP1040A */
--#define ISP_CFG0_1040B	 BIT_4	/* ISP1040B */
--#define ISP_CFG0_1040C	 BIT_5	/* ISP1040C */
-+#define ISP_CFG0_1020	 1	/* ISP1020 */
-+#define ISP_CFG0_1020A	 2	/* ISP1020A */
-+#define ISP_CFG0_1040	 3	/* ISP1040 */
-+#define ISP_CFG0_1040A	 4	/* ISP1040A */
-+#define ISP_CFG0_1040B	 5	/* ISP1040B */
-+#define ISP_CFG0_1040C	 6	/* ISP1040C */
- 	uint16_t cfg_1;		/* Configuration 1 */
- #define ISP_CFG1_F128    BIT_6  /* 128-byte FIFO threshold */
- #define ISP_CFG1_F64     BIT_4|BIT_5 /* 128-byte FIFO threshold */
+diff --git a/drivers/scsi/megaraid/megaraid_sas_base.c b/drivers/scsi/megaraid/megaraid_sas_base.c
+index 365279d7c982..d709d261d0ad 100644
+--- a/drivers/scsi/megaraid/megaraid_sas_base.c
++++ b/drivers/scsi/megaraid/megaraid_sas_base.c
+@@ -8868,8 +8868,11 @@ megasas_aen_polling(struct work_struct *work)
+ 						   (ld_target_id / MEGASAS_MAX_DEV_PER_CHANNEL),
+ 						   (ld_target_id - MEGASAS_MAX_DEV_PER_CHANNEL),
+ 						   0);
+-			if (sdev1)
++			if (sdev1) {
++				mutex_unlock(&instance->reset_mutex);
+ 				megasas_remove_scsi_device(sdev1);
++				mutex_lock(&instance->reset_mutex);
++			}
+ 
+ 			event_type = SCAN_VD_CHANNEL;
+ 			break;
 -- 
 2.39.5
 
