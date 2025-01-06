@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373F83A14;
-	Mon,  6 Jan 2025 15:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6831F44C7C;
+	Mon,  6 Jan 2025 15:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177653; cv=none; b=g/G53mHuterhGRHvQ5fu5G+QcMFFKcv6HvCpS+rkXaPRA/POUSI0I0FsDr8fw2N513CGT5qaOCrNoNd7HJyAv6qWKKncRrlbEXhT2hbRuX0ZcWp70+ZftDw1D/48CROD2khtED0H7mxFVdn11trbJdQhAYQ/FBYEWlxPj/tBnJQ=
+	t=1736177656; cv=none; b=GN/BC6tqPSqBVAaD2cnNAWUvHk7iGwi2Srh+ln2FZA5GMCycm2drpNWLoymyvm4e/efnW8dWrQcx62+8iIGTIP5KAabNXt+kxCoDpFJ3XarwBi1VWyUP+KuuDmPsj8GL/gD8beikSTtDKgM/jlRalYelrZPxKWhHt4LhfyZonhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177653; c=relaxed/simple;
-	bh=7rBFAzXqetaSSkLZBsKDEVnfwYWMod++Q26DvasYHVI=;
+	s=arc-20240116; t=1736177656; c=relaxed/simple;
+	bh=QlwIHDf548P4Y8mumSyYfg/S6Fq18/KrJzpBAUWluwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LD7dQOwg1dh8CoxakQTnxUtAcf95ZN5CMHEnvdvNrqbTJ3dKQyxCJGNOkY+xofCrP2/a0ThLTQ9PC2JwdRRV5PpDUQf8XuzZ2Gl3lL7V0y8VqxS1tmaUdL7jDcgQqKPUQqFnMTXTIPgTqGVaXQRt81ZwcZaMiFm7870kK7n9GS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjUR8sRX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NvnwloBivwbd0qPWkxHFqdVEc+k/azBhVjkU0QPVZ4JCA78ChNITp+3sjb0HxKHi+hpvZpzV6KSK8yc0rpJ2hyU+VFHPBS24OZ5dCvNpc2sLN5EiLXzfBUzXqvYmKrbrR+b8iKwffbXwuspwUJGx8ux2LwROWq5rNoFGMYBA5uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IcVhu4p4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjUR8sRX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDCBC4CED2;
-	Mon,  6 Jan 2025 15:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IcVhu4p4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F4EC4CED2;
+	Mon,  6 Jan 2025 15:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177653;
-	bh=7rBFAzXqetaSSkLZBsKDEVnfwYWMod++Q26DvasYHVI=;
+	s=korg; t=1736177656;
+	bh=QlwIHDf548P4Y8mumSyYfg/S6Fq18/KrJzpBAUWluwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjUR8sRXrcJyU1xBi9CQVWvEEviWv5/Wk62kK2XGq/4/25BeEB+Ulktslni2cSIoZ
-	 jjRgivU1YtHO2B/SSft6/840HLbDXeqEufy30rRoNC6AQgVEHaj5RZripHoNn9qztz
-	 qdR2HgNq/mncgn5PCsUtFlazjmQrOnBpZV36RHds=
+	b=IcVhu4p4TMw71KbLNU+u5p3+jQDHRNoh72J3GlQtrQF9doiVugKY0YsRuROCIc1jV
+	 XAAeo22pBdMGj9dgf5A8kvk2TPdBigAGw9rKg45yDkVNl1/S6GA+cV2zLTWDlxGRyy
+	 wFBfL4Y8v83ALbX4LNhKtNgdOXIIP7WE5Jzovho8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/156] RDMA/bnxt_re: Remove always true dattr validity check
-Date: Mon,  6 Jan 2025 16:14:58 +0100
-Message-ID: <20250106151142.208043355@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 002/156] drm/amdgpu: fix backport of commit 73dae652dcac
+Date: Mon,  6 Jan 2025 16:14:48 +0100
+Message-ID: <20250106151141.833307383@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -53,46 +49,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit eb867d797d294a00a092b5027d08439da68940b2 ]
+Commit 73dae652dcac ("drm/amdgpu: rework resume handling for display (v2)")
+missed a small code change when it was backported resulting in an automatic
+backlight control breakage.  Fix the backport.
 
-res->dattr is always valid at this point as it was initialized
-during device addition in bnxt_re_add_device().
+Note that this patch is not in Linus' tree as it is not required there;
+the bug was introduced in the backport.
 
-This change is fixing the following smatch error:
-drivers/infiniband/hw/bnxt_re/qplib_fp.c:1090 bnxt_qplib_create_qp()
-     error: we previously assumed 'res->dattr' could be null (see line 985)
-
-Fixes: 07f830ae4913 ("RDMA/bnxt_re: Adds MSN table capability for Gen P7 adapters")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202411222329.YTrwonWi-lkp@intel.com/
-Link: https://patch.msgid.link/be0d8836b64cba3e479fbcbca717acad04aae02e.1732626579.git.leonro@nvidia.com
-Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 99a02eab8251 ("drm/amdgpu: rework resume handling for display (v2)")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3853
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.11.x
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/qplib_fp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-index 7ad83566ab0f..be374d8ed430 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
-@@ -999,9 +999,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
- 	u32 tbl_indx;
- 	u16 nsge;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3721,8 +3721,12 @@ static int amdgpu_device_ip_resume_phase
+ 			continue;
+ 		if (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_DCE) {
+ 			r = adev->ip_blocks[i].version->funcs->resume(adev);
+-			if (r)
++			if (r) {
++				DRM_ERROR("resume of IP block <%s> failed %d\n",
++					  adev->ip_blocks[i].version->funcs->name, r);
+ 				return r;
++			}
++			adev->ip_blocks[i].status.hw = true;
+ 		}
+ 	}
  
--	if (res->dattr)
--		qp->is_host_msn_tbl = _is_host_msn_table(res->dattr->dev_cap_flags2);
--
-+	qp->is_host_msn_tbl = _is_host_msn_table(res->dattr->dev_cap_flags2);
- 	sq->dbinfo.flags = 0;
- 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
- 				 CMDQ_BASE_OPCODE_CREATE_QP,
--- 
-2.39.5
-
 
 
