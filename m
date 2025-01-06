@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4851DE3AB;
-	Mon,  6 Jan 2025 15:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9F81DE3D6;
+	Mon,  6 Jan 2025 15:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177486; cv=none; b=fKidLeB3tt9PFHkAqtmSkc1b1rhV5HD6HVw+r9k8FkbySWWo8M1JYIOi+RuFcnZ3ipOe5UL0pB7TQzhP30czgUq4c0hjPwHiKyge2oFf/+lBTUxe4kLFoWoA6piJOUNcH8RaoqfGRUtS1YMXMNMY8IJzGQf5PBXy4L8ZDtg1Cl0=
+	t=1736177490; cv=none; b=tBp/CiqUwkwmJqXHt+pmaaah500/6mkKMXStkQMIeDKo4dDSukNrzIzttxHWW4sb29EIcQmel5xJd4a3js9tlHdDsmR/mmlobZLgUL5icpXijB3tpFoiu2jcbBzj6io9FQ/Hq5pHiF4u4xNfTFAhflj87CNOCYCQKtuaFyway+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177486; c=relaxed/simple;
-	bh=sifCx0nxEPa4n8WjSBtjFp53f0dn8XqnP0TcsGDC7TE=;
+	s=arc-20240116; t=1736177490; c=relaxed/simple;
+	bh=natD1cTvlP0duKYsYcHB36aGjA/HrqaXWfMZzAabW+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxZr1zAwspFLvsEPvi3zPFF0d/obW3blqbZHpLuRq9Rzhxkhq1uvYA1xY2AuHKv00nGivTF0X7xq30QfQVRdKZy/yEMTJ7SLjMTHsYKtp0/YxFoXYtRaAfafGVZxWu5zgPaDI//yRRElBwzVy1mLHVTwANsrCqKixbA1jTJivRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IejBlxK3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DTfg0uwyNy8Uk0HJW2voA2EWCGY7kAseAPTomRCZxFMNBu+rr5yvBYiTCpYYF/AKMGgmgCy+91WMjTPbeAw5u/saIo0CCiNckxjU6NKGETYETaZmOOJeMdCKmfOROFv8uuZ76JAD22N9vW8Zu8VaNSUuv2o+DLw2aTGeQom4EgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkVDAYHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IejBlxK3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425C9C4CED2;
-	Mon,  6 Jan 2025 15:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkVDAYHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DB6C4CED2;
+	Mon,  6 Jan 2025 15:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177486;
-	bh=sifCx0nxEPa4n8WjSBtjFp53f0dn8XqnP0TcsGDC7TE=;
+	s=korg; t=1736177489;
+	bh=natD1cTvlP0duKYsYcHB36aGjA/HrqaXWfMZzAabW+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IejBlxK3M32LrDzUWA3RMeM4thTZdi11jctuxDx71xkQIMU23Lr3fYfzy+koPw70n
-	 i6RCrvLEjaRhaEJE2nhu+T57be6s93pKpBirLTwezenlkfQBgnCdLsO2GCVZnlB4TT
-	 G23meDiGXMQf2rRMpB60S9mqcxQN2Nc0vNEs70Po=
+	b=SkVDAYHsSqWB7mYfANWES1r+IXa6e0PRSAegV0+6Y25go4MYvYVCGA3VtTvkWPyxh
+	 uC5JPGVvRyLvztNZoy27VTVvn7cB28knQQZXyRKz9qKIM/WBddjkigxGwq6sLVlqI8
+	 W4FruVxH5Jx5qSmbFdLZ/O8Mlx8rTPt0HygG5PO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Issam Hamdi <ih@simonwunderlich.de>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 178/222] wifi: mac80211: fix mbss changed flags corruption on 32 bit systems
-Date: Mon,  6 Jan 2025 16:16:22 +0100
-Message-ID: <20250106151157.505647364@linuxfoundation.org>
+Subject: [PATCH 6.6 179/222] wifi: mac80211: wake the queues in case of failure in resume
+Date: Mon,  6 Jan 2025 16:16:23 +0100
+Message-ID: <20250106151157.543384355@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,76 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Issam Hamdi <ih@simonwunderlich.de>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit 49dba1ded8dd5a6a12748631403240b2ab245c34 ]
+[ Upstream commit 220bf000530f9b1114fa2a1022a871c7ce8a0b38 ]
 
-On 32-bit systems, the size of an unsigned long is 4 bytes,
-while a u64 is 8 bytes. Therefore, when using
-or_each_set_bit(bit, &bits, sizeof(changed) * BITS_PER_BYTE),
-the code is incorrectly searching for a bit in a 32-bit
-variable that is expected to be 64 bits in size,
-leading to incorrect bit finding.
+In case we fail to resume, we'll WARN with
+"Hardware became unavailable during restart." and we'll wait until user
+space does something. It'll typically bring the interface down and up to
+recover. This won't work though because the queues are still stopped on
+IEEE80211_QUEUE_STOP_REASON_SUSPEND reason.
+Make sure we clear that reason so that we give a chance to the recovery
+to succeed.
 
-Solution: Ensure that the size of the bits variable is correctly
-adjusted for each architecture.
-
- Call Trace:
-  ? show_regs+0x54/0x58
-  ? __warn+0x6b/0xd4
-  ? ieee80211_link_info_change_notify+0xcc/0xd4 [mac80211]
-  ? report_bug+0x113/0x150
-  ? exc_overflow+0x30/0x30
-  ? handle_bug+0x27/0x44
-  ? exc_invalid_op+0x18/0x50
-  ? handle_exception+0xf6/0xf6
-  ? exc_overflow+0x30/0x30
-  ? ieee80211_link_info_change_notify+0xcc/0xd4 [mac80211]
-  ? exc_overflow+0x30/0x30
-  ? ieee80211_link_info_change_notify+0xcc/0xd4 [mac80211]
-  ? ieee80211_mesh_work+0xff/0x260 [mac80211]
-  ? cfg80211_wiphy_work+0x72/0x98 [cfg80211]
-  ? process_one_work+0xf1/0x1fc
-  ? worker_thread+0x2c0/0x3b4
-  ? kthread+0xc7/0xf0
-  ? mod_delayed_work_on+0x4c/0x4c
-  ? kthread_complete_and_exit+0x14/0x14
-  ? ret_from_fork+0x24/0x38
-  ? kthread_complete_and_exit+0x14/0x14
-  ? ret_from_fork_asm+0xf/0x14
-  ? entry_INT80_32+0xf0/0xf0
-
-Signed-off-by: Issam Hamdi <ih@simonwunderlich.de>
-Link: https://patch.msgid.link/20241125162920.2711462-1-ih@simonwunderlich.de
-[restore no-op path for no changes]
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219447
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241119173108.cd628f560f97.I76a15fdb92de450e5329940125f3c58916be3942@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/util.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index 25223184d6e5..a5e7edd2f2d1 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -1173,14 +1173,14 @@ void ieee80211_mbss_info_change_notify(struct ieee80211_sub_if_data *sdata,
- 				       u64 changed)
- {
- 	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
--	unsigned long bits = changed;
-+	unsigned long bits[] = { BITMAP_FROM_U64(changed) };
- 	u32 bit;
- 
--	if (!bits)
-+	if (!changed)
- 		return;
- 
- 	/* if we race with running work, worst case this work becomes a noop */
--	for_each_set_bit(bit, &bits, sizeof(changed) * BITS_PER_BYTE)
-+	for_each_set_bit(bit, bits, sizeof(changed) * BITS_PER_BYTE)
- 		set_bit(bit, ifmsh->mbss_changed);
- 	set_bit(MESH_WORK_MBSS_CHANGED, &ifmsh->wrkq_flags);
- 	wiphy_work_queue(sdata->local->hw.wiphy, &sdata->work);
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index cc3c46a82077..154b41af4157 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2586,6 +2586,9 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 			WARN(1, "Hardware became unavailable upon resume. This could be a software issue prior to suspend or a hardware issue.\n");
+ 		else
+ 			WARN(1, "Hardware became unavailable during restart.\n");
++		ieee80211_wake_queues_by_reason(hw, IEEE80211_MAX_QUEUE_MAP,
++						IEEE80211_QUEUE_STOP_REASON_SUSPEND,
++						false);
+ 		ieee80211_handle_reconfig_failure(local);
+ 		return res;
+ 	}
 -- 
 2.39.5
 
