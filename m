@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D12146D40;
-	Mon,  6 Jan 2025 15:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A2749652;
+	Mon,  6 Jan 2025 15:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176899; cv=none; b=lW+px+H57VxQwblIyikEhIahiDwyjSXq7goOGylYn2aIJh1kMzi+a9AquLqplqp+y51qhm7pfaKFiCAKppfW9rqa8/bs/EcNf4OWPrABfKHEr8l9s+Lmhpi1WOEVIPuq1vyzvRxgjEAKHSjRJENfnSGhzIwDgrIfTK2NQFySi9c=
+	t=1736176901; cv=none; b=fn7bulhWxWKawQy1F81BecRRVqo0qBNTLXgnkhpPCfH+nWPnVrsuCoM6IJGIvB+8iUPzkoTcG3GnwFhRh9EbeE5pu7bLDrhywU2OJiKk0UwDgfW4yhuEGT8K+oI6LZYkmwaKPSfmQzCnIa5SZt7bYDMVlZX5kESE5+6LPYSwIeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176899; c=relaxed/simple;
-	bh=ga/veYLxd3CwwbjV9eRYE2G8jUynrWQJN8gu/kSaFOI=;
+	s=arc-20240116; t=1736176901; c=relaxed/simple;
+	bh=fzgahdhZiOhLr5d+7ne+ZZx4f/7LMu9b+O2OUwYiFVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+wZYj9ntSwmd2E1qrP99zT1BA4SSGowPeKQQcc0CnW/YQ/0qDayqMzUE1NxVtJZgrHCHOjnJUd/2EsvQGXzJjGqbNnTJAO+XghotuSsBSKRxW9xvP64Aduk1wg8S4zFWJ9SDnQyV0HR3nVrlWZUMWiKKeDDzTnSFbVTQeLz9cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zUbRbwc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cw78mvQv+WGctpRfbCI2D7Waog1ILtITTzJlFiNJMc3liUcJTebUwbmv+KYcyZ8T4ihXmGfuYIvk1zCTs0cmuRnHWsXLoz+CleSSjMhVdPiPuz2ll3UdgbWLqbn9fa29ffrXAqq9SL/rlbsiFab/uPiSjq1fZp5v8VGpNMNqf6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b7BGPQc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zUbRbwc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6926FC4CED2;
-	Mon,  6 Jan 2025 15:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b7BGPQc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E100C4CEE2;
+	Mon,  6 Jan 2025 15:21:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176898;
-	bh=ga/veYLxd3CwwbjV9eRYE2G8jUynrWQJN8gu/kSaFOI=;
+	s=korg; t=1736176901;
+	bh=fzgahdhZiOhLr5d+7ne+ZZx4f/7LMu9b+O2OUwYiFVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zUbRbwc44UDhh7T6/l6SWeTeMFK4m6Bb5tq3Yt7/Hkj9MPF3hGh8BO7v6sohGdNRR
-	 VV8lpMh/fuai90m9+QhvZ0LxOxlRR/70LJDyo9TFYjRGv1l7ShSQh4K7mrcgsdpKhk
-	 Z3SBLYoLh9Ix+I0fZMPXCkSHnufFJpsHgEmAHYKc=
+	b=b7BGPQc5DO47NgfauWnKkDOebHnvhU5jHX87uV2xDEgJH0dZlk+XeKZ9xTDw73IMF
+	 FmsWQ9gxxdrvz1x2RYcN/XB5o3z1fxPCnYWZUIHlEgf8KEVIbyjmzbWoYlOzhSAI9y
+	 9VGi29IrBs+sdn2RF5lV4SlyLY1HrlICwjUPzjqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 67/81] modpost: fix the missed iteration for the max bit in do_input()
-Date: Mon,  6 Jan 2025 16:16:39 +0100
-Message-ID: <20250106151131.960989685@linuxfoundation.org>
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux@frame.work,
+	"Dustin L. Howett" <dustin@howett.net>,
+	Daniel Schaefer <dhs@frame.work>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 68/81] ALSA hda/realtek: Add quirk for Framework F111:000C
+Date: Mon,  6 Jan 2025 16:16:40 +0100
+Message-ID: <20250106151131.998741497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -51,36 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit bf36b4bf1b9a7a0015610e2f038ee84ddb085de2 ]
+commit 7b509910b3ad6d7aacead24c8744de10daf8715d upstream.
 
-This loop should iterate over the range from 'min' to 'max' inclusively.
-The last interation is missed.
+Similar to commit eb91c456f371
+("ALSA: hda/realtek: Add Framework Laptop 13 (Intel Core Ultra) to quirks")
+and previous quirks for Framework systems with
+Realtek codecs.
 
-Fixes: 1d8f430c15b3 ("[PATCH] Input: add modalias support")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+000C is a new platform that will also have an ALC285 codec and needs the
+same quirk.
+
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: linux@frame.work
+Cc: Dustin L. Howett <dustin@howett.net>
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20241231045958.14545-1-dhs@frame.work
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/mod/file2alias.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index e7d69c9f6341..ba09484ef910 100644
---- a/scripts/mod/file2alias.c
-+++ b/scripts/mod/file2alias.c
-@@ -741,7 +741,7 @@ static void do_input(char *alias,
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10255,6 +10255,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0xf111, 0x000c, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
  
- 	for (i = min / BITS_PER_LONG; i < max / BITS_PER_LONG + 1; i++)
- 		arr[i] = TO_NATIVE(arr[i]);
--	for (i = min; i < max; i++)
-+	for (i = min; i <= max; i++)
- 		if (arr[i / BITS_PER_LONG] & (1ULL << (i%BITS_PER_LONG)))
- 			sprintf(alias + strlen(alias), "%X,*", i);
- }
--- 
-2.39.5
-
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 
 
