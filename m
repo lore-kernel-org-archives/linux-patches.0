@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32050155300;
-	Mon,  6 Jan 2025 15:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D29E1DACBE;
+	Mon,  6 Jan 2025 15:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177424; cv=none; b=Kbwh4pb0gdaa6KdiYePcA26nH0JMmIenR2sPGqXaUYFWodeSXgyiKocvwodMTztgfTNqWaf03fWJ22mZsJ4nqs7cxja7xRrltczv3BZIC0zehexaW17KDkqhaO0/KalCD+DvemONBG72ciD6KKt4qP4f3GSh2F2fuHPBoT4blFw=
+	t=1736177427; cv=none; b=lJ9A0B8TIURoYu4iVPxP9PcaznRDu3HOM0esCmJPu6sz89FyYx4qqcaZmfoKSSDkeQzxQSlEM9FwfKjYlKmRkYWhdzkdpqqHjsvxjSpZ+nM5Dqiwks8CKgWyNdDvFgujcdS2rqQUu4opyDq1Mi/vI+GZoYmAQNLrQ/Doec6A8ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177424; c=relaxed/simple;
-	bh=xtY7UjNY/pD7uiUD6h9un0j8Ew5smzqadlupcLebrPE=;
+	s=arc-20240116; t=1736177427; c=relaxed/simple;
+	bh=PdCbs0dDKhuRwxEXpfNMgP+lSTjKnlNLAPFzy7mEC8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a+YrtAK5MMIFx8a05zNEFCnf55LmxK+fe2Ek1oUZhpShiMEhb82iqfpVyRQOIS8MFkrrSbMW4p9kxA/iulQ/VpbrzNPUpzKWdcN912/U561drrq0UfT/km4rehnBmtDWyzG8cMxl02sKZMes4Uls2jQlRX1GOncheCl+1TmZybs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IIYtQn2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KLpTkMvTtL6KZWCWQGxdf0OgRBqsG0RHKTij+Yf3x/FE0kXFph74+HOOERDZUb5WJlwwvLW9F3ngT/Ke2nO3itLk4iRmaeP6Nqc20N5+zjGE5cdOErzr7+cqoarcKefhafVzdhwLR1rDBazjRU7gozZftqPYRgftjHV27DTWPFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocf8GjeL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IIYtQn2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0515C4CED2;
-	Mon,  6 Jan 2025 15:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocf8GjeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5258C4CED2;
+	Mon,  6 Jan 2025 15:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177424;
-	bh=xtY7UjNY/pD7uiUD6h9un0j8Ew5smzqadlupcLebrPE=;
+	s=korg; t=1736177427;
+	bh=PdCbs0dDKhuRwxEXpfNMgP+lSTjKnlNLAPFzy7mEC8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IIYtQn2NlJjVECC0UVs0i+/D6N6cszapMzwa8ao8ArSaH6B89HFFKCUSHjFKl8QDo
-	 QDgzvA0ZO0wohSG2KEYVD3UUIOWPITfzt8+u4KsduLNjJ+K8NevRHGx4xNzJa++eda
-	 BwHDqHhUISL53rvvqnqZ9lHvCbcucOd/20vOqjbI=
+	b=ocf8GjeLjDvsfPhAzPcNtH4T87cynG2B9m3OfM35R9rE97PieWdizVOL1GlqLVKuw
+	 jqPQR+rtGqQCYgR0uBcfMI/nuC3H89xqGxYXoHubwaZzccYeRrlGLwzielVoZzPCe6
+	 LbVzcPYnAJkg1aEd8buxl/kJq0wNzyKvulTeH0Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Mateusz Polchlopek <mateusz.polchlopek@intel.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/222] RDMA/mlx5: Enforce same type port association for multiport RoCE
-Date: Mon,  6 Jan 2025 16:15:33 +0100
-Message-ID: <20250106151155.654101900@linuxfoundation.org>
+Subject: [PATCH 6.6 130/222] RDMA/bnxt_re: Avoid initializing the software queue for user queues
+Date: Mon,  6 Jan 2025 16:15:34 +0100
+Message-ID: <20250106151155.691176546@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,67 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit e05feab22fd7dabcd6d272c4e2401ec1acdfdb9b ]
+[ Upstream commit 5effcacc8a8f3eb2a9f069d7e81a9ac793598dfb ]
 
-Different core device types such as PFs and VFs shouldn't be affiliated
-together since they have different capabilities, fix that by enforcing
-type check before doing the affiliation.
+Software Queues to hold the WRs needs to be created
+for only kernel queues. Avoid allocating the unnecessary
+memory for user Queues.
 
-Fixes: 32f69e4be269 ("{net, IB}/mlx5: Manage port association for multiport RoCE")
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Link: https://patch.msgid.link/88699500f690dff1c1852c1ddb71f8a1cc8b956e.1733233480.git.leonro@nvidia.com
-Reviewed-by: Mateusz Polchlopek <mateusz.polchlopek@intel.com>
+Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
+Fixes: 159fb4ceacd7 ("RDMA/bnxt_re: introduce a function to allocate swq")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/20241204075416.478431-3-kalesh-anakkur.purayil@broadcom.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/main.c | 6 ++++--
- include/linux/mlx5/driver.h       | 6 ++++++
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 42 +++++++++++++-----------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/main.c b/drivers/infiniband/hw/mlx5/main.c
-index c510484e024b..ada7dbf8eb1c 100644
---- a/drivers/infiniband/hw/mlx5/main.c
-+++ b/drivers/infiniband/hw/mlx5/main.c
-@@ -3372,7 +3372,8 @@ static int mlx5_ib_init_multiport_master(struct mlx5_ib_dev *dev)
- 		list_for_each_entry(mpi, &mlx5_ib_unaffiliated_port_list,
- 				    list) {
- 			if (dev->sys_image_guid == mpi->sys_image_guid &&
--			    (mlx5_core_native_port_num(mpi->mdev) - 1) == i) {
-+			    (mlx5_core_native_port_num(mpi->mdev) - 1) == i &&
-+			    mlx5_core_same_coredev_type(dev->mdev, mpi->mdev)) {
- 				bound = mlx5_ib_bind_slave_port(dev, mpi);
- 			}
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 4098e01666d1..d38e7880cebb 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -639,13 +639,6 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
+ 	rc = bnxt_qplib_alloc_init_hwq(&srq->hwq, &hwq_attr);
+ 	if (rc)
+ 		return rc;
+-
+-	srq->swq = kcalloc(srq->hwq.max_elements, sizeof(*srq->swq),
+-			   GFP_KERNEL);
+-	if (!srq->swq) {
+-		rc = -ENOMEM;
+-		goto fail;
+-	}
+ 	srq->dbinfo.flags = 0;
+ 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
+ 				 CMDQ_BASE_OPCODE_CREATE_SRQ,
+@@ -674,9 +667,17 @@ int bnxt_qplib_create_srq(struct bnxt_qplib_res *res,
+ 	spin_lock_init(&srq->lock);
+ 	srq->start_idx = 0;
+ 	srq->last_idx = srq->hwq.max_elements - 1;
+-	for (idx = 0; idx < srq->hwq.max_elements; idx++)
+-		srq->swq[idx].next_idx = idx + 1;
+-	srq->swq[srq->last_idx].next_idx = -1;
++	if (!srq->hwq.is_user) {
++		srq->swq = kcalloc(srq->hwq.max_elements, sizeof(*srq->swq),
++				   GFP_KERNEL);
++		if (!srq->swq) {
++			rc = -ENOMEM;
++			goto fail;
++		}
++		for (idx = 0; idx < srq->hwq.max_elements; idx++)
++			srq->swq[idx].next_idx = idx + 1;
++		srq->swq[srq->last_idx].next_idx = -1;
++	}
  
-@@ -4406,7 +4407,8 @@ static int mlx5r_mp_probe(struct auxiliary_device *adev,
+ 	srq->id = le32_to_cpu(resp.xid);
+ 	srq->dbinfo.hwq = &srq->hwq;
+@@ -1022,13 +1023,14 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	if (rc)
+ 		return rc;
  
- 	mutex_lock(&mlx5_ib_multiport_mutex);
- 	list_for_each_entry(dev, &mlx5_ib_dev_list, ib_dev_list) {
--		if (dev->sys_image_guid == mpi->sys_image_guid)
-+		if (dev->sys_image_guid == mpi->sys_image_guid &&
-+		    mlx5_core_same_coredev_type(dev->mdev, mpi->mdev))
- 			bound = mlx5_ib_bind_slave_port(dev, mpi);
+-	rc = bnxt_qplib_alloc_init_swq(sq);
+-	if (rc)
+-		goto fail_sq;
+-
+-	if (psn_sz)
+-		bnxt_qplib_init_psn_ptr(qp, psn_sz);
++	if (!sq->hwq.is_user) {
++		rc = bnxt_qplib_alloc_init_swq(sq);
++		if (rc)
++			goto fail_sq;
  
- 		if (bound) {
-diff --git a/include/linux/mlx5/driver.h b/include/linux/mlx5/driver.h
-index ffb98bc43b2d..38a8ff9c685c 100644
---- a/include/linux/mlx5/driver.h
-+++ b/include/linux/mlx5/driver.h
-@@ -1225,6 +1225,12 @@ static inline bool mlx5_core_is_vf(const struct mlx5_core_dev *dev)
- 	return dev->coredev_type == MLX5_COREDEV_VF;
- }
++		if (psn_sz)
++			bnxt_qplib_init_psn_ptr(qp, psn_sz);
++	}
+ 	req.sq_size = cpu_to_le32(bnxt_qplib_set_sq_size(sq, qp->wqe_mode));
+ 	pbl = &sq->hwq.pbl[PBL_LVL_0];
+ 	req.sq_pbl = cpu_to_le64(pbl->pg_map_arr[0]);
+@@ -1054,9 +1056,11 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 		rc = bnxt_qplib_alloc_init_hwq(&rq->hwq, &hwq_attr);
+ 		if (rc)
+ 			goto sq_swq;
+-		rc = bnxt_qplib_alloc_init_swq(rq);
+-		if (rc)
+-			goto fail_rq;
++		if (!rq->hwq.is_user) {
++			rc = bnxt_qplib_alloc_init_swq(rq);
++			if (rc)
++				goto fail_rq;
++		}
  
-+static inline bool mlx5_core_same_coredev_type(const struct mlx5_core_dev *dev1,
-+					       const struct mlx5_core_dev *dev2)
-+{
-+	return dev1->coredev_type == dev2->coredev_type;
-+}
-+
- static inline bool mlx5_core_is_ecpf(const struct mlx5_core_dev *dev)
- {
- 	return dev->caps.embedded_cpu;
+ 		req.rq_size = cpu_to_le32(rq->max_wqe);
+ 		pbl = &rq->hwq.pbl[PBL_LVL_0];
 -- 
 2.39.5
 
