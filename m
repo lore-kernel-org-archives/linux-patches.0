@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AFB1D86F1;
-	Mon,  6 Jan 2025 15:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8C3158536;
+	Mon,  6 Jan 2025 15:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177241; cv=none; b=lXNkGpJqfiItIsXxBYLTzP6Y7fJjGyOLsgBImmCsGo5kqS4j0t1dLhnuR3I0CVwOmTDSmDfqdlceCEpLCNy/49tJMxyuQMZ6pCKbnp1GCwc1omL0D1SDvzJRAMl5hRCaQfahpsuCk5zgy8/jt29oPDOf+WS3e+XlgweFUbeInCc=
+	t=1736177244; cv=none; b=qmSKSQRB/K6ojMFlbYhUJ7yzAzxG0jLhV/pj/VEHMtXbzZp1qD+GSnRMEKNDk7h7LJeWKubjvjpa6FaaQID2JXvVftwll564w1QEeJJWBA3Dv49gx+0WO0zmivFoABptYPCppPedkxxV0QseAaDav1/9ee8SDntt/gc5oWA1A7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177241; c=relaxed/simple;
-	bh=bROvTR9ejw47CNelZQ5LOgaoxK4BrFOQ9zUqcD30t9Q=;
+	s=arc-20240116; t=1736177244; c=relaxed/simple;
+	bh=PlYIuwhio31cqtKfIt3+MHAXUqI0z3YVeRqprSr7G+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cF5sQ4+t/2aLuFqo6Db4uBwG0Vxk5YJek/aeqJyjnZ5UNW2R8S9iHQu3ACr01gbTf7dHVg+E2+3jN0etjpMOvvbb+dImKJK4i5Bo2/9+OcKd1ABJrwWwayktxybcmMA12qnlAZ9Dlw2Nr306Vmsd+DVOt2wBXTM8ueUO9fxhKUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4z4xywp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlU0Ckx2cgSbfsZupH+R8Am0up5ZNBAYxFZ8A0beepaG/iiwSkk0jxzeAx1Ssd9PqPhQgvQukJDX0UEqGW9LicBNwiJzFafYIhKbfclZab2fnUEpxUfaDPkZLwFyo0ug5SBK9Vf7Pyh3uUzuoB7qRq8d1azP+Wt9jc9qqz+nfIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hcWXS2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4z4xywp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAFB0C4CEDF;
-	Mon,  6 Jan 2025 15:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hcWXS2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5078C4CED2;
+	Mon,  6 Jan 2025 15:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177241;
-	bh=bROvTR9ejw47CNelZQ5LOgaoxK4BrFOQ9zUqcD30t9Q=;
+	s=korg; t=1736177244;
+	bh=PlYIuwhio31cqtKfIt3+MHAXUqI0z3YVeRqprSr7G+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J4z4xywplK0ryya/+4yFxcJEImH14tFvk4NP7up44bq7PHPS3ID0FH7Tcm5GlKRre
-	 Wo6VKBlObgSmeWudMSR/8ftUXrx4wnZdej5y7h9qLhvjdIbFjjGBHNNgbHznyo0Uxm
-	 /vU/GzSUnWGZaCUfAeWb/pkAaLeVgsdO/4j/jF0M=
+	b=0hcWXS2xwyMT2F221SvXWpCleF717VIvQQcGUSss7EyrW57qrcb5mlGAaoPjK5rfD
+	 3S04Gl1LLh27u+8C+JwJDkrmjQTcy1hrx7hUrSBj33Ln9l6n+igXholCIJXhluFfGn
+	 e6UMqLVvoIp3YQfBbYHtRMmj7s+g3nK5YzV97Hc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Xin Li (Intel)" <xin@zytor.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/222] x86/fred: Clear WFE in missing-ENDBRANCH #CPs
-Date: Mon,  6 Jan 2025 16:15:03 +0100
-Message-ID: <20250106151154.343171694@linuxfoundation.org>
+Subject: [PATCH 6.6 100/222] btrfs: rename and export __btrfs_cow_block()
+Date: Mon,  6 Jan 2025 16:15:04 +0100
+Message-ID: <20250106151154.381618251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,101 +51,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Li (Intel) <xin@zytor.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit dc81e556f2a017d681251ace21bf06c126d5a192 ]
+[ Upstream commit 95f93bc4cbcac6121a5ee85cd5019ee8e7447e0b ]
 
-An indirect branch instruction sets the CPU indirect branch tracker
-(IBT) into WAIT_FOR_ENDBRANCH (WFE) state and WFE stays asserted
-across the instruction boundary.  When the decoder finds an
-inappropriate instruction while WFE is set ENDBR, the CPU raises a #CP
-fault.
+Rename and export __btrfs_cow_block() as btrfs_force_cow_block(). This is
+to allow to move defrag specific code out of ctree.c and into defrag.c in
+one of the next patches.
 
-For the "kernel IBT no ENDBR" selftest where #CPs are deliberately
-triggered, the WFE state of the interrupted context needs to be
-cleared to let execution continue.  Otherwise when the CPU resumes
-from the instruction that just caused the previous #CP, another
-missing-ENDBRANCH #CP is raised and the CPU enters a dead loop.
-
-This is not a problem with IDT because it doesn't preserve WFE and
-IRET doesn't set WFE.  But FRED provides space on the entry stack
-(in an expanded CS area) to save and restore the WFE state, thus the
-WFE state is no longer clobbered, so software must clear it.
-
-Clear WFE to avoid dead looping in ibt_clear_fred_wfe() and the
-!ibt_fatal code path when execution is allowed to continue.
-
-Clobbering WFE in any other circumstance is a security-relevant bug.
-
-[ dhansen: changelog rewording ]
-
-Fixes: a5f6c2ace997 ("x86/shstk: Add user control-protection fault handler")
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241113175934.3897541-1-xin%40zytor.com
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 44f52bbe96df ("btrfs: fix use-after-free when COWing tree bock and tracing is enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cet.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ fs/btrfs/ctree.c | 30 +++++++++++++++---------------
+ fs/btrfs/ctree.h |  7 +++++++
+ 2 files changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/arch/x86/kernel/cet.c b/arch/x86/kernel/cet.c
-index d2c732a34e5d..303bf74d175b 100644
---- a/arch/x86/kernel/cet.c
-+++ b/arch/x86/kernel/cet.c
-@@ -81,6 +81,34 @@ static void do_user_cp_fault(struct pt_regs *regs, unsigned long error_code)
- 
- static __ro_after_init bool ibt_fatal = true;
- 
-+/*
-+ * By definition, all missing-ENDBRANCH #CPs are a result of WFE && !ENDBR.
-+ *
-+ * For the kernel IBT no ENDBR selftest where #CPs are deliberately triggered,
-+ * the WFE state of the interrupted context needs to be cleared to let execution
-+ * continue.  Otherwise when the CPU resumes from the instruction that just
-+ * caused the previous #CP, another missing-ENDBRANCH #CP is raised and the CPU
-+ * enters a dead loop.
-+ *
-+ * This is not a problem with IDT because it doesn't preserve WFE and IRET doesn't
-+ * set WFE.  But FRED provides space on the entry stack (in an expanded CS area)
-+ * to save and restore the WFE state, thus the WFE state is no longer clobbered,
-+ * so software must clear it.
-+ */
-+static void ibt_clear_fred_wfe(struct pt_regs *regs)
-+{
-+	/*
-+	 * No need to do any FRED checks.
-+	 *
-+	 * For IDT event delivery, the high-order 48 bits of CS are pushed
-+	 * as 0s into the stack, and later IRET ignores these bits.
-+	 *
-+	 * For FRED, a test to check if fred_cs.wfe is set would be dropped
-+	 * by compilers.
-+	 */
-+	regs->fred_cs.wfe = 0;
-+}
-+
- static void do_kernel_cp_fault(struct pt_regs *regs, unsigned long error_code)
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 25c902e7556d..62032d3fda85 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -526,13 +526,13 @@ static noinline int update_ref_for_cow(struct btrfs_trans_handle *trans,
+  * bytes the allocator should try to find free next to the block it returns.
+  * This is just a hint and may be ignored by the allocator.
+  */
+-static noinline int __btrfs_cow_block(struct btrfs_trans_handle *trans,
+-			     struct btrfs_root *root,
+-			     struct extent_buffer *buf,
+-			     struct extent_buffer *parent, int parent_slot,
+-			     struct extent_buffer **cow_ret,
+-			     u64 search_start, u64 empty_size,
+-			     enum btrfs_lock_nesting nest)
++int btrfs_force_cow_block(struct btrfs_trans_handle *trans,
++			  struct btrfs_root *root,
++			  struct extent_buffer *buf,
++			  struct extent_buffer *parent, int parent_slot,
++			  struct extent_buffer **cow_ret,
++			  u64 search_start, u64 empty_size,
++			  enum btrfs_lock_nesting nest)
  {
- 	if ((error_code & CP_EC) != CP_ENDBR) {
-@@ -90,6 +118,7 @@ static void do_kernel_cp_fault(struct pt_regs *regs, unsigned long error_code)
+ 	struct btrfs_fs_info *fs_info = root->fs_info;
+ 	struct btrfs_disk_key disk_key;
+@@ -699,7 +699,7 @@ static inline int should_cow_block(struct btrfs_trans_handle *trans,
+ }
  
- 	if (unlikely(regs->ip == (unsigned long)&ibt_selftest_noendbr)) {
- 		regs->ax = 0;
-+		ibt_clear_fred_wfe(regs);
- 		return;
- 	}
+ /*
+- * cows a single block, see __btrfs_cow_block for the real work.
++ * COWs a single block, see btrfs_force_cow_block() for the real work.
+  * This version of it has extra checks so that a block isn't COWed more than
+  * once per transaction, as long as it hasn't been written yet
+  */
+@@ -752,8 +752,8 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
+ 	 * Also We don't care about the error, as it's handled internally.
+ 	 */
+ 	btrfs_qgroup_trace_subtree_after_cow(trans, root, buf);
+-	ret = __btrfs_cow_block(trans, root, buf, parent,
+-				 parent_slot, cow_ret, search_start, 0, nest);
++	ret = btrfs_force_cow_block(trans, root, buf, parent, parent_slot,
++				    cow_ret, search_start, 0, nest);
  
-@@ -97,6 +126,7 @@ static void do_kernel_cp_fault(struct pt_regs *regs, unsigned long error_code)
- 	if (!ibt_fatal) {
- 		printk(KERN_DEFAULT CUT_HERE);
- 		__warn(__FILE__, __LINE__, (void *)regs->ip, TAINT_WARN, regs, NULL);
-+		ibt_clear_fred_wfe(regs);
- 		return;
- 	}
- 	BUG();
+ 	trace_btrfs_cow_block(root, buf, *cow_ret);
+ 
+@@ -904,11 +904,11 @@ int btrfs_realloc_node(struct btrfs_trans_handle *trans,
+ 			search_start = last_block;
+ 
+ 		btrfs_tree_lock(cur);
+-		err = __btrfs_cow_block(trans, root, cur, parent, i,
+-					&cur, search_start,
+-					min(16 * blocksize,
+-					    (end_slot - i) * blocksize),
+-					BTRFS_NESTING_COW);
++		err = btrfs_force_cow_block(trans, root, cur, parent, i,
++					    &cur, search_start,
++					    min(16 * blocksize,
++						(end_slot - i) * blocksize),
++					    BTRFS_NESTING_COW);
+ 		if (err) {
+ 			btrfs_tree_unlock(cur);
+ 			free_extent_buffer(cur);
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index f7bb4c34b984..7df3ed2945b0 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -538,6 +538,13 @@ int btrfs_cow_block(struct btrfs_trans_handle *trans,
+ 		    struct extent_buffer *parent, int parent_slot,
+ 		    struct extent_buffer **cow_ret,
+ 		    enum btrfs_lock_nesting nest);
++int btrfs_force_cow_block(struct btrfs_trans_handle *trans,
++			  struct btrfs_root *root,
++			  struct extent_buffer *buf,
++			  struct extent_buffer *parent, int parent_slot,
++			  struct extent_buffer **cow_ret,
++			  u64 search_start, u64 empty_size,
++			  enum btrfs_lock_nesting nest);
+ int btrfs_copy_root(struct btrfs_trans_handle *trans,
+ 		      struct btrfs_root *root,
+ 		      struct extent_buffer *buf,
 -- 
 2.39.5
 
