@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A111DC9AD;
-	Mon,  6 Jan 2025 16:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E131D619D;
+	Mon,  6 Jan 2025 16:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179252; cv=none; b=IjSnjYikdoO46C5fa8OUTHgCF3Rpq4Z+V9G4edEj6hvLd4AApbt/aIy/pU2O5lqAYSQrbE1Ye1AjOnCwZkoc/IZzn+Ruy8yYAZPCzSl+WeJK6gfqzlzFFbMO10wsIjs4FMHMxCV5Uuld87ZNauG7GD7syUCaD9U2ba6ny5cCpTc=
+	t=1736179255; cv=none; b=gIH5mFrUJHPm0fRkJMzBVECB1EakdgvaABu5I8tjfI8EC7BJM32mtaU5Kv+rY+BPBWHy4+Vh99DT+FqET8TDDbq+TASc3nRuyECof0LpY5M8R6uVXZlP9ildAS0zaUpIwuC5S0hY+7rtFhYha4D3R2cjOV/jzAHkldm3KKEsEGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179252; c=relaxed/simple;
-	bh=6ExPja9xjAAO43dvHJYU+yzvrvUJxs/Ga+MPv6SmRj8=;
+	s=arc-20240116; t=1736179255; c=relaxed/simple;
+	bh=CN40k1Sx0WMdCmPtXW6nwPnzf8xu6d7wbxyZhlLDcTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIh0Z64fclQKjKHDH7C2vIURzx67b4EcWksi/HEiS18FKoC5KQ9TcBQwp+xVwiVns08Q5Vz04+9Hs7rPBStmiLHpBOqtckH7fT00OuRFvpyjnqMhQV4iIsnIDPmk3XyRUd3gH3ckb70ArawvoZKIwlwp9hnQgYp91OfMScrara0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vByPSDS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOIIP04+M9O8A/t4TEmjp9kFLEyWNBen5vNG0e2GMWEIIi0SKo1qTNtV/5tcuTkQAALgCwZ+BddORJlzUrpUeWHeusEKCQMNpQD1w9KYwBU8fQrIqZ1xCv5mLaizFZQ9rWhbkjo4gVC2FAosNMBADW3ukc+KXSlZlnLaNZLAAAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7MeEdkU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vByPSDS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B187EC4CEE1;
-	Mon,  6 Jan 2025 16:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7MeEdkU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30E2C4CED2;
+	Mon,  6 Jan 2025 16:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179252;
-	bh=6ExPja9xjAAO43dvHJYU+yzvrvUJxs/Ga+MPv6SmRj8=;
+	s=korg; t=1736179255;
+	bh=CN40k1Sx0WMdCmPtXW6nwPnzf8xu6d7wbxyZhlLDcTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vByPSDS+Ddv5JIVOVsR9rqQtBlA0h4+thMck2XvaPCzmNnsRWQrrWsOePWzWc1CeI
-	 e/1gFJ9l252AZmzjfgKGYLsGenC6cH/DmggTyl7KRrJS6S1OLC8T3N8uFnGM4cbGgc
-	 DQtY1ybRGdK+soF+C7rhJFZrZjJDEuwXPfgjZMXk=
+	b=i7MeEdkUFBb3G9R5bUWqtLVBn+ZiF6e8LTfLQya3RzMVnWeMvy69U1KpPo2OPJ/Bb
+	 NURCAaelRJFgT3ZsIeagRXgpo5Kdv+Ce+Pc9UKbpkwoiU5fJA0CivG8d8vqq5p1lop
+	 6gKvxSheoX/zhg2jfSCJgE1j5laLwqpVqk8E5MxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanya Agarwal <tanyaagarwal25699@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yi Sun <yi.sun@unisoc.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	virtualization@lists.linux.dev,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 76/93] ALSA: usb-audio: US16x08: Initialize array before use
-Date: Mon,  6 Jan 2025 16:17:52 +0100
-Message-ID: <20250106151131.574445041@linuxfoundation.org>
+Subject: [PATCH 5.4 50/93] virtio-blk: dont keep queue frozen during system suspend
+Date: Mon,  6 Jan 2025 16:17:26 +0100
+Message-ID: <20250106151130.591709064@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -51,41 +57,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tanya Agarwal <tanyaagarwal25699@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit b06a6187ef983f501e93faa56209169752d3bde3 ]
+[ Upstream commit 7678abee0867e6b7fb89aa40f6e9f575f755fb37 ]
 
-Initialize meter_urb array before use in mixer_us16x08.c.
+Commit 4ce6e2db00de ("virtio-blk: Ensure no requests in virtqueues before
+deleting vqs.") replaces queue quiesce with queue freeze in virtio-blk's
+PM callbacks. And the motivation is to drain inflight IOs before suspending.
 
-CID 1410197: (#1 of 1): Uninitialized scalar variable (UNINIT)
-uninit_use_in_call: Using uninitialized value *meter_urb when
-calling get_meter_levels_from_urb.
+block layer's queue freeze looks very handy, but it is also easy to cause
+deadlock, such as, any attempt to call into bio_queue_enter() may run into
+deadlock if the queue is frozen in current context. There are all kinds
+of ->suspend() called in suspend context, so keeping queue frozen in the
+whole suspend context isn't one good idea. And Marek reported lockdep
+warning[1] caused by virtio-blk's freeze queue in virtblk_freeze().
 
-Coverity Link:
-https://scan7.scan.coverity.com/#/project-view/52849/11354?selectedIssue=1410197
+[1] https://lore.kernel.org/linux-block/ca16370e-d646-4eee-b9cc-87277c89c43c@samsung.com/
 
-Fixes: d2bb390a2081 ("ALSA: usb-audio: Tascam US-16x08 DSP mixer quirk")
-Signed-off-by: Tanya Agarwal <tanyaagarwal25699@gmail.com>
-Link: https://patch.msgid.link/20241229060240.1642-1-tanyaagarwal25699@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Given the motivation is to drain in-flight IOs, it can be done by calling
+freeze & unfreeze, meantime restore to previous behavior by keeping queue
+quiesced during suspend.
+
+Cc: Yi Sun <yi.sun@unisoc.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: virtualization@lists.linux.dev
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/20241112125821.1475793-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_us16x08.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/virtio_blk.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/mixer_us16x08.c b/sound/usb/mixer_us16x08.c
-index c6c834ac83ac..eb59a59dcdbf 100644
---- a/sound/usb/mixer_us16x08.c
-+++ b/sound/usb/mixer_us16x08.c
-@@ -687,7 +687,7 @@ static int snd_us16x08_meter_get(struct snd_kcontrol *kcontrol,
- 	struct usb_mixer_elem_info *elem = kcontrol->private_data;
- 	struct snd_usb_audio *chip = elem->head.mixer->chip;
- 	struct snd_us16x08_meter_store *store = elem->private_data;
--	u8 meter_urb[64];
-+	u8 meter_urb[64] = {0};
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index 3afc07b59477..b1c5bcae9b31 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -1062,9 +1062,12 @@ static void virtblk_remove(struct virtio_device *vdev)
+ static int virtblk_freeze(struct virtio_device *vdev)
+ {
+ 	struct virtio_blk *vblk = vdev->priv;
++	struct request_queue *q = vblk->disk->queue;
  
- 	switch (kcontrol->private_value) {
- 	case 0: {
+ 	/* Ensure no requests in virtqueues before deleting vqs. */
+-	blk_mq_freeze_queue(vblk->disk->queue);
++	blk_mq_freeze_queue(q);
++	blk_mq_quiesce_queue_nowait(q);
++	blk_mq_unfreeze_queue(q);
+ 
+ 	/* Ensure we don't receive any more interrupts */
+ 	vdev->config->reset(vdev);
+@@ -1088,8 +1091,8 @@ static int virtblk_restore(struct virtio_device *vdev)
+ 		return ret;
+ 
+ 	virtio_device_ready(vdev);
++	blk_mq_unquiesce_queue(vblk->disk->queue);
+ 
+-	blk_mq_unfreeze_queue(vblk->disk->queue);
+ 	return 0;
+ }
+ #endif
 -- 
 2.39.5
 
