@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28142146D6B;
-	Mon,  6 Jan 2025 15:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235708634A;
+	Mon,  6 Jan 2025 15:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176960; cv=none; b=hIvB0BiwYd0AR+FunKuIVYqht8uKQD61pvrsTLHWLvZal3faSQDN/XWy6qHsVg1oH45UmJz+XppRPojTrt6B5AB20tnGab/kBxoc/LBXT2buA5oln7Bs/Hyc/S1f9iRV++hw96bLdu3dvyMGHsGheDiPLOUXrdQL2ZaqeWU2OL8=
+	t=1736176963; cv=none; b=uMYTFEu0VIv7Few+1LbRvl2B/mynEB5LA26Wy9MNtta1AVucKJBUyLuOBO6C/GUgIlqZ1DnssiuEZkcDkWmc5rtR+MS13PaVCfRpIedsjFluMgvgkbDWfuptNjJ9o6YQSYU+MaO4gy07QJN91SaJl83BvZRg4kBcYzOwFQjJxF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176960; c=relaxed/simple;
-	bh=VCspxvwjvG0Wi0gU0Z/bhDhZPlPwP72R/X0UHcrP+Q0=;
+	s=arc-20240116; t=1736176963; c=relaxed/simple;
+	bh=shyRBTbFq96rWAvuUFZyxJF9fAaRvi9/E5OtAdsnb70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4g5rTEsAN0wdQ3Gskr754xc3fTkp+0rNTQr/bM+kdULh48sh7fAlOzmQ6jVDPNxLMvu8pZmA1yhDeu+au/PBVpXjFEtLEsQ4TCQw7CE6sxKkWjmW67UuyumQfycetwHpUWrpKlhHLaHHUp5WEvxMYIN5eXVf6gr4nQKMJJtXn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hzWaNshA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=InVbT4oMmbWeiR69WHgPkMZHlGAZl16lVSEIaRRd+YgTMYCskNFLQkv9a70KyKCa+V/Ot/vke2qsJ/NbonEH6AgAl7FJdb1T+r+S8wYK6/x/OqOnuE5qPvS9H48D4wxA3E26IWXZIwkIeBwM/VFi+Z3vXt4xQ/qhY2YgNyu1SJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m67Pz+/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hzWaNshA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23D9C4CED2;
-	Mon,  6 Jan 2025 15:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m67Pz+/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2B7C4CED2;
+	Mon,  6 Jan 2025 15:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176960;
-	bh=VCspxvwjvG0Wi0gU0Z/bhDhZPlPwP72R/X0UHcrP+Q0=;
+	s=korg; t=1736176963;
+	bh=shyRBTbFq96rWAvuUFZyxJF9fAaRvi9/E5OtAdsnb70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzWaNshAa2OB5itB/FdAHZX8eT7cGhMmxkiTNNw4NiP8zUKuGnEqAa26b2viV4uVd
-	 IhSlnb0DtqdGQBt7CRnXzBqv7CghqnAIX13cSkSfSWKFRgWvKnOz/zR4UuCyI7M0JB
-	 oILy/v0EQ8ZS1hbK55qJIIt2GEg0jW00grd8kCWY=
+	b=m67Pz+/eNrfC5W+34JdCgSAc8avH+7Nr0XU0n64XRtFBRqfNvs44BhCk3vqZVvZDb
+	 LEgrhw3U2KoyFWyNump9fcbU2P0KL/28oisymUS5kF1FT3V6XC4Epwy6TC5MMp+Qf1
+	 Cst1UPtui549mr8X6vlPAD7t/ZMhJ0yMqhr5xxSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hobin Woo <hobin.woo@samsung.com>,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Yoonho Shin <yoonho.shin@samsung.com>,
-	Steve French <stfrench@microsoft.com>,
+	Daniele Palmas <dnlplm@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 60/81] ksmbd: retry iterate_dir in smb2_query_dir
-Date: Mon,  6 Jan 2025 16:16:32 +0100
-Message-ID: <20250106151131.700051944@linuxfoundation.org>
+Subject: [PATCH 6.1 61/81] net: usb: qmi_wwan: add Telit FE910C04 compositions
+Date: Mon,  6 Jan 2025 16:16:33 +0100
+Message-ID: <20250106151131.738577500@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -54,73 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hobin Woo <hobin.woo@samsung.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 2b904d61a97e8ba79e3bc216ba290fd7e1d85028 ]
+[ Upstream commit 3b58b53a26598209a7ad8259a5114ce71f7c3d64 ]
 
-Some file systems do not ensure that the single call of iterate_dir
-reaches the end of the directory. For example, FUSE fetches entries from
-a daemon using 4KB buffer and stops fetching if entries exceed the
-buffer. And then an actor of caller, KSMBD, is used to fill the entries
-from the buffer.
-Thus, pattern searching on FUSE, files located after the 4KB could not
-be found and STATUS_NO_SUCH_FILE was returned.
+Add the following Telit FE910C04 compositions:
 
-Signed-off-by: Hobin Woo <hobin.woo@samsung.com>
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Tested-by: Yoonho Shin <yoonho.shin@samsung.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+0x10c0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 13 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10c4: rmnet + tty (AT) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 14 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c4 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10c8: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c8 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Link: https://patch.msgid.link/20241209151821.3688829-1-dnlplm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 12 +++++++++++-
- fs/smb/server/vfs.h     |  1 +
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/usb/qmi_wwan.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 96d441ca511d..71478a590e83 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3988,6 +3988,7 @@ static bool __query_dir(struct dir_context *ctx, const char *name, int namlen,
- 	/* dot and dotdot entries are already reserved */
- 	if (!strcmp(".", name) || !strcmp("..", name))
- 		return true;
-+	d_info->num_scan++;
- 	if (ksmbd_share_veto_filename(priv->work->tcon->share_conf, name))
- 		return true;
- 	if (!match_pattern(name, namlen, priv->search_pattern))
-@@ -4148,8 +4149,17 @@ int smb2_query_dir(struct ksmbd_work *work)
- 	query_dir_private.info_level		= req->FileInformationClass;
- 	dir_fp->readdir_data.private		= &query_dir_private;
- 	set_ctx_actor(&dir_fp->readdir_data.ctx, __query_dir);
--
-+again:
-+	d_info.num_scan = 0;
- 	rc = iterate_dir(dir_fp->filp, &dir_fp->readdir_data.ctx);
-+	/*
-+	 * num_entry can be 0 if the directory iteration stops before reaching
-+	 * the end of the directory and no file is matched with the search
-+	 * pattern.
-+	 */
-+	if (rc >= 0 && !d_info.num_entry && d_info.num_scan &&
-+	    d_info.out_buf_len > 0)
-+		goto again;
- 	/*
- 	 * req->OutputBufferLength is too small to contain even one entry.
- 	 * In this case, it immediately returns OutputBufferLength 0 to client.
-diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
-index e761dde2443e..cc47e71c4de1 100644
---- a/fs/smb/server/vfs.h
-+++ b/fs/smb/server/vfs.h
-@@ -43,6 +43,7 @@ struct ksmbd_dir_info {
- 	char		*rptr;
- 	int		name_len;
- 	int		out_buf_len;
-+	int		num_scan;
- 	int		num_entry;
- 	int		data_count;
- 	int		last_entry_offset;
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 8b9e2888b310..65aefebdf9a9 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1372,6 +1372,9 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
 -- 
 2.39.5
 
