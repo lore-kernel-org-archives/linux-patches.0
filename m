@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9F786332;
-	Mon,  6 Jan 2025 15:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AA544C7C;
+	Mon,  6 Jan 2025 15:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177763; cv=none; b=D5mKOISFkBNM9noaA6S7zp/sGd9fWWFXwmcK4CukXTAkuzDkehnLEtb4VQPgplKhh8U7fNswlHcynqhOEZ8ENhVY4XANRp3eY9EBRzfCk6v6lNyb10Pi4rPVFNbnkCjTkcwrDcL3BeDYYuEEKFf/602Zb8YlqN0YZsd18VjmlXw=
+	t=1736177766; cv=none; b=sd+TPOcSpw6ZHRFGh0O9zq6XxgWhkZMaQCs7HcFgdt04j/A4E46yFdaKouUT12ExBDa7FRe+NCIyuPik/JyLtT29BTgN1e0ZuFFjw2MQ/SIjW+x31CwqEGVmQ2mFBq8Pd5cITHkRbNY6E9kvEe+qpBE/sb+uVHxv4FHU3XjNEU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177763; c=relaxed/simple;
-	bh=Ffe5/Msku3Jcj15suzpdo5FSn6JDtnYI80ROpey9qg8=;
+	s=arc-20240116; t=1736177766; c=relaxed/simple;
+	bh=hKBBfiaqH0JOLEBiNzUNJ6z5Ju7xPeC/RBKg0wm8ljg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxRONJseFQ7GW6KNM3f+Env3BLLOdugii6drqFHG7whtnoVqF/+O3qNRFEA0AqpGdEgNFkZ97M6UOGTBP7aT1F9Pq0EoN7Y7OBtNOCE4t2LdGgX9qNLHDWrBtZIUXp4wsEmvzh+8U5ER/ykG+XPrxfB6590s8e+G3HyUkmHbT1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WW8ZOQfj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ctV+lel78GNUP3MzLs0nxUi+kejRkxJAFCCE4RmgRbE8unrQBGcarpR4nYSeCdkWj8VEf0xt81QOZVPXIXL5Y9Lddyfm/KEkzT4qchqCeS6iLEQzJzw0Rxx3zhn2gBnIHdY7P9J/dOf34/mDqPDuazS7zP+++PjSqy1KAiGxLZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cw3mHqtU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WW8ZOQfj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C76C4CED2;
-	Mon,  6 Jan 2025 15:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cw3mHqtU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED32C4CED2;
+	Mon,  6 Jan 2025 15:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177762;
-	bh=Ffe5/Msku3Jcj15suzpdo5FSn6JDtnYI80ROpey9qg8=;
+	s=korg; t=1736177765;
+	bh=hKBBfiaqH0JOLEBiNzUNJ6z5Ju7xPeC/RBKg0wm8ljg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WW8ZOQfjwywfeJJc3d6flQsJpSBoEuKtfqNmOlHL0EkIpRivQRWhG7e927y/Qyxtn
-	 mU5wXKGiwMT2JG+qlO0G4iDmD0aSUq4Bo4s9VKDjVJxYvLZay+dL64G5cK0afrfvm4
-	 8l6aq5MDh3r7QVKiA8FMeOfhxFEre/0bNf6Awe5k=
+	b=Cw3mHqtUHMfSObAB3PHp+mnk6jXoHwHwNI0TAFSY3Fc6++CAYjfSwHXXVwtfdovkV
+	 ziHZdA9hIWq4kS7pONmsCeZiDlZGVDxC69NzItUvYHdcd09EpMTqh7mSDm872zivBH
+	 MQu5/x1TgKpoGSHIUqBPC23qgPXGhHxeo5DJr7yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kashyap Desai <kashyap.desai@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
+	Potnuri Bharat Teja <bharat@chelsio.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 017/156] RDMA/bnxt_re: Avoid sending the modify QP workaround for latest adapters
-Date: Mon,  6 Jan 2025 16:15:03 +0100
-Message-ID: <20250106151142.392336791@linuxfoundation.org>
+Subject: [PATCH 6.12 018/156] RDMA/core: Fix ENODEV error for iWARP test over vlan
+Date: Mon,  6 Jan 2025 16:15:04 +0100
+Message-ID: <20250106151142.428616813@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,48 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kashyap Desai <kashyap.desai@broadcom.com>
+From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
 
-[ Upstream commit 064c22408a73b9e945139b64614c534cbbefb591 ]
+[ Upstream commit a4048c83fd87c65657a4acb17d639092d4b6133d ]
 
-The workaround to modify the UD QP from RTS to RTS is required
-only for older adapters. Issuing this for latest adapters can caus
-some unexpected behavior. Fix it
+If traffic is over vlan, cma_validate_port() fails to match
+net_device ifindex with bound_if_index and results in ENODEV error.
+As iWARP gid table is static, it contains entry corresponding  to
+only one net device which is either real netdev or vlan netdev for
+cases like  siw attached to a vlan interface.
+This patch fixes the issue by assigning bound_if_index with net
+device index, if real net device obtained from bound if index matches
+with net device retrieved from gid table
 
-Fixes: 1801d87b3598 ("RDMA/bnxt_re: Support new 5760X P7 devices")
-Signed-off-by: Kashyap Desai <kashyap.desai@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/20241204075416.478431-4-kalesh-anakkur.purayil@broadcom.com
+Fixes: f8ef1be816bf ("RDMA/cma: Avoid GID lookups on iWARP devices")
+Link: https://lore.kernel.org/all/ZzNgdrjo1kSCGbRz@chelsio.com/
+Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
+Link: https://patch.msgid.link/20241203140052.3985-1-anumula@chelsio.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/core/cma.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 160096792224..390162018647 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -2763,7 +2763,8 @@ static int bnxt_re_post_send_shadow_qp(struct bnxt_re_dev *rdev,
- 		wr = wr->next;
- 	}
- 	bnxt_qplib_post_send_db(&qp->qplib_qp);
--	bnxt_ud_qp_hw_stall_workaround(qp);
-+	if (!bnxt_qplib_is_chip_gen_p5_p7(qp->rdev->chip_ctx))
-+		bnxt_ud_qp_hw_stall_workaround(qp);
- 	spin_unlock_irqrestore(&qp->sq_lock, flags);
- 	return rc;
- }
-@@ -2875,7 +2876,8 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
- 		wr = wr->next;
- 	}
- 	bnxt_qplib_post_send_db(&qp->qplib_qp);
--	bnxt_ud_qp_hw_stall_workaround(qp);
-+	if (!bnxt_qplib_is_chip_gen_p5_p7(qp->rdev->chip_ctx))
-+		bnxt_ud_qp_hw_stall_workaround(qp);
- 	spin_unlock_irqrestore(&qp->sq_lock, flags);
+diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
+index 64ace0b968f0..91db10515d74 100644
+--- a/drivers/infiniband/core/cma.c
++++ b/drivers/infiniband/core/cma.c
+@@ -690,6 +690,7 @@ cma_validate_port(struct ib_device *device, u32 port,
+ 	int bound_if_index = dev_addr->bound_dev_if;
+ 	int dev_type = dev_addr->dev_type;
+ 	struct net_device *ndev = NULL;
++	struct net_device *pdev = NULL;
  
- 	return rc;
+ 	if (!rdma_dev_access_netns(device, id_priv->id.route.addr.dev_addr.net))
+ 		goto out;
+@@ -714,6 +715,21 @@ cma_validate_port(struct ib_device *device, u32 port,
+ 
+ 		rcu_read_lock();
+ 		ndev = rcu_dereference(sgid_attr->ndev);
++		if (ndev->ifindex != bound_if_index) {
++			pdev = dev_get_by_index_rcu(dev_addr->net, bound_if_index);
++			if (pdev) {
++				if (is_vlan_dev(pdev)) {
++					pdev = vlan_dev_real_dev(pdev);
++					if (ndev->ifindex == pdev->ifindex)
++						bound_if_index = pdev->ifindex;
++				}
++				if (is_vlan_dev(ndev)) {
++					pdev = vlan_dev_real_dev(ndev);
++					if (bound_if_index == pdev->ifindex)
++						bound_if_index = ndev->ifindex;
++				}
++			}
++		}
+ 		if (!net_eq(dev_net(ndev), dev_addr->net) ||
+ 		    ndev->ifindex != bound_if_index) {
+ 			rdma_put_gid_attr(sgid_attr);
 -- 
 2.39.5
 
