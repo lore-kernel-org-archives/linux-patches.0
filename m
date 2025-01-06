@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465F81DE2A5;
-	Mon,  6 Jan 2025 15:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472E71DE2C2;
+	Mon,  6 Jan 2025 15:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178317; cv=none; b=oSTIMvTZn2ggwhRsXFETgMLBPwl5oS1JyvYKh/9j7KwfqS4y4Fqo2yNQjmB3/t85lRXRSmK/DCtfds+j7OPvANUYx0YpgmkJlZ6wKv2rsZS/ld1zEkyNhNYBb8JfcNLvfY6gGEpulTlIzspF6oMgfZbjUTCki1KZQIuFZXuJkfk=
+	t=1736178320; cv=none; b=PajIzJ7KaX55S2WyFkxQRhwyQbjdI8Wd0AJa1zX92gcMXqW0Zvw2JXNDxzopWyEX9GuSRYYFciu6zG4Q+/luhVLm7+YQTwAC4oblvyo+9d+eRJFkQaVfYkj99Nk+ni4MPWbbfMFdxMHf1IEge28pDJLjAndrccj9l1/efv3oz/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178317; c=relaxed/simple;
-	bh=59l+HHomKtPCXumSaZBUskFSWeLzU5yOaCEBreLzbB8=;
+	s=arc-20240116; t=1736178320; c=relaxed/simple;
+	bh=wzqkyc4QZqMfEIds4oBedphrLLZAN+VgdzAFzkprIYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElMSPuOTNi0n2uSoshzTA4G4YgzpqHE7OGTwYLnyDLgUG+KSk8iH+lUH0XZ7/WZWGJ6K7EsemFOrgts7Gh9HQIXpNEd1mUYuRIk0CMw/pCgsZptPcgclrCfA/s5+waottjM0AuNrK6aUdUQlvss34wr3OxGHu39mmOhR8Iz8qbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZMHFBuS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=CsfAWZA6Jt+Ly4IOHETnuxij+QhB4MRcwgjlL7nOSHX4xKDlOwVLl0hh0NHbtyNVcgapGUgAPkOicXbZJiVRGUigeMXhiScRjvsJPXNF1GocOViJ3bIK+AflCZSjCkeF3aTt5zPLKz8OxicaqTgdtb4QsDg1OGkQ65QV5LRZ+SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNRacIEG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZMHFBuS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05CBC4CED6;
-	Mon,  6 Jan 2025 15:45:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNRacIEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2C5C4CED2;
+	Mon,  6 Jan 2025 15:45:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178317;
-	bh=59l+HHomKtPCXumSaZBUskFSWeLzU5yOaCEBreLzbB8=;
+	s=korg; t=1736178320;
+	bh=wzqkyc4QZqMfEIds4oBedphrLLZAN+VgdzAFzkprIYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZMHFBuS4NoVeTa4Pq94rSjiswRXYsfsoJuNi9jfNOiKfyF8MblCpNkoo/Nbk2GGA
-	 VGhN6o1CwBA79BGhxeNd0ekFupLyU80hdgU6X2orynhzykV0vtdwlWtCtzaYDlVcXC
-	 Fp2+UohtYYGNJ4OvDEoTixOJYJ0PLdfN2cbEK3z4=
+	b=oNRacIEGJmolwe6sGJrWDkmb7YaMoQl7dwABmcUBdVbXdzlHoGcxMw/IZFFmUwzGh
+	 V4cKeFjEf4HAiv4pLM4Yp8v7nCthpQU4VkB3LG7makjufJen3rUUUsC9Qw6Dt0FATd
+	 OXzGNyo4bFvoVz8wK6rLWU5NQQRtfo1SO0atctIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	James Morse <james.morse@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/138] arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs
-Date: Mon,  6 Jan 2025 16:16:41 +0100
-Message-ID: <20250106151136.147611991@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 078/138] tracing: Constify string literal data member in struct trace_event_call
+Date: Mon,  6 Jan 2025 16:16:42 +0100
+Message-ID: <20250106151136.184883036@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -48,70 +52,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-[ Upstream commit c0900d15d31c2597dd9f634c8be2b71762199890 ]
+commit 452f4b31e3f70a52b97890888eeb9eaa9a87139a upstream.
 
-Linux currently sets the TCR_EL1.AS bit unconditionally during CPU
-bring-up. On an 8-bit ASID CPU, this is RES0 and ignored, otherwise
-16-bit ASIDs are enabled. However, if running in a VM and the hypervisor
-reports 8-bit ASIDs (ID_AA64MMFR0_EL1.ASIDBits == 0) on a 16-bit ASIDs
-CPU, Linux uses bits 8 to 63 as a generation number for tracking old
-process ASIDs. The bottom 8 bits of this generation end up being written
-to TTBR1_EL1 and also used for the ASID-based TLBI operations as the
-upper 8 bits of the ASID. Following an ASID roll-over event we can have
-threads of the same application with the same 8-bit ASID but different
-generation numbers running on separate CPUs. Both TLB caching and the
-TLBI operations will end up using different actual 16-bit ASIDs for the
-same process.
+The name member of the struct trace_event_call is assigned with
+generated string literals; declare them pointer to read-only.
 
-A similar scenario can happen in a big.LITTLE configuration if the boot
-CPU only uses 8-bit ASIDs while secondary CPUs have 16-bit ASIDs.
+Reported by clang:
 
-Ensure that the ASID generation is only tracked by bits 16 and up,
-leaving bits 15:8 as 0 if the kernel uses 8-bit ASIDs. Note that
-clearing TCR_EL1.AS is not sufficient since the architecture requires
-that the top 8 bits of the ASID passed to TLBI instructions are 0 rather
-than ignored in such configuration.
+    security/landlock/syscalls.c:179:1: warning: initializing 'char *' with an expression of type 'const char[34]' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+      179 | SYSCALL_DEFINE3(landlock_create_ruleset,
+          | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      180 |                 const struct landlock_ruleset_attr __user *const, attr,
+          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      181 |                 const size_t, size, const __u32, flags)
+          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:226:36: note: expanded from macro 'SYSCALL_DEFINE3'
+      226 | #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
+          |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:234:2: note: expanded from macro 'SYSCALL_DEFINEx'
+      234 |         SYSCALL_METADATA(sname, x, __VA_ARGS__)                 \
+          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:184:2: note: expanded from macro 'SYSCALL_METADATA'
+      184 |         SYSCALL_TRACE_ENTER_EVENT(sname);                       \
+          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:151:30: note: expanded from macro 'SYSCALL_TRACE_ENTER_EVENT'
+      151 |                         .name                   = "sys_enter"#sname,    \
+          |                                                   ^~~~~~~~~~~~~~~~~
 
 Cc: stable@vger.kernel.org
-Cc: Will Deacon <will@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: James Morse <james.morse@arm.com>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20241203151941.353796-1-catalin.marinas@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mickaël Salaün <mic@digikod.net>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/20241125105028.42807-1-cgoettsche@seltendoof.de
+Fixes: b77e38aa240c3 ("tracing: add event trace infrastructure")
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/context.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/trace_events.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/context.c b/arch/arm64/mm/context.c
-index 171f2fcd3cf2..4115c40a3ccc 100644
---- a/arch/arm64/mm/context.c
-+++ b/arch/arm64/mm/context.c
-@@ -32,9 +32,9 @@ static unsigned long nr_pinned_asids;
- static unsigned long *pinned_asid_map;
- 
- #define ASID_MASK		(~GENMASK(asid_bits - 1, 0))
--#define ASID_FIRST_VERSION	(1UL << asid_bits)
-+#define ASID_FIRST_VERSION	(1UL << 16)
- 
--#define NUM_USER_ASIDS		ASID_FIRST_VERSION
-+#define NUM_USER_ASIDS		(1UL << asid_bits)
- #define ctxid2asid(asid)	((asid) & ~ASID_MASK)
- #define asid2ctxid(asid, genid)	((asid) | (genid))
- 
--- 
-2.39.5
-
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -283,7 +283,7 @@ struct trace_event_call {
+ 	struct list_head	list;
+ 	struct trace_event_class *class;
+ 	union {
+-		char			*name;
++		const char		*name;
+ 		/* Set TRACE_EVENT_FL_TRACEPOINT flag when using "tp" */
+ 		struct tracepoint	*tp;
+ 	};
 
 
