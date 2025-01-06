@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3721547E3;
-	Mon,  6 Jan 2025 15:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D75D1487F4;
+	Mon,  6 Jan 2025 15:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177217; cv=none; b=LAGLuSq8HXZyKkj8KARl/8v8U+154gWcSh5jjloFvpYR9CM/NAxFxvo54OMlUc2HfJcAi6J7Fqc2ifXamndqZy0ctONRpRkDktZm5AD/uJet8DtyFDgiqVi7vjWdxvjAmiWmluoLASIKhvTNw4u79pOb92jIp/O5jTHNI5QwOws=
+	t=1736177220; cv=none; b=JUlwlt1A1TyrSQj7HM9OzEmIsPB1DkSBAJiQscy6x93NgsZzBiyAfKOLBHesVfbWHCSkkn0jAfDttMINt9xV7ATalR8BvXxneqQtuSvFHquQY6bqzuzX/xFhNb0N3TDOuynItbFEahATgdpqm3EjRg6ZML5Uyxgq2c7vwL68YSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177217; c=relaxed/simple;
-	bh=cFMS4YsS9VFrUrqF/IHS2eJ30lcVoapEY/BNVImc104=;
+	s=arc-20240116; t=1736177220; c=relaxed/simple;
+	bh=hYyp2d4B2fEZirBJq9/3k63YvBp9rX11359KtEVDnwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCnMBVJCOAkjcMZLelQD/kYueVb1/RapOHvof2SI8+8d9VnDi2HbQ3iV6A03s1GrOWq8rkZqpwDzXn3Cshwyo+DSz/Y09l8KB3+ZG80FzdW0lgdflYSLafCRIAzbbwgL48pk4r3V2/1xK43Mf2d6y/i7g4x81Bylrf+dijcx25g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZUcZw46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YC3uf5ez+RJN/FxwfgTTrglF29Pc2t0VLuphwLU/gd10+VmA+CC06lCtjOkcSe1PNu9aAVIa75xTkWVsRTfNggvPOav/ZG+1EbnFTc2UpmLqi2ZVKC7oNtVJbsHEm3Lwl0i/YGbwFT0hvY6OFwIcgjG2vnhEIvztlVOXQpKdCY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8s7eeRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZUcZw46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06078C4CED2;
-	Mon,  6 Jan 2025 15:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8s7eeRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12006C4CED2;
+	Mon,  6 Jan 2025 15:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177217;
-	bh=cFMS4YsS9VFrUrqF/IHS2eJ30lcVoapEY/BNVImc104=;
+	s=korg; t=1736177220;
+	bh=hYyp2d4B2fEZirBJq9/3k63YvBp9rX11359KtEVDnwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZUcZw465Hk0vALSlCf5F/hOeRg0+WmD5j9SARo0NkyIN+gjEXQUx/KhyZ4mf53ui
-	 R8c7ZSXVEMrHLw1LjWLlBOSa5u8fG8fnniobF9TrNigTePKMUlnZpsPG5TPOfE6Yns
-	 /mTIZNuIZgtUIGT/fJdLe0VlygodiDzoLfZpTySo=
+	b=p8s7eeRsBZNbLr69H5DR3ZsSLb+U4tb72iB+P5W9l8PZn143YwhqXWmnKhV/IyH18
+	 GRoY07fiFopEBc2tniZBXsJYTQzrWKcWuFPcDULA3z3o2TWYsNvJlkaslP1SndN33E
+	 eSOEjd92r92qm3I/TdMgHg8SNrgrz1mu5+JzsjrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xu Yang <xu.yang_2@nxp.com>,
 	Peter Chen <peter.chen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/222] usb: chipidea: add CI_HDRC_HAS_SHORT_PKT_LIMIT flag
-Date: Mon,  6 Jan 2025 16:14:23 +0100
-Message-ID: <20250106151152.840899080@linuxfoundation.org>
+Subject: [PATCH 6.6 060/222] usb: chipidea: udc: limit usb request length to max 16KB
+Date: Mon,  6 Jan 2025 16:14:24 +0100
+Message-ID: <20250106151152.880061902@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,86 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit ec841b8d73cff37f8960e209017efe1eb2fb21f2 ]
+[ Upstream commit ca8d18aa7b0f22d66a3ca9a90d8f73431b8eca89 ]
 
-Currently, the imx deivice controller has below limitations:
-
-1. can't generate short packet interrupt if IOC not set in dTD. So if one
-   request span more than one dTDs and only the last dTD set IOC, the usb
-   request will pending there if no more data comes.
-2. the controller can't accurately deliver data to differtent usb requests
-   in some cases due to short packet. For example: one usb request span 3
-   dTDs, then if the controller received a short packet the next packet
-   will go to 2nd dTD of current request rather than the first dTD of next
-   request.
-3. can't build a bus packet use multiple dTDs. For example: controller
-   needs to send one packet of 512 bytes use dTD1 (200 bytes) + dTD2
-   (312 bytes), actually the host side will see 200 bytes short packet.
-
-Based on these limits, add CI_HDRC_HAS_SHORT_PKT_LIMIT flag and use it on
-imx platforms.
+To let the device controller work properly on short packet limitations,
+one usb request should only correspond to one dTD. Then every dTD will
+set IOC. In theory, each dTD support up to 20KB data transfer if the
+offset is 0. Due to we cannot predetermine the offset, this will limit
+the usb request length to max 16KB. This should be fine since most of
+the user transfer data based on this size policy.
 
 Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
 Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20240923081203.2851768-1-xu.yang_2@nxp.com
+Link: https://lore.kernel.org/r/20240923081203.2851768-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci.h          | 1 +
- drivers/usb/chipidea/ci_hdrc_imx.c | 1 +
- drivers/usb/chipidea/core.c        | 2 ++
- include/linux/usb/chipidea.h       | 1 +
- 4 files changed, 5 insertions(+)
+ drivers/usb/chipidea/ci.h  | 1 +
+ drivers/usb/chipidea/udc.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/drivers/usb/chipidea/ci.h b/drivers/usb/chipidea/ci.h
-index 2a38e1eb6546..e4b003d060c2 100644
+index e4b003d060c2..97437de52ef6 100644
 --- a/drivers/usb/chipidea/ci.h
 +++ b/drivers/usb/chipidea/ci.h
-@@ -260,6 +260,7 @@ struct ci_hdrc {
- 	bool				b_sess_valid_event;
- 	bool				imx28_write_fix;
- 	bool				has_portsc_pec_bug;
-+	bool				has_short_pkt_limit;
- 	bool				supports_runtime_pm;
- 	bool				in_lpm;
- 	bool				wakeup_int;
-diff --git a/drivers/usb/chipidea/ci_hdrc_imx.c b/drivers/usb/chipidea/ci_hdrc_imx.c
-index e28bb2f2612d..477af457c1a1 100644
---- a/drivers/usb/chipidea/ci_hdrc_imx.c
-+++ b/drivers/usb/chipidea/ci_hdrc_imx.c
-@@ -334,6 +334,7 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
- 	struct ci_hdrc_platform_data pdata = {
- 		.name		= dev_name(&pdev->dev),
- 		.capoffset	= DEF_CAPOFFSET,
-+		.flags		= CI_HDRC_HAS_SHORT_PKT_LIMIT,
- 		.notify_event	= ci_hdrc_imx_notify_event,
- 	};
- 	int ret;
-diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
-index ca71df4f32e4..c161a4ee5290 100644
---- a/drivers/usb/chipidea/core.c
-+++ b/drivers/usb/chipidea/core.c
-@@ -1076,6 +1076,8 @@ static int ci_hdrc_probe(struct platform_device *pdev)
- 		CI_HDRC_SUPPORTS_RUNTIME_PM);
- 	ci->has_portsc_pec_bug = !!(ci->platdata->flags &
- 		CI_HDRC_HAS_PORTSC_PEC_MISSED);
-+	ci->has_short_pkt_limit = !!(ci->platdata->flags &
-+		CI_HDRC_HAS_SHORT_PKT_LIMIT);
- 	platform_set_drvdata(pdev, ci);
+@@ -25,6 +25,7 @@
+ #define TD_PAGE_COUNT      5
+ #define CI_HDRC_PAGE_SIZE  4096ul /* page size for TD's */
+ #define ENDPT_MAX          32
++#define CI_MAX_REQ_SIZE	(4 * CI_HDRC_PAGE_SIZE)
+ #define CI_MAX_BUF_SIZE	(TD_PAGE_COUNT * CI_HDRC_PAGE_SIZE)
  
- 	ret = hw_device_init(ci, base);
-diff --git a/include/linux/usb/chipidea.h b/include/linux/usb/chipidea.h
-index 5a7f96684ea2..ebdfef124b2b 100644
---- a/include/linux/usb/chipidea.h
-+++ b/include/linux/usb/chipidea.h
-@@ -65,6 +65,7 @@ struct ci_hdrc_platform_data {
- #define CI_HDRC_PHY_VBUS_CONTROL	BIT(16)
- #define CI_HDRC_HAS_PORTSC_PEC_MISSED	BIT(17)
- #define CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS	BIT(18)
-+#define	CI_HDRC_HAS_SHORT_PKT_LIMIT	BIT(19)
- 	enum usb_dr_mode	dr_mode;
- #define CI_HDRC_CONTROLLER_RESET_EVENT		0
- #define CI_HDRC_CONTROLLER_STOPPED_EVENT	1
+ /******************************************************************************
+diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
+index 9f7d003e467b..f2ae5f4c5828 100644
+--- a/drivers/usb/chipidea/udc.c
++++ b/drivers/usb/chipidea/udc.c
+@@ -959,6 +959,12 @@ static int _ep_queue(struct usb_ep *ep, struct usb_request *req,
+ 		return -EMSGSIZE;
+ 	}
+ 
++	if (ci->has_short_pkt_limit &&
++		hwreq->req.length > CI_MAX_REQ_SIZE) {
++		dev_err(hwep->ci->dev, "request length too big (max 16KB)\n");
++		return -EMSGSIZE;
++	}
++
+ 	/* first nuke then test link, e.g. previous status has not sent */
+ 	if (!list_empty(&hwreq->queue)) {
+ 		dev_err(hwep->ci->dev, "request already in queue\n");
 -- 
 2.39.5
 
