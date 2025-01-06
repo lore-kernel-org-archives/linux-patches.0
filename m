@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AA544C7C;
-	Mon,  6 Jan 2025 15:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A78770812;
+	Mon,  6 Jan 2025 15:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177766; cv=none; b=sd+TPOcSpw6ZHRFGh0O9zq6XxgWhkZMaQCs7HcFgdt04j/A4E46yFdaKouUT12ExBDa7FRe+NCIyuPik/JyLtT29BTgN1e0ZuFFjw2MQ/SIjW+x31CwqEGVmQ2mFBq8Pd5cITHkRbNY6E9kvEe+qpBE/sb+uVHxv4FHU3XjNEU4=
+	t=1736177769; cv=none; b=fhyz39WS07qcdglwuYYQrYdrhlTxh+MD0kUPul2IVPCJhra9o0MgXzF/DmvgR6xNZCP2xiZOKa5za+SEJ9+qkQVFb17Qr97dWiiQ7UvzqOp+5D/tgiSf9UiXqwwIakH9F9Ga0cB3SLjbzy+qUdJFcSKVqNzyj9MOGoQdhCScfuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177766; c=relaxed/simple;
-	bh=hKBBfiaqH0JOLEBiNzUNJ6z5Ju7xPeC/RBKg0wm8ljg=;
+	s=arc-20240116; t=1736177769; c=relaxed/simple;
+	bh=VAvxdR2ZRokiSExS2+EKdF0Qj5LYj2PGewqzKqO7S6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctV+lel78GNUP3MzLs0nxUi+kejRkxJAFCCE4RmgRbE8unrQBGcarpR4nYSeCdkWj8VEf0xt81QOZVPXIXL5Y9Lddyfm/KEkzT4qchqCeS6iLEQzJzw0Rxx3zhn2gBnIHdY7P9J/dOf34/mDqPDuazS7zP+++PjSqy1KAiGxLZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cw3mHqtU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hBTpkQjBTWOc/IBDVm2qH4Ojr5DIlylAXT3XpTKwnpojfIvCGMBRvxkTaBw9EckMDZUzkKRIHxAMlTZ7rEbfoUuf8igIx6s+biF61FywXMPsiDfSoI0OJ8Xk/Gr+XBOOMU5x4TntfnkynvwUNQ1dzU+dwvwoTV9DSD8fKcR0kRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oROzQmeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cw3mHqtU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED32C4CED2;
-	Mon,  6 Jan 2025 15:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oROzQmeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860E3C4CED2;
+	Mon,  6 Jan 2025 15:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177765;
-	bh=hKBBfiaqH0JOLEBiNzUNJ6z5Ju7xPeC/RBKg0wm8ljg=;
+	s=korg; t=1736177768;
+	bh=VAvxdR2ZRokiSExS2+EKdF0Qj5LYj2PGewqzKqO7S6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cw3mHqtUHMfSObAB3PHp+mnk6jXoHwHwNI0TAFSY3Fc6++CAYjfSwHXXVwtfdovkV
-	 ziHZdA9hIWq4kS7pONmsCeZiDlZGVDxC69NzItUvYHdcd09EpMTqh7mSDm872zivBH
-	 MQu5/x1TgKpoGSHIUqBPC23qgPXGhHxeo5DJr7yE=
+	b=oROzQmeY0ZMFO/IzkngVtwH89jmBqKrTJWKnsbeJ0oPqtqWqHRseKPycRJCFbgPgM
+	 nCCF8QaJokGk8dDEg4JdgzvG0k8+rHW/rY5z/VeKn9+/k5aWDPBkyn0LM+63xX12eF
+	 OJV+DhTVw3/GHKH6SJEy5xIcLJKDHsHjj/GtwBmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anumula Murali Mohan Reddy <anumula@chelsio.com>,
-	Potnuri Bharat Teja <bharat@chelsio.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?Pawe=C5=82=20Anikiel?= <panikiel@google.com>,
+	Robert Beckett <bob.beckett@collabora.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/156] RDMA/core: Fix ENODEV error for iWARP test over vlan
-Date: Mon,  6 Jan 2025 16:15:04 +0100
-Message-ID: <20250106151142.428616813@linuxfoundation.org>
+Subject: [PATCH 6.12 019/156] nvme-pci: 512 byte aligned dma pool segment quirk
+Date: Mon,  6 Jan 2025 16:15:05 +0100
+Message-ID: <20250106151142.466970740@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -46,70 +46,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Anumula Murali Mohan Reddy <anumula@chelsio.com>
+From: Robert Beckett <bob.beckett@collabora.com>
 
-[ Upstream commit a4048c83fd87c65657a4acb17d639092d4b6133d ]
+[ Upstream commit ebefac5647968679f6ef5803e5d35a71997d20fa ]
 
-If traffic is over vlan, cma_validate_port() fails to match
-net_device ifindex with bound_if_index and results in ENODEV error.
-As iWARP gid table is static, it contains entry corresponding  to
-only one net device which is either real netdev or vlan netdev for
-cases like  siw attached to a vlan interface.
-This patch fixes the issue by assigning bound_if_index with net
-device index, if real net device obtained from bound if index matches
-with net device retrieved from gid table
+We initially introduced a quick fix limiting the queue depth to 1 as
+experimentation showed that it fixed data corruption on 64GB steamdecks.
 
-Fixes: f8ef1be816bf ("RDMA/cma: Avoid GID lookups on iWARP devices")
-Link: https://lore.kernel.org/all/ZzNgdrjo1kSCGbRz@chelsio.com/
-Signed-off-by: Anumula Murali Mohan Reddy <anumula@chelsio.com>
-Signed-off-by: Potnuri Bharat Teja <bharat@chelsio.com>
-Link: https://patch.msgid.link/20241203140052.3985-1-anumula@chelsio.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Further experimentation revealed corruption only happens when the last
+PRP data element aligns to the end of the page boundary. The device
+appears to treat this as a PRP chain to a new list instead of the data
+element that it actually is. This implementation is in violation of the
+spec. Encountering this errata with the Linux driver requires the host
+request a 128k transfer and coincidently be handed the last small pool
+dma buffer within a page.
+
+The QD1 quirk effectly works around this because the last data PRP
+always was at a 248 byte offset from the page start, so it never
+appeared at the end of the page, but comes at the expense of throttling
+IO and wasting the remainder of the PRP page beyond 256 bytes. Also to
+note, the MDTS on these devices is small enough that the "large" prp
+pool can hold enough PRP elements to never reach the end, so that pool
+is not a problem either.
+
+Introduce a new quirk to ensure the small pool is always aligned such
+that the last PRP element can't appear a the end of the page. This comes
+at the expense of wasting 256 bytes per small pool page allocated.
+
+Link: https://lore.kernel.org/linux-nvme/20241113043151.GA20077@lst.de/T/#u
+Fixes: 83bdfcbdbe5d ("nvme-pci: qdepth 1 quirk")
+Cc: Paweł Anikiel <panikiel@google.com>
+Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cma.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/nvme/host/nvme.h | 5 +++++
+ drivers/nvme/host/pci.c  | 9 +++++++--
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/cma.c b/drivers/infiniband/core/cma.c
-index 64ace0b968f0..91db10515d74 100644
---- a/drivers/infiniband/core/cma.c
-+++ b/drivers/infiniband/core/cma.c
-@@ -690,6 +690,7 @@ cma_validate_port(struct ib_device *device, u32 port,
- 	int bound_if_index = dev_addr->bound_dev_if;
- 	int dev_type = dev_addr->dev_type;
- 	struct net_device *ndev = NULL;
-+	struct net_device *pdev = NULL;
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 093cb423f536..61bba5513de0 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -173,6 +173,11 @@ enum nvme_quirks {
+ 	 * MSI (but not MSI-X) interrupts are broken and never fire.
+ 	 */
+ 	NVME_QUIRK_BROKEN_MSI			= (1 << 21),
++
++	/*
++	 * Align dma pool segment size to 512 bytes
++	 */
++	NVME_QUIRK_DMAPOOL_ALIGN_512		= (1 << 22),
+ };
  
- 	if (!rdma_dev_access_netns(device, id_priv->id.route.addr.dev_addr.net))
- 		goto out;
-@@ -714,6 +715,21 @@ cma_validate_port(struct ib_device *device, u32 port,
+ /*
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 55af3dfbc260..76b3f7b396c8 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2690,15 +2690,20 @@ static int nvme_disable_prepare_reset(struct nvme_dev *dev, bool shutdown)
  
- 		rcu_read_lock();
- 		ndev = rcu_dereference(sgid_attr->ndev);
-+		if (ndev->ifindex != bound_if_index) {
-+			pdev = dev_get_by_index_rcu(dev_addr->net, bound_if_index);
-+			if (pdev) {
-+				if (is_vlan_dev(pdev)) {
-+					pdev = vlan_dev_real_dev(pdev);
-+					if (ndev->ifindex == pdev->ifindex)
-+						bound_if_index = pdev->ifindex;
-+				}
-+				if (is_vlan_dev(ndev)) {
-+					pdev = vlan_dev_real_dev(ndev);
-+					if (bound_if_index == pdev->ifindex)
-+						bound_if_index = ndev->ifindex;
-+				}
-+			}
-+		}
- 		if (!net_eq(dev_net(ndev), dev_addr->net) ||
- 		    ndev->ifindex != bound_if_index) {
- 			rdma_put_gid_attr(sgid_attr);
+ static int nvme_setup_prp_pools(struct nvme_dev *dev)
+ {
++	size_t small_align = 256;
++
+ 	dev->prp_page_pool = dma_pool_create("prp list page", dev->dev,
+ 						NVME_CTRL_PAGE_SIZE,
+ 						NVME_CTRL_PAGE_SIZE, 0);
+ 	if (!dev->prp_page_pool)
+ 		return -ENOMEM;
+ 
++	if (dev->ctrl.quirks & NVME_QUIRK_DMAPOOL_ALIGN_512)
++		small_align = 512;
++
+ 	/* Optimisation for I/Os between 4k and 128k */
+ 	dev->prp_small_pool = dma_pool_create("prp list 256", dev->dev,
+-						256, 256, 0);
++						256, small_align, 0);
+ 	if (!dev->prp_small_pool) {
+ 		dma_pool_destroy(dev->prp_page_pool);
+ 		return -ENOMEM;
+@@ -3446,7 +3451,7 @@ static const struct pci_device_id nvme_id_table[] = {
+ 	{ PCI_VDEVICE(REDHAT, 0x0010),	/* Qemu emulated controller */
+ 		.driver_data = NVME_QUIRK_BOGUS_NID, },
+ 	{ PCI_DEVICE(0x1217, 0x8760), /* O2 Micro 64GB Steam Deck */
+-		.driver_data = NVME_QUIRK_QDEPTH_ONE },
++		.driver_data = NVME_QUIRK_DMAPOOL_ALIGN_512, },
+ 	{ PCI_DEVICE(0x126f, 0x2262),	/* Silicon Motion generic */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS |
+ 				NVME_QUIRK_BOGUS_NID, },
 -- 
 2.39.5
 
