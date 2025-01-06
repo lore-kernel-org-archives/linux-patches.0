@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164851DE2A5;
-	Mon,  6 Jan 2025 15:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BBA1DC9BF;
+	Mon,  6 Jan 2025 15:24:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177051; cv=none; b=dKCegwo9qtM3m86Q75kOaTZroHl8wXNncxY3nNyTGGzAY41gpvFC6hlZhylsO8NUgjawYFwBI1vs5cI8WuvQ1G4H/WGn3f7MOOgLWlSP56G8WdYoOd36udOccKCuQnQyc8kWOfAt93PnVWEMXdOjKSx/JKwiNchIAJ+SGmpQ0es=
+	t=1736177055; cv=none; b=klEnlnF7lJFOCBYs8e/GPgLjutFYYbrU8RX1nkasJTUaoo4UgaMOvZpEL/nRE66n7MAEXchBAc57YYO2nqdrPN1fqIZiopkd3VH0LnTvYBpnSpy8do7DaJLaeQFUJC2bJa8ojdhv0Wnl1ruT9RSueTHK8mfeOj1DXrTQJ/Hpk4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177051; c=relaxed/simple;
-	bh=QrHWHA5fNBAYOXMb3lYQW93mxFo1Rl08t84fs4Ud32g=;
+	s=arc-20240116; t=1736177055; c=relaxed/simple;
+	bh=j0atqRUxZLv7XrsOm0yu/4Kv1nEZYwMh/HXmJg7ivt4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MdvY6Vi5E67kdIfoTvqPOPQFr1L5tr0nHNUmRBpKdmfkmkcJERqwt8H9Apk5WcEa581hTZJrXnsvqQi2rhIzu0tMV1dKUeCPb2/4nid4GEl3aJosYmDDRV1EWIttvqdsqShK0/UnidtaeGkGU2KRAe0SwQf/xG1n3+9vsZ2JAkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtBh8mRC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GSGtLSdNkLVnTWIxH+Bcnv3l0j3ud8F90yBIH5MZvYwWyKiHp3yMLnA9OoT+Kk8mSpA5zZqAAR0rcAX/wg8htW1IK7hlYtEu74PbIQbNsGIyTt6bcpIA+sZ+tyZc/cLAbnNtkiX1JgbUQPbwnxwkpgw8YaVJqimyu//ksL/U/Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQaYu2Sm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtBh8mRC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B971C4CEE1;
-	Mon,  6 Jan 2025 15:24:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQaYu2Sm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94551C4CED2;
+	Mon,  6 Jan 2025 15:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177051;
-	bh=QrHWHA5fNBAYOXMb3lYQW93mxFo1Rl08t84fs4Ud32g=;
+	s=korg; t=1736177054;
+	bh=j0atqRUxZLv7XrsOm0yu/4Kv1nEZYwMh/HXmJg7ivt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtBh8mRC207ReG6v8zMJuZMaSjTjmVHkIJsJn5HC95JbGEqfp/hgtK5baCSdairxp
-	 r8+uda+S/TB74gS2N5V6V4n+I6/fLG8iaKAgZbKt+JXd1E9EM1Jcm2X555bQXSJJR0
-	 WhN+Uhu03rfruKEKEfbyWaRAjhp6CFQQ9fKOHMlU=
+	b=IQaYu2SmUyxGeb9VWwyRg48A9q/jzrUq48RJxiyhcCQIdVbWohzlkJxNCszSCkd7J
+	 TOISxATYj6acAFq2CbC5blGZhby4fjjz+lKMcG2JNpFV9fjqTdmm/tzuCWkYW2BSFF
+	 EfskX67IybGCU6WvCAO0OaUmjFTQsHIcJ+zHHZik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	David Ruth <druth@chromium.org>,
 	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/222] wifi: ath10k: Update Qualcomm Innovation Center, Inc. copyrights
-Date: Mon,  6 Jan 2025 16:13:59 +0100
-Message-ID: <20250106151151.932150585@linuxfoundation.org>
+Subject: [PATCH 6.6 036/222] wifi: ath10k: avoid NULL pointer error during sdio remove
+Date: Mon,  6 Jan 2025 16:14:00 +0100
+Message-ID: <20250106151151.969527100@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -45,391 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Kang Yang <quic_kangyang@quicinc.com>
 
-[ Upstream commit b1dc0ba41431147e55407140962c76f3e7a06753 ]
+[ Upstream commit 95c38953cb1ecf40399a676a1f85dfe2b5780a9a ]
 
-Update the copyright for all ath10k files modified on behalf of
-Qualcomm Innovation Center, Inc. in 2021 through 2023.
+When running 'rmmod ath10k', ath10k_sdio_remove() will free sdio
+workqueue by destroy_workqueue(). But if CONFIG_INIT_ON_FREE_DEFAULT_ON
+is set to yes, kernel panic will happen:
+Call trace:
+ destroy_workqueue+0x1c/0x258
+ ath10k_sdio_remove+0x84/0x94
+ sdio_bus_remove+0x50/0x16c
+ device_release_driver_internal+0x188/0x25c
+ device_driver_detach+0x20/0x2c
 
+This is because during 'rmmod ath10k', ath10k_sdio_remove() will call
+ath10k_core_destroy() before destroy_workqueue(). wiphy_dev_release()
+will finally be called in ath10k_core_destroy(). This function will free
+struct cfg80211_registered_device *rdev and all its members, including
+wiphy, dev and the pointer of sdio workqueue. Then the pointer of sdio
+workqueue will be set to NULL due to CONFIG_INIT_ON_FREE_DEFAULT_ON.
+
+After device release, destroy_workqueue() will use NULL pointer then the
+kernel panic happen.
+
+Call trace:
+ath10k_sdio_remove
+  ->ath10k_core_unregister
+    ……
+    ->ath10k_core_stop
+      ->ath10k_hif_stop
+        ->ath10k_sdio_irq_disable
+    ->ath10k_hif_power_down
+      ->del_timer_sync(&ar_sdio->sleep_timer)
+  ->ath10k_core_destroy
+    ->ath10k_mac_destroy
+      ->ieee80211_free_hw
+        ->wiphy_free
+    ……
+          ->wiphy_dev_release
+  ->destroy_workqueue
+
+Need to call destroy_workqueue() before ath10k_core_destroy(), free
+the work queue buffer first and then free pointer of work queue by
+ath10k_core_destroy(). This order matches the error path order in
+ath10k_sdio_probe().
+
+No work will be queued on sdio workqueue between it is destroyed and
+ath10k_core_destroy() is called. Based on the call_stack above, the
+reason is:
+Only ath10k_sdio_sleep_timer_handler(), ath10k_sdio_hif_tx_sg() and
+ath10k_sdio_irq_disable() will queue work on sdio workqueue.
+Sleep timer will be deleted before ath10k_core_destroy() in
+ath10k_hif_power_down().
+ath10k_sdio_irq_disable() only be called in ath10k_hif_stop().
+ath10k_core_unregister() will call ath10k_hif_power_down() to stop hif
+bus, so ath10k_sdio_hif_tx_sg() won't be called anymore.
+
+Tested-on: QCA6174 hw3.2 SDIO WLAN.RMH.4.4.1-00189
+
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Tested-by: David Ruth <druth@chromium.org>
+Reviewed-by: David Ruth <druth@chromium.org>
+Link: https://patch.msgid.link/20241008022246.1010-1-quic_kangyang@quicinc.com
 Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20231128-ath12kcopyrights-v1-3-be0b7408cbac@quicinc.com
-Stable-dep-of: 95c38953cb1e ("wifi: ath10k: avoid NULL pointer error during sdio remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/bmi.c          | 1 +
- drivers/net/wireless/ath/ath10k/ce.c           | 1 +
- drivers/net/wireless/ath/ath10k/core.c         | 1 +
- drivers/net/wireless/ath/ath10k/core.h         | 1 +
- drivers/net/wireless/ath/ath10k/coredump.c     | 1 +
- drivers/net/wireless/ath/ath10k/coredump.h     | 1 +
- drivers/net/wireless/ath/ath10k/debug.c        | 1 +
- drivers/net/wireless/ath/ath10k/debugfs_sta.c  | 1 +
- drivers/net/wireless/ath/ath10k/htc.c          | 1 +
- drivers/net/wireless/ath/ath10k/htt.h          | 1 +
- drivers/net/wireless/ath/ath10k/htt_rx.c       | 1 +
- drivers/net/wireless/ath/ath10k/htt_tx.c       | 1 +
- drivers/net/wireless/ath/ath10k/hw.c           | 1 +
- drivers/net/wireless/ath/ath10k/hw.h           | 1 +
- drivers/net/wireless/ath/ath10k/mac.c          | 1 +
- drivers/net/wireless/ath/ath10k/pci.c          | 1 +
- drivers/net/wireless/ath/ath10k/pci.h          | 1 +
- drivers/net/wireless/ath/ath10k/qmi.c          | 1 +
- drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.c | 1 +
- drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.h | 1 +
- drivers/net/wireless/ath/ath10k/rx_desc.h      | 1 +
- drivers/net/wireless/ath/ath10k/sdio.c         | 1 +
- drivers/net/wireless/ath/ath10k/thermal.c      | 1 +
- drivers/net/wireless/ath/ath10k/usb.h          | 1 +
- drivers/net/wireless/ath/ath10k/wmi-tlv.h      | 1 +
- drivers/net/wireless/ath/ath10k/wmi.c          | 1 +
- drivers/net/wireless/ath/ath10k/wmi.h          | 1 +
- drivers/net/wireless/ath/ath10k/wow.c          | 1 +
- 28 files changed, 28 insertions(+)
+ drivers/net/wireless/ath/ath10k/sdio.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/bmi.c b/drivers/net/wireless/ath/ath10k/bmi.c
-index af6546572df2..9a4f8e815412 100644
---- a/drivers/net/wireless/ath/ath10k/bmi.c
-+++ b/drivers/net/wireless/ath/ath10k/bmi.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2014,2016-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "bmi.h"
-diff --git a/drivers/net/wireless/ath/ath10k/ce.c b/drivers/net/wireless/ath/ath10k/ce.c
-index c27b8204718a..afae4a8027f8 100644
---- a/drivers/net/wireless/ath/ath10k/ce.c
-+++ b/drivers/net/wireless/ath/ath10k/ce.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "hif.h"
-diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
-index 81058be3598f..c3a8b3496be2 100644
---- a/drivers/net/wireless/ath/ath10k/core.c
-+++ b/drivers/net/wireless/ath/ath10k/core.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/module.h>
-diff --git a/drivers/net/wireless/ath/ath10k/core.h b/drivers/net/wireless/ath/ath10k/core.h
-index 4b5239de4018..cb2359d2ee0b 100644
---- a/drivers/net/wireless/ath/ath10k/core.h
-+++ b/drivers/net/wireless/ath/ath10k/core.h
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _CORE_H_
-diff --git a/drivers/net/wireless/ath/ath10k/coredump.c b/drivers/net/wireless/ath/ath10k/coredump.c
-index 2d1634a890dd..bb3a276b7ed5 100644
---- a/drivers/net/wireless/ath/ath10k/coredump.c
-+++ b/drivers/net/wireless/ath/ath10k/coredump.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "coredump.h"
-diff --git a/drivers/net/wireless/ath/ath10k/coredump.h b/drivers/net/wireless/ath/ath10k/coredump.h
-index 437b9759f05d..e5ef0352e319 100644
---- a/drivers/net/wireless/ath/ath10k/coredump.h
-+++ b/drivers/net/wireless/ath/ath10k/coredump.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: ISC */
- /*
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _COREDUMP_H_
-diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
-index fe89bc61e531..92ad0a04bcc7 100644
---- a/drivers/net/wireless/ath/ath10k/debug.c
-+++ b/drivers/net/wireless/ath/ath10k/debug.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/module.h>
-diff --git a/drivers/net/wireless/ath/ath10k/debugfs_sta.c b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-index 5598cf706daa..0f6de862c3a9 100644
---- a/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-+++ b/drivers/net/wireless/ath/ath10k/debugfs_sta.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2014-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "core.h"
-diff --git a/drivers/net/wireless/ath/ath10k/htc.c b/drivers/net/wireless/ath/ath10k/htc.c
-index 5bfeecb95fca..a6e21ce90bad 100644
---- a/drivers/net/wireless/ath/ath10k/htc.c
-+++ b/drivers/net/wireless/ath/ath10k/htc.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "core.h"
-diff --git a/drivers/net/wireless/ath/ath10k/htt.h b/drivers/net/wireless/ath/ath10k/htt.h
-index 7b24297146e7..52f6dc6b81c5 100644
---- a/drivers/net/wireless/ath/ath10k/htt.h
-+++ b/drivers/net/wireless/ath/ath10k/htt.h
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021, 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _HTT_H_
-diff --git a/drivers/net/wireless/ath/ath10k/htt_rx.c b/drivers/net/wireless/ath/ath10k/htt_rx.c
-index 438b0caaceb7..51855f23ea26 100644
---- a/drivers/net/wireless/ath/ath10k/htt_rx.c
-+++ b/drivers/net/wireless/ath/ath10k/htt_rx.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "core.h"
-diff --git a/drivers/net/wireless/ath/ath10k/htt_tx.c b/drivers/net/wireless/ath/ath10k/htt_tx.c
-index bd603feb7953..60425d22d707 100644
---- a/drivers/net/wireless/ath/ath10k/htt_tx.c
-+++ b/drivers/net/wireless/ath/ath10k/htt_tx.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/etherdevice.h>
-diff --git a/drivers/net/wireless/ath/ath10k/hw.c b/drivers/net/wireless/ath/ath10k/hw.c
-index 6d32b43a4da6..8fafe096adff 100644
---- a/drivers/net/wireless/ath/ath10k/hw.c
-+++ b/drivers/net/wireless/ath/ath10k/hw.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: ISC
- /*
-  * Copyright (c) 2014-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/types.h>
-diff --git a/drivers/net/wireless/ath/ath10k/hw.h b/drivers/net/wireless/ath/ath10k/hw.h
-index 7ecdd0011cfa..afd336282615 100644
---- a/drivers/net/wireless/ath/ath10k/hw.h
-+++ b/drivers/net/wireless/ath/ath10k/hw.h
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _HW_H_
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index d5e6e11f630b..655fb5cdf01f 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "mac.h"
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index 23f366221939..aaa240f3c08a 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/pci.h>
-diff --git a/drivers/net/wireless/ath/ath10k/pci.h b/drivers/net/wireless/ath/ath10k/pci.h
-index 480cd97ab739..27bb4cf2dfea 100644
---- a/drivers/net/wireless/ath/ath10k/pci.h
-+++ b/drivers/net/wireless/ath/ath10k/pci.h
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _PCI_H_
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index 52c1a3de8da6..38e939f572a9 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: ISC
- /*
-  * Copyright (c) 2018 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/completion.h>
-diff --git a/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.c b/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.c
-index 1c81e454f943..0e85c75d2278 100644
---- a/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: ISC
- /*
-  * Copyright (c) 2018 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/soc/qcom/qmi.h>
-diff --git a/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.h b/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.h
-index f0db991408dc..9f311f3bc9e7 100644
---- a/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.h
-+++ b/drivers/net/wireless/ath/ath10k/qmi_wlfw_v01.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: ISC */
- /*
-  * Copyright (c) 2018 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef WCN3990_QMI_SVC_V01_H
-diff --git a/drivers/net/wireless/ath/ath10k/rx_desc.h b/drivers/net/wireless/ath/ath10k/rx_desc.h
-index 777e53aa69dc..564293df1e9a 100644
---- a/drivers/net/wireless/ath/ath10k/rx_desc.h
-+++ b/drivers/net/wireless/ath/ath10k/rx_desc.h
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _RX_DESC_H_
 diff --git a/drivers/net/wireless/ath/ath10k/sdio.c b/drivers/net/wireless/ath/ath10k/sdio.c
-index 56fbcfb80bf8..0ab5433f6cf6 100644
+index 0ab5433f6cf6..850d999615a2 100644
 --- a/drivers/net/wireless/ath/ath10k/sdio.c
 +++ b/drivers/net/wireless/ath/ath10k/sdio.c
-@@ -3,6 +3,7 @@
+@@ -3,7 +3,7 @@
   * Copyright (c) 2004-2011 Atheros Communications Inc.
   * Copyright (c) 2011-2012,2017 Qualcomm Atheros, Inc.
   * Copyright (c) 2016-2017 Erik Stromdahl <erik.stromdahl@gmail.com>
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+- * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
   */
  
  #include <linux/module.h>
-diff --git a/drivers/net/wireless/ath/ath10k/thermal.c b/drivers/net/wireless/ath/ath10k/thermal.c
-index cefd97323dfe..31c8d7fbb095 100644
---- a/drivers/net/wireless/ath/ath10k/thermal.c
-+++ b/drivers/net/wireless/ath/ath10k/thermal.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: ISC
- /*
-  * Copyright (c) 2014-2015 Qualcomm Atheros, Inc.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+@@ -2648,9 +2648,9 @@ static void ath10k_sdio_remove(struct sdio_func *func)
  
- #include <linux/device.h>
-diff --git a/drivers/net/wireless/ath/ath10k/usb.h b/drivers/net/wireless/ath/ath10k/usb.h
-index 48e066ba8162..7e4cfbb673c9 100644
---- a/drivers/net/wireless/ath/ath10k/usb.h
-+++ b/drivers/net/wireless/ath/ath10k/usb.h
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2004-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2012 Qualcomm Atheros, Inc.
-  * Copyright (c) 2016-2017 Erik Stromdahl <erik.stromdahl@gmail.com>
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+ 	netif_napi_del(&ar->napi);
  
- #ifndef _USB_H_
-diff --git a/drivers/net/wireless/ath/ath10k/wmi-tlv.h b/drivers/net/wireless/ath/ath10k/wmi-tlv.h
-index dbb48d70f2e9..83a8f07a687f 100644
---- a/drivers/net/wireless/ath/ath10k/wmi-tlv.h
-+++ b/drivers/net/wireless/ath/ath10k/wmi-tlv.h
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #ifndef _WMI_TLV_H
- #define _WMI_TLV_H
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
-index 1c21dbde77b8..818aea99f85e 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.c
-+++ b/drivers/net/wireless/ath/ath10k/wmi.c
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+-	ath10k_core_destroy(ar);
+-
+ 	destroy_workqueue(ar_sdio->workqueue);
++
++	ath10k_core_destroy(ar);
+ }
  
- #include <linux/skbuff.h>
-diff --git a/drivers/net/wireless/ath/ath10k/wmi.h b/drivers/net/wireless/ath/ath10k/wmi.h
-index b112e8826093..9146df98fcee 100644
---- a/drivers/net/wireless/ath/ath10k/wmi.h
-+++ b/drivers/net/wireless/ath/ath10k/wmi.h
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2005-2011 Atheros Communications Inc.
-  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2021-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef _WMI_H_
-diff --git a/drivers/net/wireless/ath/ath10k/wow.c b/drivers/net/wireless/ath/ath10k/wow.c
-index 20b9aa8ddf7d..aa7b2e703f3d 100644
---- a/drivers/net/wireless/ath/ath10k/wow.c
-+++ b/drivers/net/wireless/ath/ath10k/wow.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2015-2017 Qualcomm Atheros, Inc.
-  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include "mac.h"
+ static const struct sdio_device_id ath10k_sdio_devices[] = {
 -- 
 2.39.5
 
