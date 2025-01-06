@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9E01547E3;
-	Mon,  6 Jan 2025 15:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A45214900B;
+	Mon,  6 Jan 2025 15:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177166; cv=none; b=XvjSVBBIcenlxDq4GSZW0//SBYdirNV9iTP66ITcgXyG4bW3SKwF76XoXoe9Vc7+jzhuSGGsiQw1peFJBbQHAdkr4TFl0/8VbSNS6kzFwwgiI9OfPb4rkwI6VUEpwsDQfHfWoxNAEelcmMl8NXq8fQOrBrr9UPUWVVylqORgrfk=
+	t=1736177169; cv=none; b=X2kt+PaiR2dOLJ9dmbcYyzlTNc76Lb4NL9T9W1Vrpx5I/q4xd1kfLQETPUWZ8bpVd6MVZUfwxT2wQL1UDrH0O/L4/7ttrVgPMX1opF+DwVQWKMyMRQu6+ocoXsQ/vMcFzyktn9jyLkwzgYBldGj1ZESOK/aAvPDJ4GVH28LxZgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177166; c=relaxed/simple;
-	bh=DblYd0bmTDegiBnBdwHK92hKrxCuQX7PKI/561KBsrQ=;
+	s=arc-20240116; t=1736177169; c=relaxed/simple;
+	bh=sGTfLAdONMXLBSf6ftzd2pcubJimg3bEJ36rjhZ8LwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxgqrwl5/mwLeiyzKVwhmFg2Wr6PKBFlzw8W2pPB2AtRf7+0J9KB6TPZPh3GnQsuCv54adZKrYjjq9inOGR9V1SyNqNX3allXMJzmMDyk2L+eHs5t8e76kW5Vz44lh/WwPfTlqqDXiq0ouUQaepL8gGAJ7uiKbxfZyWedjF6IMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k+T6n6/H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amj1fn4TFp0uYlcwTLsXKgkwWyKE1EX2/9bFX+PVvwbRBvOtMq8EzCSX6Fk2qRmvx5b0bkJgFLWElbht8vOhsFNz/CHsJ3CELUXdg+wdJ1il6VijG9TI7LWgHf67pxH0BeHWLtZYegS56N8x+zZuwJv7TKiqnRYKXWdt09/eNfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lw03yq2b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k+T6n6/H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D1CC4CED2;
-	Mon,  6 Jan 2025 15:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lw03yq2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7875C4CED2;
+	Mon,  6 Jan 2025 15:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177166;
-	bh=DblYd0bmTDegiBnBdwHK92hKrxCuQX7PKI/561KBsrQ=;
+	s=korg; t=1736177169;
+	bh=sGTfLAdONMXLBSf6ftzd2pcubJimg3bEJ36rjhZ8LwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k+T6n6/HM9YKtvKB0vrCqIl/1alUdXXuvW9l51EILPP0kdFXScKYkDSX5pAQ6pui9
-	 TUkOJrcYp9w+Pj9yE7jFCHYMefCMaBY1YNlcDcKbBAjqAR1THUz/kF9gXNDDZugC5y
-	 Mk4/O1NdKck7hyEHrRMzdrHqzZTWx2juBtSovOeE=
+	b=Lw03yq2bSEcAejTpB2OUPiy0dIBJT/29gUGVFpLk0uO9Qhzt9qblAWbK3Z7wdwgTV
+	 6WONtNY2pV8w7LnPN+VN1wLzJXyWb57oiw4M+t7hYbXKEJt428AoyTs4C2izWGV6OU
+	 HZRLq0roCIT+A17SKNqmvQqS7s+BvaeWprbEMQCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	syzbot+1c25748a40fe79b8a119@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/222] usb: xhci: Limit Stop Endpoint retries
-Date: Mon,  6 Jan 2025 16:14:38 +0100
-Message-ID: <20250106151153.406648053@linuxfoundation.org>
+Subject: [PATCH 6.6 057/222] fs/ntfs3: Fix warning in ni_fiemap
+Date: Mon,  6 Jan 2025 16:14:21 +0100
+Message-ID: <20250106151152.766154473@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,147 +51,291 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 42b7581376015c1bbcbe5831f043cd0ac119d028 ]
+[ Upstream commit e2705dd3d16d1000f1fd8193d82447065de8c899 ]
 
-Some host controllers fail to atomically transition an endpoint to the
-Running state on a doorbell ring and enter a hidden "Restarting" state,
-which looks very much like Stopped, with the important difference that
-it will spontaneously transition to Running anytime soon.
+Use local runs_tree instead of cached. This way excludes rw_semaphore lock.
 
-A Stop Endpoint command queued in the Restarting state typically fails
-with Context State Error and the completion handler sees the Endpoint
-Context State as either still Stopped or already Running. Even a case
-of Halted was observed, when an error occurred right after the restart.
-
-The Halted state is already recovered from by resetting the endpoint.
-The Running state is handled by retrying Stop Endpoint.
-
-The Stopped state was recognized as a problem on NEC controllers and
-worked around also by retrying, because the endpoint soon restarts and
-then stops for good. But there is a risk: the command may fail if the
-endpoint is "stopped for good" already, and retries will fail forever.
-
-The possibility of this was not realized at the time, but a number of
-cases were discovered later and reproduced. Some proved difficult to
-deal with, and it is outright impossible to predict if an endpoint may
-fail to ever start at all due to a hardware bug. One such bug (albeit
-on ASM3142, not on NEC) was found to be reliably triggered simply by
-toggling an AX88179 NIC up/down in a tight loop for a few seconds.
-
-An endless retries storm is quite nasty. Besides putting needless load
-on the xHC and CPU, it causes URBs never to be given back, paralyzing
-the device and connection/disconnection logic for the whole bus if the
-device is unplugged. User processes waiting for URBs become unkillable,
-drivers and kworker threads lock up and xhci_hcd cannot be reloaded.
-
-For peace of mind, impose a timeout on Stop Endpoint retries in this
-case. If they don't succeed in 100ms, consider the endpoint stopped
-permanently for some reason and just give back the unlinked URBs. This
-failure case is rare already and work is under way to make it rarer.
-
-Start this work today by also handling one simple case of race with
-Reset Endpoint, because it costs just two lines to implement.
-
-Fixes: fd9d55d190c0 ("xhci: retry Stop Endpoint on buggy NEC controllers")
-CC: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20241106101459.775897-32-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: e21ebe51af68 ("xhci: Turn NEC specific quirk for handling Stop Endpoint errors generic")
+Reported-by: syzbot+1c25748a40fe79b8a119@syzkaller.appspotmail.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 28 ++++++++++++++++++++++++----
- drivers/usb/host/xhci.c      |  2 ++
- drivers/usb/host/xhci.h      |  1 +
- 3 files changed, 27 insertions(+), 4 deletions(-)
+ fs/ntfs3/attrib.c  |   9 ++--
+ fs/ntfs3/frecord.c | 103 +++++++--------------------------------------
+ fs/ntfs3/ntfs_fs.h |   3 +-
+ 3 files changed, 21 insertions(+), 94 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 7c3e39482834..d318310e3135 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -52,6 +52,7 @@
-  *   endpoint rings; it generates events on the event ring for these.
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 582628b9b796..e25989dd2c6b 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -978,7 +978,7 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
+ 
+ 	/* Check for compressed frame. */
+ 	err = attr_is_frame_compressed(ni, attr_b, vcn >> NTFS_LZNT_CUNIT,
+-				       &hint);
++				       &hint, run);
+ 	if (err)
+ 		goto out;
+ 
+@@ -1534,16 +1534,16 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+  * attr_is_frame_compressed - Used to detect compressed frame.
+  *
+  * attr - base (primary) attribute segment.
++ * run  - run to use, usually == &ni->file.run.
+  * Only base segments contains valid 'attr->nres.c_unit'
   */
+ int attr_is_frame_compressed(struct ntfs_inode *ni, struct ATTRIB *attr,
+-			     CLST frame, CLST *clst_data)
++			     CLST frame, CLST *clst_data, struct runs_tree *run)
+ {
+ 	int err;
+ 	u32 clst_frame;
+ 	CLST clen, lcn, vcn, alen, slen, vcn_next;
+ 	size_t idx;
+-	struct runs_tree *run;
  
-+#include <linux/jiffies.h>
- #include <linux/scatterlist.h>
- #include <linux/slab.h>
- #include <linux/dma-mapping.h>
-@@ -1182,16 +1183,35 @@ static void xhci_handle_cmd_stop_ep(struct xhci_hcd *xhci, int slot_id,
- 			return;
- 		case EP_STATE_STOPPED:
- 			/*
--			 * NEC uPD720200 sometimes sets this state and fails with
--			 * Context Error while continuing to process TRBs.
--			 * Be conservative and trust EP_CTX_STATE on other chips.
-+			 * Per xHCI 4.6.9, Stop Endpoint command on a Stopped
-+			 * EP is a Context State Error, and EP stays Stopped.
-+			 *
-+			 * But maybe it failed on Halted, and somebody ran Reset
-+			 * Endpoint later. EP state is now Stopped and EP_HALTED
-+			 * still set because Reset EP handler will run after us.
-+			 */
-+			if (ep->ep_state & EP_HALTED)
-+				break;
-+			/*
-+			 * On some HCs EP state remains Stopped for some tens of
-+			 * us to a few ms or more after a doorbell ring, and any
-+			 * new Stop Endpoint fails without aborting the restart.
-+			 * This handler may run quickly enough to still see this
-+			 * Stopped state, but it will soon change to Running.
-+			 *
-+			 * Assume this bug on unexpected Stop Endpoint failures.
-+			 * Keep retrying until the EP starts and stops again, on
-+			 * chips where this is known to help. Wait for 100ms.
- 			 */
- 			if (!(xhci->quirks & XHCI_NEC_HOST))
- 				break;
-+			if (time_is_before_jiffies(ep->stop_time + msecs_to_jiffies(100)))
-+				break;
- 			fallthrough;
- 		case EP_STATE_RUNNING:
- 			/* Race, HW handled stop ep cmd before ep was running */
--			xhci_dbg(xhci, "Stop ep completion ctx error, ep is running\n");
-+			xhci_dbg(xhci, "Stop ep completion ctx error, ctx_state %d\n",
-+					GET_EP_CTX_STATE(ep_ctx));
+ 	*clst_data = 0;
  
- 			command = xhci_alloc_command(xhci, false, GFP_ATOMIC);
- 			if (!command) {
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 3bd70e6ad64b..0b3688478ed3 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -8,6 +8,7 @@
-  * Some code borrowed from the Linux EHCI driver.
-  */
+@@ -1555,7 +1555,6 @@ int attr_is_frame_compressed(struct ntfs_inode *ni, struct ATTRIB *attr,
  
-+#include <linux/jiffies.h>
- #include <linux/pci.h>
- #include <linux/iommu.h>
- #include <linux/iopoll.h>
-@@ -1746,6 +1747,7 @@ static int xhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
- 			ret = -ENOMEM;
- 			goto done;
+ 	clst_frame = 1u << attr->nres.c_unit;
+ 	vcn = frame * clst_frame;
+-	run = &ni->file.run;
+ 
+ 	if (!run_lookup_entry(run, vcn, &lcn, &clen, &idx)) {
+ 		err = attr_load_runs_vcn(ni, attr->type, attr_name(attr),
+@@ -1691,7 +1690,7 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
+ 	if (err)
+ 		goto out;
+ 
+-	err = attr_is_frame_compressed(ni, attr_b, frame, &clst_data);
++	err = attr_is_frame_compressed(ni, attr_b, frame, &clst_data, run);
+ 	if (err)
+ 		goto out;
+ 
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 12e03feb3074..3c876c468c2c 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1900,46 +1900,6 @@ enum REPARSE_SIGN ni_parse_reparse(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	return REPARSE_LINK;
+ }
+ 
+-/*
+- * fiemap_fill_next_extent_k - a copy of fiemap_fill_next_extent
+- * but it uses 'fe_k' instead of fieinfo->fi_extents_start
+- */
+-static int fiemap_fill_next_extent_k(struct fiemap_extent_info *fieinfo,
+-				     struct fiemap_extent *fe_k, u64 logical,
+-				     u64 phys, u64 len, u32 flags)
+-{
+-	struct fiemap_extent extent;
+-
+-	/* only count the extents */
+-	if (fieinfo->fi_extents_max == 0) {
+-		fieinfo->fi_extents_mapped++;
+-		return (flags & FIEMAP_EXTENT_LAST) ? 1 : 0;
+-	}
+-
+-	if (fieinfo->fi_extents_mapped >= fieinfo->fi_extents_max)
+-		return 1;
+-
+-	if (flags & FIEMAP_EXTENT_DELALLOC)
+-		flags |= FIEMAP_EXTENT_UNKNOWN;
+-	if (flags & FIEMAP_EXTENT_DATA_ENCRYPTED)
+-		flags |= FIEMAP_EXTENT_ENCODED;
+-	if (flags & (FIEMAP_EXTENT_DATA_TAIL | FIEMAP_EXTENT_DATA_INLINE))
+-		flags |= FIEMAP_EXTENT_NOT_ALIGNED;
+-
+-	memset(&extent, 0, sizeof(extent));
+-	extent.fe_logical = logical;
+-	extent.fe_physical = phys;
+-	extent.fe_length = len;
+-	extent.fe_flags = flags;
+-
+-	memcpy(fe_k + fieinfo->fi_extents_mapped, &extent, sizeof(extent));
+-
+-	fieinfo->fi_extents_mapped++;
+-	if (fieinfo->fi_extents_mapped == fieinfo->fi_extents_max)
+-		return 1;
+-	return (flags & FIEMAP_EXTENT_LAST) ? 1 : 0;
+-}
+-
+ /*
+  * ni_fiemap - Helper for file_fiemap().
+  *
+@@ -1950,11 +1910,9 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 	      __u64 vbo, __u64 len)
+ {
+ 	int err = 0;
+-	struct fiemap_extent *fe_k = NULL;
+ 	struct ntfs_sb_info *sbi = ni->mi.sbi;
+ 	u8 cluster_bits = sbi->cluster_bits;
+-	struct runs_tree *run;
+-	struct rw_semaphore *run_lock;
++	struct runs_tree run;
+ 	struct ATTRIB *attr;
+ 	CLST vcn = vbo >> cluster_bits;
+ 	CLST lcn, clen;
+@@ -1965,13 +1923,11 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 	u32 flags;
+ 	bool ok;
+ 
++	run_init(&run);
+ 	if (S_ISDIR(ni->vfs_inode.i_mode)) {
+-		run = &ni->dir.alloc_run;
+ 		attr = ni_find_attr(ni, NULL, NULL, ATTR_ALLOC, I30_NAME,
+ 				    ARRAY_SIZE(I30_NAME), NULL, NULL);
+-		run_lock = &ni->dir.run_lock;
+ 	} else {
+-		run = &ni->file.run;
+ 		attr = ni_find_attr(ni, NULL, NULL, ATTR_DATA, NULL, 0, NULL,
+ 				    NULL);
+ 		if (!attr) {
+@@ -1986,7 +1942,6 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 				"fiemap is not supported for compressed file (cp -r)");
+ 			goto out;
  		}
-+		ep->stop_time = jiffies;
- 		ep->ep_state |= EP_STOP_CMD_PENDING;
- 		xhci_queue_stop_endpoint(xhci, command, urb->dev->slot_id,
- 					 ep_index, 0);
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 4bbd12db7239..d89010ac5f8a 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -717,6 +717,7 @@ struct xhci_virt_ep {
- 	/* Bandwidth checking storage */
- 	struct xhci_bw_info	bw_info;
- 	struct list_head	bw_endpoint_list;
-+	unsigned long		stop_time;
- 	/* Isoch Frame ID checking storage */
- 	int			next_frame_id;
- 	/* Use new Isoch TRB layout needed for extended TBC support */
+-		run_lock = &ni->file.run_lock;
+ 	}
+ 
+ 	if (!attr || !attr->non_res) {
+@@ -1998,51 +1953,33 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 		goto out;
+ 	}
+ 
+-	/*
+-	 * To avoid lock problems replace pointer to user memory by pointer to kernel memory.
+-	 */
+-	fe_k = kmalloc_array(fieinfo->fi_extents_max,
+-			     sizeof(struct fiemap_extent),
+-			     GFP_NOFS | __GFP_ZERO);
+-	if (!fe_k) {
+-		err = -ENOMEM;
+-		goto out;
+-	}
+-
+ 	end = vbo + len;
+ 	alloc_size = le64_to_cpu(attr->nres.alloc_size);
+ 	if (end > alloc_size)
+ 		end = alloc_size;
+ 
+-	down_read(run_lock);
+ 
+ 	while (vbo < end) {
+ 		if (idx == -1) {
+-			ok = run_lookup_entry(run, vcn, &lcn, &clen, &idx);
++			ok = run_lookup_entry(&run, vcn, &lcn, &clen, &idx);
+ 		} else {
+ 			CLST vcn_next = vcn;
+ 
+-			ok = run_get_entry(run, ++idx, &vcn, &lcn, &clen) &&
++			ok = run_get_entry(&run, ++idx, &vcn, &lcn, &clen) &&
+ 			     vcn == vcn_next;
+ 			if (!ok)
+ 				vcn = vcn_next;
+ 		}
+ 
+ 		if (!ok) {
+-			up_read(run_lock);
+-			down_write(run_lock);
+-
+ 			err = attr_load_runs_vcn(ni, attr->type,
+ 						 attr_name(attr),
+-						 attr->name_len, run, vcn);
+-
+-			up_write(run_lock);
+-			down_read(run_lock);
++						 attr->name_len, &run, vcn);
+ 
+ 			if (err)
+ 				break;
+ 
+-			ok = run_lookup_entry(run, vcn, &lcn, &clen, &idx);
++			ok = run_lookup_entry(&run, vcn, &lcn, &clen, &idx);
+ 
+ 			if (!ok) {
+ 				err = -EINVAL;
+@@ -2067,8 +2004,9 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 		} else if (is_attr_compressed(attr)) {
+ 			CLST clst_data;
+ 
+-			err = attr_is_frame_compressed(
+-				ni, attr, vcn >> attr->nres.c_unit, &clst_data);
++			err = attr_is_frame_compressed(ni, attr,
++						       vcn >> attr->nres.c_unit,
++						       &clst_data, &run);
+ 			if (err)
+ 				break;
+ 			if (clst_data < NTFS_LZNT_CLUSTERS)
+@@ -2097,8 +2035,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 			if (vbo + dlen >= end)
+ 				flags |= FIEMAP_EXTENT_LAST;
+ 
+-			err = fiemap_fill_next_extent_k(fieinfo, fe_k, vbo, lbo,
+-							dlen, flags);
++			err = fiemap_fill_next_extent(fieinfo, vbo, lbo, dlen,
++						      flags);
+ 
+ 			if (err < 0)
+ 				break;
+@@ -2119,8 +2057,7 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 		if (vbo + bytes >= end)
+ 			flags |= FIEMAP_EXTENT_LAST;
+ 
+-		err = fiemap_fill_next_extent_k(fieinfo, fe_k, vbo, lbo, bytes,
+-						flags);
++		err = fiemap_fill_next_extent(fieinfo, vbo, lbo, bytes, flags);
+ 		if (err < 0)
+ 			break;
+ 		if (err == 1) {
+@@ -2131,19 +2068,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 		vbo += bytes;
+ 	}
+ 
+-	up_read(run_lock);
+-
+-	/*
+-	 * Copy to user memory out of lock
+-	 */
+-	if (copy_to_user(fieinfo->fi_extents_start, fe_k,
+-			 fieinfo->fi_extents_max *
+-				 sizeof(struct fiemap_extent))) {
+-		err = -EFAULT;
+-	}
+-
+ out:
+-	kfree(fe_k);
++	run_close(&run);
+ 	return err;
+ }
+ 
+@@ -2674,7 +2600,8 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+ 		down_write(&ni->file.run_lock);
+ 		run_truncate_around(run, le64_to_cpu(attr->nres.svcn));
+ 		frame = frame_vbo >> (cluster_bits + NTFS_LZNT_CUNIT);
+-		err = attr_is_frame_compressed(ni, attr, frame, &clst_data);
++		err = attr_is_frame_compressed(ni, attr, frame, &clst_data,
++					       run);
+ 		up_write(&ni->file.run_lock);
+ 		if (err)
+ 			goto out1;
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index cfe9d3bf07f9..c98e6868bfba 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -446,7 +446,8 @@ int attr_wof_frame_info(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 			struct runs_tree *run, u64 frame, u64 frames,
+ 			u8 frame_bits, u32 *ondisk_size, u64 *vbo_data);
+ int attr_is_frame_compressed(struct ntfs_inode *ni, struct ATTRIB *attr,
+-			     CLST frame, CLST *clst_data);
++			     CLST frame, CLST *clst_data,
++			     struct runs_tree *run);
+ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
+ 			u64 new_valid);
+ int attr_collapse_range(struct ntfs_inode *ni, u64 vbo, u64 bytes);
 -- 
 2.39.5
 
