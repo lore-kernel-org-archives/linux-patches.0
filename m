@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB6414A095;
-	Mon,  6 Jan 2025 15:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C2C13BC39;
+	Mon,  6 Jan 2025 15:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178826; cv=none; b=jdJxcJiLllrKOxHlfYT+wXyUcAE29kSrUyNnGXD0+zi5rCS7Q4hBbC9bCmQS/GN/ZAwSvYlS1pIOtJqIDnkYATeN/uWU9FvaReydRISpzIlsAnfCTdU6Vb9U8TtosccjGUIFc+BdS8ocMjj5cN3ylPBvuM/0VxE9uNl3wRjxoGw=
+	t=1736178829; cv=none; b=nG6QdHXR607z14DAw+/2HMAVJDe1RgliK9j57NC+pEXxRJGWBFtuvLC8yuQeKYVF40HFxG+nFXznD2KKAm1DsXEEzmx7ICvuSmxxzrZpq8haFSnq3PAPN6lFb/hSWY7mUDqWfzHyp53KamOghneUubpa/cutqjqsP5Wcdn7+oJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178826; c=relaxed/simple;
-	bh=WCyI+Jfpx/vhqA6YRnhM6pBq/bloOYkAaCLBNhWr6XU=;
+	s=arc-20240116; t=1736178829; c=relaxed/simple;
+	bh=MXmxjrHouHGoRboskVtMa3rBryGwsE26kCLEnSW5y/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDayJJdI0xAULyBHhuUbjhuFP88PFSgEYt0TXKZTFbMSItzwppdueUP0LPBlx30jEIoe8S/J4zdaYWY0edHxUE0xEtwELioGuj/tnRLdg8b114pKQD1xKHRECC/yxu8liKnNBpAlYQYbZUoCvm/ZTRFrkrvdZRKrWsRNpOYy1H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfQYm4Uo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3gJ0h/GqwAPioxflI4cyujLAFbGw/yG8IRXBaWpW/zVUucas/nG05D7O7HKI5WKJEIrXOSrEzL7DNWf73WiNEY/z1DIpG433FA6t9rTvH212WbkFguS9uLivsVyH4BID65kpCIyUWVyqheaWgzIMPGWkzIv/ya2YItB2AoRW5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kiTtTAnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfQYm4Uo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DA6C4CED2;
-	Mon,  6 Jan 2025 15:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kiTtTAnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E7AC4CED2;
+	Mon,  6 Jan 2025 15:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178826;
-	bh=WCyI+Jfpx/vhqA6YRnhM6pBq/bloOYkAaCLBNhWr6XU=;
+	s=korg; t=1736178829;
+	bh=MXmxjrHouHGoRboskVtMa3rBryGwsE26kCLEnSW5y/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfQYm4Uo4kTrZnIMK6GHhNFWEy9uziC7AkBi0M7tksJLYTltIYq30g/7fOX2aqhl2
-	 XtM9n3iL7PjxjyqijtmE2l7KGt1/EBpEHpgvcwMHKJfUUZqlyg/764irYBohGoSg0h
-	 KkMRML3EWmu5HCQ+1SdL3LSdXfpYJhXgcb690N8w=
+	b=kiTtTAnBSKuLEZZu5FJQdqOge7S5UxFRnTuI5HUWCT24fHanUrwtkKo8HDZG0VCW0
+	 uEljVdOLXcFlgeTQaUJ5JUUAkkkuo16MEikgml3lWwh/MWLm4XWws8q99bNNi6WHhW
+	 T7J22xTRGRgaM++6SsIO2MyaQFtnZr97ANYOR0K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 5.15 074/168] mtd: rawnand: fix double free in atmel_pmecc_create_user()
-Date: Mon,  6 Jan 2025 16:16:22 +0100
-Message-ID: <20250106151141.262107875@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 075/168] tracing/kprobe: Make trace_kprobes module callback called after jump_label update
+Date: Mon,  6 Jan 2025 16:16:23 +0100
+Message-ID: <20250106151141.299494589@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -50,35 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit d8e4771f99c0400a1873235704b28bb803c83d17 upstream.
+[ Upstream commit d685d55dfc86b1a4bdcec77c3c1f8a83f181264e ]
 
-The "user" pointer was converted from being allocated with kzalloc() to
-being allocated by devm_kzalloc().  Calling kfree(user) will lead to a
-double free.
+Make sure the trace_kprobe's module notifer callback function is called
+after jump_label's callback is called. Since the trace_kprobe's callback
+eventually checks jump_label address during registering new kprobe on
+the loading module, jump_label must be updated before this registration
+happens.
 
-Fixes: 6d734f1bfc33 ("mtd: rawnand: atmel: Fix possible memory leak")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/173387585556.995044.3157941002975446119.stgit@devnote2/
+
+Fixes: 614243181050 ("tracing/kprobes: Support module init function probing")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/atmel/pmecc.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/trace/trace_kprobe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mtd/nand/raw/atmel/pmecc.c
-+++ b/drivers/mtd/nand/raw/atmel/pmecc.c
-@@ -380,10 +380,8 @@ atmel_pmecc_create_user(struct atmel_pme
- 	user->delta = user->dmu + req->ecc.strength + 1;
+diff --git a/kernel/trace/trace_kprobe.c b/kernel/trace/trace_kprobe.c
+index baaaf9bc05f2..3a1c54c9918b 100644
+--- a/kernel/trace/trace_kprobe.c
++++ b/kernel/trace/trace_kprobe.c
+@@ -705,7 +705,7 @@ static int trace_kprobe_module_callback(struct notifier_block *nb,
  
- 	gf_tables = atmel_pmecc_get_gf_tables(req);
--	if (IS_ERR(gf_tables)) {
--		kfree(user);
-+	if (IS_ERR(gf_tables))
- 		return ERR_CAST(gf_tables);
--	}
+ static struct notifier_block trace_kprobe_module_nb = {
+ 	.notifier_call = trace_kprobe_module_callback,
+-	.priority = 1	/* Invoked after kprobe module callback */
++	.priority = 2	/* Invoked after kprobe and jump_label module callback */
+ };
  
- 	user->gf_tables = gf_tables;
- 
+ struct count_symbols_struct {
+-- 
+2.39.5
+
 
 
