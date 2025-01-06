@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FC413B59A;
-	Mon,  6 Jan 2025 15:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A97BA34;
+	Mon,  6 Jan 2025 15:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179049; cv=none; b=YuFgY/9HDXwF9hcOsk3UJjFTHKWm/byZDzqCSMLK8Z5IPa1IqvDOXVBoc4QxLZ5FrqhVXt3jr6JkSw+cmscpoFws4CgXQLLCc3SlUrWCxCYh6VKAr/LEyuNe4jiwFF4RecYL0X0EtvoHowDTxZrlzAbB9J4NsiTz52SxpAoswu8=
+	t=1736179052; cv=none; b=tswIeMhNzZLciYIVzWYKUGQPu6cYPiAWuGXioE1sZfe1iNizfa7l+feH50SvWxEYwRn5V26h/Fmu1n/B44MMXxbjLVxWz4ZkZhGqEMIk7AldXwmZJfwGuNvTKbU6gzctiSeUuNVkctClmVi1BEs0FhA7L7Q28aM417sADpGFa2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179049; c=relaxed/simple;
-	bh=eZq8xh8gsGEwgwLwW7HnpUof0UuVpU+gf5M7iRpGe/c=;
+	s=arc-20240116; t=1736179052; c=relaxed/simple;
+	bh=V1rgS+B8b+NMIVNmZwAv2K9nV4trQwrabpgKClo1SgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECChKxEZY5uo0kjtcJlLo9GDaVliE8iMAFNyTkvIoQZxagrLjWOeN3CJRjZEdLH25SMRRVcN+TN+Z97vrHipHRt/vN5L0K3CxbIYhmT1MdJeAW4BRU2NWFe7UirU+RvNKut6PJfE6ao2xRr16hKZmkR6ZFXoXe5lpIUr6mFnStE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnMQsiPb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pB3XMIRWhWPSlD9ZsJc9kWKCKjPlGa8ebyvqAS6GrO2FE/zAg5MI7XHTz6/sBB2KPD47EKVlcKvyD2wMp3dopaODUEeB4xI4Xq14NOWVltlLyMF8/xoPUi9cvj5I3RAl6bXtICW6QDXabw/y9RDKUphVhMEBLxX2bntAg1fWq2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKAt667u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnMQsiPb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276BBC4CED6;
-	Mon,  6 Jan 2025 15:57:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKAt667u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA32C4CED2;
+	Mon,  6 Jan 2025 15:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179048;
-	bh=eZq8xh8gsGEwgwLwW7HnpUof0UuVpU+gf5M7iRpGe/c=;
+	s=korg; t=1736179051;
+	bh=V1rgS+B8b+NMIVNmZwAv2K9nV4trQwrabpgKClo1SgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WnMQsiPbrvm6Y0FybOWqLcQPEjNPlGT3R+4KFH19k/bLR9jS95YHCwGvuc0I0noA9
-	 kK4+MpOkbP/q+CEJObGUOzSsdsZIxWOElBGEdbZlXSCLDwdjLxXrEQLm64jDqcUXT0
-	 VVRcGJtTVC7Yf9fq8GEuTfCaYueXOyuGBjKHPtGs=
+	b=IKAt667uMQoBOeLtzw2OnzkVu7RIh/WnostwvC+ZesgTudAjvlyHPyX7QDuUbxI65
+	 6hMKtqSDNpmgh8QQDeA+THyJwb/LspYLGYEd+p/dF2dhQuQkm0z1DndvHbRg20Q74B
+	 pDuFOtl5XMQBr/t0aX9EopOXdxdO79NklPhSsfco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 10/93] net/smc: check sndbuf_space again after NOSPACE flag is set in smc_poll
-Date: Mon,  6 Jan 2025 16:16:46 +0100
-Message-ID: <20250106151129.087814868@linuxfoundation.org>
+Subject: [PATCH 5.4 11/93] ionic: use ee->offset when returning sprom data
+Date: Mon,  6 Jan 2025 16:16:47 +0100
+Message-ID: <20250106151129.126583523@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,60 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 679e9ddcf90dbdf98aaaa71a492454654b627bcb ]
+[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
 
-When application sending data more than sndbuf_space, there have chances
-application will sleep in epoll_wait, and will never be wakeup again. This
-is caused by a race between smc_poll and smc_cdc_tx_handler.
+Some calls into ionic_get_module_eeprom() don't use a single
+full buffer size, but instead multiple calls with an offset.
+Teach our driver to use the offset correctly so we can
+respond appropriately to the caller.
 
-application                                      tasklet
-smc_tx_sendmsg(len > sndbuf_space)   |
-epoll_wait for EPOLL_OUT,timeout=0   |
-  smc_poll                           |
-    if (!smc->conn.sndbuf_space)     |
-                                     |  smc_cdc_tx_handler
-                                     |    atomic_add sndbuf_space
-                                     |    smc_tx_sndbuf_nonfull
-                                     |      if (!test_bit SOCK_NOSPACE)
-                                     |        do not sk_write_space;
-      set_bit SOCK_NOSPACE;          |
-    return mask=0;                   |
-
-Application will sleep in epoll_wait as smc_poll returns 0. And
-smc_cdc_tx_handler will not call sk_write_space because the SOCK_NOSPACE
-has not be set. If there is no inflight cdc msg, sk_write_space will not be
-called any more, and application will sleep in epoll_wait forever.
-So check sndbuf_space again after NOSPACE flag is set to break the race.
-
-Fixes: 8dce2786a290 ("net/smc: smc_poll improvements")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index e070b0e2a30c..1373a0082b5a 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1660,6 +1660,13 @@ static __poll_t smc_poll(struct file *file, struct socket *sock,
- 			} else {
- 				sk_set_bit(SOCKWQ_ASYNC_NOSPACE, sk);
- 				set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
-+
-+				if (sk->sk_state != SMC_INIT) {
-+					/* Race breaker the same way as tcp_poll(). */
-+					smp_mb__after_atomic();
-+					if (atomic_read(&smc->conn.sndbuf_space))
-+						mask |= EPOLLOUT | EPOLLWRNORM;
-+				}
- 			}
- 			if (atomic_read(&smc->conn.bytes_to_rcv))
- 				mask |= EPOLLIN | EPOLLRDNORM;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index c53d2271d8ab..dd4b89c90d67 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -711,8 +711,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
+ 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
+ 
+ 	do {
+-		memcpy(data, xcvr->sprom, len);
+-		memcpy(tbuf, xcvr->sprom, len);
++		memcpy(data, &xcvr->sprom[ee->offset], len);
++		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
+ 
+ 		/* Let's make sure we got a consistent copy */
+ 		if (!memcmp(data, tbuf, len))
 -- 
 2.39.5
 
