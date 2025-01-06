@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46E713B59A;
-	Mon,  6 Jan 2025 15:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351DC182D2;
+	Mon,  6 Jan 2025 15:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178916; cv=none; b=qB5fukwT/fPCMmYgkieK/isfSSw8k0dJB9tWAYg7A2b2rT6gm0gu2mFcibhSMg2CoB4Xn3H9S3vZeMIfkRlBUuscrT2vah7RE/nVollEksTnej29DYwgKXt7WFXIhoigWyNn/fgeyHdVjgvJPKeZlSCYUmljgS2zxqihACucTy4=
+	t=1736178920; cv=none; b=bA4hDx3ktcEmLoTHpmtgO0K+XX23oUQQGiNGk7qhnZM3chOt2jWC1Akc6gDVYmzX/gHefqKM+nC39eO0lbb0nRRpz5ztiGsw5UwXyuYt2oXACVUMFt3kuxzJvt4abkx+GbR9BE24Wt3jlH3Pu7Ma0BLperdUIynEjKawuQIDPso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178916; c=relaxed/simple;
-	bh=qyPmKsHc80lri3fZDDaaCznwa7gdR5EmUlOd4x6/mX8=;
+	s=arc-20240116; t=1736178920; c=relaxed/simple;
+	bh=q+LN5V/CaskauJlHXa1mhSCfiOd3cTidjeg/IWSA2Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=avUdk6ud1CFduhN9TBu609htw+/YoRNcu6pEx4rO+1U9rUGWiMWvu37Ix0rLXqTQZkIpuQCTedGm4CO2iAk+3jin+fWCF4Q6zTop+uQTLxY8PStg0Q2QBQF2jWaRUqdFnP1UMvCXqIOYwhV83EuxK8F5PBoJ9onT/ldH/wpqC5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ibdqXBut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h3SbPya6CtT44yEPErk9tBZHbH+cIStSQ0VdlrsJp71FgiDZ7m+NGk1rK+lF1NZHRIy1mHXnMPU7jgDSKYiVQK9E3yyIBJ+cp6gst/RNa4CW9/aZLXhdcd6rASuY3Y8PRpcTxbKENYIcqeObNXpR9/AERep/4fcdjeelm++l2yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L9w8TSgZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ibdqXBut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F80C4CED2;
-	Mon,  6 Jan 2025 15:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L9w8TSgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DFC0C4CED2;
+	Mon,  6 Jan 2025 15:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178916;
-	bh=qyPmKsHc80lri3fZDDaaCznwa7gdR5EmUlOd4x6/mX8=;
+	s=korg; t=1736178920;
+	bh=q+LN5V/CaskauJlHXa1mhSCfiOd3cTidjeg/IWSA2Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ibdqXButPAmh9VjQjmXZB28Cws2lE3Fm4Uva//IeaWLhlAr+SibB9YdKR9M6iF3sS
-	 eaRhdXRPfWh/RgPWR34vOpUxfybO1XdB6szhJHuxOMv1txzsS75kbpnp5BjRwm+D3g
-	 9w39Vm3hZ4oz8Q5s7KuQEwiKYPHt9X6ArZ+9vTEc=
+	b=L9w8TSgZlgYfoqjR/HjXXO64xRbcjrrUbnRpa2eoFWUXcUebcJmW7ctW4rr95I0Pq
+	 KnSOCd6mhUt82pXcfnhisBGU6NjVBesdiKf/XHb0MeE1B2B35kiaKF1KMgnzCz+azX
+	 pm40xmy5L2qwUi/wkmMk6+5biAMc4knWcy9p4f28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/168] netfilter: nft_set_hash: unaligned atomic read on struct nft_set_ext
-Date: Mon,  6 Jan 2025 16:17:22 +0100
-Message-ID: <20250106151143.500363413@linuxfoundation.org>
+	=?UTF-8?q?Thi=C3=A9baud=20Weksteen?= <tweek@google.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.15 105/168] selinux: ignore unknown extended permissions
+Date: Mon,  6 Jan 2025 16:16:53 +0100
+Message-ID: <20250106151142.426144809@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -44,102 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Thiébaud Weksteen <tweek@google.com>
 
-[ Upstream commit 542ed8145e6f9392e3d0a86a0e9027d2ffd183e4 ]
+commit 900f83cf376bdaf798b6f5dcb2eae0c822e908b6 upstream.
 
-Access to genmask field in struct nft_set_ext results in unaligned
-atomic read:
+When evaluating extended permissions, ignore unknown permissions instead
+of calling BUG(). This commit ensures that future permissions can be
+added without interfering with older kernels.
 
-[   72.130109] Unable to handle kernel paging request at virtual address ffff0000c2bb708c
-[   72.131036] Mem abort info:
-[   72.131213]   ESR = 0x0000000096000021
-[   72.131446]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   72.132209]   SET = 0, FnV = 0
-[   72.133216]   EA = 0, S1PTW = 0
-[   72.134080]   FSC = 0x21: alignment fault
-[   72.135593] Data abort info:
-[   72.137194]   ISV = 0, ISS = 0x00000021, ISS2 = 0x00000000
-[   72.142351]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[   72.145989]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[   72.150115] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000237d27000
-[   72.154893] [ffff0000c2bb708c] pgd=0000000000000000, p4d=180000023ffff403, pud=180000023f84b403, pmd=180000023f835403,
-+pte=0068000102bb7707
-[   72.163021] Internal error: Oops: 0000000096000021 [#1] SMP
-[...]
-[   72.170041] CPU: 7 UID: 0 PID: 54 Comm: kworker/7:0 Tainted: G            E      6.13.0-rc3+ #2
-[   72.170509] Tainted: [E]=UNSIGNED_MODULE
-[   72.170720] Hardware name: QEMU QEMU Virtual Machine, BIOS edk2-stable202302-for-qemu 03/01/2023
-[   72.171192] Workqueue: events_power_efficient nft_rhash_gc [nf_tables]
-[   72.171552] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[   72.171915] pc : nft_rhash_gc+0x200/0x2d8 [nf_tables]
-[   72.172166] lr : nft_rhash_gc+0x128/0x2d8 [nf_tables]
-[   72.172546] sp : ffff800081f2bce0
-[   72.172724] x29: ffff800081f2bd40 x28: ffff0000c2bb708c x27: 0000000000000038
-[   72.173078] x26: ffff0000c6780ef0 x25: ffff0000c643df00 x24: ffff0000c6778f78
-[   72.173431] x23: 000000000000001a x22: ffff0000c4b1f000 x21: ffff0000c6780f78
-[   72.173782] x20: ffff0000c2bb70dc x19: ffff0000c2bb7080 x18: 0000000000000000
-[   72.174135] x17: ffff0000c0a4e1c0 x16: 0000000000003000 x15: 0000ac26d173b978
-[   72.174485] x14: ffffffffffffffff x13: 0000000000000030 x12: ffff0000c6780ef0
-[   72.174841] x11: 0000000000000000 x10: ffff800081f2bcf8 x9 : ffff0000c3000000
-[   72.175193] x8 : 00000000000004be x7 : 0000000000000000 x6 : 0000000000000000
-[   72.175544] x5 : 0000000000000040 x4 : ffff0000c3000010 x3 : 0000000000000000
-[   72.175871] x2 : 0000000000003a98 x1 : ffff0000c2bb708c x0 : 0000000000000004
-[   72.176207] Call trace:
-[   72.176316]  nft_rhash_gc+0x200/0x2d8 [nf_tables] (P)
-[   72.176653]  process_one_work+0x178/0x3d0
-[   72.176831]  worker_thread+0x200/0x3f0
-[   72.176995]  kthread+0xe8/0xf8
-[   72.177130]  ret_from_fork+0x10/0x20
-[   72.177289] Code: 54fff984 d503201f d2800080 91003261 (f820303f)
-[   72.177557] ---[ end trace 0000000000000000 ]---
-
-Align struct nft_set_ext to word size to address this and
-documentation it.
-
-pahole reports that this increases the size of elements for rhash and
-pipapo in 8 bytes on x86_64.
-
-Fixes: 7ffc7481153b ("netfilter: nft_set_hash: skip duplicated elements pending gc run")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: fa1aa143ac4a ("selinux: extended permissions for ioctls")
+Signed-off-by: Thiébaud Weksteen <tweek@google.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Acked-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/netfilter/nf_tables.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ security/selinux/ss/services.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index e2c786af2fc6..9ee225cff611 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -690,15 +690,18 @@ struct nft_set_ext_tmpl {
- /**
-  *	struct nft_set_ext - set extensions
-  *
-- *	@genmask: generation mask
-+ *	@genmask: generation mask, but also flags (see NFT_SET_ELEM_DEAD_BIT)
-  *	@offset: offsets of individual extension types
-  *	@data: beginning of extension data
-+ *
-+ *	This structure must be aligned to word size, otherwise atomic bitops
-+ *	on genmask field can cause alignment failure on some archs.
-  */
- struct nft_set_ext {
- 	u8	genmask;
- 	u8	offset[NFT_SET_EXT_NUM];
- 	char	data[];
--};
-+} __aligned(BITS_PER_LONG / 8);
+--- a/security/selinux/ss/services.c
++++ b/security/selinux/ss/services.c
+@@ -971,7 +971,10 @@ void services_compute_xperms_decision(st
+ 					xpermd->driver))
+ 			return;
+ 	} else {
+-		BUG();
++		pr_warn_once(
++			"SELinux: unknown extended permission (%u) will be ignored\n",
++			node->datum.u.xperms->specified);
++		return;
+ 	}
  
- static inline void nft_set_ext_prepare(struct nft_set_ext_tmpl *tmpl)
- {
--- 
-2.39.5
-
+ 	if (node->key.specified == AVTAB_XPERMS_ALLOWED) {
+@@ -1008,7 +1011,8 @@ void services_compute_xperms_decision(st
+ 					node->datum.u.xperms->perms.p[i];
+ 		}
+ 	} else {
+-		BUG();
++		pr_warn_once("SELinux: unknown specified key (%u)\n",
++			     node->key.specified);
+ 	}
+ }
+ 
 
 
