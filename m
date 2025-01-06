@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00BC78F49;
-	Mon,  6 Jan 2025 15:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963D57405A;
+	Mon,  6 Jan 2025 15:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177647; cv=none; b=h/VRivQZLVofscWgNhoBmPULo0QmuCXeIjgBjLLc+fbVMfaQ0HXihU3CD8dHuHsRQJkl04pcWgdNHUGssCoLdqG4c+zsrz59wYWlma9HhCF8xR+CsK3iRLb0Z2iApEm/VqffF5EBaYj3O8BJcj5gZSbu5kM9pDuvDwlI//ZlYRQ=
+	t=1736177650; cv=none; b=kI+45LTjNsAUAPJE+hHpJAwmd0b0uT5VR0x3i2WohzlprZtIil5IZ1ANqD4tQadEjTTQoKujKL9q0Ft0FZ4O3pbZbU7joKr5d64c9kVK/2obBIkgOWeh6XAOCCz6+LDHYE/DOWpcoZ5010rKgkQ6+BrSpCQ+hc3wxzM0s3VAncY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177647; c=relaxed/simple;
-	bh=J1PnFJhvVmrxFuZkTbz07xMLUyDAMArSwzKVNe3Zz6g=;
+	s=arc-20240116; t=1736177650; c=relaxed/simple;
+	bh=BnC+zLrcqMGpTxHf261I67ULaTYMtQgfDbJ15BQtWcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TuSRDFukWyDe9SaXGDX9+gQjdBmmRA3evg5Ip8xEUf0QGQ6DiTGvoHr2UIODIvpn80qXvx5eQk2bSYs5xBN+PGfqG0ms146OTbZxM2bHrpXy/z+lqtyfo+tcgEw4K9iWjfJd1FDSvTDoRfPeZj2Uk1cpYCKTFwiDzMMblascf9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdYTKzr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GsbSZ/PDIEdjdr4FZAWgmGrI+OCv1JRPG9A0j9DezsPbBqYRZYWlId92DtEsEgWtC6wulW6Bhe32Px0BrS6VBcyAiFjPfna6oFi7A5TZ+iv4E1h/80CrTVCayk/GT5nOQFIRcVvcNRcRG3guAkkMp0FW6wVMQyt1nQLmiFX+kBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mT8sY+Iz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdYTKzr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65E2C4CED2;
-	Mon,  6 Jan 2025 15:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mT8sY+Iz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83A6C4CED2;
+	Mon,  6 Jan 2025 15:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177647;
-	bh=J1PnFJhvVmrxFuZkTbz07xMLUyDAMArSwzKVNe3Zz6g=;
+	s=korg; t=1736177650;
+	bh=BnC+zLrcqMGpTxHf261I67ULaTYMtQgfDbJ15BQtWcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdYTKzr30ftLjSqoFSLophiQ2xvB3WapO+afJA7rrgTCkQTsT8u215iJqsoDin/r8
-	 Ahb7iBZUarePDaqAEC27pW1ua1JUsHQK2q9v/yEVlINo7L9XFIqXBYg/bZrH2szPax
-	 0iUqpnU8Makgb/wWtNeKrqUjXhVOLVsDhzjIADSc=
+	b=mT8sY+IzwIm/rYhOmXfjcqjT2B9DAQ27ddpKQuEyCr4X59Igk72fCHHppNUQopGBe
+	 S35pIgahXjFcf1ss7wKMayBPA/XORJgWnf1xhSf0xlOgF6i112hA6F5lHJoF+7hT87
+	 H/fVpoevUDqSklcAYYQoShpXdAwzS7gK5ibCWAKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 010/156] block: lift bio_is_zone_append to bio.h
-Date: Mon,  6 Jan 2025 16:14:56 +0100
-Message-ID: <20250106151142.132842011@linuxfoundation.org>
+Subject: [PATCH 6.12 011/156] btrfs: use bio_is_zone_append() in the completion handler
+Date: Mon,  6 Jan 2025 16:14:57 +0100
+Message-ID: <20250106151142.169739137@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -55,79 +55,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 0ef2b9e698dbf9ba78f67952a747f35eb7060470 ]
+[ Upstream commit 6c3864e055486fadb5b97793b57688082e14b43b ]
 
-Make bio_is_zone_append globally available, because file systems need
-to use to check for a zone append bio in their end_io handlers to deal
-with the block layer emulation.
+Otherwise it won't catch bios turned into regular writes by the block
+level zone write plugging. The additional test it adds is for emulated
+zone append.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 9b1ce7f0c6f8 ("block: Implement zone append emulation")
+CC: stable@vger.kernel.org # 6.12
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20241104062647.91160-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 6c3864e05548 ("btrfs: use bio_is_zone_append() in the completion handler")
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk.h         |  9 ---------
- include/linux/bio.h | 17 +++++++++++++++++
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ fs/btrfs/bio.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk.h b/block/blk.h
-index 88fab6a81701..1426f9c28197 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -469,11 +469,6 @@ static inline bool bio_zone_write_plugging(struct bio *bio)
- {
- 	return bio_flagged(bio, BIO_ZONE_WRITE_PLUGGING);
- }
--static inline bool bio_is_zone_append(struct bio *bio)
--{
--	return bio_op(bio) == REQ_OP_ZONE_APPEND ||
--		bio_flagged(bio, BIO_EMULATES_ZONE_APPEND);
--}
- void blk_zone_write_plug_bio_merged(struct bio *bio);
- void blk_zone_write_plug_init_request(struct request *rq);
- static inline void blk_zone_update_request_bio(struct request *rq,
-@@ -522,10 +517,6 @@ static inline bool bio_zone_write_plugging(struct bio *bio)
- {
- 	return false;
- }
--static inline bool bio_is_zone_append(struct bio *bio)
--{
--	return false;
--}
- static inline void blk_zone_write_plug_bio_merged(struct bio *bio)
- {
- }
-diff --git a/include/linux/bio.h b/include/linux/bio.h
-index faceadb040f9..66b7620a1b53 100644
---- a/include/linux/bio.h
-+++ b/include/linux/bio.h
-@@ -677,6 +677,23 @@ static inline void bio_clear_polled(struct bio *bio)
- 	bio->bi_opf &= ~REQ_POLLED;
- }
+diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
+index 3d2376caedfa..31f96c2d8691 100644
+--- a/fs/btrfs/bio.c
++++ b/fs/btrfs/bio.c
+@@ -355,7 +355,7 @@ static void btrfs_simple_end_io(struct bio *bio)
+ 		INIT_WORK(&bbio->end_io_work, btrfs_end_bio_work);
+ 		queue_work(btrfs_end_io_wq(fs_info, bio), &bbio->end_io_work);
+ 	} else {
+-		if (bio_op(bio) == REQ_OP_ZONE_APPEND && !bio->bi_status)
++		if (bio_is_zone_append(bio) && !bio->bi_status)
+ 			btrfs_record_physical_zoned(bbio);
+ 		btrfs_bio_end_io(bbio, bbio->bio.bi_status);
+ 	}
+@@ -398,7 +398,7 @@ static void btrfs_orig_write_end_io(struct bio *bio)
+ 	else
+ 		bio->bi_status = BLK_STS_OK;
  
-+/**
-+ * bio_is_zone_append - is this a zone append bio?
-+ * @bio:	bio to check
-+ *
-+ * Check if @bio is a zone append operation.  Core block layer code and end_io
-+ * handlers must use this instead of an open coded REQ_OP_ZONE_APPEND check
-+ * because the block layer can rewrite REQ_OP_ZONE_APPEND to REQ_OP_WRITE if
-+ * it is not natively supported.
-+ */
-+static inline bool bio_is_zone_append(struct bio *bio)
-+{
-+	if (!IS_ENABLED(CONFIG_BLK_DEV_ZONED))
-+		return false;
-+	return bio_op(bio) == REQ_OP_ZONE_APPEND ||
-+		bio_flagged(bio, BIO_EMULATES_ZONE_APPEND);
-+}
-+
- struct bio *blk_next_bio(struct bio *bio, struct block_device *bdev,
- 		unsigned int nr_pages, blk_opf_t opf, gfp_t gfp);
- struct bio *bio_chain_and_submit(struct bio *prev, struct bio *new);
+-	if (bio_op(bio) == REQ_OP_ZONE_APPEND && !bio->bi_status)
++	if (bio_is_zone_append(bio) && !bio->bi_status)
+ 		stripe->physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
+ 
+ 	btrfs_bio_end_io(bbio, bbio->bio.bi_status);
+@@ -412,7 +412,7 @@ static void btrfs_clone_write_end_io(struct bio *bio)
+ 	if (bio->bi_status) {
+ 		atomic_inc(&stripe->bioc->error);
+ 		btrfs_log_dev_io_error(bio, stripe->dev);
+-	} else if (bio_op(bio) == REQ_OP_ZONE_APPEND) {
++	} else if (bio_is_zone_append(bio)) {
+ 		stripe->physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
+ 	}
+ 
 -- 
 2.39.5
 
