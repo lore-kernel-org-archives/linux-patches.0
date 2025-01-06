@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8E714D28C;
-	Mon,  6 Jan 2025 15:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD453148316;
+	Mon,  6 Jan 2025 15:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178004; cv=none; b=GJnQc8kXdg92wTuBlBJrjbL+eYiCTQVbmZJ8QKW7mW1R5B8N6jYtFMzAC+rfnbIt7bJbulrNH3SSiMmz1zJ96quWMQbfNTZRt277ROsmsJNH5Vp53FyPTrGuCtWwtYxrFbC3p/ShlcTbrYOrteghUECCw2KQB4kMnZS2xjsdSME=
+	t=1736178009; cv=none; b=vC3We2iezyNT6lJWAe9a8qUDWeydU6JkeUNlyiROZfpYHlbV63yFWa/7LK3F6TaHIXNi2hlAzJdgAyK6bsSh5O3EQGlKaZDva4jywXR7gF/LAncfzRnSQtLhluY9VU+GyoCJ3tFlSj/mQNm6QoM8INHKbbh6SGe7UQly/JPK7H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178004; c=relaxed/simple;
-	bh=bIYKtXuRYyKZUCWh10qO3nap1RXSgMh2Mmzv3aBlKKU=;
+	s=arc-20240116; t=1736178009; c=relaxed/simple;
+	bh=N/erQIczHCHmasM8XDKSEs+u2OHslM/q7K+n9k83xHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAf3sofPO0ObeW6RNk9SHdPE+7EjS/LJX8OtSplRDvkpi7yrfVICBcf/x4rP37/dlKLw8eB0GUWu1/CJCjzMF61qxJkSgwJUWGnyXYF0/198eO1a1l1amReqeeAzZ9kxq0uMifALCevjdxZaPsP9UHBHQBCCB2LH0atzTprqfE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELzA4s6+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HtJczSHXpx5poB9MQR9DFMa2vYJp66+ViB4hpjEbsNnfN50sow1XsRXBGmDmKZM2TM/t+XGW2NpX7U575JlIKV6k6XnOzB5SQYK4Q3Nj3AS+7OP0Ko47pSPZvmJb4Fa3rJwNrluZZmn+08I2k7Blyle/kL6BA6oCMuqXolu7XPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mjwslzv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELzA4s6+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0302AC4CED6;
-	Mon,  6 Jan 2025 15:40:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mjwslzv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F51C4CED2;
+	Mon,  6 Jan 2025 15:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178004;
-	bh=bIYKtXuRYyKZUCWh10qO3nap1RXSgMh2Mmzv3aBlKKU=;
+	s=korg; t=1736178007;
+	bh=N/erQIczHCHmasM8XDKSEs+u2OHslM/q7K+n9k83xHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELzA4s6+0Qqk2uV8MOixuZ7ZZ+mN7ZnXbqAinhrpCq6acdnScizxcn1UZnm6XTl9b
-	 FxXaELxY4JtmRRvFEqylSHjaUZi2QSPTptgGbFXFEdIP+kQuij67ZuAAKasIbB4bLa
-	 gRxLD0Q0RQSj+PWxHaJlF8ztDUSj4ZwcpTjCNJe4=
+	b=Mjwslzv6n4frmYAYBahmessl++pp78rvNngHVv9NTnGA3KonfJz6Mu1LerWHtZ/xH
+	 BlUv+eNeFwHShiH4cARM7SjYIRruCa9JtAgeEh/ZRGEDnRPrxfyJYwjzbqG06dCipe
+	 Jy9Ar+PTfGRJ0NLQMbmbnKlX6jOI49WGCVcE6h6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Kuratov <kniv@yandex-team.ru>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 130/156] net/sctp: Prevent autoclose integer overflow in sctp_association_init()
-Date: Mon,  6 Jan 2025 16:16:56 +0100
-Message-ID: <20250106151146.629295394@linuxfoundation.org>
+	chase xd <sl1589472800@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 131/156] io_uring/rw: fix downgraded mshot read
+Date: Mon,  6 Jan 2025 16:16:57 +0100
+Message-ID: <20250106151146.666840477@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -51,36 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Kuratov <kniv@yandex-team.ru>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 4e86729d1ff329815a6e8a920cb554a1d4cb5b8d upstream.
+commit 38fc96a58ce40257aec79b32e9b310c86907c63c upstream.
 
-While by default max_autoclose equals to INT_MAX / HZ, one may set
-net.sctp.max_autoclose to UINT_MAX. There is code in
-sctp_association_init() that can consequently trigger overflow.
+The io-wq path can downgrade a multishot request to oneshot mode,
+however io_read_mshot() doesn't handle that and would still post
+multiple CQEs. That's not allowed, because io_req_post_cqe() requires
+stricter context requirements.
+
+The described can only happen with pollable files that don't support
+FMODE_NOWAIT, which is an odd combination, so if even allowed it should
+be fairly rare.
 
 Cc: stable@vger.kernel.org
-Fixes: 9f70f46bd4c7 ("sctp: properly latch and use autoclose value from sock to association")
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20241219162114.2863827-1-kniv@yandex-team.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: chase xd <sl1589472800@gmail.com>
+Fixes: bee1d5becdf5b ("io_uring: disable io-wq execution of multishot NOWAIT requests")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/c5c8c4a50a882fd581257b81bf52eee260ac29fd.1735407848.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/associola.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ io_uring/rw.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -137,7 +137,8 @@ static struct sctp_association *sctp_ass
- 		= 5 * asoc->rto_max;
- 
- 	asoc->timeouts[SCTP_EVENT_TIMEOUT_SACK] = asoc->sackdelay;
--	asoc->timeouts[SCTP_EVENT_TIMEOUT_AUTOCLOSE] = sp->autoclose * HZ;
-+	asoc->timeouts[SCTP_EVENT_TIMEOUT_AUTOCLOSE] =
-+		(unsigned long)sp->autoclose * HZ;
- 
- 	/* Initializes the timers */
- 	for (i = SCTP_EVENT_TIMEOUT_NONE; i < SCTP_NUM_TIMEOUT_TYPES; ++i)
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -979,6 +979,8 @@ int io_read_mshot(struct io_kiocb *req,
+ 		io_kbuf_recycle(req, issue_flags);
+ 		if (ret < 0)
+ 			req_set_fail(req);
++	} else if (!(req->flags & REQ_F_APOLL_MULTISHOT)) {
++		cflags = io_put_kbuf(req, ret, issue_flags);
+ 	} else {
+ 		/*
+ 		 * Any successful return value will keep the multishot read
 
 
