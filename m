@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31766146D40;
-	Mon,  6 Jan 2025 15:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C3D715C120;
+	Mon,  6 Jan 2025 15:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177259; cv=none; b=OaBDxw399yG36WV087GNfbBOsQskCq5en+n7vFu/BWP9YrTEz8ADHW6SQ5qdjisU/HfXHR1G4VlGRPr+O6kZDh2K2osffMs2E7RUvJ/rGC8Cq3fyDCY4CLkdwEUfjNjoy9LkrVf0AxRWBTm+ubKmjfj7jZ3K/bdDY2OmO5c47rY=
+	t=1736177262; cv=none; b=GMPvRsaddngHZZCV5KCZqPQaGlXGV21eBmwKvWyBHs+1odLy0FSoHIdj/Ig5DaexORCkEFibMFYjsP2TsR32ra95gC1GjcTljkh4sCRjTXWbOrAnn8aD3C9l+aI18D6yEpx8nZ2/eckjqAF+X3D/AyPFge3u48C1B9yDzfUUhv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177259; c=relaxed/simple;
-	bh=pCVJuX2u6YyFZcngH4cil7LheQ0kS0pb5HJR081cMqg=;
+	s=arc-20240116; t=1736177262; c=relaxed/simple;
+	bh=J/xnrYvBChV4FW40mIlUIahcTNCu36Fs9fxa3npnwP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XqZThrDqMoTlvkF0b6Pgk50Eq1Zm/IPByx9dsjJ9THf7C2Gx6F8EjUwa91h++U3e8wWXIkQGr3QA+9wlJ+zmfClmBS8cUR89vqQ4osYnsdoAVII3yZK56p85oYLkIn/d3us7iUnGER6ccFud7Yu/zy7iYsRWoXCpYFQazrc5hYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ormt3eG3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jG8JiaCbZjbaBFg6NJ+HUH5YDBAijB0ewnJ/8ucdfRRRBHnn9rJ9utW9PEtz2tDE4WRwYR221ECFTGIAwxSVzuqnQMLgyCh//ivyT0LPvZ2RVE1tgKc6JlMkix6chSm62qwScC9GJyMy6BxhbOTgQp9iCcrxU4iYxLbmO4J1Fag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADwwhcj3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ormt3eG3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C66C4CED2;
-	Mon,  6 Jan 2025 15:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADwwhcj3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F34C4CED2;
+	Mon,  6 Jan 2025 15:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177259;
-	bh=pCVJuX2u6YyFZcngH4cil7LheQ0kS0pb5HJR081cMqg=;
+	s=korg; t=1736177262;
+	bh=J/xnrYvBChV4FW40mIlUIahcTNCu36Fs9fxa3npnwP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ormt3eG3Y6xzxSDVHa64FVO/M79UVgUl73Dr8FUAHqO1iDpyrovxZ0dP/jHZy2rEV
-	 0uTSVk29Gn7CUWyq+RRyq/06+pMvjPVRcQtM8NZQHE4TlSntTHPUq4gURU13b3XFG2
-	 uIL606DqxM5AQBkyKUqQMWVW3v46bViILG9T3GNw=
+	b=ADwwhcj34y1rejCdB36+MRODwvoBH/8TGWnkJPBPUmdJtb7LDlocUjdS1aPzp1XkQ
+	 egpnSA2xS7KgsYZdyHnDR8tbXuSarfmuqGpnavfmvY6Q+T8U821PGoN5pvJQN+2mCb
+	 8vcVwrimyJZe/l9g0i22szsODIu+w4/jEmGLTsHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/222] crypto: ecc - Prevent ecc_digits_from_bytes from reading too many bytes
-Date: Mon,  6 Jan 2025 16:15:09 +0100
-Message-ID: <20250106151154.572580943@linuxfoundation.org>
+Subject: [PATCH 6.6 106/222] cleanup: Remove address space of returned pointer
+Date: Mon,  6 Jan 2025 16:15:10 +0100
+Message-ID: <20250106151154.610373855@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,90 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit c6ab5c915da460c0397960af3c308386c3f3247b ]
+[ Upstream commit f730fd535fc51573f982fad629f2fc6b4a0cde2f ]
 
-Prevent ecc_digits_from_bytes from reading too many bytes from the input
-byte array in case an insufficient number of bytes is provided to fill the
-output digit array of ndigits. Therefore, initialize the most significant
-digits with 0 to avoid trying to read too many bytes later on. Convert the
-function into a regular function since it is getting too big for an inline
-function.
+Guard functions in local_lock.h are defined using DEFINE_GUARD() and
+DEFINE_LOCK_GUARD_1() macros having lock type defined as pointer in
+the percpu address space. The functions, defined by these macros
+return value in generic address space, causing:
 
-If too many bytes are provided on the input byte array the extra bytes
-are ignored since the input variable 'ndigits' limits the number of digits
-that will be filled.
+cleanup.h:157:18: error: return from pointer to non-enclosed address space
 
-Fixes: d67c96fb97b5 ("crypto: ecdsa - Convert byte arrays with key coordinates to digits")
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+and
+
+cleanup.h:214:18: error: return from pointer to non-enclosed address space
+
+when strict percpu checks are enabled.
+
+Add explicit casts to remove address space of the returned pointer.
+
+Found by GCC's named address space checks.
+
+Fixes: e4ab322fbaaa ("cleanup: Add conditional guard support")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240819074124.143565-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecc.c                  | 22 ++++++++++++++++++++++
- include/crypto/internal/ecc.h | 15 ++-------------
- 2 files changed, 24 insertions(+), 13 deletions(-)
+ include/linux/cleanup.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/ecc.c b/crypto/ecc.c
-index f53fb4d6af99..21504280aca2 100644
---- a/crypto/ecc.c
-+++ b/crypto/ecc.c
-@@ -66,6 +66,28 @@ const struct ecc_curve *ecc_get_curve(unsigned int curve_id)
+diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
+index f0c6d1d45e67..64b8600eb8c0 100644
+--- a/include/linux/cleanup.h
++++ b/include/linux/cleanup.h
+@@ -123,7 +123,7 @@ static __maybe_unused const bool class_##_name##_is_conditional = _is_cond
+ 	__DEFINE_CLASS_IS_CONDITIONAL(_name, false); \
+ 	DEFINE_CLASS(_name, _type, if (_T) { _unlock; }, ({ _lock; _T; }), _type _T); \
+ 	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
+-	{ return *_T; }
++	{ return (void *)(__force unsigned long)*_T; }
+ 
+ #define DEFINE_GUARD_COND(_name, _ext, _condlock) \
+ 	__DEFINE_CLASS_IS_CONDITIONAL(_name##_ext, true); \
+@@ -204,7 +204,7 @@ static inline void class_##_name##_destructor(class_##_name##_t *_T)	\
+ 									\
+ static inline void *class_##_name##_lock_ptr(class_##_name##_t *_T)	\
+ {									\
+-	return _T->lock;						\
++	return (void *)(__force unsigned long)_T->lock;			\
  }
- EXPORT_SYMBOL(ecc_get_curve);
  
-+void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
-+			   u64 *out, unsigned int ndigits)
-+{
-+	int diff = ndigits - DIV_ROUND_UP(nbytes, sizeof(u64));
-+	unsigned int o = nbytes & 7;
-+	__be64 msd = 0;
-+
-+	/* diff > 0: not enough input bytes: set most significant digits to 0 */
-+	if (diff > 0) {
-+		ndigits -= diff;
-+		memset(&out[ndigits - 1], 0, diff * sizeof(u64));
-+	}
-+
-+	if (o) {
-+		memcpy((u8 *)&msd + sizeof(msd) - o, in, o);
-+		out[--ndigits] = be64_to_cpu(msd);
-+		in += o;
-+	}
-+	ecc_swap_digits(in, out, ndigits);
-+}
-+EXPORT_SYMBOL(ecc_digits_from_bytes);
-+
- static u64 *ecc_alloc_digits_space(unsigned int ndigits)
- {
- 	size_t len = ndigits * sizeof(u64);
-diff --git a/include/crypto/internal/ecc.h b/include/crypto/internal/ecc.h
-index ab722a8986b7..c0b8be63cbde 100644
---- a/include/crypto/internal/ecc.h
-+++ b/include/crypto/internal/ecc.h
-@@ -63,19 +63,8 @@ static inline void ecc_swap_digits(const void *in, u64 *out, unsigned int ndigit
-  * @out       Output digits array
-  * @ndigits:  Number of digits to create from byte array
-  */
--static inline void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
--					 u64 *out, unsigned int ndigits)
--{
--	unsigned int o = nbytes & 7;
--	__be64 msd = 0;
--
--	if (o) {
--		memcpy((u8 *)&msd + sizeof(msd) - o, in, o);
--		out[--ndigits] = be64_to_cpu(msd);
--		in += o;
--	}
--	ecc_swap_digits(in, out, ndigits);
--}
-+void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
-+			   u64 *out, unsigned int ndigits);
  
- /**
-  * ecc_is_key_valid() - Validate a given ECDH private key
 -- 
 2.39.5
 
