@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472E71DE2C2;
-	Mon,  6 Jan 2025 15:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529601DE88E;
+	Mon,  6 Jan 2025 15:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178320; cv=none; b=PajIzJ7KaX55S2WyFkxQRhwyQbjdI8Wd0AJa1zX92gcMXqW0Zvw2JXNDxzopWyEX9GuSRYYFciu6zG4Q+/luhVLm7+YQTwAC4oblvyo+9d+eRJFkQaVfYkj99Nk+ni4MPWbbfMFdxMHf1IEge28pDJLjAndrccj9l1/efv3oz/Y=
+	t=1736178323; cv=none; b=FdrL41guiYM7gGQR6Ctn3S9uMrlFtOP+bNb0l+BDm5HGd58uouQsUvnumGxT5icDkPAMNJMPnCY9DbasP3D6Ol5ztZmJEc+8lA3omsy7LwtcY79Vyf/MTR18gAwtp+HR+E+zYr0qccfIL8ARWvyxnfPqoz2hX7cCgHBeKCvxI7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178320; c=relaxed/simple;
-	bh=wzqkyc4QZqMfEIds4oBedphrLLZAN+VgdzAFzkprIYk=;
+	s=arc-20240116; t=1736178323; c=relaxed/simple;
+	bh=R723dTy1PDk1/IDXgdIzIlxpzS8RjLsxI7H1/5KNiP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CsfAWZA6Jt+Ly4IOHETnuxij+QhB4MRcwgjlL7nOSHX4xKDlOwVLl0hh0NHbtyNVcgapGUgAPkOicXbZJiVRGUigeMXhiScRjvsJPXNF1GocOViJ3bIK+AflCZSjCkeF3aTt5zPLKz8OxicaqTgdtb4QsDg1OGkQ65QV5LRZ+SU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNRacIEG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Snv42lPFwJqlIvugHISf9o45cqvj2WlKLDDCuEvCDUtF5efa/YrZP1TZuzU7Q4TcA0FW1DmD0fRYnu0Pj7ZEEpgT+jq/UorN8linnVAaMqNwDIcMDGJhXoJrAu81EYutcbyFThut7tKSrB8ZKO/D9tx822VUPzrPp/629U3JuD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCTLrAl5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNRacIEG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F2C5C4CED2;
-	Mon,  6 Jan 2025 15:45:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCTLrAl5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A81C4CED2;
+	Mon,  6 Jan 2025 15:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178320;
-	bh=wzqkyc4QZqMfEIds4oBedphrLLZAN+VgdzAFzkprIYk=;
+	s=korg; t=1736178323;
+	bh=R723dTy1PDk1/IDXgdIzIlxpzS8RjLsxI7H1/5KNiP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNRacIEGJmolwe6sGJrWDkmb7YaMoQl7dwABmcUBdVbXdzlHoGcxMw/IZFFmUwzGh
-	 V4cKeFjEf4HAiv4pLM4Yp8v7nCthpQU4VkB3LG7makjufJen3rUUUsC9Qw6Dt0FATd
-	 OXzGNyo4bFvoVz8wK6rLWU5NQQRtfo1SO0atctIY=
+	b=tCTLrAl5c+Obz9EaIJU7Ofs2MK6c5MoM7XWhHOLL+QUsVFw/emoFgKJRFZPqcA6Ot
+	 CRZWrhkjCTLjAy/yCkZ+wH+HxIsotZMfTaVhu28W5XiRgwuA16tZye/Gbh55x/k2/2
+	 zmCL3CAMKL1fi/pzU+Zpw1/GNKVeB8QcFi06mzFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 078/138] tracing: Constify string literal data member in struct trace_event_call
-Date: Mon,  6 Jan 2025 16:16:42 +0100
-Message-ID: <20250106151136.184883036@linuxfoundation.org>
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 5.10 079/138] power: supply: gpio-charger: Fix set charge current limits
+Date: Mon,  6 Jan 2025 16:16:43 +0100
+Message-ID: <20250106151136.222283160@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,70 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Göttsche <cgzones@googlemail.com>
+From: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
 
-commit 452f4b31e3f70a52b97890888eeb9eaa9a87139a upstream.
+commit afc6e39e824ad0e44b2af50a97885caec8d213d1 upstream.
 
-The name member of the struct trace_event_call is assigned with
-generated string literals; declare them pointer to read-only.
+Fix set charge current limits for devices which allow to set the lowest
+charge current limit to be greater zero. If requested charge current limit
+is below lowest limit, the index equals current_limit_map_size which leads
+to accessing memory beyond allocated memory.
 
-Reported by clang:
-
-    security/landlock/syscalls.c:179:1: warning: initializing 'char *' with an expression of type 'const char[34]' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
-      179 | SYSCALL_DEFINE3(landlock_create_ruleset,
-          | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      180 |                 const struct landlock_ruleset_attr __user *const, attr,
-          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-      181 |                 const size_t, size, const __u32, flags)
-          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:226:36: note: expanded from macro 'SYSCALL_DEFINE3'
-      226 | #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
-          |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:234:2: note: expanded from macro 'SYSCALL_DEFINEx'
-      234 |         SYSCALL_METADATA(sname, x, __VA_ARGS__)                 \
-          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:184:2: note: expanded from macro 'SYSCALL_METADATA'
-      184 |         SYSCALL_TRACE_ENTER_EVENT(sname);                       \
-          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ./include/linux/syscalls.h:151:30: note: expanded from macro 'SYSCALL_TRACE_ENTER_EVENT'
-      151 |                         .name                   = "sys_enter"#sname,    \
-          |                                                   ^~~~~~~~~~~~~~~~~
-
+Fixes: be2919d8355e ("power: supply: gpio-charger: add charge-current-limit feature")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Mickaël Salaün <mic@digikod.net>
-Cc: Günther Noack <gnoack@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <ndesaulniers@google.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Justin Stitt <justinstitt@google.com>
-Link: https://lore.kernel.org/20241125105028.42807-1-cgoettsche@seltendoof.de
-Fixes: b77e38aa240c3 ("tracing: add event trace infrastructure")
-Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Link: https://lore.kernel.org/r/20241209-fix-charge-current-limit-v1-1-760d9b8f2af3@liebherr.com
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_events.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/gpio-charger.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -283,7 +283,7 @@ struct trace_event_call {
- 	struct list_head	list;
- 	struct trace_event_class *class;
- 	union {
--		char			*name;
-+		const char		*name;
- 		/* Set TRACE_EVENT_FL_TRACEPOINT flag when using "tp" */
- 		struct tracepoint	*tp;
- 	};
+--- a/drivers/power/supply/gpio-charger.c
++++ b/drivers/power/supply/gpio-charger.c
+@@ -67,6 +67,14 @@ static int set_charge_current_limit(stru
+ 		if (gpio_charger->current_limit_map[i].limit_ua <= val)
+ 			break;
+ 	}
++
++	/*
++	 * If a valid charge current limit isn't found, default to smallest
++	 * current limitation for safety reasons.
++	 */
++	if (i >= gpio_charger->current_limit_map_size)
++		i = gpio_charger->current_limit_map_size - 1;
++
+ 	mapping = gpio_charger->current_limit_map[i];
+ 
+ 	for (i = 0; i < ndescs; i++) {
 
 
