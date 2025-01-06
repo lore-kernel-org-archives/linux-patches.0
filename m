@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD4B1DE2CE;
-	Mon,  6 Jan 2025 15:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD221DED77;
+	Mon,  6 Jan 2025 15:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178573; cv=none; b=ZTJzV/2K3ebyUGt9qCnpwBf/SXMeXuefNA4P4uqEgAtHiGwuH0OeeHx1JIRZiA4fSI2HquGfNl0s5+8b4Tb1FO8TsuafOHH2WijibkI0/YE3j0hpU4ybBzy2BXlnJ4a+NcZuWKlB4/rZ0h4NaQ9neDKpJMbRd9ccXYOQvlyNpvE=
+	t=1736178577; cv=none; b=cFUFfqxp4UGmztLQXujfMMwDqMpbtQQsNQTRfvQOCdlhd/QMyjZ8f7/l2kY3kxKYvLuMBOXtUCmuG/SvD9ie+4ImOocdSrIMBkhYCH9g42M+zNvLrYCU2fbQ2yWwVyrnmKezhGmUO0H8fG3quDUbat91uhXGosXydp7reP945L8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178573; c=relaxed/simple;
-	bh=tDAx+TGwYDLfbvVgW+DgyNw0H4qr1+eDvXuvzA11G0Y=;
+	s=arc-20240116; t=1736178577; c=relaxed/simple;
+	bh=ZH8NfqiNROEHZR9ZOGcV0EtT+6iwGhyyaedcZzNZV0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YonEQGNIMZpvTWiDHJAnGCAmTrIa0Wc9TYEsEQe6SgwLnk4DPHG9jb3UHcgdUErNyqaz1YK3bUioNij/UBnq7g97U2uqi4cRaQAe1jRlIkwjG+hy6xPm7qc4/f1M47oLa4BDjP1FmBRdDTjSm4JSVi2M7QeWPXbk/AsN33cXRrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IZGvEoEk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=er0fcEu4yVf2+6HQ8Dt0IB/oM2by4O7kxgqIZtXJNO6MHjlmf4ikTLNmqSBDUbTmCcZO5pD71qcvsK0Rd+N1/19x2oDto7jR4Tlfyz14IWOGsUAthIiLwy2t84vc3np81tdSytJMVNrO3qAiQ8NaUBag+GZ+RUamiy2g70EwF0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iMJhFJ4P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IZGvEoEk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04332C4CEDF;
-	Mon,  6 Jan 2025 15:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iMJhFJ4P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D573C4CED2;
+	Mon,  6 Jan 2025 15:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178573;
-	bh=tDAx+TGwYDLfbvVgW+DgyNw0H4qr1+eDvXuvzA11G0Y=;
+	s=korg; t=1736178576;
+	bh=ZH8NfqiNROEHZR9ZOGcV0EtT+6iwGhyyaedcZzNZV0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IZGvEoEk+PopR0ygnTkOfmuajuzxWzBuC3MsEp74FGNw5qbv9hBLubM9hnjkukR6z
-	 GXtZ5gQm80kj25LHCuDjcesG3VXrwj45BJ/NuNjR7CQkxFlcmACPCiagMhqtdnVcf0
-	 sm+FKUgxkJVlnUFFQw+5GFNmsddBc4ZMCE0RukjA=
+	b=iMJhFJ4PsJVA5oUq8rfcF/dTmzbHQb3/cGUByn54MAWaqU5k9zFo1tuoIlHtJwIiP
+	 FaGE6yg7XIMK3n9EnPhUvsyBwObeBIkbndR8qhBf1PCuZ3ZfcJAgVun/YR7wDarvsX
+	 0vfEkOKvzO68S9GfT9Ao8fV/YBdLyMq5VqU9bP+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Shete <pshete@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 024/168] mmc: sdhci-tegra: Remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk
-Date: Mon,  6 Jan 2025 16:15:32 +0100
-Message-ID: <20250106151139.376473205@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 025/168] chelsio/chtls: prevent potential integer overflow on 32bit
+Date: Mon,  6 Jan 2025 16:15:33 +0100
+Message-ID: <20250106151139.413501051@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -52,35 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit a56335c85b592cb2833db0a71f7112b7d9f0d56b upstream.
+commit fbbd84af6ba70334335bdeba3ae536cf751c14c6 upstream.
 
-Value 0 in ADMA length descriptor is interpreted as 65536 on new Tegra
-chips, remove SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC quirk to make sure max
-ADMA2 length is 65536.
+The "gl->tot_len" variable is controlled by the user.  It comes from
+process_responses().  On 32bit systems, the "gl->tot_len +
+sizeof(struct cpl_pass_accept_req) + sizeof(struct rss_header)" addition
+could have an integer wrapping bug.  Use size_add() to prevent this.
 
-Fixes: 4346b7c7941d ("mmc: tegra: Add Tegra186 support")
+Fixes: a08943947873 ("crypto: chtls - Register chtls with net tls")
 Cc: stable@vger.kernel.org
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Message-ID: <20241209101009.22710-1-pshete@nvidia.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/c6bfb23c-2db2-4e1b-b8ab-ba3925c82ef5@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-tegra.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci-tegra.c
-+++ b/drivers/mmc/host/sdhci-tegra.c
-@@ -1382,7 +1382,6 @@ static const struct sdhci_pltfm_data sdh
- 		  SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK |
- 		  SDHCI_QUIRK_SINGLE_POWER_WRITE |
- 		  SDHCI_QUIRK_NO_HISPD_BIT |
--		  SDHCI_QUIRK_BROKEN_ADMA_ZEROLEN_DESC |
- 		  SDHCI_QUIRK_CAP_CLOCK_BASE_BROKEN,
- 	.quirks2 = SDHCI_QUIRK2_PRESET_VALUE_BROKEN |
- 		   SDHCI_QUIRK2_BROKEN_HS200 |
+--- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_main.c
++++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_main.c
+@@ -346,8 +346,9 @@ static struct sk_buff *copy_gl_to_skb_pk
+ 	 * driver. Once driver synthesizes cpl_pass_accpet_req the skb will go
+ 	 * through the regular cpl_pass_accept_req processing in TOM.
+ 	 */
+-	skb = alloc_skb(gl->tot_len + sizeof(struct cpl_pass_accept_req)
+-			- pktshift, GFP_ATOMIC);
++	skb = alloc_skb(size_add(gl->tot_len,
++				 sizeof(struct cpl_pass_accept_req)) -
++			pktshift, GFP_ATOMIC);
+ 	if (unlikely(!skb))
+ 		return NULL;
+ 	__skb_put(skb, gl->tot_len + sizeof(struct cpl_pass_accept_req)
 
 
