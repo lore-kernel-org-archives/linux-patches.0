@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5B81DC9AD;
-	Mon,  6 Jan 2025 15:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210781DA100;
+	Mon,  6 Jan 2025 15:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178307; cv=none; b=qYYIrDlIqdM6BAd+tRV/cKRI6Jffth6rnzXRL+SYJJ9CEJVLUaAw5g9R2WQEHe9xQYjiooS5Shgb+LE9SCSCbGU+53uRwc4olPkDbCNgmGSORdub6jratu4c9hNbld/XdWbUlYe08wppIFjOEN+wtsennEyluYRr5PKs30WzYSs=
+	t=1736178311; cv=none; b=Y+gcNZDg0YNvwemv32ZB0/TnawCKlyPvYQEjzriXyaNQ+WNhFaobDdXV0lzrUbpvxDR4EoOkjCZYO4kC+5Uqtkp2fCGJo1zydsADUv+LVdK1Ra3oCQ+2/ORFmS4aQqW+PmW1BbTMTXGPWqJFTJA2ICQq2e0Q9bJAfepXXX+QqKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178307; c=relaxed/simple;
-	bh=gBq02eoNxMubUIs08iXEq/xfibTnrFx3GYRzCHNlRCc=;
+	s=arc-20240116; t=1736178311; c=relaxed/simple;
+	bh=7K7jkLl0jj7jR8GQbEBKYMhPxqD6z3Xji2Znk1r5ebo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBNHQgarzr6F/oKhhxwB/sQeC/3g66WRh1a/q26mi7k4R4j4dUUw/mkYcf750Cub/qN6YYVIHsU5EAZ56gdebD+9T9iwU58DThQ8JfyKK1mhPFNQL246/TARaiXdT/tWHddg1xvRDOIwENxyymK5Lpv5YyFLzIOut3F16OF3leY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2BM78Ow; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T+lscRQPVAzXyb+tfeu4/Uu+DnSznPcA8DA72cLaOXjyrAckrZdHcXHrMb5UuCTAS7Gtzkga4NyG7QQNz182Fe8Z3XuUeUoAmPIvhpeSs6Vy1YXMUz2sKvAZgOxTp2hhVBhg0hzfwTDMNkoYXz7V4OYP+3uB4AqbsQ0OX8fPXIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBhgcWue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2BM78Ow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD60C4CED2;
-	Mon,  6 Jan 2025 15:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBhgcWue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68921C4CED2;
+	Mon,  6 Jan 2025 15:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178307;
-	bh=gBq02eoNxMubUIs08iXEq/xfibTnrFx3GYRzCHNlRCc=;
+	s=korg; t=1736178311;
+	bh=7K7jkLl0jj7jR8GQbEBKYMhPxqD6z3Xji2Znk1r5ebo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n2BM78OwwW7DHMTIou3wBDE1pV8sIXwdvse0hEZUHqZF6hWk85ad4x86o4/snIlGS
-	 uOYpqU/CB/iWjohKTPun+segdIuWK9OxTbGCo4Ax9tu4CtLBQPfaR9HE9wPhFGujHY
-	 xkHemKcZ7N32D6NkWgnf1sLqlvTLq9TudbRlLtyY=
+	b=jBhgcWue9keo42+NH7L47KhRZsW/0kLg2PR+01u1aYdSax/eYgR67qXstqkwDBE/Y
+	 GTUx5MeXLNRlrrKWb1kg4DnTOU7q9J0Rj9fDnm9NWqDI3SImydy1EO/M25F7wU8kxK
+	 zt2aR2UdwI/HaAQlONPzwaF2lMj475OI02FPUL64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Whitchurch <vincent.whitchurch@datadoghq.com>,
-	Jiayuan Chen <mrpre@163.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Srish Srinivasan <srishwap4@gmail.com>
-Subject: [PATCH 5.10 074/138] bpf: fix recursive lock when verdict program return SK_PASS
-Date: Mon,  6 Jan 2025 16:16:38 +0100
-Message-ID: <20250106151136.035157711@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 075/138] drm/dp_mst: Fix MST sideband message body length check
+Date: Mon,  6 Jan 2025 16:16:39 +0100
+Message-ID: <20250106151136.073160111@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -55,67 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit 8ca2a1eeadf09862190b2810697702d803ceef2d upstream.
+[ Upstream commit bd2fccac61b40eaf08d9546acc9fef958bfe4763 ]
 
-When the stream_verdict program returns SK_PASS, it places the received skb
-into its own receive queue, but a recursive lock eventually occurs, leading
-to an operating system deadlock. This issue has been present since v6.9.
+Fix the MST sideband message body length check, which must be at least 1
+byte accounting for the message body CRC (aka message data CRC) at the
+end of the message.
 
-'''
-sk_psock_strp_data_ready
-    write_lock_bh(&sk->sk_callback_lock)
-    strp_data_ready
-      strp_read_sock
-        read_sock -> tcp_read_sock
-          strp_recv
-            cb.rcv_msg -> sk_psock_strp_read
-              # now stream_verdict return SK_PASS without peer sock assign
-              __SK_PASS = sk_psock_map_verd(SK_PASS, NULL)
-              sk_psock_verdict_apply
-                sk_psock_skb_ingress_self
-                  sk_psock_skb_ingress_enqueue
-                    sk_psock_data_ready
-                      read_lock_bh(&sk->sk_callback_lock) <= dead lock
+This fixes a case where an MST branch device returns a header with a
+correct header CRC (indicating a correctly received body length), with
+the body length being incorrectly set to 0. This will later lead to a
+memory corruption in drm_dp_sideband_append_payload() and the following
+errors in dmesg:
 
-'''
+   UBSAN: array-index-out-of-bounds in drivers/gpu/drm/display/drm_dp_mst_topology.c:786:25
+   index -1 is out of range for type 'u8 [48]'
+   Call Trace:
+    drm_dp_sideband_append_payload+0x33d/0x350 [drm_display_helper]
+    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
+    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
 
-This topic has been discussed before, but it has not been fixed.
-Previous discussion:
-https://lore.kernel.org/all/6684a5864ec86_403d20898@john.notmuch
+   memcpy: detected field-spanning write (size 18446744073709551615) of single field "&msg->msg[msg->curlen]" at drivers/gpu/drm/display/drm_dp_mst_topology.c:791 (size 256)
+   Call Trace:
+    drm_dp_sideband_append_payload+0x324/0x350 [drm_display_helper]
+    drm_dp_get_one_sb_msg+0x3ce/0x5f0 [drm_display_helper]
+    drm_dp_mst_hpd_irq_handle_event+0xc8/0x1580 [drm_display_helper]
 
-Fixes: 6648e613226e ("bpf, skmsg: Fix NULL pointer dereference in sk_psock_skb_ingress_enqueue")
-Reported-by: Vincent Whitchurch <vincent.whitchurch@datadoghq.com>
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20241118030910.36230-2-mrpre@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[srish: Apply to stable branch linux-5.10.y]
-Signed-off-by: Srish Srinivasan <srishwap4@gmail.com>
+Cc: <stable@vger.kernel.org>
+Cc: Lyude Paul <lyude@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241125205314.1725887-1-imre.deak@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skmsg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index 51792dda1b73..890e16bbc072 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -940,9 +940,9 @@ static void sk_psock_strp_data_ready(struct sock *sk)
- 		if (tls_sw_has_ctx_rx(sk)) {
- 			psock->parser.saved_data_ready(sk);
- 		} else {
--			write_lock_bh(&sk->sk_callback_lock);
-+			read_lock_bh(&sk->sk_callback_lock);
- 			strp_data_ready(&psock->parser.strp);
--			write_unlock_bh(&sk->sk_callback_lock);
-+			read_unlock_bh(&sk->sk_callback_lock);
- 		}
- 	}
- 	rcu_read_unlock();
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index 27305f339881..0eb2f30c1e3e 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -318,6 +318,9 @@ static bool drm_dp_decode_sideband_msg_hdr(struct drm_dp_sideband_msg_hdr *hdr,
+ 	hdr->broadcast = (buf[idx] >> 7) & 0x1;
+ 	hdr->path_msg = (buf[idx] >> 6) & 0x1;
+ 	hdr->msg_len = buf[idx] & 0x3f;
++	if (hdr->msg_len < 1)		/* min space for body CRC */
++		return false;
++
+ 	idx++;
+ 	hdr->somt = (buf[idx] >> 7) & 0x1;
+ 	hdr->eomt = (buf[idx] >> 6) & 0x1;
 -- 
 2.39.5
 
