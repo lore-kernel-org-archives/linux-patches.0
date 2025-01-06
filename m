@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750A8634A;
-	Mon,  6 Jan 2025 15:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1233060890;
+	Mon,  6 Jan 2025 15:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178123; cv=none; b=GBSu6hgtgSOgS+PQlKb0QRvAExmogtGrD8rzZyY/AAcaTDny8xZXQ7CeGAgNgDpJ8RsGxgrUlvgxn86rSIU961UbZzp3ylO7JUaX10umX+4XO8uk1AoDPqrHFM66OcJlDB6cM41RhtjKstyerdOO6ijcokNIJlW2dg6KTLc+wUo=
+	t=1736178127; cv=none; b=N3CQ94sVlHdKbkrYg6Z/HlXJgIICPbwuPlIad/8iEDJ/XONUA+z6zUeie5P+d3/sUIKLr3PyXxNyeyw2JdlzJ6RVDebr6zAPBK+BmUaN+uvLVUsz2JMmNk/8YX4JhcZ3dg4VUIfPVBdCiQFBvhi7PuV2Xpg5/DsSewfITVWLXj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178123; c=relaxed/simple;
-	bh=XZBoBPFN4B8HBtZmAISGQ6FPUdE62NcO2vF8822rEX4=;
+	s=arc-20240116; t=1736178127; c=relaxed/simple;
+	bh=pMg1fGS7f4UH7lJn/bRBHz4JABjaTkbmV+Zxf26TcPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2ruwqw6bmAmeQGVSLdzeOzYKxketz+2AFJIVRBbl+9eNcalQ6V2a+g/EZK0FjZs+8tqb3hGa/ZAYzCYGSskExcAIRLk/MFW19aVHlvdPLMPqds6I04AuAsm78cChOs4ogd2eluzROcdkOY3R36hCUchvHKOEIGCt8fTsqzo0eQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnRgnVZv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KiFuKYOa315IEJQPZ1tP6uOmgCZLiylUw4A2Rc4qbYiVa7g3jVglKB5tkb5DupvxD5mZZFciGq255LjkApp11k8JUewVwxex6J3BbyRASJNkNDY5BIJoE/hFY2PM0IWpna2bJ9KNuHFrgJwGaY8LqXvxMCZwXOzEeOUh5jyhMus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WuzmeHTf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnRgnVZv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C973C4CED6;
-	Mon,  6 Jan 2025 15:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WuzmeHTf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4634DC4CED2;
+	Mon,  6 Jan 2025 15:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178123;
-	bh=XZBoBPFN4B8HBtZmAISGQ6FPUdE62NcO2vF8822rEX4=;
+	s=korg; t=1736178126;
+	bh=pMg1fGS7f4UH7lJn/bRBHz4JABjaTkbmV+Zxf26TcPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnRgnVZvLQLIzPs51Lo+5PSbsndJ6JgU+Q9Ausq813MpAUpYPBFWFvxNQV+js7Ygy
-	 7NhrI44B7Mi5zNQMfjDT1jgmOdFPMriBvW1l4mZZDBNQ16PXEXqlUt1VZJ7LMcQvk6
-	 SbfkUDzsyxFwXW+iaDzK1qtfRKHV5NCF7sAQ+6Qg=
+	b=WuzmeHTf4svypjdJmBBqdzIYMEuaBDQ4EZP7cGFQYos3YAJoLJwS+cO7zcy+Cojdq
+	 zJKqko3enUKWdWRwLHQCbMMpsGC3ZTMshW5zyXxacxh7uCOcP6hfB4RDQ9EPNdXc69
+	 SUMwTyY1zljlLMIM3gZbSH72IBUjq6/WxdQ5bipI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"D. Wythe" <alibuda@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/138] net/smc: check iparea_offset and ipv6_prefixes_cnt when receiving proposal msg
-Date: Mon,  6 Jan 2025 16:15:37 +0100
-Message-ID: <20250106151133.720655575@linuxfoundation.org>
+Subject: [PATCH 5.10 014/138] net/smc: check return value of sock_recvmsg when draining clc data
+Date: Mon,  6 Jan 2025 16:15:38 +0100
+Message-ID: <20250106151133.758201499@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -55,85 +55,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit a29e220d3c8edbf0e1beb0f028878a4a85966556 ]
+[ Upstream commit c5b8ee5022a19464783058dc6042e8eefa34e8cd ]
 
-When receiving proposal msg in server, the field iparea_offset
-and the field ipv6_prefixes_cnt in proposal msg are from the
-remote client and can not be fully trusted. Especially the
-field iparea_offset, once exceed the max value, there has the
-chance to access wrong address, and crash may happen.
+When receiving clc msg, the field length in smc_clc_msg_hdr indicates the
+length of msg should be received from network and the value should not be
+fully trusted as it is from the network. Once the value of length exceeds
+the value of buflen in function smc_clc_wait_msg it may run into deadloop
+when trying to drain the remaining data exceeding buflen.
 
-This patch checks iparea_offset and ipv6_prefixes_cnt before using them.
+This patch checks the return value of sock_recvmsg when draining data in
+case of deadloop in draining.
 
-Fixes: e7b7a64a8493 ("smc: support variable CLC proposal messages")
+Fixes: fb4f79264c0f ("net/smc: tolerate future SMCD versions")
 Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 Reviewed-by: Wen Gu <guwen@linux.alibaba.com>
 Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/af_smc.c  | 6 +++++-
- net/smc/smc_clc.c | 4 ++++
- net/smc/smc_clc.h | 6 +++++-
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ net/smc/smc_clc.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
-index 3a4ae589671a..0e0a12f4bb61 100644
---- a/net/smc/af_smc.c
-+++ b/net/smc/af_smc.c
-@@ -1422,6 +1422,8 @@ static int smc_listen_prfx_check(struct smc_sock *new_smc,
- 	if (pclc->hdr.typev1 == SMC_TYPE_N)
- 		return 0;
- 	pclc_prfx = smc_clc_proposal_get_prefix(pclc);
-+	if (!pclc_prfx)
-+		return -EPROTO;
- 	if (smc_clc_prfx_match(newclcsock, pclc_prfx))
- 		return SMC_CLC_DECL_DIFFPREFIX;
- 
-@@ -1578,7 +1580,9 @@ static void smc_find_ism_v1_device_serv(struct smc_sock *new_smc,
- 	struct smc_clc_msg_smcd *pclc_smcd = smc_get_clc_msg_smcd(pclc);
- 
- 	/* check if ISM V1 is available */
--	if (!(ini->smcd_version & SMC_V1) || !smcd_indicated(ini->smc_type_v1))
-+	if (!(ini->smcd_version & SMC_V1) ||
-+	    !smcd_indicated(ini->smc_type_v1) ||
-+	    !pclc_smcd)
- 		goto not_found;
- 	ini->is_smcd = true; /* prepare ISM check */
- 	ini->ism_peer_gid[0] = ntohll(pclc_smcd->ism.gid);
 diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
-index 5ee5b2ce29a6..32cbdc321aec 100644
+index 32cbdc321aec..2aa69e29fa1d 100644
 --- a/net/smc/smc_clc.c
 +++ b/net/smc/smc_clc.c
-@@ -49,6 +49,10 @@ static bool smc_clc_msg_prop_valid(struct smc_clc_msg_proposal *pclc)
- 
- 	v2_ext = smc_get_clc_v2_ext(pclc);
- 	pclc_prfx = smc_clc_proposal_get_prefix(pclc);
-+	if (!pclc_prfx ||
-+	    pclc_prfx->ipv6_prefixes_cnt > SMC_CLC_MAX_V6_PREFIX)
-+		return false;
-+
- 	if (hdr->version == SMC_V1) {
- 		if (hdr->typev1 == SMC_TYPE_N)
- 			return false;
-diff --git a/net/smc/smc_clc.h b/net/smc/smc_clc.h
-index c579d1d5995a..a57a3489df4a 100644
---- a/net/smc/smc_clc.h
-+++ b/net/smc/smc_clc.h
-@@ -259,8 +259,12 @@ struct smc_clc_msg_decline {	/* clc decline message */
- static inline struct smc_clc_msg_proposal_prefix *
- smc_clc_proposal_get_prefix(struct smc_clc_msg_proposal *pclc)
- {
-+	u16 offset = ntohs(pclc->iparea_offset);
-+
-+	if (offset > sizeof(struct smc_clc_msg_smcd))
-+		return NULL;
- 	return (struct smc_clc_msg_proposal_prefix *)
--	       ((u8 *)pclc + sizeof(*pclc) + ntohs(pclc->iparea_offset));
-+	       ((u8 *)pclc + sizeof(*pclc) + offset);
- }
- 
- static inline bool smcr_indicated(int smc_type)
+@@ -427,6 +427,11 @@ int smc_clc_wait_msg(struct smc_sock *smc, void *buf, int buflen,
+ 						SMC_CLC_RECV_BUF_LEN : datlen;
+ 		iov_iter_kvec(&msg.msg_iter, READ, &vec, 1, recvlen);
+ 		len = sock_recvmsg(smc->clcsock, &msg, krflags);
++		if (len < recvlen) {
++			smc->sk.sk_err = EPROTO;
++			reason_code = -EPROTO;
++			goto out;
++		}
+ 		datlen -= len;
+ 	}
+ 	if (clcm->type == SMC_CLC_DECLINE) {
 -- 
 2.39.5
 
