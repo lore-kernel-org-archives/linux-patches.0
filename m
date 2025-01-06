@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC2D200A3;
-	Mon,  6 Jan 2025 15:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22B0200A3;
+	Mon,  6 Jan 2025 15:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176753; cv=none; b=MAV1l/W6ydSfQyW0naY7O1sayKjpiGdGb8aYUWB6w6bZMX4y5l2x705qQBTGe9ih04iRxQeEyUTHPqWSneuCGYEiZD6TzIsLln6StmmSlSlHhYfIejhZbEf2gHzAGJf1/uPiqTAYh/SxCRYUUZDWCDApBPoQbrvc95uZLCmByTE=
+	t=1736176755; cv=none; b=K0fP4fvd6CiF2Fi/aubxojqyPqaPvf+G1Nn+w6W/1En1CzqJ1ZA3Hd7ndj9PtJDixoE0PAVf7hJs1r4v+7mMFmwe1/zT/cudBBqVao9tXcqmy7MdS3oSyUVBEw3diJacO2ISt/I+0/joGg5PVGkGO0rrrgyBuvQWprErte34Th4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176753; c=relaxed/simple;
-	bh=f2+e1Qxm6qPC3nZUws/AwdxLHrnJ1foXf/fke2QocOM=;
+	s=arc-20240116; t=1736176755; c=relaxed/simple;
+	bh=grYxUht7Mw7sKLOge8RdEIAAohcXmajlNFDpX0cfDMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=btCGXrwwTobfUDyXrf3iTkcqSG2bPlwFzACbRlhhrGKasvat6705f7cR9aEdA8DByP40qzy4HaGJygGEsws8RekWKnFxEUTkBTtyd6AeK7DVzmWLqx03AmufD6z+WmrYvJ63GCjzs4qoxmmnw+suM9CLU7mWjnZ3JeiIhLz6Y5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSobjZeT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rkCQd1BwP52zDlRZQ5UjMfv2jRBQRlSrtBjhTGPdtjx2+40YpkZFgz7GxV50CsZ/ky0DLSf4CjQwB0X/3PignlyytyO1qu+tzkx1Lq7FUYZLMiuoax8Zoaf1V6ce7xcdtnM5+2rOTb3b+Cm7RHe6jA6UQqiTZUKnI3wVwPLLfKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRSgZRBF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSobjZeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B75DC4CED2;
-	Mon,  6 Jan 2025 15:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRSgZRBF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7B9C4CEE1;
+	Mon,  6 Jan 2025 15:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176752;
-	bh=f2+e1Qxm6qPC3nZUws/AwdxLHrnJ1foXf/fke2QocOM=;
+	s=korg; t=1736176755;
+	bh=grYxUht7Mw7sKLOge8RdEIAAohcXmajlNFDpX0cfDMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSobjZeTu3BTErBXiMJdOxOmk5PDsgXCX2pfUpJ9393egVIWojw2cFkK3EcBHAa8u
-	 d2WWgXEHwxTbvksg08liqEvN/l6I3h6BxjPZPgWMkQ/v++8Dc95I7nqlq8Z/6PV2/H
-	 Y3G2S5rYsfz+QpWBt/SaJGJqvyTTFO1xmQUxEdyE=
+	b=MRSgZRBF8XZWJb0AICJu7ZSYARcaO2In79j1F2ZSfkLWF1YF4JcdiH2/vTGAqoi5/
+	 2eyYKWkEBrpIGOQ50QUjupkbfY8H9iIbFcMsCjBRN04ARn4pQWR/rsF1/kmKbhF004
+	 O033qU5DgMF4Nay8DrHMHN5ohHtjoC3C9yKWg6EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Damien Le Moal <Damien.LeMoal@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.1 03/81] btrfs: fix use-after-free in btrfs_encoded_read_endio()
-Date: Mon,  6 Jan 2025 16:15:35 +0100
-Message-ID: <20250106151129.566579674@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Genes Lists <lists@sapience.com>,
+	Gene C <arch@sapience.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 04/81] tracing: Have process_string() also allow arrays
+Date: Mon,  6 Jan 2025 16:15:36 +0100
+Message-ID: <20250106151129.604915682@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -55,211 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 05b36b04d74a517d6675bf2f90829ff1ac7e28dc upstream.
+commit afc6717628f959941d7b33728570568b4af1c4b8 upstream.
 
-Shinichiro reported the following use-after free that sometimes is
-happening in our CI system when running fstests' btrfs/284 on a TCMU
-runner device:
+In order to catch a common bug where a TRACE_EVENT() TP_fast_assign()
+assigns an address of an allocated string to the ring buffer and then
+references it in TP_printk(), which can be executed hours later when the
+string is free, the function test_event_printk() runs on all events as
+they are registered to make sure there's no unwanted dereferencing.
 
-  BUG: KASAN: slab-use-after-free in lock_release+0x708/0x780
-  Read of size 8 at addr ffff888106a83f18 by task kworker/u80:6/219
+It calls process_string() to handle cases in TP_printk() format that has
+"%s". It returns whether or not the string is safe. But it can have some
+false positives.
 
-  CPU: 8 UID: 0 PID: 219 Comm: kworker/u80:6 Not tainted 6.12.0-rc6-kts+ #15
-  Hardware name: Supermicro Super Server/X11SPi-TF, BIOS 3.3 02/21/2020
-  Workqueue: btrfs-endio btrfs_end_bio_work [btrfs]
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x6e/0xa0
-   ? lock_release+0x708/0x780
-   print_report+0x174/0x505
-   ? lock_release+0x708/0x780
-   ? __virt_addr_valid+0x224/0x410
-   ? lock_release+0x708/0x780
-   kasan_report+0xda/0x1b0
-   ? lock_release+0x708/0x780
-   ? __wake_up+0x44/0x60
-   lock_release+0x708/0x780
-   ? __pfx_lock_release+0x10/0x10
-   ? __pfx_do_raw_spin_lock+0x10/0x10
-   ? lock_is_held_type+0x9a/0x110
-   _raw_spin_unlock_irqrestore+0x1f/0x60
-   __wake_up+0x44/0x60
-   btrfs_encoded_read_endio+0x14b/0x190 [btrfs]
-   btrfs_check_read_bio+0x8d9/0x1360 [btrfs]
-   ? lock_release+0x1b0/0x780
-   ? trace_lock_acquire+0x12f/0x1a0
-   ? __pfx_btrfs_check_read_bio+0x10/0x10 [btrfs]
-   ? process_one_work+0x7e3/0x1460
-   ? lock_acquire+0x31/0xc0
-   ? process_one_work+0x7e3/0x1460
-   process_one_work+0x85c/0x1460
-   ? __pfx_process_one_work+0x10/0x10
-   ? assign_work+0x16c/0x240
-   worker_thread+0x5e6/0xfc0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0x2c3/0x3a0
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x31/0x70
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+For instance, xe_bo_move() has:
 
-  Allocated by task 3661:
-   kasan_save_stack+0x30/0x50
-   kasan_save_track+0x14/0x30
-   __kasan_kmalloc+0xaa/0xb0
-   btrfs_encoded_read_regular_fill_pages+0x16c/0x6d0 [btrfs]
-   send_extent_data+0xf0f/0x24a0 [btrfs]
-   process_extent+0x48a/0x1830 [btrfs]
-   changed_cb+0x178b/0x2ea0 [btrfs]
-   btrfs_ioctl_send+0x3bf9/0x5c20 [btrfs]
-   _btrfs_ioctl_send+0x117/0x330 [btrfs]
-   btrfs_ioctl+0x184a/0x60a0 [btrfs]
-   __x64_sys_ioctl+0x12e/0x1a0
-   do_syscall_64+0x95/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ TP_printk("move_lacks_source:%s, migrate object %p [size %zu] from %s to %s device_id:%s",
+            __entry->move_lacks_source ? "yes" : "no", __entry->bo, __entry->size,
+            xe_mem_type_to_name[__entry->old_placement],
+            xe_mem_type_to_name[__entry->new_placement], __get_str(device_id))
 
-  Freed by task 3661:
-   kasan_save_stack+0x30/0x50
-   kasan_save_track+0x14/0x30
-   kasan_save_free_info+0x3b/0x70
-   __kasan_slab_free+0x4f/0x70
-   kfree+0x143/0x490
-   btrfs_encoded_read_regular_fill_pages+0x531/0x6d0 [btrfs]
-   send_extent_data+0xf0f/0x24a0 [btrfs]
-   process_extent+0x48a/0x1830 [btrfs]
-   changed_cb+0x178b/0x2ea0 [btrfs]
-   btrfs_ioctl_send+0x3bf9/0x5c20 [btrfs]
-   _btrfs_ioctl_send+0x117/0x330 [btrfs]
-   btrfs_ioctl+0x184a/0x60a0 [btrfs]
-   __x64_sys_ioctl+0x12e/0x1a0
-   do_syscall_64+0x95/0x180
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Where the "%s" references into xe_mem_type_to_name[]. This is an array of
+pointers that should be safe for the event to access. Instead of flagging
+this as a bad reference, if a reference points to an array, where the
+record field is the index, consider it safe.
 
-  The buggy address belongs to the object at ffff888106a83f00
-   which belongs to the cache kmalloc-rnd-07-96 of size 96
-  The buggy address is located 24 bytes inside of
-   freed 96-byte region [ffff888106a83f00, ffff888106a83f60)
+Link: https://lore.kernel.org/all/9dee19b6185d325d0e6fa5f7cbba81d007d99166.camel@sapience.com/
 
-  The buggy address belongs to the physical page:
-  page: refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff888106a83800 pfn:0x106a83
-  flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
-  page_type: f5(slab)
-  raw: 0017ffffc0000000 ffff888100053680 ffffea0004917200 0000000000000004
-  raw: ffff888106a83800 0000000080200019 00000001f5000000 0000000000000000
-  page dumped because: kasan: bad access detected
-
-  Memory state around the buggy address:
-   ffff888106a83e00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-   ffff888106a83e80: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-  >ffff888106a83f00: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-                              ^
-   ffff888106a83f80: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-   ffff888106a84000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  ==================================================================
-
-Further analyzing the trace and the crash dump's vmcore file shows that
-the wake_up() call in btrfs_encoded_read_endio() is calling wake_up() on
-the wait_queue that is in the private data passed to the end_io handler.
-
-Commit 4ff47df40447 ("btrfs: move priv off stack in
-btrfs_encoded_read_regular_fill_pages()") moved 'struct
-btrfs_encoded_read_private' off the stack.
-
-Before that commit one can see a corruption of the private data when
-analyzing the vmcore after a crash:
-
-*(struct btrfs_encoded_read_private *)0xffff88815626eec8 = {
-	.wait = (wait_queue_head_t){
-		.lock = (spinlock_t){
-			.rlock = (struct raw_spinlock){
-				.raw_lock = (arch_spinlock_t){
-					.val = (atomic_t){
-						.counter = (int)-2005885696,
-					},
-					.locked = (u8)0,
-					.pending = (u8)157,
-					.locked_pending = (u16)40192,
-					.tail = (u16)34928,
-				},
-				.magic = (unsigned int)536325682,
-				.owner_cpu = (unsigned int)29,
-				.owner = (void *)__SCT__tp_func_btrfs_transaction_commit+0x0 = 0x0,
-				.dep_map = (struct lockdep_map){
-					.key = (struct lock_class_key *)0xffff8881575a3b6c,
-					.class_cache = (struct lock_class *[2]){ 0xffff8882a71985c0, 0xffffea00066f5d40 },
-					.name = (const char *)0xffff88815626f100 = "",
-					.wait_type_outer = (u8)37,
-					.wait_type_inner = (u8)178,
-					.lock_type = (u8)154,
-				},
-			},
-			.__padding = (u8 [24]){ 0, 157, 112, 136, 50, 174, 247, 31, 29 },
-			.dep_map = (struct lockdep_map){
-				.key = (struct lock_class_key *)0xffff8881575a3b6c,
-				.class_cache = (struct lock_class *[2]){ 0xffff8882a71985c0, 0xffffea00066f5d40 },
-				.name = (const char *)0xffff88815626f100 = "",
-				.wait_type_outer = (u8)37,
-				.wait_type_inner = (u8)178,
-				.lock_type = (u8)154,
-			},
-		},
-		.head = (struct list_head){
-			.next = (struct list_head *)0x112cca,
-			.prev = (struct list_head *)0x47,
-		},
-	},
-	.pending = (atomic_t){
-		.counter = (int)-1491499288,
-	},
-	.status = (blk_status_t)130,
-}
-
-Here we can see several indicators of in-memory data corruption, e.g. the
-large negative atomic values of ->pending or
-->wait->lock->rlock->raw_lock->val, as well as the bogus spinlock magic
-0x1ff7ae32 (decimal 536325682 above) instead of 0xdead4ead or the bogus
-pointer values for ->wait->head.
-
-To fix this, change atomic_dec_return() to atomic_dec_and_test() to fix the
-corruption, as atomic_dec_return() is defined as two instructions on
-x86_64, whereas atomic_dec_and_test() is defined as a single atomic
-operation. This can lead to a situation where counter value is already
-decremented but the if statement in btrfs_encoded_read_endio() is not
-completely processed, i.e. the 0 test has not completed. If another thread
-continues executing btrfs_encoded_read_regular_fill_pages() the
-atomic_dec_return() there can see an already updated ->pending counter and
-continues by freeing the private data. Continuing in the endio handler the
-test for 0 succeeds and the wait_queue is woken up, resulting in a
-use-after-free.
-
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Suggested-by: Damien Le Moal <Damien.LeMoal@wdc.com>
-Fixes: 1881fba89bd5 ("btrfs: add BTRFS_IOC_ENCODED_READ ioctl")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241231000646.324fb5f7@gandalf.local.home
+Fixes: 65a25d9f7ac02 ("tracing: Add "%s" check in test_event_printk()")
+Reported-by: Genes Lists <lists@sapience.com>
+Tested-by: Gene C <arch@sapience.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/inode.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/trace_events.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -10469,7 +10469,7 @@ static void btrfs_encoded_read_endio(str
- 		 */
- 		WRITE_ONCE(priv->status, status);
- 	}
--	if (!atomic_dec_return(&priv->pending))
-+	if (atomic_dec_and_test(&priv->pending))
- 		wake_up(&priv->wait);
- 	btrfs_bio_free_csum(bbio);
- 	bio_put(&bbio->bio);
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -359,6 +359,18 @@ static bool process_string(const char *f
+ 	} while (s < e);
+ 
+ 	/*
++	 * Check for arrays. If the argument has: foo[REC->val]
++	 * then it is very likely that foo is an array of strings
++	 * that are safe to use.
++	 */
++	r = strstr(s, "[");
++	if (r && r < e) {
++		r = strstr(r, "REC->");
++		if (r && r < e)
++			return true;
++	}
++
++	/*
+ 	 * If there's any strings in the argument consider this arg OK as it
+ 	 * could be: REC->field ? "foo" : "bar" and we don't want to get into
+ 	 * verifying that logic here.
 
 
