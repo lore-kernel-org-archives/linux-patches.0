@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977FDBA34;
-	Mon,  6 Jan 2025 15:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712731422DD;
+	Mon,  6 Jan 2025 15:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178474; cv=none; b=ZsKhB/QPYkgSy8FgG+tJFQ3a5Ad+ysqCq5tdzBlzONS+p9mmrQk38bOMAe8vkr5VMBi30eSy85c9jaN97+U7hpoHrQfbQpc9WPCLaAAaeFpNyJIq5HXqGKc1TTh91zSBKIFDopOFScnLqV8lYkpURiC9QOeBScQhBN9lq05vF0g=
+	t=1736178477; cv=none; b=cp1Db96V2NfvLEq0oIDOp8mDnGeuax7IB+Hc+zwnjuSMTJYFcJHQLCMckEG1k9rY07eytYrYqFIb3JEvqzEoMsawDk5QDwbnMS0n5zpP2ZaPyaxSpYuVRkyivsQuT1WYOIMJ7VsX9EgpdCi8vJ9ZPubsoQtdbdMmLTnHVE0+mak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178474; c=relaxed/simple;
-	bh=6DH+M7RV+JR6vJdDN81trnO5QHAMDCP7Ot9nFyULSv0=;
+	s=arc-20240116; t=1736178477; c=relaxed/simple;
+	bh=SlJumpOQNkFYFPdABzaP6uzn/WN6ACTV907UcBeq4JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RVpK9xkYoCTkl1uJHbzSO4rUB5OWar952Z/jLBUH2JuFHFVRtS9UUpLiY7c96COHsaz8IRYLsvuZB897Ub5rrJu1PhhLtqB/561NuU23efGi/LA/uIBrOtT11uWiOkS50tsP4J7pKKeFXL/mfw2t4AwwFRi8HaD0wkej6ElBTZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0JUAH4U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MtcYMFWMNB97eILAfv20DF21SEH/9eKZghD9FB5CcblwY50/mya4fce0wVeEhgFyV2FBSeuHN/6w/O3eFSvFV9Im/j7p7xs7gkUALdLdKDCiLeT3+hypjulWwqb+bipazkKOTkV62HdBQrx6zcpG9HtRfLy9ERLaWV2d8UwAa9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqSkiBts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0JUAH4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F83FC4CED2;
-	Mon,  6 Jan 2025 15:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqSkiBts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE2AC4CED2;
+	Mon,  6 Jan 2025 15:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178474;
-	bh=6DH+M7RV+JR6vJdDN81trnO5QHAMDCP7Ot9nFyULSv0=;
+	s=korg; t=1736178477;
+	bh=SlJumpOQNkFYFPdABzaP6uzn/WN6ACTV907UcBeq4JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0JUAH4UoEhWGtc5vEK55vA6jn52Psuhg0ARoKL3nxiCubgthHIkqy8dl56NSlRcL
-	 7dLkxwLtjiPwv1kHTvz/0G/urtNpX/NB7jJFLuruKFwc5IDnS3cOlzMpqJMuq29SJA
-	 UqZqSZjindacurPzY5q4ZP0QdgQPNH7PksH3Wn7I=
+	b=ZqSkiBts7Uly9Gj3ZiIcOAxvEh6X4s99nUZAdHX1FX6urA+1xRbF4wR0U9Z86S6WX
+	 66h+x79Ry2Zs9H7EcIv8Tf2oeZUjsZzdrCr5J6KCi/DXDnjlEn7pcVQ2j6nzHzroea
+	 BtkW4Ou+bPOQiu/zgLmopVwZz3jHVsg34itnLBRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masahiro Yamada <masahiroy@kernel.org>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/138] modpost: fix input MODULE_DEVICE_TABLE() built for 64-bit on 32-bit host
-Date: Mon,  6 Jan 2025 16:17:35 +0100
-Message-ID: <20250106151138.194858728@linuxfoundation.org>
+Subject: [PATCH 5.10 132/138] modpost: fix the missed iteration for the max bit in do_input()
+Date: Mon,  6 Jan 2025 16:17:36 +0100
+Message-ID: <20250106151138.232007033@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,88 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 77dc55a978e69625f9718460012e5ef0172dc4de ]
+[ Upstream commit bf36b4bf1b9a7a0015610e2f038ee84ddb085de2 ]
 
-When building a 64-bit kernel on a 32-bit build host, incorrect
-input MODULE_ALIAS() entries may be generated.
+This loop should iterate over the range from 'min' to 'max' inclusively.
+The last interation is missed.
 
-For example, when compiling a 64-bit kernel with CONFIG_INPUT_MOUSEDEV=m
-on a 64-bit build machine, you will get the correct output:
-
-  $ grep MODULE_ALIAS drivers/input/mousedev.mod.c
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*110,*r*0,*1,*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*r*8,*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*14A,*r*a*0,*1,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*145,*r*a*0,*1,*18,*1C,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*110,*r*a*0,*1,*m*l*s*f*w*");
-
-However, building the same kernel on a 32-bit machine results in
-incorrect output:
-
-  $ grep MODULE_ALIAS drivers/input/mousedev.mod.c
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*110,*130,*r*0,*1,*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*r*8,*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*14A,*16A,*r*a*0,*1,*20,*21,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*145,*165,*r*a*0,*1,*18,*1C,*20,*21,*38,*3C,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*110,*130,*r*a*0,*1,*20,*21,*m*l*s*f*w*");
-
-A similar issue occurs with CONFIG_INPUT_JOYDEV=m. On a 64-bit build
-machine, the output is:
-
-  $ grep MODULE_ALIAS drivers/input/joydev.mod.c
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*0,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*2,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*8,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*6,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*120,*r*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*130,*r*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*2C0,*r*a*m*l*s*f*w*");
-
-However, on a 32-bit machine, the output is incorrect:
-
-  $ grep MODULE_ALIAS drivers/input/joydev.mod.c
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*0,*20,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*2,*22,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*8,*28,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*6,*26,*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*11F,*13F,*r*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*11F,*13F,*r*a*m*l*s*f*w*");
-  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*2C0,*2E0,*r*a*m*l*s*f*w*");
-
-When building a 64-bit kernel, BITS_PER_LONG is defined as 64. However,
-on a 32-bit build machine, the constant 1L is a signed 32-bit value.
-Left-shifting it beyond 32 bits causes wraparound, and shifting by 31
-or 63 bits makes it a negative value.
-
-The fix in commit e0e92632715f ("[PATCH] PATCH: 1 line 2.6.18 bugfix:
-modpost-64bit-fix.patch") is incorrect; it only addresses cases where
-a 64-bit kernel is built on a 64-bit build machine, overlooking cases
-on a 32-bit build machine.
-
-Using 1ULL ensures a 64-bit width on both 32-bit and 64-bit machines,
-avoiding the wraparound issue.
-
-Fixes: e0e92632715f ("[PATCH] PATCH: 1 line 2.6.18 bugfix: modpost-64bit-fix.patch")
+Fixes: 1d8f430c15b3 ("[PATCH] Input: add modalias support")
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: bf36b4bf1b9a ("modpost: fix the missed iteration for the max bit in do_input()")
+Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  scripts/mod/file2alias.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
-index 1c9c33f491e6..2febe2b8bedb 100644
+index 2febe2b8bedb..92b9b9e8bf10 100644
 --- a/scripts/mod/file2alias.c
 +++ b/scripts/mod/file2alias.c
-@@ -720,7 +720,7 @@ static void do_input(char *alias,
+@@ -719,7 +719,7 @@ static void do_input(char *alias,
+ 
  	for (i = min / BITS_PER_LONG; i < max / BITS_PER_LONG + 1; i++)
  		arr[i] = TO_NATIVE(arr[i]);
- 	for (i = min; i < max; i++)
--		if (arr[i / BITS_PER_LONG] & (1L << (i%BITS_PER_LONG)))
-+		if (arr[i / BITS_PER_LONG] & (1ULL << (i%BITS_PER_LONG)))
+-	for (i = min; i < max; i++)
++	for (i = min; i <= max; i++)
+ 		if (arr[i / BITS_PER_LONG] & (1ULL << (i%BITS_PER_LONG)))
  			sprintf(alias + strlen(alias), "%X,*", i);
  }
- 
 -- 
 2.39.5
 
