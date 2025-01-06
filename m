@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66448143C7E;
-	Mon,  6 Jan 2025 15:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9261514F6;
+	Mon,  6 Jan 2025 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178197; cv=none; b=VZNvU6/JA0sZXdy9nwgzZjJl+XnMqIIJcUgpktDvT23iebhmP7jeguDW1W5d0irhhpaRBs7JQyu3wQrGRAEgjJotyJQovFNZpoAUcUJ1VI3TsTYorMe//iUkEJ2CTi0PWhH0D4YOjtK2TG7Al/mzfYlg5GX4zF4uNSyaL7nEUFM=
+	t=1736178200; cv=none; b=GAIdPiAeBcliGLm1zY43vvljv6lnFzop7SaFg8QVV0+pEFDWoSooWUlLE6xy0wG0YQHdt0BNDXFjq3lZZqMBTXXHZUAuY6H34fJc3nmKX3O06Z6FLPmJXahjnWwH2Ero/VR3e62YoWwWgvyUHYU1CS39XfApAub+bhMdTFUy3uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178197; c=relaxed/simple;
-	bh=jNDoFPLi2k8oGF3aIS8kiWTccq2BLufmM228AqxM7mw=;
+	s=arc-20240116; t=1736178200; c=relaxed/simple;
+	bh=MvDTab2X20FijBt08Rxtiekg+Gdcf391CvJmeicHS+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1x/nuqKakkLocbl4S1ikkNIBbO/mDviumj7AuQNrD015VHk2+RGYTdFuSBbV24v+RTqSjYgN0TFjhQGBy1rbNiGP+o21mQpwyce9JcD4yvmkNxvbFscq++k6oRvA+Ok1nlV9L37uv5m5sKkzc2ADYvygag9TjpWF1nf3Z0b0vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mlva7QER; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wq4ap8/85RoerKOKBVqhyXlHeiTS0NpKpnzpOBSKx8WvANcuF2BJjXOveg42qc4JL5rVIJ14loUm2P7i0Tv7KthunWkQFea6/Iui8B/8IS91GiBIIotHOR/4GigVZaiSvrA5/fe1kwLrMrw8Ow5UZ/syrKY/Ld+3Rg11nAsw4mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9WXxJ8e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mlva7QER"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1125C4CED2;
-	Mon,  6 Jan 2025 15:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9WXxJ8e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF184C4CED2;
+	Mon,  6 Jan 2025 15:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178197;
-	bh=jNDoFPLi2k8oGF3aIS8kiWTccq2BLufmM228AqxM7mw=;
+	s=korg; t=1736178200;
+	bh=MvDTab2X20FijBt08Rxtiekg+Gdcf391CvJmeicHS+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mlva7QERwp5l+wmp1cg3EMT1+d3H8bPm4Ex7T0wZlpAYH62YbFxDJdjR08a3i3PkF
-	 lRd6XrZ9c24neB4zIhKH21jIBDfl+OtHMqelkKAjQ8yJxpDQYKU46Mze5azwQU63Ke
-	 X48eCcq5XIa/h9Fqqn0VstjaqZaK6oEgm77iIiZY=
+	b=e9WXxJ8eqMe3SmqIZYfHQV2JevAgVwS8TeiDM9AFMBoaZU6JkiLv1m7BPXSs9GbgT
+	 Tthj3Jcq6HHfNAz3tlZ+GSxISJd6sAWOp3yrIGsLZNMnSwOP2E//g4vq0XIEo8zvrl
+	 wSKulh96SpSmgrDbnpQF59HJZ6H1TL4F5I1DfH+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/138] netfilter: ipset: Fix for recursive locking warning
-Date: Mon,  6 Jan 2025 16:15:44 +0100
-Message-ID: <20250106151133.983733173@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+9260555647a5132edd48@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 038/138] nilfs2: prevent use of deleted inode
+Date: Mon,  6 Jan 2025 16:16:02 +0100
+Message-ID: <20250106151134.664873767@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -51,62 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 70b6f46a4ed8bd56c85ffff22df91e20e8c85e33 ]
+commit 901ce9705fbb9f330ff1f19600e5daf9770b0175 upstream.
 
-With CONFIG_PROVE_LOCKING, when creating a set of type bitmap:ip, adding
-it to a set of type list:set and populating it from iptables SET target
-triggers a kernel warning:
+syzbot reported a WARNING in nilfs_rmdir. [1]
 
-| WARNING: possible recursive locking detected
-| 6.12.0-rc7-01692-g5e9a28f41134-dirty #594 Not tainted
-| --------------------------------------------
-| ping/4018 is trying to acquire lock:
-| ffff8881094a6848 (&set->lock){+.-.}-{2:2}, at: ip_set_add+0x28c/0x360 [ip_set]
-|
-| but task is already holding lock:
-| ffff88811034c048 (&set->lock){+.-.}-{2:2}, at: ip_set_add+0x28c/0x360 [ip_set]
+Because the inode bitmap is corrupted, an inode with an inode number that
+should exist as a ".nilfs" file was reassigned by nilfs_mkdir for "file0",
+causing an inode duplication during execution.  And this causes an
+underflow of i_nlink in rmdir operations.
 
-This is a false alarm: ipset does not allow nested list:set type, so the
-loop in list_set_kadd() can never encounter the outer set itself. No
-other set type supports embedded sets, so this is the only case to
-consider.
+The inode is used twice by the same task to unmount and remove directories
+".nilfs" and "file0", it trigger warning in nilfs_rmdir.
 
-To avoid the false report, create a distinct lock class for list:set
-type ipset locks.
+Avoid to this issue, check i_nlink in nilfs_iget(), if it is 0, it means
+that this inode has been deleted, and iput is executed to reclaim it.
 
-Fixes: f830837f0eed ("netfilter: ipset: list:set set type support")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[1]
+WARNING: CPU: 1 PID: 5824 at fs/inode.c:407 drop_nlink+0xc4/0x110 fs/inode.c:407
+...
+Call Trace:
+ <TASK>
+ nilfs_rmdir+0x1b0/0x250 fs/nilfs2/namei.c:342
+ vfs_rmdir+0x3a3/0x510 fs/namei.c:4394
+ do_rmdir+0x3b5/0x580 fs/namei.c:4453
+ __do_sys_rmdir fs/namei.c:4472 [inline]
+ __se_sys_rmdir fs/namei.c:4470 [inline]
+ __x64_sys_rmdir+0x47/0x50 fs/namei.c:4470
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Link: https://lkml.kernel.org/r/20241209065759.6781-1-konishi.ryusuke@gmail.com
+Fixes: d25006523d0b ("nilfs2: pathname operations")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9260555647a5132edd48
+Tested-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_list_set.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nilfs2/inode.c |    8 +++++++-
+ fs/nilfs2/namei.c |    5 +++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/ipset/ip_set_list_set.c b/net/netfilter/ipset/ip_set_list_set.c
-index 902ff2f3bc72..5cc35b553a04 100644
---- a/net/netfilter/ipset/ip_set_list_set.c
-+++ b/net/netfilter/ipset/ip_set_list_set.c
-@@ -611,6 +611,8 @@ init_list_set(struct net *net, struct ip_set *set, u32 size)
- 	return true;
- }
- 
-+static struct lock_class_key list_set_lockdep_key;
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -618,8 +618,14 @@ struct inode *nilfs_iget(struct super_bl
+ 	inode = nilfs_iget_locked(sb, root, ino);
+ 	if (unlikely(!inode))
+ 		return ERR_PTR(-ENOMEM);
+-	if (!(inode->i_state & I_NEW))
 +
- static int
- list_set_create(struct net *net, struct ip_set *set, struct nlattr *tb[],
- 		u32 flags)
-@@ -627,6 +629,7 @@ list_set_create(struct net *net, struct ip_set *set, struct nlattr *tb[],
- 	if (size < IP_SET_LIST_MIN_SIZE)
- 		size = IP_SET_LIST_MIN_SIZE;
++	if (!(inode->i_state & I_NEW)) {
++		if (!inode->i_nlink) {
++			iput(inode);
++			return ERR_PTR(-ESTALE);
++		}
+ 		return inode;
++	}
  
-+	lockdep_set_class(&set->lock, &list_set_lockdep_key);
- 	set->variant = &set_variant;
- 	set->dsize = ip_set_elem_len(set, tb, sizeof(struct set_elem),
- 				     __alignof__(struct set_elem));
--- 
-2.39.5
-
+ 	err = __nilfs_read_inode(sb, root, ino, inode);
+ 	if (unlikely(err)) {
+--- a/fs/nilfs2/namei.c
++++ b/fs/nilfs2/namei.c
+@@ -67,6 +67,11 @@ nilfs_lookup(struct inode *dir, struct d
+ 		inode = NULL;
+ 	} else {
+ 		inode = nilfs_iget(dir->i_sb, NILFS_I(dir)->i_root, ino);
++		if (inode == ERR_PTR(-ESTALE)) {
++			nilfs_error(dir->i_sb,
++					"deleted inode referenced: %lu", ino);
++			return ERR_PTR(-EIO);
++		}
+ 	}
+ 
+ 	return d_splice_alias(inode, dentry);
 
 
