@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5191DD539;
-	Mon,  6 Jan 2025 15:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1064165F1F;
+	Mon,  6 Jan 2025 15:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178297; cv=none; b=s2JHpZEZOcFJur8xnrjQZuVC/PgFvmDCTgDB5ZQ4Ne2pC5i8aGmTTIuyfUIbOhEDJYLVlAR0VTSNeVNqpK/inRQpljLwUL5LiYJJL6Xr4d5CB2UMIJnvD0xKJ6uAYPYAwX13MRsKG5UxGqy9xXLNLQAEcHICA18jA8hcHBttR8w=
+	t=1736178300; cv=none; b=dbc2Yn8hm7RUEPCrr/1ifLdbyeFQ/1q0RnPb8g+RHj8QO7kDPa2St8QYPGmFVNBSR4XNvFw1+mG9rXuXLPeBjE+oLYC5NE3VjUbdkjBqWk+XlYu7eq8uR7zwIkznCNexll//3cyIGNSQQUOV6CNpOM1Ywq5EMKaRc4pe1nxz8Yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178297; c=relaxed/simple;
-	bh=qvlheI/0tY/ShvB5C1fql8KL33nkM4z7cmMSmTsPaWY=;
+	s=arc-20240116; t=1736178300; c=relaxed/simple;
+	bh=c73qR9VOS9SF/xIZlVbgWWlKaBjK2KF/kptHgr0uZ2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VnQIZz6ay/GsEZLcbK8StY3CVkXKfGEXMpEkvkDccTmvXajlSp3ESUca4r/9QAGBuQ/VZ/fi9KQpDj2NzWAISPnOVH/Bt+OCfQfZQv7IwpCv4Xqy/W72sv3vEq6kyQzx7HXrGWJgQE7zGsFnxspo8D7BG5+sjbzzVptD3ymW0Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kduHSMZB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igO6oEokxAKEK98qbWQBBB0B8q+QHF4lxRtpL3U03Ys+xnBwROQ/BiDFbRTXWHJAzZI3ScBulVOIVft8vZKpBks/uTlhcTTcBE+XsBC/RJxpip++nW5FsI45kn15OmxnRb8KK+6pmBxCYvaQcXHuwh8aYYiGEuYxvuWrZ6cdj5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zufBtSEy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kduHSMZB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38347C4CED6;
-	Mon,  6 Jan 2025 15:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zufBtSEy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05601C4CED6;
+	Mon,  6 Jan 2025 15:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178297;
-	bh=qvlheI/0tY/ShvB5C1fql8KL33nkM4z7cmMSmTsPaWY=;
+	s=korg; t=1736178300;
+	bh=c73qR9VOS9SF/xIZlVbgWWlKaBjK2KF/kptHgr0uZ2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kduHSMZBmnKoAWjbMT7RLBlk/2JtAjGPiKynr7eJY4FJnacZSRAfgq6wLBM2DbY8m
-	 S3eTI7SZaK+wRQAgiI8+s8upxPi/egz5F/ZoJDefbLMOhOA+cUqgbZgJHOiU2DJk9R
-	 8dSxHo7OYCTkQ6m7phPUKSyo7WGfifGKseRwC6k0=
+	b=zufBtSEy3oQ4sJ2EYcstEOfkj1pc1n4mm1ba91R3Js9YxVi4AqPRUF17xxulW3tiS
+	 2GXtwtz2cGeF0z8CgFfdmiYLwUAxVT3fpJG9mfAMcQoL8pvWOlq+jZEU0Pn1dSCQXg
+	 4E3mp99/i6f0OpUPauwjFfpghu7TiiyhUlwvI5mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 054/138] phy: core: Fix that API devm_phy_destroy() fails to destroy the phy
-Date: Mon,  6 Jan 2025 16:16:18 +0100
-Message-ID: <20250106151135.280977409@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Vasily Averin <vasily.averin@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Subject: [PATCH 5.10 072/138] ipv6: fix possible UAF in ip6_finish_output2()
+Date: Mon,  6 Jan 2025 16:16:36 +0100
+Message-ID: <20250106151135.960460894@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -51,38 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 4dc48c88fcf82b89fdebd83a906aaa64f40fb8a9 upstream.
+[ Upstream commit e891b36de161fcd96f12ff83667473e5067b9037 ]
 
-For devm_phy_destroy(), its comment says it needs to invoke phy_destroy()
-to destroy the phy, but it will not actually invoke the function since
-devres_destroy() does not call devm_phy_consume(), and the missing
-phy_destroy() call will cause that the phy fails to be destroyed.
+If skb_expand_head() returns NULL, skb has been freed
+and associated dst/idev could also have been freed.
 
-Fortunately, the faulty API has not been used by current kernel tree.
-Fix by using devres_release() instead of devres_destroy() within the API.
+We need to hold rcu_read_lock() to make sure the dst and
+associated idev are alive.
 
-Fixes: ff764963479a ("drivers: phy: add generic PHY framework")
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-3-40ae28f5015a@quicinc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5796015fa968 ("ipv6: allocate enough headroom in ip6_finish_output2()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Vasily Averin <vasily.averin@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20240820160859.3786976-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+(cherry picked from commit e891b36de161fcd96f12ff83667473e5067b9037)
+Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/phy-core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_output.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -991,7 +991,7 @@ void devm_phy_destroy(struct device *dev
- {
- 	int r;
+diff --git a/net/ipv6/ip6_output.c b/net/ipv6/ip6_output.c
+index a8475848d038..48f926157ef8 100644
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -69,11 +69,15 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
  
--	r = devres_destroy(dev, devm_phy_consume, devm_phy_match, phy);
-+	r = devres_release(dev, devm_phy_consume, devm_phy_match, phy);
- 	dev_WARN_ONCE(dev, r, "couldn't find PHY resource\n");
- }
- EXPORT_SYMBOL_GPL(devm_phy_destroy);
+ 	/* Be paranoid, rather than too clever. */
+ 	if (unlikely(hh_len > skb_headroom(skb)) && dev->header_ops) {
++		/* Make sure idev stays alive */
++		rcu_read_lock();
+ 		skb = skb_expand_head(skb, hh_len);
+ 		if (!skb) {
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
++			rcu_read_unlock();
+ 			return -ENOMEM;
+ 		}
++		rcu_read_unlock();
+ 	}
+ 
+ 	hdr = ipv6_hdr(skb);
+-- 
+2.39.5
+
 
 
