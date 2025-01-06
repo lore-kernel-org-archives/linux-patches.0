@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643551547D8;
-	Mon,  6 Jan 2025 15:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D7C1607AA;
+	Mon,  6 Jan 2025 15:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178220; cv=none; b=Mjr9JP8yRdsLs2Uxy8NML4cmAS0Pco+CdfoKnHF+K2bZKDSznr1lNK1DEQGzMECalAzYpks3+jTdn11zcHp2gpl40wVzPKnjWlpqU2dcQjLATczYnngeUfU8Jue2lb9Nmv8qvt1KBFFNp5tnupXhpdmZqvWLOdxKlhr+Gbweb8Q=
+	t=1736178223; cv=none; b=nlyTzlxZMiwbUmtCq5jkw2PHjSM6O/PkVBhTRkQR5q4CJRKYdY5zcqXxg3GugpJ50NXPSdTNSGkKzhRYVmE7h+i/lwmdbYwr+CgaKGYDEJf0KGBUaus+8kOduGYLrRXX2eNC+qwzQmBPlFYQIrdBXRGSkUBtGk98UOfiWtgrXpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178220; c=relaxed/simple;
-	bh=g0MVkStH1uv2UsBvc2NrgX0S+Al5Dtim0r4PJS+2u8s=;
+	s=arc-20240116; t=1736178223; c=relaxed/simple;
+	bh=MSsSFfW6NOLchXSAbuFRsR20lKCBpRgsZq+XdFmDMg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIXDHYBP2MTvjvyxhd6aI2WYghVaeWPXw7xHr9U+/orDB3wSZIspWJ+t742agxB/f2QvTesYNzYDK+ewlrK7tvuFgkdgiZczEUqM8QB9W4jt2sxENGv2QmPsu9eTbQrCRvHdBgHqYvmKsxYnYbjnd3Dxq/VvmhJv7tyLYwDZW8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LI/Syy5T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kcuSSOOvF3pVS3korcyS9NpsNWs3K262jzCe97MW2xIjH0I9p98W7hv1ClGk333vGnlLUdHPdmDhGEJAhRwqHNcYq4YlTkRk7hlfO2IMnsnuRM/HaHFptk2dWINkBLpUTrFN9/AotFkBWxVUKJglEi/VhxuMCZb6tV8IENX/ceY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcgpanaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LI/Syy5T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FA7C4CED2;
-	Mon,  6 Jan 2025 15:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcgpanaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC652C4CED2;
+	Mon,  6 Jan 2025 15:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178220;
-	bh=g0MVkStH1uv2UsBvc2NrgX0S+Al5Dtim0r4PJS+2u8s=;
+	s=korg; t=1736178223;
+	bh=MSsSFfW6NOLchXSAbuFRsR20lKCBpRgsZq+XdFmDMg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LI/Syy5TgpP9r6Idx+TGQhS6hFwCDrq5VV27E2cw6fk/51bqiU6al7UMFeEJTa3kj
-	 IUCoLjT8mZxseUN78tRj/CrF0kyy2ujR6X6j3BVFSKrlykWCO+n6SnpLJYoMYsJUvp
-	 aOEVycj0hTa+LlgfOt23q1q4sjLLS0SWEnCoixNo=
+	b=JcgpanaMIHzipkF1E3yff3OUKsyNcECM+TWRfigGFC1yTsKy0vVGgNocbCZD4Dof9
+	 4v+3N1EMy4zj/GMZBuzVjzNJVekjVth+N0LY4+RdkO9XDOc2F9Awy5ZZEPQJkKVdtZ
+	 YsvPrYoXe6q51/0SAXzbi9YPXsjitFRkcrNAbYQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Konstantin Khlebnikov <koct9i@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/138] mm/vmstat: fix a W=1 clang compiler warning
-Date: Mon,  6 Jan 2025 16:16:09 +0100
-Message-ID: <20250106151134.943999768@linuxfoundation.org>
+Subject: [PATCH 5.10 046/138] tcp_bpf: Charge receive socket buffer in bpf_tcp_ingress()
+Date: Mon,  6 Jan 2025 16:16:10 +0100
+Message-ID: <20250106151134.981550802@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -53,41 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 30c2de0a267c04046d89e678cc0067a9cfb455df ]
+[ Upstream commit 54f89b3178d5448dd4457afbb98fc1ab99090a65 ]
 
-Fix the following clang compiler warning that is reported if the kernel is
-built with W=1:
+When bpf_tcp_ingress() is called, the skmsg is being redirected to the
+ingress of the destination socket. Therefore, we should charge its
+receive socket buffer, instead of sending socket buffer.
 
-./include/linux/vmstat.h:518:36: error: arithmetic between different enumeration types ('enum node_stat_item' and 'enum lru_list') [-Werror,-Wenum-enum-conversion]
-  518 |         return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-      |                               ~~~~~~~~~~~ ^ ~~~
+Because sk_rmem_schedule() tests pfmemalloc of skb, we need to
+introduce a wrapper and call it for skmsg.
 
-Link: https://lkml.kernel.org/r/20241212213126.1269116-1-bvanassche@acm.org
-Fixes: 9d7ea9a297e6 ("mm/vmstat: add helpers to get vmstat item names for each enum type")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Cc: Konstantin Khlebnikov <koct9i@gmail.com>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241210012039.1669389-2-zijianzhang@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vmstat.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/sock.h | 10 ++++++++--
+ net/ipv4/tcp_bpf.c |  2 +-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/vmstat.h b/include/linux/vmstat.h
-index 322dcbfcc933..1ca120344b00 100644
---- a/include/linux/vmstat.h
-+++ b/include/linux/vmstat.h
-@@ -428,7 +428,7 @@ static inline const char *node_stat_name(enum node_stat_item item)
- 
- static inline const char *lru_list_name(enum lru_list lru)
- {
--	return node_stat_name(NR_LRU_BASE + lru) + 3; // skip "nr_"
-+	return node_stat_name(NR_LRU_BASE + (enum node_stat_item)lru) + 3; // skip "nr_"
+diff --git a/include/net/sock.h b/include/net/sock.h
+index c45958a68978..548f9aab9aa1 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -1525,7 +1525,7 @@ static inline bool sk_wmem_schedule(struct sock *sk, int size)
  }
  
- static inline const char *writeback_stat_name(enum writeback_stat_item item)
+ static inline bool
+-sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
++__sk_rmem_schedule(struct sock *sk, int size, bool pfmemalloc)
+ {
+ 	int delta;
+ 
+@@ -1533,7 +1533,13 @@ sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
+ 		return true;
+ 	delta = size - sk->sk_forward_alloc;
+ 	return delta <= 0 || __sk_mem_schedule(sk, delta, SK_MEM_RECV) ||
+-		skb_pfmemalloc(skb);
++	       pfmemalloc;
++}
++
++static inline bool
++sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
++{
++	return __sk_rmem_schedule(sk, size, skb_pfmemalloc(skb));
+ }
+ 
+ static inline void sk_mem_reclaim(struct sock *sk)
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 85ae2c310148..804464beb343 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -111,7 +111,7 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 		sge = sk_msg_elem(msg, i);
+ 		size = (apply && apply_bytes < sge->length) ?
+ 			apply_bytes : sge->length;
+-		if (!sk_wmem_schedule(sk, size)) {
++		if (!__sk_rmem_schedule(sk, size, false)) {
+ 			if (!copied)
+ 				ret = -ENOMEM;
+ 			break;
 -- 
 2.39.5
 
