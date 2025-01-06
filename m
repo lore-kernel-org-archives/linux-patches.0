@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65EC149C7B;
-	Mon,  6 Jan 2025 15:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE52149C7B;
+	Mon,  6 Jan 2025 15:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177065; cv=none; b=qoG+VmM9oEzUb+4ZRP86PzmzNPTGkH6HqzSZpzJBXlnOXsxgbdcXCuxy1W31KVKv2yKox+h6R8+nPU3jUCW/XZlCMliwkB/DcJ/Da5G6QYZ0wo+it5Ryl6thSCue+vo4Cn4VdNqvToAkC4Bg3zMM4Yye0tM2TTbYtBI7loBrmP4=
+	t=1736177068; cv=none; b=Ardk454zyZblsTdA+uPEN5i+flSJp56HwqFWbflq0PT3TRQ1Xk+Ref8IfbI78Qz4CPq+ZN4ES0OzhPaaJe0papsrF2H4Vp2GYnjQw7F7hPfw9W6uZ2F6ZA16qt6wMfBC0l/0jiJHmu6ZBjlCNNJ9D0mcea2feIJVwnmcXin/B5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177065; c=relaxed/simple;
-	bh=mYlST/GUzMnTOwfFK5KD5WbLFMk9awUzEP7+rJ7ZGfI=;
+	s=arc-20240116; t=1736177068; c=relaxed/simple;
+	bh=IRFYzqsidqU3Kw+bWCyCO2QVp9HbnNXtqGwPO/l5BdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAKYl2DkJqW4JEQEhi46Nd5+c5V8lJIsmJ8dliKgSHrAjtk3/JZvwOcdeLZBgCxBaDrvc6nwXXv6RKLiM0md3RiAE5mqt8iIAS0FC1MKORfpVpFZN5A+wn/4dKB9e8eFBZKAsNd4rKFIw/nEcQNpAXbtdp2mJvfbSSMXtjiVCtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBHggYU+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6UAPetVBfJUPiBiJMHD+vMVtFsiR2GgEuwEvjfj0Ad+PrbuVMt9JGihp+s1/i+G5mNRJrU36reVSneP/5OFVU+RFCNeFs730WLQMy8MiDvnhhFXyasOkk9pdmKTnYdAkZAm16O1nd8eluAasSwNsuD3Ep3A230HPvuHnogLuYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LaqePTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBHggYU+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7A1C4CEDF;
-	Mon,  6 Jan 2025 15:24:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LaqePTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B87DC4CED2;
+	Mon,  6 Jan 2025 15:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177065;
-	bh=mYlST/GUzMnTOwfFK5KD5WbLFMk9awUzEP7+rJ7ZGfI=;
+	s=korg; t=1736177068;
+	bh=IRFYzqsidqU3Kw+bWCyCO2QVp9HbnNXtqGwPO/l5BdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBHggYU+b1AxkgwXpkzhqx5tNr12RlHfQJ0CWUXBePqPVkAdQnaOTF0RwenoZRBai
-	 XAnLN8QLbVP5NyC3PpG/SBm5obpWHNzia6yW8zWVL+izaaBpjIAAQ6fBSZpmmrJBeP
-	 wBW0k0AaZGLE4qawEpx3O5KT0KLbgEdhrUKetVgY=
+	b=0LaqePTNpyrpn6Gq5Xf2mP2MCIEQbW+Rzeg2iV3Nv0QaE+J5J+FTOKw14e8igdpRE
+	 LZcUi0y9cUPtGy/HCZgw/9QjTbHgYeS/YlLVdyYDy/0CfYgzpwJJJOCVJ29zZdf8Ff
+	 M1ZJ64x/LNPTUz0BIvF50HJ7kbUFW4+4UVUTZSkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jingyang Wang <wjy7717@126.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/222] crypto: ecdsa - Convert byte arrays with key coordinates to digits
-Date: Mon,  6 Jan 2025 16:13:46 +0100
-Message-ID: <20250106151151.443565564@linuxfoundation.org>
+Subject: [PATCH 6.6 040/222] Bluetooth: Add support ITTIM PE50-M75C
+Date: Mon,  6 Jan 2025 16:14:04 +0100
+Message-ID: <20250106151152.120009549@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,100 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Berger <stefanb@linux.ibm.com>
+From: Jingyang Wang <wjy7717@126.com>
 
-[ Upstream commit d67c96fb97b5811e15c881d5cb72e293faa5f8e1 ]
+[ Upstream commit 00b1c3c4b682ba4b4f9fc46e047b537e668576af ]
 
-For NIST P192/256/384 the public key's x and y parameters could be copied
-directly from a given array since both parameters filled 'ndigits' of
-digits (a 'digit' is a u64). For support of NIST P521 the key parameters
-need to have leading zeros prepended to the most significant digit since
-only 2 bytes of the most significant digit are provided.
+-Device(35f5:7922) from /sys/kernel/debug/usb/devices
+P:  Vendor=35f5 ProdID=7922 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Therefore, implement ecc_digits_from_bytes to convert a byte array into an
-array of digits and use this function in ecdsa_set_pub_key where an input
-byte array needs to be converted into digits.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Tested-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 3b0565c70350 ("crypto: ecdsa - Avoid signed integer overflow on signature decoding")
+Signed-off-by: Jingyang Wang <wjy7717@126.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: faa5fd605d20 ("Bluetooth: btusb: Add new VID/PID 0489/e111 for MT7925")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecdsa.c                | 14 +++++++++-----
- include/crypto/internal/ecc.h | 21 +++++++++++++++++++++
- 2 files changed, 30 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btusb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/crypto/ecdsa.c b/crypto/ecdsa.c
-index 3f9ec273a121..e819d0983bd3 100644
---- a/crypto/ecdsa.c
-+++ b/crypto/ecdsa.c
-@@ -222,9 +222,8 @@ static int ecdsa_ecc_ctx_reset(struct ecc_ctx *ctx)
- static int ecdsa_set_pub_key(struct crypto_akcipher *tfm, const void *key, unsigned int keylen)
- {
- 	struct ecc_ctx *ctx = akcipher_tfm_ctx(tfm);
-+	unsigned int digitlen, ndigits;
- 	const unsigned char *d = key;
--	const u64 *digits = (const u64 *)&d[1];
--	unsigned int ndigits;
- 	int ret;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index fe5e30662017..6b0d9d9f3004 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -658,6 +658,9 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH |
+ 						     BTUSB_VALID_LE_STATES },
++	{ USB_DEVICE(0x35f5, 0x7922), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
  
- 	ret = ecdsa_ecc_ctx_reset(ctx);
-@@ -238,12 +237,17 @@ static int ecdsa_set_pub_key(struct crypto_akcipher *tfm, const void *key, unsig
- 		return -EINVAL;
- 
- 	keylen--;
--	ndigits = (keylen >> 1) / sizeof(u64);
-+	digitlen = keylen >> 1;
-+
-+	ndigits = DIV_ROUND_UP(digitlen, sizeof(u64));
- 	if (ndigits != ctx->curve->g.ndigits)
- 		return -EINVAL;
- 
--	ecc_swap_digits(digits, ctx->pub_key.x, ndigits);
--	ecc_swap_digits(&digits[ndigits], ctx->pub_key.y, ndigits);
-+	d++;
-+
-+	ecc_digits_from_bytes(d, digitlen, ctx->pub_key.x, ndigits);
-+	ecc_digits_from_bytes(&d[digitlen], digitlen, ctx->pub_key.y, ndigits);
-+
- 	ret = ecc_is_pubkey_valid_full(ctx->curve, &ctx->pub_key);
- 
- 	ctx->pub_key_set = ret == 0;
-diff --git a/include/crypto/internal/ecc.h b/include/crypto/internal/ecc.h
-index 4f6c1a68882f..ab722a8986b7 100644
---- a/include/crypto/internal/ecc.h
-+++ b/include/crypto/internal/ecc.h
-@@ -56,6 +56,27 @@ static inline void ecc_swap_digits(const void *in, u64 *out, unsigned int ndigit
- 		out[i] = get_unaligned_be64(&src[ndigits - 1 - i]);
- }
- 
-+/**
-+ * ecc_digits_from_bytes() - Create ndigits-sized digits array from byte array
-+ * @in:       Input byte array
-+ * @nbytes    Size of input byte array
-+ * @out       Output digits array
-+ * @ndigits:  Number of digits to create from byte array
-+ */
-+static inline void ecc_digits_from_bytes(const u8 *in, unsigned int nbytes,
-+					 u64 *out, unsigned int ndigits)
-+{
-+	unsigned int o = nbytes & 7;
-+	__be64 msd = 0;
-+
-+	if (o) {
-+		memcpy((u8 *)&msd + sizeof(msd) - o, in, o);
-+		out[--ndigits] = be64_to_cpu(msd);
-+		in += o;
-+	}
-+	ecc_swap_digits(in, out, ndigits);
-+}
-+
- /**
-  * ecc_is_key_valid() - Validate a given ECDH private key
-  *
+ 	/* Additional Realtek 8723AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
 -- 
 2.39.5
 
