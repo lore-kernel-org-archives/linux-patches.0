@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA1F200A3;
-	Mon,  6 Jan 2025 15:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF9DDF71;
+	Mon,  6 Jan 2025 15:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177598; cv=none; b=KQw6J75tfPDJ8TTobVWkb4/e33I1Z/kvJur57txpEoeC0G7Iu3IAZimxVUk8Hp6zLzhVGHOM4AOvRvkLep1dInwmebQ8i/u6MKoY5hQOaKXQsWwBxtOuAxrGcQ61nAKuP/79+2o+evzTe1NnJHqck7fBMyi/etl7yCBsv0EZd78=
+	t=1736177602; cv=none; b=JHTdaZCH/zacM/l1KawACTKZ723nKV2AUP4W/wrd7TvDmL/I/u2/QS4zV6IxtCZHIqc7IeecAZO1mGa+qodCH/SMtyMgX5e22HswLtHi7cyes6kuM9UolGqz2RJf3VHZfNS1yICBd8hO/yAtTV8/YJ55rgFUdDeSLzu2pViWP3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177598; c=relaxed/simple;
-	bh=61GNXp472Va3sXLv+8qxcue5sWjSY5MMY9tif4iJnhU=;
+	s=arc-20240116; t=1736177602; c=relaxed/simple;
+	bh=wh345wGM4pduADgb7FuQLLBjatFSSCMUd04GKEtoBjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dr7lTgRfp/4BhSRhChmZvs3LaTgoFrPHJAvAK7FCyGps5kOPU1//wyBEqA5bbP6JPCYp0gRTIoSJ4TdBgcblUuQbyEuYPzrqYtgo3STta6pdaWx+jiY0Xej5eFPiW0dFm/9oNGshuUsFRW56SqGyiBHyP5T7QYIBuLgOsWV5Q0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dg/IIWIs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qui2RrKpS2HqK7/oKDHCl4gJInPCYOaR59XDYvtq2TlWryWuKJSdA8VAdQqWzwYd2z30P7iM20ZBZ4BNBlo2gMQihajA2fz3L1b2vuzLByYCIFWzUoI2rUcPU7nNXr7GjGorTfv6Z2hOT9YkBdMuHv5GhOMrZJIT+XIWNqv64JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjBkAiIg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dg/IIWIs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D132C4CED2;
-	Mon,  6 Jan 2025 15:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjBkAiIg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012CAC4CED2;
+	Mon,  6 Jan 2025 15:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177596;
-	bh=61GNXp472Va3sXLv+8qxcue5sWjSY5MMY9tif4iJnhU=;
+	s=korg; t=1736177599;
+	bh=wh345wGM4pduADgb7FuQLLBjatFSSCMUd04GKEtoBjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dg/IIWIshkoyZsN3ebtTSnfiKcly7he4afDK95FwJi9G8kCGsijM73BBBiwLE90CF
-	 pH1JAnSZnOKrFZ2vVAW0egAZJR/3r0CRscu+jiaO9BvtzjVK/XnCbbk7iNVUbbBDDT
-	 uAJpgzS0kOUal6FFPe90Czg82tcuvEcgX+pf1scg=
+	b=AjBkAiIgB1yKiXN9wiHBtkCrL3BAmbSyka6oSmQJRSjBZsbNbASsOIO95TR5pPSsU
+	 DTlSpziluQg0yntPsrqzg7TvuM5wYu7dMu0xZnX3/ZZZrODnfW17FyNgO1NM91T+m4
+	 ew6/nY1vtCCeigNtTM2h1e+Gtv0tysNqymLgbxcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	David Hildenbrand <david@redhat.com>,
+	Alessandro Carminati <acarmina@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	Eric Chanudet <echanude@redhat.com>,
+	Gabriele Paoloni <gpaoloni@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 215/222] mm/readahead: fix large folio support in async readahead
-Date: Mon,  6 Jan 2025 16:16:59 +0100
-Message-ID: <20250106151158.906353517@linuxfoundation.org>
+Subject: [PATCH 6.6 216/222] mm/kmemleak: fix sleeping function called from invalid context at print message
+Date: Mon,  6 Jan 2025 16:17:00 +0100
+Message-ID: <20250106151158.943911130@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -47,73 +52,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Alessandro Carminati <acarmina@redhat.com>
 
-commit 158cdce87c8c172787063998ad5dd3e2f658b963 upstream.
+commit cddc76b165161a02ff14c4d84d0f5266d9d32b9e upstream.
 
-When testing large folio support with XFS on our servers, we observed that
-only a few large folios are mapped when reading large files via mmap.
-After a thorough analysis, I identified it was caused by the
-`/sys/block/*/queue/read_ahead_kb` setting.  On our test servers, this
-parameter is set to 128KB.  After I tune it to 2MB, the large folio can
-work as expected.  However, I believe the large folio behavior should not
-be dependent on the value of read_ahead_kb.  It would be more robust if
-the kernel can automatically adopt to it.
+Address a bug in the kernel that triggers a "sleeping function called from
+invalid context" warning when /sys/kernel/debug/kmemleak is printed under
+specific conditions:
+- CONFIG_PREEMPT_RT=y
+- Set SELinux as the LSM for the system
+- Set kptr_restrict to 1
+- kmemleak buffer contains at least one item
 
-With /sys/block/*/queue/read_ahead_kb set to 128KB and performing a
-sequential read on a 1GB file using MADV_HUGEPAGE, the differences in
-/proc/meminfo are as follows:
+BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
+in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 136, name: cat
+preempt_count: 1, expected: 0
+RCU nest depth: 2, expected: 2
+6 locks held by cat/136:
+ #0: ffff32e64bcbf950 (&p->lock){+.+.}-{3:3}, at: seq_read_iter+0xb8/0xe30
+ #1: ffffafe6aaa9dea0 (scan_mutex){+.+.}-{3:3}, at: kmemleak_seq_start+0x34/0x128
+ #3: ffff32e6546b1cd0 (&object->lock){....}-{2:2}, at: kmemleak_seq_show+0x3c/0x1e0
+ #4: ffffafe6aa8d8560 (rcu_read_lock){....}-{1:2}, at: has_ns_capability_noaudit+0x8/0x1b0
+ #5: ffffafe6aabbc0f8 (notif_lock){+.+.}-{2:2}, at: avc_compute_av+0xc4/0x3d0
+irq event stamp: 136660
+hardirqs last  enabled at (136659): [<ffffafe6a80fd7a0>] _raw_spin_unlock_irqrestore+0xa8/0xd8
+hardirqs last disabled at (136660): [<ffffafe6a80fd85c>] _raw_spin_lock_irqsave+0x8c/0xb0
+softirqs last  enabled at (0): [<ffffafe6a5d50b28>] copy_process+0x11d8/0x3df8
+softirqs last disabled at (0): [<0000000000000000>] 0x0
+Preemption disabled at:
+[<ffffafe6a6598a4c>] kmemleak_seq_show+0x3c/0x1e0
+CPU: 1 UID: 0 PID: 136 Comm: cat Tainted: G            E      6.11.0-rt7+ #34
+Tainted: [E]=UNSIGNED_MODULE
+Hardware name: linux,dummy-virt (DT)
+Call trace:
+ dump_backtrace+0xa0/0x128
+ show_stack+0x1c/0x30
+ dump_stack_lvl+0xe8/0x198
+ dump_stack+0x18/0x20
+ rt_spin_lock+0x8c/0x1a8
+ avc_perm_nonode+0xa0/0x150
+ cred_has_capability.isra.0+0x118/0x218
+ selinux_capable+0x50/0x80
+ security_capable+0x7c/0xd0
+ has_ns_capability_noaudit+0x94/0x1b0
+ has_capability_noaudit+0x20/0x30
+ restricted_pointer+0x21c/0x4b0
+ pointer+0x298/0x760
+ vsnprintf+0x330/0xf70
+ seq_printf+0x178/0x218
+ print_unreferenced+0x1a4/0x2d0
+ kmemleak_seq_show+0xd0/0x1e0
+ seq_read_iter+0x354/0xe30
+ seq_read+0x250/0x378
+ full_proxy_read+0xd8/0x148
+ vfs_read+0x190/0x918
+ ksys_read+0xf0/0x1e0
+ __arm64_sys_read+0x70/0xa8
+ invoke_syscall.constprop.0+0xd4/0x1d8
+ el0_svc+0x50/0x158
+ el0t_64_sync+0x17c/0x180
 
-- before this patch
-  FileHugePages:     18432 kB
-  FilePmdMapped:      4096 kB
+%pS and %pK, in the same back trace line, are redundant, and %pS can void
+%pK service in certain contexts.
 
-- after this patch
-  FileHugePages:   1067008 kB
-  FilePmdMapped:   1048576 kB
+%pS alone already provides the necessary information, and if it cannot
+resolve the symbol, it falls back to printing the raw address voiding
+the original intent behind the %pK.
 
-This shows that after applying the patch, the entire 1GB file is mapped to
-huge pages.  The stable list is CCed, as without this patch, large folios
-don't function optimally in the readahead path.
+Additionally, %pK requires a privilege check CAP_SYSLOG enforced through
+the LSM, which can trigger a "sleeping function called from invalid
+context" warning under RT_PREEMPT kernels when the check occurs in an
+atomic context. This issue may also affect other LSMs.
 
-It's worth noting that if read_ahead_kb is set to a larger value that
-isn't aligned with huge page sizes (e.g., 4MB + 128KB), it may still fail
-to map to hugepages.
+This change avoids the unnecessary privilege check and resolves the
+sleeping function warning without any loss of information.
 
-Link: https://lkml.kernel.org/r/20241108141710.9721-1-laoar.shao@gmail.com
-Link: https://lkml.kernel.org/r/20241206083025.3478-1-laoar.shao@gmail.com
-Fixes: 4687fdbb805a ("mm/filemap: Support VM_HUGEPAGE for file mappings")
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/20241217142032.55793-1-acarmina@redhat.com
+Fixes: 3a6f33d86baa ("mm/kmemleak: use %pK to display kernel pointers in backtrace")
+Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
+Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Clément Léger <clement.leger@bootlin.com>
+Cc: Alessandro Carminati <acarmina@redhat.com>
+Cc: Eric Chanudet <echanude@redhat.com>
+Cc: Gabriele Paoloni <gpaoloni@redhat.com>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/readahead.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ mm/kmemleak.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/readahead.c
-+++ b/mm/readahead.c
-@@ -580,7 +580,11 @@ static void ondemand_readahead(struct re
- 			1UL << order);
- 	if (index == expected || index == (ra->start + ra->size)) {
- 		ra->start += ra->size;
--		ra->size = get_next_ra_size(ra, max_pages);
-+		/*
-+		 * In the case of MADV_HUGEPAGE, the actual size might exceed
-+		 * the readahead window.
-+		 */
-+		ra->size = max(ra->size, get_next_ra_size(ra, max_pages));
- 		ra->async_size = ra->size;
- 		goto readit;
+--- a/mm/kmemleak.c
++++ b/mm/kmemleak.c
+@@ -368,7 +368,7 @@ static void print_unreferenced(struct se
+ 
+ 	for (i = 0; i < nr_entries; i++) {
+ 		void *ptr = (void *)entries[i];
+-		warn_or_seq_printf(seq, "    [<%pK>] %pS\n", ptr, ptr);
++		warn_or_seq_printf(seq, "    %pS\n", ptr);
  	}
+ }
+ 
 
 
