@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06AA44C7C;
-	Mon,  6 Jan 2025 15:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC857BA34;
+	Mon,  6 Jan 2025 15:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177789; cv=none; b=gd+bmJdkr/4YWqLRqzk7kpgElyvgBqn4hWUAA4xrOYXBtglcsjGdDN1vq5t0LP+EX72p8I/yN/mtlw29m74KvXYAJZaUuOn7PDCLnFQ0NqoiCKF3Z85bNGQF0xCCzfzwJ72ojQCuqgaVD3mgKVEl8rQx/gaAhhVxLDytZE2h3jg=
+	t=1736177792; cv=none; b=tQ9JceOwOiH6frzvQnvKrt/PwdYBJHiiqU5JRX7VVH2sUgrmyhrsDex49ajBJnuzqzlp/d0pS/Zj4qqf8aGtPc+SvfnPJgwPw9rywkUTxkXyrEK6uGUxPI6JdnDakDNNQua5UGlUX2nAJHg9Cdsf+RXe5RWh98rnZ+JwUbXQP4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177789; c=relaxed/simple;
-	bh=1abBKTiJGk33eazEzHS56DxDbyvdRkycRwts5caXAa0=;
+	s=arc-20240116; t=1736177792; c=relaxed/simple;
+	bh=Cj6vnfH/NVht5W2SNqSNQBhhCt4YQn2eRWHyf9o/DTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpTnnNCxtEO7xhrjl7pmeKmOG8JOpy3ugMQIwcg2F25eYuTRrGhq22/XsIhFPJ4ZWGtIN8/NeKL9dmd1zYupSDeO6CDLOJOG7i5sNKi6gav4LI5ZuJCFNWwugEqQ2J3lmZywABOz2wqEikT8gxKcFSnQM2J+6o/z8Myz/8V2+Ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTyM4hcz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L5HRVJgpOzRzQxpV0AbKeIpBjujUsS2qI0WTAZoDDIkV4ZZg/SjNiIJ8B6K8OWDxCBnI3tMgc3HnrlWNJcysOeAoY5+T+vjMx3BoYYyDigbTbJT/zqFhy7USGquJFuP8VEmGT2KgfxAcYrGnnPKAoaUeJWGu7Vfi5XKxiNWvTLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IwCxTovz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTyM4hcz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD59C4CED2;
-	Mon,  6 Jan 2025 15:36:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IwCxTovz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A30C4CED2;
+	Mon,  6 Jan 2025 15:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177789;
-	bh=1abBKTiJGk33eazEzHS56DxDbyvdRkycRwts5caXAa0=;
+	s=korg; t=1736177792;
+	bh=Cj6vnfH/NVht5W2SNqSNQBhhCt4YQn2eRWHyf9o/DTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTyM4hczPR7z9AyzaugwkfDdCTI9ViRAAB9R40Qm0SyRaLLrhsa4JxyiFi53/rS0V
-	 YCDI5cedqNN/e9tZjzH4Nos2AutQpmDpydRAV2dFK2FmI1BHyXESyEuQhT0MNGKtMG
-	 cujFhnTLuOv8wBaaYbrgx2eU0QPv5JQVNyRB8Uh8=
+	b=IwCxTovzmuVypaBhKB7TEaZsTUKDxzyhL/a0aRh/8mctrOALTfX2uMrX2Wm9b6747
+	 rFE3GdhtboxOx4y7PDIAQRSHbOjTmBObeRhbqecLU5HBXOhmBboGsZqQ0/qcdEIuNx
+	 Z6JJHKeQ5P3GzmKDyC5Ar0M3+DQcJBQMnsf7+a0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Pastor <antonio.pastor@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+ff4aab278fa7e27e0f9e@syzkaller.appspotmail.com,
+	Leo Stone <leocstone@gmail.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/156] net: llc: reset skb->transport_header
-Date: Mon,  6 Jan 2025 16:15:44 +0100
-Message-ID: <20250106151143.922655543@linuxfoundation.org>
+Subject: [PATCH 6.12 059/156] nvmet: Dont overflow subsysnqn
+Date: Mon,  6 Jan 2025 16:15:45 +0100
+Message-ID: <20250106151143.961380497@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,60 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Pastor <antonio.pastor@gmail.com>
+From: Leo Stone <leocstone@gmail.com>
 
-[ Upstream commit a024e377efed31ecfb39210bed562932321345b3 ]
+[ Upstream commit 4db3d750ac7e894278ef1cb1c53cc7d883060496 ]
 
-802.2+LLC+SNAP frames received by napi_complete_done with GRO and DSA
-have skb->transport_header set two bytes short, or pointing 2 bytes
-before network_header & skb->data. As snap_rcv expects transport_header
-to point to SNAP header (OID:PID) after LLC processing advances offset
-over LLC header (llc_rcv & llc_fixup_skb), code doesn't find a match
-and packet is dropped.
+nvmet_root_discovery_nqn_store treats the subsysnqn string like a fixed
+size buffer, even though it is dynamically allocated to the size of the
+string.
 
-Between napi_complete_done and snap_rcv, transport_header is not used
-until __netif_receive_skb_core, where originally it was being reset.
-Commit fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-only does so if not set, on the assumption the value was set correctly
-by GRO (and also on assumption that "network stacks usually reset the
-transport header anyway"). Afterwards it is moved forward by
-llc_fixup_skb.
+Create a new string with kstrndup instead of using the old buffer.
 
-Locally generated traffic shows up at __netif_receive_skb_core with no
-transport_header set and is processed without issue. On a setup with
-GRO but no DSA, transport_header and network_header are both set to
-point to skb->data which is also correct.
-
-As issue is LLC specific, to avoid impacting non-LLC traffic, and to
-follow up on original assumption made on previous code change,
-llc_fixup_skb to reset the offset after skb pull. llc_fixup_skb
-assumes the LLC header is at skb->data, and by definition SNAP header
-immediately follows.
-
-Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241225010723.2830290-1-antonio.pastor@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+ff4aab278fa7e27e0f9e@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ff4aab278fa7e27e0f9e
+Fixes: 95409e277d83 ("nvmet: implement unique discovery NQN")
+Signed-off-by: Leo Stone <leocstone@gmail.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/llc/llc_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/configfs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
-index 51bccfb00a9c..61b0159b2fbe 100644
---- a/net/llc/llc_input.c
-+++ b/net/llc/llc_input.c
-@@ -124,8 +124,8 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
- 	if (unlikely(!pskb_may_pull(skb, llc_len)))
- 		return 0;
+diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
+index 685e89b35d33..cfbab198693b 100644
+--- a/drivers/nvme/target/configfs.c
++++ b/drivers/nvme/target/configfs.c
+@@ -2227,12 +2227,17 @@ static ssize_t nvmet_root_discovery_nqn_store(struct config_item *item,
+ 		const char *page, size_t count)
+ {
+ 	struct list_head *entry;
++	char *old_nqn, *new_nqn;
+ 	size_t len;
  
--	skb->transport_header += llc_len;
- 	skb_pull(skb, llc_len);
-+	skb_reset_transport_header(skb);
- 	if (skb->protocol == htons(ETH_P_802_2)) {
- 		__be16 pdulen;
- 		s32 data_size;
+ 	len = strcspn(page, "\n");
+ 	if (!len || len > NVMF_NQN_FIELD_LEN - 1)
+ 		return -EINVAL;
+ 
++	new_nqn = kstrndup(page, len, GFP_KERNEL);
++	if (!new_nqn)
++		return -ENOMEM;
++
+ 	down_write(&nvmet_config_sem);
+ 	list_for_each(entry, &nvmet_subsystems_group.cg_children) {
+ 		struct config_item *item =
+@@ -2241,13 +2246,15 @@ static ssize_t nvmet_root_discovery_nqn_store(struct config_item *item,
+ 		if (!strncmp(config_item_name(item), page, len)) {
+ 			pr_err("duplicate NQN %s\n", config_item_name(item));
+ 			up_write(&nvmet_config_sem);
++			kfree(new_nqn);
+ 			return -EINVAL;
+ 		}
+ 	}
+-	memset(nvmet_disc_subsys->subsysnqn, 0, NVMF_NQN_FIELD_LEN);
+-	memcpy(nvmet_disc_subsys->subsysnqn, page, len);
++	old_nqn = nvmet_disc_subsys->subsysnqn;
++	nvmet_disc_subsys->subsysnqn = new_nqn;
+ 	up_write(&nvmet_config_sem);
+ 
++	kfree(old_nqn);
+ 	return len;
+ }
+ 
 -- 
 2.39.5
 
