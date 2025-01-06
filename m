@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71563146D6B;
-	Mon,  6 Jan 2025 15:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DBB8634A;
+	Mon,  6 Jan 2025 15:22:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176945; cv=none; b=IRuVzy8Kf84hKD9w+eZTEYc22epazbpRMYdZoPdZp+P0Ljvt67JJdFnvu4Vh+sfVmHlelJdzH3K+vvSgPCHQjYXSeEFt8EE8iSSn8rQKNHmzbL8028GuzjfEh6dDhgvLIQQOHC0zHKvLrRLPDyX5Uhb86CfR00+ILoFH3WE9Duc=
+	t=1736176948; cv=none; b=M1Fkmz+49J2uQjiGFvZ07ZnE+C9dsYPiVmuoO7Ejk9nSwHCh8+wiCP+zHEJwHm6223+HmP9hvn6j7JTRKwbcbM5OmaAJxWju+ufeAeC8UT2FG5MyT5KvmQ0rOkz22cMdsNZ/oWH8egeDkDkX6r6vdpG/1TM7r+xUJTzCcM2Kiv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176945; c=relaxed/simple;
-	bh=If8srUaQw4qDGJ3/OiQ59Hc01gAyBsWcxpIHK99Ir5E=;
+	s=arc-20240116; t=1736176948; c=relaxed/simple;
+	bh=g4CHf7A/gPfoOaO295JSuuWx1c/3HioJ76JCPTpXAVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0FPtQiIlpArq1FXDskhE+B5y5oZ2YQAOzLfoER28HkLKq4o9C5SNZojO7/MWOmcG1nH0fseezOhWDgEdQJfHcUsMnnqtUMrrp2XSB3Q2xbTjmVaSIOGU4LV1XDnDEdh3Zu56xHnEr8PPkh/G1EWxfOz1XOLQcLS0do4GN3ao5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnprFfdy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKPuR9vFCS9j8DyaSCzQ1olVnzCr4KGMXOoB7F9jL+kKDy04jixmWs4UkiO7lgVAzeKEsopZSofyyqu7jHyNNB0L/eZFjNn0pLoJXYNBz17Vkvk04jk7tqE9N+9VnjhXJdD0L1qIgpHVgDUElnHRbACG4OhaAkfGStnsC60m+Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+LzkeBO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnprFfdy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAC4C4CED2;
-	Mon,  6 Jan 2025 15:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+LzkeBO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A7BC4CED2;
+	Mon,  6 Jan 2025 15:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176945;
-	bh=If8srUaQw4qDGJ3/OiQ59Hc01gAyBsWcxpIHK99Ir5E=;
+	s=korg; t=1736176948;
+	bh=g4CHf7A/gPfoOaO295JSuuWx1c/3HioJ76JCPTpXAVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnprFfdyVpbd/Ecj7T+l8XTlYhR1ij8/R6X35Lmas2H6G3xOur/jNm3m09ZIuGUu9
-	 S+/z6kwiNUdqUd7pToVAqqAgqVjKWyTOjuFWwgyvkGXUv+Mr/skzcQBk2on3+OSpBO
-	 eCURHAJjAM0l/HymCisv+vtZu165zX3pC63DNVXU=
+	b=g+LzkeBOTTBqQUARd5w/u32b2/kP+5k/+vkMQG1ad9MBSZES0n7CYKi5M2LGHtvzM
+	 qf6wy9IcrENbpMj0uk+hP6de84R+Ktkln0gGQIMuV93BINQ7r2ZOrf6at7tykT70cL
+	 wzgxE4PYK2kNgdEbje+dK3NmynGzEMEgPI2z8j1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 81/81] mptcp: dont always assume copied data in mptcp_cleanup_rbuf()
-Date: Mon,  6 Jan 2025 16:16:53 +0100
-Message-ID: <20250106151132.485412831@linuxfoundation.org>
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 56/81] ALSA: hda/realtek: Add new alc2xx-fixup-headset-mic model
+Date: Mon,  6 Jan 2025 16:16:28 +0100
+Message-ID: <20250106151131.551431722@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -52,100 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-commit 551844f26da2a9f76c0a698baaffa631d1178645 upstream.
+[ Upstream commit 50db91fccea0da5c669bc68e2429e8de303758d3 ]
 
-Under some corner cases the MPTCP protocol can end-up invoking
-mptcp_cleanup_rbuf() when no data has been copied, but such helper
-assumes the opposite condition.
+Introduces the alc2xx-fixup-headset-mic model to simplify enabling
+headset microphones on ALC2XX codecs.
 
-Explicitly drop such assumption and performs the costly call only
-when strictly needed - before releasing the msk socket lock.
+Many recent configurations, as well as older systems that lacked this
+fix for a long time, leave headset microphones inactive by default.
+This addition provides a flexible workaround using the existing
+ALC2XX_FIXUP_HEADSET_MIC quirk.
 
-Fixes: fd8976790a6c ("mptcp: be careful on MPTCP-level ack.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241230-net-mptcp-rbuf-fixes-v1-2-8608af434ceb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://patch.msgid.link/20241207201836.6879-1-kovalev@altlinux.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -538,13 +538,13 @@ static void mptcp_send_ack(struct mptcp_
- 		mptcp_subflow_send_ack(mptcp_subflow_tcp_sock(subflow));
- }
- 
--static void mptcp_subflow_cleanup_rbuf(struct sock *ssk)
-+static void mptcp_subflow_cleanup_rbuf(struct sock *ssk, int copied)
- {
- 	bool slow;
- 
- 	slow = lock_sock_fast(ssk);
- 	if (tcp_can_send_ack(ssk))
--		tcp_cleanup_rbuf(ssk, 1);
-+		tcp_cleanup_rbuf(ssk, copied);
- 	unlock_sock_fast(ssk, slow);
- }
- 
-@@ -561,7 +561,7 @@ static bool mptcp_subflow_could_cleanup(
- 			      (ICSK_ACK_PUSHED2 | ICSK_ACK_PUSHED)));
- }
- 
--static void mptcp_cleanup_rbuf(struct mptcp_sock *msk)
-+static void mptcp_cleanup_rbuf(struct mptcp_sock *msk, int copied)
- {
- 	int old_space = READ_ONCE(msk->old_wspace);
- 	struct mptcp_subflow_context *subflow;
-@@ -569,14 +569,14 @@ static void mptcp_cleanup_rbuf(struct mp
- 	int space =  __mptcp_space(sk);
- 	bool cleanup, rx_empty;
- 
--	cleanup = (space > 0) && (space >= (old_space << 1));
--	rx_empty = !__mptcp_rmem(sk);
-+	cleanup = (space > 0) && (space >= (old_space << 1)) && copied;
-+	rx_empty = !__mptcp_rmem(sk) && copied;
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 
- 		if (cleanup || mptcp_subflow_could_cleanup(ssk, rx_empty))
--			mptcp_subflow_cleanup_rbuf(ssk);
-+			mptcp_subflow_cleanup_rbuf(ssk, copied);
- 	}
- }
- 
-@@ -2195,9 +2195,6 @@ static int mptcp_recvmsg(struct sock *sk
- 
- 		copied += bytes_read;
- 
--		/* be sure to advertise window change */
--		mptcp_cleanup_rbuf(msk);
--
- 		if (skb_queue_empty(&msk->receive_queue) && __mptcp_move_skbs(msk))
- 			continue;
- 
-@@ -2249,6 +2246,7 @@ static int mptcp_recvmsg(struct sock *sk
- 		}
- 
- 		pr_debug("block timeout %ld\n", timeo);
-+		mptcp_cleanup_rbuf(msk, copied);
- 		err = sk_wait_data(sk, &timeo, NULL);
- 		if (err < 0) {
- 			err = copied ? : err;
-@@ -2256,6 +2254,8 @@ static int mptcp_recvmsg(struct sock *sk
- 		}
- 	}
- 
-+	mptcp_cleanup_rbuf(msk, copied);
-+
- out_err:
- 	if (cmsg_flags && copied >= 0) {
- 		if (cmsg_flags & MPTCP_CMSG_TS)
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index ef9b0cc339f2..0fd61a165edb 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10443,6 +10443,7 @@ static const struct hda_model_fixup alc269_fixup_models[] = {
+ 	{.id = ALC255_FIXUP_ACER_HEADPHONE_AND_MIC, .name = "alc255-acer-headphone-and-mic"},
+ 	{.id = ALC285_FIXUP_HP_GPIO_AMP_INIT, .name = "alc285-hp-amp-init"},
+ 	{.id = ALC236_FIXUP_LENOVO_INV_DMIC, .name = "alc236-fixup-lenovo-inv-mic"},
++	{.id = ALC2XX_FIXUP_HEADSET_MIC, .name = "alc2xx-fixup-headset-mic"},
+ 	{}
+ };
+ #define ALC225_STANDARD_PINS \
+-- 
+2.39.5
+
 
 
