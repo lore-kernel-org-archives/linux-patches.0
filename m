@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D6F14D28C;
-	Mon,  6 Jan 2025 15:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A6157E82;
+	Mon,  6 Jan 2025 15:39:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177980; cv=none; b=Jmk06sf8Ug9kYyLQka+At585PpZeRBwp//TRbD0yhLORieAvUyJkT+5F99wQ8TmoC7iLyKlbG8vQtMHt/d1K5LMeu0kj4Lbm3ehVovm/0fcZ2M2n6jdj2doQh6WbbP2H+UuWOxCB+RYyWtO9EOyj0TRsZPBYDN4G+DX/Z6jJ8jI=
+	t=1736177983; cv=none; b=d7ta4sfvgDfjotW9a6pxmCCdhPrj2D8gY3WDb80oniZtGfMG9FYRyLPHljnJtuWMboQkS29S69gLLajcaXVyReQ+fSFbYunxSampBnPKptK1yz4yEdXh3Y4PjZr8RypO5BA768tAXC9BVakjC7zN+aKj1iXGrhltKtKdKs1ufJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177980; c=relaxed/simple;
-	bh=83YCLa6WFLIBBtc9q6EjTGq6iZKbPbP0lvFMZLiRMOg=;
+	s=arc-20240116; t=1736177983; c=relaxed/simple;
+	bh=tB7W+zvbqIl4mwhTkXOy3jE+0ASKOzIzz2Dt7ksueVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bsqfP5SQG9RuxkaAABZerBQ+w6JwWhf+rlWf9HxdfL+CC3ZQLhFF2UYiRy8+/B2qa/Uf8Ko7Aadh3m1Sdfte4rIpxey4iz7EGEiU1VwBQKGNoIP45SxGAIstazLiXda1oAJA4HmMqwhC709vj7ydZ1rMVD1EChXweGuYKgyVtpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtlL9gRK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKJBDANKiU8nR6lKygpWTVKuxy6C9xvqVlHCxtpq/FfRg3K6to0aIr7BO6giESmNrJOXYScgRTVlYz4RjpFiduF4LAUitqodg8TxfiOteBYwRAmGZFSxV+/cwXhFJcjUzLAUsHJbEJmOeBDwC3PmiYfCes9XIXEeLRoEe9Ro5VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rs0fiyOT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtlL9gRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080D2C4CED2;
-	Mon,  6 Jan 2025 15:39:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rs0fiyOT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0130AC4CED2;
+	Mon,  6 Jan 2025 15:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177980;
-	bh=83YCLa6WFLIBBtc9q6EjTGq6iZKbPbP0lvFMZLiRMOg=;
+	s=korg; t=1736177983;
+	bh=tB7W+zvbqIl4mwhTkXOy3jE+0ASKOzIzz2Dt7ksueVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtlL9gRKhV629M5xjE+rwcejGAz5MrvVMNG4z8wv9+o9YxSt0s3rx7qYcvLYnqr6T
-	 KUpjkei/kA8h9TA/iKDXpS6PgSxEt1xRTh9YkjfftXjEbdKB2IIu7JpNKMObIidjCB
-	 fV5JmVgtyL6vzb9/4uRnjWG/NZrOoydh08vAVaus=
+	b=Rs0fiyOTQPlgKm8ljRvRnUkYkySElEjIpkzSXycVR8ep6bd/4fh+99IbJgvzI5e82
+	 Od8S5oww+/SauLw5n0C8OJaqGrjXWq1mT7nM7mHaM8PkO8J2J+daYWesHbKVNCffHY
+	 WLKFH6NqaXtBppQFq14k2hpYqeLvVHZUxWRcYXFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Victor Zhao <Victor.Zhao@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 090/156] sound: usb: format: dont warn that raw DSD is unsupported
-Date: Mon,  6 Jan 2025 16:16:16 +0100
-Message-ID: <20250106151145.118282637@linuxfoundation.org>
+Subject: [PATCH 6.12 081/156] drm/amdgpu: use sjt mec fw on gfx943 for sriov
+Date: Mon,  6 Jan 2025 16:16:07 +0100
+Message-ID: <20250106151144.784175388@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -52,73 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
+From: Victor Zhao <Victor.Zhao@amd.com>
 
-[ Upstream commit b50a3e98442b8d72f061617c7f7a71f7dba19484 ]
+[ Upstream commit 9a4ab400f1fad0e6e8686b8f5fc5376383860ce8 ]
 
-UAC 2 & 3 DAC's set bit 31 of the format to signal support for a
-RAW_DATA type, typically used for DSD playback.
+Use second jump table in sriov for live migration or mulitple VF
+support so different VF can load different version of MEC as long
+as they support sjt
 
-This is correctly tested by (format & UAC*_FORMAT_TYPE_I_RAW_DATA),
-fp->dsd_raw = true; and call snd_usb_interface_dsd_format_quirks(),
-however a confusing and unnecessary message gets printed because
-the bit is not properly tested in the last "unsupported" if test:
-if (format & ~0x3F) { ... }
-
-For example the output:
-
-usb 7-1: new high-speed USB device number 5 using xhci_hcd
-usb 7-1: New USB device found, idVendor=262a, idProduct=9302, bcdDevice=0.01
-usb 7-1: New USB device strings: Mfr=1, Product=2, SerialNumber=6
-usb 7-1: Product: TC44C
-usb 7-1: Manufacturer: TC44C
-usb 7-1: SerialNumber: 5000000001
-hid-generic 0003:262A:9302.001E: No inputs registered, leaving
-hid-generic 0003:262A:9302.001E: hidraw6: USB HID v1.00 Device [DDHIFI TC44C] on usb-0000:08:00.3-1/input0
-usb 7-1: 2:4 : unsupported format bits 0x100000000
-
-This last "unsupported format" is actually wrong: we know the
-format is a RAW_DATA which we assume is DSD, so there is no need
-to print the confusing message.
-
-This we unset bit 31 of the format after recognizing it, to avoid
-the message.
-
-Suggested-by: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-Link: https://patch.msgid.link/20241209090529.16134-2-adrian.ratiu@collabora.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Victor Zhao <Victor.Zhao@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index 0cbf1d4fbe6e..6049d957694c 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -60,6 +60,8 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
- 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
- 			/* flag potentially raw DSD capable altsettings */
- 			fp->dsd_raw = true;
-+			/* clear special format bit to avoid "unsupported format" msg below */
-+			format &= ~UAC2_FORMAT_TYPE_I_RAW_DATA;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+index c100845409f7..ffdb966c4127 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c
+@@ -45,6 +45,8 @@ MODULE_FIRMWARE("amdgpu/gc_9_4_3_mec.bin");
+ MODULE_FIRMWARE("amdgpu/gc_9_4_4_mec.bin");
+ MODULE_FIRMWARE("amdgpu/gc_9_4_3_rlc.bin");
+ MODULE_FIRMWARE("amdgpu/gc_9_4_4_rlc.bin");
++MODULE_FIRMWARE("amdgpu/gc_9_4_3_sjt_mec.bin");
++MODULE_FIRMWARE("amdgpu/gc_9_4_4_sjt_mec.bin");
  
- 		format <<= 1;
-@@ -71,8 +73,11 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
- 		sample_width = as->bBitResolution;
- 		sample_bytes = as->bSubslotSize;
+ #define GFX9_MEC_HPD_SIZE 4096
+ #define RLCG_UCODE_LOADING_START_ADDRESS 0x00002000L
+@@ -574,8 +576,12 @@ static int gfx_v9_4_3_init_cp_compute_microcode(struct amdgpu_device *adev,
+ {
+ 	int err;
  
--		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA)
-+		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA) {
- 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
-+			/* clear special format bit to avoid "unsupported format" msg below */
-+			format &= ~UAC3_FORMAT_TYPE_I_RAW_DATA;
-+		}
- 
- 		format <<= 1;
- 		break;
+-	err = amdgpu_ucode_request(adev, &adev->gfx.mec_fw,
+-				   "amdgpu/%s_mec.bin", chip_name);
++	if (amdgpu_sriov_vf(adev))
++		err = amdgpu_ucode_request(adev, &adev->gfx.mec_fw,
++				"amdgpu/%s_sjt_mec.bin", chip_name);
++	else
++		err = amdgpu_ucode_request(adev, &adev->gfx.mec_fw,
++				"amdgpu/%s_mec.bin", chip_name);
+ 	if (err)
+ 		goto out;
+ 	amdgpu_gfx_cp_init_microcode(adev, AMDGPU_UCODE_ID_CP_MEC1);
 -- 
 2.39.5
 
