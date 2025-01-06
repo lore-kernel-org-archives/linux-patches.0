@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23214182D2;
-	Mon,  6 Jan 2025 15:55:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBFF14A60D;
+	Mon,  6 Jan 2025 15:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178907; cv=none; b=cRucFf/SckCxycTRzf2hEjg5aqDdoBe2cdLDZVe6WYuTxPG6hpvgCfiRb0Jbhd/8q07XZViLTrchq8ffvKfIkNauDkyNJYahWYaCLdynjna8qigqGhHwEAg8puQ15BDGG8IR/LlSGDpanJw1VLOgcFyp9FUABUvZHoJ5ZUWhPuQ=
+	t=1736178910; cv=none; b=bUHXVzRCJuEu9daQcSKuktunacWtY+BUdzw9eQ6qm7swHCX83nAv1mxq9LiRHkMTA64Qu4qWMOsD4ZRziieIPhChn9FTeh2UQyPGVuJ9r63TfuBtS/XpoH1qRxkjrXgOlm1334c+ZvRJ98NkG6zzWSqHn/I9UNym4crBN2A16gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178907; c=relaxed/simple;
-	bh=dDECWOtUJ8RklySRofhprzKyLDVoJA7QKtNDWtb1KO8=;
+	s=arc-20240116; t=1736178910; c=relaxed/simple;
+	bh=AlNueF/5GDaA1cF0Z8NsZOfen5gWjeVo29IaQ9CfiRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0Q6A1uSD6nSQ7snl0mmdaEu+yCYo8r5JHUQNJGC4C8aIuMssp5BDmB+XddUB+dRmnAEUhZe5pNHMHy0gZxr7amnXt/qloILUPrr+6G+dGDJj65bRpFgWyh4Y4KUSCs+pjJJ8PgFck/OgoYDDEMyRIBq1So1AndEXEAwBRF3MCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vblRen39; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDMlHIjIis/mY+GT6ax0MPhDT/cJyvgkDYu6EEERZ0MkjvBbEAz0BwGvUtVKVDV/w5BJqQ0MRsoMi9uURXdOz2zPq7pa2eEvcHAiTxlAYJESzBPSkfVI6T/YyOVA2nt4y6VeX7rSNtgo7WPTx8jAQe0et4yqC6rJ3G20dbusT/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ixunw7OU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vblRen39"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83C9C4CED2;
-	Mon,  6 Jan 2025 15:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ixunw7OU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FF1C4CED6;
+	Mon,  6 Jan 2025 15:55:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178907;
-	bh=dDECWOtUJ8RklySRofhprzKyLDVoJA7QKtNDWtb1KO8=;
+	s=korg; t=1736178910;
+	bh=AlNueF/5GDaA1cF0Z8NsZOfen5gWjeVo29IaQ9CfiRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vblRen39qEpXbXeiTxdaGl0NV5vx8ZydLmEZHyeLBaME8lVa931gQ6lIopIHZZ4JI
-	 jei4ZwAunDPzA0/PZhzeayIJCzYnTiB+5kobgM2j7LFhKm7t5MzOuoU3ZKyp/Is45S
-	 Vk5OirKUxYyfy7KQVSOp2AyuFtKaUAO0g2J6prFg=
+	b=Ixunw7OU3s8ROBgw8nTmo22W7QzthioMRvzzHQvInf8KuiTZIYNkoPQ2Q1BJVucSk
+	 zwaHwwjUVDHJ6WlRC0PM+4elAAsJZ60RmAbC68T4XydIc5tm2UoYf9BXMxI1G2mkoh
+	 DjEtXSoeudoZAKoG4MCyza20Q69Pn8ET4sLBnHyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Liang <wangliang74@huawei.com>,
+	Nikita Marushkin <hfggklm@gmail.com>,
+	Ilya Shchipletsov <rabbelkin@mail.ru>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 131/168] net: fix memory leak in tcp_conn_request()
-Date: Mon,  6 Jan 2025 16:17:19 +0100
-Message-ID: <20250106151143.387899934@linuxfoundation.org>
+Subject: [PATCH 5.15 132/168] netrom: check buffer length before accessing it
+Date: Mon,  6 Jan 2025 16:17:20 +0100
+Message-ID: <20250106151143.424828211@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,62 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Ilya Shchipletsov <rabbelkin@mail.ru>
 
-[ Upstream commit 4f4aa4aa28142d53f8b06585c478476cfe325cfc ]
+[ Upstream commit a4fd163aed2edd967a244499754dec991d8b4c7d ]
 
-If inet_csk_reqsk_queue_hash_add() return false, tcp_conn_request() will
-return without free the dst memory, which allocated in af_ops->route_req.
+Syzkaller reports an uninit value read from ax25cmp when sending raw message
+through ieee802154 implementation.
 
-Here is the kmemleak stack:
+=====================================================
+BUG: KMSAN: uninit-value in ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
+ ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
+ nr_dev_get+0x20e/0x450 net/netrom/nr_route.c:601
+ nr_route_frame+0x1a2/0xfc0 net/netrom/nr_route.c:774
+ nr_xmit+0x5a/0x1c0 net/netrom/nr_dev.c:144
+ __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
+ netdev_start_xmit include/linux/netdevice.h:4954 [inline]
+ xmit_one net/core/dev.c:3548 [inline]
+ dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3564
+ __dev_queue_xmit+0x33b8/0x5130 net/core/dev.c:4349
+ dev_queue_xmit include/linux/netdevice.h:3134 [inline]
+ raw_sendmsg+0x654/0xc10 net/ieee802154/socket.c:299
+ ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg net/socket.c:745 [inline]
+ ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+ __sys_sendmsg net/socket.c:2667 [inline]
+ __do_sys_sendmsg net/socket.c:2676 [inline]
+ __se_sys_sendmsg net/socket.c:2674 [inline]
+ __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-unreferenced object 0xffff8881198631c0 (size 240):
-  comm "softirq", pid 0, jiffies 4299266571 (age 1802.392s)
-  hex dump (first 32 bytes):
-    00 10 9b 03 81 88 ff ff 80 98 da bc ff ff ff ff  ................
-    81 55 18 bb ff ff ff ff 00 00 00 00 00 00 00 00  .U..............
-  backtrace:
-    [<ffffffffb93e8d4c>] kmem_cache_alloc+0x60c/0xa80
-    [<ffffffffba11b4c5>] dst_alloc+0x55/0x250
-    [<ffffffffba227bf6>] rt_dst_alloc+0x46/0x1d0
-    [<ffffffffba23050a>] __mkroute_output+0x29a/0xa50
-    [<ffffffffba23456b>] ip_route_output_key_hash+0x10b/0x240
-    [<ffffffffba2346bd>] ip_route_output_flow+0x1d/0x90
-    [<ffffffffba254855>] inet_csk_route_req+0x2c5/0x500
-    [<ffffffffba26b331>] tcp_conn_request+0x691/0x12c0
-    [<ffffffffba27bd08>] tcp_rcv_state_process+0x3c8/0x11b0
-    [<ffffffffba2965c6>] tcp_v4_do_rcv+0x156/0x3b0
-    [<ffffffffba299c98>] tcp_v4_rcv+0x1cf8/0x1d80
-    [<ffffffffba239656>] ip_protocol_deliver_rcu+0xf6/0x360
-    [<ffffffffba2399a6>] ip_local_deliver_finish+0xe6/0x1e0
-    [<ffffffffba239b8e>] ip_local_deliver+0xee/0x360
-    [<ffffffffba239ead>] ip_rcv+0xad/0x2f0
-    [<ffffffffba110943>] __netif_receive_skb_one_core+0x123/0x140
+Uninit was created at:
+ slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
+ slab_alloc_node mm/slub.c:3478 [inline]
+ kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
+ kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
+ __alloc_skb+0x318/0x740 net/core/skbuff.c:651
+ alloc_skb include/linux/skbuff.h:1286 [inline]
+ alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
+ sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2780
+ sock_alloc_send_skb include/net/sock.h:1884 [inline]
+ raw_sendmsg+0x36d/0xc10 net/ieee802154/socket.c:282
+ ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg net/socket.c:745 [inline]
+ ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
+ ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
+ __sys_sendmsg net/socket.c:2667 [inline]
+ __do_sys_sendmsg net/socket.c:2676 [inline]
+ __se_sys_sendmsg net/socket.c:2674 [inline]
+ __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-Call dst_release() to free the dst memory when
-inet_csk_reqsk_queue_hash_add() return false in tcp_conn_request().
+CPU: 0 PID: 5037 Comm: syz-executor166 Not tainted 6.7.0-rc7-syzkaller-00003-gfbafc3e621c3 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
+=====================================================
 
-Fixes: ff46e3b44219 ("Fix race for duplicate reqsk on identical SYN")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Link: https://patch.msgid.link/20241219072859.3783576-1-wangliang74@huawei.com
+This issue occurs because the skb buffer is too small, and it's actual
+allocation is aligned. This hides an actual issue, which is that nr_route_frame
+does not validate the buffer size before using it.
+
+Fix this issue by checking skb->len before accessing any fields in skb->data.
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Co-developed-by: Nikita Marushkin <hfggklm@gmail.com>
+Signed-off-by: Nikita Marushkin <hfggklm@gmail.com>
+Signed-off-by: Ilya Shchipletsov <rabbelkin@mail.ru>
+Link: https://patch.msgid.link/20241219082308.3942-1-rabbelkin@mail.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/netrom/nr_route.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 3e7533f64512..6bd28ac949b4 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -7059,6 +7059,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
- 			if (unlikely(!inet_csk_reqsk_queue_hash_add(sk, req,
- 								    req->timeout))) {
- 				reqsk_free(req);
-+				dst_release(dst);
- 				return 0;
- 			}
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index dc39ae20c6aa..782a6e0d1b6e 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -754,6 +754,12 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	int ret;
+ 	struct sk_buff *skbn;
  
++	/*
++	 * Reject malformed packets early. Check that it contains at least 2
++	 * addresses and 1 byte more for Time-To-Live
++	 */
++	if (skb->len < 2 * sizeof(ax25_address) + 1)
++		return 0;
+ 
+ 	nr_src  = (ax25_address *)(skb->data + 0);
+ 	nr_dest = (ax25_address *)(skb->data + 7);
 -- 
 2.39.5
 
