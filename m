@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9D718B46A;
-	Mon,  6 Jan 2025 15:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88909188A0D;
+	Mon,  6 Jan 2025 15:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177505; cv=none; b=BT4+B2Gyqmhsg8omXhO1f+5Rv4XpHkjLrEmjXlvArzjTdEWDHR6TsG1/XSPMeskZG7QsZXxzqW2zWUlPCFgoQIlsGVafVQfgbHvZUaIo1gwWKXoJhftowJWyEUPGWvzaJUrKt7WAMoY3Y9ZrRUPzt/unLqzt1Mw+GjrfXr4nxTM=
+	t=1736177508; cv=none; b=SvlaBSLOErLGmAOuQHq0+T3gWXWiIad1V4/xQJMo3TyncTTTStZjtb6cXUFwVSJLAFftCEOaZglC4jhW/FWXhr3SdRmrfMWH3wX9c2taAjnSJbi4EqhnS2MKWXCaMoQSalPZ8GbHbkzxWigVPL67Uohp5m7uQMtPI+aRE/5VXM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177505; c=relaxed/simple;
-	bh=E7+ToMoqz4TbUfg0ddktefrg14EYBlgOP5fPORL+c1c=;
+	s=arc-20240116; t=1736177508; c=relaxed/simple;
+	bh=6bxAKJaufLSLNtwoVnQ7GJz2AgY4CwciLME2jXQ0jOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSC4E63zYPem+tvivzvmE2TVaqGCU64wtbp6svR+2xvj+EMRYYqWxlXJTCT/oAKs+FEUKfBI2wh1CDgrULZYR0uyyRkUi7Nj9ugxWf6EkyMXZru/H0wM6OGmjV5xHb8QLDFbXEXkQu5cPkZKD02a/Eg/exPKMQyWArie5dSm5oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mF7ZaGgg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=azDlJw4OY2k3i9ZxRj8bjSJ1IQiYlxU7PeEqX5519Cdzrbbb1dceB2Fn/r/k5JhK5VvGROIowU3sQi9e0/0V6WSrjqoPz1jIgXw1wgHIMoCWzQx7EDqWKmxkkSPLgRoqiMr28pb3T6A0wqzeHzAxtQnzOfiycM83BtQid3QmNzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kydjh+6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mF7ZaGgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02752C4CED2;
-	Mon,  6 Jan 2025 15:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kydjh+6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11249C4CED6;
+	Mon,  6 Jan 2025 15:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177504;
-	bh=E7+ToMoqz4TbUfg0ddktefrg14EYBlgOP5fPORL+c1c=;
+	s=korg; t=1736177507;
+	bh=6bxAKJaufLSLNtwoVnQ7GJz2AgY4CwciLME2jXQ0jOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mF7ZaGggO89HNk9uU8khk6OwbrELA54usFe/ZumjupBWvzDBfMrNFFaR+81sVd55Y
-	 JYGr2GIvVaMY5dmXYR2oPe9K7phiO0w8Ke+qTq9gm3WzOTPT1mW1j4/Og0LoppYtvV
-	 4uM4H8P84giAU9N4aEEMIZk5MQRYBd2Coc/xooVc=
+	b=kydjh+6e4iBL46UgAOIOTCd+bjtzr7caPiV1Zbt2uwYlf729km7q8FacqJvbvPyE0
+	 GMvXnGbLHN0fZtGyMCDqIzybFs34IicPuRA8NVo4Wm3LCF7wKer3Hmy9o2kFghjYHD
+	 c8XpVYfwcQCpYQGwYLPgLFxNG/vnH2Nbv1IwYiYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Takashi Iwai <tiwai@suse.com>,
 	Adrian Ratiu <adrian.ratiu@collabora.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/222] sound: usb: enable DSD output for ddHiFi TC44C
-Date: Mon,  6 Jan 2025 16:16:28 +0100
-Message-ID: <20250106151157.730014776@linuxfoundation.org>
+Subject: [PATCH 6.6 185/222] sound: usb: format: dont warn that raw DSD is unsupported
+Date: Mon,  6 Jan 2025 16:16:29 +0100
+Message-ID: <20250106151157.768256954@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,70 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Ratiu <adrian.ratiu@collabora.com>
 
-[ Upstream commit c84bd6c810d1880194fea2229c7086e4b73fddc1 ]
+[ Upstream commit b50a3e98442b8d72f061617c7f7a71f7dba19484 ]
 
-This is a UAC 2 DAC capable of raw DSD on intf 2 alt 4:
+UAC 2 & 3 DAC's set bit 31 of the format to signal support for a
+RAW_DATA type, typically used for DSD playback.
 
-Bus 007 Device 004: ID 262a:9302 SAVITECH Corp. TC44C
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass          239 Miscellaneous Device
-  bDeviceSubClass         2 [unknown]
-  bDeviceProtocol         1 Interface Association
-  bMaxPacketSize0        64
-  idVendor           0x262a SAVITECH Corp.
-  idProduct          0x9302 TC44C
-  bcdDevice            0.01
-  iManufacturer           1 DDHIFI
-  iProduct                2 TC44C
-  iSerial                 6 5000000001
-.......
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        2
-      bAlternateSetting       4
-      bNumEndpoints           2
-      bInterfaceClass         1 Audio
-      bInterfaceSubClass      2 Streaming
-      bInterfaceProtocol      32
-      iInterface              0
-	AudioStreaming Interface Descriptor:
-          bLength                16
-          bDescriptorType        36
-          bDescriptorSubtype     1 (AS_GENERAL)
-          bTerminalLink          3
-          bmControls             0x00
-          bFormatType            1
-          bmFormats              0x80000000
-          bNrChannels            2
-          bmChannelConfig        0x00000000
-          iChannelNames          0
-.......
+This is correctly tested by (format & UAC*_FORMAT_TYPE_I_RAW_DATA),
+fp->dsd_raw = true; and call snd_usb_interface_dsd_format_quirks(),
+however a confusing and unnecessary message gets printed because
+the bit is not properly tested in the last "unsupported" if test:
+if (format & ~0x3F) { ... }
 
+For example the output:
+
+usb 7-1: new high-speed USB device number 5 using xhci_hcd
+usb 7-1: New USB device found, idVendor=262a, idProduct=9302, bcdDevice=0.01
+usb 7-1: New USB device strings: Mfr=1, Product=2, SerialNumber=6
+usb 7-1: Product: TC44C
+usb 7-1: Manufacturer: TC44C
+usb 7-1: SerialNumber: 5000000001
+hid-generic 0003:262A:9302.001E: No inputs registered, leaving
+hid-generic 0003:262A:9302.001E: hidraw6: USB HID v1.00 Device [DDHIFI TC44C] on usb-0000:08:00.3-1/input0
+usb 7-1: 2:4 : unsupported format bits 0x100000000
+
+This last "unsupported format" is actually wrong: we know the
+format is a RAW_DATA which we assume is DSD, so there is no need
+to print the confusing message.
+
+This we unset bit 31 of the format after recognizing it, to avoid
+the message.
+
+Suggested-by: Takashi Iwai <tiwai@suse.com>
 Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-Link: https://patch.msgid.link/20241209090529.16134-1-adrian.ratiu@collabora.com
+Link: https://patch.msgid.link/20241209090529.16134-2-adrian.ratiu@collabora.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/format.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 8eed8d9742fd..ec81b47c41c9 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2225,6 +2225,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2522, 0x0007, /* LH Labs Geek Out HD Audio 1V5 */
- 		   QUIRK_FLAG_SET_IFACE_FIRST),
-+	DEVICE_FLG(0x262a, 0x9302, /* ddHiFi TC44C */
-+		   QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2708, 0x0002, /* Audient iD14 */
- 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
- 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
+diff --git a/sound/usb/format.c b/sound/usb/format.c
+index 3b45d0ee7693..3b3a5ea6fcbf 100644
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -60,6 +60,8 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
+ 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
+ 			/* flag potentially raw DSD capable altsettings */
+ 			fp->dsd_raw = true;
++			/* clear special format bit to avoid "unsupported format" msg below */
++			format &= ~UAC2_FORMAT_TYPE_I_RAW_DATA;
+ 		}
+ 
+ 		format <<= 1;
+@@ -71,8 +73,11 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
+ 		sample_width = as->bBitResolution;
+ 		sample_bytes = as->bSubslotSize;
+ 
+-		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA)
++		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA) {
+ 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
++			/* clear special format bit to avoid "unsupported format" msg below */
++			format &= ~UAC3_FORMAT_TYPE_I_RAW_DATA;
++		}
+ 
+ 		format <<= 1;
+ 		break;
 -- 
 2.39.5
 
