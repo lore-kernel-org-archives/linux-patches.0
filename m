@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA07F7603F;
-	Mon,  6 Jan 2025 15:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC8E7405A;
+	Mon,  6 Jan 2025 15:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177626; cv=none; b=f3LJZC81QKAb1/45jVPMXOcvNvHgttweFQRjo/i6f1HZD30e/cl/uNwOQ6pJyfVU6w6+49VDc2uAnNi4q4w+AruhxyQSA3k1EBBXSBxjh39D3q7n9r5HyW2q6XEPB17B2usQg9bepfc+ITFSTq7l0JErKXIksr6aa42wjgU5RR4=
+	t=1736177629; cv=none; b=gz+US8UIvDymOW96s8f6Oa60rNbQ/zCC3TnRQzjsJsCWRHwDD+4zYcZJ9y7oXtM0ZP/xQrAoKLCSFzK49Cs5xADF0bWexu+s9Ew7Dwx0OpTeoqF28nos6LBclT70kmW9KG+rc1Fbw1lwlkg6jKxzdwJQ5b1cmOZM/F8gJ8jq3Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177626; c=relaxed/simple;
-	bh=SIgfofJWBzbqwUNT6xW5j9CPRwjwy4seq6NvonfwM6Q=;
+	s=arc-20240116; t=1736177629; c=relaxed/simple;
+	bh=mCdEhtJ55N4cy4O8F6i9fSZ4IvCa4szkwtMh2y8EqQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7t4mVh6TwvEEfxv+t452guii3Zz8qbA2fPXO9JGCbeW9rh/iH1IRbAHN1/3h8Kmg0wBzcCcniM0ig50/35tiFScI1ZJFsJa9wapi/dnqgk2Meg1XbW+NHvpewL7+KGIWFh1AvxZndSkRv270jjPFGCYEtqWIRHkph0x4NrzZuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YOYUBUuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQNzTRJ0imjfDK6L1M5zz5ci+keC9wa3kGjPBoKWIy6NsHE0LAe6agC8I98w+tW22uIXLvOfCLRJiY/FsvuUsuK5++YQacXS52k273ymozWZFGA1MQ/x+qiXOaTMhLHVBQcf+gIboQUCCN1C4lr2KpV2dntZlLKS0G5u5KD3Ir0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqOEfzMv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YOYUBUuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BA4C4CED2;
-	Mon,  6 Jan 2025 15:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqOEfzMv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D498AC4CED2;
+	Mon,  6 Jan 2025 15:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177626;
-	bh=SIgfofJWBzbqwUNT6xW5j9CPRwjwy4seq6NvonfwM6Q=;
+	s=korg; t=1736177629;
+	bh=mCdEhtJ55N4cy4O8F6i9fSZ4IvCa4szkwtMh2y8EqQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOYUBUuAUxZ5GU3O0fOZ3BesNsWaXXynenp6uMKlFO5uprdPcMrNQL3S1xcGjwsrQ
-	 iiqNUKpFur1pr/nwC+UAAPvHzs42vRRguetL/ltYtr19k/qNcecERz97mfE5MTEmED
-	 ZvJg4LkK5fUhihDzQ+KP+A4Xfm/crUG92HgOF848=
+	b=cqOEfzMvK34G6rCxPfCcswtvoXCpHR7CEskCAdV48qwGDQmAzidUTNpF9vcopsTzO
+	 nI9CY+KLB65nnKSQFNfALorpqgOXW105xapISo14skPgfcLKDzJe6+PQh89fGjcVJk
+	 399fkyWh/bRl+brdLwty02GNdwg847IXPfDoSo58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 195/222] RDMA/bnxt_re: Fix the max WQE size for static WQE support
-Date: Mon,  6 Jan 2025 16:16:39 +0100
-Message-ID: <20250106151158.143078276@linuxfoundation.org>
+Subject: [PATCH 6.6 196/222] modpost: fix input MODULE_DEVICE_TABLE() built for 64-bit on 32-bit host
+Date: Mon,  6 Jan 2025 16:16:40 +0100
+Message-ID: <20250106151158.180834407@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,76 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 227f51743b61fe3f6fc481f0fb8086bf8c49b8c9 ]
+[ Upstream commit 77dc55a978e69625f9718460012e5ef0172dc4de ]
 
-When variable size WQE is supported, max_qp_sges reported
-is more than 6. For devices that supports variable size WQE,
-the Send WQE size calculation is wrong when an an older library
-that doesn't support variable size WQE is used.
+When building a 64-bit kernel on a 32-bit build host, incorrect
+input MODULE_ALIAS() entries may be generated.
 
-Set the WQE size to 128 when static WQE is supported.
+For example, when compiling a 64-bit kernel with CONFIG_INPUT_MOUSEDEV=m
+on a 64-bit build machine, you will get the correct output:
 
-Fixes: de1d364c3815 ("RDMA/bnxt_re: Add support for Variable WQE in Genp7 adapters")
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1725444253-13221-3-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  $ grep MODULE_ALIAS drivers/input/mousedev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*110,*r*0,*1,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*r*8,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*14A,*r*a*0,*1,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*145,*r*a*0,*1,*18,*1C,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*110,*r*a*0,*1,*m*l*s*f*w*");
+
+However, building the same kernel on a 32-bit machine results in
+incorrect output:
+
+  $ grep MODULE_ALIAS drivers/input/mousedev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*110,*130,*r*0,*1,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*2,*k*r*8,*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*14A,*16A,*r*a*0,*1,*20,*21,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*145,*165,*r*a*0,*1,*18,*1C,*20,*21,*38,*3C,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*3,*k*110,*130,*r*a*0,*1,*20,*21,*m*l*s*f*w*");
+
+A similar issue occurs with CONFIG_INPUT_JOYDEV=m. On a 64-bit build
+machine, the output is:
+
+  $ grep MODULE_ALIAS drivers/input/joydev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*0,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*2,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*8,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*6,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*120,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*130,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*2C0,*r*a*m*l*s*f*w*");
+
+However, on a 32-bit machine, the output is incorrect:
+
+  $ grep MODULE_ALIAS drivers/input/joydev.mod.c
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*0,*20,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*2,*22,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*8,*28,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*3,*k*r*a*6,*26,*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*11F,*13F,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*11F,*13F,*r*a*m*l*s*f*w*");
+  MODULE_ALIAS("input:b*v*p*e*-e*1,*k*2C0,*2E0,*r*a*m*l*s*f*w*");
+
+When building a 64-bit kernel, BITS_PER_LONG is defined as 64. However,
+on a 32-bit build machine, the constant 1L is a signed 32-bit value.
+Left-shifting it beyond 32 bits causes wraparound, and shifting by 31
+or 63 bits makes it a negative value.
+
+The fix in commit e0e92632715f ("[PATCH] PATCH: 1 line 2.6.18 bugfix:
+modpost-64bit-fix.patch") is incorrect; it only addresses cases where
+a 64-bit kernel is built on a 64-bit build machine, overlooking cases
+on a 32-bit build machine.
+
+Using 1ULL ensures a 64-bit width on both 32-bit and 64-bit machines,
+avoiding the wraparound issue.
+
+Fixes: e0e92632715f ("[PATCH] PATCH: 1 line 2.6.18 bugfix: modpost-64bit-fix.patch")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: bf36b4bf1b9a ("modpost: fix the missed iteration for the max bit in do_input()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 21 ++++++++++-----------
- drivers/infiniband/hw/bnxt_re/qplib_sp.h |  2 ++
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ scripts/mod/file2alias.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 540998ddbb44..13c65ec58256 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -992,23 +992,22 @@ static int bnxt_re_setup_swqe_size(struct bnxt_re_qp *qp,
- 	align = sizeof(struct sq_send_hdr);
- 	ilsize = ALIGN(init_attr->cap.max_inline_data, align);
+diff --git a/scripts/mod/file2alias.c b/scripts/mod/file2alias.c
+index efbb4836ec66..96f37fe1b992 100644
+--- a/scripts/mod/file2alias.c
++++ b/scripts/mod/file2alias.c
+@@ -743,7 +743,7 @@ static void do_input(char *alias,
+ 	for (i = min / BITS_PER_LONG; i < max / BITS_PER_LONG + 1; i++)
+ 		arr[i] = TO_NATIVE(arr[i]);
+ 	for (i = min; i < max; i++)
+-		if (arr[i / BITS_PER_LONG] & (1L << (i%BITS_PER_LONG)))
++		if (arr[i / BITS_PER_LONG] & (1ULL << (i%BITS_PER_LONG)))
+ 			sprintf(alias + strlen(alias), "%X,*", i);
+ }
  
--	sq->wqe_size = bnxt_re_get_wqe_size(ilsize, sq->max_sge);
--	if (sq->wqe_size > bnxt_re_get_swqe_size(dev_attr->max_qp_sges))
--		return -EINVAL;
--	/* For gen p4 and gen p5 backward compatibility mode
--	 * wqe size is fixed to 128 bytes
-+	/* For gen p4 and gen p5 fixed wqe compatibility mode
-+	 * wqe size is fixed to 128 bytes - ie 6 SGEs
- 	 */
--	if (sq->wqe_size < bnxt_re_get_swqe_size(dev_attr->max_qp_sges) &&
--			qplqp->wqe_mode == BNXT_QPLIB_WQE_MODE_STATIC)
--		sq->wqe_size = bnxt_re_get_swqe_size(dev_attr->max_qp_sges);
-+	if (qplqp->wqe_mode == BNXT_QPLIB_WQE_MODE_STATIC) {
-+		sq->wqe_size = bnxt_re_get_swqe_size(BNXT_STATIC_MAX_SGE);
-+		sq->max_sge = BNXT_STATIC_MAX_SGE;
-+	} else {
-+		sq->wqe_size = bnxt_re_get_wqe_size(ilsize, sq->max_sge);
-+		if (sq->wqe_size > bnxt_re_get_swqe_size(dev_attr->max_qp_sges))
-+			return -EINVAL;
-+	}
- 
- 	if (init_attr->cap.max_inline_data) {
- 		qplqp->max_inline_data = sq->wqe_size -
- 			sizeof(struct sq_send_hdr);
- 		init_attr->cap.max_inline_data = qplqp->max_inline_data;
--		if (qplqp->wqe_mode == BNXT_QPLIB_WQE_MODE_STATIC)
--			sq->max_sge = qplqp->max_inline_data /
--				sizeof(struct sq_sge);
- 	}
- 
- 	return 0;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-index b91e6a85e75d..aeacd0a9a92c 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-@@ -358,4 +358,6 @@ int bnxt_qplib_modify_cc(struct bnxt_qplib_res *res,
- #define BNXT_VAR_MAX_SGE        13
- #define BNXT_RE_MAX_RQ_WQES     65536
- 
-+#define BNXT_STATIC_MAX_SGE	6
-+
- #endif /* __BNXT_QPLIB_SP_H__*/
 -- 
 2.39.5
 
