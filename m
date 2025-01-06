@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33258146D6B;
-	Mon,  6 Jan 2025 15:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CF0143C7E;
+	Mon,  6 Jan 2025 15:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178165; cv=none; b=FeY5cpjzChNWtYk3Ml4JznY55LbSIeNMbmYyTZjcAN9B2Dc3b8ZuYxOU60sWku1XkRFXCm8e2RseJykUJp8XJd4QZ318T3WQH2HDfe6fYskwX5R6PbtpsocDp+G2yRXxGTHEvSz7H0JbNS4qLp5wbSZcCh81L5mtKEySfz+rTaU=
+	t=1736178168; cv=none; b=OdMAb7LFcyHWANCf2aM8DehKjsuv6QsOuuzJiOm82t1GUUi5X3LxaOCHvDInHPvIID+12yIP1StKGOctAFYlCs7RygNvbPjISc0Hh6sTdXnYCrZ1k6RQoqpw9WSWMWAiUxw1orRGqmbg5FDDEvdlIDHbWQWxs7eBlascD9InxE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178165; c=relaxed/simple;
-	bh=01R9D6F1DKw4N9g3xfQbixEXGR4tQ/Fs+EV7HLBuC4k=;
+	s=arc-20240116; t=1736178168; c=relaxed/simple;
+	bh=m0MThEItI0Uns7KsIwz1wH2CSoFhebxXsWdcPaZ8Wu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UCsr+M/2cw6oNx4uCT5XtrbIhG0yeLOReInvb2bjpBHdFZ5L18g9YehZusw+3vSFWRLLLCv/Nzrkg4kiANvkD5HPmYv6DCX1Xb5AjiZvrkIz5BI4DIUFaYU2wVTLPis1namR6ePTQQuWXZABK8PLES7DF4T6yHOuAjIsdpi84MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFJIvJeY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kGZh82yBBsPrHOlIYA8CqZEx4riOSMH7YGCWil8DX4MwD8+rgGfCI+x9AiDUo7dHaEptfoVGS4LJbP89IzzJK+rukn3BS93YyhyfwBCptLVi/9SJyD7ivYlOjQMrn2wnnsYTsSFWmDZ4ztqN+hb3jJlam3vExS0W/RMv0pv0UZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDcU6opl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFJIvJeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE30C4CED2;
-	Mon,  6 Jan 2025 15:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDcU6opl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8FEC4CED2;
+	Mon,  6 Jan 2025 15:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178165;
-	bh=01R9D6F1DKw4N9g3xfQbixEXGR4tQ/Fs+EV7HLBuC4k=;
+	s=korg; t=1736178168;
+	bh=m0MThEItI0Uns7KsIwz1wH2CSoFhebxXsWdcPaZ8Wu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFJIvJeYAgUTSk3OVauPHzyKaWnggfTtLk27r7fULMc/HZfBPVXhVVoZqP2LT+QKL
-	 jBCXCCXP+SXzV9qdHCgLAkFHZlKf4btybqKiwc6zIGs0UrQ+a0MhvvhnWLcgWTU23F
-	 hU0oNcNqW8kSUHgxkxjJgOMzVAwCGeXEr+FpUfhM=
+	b=LDcU6oplDKJtBAwgItXHZhRcA3ouhF87oI7fuMH6lARmmRjvVxHT8Gc2oky0YriiD
+	 yTBseiK+cBtvLNHqU9t5TGXafcZK5sQqVFc3Do4648jooXc8b836orcSs5V5viGpKo
+	 5cPJopQLHJk5AhqRE9WT6lnR34bPYPUT3OLjubiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/138] net: ethernet: bgmac-platform: fix an OF node reference leak
-Date: Mon,  6 Jan 2025 16:15:43 +0100
-Message-ID: <20250106151133.946360900@linuxfoundation.org>
+	Jack Wu <wojackbb@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 028/138] USB: serial: option: add MediaTek T7XX compositions
+Date: Mon,  6 Jan 2025 16:15:52 +0100
+Message-ID: <20250106151134.285068578@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,51 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Jack Wu <wojackbb@gmail.com>
 
-[ Upstream commit 0cb2c504d79e7caa3abade3f466750c82ad26f01 ]
+commit f07dfa6a1b65034a5c3ba3a555950d972f252757 upstream.
 
-The OF node obtained by of_parse_phandle() is not freed. Call
-of_node_put() to balance the refcount.
+Add the MediaTek T7XX compositions:
 
-This bug was found by an experimental static analysis tool that I am
-developing.
+T:  Bus=03 Lev=01 Prnt=01 Port=05 Cnt=01 Dev#= 74 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=7129 Rev= 0.01
+S:  Manufacturer=MediaTek Inc.
+S:  Product=USB DATA CARD
+S:  SerialNumber=004402459035402
+C:* #Ifs=10 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: 1676aba5ef7e ("net: ethernet: bgmac: device tree phy enablement")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241214014912.2810315-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+-------------------------------
+| If Number | Function        |
+-------------------------------
+| 2         | USB AP Log Port |
+-------------------------------
+| 3         | USB AP GNSS Port|
+-------------------------------
+| 4         | USB AP META Port|
+-------------------------------
+| 5         | ADB port        |
+-------------------------------
+| 6         | USB MD AT Port  |
+------------------------------
+| 7         | USB MD META Port|
+-------------------------------
+| 8         | USB NTZ Port    |
+-------------------------------
+| 9         | USB Debug port  |
+-------------------------------
+
+Signed-off-by: Jack Wu <wojackbb@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bgmac-platform.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac-platform.c b/drivers/net/ethernet/broadcom/bgmac-platform.c
-index f37f1c58f368..c2e0bc1326fe 100644
---- a/drivers/net/ethernet/broadcom/bgmac-platform.c
-+++ b/drivers/net/ethernet/broadcom/bgmac-platform.c
-@@ -171,6 +171,7 @@ static int platform_phy_connect(struct bgmac *bgmac)
- static int bgmac_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
-+	struct device_node *phy_node;
- 	struct bgmac *bgmac;
- 	struct resource *regs;
- 	const u8 *mac_addr;
-@@ -232,7 +233,9 @@ static int bgmac_probe(struct platform_device *pdev)
- 	bgmac->cco_ctl_maskset = platform_bgmac_cco_ctl_maskset;
- 	bgmac->get_bus_clock = platform_bgmac_get_bus_clock;
- 	bgmac->cmn_maskset32 = platform_bgmac_cmn_maskset32;
--	if (of_parse_phandle(np, "phy-handle", 0)) {
-+	phy_node = of_parse_phandle(np, "phy-handle", 0);
-+	if (phy_node) {
-+		of_node_put(phy_node);
- 		bgmac->phy_connect = platform_phy_connect;
- 	} else {
- 		bgmac->phy_connect = bgmac_phy_connect_direct;
--- 
-2.39.5
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2249,6 +2249,8 @@ static const struct usb_device_id option
+ 	  .driver_info = NCTRL(2) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, 0x7127, 0xff, 0x00, 0x00),
+ 	  .driver_info = NCTRL(2) | NCTRL(3) | NCTRL(4) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEDIATEK_VENDOR_ID, 0x7129, 0xff, 0x00, 0x00),        /* MediaTek T7XX  */
++	  .driver_info = NCTRL(2) | NCTRL(3) | NCTRL(4) },
+ 	{ USB_DEVICE(CELLIENT_VENDOR_ID, CELLIENT_PRODUCT_MEN200) },
+ 	{ USB_DEVICE(CELLIENT_VENDOR_ID, CELLIENT_PRODUCT_MPL200),
+ 	  .driver_info = RSVD(1) | RSVD(4) },
 
 
