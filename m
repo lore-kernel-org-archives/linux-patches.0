@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 977748635E;
-	Mon,  6 Jan 2025 15:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6018B8635E;
+	Mon,  6 Jan 2025 15:26:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177157; cv=none; b=idbCi20SVCsZ8LzlcPxu11IOVm8icv1CqtxnvaYM9lL3EJtUhPdcZdnom8C259FC1ZF04l5zP3y9ykojW2rdmegz/pQ5dH/x/G5g2Naa+1eYz7g7HHsf9zafl1PP+btUjxoVWw4Xmr/MXEpB13CW9G8GnjXHvXwu7IifNcfXeaU=
+	t=1736177160; cv=none; b=Ekt7Hg9CRlXG0F1mbYF0NL1ehxE3lRhe1SK6NqTFzzqmoFUszggW0PV6g9bHJpxpN9XJAT8LKAt04fgMYm197J044n9oPzMvRC/gVpZcAt1A2MYW1lnwn7gPOd5X3aeIi6k+qkClxIuuc/lfdkvTvcgcr4sk9RXSI4JR+d4kWOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177157; c=relaxed/simple;
-	bh=uTUIecjYpXg30YUTeoJQY1HE+aoKYGyVqGXiPMfnJ2Q=;
+	s=arc-20240116; t=1736177160; c=relaxed/simple;
+	bh=C/uQlAV58VC4lRoVKGxwDtIPbIJH/0YfhqXDbBUNURo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSOg479Vdlin1HGc0/cQTiXh2b2J7P8dZAKi62rlA4p+d9RJcDsK+VJUAvLaz9c8yY9W29oDuSDzEdIV931KIvSRpUiMyv07GJ4UDIfd3DKk9cP2yLFK/r2JMddD4/ofsnsYtemTGKAO++acXyxwUBTG9dty/BMdH2uiHpU4mfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJPa899s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wr3ME/RBCtiEAIsPQrZMO+Ro+hIfnwnrYEQDAjDFYeOIaLV3QDmrSuqkgPR5RLAE9KmScN+DWNhiuultbU+HjJdER9qKbmbMpjAYjBL6Azelrdas23zSkrD4GHlpScvik05km/q2Nzx2txEURYsFdjdRzeZJd4wfq//Bi7UBKQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddulVw0L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJPa899s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB5DC4CED2;
-	Mon,  6 Jan 2025 15:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddulVw0L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C7FC4CED2;
+	Mon,  6 Jan 2025 15:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177157;
-	bh=uTUIecjYpXg30YUTeoJQY1HE+aoKYGyVqGXiPMfnJ2Q=;
+	s=korg; t=1736177160;
+	bh=C/uQlAV58VC4lRoVKGxwDtIPbIJH/0YfhqXDbBUNURo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJPa899sp80PugvKZ2Z42pQGBG+WnmU2tGkJM677DF4BILDoeXgujDMUPp9wxHdON
-	 PJ0SmNe3Ca//oAAHxpBVp9jmDyKm38ypixMm8+P5eYQOMR5y+cqO6dhZ5Uv2HQsDxB
-	 v+hnMXZnVNqJWRaxrxOCR1qQ4u25R2E06mNO6FCE=
+	b=ddulVw0L+h53qNxnxSP9Z3drr7twQUPg0mwjyrgOE+JnqDfUGPo70G3fqqzEAN55c
+	 TxzHbn90dFM0v4AA2U561TY0csXi1V6BPtg0/El9bfvRfS4mELZxeEOkhvIZ4maIR0
+	 yKAkLzNPTibqp0sFlv9+iguYQEU426gZxk7OZpjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nikita Yushchenko <nikita.yoush@cogentembedded.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/222] softirq: Allow raising SCHED_SOFTIRQ from SMP-call-function on RT kernel
-Date: Mon,  6 Jan 2025 16:14:35 +0100
-Message-ID: <20250106151153.292212277@linuxfoundation.org>
+Subject: [PATCH 6.6 072/222] net: renesas: rswitch: fix possible early skb release
+Date: Mon,  6 Jan 2025 16:14:36 +0100
+Message-ID: <20250106151153.328962565@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,88 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
 
-[ Upstream commit 6675ce20046d149e1e1ffe7e9577947dee17aad5 ]
+[ Upstream commit 5cb099902b6b6292b3a85ffa1bb844e0ba195945 ]
 
-do_softirq_post_smp_call_flush() on PREEMPT_RT kernels carries a
-WARN_ON_ONCE() for any SOFTIRQ being raised from an SMP-call-function.
-Since do_softirq_post_smp_call_flush() is called with preempt disabled,
-raising a SOFTIRQ during flush_smp_call_function_queue() can lead to
-longer preempt disabled sections.
+When sending frame split into multiple descriptors, hardware processes
+descriptors one by one, including writing back DT values. The first
+descriptor could be already marked as completed when processing of
+next descriptors for the same frame is still in progress.
 
-Since commit b2a02fc43a1f ("smp: Optimize
-send_call_function_single_ipi()") IPIs to an idle CPU in
-TIF_POLLING_NRFLAG mode can be optimized out by instead setting
-TIF_NEED_RESCHED bit in idle task's thread_info and relying on the
-flush_smp_call_function_queue() in the idle-exit path to run the
-SMP-call-function.
+Although only the last descriptor is configured to generate interrupt,
+completion of the first descriptor could be noticed by the driver when
+handling interrupt for the previous frame.
 
-To trigger an idle load balancing, the scheduler queues
-nohz_csd_function() responsible for triggering an idle load balancing on
-a target nohz idle CPU and sends an IPI. Only now, this IPI is optimized
-out and the SMP-call-function is executed from
-flush_smp_call_function_queue() in do_idle() which can raise a
-SCHED_SOFTIRQ to trigger the balancing.
+Currently, driver stores skb in the entry that corresponds to the first
+descriptor. This results into skb could be unmapped and freed when
+hardware did not complete the send yet. This opens a window for
+corrupting the data being sent.
 
-So far, this went undetected since, the need_resched() check in
-nohz_csd_function() would make it bail out of idle load balancing early
-as the idle thread does not clear TIF_POLLING_NRFLAG before calling
-flush_smp_call_function_queue(). The need_resched() check was added with
-the intent to catch a new task wakeup, however, it has recently
-discovered to be unnecessary and will be removed in the subsequent
-commit after which nohz_csd_function() can raise a SCHED_SOFTIRQ from
-flush_smp_call_function_queue() to trigger an idle load balance on an
-idle target in TIF_POLLING_NRFLAG mode.
+Fix this by saving skb in the entry that corresponds to the last
+descriptor used to send the frame.
 
-nohz_csd_function() bails out early if "idle_cpu()" check for the
-target CPU, and does not lock the target CPU's rq until the very end,
-once it has found tasks to run on the CPU and will not inhibit the
-wakeup of, or running of a newly woken up higher priority task. Account
-for this and prevent a WARN_ON_ONCE() when SCHED_SOFTIRQ is raised from
-flush_smp_call_function_queue().
-
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20241119054432.6405-2-kprateek.nayak@amd.com
+Fixes: d2c96b9d5f83 ("net: rswitch: Add jumbo frames handling for TX")
+Signed-off-by: Nikita Yushchenko <nikita.yoush@cogentembedded.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://patch.msgid.link/20241208095004.69468-2-nikita.yoush@cogentembedded.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/softirq.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/renesas/rswitch.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/softirq.c b/kernel/softirq.c
-index bd9716d7bb63..f24d80cf20bd 100644
---- a/kernel/softirq.c
-+++ b/kernel/softirq.c
-@@ -279,17 +279,24 @@ static inline void invoke_softirq(void)
- 		wakeup_softirqd();
- }
+diff --git a/drivers/net/ethernet/renesas/rswitch.c b/drivers/net/ethernet/renesas/rswitch.c
+index 54aa56c84133..2f483531d95c 100644
+--- a/drivers/net/ethernet/renesas/rswitch.c
++++ b/drivers/net/ethernet/renesas/rswitch.c
+@@ -1632,8 +1632,9 @@ static netdev_tx_t rswitch_start_xmit(struct sk_buff *skb, struct net_device *nd
+ 	if (dma_mapping_error(ndev->dev.parent, dma_addr_orig))
+ 		goto err_kfree;
  
-+#define SCHED_SOFTIRQ_MASK	BIT(SCHED_SOFTIRQ)
-+
- /*
-  * flush_smp_call_function_queue() can raise a soft interrupt in a function
-- * call. On RT kernels this is undesired and the only known functionality
-- * in the block layer which does this is disabled on RT. If soft interrupts
-- * get raised which haven't been raised before the flush, warn so it can be
-+ * call. On RT kernels this is undesired and the only known functionalities
-+ * are in the block layer which is disabled on RT, and in the scheduler for
-+ * idle load balancing. If soft interrupts get raised which haven't been
-+ * raised before the flush, warn if it is not a SCHED_SOFTIRQ so it can be
-  * investigated.
-  */
- void do_softirq_post_smp_call_flush(unsigned int was_pending)
- {
--	if (WARN_ON_ONCE(was_pending != local_softirq_pending()))
-+	unsigned int is_pending = local_softirq_pending();
-+
-+	if (unlikely(was_pending != is_pending)) {
-+		WARN_ON_ONCE(was_pending != (is_pending & ~SCHED_SOFTIRQ_MASK));
- 		invoke_softirq();
-+	}
- }
+-	gq->skbs[gq->cur] = skb;
+-	gq->unmap_addrs[gq->cur] = dma_addr_orig;
++	/* Stored the skb at the last descriptor to avoid skb free before hardware completes send */
++	gq->skbs[(gq->cur + nr_desc - 1) % gq->ring_size] = skb;
++	gq->unmap_addrs[(gq->cur + nr_desc - 1) % gq->ring_size] = dma_addr_orig;
  
- #else /* CONFIG_PREEMPT_RT */
+ 	dma_wmb();
+ 
 -- 
 2.39.5
 
