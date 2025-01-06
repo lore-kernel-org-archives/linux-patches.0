@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7CF16D9B8;
-	Mon,  6 Jan 2025 15:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8E714D28C;
+	Mon,  6 Jan 2025 15:40:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178001; cv=none; b=cCU/DIq0oRu154dWN5IJ5zhs0yJQsACuYwxYNBCFLSWQwrKOUVL4P48AcmDLYcZWVcvOxRgWSu1DqwxJX9bosKcYaMUhXaod3A+pRZjEUF8vYLa0yq+8IoebPT6oxjouv0UbPbY4dXIvN1lDMIUmqTpwlvlw29mVCbWGNHk5gqQ=
+	t=1736178004; cv=none; b=GJnQc8kXdg92wTuBlBJrjbL+eYiCTQVbmZJ8QKW7mW1R5B8N6jYtFMzAC+rfnbIt7bJbulrNH3SSiMmz1zJ96quWMQbfNTZRt277ROsmsJNH5Vp53FyPTrGuCtWwtYxrFbC3p/ShlcTbrYOrteghUECCw2KQB4kMnZS2xjsdSME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178001; c=relaxed/simple;
-	bh=hY5Qy27gjANYa0Y+6wytJ7TG3ee4bSWmqC+Q/qjxkyY=;
+	s=arc-20240116; t=1736178004; c=relaxed/simple;
+	bh=bIYKtXuRYyKZUCWh10qO3nap1RXSgMh2Mmzv3aBlKKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWobUM1xeJuEQyRWFpJUBDH82f0dJj0wvJc+srK+ECRkTuMKzdaGVGI1Op7Z8Qo26luUWhOnsyBSYQ/cSFVkjqCAJZKOe0seB/Geo2W4JaobB188+AtSYeDou8E5hkPlsBaRdMKXgVT2fTeBIVNEy5+qtrrJszJ0BqJ6UH3tM9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WacP/dvE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BAf3sofPO0ObeW6RNk9SHdPE+7EjS/LJX8OtSplRDvkpi7yrfVICBcf/x4rP37/dlKLw8eB0GUWu1/CJCjzMF61qxJkSgwJUWGnyXYF0/198eO1a1l1amReqeeAzZ9kxq0uMifALCevjdxZaPsP9UHBHQBCCB2LH0atzTprqfE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELzA4s6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WacP/dvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55DFC4CED2;
-	Mon,  6 Jan 2025 15:40:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELzA4s6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0302AC4CED6;
+	Mon,  6 Jan 2025 15:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178001;
-	bh=hY5Qy27gjANYa0Y+6wytJ7TG3ee4bSWmqC+Q/qjxkyY=;
+	s=korg; t=1736178004;
+	bh=bIYKtXuRYyKZUCWh10qO3nap1RXSgMh2Mmzv3aBlKKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WacP/dvE2lSr4GnbTwc67wCmgc4IP+cDa3zqHXBmY0sES8vEVrE4qr1F4a0OElt0a
-	 dcRbSs04LIYNnU+H5q7LGolY+2bLl6T9g/9XcPePXy/J1u5WDYR5qQGh3HjXXPjfCR
-	 PUKUZ7ChsEXouOIJ8g1GCnobZ+OwoMrDfhsH48XU=
+	b=ELzA4s6+0Qqk2uV8MOixuZ7ZZ+mN7ZnXbqAinhrpCq6acdnScizxcn1UZnm6XTl9b
+	 FxXaELxY4JtmRRvFEqylSHjaUZi2QSPTptgGbFXFEdIP+kQuij67ZuAAKasIbB4bLa
+	 gRxLD0Q0RQSj+PWxHaJlF8ztDUSj4ZwcpTjCNJe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henry Huang <henry.hj@antgroup.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 129/156] sched_ext: initialize kit->cursor.flags
-Date: Mon,  6 Jan 2025 16:16:55 +0100
-Message-ID: <20250106151146.591015886@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 130/156] net/sctp: Prevent autoclose integer overflow in sctp_association_init()
+Date: Mon,  6 Jan 2025 16:16:56 +0100
+Message-ID: <20250106151146.629295394@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -50,35 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henry Huang <henry.hj@antgroup.com>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-commit 35bf430e08a18fdab6eb94492a06d9ad14c6179b upstream.
+commit 4e86729d1ff329815a6e8a920cb554a1d4cb5b8d upstream.
 
-struct bpf_iter_scx_dsq *it maybe not initialized.
-If we didn't call scx_bpf_dsq_move_set_vtime and scx_bpf_dsq_move_set_slice
-before scx_bpf_dsq_move, it would cause unexpected behaviors:
-1. Assign a huge slice into p->scx.slice
-2. Assign a invalid vtime into p->scx.dsq_vtime
+While by default max_autoclose equals to INT_MAX / HZ, one may set
+net.sctp.max_autoclose to UINT_MAX. There is code in
+sctp_association_init() that can consequently trigger overflow.
 
-Signed-off-by: Henry Huang <henry.hj@antgroup.com>
-Fixes: 6462dd53a260 ("sched_ext: Compact struct bpf_iter_scx_dsq_kern")
-Cc: stable@vger.kernel.org # v6.12
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 9f70f46bd4c7 ("sctp: properly latch and use autoclose value from sock to association")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20241219162114.2863827-1-kniv@yandex-team.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/associola.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -6637,7 +6637,7 @@ __bpf_kfunc int bpf_iter_scx_dsq_new(str
- 		return -ENOENT;
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -137,7 +137,8 @@ static struct sctp_association *sctp_ass
+ 		= 5 * asoc->rto_max;
  
- 	INIT_LIST_HEAD(&kit->cursor.node);
--	kit->cursor.flags |= SCX_DSQ_LNODE_ITER_CURSOR | flags;
-+	kit->cursor.flags = SCX_DSQ_LNODE_ITER_CURSOR | flags;
- 	kit->cursor.priv = READ_ONCE(kit->dsq->seq);
+ 	asoc->timeouts[SCTP_EVENT_TIMEOUT_SACK] = asoc->sackdelay;
+-	asoc->timeouts[SCTP_EVENT_TIMEOUT_AUTOCLOSE] = sp->autoclose * HZ;
++	asoc->timeouts[SCTP_EVENT_TIMEOUT_AUTOCLOSE] =
++		(unsigned long)sp->autoclose * HZ;
  
- 	return 0;
+ 	/* Initializes the timers */
+ 	for (i = SCTP_EVENT_TIMEOUT_NONE; i < SCTP_NUM_TIMEOUT_TYPES; ++i)
 
 
