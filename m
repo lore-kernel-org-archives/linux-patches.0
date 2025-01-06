@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0112145A03;
-	Mon,  6 Jan 2025 15:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26FE13AD20;
+	Mon,  6 Jan 2025 15:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178762; cv=none; b=nlfdxaYdWhkhc8asQp9+XVHWD4ywhuDITgojjT2zwaNdtlOHICVyR90dPTnJSHL4Y1mLVEiPaeaAL0Cu1cShha8Nm0FWQGXsAv9Ln/fVTHMbqP0RY/FacNnbRnzItEZSIyLgq36ICFLzwY/a84zGyPCysyfHcDb/bae7rAgqzMg=
+	t=1736178765; cv=none; b=L6SFk8qTtvlEl9sgsC1mjvBL/H2l7N/XgpzixjzMHSiu0KrSBSPur5OzloLE88KiR1eqhAoEoTHOiEJz/j0NtRxhHqa1j67WC/ibnvcv+n2w6d0RRwOxoJYW5Sij3ifZgmPR55RxEOQc7h1lwI4O8xWurzv06738WWwXgeqmqpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178762; c=relaxed/simple;
-	bh=TiXxgUaFckb5egeaqCd8OizG2jG+JQGWUxXb6RUpqpU=;
+	s=arc-20240116; t=1736178765; c=relaxed/simple;
+	bh=xqDlUtYyrFxzP8MuulD+AbLL06Z85YOCgLj7DBHtnFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCpRlr1B4FwzRCNFhGDrmq8TsCAtA7JRrYijPQkx4zeL+mSRSw5YjtyQ6ImhmRSREla26TJIqJ1WgZdA3LjUyrvp7MieUIDkJHbTuzB+YAmifa5OK0LplCEVwuZArJUf5m3U9QPHUol4IajiesFM2NxLR/kOAq6IknKjanQmkrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0a62vSsW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ct7jB3dor9WUUSpx6COVMmejtrF+rtgv6JhoZoNG9EpBMRkfpKDwNCG8+7A2HgDjNewUlYCE2vqibwmdBUxLCObADPckAaQW9D9Hn014Dl+NvW1G8+Y40FeeLjV3P8Ustt3Po6Pbsgqb4thcs83N7/8va5tMPkgRX54x1d1/mI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GnXYGHnL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0a62vSsW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DEAC4CED2;
-	Mon,  6 Jan 2025 15:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GnXYGHnL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47326C4CED2;
+	Mon,  6 Jan 2025 15:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178761;
-	bh=TiXxgUaFckb5egeaqCd8OizG2jG+JQGWUxXb6RUpqpU=;
+	s=korg; t=1736178764;
+	bh=xqDlUtYyrFxzP8MuulD+AbLL06Z85YOCgLj7DBHtnFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0a62vSsW2NWetnXlMg7CcFvjatutdjEelsPN4jNdtmhg7Lw+fQCML5znp4aOIkmWN
-	 oqvDxtjY/T0wgfsIWiNZjDPtU77f64sJCNZIALUwt/g1xaD84+ojgMlnYFt/bI5eva
-	 NJcCluszWMWEPP5LCM3VlPykaPdOEdiE8Phg+T6E=
+	b=GnXYGHnLsXB54Lu1wgSgw1UH1fjjtbSEo8awAGXs9WVvzshczVvj7XpktqcZunXOE
+	 OxhR7rkNCQAHFCgpiQsHs7I8gpdQTX5Dy4U6az49QXhNgkNy6NnTqVv3A/lwnSdZEA
+	 0nIwOc5lzxK2cFDOFikX8EryVYtQQisc6U22f0r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Sun <yi.sun@unisoc.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	virtualization@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	"Uladzislau Rezki (Sony)" <urezki@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 084/168] virtio-blk: dont keep queue frozen during system suspend
-Date: Mon,  6 Jan 2025 16:16:32 +0100
-Message-ID: <20250106151141.636375230@linuxfoundation.org>
+Subject: [PATCH 5.15 085/168] vmalloc: fix accounting with i915
+Date: Mon,  6 Jan 2025 16:16:33 +0100
+Message-ID: <20250106151141.674309190@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -57,70 +59,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 7678abee0867e6b7fb89aa40f6e9f575f755fb37 ]
+[ Upstream commit a2e740e216f5bf49ccb83b6d490c72a340558a43 ]
 
-Commit 4ce6e2db00de ("virtio-blk: Ensure no requests in virtqueues before
-deleting vqs.") replaces queue quiesce with queue freeze in virtio-blk's
-PM callbacks. And the motivation is to drain inflight IOs before suspending.
+If the caller of vmap() specifies VM_MAP_PUT_PAGES (currently only the
+i915 driver), we will decrement nr_vmalloc_pages and MEMCG_VMALLOC in
+vfree().  These counters are incremented by vmalloc() but not by vmap() so
+this will cause an underflow.  Check the VM_MAP_PUT_PAGES flag before
+decrementing either counter.
 
-block layer's queue freeze looks very handy, but it is also easy to cause
-deadlock, such as, any attempt to call into bio_queue_enter() may run into
-deadlock if the queue is frozen in current context. There are all kinds
-of ->suspend() called in suspend context, so keeping queue frozen in the
-whole suspend context isn't one good idea. And Marek reported lockdep
-warning[1] caused by virtio-blk's freeze queue in virtblk_freeze().
-
-[1] https://lore.kernel.org/linux-block/ca16370e-d646-4eee-b9cc-87277c89c43c@samsung.com/
-
-Given the motivation is to drain in-flight IOs, it can be done by calling
-freeze & unfreeze, meantime restore to previous behavior by keeping queue
-quiesced during suspend.
-
-Cc: Yi Sun <yi.sun@unisoc.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: virtualization@lists.linux.dev
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/20241112125821.1475793-1-ming.lei@redhat.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Link: https://lkml.kernel.org/r/20241211202538.168311-1-willy@infradead.org
+Fixes: b944afc9d64d ("mm: add a VM_MAP_PUT_PAGES flag for vmap")
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: "Uladzislau Rezki (Sony)" <urezki@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/vmalloc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index 7f73e7447ecb..c1087dfa332e 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -988,9 +988,12 @@ static void virtblk_remove(struct virtio_device *vdev)
- static int virtblk_freeze(struct virtio_device *vdev)
- {
- 	struct virtio_blk *vblk = vdev->priv;
-+	struct request_queue *q = vblk->disk->queue;
+diff --git a/mm/vmalloc.c b/mm/vmalloc.c
+index cd434f0ec47f..3cb1f59d1b53 100644
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -2621,7 +2621,8 @@ static void __vunmap(const void *addr, int deallocate_pages)
+ 			__free_pages(page, page_order);
+ 			cond_resched();
+ 		}
+-		atomic_long_sub(area->nr_pages, &nr_vmalloc_pages);
++		if (!(area->flags & VM_MAP_PUT_PAGES))
++			atomic_long_sub(area->nr_pages, &nr_vmalloc_pages);
  
- 	/* Ensure no requests in virtqueues before deleting vqs. */
--	blk_mq_freeze_queue(vblk->disk->queue);
-+	blk_mq_freeze_queue(q);
-+	blk_mq_quiesce_queue_nowait(q);
-+	blk_mq_unfreeze_queue(q);
- 
- 	/* Ensure we don't receive any more interrupts */
- 	vdev->config->reset(vdev);
-@@ -1014,8 +1017,8 @@ static int virtblk_restore(struct virtio_device *vdev)
- 		return ret;
- 
- 	virtio_device_ready(vdev);
-+	blk_mq_unquiesce_queue(vblk->disk->queue);
- 
--	blk_mq_unfreeze_queue(vblk->disk->queue);
- 	return 0;
- }
- #endif
+ 		kvfree(area->pages);
+ 	}
 -- 
 2.39.5
 
