@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F2786345;
-	Mon,  6 Jan 2025 15:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5036A82D98;
+	Mon,  6 Jan 2025 15:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176841; cv=none; b=Z7bC75qA8++qEGMwXuoWjWpZb2PM2lNAuCuMfU88RKk6nlC1vfWg2Pe4xUu3mexgJnfMsOByr5xlZday6lBOUnurCAns+EsaovK+7T5Z2tdQjSkns/cpoOhrsogZOWh3TOKckkuz2JQZKEfw37+R5Zac1JSRhV9UJhQP9LMzhTs=
+	t=1736176844; cv=none; b=l4R4+BunJYqO00aQO2HPirp899pCol56NqEW+M0KBYYz0HJfDt9NhoiYzq3TgNH5Kj9Q7uy4RQFTtSVItyf+PvQke3ZvWIJCtQRnF8lAK+d1k1VzKWa/J4yEHjBfVrDSDLhRvMY6jUZ+83OrytoJ8SwYFjLjYhGYVHCuAPa8yWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176841; c=relaxed/simple;
-	bh=5hVqgcYNlceCZhBj9k5BQ3sador5afMg51inNLztv+c=;
+	s=arc-20240116; t=1736176844; c=relaxed/simple;
+	bh=bBGlLg1Efy1eplsOZ1gwuU6RQyTXVG4CMUSQ+uM+C5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmIvP9Nlq7mtt8q+odDTCa4S28xM2IYGgqsCJ86pYNd1BhQD88ALVkLZNBoKEE1bpqw9AztEJHCzmdlRXo8ACQACz6HsPqQNXwoJrUFCMpzG+HAvxY8b2w7JsLN3BNTV/Wqd2VLCvVmOviCnEjQI8dRJJ0w4v4jTuqOg2xxcd3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQFEFSBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hLJ0p4l3SIhxn6sO7RWBK7cIfL5dzKA9wSJwsM3BZRwThenbt1RBYs3u2Npb2JkB5DBIcBEEVsBzceL+0Aag3C6EpboaNmQllJZzzxrxPa2SYNtIUg4qnQgbFA0JLxtI7dhLcSnQSyKf18LmwkNmhN12PrE/eaOgjZE7U6rBupE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ImWI9llc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQFEFSBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13A8C4CED2;
-	Mon,  6 Jan 2025 15:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ImWI9llc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C087DC4CEDF;
+	Mon,  6 Jan 2025 15:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176841;
-	bh=5hVqgcYNlceCZhBj9k5BQ3sador5afMg51inNLztv+c=;
+	s=korg; t=1736176844;
+	bh=bBGlLg1Efy1eplsOZ1gwuU6RQyTXVG4CMUSQ+uM+C5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQFEFSBCVzXRUg/nAmV4VaVjBp6TROTTHXxqhJksXjqWAmJYDaz9J6VQLVPRsr9gI
-	 kbsJsgR9IS2iMYIi+NIqz4bna8H/on+URM++MpNKKd9iUILrnI9R4wsz64/sPk9Pww
-	 VSWjaN+ZqB+e4wd7X4SbN2h/P+N73Vrho6veFVc8=
+	b=ImWI9llcSqrmDrha8LLuHS6TQ+/8qb9To3IJAnoDpFc/CwvH2NFMZRfWZpzIzd1NE
+	 fB8uQWwL3kNGFUzMQBiT4v1qXwesPNS0AfxwYDu5xkODGGJ+z8tp/jt08NNQsH/PsQ
+	 iFEscH6cMlSyLyU9wBhlDRgfCCgNuElVMsQTEkmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8400677f3fd43f37d3bc@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Chengen Du <chengen.du@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 48/81] af_packet: fix vlan_get_tci() vs MSG_PEEK
-Date: Mon,  6 Jan 2025 16:16:20 +0100
-Message-ID: <20250106151131.248144560@linuxfoundation.org>
+Subject: [PATCH 6.1 22/81] RDMA/hns: Remove unused parameters and variables
+Date: Mon,  6 Jan 2025 16:15:54 +0100
+Message-ID: <20250106151130.275759664@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -54,100 +52,266 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 77ee7a6d16b6ec07b5c3ae2b6b60a24c1afbed09 ]
+[ Upstream commit f4caa864af84f801a5821ea2ba6c1cc46f8252c1 ]
 
-Blamed commit forgot MSG_PEEK case, allowing a crash [1] as found
-by syzbot.
+Remove unused parameters and variables.
 
-Rework vlan_get_tci() to not touch skb at all,
-so that it can be used from many cpus on the same skb.
-
-Add a const qualifier to skb argument.
-
-[1]
-skbuff: skb_under_panic: text:ffffffff8a8da482 len:32 put:14 head:ffff88807a1d5800 data:ffff88807a1d5810 tail:0x14 end:0x140 dev:<NULL>
-------------[ cut here ]------------
- kernel BUG at net/core/skbuff.c:206 !
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 0 UID: 0 PID: 5880 Comm: syz-executor172 Not tainted 6.13.0-rc3-syzkaller-00762-g9268abe611b0 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
- RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
- RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
-Code: 0b 8d 48 c7 c6 9e 6c 26 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 3a 5a 79 f7 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
-RSP: 0018:ffffc90003baf5b8 EFLAGS: 00010286
-RAX: 0000000000000087 RBX: dffffc0000000000 RCX: 8565c1eec37aa000
-RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
-RBP: ffff88802616fb50 R08: ffffffff817f0a4c R09: 1ffff92000775e50
-R10: dffffc0000000000 R11: fffff52000775e51 R12: 0000000000000140
-R13: ffff88807a1d5800 R14: ffff88807a1d5810 R15: 0000000000000014
-FS:  00007fa03261f6c0(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffd65753000 CR3: 0000000031720000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  skb_push+0xe5/0x100 net/core/skbuff.c:2636
-  vlan_get_tci+0x272/0x550 net/packet/af_packet.c:565
-  packet_recvmsg+0x13c9/0x1ef0 net/packet/af_packet.c:3616
-  sock_recvmsg_nosec net/socket.c:1044 [inline]
-  sock_recvmsg+0x22f/0x280 net/socket.c:1066
-  ____sys_recvmsg+0x1c6/0x480 net/socket.c:2814
-  ___sys_recvmsg net/socket.c:2856 [inline]
-  do_recvmmsg+0x426/0xab0 net/socket.c:2951
-  __sys_recvmmsg net/socket.c:3025 [inline]
-  __do_sys_recvmmsg net/socket.c:3048 [inline]
-  __se_sys_recvmmsg net/socket.c:3041 [inline]
-  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3041
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
-
-Fixes: 79eecf631c14 ("af_packet: Handle outgoing VLAN packets without hardware offloading")
-Reported-by: syzbot+8400677f3fd43f37d3bc@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6772c485.050a0220.2f3838.04c6.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Chengen Du <chengen.du@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20241230161004.2681892-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240412091616.370789-3-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 8673a6c2d9e4 ("RDMA/hns: Fix mapping error of zero-hop WQE buffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_alloc.c  |  3 +--
+ drivers/infiniband/hw/hns/hns_roce_device.h |  5 ++---
+ drivers/infiniband/hw/hns/hns_roce_hem.c    | 13 +++++--------
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 20 +++++++-------------
+ drivers/infiniband/hw/hns/hns_roce_mr.c     |  4 ++--
+ drivers/infiniband/hw/hns/hns_roce_qp.c     |  4 +---
+ drivers/infiniband/hw/hns/hns_roce_srq.c    |  4 ++--
+ 7 files changed, 20 insertions(+), 33 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 9da9e41899c6..224ac9a3482c 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -541,10 +541,8 @@ static void *packet_current_frame(struct packet_sock *po,
- 	return packet_lookup_frame(po, rb, rb->head, status);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_alloc.c b/drivers/infiniband/hw/hns/hns_roce_alloc.c
+index 11a78ceae568..950c133d4220 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_alloc.c
++++ b/drivers/infiniband/hw/hns/hns_roce_alloc.c
+@@ -153,8 +153,7 @@ int hns_roce_get_kmem_bufs(struct hns_roce_dev *hr_dev, dma_addr_t *bufs,
+ 	return total;
  }
  
--static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
-+static u16 vlan_get_tci(const struct sk_buff *skb, struct net_device *dev)
+-int hns_roce_get_umem_bufs(struct hns_roce_dev *hr_dev, dma_addr_t *bufs,
+-			   int buf_cnt, struct ib_umem *umem,
++int hns_roce_get_umem_bufs(dma_addr_t *bufs, int buf_cnt, struct ib_umem *umem,
+ 			   unsigned int page_shift)
  {
--	u8 *skb_orig_data = skb->data;
--	int skb_orig_len = skb->len;
- 	struct vlan_hdr vhdr, *vh;
- 	unsigned int header_len;
+ 	struct ib_block_iter biter;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 461008bf0fcf..060797001353 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -882,8 +882,7 @@ struct hns_roce_hw {
+ 	int (*rereg_write_mtpt)(struct hns_roce_dev *hr_dev,
+ 				struct hns_roce_mr *mr, int flags,
+ 				void *mb_buf);
+-	int (*frmr_write_mtpt)(struct hns_roce_dev *hr_dev, void *mb_buf,
+-			       struct hns_roce_mr *mr);
++	int (*frmr_write_mtpt)(void *mb_buf, struct hns_roce_mr *mr);
+ 	int (*mw_write_mtpt)(void *mb_buf, struct hns_roce_mw *mw);
+ 	void (*write_cqc)(struct hns_roce_dev *hr_dev,
+ 			  struct hns_roce_cq *hr_cq, void *mb_buf, u64 *mtts,
+@@ -1182,7 +1181,7 @@ struct hns_roce_buf *hns_roce_buf_alloc(struct hns_roce_dev *hr_dev, u32 size,
+ int hns_roce_get_kmem_bufs(struct hns_roce_dev *hr_dev, dma_addr_t *bufs,
+ 			   int buf_cnt, struct hns_roce_buf *buf,
+ 			   unsigned int page_shift);
+-int hns_roce_get_umem_bufs(struct hns_roce_dev *hr_dev, dma_addr_t *bufs,
++int hns_roce_get_umem_bufs(dma_addr_t *bufs,
+ 			   int buf_cnt, struct ib_umem *umem,
+ 			   unsigned int page_shift);
  
-@@ -565,12 +563,8 @@ static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index f605eb8fd13a..6e0ca8a4b2a8 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -1043,15 +1043,13 @@ static void hem_list_free_all(struct hns_roce_dev *hr_dev,
+ 	}
+ }
+ 
+-static void hem_list_link_bt(struct hns_roce_dev *hr_dev, void *base_addr,
+-			     u64 table_addr)
++static void hem_list_link_bt(void *base_addr, u64 table_addr)
+ {
+ 	*(u64 *)(base_addr) = table_addr;
+ }
+ 
+ /* assign L0 table address to hem from root bt */
+-static void hem_list_assign_bt(struct hns_roce_dev *hr_dev,
+-			       struct hns_roce_hem_item *hem, void *cpu_addr,
++static void hem_list_assign_bt(struct hns_roce_hem_item *hem, void *cpu_addr,
+ 			       u64 phy_addr)
+ {
+ 	hem->addr = cpu_addr;
+@@ -1222,8 +1220,7 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
+ 		if (level > 1) {
+ 			pre = hem_ptrs[level - 1];
+ 			step = (cur->start - pre->start) / step * BA_BYTE_LEN;
+-			hem_list_link_bt(hr_dev, pre->addr + step,
+-					 cur->dma_addr);
++			hem_list_link_bt(pre->addr + step, cur->dma_addr);
+ 		}
+ 	}
+ 
+@@ -1281,7 +1278,7 @@ static int alloc_fake_root_bt(struct hns_roce_dev *hr_dev, void *cpu_base,
+ 	if (!hem)
+ 		return -ENOMEM;
+ 
+-	hem_list_assign_bt(hr_dev, hem, cpu_base, phy_base);
++	hem_list_assign_bt(hem, cpu_base, phy_base);
+ 	list_add(&hem->list, branch_head);
+ 	list_add(&hem->sibling, leaf_head);
+ 
+@@ -1304,7 +1301,7 @@ static int setup_middle_bt(struct hns_roce_dev *hr_dev, void *cpu_base,
+ 	/* if exist mid bt, link L1 to L0 */
+ 	list_for_each_entry_safe(hem, temp_hem, branch_head, list) {
+ 		offset = (hem->start - r->offset) / step * BA_BYTE_LEN;
+-		hem_list_link_bt(hr_dev, cpu_base + offset, hem->dma_addr);
++		hem_list_link_bt(cpu_base + offset, hem->dma_addr);
+ 		total++;
+ 	}
+ 
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 105ad0aec922..60628ef1c46e 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -3400,8 +3400,7 @@ static int hns_roce_v2_rereg_write_mtpt(struct hns_roce_dev *hr_dev,
+ 	return ret;
+ }
+ 
+-static int hns_roce_v2_frmr_write_mtpt(struct hns_roce_dev *hr_dev,
+-				       void *mb_buf, struct hns_roce_mr *mr)
++static int hns_roce_v2_frmr_write_mtpt(void *mb_buf, struct hns_roce_mr *mr)
+ {
+ 	dma_addr_t pbl_ba = hns_roce_get_mtr_ba(&mr->pbl_mtr);
+ 	struct hns_roce_v2_mpt_entry *mpt_entry;
+@@ -4367,8 +4366,7 @@ static void set_access_flags(struct hns_roce_qp *hr_qp,
+ }
+ 
+ static void set_qpc_wqe_cnt(struct hns_roce_qp *hr_qp,
+-			    struct hns_roce_v2_qp_context *context,
+-			    struct hns_roce_v2_qp_context *qpc_mask)
++			    struct hns_roce_v2_qp_context *context)
+ {
+ 	hr_reg_write(context, QPC_SGE_SHIFT,
+ 		     to_hr_hem_entries_shift(hr_qp->sge.sge_cnt,
+@@ -4390,7 +4388,6 @@ static inline int get_pdn(struct ib_pd *ib_pd)
+ }
+ 
+ static void modify_qp_reset_to_init(struct ib_qp *ibqp,
+-				    const struct ib_qp_attr *attr,
+ 				    struct hns_roce_v2_qp_context *context,
+ 				    struct hns_roce_v2_qp_context *qpc_mask)
+ {
+@@ -4409,7 +4406,7 @@ static void modify_qp_reset_to_init(struct ib_qp *ibqp,
+ 
+ 	hr_reg_write(context, QPC_RQWS, ilog2(hr_qp->rq.max_gs));
+ 
+-	set_qpc_wqe_cnt(hr_qp, context, qpc_mask);
++	set_qpc_wqe_cnt(hr_qp, context);
+ 
+ 	/* No VLAN need to set 0xFFF */
+ 	hr_reg_write(context, QPC_VLAN_ID, 0xfff);
+@@ -4454,7 +4451,6 @@ static void modify_qp_reset_to_init(struct ib_qp *ibqp,
+ }
+ 
+ static void modify_qp_init_to_init(struct ib_qp *ibqp,
+-				   const struct ib_qp_attr *attr,
+ 				   struct hns_roce_v2_qp_context *context,
+ 				   struct hns_roce_v2_qp_context *qpc_mask)
+ {
+@@ -4752,8 +4748,7 @@ static int modify_qp_init_to_rtr(struct ib_qp *ibqp,
+ 	return 0;
+ }
+ 
+-static int modify_qp_rtr_to_rts(struct ib_qp *ibqp,
+-				const struct ib_qp_attr *attr, int attr_mask,
++static int modify_qp_rtr_to_rts(struct ib_qp *ibqp, int attr_mask,
+ 				struct hns_roce_v2_qp_context *context,
+ 				struct hns_roce_v2_qp_context *qpc_mask)
+ {
+@@ -5121,15 +5116,14 @@ static int hns_roce_v2_set_abs_fields(struct ib_qp *ibqp,
+ 
+ 	if (cur_state == IB_QPS_RESET && new_state == IB_QPS_INIT) {
+ 		memset(qpc_mask, 0, hr_dev->caps.qpc_sz);
+-		modify_qp_reset_to_init(ibqp, attr, context, qpc_mask);
++		modify_qp_reset_to_init(ibqp, context, qpc_mask);
+ 	} else if (cur_state == IB_QPS_INIT && new_state == IB_QPS_INIT) {
+-		modify_qp_init_to_init(ibqp, attr, context, qpc_mask);
++		modify_qp_init_to_init(ibqp, context, qpc_mask);
+ 	} else if (cur_state == IB_QPS_INIT && new_state == IB_QPS_RTR) {
+ 		ret = modify_qp_init_to_rtr(ibqp, attr, attr_mask, context,
+ 					    qpc_mask);
+ 	} else if (cur_state == IB_QPS_RTR && new_state == IB_QPS_RTS) {
+-		ret = modify_qp_rtr_to_rts(ibqp, attr, attr_mask, context,
+-					   qpc_mask);
++		ret = modify_qp_rtr_to_rts(ibqp, attr_mask, context, qpc_mask);
+ 	}
+ 
+ 	return ret;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 7b59b95f87c2..acdcd5c9f42f 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -154,7 +154,7 @@ static int hns_roce_mr_enable(struct hns_roce_dev *hr_dev,
+ 	if (mr->type != MR_TYPE_FRMR)
+ 		ret = hr_dev->hw->write_mtpt(hr_dev, mailbox->buf, mr);
  	else
- 		return 0;
+-		ret = hr_dev->hw->frmr_write_mtpt(hr_dev, mailbox->buf, mr);
++		ret = hr_dev->hw->frmr_write_mtpt(mailbox->buf, mr);
+ 	if (ret) {
+ 		dev_err(dev, "failed to write mtpt, ret = %d.\n", ret);
+ 		goto err_page;
+@@ -714,7 +714,7 @@ static int mtr_map_bufs(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 		return -ENOMEM;
  
--	skb_push(skb, skb->data - skb_mac_header(skb));
--	vh = skb_header_pointer(skb, header_len, sizeof(vhdr), &vhdr);
--	if (skb_orig_data != skb->data) {
--		skb->data = skb_orig_data;
--		skb->len = skb_orig_len;
--	}
-+	vh = skb_header_pointer(skb, skb_mac_offset(skb) + header_len,
-+				sizeof(vhdr), &vhdr);
- 	if (unlikely(!vh))
- 		return 0;
+ 	if (mtr->umem)
+-		npage = hns_roce_get_umem_bufs(hr_dev, pages, page_count,
++		npage = hns_roce_get_umem_bufs(pages, page_count,
+ 					       mtr->umem, page_shift);
+ 	else
+ 		npage = hns_roce_get_kmem_bufs(hr_dev, pages, page_count,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index 7af663176104..19136cb16960 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -1139,7 +1139,6 @@ static int set_qp_param(struct hns_roce_dev *hr_dev, struct hns_roce_qp *hr_qp,
+ }
  
+ static int hns_roce_create_qp_common(struct hns_roce_dev *hr_dev,
+-				     struct ib_pd *ib_pd,
+ 				     struct ib_qp_init_attr *init_attr,
+ 				     struct ib_udata *udata,
+ 				     struct hns_roce_qp *hr_qp)
+@@ -1293,7 +1292,6 @@ int hns_roce_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *init_attr,
+ 	struct ib_device *ibdev = qp->device;
+ 	struct hns_roce_dev *hr_dev = to_hr_dev(ibdev);
+ 	struct hns_roce_qp *hr_qp = to_hr_qp(qp);
+-	struct ib_pd *pd = qp->pd;
+ 	int ret;
+ 
+ 	ret = check_qp_type(hr_dev, init_attr->qp_type, !!udata);
+@@ -1308,7 +1306,7 @@ int hns_roce_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *init_attr,
+ 		hr_qp->phy_port = hr_dev->iboe.phy_port[hr_qp->port];
+ 	}
+ 
+-	ret = hns_roce_create_qp_common(hr_dev, pd, init_attr, udata, hr_qp);
++	ret = hns_roce_create_qp_common(hr_dev, init_attr, udata, hr_qp);
+ 	if (ret)
+ 		ibdev_err(ibdev, "create QP type 0x%x failed(%d)\n",
+ 			  init_attr->qp_type, ret);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_srq.c b/drivers/infiniband/hw/hns/hns_roce_srq.c
+index 652508b660a0..80fcb1b0e8fd 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_srq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
+@@ -249,7 +249,7 @@ static void free_srq_wqe_buf(struct hns_roce_dev *hr_dev,
+ 	hns_roce_mtr_destroy(hr_dev, &srq->buf_mtr);
+ }
+ 
+-static int alloc_srq_wrid(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq)
++static int alloc_srq_wrid(struct hns_roce_srq *srq)
+ {
+ 	srq->wrid = kvmalloc_array(srq->wqe_cnt, sizeof(u64), GFP_KERNEL);
+ 	if (!srq->wrid)
+@@ -365,7 +365,7 @@ static int alloc_srq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_srq *srq,
+ 		goto err_idx;
+ 
+ 	if (!udata) {
+-		ret = alloc_srq_wrid(hr_dev, srq);
++		ret = alloc_srq_wrid(srq);
+ 		if (ret)
+ 			goto err_wqe_buf;
+ 	}
 -- 
 2.39.5
 
