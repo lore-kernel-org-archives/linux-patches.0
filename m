@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12231547FE;
-	Mon,  6 Jan 2025 15:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA1F200A3;
+	Mon,  6 Jan 2025 15:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177594; cv=none; b=jZ07ziNChN4C1J1HGqOnjdxQJ2XqzGQNvalXLrFyIjy2tNuKZjbFfgC2P+xJEN1qgZOtSCZij6TAE+tAvz9wXMblnAfHzWy4i7zOG6zRI7wuqxlSt6LG8Uz6AGHrONSVUulo3sYP1lqCZgwlU8TbQ0dlweUL8AoBmfTvf+LrTEk=
+	t=1736177598; cv=none; b=KQw6J75tfPDJ8TTobVWkb4/e33I1Z/kvJur57txpEoeC0G7Iu3IAZimxVUk8Hp6zLzhVGHOM4AOvRvkLep1dInwmebQ8i/u6MKoY5hQOaKXQsWwBxtOuAxrGcQ61nAKuP/79+2o+evzTe1NnJHqck7fBMyi/etl7yCBsv0EZd78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177594; c=relaxed/simple;
-	bh=AzIVrfELyFRq+5E738w1OuPCu7ENnWnSy0WL4KTBblA=;
+	s=arc-20240116; t=1736177598; c=relaxed/simple;
+	bh=61GNXp472Va3sXLv+8qxcue5sWjSY5MMY9tif4iJnhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRt+a4j1XMsDMADoYL//5oOlPJJFFKNM+eWvdCdV9U3Tlc/ErhAjtn+uJoIlinpv5j5iCn+wsCli/rqP/Q9GKStufnMn1AdHsteoxzPMwpo/sbU+wlOZk4Trmat/WoFuP5ghEPYX1V2qbGizajV+vPG6CGgZXLeZnhkCS3I11AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqOK8/rN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dr7lTgRfp/4BhSRhChmZvs3LaTgoFrPHJAvAK7FCyGps5kOPU1//wyBEqA5bbP6JPCYp0gRTIoSJ4TdBgcblUuQbyEuYPzrqYtgo3STta6pdaWx+jiY0Xej5eFPiW0dFm/9oNGshuUsFRW56SqGyiBHyP5T7QYIBuLgOsWV5Q0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dg/IIWIs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqOK8/rN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6442C4CED2;
-	Mon,  6 Jan 2025 15:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dg/IIWIs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D132C4CED2;
+	Mon,  6 Jan 2025 15:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177593;
-	bh=AzIVrfELyFRq+5E738w1OuPCu7ENnWnSy0WL4KTBblA=;
+	s=korg; t=1736177596;
+	bh=61GNXp472Va3sXLv+8qxcue5sWjSY5MMY9tif4iJnhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqOK8/rNxU/+svAWYu4mMprtM3g91RIY89ZQ5l0PThzSUVw1dtqJVg7hM7QNPDbLv
-	 ou3KvX6MozBxqXi/4cvT2yDgMLaUpHcD7d/hqPULB/FWjW8UKcXz/HxAeSMSyphPRq
-	 I+mwCugnzXk8FqdAACZgOKtTJOAlwwQZ7Ed4jZ14=
+	b=Dg/IIWIshkoyZsN3ebtTSnfiKcly7he4afDK95FwJi9G8kCGsijM73BBBiwLE90CF
+	 pH1JAnSZnOKrFZ2vVAW0egAZJR/3r0CRscu+jiaO9BvtzjVK/XnCbbk7iNVUbbBDDT
+	 uAJpgzS0kOUal6FFPe90Czg82tcuvEcgX+pf1scg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Washington <joshwash@google.com>,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Shailend Chand <shailend@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 214/222] gve: guard XDP xmit NDO on existence of xdp queues
-Date: Mon,  6 Jan 2025 16:16:58 +0100
-Message-ID: <20250106151158.868999254@linuxfoundation.org>
+	Yafang Shao <laoar.shao@gmail.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 215/222] mm/readahead: fix large folio support in async readahead
+Date: Mon,  6 Jan 2025 16:16:59 +0100
+Message-ID: <20250106151158.906353517@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,65 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Washington <joshwash@google.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-commit ff7c2dea9dd1a436fc79d6273adffdcc4a7ffea3 upstream.
+commit 158cdce87c8c172787063998ad5dd3e2f658b963 upstream.
 
-In GVE, dedicated XDP queues only exist when an XDP program is installed
-and the interface is up. As such, the NDO XDP XMIT callback should
-return early if either of these conditions are false.
+When testing large folio support with XFS on our servers, we observed that
+only a few large folios are mapped when reading large files via mmap.
+After a thorough analysis, I identified it was caused by the
+`/sys/block/*/queue/read_ahead_kb` setting.  On our test servers, this
+parameter is set to 128KB.  After I tune it to 2MB, the large folio can
+work as expected.  However, I believe the large folio behavior should not
+be dependent on the value of read_ahead_kb.  It would be more robust if
+the kernel can automatically adopt to it.
 
-In the case of no loaded XDP program, priv->num_xdp_queues=0 which can
-cause a divide-by-zero error, and in the case of interface down,
-num_xdp_queues remains untouched to persist XDP queue count for the next
-interface up, but the TX pointer itself would be NULL.
+With /sys/block/*/queue/read_ahead_kb set to 128KB and performing a
+sequential read on a 1GB file using MADV_HUGEPAGE, the differences in
+/proc/meminfo are as follows:
 
-The XDP xmit callback also needs to synchronize with a device
-transitioning from open to close. This synchronization will happen via
-the GVE_PRIV_FLAGS_NAPI_ENABLED bit along with a synchronize_net() call,
-which waits for any RCU critical sections at call-time to complete.
+- before this patch
+  FileHugePages:     18432 kB
+  FilePmdMapped:      4096 kB
 
-Fixes: 39a7f4aa3e4a ("gve: Add XDP REDIRECT support for GQI-QPL format")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Shailend Chand <shailend@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+- after this patch
+  FileHugePages:   1067008 kB
+  FilePmdMapped:   1048576 kB
+
+This shows that after applying the patch, the entire 1GB file is mapped to
+huge pages.  The stable list is CCed, as without this patch, large folios
+don't function optimally in the readahead path.
+
+It's worth noting that if read_ahead_kb is set to a larger value that
+isn't aligned with huge page sizes (e.g., 4MB + 128KB), it may still fail
+to map to hugepages.
+
+Link: https://lkml.kernel.org/r/20241108141710.9721-1-laoar.shao@gmail.com
+Link: https://lkml.kernel.org/r/20241206083025.3478-1-laoar.shao@gmail.com
+Fixes: 4687fdbb805a ("mm/filemap: Support VM_HUGEPAGE for file mappings")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Tested-by: kernel test robot <oliver.sang@intel.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c |    3 +++
- drivers/net/ethernet/google/gve/gve_tx.c   |    5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ mm/readahead.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1755,6 +1755,9 @@ static void gve_turndown(struct gve_priv
- 
- 	gve_clear_napi_enabled(priv);
- 	gve_clear_report_stats(priv);
-+
-+	/* Make sure that all traffic is finished processing. */
-+	synchronize_net();
- }
- 
- static void gve_turnup(struct gve_priv *priv)
---- a/drivers/net/ethernet/google/gve/gve_tx.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx.c
-@@ -777,9 +777,12 @@ int gve_xdp_xmit(struct net_device *dev,
- 	struct gve_tx_ring *tx;
- 	int i, err = 0, qid;
- 
--	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK))
-+	if (unlikely(flags & ~XDP_XMIT_FLAGS_MASK) || !priv->xdp_prog)
- 		return -EINVAL;
- 
-+	if (!gve_get_napi_enabled(priv))
-+		return -ENETDOWN;
-+
- 	qid = gve_xdp_tx_queue_id(priv,
- 				  smp_processor_id() % priv->num_xdp_queues);
- 
+--- a/mm/readahead.c
++++ b/mm/readahead.c
+@@ -580,7 +580,11 @@ static void ondemand_readahead(struct re
+ 			1UL << order);
+ 	if (index == expected || index == (ra->start + ra->size)) {
+ 		ra->start += ra->size;
+-		ra->size = get_next_ra_size(ra, max_pages);
++		/*
++		 * In the case of MADV_HUGEPAGE, the actual size might exceed
++		 * the readahead window.
++		 */
++		ra->size = max(ra->size, get_next_ra_size(ra, max_pages));
+ 		ra->async_size = ra->size;
+ 		goto readit;
+ 	}
 
 
