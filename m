@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5D14146D40;
-	Mon,  6 Jan 2025 15:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB88146D40;
+	Mon,  6 Jan 2025 15:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177002; cv=none; b=GW6IjfPGlmdj7H1dYhzp4siiC/o2/TVrH0m/5jr7Ogn4Exs47gMqNjIUX87vKb8giN/M/jGCvKiNxsJwYRjmNV6iuhqdoXdGlJgy4HOfcsJRgS7dMmydadqG952kXt4+GVCiexY7nebkwgjpJCxkWHM2WD4wruAK8PwAna+ib3M=
+	t=1736177005; cv=none; b=O7ZnhF/SJYsbj4OuX7FkGOJVQcJIhCD9HJk0E3XdFKefA2ViWFw/hufeoSJ0lif12+/jz/OdMBQ4Pf26XLjUT6B6uadK2MnJT1RZPkT+JccJP/oSnp+NWL37PXKgnIznZAEuq3odNqF93GTd6HsGzLgSHBLMK7NXAspB0zQRVMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177002; c=relaxed/simple;
-	bh=2tgDnPcWw6QlNZu+33u6IkbRCwRYD6fXG8Gbe0Oobl0=;
+	s=arc-20240116; t=1736177005; c=relaxed/simple;
+	bh=7PCml4w9SfvHEOCxFSVcro6zKFhxsWtuqAMwauXD1W8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i19Kr4QHSG79PDSAXZ2et8Az5n3SZRJYSr4ZrXiAXJpA3bH+P2CDgSKSktHO1YhJXvfflpHtowkwUx3IPiU8g99KG05wC4rUxBKDwR+pyZUj1WEAqZEPoSoU3g8qMnWueneCv21Neeu6W8dsj6lQ5MC6ePFPGv+tfKGsaMSg7m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hvtl6rpe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uRrTOjGuo51Ue7Xd/ZRpHSM5ktL65KlFN7MTEhcNhQ9l+/CBSrmmDs1sfE2Q1Qdi3KOyl6WNXkJ1sXls78Uc2CQsDVKCm/ODKUUY/7v67Dj9DMHA825UK9QxRuReQq1lEPN/0UmPIvN0oK6dqMMjH9fdWCjYgFeC8EXdRl3kS64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ohhBEwjn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hvtl6rpe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CE11C4CED2;
-	Mon,  6 Jan 2025 15:23:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ohhBEwjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5326AC4CED2;
+	Mon,  6 Jan 2025 15:23:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177002;
-	bh=2tgDnPcWw6QlNZu+33u6IkbRCwRYD6fXG8Gbe0Oobl0=;
+	s=korg; t=1736177005;
+	bh=7PCml4w9SfvHEOCxFSVcro6zKFhxsWtuqAMwauXD1W8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hvtl6rpefa+6d8FdWVwO8fNwFnKAFIvXH+QUKGNtbqLXTAYRMYScvNfQ9Li5+7+Jv
-	 QGTnTsd1kHLi12sELKEbO4L881b7gU6BRH6ooI+1hudtFfCZ/p7r+jfaff8Rvd6QLp
-	 OuJfxMGP9otWf9Gruw2Bt+nRykyi+RHp/jSDE5v8=
+	b=ohhBEwjnrrCJMmaNgNgUD8UgzeBB5XzhObJxcD0j4MTDqdsgOBxXOCcr5fxvsuUdz
+	 mLg1gIJUu1+c6uBEPX6L9FtwEShj4Eq4rb1OWLZzrNaQ5nLfs8TmQujE8qjlfJjEf/
+	 yX/jXrWdbwLLTaR0zIjDQPZMdRNd+x9FlVwYk6Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/222] memblock: allow zero threshold in validate_numa_converage()
-Date: Mon,  6 Jan 2025 16:13:43 +0100
-Message-ID: <20250106151151.327685907@linuxfoundation.org>
+Subject: [PATCH 6.6 002/222] drm/amd/display: Fix incorrect DSC recompute trigger
+Date: Mon,  6 Jan 2025 16:13:26 +0100
+Message-ID: <20250106151150.686057624@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -50,45 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-[ Upstream commit 9cdc6423acb49055efb444ecd895d853a70ef931 ]
+[ Upstream commit 4641169a8c95d9efc35d2d3c55c3948f3b375ff9 ]
 
-Currently memblock validate_numa_converage() returns false negative when
-threshold set to zero.
+A stream without dsc_aux should not be eliminated from
+the dsc determination. Whether it needs a dsc recompute depends on
+whether its mode has changed or not. Eliminating such a no-dsc stream
+from the dsc determination policy will end up with inconsistencies
+in the new dc_state when compared to the current dc_state,
+triggering a dsc recompute that should not have happened.
 
-Make the check if the memory size with invalid node ID is greater than
-the threshold exclusive to fix that.
-
-Link: https://lore.kernel.org/all/Z0mIDBD4KLyxyOCm@kernel.org/
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memblock.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/memblock.c b/mm/memblock.c
-index 3a3ab73546f5..87a2b4340ce4 100644
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -738,7 +738,7 @@ int __init_memblock memblock_add(phys_addr_t base, phys_addr_t size)
- /**
-  * memblock_validate_numa_coverage - check if amount of memory with
-  * no node ID assigned is less than a threshold
-- * @threshold_bytes: maximal number of pages that can have unassigned node
-+ * @threshold_bytes: maximal memory size that can have unassigned node
-  * ID (in bytes).
-  *
-  * A buggy firmware may report memory that does not belong to any node.
-@@ -758,7 +758,7 @@ bool __init_memblock memblock_validate_numa_coverage(unsigned long threshold_byt
- 			nr_pages += end_pfn - start_pfn;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index b4bbd3be35a6..385a5a75fdf8 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1236,7 +1236,7 @@ static bool is_dsc_need_re_compute(
+ 			continue;
  
--	if ((nr_pages << PAGE_SHIFT) >= threshold_bytes) {
-+	if ((nr_pages << PAGE_SHIFT) > threshold_bytes) {
- 		mem_size_mb = memblock_phys_mem_size() >> 20;
- 		pr_err("NUMA: no nodes coverage for %luMB of %luMB RAM\n",
- 		       (nr_pages << PAGE_SHIFT) >> 20, mem_size_mb);
+ 		aconnector = (struct amdgpu_dm_connector *) stream->dm_stream_context;
+-		if (!aconnector || !aconnector->dsc_aux)
++		if (!aconnector)
+ 			continue;
+ 
+ 		/*
 -- 
 2.39.5
 
