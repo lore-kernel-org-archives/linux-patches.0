@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7AF148316;
-	Mon,  6 Jan 2025 15:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9825670813;
+	Mon,  6 Jan 2025 15:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177373; cv=none; b=fYMs/VjRBTIpXZtctV32nQ0kHtTJQqWS0WwwbqvHV77gA5dSLn/+5KUvbGI3a3xtjdRDno6Pw7PKn38HB8o2wqQISI589SeqGD5y2F0PHig8hRSuYnKrvD/KkvozwCWBFJaw6gg/sqJ/3Ee/OvFqCdt/uifUobb8LjIzpNLCKKU=
+	t=1736177376; cv=none; b=r4DjCHwon58r7ksQQMX1J++VOjTIvI+Y9pb/VMIC51/0B9liesvUzbrH12yeJdSuRBGyRx/eDZFsMsXjtU9e6b+wWSObSYRYQV+8HryuUnz3RobJHBWKbXLDGgFcne/nRbgTM2aYx3fS5p4viV+NN2S0i5SktkOVyyXHVOHf18A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177373; c=relaxed/simple;
-	bh=qhqQgIEDGW6HjSl/vgG0c+xZaXjXbCmAAsyRPfppGIE=;
+	s=arc-20240116; t=1736177376; c=relaxed/simple;
+	bh=kXcsSIb3zSuclT+X5F8xlk6353LrocZ5TLMe94OEdws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VdHmjOMAoKBuJKLuTc/bhFVOwqty2EjRCyNYhbNpfMctx/1YaDKY06h6KBPuKGrSDWEd2dYry5VeSnLup4mtL5biNPeWaxbEEK8/0StIa2R+rSS4yYvXTp7FRNfv1KJnjSZuumVrANkJvZQaqjKzQYi41xP+/pP7FOTDfzWPdJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQOoPLvi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gk3oI++6GGnUGoIQovlG7WjsivOwB5wlkdChwdydF8aBh0PPPjJk3Xna3fNz78wSp/r2wG4hYWMD9Uvm32H9lePUkf9cAZOROFqKZDV5XfInBYHD2vzaXPMG2qKzYwd8RU7/sRdGwSka3VRVeHwPmhpWydiESegRIauMXxfeWb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PWFH00Fl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQOoPLvi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15767C4CED6;
-	Mon,  6 Jan 2025 15:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PWFH00Fl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBC0C4CED2;
+	Mon,  6 Jan 2025 15:29:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177373;
-	bh=qhqQgIEDGW6HjSl/vgG0c+xZaXjXbCmAAsyRPfppGIE=;
+	s=korg; t=1736177376;
+	bh=kXcsSIb3zSuclT+X5F8xlk6353LrocZ5TLMe94OEdws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQOoPLviUGpOjj6xwSnX+jDr8BSDlLiR6X7zLTU8ckulRJAADWw1pBd01L1fQlETS
-	 rUP3+cNFBWfbwvhvGo0ImKqrZi5BEx7lz+e5VZ8H77043BtOfRNwvWdlc26pIo2s9s
-	 HQ1hwp44RwCSYVORbV5A8w6HHsJuM2QVDZHD/Xf4=
+	b=PWFH00Fltn+7RFu7dTZXBkRAnY1A7qk1DwYzp0OdT1DsaZQVX7CkN/OTqieFBDsbD
+	 8PN32N4d54fq3GBKcRf3gyUR9vu3MybwdvHdMNPAWTAwUHHR8NrRV7Nzjt+jKGV6Yj
+	 d/QA1OpxM5LKYbVOHVvfiDIXxcLKFXIWIhXmHvlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Tristram Ha <tristram.ha@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/222] tracing: Fix trace_check_vprintf() when tp_printk is used
-Date: Mon,  6 Jan 2025 16:15:29 +0100
-Message-ID: <20250106151155.340825943@linuxfoundation.org>
+Subject: [PATCH 6.6 143/222] net: dsa: microchip: Fix KSZ9477 set_ageing_time function
+Date: Mon,  6 Jan 2025 16:15:47 +0100
+Message-ID: <20250106151156.180305744@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,74 +52,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit 50a3242d84ee1625b0bfef29b95f935958dccfbe ]
+[ Upstream commit 262bfba8ab820641c8cfbbf03b86d6c00242c078 ]
 
-When the tp_printk kernel command line is used, the trace events go
-directly to printk(). It is still checked via the trace_check_vprintf()
-function to make sure the pointers of the trace event are legit.
+The aging count is not a simple 11-bit value but comprises a 3-bit
+multiplier and an 8-bit second count.  The code tries to use the
+original multiplier which is 4 as the second count is still 300 seconds
+by default.
 
-The addition of reading buffers from previous boots required adding a
-delta between the addresses of the previous boot and the current boot so
-that the pointers in the old buffer can still be used. But this required
-adding a trace_array pointer to acquire the delta offsets.
-
-The tp_printk code does not provide a trace_array (tr) pointer, so when
-the offsets were examined, a NULL pointer dereference happened and the
-kernel crashed.
-
-If the trace_array does not exist, just default the delta offsets to zero,
-as that also means the trace event is not being read from a previous boot.
-
-Link: https://lore.kernel.org/all/Zv3z5UsG_jsO9_Tb@aschofie-mobl2.lan/
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://lore.kernel.org/20241003104925.4e1b1fd9@gandalf.local.home
-Fixes: 07714b4bb3f98 ("tracing: Handle old buffer mappings for event strings and functions")
-Reported-by: Alison Schofield <alison.schofield@intel.com>
-Tested-by: Alison Schofield <alison.schofield@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Stable-dep-of: afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
+Fixes: 2c119d9982b1 ("net: dsa: microchip: add the support for set_ageing_time")
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20241218020224.70590-2-Tristram.Ha@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/net/dsa/microchip/ksz9477.c     | 47 +++++++++++++++++++------
+ drivers/net/dsa/microchip/ksz9477_reg.h |  4 +--
+ 2 files changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index 2a45efc4e417..addc1b326c79 100644
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -3858,8 +3858,8 @@ static void test_can_verify(void)
- void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 			 va_list ap)
- {
--	long text_delta = iter->tr->text_delta;
--	long data_delta = iter->tr->data_delta;
-+	long text_delta = 0;
-+	long data_delta = 0;
- 	const char *p = fmt;
- 	const char *str;
- 	bool good;
-@@ -3871,6 +3871,17 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
- 	if (static_branch_unlikely(&trace_no_verify))
- 		goto print;
+diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
+index a7e8fcdf2576..59134d117846 100644
+--- a/drivers/net/dsa/microchip/ksz9477.c
++++ b/drivers/net/dsa/microchip/ksz9477.c
+@@ -2,7 +2,7 @@
+ /*
+  * Microchip KSZ9477 switch driver main logic
+  *
+- * Copyright (C) 2017-2019 Microchip Technology Inc.
++ * Copyright (C) 2017-2024 Microchip Technology Inc.
+  */
  
-+	/*
-+	 * When the kernel is booted with the tp_printk command line
-+	 * parameter, trace events go directly through to printk().
-+	 * It also is checked by this function, but it does not
-+	 * have an associated trace_array (tr) for it.
+ #include <linux/kernel.h>
+@@ -916,26 +916,51 @@ void ksz9477_get_caps(struct ksz_device *dev, int port,
+ int ksz9477_set_ageing_time(struct ksz_device *dev, unsigned int msecs)
+ {
+ 	u32 secs = msecs / 1000;
+-	u8 value;
+-	u8 data;
++	u8 data, mult, value;
++	u32 max_val;
+ 	int ret;
+ 
+-	value = FIELD_GET(SW_AGE_PERIOD_7_0_M, secs);
++#define MAX_TIMER_VAL	((1 << 8) - 1)
+ 
+-	ret = ksz_write8(dev, REG_SW_LUE_CTRL_3, value);
+-	if (ret < 0)
+-		return ret;
++	/* The aging timer comprises a 3-bit multiplier and an 8-bit second
++	 * value.  Either of them cannot be zero.  The maximum timer is then
++	 * 7 * 255 = 1785 seconds.
 +	 */
-+	if (iter->tr) {
-+		text_delta = iter->tr->text_delta;
-+		data_delta = iter->tr->data_delta;
++	if (!secs)
++		secs = 1;
+ 
+-	data = FIELD_GET(SW_AGE_PERIOD_10_8_M, secs);
++	/* Return error if too large. */
++	else if (secs > 7 * MAX_TIMER_VAL)
++		return -EINVAL;
+ 
+ 	ret = ksz_read8(dev, REG_SW_LUE_CTRL_0, &value);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	value &= ~SW_AGE_CNT_M;
+-	value |= FIELD_PREP(SW_AGE_CNT_M, data);
++	/* Check whether there is need to update the multiplier. */
++	mult = FIELD_GET(SW_AGE_CNT_M, value);
++	max_val = MAX_TIMER_VAL;
++	if (mult > 0) {
++		/* Try to use the same multiplier already in the register as
++		 * the hardware default uses multiplier 4 and 75 seconds for
++		 * 300 seconds.
++		 */
++		max_val = DIV_ROUND_UP(secs, mult);
++		if (max_val > MAX_TIMER_VAL || max_val * mult != secs)
++			max_val = MAX_TIMER_VAL;
 +	}
 +
- 	/* Don't bother checking when doing a ftrace_dump() */
- 	if (iter->fmt == static_fmt_buf)
- 		goto print;
++	data = DIV_ROUND_UP(secs, max_val);
++	if (mult != data) {
++		value &= ~SW_AGE_CNT_M;
++		value |= FIELD_PREP(SW_AGE_CNT_M, data);
++		ret = ksz_write8(dev, REG_SW_LUE_CTRL_0, value);
++		if (ret < 0)
++			return ret;
++	}
+ 
+-	return ksz_write8(dev, REG_SW_LUE_CTRL_0, value);
++	value = DIV_ROUND_UP(secs, data);
++	return ksz_write8(dev, REG_SW_LUE_CTRL_3, value);
+ }
+ 
+ void ksz9477_port_queue_split(struct ksz_device *dev, int port)
+diff --git a/drivers/net/dsa/microchip/ksz9477_reg.h b/drivers/net/dsa/microchip/ksz9477_reg.h
+index a2ef4b18349c..d0886ed984c5 100644
+--- a/drivers/net/dsa/microchip/ksz9477_reg.h
++++ b/drivers/net/dsa/microchip/ksz9477_reg.h
+@@ -2,7 +2,7 @@
+ /*
+  * Microchip KSZ9477 register definitions
+  *
+- * Copyright (C) 2017-2018 Microchip Technology Inc.
++ * Copyright (C) 2017-2024 Microchip Technology Inc.
+  */
+ 
+ #ifndef __KSZ9477_REGS_H
+@@ -190,8 +190,6 @@
+ #define SW_VLAN_ENABLE			BIT(7)
+ #define SW_DROP_INVALID_VID		BIT(6)
+ #define SW_AGE_CNT_M			GENMASK(5, 3)
+-#define SW_AGE_CNT_S			3
+-#define SW_AGE_PERIOD_10_8_M		GENMASK(10, 8)
+ #define SW_RESV_MCAST_ENABLE		BIT(2)
+ #define SW_HASH_OPTION_M		0x03
+ #define SW_HASH_OPTION_CRC		1
 -- 
 2.39.5
 
