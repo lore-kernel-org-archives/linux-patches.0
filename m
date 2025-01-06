@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FE0157E82;
-	Mon,  6 Jan 2025 15:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD3C159565;
+	Mon,  6 Jan 2025 15:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177915; cv=none; b=LWTYjwXGo+iNv3WxHMaY5zEYT/zFQ1FoP25bCvlk+iWSbwe7sH7LRZU9ufxSJOKJ7+wW915O2WF6perCaQribdI63602B47ohnVo8YwW8SHyL34kCQTIgQKvrs1gcLId+bldtAAOXh8hVU3sGZapoW5g0YzasYP9ACPi1+YIZYM=
+	t=1736177918; cv=none; b=E/xblXgCT7VMP6v6OJ2SuanvUvTBpRijuS1+XndbFU81C6kwKqsHdEDkzfR2UGfqJumt0ANW9BsdvyQhU+UnfmfTDiPSa+8wUuZ9ujZYZeNDNAVmvN73/Nbs3Wp471Vksa2fXnVgOQo5K9R8n/IxeytWxSehFtgaMGjrDnHZubs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177915; c=relaxed/simple;
-	bh=JIAFS+aRmPRdDyWe8kB+A4L0lXhNemEXMUrUxXD4lOs=;
+	s=arc-20240116; t=1736177918; c=relaxed/simple;
+	bh=srrWm9h3W0f/Uyxms1aeedWNqBErvPqNoAs5OcQ+q4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcaC93kOaw2sVshNqRscLE4PpIahKYsOOcQPNAgxsAPeqIAJm2OdGQPclYKawcTAUtgcezXXEzbBkkHT/4MYVKGkVoW2P35hWWn284c5EGUi6rLTk5dO8MaIz8CNLQPK9/nsKIWFMeSEGWikY8RooqySmlyAHhv8dLtGD8ijjdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oy40Z/em; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YW9B1scwllCZRyjpJiNYcATCtJpbm+z681wuK7tZDmepZmFeZabq2FemykW92aD6t8+WVbAFR39hEjkh7/ULOH5hTw8pJ4C1ATfz9VgB5UoOXdM1kMRdRIlIbxobV7k+cR/Su9alghLBiPLyLtcj4PaJE9BRCCxmmLezvWM4hiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJkWucYJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oy40Z/em"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF48C4CED2;
-	Mon,  6 Jan 2025 15:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJkWucYJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF348C4CED2;
+	Mon,  6 Jan 2025 15:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177915;
-	bh=JIAFS+aRmPRdDyWe8kB+A4L0lXhNemEXMUrUxXD4lOs=;
+	s=korg; t=1736177918;
+	bh=srrWm9h3W0f/Uyxms1aeedWNqBErvPqNoAs5OcQ+q4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oy40Z/emfnjKa56ztiSTvXY4WIxw5D/Aphw7g+9a51zIE4f5kMOl/NXh6lLrj2fdt
-	 if0Buoa1klbeaNtYVfmsRmKwT0Czuh5XKatkO3KuO1EnbQAoCujhp6T8SagQcDbC8X
-	 AsdMROKfORN7rbHA6ReiDiRJmp/f5PvYPnZ4M+pY=
+	b=UJkWucYJHZW5QLPk/8JaQEjAVmThVu5myib239v4GGrMQIa6TxJ6EAZWSV+7E82/I
+	 69u7BeMEPRW4rH6/6l2DPFQqUGCSXk10yj34XziUA9UsaABOUaHaqfiDRTkbNty/WV
+	 bIi7R5Db8kN7uyZsCKIO0842xh/p5EdRrixBug4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/156] net: usb: qmi_wwan: add Telit FE910C04 compositions
-Date: Mon,  6 Jan 2025 16:16:26 +0100
-Message-ID: <20250106151145.491740077@linuxfoundation.org>
+Subject: [PATCH 6.12 083/156] ALSA: hda: cs35l56: Remove calls to cs35l56_force_sync_asp1_registers_from_cache()
+Date: Mon,  6 Jan 2025 16:16:09 +0100
+Message-ID: <20250106151144.857515245@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -51,107 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit 3b58b53a26598209a7ad8259a5114ce71f7c3d64 ]
+[ Upstream commit 47b17ba05a463b22fa79f132e6f6899d53538802 ]
 
-Add the following Telit FE910C04 compositions:
+Commit 5d7e328e20b3 ("ASoC: cs35l56: Revert support for dual-ownership
+of ASP registers")
+replaced cs35l56_force_sync_asp1_registers_from_cache() with a dummy
+implementation so that the HDA driver would continue to build.
 
-0x10c0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 13 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10c0 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FE910
-S:  SerialNumber=f71b8b32
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Remove the calls from HDA and remove the stub function.
 
-0x10c4: rmnet + tty (AT) + tty (AT) + tty (diag)
-T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 14 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10c4 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FE910
-S:  SerialNumber=f71b8b32
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x10c8: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=10c8 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FE910
-S:  SerialNumber=f71b8b32
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Link: https://patch.msgid.link/20241209151821.3688829-1-dnlplm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20241206105757.718750-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/sound/cs35l56.h     | 6 ------
+ sound/pci/hda/cs35l56_hda.c | 8 --------
+ 2 files changed, 14 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 0c011d8f5d4d..9fe7f704a2f7 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1365,6 +1365,9 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
- 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
+diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
+index 94e8185c4795..3dc7a1551ac3 100644
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -271,12 +271,6 @@ struct cs35l56_base {
+ 	struct gpio_desc *reset_gpio;
+ };
+ 
+-/* Temporary to avoid a build break with the HDA driver */
+-static inline int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base)
+-{
+-	return 0;
+-}
+-
+ static inline bool cs35l56_is_otp_register(unsigned int reg)
+ {
+ 	return (reg >> 16) == 3;
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index e3ac0e23ae32..7baf3b506eef 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -151,10 +151,6 @@ static int cs35l56_hda_runtime_resume(struct device *dev)
+ 		}
+ 	}
+ 
+-	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
+-	if (ret)
+-		goto err;
+-
+ 	return 0;
+ 
+ err:
+@@ -1059,9 +1055,6 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int hid, int id)
+ 
+ 	regmap_multi_reg_write(cs35l56->base.regmap, cs35l56_hda_dai_config,
+ 			       ARRAY_SIZE(cs35l56_hda_dai_config));
+-	ret = cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
+-	if (ret)
+-		goto dsp_err;
+ 
+ 	/*
+ 	 * By default only enable one ASP1TXn, where n=amplifier index,
+@@ -1087,7 +1080,6 @@ int cs35l56_hda_common_probe(struct cs35l56_hda *cs35l56, int hid, int id)
+ 
+ pm_err:
+ 	pm_runtime_disable(cs35l56->base.dev);
+-dsp_err:
+ 	cs_dsp_remove(&cs35l56->cs_dsp);
+ err:
+ 	gpiod_set_value_cansleep(cs35l56->base.reset_gpio, 0);
 -- 
 2.39.5
 
