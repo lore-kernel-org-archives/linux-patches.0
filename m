@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B28DF71;
-	Mon,  6 Jan 2025 15:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F55744C7C;
+	Mon,  6 Jan 2025 15:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178135; cv=none; b=lG4z6+OolJ/pEIsBPcO+cCNVPZ3P+ECdUKXIhq/8pWkhl10MvRMzRVsLTa47m+I9NKX4C+OA8E7XBDhDRZFcHnG40v191n31GXi0tW1kjqN0iI4CtXJJE3ip8eqk8tZxUivWWn49CexP6RH/lLZWCDv464DK16Hdxyj6K4ieQl8=
+	t=1736178138; cv=none; b=gymB0G7tFlAT/RWldZR7tYpXQ1q6ztPGXFUgQq5euerJMppAQZ9rhb91vfBjY+2PidfwdDfa6H2yev6rOlW8JJyAtLBwV0msxjxYtk8X3EGn12BC3kQWj1jRhqsSwaqIJ02Yxl9livDP16ELFLULiwXAPCTAeWn1J9Uz/kWWd44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178135; c=relaxed/simple;
-	bh=0lSMRdDokC6BuvealOXeLMSDPnHLhm9W4Tf2NWjnxCE=;
+	s=arc-20240116; t=1736178138; c=relaxed/simple;
+	bh=QHF5/kwkg6Ckb4j17mn83uNWKFXvFpTUWc6pY98zOxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iX3vs6oRLm7p8g4qBPaux1bN9yJSbpGbQwpDhuYDoH4OPCq+x4KG17jxz+95hMaaewDToBTU9Z2VoQPGSqVizdCHijbw86mGrociakBOC95SinL/bIBTCDbKslzjBoRngj8fC8sOzlnndOZ9c86zVVfoUhwlg7ltHpHx9OgKw0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8c/wtJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=juHZCD/cLxmktm7IaRuj5HYfgU6813dLqzc8BjSPZDPdqzFuHihGCLb3+AOJjW15c5+M8bucelXYSYTeqiz1QW37ub15zS0GzSVeIiDVk0NMGYfyiQT9zgheUsclKHtE2utc0f71WNTZEboHVBGZD438VYifbcCzAGjdMBwj86E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjOvb8st; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8c/wtJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AC1C4CED2;
-	Mon,  6 Jan 2025 15:42:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjOvb8st"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3CBC4CED2;
+	Mon,  6 Jan 2025 15:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178135;
-	bh=0lSMRdDokC6BuvealOXeLMSDPnHLhm9W4Tf2NWjnxCE=;
+	s=korg; t=1736178138;
+	bh=QHF5/kwkg6Ckb4j17mn83uNWKFXvFpTUWc6pY98zOxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8c/wtJePVJRH0N1kvtz1Lei32mWqEjmw99rKaUIXBD10ubyEjMdu17sOtwzLjEvc
-	 0qLG6TLwEMvmfbihp2EMRF8/75CVVW2sXrRi5pYRcSGHGkLFRONGlG1btoR3bAOeym
-	 BTv0TXkqvyloa3wPVdZnCRWv3d+wOJxJaJz8IVAg=
+	b=gjOvb8stz+TLjEoQSagm9+d1bUPIw4vUinHpwwefgDJuDt/vB4XMPIQzwfgKLcrQl
+	 FDg7SfbYRZ5WK0DFSWNjNdLoRK6//s0tZTvGaeJYyygpadV7GtT9Mhmiu3ezdEJMA/
+	 LgwOzlGa6lfHCs/yKa37Gz394dAFy5CB04o+ZXgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 017/138] ionic: use ee->offset when returning sprom data
-Date: Mon,  6 Jan 2025 16:15:41 +0100
-Message-ID: <20250106151133.871862360@linuxfoundation.org>
+Subject: [PATCH 5.10 002/138] PCI/AER: Disable AER service on suspend
+Date: Mon,  6 Jan 2025 16:15:26 +0100
+Message-ID: <20250106151133.306865601@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,40 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
+[ Upstream commit 5afc2f763edc5daae4722ee46fea4e627d01fa90 ]
 
-Some calls into ionic_get_module_eeprom() don't use a single
-full buffer size, but instead multiple calls with an offset.
-Teach our driver to use the offset correctly so we can
-respond appropriately to the caller.
+If the link is powered off during suspend, electrical noise may cause
+errors that are logged via AER.  If the AER interrupt is enabled and shares
+an IRQ with PME, that causes a spurious wakeup during suspend.
 
-Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Disable the AER interrupt during suspend to prevent this.  Clear error
+status before re-enabling IRQ interrupts during resume so we don't get an
+interrupt for errors that occurred during the suspend/resume process.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=209149
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216295
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218090
+Link: https://lore.kernel.org/r/20240416043225.1462548-2-kai.heng.feng@canonical.com
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
+[bhelgaas: drop pci_ancestor_pr3_present() etc, commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pcie/aer.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index 8e5b01af85ed..d0a613fac9ff 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -835,8 +835,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
- 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index d58b02237075..974d56644973 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -1373,6 +1373,22 @@ static int aer_probe(struct pcie_device *dev)
+ 	return 0;
+ }
  
- 	do {
--		memcpy(data, xcvr->sprom, len);
--		memcpy(tbuf, xcvr->sprom, len);
-+		memcpy(data, &xcvr->sprom[ee->offset], len);
-+		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
++static int aer_suspend(struct pcie_device *dev)
++{
++	struct aer_rpc *rpc = get_service_data(dev);
++
++	aer_disable_rootport(rpc);
++	return 0;
++}
++
++static int aer_resume(struct pcie_device *dev)
++{
++	struct aer_rpc *rpc = get_service_data(dev);
++
++	aer_enable_rootport(rpc);
++	return 0;
++}
++
+ /**
+  * aer_root_reset - reset Root Port hierarchy or RCEC
+  * @dev: pointer to Root Port or RCEC
+@@ -1431,6 +1447,8 @@ static struct pcie_port_service_driver aerdriver = {
+ 	.service	= PCIE_PORT_SERVICE_AER,
  
- 		/* Let's make sure we got a consistent copy */
- 		if (!memcmp(data, tbuf, len))
+ 	.probe		= aer_probe,
++	.suspend	= aer_suspend,
++	.resume		= aer_resume,
+ 	.remove		= aer_remove,
+ };
+ 
 -- 
 2.39.5
 
