@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BB2142E77;
-	Mon,  6 Jan 2025 15:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2E87603F;
+	Mon,  6 Jan 2025 15:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178174; cv=none; b=u6lGENjA/OfGfem/1YAyIRvRkz5fLLucNo7q8JVXpJSpBSPfyjNzg6qCnwBR58ZvNdjJKAGzf/+UwLcFOQRP5zb+sRc6CM56jZLSXAY5G070og8zs20OG4qui6x5s0pk0W3Q9Vbs2vaRdrCPCf3SeAoyusJFFD0bGBPvUfOxSmM=
+	t=1736178177; cv=none; b=QUC9HpqY6xHlS+W3JvSc9ahvl1zRuVpQx27oi4BULhpbbYTpyLuKlQL0T9CQqd32183U6zyTLhe3sRd9aq7V58eQYUDU6ulJWsDUueeujREIloi5SOwxH6X1P7lgCm8yFGFwbuu023FRsdwqINrN36SJ4FQ3CGcOO9PurjHZ+EM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178174; c=relaxed/simple;
-	bh=2frVFjWSbkIubBzKNYupB6dSL2ceq3SjJXSzF2FjfH8=;
+	s=arc-20240116; t=1736178177; c=relaxed/simple;
+	bh=hEiRccQwr1KTtRttbfVWwEsCbcy6DI3cheewRljgo0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a4TCXbei5Vp1Oymi/oduUehbcPTYjyY1NJmU8bVSqHve7xwIev44o9RAx+fl8oHqGOcIwqG6tLyo1/qEYh36w8We2eeo/MBaaWxEoNjiJbT5IxC6c9Pf6S++h8O1GOtfkym9t0GWvSQKs/wYuof4Lf88vtRUJu2CXSbQ+kipNQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDdTdDqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G5t5c6TvQiuv/xTPYBjReD6TQ+xZpAE/SXvoHyeCQoJKnsh+m9HmvQjL9k83SUhQrtdenTuunONX8QSgI+lMo7VHZkZDvDGbK/Jy7yrh+5LuppxozkfRoaxJN6F3fvD92iJeex+xWjUzhITduPjc5zpNPjhncvHhXzMK18bFFzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dI1yp9NI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDdTdDqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E55C4CED2;
-	Mon,  6 Jan 2025 15:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dI1yp9NI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D5AC4CED2;
+	Mon,  6 Jan 2025 15:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178174;
-	bh=2frVFjWSbkIubBzKNYupB6dSL2ceq3SjJXSzF2FjfH8=;
+	s=korg; t=1736178176;
+	bh=hEiRccQwr1KTtRttbfVWwEsCbcy6DI3cheewRljgo0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oDdTdDqWnkLT7e2qVNrKlW7Kjxh395987Elh9m/BTse/ipD9RmQP/NLxQF7AYoHLv
-	 H/RLGMULUJyU6C8q+ODdpap+lBP91eLhXGQYDy36rOE7/8IozplkciCst9gfZPIuNO
-	 HeKTgLOG8MMEkLWREH88UcDEFkHz+pToNOFriBnE=
+	b=dI1yp9NISNja3FXtqWo7cBhmt7uJJ6KyBmgcSFo4yBKwz4smy9wiYV97vMFrPxNuL
+	 HG9iVmDQdBsePVhoJDIZUAXHDlGlo/71tm7qF6OZrPiwdCyREBdBcQh2JMtJSWbDey
+	 c+PfDXxmuV0w6iHs2uc3VWr25vdycKTIkjMydRDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>
-Subject: [PATCH 5.10 030/138] drm/modes: Avoid divide by zero harder in drm_mode_vrefresh()
-Date: Mon,  6 Jan 2025 16:15:54 +0100
-Message-ID: <20250106151134.359390379@linuxfoundation.org>
+	Murad Masimov <m.masimov@maxima.ru>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 031/138] hwmon: (tmp513) Fix interpretation of values of Temperature Result and Limit Registers
+Date: Mon,  6 Jan 2025 16:15:55 +0100
+Message-ID: <20250106151134.397909725@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -45,62 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Murad Masimov <m.masimov@maxima.ru>
 
-commit 9398332f23fab10c5ec57c168b44e72997d6318e upstream.
+[ Upstream commit dd471e25770e7e632f736b90db1e2080b2171668 ]
 
-drm_mode_vrefresh() is trying to avoid divide by zero
-by checking whether htotal or vtotal are zero. But we may
-still end up with a div-by-zero of vtotal*htotal*...
+The values returned by the driver after processing the contents of the
+Temperature Result and the Temperature Limit Registers do not correspond to
+the TMP512/TMP513 specifications. A raw register value is converted to a
+signed integer value by a sign extension in accordance with the algorithm
+provided in the specification, but due to the off-by-one error in the sign
+bit index, the result is incorrect.
 
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+622bba18029bcde672e1@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=622bba18029bcde672e1
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241129042629.18280-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+According to the TMP512 and TMP513 datasheets, the Temperature Result (08h
+to 0Bh) and Limit (11h to 14h) Registers are 13-bit two's complement
+integer values, shifted left by 3 bits. The value is scaled by 0.0625
+degrees Celsius per bit.  E.g., if regval = 1 1110 0111 0000 000, the
+output should be -25 degrees, but the driver will return +487 degrees.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 59dfa75e5d82 ("hwmon: Add driver for Texas Instruments TMP512/513 sensor chips.")
+Signed-off-by: Murad Masimov <m.masimov@maxima.ru>
+Link: https://lore.kernel.org/r/20241216173648.526-4-m.masimov@maxima.ru
+[groeck: fixed description line length]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_modes.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/hwmon/tmp513.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_modes.c
-+++ b/drivers/gpu/drm/drm_modes.c
-@@ -757,14 +757,11 @@ EXPORT_SYMBOL(drm_mode_set_name);
-  */
- int drm_mode_vrefresh(const struct drm_display_mode *mode)
- {
--	unsigned int num, den;
-+	unsigned int num = 1, den = 1;
- 
- 	if (mode->htotal == 0 || mode->vtotal == 0)
- 		return 0;
- 
--	num = mode->clock;
--	den = mode->htotal * mode->vtotal;
--
- 	if (mode->flags & DRM_MODE_FLAG_INTERLACE)
- 		num *= 2;
- 	if (mode->flags & DRM_MODE_FLAG_DBLSCAN)
-@@ -772,6 +769,12 @@ int drm_mode_vrefresh(const struct drm_d
- 	if (mode->vscan > 1)
- 		den *= mode->vscan;
- 
-+	if (check_mul_overflow(mode->clock, num, &num))
-+		return 0;
-+
-+	if (check_mul_overflow(mode->htotal * mode->vtotal, den, &den))
-+		return 0;
-+
- 	return DIV_ROUND_CLOSEST_ULL(mul_u32_u32(num, 1000), den);
- }
- EXPORT_SYMBOL(drm_mode_vrefresh);
+diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
+index b9a93ee9c236..497c45d398e2 100644
+--- a/drivers/hwmon/tmp513.c
++++ b/drivers/hwmon/tmp513.c
+@@ -223,7 +223,7 @@ static int tmp51x_get_value(struct tmp51x_data *data, u8 reg, u8 pos,
+ 	case TMP51X_REMOTE_TEMP_LIMIT_2:
+ 	case TMP513_REMOTE_TEMP_LIMIT_3:
+ 		// 1lsb = 0.0625 degrees centigrade
+-		*val = sign_extend32(regval, 16) >> TMP51X_TEMP_SHIFT;
++		*val = sign_extend32(regval, 15) >> TMP51X_TEMP_SHIFT;
+ 		*val = DIV_ROUND_CLOSEST(*val * 625, 10);
+ 		break;
+ 	case TMP51X_N_FACTOR_AND_HYST_1:
+-- 
+2.39.5
+
 
 
