@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D311DC9BC;
-	Mon,  6 Jan 2025 15:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4851DE3AB;
+	Mon,  6 Jan 2025 15:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177484; cv=none; b=fCTNLWcxLJ2gX5uDOf8qSpbHNLEUW1IRnVzrG8DvG3nnRz+u4JZQRcH0yvNRDPyHMb6boqnre3d10YvQG/LCXFfZJxnvnQocCnPaVHelne2SU3tBLbZq5aVMzR3BZ7e/CIUeoKBgehJX+DxpRziX3ndvBHokJ0b6oRxT7L393qI=
+	t=1736177486; cv=none; b=fKidLeB3tt9PFHkAqtmSkc1b1rhV5HD6HVw+r9k8FkbySWWo8M1JYIOi+RuFcnZ3ipOe5UL0pB7TQzhP30czgUq4c0hjPwHiKyge2oFf/+lBTUxe4kLFoWoA6piJOUNcH8RaoqfGRUtS1YMXMNMY8IJzGQf5PBXy4L8ZDtg1Cl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177484; c=relaxed/simple;
-	bh=O0xTL3EK2Zc7uKZ9ZMY2s/S9S0cVEeXX9LW65kh4P6w=;
+	s=arc-20240116; t=1736177486; c=relaxed/simple;
+	bh=sifCx0nxEPa4n8WjSBtjFp53f0dn8XqnP0TcsGDC7TE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwmX2dYEQlMPncSik7Z3Hy6kA1X4fhsUqkt4uFjpupkIP05Wt6hbS2OEoj6PZ4Up3H3vzNFfIdgi5Ijzn7Y/H262jmH21kUirC+bUMRRBjzJ/Eu+KvsIIUbFcWkAQzDzIvE4Y/2ZpvJxpsEVdEvwAXR4oQSOBXdNAp4H2rY6ROs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+9Y/uIW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jxZr1zAwspFLvsEPvi3zPFF0d/obW3blqbZHpLuRq9Rzhxkhq1uvYA1xY2AuHKv00nGivTF0X7xq30QfQVRdKZy/yEMTJ7SLjMTHsYKtp0/YxFoXYtRaAfafGVZxWu5zgPaDI//yRRElBwzVy1mLHVTwANsrCqKixbA1jTJivRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IejBlxK3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+9Y/uIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F9CC4CED2;
-	Mon,  6 Jan 2025 15:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IejBlxK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 425C9C4CED2;
+	Mon,  6 Jan 2025 15:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177483;
-	bh=O0xTL3EK2Zc7uKZ9ZMY2s/S9S0cVEeXX9LW65kh4P6w=;
+	s=korg; t=1736177486;
+	bh=sifCx0nxEPa4n8WjSBtjFp53f0dn8XqnP0TcsGDC7TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+9Y/uIWvuGGuCquLwuxyVBCJpc9BsAGzXtFbo5B42dipCPvHYOMsdZ4ni4r0VQH+
-	 EU/t/8GgNnoj3BkRQqnchbw4e5fikISyfW+2vDCthLqGvWgBpo47FwHJ5PlPo3O2Wl
-	 ogBuZvMC1zw4G++Gnik8iYy51k76QaXe03tS1I4o=
+	b=IejBlxK3M32LrDzUWA3RMeM4thTZdi11jctuxDx71xkQIMU23Lr3fYfzy+koPw70n
+	 i6RCrvLEjaRhaEJE2nhu+T57be6s93pKpBirLTwezenlkfQBgnCdLsO2GCVZnlB4TT
+	 G23meDiGXMQf2rRMpB60S9mqcxQN2Nc0vNEs70Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Issam Hamdi <ih@simonwunderlich.de>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 177/222] net: ti: icssg-prueth: Fix clearing of IEP_CMP_CFG registers during iep_init
-Date: Mon,  6 Jan 2025 16:16:21 +0100
-Message-ID: <20250106151157.463511851@linuxfoundation.org>
+Subject: [PATCH 6.6 178/222] wifi: mac80211: fix mbss changed flags corruption on 32 bit systems
+Date: Mon,  6 Jan 2025 16:16:22 +0100
+Message-ID: <20250106151157.505647364@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,58 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Issam Hamdi <ih@simonwunderlich.de>
 
-[ Upstream commit 9b115361248dc6cce182a2dc030c1c70b0a9639e ]
+[ Upstream commit 49dba1ded8dd5a6a12748631403240b2ab245c34 ]
 
-When ICSSG interfaces are brought down and brought up again, the
-pru cores are shut down and booted again, flushing out all the memories
-and start again in a clean state. Hence it is expected that the
-IEP_CMP_CFG register needs to be flushed during iep_init() to ensure
-that the existing residual configuration doesn't cause any unusual
-behavior. If the register is not cleared, existing IEP_CMP_CFG set for
-CMP1 will result in SYNC0_OUT signal based on the SYNC_OUT register values.
+On 32-bit systems, the size of an unsigned long is 4 bytes,
+while a u64 is 8 bytes. Therefore, when using
+or_each_set_bit(bit, &bits, sizeof(changed) * BITS_PER_BYTE),
+the code is incorrectly searching for a bit in a 32-bit
+variable that is expected to be 64 bits in size,
+leading to incorrect bit finding.
 
-After bringing the interface up, calling PPS enable doesn't work as
-the driver believes PPS is already enabled, (iep->pps_enabled is not
-cleared during interface bring down) and driver will just return true
-even though there is no signal. Fix this by disabling pps and perout.
+Solution: Ensure that the size of the bits variable is correctly
+adjusted for each architecture.
 
-Fixes: c1e0230eeaab ("net: ti: icss-iep: Add IEP driver")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+ Call Trace:
+  ? show_regs+0x54/0x58
+  ? __warn+0x6b/0xd4
+  ? ieee80211_link_info_change_notify+0xcc/0xd4 [mac80211]
+  ? report_bug+0x113/0x150
+  ? exc_overflow+0x30/0x30
+  ? handle_bug+0x27/0x44
+  ? exc_invalid_op+0x18/0x50
+  ? handle_exception+0xf6/0xf6
+  ? exc_overflow+0x30/0x30
+  ? ieee80211_link_info_change_notify+0xcc/0xd4 [mac80211]
+  ? exc_overflow+0x30/0x30
+  ? ieee80211_link_info_change_notify+0xcc/0xd4 [mac80211]
+  ? ieee80211_mesh_work+0xff/0x260 [mac80211]
+  ? cfg80211_wiphy_work+0x72/0x98 [cfg80211]
+  ? process_one_work+0xf1/0x1fc
+  ? worker_thread+0x2c0/0x3b4
+  ? kthread+0xc7/0xf0
+  ? mod_delayed_work_on+0x4c/0x4c
+  ? kthread_complete_and_exit+0x14/0x14
+  ? ret_from_fork+0x24/0x38
+  ? kthread_complete_and_exit+0x14/0x14
+  ? ret_from_fork_asm+0xf/0x14
+  ? entry_INT80_32+0xf0/0xf0
+
+Signed-off-by: Issam Hamdi <ih@simonwunderlich.de>
+Link: https://patch.msgid.link/20241125162920.2711462-1-ih@simonwunderlich.de
+[restore no-op path for no changes]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icss_iep.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/mac80211/mesh.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
-index 3025e9c18970..f06cdec14ed7 100644
---- a/drivers/net/ethernet/ti/icssg/icss_iep.c
-+++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
-@@ -290,6 +290,9 @@ static void icss_iep_enable_shadow_mode(struct icss_iep *iep)
- 	for (cmp = IEP_MIN_CMP; cmp < IEP_MAX_CMP; cmp++) {
- 		regmap_update_bits(iep->map, ICSS_IEP_CMP_STAT_REG,
- 				   IEP_CMP_STATUS(cmp), IEP_CMP_STATUS(cmp));
-+
-+		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
-+				   IEP_CMP_CFG_CMP_EN(cmp), 0);
- 	}
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index 25223184d6e5..a5e7edd2f2d1 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -1173,14 +1173,14 @@ void ieee80211_mbss_info_change_notify(struct ieee80211_sub_if_data *sdata,
+ 				       u64 changed)
+ {
+ 	struct ieee80211_if_mesh *ifmsh = &sdata->u.mesh;
+-	unsigned long bits = changed;
++	unsigned long bits[] = { BITMAP_FROM_U64(changed) };
+ 	u32 bit;
  
- 	/* enable reset counter on CMP0 event */
-@@ -808,6 +811,11 @@ int icss_iep_exit(struct icss_iep *iep)
- 	}
- 	icss_iep_disable(iep);
+-	if (!bits)
++	if (!changed)
+ 		return;
  
-+	if (iep->pps_enabled)
-+		icss_iep_pps_enable(iep, false);
-+	else if (iep->perout_enabled)
-+		icss_iep_perout_enable(iep, NULL, false);
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(icss_iep_exit);
+ 	/* if we race with running work, worst case this work becomes a noop */
+-	for_each_set_bit(bit, &bits, sizeof(changed) * BITS_PER_BYTE)
++	for_each_set_bit(bit, bits, sizeof(changed) * BITS_PER_BYTE)
+ 		set_bit(bit, ifmsh->mbss_changed);
+ 	set_bit(MESH_WORK_MBSS_CHANGED, &ifmsh->wrkq_flags);
+ 	wiphy_work_queue(sdata->local->hw.wiphy, &sdata->work);
 -- 
 2.39.5
 
