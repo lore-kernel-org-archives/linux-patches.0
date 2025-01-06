@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979F381728;
-	Mon,  6 Jan 2025 15:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC96156237;
+	Mon,  6 Jan 2025 15:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178957; cv=none; b=IqoIAfygIwoWGPZx/e8Awx3vbivBffcf2LTjNLHzWAjIkgaeG92LF/aRTBaJNcfx+cREvnRnXCJCkFJdAQ1ZeVgxx4zVH3M8ZL3I15eCXmYTOSWOg/wjyOB9kOvnApo+2bAdSQM+scWQ7I43+q1P5i0QUO71izFaDPD9KGx8Ikg=
+	t=1736178960; cv=none; b=ZQb/4hOdJtVqVKaG1gtn+vTtG0LxIDELYtGo7VDn/Hi2Otj2BjNyKXZrZ6F/Lguv5oIF4V+aBLVPHuyBNWhoO+pi3uCHU4RBjDuFlYeYPiVOn/hQY9Sc51YavNAn/9ero+cjdw1W12atHQ1sPu9vicXhmW3tem44Vm5+6183X2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178957; c=relaxed/simple;
-	bh=+oaG/P8PasBUYcAFQuKIMHA8VpJ6bj+ZE2IowJvyaTA=;
+	s=arc-20240116; t=1736178960; c=relaxed/simple;
+	bh=isyEJo/qEc4AfIDAOu0iWZEUagSOxINONfTs3FB8NB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACfrokGKq3GptpHzjGh2/N30OjpCnuMx3tfy+TO+540cmUQqRWkVMR2PWwYhN1XDZjTQ+Lx9yFbYTq2/TrOImrs+tcRNiSTPdqwFKKl7BMI1i332xu1gfZve21skV6+aX5niCbjNC0dnRM/pTmUOuhL44Wj2n4P94L4eH9D0HNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1Na9BPo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WOpTVQk8FoZ1+9qnTKd+9LwjXOZ6qDwajCa7Q392WkCJRy0wSHQMBL1lsVAgHJcadETZiRy/sp8JlQTU+5ydqqMPmYZHbnWPqXKBepiG8lAtR9wDLiEgb2XE8i4qCcKAbRORHwTsN0r4Ju1tWrc6RjLbjqVccchJ3k2TJgcnoyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMUfQLkV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1Na9BPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211E6C4CED2;
-	Mon,  6 Jan 2025 15:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMUfQLkV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14027C4CED2;
+	Mon,  6 Jan 2025 15:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178957;
-	bh=+oaG/P8PasBUYcAFQuKIMHA8VpJ6bj+ZE2IowJvyaTA=;
+	s=korg; t=1736178960;
+	bh=isyEJo/qEc4AfIDAOu0iWZEUagSOxINONfTs3FB8NB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m1Na9BPoAACoNbbFjq/NVCfmhq9p7PwIpDTfNsrckzaqE6xONqEkb+LUA99iI6Pq2
-	 xcl5GYCcI/j0TwkiOs+GHLsBYnwfpPjEJF1+lH77Ys/FtFNWHdb85H56w24BkfhxOi
-	 iDtF91POGaIy2fLnIiivFFblf/dwyv5e7eV5/Dzc=
+	b=GMUfQLkVHpYGhR1yUfKPd8pZqetOCjRrNoMXrAtDtgGO1jSK2syCdzTiiMXvqXdyL
+	 PnEmK2dzzDao425ymj6ZrFEcUgvQG/+yPgSKi9+xU6xme7wKafkAaOk24HKuMRKMWb
+	 1j7MH/KX7pxzLiFV5pQvejGymCwvih6AwQAjFlXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 148/168] btrfs: sysfs: fix direct super block member reads
-Date: Mon,  6 Jan 2025 16:17:36 +0100
-Message-ID: <20250106151144.026621568@linuxfoundation.org>
+Subject: [PATCH 5.15 149/168] wifi: mac80211: wake the queues in case of failure in resume
+Date: Mon,  6 Jan 2025 16:17:37 +0100
+Message-ID: <20250106151144.062806079@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -53,66 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit fca432e73db2bec0fdbfbf6d98d3ebcd5388a977 ]
+[ Upstream commit 220bf000530f9b1114fa2a1022a871c7ce8a0b38 ]
 
-The following sysfs entries are reading super block member directly,
-which can have a different endian and cause wrong values:
+In case we fail to resume, we'll WARN with
+"Hardware became unavailable during restart." and we'll wait until user
+space does something. It'll typically bring the interface down and up to
+recover. This won't work though because the queues are still stopped on
+IEEE80211_QUEUE_STOP_REASON_SUSPEND reason.
+Make sure we clear that reason so that we give a chance to the recovery
+to succeed.
 
-- sys/fs/btrfs/<uuid>/nodesize
-- sys/fs/btrfs/<uuid>/sectorsize
-- sys/fs/btrfs/<uuid>/clone_alignment
-
-Thankfully those values (nodesize and sectorsize) are always aligned
-inside the btrfs_super_block, so it won't trigger unaligned read errors,
-just endian problems.
-
-Fix them by using the native cached members instead.
-
-Fixes: df93589a1737 ("btrfs: export more from FS_INFO to sysfs")
-CC: stable@vger.kernel.org
-Reviewed-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219447
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20241119173108.cd628f560f97.I76a15fdb92de450e5329940125f3c58916be3942@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/sysfs.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/util.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/sysfs.c b/fs/btrfs/sysfs.c
-index bc8d5b4c279e..6f7f7231e34a 100644
---- a/fs/btrfs/sysfs.c
-+++ b/fs/btrfs/sysfs.c
-@@ -821,7 +821,7 @@ static ssize_t btrfs_nodesize_show(struct kobject *kobj,
- {
- 	struct btrfs_fs_info *fs_info = to_fs_info(kobj);
- 
--	return sysfs_emit(buf, "%u\n", fs_info->super_copy->nodesize);
-+	return sysfs_emit(buf, "%u\n", fs_info->nodesize);
- }
- 
- BTRFS_ATTR(, nodesize, btrfs_nodesize_show);
-@@ -831,7 +831,7 @@ static ssize_t btrfs_sectorsize_show(struct kobject *kobj,
- {
- 	struct btrfs_fs_info *fs_info = to_fs_info(kobj);
- 
--	return sysfs_emit(buf, "%u\n", fs_info->super_copy->sectorsize);
-+	return sysfs_emit(buf, "%u\n", fs_info->sectorsize);
- }
- 
- BTRFS_ATTR(, sectorsize, btrfs_sectorsize_show);
-@@ -841,7 +841,7 @@ static ssize_t btrfs_clone_alignment_show(struct kobject *kobj,
- {
- 	struct btrfs_fs_info *fs_info = to_fs_info(kobj);
- 
--	return sysfs_emit(buf, "%u\n", fs_info->super_copy->sectorsize);
-+	return sysfs_emit(buf, "%u\n", fs_info->sectorsize);
- }
- 
- BTRFS_ATTR(, clone_alignment, btrfs_clone_alignment_show);
+diff --git a/net/mac80211/util.c b/net/mac80211/util.c
+index 85d3d2034d43..cc78d3cba45e 100644
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -2374,6 +2374,9 @@ int ieee80211_reconfig(struct ieee80211_local *local)
+ 			WARN(1, "Hardware became unavailable upon resume. This could be a software issue prior to suspend or a hardware issue.\n");
+ 		else
+ 			WARN(1, "Hardware became unavailable during restart.\n");
++		ieee80211_wake_queues_by_reason(hw, IEEE80211_MAX_QUEUE_MAP,
++						IEEE80211_QUEUE_STOP_REASON_SUSPEND,
++						false);
+ 		ieee80211_handle_reconfig_failure(local);
+ 		return res;
+ 	}
 -- 
 2.39.5
 
