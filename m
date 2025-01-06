@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D7C1607AA;
-	Mon,  6 Jan 2025 15:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF121514F6;
+	Mon,  6 Jan 2025 15:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178223; cv=none; b=nlyTzlxZMiwbUmtCq5jkw2PHjSM6O/PkVBhTRkQR5q4CJRKYdY5zcqXxg3GugpJ50NXPSdTNSGkKzhRYVmE7h+i/lwmdbYwr+CgaKGYDEJf0KGBUaus+8kOduGYLrRXX2eNC+qwzQmBPlFYQIrdBXRGSkUBtGk98UOfiWtgrXpA=
+	t=1736178226; cv=none; b=Sjh20QDSKYEAw7oHhooCcqJPAmSd8aXjDtUyHC98ZPaaRF4rin1Bj6VDmpc37yJ2m7qXqcDvjpd/z83lLkmwlR1TG1Ea95gnga68awbC9BdHJ/fVCusTCiTGMGnoSSc1PJ5MHbMMeCwTDGfqRvOod/OialNNULCTvx1xBczIBVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178223; c=relaxed/simple;
-	bh=MSsSFfW6NOLchXSAbuFRsR20lKCBpRgsZq+XdFmDMg8=;
+	s=arc-20240116; t=1736178226; c=relaxed/simple;
+	bh=tDvckh5ptd/CzVXwzS4ByGFqPEWwN3eF16+K9J3HiuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kcuSSOOvF3pVS3korcyS9NpsNWs3K262jzCe97MW2xIjH0I9p98W7hv1ClGk333vGnlLUdHPdmDhGEJAhRwqHNcYq4YlTkRk7hlfO2IMnsnuRM/HaHFptk2dWINkBLpUTrFN9/AotFkBWxVUKJglEi/VhxuMCZb6tV8IENX/ceY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JcgpanaM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SD6KuQp1HHu+1bi1QEna9Z1Vy2U73eIOGiMH0gahhgrfYxT4uFy7Q6zRVddnIj8AfPbB6I5oKD3iojLIZisXJkTse+tk4xkXEB7Nni9M+dquaQSrosfOQcTjrNXpSXSWiwMlsAyxW655eKatjY792qWWKrl6vNzWwbXMhVtpAwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jQMZ6AQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JcgpanaM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC652C4CED2;
-	Mon,  6 Jan 2025 15:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jQMZ6AQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A3EC4CED6;
+	Mon,  6 Jan 2025 15:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178223;
-	bh=MSsSFfW6NOLchXSAbuFRsR20lKCBpRgsZq+XdFmDMg8=;
+	s=korg; t=1736178226;
+	bh=tDvckh5ptd/CzVXwzS4ByGFqPEWwN3eF16+K9J3HiuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JcgpanaMIHzipkF1E3yff3OUKsyNcECM+TWRfigGFC1yTsKy0vVGgNocbCZD4Dof9
-	 4v+3N1EMy4zj/GMZBuzVjzNJVekjVth+N0LY4+RdkO9XDOc2F9Awy5ZZEPQJkKVdtZ
-	 YsvPrYoXe6q51/0SAXzbi9YPXsjitFRkcrNAbYQI=
+	b=jQMZ6AQqiQwyosbrI8cvCWpTioSGR3+tBT6i7hplhXaY41FOio1MqiTB5i8VLKiYJ
+	 Lt/jJ7B/opS648G156ZvvxnG7BLfxyTEmnx74LZrvV54FTsOQUkjKqqo6k6RvMndHL
+	 grhfW3adbhyUFpNheo7XL576wnwtaR6WMY5cpsZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/138] tcp_bpf: Charge receive socket buffer in bpf_tcp_ingress()
-Date: Mon,  6 Jan 2025 16:16:10 +0100
-Message-ID: <20250106151134.981550802@linuxfoundation.org>
+Subject: [PATCH 5.10 047/138] bpf: Check negative offsets in __bpf_skb_min_len()
+Date: Mon,  6 Jan 2025 16:16:11 +0100
+Message-ID: <20250106151135.018737467@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -54,67 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 54f89b3178d5448dd4457afbb98fc1ab99090a65 ]
+[ Upstream commit 9ecc4d858b92c1bb0673ad9c327298e600c55659 ]
 
-When bpf_tcp_ingress() is called, the skmsg is being redirected to the
-ingress of the destination socket. Therefore, we should charge its
-receive socket buffer, instead of sending socket buffer.
+skb_network_offset() and skb_transport_offset() can be negative when
+they are called after we pull the transport header, for example, when
+we use eBPF sockmap at the point of ->sk_data_ready().
 
-Because sk_rmem_schedule() tests pfmemalloc of skb, we need to
-introduce a wrapper and call it for skmsg.
+__bpf_skb_min_len() uses an unsigned int to get these offsets, this
+leads to a very large number which then causes bpf_skb_change_tail()
+failed unexpectedly.
 
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Fix this by using a signed int to get these offsets and ensure the
+minimum is at least zero.
+
+Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
 Signed-off-by: Cong Wang <cong.wang@bytedance.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241210012039.1669389-2-zijianzhang@bytedance.com
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241213034057.246437-2-xiyou.wangcong@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 10 ++++++++--
- net/ipv4/tcp_bpf.c |  2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ net/core/filter.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index c45958a68978..548f9aab9aa1 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1525,7 +1525,7 @@ static inline bool sk_wmem_schedule(struct sock *sk, int size)
- }
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 0b61575df86e..b80203274d3f 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3710,13 +3710,22 @@ static const struct bpf_func_proto bpf_skb_adjust_room_proto = {
  
- static inline bool
--sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
-+__sk_rmem_schedule(struct sock *sk, int size, bool pfmemalloc)
+ static u32 __bpf_skb_min_len(const struct sk_buff *skb)
  {
- 	int delta;
+-	u32 min_len = skb_network_offset(skb);
++	int offset = skb_network_offset(skb);
++	u32 min_len = 0;
  
-@@ -1533,7 +1533,13 @@ sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
- 		return true;
- 	delta = size - sk->sk_forward_alloc;
- 	return delta <= 0 || __sk_mem_schedule(sk, delta, SK_MEM_RECV) ||
--		skb_pfmemalloc(skb);
-+	       pfmemalloc;
-+}
-+
-+static inline bool
-+sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
-+{
-+	return __sk_rmem_schedule(sk, size, skb_pfmemalloc(skb));
+-	if (skb_transport_header_was_set(skb))
+-		min_len = skb_transport_offset(skb);
+-	if (skb->ip_summed == CHECKSUM_PARTIAL)
+-		min_len = skb_checksum_start_offset(skb) +
+-			  skb->csum_offset + sizeof(__sum16);
++	if (offset > 0)
++		min_len = offset;
++	if (skb_transport_header_was_set(skb)) {
++		offset = skb_transport_offset(skb);
++		if (offset > 0)
++			min_len = offset;
++	}
++	if (skb->ip_summed == CHECKSUM_PARTIAL) {
++		offset = skb_checksum_start_offset(skb) +
++			 skb->csum_offset + sizeof(__sum16);
++		if (offset > 0)
++			min_len = offset;
++	}
+ 	return min_len;
  }
  
- static inline void sk_mem_reclaim(struct sock *sk)
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 85ae2c310148..804464beb343 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -111,7 +111,7 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
- 		sge = sk_msg_elem(msg, i);
- 		size = (apply && apply_bytes < sge->length) ?
- 			apply_bytes : sge->length;
--		if (!sk_wmem_schedule(sk, size)) {
-+		if (!__sk_rmem_schedule(sk, size, false)) {
- 			if (!copied)
- 				ret = -ENOMEM;
- 			break;
 -- 
 2.39.5
 
