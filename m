@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB35A1DC9BC;
-	Mon,  6 Jan 2025 15:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D311DC9BC;
+	Mon,  6 Jan 2025 15:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177480; cv=none; b=n/j6y17wb4xvWPWyKbmA/Q3PetCNORBFKKk80hAFZ1DpdB+WISi2fvj4WNdjJgPQBFWF6hyzv4st/V+rIqYP3AbNwFxb8M5OXSIy9Hvngsm+0lFyIycVxYrtmffPnKMHuKMx235R+QCkIdbw2HzR8VN/+vNAPmXTZunZL0KsOfI=
+	t=1736177484; cv=none; b=fCTNLWcxLJ2gX5uDOf8qSpbHNLEUW1IRnVzrG8DvG3nnRz+u4JZQRcH0yvNRDPyHMb6boqnre3d10YvQG/LCXFfZJxnvnQocCnPaVHelne2SU3tBLbZq5aVMzR3BZ7e/CIUeoKBgehJX+DxpRziX3ndvBHokJ0b6oRxT7L393qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177480; c=relaxed/simple;
-	bh=BtmpgpG6aTgmrD/VfyF+IZ/4cEyAh9REbD5EDm7JcPk=;
+	s=arc-20240116; t=1736177484; c=relaxed/simple;
+	bh=O0xTL3EK2Zc7uKZ9ZMY2s/S9S0cVEeXX9LW65kh4P6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=talCiabaSi4O9+zkjM6lDg0hAPkw8sDpL7lmuWQgkKlqoUCm6YtYW3/kekcuBZr1fsZBqzIeVhxVhupGDcj79YpmDHezjHcgZDZHZR1Kfi3Sk7RO1YLAps6a+mAiLubT8spnbRWCQw95e5baLWu4atgfv+Gtyo8qGKCZfD9ZwJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbtJwow8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DwmX2dYEQlMPncSik7Z3Hy6kA1X4fhsUqkt4uFjpupkIP05Wt6hbS2OEoj6PZ4Up3H3vzNFfIdgi5Ijzn7Y/H262jmH21kUirC+bUMRRBjzJ/Eu+KvsIIUbFcWkAQzDzIvE4Y/2ZpvJxpsEVdEvwAXR4oQSOBXdNAp4H2rY6ROs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+9Y/uIW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbtJwow8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83821C4CED2;
-	Mon,  6 Jan 2025 15:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+9Y/uIW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F9CC4CED2;
+	Mon,  6 Jan 2025 15:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177480;
-	bh=BtmpgpG6aTgmrD/VfyF+IZ/4cEyAh9REbD5EDm7JcPk=;
+	s=korg; t=1736177483;
+	bh=O0xTL3EK2Zc7uKZ9ZMY2s/S9S0cVEeXX9LW65kh4P6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RbtJwow8Q0wdBm9ykNuDwdLjbLQVVa2Hv+7Mq9pJds7ewpboKXA/WOwtKTA7ctKKO
-	 9hKbIMc4Dx8CZ5Cpj/5uUZHagflJxP5gTZC1AqkMDbbFb0w0H6aHkHYlgaIt547kT8
-	 Tn11mhqPQN49U8CLpFI43zRMSlRBPsP04u8IF54k=
+	b=D+9Y/uIWvuGGuCquLwuxyVBCJpc9BsAGzXtFbo5B42dipCPvHYOMsdZ4ni4r0VQH+
+	 EU/t/8GgNnoj3BkRQqnchbw4e5fikISyfW+2vDCthLqGvWgBpo47FwHJ5PlPo3O2Wl
+	 ogBuZvMC1zw4G++Gnik8iYy51k76QaXe03tS1I4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Florian Westphal <fw@strlen.de>,
-	Tom Herbert <tom@herbertland.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Meghana Malladi <m-malladi@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/222] ila: serialize calls to nf_register_net_hooks()
-Date: Mon,  6 Jan 2025 16:16:20 +0100
-Message-ID: <20250106151157.426596975@linuxfoundation.org>
+Subject: [PATCH 6.6 177/222] net: ti: icssg-prueth: Fix clearing of IEP_CMP_CFG registers during iep_init
+Date: Mon,  6 Jan 2025 16:16:21 +0100
+Message-ID: <20250106151157.463511851@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -54,111 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Meghana Malladi <m-malladi@ti.com>
 
-[ Upstream commit 260466b576bca0081a7d4acecc8e93687aa22d0e ]
+[ Upstream commit 9b115361248dc6cce182a2dc030c1c70b0a9639e ]
 
-syzbot found a race in ila_add_mapping() [1]
+When ICSSG interfaces are brought down and brought up again, the
+pru cores are shut down and booted again, flushing out all the memories
+and start again in a clean state. Hence it is expected that the
+IEP_CMP_CFG register needs to be flushed during iep_init() to ensure
+that the existing residual configuration doesn't cause any unusual
+behavior. If the register is not cleared, existing IEP_CMP_CFG set for
+CMP1 will result in SYNC0_OUT signal based on the SYNC_OUT register values.
 
-commit 031ae72825ce ("ila: call nf_unregister_net_hooks() sooner")
-attempted to fix a similar issue.
+After bringing the interface up, calling PPS enable doesn't work as
+the driver believes PPS is already enabled, (iep->pps_enabled is not
+cleared during interface bring down) and driver will just return true
+even though there is no signal. Fix this by disabling pps and perout.
 
-Looking at the syzbot repro, we have concurrent ILA_CMD_ADD commands.
-
-Add a mutex to make sure at most one thread is calling nf_register_net_hooks().
-
-[1]
- BUG: KASAN: slab-use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
- BUG: KASAN: slab-use-after-free in __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
-Read of size 4 at addr ffff888028f40008 by task dhcpcd/5501
-
-CPU: 1 UID: 0 PID: 5501 Comm: dhcpcd Not tainted 6.13.0-rc4-syzkaller-00054-gd6ef8b40d075 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <IRQ>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0xc3/0x620 mm/kasan/report.c:489
-  kasan_report+0xd9/0x110 mm/kasan/report.c:602
-  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
-  __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
-  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
-  rhashtable_lookup_fast include/linux/rhashtable.h:672 [inline]
-  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:127 [inline]
-  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
-  ila_nf_input+0x1ee/0x620 net/ipv6/ila/ila_xlat.c:185
-  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
-  nf_hook_slow+0xbb/0x200 net/netfilter/core.c:626
-  nf_hook.constprop.0+0x42e/0x750 include/linux/netfilter.h:269
-  NF_HOOK include/linux/netfilter.h:312 [inline]
-  ipv6_rcv+0xa4/0x680 net/ipv6/ip6_input.c:309
-  __netif_receive_skb_one_core+0x12e/0x1e0 net/core/dev.c:5672
-  __netif_receive_skb+0x1d/0x160 net/core/dev.c:5785
-  process_backlog+0x443/0x15f0 net/core/dev.c:6117
-  __napi_poll.constprop.0+0xb7/0x550 net/core/dev.c:6883
-  napi_poll net/core/dev.c:6952 [inline]
-  net_rx_action+0xa94/0x1010 net/core/dev.c:7074
-  handle_softirqs+0x213/0x8f0 kernel/softirq.c:561
-  __do_softirq kernel/softirq.c:595 [inline]
-  invoke_softirq kernel/softirq.c:435 [inline]
-  __irq_exit_rcu+0x109/0x170 kernel/softirq.c:662
-  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
-  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
-  sysvec_apic_timer_interrupt+0xa4/0xc0 arch/x86/kernel/apic/apic.c:1049
-
-Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
-Reported-by: syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6772c9ae.050a0220.2f3838.04c7.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Florian Westphal <fw@strlen.de>
-Cc: Tom Herbert <tom@herbertland.com>
-Link: https://patch.msgid.link/20241230162849.2795486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c1e0230eeaab ("net: ti: icss-iep: Add IEP driver")
+Signed-off-by: Meghana Malladi <m-malladi@ti.com>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ila/ila_xlat.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/ti/icssg/icss_iep.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/ipv6/ila/ila_xlat.c b/net/ipv6/ila/ila_xlat.c
-index 534a4498e280..fff09f5a796a 100644
---- a/net/ipv6/ila/ila_xlat.c
-+++ b/net/ipv6/ila/ila_xlat.c
-@@ -200,6 +200,8 @@ static const struct nf_hook_ops ila_nf_hook_ops[] = {
- 	},
- };
- 
-+static DEFINE_MUTEX(ila_mutex);
+diff --git a/drivers/net/ethernet/ti/icssg/icss_iep.c b/drivers/net/ethernet/ti/icssg/icss_iep.c
+index 3025e9c18970..f06cdec14ed7 100644
+--- a/drivers/net/ethernet/ti/icssg/icss_iep.c
++++ b/drivers/net/ethernet/ti/icssg/icss_iep.c
+@@ -290,6 +290,9 @@ static void icss_iep_enable_shadow_mode(struct icss_iep *iep)
+ 	for (cmp = IEP_MIN_CMP; cmp < IEP_MAX_CMP; cmp++) {
+ 		regmap_update_bits(iep->map, ICSS_IEP_CMP_STAT_REG,
+ 				   IEP_CMP_STATUS(cmp), IEP_CMP_STATUS(cmp));
 +
- static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
- {
- 	struct ila_net *ilan = net_generic(net, ila_net_id);
-@@ -207,16 +209,20 @@ static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
- 	spinlock_t *lock = ila_get_lock(ilan, xp->ip.locator_match);
- 	int err = 0, order;
- 
--	if (!ilan->xlat.hooks_registered) {
-+	if (!READ_ONCE(ilan->xlat.hooks_registered)) {
- 		/* We defer registering net hooks in the namespace until the
- 		 * first mapping is added.
- 		 */
--		err = nf_register_net_hooks(net, ila_nf_hook_ops,
--					    ARRAY_SIZE(ila_nf_hook_ops));
-+		mutex_lock(&ila_mutex);
-+		if (!ilan->xlat.hooks_registered) {
-+			err = nf_register_net_hooks(net, ila_nf_hook_ops,
-+						ARRAY_SIZE(ila_nf_hook_ops));
-+			if (!err)
-+				WRITE_ONCE(ilan->xlat.hooks_registered, true);
-+		}
-+		mutex_unlock(&ila_mutex);
- 		if (err)
- 			return err;
--
--		ilan->xlat.hooks_registered = true;
++		regmap_update_bits(iep->map, ICSS_IEP_CMP_CFG_REG,
++				   IEP_CMP_CFG_CMP_EN(cmp), 0);
  	}
  
- 	ila = kzalloc(sizeof(*ila), GFP_KERNEL);
+ 	/* enable reset counter on CMP0 event */
+@@ -808,6 +811,11 @@ int icss_iep_exit(struct icss_iep *iep)
+ 	}
+ 	icss_iep_disable(iep);
+ 
++	if (iep->pps_enabled)
++		icss_iep_pps_enable(iep, false);
++	else if (iep->perout_enabled)
++		icss_iep_perout_enable(iep, NULL, false);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(icss_iep_exit);
 -- 
 2.39.5
 
