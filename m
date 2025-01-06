@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88909188A0D;
-	Mon,  6 Jan 2025 15:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87A01DE4CE;
+	Mon,  6 Jan 2025 15:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177508; cv=none; b=SvlaBSLOErLGmAOuQHq0+T3gWXWiIad1V4/xQJMo3TyncTTTStZjtb6cXUFwVSJLAFftCEOaZglC4jhW/FWXhr3SdRmrfMWH3wX9c2taAjnSJbi4EqhnS2MKWXCaMoQSalPZ8GbHbkzxWigVPL67Uohp5m7uQMtPI+aRE/5VXM4=
+	t=1736177510; cv=none; b=qGf8oit75RtXbUF70sCau0Ercgpj73As7BdlBlSR9562mcrlTWuvvllttanl9gUuN6pJbU29dV6nsCMxqbbxju9qiYUdw6uWOeB0X+CDOmBwrNkRtban3eOvc6HHEkiCUsi74xMwY909yz9bFtea7W3zWcktdRCX5DBuTeT0EPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177508; c=relaxed/simple;
-	bh=6bxAKJaufLSLNtwoVnQ7GJz2AgY4CwciLME2jXQ0jOo=;
+	s=arc-20240116; t=1736177510; c=relaxed/simple;
+	bh=MgWgEq4N/mAxX16aLzmL35SK7niGilt96yhFTPKNXfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=azDlJw4OY2k3i9ZxRj8bjSJ1IQiYlxU7PeEqX5519Cdzrbbb1dceB2Fn/r/k5JhK5VvGROIowU3sQi9e0/0V6WSrjqoPz1jIgXw1wgHIMoCWzQx7EDqWKmxkkSPLgRoqiMr28pb3T6A0wqzeHzAxtQnzOfiycM83BtQid3QmNzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kydjh+6e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KTQPUeOZf1dKCC99fTbuvq59myRLDUq7v6lZdROTRcGlwlU8Huha+2T80uSBl7SUaNXIdgEl28QN2Qx9+qHigjwEuTBw5wSC511Ho+FPQYqLY1WQs/3qbcv5z8r1jvoHLrzLoAGNYNsx37XMEcuCbo2kA31mdLjfwXw/ii00SrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7bcusvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kydjh+6e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11249C4CED6;
-	Mon,  6 Jan 2025 15:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7bcusvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09AAC4CED6;
+	Mon,  6 Jan 2025 15:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177507;
-	bh=6bxAKJaufLSLNtwoVnQ7GJz2AgY4CwciLME2jXQ0jOo=;
+	s=korg; t=1736177510;
+	bh=MgWgEq4N/mAxX16aLzmL35SK7niGilt96yhFTPKNXfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kydjh+6e4iBL46UgAOIOTCd+bjtzr7caPiV1Zbt2uwYlf729km7q8FacqJvbvPyE0
-	 GMvXnGbLHN0fZtGyMCDqIzybFs34IicPuRA8NVo4Wm3LCF7wKer3Hmy9o2kFghjYHD
-	 c8XpVYfwcQCpYQGwYLPgLFxNG/vnH2Nbv1IwYiYw=
+	b=i7bcusvrbAzt1YHARMGA6MTxuzf2xxKIxIYtzGI+GrQ5NRFgILktXaBFY8rAOQAOa
+	 pNKLsgcVJRjW0BLth4Ch6JSa7lzsxZKHEa0LblvETzhjP2QA/Muu+yyO+8q/siT0E7
+	 UjoaV1qVi25TXo0uNcAh1Dp4oqxUXjQPce8yZVyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 185/222] sound: usb: format: dont warn that raw DSD is unsupported
-Date: Mon,  6 Jan 2025 16:16:29 +0100
-Message-ID: <20250106151157.768256954@linuxfoundation.org>
+Subject: [PATCH 6.6 159/222] net/mlx5: DR, select MSIX vector 0 for completion queue creation
+Date: Mon,  6 Jan 2025 16:16:03 +0100
+Message-ID: <20250106151156.780539220@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,73 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
+From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit b50a3e98442b8d72f061617c7f7a71f7dba19484 ]
+[ Upstream commit 050a4c011b0dfeb91664a5d7bd3647ff38db08ce ]
 
-UAC 2 & 3 DAC's set bit 31 of the format to signal support for a
-RAW_DATA type, typically used for DSD playback.
+When creating a software steering completion queue (CQ), an arbitrary
+MSIX vector n is selected. This results in the CQ sharing the same
+Ethernet traffic channel n associated with the chosen vector. However,
+the value of n is often unpredictable, which can introduce complications
+for interrupt monitoring and verification tools.
 
-This is correctly tested by (format & UAC*_FORMAT_TYPE_I_RAW_DATA),
-fp->dsd_raw = true; and call snd_usb_interface_dsd_format_quirks(),
-however a confusing and unnecessary message gets printed because
-the bit is not properly tested in the last "unsupported" if test:
-if (format & ~0x3F) { ... }
+Moreover, SW steering uses polling rather than event-driven interrupts.
+Therefore, there is no need to select any MSIX vector other than the
+existing vector 0 for CQ creation.
 
-For example the output:
+In light of these factors, and to enhance predictability, we modify the
+code to consistently select MSIX vector 0 for CQ creation.
 
-usb 7-1: new high-speed USB device number 5 using xhci_hcd
-usb 7-1: New USB device found, idVendor=262a, idProduct=9302, bcdDevice=0.01
-usb 7-1: New USB device strings: Mfr=1, Product=2, SerialNumber=6
-usb 7-1: Product: TC44C
-usb 7-1: Manufacturer: TC44C
-usb 7-1: SerialNumber: 5000000001
-hid-generic 0003:262A:9302.001E: No inputs registered, leaving
-hid-generic 0003:262A:9302.001E: hidraw6: USB HID v1.00 Device [DDHIFI TC44C] on usb-0000:08:00.3-1/input0
-usb 7-1: 2:4 : unsupported format bits 0x100000000
-
-This last "unsupported format" is actually wrong: we know the
-format is a RAW_DATA which we assume is DSD, so there is no need
-to print the confusing message.
-
-This we unset bit 31 of the format after recognizing it, to avoid
-the message.
-
-Suggested-by: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-Link: https://patch.msgid.link/20241209090529.16134-2-adrian.ratiu@collabora.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 297cccebdc5a ("net/mlx5: DR, Expose an internal API to issue RDMA operations")
+Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20241220081505.1286093-2-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index 3b45d0ee7693..3b3a5ea6fcbf 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -60,6 +60,8 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
- 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
- 			/* flag potentially raw DSD capable altsettings */
- 			fp->dsd_raw = true;
-+			/* clear special format bit to avoid "unsupported format" msg below */
-+			format &= ~UAC2_FORMAT_TYPE_I_RAW_DATA;
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
+index 6fa06ba2d346..f57c84e5128b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_send.c
+@@ -1067,7 +1067,6 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
+ 	int inlen, err, eqn;
+ 	void *cqc, *in;
+ 	__be64 *pas;
+-	int vector;
+ 	u32 i;
  
- 		format <<= 1;
-@@ -71,8 +73,11 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
- 		sample_width = as->bBitResolution;
- 		sample_bytes = as->bSubslotSize;
+ 	cq = kzalloc(sizeof(*cq), GFP_KERNEL);
+@@ -1096,8 +1095,7 @@ static struct mlx5dr_cq *dr_create_cq(struct mlx5_core_dev *mdev,
+ 	if (!in)
+ 		goto err_cqwq;
  
--		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA)
-+		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA) {
- 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
-+			/* clear special format bit to avoid "unsupported format" msg below */
-+			format &= ~UAC3_FORMAT_TYPE_I_RAW_DATA;
-+		}
- 
- 		format <<= 1;
- 		break;
+-	vector = raw_smp_processor_id() % mlx5_comp_vectors_max(mdev);
+-	err = mlx5_comp_eqn_get(mdev, vector, &eqn);
++	err = mlx5_comp_eqn_get(mdev, 0, &eqn);
+ 	if (err) {
+ 		kvfree(in);
+ 		goto err_cqwq;
 -- 
 2.39.5
 
