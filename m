@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E11D136E09;
-	Mon,  6 Jan 2025 15:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DE61422DD;
+	Mon,  6 Jan 2025 15:44:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178259; cv=none; b=gBMgiO3WPOKdb1BWKOj8zL3BRO0RuY8kq7iEq0Xi6D+mFNc3cEgoSHy9BG+kJy6+tyL+nBd5hursuSNR7T8hFa6E7FiFu/sJofzG8TmHOwJ2HLGPbBmE2k0UmjkdEzq077DTBj7pchZHgjA48itY6WqBDAJeYP2eMUnkow4ympc=
+	t=1736178262; cv=none; b=ndVsTG/i8GK3H2bgZSG0Lk7yls90W/pN43syyYnIdg96JUxtYYT5II/du5/BOOiq/z0SEzinIElXVx2qBG8l64fsNAWVUYImr3uCCcp43kSL3rRvcQHsquklgf8UYERKDaaAK3BKMHx8pEuYFV4g+D2I13hSW9ANavRhWnpEa6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178259; c=relaxed/simple;
-	bh=wynyiNzcU6vtxXl0tz32UK3JNPfhPlzlMNZGtj7KnEI=;
+	s=arc-20240116; t=1736178262; c=relaxed/simple;
+	bh=D1QCr3MVALaYdh/8VEgMbVSOFCtGfmYaHekajkLgsgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gn+shG7KvNz1XMtRJJdZm6ILRXFU74LNjc/COGUdabeCfa2Wr12uND2i6SrJD6XNYx+QVurJ64b+Vx4j5QhPtv5ZbA1rmsASnqxaaFrJE3r9q8Bg+Wfl8xZPlnI5dIXLgbPffHhaBHFIGJtMksX5fQLjOqPra5SDICM2xWK/8Cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCAXMKLm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZhsLUMU5k6FJjO7WrfDukXE44XrRySF4Swb3NnrILk53pRUzXYkpkk5ApDbg6J6GRpcBr+I7EVySvjMtobSMS0jt9qXxwKDgbEy3S0kHgGHgEquMQmJAmVDhapR8elPO3GjZXqnTgu54bSboIAmTwGVs3iivyWR7Yv5j6JnsguU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amVu90Nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCAXMKLm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFA9C4CED2;
-	Mon,  6 Jan 2025 15:44:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amVu90Nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E355C4CED2;
+	Mon,  6 Jan 2025 15:44:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178258;
-	bh=wynyiNzcU6vtxXl0tz32UK3JNPfhPlzlMNZGtj7KnEI=;
+	s=korg; t=1736178261;
+	bh=D1QCr3MVALaYdh/8VEgMbVSOFCtGfmYaHekajkLgsgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCAXMKLmOmeEpi6WEX9qTo2kCtipRz4SsyGXYu+q89iAxJXrWyLwkDbNgqLY3Wucg
-	 wxAku5N7xk1KKa8u1ZYqBpeTx5n5DxeeYqB/+0Ky9yusqfecZu8P9FdpFotecWOYg/
-	 cw0UOjDbD7tV2KXZ1MmuGN6c0CwiiF8mLrOtpKuU=
+	b=amVu90Nh9ZvczJj2Upi4krSYV73V+X2ZHKcpfGHmumejSuUw7vHsdSWxFXPiOxgXt
+	 e21HEep/YC0L+eIrgPb2LzXQtMaVz7MAoS3Z6qQ0njnUyXDWAkLjw1zTt77q1o715m
+	 ynE8BfdPf9QFSTQm6KiAz2grkyfKuA0VwjiZAHcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mank Wang <mank.wang@netprisma.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 027/138] USB: serial: option: add Netprisma LCUK54 modules for WWAN Ready
-Date: Mon,  6 Jan 2025 16:15:51 +0100
-Message-ID: <20250106151134.247536285@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 018/138] net: hinic: Fix cleanup in create_rxqs/txqs()
+Date: Mon,  6 Jan 2025 16:15:42 +0100
+Message-ID: <20250106151133.909134015@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -50,83 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mank Wang <mank.wang@netprisma.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit aa954ae08262bb5cd6ab18dd56a0b58c1315db8b upstream.
+[ Upstream commit 7203d10e93b6e6e1d19481ef7907de6a9133a467 ]
 
-LCUK54-WRD's pid/vid
-0x3731/0x010a
-0x3731/0x010c
+There is a check for NULL at the start of create_txqs() and
+create_rxqs() which tess if "nic_dev->txqs" is non-NULL.  The
+intention is that if the device is already open and the queues
+are already created then we don't create them a second time.
 
-LCUK54-WWD's pid/vid
-0x3731/0x010b
-0x3731/0x010d
+However, the bug is that if we have an error in the create_txqs()
+then the pointer doesn't get set back to NULL.  The NULL check
+at the start of the function will say that it's already open when
+it's not and the device can't be used.
 
-Above products use the exact same interface layout and option
-driver:
-MBIM + GNSS + DIAG + NMEA + AT + QDSS + DPL
+Set ->txqs back to NULL on cleanup on error.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=02 Dev#=  5 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=3731 ProdID=0101 Rev= 5.04
-S:  Manufacturer=NetPrisma
-S:  Product=LCUK54-WRD
-S:  SerialNumber=feeba631
-C:* #Ifs= 8 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=81(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0f(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=40 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=70 Driver=(none)
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 7 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=8f(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Mank Wang <mank.wang@netprisma.com>
-[ johan: use lower case hex notation ]
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c3e79baf1b03 ("net-next/hinic: Add logical Txq and Rxq")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/0cc98faf-a0ed-4565-a55b-0fa2734bc205@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/ethernet/huawei/hinic/hinic_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2377,6 +2377,18 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for Golbal EDU */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0x00, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x0116, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WRD for WWAN Ready */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010a, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for WWAN Ready */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010b, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WRD for WWAN Ready */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010c, 0xff, 0xff, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0xff, 0x30) },	/* NetPrisma LCUK54-WWD for WWAN Ready */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0x00, 0x40) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x3731, 0x010d, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x40) },
+diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+index 6ec042d48cd1..dd5c96557976 100644
+--- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
++++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
+@@ -173,6 +173,7 @@ static int create_txqs(struct hinic_dev *nic_dev)
+ 	hinic_sq_dbgfs_uninit(nic_dev);
+ 
+ 	devm_kfree(&netdev->dev, nic_dev->txqs);
++	nic_dev->txqs = NULL;
+ 	return err;
+ }
+ 
+@@ -269,6 +270,7 @@ static int create_rxqs(struct hinic_dev *nic_dev)
+ 	hinic_rq_dbgfs_uninit(nic_dev);
+ 
+ 	devm_kfree(&netdev->dev, nic_dev->rxqs);
++	nic_dev->rxqs = NULL;
+ 	return err;
+ }
+ 
+-- 
+2.39.5
+
 
 
