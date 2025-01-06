@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D7F149C7B;
-	Mon,  6 Jan 2025 15:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFF4282F5;
+	Mon,  6 Jan 2025 15:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178657; cv=none; b=HJ2mxxPZKJP7ddbzG4cos11Nba/WtiPH81Kq91Li15BMXYG/5E/inEtz8RAKbhuBn9vwYnxtvXZAhnMH0HTGeh1goJU0YW/JnUPamjJkLWEgLViR2aEL5UxJsN0CvhQq1GQf7+aG+LYHu5IeHBHgJmDs7BnfqTz8WXbh2GydvNg=
+	t=1736178661; cv=none; b=QMyI5UkARu5T6eEcqHXO9ewwtLIn/YE17G4cn9qGQ26zpBULIcdKKomGwjG/yoTU2V+9STAq2X6s70F2f5xxVqUl7BcSSbHr/8DfbxS+IMy5fugGCvpyJd6oBys1L3/Rv5DYhiwrdIjNFwlmJPleIahKh4V+AZjmPbWWsGlUEFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178657; c=relaxed/simple;
-	bh=Scrcg/ETeZQbUGi6GfNcu9HR9bH7wkhwwbJl6bN/sfs=;
+	s=arc-20240116; t=1736178661; c=relaxed/simple;
+	bh=AW/7lMntPaw37VTFLysfmJQlaNdTcGnEJhvZ0+Fw49A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/TbuaHFUkoWr5zmyFrntAmMRXe5cdkX8PDTfg0cwvg1qKXUeBBJluGD1dj30PwPwfFzk3WKLm9fUchiFfghgotz+tFH631jHjQrdgT1twK/DPvsg8bYwu5HADYPqBsVCyArPJyuhl6GtrnsmoHu6LNpScX/ieC0cWIDmTibiGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vi4qUTax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXVUHVK/1nCTBwdgs1dIJzYVT8H64HTx5bXfKjeKVUREQ1TEOaTsFPb610a+2w8doTR9WefJimnJwSxFZcRcCPXZJ/nZ+kbCntzvROJwkOD9izfGV8zXUbnBGutGeY12KyGX7NY3k4ONiHKPEI+rww5A7xpTPrXFyCqWpq1ARFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAN0vaj5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vi4qUTax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD63C4CEDF;
-	Mon,  6 Jan 2025 15:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAN0vaj5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20A2C4CEDF;
+	Mon,  6 Jan 2025 15:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178657;
-	bh=Scrcg/ETeZQbUGi6GfNcu9HR9bH7wkhwwbJl6bN/sfs=;
+	s=korg; t=1736178661;
+	bh=AW/7lMntPaw37VTFLysfmJQlaNdTcGnEJhvZ0+Fw49A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vi4qUTax4GbtdldvajPuGzaRRTd1N+wWSoYdj+GLezKYkUXQEWqq+De6uC/I4N83V
-	 sVLY/APJ6MeuBNbyqoz/AZAxEpsKAwE/Ldsol77rDXhPmzeUshE+tDMY9snX+tH7cd
-	 krLAwTA4PsmSK7YkK77gYha1XIYBt61S17roVxNw=
+	b=lAN0vaj53IKSA/cCDnbdr/86JGgEek1WfJq+AEP7qGJgfnnRlUlNaiK+3ID1LvFJS
+	 pwPNJlhhSOBzSP+G5AknpqcwfNpGbtU4jR+1ZCu68ZqeADJn856rAkrHGJ7Jgx9VFx
+	 XAuTNNI6RSRbA9Dw7ky54k2n1gPORz0tmhNooQZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+9260555647a5132edd48@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 050/168] nilfs2: prevent use of deleted inode
-Date: Mon,  6 Jan 2025 16:15:58 +0100
-Message-ID: <20250106151140.353620979@linuxfoundation.org>
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Jann Horn <jannh@google.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>
+Subject: [PATCH 5.15 051/168] udmabuf: also check for F_SEAL_FUTURE_WRITE
+Date: Mon,  6 Jan 2025 16:15:59 +0100
+Message-ID: <20250106151140.390632986@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -52,84 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jann Horn <jannh@google.com>
 
-commit 901ce9705fbb9f330ff1f19600e5daf9770b0175 upstream.
+commit 0a16e24e34f28210f68195259456c73462518597 upstream.
 
-syzbot reported a WARNING in nilfs_rmdir. [1]
+When F_SEAL_FUTURE_WRITE was introduced, it was overlooked that udmabuf
+must reject memfds with this flag, just like ones with F_SEAL_WRITE.
+Fix it by adding F_SEAL_FUTURE_WRITE to SEALS_DENIED.
 
-Because the inode bitmap is corrupted, an inode with an inode number that
-should exist as a ".nilfs" file was reassigned by nilfs_mkdir for "file0",
-causing an inode duplication during execution.  And this causes an
-underflow of i_nlink in rmdir operations.
-
-The inode is used twice by the same task to unmount and remove directories
-".nilfs" and "file0", it trigger warning in nilfs_rmdir.
-
-Avoid to this issue, check i_nlink in nilfs_iget(), if it is 0, it means
-that this inode has been deleted, and iput is executed to reclaim it.
-
-[1]
-WARNING: CPU: 1 PID: 5824 at fs/inode.c:407 drop_nlink+0xc4/0x110 fs/inode.c:407
-...
-Call Trace:
- <TASK>
- nilfs_rmdir+0x1b0/0x250 fs/nilfs2/namei.c:342
- vfs_rmdir+0x3a3/0x510 fs/namei.c:4394
- do_rmdir+0x3b5/0x580 fs/namei.c:4453
- __do_sys_rmdir fs/namei.c:4472 [inline]
- __se_sys_rmdir fs/namei.c:4470 [inline]
- __x64_sys_rmdir+0x47/0x50 fs/namei.c:4470
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Link: https://lkml.kernel.org/r/20241209065759.6781-1-konishi.ryusuke@gmail.com
-Fixes: d25006523d0b ("nilfs2: pathname operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9260555647a5132edd48
-Tested-by: syzbot+9260555647a5132edd48@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: ab3948f58ff8 ("mm/memfd: add an F_SEAL_FUTURE_WRITE seal to memfd")
+Cc: stable@vger.kernel.org
+Acked-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241204-udmabuf-fixes-v2-2-23887289de1c@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |    8 +++++++-
- fs/nilfs2/namei.c |    5 +++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ drivers/dma-buf/udmabuf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -618,8 +618,14 @@ struct inode *nilfs_iget(struct super_bl
- 	inode = nilfs_iget_locked(sb, root, ino);
- 	if (unlikely(!inode))
- 		return ERR_PTR(-ENOMEM);
--	if (!(inode->i_state & I_NEW))
-+
-+	if (!(inode->i_state & I_NEW)) {
-+		if (!inode->i_nlink) {
-+			iput(inode);
-+			return ERR_PTR(-ESTALE);
-+		}
- 		return inode;
-+	}
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -164,7 +164,7 @@ static const struct dma_buf_ops udmabuf_
+ };
  
- 	err = __nilfs_read_inode(sb, root, ino, inode);
- 	if (unlikely(err)) {
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -67,6 +67,11 @@ nilfs_lookup(struct inode *dir, struct d
- 		inode = NULL;
- 	} else {
- 		inode = nilfs_iget(dir->i_sb, NILFS_I(dir)->i_root, ino);
-+		if (inode == ERR_PTR(-ESTALE)) {
-+			nilfs_error(dir->i_sb,
-+					"deleted inode referenced: %lu", ino);
-+			return ERR_PTR(-EIO);
-+		}
- 	}
+ #define SEALS_WANTED (F_SEAL_SHRINK)
+-#define SEALS_DENIED (F_SEAL_WRITE)
++#define SEALS_DENIED (F_SEAL_WRITE|F_SEAL_FUTURE_WRITE)
  
- 	return d_splice_alias(inode, dentry);
+ static long udmabuf_create(struct miscdevice *device,
+ 			   struct udmabuf_create_list *head,
 
 
