@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38EE81728;
-	Mon,  6 Jan 2025 15:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C9E145A03;
+	Mon,  6 Jan 2025 15:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178977; cv=none; b=KUHW2sVuDtfN03CFDgD1knacSnhFCa/0vpe6Z9PByxUATGRxwPqWiV6bgQ2pnr3JiNeCdTh2K4XHpUaXo0NqRFqE5cnotJSGpAwzWMX14lVBjhpanJwZcdoYs0VqQnihDmbSGiJEBG47mRxMyh8/G9au8k/xT60CVTU6J4UrzKk=
+	t=1736178980; cv=none; b=c2fXHa3rm9S7ejgNnAaBscb6IQDa3qQOb/HgVTDQPm6/wI0VTw912lWVtAlZUtuwPcp9fXMbG1pOWPBPGuDWyN09MgJt/m7R98UMBJtX3zw5oP0jaipeRiYNrza3LsAHfD/tpf6knPfMNMZ9tqnApD7H8FVSBwzUdXj7S8LoDFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178977; c=relaxed/simple;
-	bh=e2ClKiupTS0yVbM491ZI5T9iAMe0wRDsiG8XwP6UTjw=;
+	s=arc-20240116; t=1736178980; c=relaxed/simple;
+	bh=exSgmj5F2BIhnaYZU/o6RfqTCfAmratIa8C62zcnAlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mRfiBncJbfAwj+XhMc3p9rMLqci9XyoDKpmDoyrUz/a28zIQlxqRTeUgrr0KmYj8j4uaaED4WDn/O1mRXdAiBm9Ymn1keI6kErQYrJt6ZBGO0n3/TI+rNGPxNn9Kt0DYGpZFQN3P5CKS7VHc7ePKU+VjAKqVHD91XIbYZ7JzPwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L6H9uIy4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdTzZ+UQHZnkVNZu5cv76zYfSUyMbZJ5q31Zb6Hl04lGP0eYRMQg/JbHvcFp8vwDo9agZ5ZmAEz89nSLNpH8T3UykiYuVfRMwfxY/5fdFi9/NhOChZHvD9lBuVPtFJw2Oa+30OItFNFCLxKh2AzHroyhp5FQPYJKk7YHmeBKceA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HouQ13pe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L6H9uIy4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC37C4CED2;
-	Mon,  6 Jan 2025 15:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HouQ13pe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E09C4CED2;
+	Mon,  6 Jan 2025 15:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178977;
-	bh=e2ClKiupTS0yVbM491ZI5T9iAMe0wRDsiG8XwP6UTjw=;
+	s=korg; t=1736178980;
+	bh=exSgmj5F2BIhnaYZU/o6RfqTCfAmratIa8C62zcnAlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6H9uIy4recmcLNF68/7qB9CXk9Ot4Su+CRz5wr2Y9BnKpDpQgmFWzoozVBAM78fm
-	 hnUvt6jxdbn6y88qz05AdSCPeM11AuK4XuIDVSpDDGsGTrN4YY1qKWU7U7g+20sVtj
-	 pWqDFUUgUtTCL8Mv/MW0uQsKyPPukI1kxk17kW3E=
+	b=HouQ13peLLqNrJleOE23UAC+EiuaO53YcTLHL81mLFXbJS+SyongZRsaodlPwkIhR
+	 aTu4FRezTtkOykhqNczUY/R8AXfDT7h5YbxcEhdqk9A7UNrWEpUZGQ3G3tXnCHhFVO
+	 R9DsR0Y03rGWMjFkAS+iQNU5XERmoT+fsHEwkonw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitalii Mordan <mordan@ispras.ru>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Daniele Palmas <dnlplm@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/168] eth: bcmsysport: fix call balance of priv->clk handling routines
-Date: Mon,  6 Jan 2025 16:17:25 +0100
-Message-ID: <20250106151143.611411852@linuxfoundation.org>
+Subject: [PATCH 5.15 155/168] net: usb: qmi_wwan: add Telit FE910C04 compositions
+Date: Mon,  6 Jan 2025 16:17:43 +0100
+Message-ID: <20250106151144.287598548@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -52,80 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitalii Mordan <mordan@ispras.ru>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit b255ef45fcc2141c1bf98456796abb956d843a27 ]
+[ Upstream commit 3b58b53a26598209a7ad8259a5114ce71f7c3d64 ]
 
-Check the return value of clk_prepare_enable to ensure that priv->clk has
-been successfully enabled.
+Add the following Telit FE910C04 compositions:
 
-If priv->clk was not enabled during bcm_sysport_probe, bcm_sysport_resume,
-or bcm_sysport_open, it must not be disabled in any subsequent execution
-paths.
+0x10c0: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 13 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c0 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: 31bc72d97656 ("net: systemport: fetch and use clock resources")
-Signed-off-by: Vitalii Mordan <mordan@ispras.ru>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20241227123007.2333397-1-mordan@ispras.ru
+0x10c4: rmnet + tty (AT) + tty (AT) + tty (diag)
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 14 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c4 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+0x10c8: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=02 Lev=01 Prnt=03 Port=06 Cnt=01 Dev#= 17 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=10c8 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FE910
+S:  SerialNumber=f71b8b32
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Link: https://patch.msgid.link/20241209151821.3688829-1-dnlplm@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bcmsysport.c | 21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bcmsysport.c b/drivers/net/ethernet/broadcom/bcmsysport.c
-index 8962bd6349d4..fa140c5175a6 100644
---- a/drivers/net/ethernet/broadcom/bcmsysport.c
-+++ b/drivers/net/ethernet/broadcom/bcmsysport.c
-@@ -1956,7 +1956,11 @@ static int bcm_sysport_open(struct net_device *dev)
- 	unsigned int i;
- 	int ret;
- 
--	clk_prepare_enable(priv->clk);
-+	ret = clk_prepare_enable(priv->clk);
-+	if (ret) {
-+		netdev_err(dev, "could not enable priv clock\n");
-+		return ret;
-+	}
- 
- 	/* Reset UniMAC */
- 	umac_reset(priv);
-@@ -2618,7 +2622,11 @@ static int bcm_sysport_probe(struct platform_device *pdev)
- 		goto err_deregister_notifier;
- 	}
- 
--	clk_prepare_enable(priv->clk);
-+	ret = clk_prepare_enable(priv->clk);
-+	if (ret) {
-+		dev_err(&pdev->dev, "could not enable priv clock\n");
-+		goto err_deregister_netdev;
-+	}
- 
- 	priv->rev = topctrl_readl(priv, REV_CNTL) & REV_MASK;
- 	dev_info(&pdev->dev,
-@@ -2632,6 +2640,8 @@ static int bcm_sysport_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+err_deregister_netdev:
-+	unregister_netdev(dev);
- err_deregister_notifier:
- 	unregister_netdevice_notifier(&priv->netdev_notifier);
- err_deregister_fixed_link:
-@@ -2803,7 +2813,12 @@ static int __maybe_unused bcm_sysport_resume(struct device *d)
- 	if (!netif_running(dev))
- 		return 0;
- 
--	clk_prepare_enable(priv->clk);
-+	ret = clk_prepare_enable(priv->clk);
-+	if (ret) {
-+		netdev_err(dev, "could not enable priv clock\n");
-+		return ret;
-+	}
-+
- 	if (priv->wolopts)
- 		clk_disable_unprepare(priv->wol_clk);
- 
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 758af6ea861b..96cbc8a7ee9b 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1367,6 +1367,9 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a0, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a4, 0)}, /* Telit FN920C04 */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10a9, 0)}, /* Telit FN920C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c0, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c4, 0)}, /* Telit FE910C04 */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x10c8, 0)}, /* Telit FE910C04 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1100, 3)},	/* Telit ME910 */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1101, 3)},	/* Telit ME910 dual modem */
+ 	{QMI_FIXED_INTF(0x1bc7, 0x1200, 5)},	/* Telit LE920 */
 -- 
 2.39.5
 
