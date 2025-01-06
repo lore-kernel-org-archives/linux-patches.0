@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87C514A617;
-	Mon,  6 Jan 2025 15:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08174148316;
+	Mon,  6 Jan 2025 15:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177986; cv=none; b=NwTWrGoeADOHT6qysTNKOnp4fRgKJ7WXZC2nCakgJt+NK+ccFU0FwHw9E0McY0USa6oTkFu29jVPIzOmTTnoCK8mAwwWwIJRYWJRbHro/GvInA0hdfg9F1YiT+WYhSPRpOCAeYgbfDzNVv41iSg8rCQR7mF0+Fz2KO/dJgMPV8c=
+	t=1736177990; cv=none; b=U1Fwlzj9OsYM61MEj7dKfhwAXZQ8nakplbH3+7Zw9EY9CHN8fDDOJI6t7rs2o2o/UGE+Dq9MX4EIXy5fgScSDTW9++cHQHRLW+ILCoHztMuTOh8fnqj1xUMz14sEjTVTWMJ+993kEG73clayITk9Civt3dVXcFmD2jtJqqbSNP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177986; c=relaxed/simple;
-	bh=2s1mCsUkhr+XGrQnqQg/3CaH65VRSGOgbtS81dS/PFU=;
+	s=arc-20240116; t=1736177990; c=relaxed/simple;
+	bh=QMVYgPcVzazC5Jcahhof674QxX3QxkC6GMwgpLzq19Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QqtXp9Hm5oLIk5C8yY+0Dbojbi/Uhih/nhDR1qTWr+QIF7Dt8lBFHm/30VzybQbAStaFX2gG9w4OyD5CrKYtHulMSJuXVL6UyuMY60l2EwhlPLP8obGwGbW93bhQcvlkLqyVL5jI5KR6v8OKSZhGPuzV3UdbaZ4SQ5zb/XyT79U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QumhJjtV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3PS5A9yaO05cPHDWxfP0r0d5dqyI7dMwLf4MFq/K7pqgHqrLVXKcNTi2xXj82tG5o1SZNFBjVa+zqfc8o9+ioh1qvXo6ikrWi1Brhw+CS3PoSvte/f1C01NtAJ2dn8fBCYWPh+yIMHqrCxoT8LY3bUo03jxCm/spb3lJmsHoBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jpl2RF5C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QumhJjtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274A8C4CED2;
-	Mon,  6 Jan 2025 15:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jpl2RF5C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26163C4CED2;
+	Mon,  6 Jan 2025 15:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177986;
-	bh=2s1mCsUkhr+XGrQnqQg/3CaH65VRSGOgbtS81dS/PFU=;
+	s=korg; t=1736177989;
+	bh=QMVYgPcVzazC5Jcahhof674QxX3QxkC6GMwgpLzq19Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QumhJjtV/GgmSsp0j/LmXnX0yO714/3/rIdcEWGaQe0qADRamaiI6n/lVSWzLe/XB
-	 grOoSiuN8HXPhETV7d/svDbDEgG/pc1qDgnn8JDlRtk/FyDnw3WAY56ZAsbZwOdWuA
-	 G1aZrXFDUctrJos+ETclP3QrEqElCI6WihCg4nwI=
+	b=Jpl2RF5CGxJ9DmtPRSCBPa+aiThHKVP4ig2Wf14Bs1+PeTaNUHcVMXaRKmdetvZWY
+	 aP3p/NmUdJ+Xs9iqlMUulVWfyETfx3Fd9u9HIrNe+6nzqDJHa6yWN/vcQJWwdOwOKv
+	 mDGu4ddy3z3kFeUwkfh43BRRty+H3OCGKul7ajXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>
-Subject: [PATCH 6.12 116/156] drm/xe: Wait for migration job before unmapping pages
-Date: Mon,  6 Jan 2025 16:16:42 +0100
-Message-ID: <20250106151146.096678532@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.12 125/156] RDMA/uverbs: Prevent integer overflow issue
+Date: Mon,  6 Jan 2025 16:16:51 +0100
+Message-ID: <20250106151146.440082840@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -47,63 +44,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 5e0a67fdb894d34c5f109e969320eef9ddae7480 upstream.
+commit d0257e089d1bbd35c69b6c97ff73e3690ab149a9 upstream.
 
-Fix a potential GPU page fault during tt -> system moves by waiting for
-migration jobs to complete before unmapping SG. This ensures that IOMMU
-mappings are not prematurely torn down while a migration job is still in
-progress.
+In the expression "cmd.wqe_size * cmd.wr_count", both variables are u32
+values that come from the user so the multiplication can lead to integer
+wrapping.  Then we pass the result to uverbs_request_next_ptr() which also
+could potentially wrap.  The "cmd.sge_count * sizeof(struct ib_uverbs_sge)"
+multiplication can also overflow on 32bit systems although it's fine on
+64bit systems.
 
-v2: Use intr=false(Matt A)
-v3: Update commit message(Matt A)
-v4: s/DMA_RESV_USAGE_BOOKKEEP/DMA_RESV_USAGE_KERNEL(Thomas)
+This patch does two things.  First, I've re-arranged the condition in
+uverbs_request_next_ptr() so that the use controlled variable "len" is on
+one side of the comparison by itself without any math.  Then I've modified
+all the callers to use size_mul() for the multiplications.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/3466
-Fixes: 75521e8b56e8 ("drm/xe: Perform dma_map when moving system buffer objects to TT")
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: stable@vger.kernel.org # v6.11+
-Cc: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241213122415.3880017-2-nirmoy.das@intel.com
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
-(cherry picked from commit cda06412c06893a6f07a2fbf89d42a0972ec9e8e)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 67cdb40ca444 ("[IB] uverbs: Implement more commands")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/b8765ab3-c2da-4611-aae0-ddd6ba173d23@stanley.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_bo.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/uverbs_cmd.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_bo.c
-+++ b/drivers/gpu/drm/xe/xe_bo.c
-@@ -846,8 +846,16 @@ static int xe_bo_move(struct ttm_buffer_
+--- a/drivers/infiniband/core/uverbs_cmd.c
++++ b/drivers/infiniband/core/uverbs_cmd.c
+@@ -161,7 +161,7 @@ static const void __user *uverbs_request
+ {
+ 	const void __user *res = iter->cur;
  
- out:
- 	if ((!ttm_bo->resource || ttm_bo->resource->mem_type == XE_PL_SYSTEM) &&
--	    ttm_bo->ttm)
-+	    ttm_bo->ttm) {
-+		long timeout = dma_resv_wait_timeout(ttm_bo->base.resv,
-+						     DMA_RESV_USAGE_KERNEL,
-+						     false,
-+						     MAX_SCHEDULE_TIMEOUT);
-+		if (timeout < 0)
-+			ret = timeout;
-+
- 		xe_tt_unmap_sg(ttm_bo->ttm);
-+	}
+-	if (iter->cur + len > iter->end)
++	if (len > iter->end - iter->cur)
+ 		return (void __force __user *)ERR_PTR(-ENOSPC);
+ 	iter->cur += len;
+ 	return res;
+@@ -2010,11 +2010,13 @@ static int ib_uverbs_post_send(struct uv
+ 	ret = uverbs_request_start(attrs, &iter, &cmd, sizeof(cmd));
+ 	if (ret)
+ 		return ret;
+-	wqes = uverbs_request_next_ptr(&iter, cmd.wqe_size * cmd.wr_count);
++	wqes = uverbs_request_next_ptr(&iter, size_mul(cmd.wqe_size,
++						       cmd.wr_count));
+ 	if (IS_ERR(wqes))
+ 		return PTR_ERR(wqes);
+-	sgls = uverbs_request_next_ptr(
+-		&iter, cmd.sge_count * sizeof(struct ib_uverbs_sge));
++	sgls = uverbs_request_next_ptr(&iter,
++				       size_mul(cmd.sge_count,
++						sizeof(struct ib_uverbs_sge)));
+ 	if (IS_ERR(sgls))
+ 		return PTR_ERR(sgls);
+ 	ret = uverbs_request_finish(&iter);
+@@ -2200,11 +2202,11 @@ ib_uverbs_unmarshall_recv(struct uverbs_
+ 	if (wqe_size < sizeof(struct ib_uverbs_recv_wr))
+ 		return ERR_PTR(-EINVAL);
  
- 	return ret;
- }
+-	wqes = uverbs_request_next_ptr(iter, wqe_size * wr_count);
++	wqes = uverbs_request_next_ptr(iter, size_mul(wqe_size, wr_count));
+ 	if (IS_ERR(wqes))
+ 		return ERR_CAST(wqes);
+-	sgls = uverbs_request_next_ptr(
+-		iter, sge_count * sizeof(struct ib_uverbs_sge));
++	sgls = uverbs_request_next_ptr(iter, size_mul(sge_count,
++						      sizeof(struct ib_uverbs_sge)));
+ 	if (IS_ERR(sgls))
+ 		return ERR_CAST(sgls);
+ 	ret = uverbs_request_finish(iter);
 
 
