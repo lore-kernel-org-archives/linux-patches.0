@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09181607AA;
-	Mon,  6 Jan 2025 15:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD67155352;
+	Mon,  6 Jan 2025 15:43:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178185; cv=none; b=pLBB7DWMRScL7bziO98Fjez9hEc3sUomQ01hx5h7KTPU9ka7Cu13JDwfUbDMz8XZQhJBc6ouCqcn2NkLziSiran8PeZagmx9ujOGthdlSuSZYK3nBWg9oUxBChAaMfs6/kkncLOSjZtRd9bLVPZGUSE5FwqkV4HZnq26ThgselM=
+	t=1736178188; cv=none; b=HAIyJRSkHt/jxAgP8vb4ngfzfCMgkcUOT3aEwEJFY1qDof/2cBpUr3L/C3hTi328D39c9AeHezq3AJHyNso1rNUYKOq8x5a4d6zFolcPUgsXUGHInOfYBTO/pEhDdQSX8XTVNFiXRLeGQiq/5EkK0v+7aoHtaLxdHOumn8j1iPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178185; c=relaxed/simple;
-	bh=RKRpVBOu31udq3et9UTI7cONVd4t4kg00neEgT4WGKo=;
+	s=arc-20240116; t=1736178188; c=relaxed/simple;
+	bh=hxa2JZ+yvD+0/BDPn0duLDpoZ/xMAKKA+faaPrvfZBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qulizTgFaAH0GWZL+w7/6FoF6aLwb9rp4cueQcBuJbjbLMBlPhYJf4iOYkwhTLLj/ZNhE8yFv6yA7OiSNvopE4R3X1kWUev5MZuJ8bCKipEndLkeRAzpOKZaJQcizVfi0hqNpHgXlYD48mAdYb8XWU7K8avh+qTBO882WoUBXGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym+LuLIa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qwhAlAEWioC1uRehQaqXuXePQRQ+dA8e35RPoCWmpKLyQqXlXp1GgAmkCgLL4UZERcZgiZpoA2ui3IycZUXEV+kTXXGnszSoo/Fs65WoVvJS5OGqfOXyyL+tCQ5QBI53MBvVDknAxmVgOVL+8+anz93RY7YOVfGTzltOTpKPlb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4WCM7LB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym+LuLIa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD18C4CED2;
-	Mon,  6 Jan 2025 15:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4WCM7LB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 406B6C4CED2;
+	Mon,  6 Jan 2025 15:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178185;
-	bh=RKRpVBOu31udq3et9UTI7cONVd4t4kg00neEgT4WGKo=;
+	s=korg; t=1736178188;
+	bh=hxa2JZ+yvD+0/BDPn0duLDpoZ/xMAKKA+faaPrvfZBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ym+LuLIa6zKtrwbmM4bk+cb2hdCuOnqmjj5dwzIrUAiQaxlDl4WY0mZCJamttBgyt
-	 l3yrd+wfnf1PXxsLhscanE5j3Ay2/TeCIR3ZYmGoPysfqNwgoqkK3lCopS4+6QU3aI
-	 NqJDkh5NZgQKXTF7kKtuFya3HsplV6jqK1906x2g=
+	b=z4WCM7LBrpn5ximDTBOm/7V3Go9GXpJIjffThL0589OyKdZ6XhkMnJ4piXfqFBns8
+	 LWvlvsdUoqQpOL3iX4EQsIU56ukyN6sGnP1YeS9d+Ew/rBBRa2LVv9ZgrRSJ5WGlZC
+	 4IgX+jHCdYFiIQy+NyaDkdcqnvzQLCghoALC72z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frankie Fisher <frankie@terrorise.me.uk>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 034/138] btrfs: tree-checker: reject inline extent items with 0 ref count
-Date: Mon,  6 Jan 2025 16:15:58 +0100
-Message-ID: <20250106151134.514415288@linuxfoundation.org>
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH 5.10 035/138] Drivers: hv: util: Avoid accessing a ringbuffer not initialized yet
+Date: Mon,  6 Jan 2025 16:15:59 +0100
+Message-ID: <20250106151134.553045274@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,104 +51,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-commit dfb92681a19e1d5172420baa242806414b3eff6f upstream.
+commit 07a756a49f4b4290b49ea46e089cbe6f79ff8d26 upstream.
 
-[BUG]
-There is a bug report in the mailing list where btrfs_run_delayed_refs()
-failed to drop the ref count for logical 25870311358464 num_bytes
-2113536.
+If the KVP (or VSS) daemon starts before the VMBus channel's ringbuffer is
+fully initialized, we can hit the panic below:
 
-The involved leaf dump looks like this:
+hv_utils: Registering HyperV Utility Driver
+hv_vmbus: registering driver hv_utils
+...
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+CPU: 44 UID: 0 PID: 2552 Comm: hv_kvp_daemon Tainted: G E 6.11.0-rc3+ #1
+RIP: 0010:hv_pkt_iter_first+0x12/0xd0
+Call Trace:
+...
+ vmbus_recvpacket
+ hv_kvp_onchannelcallback
+ vmbus_on_event
+ tasklet_action_common
+ tasklet_action
+ handle_softirqs
+ irq_exit_rcu
+ sysvec_hyperv_stimer0
+ </IRQ>
+ <TASK>
+ asm_sysvec_hyperv_stimer0
+...
+ kvp_register_done
+ hvt_op_read
+ vfs_read
+ ksys_read
+ __x64_sys_read
 
-  item 166 key (25870311358464 168 2113536) itemoff 10091 itemsize 50
-    extent refs 1 gen 84178 flags 1
-    ref#0: shared data backref parent 32399126528000 count 0 <<<
-    ref#1: shared data backref parent 31808973717504 count 1
+This can happen because the KVP/VSS channel callback can be invoked
+even before the channel is fully opened:
+1) as soon as hv_kvp_init() -> hvutil_transport_init() creates
+/dev/vmbus/hv_kvp, the kvp daemon can open the device file immediately and
+register itself to the driver by writing a message KVP_OP_REGISTER1 to the
+file (which is handled by kvp_on_msg() ->kvp_handle_handshake()) and
+reading the file for the driver's response, which is handled by
+hvt_op_read(), which calls hvt->on_read(), i.e. kvp_register_done().
 
-Notice the count number is 0.
+2) the problem with kvp_register_done() is that it can cause the
+channel callback to be called even before the channel is fully opened,
+and when the channel callback is starting to run, util_probe()->
+vmbus_open() may have not initialized the ringbuffer yet, so the
+callback can hit the panic of NULL pointer dereference.
 
-[CAUSE]
-There is no concrete evidence yet, but considering 0 -> 1 is also a
-single bit flipped, it's possible that hardware memory bitflip is
-involved, causing the on-disk extent tree to be corrupted.
+To reproduce the panic consistently, we can add a "ssleep(10)" for KVP in
+__vmbus_open(), just before the first hv_ringbuffer_init(), and then we
+unload and reload the driver hv_utils, and run the daemon manually within
+the 10 seconds.
 
-[FIX]
-To prevent us reading such corrupted extent item, or writing such
-damaged extent item back to disk, enhance the handling of
-BTRFS_EXTENT_DATA_REF_KEY and BTRFS_SHARED_DATA_REF_KEY keys for both
-inlined and key items, to detect such 0 ref count and reject them.
+Fix the panic by reordering the steps in util_probe() so the char dev
+entry used by the KVP or VSS daemon is not created until after
+vmbus_open() has completed. This reordering prevents the race condition
+from happening.
 
-CC: stable@vger.kernel.org # 5.4+
-Link: https://lore.kernel.org/linux-btrfs/7c69dd49-c346-4806-86e7-e6f863a66f48@app.fastmail.com/
-Reported-by: Frankie Fisher <frankie@terrorise.me.uk>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Dexuan Cui <decui@microsoft.com>
+Fixes: e0fa3e5e7df6 ("Drivers: hv: utils: fix a race on userspace daemons registration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Acked-by: Wei Liu <wei.liu@kernel.org>
+Link: https://lore.kernel.org/r/20241106154247.2271-3-mhklinux@outlook.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Message-ID: <20241106154247.2271-3-mhklinux@outlook.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-checker.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/hv/hv_kvp.c       |    6 ++++++
+ drivers/hv/hv_snapshot.c  |    6 ++++++
+ drivers/hv/hv_util.c      |    9 +++++++++
+ drivers/hv/hyperv_vmbus.h |    2 ++
+ include/linux/hyperv.h    |    1 +
+ 5 files changed, 24 insertions(+)
 
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1367,6 +1367,11 @@ static int check_extent_item(struct exte
- 					   dref_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_extent_data_ref_count(leaf, dref);
- 			break;
- 		/* Contains parent bytenr and ref count */
-@@ -1378,6 +1383,11 @@ static int check_extent_item(struct exte
- 					   inline_offset, fs_info->sectorsize);
- 				return -EUCLEAN;
- 			}
-+			if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+				extent_err(leaf, slot,
-+			"invalid shared data ref count, should have non-zero value");
-+				return -EUCLEAN;
-+			}
- 			inline_refs += btrfs_shared_data_ref_count(leaf, sref);
- 			break;
- 		default:
-@@ -1429,8 +1439,18 @@ static int check_simple_keyed_refs(struc
- {
- 	u32 expect_item_size = 0;
+--- a/drivers/hv/hv_kvp.c
++++ b/drivers/hv/hv_kvp.c
+@@ -750,6 +750,12 @@ hv_kvp_init(struct hv_util_service *srv)
+ 	 */
+ 	kvp_transaction.state = HVUTIL_DEVICE_INIT;
  
--	if (key->type == BTRFS_SHARED_DATA_REF_KEY)
-+	if (key->type == BTRFS_SHARED_DATA_REF_KEY) {
-+		struct btrfs_shared_data_ref *sref;
++	return 0;
++}
 +
-+		sref = btrfs_item_ptr(leaf, slot, struct btrfs_shared_data_ref);
-+		if (unlikely(btrfs_shared_data_ref_count(leaf, sref) == 0)) {
-+			extent_err(leaf, slot,
-+		"invalid shared data backref count, should have non-zero value");
-+			return -EUCLEAN;
++int
++hv_kvp_init_transport(void)
++{
+ 	hvt = hvutil_transport_init(kvp_devname, CN_KVP_IDX, CN_KVP_VAL,
+ 				    kvp_on_msg, kvp_on_reset);
+ 	if (!hvt)
+--- a/drivers/hv/hv_snapshot.c
++++ b/drivers/hv/hv_snapshot.c
+@@ -369,6 +369,12 @@ hv_vss_init(struct hv_util_service *srv)
+ 	 */
+ 	vss_transaction.state = HVUTIL_DEVICE_INIT;
+ 
++	return 0;
++}
++
++int
++hv_vss_init_transport(void)
++{
+ 	hvt = hvutil_transport_init(vss_devname, CN_VSS_IDX, CN_VSS_VAL,
+ 				    vss_on_msg, vss_on_reset);
+ 	if (!hvt) {
+--- a/drivers/hv/hv_util.c
++++ b/drivers/hv/hv_util.c
+@@ -142,6 +142,7 @@ static struct hv_util_service util_heart
+ static struct hv_util_service util_kvp = {
+ 	.util_cb = hv_kvp_onchannelcallback,
+ 	.util_init = hv_kvp_init,
++	.util_init_transport = hv_kvp_init_transport,
+ 	.util_pre_suspend = hv_kvp_pre_suspend,
+ 	.util_pre_resume = hv_kvp_pre_resume,
+ 	.util_deinit = hv_kvp_deinit,
+@@ -150,6 +151,7 @@ static struct hv_util_service util_kvp =
+ static struct hv_util_service util_vss = {
+ 	.util_cb = hv_vss_onchannelcallback,
+ 	.util_init = hv_vss_init,
++	.util_init_transport = hv_vss_init_transport,
+ 	.util_pre_suspend = hv_vss_pre_suspend,
+ 	.util_pre_resume = hv_vss_pre_resume,
+ 	.util_deinit = hv_vss_deinit,
+@@ -539,6 +541,13 @@ static int util_probe(struct hv_device *
+ 	if (ret)
+ 		goto error;
+ 
++	if (srv->util_init_transport) {
++		ret = srv->util_init_transport();
++		if (ret) {
++			vmbus_close(dev->channel);
++			goto error;
 +		}
-+
- 		expect_item_size = sizeof(struct btrfs_shared_data_ref);
 +	}
- 
- 	if (btrfs_item_size_nr(leaf, slot) != expect_item_size) {
- 		generic_err(leaf, slot,
-@@ -1490,6 +1510,11 @@ static int check_extent_data_ref(struct
- 				   offset, leaf->fs_info->sectorsize);
- 			return -EUCLEAN;
- 		}
-+		if (unlikely(btrfs_extent_data_ref_count(leaf, dref) == 0)) {
-+			extent_err(leaf, slot,
-+	"invalid extent data backref count, should have non-zero value");
-+			return -EUCLEAN;
-+		}
- 	}
  	return 0;
- }
+ 
+ error:
+--- a/drivers/hv/hyperv_vmbus.h
++++ b/drivers/hv/hyperv_vmbus.h
+@@ -357,12 +357,14 @@ void vmbus_on_event(unsigned long data);
+ void vmbus_on_msg_dpc(unsigned long data);
+ 
+ int hv_kvp_init(struct hv_util_service *srv);
++int hv_kvp_init_transport(void);
+ void hv_kvp_deinit(void);
+ int hv_kvp_pre_suspend(void);
+ int hv_kvp_pre_resume(void);
+ void hv_kvp_onchannelcallback(void *context);
+ 
+ int hv_vss_init(struct hv_util_service *srv);
++int hv_vss_init_transport(void);
+ void hv_vss_deinit(void);
+ int hv_vss_pre_suspend(void);
+ int hv_vss_pre_resume(void);
+--- a/include/linux/hyperv.h
++++ b/include/linux/hyperv.h
+@@ -1510,6 +1510,7 @@ struct hv_util_service {
+ 	void *channel;
+ 	void (*util_cb)(void *);
+ 	int (*util_init)(struct hv_util_service *);
++	int (*util_init_transport)(void);
+ 	void (*util_deinit)(void);
+ 	int (*util_pre_suspend)(void);
+ 	int (*util_pre_resume)(void);
 
 
