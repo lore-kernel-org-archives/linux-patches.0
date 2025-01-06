@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55CE1474A0;
-	Mon,  6 Jan 2025 15:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76C914A098;
+	Mon,  6 Jan 2025 15:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178691; cv=none; b=RbW6CCXurrp7qab+oc6d5E6NbgDVs3ZfdLID8sGwBw1JIbggHSwQgCSHbtTNsv8T80ot+MhJdDRVGukb7Knu29rVXcWfdD5OaMKIbYgy7SaH3wXWvrZGO6mQ4VjEcVzgzqrrzWKKE2EMzwq+BgFDzENGI/fjGNajKhaUb16PpcY=
+	t=1736178693; cv=none; b=AHKFHJgVOCh8gy381mWhCfpGMjtRHHDGqeh7ufVqdtZSF/3fRsagrSBUwhxgi58EHEJB1map3A35TtXXpLh8EGX/jG9N3+8unWJfn4b+Psq75Yi0X726ZXhM7jFMwP+Ksz2TMXon5Ou+tH2mDoN+1vtqWnPJYo/+yltB2vPO8HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178691; c=relaxed/simple;
-	bh=BGf1qN7/VnIlBHcZbn4z1EYQFY760+05xMH4GviyRA8=;
+	s=arc-20240116; t=1736178693; c=relaxed/simple;
+	bh=7JV6KVvHWZsq9UPFN9IUvmWyClc4xgCT5EL0hJuoq7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hGsBWsBO4K9gKzIn98R1rRua1FTfXpSBs3V3DByhUEYuqJYx9ldFAYXOJM7/FcA86bfO6zQvU5OS8v9+IXLYUHHNC8U7bCxIGV+Wr0XWN+2RV/f4g6hb+ZYoxuHvXJkcX2r3kD+If1fE3vd5FahJ51lhgXSVnYFLttnanKXwnPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeCaT2XJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ennsZhrnRlaXZxhtzVrbB3tg1QZ2PiY+OwWgNhxBtRgO4xa8hbh8yKWfSJCoZ4jCk/JyLQzS5I7wWOoLy8Mz+JSzszJWcIKCwJ5XalKGMFr3b4t3O6Ilhycw4Vlfbd9munOj0LDyaINK3etkRKyEDq4LuyUddFiV9L9ZYBIP6H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLhkh6ZW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeCaT2XJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACD9C4CED2;
-	Mon,  6 Jan 2025 15:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLhkh6ZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F37C4CED2;
+	Mon,  6 Jan 2025 15:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178690;
-	bh=BGf1qN7/VnIlBHcZbn4z1EYQFY760+05xMH4GviyRA8=;
+	s=korg; t=1736178693;
+	bh=7JV6KVvHWZsq9UPFN9IUvmWyClc4xgCT5EL0hJuoq7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LeCaT2XJPNCOjyhiLYxjvXoLgnCWuglUASU3didG0u8XPyF/hoAmGkbhNs9IcWA7l
-	 xFK+ZJryWDFD/gJUOS8+9y0ViEcq0JA/g/605CAq6bMvlEctzl6OZB9RLwx9L1Sx6J
-	 eD5lWZ9eqru/6Tm6jTz9e7Z1xGVDD/yFfT++XRA0=
+	b=eLhkh6ZWCuUnEmS4MZcZEBOIcQ+ZRw4ErkeDXwPtAPVpI5PFGXeUyenOrMOgiG+om
+	 9RDmFMeqnA2pksbcDQULe+MRvvmPK4LNBfy9cUT0uwZajcS+QVhOxuUeII5BEtkYBz
+	 BUcHGhvbBFPeeVzWFTPxOniA0YpOIkaUoGcc76aI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Wang <cong.wang@bytedance.com>,
+	Zijian Zhang <zijianzhang@bytedance.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 059/168] tcp_bpf: Charge receive socket buffer in bpf_tcp_ingress()
-Date: Mon,  6 Jan 2025 16:16:07 +0100
-Message-ID: <20250106151140.692456178@linuxfoundation.org>
+Subject: [PATCH 5.15 060/168] tcp_bpf: Add sk_rmem_alloc related logic for tcp_bpf ingress redirection
+Date: Mon,  6 Jan 2025 16:16:08 +0100
+Message-ID: <20250106151140.729393044@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -52,69 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Zijian Zhang <zijianzhang@bytedance.com>
 
-[ Upstream commit 54f89b3178d5448dd4457afbb98fc1ab99090a65 ]
+[ Upstream commit d888b7af7c149c115dd6ac772cc11c375da3e17c ]
 
-When bpf_tcp_ingress() is called, the skmsg is being redirected to the
-ingress of the destination socket. Therefore, we should charge its
-receive socket buffer, instead of sending socket buffer.
+When we do sk_psock_verdict_apply->sk_psock_skb_ingress, an sk_msg will
+be created out of the skb, and the rmem accounting of the sk_msg will be
+handled by the skb.
 
-Because sk_rmem_schedule() tests pfmemalloc of skb, we need to
-introduce a wrapper and call it for skmsg.
+For skmsgs in __SK_REDIRECT case of tcp_bpf_send_verdict, when redirecting
+to the ingress of a socket, although we sk_rmem_schedule and add sk_msg to
+the ingress_msg of sk_redir, we do not update sk_rmem_alloc. As a result,
+except for the global memory limit, the rmem of sk_redir is nearly
+unlimited. Thus, add sk_rmem_alloc related logic to limit the recv buffer.
+
+Since the function sk_msg_recvmsg and __sk_psock_purge_ingress_msg are
+used in these two paths. We use "msg->skb" to test whether the sk_msg is
+skb backed up. If it's not, we shall do the memory accounting explicitly.
 
 Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Zijian Zhang <zijianzhang@bytedance.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20241210012039.1669389-2-zijianzhang@bytedance.com
+Link: https://lore.kernel.org/bpf/20241210012039.1669389-3-zijianzhang@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 10 ++++++++--
- net/ipv4/tcp_bpf.c |  2 +-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ include/linux/skmsg.h | 11 ++++++++---
+ net/core/skmsg.c      |  6 +++++-
+ net/ipv4/tcp_bpf.c    |  4 +++-
+ 3 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 1680d6dc4d19..ca3cc2b325d7 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -1570,7 +1570,7 @@ static inline bool sk_wmem_schedule(struct sock *sk, int size)
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index 422b391d931f..5d3e4d4d9438 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -313,17 +313,22 @@ static inline void sock_drop(struct sock *sk, struct sk_buff *skb)
+ 	kfree_skb(skb);
  }
  
- static inline bool
--sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
-+__sk_rmem_schedule(struct sock *sk, int size, bool pfmemalloc)
+-static inline void sk_psock_queue_msg(struct sk_psock *psock,
++static inline bool sk_psock_queue_msg(struct sk_psock *psock,
+ 				      struct sk_msg *msg)
  {
- 	int delta;
- 
-@@ -1578,7 +1578,13 @@ sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
- 		return true;
- 	delta = size - sk->sk_forward_alloc;
- 	return delta <= 0 || __sk_mem_schedule(sk, delta, SK_MEM_RECV) ||
--		skb_pfmemalloc(skb);
-+	       pfmemalloc;
-+}
++	bool ret;
 +
-+static inline bool
-+sk_rmem_schedule(struct sock *sk, struct sk_buff *skb, int size)
-+{
-+	return __sk_rmem_schedule(sk, size, skb_pfmemalloc(skb));
+ 	spin_lock_bh(&psock->ingress_lock);
+-	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED))
++	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
+ 		list_add_tail(&msg->list, &psock->ingress_msg);
+-	else {
++		ret = true;
++	} else {
+ 		sk_msg_free(psock->sk, msg);
+ 		kfree(msg);
++		ret = false;
+ 	}
+ 	spin_unlock_bh(&psock->ingress_lock);
++	return ret;
  }
  
- static inline void sk_mem_reclaim(struct sock *sk)
+ static inline struct sk_msg *sk_psock_dequeue_msg(struct sk_psock *psock)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index f8563d4da0b1..a5947aa55983 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -445,8 +445,10 @@ int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
+ 			if (likely(!peek)) {
+ 				sge->offset += copy;
+ 				sge->length -= copy;
+-				if (!msg_rx->skb)
++				if (!msg_rx->skb) {
+ 					sk_mem_uncharge(sk, copy);
++					atomic_sub(copy, &sk->sk_rmem_alloc);
++				}
+ 				msg_rx->sg.size -= copy;
+ 
+ 				if (!sge->length) {
+@@ -761,6 +763,8 @@ static void __sk_psock_purge_ingress_msg(struct sk_psock *psock)
+ 
+ 	list_for_each_entry_safe(msg, tmp, &psock->ingress_msg, list) {
+ 		list_del(&msg->list);
++		if (!msg->skb)
++			atomic_sub(msg->sg.size, &psock->sk->sk_rmem_alloc);
+ 		sk_msg_free(psock->sk, msg);
+ 		kfree(msg);
+ 	}
 diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index f2ae1e51e59f..dc1291827381 100644
+index dc1291827381..9e24542251b1 100644
 --- a/net/ipv4/tcp_bpf.c
 +++ b/net/ipv4/tcp_bpf.c
-@@ -31,7 +31,7 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
- 		sge = sk_msg_elem(msg, i);
- 		size = (apply && apply_bytes < sge->length) ?
- 			apply_bytes : sge->length;
--		if (!sk_wmem_schedule(sk, size)) {
-+		if (!__sk_rmem_schedule(sk, size, false)) {
- 			if (!copied)
- 				ret = -ENOMEM;
- 			break;
+@@ -38,6 +38,7 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 		}
+ 
+ 		sk_mem_charge(sk, size);
++		atomic_add(size, &sk->sk_rmem_alloc);
+ 		sk_msg_xfer(tmp, msg, i, size);
+ 		copied += size;
+ 		if (sge->length)
+@@ -56,7 +57,8 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 
+ 	if (!ret) {
+ 		msg->sg.start = i;
+-		sk_psock_queue_msg(psock, tmp);
++		if (!sk_psock_queue_msg(psock, tmp))
++			atomic_sub(copied, &sk->sk_rmem_alloc);
+ 		sk_psock_data_ready(sk, psock);
+ 	} else {
+ 		sk_msg_free(sk, tmp);
 -- 
 2.39.5
 
