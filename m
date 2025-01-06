@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3E11DED46;
-	Mon,  6 Jan 2025 15:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725F11D7999;
+	Mon,  6 Jan 2025 15:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178678; cv=none; b=LgufThN1xkL7zSOoXgtFs+s4FyFx3pODQPjVZ1MaX13Tu7MiwLuzT4dqb/9lYn9fX4gw1gRuQu8VHE4CUtBDgiQrg9jr9W8jXk4vP3ieezMWmhdTu/zEOgByUpuLQj5g1oWfkbVOvVMAuX/xT95wX/nIQZCQTcAy1MJPggpqgic=
+	t=1736178681; cv=none; b=jdNCioiazVCnAeOoJvOmsmDzuLrqdCgP1EVslky3nCbo+AYO54w81ZCTKykUY1jwt8ceYirwOJP42fcDdTSWAi4QTRIlPCwzVo9pAiQl5mTcqAh9Awl5Qe8uL+OSMNN4GkBCu4rNbG6kLtODiWXzK1vuz3C4eN5iPGrEdsFCy/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178678; c=relaxed/simple;
-	bh=w1eM1FPwAiPoqmpkP6xClGVfmPtwrhBBUv/VAO7FsTE=;
+	s=arc-20240116; t=1736178681; c=relaxed/simple;
+	bh=0oBYiCZn8osFPqF6GpOL2CCTcVDVPHjOyMplRGmInBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plV3c3t8JrSgjt4P6eBIbuhxVmglJRhhhJgigS7qKqARmtp8oR8rus06ggXB2bOGM/xCiUEbis83QFkx4CLKEXtspX9QCmMGBTcst7zs8DrN5zF5wv7mGuCaIfKygx66MCKiGJrmGj65Zol1R87A4Ydo842c8AFU37Z8lC+N+0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCcfHFHM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oK3hQ3oXbBPZ5CIebTzEowro//NGCYY2v/4tuMDwfgREbIpkjMb2RZ0r90UV5GX29ebHG/bJYc+btlqXFSJewqCgjjweruyXPQJ0QqDlEpYsJY4XBI+q6vDyxoOATMSytFA0oy3YjXXRVpVn0nHyQsjI7mBmKquozDQsnidJQtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BI0rG8Ew; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCcfHFHM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DE1C4CED2;
-	Mon,  6 Jan 2025 15:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BI0rG8Ew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA777C4CED2;
+	Mon,  6 Jan 2025 15:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178678;
-	bh=w1eM1FPwAiPoqmpkP6xClGVfmPtwrhBBUv/VAO7FsTE=;
+	s=korg; t=1736178681;
+	bh=0oBYiCZn8osFPqF6GpOL2CCTcVDVPHjOyMplRGmInBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YCcfHFHMFaDxRInVZ0wM5c85cddZjfuX122oYX55SMIepx5T0ZeOYdhAVSAxxEuWf
-	 snkIFy8BM3NxFEE41iXvT42xKbhmbSKTfpwzfp8iFmbFeAaKQ/IcQ/nAy354xHLICT
-	 lJiODHJFuxOpsuHTyBJsWbemwGsi9BSFiflDCk3o=
+	b=BI0rG8EwUAP7A9oBXmOevDOi9YVnjHt4mruEEChivd5rZAQsVcBDPJ/NG48F8ugsD
+	 nNlySNHJ8qY70kA84TqtrAwodR80ejqL0k547nFT8YO9h5eN9b1QxrU49vCr7KoNbx
+	 lC2qfwZ+2qJVLrx2qFtc+zqkSKbg7nlIlTj0mne8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jing Xia <jing.xia@unisoc.com>,
-	Xuewen Yan <xuewen.yan@unisoc.com>,
-	Brian Geffon <bgeffon@google.com>,
-	Benoit Lize <lizeb@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 055/168] epoll: Add synchronous wakeup support for ep_poll_callback
-Date: Mon,  6 Jan 2025 16:16:03 +0100
-Message-ID: <20250106151140.541375193@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 056/168] drm/amdgpu: Handle NULL bo->tbo.resource (again) in amdgpu_vm_bo_update
+Date: Mon,  6 Jan 2025 16:16:04 +0100
+Message-ID: <20250106151140.579305093@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -47,61 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-commit 900bbaae67e980945dec74d36f8afe0de7556d5a upstream.
+commit 85230ee36d88e7a09fb062d43203035659dd10a5 upstream.
 
-Now, the epoll only use wake_up() interface to wake up task.
-However, sometimes, there are epoll users which want to use
-the synchronous wakeup flag to hint the scheduler, such as
-Android binder driver.
-So add a wake_up_sync() define, and use the wake_up_sync()
-when the sync is true in ep_poll_callback().
+Third time's the charm, I hope?
 
-Co-developed-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Jing Xia <jing.xia@unisoc.com>
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Link: https://lore.kernel.org/r/20240426080548.8203-1-xuewen.yan@unisoc.com
-Tested-by: Brian Geffon <bgeffon@google.com>
-Reviewed-by: Brian Geffon <bgeffon@google.com>
-Reported-by: Benoit Lize <lizeb@google.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Cc: Brian Geffon <bgeffon@google.com>
+Fixes: d3116756a710 ("drm/ttm: rename bo->mem and make it a pointer")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3837
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 695c2c745e5dff201b75da8a1d237ce403600d04)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c       |    5 ++++-
- include/linux/wait.h |    1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -1230,7 +1230,10 @@ static int ep_poll_callback(wait_queue_e
- 				break;
- 			}
- 		}
--		wake_up(&ep->wq);
-+		if (sync)
-+			wake_up_sync(&ep->wq);
-+		else
-+			wake_up(&ep->wq);
- 	}
- 	if (waitqueue_active(&ep->poll_wait))
- 		pwake++;
---- a/include/linux/wait.h
-+++ b/include/linux/wait.h
-@@ -224,6 +224,7 @@ void __wake_up_pollfree(struct wait_queu
- #define wake_up_all(x)			__wake_up(x, TASK_NORMAL, 0, NULL)
- #define wake_up_locked(x)		__wake_up_locked((x), TASK_NORMAL, 1)
- #define wake_up_all_locked(x)		__wake_up_locked((x), TASK_NORMAL, 0)
-+#define wake_up_sync(x)			__wake_up_sync(x, TASK_NORMAL)
- 
- #define wake_up_interruptible(x)	__wake_up(x, TASK_INTERRUPTIBLE, 1, NULL)
- #define wake_up_interruptible_nr(x, nr)	__wake_up(x, TASK_INTERRUPTIBLE, nr, NULL)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1958,10 +1958,9 @@ int amdgpu_vm_bo_update(struct amdgpu_de
+ 	 * next command submission.
+ 	 */
+ 	if (bo && bo->tbo.base.resv == vm->root.bo->tbo.base.resv) {
+-		uint32_t mem_type = bo->tbo.resource->mem_type;
+-
+-		if (!(bo->preferred_domains &
+-		      amdgpu_mem_type_to_domain(mem_type)))
++		if (bo->tbo.resource &&
++		    !(bo->preferred_domains &
++		      amdgpu_mem_type_to_domain(bo->tbo.resource->mem_type)))
+ 			amdgpu_vm_bo_evicted(&bo_va->base);
+ 		else
+ 			amdgpu_vm_bo_idle(&bo_va->base);
 
 
