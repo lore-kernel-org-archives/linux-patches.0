@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADA7155352;
-	Mon,  6 Jan 2025 15:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1112F7082A;
+	Mon,  6 Jan 2025 15:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177933; cv=none; b=IJqFgfxiHtx9IoFnmoGC63vAF3ddtApmu1gR/olZjuswNgZ1s5E3GrQKd7AMmOaYaLhTtH76u2KDqW6pOJMa2QdQBkQNP/aeP0+LlmTVva+X4v97kM+SU2SeU8DBBxIUKT+IObW8kwS5g/AqLHE4TATUBx5KpoQVpP94oaMOKp0=
+	t=1736177936; cv=none; b=ALX0eGS7XIWnS4OqWKPQZZcF5x+dl9AeE05v3J2YCM9j0SATry/mzAVFXaFx8StOE8/nURT8osaafU9YRP+XGYHFNLE448pYCYZxCyfWXXF0wQheGJ/8t7nPYcHDNxz4ZuhLK1P4AMXcAhzJoH1IKX3l7yXD4YblZoZMLJZ8mys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177933; c=relaxed/simple;
-	bh=Ovd+EtWl14bxhwF0iSCpdj6RYZFbniDYbip7Fdh0yec=;
+	s=arc-20240116; t=1736177936; c=relaxed/simple;
+	bh=JXoQy2ZkmnML1vQr2ytdHEAybVRptx7lCiCxPZfZDiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhWhs8zFs3O7ZkfClAWhNGGcQXvNQKErqJAAyV5KWlkp0bZhiAcwutjrQLa2w1eHZHjaQgW7u1RUS30ywF2aN8UZzWmP7G/zdHUU1DIiSUEVQchJ4dqwodgNkjyUigccuPCrkOTdInbu6fOivqMeSIgFeHm1Nfr54/sAY9Bh4Zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T9mMxFop; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RrQigJ02F5QU+enVup10V4yfYJXStzLjr1+k+7LXbTC6rSG5FvE24YsuL8qb3siXBH+GQOo3sq8jhaIIiL+R7W8VAYNtSqk4s8xj+hYPMZXIEU3nn1zFDeDdvFwIGs7Vks/KMCWQX92aveJZOkmcJHpB+bDGR4LNHJKwQhgXeeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jj4+KwwW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T9mMxFop"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F7EC4CED6;
-	Mon,  6 Jan 2025 15:38:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jj4+KwwW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88166C4CED2;
+	Mon,  6 Jan 2025 15:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177933;
-	bh=Ovd+EtWl14bxhwF0iSCpdj6RYZFbniDYbip7Fdh0yec=;
+	s=korg; t=1736177935;
+	bh=JXoQy2ZkmnML1vQr2ytdHEAybVRptx7lCiCxPZfZDiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T9mMxFopNwNhWIMv41muU/YBD4NdnlwscFBuz1rpyfPSj8rSd0+ElXbitZ/ZOoaw/
-	 RHwWrBr///b9MmufLB7rwHcGA2PDgw5DjDz9+2dG3xzrhGUZhu+SzpODrY6W9c+EUZ
-	 O1qJJeK/piC2g3e/nbOnP/o/LKbyhL7S7ktyqcww=
+	b=Jj4+KwwWlg2FXTQ2/l208snq54+c2LMYwOerQ9DEcoRroPXQoNuEax5U/QivTvskb
+	 JnF+BLBALXM+YhyjMZdS7EnCami+ZwgZQ9u9Qew2DXMT2Bi36r63B/fBUAXNBnvVJ+
+	 ZxHxyZ3yyfEvAh73BBpnuUZiCw3Fx4cx+ayW+4rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Maksim Kiselev <bigunclemax@gmail.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/156] bpf: consider that tail calls invalidate packet pointers
-Date: Mon,  6 Jan 2025 16:16:31 +0100
-Message-ID: <20250106151145.682825009@linuxfoundation.org>
+Subject: [PATCH 6.12 106/156] clk: thead: Fix TH1520 emmc and shdci clock rate
+Date: Mon,  6 Jan 2025 16:16:32 +0100
+Message-ID: <20250106151145.720137573@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -51,74 +53,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Maksim Kiselev <bigunclemax@gmail.com>
 
-[ Upstream commit 1a4607ffba35bf2a630aab299e34dd3f6e658d70 ]
+[ Upstream commit f4bf0b909a6bf64a2220a42a7c8b8c2ee1b77b89 ]
 
-Tail-called programs could execute any of the helpers that invalidate
-packet pointers. Hence, conservatively assume that each tail call
-invalidates packet pointers.
+In accordance with LicheePi 4A BSP the clock that comes to emmc/sdhci
+is 198Mhz which is got through frequency division of source clock
+VIDEO PLL by 4 [1].
 
-Making the change in bpf_helper_changes_pkt_data() automatically makes
-use of check_cfg() logic that computes 'changes_pkt_data' effect for
-global sub-programs, such that the following program could be
-rejected:
+But now the AP_SUBSYS driver sets the CLK EMMC SDIO to the same
+frequency as the VIDEO PLL, equal to 792 MHz. This causes emmc/sdhci
+to work 4 times slower.
 
-    int tail_call(struct __sk_buff *sk)
-    {
-    	bpf_tail_call_static(sk, &jmp_table, 0);
-    	return 0;
-    }
+Let's fix this issue by adding fixed factor clock that divides
+VIDEO PLL by 4 for emmc/sdhci.
 
-    SEC("tc")
-    int not_safe(struct __sk_buff *sk)
-    {
-    	int *p = (void *)(long)sk->data;
-    	... make p valid ...
-    	tail_call(sk);
-    	*p = 42; /* this is unsafe */
-    	...
-    }
+Link: https://github.com/revyos/thead-kernel/blob/7563179071a314f41cdcdbfd8cf6e101e73707f3/drivers/clk/thead/clk-light-fm.c#L454
 
-The tc_bpf2bpf.c:subprog_tc() needs change: mark it as a function that
-can invalidate packet pointers. Otherwise, it can't be freplaced with
-tailcall_freplace.c:entry_freplace() that does a tail call.
-
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20241210041100.1898468-8-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: ae81b69fd2b1 ("clk: thead: Add support for T-Head TH1520 AP_SUBSYS clocks")
+Signed-off-by: Maksim Kiselev <bigunclemax@gmail.com>
+Link: https://lore.kernel.org/r/20241210083029.92620-1-bigunclemax@gmail.com
+Tested-by: Xi Ruoyao <xry111@xry111.site>
+Reviewed-by: Drew Fustini <dfustini@tenstorrent.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c                              | 2 ++
- tools/testing/selftests/bpf/progs/tc_bpf2bpf.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/clk/thead/clk-th1520-ap.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 4b0ad74cfff5..54a53fae9e98 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -7943,6 +7943,8 @@ bool bpf_helper_changes_pkt_data(enum bpf_func_id func_id)
- 	case BPF_FUNC_xdp_adjust_head:
- 	case BPF_FUNC_xdp_adjust_meta:
- 	case BPF_FUNC_xdp_adjust_tail:
-+	/* tail-called program could call any of the above */
-+	case BPF_FUNC_tail_call:
- 		return true;
- 	default:
- 		return false;
-diff --git a/tools/testing/selftests/bpf/progs/tc_bpf2bpf.c b/tools/testing/selftests/bpf/progs/tc_bpf2bpf.c
-index 8a0632c37839..79f5087dade2 100644
---- a/tools/testing/selftests/bpf/progs/tc_bpf2bpf.c
-+++ b/tools/testing/selftests/bpf/progs/tc_bpf2bpf.c
-@@ -10,6 +10,8 @@ int subprog(struct __sk_buff *skb)
- 	int ret = 1;
+diff --git a/drivers/clk/thead/clk-th1520-ap.c b/drivers/clk/thead/clk-th1520-ap.c
+index 17e32ae08720..1015fab95251 100644
+--- a/drivers/clk/thead/clk-th1520-ap.c
++++ b/drivers/clk/thead/clk-th1520-ap.c
+@@ -779,6 +779,13 @@ static struct ccu_div dpu1_clk = {
+ 	},
+ };
  
- 	__sink(ret);
-+	/* let verifier know that 'subprog_tc' can change pointers to skb->data */
-+	bpf_skb_change_proto(skb, 0, 0);
- 	return ret;
- }
++static CLK_FIXED_FACTOR_HW(emmc_sdio_ref_clk, "emmc-sdio-ref",
++			   &video_pll_clk.common.hw, 4, 1, 0);
++
++static const struct clk_parent_data emmc_sdio_ref_clk_pd[] = {
++	{ .hw = &emmc_sdio_ref_clk.hw },
++};
++
+ static CCU_GATE(CLK_BROM, brom_clk, "brom", ahb2_cpusys_hclk_pd, 0x100, BIT(4), 0);
+ static CCU_GATE(CLK_BMU, bmu_clk, "bmu", axi4_cpusys2_aclk_pd, 0x100, BIT(5), 0);
+ static CCU_GATE(CLK_AON2CPU_A2X, aon2cpu_a2x_clk, "aon2cpu-a2x", axi4_cpusys2_aclk_pd,
+@@ -798,7 +805,7 @@ static CCU_GATE(CLK_PERISYS_APB4_HCLK, perisys_apb4_hclk, "perisys-apb4-hclk", p
+ 		0x150, BIT(12), 0);
+ static CCU_GATE(CLK_NPU_AXI, npu_axi_clk, "npu-axi", axi_aclk_pd, 0x1c8, BIT(5), 0);
+ static CCU_GATE(CLK_CPU2VP, cpu2vp_clk, "cpu2vp", axi_aclk_pd, 0x1e0, BIT(13), 0);
+-static CCU_GATE(CLK_EMMC_SDIO, emmc_sdio_clk, "emmc-sdio", video_pll_clk_pd, 0x204, BIT(30), 0);
++static CCU_GATE(CLK_EMMC_SDIO, emmc_sdio_clk, "emmc-sdio", emmc_sdio_ref_clk_pd, 0x204, BIT(30), 0);
+ static CCU_GATE(CLK_GMAC1, gmac1_clk, "gmac1", gmac_pll_clk_pd, 0x204, BIT(26), 0);
+ static CCU_GATE(CLK_PADCTRL1, padctrl1_clk, "padctrl1", perisys_apb_pclk_pd, 0x204, BIT(24), 0);
+ static CCU_GATE(CLK_DSMART, dsmart_clk, "dsmart", perisys_apb_pclk_pd, 0x204, BIT(23), 0);
+@@ -1059,6 +1066,10 @@ static int th1520_clk_probe(struct platform_device *pdev)
+ 		return ret;
+ 	priv->hws[CLK_PLL_GMAC_100M] = &gmac_pll_clk_100m.hw;
  
++	ret = devm_clk_hw_register(dev, &emmc_sdio_ref_clk.hw);
++	if (ret)
++		return ret;
++
+ 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, priv);
+ 	if (ret)
+ 		return ret;
 -- 
 2.39.5
 
