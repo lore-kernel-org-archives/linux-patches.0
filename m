@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F039E14A617;
-	Mon,  6 Jan 2025 15:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DB786332;
+	Mon,  6 Jan 2025 15:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179010; cv=none; b=KVkFD1wPglAzHtVVOHapPbwmPhkIdvgbR79ilxbIcfqPnSe49zX80Xu8ePckjEF6pVSFYEayxNmvcyOZOpwP5K/pSIISjFF8yb4a509pzdkJ2oGAvMtmQRBeOwa6VU2YnZ5nK/slLgVSGU/QLVSYSpl14EwEmyJdhPdUYo9ip1M=
+	t=1736179013; cv=none; b=kDjP+Sg2StCslQpjlJRp62Ln1cCRuf/Qd3MNAqhQJGxJaS3/naV+awkeLOtNbpkku7Tkhl3fI5CYLlvVeOldK2hA5tM0rrsvJ065Fj0wgNS1iMotnk14IJy9ub5AVJjcH9aO3+9NSORewFt7+Rrv+OcRLNrDz/J8AYU5tCdYcTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179010; c=relaxed/simple;
-	bh=Oo8X2zoQB9K/gB4zrVUym79bTgI4iYBNB04L1/SCERE=;
+	s=arc-20240116; t=1736179013; c=relaxed/simple;
+	bh=rDOM5FzEvG4QmV335DZZYzp33+Rc7qROfEClhI3VQ/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lhPYzXeRSFa9CKuDFLxnT6pq29V4JBEkAS+1MC5dtaXjs/L4PXszlAbtzTXlo5FElC5vqpuEk30rIAjiSkVhgxIn2V3O1rCzROgs45UsCw80LsJq5bFhnnqtGPMW/zl6MwG8KZU6k5kp3iSFVAp/IMkqHQxuVPxd16/Wat1vEfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJWO16oZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGarLY9jXUWhD+jrV91jtp+YwE5cJhSpK1Guoe51+2HePGbjDAEA7QoxUl95SwFq9/9qjOBwVgAqLQGc2Z4msB/z2b2PMy3JH82lSgluQhEvKWXdemN/vRLBYHN2IdqG07Gm4e27PAdopl+Ns2CVJfWXYDOC4yzDythGHB2OY3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOlgN3+d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJWO16oZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D55C4CED2;
-	Mon,  6 Jan 2025 15:56:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOlgN3+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 833A1C4CED2;
+	Mon,  6 Jan 2025 15:56:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179009;
-	bh=Oo8X2zoQB9K/gB4zrVUym79bTgI4iYBNB04L1/SCERE=;
+	s=korg; t=1736179012;
+	bh=rDOM5FzEvG4QmV335DZZYzp33+Rc7qROfEClhI3VQ/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJWO16oZa93UZ2ktKRsEvAxRtqYX81qg3zLo8ePtw1I+VijfvoF1v1xn35i9a8fIs
-	 6UOyjlpgg23PE81kkEFKWQSq1HTTKhKDOefAjGl8mlBXzh5GDhE3MO/yJ2dCvaUZXJ
-	 WAcS2E89xc9bDxZ7xSybxJ8NeKjuybqJPFTno+wg=
+	b=BOlgN3+ddH9vav0vqVJlbb2bd23E50Bf8TErTn6PPRyeCAy32JryqH3woR+ZGmziL
+	 5wD4DQyLE144p+7yYPVC0nVHKljkdhIHbKKopmbNG779xENELD4k9+pTr6S3RvxDNO
+	 w+ZJtA4+2GF5gEOG/1iX6wmgEHght+A5qjDDeIVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/168] net: mv643xx_eth: fix an OF node reference leak
-Date: Mon,  6 Jan 2025 16:17:26 +0100
-Message-ID: <20250106151143.648604677@linuxfoundation.org>
+	Nikolay Kuratov <kniv@yandex-team.ru>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 165/168] net/sctp: Prevent autoclose integer overflow in sctp_association_init()
+Date: Mon,  6 Jan 2025 16:17:53 +0100
+Message-ID: <20250106151144.659971366@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,70 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Nikolay Kuratov <kniv@yandex-team.ru>
 
-[ Upstream commit ad5c318086e2e23b577eca33559c5ebf89bc7eb9 ]
+commit 4e86729d1ff329815a6e8a920cb554a1d4cb5b8d upstream.
 
-Current implementation of mv643xx_eth_shared_of_add_port() calls
-of_parse_phandle(), but does not release the refcount on error. Call
-of_node_put() in the error path and in mv643xx_eth_shared_of_remove().
+While by default max_autoclose equals to INT_MAX / HZ, one may set
+net.sctp.max_autoclose to UINT_MAX. There is code in
+sctp_association_init() that can consequently trigger overflow.
 
-This bug was found by an experimental verification tool that I am
-developing.
-
-Fixes: 76723bca2802 ("net: mv643xx_eth: add DT parsing support")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://patch.msgid.link/20241221081448.3313163-1-joe@pf.is.s.u-tokyo.ac.jp
+Cc: stable@vger.kernel.org
+Fixes: 9f70f46bd4c7 ("sctp: properly latch and use autoclose value from sock to association")
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20241219162114.2863827-1-kniv@yandex-team.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/mv643xx_eth.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/sctp/associola.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mv643xx_eth.c b/drivers/net/ethernet/marvell/mv643xx_eth.c
-index d37a0fba3d16..6174b4bd44d3 100644
---- a/drivers/net/ethernet/marvell/mv643xx_eth.c
-+++ b/drivers/net/ethernet/marvell/mv643xx_eth.c
-@@ -2703,9 +2703,15 @@ static struct platform_device *port_platdev[3];
+--- a/net/sctp/associola.c
++++ b/net/sctp/associola.c
+@@ -137,7 +137,8 @@ static struct sctp_association *sctp_ass
+ 		= 5 * asoc->rto_max;
  
- static void mv643xx_eth_shared_of_remove(void)
- {
-+	struct mv643xx_eth_platform_data *pd;
- 	int n;
+ 	asoc->timeouts[SCTP_EVENT_TIMEOUT_SACK] = asoc->sackdelay;
+-	asoc->timeouts[SCTP_EVENT_TIMEOUT_AUTOCLOSE] = sp->autoclose * HZ;
++	asoc->timeouts[SCTP_EVENT_TIMEOUT_AUTOCLOSE] =
++		(unsigned long)sp->autoclose * HZ;
  
- 	for (n = 0; n < 3; n++) {
-+		if (!port_platdev[n])
-+			continue;
-+		pd = dev_get_platdata(&port_platdev[n]->dev);
-+		if (pd)
-+			of_node_put(pd->phy_node);
- 		platform_device_del(port_platdev[n]);
- 		port_platdev[n] = NULL;
- 	}
-@@ -2766,8 +2772,10 @@ static int mv643xx_eth_shared_of_add_port(struct platform_device *pdev,
- 	}
- 
- 	ppdev = platform_device_alloc(MV643XX_ETH_NAME, dev_num);
--	if (!ppdev)
--		return -ENOMEM;
-+	if (!ppdev) {
-+		ret = -ENOMEM;
-+		goto put_err;
-+	}
- 	ppdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
- 	ppdev->dev.of_node = pnp;
- 
-@@ -2789,6 +2797,8 @@ static int mv643xx_eth_shared_of_add_port(struct platform_device *pdev,
- 
- port_err:
- 	platform_device_put(ppdev);
-+put_err:
-+	of_node_put(ppd.phy_node);
- 	return ret;
- }
- 
--- 
-2.39.5
-
+ 	/* Initializes the timers */
+ 	for (i = SCTP_EVENT_TIMEOUT_NONE; i < SCTP_NUM_TIMEOUT_TYPES; ++i)
 
 
