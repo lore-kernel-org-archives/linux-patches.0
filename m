@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D75D1487F4;
-	Mon,  6 Jan 2025 15:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8554714900B;
+	Mon,  6 Jan 2025 15:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177220; cv=none; b=JUlwlt1A1TyrSQj7HM9OzEmIsPB1DkSBAJiQscy6x93NgsZzBiyAfKOLBHesVfbWHCSkkn0jAfDttMINt9xV7ATalR8BvXxneqQtuSvFHquQY6bqzuzX/xFhNb0N3TDOuynItbFEahATgdpqm3EjRg6ZML5Uyxgq2c7vwL68YSI=
+	t=1736177223; cv=none; b=rN0aouFPzEaj1YtfZl5nhk0GqFsGvZ9baNjCJUfil0VMPBgxz8D9l3VHbwSTyfd5VeqWdcJBuUPeZMybuhAjZZT/vR0/8ex5AGE4oXu9arLFhoS4PKWyB5kDeZv0I1uBMab13eWlDCwJUO0nW0/+WHvxkS4o/dVpSqLtm24IEGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177220; c=relaxed/simple;
-	bh=hYyp2d4B2fEZirBJq9/3k63YvBp9rX11359KtEVDnwk=;
+	s=arc-20240116; t=1736177223; c=relaxed/simple;
+	bh=OwPlZY31EboWBmDBZE+309UauQGhjvvrnks6PUvn8BE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YC3uf5ez+RJN/FxwfgTTrglF29Pc2t0VLuphwLU/gd10+VmA+CC06lCtjOkcSe1PNu9aAVIa75xTkWVsRTfNggvPOav/ZG+1EbnFTc2UpmLqi2ZVKC7oNtVJbsHEm3Lwl0i/YGbwFT0hvY6OFwIcgjG2vnhEIvztlVOXQpKdCY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8s7eeRs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Etgl4+OxHH9QyYOhKiB/qk1m+T6cU/7bohp3R9Krl5K7mPxxJaH2VnYJaXTPCP8vxIhKogN/pJYKK8XRFMPYBbqnzVCxxvECcjcmSK5SkGO4kQzKnsxWkzXXz3ak8dnAOsdJcYsIrdQUhL2t6bkZ2nmlO5WzJ+U3+BA1XL61M4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdeljnD0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8s7eeRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12006C4CED2;
-	Mon,  6 Jan 2025 15:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdeljnD0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09116C4CED2;
+	Mon,  6 Jan 2025 15:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177220;
-	bh=hYyp2d4B2fEZirBJq9/3k63YvBp9rX11359KtEVDnwk=;
+	s=korg; t=1736177223;
+	bh=OwPlZY31EboWBmDBZE+309UauQGhjvvrnks6PUvn8BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8s7eeRsBZNbLr69H5DR3ZsSLb+U4tb72iB+P5W9l8PZn143YwhqXWmnKhV/IyH18
-	 GRoY07fiFopEBc2tniZBXsJYTQzrWKcWuFPcDULA3z3o2TWYsNvJlkaslP1SndN33E
-	 eSOEjd92r92qm3I/TdMgHg8SNrgrz1mu5+JzsjrE=
+	b=tdeljnD0b/W43G8o+U4d+AVOX1ImUUONiL8ED98stRTb32FT3zxfCozrILA2vk3nC
+	 k9+oVhH7Dc4MivcG0jpytCeY5abmjojMoY5wryZJEs46jv2SzIFse0Sl4jwPP8I7zr
+	 AkZEHJ64yDCl/9P7UD7tp7wZvxWukIyanX3WEqEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Alisa-Dariana Roman <alisa.roman@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 060/222] usb: chipidea: udc: limit usb request length to max 16KB
-Date: Mon,  6 Jan 2025 16:14:24 +0100
-Message-ID: <20250106151152.880061902@linuxfoundation.org>
+Subject: [PATCH 6.6 061/222] iio: adc: ad7192: Convert from of specific to fwnode property handling
+Date: Mon,  6 Jan 2025 16:14:25 +0100
+Message-ID: <20250106151152.918420440@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,56 +52,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-[ Upstream commit ca8d18aa7b0f22d66a3ca9a90d8f73431b8eca89 ]
+[ Upstream commit c3708c829a0662af429897a90aed46b70f14a50b ]
 
-To let the device controller work properly on short packet limitations,
-one usb request should only correspond to one dTD. Then every dTD will
-set IOC. In theory, each dTD support up to 20KB data transfer if the
-offset is 0. Due to we cannot predetermine the offset, this will limit
-the usb request length to max 16KB. This should be fine since most of
-the user transfer data based on this size policy.
+Enables use of with other firmwware types.
+Removes a case of device tree specific handlers that might get copied
+into new drivers.
 
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://lore.kernel.org/r/20240923081203.2851768-2-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alisa-Dariana Roman <alisa.roman@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240218172731.1023367-6-jic23@kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: b7f99fa1b64a ("iio: adc: ad7192: properly check spi_get_device_match_data()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/chipidea/ci.h  | 1 +
- drivers/usb/chipidea/udc.c | 6 ++++++
- 2 files changed, 7 insertions(+)
+ drivers/iio/adc/ad7192.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/usb/chipidea/ci.h b/drivers/usb/chipidea/ci.h
-index e4b003d060c2..97437de52ef6 100644
---- a/drivers/usb/chipidea/ci.h
-+++ b/drivers/usb/chipidea/ci.h
-@@ -25,6 +25,7 @@
- #define TD_PAGE_COUNT      5
- #define CI_HDRC_PAGE_SIZE  4096ul /* page size for TD's */
- #define ENDPT_MAX          32
-+#define CI_MAX_REQ_SIZE	(4 * CI_HDRC_PAGE_SIZE)
- #define CI_MAX_BUF_SIZE	(TD_PAGE_COUNT * CI_HDRC_PAGE_SIZE)
+diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
+index b64fd365f83f..ecaf87af539b 100644
+--- a/drivers/iio/adc/ad7192.c
++++ b/drivers/iio/adc/ad7192.c
+@@ -16,7 +16,9 @@
+ #include <linux/err.h>
+ #include <linux/sched.h>
+ #include <linux/delay.h>
+-#include <linux/of.h>
++#include <linux/module.h>
++#include <linux/mod_devicetable.h>
++#include <linux/property.h>
  
- /******************************************************************************
-diff --git a/drivers/usb/chipidea/udc.c b/drivers/usb/chipidea/udc.c
-index 9f7d003e467b..f2ae5f4c5828 100644
---- a/drivers/usb/chipidea/udc.c
-+++ b/drivers/usb/chipidea/udc.c
-@@ -959,6 +959,12 @@ static int _ep_queue(struct usb_ep *ep, struct usb_request *req,
- 		return -EMSGSIZE;
+ #include <linux/iio/iio.h>
+ #include <linux/iio/sysfs.h>
+@@ -360,19 +362,19 @@ static inline bool ad7192_valid_external_frequency(u32 freq)
+ 		freq <= AD7192_EXT_FREQ_MHZ_MAX);
+ }
+ 
+-static int ad7192_of_clock_select(struct ad7192_state *st)
++static int ad7192_clock_select(struct ad7192_state *st)
+ {
+-	struct device_node *np = st->sd.spi->dev.of_node;
++	struct device *dev = &st->sd.spi->dev;
+ 	unsigned int clock_sel;
+ 
+ 	clock_sel = AD7192_CLK_INT;
+ 
+ 	/* use internal clock */
+ 	if (!st->mclk) {
+-		if (of_property_read_bool(np, "adi,int-clock-output-enable"))
++		if (device_property_read_bool(dev, "adi,int-clock-output-enable"))
+ 			clock_sel = AD7192_CLK_INT_CO;
+ 	} else {
+-		if (of_property_read_bool(np, "adi,clock-xtal"))
++		if (device_property_read_bool(dev, "adi,clock-xtal"))
+ 			clock_sel = AD7192_CLK_EXT_MCLK1_2;
+ 		else
+ 			clock_sel = AD7192_CLK_EXT_MCLK2;
+@@ -381,7 +383,7 @@ static int ad7192_of_clock_select(struct ad7192_state *st)
+ 	return clock_sel;
+ }
+ 
+-static int ad7192_setup(struct iio_dev *indio_dev, struct device_node *np)
++static int ad7192_setup(struct iio_dev *indio_dev, struct device *dev)
+ {
+ 	struct ad7192_state *st = iio_priv(indio_dev);
+ 	bool rej60_en, refin2_en;
+@@ -403,7 +405,7 @@ static int ad7192_setup(struct iio_dev *indio_dev, struct device_node *np)
+ 	id &= AD7192_ID_MASK;
+ 
+ 	if (id != st->chip_info->chip_id)
+-		dev_warn(&st->sd.spi->dev, "device ID query failed (0x%X != 0x%X)\n",
++		dev_warn(dev, "device ID query failed (0x%X != 0x%X)\n",
+ 			 id, st->chip_info->chip_id);
+ 
+ 	st->mode = AD7192_MODE_SEL(AD7192_MODE_IDLE) |
+@@ -412,31 +414,31 @@ static int ad7192_setup(struct iio_dev *indio_dev, struct device_node *np)
+ 
+ 	st->conf = AD7192_CONF_GAIN(0);
+ 
+-	rej60_en = of_property_read_bool(np, "adi,rejection-60-Hz-enable");
++	rej60_en = device_property_read_bool(dev, "adi,rejection-60-Hz-enable");
+ 	if (rej60_en)
+ 		st->mode |= AD7192_MODE_REJ60;
+ 
+-	refin2_en = of_property_read_bool(np, "adi,refin2-pins-enable");
++	refin2_en = device_property_read_bool(dev, "adi,refin2-pins-enable");
+ 	if (refin2_en && st->chip_info->chip_id != CHIPID_AD7195)
+ 		st->conf |= AD7192_CONF_REFSEL;
+ 
+ 	st->conf &= ~AD7192_CONF_CHOP;
+ 	st->f_order = AD7192_NO_SYNC_FILTER;
+ 
+-	buf_en = of_property_read_bool(np, "adi,buffer-enable");
++	buf_en = device_property_read_bool(dev, "adi,buffer-enable");
+ 	if (buf_en)
+ 		st->conf |= AD7192_CONF_BUF;
+ 
+-	bipolar = of_property_read_bool(np, "bipolar");
++	bipolar = device_property_read_bool(dev, "bipolar");
+ 	if (!bipolar)
+ 		st->conf |= AD7192_CONF_UNIPOLAR;
+ 
+-	burnout_curr_en = of_property_read_bool(np,
+-						"adi,burnout-currents-enable");
++	burnout_curr_en = device_property_read_bool(dev,
++						    "adi,burnout-currents-enable");
+ 	if (burnout_curr_en && buf_en) {
+ 		st->conf |= AD7192_CONF_BURN;
+ 	} else if (burnout_curr_en) {
+-		dev_warn(&st->sd.spi->dev,
++		dev_warn(dev,
+ 			 "Can't enable burnout currents: see CHOP or buffer\n");
  	}
  
-+	if (ci->has_short_pkt_limit &&
-+		hwreq->req.length > CI_MAX_REQ_SIZE) {
-+		dev_err(hwep->ci->dev, "request length too big (max 16KB)\n");
-+		return -EMSGSIZE;
-+	}
-+
- 	/* first nuke then test link, e.g. previous status has not sent */
- 	if (!list_empty(&hwreq->queue)) {
- 		dev_err(hwep->ci->dev, "request already in queue\n");
+@@ -1036,9 +1038,7 @@ static int ad7192_probe(struct spi_device *spi)
+ 	}
+ 	st->int_vref_mv = ret / 1000;
+ 
+-	st->chip_info = of_device_get_match_data(&spi->dev);
+-	if (!st->chip_info)
+-		st->chip_info = (void *)spi_get_device_id(spi)->driver_data;
++	st->chip_info = spi_get_device_match_data(spi);
+ 	indio_dev->name = st->chip_info->name;
+ 	indio_dev->modes = INDIO_DIRECT_MODE;
+ 
+@@ -1065,7 +1065,7 @@ static int ad7192_probe(struct spi_device *spi)
+ 	if (IS_ERR(st->mclk))
+ 		return PTR_ERR(st->mclk);
+ 
+-	st->clock_sel = ad7192_of_clock_select(st);
++	st->clock_sel = ad7192_clock_select(st);
+ 
+ 	if (st->clock_sel == AD7192_CLK_EXT_MCLK1_2 ||
+ 	    st->clock_sel == AD7192_CLK_EXT_MCLK2) {
+@@ -1077,7 +1077,7 @@ static int ad7192_probe(struct spi_device *spi)
+ 		}
+ 	}
+ 
+-	ret = ad7192_setup(indio_dev, spi->dev.of_node);
++	ret = ad7192_setup(indio_dev, &spi->dev);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.39.5
 
