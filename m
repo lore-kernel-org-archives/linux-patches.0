@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02CD1DD539;
-	Mon,  6 Jan 2025 15:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687F186332;
+	Mon,  6 Jan 2025 15:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179192; cv=none; b=jhDjMWFl49TPhMK6e7nWjBVRCp0/MH4yLmp1itCZQu/NL5eGlRt+yTfVzL4M6dPGdP5ioMcymLoslee+tg5W1IQ7c6VqLGloqMVimsHfebE53lJmaPldiWJfKRt0H4rC7DN3DELEH7R0fMsZgcGsKxBxwbEMOb/FagxOr8owiAI=
+	t=1736179195; cv=none; b=VBIxlP300uSXTFmR6/hMX2PPFQadv/SKDWKFE1wFAZv7NIV0Je5wY4eqOHn1JsK9kjEJPzX7Q9Zo9loeuoz2PNpbtrSK5g6TLbJ+Ic6OqWY7BDfxg9CtmAA2bvhVm6ZYBQgVjXzYWajpIvz0C6b4GPcdm4PSAnFsIqTVkgSRjxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179192; c=relaxed/simple;
-	bh=Q4fDaftEIIVe71f3flseVxIU8FCnzWLkg5026lIk0t0=;
+	s=arc-20240116; t=1736179195; c=relaxed/simple;
+	bh=15nmrGVSfN5UXTqhrHpVUhNy5ncOCgbiMNxUs6yJqko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpFk8B8vqCsPOXhTVl6XFf66+wjOMaktt9EoJnws3tGKouHakViZJ7ZDoWh9F8oi5kQwsZq7ZIrQVHIkJec1gLbMLCfTwxA5NL78TFYim4qEM62WPA/x9gYq93+lDigmmoa0zAu0tUmJtUdwK8+UNOkaTIZE8SYHfxKE9kVbCCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEmMzBQq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OyGSLQX6bDca7tRv92lSxyWA0yEjoZn7dlra8jRYeoPWUbqC8QsA5UQ/h4eYqcqysSJle1aqSD43D+5EDUFrCVOR6m58qgv4EOFApMMkRuiAZm/uEyjvg6mgxvO3WDH9C1AvFrpE8zwqLm/2ZywIZRlBXbrrylUEYYlBMiQ5Enk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CgcFD8Qf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEmMzBQq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6C7C4CED2;
-	Mon,  6 Jan 2025 15:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CgcFD8Qf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3A8C4CED2;
+	Mon,  6 Jan 2025 15:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179192;
-	bh=Q4fDaftEIIVe71f3flseVxIU8FCnzWLkg5026lIk0t0=;
+	s=korg; t=1736179195;
+	bh=15nmrGVSfN5UXTqhrHpVUhNy5ncOCgbiMNxUs6yJqko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEmMzBQqwoQC0ut6+/6IwIJQr6iGkiq8y97us2cDMpmgAO73zxxkiLTdFGDs9Y1fD
-	 gH5TP2Fh6F8rFy/UGg/r8KpmUcqw5H4hwXORw3B2Ljchscl5SIPatnqWpLmNyos+bQ
-	 UobRReY5oJQhJlvWctePl0dNU3icBpHGaCiZ5R+s=
+	b=CgcFD8QfZPJ82we19NVz/iyRiV6ZN4t5bWz3gLzt+qAYxM5Ke1CODkGDIE3gFFEvo
+	 QTJ7jyQEKmexRCDdb6XmBIzeRZR810sizL1hw2Yum9MkGQ6L2DGCsMiTdXY923aG5c
+	 2sYJ1CwMW99Rhuq7se1j9VJm2i7a10TkU+tIGF2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Whitchurch <vincent.whitchurch@datadoghq.com>,
-	Jiayuan Chen <mrpre@163.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Srish Srinivasan <srishwap4@gmail.com>
-Subject: [PATCH 5.4 57/93] bpf: fix recursive lock when verdict program return SK_PASS
-Date: Mon,  6 Jan 2025 16:17:33 +0100
-Message-ID: <20250106151130.856253891@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	=?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 58/93] tracing: Constify string literal data member in struct trace_event_call
+Date: Mon,  6 Jan 2025 16:17:34 +0100
+Message-ID: <20250106151130.894613868@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -49,75 +52,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Christian Göttsche <cgzones@googlemail.com>
 
-commit 8ca2a1eeadf09862190b2810697702d803ceef2d upstream.
+commit 452f4b31e3f70a52b97890888eeb9eaa9a87139a upstream.
 
-When the stream_verdict program returns SK_PASS, it places the received skb
-into its own receive queue, but a recursive lock eventually occurs, leading
-to an operating system deadlock. This issue has been present since v6.9.
+The name member of the struct trace_event_call is assigned with
+generated string literals; declare them pointer to read-only.
 
-'''
-sk_psock_strp_data_ready
-    write_lock_bh(&sk->sk_callback_lock)
-    strp_data_ready
-      strp_read_sock
-        read_sock -> tcp_read_sock
-          strp_recv
-            cb.rcv_msg -> sk_psock_strp_read
-              # now stream_verdict return SK_PASS without peer sock assign
-              __SK_PASS = sk_psock_map_verd(SK_PASS, NULL)
-              sk_psock_verdict_apply
-                sk_psock_skb_ingress_self
-                  sk_psock_skb_ingress_enqueue
-                    sk_psock_data_ready
-                      read_lock_bh(&sk->sk_callback_lock) <= dead lock
+Reported by clang:
 
-'''
+    security/landlock/syscalls.c:179:1: warning: initializing 'char *' with an expression of type 'const char[34]' discards qualifiers [-Wincompatible-pointer-types-discards-qualifiers]
+      179 | SYSCALL_DEFINE3(landlock_create_ruleset,
+          | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      180 |                 const struct landlock_ruleset_attr __user *const, attr,
+          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      181 |                 const size_t, size, const __u32, flags)
+          |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:226:36: note: expanded from macro 'SYSCALL_DEFINE3'
+      226 | #define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
+          |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:234:2: note: expanded from macro 'SYSCALL_DEFINEx'
+      234 |         SYSCALL_METADATA(sname, x, __VA_ARGS__)                 \
+          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:184:2: note: expanded from macro 'SYSCALL_METADATA'
+      184 |         SYSCALL_TRACE_ENTER_EVENT(sname);                       \
+          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ./include/linux/syscalls.h:151:30: note: expanded from macro 'SYSCALL_TRACE_ENTER_EVENT'
+      151 |                         .name                   = "sys_enter"#sname,    \
+          |                                                   ^~~~~~~~~~~~~~~~~
 
-This topic has been discussed before, but it has not been fixed.
-Previous discussion:
-https://lore.kernel.org/all/6684a5864ec86_403d20898@john.notmuch
-
-Fixes: 6648e613226e ("bpf, skmsg: Fix NULL pointer dereference in sk_psock_skb_ingress_enqueue")
-Reported-by: Vincent Whitchurch <vincent.whitchurch@datadoghq.com>
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Signed-off-by: John Fastabend <john.fastabend@gmail.com>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20241118030910.36230-2-mrpre@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[srish: Apply to stable branch linux-5.10.y]
-Signed-off-by: Srish Srinivasan <srishwap4@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mickaël Salaün <mic@digikod.net>
+Cc: Günther Noack <gnoack@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/20241125105028.42807-1-cgoettsche@seltendoof.de
+Fixes: b77e38aa240c3 ("tracing: add event trace infrastructure")
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skmsg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/trace_events.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skmsg.c b/net/core/skmsg.c
-index a606ad8e8be2..dfc2e4d6a7a0 100644
---- a/net/core/skmsg.c
-+++ b/net/core/skmsg.c
-@@ -904,9 +904,9 @@ static void sk_psock_strp_data_ready(struct sock *sk)
- 		if (tls_sw_has_ctx_rx(sk)) {
- 			psock->parser.saved_data_ready(sk);
- 		} else {
--			write_lock_bh(&sk->sk_callback_lock);
-+			read_lock_bh(&sk->sk_callback_lock);
- 			strp_data_ready(&psock->parser.strp);
--			write_unlock_bh(&sk->sk_callback_lock);
-+			read_unlock_bh(&sk->sk_callback_lock);
- 		}
- 	}
- 	rcu_read_unlock();
--- 
-2.39.5
-
+--- a/include/linux/trace_events.h
++++ b/include/linux/trace_events.h
+@@ -255,7 +255,7 @@ struct trace_event_call {
+ 	struct list_head	list;
+ 	struct trace_event_class *class;
+ 	union {
+-		char			*name;
++		const char		*name;
+ 		/* Set TRACE_EVENT_FL_TRACEPOINT flag when using "tp" */
+ 		struct tracepoint	*tp;
+ 	};
 
 
