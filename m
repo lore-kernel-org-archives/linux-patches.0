@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB10014A617;
-	Mon,  6 Jan 2025 15:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76CF44C7C;
+	Mon,  6 Jan 2025 15:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178117; cv=none; b=e2pjK+h9fsNKUWfQKuDFda5rM/pb2zgT1IWQua3WrCcruqfapACMHepzLmcIhwGEwoW13ONtiVlGyo47g6Oju1uOAdLybMysyeN0AkDvEZmXhTc9o/jevdImY5AxYSc0L07avOjg9zVOPgGgKxfNjR8zeJxo3MC71Re/Y/h1hzM=
+	t=1736178120; cv=none; b=REKOUEjZJUP2E1i7V0BIABb+/HUsTZcD9af2Zmf8MdwlaNWsc4LCOLG/x7UiNX090Tsfuv1fVoHoaPaAiq7wt1u+Uy8iMnSIWoBoI5KKJ/I3Wx9uqQJaum8jYQqS2OAhoNuzMUm7UWuzX8rp498yunDEu+YPbYfI5rvNPmfhfZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178117; c=relaxed/simple;
-	bh=kVNeB86cGHIyiK2a58UuWWtF92r/snNw3WjrInWVIag=;
+	s=arc-20240116; t=1736178120; c=relaxed/simple;
+	bh=qCpbp3BVyNRdcUC0mTEuobaA0ke6Ete2n8QFiBHTLDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d9UyN2Iv8t4fsujf3kPvEKQewTlyfyxW1UhBZZPqtd3cYQO1GEP4oyIVK5myTWSH1IOmVNW/a094mMdJEmXYjdZiVi211tenIV8bRq2KF78QiDp5MPpHkpt6bW4Rltd0JcRVBZICtflUDWbzqgK1mBtAyhj43vElinb6xOZCsRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/r6PFvS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YFq2qc8FkBtTYHnz4dUtgKMjozq+39XR1cFbXpsXDh9DG1b1lD885Iw+nvxgIX4BYWSW8vhoNg50B2yoUg3V18ymLu3tUxWCQL8RBObshARrsiUAYV0vI0o5jrNS55BPq3DKRM/JUcLlq1ZpeL2OB9HFf5mBy9a2JCa6bj5XGIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRwdruXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/r6PFvS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B87C4CED2;
-	Mon,  6 Jan 2025 15:41:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRwdruXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE38C4CEDF;
+	Mon,  6 Jan 2025 15:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178117;
-	bh=kVNeB86cGHIyiK2a58UuWWtF92r/snNw3WjrInWVIag=;
+	s=korg; t=1736178120;
+	bh=qCpbp3BVyNRdcUC0mTEuobaA0ke6Ete2n8QFiBHTLDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/r6PFvSHeVpqT+ne5FmjbGxnSpQY5EmZusSMqadmpl51YbrezeOfd8/P6usBEHXb
-	 7KS6rgFATRmbjvDNlusEfrnh1bFf8ZKbMlBGcAgE3tdQ9SoX4slyGYbReCKK+6BhOE
-	 4oMYqGOO2rrpJLQaAZWH7SJcG8KoqGm4LJGT4T90=
+	b=aRwdruXr7sVAuhSC5nTrcxWknEOcyavrxtkbMfz0gw9AaVeLy2OzdfzCjmhLytW8D
+	 UqGTLjkYtrOKuGtrhdd2i0YXzhSIA1vaMcCIvt5VdVK/GtrybUhDGpaCn6N9pyPs42
+	 PyTFiXChiECbDEeoTsvHDXejdLbEEKdqbxuO2mMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Walters <walters@verbum.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/138] erofs: fix incorrect symlink detection in fast symlink
-Date: Mon,  6 Jan 2025 16:15:35 +0100
-Message-ID: <20250106151133.643512103@linuxfoundation.org>
+Subject: [PATCH 5.10 012/138] net/smc: check sndbuf_space again after NOSPACE flag is set in smc_poll
+Date: Mon,  6 Jan 2025 16:15:36 +0100
+Message-ID: <20250106151133.680919007@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -45,80 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-commit 9ed50b8231e37b1ae863f5dec8153b98d9f389b4 upstream.
+[ Upstream commit 679e9ddcf90dbdf98aaaa71a492454654b627bcb ]
 
-Fast symlink can be used if the on-disk symlink data is stored
-in the same block as the on-disk inode, so we don’t need to trigger
-another I/O for symlink data.  However, currently fs correction could be
-reported _incorrectly_ if inode xattrs are too large.
+When application sending data more than sndbuf_space, there have chances
+application will sleep in epoll_wait, and will never be wakeup again. This
+is caused by a race between smc_poll and smc_cdc_tx_handler.
 
-In fact, these should be valid images although they cannot be handled as
-fast symlinks.
+application                                      tasklet
+smc_tx_sendmsg(len > sndbuf_space)   |
+epoll_wait for EPOLL_OUT,timeout=0   |
+  smc_poll                           |
+    if (!smc->conn.sndbuf_space)     |
+                                     |  smc_cdc_tx_handler
+                                     |    atomic_add sndbuf_space
+                                     |    smc_tx_sndbuf_nonfull
+                                     |      if (!test_bit SOCK_NOSPACE)
+                                     |        do not sk_write_space;
+      set_bit SOCK_NOSPACE;          |
+    return mask=0;                   |
 
-Many thanks to Colin for reporting this!
+Application will sleep in epoll_wait as smc_poll returns 0. And
+smc_cdc_tx_handler will not call sk_write_space because the SOCK_NOSPACE
+has not be set. If there is no inflight cdc msg, sk_write_space will not be
+called any more, and application will sleep in epoll_wait forever.
+So check sndbuf_space again after NOSPACE flag is set to break the race.
 
-Reported-by: Colin Walters <walters@verbum.org>
-Reported-by: https://honggfuzz.dev/
-Link: https://lore.kernel.org/r/bb2dd430-7de0-47da-ae5b-82ab2dd4d945@app.fastmail.com
-Fixes: 431339ba9042 ("staging: erofs: add inode operations")
-[ Note that it's a runtime misbehavior instead of a security issue. ]
-Link: https://lore.kernel.org/r/20240909031911.1174718-1-hsiangkao@linux.alibaba.com
-[ Gao Xiang: fix 5.10.y build warning due to `check_add_overflow`. ]
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fixes: 8dce2786a290 ("net/smc: smc_poll improvements")
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/inode.c | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ net/smc/af_smc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
-index 93a4ed665d93..60b4c4326dae 100644
---- a/fs/erofs/inode.c
-+++ b/fs/erofs/inode.c
-@@ -198,11 +198,14 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
- 			      unsigned int m_pofs)
- {
- 	struct erofs_inode *vi = EROFS_I(inode);
-+	loff_t off;
- 	char *lnk;
- 
--	/* if it cannot be handled with fast symlink scheme */
--	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
--	    inode->i_size >= PAGE_SIZE || inode->i_size < 0) {
-+	m_pofs += vi->xattr_isize;
-+	/* check if it cannot be handled with fast symlink scheme */
-+	if (vi->datalayout != EROFS_INODE_FLAT_INLINE || inode->i_size < 0 ||
-+	    check_add_overflow((loff_t)m_pofs, inode->i_size, &off) ||
-+	    off > i_blocksize(inode)) {
- 		inode->i_op = &erofs_symlink_iops;
- 		return 0;
- 	}
-@@ -211,17 +214,6 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
- 	if (!lnk)
- 		return -ENOMEM;
- 
--	m_pofs += vi->xattr_isize;
--	/* inline symlink data shouldn't cross page boundary as well */
--	if (m_pofs + inode->i_size > PAGE_SIZE) {
--		kfree(lnk);
--		erofs_err(inode->i_sb,
--			  "inline data cross block boundary @ nid %llu",
--			  vi->nid);
--		DBG_BUGON(1);
--		return -EFSCORRUPTED;
--	}
--
- 	memcpy(lnk, data + m_pofs, inode->i_size);
- 	lnk[inode->i_size] = '\0';
- 
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index 664ddf5641de..3a4ae589671a 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -2110,6 +2110,13 @@ static __poll_t smc_poll(struct file *file, struct socket *sock,
+ 			} else {
+ 				sk_set_bit(SOCKWQ_ASYNC_NOSPACE, sk);
+ 				set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
++
++				if (sk->sk_state != SMC_INIT) {
++					/* Race breaker the same way as tcp_poll(). */
++					smp_mb__after_atomic();
++					if (atomic_read(&smc->conn.sndbuf_space))
++						mask |= EPOLLOUT | EPOLLWRNORM;
++				}
+ 			}
+ 			if (atomic_read(&smc->conn.bytes_to_rcv))
+ 				mask |= EPOLLIN | EPOLLRDNORM;
 -- 
 2.39.5
 
