@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B25FBA34;
-	Mon,  6 Jan 2025 15:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE73BA34;
+	Mon,  6 Jan 2025 15:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179075; cv=none; b=FxXTG51SR4hhLZZj/uP+a8DuH7L+FraM+7YoXR4j2N6lkts6bc7t2YvmpdCMmJZxLrvbgIJqhGFjDSSf01rWZFWXrNbFjBcF6tcNsd8onoSDafSyhFEyf3a3L6yoKCpm3amSek4BLjrRLwxF8mVZkPz3FnIuDESCZaFLVN893zo=
+	t=1736179078; cv=none; b=McPSXZElkwqMpnPjgnrJD5cso3ahUPfdIh3T4knvGz5torZqB0UjmAJnHC9GxrUl5yFVo85UN/HJH8OBsUfpuxyCnYmxQQRN/6YnIVZMcQVyeyNh/FfxVlJ+QvIGYZd7HLtnAbLk9nP/NPD5vSv3MNyreqHtosdQ1Spm758T0NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179075; c=relaxed/simple;
-	bh=qTMB2zLKvp5caWdfhnF5EJaV5WOM2qjj9L4SrmTsVj0=;
+	s=arc-20240116; t=1736179078; c=relaxed/simple;
+	bh=n8a4P3paj2GOuUILt3TeU7iZyufBVUDAL+O6r6x0IhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mti69Hr949pMb/840fngLhuxXtBBg9en+a5vuG3L0bLywq4mgz6JcxPOOih7ENfYOeVx/pc2Ki3VUB5W+zcnjY+VW/VvJZDk3p4tivHRUzBaSYf2o3yYuaEBeGDOZ0PRsXGN8LJxedkqWs3I1OFq1gPsmA61hvvq6gIqO2V5DzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2heewfY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f6SDoSHJvCMMV0BIcTUc7Bfj1Aer78rHtAMeazxLrl0p4TImNE6tDZukd8Twl9AQpz7UC1XUhS3e1zrImeVZNksMjQCCr0AO3JLG4i4bcf5vcO0gmqE7bntfBLIZzOf3WvzHE2Co/kdcZ0wFO8JWTuv6WqpvXpF+WMij0EtSSG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2L08WnA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2heewfY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E412DC4CED2;
-	Mon,  6 Jan 2025 15:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2L08WnA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D59B9C4CED2;
+	Mon,  6 Jan 2025 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179075;
-	bh=qTMB2zLKvp5caWdfhnF5EJaV5WOM2qjj9L4SrmTsVj0=;
+	s=korg; t=1736179078;
+	bh=n8a4P3paj2GOuUILt3TeU7iZyufBVUDAL+O6r6x0IhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2heewfYxAfpTWSmQhIp8IV1O+PniiLYZvoSqbUWg3UVObgk6vNjciVmADgtCq8YH
-	 xaPKyWzqbKCse7NbUU3T+PXYDaRvPpxzxDqJrDXDMsg9W4AEuQT8ZSAb55faq3iEM5
-	 xDHcnz9Hcz3p+dL9LN7XHbSOhMzhOOafJ0cGueyg=
+	b=X2L08WnAMUVevLCZLHrp9Dm8215oRNUgZW8BXhLfsuiUbsflWmRAp1A0Y+Gca52jS
+	 Bz1GwAHDoXpNnlpLIbMSaqAzx+f8F/SaLIixSy+MdkLH8jURiiLN2CI1xr0aqxu3vK
+	 PEi2p3dcimFl3nlxGchkMwr+BibcICohdCGr8qiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f966c13b1b4fc0403b19@syzkaller.appspotmail.com,
-	Yue Hu <huyue2@coolpad.com>,
+	Colin Walters <walters@verbum.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 08/93] erofs: fix order >= MAX_ORDER warning due to crafted negative i_size
-Date: Mon,  6 Jan 2025 16:16:44 +0100
-Message-ID: <20250106151129.012013987@linuxfoundation.org>
+Subject: [PATCH 5.4 09/93] erofs: fix incorrect symlink detection in fast symlink
+Date: Mon,  6 Jan 2025 16:16:45 +0100
+Message-ID: <20250106151129.050066936@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -46,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
@@ -54,39 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 1dd73601a1cba37a0ed5f89a8662c90191df5873 upstream.
+commit 9ed50b8231e37b1ae863f5dec8153b98d9f389b4 upstream.
 
-As syzbot reported [1], the root cause is that i_size field is a
-signed type, and negative i_size is also less than EROFS_BLKSIZ.
-As a consequence, it's handled as fast symlink unexpectedly.
+Fast symlink can be used if the on-disk symlink data is stored
+in the same block as the on-disk inode, so we don’t need to trigger
+another I/O for symlink data.  However, currently fs correction could be
+reported _incorrectly_ if inode xattrs are too large.
 
-Let's fall back to the generic path to deal with such unusual i_size.
+In fact, these should be valid images although they cannot be handled as
+fast symlinks.
 
-[1] https://lore.kernel.org/r/000000000000ac8efa05e7feaa1f@google.com
+Many thanks to Colin for reporting this!
 
-Reported-by: syzbot+f966c13b1b4fc0403b19@syzkaller.appspotmail.com
+Reported-by: Colin Walters <walters@verbum.org>
+Reported-by: https://honggfuzz.dev/
+Link: https://lore.kernel.org/r/bb2dd430-7de0-47da-ae5b-82ab2dd4d945@app.fastmail.com
 Fixes: 431339ba9042 ("staging: erofs: add inode operations")
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Link: https://lore.kernel.org/r/20220909023948.28925-1-hsiangkao@linux.alibaba.com
+[ Note that it's a runtime misbehavior instead of a security issue. ]
+Link: https://lore.kernel.org/r/20240909031911.1174718-1-hsiangkao@linux.alibaba.com
+[ Gao Xiang: fix 5.4.y build warning due to `check_add_overflow`. ]
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/erofs/inode.c | 20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
 diff --git a/fs/erofs/inode.c b/fs/erofs/inode.c
-index 0dbeaf68e1d6..ba981076d6f2 100644
+index ba981076d6f2..af90d3d70a08 100644
 --- a/fs/erofs/inode.c
 +++ b/fs/erofs/inode.c
-@@ -202,7 +202,7 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
+@@ -198,11 +198,14 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
+ 			      unsigned int m_pofs)
+ {
+ 	struct erofs_inode *vi = EROFS_I(inode);
++	loff_t off;
+ 	char *lnk;
  
- 	/* if it cannot be handled with fast symlink scheme */
- 	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
--	    inode->i_size >= PAGE_SIZE) {
-+	    inode->i_size >= PAGE_SIZE || inode->i_size < 0) {
+-	/* if it cannot be handled with fast symlink scheme */
+-	if (vi->datalayout != EROFS_INODE_FLAT_INLINE ||
+-	    inode->i_size >= PAGE_SIZE || inode->i_size < 0) {
++	m_pofs += vi->xattr_isize;
++	/* check if it cannot be handled with fast symlink scheme */
++	if (vi->datalayout != EROFS_INODE_FLAT_INLINE || inode->i_size < 0 ||
++	    check_add_overflow((loff_t)m_pofs, inode->i_size, &off) ||
++	    off > i_blocksize(inode)) {
  		inode->i_op = &erofs_symlink_iops;
  		return 0;
  	}
+@@ -211,17 +214,6 @@ static int erofs_fill_symlink(struct inode *inode, void *data,
+ 	if (!lnk)
+ 		return -ENOMEM;
+ 
+-	m_pofs += vi->xattr_isize;
+-	/* inline symlink data shouldn't cross page boundary as well */
+-	if (m_pofs + inode->i_size > PAGE_SIZE) {
+-		kfree(lnk);
+-		erofs_err(inode->i_sb,
+-			  "inline data cross block boundary @ nid %llu",
+-			  vi->nid);
+-		DBG_BUGON(1);
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	memcpy(lnk, data + m_pofs, inode->i_size);
+ 	lnk[inode->i_size] = '\0';
+ 
 -- 
 2.39.5
 
