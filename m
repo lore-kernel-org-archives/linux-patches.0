@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534E61A8F79;
-	Mon,  6 Jan 2025 16:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2336E1A8F79;
+	Mon,  6 Jan 2025 16:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179201; cv=none; b=YsnnH3SjMJsqFG7PFPLd++nXcq57ld0zJL6sSaOoPMr42LIqJee3dqPYDmkDAHg/prqpKi6vZ+yeGHaHwR/qaJSe8mCKwzVio3peXD/oeGTUjSop6vxZ+lgUbizxSP4/IARPmem6q5W3F+z0fKi/6SPRB8mGfR61Szoxnmj1mEo=
+	t=1736179204; cv=none; b=RUGfB/iD18Cf096W+/Ii7bLb6eT5NCD5eEgGs5SMxc/5cosE5TQqsnHpME4fVR3h+6/v3rN96Ul8NxWRbB3eIFmoCPCj7W6CddWXcoz8LXksc26uWnhnWV9l95MvYpsSyIkNttQ4JJCdbd/V5zZsydd6q2zEl0CjuWyJusC8ZlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179201; c=relaxed/simple;
-	bh=7H1HbcYDzFV9kqGBsKqlenWhj/o/Sfn3I5LHhEeQkXE=;
+	s=arc-20240116; t=1736179204; c=relaxed/simple;
+	bh=tR0ULnQT4PMamV1w8U5qy5iCx7PUBuFKmeDPIPdI2Z0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAKMqCDLOzUOg2wTQfbIjT41lSn8YLE/Kw9bwrHTSLEdqqk6rCefqs8Sd2aiF6kj223YPE9ffWw84hZydaA5zgI4NqAxzEnFr0zIbXS9j2bz4qQ6tnySD+2BJ3TIatHw4Lm6M9YgvWijkFBNSrASem7XE4cKKjZzCNcKxlOE8xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjWQmbKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gRFn8NEv+WMorPUO2+BZva/pVmlojgDD8pAHstz9jJmEfNKFNYoc+NeGgM+PNrzucfaaZkQX7pjk3was2cd1XW55qqhTx9jg2vXOcIJUcx1rv/UDL0NymN227WjeeMgLpT1uTTsLe1Vkh55+G3QyIgc6EUQvo4uZCQCywnSjq/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ws2STI3p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjWQmbKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC499C4CED2;
-	Mon,  6 Jan 2025 16:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ws2STI3p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FFD9C4CED2;
+	Mon,  6 Jan 2025 16:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179201;
-	bh=7H1HbcYDzFV9kqGBsKqlenWhj/o/Sfn3I5LHhEeQkXE=;
+	s=korg; t=1736179204;
+	bh=tR0ULnQT4PMamV1w8U5qy5iCx7PUBuFKmeDPIPdI2Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjWQmbKYgrnMGyA7C0qMWtlvE8lcfsPUIUTxBND+MinTAh2rPPylpc11BU8iLxMb3
-	 W8HLTV5zgjMC41NOZpD7cr56BXF5LidFiA+4ws5NZkdsmmymUyDqh3nldp2ZATaZWJ
-	 VZudphmxYRIuVdFjyJKRuWm3Gx6hOCML322/EM1A=
+	b=ws2STI3p5ZMHAZ5wOUaqDyuHknxOnFK2GUSGe2NCcx6cBUvc9We3W1ZMoVagLcLMk
+	 9IjpE2kRAc0nDTApZemWCDR5aH/EEffg0e9do2yCHyURoDPkC75c+4lf7ogNHYj3BG
+	 H+XtOk0y1iLWy7hW4+5vqj6Vd+9YtWHfGSTm0ZY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <christoph.paasch@gmail.com>,
-	Vasily Averin <vvs@virtuozzo.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Vasily Averin <vasily.averin@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 60/93] skb_expand_head() adjust skb->truesize incorrectly
-Date: Mon,  6 Jan 2025 16:17:36 +0100
-Message-ID: <20250106151130.971492292@linuxfoundation.org>
+Subject: [PATCH 5.4 61/93] ipv6: prevent possible UAF in ip6_xmit()
+Date: Mon,  6 Jan 2025 16:17:37 +0100
+Message-ID: <20250106151131.008803986@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,95 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Averin <vvs@virtuozzo.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 7f678def99d29c520418607509bb19c7fc96a6db upstream.
+commit 2d5ff7e339d04622d8282661df36151906d0e1c7 upstream.
 
-Christoph Paasch reports [1] about incorrect skb->truesize
-after skb_expand_head() call in ip6_xmit.
-This may happen because of two reasons:
-- skb_set_owner_w() for newly cloned skb is called too early,
-before pskb_expand_head() where truesize is adjusted for (!skb-sk) case.
-- pskb_expand_head() does not adjust truesize in (skb->sk) case.
-In this case sk->sk_wmem_alloc should be adjusted too.
+If skb_expand_head() returns NULL, skb has been freed
+and the associated dst/idev could also have been freed.
 
-[1] https://lkml.org/lkml/2021/8/20/1082
+We must use rcu_read_lock() to prevent a possible UAF.
 
-Fixes: f1260ff15a71 ("skbuff: introduce skb_expand_head()")
-Fixes: 2d85a1b31dde ("ipv6: ip6_finish_output2: set sk into newly allocated nskb")
-Reported-by: Christoph Paasch <christoph.paasch@gmail.com>
-Signed-off-by: Vasily Averin <vvs@virtuozzo.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/644330dd-477e-0462-83bf-9f514c41edd1@virtuozzo.com
+Fixes: 0c9f227bee11 ("ipv6: use skb_expand_head in ip6_xmit")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Vasily Averin <vasily.averin@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20240820160859.3786976-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |   36 +++++++++++++++++++++++-------------
- 1 file changed, 23 insertions(+), 13 deletions(-)
- create mode 100644 net/core/sock_destructor.h
+ net/ipv6/ip6_output.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -77,6 +77,7 @@
- #include <linux/indirect_call_wrapper.h>
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -271,11 +271,15 @@ int ip6_xmit(const struct sock *sk, stru
+ 		head_room += opt->opt_nflen + opt->opt_flen;
  
- #include "datagram.h"
-+#include "sock_destructor.h"
- 
- struct kmem_cache *skbuff_head_cache __ro_after_init;
- static struct kmem_cache *skbuff_fclone_cache __ro_after_init;
-@@ -1741,30 +1742,39 @@ EXPORT_SYMBOL(skb_realloc_headroom);
- struct sk_buff *skb_expand_head(struct sk_buff *skb, unsigned int headroom)
- {
- 	int delta = headroom - skb_headroom(skb);
-+	int osize = skb_end_offset(skb);
-+	struct sock *sk = skb->sk;
- 
- 	if (WARN_ONCE(delta <= 0,
- 		      "%s is expecting an increase in the headroom", __func__))
- 		return skb;
- 
--	/* pskb_expand_head() might crash, if skb is shared */
--	if (skb_shared(skb)) {
-+	delta = SKB_DATA_ALIGN(delta);
-+	/* pskb_expand_head() might crash, if skb is shared. */
-+	if (skb_shared(skb) || !is_skb_wmem(skb)) {
- 		struct sk_buff *nskb = skb_clone(skb, GFP_ATOMIC);
- 
--		if (likely(nskb)) {
--			if (skb->sk)
--				skb_set_owner_w(nskb, skb->sk);
--			consume_skb(skb);
--		} else {
--			kfree_skb(skb);
--		}
-+		if (unlikely(!nskb))
-+			goto fail;
-+
-+		if (sk)
-+			skb_set_owner_w(nskb, sk);
-+		consume_skb(skb);
- 		skb = nskb;
+ 	if (unlikely(head_room > skb_headroom(skb))) {
++		/* Make sure idev stays alive */
++		rcu_read_lock();
+ 		skb = skb_expand_head(skb, head_room);
+ 		if (!skb) {
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
++			rcu_read_unlock();
+ 			return -ENOBUFS;
+ 		}
++		rcu_read_unlock();
  	}
--	if (skb &&
--	    pskb_expand_head(skb, SKB_DATA_ALIGN(delta), 0, GFP_ATOMIC)) {
--		kfree_skb(skb);
--		skb = NULL;
-+	if (pskb_expand_head(skb, delta, 0, GFP_ATOMIC))
-+		goto fail;
-+
-+	if (sk && is_skb_wmem(skb)) {
-+		delta = skb_end_offset(skb) - osize;
-+		refcount_add(delta, &sk->sk_wmem_alloc);
-+		skb->truesize += delta;
- 	}
- 	return skb;
-+
-+fail:
-+	kfree_skb(skb);
-+	return NULL;
- }
- EXPORT_SYMBOL(skb_expand_head);
  
+ 	if (opt) {
 
 
