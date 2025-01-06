@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55F81DD539;
-	Mon,  6 Jan 2025 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417D41DE2DF;
+	Mon,  6 Jan 2025 16:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179301; cv=none; b=qYtxdRUBMv2DAlW8IToTKpn7AeXkKLoRduUL7kor7uHhhGTwdskS4AV6KWJg5IKmbnhJs5hp74ywIFWnMctFxrLgPofMXjOkTtpbvLQs6+KpgOZley7HitGkHDvohurgLDtFeCuEPnHmpCDS4bINd7+xcicblMGg/ktaA4UZBnQ=
+	t=1736179304; cv=none; b=DXqOiUvQjo6fxSpsTEF7IXO21fox4e/1K2L329B/dblOMH2LODnEd6Cty8WvXoAQQC66sqf7MWn70H9vLmtB4SX82Ng+itOFn/9Exgwu3I1PM3hySlDnuT5pbeLwN6205qHoy1kIbRDQPIMDjCdO6thY+wC2B7CxbnXF+p2UJaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179301; c=relaxed/simple;
-	bh=0yJhzvgRDMxB0LPJ5bB+mPYpLqkyhirs7wCEBWWKuF8=;
+	s=arc-20240116; t=1736179304; c=relaxed/simple;
+	bh=+DSHQup9JeFlUFWuxj2MKW6iJdsQzkaufo2XGLCiX24=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCT2oOiNWFJALf/NT2jrj5eMRGJJFjQsSQuH/I9yHV12wqWYBt7JksoIVSCkFxOYyZun5QTEAjAAH672nuXYYUzY2afmJfSg/l+9YuSS29GbM2714CJV85RdlIZr2UuCi9YqCwh0hIQIe48lI8+dgBB6OQzHx+SaxZ5JQ+2MMpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bAOQBvCb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BuJQJvU8CFPp2smXQBYshzRITaH0s/dCqE/FWvmZHSh3YoFAkeP5+eL1SyQOtxihRPxqxXirceVuiXF9sF71g1eDKnOOXwto8Fgs7u0BHDQcQYILGp1rkYSdGEiG7RWf6lxOXSp39ShYB4YQbi9rzT4LHceuwkEoEW2pmfVr/CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FhTYYQu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bAOQBvCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 594F9C4CED2;
-	Mon,  6 Jan 2025 16:01:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FhTYYQu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EA5C4CED2;
+	Mon,  6 Jan 2025 16:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179300;
-	bh=0yJhzvgRDMxB0LPJ5bB+mPYpLqkyhirs7wCEBWWKuF8=;
+	s=korg; t=1736179303;
+	bh=+DSHQup9JeFlUFWuxj2MKW6iJdsQzkaufo2XGLCiX24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bAOQBvCbXfTIKUCkm84ebg1FgMdPukS7k4661gEwNHDduCw16bLr+vg9Pmtd7Zb/c
-	 p7AxiAL2bxKOHsbkZVsq8zuTFcTTfqjVZKHyGyDmK+HGK8Q8fDu/mGIYMeqJkir3/P
-	 1F2B9hHXLehEDObTxZWNJjVRi/ajsHEF89Gyd3aM=
+	b=FhTYYQu0mRhTE+klBwnD6Xs+st/C3C0DcH4ojTsMzXhC00nRpPgS0Iz2XLQR4nMxH
+	 SnXs3ihQUy+XVv6sNdycPmfZFo+bz2qJSh8YAK4PNqrA37oX9ifNtvpJbBIa2cKME1
+	 ebKNko3UfA6PwPUzy7fzFeGbd/9fZt7q1Am70YPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hien Huynh <hien.huynh.px@renesas.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Adam Ford <aford173@gmail.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 5.4 92/93] drm: adv7511: Drop dsi single lane support
-Date: Mon,  6 Jan 2025 16:18:08 +0100
-Message-ID: <20250106151132.175697291@linuxfoundation.org>
+	Seiji Nishikawa <snishika@redhat.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 93/93] mm: vmscan: account for free pages to prevent infinite Loop in throttle_direct_reclaim()
+Date: Mon,  6 Jan 2025 16:18:09 +0100
+Message-ID: <20250106151132.213551251@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -53,39 +51,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-commit 79d67c499c3f886202a40c5cb27e747e4fa4d738 upstream.
+commit 6aaced5abd32e2a57cd94fd64f824514d0361da8 upstream.
 
-As per [1] and [2], ADV7535/7533 supports only 2-, 3-, or 4-lane. Drop
-unsupported 1-lane.
+The task sometimes continues looping in throttle_direct_reclaim() because
+allow_direct_reclaim(pgdat) keeps returning false.
 
-[1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7535.pdf
-[2] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7533.pdf
+ #0 [ffff80002cb6f8d0] __switch_to at ffff8000080095ac
+ #1 [ffff80002cb6f900] __schedule at ffff800008abbd1c
+ #2 [ffff80002cb6f990] schedule at ffff800008abc50c
+ #3 [ffff80002cb6f9b0] throttle_direct_reclaim at ffff800008273550
+ #4 [ffff80002cb6fa20] try_to_free_pages at ffff800008277b68
+ #5 [ffff80002cb6fae0] __alloc_pages_nodemask at ffff8000082c4660
+ #6 [ffff80002cb6fc50] alloc_pages_vma at ffff8000082e4a98
+ #7 [ffff80002cb6fca0] do_anonymous_page at ffff80000829f5a8
+ #8 [ffff80002cb6fce0] __handle_mm_fault at ffff8000082a5974
+ #9 [ffff80002cb6fd90] handle_mm_fault at ffff8000082a5bd4
 
-Fixes: 1e4d58cd7f88 ("drm/bridge: adv7533: Create a MIPI DSI device")
-Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Adam Ford <aford173@gmail.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-4-biju.das.jz@bp.renesas.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+At this point, the pgdat contains the following two zones:
+
+        NODE: 4  ZONE: 0  ADDR: ffff00817fffe540  NAME: "DMA32"
+          SIZE: 20480  MIN/LOW/HIGH: 11/28/45
+          VM_STAT:
+                NR_FREE_PAGES: 359
+        NR_ZONE_INACTIVE_ANON: 18813
+          NR_ZONE_ACTIVE_ANON: 0
+        NR_ZONE_INACTIVE_FILE: 50
+          NR_ZONE_ACTIVE_FILE: 0
+          NR_ZONE_UNEVICTABLE: 0
+        NR_ZONE_WRITE_PENDING: 0
+                     NR_MLOCK: 0
+                    NR_BOUNCE: 0
+                   NR_ZSPAGES: 0
+            NR_FREE_CMA_PAGES: 0
+
+        NODE: 4  ZONE: 1  ADDR: ffff00817fffec00  NAME: "Normal"
+          SIZE: 8454144  PRESENT: 98304  MIN/LOW/HIGH: 68/166/264
+          VM_STAT:
+                NR_FREE_PAGES: 146
+        NR_ZONE_INACTIVE_ANON: 94668
+          NR_ZONE_ACTIVE_ANON: 3
+        NR_ZONE_INACTIVE_FILE: 735
+          NR_ZONE_ACTIVE_FILE: 78
+          NR_ZONE_UNEVICTABLE: 0
+        NR_ZONE_WRITE_PENDING: 0
+                     NR_MLOCK: 0
+                    NR_BOUNCE: 0
+                   NR_ZSPAGES: 0
+            NR_FREE_CMA_PAGES: 0
+
+In allow_direct_reclaim(), while processing ZONE_DMA32, the sum of
+inactive/active file-backed pages calculated in zone_reclaimable_pages()
+based on the result of zone_page_state_snapshot() is zero.
+
+Additionally, since this system lacks swap, the calculation of inactive/
+active anonymous pages is skipped.
+
+        crash> p nr_swap_pages
+        nr_swap_pages = $1937 = {
+          counter = 0
+        }
+
+As a result, ZONE_DMA32 is deemed unreclaimable and skipped, moving on to
+the processing of the next zone, ZONE_NORMAL, despite ZONE_DMA32 having
+free pages significantly exceeding the high watermark.
+
+The problem is that the pgdat->kswapd_failures hasn't been incremented.
+
+        crash> px ((struct pglist_data *) 0xffff00817fffe540)->kswapd_failures
+        $1935 = 0x0
+
+This is because the node deemed balanced.  The node balancing logic in
+balance_pgdat() evaluates all zones collectively.  If one or more zones
+(e.g., ZONE_DMA32) have enough free pages to meet their watermarks, the
+entire node is deemed balanced.  This causes balance_pgdat() to exit early
+before incrementing the kswapd_failures, as it considers the overall
+memory state acceptable, even though some zones (like ZONE_NORMAL) remain
+under significant pressure.
+
+
+The patch ensures that zone_reclaimable_pages() includes free pages
+(NR_FREE_PAGES) in its calculation when no other reclaimable pages are
+available (e.g., file-backed or anonymous pages).  This change prevents
+zones like ZONE_DMA32, which have sufficient free pages, from being
+mistakenly deemed unreclaimable.  By doing so, the patch ensures proper
+node balancing, avoids masking pressure on other zones like ZONE_NORMAL,
+and prevents infinite loops in throttle_direct_reclaim() caused by
+allow_direct_reclaim(pgdat) repeatedly returning false.
+
+
+The kernel hangs due to a task stuck in throttle_direct_reclaim(), caused
+by a node being incorrectly deemed balanced despite pressure in certain
+zones, such as ZONE_NORMAL.  This issue arises from
+zone_reclaimable_pages() returning 0 for zones without reclaimable file-
+backed or anonymous pages, causing zones like ZONE_DMA32 with sufficient
+free pages to be skipped.
+
+The lack of swap or reclaimable pages results in ZONE_DMA32 being ignored
+during reclaim, masking pressure in other zones.  Consequently,
+pgdat->kswapd_failures remains 0 in balance_pgdat(), preventing fallback
+mechanisms in allow_direct_reclaim() from being triggered, leading to an
+infinite loop in throttle_direct_reclaim().
+
+This patch modifies zone_reclaimable_pages() to account for free pages
+(NR_FREE_PAGES) when no other reclaimable pages exist.  This ensures zones
+with sufficient free pages are not skipped, enabling proper balancing and
+reclaim behavior.
+
+[akpm@linux-foundation.org: coding-style cleanups]
+Link: https://lkml.kernel.org/r/20241130164346.436469-1-snishika@redhat.com
+Link: https://lkml.kernel.org/r/20241130161236.433747-2-snishika@redhat.com
+Fixes: 5a1c84b404a7 ("mm: remove reclaim and compaction retry approximations")
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7533.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmscan.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -193,7 +193,7 @@ int adv7533_parse_dt(struct device_node
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -342,7 +342,14 @@ unsigned long zone_reclaimable_pages(str
+ 	if (get_nr_swap_pages() > 0)
+ 		nr += zone_page_state_snapshot(zone, NR_ZONE_INACTIVE_ANON) +
+ 			zone_page_state_snapshot(zone, NR_ZONE_ACTIVE_ANON);
+-
++	/*
++	 * If there are no reclaimable file-backed or anonymous pages,
++	 * ensure zones with sufficient free pages are not skipped.
++	 * This prevents zones like DMA32 from being ignored in reclaim
++	 * scenarios where they can still help alleviate memory pressure.
++	 */
++	if (nr == 0)
++		nr = zone_page_state_snapshot(zone, NR_FREE_PAGES);
+ 	return nr;
+ }
  
- 	of_property_read_u32(np, "adi,dsi-lanes", &num_lanes);
- 
--	if (num_lanes < 1 || num_lanes > 4)
-+	if (num_lanes < 2 || num_lanes > 4)
- 		return -EINVAL;
- 
- 	adv->num_dsi_lanes = num_lanes;
 
 
