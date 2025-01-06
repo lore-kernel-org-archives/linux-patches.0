@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D04146D6B;
-	Mon,  6 Jan 2025 15:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1ED15A842;
+	Mon,  6 Jan 2025 15:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177122; cv=none; b=cqGb1O6pesJqz2Yj5H3YrSMPJMWPeefaWInPvkpKmzftNlCAzcqN4IoArs/jZfwyef1qQDgAeFHULxzmcv+X8sc84DlFUV/ZtjDSGmCvzxB2w4ybdFfCL7dMCckrc8sH0+aX4ylTP4FNFj5TkKyO5ZE4WDKu+imhVr5TpUbgy+E=
+	t=1736177125; cv=none; b=VMbW+/rJYT4liRyU3Ui32oEOVXi8rO8pb6uwmpuQElsDQ19UKYTBGeTn6EVylEIzi403eDHHVhY0OAD3YyNkWj3mQcNIA2n8RzaAyMIy3mc97Ez7/2FsF2qDR8HHy2/7bKGBVBpf+jUSa1PF375+5DAZF+J8nSbyJ/evHhLJ0Zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177122; c=relaxed/simple;
-	bh=j4AxSgnYGJaULbFxBfYQHc5nqs4qPS5RKZXGmvs+18k=;
+	s=arc-20240116; t=1736177125; c=relaxed/simple;
+	bh=QOS+WtMdlYdnGTliJeN3unNo/LekunBVL/yF8BVEEL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BaMPBNF3QwGD7xqmwTYhm6T0uzYIq9Ny1K0Bakc1tbKTCMY1LKlDJZ6/W6xmy4wF4DNHiWByPNu3OXMKMovoz+CTJt788n6nXUNmDCFdwL+2NWkdZpYsomj7Fmrn78qVqFrTYh/J9iatveBT2Kmbt83NIyTqNL93naFRM2dZdjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqMwDnVN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pq7f9cZKkoaFwQWxtbWclGcO1xmARmhsntoUFk1KO6Q4dmutcNT3ffGpZV7olyQP4H73zm6SPT0Q07ENGaRxyzOfaV4rdRGI/UW6TYJXuQYbA4HdzZgdmxgLxj4EwDgWlvb6b3HQ8Mkc3vO9p9BECoqkZNhRfZe+38m0EkTawN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zY4MoPYz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqMwDnVN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A18C4CED2;
-	Mon,  6 Jan 2025 15:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zY4MoPYz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB235C4CED2;
+	Mon,  6 Jan 2025 15:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177122;
-	bh=j4AxSgnYGJaULbFxBfYQHc5nqs4qPS5RKZXGmvs+18k=;
+	s=korg; t=1736177125;
+	bh=QOS+WtMdlYdnGTliJeN3unNo/LekunBVL/yF8BVEEL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqMwDnVNi9rMBOzWXa3/rfx9ZFwqKHvn8OL715jK3pG7huda4e1jPF9k39BjN2Lik
-	 OxkCQHv18R7xkaawUVhf/kRkNvq9OJkdtGnfi+VAW15DoRnPWhJC/tRpKnxOdXFed3
-	 GrbfYp8ABjbD5RUtvGS2arfPC2ywMuQHdD+pyCEo=
+	b=zY4MoPYz9hogvThFQKs7xDxNyd7U17I3A7SANEqKVAWjULCMA2DYmS6swxbn+cYt5
+	 oKO0eh9wBgO6rkiU+nVcXlBc2JoKEP3bCJTN3mWWj5YqdVUbXla/XXESGMBWLXal4k
+	 fD8XThB/C+TFFvlj9UPvGoovOwIvebBo9GsKPdxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/222] cleanup: Add conditional guard support
-Date: Mon,  6 Jan 2025 16:13:50 +0100
-Message-ID: <20250106151151.592002196@linuxfoundation.org>
+Subject: [PATCH 6.6 027/222] cleanup: Adjust scoped_guard() macros to avoid potential warning
+Date: Mon,  6 Jan 2025 16:13:51 +0100
+Message-ID: <20250106151151.629422119@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -50,223 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit e4ab322fbaaaf84b23d6cb0e3317a7f68baf36dc ]
+[ Upstream commit fcc22ac5baf06dd17193de44b60dbceea6461983 ]
 
-Adds:
+Change scoped_guard() and scoped_cond_guard() macros to make reasoning
+about them easier for static analysis tools (smatch, compiler
+diagnostics), especially to enable them to tell if the given usage of
+scoped_guard() is with a conditional lock class (interruptible-locks,
+try-locks) or not (like simple mutex_lock()).
 
- - DEFINE_GUARD_COND() / DEFINE_LOCK_GUARD_1_COND() to extend existing
-   guards with conditional lock primitives, eg. mutex_trylock(),
-   mutex_lock_interruptible().
+Add compile-time error if scoped_cond_guard() is used for non-conditional
+lock class.
 
-   nb. both primitives allow NULL 'locks', which cause the lock to
-       fail (obviously).
+Beyond easier tooling and a little shrink reported by bloat-o-meter
+this patch enables developer to write code like:
 
- - extends scoped_guard() to not take the body when the the
-   conditional guard 'fails'. eg.
+int foo(struct my_drv *adapter)
+{
+	scoped_guard(spinlock, &adapter->some_spinlock)
+		return adapter->spinlock_protected_var;
+}
 
-     scoped_guard (mutex_intr, &task->signal_cred_guard_mutex) {
-	...
-     }
+Current scoped_guard() implementation does not support that,
+due to compiler complaining:
+error: control reaches end of non-void function [-Werror=return-type]
 
-   will only execute the body when the mutex is held.
+Technical stuff about the change:
+scoped_guard() macro uses common idiom of using "for" statement to declare
+a scoped variable. Unfortunately, current logic is too hard for compiler
+diagnostics to be sure that there is exactly one loop step; fix that.
 
- - provides scoped_cond_guard(name, fail, args...); which extends
-   scoped_guard() to do fail when the lock-acquire fails.
+To make any loop so trivial that there is no above warning, it must not
+depend on any non-const variable to tell if there are more steps. There is
+no obvious solution for that in C, but one could use the compound
+statement expression with "goto" jumping past the "loop", effectively
+leaving only the subscope part of the loop semantics.
 
+More impl details:
+one more level of macro indirection is now needed to avoid duplicating
+label names;
+I didn't spot any other place that is using the
+"for (...; goto label) if (0) label: break;" idiom, so it's not packed for
+reuse beyond scoped_guard() family, what makes actual macros code cleaner.
+
+There was also a need to introduce const true/false variable per lock
+class, it is used to aid compiler diagnostics reasoning about "exactly
+1 step" loops (note that converting that to function would undo the whole
+benefit).
+
+Big thanks to Andy Shevchenko for help on this patch, both internal and
+public, ranging from whitespace/formatting, through commit message
+clarifications, general improvements, ending with presenting alternative
+approaches - all despite not even liking the idea.
+
+Big thanks to Dmitry Torokhov for the idea of compile-time check for
+scoped_cond_guard() (to use it only with conditional locsk), and general
+improvements for the patch.
+
+Big thanks to David Lechner for idea to cover also scoped_cond_guard().
+
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20231102110706.460851167%40infradead.org
-Stable-dep-of: fcc22ac5baf0 ("cleanup: Adjust scoped_guard() macros to avoid potential warning")
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lkml.kernel.org/r/20241018113823.171256-1-przemyslaw.kitszel@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cleanup.h  | 52 +++++++++++++++++++++++++++++++++++++---
- include/linux/mutex.h    |  3 ++-
- include/linux/rwsem.h    |  8 +++----
- include/linux/spinlock.h | 15 ++++++++++++
- 4 files changed, 70 insertions(+), 8 deletions(-)
+ include/linux/cleanup.h | 52 +++++++++++++++++++++++++++++++++--------
+ 1 file changed, 42 insertions(+), 10 deletions(-)
 
 diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
-index 53f1a7a932b0..6d7bfa899df0 100644
+index 6d7bfa899df0..f0c6d1d45e67 100644
 --- a/include/linux/cleanup.h
 +++ b/include/linux/cleanup.h
-@@ -92,25 +92,55 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
-  *	trivial wrapper around DEFINE_CLASS() above specifically
-  *	for locks.
+@@ -113,14 +113,20 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
+  *      similar to scoped_guard(), except it does fail when the lock
+  *      acquire fails.
   *
-+ * DEFINE_GUARD_COND(name, ext, condlock)
-+ *	wrapper around EXTEND_CLASS above to add conditional lock
-+ *	variants to a base class, eg. mutex_trylock() or
-+ *	mutex_lock_interruptible().
-+ *
-  * guard(name):
-- *	an anonymous instance of the (guard) class
-+ *	an anonymous instance of the (guard) class, not recommended for
-+ *	conditional locks.
-  *
-  * scoped_guard (name, args...) { }:
-  *	similar to CLASS(name, scope)(args), except the variable (with the
-  *	explicit name 'scope') is declard in a for-loop such that its scope is
-  *	bound to the next (compound) statement.
-  *
-+ *	for conditional locks the loop body is skipped when the lock is not
-+ *	acquired.
-+ *
-+ * scoped_cond_guard (name, fail, args...) { }:
-+ *      similar to scoped_guard(), except it does fail when the lock
-+ *      acquire fails.
-+ *
++ *      Only for conditional locks.
   */
  
- #define DEFINE_GUARD(_name, _type, _lock, _unlock) \
--	DEFINE_CLASS(_name, _type, _unlock, ({ _lock; _T; }), _type _T)
-+	DEFINE_CLASS(_name, _type, if (_T) { _unlock; }, ({ _lock; _T; }), _type _T); \
-+	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
-+	{ return *_T; }
++#define __DEFINE_CLASS_IS_CONDITIONAL(_name, _is_cond)	\
++static __maybe_unused const bool class_##_name##_is_conditional = _is_cond
 +
-+#define DEFINE_GUARD_COND(_name, _ext, _condlock) \
-+	EXTEND_CLASS(_name, _ext, \
-+		     ({ void *_t = _T; if (_T && !(_condlock)) _t = NULL; _t; }), \
-+		     class_##_name##_t _T) \
-+	static inline void * class_##_name##_ext##_lock_ptr(class_##_name##_t *_T) \
-+	{ return class_##_name##_lock_ptr(_T); }
+ #define DEFINE_GUARD(_name, _type, _lock, _unlock) \
++	__DEFINE_CLASS_IS_CONDITIONAL(_name, false); \
+ 	DEFINE_CLASS(_name, _type, if (_T) { _unlock; }, ({ _lock; _T; }), _type _T); \
+ 	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
+ 	{ return *_T; }
  
- #define guard(_name) \
+ #define DEFINE_GUARD_COND(_name, _ext, _condlock) \
++	__DEFINE_CLASS_IS_CONDITIONAL(_name##_ext, true); \
+ 	EXTEND_CLASS(_name, _ext, \
+ 		     ({ void *_t = _T; if (_T && !(_condlock)) _t = NULL; _t; }), \
+ 		     class_##_name##_t _T) \
+@@ -131,17 +137,40 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
  	CLASS(_name, __UNIQUE_ID(guard))
  
-+#define __guard_ptr(_name) class_##_name##_lock_ptr
-+
- #define scoped_guard(_name, args...)					\
- 	for (CLASS(_name, scope)(args),					\
--	     *done = NULL; !done; done = (void *)1)
-+	     *done = NULL; __guard_ptr(_name)(&scope) && !done; done = (void *)1)
-+
-+#define scoped_cond_guard(_name, _fail, args...) \
-+	for (CLASS(_name, scope)(args), \
-+	     *done = NULL; !done; done = (void *)1) \
-+		if (!__guard_ptr(_name)(&scope)) _fail; \
-+		else
+ #define __guard_ptr(_name) class_##_name##_lock_ptr
++#define __is_cond_ptr(_name) class_##_name##_is_conditional
  
+-#define scoped_guard(_name, args...)					\
+-	for (CLASS(_name, scope)(args),					\
+-	     *done = NULL; __guard_ptr(_name)(&scope) && !done; done = (void *)1)
+-
+-#define scoped_cond_guard(_name, _fail, args...) \
+-	for (CLASS(_name, scope)(args), \
+-	     *done = NULL; !done; done = (void *)1) \
+-		if (!__guard_ptr(_name)(&scope)) _fail; \
+-		else
+-
++/*
++ * Helper macro for scoped_guard().
++ *
++ * Note that the "!__is_cond_ptr(_name)" part of the condition ensures that
++ * compiler would be sure that for the unconditional locks the body of the
++ * loop (caller-provided code glued to the else clause) could not be skipped.
++ * It is needed because the other part - "__guard_ptr(_name)(&scope)" - is too
++ * hard to deduce (even if could be proven true for unconditional locks).
++ */
++#define __scoped_guard(_name, _label, args...)				\
++	for (CLASS(_name, scope)(args);					\
++	     __guard_ptr(_name)(&scope) || !__is_cond_ptr(_name);	\
++	     ({ goto _label; }))					\
++		if (0) {						\
++_label:									\
++			break;						\
++		} else
++
++#define scoped_guard(_name, args...)	\
++	__scoped_guard(_name, __UNIQUE_ID(label), args)
++
++#define __scoped_cond_guard(_name, _fail, _label, args...)		\
++	for (CLASS(_name, scope)(args); true; ({ goto _label; }))	\
++		if (!__guard_ptr(_name)(&scope)) {			\
++			BUILD_BUG_ON(!__is_cond_ptr(_name));		\
++			_fail;						\
++_label:									\
++			break;						\
++		} else
++
++#define scoped_cond_guard(_name, _fail, args...)	\
++	__scoped_cond_guard(_name, _fail, __UNIQUE_ID(label), args)
  /*
   * Additional helper macros for generating lock guards with types, either for
-@@ -119,6 +149,7 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
-  *
-  * DEFINE_LOCK_GUARD_0(name, lock, unlock, ...)
-  * DEFINE_LOCK_GUARD_1(name, type, lock, unlock, ...)
-+ * DEFINE_LOCK_GUARD_1_COND(name, ext, condlock)
-  *
-  * will result in the following type:
-  *
-@@ -140,6 +171,11 @@ typedef struct {							\
- static inline void class_##_name##_destructor(class_##_name##_t *_T)	\
- {									\
- 	if (_T->lock) { _unlock; }					\
-+}									\
-+									\
-+static inline void *class_##_name##_lock_ptr(class_##_name##_t *_T)	\
-+{									\
-+	return _T->lock;						\
+  * locks that don't have a native type (eg. RCU, preempt) or those that need a
+@@ -197,14 +226,17 @@ static inline class_##_name##_t class_##_name##_constructor(void)	\
  }
  
+ #define DEFINE_LOCK_GUARD_1(_name, _type, _lock, _unlock, ...)		\
++__DEFINE_CLASS_IS_CONDITIONAL(_name, false);				\
+ __DEFINE_UNLOCK_GUARD(_name, _type, _unlock, __VA_ARGS__)		\
+ __DEFINE_LOCK_GUARD_1(_name, _type, _lock)
  
-@@ -168,4 +204,14 @@ __DEFINE_LOCK_GUARD_1(_name, _type, _lock)
+ #define DEFINE_LOCK_GUARD_0(_name, _lock, _unlock, ...)			\
++__DEFINE_CLASS_IS_CONDITIONAL(_name, false);				\
  __DEFINE_UNLOCK_GUARD(_name, void, _unlock, __VA_ARGS__)		\
  __DEFINE_LOCK_GUARD_0(_name, _lock)
  
-+#define DEFINE_LOCK_GUARD_1_COND(_name, _ext, _condlock)		\
-+	EXTEND_CLASS(_name, _ext,					\
-+		     ({ class_##_name##_t _t = { .lock = l }, *_T = &_t;\
-+		        if (_T->lock && !(_condlock)) _T->lock = NULL;	\
-+			_t; }),						\
-+		     typeof_member(class_##_name##_t, lock) l)		\
-+	static inline void * class_##_name##_ext##_lock_ptr(class_##_name##_t *_T) \
-+	{ return class_##_name##_lock_ptr(_T); }
-+
-+
- #endif /* __LINUX_GUARDS_H */
-diff --git a/include/linux/mutex.h b/include/linux/mutex.h
-index 5b5630e58407..e1c323c7d75b 100644
---- a/include/linux/mutex.h
-+++ b/include/linux/mutex.h
-@@ -248,6 +248,7 @@ extern void mutex_unlock(struct mutex *lock);
- extern int atomic_dec_and_mutex_lock(atomic_t *cnt, struct mutex *lock);
- 
- DEFINE_GUARD(mutex, struct mutex *, mutex_lock(_T), mutex_unlock(_T))
--DEFINE_FREE(mutex, struct mutex *, if (_T) mutex_unlock(_T))
-+DEFINE_GUARD_COND(mutex, _try, mutex_trylock(_T))
-+DEFINE_GUARD_COND(mutex, _intr, mutex_lock_interruptible(_T) == 0)
- 
- #endif /* __LINUX_MUTEX_H */
-diff --git a/include/linux/rwsem.h b/include/linux/rwsem.h
-index 1dd530ce8b45..9c29689ff505 100644
---- a/include/linux/rwsem.h
-+++ b/include/linux/rwsem.h
-@@ -203,11 +203,11 @@ extern void up_read(struct rw_semaphore *sem);
- extern void up_write(struct rw_semaphore *sem);
- 
- DEFINE_GUARD(rwsem_read, struct rw_semaphore *, down_read(_T), up_read(_T))
--DEFINE_GUARD(rwsem_write, struct rw_semaphore *, down_write(_T), up_write(_T))
--
--DEFINE_FREE(up_read, struct rw_semaphore *, if (_T) up_read(_T))
--DEFINE_FREE(up_write, struct rw_semaphore *, if (_T) up_write(_T))
-+DEFINE_GUARD_COND(rwsem_read, _try, down_read_trylock(_T))
-+DEFINE_GUARD_COND(rwsem_read, _intr, down_read_interruptible(_T) == 0)
- 
-+DEFINE_GUARD(rwsem_write, struct rw_semaphore *, down_write(_T), up_write(_T))
-+DEFINE_GUARD_COND(rwsem_write, _try, down_write_trylock(_T))
- 
- /*
-  * downgrade write lock to read lock
-diff --git a/include/linux/spinlock.h b/include/linux/spinlock.h
-index 31d3d747a9db..ceb56b39c70f 100644
---- a/include/linux/spinlock.h
-+++ b/include/linux/spinlock.h
-@@ -507,6 +507,8 @@ DEFINE_LOCK_GUARD_1(raw_spinlock, raw_spinlock_t,
- 		    raw_spin_lock(_T->lock),
- 		    raw_spin_unlock(_T->lock))
- 
-+DEFINE_LOCK_GUARD_1_COND(raw_spinlock, _try, raw_spin_trylock(_T->lock))
-+
- DEFINE_LOCK_GUARD_1(raw_spinlock_nested, raw_spinlock_t,
- 		    raw_spin_lock_nested(_T->lock, SINGLE_DEPTH_NESTING),
- 		    raw_spin_unlock(_T->lock))
-@@ -515,23 +517,36 @@ DEFINE_LOCK_GUARD_1(raw_spinlock_irq, raw_spinlock_t,
- 		    raw_spin_lock_irq(_T->lock),
- 		    raw_spin_unlock_irq(_T->lock))
- 
-+DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irq, _try, raw_spin_trylock_irq(_T->lock))
-+
- DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
- 		    raw_spin_lock_irqsave(_T->lock, _T->flags),
- 		    raw_spin_unlock_irqrestore(_T->lock, _T->flags),
- 		    unsigned long flags)
- 
-+DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
-+			 raw_spin_trylock_irqsave(_T->lock, _T->flags))
-+
- DEFINE_LOCK_GUARD_1(spinlock, spinlock_t,
- 		    spin_lock(_T->lock),
- 		    spin_unlock(_T->lock))
- 
-+DEFINE_LOCK_GUARD_1_COND(spinlock, _try, spin_trylock(_T->lock))
-+
- DEFINE_LOCK_GUARD_1(spinlock_irq, spinlock_t,
- 		    spin_lock_irq(_T->lock),
- 		    spin_unlock_irq(_T->lock))
- 
-+DEFINE_LOCK_GUARD_1_COND(spinlock_irq, _try,
-+			 spin_trylock_irq(_T->lock))
-+
- DEFINE_LOCK_GUARD_1(spinlock_irqsave, spinlock_t,
- 		    spin_lock_irqsave(_T->lock, _T->flags),
- 		    spin_unlock_irqrestore(_T->lock, _T->flags),
- 		    unsigned long flags)
- 
-+DEFINE_LOCK_GUARD_1_COND(spinlock_irqsave, _try,
-+			 spin_trylock_irqsave(_T->lock, _T->flags))
-+
- #undef __LINUX_INSIDE_SPINLOCK_H
- #endif /* __LINUX_SPINLOCK_H */
+ #define DEFINE_LOCK_GUARD_1_COND(_name, _ext, _condlock)		\
++	__DEFINE_CLASS_IS_CONDITIONAL(_name##_ext, true);		\
+ 	EXTEND_CLASS(_name, _ext,					\
+ 		     ({ class_##_name##_t _t = { .lock = l }, *_T = &_t;\
+ 		        if (_T->lock && !(_condlock)) _T->lock = NULL;	\
 -- 
 2.39.5
 
