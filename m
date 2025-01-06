@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE8C81728;
-	Mon,  6 Jan 2025 15:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8746313B59A;
+	Mon,  6 Jan 2025 15:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179042; cv=none; b=t9XZfTK27tZaRPcYpN/a/JjAkcTCu4nUS/anvxGyGssXIc2obTpYJmtP/lAD18Ex0k4RlANVsb21Qr4df3+vfCvoqRxWhBvb4v957VI+lD+j4Xup8C7rLhYeMzpt9qGDz22yUbMDMWvvUcQInVowLmZf+MyR8pKg3sYLZgTsFRE=
+	t=1736179045; cv=none; b=EHQwfHQpzi9D9EQ758rldsWiVABNVxV5C63Kiauv0TMbTCX69PDs8gt02U79iP1YisTR08hWL9Nycf85UoK3WWAqmIbIq/tOdvEToIHSvpSFJIUnaJsqPsaLrUArObV1jbCkH9VNN1YkLZpdOnRXzk+90fWO7rJFvYqjb43ij3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179042; c=relaxed/simple;
-	bh=BP5x7b1EwJZ5GfrC2qZvHHsDtiKYtw29mqfibItg5Rw=;
+	s=arc-20240116; t=1736179045; c=relaxed/simple;
+	bh=GHR3uQB8XyOwPG+qHgPghhqaz7cffBmsWt/CuuUcFDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sCq6Yz+Iso3R8Z9b+B5Bz78kfKMo9QQsZ50TtaNEA327ZksGfCT28Tla8fuLGko6UC61BHnHSpBJqOYnzigLuUogFbaSPTUlnKtMDTOK8VYUuiSBbHCqqPsGvFdE12vibhS4xq4NjfNotHqEyGNHFZznYQP7jDdJ5DfRwh6tBQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYtc8S/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qviqpxkJ1FIqaNb2+vrwacSKhCrNQsoNHi4XxzdYBb4OJrVy8ClbDvKJRgfPmjuhB8fZapBCRGjps/Tm1z4fhTKfd0NVKX239xK5YvxQ27J1ABS5TqTKErLmwEzFFUJRKFOJSEb26ve23rWSgdt5JDHnYLvxiv8bRew7jDeydoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeFcxrJB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYtc8S/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A040C4CEDF;
-	Mon,  6 Jan 2025 15:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeFcxrJB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED49C4CED2;
+	Mon,  6 Jan 2025 15:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179042;
-	bh=BP5x7b1EwJZ5GfrC2qZvHHsDtiKYtw29mqfibItg5Rw=;
+	s=korg; t=1736179045;
+	bh=GHR3uQB8XyOwPG+qHgPghhqaz7cffBmsWt/CuuUcFDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYtc8S/q62/rwjFuFgKsr0gGUCV/yq2pFHpMMAtxOPRStQ4S04ZBqJhrj4+q4RcM3
-	 CSPCw4F7WHPsB2yO8GD2l08V2242UF4fJexZO3qD5VFX0ms5jHyzcbm3x4xKGNyG4U
-	 sy9kwXyhKaB7ESSvU+7UlXYsmRoRCddXdhK3BUg8=
+	b=XeFcxrJBH2aUB7VQ4Un3MwuF/isvQpgp7SlXCgbJqQWhecEy/LHx+zGQBgHqEY1vK
+	 b8ZAzEA9owSz8SNkTvKlbU/NpV0zyIZ7izlqNqd7SakAMbsqzNVEcxlqNfDvcVXpLO
+	 RG4vF40tYBhUhq3aFP/O4lyVgD8GvmwdhXl6OvLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Pastor <antonio.pastor@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/168] net: llc: reset skb->transport_header
-Date: Mon,  6 Jan 2025 16:17:23 +0100
-Message-ID: <20250106151143.537810616@linuxfoundation.org>
+	Lion Ackermann <nnamrec@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	"David S. Miller" <davem@davemloft.net>,
+	Artem Metla <ametla@google.com>
+Subject: [PATCH 5.4 01/93] net: sched: fix ordering of qlen adjustment
+Date: Mon,  6 Jan 2025 16:16:37 +0100
+Message-ID: <20250106151128.746093928@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
-References: <20250106151138.451846855@linuxfoundation.org>
+In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
+References: <20250106151128.686130933@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antonio Pastor <antonio.pastor@gmail.com>
+From: Lion Ackermann <nnamrec@gmail.com>
 
-[ Upstream commit a024e377efed31ecfb39210bed562932321345b3 ]
+commit 5eb7de8cd58e73851cd37ff8d0666517d9926948 upstream.
 
-802.2+LLC+SNAP frames received by napi_complete_done with GRO and DSA
-have skb->transport_header set two bytes short, or pointing 2 bytes
-before network_header & skb->data. As snap_rcv expects transport_header
-to point to SNAP header (OID:PID) after LLC processing advances offset
-over LLC header (llc_rcv & llc_fixup_skb), code doesn't find a match
-and packet is dropped.
+Changes to sch->q.qlen around qdisc_tree_reduce_backlog() need to happen
+_before_ a call to said function because otherwise it may fail to notify
+parent qdiscs when the child is about to become empty.
 
-Between napi_complete_done and snap_rcv, transport_header is not used
-until __netif_receive_skb_core, where originally it was being reset.
-Commit fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-only does so if not set, on the assumption the value was set correctly
-by GRO (and also on assumption that "network stacks usually reset the
-transport header anyway"). Afterwards it is moved forward by
-llc_fixup_skb.
-
-Locally generated traffic shows up at __netif_receive_skb_core with no
-transport_header set and is processed without issue. On a setup with
-GRO but no DSA, transport_header and network_header are both set to
-point to skb->data which is also correct.
-
-As issue is LLC specific, to avoid impacting non-LLC traffic, and to
-follow up on original assumption made on previous code change,
-llc_fixup_skb to reset the offset after skb pull. llc_fixup_skb
-assumes the LLC header is at skb->data, and by definition SNAP header
-immediately follows.
-
-Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241225010723.2830290-1-antonio.pastor@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Lion Ackermann <nnamrec@gmail.com>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Artem Metla <ametla@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/llc/llc_input.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_cake.c  |    2 +-
+ net/sched/sch_choke.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/llc/llc_input.c b/net/llc/llc_input.c
-index 51bccfb00a9c..61b0159b2fbe 100644
---- a/net/llc/llc_input.c
-+++ b/net/llc/llc_input.c
-@@ -124,8 +124,8 @@ static inline int llc_fixup_skb(struct sk_buff *skb)
- 	if (unlikely(!pskb_may_pull(skb, llc_len)))
- 		return 0;
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -1505,7 +1505,6 @@ static unsigned int cake_drop(struct Qdi
+ 	b->backlogs[idx]    -= len;
+ 	b->tin_backlog      -= len;
+ 	sch->qstats.backlog -= len;
+-	qdisc_tree_reduce_backlog(sch, 1, len);
  
--	skb->transport_header += llc_len;
- 	skb_pull(skb, llc_len);
-+	skb_reset_transport_header(skb);
- 	if (skb->protocol == htons(ETH_P_802_2)) {
- 		__be16 pdulen;
- 		s32 data_size;
--- 
-2.39.5
-
+ 	flow->dropped++;
+ 	b->tin_dropped++;
+@@ -1516,6 +1515,7 @@ static unsigned int cake_drop(struct Qdi
+ 
+ 	__qdisc_drop(skb, to_free);
+ 	sch->q.qlen--;
++	qdisc_tree_reduce_backlog(sch, 1, len);
+ 
+ 	cake_heapify(q, 0);
+ 
+--- a/net/sched/sch_choke.c
++++ b/net/sched/sch_choke.c
+@@ -124,10 +124,10 @@ static void choke_drop_by_idx(struct Qdi
+ 	if (idx == q->tail)
+ 		choke_zap_tail_holes(q);
+ 
++	--sch->q.qlen;
+ 	qdisc_qstats_backlog_dec(sch, skb);
+ 	qdisc_tree_reduce_backlog(sch, 1, qdisc_pkt_len(skb));
+ 	qdisc_drop(skb, sch, to_free);
+-	--sch->q.qlen;
+ }
+ 
+ struct choke_skb_cb {
 
 
