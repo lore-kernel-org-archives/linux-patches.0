@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7872B1DE2CC;
-	Mon,  6 Jan 2025 15:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12738155389;
+	Mon,  6 Jan 2025 15:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177524; cv=none; b=j99DG7oy8gTo9MYCSAXaJGRPifK5GFYQ+TJKwtaf7z8nJazHAxI+ZRzNR+rxBxpta+hsaRjamkw9J8kioQhF+rNl3JsNkoVv0QJtqR0i6eeHtZ6pirfG2Ed5HAmdZ5jLGzR3DcWP8HkIl+XPK9PAtgIb6rdTaBAfZZK2yCfzCDE=
+	t=1736177528; cv=none; b=HPBYKnJiGjAyNc2vQ46az9nhsNx/k+y8NIp0gqcSGCkJWGfVyK2rTbhIT6bXDc3pvgUE1BANQg0lBCo/hOVsBumCwIdn9p13Wx9fpVXOzxqv8Cvb+gRjWnjspgBUlbtuH/rwiNUoUFwFgY5XEwGjMzBA9R343y+NDXOdmHHLG1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177524; c=relaxed/simple;
-	bh=swuvo0GJ+jCK4cRFgjdcc07a2vVGAEdZ8AjsRFzFUek=;
+	s=arc-20240116; t=1736177528; c=relaxed/simple;
+	bh=GfvMgxDZdqEabQCnGEQBSUYIbrLA3OwS32YELzmLD9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ic2uXDz1Ig8bDwIVpINTaCuykQslIC7BG74UnLS3mPPMAXk72Wl9d0c+1lEup9gLPQ/Szm4SsBx5ljV1+BbOOGq7PpJa+lTdU4tXU9tD3hWAanHykCkRaIxlmE/cPGsQ8x3bcOVF1nOMHi+3TOoCSiNioNJocLTXX33gbvynaiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG/rA1sZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=brZ+cauZyPxW6Y7g3Gk99GYwLJdezRjz+eKcMjP2S6IQXRuuGSh9aivEDeGQxR/RDXhH0XiWOjE+cD0RjSebtpEi3xDAV4f2EgveGpxLneCCaGikUwpFQPwiS8fBCL8TxAVBGw/aw2aY88C0E9NrQwu/ApDbhmyJcuvLAziS3SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9oMSBDv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG/rA1sZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 825FAC4CED2;
-	Mon,  6 Jan 2025 15:32:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9oMSBDv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7668AC4CED6;
+	Mon,  6 Jan 2025 15:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177521;
-	bh=swuvo0GJ+jCK4cRFgjdcc07a2vVGAEdZ8AjsRFzFUek=;
+	s=korg; t=1736177524;
+	bh=GfvMgxDZdqEabQCnGEQBSUYIbrLA3OwS32YELzmLD9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UG/rA1sZdkZP+g3szr05fE5QqgdG81xMNpJuFFTIzi++yUvY2cVMs1GChnwzCsUJF
-	 JYG17l2FgTm3L9+FJf8adKSUdGQiWaQ3on1crTEKUDp6IgZZdPnneNmCVEPrE1Q3Ry
-	 cgTq1HHdcSyf+HTDAw3mBB3R/TrAWNu1lPBI/OIg=
+	b=j9oMSBDvF0fHDxvpmCCl6VxI83bWIX02oCC73PzAEkepBZdKLvTYdQT+mP0P7axlO
+	 jEoM+BdNIVfne+8wHDx8IfPIblbsJu0loHT8wJ8lQ7+xSZFGg14HtJcOBSvIVoZYXO
+	 bUsX+7NUEyywqLT9ElQ6RIra/nulrpQB4WdDXy3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Lior Nahmanson <liorna@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 189/222] smb: client: destroy cfid_put_wq on module exit
-Date: Mon,  6 Jan 2025 16:16:33 +0100
-Message-ID: <20250106151157.917980228@linuxfoundation.org>
+Subject: [PATCH 6.6 160/222] net/mlx5e: macsec: Maintain TX SA from encoding_sa
+Date: Mon,  6 Jan 2025 16:16:04 +0100
+Message-ID: <20250106151156.817864274@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,31 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 633609c48a358134d3f8ef8241dff24841577f58 ]
+[ Upstream commit 8c6254479b3d5bd788d2b5fefaa48fb194331ed0 ]
 
-Fix potential problem in rmmod
+In MACsec, it is possible to create multiple active TX SAs on a SC,
+but only one such SA can be used at a time for transmission. This SA
+is selected through the encoding_sa link parameter.
 
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+When there are 2 or more active TX SAs configured (encoding_sa=0):
+  ip macsec add macsec0 tx sa 0 pn 1 on key 00 <KEY1>
+  ip macsec add macsec0 tx sa 1 pn 1 on key 00 <KEY2>
+
+... the traffic should be still sent via TX SA 0 as the encoding_sa was
+not changed. However, the driver ignores the encoding_sa and overrides
+it to SA 1 by installing the flow steering id of the newly created TX SA
+into the SCI -> flow steering id hash map. The future packet tx
+descriptors will point to the incorrect flow steering rule (SA 1).
+
+This patch fixes the issue by avoiding the creation of the flow steering
+rule for an active TX SA that is not the encoding_sa. The driver side
+tx_sa object and the FW side macsec object are still created. When the
+encoding_sa link parameter is changed to another active TX SA, only the
+new flow steering rule will be created in the mlx5e_macsec_upd_txsa()
+handler.
+
+Fixes: 8ff0ac5be144 ("net/mlx5: Add MACsec offload Tx command support")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Lior Nahmanson <liorna@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20241220081505.1286093-3-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 6ed0f2548232..bbb0ef18d7b8 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -2015,6 +2015,7 @@ exit_cifs(void)
- 	destroy_workqueue(decrypt_wq);
- 	destroy_workqueue(fileinfo_put_wq);
- 	destroy_workqueue(serverclose_wq);
-+	destroy_workqueue(cfid_put_wq);
- 	destroy_workqueue(cifsiod_wq);
- 	cifs_proc_clean();
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
+index cc9bcc420032..6ab02f3fc291 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
+@@ -339,9 +339,13 @@ static int mlx5e_macsec_init_sa_fs(struct macsec_context *ctx,
+ {
+ 	struct mlx5e_priv *priv = macsec_netdev_priv(ctx->netdev);
+ 	struct mlx5_macsec_fs *macsec_fs = priv->mdev->macsec_fs;
++	const struct macsec_tx_sc *tx_sc = &ctx->secy->tx_sc;
+ 	struct mlx5_macsec_rule_attrs rule_attrs;
+ 	union mlx5_macsec_rule *macsec_rule;
+ 
++	if (is_tx && tx_sc->encoding_sa != sa->assoc_num)
++		return 0;
++
+ 	rule_attrs.macsec_obj_id = sa->macsec_obj_id;
+ 	rule_attrs.sci = sa->sci;
+ 	rule_attrs.assoc_num = sa->assoc_num;
 -- 
 2.39.5
 
