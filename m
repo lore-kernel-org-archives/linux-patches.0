@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E5F1DDA2E;
-	Mon,  6 Jan 2025 15:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5B81DC9AD;
+	Mon,  6 Jan 2025 15:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178304; cv=none; b=PKPK8vUrvCBScvuy1x7v4vnVSxrF5N/W9gu3HAaYA8Y72YkmVnkS3uY14vTV51YM0JzkTGTRSBot34UfcLLLa5D28GE+aVYEUuy8VK6OT1NoSy6okZwun4fp5WZ2Eilgl7RFJlK+QvEA9GlnaSxRVAwGh8W/wZn89EghxiHWvFw=
+	t=1736178307; cv=none; b=qYYIrDlIqdM6BAd+tRV/cKRI6Jffth6rnzXRL+SYJJ9CEJVLUaAw5g9R2WQEHe9xQYjiooS5Shgb+LE9SCSCbGU+53uRwc4olPkDbCNgmGSORdub6jratu4c9hNbld/XdWbUlYe08wppIFjOEN+wtsennEyluYRr5PKs30WzYSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178304; c=relaxed/simple;
-	bh=FnCt3aD5DFsQUuGLGdKSLn5LwaDMc9MjWB9hHwzdyc8=;
+	s=arc-20240116; t=1736178307; c=relaxed/simple;
+	bh=gBq02eoNxMubUIs08iXEq/xfibTnrFx3GYRzCHNlRCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sV4cgndUz5DUW4Q6Ka2sMdsPmNlyReVize3SGzYmgy6clFZIfVPGGhl+3ldL/vxsu8fYkrTEltPJtjC0V05/hIfbsZJiA7dB9u91rs12GROaWWYcoOR9chCzajwlo8F/qfl9aISNNRJosM8XEUjcV/S+/jMRXO28H5vuPfK5tQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EcIXDNwj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBNHQgarzr6F/oKhhxwB/sQeC/3g66WRh1a/q26mi7k4R4j4dUUw/mkYcf750Cub/qN6YYVIHsU5EAZ56gdebD+9T9iwU58DThQ8JfyKK1mhPFNQL246/TARaiXdT/tWHddg1xvRDOIwENxyymK5Lpv5YyFLzIOut3F16OF3leY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2BM78Ow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EcIXDNwj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52E15C4CED2;
-	Mon,  6 Jan 2025 15:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2BM78Ow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD60C4CED2;
+	Mon,  6 Jan 2025 15:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178303;
-	bh=FnCt3aD5DFsQUuGLGdKSLn5LwaDMc9MjWB9hHwzdyc8=;
+	s=korg; t=1736178307;
+	bh=gBq02eoNxMubUIs08iXEq/xfibTnrFx3GYRzCHNlRCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EcIXDNwj6Qvu+7lTds99pPjKIcw2Scp2vfLZrZEnuS2qth/wcKFWVhhzsjzOmPY7/
-	 7GNDZaz9O9kdyj/O9KBYvM1EV2Sy9WCyazNdXb0FOJ2lmqQzXnFz9Ik6ZY96OmI9kU
-	 urZlyBLuWD3ySoJ2b0rlQdB3xiCccRCYMrKws0mA=
+	b=n2BM78OwwW7DHMTIou3wBDE1pV8sIXwdvse0hEZUHqZF6hWk85ad4x86o4/snIlGS
+	 uOYpqU/CB/iWjohKTPun+segdIuWK9OxTbGCo4Ax9tu4CtLBQPfaR9HE9wPhFGujHY
+	 xkHemKcZ7N32D6NkWgnf1sLqlvTLq9TudbRlLtyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/138] bpf: Check validity of link->type in bpf_link_show_fdinfo()
-Date: Mon,  6 Jan 2025 16:16:37 +0100
-Message-ID: <20250106151135.998158145@linuxfoundation.org>
+	Vincent Whitchurch <vincent.whitchurch@datadoghq.com>,
+	Jiayuan Chen <mrpre@163.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Srish Srinivasan <srishwap4@gmail.com>
+Subject: [PATCH 5.10 074/138] bpf: fix recursive lock when verdict program return SK_PASS
+Date: Mon,  6 Jan 2025 16:16:38 +0100
+Message-ID: <20250106151136.035157711@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -52,58 +55,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Jiayuan Chen <mrpre@163.com>
 
-commit 8421d4c8762bd022cb491f2f0f7019ef51b4f0a7 upstream.
+commit 8ca2a1eeadf09862190b2810697702d803ceef2d upstream.
 
-If a newly-added link type doesn't invoke BPF_LINK_TYPE(), accessing
-bpf_link_type_strs[link->type] may result in an out-of-bounds access.
+When the stream_verdict program returns SK_PASS, it places the received skb
+into its own receive queue, but a recursive lock eventually occurs, leading
+to an operating system deadlock. This issue has been present since v6.9.
 
-To spot such missed invocations early in the future, checking the
-validity of link->type in bpf_link_show_fdinfo() and emitting a warning
-when such invocations are missed.
+'''
+sk_psock_strp_data_ready
+    write_lock_bh(&sk->sk_callback_lock)
+    strp_data_ready
+      strp_read_sock
+        read_sock -> tcp_read_sock
+          strp_recv
+            cb.rcv_msg -> sk_psock_strp_read
+              # now stream_verdict return SK_PASS without peer sock assign
+              __SK_PASS = sk_psock_map_verd(SK_PASS, NULL)
+              sk_psock_verdict_apply
+                sk_psock_skb_ingress_self
+                  sk_psock_skb_ingress_enqueue
+                    sk_psock_data_ready
+                      read_lock_bh(&sk->sk_callback_lock) <= dead lock
 
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241024013558.1135167-3-houtao@huaweicloud.com
-[ shung-hsi.yu: break up existing seq_printf() call since commit 68b04864ca42
-  ("bpf: Create links for BPF struct_ops maps.") is not present ]
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+'''
+
+This topic has been discussed before, but it has not been fixed.
+Previous discussion:
+https://lore.kernel.org/all/6684a5864ec86_403d20898@john.notmuch
+
+Fixes: 6648e613226e ("bpf, skmsg: Fix NULL pointer dereference in sk_psock_skb_ingress_enqueue")
+Reported-by: Vincent Whitchurch <vincent.whitchurch@datadoghq.com>
+Signed-off-by: Jiayuan Chen <mrpre@163.com>
+Signed-off-by: John Fastabend <john.fastabend@gmail.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20241118030910.36230-2-mrpre@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[srish: Apply to stable branch linux-5.10.y]
+Signed-off-by: Srish Srinivasan <srishwap4@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/syscall.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/core/skmsg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index fbe7f8e2b022..b5d9bba73834 100644
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -2427,16 +2427,21 @@ static void bpf_link_show_fdinfo(struct seq_file *m, struct file *filp)
- {
- 	const struct bpf_link *link = filp->private_data;
- 	const struct bpf_prog *prog = link->prog;
-+	enum bpf_link_type type = link->type;
- 	char prog_tag[sizeof(prog->tag) * 2 + 1] = { };
- 
-+	if (type < ARRAY_SIZE(bpf_link_type_strs) && bpf_link_type_strs[type]) {
-+		seq_printf(m, "link_type:\t%s\n", bpf_link_type_strs[type]);
-+	} else {
-+		WARN_ONCE(1, "missing BPF_LINK_TYPE(...) for link type %u\n", type);
-+		seq_printf(m, "link_type:\t<%u>\n", type);
-+	}
-+	seq_printf(m, "link_id:\t%u\n", link->id);
-+
- 	bin2hex(prog_tag, prog->tag, sizeof(prog->tag));
- 	seq_printf(m,
--		   "link_type:\t%s\n"
--		   "link_id:\t%u\n"
- 		   "prog_tag:\t%s\n"
- 		   "prog_id:\t%u\n",
--		   bpf_link_type_strs[link->type],
--		   link->id,
- 		   prog_tag,
- 		   prog->aux->id);
- 	if (link->ops->show_fdinfo)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index 51792dda1b73..890e16bbc072 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -940,9 +940,9 @@ static void sk_psock_strp_data_ready(struct sock *sk)
+ 		if (tls_sw_has_ctx_rx(sk)) {
+ 			psock->parser.saved_data_ready(sk);
+ 		} else {
+-			write_lock_bh(&sk->sk_callback_lock);
++			read_lock_bh(&sk->sk_callback_lock);
+ 			strp_data_ready(&psock->parser.strp);
+-			write_unlock_bh(&sk->sk_callback_lock);
++			read_unlock_bh(&sk->sk_callback_lock);
+ 		}
+ 	}
+ 	rcu_read_unlock();
 -- 
 2.39.5
 
