@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9E76088F;
-	Mon,  6 Jan 2025 15:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D06B39FCE;
+	Mon,  6 Jan 2025 15:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179061; cv=none; b=GVR9phEDrxSSvnvkFknPNkU4O6mY4tF1uulpxf7Hz7LptYOnoHfsoYFN879EGotlTXLeA7DEW1YUvoruQa/+tyukRki6hlO0ztKq8k6RB6XNLtxU1FWxzBhh+FD8cTLpyZ9teJl8/VakLOK5wesHEnQJLtFQvn+crAAmt96Pq54=
+	t=1736179063; cv=none; b=VXRXZeuS4jVozdBxV2s9dCPVEoPRFPQEYObHi7JoxpDqdybsX76HXCk75RI9N6s2LiWneZHO8Uj04EOx5tW848UaGb6uuEZLbE2ughzfI6koBmIEDM0lFTp4OSOF2G6pjf4oqfLB9A6TDp4XUHakKPyFQoqDkDkHmuE6bHqNMMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179061; c=relaxed/simple;
-	bh=h8SmvPzjKRu3AmOniGkd8Td5yQj/73UVjTQK6b4ejmc=;
+	s=arc-20240116; t=1736179063; c=relaxed/simple;
+	bh=IEyQ/Nlarfn0CsPD0M/hS2svVSyTQyz7CXBiVsg0CLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7QB4yPUklW/PPiMp+lYEziodDOV1nhvt1Saah+CeXLvwDcubdDJydSYTDO8d3womOKBwDDu2DaHGo/SIrxSUPGisWBYdGRX1qf5DbsD+pMutCY1Bs95pBpdEFeqldJM1rCsIcmEl6Db3vTMr9aEtnnjn/yFuOEzQDutcC5poGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1LgL6Q1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VXfomCwVjstvFflC0mbjiNbBGY8Pp5PfLpmbXPm/EelvD+VUOLuLU7enpwyPLmeqMa9Z8VmtO9I2d3XuQHUtrdvT4MmaT5WKcVPdS4ML5ZG41dUbwdCYEOeBCi0Nk8EcUg06DUR9q/OUJdMfwHFmd/oQBDuhf5Ns9bK79XRg5KM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSn8CmAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1LgL6Q1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3DAC4CED2;
-	Mon,  6 Jan 2025 15:57:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSn8CmAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12DA0C4CED2;
+	Mon,  6 Jan 2025 15:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179060;
-	bh=h8SmvPzjKRu3AmOniGkd8Td5yQj/73UVjTQK6b4ejmc=;
+	s=korg; t=1736179063;
+	bh=IEyQ/Nlarfn0CsPD0M/hS2svVSyTQyz7CXBiVsg0CLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1LgL6Q1BQTjyV41OTM6JBkGvnTYsZ0cCVXMXMSQ41evB3wfJE/G8j0KWS/9beEW1
-	 2p8BN2091kjTO3rgr6PPMiabmLQYS1W/HSH3ZoHdKzSKXmQoy32ysDOnQNLw+o87zt
-	 jMz6+VuvxFaRkPdHTVxg5x7lYIe5drSRq2BDaxsM=
+	b=mSn8CmAOtPMoOfZhGMmeAbcup+9Zq810LwxUeRxXupeMg72MwUhzLHaKjNfCepQoA
+	 Cmz+y/cVRyj8CzjKJsCL51J3nXyB/V6PbDV2JojMGNbyA/SRliJ4u/5gP24rDasZrJ
+	 9/CrJNgDpNLHJNdG74eiEab+oE0+nR/LLL4v3/AU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	syzbot+78d5b129a762182225aa@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 03/93] PCI/AER: Disable AER service on suspend
-Date: Mon,  6 Jan 2025 16:16:39 +0100
-Message-ID: <20250106151128.821714701@linuxfoundation.org>
+Subject: [PATCH 5.4 04/93] ALSA: usb: Fix UBSAN warning in parse_audio_unit()
+Date: Mon,  6 Jan 2025 16:16:40 +0100
+Message-ID: <20250106151128.859381672@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -51,66 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kai.heng.feng@canonical.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5afc2f763edc5daae4722ee46fea4e627d01fa90 ]
+[ Upstream commit 2f38cf730caedaeacdefb7ff35b0a3c1168117f9 ]
 
-If the link is powered off during suspend, electrical noise may cause
-errors that are logged via AER.  If the AER interrupt is enabled and shares
-an IRQ with PME, that causes a spurious wakeup during suspend.
+A malformed USB descriptor may pass the lengthy mixer description with
+a lot of channels, and this may overflow the 32bit integer shift
+size, as caught by syzbot UBSAN test.  Although this won't cause any
+real trouble, it's better to address.
 
-Disable the AER interrupt during suspend to prevent this.  Clear error
-status before re-enabling IRQ interrupts during resume so we don't get an
-interrupt for errors that occurred during the suspend/resume process.
+This patch introduces a sanity check of the number of channels to bail
+out the parsing when too many channels are found.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=209149
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216295
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218090
-Link: https://lore.kernel.org/r/20240416043225.1462548-2-kai.heng.feng@canonical.com
-Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-[bhelgaas: drop pci_ancestor_pr3_present() etc, commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reported-by: syzbot+78d5b129a762182225aa@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/0000000000000adac5061d3c7355@google.com
+Link: https://patch.msgid.link/20240715123619.26612-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/aer.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ sound/usb/mixer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
-index 6b5c9f7916fa..ee38ca162a7c 100644
---- a/drivers/pci/pcie/aer.c
-+++ b/drivers/pci/pcie/aer.c
-@@ -1407,6 +1407,22 @@ static int aer_probe(struct pcie_device *dev)
- 	return 0;
- }
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 67eb1293fa15..1374a4e093b3 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1906,6 +1906,13 @@ static int parse_audio_feature_unit(struct mixer_build *state, int unitid,
+ 		bmaControls = ftr->bmaControls;
+ 	}
  
-+static int aer_suspend(struct pcie_device *dev)
-+{
-+	struct aer_rpc *rpc = get_service_data(dev);
++	if (channels > 32) {
++		usb_audio_info(state->chip,
++			       "usbmixer: too many channels (%d) in unit %d\n",
++			       channels, unitid);
++		return -EINVAL;
++	}
 +
-+	aer_disable_rootport(rpc);
-+	return 0;
-+}
-+
-+static int aer_resume(struct pcie_device *dev)
-+{
-+	struct aer_rpc *rpc = get_service_data(dev);
-+
-+	aer_enable_rootport(rpc);
-+	return 0;
-+}
-+
- /**
-  * aer_root_reset - reset link on Root Port
-  * @dev: pointer to Root Port's pci_dev data structure
-@@ -1447,6 +1463,8 @@ static struct pcie_port_service_driver aerdriver = {
- 	.service	= PCIE_PORT_SERVICE_AER,
- 
- 	.probe		= aer_probe,
-+	.suspend	= aer_suspend,
-+	.resume		= aer_resume,
- 	.remove		= aer_remove,
- 	.reset_link	= aer_root_reset,
- };
+ 	/* parse the source unit */
+ 	err = parse_audio_unit(state, hdr->bSourceID);
+ 	if (err < 0)
 -- 
 2.39.5
 
