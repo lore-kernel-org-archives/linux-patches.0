@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF9DDF71;
-	Mon,  6 Jan 2025 15:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1E3146D6B;
+	Mon,  6 Jan 2025 15:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177602; cv=none; b=JHTdaZCH/zacM/l1KawACTKZ723nKV2AUP4W/wrd7TvDmL/I/u2/QS4zV6IxtCZHIqc7IeecAZO1mGa+qodCH/SMtyMgX5e22HswLtHi7cyes6kuM9UolGqz2RJf3VHZfNS1yICBd8hO/yAtTV8/YJ55rgFUdDeSLzu2pViWP3o=
+	t=1736177602; cv=none; b=qy4sTQfAkGoRodUzGkdRnPFR8X3HlRVOgeKkTyXmTNE0hJNqvCcMJrDkx4tjhL3UHODy/Z7Y8+IlJpC5H0rEojYrNmAN8W+SY/vd5tYvwi5wvqsWrrCFmZ51Q18CDbwZ2mo96QYru4zKOOBdMrfInb3o09sZ57cLidnayD+vd0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736177602; c=relaxed/simple;
-	bh=wh345wGM4pduADgb7FuQLLBjatFSSCMUd04GKEtoBjk=;
+	bh=myiSnEA8Yfz0EqR64QBM3H9jw8q8xAxoeLoHE6XQGe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qui2RrKpS2HqK7/oKDHCl4gJInPCYOaR59XDYvtq2TlWryWuKJSdA8VAdQqWzwYd2z30P7iM20ZBZ4BNBlo2gMQihajA2fz3L1b2vuzLByYCIFWzUoI2rUcPU7nNXr7GjGorTfv6Z2hOT9YkBdMuHv5GhOMrZJIT+XIWNqv64JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjBkAiIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=agcUM6oK8jt4R6SKzBnFo5WC+8yFsE04EfklDfKO5rQQkTFwFnB8MjGtYetLpptX9P47VSqYj6YjJelRYkLTUrvtEcm4vtDxMZptrA/4oBeHt2h7gvTk/eI4Cz6LZjy1KI2dVxK9RzUn9j9Em0pQctzK4f/ogG3gvqsSOSF30Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YNga0Tm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjBkAiIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012CAC4CED2;
-	Mon,  6 Jan 2025 15:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YNga0Tm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F0FC4CED6;
+	Mon,  6 Jan 2025 15:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177599;
-	bh=wh345wGM4pduADgb7FuQLLBjatFSSCMUd04GKEtoBjk=;
+	s=korg; t=1736177602;
+	bh=myiSnEA8Yfz0EqR64QBM3H9jw8q8xAxoeLoHE6XQGe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjBkAiIgB1yKiXN9wiHBtkCrL3BAmbSyka6oSmQJRSjBZsbNbASsOIO95TR5pPSsU
-	 DTlSpziluQg0yntPsrqzg7TvuM5wYu7dMu0xZnX3/ZZZrODnfW17FyNgO1NM91T+m4
-	 ew6/nY1vtCCeigNtTM2h1e+Gtv0tysNqymLgbxcI=
+	b=0YNga0TmfeKrWEHAJelKbuerNchUxFNwD1Z2vDlOQHM1FadttECA5nXR21xqsqx2V
+	 veiuc7D0QbCIelzLqzer+exsgDC19rZs67q5bNO0Ynpzr48ywNC6rbayZ4ZCaIQPLt
+	 8WEloR0Sm9KF6h3wM4EBSg+66qQsUL9vcehjVoCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessandro Carminati <acarmina@redhat.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
-	Eric Chanudet <echanude@redhat.com>,
-	Gabriele Paoloni <gpaoloni@redhat.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Seiji Nishikawa <snishika@redhat.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 216/222] mm/kmemleak: fix sleeping function called from invalid context at print message
-Date: Mon,  6 Jan 2025 16:17:00 +0100
-Message-ID: <20250106151158.943911130@linuxfoundation.org>
+Subject: [PATCH 6.6 217/222] mm: vmscan: account for free pages to prevent infinite Loop in throttle_direct_reclaim()
+Date: Mon,  6 Jan 2025 16:17:01 +0100
+Message-ID: <20250106151158.980789637@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,116 +45,149 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alessandro Carminati <acarmina@redhat.com>
+From: Seiji Nishikawa <snishika@redhat.com>
 
-commit cddc76b165161a02ff14c4d84d0f5266d9d32b9e upstream.
+commit 6aaced5abd32e2a57cd94fd64f824514d0361da8 upstream.
 
-Address a bug in the kernel that triggers a "sleeping function called from
-invalid context" warning when /sys/kernel/debug/kmemleak is printed under
-specific conditions:
-- CONFIG_PREEMPT_RT=y
-- Set SELinux as the LSM for the system
-- Set kptr_restrict to 1
-- kmemleak buffer contains at least one item
+The task sometimes continues looping in throttle_direct_reclaim() because
+allow_direct_reclaim(pgdat) keeps returning false.
 
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 136, name: cat
-preempt_count: 1, expected: 0
-RCU nest depth: 2, expected: 2
-6 locks held by cat/136:
- #0: ffff32e64bcbf950 (&p->lock){+.+.}-{3:3}, at: seq_read_iter+0xb8/0xe30
- #1: ffffafe6aaa9dea0 (scan_mutex){+.+.}-{3:3}, at: kmemleak_seq_start+0x34/0x128
- #3: ffff32e6546b1cd0 (&object->lock){....}-{2:2}, at: kmemleak_seq_show+0x3c/0x1e0
- #4: ffffafe6aa8d8560 (rcu_read_lock){....}-{1:2}, at: has_ns_capability_noaudit+0x8/0x1b0
- #5: ffffafe6aabbc0f8 (notif_lock){+.+.}-{2:2}, at: avc_compute_av+0xc4/0x3d0
-irq event stamp: 136660
-hardirqs last  enabled at (136659): [<ffffafe6a80fd7a0>] _raw_spin_unlock_irqrestore+0xa8/0xd8
-hardirqs last disabled at (136660): [<ffffafe6a80fd85c>] _raw_spin_lock_irqsave+0x8c/0xb0
-softirqs last  enabled at (0): [<ffffafe6a5d50b28>] copy_process+0x11d8/0x3df8
-softirqs last disabled at (0): [<0000000000000000>] 0x0
-Preemption disabled at:
-[<ffffafe6a6598a4c>] kmemleak_seq_show+0x3c/0x1e0
-CPU: 1 UID: 0 PID: 136 Comm: cat Tainted: G            E      6.11.0-rt7+ #34
-Tainted: [E]=UNSIGNED_MODULE
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- dump_backtrace+0xa0/0x128
- show_stack+0x1c/0x30
- dump_stack_lvl+0xe8/0x198
- dump_stack+0x18/0x20
- rt_spin_lock+0x8c/0x1a8
- avc_perm_nonode+0xa0/0x150
- cred_has_capability.isra.0+0x118/0x218
- selinux_capable+0x50/0x80
- security_capable+0x7c/0xd0
- has_ns_capability_noaudit+0x94/0x1b0
- has_capability_noaudit+0x20/0x30
- restricted_pointer+0x21c/0x4b0
- pointer+0x298/0x760
- vsnprintf+0x330/0xf70
- seq_printf+0x178/0x218
- print_unreferenced+0x1a4/0x2d0
- kmemleak_seq_show+0xd0/0x1e0
- seq_read_iter+0x354/0xe30
- seq_read+0x250/0x378
- full_proxy_read+0xd8/0x148
- vfs_read+0x190/0x918
- ksys_read+0xf0/0x1e0
- __arm64_sys_read+0x70/0xa8
- invoke_syscall.constprop.0+0xd4/0x1d8
- el0_svc+0x50/0x158
- el0t_64_sync+0x17c/0x180
+ #0 [ffff80002cb6f8d0] __switch_to at ffff8000080095ac
+ #1 [ffff80002cb6f900] __schedule at ffff800008abbd1c
+ #2 [ffff80002cb6f990] schedule at ffff800008abc50c
+ #3 [ffff80002cb6f9b0] throttle_direct_reclaim at ffff800008273550
+ #4 [ffff80002cb6fa20] try_to_free_pages at ffff800008277b68
+ #5 [ffff80002cb6fae0] __alloc_pages_nodemask at ffff8000082c4660
+ #6 [ffff80002cb6fc50] alloc_pages_vma at ffff8000082e4a98
+ #7 [ffff80002cb6fca0] do_anonymous_page at ffff80000829f5a8
+ #8 [ffff80002cb6fce0] __handle_mm_fault at ffff8000082a5974
+ #9 [ffff80002cb6fd90] handle_mm_fault at ffff8000082a5bd4
 
-%pS and %pK, in the same back trace line, are redundant, and %pS can void
-%pK service in certain contexts.
+At this point, the pgdat contains the following two zones:
 
-%pS alone already provides the necessary information, and if it cannot
-resolve the symbol, it falls back to printing the raw address voiding
-the original intent behind the %pK.
+        NODE: 4  ZONE: 0  ADDR: ffff00817fffe540  NAME: "DMA32"
+          SIZE: 20480  MIN/LOW/HIGH: 11/28/45
+          VM_STAT:
+                NR_FREE_PAGES: 359
+        NR_ZONE_INACTIVE_ANON: 18813
+          NR_ZONE_ACTIVE_ANON: 0
+        NR_ZONE_INACTIVE_FILE: 50
+          NR_ZONE_ACTIVE_FILE: 0
+          NR_ZONE_UNEVICTABLE: 0
+        NR_ZONE_WRITE_PENDING: 0
+                     NR_MLOCK: 0
+                    NR_BOUNCE: 0
+                   NR_ZSPAGES: 0
+            NR_FREE_CMA_PAGES: 0
 
-Additionally, %pK requires a privilege check CAP_SYSLOG enforced through
-the LSM, which can trigger a "sleeping function called from invalid
-context" warning under RT_PREEMPT kernels when the check occurs in an
-atomic context. This issue may also affect other LSMs.
+        NODE: 4  ZONE: 1  ADDR: ffff00817fffec00  NAME: "Normal"
+          SIZE: 8454144  PRESENT: 98304  MIN/LOW/HIGH: 68/166/264
+          VM_STAT:
+                NR_FREE_PAGES: 146
+        NR_ZONE_INACTIVE_ANON: 94668
+          NR_ZONE_ACTIVE_ANON: 3
+        NR_ZONE_INACTIVE_FILE: 735
+          NR_ZONE_ACTIVE_FILE: 78
+          NR_ZONE_UNEVICTABLE: 0
+        NR_ZONE_WRITE_PENDING: 0
+                     NR_MLOCK: 0
+                    NR_BOUNCE: 0
+                   NR_ZSPAGES: 0
+            NR_FREE_CMA_PAGES: 0
 
-This change avoids the unnecessary privilege check and resolves the
-sleeping function warning without any loss of information.
+In allow_direct_reclaim(), while processing ZONE_DMA32, the sum of
+inactive/active file-backed pages calculated in zone_reclaimable_pages()
+based on the result of zone_page_state_snapshot() is zero.
 
-Link: https://lkml.kernel.org/r/20241217142032.55793-1-acarmina@redhat.com
-Fixes: 3a6f33d86baa ("mm/kmemleak: use %pK to display kernel pointers in backtrace")
-Signed-off-by: Alessandro Carminati <acarmina@redhat.com>
-Acked-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Clément Léger <clement.leger@bootlin.com>
-Cc: Alessandro Carminati <acarmina@redhat.com>
-Cc: Eric Chanudet <echanude@redhat.com>
-Cc: Gabriele Paoloni <gpaoloni@redhat.com>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Additionally, since this system lacks swap, the calculation of inactive/
+active anonymous pages is skipped.
+
+        crash> p nr_swap_pages
+        nr_swap_pages = $1937 = {
+          counter = 0
+        }
+
+As a result, ZONE_DMA32 is deemed unreclaimable and skipped, moving on to
+the processing of the next zone, ZONE_NORMAL, despite ZONE_DMA32 having
+free pages significantly exceeding the high watermark.
+
+The problem is that the pgdat->kswapd_failures hasn't been incremented.
+
+        crash> px ((struct pglist_data *) 0xffff00817fffe540)->kswapd_failures
+        $1935 = 0x0
+
+This is because the node deemed balanced.  The node balancing logic in
+balance_pgdat() evaluates all zones collectively.  If one or more zones
+(e.g., ZONE_DMA32) have enough free pages to meet their watermarks, the
+entire node is deemed balanced.  This causes balance_pgdat() to exit early
+before incrementing the kswapd_failures, as it considers the overall
+memory state acceptable, even though some zones (like ZONE_NORMAL) remain
+under significant pressure.
+
+
+The patch ensures that zone_reclaimable_pages() includes free pages
+(NR_FREE_PAGES) in its calculation when no other reclaimable pages are
+available (e.g., file-backed or anonymous pages).  This change prevents
+zones like ZONE_DMA32, which have sufficient free pages, from being
+mistakenly deemed unreclaimable.  By doing so, the patch ensures proper
+node balancing, avoids masking pressure on other zones like ZONE_NORMAL,
+and prevents infinite loops in throttle_direct_reclaim() caused by
+allow_direct_reclaim(pgdat) repeatedly returning false.
+
+
+The kernel hangs due to a task stuck in throttle_direct_reclaim(), caused
+by a node being incorrectly deemed balanced despite pressure in certain
+zones, such as ZONE_NORMAL.  This issue arises from
+zone_reclaimable_pages() returning 0 for zones without reclaimable file-
+backed or anonymous pages, causing zones like ZONE_DMA32 with sufficient
+free pages to be skipped.
+
+The lack of swap or reclaimable pages results in ZONE_DMA32 being ignored
+during reclaim, masking pressure in other zones.  Consequently,
+pgdat->kswapd_failures remains 0 in balance_pgdat(), preventing fallback
+mechanisms in allow_direct_reclaim() from being triggered, leading to an
+infinite loop in throttle_direct_reclaim().
+
+This patch modifies zone_reclaimable_pages() to account for free pages
+(NR_FREE_PAGES) when no other reclaimable pages exist.  This ensures zones
+with sufficient free pages are not skipped, enabling proper balancing and
+reclaim behavior.
+
+[akpm@linux-foundation.org: coding-style cleanups]
+Link: https://lkml.kernel.org/r/20241130164346.436469-1-snishika@redhat.com
+Link: https://lkml.kernel.org/r/20241130161236.433747-2-snishika@redhat.com
+Fixes: 5a1c84b404a7 ("mm: remove reclaim and compaction retry approximations")
+Signed-off-by: Seiji Nishikawa <snishika@redhat.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmemleak.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmscan.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/mm/kmemleak.c
-+++ b/mm/kmemleak.c
-@@ -368,7 +368,7 @@ static void print_unreferenced(struct se
- 
- 	for (i = 0; i < nr_entries; i++) {
- 		void *ptr = (void *)entries[i];
--		warn_or_seq_printf(seq, "    [<%pK>] %pS\n", ptr, ptr);
-+		warn_or_seq_printf(seq, "    %pS\n", ptr);
- 	}
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -641,7 +641,14 @@ unsigned long zone_reclaimable_pages(str
+ 	if (can_reclaim_anon_pages(NULL, zone_to_nid(zone), NULL))
+ 		nr += zone_page_state_snapshot(zone, NR_ZONE_INACTIVE_ANON) +
+ 			zone_page_state_snapshot(zone, NR_ZONE_ACTIVE_ANON);
+-
++	/*
++	 * If there are no reclaimable file-backed or anonymous pages,
++	 * ensure zones with sufficient free pages are not skipped.
++	 * This prevents zones like DMA32 from being ignored in reclaim
++	 * scenarios where they can still help alleviate memory pressure.
++	 */
++	if (nr == 0)
++		nr = zone_page_state_snapshot(zone, NR_FREE_PAGES);
+ 	return nr;
  }
  
 
