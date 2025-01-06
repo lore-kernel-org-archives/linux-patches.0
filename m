@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714371448F2;
-	Mon,  6 Jan 2025 15:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8744BA34;
+	Mon,  6 Jan 2025 15:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178668; cv=none; b=RHRMYY+yrgGd/OQRtg6GRfHtL6bMq2gH28R5OKBVaBZVDQzOOhd6SpUCbVvHeF3ChRC0TB7bI/p0+OuNJVhsDkfBigu2ROp7aUX2I2ddC7gWVcNTkJyIngiP61SN7EFfSVIAqyoaJ6Mec9d1mS+glwtS0stbpyLYVORXoLd1uv8=
+	t=1736178671; cv=none; b=VEQxIjST2jZAkz2wF1jL/q5aQ0oX4JZLOoVAtDE78g6e7ZUtlGoCMQqquvOVo1XUWvR3XDnsyztRC2gnW/zYAK+LN+QEPryJ01wLKissu6Zg/lPvwSVt8lG9e9fQvlT8vkk3jGF3SjAw1aTgEbTMk9ec6MuQ3htLwatSmhZef5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178668; c=relaxed/simple;
-	bh=g5mfEoeZrAp7A/twXEN0ckVL8FTCaVQxAjeKZC0//Qw=;
+	s=arc-20240116; t=1736178671; c=relaxed/simple;
+	bh=IF1daYkMHD46tgN319dkOetFhdjePRqR4AVhiSunFfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mw1mVGfNNoTBGg7s0MHgkqVKPCYUw91TVs/OmjmCUR8FhnQsMrKoccVa0H2AUFc5megSIQK8Xcuvpg0hu/IyuZcXNO6yZOjiaFAv24XlFV4QRUUtSWo+/RJCWoC3ehmgdiRd/Quv3HJFrfBNbHW+UAM6ANCh1xt9aa85FwXotWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oEuXuS/S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehSCM50eMGIa0wWrayOPE/zODqIzRLLf33kO/+VP9u4dAHfZrDGNmz27yY2XOwyf+NJUQPkBEoMMZC0qIq+TDelPzh6U1SDV2IMU4xnLkd0J328ileOf9obqZWMKBC5ygnSILFqwZ4ghIrlXPwlN+PHNbq6/0YEwt9rgPCJexBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OV7CmJJ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oEuXuS/S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1C7C4CED6;
-	Mon,  6 Jan 2025 15:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OV7CmJJ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE31C4CEE4;
+	Mon,  6 Jan 2025 15:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178668;
-	bh=g5mfEoeZrAp7A/twXEN0ckVL8FTCaVQxAjeKZC0//Qw=;
+	s=korg; t=1736178671;
+	bh=IF1daYkMHD46tgN319dkOetFhdjePRqR4AVhiSunFfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oEuXuS/SsKmV+mU0asXVwjYAb7eQD1fwYLv3ZL0ZB+g5qQj5MNdnBBjUTSj9gAr9Y
-	 1C1d1TjAwA+4PZsRO91P/9fRWMTet7WKeWtUHxgTpSY1Ss5I61xSW8IyCfktFjonDf
-	 Cq7A9GyBOHfuytz5RyDBH/il4zPJZG+siYuGMu/w=
+	b=OV7CmJJ3relehHEUdNJDzoYqaFBkRuGpPjHVWyUa1YXTWj5pjwXHMDLxnMsT8c+Et
+	 iwhx+eH5z2eSaS3zxGnc+6LPhKhcItsqLNiDIWNxUuSwsS5EjW872zRUgtOuDcDcmM
+	 Z2OgbycWSFYf+jM8Mg1BLHhvAoUbvjPu9Qg32t7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/168] hwmon: (tmp513) Simplify with dev_err_probe()
-Date: Mon,  6 Jan 2025 16:15:43 +0100
-Message-ID: <20250106151139.788933878@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.15 053/168] of: Fix refcount leakage for OF node returned by __of_get_dma_parent()
+Date: Mon,  6 Jan 2025 16:16:01 +0100
+Message-ID: <20250106151140.466117558@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,96 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit df989762bc4b71068e6adc0c2b5ef6f76b6acf74 ]
+commit 5d009e024056ded20c5bb1583146b833b23bbd5a upstream.
 
-Common pattern of handling deferred probe can be simplified with
-dev_err_probe().  Less code and also it prints the error value.
+__of_get_dma_parent() returns OF device node @args.np, but the node's
+refcount is increased twice, by both of_parse_phandle_with_args() and
+of_node_get(), so causes refcount leakage for the node.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231128180654.395692-3-andriy.shevchenko@linux.intel.com
-[groeck: Fixed excessive line length]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 74d7e038fd07 ("hwmon: (tmp513) Fix interpretation of values of Shunt Voltage and Limit Registers")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix by directly returning the node got by of_parse_phandle_with_args().
+
+Fixes: f83a6e5dea6c ("of: address: Add support for the parent DMA bus")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/20241206-of_core_fix-v1-4-dc28ed56bec3@quicinc.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/tmp513.c | 35 +++++++++++++++--------------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+ drivers/of/address.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index fe3f1113b64e..53525d3a32a0 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -632,9 +632,9 @@ static int tmp51x_vbus_range_to_reg(struct device *dev,
- 	} else if (data->vbus_range_uvolt == TMP51X_VBUS_RANGE_16V) {
- 		data->shunt_config &= ~TMP51X_BUS_VOLTAGE_MASK;
- 	} else {
--		dev_err(dev, "ti,bus-range-microvolt is invalid: %u\n",
--			data->vbus_range_uvolt);
--		return -EINVAL;
-+		return dev_err_probe(dev, -EINVAL,
-+				     "ti,bus-range-microvolt is invalid: %u\n",
-+				     data->vbus_range_uvolt);
- 	}
- 	return 0;
+--- a/drivers/of/address.c
++++ b/drivers/of/address.c
+@@ -594,7 +594,7 @@ static struct device_node *__of_get_dma_
+ 	if (ret < 0)
+ 		return of_get_parent(np);
+ 
+-	return of_node_get(args.np);
++	return args.np;
  }
-@@ -650,8 +650,8 @@ static int tmp51x_pga_gain_to_reg(struct device *dev, struct tmp51x_data *data)
- 	} else if (data->pga_gain == 1) {
- 		data->shunt_config |= CURRENT_SENSE_VOLTAGE_40_MASK;
- 	} else {
--		dev_err(dev, "ti,pga-gain is invalid: %u\n", data->pga_gain);
--		return -EINVAL;
-+		return dev_err_probe(dev, -EINVAL,
-+				     "ti,pga-gain is invalid: %u\n", data->pga_gain);
- 	}
- 	return 0;
- }
-@@ -684,9 +684,9 @@ static int tmp51x_read_properties(struct device *dev, struct tmp51x_data *data)
  
- 	// Check if shunt value is compatible with pga-gain
- 	if (data->shunt_uohms > data->pga_gain * 40 * 1000 * 1000) {
--		dev_err(dev, "shunt-resistor: %u too big for pga_gain: %u\n",
--			data->shunt_uohms, data->pga_gain);
--		return -EINVAL;
-+		return dev_err_probe(dev, -EINVAL,
-+				     "shunt-resistor: %u too big for pga_gain: %u\n",
-+				     data->shunt_uohms, data->pga_gain);
- 	}
- 
- 	return 0;
-@@ -730,22 +730,17 @@ static int tmp51x_probe(struct i2c_client *client)
- 		data->id = i2c_match_id(tmp51x_id, client)->driver_data;
- 
- 	ret = tmp51x_configure(dev, data);
--	if (ret < 0) {
--		dev_err(dev, "error configuring the device: %d\n", ret);
--		return ret;
--	}
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "error configuring the device\n");
- 
- 	data->regmap = devm_regmap_init_i2c(client, &tmp51x_regmap_config);
--	if (IS_ERR(data->regmap)) {
--		dev_err(dev, "failed to allocate register map\n");
--		return PTR_ERR(data->regmap);
--	}
-+	if (IS_ERR(data->regmap))
-+		return dev_err_probe(dev, PTR_ERR(data->regmap),
-+				     "failed to allocate register map\n");
- 
- 	ret = tmp51x_init(data);
--	if (ret < 0) {
--		dev_err(dev, "error configuring the device: %d\n", ret);
--		return -ENODEV;
--	}
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "error configuring the device\n");
- 
- 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name,
- 							 data,
--- 
-2.39.5
-
+ static struct device_node *of_get_next_dma_parent(struct device_node *np)
 
 
