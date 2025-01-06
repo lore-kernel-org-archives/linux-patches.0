@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18C5155C9E;
-	Mon,  6 Jan 2025 15:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97296153814;
+	Mon,  6 Jan 2025 15:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177951; cv=none; b=ru45UFwwDc5VB53aM80hy8mPXMV4WmkoPBmTHTkx7Qml2LGZ03N4XuMVJYbaA/MZALRf5gaHsAgVm2AUDgibqffFTyz7R4mUoSCtbVhT1QCFm3wcYybZ1siFA5LEc5H4rXuhHVD2fNPu8obrbH4DvVoKpWFd6V75UV6efJShqFs=
+	t=1736177953; cv=none; b=kKeCS3cG+7V6rThUIAVJVY6hEJMiiwRgzP4PwroMqL+rkJuy2hLjHVvR6Q+k6SwNo89+RFBSD9XE66xmgUdlRzJkuPracCPJmcgqzv/LZicKhIkXAQ0V4WlHRqeAtTHNQg1i1f7eNhj/C3sDPkpDpOJg7D8lDEQlP6LleaNmh04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177951; c=relaxed/simple;
-	bh=aeCCfPs+LRtPThuigzjjXVpNa68OhsDxYSaLGOZ12N4=;
+	s=arc-20240116; t=1736177953; c=relaxed/simple;
+	bh=oCiOEzGw9vtRuTIT3HwnzmcuGdQy49cuN5QV0b8heJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PmIqLxdoYofJILWeJredZJubfYceYKZ79MhmTRJ/J1Dwnemc7ou43WGIzKzOXihxxOy96uAHcBfYoL+XJaZoNgYGcCdgzJ9aUcwQVwOZ5MAxucHE3vImkcUhQnX49b+3u+Wl21fkphcDp69qUgdZyTNs5p9ZakGP+qCMAo2R1eo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0HmCtQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d88LW+vv41SXrSZlU42utCXnUwBXubPXwSlnaEY2pmaxhF44vYvI4rVanluA/uPotSRGxF5EwSbr/8SkBB/MzQLuU4e1f1gxfsFXk74ZMlsF+1S/DGp16FnoLe+CxsnTBODWyU0AQ6KJol/sfECCdFDQuZ4vWMhDgsCyGH8/RwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIEsGeMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0HmCtQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B525C4CEE1;
-	Mon,  6 Jan 2025 15:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIEsGeMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAA8C4CED2;
+	Mon,  6 Jan 2025 15:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177950;
-	bh=aeCCfPs+LRtPThuigzjjXVpNa68OhsDxYSaLGOZ12N4=;
+	s=korg; t=1736177953;
+	bh=oCiOEzGw9vtRuTIT3HwnzmcuGdQy49cuN5QV0b8heJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x0HmCtQDL+fdDNgH6Iwb3eE7oNCeCS4l0hYCRYjOzHZZ/Exolr1ASCCQXjm/IQxpN
-	 RR3NTVVqRccBWmP1TI/+Ye9DcdL9AN/pIykw34hQBbzPxiFvcgXlKnlViDQ3CHotKK
-	 +kp2CiJiqwKFOXYn0dPE+2PEko2y+1byzVjxEhQ4=
+	b=qIEsGeMiGX5t4h2hMuun0DOdsbZ/YB18/llfMe1oyzGPk4bYnC1guO2qaF6wzJD7q
+	 oBcjhX1XxHrFZnZcII8OnOFxQCu7xLZBl6ZLYzSMr6YZSR1rbpZn4/gChQ2Sx3tpZ0
+	 J4EzwZ/f+UtQGLd4qlu4aWJY11DetozGWgi/MMIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasiliy Kovalev <kovalev@altlinux.org>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/156] ALSA: hda/realtek - Add support for ASUS Zen AIO 27 Z272SD_A272SD audio
-Date: Mon,  6 Jan 2025 16:16:10 +0100
-Message-ID: <20250106151144.896513708@linuxfoundation.org>
+	Francesco Poli <invernomuto@paranoici.org>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: [PATCH 6.12 111/156] RDMA/mlx5: Enable multiplane mode only when it is supported
+Date: Mon,  6 Jan 2025 16:16:37 +0100
+Message-ID: <20250106151145.908217414@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -51,77 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasiliy Kovalev <kovalev@altlinux.org>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 1b452c2de5555d832cd51c46824272a44ad7acac ]
+commit 45d339fefaa3dcd237038769e0d34584fb867390 upstream.
 
-Introduces necessary quirks to enable audio functionality on the
-ASUS Zen AIO 27 Z272SD_A272SD:
-- configures verbs to activate internal speakers and headphone jack.
-- implements adjustments for headset microphone functionality.
+Driver queries vport_cxt.num_plane and enables multiplane when it is
+greater then 0, but some old FWs (versions from x.40.1000 till x.42.1000),
+report vport_cxt.num_plane = 1 unexpectedly.
 
-The speaker and jack configurations were derived from a dump of
-the working Windows driver, while the headset microphone
-functionality was fine-tuned through experimental testing.
+Fix it by querying num_plane only when HCA_CAP2.multiplane bit is set.
 
-Link: https://lore.kernel.org/all/CAGGMHBOGDUnMewBTrZgoBKFk_A4sNF4fEXwfH9Ay8SNTzjy0-g@mail.gmail.com/T/
-Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
-Link: https://patch.msgid.link/20241205210306.977634-1-kovalev@altlinux.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2a5db20fa532 ("RDMA/mlx5: Add support to multi-plane device and port")
+Link: https://patch.msgid.link/r/1ef901acdf564716fcf550453cf5e94f343777ec.1734610916.git.leon@kernel.org
+Cc: stable@vger.kernel.org
+Reported-by: Francesco Poli <invernomuto@paranoici.org>
+Closes: https://lore.kernel.org/all/nvs4i2v7o6vn6zhmtq4sgazy2hu5kiulukxcntdelggmznnl7h@so3oul6uwgbl/
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/infiniband/hw/mlx5/main.c |    2 +-
+ include/linux/mlx5/mlx5_ifc.h     |    4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 192fc75b51e6..e9ec5f79bd45 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7704,6 +7704,7 @@ enum {
- 	ALC274_FIXUP_HP_MIC,
- 	ALC274_FIXUP_HP_HEADSET_MIC,
- 	ALC274_FIXUP_HP_ENVY_GPIO,
-+	ALC274_FIXUP_ASUS_ZEN_AIO_27,
- 	ALC256_FIXUP_ASUS_HPE,
- 	ALC285_FIXUP_THINKPAD_NO_BASS_SPK_HEADSET_JACK,
- 	ALC287_FIXUP_HP_GPIO_LED,
-@@ -9505,6 +9506,26 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc274_fixup_hp_envy_gpio,
- 	},
-+	[ALC274_FIXUP_ASUS_ZEN_AIO_27] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x10 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0xc420 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x40 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x8800 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x49 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x0249 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x4a },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x202b },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x62 },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0xa007 },
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x6b },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x5060 },
-+			{}
-+		},
-+		.chained = true,
-+		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
-+	},
- 	[ALC256_FIXUP_ASUS_HPE] = {
- 		.type = HDA_FIXUP_VERBS,
- 		.v.verbs = (const struct hda_verb[]) {
-@@ -10615,6 +10636,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1f62, "ASUS UX7602ZM", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1f92, "ASUS ROG Flow X16", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
-+	SND_PCI_QUIRK(0x1043, 0x31d0, "ASUS Zen AIO 27 Z272SD_A272SD", ALC274_FIXUP_ASUS_ZEN_AIO_27),
- 	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
--- 
-2.39.5
-
+--- a/drivers/infiniband/hw/mlx5/main.c
++++ b/drivers/infiniband/hw/mlx5/main.c
+@@ -2831,7 +2831,7 @@ static int mlx5_ib_get_plane_num(struct
+ 	int err;
+ 
+ 	*num_plane = 0;
+-	if (!MLX5_CAP_GEN(mdev, ib_virt))
++	if (!MLX5_CAP_GEN(mdev, ib_virt) || !MLX5_CAP_GEN_2(mdev, multiplane))
+ 		return 0;
+ 
+ 	err = mlx5_query_hca_vport_context(mdev, 0, 1, 0, &vport_ctx);
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -2113,7 +2113,9 @@ struct mlx5_ifc_cmd_hca_cap_2_bits {
+ 	u8	   migration_in_chunks[0x1];
+ 	u8	   reserved_at_d1[0x1];
+ 	u8	   sf_eq_usage[0x1];
+-	u8	   reserved_at_d3[0xd];
++	u8	   reserved_at_d3[0x5];
++	u8	   multiplane[0x1];
++	u8	   reserved_at_d9[0x7];
+ 
+ 	u8	   cross_vhca_object_to_object_supported[0x20];
+ 
 
 
