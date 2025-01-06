@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6351DDC1F;
-	Mon,  6 Jan 2025 15:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5217F1448F2;
+	Mon,  6 Jan 2025 15:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178785; cv=none; b=gRD5wbk8jLZa/5bpykCY9P6oQe6p2YM49/UKCijmrpofGDKLnJl3I4uIBb0iIskfRSF+2SxdarHmeztQCq2Djw2ikBlwCVNSJOcbx2Gk5c372iq1PBik1D6oiuU5L3BDCC5Lb/m44pSz4VySb3eUI9MXx6eNp5+ioCIjaArsIlc=
+	t=1736178788; cv=none; b=VMPm1aMUNNbkcSQLy3dRcW13ntU/frZExsebYcm6x4ICdEscJfm2uc68l8Kaz/RY0DePAVqdIb2pzDs2EyjtKNOUfczru1Pn6DICbS423jditKKfgcjfzNR3NrGz97jjC2ervz2M32vh3jgNfTJZSwaMuHpIHUStDVOElUV73dI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178785; c=relaxed/simple;
-	bh=+lGotaIvodxhL9DnrzrlcIiXyHg6y8cbANKDzbuakFk=;
+	s=arc-20240116; t=1736178788; c=relaxed/simple;
+	bh=tWsBoTZlXZcOOUTlUjMcvyCV3hXLUGalKsvxDCmkyrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDhP3MRElRvYVpPl7T6FFBn4v0Cgr/yABo0vZkARwZluvZCyyYS/8bHSiVVReQJOkA7y+GbxvvnHe0MoN0SYwl/fSANOdeTpHMPIN2WO0tZWDshDjjkFnZBOuu5KigMuhj6Iw8LB+LdPl1xp3SZewmNCOOmqT38WUXBpB43BNXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrJiCCxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PhMwZ0R/vIq0rv27KJSDRyUkTKPAM/KYtnv1HZJzwH11DghVXf56GdumYhht6+N9tsajl8gzV8tXFDVn5LfWOVwlpY63GA3vq1K5KMN90Gq1fdHQy0NTEPT+nVm5ZNrpdvj1d+q3plNSbzdgWl+db1iDZkuMUWCX0fN+SgZWBgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIyCgiIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrJiCCxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA48C4CEDF;
-	Mon,  6 Jan 2025 15:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIyCgiIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE218C4CED2;
+	Mon,  6 Jan 2025 15:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178785;
-	bh=+lGotaIvodxhL9DnrzrlcIiXyHg6y8cbANKDzbuakFk=;
+	s=korg; t=1736178788;
+	bh=tWsBoTZlXZcOOUTlUjMcvyCV3hXLUGalKsvxDCmkyrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FrJiCCxLucbT7EzUbTmRUp6YBFYZjmo8GWmbHGe5Hag05/FttXLjLSKYe5rh5zYnD
-	 KxFvsPib2M+wkFznpWTbiv/vxH8cpEo0iUwglyFKUFVrI8Ov47SaKBMks0o6SSAeyj
-	 FWu861xuujLwmJBdKMMby7w4eQfEUIZc7O49iTnA=
+	b=YIyCgiIY7cHI7MFkb9LtU8MRlLtvqQGfRfm2+l1dRuDWzPgBWCHRSsGoL1rjx/Z23
+	 cd6ihRS+qtHHGDBAcI43MjrO47iuyYyWs/OpH9Ojokxs45ueZt4wwFG/mHw2M9GJay
+	 hyRDNUvP+T224I/r0hlH12df0zIyS1gaR76JMMKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	George Shen <george.shen@amd.com>,
-	Peterson Guo <peterson.guo@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Yunfeng Ye <yeyunfeng@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/168] drm/amd/display: Add a left edge pixel if in YCbCr422 or YCbCr420 and odm
-Date: Mon,  6 Jan 2025 16:16:39 +0100
-Message-ID: <20250106151141.902285619@linuxfoundation.org>
+Subject: [PATCH 5.15 092/168] arm64: mm: Rename asid2idx() to ctxid2asid()
+Date: Mon,  6 Jan 2025 16:16:40 +0100
+Message-ID: <20250106151141.939942150@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -55,84 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peterson Guo <peterson.guo@amd.com>
+From: Yunfeng Ye <yeyunfeng@huawei.com>
 
-[ Upstream commit 63e7ee677c74e981257cedfdd8543510d09096ba ]
+[ Upstream commit a3a5b763410c7bceacf41a52071134d9dc26202a ]
 
-[WHY]
-On some cards when odm is used, the monitor will have 2 separate pipes
-split vertically. When compression is used on the YCbCr colour space on
-the second pipe to have correct colours, we need to read a pixel from the
-end of first pipe to accurately display colours. Hardware was programmed
-properly to account for this extra pixel but it was not calculated
-properly in software causing a split screen on some monitors.
+The commit 0c8ea531b774 ("arm64: mm: Allocate ASIDs in pairs") introduce
+the asid2idx and idx2asid macro, but these macros are not really useful
+after the commit f88f42f853a8 ("arm64: context: Free up kernel ASIDs if
+KPTI is not in use").
 
-[HOW]
-The fix adjusts the second pipe's viewport and timings if the pixel
-encoding is YCbCr422 or YCbCr420.
+The code "(asid & ~ASID_MASK)" can be instead by a macro, which is the
+same code with asid2idx(). So rename it to ctxid2asid() for a better
+understanding.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: George Shen <george.shen@amd.com>
-Signed-off-by: Peterson Guo <peterson.guo@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Also we add asid2ctxid() macro, the contextid can be generated based on
+the asid and generation through this macro.
+
+Signed-off-by: Yunfeng Ye <yeyunfeng@huawei.com>
+Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Link: https://lore.kernel.org/r/c31516eb-6d15-94e0-421c-305fc010ea79@huawei.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Stable-dep-of: c0900d15d31c ("arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/dc/dcn20/dcn20_resource.c | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ arch/arm64/mm/context.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-index 04b370e7e732..6688c40f3c70 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn20/dcn20_resource.c
-@@ -1899,6 +1899,7 @@ bool dcn20_split_stream_for_odm(
+diff --git a/arch/arm64/mm/context.c b/arch/arm64/mm/context.c
+index cd72576ae2b7..bbc2708fe928 100644
+--- a/arch/arm64/mm/context.c
++++ b/arch/arm64/mm/context.c
+@@ -35,8 +35,8 @@ static unsigned long *pinned_asid_map;
+ #define ASID_FIRST_VERSION	(1UL << asid_bits)
  
- 	if (prev_odm_pipe->plane_state) {
- 		struct scaler_data *sd = &prev_odm_pipe->plane_res.scl_data;
-+		struct output_pixel_processor *opp = next_odm_pipe->stream_res.opp;
- 		int new_width;
+ #define NUM_USER_ASIDS		ASID_FIRST_VERSION
+-#define asid2idx(asid)		((asid) & ~ASID_MASK)
+-#define idx2asid(idx)		asid2idx(idx)
++#define ctxid2asid(asid)	((asid) & ~ASID_MASK)
++#define asid2ctxid(asid, genid)	((asid) | (genid))
  
- 		/* HACTIVE halved for odm combine */
-@@ -1932,7 +1933,28 @@ bool dcn20_split_stream_for_odm(
- 		sd->viewport_c.x += dc_fixpt_floor(dc_fixpt_mul_int(
- 				sd->ratios.horz_c, sd->h_active - sd->recout.x));
- 		sd->recout.x = 0;
-+
-+		/*
-+		 * When odm is used in YcbCr422 or 420 colour space, a split screen
-+		 * will be seen with the previous calculations since the extra left
-+		 *  edge pixel is accounted for in fmt but not in viewport.
-+		 *
-+		 * Below are calculations which fix the split by fixing the calculations
-+		 * if there is an extra left edge pixel.
-+		 */
-+		if (opp && opp->funcs->opp_get_left_edge_extra_pixel_count
-+				&& opp->funcs->opp_get_left_edge_extra_pixel_count(
-+					opp, next_odm_pipe->stream->timing.pixel_encoding,
-+					resource_is_pipe_type(next_odm_pipe, OTG_MASTER)) == 1) {
-+			sd->h_active += 1;
-+			sd->recout.width += 1;
-+			sd->viewport.x -= dc_fixpt_ceil(dc_fixpt_mul_int(sd->ratios.horz, 1));
-+			sd->viewport_c.x -= dc_fixpt_ceil(dc_fixpt_mul_int(sd->ratios.horz, 1));
-+			sd->viewport_c.width += dc_fixpt_ceil(dc_fixpt_mul_int(sd->ratios.horz, 1));
-+			sd->viewport.width += dc_fixpt_ceil(dc_fixpt_mul_int(sd->ratios.horz, 1));
-+		}
+ /* Get the ASIDBits supported by the current CPU */
+ static u32 get_cpu_asid_bits(void)
+@@ -120,7 +120,7 @@ static void flush_context(void)
+ 		 */
+ 		if (asid == 0)
+ 			asid = per_cpu(reserved_asids, i);
+-		__set_bit(asid2idx(asid), asid_map);
++		__set_bit(ctxid2asid(asid), asid_map);
+ 		per_cpu(reserved_asids, i) = asid;
  	}
-+
- 	if (!next_odm_pipe->top_pipe)
- 		next_odm_pipe->stream_res.opp = pool->opps[next_odm_pipe->pipe_idx];
- 	else
-@@ -2905,6 +2927,7 @@ bool dcn20_fast_validate_bw(
- 			ASSERT(0);
- 		}
+ 
+@@ -162,7 +162,7 @@ static u64 new_context(struct mm_struct *mm)
+ 	u64 generation = atomic64_read(&asid_generation);
+ 
+ 	if (asid != 0) {
+-		u64 newasid = generation | (asid & ~ASID_MASK);
++		u64 newasid = asid2ctxid(ctxid2asid(asid), generation);
+ 
+ 		/*
+ 		 * If our current ASID was active during a rollover, we
+@@ -183,7 +183,7 @@ static u64 new_context(struct mm_struct *mm)
+ 		 * We had a valid ASID in a previous life, so try to re-use
+ 		 * it if possible.
+ 		 */
+-		if (!__test_and_set_bit(asid2idx(asid), asid_map))
++		if (!__test_and_set_bit(ctxid2asid(asid), asid_map))
+ 			return newasid;
  	}
-+
- 	/* Actual dsc count per stream dsc validation*/
- 	if (!dcn20_validate_dsc(dc, context)) {
- 		context->bw_ctx.dml.vba.ValidationStatus[context->bw_ctx.dml.vba.soc.num_states] =
+ 
+@@ -209,7 +209,7 @@ static u64 new_context(struct mm_struct *mm)
+ set_asid:
+ 	__set_bit(asid, asid_map);
+ 	cur_idx = asid;
+-	return idx2asid(asid) | generation;
++	return asid2ctxid(asid, generation);
+ }
+ 
+ void check_and_switch_context(struct mm_struct *mm)
+@@ -300,13 +300,13 @@ unsigned long arm64_mm_context_get(struct mm_struct *mm)
+ 	}
+ 
+ 	nr_pinned_asids++;
+-	__set_bit(asid2idx(asid), pinned_asid_map);
++	__set_bit(ctxid2asid(asid), pinned_asid_map);
+ 	refcount_set(&mm->context.pinned, 1);
+ 
+ out_unlock:
+ 	raw_spin_unlock_irqrestore(&cpu_asid_lock, flags);
+ 
+-	asid &= ~ASID_MASK;
++	asid = ctxid2asid(asid);
+ 
+ 	/* Set the equivalent of USER_ASID_BIT */
+ 	if (asid && arm64_kernel_unmapped_at_el0())
+@@ -327,7 +327,7 @@ void arm64_mm_context_put(struct mm_struct *mm)
+ 	raw_spin_lock_irqsave(&cpu_asid_lock, flags);
+ 
+ 	if (refcount_dec_and_test(&mm->context.pinned)) {
+-		__clear_bit(asid2idx(asid), pinned_asid_map);
++		__clear_bit(ctxid2asid(asid), pinned_asid_map);
+ 		nr_pinned_asids--;
+ 	}
+ 
 -- 
 2.39.5
 
