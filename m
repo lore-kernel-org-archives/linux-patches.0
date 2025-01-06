@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3326F8635E;
-	Mon,  6 Jan 2025 15:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68853146D6B;
+	Mon,  6 Jan 2025 15:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176954; cv=none; b=HjapQrwA3Vi++oFEYjrZwbGyn7IU3yLLhG9uzNViZwR+dDyHTAymwNUBucKe4G2f8jqJeI6/nFkeMz5M33cAH7n525c4mDRlBzntk3f9gEZl3Lbj77ac9nVvRSXG/PWdx32rbg/74W8GB1Qa7rwHJiPXpYNDp6ISP+nQ3sUtCUM=
+	t=1736176957; cv=none; b=dtiJScDUCsTyB4lUTNQAzXvYUoToMpdq8BRjm9ZnH7N8GUFATsjNoijzTPsWU9sW0YcYVI68g+Lpgsf80E6bkt5p6+FKbGFWirYWzhjzFl+BigWPxN/hCFnUtc03gvJsfVEk8gtulOlZXamTMg2lQFqsSR7uGiC3L3xdbMMmLxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176954; c=relaxed/simple;
-	bh=2zgGxaI9h6VFYRZ+B1tDEIwZXZ7JaWdQtT+WwUYj+6o=;
+	s=arc-20240116; t=1736176957; c=relaxed/simple;
+	bh=RFjsFZ/YtpsOVNz/mai2c2brkR9rC7IoeTLEUcUwafg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8bTHudeyaYrRDR7489MV0yXhPnbCaqZ4nQjx2iB6P0VDEqhjCHWC1S+Ok4PMKtg/sUjN9IldgNlvd0y6Vvz66mYSykqLl4wXTO2hPeF56i1O9/CNepWmjboYI5XApQ24Zr6H5F9aqTorgAjO6RjHpWWaBhTay1l3iv94OG+goE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFYxwXgc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2WTKmy4HfQ61fcqHnbB25P29f5VxgCvH+jNW88G7K0/mN2SLxfMFxloC5kIocRbw6BNVxq7einxa/MKNc9Rog5DUet7yCrxC5MmBFJiursb7xAnN8cK51JIHd0gygPlB5529elYQK7rpUJaOtNApbjKEQY0FP8rdRNMAXXIh1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKnjUf2m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFYxwXgc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE75CC4CED2;
-	Mon,  6 Jan 2025 15:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKnjUf2m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D163C4CED2;
+	Mon,  6 Jan 2025 15:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176954;
-	bh=2zgGxaI9h6VFYRZ+B1tDEIwZXZ7JaWdQtT+WwUYj+6o=;
+	s=korg; t=1736176957;
+	bh=RFjsFZ/YtpsOVNz/mai2c2brkR9rC7IoeTLEUcUwafg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFYxwXgcSNOAlsk/8OtTVyuhX0x8mSIUJ/Nyyy8+MmrsL8cVSlcFMCbUyrmB6Naw/
-	 o2rWSfAMHS8GRTueXY6fEnd7SdQwcTzc1chBnvSAebfvyOsCQuOFFQ24mv5+a+SdBB
-	 Kbs8pugOlU/e4xF9J3s+oC2yDKbmyaNbEbpsEoT8=
+	b=PKnjUf2mCqrHlq2nTczQeU6TxqnsQr7eN2liKiYxhZ6hb2u7khnZb84egACNYkOwC
+	 zc4E72U0NExGmGM9YNuIO+h8v5GmUfYIEn0Zj66GczIwUd5KJ21gFqErc8OF4OAOLu
+	 IfjRokzCODjV+I3rp4PZLg5945iDqu+w2OpegZ0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.com>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Anton Protopopov <aspsk@isovalent.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 58/81] sound: usb: format: dont warn that raw DSD is unsupported
-Date: Mon,  6 Jan 2025 16:16:30 +0100
-Message-ID: <20250106151131.625550325@linuxfoundation.org>
+Subject: [PATCH 6.1 59/81] bpf: fix potential error return
+Date: Mon,  6 Jan 2025 16:16:31 +0100
+Message-ID: <20250106151131.663057837@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -52,73 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ratiu <adrian.ratiu@collabora.com>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-[ Upstream commit b50a3e98442b8d72f061617c7f7a71f7dba19484 ]
+[ Upstream commit c4441ca86afe4814039ee1b32c39d833c1a16bbc ]
 
-UAC 2 & 3 DAC's set bit 31 of the format to signal support for a
-RAW_DATA type, typically used for DSD playback.
+The bpf_remove_insns() function returns WARN_ON_ONCE(error), where
+error is a result of bpf_adj_branches(), and thus should be always 0
+However, if for any reason it is not 0, then it will be converted to
+boolean by WARN_ON_ONCE and returned to user space as 1, not an actual
+error value. Fix this by returning the original err after the WARN check.
 
-This is correctly tested by (format & UAC*_FORMAT_TYPE_I_RAW_DATA),
-fp->dsd_raw = true; and call snd_usb_interface_dsd_format_quirks(),
-however a confusing and unnecessary message gets printed because
-the bit is not properly tested in the last "unsupported" if test:
-if (format & ~0x3F) { ... }
-
-For example the output:
-
-usb 7-1: new high-speed USB device number 5 using xhci_hcd
-usb 7-1: New USB device found, idVendor=262a, idProduct=9302, bcdDevice=0.01
-usb 7-1: New USB device strings: Mfr=1, Product=2, SerialNumber=6
-usb 7-1: Product: TC44C
-usb 7-1: Manufacturer: TC44C
-usb 7-1: SerialNumber: 5000000001
-hid-generic 0003:262A:9302.001E: No inputs registered, leaving
-hid-generic 0003:262A:9302.001E: hidraw6: USB HID v1.00 Device [DDHIFI TC44C] on usb-0000:08:00.3-1/input0
-usb 7-1: 2:4 : unsupported format bits 0x100000000
-
-This last "unsupported format" is actually wrong: we know the
-format is a RAW_DATA which we assume is DSD, so there is no need
-to print the confusing message.
-
-This we unset bit 31 of the format after recognizing it, to avoid
-the message.
-
-Suggested-by: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Adrian Ratiu <adrian.ratiu@collabora.com>
-Link: https://patch.msgid.link/20241209090529.16134-2-adrian.ratiu@collabora.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20241210114245.836164-1-aspsk@isovalent.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/format.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/bpf/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/format.c b/sound/usb/format.c
-index 3b45d0ee7693..3b3a5ea6fcbf 100644
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -60,6 +60,8 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
- 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
- 			/* flag potentially raw DSD capable altsettings */
- 			fp->dsd_raw = true;
-+			/* clear special format bit to avoid "unsupported format" msg below */
-+			format &= ~UAC2_FORMAT_TYPE_I_RAW_DATA;
- 		}
+diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
+index 0ea0d50a7c16..83b416af4da1 100644
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -523,6 +523,8 @@ struct bpf_prog *bpf_patch_insn_single(struct bpf_prog *prog, u32 off,
  
- 		format <<= 1;
-@@ -71,8 +73,11 @@ static u64 parse_audio_format_i_type(struct snd_usb_audio *chip,
- 		sample_width = as->bBitResolution;
- 		sample_bytes = as->bSubslotSize;
+ int bpf_remove_insns(struct bpf_prog *prog, u32 off, u32 cnt)
+ {
++	int err;
++
+ 	/* Branch offsets can't overflow when program is shrinking, no need
+ 	 * to call bpf_adj_branches(..., true) here
+ 	 */
+@@ -530,7 +532,9 @@ int bpf_remove_insns(struct bpf_prog *prog, u32 off, u32 cnt)
+ 		sizeof(struct bpf_insn) * (prog->len - off - cnt));
+ 	prog->len -= cnt;
  
--		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA)
-+		if (format & UAC3_FORMAT_TYPE_I_RAW_DATA) {
- 			pcm_formats |= SNDRV_PCM_FMTBIT_SPECIAL;
-+			/* clear special format bit to avoid "unsupported format" msg below */
-+			format &= ~UAC3_FORMAT_TYPE_I_RAW_DATA;
-+		}
+-	return WARN_ON_ONCE(bpf_adj_branches(prog, off, off + cnt, off, false));
++	err = bpf_adj_branches(prog, off, off + cnt, off, false);
++	WARN_ON_ONCE(err);
++	return err;
+ }
  
- 		format <<= 1;
- 		break;
+ static void bpf_prog_kallsyms_del_subprogs(struct bpf_prog *fp)
 -- 
 2.39.5
 
