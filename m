@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C808913B592;
-	Mon,  6 Jan 2025 15:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DE642040;
+	Mon,  6 Jan 2025 15:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178516; cv=none; b=IJ2lwOV1V9p45+j3vE7ivRQxKQQHNoF86BX2O/pF/60gqo1tH/JXjtMO8r1RIJ0gSSET0gP5yl33lgwnJZCj++TyYA1mFRBm3TwmrCsTKdsEOtU4LtkbC0Q5Gr7a5mFC8EGy1Lk0Q+NDcibwV55BkNStxcmGzJhE6ED5PBf9jl0=
+	t=1736178519; cv=none; b=KF+6QacsvCmUcHk8oNOHiK5y7u/RPf+SgP6G1Laq4gcgGPBgVyaNn88mAFzmK9Y5FuuoXtWDPce767Eo1+tABoteBF5WL3JKdR5WTh1UaS8jg7cwm2WAf62tI5j3C8rmwjc92d6gaGA4vvMt8FOeU2BQUYnthG9SwUcHx2pcPfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178516; c=relaxed/simple;
-	bh=5Rlac0DBbJwqJO69oGUcpTjKe1C/xDwOWomFZBzSKzQ=;
+	s=arc-20240116; t=1736178519; c=relaxed/simple;
+	bh=5VLFm6F8j4JojQa1uUjp6KK4oYg9U3CuNy6v2KlEEmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ib1qXmQfrMC6IHYTewkqIT+AwnRA8Zuf89FEzzfVM7zZdF5xWGOn9JPhM7WnZFxvcNxAjalqolqBtpTWipHxOiICAipFFAscBQprYCLfvvQs9bKWqyNHWsD4aPK0M+oLhcUPpRTdulgwv47Hkynn3tAZkjwjP/MbVtYf1qe7VKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzXV6zt5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uD5/9qtT7Has+wQqk7B1hsV7g8DAcUTQP6oEqD1fkolBT41cOkJEasjes7VWCEKfpd9d5uZIDnqgUpQO4Ro3fe9neaPK5CYxYQn7YcEZmFxQKULuBdh3+FmmyTXh+UGWeyBa0tyGtzlYHVvLRmkPYm3ECWm1i0eiUkJ0MhPmJCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E7N6Pb3y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzXV6zt5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F99C4CED2;
-	Mon,  6 Jan 2025 15:48:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E7N6Pb3y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1E1C4CED2;
+	Mon,  6 Jan 2025 15:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178516;
-	bh=5Rlac0DBbJwqJO69oGUcpTjKe1C/xDwOWomFZBzSKzQ=;
+	s=korg; t=1736178519;
+	bh=5VLFm6F8j4JojQa1uUjp6KK4oYg9U3CuNy6v2KlEEmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzXV6zt54DGJrDMVwX3kRZYT2efYCEl0eVFmEx1GBXnoJcG+82nK68ehgmkjPhDBT
-	 d/iNEiY8mI8uHnCyRHru/0UAdAoDedVVu/j92ULE85rBbzOuf2tJl3QXqTYS6WbSLt
-	 wR7Ry9mXc/L4imqSl72HzMXzrUvUpHSEHiQqQWbM=
+	b=E7N6Pb3yuUVAyL+yjhVGlTc13BF3hTFqf0EhVAwHRyRJB51IsRxEXUT5UqMlevSv6
+	 TBV2HEewFal1a3M38wwuCEJEPkpUJy8JMAfKW1cAKwKF1YIlgdnAh6wOGLZ5Bt0a8k
+	 4PNDXk7mnIZBdyABaLkXZIUNZDiga7KaDMqZ+E2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Vineet Gupta <vgupta@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 128/138] ARC: build: Try to guess GCC variant of cross compiler
-Date: Mon,  6 Jan 2025 16:17:32 +0100
-Message-ID: <20250106151138.079984914@linuxfoundation.org>
+Subject: [PATCH 5.10 129/138] btrfs: locking: remove the recursion handling code
+Date: Mon,  6 Jan 2025 16:17:33 +0100
+Message-ID: <20250106151138.117477287@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -45,52 +46,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 824927e88456331c7a999fdf5d9d27923b619590 ]
+[ Upstream commit 4048daedb910f83f080c6bb03c78af794aebdff5 ]
 
-ARC GCC compiler is packaged starting from Fedora 39i and the GCC
-variant of cross compile tools has arc-linux-gnu- prefix and not
-arc-linux-. This is causing that CROSS_COMPILE variable is left unset.
+Now that we're no longer using recursion, rip out all of the supporting
+code.  Follow up patches will clean up the callers of these functions.
 
-This change allows builds without need to supply CROSS_COMPILE argument
-if distro package is used.
+The extent_buffer::lock_owner is still retained as it allows safety
+checks in btrfs_init_new_buffer for the case that the free space cache
+is corrupted and we try to allocate a block that we are currently using
+and have locked in the path.
 
-Before this change:
-$ make -j 128 ARCH=arc W=1 drivers/infiniband/hw/mlx4/
-  gcc: warning: ‘-mcpu=’ is deprecated; use ‘-mtune=’ or ‘-march=’ instead
-  gcc: error: unrecognized command-line option ‘-mmedium-calls’
-  gcc: error: unrecognized command-line option ‘-mlock’
-  gcc: error: unrecognized command-line option ‘-munaligned-access’
-
-[1] https://packages.fedoraproject.org/pkgs/cross-gcc/gcc-arc-linux-gnu/index.html
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Vineet Gupta <vgupta@kernel.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 97e86631bccd ("btrfs: don't set lock_owner when locking extent buffer for reading")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arc/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/locking.c | 68 +++-------------------------------------------
+ 1 file changed, 4 insertions(+), 64 deletions(-)
 
-diff --git a/arch/arc/Makefile b/arch/arc/Makefile
-index 578bdbbb0fa7..18f4b2452074 100644
---- a/arch/arc/Makefile
-+++ b/arch/arc/Makefile
-@@ -6,7 +6,7 @@
- KBUILD_DEFCONFIG := haps_hs_smp_defconfig
+diff --git a/fs/btrfs/locking.c b/fs/btrfs/locking.c
+index 5260660b655a..1e36a66fcefa 100644
+--- a/fs/btrfs/locking.c
++++ b/fs/btrfs/locking.c
+@@ -25,43 +25,18 @@
+  * - reader/reader sharing
+  * - try-lock semantics for readers and writers
+  *
+- * Additionally we need one level nesting recursion, see below. The rwsem
+- * implementation does opportunistic spinning which reduces number of times the
+- * locking task needs to sleep.
+- *
+- *
+- * Lock recursion
+- * --------------
+- *
+- * A write operation on a tree might indirectly start a look up on the same
+- * tree.  This can happen when btrfs_cow_block locks the tree and needs to
+- * lookup free extents.
+- *
+- * btrfs_cow_block
+- *   ..
+- *   alloc_tree_block_no_bg_flush
+- *     btrfs_alloc_tree_block
+- *       btrfs_reserve_extent
+- *         ..
+- *         load_free_space_cache
+- *           ..
+- *           btrfs_lookup_file_extent
+- *             btrfs_search_slot
+- *
++ * The rwsem implementation does opportunistic spinning which reduces number of
++ * times the locking task needs to sleep.
+  */
  
- ifeq ($(CROSS_COMPILE),)
--CROSS_COMPILE := $(call cc-cross-prefix, arc-linux- arceb-linux-)
-+CROSS_COMPILE := $(call cc-cross-prefix, arc-linux- arceb-linux- arc-linux-gnu-)
- endif
+ /*
+  * __btrfs_tree_read_lock - lock extent buffer for read
+  * @eb:		the eb to be locked
+  * @nest:	the nesting level to be used for lockdep
+- * @recurse:	if this lock is able to be recursed
++ * @recurse:	unused
+  *
+  * This takes the read lock on the extent buffer, using the specified nesting
+  * level for lockdep purposes.
+- *
+- * If you specify recurse = true, then we will allow this to be taken if we
+- * currently own the lock already.  This should only be used in specific
+- * usecases, and the subsequent unlock will not change the state of the lock.
+  */
+ void __btrfs_tree_read_lock(struct extent_buffer *eb, enum btrfs_lock_nesting nest,
+ 			    bool recurse)
+@@ -71,31 +46,7 @@ void __btrfs_tree_read_lock(struct extent_buffer *eb, enum btrfs_lock_nesting ne
+ 	if (trace_btrfs_tree_read_lock_enabled())
+ 		start_ns = ktime_get_ns();
  
- cflags-y	+= -fno-common -pipe -fno-builtin -mmedium-calls -D__linux__
+-	if (unlikely(recurse)) {
+-		/* First see if we can grab the lock outright */
+-		if (down_read_trylock(&eb->lock))
+-			goto out;
+-
+-		/*
+-		 * Ok still doesn't necessarily mean we are already holding the
+-		 * lock, check the owner.
+-		 */
+-		if (eb->lock_owner != current->pid) {
+-			down_read_nested(&eb->lock, nest);
+-			goto out;
+-		}
+-
+-		/*
+-		 * Ok we have actually recursed, but we should only be recursing
+-		 * once, so blow up if we're already recursed, otherwise set
+-		 * ->lock_recursed and carry on.
+-		 */
+-		BUG_ON(eb->lock_recursed);
+-		eb->lock_recursed = true;
+-		goto out;
+-	}
+ 	down_read_nested(&eb->lock, nest);
+-out:
+ 	eb->lock_owner = current->pid;
+ 	trace_btrfs_tree_read_lock(eb, start_ns);
+ }
+@@ -136,22 +87,11 @@ int btrfs_try_tree_write_lock(struct extent_buffer *eb)
+ }
+ 
+ /*
+- * Release read lock.  If the read lock was recursed then the lock stays in the
+- * original state that it was before it was recursively locked.
++ * Release read lock.
+  */
+ void btrfs_tree_read_unlock(struct extent_buffer *eb)
+ {
+ 	trace_btrfs_tree_read_unlock(eb);
+-	/*
+-	 * if we're nested, we have the write lock.  No new locking
+-	 * is needed as long as we are the lock owner.
+-	 * The write unlock will do a barrier for us, and the lock_recursed
+-	 * field only matters to the lock owner.
+-	 */
+-	if (eb->lock_recursed && current->pid == eb->lock_owner) {
+-		eb->lock_recursed = false;
+-		return;
+-	}
+ 	eb->lock_owner = 0;
+ 	up_read(&eb->lock);
+ }
 -- 
 2.39.5
 
