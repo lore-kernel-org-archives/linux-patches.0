@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63AD2BA34;
-	Mon,  6 Jan 2025 15:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DDDBA34;
+	Mon,  6 Jan 2025 15:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179121; cv=none; b=pMEbDZpvKyA+91qBfxH7IBqacI8lIjkJ/fjYe2d0/PME+cYnfWYNXKRkRUmkd81ojlK0kYhlJ0OI6tBPiEzV+Q+wr5BE2tL0RpKm2upYo7LkGobtqq8uU6u1wYHjFYu0DGf4OUyi2HensS+jso8EufCtmSqY7PpVFQfRlrtib3c=
+	t=1736179124; cv=none; b=LWCkw0XjpxqGvD9uvZbIZIhDyo8ntqihTUsg6nsq17OHlrr0k+9UgnGG4mhLS0MGWNjOKLBtHfcvPmPYDPmtB941lt7IsLUtB8AI7vHSEFv9nfpeJOdvZ4WWxPR0UPP2O8tQ42PD2mSUw0hIdRqwWM8zBIzvs6KhFTEt1p3VZMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179121; c=relaxed/simple;
-	bh=blMGlsdyjCTi/qeEagjtA4EklLZurvz80FDON+ZlHm0=;
+	s=arc-20240116; t=1736179124; c=relaxed/simple;
+	bh=A44yEl0d7Hs5p+wiYrwjEzirTRDslHQuqEd8xDvqBLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rieRMGhkatTZuha5viFfqVXM7SfufDMzEIUEHRfqbtCh39RfMOw0XRmuZclIrE4By6c1FXR6WzaHXMzxBhHcmos06V19ZFBOZkI4oqJjiWUZRw1eFXQfNT79mBRqva7hMHH0Xo8PCzn1VyNkH4eYKKr2//n/0DR3rBWFZfe6KmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MicplEMK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmjUDYFjXMwWNtTXAQSnjaaaPfTgOx8y99R7t6IV8+8kh4S0BfTf+3FhS7UU96VWPYgfBUoun7JSNe/6LdLHX4L+UV6hfeO7+Y7gL2meSs4t3E+AYhiKJvZ/sxafEMki3TbYLE49SLgdeN2sUV4mznh4ZiurEyzQA6IwuVxNmP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJGg0ggK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MicplEMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71734C4CED2;
-	Mon,  6 Jan 2025 15:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJGg0ggK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1CCC4CED2;
+	Mon,  6 Jan 2025 15:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179120;
-	bh=blMGlsdyjCTi/qeEagjtA4EklLZurvz80FDON+ZlHm0=;
+	s=korg; t=1736179124;
+	bh=A44yEl0d7Hs5p+wiYrwjEzirTRDslHQuqEd8xDvqBLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MicplEMKo5XTOjluiXy7BlWJK5UzVzRWvobWbMg6vbKeyCNPfNOibCqviFfdGpDTf
-	 C5Eg+26dWnn/MeYnrQMLSYO6lpHqXpHzoaizTYOVNhzRk38d81D7CPFwNI9bG9FdOK
-	 4HRM24DTaLNVGTVfJcR/nhrzsm4CbwiyABRN/zyY=
+	b=MJGg0ggK6INuWdDF5l6N8cu6lpcwGrTOU+clsv3T7HZ26UkLHyS9ar7T/jJTLSShh
+	 gz1Em0z/6ElZCUgbEbm5SEaxNPhnBK32lbQCc9hUdQOr1MXveEwRyT0mViVZevwjQz
+	 srJKTIlCpWDWEaNs+9fSCb2t/knUuJX1HhEUNcm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 33/93] media: dvb-frontends: dib3000mb: fix uninit-value in dib3000_write_reg
-Date: Mon,  6 Jan 2025 16:17:09 +0100
-Message-ID: <20250106151129.953776175@linuxfoundation.org>
+Subject: [PATCH 5.4 34/93] bpf: Check negative offsets in __bpf_skb_min_len()
+Date: Mon,  6 Jan 2025 16:17:10 +0100
+Message-ID: <20250106151129.990746372@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,59 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 2dd59fe0e19e1ab955259978082b62e5751924c7 ]
+[ Upstream commit 9ecc4d858b92c1bb0673ad9c327298e600c55659 ]
 
-Syzbot reports [1] an uninitialized value issue found by KMSAN in
-dib3000_read_reg().
+skb_network_offset() and skb_transport_offset() can be negative when
+they are called after we pull the transport header, for example, when
+we use eBPF sockmap at the point of ->sk_data_ready().
 
-Local u8 rb[2] is used in i2c_transfer() as a read buffer; in case
-that call fails, the buffer may end up with some undefined values.
+__bpf_skb_min_len() uses an unsigned int to get these offsets, this
+leads to a very large number which then causes bpf_skb_change_tail()
+failed unexpectedly.
 
-Since no elaborate error handling is expected in dib3000_write_reg(),
-simply zero out rb buffer to mitigate the problem.
+Fix this by using a signed int to get these offsets and ensure the
+minimum is at least zero.
 
-[1] Syzkaller report
-dvb-usb: bulk message failed: -22 (6/0)
-=====================================================
-BUG: KMSAN: uninit-value in dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
- dib3000mb_attach+0x2d8/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
- dibusb_dib3000mb_frontend_attach+0x155/0x2f0 drivers/media/usb/dvb-usb/dibusb-mb.c:31
- dvb_usb_adapter_frontend_init+0xed/0x9a0 drivers/media/usb/dvb-usb/dvb-usb-dvb.c:290
- dvb_usb_adapter_init drivers/media/usb/dvb-usb/dvb-usb-init.c:90 [inline]
- dvb_usb_init drivers/media/usb/dvb-usb/dvb-usb-init.c:186 [inline]
- dvb_usb_device_init+0x25a8/0x3760 drivers/media/usb/dvb-usb/dvb-usb-init.c:310
- dibusb_probe+0x46/0x250 drivers/media/usb/dvb-usb/dibusb-mb.c:110
-...
-Local variable rb created at:
- dib3000_read_reg+0x86/0x4e0 drivers/media/dvb-frontends/dib3000mb.c:54
- dib3000mb_attach+0x123/0x3c0 drivers/media/dvb-frontends/dib3000mb.c:758
-...
-
-Fixes: 74340b0a8bc6 ("V4L/DVB (4457): Remove dib3000-common-module")
-Reported-by: syzbot+c88fc0ebe0d5935c70da@syzkaller.appspotmail.com
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20240517155800.9881-1-n.zhandarovich@fintech.ru
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 5293efe62df8 ("bpf: add bpf_skb_change_tail helper")
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20241213034057.246437-2-xiyou.wangcong@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/dib3000mb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/filter.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/dvb-frontends/dib3000mb.c b/drivers/media/dvb-frontends/dib3000mb.c
-index 282cdcf9f21b..b7c729a5ab9e 100644
---- a/drivers/media/dvb-frontends/dib3000mb.c
-+++ b/drivers/media/dvb-frontends/dib3000mb.c
-@@ -51,7 +51,7 @@ MODULE_PARM_DESC(debug, "set debugging level (1=info,2=xfer,4=setfe,8=getfe (|-a
- static int dib3000_read_reg(struct dib3000_state *state, u16 reg)
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 9f67d9f20ae0..6ba1121a9f34 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3252,13 +3252,22 @@ static const struct bpf_func_proto bpf_skb_adjust_room_proto = {
+ 
+ static u32 __bpf_skb_min_len(const struct sk_buff *skb)
  {
- 	u8 wb[] = { ((reg >> 8) | 0x80) & 0xff, reg & 0xff };
--	u8 rb[2];
-+	u8 rb[2] = {};
- 	struct i2c_msg msg[] = {
- 		{ .addr = state->config.demod_address, .flags = 0,        .buf = wb, .len = 2 },
- 		{ .addr = state->config.demod_address, .flags = I2C_M_RD, .buf = rb, .len = 2 },
+-	u32 min_len = skb_network_offset(skb);
+-
+-	if (skb_transport_header_was_set(skb))
+-		min_len = skb_transport_offset(skb);
+-	if (skb->ip_summed == CHECKSUM_PARTIAL)
+-		min_len = skb_checksum_start_offset(skb) +
+-			  skb->csum_offset + sizeof(__sum16);
++	int offset = skb_network_offset(skb);
++	u32 min_len = 0;
++
++	if (offset > 0)
++		min_len = offset;
++	if (skb_transport_header_was_set(skb)) {
++		offset = skb_transport_offset(skb);
++		if (offset > 0)
++			min_len = offset;
++	}
++	if (skb->ip_summed == CHECKSUM_PARTIAL) {
++		offset = skb_checksum_start_offset(skb) +
++			 skb->csum_offset + sizeof(__sum16);
++		if (offset > 0)
++			min_len = offset;
++	}
+ 	return min_len;
+ }
+ 
 -- 
 2.39.5
 
