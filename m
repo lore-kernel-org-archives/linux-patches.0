@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963D57405A;
-	Mon,  6 Jan 2025 15:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2373F83A14;
+	Mon,  6 Jan 2025 15:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177650; cv=none; b=kI+45LTjNsAUAPJE+hHpJAwmd0b0uT5VR0x3i2WohzlprZtIil5IZ1ANqD4tQadEjTTQoKujKL9q0Ft0FZ4O3pbZbU7joKr5d64c9kVK/2obBIkgOWeh6XAOCCz6+LDHYE/DOWpcoZ5010rKgkQ6+BrSpCQ+hc3wxzM0s3VAncY=
+	t=1736177653; cv=none; b=g/G53mHuterhGRHvQ5fu5G+QcMFFKcv6HvCpS+rkXaPRA/POUSI0I0FsDr8fw2N513CGT5qaOCrNoNd7HJyAv6qWKKncRrlbEXhT2hbRuX0ZcWp70+ZftDw1D/48CROD2khtED0H7mxFVdn11trbJdQhAYQ/FBYEWlxPj/tBnJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177650; c=relaxed/simple;
-	bh=BnC+zLrcqMGpTxHf261I67ULaTYMtQgfDbJ15BQtWcw=;
+	s=arc-20240116; t=1736177653; c=relaxed/simple;
+	bh=7rBFAzXqetaSSkLZBsKDEVnfwYWMod++Q26DvasYHVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GsbSZ/PDIEdjdr4FZAWgmGrI+OCv1JRPG9A0j9DezsPbBqYRZYWlId92DtEsEgWtC6wulW6Bhe32Px0BrS6VBcyAiFjPfna6oFi7A5TZ+iv4E1h/80CrTVCayk/GT5nOQFIRcVvcNRcRG3guAkkMp0FW6wVMQyt1nQLmiFX+kBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mT8sY+Iz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LD7dQOwg1dh8CoxakQTnxUtAcf95ZN5CMHEnvdvNrqbTJ3dKQyxCJGNOkY+xofCrP2/a0ThLTQ9PC2JwdRRV5PpDUQf8XuzZ2Gl3lL7V0y8VqxS1tmaUdL7jDcgQqKPUQqFnMTXTIPgTqGVaXQRt81ZwcZaMiFm7870kK7n9GS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjUR8sRX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mT8sY+Iz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83A6C4CED2;
-	Mon,  6 Jan 2025 15:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjUR8sRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDCBC4CED2;
+	Mon,  6 Jan 2025 15:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177650;
-	bh=BnC+zLrcqMGpTxHf261I67ULaTYMtQgfDbJ15BQtWcw=;
+	s=korg; t=1736177653;
+	bh=7rBFAzXqetaSSkLZBsKDEVnfwYWMod++Q26DvasYHVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mT8sY+IzwIm/rYhOmXfjcqjT2B9DAQ27ddpKQuEyCr4X59Igk72fCHHppNUQopGBe
-	 S35pIgahXjFcf1ss7wKMayBPA/XORJgWnf1xhSf0xlOgF6i112hA6F5lHJoF+7hT87
-	 H/fVpoevUDqSklcAYYQoShpXdAwzS7gK5ibCWAKo=
+	b=OjUR8sRXrcJyU1xBi9CQVWvEEviWv5/Wk62kK2XGq/4/25BeEB+Ulktslni2cSIoZ
+	 jjRgivU1YtHO2B/SSft6/840HLbDXeqEufy30rRoNC6AQgVEHaj5RZripHoNn9qztz
+	 qdR2HgNq/mncgn5PCsUtFlazjmQrOnBpZV36RHds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/156] btrfs: use bio_is_zone_append() in the completion handler
-Date: Mon,  6 Jan 2025 16:14:57 +0100
-Message-ID: <20250106151142.169739137@linuxfoundation.org>
+Subject: [PATCH 6.12 012/156] RDMA/bnxt_re: Remove always true dattr validity check
+Date: Mon,  6 Jan 2025 16:14:58 +0100
+Message-ID: <20250106151142.208043355@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -53,57 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 6c3864e055486fadb5b97793b57688082e14b43b ]
+[ Upstream commit eb867d797d294a00a092b5027d08439da68940b2 ]
 
-Otherwise it won't catch bios turned into regular writes by the block
-level zone write plugging. The additional test it adds is for emulated
-zone append.
+res->dattr is always valid at this point as it was initialized
+during device addition in bnxt_re_add_device().
 
-Fixes: 9b1ce7f0c6f8 ("block: Implement zone append emulation")
-CC: stable@vger.kernel.org # 6.12
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+This change is fixing the following smatch error:
+drivers/infiniband/hw/bnxt_re/qplib_fp.c:1090 bnxt_qplib_create_qp()
+     error: we previously assumed 'res->dattr' could be null (see line 985)
+
+Fixes: 07f830ae4913 ("RDMA/bnxt_re: Adds MSN table capability for Gen P7 adapters")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202411222329.YTrwonWi-lkp@intel.com/
+Link: https://patch.msgid.link/be0d8836b64cba3e479fbcbca717acad04aae02e.1732626579.git.leonro@nvidia.com
+Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/bio.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/bio.c b/fs/btrfs/bio.c
-index 3d2376caedfa..31f96c2d8691 100644
---- a/fs/btrfs/bio.c
-+++ b/fs/btrfs/bio.c
-@@ -355,7 +355,7 @@ static void btrfs_simple_end_io(struct bio *bio)
- 		INIT_WORK(&bbio->end_io_work, btrfs_end_bio_work);
- 		queue_work(btrfs_end_io_wq(fs_info, bio), &bbio->end_io_work);
- 	} else {
--		if (bio_op(bio) == REQ_OP_ZONE_APPEND && !bio->bi_status)
-+		if (bio_is_zone_append(bio) && !bio->bi_status)
- 			btrfs_record_physical_zoned(bbio);
- 		btrfs_bio_end_io(bbio, bbio->bio.bi_status);
- 	}
-@@ -398,7 +398,7 @@ static void btrfs_orig_write_end_io(struct bio *bio)
- 	else
- 		bio->bi_status = BLK_STS_OK;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 7ad83566ab0f..be374d8ed430 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -999,9 +999,7 @@ int bnxt_qplib_create_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	u32 tbl_indx;
+ 	u16 nsge;
  
--	if (bio_op(bio) == REQ_OP_ZONE_APPEND && !bio->bi_status)
-+	if (bio_is_zone_append(bio) && !bio->bi_status)
- 		stripe->physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
- 
- 	btrfs_bio_end_io(bbio, bbio->bio.bi_status);
-@@ -412,7 +412,7 @@ static void btrfs_clone_write_end_io(struct bio *bio)
- 	if (bio->bi_status) {
- 		atomic_inc(&stripe->bioc->error);
- 		btrfs_log_dev_io_error(bio, stripe->dev);
--	} else if (bio_op(bio) == REQ_OP_ZONE_APPEND) {
-+	} else if (bio_is_zone_append(bio)) {
- 		stripe->physical = bio->bi_iter.bi_sector << SECTOR_SHIFT;
- 	}
- 
+-	if (res->dattr)
+-		qp->is_host_msn_tbl = _is_host_msn_table(res->dattr->dev_cap_flags2);
+-
++	qp->is_host_msn_tbl = _is_host_msn_table(res->dattr->dev_cap_flags2);
+ 	sq->dbinfo.flags = 0;
+ 	bnxt_qplib_rcfw_cmd_prep((struct cmdq_base *)&req,
+ 				 CMDQ_BASE_OPCODE_CREATE_QP,
 -- 
 2.39.5
 
