@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCA486332;
-	Mon,  6 Jan 2025 15:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D421791F4;
+	Mon,  6 Jan 2025 15:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177834; cv=none; b=QyaKvUtM9fRhBLuOi/gdXykf+Q5v3pBalppTzW4LLV9jKH2SajVQaWSFMpjCwWf2bD5SKsn6JlbRGeFZZinR5D0sKbiGFVnBVY4T+s7WNSzpoXpeCz1DRJg7JKY+xT1RIX2HZ1LjkA0C+wYkHUXvQT5hzoCSQOyhkMRY3/ENHts=
+	t=1736177837; cv=none; b=qmra+VTkGn1gycRk6F8e2j6V3U7bQ6nGKQ0vye3K8R9Lv15p9UFo9awFcAiODa/gEt7iMfOACJnzr6T7Lgg7YjJWZVXcPt7H09Yu8KQh2i58i+ZRnxSFc95IryX7GRzDPDwtU1SlLsxUn2PeXHLk5y+NZyACwrNUTzZKQ8cyy88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177834; c=relaxed/simple;
-	bh=fqxSSlHdMx0KJ5Fp6HtFUS+mBTvdtAfy6vfiZ9kWa7w=;
+	s=arc-20240116; t=1736177837; c=relaxed/simple;
+	bh=Ln3m1LbllgyI8CYVCi1MBIj/LYtKHZRKGC/UbwsRKg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WZFkD33b1X3HRdPtCrRuslfXMLPZ6EFndInndN0GGb34g/ll2LamRs87sTYQs/Nk2SBov+M675PtvRKwiFLlaOxTBLzBK7YxCdZP9HLC4uuLMC6YATYlMX3iGmfCKXtMwTBAaCjPdzQw0/mR2W0w3XiT1kp3gsv9WQE5P+rs8yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNa/jmdX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lk3cbOxQjDXXSRFPkb0+aXE7+fI7vVigIf0DE1UP/qCWafKs5otAaUs3LqbkPR4ZEXp4bFRrrvipIRVfq2ZyfqIx0ceepZ027D48dAVQ6e8tO3Bm3fuxmQg33U9+Pd1wRAYa1VpWr1A9EeWhdNhFXSuTDsXlOW2QD0yJunOWL5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/x5dXza; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNa/jmdX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2DEC4CED2;
-	Mon,  6 Jan 2025 15:37:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/x5dXza"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1ACC4CED2;
+	Mon,  6 Jan 2025 15:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177834;
-	bh=fqxSSlHdMx0KJ5Fp6HtFUS+mBTvdtAfy6vfiZ9kWa7w=;
+	s=korg; t=1736177837;
+	bh=Ln3m1LbllgyI8CYVCi1MBIj/LYtKHZRKGC/UbwsRKg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNa/jmdXLNthKnpArvQPpRO17+GUT05DEBydewgtMPG05c9+idF8ifSRyIiseeBI5
-	 KBzGyz/DMx1VyRfBSfg3ixkU+zxPx11IefTIdrqFPw1NM7DBr+vp7XT4/EIDhYbY2C
-	 Uu/jpzn4ODqBajsUVALGDVRh06b5k41UwA9XRswE=
+	b=N/x5dXzatJE5ACfcZ4V/q7a87Y3lIUtZx10jXHTdomwLHY+dhnhjwqeLr2w/XkdGI
+	 JOKcQ8Vqw6zAy1c2NYrh9HROHHTFka2fNCjUWr0Zcpq/bm62bUK/SpWJ1BeWo0CrNx
+	 MfSxmWLMpQHbtLSPxS8krY0fuhl4p9SRVRFO7mNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+74f70bb1cb968bf09e4f@syzkaller.appspotmail.com,
+	syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Chengen Du <chengen.du@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Florian Westphal <fw@strlen.de>,
+	Tom Herbert <tom@herbertland.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/156] af_packet: fix vlan_get_protocol_dgram() vs MSG_PEEK
-Date: Mon,  6 Jan 2025 16:15:58 +0100
-Message-ID: <20250106151144.444624494@linuxfoundation.org>
+Subject: [PATCH 6.12 073/156] ila: serialize calls to nf_register_net_hooks()
+Date: Mon,  6 Jan 2025 16:15:59 +0100
+Message-ID: <20250106151144.482481605@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -56,145 +56,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit f91a5b8089389eb408501af2762f168c3aaa7b79 ]
+[ Upstream commit 260466b576bca0081a7d4acecc8e93687aa22d0e ]
 
-Blamed commit forgot MSG_PEEK case, allowing a crash [1] as found
-by syzbot.
+syzbot found a race in ila_add_mapping() [1]
 
-Rework vlan_get_protocol_dgram() to not touch skb at all,
-so that it can be used from many cpus on the same skb.
+commit 031ae72825ce ("ila: call nf_unregister_net_hooks() sooner")
+attempted to fix a similar issue.
 
-Add a const qualifier to skb argument.
+Looking at the syzbot repro, we have concurrent ILA_CMD_ADD commands.
+
+Add a mutex to make sure at most one thread is calling nf_register_net_hooks().
 
 [1]
-skbuff: skb_under_panic: text:ffffffff8a8ccd05 len:29 put:14 head:ffff88807fc8e400 data:ffff88807fc8e3f4 tail:0x11 end:0x140 dev:<NULL>
-------------[ cut here ]------------
- kernel BUG at net/core/skbuff.c:206 !
-Oops: invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 1 UID: 0 PID: 5892 Comm: syz-executor883 Not tainted 6.13.0-rc4-syzkaller-00054-gd6ef8b40d075 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
- RIP: 0010:skb_panic net/core/skbuff.c:206 [inline]
- RIP: 0010:skb_under_panic+0x14b/0x150 net/core/skbuff.c:216
-Code: 0b 8d 48 c7 c6 86 d5 25 8e 48 8b 54 24 08 8b 0c 24 44 8b 44 24 04 4d 89 e9 50 41 54 41 57 41 56 e8 5a 69 79 f7 48 83 c4 20 90 <0f> 0b 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3
-RSP: 0018:ffffc900038d7638 EFLAGS: 00010282
-RAX: 0000000000000087 RBX: dffffc0000000000 RCX: 609ffd18ea660600
-RDX: 0000000000000000 RSI: 0000000080000000 RDI: 0000000000000000
-RBP: ffff88802483c8d0 R08: ffffffff817f0a8c R09: 1ffff9200071ae60
-R10: dffffc0000000000 R11: fffff5200071ae61 R12: 0000000000000140
-R13: ffff88807fc8e400 R14: ffff88807fc8e3f4 R15: 0000000000000011
-FS:  00007fbac5e006c0(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fbac5e00d58 CR3: 000000001238e000 CR4: 00000000003526f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
-  skb_push+0xe5/0x100 net/core/skbuff.c:2636
-  vlan_get_protocol_dgram+0x165/0x290 net/packet/af_packet.c:585
-  packet_recvmsg+0x948/0x1ef0 net/packet/af_packet.c:3552
-  sock_recvmsg_nosec net/socket.c:1033 [inline]
-  sock_recvmsg+0x22f/0x280 net/socket.c:1055
-  ____sys_recvmsg+0x1c6/0x480 net/socket.c:2803
-  ___sys_recvmsg net/socket.c:2845 [inline]
-  do_recvmmsg+0x426/0xab0 net/socket.c:2940
-  __sys_recvmmsg net/socket.c:3014 [inline]
-  __do_sys_recvmmsg net/socket.c:3037 [inline]
-  __se_sys_recvmmsg net/socket.c:3030 [inline]
-  __x64_sys_recvmmsg+0x199/0x250 net/socket.c:3030
-  do_syscall_x64 arch/x86/entry/common.c:52 [inline]
-  do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ BUG: KASAN: slab-use-after-free in rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+ BUG: KASAN: slab-use-after-free in __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
+Read of size 4 at addr ffff888028f40008 by task dhcpcd/5501
 
-Fixes: 79eecf631c14 ("af_packet: Handle outgoing VLAN packets without hardware offloading")
-Reported-by: syzbot+74f70bb1cb968bf09e4f@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6772c485.050a0220.2f3838.04c5.GAE@google.com/T/#u
+CPU: 1 UID: 0 PID: 5501 Comm: dhcpcd Not tainted 6.13.0-rc4-syzkaller-00054-gd6ef8b40d075 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+Call Trace:
+ <IRQ>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0xc3/0x620 mm/kasan/report.c:489
+  kasan_report+0xd9/0x110 mm/kasan/report.c:602
+  rht_key_hashfn include/linux/rhashtable.h:159 [inline]
+  __rhashtable_lookup.constprop.0+0x426/0x550 include/linux/rhashtable.h:604
+  rhashtable_lookup include/linux/rhashtable.h:646 [inline]
+  rhashtable_lookup_fast include/linux/rhashtable.h:672 [inline]
+  ila_lookup_wildcards net/ipv6/ila/ila_xlat.c:127 [inline]
+  ila_xlat_addr net/ipv6/ila/ila_xlat.c:652 [inline]
+  ila_nf_input+0x1ee/0x620 net/ipv6/ila/ila_xlat.c:185
+  nf_hook_entry_hookfn include/linux/netfilter.h:154 [inline]
+  nf_hook_slow+0xbb/0x200 net/netfilter/core.c:626
+  nf_hook.constprop.0+0x42e/0x750 include/linux/netfilter.h:269
+  NF_HOOK include/linux/netfilter.h:312 [inline]
+  ipv6_rcv+0xa4/0x680 net/ipv6/ip6_input.c:309
+  __netif_receive_skb_one_core+0x12e/0x1e0 net/core/dev.c:5672
+  __netif_receive_skb+0x1d/0x160 net/core/dev.c:5785
+  process_backlog+0x443/0x15f0 net/core/dev.c:6117
+  __napi_poll.constprop.0+0xb7/0x550 net/core/dev.c:6883
+  napi_poll net/core/dev.c:6952 [inline]
+  net_rx_action+0xa94/0x1010 net/core/dev.c:7074
+  handle_softirqs+0x213/0x8f0 kernel/softirq.c:561
+  __do_softirq kernel/softirq.c:595 [inline]
+  invoke_softirq kernel/softirq.c:435 [inline]
+  __irq_exit_rcu+0x109/0x170 kernel/softirq.c:662
+  irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+  instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+  sysvec_apic_timer_interrupt+0xa4/0xc0 arch/x86/kernel/apic/apic.c:1049
+
+Fixes: 7f00feaf1076 ("ila: Add generic ILA translation facility")
+Reported-by: syzbot+47e761d22ecf745f72b9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6772c9ae.050a0220.2f3838.04c7.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Chengen Du <chengen.du@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20241230161004.2681892-2-edumazet@google.com
+Cc: Florian Westphal <fw@strlen.de>
+Cc: Tom Herbert <tom@herbertland.com>
+Link: https://patch.msgid.link/20241230162849.2795486-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_vlan.h | 16 +++++++++++++---
- net/packet/af_packet.c  | 16 ++++------------
- 2 files changed, 17 insertions(+), 15 deletions(-)
+ net/ipv6/ila/ila_xlat.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
-index c1645c86eed9..d65b5d71b93b 100644
---- a/include/linux/if_vlan.h
-+++ b/include/linux/if_vlan.h
-@@ -585,13 +585,16 @@ static inline int vlan_get_tag(const struct sk_buff *skb, u16 *vlan_tci)
-  * vlan_get_protocol - get protocol EtherType.
-  * @skb: skbuff to query
-  * @type: first vlan protocol
-+ * @mac_offset: MAC offset
-  * @depth: buffer to store length of eth and vlan tags in bytes
-  *
-  * Returns the EtherType of the packet, regardless of whether it is
-  * vlan encapsulated (normal or hardware accelerated) or not.
-  */
--static inline __be16 __vlan_get_protocol(const struct sk_buff *skb, __be16 type,
--					 int *depth)
-+static inline __be16 __vlan_get_protocol_offset(const struct sk_buff *skb,
-+						__be16 type,
-+						int mac_offset,
-+						int *depth)
- {
- 	unsigned int vlan_depth = skb->mac_len, parse_depth = VLAN_MAX_DEPTH;
+diff --git a/net/ipv6/ila/ila_xlat.c b/net/ipv6/ila/ila_xlat.c
+index 534a4498e280..fff09f5a796a 100644
+--- a/net/ipv6/ila/ila_xlat.c
++++ b/net/ipv6/ila/ila_xlat.c
+@@ -200,6 +200,8 @@ static const struct nf_hook_ops ila_nf_hook_ops[] = {
+ 	},
+ };
  
-@@ -610,7 +613,8 @@ static inline __be16 __vlan_get_protocol(const struct sk_buff *skb, __be16 type,
- 		do {
- 			struct vlan_hdr vhdr, *vh;
- 
--			vh = skb_header_pointer(skb, vlan_depth, sizeof(vhdr), &vhdr);
-+			vh = skb_header_pointer(skb, mac_offset + vlan_depth,
-+						sizeof(vhdr), &vhdr);
- 			if (unlikely(!vh || !--parse_depth))
- 				return 0;
- 
-@@ -625,6 +629,12 @@ static inline __be16 __vlan_get_protocol(const struct sk_buff *skb, __be16 type,
- 	return type;
- }
- 
-+static inline __be16 __vlan_get_protocol(const struct sk_buff *skb, __be16 type,
-+					 int *depth)
-+{
-+	return __vlan_get_protocol_offset(skb, type, 0, depth);
-+}
++static DEFINE_MUTEX(ila_mutex);
 +
- /**
-  * vlan_get_protocol - get protocol EtherType.
-  * @skb: skbuff to query
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index ac84b1fc1a65..f3cecb3e4bcb 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -568,21 +568,13 @@ static u16 vlan_get_tci(const struct sk_buff *skb, struct net_device *dev)
- 	return ntohs(vh->h_vlan_TCI);
- }
- 
--static __be16 vlan_get_protocol_dgram(struct sk_buff *skb)
-+static __be16 vlan_get_protocol_dgram(const struct sk_buff *skb)
+ static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
  {
- 	__be16 proto = skb->protocol;
+ 	struct ila_net *ilan = net_generic(net, ila_net_id);
+@@ -207,16 +209,20 @@ static int ila_add_mapping(struct net *net, struct ila_xlat_params *xp)
+ 	spinlock_t *lock = ila_get_lock(ilan, xp->ip.locator_match);
+ 	int err = 0, order;
  
--	if (unlikely(eth_type_vlan(proto))) {
--		u8 *skb_orig_data = skb->data;
--		int skb_orig_len = skb->len;
+-	if (!ilan->xlat.hooks_registered) {
++	if (!READ_ONCE(ilan->xlat.hooks_registered)) {
+ 		/* We defer registering net hooks in the namespace until the
+ 		 * first mapping is added.
+ 		 */
+-		err = nf_register_net_hooks(net, ila_nf_hook_ops,
+-					    ARRAY_SIZE(ila_nf_hook_ops));
++		mutex_lock(&ila_mutex);
++		if (!ilan->xlat.hooks_registered) {
++			err = nf_register_net_hooks(net, ila_nf_hook_ops,
++						ARRAY_SIZE(ila_nf_hook_ops));
++			if (!err)
++				WRITE_ONCE(ilan->xlat.hooks_registered, true);
++		}
++		mutex_unlock(&ila_mutex);
+ 		if (err)
+ 			return err;
 -
--		skb_push(skb, skb->data - skb_mac_header(skb));
--		proto = __vlan_get_protocol(skb, proto, NULL);
--		if (skb_orig_data != skb->data) {
--			skb->data = skb_orig_data;
--			skb->len = skb_orig_len;
--		}
--	}
-+	if (unlikely(eth_type_vlan(proto)))
-+		proto = __vlan_get_protocol_offset(skb, proto,
-+						   skb_mac_offset(skb), NULL);
+-		ilan->xlat.hooks_registered = true;
+ 	}
  
- 	return proto;
- }
+ 	ila = kzalloc(sizeof(*ila), GFP_KERNEL);
 -- 
 2.39.5
 
