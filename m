@@ -1,37 +1,61 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3615914900B;
-	Mon,  6 Jan 2025 15:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28120146D40;
+	Mon,  6 Jan 2025 15:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177338; cv=none; b=j5WQeOlbM2jsblKwLtV1vFSwfdiZgIM/4L9CD2fx6qipMv4v+tynPVjotbV68E6/jDiNfPHM6eCN54FirOmdoBJuT8itBOrFFzbRap4B/guvVNg9COqbj153zVqwdACG2jt15xIqUJ1bgWYPddeH6jxya8n44F8eroVOgEbQ3cg=
+	t=1736177341; cv=none; b=JlOuzdyHxwo7J438KbUSbBnLL0QCxZPIQD3SIGhU9i+zx9EfHkdLMJYVbGymZETJBVzneTD8ENYeKwiaJj8VesDRIStkg+cOp5SKXprJwWgm+VG9ssqcvidLmWt6scEie3FlHaBlaCAb5aHi4NRFwm9EcCQ3K3OH13e3qJKJJn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177338; c=relaxed/simple;
-	bh=K6kPso4fdN1noJQauV7oXJp58bBjR+8vtT6v+nPG0sg=;
+	s=arc-20240116; t=1736177341; c=relaxed/simple;
+	bh=ad+zbkeJ8/AZpl6QHmBz4avBSXdszzStPk/nRy1816Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HzMkco2LsBPpwAIDMW82i54a6s3jysZyFAvrmefj28GxS5GiT03ydkbnRbUC/97fFNt+K0hu45d1PLX5gUpz3Blwk4gpPBVB0C+zaIOfO1OU40zDkLEw5kBE9vE17NpfFfZlAh3qFTpuEVLkp/8ZhiFSWFwuPO7oY2D3EUFhjlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AZQR+mx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bW/iH901So+YmeES5TCHArtI4GlW8IYElCbPDQK3FpWm3oAOrCqQNQhHeIuV27beushGYNsHyzK7E+m0/i8A+GV+/JhAefIpZ8D/7WW6XA/9mM+lt9jHX2v16U29fOVd2eOhO97MeGwtmiHOGUKPxHXNO5yy7aQgItdSzG75DRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1o8ahf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AZQR+mx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E92C4CED2;
-	Mon,  6 Jan 2025 15:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1o8ahf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71C2BC4CED2;
+	Mon,  6 Jan 2025 15:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177338;
-	bh=K6kPso4fdN1noJQauV7oXJp58bBjR+8vtT6v+nPG0sg=;
+	s=korg; t=1736177341;
+	bh=ad+zbkeJ8/AZpl6QHmBz4avBSXdszzStPk/nRy1816Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AZQR+mxfU4Tm4X01J3+U+31k03LXNgkcN6fPaWvTaMDeHSMpWPU5qMzjBOe7BFvZ
-	 yXeI7y6CvpiVU1voya47I7WixYBkUMbpk7rd0sSZ2v2RzwTI5qHNL8RFiuw2P0b+67
-	 La7fYngjUTIfFPnkDUnTfa72zudrC/Fed9Gwa8G8=
+	b=H1o8ahf3XavmmM4j4LhKrd+Q//rNn2EAEYH66UxCzdbWV35I/GJt6lKzZyanfjPAW
+	 6xCv7mIbOOlneI7NqbxXsQJ6phdAbmU3impI1wzP4u8Zobx6q5XQxvQKKyaaerhjT2
+	 5G5mUOd22pV47djxftNOdnsM9cBQ1pyD6sj2xEZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Daniel Bristot de Oliveira <bristot@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Vineeth Pillai <vineeth@bitbyteword.org>,
+	Youssef Esmat <youssefesmat@google.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
+	Alexander Graf <graf@amazon.com>,
+	Baoquan He <bhe@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Ross Zwisler <zwisler@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 089/222] ALSA: ump: Use guard() for locking
-Date: Mon,  6 Jan 2025 16:14:53 +0100
-Message-ID: <20250106151153.966653985@linuxfoundation.org>
+Subject: [PATCH 6.6 124/222] tracing: Handle old buffer mappings for event strings and functions
+Date: Mon,  6 Jan 2025 16:15:28 +0100
+Message-ID: <20250106151155.303357040@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -50,127 +74,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-[ Upstream commit 631896f7eaaf8cf8c639b065d3c9fbaa66da5d32 ]
+[ Upstream commit 07714b4bb3f9800261c8b4b2f47e9010ed60979d ]
 
-We can simplify the code gracefully with new guard() macro and co for
-automatic cleanup of locks.
+Use the saved text_delta and data_delta of a persistent memory mapped ring
+buffer that was saved from a previous boot, and use the delta in the trace
+event print output so that strings and functions show up normally.
 
-Only the code refactoring, and no functional changes.
+That is, for an event like trace_kmalloc() that prints the callsite via
+"%pS", if it used the address saved in the ring buffer it will not match
+the function that was saved in the previous boot if the kernel remaps
+itself between boots.
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240227085306.9764-2-tiwai@suse.de
-Stable-dep-of: 3978d53df723 ("ALSA: ump: Don't open legacy substream for an inactive group")
+For RCU events that point to saved static strings where only the address
+of the string is saved in the ring buffer, it too will be adjusted to
+point to where the string is on the current boot.
+
+Link: https://lkml.kernel.org/r/20240612232026.821020753@goodmis.org
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Vincent Donnefort <vdonnefort@google.com>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Vineeth Pillai <vineeth@bitbyteword.org>
+Cc: Youssef Esmat <youssefesmat@google.com>
+Cc: Beau Belgrave <beaub@linux.microsoft.com>
+Cc: Alexander Graf <graf@amazon.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Cc: Ross Zwisler <zwisler@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 35 ++++++++++++-----------------------
- 1 file changed, 12 insertions(+), 23 deletions(-)
+ kernel/trace/trace.c | 42 +++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index 83856b2f88b8..ada2625ce78f 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -1076,13 +1076,11 @@ static int snd_ump_legacy_open(struct snd_rawmidi_substream *substream)
- 	struct snd_ump_endpoint *ump = substream->rmidi->private_data;
- 	int dir = substream->stream;
- 	int group = ump->legacy_mapping[substream->number];
--	int err = 0;
-+	int err;
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index d9406a1f8795..2a45efc4e417 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -3858,8 +3858,11 @@ static void test_can_verify(void)
+ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 			 va_list ap)
+ {
++	long text_delta = iter->tr->text_delta;
++	long data_delta = iter->tr->data_delta;
+ 	const char *p = fmt;
+ 	const char *str;
++	bool good;
+ 	int i, j;
  
--	mutex_lock(&ump->open_mutex);
--	if (ump->legacy_substreams[dir][group]) {
--		err = -EBUSY;
--		goto unlock;
--	}
-+	guard(mutex)(&ump->open_mutex);
-+	if (ump->legacy_substreams[dir][group])
-+		return -EBUSY;
- 	if (dir == SNDRV_RAWMIDI_STREAM_OUTPUT) {
- 		if (!ump->legacy_out_opens) {
- 			err = snd_rawmidi_kernel_open(&ump->core, 0,
-@@ -1090,17 +1088,14 @@ static int snd_ump_legacy_open(struct snd_rawmidi_substream *substream)
- 						      SNDRV_RAWMIDI_LFLG_APPEND,
- 						      &ump->legacy_out_rfile);
- 			if (err < 0)
--				goto unlock;
-+				return err;
- 		}
- 		ump->legacy_out_opens++;
- 		snd_ump_convert_reset(&ump->out_cvts[group]);
- 	}
--	spin_lock_irq(&ump->legacy_locks[dir]);
-+	guard(spinlock_irq)(&ump->legacy_locks[dir]);
- 	ump->legacy_substreams[dir][group] = substream;
--	spin_unlock_irq(&ump->legacy_locks[dir]);
-- unlock:
--	mutex_unlock(&ump->open_mutex);
--	return err;
-+	return 0;
- }
+ 	if (WARN_ON_ONCE(!fmt))
+@@ -3878,7 +3881,10 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
  
- static int snd_ump_legacy_close(struct snd_rawmidi_substream *substream)
-@@ -1109,15 +1104,13 @@ static int snd_ump_legacy_close(struct snd_rawmidi_substream *substream)
- 	int dir = substream->stream;
- 	int group = ump->legacy_mapping[substream->number];
+ 		j = 0;
  
--	mutex_lock(&ump->open_mutex);
--	spin_lock_irq(&ump->legacy_locks[dir]);
--	ump->legacy_substreams[dir][group] = NULL;
--	spin_unlock_irq(&ump->legacy_locks[dir]);
-+	guard(mutex)(&ump->open_mutex);
-+	scoped_guard(spinlock_irq, &ump->legacy_locks[dir])
-+		ump->legacy_substreams[dir][group] = NULL;
- 	if (dir == SNDRV_RAWMIDI_STREAM_OUTPUT) {
- 		if (!--ump->legacy_out_opens)
- 			snd_rawmidi_kernel_release(&ump->legacy_out_rfile);
- 	}
--	mutex_unlock(&ump->open_mutex);
- 	return 0;
- }
+-		/* We only care about %s and variants */
++		/*
++		 * We only care about %s and variants
++		 * as well as %p[sS] if delta is non-zero
++		 */
+ 		for (i = 0; p[i]; i++) {
+ 			if (i + 1 >= iter->fmt_size) {
+ 				/*
+@@ -3907,6 +3913,11 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 				}
+ 				if (p[i+j] == 's')
+ 					break;
++
++				if (text_delta && p[i+1] == 'p' &&
++				    ((p[i+2] == 's' || p[i+2] == 'S')))
++					break;
++
+ 				star = false;
+ 			}
+ 			j = 0;
+@@ -3920,6 +3931,24 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 		iter->fmt[i] = '\0';
+ 		trace_seq_vprintf(&iter->seq, iter->fmt, ap);
  
-@@ -1169,12 +1162,11 @@ static int process_legacy_output(struct snd_ump_endpoint *ump,
- 	const int dir = SNDRV_RAWMIDI_STREAM_OUTPUT;
- 	unsigned char c;
- 	int group, size = 0;
--	unsigned long flags;
++		/* Add delta to %pS pointers */
++		if (p[i+1] == 'p') {
++			unsigned long addr;
++			char fmt[4];
++
++			fmt[0] = '%';
++			fmt[1] = 'p';
++			fmt[2] = p[i+2]; /* Either %ps or %pS */
++			fmt[3] = '\0';
++
++			addr = va_arg(ap, unsigned long);
++			addr += text_delta;
++			trace_seq_printf(&iter->seq, fmt, (void *)addr);
++
++			p += i + 3;
++			continue;
++		}
++
+ 		/*
+ 		 * If iter->seq is full, the above call no longer guarantees
+ 		 * that ap is in sync with fmt processing, and further calls
+@@ -3938,6 +3967,14 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 		/* The ap now points to the string data of the %s */
+ 		str = va_arg(ap, const char *);
  
- 	if (!ump->out_cvts || !ump->legacy_out_opens)
- 		return 0;
++		good = trace_safe_str(iter, str, star, len);
++
++		/* Could be from the last boot */
++		if (data_delta && !good) {
++			str += data_delta;
++			good = trace_safe_str(iter, str, star, len);
++		}
++
+ 		/*
+ 		 * If you hit this warning, it is likely that the
+ 		 * trace event in question used %s on a string that
+@@ -3947,8 +3984,7 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 		 * instead. See samples/trace_events/trace-events-sample.h
+ 		 * for reference.
+ 		 */
+-		if (WARN_ONCE(!trace_safe_str(iter, str, star, len),
+-			      "fmt: '%s' current_buffer: '%s'",
++		if (WARN_ONCE(!good, "fmt: '%s' current_buffer: '%s'",
+ 			      fmt, seq_buf_str(&iter->seq.seq))) {
+ 			int ret;
  
--	spin_lock_irqsave(&ump->legacy_locks[dir], flags);
-+	guard(spinlock_irqsave)(&ump->legacy_locks[dir]);
- 	for (group = 0; group < SNDRV_UMP_MAX_GROUPS; group++) {
- 		substream = ump->legacy_substreams[dir][group];
- 		if (!substream)
-@@ -1190,7 +1182,6 @@ static int process_legacy_output(struct snd_ump_endpoint *ump,
- 			break;
- 		}
- 	}
--	spin_unlock_irqrestore(&ump->legacy_locks[dir], flags);
- 	return size;
- }
- 
-@@ -1200,18 +1191,16 @@ static void process_legacy_input(struct snd_ump_endpoint *ump, const u32 *src,
- 	struct snd_rawmidi_substream *substream;
- 	unsigned char buf[16];
- 	unsigned char group;
--	unsigned long flags;
- 	const int dir = SNDRV_RAWMIDI_STREAM_INPUT;
- 	int size;
- 
- 	size = snd_ump_convert_from_ump(src, buf, &group);
- 	if (size <= 0)
- 		return;
--	spin_lock_irqsave(&ump->legacy_locks[dir], flags);
-+	guard(spinlock_irqsave)(&ump->legacy_locks[dir]);
- 	substream = ump->legacy_substreams[dir][group];
- 	if (substream)
- 		snd_rawmidi_receive(substream, buf, size);
--	spin_unlock_irqrestore(&ump->legacy_locks[dir], flags);
- }
- 
- /* Fill ump->legacy_mapping[] for groups to be used for legacy rawmidi */
 -- 
 2.39.5
 
