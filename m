@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C8015252D;
-	Mon,  6 Jan 2025 15:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D04146D6B;
+	Mon,  6 Jan 2025 15:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177119; cv=none; b=HdxDTRpLnfF+R9nif3gvrU/aXVXG8xrxFZ9obP/sRcCsqUXOUopiIskY/n8cFcwfz66cmvrSU+9PXgCaQBfAs2rANITfOsy7qsEZSZVs9OVgXGck+D1ZEj2zj6raBfnjlo4oycRMXrBOyXfhLyIt2E8JGGJOFYyHJIjKk833i+E=
+	t=1736177122; cv=none; b=cqGb1O6pesJqz2Yj5H3YrSMPJMWPeefaWInPvkpKmzftNlCAzcqN4IoArs/jZfwyef1qQDgAeFHULxzmcv+X8sc84DlFUV/ZtjDSGmCvzxB2w4ybdFfCL7dMCckrc8sH0+aX4ylTP4FNFj5TkKyO5ZE4WDKu+imhVr5TpUbgy+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177119; c=relaxed/simple;
-	bh=03EjnzBpAtXmTACzUaPA0qMe5Uf/ZpN5tnS/0X4efDE=;
+	s=arc-20240116; t=1736177122; c=relaxed/simple;
+	bh=j4AxSgnYGJaULbFxBfYQHc5nqs4qPS5RKZXGmvs+18k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=img16S96wojypeo9ETKVY4B4puqNbaBOx6F5Mi/mBHr7hfXYGOtIesnoXqplpHOsVhAT3MJwVwLxBUk3DCkUqQcdolihmRNNaAVhHM0QqhZ7pC3bWEkH7qbiAKMlLw6gLIqggCy0KCzAKUzr4slV+IIPoNMcfFMM5BSw9AFqnYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOOm/kta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BaMPBNF3QwGD7xqmwTYhm6T0uzYIq9Ny1K0Bakc1tbKTCMY1LKlDJZ6/W6xmy4wF4DNHiWByPNu3OXMKMovoz+CTJt788n6nXUNmDCFdwL+2NWkdZpYsomj7Fmrn78qVqFrTYh/J9iatveBT2Kmbt83NIyTqNL93naFRM2dZdjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqMwDnVN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOOm/kta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C412CC4CED2;
-	Mon,  6 Jan 2025 15:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqMwDnVN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A18C4CED2;
+	Mon,  6 Jan 2025 15:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177119;
-	bh=03EjnzBpAtXmTACzUaPA0qMe5Uf/ZpN5tnS/0X4efDE=;
+	s=korg; t=1736177122;
+	bh=j4AxSgnYGJaULbFxBfYQHc5nqs4qPS5RKZXGmvs+18k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOOm/ktaLCqRcby99beBvTon2mdoR4mW4ehrk0oMmHaXY4FNClDdYRb1HKOD1auLP
-	 edDyZMEd+HRLJ2qZXfx9E2gTSDbVgh3aSWXU41Wq2HkvWwbzq8zFaelFF+LnsbpoYv
-	 tJwwsZA/oE92XSNmGVIalavDnqdJB/xqpFeenBD8=
+	b=AqMwDnVNi9rMBOzWXa3/rfx9ZFwqKHvn8OL715jK3pG7huda4e1jPF9k39BjN2Lik
+	 OxkCQHv18R7xkaawUVhf/kRkNvq9OJkdtGnfi+VAW15DoRnPWhJC/tRpKnxOdXFed3
+	 GrbfYp8ABjbD5RUtvGS2arfPC2ywMuQHdD+pyCEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/222] crypto: ecdsa - Avoid signed integer overflow on signature decoding
-Date: Mon,  6 Jan 2025 16:13:49 +0100
-Message-ID: <20250106151151.554572243@linuxfoundation.org>
+Subject: [PATCH 6.6 026/222] cleanup: Add conditional guard support
+Date: Mon,  6 Jan 2025 16:13:50 +0100
+Message-ID: <20250106151151.592002196@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -53,80 +50,223 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 3b0565c703503f832d6cd7ba805aafa3b330cb9d ]
+[ Upstream commit e4ab322fbaaaf84b23d6cb0e3317a7f68baf36dc ]
 
-When extracting a signature component r or s from an ASN.1-encoded
-integer, ecdsa_get_signature_rs() subtracts the expected length
-"bufsize" from the ASN.1 length "vlen" (both of unsigned type size_t)
-and stores the result in "diff" (of signed type ssize_t).
+Adds:
 
-This results in a signed integer overflow if vlen > SSIZE_MAX + bufsize.
+ - DEFINE_GUARD_COND() / DEFINE_LOCK_GUARD_1_COND() to extend existing
+   guards with conditional lock primitives, eg. mutex_trylock(),
+   mutex_lock_interruptible().
 
-The kernel is compiled with -fno-strict-overflow, which implies -fwrapv,
-meaning signed integer overflow is not undefined behavior.  And the
-function does check for overflow:
+   nb. both primitives allow NULL 'locks', which cause the lock to
+       fail (obviously).
 
-       if (-diff >= bufsize)
-               return -EINVAL;
+ - extends scoped_guard() to not take the body when the the
+   conditional guard 'fails'. eg.
 
-So the code is fine in principle but not very obvious.  In the future it
-might trigger a false-positive with CONFIG_UBSAN_SIGNED_WRAP=y.
+     scoped_guard (mutex_intr, &task->signal_cred_guard_mutex) {
+	...
+     }
 
-Avoid by comparing the two unsigned variables directly and erroring out
-if "vlen" is too large.
+   will only execute the body when the mutex is held.
 
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+ - provides scoped_cond_guard(name, fail, args...); which extends
+   scoped_guard() to do fail when the lock-acquire fails.
+
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20231102110706.460851167%40infradead.org
+Stable-dep-of: fcc22ac5baf0 ("cleanup: Adjust scoped_guard() macros to avoid potential warning")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ecdsa.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ include/linux/cleanup.h  | 52 +++++++++++++++++++++++++++++++++++++---
+ include/linux/mutex.h    |  3 ++-
+ include/linux/rwsem.h    |  8 +++----
+ include/linux/spinlock.h | 15 ++++++++++++
+ 4 files changed, 70 insertions(+), 8 deletions(-)
 
-diff --git a/crypto/ecdsa.c b/crypto/ecdsa.c
-index 28441311af36..da04df3c8ecf 100644
---- a/crypto/ecdsa.c
-+++ b/crypto/ecdsa.c
-@@ -36,29 +36,24 @@ static int ecdsa_get_signature_rs(u64 *dest, size_t hdrlen, unsigned char tag,
- 				  const void *value, size_t vlen, unsigned int ndigits)
- {
- 	size_t bufsize = ndigits * sizeof(u64);
--	ssize_t diff = vlen - bufsize;
- 	const char *d = value;
+diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
+index 53f1a7a932b0..6d7bfa899df0 100644
+--- a/include/linux/cleanup.h
++++ b/include/linux/cleanup.h
+@@ -92,25 +92,55 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
+  *	trivial wrapper around DEFINE_CLASS() above specifically
+  *	for locks.
+  *
++ * DEFINE_GUARD_COND(name, ext, condlock)
++ *	wrapper around EXTEND_CLASS above to add conditional lock
++ *	variants to a base class, eg. mutex_trylock() or
++ *	mutex_lock_interruptible().
++ *
+  * guard(name):
+- *	an anonymous instance of the (guard) class
++ *	an anonymous instance of the (guard) class, not recommended for
++ *	conditional locks.
+  *
+  * scoped_guard (name, args...) { }:
+  *	similar to CLASS(name, scope)(args), except the variable (with the
+  *	explicit name 'scope') is declard in a for-loop such that its scope is
+  *	bound to the next (compound) statement.
+  *
++ *	for conditional locks the loop body is skipped when the lock is not
++ *	acquired.
++ *
++ * scoped_cond_guard (name, fail, args...) { }:
++ *      similar to scoped_guard(), except it does fail when the lock
++ *      acquire fails.
++ *
+  */
  
--	if (!value || !vlen)
-+	if (!value || !vlen || vlen > bufsize + 1)
- 		return -EINVAL;
+ #define DEFINE_GUARD(_name, _type, _lock, _unlock) \
+-	DEFINE_CLASS(_name, _type, _unlock, ({ _lock; _T; }), _type _T)
++	DEFINE_CLASS(_name, _type, if (_T) { _unlock; }, ({ _lock; _T; }), _type _T); \
++	static inline void * class_##_name##_lock_ptr(class_##_name##_t *_T) \
++	{ return *_T; }
++
++#define DEFINE_GUARD_COND(_name, _ext, _condlock) \
++	EXTEND_CLASS(_name, _ext, \
++		     ({ void *_t = _T; if (_T && !(_condlock)) _t = NULL; _t; }), \
++		     class_##_name##_t _T) \
++	static inline void * class_##_name##_ext##_lock_ptr(class_##_name##_t *_T) \
++	{ return class_##_name##_lock_ptr(_T); }
  
--	/* diff = 0: 'value' has exacly the right size
--	 * diff > 0: 'value' has too many bytes; one leading zero is allowed that
--	 *           makes the value a positive integer; error on more
--	 * diff < 0: 'value' is missing leading zeros
-+	/*
-+	 * vlen may be 1 byte larger than bufsize due to a leading zero byte
-+	 * (necessary if the most significant bit of the integer is set).
- 	 */
--	if (diff > 0) {
-+	if (vlen > bufsize) {
- 		/* skip over leading zeros that make 'value' a positive int */
- 		if (*d == 0) {
- 			vlen -= 1;
--			diff--;
- 			d++;
--		}
--		if (diff)
-+		} else {
- 			return -EINVAL;
-+		}
- 	}
--	if (-diff >= bufsize)
--		return -EINVAL;
+ #define guard(_name) \
+ 	CLASS(_name, __UNIQUE_ID(guard))
  
- 	ecc_digits_from_bytes(d, vlen, dest, ndigits);
++#define __guard_ptr(_name) class_##_name##_lock_ptr
++
+ #define scoped_guard(_name, args...)					\
+ 	for (CLASS(_name, scope)(args),					\
+-	     *done = NULL; !done; done = (void *)1)
++	     *done = NULL; __guard_ptr(_name)(&scope) && !done; done = (void *)1)
++
++#define scoped_cond_guard(_name, _fail, args...) \
++	for (CLASS(_name, scope)(args), \
++	     *done = NULL; !done; done = (void *)1) \
++		if (!__guard_ptr(_name)(&scope)) _fail; \
++		else
  
+ /*
+  * Additional helper macros for generating lock guards with types, either for
+@@ -119,6 +149,7 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
+  *
+  * DEFINE_LOCK_GUARD_0(name, lock, unlock, ...)
+  * DEFINE_LOCK_GUARD_1(name, type, lock, unlock, ...)
++ * DEFINE_LOCK_GUARD_1_COND(name, ext, condlock)
+  *
+  * will result in the following type:
+  *
+@@ -140,6 +171,11 @@ typedef struct {							\
+ static inline void class_##_name##_destructor(class_##_name##_t *_T)	\
+ {									\
+ 	if (_T->lock) { _unlock; }					\
++}									\
++									\
++static inline void *class_##_name##_lock_ptr(class_##_name##_t *_T)	\
++{									\
++	return _T->lock;						\
+ }
+ 
+ 
+@@ -168,4 +204,14 @@ __DEFINE_LOCK_GUARD_1(_name, _type, _lock)
+ __DEFINE_UNLOCK_GUARD(_name, void, _unlock, __VA_ARGS__)		\
+ __DEFINE_LOCK_GUARD_0(_name, _lock)
+ 
++#define DEFINE_LOCK_GUARD_1_COND(_name, _ext, _condlock)		\
++	EXTEND_CLASS(_name, _ext,					\
++		     ({ class_##_name##_t _t = { .lock = l }, *_T = &_t;\
++		        if (_T->lock && !(_condlock)) _T->lock = NULL;	\
++			_t; }),						\
++		     typeof_member(class_##_name##_t, lock) l)		\
++	static inline void * class_##_name##_ext##_lock_ptr(class_##_name##_t *_T) \
++	{ return class_##_name##_lock_ptr(_T); }
++
++
+ #endif /* __LINUX_GUARDS_H */
+diff --git a/include/linux/mutex.h b/include/linux/mutex.h
+index 5b5630e58407..e1c323c7d75b 100644
+--- a/include/linux/mutex.h
++++ b/include/linux/mutex.h
+@@ -248,6 +248,7 @@ extern void mutex_unlock(struct mutex *lock);
+ extern int atomic_dec_and_mutex_lock(atomic_t *cnt, struct mutex *lock);
+ 
+ DEFINE_GUARD(mutex, struct mutex *, mutex_lock(_T), mutex_unlock(_T))
+-DEFINE_FREE(mutex, struct mutex *, if (_T) mutex_unlock(_T))
++DEFINE_GUARD_COND(mutex, _try, mutex_trylock(_T))
++DEFINE_GUARD_COND(mutex, _intr, mutex_lock_interruptible(_T) == 0)
+ 
+ #endif /* __LINUX_MUTEX_H */
+diff --git a/include/linux/rwsem.h b/include/linux/rwsem.h
+index 1dd530ce8b45..9c29689ff505 100644
+--- a/include/linux/rwsem.h
++++ b/include/linux/rwsem.h
+@@ -203,11 +203,11 @@ extern void up_read(struct rw_semaphore *sem);
+ extern void up_write(struct rw_semaphore *sem);
+ 
+ DEFINE_GUARD(rwsem_read, struct rw_semaphore *, down_read(_T), up_read(_T))
+-DEFINE_GUARD(rwsem_write, struct rw_semaphore *, down_write(_T), up_write(_T))
+-
+-DEFINE_FREE(up_read, struct rw_semaphore *, if (_T) up_read(_T))
+-DEFINE_FREE(up_write, struct rw_semaphore *, if (_T) up_write(_T))
++DEFINE_GUARD_COND(rwsem_read, _try, down_read_trylock(_T))
++DEFINE_GUARD_COND(rwsem_read, _intr, down_read_interruptible(_T) == 0)
+ 
++DEFINE_GUARD(rwsem_write, struct rw_semaphore *, down_write(_T), up_write(_T))
++DEFINE_GUARD_COND(rwsem_write, _try, down_write_trylock(_T))
+ 
+ /*
+  * downgrade write lock to read lock
+diff --git a/include/linux/spinlock.h b/include/linux/spinlock.h
+index 31d3d747a9db..ceb56b39c70f 100644
+--- a/include/linux/spinlock.h
++++ b/include/linux/spinlock.h
+@@ -507,6 +507,8 @@ DEFINE_LOCK_GUARD_1(raw_spinlock, raw_spinlock_t,
+ 		    raw_spin_lock(_T->lock),
+ 		    raw_spin_unlock(_T->lock))
+ 
++DEFINE_LOCK_GUARD_1_COND(raw_spinlock, _try, raw_spin_trylock(_T->lock))
++
+ DEFINE_LOCK_GUARD_1(raw_spinlock_nested, raw_spinlock_t,
+ 		    raw_spin_lock_nested(_T->lock, SINGLE_DEPTH_NESTING),
+ 		    raw_spin_unlock(_T->lock))
+@@ -515,23 +517,36 @@ DEFINE_LOCK_GUARD_1(raw_spinlock_irq, raw_spinlock_t,
+ 		    raw_spin_lock_irq(_T->lock),
+ 		    raw_spin_unlock_irq(_T->lock))
+ 
++DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irq, _try, raw_spin_trylock_irq(_T->lock))
++
+ DEFINE_LOCK_GUARD_1(raw_spinlock_irqsave, raw_spinlock_t,
+ 		    raw_spin_lock_irqsave(_T->lock, _T->flags),
+ 		    raw_spin_unlock_irqrestore(_T->lock, _T->flags),
+ 		    unsigned long flags)
+ 
++DEFINE_LOCK_GUARD_1_COND(raw_spinlock_irqsave, _try,
++			 raw_spin_trylock_irqsave(_T->lock, _T->flags))
++
+ DEFINE_LOCK_GUARD_1(spinlock, spinlock_t,
+ 		    spin_lock(_T->lock),
+ 		    spin_unlock(_T->lock))
+ 
++DEFINE_LOCK_GUARD_1_COND(spinlock, _try, spin_trylock(_T->lock))
++
+ DEFINE_LOCK_GUARD_1(spinlock_irq, spinlock_t,
+ 		    spin_lock_irq(_T->lock),
+ 		    spin_unlock_irq(_T->lock))
+ 
++DEFINE_LOCK_GUARD_1_COND(spinlock_irq, _try,
++			 spin_trylock_irq(_T->lock))
++
+ DEFINE_LOCK_GUARD_1(spinlock_irqsave, spinlock_t,
+ 		    spin_lock_irqsave(_T->lock, _T->flags),
+ 		    spin_unlock_irqrestore(_T->lock, _T->flags),
+ 		    unsigned long flags)
+ 
++DEFINE_LOCK_GUARD_1_COND(spinlock_irqsave, _try,
++			 spin_trylock_irqsave(_T->lock, _T->flags))
++
+ #undef __LINUX_INSIDE_SPINLOCK_H
+ #endif /* __LINUX_SPINLOCK_H */
 -- 
 2.39.5
 
