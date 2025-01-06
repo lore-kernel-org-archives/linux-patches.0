@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A956A146D40;
-	Mon,  6 Jan 2025 15:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7AF148316;
+	Mon,  6 Jan 2025 15:29:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177370; cv=none; b=UyUFFDK0yCu6g8zotjmRXjjXo+G0Cf5dAJAZN917TchEEeReSoRqeP7FcVRBdTiq+VBOtF8gxNfETtQlrUjKMA7MFL/R+RZZBAGXtU36wmn9OHAiGsNAreBBLC+p9CZ91iY2AB/Zx9Jg8JF5tHguPtxtlltFa0CRKcwgXWGchEs=
+	t=1736177373; cv=none; b=fYMs/VjRBTIpXZtctV32nQ0kHtTJQqWS0WwwbqvHV77gA5dSLn/+5KUvbGI3a3xtjdRDno6Pw7PKn38HB8o2wqQISI589SeqGD5y2F0PHig8hRSuYnKrvD/KkvozwCWBFJaw6gg/sqJ/3Ee/OvFqCdt/uifUobb8LjIzpNLCKKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177370; c=relaxed/simple;
-	bh=76iYJ/grmIxY4bACiJ4brKPno8vrCrelHVVRSSy9jUo=;
+	s=arc-20240116; t=1736177373; c=relaxed/simple;
+	bh=qhqQgIEDGW6HjSl/vgG0c+xZaXjXbCmAAsyRPfppGIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dJh9HM27hDOVOcA5Qduw8ptnGhhyTL0S74cUrn9XROFsqwRFa7sdsT71aj3myXNu6VBYGuq9/yoLvO0IbLdw+BYJz/gmf9P3KGH482WUfvnVy/Xct+GrEc5IHuu3TaLNbfY6JlbaCQSqqs9jXFe3f9ZR2ixyuFT21gYLV94CSBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfFbTXrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdHmjOMAoKBuJKLuTc/bhFVOwqty2EjRCyNYhbNpfMctx/1YaDKY06h6KBPuKGrSDWEd2dYry5VeSnLup4mtL5biNPeWaxbEEK8/0StIa2R+rSS4yYvXTp7FRNfv1KJnjSZuumVrANkJvZQaqjKzQYi41xP+/pP7FOTDfzWPdJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQOoPLvi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfFbTXrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322D7C4CED2;
-	Mon,  6 Jan 2025 15:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQOoPLvi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15767C4CED6;
+	Mon,  6 Jan 2025 15:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177370;
-	bh=76iYJ/grmIxY4bACiJ4brKPno8vrCrelHVVRSSy9jUo=;
+	s=korg; t=1736177373;
+	bh=qhqQgIEDGW6HjSl/vgG0c+xZaXjXbCmAAsyRPfppGIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfFbTXrJc/CVBRmUbouG8sUNYYPk0PSmraySA8fF3PHVUdTpYCEfLOFdHoDEs80tz
-	 cnxKoCET2fwfILPVOFgYpgDBBAjE5UtqeeJ7/MmlsBEa/EmVKpE5T6hY4l6KBxucKx
-	 7qTZvMONhxTIENYsKp6zwfmn8Y7yp4lBdjs4cvaU=
+	b=EQOoPLviUGpOjj6xwSnX+jDr8BSDlLiR6X7zLTU8ckulRJAADWw1pBd01L1fQlETS
+	 rUP3+cNFBWfbwvhvGo0ImKqrZi5BEx7lz+e5VZ8H77043BtOfRNwvWdlc26pIo2s9s
+	 HQ1hwp44RwCSYVORbV5A8w6HHsJuM2QVDZHD/Xf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Stefan Ekenberg <stefan.ekenberg@axis.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 142/222] drm/bridge: adv7511_audio: Update Audio InfoFrame properly
-Date: Mon,  6 Jan 2025 16:15:46 +0100
-Message-ID: <20250106151156.142057796@linuxfoundation.org>
+Subject: [PATCH 6.6 125/222] tracing: Fix trace_check_vprintf() when tp_printk is used
+Date: Mon,  6 Jan 2025 16:15:29 +0100
+Message-ID: <20250106151155.340825943@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -52,72 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Ekenberg <stefan.ekenberg@axis.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 902806baf3c1e8383c1fe3ff0b6042b8cb5c2707 ]
+[ Upstream commit 50a3242d84ee1625b0bfef29b95f935958dccfbe ]
 
-AUDIO_UPDATE bit (Bit 5 of MAIN register 0x4A) needs to be set to 1
-while updating Audio InfoFrame information and then set to 0 when done.
-Otherwise partially updated Audio InfoFrames could be sent out. Two
-cases where this rule were not followed are fixed:
- - In adv7511_hdmi_hw_params() make sure AUDIO_UPDATE bit is updated
-   before/after setting ADV7511_REG_AUDIO_INFOFRAME.
- - In audio_startup() use the correct register for clearing
-   AUDIO_UPDATE bit.
+When the tp_printk kernel command line is used, the trace events go
+directly to printk(). It is still checked via the trace_check_vprintf()
+function to make sure the pointers of the trace event are legit.
 
-The problem with corrupted audio infoframes were discovered by letting
-a HDMI logic analyser check the output of ADV7535.
+The addition of reading buffers from previous boots required adding a
+delta between the addresses of the previous boot and the current boot so
+that the pointers in the old buffer can still be used. But this required
+adding a trace_array pointer to acquire the delta offsets.
 
-Note that this patchs replaces writing REG_GC(1) with
-REG_INFOFRAME_UPDATE. Bit 5 of REG_GC(1) is positioned within field
-GC_PP[3:0] and that field doesn't control audio infoframe and is read-
-only. My conclusion therefore was that the author if this code meant to
-clear bit 5 of REG_INFOFRAME_UPDATE from the very beginning.
+The tp_printk code does not provide a trace_array (tr) pointer, so when
+the offsets were examined, a NULL pointer dereference happened and the
+kernel crashed.
 
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Fixes: 53c515befe28 ("drm/bridge: adv7511: Add Audio support")
-Signed-off-by: Stefan Ekenberg <stefan.ekenberg@axis.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119-adv7511-audio-info-frame-v4-1-4ae68e76c89c@axis.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+If the trace_array does not exist, just default the delta offsets to zero,
+as that also means the trace event is not being read from a previous boot.
+
+Link: https://lore.kernel.org/all/Zv3z5UsG_jsO9_Tb@aschofie-mobl2.lan/
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://lore.kernel.org/20241003104925.4e1b1fd9@gandalf.local.home
+Fixes: 07714b4bb3f98 ("tracing: Handle old buffer mappings for event strings and functions")
+Reported-by: Alison Schofield <alison.schofield@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Stable-dep-of: afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_audio.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-index 61f4a38e7d2b..8f786592143b 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_audio.c
-@@ -153,7 +153,16 @@ static int adv7511_hdmi_hw_params(struct device *dev, void *data,
- 			   ADV7511_AUDIO_CFG3_LEN_MASK, len);
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_I2C_FREQ_ID_CFG,
- 			   ADV7511_I2C_FREQ_ID_CFG_RATE_MASK, rate << 4);
--	regmap_write(adv7511->regmap, 0x73, 0x1);
-+
-+	/* send current Audio infoframe values while updating */
-+	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
-+			   BIT(5), BIT(5));
-+
-+	regmap_write(adv7511->regmap, ADV7511_REG_AUDIO_INFOFRAME(0), 0x1);
-+
-+	/* use Audio infoframe updated info */
-+	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
-+			   BIT(5), 0);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 2a45efc4e417..addc1b326c79 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -3858,8 +3858,8 @@ static void test_can_verify(void)
+ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 			 va_list ap)
+ {
+-	long text_delta = iter->tr->text_delta;
+-	long data_delta = iter->tr->data_delta;
++	long text_delta = 0;
++	long data_delta = 0;
+ 	const char *p = fmt;
+ 	const char *str;
+ 	bool good;
+@@ -3871,6 +3871,17 @@ void trace_check_vprintf(struct trace_iterator *iter, const char *fmt,
+ 	if (static_branch_unlikely(&trace_no_verify))
+ 		goto print;
  
- 	return 0;
- }
-@@ -184,8 +193,9 @@ static int audio_startup(struct device *dev, void *data)
- 	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(0),
- 				BIT(7) | BIT(6), BIT(7));
- 	/* use Audio infoframe updated info */
--	regmap_update_bits(adv7511->regmap, ADV7511_REG_GC(1),
-+	regmap_update_bits(adv7511->regmap, ADV7511_REG_INFOFRAME_UPDATE,
- 				BIT(5), 0);
++	/*
++	 * When the kernel is booted with the tp_printk command line
++	 * parameter, trace events go directly through to printk().
++	 * It also is checked by this function, but it does not
++	 * have an associated trace_array (tr) for it.
++	 */
++	if (iter->tr) {
++		text_delta = iter->tr->text_delta;
++		data_delta = iter->tr->data_delta;
++	}
 +
- 	/* enable SPDIF receiver */
- 	if (adv7511->audio_source == ADV7511_AUDIO_SOURCE_SPDIF)
- 		regmap_update_bits(adv7511->regmap, ADV7511_REG_AUDIO_CONFIG,
+ 	/* Don't bother checking when doing a ftrace_dump() */
+ 	if (iter->fmt == static_fmt_buf)
+ 		goto print;
 -- 
 2.39.5
 
