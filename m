@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF6613AD11;
-	Mon,  6 Jan 2025 15:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF4B13AD11;
+	Mon,  6 Jan 2025 15:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178726; cv=none; b=poUl12vU+M6OxflcLD/lRSn9Ww8CrKxMOFZZf5KSZo+yNneXuzRK1nNCUqjZqY1MIR83R4lbSJ9m5xZ4Op/TfNmKiLg8Vih09Q+aWRaX4WmQ1HHpo73+r1FwMASjjuclzygyj+zUrfC4Spu3jMBCP1M5vBBIxbeD0L+G3zkZYHI=
+	t=1736178729; cv=none; b=rD1VnB4aq8/tPnDmfMBC9IaeZ3DK4AafCQ/CANmaMSUbw3E5dZ6twzqKKjSc9QL2FihHqvpvs2Iin5IUPzGICVFLLCfQjS19DDLQFhSwxjPQR3eq9v5E1Fc8ILLLiz0ID5HgcZgup+jzmhSkj+kJ9jqWa7yM2XCAzDOBcIFTNy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178726; c=relaxed/simple;
-	bh=nBd8BdUq7/tHbsMhBEUGfDOj5TRMQ5W6hfMzu53YHVI=;
+	s=arc-20240116; t=1736178729; c=relaxed/simple;
+	bh=CAxqHcKmPtsQyUDMEpFb6BR1L7Z3KfUHuenyKHzbsiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+rgVD9PQd0TtWcbEEneceTTHvMyzwx/VhT0q6hAledQ2yo/n+J+Lhcdrd3A/cC8T9zbi331zwnd5LcY9xYjjonUdCvBujNy5qNKBKGQORAe6SRqPaglxi3ez7eBFQWhfeuR3LKkok4rU3KobRubxASzMpKC8BN24yL67XfgP8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6reAhic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I6wJXgowWwn5NTYeIhvCALq03krmxBiPJM+lgZkR+8dmMrqsY6t5rGF7isyzWgNGdPJi7LeFNh8UqFUNKevDOiCdcOu/aCM+2IXN7mP4mnlmQTvFPQ7KPguDAX3XmTxIP3xSsJPB/TjYk2QWrm+l8hf+7bxPWUh0VKBG4z+WVx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdKC5GM1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6reAhic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B96C4CED2;
-	Mon,  6 Jan 2025 15:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdKC5GM1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B13C4CED2;
+	Mon,  6 Jan 2025 15:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178726;
-	bh=nBd8BdUq7/tHbsMhBEUGfDOj5TRMQ5W6hfMzu53YHVI=;
+	s=korg; t=1736178728;
+	bh=CAxqHcKmPtsQyUDMEpFb6BR1L7Z3KfUHuenyKHzbsiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6reAhic6WbvnhHf86qg+By3AcUoEeGhdeRlbULqWwiszB7XQyneNowFXLcNRaU/n
-	 ZWwiyT/wXjwBZ6izQFRdXe2p2xV6EJG4mbO9vpaHm8mEtkafSCYIgsgzcF3x9wcRts
-	 aQ7lYPpZI090xNsYAJbhRPFjGrT3y2/O+b5gR3zc=
+	b=WdKC5GM1dXRxZzJE3DujQa084ho1fiBSUpPuFk3j1NHFO+RY29vmr/Md/3gbrV7lm
+	 jjp2nn34NoMiRV47LDHmtlpZ1XVxaW1aPvB8HBtlPLgg3+AAiXrT4A3IhJdBgq0W8B
+	 pAEFGB7LFSwjzMhhJuSlxMYG3G1EMAJsLXeWSfOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.15 040/168] sh: clk: Fix clk_enable() to return 0 on NULL clk
-Date: Mon,  6 Jan 2025 16:15:48 +0100
-Message-ID: <20250106151139.977160669@linuxfoundation.org>
+	Kairui Song <kasong@tencent.com>,
+	Desheng Wu <deshengwu@tencent.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 041/168] zram: refuse to use zero sized block device as backing device
+Date: Mon,  6 Jan 2025 16:15:49 +0100
+Message-ID: <20250106151140.015362477@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,40 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Kairui Song <kasong@tencent.com>
 
-commit ff30bd6a6618e979b16977617371c0f28a95036e upstream.
+commit be48c412f6ebf38849213c19547bc6d5b692b5e5 upstream.
 
-On SH, devm_clk_get_optional_enabled() fails with -EINVAL if the clock
-is not found.  This happens because __devm_clk_get() assumes it can pass
-a NULL clock pointer (as returned by clk_get_optional()) to the init()
-function (clk_prepare_enable() in this case), while the SH
-implementation of clk_enable() considers that an error.
+Patch series "zram: fix backing device setup issue", v2.
 
-Fix this by making the SH clk_enable() implementation return zero
-instead, like the Common Clock Framework does.
+This series fixes two bugs of backing device setting:
 
-Reported-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/b53e6b557b4240579933b3359dda335ff94ed5af.1675354849.git.geert+renesas@glider.be
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+- ZRAM should reject using a zero sized (or the uninitialized ZRAM
+  device itself) as the backing device.
+- Fix backing device leaking when removing a uninitialized ZRAM
+  device.
+
+
+This patch (of 2):
+
+Setting a zero sized block device as backing device is pointless, and one
+can easily create a recursive loop by setting the uninitialized ZRAM
+device itself as its own backing device by (zram0 is uninitialized):
+
+    echo /dev/zram0 > /sys/block/zram0/backing_dev
+
+It's definitely a wrong config, and the module will pin itself, kernel
+should refuse doing so in the first place.
+
+By refusing to use zero sized device we avoided misuse cases including
+this one above.
+
+Link: https://lkml.kernel.org/r/20241209165717.94215-1-ryncsn@gmail.com
+Link: https://lkml.kernel.org/r/20241209165717.94215-2-ryncsn@gmail.com
+Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reported-by: Desheng Wu <deshengwu@tencent.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/sh/clk/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/zram/zram_drv.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/sh/clk/core.c
-+++ b/drivers/sh/clk/core.c
-@@ -295,7 +295,7 @@ int clk_enable(struct clk *clk)
- 	int ret;
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -499,6 +499,12 @@ static ssize_t backing_dev_store(struct
+ 	}
  
- 	if (!clk)
--		return -EINVAL;
-+		return 0;
- 
- 	spin_lock_irqsave(&clock_lock, flags);
- 	ret = __clk_enable(clk);
+ 	nr_pages = i_size_read(inode) >> PAGE_SHIFT;
++	/* Refuse to use zero sized device (also prevents self reference) */
++	if (!nr_pages) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	bitmap_sz = BITS_TO_LONGS(nr_pages) * sizeof(long);
+ 	bitmap = kvzalloc(bitmap_sz, GFP_KERNEL);
+ 	if (!bitmap) {
 
 
