@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109577082A;
-	Mon,  6 Jan 2025 15:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A3E146D6B;
+	Mon,  6 Jan 2025 15:44:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178241; cv=none; b=tO1r9f1/6HX9TTK5kAoOdgis2/0fTpi0CWQJzm719bsPNNPShKD5KgeVGZXUN0jsq9mCzLwVuJzYjSRpCz2s4PZAq8npjjzc69CHtjrq880ZOhc63uC5BRY+6pTaNNR7JeZKsLXCFQ/WiotJGA8xBpmWK4DsVe5O5P+10PCSuHo=
+	t=1736178244; cv=none; b=e7upfI5HQGsFjHUpI8gbUazHM4Km1w73MlaVCifLyGwfXKnRtuoFJ5KRbRdAy8CjHIJRXVpuFe81P1AO0e/+l4b7rSSvdvbGlzSh4PIRvgV1YLdb8SqnrseCPosn/4H42qlCxTv0jImTSXTNU8ec+mwfNR/bjOvA2yKMLsv8DdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178241; c=relaxed/simple;
-	bh=ebnyWLlG2Uk7BmbVTEoPcdgxMjCioFKj+agkteESrbQ=;
+	s=arc-20240116; t=1736178244; c=relaxed/simple;
+	bh=SaahdEcRye9aXgaI+hYg+Ukj3WDZzF8B1RqNwziMelU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LLW2BzRwAWBm34ZHmhcV7X8MuLdeeKSB95rXMpPEc2t6ShU5E95wf+KZIRWRwDuHS7lz7EjjwfuxpJLX9gzvtNX5YFK0Nt7O/VaW9qNdzzlN6X+dBq2+Z16oIgwXkx7n0b/tb72jF/PP0orDXdm5M3Z549/o9hD3VdqFZCvWxlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r++5/WJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s9YT/u8li2EbW1PQYYSRe24tjinmw6VAY1aAN/UdFvISohxgFq5lvh1Ly8Vad+saE+leAIWoRUH1//FqqPG7UsFl0gsxLhhyNF3XPjV1xMQr9hju6d99AG7o83xtbuRmgMAaQR6iWjobhcdBwWcuCqAjmKRCY00+wRFDfwUrptw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJT+CJlJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r++5/WJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87910C4CED2;
-	Mon,  6 Jan 2025 15:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJT+CJlJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794EDC4CED2;
+	Mon,  6 Jan 2025 15:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178240;
-	bh=ebnyWLlG2Uk7BmbVTEoPcdgxMjCioFKj+agkteESrbQ=;
+	s=korg; t=1736178243;
+	bh=SaahdEcRye9aXgaI+hYg+Ukj3WDZzF8B1RqNwziMelU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r++5/WJylNjP2XoYbguNj9nzDRu6MpLw8u5Z+JywM7oThBFw+0H6il/ubKdgv28Ts
-	 FxLNI7+cpUSBZQck4EiYr5fjHKsvDexWjQjJdP91L5pXXg5xCVDM5f7L4T9QbgQs9G
-	 hSlDJ4p6cArt2T/a+TuXyc7nRD3PuobrPvZwhwPU=
+	b=gJT+CJlJTigUy0wFDzA4FmWtwF39bO6WqowjP36lARWuFOFczUjMpBgNZ+GF4nLIy
+	 PRxDzpbgZF9gbAMOf9zBRWsxiC8iCfbHsAnSubxyimhzZpjI+zVxYuN0fJeCFNwJab
+	 EoGTan4H7rIXvpH1Tw0zzsCXWyLLQUw7Yfv1PmlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Zijun Hu <quic_zijuhu@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 051/138] phy: core: Fix an OF node refcount leakage in of_phy_provider_lookup()
-Date: Mon,  6 Jan 2025 16:16:15 +0100
-Message-ID: <20250106151135.167939233@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 022/138] chelsio/chtls: prevent potential integer overflow on 32bit
+Date: Mon,  6 Jan 2025 16:15:46 +0100
+Message-ID: <20250106151134.058294712@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
 References: <20250106151133.209718681@linuxfoundation.org>
@@ -51,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit a2d633cb1421e679b56f1a9fe1f42f089706f1ed upstream.
+commit fbbd84af6ba70334335bdeba3ae536cf751c14c6 upstream.
 
-For macro for_each_child_of_node(parent, child), refcount of @child has
-been increased before entering its loop body, so normally needs to call
-of_node_put(@child) before returning from the loop body to avoid refcount
-leakage.
+The "gl->tot_len" variable is controlled by the user.  It comes from
+process_responses().  On 32bit systems, the "gl->tot_len +
+sizeof(struct cpl_pass_accept_req) + sizeof(struct rss_header)" addition
+could have an integer wrapping bug.  Use size_add() to prevent this.
 
-of_phy_provider_lookup() has such usage but does not call of_node_put()
-before returning, so cause leakage of the OF node refcount.
-
-Fix by simply calling of_node_put() before returning from the loop body.
-
-The APIs affected by this issue are shown below since they indirectly
-invoke problematic of_phy_provider_lookup().
-phy_get()
-of_phy_get()
-devm_phy_get()
-devm_of_phy_get()
-devm_of_phy_get_by_index()
-
-Fixes: 2a4c37016ca9 ("phy: core: Fix of_phy_provider_lookup to return PHY provider for sub node")
+Fixes: a08943947873 ("crypto: chtls - Register chtls with net tls")
 Cc: stable@vger.kernel.org
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/20241213-phy_core_fix-v6-5-40ae28f5015a@quicinc.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/c6bfb23c-2db2-4e1b-b8ab-ba3925c82ef5@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/phy-core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_main.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/phy-core.c
-+++ b/drivers/phy/phy-core.c
-@@ -138,8 +138,10 @@ static struct phy_provider *of_phy_provi
- 			return phy_provider;
- 
- 		for_each_child_of_node(phy_provider->children, child)
--			if (child == node)
-+			if (child == node) {
-+				of_node_put(child);
- 				return phy_provider;
-+			}
- 	}
- 
- 	return ERR_PTR(-EPROBE_DEFER);
+--- a/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_main.c
++++ b/drivers/net/ethernet/chelsio/inline_crypto/chtls/chtls_main.c
+@@ -346,8 +346,9 @@ static struct sk_buff *copy_gl_to_skb_pk
+ 	 * driver. Once driver synthesizes cpl_pass_accpet_req the skb will go
+ 	 * through the regular cpl_pass_accept_req processing in TOM.
+ 	 */
+-	skb = alloc_skb(gl->tot_len + sizeof(struct cpl_pass_accept_req)
+-			- pktshift, GFP_ATOMIC);
++	skb = alloc_skb(size_add(gl->tot_len,
++				 sizeof(struct cpl_pass_accept_req)) -
++			pktshift, GFP_ATOMIC);
+ 	if (unlikely(!skb))
+ 		return NULL;
+ 	__skb_put(skb, gl->tot_len + sizeof(struct cpl_pass_accept_req)
 
 
