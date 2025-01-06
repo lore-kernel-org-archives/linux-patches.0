@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEF18136E09;
-	Mon,  6 Jan 2025 15:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E2578F49;
+	Mon,  6 Jan 2025 15:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176877; cv=none; b=WbWg2v+NQtZ3xahs/inP0gimpXbVpGd063llZrmH/ma1TGKfuOTN1gbgj8+9pYzC6JntElmHU3VQjdikRRMbn6UZzP4YCr720yhg43avpIaLYW9dTt1GrjIZQK6aitul3VWNde9c7U6o7dBCED6PlBnqfRS3JZ6CyoJ+B6raisE=
+	t=1736176880; cv=none; b=RHgBNb5Z59XZrxR2TeDdhYxr+W/0P6eMLfCbcfO33F9S1hHAkOO0ivTXrbK4kIlbpcU2QKwvtUfuyiF3TjMRi1qBWLGhZBNIWZp3Clq2gJpQgCAALnkCnII674atj5AscQa1ESn82KBO9b7WVi3WXSNOjibaRem10D4jRI0a5jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176877; c=relaxed/simple;
-	bh=2gFief8vLeOr+4ci3sYDNeKlDYLRILCBRoJM77oKhsY=;
+	s=arc-20240116; t=1736176880; c=relaxed/simple;
+	bh=pQvSzM7En5Worw9f2s+elHVFerw2WhGvSqbR0fQzhIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ly2XxjauYg8DV6iY5NOxr1Dq0W6zRPldu5QL36Dsk4fV/bVXjsq4v30ErfFibFXc0zS2YAgnH8lU8uk5e0K8faM30E1InQ9luXP7i5Q7wOF4HsNRtWdi+cabgujiAVMzBlul3YaVE9pkN/5QRHBbxq5qLJ0DRY8XBTyWv189rUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSOo3y8k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NG4XgIK2CahZiAcB7zshDBr1r3kJCouahk3S3db6H2BX1w8XHb4WxmjpUdUf+t3sQFh7wWLO91YrlxfFtEs19ZJVKKuerOvaCH6pWfzBmD+QWKVhqeK4QBSKmXCO22e8RXuUodY4Eo+QQWQ8opTcnkb4/ung7V2ebTe9qAQ7r4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osQQUPh/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSOo3y8k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B11C4CEDF;
-	Mon,  6 Jan 2025 15:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osQQUPh/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E59C4CED2;
+	Mon,  6 Jan 2025 15:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176877;
-	bh=2gFief8vLeOr+4ci3sYDNeKlDYLRILCBRoJM77oKhsY=;
+	s=korg; t=1736176880;
+	bh=pQvSzM7En5Worw9f2s+elHVFerw2WhGvSqbR0fQzhIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSOo3y8kNnLcy5ezWwrIDNfVqBsKYfzwwh4C+4NNmrfQL0BjhBtrbY3/kOJTSLwlk
-	 PQRQU/ArM07l3RketkNUz1Cs1PUrzX2oUVs+L3oaFEyXLaAPOgWOMsr4aYm+3kICUD
-	 AEYT1kjGbA22vWUfeBfgWGmc9VeaxyNmG3bcafq0=
+	b=osQQUPh/BMVddYUmeqOzmd4QBRm/3lm7ahfFeXWG978M9Lrk3Do8U/E9dM0sK0gX+
+	 nSQH5CeEWjPztRlSPR/2njnZQUTBLIu0zuHWMQXHwl4MsGwFsXNx/Clr3I6LuL59gp
+	 Nxyw4iBYIDRXarauKh8KgQjtpiHq2LJWce6CH1cQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Arun Ramadoss <arun.ramadoss@microchip.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/81] net: stmmac: restructure the error path of stmmac_probe_config_dt()
-Date: Mon,  6 Jan 2025 16:16:00 +0100
-Message-ID: <20250106151130.501327358@linuxfoundation.org>
+Subject: [PATCH 6.1 19/81] net: dsa: microchip: add ksz_rmw8() function
+Date: Mon,  6 Jan 2025 16:15:51 +0100
+Message-ID: <20250106151130.160793441@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -51,103 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 2b6ffcd7873b7e8a62c3e15a6f305bfc747c466b ]
+[ Upstream commit 6f1b986a43ce9aa67b11a7e54ac75530705d04e7 ]
 
-Current implementation of stmmac_probe_config_dt() does not release the
-OF node reference obtained by of_parse_phandle() in some error paths.
-The problem is that some error paths call stmmac_remove_config_dt() to
-clean up but others use and unwind ladder.  These two types of error
-handling have not kept in sync and have been a recurring source of bugs.
-Re-write the error handling in stmmac_probe_config_dt() to use an unwind
-ladder. Consequently, stmmac_remove_config_dt() is not needed anymore,
-thus remove it.
+Add ksz_rmw8(), it will be used in the next patch.
 
-This bug was found by an experimental verification tool that I am
-developing.
-
-Fixes: 4838a5405028 ("net: stmmac: Fix wrapper drivers not detecting PHY")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://patch.msgid.link/20241219024119.2017012-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Arun Ramadoss <arun.ramadoss@microchip.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: bb9869043438 ("net: dsa: microchip: Fix LAN937X set_ageing_time function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/stmmac_platform.c | 27 ++++++++++++-------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index e7e7d388399d..c368ef3cd9cb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -473,8 +473,10 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 		dev_warn(&pdev->dev, "snps,phy-addr property is deprecated\n");
- 
- 	rc = stmmac_mdio_setup(plat, np, &pdev->dev);
--	if (rc)
--		return ERR_PTR(rc);
-+	if (rc) {
-+		ret = ERR_PTR(rc);
-+		goto error_put_phy;
-+	}
- 
- 	of_property_read_u32(np, "tx-fifo-depth", &plat->tx_fifo_size);
- 
-@@ -560,8 +562,8 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 	dma_cfg = devm_kzalloc(&pdev->dev, sizeof(*dma_cfg),
- 			       GFP_KERNEL);
- 	if (!dma_cfg) {
--		stmmac_remove_config_dt(pdev, plat);
--		return ERR_PTR(-ENOMEM);
-+		ret = ERR_PTR(-ENOMEM);
-+		goto error_put_mdio;
- 	}
- 	plat->dma_cfg = dma_cfg;
- 
-@@ -589,8 +591,8 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 
- 	rc = stmmac_mtl_setup(pdev, plat);
- 	if (rc) {
--		stmmac_remove_config_dt(pdev, plat);
--		return ERR_PTR(rc);
-+		ret = ERR_PTR(rc);
-+		goto error_put_mdio;
- 	}
- 
- 	/* clock setup */
-@@ -642,6 +644,10 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
- 	clk_disable_unprepare(plat->pclk);
- error_pclk_get:
- 	clk_disable_unprepare(plat->stmmac_clk);
-+error_put_mdio:
-+	of_node_put(plat->mdio_node);
-+error_put_phy:
-+	of_node_put(plat->phy_node);
- 
- 	return ret;
+diff --git a/drivers/net/dsa/microchip/ksz_common.h b/drivers/net/dsa/microchip/ksz_common.h
+index d1b2db8e6533..a3a7a90dad96 100644
+--- a/drivers/net/dsa/microchip/ksz_common.h
++++ b/drivers/net/dsa/microchip/ksz_common.h
+@@ -454,6 +454,11 @@ static inline int ksz_write64(struct ksz_device *dev, u32 reg, u64 value)
+ 	return regmap_bulk_write(dev->regmap[2], reg, val, 2);
  }
-@@ -650,16 +656,17 @@ static void devm_stmmac_remove_config_dt(void *data)
+ 
++static inline int ksz_rmw8(struct ksz_device *dev, int offset, u8 mask, u8 val)
++{
++	return regmap_update_bits(dev->regmap[0], offset, mask, val);
++}
++
+ static inline int ksz_pread8(struct ksz_device *dev, int port, int offset,
+ 			     u8 *data)
  {
- 	struct plat_stmmacenet_data *plat = data;
- 
--	/* Platform data argument is unused */
--	stmmac_remove_config_dt(NULL, plat);
-+	clk_disable_unprepare(plat->stmmac_clk);
-+	clk_disable_unprepare(plat->pclk);
-+	of_node_put(plat->mdio_node);
-+	of_node_put(plat->phy_node);
- }
- 
- /**
-  * devm_stmmac_probe_config_dt
-  * @pdev: platform_device structure
-  * @mac: MAC address to use
-- * Description: Devres variant of stmmac_probe_config_dt(). Does not require
-- * the user to call stmmac_remove_config_dt() at driver detach.
-+ * Description: Devres variant of stmmac_probe_config_dt().
-  */
- struct plat_stmmacenet_data *
- devm_stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
 -- 
 2.39.5
 
