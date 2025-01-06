@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2A41DB92A;
-	Mon,  6 Jan 2025 15:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFF91DDC12;
+	Mon,  6 Jan 2025 15:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178552; cv=none; b=fc4cU0IkAvSCDT685jFkuzU5YrC88Xf6xbtb9Lxs8UhbtxicHZ+rd8qde7VFnkx4nmJnSpA7zXHzvDAV2QXEwSwExdV+2VSFi39KxLkj0ZmoB90H3zfT6G6WBMwFzyFsarP26JkBLGhd3rbsuyNj+w/DSzZejJWpLykslhOkXao=
+	t=1736178555; cv=none; b=VQ26dIzhhrWXatC3d2gwdIs4KDF85zFtvEzECIRn0qTaIV/3cAd7hRs9avDwScuMuWaGgxnQjWOh4wKSQP91wMfC39w2kR0tMx9bob7C1CXJG01shpjc1G7iEylREEqdfrxBBpA6BrC7l7jHb8To/pDqxGtcRU4bvmwJG5wHUUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178552; c=relaxed/simple;
-	bh=XChnWrM18rg83wFGNbe/6GPuktgxMx4azPd3ZjbI9SE=;
+	s=arc-20240116; t=1736178555; c=relaxed/simple;
+	bh=qh2+g4BC9Gpb4bqm6szuBEUiabWgMzzKrES4BzsOIIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uB4Y6CXuTcpJtktpy+TTQRoDKrBEMN+0TV1vtW/LSagcKtFjk1JeIGCPkSU/Bn6seBDjJzDum8sZ18x+oEdE2rVQWZyi+VlLE6RZcNSQ3JKNxoX5+dV6WVXTqw+Kd4b1e7BlZ70xtDf7SbPuooV4wPF2wo5QJf2mXYTO73uEGY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IadHdPe3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fuvWgtdJzTEhQaaogyR+ZowB3fvAZUTHqQXohkCn4gD5bC75A1RucUBNBOqfmn2gScSDUsuSOKLZTL9CvNePry9y1u2jqAiVd2aLOdgOThJC+Z9gzsZfuXFXgCajsrjVPDTqfS4uoQB1bF0l38gFl7xIuEbL6o4Xg1u0vDxFtgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEUKSHu6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IadHdPe3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E04DC4CED2;
-	Mon,  6 Jan 2025 15:49:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEUKSHu6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD9BC4CED2;
+	Mon,  6 Jan 2025 15:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178552;
-	bh=XChnWrM18rg83wFGNbe/6GPuktgxMx4azPd3ZjbI9SE=;
+	s=korg; t=1736178555;
+	bh=qh2+g4BC9Gpb4bqm6szuBEUiabWgMzzKrES4BzsOIIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IadHdPe3NI+aI9Wqo70cM1yh7oSuTZ1YJ/eW07Kx6P0r7xfWPJjBMEb6rix4MkhuA
-	 fihFW9+egHJu/Ak6t2yxaNf7nADxuieifUpuvzO6yW8BzZc/Sitjzq910lRLF4v8un
-	 FmTsMLYdnnVTOcAjUDmBNYrzSSvrXCpjcVWvMxhc=
+	b=kEUKSHu6rqOBpDS7L0uW7OXVtW4rzxjb+TI0cvCY/32QA6vUyRcc24knSHs//RAUj
+	 um4/15VS3MhikxzYdPDF/M/UmGLSgcFtVRCRtJB/VKqPwOg4OCGtEoJvW5a1fFX30Q
+	 VuVmvihqOdAABds6prA25XqC7VL6IRc2zD6GBFrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@amd.com>,
 	Shannon Nelson <shannon.nelson@amd.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/168] ionic: Fix netdev notifier unregister on failure
-Date: Mon,  6 Jan 2025 16:15:26 +0100
-Message-ID: <20250106151139.151182569@linuxfoundation.org>
+Subject: [PATCH 5.15 019/168] ionic: use ee->offset when returning sprom data
+Date: Mon,  6 Jan 2025 16:15:27 +0100
+Message-ID: <20250106151139.188573402@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -53,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brett Creeley <brett.creeley@amd.com>
+From: Shannon Nelson <shannon.nelson@amd.com>
 
-[ Upstream commit 9590d32e090ea2751e131ae5273859ca22f5ac14 ]
+[ Upstream commit b096d62ba1323391b2db98b7704e2468cf3b1588 ]
 
-If register_netdev() fails, then the driver leaks the netdev notifier.
-Fix this by calling ionic_lif_unregister() on register_netdev()
-failure. This will also call ionic_lif_unregister_phc() if it has
-already been registered.
+Some calls into ionic_get_module_eeprom() don't use a single
+full buffer size, but instead multiple calls with an offset.
+Teach our driver to use the offset correctly so we can
+respond appropriately to the caller.
 
-Fixes: 30b87ab4c0b3 ("ionic: remove lif list concept")
-Signed-off-by: Brett Creeley <brett.creeley@amd.com>
+Fixes: 4d03e00a2140 ("ionic: Add initial ethtool support")
 Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20241212213157.12212-2-shannon.nelson@amd.com
+Link: https://patch.msgid.link/20241212213157.12212-4-shannon.nelson@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 4 ++--
+ drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index 910d8973a4b0..cdc3c55fab6a 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -3514,8 +3514,8 @@ int ionic_lif_register(struct ionic_lif *lif)
- 	/* only register LIF0 for now */
- 	err = register_netdev(lif->netdev);
- 	if (err) {
--		dev_err(lif->ionic->dev, "Cannot register net device, aborting\n");
--		ionic_lif_unregister_phc(lif);
-+		dev_err(lif->ionic->dev, "Cannot register net device: %d, aborting\n", err);
-+		ionic_lif_unregister(lif);
- 		return err;
- 	}
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+index 2fa116c3694c..8d459d563416 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
+@@ -861,8 +861,8 @@ static int ionic_get_module_eeprom(struct net_device *netdev,
+ 	len = min_t(u32, sizeof(xcvr->sprom), ee->len);
  
+ 	do {
+-		memcpy(data, xcvr->sprom, len);
+-		memcpy(tbuf, xcvr->sprom, len);
++		memcpy(data, &xcvr->sprom[ee->offset], len);
++		memcpy(tbuf, &xcvr->sprom[ee->offset], len);
+ 
+ 		/* Let's make sure we got a consistent copy */
+ 		if (!memcmp(data, tbuf, len))
 -- 
 2.39.5
 
