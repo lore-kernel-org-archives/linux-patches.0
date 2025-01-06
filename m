@@ -1,106 +1,129 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF291C3C07
-	for <patches@lists.linux.dev>; Mon,  6 Jan 2025 22:26:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C152B1DF271
+	for <patches@lists.linux.dev>; Mon,  6 Jan 2025 23:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736202383; cv=none; b=CdQ9ED6LBbvdCAKLjHk/PTb1hpm+DaOWVjgPzLkMnslWvXbfycjk1T+00CQGVjnFrCi/nWAWr875xwZiViYByW8K5OmYjVpC0GKxqNZgo1j4Z3n2lkAS0f4Rb5KZR4O/8541s0R4hktHby3e6d3KtvGcOqPSvE2fhnDkJLaJr+Q=
+	t=1736204734; cv=none; b=iAYDC64HLiA69jCJ/0zOUkzxWmu8hNxd9LBe3gH58HjEaAIHH8vSpJuEXva+1V3CimBMqRgBOM7e0cO2eJGyyQbwG0YKhOzrDDuLa6a83XQC7zV6Yn/tYuEDMypg8czzQofFfwFtZJGnbHKpJ+wwJnzyhGrUm/dzxnNpFb4zTWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736202383; c=relaxed/simple;
-	bh=QPketlUGoogrO6gvcVI+FDNH7XIiHg7ZiGSC7pjyZuY=;
+	s=arc-20240116; t=1736204734; c=relaxed/simple;
+	bh=ER5Yz9kOS4M3qneRwV1W+hbll4azflGc7w+oKnUTlGU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lf5iS8ckkQMc1Lg9oSPPouJ+endMSJqi/QXJ4+ZKYClq3jyHtrqnMiRFBkSh2Ox7RSS6VqrA92e+nXI9N8DJrLZhNFVzaJM4BvTGtLYn3rzQPDqhlu06Xc0hXzd1JH1io8HneK7YUrzinvPCnHgtlrSK+yusFH9FmdF6sfkg0vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=FjKmaK/T; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=dFX4LT9hSaRo8MHRePKm/XJThmKUDpXfB7rIwvdkbqu/835MhBJtI4IEUTwt6kDHIl8gfqvoUoWa8sNq5wVDQx0VjzJENhSbuX25JFRJHVqFkpWum2xn/kD0t8Y1eDzTBAw8bOOnUO3HBSw4w7qOVtI0d20MVyCa9+ovWsmdzl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BU2m3Ond; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="FjKmaK/T"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5d122cf8dd1so26013107a12.2
-        for <patches@lists.linux.dev>; Mon, 06 Jan 2025 14:26:21 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BU2m3Ond"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3cdce23f3e7so21264795ab.0
+        for <patches@lists.linux.dev>; Mon, 06 Jan 2025 15:05:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1736202380; x=1736807180; darn=lists.linux.dev;
+        d=linuxfoundation.org; s=google; t=1736204732; x=1736809532; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Z3+/T2NHIGuIM+e3D7sraUWaBgJ/Ro2wWDhtiomaBU=;
-        b=FjKmaK/TYVY6Bw6M8hQ2TlFAAV4Y1Niag+QX1MxifisZfYvKnzVbbMO7NIZqDxe5X1
-         K6Orix5TMWsi2gO11KoIePe1bAwglJctfuEjE2q22QT5XM9Lk3jcWYVpYIWFDbJcehtW
-         umf3SeQxkOqwlfbhv9mzXO4itKEBtntXbOYozpztyhOAXhv65n+dB6pYthqSEtYeQ2vw
-         eoEb/W2Lm4Y1+oxxyJX0aI3FTzd8yki1CPkhMZ2psxvNsUAPaHotea4HBVpj9WOa5Tft
-         Dzgs7u24FXhIfFevs8fsrSkgqHNUYkfP5ZpGoifo4LSp2cn9G6jVbOhZc+qBxPB1XNAf
-         tpdw==
+        bh=WO8rgVVnKrlIP7QnNtiMdBIDZhjxV64FAnnGDxLCHec=;
+        b=BU2m3Ond8cDN5HQ5z4zXTzkFgjSixdtJQByXsSm+bf3vTdea+NNBFioo7DuMcSxNH2
+         IjzQPSZ2c/14piOHtJeCn+oMgOSsw4GeaSqdtPL19ersauoV+6sHy/wlzEaea9wgGjQd
+         Z53zi2T7rbEUfWYqhhIn/WoLjqNsDEqfDE9ow=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736202380; x=1736807180;
+        d=1e100.net; s=20230601; t=1736204732; x=1736809532;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Z3+/T2NHIGuIM+e3D7sraUWaBgJ/Ro2wWDhtiomaBU=;
-        b=DNEZF0rg3htlnw1vl7h494c+tYv5jeqbIVoEuTWeKnwKNiJrFYStMvL0s+fVyuJ5cv
-         EylhjChQOYe8G8UrAc5WzxFk8O0kkzy3BCl7fbioxTQiJ99h+9jCBCeUgiimm1ipU+2y
-         s6ihUFT0bz1d1WnHIeQDZ7LIZHyC6fA4axtMRBu1Xupps5WPtFwBcC+V8fg1xYBcQiXA
-         DpnyOhnDktEYFuv1nOcG2FPozeIIVNmWXbUe5dydcC554p7k8+dNdfNeOSrBMQGNhmAV
-         GfYIAv+3n59vOIcQYAacjrusIm7JQiBY4lH7ZgMZq6I0DcLKwil4+w43s7rsibfTGrI/
-         FbUw==
-X-Gm-Message-State: AOJu0YxesvGhlFdzp3agiXMMlt378X3+PLPe/FvKc8Sf3Rb8eZFQgnQu
-	sXMMRLe6jXB6Vf8WF+qGCARjaKp1zdxB8i/qPKJyV3KhG9vUNpY=
-X-Gm-Gg: ASbGncv22wW7CyRaL691llrkzFXlUGS+sFQMa0dpfqu/ajGvFguooWbBmd4eTakqUc+
-	fRm3e/SxUmRwwE0vnGODcxB47A+e4BFWnYol74TScvcBqei+B7Pehe3MRR2aN96X7fdo1+cZfxI
-	sV23LIye/ZPaxUlCQBFS1bS1UbMCODru3bjd86Zf5Ueg0+rf5KRO+jnKjMebr0XX085xrVReOgI
-	7FMcb1y79mbwheeuaQ4DW4c/EN75V7pyiIx2LcMRtUOZHGgSAo/6DBWX4PB8ytBB+smK3vqKfXg
-	/aHzZ/iqoeoKiFxoIjVyS/7PrspnDakP
-X-Google-Smtp-Source: AGHT+IFaOV7bYOqku3p6kglihfNLiGCsNO9e9smxJHrIGlbUaipg5/cpBSDu8juWzNus67twom/IAg==
-X-Received: by 2002:a05:6402:3206:b0:5d1:2290:c623 with SMTP id 4fb4d7f45d1cf-5d81dd83dc9mr57270688a12.7.1736202379632;
-        Mon, 06 Jan 2025 14:26:19 -0800 (PST)
-Received: from [192.168.1.3] (p5b2b4110.dip0.t-ipconnect.de. [91.43.65.16])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d80678c8dbsm23417043a12.40.2025.01.06.14.26.16
+        bh=WO8rgVVnKrlIP7QnNtiMdBIDZhjxV64FAnnGDxLCHec=;
+        b=F3EBQo9QY2mQCTtwGEBbnXIEFpuRFGUxOQJ+FxbxS6ha7rpM9hQzAtjEX0FMwbaDOv
+         oLto4e6L9m/btZbuHEXwPOEAxnJKqZWOtVwF0lblzUmy4ORXg8wYSi9KwDFFDIr2vaC9
+         QhS/14ureH2IQlliHCqguTKsNojuAm8Ns1YzudoY8kPMD9u+IQkVI+Oy38V03/KGNbRQ
+         gBROYzADb1MIRfNDBXINpQj4SwANfrlImv7v2Gw3Ixb1YbphMVW+se7f5/y6Aqc1YCf6
+         e0srZ0MFjr6vBSmwOeCtfgWQXgLdZlYt9u09LuJ1eZokvx1wqnfcZBlinfkWPqMEmYBv
+         hvXw==
+X-Gm-Message-State: AOJu0Ywew33izyqCB4Tx62FuMIKB3gBraE9XFWD9pmPz3TIrJpj9Qxn2
+	i/Jj/ODR88GKmlXEmVl6ADPSjHI12uMIT1+cBtHgNaNdPwoRDl8x2kogu/0QSu0=
+X-Gm-Gg: ASbGncs8TbvNqwf0Pfo7vfMyGfvoNe+jpzuVPsbl/ZRtqnHLNzhvO8bPrcQXOfVUWtW
+	8r6qeH1EUdHJmqv2PkEHZBr3MyHCThxj0u8siY19CuK6rv5jczX1TqPAxWzprOzm5GRJ2VkjpqS
+	pFTq4YRiw2wIOm6I7pn6nVJ+ZsO1OnFRVwBkmYGha7p/5dusTPMwdkodH1SeGgTU0JLu4EuxBWd
+	8Wy/WXhQ3F3rfSrwjXo+FYN+JYQ9L++kabqUXZlmK9uR8vw0gapYlfaGErgpymq/QuJ
+X-Google-Smtp-Source: AGHT+IE1ug/ECMGbNrZ04hdqCJXBEemo+rZ1EKtJhngCH2J1PkN1z+o+R3HTuRNgGuKy8C5cyCciog==
+X-Received: by 2002:a05:6e02:52f:b0:3cd:d6a7:dbd1 with SMTP id e9e14a558f8ab-3cdd6a7e190mr63730045ab.13.1736204731905;
+        Mon, 06 Jan 2025 15:05:31 -0800 (PST)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4e68bf7ed01sm9645635173.66.2025.01.06.15.05.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jan 2025 14:26:17 -0800 (PST)
-Message-ID: <3111ff33-f859-4487-b5a4-00996e971360@googlemail.com>
-Date: Mon, 6 Jan 2025 23:26:15 +0100
+        Mon, 06 Jan 2025 15:05:31 -0800 (PST)
+Message-ID: <d0e2b7d8-cde9-48f7-a931-ba204deb3a47@linuxfoundation.org>
+Date: Mon, 6 Jan 2025 16:05:30 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.1 00/81] 6.1.124-rc1 review
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/168] 5.15.176-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250106151129.433047073@linuxfoundation.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20250106151138.451846855@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 06.01.2025 um 16:15 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.1.124 release.
-> There are 81 patches in this series, all will be posted as a response
+On 1/6/25 08:15, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.176 release.
+> There are 168 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.176-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+Build failed on my test system with this commit:
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+	999976126ca826e40fd85007a1b325d83e102164
 
+https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?h=linux-5.15.y&id=999976126ca826e40fd85007a1b325d83e102164
 
-Beste Grüße,
-Peter Schneider
+Worked when I removed this commit.
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+Errors:
+  CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.o
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c: In function ‘dcn20_split_stream_for_odm’:
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1945:40: error: ‘const struct opp_funcs’ has no member named ‘opp_get_left_edge_extra_pixel_count’; did you mean ‘opp_program_left_edge_extra_pixel’?
+  1945 |                 if (opp && opp->funcs->opp_get_left_edge_extra_pixel_count
+       |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       |                                        opp_program_left_edge_extra_pixel
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1946:48: error: ‘const struct opp_funcs’ has no member named ‘opp_get_left_edge_extra_pixel_count’; did you mean ‘opp_program_left_edge_extra_pixel’?
+  1946 |                                 && opp->funcs->opp_get_left_edge_extra_pixel_count(
+       |                                                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       |                                                opp_program_left_edge_extra_pixel
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1948:41: error: implicit declaration of function ‘resource_is_pipe_type’; did you mean ‘resource_list_first_type’? [-Werror=implicit-function-declaration]
+  1948 |                                         resource_is_pipe_type(next_odm_pipe, OTG_MASTER)) == 1) {
+       |                                         ^~~~~~~~~~~~~~~~~~~~~
+       |                                         resource_list_first_type
+drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1948:78: error: ‘OTG_MASTER’ undeclared (first use in this function); did you mean ‘IFF_MASTER’?
+  1948 |                                         resource_is_pipe_type(next_odm_pipe, OTG_MASTER)) == 1) {
+       |                                                                              ^~~~~~~~~~
+       |
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+thanks,
+-- Shuah
