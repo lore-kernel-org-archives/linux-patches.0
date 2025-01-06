@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBFF14A60D;
-	Mon,  6 Jan 2025 15:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43098145A03;
+	Mon,  6 Jan 2025 15:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178910; cv=none; b=bUHXVzRCJuEu9daQcSKuktunacWtY+BUdzw9eQ6qm7swHCX83nAv1mxq9LiRHkMTA64Qu4qWMOsD4ZRziieIPhChn9FTeh2UQyPGVuJ9r63TfuBtS/XpoH1qRxkjrXgOlm1334c+ZvRJ98NkG6zzWSqHn/I9UNym4crBN2A16gE=
+	t=1736178913; cv=none; b=fwjl5vxCiR1uKb0TNjwCK0rn9TmUGYWcMIpdyitQoiTL9KBAtAjezBtqbeDWiYvZHnSZkSOr8WwsmlG0VE6t5wvlDp6M5IzUZkcdcnvBBwIePFkpPZhAL3320uVhoayzhZFVwomPgoTUgFfogzXMXXOM5vn5Ds0wdQRfB44gZ/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178910; c=relaxed/simple;
-	bh=AlNueF/5GDaA1cF0Z8NsZOfen5gWjeVo29IaQ9CfiRU=;
+	s=arc-20240116; t=1736178913; c=relaxed/simple;
+	bh=Vs9KCacQ0+KgZ8Zc5B8K33sFwTYEZTQ/ufQ2JPKGqgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qDMlHIjIis/mY+GT6ax0MPhDT/cJyvgkDYu6EEERZ0MkjvBbEAz0BwGvUtVKVDV/w5BJqQ0MRsoMi9uURXdOz2zPq7pa2eEvcHAiTxlAYJESzBPSkfVI6T/YyOVA2nt4y6VeX7rSNtgo7WPTx8jAQe0et4yqC6rJ3G20dbusT/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ixunw7OU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HvrMYz8yQZlrqqBQOZBO+yCfhmPMo+02hmeF/PPsBCLNPU1fwgV0pmdt/XaZ5XNI2wfEQLNed6tDaqPkmwD0KxeDl87wliRmtzBEzTnykAJL0VnjnPpsLq3H96RCmmpintvGsceJk8mW1XnAfTfYzmTDFtZDHUKH+UCfNd5tguQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZ0qj6vL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ixunw7OU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FF1C4CED6;
-	Mon,  6 Jan 2025 15:55:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZ0qj6vL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA33C4CED2;
+	Mon,  6 Jan 2025 15:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178910;
-	bh=AlNueF/5GDaA1cF0Z8NsZOfen5gWjeVo29IaQ9CfiRU=;
+	s=korg; t=1736178913;
+	bh=Vs9KCacQ0+KgZ8Zc5B8K33sFwTYEZTQ/ufQ2JPKGqgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ixunw7OU3s8ROBgw8nTmo22W7QzthioMRvzzHQvInf8KuiTZIYNkoPQ2Q1BJVucSk
-	 zwaHwwjUVDHJ6WlRC0PM+4elAAsJZ60RmAbC68T4XydIc5tm2UoYf9BXMxI1G2mkoh
-	 DjEtXSoeudoZAKoG4MCyza20Q69Pn8ET4sLBnHyI=
+	b=ZZ0qj6vLgyP/F+nYm6e0Wo2xcUkFrnRvj1BOhn/IAi6/m1GXwa2+RT+3DbevppT4R
+	 a92GkDfA6zdBM7jBMCE6rW73aLVvsf0mnqc+8FrQK8kgs8sehMDscPCzPIGHFH1MxR
+	 dprGxwx6euBIoSF3woRvXEYd0xdT1AilG9SaFdoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Marushkin <hfggklm@gmail.com>,
-	Ilya Shchipletsov <rabbelkin@mail.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/168] netrom: check buffer length before accessing it
-Date: Mon,  6 Jan 2025 16:17:20 +0100
-Message-ID: <20250106151143.424828211@linuxfoundation.org>
+Subject: [PATCH 5.15 133/168] drm/i915/dg1: Fix power gate sequence.
+Date: Mon,  6 Jan 2025 16:17:21 +0100
+Message-ID: <20250106151143.462610732@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -52,103 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Shchipletsov <rabbelkin@mail.ru>
+From: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-[ Upstream commit a4fd163aed2edd967a244499754dec991d8b4c7d ]
+[ Upstream commit 20e7c5313ffbf11c34a46395345677adbe890bee ]
 
-Syzkaller reports an uninit value read from ax25cmp when sending raw message
-through ieee802154 implementation.
+sub-pipe PG is not present on DG1. Setting these bits can disable
+other power gates and cause GPU hangs on video playbacks.
 
-=====================================================
-BUG: KMSAN: uninit-value in ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
- ax25cmp+0x3a5/0x460 net/ax25/ax25_addr.c:119
- nr_dev_get+0x20e/0x450 net/netrom/nr_route.c:601
- nr_route_frame+0x1a2/0xfc0 net/netrom/nr_route.c:774
- nr_xmit+0x5a/0x1c0 net/netrom/nr_dev.c:144
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3548 [inline]
- dev_hard_start_xmit+0x247/0xa10 net/core/dev.c:3564
- __dev_queue_xmit+0x33b8/0x5130 net/core/dev.c:4349
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- raw_sendmsg+0x654/0xc10 net/ieee802154/socket.c:299
- ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+VLK: 16314, 4304
 
-Uninit was created at:
- slab_post_alloc_hook+0x129/0xa70 mm/slab.h:768
- slab_alloc_node mm/slub.c:3478 [inline]
- kmem_cache_alloc_node+0x5e9/0xb10 mm/slub.c:3523
- kmalloc_reserve+0x13d/0x4a0 net/core/skbuff.c:560
- __alloc_skb+0x318/0x740 net/core/skbuff.c:651
- alloc_skb include/linux/skbuff.h:1286 [inline]
- alloc_skb_with_frags+0xc8/0xbd0 net/core/skbuff.c:6334
- sock_alloc_send_pskb+0xa80/0xbf0 net/core/sock.c:2780
- sock_alloc_send_skb include/net/sock.h:1884 [inline]
- raw_sendmsg+0x36d/0xc10 net/ieee802154/socket.c:282
- ieee802154_sock_sendmsg+0x91/0xc0 net/ieee802154/socket.c:96
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg net/socket.c:745 [inline]
- ____sys_sendmsg+0x9c2/0xd60 net/socket.c:2584
- ___sys_sendmsg+0x28d/0x3c0 net/socket.c:2638
- __sys_sendmsg net/socket.c:2667 [inline]
- __do_sys_sendmsg net/socket.c:2676 [inline]
- __se_sys_sendmsg net/socket.c:2674 [inline]
- __x64_sys_sendmsg+0x307/0x490 net/socket.c:2674
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x44/0x110 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-CPU: 0 PID: 5037 Comm: syz-executor166 Not tainted 6.7.0-rc7-syzkaller-00003-gfbafc3e621c3 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/17/2023
-=====================================================
-
-This issue occurs because the skb buffer is too small, and it's actual
-allocation is aligned. This hides an actual issue, which is that nr_route_frame
-does not validate the buffer size before using it.
-
-Fix this issue by checking skb->len before accessing any fields in skb->data.
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Co-developed-by: Nikita Marushkin <hfggklm@gmail.com>
-Signed-off-by: Nikita Marushkin <hfggklm@gmail.com>
-Signed-off-by: Ilya Shchipletsov <rabbelkin@mail.ru>
-Link: https://patch.msgid.link/20241219082308.3942-1-rabbelkin@mail.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13381
+Fixes: 85a12d7eb8fe ("drm/i915/tgl: Fix Media power gate sequence.")
+Cc: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241219210019.70532-1-rodrigo.vivi@intel.com
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit de7061947b4ed4be857d452c60d5fb795831d79e)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_route.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_rc6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
-index dc39ae20c6aa..782a6e0d1b6e 100644
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -754,6 +754,12 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
- 	int ret;
- 	struct sk_buff *skbn;
+diff --git a/drivers/gpu/drm/i915/gt/intel_rc6.c b/drivers/gpu/drm/i915/gt/intel_rc6.c
+index 799d382eea79..fbf1b0136aad 100644
+--- a/drivers/gpu/drm/i915/gt/intel_rc6.c
++++ b/drivers/gpu/drm/i915/gt/intel_rc6.c
+@@ -122,7 +122,7 @@ static void gen11_rc6_enable(struct intel_rc6 *rc6)
+ 		GEN9_MEDIA_PG_ENABLE |
+ 		GEN11_MEDIA_SAMPLER_PG_ENABLE;
  
-+	/*
-+	 * Reject malformed packets early. Check that it contains at least 2
-+	 * addresses and 1 byte more for Time-To-Live
-+	 */
-+	if (skb->len < 2 * sizeof(ax25_address) + 1)
-+		return 0;
- 
- 	nr_src  = (ax25_address *)(skb->data + 0);
- 	nr_dest = (ax25_address *)(skb->data + 7);
+-	if (GRAPHICS_VER(gt->i915) >= 12) {
++	if (GRAPHICS_VER(gt->i915) >= 12 && !IS_DG1(gt->i915)) {
+ 		for (i = 0; i < I915_MAX_VCS; i++)
+ 			if (HAS_ENGINE(gt, _VCS(i)))
+ 				pg_enable |= (VDN_HCP_POWERGATE_ENABLE(i) |
 -- 
 2.39.5
 
