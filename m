@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD453148316;
-	Mon,  6 Jan 2025 15:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6C0157E82;
+	Mon,  6 Jan 2025 15:40:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178009; cv=none; b=vC3We2iezyNT6lJWAe9a8qUDWeydU6JkeUNlyiROZfpYHlbV63yFWa/7LK3F6TaHIXNi2hlAzJdgAyK6bsSh5O3EQGlKaZDva4jywXR7gF/LAncfzRnSQtLhluY9VU+GyoCJ3tFlSj/mQNm6QoM8INHKbbh6SGe7UQly/JPK7H0=
+	t=1736178010; cv=none; b=L6vC4MTFye1L2PDpr5xt72DwDRDWZwG6fQC9j2SwvsDZQPknmJSO5iFEs1MS8PO0viipGgobkJuZqh6hD+Nzwyc7UuVpM9k4ABRk9PVluMjCrC3MNnxtVzc79N2D6UDkbAqGqtoW/Cp1ph3A79lOIx9BV5okgub2/AoDK1O9suo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178009; c=relaxed/simple;
-	bh=N/erQIczHCHmasM8XDKSEs+u2OHslM/q7K+n9k83xHs=;
+	s=arc-20240116; t=1736178010; c=relaxed/simple;
+	bh=SwTW9BYDPMSacZtJVTNCWmJhT4mHBqUZjeAm/nfqiCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtJczSHXpx5poB9MQR9DFMa2vYJp66+ViB4hpjEbsNnfN50sow1XsRXBGmDmKZM2TM/t+XGW2NpX7U575JlIKV6k6XnOzB5SQYK4Q3Nj3AS+7OP0Ko47pSPZvmJb4Fa3rJwNrluZZmn+08I2k7Blyle/kL6BA6oCMuqXolu7XPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mjwslzv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sl2li5d31avJLs6RCtZhsi2lp6IXPEnM/zho3rfDHVN5iVyiRwbci0nw2KZVoMwF+P8yD6d+1JgouLGgNB+ZGEee43j7SWfz+up1T6UYn6RRiZm3KcWVqcQbdE6N4MP/r5VMuGoavwIECbCOf/eghns8dQBuq2f4eKgSwxGOQ4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qh9ugpO/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mjwslzv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2F51C4CED2;
-	Mon,  6 Jan 2025 15:40:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qh9ugpO/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC46AC4CED2;
+	Mon,  6 Jan 2025 15:40:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178007;
-	bh=N/erQIczHCHmasM8XDKSEs+u2OHslM/q7K+n9k83xHs=;
+	s=korg; t=1736178010;
+	bh=SwTW9BYDPMSacZtJVTNCWmJhT4mHBqUZjeAm/nfqiCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mjwslzv6n4frmYAYBahmessl++pp78rvNngHVv9NTnGA3KonfJz6Mu1LerWHtZ/xH
-	 BlUv+eNeFwHShiH4cARM7SjYIRruCa9JtAgeEh/ZRGEDnRPrxfyJYwjzbqG06dCipe
-	 Jy9Ar+PTfGRJ0NLQMbmbnKlX6jOI49WGCVcE6h6A=
+	b=Qh9ugpO/j3XmCgiqo6FLV8z3Dxfze8ziFCvCd49qJpHDAd0GECX1fu8xzBReQBUOY
+	 ZwCxyEa0TqPzoP7Fikw3wtGMz6vnTOsp5++pU6sOYbVIF8J9LaEHWXpI4h05CJsQ8w
+	 5/XzwRmMEa5fSzi7eFhcnR50Jv7wDJf6kUkUY5sw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chase xd <sl1589472800@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 131/156] io_uring/rw: fix downgraded mshot read
-Date: Mon,  6 Jan 2025 16:16:57 +0100
-Message-ID: <20250106151146.666840477@linuxfoundation.org>
+	Hien Huynh <hien.huynh.px@renesas.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Adam Ford <aford173@gmail.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.12 132/156] drm: adv7511: Drop dsi single lane support
+Date: Mon,  6 Jan 2025 16:16:58 +0100
+Message-ID: <20250106151146.704017162@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -51,40 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 38fc96a58ce40257aec79b32e9b310c86907c63c upstream.
+commit 79d67c499c3f886202a40c5cb27e747e4fa4d738 upstream.
 
-The io-wq path can downgrade a multishot request to oneshot mode,
-however io_read_mshot() doesn't handle that and would still post
-multiple CQEs. That's not allowed, because io_req_post_cqe() requires
-stricter context requirements.
+As per [1] and [2], ADV7535/7533 supports only 2-, 3-, or 4-lane. Drop
+unsupported 1-lane.
 
-The described can only happen with pollable files that don't support
-FMODE_NOWAIT, which is an odd combination, so if even allowed it should
-be fairly rare.
+[1] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7535.pdf
+[2] https://www.analog.com/media/en/technical-documentation/data-sheets/ADV7533.pdf
 
+Fixes: 1e4d58cd7f88 ("drm/bridge: adv7533: Create a MIPI DSI device")
+Reported-by: Hien Huynh <hien.huynh.px@renesas.com>
 Cc: stable@vger.kernel.org
-Reported-by: chase xd <sl1589472800@gmail.com>
-Fixes: bee1d5becdf5b ("io_uring: disable io-wq execution of multishot NOWAIT requests")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/c5c8c4a50a882fd581257b81bf52eee260ac29fd.1735407848.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-4-biju.das.jz@bp.renesas.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/rw.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/adv7511/adv7533.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -979,6 +979,8 @@ int io_read_mshot(struct io_kiocb *req,
- 		io_kbuf_recycle(req, issue_flags);
- 		if (ret < 0)
- 			req_set_fail(req);
-+	} else if (!(req->flags & REQ_F_APOLL_MULTISHOT)) {
-+		cflags = io_put_kbuf(req, ret, issue_flags);
- 	} else {
- 		/*
- 		 * Any successful return value will keep the multishot read
+--- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
+@@ -172,7 +172,7 @@ int adv7533_parse_dt(struct device_node
+ 
+ 	of_property_read_u32(np, "adi,dsi-lanes", &num_lanes);
+ 
+-	if (num_lanes < 1 || num_lanes > 4)
++	if (num_lanes < 2 || num_lanes > 4)
+ 		return -EINVAL;
+ 
+ 	adv->num_dsi_lanes = num_lanes;
 
 
