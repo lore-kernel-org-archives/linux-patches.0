@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3A714F9F3;
-	Mon,  6 Jan 2025 15:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64FB13B59A;
+	Mon,  6 Jan 2025 15:59:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179186; cv=none; b=o2MoLwEEN1+LzIvzNSxbpq9raDB57Oz+/ZdMuMjkIWhYurkiLrZtw4gxUuUcHmnrJpfjg71aLU9gYl54i9jAsNDS2JDYphiGC10vLy7LULvue9paD5NquAgxcDptSgAB8yw81fSJVNqvKCODPf8xGNOXD/Y83yiuDehDw1Izdqc=
+	t=1736179190; cv=none; b=qZ6bc4fQzTUJ8cNnsAsQlaJX1PrKIIfJqomaqVqFnq16NOolMRZi7kncNS8lfEQHESaU3ZQyLb6l++5ogeBVrjc1nSrv2pjxj03TgGqQ0GclIJPPBUlshE3Qa6iyW7Ijl7IGYXrUksErgKSxXxlilw6T99L58F92Dp+SL2j3/NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179186; c=relaxed/simple;
-	bh=wTf6PSiQrhUG1tK7/sUfsVfay1RiYPfXwyWdZKgczIA=;
+	s=arc-20240116; t=1736179190; c=relaxed/simple;
+	bh=OXSOMhCqQ4pI/Yi7scKcr53bAyVdMgKVMNe9lJ7Vd3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ceWjw8Rb0IaE03HQQrzq3O+Z4dhlRAuUy8JeVw9ton/qNf7iRJ+fNfdldrinIr+gL9WG6mlNGspzVsXl4E1gnBkBHt+lIgokDZeEDRY7SRuOPvhYpBAfwuPKYzJmMpHvlsyosRbuLzwoqsga4iWAG2hPXwlpbxqvI5PuPOBRJSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b8Ixtgna; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K0ry8sSHeA0/+RmPzRp03mSCIMpacakdG9xw1ZHw0cGD+R0vuyGEjMCjwBNnIuCHq/0rY+5FR8ZIQOIxiqsRGuKRwIvyp/RU32v3Cr9JrSvjqPiZoAmeqbyScn1Elb6Hf34XQnbZm+zA8bZPmnyxweXhLDBNFNDnkxRzR5/Tla4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrOlx61e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b8Ixtgna"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A43C4CED2;
-	Mon,  6 Jan 2025 15:59:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrOlx61e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D59AC4CEE6;
+	Mon,  6 Jan 2025 15:59:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179186;
-	bh=wTf6PSiQrhUG1tK7/sUfsVfay1RiYPfXwyWdZKgczIA=;
+	s=korg; t=1736179189;
+	bh=OXSOMhCqQ4pI/Yi7scKcr53bAyVdMgKVMNe9lJ7Vd3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b8IxtgnarnErVb+O416STog2dlkkt1p8ix7VcLCVz4bXBjxyqWp+ZPy0E35McxIuD
-	 5L42eS13em23j0/NJqEFsTVkaoc9RP1xIBpYpNjclkpJlBQ6HnuO8/0r4Adn+vZ5qT
-	 jjBfs4NpR8AM5KwNwGIlg5nfvIJc0c8iOIl2HtlY=
+	b=KrOlx61ew6LWqceHv3mi7GH+xkqnAGHF04hSAzYG87B3LSdCtBhaEVp3sWlQecONb
+	 WQRbBd4UpZbg7u/e3g2MNIUw8QTVpaTAeZuTxYn8r60sMhDdV5lqAeEtuxceAIo3iM
+	 1AKC1XOZdr5Ie/G0LnipgbYRpex4v8vHY8zauoLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Pau Espin Pedrol <pespin@espeweb.net>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 13/93] net: ethernet: bgmac-platform: fix an OF node reference leak
-Date: Mon,  6 Jan 2025 16:16:49 +0100
-Message-ID: <20250106151129.202251135@linuxfoundation.org>
+Subject: [PATCH 5.4 48/93] platform/x86: asus-nb-wmi: Ignore unknown event 0xCF
+Date: Mon,  6 Jan 2025 16:17:24 +0100
+Message-ID: <20250106151130.515530955@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -46,55 +47,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 0cb2c504d79e7caa3abade3f466750c82ad26f01 ]
+[ Upstream commit e9fba20c29e27dc99e55e1c550573a114561bf8c ]
 
-The OF node obtained by of_parse_phandle() is not freed. Call
-of_node_put() to balance the refcount.
+On the Asus X541UAK an unknown event 0xCF is emited when the charger
+is plugged in. This is caused by the following AML code:
 
-This bug was found by an experimental static analysis tool that I am
-developing.
+    If (ACPS ())
+    {
+        ACPF = One
+        Local0 = 0x58
+        If (ATKP)
+        {
+            ^^^^ATKD.IANE (0xCF)
+        }
+    }
+    Else
+    {
+        ACPF = Zero
+        Local0 = 0x57
+    }
 
-Fixes: 1676aba5ef7e ("net: ethernet: bgmac: device tree phy enablement")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241214014912.2810315-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+    Notify (AC0, 0x80) // Status Change
+    If (ATKP)
+    {
+        ^^^^ATKD.IANE (Local0)
+    }
+
+    Sleep (0x64)
+    PNOT ()
+    Sleep (0x0A)
+    NBAT (0x80)
+
+Ignore the 0xCF event to silence the unknown event warning.
+
+Reported-by: Pau Espin Pedrol <pespin@espeweb.net>
+Closes: https://lore.kernel.org/platform-driver-x86/54d4860b-ec9c-4992-acf6-db3f90388293@espeweb.net
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20241123224700.18530-1-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac-platform.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/x86/asus-nb-wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bgmac-platform.c b/drivers/net/ethernet/broadcom/bgmac-platform.c
-index c46c1b1416f7..cdbd9ef85981 100644
---- a/drivers/net/ethernet/broadcom/bgmac-platform.c
-+++ b/drivers/net/ethernet/broadcom/bgmac-platform.c
-@@ -171,6 +171,7 @@ static int platform_phy_connect(struct bgmac *bgmac)
- static int bgmac_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
-+	struct device_node *phy_node;
- 	struct bgmac *bgmac;
- 	struct resource *regs;
- 	const u8 *mac_addr;
-@@ -237,7 +238,9 @@ static int bgmac_probe(struct platform_device *pdev)
- 	bgmac->cco_ctl_maskset = platform_bgmac_cco_ctl_maskset;
- 	bgmac->get_bus_clock = platform_bgmac_get_bus_clock;
- 	bgmac->cmn_maskset32 = platform_bgmac_cmn_maskset32;
--	if (of_parse_phandle(np, "phy-handle", 0)) {
-+	phy_node = of_parse_phandle(np, "phy-handle", 0);
-+	if (phy_node) {
-+		of_node_put(phy_node);
- 		bgmac->phy_connect = platform_phy_connect;
- 	} else {
- 		bgmac->phy_connect = bgmac_phy_connect_direct;
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index 78d357de2f04..18d963916b7f 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -585,6 +585,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, 0xC4, { KEY_KBDILLUMUP } },
+ 	{ KE_KEY, 0xC5, { KEY_KBDILLUMDOWN } },
+ 	{ KE_IGNORE, 0xC6, },  /* Ambient Light Sensor notification */
++	{ KE_IGNORE, 0xCF, },	/* AC mode */
+ 	{ KE_KEY, 0xFA, { KEY_PROG2 } },           /* Lid flip action */
+ 	{ KE_END, 0},
+ };
 -- 
 2.39.5
 
