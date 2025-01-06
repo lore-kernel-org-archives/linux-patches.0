@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5217F1448F2;
-	Mon,  6 Jan 2025 15:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C91DDC36;
+	Mon,  6 Jan 2025 15:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178788; cv=none; b=VMPm1aMUNNbkcSQLy3dRcW13ntU/frZExsebYcm6x4ICdEscJfm2uc68l8Kaz/RY0DePAVqdIb2pzDs2EyjtKNOUfczru1Pn6DICbS423jditKKfgcjfzNR3NrGz97jjC2ervz2M32vh3jgNfTJZSwaMuHpIHUStDVOElUV73dI=
+	t=1736178791; cv=none; b=mdrx3gStMiMR9+cwpfBApS8soDR/vp/X8uZIeN17T8FJCWpD3B+1B27lcJlYaZJd5ZRqlAyUOKz5eV7i1vphC0ngonT8GHpym33ZXOU3oJ9zTZOVuZZfJYAJHhyIzZVVZnjYFl+X3/Rcmpf8485sCjL/miFEp1prd/rTJkqKWrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178788; c=relaxed/simple;
-	bh=tWsBoTZlXZcOOUTlUjMcvyCV3hXLUGalKsvxDCmkyrc=;
+	s=arc-20240116; t=1736178791; c=relaxed/simple;
+	bh=ccsDKME1LCsX1XmeMxGeVLKBlnmxULuHU3KsQvSQhuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PhMwZ0R/vIq0rv27KJSDRyUkTKPAM/KYtnv1HZJzwH11DghVXf56GdumYhht6+N9tsajl8gzV8tXFDVn5LfWOVwlpY63GA3vq1K5KMN90Gq1fdHQy0NTEPT+nVm5ZNrpdvj1d+q3plNSbzdgWl+db1iDZkuMUWCX0fN+SgZWBgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YIyCgiIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QB6BHC2q4hCKpQXjHXL7ej2mgBIFEkYQ0nVygfa3Sh+7328I2CoSvdsBHpbkMdLtvvMjtOQYl9kDRJ/neLn61t8U+tgPZAhi3Xz4aRVPuEv5ST+loZopSuNyrkW6D3m4P/+Lg8+K1mIas/m7TQYAbwvsKip/rk+riheuwh2KeAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJ7i3Q5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YIyCgiIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE218C4CED2;
-	Mon,  6 Jan 2025 15:53:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJ7i3Q5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76D8C4CED2;
+	Mon,  6 Jan 2025 15:53:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178788;
-	bh=tWsBoTZlXZcOOUTlUjMcvyCV3hXLUGalKsvxDCmkyrc=;
+	s=korg; t=1736178791;
+	bh=ccsDKME1LCsX1XmeMxGeVLKBlnmxULuHU3KsQvSQhuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YIyCgiIY7cHI7MFkb9LtU8MRlLtvqQGfRfm2+l1dRuDWzPgBWCHRSsGoL1rjx/Z23
-	 cd6ihRS+qtHHGDBAcI43MjrO47iuyYyWs/OpH9Ojokxs45ueZt4wwFG/mHw2M9GJay
-	 hyRDNUvP+T224I/r0hlH12df0zIyS1gaR76JMMKM=
+	b=JJ7i3Q5hVH6DZbVMV1QgZgXHeJUX+ElxAFfLIGkhHSFGNA+F38S+kA2z56UGd7VO2
+	 QKgddEyRCfbuZLh9QhqzuxrodSAb8EHt6T8pPrM4gM3Ou+1ItGfvHaCqJYg95Tc3bz
+	 X/gX9cUylxEqCxn57AazKR/yKCw0eFgRuLhKVLGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfeng Ye <yeyunfeng@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Marc Zyngier <maz@kernel.org>,
+	James Morse <james.morse@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/168] arm64: mm: Rename asid2idx() to ctxid2asid()
-Date: Mon,  6 Jan 2025 16:16:40 +0100
-Message-ID: <20250106151141.939942150@linuxfoundation.org>
+Subject: [PATCH 5.15 093/168] arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs
+Date: Mon,  6 Jan 2025 16:16:41 +0100
+Message-ID: <20250106151141.976873488@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -52,107 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunfeng Ye <yeyunfeng@huawei.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-[ Upstream commit a3a5b763410c7bceacf41a52071134d9dc26202a ]
+[ Upstream commit c0900d15d31c2597dd9f634c8be2b71762199890 ]
 
-The commit 0c8ea531b774 ("arm64: mm: Allocate ASIDs in pairs") introduce
-the asid2idx and idx2asid macro, but these macros are not really useful
-after the commit f88f42f853a8 ("arm64: context: Free up kernel ASIDs if
-KPTI is not in use").
+Linux currently sets the TCR_EL1.AS bit unconditionally during CPU
+bring-up. On an 8-bit ASID CPU, this is RES0 and ignored, otherwise
+16-bit ASIDs are enabled. However, if running in a VM and the hypervisor
+reports 8-bit ASIDs (ID_AA64MMFR0_EL1.ASIDBits == 0) on a 16-bit ASIDs
+CPU, Linux uses bits 8 to 63 as a generation number for tracking old
+process ASIDs. The bottom 8 bits of this generation end up being written
+to TTBR1_EL1 and also used for the ASID-based TLBI operations as the
+upper 8 bits of the ASID. Following an ASID roll-over event we can have
+threads of the same application with the same 8-bit ASID but different
+generation numbers running on separate CPUs. Both TLB caching and the
+TLBI operations will end up using different actual 16-bit ASIDs for the
+same process.
 
-The code "(asid & ~ASID_MASK)" can be instead by a macro, which is the
-same code with asid2idx(). So rename it to ctxid2asid() for a better
-understanding.
+A similar scenario can happen in a big.LITTLE configuration if the boot
+CPU only uses 8-bit ASIDs while secondary CPUs have 16-bit ASIDs.
 
-Also we add asid2ctxid() macro, the contextid can be generated based on
-the asid and generation through this macro.
+Ensure that the ASID generation is only tracked by bits 16 and up,
+leaving bits 15:8 as 0 if the kernel uses 8-bit ASIDs. Note that
+clearing TCR_EL1.AS is not sufficient since the architecture requires
+that the top 8 bits of the ASID passed to TLBI instructions are 0 rather
+than ignored in such configuration.
 
-Signed-off-by: Yunfeng Ye <yeyunfeng@huawei.com>
-Reviewed-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Link: https://lore.kernel.org/r/c31516eb-6d15-94e0-421c-305fc010ea79@huawei.com
+Cc: stable@vger.kernel.org
+Cc: Will Deacon <will@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: James Morse <james.morse@arm.com>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20241203151941.353796-1-catalin.marinas@arm.com
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Stable-dep-of: c0900d15d31c ("arm64: Ensure bits ASID[15:8] are masked out when the kernel uses 8-bit ASIDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/context.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ arch/arm64/mm/context.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/arm64/mm/context.c b/arch/arm64/mm/context.c
-index cd72576ae2b7..bbc2708fe928 100644
+index bbc2708fe928..d160100c8dab 100644
 --- a/arch/arm64/mm/context.c
 +++ b/arch/arm64/mm/context.c
-@@ -35,8 +35,8 @@ static unsigned long *pinned_asid_map;
- #define ASID_FIRST_VERSION	(1UL << asid_bits)
+@@ -32,9 +32,9 @@ static unsigned long nr_pinned_asids;
+ static unsigned long *pinned_asid_map;
  
- #define NUM_USER_ASIDS		ASID_FIRST_VERSION
--#define asid2idx(asid)		((asid) & ~ASID_MASK)
--#define idx2asid(idx)		asid2idx(idx)
-+#define ctxid2asid(asid)	((asid) & ~ASID_MASK)
-+#define asid2ctxid(asid, genid)	((asid) | (genid))
+ #define ASID_MASK		(~GENMASK(asid_bits - 1, 0))
+-#define ASID_FIRST_VERSION	(1UL << asid_bits)
++#define ASID_FIRST_VERSION	(1UL << 16)
  
- /* Get the ASIDBits supported by the current CPU */
- static u32 get_cpu_asid_bits(void)
-@@ -120,7 +120,7 @@ static void flush_context(void)
- 		 */
- 		if (asid == 0)
- 			asid = per_cpu(reserved_asids, i);
--		__set_bit(asid2idx(asid), asid_map);
-+		__set_bit(ctxid2asid(asid), asid_map);
- 		per_cpu(reserved_asids, i) = asid;
- 	}
- 
-@@ -162,7 +162,7 @@ static u64 new_context(struct mm_struct *mm)
- 	u64 generation = atomic64_read(&asid_generation);
- 
- 	if (asid != 0) {
--		u64 newasid = generation | (asid & ~ASID_MASK);
-+		u64 newasid = asid2ctxid(ctxid2asid(asid), generation);
- 
- 		/*
- 		 * If our current ASID was active during a rollover, we
-@@ -183,7 +183,7 @@ static u64 new_context(struct mm_struct *mm)
- 		 * We had a valid ASID in a previous life, so try to re-use
- 		 * it if possible.
- 		 */
--		if (!__test_and_set_bit(asid2idx(asid), asid_map))
-+		if (!__test_and_set_bit(ctxid2asid(asid), asid_map))
- 			return newasid;
- 	}
- 
-@@ -209,7 +209,7 @@ static u64 new_context(struct mm_struct *mm)
- set_asid:
- 	__set_bit(asid, asid_map);
- 	cur_idx = asid;
--	return idx2asid(asid) | generation;
-+	return asid2ctxid(asid, generation);
- }
- 
- void check_and_switch_context(struct mm_struct *mm)
-@@ -300,13 +300,13 @@ unsigned long arm64_mm_context_get(struct mm_struct *mm)
- 	}
- 
- 	nr_pinned_asids++;
--	__set_bit(asid2idx(asid), pinned_asid_map);
-+	__set_bit(ctxid2asid(asid), pinned_asid_map);
- 	refcount_set(&mm->context.pinned, 1);
- 
- out_unlock:
- 	raw_spin_unlock_irqrestore(&cpu_asid_lock, flags);
- 
--	asid &= ~ASID_MASK;
-+	asid = ctxid2asid(asid);
- 
- 	/* Set the equivalent of USER_ASID_BIT */
- 	if (asid && arm64_kernel_unmapped_at_el0())
-@@ -327,7 +327,7 @@ void arm64_mm_context_put(struct mm_struct *mm)
- 	raw_spin_lock_irqsave(&cpu_asid_lock, flags);
- 
- 	if (refcount_dec_and_test(&mm->context.pinned)) {
--		__clear_bit(asid2idx(asid), pinned_asid_map);
-+		__clear_bit(ctxid2asid(asid), pinned_asid_map);
- 		nr_pinned_asids--;
- 	}
+-#define NUM_USER_ASIDS		ASID_FIRST_VERSION
++#define NUM_USER_ASIDS		(1UL << asid_bits)
+ #define ctxid2asid(asid)	((asid) & ~ASID_MASK)
+ #define asid2ctxid(asid, genid)	((asid) | (genid))
  
 -- 
 2.39.5
