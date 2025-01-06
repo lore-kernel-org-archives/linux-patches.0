@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AE4282F5;
-	Mon,  6 Jan 2025 15:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02553282F5;
+	Mon,  6 Jan 2025 15:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736179054; cv=none; b=ZmhlOzlsKY7z06Ee2VpZpHUt2+3xLN+5L/qRuSwI+oCx9YISqvbxgjBhvqOathBIAc4CuIp1Xo54CuiOQnXQeUuJK6oAtA7Yv3ZBEnaMcuNzZD5XQlSWb+M0VdR4pkUYFRWw0SN6XKxkeJ4xzy7Xj4FbhXkmGTGddJl2TNGpzeo=
+	t=1736179058; cv=none; b=BAq8lQm9jKRijmJAGrRytXpETdhlZ5Z3C6jX2szckegsMk0O1L4ts/frf2XjDb/3yWwGH0Gclu2u7CNaZWRT26VTqtM9X+k9ntNBG9RtyKpxxAeF2ElEHvH3Fd2TckprXm/Uh+DhCGtQKryWe8BDN6XUeL6toLTiuzoNz+DxcRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736179054; c=relaxed/simple;
-	bh=v8rIU4uMv2rxromXo3FVGIL5KjUW39LnIE9x/CROV58=;
+	s=arc-20240116; t=1736179058; c=relaxed/simple;
+	bh=ky+cj6IBdIBpCu8dQYcNuwZt56llx4Uh2ItAeszxMss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OQtaChrKaXt9+dq4HT8OQsgBba9tOSk8iK1l0SscQfwNP5/EjS80qGPpMOBSHa/Am0L1pOcsqfnTPB0eMjcfoSv8T1uN+OI0tl1NTWcQOYGFz8sVsWw1OWylowm4dORNQjEDekc2ESugBXHNUiaxeq+qSx8avSItiJ1MTfUmcmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGMnQU1y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=daeYC0720LQwTuyZhmZFQPmHlO98Q3eSrwvtiH9pW8j/gMJvIpg+pPc0jmQAzxx9kKjcIXz1NYD5lyScaC/HMSai9fmL/Sn4r4Tr20qyVljLhkgH88eoDBnnf6oMHRlfrYKUkoZL5o544lz7kXOfql7QulAkCJPYwmKvh6XYeWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptKTxCwU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGMnQU1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F3B5C4CED2;
-	Mon,  6 Jan 2025 15:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptKTxCwU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074F6C4CED2;
+	Mon,  6 Jan 2025 15:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736179054;
-	bh=v8rIU4uMv2rxromXo3FVGIL5KjUW39LnIE9x/CROV58=;
+	s=korg; t=1736179057;
+	bh=ky+cj6IBdIBpCu8dQYcNuwZt56llx4Uh2ItAeszxMss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGMnQU1y4uyYsmG1UphIdT7cmUT03dtXet448LZcB/LnuCE1rAGxloNBWzxoRsvgy
-	 8ei3kxJOEd3QPWCRvdMLp9m6p2/t5azncf/LkCGwGrAsbzjHtBFBElxgvrW5OCRbKJ
-	 NaIdB5jkQSfBRbICN0kJFERiDr/rBbW4Tc6i0Vqg=
+	b=ptKTxCwUeDKXFHTrT6LcCwk16WNo7HqEDgwTyZIdAmbUs6BKyM/Uizlq/ggLI8c9r
+	 i1pAEuVBwF3Kp8Ib8a7ifdI5RzkEB4/4d0pGX4zwB//ZnO/es3dEuuYxbKaPbFQ7dE
+	 VrPcaxLXlns59T9/1JmUzZO207SBYBbRz9iMVajQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peng Hongchi <hongchi.peng@siengine.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 12/93] net: hinic: Fix cleanup in create_rxqs/txqs()
-Date: Mon,  6 Jan 2025 16:16:48 +0100
-Message-ID: <20250106151129.163800647@linuxfoundation.org>
+Subject: [PATCH 5.4 02/93] usb: dwc2: gadget: Dont write invalid mapped sg entries into dma_desc with iommu enabled
+Date: Mon,  6 Jan 2025 16:16:38 +0100
+Message-ID: <20250106151128.783815340@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 References: <20250106151128.686130933@linuxfoundation.org>
@@ -52,51 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Peng Hongchi <hongchi.peng@siengine.com>
 
-[ Upstream commit 7203d10e93b6e6e1d19481ef7907de6a9133a467 ]
+[ Upstream commit 1134289b6b93d73721340b66c310fd985385e8fa ]
 
-There is a check for NULL at the start of create_txqs() and
-create_rxqs() which tess if "nic_dev->txqs" is non-NULL.  The
-intention is that if the device is already open and the queues
-are already created then we don't create them a second time.
+When using dma_map_sg() to map the scatterlist with iommu enabled,
+the entries in the scatterlist can be mergerd into less but longer
+entries in the function __finalise_sg(). So that the number of
+valid mapped entries is actually smaller than ureq->num_reqs,and
+there are still some invalid entries in the scatterlist with
+dma_addr=0xffffffff and len=0. Writing these invalid sg entries
+into the dma_desc can cause a data transmission error.
 
-However, the bug is that if we have an error in the create_txqs()
-then the pointer doesn't get set back to NULL.  The NULL check
-at the start of the function will say that it's already open when
-it's not and the device can't be used.
+The function dma_map_sg() returns the number of valid map entries
+and the return value is assigned to usb_request::num_mapped_sgs in
+function usb_gadget_map_request_by_dev(). So that just write valid
+mapped entries into dma_desc according to the usb_request::num_mapped_sgs,
+and set the IOC bit if it's the last valid mapped entry.
 
-Set ->txqs back to NULL on cleanup on error.
+This patch poses no risk to no-iommu situation, cause
+ureq->num_mapped_sgs equals ureq->num_sgs while using dma_direct_map_sg()
+to map the scatterlist whith iommu disabled.
 
-Fixes: c3e79baf1b03 ("net-next/hinic: Add logical Txq and Rxq")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/0cc98faf-a0ed-4565-a55b-0fa2734bc205@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peng Hongchi <hongchi.peng@siengine.com>
+Link: https://lore.kernel.org/r/20240523100315.7226-1-hongchi.peng@siengine.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/huawei/hinic/hinic_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/dwc2/gadget.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/huawei/hinic/hinic_main.c b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-index 3f739ce40201..4361e56d7dd3 100644
---- a/drivers/net/ethernet/huawei/hinic/hinic_main.c
-+++ b/drivers/net/ethernet/huawei/hinic/hinic_main.c
-@@ -161,6 +161,7 @@ static int create_txqs(struct hinic_dev *nic_dev)
- 		hinic_clean_txq(&nic_dev->txqs[j]);
+diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
+index b341bbc9f1da..abc2271799e0 100644
+--- a/drivers/usb/dwc2/gadget.c
++++ b/drivers/usb/dwc2/gadget.c
+@@ -885,10 +885,10 @@ static void dwc2_gadget_config_nonisoc_xfer_ddma(struct dwc2_hsotg_ep *hs_ep,
+ 	}
  
- 	devm_kfree(&netdev->dev, nic_dev->txqs);
-+	nic_dev->txqs = NULL;
- 	return err;
- }
- 
-@@ -221,6 +222,7 @@ static int create_rxqs(struct hinic_dev *nic_dev)
- 		hinic_clean_rxq(&nic_dev->rxqs[j]);
- 
- 	devm_kfree(&netdev->dev, nic_dev->rxqs);
-+	nic_dev->rxqs = NULL;
- 	return err;
- }
+ 	/* DMA sg buffer */
+-	for_each_sg(ureq->sg, sg, ureq->num_sgs, i) {
++	for_each_sg(ureq->sg, sg, ureq->num_mapped_sgs, i) {
+ 		dwc2_gadget_fill_nonisoc_xfer_ddma_one(hs_ep, &desc,
+ 			sg_dma_address(sg) + sg->offset, sg_dma_len(sg),
+-			sg_is_last(sg));
++			(i == (ureq->num_mapped_sgs - 1)));
+ 		desc_count += hs_ep->desc_count;
+ 	}
  
 -- 
 2.39.5
