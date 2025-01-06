@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FA0182D2;
-	Mon,  6 Jan 2025 15:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8346D158525;
+	Mon,  6 Jan 2025 15:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178094; cv=none; b=gW2vzJpsFezT+7QUosfjXWJy2wFtoT/ZK/sjVahqMGG5AQlyv0LDId5HD4aoxVKaYNULfZ8Ot5Likb4QfOZkdygAI9KpDTN3j643pP7tziEhiZUiq9nrTJNn1f59rKaObafA6SjMtiDQwLuhz1xicT8wC33ahpYF98FMV/vY3XE=
+	t=1736178097; cv=none; b=TAiN/ZpB0KUJGdkCv5anByWpe5EnYYOoMTXLe/vy4tTZMxUJtQL/yeTL2NqOyVG50RvzuZX6XJ055TbdJXd2MlPbRv6BAzd74jWCI5AwD6m6aE2Rdo3SOKXc/CGum/PSfbPROM9IF6NIEwtFu5Xtx5qmnecX/70xhwYXFaSJAKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178094; c=relaxed/simple;
-	bh=04dHs1GRmcxcOhv6ieDF2wsAn6+Jq5xG1fBLJlrJqYU=;
+	s=arc-20240116; t=1736178097; c=relaxed/simple;
+	bh=eDbAv4Rcyu/prvxe4brltpbijkTobDBq+NoBP7wTkJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TvcBP8E7mNU0FaVug022cuA2+rXcM672fY15K51AgFsTIlToNRxxsLbAmd2u1ZN2oji4hB5OSsf3+l3UAxNv/7kQTt72LEuSm5u7hX4tC1YouVHr2EBV5tFoj/zx7NUpCFJH93UUjIeRj0mrvxExnn9oDngnoL3zMzdSau/yX1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj8e3bTQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NeOLhKeLSKZ/lmcpdDcXvL55Op6+FlAT4oQs5dbS3WIBoQOMoV/M6Qc+tLi+UJGhNeRZyr3jqVUc3o52BbMJkcUxYWJktKU/IxSkm/A2GMAPgUTrlQPcBksun7sXqrMhtvJhPwpcYYnN0h2/THzJ1Wa1Z62+CclAirr9uRjfVFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LctpTZsF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj8e3bTQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC217C4CED2;
-	Mon,  6 Jan 2025 15:41:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LctpTZsF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72FFC4CED2;
+	Mon,  6 Jan 2025 15:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178094;
-	bh=04dHs1GRmcxcOhv6ieDF2wsAn6+Jq5xG1fBLJlrJqYU=;
+	s=korg; t=1736178097;
+	bh=eDbAv4Rcyu/prvxe4brltpbijkTobDBq+NoBP7wTkJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mj8e3bTQbDKHm6C8iaOiHCVgvBIoN9bBmNeSjy6imG1gKSpL0nGbByAQNLITwSdgx
-	 +DcKLrZ1ykHOYBKf0EFPe60OB+eC/7aVQ8yW2jjZ0fDjrbCjt5FSQ9Zh8iD9pNgrsv
-	 kcQuqzXvXb/NdgNUxwja2kqY4/YZhntfHUoHwfS4=
+	b=LctpTZsFb8iX7THqnVMwJKTHWA/5rOMdbaClxr6QQBp/57hqTtNzPW5rGO6q9jsqg
+	 pPm7kzulXGSz9+BCvXJw47ecEIHPboy9WnW0ZrqT/a5OxfywbY7X55SffcnBf6iFlV
+	 BpBT0G7aUM+kh0jSg6qqIiGRTV7D/jy5E87BrSKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Julian Orth <ju.orth@gmail.com>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Ken Chen <kenneth.w.chen@intel.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Jane Chu <jane.chu@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 152/156] mm: reinstate ability to map write-sealed memfd mappings read-only
-Date: Mon,  6 Jan 2025 16:17:18 +0100
-Message-ID: <20250106151147.456273657@linuxfoundation.org>
+Subject: [PATCH 6.12 153/156] mm: hugetlb: independent PMD page table shared count
+Date: Mon,  6 Jan 2025 16:17:19 +0100
+Message-ID: <20250106151147.493335782@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
 References: <20250106151141.738050441@linuxfoundation.org>
@@ -56,233 +55,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-commit 8ec396d05d1b737c87311fb7311f753b02c2a6b1 upstream.
+commit 59d9094df3d79443937add8700b2ef1a866b1081 upstream.
 
-Patch series "mm: reinstate ability to map write-sealed memfd mappings
-read-only".
+The folio refcount may be increased unexpectly through try_get_folio() by
+caller such as split_huge_pages.  In huge_pmd_unshare(), we use refcount
+to check whether a pmd page table is shared.  The check is incorrect if
+the refcount is increased by the above caller, and this can cause the page
+table leaked:
 
-In commit 158978945f31 ("mm: perform the mapping_map_writable() check
-after call_mmap()") (and preceding changes in the same series) it became
-possible to mmap() F_SEAL_WRITE sealed memfd mappings read-only.
+ BUG: Bad page state in process sh  pfn:109324
+ page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x66 pfn:0x109324
+ flags: 0x17ffff800000000(node=0|zone=2|lastcpupid=0xfffff)
+ page_type: f2(table)
+ raw: 017ffff800000000 0000000000000000 0000000000000000 0000000000000000
+ raw: 0000000000000066 0000000000000000 00000000f2000000 0000000000000000
+ page dumped because: nonzero mapcount
+ ...
+ CPU: 31 UID: 0 PID: 7515 Comm: sh Kdump: loaded Tainted: G    B              6.13.0-rc2master+ #7
+ Tainted: [B]=BAD_PAGE
+ Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+ Call trace:
+  show_stack+0x20/0x38 (C)
+  dump_stack_lvl+0x80/0xf8
+  dump_stack+0x18/0x28
+  bad_page+0x8c/0x130
+  free_page_is_bad_report+0xa4/0xb0
+  free_unref_page+0x3cc/0x620
+  __folio_put+0xf4/0x158
+  split_huge_pages_all+0x1e0/0x3e8
+  split_huge_pages_write+0x25c/0x2d8
+  full_proxy_write+0x64/0xd8
+  vfs_write+0xcc/0x280
+  ksys_write+0x70/0x110
+  __arm64_sys_write+0x24/0x38
+  invoke_syscall+0x50/0x120
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x34/0x128
+  el0t_64_sync_handler+0xc8/0xd0
+  el0t_64_sync+0x190/0x198
 
-Commit 5de195060b2e ("mm: resolve faulty mmap_region() error path
-behaviour") unintentionally undid this logic by moving the
-mapping_map_writable() check before the shmem_mmap() hook is invoked,
-thereby regressing this change.
+The issue may be triggered by damon, offline_page, page_idle, etc, which
+will increase the refcount of page table.
 
-This series reworks how we both permit write-sealed mappings being mapped
-read-only and disallow mprotect() from undoing the write-seal, fixing this
-regression.
+1. The page table itself will be discarded after reporting the
+   "nonzero mapcount".
 
-We also add a regression test to ensure that we do not accidentally
-regress this in future.
+2. The HugeTLB page mapped by the page table miss freeing since we
+   treat the page table as shared and a shared page table will not be
+   unmapped.
 
-Thanks to Julian Orth for reporting this regression.
+Fix it by introducing independent PMD page table shared count.  As
+described by comment, pt_index/pt_mm/pt_frag_refcount are used for s390
+gmap, x86 pgds and powerpc, pt_share_count is used for x86/arm64/riscv
+pmds, so we can reuse the field as pt_share_count.
 
-
-This patch (of 2):
-
-In commit 158978945f31 ("mm: perform the mapping_map_writable() check
-after call_mmap()") (and preceding changes in the same series) it became
-possible to mmap() F_SEAL_WRITE sealed memfd mappings read-only.
-
-This was previously unnecessarily disallowed, despite the man page
-documentation indicating that it would be, thereby limiting the usefulness
-of F_SEAL_WRITE logic.
-
-We fixed this by adapting logic that existed for the F_SEAL_FUTURE_WRITE
-seal (one which disallows future writes to the memfd) to also be used for
-F_SEAL_WRITE.
-
-For background - the F_SEAL_FUTURE_WRITE seal clears VM_MAYWRITE for a
-read-only mapping to disallow mprotect() from overriding the seal - an
-operation performed by seal_check_write(), invoked from shmem_mmap(), the
-f_op->mmap() hook used by shmem mappings.
-
-By extending this to F_SEAL_WRITE and critically - checking
-mapping_map_writable() to determine if we may map the memfd AFTER we
-invoke shmem_mmap() - the desired logic becomes possible.  This is because
-mapping_map_writable() explicitly checks for VM_MAYWRITE, which we will
-have cleared.
-
-Commit 5de195060b2e ("mm: resolve faulty mmap_region() error path
-behaviour") unintentionally undid this logic by moving the
-mapping_map_writable() check before the shmem_mmap() hook is invoked,
-thereby regressing this change.
-
-We reinstate this functionality by moving the check out of shmem_mmap()
-and instead performing it in do_mmap() at the point at which VMA flags are
-being determined, which seems in any case to be a more appropriate place
-in which to make this determination.
-
-In order to achieve this we rework memfd seal logic to allow us access to
-this information using existing logic and eliminate the clearing of
-VM_MAYWRITE from seal_check_write() which we are performing in do_mmap()
-instead.
-
-Link: https://lkml.kernel.org/r/99fc35d2c62bd2e05571cf60d9f8b843c56069e0.1732804776.git.lorenzo.stoakes@oracle.com
-Fixes: 5de195060b2e ("mm: resolve faulty mmap_region() error path behaviour")
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reported-by: Julian Orth <ju.orth@gmail.com>
-Closes: https://lore.kernel.org/all/CAHijbEUMhvJTN9Xw1GmbM266FXXv=U7s4L_Jem5x3AaPZxrYpQ@mail.gmail.com/
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lkml.kernel.org/r/20241216071147.3984217-1-liushixin2@huawei.com
+Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Ken Chen <kenneth.w.chen@intel.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Jane Chu <jane.chu@oracle.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/memfd.h |   14 ++++++++++++
- include/linux/mm.h    |   58 ++++++++++++++++++++++++++++++++++----------------
- mm/memfd.c            |    2 -
- mm/mmap.c             |    4 +++
- 4 files changed, 59 insertions(+), 19 deletions(-)
+ include/linux/mm.h       |    1 +
+ include/linux/mm_types.h |   30 ++++++++++++++++++++++++++++++
+ mm/hugetlb.c             |   16 +++++++---------
+ 3 files changed, 38 insertions(+), 9 deletions(-)
 
---- a/include/linux/memfd.h
-+++ b/include/linux/memfd.h
-@@ -7,6 +7,7 @@
- #ifdef CONFIG_MEMFD_CREATE
- extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
- struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx);
-+unsigned int *memfd_file_seals_ptr(struct file *file);
- #else
- static inline long memfd_fcntl(struct file *f, unsigned int c, unsigned int a)
- {
-@@ -16,6 +17,19 @@ static inline struct folio *memfd_alloc_
- {
- 	return ERR_PTR(-EINVAL);
- }
-+
-+static inline unsigned int *memfd_file_seals_ptr(struct file *file)
-+{
-+	return NULL;
-+}
- #endif
- 
-+/* Retrieve memfd seals associated with the file, if any. */
-+static inline unsigned int memfd_file_seals(struct file *file)
-+{
-+	unsigned int *sealsp = memfd_file_seals_ptr(file);
-+
-+	return sealsp ? *sealsp : 0;
-+}
-+
- #endif /* __LINUX_MEMFD_H */
 --- a/include/linux/mm.h
 +++ b/include/linux/mm.h
-@@ -4079,6 +4079,37 @@ void mem_dump_obj(void *object);
- static inline void mem_dump_obj(void *object) {}
- #endif
+@@ -3100,6 +3100,7 @@ static inline bool pagetable_pmd_ctor(st
+ 	if (!pmd_ptlock_init(ptdesc))
+ 		return false;
+ 	__folio_set_pgtable(folio);
++	ptdesc_pmd_pts_init(ptdesc);
+ 	lruvec_stat_add_folio(folio, NR_PAGETABLE);
+ 	return true;
+ }
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -445,6 +445,7 @@ FOLIO_MATCH(compound_head, _head_2a);
+  * @pt_index:         Used for s390 gmap.
+  * @pt_mm:            Used for x86 pgds.
+  * @pt_frag_refcount: For fragmented page table tracking. Powerpc only.
++ * @pt_share_count:   Used for HugeTLB PMD page table share count.
+  * @_pt_pad_2:        Padding to ensure proper alignment.
+  * @ptl:              Lock for the page table.
+  * @__page_type:      Same as page->page_type. Unused for page tables.
+@@ -471,6 +472,9 @@ struct ptdesc {
+ 		pgoff_t pt_index;
+ 		struct mm_struct *pt_mm;
+ 		atomic_t pt_frag_refcount;
++#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
++		atomic_t pt_share_count;
++#endif
+ 	};
  
-+static inline bool is_write_sealed(int seals)
+ 	union {
+@@ -516,6 +520,32 @@ static_assert(sizeof(struct ptdesc) <= s
+ 	const struct page *:		(const struct ptdesc *)(p),	\
+ 	struct page *:			(struct ptdesc *)(p)))
+ 
++#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
++static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
 +{
-+	return seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE);
++	atomic_set(&ptdesc->pt_share_count, 0);
 +}
 +
-+/**
-+ * is_readonly_sealed - Checks whether write-sealed but mapped read-only,
-+ *                      in which case writes should be disallowing moving
-+ *                      forwards.
-+ * @seals: the seals to check
-+ * @vm_flags: the VMA flags to check
-+ *
-+ * Returns whether readonly sealed, in which case writess should be disallowed
-+ * going forward.
-+ */
-+static inline bool is_readonly_sealed(int seals, vm_flags_t vm_flags)
++static inline void ptdesc_pmd_pts_inc(struct ptdesc *ptdesc)
 +{
-+	/*
-+	 * Since an F_SEAL_[FUTURE_]WRITE sealed memfd can be mapped as
-+	 * MAP_SHARED and read-only, take care to not allow mprotect to
-+	 * revert protections on such mappings. Do this only for shared
-+	 * mappings. For private mappings, don't need to mask
-+	 * VM_MAYWRITE as we still want them to be COW-writable.
-+	 */
-+	if (is_write_sealed(seals) &&
-+	    ((vm_flags & (VM_SHARED | VM_WRITE)) == VM_SHARED))
-+		return true;
-+
-+	return false;
++	atomic_inc(&ptdesc->pt_share_count);
 +}
 +
- /**
-  * seal_check_write - Check for F_SEAL_WRITE or F_SEAL_FUTURE_WRITE flags and
-  *                    handle them.
-@@ -4090,24 +4121,15 @@ static inline void mem_dump_obj(void *ob
++static inline void ptdesc_pmd_pts_dec(struct ptdesc *ptdesc)
++{
++	atomic_dec(&ptdesc->pt_share_count);
++}
++
++static inline int ptdesc_pmd_pts_count(struct ptdesc *ptdesc)
++{
++	return atomic_read(&ptdesc->pt_share_count);
++}
++#else
++static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
++{
++}
++#endif
++
+ /*
+  * Used for sizing the vmemmap region on some architectures
   */
- static inline int seal_check_write(int seals, struct vm_area_struct *vma)
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -7200,7 +7200,7 @@ pte_t *huge_pmd_share(struct mm_struct *
+ 			spte = hugetlb_walk(svma, saddr,
+ 					    vma_mmu_pagesize(svma));
+ 			if (spte) {
+-				get_page(virt_to_page(spte));
++				ptdesc_pmd_pts_inc(virt_to_ptdesc(spte));
+ 				break;
+ 			}
+ 		}
+@@ -7215,7 +7215,7 @@ pte_t *huge_pmd_share(struct mm_struct *
+ 				(pmd_t *)((unsigned long)spte & PAGE_MASK));
+ 		mm_inc_nr_pmds(mm);
+ 	} else {
+-		put_page(virt_to_page(spte));
++		ptdesc_pmd_pts_dec(virt_to_ptdesc(spte));
+ 	}
+ 	spin_unlock(&mm->page_table_lock);
+ out:
+@@ -7227,10 +7227,6 @@ out:
+ /*
+  * unmap huge page backed by shared pte.
+  *
+- * Hugetlb pte page is ref counted at the time of mapping.  If pte is shared
+- * indicated by page_count > 1, unmap is achieved by clearing pud and
+- * decrementing the ref count. If count == 1, the pte page is not shared.
+- *
+  * Called with page table lock held.
+  *
+  * returns: 1 successfully unmapped a shared pte page
+@@ -7239,18 +7235,20 @@ out:
+ int huge_pmd_unshare(struct mm_struct *mm, struct vm_area_struct *vma,
+ 					unsigned long addr, pte_t *ptep)
  {
--	if (seals & (F_SEAL_WRITE | F_SEAL_FUTURE_WRITE)) {
--		/*
--		 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
--		 * write seals are active.
--		 */
--		if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_WRITE))
--			return -EPERM;
--
--		/*
--		 * Since an F_SEAL_[FUTURE_]WRITE sealed memfd can be mapped as
--		 * MAP_SHARED and read-only, take care to not allow mprotect to
--		 * revert protections on such mappings. Do this only for shared
--		 * mappings. For private mappings, don't need to mask
--		 * VM_MAYWRITE as we still want them to be COW-writable.
--		 */
--		if (vma->vm_flags & VM_SHARED)
--			vm_flags_clear(vma, VM_MAYWRITE);
--	}
-+	if (!is_write_sealed(seals))
++	unsigned long sz = huge_page_size(hstate_vma(vma));
+ 	pgd_t *pgd = pgd_offset(mm, addr);
+ 	p4d_t *p4d = p4d_offset(pgd, addr);
+ 	pud_t *pud = pud_offset(p4d, addr);
+ 
+ 	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
+ 	hugetlb_vma_assert_locked(vma);
+-	BUG_ON(page_count(virt_to_page(ptep)) == 0);
+-	if (page_count(virt_to_page(ptep)) == 1)
++	if (sz != PMD_SIZE)
 +		return 0;
-+
-+	/*
-+	 * New PROT_WRITE and MAP_SHARED mmaps are not allowed when
-+	 * write seals are active.
-+	 */
-+	if ((vma->vm_flags & VM_SHARED) && (vma->vm_flags & VM_WRITE))
-+		return -EPERM;
++	if (!ptdesc_pmd_pts_count(virt_to_ptdesc(ptep)))
+ 		return 0;
  
- 	return 0;
+ 	pud_clear(pud);
+-	put_page(virt_to_page(ptep));
++	ptdesc_pmd_pts_dec(virt_to_ptdesc(ptep));
+ 	mm_dec_nr_pmds(mm);
+ 	return 1;
  }
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -170,7 +170,7 @@ static int memfd_wait_for_pins(struct ad
- 	return error;
- }
- 
--static unsigned int *memfd_file_seals_ptr(struct file *file)
-+unsigned int *memfd_file_seals_ptr(struct file *file)
- {
- 	if (shmem_file(file))
- 		return &SHMEM_I(file_inode(file))->seals;
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -47,6 +47,7 @@
- #include <linux/oom.h>
- #include <linux/sched/mm.h>
- #include <linux/ksm.h>
-+#include <linux/memfd.h>
- 
- #include <linux/uaccess.h>
- #include <asm/cacheflush.h>
-@@ -368,6 +369,7 @@ unsigned long do_mmap(struct file *file,
- 
- 	if (file) {
- 		struct inode *inode = file_inode(file);
-+		unsigned int seals = memfd_file_seals(file);
- 		unsigned long flags_mask;
- 
- 		if (!file_mmap_ok(file, inode, pgoff, len))
-@@ -408,6 +410,8 @@ unsigned long do_mmap(struct file *file,
- 			vm_flags |= VM_SHARED | VM_MAYSHARE;
- 			if (!(file->f_mode & FMODE_WRITE))
- 				vm_flags &= ~(VM_MAYWRITE | VM_SHARED);
-+			else if (is_readonly_sealed(seals, vm_flags))
-+				vm_flags &= ~VM_MAYWRITE;
- 			fallthrough;
- 		case MAP_PRIVATE:
- 			if (!(file->f_mode & FMODE_READ))
 
 
