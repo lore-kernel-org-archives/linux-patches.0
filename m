@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA6E1369B4;
-	Mon,  6 Jan 2025 15:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D7786333;
+	Mon,  6 Jan 2025 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178702; cv=none; b=gtY4mURuMNvyRftGf5hmVokSByLr7hy/IKPqqng4WvhqpoY2L9VPt2MBT/y8Z0egrLHCBQsk6t4czumqGQvp8iT1IKKkJwywvyNF0VL1lHzHEpW6q4lfZHDmIvSHOSkjCMC4Dkh2vxgJh3cd1VfMQsCDWKZxZNG+CwHPb8vmBYI=
+	t=1736178707; cv=none; b=QzZsvmfhX2xsBw5Xlac/MWtFQxKHPrrjEalpjcs5BKs5RKOjo+YOkNum4/KrYWu91UNMv7QSMzYMV8PLbB8XWZL4qcnBbVRFo72V6cEo4o72LI9zhvSZgT3b79KGg+AxUfLiOfKnKkSm4fWkfDNmLXDNPjJ7tZH8lx6Xdrx3eUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178702; c=relaxed/simple;
-	bh=li+DC6fj0PD1oEj6AqUBtVb3hqZesOkdcP77xDImVKY=;
+	s=arc-20240116; t=1736178707; c=relaxed/simple;
+	bh=m2PZ4CqHIHTiFENN3syguppk0JZgd7bX53vq0nL/vUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSSVOfB8y2ENJMW7hc9dKMjcUELq7PhUxcwqr3KwJxT1glBZhdPdR1NDKAW8WL08zXrz+xtmrzwojqZg49z284HlHVCgSH/Bc+nf6upz04QHbX69yt/AMg++hjgT975rgEamBvMz9l8YCP16gygcI2WHOtZ0EIwACC28IQnYrcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fujBf1oq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxaCppTGTlp21Q/zE+LVBVAAu70GsXkIAASQubPulp9EOf8dLD1h3mBJsCQxxcqm5E+XOxs5UekOrBpA4eg2vgWgu30mHnZb+1cX0m9pGL8eHgoy+dZx42YN7LWYA2P1IzDv/h9ztNQ0zxLDKPQV2SyKwXRcVIt8llfv9cp2Fd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeBP+aTN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fujBf1oq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEB3C4CED2;
-	Mon,  6 Jan 2025 15:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeBP+aTN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3245C4CED2;
+	Mon,  6 Jan 2025 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736178702;
-	bh=li+DC6fj0PD1oEj6AqUBtVb3hqZesOkdcP77xDImVKY=;
+	s=korg; t=1736178705;
+	bh=m2PZ4CqHIHTiFENN3syguppk0JZgd7bX53vq0nL/vUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fujBf1oq69Xkx/pKMUeVwU/aSL2bSgyEBUEX5JsvO9ZJLop1Ro4ApmaeW+ejks7WB
-	 6OrX3Q6bUrXQWM5Buu6ZBiwEhj4ge1m1zed3galUPdmB8hcZNPHvVfs1QqYMVRy5P+
-	 MGyxG+VI+l6z6HB3n+X3f97OFy2dSXK5cb4bnfAI=
+	b=FeBP+aTNZGFunouZVL4IQk1dv4oW6dW6psOdhZhUmxEtpS48i99b0lrBPxFkw7CDJ
+	 jPRHZsOk8vHYRrdzsOOh2MTNnEySFMnAhve0kK5+wMlXucfCY3e+EmO3Jp45ZwnOZe
+	 yXVBSJA1OZ4fI4cConD/jD/FPoYmTH8zgT1PpvmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/168] hwmon: (tmp513) Use SI constants from units.h
-Date: Mon,  6 Jan 2025 16:15:44 +0100
-Message-ID: <20250106151139.827365975@linuxfoundation.org>
+	Zichen Xie <zichenxie0106@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 063/168] mtd: diskonchip: Cast an operand to prevent potential overflow
+Date: Mon,  6 Jan 2025 16:16:11 +0100
+Message-ID: <20250106151140.841371787@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151138.451846855@linuxfoundation.org>
 References: <20250106151138.451846855@linuxfoundation.org>
@@ -51,105 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Zichen Xie <zichenxie0106@gmail.com>
 
-[ Upstream commit f07f9d2467f4a298d24e186ddee6f69724903067 ]
+commit 9b458e8be0d13e81ed03fffa23f8f9b528bbd786 upstream.
 
-MILLI and MICRO may be used in the driver to make code more robust
-against possible miscalculations.
+There may be a potential integer overflow issue in inftl_partscan().
+parts[0].size is defined as "uint64_t"  while mtd->erasesize and
+ip->firstUnit are defined as 32-bit unsigned integer. The result of
+the calculation will be limited to 32 bits without correct casting.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20231128180654.395692-4-andriy.shevchenko@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Stable-dep-of: 74d7e038fd07 ("hwmon: (tmp513) Fix interpretation of values of Shunt Voltage and Limit Registers")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/tmp513.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ drivers/mtd/nand/raw/diskonchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/tmp513.c b/drivers/hwmon/tmp513.c
-index 53525d3a32a0..589982c92190 100644
---- a/drivers/hwmon/tmp513.c
-+++ b/drivers/hwmon/tmp513.c
-@@ -32,6 +32,7 @@
- #include <linux/regmap.h>
- #include <linux/slab.h>
- #include <linux/types.h>
-+#include <linux/units.h>
+--- a/drivers/mtd/nand/raw/diskonchip.c
++++ b/drivers/mtd/nand/raw/diskonchip.c
+@@ -1098,7 +1098,7 @@ static inline int __init inftl_partscan(
+ 		    (i == 0) && (ip->firstUnit > 0)) {
+ 			parts[0].name = " DiskOnChip IPL / Media Header partition";
+ 			parts[0].offset = 0;
+-			parts[0].size = mtd->erasesize * ip->firstUnit;
++			parts[0].size = (uint64_t)mtd->erasesize * ip->firstUnit;
+ 			numparts = 1;
+ 		}
  
- // Common register definition
- #define TMP51X_SHUNT_CONFIG		0x00
-@@ -104,8 +105,8 @@
- #define TMP51X_REMOTE_TEMP_LIMIT_2_POS		8
- #define TMP513_REMOTE_TEMP_LIMIT_3_POS		7
- 
--#define TMP51X_VBUS_RANGE_32V		32000000
--#define TMP51X_VBUS_RANGE_16V		16000000
-+#define TMP51X_VBUS_RANGE_32V		(32 * MICRO)
-+#define TMP51X_VBUS_RANGE_16V		(16 * MICRO)
- 
- // Max and Min value
- #define MAX_BUS_VOLTAGE_32_LIMIT	32764
-@@ -200,7 +201,7 @@ static int tmp51x_get_value(struct tmp51x_data *data, u8 reg, u8 pos,
- 		 * on the pga gain setting. 1lsb = 10uV
- 		 */
- 		*val = sign_extend32(regval, 17 - tmp51x_get_pga_shift(data));
--		*val = DIV_ROUND_CLOSEST(*val * 10000, data->shunt_uohms);
-+		*val = DIV_ROUND_CLOSEST(*val * 10 * MILLI, data->shunt_uohms);
- 		break;
- 	case TMP51X_BUS_VOLTAGE_RESULT:
- 	case TMP51X_BUS_VOLTAGE_H_LIMIT:
-@@ -216,7 +217,7 @@ static int tmp51x_get_value(struct tmp51x_data *data, u8 reg, u8 pos,
- 	case TMP51X_BUS_CURRENT_RESULT:
- 		// Current = (ShuntVoltage * CalibrationRegister) / 4096
- 		*val = sign_extend32(regval, 16) * data->curr_lsb_ua;
--		*val = DIV_ROUND_CLOSEST(*val, 1000);
-+		*val = DIV_ROUND_CLOSEST(*val, MILLI);
- 		break;
- 	case TMP51X_LOCAL_TEMP_RESULT:
- 	case TMP51X_REMOTE_TEMP_RESULT_1:
-@@ -256,7 +257,7 @@ static int tmp51x_set_value(struct tmp51x_data *data, u8 reg, long val)
- 		 * The user enter current value and we convert it to
- 		 * voltage. 1lsb = 10uV
- 		 */
--		val = DIV_ROUND_CLOSEST(val * data->shunt_uohms, 10000);
-+		val = DIV_ROUND_CLOSEST(val * data->shunt_uohms, 10 * MILLI);
- 		max_val = U16_MAX >> tmp51x_get_pga_shift(data);
- 		regval = clamp_val(val, -max_val, max_val);
- 		break;
-@@ -546,18 +547,16 @@ static int tmp51x_calibrate(struct tmp51x_data *data)
- 	if (data->shunt_uohms == 0)
- 		return regmap_write(data->regmap, TMP51X_SHUNT_CALIBRATION, 0);
- 
--	max_curr_ma = DIV_ROUND_CLOSEST_ULL(vshunt_max * 1000 * 1000,
--					    data->shunt_uohms);
-+	max_curr_ma = DIV_ROUND_CLOSEST_ULL(vshunt_max * MICRO, data->shunt_uohms);
- 
- 	/*
- 	 * Calculate the minimal bit resolution for the current and the power.
- 	 * Those values will be used during register interpretation.
- 	 */
--	data->curr_lsb_ua = DIV_ROUND_CLOSEST_ULL(max_curr_ma * 1000, 32767);
-+	data->curr_lsb_ua = DIV_ROUND_CLOSEST_ULL(max_curr_ma * MILLI, 32767);
- 	data->pwr_lsb_uw = 20 * data->curr_lsb_ua;
- 
--	div = DIV_ROUND_CLOSEST_ULL(data->curr_lsb_ua * data->shunt_uohms,
--				    1000 * 1000);
-+	div = DIV_ROUND_CLOSEST_ULL(data->curr_lsb_ua * data->shunt_uohms, MICRO);
- 
- 	return regmap_write(data->regmap, TMP51X_SHUNT_CALIBRATION,
- 			    DIV_ROUND_CLOSEST(40960, div));
-@@ -683,7 +682,7 @@ static int tmp51x_read_properties(struct device *dev, struct tmp51x_data *data)
- 		memcpy(data->nfactor, nfactor, (data->id == tmp513) ? 3 : 2);
- 
- 	// Check if shunt value is compatible with pga-gain
--	if (data->shunt_uohms > data->pga_gain * 40 * 1000 * 1000) {
-+	if (data->shunt_uohms > data->pga_gain * 40 * MICRO) {
- 		return dev_err_probe(dev, -EINVAL,
- 				     "shunt-resistor: %u too big for pga_gain: %u\n",
- 				     data->shunt_uohms, data->pga_gain);
--- 
-2.39.5
-
 
 
