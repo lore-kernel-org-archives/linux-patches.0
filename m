@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A20C14D28C;
-	Mon,  6 Jan 2025 15:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9975A136E09;
+	Mon,  6 Jan 2025 15:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736176858; cv=none; b=TNM99IiBO9SkLGbXM9RPNY0ex2nnKObbi/h3p5wogxFLLZa+FlfbVvhRj/nNu6ZwKnjjmSI/stRLr4/7aEWP3wQ02Wd0Ji6Sdy9jtk8GZ6Nktd+dNSeIu74ow4aiLOd7GoVX7lv9s41Jzs6CFy2SpVrFz/vqBLxBwNfrfv6JOyc=
+	t=1736176861; cv=none; b=RIhn81oTptB44QmhBRHT12AQgHSyYsuvLqZ6L7b/G9xW8DINyk4SAI0L376PlwN7Wg4fsChPI74GCpXCEni4v/hx1Q6qBMwF7UcnSlrSrNr94XKe+1DtgkLsPxtNErIcepIwS0OUy3udiwYQi+T5upVMvlmS8E04R85/Hkz/EpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736176858; c=relaxed/simple;
-	bh=KCbgHx+OZmqo2WCgLmxsf3kIyjoFNrkGGniv/9Gof/s=;
+	s=arc-20240116; t=1736176861; c=relaxed/simple;
+	bh=KC+SwL+LzOjO/uklCV2yTQqV0NR0ReUlqfZ0vWnjDMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qFJWqkXRYm2yqF76C7qs9zYqTmThTMtMxoNZfpl10z4JQsgYVX+/Bk53APqiol9hQAKmE/ay9iD3JtaL9PrQQqu0tWWoSWX0QD6wthtWldXWXPmsR4ev0rZByZ5kiu3mh7go9WnTPtgM5PazS293Sycrdo/+20UAEw50CybqNS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6cf0hg9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgmxeG1HKfFUt0XN7BRMJ7K+Giy9XWEyOA+YxIns8/DkJW2x7Ju3TAuapWODGIvUIFE6cjaImJJB+F0zxwkiGB+pXDwFTUc6J3fgaPMvVBEaUFNRzTGfJl1qsFPm9VtWHQQ5u1ygCVLQknkvnWN8Y94qh9OIIfOH0ApcaiNqXSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HziFxwT5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6cf0hg9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FEFC4CED2;
-	Mon,  6 Jan 2025 15:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HziFxwT5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C96C4CED2;
+	Mon,  6 Jan 2025 15:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736176858;
-	bh=KCbgHx+OZmqo2WCgLmxsf3kIyjoFNrkGGniv/9Gof/s=;
+	s=korg; t=1736176861;
+	bh=KC+SwL+LzOjO/uklCV2yTQqV0NR0ReUlqfZ0vWnjDMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6cf0hg94oO4+4haLdUjZFF6W6Uxo79t3N79Vor06EVhFgYf8ATszQwW87iki8uO8
-	 a3c26KJrDkhada9L8SqlBh6wJR4npzGUbxpwj4tN9vdoA7nZx9oFT028bK4T+I/YS2
-	 ZsuevVsSlua/zJsXNn8J+JanYhhS9Dveh6lsOmEw=
+	b=HziFxwT5W4DgmoqtUA1awpO4ahCiGRahgJHQxTzM0v9nCUHYkY44SRS0erU8FpZvb
+	 qxz9d9xZwo2RITEw3KAsBf9jtCUlU+8KA04pw5ab6c5PODsiqsxiJ5126lCxlSF9F0
+	 GHJJ3vbeGPW7U/FZfmdLsFH6oPn4NM7PzHQ0cnLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8517da8635307182c8a5@syzkaller.appspotmail.com,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	wenglianfa <wenglianfa@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 52/81] btrfs: fix use-after-free when COWing tree bock and tracing is enabled
-Date: Mon,  6 Jan 2025 16:16:24 +0100
-Message-ID: <20250106151131.397118529@linuxfoundation.org>
+Subject: [PATCH 6.1 23/81] RDMA/hns: Fix mapping error of zero-hop WQE buffer
+Date: Mon,  6 Jan 2025 16:15:55 +0100
+Message-ID: <20250106151130.312669961@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
 References: <20250106151129.433047073@linuxfoundation.org>
@@ -53,76 +52,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: wenglianfa <wenglianfa@huawei.com>
 
-[ Upstream commit 44f52bbe96dfdbe4aca3818a2534520082a07040 ]
+[ Upstream commit 8673a6c2d9e483dfeeef83a1f06f59e05636f4d1 ]
 
-When a COWing a tree block, at btrfs_cow_block(), and we have the
-tracepoint trace_btrfs_cow_block() enabled and preemption is also enabled
-(CONFIG_PREEMPT=y), we can trigger a use-after-free in the COWed extent
-buffer while inside the tracepoint code. This is because in some paths
-that call btrfs_cow_block(), such as btrfs_search_slot(), we are holding
-the last reference on the extent buffer @buf so btrfs_force_cow_block()
-drops the last reference on the @buf extent buffer when it calls
-free_extent_buffer_stale(buf), which schedules the release of the extent
-buffer with RCU. This means that if we are on a kernel with preemption,
-the current task may be preempted before calling trace_btrfs_cow_block()
-and the extent buffer already released by the time trace_btrfs_cow_block()
-is called, resulting in a use-after-free.
+Due to HW limitation, the three region of WQE buffer must be mapped
+and set to HW in a fixed order: SQ buffer, SGE buffer, and RQ buffer.
 
-Fix this by moving the trace_btrfs_cow_block() from btrfs_cow_block() to
-btrfs_force_cow_block() before the COWed extent buffer is freed.
-This also has a side effect of invoking the tracepoint in the tree defrag
-code, at defrag.c:btrfs_realloc_node(), since btrfs_force_cow_block() is
-called there, but this is fine and it was actually missing there.
+Currently when one region is zero-hop while the other two are not,
+the zero-hop region will not be mapped. This violate the limitation
+above and leads to address error.
 
-Reported-by: syzbot+8517da8635307182c8a5@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/6759a9b9.050a0220.1ac542.000d.GAE@google.com/
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 38389eaa4db1 ("RDMA/hns: Add mtr support for mixed multihop addressing")
+Signed-off-by: wenglianfa <wenglianfa@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://patch.msgid.link/20241220055249.146943-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hem.c | 43 ++++++++++++++++--------
+ drivers/infiniband/hw/hns/hns_roce_mr.c  |  5 ---
+ 2 files changed, 29 insertions(+), 19 deletions(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index a02b41106257..c7171b286de7 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -520,6 +520,8 @@ int btrfs_force_cow_block(struct btrfs_trans_handle *trans,
- 		btrfs_free_tree_block(trans, btrfs_root_id(root), buf,
- 				      parent_start, last_ref);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hem.c b/drivers/infiniband/hw/hns/hns_roce_hem.c
+index 6e0ca8a4b2a8..f1de497fc977 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hem.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hem.c
+@@ -986,6 +986,7 @@ struct hns_roce_hem_item {
+ 	size_t count; /* max ba numbers */
+ 	int start; /* start buf offset in this hem */
+ 	int end; /* end buf offset in this hem */
++	bool exist_bt;
+ };
+ 
+ /* All HEM items are linked in a tree structure */
+@@ -1014,6 +1015,7 @@ hem_list_alloc_item(struct hns_roce_dev *hr_dev, int start, int end, int count,
+ 		}
  	}
-+
-+	trace_btrfs_cow_block(root, buf, cow);
- 	if (unlock_orig)
- 		btrfs_tree_unlock(buf);
- 	free_extent_buffer_stale(buf);
-@@ -571,7 +573,6 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
- {
- 	struct btrfs_fs_info *fs_info = root->fs_info;
- 	u64 search_start;
--	int ret;
  
- 	if (unlikely(test_bit(BTRFS_ROOT_DELETING, &root->state))) {
- 		btrfs_abort_transaction(trans, -EUCLEAN);
-@@ -612,12 +613,8 @@ noinline int btrfs_cow_block(struct btrfs_trans_handle *trans,
- 	 * Also We don't care about the error, as it's handled internally.
- 	 */
- 	btrfs_qgroup_trace_subtree_after_cow(trans, root, buf);
--	ret = btrfs_force_cow_block(trans, root, buf, parent, parent_slot,
--				    cow_ret, search_start, 0, nest);
--
--	trace_btrfs_cow_block(root, buf, *cow_ret);
--
--	return ret;
-+	return btrfs_force_cow_block(trans, root, buf, parent, parent_slot,
-+				     cow_ret, search_start, 0, nest);
++	hem->exist_bt = exist_bt;
+ 	hem->count = count;
+ 	hem->start = start;
+ 	hem->end = end;
+@@ -1024,22 +1026,22 @@ hem_list_alloc_item(struct hns_roce_dev *hr_dev, int start, int end, int count,
  }
- ALLOW_ERROR_INJECTION(btrfs_cow_block, ERRNO);
  
+ static void hem_list_free_item(struct hns_roce_dev *hr_dev,
+-			       struct hns_roce_hem_item *hem, bool exist_bt)
++			       struct hns_roce_hem_item *hem)
+ {
+-	if (exist_bt)
++	if (hem->exist_bt)
+ 		dma_free_coherent(hr_dev->dev, hem->count * BA_BYTE_LEN,
+ 				  hem->addr, hem->dma_addr);
+ 	kfree(hem);
+ }
+ 
+ static void hem_list_free_all(struct hns_roce_dev *hr_dev,
+-			      struct list_head *head, bool exist_bt)
++			      struct list_head *head)
+ {
+ 	struct hns_roce_hem_item *hem, *temp_hem;
+ 
+ 	list_for_each_entry_safe(hem, temp_hem, head, list) {
+ 		list_del(&hem->list);
+-		hem_list_free_item(hr_dev, hem, exist_bt);
++		hem_list_free_item(hr_dev, hem);
+ 	}
+ }
+ 
+@@ -1139,6 +1141,10 @@ int hns_roce_hem_list_calc_root_ba(const struct hns_roce_buf_region *regions,
+ 
+ 	for (i = 0; i < region_cnt; i++) {
+ 		r = (struct hns_roce_buf_region *)&regions[i];
++		/* when r->hopnum = 0, the region should not occupy root_ba. */
++		if (!r->hopnum)
++			continue;
++
+ 		if (r->hopnum > 1) {
+ 			step = hem_list_calc_ba_range(r->hopnum, 1, unit);
+ 			if (step > 0)
+@@ -1232,7 +1238,7 @@ static int hem_list_alloc_mid_bt(struct hns_roce_dev *hr_dev,
+ 
+ err_exit:
+ 	for (level = 1; level < hopnum; level++)
+-		hem_list_free_all(hr_dev, &temp_list[level], true);
++		hem_list_free_all(hr_dev, &temp_list[level]);
+ 
+ 	return ret;
+ }
+@@ -1273,16 +1279,26 @@ static int alloc_fake_root_bt(struct hns_roce_dev *hr_dev, void *cpu_base,
+ {
+ 	struct hns_roce_hem_item *hem;
+ 
++	/* This is on the has_mtt branch, if r->hopnum
++	 * is 0, there is no root_ba to reuse for the
++	 * region's fake hem, so a dma_alloc request is
++	 * necessary here.
++	 */
+ 	hem = hem_list_alloc_item(hr_dev, r->offset, r->offset + r->count - 1,
+-				  r->count, false);
++				  r->count, !r->hopnum);
+ 	if (!hem)
+ 		return -ENOMEM;
+ 
+-	hem_list_assign_bt(hem, cpu_base, phy_base);
++	/* The root_ba can be reused only when r->hopnum > 0. */
++	if (r->hopnum)
++		hem_list_assign_bt(hem, cpu_base, phy_base);
+ 	list_add(&hem->list, branch_head);
+ 	list_add(&hem->sibling, leaf_head);
+ 
+-	return r->count;
++	/* If r->hopnum == 0, 0 is returned,
++	 * so that the root_bt entry is not occupied.
++	 */
++	return r->hopnum ? r->count : 0;
+ }
+ 
+ static int setup_middle_bt(struct hns_roce_dev *hr_dev, void *cpu_base,
+@@ -1326,7 +1342,7 @@ setup_root_hem(struct hns_roce_dev *hr_dev, struct hns_roce_hem_list *hem_list,
+ 		return -ENOMEM;
+ 
+ 	total = 0;
+-	for (i = 0; i < region_cnt && total < max_ba_num; i++) {
++	for (i = 0; i < region_cnt && total <= max_ba_num; i++) {
+ 		r = &regions[i];
+ 		if (!r->count)
+ 			continue;
+@@ -1392,9 +1408,9 @@ static int hem_list_alloc_root_bt(struct hns_roce_dev *hr_dev,
+ 			     region_cnt);
+ 	if (ret) {
+ 		for (i = 0; i < region_cnt; i++)
+-			hem_list_free_all(hr_dev, &head.branch[i], false);
++			hem_list_free_all(hr_dev, &head.branch[i]);
+ 
+-		hem_list_free_all(hr_dev, &head.root, true);
++		hem_list_free_all(hr_dev, &head.root);
+ 	}
+ 
+ 	return ret;
+@@ -1457,10 +1473,9 @@ void hns_roce_hem_list_release(struct hns_roce_dev *hr_dev,
+ 
+ 	for (i = 0; i < HNS_ROCE_MAX_BT_REGION; i++)
+ 		for (j = 0; j < HNS_ROCE_MAX_BT_LEVEL; j++)
+-			hem_list_free_all(hr_dev, &hem_list->mid_bt[i][j],
+-					  j != 0);
++			hem_list_free_all(hr_dev, &hem_list->mid_bt[i][j]);
+ 
+-	hem_list_free_all(hr_dev, &hem_list->root_bt, true);
++	hem_list_free_all(hr_dev, &hem_list->root_bt);
+ 	INIT_LIST_HEAD(&hem_list->btm_bt);
+ 	hem_list->root_ba = 0;
+ }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index acdcd5c9f42f..408ef2a96149 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -767,11 +767,6 @@ int hns_roce_mtr_map(struct hns_roce_dev *hr_dev, struct hns_roce_mtr *mtr,
+ 	for (i = 0, mapped_cnt = 0; i < mtr->hem_cfg.region_count &&
+ 	     mapped_cnt < page_cnt; i++) {
+ 		r = &mtr->hem_cfg.region[i];
+-		/* if hopnum is 0, no need to map pages in this region */
+-		if (!r->hopnum) {
+-			mapped_cnt += r->count;
+-			continue;
+-		}
+ 
+ 		if (r->offset + r->count > page_cnt) {
+ 			ret = -EINVAL;
 -- 
 2.39.5
 
