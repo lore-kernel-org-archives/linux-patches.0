@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F051DA31F;
-	Mon,  6 Jan 2025 15:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A521DA31F;
+	Mon,  6 Jan 2025 15:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736177045; cv=none; b=T26JEw5sCvMGy1iZDuPpELYxbG0SqkaTjWxFIb1i7f08WMEnpd1DCM0JWGFEP0XTXOgat/+rv30myQonk1dXnOwEeyZmUf5oxbl7EzyPXMXNk+fRAc9BuuGSW4+PKpYdEgYXCt5ZhfaKEkKJX98nhHsmCq4MQunJR0PYOXZBb0g=
+	t=1736177048; cv=none; b=Ew6RBpa4766l5UkWOVwXVMhIszpuNQx+ZQ2/b8QNMRjkM2Z8U6KDAGEwGouDl/1nVIm8zAdYwaY6B+dks6yHbK5UvOMrwDXzxYAXjgNSCxCyLqw3nFOFjzkG93w28FoBkrlSJv0JgBEp+j9YwZUjeKfoKijjkpHq75LKG9VsJWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736177045; c=relaxed/simple;
-	bh=/uGj4sqkh6Ol7Gp9CawK7fDAf4n0SwImLoty8ipM1c0=;
+	s=arc-20240116; t=1736177048; c=relaxed/simple;
+	bh=PbL1Tprdc97Yop2tCqJ4JeJmqc5LzJDzjTjHsvoRHEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7kwic8pabiyqUDTVpn7q5V8bsPfyRAdrvuCBKNUDns9Cp87yX6Wl/vU7bhywV7oKUyJK8zHc6XKkdBhedjyLvzzLlVAgodupusiSEyB0qduUzoblaB2/MOs4thpv1y949LTW4Kwo2v9FdsdZehPqh97duALRboxqmKnnD4uM3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9DjoIpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OKNzsEusm8DVykRmGmdrHatVMyFbYGbiBv0pRpJ3B2p7r340nMApPlETEeBgS5FiRPhxEWkoubafCCFHtVTtYhxnf2A3YpXAEmraVWcmrn4UggG7O9he3qf4BS/bSn73qVTO4f/qUT2zY5tD6F3LBEU4pbki2G7jpZTiA6btn1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXq3I29H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9DjoIpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E23C4CED2;
-	Mon,  6 Jan 2025 15:24:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXq3I29H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBCDC4CEE6;
+	Mon,  6 Jan 2025 15:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736177045;
-	bh=/uGj4sqkh6Ol7Gp9CawK7fDAf4n0SwImLoty8ipM1c0=;
+	s=korg; t=1736177047;
+	bh=PbL1Tprdc97Yop2tCqJ4JeJmqc5LzJDzjTjHsvoRHEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9DjoIpam4ThD0FxR5Tk7O9FRqXimJbn1JDRke8MlRGLjvHeop377JZ/FmVeG9NNi
-	 fzTdoDMvNxzrXKY2QtWiMIlVLPSFjUFQs3ZUTjYrDOFLDPpy5GYlee8LqZXyciZ4np
-	 cEDkIkJnbARj47sg9HECJeD7GUH7K9gq9y4XOsAQ=
+	b=JXq3I29Hsvx4KyvyNLpT0jywtvpsNSLnw/YqRRghDf0gQxxcQD55Nohnw2h63XaXS
+	 o9XfNotIJvd16fxinL54WHHh5pV+vTvzvZueDlx/QHOcLRpodmC0UFe2u97A0QcSlj
+	 yOhg70U1tPyXVT3cgZ/4b9pMuB829QQiq6LkM7dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rory Little <rory@candelatech.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/222] wifi: mac80211: Add non-atomic station iterator
-Date: Mon,  6 Jan 2025 16:13:57 +0100
-Message-ID: <20250106151151.857834175@linuxfoundation.org>
+Subject: [PATCH 6.6 034/222] wifi: ath12k: fix atomic calls in ath12k_mac_op_set_bitrate_mask()
+Date: Mon,  6 Jan 2025 16:13:58 +0100
+Message-ID: <20250106151151.895253709@linuxfoundation.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
 References: <20250106151150.585603565@linuxfoundation.org>
@@ -51,91 +51,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rory Little <rory@candelatech.com>
+From: Kalle Valo <quic_kvalo@quicinc.com>
 
-[ Upstream commit 7c3b69eadea9e57c28bf914b0fd70f268f3682e1 ]
+[ Upstream commit 8fac3266c68a8e647240b8ac8d0b82f1821edf85 ]
 
-Drivers may at times want to iterate their stations with a function
-which requires some non-atomic operations.
+When I try to manually set bitrates:
 
-ieee80211_iterate_stations_mtx() introduces an API to iterate stations
-while holding that wiphy's mutex. This allows the iterating function to
-do non-atomic operations safely.
+iw wlan0 set bitrates legacy-2.4 1
 
-Signed-off-by: Rory Little <rory@candelatech.com>
-Link: https://patch.msgid.link/20240806004024.2014080-2-rory@candelatech.com
-[unify internal list iteration functions]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 8fac3266c68a ("wifi: ath12k: fix atomic calls in ath12k_mac_op_set_bitrate_mask()")
+I get sleeping from invalid context error, see below. Fix that by switching to
+use recently introduced ieee80211_iterate_stations_mtx().
+
+Do note that WCN6855 firmware is still crashing, I'm not sure if that firmware
+even supports bitrate WMI commands and should we consider disabling
+ath12k_mac_op_set_bitrate_mask() for WCN6855? But that's for another patch.
+
+BUG: sleeping function called from invalid context at drivers/net/wireless/ath/ath12k/wmi.c:420
+in_atomic(): 0, irqs_disabled(): 0, non_block: 0, pid: 2236, name: iw
+preempt_count: 0, expected: 0
+RCU nest depth: 1, expected: 0
+3 locks held by iw/2236:
+ #0: ffffffffabc6f1d8 (cb_lock){++++}-{3:3}, at: genl_rcv+0x14/0x40
+ #1: ffff888138410810 (&rdev->wiphy.mtx){+.+.}-{3:3}, at: nl80211_pre_doit+0x54d/0x800 [cfg80211]
+ #2: ffffffffab2cfaa0 (rcu_read_lock){....}-{1:2}, at: ieee80211_iterate_stations_atomic+0x2f/0x200 [mac80211]
+CPU: 3 UID: 0 PID: 2236 Comm: iw Not tainted 6.11.0-rc7-wt-ath+ #1772
+Hardware name: Intel(R) Client Systems NUC8i7HVK/NUC8i7HVB, BIOS HNKBLi70.86A.0067.2021.0528.1339 05/28/2021
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xa4/0xe0
+ dump_stack+0x10/0x20
+ __might_resched+0x363/0x5a0
+ ? __alloc_skb+0x165/0x340
+ __might_sleep+0xad/0x160
+ ath12k_wmi_cmd_send+0xb1/0x3d0 [ath12k]
+ ? ath12k_wmi_init_wcn7850+0xa40/0xa40 [ath12k]
+ ? __netdev_alloc_skb+0x45/0x7b0
+ ? __asan_memset+0x39/0x40
+ ? ath12k_wmi_alloc_skb+0xf0/0x150 [ath12k]
+ ? reacquire_held_locks+0x4d0/0x4d0
+ ath12k_wmi_set_peer_param+0x340/0x5b0 [ath12k]
+ ath12k_mac_disable_peer_fixed_rate+0xa3/0x110 [ath12k]
+ ? ath12k_mac_vdev_stop+0x4f0/0x4f0 [ath12k]
+ ieee80211_iterate_stations_atomic+0xd4/0x200 [mac80211]
+ ath12k_mac_op_set_bitrate_mask+0x5d2/0x1080 [ath12k]
+ ? ath12k_mac_vif_chan+0x320/0x320 [ath12k]
+ drv_set_bitrate_mask+0x267/0x470 [mac80211]
+ ieee80211_set_bitrate_mask+0x4cc/0x8a0 [mac80211]
+ ? __this_cpu_preempt_check+0x13/0x20
+ nl80211_set_tx_bitrate_mask+0x2bc/0x530 [cfg80211]
+ ? nl80211_parse_tx_bitrate_mask+0x2320/0x2320 [cfg80211]
+ ? trace_contention_end+0xef/0x140
+ ? rtnl_unlock+0x9/0x10
+ ? nl80211_pre_doit+0x557/0x800 [cfg80211]
+ genl_family_rcv_msg_doit+0x1f0/0x2e0
+ ? genl_family_rcv_msg_attrs_parse.isra.0+0x250/0x250
+ ? ns_capable+0x57/0xd0
+ genl_family_rcv_msg+0x34c/0x600
+ ? genl_family_rcv_msg_dumpit+0x310/0x310
+ ? __lock_acquire+0xc62/0x1de0
+ ? he_set_mcs_mask.isra.0+0x8d0/0x8d0 [cfg80211]
+ ? nl80211_parse_tx_bitrate_mask+0x2320/0x2320 [cfg80211]
+ ? cfg80211_external_auth_request+0x690/0x690 [cfg80211]
+ genl_rcv_msg+0xa0/0x130
+ netlink_rcv_skb+0x14c/0x400
+ ? genl_family_rcv_msg+0x600/0x600
+ ? netlink_ack+0xd70/0xd70
+ ? rwsem_optimistic_spin+0x4f0/0x4f0
+ ? genl_rcv+0x14/0x40
+ ? down_read_killable+0x580/0x580
+ ? netlink_deliver_tap+0x13e/0x350
+ ? __this_cpu_preempt_check+0x13/0x20
+ genl_rcv+0x23/0x40
+ netlink_unicast+0x45e/0x790
+ ? netlink_attachskb+0x7f0/0x7f0
+ netlink_sendmsg+0x7eb/0xdb0
+ ? netlink_unicast+0x790/0x790
+ ? __this_cpu_preempt_check+0x13/0x20
+ ? selinux_socket_sendmsg+0x31/0x40
+ ? netlink_unicast+0x790/0x790
+ __sock_sendmsg+0xc9/0x160
+ ____sys_sendmsg+0x620/0x990
+ ? kernel_sendmsg+0x30/0x30
+ ? __copy_msghdr+0x410/0x410
+ ? __kasan_check_read+0x11/0x20
+ ? mark_lock+0xe6/0x1470
+ ___sys_sendmsg+0xe9/0x170
+ ? copy_msghdr_from_user+0x120/0x120
+ ? __lock_acquire+0xc62/0x1de0
+ ? do_fault_around+0x2c6/0x4e0
+ ? do_user_addr_fault+0x8c1/0xde0
+ ? reacquire_held_locks+0x220/0x4d0
+ ? do_user_addr_fault+0x8c1/0xde0
+ ? __kasan_check_read+0x11/0x20
+ ? __fdget+0x4e/0x1d0
+ ? sockfd_lookup_light+0x1a/0x170
+ __sys_sendmsg+0xd2/0x180
+ ? __sys_sendmsg_sock+0x20/0x20
+ ? reacquire_held_locks+0x4d0/0x4d0
+ ? debug_smp_processor_id+0x17/0x20
+ __x64_sys_sendmsg+0x72/0xb0
+ ? lockdep_hardirqs_on+0x7d/0x100
+ x64_sys_call+0x894/0x9f0
+ do_syscall_64+0x64/0x130
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+RIP: 0033:0x7f230fe04807
+Code: 64 89 02 48 c7 c0 ff ff ff ff eb bb 0f 1f 80 00 00 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 89 74 24 10
+RSP: 002b:00007ffe996a7ea8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+RAX: ffffffffffffffda RBX: 0000556f9f9c3390 RCX: 00007f230fe04807
+RDX: 0000000000000000 RSI: 00007ffe996a7ee0 RDI: 0000000000000003
+RBP: 0000556f9f9c88c0 R08: 0000000000000002 R09: 0000000000000000
+R10: 0000556f965ca190 R11: 0000000000000246 R12: 0000556f9f9c8780
+R13: 00007ffe996a7ee0 R14: 0000556f9f9c87d0 R15: 0000556f9f9c88c0
+ </TASK>
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20241007165932.78081-2-kvalo@kernel.org
+Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mac80211.h | 18 ++++++++++++++++++
- net/mac80211/util.c    | 16 +++++++++++++++-
- 2 files changed, 33 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index 901fe3ac139e..835a58ce9ca5 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -6080,6 +6080,24 @@ void ieee80211_iterate_stations_atomic(struct ieee80211_hw *hw,
- 				       void (*iterator)(void *data,
- 						struct ieee80211_sta *sta),
- 				       void *data);
-+
-+/**
-+ * ieee80211_iterate_stations_mtx - iterate stations
-+ *
-+ * This function iterates over all stations associated with a given
-+ * hardware that are currently uploaded to the driver and calls the callback
-+ * function for them. This version can only be used while holding the wiphy
-+ * mutex.
-+ *
-+ * @hw: the hardware struct of which the interfaces should be iterated over
-+ * @iterator: the iterator function to call
-+ * @data: first argument of the iterator function
-+ */
-+void ieee80211_iterate_stations_mtx(struct ieee80211_hw *hw,
-+				    void (*iterator)(void *data,
-+						     struct ieee80211_sta *sta),
-+				    void *data);
-+
- /**
-  * ieee80211_queue_work - add work onto the mac80211 workqueue
-  *
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index d682c32821a1..cc3c46a82077 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -827,7 +827,8 @@ static void __iterate_stations(struct ieee80211_local *local,
- {
- 	struct sta_info *sta;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index e4b8c45898d2..713899735ccc 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -6676,9 +6676,9 @@ ath12k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
+ 				    arvif->vdev_id, ret);
+ 			return ret;
+ 		}
+-		ieee80211_iterate_stations_atomic(hw,
+-						  ath12k_mac_disable_peer_fixed_rate,
+-						  arvif);
++		ieee80211_iterate_stations_mtx(hw,
++					       ath12k_mac_disable_peer_fixed_rate,
++					       arvif);
+ 	} else if (ath12k_mac_bitrate_mask_get_single_nss(ar, band, mask,
+ 							  &single_nss)) {
+ 		rate = WMI_FIXED_RATE_NONE;
+@@ -6722,16 +6722,16 @@ ath12k_mac_op_set_bitrate_mask(struct ieee80211_hw *hw,
+ 			return -EINVAL;
+ 		}
  
--	list_for_each_entry_rcu(sta, &local->sta_list, list) {
-+	list_for_each_entry_rcu(sta, &local->sta_list, list,
-+				lockdep_is_held(&local->hw.wiphy->mtx)) {
- 		if (!sta->uploaded)
- 			continue;
+-		ieee80211_iterate_stations_atomic(hw,
+-						  ath12k_mac_disable_peer_fixed_rate,
+-						  arvif);
++		ieee80211_iterate_stations_mtx(hw,
++					       ath12k_mac_disable_peer_fixed_rate,
++					       arvif);
  
-@@ -848,6 +849,19 @@ void ieee80211_iterate_stations_atomic(struct ieee80211_hw *hw,
- }
- EXPORT_SYMBOL_GPL(ieee80211_iterate_stations_atomic);
+ 		mutex_lock(&ar->conf_mutex);
  
-+void ieee80211_iterate_stations_mtx(struct ieee80211_hw *hw,
-+				    void (*iterator)(void *data,
-+						     struct ieee80211_sta *sta),
-+				    void *data)
-+{
-+	struct ieee80211_local *local = hw_to_local(hw);
-+
-+	lockdep_assert_wiphy(local->hw.wiphy);
-+
-+	__iterate_stations(local, iterator, data);
-+}
-+EXPORT_SYMBOL_GPL(ieee80211_iterate_stations_mtx);
-+
- struct ieee80211_vif *wdev_to_ieee80211_vif(struct wireless_dev *wdev)
- {
- 	struct ieee80211_sub_if_data *sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
+ 		arvif->bitrate_mask = *mask;
+-		ieee80211_iterate_stations_atomic(hw,
+-						  ath12k_mac_set_bitrate_mask_iter,
+-						  arvif);
++		ieee80211_iterate_stations_mtx(hw,
++					       ath12k_mac_set_bitrate_mask_iter,
++					       arvif);
+ 
+ 		mutex_unlock(&ar->conf_mutex);
+ 	}
 -- 
 2.39.5
 
