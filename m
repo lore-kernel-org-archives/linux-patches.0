@@ -1,120 +1,147 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D026514658D
-	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 11:36:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989A01DF725
+	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 12:21:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736249804; cv=none; b=S5YL9L+1hp1HqxyFwGdfVHSXShnlKWJ6uC/WM0iGgJ77nojj7Q2/3kM948eqeskbiIRHnRaF0/oqp3T+w8IRv9ofLYnLQfK/ECzm68JgBQvVr9sln10Jff6LmoIMI2lB2VHCvYmnVOpMlMo37WIasAWfXWRSKuw2Z7M82xVyk6w=
+	t=1736252487; cv=none; b=F1FArFVIoTbm4aorUMDLUG/qb74sMotmov1wC3imonSuOSKXroUSwc2BAFrjw6TE0gCu3++1/OZL6OCHc42j1tyMl+i2lLdr7eAVyPMc+db8YCXUyiCJSvN0mIYd6iomNKCMGEEWVshOb1/A+vqWMjJy0nyGBhyFcKCF/R5y+Ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736249804; c=relaxed/simple;
-	bh=Y9BesMiV9uMCy3y/CTJ8dLA38nejyMoFaiNgq7Tq74A=;
+	s=arc-20240116; t=1736252487; c=relaxed/simple;
+	bh=D1Etn3txFhKoQjFizo9oCi0lO+MKHRok+gDKC6yCRaU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XFvIbq2pjgAHECF0AvbuW/cZuPJ7UvoOs1BPgvEiGJDKbThgjWf8PlijhLwD+nXsAlx6WvDfMgPJaulVGI58w0N9W4w5IXhkbb1HBM99N168GwVtJQrIikMcEcqtB2U3Npp1A3hDtl7VtIMlIf8SYyNi0qAJvPQ8B4r8AFw5b3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=3VP/WBki; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	 To:Cc:Content-Type; b=UAs9U4Ptqbv4h05zVM4j8d8TKrgIVJUob0Fn8JwQTZ7zYdfkkohr46rUJ1g59I8VVJhjHr9EmEHlY0MudpAPTOXrHw+gAY2FkgTEN632Dgr5wKe0JaYRZ7BKd7xNsIJdSZpB2IGrJVrp9sVWHIhiZYU2kcPwgOteYp/W69lzlFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHtGw6c2; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="3VP/WBki"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ee786b3277so16659779a91.1
-        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 03:36:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHtGw6c2"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2efb17478adso22328879a91.1
+        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 04:21:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1736249801; x=1736854601; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1736252484; x=1736857284; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HezLHe4o9o/F1dzK4dU9Wz6o3ClQ7CI2rKrB29RoRCA=;
-        b=3VP/WBkioL1bngC/Uik/ifvHRgS3OkwYKvn9N7zOwZ06ltXZvRO/Qdgleew1Fff6Pk
-         rjig5QHHiWWNc+cZzT0XqoOdQoxTPcRNtpaTQtwcqnC951mAaGckBcvDj6g+TAXgPG75
-         fcPW/lprL2GTKqDEs3syJadG+esHpGvOTcsbNkya8kz9S/W6A2W7Co48lfwPQdldOaP3
-         4V7LK42SDfpToWbBZqy95r+rohAqSKExQ5wI7RUqJECwCHGOQ+VQuU4U0TnaBDDkByKv
-         nBoMFe2oWc0+PUiC4DSOwZTeQPt4E7rG+RH0Fe0PBQdVO4ViRMisZYIh94vs82U188JW
-         xPRQ==
+        bh=kMk5FvMugOn4M96ewqgpsWQainnISa9eVMfptWei7UY=;
+        b=hHtGw6c2M9sO3DFNw0eeQRRg5PVSDlbzTF3rexGOoUkrjt47eTR4j3viOvi9MavS//
+         9492RwrUUtqt9AjnGzCaPQ/gxGC812sxVJm4dPr4YWSZD/Q1RXESLN8KpSv2amV/U9Tt
+         D4HXblWvCVQBXMaS2Dvf5T/mx23HHt54DxQIY5HTdhGlyF1bCWbWKni8YVm2RUf3A7iI
+         s3sKKjUtTyCpLOQPuA2cPZUq4W1VHSkttKu2hG5/Mh81RZK2oPCm9OQZ+AXQbALQUBbC
+         vC5kJ/aixfMonpFHv7bCTU0xPVeJkqs53DsI4eJfRdUzkLvfIcuwbB+Flr8ye95CQAeE
+         dAew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736249801; x=1736854601;
+        d=1e100.net; s=20230601; t=1736252484; x=1736857284;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HezLHe4o9o/F1dzK4dU9Wz6o3ClQ7CI2rKrB29RoRCA=;
-        b=HxaQgXH0x/YiZgbRcY48tNhiY0Ob6FRdzbtXL1GqsZJq0fPY+KEuMME18cvMAP8YnM
-         eHH9Mx4fobma3vuA+HmUPtrtNym1CR1JQcRlht0iLR91rzDPC4oKMZcQWaGquwCe2cWX
-         GHcyo1QmDmhhSPZJ/vk901H5D9Vi1cwJ4GptFofSMUyZHMigcLKgZDdUsnR+i7SPzFqY
-         eeJiVdAuuvj+8j7+dSUbwfNDfFk0T0hGPVG9A4U4ukeLT99PF+BVYt74ybLyWjgSLpc0
-         CWc63QiZpjTmspL3rSTttBbaS5Kv2F88dZnJYjvCA8rNumzS9NtzvpcCiLPFwavZeMBk
-         xlMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU3jx+MARGFnyYWRcGfr74EKSMzLo43gbn/j87Su97HNsiH5AhLQTxS+87ZMrx1Jf/Pgy9gAWgO@lists.linux.dev
-X-Gm-Message-State: AOJu0YxrwlpLkbIK1NECaRw0xsnFGCHfvoD36EA+O1xeRomDUAfGgewH
-	NbrgBfFTL0vbvoFL0vXdjjAzZRuiGCWx7OomIMQtDhbJbFqkl2c89dXQC9raHDqFcAGyEupk7uY
-	rFZM6vziTGG1xgjQd7rWDGa8CobiwOT45Xpg56Q==
-X-Gm-Gg: ASbGnctruo53ZSXxhemriiQ+h55sAEzZXbVmTrzJeuoj+kgcIpDRYA/JW68wZnLyM+d
-	X8x2O+vLtIvyQeESxy8DbPOZBYg2PerddeoIN
-X-Google-Smtp-Source: AGHT+IEpYwKsbS+mCPDKNQglIw0fFMHrX0/2J4U1AUgg44SrAqTO7vSYUXvw4K7xW0AF8enbL06mVLQWtquxJUldXJM=
-X-Received: by 2002:a17:90a:d88d:b0:2ee:863e:9ffc with SMTP id
- 98e67ed59e1d1-2f452e4ace5mr80833760a91.21.1736249801195; Tue, 07 Jan 2025
- 03:36:41 -0800 (PST)
+        bh=kMk5FvMugOn4M96ewqgpsWQainnISa9eVMfptWei7UY=;
+        b=A2VbzT9QeOpOxowkajR5FiKvOpIxCC+dDZ48oyD3rR/aeu7Y654A9osAFQ99Kga3gK
+         eYxxeJTmNjUFBDP+ogoVX2dlxofOcPGr/Kx4sQwWy4D8CmiTxXlo5qyO3d5J+gwDoS26
+         P52rzaVbbUTTAGCfqjSHGeHF3+qKoa1p8efLN3aiAA6s/06x0IeX2duv2PCJjEcoGY3b
+         6YfcJKh/oi5aKZt6cPEdW10I6Yy/p9aDfLZL4PkhcRhgCgAsaVpO1Lce2rr7AXTqVA5E
+         tvLntxBsm9TngvxoA/S5rIypKR/AJ8EVdeuN+l69ipd0zlMoLfW5b5PculqtFAxz6AsC
+         PH1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVh4JEj946UGmIH7sGunLOAJUpNaoocQtz/nUwRaRBh8UkdWyBrzXI2CFvmMNAYI/zLoHzBoPf9@lists.linux.dev
+X-Gm-Message-State: AOJu0YyWxm6d12Zk8OES1p6tuoByJo8ddleZ+Vt7PuCspbe/f7AyioO4
+	fd0rWqy8PlPOD3x24WOvBz7QnJjXkzkMp89QEDEhwFhWJjUhdD+J57lCw1RhagHSlqtBfVeXJA9
+	VqU8ko3WZAJvxJWAOXGzxC3H3S7k=
+X-Gm-Gg: ASbGncsWhL4kAS/y0Yezcv4rP2eH/oi654ymP8izbRCIQizJQQrnVtkLEybMHpa7x3v
+	BYAbqniehxZKbrExutfn01VIEWB/DS7pPiPA+1g==
+X-Google-Smtp-Source: AGHT+IF/oo8IEKv/OpOv7Nts3WwiuFWPiAadrA9W8YOOQSaDPIVl9tifEfOEYCOU9txhDO7q88i/wtHWiiqZWz6vIyU=
+X-Received: by 2002:a17:90b:534b:b0:2ee:c91a:acf7 with SMTP id
+ 98e67ed59e1d1-2f452dfccdcmr91045475a91.4.1736252483836; Tue, 07 Jan 2025
+ 04:21:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250106151141.738050441@linuxfoundation.org>
-In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 7 Jan 2025 20:36:30 +0900
-Message-ID: <CAKL4bV730JK+vXvpd0jqWfEPtN-tZAfud3F62ONvp48J9Bqxjw@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/156] 6.12.9-rc1 review
+References: <20250106151150.585603565@linuxfoundation.org> <20250106151155.069105214@linuxfoundation.org>
+In-Reply-To: <20250106151155.069105214@linuxfoundation.org>
+From: Ilya Dryomov <idryomov@gmail.com>
+Date: Tue, 7 Jan 2025 13:21:12 +0100
+Message-ID: <CAOi1vP9_s3oW8XP6bytvKm3JocPO0-odkv9LQFuuEU==JBgfaw@mail.gmail.com>
+Subject: Re: [PATCH 6.6 118/222] ceph: print cluster fsid and client global_id
+ in all debug logs
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
-	broonie@kernel.org
+	Xiubo Li <xiubli@redhat.com>, Patrick Donnelly <pdonnell@redhat.com>, 
+	Milind Changire <mchangir@redhat.com>, Sasha Levin <sashal@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
-
-On Tue, Jan 7, 2025 at 12:34=E2=80=AFAM Greg Kroah-Hartman
+On Mon, Jan 6, 2025 at 4:28=E2=80=AFPM Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.12.9 release.
-> There are 156 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> 6.6-stable review patch.  If anyone has any objections, please let me kno=
+w.
 >
-> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> Anything received after that time might be too late.
+> ------------------
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.12.9-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
+> From: Xiubo Li <xiubli@redhat.com>
 >
-> thanks,
+> [ Upstream commit 38d46409c4639a1d659ebfa70e27a8bed6b8ee1d ]
 >
-> greg k-h
+> Multiple CephFS mounts on a host is increasingly common so
+> disambiguating messages like this is necessary and will make it easier
+> to debug issues.
 >
+> At the same this will improve the debug logs to make them easier to
+> troubleshooting issues, such as print the ino# instead only printing
+> the memory addresses of the corresponding inodes and print the dentry
+> names instead of the corresponding memory addresses for the dentry,etc.
+>
+> Link: https://tracker.ceph.com/issues/61590
+> Signed-off-by: Xiubo Li <xiubli@redhat.com>
+> Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
+> Reviewed-by: Milind Changire <mchangir@redhat.com>
+> Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+> Stable-dep-of: 550f7ca98ee0 ("ceph: give up on paths longer than PATH_MAX=
+")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  fs/ceph/acl.c        |   6 +-
+>  fs/ceph/addr.c       | 279 +++++++++--------
+>  fs/ceph/caps.c       | 710 +++++++++++++++++++++++++------------------
+>  fs/ceph/crypto.c     |  39 ++-
+>  fs/ceph/debugfs.c    |   6 +-
+>  fs/ceph/dir.c        | 218 +++++++------
+>  fs/ceph/export.c     |  39 +--
+>  fs/ceph/file.c       | 245 ++++++++-------
+>  fs/ceph/inode.c      | 485 ++++++++++++++++-------------
+>  fs/ceph/ioctl.c      |  13 +-
+>  fs/ceph/locks.c      |  57 ++--
+>  fs/ceph/mds_client.c | 558 +++++++++++++++++++---------------
+>  fs/ceph/mdsmap.c     |  24 +-
+>  fs/ceph/metric.c     |   5 +-
+>  fs/ceph/quota.c      |  29 +-
+>  fs/ceph/snap.c       | 174 ++++++-----
+>  fs/ceph/super.c      |  70 +++--
+>  fs/ceph/super.h      |   6 +
+>  fs/ceph/xattr.c      |  96 +++---
+>  19 files changed, 1747 insertions(+), 1312 deletions(-)
 
-6.12.9-rc1 tested.
+Hi Greg,
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+This is a huge patch, albeit mostly mechanical.  Commit 550f7ca98ee0
+("ceph: give up on paths longer than PATH_MAX") for which this patch is
+a dependency just removes the affected log message, so it could be
+backported with a trivial conflict resolution instead of taking in
+5c5f0d2b5f92 ("libceph: add doutc and *_client debug macros support")
+and 38d46409c463 ("ceph: print cluster fsid and client global_id in all
+debug logs") to arrange for a "clean" backport.
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+Were these cherry picks done in an automated fashion by a tool that
+tries to identify and pull prerequisite patches based on "git blame"
+output?  The result appears to go against the rules laid out in
+Documentation/process/stable-kernel-rules.rst (particularly the limit
+on the number of lines), so I wanted to clarify the expected workflow
+of the stable team in this area.  Are "clean" backports considered to
+justify additional prerequisite patches of this size even when the
+conflict resolution is "take ours" or otherwise trivial?
 
-[    0.000000] Linux version 6.12.9-rc1rv
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU
-Binutils) 2.43.0) #1 SMP PREEMPT_DYNAMIC Tue Jan  7 19:51:46 JST 2025
+Thanks,
 
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+                Ilya
