@@ -1,121 +1,76 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388BA1DE4F1;
-	Tue,  7 Jan 2025 10:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E8D1E573B;
+	Tue,  7 Jan 2025 10:39:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736245835; cv=none; b=krpk+2uslMvHyPhHOg63LmjLuHsbSdFttjLbxUF7Q3PdMnkfKfR0rsgBp/6hKJ1XENxziNtY081xjfQ48TbWs4CRLnrygfEABQzqaZcQ0EmWOr2s2UXVkjJAtfCi/GKOQbaLOsFKeEzj+b77SCzqrpMj3APvi1fmhC5Fg5jcCK8=
+	t=1736246376; cv=none; b=kRuMtqbHKiFMaQ7KZzbeW7atgJgDuP+zBO5SQh951gKzT9pWozxqFFH4/V8EEyXFe+iwUPxUpdZmN3V4Dx8F+UZj886y8E6kFfHc4+bcwqh2yOfrwwSsIGx+iJeuV1exUFmk27r5XykA/jGK3c1hT3TkqV5PKZszDccZyQtUjhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736245835; c=relaxed/simple;
-	bh=2XgPbOnTQq06t8pLUvQn/Sa68Jw5XcKt8Gl+qefLhn8=;
+	s=arc-20240116; t=1736246376; c=relaxed/simple;
+	bh=0UtoztvkGqO74lDBXkcUkB7JSpBiKVH6jVMstbnte4U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XSW2rRgCAo8n/OSg2rytFVYnXY9ftY2Km9N2vVeB72mz0ejjk4gvDL26RwBysKzLnyH6jsJpLI6Z/fyPapF0c9sHx/BTbS8qBxrP1XtwShBXoIRD0enDXlGX4ww5nSXfgPjbVgr0hkgUjbVyutDOTLitF3R1gxi/qCGh7eY4+1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=mOfgP8zT; arc=none smtp.client-ip=212.227.17.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	 Content-Type:Content-Disposition:In-Reply-To; b=cR+7DKwXlucjBeh3fmPHiHtWSH3qTUAOc5idyDrWs6CoLhP3rZdFCYsC1ekPpp9HnE2nHvJ3PVuhNwt1gJgO155zZoNcQejK9TyuOjOMzP5Tt9LikO82e/RiQ+2iG5hVvwjvCcYb/ikL6l25K8sIjozbCGm3CB9c7oAFdsTk3jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpfIcCH3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="mOfgP8zT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1736245795; x=1736850595; i=christian@heusel.eu;
-	bh=Z8vr7W70GbfxUf5/Vci+71ulvRYTfJ4JAm+1PYrhaP4=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=mOfgP8zTLzH1KF5NcALMjVMHyMUEtxYI0ZFiKR+3lBoyBBSEFXJORTkGz5ciPZEb
-	 Isk0n11bFUHX9vUf9+oLf+Vox0V+ePXt+TT+oK87dcgjpsBUx3XPKBz45u3sgl+lq
-	 PpnDezMSVKWs6Zhiuf+ZTJLlToKEOFYWEIqJ7WR1EhuQHVw3Xq7Vv4dM7cK/je/EY
-	 O502RwxbGN8K5KtogF0pY4CyO5q7s9rFRgcLxUPwwJ9qhveyvi48yFoina9RsqDkb
-	 20Ditu2mR/iem7SyEv+Y1sK9RsDI5BNwSSXwWzaaog5qoxIqGM+unGUv50zMvdd5o
-	 4DFUbUO5oYNCM8N8bw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([129.206.221.31]) by mrelayeu.kundenserver.de
- (mreue107 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MTigN-1t1Fmg15xN-00Ksmo; Tue, 07 Jan 2025 11:29:55 +0100
-Date: Tue, 7 Jan 2025 11:29:51 +0100
-From: Christian Heusel <christian@heusel.eu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/156] 6.12.9-rc1 review
-Message-ID: <92cb12c9-4c6e-4376-b053-6791ce147efa@heusel.eu>
-References: <20250106151141.738050441@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpfIcCH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D14C4CEDD;
+	Tue,  7 Jan 2025 10:39:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1736246375;
+	bh=0UtoztvkGqO74lDBXkcUkB7JSpBiKVH6jVMstbnte4U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jpfIcCH3Bneqgna3SeS1sg8rBPN+RnK2xfhtZVD7bhbefvy5699TzibpSqQQ8ez3B
+	 UGVQsMKzdCVnGT+JRIr/GI3p62BKNIId7S8WyuhHmMZ+rv5AkElrYYgcGhqEEPsKLG
+	 NvEJ5+Rtw9PP4NauzUPZAsl0XzZSuI9NjsQQP0Wk=
+Date: Tue, 7 Jan 2025 11:39:32 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Cc: patches@lists.linux.dev,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>, stable@vger.kernel.org
+Subject: Re: [PATCH 6.6 027/222] cleanup: Adjust scoped_guard() macros to
+ avoid potential warning
+Message-ID: <2025010725-cartoon-semantic-da14@gregkh>
+References: <20250106151150.585603565@linuxfoundation.org>
+ <20250106151151.629422119@linuxfoundation.org>
+ <35ac0170-8979-4047-9b11-cd2c9ffea014@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="upiekvmb3x75q2xj"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250106151141.738050441@linuxfoundation.org>
-X-Provags-ID: V03:K1:55CIYtMPAbBaD889aOfT7rVzrzoLg/qGR7f0mqZsr4Za/d+8AwJ
- REzX2UQSq6Jxw/50jSicuqmjHPklIbnK0JfFLTFZFjs1aM2ckRUXQaMoVbGJ/arxs6ze+WP
- 0l+iHnbvb3/mnm4Icd2ykvqJoKe+CEHf9re1TcMQHdwprpfI7pwq1AD9CgNLaIpyCe6UvJT
- n3cqV9pLu4EVP7NMpffsg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Hqq/drXZ/dM=;jabQrdfAfF9xs8HMnjF1b16Jfpi
- WYdHFrgz0akraSEqoa9T4ICH6+eRQfpPbXR1DEUNXH5Wfvn3tW0QbvewhPeLX5AHKAgXMhBqp
- q5tokFVX8GQbyPNTqby1EjnUKApgwQaS+iLoSfdFOOBN9IavbWZ7yOWcmWwSMgjloRW/3cpdG
- HRv7Jp8yblTJ4ZL7F5HMprPUPW3aO4NW4mvjfZDA08j+UFMT7X/XbXgGT3/p0uhoSl7ad0RqH
- DnPqIg77TWcJVhxyybAm7fWHVEcTUk1yxswvOmGqb4WxbsVvvB+ZkK2mIsWqgdqZJIn/PWsEh
- MuZe5Q27tp0UST8/zv45pcD2+TRM0mNOxzE2e47rlfC+zXLahRPBQq7J9G1rv7nrDQsV9b/Rw
- 8MCl8FHPGWvKooIUZCrOrg1A9dTEIdUrrIZuW/A8BHd4I7t0gPFeW1I2SYgGgaPtcdqSSKzeg
- s5Z1LZn8K/MvRRqaPFDSLEu5vbrz/bTt36NDqm4+Mrb7GJ49S65YfW7DxVzRxgfIOQTrlDKc9
- pEHRxXYgTheo0wqQtxXABFrbedOZklh5+n5ZKRQmt3hZLWjuT6i0dC7/lb4PeI70G7Vk6uQj9
- qeuMjkFTLHwCaTYGSTj/61AcXqx5rFZcm4jdF26xW4p53nO1meFXdu+4OQqJ3pRniVguwBk1b
- 0PL/kE+FqTk0R863nDRw5S4du/r7r70GD2nyJiDhOxr9DiSuYptOhLdywULKY8Jn+uFkqypBD
- sPxuSMQrEIvPTTDAq5YWrqHcCEJTjfPRAo4Z46Kl/jCWvYyQSmnwgQPJt7BhCTgiLdcuKW+3c
- YK0GYHXwFaAJbH6xHDW0KTJBYnYlD/5MTpnxnyULWv4NmaEnnOBTgtEWeaf0mSNzlFtGHebHo
- erx/D9XDfMupRmpXxCk1YnhiSdUeFywZpdZfPsFDHFOtpcRYiTMkwfyo15Rr6W+fndR4/fwOs
- ZD/Rbo3cIhxBOIiCYZ8q1AAh5skdJB3rl4ugKEQSYNwhiOg0UFy7u2Kpdr4JxrB0uEcpebORB
- X5fVmEseseqTvHrI5Y3HsUvL5uK2jad+iE10r+g
+In-Reply-To: <35ac0170-8979-4047-9b11-cd2c9ffea014@intel.com>
 
+On Tue, Jan 07, 2025 at 11:01:23AM +0100, Przemek Kitszel wrote:
+> On 1/6/25 16:13, Greg Kroah-Hartman wrote:
+> > 6.6-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+> > 
+> > [ Upstream commit fcc22ac5baf06dd17193de44b60dbceea6461983 ]
+> > 
+> > Change scoped_guard() and scoped_cond_guard() macros to make reasoning
+> > about them easier for static analysis tools (smatch, compiler
+> > diagnostics), especially to enable them to tell if the given usage of
+> > scoped_guard() is with a conditional lock class (interruptible-locks,
+> > try-locks) or not (like simple mutex_lock()).
+> > 
+> 
+> please also consider cherry pick of the commit 9a884bdb6e95 ("iio:
+> magnetometer: fix if () scoped_guard() formatting") when picking
+> the one in the subject
 
---upiekvmb3x75q2xj
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: Re: [PATCH 6.12 000/156] 6.12.9-rc1 review
-MIME-Version: 1.0
+Did you try to apply that commit to the 6.6.y tree?  If you have it
+working, please send us the correct backport because as-is, it does not
+apply at all.
 
-On 25/01/06 04:14PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.9 release.
-> There are 156 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> Anything received after that time might be too late.
+thanks,
 
-Tested-by: Christian Heusel <christian@heusel.eu>
-
-Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU and with my
-Sony WH1000XM3 Headphones.
-
---upiekvmb3x75q2xj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmd9Ah8ACgkQwEfU8yi1
-JYX/TQ/+ObBgY+Gn+xwXFj/DspDrUXyzfcLPFFYmg7TfrA9f5rZbbmtJFrQJ5TeX
-iUSGGQK0yMVZ5mWfXp+8PUOcpb9Ft1i3iwBkm+hhpdmz9QnKAa5KuYWOh8a3rWHl
-ZgUsz7+sSj3Q1czLS6QKc91CeKxwAbKqnw505BR7xku7+RqQgspNwxTs0AYr/H6h
-mfbOsjPVr9mtWs/z92ERaRasHdatvSdmTa6LkIWsEdCn3LPbOCaEVkN72/y9iPD/
-FMelGzxjvPtnOnUCUClgmMPPbWWnefPpptCKu1bIzetgTOzF9r5WBJxW5l333URd
-Y5jHnwqVsM+EBQDmAA+5kFFaEmSDDb4VZ6eYcrbnrz03gsToKnG3dkI2MsYUHffD
-EbSUNj+YDDCmHFxtMqxQUp89GjrVu4DrWtfO5ZfcSdAcS3J9WrSKRCvLzV2lMXsv
-GRsDTimkCEesfh3GwqihO2I8VUd0uJu+knf/PYVqCRvitNVlSQrM0dKs4C0v8Rgq
-bFwphDzQG7275RR1eM2swZln+LkdPsx++BLCO4wWszodws/6PbTU4mafgnbW0WHA
-h4u/zxsIfyhV8IE4ufhI8K419cpdfXFIvQOhFy3eL1MZciFWEimm01MF38AtXILD
-vahL3qRQ/YDfi0jKO5nknGoISb5MN+UG/uejrezTXKniBskStJg=
-=wh1A
------END PGP SIGNATURE-----
-
---upiekvmb3x75q2xj--
+greg k-h
