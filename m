@@ -1,114 +1,162 @@
-Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
+Received: from gw2.atmark-techno.com (gw2.atmark-techno.com [35.74.137.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032E11DDC06
-	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 07:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AE31ADFE3
+	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 07:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.74.137.57
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736233820; cv=none; b=uXsnuK72bI+kWYCkVpcI1ZzQN+IxUfAd9+sPyihD+MM4FVGqQLuV8VIVKxG1sT4kFRsv0cnB0Yh0OSfDgWXNp56HMpOgFBJdf4Vck06R8RpNN0PNgbeRKoqrTC/0GxO2/0mrR2UbwTms9jsan9qq9EVpP1g4FY6Dn7wVtfCtD4E=
+	t=1736234183; cv=none; b=pU8KhfwGpNLDlbaoUz1HPwijH2tpNcEIfxFvlb5ggpJXJIps474qVsK0k2de3nSkQhKTZ6nEhxOeVJ2MsSSSc0eWl15SGBEx2FR/fOqyi7MJ8h2k7/pV4Z3lzIF4NRbZ6U7HNR/YOVF4ba+vph149GgTtq11uq9mYUui0Lso8YY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736233820; c=relaxed/simple;
-	bh=7Zphmnz3LMezieYWOaHieK2xW5iCtqfYP/qT/euE+50=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DNuQ0cAFLA4TuYMcjIu1wjMRmMHnKslGJFId5xDrv00sj6/w1RS6bHYbLq2TmqD+nisPz2tQKP3M2k2bKWlTLcEg1HsEyUJKFYN4IwwaW5kq8DfDIdUHoFHJBlpbmZIbB7wHH1hG4AzlQKCYfu2CH3ciCYgkUh0ZsDblq0Pcbfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=dJXpYcO/; arc=none smtp.client-ip=44.202.169.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1736234183; c=relaxed/simple;
+	bh=4JOf4vQJKySbNhFzUeO9HfqnUcNDwDoaMz2y5skl6qo=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Hy74VZ/3r9pmZETFJ0gmcnrNtvlzUYdEMQecF16SeIiPr70CajOp8wuyZa5AM5eD8+9+Bti293TvtH+8s8BvLF/6M24LqSeAej0jljoiXEotHGQeGBJh1z+bhDFt+xP2jCS0s/VoKvWKN9O/DXI3tlL2573zk1o+DIQQQBRQf+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com; spf=pass smtp.mailfrom=atmark-techno.com; dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b=LxqYsGP7; dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b=hFmei3Kr; arc=none smtp.client-ip=35.74.137.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atmark-techno.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="dJXpYcO/"
-Received: from eig-obgw-6010a.ext.cloudfilter.net ([10.0.30.248])
-	by cmsmtp with ESMTPS
-	id Ulb5tcUUgjMK7V3jCtK3Sb; Tue, 07 Jan 2025 07:10:15 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id V3jCtGf5shs2qV3jCt7ey5; Tue, 07 Jan 2025 07:10:14 +0000
-X-Authority-Analysis: v=2.4 cv=NeDg1XD4 c=1 sm=1 tr=0 ts=677cd356
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=VdSt8ZQiCzkA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=9j9uveJ0GrHUEOsm6y3z+rwLY4XtuBfQx/7bDQMRY1s=; b=dJXpYcO/2tDYeLgYSqqrWeLqOj
-	oz1i4ZZn/Ni3/e0OGGJtcqb8CpOlZJ3lgmLIPklOvzl1gOQILQK/VaEa9xZ6HW0KkCx7YoWF0/zBJ
-	9BD8yxurS5Xk1yN59Z93t7DEtrL2iw5mQfDJK8Pt3jf6wZRyDGkXWgzciMlpXTl8S0Ow+9U/8YRBc
-	j4CAewuAFtlrJ/Mfd4ZVjF3nzIaEj0z9XC2yGxEO5PTSFUMVkkh5a/DHrvfi9emPURInlu60w+x7M
-	HFDbHP5MtwGgsVkwsa1U6Y8yEORPvBqNs3vpvXA20PN9Z6kcZyD/v9ZPLZ5bzbNCBXuKgAMoZUHM3
-	YmeWU9OQ==;
-Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:51688 helo=[10.0.1.115])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <re@w6rz.net>)
-	id 1tV3jB-002klz-0N;
-	Tue, 07 Jan 2025 00:10:13 -0700
-Message-ID: <3d30ff74-4271-4f53-b830-b5b751047cef@w6rz.net>
-Date: Mon, 6 Jan 2025 23:10:10 -0800
+	dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b="LxqYsGP7";
+	dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b="hFmei3Kr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=atmark-techno.com;
+	s=gw2_bookworm; t=1736234172;
+	bh=4JOf4vQJKySbNhFzUeO9HfqnUcNDwDoaMz2y5skl6qo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=LxqYsGP7rd9rzP0Oj/1U29fRCe9Y1fnmoOk58JDTaRQOs56OC86uGrd09ssh/xVg2
+	 dEWvfi4vneFm0XElCTxppqKCAo0pv/Wdd260CBAx4Ii/pU62q5ulgR7dYi4yVHv78n
+	 I2jVJpRlBdMHqBIISNjb6THUN/+9cuihH/HF18r4YU8u6aZbYSfbqgz5LHv3PkVLgA
+	 5qeqcz9MwzHri03hhDXkDORp+88yOY5gncW63VZDVmtgvgEuBqnkDI4McVnplDYfip
+	 LenHxnV2+ymqg7PSLHX2FK+F0y7Cx74MB1vOlXvRj56loz5uAmVLTqiAs0627ALad4
+	 QO6wqAGsdlwyw==
+Received: from gw2.atmark-techno.com (localhost [127.0.0.1])
+	by gw2.atmark-techno.com (Postfix) with ESMTP id F22DDA5C
+	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 16:16:12 +0900 (JST)
+Authentication-Results: gw2.atmark-techno.com;
+	dkim=pass (2048-bit key; unprotected) header.d=atmark-techno.com header.i=@atmark-techno.com header.a=rsa-sha256 header.s=google header.b=hFmei3Kr;
+	dkim-atps=neutral
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by gw2.atmark-techno.com (Postfix) with ESMTPS id B7BC0A5C
+	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 16:16:11 +0900 (JST)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-21a7cbe3b56so4099955ad.0
+        for <patches@lists.linux.dev>; Mon, 06 Jan 2025 23:16:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atmark-techno.com; s=google; t=1736234170; x=1736838970; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rpDKhWdhWoMNZAx6W+tFqQ6UOWX7FUPFoMzc+kYG/bM=;
+        b=hFmei3KrH4QIvYrMR4bWn5CyUu0WFUZgCfm/FKNzfvuRs8iaruZM7WIm8V/V4q0V2L
+         OqNcUQkNAq1T7BCiT6ZkgW54esndaC1ywjqEpq+3MklMzrh0OaQ1am8RYi0nX53ZxySf
+         USzGdpNm894j9MTUvglL0l+jMYPUj783Ug+SRgN3BkNCIPq1StoSM8DNKW6NCafibWZc
+         PP4rI8tmoUTd2y4M6A7SkvhT9xkBLY5Sv8kbsK42aW9nXSdVi/p1IjgHwC7mWh1OX8VQ
+         Hb+GNMW9i+8YhEsSmt3ypHJ5MDg9d78ubXSqCNv/TPc+LUFYMTkCWWdHbWw/UL702822
+         wm5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736234170; x=1736838970;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rpDKhWdhWoMNZAx6W+tFqQ6UOWX7FUPFoMzc+kYG/bM=;
+        b=eqKa4aAdldLUbIGFcYUtWcbBNt0egdqsO1OjpkTyTO9Swc8NsmErkC+Yg1GbJ+/6lm
+         9b01Boamu5qQul+2Qxm0tAvwbs3eabIMBOhvjTkyvLXi2BYzMKe49gx0iO9bVsHBa+CI
+         uU3GrD0MRfAp3TREh4Ko22R7P2KDEcw5rPxnN4P+3ptp/mtdgbYV7pnMR9kbk/2RjWjE
+         BVSuWEAxge/mVqGF7E72wrQC3kIWGI9sdCR0BLIEltanl0VSWUnkf6CHZc8+v1wUM733
+         StkQZFzMP0dmPKzFUnI3LBKTyA5mHFGJqfp4NKUGn4Lo8UtB3Kr/2HJRV2D7tVYuTgob
+         kJbA==
+X-Forwarded-Encrypted: i=1; AJvYcCXWXQNCOPStV/VuBXZt+SwX1RvxlwKFx909jc/PFTgqugFMlJQwaWfxhNJUqynCWm8DrAWfAXQV@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywh6VnRgykZ0KqsRK1ZGyKbUy0Ag7efecJMTFPiyPYQFnWWs3gz
+	Kw/gN0WL9AClixwGpooEGXUw9gGDV/qtU22lG03bAEhZaHAN941nhAiSA8T/xgpwcMuiUcV6OCB
+	udUcLfnJLIGEuxVMbFlHfEXRMD/toN8u8EJQ2u4vZifRfWjimHH/UZBUo
+X-Gm-Gg: ASbGncvImhKZBi43h7hShDAo/qpi8yF0LGME6Yc4GtQfn73iDjNaFtZu4YkfsVBKq3w
+	hQAd6qnUYF4GXnhtKN5VoORng04dLEsc8GL10xtUVP7J8wBlkujXPK5IF3oy+FxGoWi5tM14lpT
+	EPuxeAnmUNfKtwpZ/UJFmn8QZAnByLVo1xKKUwr2/stv1xGoQ7drvQK5HLuckYjM54B3adh77Tr
+	B/hxX4GkvLHleUL2FG1UEiGuddUlUaBRpgbDlpbrLV+bE3R+5pz4siG3xHW0wCne6T9XGHVjSCG
+	nztBT2rvlZuG+JrsDM23l5A78mLKzOwmJbUKznOk
+X-Received: by 2002:a17:903:94d:b0:216:46f4:7e30 with SMTP id d9443c01a7336-219e6f11764mr946279455ad.43.1736234170647;
+        Mon, 06 Jan 2025 23:16:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGAAlP1234Rnr9ldpY2k0GzJjVBsLLDKGARicFLlaJ4wlVFeOd9XKA9FdNXUOAGZRvRjOTfbw==
+X-Received: by 2002:a17:903:94d:b0:216:46f4:7e30 with SMTP id d9443c01a7336-219e6f11764mr946279245ad.43.1736234170365;
+        Mon, 06 Jan 2025 23:16:10 -0800 (PST)
+Received: from localhost (117.209.187.35.bc.googleusercontent.com. [35.187.209.117])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9cdd9bsm303236805ad.132.2025.01.06.23.16.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 06 Jan 2025 23:16:10 -0800 (PST)
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	Kairui Song <kasong@tencent.com>,
+	Desheng Wu <deshengwu@tencent.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Dominique Martinet <dominique.martinet@atmark-techno.com>
+Subject: [PATCH 5.10 5.15 6.1] zram: check comp is non-NULL before calling comp_destroy
+Date: Tue,  7 Jan 2025 16:16:04 +0900
+Message-Id: <20250107071604.190497-1-dominique.martinet@atmark-techno.com>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <Z3ytcILx4S1v_ueJ@codewreck.org>
+References: <Z3ytcILx4S1v_ueJ@codewreck.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 00/81] 6.1.124-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250106151129.433047073@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.223.253.157
-X-Source-L: No
-X-Exim-ID: 1tV3jB-002klz-0N
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.115]) [73.223.253.157]:51688
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 36
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfJ+xEXDDDhUvo4M3GQp6fyEQMpeISsFJ3LSnTbUInL+Z6mO8kqZ1k0npBwbW10WXqGy5Q+xtAG1shpbU60iEqAItG/gDjM/RaKPXicJNQb2F0egPILX0
- PhvWaHoDPObDqAdrg5/eavGMVg3THMI16ji8rHI6fIWnBY6ySvIyXGUXqoJxSnrHdXE51rlXWyCSKg==
+Content-Transfer-Encoding: 8bit
 
-On 1/6/25 07:15, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.124 release.
-> There are 81 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.124-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+This is a pre-requisite for the backport of commit 74363ec674cb ("zram:
+fix uninitialized ZRAM not releasing backing device"), which has been
+implemented differently in commit 7ac07a26dea7 ("zram: preparation for
+multi-zcomp support") upstream.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+We only need to ensure that zcomp_destroy is not called with a NULL
+comp, so add this check as the other commit cannot be backported easily.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Stable-dep-of: 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing device")
+Link: https://lore.kernel.org/Z3ytcILx4S1v_ueJ@codewreck.org
+Suggested-by: Kairui Song <kasong@tencent.com>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+---
+This is the fix suggested by kasong in reply to my report (his mail
+didn't make it to lkml because of client sending html)
+
+This applies cleanly on all 3 branches, and I've tested it works
+properly on 5.10 (e.g. I can allocate and free zram devices fine)
+
+I have no preference on which way forward is taken, the problematic
+patch can be dropped for a cycle while this is sorted out...
+
+
+Also, Kasong pointed to another issue he sent a patch for just now:
+https://lore.kernel.org/all/20250107065446.86928-1-ryncsn@gmail.com/
+
+Before 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing
+device") that was indeed not a problem so I confirm this is a
+regression, even if it is unlikely.
+It doesn't look exploitable by unprivileged users anyway so I don't have
+any opinion on whether the patches should be held until upstream picks
+this latest fix up as well either.
+
+Thanks,
+Dominique
+
+
+ drivers/block/zram/zram_drv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
+index b83181357f36..b4133258e1bf 100644
+--- a/drivers/block/zram/zram_drv.c
++++ b/drivers/block/zram/zram_drv.c
+@@ -1734,5 +1734,6 @@ static void zram_reset_device(struct zram *zram)
+ 	zram->disksize = 0;
+ 	memset(&zram->stats, 0, sizeof(zram->stats));
+-	zcomp_destroy(zram->comp);
++	if (zram->comp)
++		zcomp_destroy(zram->comp);
+ 	zram->comp = NULL;
+ 	reset_bdev(zram);
+-- 
+2.39.5
+
 
