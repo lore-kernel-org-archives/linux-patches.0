@@ -1,186 +1,125 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0001EF08D
-	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 15:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4EC1F3D43;
+	Tue,  7 Jan 2025 16:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736265163; cv=none; b=GkZ/qlKd/yYQNQscoKz0AuWQVfp6DGmrctzOsttExoTs2H1AZpjRYfDO/slSA8E+4Ccc1rKHYybrAPK6rdGneCsX85CSuAioZK7iVtwJ2nTTrYdBmwNQERYym1ShmZzQkcU4cGjyN0re0yk9UtzyaToZebfeEwdATogBxHsp4iA=
+	t=1736266405; cv=none; b=ZR8kJLOwDSaerif4HysONcTkmK5a/TTXVhcV5W4Dvlmd/fSu9iGnMJFpBkiB1QN/sn8fB8YfkkhOgEAplyFLGYfrSFE6Z1ku7U56Il1pH5HtzjKzSu7xVE+/O6dpJujSXmefRM2u7kPb0juLId5j8W2bbncjXx8tgaMoDoqoyW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736265163; c=relaxed/simple;
-	bh=Y3K6VnkTj0agsEpHyH49R+8Yy718tcYTrz5OV5nifrg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VLS9UMhYDwtwFq8D1F/nUVHej3JGrN+J5/TZQE8lnaDm7UskjLyXA7Y6CxYkMyYf+V718VMaYFdhKeNorSMI132mcsKEpgYR9QFmvb4v457CvRr3pFUQQMuSe0B/0jINiwl7/t+ndeqe565uTkZcin6JSEIaY3KubCKNZIJYWVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JBxHfvJ0; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JBxHfvJ0"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2164b662090so203652275ad.1
-        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 07:52:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736265158; x=1736869958; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5akAFf1ZPesAMt6W0eaVJbcjKXPbLry7I/lEXkZAboA=;
-        b=JBxHfvJ0hsli5XaQfbfSyzNCj6bjkOSOi+LJeGZ9q35SE1vAeBrVpf0doYarhFEz2b
-         wIALuDVSyshKbD7WlI2nei1QcFs6NEuW/GM3kZCfBYOV5P+gDxDH4O/SrnDth8EcUaKr
-         2egURTkqyGNZ5rMJ1Sar5DRdG3pQoys7kDc1FqiXHwlaSAJGnnUFMwsVBxxxdjqhlVvO
-         8JffMiU7QrjaKsiU58Bbmi7EEsRwjqtoqh1pgpesfBxyV87BOYSNZnggJRuMsUABygkN
-         EDoOiLk4cLrJ/q1QEGvazgqSqzni1wSvBIlRoBJieLt2fp7MVyciMzDsnV2bx7gcMW8B
-         WfNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736265158; x=1736869958;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5akAFf1ZPesAMt6W0eaVJbcjKXPbLry7I/lEXkZAboA=;
-        b=oP6HIcyMYolk2p47UX6TsviICjXjg5+6OT76pkhaIrDzkj0jYQpGr+9SIr4aHrlif/
-         7HaEhyl6nCWwC5BYtawVj81IxK6QtZdW3Dv5CZuqpSVsqpQlX5kQhF9vq41IGp/USaBK
-         QlX42I25XiwD6buo9jreDoyhOnA0hv/oxNZ6XEqo+oWCDx4DEkuGzyomF83Aj8G32YMY
-         XR25MMcfjxTCD+uxaXXcfGyk2nfGEcPZ/KMcGj51oaW5wogBto8q/F2CgXT29ZS7YQpI
-         HWZIG1tWio2nS0cl5NbgGiDgkjdfO8LCi/1zyrYgoGQzcPaObnkD8d3qa764bemK7obR
-         Ptfg==
-X-Forwarded-Encrypted: i=1; AJvYcCVFHcZdwduEFpoaaDQkeTnpFNVw+lsbdFx1tikziTwckB69kO9FT9h8Uf50Ux9TWCn6Ie27gcaQ@lists.linux.dev
-X-Gm-Message-State: AOJu0YxE/Obm8WHDVEyU1Vh+/h//HE/1tdWj+/LzEjjvVv6r5XWnL3Rb
-	5ptZigs1TCDVrb8FwMISmBTT+NKr+PVwPRA8Y4Rx3ycm/xeUr87LUVCQv8jgPgDrX1sRnidBxLW
-	a0xeVlpRxjOGegOcKExbrGABDssk=
-X-Gm-Gg: ASbGnctRJILLa+ujIu/34hTXO9F7nHBgQ/UIfyKX1AOljN8Yhd6+ZMk7jmRVgzWKejv
-	7H39KvSBgTZnDyUNSaZ5cO2WVM4IvlY+mQyvr5Q==
-X-Google-Smtp-Source: AGHT+IH1MJiukfAycq+hK/y+HEGZQSzQHUwwsUw+2RmnbE5MF9cXH6e29VZImIdEQGJyw1Y4KMMtUvA/kp6Z7oPQwDk=
-X-Received: by 2002:a17:90b:37c3:b0:2ee:8008:b583 with SMTP id
- 98e67ed59e1d1-2f452e2fe28mr96830234a91.16.1736265158427; Tue, 07 Jan 2025
- 07:52:38 -0800 (PST)
+	s=arc-20240116; t=1736266405; c=relaxed/simple;
+	bh=n7ayQdfsJwptn30pRC4jp91zbfN+mXLjDFUwsuzxGbk=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=aBvru5/DwngxNPCI7JXrIiNmOxykuCPjAqwgPXzLJW2TnVUyWHjfe2EqmQADrxDrLk81oHhhpNeHPiWzMkszRKkBKJJy1/5xXbCbCxW9QfGLFoxZMLoQUqoNCWbqvM8E3XNPSiiTfpZjKP+7CJd42mRKv54wzcXT892qERBCtY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85190C4CEDD;
+	Tue,  7 Jan 2025 16:13:23 +0000 (UTC)
+Date: Tue, 7 Jan 2025 11:14:51 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Koichiro Den <koichiro.den@canonical.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, mhiramat@kernel.org, mark.rutland@arm.com,
+ mathieu.desnoyers@efficios.com, Zheng Yejian <zhengyejian1@huawei.com>,
+ Hagar Hemdan <hagarhem@amazon.com>
+Subject: Re: [PATCH 5.4 50/66] ftrace: Fix possible use-after-free issue in
+ ftrace_location()
+Message-ID: <20250107111451.70c905d0@gandalf.local.home>
+In-Reply-To: <74gjhwxupvozwop7ndhrh7t5qeckomt7yqvkkbm5j2tlx6dkfk@rgv7sijvry2k>
+References: <20241115063722.834793938@linuxfoundation.org>
+	<20241115063724.648039829@linuxfoundation.org>
+	<74gjhwxupvozwop7ndhrh7t5qeckomt7yqvkkbm5j2tlx6dkfk@rgv7sijvry2k>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250106151150.585603565@linuxfoundation.org> <20250106151155.069105214@linuxfoundation.org>
- <CAOi1vP9_s3oW8XP6bytvKm3JocPO0-odkv9LQFuuEU==JBgfaw@mail.gmail.com> <2025010737-fancy-blurb-f510@gregkh>
-In-Reply-To: <2025010737-fancy-blurb-f510@gregkh>
-From: Ilya Dryomov <idryomov@gmail.com>
-Date: Tue, 7 Jan 2025 16:52:26 +0100
-Message-ID: <CAOi1vP-aoU4mSvVm8OsLozka3=-S_LqroU9VAgZY-ptdrGZ+GA@mail.gmail.com>
-Subject: Re: [PATCH 6.6 118/222] ceph: print cluster fsid and client global_id
- in all debug logs
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Xiubo Li <xiubli@redhat.com>, Patrick Donnelly <pdonnell@redhat.com>, 
-	Milind Changire <mchangir@redhat.com>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 7, 2025 at 2:05=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Tue, Jan 07, 2025 at 01:21:12PM +0100, Ilya Dryomov wrote:
-> > On Mon, Jan 6, 2025 at 4:28=E2=80=AFPM Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > 6.6-stable review patch.  If anyone has any objections, please let me=
- know.
-> > >
-> > > ------------------
-> > >
-> > > From: Xiubo Li <xiubli@redhat.com>
-> > >
-> > > [ Upstream commit 38d46409c4639a1d659ebfa70e27a8bed6b8ee1d ]
-> > >
-> > > Multiple CephFS mounts on a host is increasingly common so
-> > > disambiguating messages like this is necessary and will make it easie=
-r
-> > > to debug issues.
-> > >
-> > > At the same this will improve the debug logs to make them easier to
-> > > troubleshooting issues, such as print the ino# instead only printing
-> > > the memory addresses of the corresponding inodes and print the dentry
-> > > names instead of the corresponding memory addresses for the dentry,et=
-c.
-> > >
-> > > Link: https://tracker.ceph.com/issues/61590
-> > > Signed-off-by: Xiubo Li <xiubli@redhat.com>
-> > > Reviewed-by: Patrick Donnelly <pdonnell@redhat.com>
-> > > Reviewed-by: Milind Changire <mchangir@redhat.com>
-> > > Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-> > > Stable-dep-of: 550f7ca98ee0 ("ceph: give up on paths longer than PATH=
-_MAX")
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >  fs/ceph/acl.c        |   6 +-
-> > >  fs/ceph/addr.c       | 279 +++++++++--------
-> > >  fs/ceph/caps.c       | 710 +++++++++++++++++++++++++----------------=
---
-> > >  fs/ceph/crypto.c     |  39 ++-
-> > >  fs/ceph/debugfs.c    |   6 +-
-> > >  fs/ceph/dir.c        | 218 +++++++------
-> > >  fs/ceph/export.c     |  39 +--
-> > >  fs/ceph/file.c       | 245 ++++++++-------
-> > >  fs/ceph/inode.c      | 485 ++++++++++++++++-------------
-> > >  fs/ceph/ioctl.c      |  13 +-
-> > >  fs/ceph/locks.c      |  57 ++--
-> > >  fs/ceph/mds_client.c | 558 +++++++++++++++++++---------------
-> > >  fs/ceph/mdsmap.c     |  24 +-
-> > >  fs/ceph/metric.c     |   5 +-
-> > >  fs/ceph/quota.c      |  29 +-
-> > >  fs/ceph/snap.c       | 174 ++++++-----
-> > >  fs/ceph/super.c      |  70 +++--
-> > >  fs/ceph/super.h      |   6 +
-> > >  fs/ceph/xattr.c      |  96 +++---
-> > >  19 files changed, 1747 insertions(+), 1312 deletions(-)
-> >
-> > Hi Greg,
-> >
-> > This is a huge patch, albeit mostly mechanical.  Commit 550f7ca98ee0
-> > ("ceph: give up on paths longer than PATH_MAX") for which this patch is
-> > a dependency just removes the affected log message, so it could be
-> > backported with a trivial conflict resolution instead of taking in
-> > 5c5f0d2b5f92 ("libceph: add doutc and *_client debug macros support")
-> > and 38d46409c463 ("ceph: print cluster fsid and client global_id in all
-> > debug logs") to arrange for a "clean" backport.
-> >
->
-> Great, can you send such a backport?
+On Tue, 7 Jan 2025 17:51:36 +0900
+Koichiro Den <koichiro.den@canonical.com> wrote:
 
-Sure, you should have one for 5.10-6.1 and a separate one for 6.6 in
-your inbox now.
+> I observed that since this backport, on linux-5.4.y x86-64, a simple 'echo
+> function > current_tracer' without any filter can easily result in double
+> fault (int3) and system becomes unresponsible. linux-5.4.y x86 code has not
+> yet been converted to use text_poke(), so IIUC the issue appears to be that
+> the old ftrace_int3_handler()->ftrace_location() path now includes
+> rcu_read_lock() with this backport patch, which has mcount location inside,
+> that leads to the double fault.
 
->
-> > Were these cherry picks done in an automated fashion by a tool that
-> > tries to identify and pull prerequisite patches based on "git blame"
-> > output?
->
-> Yes.
->
-> > The result appears to go against the rules laid out in
-> > Documentation/process/stable-kernel-rules.rst (particularly the limit
-> > on the number of lines), so I wanted to clarify the expected workflow
-> > of the stable team in this area.  Are "clean" backports considered to
-> > justify additional prerequisite patches of this size even when the
-> > conflict resolution is "take ours" or otherwise trivial?
->
-> Yes.  Keeping the tree in sync is almost always preferred over "one-off"
-> changes that have to be hand-provided, when the maintainer is not
-> involved to ensure that we don't break anything.  But if you want to
+Yep, I can easily reproduce this. Hmm, this should have been caught by
+running the ftrace selftests. I guess nobody is doing that on stable releases :-/
 
-In this case this lead to pulling in
+> 
+> I verified on an x86-64 qemu env that applying the following 11 additional
+> backports resolves the issue. The main purpose is to backport #7. All the
+> commits can be cleanly applied to the latest linux-5.4.y (v5.4.288).
+> 
+>   #11. fd3dc56253ac ftrace/x86: Add back ftrace_expected for ftrace bug reports
+>   #10. ac6c1b2ca77e ftrace/x86: Add back ftrace_expected assignment
+>    #9. 59566b0b622e x86/ftrace: Have ftrace trampolines turn read-only at the end of system boot up
+>    #8. 38ebd8d11924 x86/ftrace: Mark ftrace_modify_code_direct() __ref
+>    #7. 768ae4406a5c x86/ftrace: Use text_poke()
+>    #6. 63f62addb88e x86/alternatives: Add and use text_gen_insn() helper
+>    #5. 18cbc8bed0c7 x86/alternatives, jump_label: Provide better text_poke() batching interface
+>    #4. 8f4a4160c618 x86/alternatives: Update int3_emulate_push() comment
+>    #3. 72ebb5ff806f x86/alternative: Update text_poke_bp() kernel-doc comment
+>    #2. 3a1255396b5a x86/alternatives: add missing insn.h include
+>    #1. c3d6324f841b x86/alternatives: Teach text_poke_bp() to emulate instructions
+> 
+>   Note: #8-11 are follow-up fixes for #7
+>         #2-3 are follow-up fixes for #1
 
-  1 file changed, 38 insertions(+)
+That's a lot to backport. Perhaps there's a simpler solution?
 
-and
+> 
+> According to [1], no regressions were observed on x86_64, which included
+> running kselftest-ftrace. So I'm a bit confused.
 
-  19 files changed, 1747 insertions(+), 1312 deletions(-)
+Yeah, that's a big failure!
 
-patches as dependencies to satisfy the backport of
+Maybe they only tested a min config with no ftrace enabled?
 
-  1 file changed, 4 insertions(+), 5 deletions(-)
+> 
+> Could someone take a look and shed light on this? (ftrace on linux-5.4.y x86)
 
-patch.  Is this OK given that stable-kernel-rules.rst still has "It
-cannot be bigger than 100 lines, with context." as one of the rules for
-what kind of patches are accepted?
+I would like to know too!
 
-Thanks,
+> 
+> Thanks.
+> 
+> [1] https://lore.kernel.org/stable/CA+G9fYtdzDCDP_RxjPKS5wvQH=NsjT+bDRbukFqoX6cN+EHa7Q@mail.gmail.com/
 
-                Ilya
+Anyway, this appears to fix it (for 5.4 and earlier):
+
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index 380032a27f98..2eb1a8ec5755 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1554,7 +1554,7 @@ unsigned long ftrace_location_range(unsigned long start, unsigned long end)
+ 	struct dyn_ftrace key;
+ 	unsigned long ip = 0;
+ 
+-	rcu_read_lock();
++	preempt_disable_notrace();
+ 	key.ip = start;
+ 	key.flags = end;	/* overload flags, as it is unsigned long */
+ 
+@@ -1572,7 +1572,7 @@ unsigned long ftrace_location_range(unsigned long start, unsigned long end)
+ 			break;
+ 		}
+ 	}
+-	rcu_read_unlock();
++	preempt_enable_notrace();
+ 	return ip;
+ }
+ 
+
+If someone would like to apply that, feel free. As preempt_disable() will
+give RCU protection as well.
+
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+
+-- Steve
