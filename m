@@ -1,84 +1,148 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1DB6158558
-	for <patches@lists.linux.dev>; Tue,  7 Jan 2025 05:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA497A31;
+	Tue,  7 Jan 2025 05:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736228937; cv=none; b=KmKPAWOS0/pAApgP/xVbD+lPTdhzfYnxRGZFqXE0yN4nxs707kIacfrFpzr8YzraOPRmXcTAFmjywRwE7C+rFw7H2SX9u1Iir9Kf5N4cLELzx90B68KFI/fJJBcDXZ/0N0OdP3rTJUZJWU+x+Xo+s3reAiG4ti/PWjg7JWdAYFE=
+	t=1736229366; cv=none; b=NXF3Y6TedKTwt0yWjNEUgJUS2VL6MIjtp2XeJCmGyQz2xMT0Ceo+EjLShSD5WK4002Pf5oG1wYa8wWsuQWLg/d6B84DQcMYaZ/RhwT7u5CmW3X6SnQ2dBQ78gVEt9TwFkVWVGHBvqZCRRwo1b/lhRqFdMjt5ogyOHi/0Shk+79k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736228937; c=relaxed/simple;
-	bh=2D7nJT1s57AhZd7bnAtWkJG0G1NWlqxlRKh9pHXVAKQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eubfMRtkwDLIXvI9N3EmNa8ixJ3FRI2iXa9/5Om6gbujPwy5pS4c8x80pEU15nbIRBuzY7SD85DWIqeYh9aAmswatz/TYzNBuQAQJ5TpPnaevnv3fOWU7Fr1z1PI0Hp/WKkY8rV2ZH8cVX0E6hIt30WLs6GEBBgC5LFEkU9lBXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=2EH3mTb4; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1736229366; c=relaxed/simple;
+	bh=WoJ6PsFjUaXsGhvoop4qkupd0WOfNNTpqM+Het/KLMU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BACOnoxw1UiHx7jezhIIid677vzsBYgqJjCVjFsyIDo4vycTmH5uREj3y6HDIvNFL9/YOn0HwiJsGzmS93gzzH7R/6DcUiK7qQ6rxE65AtGAixcHDZZVgeJuoCT/ZVV4qax9dpo8nHZMvPDIBT51fG+RoOwruZoqUyqROLcUe+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jlmsKSnp; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="2EH3mTb4"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 7893614C1E1;
-	Tue,  7 Jan 2025 06:48:45 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1736228931;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6RhY/zDwnLzW59KAqK0wY5bVr7f0LYhNiClT9bjt9lU=;
-	b=2EH3mTb4E/UVrZI+oT3jnAlLgpCTDY/4/oE1SCKdzk6i0mOl2l8oSLpjnRwq9AYJFkh2xc
-	Jbg3AG901JhDUiR3x9NnfvXAnGz0AZMObPC3+hSsspCvVzvCakFGw3QH2EsN5oT/WY4bz2
-	yAv+zv36YXJPD5yf2Xed4vYtF/XQAoX490vEIRpvTG54kcxFE2ocnM3FBCxBls3H70fPsu
-	uaajxfaWxLmpJE8t4pXXT7NsbgFFNbZm8GoyyCbp8Lvx31THLItRjcn5FCTb48IYCz4CYv
-	Nc0juzf0WeFO1tc1RZY1RkcA9/fOVs+U4aTvBalLd3Lb6tFKTDjnFA1YuPKPYg==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 7901807a;
-	Tue, 7 Jan 2025 05:48:44 +0000 (UTC)
-Date: Tue, 7 Jan 2025 14:48:29 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 5.10 000/138] 5.10.233-rc1 review
-Message-ID: <Z3zALRN6QZyEek21@codewreck.org>
-References: <20250106151133.209718681@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jlmsKSnp"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1736229365; x=1767765365;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=WoJ6PsFjUaXsGhvoop4qkupd0WOfNNTpqM+Het/KLMU=;
+  b=jlmsKSnpHomDLrhprqVVMScoxXYRK+gX6ahXokLkXOUuOswFZ3SeUquP
+   qOvihRgC643dqxjG5E/sdR1d6p4+jNRfpi3lSJ9EdckIZIybsi0ZIjVR/
+   Eumrly0pFN5+Djx9Gapwe9ELWa4jjlkPFs8Pi37DZk2/ZEk2w8TQzVsKg
+   V6C/CVWKCURGh1NTBDV+IZvFXwep1ibnFHybpn8JOcFTmjD0tQwsFGCJy
+   O2PyLy1UlkH9hGkKhAPLz/96IBkchr5d+q4IGt3WcUnIp0kRn+j6odBww
+   MsOAtxL9ypjlqiTNTiTaIR1zr4BlWlT0H1E4LCvrf+KFKY7iO3Vm1GZm6
+   g==;
+X-CSE-ConnectionGUID: W3dDeYRYRlmC/HCH4Ofu+Q==
+X-CSE-MsgGUID: nKGZ5AxNRSq+YEmYyVpptQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11307"; a="24001427"
+X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; 
+   d="scan'208";a="24001427"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2025 21:56:04 -0800
+X-CSE-ConnectionGUID: OOJpn2qvQDGj1fkl/ZwdHw==
+X-CSE-MsgGUID: 6MdEJVMyTveGv4b9OOT3qw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,294,1728975600"; 
+   d="scan'208";a="102849876"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jan 2025 21:56:00 -0800
+Message-ID: <75456867-8993-4be4-bcdf-14df28fe92cc@linux.intel.com>
+Date: Tue, 7 Jan 2025 13:54:00 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250106151133.209718681@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 14/14] iommu/arm-smmu-v3: Report events that belong to
+ devices attached to vIOMMU
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: jgg@nvidia.com, kevin.tian@intel.com, corbet@lwn.net, will@kernel.org,
+ joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+ dwmw2@infradead.org, shuah@kernel.org, linux-kernel@vger.kernel.org,
+ iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+ eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+ mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+ smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+ patches@lists.linux.dev
+References: <cover.1735933254.git.nicolinc@nvidia.com>
+ <69a46c72e43ed086840be462eef731167d90a9d8.1735933254.git.nicolinc@nvidia.com>
+ <585fc99f-c2dc-459c-929a-c7c7631b9caf@linux.intel.com>
+ <Z3wk9TvmUhB3/zlk@Asurada-Nvidia> <Z3yvZsq77bpnaoAb@Asurada-Nvidia>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <Z3yvZsq77bpnaoAb@Asurada-Nvidia>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Greg Kroah-Hartman wrote on Mon, Jan 06, 2025 at 04:15:24PM +0100:
-> This is the start of the stable review cycle for the 5.10.233 release.
-> There are 138 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 1/7/25 12:36, Nicolin Chen wrote:
+> On Mon, Jan 06, 2025 at 10:46:21AM -0800, Nicolin Chen wrote:
+>> On Mon, Jan 06, 2025 at 11:01:32AM +0800, Baolu Lu wrote:
+>>> Nit: I think it would be more readable to add a check in the vevent
+>>> reporting helper.
+>>>
+>>> diff --git a/drivers/iommu/iommufd/driver.c b/drivers/iommu/iommufd/driver.c
+>>> index 77c34f8791ef..ccada0ada5ff 100644
+>>> --- a/drivers/iommu/iommufd/driver.c
+>>> +++ b/drivers/iommu/iommufd/driver.c
+>>> @@ -86,6 +86,9 @@ int iommufd_viommu_report_event(struct iommufd_viommu
+>>> *viommu,
+>>>          if (WARN_ON_ONCE(!data_len || !event_data))
+>>>                  return -EINVAL;
+>>>
+>>> +       if (WARN_ON_ONCE(type != IOMMU_VEVENTQ_TYPE_ARM_SMMUV3))
+>>> +               return -EINVAL;
+>>> +
+>> Hmm, that's a good point I think.
+>>
+>>>          down_read(&viommu->veventqs_rwsem);
+>>>
+>>>          veventq = iommufd_viommu_find_veventq(viommu, type);
+>> 		    ^
+>> 		    |
+>> We actually have been missing a type validation entirely, so the
+>> type could have been rejected by this function. Perhaps we should
+>> add a static list of supported types to struct iommufd_viommu_ops
+>> for drivers to report so that then the core could reject from the
+>> first place during a vEVENTQ allocation.
+> I added something like this. Will send a v5.
 > 
-> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.233-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> index 0c7a5894ba07..348179f3cf2a 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
+> @@ -399,9 +399,15 @@ static int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
+>   	return ret;
+>   }
+>   
+> +static bool arm_vsmmu_supports_veventq(unsigned int type)
+> +{
+> +	return type == IOMMU_VIOMMU_TYPE_ARM_SMMUV3;
 
-Didn't run into any issue other than the zram problem reported in reply
-to the patch itself.
+Do you need to check the hardware capabilities before reporting this? I
+am not familiar with the ARM architecture, but typically it's better to
+make it like this,
 
-Tested e0db650ec963 ("Linux 5.10.233-rc1") + revert of bc2472d78aec256d
-("zram: fix uninitialized ZRAM not releasing backing device") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+static bool arm_vsmmu_supports_veventq(struct iommufd_viommu *viommu,
+                                        enum iommu_veventq_type type)
+{
+	if (type != IOMMU_VEVENTQ_TYPE_ARM_SMMUV3)
+		return false;
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+	if (hardware_not_capable(viommu))
+		return false;
 
--- 
-Dominique Martinet
+	return true;
+}
+
+> +}
+> +
+>   static const struct iommufd_viommu_ops arm_vsmmu_ops = {
+>   	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
+>   	.cache_invalidate = arm_vsmmu_cache_invalidate,
+> +	.supports_veventq = arm_vsmmu_supports_veventq,
+>   };
+
+Others look good to me.
+
+Thanks,
+baolu
