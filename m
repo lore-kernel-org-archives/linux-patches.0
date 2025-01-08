@@ -1,102 +1,129 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1B7225D7
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 03:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736308738; cv=none; b=P6VEMDEz6ME6u/J6SkN5CA8xCA5xfxyBuiP0yDgTZGHEOl+S5MB4abxddkc3UCqJdLpQ3u/JwEISa56Yx3Ct62eXN+ViotLm6N/rNzm15pRRvl0PLYb6HhTNNgxDvyo4w6einNko12KL4x2dwG2bRsDCK/Dpxz65zsn8DPRUbaQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736308738; c=relaxed/simple;
-	bh=Wqsm2OX2pUiC8B3MPlIcLexKxiaNigUMw7QhyjuPCIM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BmLzRl5UOZooVK147POrV8P3+Bm+a42mL7hPdW5JBXt/b7fYiEHl6s7th2Y/JFpZy1HhbSKUnBfwRSfzPkYAfrQjTb0eXf42uRUzlzwAHCp4QI2sO5MsdFECqIhfUoopQNNTzXOJNvoqI5ll5TeArCKFIkXCe5vxglXfpBj5t7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ScsA60U9; arc=none smtp.client-ip=209.85.216.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E441FA8DF
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 12:27:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736339249; cv=pass; b=AxHSJ/mtLA8oKrJo8bJ87V2EWY3Wivlf1igdkH5eFzRjKunKqX+6YZG0uHLf9Yu0NMyxjJMz44xKrxNUCp/oQtelEf++1xUhtm6iJmjpCIrnixFFtafpRl9/ycBat3VqLUEIlDUkE/xrqZRlbDJGXoUoSVdz60P66gYPBj6u3LU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736339249; c=relaxed/simple;
+	bh=HWTdt1DU9qCpMKRrSvvrH/p1pP5OJXdhC8uGHcMaGKg=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=g8jHImsCPUB+Dbz2iT88pZvT/UVT4pILCIu8Y4mGEl16CBjQAp9nHE2SCpkfmljaDmA928tzK+mwLhzbEI5hzVRJl+nmjqPglb3pYsZaQ7zMHfBi26M2G2PLbKid8W0g01jZWbFXxZJVVfGDyIL2iZKlBOLTH++HxT7B4pw7LVw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=jc5fUKD1; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ScsA60U9"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ee786b3277so17781567a91.1
-        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 19:58:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736308736; x=1736913536; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/5SJfDYo1krnMaVXgKeA8KZwOLGlt8uzSPVvBfgdcUw=;
-        b=ScsA60U9sXJ4oltL8ZDOUvzhAU2/ie3g0HcblTztHZoDBfIdCiKLVIiaGycYizs5BJ
-         CWwo9yZwVvL4qNie81NjtAW0QBlK+/vRTpr2ae6PoSYEsS4rRTmpmK8/M035ODRElbxs
-         E6/sC1me6IW16o6I3WWPJUXdkgpvweTFDJmO8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736308736; x=1736913536;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/5SJfDYo1krnMaVXgKeA8KZwOLGlt8uzSPVvBfgdcUw=;
-        b=Kq9eDExFvjjgxZD9lsuPJpCQlom6I8+yrDBP7CBpW5jNJ/WFOGs3+wjVX+vOPhWQz/
-         B52bH7y2JqOfgdZ4rRMybPRFs6H7b79Xl9EFEYFp/U9tU2IWQ4TUzj/bs7IcJblfXBFW
-         CLeiV8NUTj6ZYjk1CS99/8TVCAodZJiLVZDzdVB/9sZx1dR+v6CGSXWQlu8FOy+JeRLx
-         vM1UCX1qoKNx+hJ7NKe9ga4gkAB9+WV3ClAB1D02EZ1SZCiX8n3KGuV+GvAg4ttw0vDR
-         BxujXxGN3rpUcQWpVs1ZLiw9TXueqnVRZD4ZP70XtI/WVaKVqong4h9aIwq3dVD7UgD0
-         RzjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUEHRFKdeDJTuiG81kwFlako0rEutLAYH1ncre7Q6RRBkmUe1WdjBFbnlRNNpTJTm6wpAJM8Cd9@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz8url2APTsBKMGQT/iV6Kdue7AuzUOdcYpTfcCiGqU4ayykItT
-	Hfd8Kh2fzz3haT7wY8Imo4lxHx6j/AkidyeOjzoEJ08Q2hDnhVGgMHsHOOH5Hw==
-X-Gm-Gg: ASbGncvcNlf9cILIAz4hh1wEDGkp/U50p48CEhrJQF5QxFeu4gD79PcFVC1e7vcRruh
-	REvArx5oLOQlSGlQiV98myD7GxYH0bJcdCuYlYjr3RI9eU805Se0ZwRo3PeEMQZa+Xyf2LixZYr
-	DEMDC0mHgKCze2la+hQUKlVt5asWKHMDOKzxxS1TxbB7pl1X+1Fxp+HAlhFwrX4WCHw1f5xIGiq
-	e3KHAEC9piyMyNCFkLUa86lo3Nt9xbJ2EMS+P2tDHqabzba2ruJ2iYHN6BV
-X-Google-Smtp-Source: AGHT+IHk9xNeOcJGphe0sHJuFkp76vnbwL90DLnRx4ZAZ8BLyvlFgQKpq5hj9YdtEyneH32ttDxjaA==
-X-Received: by 2002:a05:6a00:9294:b0:725:cfa3:bc76 with SMTP id d2e1a72fcca58-72d21f115b4mr2151749b3a.4.1736308736575;
-        Tue, 07 Jan 2025 19:58:56 -0800 (PST)
-Received: from google.com ([2401:fa00:8f:203:57ef:1197:3074:36c2])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad8faf93sm34135735b3a.153.2025.01.07.19.58.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 19:58:56 -0800 (PST)
-Date: Wed, 8 Jan 2025 12:58:51 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Kairui Song <kasong@tencent.com>, Desheng Wu <deshengwu@tencent.com>, 
-	Sergey Senozhatsky <senozhatsky@chromium.org>, Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.12 110/160] zram: fix uninitialized ZRAM not releasing
- backing device
-Message-ID: <wpzuuv6x4bhfldzk2x56yceyymom7jektmwdz5eizugfx3r6od@w7qllyd6vkvf>
-References: <20241223155408.598780301@linuxfoundation.org>
- <20241223155412.926326153@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="jc5fUKD1"
+ARC-Seal: i=1; a=rsa-sha256; t=1736339234; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=JQt0aGGy2fuhIef3U3cntj4rW2QwqjiT6rtne0I4aB4VHl8EDxEkyJzUJlM+FCJaXdlfUQ4ATUdxXc2cJtNE8Oclwe3e+XHLb0A84zzb+14/gBLzk6Ac8V3ypdWxDgRNCjGxi3clRBr2t24YksSIb62YvkN3750yGPdBQHY1VRU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1736339234; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=S5+gnTTvJtTDpVln+yMS3ksSeB/H8kIqzjZctPPJLsg=; 
+	b=dB5L3yRQgUP0jftch2biNJY3dCGSehAz9OYuONZzquFW6c3clnfOrt+4EvdTQU2/Pp1bxWThSHBm2a/zGhuUhlNNpLBH9McEPHDxu3ocQuPDEk6iHXa4JyN1pjy9/EPsfUBPqZLaz1U+GrZkoFmKKGrzsNnHDSlJJFXlWllWvPc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
+	dmarc=pass header.from=<Usama.Anjum@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1736339234;
+	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=S5+gnTTvJtTDpVln+yMS3ksSeB/H8kIqzjZctPPJLsg=;
+	b=jc5fUKD1PIlCAD2IhIzR2e72HchRSrxCZ0LQkCmxYJAx7GoUsK3mTWyiL9DMd6QG
+	URFpwbwSCjThyoxnjkQzQxZICNebxG1OU6WeWw6Y/+YPg6XABRQtrmTEFyq5aehXQkz
+	yOCUldvpJxAD91FJWpWTieVp+pKQhgcmTqLDuMcE=
+Received: by mx.zohomail.com with SMTPS id 1736339232110462.21635361600033;
+	Wed, 8 Jan 2025 04:27:12 -0800 (PST)
+Message-ID: <cbf4c67a-7ca3-4823-a5b9-a0ccb49e7f00@collabora.com>
+Date: Wed, 8 Jan 2025 17:27:28 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241223155412.926326153@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.6 000/222] 6.6.70-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+References: <20250106151150.585603565@linuxfoundation.org>
+Content-Language: en-US
+From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
+In-Reply-To: <20250106151150.585603565@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On (24/12/23 16:58), Greg Kroah-Hartman wrote:
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
+On 1/6/25 8:13 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.70 release.
+> There are 222 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> ------------------
+> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
+> Anything received after that time might be too late.
 > 
-> From: Kairui Song <kasong@tencent.com>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.70-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 > 
-> commit 74363ec674cb172d8856de25776c8f3103f05e2f upstream.
+> thanks,
 > 
-> Setting backing device is done before ZRAM initialization.  If we set the
-> backing device, then remove the ZRAM module without initializing the
-> device, the backing device reference will be leaked and the device will be
-> hold forever.
+> greg k-h
 > 
-> Fix this by always reset the ZRAM fully on rmmod or reset store.
-> 
-> Link: https://lkml.kernel.org/r/20241209165717.94215-3-ryncsn@gmail.com
-> Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
-> Signed-off-by: Kairui Song <kasong@tencent.com>
-> Reported-by: Desheng Wu <deshengwu@tencent.com>
-> Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> -------------
+OVERVIEW
 
-Can we please drop this patch?
+        Builds: 38 passed, 3 failed
+
+    Boot tests: 358 passed, 0 failed
+
+    CI systems: broonie, maestro
+
+REVISION
+
+    Commit
+        name: v6.6.69-223-g5652330123c6
+        hash: 5652330123c6a64b444f3012d9c9013742a872e7
+    Checked out from
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+
+
+BUILDS
+
+    Failures
+      -x86_64 (cros://chromeos-6.6/x86_64/chromeos-intel-pineview.flavour.config)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c10a0423acf18d2737e91
+      Build error: ld: kernel/kexec_core.o: in function `__crash_kexec':
+      -arm64 (defconfig+allmodconfig)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c10aa423acf18d2737f1a
+      Build error: drivers/i2c/busses/i2c-xgene-slimpro.c:95:9: error: 'PCC_SIGNATURE' macro redefined [-Werror,-Wmacro-redefined]
+      -x86_64 (cros://chromeos-6.6/x86_64/chromeos-amd-stoneyridge.flavour.config)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c109b423acf18d2737e5a
+      Build error: ld: kernel/kexec_core.o: in function `__crash_kexec':
+      CI system: maestro
+
+
+BOOT TESTS
+
+    No failure found
+
+See complete and up-to-date report at:
+
+    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=5652330123c6a64b444f3012d9c9013742a872e7&var-patchset_hash=
+
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
+
+Thanks,
+KernelCI team
