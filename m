@@ -1,59 +1,59 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A599719F121
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 01:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF5D19F489
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 01:28:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736299734; cv=none; b=b4MXRrmK2mv5U/DN5dYO0AkhLhVvNqQ3JHipinAU8XVSbNXU4zlgQCmE0ASyoBN/JYhGqT/3QvmMIBD72zQP5oj/Kh+rhIPzN4IP+vjr5Sk5IbeTXOFLTR0Yvxnfre3LHn2osA0CjKhlDOCF5bBwqDTOCHXmdu/64S2RtstrNBY=
+	t=1736299736; cv=none; b=EADv6bAI6Ubm/njuhWlQeWmGW11Zq7X1UOxjljgz476xbNiaPw8QjB9Alvo7d4ipgjJnPRvbqMVa4PDZ480SisWP2/fm05dVXrv2lR1F93Kl+nRF4bAhN6w0fa/Uo4qM+rg3jl6R6/F8SS1Od7dVbzcTavb5lSbEj6EfFvQptQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736299734; c=relaxed/simple;
-	bh=HLeXh7e3GjhFtwyj5udajVxpHq3OwLVCrig2Syvg2OQ=;
+	s=arc-20240116; t=1736299736; c=relaxed/simple;
+	bh=U0IWbkSIOHLV0YE/NKEsZZohQ07wjFpip/mVKrtIjDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mC3vdGptHNM4PIUmlHykA0L8cIU8UbZ0zv4RV42FtMjJvtkZigmRjhm3KwlPpomm/LMvVqZ89ACHMchlYHj+rAPt1tXwQlDioXIG+b82NOYpxc+pvSy40PjCUdwP8F+3RT/GI7KhW8xW6OCQH+VKARi2gWksda5mNUn3cFQetBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=dmG5pajL; arc=none smtp.client-ip=209.85.216.53
+	 MIME-Version; b=asYZ2XAbPhhkrdbmDkovQbJ6OLeR877KAKDyFNkJBW9SIDVbAT3TXrV7m89RiiH+1IRsKbMzG3hF8yhc5ucKPI9ZxQHXPYKNRg5IvqZlSbi4RZP53VigZygispxLWL2vAYel8nUELzg0JfRxS5ssCxogeae/ekZQWzXn15ERmVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=n7+exg7X; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="dmG5pajL"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2f4409fc8fdso548624a91.1
-        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 17:28:52 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="n7+exg7X"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2161eb94cceso168844905ad.2
+        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 17:28:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736299732; x=1736904532; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1736299733; x=1736904533; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+3OGnfMaF6ttidHVZW35hLDvix/z1ZneywWqGiGVTK0=;
-        b=dmG5pajLcXBLdw0V1//4v1EAcp42tVLo1lptrB4AOh3lRRymrci7c95N2/H9Uld620
-         JmBReYuQTcAZtH0EfJAGSW2WvGYw2ySJitQXtmjJ/inji3QqX01ZKdTGBF532e32MsWI
-         Ba285SkzcrcK8iPA5lP5MAqOintV5NhOuHs2Q=
+        bh=dtdkWnLr/kObxk9d1OZrWr4jX4hdZNVEJy/OpGU79kA=;
+        b=n7+exg7XSj/4On3S+/hT6awEmuTpGL8IyJRf0RVreMKv1G+/re0ADC5FiK2ISfkZpp
+         +DhsPUAbZumOA8nbUb22LrwiHp/D4N3B1bJG4wxm/DLi5bg+fo/TIH2Ri410n6ytVGVe
+         BdxftPY/ZewXiqKQtJTYIraLEAUbq2GdQnPKI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736299732; x=1736904532;
+        d=1e100.net; s=20230601; t=1736299733; x=1736904533;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+3OGnfMaF6ttidHVZW35hLDvix/z1ZneywWqGiGVTK0=;
-        b=ub4rtKwUKZK0VmBoD94bE8JIcqelgl1xE4kbAxxlqhYDwcVy7cRwOOM0vF09tPuamo
-         VzkWThxLJbR97zT/kVeit1Qu7o1y5TFscsX4qv2sRdNI5N6PC+w1/bpgBN/P0aQGHBg3
-         EyeFbJZ7Zp3X/4rgAc9X6KN8Vlnc15wb4MyOhR/eV1ic5WyhQmc0EYBsCvQdVm9FoPXU
-         CAnKof4kMNaQMeVAf7zIysZZWVLJgNdMXkcIznJrgWs78L7ZpW2kyc7Fkb4Yopitt5b5
-         T1QU7nyDKcL4aUhfDnky2mQV9LeuuLJqPfBSwHjeZh9UUbWtD1xJTNkFNQ1BIU1Chg9s
-         GntQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWZrCMtfV+KPG9RYporDe1I/QdL1enVZ+t9jOdzdH80Lanfec5ECpoGB81p7GbCWx1iJvVMBzOr@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywvoqq25vykXNH8GcK1yYOdpVXezTrtleHsQ3qudlrRIb0ikWxm
-	y1ikqRd6erv7RHna64y6xRZLLwG8YHNlp+/H4U5lkCWTx1kwtfeW5bpFuNLr6A==
-X-Gm-Gg: ASbGncvsX0hJSKmfuH8hJWXKgzivAfGxPCLAL3Qd6y2rSbpl+ac9H/QvCaCUPCVdf1A
-	RkJwtlMu0woln9STDVSgjc7HNra4df58LyST68W9e+xAvp3FryyYakjg8tzbBo0vRIfzJ6YxEVN
-	mkM/PLEEP0zo0L8cJ4Ne0ghfaQ5AuGF8jFy+GfRKgHyBzl5VO2+PphcvJGTqmdpuXpZKUKpup9y
-	tQtcLbk429ye2h4KePc1THC8rEX7uasSsJJzWukhPzM4hr1yGwy6qjaC4JYkN4yw5FLklDpWD7L
-	OXmkjmFQTPqYzR54qDIT
-X-Google-Smtp-Source: AGHT+IGRIU+NqXGlb71FFJypyGjyxuINnxFY9kBScDBRLLqASUBsZ/TtCxmB7qxtQamZfY7V7xiN8A==
-X-Received: by 2002:a17:90b:2705:b0:2ef:949c:6f6b with SMTP id 98e67ed59e1d1-2f53cc6e0e4mr8060729a91.13.1736299732138;
-        Tue, 07 Jan 2025 17:28:52 -0800 (PST)
+        bh=dtdkWnLr/kObxk9d1OZrWr4jX4hdZNVEJy/OpGU79kA=;
+        b=hgZk1UvjcH8p0HiXcD34pZKWPTci8/iCPfCTwPxC6UuiCoq8yaGdHcjdfeLGaoAXtf
+         mV9LjMOqEENCdsSK+Bio56MzW3CoicfqQH0Sgd5kH1vHHhrWdZ+8G96oV2vuCbi6XU0f
+         ENwT7h8FiYuw5n7V0cdAhIlXT5FZQsZWhZmZx7Va/f3QZiJ4S+KK1KpDqabNHKjLm2H7
+         fJCb/zabOIaFHobgIS66a0BUcktVfSrOdNU1MMIUtCqPcCXGxDcWuNUHnEh71l0KVhzl
+         BiWL60WBvz2ADuHLW4GAB7KHP/GcmtfERo4JCeUOwXlCn7eDYSDuXrgw6iZMkVHiIfaq
+         je3g==
+X-Forwarded-Encrypted: i=1; AJvYcCVyQXzXBgK2hwQZoPjbnv/z+/IdOzN4NFapeZ/GdQb9xjQkrcKnX25ehKPz+jkLZDIcFg0mzQRH@lists.linux.dev
+X-Gm-Message-State: AOJu0YydSmUnH4VWOeuc/TDjg/X/RwzjZEfjwWPA0QHp3EhoQhkca0z+
+	fovrjxgieXGN6eKB+MHLm1wrO4H2GFhxs/s7AbtGo0KtsL0JXZ9IParpnY5HZw==
+X-Gm-Gg: ASbGncuDJhgiJUQ3O007r+kTEys3Ca0BGte10ETNYaax0bxAma3K0qIc63NIL76o0UC
+	TLUtrX/76u0lnulD64obfs5ZLzTw1YEnnclZgl3bHKEJo9VJXIaeOe7T2mDC85S23apEimTyBI+
+	RpUvFYd4XVjYSbB3KfZgL1oTaM57qleZ/ugkqrsqiaiWwC3eifgN4AmUcEgUn9TD1RwcKn7LB9e
+	3wNEtaO1d4M2sMKaRkytJfas1GE33aMVP+0RRObLPbCWdmukAlPmuXq6Rbrifwu7b0s6rFyU8Fj
+	Hxdsc/GrdXRZeOONMrbU
+X-Google-Smtp-Source: AGHT+IHT5knJwT6WWg3ma5G8rT/UQQorba0QpRS5VpGWB4gpjmUniZb797RHNFR9BYNyRf9SZQjl8w==
+X-Received: by 2002:a05:6a21:339b:b0:1e0:c432:32fe with SMTP id adf61e73a8af0-1e88cff3d1amr1835597637.26.1736299733617;
+        Tue, 07 Jan 2025 17:28:53 -0800 (PST)
 Received: from localhost (129.135.125.34.bc.googleusercontent.com. [34.125.135.129])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2f54a287254sm196478a91.20.2025.01.07.17.28.51
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72aad834cecsm33982127b3a.70.2025.01.07.17.28.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jan 2025 17:28:51 -0800 (PST)
+        Tue, 07 Jan 2025 17:28:53 -0800 (PST)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
@@ -68,11 +68,10 @@ Cc: linux-kernel@vger.kernel.org,
 	Arnd Bergmann <arnd@arndb.de>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Saravana Kannan <saravanak@google.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: [RFC PATCH 2/6] dt-bindings: bus: Add qcom,soc-sc7180 SoC
-Date: Tue,  7 Jan 2025 17:28:39 -0800
-Message-ID: <20250108012846.3275443-3-swboyd@chromium.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Subject: [RFC PATCH 3/6] bus: Add basic sc7180 bus driver
+Date: Tue,  7 Jan 2025 17:28:40 -0800
+Message-ID: <20250108012846.3275443-4-swboyd@chromium.org>
 X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
 In-Reply-To: <20250108012846.3275443-1-swboyd@chromium.org>
 References: <20250108012846.3275443-1-swboyd@chromium.org>
@@ -84,108 +83,141 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the Qualcomm SC7180 System on a Chip (SoC). This SoC is made up
-of multiple devices that have their own bindings, therefore this binding
-is for a "bus" that is the SoC node.
-
-TODO: Document all child nodes. This is woefully incomplete but at least
-shows what is involved with describing an SoC node in dt schema.
+Add a bus driver that does nothing besides populate devices as a child
+of the soc device.
 
 Cc: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>
-Cc: <devicetree@vger.kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>
 Cc: Konrad Dybcio <konradybcio@kernel.org>
 Cc: <linux-arm-msm@vger.kernel.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- .../bindings/bus/qcom,soc-sc7180.yaml         | 76 +++++++++++++++++++
- 1 file changed, 76 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/bus/qcom,soc-sc7180.yaml
+ drivers/bus/Kconfig            |  3 ++
+ drivers/bus/Makefile           |  3 ++
+ drivers/bus/qcom/Kconfig       | 16 +++++++++++
+ drivers/bus/qcom/Makefile      |  3 ++
+ drivers/bus/qcom/qcom-sc7180.c | 51 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 76 insertions(+)
+ create mode 100644 drivers/bus/qcom/Kconfig
+ create mode 100644 drivers/bus/qcom/Makefile
+ create mode 100644 drivers/bus/qcom/qcom-sc7180.c
 
-diff --git a/Documentation/devicetree/bindings/bus/qcom,soc-sc7180.yaml b/Documentation/devicetree/bindings/bus/qcom,soc-sc7180.yaml
+diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
+index 7c2aa1350578..69963f0f02f3 100644
+--- a/drivers/bus/Kconfig
++++ b/drivers/bus/Kconfig
+@@ -284,6 +284,9 @@ config OF_SIMPLE_BUS
+ 	  symbol if ALLOW_SIMPLE_BUS_OVERRIDE is set and there isn't another
+ 	  driver for the simple-bus compatible.
+ 
++# SoC specific drivers
++source "drivers/bus/qcom/Kconfig"
++
+ source "drivers/bus/fsl-mc/Kconfig"
+ source "drivers/bus/mhi/Kconfig"
+ 
+diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
+index f3968221d704..796dd0515578 100644
+--- a/drivers/bus/Makefile
++++ b/drivers/bus/Makefile
+@@ -40,6 +40,9 @@ obj-$(CONFIG_VEXPRESS_CONFIG)	+= vexpress-config.o
+ 
+ obj-$(CONFIG_DA8XX_MSTPRI)	+= da8xx-mstpri.o
+ 
++# SoC specific drivers
++obj-y				+= qcom/
++
+ # Must be last for driver registration ordering
+ obj-$(CONFIG_OF_SIMPLE_BUS)	+= simple-bus.o
+ 
+diff --git a/drivers/bus/qcom/Kconfig b/drivers/bus/qcom/Kconfig
 new file mode 100644
-index 000000000000..56f8b75ecdab
+index 000000000000..f4c5d05ec9ca
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/bus/qcom,soc-sc7180.yaml
-@@ -0,0 +1,76 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/bus/qcom,soc-sc7180.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/bus/qcom/Kconfig
+@@ -0,0 +1,16 @@
++# SPDX-License-Identifier: GPL-2.0
 +
-+title: Qualcomm SC7180 SoC
++menuconfig QCOM_SOC_BUS
++	tristate "Qualcomm SoC Bus Drivers"
++	depends on ARCH_QCOM || COMPILE_TEST
 +
-+maintainers:
-+  - Bjorn Andersson <andersson@kernel.org>
-+  - Konrad Dybcio <konradybcio@kernel.org>
++if QCOM_SOC_BUS
 +
-+description:
-+  Qualcomm's SC7180 System on a Chip (SoC).
++config QCOM_SOC_BUS_SC7180
++	tristate "Qualcomm SC7180 SoC Bus"
++	depends on ALLOW_SIMPLE_BUS_OVERRIDE
++	depends on OF_SIMPLE_BUS || !OF_SIMPLE_BUS
++	help
++	  Support for the Qualcomm SC7180 SoC bus.
 +
-+properties:
-+  compatible:
-+    items:
-+      - const: qcom,soc-sc7180
-+      - const: simple-bus
++endif
+diff --git a/drivers/bus/qcom/Makefile b/drivers/bus/qcom/Makefile
+new file mode 100644
+index 000000000000..5d41ad61fead
+--- /dev/null
++++ b/drivers/bus/qcom/Makefile
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0
 +
-+  '#address-cells':
-+    const: 2
++obj-$(CONFIG_QCOM_SOC_BUS_SC7180)		+= qcom-sc7180.o
+diff --git a/drivers/bus/qcom/qcom-sc7180.c b/drivers/bus/qcom/qcom-sc7180.c
+new file mode 100644
+index 000000000000..a615cf5a2129
+--- /dev/null
++++ b/drivers/bus/qcom/qcom-sc7180.c
+@@ -0,0 +1,51 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * SoC bus driver for Qualcomm SC7180 SoCs
++ */
 +
-+  '#size-cells':
-+    const: 2
++#include <linux/device.h>
++#include <linux/init.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/of_platform.h>
++#include <linux/platform_device.h>
 +
-+  clock-controller@100000:
-+    $ref: /schemas/clock/qcom,gcc-sc7180.yaml#
++static int qcom_soc_sc7180_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *np = dev->of_node;
 +
-+  watchdog@17c10000:
-+    $ref: /schemas/watchdog/qcom-wdt.yaml#
++	return of_platform_populate(np, NULL, NULL, dev);
++}
 +
-+required:
-+  - compatible
-+  - '#address-cells'
-+  - '#size-cells'
-+  - clock-controller@100000
-+  - watchdog@17c10000
++static const struct of_device_id qcom_soc_sc7180_match[] = {
++	{ .compatible = "qcom,soc-sc7180", },
++	{ }
++};
++MODULE_DEVICE_TABLE(of, qcom_soc_sc7180_match);
 +
-+additionalProperties: false
++static struct platform_driver qcom_soc_sc7180_driver = {
++	.probe = qcom_soc_sc7180_probe,
++	.driver = {
++		.name = "qcom-soc-sc7180",
++		.of_match_table = qcom_soc_sc7180_match,
++		.suppress_bind_attrs = true,
++	},
++};
 +
-+examples:
-+  - |
-+    #include <dt-bindings/gpio/gpio.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
++static int __init qcom_soc_sc7180_driver_init(void)
++{
++	return platform_driver_register(&qcom_soc_sc7180_driver);
++}
++/* Register before simple-bus driver. */
++arch_initcall(qcom_soc_sc7180_driver_init);
 +
-+    soc {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+        compatible = "qcom,soc-sc7180", "simple-bus";
++static void __exit qcom_soc_sc7180_driver_exit(void)
++{
++	platform_driver_unregister(&qcom_soc_sc7180_driver);
++}
++module_exit(qcom_soc_sc7180_driver_exit);
 +
-+        // TODO: Is it possible to ignore the details?
-+        clock-controller@100000 {
-+          compatible = "qcom,gcc-sc7180";
-+          reg = <0 0x00100000 0 0x1f0000>;
-+          clocks = <&rpmhcc_RPMH_CXO_CLK>,
-+                   <&rpmhcc_RPMH_CXO_CLK_A>,
-+                   <&sleep_clk>;
-+          clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
-+          #clock-cells = <1>;
-+          #reset-cells = <1>;
-+          #power-domain-cells = <1>;
-+          power-domains = <&rpmhpd_SC7180_CX>;
-+        };
-+
-+        watchdog@17c10000 {
-+          compatible = "qcom,apss-wdt-sc7180", "qcom,kpss-wdt";
-+          reg = <0 0x17c10000 0 0x1000>;
-+          clocks = <&sleep_clk>;
-+          interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
-+        };
-+    };
-+
-+...
++MODULE_DESCRIPTION("Qualcomm SC7180 SoC Driver");
++MODULE_LICENSE("GPL");
 -- 
 https://chromeos.dev
 
