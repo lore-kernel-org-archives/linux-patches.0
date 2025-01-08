@@ -1,69 +1,68 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91258225D7
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 03:58:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1B7225D7
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 03:58:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736308702; cv=none; b=je+s58Btl6gDVYD3OioxL7p7AxBFhRAc8Dwi0x7zU/GdUIQopu0IFV5HkZEhBcOybBFFkHUZgvEy6+Sx5k2j/SVSeDnRYghz3Qxx5wH7JSFuOWLfLiQsooSgZ0U2VNFo8eUNKWinO3t8yqdj7sOzL+HFY1EgfM/zyNQZzvd7wII=
+	t=1736308738; cv=none; b=P6VEMDEz6ME6u/J6SkN5CA8xCA5xfxyBuiP0yDgTZGHEOl+S5MB4abxddkc3UCqJdLpQ3u/JwEISa56Yx3Ct62eXN+ViotLm6N/rNzm15pRRvl0PLYb6HhTNNgxDvyo4w6einNko12KL4x2dwG2bRsDCK/Dpxz65zsn8DPRUbaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736308702; c=relaxed/simple;
-	bh=zNGpVWpLu9Qvd2Wn/x54cG2h3cDfMLeqXE5y1RN712w=;
+	s=arc-20240116; t=1736308738; c=relaxed/simple;
+	bh=Wqsm2OX2pUiC8B3MPlIcLexKxiaNigUMw7QhyjuPCIM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tBsDgfR9nOivseZQwyvFjO1vIXfLB8ktgZq5XECLi+512g/vcMTIyucBMzoOlmEcfe6tGQ3iMcrmKmzW3TV78iCSV2KFDvoXiivYChDMiDAiLngGUpImWEWLw5gpo41g/9N2EPMSOP8K+lbMVU4fVEJImzcP3yIzWIoH9h/DX20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Ka2TCq1j; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=BmLzRl5UOZooVK147POrV8P3+Bm+a42mL7hPdW5JBXt/b7fYiEHl6s7th2Y/JFpZy1HhbSKUnBfwRSfzPkYAfrQjTb0eXf42uRUzlzwAHCp4QI2sO5MsdFECqIhfUoopQNNTzXOJNvoqI5ll5TeArCKFIkXCe5vxglXfpBj5t7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=ScsA60U9; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Ka2TCq1j"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2156e078563so209313945ad.2
-        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 19:58:20 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ScsA60U9"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ee786b3277so17781567a91.1
+        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 19:58:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736308700; x=1736913500; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1736308736; x=1736913536; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kcBrl6keYH+0kZEwvvhNEQ1sIGNcdbWuJh+Y5ZXPHk8=;
-        b=Ka2TCq1jGpNSGgYxchUrq21LNHocRmHPdkda/lMbO+lYybTXEcyvMyU2D3qSm55KnH
-         jN0wwGof08lBJkqD5DzfUhbO0n4v7ij6nhMYiDH9lrToqSrK9RnwfEnyyIVmLex9hu7Q
-         1r6y0he2dlXqOQLCy6yBTWpGIiarEF6VsKV1w=
+        bh=/5SJfDYo1krnMaVXgKeA8KZwOLGlt8uzSPVvBfgdcUw=;
+        b=ScsA60U9sXJ4oltL8ZDOUvzhAU2/ie3g0HcblTztHZoDBfIdCiKLVIiaGycYizs5BJ
+         CWwo9yZwVvL4qNie81NjtAW0QBlK+/vRTpr2ae6PoSYEsS4rRTmpmK8/M035ODRElbxs
+         E6/sC1me6IW16o6I3WWPJUXdkgpvweTFDJmO8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736308700; x=1736913500;
+        d=1e100.net; s=20230601; t=1736308736; x=1736913536;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kcBrl6keYH+0kZEwvvhNEQ1sIGNcdbWuJh+Y5ZXPHk8=;
-        b=faJK2Sn/Ah4vh5WmG62kO63zqihKlH+/iSgTGvHdiO43jooMnW8mk5v6JVxJ/5cG/c
-         UEhNByT3Iul56jf/W6jojJxGejQGqxy2yGRYY2rQTmGQEO7T73Tpfxk2U+t1itAh0VGR
-         3Ru4oCsTg+yul5QFoIEWhfrWTzZjFbYYFA3HEg53ANrAnoqxt9wN6220M5X0+doO6S/k
-         urKaOihxkjfmRMX3S1QhUNmSHDWSe9FcaTfbONhQhcpDJB2E5yKAA/hI9V3VsFDYJ9qU
-         Y25aDYjfwFDxxFXBGQUZ09Vkh3aWFrPqiB3JfT2p2a+YsIEFFoPashDDDfNMF9hodK1W
-         R83A==
-X-Forwarded-Encrypted: i=1; AJvYcCWbrTxhhH9EJhQ3SdTCexgNKCElzgDj/WqIWNUFav2PqUEXIdbb3ygx3JxIqgD95IUokjNH9LIr@lists.linux.dev
-X-Gm-Message-State: AOJu0YyOLk6iY5BHF3Kcnx01pZBZ0GancLeQo9Np4rt9Hx3ulWeuNHou
-	n6wAhweDKPWZbxIU8W9CpvNDJPEzScUbN6sXrhdJn8nB086i4qE6ZJp5HNTIOLBEZgv5pQq4d2s
-	=
-X-Gm-Gg: ASbGnctpUf1JXWs/xdKWPP7NUVCXeVkX7nMcztSB3bip2RjmJyaLe6LKrz5HfT50k3K
-	/+HSYk5JXQt8acYkqQiJr7EM8yuUKxgDUzxz9h8LMe1wR5VXTk03qpQlhVTYA4kHraS+bdFQGDs
-	yCAVKmzY98zAqi3uJOA/RYfXzbm7Q/1lQnExBddwslsh49ebyP54fiAcCTYHShZFAkFfrG/2Gha
-	dvob1oWChZFdMLYkcMycuvf5xAGDypISXiMrzuxrSYafhfn+T4rp2yc+UIp
-X-Google-Smtp-Source: AGHT+IFRI8VkNI5WzMBkrf+NdV1dwwPsWeNqtxBjhBmLN1x0Izyt9QoJfA3EZ0ajsULkV25Jflag2A==
-X-Received: by 2002:a17:903:2b08:b0:216:70b6:8723 with SMTP id d9443c01a7336-21a83fb5af8mr24176405ad.44.1736308699936;
-        Tue, 07 Jan 2025 19:58:19 -0800 (PST)
+        bh=/5SJfDYo1krnMaVXgKeA8KZwOLGlt8uzSPVvBfgdcUw=;
+        b=Kq9eDExFvjjgxZD9lsuPJpCQlom6I8+yrDBP7CBpW5jNJ/WFOGs3+wjVX+vOPhWQz/
+         B52bH7y2JqOfgdZ4rRMybPRFs6H7b79Xl9EFEYFp/U9tU2IWQ4TUzj/bs7IcJblfXBFW
+         CLeiV8NUTj6ZYjk1CS99/8TVCAodZJiLVZDzdVB/9sZx1dR+v6CGSXWQlu8FOy+JeRLx
+         vM1UCX1qoKNx+hJ7NKe9ga4gkAB9+WV3ClAB1D02EZ1SZCiX8n3KGuV+GvAg4ttw0vDR
+         BxujXxGN3rpUcQWpVs1ZLiw9TXueqnVRZD4ZP70XtI/WVaKVqong4h9aIwq3dVD7UgD0
+         RzjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUEHRFKdeDJTuiG81kwFlako0rEutLAYH1ncre7Q6RRBkmUe1WdjBFbnlRNNpTJTm6wpAJM8Cd9@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz8url2APTsBKMGQT/iV6Kdue7AuzUOdcYpTfcCiGqU4ayykItT
+	Hfd8Kh2fzz3haT7wY8Imo4lxHx6j/AkidyeOjzoEJ08Q2hDnhVGgMHsHOOH5Hw==
+X-Gm-Gg: ASbGncvcNlf9cILIAz4hh1wEDGkp/U50p48CEhrJQF5QxFeu4gD79PcFVC1e7vcRruh
+	REvArx5oLOQlSGlQiV98myD7GxYH0bJcdCuYlYjr3RI9eU805Se0ZwRo3PeEMQZa+Xyf2LixZYr
+	DEMDC0mHgKCze2la+hQUKlVt5asWKHMDOKzxxS1TxbB7pl1X+1Fxp+HAlhFwrX4WCHw1f5xIGiq
+	e3KHAEC9piyMyNCFkLUa86lo3Nt9xbJ2EMS+P2tDHqabzba2ruJ2iYHN6BV
+X-Google-Smtp-Source: AGHT+IHk9xNeOcJGphe0sHJuFkp76vnbwL90DLnRx4ZAZ8BLyvlFgQKpq5hj9YdtEyneH32ttDxjaA==
+X-Received: by 2002:a05:6a00:9294:b0:725:cfa3:bc76 with SMTP id d2e1a72fcca58-72d21f115b4mr2151749b3a.4.1736308736575;
+        Tue, 07 Jan 2025 19:58:56 -0800 (PST)
 Received: from google.com ([2401:fa00:8f:203:57ef:1197:3074:36c2])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc962dc0sm319522885ad.32.2025.01.07.19.58.17
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad8faf93sm34135735b3a.153.2025.01.07.19.58.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2025 19:58:19 -0800 (PST)
-Date: Wed, 8 Jan 2025 12:58:15 +0900
+        Tue, 07 Jan 2025 19:58:56 -0800 (PST)
+Date: Wed, 8 Jan 2025 12:58:51 +0900
 From: Sergey Senozhatsky <senozhatsky@chromium.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	Kairui Song <kasong@tencent.com>, Desheng Wu <deshengwu@tencent.com>, 
 	Sergey Senozhatsky <senozhatsky@chromium.org>, Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 6.6 086/116] zram: fix uninitialized ZRAM not releasing
+Subject: Re: [PATCH 6.12 110/160] zram: fix uninitialized ZRAM not releasing
  backing device
-Message-ID: <tsalwprwgp2b4uarbrjzik6m4hg5kbezjthdqxp3foxuu2vyws@vtvw7sl5fp6w>
-References: <20241223155359.534468176@linuxfoundation.org>
- <20241223155402.907380237@linuxfoundation.org>
+Message-ID: <wpzuuv6x4bhfldzk2x56yceyymom7jektmwdz5eizugfx3r6od@w7qllyd6vkvf>
+References: <20241223155408.598780301@linuxfoundation.org>
+ <20241223155412.926326153@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -72,10 +71,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241223155402.907380237@linuxfoundation.org>
+In-Reply-To: <20241223155412.926326153@linuxfoundation.org>
 
-On (24/12/23 16:59), Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
+On (24/12/23 16:58), Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
