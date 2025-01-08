@@ -1,60 +1,59 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA8A1A0BDB
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 01:28:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392AD1A239F
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 01:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736299737; cv=none; b=PbnPdrTdo9niSFr4zDIZGRIgu80RwOzyYZgPhdxR0SMlJZ94aQeA+AyWZDbqrZvc3sPgrCY9iSysJuWbLE5XEfmIUezI+8Xgubwrysc05se2svdKzzso8ghFaBxG1+AK6DngcKnzbkgD4Z9WfKiGbnE1kFLxiNmRGeTdqdgnzu8=
+	t=1736299739; cv=none; b=eJR+UTdhq+lAu51dEruKX7Hp6Dw+8wTKrgNKH5HNhjJ+m4Kvsdtrt48E4Yb9ozB610oT8rs5g/IIG6KkhZMWqxsqandBmsvDbsrLbV3bJz4lAj9RV9C6Npxi2+2VR04K2PQjVTKdsK+te4Cc8kfe19B84X0cNqharaG01mCZgPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736299737; c=relaxed/simple;
-	bh=4tV3lnlihbjKXefUypMNRce6dC18x2ab/02qc1skGvw=;
+	s=arc-20240116; t=1736299739; c=relaxed/simple;
+	bh=ZPZ1RvYh2kO8gp/HE4ITCITiJwPeiYCbTgy1PyW8+MI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmvgQRWUC+7WObZICXRiWQ0yZ5LmUdOdmAW89R/r+6vjiW0oBiVQM+6S1/9hH1Ia/aWZVDGGuICguUtTfVhZl8WecAZXU6fkogzkDSFb0oOEn/iA1OfwzBUkVJV2R3dgCZmeovgig1TcbtH10YdfM9gWqETgnX9PMFy8TLGYlII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=KqYT1NRp; arc=none smtp.client-ip=209.85.216.41
+	 MIME-Version; b=J2uiRjTgiRTxoGlKHkKNDpSbudeuu1W0WFuz1SF6c3Ql0ElYNfyTVMhQEYHcmv2wL09KaIEIsuNrTTjJQsvBieGDZKea9jMTNDqFaQk/8DQCkBHikqYBRiiPZRiAwPomO7s6Jer5jYTjyJtKNirkQPlivAT4pHry+1ngk+y+kus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=nVdRqvUL; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="KqYT1NRp"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2ee46851b5eso19426209a91.1
-        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 17:28:55 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nVdRqvUL"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21619108a6bso223784575ad.3
+        for <patches@lists.linux.dev>; Tue, 07 Jan 2025 17:28:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736299735; x=1736904535; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1736299736; x=1736904536; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MfN6GTuNKF5VqrxYRWrKUqgkdrEWac7RU0Z/q9vfjN0=;
-        b=KqYT1NRp7xExvxDZi1vujBntlVdYFUQ+12aVnAn5ac2dQaVdcxOG7oXKL4WV7ta/9Y
-         +js5WdsdGosBB6W3cgoKkTVv15N/vEnyOnlWgAtfZ6pfBsfUjU5rwFTd5V+w90wMoFsK
-         tlqTJ/UyCHrSmoH1lRcTWxz3+neezgMk2rPR0=
+        bh=h2PH+YeR0bEBhGOmEQodK+uTa/B+QOdEM0hw2aypokE=;
+        b=nVdRqvULKky0dotFuy3NzyGvoEOm5tI5p8CIFZgas3nFeuoe8R3wPPFynWmDZWfIH1
+         QjkzREKFAVEXmfwAI12KJTEM/nR/Z7+y+2BwDpH/9jSYezbxIWZNFjomcl74MYM5qDuF
+         GR+Yl3sJVfjIH7eBpwrQQepZafXe23lJ9DoDg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736299735; x=1736904535;
+        d=1e100.net; s=20230601; t=1736299736; x=1736904536;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MfN6GTuNKF5VqrxYRWrKUqgkdrEWac7RU0Z/q9vfjN0=;
-        b=wn26tvBWLIIWOqyh3bM6kwuSrImSThv4pJRO0ZmpQtPuaHJJh+Sv/wIgn+ssNN/a8z
-         r7bqst7NlE8mII/Bf7vGXoVjmVI9AIhgYIup86lP7EmRM9XSGbAtbgXrU7K5vrORBvTQ
-         hE4XJtnplDXFw+Z8s8QJdZA09envrZKnMZQqq4qJG2JLXjRHy7dLVfYh7A0Jtc2hmjD6
-         Y+lz1PSxT/APyW7GnhqazNhfpkHo7ABSaJB64giVj0wJtbVrCzJxLoouh87cw3mP9iQq
-         m7PRJbPqLbMG4G9LSycNZ01S0fQ4Hxe9D5O5QkR9m5YBcTD2szhf8qVm3xeW+H/UNyA6
-         qQEw==
-X-Forwarded-Encrypted: i=1; AJvYcCWbsMRgKJC7NbTCffjC1ROxp4uyetIQ7zOosFBrOZarRQhLu08vaQtvAYhSCwZ6hv5fOh38/kPk@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywi2hJcbMykJslgHTbJioBSSdf0hAKjbrZuSkU1Fl9kZOmK02VS
-	FM+D+mEMTj8opU3pjAcIbjV32KNhswhqaUJsp4ZXwEN8VJZ4s68o1nBz6CP1Vkw+0ppRzh+YWLU
-	=
-X-Gm-Gg: ASbGncvhjGEoXLFyiwSyYcaILBchuStVzVDnrbiEQcr6D2DB+/SWUeWnnd76ax23NFW
-	37w6LLBR3chH1RpNlBTCjEmihmoCoajf8HhiQmIYB3ecfak+eoOZgORs4IzV0fCgba3mPS7Lmd+
-	z7IwO5E+O7iPc1fVsAyCo0l0TKroavpJ4fYgkK3VlzJorxhVEtlnYLXxogGz3ZgTcvjnRLUTRgD
-	Ti8VIMH+BXAxgNHGBXWPRyWSwK3tsqh4TG/CMOgr+zJM3zuStvygo5GS694w/hO3RyR1mBYYKDv
-	uNtvOW/YW/BbZqIkhOMs
-X-Google-Smtp-Source: AGHT+IH4Y++Unzll3LBTxpHGSJAl9gWr9EZnywMb7/5iKVZRlAs9Kn/eOeYulAHPdNQ/JPBW9ae4bA==
-X-Received: by 2002:a17:90b:2c84:b0:2f4:47fc:7f18 with SMTP id 98e67ed59e1d1-2f548ebb679mr1630164a91.10.1736299735123;
-        Tue, 07 Jan 2025 17:28:55 -0800 (PST)
+        bh=h2PH+YeR0bEBhGOmEQodK+uTa/B+QOdEM0hw2aypokE=;
+        b=WPuw1c5PvPZMx7SPQeGl0F1ADtxu8kv0Eb6GyDteyO/bqvDyhcUu2SO9ez6ZvXfyMs
+         rGImdTrDtYF2VP/vLzujURH+k9YEfkFChW+APIWRxUByi408wVAOvOTrcNEQIeF9CdtN
+         Kx1WFTeNEVmw5E5lcc0YxXEa8uaqVrd0DVI9WwoewV8+ESj5QmzYHd91qfLsGORgZap+
+         sWilPklbbesrQc0W1EKtiMz+4zrGTSWdb8MFbpGG1/QzBWLerkV/ZbBBU6ZDrX2MMWD8
+         PKPkQzkFZ+cuhIIVjgQ0JSrSjXJUkKPxWCjjevlSTXN/tp7g2EtvE0E+qGAp0duUjcXG
+         Ufww==
+X-Forwarded-Encrypted: i=1; AJvYcCW4BrL/RMQt6E5ODMgOFPPimBdYJAKsxIMwEb98D9tXiXtFf1t7BwXkpZFs6EG1tZLREBGc6YKn@lists.linux.dev
+X-Gm-Message-State: AOJu0YyLt7RPasnUToGjE5sJR4x/qs4PDJYxgAnw4ow8a5bOf57HVzPZ
+	7s1eEgQYcLHAh7qxjmlCQIp7akn2RHVKdHm1Cry9FeWMcqan09sGH0/V2oRILA==
+X-Gm-Gg: ASbGncugfMiAr2L2eDV/bq8DjRj7go/CSYYcBYUrdwI+hF2OH8zYRBfVqDasa4Bmocb
+	YGEEOtlGV5ZMLsM7OnffDQmrX6JrEHxX2ikb9JQknqKINWI+IRrzQoPI/fx76zpAnAOKL9EYNDJ
+	1cDUdWAjNKVM9qSTr0jrmjrggmnm4dtzYlc70mH04OJzRe3bC8nwDX7CwUpzB9lkLS6kMEyETgb
+	spMWMLBwK9K+5CTURSUbPlMYwWgZLcne3BcZA3N+1Ohaboqc2agMWXi1J+s9v8Tro9btnjAN5Tc
+	bqruJ2hTYsZa6+UniLhK
+X-Google-Smtp-Source: AGHT+IEPnKUCG2gblLZlLZNHyLGaKfpBR0RoXfdx9u2gcf5pTAWqsgbyihyLPhCZcWcNvOkJsoUDRw==
+X-Received: by 2002:a17:903:2311:b0:215:a2e2:53ff with SMTP id d9443c01a7336-21a83f36e1dmr16501155ad.11.1736299736529;
+        Tue, 07 Jan 2025 17:28:56 -0800 (PST)
 Received: from localhost (129.135.125.34.bc.googleusercontent.com. [34.125.135.129])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2f54a13dcd5sm239559a91.0.2025.01.07.17.28.54
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-219dc962cf4sm316325925ad.25.2025.01.07.17.28.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jan 2025 17:28:54 -0800 (PST)
+        Tue, 07 Jan 2025 17:28:56 -0800 (PST)
 From: Stephen Boyd <swboyd@chromium.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>
@@ -70,9 +69,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Conor Dooley <conor+dt@kernel.org>,
 	Saravana Kannan <saravanak@google.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Subject: [RFC PATCH 4/6] of: Extract alloc/add functions from of_platform_device_create_pdata()
-Date: Tue,  7 Jan 2025 17:28:41 -0800
-Message-ID: <20250108012846.3275443-5-swboyd@chromium.org>
+Subject: [RFC PATCH 5/6] bus: qcom-sc7180: Attach pm domain to watchdog device
+Date: Tue,  7 Jan 2025 17:28:42 -0800
+Message-ID: <20250108012846.3275443-6-swboyd@chromium.org>
 X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
 In-Reply-To: <20250108012846.3275443-1-swboyd@chromium.org>
 References: <20250108012846.3275443-1-swboyd@chromium.org>
@@ -84,165 +83,166 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Allow drivers to modify the 'struct device' for a device node by
-splitting of_platform_device_create_pdata() into two functions. The
-first function, of_platform_device_alloc(), allocates the platform
-device and the second function, of_platform_device_add(), adds the
-platform device to the platform bus. SoC power management drivers can
-use these APIs to allocate a platform device for a node underneath the
-soc node, attach pmdomains and/or set the device as runtime PM active,
-and finally add the platform device to the platform bus.
+Find the watchdog device described as a child node of the sc7180 SoC
+node and attach a generic pm domain to the device before registering the
+device with the platform bus. The domain simply gets the clk and turns
+it on when the pm domain is powered on and turns it off when the pm
+domain is powered off.
 
 Cc: Rob Herring <robh@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: <devicetree@vger.kernel.org>
 Cc: Bjorn Andersson <andersson@kernel.org>
 Cc: Konrad Dybcio <konradybcio@kernel.org>
 Cc: <linux-arm-msm@vger.kernel.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/of/platform.c       | 80 ++++++++++++++++++++++++++++++-------
- include/linux/of_platform.h | 14 +++++++
- 2 files changed, 79 insertions(+), 15 deletions(-)
+ drivers/bus/qcom/qcom-sc7180.c | 122 +++++++++++++++++++++++++++++++++
+ 1 file changed, 122 insertions(+)
 
-diff --git a/drivers/of/platform.c b/drivers/of/platform.c
-index 63a80c30d515..d8ee2d38a382 100644
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -138,6 +138,66 @@ struct platform_device *of_device_alloc(struct device_node *np,
- }
- EXPORT_SYMBOL(of_device_alloc);
+diff --git a/drivers/bus/qcom/qcom-sc7180.c b/drivers/bus/qcom/qcom-sc7180.c
+index a615cf5a2129..7dfe6b32efef 100644
+--- a/drivers/bus/qcom/qcom-sc7180.c
++++ b/drivers/bus/qcom/qcom-sc7180.c
+@@ -3,18 +3,140 @@
+  * SoC bus driver for Qualcomm SC7180 SoCs
+  */
  
-+/**
-+ * of_platform_device_alloc - Alloc and initialize an of_device
-+ * @np: pointer to node to create device for
-+ * @bus_id: name to assign device
-+ * @parent: Linux device model parent device.
-+ *
-+ * Return: Pointer to created platform device, or NULL if a device was not
-+ * allocated.  Unavailable devices will not get allocated.
-+ */
-+struct platform_device *
-+of_platform_device_alloc(struct device_node *np, const char *bus_id,
-+			  struct device *parent)
++#include <linux/cleanup.h>
++#include <linux/clk.h>
+ #include <linux/device.h>
++#include <linux/dev_printk.h>
+ #include <linux/init.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/of_platform.h>
+ #include <linux/platform_device.h>
++#include <linux/pm.h>
++#include <linux/pm_domain.h>
++
++struct qcom_soc_pm_domain {
++	struct clk *clk;
++	struct generic_pm_domain pd;
++};
++
++static struct qcom_soc_pm_domain *
++gpd_to_qcom_soc_pm_domain(struct generic_pm_domain *gpd)
 +{
-+	struct platform_device *ofdev;
++	return container_of(gpd, struct qcom_soc_pm_domain, pd);
++}
 +
-+	pr_debug("alloc platform device: %pOF\n", np);
++static struct qcom_soc_pm_domain *pd_to_qcom_soc_pm_domain(struct dev_pm_domain *pd)
++{
++	struct generic_pm_domain *gpd;
 +
-+	if (!of_device_is_available(np) ||
-+	    of_node_test_and_set_flag(np, OF_POPULATED))
++	gpd = container_of(pd, struct generic_pm_domain, domain);
++
++	return gpd_to_qcom_soc_pm_domain(gpd);
++}
++
++static struct qcom_soc_pm_domain *dev_to_qcom_soc_pm_domain(struct device *dev)
++{
++	struct dev_pm_domain *pd;
++
++	pd = dev->pm_domain;
++	if (!pd)
 +		return NULL;
 +
-+	ofdev = of_device_alloc(np, bus_id, parent);
-+	if (!ofdev) {
-+		of_node_clear_flag(np, OF_POPULATED);
-+		return ofdev;
-+	}
-+
-+	ofdev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
-+	if (!ofdev->dev.dma_mask)
-+		ofdev->dev.dma_mask = &ofdev->dev.coherent_dma_mask;
-+	ofdev->dev.bus = &platform_bus_type;
-+	of_msi_configure(&ofdev->dev, ofdev->dev.of_node);
-+
-+	return ofdev;
++	return pd_to_qcom_soc_pm_domain(pd);
 +}
-+EXPORT_SYMBOL(of_platform_device_alloc);
 +
-+/**
-+ * of_platform_device_add - Add an of_device to the platform bus
-+ * @ofdev: of_device to add
-+ *
-+ * Return: 0 on success, negative errno on failure.
-+ */
-+int of_platform_device_add(struct platform_device *ofdev)
++static struct platform_device *
++qcom_soc_alloc_device(struct platform_device *socdev, const char *compatible)
 +{
-+	struct device_node *np = ofdev->dev.of_node;
-+	int ret;
++	struct device_node *np __free(device_node);
 +
-+	pr_debug("adding platform device: %pOF\n", np);
++	np = of_get_compatible_child(socdev->dev.of_node, compatible);
 +
-+	ret = of_device_add(ofdev);
-+	if (ret) {
-+		platform_device_put(ofdev);
-+		of_node_clear_flag(np, OF_POPULATED);
-+	}
-+
-+	return ret;
++	return of_platform_device_alloc(np, NULL, &socdev->dev);
 +}
-+EXPORT_SYMBOL(of_platform_device_add);
 +
- /**
-  * of_platform_device_create_pdata - Alloc, initialize and register an of_device
-  * @np: pointer to node to create device for
-@@ -154,29 +214,19 @@ static struct platform_device *of_platform_device_create_pdata(
- 					void *platform_data,
- 					struct device *parent)
- {
++static int qcom_soc_domain_activate(struct device *dev)
++{
++	struct qcom_soc_pm_domain *soc_domain;
++
++	dev_info(dev, "Activating device\n");
++	soc_domain = dev_to_qcom_soc_pm_domain(dev);
++
++	soc_domain->clk = devm_clk_get(dev, NULL);
++
++	return PTR_ERR_OR_ZERO(soc_domain->clk);
++}
++
++static int qcom_soc_domain_power_on(struct generic_pm_domain *domain)
++{
++	struct qcom_soc_pm_domain *soc_domain;
++
++	pr_info("Powering on device\n");
++	soc_domain = gpd_to_qcom_soc_pm_domain(domain);
++
++	return clk_prepare_enable(soc_domain->clk);
++}
++
++static int qcom_soc_domain_power_off(struct generic_pm_domain *domain)
++{
++	struct qcom_soc_pm_domain *soc_domain;
++
++	pr_info("Powering off device\n");
++	soc_domain = gpd_to_qcom_soc_pm_domain(domain);
++
++	clk_disable_unprepare(soc_domain->clk);
++
++	return 0;
++}
++
++static int qcom_soc_add_clk_domain(struct platform_device *socdev,
++				   struct platform_device *pdev)
++{
++	struct qcom_soc_pm_domain *domain;
++	struct generic_pm_domain *pd;
 +	int ret;
- 	struct platform_device *dev;
- 
- 	pr_debug("create platform device: %pOF\n", np);
- 
--	if (!of_device_is_available(np) ||
--	    of_node_test_and_set_flag(np, OF_POPULATED))
-+	dev = of_platform_device_alloc(np, bus_id, parent);
-+	if (!dev)
- 		return NULL;
- 
--	dev = of_device_alloc(np, bus_id, parent);
--	if (!dev)
--		goto err_clear_flag;
--
--	dev->dev.coherent_dma_mask = DMA_BIT_MASK(32);
--	if (!dev->dev.dma_mask)
--		dev->dev.dma_mask = &dev->dev.coherent_dma_mask;
--	dev->dev.bus = &platform_bus_type;
- 	dev->dev.platform_data = platform_data;
--	of_msi_configure(&dev->dev, dev->dev.of_node);
--
--	if (of_device_add(dev) != 0) {
--		platform_device_put(dev);
-+	ret = of_platform_device_add(dev);
++
++	domain = devm_kzalloc(&socdev->dev, sizeof(*domain), GFP_KERNEL);
++	if (!domain)
++		return -ENOMEM;
++
++	pd = &domain->pd;
++	pd->name = "wdog";
++	ret = pm_genpd_init(pd, NULL, false);
 +	if (ret)
- 		goto err_clear_flag;
--	}
- 
- 	return dev;
- 
-diff --git a/include/linux/of_platform.h b/include/linux/of_platform.h
-index 17471ef8e092..e55c1371b560 100644
---- a/include/linux/of_platform.h
-+++ b/include/linux/of_platform.h
-@@ -71,6 +71,10 @@ extern int of_platform_bus_probe(struct device_node *root,
- 
- #ifdef CONFIG_OF_ADDRESS
- /* Platform devices and busses creation */
-+extern struct platform_device *of_platform_device_alloc(struct device_node *np,
-+							const char *bus_id,
-+							struct device *parent);
-+extern int of_platform_device_add(struct platform_device *ofdev);
- extern struct platform_device *of_platform_device_create(struct device_node *np,
- 						   const char *bus_id,
- 						   struct device *parent);
-@@ -91,6 +95,16 @@ extern int devm_of_platform_populate(struct device *dev);
- extern void devm_of_platform_depopulate(struct device *dev);
- #else
- /* Platform devices and busses creation */
-+static inline struct platform_device *of_platform_device_alloc(struct device_node *np,
-+							       const char *bus_id,
-+							       struct device *parent)
-+{
-+	return NULL;
++		return ret;
++
++	/* TODO: Wrap this in a generic_pm_domain function similar to power_on() */
++	pd->domain.activate = qcom_soc_domain_activate;
++	pd->power_on = qcom_soc_domain_power_on;
++	pd->power_off = qcom_soc_domain_power_off;
++
++	dev_info(&socdev->dev, "adding pm domain for %s\n", dev_name(&pdev->dev));
++	dev_pm_domain_set(&pdev->dev, &pd->domain);
++
++	return 0;
 +}
-+static inline int of_platform_device_add(struct platform_device *ofdev)
-+{
-+	return -ENODEV;
-+}
- static inline struct platform_device *of_platform_device_create(struct device_node *np,
- 								const char *bus_id,
- 								struct device *parent)
+ 
+ static int qcom_soc_sc7180_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
++	struct platform_device *sdev;
++	int ret;
++
++	sdev = qcom_soc_alloc_device(pdev, "qcom,apss-wdt-sc7180");
++	if (!sdev)
++		return dev_err_probe(dev, -ENODEV, "Failed to alloc sdev\n");
++
++	ret = qcom_soc_add_clk_domain(pdev, sdev);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to add clk domain to sdev\n");
++
++	ret = of_platform_device_add(sdev);
++	if (ret)
++		return dev_err_probe(dev, ret, "Failed to add sdev to bus\n");
+ 
+ 	return of_platform_populate(np, NULL, NULL, dev);
+ }
 -- 
 https://chromeos.dev
 
