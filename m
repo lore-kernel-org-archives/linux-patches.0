@@ -1,43 +1,43 @@
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F0931F942F
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 12:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385071F941E
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 13:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736340844; cv=pass; b=AtzaMIvYr2tUgQcjaQfx8L/XUx2aYWgwmqIi9iR6BxXg9onx/CA21bGHZOQfmHmqJCyzKFRXRJbq9I7MRAPmofCLV1WXmh5cScSHZ34miwY1rQL3ClBi/3j0MeRNrPfRgh1e8KFi/bU+WW/o/kv8e0Si/cGvtta/bl6M2OHt6W0=
+	t=1736341241; cv=pass; b=Fzr0QGUNTJM2QMz2AoKOE3toUSYCTZmXibtPq2SMkm+D47oidD440LEM0HiXRRVnfCdH0rA5F2AY7RwLdT8t2Wo+446gLrK4YP8KJhZP2E2D/8H/k1Pxst0qgt3FeYo0PO6oFsZLeDfCdTg42pD1xi7dRxf0nhekQBa2ssH7KBo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736340844; c=relaxed/simple;
-	bh=cOBuH+Ar3/Tv0aFxUCrAETJblGMPY4RSTmguzDsLwPw=;
+	s=arc-20240116; t=1736341241; c=relaxed/simple;
+	bh=tnTizHbo5RCVXiv/k44EMtNNSlcV8XEFxWPds94nEiU=;
 	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=BVdeeg8C7JqH+SWsvKIKJ7R5XP7mkp/c/CRKFBeubaDeZCGPc8lVr/Cs79whkPETYT54sFbB/toWrNfs0R6ycxz/U/gS5gfDqqBbyWrpPpyNSRJuV/3ywZtCDjSiiqKkkwiSkSm4UNm9xiFmSd7jx7GGV2wOr30zUJdTJk8ejQU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=Rs76IAct; arc=pass smtp.client-ip=136.143.188.112
+	 In-Reply-To:Content-Type; b=SahQFPI73gRq59t/sh1maU2SfY4x5a6UAIIwRHmOqH4/VF4BZd6Rxf+4W8tlOg7c/X9YhX28FOFmnx0HPgmJiKBy7bTVD3gD3JFImP1G2pEGKn5wASJcN4p93iTaAhLEmbZa8C1EpBXSzC/jV9wzEy8nLeniyhBYTVPmSZ+Og/g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=VOAqhO61; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="Rs76IAct"
-ARC-Seal: i=1; a=rsa-sha256; t=1736340833; cv=none; 
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="VOAqhO61"
+ARC-Seal: i=1; a=rsa-sha256; t=1736341225; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=GyKiTR3i9IVImWgohbu/h7RiDH80Ry0XKlQH3YOMGTFcAM6jGPuXE+byNsbvNMnZY/NYipVWxBRFSVTv+9pmJ9i8KTz4diOZqQh3s+NBvQ5ejrbluJHWWRCsxX9hhjmaT/qAjwSkRTCptdOoI1XF7/yS0TI86wlAAo+/xoYk27I=
+	b=DH/LOQZfq01z/2t2GaD9VUKmNUlGvwWvPBSvttSNzrhpNUOkHj2O4anSjPMIlJxGslRmAvmdC3lev3YlqXLHkWdyGSTP00d5ZCmu3GwKBMBBzqj9EWp+GhOM8/hbUQwPeK1hXhWMxSPh6mo+Kjtl+gpqdfvJgaWFxNdmrWalyVc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1736340833; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=As/1OFEdRlaDnb0q+DbYfiD3CxO3jXivKyFqYgdOjBQ=; 
-	b=j962p/EA2Pg9ZkR7jLuoI5fOxe5zDufgnIZTOE66ondDtHnlqN7WBj76at4G39VOaizHnI4HDdHtNOIpf0YaN/fvwZw0WqsEFn+7uo3pQPAQFkARRePMBV6x5INpAuYphTaFl0L//Jt6nhv7UoPFefVKu2SXPVwfdoq8ArZZaoM=
+	t=1736341225; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Hq+0i0owL/LZnmcbP3iuFwoYgT0nRlEWFd9Yf09SLY0=; 
+	b=SB7Qqw9hZzNnIHFtTx+BZSJSiY3huPCdtNb39YfMieztH5hg25lL5LjerS2wxvpiPP4g6jm10IuQMDsZdrKBBVqpJk46R/DvEqRFhmnkm2I5/xDKAyG7eWbSqCJEK2zKKXbFEHFcnQutpg74CWc/TAhlaAd1Xa1qoPuVNzMztjQ=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
 	dmarc=pass header.from=<Usama.Anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1736340833;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1736341225;
 	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
 	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=As/1OFEdRlaDnb0q+DbYfiD3CxO3jXivKyFqYgdOjBQ=;
-	b=Rs76IActLdubnBActQkfV0AAW/9cYoRXsV+ejcclL3sTIWZzF2FulJdm981FIfQT
-	wv+uBOnA4JV72psQITPito5cbUv50/8YxTbQaSQgnkAsEg0JVJB+m79kF/qwFiuEqnr
-	v85bXscpFiFG15UxOI14vXZPVK1l96ZNHD9pOr/M=
-Received: by mx.zohomail.com with SMTPS id 1736340830559114.59343033945629;
-	Wed, 8 Jan 2025 04:53:50 -0800 (PST)
-Message-ID: <f6073fd2-5254-4de5-8e0b-cc32166f8ffa@collabora.com>
-Date: Wed, 8 Jan 2025 17:54:08 +0500
+	bh=Hq+0i0owL/LZnmcbP3iuFwoYgT0nRlEWFd9Yf09SLY0=;
+	b=VOAqhO61v+fXipESqurfzHnyR0L15zNpuHGd7/CzWPBMKutEn3Rl2epna/ntyTUA
+	zEX2c0XBGJiJzsEu7kfFABq3MlPKKJ4teupCBPY3i+sZhxgF1cUfDRXtRf9Jnw8QSKZ
+	nwvbDV2NATAlT9wBdDY55p3yKNLPjundhCmzwvqI=
+Received: by mx.zohomail.com with SMTPS id 1736341222896299.72530666439025;
+	Wed, 8 Jan 2025 05:00:22 -0800 (PST)
+Message-ID: <9382652c-939d-4368-a4b2-93798ba0da19@collabora.com>
+Date: Wed, 8 Jan 2025 18:00:40 +0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,19 +52,19 @@ Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
  hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 00/81] 6.1.124-rc1 review
+Subject: Re: [PATCH 5.4 00/93] 5.4.289-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-References: <20250106151129.433047073@linuxfoundation.org>
+References: <20250106151128.686130933@linuxfoundation.org>
 Content-Language: en-US
 From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
-In-Reply-To: <20250106151129.433047073@linuxfoundation.org>
+In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
 
-On 1/6/25 8:15 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.124 release.
-> There are 81 patches in this series, all will be posted as a response
+On 1/6/25 8:16 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.289 release.
+> There are 93 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,9 +72,9 @@ On 1/6/25 8:15 PM, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.124-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.289-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
 > 
 > thanks,
@@ -84,24 +84,38 @@ On 1/6/25 8:15 PM, Greg Kroah-Hartman wrote:
 > -------------
 OVERVIEW
 
-        Builds: 39 passed, 0 failed
+        Builds: 34 passed, 4 failed
 
-    Boot tests: 507 passed, 0 failed
+    Boot tests: 384 passed, 0 failed
 
     CI systems: broonie, maestro
 
 REVISION
 
     Commit
-        name: v6.1.123-82-g88f2306b7d74
-        hash: 88f2306b7d7493dc9a6aaa851f2983532fb5666f
+        name: v5.4.288-94-g0578e8d64d90
+        hash: 0578e8d64d90f030b54a4ced241ec0b7f53a7c57
     Checked out from
-        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 
 
 BUILDS
 
-    No build failure found
+    Failures
+      -arm64 (defconfig)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=broonie:0578e8d64d90f030b54a4ced241ec0b7f53a7c57-arm64-defconfig
+      CI system: broonie
+
+      -arm64 (cros://chromeos-5.4/arm64/chromiumos-qualcomm.flavour.config)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0e55423acf18d2736a33
+      Build error: make: *** [arch/arm64/Makefile:170: vdso_prepare] Error 2
+      -arm64 (defconfig)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0e9e423acf18d2736b66
+      Build error: ./arch/arm64/include/asm/memory.h:85:50: error: ‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)
+      -i386 (i386_defconfig+allmodconfig)
+      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0ea8423acf18d2736b8c
+      Build error: arch/x86/events/amd/../perf_event.h:838:21: error: invalid output size for constraint '=q'
+      CI system: maestro
 
 
 BOOT TESTS
@@ -110,7 +124,7 @@ BOOT TESTS
 
 See complete and up-to-date report at:
 
-    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=88f2306b7d7493dc9a6aaa851f2983532fb5666f&var-patchset_hash=
+    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=0578e8d64d90f030b54a4ced241ec0b7f53a7c57&var-patchset_hash=
 
 
 Tested-by: kernelci.org bot <bot@kernelci.org>
