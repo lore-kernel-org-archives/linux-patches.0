@@ -1,105 +1,280 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D02F1AA781
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 20:37:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE062046B6
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 22:44:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736368633; cv=none; b=MGbFwnkflsN6MGa1pHCnA7zn2uUyUBZaQv7LiLVrAD2ieyllOBgPvFXSdx5qALDVI/q7cNDRAA+hJzH1ByUU6+5k8JLUhXHbvk2lHvkDJGwIdt/kXlHj3HlcoWc+14cT98WsFMxAZgHyW0dY3LAW1tD+cS0dseAhvGHY5nLpOX0=
+	t=1736376297; cv=none; b=RuhYb6c4lqor7R3UIM1YNwVFDJMnckzp4l3kSyjCcztFTh8mjaL/3/NAQjPPlmcxl5AvtglKfSYoLvcnUok3Y4yXgd99K11uGqWc1gD1RXiICuTWsYpltpz6Z7Ky8EM95M9VItY8ivM7iU5B8diw4AUIemn05SgjvEkBDkAjkIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736368633; c=relaxed/simple;
-	bh=FoCj2wZOlXVxbzmakk66/ByIg+IO7g/sdeHyyuKYxGk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=QhMa67rzIoWqfYwkArC9zJzrihnQ1TbGsBeRQJjXxXc33mXuGKMTIENYa7VQetdEoQpnLEKaM8OlOHEpojGxzM61QLnkpOeoMXCsIQ4szuyP2oUY1r5qplxkDm3Ld/LbK/vdW2uAPUSQivXNIF5mDQC+3BhW0K5BDRg5Kmsrrac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Za/4viTI; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+	s=arc-20240116; t=1736376297; c=relaxed/simple;
+	bh=c6qzH6M04EpmnrxrnTUrfn1gPyfm5fau7DjBH79aYXU=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JJIV6n6eDWEicGIwqaRPoSClwVvbfCEQqEwy9I6KMaykm8ztdbdSCZBOxSSttoCfEl8sulrLcvWhuqgsYdFW4DGQohK1jHlxVTwCXAXfnChgdr1mdkJtXAl2DrQKzn37KMvPq8hAMTh79HWKybRuG0zzQkCWUGiCGesrQJEGgVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=eJNBUZnj; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Za/4viTI"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-436202dd7f6so3159625e9.0
-        for <patches@lists.linux.dev>; Wed, 08 Jan 2025 12:37:11 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="eJNBUZnj"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4678cce3d60so2173221cf.2
+        for <patches@lists.linux.dev>; Wed, 08 Jan 2025 14:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=suse.com; s=google; t=1736368630; x=1736973430; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FoCj2wZOlXVxbzmakk66/ByIg+IO7g/sdeHyyuKYxGk=;
-        b=Za/4viTIiBzXJDBqyH7kt6amTPfS74wo2RY8LUqgdViWOm4poC8Kemjn2rQ+2lZza7
-         TXMHAh8q+++GGqLI4B5wXupcbkL41zm4GDSgWepolTXR1s2Hu0HI42tnX1sRUnJK8Bwe
-         xQqEzociTtL2dbhOBvy7VGBTbwbkHMK/gM4MIpa6JKksI1wDrAOEHVg51HdrKhjJla6q
-         /ebLeWIey+YWZff5TgMUwHtpDEHDIRLP2wO4rA8ZhQti4cCQ2W5lNEKun4YzxVos6Z3h
-         YoadVw80WuagjFKEAEC28DTX2rhd0bSIgt+QNKQI37ri0BV97o38lEarSulTTRbXWsde
-         2iXA==
+        d=chromium.org; s=google; t=1736376294; x=1736981094; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ql9KgAfRTbaAqeZqn0FEB+3SVYZKcwjQsk+4GLgd/tQ=;
+        b=eJNBUZnjJFYOoClR3RBnW6mVaWZFcqOU9BnUGm/U28DxnMipg+DqgxWSaD/lGl9Nvd
+         ocTA2crJniaBM1dwaP+hUq9mjRUqK5gGVhfAqJ/4XDfv5106re4PByFswCgsXubMQkZp
+         kx7sLMP7QowgePOW3AKjckaeDL42DQNGIEhJM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736368630; x=1736973430;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FoCj2wZOlXVxbzmakk66/ByIg+IO7g/sdeHyyuKYxGk=;
-        b=c5P1ETHOwZuNzgQuQ+rlEWN3NkFOpOqvmwCC5NsmRoma/S/N7ITQX1AwqudTGxEiCE
-         qVkZRtgN6ROl/j0YW73fYLyyu3N1h/MtB/4CzMp1gwHvTGxhMioa9jNeAJDUqtasinN5
-         899IMfu67ML+I6CcrV4QTZxtN8v9NSRTeachjGHqZaYzQH0aBjSCLwKm0O5GdoQq9gCv
-         3Af/KPfECXd1BBSXwChIwzpp2GF7e7rNGYwatfxt3VPCkkbeWxSLrBDpZWiEJlCUjmWs
-         XlIoVChUwmeC0o7RpMCGzVsb/87OxU3C+5uAmkb/+FfAU4LtET7Xi1PXICE5Jf6bs3uS
-         D4VA==
-X-Forwarded-Encrypted: i=1; AJvYcCW39akk6DaP+zOlC3V96IQsgz8OY3sjV14aMAoyg0JOKEJ0MszyI0pk9ezeklhToROPzf3VoQ/f@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy++xNEG5KFXvFZMXzuON1cRsfCspOVilS6rEyymTD/nONXZxwh
-	5B50+CwMlyDNPK9xaEc0r0/bKP71T2db6t9fjzlKZ42uMZmyDaAJ4csBRkRpLYTVas9pW9T3v8H
-	j
-X-Gm-Gg: ASbGncsqHr/spsdENy/h7VA2+YYWgH+l8uloLog7l2JbqlZNnfIEuhNoMcfLmkUeryC
-	su/rLQ7QnMbmN22/FWWgYvy9I+VLp6Us4aO0HnizvlQKoyxfXHuHwlbvWyOG47wHN16dTfH9FTU
-	yWzueIXvd+b/mfdRIS9XEeW35zDQSpd8UmRNqQoTs2LkQHXXUYqFAsvl2JUF5nOyaiSjpzJo+np
-	/GV09xJWgIEkg/aVSJURkTN0nnI9J7Lk6uz0HLZIiNQi+GBZrE5uGD9453j0deezUntyFeWTWyM
-	i5VwYHEfUjblkly7nzWsTGH+BSY21yv84wQ6gDDgQWf3JcCbUbCNxm5lnGuZ5EXpClvRsvGIAIl
-	4ge/DuCmlKuwW
-X-Google-Smtp-Source: AGHT+IHpnnqDyxLOQ/nirgjGGOdJ/ZH339XOXDS+je7JQQB/3fm1iDtTpuu0EuN1RG6e4kTXU5QFmQ==
-X-Received: by 2002:a05:600c:4e0b:b0:434:a7e3:db5c with SMTP id 5b1f17b1804b1-436e26aeeeemr34671985e9.11.1736368629554;
-        Wed, 08 Jan 2025 12:37:09 -0800 (PST)
-Received: from ?IPv6:2003:de:3746:4600:ac00:378:25cc:9f2c? (p200300de37464600ac00037825cc9f2c.dip0.t-ipconnect.de. [2003:de:3746:4600:ac00:378:25cc:9f2c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8475cesm53429771f8f.57.2025.01.08.12.37.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 12:37:09 -0800 (PST)
-Message-ID: <f693d9e8e0ece410ea6a8d1cfc26945286178231.camel@suse.com>
-Subject: Re: [PATCH blktests] nvme/053: provide time extension alternative
-From: Martin Wilck <martin.wilck@suse.com>
-To: Luis Chamberlain <mcgrof@kernel.org>, shinichiro.kawasaki@wdc.com
-Cc: linux-block@vger.kernel.org, patches@lists.linux.dev,
- gost.dev@samsung.com
-Date: Wed, 08 Jan 2025 21:37:07 +0100
-In-Reply-To: <20241218111340.3912034-1-mcgrof@kernel.org>
-References: <20241218111340.3912034-1-mcgrof@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.2 
+        d=1e100.net; s=20230601; t=1736376294; x=1736981094;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
+         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ql9KgAfRTbaAqeZqn0FEB+3SVYZKcwjQsk+4GLgd/tQ=;
+        b=rHMFJhqHBxRn3Mi9R2ceA+i+DNDl+F4WDe2FqVF98x1ysZhv5DsACmUNt3m109YU8T
+         N7p+ubZQapAz0A8sNeFE37rpsEKlXaRur1d+vt5TSkyZHcD2t+nteTZ4M6idpCI6HqgR
+         DQVpS+4z8Rk+M8q8NfsmNFm9Xw1wICtgJPSXj/LX0fRqQpxI8IjyXwnoEwZC23ypR9+z
+         UHgSkxYRJU/AJSbFmfj5y/wdw+x3IbjSB7Ei4C3TeBJSvCHKtVzwfdxxkzkfGzMvJoQb
+         JO+OnsNsPAHCII9rrnae1YD42tiPcgx3Z8GwqZhMW+gEkX+aXEDHJGaskPKrHZgsweA3
+         cZqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXDTMhPz46ycAo0WGeDQu/P2ONXLAG+yJokahDTIWoqSUcipcTG3qIIWk4z2/5d/TVK9ThF1L3O@lists.linux.dev
+X-Gm-Message-State: AOJu0YzwFWnFY4GuTh4LOnJfHHx4jvy7qFontP51MKl3WgRUyEIplf4v
+	Ao2xHFtHW38sGk8XfmVijTa70P1x3pdp0NpXg64ko07d9ZHOluvh8tasxnFf0s4QZPlbDTZYQ+S
+	86jloUlQsAEUFLGvgsY0dtDVTIKW/LwKBfcYR
+X-Gm-Gg: ASbGncsNuFz3Pevpx1GoTRCN8mIiySVyCogxVrhebZmYC1JRjVW5gqMyspogjIwcyDi
+	0ggxCb2pqT6St0ntu0Z4gX/1n1YGzd0c2ify3MsRN11LXjNbG7vPIgISNL0IP0aW46Q==
+X-Google-Smtp-Source: AGHT+IEO1UjbzlWHUzA9Gg/J/8qMV0j9bHf+zPg27HIqSiBhM4IvZGuoAL+oAG1OVL66PaeXK53g4W+9J5Q0ff2nIrA=
+X-Received: by 2002:a05:620a:19a3:b0:7b6:d273:9b52 with SMTP id
+ af79cd13be357-7bcd9709522mr745480585a.24.1736376294544; Wed, 08 Jan 2025
+ 14:44:54 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 8 Jan 2025 14:44:54 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <CAL_JsqKMcHPhf8yzEZNC6280-k+aSmo3SQOBZLMjmfTR47BH=g@mail.gmail.com>
+References: <20250108012846.3275443-1-swboyd@chromium.org> <20250108012846.3275443-2-swboyd@chromium.org>
+ <CAL_JsqKMcHPhf8yzEZNC6280-k+aSmo3SQOBZLMjmfTR47BH=g@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.12.dev1+gaa8c22fdeedb
+Date: Wed, 8 Jan 2025 14:44:54 -0800
+X-Gm-Features: AbW1kvb1_nWtQftRF6WxL1bcdIY5RMcBpQuHQK_ddNANpT_CioCq0Ftpnme_gUw
+Message-ID: <CAE-0n52k0Gg85Ry4KyjE7Ms_dJgj=aPA4aPB5gmC-VGWSNLZXA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/6] bus: Extract simple-bus into self-contained driver
+To: Rob Herring <robh@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	devicetree@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>, 
+	Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2024-12-18 at 03:13 -0800, Luis Chamberlain wrote:
-> I get this failure when I run this test:
->=20
-> awk: ...rescan.awk:2: warning: The time extension is obsolete.
-> Use the timex extension from gawkextlib
->=20
-> I can't find this extension either, so just use systime() and
-> use system(sleep) for the sleep command.
+Quoting Rob Herring (2025-01-08 06:11:28)
+> On Tue, Jan 7, 2025 at 7:28=E2=80=AFPM Stephen Boyd <swboyd@chromium.org>=
+ wrote:
+> >
+> > Extract the simple bus into a self contained driver so that devices are
+> > still populated when a node has two (or more) compatibles with the leas=
+t
+> > specific one being the generic "simple-bus". Allow the driver to be a
+> > module so that in a fully modular build a driver module for the more
+> > specific compatible will be loaded first before trying to match this
+> > driver.
+> >
+> > Cc: Rob Herring <robh@kernel.org>
+> > Cc: Saravana Kannan <saravanak@google.com>
+> > Cc: <devicetree@vger.kernel.org>
+> > Cc: Arnd Bergmann <arnd@arndb.de>
+> > Cc: "Uwe Kleine-K=C3=B6nig" <u.kleine-koenig@baylibre.com>
+> > Cc: Bjorn Andersson <andersson@kernel.org>
+> > Cc: Konrad Dybcio <konradybcio@kernel.org>
+> > Cc: <linux-arm-msm@vger.kernel.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  drivers/bus/Kconfig         | 23 +++++++++++
+> >  drivers/bus/Makefile        |  3 ++
+> >  drivers/bus/simple-bus.c    | 79 +++++++++++++++++++++++++++++++++++++
+> >  drivers/bus/simple-pm-bus.c |  2 +
+> >  drivers/of/platform.c       | 50 +++++++++++++++++++++++
+> >  5 files changed, 157 insertions(+)
+> >  create mode 100644 drivers/bus/simple-bus.c
+> >
+> > diff --git a/drivers/bus/Kconfig b/drivers/bus/Kconfig
+> > index ff669a8ccad9..7c2aa1350578 100644
+> > --- a/drivers/bus/Kconfig
+> > +++ b/drivers/bus/Kconfig
+> > @@ -261,6 +261,29 @@ config DA8XX_MSTPRI
+> >           configuration. Allows to adjust the priorities of all master
+> >           peripherals.
+> >
+> > +config ALLOW_SIMPLE_BUS_OVERRIDE
+> > +       bool "Allow simple-bus compatible OF nodes to match other drive=
+rs"
+> > +       depends on OF
+> > +       help
+> > +         Allow nodes with the "simple-bus" compatible to use a more sp=
+ecific
+> > +         driver which populates child devices itself.
+>
+> A kconfig option for this is not going to work. What does a distro kernel=
+ pick?
 
-While I'm ok with Shinshiro's propsal for working around this issue, I
-wonder which gawk version you are using? In the history of gawk, I can
-see that the deprecation of the "time" extension (gawk 5.2.0) was taken
-back in gawk 5.2.2:
+I was thinking a distro kernel would set it to =3DY
 
-c3c6419 ("Make the time extension deprecated.")
-6e195e4 ("Undeprecate the time extension, add strptime, update tests
-and doc.")
+>
+> > +
+> > +config OF_SIMPLE_BUS
+> > +       tristate "OF Simple Bus Driver"
+> > +       depends on ALLOW_SIMPLE_BUS_OVERRIDE || COMPILE_TEST
+> > +       default ALLOW_SIMPLE_BUS_OVERRIDE
+> > +       help
+> > +         Driver for the "simple-bus" compatible nodes in DeviceTree. C=
+hild
+> > +         nodes are usually automatically populated on the platform bus=
+ when a
+> > +         node is compatible with "simple-bus". This driver maintains t=
+hat
+> > +         feature but it fails probe to allow other drivers to try to p=
+robe
+> > +         with a more specific compatible if possible.
+> > +
+> > +         Those other drivers depend on this kconfig symbol so that the=
+y match
+> > +         the builtin or modular status of this driver. Don't disable t=
+his
+> > +         symbol if ALLOW_SIMPLE_BUS_OVERRIDE is set and there isn't an=
+other
+> > +         driver for the simple-bus compatible.
+>
+> Giving users some rope to hang themselves?
 
-The NEWS file says "The time extension is no longer deprecated. The
-strptime() function from gawkextlib's timex extension has been added to
-it."
+Heh.
 
-Regards,
-Martin
+>
+> > +
+> >  source "drivers/bus/fsl-mc/Kconfig"
+> >  source "drivers/bus/mhi/Kconfig"
+> >
+> > diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
+> > index cddd4984d6af..f3968221d704 100644
+> > --- a/drivers/bus/Makefile
+> > +++ b/drivers/bus/Makefile
+> > @@ -40,5 +40,8 @@ obj-$(CONFIG_VEXPRESS_CONFIG) +=3D vexpress-config.o
+> >
+> >  obj-$(CONFIG_DA8XX_MSTPRI)     +=3D da8xx-mstpri.o
+> >
+> > +# Must be last for driver registration ordering
+> > +obj-$(CONFIG_OF_SIMPLE_BUS)    +=3D simple-bus.o
+> > +
+> >  # MHI
+> >  obj-y                          +=3D mhi/
+> > diff --git a/drivers/bus/simple-bus.c b/drivers/bus/simple-bus.c
+> > new file mode 100644
+> > index 000000000000..3e39b9818566
+> > --- /dev/null
+> > +++ b/drivers/bus/simple-bus.c
+> > @@ -0,0 +1,79 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Simple Bus Driver
+> > + */
+> > +
+> > +#include <linux/mod_devicetable.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of.h>
+> > +#include <linux/of_device.h>
+> > +#include <linux/of_platform.h>
+> > +#include <linux/platform_device.h>
+> > +
+> > +static struct platform_driver simple_bus_driver;
+> > +
+> > +static int has_specific_simple_bus_drv(struct device_driver *drv, void=
+ *dev)
+> > +{
+> > +       /* Skip if it's this simple bus driver */
+> > +       if (drv =3D=3D &simple_bus_driver.driver)
+> > +               return 0;
+> > +
+> > +       if (of_driver_match_device(dev, drv)) {
+> > +               dev_dbg(dev, "Allowing '%s' to probe more specifically\=
+n", drv->name);
+> > +               return 1;
+> > +       }
+> > +
+> > +       return 0;
+> > +}
+> > +
+> > +static int simple_bus_probe(struct platform_device *pdev)
+> > +{
+> > +       struct device *dev =3D &pdev->dev;
+> > +       const struct of_dev_auxdata *lookup =3D dev_get_platdata(dev);
+> > +       struct device_node *np =3D dev->of_node;
+> > +
+> > +       /*
+> > +        * If any other driver wants the device, leave the device to th=
+e other
+> > +        * driver. Only check drivers that come after this driver so th=
+at if an
+> > +        * earlier driver failed to probe we don't populate any devices=
+, and
+> > +        * only check if there's a more specific compatible.
+> > +        */
+> > +       if (of_property_match_string(np, "compatible", "simple-bus") !=
+=3D 0 &&
+> > +           bus_for_each_drv(&platform_bus_type, &simple_bus_driver.dri=
+ver, dev,
+> > +                            has_specific_simple_bus_drv))
+> > +               return -ENODEV;
+>
+> If this driver is built-in and the specific driver is a module, this
+> doesn't work, right?
 
+Yes. The thinking is that if the specific driver is a module we would
+make the simple bus driver be a module as well.
+
+>
+> I think we're going to have to have a list of specific compatibles
+> that have or don't have a specific driver. Today, the list with
+> specific drivers is short, but that could easily change if this
+> becomes the way to handle things.
+
+Are you talking about simple_pm_bus_probe()? I don't know how to make a
+list of specific compatibles work because we can't know if the more
+specific driver has been compiled or shipped as a module. We could get
+stuck waiting forever for the specific driver to be registered, leading
+to what looks like a non-working system because the simple-bus driver
+refused to probe. I decided to punt on that problem by relying on
+userspace to load the specific driver module before the simple-bus one.
+Or if the two drivers are builtin then the specific driver would be
+registered before the simple-bus driver via link ordering and it will
+work.
+
+> We should consider if new platforms
+> should just avoid 'simple-bus' and use something new.
+
+Yes, I think new platforms should entirely avoid "simple-bus" for their
+SoC node.
+
+One idea I had was to populate the devices for simple-bus and then
+remove them if a more specific driver registers to allow the specific
+driver to bind and do what it wants. That's not great because we would
+almost always cycle through deleting devices and repopulating them,
+unless we play tricks with initcall ordering. The benefit is that we
+don't have to do gymnastics to avoid the probe of the simple-bus driver.
+
+Maybe the best approach is to simply avoid all of this and drop the
+"simple-bus" compatible from the soc node? It introduces an annoying
+hurdle where you have to enable the new driver that does exactly the
+same thing as "simple-bus" does so you continue to have a working
+system, but it avoids the headaches of trying to make the fallback to
+"simple-bus" work and it would match how new DTs would be written. We
+could make the driver 'default ARCH_<SOC_VENDOR>' so that it gets built
+for olddefconfig users too.
