@@ -1,134 +1,121 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385071F941E
-	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 13:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736341241; cv=pass; b=Fzr0QGUNTJM2QMz2AoKOE3toUSYCTZmXibtPq2SMkm+D47oidD440LEM0HiXRRVnfCdH0rA5F2AY7RwLdT8t2Wo+446gLrK4YP8KJhZP2E2D/8H/k1Pxst0qgt3FeYo0PO6oFsZLeDfCdTg42pD1xi7dRxf0nhekQBa2ssH7KBo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736341241; c=relaxed/simple;
-	bh=tnTizHbo5RCVXiv/k44EMtNNSlcV8XEFxWPds94nEiU=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=SahQFPI73gRq59t/sh1maU2SfY4x5a6UAIIwRHmOqH4/VF4BZd6Rxf+4W8tlOg7c/X9YhX28FOFmnx0HPgmJiKBy7bTVD3gD3JFImP1G2pEGKn5wASJcN4p93iTaAhLEmbZa8C1EpBXSzC/jV9wzEy8nLeniyhBYTVPmSZ+Og/g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=VOAqhO61; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE4D1FA166
+	for <patches@lists.linux.dev>; Wed,  8 Jan 2025 13:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736341339; cv=none; b=FjGonXCU1OhDPsmURsP6iI+xUlq4oMo0waZIHAPNHHuJS5gXTe6QzQS83ZA/B8iwFgx/ELf5TgU06XO+HZngiCN3p6Y0sbOO73eTQ8ea1WYIZRVKJNSg8YZIaVCbd8aIg5tPW5xMWalxfA6M3GTE9tQbG+VQZlD0KEIj+VSpqAs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736341339; c=relaxed/simple;
+	bh=pfXKttkEL2SWWU2rinTk0BU61tt2kEqGuqQajYKioxY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CQqBOKNnP58ueJ/2EvglSNo6Fxjdm+p4Ldik1ptG4xIWTR5jiA6NeohVD4nxpT1swUIEAZGZNk7t7pjeOW4sR8icxzHJqiZ/I5kcXnZLV/fCPMOcHPEVmJxqHgWq938SY8ZR+vXrifMGmliGJ6tOCh+sHw5Lbu3XUJ2Zkyvj/7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gEUhJJ6+; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="VOAqhO61"
-ARC-Seal: i=1; a=rsa-sha256; t=1736341225; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=DH/LOQZfq01z/2t2GaD9VUKmNUlGvwWvPBSvttSNzrhpNUOkHj2O4anSjPMIlJxGslRmAvmdC3lev3YlqXLHkWdyGSTP00d5ZCmu3GwKBMBBzqj9EWp+GhOM8/hbUQwPeK1hXhWMxSPh6mo+Kjtl+gpqdfvJgaWFxNdmrWalyVc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1736341225; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=Hq+0i0owL/LZnmcbP3iuFwoYgT0nRlEWFd9Yf09SLY0=; 
-	b=SB7Qqw9hZzNnIHFtTx+BZSJSiY3huPCdtNb39YfMieztH5hg25lL5LjerS2wxvpiPP4g6jm10IuQMDsZdrKBBVqpJk46R/DvEqRFhmnkm2I5/xDKAyG7eWbSqCJEK2zKKXbFEHFcnQutpg74CWc/TAhlaAd1Xa1qoPuVNzMztjQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
-	dmarc=pass header.from=<Usama.Anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1736341225;
-	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=Hq+0i0owL/LZnmcbP3iuFwoYgT0nRlEWFd9Yf09SLY0=;
-	b=VOAqhO61v+fXipESqurfzHnyR0L15zNpuHGd7/CzWPBMKutEn3Rl2epna/ntyTUA
-	zEX2c0XBGJiJzsEu7kfFABq3MlPKKJ4teupCBPY3i+sZhxgF1cUfDRXtRf9Jnw8QSKZ
-	nwvbDV2NATAlT9wBdDY55p3yKNLPjundhCmzwvqI=
-Received: by mx.zohomail.com with SMTPS id 1736341222896299.72530666439025;
-	Wed, 8 Jan 2025 05:00:22 -0800 (PST)
-Message-ID: <9382652c-939d-4368-a4b2-93798ba0da19@collabora.com>
-Date: Wed, 8 Jan 2025 18:00:40 +0500
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gEUhJJ6+"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53ff1f7caaeso17670984e87.0
+        for <patches@lists.linux.dev>; Wed, 08 Jan 2025 05:02:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1736341336; x=1736946136; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LtdjdENjpDlREgBVNAk/GURw9RLq4teFMIc2Gk3yyCc=;
+        b=gEUhJJ6+k/nga0vBdA9i2CCCXYfYwlpJMfJAOEFhVynA4WZYooRl9omIqpg/g0h606
+         BLb8//X1IgG6UCXu0rigLRafM+kSEJyYWzMQVQeEiwd7gtCkuh5oDd+44fnRWQtAfVUk
+         eENfOxKFTxVqFALKTIdrRyS+mRa6JTYme0znV4O32khvnXI3qzsBdy+ZhvNQ/NEN/q84
+         f2AfmKB/r3d7vSIwm/fjm0wZGPB7nOdvLxpxGIdIphivKvtycR44uWBuU15RLoHE4bJh
+         Sn8OCZuk7uY13zelEw0kwoq7YRqIbUsRLwcYgbu4WodXZdmLeqK1LKp26QtRENaRuaYK
+         yduA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736341336; x=1736946136;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LtdjdENjpDlREgBVNAk/GURw9RLq4teFMIc2Gk3yyCc=;
+        b=NyzPipP786nuol+URDkY5aoFMCx2CwF17YCgGxVcNZohQ+J1HY2KcYeH9ScFqjW4Kv
+         B4CTWYxP9F6tEEjAJOA/6tJNI5IKhPCaVgt+YXJadtbrBgpRd9d1Q4Y8AJbn8SeOItP9
+         QTU8KXEGnsdkxDStYCDIzyz18KjUShHW1ycZpX5zYNGL52AlYqq/SS6A8WWkzsxNOPjz
+         wobOIQQzpiHeTqou2sP5AQOZoCIQPZ8nNHTeDXltNwWi739RYsyQMo4eenjirx2BBgn1
+         qbqnw3UINaGtAEh0ta5pJNS4l1aTPm5ZoQ646849+ZkEP9zjGcwJYuHaK4rtmlb++UUN
+         4onQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVvBDunj3QTX0FD2PA74vb3uGQJB8XpmTOucEt0yTvm6VaSYyh9leI2V8Vvoso7qmv2WnKyS7Cz@lists.linux.dev
+X-Gm-Message-State: AOJu0YxvMPwfwLoIe/AjltEJBql7UmRKGi1hN18r8eWbA+H6i2Xb/D4r
+	qRUaBmSsbY0jy2EnqyjCAVSFPis2Pvz8xYLHZH/QnZh0MzeJSF5QuRUQLUCT4sQ=
+X-Gm-Gg: ASbGncv36fl6iUMJd1af4I0dOh55pQY01dAteSi31gx2RgA0aF/XCEa6V4fuZJ7U9kk
+	s1ipIPLeZctN280wDes1h36s4llXPMokQTMNXWYCiJthPtpXu4zAw6anWFK8Oh7teU2Jsl60DcZ
+	UhDW//zMUkTeUhDTAaoB/2RaDpm9eD6E7dyH30wUeax3xgesoY+IyyrvuqjsQmsgxnxtu8zDM5Q
+	cy5ZgY2L5QsCUgvTrZUSIrCOJ+CQn8sFH2EvEBo/kDjQgJwWHTeBKeOAb8HPNx4imKuKZ6hhIHb
+	bZB5lhFGIWLDGCB/EbRcQkXyp5JMqhkQrZCm
+X-Google-Smtp-Source: AGHT+IF11Wgw4NNBGE9Alqz5c2ikDMgSytLQymr22qioeMYiszQ6HPLJGryvXEb7CVA6I7N4H4lGkQ==
+X-Received: by 2002:ac2:4e08:0:b0:542:23b3:d81b with SMTP id 2adb3069b0e04-5428450707amr631936e87.5.1736341335696;
+        Wed, 08 Jan 2025 05:02:15 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-542236000ddsm5590003e87.82.2025.01.08.05.02.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 05:02:15 -0800 (PST)
+Date: Wed, 8 Jan 2025 15:02:12 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	devicetree@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
+	Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>, 
+	Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Subject: Re: [RFC PATCH 6/6] arm64: dts: qcom: sc7180: Add SoC specific
+ compatible to soc node
+Message-ID: <n3fn5mnrrinrgrvadqgymv3cx355qpx5kk27nlrz2emoxfmjyt@ymwpfxf7lv4r>
+References: <20250108012846.3275443-1-swboyd@chromium.org>
+ <20250108012846.3275443-7-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 5.4 00/93] 5.4.289-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-References: <20250106151128.686130933@linuxfoundation.org>
-Content-Language: en-US
-From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
-In-Reply-To: <20250106151128.686130933@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250108012846.3275443-7-swboyd@chromium.org>
 
-On 1/6/25 8:16 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.289 release.
-> There are 93 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Jan 07, 2025 at 05:28:43PM -0800, Stephen Boyd wrote:
+> Allow an SoC driver to probe for these devices. Add the SoC specific
+> compatible to the soc node. Leave the original simple-bus compatible in
+> place so that everything keeps working.
 > 
-> Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> Anything received after that time might be too late.
+> Cc: Rob Herring <robh@kernel.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Konrad Dybcio <konradybcio@kernel.org>
+> Cc: <linux-arm-msm@vger.kernel.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.289-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> index 76fe314d2ad5..257890a193e6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> @@ -782,7 +782,7 @@ soc: soc@0 {
+>  		#size-cells = <2>;
+>  		ranges = <0 0 0 0 0x10 0>;
+>  		dma-ranges = <0 0 0 0 0x10 0>;
+> -		compatible = "simple-bus";
+> +		compatible = "qcom,soc-sc7180", "simple-bus";
+
+If the new driver requires this compatible, it will break compatibility
+with older DT files (and it should be avoided).
+
+>  
+>  		gcc: clock-controller@100000 {
+>  			compatible = "qcom,gcc-sc7180";
+> -- 
+> https://chromeos.dev
 > 
-> thanks,
-> 
-> greg k-h
-> 
-> -------------
-OVERVIEW
 
-        Builds: 34 passed, 4 failed
-
-    Boot tests: 384 passed, 0 failed
-
-    CI systems: broonie, maestro
-
-REVISION
-
-    Commit
-        name: v5.4.288-94-g0578e8d64d90
-        hash: 0578e8d64d90f030b54a4ced241ec0b7f53a7c57
-    Checked out from
-        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-
-
-BUILDS
-
-    Failures
-      -arm64 (defconfig)
-      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=broonie:0578e8d64d90f030b54a4ced241ec0b7f53a7c57-arm64-defconfig
-      CI system: broonie
-
-      -arm64 (cros://chromeos-5.4/arm64/chromiumos-qualcomm.flavour.config)
-      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0e55423acf18d2736a33
-      Build error: make: *** [arch/arm64/Makefile:170: vdso_prepare] Error 2
-      -arm64 (defconfig)
-      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0e9e423acf18d2736b66
-      Build error: ./arch/arm64/include/asm/memory.h:85:50: error: ‘KASAN_SHADOW_SCALE_SHIFT’ undeclared (first use in this function)
-      -i386 (i386_defconfig+allmodconfig)
-      Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0ea8423acf18d2736b8c
-      Build error: arch/x86/events/amd/../perf_event.h:838:21: error: invalid output size for constraint '=q'
-      CI system: maestro
-
-
-BOOT TESTS
-
-    No boot failure found
-
-See complete and up-to-date report at:
-
-    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=0578e8d64d90f030b54a4ced241ec0b7f53a7c57&var-patchset_hash=
-
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-Thanks,
-KernelCI team
-
+-- 
+With best wishes
+Dmitry
