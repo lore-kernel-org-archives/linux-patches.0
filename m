@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D38A2165E3;
-	Thu,  9 Jan 2025 11:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD66E2163AF;
+	Thu,  9 Jan 2025 11:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736421022; cv=none; b=l/71HGyrxwMqbaTpO/gIG3DGdPZSQ6huk0MMaVPkeygim4ML6FHo/2s4iLEmgMRdh6B+TA7T+i5OVgI0DVUc5Aw8a8duEm4y0Tdaf+mN8NmCLye5INZb39iW2CjhwBYF2SqF36zsaOpm0yI4xyR5dXp/HPsNWXcShHbhkEMv9sA=
+	t=1736421090; cv=none; b=OBoVNLoaaTGdIXhrjo4m6MTwkhe1GRDoxsZayDI9so2+Q6ba2B7I5hnK0Ao/O2aswL801ghkCvKUElr9GIASw17DtxE0/VNU56+2Dp6v7DQWcNW62M3MY8oNF9ibxZymtSBPxZEvIbS5l671S3H3thzbeteCBKqna27JzKL2ud0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736421022; c=relaxed/simple;
-	bh=saPJfGL5HcZGuAmHxJK4KJXlcjFEiRqX297G5X1zF+4=;
+	s=arc-20240116; t=1736421090; c=relaxed/simple;
+	bh=g2mrLiwGez/7VNoBp7dSY2O9AvTdlI9GNQWbuVkSXBg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aTzb0JHMoZY7vX5z6GK6jOTdFKXVYMs4QpeVjFtBv+UH3CiCnWc7wOpk56T9eCPf4mOpyGDZxBpQfigOt9eLZY51hCtj+wPFhZitXdjHFg3agjvMGfDAoca6C6BuUFQbYnnW7dfg1+mYfZTBQ3+2yqTv+eW7nvumCkC0R45B4xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJBGjWmN; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=rviL8kw0+lj7tk2d8wfOmdixXcOGflntfNNWStK2yVHATxzbWuELLyOqa/gZRMZSZAN60tTBEHGCMSqVGkGnfUUkSU5zOe6iWlrI/+9YPx9rcThFNZ6ke9qAX7gc8zLaoFwsxIS6q151ACVNyjLqfrtcIlrmKCvcLd705ZgSqFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dsuxg/Wd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJBGjWmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7C7C4CEDF;
-	Thu,  9 Jan 2025 11:10:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dsuxg/Wd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0D0C4CED2;
+	Thu,  9 Jan 2025 11:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736421022;
-	bh=saPJfGL5HcZGuAmHxJK4KJXlcjFEiRqX297G5X1zF+4=;
+	s=korg; t=1736421090;
+	bh=g2mrLiwGez/7VNoBp7dSY2O9AvTdlI9GNQWbuVkSXBg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RJBGjWmNb76Lhi2pJB1shjGv26NDHdPxH2ywlln/VNf1aOVgibN/z7fmp0JL+O4YG
-	 tIYsDTiWVoHlnbG8NJYeoEAEQKDvnesPJbuUq5LGc0ptfHIQzMso1pmAatDAtaSHIT
-	 R2I4Ij4PigRBwa11wq27TaY0qFUKGIwVDmn/OFaY=
-Date: Thu, 9 Jan 2025 12:10:18 +0100
+	b=Dsuxg/WdErBNNTrmyKjfRXrjx5xqYrm61t6r26t4+mtatYc1Hyv10IOhYxsgqdQ7l
+	 6Vzlz8/IA6VKmT77tvsf8sKBLNKUXlhQWRfYC6dWwxJX0+vMbk7cNYh3TF9lF3/tyn
+	 tEooCuhsWcy30kX8EuknXgjJ2kxitKO44vACcryg=
+Date: Thu, 9 Jan 2025 12:11:26 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
+To: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
@@ -34,22 +34,22 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
 	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
 Subject: Re: [PATCH 5.15 000/168] 5.15.176-rc1 review
-Message-ID: <2025010910-hypocrite-handler-1f1b@gregkh>
+Message-ID: <2025010916-preorder-sway-50ad@gregkh>
 References: <20250106151138.451846855@linuxfoundation.org>
- <fc58a412-b154-4286-9097-4f3c5d7d97aa@w6rz.net>
+ <d74b5262-cc20-40d3-89eb-69029965bdcb@collabora.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fc58a412-b154-4286-9097-4f3c5d7d97aa@w6rz.net>
+In-Reply-To: <d74b5262-cc20-40d3-89eb-69029965bdcb@collabora.com>
 
-On Mon, Jan 06, 2025 at 10:32:32PM -0800, Ron Economos wrote:
-> On 1/6/25 07:15, Greg Kroah-Hartman wrote:
+On Wed, Jan 08, 2025 at 05:44:48PM +0500, Muhammad Usama Anjum wrote:
+> On 1/6/25 8:15 PM, Greg Kroah-Hartman wrote:
 > > This is the start of the stable review cycle for the 5.15.176 release.
 > > There are 168 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
@@ -67,33 +67,42 @@ On Mon, Jan 06, 2025 at 10:32:32PM -0800, Ron Economos wrote:
 > > thanks,
 > > 
 > > greg k-h
+> OVERVIEW
 > 
-> On RISC-V, the build fails with:
+>         Builds: 34 passed, 5 failed
 > 
-> In file included from mm/kfence/core.c:33:
-> ./arch/riscv/include/asm/kfence.h: In function 'kfence_protect_page':
-> ./arch/riscv/include/asm/kfence.h:59:9: error: implicit declaration of
-> function 'local_flush_tlb_kernel_range'; did you mean
-> 'flush_tlb_kernel_range'? [-Werror=implicit-function-declaration]
->    59 |         local_flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
->       |         flush_tlb_kernel_range
-> In file included from mm/kfence/report.c:20:
-> ./arch/riscv/include/asm/kfence.h: In function 'kfence_protect_page':
-> ./arch/riscv/include/asm/kfence.h:59:9: error: implicit declaration of
-> function 'local_flush_tlb_kernel_range'; did you mean
-> 'flush_tlb_kernel_range'? [-Werror=implicit-function-declaration]
->    59 |         local_flush_tlb_kernel_range(addr, addr + PAGE_SIZE);
->       |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
->       |         flush_tlb_kernel_range
+>     Boot tests: 70 passed, 0 failed
 > 
-> This is caused by commit d28e50e231ce20a9b9cad9edce139ac775421ce5 riscv: Fix
-> IPIs usage in kfence_protect_page().
+>     CI systems: broonie, maestro
 > 
-> The function local_flush_tlb_kernel_range() doesn't exist for RISC-V in
-> 5.15.x and doesn't appear until much later in 6.8-rc1. So probably best to
-> drop this patch.
+> REVISION
+> 
+>     Commit
+>         name: v5.15.175-169-gbcfd1339c90c
+>         hash: bcfd1339c90c53211978065747daad99e1149916
+>     Checked out from
+>         https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 
+> 
+> BUILDS
+> 
+>     Failures
+>       -x86_64 (cros://chromeos-5.15/x86_64/chromeos-amd-stoneyridge.flavour.config)
+>       Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0f6d423acf18d27370ec
+>       Build error: drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1948:78: error: â€˜OTG_MASTERâ€™ undeclared (first use in this function); did you mean â€˜IFF_MASTERâ€™?
+>       -x86_64 (cros://chromeos-5.15/x86_64/chromeos-intel-pineview.flavour.config)
+>       Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0f72423acf18d27370ff
+>       Build error: drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1948:78: error: â€˜OTG_MASTERâ€™ undeclared (first use in this function); did you mean â€˜IFF_MASTERâ€™?
+>       -i386 (defconfig)
+>       Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0fe6423acf18d27375ac
+>       Build error: drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1948:78: error: â€˜OTG_MASTERâ€™ undeclared (first use in this function)
+>       -x86_64 (x86_64_defconfig)
+>       Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0fdb423acf18d273753b
+>       Build error: drivers/gpu/drm/amd/amdgpu/../display/dc/dcn20/dcn20_resource.c:1948:78: error: â€˜OTG_MASTERâ€™ undeclared (first use in this function)
+>       -i386 (i386_defconfig+allmodconfig)
+>       Build detail: https://kcidb.kernelci.org/d/build/build?orgId=1&var-id=maestro:677c0fbd423acf18d27372f5
+>       Build error: LD [M]  fs/xfs/xfs.o
+>       CI system: maestro
 
-Thanks, now dropped.
+Offending commit now dropped, thanks!
 
-greg k-h
