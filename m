@@ -1,98 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D36216E01;
-	Thu,  9 Jan 2025 11:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE682010EF;
+	Thu,  9 Jan 2025 11:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736422796; cv=none; b=kg5NXyumVaKSpQaKEsiPGECGJS/ApH3/q3W0s+VsNpYlu1ucibD6hiqr0HkBE+l1Bk5gV6ztJlO5LviY1qpGlLRccohRmAMYSi6J1+CbQ3ff7uSPyRR4bRDiNZVGMo1IpawkgtZACMXUIKtQrCVcU6nGc/D7PcfvhyTl2ZPDE+s=
+	t=1736423194; cv=none; b=tBxUxpyR4w+v9z6uskforWA2Z2hMgS+oI4SiJrwn47LqsbWQsF5b1Daqb5Z92U2GjhQH6pO4WbwZAWkWMDoePU+iEUl0YSk4gIt5ao/FUXrs7rxMgvUrr/LR9uFwaI2Yo1M5Rh3xMf+cOs7GTjt61FdvUwQFHOO9rTYCJW+RUXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736422796; c=relaxed/simple;
-	bh=sIO6Esic9WvSJaJ/gXwKPf5nuLUVqLVnK8MkdoqX8+g=;
+	s=arc-20240116; t=1736423194; c=relaxed/simple;
+	bh=H9eA+ejVhVauhCwjmVMYIRD2dwBKM9fp8Rs1XAnOzmQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=snA4qUBfQgsdzgpneMZlgLRquVkVeJ7nf5auLywwnb24BwaY3+8hPc0AnrgciBtHPORAqc5idFMrpMCQMbNFB/UERUn/7zvIuOqMw2oTp4o7+mEW9omjdabhg1pkEepZqfRvlEF4dEfxkgAXTcqoZWnt+urzEo/Qp+LwT5JJnK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7oFFlSn; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=kU/HHHY8v1gY/CLtdRoVA2tYxFtm7pkfR1bqXZvJ4C06L1jCAfDcm2fZcO8/yPArCewqPbd3X0w07ZkZBdbKkXDbPDmWZPzyoCg14wfesap1geDx80Utvl3iF3CZiv7hs9+w5eEuWXtvu819O6+rGx0TBoTieAUsG/1y1s1/y2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xbgg10Or; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7oFFlSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5656AC4CED2;
-	Thu,  9 Jan 2025 11:39:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xbgg10Or"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDBAC4CED2;
+	Thu,  9 Jan 2025 11:46:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736422795;
-	bh=sIO6Esic9WvSJaJ/gXwKPf5nuLUVqLVnK8MkdoqX8+g=;
+	s=korg; t=1736423193;
+	bh=H9eA+ejVhVauhCwjmVMYIRD2dwBKM9fp8Rs1XAnOzmQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=h7oFFlSnRcruxkwlTkZEAt52k0gLWf3tsjkYMoXDLkBI9JJB0Ap4yyzo4EScNlH1+
-	 rBxfFebsBWTpQytZWUVnoti9xR5r5/ZeSauQsfb2gQTaNxzXLPTA6TE9obsyitzxBK
-	 jd6wtWJkRoEMS95pboJ1EnMSLqdHRa6GjdqOVhh4=
-Date: Thu, 9 Jan 2025 12:39:52 +0100
+	b=Xbgg10OrH4pVeN3JEgauUXLIuDmGpt3VoNvaa3Xg73D1VgpP1YVh2p/5K4ESnvcOH
+	 ujqBu3R8ERofX+KcVySR0DiifqxKx10G31XukoR32+N6dVYkHuAOlLjCS/4ndvVt+t
+	 7Ez6iOjMRPJGkvoGUCAKcITQ5vuFtepGRVvVNWOk=
+Date: Thu, 9 Jan 2025 12:46:30 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
+To: Ilya Dryomov <idryomov@gmail.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	linux-i2c@vger.kernel.org, andi.shyti@kernel.org
-Subject: Re: [PATCH 6.6 000/222] 6.6.70-rc1 review
-Message-ID: <2025010940-tint-saturate-b4ef@gregkh>
-References: <20250106151150.585603565@linuxfoundation.org>
- <CA+G9fYuJA5eUxunLVyws_J6YNuZdyVUjTGGgGyPwFMgCHUpsnA@mail.gmail.com>
+	Xiubo Li <xiubli@redhat.com>,
+	Patrick Donnelly <pdonnell@redhat.com>,
+	Milind Changire <mchangir@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6] ceph: give up on paths longer than PATH_MAX
+Message-ID: <2025010912-deputize-frolic-7381@gregkh>
+References: <20250107155010.2658845-1-idryomov@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CA+G9fYuJA5eUxunLVyws_J6YNuZdyVUjTGGgGyPwFMgCHUpsnA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250107155010.2658845-1-idryomov@gmail.com>
 
-On Tue, Jan 07, 2025 at 12:30:26AM +0530, Naresh Kamboju wrote:
-> On Mon, 6 Jan 2025 at 20:53, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.6.70 release.
-> > There are 222 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.70-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
+On Tue, Jan 07, 2025 at 04:50:08PM +0100, Ilya Dryomov wrote:
+> From: Max Kellermann <max.kellermann@ionos.com>
 > 
-> The following build errors were noticed while building the
-> allmodconfig builds on arm64 on the stable-rc linux-6.6.y
-> branch.
+> commit 550f7ca98ee028a606aa75705a7e77b1bd11720f upstream.
 > 
-> This is first seen on 5652330123c6a64b444f3012d9c9013742a872e7.
-> GOOD: v6.6.69
-> BAD: 5652330123c6a64b444f3012d9c9013742a872e7
+> If the full path to be built by ceph_mdsc_build_path() happens to be
+> longer than PATH_MAX, then this function will enter an endless (retry)
+> loop, effectively blocking the whole task.  Most of the machine
+> becomes unusable, making this a very simple and effective DoS
+> vulnerability.
 > 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> I cannot imagine why this retry was ever implemented, but it seems
+> rather useless and harmful to me.  Let's remove it and fail with
+> ENAMETOOLONG instead.
 > 
-> Build error:
-> ============
-> drivers/i2c/busses/i2c-xgene-slimpro.c:95: error: "PCC_SIGNATURE"
-> redefined [-Werror]
->    95 | #define PCC_SIGNATURE                   0x50424300
->       |
-> In file included from drivers/i2c/busses/i2c-xgene-slimpro.c:12:
-> include/acpi/pcc.h:23: note: this is the location of the previous definition
->    23 | #define PCC_SIGNATURE                   0x50434300
->       |
-> cc1: all warnings being treated as errors
-> make[6]: *** [scripts/Makefile.build:243: drivers/i2c/busses/i2c-xgene
+> Cc: stable@vger.kernel.org
+> Reported-by: Dario Weiﬂer <dario@cure53.de>
+> Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+> Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+> Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+> [idryomov@gmail.com: backport to 6.6: pr_warn() is still in use]
+> ---
+>  fs/ceph/mds_client.c | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
 
-Thanks, I've applied a patch to fix this up.
+Thank you, I've dropped the "large" ceph patches from 6.6.y now and
+added this one instead.
 
 greg k-h
