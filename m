@@ -1,108 +1,129 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A122054F2
-	for <patches@lists.linux.dev>; Thu,  9 Jan 2025 22:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FA318132A
+	for <patches@lists.linux.dev>; Thu,  9 Jan 2025 23:45:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736460422; cv=none; b=mJI9QJE0swuDX6giurS9mxfByxaJ0yfAJPfsiBe93v2XoLzQUO9LApR5G7/TXlauweICDXgnqOi4+G3vrNRmIQ41bALhheRyQ1MCV/lJ8rYp2aXHv8GpUNu7yJOBAgIoE/Opcl5C0qyYjgRrrCjVltdfGVvloAodkOnzUVOZCno=
+	t=1736466354; cv=none; b=DS4lAULKm29ZbxBqZZAy6jztOh9/9uPMBt/ndqgaMu1ahE9HBKn5ROuLFJMdriGj7YQf7QoEZdfmTn83Ywzy6Drv6NX/BL+WeDmwz6X2kfo0DKjr8RK2Fre2CfmlMNR/wrfVSV0gh/TAYlKIiEWTN1EQOaX/hWqf/HLroiTZsw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736460422; c=relaxed/simple;
-	bh=16103WdjKkDRPAUpJv/gja+j04dR9xW9d/edeY7WQjc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=otLjaYN/2WMMt3p/Wy9nxtTn6FlCZqh/zXICoj6IcQucfkqYcS3w7ZIC5u9F0w5MWmeBzmDA78BZ6CUtEbg6IgWOOghmbLEoot0PdeOGiq+38TmLKBFu6HiXg5y7fnix7Q9Pjah3ffsd5XZLJ8GZ1qPPnMNlP+4ixvre4kAv9J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=dvbOhfmM; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1736466354; c=relaxed/simple;
+	bh=8Fn5tpVxQQ8gfYVSYC9d+1uDg2CraF9og34DhkJKWIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RRS1VTee0/REYcJ2De5ermAry4BQv+nq4GUZFWQBlKTP+13du/RcRtUBQ0VWbxtWJe7B5ZrmuoM5Ett0GnpG/QAUSvym2cLH1NjOg5BZh8xKLjcnfxLrkQ9vIrW+5G15Iu4VoGbelVXHODxXU4xLD5qAxeBzm9hWdMTLdDoAMYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TPAeRLTX; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="dvbOhfmM"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2165cb60719so25358115ad.0
-        for <patches@lists.linux.dev>; Thu, 09 Jan 2025 14:07:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TPAeRLTX"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53df80eeeedso1417555e87.2
+        for <patches@lists.linux.dev>; Thu, 09 Jan 2025 15:45:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1736460420; x=1737065220; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gXlckJ6SpwsTGpU1oM+HpGRrggJSHrz/QlJTly2bc/Y=;
-        b=dvbOhfmMWjSLAwvAJ6HJNLHHub/vbHA44B+dZF4FYOs9ggLsvaewoHLgk0i4wCx0l0
-         shLJTZODmCAMLqlTz9aM0iWzF4T/Su3e/Kz4YgpOwwoZxcOZzZj0w15MFnmcLW8WSTsi
-         cTBRAVuxJxeHfpPpqQ5ZOQLB9Mwot7Mz+N7UY=
+        d=linaro.org; s=google; t=1736466351; x=1737071151; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ifd3ai3biKTaNdzvBUxlg/E6YILRTZjA+4tT653tYFI=;
+        b=TPAeRLTXaUZplyGIZsw6vUR0aYmXJzwK7LydnJ43eHwzEi8eyaEj/nLm0h4Ors8GEK
+         saQmbJeCLPBCRjn+Lo0jUHw/zWgFyBI37nBTvReY6w/cNtMcw3VnaXYHBiZ8V1C8xHFd
+         UXjVJPCiVMqj3Ekv7S1LSVn/mq6mYKSjAFtVCvNoEH+SemoK2c4XsW8l76I7AOWcVbun
+         ss8kHTCJl8U60gaGh9h9/9JgkBCAxfYzEsfpjrVBRbWaX/zLDaJ3wOIaViZj9JlHzi8G
+         zVwkiVYw0MQJwg/BJ+01oqajCg+dzb41YDhcTkN+bILsak29+JBxVv0SrsHiPW/hufsq
+         O62Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736460420; x=1737065220;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gXlckJ6SpwsTGpU1oM+HpGRrggJSHrz/QlJTly2bc/Y=;
-        b=YSo3r2vb0SPUBxhqkFtpWc2MGkb8jJH+btWq/pVbDcpLYp1z2iI7zeYjt8pdUFdTf/
-         pohNpgSONrX0Yn3wvLpYTQsfQ9e8BAh9GV1nJzZzto0qRIIRaeYzCsCwC64aAOIz8w9s
-         dF3PApHFEKiPbaNWsbf0UM6pjy7VcfcK4MarHzEuTTslKrF0Neqng+9r05tApCA6IcK5
-         51pMU4OY4JyOphnaoPajpab+qmbQNkd2lY/Zw2MuYBHAudGv5Expphue6wODLDUr1j7F
-         hs3patnBzNSnksPJHNzNjUfc9nqp9V6jxo2nAtGywnt4WCiBJUvkCy4d5YuA+kOtD0cG
-         Vzyw==
-X-Forwarded-Encrypted: i=1; AJvYcCW/ubIw9IDjLzUJGbS+XM2cp9b6wJOQtPingXMhf6+C3l9G4Yd8oi/Y+tmw7qAGuy87mxIWpMSE@lists.linux.dev
-X-Gm-Message-State: AOJu0YyAQNjWHMZnRn0Nf8FZKgHER/1Qtdxj6E6As2JlFd7Wz7utEcYU
-	f9JZXJ0yI1b4rVuR665Q3mO2r+H0sCIwbewaSWhE5iYlGx94RNT7uSCn3YUo2g==
-X-Gm-Gg: ASbGncs9vDFi2AVkmnLQ0OR33Nytpqajcx7qT9u7VbsXW33fwb8j/vT1XAMilDZBHpz
-	H7Fmd3vACSgy4x/QVLQ8nk23E3zUfqxpkJ4K1uRf/tkSPG28+LrhrNUOco5iIz5N7qPOdVnQes4
-	YXpC1HatqlFiPvXkKRnOUoIBd821s7P5W77f0RRv0gjZFmjcqinUwN7OZlFSsPQ7jw/dmZwTdbS
-	b85qecAEQ3P0zgY9OqmHkDGtNvUG2ocNM3eDVEXKKpGTBdKBcQOk/FlRu8okgLqhzbUzTdWIEmS
-	8sX0EOx7e9ocN4bsY1mX
-X-Google-Smtp-Source: AGHT+IFHTcniOS4ymC+7O/d+cYlP/uXsl/KBs0vwkT5Jh/l8n+3KRvnZGRy97PfSYyRO9sv8ZtFVgA==
-X-Received: by 2002:a05:6a20:a10e:b0:1e4:745c:4967 with SMTP id adf61e73a8af0-1e88d0dfa1dmr13487894637.3.1736460420526;
-        Thu, 09 Jan 2025 14:07:00 -0800 (PST)
-Received: from localhost (129.135.125.34.bc.googleusercontent.com. [34.125.135.129])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72d4068178csm291404b3a.148.2025.01.09.14.06.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jan 2025 14:07:00 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Benson Leung <bleung@chromium.org>,
-	chrome-platform@lists.linux.dev,
-	linux-usb@vger.kernel.org,
-	Pavan Holla <pholla@chromium.org>,
-	Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>
-Subject: [PATCH 2/2] usb: typec: cros-ec-ucsi: Mark cros_ucsi_ops static/const
-Date: Thu,  9 Jan 2025 14:06:53 -0800
-Message-ID: <20250109220655.1677506-3-swboyd@chromium.org>
-X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
-In-Reply-To: <20250109220655.1677506-1-swboyd@chromium.org>
-References: <20250109220655.1677506-1-swboyd@chromium.org>
+        d=1e100.net; s=20230601; t=1736466351; x=1737071151;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ifd3ai3biKTaNdzvBUxlg/E6YILRTZjA+4tT653tYFI=;
+        b=dhmJ7rs0Ijh/sBRUJY6oqb8ufn7G+FmQJ7BYttGkZYJAwVPvzYQ83i+sJ4zvWxq3R2
+         36mi1Ig3iWvHbftl3JOExx/kLjNJ11fXYkIvnlqZkWGGT8ztCBxIaPyXsYyvONOlMhbM
+         MM5MNOzROJRfjUwuH5f2bSOjF4IpyUCkkEi+G+g9wWS2PfzKf1165tpL/UhqMZhLtFNr
+         sr1Qh+H4vSuvCmHiQDULx4C4dRIC4gOA53+AEAQsCT7l9J1gmGBwlIooDSctXnyEXUhb
+         Z7yIVkGYixwLWb6hFRV61XFcx7+bneHPtDkBln9bP/qSlQ2LoLB09zKb76xCQwVqtRN4
+         BMBg==
+X-Forwarded-Encrypted: i=1; AJvYcCVxQCqdlhSzMzwEZJvQmfLJ2cOtwS7q57m/NzgJQsBbhFAdZ0f0nlMUsmAOSG8IgeasI2SzWfxD@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz0tUqp21eitGqA9SfJB3Nxsr++gqf4t3otfkGvgWq0hQRyb1jV
+	kr+3r4phnAVadLrGzF4og6tlm3WwiSRwU58MAWz7YCFAH2gNZQe+Dcmjnx5mh3U=
+X-Gm-Gg: ASbGncvvk2mDv2JYJCHoDqk8zlrKog7iTIOaNY4mDQZH4J/8aSQ9dKoWJHtwmifdH/9
+	GR5MsDlJupnfkiruBDtwjHV8sA6mzA/LTKlE7X+kaGZBQZOiCjLNMag7mx1gjW7gF7mfE4aCyrL
+	8c3HIoI07jdsEOP6TJmBiBKJjtXh+xbPdNweoUWWaHDfV6LXkOCQIYfkKAd3TNMXNA9PPXKheQI
+	TlBclzd735vd9ctzIpLjXZuN/W/D+O0blx83Gr5dsydV/dbm6O1BvcYJWGpwvh6oeOCvWKXrIO5
+	sR48LkyjbazE9KWij8zotGHQ/qxU9Qe39j2r
+X-Google-Smtp-Source: AGHT+IFE0TD0xLOUiVIfjJiuGh9UVHHNy8CtrSGHCWyGYMHymyrvfqIdJCqZCoyf+hgFwIwzU5DqeQ==
+X-Received: by 2002:a05:6512:2205:b0:540:2542:cba6 with SMTP id 2adb3069b0e04-54284527758mr2364630e87.21.1736466350748;
+        Thu, 09 Jan 2025 15:45:50 -0800 (PST)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428becaac3sm333191e87.229.2025.01.09.15.45.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jan 2025 15:45:49 -0800 (PST)
+Date: Fri, 10 Jan 2025 01:45:46 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Stephen Boyd <swboyd@chromium.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, devicetree@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>, 
+	Conor Dooley <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>, 
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Subject: Re: [RFC PATCH 6/6] arm64: dts: qcom: sc7180: Add SoC specific
+ compatible to soc node
+Message-ID: <x6smfgtq2ojzl774jd6d6fsilxj5dte4jbfypbvxvdmaqd7pem@nnpcnyzz4l4i>
+References: <20250108012846.3275443-1-swboyd@chromium.org>
+ <20250108012846.3275443-7-swboyd@chromium.org>
+ <n3fn5mnrrinrgrvadqgymv3cx355qpx5kk27nlrz2emoxfmjyt@ymwpfxf7lv4r>
+ <0ab00013-0265-4336-bc30-f49492e96424@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0ab00013-0265-4336-bc30-f49492e96424@oss.qualcomm.com>
 
-This structure isn't used outside this file and can be marked const so
-that it gets moved to read-only memory.
+On Thu, Jan 09, 2025 at 03:10:33PM +0100, Konrad Dybcio wrote:
+> On 8.01.2025 2:02 PM, Dmitry Baryshkov wrote:
+> > On Tue, Jan 07, 2025 at 05:28:43PM -0800, Stephen Boyd wrote:
+> >> Allow an SoC driver to probe for these devices. Add the SoC specific
+> >> compatible to the soc node. Leave the original simple-bus compatible in
+> >> place so that everything keeps working.
+> >>
+> >> Cc: Rob Herring <robh@kernel.org>
+> >> Cc: Bjorn Andersson <andersson@kernel.org>
+> >> Cc: Konrad Dybcio <konradybcio@kernel.org>
+> >> Cc: <linux-arm-msm@vger.kernel.org>
+> >> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> >> index 76fe314d2ad5..257890a193e6 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+> >> @@ -782,7 +782,7 @@ soc: soc@0 {
+> >>  		#size-cells = <2>;
+> >>  		ranges = <0 0 0 0 0x10 0>;
+> >>  		dma-ranges = <0 0 0 0 0x10 0>;
+> >> -		compatible = "simple-bus";
+> >> +		compatible = "qcom,soc-sc7180", "simple-bus";
+> > 
+> > If the new driver requires this compatible, it will break compatibility
+> > with older DT files (and it should be avoided).
+> 
+> IIUC the intent here is to provide backwards compatibility through checking
+> for sth like IS_SOCPM_MANAGED(), sorta like HAS_ACPI_COMPANION(). In that
+> case, power sequencing would be done by the socpm driver, whereas if it
+> doesn't hold, the resources would be toggled by the device driver
 
-Cc: Pavan Holla <pholla@chromium.org>
-Cc: Abhishek Pandit-Subedi <abhishekpandit@chromium.org>
-Cc: Łukasz Bartosik <ukaszb@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/usb/typec/ucsi/cros_ec_ucsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think that this way we end up having PM code both in the device driver
+and in the socpm. Ideally in my opinion we should be able to migrate all
+pm code to socpm, keeping compat with old DT files. In the end, if this
+is the only change to the SoC.dtsi, then we should be able to live
+without this compat change.
 
-diff --git a/drivers/usb/typec/ucsi/cros_ec_ucsi.c b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
-index 75646a8d55be..c605c8616726 100644
---- a/drivers/usb/typec/ucsi/cros_ec_ucsi.c
-+++ b/drivers/usb/typec/ucsi/cros_ec_ucsi.c
-@@ -133,7 +133,7 @@ static int cros_ucsi_sync_control(struct ucsi *ucsi, u64 cmd)
- 	return ret;
- }
- 
--struct ucsi_operations cros_ucsi_ops = {
-+static const struct ucsi_operations cros_ucsi_ops = {
- 	.read_version = cros_ucsi_read_version,
- 	.read_cci = cros_ucsi_read_cci,
- 	.read_message_in = cros_ucsi_read_message_in,
 -- 
-https://chromeos.dev
-
+With best wishes
+Dmitry
