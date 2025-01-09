@@ -1,103 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD291FCFF4;
-	Thu,  9 Jan 2025 10:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521CA1FCFF4;
+	Thu,  9 Jan 2025 10:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736417464; cv=none; b=m1amYoWHzEoz+FgF0la6brfcV8Iz8JegC4m0nDvmyKLYy60VlCADepU0n1922w+K88YY/dN0Xo3GPNuLL62EF7SIChR3bsPwT4aM83KK/Go1BfmIgpSFfkNS2Qv91FddzcrQW8Knaffn0KBhKybdt9eanZAcJEfJImBJBkiReNo=
+	t=1736417488; cv=none; b=JrAPC9FIJYpuj3DOf6ZoPXU3lrXym5zOQ+2AWFeao9z3VKdYXWCefL33NoamXYOgJOT+yh9RBMu1daU2ASQu3EegqA9k3mXRMraIXzBZ5f3L9BpWja+BQoCtxd8SyXM/yEPB2Cy5T5FGFhavOhS9kMJQYNnwgxHDppBCu191qwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736417464; c=relaxed/simple;
-	bh=RuSFpt4jOMNZyV0PNlTyU45SM3deU00IivtE19pR7dY=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=sbeNeCS5nuVGgYoZmLqC+5T/69Q2gHYE7mtGAr5XMWLT74qrtjWCQ2NzXDKFI5KGurCI2LLXtBu+iJ/TGyEmFvUFXsemhQ0oKbLQ9+iGL2kxQZTcTAvg17+TgerbwxCBpV2wc2MwnPmYjCO+4uLcCWrP0FGqno3AfcPY1hslbZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G//Ou8xM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736417488; c=relaxed/simple;
+	bh=UclOxUeegfd9H8l71oZtnGFp2jXRP6zSHxVUd5irahE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mThmuVn6kcPQ7jPPanVA4ieo5no/95GjKbLzEIZPE3bLb+ymPV55P/IBIlDhOAa+Vuf3By6SKDKvE6Y5xOdI13Xl9vHUfgGxHNQZcoxjMSxEPxMQX6wvd9VIeUj6i0kayDjE6v8nFt8R4DpW+6hejDHfH0rydf5Dir7XeAoZ910=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi8fBlii; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G//Ou8xM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F402C4CED2;
-	Thu,  9 Jan 2025 10:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi8fBlii"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A208C4CED2;
+	Thu,  9 Jan 2025 10:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736417463;
-	bh=RuSFpt4jOMNZyV0PNlTyU45SM3deU00IivtE19pR7dY=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=G//Ou8xMTeZdzA8PeI/p3SY3wrDwr69dm80lz6qSpOJSsOb3rCj4fPFd9LUzjCK7O
-	 ZgR74KxFcb/XQxWoLnBRdYqWLKYJJPh2OlXvwL/inWENY4b+aAf35u7S619fRprwlP
-	 c9cl4Md+45rcEntl7ieRMXvnDjvvRbwmzJDatLM4=
-Subject: Patch "zram: check comp is non-NULL before calling comp_destroy" has been added to the 6.1-stable tree
-To: akpm@linux-foundation.org,deshengwu@tencent.com,dominique.martinet@atmark-techno.com,gregkh@linuxfoundation.org,kasong@tencent.com,patches@lists.linux.dev,sashal@kernel.org,senozhatsky@chromium.org
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Thu, 09 Jan 2025 11:11:01 +0100
-In-Reply-To: <20250107071604.190497-1-dominique.martinet@atmark-techno.com>
-Message-ID: <2025010900-remote-segment-eca4@gregkh>
+	s=korg; t=1736417487;
+	bh=UclOxUeegfd9H8l71oZtnGFp2jXRP6zSHxVUd5irahE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pi8fBliidLq4GO44JzeznRUtDoWPiVfxPnXlGfTuz5V1vbl+WdVq+R1p7HaMTiRYi
+	 3zc9Oz1ZJ9zFN2IEfZYCnWOjZXUtGvJtGbhNS2mJUEn6F/p4qP9kHX+JvE9HF8DBz0
+	 rBoofs2xKSpfUoAvC6HWdz++krSlQo4r+1IrAg90=
+Date: Thu, 9 Jan 2025 11:11:24 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Kairui Song <kasong@tencent.com>,
+	Desheng Wu <deshengwu@tencent.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 116/168] zram: fix uninitialized ZRAM not releasing
+ backing device
+Message-ID: <2025010916-hardiness-dynamite-e8d3@gregkh>
+References: <20250106151138.451846855@linuxfoundation.org>
+ <20250106151142.833223628@linuxfoundation.org>
+ <in5x6saane6o2yjo3qxrcs3fpssgsfg3dutksidtsjie2g3zeb@5wait6y3lrz4>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <in5x6saane6o2yjo3qxrcs3fpssgsfg3dutksidtsjie2g3zeb@5wait6y3lrz4>
 
+On Wed, Jan 08, 2025 at 12:55:14PM +0900, Sergey Senozhatsky wrote:
+> On (25/01/06 16:17), Greg Kroah-Hartman wrote:
+> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> > 
+> > ------------------
+> > 
+> > From: Kairui Song <kasong@tencent.com>
+> > 
+> > [ Upstream commit 74363ec674cb172d8856de25776c8f3103f05e2f ]
+> > 
+> > Setting backing device is done before ZRAM initialization.  If we set the
+> > backing device, then remove the ZRAM module without initializing the
+> > device, the backing device reference will be leaked and the device will be
+> > hold forever.
+> > 
+> > Fix this by always reset the ZRAM fully on rmmod or reset store.
+> > 
+> > Link: https://lkml.kernel.org/r/20241209165717.94215-3-ryncsn@gmail.com
+> > Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
+> > Signed-off-by: Kairui Song <kasong@tencent.com>
+> > Reported-by: Desheng Wu <deshengwu@tencent.com>
+> > Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+> > Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+> > Cc: <stable@vger.kernel.org>
+> > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> 
+> Can we please drop this patch?
+> 
 
-This is a note to let you know that I've just added the patch titled
-
-    zram: check comp is non-NULL before calling comp_destroy
-
-to the 6.1-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
-
-The filename of the patch is:
-     zram-check-comp-is-non-null-before-calling-comp_destroy.patch
-and it can be found in the queue-6.1 subdirectory.
-
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From dominique.martinet@atmark-techno.com  Thu Jan  9 11:09:53 2025
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Date: Tue,  7 Jan 2025 16:16:04 +0900
-Subject: zram: check comp is non-NULL before calling comp_destroy
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, Kairui Song <kasong@tencent.com>, Desheng Wu <deshengwu@tencent.com>, Sergey Senozhatsky <senozhatsky@chromium.org>, Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>, Dominique Martinet <dominique.martinet@atmark-techno.com>
-Message-ID: <20250107071604.190497-1-dominique.martinet@atmark-techno.com>
-
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
-
-This is a pre-requisite for the backport of commit 74363ec674cb ("zram:
-fix uninitialized ZRAM not releasing backing device"), which has been
-implemented differently in commit 7ac07a26dea7 ("zram: preparation for
-multi-zcomp support") upstream.
-
-We only need to ensure that zcomp_destroy is not called with a NULL
-comp, so add this check as the other commit cannot be backported easily.
-
-Stable-dep-of: 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing device")
-Link: https://lore.kernel.org/Z3ytcILx4S1v_ueJ@codewreck.org
-Suggested-by: Kairui Song <kasong@tencent.com>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/block/zram/zram_drv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1733,7 +1733,8 @@ static void zram_reset_device(struct zra
- 	zram_meta_free(zram, zram->disksize);
- 	zram->disksize = 0;
- 	memset(&zram->stats, 0, sizeof(zram->stats));
--	zcomp_destroy(zram->comp);
-+	if (zram->comp)
-+		zcomp_destroy(zram->comp);
- 	zram->comp = NULL;
- 	reset_bdev(zram);
- 
-
-
-Patches currently in stable-queue which might be from dominique.martinet@atmark-techno.com are
-
-queue-6.1/zram-check-comp-is-non-null-before-calling-comp_destroy.patch
+Now dropped (also in 5.10.y)
