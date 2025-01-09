@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 521CA1FCFF4;
-	Thu,  9 Jan 2025 10:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1199321577F;
+	Thu,  9 Jan 2025 10:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736417488; cv=none; b=JrAPC9FIJYpuj3DOf6ZoPXU3lrXym5zOQ+2AWFeao9z3VKdYXWCefL33NoamXYOgJOT+yh9RBMu1daU2ASQu3EegqA9k3mXRMraIXzBZ5f3L9BpWja+BQoCtxd8SyXM/yEPB2Cy5T5FGFhavOhS9kMJQYNnwgxHDppBCu191qwc=
+	t=1736417545; cv=none; b=gqpdtTCH6v4qdstqa70SvoeRNkA5b4fXu0yRla/YSeY4Sk3czQvUCJ/V9eD5u5H/d+t+obX+JmAvXIYAB+juQqqaX3M4gWYYncRSzx7s60/lQx7vhc20x9GerRCwQAzRvPjaZYHUu//4pWYCDMMZFlWFZRgPLeqahiVJbrWZ5gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736417488; c=relaxed/simple;
-	bh=UclOxUeegfd9H8l71oZtnGFp2jXRP6zSHxVUd5irahE=;
+	s=arc-20240116; t=1736417545; c=relaxed/simple;
+	bh=mpf4PO0MC/K24WEphpG967MEZW2PWTj0uQneUZTTeic=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mThmuVn6kcPQ7jPPanVA4ieo5no/95GjKbLzEIZPE3bLb+ymPV55P/IBIlDhOAa+Vuf3By6SKDKvE6Y5xOdI13Xl9vHUfgGxHNQZcoxjMSxEPxMQX6wvd9VIeUj6i0kayDjE6v8nFt8R4DpW+6hejDHfH0rydf5Dir7XeAoZ910=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pi8fBlii; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=dcz6D4tm89cbSURaOcKN0NPcSciW4BjWvz5ouHGCLnXRIx8Z3KwiJwMwv98ZYzbvOodMToD9/owJ4nk7c3g6hr1NdmQVrmeGc1RglmA/D3pj/mVVYI3fKcjFOuJVIvP1ixvl3UcKHlEPdcSYU++WzLXD+OYaYVg5VDGfmcY3CW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xI3SIYSn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pi8fBlii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A208C4CED2;
-	Thu,  9 Jan 2025 10:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xI3SIYSn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03FC3C4CED2;
+	Thu,  9 Jan 2025 10:12:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736417487;
-	bh=UclOxUeegfd9H8l71oZtnGFp2jXRP6zSHxVUd5irahE=;
+	s=korg; t=1736417544;
+	bh=mpf4PO0MC/K24WEphpG967MEZW2PWTj0uQneUZTTeic=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pi8fBliidLq4GO44JzeznRUtDoWPiVfxPnXlGfTuz5V1vbl+WdVq+R1p7HaMTiRYi
-	 3zc9Oz1ZJ9zFN2IEfZYCnWOjZXUtGvJtGbhNS2mJUEn6F/p4qP9kHX+JvE9HF8DBz0
-	 rBoofs2xKSpfUoAvC6HWdz++krSlQo4r+1IrAg90=
-Date: Thu, 9 Jan 2025 11:11:24 +0100
+	b=xI3SIYSnYad3ViLE7wozlCC6NCqqncOyF/XF/EKG47JUN7GNP7n8sHuSeXGHLq7SY
+	 r4Gc04nZBe4p/rJdEG2uJdEMac1nI2ezVh/faMabFYgs7MjpVkmuQiXxrBQuUDum5U
+	 6Q02CLidEnkuZqn51m5SvmZ1U7BoMrmWUWzZ2EUE=
+Date: Thu, 9 Jan 2025 11:12:21 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sergey Senozhatsky <senozhatsky@chromium.org>
+To: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Desheng Wu <deshengwu@tencent.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 116/168] zram: fix uninitialized ZRAM not releasing
- backing device
-Message-ID: <2025010916-hardiness-dynamite-e8d3@gregkh>
-References: <20250106151138.451846855@linuxfoundation.org>
- <20250106151142.833223628@linuxfoundation.org>
- <in5x6saane6o2yjo3qxrcs3fpssgsfg3dutksidtsjie2g3zeb@5wait6y3lrz4>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 5.4 00/93] 5.4.289-rc1 review
+Message-ID: <2025010900-camping-giggle-fbe2@gregkh>
+References: <20250106151128.686130933@linuxfoundation.org>
+ <9382652c-939d-4368-a4b2-93798ba0da19@collabora.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,36 +45,34 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <in5x6saane6o2yjo3qxrcs3fpssgsfg3dutksidtsjie2g3zeb@5wait6y3lrz4>
+In-Reply-To: <9382652c-939d-4368-a4b2-93798ba0da19@collabora.com>
 
-On Wed, Jan 08, 2025 at 12:55:14PM +0900, Sergey Senozhatsky wrote:
-> On (25/01/06 16:17), Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+On Wed, Jan 08, 2025 at 06:00:40PM +0500, Muhammad Usama Anjum wrote:
+> On 1/6/25 8:16 PM, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.4.289 release.
+> > There are 93 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > ------------------
+> > Responses should be made by Wed, 08 Jan 2025 15:11:04 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > From: Kairui Song <kasong@tencent.com>
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.289-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> > and the diffstat can be found below.
 > > 
-> > [ Upstream commit 74363ec674cb172d8856de25776c8f3103f05e2f ]
+> > thanks,
 > > 
-> > Setting backing device is done before ZRAM initialization.  If we set the
-> > backing device, then remove the ZRAM module without initializing the
-> > device, the backing device reference will be leaked and the device will be
-> > hold forever.
+> > greg k-h
 > > 
-> > Fix this by always reset the ZRAM fully on rmmod or reset store.
-> > 
-> > Link: https://lkml.kernel.org/r/20241209165717.94215-3-ryncsn@gmail.com
-> > Fixes: 013bf95a83ec ("zram: add interface to specif backing device")
-> > Signed-off-by: Kairui Song <kasong@tencent.com>
-> > Reported-by: Desheng Wu <deshengwu@tencent.com>
-> > Suggested-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> > Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> > Cc: <stable@vger.kernel.org>
-> > Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > -------------
+> OVERVIEW
 > 
-> Can we please drop this patch?
-> 
+>         Builds: 34 passed, 4 failed
 
-Now dropped (also in 5.10.y)
+Are these new failures?  Or old ones?  Knowing this would help out a
+lot, thanks.
+
+greg k-h
