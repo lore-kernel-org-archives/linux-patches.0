@@ -1,231 +1,186 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2081.outbound.protection.outlook.com [40.107.93.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C8F20E701;
-	Fri, 10 Jan 2025 14:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736518177; cv=none; b=ARnSXtSkHooPEWYUdByBT/M/OZW4dsthctPEDrkYQUluziaifhzhMOjSjGuOQYWGPvzB/VnBH7QURTALP2OYqeYihMsxYNuJk/yrY9Fg5diKy/HOSRXRAgwGmpRRSwyqc33gWb6x0J7tohpPPVeXSuuTMb1huG1yaKomWXnf4UI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736518177; c=relaxed/simple;
-	bh=BzqU8k0ICGCf9P2lsYRHW6RrSoUUVhJhmDeNcCF/upo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H0TnM7gEWpZgggHfSrPg6xvdgHtqJ7c9w1JP6AQHIhGwiORPewFsR9EaI1uJTnA6YWexxfLD2fhf73KyzMUF9gEUt0BICPfPIUVEY/8T4b8o/jGAvlqIZx0BnDDYPpGh5E+AKlqVBTqwrTCwE6ysv3RqLhCoxobyWCdN/Vynd8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N6X4Ck3D; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3F720FABB;
+	Fri, 10 Jan 2025 14:51:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736520714; cv=fail; b=qvrVGhunZq7FGROUNINp5arn6hFItFfid9C4Vu6LmhIbj8fGCxkqv1AFLc6/EGdWgmme13PaJwOWVAzfOefuQKI7ThTK7g9gUm5GyFw2FDEMlJ86e+2TrNQ/XjkRX4OmcxM37hM5o67aGEXXzOaTsF1JE+W75cblRhbK2pbQQwA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736520714; c=relaxed/simple;
+	bh=MwkBvNnjN1ywUqgaOGte4I0c8lRriSplRFxnkPDIMGE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=TJb6AeRneBkFyvTz1Twga5QRZfp6vtQ7R3GEoDKTBAtBxAasuqSWXWMHhqDXE8iE+lVwbof3n7UhHZkms308B2ZgKi1TEpbeAJo09KFHCfyLR9+CWrnlto5/2CVrBUjqyxjXbfIkHdMa+x0aUpIYAyZNHOItwb7+oJBVc/Kmd4U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=i85r9kYx; arc=fail smtp.client-ip=40.107.93.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N6X4Ck3D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57E6C4CED6;
-	Fri, 10 Jan 2025 14:09:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736518176;
-	bh=BzqU8k0ICGCf9P2lsYRHW6RrSoUUVhJhmDeNcCF/upo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N6X4Ck3DIAaxq3dwu9LnBtCtQSYh1wtLY1sQXIYSQN56fTof/Xt1fvalaxdOFbTLi
-	 Xwv27NKD1oxDtn6rSZxzZSxBEJOyFvIm9GhEQlykxWNvYlbtJ5WAeUuD/p03dP3Yrn
-	 jOJehV+J3FPIWMqhSQtixHYW4fv6TN6peeBW7F1guMNAwVwWyK/hg0d/wLIdGsZ3qy
-	 H9aSS2gzYJ29a3ssBvXWE/Uyq00zQxi+0Km5opq1OUpxzMim2zzufjoIcHKxC1qBBx
-	 E/+7FbVph1WDoZuWuNt19NHrJQfzAfUiGIzKJcn+xuv1gpZ/GqNj1FDCKRxx8aRhBE
-	 HcKWtu0yCHMJQ==
-Date: Fri, 10 Jan 2025 08:09:34 -0600
-From: Rob Herring <robh@kernel.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	devicetree@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>, Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
-Subject: Re: [RFC PATCH 5/6] bus: qcom-sc7180: Attach pm domain to watchdog
- device
-Message-ID: <20250110140934.GB2630182-robh@kernel.org>
-References: <20250108012846.3275443-1-swboyd@chromium.org>
- <20250108012846.3275443-6-swboyd@chromium.org>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="i85r9kYx"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HoXhJyeoe/MLTSTYGLeTo8gxoXwc4bUGqUbjhEHYChM27d2ni6I59QGwT0YabBES6cxkwLZ4PB8ON7NHWe3AfnHWRwtu/YJ7KIkJ+0hauKfksgieISGe3qyNOc8us4msLhcEj0GvHjOo69MYIqM1qD6oLWp/nUx3TGDtoehGHUuDhFkCwhn7gMeNXS2Q3Ki2HYDKbHR6LMunpQQTA2Ut4lkZS63VuCuVVScqyKLgp5Divs1UtotvWprOguGiuLiDKs79jwfgVmjcS29TD/B0TSPaBRtOsnEzoq3auHke4IHZVkquXcGTd41VwscnXuolLA2IOnu0q+5ZjLjPo2UT+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3nKXWJEXYkbdUCHl37CqE9VmQ1BSykBrBQ4DRPMLqS0=;
+ b=dgdAv0eU3XStg9072CDmH4yaEi6yHuqyouvORWgsCDiX6+u51XQfBh73gXLSrEGtbR6AXSqIjfFHd95hx5PtJah1ZPs4h7F6XZoSgWjY5w2kbSTdrAwCoo+BaBHrZNjs4rdkbIkGSOcbHBk01ZhdzfdCarf/RPGYrnshYZfFBrCOlpAhubJdYQeYr8N8FTdPpL+csF0GWDRPdo8LRYPWxHDxrlGSuJJnCAEqQifO1tMOvWFbh8UJt7Xm6oCiFyREoLkjf1OZXZ34FNqkIpxO15pMG1RjMxgLcntkvV3ta3KVo3og7n+aLGgrb+FqomLjSAE1HOc4h1TqBu9HD/8hxw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3nKXWJEXYkbdUCHl37CqE9VmQ1BSykBrBQ4DRPMLqS0=;
+ b=i85r9kYxdNp9sRUFZFKfmHoEtELYCIunv4UpWq72cgxvMyEZmTkytWmO/djS0DMy2eKacKcG0sD8o3Vi7+5/JZDwszWM4RbNXx6kKFJnvlAM5BZ0GQaqIcQ1nJqmVy//M3ffnX9r71ckZ6tyYLFpl0s0xOVQZBaglfNMblNd4p9aZul0p4eQeZcvhMSiZ6mf5l/pqK1ErTTZh4G/YIICEzoZgoMvRRx+xyWpPQ/gi9GV3Zxq3fg6WioBN0CFawRdteqyYyh3g8ic6EfHJTs2Szvxo+dQ1tJAV3LPtXSL5NNiBw01GQmI0BqPHWpidMIyV9M72UT+ZqbADtxeqLXMpg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by BL3PR12MB6452.namprd12.prod.outlook.com (2603:10b6:208:3bb::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.11; Fri, 10 Jan
+ 2025 14:51:50 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%4]) with mapi id 15.20.8314.015; Fri, 10 Jan 2025
+ 14:51:50 +0000
+Date: Fri, 10 Jan 2025 10:51:49 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, "corbet@lwn.net" <corbet@lwn.net>,
+	"will@kernel.org" <will@kernel.org>,
+	"joro@8bytes.org" <joro@8bytes.org>,
+	"suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
+	"robin.murphy@arm.com" <robin.murphy@arm.com>,
+	"dwmw2@infradead.org" <dwmw2@infradead.org>,
+	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+	"shuah@kernel.org" <shuah@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"eric.auger@redhat.com" <eric.auger@redhat.com>,
+	"jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+	"mdf@kernel.org" <mdf@kernel.org>,
+	"mshavit@google.com" <mshavit@google.com>,
+	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
+	"smostafa@google.com" <smostafa@google.com>,
+	"ddutile@redhat.com" <ddutile@redhat.com>,
+	"Liu, Yi L" <yi.l.liu@intel.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v5 08/14] iommufd/viommu: Add iommufd_viommu_report_event
+ helper
+Message-ID: <20250110145149.GH5556@nvidia.com>
+References: <cover.1736237481.git.nicolinc@nvidia.com>
+ <b9b4f3df990934cb80b2f5e1e49e555e50c1c857.1736237481.git.nicolinc@nvidia.com>
+ <BN9PR11MB527634DAD9FE43A6DD50A2348C1C2@BN9PR11MB5276.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BN9PR11MB527634DAD9FE43A6DD50A2348C1C2@BN9PR11MB5276.namprd11.prod.outlook.com>
+X-ClientProxiedBy: BLAPR03CA0085.namprd03.prod.outlook.com
+ (2603:10b6:208:329::30) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250108012846.3275443-6-swboyd@chromium.org>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|BL3PR12MB6452:EE_
+X-MS-Office365-Filtering-Correlation-Id: 157bae20-7fb8-4bbd-9397-08dd31865055
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?fqla3qwxd+I5o837BUanwO4nlNpo+x47pjaDhVBzhS1fVuLwVAIYhsS7AYjK?=
+ =?us-ascii?Q?tOkT79u7Sg2PEN6Z2Da+fq2o5N9cJkXA8E7Ty7wou6ZN69h5986iGqrsgSWM?=
+ =?us-ascii?Q?F4lLZUU4Ir6/1DZveMxpNrt87GzKsCFGI0HRZVgWFovVPXnZgcKr815HE1o9?=
+ =?us-ascii?Q?UVQIn1ayfqOshiQF/2HernaI7rBOgTAHWOsP9Mrf6ZFCksGecV0kvq6KgOvX?=
+ =?us-ascii?Q?47i36XNl0oawgAzy0MyYxmUGpKodBq7rFNvvc50BRkCwPxq0GBGQqR8oAI8v?=
+ =?us-ascii?Q?3QytyD7YlWmrEfFv1I9Z2bN3kNj3DI+a3XBENu/M2d7oqfQTic2yLa8MzHnc?=
+ =?us-ascii?Q?FuordSdVv/PPmMYGQtPLlfELEkZbziDtyztYOFRPZ9y9JAy5vdC1DWAnHlch?=
+ =?us-ascii?Q?dmP3F4ZkGqG+WmFqbEbCdR3SEM9T2C3qmK0d3W53UwaWYcA+iVQ3cNrqOCaM?=
+ =?us-ascii?Q?X+TRK2k+c+F+Oeu/ihan2MFwGRk2xByKI2xWZ6otL37e3N7qobmrrHyhMj/G?=
+ =?us-ascii?Q?JSKa5EnfcfVFPi49h2xiRdRpSGkOmXaOw5TQFMGa9iE9dUlUFzF+50GX/3qQ?=
+ =?us-ascii?Q?9aE2TsMkK+40ncUejoFKj7dVDq3kYvTiXGUnlHDHPYWRW2nKdhUdsgsO5t4K?=
+ =?us-ascii?Q?hCGauRzK191Hk1zK3o/ZWPB+/bLCLvdu6Smh3zb40Z79UYVjru7Iy2lpy4an?=
+ =?us-ascii?Q?ykTrY5p2bk6uOV8o0Rfbvtmj0H5t3aS2B/UUbrRq55dccCWh/l0UYRDcECtm?=
+ =?us-ascii?Q?Tux8wbpl6xXDxLT8tcJPneyuNExbwJ87o1USlxcN5da8YRkQOzX74anXUhv+?=
+ =?us-ascii?Q?ow0lAjEJW20kQD+9+s7U5TYakO0OhCZfA4/zJ5cGN9/Q5eZ109gzWHNcGRlD?=
+ =?us-ascii?Q?ibEeIw9SrS6wPph1RbCjONF2HDXQkSesT6niy73zPr8+inja1JbW3YtOIssS?=
+ =?us-ascii?Q?YPmQzBLvagCFPbacH55Fa3hSSHqI0Gk5iGSNabw73tDEUK80xbNhirXMyUkd?=
+ =?us-ascii?Q?heHqucMRiUCYy9UzpCPhhUg+v25Kmf8ztVZqJntST6YCCFLM7DmmU8vWTNVr?=
+ =?us-ascii?Q?fLyX+lRgeavrPFvmKA+1qweW9Y4yskSsGYAw3HorkwzmiljtLUh/SrJH26Hr?=
+ =?us-ascii?Q?Rtafvdl46amunUvjUI1bOCQ7onHTY5PzM616oxFxw5hsLV/BW0x6iz7SMa9m?=
+ =?us-ascii?Q?El1vUtJX9ic+mcmyQC5uE/sQDEA/FKstrK/37Lz3vEARU4+N9rcsJXRVCE+h?=
+ =?us-ascii?Q?UUpnYMdoPnLjgr7fGjv00H7CaH5Pg8941R5sRfUkcwpnoV5AIlcNpBs/D8Oh?=
+ =?us-ascii?Q?YsuKe9gcUmo2DE4B3qQmMgmUH3XuAzrG5/J/i80j1bWbx4s4c8XUY3XxrF7y?=
+ =?us-ascii?Q?NbsrU4uCY4BspOOynCFXbV00lbhj?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?Sa20j6sfXylIrFq2c4V7jDomIkM/YJ14S4BvgAGgp0y5HfjZwvciU4fAv4/a?=
+ =?us-ascii?Q?p8S3RdTDhcd6woRLGXzKM5i+3Lu2a9ytOF7aG/4csqlbTLtLTBXYQ3IaOv1K?=
+ =?us-ascii?Q?PyT9GxTTlGd4w/ccXMY8NmAeQs0AZ5e3IkfYcR80sBjvZpFqvz+gd8p0LQh+?=
+ =?us-ascii?Q?OHHVcsc1BSdMScOno4F9LxilW/yLCGxdIJ0f5AVg7E7ElJRxzZrvcZAMkK3M?=
+ =?us-ascii?Q?x0HpIJ6OBKTuroE4NcDCKeNStwYEfYST1socdUdSBAgG3W3aGNOrvJL+n0qF?=
+ =?us-ascii?Q?mkFT21yV8FN+4ngPlZE7VFpstdfLsuPuBRSe3uLj2x6EVTscX116YHyiYFVQ?=
+ =?us-ascii?Q?wBeSJ7JBAy2ex+oQxKYOOFIhbmfynSkpkRVNAhi+kULs5PTQ+yrSzvORwtUk?=
+ =?us-ascii?Q?f7PMyaBYW9aPhond4oDm+JfzcpEXSA2K7ddS3NAXjTISKergDr2I9cwu9BAB?=
+ =?us-ascii?Q?hCCE70J+DT0i3aqsfj71JRKYwivBgrU7VWJKe6AKrhgIqmrtzV7drkzZnE5w?=
+ =?us-ascii?Q?afslyxBA2EWyoul95Umt3awk1g3vd/seeCsiREv+5aDiyXAbTq0Rl9vlejEy?=
+ =?us-ascii?Q?zbCu6YEhsm5CRbBmGOSdm0N/XIync9RMEfq7GSwB7tqz9sGZwtkWvOnMOcD3?=
+ =?us-ascii?Q?U9zX7LBAl0tqhgg4RT69/9sBaR5ZIdwoGPNw/JefWB2Cx2DSWgeedeMeIuaW?=
+ =?us-ascii?Q?9wD/dUZa1o9Dv4TtG7MfAC+XAJl0ywRarhpYEvbacBn6isn4PENp1P+jT0B1?=
+ =?us-ascii?Q?GoVaTV/BUwPBcA+9i8Mq5SwQvLCqVRWyVDUn5TmpctVV4X4zpiSDohM2oC24?=
+ =?us-ascii?Q?xdn/d87UBgn/o0L9vuLVWMmFfEFS3bDHtK3+UKTgiFX9R82p1wkVAJ8IsMq5?=
+ =?us-ascii?Q?10LDHMjFfTn50Sws+fk+MVcTl0a91k6v8/wnl/XBbbD8UAv8KVrCoIS2NpdN?=
+ =?us-ascii?Q?dHrHymKNSX5e1l0/90Cc9mkGEDFTEt8wXj1iFt/AKwTAQHMz16UCaw8RUBNl?=
+ =?us-ascii?Q?HRwtX110FJKJEaH62Cipt/5jwcDEENIBDiqnQ+ylS5EsXfmgJS/d11Jizu6O?=
+ =?us-ascii?Q?fyuiztMXQARdFR3l/PM8E5MjDvUHr/h2mq4/OUh3QGGqv+bW0Xv3Bv/pWxHB?=
+ =?us-ascii?Q?F9utKZKhnUbkfSHC3UM1DhRdTBOkRLdod+uTKiydlQe2slGdN7lajD+Lrm9Y?=
+ =?us-ascii?Q?NRCkFj0DKeIFZZ1hc2z0H1teaJb5OJIFHfDhAeT/g/V2SZIwrzvgwS1NHmAG?=
+ =?us-ascii?Q?js/v5jEZLfIQz1rSpNRkkBGHEbjFKdgtx3zauB3rXPGdrs6Y/CKwYrjSpTsr?=
+ =?us-ascii?Q?P7vhhcOk0s5RZmxb9ZxEf1cp4kZ6XpwsoERWZBz7tpA2yFL3AMpZW/pW63Ha?=
+ =?us-ascii?Q?iMbFQX4DeTxRsLPS1gIX8g62YRu2zgkP8TjhKqNhN/k28uYS6+JkI9ql35Hr?=
+ =?us-ascii?Q?YypX4Mmsx41ai+t0g1sAyDkb3ZJqU3EgQfVPWD6Nen9QDnNw6tIO8tz9Tlz+?=
+ =?us-ascii?Q?Me2gWTsAP8AFLSeAR5pLL4P/wueuT6+MgRhKwN4P7U5xXMBH7jpwP5zMlVdg?=
+ =?us-ascii?Q?bfmrhTVI6XNTQlV0xGGu8i87Qxwo1qdJri1+X6cG?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 157bae20-7fb8-4bbd-9397-08dd31865055
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jan 2025 14:51:50.1392
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KU0HNpXyKSlMnSFVrM1PXqy63YnTrFd6DpsV7aauW7oHrtf1CQq33iss01pWSuYM
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6452
 
-On Tue, Jan 07, 2025 at 05:28:42PM -0800, Stephen Boyd wrote:
-> Find the watchdog device described as a child node of the sc7180 SoC
-> node and attach a generic pm domain to the device before registering the
-> device with the platform bus. The domain simply gets the clk and turns
-> it on when the pm domain is powered on and turns it off when the pm
-> domain is powered off.
+On Fri, Jan 10, 2025 at 07:12:46AM +0000, Tian, Kevin wrote:
+
+> > +	if (!viommu)
+> > +		return -ENODEV;
+> > +	if (WARN_ON_ONCE(!viommu->ops || !viommu->ops-
+> > >supports_veventq ||
+> > +			 !viommu->ops->supports_veventq(type)))
+> > +		return -EOPNOTSUPP;
 > 
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> Cc: <linux-arm-msm@vger.kernel.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/bus/qcom/qcom-sc7180.c | 122 +++++++++++++++++++++++++++++++++
->  1 file changed, 122 insertions(+)
-> 
-> diff --git a/drivers/bus/qcom/qcom-sc7180.c b/drivers/bus/qcom/qcom-sc7180.c
-> index a615cf5a2129..7dfe6b32efef 100644
-> --- a/drivers/bus/qcom/qcom-sc7180.c
-> +++ b/drivers/bus/qcom/qcom-sc7180.c
-> @@ -3,18 +3,140 @@
->   * SoC bus driver for Qualcomm SC7180 SoCs
->   */
->  
-> +#include <linux/cleanup.h>
-> +#include <linux/clk.h>
->  #include <linux/device.h>
-> +#include <linux/dev_printk.h>
->  #include <linux/init.h>
->  #include <linux/mod_devicetable.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
->  #include <linux/of_platform.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm.h>
-> +#include <linux/pm_domain.h>
-> +
-> +struct qcom_soc_pm_domain {
-> +	struct clk *clk;
-> +	struct generic_pm_domain pd;
-> +};
-> +
-> +static struct qcom_soc_pm_domain *
-> +gpd_to_qcom_soc_pm_domain(struct generic_pm_domain *gpd)
-> +{
-> +	return container_of(gpd, struct qcom_soc_pm_domain, pd);
-> +}
-> +
-> +static struct qcom_soc_pm_domain *pd_to_qcom_soc_pm_domain(struct dev_pm_domain *pd)
-> +{
-> +	struct generic_pm_domain *gpd;
-> +
-> +	gpd = container_of(pd, struct generic_pm_domain, domain);
-> +
-> +	return gpd_to_qcom_soc_pm_domain(gpd);
-> +}
-> +
-> +static struct qcom_soc_pm_domain *dev_to_qcom_soc_pm_domain(struct device *dev)
-> +{
-> +	struct dev_pm_domain *pd;
-> +
-> +	pd = dev->pm_domain;
-> +	if (!pd)
-> +		return NULL;
-> +
-> +	return pd_to_qcom_soc_pm_domain(pd);
-> +}
-> +
-> +static struct platform_device *
-> +qcom_soc_alloc_device(struct platform_device *socdev, const char *compatible)
-> +{
-> +	struct device_node *np __free(device_node);
-> +
-> +	np = of_get_compatible_child(socdev->dev.of_node, compatible);
-> +
-> +	return of_platform_device_alloc(np, NULL, &socdev->dev);
-> +}
-> +
-> +static int qcom_soc_domain_activate(struct device *dev)
-> +{
-> +	struct qcom_soc_pm_domain *soc_domain;
-> +
-> +	dev_info(dev, "Activating device\n");
-> +	soc_domain = dev_to_qcom_soc_pm_domain(dev);
-> +
-> +	soc_domain->clk = devm_clk_get(dev, NULL);
-> +
-> +	return PTR_ERR_OR_ZERO(soc_domain->clk);
-> +}
-> +
-> +static int qcom_soc_domain_power_on(struct generic_pm_domain *domain)
-> +{
-> +	struct qcom_soc_pm_domain *soc_domain;
-> +
-> +	pr_info("Powering on device\n");
-> +	soc_domain = gpd_to_qcom_soc_pm_domain(domain);
-> +
-> +	return clk_prepare_enable(soc_domain->clk);
-> +}
-> +
-> +static int qcom_soc_domain_power_off(struct generic_pm_domain *domain)
-> +{
-> +	struct qcom_soc_pm_domain *soc_domain;
-> +
-> +	pr_info("Powering off device\n");
-> +	soc_domain = gpd_to_qcom_soc_pm_domain(domain);
-> +
-> +	clk_disable_unprepare(soc_domain->clk);
+> Hmm the driver knows which type is supported by itself before
+> calling this helper. Why bother having the helper calling into
+> the driver again to verify?
 
-How's this going to scale when there are multiple clocks and it's not 
-just turn on/off all the clocks in any order? Or when there's ordering 
-requirements between different resources.
+Indeed, it might make sense to protect this with
 
-I'm pretty sure I've seen attempts to order clock entries in DT based on 
-the order they want to enable them.
+        if (IS_ENABLED(CONFIG_IOMMUFD_TEST))
 
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_soc_add_clk_domain(struct platform_device *socdev,
-> +				   struct platform_device *pdev)
-> +{
-> +	struct qcom_soc_pm_domain *domain;
-> +	struct generic_pm_domain *pd;
-> +	int ret;
-> +
-> +	domain = devm_kzalloc(&socdev->dev, sizeof(*domain), GFP_KERNEL);
-> +	if (!domain)
-> +		return -ENOMEM;
-> +
-> +	pd = &domain->pd;
-> +	pd->name = "wdog";
-> +	ret = pm_genpd_init(pd, NULL, false);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* TODO: Wrap this in a generic_pm_domain function similar to power_on() */
-> +	pd->domain.activate = qcom_soc_domain_activate;
-> +	pd->power_on = qcom_soc_domain_power_on;
-> +	pd->power_off = qcom_soc_domain_power_off;
-> +
-> +	dev_info(&socdev->dev, "adding pm domain for %s\n", dev_name(&pdev->dev));
-> +	dev_pm_domain_set(&pdev->dev, &pd->domain);
-> +
-> +	return 0;
-> +}
->  
->  static int qcom_soc_sc7180_probe(struct platform_device *pdev)
->  {
->  	struct device *dev = &pdev->dev;
->  	struct device_node *np = dev->of_node;
-> +	struct platform_device *sdev;
-> +	int ret;
-> +
-> +	sdev = qcom_soc_alloc_device(pdev, "qcom,apss-wdt-sc7180");
+As a compiled out assertion
 
-We're going to have to have an explicit call for every child node?
+Or drop it
 
-> +	if (!sdev)
-> +		return dev_err_probe(dev, -ENODEV, "Failed to alloc sdev\n");
-> +
-> +	ret = qcom_soc_add_clk_domain(pdev, sdev);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "Failed to add clk domain to sdev\n");
-> +
-> +	ret = of_platform_device_add(sdev);
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "Failed to add sdev to bus\n");
->  
->  	return of_platform_populate(np, NULL, NULL, dev);
->  }
-> -- 
-> https://chromeos.dev
-> 
+We shouldn't have unnecessary argument validation on fast paths,
+!viommu should go too.
+
+Jason
