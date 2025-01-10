@@ -1,158 +1,137 @@
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from gw2.atmark-techno.com (gw2.atmark-techno.com [35.74.137.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B071A2D
-	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 00:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F224B19F421
+	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 02:24:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.74.137.57
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736469509; cv=none; b=jl8NvFDRj/qijp/I3V+RfnxE0vwog8GKnUeTXt/fIOUl0Qh0gxDb3Q4+TqS6Gtx35fjXlFN+vlLBX/86KUq/wgqHoSBSR1ax8f9FSAG5zxIuVGu8TZEWe/0MwfpNoM37lqf2L62DNxhu1lbK89qPlrqBgIinqSTaiRxSYN+MUhE=
+	t=1736475854; cv=none; b=nCoNUlGJqd9BDodcCqlhX92yM9FMQu8+J1qWPX7oPyu5+9pm8KJru1rhcxqoHdqsvUQXO5aLGri7ukb/zXfRnF+sM8+/ErtdUEELEI7rVOghuu4Z5wtxRknnwhoUYHRF9h80aTHSXL4s9Ggg5KZlhWgEfInxB7SluZ8kDypRo5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736469509; c=relaxed/simple;
-	bh=qWIZclo97O3t4XnMAadZI3RzDyG5vkOhisR5QJgFLj8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MqbAzy8ix+EahfsNTNJpQDaqOzih2mKGsXb+DG2zBm8DPuUd+DuokyZ5IaE3zPm4Xt/2/l4IW6ZO8isxOYOcSDFNBf3PJppTkks2tDaeG4qorQVtrIyTqh+GKeSTexqUYIbM8rQDOupKTzqBeDGjxKcw7fCh8Pi3tjY6hgLmmII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CjZB72gN; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	s=arc-20240116; t=1736475854; c=relaxed/simple;
+	bh=HPbJTAOZCcEw1vPjoee7BGtZeeHn6BbIBbKmaAl3eug=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d32snllyuhKDn5/zIwiMtLgach3rTXQ8V1bO5dSrAhvO0rhxd83LBMDLl1OXAsTn7rXb0epdTm9gk10fOdS9CbbdECaib6j4qg68nAVPBysj/VPC8eCPlAoz41QRRsuZdoFyqr5SCD4buk/vtmqA4hyrs6JiDR/m524l6ObxyRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com; spf=pass smtp.mailfrom=atmark-techno.com; dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b=jy8JDrdj; arc=none smtp.client-ip=35.74.137.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atmark-techno.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CjZB72gN"
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 509EEWVG007575
-	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 00:38:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kmF+DuU3JzVjgbd8y0t7kRkzSWdwvKPVstxc9QQq5H8=; b=CjZB72gNpfcFbn1B
-	NMtx1dBmxieUB+UHEUnzOXGirMST0xzBwKWxxgG3xBILREr+mc1RPNM8glJs6TJ4
-	7UrMfj3kRL1NjeeBg6JBBFhTKN6ZlVkHpqPEKrTOvI9HWGCprJ4n5iE189MEVeZ5
-	QjCH0O/4ewSbG46ZR6neWfAZrsDoNwUUvOoYSZjatdD27+qMX4RthaCpPCgBovNd
-	idsp2wD9VM3gLx5UMwrCbqXtGRW2q64UDUixwM4lASCDJKznwMB2P14Wyzb2qicy
-	o7XXauBGAL8H49QJxBM93wClU5tc75LHT1br0BAoO2Dzw53TcYynueU7whoyHWDg
-	JzaN6Q==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 442g209ame-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 00:38:27 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6d8f8762a69so2781756d6.3
-        for <patches@lists.linux.dev>; Thu, 09 Jan 2025 16:38:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b="jy8JDrdj"
+Authentication-Results: gw2.atmark-techno.com;
+	dkim=pass (2048-bit key; unprotected) header.d=atmark-techno.com header.i=@atmark-techno.com header.a=rsa-sha256 header.s=google header.b=jy8JDrdj;
+	dkim-atps=neutral
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by gw2.atmark-techno.com (Postfix) with ESMTPS id 1F2ACA5C
+	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 11:24:06 +0900 (JST)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-21638389f63so20020355ad.1
+        for <patches@lists.linux.dev>; Thu, 09 Jan 2025 18:24:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atmark-techno.com; s=google; t=1736475845; x=1737080645; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=RT99AIOWKsdh3kIu1d1CPLSjddf8N740x5d+oosRGww=;
+        b=jy8JDrdj+FPYmSxK4jAOoggvOUr9AYBhTrmyZk5egFCoy7Mp9MyhNulTf7UahekAH/
+         nCeONXA+l0sgqg32l/xZqMYlyzZRL0udaU9+g14ZFOABXFCPlfMDm1Nb0Pm8BQkybSvV
+         45CDOyAgSCRuIzhY9jL868Wul/3yfdrOoDRFjcSH8DevEkfszBFtZBY4ndi4zHjOIFpH
+         L/meJqhM/JLzxKk/45bTGlZZekQaXJeQ79fEDPlivIoeGmQKID4VmnA3gtGWg2kU69+Q
+         0qGEccivVQC7QFe+uqTZUXWJty0wGcEpIj/wdf2dLmhZ3eogYXM/7KuXYlDcXN6GaouT
+         k22Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736469506; x=1737074306;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kmF+DuU3JzVjgbd8y0t7kRkzSWdwvKPVstxc9QQq5H8=;
-        b=PvwieL7iTONx42k3ictY8wZfIYl4L+CySOvaMJYJ5+7UAgwn4AFV2TPxahEyW9DaAe
-         c/IOY+b0mxDWDsQSElRMg3MX4S7dqXlxdrAY/2StrY43qbjI5Sq3izwF5a7oGtc60VGz
-         ELgprZUB8XeGhQFiMrv+KKdDhd61RfKpM7/ze6UzC/We2YOcnNP+7RgohTybhYAit5HE
-         PXV+FCSl6FoFqubb/YusySJPa2by1CyV/URLC0JunC5pqm8W6+vTCNbvcqa3KWKFKL4V
-         TwhBePFL7Wj/YRvtogm8MRQUWwZCH8Ny7v10ePvAzjrXL3ZyITdnaFENoz+g9ci6Vhee
-         aoLg==
-X-Forwarded-Encrypted: i=1; AJvYcCWTSncPueiLQVFfsF/Be4o0HnmbM1zKDhOuxlfK1OfxQBT10f/NqjsQkn7i/lgrKH0Me40sAcMI@lists.linux.dev
-X-Gm-Message-State: AOJu0Yymd+txSWyCfZ+oS2gYPMnam8kgvTbB+IzzvG/yBTezFOo9Vi0d
-	Hl8d+E3SLkPsBiPKNZoUmHAH0CHTyBtmjPVMBgGuGkpg7yZRnpb9ymHfbHWOz0kCDWjUM/ArD6z
-	cYm/LqX11w0SN4LcvJVrA8Ne+reiI66wO04DI/cv/jNi/VdidxGBPwn6z
-X-Gm-Gg: ASbGncsvvywjrehgsoaht6O4lM87F9yk8b5ovn1ZlwzXf5MmJ3wfpdUjUymlzTtTG7/
-	fQin8rVcrfaeOENtN/NCf0B3CrClL2Des41v8UfebZRijomoRE/j36sMsZneby1VBD0y6Mgfotw
-	EhKHIINd/anCTC3NLuOcH7bzLD5OXKC09qxRWBJWfcRxisMcKkUkYzxX5RJk/XkR6i08sM9Ahip
-	5ISz5V/5j8B7lWlI768rHzeAypwOroFYjCyQhmlKqMSRpjLhTRnUW0C342T5vxi/CDRrxmTkexB
-	mxvDK0OUTmG4/3uwoKrTy8mhWp/IAKI3Zco=
-X-Received: by 2002:a05:622a:180c:b0:467:5d7f:c684 with SMTP id d75a77b69052e-46c710e105bmr55517931cf.12.1736469506238;
-        Thu, 09 Jan 2025 16:38:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFozTpKFg1C/Y/ohAM2r+YfB4QhoW6K8Hsfv6wtkptViZjHIU9D6x8pLZdO9xilbQsJvyLgGg==
-X-Received: by 2002:a05:622a:180c:b0:467:5d7f:c684 with SMTP id d75a77b69052e-46c710e105bmr55517771cf.12.1736469505858;
-        Thu, 09 Jan 2025 16:38:25 -0800 (PST)
-Received: from [192.168.65.90] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c95648e7sm117905366b.95.2025.01.09.16.38.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Jan 2025 16:38:24 -0800 (PST)
-Message-ID: <53657ae6-71a7-4800-8107-a08d47a17cb5@oss.qualcomm.com>
-Date: Fri, 10 Jan 2025 01:38:21 +0100
+        d=1e100.net; s=20230601; t=1736475845; x=1737080645;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RT99AIOWKsdh3kIu1d1CPLSjddf8N740x5d+oosRGww=;
+        b=sk97BDOuqx5OGzfJ9jCF66w2L2oebYQKB0RA+RBYASl4ZDRaS6dlx90tl0Wggq12ma
+         7w03SnXmdwaU240k4uTumf5bjhKuf7hTFUgfHsVMoRzCCxmbRaoxm7ZzOH3HDrZGV7rY
+         psnadQiWq8D+M/8oHHkcyUqEL6ve1xZP7T3KPJD3hwv0i6SbE4vYJx56b6aOQqadMqRG
+         2AUQKl9uC03Ax6aCcHMR9VJcTJSyNtJdpBzbrc9XruXv8PsyhjIkPwbmQyFkCW5bsbhV
+         m39AgF9+U62p/fYz5ER7f+B9gUsYZGTrqlsN6QEL9xh45v081R9cyIcKbqvoN1J4VHcw
+         S0yg==
+X-Forwarded-Encrypted: i=1; AJvYcCXfOBrk9OBb0tAiJnARlrnjKgqK358bnnbMMK9QEcBlvWmC9CNh1PxfkZFiAR3gxfupa6dTABFp@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzqvvzw5qC0Z/iRYlSKiPsoXUuF5M79H5kO3LWV0MxQq4L21IyB
+	BCY+AYp6gAd8NKWabxo4Ol++jQaBo+bKO0TpxCHaJxTV8yrZhORPzD7w/gpriYLWp7e5esC41Ia
+	5Tj8u7099aTpppdbjgUpDp72gd5XSHZgSIBwGs/sFdRKlPgA+kBAY9xbM
+X-Gm-Gg: ASbGncvgzJGJorHFa3h2p1FbERmDTDjkdCXIAtbEjFiTASpFWZ6Qr4GwD9rKzvXVExM
+	HXFbLWOu+T15g9mb+v+4T3BBEs73uBADbruaXWSMi/cyZlydwgjw6dbZYsqoSZBV8Zg1VIIiAaq
+	TUzNP+GzJopwLBnM7rWa+KCF+rzwnj3KIhT9jZfnveY5YudxMIaSc0eyyFLAjo6dgxKyzTqJxTO
+	fQimvQc9XCSU16aZc/jrK1JihASbdLmGD/DyIUjo+7O5c3OVyOyMZmO/v6IQEwt+cB4Y3Iya7/7
+	xgtSD5fo8P9FZEngxTTG8HsyYrYYqiMEBTv0ILSU
+X-Received: by 2002:a17:902:d491:b0:215:54a1:8584 with SMTP id d9443c01a7336-21a83f4c070mr132141975ad.17.1736475845068;
+        Thu, 09 Jan 2025 18:24:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH7zOCxWxdSOPki70L4ZSLPi+nEkzbIqt3vmIoV52QigSXWXfd5vnC+IeYGVUSlUiO0mwxYaw==
+X-Received: by 2002:a17:902:d491:b0:215:54a1:8584 with SMTP id d9443c01a7336-21a83f4c070mr132141685ad.17.1736475844693;
+        Thu, 09 Jan 2025 18:24:04 -0800 (PST)
+Received: from localhost (145.82.198.104.bc.googleusercontent.com. [104.198.82.145])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21a9f2199ebsm4453335ad.143.2025.01.09.18.24.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Jan 2025 18:24:04 -0800 (PST)
+Date: Fri, 10 Jan 2025 11:23:51 +0900
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Kairui Song <kasong@tencent.com>,
+	Desheng Wu <deshengwu@tencent.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 5.15 6.1] zram: check comp is non-NULL before
+ calling comp_destroy
+Message-ID: <Z4CEt5k3DWz4J9SK@atmark-techno.com>
+References: <Z3ytcILx4S1v_ueJ@codewreck.org>
+ <20250107071604.190497-1-dominique.martinet@atmark-techno.com>
+ <2025010929-nutmeg-lustiness-f433@gregkh>
+ <2025010916-janitor-matching-0136@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 6/6] arm64: dts: qcom: sc7180: Add SoC specific
- compatible to soc node
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org,
-        patches@lists.linux.dev, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, Arnd Bergmann <arnd@arndb.de>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-References: <20250108012846.3275443-1-swboyd@chromium.org>
- <20250108012846.3275443-7-swboyd@chromium.org>
- <n3fn5mnrrinrgrvadqgymv3cx355qpx5kk27nlrz2emoxfmjyt@ymwpfxf7lv4r>
- <0ab00013-0265-4336-bc30-f49492e96424@oss.qualcomm.com>
- <x6smfgtq2ojzl774jd6d6fsilxj5dte4jbfypbvxvdmaqd7pem@nnpcnyzz4l4i>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <x6smfgtq2ojzl774jd6d6fsilxj5dte4jbfypbvxvdmaqd7pem@nnpcnyzz4l4i>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: UI7bsk6OOwVGP52cmDMgqHIPL1MJlLe7
-X-Proofpoint-GUID: UI7bsk6OOwVGP52cmDMgqHIPL1MJlLe7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- impostorscore=0 bulkscore=0 spamscore=0 mlxlogscore=999 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2501100002
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2025010916-janitor-matching-0136@gregkh>
 
-On 10.01.2025 12:45 AM, Dmitry Baryshkov wrote:
-> On Thu, Jan 09, 2025 at 03:10:33PM +0100, Konrad Dybcio wrote:
->> On 8.01.2025 2:02 PM, Dmitry Baryshkov wrote:
->>> On Tue, Jan 07, 2025 at 05:28:43PM -0800, Stephen Boyd wrote:
->>>> Allow an SoC driver to probe for these devices. Add the SoC specific
->>>> compatible to the soc node. Leave the original simple-bus compatible in
->>>> place so that everything keeps working.
->>>>
->>>> Cc: Rob Herring <robh@kernel.org>
->>>> Cc: Bjorn Andersson <andersson@kernel.org>
->>>> Cc: Konrad Dybcio <konradybcio@kernel.org>
->>>> Cc: <linux-arm-msm@vger.kernel.org>
->>>> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sc7180.dtsi | 2 +-
->>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>> index 76fe314d2ad5..257890a193e6 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
->>>> @@ -782,7 +782,7 @@ soc: soc@0 {
->>>>  		#size-cells = <2>;
->>>>  		ranges = <0 0 0 0 0x10 0>;
->>>>  		dma-ranges = <0 0 0 0 0x10 0>;
->>>> -		compatible = "simple-bus";
->>>> +		compatible = "qcom,soc-sc7180", "simple-bus";
->>>
->>> If the new driver requires this compatible, it will break compatibility
->>> with older DT files (and it should be avoided).
->>
->> IIUC the intent here is to provide backwards compatibility through checking
->> for sth like IS_SOCPM_MANAGED(), sorta like HAS_ACPI_COMPANION(). In that
->> case, power sequencing would be done by the socpm driver, whereas if it
->> doesn't hold, the resources would be toggled by the device driver
+Greg Kroah-Hartman wrote on Thu, Jan 09, 2025 at 11:09:38AM +0100:
+> On Thu, Jan 09, 2025 at 11:09:02AM +0100, Greg Kroah-Hartman wrote:
+> > > Before 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing
+> > > device") that was indeed not a problem so I confirm this is a
+> > > regression, even if it is unlikely.
+> > > It doesn't look exploitable by unprivileged users anyway so I don't have
+> > > any opinion on whether the patches should be held until upstream picks
+> > > this latest fix up as well either.
+> > 
+> > Looks like Sasha just dropped the offending commit from the 5.10 and
+> > 5.15 queues (but forgot to drop some dep-of patches, I'll go fix that
+> > up), so I'll also drop the patch from the 6.1.y queue as well to keep
+> > things in sync.
+> > 
+> > If you all want this change to be in 6.1.y (or any other tree), can you
+> > provide a working backport, with this patch merged into it?
 > 
-> I think that this way we end up having PM code both in the device driver
-> and in the socpm. Ideally in my opinion we should be able to migrate all
-> pm code to socpm, keeping compat with old DT files. In the end, if this
-> is the only change to the SoC.dtsi, then we should be able to live
-> without this compat change.
+> Oops, nope, this was already in a 6.1.y release, so I'll go apply this
+> patch there now.  Sorry for the noise...
 
-We should be able to do that with a dynamic overlay, I suppose.. which we
-could drop after some time (probably a rather large amount of time)
+Thank you! I hadn't even noticed the patch had made it to 6.1.122
+earlier, good catch.
 
-Konrad
+So to recap:
+- 6.1 is now covered;
+- for 5.15/5.10, you suggested squashing this prereq directly into the
+74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing
+device") backport ; given the patch got merged to 6.1 as is does it
+still make sense?
+I can resend both patches together as a set if it's become more
+preferable.
+(... Perhaps adding a tag like [ v6.1 tree commit xyz123 ] even if I
+doubt it's standard)
+- (for completeness I checked 5.4, 74363ec674cb doesn't apply so I won't
+bother)
+- I don't think there's any rush for the latest fix[1], so it'll get
+picked up through the Fixes tag when it does and I won't wait for it to
+resend whichever version.
+[1] https://lore.kernel.org/all/20250107065446.86928-1-ryncsn@gmail.com/
+
+Thanks!
+-- 
+Dominique
+
