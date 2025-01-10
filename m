@@ -1,70 +1,70 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A1420B218
-	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 10:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99995205513
+	for <patches@lists.linux.dev>; Fri, 10 Jan 2025 10:45:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736505898; cv=none; b=e2WAf6L6vu/95oIxIKYZURVzuUlp1Qerjl5BuvCDnlL1sLXBmB1kwdx8jR6dOqv764U02jooUGdIUO/ubQxih4uDf9k7ITfLecAUEH45hpgd2IERhbogPssC2JLWRqIWJjkdDqW+/c2m+1NBzLd9yXjEqDbUfNN28w9QV+Cb9wA=
+	t=1736505906; cv=none; b=d9j7rGf6WcmoUoVGgPHYZN2TxBhtAIXwgRfZtigC4p5D/liHtrL6CaI6FyNTaEVxCCT9fA5sjSAVi4ZO8ziYi4+r965csNdGzYpD8mrJtu6Lt7kwJ4f8g3L+ywtHyB6RPa0B5/VdoyaI/IzgxxHg9BAXJxFHtdt7/TtaFECM5ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736505898; c=relaxed/simple;
-	bh=fOv7coRlriT5GANzBwoZW5RjAdJTGUO0YETEjUTqeco=;
+	s=arc-20240116; t=1736505906; c=relaxed/simple;
+	bh=oo9bGb4bFrCx3uBpRyZM133GR4ua2TD5WYyaLAYD0ME=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GxgkNx2Ww237KE+Ge9X6ZiQDKdg92ZjKxShfvEzK1fz3z+cve3P3Eno1BndhqAhzIGmacR1Lg+vU1cm1B1cSCTHl4qy2wurwL9UTcnPaMqu4eNBwVfAPV4wMeX4QHOZTeMNPPaD43nrvnjLAAQ49TZiDG/1cCU38BFcPi4MgTTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EqAY1qTX; arc=none smtp.client-ip=209.85.216.47
+	 To:Cc:Content-Type; b=r36PfkjSBAlBvp4cGxiwTqD4gzLTHNEtmBN9KJPZg6eHbnT/0KbRegRrCGSGCDsgUyGAq9sz/zColS9yZUf9/3UJS4Zzwoy0lAzw06PtHc8EQ5nRYsq0nlwe7PvBO3qbOYznsW16omz25XvwlB+qvOwSuiSUYQlblZgRoUH1gn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MtRhcfw7; arc=none smtp.client-ip=209.85.216.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EqAY1qTX"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ef6edddf70so370466a91.2
-        for <patches@lists.linux.dev>; Fri, 10 Jan 2025 02:44:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MtRhcfw7"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2efdaa02378so380997a91.1
+        for <patches@lists.linux.dev>; Fri, 10 Jan 2025 02:45:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736505896; x=1737110696; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1736505904; x=1737110704; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fOv7coRlriT5GANzBwoZW5RjAdJTGUO0YETEjUTqeco=;
-        b=EqAY1qTXWdFrqRW6Hkdh2aWkILUCOiOmVU47cvavYqwttGPTlXYV+rTWrS0ZnvAdGN
-         OkLKCkQaqEvVx90EIlAJFnJf4XnJJxGalhX4L//D1U7L/OzrmiPlDAo8ZRAuZvbzwnXy
-         o9M744cpwAHmH9dz5llnEZRqNKlCHqQxy2TUenohIY/G5c2gDKmDonKGYEvo/pZeCEO1
-         hzCM5Jlq2/vXfdwFZhabOxlD66PjSmQoDz8bRR+CB3fREeO9Y68Xbk8RDza5+W1JrVtk
-         cEDbmgTkKjt5yHC34amvr2rKUD4gxoj2Y6IWZnXqtvPMxQ09TOwrrt0gwwSl1zFvghm5
-         ll2g==
+        bh=oo9bGb4bFrCx3uBpRyZM133GR4ua2TD5WYyaLAYD0ME=;
+        b=MtRhcfw7mghmYhn3c+0uV2H+SYPJFoTOBVWNoJL+dYQac9j8pTPj/syD/QCzuUuaQr
+         vPgYfupAuKKUCSLXYPHWQo0AhYaovpngmfKee3k4tHbWv4M/0zEI8PzGGdywN6ifsntk
+         ZeY9JfTyRWCRzvFIi15DDpdBvM/WygXCWjM8oqT80UhgqTsQ2lKWVSFRGPhVYa9f6bkX
+         d2bMtmhGD/F7HixRLKzyXlH6fYoNLCeZVN9Wa/pJy5lVOazXQJbV8QOMeB1d8DBM+ghe
+         47h45mbXhtMB/yrdTPZjMlsndFMQDJ3zldSsWuDcE5OF3fO46AZdzSvr9cnlA8z4Cbi6
+         W5eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736505896; x=1737110696;
+        d=1e100.net; s=20230601; t=1736505904; x=1737110704;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fOv7coRlriT5GANzBwoZW5RjAdJTGUO0YETEjUTqeco=;
-        b=PqycvwJl68M1KbTdz33KETiN6e5CTTYrR99wezYxtYIUR1dybWg3XyCAOSdakGDMo1
-         bqptznaM1e7kAV+l+vzAXvMDxIX5qS0S+UZaQ11Eehl5IxRcAPb1lddsgIsREElL77ZS
-         Pu2+2D1oeP2ij8JMItoBZ9kY41nqlG7nOpmoveInHrZDf2ltupUW+M5s8prRI6bHj2w3
-         Ns0wcdpFI+3iUATOf1JuylcOqyB92GE0e/2spyaTlIrfGYAsCmurEjGsA+8YOUVfBCKM
-         aLRAHnnA9D/UCTlvToYIX9XXtEVIu/QbyRfnSTUow6M7iFVZzUc3kVvJNTZXb/xSghuG
-         +F5A==
-X-Forwarded-Encrypted: i=1; AJvYcCWRpaGYxfRUeMGxd3u6RAjcnkSQeq7mLgVQ6H5S2HBw/LMvdj4NhC6JcD3oh8nX7FhNRcHZUodH@lists.linux.dev
-X-Gm-Message-State: AOJu0YzUbGF0qz+fhmievdmwUUX0/p5w3HWyfs5q8jDKx/1Gg5BpzLUe
-	4iQI65i2a28isR3vFreA8ew1/emrG1XNmET1HzzlDhrbn007GwFjlZgvtE5w+3WJ1yzWeVVF6cu
-	u89eStgUJlKJms61kdNPhDV4GCL8=
-X-Gm-Gg: ASbGncuNXy+eTObCvPL9s8zt2bf6vzwaeCrMqVyONw5GnZ2UIGCPLESkCoHcxv2jVQN
-	liyWbs4YurB272VLTthq5iPsgPJ2f9erxNltx0Q==
-X-Google-Smtp-Source: AGHT+IGNLLtPuhByhtmusmNLB2QossNQCJC7ro42TnrIvXjLtSadskn5v/LaUt8bn6GUFk6dcNI9dIANJeOAzCIQUOc=
-X-Received: by 2002:a17:90b:2808:b0:2ea:bb3a:8f09 with SMTP id
- 98e67ed59e1d1-2f548db69e5mr5302153a91.0.1736505896347; Fri, 10 Jan 2025
- 02:44:56 -0800 (PST)
+        bh=oo9bGb4bFrCx3uBpRyZM133GR4ua2TD5WYyaLAYD0ME=;
+        b=ToSM+AGtb5i7SDpkwnrjBXbPS30JpC+nFphMko+jfJuWZPp3z4mBmQ4QC8YMwvWffJ
+         3w/P83w4jYwhuevJ5oHmUEHuHJBd3JSwIXTK/jboLQxv6CqZWuJHFODy/LlifPnaGGnG
+         s/3yyftJ+73N/BdhwbJ76jjcl8GBzIK8e3eVyKIvt+kdPHfPaf8o3kWRBlxEwBXwT0hM
+         UBw4/ny+NGYwD76nzjTf+DAouhxvYdfORIU88C6IpCAcxN2SCQ4zwF5nfsFc3KqxPPD/
+         WZbc3plZUHJ7MNr0/1SmmH/V1T0Ui38BOT/erVgfstdnBaWeK6SNrA0HcoUkjHBtbTIK
+         v2Vw==
+X-Forwarded-Encrypted: i=1; AJvYcCV8bl7c4/kOnxKwaejmNHehJj9+pmimJRbj6AH3tjuWPbADqDKAEtBH0Q4snMY90DWzsWYNfYY2@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzzheu3phWRrZpX+fQZc9iUmteGAUK9nPkV4eH0YIIlFWms3owQ
+	9+G71AS9ZQrNRMeZA+GqCEJuvTL4WKwSlmazX3BTSzKlQhCA2P4GL48ueAjNucbE8PNpMnVkdNH
+	VVIuc/JEZZDKDYHFRpJdu8IzasfQ=
+X-Gm-Gg: ASbGncsZGafV/BkkfJa+Yx0KNMlHc2Bs+hgTwie4KJvQxDzArj3833MG44QrAFc7714
+	cPzpxDLxLB+7LeVpVYtUQ+VnE17J8s1YkPvkCBw==
+X-Google-Smtp-Source: AGHT+IEbNZBuLmaRgBcsm8R3xQ2C1O267JEPoFSswVUc2c6LmXdzbOtsRBMHYlyDSMraiJjX/QPW1oCp1JhPbpPM0m4=
+X-Received: by 2002:a17:90b:37c3:b0:2f2:f6e5:d28e with SMTP id
+ 98e67ed59e1d1-2f548f1c677mr5770456a91.3.1736505904016; Fri, 10 Jan 2025
+ 02:45:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241123222345.346976-1-ojeda@kernel.org>
-In-Reply-To: <20241123222345.346976-1-ojeda@kernel.org>
+References: <20241123180639.260191-1-ojeda@kernel.org>
+In-Reply-To: <20241123180639.260191-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Fri, 10 Jan 2025 11:44:42 +0100
-X-Gm-Features: AbW1kvaBvWqqb3Lx-vPEwf12VHqF1zxLTLPxMzQsbxNmtrbNwtOPae8QLNhIWTA
-Message-ID: <CANiq72niw1ZU_97PsfGB0dgcRQNCo9LiFCjaHWCTY1A3qe+O=A@mail.gmail.com>
-Subject: Re: [RFC PATCH] rust: give Clippy the minimum supported Rust version
+Date: Fri, 10 Jan 2025 11:44:52 +0100
+X-Gm-Features: AbW1kvZ-6wVsYLH3Z85aGjQeaQNh26yqboHEUAMw9amj89Cs-YdsVrsxZf1LQ34
+Message-ID: <CANiq72nvfGOkVCH7sie5mtn7Y3jzV2W0fbJacF5W-r+XUHLn7w@mail.gmail.com>
+Subject: Re: [PATCH] rust: kbuild: run Clippy for `rusttest` code
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
 	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
@@ -74,34 +74,19 @@ Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 23, 2024 at 11:24=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wr=
-ote:
+On Sat, Nov 23, 2024 at 7:07=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> Clippy's lints may avoid emitting a suggestion to use a language or
-> library feature that is not supported by the minimum supported version,
-> if given by the `msrv` field in the configuration file.
+> Running Clippy for `rusttest` code is useful to catch issues there too,
+> even if the code is not as critical. In the future, this code may also
+> run in kernelspace and could be copy-pasted. Thus it is useful to keep
+> it under the same standards. For instance, it will now make us add
+> `// SAFETY` comments.
 >
-> For instance, Clippy should not suggest using `let ... else` in a lint
-> if the MSRV did not implement that syntax.
+> It also makes everything more consistent.
 >
-> If the MSRV is not provided, Clippy will assume all features are availabl=
-e.
+> Thus clean the few issues spotted by Clippy and start running it.
 >
-> Thus enable it with the minimum Rust version the kernel supports.
->
-> Note that there is currently a small disadvantage in doing so: since
-> we still use unstable features that nevertheless work in the range
-> of versions we support (e.g. `#[expect(...)]`), we lose suggestions
-> for those. However, over time we will stop using unstable features
-> (especially language and library ones) as it is our goal, thus, in the
-> end, we will want to have the `msrv` set.
->
-> Rust is also considering adding a similar feature in `rustc` too, which
-> we should probably enable if it becomes available [2].
->
-> Link: https://github.com/rust-lang/rust-clippy/blob/8298da72e7b81fa30c515=
-631b40fc4c0845948cb/clippy_utils/src/msrvs.rs#L20 [1]
-> Link: https://github.com/rust-lang/compiler-team/issues/772 [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Applied to `rust-next` -- thanks!
