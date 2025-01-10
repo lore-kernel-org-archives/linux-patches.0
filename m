@@ -1,93 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9646120E030;
-	Fri, 10 Jan 2025 13:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E949820FAA2;
+	Fri, 10 Jan 2025 13:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736516000; cv=none; b=p8MVvo3hKBFjf1PdfXx6VEv8wlL8tvmZgIvnPT+yZprZxg3yT7QWC5c+3EpypLlNP1OV3UOBWNoWHWKRPkERMfK3nKmY+yBMON0lYbYnYhP7L5G10SNrQ45FitCHRZypO9ORr7t00gOxD/EQ2dU1ITUa5qE8b6EKhzIKXspnGsk=
+	t=1736516005; cv=none; b=MCJ9O4Y1GmnnVqN8rbsy4MILmEonRm28ZnkXlLLgBD11X++uQF/j7aPAq7d7eV6l3c09gx/jvfKQcy5mpExfuLlbHbvVoLmK/MVvd6tVA2MgNglDgidoLik0NqJs3JbP1pumNMc6c2ySEQo3UpzQAbRt1zWVxQa1BTOIVswRsdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736516000; c=relaxed/simple;
-	bh=X8lP9UXjOeljq6oXBXuy8NDfvQZaTeuGvk76WyCjI7I=;
+	s=arc-20240116; t=1736516005; c=relaxed/simple;
+	bh=silqge2DVCwuHEb9M5/ClOaRGQ/9d3hVmjF8uWto/4Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tCDiFSRkXIG4VWhZ5UG0HMhAeYfZXIkQ7agFn6dYnLhGw3LX0yGxfeWmrUR3ZHVHRXhv30RuB5+kD8Ej9dsz0OSMwSt6OblQWkliBMj1iwTL2ho/NusBWnzYMm4CaVYPKFjLbWvNA9kJpRQ1m2ZmrTRVu12y2YwjS13N4+eDMUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ulVIbC07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lPMo3LyuNJzZ7khWnVcVjdi1/M+wqSa0U3jLKShEyuB4gDp6FXwX2C6YjTMqlqSD5TFaZwqM+SJnAp9v5fuY/q4QlJHIAbu1hvuSi0g9m4p9FoBB/Eo7SEpv0w/ms/97I9/dctp67H7Yua3FYF4nIuSDFZNkoU+oSJhw/9WElLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rDJ0VkMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ulVIbC07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572BAC4CED6;
-	Fri, 10 Jan 2025 13:33:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rDJ0VkMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0022C4CED6;
+	Fri, 10 Jan 2025 13:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736516000;
-	bh=X8lP9UXjOeljq6oXBXuy8NDfvQZaTeuGvk76WyCjI7I=;
+	s=k20201202; t=1736516004;
+	bh=silqge2DVCwuHEb9M5/ClOaRGQ/9d3hVmjF8uWto/4Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=ulVIbC07sslw4lIhw9FViCS3ihsqa99Fy8vHdATtTtPtH2rkFNhdjCFttb38PBBqy
-	 xAuf7mt3T5dtcTwfIDfEKT+GeO4EFs3AfkDayTiKELJC8Qz5/NNjHhLEZ6s+AMsM4G
-	 6dCqXZUniqyZN23/+gia3yz3/4MtVFH0LzelnsEsxIZxyRXLTc5CIyRZRgVHxyesSa
-	 Qep+qQiJV/HavqtDy4/4mKGfGPQPwNWT4sa9ZUgfPZJTzNMXboLffkg6C5dePeDPN4
-	 h7jmjexaigPrsTT3R/EQtcpIT2Xuo28i9QHScuBIVC4vspJS6C+Wv2zJ2FAzr2X7Zq
-	 wOSDstbOgQ94g==
+	b=rDJ0VkMpTmy0mPhpS4jWaav1GSyu1S8p3AortkUviOnwtui/0CuSnR3rC0sQxeAdL
+	 eljNAXc/vQxLmMxprI5x6Ei8tWE2d7aEGw73yoaR4xTybJwsVAYe7j3QXINFnrLghv
+	 YVbAdKUlCPL4keivMOVC5XIo6m26AUMqf4QhUbm7KNtbvwHVcyQPgoUqcAG0lOjKEv
+	 yL59bSyLd1hCuQWURltyrOx0ifkczFd84yB1pDft7/G754DAQJUJcF7VEB0FbEz6Pu
+	 ZsDZcR6aWCItP50biYMAXH2zIcFdORvh0VGJEEzvVDwRJwcxkVKlNNhiTH4HQddXps
+	 kuqgfdV6Dsa8w==
 From: Andreas Hindborg <a.hindborg@kernel.org>
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,  Miguel Ojeda
- <ojeda@kernel.org>,  Wedson Almeida Filho <wedsonaf@gmail.com>,  Alex
- Gaynor <alex.gaynor@gmail.com>,  Nathan Chancellor <nathan@kernel.org>,
-  Nicolas Schier <nicolas@fjasle.eu>,  Boqun Feng <boqun.feng@gmail.com>,
-  Gary Guo <gary@garyguo.net>,  =?utf-8?Q?Bj=C3=B6rn?= Roy Baron
- <bjorn3_gh@protonmail.com>,
-  Benno Lossin <benno.lossin@proton.me>,  Andreas Hindborg
- <a.hindborg@samsung.com>,  Alice Ryhl <aliceryhl@google.com>,
-  linux-kbuild@vger.kernel.org,  rust-for-linux@vger.kernel.org,
-  linux-kernel@vger.kernel.org,  patches@lists.linux.dev
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>,  Wedson Almeida Filho
+ <wedsonaf@gmail.com>,  Alex Gaynor <alex.gaynor@gmail.com>,  Nathan
+ Chancellor <nathan@kernel.org>,  Nicolas Schier <nicolas@fjasle.eu>,
+  Boqun Feng <boqun.feng@gmail.com>,  Gary Guo <gary@garyguo.net>,
+  =?utf-8?Q?Bj=C3=B6rn?=
+ Roy Baron <bjorn3_gh@protonmail.com>,  Benno Lossin
+ <benno.lossin@proton.me>,  Andreas Hindborg <a.hindborg@samsung.com>,
+  Alice Ryhl <aliceryhl@google.com>,  linux-kbuild@vger.kernel.org,
+  rust-for-linux@vger.kernel.org,  linux-kernel@vger.kernel.org,
+  patches@lists.linux.dev
 Subject: Re: [PATCH 2/3] kbuild: rust: apply `CONFIG_WERROR` to all Rust
  targets
-In-Reply-To: <CAK7LNAQkUik_VW7j-d56Pr4NnExxDnjMfWSwtxvijH4q4Onctg@mail.gmail.com>
-	(Masahiro Yamada's message of "Wed, 22 May 2024 20:58:46 +0900")
+In-Reply-To: <20240519211235.589325-2-ojeda@kernel.org> (Miguel Ojeda's
+	message of "Sun, 19 May 2024 23:12:34 +0200")
 References: <20240519211235.589325-1-ojeda@kernel.org>
 	<20240519211235.589325-2-ojeda@kernel.org>
-	<CAK7LNATPx2wTEM=KDmGtcH8vVTB4suOhh-CUQKP54F8wtPWDiw@mail.gmail.com>
-	<CANiq72mcdtNie=t=HHhZnjQa7gQiDZin+TYP_7Rgi4kL83H2BA@mail.gmail.com>
-	<CAK7LNASYYYsiZUaA1StD9kWO0WBC0PBPtfY7u32g94WtOPFZgw@mail.gmail.com>
-	<CANiq72mzTaKYJqNcv1qT3nXEbh_t7CwaAqxCuYNcx9eHOZf7wQ@mail.gmail.com>
-	<CAK7LNAQkUik_VW7j-d56Pr4NnExxDnjMfWSwtxvijH4q4Onctg@mail.gmail.com>
 User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Fri, 10 Jan 2025 14:33:02 +0100
-Message-ID: <878qrig5f5.fsf@kernel.org>
+Date: Fri, 10 Jan 2025 14:27:29 +0100
+Message-ID: <87jzb2g5oe.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Masahiro Yamada <masahiroy@kernel.org> writes:
+Miguel Ojeda <ojeda@kernel.org> writes:
 
-> On Wed, May 22, 2024 at 7:52=E2=80=AFPM Miguel Ojeda
-> <miguel.ojeda.sandonis@gmail.com> wrote:
->>
->> On Wed, May 22, 2024 at 12:14=E2=80=AFPM Masahiro Yamada <masahiroy@kern=
-el.org> wrote:
->> >
->> > What does "everything else" mean exactly?
->>
->> Everything but the host programs. Or as many targets as possible, if
->> you think there are other cases that we should avoid.
+> Make all Rust code (i.e. not just kernel code) respect `CONFIG_WERROR`,
+> so that we keep everything warning clean.
 >
+> In particular, this affects targets in `rust/` (`RUSTDOC H`, `RUSTC TL`,
+> `RUSTDOC T`, `RUSTC T` and `RUSTC P`), plus host programs and any others
+> we may add later.
 >
-> You can do this if rebuilding makes sense
-> when any CONFIG option is changed.
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Not having the ability to make builds fail when clippy or rustdoc is
-issuing warnings is a big problem. I would very much like to have the
-option to make builds fail when these targets give warnings.
-
-@Miguel: Should I look into exempting host programs, or do you already
-have an idea of how to implement?
-
-
-Regarding host programs, it would be nice to set werror for those. How
-does C do this? Is W=3De enough?
+Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
+Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
 
 
 Best regards,
