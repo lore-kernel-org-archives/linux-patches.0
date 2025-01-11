@@ -1,116 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B50322083;
-	Sat, 11 Jan 2025 19:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4C71B043E;
+	Sat, 11 Jan 2025 19:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736622541; cv=none; b=Hpitqo7hbr9LbA4QGWBNJLSuKJZa6yLrvwHaN6tysuLFlLkHaFJx4se/Y9Yegv03RCDhMo1uPh1HxKXwbwQDV5P4OTye/JjBGEmImaqchQ9ZauLlPi/uHW9hF0CoSRwD7SA/wPOmUa5qbs4SRQGyWPU82XaWAluJZBE65JTAi6o=
+	t=1736623659; cv=none; b=mGRdUAQ4ttr5nWNyTzGCZPnO14WZVaNuXY4vWt4MPWE7it+YTYgtnmHRZvlJ1hfkWEEDBNdKPpwKkp/jxud1BVRmmSY/wpBmu75YcLqIdnXPr3OX6qKzawmoO1t/9yUJYQpFl6h9udsrY0iBBBUGZ6U42+LrKsW83r4SXmHUJQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736622541; c=relaxed/simple;
-	bh=WwYW42JvpW0nfeStKB+/FvmdEPZw4aogO0d6MLliTLw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ocKH8SON3wmWWHKUYlO3mwKg4MMDQoyVmcJzXFCML65cfMMcKzOGGTskePrQG2SJ7Wikf9h+5nW5Z/i06THtlq0zzfHGnWt8AdewzponEawjZKnRCnAcpa7sEQ3lRNiFH+FRg1bVB6RQL30DmnRQVF+z4vKVqWBZuVHkfV1cCho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=deuvm6q9; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736623659; c=relaxed/simple;
+	bh=CfwpKR+2LZXVDs9rJcHICXGzOU2a9Lg/d7i7j7kAkas=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=m16RxVtc8c6d0zU8UR9A7tjSI+0SRrbUzzOYGJP2sjNO1AhIsi+aMcZGYvDrIvQNGc0xGXltUGZzWQXiUfuIJNuAQoHytaMetmOL4V0O+EfCwqHtpAb7wSJcT9QAXsJLn9WydUGWQb9s1PK6x9BDDO3LclaKti67CrRHc6GFWow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XzyT3wgD; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="deuvm6q9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B505EC4CED2;
-	Sat, 11 Jan 2025 19:08:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736622541;
-	bh=WwYW42JvpW0nfeStKB+/FvmdEPZw4aogO0d6MLliTLw=;
-	h=From:Date:Subject:To:Cc:From;
-	b=deuvm6q91DkUntjgvy5pexbYEWzZGD3mddRs9+nvLNNDVuDtpOhQXwgMxUzJgkT7C
-	 UMOI5UhnXXP5Ls7f5YvfYuACBxvulQKueKCATIYNi/HlcXFy/ZEvGzYixsqENYARAp
-	 KqJMutSrFU+M06yS7xz4cfJms4E+xPy2918/wAeNWNlwiK5AOX7i9V58Z7++jDKM/o
-	 kmMYLC2f6WXoNMCU5WaeOI4/Vb4LlUPDCBLsNCb0P1s88q6Bipvsu/n6g5ESN0ys2a
-	 OBUeqGCQaPW8UV99L8DvEIv5NREUBbV5L7BOQmK0HFu0LgrgWlqVFP9fg/vvWBk6Wy
-	 firOeeAZphltg==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Sat, 11 Jan 2025 12:08:38 -0700
-Subject: [PATCH] spi: amd: Fix -Wuninitialized in amd_spi_exec_mem_op()
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XzyT3wgD"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ee534d6800so681438a91.2;
+        Sat, 11 Jan 2025 11:27:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736623658; x=1737228458; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CfwpKR+2LZXVDs9rJcHICXGzOU2a9Lg/d7i7j7kAkas=;
+        b=XzyT3wgDsonSL4P3xiVHJbH/Ym4ISzhmlRD9vxpvIDMLyBq2mqOtzSonIBhT7okod/
+         LUy9LFA0v45bnZz9dMZn2Qjdq3QMsJi1IzTLSmknVV2lQ1hWC6ZPkJqX3u8kGC6+ryW/
+         MrKxBUPCi3/3QN5W/ANY4zMt6gXXKZtzwvG4D9J/bVj1ATaxZR4f+evSOhP7otck6soW
+         h8lmgx13+7PwAsfP04Pelvt0sJI4EqsOOvbGo6JNdYNT2YbF8VnUOScQO8P5DvDq7g44
+         Wb5bl2A1vQsNRQgL4sVyfAhY5yVu1TzYJSrExjlu/OSHBbjjxngKX5731Ltg7k4t9xqc
+         lMkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736623658; x=1737228458;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CfwpKR+2LZXVDs9rJcHICXGzOU2a9Lg/d7i7j7kAkas=;
+        b=lzoV8J93swzGfqo2+ryomxf2WBr7M+WVUS6vRTuhQOjzv0bH9PN/lrbNIO79nDMn/9
+         WJWKYPmI+anmS53kzRFxHaBKnkAWGDEDnepbOhGUbRSJGuujXoS+xyVK9pmiPoGxn1Cm
+         MZHA6ON6WWNEdxyv2dlKu+Cfd+w4z3WYHGzfV48l2eiXVZ5TkXMRPKJPOjUX6xEYwwbi
+         dwxmcCOQ3glbbYAEpT3ks6H9uZQPKE/lYv8KknPN+rDynzT+Arv/rW6CLVeZ6oj415Es
+         CeFd7dQ9iw/e4HyY03UHbU11r9Oggq5x+xHYVUmnp/V8KwDKMmrpin6M7jMHG7Ct75Fw
+         xnrg==
+X-Forwarded-Encrypted: i=1; AJvYcCUV8adRKsikZxIcsV3iu3J41mSy/hg4TdyQ4Wyo3vorI2maoT7KlXRAvbusteCbxdYW9uB+@lists.linux.dev, AJvYcCVhoGaIYNTTFA9nK35iZXLjF92Ee7VHqxeTgIb8vidMHsJT7S42meiJfaoh18h+TRokY8ji5VJyow==@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw9ie14pyY0wVnrr+FcX6bGFvF9Gpwll8qCXdH1CjGcfrNvXVKm
+	pWS9qDPWhTcgIuYrYvOHxn96b0pd5g5GB/yOFXvAjj0d6L5dVXNRJUbgu260lxCH7NzhRmkd7X5
+	VyVtyYMLalRXWMolLjHM30Nz3RR0=
+X-Gm-Gg: ASbGnctOTAkZ5QlaWlhXkFkgFBTE6tNNnZtRBEHeRwNPghBMg4hgQxuj3KyrDYI+lhG
+	eHuJjXjxsv65OLTa8z1c1RcIL345NgQIcspGZMg==
+X-Google-Smtp-Source: AGHT+IGhZwUzkEh+DpckkqR/MjURM5moqDg715p8zsHuYl2YtO5TfToWhx68Yn70vIliBDudFsoCIatJKla+jEhtLG8=
+X-Received: by 2002:a17:90a:d887:b0:2ee:6a70:c5d1 with SMTP id
+ 98e67ed59e1d1-2f548f1ef1bmr8556990a91.3.1736623657797; Sat, 11 Jan 2025
+ 11:27:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250111-spi-amd-fix-uninitialized-ret-v1-1-c66ab9f6a23d@kernel.org>
-X-B4-Tracking: v=1; b=H4sIALXBgmcC/x3MQQrDIBBG4auEWWcgarNorxKyMDo2P7RGNAmlw
- btXuvzg8S4qkiGFHt1FWU4UbLFB9R251canMHwz6UGPg1KKSwLbt+eADx8RETvsC1/xnGXnxS1
- OizE23G/UHilLC///aa71B+j+BSdvAAAA
-X-Change-ID: 20250111-spi-amd-fix-uninitialized-ret-bcbc2e33af94
-To: Raju Rangoju <Raju.Rangoju@amd.com>, Mark Brown <broonie@kernel.org>, 
- Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: linux-spi@vger.kernel.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev, kernel test robot <lkp@intel.com>, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1941; i=nathan@kernel.org;
- h=from:subject:message-id; bh=WwYW42JvpW0nfeStKB+/FvmdEPZw4aogO0d6MLliTLw=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOlNB09XL3kSZXDtpLGrUOji24ut2LimBP9UjFe/Nn/fO
- b/bKcX1HaUsDGJcDLJiiizVj1WPGxrOOct449QkmDmsTCBDGLg4BWAinRKMDF+1Padc+/zv4qRX
- bnOPcu4JzvFZZLL9/pvSP16L+VK0rqxhZFiwM9b62j2uHZq8e5fq54lP92g/vtXxyzHx7UWT4gx
- 4/bkB
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20250111-spi-amd-fix-uninitialized-ret-v1-1-c66ab9f6a23d@kernel.org>
+In-Reply-To: <20250111-spi-amd-fix-uninitialized-ret-v1-1-c66ab9f6a23d@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 11 Jan 2025 20:27:24 +0100
+X-Gm-Features: AbW1kvbCeEX-RVceRqr5kUTnEyvsVpIAE_SIlsCCDcXFsJEw2-aR6KBDnwyi5y0
+Message-ID: <CANiq72=6hA20fmBtO_iOTQkk7afUo2Aw9=WLY5kUD8OYgCM5jA@mail.gmail.com>
+Subject: Re: [PATCH] spi: amd: Fix -Wuninitialized in amd_spi_exec_mem_op()
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: Raju Rangoju <Raju.Rangoju@amd.com>, Mark Brown <broonie@kernel.org>, 
+	Miquel Raynal <miquel.raynal@bootlin.com>, linux-spi@vger.kernel.org, llvm@lists.linux.dev, 
+	patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-After commit e6204f39fe3a ("spi: amd: Drop redundant check"), clang warns (or
-errors with CONFIG_WERROR=y):
+On Sat, Jan 11, 2025 at 8:09=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
+> After commit e6204f39fe3a ("spi: amd: Drop redundant check"), clang warns=
+ (or
+> errors with CONFIG_WERROR=3Dy):
 
-  drivers/spi/spi-amd.c:695:9: error: variable 'ret' is uninitialized when used here [-Werror,-Wuninitialized]
-    695 |         return ret;
-        |                ^~~
-  drivers/spi/spi-amd.c:673:9: note: initialize the variable 'ret' to silence this warning
-    673 |         int ret;
-        |                ^
-        |                 = 0
-  1 error generated.
+Reviewed-by: Miguel Ojeda <ojeda@kernel.org>
 
-ret is no longer set on anything other than the default switch path.
-Replace ret with a direct return of 0 at the end of the function and
--EOPNOTSUPP in the default case to resolve the warning.
-
-Fixes: e6204f39fe3a ("spi: amd: Drop redundant check")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501112315.ugYQ7Ce7-lkp@intel.com/
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- drivers/spi/spi-amd.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/spi/spi-amd.c b/drivers/spi/spi-amd.c
-index fbe795bbcf507abcbbd973b226b5db0de1584898..c85997478b81903c97636d271baf7d378914c50a 100644
---- a/drivers/spi/spi-amd.c
-+++ b/drivers/spi/spi-amd.c
-@@ -670,7 +670,6 @@ static int amd_spi_exec_mem_op(struct spi_mem *mem,
- 			       const struct spi_mem_op *op)
- {
- 	struct amd_spi *amd_spi;
--	int ret;
- 
- 	amd_spi = spi_controller_get_devdata(mem->spi->controller);
- 
-@@ -689,10 +688,10 @@ static int amd_spi_exec_mem_op(struct spi_mem *mem,
- 		amd_spi_mem_data_out(amd_spi, op);
- 		break;
- 	default:
--		ret = -EOPNOTSUPP;
-+		return -EOPNOTSUPP;
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static const struct spi_controller_mem_ops amd_spi_mem_ops = {
-
----
-base-commit: 226d6cb3cb799aae46d0dd19a521133997d9db11
-change-id: 20250111-spi-amd-fix-uninitialized-ret-bcbc2e33af94
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Cheers,
+Miguel
