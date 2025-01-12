@@ -1,55 +1,57 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BB11BEF7D
-	for <patches@lists.linux.dev>; Sun, 12 Jan 2025 16:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A473D1CD1F1
+	for <patches@lists.linux.dev>; Sun, 12 Jan 2025 17:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736699771; cv=none; b=E4ubWcy4XJe4Z8KAK5IguFsOQKm3DrWO+6PBZL9dEluGwrEPwSZu5K1RaV8kHz8pTHhxX/lao1+mxFvhQeKASByJaWsdC3f8BYyzzRsehpB8tRfi8zJxXJKit5Ci/S3rYiAfQ0XwQuY6AMWeMWi50Bn5IsWQuO7rl7w4pUdQuxc=
+	t=1736701820; cv=none; b=ALFVx3Lv3CeQtR9A5dLTjh56JQeBZY/dirt1dGOADqLKsUQlo+QJusVPXBMtldfchg0YPeVgUneC6PTVrkI6q7Q1EG82Nh8IShYT8roIzaVovr/IbJNtR9jeYdsIY3ldHyyxQeBOjgkfy4gGS/68j0CEk36jQE56z/LP2DTjhg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736699771; c=relaxed/simple;
-	bh=3JtN8UOnO3UzsJ4wD1F2Qadp0yRNWF8iW+v76Oc1WZg=;
+	s=arc-20240116; t=1736701820; c=relaxed/simple;
+	bh=gJ+RuvagMf8tl1xcnIOZN+Mj3mQMfvDjzmgmDAhHNVY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hfX0hp/Uo2BqvMrD0bDiB8fkOcIgityQTZAFy/NVy3GKcQbKQoWI6NG3x7hPVqchNo59lqW7IPA4YKN/yQ2Vk9351dJ5CEjN3/zb64T/pe3JZwOZU1hwXdntF9guUu4AAFpAL1ta86e1zQqxrEcJck0KOl9p9rwsRDAiHpKndSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev
+	 To:Cc:Content-Type; b=pyhbwvbvbTRL+BTDoi1BZITUInMR3E7ogwU5kRwYmwvGPDAaz96X4h66qYuq4Wb48QRwZkBkdpv3pEhB9N+jqBoyFLOb92mPx5MAnaFthqZfNQYNdgLSakKkzsqw+u8Tz1VbsE5G6LdpheIOqYfF2+fnGReapj3SUk7v+spRJIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=clizyaI5; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-aa68b513abcso634448266b.0
-        for <patches@lists.linux.dev>; Sun, 12 Jan 2025 08:36:08 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clizyaI5"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2ee534d6800so833899a91.2
+        for <patches@lists.linux.dev>; Sun, 12 Jan 2025 09:10:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736701816; x=1737306616; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gJ+RuvagMf8tl1xcnIOZN+Mj3mQMfvDjzmgmDAhHNVY=;
+        b=clizyaI5EKQGlogq6x0XEbFZ3rGFG27Nyos86jzowv1Ar4rd78GCKSc/7uk9aIesFl
+         T+QwJbHBkNzbqo7o3K1QAMMByBCKsir4Gsfqno8gULPUlvHw8rvm40VYytCR2VSHZ8hJ
+         uOgKotseuaYYyXk6ieWSPcEFbC6PFLRHesKUaBFPsyQgfwKlMZtTIp1A7Yw4MJ6fnYeW
+         ok60+zKUDEfIDaEOK99ZnRnq5j8tWAD62+e/jSMz60QW9YfOHQ35SumRTuuUemqhFPrr
+         4AkCZhgkfhUbEY//AuPrtgi4SM+/a9wMHylKnjnoXwdTF9k7LmQafDBkcMmSeMH2pvJS
+         yZ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736699767; x=1737304567;
+        d=1e100.net; s=20230601; t=1736701816; x=1737306616;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=t2MDuB8AdvR6eck9De9E1R9rQFdV7/dz1RZGo3VxOfY=;
-        b=EP3+5QVyjnkN8AMNbC7zXTLWzE88GFvX0AE+ynVqOpJLu2Dt+4tW4JSIS5+3FEjB5z
-         4PA03mxRUTYIwIkkxsMTb2obJ+IQEe3Vuhp+MJCGLGb+YqSn3WUClIYJ414rFz49ByPE
-         pgwO2BELIvaZkXNdoJdJ78TNWqlNs+mnSVpP+4p6AofxLFd4HGHs4GMjVkSXCF9r6c3y
-         hBnrtR8evt1gwHSi7JotpIXC+zFic1L2PrCmuyn+4o3Q5Ul9zk096vV6Fh3XF6hnWAzP
-         8lLnTXsdJ8hCPWLjuwRBCuzAYX6shJhFzo7oyOijUKtkypVe3OKTjxnkIxsLREI2n2cM
-         rDFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVBhtz+q0P4SfyU9mz1jpTcT2KFCVF4KvoorCz/2UmHjTiMpyCB6bjmTAn9SR7ZOkefMXaG6SHp@lists.linux.dev
-X-Gm-Message-State: AOJu0YzX1fadv39VdKKrCVllg/BikgURLHzieLXJsh5ngymdrxq94nRD
-	0XnUpyzTLrodignMlQtF8Wq38bwL0b4I7x00NsFtrRR/sUzS0n9Wj6r5bP+mY/c=
-X-Gm-Gg: ASbGncssZJ9Q4HMOKZj7sZXncqzxFOcpyJK9H5a5HiWrVM5QHxn/zwl1vLKOabKdw3f
-	Kp2PFrlnROjXBg43gULxjP6Fh40vPauFhxhQCSQEz+Qee5W90DfCSuXdFDev8hbRXRoSb/ureCn
-	+US10u358H6ufYBsAWBhOd6+Df/FpePdpPYksb7iKSyQ44TuiexgeHF1I2/3FV6xi7L3bdGYP1k
-	0r/ExkTmeD7c1IeqIG3oKbpPsUKhtunk9CgegrTiLFGiB52dXaMn5a4bd1U4s6ltU2nNio7aW0+
-	6eW64Yjhp1k=
-X-Google-Smtp-Source: AGHT+IGbI5LZidENj1+o0blq/HJ+dMlPQKw52PCYbV613u71Gtp2kHuffe1K7Z6TH9AsVC5NAmQSKw==
-X-Received: by 2002:a17:907:6d01:b0:aa6:730c:acf with SMTP id a640c23a62f3a-ab2ab6fd01fmr1752470766b.13.1736699766661;
-        Sun, 12 Jan 2025 08:36:06 -0800 (PST)
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com. [209.85.208.51])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c366sm3922448a12.17.2025.01.12.08.36.06
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 12 Jan 2025 08:36:06 -0800 (PST)
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d932eac638so6790793a12.1
-        for <patches@lists.linux.dev>; Sun, 12 Jan 2025 08:36:06 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW7zEy1HJgo2bA2FvG9O6+3/NGOC8nznQoIIWCJ7WMsqk2KT7erGuG6z3t3Bo9Ix2xlWwYRBI+a@lists.linux.dev
-X-Received: by 2002:a17:907:3f95:b0:aae:b259:ef6c with SMTP id
- a640c23a62f3a-ab2aacfbb7cmr1734963066b.0.1736699765990; Sun, 12 Jan 2025
- 08:36:05 -0800 (PST)
+        bh=gJ+RuvagMf8tl1xcnIOZN+Mj3mQMfvDjzmgmDAhHNVY=;
+        b=HZNgiRFhK8VhiD+Wo7vQ8DSHsD+gkqMqG0KIW6Nx1NPiZSrbdLSyNE/wVQoxHGGldq
+         oAgknsjmVqwJtp3DGLk6e6eTkfZ6xVXzd6k/fPbDvvJEX+0/wouIlbirNlBOc4E1+EFl
+         m5Nzj/PCsKpBbW7L9t7UC9Qfcg01mwR3R3AtLFxXMpegN3dhCB3YdPDkIbMYUPcqNnCd
+         qSYhJPfh2JOw1y6brKqd3OqrpzqBlrIyJeVDxuuBdBucfzDvmit0MA739lgQXorrr9Ag
+         DEQc87bX0lk3m1RaaDZB1TiX48WVAUPfB5DRj737695AkjZF/jcrZ4hw+Ue1HkHl3bEd
+         tesg==
+X-Forwarded-Encrypted: i=1; AJvYcCULcwjiNdNunDSEYMF8YtssSSzg0OjBmUP9RiuOnHdhTGOeBH5OWqd3kaTw0viHA0ilZeI74VCY@lists.linux.dev
+X-Gm-Message-State: AOJu0YyCih83RD+pKnwyAl9qw7tKFNSyLRjO4zDNBCQGPx6Rbqs+bER5
+	RdFmqlvsu+rFy7GZRCxPrZm78bvLaJlTOoZpuNo3AcqIgK996XGVEoHWqCVgIOhIthtisaJUVn4
+	ZaoIvSZxDdtPzKjoGsydFYhWvuJk=
+X-Gm-Gg: ASbGncsOJ6mPlH6ZnEgNIQBlFxkxya0sb4JsCwqm/b49lA93DUoy8G0n/69Rf3t1CDF
+	ccBhPlkNSAVpMNnZD4+JX6tqNJfsbY6qS2d+zAQ==
+X-Google-Smtp-Source: AGHT+IHxoxUQSPlBOqQ0zh5ZIpFG+rt0AMgT3xRUQJwHEFqbYPbyKn6L/j9REv91zMAhFmPNH1dQSh8ewB3F2mgpwRw=
+X-Received: by 2002:a17:90b:538f:b0:2ea:5e0c:2851 with SMTP id
+ 98e67ed59e1d1-2f548e3c0c8mr10050369a91.0.1736701815909; Sun, 12 Jan 2025
+ 09:10:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,16 +59,16 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20250112152946.761150-1-ojeda@kernel.org> <20250112152946.761150-3-ojeda@kernel.org>
- <CAEg-Je81VAYecajUjYVJKBJUT+YqKemWsWEoWFgOcF=vtfPRPw@mail.gmail.com> <CANiq72kQOrvi5=1RUScEpov79RNzA3vna9KW6MoYmj8XJZhpQQ@mail.gmail.com>
-In-Reply-To: <CANiq72kQOrvi5=1RUScEpov79RNzA3vna9KW6MoYmj8XJZhpQQ@mail.gmail.com>
-From: Neal Gompa <neal@gompa.dev>
-Date: Sun, 12 Jan 2025 11:35:29 -0500
-X-Gmail-Original-Message-ID: <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
-X-Gm-Features: AbW1kvaGx_MSJ3IPf7cryJeRayddnsNQNkHSEUemH4CYPXyC2A6fwg7vKUuHKAs
-Message-ID: <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
+ <CAEg-Je81VAYecajUjYVJKBJUT+YqKemWsWEoWFgOcF=vtfPRPw@mail.gmail.com>
+ <CANiq72kQOrvi5=1RUScEpov79RNzA3vna9KW6MoYmj8XJZhpQQ@mail.gmail.com> <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
+In-Reply-To: <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sun, 12 Jan 2025 18:10:04 +0100
+X-Gm-Features: AbW1kvahoCxgDriEaQ0jzXg-Xw-OJQLOMZcGEkZHdji6mnUF75v6llzV78Fsi7U
+Message-ID: <CANiq72=GsHUARPZqdj8TSzHLoW9SHDK72D10s2vhTN1OEW58oQ@mail.gmail.com>
 Subject: Re: [PATCH 2/3] docs: submitting-patches: clarify difference between
  Acked-by and Reviewed-by
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+To: Neal Gompa <neal@gompa.dev>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, 
 	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, Sami Tolvanen <samitolvanen@google.com>, 
@@ -78,45 +80,33 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>, workflows
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jan 12, 2025 at 11:31=E2=80=AFAM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Sun, Jan 12, 2025 at 5:36=E2=80=AFPM Neal Gompa <neal@gompa.dev> wrote:
 >
-> On Sun, Jan 12, 2025 at 4:51=E2=80=AFPM Neal Gompa <neal@gompa.dev> wrote=
-:
-> >
-> > This doesn't make sense as a distinction. What defines "thoroughly"?
+> I've had my Reviewed-by tags silently ignored or deliberately stripped
+> because even though I've done a technical review, the maintainer does
+> not believe that I did. Therefore, what I am saying is that
+> maintainers seem to speciously decide whether an Acked-by or
+> Reviewed-by tag is appropriate or not *after* someone has sent it.
 >
-> It is a call, but when you give a Reviewed-by, it at least includes
-> what the "Reviewer's statement of oversight" mentions, unlike an
-> Acked-by.
->
-> > To be honest, I think you should go the other way and become okay with
-> > people sending Reviewed-by tags when people have looked over a patch
-> > and consider it good to land.
->
-> I am not sure what you mean. It is OK for people to send Reviewed-by
-> tags. The original discussion was about Acked-by because that is the
-> one that was usually used by maintainers only.
->
-> If what you mean is that Reviewed-by should not require an actual
-> review, then that is not the purpose of the tag. Please see the
-> "Reviewer's statement of oversight" -- its first bullet says:
->
->      (a) I have carried out a technical review of this patch to
->          evaluate its appropriateness and readiness for inclusion into
->          the mainline kernel.
->
+> This is the fundamental problem I have right now. This decision is not
+> the maintainer's to make, it is the submitter's.
 
-I've had my Reviewed-by tags silently ignored or deliberately stripped
-because even though I've done a technical review, the maintainer does
-not believe that I did. Therefore, what I am saying is that
-maintainers seem to speciously decide whether an Acked-by or
-Reviewed-by tag is appropriate or not *after* someone has sent it.
+First of all, if you are referring to other cases that I may not be
+aware of, then I am sorry to hear that! Things like this can cause
+friction sometimes.
 
-This is the fundamental problem I have right now. This decision is not
-the maintainer's to make, it is the submitter's.
+Sending tags is OK, but the author/maintainer ultimately decides
+whether to pick them up. For Reviewed-by, I would think it is rare
+that it gets ignored -- after all, maintainers usually love to get
+that tag.
 
+If you mean the case that triggered this patch series, then (as far as
+I understood it), the maintainer was OK with picking your Reviewed-by
+and Tested-by if you sent it, but not your (bare) Acked-by. That
+seemed reasonable to me, because the rules are a bit unclear around
+the latter tag. This series tries to solve that part, so that in the
+future one can provide an Acked-by with a suffix in a situation like
+yours.
 
---=20
-=E7=9C=9F=E5=AE=9F=E3=81=AF=E3=81=84=E3=81=A4=E3=82=82=E4=B8=80=E3=81=A4=EF=
-=BC=81/ Always, there's only one truth!
+Cheers,
+Miguel
