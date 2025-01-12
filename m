@@ -1,73 +1,77 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F201B3948;
-	Sun, 12 Jan 2025 14:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABA61B6CE1;
+	Sun, 12 Jan 2025 15:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736693674; cv=none; b=TGt8D6A5HP1EQkm7Qrn9ttXCITduvpZtrK1BhhBYQQG0EUTTARnBFmBjDQqSXAi6z6m3/LD2USIcIKORTsoC2+6zMTrAKWYr/2/IHxGO6B3xmbvx2nrHxm+z3XSNu5cYyrDrq3djeN2ANPqnzSXSbNv58OZImGepmp/Po0NO7S0=
+	t=1736695801; cv=none; b=uvSRmE8qXNWbc/Ql7nlVZ3yZzu9OT6Y4G8glVZNp7xvW0OK77HoNgN0Jl2rswQB0TLIqxHX5hpVmSUJTPgwfUy+MF/RHAOCz3MCzLeTicooD9HXEi+jlFs12svtfKqOs8jgnZ6/YZxB2VGBkcFjOF/3tvTDetb6ZUTF0LfPeU9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736693674; c=relaxed/simple;
-	bh=9dqA17U4v5bNA6UGoWgoPLebWf69ya2Zv5ng/piZlXI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M7oP2BuTa6/u4LCKNUMqRb+lOTgTLMZM9hn9nWRoZGPzzu7aSXZ67cZQ/vmGPDqH27mU3T2YxLL9dcR1mVQVTaqdV3s7m3UU/dul4qr8c43pg+OgDRSILtvK/E0RqkHi1LLfutEsaU+dB42s3dwpZOhrRQ6RMC3Nr6j+UZFQkio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PBJg03aM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736695801; c=relaxed/simple;
+	bh=5n4rv3ZWhJJOW+kQB8Ca/KAiE8vF/g6y78Qv0oArNFw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kNl1etU8nVFHrzuDJyORH1uX+dn78xHDOE+mEbmHUB74FPTwwZLBvWQaRapaL4Id4Tm6zsw0rsPRKBczZ0+cgeXeuGO2uWcHM7diAY5flCjKmWXZ6SWajdW3DGk7HQhgqjEdQ3ba3O+dlX/Fu5l74FVuuemZogNlqRP6hOnSqG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bXzyKYBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PBJg03aM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA8AC4CEDF;
-	Sun, 12 Jan 2025 14:54:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736693673;
-	bh=9dqA17U4v5bNA6UGoWgoPLebWf69ya2Zv5ng/piZlXI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PBJg03aMgTB3SBIHF0jV+pBLERVO9yLb6QpQbZh23FT/GVrNZY1W04zM6qkxYj5O6
-	 3XypUfgJtbQE2OZB9M/byE0QY2rHn7uYnzNrdx/BlQbeyqDHco5FMxeVhFqi+tF7Tu
-	 ljSy+jmHK+l5bXwpUbqtTPCaVnBRh6nFPlvaTc+o=
-Date: Sun, 12 Jan 2025 15:54:30 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>,
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, stable@vger.kernel.org
-Subject: Re: [PATCH] objtool/rust: add one more `noreturn` Rust function
-Message-ID: <2025011206-poker-last-774f@gregkh>
-References: <20250112143951.751139-1-ojeda@kernel.org>
- <CANiq72m=O6LHrj03nTLEtn6wqxe-4ra3UNxV6eUXOQOAW58Rsg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bXzyKYBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38522C4CEDF;
+	Sun, 12 Jan 2025 15:29:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736695800;
+	bh=5n4rv3ZWhJJOW+kQB8Ca/KAiE8vF/g6y78Qv0oArNFw=;
+	h=From:To:Cc:Subject:Date:From;
+	b=bXzyKYBjtf5KMiVSDFWZaGyKuhx5w85xpt+MMUlxuD2vlYSyGXdkI+j4vrd6lSkIX
+	 G7dQHs3JuE/9rt3iwdpeI5r3en9jxvz59mTtIMb5uCPSKE8sE8BncL3gMtFJxzsdVf
+	 Za/nHilb9HVHKLxA6+IGas6E+v6j1UwE8nu5YSmtISh18QqE5xFY8UaXsbX7XGCTrO
+	 372Wvyrxh/8KmssaSxNNY1PUHgPJuekS7pwC4ZVaWdTgepLvOrmObQBEz6GTS+3526
+	 oDIDArfs91zg9xLuoZcN0ib9ZFpThIVN7RHfMiDpmysx3pCXQdOGKFCOAfKWi/L+xp
+	 PY47fKJsnO+nw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Jonathan Corbet <corbet@lwn.net>
+Cc: workflows@vger.kernel.org,
+	linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Neal Gompa <neal@gompa.dev>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	tech-board@groups.linuxfoundation.org,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 0/3] Clarifications around Acked-by and "# Suffix" proposal
+Date: Sun, 12 Jan 2025 16:29:43 +0100
+Message-ID: <20250112152946.761150-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANiq72m=O6LHrj03nTLEtn6wqxe-4ra3UNxV6eUXOQOAW58Rsg@mail.gmail.com>
 
-On Sun, Jan 12, 2025 at 03:47:03PM +0100, Miguel Ojeda wrote:
-> On Sun, Jan 12, 2025 at 3:40 PM Miguel Ojeda <ojeda@kernel.org> wrote:
-> >
-> > See commit 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
-> > for more details.
-> >
-> > Cc: <stable@vger.kernel.org> # Needed in 6.12.y only (Rust is pinned in older LTSs).
-> 
-> Greg/Sasha: I didn't add a Fixes since it is not really a "fix" for
-> that commit, but if you want it for automation please feel free to add
-> it:
-> 
->     Fixes: 56d680dd23c3 ("objtool/rust: list `noreturn` Rust functions")
+A patch series that aims to clarify what the purpose of the Acked-by tag is,
+in order to help newcomers understand the kernel process better, as well as
+to give extra flexibility on the usage of the Acked-by tag.
 
-Yeah, putting the Fixes: tag triggers our tools easier, but we can
-manage either way :)
+It formalizes one of the proposals from [1]: "# Suffix" for Acked-by.
 
-thanks,
+I hope this helps!
 
-greg k-h
+Link: https://lore.kernel.org/rust-for-linux/CANiq72m4fea15Z0fFZauz8N2madkBJ0G7Dc094OwoajnXmROOA@mail.gmail.com/ [1]
+
+Miguel Ojeda (3):
+  docs: submitting-patches: clarify Acked-by and introduce "# Suffix"
+  docs: submitting-patches: clarify difference between Acked-by and
+    Reviewed-by
+  docs: submitting-patches: clarify that signers may use their
+    discretion on tags
+
+ Documentation/process/submitting-patches.rst | 22 ++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
+
+
+base-commit: 9d89551994a430b50c4fffcb1e617a057fa76e20
+--
+2.48.0
