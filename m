@@ -1,104 +1,122 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5A91BD03C
-	for <patches@lists.linux.dev>; Sun, 12 Jan 2025 16:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BB11BEF7D
+	for <patches@lists.linux.dev>; Sun, 12 Jan 2025 16:36:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736699605; cv=none; b=HAL+xYntnDyztcaejR17harMx17m/9O5XDIXssU04L0Gu1BYDIIgOJZORWZdNqRhBRxmzmbx2Ht/n2w3xT+bd+9OjJQTqH0q62lXkLFDxzkZsuOJe1Th585MKJzsbqNjwGhn4vNGOyCX68LdbCg2T5ETI/XeUU/nVmuW/jjnh80=
+	t=1736699771; cv=none; b=E4ubWcy4XJe4Z8KAK5IguFsOQKm3DrWO+6PBZL9dEluGwrEPwSZu5K1RaV8kHz8pTHhxX/lao1+mxFvhQeKASByJaWsdC3f8BYyzzRsehpB8tRfi8zJxXJKit5Ci/S3rYiAfQ0XwQuY6AMWeMWi50Bn5IsWQuO7rl7w4pUdQuxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736699605; c=relaxed/simple;
-	bh=XVqHpY3N9bg+00YKap6C+QuFblHD0Z37kdfroKcfoBc=;
+	s=arc-20240116; t=1736699771; c=relaxed/simple;
+	bh=3JtN8UOnO3UzsJ4wD1F2Qadp0yRNWF8iW+v76Oc1WZg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K4rSyKMT5lq3W11eH0peoXt4EAIUB9defKXCQnqFoDkbHBz0IyJ3bp261xgUDEQZp82pAxcU+tCVjxTrnIrR9HEXXcrWxQ/itpsfMZVK62VeZuIrb1TjRGukPfm5m1f1Zp+AxIh6ZkWaFw3OzCKONSTvHlet+hzZvmcNNf/V0rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CcwR23uf; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=hfX0hp/Uo2BqvMrD0bDiB8fkOcIgityQTZAFy/NVy3GKcQbKQoWI6NG3x7hPVqchNo59lqW7IPA4YKN/yQ2Vk9351dJ5CEjN3/zb64T/pe3JZwOZU1hwXdntF9guUu4AAFpAL1ta86e1zQqxrEcJck0KOl9p9rwsRDAiHpKndSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gompa.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CcwR23uf"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ee94a2d8d0so749876a91.2
-        for <patches@lists.linux.dev>; Sun, 12 Jan 2025 08:33:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736699604; x=1737304404; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XVqHpY3N9bg+00YKap6C+QuFblHD0Z37kdfroKcfoBc=;
-        b=CcwR23ufoWkCt4qx8N52zsp6w0VsrtsfaUJluIwgQBF9LAv2ehbtNaXRIZ93I9L50S
-         AZH8reh51oEzX+6VMwr94kcvxyfk5D/6QdIuCLo+8DjvQn8Cog9zd8BnDz6Yrd/JpbNx
-         n/3vAb6c7yMKltnD189vGWfWp/OaymMrTFzdHLE/b48jDyAp6MYR2DiItBkac9FDMqpp
-         FoPFlWFkwDzz56u8IovGYCeZNq5oGSgIkeb0S52uLKv5xDpdDonh2IXbf77S2iMo8KgI
-         OM8Iyg7jF/o7zHnB6VNANwsBMrKHXrXZc9TOq7pl6yTEZbtIhbo8CdPvoqFb04CFjqQA
-         lKKA==
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-aa68b513abcso634448266b.0
+        for <patches@lists.linux.dev>; Sun, 12 Jan 2025 08:36:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736699604; x=1737304404;
+        d=1e100.net; s=20230601; t=1736699767; x=1737304567;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XVqHpY3N9bg+00YKap6C+QuFblHD0Z37kdfroKcfoBc=;
-        b=iVAB+rxAM0qCN5OtLOKLkE8/gNzCFE6AovdNVgtiLNfUgn2wPDZt4SnakS8ePGdnTp
-         argBK2Lk5CzaZDuFaipDur8CwuxgatBfocqKpfzXoXwzMKP1F0D437WNb1Y7l81o8Ovc
-         Ioq+kNogNgiK+mBIOeJuFSe8hH6LZd26+si3PVzjSQxIeDiTRZZswHKXsjG5EPamfgA+
-         smm+x6IruVU00N1lhSVjKCbqxRu3TkVVuYkZ1GgQNYYCOw1gMbpUcJrg190wuEuCA69H
-         RJd6IDs1kJ/W5ZPauSQShWXfW9XJCKo606jhPwSu9x4LrdL5QcZFkO1i8ygfH5TXlGvE
-         5UiA==
-X-Forwarded-Encrypted: i=1; AJvYcCVQf7CDdmS332NrCudW3h2wj90HEJUAI5OKz9mJ+kWEQflGVy7MsivcDFiuedrMECQTqdsn9OVX@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9wC/AXDvCpUi2t0ulAb4AH61yuT/W+HU8RRkg3LCgjKwgVhdO
-	BF5xbrkPWTuj4HrsgTOvEzYZNWE1xF2kPjU0J22ElwSfqJEN4bcexnWPyCYNA5umpTEsElbUw3K
-	CgVniik+DWp8TsGsXgUfuIewA9+s=
-X-Gm-Gg: ASbGncsXGczz79mGcbkbd80PAExceDhFF20sSOKCwXPZ40FP0weiv5+gy9B09dB7pd+
-	/hlv3aefXdZAX+CyT3cekm5zAte7CUfkM1SUMRw==
-X-Google-Smtp-Source: AGHT+IF9qCroMjFPgvBrOcm4sTwu8DFr8c2pZOMN3ul1CkskTe9gK5SbLAJsB7sYZjuS8R9wMmOjKIpCXLy5qVlhxpo=
-X-Received: by 2002:a17:90b:2f07:b0:2ee:f59a:94d3 with SMTP id
- 98e67ed59e1d1-2f548e55126mr10017977a91.0.1736699603851; Sun, 12 Jan 2025
- 08:33:23 -0800 (PST)
+        bh=t2MDuB8AdvR6eck9De9E1R9rQFdV7/dz1RZGo3VxOfY=;
+        b=EP3+5QVyjnkN8AMNbC7zXTLWzE88GFvX0AE+ynVqOpJLu2Dt+4tW4JSIS5+3FEjB5z
+         4PA03mxRUTYIwIkkxsMTb2obJ+IQEe3Vuhp+MJCGLGb+YqSn3WUClIYJ414rFz49ByPE
+         pgwO2BELIvaZkXNdoJdJ78TNWqlNs+mnSVpP+4p6AofxLFd4HGHs4GMjVkSXCF9r6c3y
+         hBnrtR8evt1gwHSi7JotpIXC+zFic1L2PrCmuyn+4o3Q5Ul9zk096vV6Fh3XF6hnWAzP
+         8lLnTXsdJ8hCPWLjuwRBCuzAYX6shJhFzo7oyOijUKtkypVe3OKTjxnkIxsLREI2n2cM
+         rDFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVBhtz+q0P4SfyU9mz1jpTcT2KFCVF4KvoorCz/2UmHjTiMpyCB6bjmTAn9SR7ZOkefMXaG6SHp@lists.linux.dev
+X-Gm-Message-State: AOJu0YzX1fadv39VdKKrCVllg/BikgURLHzieLXJsh5ngymdrxq94nRD
+	0XnUpyzTLrodignMlQtF8Wq38bwL0b4I7x00NsFtrRR/sUzS0n9Wj6r5bP+mY/c=
+X-Gm-Gg: ASbGncssZJ9Q4HMOKZj7sZXncqzxFOcpyJK9H5a5HiWrVM5QHxn/zwl1vLKOabKdw3f
+	Kp2PFrlnROjXBg43gULxjP6Fh40vPauFhxhQCSQEz+Qee5W90DfCSuXdFDev8hbRXRoSb/ureCn
+	+US10u358H6ufYBsAWBhOd6+Df/FpePdpPYksb7iKSyQ44TuiexgeHF1I2/3FV6xi7L3bdGYP1k
+	0r/ExkTmeD7c1IeqIG3oKbpPsUKhtunk9CgegrTiLFGiB52dXaMn5a4bd1U4s6ltU2nNio7aW0+
+	6eW64Yjhp1k=
+X-Google-Smtp-Source: AGHT+IGbI5LZidENj1+o0blq/HJ+dMlPQKw52PCYbV613u71Gtp2kHuffe1K7Z6TH9AsVC5NAmQSKw==
+X-Received: by 2002:a17:907:6d01:b0:aa6:730c:acf with SMTP id a640c23a62f3a-ab2ab6fd01fmr1752470766b.13.1736699766661;
+        Sun, 12 Jan 2025 08:36:06 -0800 (PST)
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com. [209.85.208.51])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c366sm3922448a12.17.2025.01.12.08.36.06
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 12 Jan 2025 08:36:06 -0800 (PST)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d932eac638so6790793a12.1
+        for <patches@lists.linux.dev>; Sun, 12 Jan 2025 08:36:06 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCW7zEy1HJgo2bA2FvG9O6+3/NGOC8nznQoIIWCJ7WMsqk2KT7erGuG6z3t3Bo9Ix2xlWwYRBI+a@lists.linux.dev
+X-Received: by 2002:a17:907:3f95:b0:aae:b259:ef6c with SMTP id
+ a640c23a62f3a-ab2aacfbb7cmr1734963066b.0.1736699765990; Sun, 12 Jan 2025
+ 08:36:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250112152946.761150-1-ojeda@kernel.org> <20250112152946.761150-4-ojeda@kernel.org>
- <CAEg-Je-Knta8BtYSbZgX8cZ9Gd-2cpDAUE83dCJZbTbqmSfcKA@mail.gmail.com>
-In-Reply-To: <CAEg-Je-Knta8BtYSbZgX8cZ9Gd-2cpDAUE83dCJZbTbqmSfcKA@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sun, 12 Jan 2025 17:33:10 +0100
-X-Gm-Features: AbW1kvaZe2CFc-6pU_Vov_pNC6aiqdn2dh03696kzpcBc1UaVJG0rucVMsTqMCA
-Message-ID: <CANiq72nPJHW_2B34d4jScTuvFA=Ux+EszvLN-p=wwPd5sFt54Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] docs: submitting-patches: clarify that signers may
- use their discretion on tags
-To: Neal Gompa <neal@gompa.dev>
+References: <20250112152946.761150-1-ojeda@kernel.org> <20250112152946.761150-3-ojeda@kernel.org>
+ <CAEg-Je81VAYecajUjYVJKBJUT+YqKemWsWEoWFgOcF=vtfPRPw@mail.gmail.com> <CANiq72kQOrvi5=1RUScEpov79RNzA3vna9KW6MoYmj8XJZhpQQ@mail.gmail.com>
+In-Reply-To: <CANiq72kQOrvi5=1RUScEpov79RNzA3vna9KW6MoYmj8XJZhpQQ@mail.gmail.com>
+From: Neal Gompa <neal@gompa.dev>
+Date: Sun, 12 Jan 2025 11:35:29 -0500
+X-Gmail-Original-Message-ID: <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
+X-Gm-Features: AbW1kvaGx_MSJ3IPf7cryJeRayddnsNQNkHSEUemH4CYPXyC2A6fwg7vKUuHKAs
+Message-ID: <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
+Subject: Re: [PATCH 2/3] docs: submitting-patches: clarify difference between
+ Acked-by and Reviewed-by
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org, 
 	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	patches@lists.linux.dev, Sami Tolvanen <samitolvanen@google.com>, 
 	Masahiro Yamada <masahiroy@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>, 
 	tech-board@groups.linuxfoundation.org, Steven Rostedt <rostedt@goodmis.org>, 
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Linus Torvalds <torvalds@linux-foundation.org>, 
-	Dan Williams <dan.j.williams@intel.com>, Shuah Khan <skhan@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>, Dan Williams <dan.j.williams@intel.com>, 
+	"Darrick J. Wong" <djwong@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jan 12, 2025 at 4:47=E2=80=AFPM Neal Gompa <neal@gompa.dev> wrote:
+On Sun, Jan 12, 2025 at 11:31=E2=80=AFAM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
 >
-> A tag must not be dropped without the tag submitter's authorization.
+> On Sun, Jan 12, 2025 at 4:51=E2=80=AFPM Neal Gompa <neal@gompa.dev> wrote=
+:
+> >
+> > This doesn't make sense as a distinction. What defines "thoroughly"?
+>
+> It is a call, but when you give a Reviewed-by, it at least includes
+> what the "Reviewer's statement of oversight" mentions, unlike an
+> Acked-by.
+>
+> > To be honest, I think you should go the other way and become okay with
+> > people sending Reviewed-by tags when people have looked over a patch
+> > and consider it good to land.
+>
+> I am not sure what you mean. It is OK for people to send Reviewed-by
+> tags. The original discussion was about Acked-by because that is the
+> one that was usually used by maintainers only.
+>
+> If what you mean is that Reviewed-by should not require an actual
+> review, then that is not the purpose of the tag. Please see the
+> "Reviewer's statement of oversight" -- its first bullet says:
+>
+>      (a) I have carried out a technical review of this patch to
+>          evaluate its appropriateness and readiness for inclusion into
+>          the mainline kernel.
+>
 
-Tags get routinely dropped, as the commit message explains. So we
-cannot say "must not", sorry.
+I've had my Reviewed-by tags silently ignored or deliberately stripped
+because even though I've done a technical review, the maintainer does
+not believe that I did. Therefore, what I am saying is that
+maintainers seem to speciously decide whether an Acked-by or
+Reviewed-by tag is appropriate or not *after* someone has sent it.
 
-Even if that were not the case, tags are currently added/decided by
-signers, not tag providers. This patch is trying to document how it
-works today.
+This is the fundamental problem I have right now. This decision is not
+the maintainer's to make, it is the submitter's.
 
-I understand it may feel bad to not have a tag applied, but it is
-something normal in the current process. Tags are publicly archived
-nevertheless, so e.g. one can still prove work to others.
 
-I don't think misunderstandings about development processes mean
-people is "rude": it may feel bad, but that does not mean others are
-"rude" necessarily, unless they were rude in their manners or
-something like that, which is not what is being discussed here.
-
-Thanks for the quick review!
-
-Cheers,
-Miguel
+--=20
+=E7=9C=9F=E5=AE=9F=E3=81=AF=E3=81=84=E3=81=A4=E3=82=82=E4=B8=80=E3=81=A4=EF=
+=BC=81/ Always, there's only one truth!
