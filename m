@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914A61CAA61;
-	Mon, 13 Jan 2025 11:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B63022CF3C;
+	Mon, 13 Jan 2025 11:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736768931; cv=none; b=IVZaNit0SFgcz17lNpSSTp8fuEheyiNV04Z9qvzX0ZzI89XHxlav/q4ZtX7ksMGSyqzRyRiYi1kMwD918EX8XfOd6RboJeOro0lOLPaqsWd2VSe8R+UjrCODqFOu192xncnwmSjm5p5Jzit5/ABKGnv7mzbzhGm7nMrH+rWq3+A=
+	t=1736769033; cv=none; b=bg0Y/L44vwQJuIZ8X9Owp1QU+OhsOwMunXgbBBcXNCfWgZEEkrBaZdlJSP1j9EdAU3iFcPwRbd9cDsnC15nv8IhIqda2qZqikD65bgopO/kpIz6nKYmLROOnz/UFDc8zM+JDvJy9nAg99tAfm6lXaEtEaWOjPVa7ZFxPsUwnQu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736768931; c=relaxed/simple;
-	bh=utDGhzB1ePx5WwK/+vy7RmdNe9P1VCxIJTtXnUkW5dM=;
+	s=arc-20240116; t=1736769033; c=relaxed/simple;
+	bh=b33m7yGII0jdewcEGaJ33D3e6+wNiG5UTRCQwOnY8KM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=py3NIc0tgO/cbUoBQ9f3jBH12EAFTE8wnGDDr0e25vO0jJyRqldqBhNeCKkAU+290HyHVpzjjcPfCUIymbppDhEf2QvR3bZSdlrXUjqLbvsQnJi9ZMrguRGdXWwnauQhNscGk7lqCX31lkKpmHqM35P7hqM+m/YroEXfbVVh93E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rOVAw+HW; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=SbSWTyrMBIw2QfVt8mUTfDw4nZ2hXthybldUy0qYZtGCXIhJT0q9o34f2zwBxBJe7fInJo6H5lhitKoO1WJOtfX9olb76DRTF6XaLr+BWBlqTTFN92LPeX9TXjitZvmXiZxan8VcHjj5ncZqhXaSyGMr42lDHnNl3CPHoKNDKM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZ5fjhu8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rOVAw+HW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ABBC4CED6;
-	Mon, 13 Jan 2025 11:48:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZ5fjhu8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C758BC4CED6;
+	Mon, 13 Jan 2025 11:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736768931;
-	bh=utDGhzB1ePx5WwK/+vy7RmdNe9P1VCxIJTtXnUkW5dM=;
+	s=k20201202; t=1736769032;
+	bh=b33m7yGII0jdewcEGaJ33D3e6+wNiG5UTRCQwOnY8KM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rOVAw+HWkYqxqKQLs31P+TTsmdHLTcWBqx/0cBhkKkOsGmlClh5XWzEevyliAc+L9
-	 yDYYOXhTjcvfUmr8c3l96/269/wh6aYbbjB5yREPlUss3Uun9kioqcYw1vGA/NiwKs
-	 DMwzk/KT957lQJ1ouUTQ8tJVK2riHVVP1jsaJJ/FPI1OmAMRSiPY7Fa5w06IllIe+5
-	 qsgvse4GiN/fYIxEcz1U7XofpMWV/yjBHtwff3ZwRcYrcY50pRtO3LDtw/5nKLZgiN
-	 BO+JOQCFyDgZwAxao1R26wuKcVsCxiYg0batmOxyxa2/DmhONK7lv8kLzz3a+7RG9C
-	 jP3o45MOmed9A==
-Message-ID: <8c9a692b-aebf-425a-b267-6bcaef025cb6@kernel.org>
-Date: Mon, 13 Jan 2025 12:48:42 +0100
+	b=tZ5fjhu8T5zeCOrvFtUDOluUaDVVOvadOGzS73/fh+/sDH7GRhzCI3QKXtC3y6c75
+	 8STEVEO8gZqvTYjjAMTWj9hcm/0tj/Wt1pqFGPaz4s3IQEmH3WVMKQPUvUyXpW74ph
+	 +GHVNx44WIhMHcUHcHPQlnfCHLS2k9fIzapR10uJ2D7NvuAXPvki9J8wqpI18rtlyC
+	 YXvlEF6LNIJHypyttHzAMGxRZ6IrJbzTTh8DeCKXD0Iau/gyWLKBQH1ucmukjZO94p
+	 BCVSizC/gx3ddH59k0UbxMvGyEProMywG7hXV2dHk5WG+DvA+AoS9nWYUgAN+03+M6
+	 NCdHxJZnHFz0A==
+Message-ID: <488f009d-790d-49e0-b736-8a54b61b628a@kernel.org>
+Date: Mon, 13 Jan 2025 12:50:25 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,23 +37,21 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/3] docs: submitting-patches: clarify difference between
  Acked-by and Reviewed-by
-To: Neal Gompa <neal@gompa.dev>, Miguel Ojeda <ojeda@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, workflows@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Sami Tolvanen <samitolvanen@google.com>,
+To: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>
+Cc: workflows@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Neal Gompa <neal@gompa.dev>, Sami Tolvanen <samitolvanen@google.com>,
  Masahiro Yamada <masahiroy@kernel.org>, Luis Chamberlain
  <mcgrof@kernel.org>, tech-board@groups.linuxfoundation.org,
  Steven Rostedt <rostedt@goodmis.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Linus Torvalds <torvalds@linux-foundation.org>,
  Shuah Khan <skhan@linuxfoundation.org>,
- Dan Williams <dan.j.williams@intel.com>, "Darrick J. Wong"
- <djwong@kernel.org>
+ Dan Williams <dan.j.williams@intel.com>
 References: <20250112152946.761150-1-ojeda@kernel.org>
  <20250112152946.761150-3-ojeda@kernel.org>
- <CAEg-Je81VAYecajUjYVJKBJUT+YqKemWsWEoWFgOcF=vtfPRPw@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -97,62 +95,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <CAEg-Je81VAYecajUjYVJKBJUT+YqKemWsWEoWFgOcF=vtfPRPw@mail.gmail.com>
+In-Reply-To: <20250112152946.761150-3-ojeda@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 12/01/2025 16:50, Neal Gompa wrote:
-> On Sun, Jan 12, 2025 at 10:30 AM Miguel Ojeda <ojeda@kernel.org> wrote:
->>
->> Newcomers to the kernel need to learn the different tags that are
->> used in commit messages and when to apply them. Acked-by is sometimes
->> misunderstood, since the documentation did not really clarify (up to
->> the previous commit) when it should be used, especially compared to
->> Reviewed-by.
->>
->> The previous commit already clarified who the usual providers of Acked-by
->> tags are, with examples. Thus provide a clarification paragraph for
->> the comparison with Reviewed-by, and give a couple examples reusing the
->> cases given above, in the previous commit.
->>
->> Acked-by: Shuah Khan <skhan@linuxfoundation.org>
->> Acked-by: Dan Williams <dan.j.williams@intel.com>
->> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
->> ---
->>  Documentation/process/submitting-patches.rst | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/Documentation/process/submitting-patches.rst b/Documentation/process/submitting-patches.rst
->> index c7a28af235f7..7b0ac7370cb1 100644
->> --- a/Documentation/process/submitting-patches.rst
->> +++ b/Documentation/process/submitting-patches.rst
->> @@ -480,6 +480,12 @@ mergers will sometimes manually convert an acker's "yep, looks good to me"
->>  into an Acked-by: (but note that it is usually better to ask for an
->>  explicit ack).
->>
->> +Acked-by: is also less formal than Reviewed-by:.  For instance, maintainers may
->> +use it to signify that they are OK with a patch landing, but they may not have
->> +reviewed it as thoroughly as if a Reviewed-by: was provided.  Similarly, a key
->> +user may not have carried out a technical review of the patch, yet they may be
->> +satisfied with the general approach, the feature or the user-facing interface.
->> +
->>  Acked-by: does not necessarily indicate acknowledgement of the entire patch.
->>  For example, if a patch affects multiple subsystems and has an Acked-by: from
->>  one subsystem maintainer then this usually indicates acknowledgement of just
->> --
->> 2.48.0
->>
+On 12/01/2025 16:29, Miguel Ojeda wrote:
+> Newcomers to the kernel need to learn the different tags that are
+> used in commit messages and when to apply them. Acked-by is sometimes
+> misunderstood, since the documentation did not really clarify (up to
+> the previous commit) when it should be used, especially compared to
+> Reviewed-by.
 > 
-> This doesn't make sense as a distinction. What defines "thoroughly"?
+> The previous commit already clarified who the usual providers of Acked-by
+> tags are, with examples. Thus provide a clarification paragraph for
+> the comparison with Reviewed-by, and give a couple examples reusing the
+> cases given above, in the previous commit.
+> 
 
-IMO, reviewers statement of oversight. One should not give reviewed-by
-tags, if one does not agree fully with the statement.
 
-> To be honest, I think you should go the other way and become okay with
-> people sending Reviewed-by tags when people have looked over a patch
-> and consider it good to land.
-
-No, that dilutes the review. There always was Ack for such cases.
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
