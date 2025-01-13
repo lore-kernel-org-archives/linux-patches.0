@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B63022CF3C;
-	Mon, 13 Jan 2025 11:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5CFC22CF3C;
+	Mon, 13 Jan 2025 11:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736769033; cv=none; b=bg0Y/L44vwQJuIZ8X9Owp1QU+OhsOwMunXgbBBcXNCfWgZEEkrBaZdlJSP1j9EdAU3iFcPwRbd9cDsnC15nv8IhIqda2qZqikD65bgopO/kpIz6nKYmLROOnz/UFDc8zM+JDvJy9nAg99tAfm6lXaEtEaWOjPVa7ZFxPsUwnQu0=
+	t=1736769091; cv=none; b=E78cWHgQF9vgAZFZyNsEdUHLyR1GwnwJbSry2gpeQka9KCCNw7v+mnf+0s+Tutp7kPNIWYZCYblEOMCpAd0LGk9xs1b2jSZ0g5+P/6S6o3PE2fo35+K53gfsTSKTWCZncbBcdHoT6xnJRyyaMVCta3x25V1wL0iakvazc5kdot8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736769033; c=relaxed/simple;
-	bh=b33m7yGII0jdewcEGaJ33D3e6+wNiG5UTRCQwOnY8KM=;
+	s=arc-20240116; t=1736769091; c=relaxed/simple;
+	bh=z4WKz6RzEcIuh6zZ/p/HO8e/2rmIlGv/wZNFGuVS1rM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SbSWTyrMBIw2QfVt8mUTfDw4nZ2hXthybldUy0qYZtGCXIhJT0q9o34f2zwBxBJe7fInJo6H5lhitKoO1WJOtfX9olb76DRTF6XaLr+BWBlqTTFN92LPeX9TXjitZvmXiZxan8VcHjj5ncZqhXaSyGMr42lDHnNl3CPHoKNDKM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZ5fjhu8; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=aRCjeL9QxmvZwyxb5LNGT/If5SgQiznrdE64EEHfHcu6x48cZwihxuTcabBBYJn771PNzzjZNEdFbe4qa2EOOrdCSRgphmlonabx4euAe72hBrMGRrHCRSs45WsGdSGaIBmSnYYotyZ80xuL4ruein7dOfWJfI1Mdi0Q4Z5kXSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mgFWjfaE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZ5fjhu8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C758BC4CED6;
-	Mon, 13 Jan 2025 11:50:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mgFWjfaE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B584EC4CED6;
+	Mon, 13 Jan 2025 11:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736769032;
-	bh=b33m7yGII0jdewcEGaJ33D3e6+wNiG5UTRCQwOnY8KM=;
+	s=k20201202; t=1736769091;
+	bh=z4WKz6RzEcIuh6zZ/p/HO8e/2rmIlGv/wZNFGuVS1rM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tZ5fjhu8T5zeCOrvFtUDOluUaDVVOvadOGzS73/fh+/sDH7GRhzCI3QKXtC3y6c75
-	 8STEVEO8gZqvTYjjAMTWj9hcm/0tj/Wt1pqFGPaz4s3IQEmH3WVMKQPUvUyXpW74ph
-	 +GHVNx44WIhMHcUHcHPQlnfCHLS2k9fIzapR10uJ2D7NvuAXPvki9J8wqpI18rtlyC
-	 YXvlEF6LNIJHypyttHzAMGxRZ6IrJbzTTh8DeCKXD0Iau/gyWLKBQH1ucmukjZO94p
-	 BCVSizC/gx3ddH59k0UbxMvGyEProMywG7hXV2dHk5WG+DvA+AoS9nWYUgAN+03+M6
-	 NCdHxJZnHFz0A==
-Message-ID: <488f009d-790d-49e0-b736-8a54b61b628a@kernel.org>
-Date: Mon, 13 Jan 2025 12:50:25 +0100
+	b=mgFWjfaEXlIYYhZM98AOSfKgXlQr1MDrokiO2IpKPCgDdJx8X9yPLePsIU1inYqOu
+	 7e71F/rVpOEx/1z4wcuJ2jIip/3GvPg/Vs5wYsghR+Zo892BZPmtwdcutycbr3fd7p
+	 uF52wcRK4cD/FXn0Z0I5LfzeQHf8z4m1CAZlfRi7rZO1b9DJ5kaSQ4q1MDcDVUNeo8
+	 0uWF9/pqDCzpEmm4pzdQxmmql211Xlvu7pfvNwYkiLJGwfKVF8lTDThjvKPtZloi3q
+	 zl/IjjHcRtiudJc5fYbi9eoM1EqkZI7cit6v8PCCfjIYPXj0QBNyL6S8pXikiUT5u5
+	 7ubRKQ3ruQOLA==
+Message-ID: <9d509e88-f8e2-4a11-818d-43bd8254d8c5@kernel.org>
+Date: Mon, 13 Jan 2025 12:51:24 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,8 +35,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] docs: submitting-patches: clarify difference between
- Acked-by and Reviewed-by
+Subject: Re: [PATCH 3/3] docs: submitting-patches: clarify that signers may
+ use their discretion on tags
 To: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>
 Cc: workflows@vger.kernel.org, linux-doc@vger.kernel.org,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev,
@@ -46,12 +46,12 @@ Cc: workflows@vger.kernel.org, linux-doc@vger.kernel.org,
  Steven Rostedt <rostedt@goodmis.org>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Linus Torvalds <torvalds@linux-foundation.org>,
- Shuah Khan <skhan@linuxfoundation.org>,
- Dan Williams <dan.j.williams@intel.com>
+ Dan Williams <dan.j.williams@intel.com>,
+ Shuah Khan <skhan@linuxfoundation.org>
 References: <20250112152946.761150-1-ojeda@kernel.org>
- <20250112152946.761150-3-ojeda@kernel.org>
-Content-Language: en-US
+ <20250112152946.761150-4-ojeda@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -95,23 +95,29 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20250112152946.761150-3-ojeda@kernel.org>
+In-Reply-To: <20250112152946.761150-4-ojeda@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 12/01/2025 16:29, Miguel Ojeda wrote:
-> Newcomers to the kernel need to learn the different tags that are
-> used in commit messages and when to apply them. Acked-by is sometimes
-> misunderstood, since the documentation did not really clarify (up to
-> the previous commit) when it should be used, especially compared to
-> Reviewed-by.
+> Tags are really appreciated by maintainers in general, since it means
+> someone is willing to put their name on a commit, be it as a reviewer,
+> tester, etc.
 > 
-> The previous commit already clarified who the usual providers of Acked-by
-> tags are, with examples. Thus provide a clarification paragraph for
-> the comparison with Reviewed-by, and give a couple examples reusing the
-> cases given above, in the previous commit.
+> However, signers (i.e. submitters carrying tags from previous versions
+> and maintainers applying patches) may need to take or drop tags, on a
+> case-by-case basis, for different reasons.
 > 
-
+> Yet this is not explicitly spelled out in the documentation, thus there
+> may be instances [1] where contributors may feel unwelcome.
+> 
+> Thus, to clarify, state this clearly.
+> 
+> Link: https://lore.kernel.org/rust-for-linux/CAEg-Je-h4NitWb2ErFGCOqt0KQfXuyKWLhpnNHCdRzZdxi018Q@mail.gmail.com/ [1]
+> Suggested-by: Dan Williams <dan.j.williams@intel.com>
+> Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+> Acked-by: Dan Williams <dan.j.williams@intel.com>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
 Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
