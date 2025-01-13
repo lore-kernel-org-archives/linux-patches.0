@@ -1,108 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9516222CF1F;
-	Mon, 13 Jan 2025 13:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B9423ED74
+	for <patches@lists.linux.dev>; Mon, 13 Jan 2025 14:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.9.28.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736775425; cv=none; b=M3zLWUjBEwWh/KgYaiHoeY/gysrnYNHc4hYdhQ22tDtKWtdgGGNCvA3STFBTEPo1YHFlWxI3tpUgzvsgDuA2q7gsbZQqtBAcuNWoysc3wnTxfDHqvIH0az1BAXWTMj/hhZeziKc3QukVLphjNYsxt5Va7ibqMGepqaFRT/8RtjA=
+	t=1736777702; cv=none; b=TaPVPVnzXUDvPU/owmb5aKu8v5TSPxLzXvAxeuGCOFRSfvUFQeWSvoDn/LgB9oyESGQFqpOWR8JjTUkoQnNf/dCfCMFzBPgggYpgWTirKPSR4yKNRNqQBrlStbZAZdNZ85Q1pk02hTyMwhxtjmJiYwmSjQUxQrSKpxmFyIF13mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736775425; c=relaxed/simple;
-	bh=bUBozldLrA+tN5+cri5z0CuwhtvWendkH1kzInKSEq4=;
+	s=arc-20240116; t=1736777702; c=relaxed/simple;
+	bh=gniWYhXWfG/kTIEpG2o605h1qixBRejJa9c4NLSlU58=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b4zDw5TR/eWCwG7CwIQsBm8G1jJ5WwYb/NUfqRihXvi1as6RIRRcpnQtiDyH76lSKOZJHPO7CRsmX/cyypKWYZHqtqKWHX7NeBniNAXEDwMArXTfLnl+EAFz4/Xi/n9+S2warrqiCQWA0mCCU65uFH+2Ao+xdCJfKX0wrgD9tqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k+UE78Dr; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=AV3b8Wtd3UF6KyxkOAsEk4BBKjS6QI0cx7OdK1PdhGHEilis0RIKax7AHYieqA50YubkeDnSboLxQyVDhZaGKJQZ5JtpsGEuXAqsuQzhS9bPPzZ3kiQg9c8MDtmiJbvFJeKzXtB1etImik17KIhPbqDRQU8gCeuGdCdBpSBK5qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu; spf=pass smtp.mailfrom=mit.edu; dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b=hSOIfovK; arc=none smtp.client-ip=18.9.28.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mit.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mit.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k+UE78Dr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E53C4CED6;
-	Mon, 13 Jan 2025 13:37:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736775425;
-	bh=bUBozldLrA+tN5+cri5z0CuwhtvWendkH1kzInKSEq4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=k+UE78DrNjpBo9PvgdtwxUuPgmwqmI1oaJLBQMQeyWgcEa9VnVIzvVJ4qAJpwMZe3
-	 tP8LBb+/nFr9AJ2tw7Z99e3AHPi3kZr9fI5ipMuTo7+uqKJOmcJ6HE4eOgczoM1asd
-	 uLEzBNAjYPiEPManL1Y8G/fix+LYheEH4B39haADD0QWC3kKycFG99wy4kL0Z3emEB
-	 jgvbHuWtDtQjnneI9H4iv+8/v6HWLpalmhAFPJi7AaaTl6A2JhNWutDGGW2YNSN5mt
-	 toKzPRghb6esG/tFWusU89RMFxes86NRN16E7NbHMh2uipmCJ0qwI+WD6/P9A9yxEu
-	 +m8DlXlAyKi8Q==
-Date: Mon, 13 Jan 2025 13:36:59 +0000
-From: Mark Brown <broonie@kernel.org>
+	dkim=pass (2048-bit key) header.d=mit.edu header.i=@mit.edu header.b="hSOIfovK"
+Received: from cwcc.thunk.org (pool-173-48-82-229.bstnma.fios.verizon.net [173.48.82.229])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 50DEDxax009455
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 13 Jan 2025 09:14:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+	t=1736777643; bh=cstIT/Ge3hyyls2hAQtO81zaohHddliLPg+dh7uODCk=;
+	h=Date:From:Subject:Message-ID:MIME-Version:Content-Type;
+	b=hSOIfovKFPLX72TdZC02j1laOT/1OIZdi+DpTQM8UDL5DTU0pM92n0WB+nQRJ5I5Y
+	 y6kGFbVAMY6xM9LIIQ9OUeSKm+WQ+Jh5sJlUGCwGgyt0LC+GL42u3IAL+hrpFsvXaA
+	 AiExrhGB8awNEgIQ3MVzP5UQKrZqS+oFYp5Zs8H3CzfuXXsk/FVJvg5ohhT8OyHF5/
+	 f+n3MCGpywCVmD5uEpoA9lhPK4LssNFhh//W5+bemeo418sV/A6JRTCDbu38CKrTrf
+	 Kl7JWNHd6IKC5youmtspCyAemnGQHyywA6R8tnYFXM3y+S9wR4UmVSBxMfJpM0SyTI
+	 p2eLQR8JgBlRg==
+Received: by cwcc.thunk.org (Postfix, from userid 15806)
+	id 6A20F15C0135; Mon, 13 Jan 2025 09:13:59 -0500 (EST)
+Date: Mon, 13 Jan 2025 09:13:59 -0500
+From: "Theodore Ts'o" <tytso@mit.edu>
 To: Neal Gompa <neal@gompa.dev>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	workflows@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	tech-board@groups.linuxfoundation.org,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: Re: [PATCH 3/3] docs: submitting-patches: clarify that signers may
- use their discretion on tags
-Message-ID: <523e2f74-ff67-42b1-8cc6-2956c856c833@sirena.org.uk>
+Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+        Miguel Ojeda <ojeda@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        workflows@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+        Sami Tolvanen <samitolvanen@google.com>,
+        Masahiro Yamada <masahiroy@kernel.org>,
+        Luis Chamberlain <mcgrof@kernel.org>,
+        tech-board@groups.linuxfoundation.org,
+        Steven Rostedt <rostedt@goodmis.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Shuah Khan <skhan@linuxfoundation.org>,
+        Dan Williams <dan.j.williams@intel.com>,
+        "Darrick J. Wong" <djwong@kernel.org>
+Subject: Re: [PATCH 2/3] docs: submitting-patches: clarify difference between
+ Acked-by and Reviewed-by
+Message-ID: <20250113141359.GD1514771@mit.edu>
 References: <20250112152946.761150-1-ojeda@kernel.org>
- <20250112152946.761150-4-ojeda@kernel.org>
- <CAEg-Je-Knta8BtYSbZgX8cZ9Gd-2cpDAUE83dCJZbTbqmSfcKA@mail.gmail.com>
+ <20250112152946.761150-3-ojeda@kernel.org>
+ <CAEg-Je81VAYecajUjYVJKBJUT+YqKemWsWEoWFgOcF=vtfPRPw@mail.gmail.com>
+ <CANiq72kQOrvi5=1RUScEpov79RNzA3vna9KW6MoYmj8XJZhpQQ@mail.gmail.com>
+ <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OJsS87fX618Yyo0C"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEg-Je-Knta8BtYSbZgX8cZ9Gd-2cpDAUE83dCJZbTbqmSfcKA@mail.gmail.com>
-X-Cookie: You will outgrow your usefulness.
+In-Reply-To: <CAEg-Je9Cs54SkvhzbSq=2v2QYMo=mwUuGqFcs6cvi7nFgw6+Ug@mail.gmail.com>
 
+On Sun, Jan 12, 2025 at 11:35:29AM -0500, Neal Gompa wrote:
+> I've had my Reviewed-by tags silently ignored or deliberately stripped
+> because even though I've done a technical review, the maintainer does
+> not believe that I did. Therefore, what I am saying is that
+> maintainers seem to speciously decide whether an Acked-by or
+> Reviewed-by tag is appropriate or not *after* someone has sent it.
+> 
+> This is the fundamental problem I have right now. This decision is not
+> the maintainer's to make, it is the submitter's.
 
---OJsS87fX618Yyo0C
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Nope, it's is *absolutely* the maintainer's to make.  If I don't trust
+the reviewer, or reviewer is known to be someone who is only giving
+English grammer or policy nit-picking, I am absolutely going to ignore
+the reviewer, and in some cases, tell the patch submitter that should
+feel to ignore the reviewer or feel that they should be obliged to pay
+attention to certain reviewers.
 
-On Sun, Jan 12, 2025 at 10:47:02AM -0500, Neal Gompa wrote:
-> On Sun, Jan 12, 2025 at 10:30=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> =
-wrote:
+Note also that a submitter is not obliged to resend a patch if someone
+sends an Acked-by or Reviewed-by.  There are tools like b4 or
+patchwork that will blindly add all tags, and then it's up to the
+maintainer to remove any b.s. tags that maintainer doesn't feel up to
+the subsystem's standards.
 
-> > +Finally, while providing tags is welcome and typically very appreciate=
-d, please
-> > +note that signers (i.e. submitters and maintainers) may use their disc=
-retion in
-> > +applying offered tags.
-> > +
-
-> A tag must not be dropped without the tag submitter's authorization.
-> Otherwise it doesn't matter what you write here, the submitter *will*
-> feel unwelcome.
-
-> It is rude and discouraging to do so without their acceptance of doing so.
-
-As well as the issues that Miguel and Greg mentioned there's cases where
-we specifically want to drop tags, the most obvious one being that if a
-patch or possibly even it's context changes substantially between
-versions that will invalidate the testing or review that was done on
-prior versions.  Perhaps we might want something like "please note that
-while the default is to apply tags signers..." but I don't think we'd
-want anything stronger.
-
---OJsS87fX618Yyo0C
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmeFFvoACgkQJNaLcl1U
-h9AMawf/RDVc9QITXwisNyheXl8wCZ+1FAqXf0USgJDR7Ptsogz9dHSl2M+2AOLe
-yJVnHXWVirQfunQ/ipUFyqZbzEH1f5HEv1e+r+1k7MQkbGcK1UTFKvLWGLySiHrk
-DVUDPRUejJnTn62xGuKB2QYbY4M34CyIsi3qR/dDM8XVc7J6aGlsUabbLdyYRiM2
-D/HPQc8k2kvW/QITElrHR6CLyE1ujKmpEbWfCmyhVj42UCN8GyQv3mv21SToo3qH
-sz5/Gz2MjnA/+SwSXZvjLIvHI699/TEsgntSHrH2Mc1ZyTCyNxuODNDZ9b7pS4ys
-b2GRgd5YQ0jSaj8TsHX2NUzTQc01QA==
-=nNXE
------END PGP SIGNATURE-----
-
---OJsS87fX618Yyo0C--
+						- Ted
