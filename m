@@ -1,93 +1,165 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2081.outbound.protection.outlook.com [40.107.236.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A861C5D63;
-	Mon, 13 Jan 2025 15:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736782609; cv=none; b=F9AHLDwXGJZZcHgZb3pxmqahk2z803ADt6oBMpo2BAr1DRQ90tcqIac82dUnBlqJfEw67wDJXoY3vROlP2mMC/uTOISyGU0GD5f5I6/eYfZkM9Q3ESWwOlX+yJTv4td+MpngiWgIkPl/PomwX5My59ZEsrSylBY/NfDf8t+CsHE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736782609; c=relaxed/simple;
-	bh=aTaFsOVTUvhaciB6oEEHAAJtRFXGI0RHnENI65tSv+o=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dK9mY/bxJrCL03vkukiuj/n8kksVnfTctxdxys+0TymicLHys2bxFrC1SvqHuP9FxNMHU0DCZvg3ZHLDVKLVJ58qYvTqxv2VMV7zzYgiwVIJYxiDKfsB/Q7hALmJzpGAcSXgtS/LFERmKReyMYuHXwijHBaisNX9ycgWT6fdJnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2EAC4CEE4;
-	Mon, 13 Jan 2025 15:36:46 +0000 (UTC)
-Date: Mon, 13 Jan 2025 10:36:45 -0500
-From: Steven Rostedt <rostedt@goodmis.org>
-To: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Neal Gompa <neal@gompa.dev>, Miguel Ojeda <ojeda@kernel.org>, Jonathan
- Corbet <corbet@lwn.net>, workflows@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Sami Tolvanen <samitolvanen@google.com>, Masahiro
- Yamada <masahiroy@kernel.org>, Luis Chamberlain <mcgrof@kernel.org>,
- tech-board@groups.linuxfoundation.org, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, Linus Torvalds
- <torvalds@linux-foundation.org>, Dan Williams <dan.j.williams@intel.com>,
- Shuah Khan <skhan@linuxfoundation.org>
-Subject: Re: [PATCH 3/3] docs: submitting-patches: clarify that signers may
- use their discretion on tags
-Message-ID: <20250113103645.1f23b3b7@gandalf.local.home>
-In-Reply-To: <20250113142227.GE1514771@mit.edu>
-References: <20250112152946.761150-1-ojeda@kernel.org>
-	<20250112152946.761150-4-ojeda@kernel.org>
-	<CAEg-Je-Knta8BtYSbZgX8cZ9Gd-2cpDAUE83dCJZbTbqmSfcKA@mail.gmail.com>
-	<20250113142227.GE1514771@mit.edu>
-X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30DEB204583;
+	Mon, 13 Jan 2025 16:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736786445; cv=fail; b=WHCTXMDs+W283JmOF7HMY3RfzMPyMSn2Go2DUzfYFP/BOgQ6KBAhKoiB98fSyYI/Xzph+7I6PSI3KZOPURpjfXvWgj8xIGwpfNzuBSOC8uvmR0a13PNMQv75IHeNw8SD7JRgl3+fnUZS7p4U9/XxQTJqEzJXN6U57NFRx5efB7M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736786445; c=relaxed/simple;
+	bh=QnKlBB4pWTLJhy4Pr3OmmpwTGLhoORaF4yly6b8dUvE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=bNh+y/CQBy2Jj6jAa55TiLaODPgp5bP4xSG/jJRCRx8oTM6MAqm1P76G8kb8bbc2yVxAG9Pa3+0jWvknzAGPDVksubLwYWPwVff0I3sNlKE86BACL7IgWA7M8RLKeKqgd23NTzvRdO4sOeAPAFyDEByg2Pf9G9WjTaojMTAFwAM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ju1yMqRo; arc=fail smtp.client-ip=40.107.236.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ju1yMqRo"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TNObtvM5/NMvHxiHbtfcNYDVVhNfBLiJBYRc9iICRKPiCB8gSrar8Il+5rMygLwByda/zF0e+ya7U76m/fwALoZILmcmJkP3eBUfPJ9RnU9/tp4S8/pjPwdSg6lRSPu8e0VSILlHE3QYxstiXTYKmok3PipX5YzsyvExKHztjX7uA13GXz1zl05Qe48CCSJ1ZZDI97nOFu2I/6YORDW5WVF7h6vV/mTmphuqgsZvYr0AJiqJSPnMjCVeGKeZ/xPEYf0enacYXosn7QI6axE9XpgGOOjL7UAyFbt4FT5OM4ulRf8vSsfscrVkdLml3PqYWNATpHVA4L4YrgqfqYCHUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QnKlBB4pWTLJhy4Pr3OmmpwTGLhoORaF4yly6b8dUvE=;
+ b=JDNAyf7tRT5CEQ1pMjNpsOmEQkOrdJRLyrTq8Ik7gs5EY89TNq7ihnXPZ97F0GwtV6vk7zY1p1uJOFYs8ZCUXiWhDINqEiAq7Fyf1v75cOtXExwGDCcdJCn6tVkda4HlP4AoJYCXua515HqdMaHiVTqWOuoPtOJqcEKIQm8NgHgZsF9Bu+GxOWekledijxas0IuLk+xVXu0K454tPDKybayHDjM8m/tkzsDcHBtpHQlqNNrYKBptAMHi8QsSRo1k+ex1zpgjxFd1+C5qVVa+YatF05kG/NGfNfg4PNDSRa/nYz7Xu7CA9Oeek9MHGn9AtzAipylE8fb2xqIUGEyLdw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QnKlBB4pWTLJhy4Pr3OmmpwTGLhoORaF4yly6b8dUvE=;
+ b=ju1yMqRoOuDkglKXbBQYO/dq7GWUCSoSuDIeALnIbUOMRLkvpIzkk77XdVjJyeJnQAqCaZFSKSF0FuCKE4zjg5HmRVh7iZK/7ovQmIUWbaqE6TSAOZUBgikCXKgKNmwmm/XsSlclrEYPrMs71wh4OyHmRGYPSty0Tcd9fffKHeBTX7zyDcz6918wut5xlSPAyJvqS8Psp0MTsecGd9SXkFM2fKVlgdz38EyZbQX9LOkCxTDqIo6dueC/V0edyVHfpyJmx96A3E7p+TA5numPe0jD6qZlAbrfuRftT53Lms4W6Dt8Qne7OjYwRLv4COf8/k+fLZYbVY+UNcHsh8aIgg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by DM4PR12MB6495.namprd12.prod.outlook.com (2603:10b6:8:bc::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.18; Mon, 13 Jan
+ 2025 16:40:39 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%5]) with mapi id 15.20.8314.022; Mon, 13 Jan 2025
+ 16:40:39 +0000
+Date: Mon, 13 Jan 2025 12:40:37 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: will@kernel.org, robin.murphy@arm.com, kevin.tian@intel.com,
+	tglx@linutronix.de, maz@kernel.org, alex.williamson@redhat.com,
+	joro@8bytes.org, shuah@kernel.org, reinette.chatre@intel.com,
+	eric.auger@redhat.com, yebin10@huawei.com, apatel@ventanamicro.com,
+	shivamurthy.shastri@linutronix.de, bhelgaas@google.com,
+	anna-maria@linutronix.de, yury.norov@gmail.com, nipun.gupta@amd.com,
+	iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+	jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com,
+	shameerali.kolothum.thodi@huawei.com, smostafa@google.com,
+	ddutile@redhat.com
+Subject: Re: [PATCH RFCv2 08/13] iommu: Turn iova_cookie to dma-iommu private
+ pointer
+Message-ID: <20250113164037.GO5556@nvidia.com>
+References: <cover.1736550979.git.nicolinc@nvidia.com>
+ <42c6ff3090636146a86501528eb03df99f83381c.1736550979.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <42c6ff3090636146a86501528eb03df99f83381c.1736550979.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BL1PR13CA0253.namprd13.prod.outlook.com
+ (2603:10b6:208:2ba::18) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|DM4PR12MB6495:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f35b9a3-5bc1-45b2-77e8-08dd33f10323
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?uWMU17Z/9vkV4ZyqZ0LNEsH0n5X4a7Zfbjc8NJW+Nt1gkgSfoQlNFbFFxr2L?=
+ =?us-ascii?Q?kXpndaaOuWqtDnpfrW5O3mWU0jqdGHRCnAvWQGGyMc73B/ER9/KjVkBpGXMv?=
+ =?us-ascii?Q?48m65kVF2Rrv2rQxL7gkyAjYKuYSX1aFgfsH1hLYMTfqkkqEvNke0a22yF6f?=
+ =?us-ascii?Q?aKhTVu7jWbfs8W/m8aW5pjv9GJdqdmzp5q3dM7Osb94QjAApwPeHF7v25ICW?=
+ =?us-ascii?Q?Dv8jgDHuz4QmByUMcLbyAkbhjJNuDjOLEpnsdT+DdRCBwT6Ck09K16TyNPao?=
+ =?us-ascii?Q?pBMN2NmRszyCb6pCPd28ub1rc+RkqmbK4U86n/zHcNUutRp/CN057gLJA/hL?=
+ =?us-ascii?Q?1lSpUJLjIFgMu9FONH7xW5USG9vR2pXCdbflh8atND3ogrGeAd0w3DT3ZIH7?=
+ =?us-ascii?Q?STH7ea9bY5b81cYEKzsBpyUHdLaWZnc6GVaVa4A98m5zNZqNXZmdLci/OTmg?=
+ =?us-ascii?Q?t99p8vb37eSc+MhF14DdugnXeC1q+mhq3C0hucMd66fzGqdgWYqvSrYVTjjm?=
+ =?us-ascii?Q?pQLa8g+V3HkfJurxP18U1EKQb1aomJweFJN2x+1vOCUVBmBuK9X2lPLqomN9?=
+ =?us-ascii?Q?RfdnR2+wkIkChBc5dXQgGHWxEBFXR+REm+8G2S1bIhi+712e7EdO4HaYfXI0?=
+ =?us-ascii?Q?caMEZ9yGVzMUcScKNRfwHup0U5yWLwF/2gSTTbSiroOjc9Ub6XM0uXODrdHR?=
+ =?us-ascii?Q?BQGIrF0zGS1mA9RVmwgFOCbmOIviDxYY6mFM6g72fkOCBgnaXv2q/jQyRuzO?=
+ =?us-ascii?Q?dRTeydFaeg46Zyy/fsbeP0icfYWiIv64fJKtLBhuYozrapUXVa/AkqIpFf3O?=
+ =?us-ascii?Q?DREJIr/u8UdXg53jxsEM3YsvgQ9a/OAyVYD5acf9Ghk7kjgqL7SWltkxes0g?=
+ =?us-ascii?Q?JosWFB1GzWHXEb26WTFj2if/6YgKZxtsvj3AYJ8ecmdVMKxy77gkHqKfDQWM?=
+ =?us-ascii?Q?5QSO48cf5hq9VJkkp5hm4mOTFnH3Sld0cM3xjIriYFATew1LZvNZ6CXGvI1h?=
+ =?us-ascii?Q?qfHkLby4yhz09vy8yMXLwZIdem6VkcA/nXM8ArQyHT0LC8t34b9uTaR9F4ew?=
+ =?us-ascii?Q?Ne/8wG4HLmuFZDB7KWsjYn5YYJHRF/O0N74Gngh1bnpxxPinRDGwi9cdr/i7?=
+ =?us-ascii?Q?/1HWFPvc8Inv84mOvDYPSeYabh6kCvKiCoCGfYwBjDkGPjNuNrS2Sc407kAZ?=
+ =?us-ascii?Q?lurvHetwEEW/rgm6R3R9XSUNmKnkurWe3Z8k1X7ifG9msCFIs3empF4O8Qam?=
+ =?us-ascii?Q?tk6pEYRONrwsUVT/WfIYKcMT7emLMu2JWa8rMw4zL8sfwazx9shepzn7L6tR?=
+ =?us-ascii?Q?YjfSx/oPQYMY1ZBWmv5VB0267KRB21nPsMJg0TfA2l8ajOGwK2jwnaYin81s?=
+ =?us-ascii?Q?Cxuq08WadGYes/kmQ2awdennA4JH?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(7416014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?HLfzxvzDhdacreZHj9GsiSlpyekIhQ2oFT+H9CphBDviYQQC0H3Z9OWCmKSx?=
+ =?us-ascii?Q?LTmtdeLGaW/drWBRTPUK2BnTjPAYNI6yQSR/BgHEz4pscGs7JYh4OJ4UyEaq?=
+ =?us-ascii?Q?1SnLzUo/QkDgCH9LQETXFnM0/X2gw29KGnprHIXX2t+XSGusgGCLM//2QjVi?=
+ =?us-ascii?Q?eY5xxAoRQkkgE4zwQ+dERmjwNCSgcqiYd8UiaR9ghLr0SALovR0Fc0J/au44?=
+ =?us-ascii?Q?FBVTTc7X64BApGhI1uBNDZ+iZqOVBNU90O3dgObl/4UBikc3A0c0uGe6EaG3?=
+ =?us-ascii?Q?o76m2CqvoHFaPEqVXRPCe+LFwAi6CZJwDypsHtieeU4CRf2gRgzmj+wVaNYP?=
+ =?us-ascii?Q?0WVPjfmGYIWTCsmeVjdOuKv4p4LvgxmrDVD63DcGM+z8D50ywSJL6uWC7+Ub?=
+ =?us-ascii?Q?ctSegxbIza1vCt6m2fKZOoqPU43W8HU3ix9KiP6udSjfJfRAiK1uTT5aKyD6?=
+ =?us-ascii?Q?/d29WKZujJFUCMxB7E63x9uwtfuCt/mJsoUMIBUSOwpNmL/V5NIB3xx4oyCD?=
+ =?us-ascii?Q?aJ44CIpNug9AgvjNERHgGIySVUlFWXA3y7wCWtL5yxQeK9UBVEihGiyDnowB?=
+ =?us-ascii?Q?HiWwMg+PXy8H7MgQuopbQt4YYpxSdnQGAxAzovLSTAVlt3BKLGz78qAg3DVV?=
+ =?us-ascii?Q?gttHPjErJ/Dt04X9KGLeZjUAW+mpLH+oiSjEoQRCkWYWKi/EjHu9NtWjrPBU?=
+ =?us-ascii?Q?XnaeFkeRct8Muwfsw4yIKC0icRvdYxB3V5QRI+85626GEnrWYVuM+Vrc+WMC?=
+ =?us-ascii?Q?j9iyBovHuLJ0o3JVH+UILYT4uV4pHSel0wGN6+H/IIwSiPlBl+2pfOplyjFh?=
+ =?us-ascii?Q?3oMIPeSLN4Ir+HXWDvaeS8YTfJYs7mHpU0skc49fIxWNaaDrR+Mh4YsBv6p7?=
+ =?us-ascii?Q?DQiI9kcNiylfzeWE+LfHdFmSDI96QrGO/UH6RzdUz/Rg3aIxzXW/C9g1+8dY?=
+ =?us-ascii?Q?wYC6KArRwJNNnAThVY5IyRrifIHE4dXGi5QwA2OO9ErW1hstn4Dfa9qn4+16?=
+ =?us-ascii?Q?gB8lRuxSRPSFcZM82Vcl/HxEFCVBZAHCEdLyhKbaDl5yN7FljlsCr6cw9xSw?=
+ =?us-ascii?Q?S0a8kNY5CuAQq91ANAyLQsAEOrPTOfJse6+lxwI1M14lDxyUXPFw61ppHlfZ?=
+ =?us-ascii?Q?F0fHipFxEJHFLZg18VlT5e5W3qm+HdGBUYjTfCpNdmpXwx9imkbs8DvOjveA?=
+ =?us-ascii?Q?uUR06ybngLUJXFWyImUvBtMzLFn1GLqle0Gz44FbIxzz1PE5cTwY+rLbjJ4z?=
+ =?us-ascii?Q?c6q/Qsn5zXF+y53qx22QD9pl6Xgm/GvTnlIQeUixHGeTyV2xDtGgdKzC6zdy?=
+ =?us-ascii?Q?y8wiazf6qAUjKfNmYqJpzRtznT8TSSGmxAFGokZXmMyrcOiS0wTrrVB9XCVf?=
+ =?us-ascii?Q?MNMtb9u/RsV2r3eYXonUsEpcfWO39ZhQLaLJ6tXw0mfV1rKEJ6gcb5xBgfyS?=
+ =?us-ascii?Q?+YzfaIvnKlMvGkorGIi3FSpQhzPf7Ld/0TjkdQDh98FcyzfqUCxNmDngFdXK?=
+ =?us-ascii?Q?PY6lyYxuvqu568dSZifsdApthGsqIK6ARS9cyVQlZNs2yEkgP6ltKOIU5Eq7?=
+ =?us-ascii?Q?i5vEwjF47Pb2J40MX34=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f35b9a3-5bc1-45b2-77e8-08dd33f10323
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2025 16:40:39.1165
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Y1rNZs7iLCT7Ev6SZBy+NlJFrSwvh/twMuJqaZrjTFoGn51BN6uGHYMI7RmJ8m+U
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6495
 
-On Mon, 13 Jan 2025 09:22:27 -0500
-"Theodore Ts'o" <tytso@mit.edu> wrote:
+On Fri, Jan 10, 2025 at 07:32:24PM -0800, Nicolin Chen wrote:
+> Now, iommufd has its own iommufd_sw_msi using iommufd_hwpt, the iommufd
+> owned domain's private pointer. Similarly, iova_cookie can be seen as a
+> dma-iommu owned domain's private pointer. So, move iova_cookie into the
+> union.
 
-> On Sun, Jan 12, 2025 at 10:47:02AM -0500, Neal Gompa wrote:
-> > 
-> > A tag must not be dropped without the tag submitter's authorization.
-> > Otherwise it doesn't matter what you write here, the submitter *will*
-> > feel unwelcome.
-> > 
-> > It is rude and discouraging to do so without their acceptance of doing so.  
-> 
-> In some cases, if the reviewer hasn't taken the less than subtle hints
-> that their reviews are unwelcome and are discouraging patch
-> submitters, as far as I'm concerned, if they feel unwelcome, that is a
-> *feature* and not a *bug*.
-> 
-> I'm not saying that is the case for you, but there are reviewers that
-> add negative value in the ecosystem.  The assumption that all tag
-> submitters are people that need to feel welcome might mostly true, but
-> it is not always the case.  This is why it MUST ultimately be up to
-> the maintainer.  I do not want the rules that force me to reward
-> people that should be discouraged, not encouraged.
+This commit message would be clearer as:
 
-I try to add all tags that are meaningful, but a lot of times I already
-pulled in the patch, and there's been several times tags came in after I
-did a pull request to Linus! (for fixes patches). Once I do a pull request to
-Linus, only Linus can have me change that commit (if there's an issue with
-it).
+Now that iommufd does not rely on dma-iommu.c for any purpose we can
+combine the dma-iommu.c iova_cookie and the iommufd_hwpt under the
+same union. This union is effectively 'owner data' can be used by the
+entity that allocated the domain. Note that legacy vfio type1 flows
+continue to use dma-iommu.c for sw_msi and still need iova_cookie.
 
-For linux-next, I will add tags, even when Linus told me to avoid doing so.
-
-That said, I have ignored several "Reviewed-by" tags when they appear
-random. If you send a "Reviewed-by" without a single comment, and I don't
-know you, it is meaningless to me, and I will not add it.
-
-Now for people I don't know, if they came in and found an issue with a
-patch which requires another revision, I will most definitely add their
-Reviewed-by for the next version (if they send one), and will likely take
-Reviewed-by tags from them in the future without comments (up to a point).
-
-There's also been several cases that someone sent a Reviewed-by tag and
-when I take a look at the patch I find an obvious bug. That will cause me
-to ignore that reviewer in the future. Adding that tag comes with
-responsibilities. As I mentioned in another thread, if I give a Reviewed-by
-and a bug happens on that commit, I will spend time to help fix it.
-
--- Steve
+Jason
