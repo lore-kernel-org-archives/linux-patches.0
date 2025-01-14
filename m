@@ -1,73 +1,72 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59B42147EE
-	for <patches@lists.linux.dev>; Tue, 14 Jan 2025 22:47:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4FB232429
+	for <patches@lists.linux.dev>; Tue, 14 Jan 2025 23:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736894826; cv=none; b=JUPJKT5YEDXpM01mybyGaSmVrIIPcBMp7u5rSw5NUzcRWIE8G3wUtfhNfwLe4Lel80xXQCcElMGPvwu/ABMTZ6+aC5opqTTgmJzl0a/rIPsubgj6F5z5ocKXo0FI7kFnYBxjam4wHjZNOIxkO62qVmOFjW2EKE/AxX1yyb+gMLQ=
+	t=1736895959; cv=none; b=oafGI1qmav8YdD3KPt02l/ABBGbjIqxfkDiqq89FV6Ncdcg+ul/tUq3PVAg2VkrmS5R/lsvI9Ltb859gKMtGdt4HZWaGUZt+1GpUwJlrXB+CnOWFXoaL5Y1DcDOjuMhT/lcPbxG7BfcmX8ju20u+F2VtC8h00nZh6F67WgAsd6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736894826; c=relaxed/simple;
-	bh=IXANTz1bJSDyjXEnN8PxknznKsE2jL8seUW9FVQiReU=;
+	s=arc-20240116; t=1736895959; c=relaxed/simple;
+	bh=jGONpBpb6F9TljeHsIjaB5ReH725348vqOqeKbCOuPw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=t5Gy7stTJdW4MLH2IRJfLB4n31/ZecSGcQ+E9V2oqOeYHnUrb3xnMp3eI/OuFKT+/sCFO8UYF8J0a0Bbm2kzeB4ooODNsVMc3IZHPx6KfpvJ7YurEbEgwpExBsPNvmWZugfnOwTbrPm+ViUHmB8st1qw6W/GkcODbEGEqzEmEA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WoevlAxs; arc=none smtp.client-ip=209.85.214.178
+	 To:Cc:Content-Type; b=CiGOojKIeP4LYFHBKfZ+xksGyuizm9r9Byb2tslNV50c+7w5cjqpEsakwa7vSASZpDrfLnkYlIoQJwhFfo9Xn/GCAofaFFfY3Bspnwya6r5fpl3eZdHW24BBJp8afHu+dtOGBI3bOGYtDCeQpoeSwy09mdpwxqP2pqlJY6GjJj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SSf1GvTb; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WoevlAxs"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2162b5d2e1fso11806085ad.3
-        for <patches@lists.linux.dev>; Tue, 14 Jan 2025 14:47:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SSf1GvTb"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2166db59927so10564115ad.0
+        for <patches@lists.linux.dev>; Tue, 14 Jan 2025 15:05:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736894823; x=1737499623; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1736895957; x=1737500757; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Lozpaj0g3GYjPfEclpw5ZqeH+g5/kYsdh3R22/oSzT8=;
-        b=WoevlAxsuw2gUoA1rEHXUJj7Z7Lx6fiG5vjRS/tv/32HxpWlAwyAdiTBe+N+z/fyup
-         gX3D50u2b9bpkh/gHnf/blLIjA3N2Olr9DDjCnW5p/v07S9ccFmX58PYk+5rmBOUxYCV
-         /gtxuwJUatQxhD8xv1hWsTBvh5sZ/Mh/d+dTftmGBcYO6H4mkbWGSQG4YfztQjhKYmnf
-         txZS8v4utCfy3cF7gIgKgKjgfS8GAkoSNyJf1Ji7ADf+TNDjbTQuHuB9H17Lt+sYd+FX
-         MwouuDE+I0k8Ydp9kvB9qBSKKuTs0zRMzivCB1oCDmOGQ6VbDAVdY61Kv/ujwE7o5U/u
-         ltlw==
+        bh=jGONpBpb6F9TljeHsIjaB5ReH725348vqOqeKbCOuPw=;
+        b=SSf1GvTbQ/Vdpi9usZM+GIHIscmuMbz/3HVROl7fBhCpQnTci0Kh5I4a87KJt/H+p+
+         hJ2VZKp0zobMVy/rQx8QkMeS9fZXn9FcZj7NaYhgRIe/q/HwNz+aQNaADdL1KDFZT/+Y
+         oA+y7l+U8Aj3Kl2YL3/ZP0mT5k3JAgQTMJWMVY02TMkYfyXaqxbI5XBVAx1pd9EN32Mq
+         E75gjSMHnUtM1IIGb/RiQZtcg9jWa3gaKNnNtmtn7hRK+ye7JvdbLyAfdeybei+1ytEw
+         XFo/ld4LC7whS6EiG1aIkSs6P8xHIh/Tz37d/If60wCxHebyw4gBumfJFiAK7n2C5mxx
+         Si0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736894823; x=1737499623;
+        d=1e100.net; s=20230601; t=1736895957; x=1737500757;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Lozpaj0g3GYjPfEclpw5ZqeH+g5/kYsdh3R22/oSzT8=;
-        b=bl009CPvDEA0eKY5E/XgqOykGdyV12SxCnJP1DOAoPukYkuvoAfVcQGZqC3wS3Jqxh
-         4VjbCkeWag/+170aL1fdCvn7uwMln3viBd7z1wWG/VDKpn/n4J5AjKHgRDxUPPMgM7Xv
-         nBCNAZrpYOV/LcrWYLyomS0BP1e6Lb3YYgYk70zLSJSGizNYryLb3t+6JHt9YGNyf3tp
-         j/AqCUSdlEor46T2EevsLh0zFmmHz+XW3Ve9loPj3KnOm6CFLIMO++VEpl+28C+xC6w/
-         0ahDdo/ciYvoRGl7/Kovvy1JweHzUi0kYatefzkCnBV1SQASgq1PUfLxTOb2BEUKL/6K
-         2Wkw==
-X-Forwarded-Encrypted: i=1; AJvYcCXfOtHWnXjtgZ+Yr+NH+Htn/rHpFrZEZZkuTFOO+LJ3qeBq+OXtPyzYZWf2ncJA3nMCoxbEJOxS@lists.linux.dev
-X-Gm-Message-State: AOJu0YyHZBeRVZfaHoB0a/FoVoqYvkasENrgHPCoVRZ5Le5ekqpZ543J
-	gLKI8dU0kalLbq/z+CjSrNM/eOAs0ytGg2AlQ13JvWePx+zNdABWbbaYEgcAoGp7f4HyGE/ybc8
-	f3yaVQEX9Uu+jEGrPs3vqK7mnV14hzsXDg8s=
-X-Gm-Gg: ASbGnct9OpWg1UTy3S8XWa0xan1RhaKZZVYYPHusFQfi9OzVrSD+1LDXn9YTKVY6LGR
-	OVGN0yQTF7Ecy11McTO9RZeZjMHQljTFsNUiMYQ==
-X-Google-Smtp-Source: AGHT+IGevwfPXGCAQQVOp/Ab1cBDzyCJ8G1YfMVI8AtOp+xUdHCuOY6eWeuJWDZfjx7Z2eYbdSZVK9tX1UXrXPJHYgA=
-X-Received: by 2002:a17:902:e545:b0:215:435d:b41a with SMTP id
- d9443c01a7336-21a83f34893mr149435055ad.1.1736894823228; Tue, 14 Jan 2025
- 14:47:03 -0800 (PST)
+        bh=jGONpBpb6F9TljeHsIjaB5ReH725348vqOqeKbCOuPw=;
+        b=rnIsopmTqN3aGU1JOIcznmDWHeDxWxfl2KOef7ir8FGj/ZGjMfgEaUf8yZBQlQNO5U
+         QyBddZL/Y0kugpJqQE73OZ3mOZJwXJ/MwgrIYUruJ6WCFBDrXgQzsbLDDsW/dhn/Wh6l
+         Z2Ui+iF89w3ve0cA7HUDGyQGfGEUjy/0RFCJ2SuoIX9fR7G9LoVbU2OehQt+0yaWwY1k
+         uWR534ZOrMEaiHnz7pL1lkwvbskD9uARj6cQzcWMt7037XmyepD1gv0ZWqu223hNsbcP
+         fK/c+iNrlNEHqnAeQd3S6f5DJfQsDMD7JwDM8FqQhjXgiFMxyhgCDki8yyoyL1nR+fkW
+         zT8w==
+X-Forwarded-Encrypted: i=1; AJvYcCVjEFg4DYQF82xoG7B4Q5HXKI27s0mn/r7FnB8/uG4JJ3Hjj6gFMcyR62kb1/aTUBeyUO0v3CsR@lists.linux.dev
+X-Gm-Message-State: AOJu0YxrAWIJdOeQZSQOpoHp3jxFZErki+0z8FHEHnlPwKeKpL/GNk6U
+	Ipuv2hMHLZXHWayZuLzhzKnbSe7l6SXET176xfgVrO+jb4O+I65zdDoy0V9SaxzeKNOxGDgV/KT
+	hpXIKyOBe99hpEZRVc0pKzs9u69M=
+X-Gm-Gg: ASbGnct29apomxTlFVvb07LxpcUfZH+lf2AzjdTqOSQpco+nAVdMbOE1eFZAjmNitxM
+	Sy12Y9sP+dPwqLPqJfdMoP2DcO5yqtlAEeTmoEw==
+X-Google-Smtp-Source: AGHT+IFw7qEmnSUSBN15L+/rlki7LwsWRww8bHcfKqUXNQn0Pn9u6VHx1zgibAEJ3jsF9xzVfr5SDELRI8wCRUezTn0=
+X-Received: by 2002:a17:902:e5c2:b0:215:a97a:c6bc with SMTP id
+ d9443c01a7336-21a83da2ae3mr150920595ad.0.1736895957174; Tue, 14 Jan 2025
+ 15:05:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241112184455.855133-1-ojeda@kernel.org> <CANiq72=BvnriScFay8SpLNe9mNhjvGsBJ9W9UtdzU_6v_i+woA@mail.gmail.com>
- <CAABy=s12gOZadhYC+=6=TbbyN9j5L0B19ZLSGR_VFEdt1jhwEA@mail.gmail.com>
-In-Reply-To: <CAABy=s12gOZadhYC+=6=TbbyN9j5L0B19ZLSGR_VFEdt1jhwEA@mail.gmail.com>
+References: <20241112184455.855133-1-ojeda@kernel.org>
+In-Reply-To: <20241112184455.855133-1-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 14 Jan 2025 23:46:50 +0100
-X-Gm-Features: AbW1kvacpMeTqUYlQMLS6S4D2USApAhXAr5atLy2VwEVUQxisq97hcv1qVOPz0I
-Message-ID: <CANiq72kQKGG7j61bpsORnE0vzNo_dzwMZMLx=Z0xOnY0wefv6g@mail.gmail.com>
+Date: Wed, 15 Jan 2025 00:05:45 +0100
+X-Gm-Features: AbW1kvafypkAPrC-F6af1-zFvD-4hiQ71FiqfbF1PE_YNJTaf0k1myhzOh-09ko
+Message-ID: <CANiq72m+k07miKu=vHfp1-A+nu092R+khau5b95Ugq8M8sksFQ@mail.gmail.com>
 Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
-To: "Hong, Yifan" <elsk@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, HONG Yifan <elsk@google.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Jonathan Corbet <corbet@lwn.net>, 
 	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
@@ -79,29 +78,16 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 10, 2024 at 1:51=E2=80=AFAM Hong, Yifan <elsk@google.com> wrote=
-:
+On Tue, Nov 12, 2024 at 7:45=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
 >
-> With https://github.com/rust-lang/compiler-team/issues/731 fixed and
-> this idea of appending flags, our --sysroot flag should be able to be
-> properly overridden. But the -L and -Wl,-rpath's remains, and could
-> potentially be disturbing.
+> To distinguish between the two, introduce this new variable to stand
+> out from KBUILD_HOSTLDFLAGS used to link other host progs.
 
-On second thought, #731 probably only applies to `rustc` native flags
-only, rather than those that are passed to the linker (e.g. if I pass
-a dummy flag, it is passed as-is, so I doubt they will start checking,
-and probably they shouldn't), so it may not help here after all.
+Applied to `rust-next` -- thanks everyone!
 
-> So if I understand what you mean correctly, with this:
->   KBUILD_PROCMACROLDFLAGS :=3D $(HOSTLDFLAGS) $(PROCMACROLDFLAGS)
-> Android might need a separate mechanism (another variable?) to filter
-> out our -L/-Wl,-rpath from HOSTLDFLAGS. (Dumb question: We can't take
-> -L/-Wl,-rpath away by prepending/appending more flags, right?)
-
-Yeah, we would need a variable to provide the filters, but it would be
-more complex and possibly less flexible. I think it may be best to
-keep things simple and use the v3 here, which already works for your
-use case.
+Masahiro: if you wanted to pick this up through Kbuild or to give an
+Acked-by, please let me know!
 
 Cheers,
 Miguel
