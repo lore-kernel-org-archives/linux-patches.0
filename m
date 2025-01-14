@@ -1,152 +1,165 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2059.outbound.protection.outlook.com [40.107.96.59])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F33014A4CC;
-	Tue, 14 Jan 2025 15:18:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736867884; cv=none; b=iDmCsC5pGhsW/YxF88plxBNdl+NqexCKwQmpPMz65lkWzvFGbdpAc3tYlKV+d3vUQ03vSVk+KCwYw8NEMdbXuVtHY2HrHG3ORQbfuKbAkWczVwht2eydyIWVIFclVZAEI+dprE0umPPd4C3bd/h75AtOS8q3S4cdayJPbGvloqw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736867884; c=relaxed/simple;
-	bh=dV7A7VJAGHTtWu/S7xXcA8BcPXYKQZhkeq6pa2Goexo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qOUPPQ7RDHbHH+/Ev3JKtgqshprbxfsKsDorDgTUvQ7qN5U7bF5RWL9wsC4rYsOPWyVUIxEVrRzT5QbIWzOG4WM3RITgJz4a4/t9pCfssjD+xaYoO9LclWRYuVe3BwyjzaeE1aNe39PcpAYUeH81EbrA2WO24hD+iw8HkiXcyvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qu/9pFaj; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D71E1FCFE1;
+	Tue, 14 Jan 2025 19:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.96.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736882971; cv=fail; b=O2Ao/J9IktRqMsWIbEiVpfwyt0YkbSWtbKHSH+6HaN/+VCvkM5r6Y9hpVzMHK6Vqt5XkTaKixax+OcsBW0IMOdPz1TwOrCSwZO9eDLnWEbDFn6JJUoc8VDMiXvXxlkN38W9kB5vDpcq/wZD06EwY1C1O1fC4m/eLIQTWmOP9FtU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736882971; c=relaxed/simple;
+	bh=10xcIeplRjwxBtLaF1pkLKAohGy9/iQzaDfLHQzrvaQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Zz3OYkOv4x/ZBzBE5IAPNUWaeXYPcazplLNuLH+BHksZ6Wz51wFpJWbjwo1tbx9drGkSf3GRiN665sgQZcU1CzkQw6jLbhFM+ixAtI2kTnCMkQr2FX0ZPeQBlFWtgpszmgpLLZUPSM1es5mfBoXNkXG1PCjXiHpLpB5Fxy0jWbo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=if0GHIRM; arc=fail smtp.client-ip=40.107.96.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qu/9pFaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57A0C4CEDD;
-	Tue, 14 Jan 2025 15:18:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736867883;
-	bh=dV7A7VJAGHTtWu/S7xXcA8BcPXYKQZhkeq6pa2Goexo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qu/9pFajRI6OFPR54X4zaadjDYvXKGcbBr2W4xsyhguKlnfoKTEmPNdwyaBr1UTQ/
-	 BtH4x/U02Z7Epjan3mU/bHnJuWVacAFguzj0zJSwUsyKKJuY5aCbVmue1P11XFZHlq
-	 fneGg5/K5f1ggjMgGxadtKdQoMP5EvqfNW7mghGMh1GHjFsKhpLEBQaU0BoSY9WWTo
-	 Kx0edjfHEIel0E8oqTP12sOx2vjs41z7nkJCu4jaXh+Xw2VdEP0NBtnRvqoyowxmWr
-	 9uqwaCWzedp1RFXZFCgpVs+quvcpcUJ5VMcNPSx+G63H21mmluXVOF0JbOi2UPmd6s
-	 YGuCHLm2kLNpw==
-Date: Tue, 14 Jan 2025 15:17:59 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: Raju Rangoju <Raju.Rangoju@amd.com>,
-	Nathan Chancellor <nathan@kernel.org>, linux-spi@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH] spi: amd: Fix -Wuninitialized in amd_spi_exec_mem_op()
-Message-ID: <a20383dd-57cc-4c0d-8bab-09a9260f2378@sirena.org.uk>
-References: <20250111-spi-amd-fix-uninitialized-ret-v1-1-c66ab9f6a23d@kernel.org>
- <173678670956.71125.2320310623665812760.b4-ty@kernel.org>
- <87h661u2z9.fsf@bootlin.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="if0GHIRM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ITVFBaNs49/UnZGDpEAAiWdasqg1+HmeuN9eVSoegUY18aV+gVBCoLnfR74vPvgCbN5FcKN2VRYRxxDtsDtiJwy9MAPVCW3dctZr976Wj+s2/Q/TxkJq9kckQ6mCmpPj2k0H0cs53qM6z3gFn6gXTaG11ncr4/IRydZGsVtj01DCG2voTKzKOzUPp7PVdtktTrpfG0ReFeSmWdvv21A/iU25l6mrk+iwNrqp+DzdzqLVli6YugYbE9tzhH+qxR+1Kkl+EYd8AD3uY+BAdId1ZKXTwAYXzJhJU3SX3vFFDXkQPcdBgJbA9aQ0HmCzbfAwweZITyjYbTkERVBtBrkg+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PSQH8luvZHWK3XmXpx54WI+KjCic9g3q3TJN0ZpiZHY=;
+ b=iLHvD4X9rlKvvw6RnaCmkrH/JcNindcWjTB2Yk/iOqWGdUB6I/CNd28kKmgOk67OIOBsgYiOoiRDhqSUyLshlVd7GhNBktSS2MTRM19KxIX+bbagK+PDxqq8wzLx1AvnuUIglViLEXUaM/Ml2BpA7wwCMGufh37YTjc+5Ukdhhr1sCOtQKAnLCoSbCl15Kjd5H54LZq8DOyeKipgF5gbklHcX/8S5Ntb+Go9yhQ6GWG0YRA5pR5Tg+aZtXhYrmw+mDICbkXXxiGPm1oC5eEOTplxyF36Cj+XfTIAEyFVuExMxttOHW4s/bNhOnSFMZjSx67hhlsuwVL/i1rHsRLhcw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PSQH8luvZHWK3XmXpx54WI+KjCic9g3q3TJN0ZpiZHY=;
+ b=if0GHIRMZ8/gPccYus5Rc4IK7N6ebjPf54KlKasu/ybVfSnifqQIE8iVKLfb8rP89NddHN8uflz7oA5tk3o39c349qableshUQvim1R/ziNKnWuUg/QpAq7hm9KpKidhrA3B/7SyLVHdKmN7YisbI9opzTCLc/0LRzn8wpP5hvXQYx8oXbizuAGxRqTjVnxPn9cKwpCvv+AQahX7J2Emgf4lwqsZD8I5WMMVfor7/21/YaIQVwiPRepZyTq4zb0iAggHVEBN9hRHTLnnNV1guuVln9p0haPt/dSJJ6egzeIizUFg0nmRjtn3pHXdA44KDntmCW2ACgdmQdcntJBefQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by PH0PR12MB5605.namprd12.prod.outlook.com (2603:10b6:510:129::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8335.12; Tue, 14 Jan
+ 2025 19:29:22 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%5]) with mapi id 15.20.8335.017; Tue, 14 Jan 2025
+ 19:29:22 +0000
+Date: Tue, 14 Jan 2025 15:29:20 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: kevin.tian@intel.com, corbet@lwn.net, will@kernel.org, joro@8bytes.org,
+	suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com, shuah@kernel.org,
+	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v5 01/14] iommufd: Keep OBJ/IOCTL lists in an
+ alphabetical order
+Message-ID: <20250114192920.GA591693@nvidia.com>
+References: <cover.1736237481.git.nicolinc@nvidia.com>
+ <c5e6d6e0a0bb7abc92ad26937fde19c9426bee96.1736237481.git.nicolinc@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c5e6d6e0a0bb7abc92ad26937fde19c9426bee96.1736237481.git.nicolinc@nvidia.com>
+X-ClientProxiedBy: BL1P222CA0017.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c7::22) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2iPXVcBfzc1mAQZJ"
-Content-Disposition: inline
-In-Reply-To: <87h661u2z9.fsf@bootlin.com>
-X-Cookie: Sauron is alive in Argentina!
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|PH0PR12MB5605:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52670a7d-2670-46d5-a21f-08dd34d1bf67
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?U79nyW+0aL0eBONrOKg9AXkjwh61pVl66F+cOKog/6yqcSIf3nZEmMzknKPy?=
+ =?us-ascii?Q?kyljYApe7d2/l/iPP9WqRoTSLBTD7x9kM6m4tlkCPBuUogZSoVaWd0ierSBT?=
+ =?us-ascii?Q?JM1QnBju2V2JM274ly8dj/Xuj5JDZQ8/bfs8PTbyVTwvJ/NMBdhYpNi/rraZ?=
+ =?us-ascii?Q?0zgCxGU5CkbDPyq765cDAxmRcGLGwZy0APWc79oY71y7ga+mCqQClUbXiSk/?=
+ =?us-ascii?Q?IuCUVhNLQCTOQyKwF6QZ42xjPoieZw++8e2ROiIIXBwpvwGMF3OZIDYIKauF?=
+ =?us-ascii?Q?q28aqdp0UMjQHaWTgGALZAPO/vztzRytXztU5Z6QlEK8rsnMNhosRwL2MunZ?=
+ =?us-ascii?Q?qvoMO68deKXTx+4OjEulcgJJPKGjptidSSL9+KESt7nXea5h4YlHt7WnvntP?=
+ =?us-ascii?Q?EFs7jb+zMrpF/SRjN/g8zz43BPPQ+iICYYM3PfJcKBUZiiSCO0XEMaeUrGsb?=
+ =?us-ascii?Q?lJnsUtHXBbo4PDM5ngq02sQWPev2bstn2PbbmraHCt+LnjJAAAJGQAmXzvhs?=
+ =?us-ascii?Q?PQDvqUXBZ7yTybMAdX8DGf+BmCQh76krCDYmEA8CE7rBRm0OlrrbI9J38Q0n?=
+ =?us-ascii?Q?5wsF2ty2qJa8P6QIFrhbOoGQ4YsaoK5WUggIuAh7g/qJFc7bYiJrmSG3mVjW?=
+ =?us-ascii?Q?ig/zZagjIVe115+wrM1w1ZXqFjW/h0Z/FfZLYuVUufPnLxI4BPnJydudBj5X?=
+ =?us-ascii?Q?lkmZa+TduhNTzckOj3pB1plIwSZ7vylzISl/NQ+o1ozlH6iduwp/8WVNRlZ2?=
+ =?us-ascii?Q?C16LUFQ+wb0kfxnD3gIP3yexU5L86Iin0M9eYaflf4oaFRaNax6ObwueF7X/?=
+ =?us-ascii?Q?ARujDYyY9gYJv6s5NLNX9GtymThxSx5/6WgkzEKcOQxIDVrWCm0aTdNXFLn5?=
+ =?us-ascii?Q?9q4RutEXO5HOFt0INLQKUhQ8yNVbAOeFeoInWw/5BFXCUKj8idGQoxiVlZ5Z?=
+ =?us-ascii?Q?iA3X5Jnxp6C8qyKZ24H2D/TlCi1Ppp/aCQpwKGFQ4+loE7uH9h4xg4mYaGUR?=
+ =?us-ascii?Q?6HwdHnuiV7CEyKMnpZNLVTzm3Q9p5lTQJloM9GjjLcE3m4RiJMi0pTZn68w7?=
+ =?us-ascii?Q?aofYNPG7Pu2d4m2YceKE5ZG2K9pceYu/OgGlWT/+xqFgeiKxfwcbPCaimd33?=
+ =?us-ascii?Q?vC4K8IP/bxpdGd2q3vuIOejVuZF40LrRn5R9LRNeylZ9Lb1V51ksF5N+hNLx?=
+ =?us-ascii?Q?fSSTNijyC2bmbFxfbL0BVzzT6NQ+hEpZotDHKl06aV3JCUdEHQ8AXDNy5iEo?=
+ =?us-ascii?Q?jM/Hjd2BHfn4QSeG1WH3XoFgBVVMpvD4MKjZpKLLmj1esuS11RUuSRTIM6Ij?=
+ =?us-ascii?Q?3c8x4VVpeewINsFzqL/SXGCfT0IgLguOAScgJM2O1UwIeQdSqYSRDWgfKrvQ?=
+ =?us-ascii?Q?DYvHNJaJJseOMUkP2faQ4w2B0qUl?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?D550avwTjnxEk2mWHPbDFjDvnQLOVXByV3m+C/ZXbyRc5b1W4fcQmpRR8lYg?=
+ =?us-ascii?Q?KgYBcvReavFMEmNdxRPokl7+970RC3uZzaDuFVSdA2YoEYb6YckOEcdUWIC8?=
+ =?us-ascii?Q?0VKpaZA7zvWhjxzJmv7ZsaX6i2nV9W1GureVHcyk5U6Tb1cyzxr7bvIF5cVK?=
+ =?us-ascii?Q?tp9av2NRUcNjMyuT0K16MrBrAUgzDx4sgu2CD0dWk/dRZg3RwfTWGYRgQyHH?=
+ =?us-ascii?Q?nmaEqTHqWVR8ETBjkbZ//bmzq04QIztkq1Sqv6m0TCBH29NQ+BYT9RpfSds1?=
+ =?us-ascii?Q?i5O/NhoWEjnGbHmzTRB0NtXKGu5MUfE3VTz0RqRXZgJCz7pUlQ/BGcGy07MZ?=
+ =?us-ascii?Q?aWFvFQBBKoJMaVH/av3niXTEOqak3Yp5oJ6I1LvpeYTmae3r9GtsqxvS8QM7?=
+ =?us-ascii?Q?OjrgXOWDZK1uRAm8TnE3I+n3Q8D5ul1v5nRFmeyZner7yvAmznfR/j+LhmiT?=
+ =?us-ascii?Q?9IuvH8LxvVJaY9IqZOCwjHqUKK0vji5/QteBeI1hStJzoKR/W7Omxqc+Itjc?=
+ =?us-ascii?Q?CTMwvDKZFITSDpEIBLBMR4LU0SGyrM6/xrbac6J7K3iyNRUH5lN2iEjbBIee?=
+ =?us-ascii?Q?W7CvsTK2WVM8KCf98cON2JUUxdVaDK6BsyLgaRDL1jqKenl1xmSwjNm89Y1Q?=
+ =?us-ascii?Q?k290pHBakFAbzAe097hMkoSFiH0klo9gO1A2FVKjgrn+8mPHIqrCSMlM2uUV?=
+ =?us-ascii?Q?qibXaCTwDeI6cnGP8NSEdQMqcVpHz2ycL3p6Cx3+ZgZ91aH6TptSuWb/bZbB?=
+ =?us-ascii?Q?8ZxqFH2pJGoUM0f+fZgrmTjIgdtANmd8XOXoT1qI7XV9XtqouIv5/4RC0Ysz?=
+ =?us-ascii?Q?98A2gUcvfFNfetaraC9XsMLPB49ZOLCB6LqfwAaCenTp4DDZKPFaWXPXlP2P?=
+ =?us-ascii?Q?T08GYaHrCHUJqJqCUu1trXlXlt7Xn2wcgRU8dDp/pkSK6jg+B3UEiPu1MEoX?=
+ =?us-ascii?Q?G1z1EvJDrg2Or5wWJOrPZ0SJ6n67Ob6LYIr5djp1gmamh+WsXO+2Kb7r1+zT?=
+ =?us-ascii?Q?GdDtecyGX9Uhn9j1n9JUE4QoQxh5lWpHaeYn+ocgvLN4NMHY9+VW9IZsgofJ?=
+ =?us-ascii?Q?FqxIB99b2nVD1plavzAyJSPiRT0yRAGiq6WiCv5fdb04tEA+AizXXCMs0LpJ?=
+ =?us-ascii?Q?YgVavdD1yfSMLMEnqQ1pgHhsSJ2rXdDPKWJVx9HsuCDjP52OkqENMFV7mu9/?=
+ =?us-ascii?Q?l6KHV2kHLBaLnbDjP/vepl7KS47BexY9t2pSUWT2ZNHYLj7FzIl21q77EYxv?=
+ =?us-ascii?Q?cgxb4C9Pnw57vHZQeRDLfsYfEk2IkJzZn/4VzG8//vkxYKh6kBA5aAUdq9Mh?=
+ =?us-ascii?Q?Ylxs4h/qUc0sNHp+4T+uomZ16JDWlaJ6Dfvfz4ulpXtOeMpJ6ZiNYvEFxF8v?=
+ =?us-ascii?Q?6iXlJa/NC0avStnVtUNt/AtcrnRewMSjZsxOi/1n8UR9/y9V0SacDm5qAgHU?=
+ =?us-ascii?Q?8NfJv6HO9+vekhqhKrFkVleIGY/Wax0uCwUZSK14DkKDFWHCklq/iQHYEoI3?=
+ =?us-ascii?Q?M4WOlS6dg0tT1pYpRE3aakatlUhUnY/rXU2nDw/BVDU9cSq3gPlHF7GdtWqj?=
+ =?us-ascii?Q?gFA+W9ftl24tjS+TCUfbHaKGbI3VfPYCsuoa9glL?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52670a7d-2670-46d5-a21f-08dd34d1bf67
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jan 2025 19:29:22.2549
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sZpp61efs1TH+oxSzPLUUrO4py7xNGLKDmu5aW9Yx2F17WXJgwbcK6sZQK9k73/8
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB5605
 
+On Tue, Jan 07, 2025 at 09:10:04AM -0800, Nicolin Chen wrote:
+> Reorder the existing OBJ/IOCTL lists.
+> 
+> Also run clang-format for the same coding style at line wrappings.
+> 
+> No functional change.
+> 
+> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  drivers/iommu/iommufd/main.c | 30 ++++++++++++++----------------
+>  1 file changed, 14 insertions(+), 16 deletions(-)
 
---2iPXVcBfzc1mAQZJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Applied to for-next
 
-On Tue, Jan 14, 2025 at 11:03:22AM +0100, Miquel Raynal wrote:
-> On 13/01/2025 at 16:45:09 GMT, Mark Brown <broonie@kernel.org> wrote:
-
-> > Applied to
-
-> >    https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
-
-> > Thanks!
-
-> I'm wondering whether it's relevant to pull the branch you shared
-> as-is. Do you plan on pushing this patch of top of it? Or shall I wait
-> -rc1 for the SPI NAND part?
-
-Well, it's not a branch but rather a tag which complicates matters a
-bit.  I could cherry pick the patch over and make a new tag I guess?  Or
-you could just not do allmodconfig builds with clang?
-
-The following changes since commit 9d89551994a430b50c4fffcb1e617a057fa76e20:
-
-  Linux 6.13-rc6 (2025-01-05 14:13:40 -0800)
-
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git tags/spi-mem-dtr-2
-
-for you to fetch changes up to e896c04890aeff2292364c19632fc15d890d436c:
-
-  spi: amd: Fix -Wuninitialized in amd_spi_exec_mem_op() (2025-01-14 15:07:11 +0000)
-
-----------------------------------------------------------------
-spi: Support DTR in spi-mem
-
-Changes to support DTR with spi-mem.
-
-----------------------------------------------------------------
-Miquel Raynal (20):
-      spi: spi-mem: Extend spi-mem operations with a per-operation maximum frequency
-      spi: spi-mem: Add a new controller capability
-      spi: amd: Support per spi-mem operation frequency switches
-      spi: amd: Drop redundant check
-      spi: amlogic-spifc-a1: Support per spi-mem operation frequency switches
-      spi: cadence-qspi: Support per spi-mem operation frequency switches
-      spi: dw: Support per spi-mem operation frequency switches
-      spi: fsl-qspi: Support per spi-mem operation frequency switches
-      spi: microchip-core-qspi: Support per spi-mem operation frequency switches
-      spi: mt65xx: Support per spi-mem operation frequency switches
-      spi: mxic: Support per spi-mem operation frequency switches
-      spi: nxp-fspi: Support per spi-mem operation frequency switches
-      spi: rockchip-sfc: Support per spi-mem operation frequency switches
-      spi: spi-sn-f-ospi: Support per spi-mem operation frequency switches
-      spi: spi-ti-qspi: Support per spi-mem operation frequency switches
-      spi: zynq-qspi: Support per spi-mem operation frequency switches
-      spi: zynqmp-gqspi: Support per spi-mem operation frequency switches
-      spi: spi-mem: Reorder spi-mem macro assignments
-      spi: spi-mem: Create macros for DTR operation
-      spi: spi-mem: Estimate the time taken by operations
-
-Nathan Chancellor (1):
-      spi: amd: Fix -Wuninitialized in amd_spi_exec_mem_op()
-
- drivers/mtd/nand/spi/core.c           |  2 ++
- drivers/spi/spi-amd.c                 | 26 +++++++-------
- drivers/spi/spi-amlogic-spifc-a1.c    |  7 +++-
- drivers/spi/spi-cadence-quadspi.c     |  3 +-
- drivers/spi/spi-dw-core.c             | 10 ++++--
- drivers/spi/spi-fsl-qspi.c            | 12 +++++--
- drivers/spi/spi-mem.c                 | 64 +++++++++++++++++++++++++++++++++++
- drivers/spi/spi-microchip-core-qspi.c | 26 +++++++++++---
- drivers/spi/spi-mt65xx.c              |  7 +++-
- drivers/spi/spi-mxic.c                |  3 +-
- drivers/spi/spi-nxp-fspi.c            | 12 +++++--
- drivers/spi/spi-rockchip-sfc.c        | 11 ++++--
- drivers/spi/spi-sn-f-ospi.c           |  8 +++--
- drivers/spi/spi-ti-qspi.c             |  7 +++-
- drivers/spi/spi-zynq-qspi.c           | 13 +++++--
- drivers/spi/spi-zynqmp-gqspi.c        | 13 ++++---
- include/linux/spi/spi-mem.h           | 56 +++++++++++++++++++++++++++++-
- 17 files changed, 237 insertions(+), 43 deletions(-)
-
---2iPXVcBfzc1mAQZJ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmeGgCYACgkQJNaLcl1U
-h9C5Dgf/RQhmGbs3CM6H/hRKhwFsGtKWssBC2kOLN+PiUG1tXi0R4xXhhCG1YZ+I
-mmbh18x03b5AkS7mgA7/Hv3cBlWU20+9Lbum30vy3m/6tv65PbMRKhJP7Wp8fVZ4
-peAWt9t/DOgczBGOKn1hOmdK0DKl5Ud53TcrLs8Euo21rg0fwPYzTomir2KOCSSw
-eR3zY6WsfdKAvS+jx0sbRJc3QoI92Lt5vOilGl4nTf2YG7aXt4kYryWg9srWJ3bp
-dID0aBfHHIxncNmQFigJhaxoG70pMR35LG3ZeN4FTwzyEVyg1/nP4yGYDG5MFyfA
-FLHg1nVdJ8hdV+MnnPPsYH4aGXTdCQ==
-=4HD+
------END PGP SIGNATURE-----
-
---2iPXVcBfzc1mAQZJ--
+Thanks,
+Jason
