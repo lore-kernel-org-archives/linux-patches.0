@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918E21E98FA;
-	Wed, 15 Jan 2025 10:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075171E98E3;
+	Wed, 15 Jan 2025 10:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937918; cv=none; b=G9pamapJclxOsXt1gnQwVrFrrwmRQVE7/KXIxnOh+wUbTVLiMei2yIW/4EgLDy5vOZUM3mLu1djJJWidJmRBIuUae6gJKdQRVlJd2oPLlHUwlXngkgwMvoYGeZDDBEcoMT9Q7T43kjPg2g5IavpXvapFPgYF2uVw9F92s3qQB/M=
+	t=1736937922; cv=none; b=bHfCNkO5cw7yg9kokxRmazDpnju+xeBLRhIhkrV0nSZZZN7MlOG7qPWKtCVwFOAKR/qWXd4FUxKBYPpnFaDtLDEcDZd/wRIYMcaz7IBeQBkuOx8Yh36FQLmOH59l+CtcVrc5OLwNZYHVh9xbY1QFv9rFXkr0AOJhv6aW8PQkv70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937918; c=relaxed/simple;
-	bh=Y0R5b6+j3yv/njmmZ9SExVUPpS7IeKztbaeXaqU1ZoA=;
+	s=arc-20240116; t=1736937922; c=relaxed/simple;
+	bh=U30XZ9ZT+qmUI4V6l5bhi/q8RUIPBxLqoZK5xhr98ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KK+8K+Wx8nVILCgP5m4el1YE6x+7oom8VwnJpaEOkBh/j049+xStO4B4TA3KB5UrUz6ceZFqy74I0oAEoV0I7hUmxf9M0Z5EXXMZYk1fm/yUuELx7a1Lgkc71R6b0/OtA6JprmvkKxh1zeMBFw266WBIkF8JjKsE1IyuudjKnvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCmCmHor; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z3UPCWy/uoc9+kOlioUajuIi0RWQ4ZWoKsbAnqGxnt4MFaAtgK7NrJ5JnxRVpPumei5Bdfb/nnMTXYuSU+MQNt1tDnqW9dbCL6iqUizoVpQtl2zBeQvItGgx5ZbM93zJujx19G1UDoSYoHg9B+0ecuvb1XkhH4ByWN/vsCZfu7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEQfZLf7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCmCmHor"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE851C4CEDF;
-	Wed, 15 Jan 2025 10:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEQfZLf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE8DC4CEE1;
+	Wed, 15 Jan 2025 10:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937918;
-	bh=Y0R5b6+j3yv/njmmZ9SExVUPpS7IeKztbaeXaqU1ZoA=;
+	s=korg; t=1736937921;
+	bh=U30XZ9ZT+qmUI4V6l5bhi/q8RUIPBxLqoZK5xhr98ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCmCmHor/iS4l2QMox43pSN4nab632sVhOynzNschxkacVF1PtVuTm8O+nyE2fg4j
-	 N3Dy/enfwpAO5venYRyeW+EdCe4XiNi3UpFPyjhpX04xLTftIUw9LejEInlWN6uicH
-	 XieCjGCQlhesrnMt/rF7hoCxwIuCxpLrPSO6L9uw=
+	b=kEQfZLf7WMb52dN9g0Pwtc4tP1wFMWUBPRzQxmFJH2xDlb/AfKeSr+KFd4AP8T+Df
+	 pCqkE2ht0oWZV6h+qUFsNhleJS0LEsR7atc+ogzCW8Gszjq34nxKC4DAKSzvWElqLe
+	 SN6Dw90n6IRLd604QNRPUN3rK63s+OdnzQHllK3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Brian Foster <bfoster@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Joe Thornber <thornber@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/189] iomap: fix zero padding data issue in concurrent append writes
-Date: Wed, 15 Jan 2025 11:35:01 +0100
-Message-ID: <20250115103606.571186439@linuxfoundation.org>
+Subject: [PATCH 6.12 006/189] dm array: fix releasing a faulty array block twice in dm_array_cursor_end
+Date: Wed, 15 Jan 2025 11:35:02 +0100
+Message-ID: <20250115103606.613153137@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -53,154 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 51d20d1dacbec589d459e11fc88fbca419f84a99 ]
+[ Upstream commit f2893c0804d86230ffb8f1c8703fdbb18648abc8 ]
 
-During concurrent append writes to XFS filesystem, zero padding data
-may appear in the file after power failure. This happens due to imprecise
-disk size updates when handling write completion.
+When dm_bm_read_lock() fails due to locking or checksum errors, it
+releases the faulty block implicitly while leaving an invalid output
+pointer behind. The caller of dm_bm_read_lock() should not operate on
+this invalid dm_block pointer, or it will lead to undefined result.
+For example, the dm_array_cursor incorrectly caches the invalid pointer
+on reading a faulty array block, causing a double release in
+dm_array_cursor_end(), then hitting the BUG_ON in dm-bufio cache_put().
 
-Consider this scenario with concurrent append writes same file:
+Reproduce steps:
 
-  Thread 1:                  Thread 2:
-  ------------               -----------
-  write [A, A+B]
-  update inode size to A+B
-  submit I/O [A, A+BS]
-                             write [A+B, A+B+C]
-                             update inode size to A+B+C
-  <I/O completes, updates disk size to min(A+B+C, A+BS)>
-  <power failure>
+1. initialize a cache device
 
-After reboot:
-  1) with A+B+C < A+BS, the file has zero padding in range [A+B, A+B+C]
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc $262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-  |<         Block Size (BS)      >|
-  |DDDDDDDDDDDDDDDD0000000000000000|
-  ^               ^        ^
-  A              A+B     A+B+C
-                         (EOF)
+2. wipe the second array block offline
 
-  2) with A+B+C > A+BS, the file has zero padding in range [A+B, A+BS]
+dmsteup remove cache cmeta cdata corig
+mapping_root=$(dd if=/dev/sdc bs=1c count=8 skip=192 \
+2>/dev/null | hexdump -e '1/8 "%u\n"')
+ablock=$(dd if=/dev/sdc bs=1c count=8 skip=$((4096*mapping_root+2056)) \
+2>/dev/null | hexdump -e '1/8 "%u\n"')
+dd if=/dev/zero of=/dev/sdc bs=4k count=1 seek=$ablock
 
-  |<         Block Size (BS)      >|<           Block Size (BS)    >|
-  |DDDDDDDDDDDDDDDD0000000000000000|00000000000000000000000000000000|
-  ^               ^                ^               ^
-  A              A+B              A+BS           A+B+C
-                                  (EOF)
+3. try reopen the cache device
 
-  D = Valid Data
-  0 = Zero Padding
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc $262144"
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
 
-The issue stems from disk size being set to min(io_offset + io_size,
-inode->i_size) at I/O completion. Since io_offset+io_size is block
-size granularity, it may exceed the actual valid file data size. In
-the case of concurrent append writes, inode->i_size may be larger
-than the actual range of valid file data written to disk, leading to
-inaccurate disk size updates.
+Kernel logs:
 
-This patch modifies the meaning of io_size to represent the size of
-valid data within EOF in an ioend. If the ioend spans beyond i_size,
-io_size will be trimmed to provide the file with more accurate size
-information. This is particularly useful for on-disk size updates
-at completion time.
+(snip)
+device-mapper: array: array_block_check failed: blocknr 0 != wanted 10
+device-mapper: block manager: array validator check failed for block 10
+device-mapper: array: get_ablock failed
+device-mapper: cache metadata: dm_array_cursor_next for mapping failed
+------------[ cut here ]------------
+kernel BUG at drivers/md/dm-bufio.c:638!
 
-After this change, ioends that span i_size will not grow or merge with
-other ioends in concurrent scenarios. However, these cases that need
-growth/merging rarely occur and it seems no noticeable performance impact.
-Although rounding up io_size could enable ioend growth/merging in these
-scenarios, we decided to keep the code simple after discussion [1].
+Fix by setting the cached block pointer to NULL on errors.
 
-Another benefit is that it makes the xfs_ioend_is_append() check more
-accurate, which can reduce unnecessary end bio callbacks of xfs_end_bio()
-in certain scenarios, such as repeated writes at the file tail without
-extending the file size.
+In addition to the reproducer described above, this fix can be
+verified using the "array_cursor/damaged" test in dm-unit:
+  dm-unit run /pdata/array_cursor/damaged --kernel-dir <KERNEL_DIR>
 
-Link [1]: https://patchwork.kernel.org/project/xfs/patch/20241113091907.56937-1-leo.lilong@huawei.com
-
-Fixes: ae259a9c8593 ("fs: introduce iomap infrastructure") # goes further back than this
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Link: https://lore.kernel.org/r/20241209114241.3725722-3-leo.lilong@huawei.com
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: fdd1315aa5f0 ("dm array: introduce cursor api")
+Reviewed-by: Joe Thornber <thornber@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 45 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/iomap.h  |  2 +-
- 2 files changed, 46 insertions(+), 1 deletion(-)
+ drivers/md/persistent-data/dm-array.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index 05e5cc3bf976..25d1ede6bb0e 100644
---- a/fs/iomap/buffered-io.c
-+++ b/fs/iomap/buffered-io.c
-@@ -1784,7 +1784,52 @@ static int iomap_add_to_ioend(struct iomap_writepage_ctx *wpc,
+diff --git a/drivers/md/persistent-data/dm-array.c b/drivers/md/persistent-data/dm-array.c
+index 157c9bd2fed7..4866ff56125f 100644
+--- a/drivers/md/persistent-data/dm-array.c
++++ b/drivers/md/persistent-data/dm-array.c
+@@ -917,23 +917,27 @@ static int load_ablock(struct dm_array_cursor *c)
+ 	if (c->block)
+ 		unlock_ablock(c->info, c->block);
  
- 	if (ifs)
- 		atomic_add(len, &ifs->write_bytes_pending);
+-	c->block = NULL;
+-	c->ab = NULL;
+ 	c->index = 0;
+ 
+ 	r = dm_btree_cursor_get_value(&c->cursor, &key, &value_le);
+ 	if (r) {
+ 		DMERR("dm_btree_cursor_get_value failed");
+-		dm_btree_cursor_end(&c->cursor);
++		goto out;
+ 
+ 	} else {
+ 		r = get_ablock(c->info, le64_to_cpu(value_le), &c->block, &c->ab);
+ 		if (r) {
+ 			DMERR("get_ablock failed");
+-			dm_btree_cursor_end(&c->cursor);
++			goto out;
+ 		}
+ 	}
+ 
++	return 0;
 +
-+	/*
-+	 * Clamp io_offset and io_size to the incore EOF so that ondisk
-+	 * file size updates in the ioend completion are byte-accurate.
-+	 * This avoids recovering files with zeroed tail regions when
-+	 * writeback races with appending writes:
-+	 *
-+	 *    Thread 1:                  Thread 2:
-+	 *    ------------               -----------
-+	 *    write [A, A+B]
-+	 *    update inode size to A+B
-+	 *    submit I/O [A, A+BS]
-+	 *                               write [A+B, A+B+C]
-+	 *                               update inode size to A+B+C
-+	 *    <I/O completes, updates disk size to min(A+B+C, A+BS)>
-+	 *    <power failure>
-+	 *
-+	 *  After reboot:
-+	 *    1) with A+B+C < A+BS, the file has zero padding in range
-+	 *       [A+B, A+B+C]
-+	 *
-+	 *    |<     Block Size (BS)   >|
-+	 *    |DDDDDDDDDDDD0000000000000|
-+	 *    ^           ^        ^
-+	 *    A          A+B     A+B+C
-+	 *                       (EOF)
-+	 *
-+	 *    2) with A+B+C > A+BS, the file has zero padding in range
-+	 *       [A+B, A+BS]
-+	 *
-+	 *    |<     Block Size (BS)   >|<     Block Size (BS)    >|
-+	 *    |DDDDDDDDDDDD0000000000000|00000000000000000000000000|
-+	 *    ^           ^             ^           ^
-+	 *    A          A+B           A+BS       A+B+C
-+	 *                             (EOF)
-+	 *
-+	 *    D = Valid Data
-+	 *    0 = Zero Padding
-+	 *
-+	 * Note that this defeats the ability to chain the ioends of
-+	 * appending writes.
-+	 */
- 	wpc->ioend->io_size += len;
-+	if (wpc->ioend->io_offset + wpc->ioend->io_size > end_pos)
-+		wpc->ioend->io_size = end_pos - wpc->ioend->io_offset;
-+
- 	wbc_account_cgroup_owner(wbc, folio, len);
- 	return 0;
++out:
++	dm_btree_cursor_end(&c->cursor);
++	c->block = NULL;
++	c->ab = NULL;
+ 	return r;
  }
-diff --git a/include/linux/iomap.h b/include/linux/iomap.h
-index f61407e3b121..d204dcd35063 100644
---- a/include/linux/iomap.h
-+++ b/include/linux/iomap.h
-@@ -330,7 +330,7 @@ struct iomap_ioend {
- 	u16			io_type;
- 	u16			io_flags;	/* IOMAP_F_* */
- 	struct inode		*io_inode;	/* file being written to */
--	size_t			io_size;	/* size of the extent */
-+	size_t			io_size;	/* size of data within eof */
- 	loff_t			io_offset;	/* offset in the file */
- 	sector_t		io_sector;	/* start sector of ioend */
- 	struct bio		io_bio;		/* MUST BE LAST! */
+ 
 -- 
 2.39.5
 
