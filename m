@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2911E98E4;
-	Wed, 15 Jan 2025 10:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFA11DB151;
+	Wed, 15 Jan 2025 10:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938145; cv=none; b=E0zV5glDSMWce1xb7pFFNUYeeeYofEgbeQfBU9t99dmXY8hOGTVY156R/FDLlrH2VM7wsQXrtGOXi7W6+ldlhi1AIscwS3V9T/RLbosQmZOp9pMioFqPDg5qCi8T6wcJ7BFlCMyRFGrkAcXQO3OarEow4M0nJ7RI7X5iud14NVg=
+	t=1736938149; cv=none; b=Xv0kT55P8PC/cyVSQfgPODtrambVNMkd6ttABpP/sIGnUX1GvOfv+opSyD6tGLR2cO8xHaZfxX42iPQeYPp2OumkBkY4aXeHg6fGkH+YGXFay/LPlUWSSPA13cZHuuDrHWhJ8CLNjW0NGSeyDvxfyJoQLkCWBi1KmRUBNQVCSE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938145; c=relaxed/simple;
-	bh=JV1KThMiAHSxk/sLZClp7Moy4yTBhzANPGrKxu1T7eI=;
+	s=arc-20240116; t=1736938149; c=relaxed/simple;
+	bh=m4racqz3TrkZn9JUN3e9BcNKjWNI8zlPiTtO5jnutpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GZV7NA8hJ4szbA3t+3QTYHOTpAetNSMlTOCUGbSCwhmQ3BSRVqtRrY5HLFOAgHr5jCpJ4AyMjyEWKDmJQ4PQA8XgVRSATVexscLvAWuak2Bzy3rELMN1ji6n6LVgEz/NDn6HCftzR+LIRJMHQRUpPrBAWs2I3OEOcLCJna/+RIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peZg0aBJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=osYTW0nYXVHNncTX6ILAF96aE7kJT5++sMr7mA5If/x3RoyN1uGdHqgGVV+0wr4TuV4RO+Thx9j627O0jBhYes5GdX/X6mQg2ieANEDCs0icezFal8H8tWlCpeyhqO7csJ5zP8not/FqEnB8HA5SEY+FdCx9XEZ4z7SwzHqUinU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oaOtMu07; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peZg0aBJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0845AC4CEDF;
-	Wed, 15 Jan 2025 10:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oaOtMu07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E36C4CEE1;
+	Wed, 15 Jan 2025 10:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938145;
-	bh=JV1KThMiAHSxk/sLZClp7Moy4yTBhzANPGrKxu1T7eI=;
+	s=korg; t=1736938148;
+	bh=m4racqz3TrkZn9JUN3e9BcNKjWNI8zlPiTtO5jnutpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=peZg0aBJhPWSUWYPWaIbkQpnvSCUBl28GKd+jAyIk8pjESqiokZrBfumtdg/W1nm1
-	 g+tX+0OgePR2XDMLzhTXzwpn3+31dmJv5fAktaneC/2bCZ771LIgOVm6sFL/8qG4xq
-	 6MG/vDPvzFdkBVdv0JIG3ttZKBteiw1080Tn1QCk=
+	b=oaOtMu07JE5Gd5xPC0m5poUhxaRQWe4T/hNOlOysaZrAqj4Ru+RJCZTTUTpDBJS2T
+	 4iQvLOl0s4qEtJtvmK8H3yjzDymrszUfUMCcISPdAD6TApX7y4aahKe1OTH5wjIhAF
+	 vkiKklCuAeQzL1JxBa0/iGgF+csALnn4Z3/zhrgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Koichiro Den <koichiro.den@canonical.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/189] drm/mediatek: mtk_dsi: Add registers to pdata to fix MT8186/MT8188
-Date: Wed, 15 Jan 2025 11:36:02 +0100
-Message-ID: <20250115103608.989688536@linuxfoundation.org>
+Subject: [PATCH 6.12 067/189] gpio: virtuser: fix missing lookup table cleanups
+Date: Wed, 15 Jan 2025 11:36:03 +0100
+Message-ID: <20250115103609.035597867@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,117 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Koichiro Den <koichiro.den@canonical.com>
 
-[ Upstream commit 76aed5e00ff2625e0ec4b40c75f3514bdb27fae4 ]
+[ Upstream commit a619cba8c69c434258ff4101d463322cd63e1bdc ]
 
-Registers DSI_VM_CMD and DSI_SHADOW_DEBUG start at different
-addresses in both MT8186 and MT8188 compared to the older IPs.
+When a virtuser device is created via configfs and the probe fails due
+to an incorrect lookup table, the table is not removed. This prevents
+subsequent probe attempts from succeeding, even if the issue is
+corrected, unless the device is released. Additionally, cleanup is also
+needed in the less likely case of platform_device_register_full()
+failure.
 
-Add two members in struct mtk_dsi_driver_data to specify the
-offsets for these two registers on a per-SoC basis, then do
-specify those in all of the currently present SoC driver data.
+Besides, a consistent memory leak in lookup_table->dev_id was spotted
+using kmemleak by toggling the live state between 0 and 1 with a correct
+lookup table.
 
-This fixes writes to the Video Mode Command Packet Control
-register, fixing enablement of command packet transmission
-(VM_CMD_EN) and allowance of this transmission during the
-VFP period (TS_VFP_EN) on both MT8186 and MT8188.
+Introduce gpio_virtuser_remove_lookup_table() as the counterpart to the
+existing gpio_virtuser_make_lookup_table() and call it from all
+necessary points to ensure proper cleanup.
 
-Fixes: 03d7adc41027 ("drm/mediatek: Add mt8186 dsi compatible to mtk_dsi.c")
-Fixes: 814d5341f314 ("drm/mediatek: Add mt8188 dsi compatible to mtk_dsi.c")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241219112733.47907-1-angelogioacchino.delregno@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
+Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
+Link: https://lore.kernel.org/r/20250103141829.430662-2-koichiro.den@canonical.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dsi.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-virtuser.c | 36 +++++++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dsi.c b/drivers/gpu/drm/mediatek/mtk_dsi.c
-index eeec641cab60..5762cff4d6f5 100644
---- a/drivers/gpu/drm/mediatek/mtk_dsi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dsi.c
-@@ -139,11 +139,11 @@
- #define CLK_HS_POST			GENMASK(15, 8)
- #define CLK_HS_EXIT			GENMASK(23, 16)
- 
--#define DSI_VM_CMD_CON		0x130
-+/* DSI_VM_CMD_CON */
- #define VM_CMD_EN			BIT(0)
- #define TS_VFP_EN			BIT(5)
- 
--#define DSI_SHADOW_DEBUG	0x190U
-+/* DSI_SHADOW_DEBUG */
- #define FORCE_COMMIT			BIT(0)
- #define BYPASS_SHADOW			BIT(1)
- 
-@@ -187,6 +187,8 @@ struct phy;
- 
- struct mtk_dsi_driver_data {
- 	const u32 reg_cmdq_off;
-+	const u32 reg_vm_cmd_off;
-+	const u32 reg_shadow_dbg_off;
- 	bool has_shadow_ctl;
- 	bool has_size_ctl;
- 	bool cmdq_long_packet_ctl;
-@@ -367,8 +369,8 @@ static void mtk_dsi_set_mode(struct mtk_dsi *dsi)
- 
- static void mtk_dsi_set_vm_cmd(struct mtk_dsi *dsi)
- {
--	mtk_dsi_mask(dsi, DSI_VM_CMD_CON, VM_CMD_EN, VM_CMD_EN);
--	mtk_dsi_mask(dsi, DSI_VM_CMD_CON, TS_VFP_EN, TS_VFP_EN);
-+	mtk_dsi_mask(dsi, dsi->driver_data->reg_vm_cmd_off, VM_CMD_EN, VM_CMD_EN);
-+	mtk_dsi_mask(dsi, dsi->driver_data->reg_vm_cmd_off, TS_VFP_EN, TS_VFP_EN);
+diff --git a/drivers/gpio/gpio-virtuser.c b/drivers/gpio/gpio-virtuser.c
+index 91b6352c957c..e89b1239b635 100644
+--- a/drivers/gpio/gpio-virtuser.c
++++ b/drivers/gpio/gpio-virtuser.c
+@@ -1439,6 +1439,15 @@ gpio_virtuser_make_lookup_table(struct gpio_virtuser_device *dev)
+ 	return 0;
  }
  
- static void mtk_dsi_rxtx_control(struct mtk_dsi *dsi)
-@@ -714,7 +716,7 @@ static int mtk_dsi_poweron(struct mtk_dsi *dsi)
++static void
++gpio_virtuser_remove_lookup_table(struct gpio_virtuser_device *dev)
++{
++	gpiod_remove_lookup_table(dev->lookup_table);
++	kfree(dev->lookup_table->dev_id);
++	kfree(dev->lookup_table);
++	dev->lookup_table = NULL;
++}
++
+ static struct fwnode_handle *
+ gpio_virtuser_make_device_swnode(struct gpio_virtuser_device *dev)
+ {
+@@ -1487,10 +1496,8 @@ gpio_virtuser_device_activate(struct gpio_virtuser_device *dev)
+ 	pdevinfo.fwnode = swnode;
  
- 	if (dsi->driver_data->has_shadow_ctl)
- 		writel(FORCE_COMMIT | BYPASS_SHADOW,
--		       dsi->regs + DSI_SHADOW_DEBUG);
-+		       dsi->regs + dsi->driver_data->reg_shadow_dbg_off);
+ 	ret = gpio_virtuser_make_lookup_table(dev);
+-	if (ret) {
+-		fwnode_remove_software_node(swnode);
+-		return ret;
+-	}
++	if (ret)
++		goto err_remove_swnode;
  
- 	mtk_dsi_reset_engine(dsi);
- 	mtk_dsi_phy_timconfig(dsi);
-@@ -1255,26 +1257,36 @@ static void mtk_dsi_remove(struct platform_device *pdev)
+ 	reinit_completion(&dev->probe_completion);
+ 	dev->driver_bound = false;
+@@ -1498,23 +1505,31 @@ gpio_virtuser_device_activate(struct gpio_virtuser_device *dev)
  
- static const struct mtk_dsi_driver_data mt8173_dsi_driver_data = {
- 	.reg_cmdq_off = 0x200,
-+	.reg_vm_cmd_off = 0x130,
-+	.reg_shadow_dbg_off = 0x190
- };
+ 	pdev = platform_device_register_full(&pdevinfo);
+ 	if (IS_ERR(pdev)) {
++		ret = PTR_ERR(pdev);
+ 		bus_unregister_notifier(&platform_bus_type, &dev->bus_notifier);
+-		fwnode_remove_software_node(swnode);
+-		return PTR_ERR(pdev);
++		goto err_remove_lookup_table;
+ 	}
  
- static const struct mtk_dsi_driver_data mt2701_dsi_driver_data = {
- 	.reg_cmdq_off = 0x180,
-+	.reg_vm_cmd_off = 0x130,
-+	.reg_shadow_dbg_off = 0x190
- };
+ 	wait_for_completion(&dev->probe_completion);
+ 	bus_unregister_notifier(&platform_bus_type, &dev->bus_notifier);
  
- static const struct mtk_dsi_driver_data mt8183_dsi_driver_data = {
- 	.reg_cmdq_off = 0x200,
-+	.reg_vm_cmd_off = 0x130,
-+	.reg_shadow_dbg_off = 0x190,
- 	.has_shadow_ctl = true,
- 	.has_size_ctl = true,
- };
+ 	if (!dev->driver_bound) {
+-		platform_device_unregister(pdev);
+-		fwnode_remove_software_node(swnode);
+-		return -ENXIO;
++		ret = -ENXIO;
++		goto err_unregister_pdev;
+ 	}
  
- static const struct mtk_dsi_driver_data mt8186_dsi_driver_data = {
- 	.reg_cmdq_off = 0xd00,
-+	.reg_vm_cmd_off = 0x200,
-+	.reg_shadow_dbg_off = 0xc00,
- 	.has_shadow_ctl = true,
- 	.has_size_ctl = true,
- };
+ 	dev->pdev = pdev;
  
- static const struct mtk_dsi_driver_data mt8188_dsi_driver_data = {
- 	.reg_cmdq_off = 0xd00,
-+	.reg_vm_cmd_off = 0x200,
-+	.reg_shadow_dbg_off = 0xc00,
- 	.has_shadow_ctl = true,
- 	.has_size_ctl = true,
- 	.cmdq_long_packet_ctl = true,
+ 	return 0;
++
++err_unregister_pdev:
++	platform_device_unregister(pdev);
++err_remove_lookup_table:
++	gpio_virtuser_remove_lookup_table(dev);
++err_remove_swnode:
++	fwnode_remove_software_node(swnode);
++
++	return ret;
+ }
+ 
+ static void
+@@ -1526,10 +1541,9 @@ gpio_virtuser_device_deactivate(struct gpio_virtuser_device *dev)
+ 
+ 	swnode = dev_fwnode(&dev->pdev->dev);
+ 	platform_device_unregister(dev->pdev);
++	gpio_virtuser_remove_lookup_table(dev);
+ 	fwnode_remove_software_node(swnode);
+ 	dev->pdev = NULL;
+-	gpiod_remove_lookup_table(dev->lookup_table);
+-	kfree(dev->lookup_table);
+ }
+ 
+ static ssize_t
 -- 
 2.39.5
 
