@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F18C248BA6;
-	Wed, 15 Jan 2025 10:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C6E248BA6;
+	Wed, 15 Jan 2025 10:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937706; cv=none; b=i0K3PqDqG/0JPm4e41aWi6AitqT4mV303teJVPQCqAbsc/FiuNInngtMSUIphSMRTwqLC25LpnhymtT204dtUeZNYTzRTp8BGwZg3tw8GU44901f+XxZoVvct6OG+hv2YYaBMsYenPOFIwU5gj8RPhCyKdQfUOT82Vp3GxMY07I=
+	t=1736937710; cv=none; b=S9tbYJuCGgNliRIKoiTqKujx8oTW/gZt9DvoxlrLqd8L/scERRhhXwPk9Al6+dd5GU9lCH0St1i7mfYOU4tZaaPjtIxdERaAx2CCH+iIhovs//4qrTU0fy07q+dfNzX2OfOLdpgZ4WrqsFzaDmvh8GQOKpA2YW7lzh/FCCbMlAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937706; c=relaxed/simple;
-	bh=dlkILevdgqa3WSkIor5mUZk2mQPy1O0Mcd9s6l/PPZY=;
+	s=arc-20240116; t=1736937710; c=relaxed/simple;
+	bh=KjECM/RB1HMHVWWQEBDuiXjfFfYKIB+VVVcJuDqMAWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hqEekRAGPXWRwUNLPTWdb9BzpxYbJFcRyHKpTn3a5a60DC26OCdIsdvgiaYh91CSylLA/D0dFORQ4ffQB7Edo8O7Z49j9PCe5OWlal7wBcCeMpGX4tzvwZDE99B9vH4fZMa628h3fBCVylSvUKyP+48BCO+f26wIkNqtN9kGQh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPfSjsZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZRi29gZ33X4rlREPMi7KKqLAc+ir/F8BIp4zUBc2kCoByYBQf8MAv1cA9oSeeAX04fftAXXAWo/4hh06xZ5y5NMe/osy4AKJMzBGMExAntRQX4VYcSXukVZ5+PL6Ozx7ULvv5C2uVK0gI+DkevQjBD+sNR2fW+3DwWnXQEilLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0/o2KWx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPfSjsZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E09C4CEE2;
-	Wed, 15 Jan 2025 10:41:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0/o2KWx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC28C4CEE2;
+	Wed, 15 Jan 2025 10:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937706;
-	bh=dlkILevdgqa3WSkIor5mUZk2mQPy1O0Mcd9s6l/PPZY=;
+	s=korg; t=1736937710;
+	bh=KjECM/RB1HMHVWWQEBDuiXjfFfYKIB+VVVcJuDqMAWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aPfSjsZTyWwjUBV4gIew85T2Fz72D/Z+NSAcKrI4Trx64sK4ZYlmPgYqAv4UVvi7d
-	 gbU6v4SZmsXm4ZkkREjKaG9krgEh/nEHo5rWLnQhCMlSC3Vv4LQRpAXDQ0+2xJiOtR
-	 B0Vrkav/XTiiwrvFv1Gmxir6DcGAqkcVzOc/QjaU=
+	b=y0/o2KWxJ9MQtDpkuFM1QsZoBrY7bHyfLsNyY131Rv6NMdw+LIRgW2krli2o7wX+6
+	 SFmU18FW+VZ1/ULnA6QBbOl1ATLn5bMXzsUEfxvhoazYhwsVqB4PUMFTVuFQfAwR2z
+	 OwW7VwbRdySWZQ7hZua0dBgKnt1EiUHpppuuvU8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/92] net/mlx5: Fix variable not being completed when function returns
-Date: Wed, 15 Jan 2025 11:36:45 +0100
-Message-ID: <20250115103548.613134866@linuxfoundation.org>
+Subject: [PATCH 6.1 28/92] drm/mediatek: stop selecting foreign drivers
+Date: Wed, 15 Jan 2025 11:36:46 +0100
+Message-ID: <20250115103548.651549088@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -53,60 +53,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0e2909c6bec9048f49d0c8e16887c63b50b14647 ]
+[ Upstream commit 924d66011f2401a4145e2e814842c5c4572e439f ]
 
-When cmd_alloc_index(), fails cmd_work_handler() needs
-to complete ent->slotted before returning early.
-Otherwise the task which issued the command may hang:
+The PHY portion of the mediatek hdmi driver was originally part of
+the driver it self and later split out into drivers/phy, which a
+'select' to keep the prior behavior.
 
-   mlx5_core 0000:01:00.0: cmd_work_handler:877:(pid 3880418): failed to allocate command entry
-   INFO: task kworker/13:2:4055883 blocked for more than 120 seconds.
-         Not tainted 4.19.90-25.44.v2101.ky10.aarch64 #1
-   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-   kworker/13:2    D    0 4055883      2 0x00000228
-   Workqueue: events mlx5e_tx_dim_work [mlx5_core]
-   Call trace:
-      __switch_to+0xe8/0x150
-      __schedule+0x2a8/0x9b8
-      schedule+0x2c/0x88
-      schedule_timeout+0x204/0x478
-      wait_for_common+0x154/0x250
-      wait_for_completion+0x28/0x38
-      cmd_exec+0x7a0/0xa00 [mlx5_core]
-      mlx5_cmd_exec+0x54/0x80 [mlx5_core]
-      mlx5_core_modify_cq+0x6c/0x80 [mlx5_core]
-      mlx5_core_modify_cq_moderation+0xa0/0xb8 [mlx5_core]
-      mlx5e_tx_dim_work+0x54/0x68 [mlx5_core]
-      process_one_work+0x1b0/0x448
-      worker_thread+0x54/0x468
-      kthread+0x134/0x138
-      ret_from_fork+0x10/0x18
+However, this leads to build failures when the PHY driver cannot
+be built:
 
-Fixes: 485d65e13571 ("net/mlx5: Add a timeout to acquire the command queue semaphore")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250108030009.68520-1-zhaochenguang@kylinos.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+WARNING: unmet direct dependencies detected for PHY_MTK_HDMI
+  Depends on [n]: (ARCH_MEDIATEK || COMPILE_TEST [=y]) && COMMON_CLK [=y] && OF [=y] && REGULATOR [=n]
+  Selected by [m]:
+  - DRM_MEDIATEK_HDMI [=m] && HAS_IOMEM [=y] && DRM [=m] && DRM_MEDIATEK [=m]
+ERROR: modpost: "devm_regulator_register" [drivers/phy/mediatek/phy-mtk-hdmi-drv.ko] undefined!
+ERROR: modpost: "rdev_get_drvdata" [drivers/phy/mediatek/phy-mtk-hdmi-drv.ko] undefined!
+
+The best option here is to just not select the phy driver and leave that
+up to the defconfig. Do the same for the other PHY and memory drivers
+selected here as well for consistency.
+
+Fixes: a481bf2f0ca4 ("drm/mediatek: Separate mtk_hdmi_phy to an independent module")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241218085837.2670434-1-arnd@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/mediatek/Kconfig | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 4a1eb6cd699c..6dbb4021fd2f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1003,6 +1003,7 @@ static void cmd_work_handler(struct work_struct *work)
- 				complete(&ent->done);
- 			}
- 			up(&cmd->vars.sem);
-+			complete(&ent->slotted);
- 			return;
- 		}
- 	} else {
+diff --git a/drivers/gpu/drm/mediatek/Kconfig b/drivers/gpu/drm/mediatek/Kconfig
+index d1eededee943..d663869bfce1 100644
+--- a/drivers/gpu/drm/mediatek/Kconfig
++++ b/drivers/gpu/drm/mediatek/Kconfig
+@@ -11,9 +11,6 @@ config DRM_MEDIATEK
+ 	select DRM_KMS_HELPER
+ 	select DRM_MIPI_DSI
+ 	select DRM_PANEL
+-	select MEMORY
+-	select MTK_SMI
+-	select PHY_MTK_MIPI_DSI
+ 	select VIDEOMODE_HELPERS
+ 	help
+ 	  Choose this option if you have a Mediatek SoCs.
+@@ -24,7 +21,6 @@ config DRM_MEDIATEK
+ config DRM_MEDIATEK_DP
+ 	tristate "DRM DPTX Support for MediaTek SoCs"
+ 	depends on DRM_MEDIATEK
+-	select PHY_MTK_DP
+ 	select DRM_DISPLAY_HELPER
+ 	select DRM_DISPLAY_DP_HELPER
+ 	select DRM_DP_AUX_BUS
+@@ -35,6 +31,5 @@ config DRM_MEDIATEK_HDMI
+ 	tristate "DRM HDMI Support for Mediatek SoCs"
+ 	depends on DRM_MEDIATEK
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
+-	select PHY_MTK_HDMI
+ 	help
+ 	  DRM/KMS HDMI driver for Mediatek SoCs
 -- 
 2.39.5
 
