@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF88248BBD;
-	Wed, 15 Jan 2025 10:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A4D1E7C02;
+	Wed, 15 Jan 2025 10:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938279; cv=none; b=b8AeIsBpoIMn/VrylC05PBAE7ovP6XIRd3IJeRqiNRTIHyrXs98YPZErLNFmFw7UtjYz219cgNq4+hQRkqjL6lwkfuZXHFSxX/Rhkrzo7WZAjuAlUtTY4WC8E//e35D7YMI+9++IStjNGDEtzeqhD0seZK6lTwAVKZZYbjHlI9M=
+	t=1736938282; cv=none; b=r0LPHMW6hvsJJ8ozsu0SZh2ltyEdLF6w9ZWdI+DU9cvisBFWgEnAxjncsZzNG4yyo+cSW4QG88P8mAHEnxmcJkNZS0c6apF30z4xb/q4slf8/cgrTzXBSl9UGFNOTqqQsFgRgNHOPlxiX7bAfKSXmYUU6i89r3R2D/ai28njTlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938279; c=relaxed/simple;
-	bh=UiRMtrVp1yE1F35jchbT9w5YF/UK/VCZDOO2a7xs9pA=;
+	s=arc-20240116; t=1736938282; c=relaxed/simple;
+	bh=vcQjru/Q2mb/b3ayxJv2Q6cRJ1R6jEX7k5ykZaeZ+r8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IV0Y30H8GczYqCDu9/9FIV3yNQEjDNOM4B0OySnwdeCGGDNrxzhIZr6xnMo0M6llAU3N4nTmaQOg2BPjkkhd1yxVG96QwBc9l/l0PgodMiSByR/JoQLvPINdelGg2w1u6QrJKF+VtgOkH358JOCCons9YrHjUMUAKydrCjGcJbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6FOQ1Cc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEcNdw5FsWljTnB7YrncFXcuE8Y4AfPBgBpFxarFrrTpTqN0+2+BAOS0vBIplvLK+gVAg1cPDNJhC8iydo9D2H3FMMqGB923kpapPt434WG3jyrCEC+FaEtr+yxDXhLbS5/RFbL8udlcwOjjHVQt0BgFW19culPdQpCg4K8nbBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zn3m65cv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6FOQ1Cc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDCBC4CEDF;
-	Wed, 15 Jan 2025 10:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zn3m65cv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E61C4CEDF;
+	Wed, 15 Jan 2025 10:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938278;
-	bh=UiRMtrVp1yE1F35jchbT9w5YF/UK/VCZDOO2a7xs9pA=;
+	s=korg; t=1736938282;
+	bh=vcQjru/Q2mb/b3ayxJv2Q6cRJ1R6jEX7k5ykZaeZ+r8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f6FOQ1CcG+K1KH26SPNddD8YUyRU07NHFhllimWs8EXsKM22e9HmkbM2EhP+l7Itt
-	 SXoikkrLaEQ5UpTU8ELU+GHvISO3ntcw6OeGcSK0CTkbD1iYlhKSzRA87gvfrJkkSh
-	 fDGW36RUJnkw6wg0ZxifCOZ/UxGFURI1rENTqIX0=
+	b=Zn3m65cvK57D/EZC25QTG2sXnGXSaSweklCU70ZryKzI8EaHDYSPl7DL7nLwtR2dl
+	 xRlfkwxUrAQv1mKWnD0hrBqvWrZRKH8DpXUa7gHKhGlE9bUuQTU7SD/Wt0XpkicK8x
+	 /KjYu7OA8dR9x9dIPy7ZqV/ATCPHTtbvCx4ZqyEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.12 136/189] usb: dwc3: gadget: fix writing NYET threshold
-Date: Wed, 15 Jan 2025 11:37:12 +0100
-Message-ID: <20250115103611.861192608@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 137/189] topology: Keep the cpumask unchanged when printing cpumap
+Date: Wed, 15 Jan 2025 11:37:13 +0100
+Message-ID: <20250115103611.901199119@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -44,63 +45,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Li Huafei <lihuafei1@huawei.com>
 
-commit 01ea6bf5cb58b20cc1bd159f0cf74a76cf04bb69 upstream.
+commit cbd399f78e23ad4492c174fc5e6b3676dba74a52 upstream.
 
-Before writing a new value to the register, the old value needs to be
-masked out for the new value to be programmed as intended, because at
-least in some cases the reset value of that field is 0xf (max value).
+During fuzz testing, the following warning was discovered:
 
-At the moment, the dwc3 core initialises the threshold to the maximum
-value (0xf), with the option to override it via a DT. No upstream DTs
-seem to override it, therefore this commit doesn't change behaviour for
-any upstream platform. Nevertheless, the code should be fixed to have
-the desired outcome.
+ different return values (15 and 11) from vsnprintf("%*pbl
+ ", ...)
 
-Do so.
+ test:keyward is WARNING in kvasprintf
+ WARNING: CPU: 55 PID: 1168477 at lib/kasprintf.c:30 kvasprintf+0x121/0x130
+ Call Trace:
+  kvasprintf+0x121/0x130
+  kasprintf+0xa6/0xe0
+  bitmap_print_to_buf+0x89/0x100
+  core_siblings_list_read+0x7e/0xb0
+  kernfs_file_read_iter+0x15b/0x270
+  new_sync_read+0x153/0x260
+  vfs_read+0x215/0x290
+  ksys_read+0xb9/0x160
+  do_syscall_64+0x56/0x100
+  entry_SYSCALL_64_after_hwframe+0x78/0xe2
 
-Fixes: 80caf7d21adc ("usb: dwc3: add lpm erratum support")
-Cc: stable@vger.kernel.org # 5.10+ (needs adjustment for 5.4)
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20241209-dwc3-nyet-fix-v2-1-02755683345b@linaro.org
+The call trace shows that kvasprintf() reported this warning during the
+printing of core_siblings_list. kvasprintf() has several steps:
+
+ (1) First, calculate the length of the resulting formatted string.
+
+ (2) Allocate a buffer based on the returned length.
+
+ (3) Then, perform the actual string formatting.
+
+ (4) Check whether the lengths of the formatted strings returned in
+     steps (1) and (2) are consistent.
+
+If the core_cpumask is modified between steps (1) and (3), the lengths
+obtained in these two steps may not match. Indeed our test includes cpu
+hotplugging, which should modify core_cpumask while printing.
+
+To fix this issue, cache the cpumask into a temporary variable before
+calling cpumap_print_{list, cpumask}_to_buf(), to keep it unchanged
+during the printing process.
+
+Fixes: bb9ec13d156e ("topology: use bin_attribute to break the size limitation of cpumap ABI")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/20241114110141.94725-1-lihuafei1@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.h   |    1 +
- drivers/usb/dwc3/gadget.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/base/topology.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -464,6 +464,7 @@
- #define DWC3_DCTL_TRGTULST_SS_INACT	(DWC3_DCTL_TRGTULST(6))
+--- a/drivers/base/topology.c
++++ b/drivers/base/topology.c
+@@ -27,9 +27,17 @@ static ssize_t name##_read(struct file *
+ 			   loff_t off, size_t count)				\
+ {										\
+ 	struct device *dev = kobj_to_dev(kobj);                                 \
++	cpumask_var_t mask;							\
++	ssize_t n;								\
+ 										\
+-	return cpumap_print_bitmask_to_buf(buf, topology_##mask(dev->id),	\
+-					   off, count);                         \
++	if (!alloc_cpumask_var(&mask, GFP_KERNEL))				\
++		return -ENOMEM;							\
++										\
++	cpumask_copy(mask, topology_##mask(dev->id));				\
++	n = cpumap_print_bitmask_to_buf(buf, mask, off, count);			\
++	free_cpumask_var(mask);							\
++										\
++	return n;								\
+ }										\
+ 										\
+ static ssize_t name##_list_read(struct file *file, struct kobject *kobj,	\
+@@ -37,9 +45,17 @@ static ssize_t name##_list_read(struct f
+ 				loff_t off, size_t count)			\
+ {										\
+ 	struct device *dev = kobj_to_dev(kobj);					\
++	cpumask_var_t mask;							\
++	ssize_t n;								\
++										\
++	if (!alloc_cpumask_var(&mask, GFP_KERNEL))				\
++		return -ENOMEM;							\
++										\
++	cpumask_copy(mask, topology_##mask(dev->id));				\
++	n = cpumap_print_list_to_buf(buf, mask, off, count);			\
++	free_cpumask_var(mask);							\
+ 										\
+-	return cpumap_print_list_to_buf(buf, topology_##mask(dev->id),		\
+-					off, count);				\
++	return n;								\
+ }
  
- /* These apply for core versions 1.94a and later */
-+#define DWC3_DCTL_NYET_THRES_MASK	(0xf << 20)
- #define DWC3_DCTL_NYET_THRES(n)		(((n) & 0xf) << 20)
- 
- #define DWC3_DCTL_KEEP_CONNECT		BIT(19)
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4208,8 +4208,10 @@ static void dwc3_gadget_conndone_interru
- 		WARN_ONCE(DWC3_VER_IS_PRIOR(DWC3, 240A) && dwc->has_lpm_erratum,
- 				"LPM Erratum not available on dwc3 revisions < 2.40a\n");
- 
--		if (dwc->has_lpm_erratum && !DWC3_VER_IS_PRIOR(DWC3, 240A))
-+		if (dwc->has_lpm_erratum && !DWC3_VER_IS_PRIOR(DWC3, 240A)) {
-+			reg &= ~DWC3_DCTL_NYET_THRES_MASK;
- 			reg |= DWC3_DCTL_NYET_THRES(dwc->lpm_nyet_threshold);
-+		}
- 
- 		dwc3_gadget_dctl_write_safe(dwc, reg);
- 	} else {
+ define_id_show_func(physical_package_id, "%d");
 
 
