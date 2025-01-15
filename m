@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C5F248BDE;
-	Wed, 15 Jan 2025 10:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB78F1E98F6;
+	Wed, 15 Jan 2025 10:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938381; cv=none; b=LmuP1T+sG0fci75u6BPeGNgT23Uz1xkMgzvZHCUh7AkR+WUvqRJ9dfz9e22uYm4zEn8oHtlDUzAZIN2h0UfRTwPienvpkxJfJM28OdBM3sr8C3p7oEm0mO2xCWkkp2dNiCpFxiDRzxdLj0JkNCX3FWxxFQzVF2IY12FSk18la7s=
+	t=1736938384; cv=none; b=N9DKn9TDtg8jKwRGzYyzHMANubA6FkzVkjzgjtGaxKpeXQYs5XuKRjGVShU9DrDYN58RVlDIOeiP2+FRcXoWERgwROAxAUqZPNpSJ8K/dUp0LvFjDMAT3o9uAt/avZEfzB4f5SkqwzWnrLUVMpOx2Ymji0RJluThBoueCyCMAwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938381; c=relaxed/simple;
-	bh=JMpxtZwX27HnzmZPB4jHNLG+zgWA5L6hRKORx7nSYdo=;
+	s=arc-20240116; t=1736938384; c=relaxed/simple;
+	bh=NAe26oVsu6fquadRJOAXuS/4E6SoD/3tkl2hEeP8V0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fc7Kr9VGkbmiD68SAVmX81/OfTTzE9RCCdRhQYxCCjOumTAfIECN4T7joJaAmgetRFNJvn2L3g0TuYt9Dg9Bzc01FmHgtib0M2N0tkSiI5NluShm66o0WfOoiBKiCGbYdjMuXiyishkvlH5KdFS1HJdLWQ8V70nVabKT9fJZ14k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOrHkWCC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ohNz7A6Jl2+W54WhbkRIUmP8aBdhoiC37/44hUNGtnQ6u2C/r1luDPFBhK0sBjeqPlQh/yKAho2RFfpE+FKnGHC01AJx6i+Wpn8ZOH7LykAM6Q9vin0iG37mhq4Qi/6u8g7qFo8++QkxosAj6/aMS5wow1RRJT6nlK/Nu0hp5q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHvqh9wo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOrHkWCC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89A6C4CEDF;
-	Wed, 15 Jan 2025 10:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHvqh9wo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE5AC4CEDF;
+	Wed, 15 Jan 2025 10:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938381;
-	bh=JMpxtZwX27HnzmZPB4jHNLG+zgWA5L6hRKORx7nSYdo=;
+	s=korg; t=1736938384;
+	bh=NAe26oVsu6fquadRJOAXuS/4E6SoD/3tkl2hEeP8V0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOrHkWCCDMvmhuu4ohII8t2dkJexYVM/F2tQ1E6lXQDd3rq/A6inHfydkgc51s4T3
-	 AbdT5/QI2L0A1fks7g5VjFpnMZVed66QarMX+YpwpGgS2AYEgCCUHzw6AhIuLiGpiY
-	 AcRFg5/MKMBzfNOzK12XXNoJcY2QCvoPf8AWTC9Q=
+	b=bHvqh9wowBdEksPKt+v9jLqaU85RKDnN6/1R30PHJBYn+ZC/COdHJfonsXEZm6mIW
+	 E7J0axCRC+Plq9STl/+ony1My1trwReagF2Z2MLRhNHPILu2JNL/ghA+jlxzSDGaY+
+	 KPYOB162nCe1il3L3PrT+PuljcMumBquA16FMzsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lubomir Rintel <lkundrak@v3.sk>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 134/189] usb-storage: Add max sectors quirk for Nokia 208
-Date: Wed, 15 Jan 2025 11:37:10 +0100
-Message-ID: <20250115103611.786806146@linuxfoundation.org>
+	Fabio Scaccabarozzi <fsvm88@gmail.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 125/189] drm/amd/display: fix divide error in DM plane scale calcs
+Date: Wed, 15 Jan 2025 11:37:01 +0100
+Message-ID: <20250115103611.433508138@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -51,66 +52,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lubomir Rintel <lrintel@redhat.com>
+From: Melissa Wen <mwen@igalia.com>
 
-commit cdef30e0774802df2f87024d68a9d86c3b99ca2a upstream.
+commit 5225fd2a26211d012533acf98a6ad3f983885817 upstream.
 
-This fixes data corruption when accessing the internal SD card in mass
-storage mode.
+dm_get_plane_scale doesn't take into account plane scaled size equal to
+zero, leading to a kernel oops due to division by zero. Fix by setting
+out-scale size as zero when the dst size is zero, similar to what is
+done by drm_calc_scale(). This issue started with the introduction of
+cursor ovelay mode that uses this function to assess cursor mode changes
+via dm_crtc_get_cursor_mode() before checking plane state.
 
-I am actually not too sure why. I didn't figure a straightforward way to
-reproduce the issue, but i seem to get garbage when issuing a lot (over 50)
-of large reads (over 120 sectors) are done in a quick succession. That is,
-time seems to matter here -- larger reads are fine if they are done with
-some delay between them.
+[Dec17 17:14] Oops: divide error: 0000 [#1] PREEMPT SMP NOPTI
+[  +0.000018] CPU: 5 PID: 1660 Comm: surface-DP-1 Not tainted 6.10.0+ #231
+[  +0.000007] Hardware name: Valve Jupiter/Jupiter, BIOS F7A0131 01/30/2024
+[  +0.000004] RIP: 0010:dm_get_plane_scale+0x3f/0x60 [amdgpu]
+[  +0.000553] Code: 44 0f b7 41 3a 44 0f b7 49 3e 83 e0 0f 48 0f a3 c2 73 21 69 41 28 e8 03 00 00 31 d2 41 f7 f1 31 d2 89 06 69 41 2c e8 03 00 00 <41> f7 f0 89 07 e9 d7 d8 7e e9 44 89 c8 45 89 c1 41 89 c0 eb d4 66
+[  +0.000005] RSP: 0018:ffffa8df0de6b8a0 EFLAGS: 00010246
+[  +0.000006] RAX: 00000000000003e8 RBX: ffff9ac65c1f6e00 RCX: ffff9ac65d055500
+[  +0.000003] RDX: 0000000000000000 RSI: ffffa8df0de6b8b0 RDI: ffffa8df0de6b8b4
+[  +0.000004] RBP: ffff9ac64e7a5800 R08: 0000000000000000 R09: 0000000000000a00
+[  +0.000003] R10: 00000000000000ff R11: 0000000000000054 R12: ffff9ac6d0700010
+[  +0.000003] R13: ffff9ac65d054f00 R14: ffff9ac65d055500 R15: ffff9ac64e7a60a0
+[  +0.000004] FS:  00007f869ea00640(0000) GS:ffff9ac970080000(0000) knlGS:0000000000000000
+[  +0.000004] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  +0.000003] CR2: 000055ca701becd0 CR3: 000000010e7f2000 CR4: 0000000000350ef0
+[  +0.000004] Call Trace:
+[  +0.000007]  <TASK>
+[  +0.000006]  ? __die_body.cold+0x19/0x27
+[  +0.000009]  ? die+0x2e/0x50
+[  +0.000007]  ? do_trap+0xca/0x110
+[  +0.000007]  ? do_error_trap+0x6a/0x90
+[  +0.000006]  ? dm_get_plane_scale+0x3f/0x60 [amdgpu]
+[  +0.000504]  ? exc_divide_error+0x38/0x50
+[  +0.000005]  ? dm_get_plane_scale+0x3f/0x60 [amdgpu]
+[  +0.000488]  ? asm_exc_divide_error+0x1a/0x20
+[  +0.000011]  ? dm_get_plane_scale+0x3f/0x60 [amdgpu]
+[  +0.000593]  dm_crtc_get_cursor_mode+0x33f/0x430 [amdgpu]
+[  +0.000562]  amdgpu_dm_atomic_check+0x2ef/0x1770 [amdgpu]
+[  +0.000501]  drm_atomic_check_only+0x5e1/0xa30 [drm]
+[  +0.000047]  drm_mode_atomic_ioctl+0x832/0xcb0 [drm]
+[  +0.000050]  ? __pfx_drm_mode_atomic_ioctl+0x10/0x10 [drm]
+[  +0.000047]  drm_ioctl_kernel+0xb3/0x100 [drm]
+[  +0.000062]  drm_ioctl+0x27a/0x4f0 [drm]
+[  +0.000049]  ? __pfx_drm_mode_atomic_ioctl+0x10/0x10 [drm]
+[  +0.000055]  amdgpu_drm_ioctl+0x4e/0x90 [amdgpu]
+[  +0.000360]  __x64_sys_ioctl+0x97/0xd0
+[  +0.000010]  do_syscall_64+0x82/0x190
+[  +0.000008]  ? __pfx_drm_mode_createblob_ioctl+0x10/0x10 [drm]
+[  +0.000044]  ? srso_return_thunk+0x5/0x5f
+[  +0.000006]  ? drm_ioctl_kernel+0xb3/0x100 [drm]
+[  +0.000040]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? __check_object_size+0x50/0x220
+[  +0.000007]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? drm_ioctl+0x2a4/0x4f0 [drm]
+[  +0.000039]  ? __pfx_drm_mode_createblob_ioctl+0x10/0x10 [drm]
+[  +0.000043]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? __pm_runtime_suspend+0x69/0xc0
+[  +0.000006]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? amdgpu_drm_ioctl+0x71/0x90 [amdgpu]
+[  +0.000366]  ? srso_return_thunk+0x5/0x5f
+[  +0.000006]  ? syscall_exit_to_user_mode+0x77/0x210
+[  +0.000007]  ? srso_return_thunk+0x5/0x5f
+[  +0.000005]  ? do_syscall_64+0x8e/0x190
+[  +0.000006]  ? srso_return_thunk+0x5/0x5f
+[  +0.000006]  ? do_syscall_64+0x8e/0x190
+[  +0.000006]  ? srso_return_thunk+0x5/0x5f
+[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  +0.000008] RIP: 0033:0x55bb7cd962bc
+[  +0.000007] Code: 4c 89 6c 24 18 4c 89 64 24 20 4c 89 74 24 28 0f 57 c0 0f 11 44 24 30 89 c7 48 8d 54 24 08 b8 10 00 00 00 be bc 64 38 c0 0f 05 <49> 89 c7 48 83 3b 00 74 09 4c 89 c7 ff 15 62 64 99 00 48 83 7b 18
+[  +0.000005] RSP: 002b:00007f869e9f4da0 EFLAGS: 00000217 ORIG_RAX: 0000000000000010
+[  +0.000007] RAX: ffffffffffffffda RBX: 00007f869e9f4fb8 RCX: 000055bb7cd962bc
+[  +0.000004] RDX: 00007f869e9f4da8 RSI: 00000000c03864bc RDI: 000000000000003b
+[  +0.000003] RBP: 000055bb9ddcbcc0 R08: 00007f86541b9920 R09: 0000000000000009
+[  +0.000004] R10: 0000000000000004 R11: 0000000000000217 R12: 00007f865406c6b0
+[  +0.000003] R13: 00007f86541b5290 R14: 00007f865410b700 R15: 000055bb9ddcbc18
+[  +0.000009]  </TASK>
 
-But I'm not great at understanding this sort of things, so I'll assume
-the issue other, smarter, folks were seeing with similar phones is the
-same problem and I'll just put my quirk next to theirs.
-
-The "Software details" screen on the phone is as follows:
-
-  V 04.06
-  07-08-13
-  RM-849
-  (c) Nokia
-
-TL;DR version of the device descriptor:
-
-  idVendor           0x0421 Nokia Mobile Phones
-  idProduct          0x06c2
-  bcdDevice            4.06
-  iManufacturer           1 Nokia
-  iProduct                2 Nokia 208
-
-The patch assumes older firmwares are broken too (I'm unable to test, but
-no biggie if they aren't I guess), and I have no idea if newer firmware
-exists.
-
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250101212206.2386207-1-lkundrak@v3.sk
+Fixes: 1b04dcca4fb1 ("drm/amd/display: Introduce overlay cursor mode")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3729
+Reported-by: Fabio Scaccabarozzi <fsvm88@gmail.com>
+Co-developed-by: Fabio Scaccabarozzi <fsvm88@gmail.com>
+Signed-off-by: Fabio Scaccabarozzi <fsvm88@gmail.com>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ab75a0d2e07942ae15d32c0a5092fd336451378c)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -255,6 +255,13 @@ UNUSUAL_DEV(  0x0421, 0x06aa, 0x1110, 0x
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_MAX_SECTORS_64 ),
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11115,8 +11115,8 @@ dm_get_plane_scale(struct drm_plane_stat
+ 	int plane_src_w, plane_src_h;
  
-+/* Added by Lubomir Rintel <lkundrak@v3.sk>, a very fine chap */
-+UNUSUAL_DEV(  0x0421, 0x06c2, 0x0000, 0x0406,
-+		"Nokia",
-+		"Nokia 208",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_MAX_SECTORS_64 ),
-+
- #ifdef NO_SDDR09
- UNUSUAL_DEV(  0x0436, 0x0005, 0x0100, 0x0100,
- 		"Microtech",
+ 	dm_get_oriented_plane_size(plane_state, &plane_src_w, &plane_src_h);
+-	*out_plane_scale_w = plane_state->crtc_w * 1000 / plane_src_w;
+-	*out_plane_scale_h = plane_state->crtc_h * 1000 / plane_src_h;
++	*out_plane_scale_w = plane_src_w ? plane_state->crtc_w * 1000 / plane_src_w : 0;
++	*out_plane_scale_h = plane_src_h ? plane_state->crtc_h * 1000 / plane_src_h : 0;
+ }
+ 
+ /*
 
 
