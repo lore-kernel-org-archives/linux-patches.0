@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA05248BA0;
-	Wed, 15 Jan 2025 10:41:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F1C248BA0;
+	Wed, 15 Jan 2025 10:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937699; cv=none; b=OseqyodFAT/AoEy1OLL6m3/Pcc0RWxezIiVtP0+GwmlrYM/feeQGjNrh40I0DOSA/9MfbiQSrQoAAKBXXzXKSY8K1JDSNQwhy4SBnN7w0WjTV+eauQ2Vay0tncG/wDo3Z86H/PYVbUUjK3qdg9at+TcbPiRD/XmmWY2tLbMqTQk=
+	t=1736937703; cv=none; b=AginfNOXkQxvEExJg/lod7JiRcpE/zjb3PMAzIg7FK6Ht9VC7tJ52F7zS+5yxZLnYexKSNnEeve7PUxVcIs9y/r/3OQzz6+xXxbOBqXw7ozeqvAnRHhjrylLckKgzlaDE+ttc7465pDcoDE/lfbTRYf7Cv0CAb2ox7rcCEG6Bd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937699; c=relaxed/simple;
-	bh=auiRrgbnYrzmN2onjQvMuf5/hS73Z9s7w2Uujp1kUjQ=;
+	s=arc-20240116; t=1736937703; c=relaxed/simple;
+	bh=Ra/Nh/P38HDc9FqwzLNp05n68iScWGuUbYyEijmo1mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfmgiubEoETDqOkNQELqqQtthj/3aXs1FFrg6I5IWe4AghI+oUTbhAS2uiuM9U4xzEuY1ejrmHimwLL8ixcKJZnR2/lf8IQLLY66FLk9ltIeMwpHDzb7Pe474E77w/lVhL1t4crR5hXqSNypRcEtIJXtFvC0yDN7/4mDnlIUt/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRQKa4lo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YVoib6cXeMNcB1RuHLRErUEywXe65jDVVZ8+URzhb8U+OYIE3l7WF3B23fnlMVFiT/S3PefrekUX4ZTGXX/PqUcxmOOyHAY6VhU3XhvMB/DCUCSMldNQtGLARmYgPxYyLRb5l8+MnlTFPhFneP3uN32PSzjxxGv0MPy3Sl+NTJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yCF9563S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRQKa4lo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF08C4CEE1;
-	Wed, 15 Jan 2025 10:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yCF9563S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4E5C4CEE2;
+	Wed, 15 Jan 2025 10:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937699;
-	bh=auiRrgbnYrzmN2onjQvMuf5/hS73Z9s7w2Uujp1kUjQ=;
+	s=korg; t=1736937702;
+	bh=Ra/Nh/P38HDc9FqwzLNp05n68iScWGuUbYyEijmo1mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRQKa4loI//WFufdnHv09JkVZk5Ln9fi8vv4CSauLDuMUib4UG2yDKpGJIn6IDvC+
-	 XLSL9KLrGpfm0AbhryUVEI1d/ARCSOqjpa8h99tY9ghNuNWdDNvDEaYWu4VJP6KwU5
-	 Yh8H0h+fPZYe+UlYvq4W1VuyHYvUt+Di55+r3Guw=
+	b=yCF9563S9ENuh0oMd/kFiOR94Y+f6jBbICyYxRmI5tFZi2WKhSrYnjcbXI22cHDg/
+	 Q2HOwuP4neztbrKoZRFsm9LB3ST+G+BsE2pGVY5GCKkxMEWuozl3diWUU9fuRs4yme
+	 WLIiiYyULKHJRpszrwxSBHqC4NIRINdMyI6GELa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 54/92] staging: iio: ad9834: Correct phase range check
-Date: Wed, 15 Jan 2025 11:37:12 +0100
-Message-ID: <20250115103549.695100187@linuxfoundation.org>
+	syzbot+f63600d288bfb7057424@syzkaller.appspotmail.com,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Dave Taht <dave.taht@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 26/92] sched: sch_cake: add bounds checks to host bulk flow fairness counts
+Date: Wed, 15 Jan 2025 11:36:44 +0100
+Message-ID: <20250115103548.575569627@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -45,61 +47,294 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit c0599762f0c7e260b99c6b7bceb8eae69b804c94 upstream.
+[ Upstream commit 737d4d91d35b5f7fa5bb442651472277318b0bfd ]
 
-User Perspective:
-When a user sets the phase value, the ad9834_write_phase() is called.
-The phase register has a 12-bit resolution, so the valid range is 0 to
-4095. If the phase offset value of 4096 is input, it effectively exactly
-equals 0 in the lower 12 bits, meaning no offset.
+Even though we fixed a logic error in the commit cited below, syzbot
+still managed to trigger an underflow of the per-host bulk flow
+counters, leading to an out of bounds memory access.
 
-Reasons for the Change:
-1) Original Condition (phase > BIT(AD9834_PHASE_BITS)):
-This condition allows a phase value equal to 2^12, which is 4096.
-However, this value exceeds the valid 12-bit range, as the maximum valid
-phase value should be 4095.
-2) Modified Condition (phase >= BIT(AD9834_PHASE_BITS)):
-Ensures that the phase value is within the valid range, preventing
-invalid datafrom being written.
+To avoid any such logic errors causing out of bounds memory accesses,
+this commit factors out all accesses to the per-host bulk flow counters
+to a series of helpers that perform bounds-checking before any
+increments and decrements. This also has the benefit of improving
+readability by moving the conditional checks for the flow mode into
+these helpers, instead of having them spread out throughout the
+code (which was the cause of the original logic error).
 
-Impact on Subsequent Logic: st->data = cpu_to_be16(addr | phase):
-If the phase value is 2^12, i.e., 4096 (0001 0000 0000 0000), and addr
-is AD9834_REG_PHASE0 (1100 0000 0000 0000), then addr | phase results in
-1101 0000 0000 0000, occupying DB12. According to the section of WRITING
-TO A PHASE REGISTER in the datasheet, the MSB 12 PHASE0 bits should be
-DB11. The original condition leads to incorrect DB12 usage, which
-contradicts the datasheet and could pose potential issues for future
-updates if DB12 is used in such related cases.
+As part of this change, the flow quantum calculation is consolidated
+into a helper function, which means that the dithering applied to the
+ost load scaling is now applied both in the DRR rotation and when a
+sparse flow's quantum is first initiated. The only user-visible effect
+of this is that the maximum packet size that can be sent while a flow
+stays sparse will now vary with +/- one byte in some cases. This should
+not make a noticeable difference in practice, and thus it's not worth
+complicating the code to preserve the old behaviour.
 
-Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20241107011015.2472600-2-quzicheng@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 546ea84d07e3 ("sched: sch_cake: fix bulk flow accounting logic for host fairness")
+Reported-by: syzbot+f63600d288bfb7057424@syzkaller.appspotmail.com
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Dave Taht <dave.taht@gmail.com>
+Link: https://patch.msgid.link/20250107120105.70685-1-toke@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/frequency/ad9834.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_cake.c | 140 +++++++++++++++++++++++--------------------
+ 1 file changed, 75 insertions(+), 65 deletions(-)
 
---- a/drivers/staging/iio/frequency/ad9834.c
-+++ b/drivers/staging/iio/frequency/ad9834.c
-@@ -131,7 +131,7 @@ static int ad9834_write_frequency(struct
- static int ad9834_write_phase(struct ad9834_state *st,
- 			      unsigned long addr, unsigned long phase)
- {
--	if (phase > BIT(AD9834_PHASE_BITS))
-+	if (phase >= BIT(AD9834_PHASE_BITS))
- 		return -EINVAL;
- 	st->data = cpu_to_be16(addr | phase);
+diff --git a/net/sched/sch_cake.c b/net/sched/sch_cake.c
+index eee9ebad35a5..12dd4d41605c 100644
+--- a/net/sched/sch_cake.c
++++ b/net/sched/sch_cake.c
+@@ -643,6 +643,63 @@ static bool cake_ddst(int flow_mode)
+ 	return (flow_mode & CAKE_FLOW_DUAL_DST) == CAKE_FLOW_DUAL_DST;
+ }
  
++static void cake_dec_srchost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_dsrc(flow_mode) &&
++		   q->hosts[flow->srchost].srchost_bulk_flow_count))
++		q->hosts[flow->srchost].srchost_bulk_flow_count--;
++}
++
++static void cake_inc_srchost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_dsrc(flow_mode) &&
++		   q->hosts[flow->srchost].srchost_bulk_flow_count < CAKE_QUEUES))
++		q->hosts[flow->srchost].srchost_bulk_flow_count++;
++}
++
++static void cake_dec_dsthost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_ddst(flow_mode) &&
++		   q->hosts[flow->dsthost].dsthost_bulk_flow_count))
++		q->hosts[flow->dsthost].dsthost_bulk_flow_count--;
++}
++
++static void cake_inc_dsthost_bulk_flow_count(struct cake_tin_data *q,
++					     struct cake_flow *flow,
++					     int flow_mode)
++{
++	if (likely(cake_ddst(flow_mode) &&
++		   q->hosts[flow->dsthost].dsthost_bulk_flow_count < CAKE_QUEUES))
++		q->hosts[flow->dsthost].dsthost_bulk_flow_count++;
++}
++
++static u16 cake_get_flow_quantum(struct cake_tin_data *q,
++				 struct cake_flow *flow,
++				 int flow_mode)
++{
++	u16 host_load = 1;
++
++	if (cake_dsrc(flow_mode))
++		host_load = max(host_load,
++				q->hosts[flow->srchost].srchost_bulk_flow_count);
++
++	if (cake_ddst(flow_mode))
++		host_load = max(host_load,
++				q->hosts[flow->dsthost].dsthost_bulk_flow_count);
++
++	/* The get_random_u16() is a way to apply dithering to avoid
++	 * accumulating roundoff errors
++	 */
++	return (q->flow_quantum * quantum_div[host_load] +
++		get_random_u16()) >> 16;
++}
++
+ static u32 cake_hash(struct cake_tin_data *q, const struct sk_buff *skb,
+ 		     int flow_mode, u16 flow_override, u16 host_override)
+ {
+@@ -789,10 +846,8 @@ static u32 cake_hash(struct cake_tin_data *q, const struct sk_buff *skb,
+ 		allocate_dst = cake_ddst(flow_mode);
+ 
+ 		if (q->flows[outer_hash + k].set == CAKE_SET_BULK) {
+-			if (allocate_src)
+-				q->hosts[q->flows[reduced_hash].srchost].srchost_bulk_flow_count--;
+-			if (allocate_dst)
+-				q->hosts[q->flows[reduced_hash].dsthost].dsthost_bulk_flow_count--;
++			cake_dec_srchost_bulk_flow_count(q, &q->flows[outer_hash + k], flow_mode);
++			cake_dec_dsthost_bulk_flow_count(q, &q->flows[outer_hash + k], flow_mode);
+ 		}
+ found:
+ 		/* reserve queue for future packets in same flow */
+@@ -817,9 +872,10 @@ static u32 cake_hash(struct cake_tin_data *q, const struct sk_buff *skb,
+ 			q->hosts[outer_hash + k].srchost_tag = srchost_hash;
+ found_src:
+ 			srchost_idx = outer_hash + k;
+-			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
+-				q->hosts[srchost_idx].srchost_bulk_flow_count++;
+ 			q->flows[reduced_hash].srchost = srchost_idx;
++
++			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
++				cake_inc_srchost_bulk_flow_count(q, &q->flows[reduced_hash], flow_mode);
+ 		}
+ 
+ 		if (allocate_dst) {
+@@ -840,9 +896,10 @@ static u32 cake_hash(struct cake_tin_data *q, const struct sk_buff *skb,
+ 			q->hosts[outer_hash + k].dsthost_tag = dsthost_hash;
+ found_dst:
+ 			dsthost_idx = outer_hash + k;
+-			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
+-				q->hosts[dsthost_idx].dsthost_bulk_flow_count++;
+ 			q->flows[reduced_hash].dsthost = dsthost_idx;
++
++			if (q->flows[reduced_hash].set == CAKE_SET_BULK)
++				cake_inc_dsthost_bulk_flow_count(q, &q->flows[reduced_hash], flow_mode);
+ 		}
+ 	}
+ 
+@@ -1855,10 +1912,6 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 
+ 	/* flowchain */
+ 	if (!flow->set || flow->set == CAKE_SET_DECAYING) {
+-		struct cake_host *srchost = &b->hosts[flow->srchost];
+-		struct cake_host *dsthost = &b->hosts[flow->dsthost];
+-		u16 host_load = 1;
+-
+ 		if (!flow->set) {
+ 			list_add_tail(&flow->flowchain, &b->new_flows);
+ 		} else {
+@@ -1868,18 +1921,8 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		flow->set = CAKE_SET_SPARSE;
+ 		b->sparse_flow_count++;
+ 
+-		if (cake_dsrc(q->flow_mode))
+-			host_load = max(host_load, srchost->srchost_bulk_flow_count);
+-
+-		if (cake_ddst(q->flow_mode))
+-			host_load = max(host_load, dsthost->dsthost_bulk_flow_count);
+-
+-		flow->deficit = (b->flow_quantum *
+-				 quantum_div[host_load]) >> 16;
++		flow->deficit = cake_get_flow_quantum(b, flow, q->flow_mode);
+ 	} else if (flow->set == CAKE_SET_SPARSE_WAIT) {
+-		struct cake_host *srchost = &b->hosts[flow->srchost];
+-		struct cake_host *dsthost = &b->hosts[flow->dsthost];
+-
+ 		/* this flow was empty, accounted as a sparse flow, but actually
+ 		 * in the bulk rotation.
+ 		 */
+@@ -1887,12 +1930,8 @@ static s32 cake_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 		b->sparse_flow_count--;
+ 		b->bulk_flow_count++;
+ 
+-		if (cake_dsrc(q->flow_mode))
+-			srchost->srchost_bulk_flow_count++;
+-
+-		if (cake_ddst(q->flow_mode))
+-			dsthost->dsthost_bulk_flow_count++;
+-
++		cake_inc_srchost_bulk_flow_count(b, flow, q->flow_mode);
++		cake_inc_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 	}
+ 
+ 	if (q->buffer_used > q->buffer_max_used)
+@@ -1949,13 +1988,11 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ {
+ 	struct cake_sched_data *q = qdisc_priv(sch);
+ 	struct cake_tin_data *b = &q->tins[q->cur_tin];
+-	struct cake_host *srchost, *dsthost;
+ 	ktime_t now = ktime_get();
+ 	struct cake_flow *flow;
+ 	struct list_head *head;
+ 	bool first_flow = true;
+ 	struct sk_buff *skb;
+-	u16 host_load;
+ 	u64 delay;
+ 	u32 len;
+ 
+@@ -2055,11 +2092,6 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 	q->cur_flow = flow - b->flows;
+ 	first_flow = false;
+ 
+-	/* triple isolation (modified DRR++) */
+-	srchost = &b->hosts[flow->srchost];
+-	dsthost = &b->hosts[flow->dsthost];
+-	host_load = 1;
+-
+ 	/* flow isolation (DRR++) */
+ 	if (flow->deficit <= 0) {
+ 		/* Keep all flows with deficits out of the sparse and decaying
+@@ -2071,11 +2103,8 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 				b->sparse_flow_count--;
+ 				b->bulk_flow_count++;
+ 
+-				if (cake_dsrc(q->flow_mode))
+-					srchost->srchost_bulk_flow_count++;
+-
+-				if (cake_ddst(q->flow_mode))
+-					dsthost->dsthost_bulk_flow_count++;
++				cake_inc_srchost_bulk_flow_count(b, flow, q->flow_mode);
++				cake_inc_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 
+ 				flow->set = CAKE_SET_BULK;
+ 			} else {
+@@ -2087,19 +2116,7 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 			}
+ 		}
+ 
+-		if (cake_dsrc(q->flow_mode))
+-			host_load = max(host_load, srchost->srchost_bulk_flow_count);
+-
+-		if (cake_ddst(q->flow_mode))
+-			host_load = max(host_load, dsthost->dsthost_bulk_flow_count);
+-
+-		WARN_ON(host_load > CAKE_QUEUES);
+-
+-		/* The get_random_u16() is a way to apply dithering to avoid
+-		 * accumulating roundoff errors
+-		 */
+-		flow->deficit += (b->flow_quantum * quantum_div[host_load] +
+-				  get_random_u16()) >> 16;
++		flow->deficit += cake_get_flow_quantum(b, flow, q->flow_mode);
+ 		list_move_tail(&flow->flowchain, &b->old_flows);
+ 
+ 		goto retry;
+@@ -2123,11 +2140,8 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 				if (flow->set == CAKE_SET_BULK) {
+ 					b->bulk_flow_count--;
+ 
+-					if (cake_dsrc(q->flow_mode))
+-						srchost->srchost_bulk_flow_count--;
+-
+-					if (cake_ddst(q->flow_mode))
+-						dsthost->dsthost_bulk_flow_count--;
++					cake_dec_srchost_bulk_flow_count(b, flow, q->flow_mode);
++					cake_dec_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 
+ 					b->decaying_flow_count++;
+ 				} else if (flow->set == CAKE_SET_SPARSE ||
+@@ -2145,12 +2159,8 @@ static struct sk_buff *cake_dequeue(struct Qdisc *sch)
+ 				else if (flow->set == CAKE_SET_BULK) {
+ 					b->bulk_flow_count--;
+ 
+-					if (cake_dsrc(q->flow_mode))
+-						srchost->srchost_bulk_flow_count--;
+-
+-					if (cake_ddst(q->flow_mode))
+-						dsthost->dsthost_bulk_flow_count--;
+-
++					cake_dec_srchost_bulk_flow_count(b, flow, q->flow_mode);
++					cake_dec_dsthost_bulk_flow_count(b, flow, q->flow_mode);
+ 				} else
+ 					b->decaying_flow_count--;
+ 
+-- 
+2.39.5
+
 
 
