@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F82248BA0;
-	Wed, 15 Jan 2025 10:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AAC248BA0;
+	Wed, 15 Jan 2025 10:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937756; cv=none; b=Fo9I9DZoH3GiRMr16Lw7Blg5uPBRrdrFPOyi2zuSkXogkbwlV0SbmbUbQyPRfBL759ITYMOs/ZZXz4zPdNDg+D+7lUdcnE4beD7o+I7fN45k85cwdE7tMqil3RWHxD3IrF9aeeYKqEfVFhzWkDSQIOOjhlJktz5NYKFqRiVBwkU=
+	t=1736937759; cv=none; b=pkHYUGanGtQi8BbPt0ToDVGePwch3uh7+6m60m0FbZE9/i+k0MWz9gtLicRrEEj7QlfjAfVrcVer/AnCgZzF/K5xUFSAh3d0UWtOaxcUKx5RBBTKuAE+pgAtjgjM4H611vziYe1TyQ9tWm36U0p3YbGUP6Wfu93hKkntHmdc3RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937756; c=relaxed/simple;
-	bh=/JkeAwBa0FInAiQHPvNoQfXQ1bVTJvyDMQftg2kFiX4=;
+	s=arc-20240116; t=1736937759; c=relaxed/simple;
+	bh=uGeGApO3gBnDO8N/gWnbNKmU36iw03Th7VhULZTpOA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/QtD430X2Vm1M2JyvCjLpSHWUyz0hbnqVDzvrz7FUtixBbc/P/8dzt7/+NHD3CcghZB9tDOcD5MNnGgwoMCSZOOE2xDIUuLbQYBHoqD0bvy4lyGva5y8A/WImRsJYmozHiBDDWGvhEGoL/z0CeKLm3pW2hdsg53YfQ7AFn2eMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VvzDa6ob; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KH2ourjqA6D4sMVdIfl5DLB8YU7usVQDN/vqt95EqYYu5dFNsuXlghyGm7tCwv0D6NNbYG2okGb8vPofwh5nJ952coK4H2cke7THOb0JppFSYiBxbTKRTTR6soNuMQFa/EYHty1GCuDc3p3AX6pnrEbz/hwi3dtGiSJGqmdMrTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0YmCs3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VvzDa6ob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDBCC4CEDF;
-	Wed, 15 Jan 2025 10:42:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0YmCs3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5E0C4CEDF;
+	Wed, 15 Jan 2025 10:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937756;
-	bh=/JkeAwBa0FInAiQHPvNoQfXQ1bVTJvyDMQftg2kFiX4=;
+	s=korg; t=1736937759;
+	bh=uGeGApO3gBnDO8N/gWnbNKmU36iw03Th7VhULZTpOA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VvzDa6obOtwxqmkUOcJ4fTl5mwM8TKyPz9VUzx57Ru0va1fZtId7gHqGlBp4plIoO
-	 VGvcNKrP9z2K3qxJptfktF73RkH8m0LvSQEacGpjPW90ZQNwLwJh/EnXxnwFFjkSQs
-	 cELBZ0uIubaRWWgFgSSPrr8A0An79zeVA5lbj2+k=
+	b=M0YmCs3ZAADdtfVgUZvSHzXCX/aZJ6FYxBGBT14lAysGL2RZ2fPxBDBGwlBKXry8Q
+	 1nyyx5lBsWeHWniR2GMxsvnV/DbkTqRZsa+jGMo2VmwcIPvj2J+KiRqbT4NviAZpP5
+	 fWkl7PYzR2WqJI1iHV5pXdc9JQa2rIye0UMuumAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 73/92] iio: adc: ti-ads8688: fix information leak in triggered buffer
-Date: Wed, 15 Jan 2025 11:37:31 +0100
-Message-ID: <20250115103550.471931025@linuxfoundation.org>
+Subject: [PATCH 6.1 74/92] iio: gyro: fxas21002c: Fix missing data update in trigger handler
+Date: Wed, 15 Jan 2025 11:37:32 +0100
+Message-ID: <20250115103550.512082534@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,37 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit 2a7377ccfd940cd6e9201756aff1e7852c266e69 upstream.
+commit fa13ac6cdf9b6c358e7d77c29fb60145c7a87965 upstream.
 
-The 'buffer' local array is used to push data to user space from a
-triggered buffer, but it does not set values for inactive channels, as
-it only uses iio_for_each_active_channel() to assign new values.
+The fxas21002c_trigger_handler() may fail to acquire sample data because
+the runtime PM enters the autosuspend state and sensor can not return
+sample data in standby mode..
 
-Initialize the array to zero before using it to avoid pushing
-uninitialized information to userspace.
+Resume the sensor before reading the sample data into the buffer within the
+trigger handler. After the data is read, place the sensor back into the
+autosuspend state.
 
-Cc: stable@vger.kernel.org
-Fixes: 61fa5dfa5f52 ("iio: adc: ti-ads8688: Fix alignment of buffer in iio_push_to_buffers_with_timestamp()")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-8-0cb6e98d895c@gmail.com
+Fixes: a0701b6263ae ("iio: gyro: add core driver for fxas21002c")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20241116152945.4006374-1-Frank.Li@nxp.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads8688.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/gyro/fxas21002c_core.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-ads8688.c
-+++ b/drivers/iio/adc/ti-ads8688.c
-@@ -382,7 +382,7 @@ static irqreturn_t ads8688_trigger_handl
- 	struct iio_poll_func *pf = p;
- 	struct iio_dev *indio_dev = pf->indio_dev;
- 	/* Ensure naturally aligned timestamp */
--	u16 buffer[ADS8688_MAX_CHANNELS + sizeof(s64)/sizeof(u16)] __aligned(8);
-+	u16 buffer[ADS8688_MAX_CHANNELS + sizeof(s64)/sizeof(u16)] __aligned(8) = { };
- 	int i, j = 0;
+--- a/drivers/iio/gyro/fxas21002c_core.c
++++ b/drivers/iio/gyro/fxas21002c_core.c
+@@ -730,14 +730,21 @@ static irqreturn_t fxas21002c_trigger_ha
+ 	int ret;
  
- 	for (i = 0; i < indio_dev->masklength; i++) {
+ 	mutex_lock(&data->lock);
++	ret = fxas21002c_pm_get(data);
++	if (ret < 0)
++		goto out_unlock;
++
+ 	ret = regmap_bulk_read(data->regmap, FXAS21002C_REG_OUT_X_MSB,
+ 			       data->buffer, CHANNEL_SCAN_MAX * sizeof(s16));
+ 	if (ret < 0)
+-		goto out_unlock;
++		goto out_pm_put;
+ 
+ 	iio_push_to_buffers_with_timestamp(indio_dev, data->buffer,
+ 					   data->timestamp);
+ 
++out_pm_put:
++	fxas21002c_pm_put(data);
++
+ out_unlock:
+ 	mutex_unlock(&data->lock);
+ 
 
 
