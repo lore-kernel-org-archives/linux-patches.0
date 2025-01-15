@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EF3248BAF;
-	Wed, 15 Jan 2025 11:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9511D248BAF;
+	Wed, 15 Jan 2025 11:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938870; cv=none; b=ggSbfo/e/KxqwZTC95cK7xz6sulbcV20ITJDqR2lajKxVXj5LifoiVoSDBp4GuuJXwnouUjF/TV1Q4eR18MIs5Ge/Z5xcJ7rbnkldadjI7+VWubeFITh3ca8ZH9S9mlK8KlgBmi0vhmpmtKb9cbZ0XPwj0l5fHKz8nz/I+7Dxm8=
+	t=1736938873; cv=none; b=F/SRSlR5QqJK41uQJyrQu3K5rIJAfUAKjlXzlxmlsiLanjyDVpygFcnkPrODnumPD3O4i3z2Itogr8gDmBvO74BI7c5lu8daZlwm2RCVaAJV26p2ObwwxJWoyql6AF9GCcgiWR9q/WMmp4MX6p/bCDpPH6mQucE3o4btZ5jy1Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938870; c=relaxed/simple;
-	bh=ngm8zg57/eHDh9HabxZDuqvpgKqOmoUi/PwA0glv01s=;
+	s=arc-20240116; t=1736938873; c=relaxed/simple;
+	bh=9Q68S/ZzStzxfX+IuZvrDZyRvnRpv/MYzb7riuaJsVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjeVMXW7R0+ViOuW51jpWiSvlWIPQwDfj/wUnht5gbajSDYunO25jAk4ZSuhqXxh6QSi7Yg3VLDWZb5wXpykmlBJs3Zns/SNZktOouuqkx8CtjtZSZyI2gfvJNJJmT9pjm7nyAgia93RlyMfATP5lcZG16udSVPao28A4wbQbKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxlyKMfs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Wq6QxRqE/+zT6AcDHJ+wVFEJoi+EQO193vWuBarDPlk6VpBesOOqYLJZdfzjnPMm8JiTAYv6lSFl7pBifFJYnqSgsfJ5ZR38K6a7TXWNsHq5x1J6CbmGRBW7bACHHv0LJUspBDl6oACI5Thx+LZwRsCW7rJHJ3rL9PgR116YlyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0HAnUK1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxlyKMfs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D6CC4CEDF;
-	Wed, 15 Jan 2025 11:01:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0HAnUK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05830C4CEDF;
+	Wed, 15 Jan 2025 11:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938869;
-	bh=ngm8zg57/eHDh9HabxZDuqvpgKqOmoUi/PwA0glv01s=;
+	s=korg; t=1736938873;
+	bh=9Q68S/ZzStzxfX+IuZvrDZyRvnRpv/MYzb7riuaJsVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxlyKMfsoVSFUzO6+uCl8msGKxPzeGMZxcQfYiDyZZJ+4nUy8yBckDJeEGOwGQEkU
-	 00eIe9eTkFV1ChLIMTBo7rTDhw0WNLw7uMtQSjD9X50VA2CpzywoIp29pVFfq2R7N2
-	 9xL4musTWnyYiqemZarLH/ggg//lwKM2UhJtsL2E=
+	b=H0HAnUK1wY+waC8oAikJ9lNe0LlbFSUp7+BDgxM/cIw6smD0X/8kJwcuW8tZoxkti
+	 7xNXgWu1u/YKHSDVN7WZmayidsL+Jv5bwzpz1K/Qwl/JaetSwIpnQpXKB0cXWOXgYT
+	 Jhr2cueC7QMSfRD3cBY7rSGK3IfEmVuNackdxieY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
 	Tejun Heo <tj@kernel.org>,
-	Allen Pais <allen.lkml@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Matthew Brost <matthew.brost@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 122/129] workqueue: Update lock debugging code
-Date: Wed, 15 Jan 2025 11:38:17 +0100
-Message-ID: <20250115103559.218461611@linuxfoundation.org>
+Subject: [PATCH 6.6 123/129] workqueue: Do not warn when cancelling WQ_MEM_RECLAIM work from !WQ_MEM_RECLAIM worker
+Date: Wed, 15 Jan 2025 11:38:18 +0100
+Message-ID: <20250115103559.256515275@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -45,160 +49,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit c35aea39d1e106f61fd2130f0d32a3bac8bd4570 ]
+[ Upstream commit de35994ecd2dd6148ab5a6c5050a1670a04dec77 ]
 
-These changes are in preparation of BH workqueue which will execute work
-items from BH context.
+After commit
+746ae46c1113 ("drm/sched: Mark scheduler work queues with WQ_MEM_RECLAIM")
+amdgpu started seeing the following warning:
 
-- Update lock and RCU depth checks in process_one_work() so that it
-  remembers and checks against the starting depths and prints out the depth
-  changes.
+ [ ] workqueue: WQ_MEM_RECLAIM sdma0:drm_sched_run_job_work [gpu_sched] is flushing !WQ_MEM_RECLAIM events:amdgpu_device_delay_enable_gfx_off [amdgpu]
+...
+ [ ] Workqueue: sdma0 drm_sched_run_job_work [gpu_sched]
+...
+ [ ] Call Trace:
+ [ ]  <TASK>
+...
+ [ ]  ? check_flush_dependency+0xf5/0x110
+...
+ [ ]  cancel_delayed_work_sync+0x6e/0x80
+ [ ]  amdgpu_gfx_off_ctrl+0xab/0x140 [amdgpu]
+ [ ]  amdgpu_ring_alloc+0x40/0x50 [amdgpu]
+ [ ]  amdgpu_ib_schedule+0xf4/0x810 [amdgpu]
+ [ ]  ? drm_sched_run_job_work+0x22c/0x430 [gpu_sched]
+ [ ]  amdgpu_job_run+0xaa/0x1f0 [amdgpu]
+ [ ]  drm_sched_run_job_work+0x257/0x430 [gpu_sched]
+ [ ]  process_one_work+0x217/0x720
+...
+ [ ]  </TASK>
 
-- Factor out lockdep annotations in the flush paths into
-  touch_{wq|work}_lockdep_map(). The work->lockdep_map touching is moved
-  from __flush_work() to its callee - start_flush_work(). This brings it
-  closer to the wq counterpart and will allow testing the associated wq's
-  flags which will be needed to support BH workqueues. This is not expected
-  to cause any functional changes.
+The intent of the verifcation done in check_flush_depedency is to ensure
+forward progress during memory reclaim, by flagging cases when either a
+memory reclaim process, or a memory reclaim work item is flushed from a
+context not marked as memory reclaim safe.
 
+This is correct when flushing, but when called from the
+cancel(_delayed)_work_sync() paths it is a false positive because work is
+either already running, or will not be running at all. Therefore
+cancelling it is safe and we can relax the warning criteria by letting the
+helper know of the calling context.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Fixes: fca839c00a12 ("workqueue: warn if memory reclaim tries to flush !WQ_MEM_RECLAIM workqueue")
+References: 746ae46c1113 ("drm/sched: Mark scheduler work queues with WQ_MEM_RECLAIM")
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Lai Jiangshan <jiangshanlai@gmail.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: <stable@vger.kernel.org> # v4.5+
 Signed-off-by: Tejun Heo <tj@kernel.org>
-Tested-by: Allen Pais <allen.lkml@gmail.com>
-Stable-dep-of: de35994ecd2d ("workqueue: Do not warn when cancelling WQ_MEM_RECLAIM work from !WQ_MEM_RECLAIM worker")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 51 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 17 deletions(-)
+ kernel/workqueue.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 2d85f232c675..da5750246a92 100644
+index da5750246a92..59b6efb2a11c 100644
 --- a/kernel/workqueue.c
 +++ b/kernel/workqueue.c
-@@ -2541,6 +2541,7 @@ __acquires(&pool->lock)
- 	struct pool_workqueue *pwq = get_work_pwq(work);
- 	struct worker_pool *pool = worker->pool;
- 	unsigned long work_data;
-+	int lockdep_start_depth, rcu_start_depth;
- #ifdef CONFIG_LOCKDEP
- 	/*
- 	 * It is permissible to free the struct work_struct from
-@@ -2603,6 +2604,8 @@ __acquires(&pool->lock)
- 	pwq->stats[PWQ_STAT_STARTED]++;
- 	raw_spin_unlock_irq(&pool->lock);
+@@ -2947,23 +2947,27 @@ static int rescuer_thread(void *__rescuer)
+  * check_flush_dependency - check for flush dependency sanity
+  * @target_wq: workqueue being flushed
+  * @target_work: work item being flushed (NULL for workqueue flushes)
++ * @from_cancel: are we called from the work cancel path
+  *
+  * %current is trying to flush the whole @target_wq or @target_work on it.
+- * If @target_wq doesn't have %WQ_MEM_RECLAIM, verify that %current is not
+- * reclaiming memory or running on a workqueue which doesn't have
+- * %WQ_MEM_RECLAIM as that can break forward-progress guarantee leading to
+- * a deadlock.
++ * If this is not the cancel path (which implies work being flushed is either
++ * already running, or will not be at all), check if @target_wq doesn't have
++ * %WQ_MEM_RECLAIM and verify that %current is not reclaiming memory or running
++ * on a workqueue which doesn't have %WQ_MEM_RECLAIM as that can break forward-
++ * progress guarantee leading to a deadlock.
+  */
+ static void check_flush_dependency(struct workqueue_struct *target_wq,
+-				   struct work_struct *target_work)
++				   struct work_struct *target_work,
++				   bool from_cancel)
+ {
+-	work_func_t target_func = target_work ? target_work->func : NULL;
++	work_func_t target_func;
+ 	struct worker *worker;
  
-+	rcu_start_depth = rcu_preempt_depth();
-+	lockdep_start_depth = lockdep_depth(current);
- 	lock_map_acquire(&pwq->wq->lockdep_map);
- 	lock_map_acquire(&lockdep_map);
- 	/*
-@@ -2638,12 +2641,15 @@ __acquires(&pool->lock)
- 	lock_map_release(&lockdep_map);
- 	lock_map_release(&pwq->wq->lockdep_map);
- 
--	if (unlikely(in_atomic() || lockdep_depth(current) > 0 ||
--		     rcu_preempt_depth() > 0)) {
--		pr_err("BUG: workqueue leaked lock or atomic: %s/0x%08x/%d/%d\n"
--		       "     last function: %ps\n",
--		       current->comm, preempt_count(), rcu_preempt_depth(),
--		       task_pid_nr(current), worker->current_func);
-+	if (unlikely((worker->task && in_atomic()) ||
-+		     lockdep_depth(current) != lockdep_start_depth ||
-+		     rcu_preempt_depth() != rcu_start_depth)) {
-+		pr_err("BUG: workqueue leaked atomic, lock or RCU: %s[%d]\n"
-+		       "     preempt=0x%08x lock=%d->%d RCU=%d->%d workfn=%ps\n",
-+		       current->comm, task_pid_nr(current), preempt_count(),
-+		       lockdep_start_depth, lockdep_depth(current),
-+		       rcu_start_depth, rcu_preempt_depth(),
-+		       worker->current_func);
- 		debug_show_held_locks(current);
- 		dump_stack();
- 	}
-@@ -3123,6 +3129,19 @@ static bool flush_workqueue_prep_pwqs(struct workqueue_struct *wq,
- 	return wait;
- }
- 
-+static void touch_wq_lockdep_map(struct workqueue_struct *wq)
-+{
-+	lock_map_acquire(&wq->lockdep_map);
-+	lock_map_release(&wq->lockdep_map);
-+}
-+
-+static void touch_work_lockdep_map(struct work_struct *work,
-+				   struct workqueue_struct *wq)
-+{
-+	lock_map_acquire(&work->lockdep_map);
-+	lock_map_release(&work->lockdep_map);
-+}
-+
- /**
-  * __flush_workqueue - ensure that any scheduled work has run to completion.
-  * @wq: workqueue to flush
-@@ -3142,8 +3161,7 @@ void __flush_workqueue(struct workqueue_struct *wq)
- 	if (WARN_ON(!wq_online))
+-	if (target_wq->flags & WQ_MEM_RECLAIM)
++	if (from_cancel || target_wq->flags & WQ_MEM_RECLAIM)
  		return;
  
--	lock_map_acquire(&wq->lockdep_map);
--	lock_map_release(&wq->lockdep_map);
-+	touch_wq_lockdep_map(wq);
+ 	worker = current_wq_worker();
++	target_func = target_work ? target_work->func : NULL;
  
- 	mutex_lock(&wq->mutex);
- 
-@@ -3342,6 +3360,7 @@ static bool start_flush_work(struct work_struct *work, struct wq_barrier *barr,
- 	struct worker *worker = NULL;
- 	struct worker_pool *pool;
- 	struct pool_workqueue *pwq;
-+	struct workqueue_struct *wq;
- 
- 	might_sleep();
- 
-@@ -3365,11 +3384,14 @@ static bool start_flush_work(struct work_struct *work, struct wq_barrier *barr,
- 		pwq = worker->current_pwq;
+ 	WARN_ONCE(current->flags & PF_MEMALLOC,
+ 		  "workqueue: PF_MEMALLOC task %d(%s) is flushing !WQ_MEM_RECLAIM %s:%ps",
+@@ -3208,7 +3212,7 @@ void __flush_workqueue(struct workqueue_struct *wq)
+ 		list_add_tail(&this_flusher.list, &wq->flusher_overflow);
  	}
  
--	check_flush_dependency(pwq->wq, work);
-+	wq = pwq->wq;
-+	check_flush_dependency(wq, work);
+-	check_flush_dependency(wq, NULL);
++	check_flush_dependency(wq, NULL, false);
+ 
+ 	mutex_unlock(&wq->mutex);
+ 
+@@ -3385,7 +3389,7 @@ static bool start_flush_work(struct work_struct *work, struct wq_barrier *barr,
+ 	}
+ 
+ 	wq = pwq->wq;
+-	check_flush_dependency(wq, work);
++	check_flush_dependency(wq, work, from_cancel);
  
  	insert_wq_barrier(pwq, barr, work, worker);
  	raw_spin_unlock_irq(&pool->lock);
- 
-+	touch_work_lockdep_map(work, wq);
-+
- 	/*
- 	 * Force a lock recursion deadlock when using flush_work() inside a
- 	 * single-threaded or rescuer equipped workqueue.
-@@ -3379,11 +3401,9 @@ static bool start_flush_work(struct work_struct *work, struct wq_barrier *barr,
- 	 * workqueues the deadlock happens when the rescuer stalls, blocking
- 	 * forward progress.
- 	 */
--	if (!from_cancel &&
--	    (pwq->wq->saved_max_active == 1 || pwq->wq->rescuer)) {
--		lock_map_acquire(&pwq->wq->lockdep_map);
--		lock_map_release(&pwq->wq->lockdep_map);
--	}
-+	if (!from_cancel && (wq->saved_max_active == 1 || wq->rescuer))
-+		touch_wq_lockdep_map(wq);
-+
- 	rcu_read_unlock();
- 	return true;
- already_gone:
-@@ -3402,9 +3422,6 @@ static bool __flush_work(struct work_struct *work, bool from_cancel)
- 	if (WARN_ON(!work->func))
- 		return false;
- 
--	lock_map_acquire(&work->lockdep_map);
--	lock_map_release(&work->lockdep_map);
--
- 	if (start_flush_work(work, &barr, from_cancel)) {
- 		wait_for_completion(&barr.done);
- 		destroy_work_on_stack(&barr.work);
 -- 
 2.39.5
 
