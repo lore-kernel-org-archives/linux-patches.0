@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08063248BC8;
-	Wed, 15 Jan 2025 10:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF372248BC8;
+	Wed, 15 Jan 2025 10:40:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937625; cv=none; b=QHZDzOYEBm7FNpX9ocUSOe1Nl/5ysYyfmajYP+kGN4WzYmMAbGLHC/Hd0BKy+YruHGeC2S9HvvIgqkShzBY2w3tOTmMogeNEm1o0t08fmcxUkL+t7WonK12qaiNOBuLRrcJsda0dVY5zlIkNa8O/4AGpcPU6i9W+PtWbc/6KUvU=
+	t=1736937629; cv=none; b=ZQFkQT7juhHx23SdfZDntlGu/dlVvY6sLD6CeMuJTFyKifYSFrRbce+kdk6CYz0Ml1vLTa09ayVwEDnw4Dl7k1qrTMvuz4NWMtHV3yuN6KJEPdQUpC1x8NbVfm+bQ6ZGq6Afu6f0m68cYFrAOYaEfUBraMtg/fOekAr0BM7RC1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937625; c=relaxed/simple;
-	bh=Q7+Y0gAmOuUjAAqO1f+yCMYXco5aI1ntLbuZR7u3Qjg=;
+	s=arc-20240116; t=1736937629; c=relaxed/simple;
+	bh=mQonhShtlN0f65bSkoCyKsiQbGDpGFl0QNG7eMZ2j/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=as5Xf+p+0MAv27Aatnvqu2WabT/r3Tkqn202A4WmZK0XfEnbwBLh3dycP8vbzCHEIwx1LqoNEc0OELl9PdyGQDIvy5weW63bCnqI3fpo1Z/ZtZJkTV2bDPXuAHKLITha49yy0k14hXM92/nwNoUkoOo0uWqmYJsULdNOLtApcC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfYUkuOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZeIEtlYlMHVWPNuhTSyab66LUByb6YA2VMBvd0QENMuYofk6A8OyDkLz9L/l1joc+5NSNP9C0H0X65jWvo0KggeLGCvO1GrfmXUrGfxm9ID138oSv2CZ2O5QtAUalThXz8SL2Hv1rlqjN6JC8IAiVQ1gvTt0YbY82MvFODHGVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sck/ZGH9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfYUkuOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514F8C4CEE1;
-	Wed, 15 Jan 2025 10:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sck/ZGH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC389C4CEE1;
+	Wed, 15 Jan 2025 10:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937624;
-	bh=Q7+Y0gAmOuUjAAqO1f+yCMYXco5aI1ntLbuZR7u3Qjg=;
+	s=korg; t=1736937628;
+	bh=mQonhShtlN0f65bSkoCyKsiQbGDpGFl0QNG7eMZ2j/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfYUkuOxngXJ9T+LBADBjNwj6qOBaapywUBFEZ+sbxta14cxTlxarhyD6o8DAVch8
-	 CfOHi6ICQu3g/3qk1VKdvGiLtrX3zHeR89Pj/4fz0xkamQPaQt0GtDiNo28PsvDJ3m
-	 iDnNl30rnvIofDRLSZW9/liD0rGiCVpeDvOTp4ZY=
+	b=sck/ZGH914Bu9Lx2Km0PO0a+7ePgsvqupESCv0ViUw9FUfJgxnajQJxLgVfNvDudA
+	 16I8prkTFAP+mzTgTeV/t+kOqEXtQRUfAu9gSLJrsA5d/p9Td2hLtcBHgiKU57DN3U
+	 lOzu5x8mKlP5tn2epqkcF7UVBn+bGlLNpLKDHZX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 35/92] cpuidle: riscv-sbi: fix device node release in early exit of for_each_possible_cpu
-Date: Wed, 15 Jan 2025 11:36:53 +0100
-Message-ID: <20250115103548.929890559@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.1 36/92] dm thin: make get_first_thin use rcu-safe list first function
+Date: Wed, 15 Jan 2025 11:36:54 +0100
+Message-ID: <20250115103548.972263713@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -52,52 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-[ Upstream commit 7e25044b804581b9c029d5a28d8800aebde18043 ]
+commit 80f130bfad1dab93b95683fc39b87235682b8f72 upstream.
 
-The 'np' device_node is initialized via of_cpu_device_node_get(), which
-requires explicit calls to of_node_put() when it is no longer required
-to avoid leaking the resource.
+The documentation in rculist.h explains the absence of list_empty_rcu()
+and cautions programmers against relying on a list_empty() ->
+list_first() sequence in RCU safe code.  This is because each of these
+functions performs its own READ_ONCE() of the list head.  This can lead
+to a situation where the list_empty() sees a valid list entry, but the
+subsequent list_first() sees a different view of list head state after a
+modification.
 
-Instead of adding the missing calls to of_node_put() in all execution
-paths, use the cleanup attribute for 'np' by means of the __free()
-macro, which automatically calls of_node_put() when the variable goes
-out of scope. Given that 'np' is only used within the
-for_each_possible_cpu(), reduce its scope to release the nood after
-every iteration of the loop.
+In the case of dm-thin, this author had a production box crash from a GP
+fault in the process_deferred_bios path.  This function saw a valid list
+head in get_first_thin() but when it subsequently dereferenced that and
+turned it into a thin_c, it got the inside of the struct pool, since the
+list was now empty and referring to itself.  The kernel on which this
+occurred printed both a warning about a refcount_t being saturated, and
+a UBSAN error for an out-of-bounds cpuid access in the queued spinlock,
+prior to the fault itself.  When the resulting kdump was examined, it
+was possible to see another thread patiently waiting in thin_dtr's
+synchronize_rcu.
 
-Fixes: 6abf32f1d9c5 ("cpuidle: Add RISC-V SBI CPU idle driver")
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://lore.kernel.org/r/20241116-cpuidle-riscv-sbi-cleanup-v3-1-a3a46372ce08@gmail.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The thin_dtr call managed to pull the thin_c out of the active thins
+list (and have it be the last entry in the active_thins list) at just
+the wrong moment which lead to this crash.
+
+Fortunately, the fix here is straight forward.  Switch get_first_thin()
+function to use list_first_or_null_rcu() which performs just a single
+READ_ONCE() and returns NULL if the list is already empty.
+
+This was run against the devicemapper test suite's thin-provisioning
+suites for delete and suspend and no regressions were observed.
+
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Fixes: b10ebd34ccca ("dm thin: fix rcu_read_lock being held in code that can sleep")
+Cc: stable@vger.kernel.org
+Acked-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/cpuidle-riscv-sbi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-thin.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpuidle/cpuidle-riscv-sbi.c b/drivers/cpuidle/cpuidle-riscv-sbi.c
-index af7320a768d2..963d5f171ef7 100644
---- a/drivers/cpuidle/cpuidle-riscv-sbi.c
-+++ b/drivers/cpuidle/cpuidle-riscv-sbi.c
-@@ -540,12 +540,12 @@ static int sbi_cpuidle_probe(struct platform_device *pdev)
- 	int cpu, ret;
- 	struct cpuidle_driver *drv;
- 	struct cpuidle_device *dev;
--	struct device_node *np, *pds_node;
-+	struct device_node *pds_node;
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -2306,10 +2306,9 @@ static struct thin_c *get_first_thin(str
+ 	struct thin_c *tc = NULL;
  
- 	/* Detect OSI support based on CPU DT nodes */
- 	sbi_cpuidle_use_osi = true;
- 	for_each_possible_cpu(cpu) {
--		np = of_cpu_device_node_get(cpu);
-+		struct device_node *np __free(device_node) = of_cpu_device_node_get(cpu);
- 		if (np &&
- 		    of_find_property(np, "power-domains", NULL) &&
- 		    of_find_property(np, "power-domain-names", NULL)) {
--- 
-2.39.5
-
+ 	rcu_read_lock();
+-	if (!list_empty(&pool->active_thins)) {
+-		tc = list_entry_rcu(pool->active_thins.next, struct thin_c, list);
++	tc = list_first_or_null_rcu(&pool->active_thins, struct thin_c, list);
++	if (tc)
+ 		thin_get(tc);
+-	}
+ 	rcu_read_unlock();
+ 
+ 	return tc;
 
 
