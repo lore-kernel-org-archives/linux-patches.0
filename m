@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34173248BA6;
-	Wed, 15 Jan 2025 10:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FA8248BA6;
+	Wed, 15 Jan 2025 10:47:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938020; cv=none; b=gnTzN+kaYuMS+hLK02M7+C9ftB2f9hpjDRmcM7rp3lzK+iXWuS3T+tiuHm2FRxxeEt7UpETPpzWrLNVPAeeGb+90LKL0ul8YQip0J6V7i0TIrViCZ6uANV8Q5saQ8D05H5PxOjR/tPlKcHmh/9j5VQxYjpO/zmUrIEFaVvedgpQ=
+	t=1736938023; cv=none; b=JbKsNaaEBEkT2/vCPWHkHrQCJBWgC3VnD+sHO1LpZQmy8cIXVtlM8oETBdxWVlgNVJO+yBeGumHIjrfm/oy/suLQBCtL/UUbrxOwyTeVJlm0ZyTpMvpDfwU93QanPdaUtReyQM+IQ0p6iwxaXss8XR2kJsElbTP7bTFXeD6mdlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938020; c=relaxed/simple;
-	bh=rxkmvwPBmdt7spE2nyn+4+sj0e6VwD7M/ujiiNTiBEc=;
+	s=arc-20240116; t=1736938023; c=relaxed/simple;
+	bh=KBPS1WXdHrPDUCTcyEtGIGfwPSKCIRnjr5jpp6HN0d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QaBhQzFFBBxOLHm0Gd074vqmj/V+16nM/3hq+6MKOsx5hwZGlwvOIEheVvuOQDaRIlPnEhBBKhtcQRyYmqLEpZ/O8Fdqm00awBxTV2+cD/ox9yFE6ugp1apnxr40zsC2t4SL0umGVZkJL1JBTWR8wC8IfZDIm4PvNZbU0M9LbXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBe/rhnQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SndOPeutOHzwG0zFINAnIVcuW+6WtyZzqW1CmWCagOzb4nWzFOOXlGcICX5N6WB+0Lf9v1iun2pmviinxF+m1AZkUQWzGEPC7LRByU5E/I3Dicq4Fxb0u7w1rUlj7S+lBC7PFQ3y7jVImOMPyvVYMnwiw76kkt08iDkvXPidI5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3zX+WMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBe/rhnQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63963C4CEDF;
-	Wed, 15 Jan 2025 10:46:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3zX+WMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16EB4C4CEDF;
+	Wed, 15 Jan 2025 10:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938019;
-	bh=rxkmvwPBmdt7spE2nyn+4+sj0e6VwD7M/ujiiNTiBEc=;
+	s=korg; t=1736938023;
+	bh=KBPS1WXdHrPDUCTcyEtGIGfwPSKCIRnjr5jpp6HN0d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBe/rhnQO8BtaAuMyPRsgPHm0p8W6DUyK9upiKTx7qgmDgchnKaX9wzV8PUH4n3+d
-	 mYunAb7hsSXUIPZ4S5UQL8KaUy65d4W30vk77dvRzFH8RNdC1c8+Tof7twilg7UR0Z
-	 kgxG+umUV6CYmGsOkvqClkzmt19JvYBcUv7JdrSU=
+	b=N3zX+WMsmUr2MDmpzj3s+mKU0CWRWkqqCVNBmk1+Jbrm2vhU66MFZca01qhdf4feZ
+	 vphhb8ZH77jEIb/Z7gcH5tXgr/DHFMlUe7PXVlOKQv0sEqSv6udfjZT0F1qhvXiz6S
+	 4dCkfDvEebQDrEO2RjG+TMx7xdTfDjyjpC+QnDio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/189] rtase: Fix a check for error in rtase_alloc_msix()
-Date: Wed, 15 Jan 2025 11:35:54 +0100
-Message-ID: <20250115103608.675792783@linuxfoundation.org>
+Subject: [PATCH 6.12 031/189] bnxt_en: Fix possible memory leak when hwrm_req_replace fails
+Date: Wed, 15 Jan 2025 11:35:27 +0100
+Message-ID: <20250115103607.600835815@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -53,38 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 2055272e3ae01a954e41a5afb437c5d76f758e0b ]
+[ Upstream commit c8dafb0e4398dacc362832098a04b97da3b0395b ]
 
-The pci_irq_vector() function never returns zero.  It returns negative
-error codes or a positive non-zero IRQ number.  Fix the error checking to
-test for negatives.
+When hwrm_req_replace() fails, the driver is not invoking bnxt_req_drop()
+which could cause a memory leak.
 
-Fixes: a36e9f5cfe9e ("rtase: Add support for a pci table in this module")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Link: https://patch.msgid.link/f2ecc88d-af13-4651-9820-7cc665230019@stanley.mountain
+Fixes: bbf33d1d9805 ("bnxt_en: update all firmware calls to use the new APIs")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20250104043849.3482067-2-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/rtase/rtase_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/rtase/rtase_main.c b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-index 1bfe5ef40c52..14ffd45e9a25 100644
---- a/drivers/net/ethernet/realtek/rtase/rtase_main.c
-+++ b/drivers/net/ethernet/realtek/rtase/rtase_main.c
-@@ -1827,7 +1827,7 @@ static int rtase_alloc_msix(struct pci_dev *pdev, struct rtase_private *tp)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+index fdd6356f21ef..546d9a3d7efe 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ulp.c
+@@ -208,7 +208,7 @@ int bnxt_send_msg(struct bnxt_en_dev *edev,
  
- 	for (i = 0; i < tp->int_nums; i++) {
- 		irq = pci_irq_vector(pdev, i);
--		if (!irq) {
-+		if (irq < 0) {
- 			pci_disable_msix(pdev);
- 			return irq;
- 		}
+ 	rc = hwrm_req_replace(bp, req, fw_msg->msg, fw_msg->msg_len);
+ 	if (rc)
+-		return rc;
++		goto drop_req;
+ 
+ 	hwrm_req_timeout(bp, req, fw_msg->timeout);
+ 	resp = hwrm_req_hold(bp, req);
+@@ -220,6 +220,7 @@ int bnxt_send_msg(struct bnxt_en_dev *edev,
+ 
+ 		memcpy(fw_msg->resp, resp, resp_len);
+ 	}
++drop_req:
+ 	hwrm_req_drop(bp, req);
+ 	return rc;
+ }
 -- 
 2.39.5
 
