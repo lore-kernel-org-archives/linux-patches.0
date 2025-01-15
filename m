@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04BA248BA0;
-	Wed, 15 Jan 2025 10:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18F03248BA1;
+	Wed, 15 Jan 2025 10:42:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937736; cv=none; b=eR5se/fciqboVornCShDDYILP4cur0Ufers0NtffK638fL1lrbAxnXQFRJQvSixuOYQeKMKwWKqKgj8+4sHpAPua8oAd2+RMnP427F7EX8wg5MYL/c1uWP+EZ21idX9gYL4CYsBtxGxYy3x0hYDM9ai00CAWU8pZPjVd9GzJM/0=
+	t=1736937741; cv=none; b=iNF2TzUGhSlC2I2shDR4sJujyhqDIcLogs3lIhgYk+MScPJyNfApG0gLrMV2jwXxAxw1At8y3tCBvc2NW8OkP1bFq/Ot125N06psvPIuK+crEW8reN1KjRIj1yEqLfxm08OWTmKceHCRUO1wPxPG/EwlI7XOKlKnYqDWaNGvdrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937736; c=relaxed/simple;
-	bh=jQocUdsV1f6sk2LYIaeNKTi6lDknX43Co4af8B2nVt8=;
+	s=arc-20240116; t=1736937741; c=relaxed/simple;
+	bh=JEPm2Ah5bzOcRjrIKXC5LCuD7JJZlh1vM0x75w9+SJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6nuTKJ1fmyexjdwE/Wc/xiu02KISVuQScfV65AcdML8EWGW3ALkF4GGGo9/ohV0G3hZJorF7QDKV9hXcbrb8bTDiSspFOwjQ/vozs4NXQi4suXI3L6PPSMcmEp/sIj6oSk3CvX9rdY77ilpOlYv8E2nZ19oIAlcasYn7dhbu3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uj1tKBLz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mjNgIrqeO4Fsorg9EO2M3neeXTwShNqLXTFalU9r3qowXKLCECTBVALPy5eCZvtve984C7VA/h7q7z7hIv/ghgKiyplsZAhMSxjWE4yHZxGjI/MoGR/nlSeaColXbY+pzy63OfdTyl4u/jukJjtHw6/hV4nB4fA6lxduGCnzH2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFMJNxOA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uj1tKBLz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F54AC4CEE2;
-	Wed, 15 Jan 2025 10:42:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFMJNxOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2B6C4CEE2;
+	Wed, 15 Jan 2025 10:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937736;
-	bh=jQocUdsV1f6sk2LYIaeNKTi6lDknX43Co4af8B2nVt8=;
+	s=korg; t=1736937739;
+	bh=JEPm2Ah5bzOcRjrIKXC5LCuD7JJZlh1vM0x75w9+SJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uj1tKBLz74EVJcRfnz1H2RZr/vGR3kOBCKyulzsOVTuGVYOvSSMjgO5p2vN3fHuFA
-	 4AyN+dFstXwS7AHgD3fR4zE1yZySVpiWTPglU4VY0o2TnDtZARe54jfsg8cehLuHe2
-	 xYJREbDktpaBo2x7/TbgYwScOvioT0IUFH5dHcDc=
+	b=FFMJNxOATRb/wZFAIsMEHTsE24aTrVvmXX/d6CDzK1pxnVsd9x8fREtNwXrd35hBL
+	 455roTHHd6um8KOZUdDkmJuI0U15z84tj45vXNLPRgPQbuPsewEnGhzj0Zha0LI5Hp
+	 FwoTlYz60qEXlfR1JqsxiRSenrE2k3NOSYWvh3Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH 6.1 67/92] usb: gadget: f_uac2: Fix incorrect setting of bNumEndpoints
-Date: Wed, 15 Jan 2025 11:37:25 +0100
-Message-ID: <20250115103550.229025697@linuxfoundation.org>
+	Akash M <akash.m5@samsung.com>
+Subject: [PATCH 6.1 68/92] usb: gadget: f_fs: Remove WARN_ON in functionfs_bind
+Date: Wed, 15 Jan 2025 11:37:26 +0100
+Message-ID: <20250115103550.265653931@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,36 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Akash M <akash.m5@samsung.com>
 
-commit 057bd54dfcf68b1f67e6dfc32a47a72e12198495 upstream.
+commit dfc51e48bca475bbee984e90f33fdc537ce09699 upstream.
 
-Currently afunc_bind sets std_ac_if_desc.bNumEndpoints to 1 if
-controls (mute/volume) are enabled. During next afunc_bind call,
-bNumEndpoints would be unchanged and incorrectly set to 1 even
-if the controls aren't enabled.
+This commit addresses an issue related to below kernel panic where
+panic_on_warn is enabled. It is caused by the unnecessary use of WARN_ON
+in functionsfs_bind, which easily leads to the following scenarios.
 
-Fix this by resetting the value of bNumEndpoints to 0 on every
-afunc_bind call.
+1.adb_write in adbd               2. UDC write via configfs
+  =================	             =====================
 
-Fixes: eaf6cbe09920 ("usb: gadget: f_uac2: add volume and mute support")
+->usb_ffs_open_thread()           ->UDC write
+ ->open_functionfs()               ->configfs_write_iter()
+  ->adb_open()                      ->gadget_dev_desc_UDC_store()
+   ->adb_write()                     ->usb_gadget_register_driver_owner
+                                      ->driver_register()
+->StartMonitor()                       ->bus_add_driver()
+ ->adb_read()                           ->gadget_bind_driver()
+<times-out without BIND event>           ->configfs_composite_bind()
+                                          ->usb_add_function()
+->open_functionfs()                        ->ffs_func_bind()
+ ->adb_open()                               ->functionfs_bind()
+                                       <ffs->state !=FFS_ACTIVE>
+
+The adb_open, adb_read, and adb_write operations are invoked from the
+daemon, but trying to bind the function is a process that is invoked by
+UDC write through configfs, which opens up the possibility of a race
+condition between the two paths. In this race scenario, the kernel panic
+occurs due to the WARN_ON from functionfs_bind when panic_on_warn is
+enabled. This commit fixes the kernel panic by removing the unnecessary
+WARN_ON.
+
+Kernel panic - not syncing: kernel: panic_on_warn set ...
+[   14.542395] Call trace:
+[   14.542464]  ffs_func_bind+0x1c8/0x14a8
+[   14.542468]  usb_add_function+0xcc/0x1f0
+[   14.542473]  configfs_composite_bind+0x468/0x588
+[   14.542478]  gadget_bind_driver+0x108/0x27c
+[   14.542483]  really_probe+0x190/0x374
+[   14.542488]  __driver_probe_device+0xa0/0x12c
+[   14.542492]  driver_probe_device+0x3c/0x220
+[   14.542498]  __driver_attach+0x11c/0x1fc
+[   14.542502]  bus_for_each_dev+0x104/0x160
+[   14.542506]  driver_attach+0x24/0x34
+[   14.542510]  bus_add_driver+0x154/0x270
+[   14.542514]  driver_register+0x68/0x104
+[   14.542518]  usb_gadget_register_driver_owner+0x48/0xf4
+[   14.542523]  gadget_dev_desc_UDC_store+0xf8/0x144
+[   14.542526]  configfs_write_iter+0xf0/0x138
+
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/20241211115915.159864-1-quic_prashk@quicinc.com
+Signed-off-by: Akash M <akash.m5@samsung.com>
+Link: https://lore.kernel.org/r/20241219125221.1679-1-akash.m5@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac2.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -1176,6 +1176,7 @@ afunc_bind(struct usb_configuration *cfg
- 		uac2->as_in_alt = 0;
- 	}
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1868,7 +1868,7 @@ static int functionfs_bind(struct ffs_da
  
-+	std_ac_if_desc.bNumEndpoints = 0;
- 	if (FUOUT_EN(uac2_opts) || FUIN_EN(uac2_opts)) {
- 		uac2->int_ep = usb_ep_autoconfig(gadget, &fs_ep_int_desc);
- 		if (!uac2->int_ep) {
+ 	ENTER();
+ 
+-	if (WARN_ON(ffs->state != FFS_ACTIVE
++	if ((ffs->state != FFS_ACTIVE
+ 		 || test_and_set_bit(FFS_FL_BOUND, &ffs->flags)))
+ 		return -EBADFD;
+ 
 
 
