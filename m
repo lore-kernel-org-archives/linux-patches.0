@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E77248BA1;
-	Wed, 15 Jan 2025 10:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E48156644;
+	Wed, 15 Jan 2025 10:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938350; cv=none; b=u4QWvG4JRrXM5HJCHMOqKelNx2fa2wKavQIknUepm8dmGYYzE0d2RFTn7Fxx35caLTLlArptJ5+XGDfPJZxzZPW//qvkZATTqKNOyyn4aqVgDgdkAJCNojAtAFxTDce9F6TtxdSUdCzmlNAgdugGJKvlZE1ZlENhT0sRwN5a74s=
+	t=1736938353; cv=none; b=Tij7+B0brGoT9cxAeD09hBrPrWW5xVB4IicHW91AUpjKc7afRxPtXg6dIBZwfcJqz429cYSMZ3JLwlMfoRpCb5n1pXJpA/0y0ayDcD0D6eBEMmrG64ciCdXnJS5lUzIVOqt4nZK+GI2uVekZNarCqI34MkQ+q8zOWlXtk48qLrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938350; c=relaxed/simple;
-	bh=hL338cH60dz5bbYB9CTs3nb1e1wBO3FmswVWYXxXAuc=;
+	s=arc-20240116; t=1736938353; c=relaxed/simple;
+	bh=5n5G/uDckvyTPZf4nWhpeJnTE7viQPLWO6ppBzhysiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDOj6SjqDkYjZFhxgAEF1o3e9rL/tb9h3PLA5FFgHC9N0c4uZaey2VGk+ROd9qY0FC4tLuOUjovzeklbSoPDqs+pXARSwTJ0OFxEOxOcJs/rbwo7wwe+oJrwSqyn91NZp7NBY7KNVXuv/DJrpTwTWtf1jtvTLj3Rk+fIAb1pR4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qYv2bpry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SnXKjilDWlOLqvEkwoKe5Gug2/Im15whtHskTcU8vEvhXkZ0dekXVbdX+ImMAjdqN3fH+5sYnEeZQSFwtf0H6lJ5emBJFdx+RN5GeIVXZYxBMLLyN3dXDXWNBBftJGq7GydJsOdUqqPfmOEOxpi5rPMDl699QJrU4xPjgrdA8qc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDdmmMPg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qYv2bpry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F15EC4CEDF;
-	Wed, 15 Jan 2025 10:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDdmmMPg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354AFC4CEDF;
+	Wed, 15 Jan 2025 10:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938350;
-	bh=hL338cH60dz5bbYB9CTs3nb1e1wBO3FmswVWYXxXAuc=;
+	s=korg; t=1736938353;
+	bh=5n5G/uDckvyTPZf4nWhpeJnTE7viQPLWO6ppBzhysiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYv2bpryrHSzIsyRmeLAPO+ts5mCePO2DJa+jIYb8Jk8AfrReWRp2UiglWnqKyKvh
-	 40VyaxdIUv9Ave8u8UKP2mBK1owC2GXlFFH6cHk3aVHGzslipXQYaKX2KUXfYTrW3o
-	 Q75X+hhdsGwzfjh8n+YzhA8nFSqhgr01mddtkq6o=
+	b=PDdmmMPgjlEGw+Fs/JfM8wK+gXjuSJj0498ARIZZuvDMtT9dl/GCC3+DnsJJsRz09
+	 BKmlRXXIe+IGff30V1TRkW4bE1sJIlAOwnv5IfxKLRdZoHfuxzk4qcii0aNALU6xmZ
+	 SIfh73GvjXi1VMXsJ06p/6Q83eyOu+4beJkBjEuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.12 155/189] usb: host: xhci-plat: set skip_phy_initialization if software node has XHCI_SKIP_PHY_INIT property
-Date: Wed, 15 Jan 2025 11:37:31 +0100
-Message-ID: <20250115103612.593047839@linuxfoundation.org>
+	GONG Ruiqi <gongruiqi1@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.12 156/189] usb: typec: fix pm usage counter imbalance in ucsi_ccg_sync_control()
+Date: Wed, 15 Jan 2025 11:37:32 +0100
+Message-ID: <20250115103612.637373700@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -50,39 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: GONG Ruiqi <gongruiqi1@huawei.com>
 
-commit e19852d0bfecbc80976b1423cf2af87ca514a58c upstream.
+commit b0e525d7a22ea350e75e2aec22e47fcfafa4cacd upstream.
 
-The source of quirk XHCI_SKIP_PHY_INIT comes from xhci_plat_priv.quirks or
-software node property. This will set skip_phy_initialization if software
-node also has XHCI_SKIP_PHY_INIT property.
+The error handling for the case `con_index == 0` should involve dropping
+the pm usage counter, as ucsi_ccg_sync_control() gets it at the
+beginning. Fix it.
 
-Fixes: a6cd2b3fa894 ("usb: host: xhci-plat: Parse xhci-missing_cas_quirk and apply quirk")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20241209111423.4085548-1-xu.yang_2@nxp.com
+Fixes: e56aac6e5a25 ("usb: typec: fix potential array underflow in ucsi_ccg_sync_control()")
+Signed-off-by: GONG Ruiqi <gongruiqi1@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250107015750.2778646-1-gongruiqi1@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-plat.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi_ccg.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
-index e6c9006bd568..db109b570c5c 100644
---- a/drivers/usb/host/xhci-plat.c
-+++ b/drivers/usb/host/xhci-plat.c
-@@ -290,7 +290,8 @@ int xhci_plat_probe(struct platform_device *pdev, struct device *sysdev, const s
+--- a/drivers/usb/typec/ucsi/ucsi_ccg.c
++++ b/drivers/usb/typec/ucsi/ucsi_ccg.c
+@@ -646,7 +646,7 @@ static int ucsi_ccg_sync_control(struct
+ 			UCSI_CMD_CONNECTOR_MASK;
+ 		if (con_index == 0) {
+ 			ret = -EINVAL;
+-			goto unlock;
++			goto err_put;
+ 		}
+ 		con = &uc->ucsi->connector[con_index - 1];
+ 		ucsi_ccg_update_set_new_cam_cmd(uc, con, &command);
+@@ -654,8 +654,8 @@ static int ucsi_ccg_sync_control(struct
  
- 	hcd->tpl_support = of_usb_host_tpl_support(sysdev->of_node);
+ 	ret = ucsi_sync_control_common(ucsi, command);
  
--	if (priv && (priv->quirks & XHCI_SKIP_PHY_INIT))
-+	if ((priv && (priv->quirks & XHCI_SKIP_PHY_INIT)) ||
-+	    (xhci->quirks & XHCI_SKIP_PHY_INIT))
- 		hcd->skip_phy_initialization = 1;
++err_put:
+ 	pm_runtime_put_sync(uc->dev);
+-unlock:
+ 	mutex_unlock(&uc->lock);
  
- 	if (priv && (priv->quirks & XHCI_SG_TRB_CACHE_SIZE_QUIRK))
--- 
-2.48.0
-
+ 	return ret;
 
 
