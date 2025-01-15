@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7B2248BA0;
-	Wed, 15 Jan 2025 10:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E55248BA1;
+	Wed, 15 Jan 2025 10:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937816; cv=none; b=nG8frx2/FVLpVEahD3qTrRb5jPDYRzjjmDZB1zjSxA8TXpnX/7FPYP3URJlmNQEiw4eNS0k3OjvZ8L3y/3KfPWnsGp6P/piAFqY30oqKOK8pE5M7LMDH5pMXU2V1Keb6R+oPuONlw3sTu1+i4AekUqj2FynsNAwTdZgMPU/iGCg=
+	t=1736937820; cv=none; b=hyJoREI/Ja3hZcZ7zbPq30SoidbznerFwsfal7VREjNRa47PYyPbBXqpTPzPsOauMY2jHwhFDb/rLK8IEJXeNey9f9yOYjeQtxcOaQfwwf81W9sGVMCGBNgyUdlTMuK+z3t6UwKjo1jJrC7yrsCeaT22B7UYKb/ASnCvbuCPV78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937816; c=relaxed/simple;
-	bh=kd5UG2c3zzaTbtl1jwtiPD2uVVbK+bSUkB9dvVxnnwk=;
+	s=arc-20240116; t=1736937820; c=relaxed/simple;
+	bh=jWPmMjFA/1/zrHWCm+n3R2uqcasNZthJPWLMoTQ1avI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixedsElyNPM06JafMpfPpbDSBeLKpAN2FC+V2mNO46DL2OMgxn6T2JWtI6xv9btYfsxpU7SZJpm3TiFf9pG7hkMMHTn7VZ6CiSjfyx1i3+HpnKaoxqJ49AdcfVSa+I8RxBJAKkKKIvlPmdG7fkQg7DaRZLLcWVogr+RgCsEMWm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTk+gMx9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pj0Tz//lS1htfX4+2B776V2z/eDdR5VAUSTon0azSywj710bOLwkIyaCu0tXf6ZIIyJWrB7qCFVTHsiZkHXopv17sV1SU6KgZGbr0DdV/LbyMVWLFNRjv+6RoGgHOjDoWRNxFFzhdlCwG5/5pA+AVnJa2JMyCluQB5Stbp2MN38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLUBIYIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTk+gMx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F90AC4CEE2;
-	Wed, 15 Jan 2025 10:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLUBIYIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED21C4CEE2;
+	Wed, 15 Jan 2025 10:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937816;
-	bh=kd5UG2c3zzaTbtl1jwtiPD2uVVbK+bSUkB9dvVxnnwk=;
+	s=korg; t=1736937819;
+	bh=jWPmMjFA/1/zrHWCm+n3R2uqcasNZthJPWLMoTQ1avI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTk+gMx938f4iyK34jH0nnDmck60FTfCLw5YVBxp+SWyR5ZoiXCH1p0K4jG1zVEWI
-	 6+yxcY+r8Y97CQ9BSiu5oiPmZdiGD9OatT412mXRybZJqJP+fqX7K9Mp6oLFnJ2djb
-	 ZZ56Wo4SOPiE4Gb4VCW5GEIsQ1eCeV0+vjyPMdEY=
+	b=MLUBIYINYaN6ez6CQ5tNBkKnpRlKhf6z2cHHX4a57OxAtWevWpyZOvmtlinedvq5P
+	 2YA4KBhQsYvjhpWumbUefueflUREdGQbB4jHe5d34EJm3NXjW1FvEOgnW07QrRbZap
+	 PsT8TYVl2UE4HyVKSdUKAF7wXRmKghuAUk9fPW6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Rengarajan S <rengarajan.s@microchip.com>
-Subject: [PATCH 6.1 61/92] misc: microchip: pci1xxxx: Resolve return code mismatch during GPIO set config
-Date: Wed, 15 Jan 2025 11:37:19 +0100
-Message-ID: <20250115103549.994647500@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>
+Subject: [PATCH 6.1 62/92] usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null
+Date: Wed, 15 Jan 2025 11:37:20 +0100
+Message-ID: <20250115103550.033905016@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,34 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit c7a5378a0f707686de3ddb489f1653c523bb7dcc upstream.
+commit 13014969cbf07f18d62ceea40bd8ca8ec9d36cec upstream.
 
-Driver returns -EOPNOTSUPPORTED on unsupported parameters case in set
-config. Upper level driver checks for -ENOTSUPP. Because of the return
-code mismatch, the ioctls from userspace fail. Resolve the issue by
-passing -ENOTSUPP during unsupported case.
+Considering that in some extreme cases, when performing the
+unbinding operation, gserial_disconnect has cleared gser->ioport,
+which triggers gadget reconfiguration, and then calls gs_read_complete,
+resulting in access to a null pointer. Therefore, ep is disabled before
+gserial_disconnect sets port to null to prevent this from happening.
 
-Fixes: 7d3e4d807df2 ("misc: microchip: pci1xxxx: load gpio driver for the gpio controller auxiliary device enumerated by the auxiliary bus driver.")
+Call trace:
+ gs_read_complete+0x58/0x240
+ usb_gadget_giveback_request+0x40/0x160
+ dwc3_remove_requests+0x170/0x484
+ dwc3_ep0_out_start+0xb0/0x1d4
+ __dwc3_gadget_start+0x25c/0x720
+ kretprobe_trampoline.cfi_jt+0x0/0x8
+ kretprobe_trampoline.cfi_jt+0x0/0x8
+ udc_bind_to_driver+0x1d8/0x300
+ usb_gadget_probe_driver+0xa8/0x1dc
+ gadget_dev_desc_UDC_store+0x13c/0x188
+ configfs_write_iter+0x160/0x1f4
+ vfs_write+0x2d0/0x40c
+ ksys_write+0x7c/0xf0
+ __arm64_sys_write+0x20/0x30
+ invoke_syscall+0x60/0x150
+ el0_svc_common+0x8c/0xf8
+ do_el0_svc+0x28/0xa0
+ el0_svc+0x24/0x84
+
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20241205133626.1483499-3-rengarajan.s@microchip.com
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Link: https://lore.kernel.org/r/TYUPR06MB621733B5AC690DBDF80A0DCCD2042@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_serial.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-@@ -148,7 +148,7 @@ static int pci1xxxx_gpio_set_config(stru
- 		pci1xxx_assign_bit(priv->reg_base, OPENDRAIN_OFFSET(offset), (offset % 32), true);
- 		break;
- 	default:
--		ret = -EOPNOTSUPP;
-+		ret = -ENOTSUPP;
- 		break;
- 	}
- 	spin_unlock_irqrestore(&priv->lock, flags);
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -1393,6 +1393,10 @@ void gserial_disconnect(struct gserial *
+ 	/* REVISIT as above: how best to track this? */
+ 	port->port_line_coding = gser->port_line_coding;
+ 
++	/* disable endpoints, aborting down any active I/O */
++	usb_ep_disable(gser->out);
++	usb_ep_disable(gser->in);
++
+ 	port->port_usb = NULL;
+ 	gser->ioport = NULL;
+ 	if (port->port.count > 0) {
+@@ -1404,10 +1408,6 @@ void gserial_disconnect(struct gserial *
+ 	spin_unlock(&port->port_lock);
+ 	spin_unlock_irqrestore(&serial_port_lock, flags);
+ 
+-	/* disable endpoints, aborting down any active I/O */
+-	usb_ep_disable(gser->out);
+-	usb_ep_disable(gser->in);
+-
+ 	/* finally, free any unused/unusable I/O buffers */
+ 	spin_lock_irqsave(&port->port_lock, flags);
+ 	if (port->port.count == 0)
 
 
