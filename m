@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7557A1DB15D;
-	Wed, 15 Jan 2025 11:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A2B1E7C33;
+	Wed, 15 Jan 2025 11:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938900; cv=none; b=trcDRNRsXep+fRRDNVqqfnizqJTYiOv8piDHqrb+TL8ttyhD8rswED3wdcz4REHyuar3rM8CGl0hyfsNYZV1xDUdpEk3GYb2zClxLsnMWMmNuKG0MSMku0O3vbV9yTGLm0tpsQfjhu3YOepCz+BTyF7CtmkDpq3CkTOJzcS1X7s=
+	t=1736938904; cv=none; b=qrNchpgtPL1DSo53h34pPasd6PN3D9CmTdCptAibkczfl3aaqMr4U3HMzX8+4lMpTGWqY7reYOADebfx+Oqayg6BA+4jPab6RkRMvtU1g0Z2rQ0yNfz6H0WvDl8rH6fM9SCDbH4EtrywCJeX3RSxrdPrGC9nvw1ud3bUvpuhRZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938900; c=relaxed/simple;
-	bh=3++wBy0d6lbn2Yf1iOqHDhcFEfrDqjuu8iPEV5KQezM=;
+	s=arc-20240116; t=1736938904; c=relaxed/simple;
+	bh=JTRgTbLzud8M73jk2naaNyvYDF9MyXPm7K4BgaK0uyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjSkNsmki35rq++QBCaLw2q1b/WY5txm+HVEUjki0PNrpY6GKT/u0sT2NY0Jli8UtTDMDcqK6Ml5RnNvShRLgite4AxRSZ7Ml/sdz6hSITLBrteJzyhMjMTjpxb0S8b0gK2PHuPtfk7BQsldYQ1WCXZMD1qJf5Ku9Ypr9OJU5CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P6ieLglN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K9Lth4LzpoQFAOtEVziPvGI8j6fBSlzz2biAmo8i8MrzHq8NrnuJKHoehbjx8bvW39A8Lw9eY6wUfVo3fkm+qnvRTQJAgG0sPeyYLFZPHvjQvKPLSThMt3N9SLU8oAVtNIHbB47Rev+4MGZ2GQ4k0Fx63AjV04uYvjm4veBWbMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yzkIy2Hy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P6ieLglN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF04C4CEDF;
-	Wed, 15 Jan 2025 11:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yzkIy2Hy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67BF8C4CEDF;
+	Wed, 15 Jan 2025 11:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938900;
-	bh=3++wBy0d6lbn2Yf1iOqHDhcFEfrDqjuu8iPEV5KQezM=;
+	s=korg; t=1736938903;
+	bh=JTRgTbLzud8M73jk2naaNyvYDF9MyXPm7K4BgaK0uyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P6ieLglNefKq2GnuDzcXKly+V0XOe+LBymd5OaRESsbOkQOhNHMhtZc+njLye3DwE
-	 SjDRnW1ZafETFNocbc890apdehoIJyUNtsqqK6pAHbSuooF75cgaiBAV67Em8GbDGs
-	 vEwQITfw97vIva2LgcRVoreFP7KQ1q/EjpZ2/rBQ=
+	b=yzkIy2HysU8siT71A/kP0w0WV/jL9kd+K+wB8pLNb12AyaNu4uOTmk2KZeYxSd5eW
+	 tmx9fljvxfmmuMESxt3ZEpXPfmdCW+oEiP/hSA5f4myfdd1DNWkPMwiAn94J/NpyOG
+	 VYJO4GRzJTohe9qColo4UktRyfFxBdgr/TejB1TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Nuno Sa <nuno.sa@analog.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 111/129] iio: inkern: call iio_device_put() only on mapped devices
-Date: Wed, 15 Jan 2025 11:38:06 +0100
-Message-ID: <20250115103558.773857119@linuxfoundation.org>
+Subject: [PATCH 6.6 112/129] iio: adc: ad7124: Disable all channels at probe time
+Date: Wed, 15 Jan 2025 11:38:07 +0100
+Message-ID: <20250115103558.813769331@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -45,41 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 64f43895b4457532a3cc524ab250b7a30739a1b1 upstream.
+commit 4be339af334c283a1a1af3cb28e7e448a0aa8a7c upstream.
 
-In the error path of iio_channel_get_all(), iio_device_put() is called
-on all IIO devices, which can cause a refcount imbalance. Fix this error
-by calling iio_device_put() only on IIO devices whose refcounts were
-previously incremented by iio_device_get().
+When during a measurement two channels are enabled, two measurements are
+done that are reported sequencially in the DATA register. As the code
+triggered by reading one of the sysfs properties expects that only one
+channel is enabled it only reads the first data set which might or might
+not belong to the intended channel.
 
-Fixes: 314be14bb893 ("iio: Rename _st_ functions to loose the bit that meant the staging version.")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Link: https://patch.msgid.link/20241204111342.1246706-1-joe@pf.is.s.u-tokyo.ac.jp
+To prevent this situation disable all channels during probe. This fixes
+a problem in practise because the reset default for channel 0 is
+enabled. So all measurements before the first measurement on channel 0
+(which disables channel 0 at the end) might report wrong values.
+
+Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20241104101905.845737-2-u.kleine-koenig@baylibre.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/inkern.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/ad7124.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/inkern.c
-+++ b/drivers/iio/inkern.c
-@@ -514,7 +514,7 @@ struct iio_channel *iio_channel_get_all(
- 	return chans;
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -923,6 +923,9 @@ static int ad7124_setup(struct ad7124_st
+ 		 * set all channels to this default value.
+ 		 */
+ 		ad7124_set_channel_odr(st, i, 10);
++
++		/* Disable all channels to prevent unintended conversions. */
++		ad_sd_write_reg(&st->sd, AD7124_CHANNEL(i), 2, 0);
+ 	}
  
- error_free_chans:
--	for (i = 0; i < nummaps; i++)
-+	for (i = 0; i < mapind; i++)
- 		iio_device_put(chans[i].indio_dev);
- 	kfree(chans);
- error_ret:
+ 	return ret;
 
 
