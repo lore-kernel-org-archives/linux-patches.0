@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052981DB13A;
-	Wed, 15 Jan 2025 10:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54736156644;
+	Wed, 15 Jan 2025 10:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938563; cv=none; b=oEzX4MSafD+8gnU/HAapgPTyPOD8DMDFb24g+EBXl1u0JuH0PVxW2zSvA7/BEew8jwBB+E+uk0Mu4Q3OaLzE5o2zQHchiQKEKPnzP//sURoefBqz/lqOS0YZk1Klw3vz5z5vJhfJKaEHcvABSF6pTpUj3a+6VIFP54nWPuHPu7I=
+	t=1736938566; cv=none; b=hadfXQ1H/4HszTJ7wyzU8MEKUqDCYhjru1C0PfyudzLeEdwNqCEw/pJV2nh7MFW+EBV4S/UBu0NzrW8d5kRORwl6voAQecST+Bq3eCipBXs/PJqDVdRAv26M3KHJHEbzt+2wISKFLZ0QshZ121ljgJLahDT6PRg42IvYymSC1fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938563; c=relaxed/simple;
-	bh=L0baaO3NkfPtMQTiEAJGTuXd8amxAHCXSJvj6irZb5I=;
+	s=arc-20240116; t=1736938566; c=relaxed/simple;
+	bh=u9vrgY48gYoS3DZokGRG87O4wNEAOB1u31Q2Ae4W5jI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aNeRvc72/kfVFbT21Ll4fwYazjl76Q1V93jyTC0goJnvqpn0eILjFi4XdU+3LK7fq7rGOvb21985wKC9HpxT9pL+AnASU5AxeB0TR5F0VXIkFDI0JBMt3TRhHFS6+X+2G3e04A1fjsxdjQrvS+PW3DMVN/ZLgxg86AbWKXpiz8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUl0skKw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYUb/Oiz5yJo0s9+ioORgavtJgh8hE8HXXZkaIzhUa7VBMlNNPSomfYNQVD3vfW7y7l9CR2U4Y4eyI59JiAvaWmx4a1jDJ/asblooUTKK3eHYrmbWnK2j+9tuisGv7G+ic7ttjoDigjMhCk+vO+vBBB5oHLj/IbwPbjYmwicXNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKJPJEMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUl0skKw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83407C4CEDF;
-	Wed, 15 Jan 2025 10:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKJPJEMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986C2C4CEE4;
+	Wed, 15 Jan 2025 10:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938562;
-	bh=L0baaO3NkfPtMQTiEAJGTuXd8amxAHCXSJvj6irZb5I=;
+	s=korg; t=1736938566;
+	bh=u9vrgY48gYoS3DZokGRG87O4wNEAOB1u31Q2Ae4W5jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUl0skKwyHn1PfaQzZ5h5uH9QiFPnZRX/5MGrxJXmkYkwaCIV5zPdCR+U1ULzXgLT
-	 Mt2vjCMqOaqcISuAjFqEhyfBTKgdzejcIrKyBW4TEqtybAghRiAfGnltjmqxLC5hav
-	 fT/CoQ02dLQwa1Xxmm06AGBHl2/93lkdgv8S39Kw=
+	b=nKJPJEMwLt4L5mkTW091zV+jt1jxKLR8fqkBdEw6kWyrzRwcMQ01ryZRofZDxi1Eh
+	 mw5TIvhTQj4BQfSaaIHwmsqbqbg4ToJK0KGu1iv2VBciTjikbXqfscd7llMCWO8LH/
+	 200GDzIbBBq485srVYGajTKyfq/CNqq9fjkq9+og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milena Olech <milena.olech@intel.com>,
-	Przemyslaw Korba <przemyslaw.korba@intel.com>,
+	Julia Lawall <Julia.Lawall@inria.fr>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.6 028/129] ice: fix incorrect PHY settings for 100 GB/s
-Date: Wed, 15 Jan 2025 11:36:43 +0100
-Message-ID: <20250115103555.488538390@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 029/129] igc: field get conversion
+Date: Wed, 15 Jan 2025 11:36:44 +0100
+Message-ID: <20250115103555.528771800@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -53,63 +54,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Przemyslaw Korba <przemyslaw.korba@intel.com>
+From: Jesse Brandeburg <jesse.brandeburg@intel.com>
 
-[ Upstream commit 6c5b989116083a98f45aada548ff54e7a83a9c2d ]
+[ Upstream commit a8e0c7a6800dc466ac815264c16971b9adf7ffbd ]
 
-ptp4l application reports too high offset when ran on E823 device
-with a 100GB/s link. Those values cannot go under 100ns, like in a
-working case when using 100 GB/s cable.
+Refactor the igc driver to use FIELD_GET() for mask and shift reads,
+which reduces lines of code and adds clarity of intent.
 
-This is due to incorrect frequency settings on the PHY clocks for
-100 GB/s speed. Changes are introduced to align with the internal
-hardware documentation, and correctly initialize frequency in PHY
-clocks with the frequency values that are in our HW spec.
+This code was generated by the following coccinelle/spatch script and
+then manually repaired in a later patch.
 
-To reproduce the issue run ptp4l as a Time Receiver on E823 device,
-and observe the offset, which will never approach values seen
-in the PTP working case.
+@get@
+constant shift,mask;
+type T;
+expression a;
+@@
+-((T)((a) & mask) >> shift)
++FIELD_GET(mask, a)
 
-Reproduction output:
-ptp4l -i enp137s0f3 -m -2 -s -f /etc/ptp4l_8275.conf
-ptp4l[5278.775]: master offset      12470 s2 freq  +41288 path delay -3002
-ptp4l[5278.837]: master offset      10525 s2 freq  +39202 path delay -3002
-ptp4l[5278.900]: master offset     -24840 s2 freq  -20130 path delay -3002
-ptp4l[5278.963]: master offset      10597 s2 freq  +37908 path delay -3002
-ptp4l[5279.025]: master offset       8883 s2 freq  +36031 path delay -3002
-ptp4l[5279.088]: master offset       7267 s2 freq  +34151 path delay -3002
-ptp4l[5279.150]: master offset       5771 s2 freq  +32316 path delay -3002
-ptp4l[5279.213]: master offset       4388 s2 freq  +30526 path delay -3002
-ptp4l[5279.275]: master offset     -30434 s2 freq  -28485 path delay -3002
-ptp4l[5279.338]: master offset     -28041 s2 freq  -27412 path delay -3002
-ptp4l[5279.400]: master offset       7870 s2 freq  +31118 path delay -3002
+and applied via:
+spatch --sp-file field_prep.cocci --in-place --dir \
+ drivers/net/ethernet/intel/
 
-Fixes: 3a7496234d17 ("ice: implement basic E822 PTP support")
-Reviewed-by: Milena Olech <milena.olech@intel.com>
-Signed-off-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Cc: Julia Lawall <Julia.Lawall@inria.fr>
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: bd2776e39c2a ("igc: return early when failing to read EECD register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp_consts.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_base.c | 6 ++----
+ drivers/net/ethernet/intel/igc/igc_i225.c | 5 ++---
+ drivers/net/ethernet/intel/igc/igc_main.c | 6 ++----
+ drivers/net/ethernet/intel/igc/igc_phy.c  | 4 ++--
+ 4 files changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-index 4109aa3b2fcd..87ce20540f57 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_consts.h
-@@ -359,9 +359,9 @@ const struct ice_vernier_info_e822 e822_vernier[NUM_ICE_PTP_LNK_SPD] = {
- 		/* rx_desk_rsgb_par */
- 		644531250, /* 644.53125 MHz Reed Solomon gearbox */
- 		/* tx_desk_rsgb_pcs */
--		644531250, /* 644.53125 MHz Reed Solomon gearbox */
-+		390625000, /* 390.625 MHz Reed Solomon gearbox */
- 		/* rx_desk_rsgb_pcs */
--		644531250, /* 644.53125 MHz Reed Solomon gearbox */
-+		390625000, /* 390.625 MHz Reed Solomon gearbox */
- 		/* tx_fixed_delay */
- 		1620,
- 		/* pmd_adj_divisor */
+diff --git a/drivers/net/ethernet/intel/igc/igc_base.c b/drivers/net/ethernet/intel/igc/igc_base.c
+index a1d815af507d..9fae8bdec2a7 100644
+--- a/drivers/net/ethernet/intel/igc/igc_base.c
++++ b/drivers/net/ethernet/intel/igc/igc_base.c
+@@ -68,8 +68,7 @@ static s32 igc_init_nvm_params_base(struct igc_hw *hw)
+ 	u32 eecd = rd32(IGC_EECD);
+ 	u16 size;
+ 
+-	size = (u16)((eecd & IGC_EECD_SIZE_EX_MASK) >>
+-		     IGC_EECD_SIZE_EX_SHIFT);
++	size = FIELD_GET(IGC_EECD_SIZE_EX_MASK, eecd);
+ 
+ 	/* Added to a constant, "size" becomes the left-shift value
+ 	 * for setting word_size.
+@@ -162,8 +161,7 @@ static s32 igc_init_phy_params_base(struct igc_hw *hw)
+ 	phy->reset_delay_us	= 100;
+ 
+ 	/* set lan id */
+-	hw->bus.func = (rd32(IGC_STATUS) & IGC_STATUS_FUNC_MASK) >>
+-			IGC_STATUS_FUNC_SHIFT;
++	hw->bus.func = FIELD_GET(IGC_STATUS_FUNC_MASK, rd32(IGC_STATUS));
+ 
+ 	/* Make sure the PHY is in a good state. Several people have reported
+ 	 * firmware leaving the PHY's page select register set to something
+diff --git a/drivers/net/ethernet/intel/igc/igc_i225.c b/drivers/net/ethernet/intel/igc/igc_i225.c
+index d2562c8e8015..0dd61719f1ed 100644
+--- a/drivers/net/ethernet/intel/igc/igc_i225.c
++++ b/drivers/net/ethernet/intel/igc/igc_i225.c
+@@ -579,9 +579,8 @@ s32 igc_set_ltr_i225(struct igc_hw *hw, bool link)
+ 
+ 			/* Calculate tw_system (nsec). */
+ 			if (speed == SPEED_100) {
+-				tw_system = ((rd32(IGC_EEE_SU) &
+-					     IGC_TW_SYSTEM_100_MASK) >>
+-					     IGC_TW_SYSTEM_100_SHIFT) * 500;
++				tw_system = FIELD_GET(IGC_TW_SYSTEM_100_MASK,
++						      rd32(IGC_EEE_SU)) * 500;
+ 			} else {
+ 				tw_system = (rd32(IGC_EEE_SU) &
+ 					     IGC_TW_SYSTEM_1000_MASK) * 500;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index da1018d83262..91a4722460f6 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -3708,8 +3708,7 @@ static int igc_enable_nfc_rule(struct igc_adapter *adapter,
+ 	}
+ 
+ 	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) {
+-		int prio = (rule->filter.vlan_tci & VLAN_PRIO_MASK) >>
+-			   VLAN_PRIO_SHIFT;
++		int prio = FIELD_GET(VLAN_PRIO_MASK, rule->filter.vlan_tci);
+ 
+ 		err = igc_add_vlan_prio_filter(adapter, prio, rule->action);
+ 		if (err)
+@@ -3731,8 +3730,7 @@ static void igc_disable_nfc_rule(struct igc_adapter *adapter,
+ 		igc_del_etype_filter(adapter, rule->filter.etype);
+ 
+ 	if (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_TCI) {
+-		int prio = (rule->filter.vlan_tci & VLAN_PRIO_MASK) >>
+-			   VLAN_PRIO_SHIFT;
++		int prio = FIELD_GET(VLAN_PRIO_MASK, rule->filter.vlan_tci);
+ 
+ 		igc_del_vlan_prio_filter(adapter, prio);
+ 	}
+diff --git a/drivers/net/ethernet/intel/igc/igc_phy.c b/drivers/net/ethernet/intel/igc/igc_phy.c
+index d0d9e7170154..7cd8716d2ffa 100644
+--- a/drivers/net/ethernet/intel/igc/igc_phy.c
++++ b/drivers/net/ethernet/intel/igc/igc_phy.c
+@@ -727,7 +727,7 @@ static s32 igc_write_xmdio_reg(struct igc_hw *hw, u16 addr,
+  */
+ s32 igc_write_phy_reg_gpy(struct igc_hw *hw, u32 offset, u16 data)
+ {
+-	u8 dev_addr = (offset & GPY_MMD_MASK) >> GPY_MMD_SHIFT;
++	u8 dev_addr = FIELD_GET(GPY_MMD_MASK, offset);
+ 	s32 ret_val;
+ 
+ 	offset = offset & GPY_REG_MASK;
+@@ -758,7 +758,7 @@ s32 igc_write_phy_reg_gpy(struct igc_hw *hw, u32 offset, u16 data)
+  */
+ s32 igc_read_phy_reg_gpy(struct igc_hw *hw, u32 offset, u16 *data)
+ {
+-	u8 dev_addr = (offset & GPY_MMD_MASK) >> GPY_MMD_SHIFT;
++	u8 dev_addr = FIELD_GET(GPY_MMD_MASK, offset);
+ 	s32 ret_val;
+ 
+ 	offset = offset & GPY_REG_MASK;
 -- 
 2.39.5
 
