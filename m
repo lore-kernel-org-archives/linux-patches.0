@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0D3248BA6;
-	Wed, 15 Jan 2025 10:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FB5248BA6;
+	Wed, 15 Jan 2025 10:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937863; cv=none; b=cVzLmRemL/O9vfodHBYPTai6lNI+UgHnwOK3QUcDdk/zOLkbewcPNiLtiPyRP9ftlKjgaP7UhaNWCmJfJsf4D17/Kr5O0E2Mgr1aMjR0RA2I7w0i+AfPMNz8piV23cAIZFeuHI9tGBx8JO85HvQCPDOh4u8CmQz4Gerf5GQUDLo=
+	t=1736937866; cv=none; b=DJyLYGPLgZOee3Rt1dVMISm07sRipWaUI410cvMSySZ6hK4mZZAaRQ5IGkbg1/aj/FEIg1Yfc1vipXQ6VI8CMam/eXAz7ei0fJrIe2SR+YGkxwbLyYeMBErb1svrqzrO/8mGESBUmYlrKMwBOJ7UQnFagG2In0ytZmuBtwjlg5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937863; c=relaxed/simple;
-	bh=Kdxz0lyK8z7zX6L+U+/sPw/y8Tp+1OjDoriWgrtvo5I=;
+	s=arc-20240116; t=1736937866; c=relaxed/simple;
+	bh=OASlGgaqBc+zRbzD+08800yxL1Hm+xSL5IFYTFuXTGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gt4jzhpOiFjw3SD2ANDDpQ7TTBZ0bJ2MgXbV6NUkjdDyqnRBQWH3fy7nmle3Rh0FXwoJMH8AQDGcuND+rsCSXcA7VH1mQiEZnm3mXiuAhPbGWIJJi/F9m+1urgMU7Btz0pPBZPDE+zsVPZh+wiLL7c3SfJeA/mZSAX1WnO/MvAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXaL2Uoa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dlSZskfJ1KzMIs0248jJUGezr8UCGQVfT89hz0j2a/ycYCiJRK2cpFnHmzAaz9gKZPxLDtrkaa6PVr50I3ufmYjJrL9aooQDMrpGDCgI1SB47gynaO/MFTYicS8WnM6V02NdeZglLzMCVdhkpiYQ+WNMpXdKoN37lJVz0PTp9kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ra1H42a/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXaL2Uoa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D96C4CEE1;
-	Wed, 15 Jan 2025 10:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ra1H42a/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7F5C4CEDF;
+	Wed, 15 Jan 2025 10:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937863;
-	bh=Kdxz0lyK8z7zX6L+U+/sPw/y8Tp+1OjDoriWgrtvo5I=;
+	s=korg; t=1736937866;
+	bh=OASlGgaqBc+zRbzD+08800yxL1Hm+xSL5IFYTFuXTGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXaL2UoavBmn/x5S41BULnKnAn6ZjiQGJgAROkAG/Y7gEmrdNPMWYWpxzTBNGhiyr
-	 HSJMIk43KvEBPBONzbZHLlgeiX++roR+XlVTQL+w94rtm8N3O3KEpXGOCAj4oqZwWS
-	 UnCKyiAuZEkAnyl95nFoQb1w0k9CJJ0/OKml9HKg=
+	b=Ra1H42a/lKtlZCM65E4Zgnuy9QLCnhk60SVLs7xpLV6c/xCfnGk4H7Gu6h+nDgT9U
+	 6YJHNufVy5sALOroxfkC42+hxVfHWIaxq2H4oEYG/pUfYWiWxIFm/o9zviPZL63Yhp
+	 wDNRG+e/I1fsXqP0Bwx7lj+EN+S6A6FlX8MLGaD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/189] netfs: Fix is-caching check in read-retry
-Date: Wed, 15 Jan 2025 11:35:10 +0100
-Message-ID: <20250115103606.930204147@linuxfoundation.org>
+Subject: [PATCH 6.12 015/189] exfat: fix the infinite loop in exfat_readdir()
+Date: Wed, 15 Jan 2025 11:35:11 +0100
+Message-ID: <20250115103606.968523120@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -54,59 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit d4e338de17cb6532bf805fae00db8b41e914009b ]
+[ Upstream commit fee873761bd978d077d8c55334b4966ac4cb7b59 ]
 
-netfs: Fix is-caching check in read-retry
+If the file system is corrupted so that a cluster is linked to
+itself in the cluster chain, and there is an unused directory
+entry in the cluster, 'dentry' will not be incremented, causing
+condition 'dentry < max_dentries' unable to prevent an infinite
+loop.
 
-The read-retry code checks the NETFS_RREQ_COPY_TO_CACHE flag to determine
-if there might be failed reads from the cache that need turning into reads
-from the server, with the intention of skipping the complicated part if it
-can.  The code that set the flag, however, got lost during the read-side
-rewrite.
+This infinite loop causes s_lock not to be released, and other
+tasks will hang, such as exfat_sync_fs().
 
-Fix the check to see if the cache_resources are valid instead.  The flag
-can then be removed.
+This commit stops traversing the cluster chain when there is unused
+directory entry in the cluster to avoid this infinite loop.
 
-Fixes: ee4cdf7ba857 ("netfs: Speed up buffered reading")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/3752048.1734381285@warthog.procyon.org.uk
-cc: Jeff Layton <jlayton@kernel.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=205c2644abdff9d3f9fc
+Tested-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
+Fixes: ca06197382bd ("exfat: add directory operations")
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/read_retry.c | 2 +-
- include/linux/netfs.h | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ fs/exfat/dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/read_retry.c b/fs/netfs/read_retry.c
-index 0350592ea804..2701f7d45999 100644
---- a/fs/netfs/read_retry.c
-+++ b/fs/netfs/read_retry.c
-@@ -49,7 +49,7 @@ static void netfs_retry_read_subrequests(struct netfs_io_request *rreq)
- 	 * up to the first permanently failed one.
- 	 */
- 	if (!rreq->netfs_ops->prepare_read &&
--	    !test_bit(NETFS_RREQ_COPY_TO_CACHE, &rreq->flags)) {
-+	    !rreq->cache_resources.ops) {
- 		struct netfs_io_subrequest *subreq;
+diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
+index 7446bf09a04a..9d8848872fe8 100644
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -125,7 +125,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 			type = exfat_get_entry_type(ep);
+ 			if (type == TYPE_UNUSED) {
+ 				brelse(bh);
+-				break;
++				goto out;
+ 			}
  
- 		list_for_each_entry(subreq, &rreq->subrequests, rreq_link) {
-diff --git a/include/linux/netfs.h b/include/linux/netfs.h
-index 5eaceef41e6c..474481ee8b7c 100644
---- a/include/linux/netfs.h
-+++ b/include/linux/netfs.h
-@@ -269,7 +269,6 @@ struct netfs_io_request {
- 	size_t			prev_donated;	/* Fallback for subreq->prev_donated */
- 	refcount_t		ref;
- 	unsigned long		flags;
--#define NETFS_RREQ_COPY_TO_CACHE	1	/* Need to write to the cache */
- #define NETFS_RREQ_NO_UNLOCK_FOLIO	2	/* Don't unlock no_unlock_folio on completion */
- #define NETFS_RREQ_DONT_UNLOCK_FOLIOS	3	/* Don't unlock the folios on completion */
- #define NETFS_RREQ_FAILED		4	/* The request failed */
+ 			if (type != TYPE_FILE && type != TYPE_DIR) {
+@@ -189,6 +189,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 		}
+ 	}
+ 
++out:
+ 	dir_entry->namebuf.lfn[0] = '\0';
+ 	*cpos = EXFAT_DEN_TO_B(dentry);
+ 	return 0;
 -- 
 2.39.5
 
