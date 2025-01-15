@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4151E98E3;
-	Wed, 15 Jan 2025 10:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B59248BCB;
+	Wed, 15 Jan 2025 10:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938288; cv=none; b=HmDbLOeHfhohRBL8zYI75tROLYqW9d04m9288Rgu/VLqqBYrKFQ7lB7zqPIL2nreHWubNvSIKXLW3PFNmMsxL/YEaHV1KMFDgJUsfNbdUDajdd28AvQpPMkvsGflw/YOAFmacBbywJafRuqJfSsoJWsVwBWXXpvTrWmcQ7a/V7k=
+	t=1736938292; cv=none; b=Uxp8czXxC/m4NOzKuJoMj62mEKrQfcI9AMJR/FkxyBEdDIAkkmH9Q11rz0PfsSHNW/+X2zxsOjagpr3W/w+HMxbPkbRltPy5u8s3hnZOmN4A3t383Ks4rr5/rTxp5pd1fMWpITeRrVkMw/l4X+IOQmrsPk4VSg6adWsq65JKyoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938288; c=relaxed/simple;
-	bh=XePNtQGldHFHSRI9OCY6lQsTV1257TxC2KcdWSuQc5c=;
+	s=arc-20240116; t=1736938292; c=relaxed/simple;
+	bh=TK7dTgpgB5+f46RRVtt/RL/gq7X8v/zc04Q5wQYDvHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O04qh+NLEm6eMkRy11wL9DSjRrRf16OYeDYV7160tKLGC37cgRo+7J9binhlY/YXhIT1fIpKY3AmynzExuxTHOfODAZ0PU8E2INZyUClXOo8imtnj0NehYQ/V+Rxln0ou2UVNKml3e1hrkD0vQUZ//lvogAnj6eqOaUPjAEsSBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xmk/6aqw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J0FUk2dYxLG8U8Me/HFhQ3FnL2HlgTXh5U10Zy4S2UA7gpd7l/HbF2Oa0s1kV1YyeNEmnDzLE5LAhT+OmvQOermC9I2/oplhre4uMuoH/vGuSspF+K1giQC/adQgnn8wLhUtdCox6HMxHWhkGgKmLobZpazNT58dkv0Ypq44Ugg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7sTP9qL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xmk/6aqw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEF3C4CEDF;
-	Wed, 15 Jan 2025 10:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7sTP9qL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C161C4CEDF;
+	Wed, 15 Jan 2025 10:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938288;
-	bh=XePNtQGldHFHSRI9OCY6lQsTV1257TxC2KcdWSuQc5c=;
+	s=korg; t=1736938291;
+	bh=TK7dTgpgB5+f46RRVtt/RL/gq7X8v/zc04Q5wQYDvHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmk/6aqwuU4aMI4uEq/1SgTD0l0LnKGk26ysIYd7M8grvaG1R7GTCASMnDT/5F0fg
-	 XP7RexWA4RCwsh0fP3dT1+F0LzNszAdQj6yju7Uo2+oNZciNw/yzQL/qO/yTVloBcw
-	 j9xYTLQtXnGngm8GziO7Q5GFKMWyMW+fqUtNfYJo=
+	b=c7sTP9qLvs8oyMuQ/rM8GRJnYcA2w5itAniPPDedzOdjA07PZAOYu982N/YzfMb96
+	 JOEv/pHb74j1HiZhMpe0kAjKIjY0nX9v/9yaaMg09jUZtTHK//aANXQ9pPpV3geRkc
+	 kVZHIIMknQBGBlXTFpPwLu1kcXawL0tclmDybH7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	stable <stable@kernel.org>,
-	Rengarajan S <rengarajan.s@microchip.com>
-Subject: [PATCH 6.12 139/189] misc: microchip: pci1xxxx: Resolve return code mismatch during GPIO set config
-Date: Wed, 15 Jan 2025 11:37:15 +0100
-Message-ID: <20250115103611.977222449@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.12 140/189] tty: serial: 8250: Fix another runtime PM usage counter underflow
+Date: Wed, 15 Jan 2025 11:37:16 +0100
+Message-ID: <20250115103612.013750785@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -44,40 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rengarajan S <rengarajan.s@microchip.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit c7a5378a0f707686de3ddb489f1653c523bb7dcc upstream.
+commit ed2761958ad77e54791802b07095786150eab844 upstream.
 
-Driver returns -EOPNOTSUPPORTED on unsupported parameters case in set
-config. Upper level driver checks for -ENOTSUPP. Because of the return
-code mismatch, the ioctls from userspace fail. Resolve the issue by
-passing -ENOTSUPP during unsupported case.
+The commit f9b11229b79c ("serial: 8250: Fix PM usage_count for console
+handover") fixed one runtime PM usage counter balance problem that
+occurs because .dev is not set during univ8250 setup preventing call to
+pm_runtime_get_sync(). Later, univ8250_console_exit() will trigger the
+runtime PM usage counter underflow as .dev is already set at that time.
 
-Fixes: 7d3e4d807df2 ("misc: microchip: pci1xxxx: load gpio driver for the gpio controller auxiliary device enumerated by the auxiliary bus driver.")
+Call pm_runtime_get_sync() to balance the RPM usage counter also in
+serial8250_register_8250_port() before trying to add the port.
+
+Reported-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: bedb404e91bb ("serial: 8250_port: Don't use power management for kernel console")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Rengarajan S <rengarajan.s@microchip.com>
-Link: https://lore.kernel.org/r/20241205133626.1483499-3-rengarajan.s@microchip.com
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20241210170120.2231-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-+++ b/drivers/misc/mchp_pci1xxxx/mchp_pci1xxxx_gpio.c
-@@ -148,7 +148,7 @@ static int pci1xxxx_gpio_set_config(stru
- 		pci1xxx_assign_bit(priv->reg_base, OPENDRAIN_OFFSET(offset), (offset % 32), true);
- 		break;
- 	default:
--		ret = -EOPNOTSUPP;
-+		ret = -ENOTSUPP;
- 		break;
- 	}
- 	spin_unlock_irqrestore(&priv->lock, flags);
+--- a/drivers/tty/serial/8250/8250_core.c
++++ b/drivers/tty/serial/8250/8250_core.c
+@@ -812,6 +812,9 @@ int serial8250_register_8250_port(const
+ 			uart->dl_write = up->dl_write;
+ 
+ 		if (uart->port.type != PORT_8250_CIR) {
++			if (uart_console_registered(&uart->port))
++				pm_runtime_get_sync(uart->port.dev);
++
+ 			if (serial8250_isa_config != NULL)
+ 				serial8250_isa_config(0, &uart->port,
+ 						&uart->capabilities);
 
 
