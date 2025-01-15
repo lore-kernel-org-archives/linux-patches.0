@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC668248BA7;
-	Wed, 15 Jan 2025 10:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04BA248BA0;
+	Wed, 15 Jan 2025 10:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937735; cv=none; b=RchtZwvuaeWaD2B4iJygVGdeBQAPTFPBNeMHhZlJIrPwhth0l1ayxou5vBglw4+du5qq5D/sSbkxaxUvSplMMavfgsO6bOyNOgBCioETD4ijFk9Dq8rTbsTgQtknMBMjyoxQKck1/zIAgQo7blKXocIEvSOWVm6aaFsfZK/EWwg=
+	t=1736937736; cv=none; b=eR5se/fciqboVornCShDDYILP4cur0Ufers0NtffK638fL1lrbAxnXQFRJQvSixuOYQeKMKwWKqKgj8+4sHpAPua8oAd2+RMnP427F7EX8wg5MYL/c1uWP+EZ21idX9gYL4CYsBtxGxYy3x0hYDM9ai00CAWU8pZPjVd9GzJM/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937735; c=relaxed/simple;
-	bh=c8qFMsTNwarIIrrZzbG8EPLdCfnYOzF97pN+5Syz7oY=;
+	s=arc-20240116; t=1736937736; c=relaxed/simple;
+	bh=jQocUdsV1f6sk2LYIaeNKTi6lDknX43Co4af8B2nVt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iG60H3hgI60t9XhPcrZb5q8uR/6t63mEodxfSf2T3ADcS+z5MkYmAEIjCwL0PO/9rvHTkrOon689/b8FtwKiueWl7+ylrFkBDG7RsEXVo7Aumrp0a16taGAQ3BR57Gsb/dxlmSFXOujURbpRVKnWPBUGUQi9lNirXIn3o6xz91E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJb7B+gQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6nuTKJ1fmyexjdwE/Wc/xiu02KISVuQScfV65AcdML8EWGW3ALkF4GGGo9/ohV0G3hZJorF7QDKV9hXcbrb8bTDiSspFOwjQ/vozs4NXQi4suXI3L6PPSMcmEp/sIj6oSk3CvX9rdY77ilpOlYv8E2nZ19oIAlcasYn7dhbu3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uj1tKBLz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJb7B+gQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5FEC4CEE2;
-	Wed, 15 Jan 2025 10:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uj1tKBLz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F54AC4CEE2;
+	Wed, 15 Jan 2025 10:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937733;
-	bh=c8qFMsTNwarIIrrZzbG8EPLdCfnYOzF97pN+5Syz7oY=;
+	s=korg; t=1736937736;
+	bh=jQocUdsV1f6sk2LYIaeNKTi6lDknX43Co4af8B2nVt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJb7B+gQWeLUT7fSf0qNjZNVxiS6ZxOy+PdIMk7cgsa52JomSdDHj4IzOtftUY7Es
-	 UOfwgAMIqfklml3Qzq5AwQxK1P4T7BIvr+wpbnhjhGA/V2ZfeJh/4MKWQxAdAenxC7
-	 Kh91m9pCFT/oC8M65yEnGaLmPqxusWaJl0e0hq5Y=
+	b=Uj1tKBLz74EVJcRfnz1H2RZr/vGR3kOBCKyulzsOVTuGVYOvSSMjgO5p2vN3fHuFA
+	 4AyN+dFstXwS7AHgD3fR4zE1yZySVpiWTPglU4VY0o2TnDtZARe54jfsg8cehLuHe2
+	 xYJREbDktpaBo2x7/TbgYwScOvioT0IUFH5dHcDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ma Ke <make_ruc2021@163.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 66/92] usb: fix reference leak in usb_new_device()
-Date: Wed, 15 Jan 2025 11:37:24 +0100
-Message-ID: <20250115103550.189020155@linuxfoundation.org>
+	Prashanth K <quic_prashk@quicinc.com>
+Subject: [PATCH 6.1 67/92] usb: gadget: f_uac2: Fix incorrect setting of bNumEndpoints
+Date: Wed, 15 Jan 2025 11:37:25 +0100
+Message-ID: <20250115103550.229025697@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -51,54 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-commit 0df11fa8cee5a9cf8753d4e2672bb3667138c652 upstream.
+commit 057bd54dfcf68b1f67e6dfc32a47a72e12198495 upstream.
 
-When device_add(&udev->dev) succeeds and a later call fails,
-usb_new_device() does not properly call device_del(). As comment of
-device_add() says, 'if device_add() succeeds, you should call
-device_del() when you want to get rid of it. If device_add() has not
-succeeded, use only put_device() to drop the reference count'.
+Currently afunc_bind sets std_ac_if_desc.bNumEndpoints to 1 if
+controls (mute/volume) are enabled. During next afunc_bind call,
+bNumEndpoints would be unchanged and incorrectly set to 1 even
+if the controls aren't enabled.
 
-Found by code review.
+Fix this by resetting the value of bNumEndpoints to 0 on every
+afunc_bind call.
 
+Fixes: eaf6cbe09920 ("usb: gadget: f_uac2: add volume and mute support")
 Cc: stable <stable@kernel.org>
-Fixes: 9f8b17e643fe ("USB: make usbdevices export their device nodes instead of using a separate class")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241218071346.2973980-1-make_ruc2021@163.com
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Link: https://lore.kernel.org/r/20241211115915.159864-1-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_uac2.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2632,13 +2632,13 @@ int usb_new_device(struct usb_device *ud
- 		err = sysfs_create_link(&udev->dev.kobj,
- 				&port_dev->dev.kobj, "port");
- 		if (err)
--			goto fail;
-+			goto out_del_dev;
+--- a/drivers/usb/gadget/function/f_uac2.c
++++ b/drivers/usb/gadget/function/f_uac2.c
+@@ -1176,6 +1176,7 @@ afunc_bind(struct usb_configuration *cfg
+ 		uac2->as_in_alt = 0;
+ 	}
  
- 		err = sysfs_create_link(&port_dev->dev.kobj,
- 				&udev->dev.kobj, "device");
- 		if (err) {
- 			sysfs_remove_link(&udev->dev.kobj, "port");
--			goto fail;
-+			goto out_del_dev;
- 		}
- 
- 		if (!test_and_set_bit(port1, hub->child_usage_bits))
-@@ -2650,6 +2650,8 @@ int usb_new_device(struct usb_device *ud
- 	pm_runtime_put_sync_autosuspend(&udev->dev);
- 	return err;
- 
-+out_del_dev:
-+	device_del(&udev->dev);
- fail:
- 	usb_set_device_state(udev, USB_STATE_NOTATTACHED);
- 	pm_runtime_disable(&udev->dev);
++	std_ac_if_desc.bNumEndpoints = 0;
+ 	if (FUOUT_EN(uac2_opts) || FUIN_EN(uac2_opts)) {
+ 		uac2->int_ep = usb_ep_autoconfig(gadget, &fs_ep_int_desc);
+ 		if (!uac2->int_ep) {
 
 
