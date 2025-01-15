@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24990248BD0;
-	Wed, 15 Jan 2025 10:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94ED248BD0;
+	Wed, 15 Jan 2025 10:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938697; cv=none; b=dgcoMvYko2Dyz4Yg12iNbcGUxSL4R+7pfi0Mt/Np254Z+RXZFkI58yhsQ7mF1itmE8ikRREmdoUjlYBXa6bR8jPQRUr0lq1+Re76eY3aG5/OrXJGkB2RitUc5qSzu4/TXPC4xLJ+IQ6V84AdDRTM2gPBQONIslx1719JVPsjoMA=
+	t=1736938701; cv=none; b=siI5liiuoBiyCav93QNyZqLQB8ilD2G/BIlXW8R2cHfIS0lwQP3Mw/6tvbSQxbUMjox0tqOZRydQLNlodTf8wLhYIB07WGCXfrt+34KBiNYSnhugBeuhO2BJveG3szsVdJRLBo/ZkyPJs4ccHUzPOPYG+IZkfbCdXd/TUlDDABk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938697; c=relaxed/simple;
-	bh=WdHDAmoxph8ZTvuSaALU0mZtqPldoJHaUCmy2B3kbB4=;
+	s=arc-20240116; t=1736938701; c=relaxed/simple;
+	bh=O0qxxGCIujx4V8PdUMliPkRD5JIN1f515OITJv90q84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MirWqdYgu4penAJS0pz4oXs0HVSg6E59LV91ZF0ecHrae0jN/6GTDS8uSpaKNLg8ep9jJe6heZlwYTtmam0YyCtsjDl8g0OLLsUCJ6FFuDN9lmwfoV7No7GpMxsrY4VP483tiMxwXytEMb81S458ObLeerJRg9eMOTP+MsX+PBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnh//ker; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SobbXCwBMhSDEfrmgn8DU8T25nO1go/UiLH0IiVREAW20LgGhzI90MUfIP+m1tFIFurzsF0zaTGtgQEXvxcJHSAQMynt4YkGNigz2xMgkiFHd3Rf5mnwqBjBChM2AJP8nf4y9ZMlVaL5M+6AuSam1MgzewW2qDmIJSCvjQR5g1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGCW9ypp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnh//ker"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D077C4CEDF;
-	Wed, 15 Jan 2025 10:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGCW9ypp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5FEC4CEDF;
+	Wed, 15 Jan 2025 10:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938697;
-	bh=WdHDAmoxph8ZTvuSaALU0mZtqPldoJHaUCmy2B3kbB4=;
+	s=korg; t=1736938700;
+	bh=O0qxxGCIujx4V8PdUMliPkRD5JIN1f515OITJv90q84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wnh//kerV5dq3KcwW7nrUVNZ/ScAOPbxpuCYMKTOzHM5//Uz0CU7q7g0r9yJRYKH3
-	 rwsgwMThA0ZAbh8hL9g3DKJnP/vFrySEpGLBgI+/r3VU5oVCXrIRr5DufLUjoNq7sG
-	 th/rzjX6XnudGGAzhrIHpPLNoEH//Fr+qFJnrZ0o=
+	b=HGCW9yppf4SEvgZBDP7PDvqzaGxnCzEPOvUmisdVs9E4zHn0T/jcpTMn2fh3Ttv7m
+	 BTYbbmbqeMa+MRTIb0RuCLThiV5OZVMdGCMnBlG48m/BiMHM7uSHmNDkZZSC8T4flN
+	 jwwgIn7iy0JtyycSkJ53sllJzsRPmM58OIUuowrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 068/129] drm/amd/display: Add check for granularity in dml ceil/floor helpers
-Date: Wed, 15 Jan 2025 11:37:23 +0100
-Message-ID: <20250115103557.090880446@linuxfoundation.org>
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 069/129] thermal: of: fix OF node leak in of_thermal_zone_find()
+Date: Wed, 15 Jan 2025 11:37:24 +0100
+Message-ID: <20250115103557.128763222@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -53,63 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Li <Roman.Li@amd.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit 0881fbc4fd62e00a2b8e102725f76d10351b2ea8 upstream.
+[ Upstream commit 9164e0912af206a72ddac4915f7784e470a04ace ]
 
-[Why]
-Wrapper functions for dcn_bw_ceil2() and dcn_bw_floor2()
-should check for granularity is non zero to avoid assert and
-divide-by-zero error in dcn_bw_ functions.
+of_thermal_zone_find() calls of_parse_phandle_with_args(), but does not
+release the OF node reference obtained by it.
 
-[How]
-Add check for granularity 0.
+Add a of_node_put() call when the call is successful.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f6e09701c3eb2ccb8cb0518e0b67f1c69742a4ec)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3fd6d6e2b4e8 ("thermal/of: Rework the thermal device tree initialization")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20241224031809.950461-1-joe@pf.is.s.u-tokyo.ac.jp
+[ rjw: Changelog edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/thermal/thermal_of.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h
-@@ -66,11 +66,15 @@ static inline double dml_max5(double a,
+diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+index 4e5f86c21456..0f520cf923a1 100644
+--- a/drivers/thermal/thermal_of.c
++++ b/drivers/thermal/thermal_of.c
+@@ -203,6 +203,7 @@ static struct device_node *of_thermal_zone_find(struct device_node *sensor, int
+ 				goto out;
+ 			}
  
- static inline double dml_ceil(double a, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_ceil2(a, granularity);
- }
- 
- static inline double dml_floor(double a, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_floor2(a, granularity);
- }
- 
-@@ -114,11 +118,15 @@ static inline double dml_ceil_2(double f
- 
- static inline double dml_ceil_ex(double x, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_ceil2(x, granularity);
- }
- 
- static inline double dml_floor_ex(double x, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_floor2(x, granularity);
- }
- 
++			of_node_put(sensor_specs.np);
+ 			if ((sensor == sensor_specs.np) && id == (sensor_specs.args_count ?
+ 								  sensor_specs.args[0] : 0)) {
+ 				pr_debug("sensor %pOFn id=%d belongs to %pOFn\n", sensor, id, child);
+-- 
+2.39.5
+
 
 
