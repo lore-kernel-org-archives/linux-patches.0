@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65656248BD0;
-	Wed, 15 Jan 2025 10:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20060248BD0;
+	Wed, 15 Jan 2025 10:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938690; cv=none; b=I7mn+d4kvwEDTmPoRuVtaRzyzj+0AZfXgxszbfTfwQMyyIJpwR84ZWWyy6S/ATUoo/juwSSAKyIP6yC4b1HhxkAmhgogFAgDeqtVo62NKvs9wWNzqNvU/UNrBAEN0Px7bUfiCaeCL/9tOI6nNUDxX2MzT0b4dWC3qaK/jnMqIck=
+	t=1736938695; cv=none; b=pXfwJD7Uw/CLooeeO3Bphsuil8Hl8k7GHSmTqRW60782JEyqet9n9vFVpquxmEWwE6XZFQHkw2esc/hGz1+I3e5phJKZ03xxN6vF9KuJQd3FY0HUqzgeyW/wFKI8m6VQ9PHqgZnY8v53NKKwYGYPUprtCMht//xqSWwXXeSZTZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938690; c=relaxed/simple;
-	bh=1Wn5f3ESaj45afOAQGnOTxUQqxlRrMggftzr2aw/+yk=;
+	s=arc-20240116; t=1736938695; c=relaxed/simple;
+	bh=c+kFFr2v3aID+t63o403I7SFHM8URDNQ+Fe0BTb/x6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aW4i9UFYHD7S9dBv0kSdxqkk75qaPdr3mKy4x0zXetx64EHjMqEZmQjA39S2nISCYAhiNwCu82qfOhcdpKVbCXH+5PGYVWEj0cz3omsF4feOl04scbSpqKy8OWqenjFhRRO/PleAlOutzLm7sT5iRvPv3Nv6iSrxBx+tNC61988=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZbKtcP6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BGtbjGIQivu16GLLjUBt8T2srNxsLbKAgV3BXvUdzcPVgSYNNgnoSvDjgxng9krGdbzj7SH2wCYB7hd6O1Oo93fsf9f8NxYunVhUKX2FqXpWpWbmF4xZbB3278/HrED46p71UqLGaSzDFieshiac1JFDoS3q92QsF8ak4UNFeIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnJtEe4d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZbKtcP6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9365C4CEDF;
-	Wed, 15 Jan 2025 10:58:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnJtEe4d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEB2C4CEDF;
+	Wed, 15 Jan 2025 10:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938690;
-	bh=1Wn5f3ESaj45afOAQGnOTxUQqxlRrMggftzr2aw/+yk=;
+	s=korg; t=1736938693;
+	bh=c+kFFr2v3aID+t63o403I7SFHM8URDNQ+Fe0BTb/x6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZbKtcP6rsOI9BYr1yQFaymKvP6Li0cOLg1ERHab6i6xoDZ70CLdgWYE6ZjqIIBDZ
-	 kNIyaQNvmYPvpaFia01GTF6Vd4k9K7fgj1QoqvlfO4MGs5kfLx+aOe20PD16W2A4OI
-	 YnUoFOJSP/ABPQFBxW2p/UqSpHJZAxAYCHWwo/6o=
+	b=fnJtEe4dA23NdrMJrrAQi0sP9nsQah0HN5TCDZdzvob1p3tbhMUrPN26UUgQkxcIV
+	 0iC1+0e+P+xva5bjmeTZGX3dxUmqvKXsTuELk1GlZs3lDvzIL0etgv05TAgo1NkX4Y
+	 cRRPJij+LZ1QI1iLU74qSrcvR1bpp93elOPbzoMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 066/129] sctp: sysctl: plpmtud_probe_interval: avoid using current->nsproxy
-Date: Wed, 15 Jan 2025 11:37:21 +0100
-Message-ID: <20250115103557.010284777@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 067/129] ksmbd: Implement new SMB3 POSIX type
+Date: Wed, 15 Jan 2025 11:37:22 +0100
+Message-ID: <20250115103557.051304741@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -51,51 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 6259d2484d0ceff42245d1f09cc8cb6ee72d847a upstream.
+commit e8580b4c600e085b3c8e6404392de2f822d4c132 upstream.
 
-As mentioned in a previous commit of this series, using the 'net'
-structure via 'current' is not recommended for different reasons:
+As SMB3 posix extension specification, Give posix file type to posix
+mode.
 
-- Inconsistency: getting info from the reader's/writer's netns vs only
-  from the opener's netns.
+https://www.samba.org/~slow/SMB3_POSIX/fscc_posix_extensions.html#posix-file-type-definition
 
-- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
-  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
-  syzbot [1] using acct(2).
-
-The 'net' structure can be obtained from the table->data using
-container_of().
-
-Note that table->data could also be used directly, as this is the only
-member needed from the 'net' structure, but that would increase the size
-of this fix, to use '*data' everywhere 'net->sctp.probe_interval' is
-used.
-
-Fixes: d1e462a7a5f3 ("sctp: add probe_interval in sysctl and sock/asoc/transport")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-8-5df34b2083e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sysctl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c |   40 ++++++++++++++++++++++++++++++++++++++++
+ fs/smb/server/smb2pdu.h |   10 ++++++++++
+ 2 files changed, 50 insertions(+)
 
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -573,7 +573,8 @@ static int proc_sctp_do_udp_port(struct
- static int proc_sctp_do_probe_interval(struct ctl_table *ctl, int write,
- 				       void *buffer, size_t *lenp, loff_t *ppos)
- {
--	struct net *net = current->nsproxy->net_ns;
-+	struct net *net = container_of(ctl->data, struct net,
-+				       sctp.probe_interval);
- 	struct ctl_table tbl;
- 	int ret, new_value;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3989,6 +3989,26 @@ static int smb2_populate_readdir_entry(s
+ 		posix_info->DeviceId = cpu_to_le32(ksmbd_kstat->kstat->rdev);
+ 		posix_info->HardLinks = cpu_to_le32(ksmbd_kstat->kstat->nlink);
+ 		posix_info->Mode = cpu_to_le32(ksmbd_kstat->kstat->mode & 0777);
++		switch (ksmbd_kstat->kstat->mode & S_IFMT) {
++		case S_IFDIR:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFLNK:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFCHR:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFBLK:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFIFO:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFSOCK:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
++		}
++
+ 		posix_info->Inode = cpu_to_le64(ksmbd_kstat->kstat->ino);
+ 		posix_info->DosAttributes =
+ 			S_ISDIR(ksmbd_kstat->kstat->mode) ?
+@@ -5177,6 +5197,26 @@ static int find_file_posix_info(struct s
+ 	file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
+ 	file_info->HardLinks = cpu_to_le32(stat.nlink);
+ 	file_info->Mode = cpu_to_le32(stat.mode & 0777);
++	switch (stat.mode & S_IFMT) {
++	case S_IFDIR:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFLNK:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFCHR:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFBLK:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFIFO:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFSOCK:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
++	}
++
+ 	file_info->DeviceId = cpu_to_le32(stat.rdev);
  
+ 	/*
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -500,4 +500,14 @@ static inline void *smb2_get_msg(void *b
+ 	return buf + 4;
+ }
+ 
++#define POSIX_TYPE_FILE		0
++#define POSIX_TYPE_DIR		1
++#define POSIX_TYPE_SYMLINK	2
++#define POSIX_TYPE_CHARDEV	3
++#define POSIX_TYPE_BLKDEV	4
++#define POSIX_TYPE_FIFO		5
++#define POSIX_TYPE_SOCKET	6
++
++#define POSIX_FILETYPE_SHIFT	12
++
+ #endif	/* _SMB2PDU_H */
 
 
