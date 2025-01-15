@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4398E248BA1;
-	Wed, 15 Jan 2025 10:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF88248BBD;
+	Wed, 15 Jan 2025 10:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938275; cv=none; b=go9B0nMSxyhNqukIZUMVdV7meK7jEAcVM6AdyAa2rkEt17lB3S0FNKg5QszdEfMGThVP5LRN9hgzAll+xp0Nc179LbZcrNqOxggwLbu4yDNMhIuaGrg2gEJd4X+EHbcKWFhgAIFRs3tM6AdtYLHv0rZJ9uRUOiq3vKCAkDpJ/Js=
+	t=1736938279; cv=none; b=b8AeIsBpoIMn/VrylC05PBAE7ovP6XIRd3IJeRqiNRTIHyrXs98YPZErLNFmFw7UtjYz219cgNq4+hQRkqjL6lwkfuZXHFSxX/Rhkrzo7WZAjuAlUtTY4WC8E//e35D7YMI+9++IStjNGDEtzeqhD0seZK6lTwAVKZZYbjHlI9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938275; c=relaxed/simple;
-	bh=dBVlBBJgUI/P88/d8/Dvy8HnadNPuNzU8RzUaDVeqe4=;
+	s=arc-20240116; t=1736938279; c=relaxed/simple;
+	bh=UiRMtrVp1yE1F35jchbT9w5YF/UK/VCZDOO2a7xs9pA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qP/dhvOZL13aYAAX+CK2AwJYLtHGoMSOImqEvW1/srudTmGnF3MMozhSeGDKgu3xtIvEXMQnVsUE8exX0mPifXqzVPgQa+vepqLKcS/HWpqSFdn68XryKu80Dvf5CxBpr1o4BqPd4YtuU9RtaVtQIn/AZWo7yaPQKeKD6eUs3Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtQLpoWu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IV0Y30H8GczYqCDu9/9FIV3yNQEjDNOM4B0OySnwdeCGGDNrxzhIZr6xnMo0M6llAU3N4nTmaQOg2BPjkkhd1yxVG96QwBc9l/l0PgodMiSByR/JoQLvPINdelGg2w1u6QrJKF+VtgOkH358JOCCons9YrHjUMUAKydrCjGcJbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6FOQ1Cc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtQLpoWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A093CC4CEE1;
-	Wed, 15 Jan 2025 10:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6FOQ1Cc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDCBC4CEDF;
+	Wed, 15 Jan 2025 10:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938275;
-	bh=dBVlBBJgUI/P88/d8/Dvy8HnadNPuNzU8RzUaDVeqe4=;
+	s=korg; t=1736938278;
+	bh=UiRMtrVp1yE1F35jchbT9w5YF/UK/VCZDOO2a7xs9pA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtQLpoWuu+Yy5Z+5VujV//hd85tCAp195ov1rbAtleYm0Yd2nJF1RmZUmxRi7kdkh
-	 T5ZyTlUi8+5lX31EFkWrqZiXbtfp6eNGzwnxw+5DZUlsJpunyNuSLTmD4CxGYswxbF
-	 v8a8bQZLGSpHOe43w0o+dx0hZ1HRR7tCNqSD7xDc=
+	b=f6FOQ1CcG+K1KH26SPNddD8YUyRU07NHFhllimWs8EXsKM22e9HmkbM2EhP+l7Itt
+	 SXoikkrLaEQ5UpTU8ELU+GHvISO3ntcw6OeGcSK0CTkbD1iYlhKSzRA87gvfrJkkSh
+	 fDGW36RUJnkw6wg0ZxifCOZ/UxGFURI1rENTqIX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 135/189] USB: serial: cp210x: add Phoenix Contact UPS Device
-Date: Wed, 15 Jan 2025 11:37:11 +0100
-Message-ID: <20250115103611.824637033@linuxfoundation.org>
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.12 136/189] usb: dwc3: gadget: fix writing NYET threshold
+Date: Wed, 15 Jan 2025 11:37:12 +0100
+Message-ID: <20250115103611.861192608@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -44,96 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: André Draszik <andre.draszik@linaro.org>
 
-commit 854eee93bd6e3dca619d47087af4d65b2045828e upstream.
+commit 01ea6bf5cb58b20cc1bd159f0cf74a76cf04bb69 upstream.
 
-Phoenix Contact sells UPS Quint devices [1] with a custom datacable [2]
-that embeds a Silicon Labs converter:
+Before writing a new value to the register, the old value needs to be
+masked out for the new value to be programmed as intended, because at
+least in some cases the reset value of that field is 0xf (max value).
 
-Bus 001 Device 003: ID 1b93:1013 Silicon Labs Phoenix Contact UPS Device
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass            0
-  bDeviceSubClass         0
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x1b93
-  idProduct          0x1013
-  bcdDevice            1.00
-  iManufacturer           1 Silicon Labs
-  iProduct                2 Phoenix Contact UPS Device
-  iSerial                 3 <redacted>
-  bNumConfigurations	 1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0020
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass       255 Vendor Specific Class
-      bInterfaceSubClass      0
-      bInterfaceProtocol      0
-      iInterface              2 Phoenix Contact UPS Device
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x82  EP 2 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
+At the moment, the dwc3 core initialises the threshold to the maximum
+value (0xf), with the option to override it via a DT. No upstream DTs
+seem to override it, therefore this commit doesn't change behaviour for
+any upstream platform. Nevertheless, the code should be fixed to have
+the desired outcome.
 
-[1] https://www.phoenixcontact.com/en-pc/products/power-supply-unit-quint-ps-1ac-24dc-10-2866763
-[2] https://www.phoenixcontact.com/en-il/products/data-cable-preassembled-ifs-usb-datacable-2320500
+Do so.
 
-Reported-by: Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 80caf7d21adc ("usb: dwc3: add lpm erratum support")
+Cc: stable@vger.kernel.org # 5.10+ (needs adjustment for 5.4)
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/20241209-dwc3-nyet-fix-v2-1-02755683345b@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/core.h   |    1 +
+ drivers/usb/dwc3/gadget.c |    4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -223,6 +223,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
- 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
- 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
-+	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
- 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
- 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
- 	{ USB_DEVICE(0x1D6F, 0x0010) }, /* Seluxit ApS RF Dongle */
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -464,6 +464,7 @@
+ #define DWC3_DCTL_TRGTULST_SS_INACT	(DWC3_DCTL_TRGTULST(6))
+ 
+ /* These apply for core versions 1.94a and later */
++#define DWC3_DCTL_NYET_THRES_MASK	(0xf << 20)
+ #define DWC3_DCTL_NYET_THRES(n)		(((n) & 0xf) << 20)
+ 
+ #define DWC3_DCTL_KEEP_CONNECT		BIT(19)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4208,8 +4208,10 @@ static void dwc3_gadget_conndone_interru
+ 		WARN_ONCE(DWC3_VER_IS_PRIOR(DWC3, 240A) && dwc->has_lpm_erratum,
+ 				"LPM Erratum not available on dwc3 revisions < 2.40a\n");
+ 
+-		if (dwc->has_lpm_erratum && !DWC3_VER_IS_PRIOR(DWC3, 240A))
++		if (dwc->has_lpm_erratum && !DWC3_VER_IS_PRIOR(DWC3, 240A)) {
++			reg &= ~DWC3_DCTL_NYET_THRES_MASK;
+ 			reg |= DWC3_DCTL_NYET_THRES(dwc->lpm_nyet_threshold);
++		}
+ 
+ 		dwc3_gadget_dctl_write_safe(dwc, reg);
+ 	} else {
 
 
