@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4434E248BB0;
-	Wed, 15 Jan 2025 10:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFDE248BB0;
+	Wed, 15 Jan 2025 10:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938789; cv=none; b=bbfwCd1JbWj95+y+aV21W8/W/RzkZtd3ruaAljl/9lTr80m5Fm0APP9PwXpFI6tjFqkslgluXZ1JEbZBDDg44JZbGczRFMbZY6ui4cFWIXxTcywhcmtwsMtg+zudaeLgh2LKAr8Gi9D2nTGJW3u+MD5JY96lY8U94Tg+D1qW5CY=
+	t=1736938792; cv=none; b=OzUm+9b5zC4XHOKDBAYR/17q0onQ0b+gkgsgSucX4zP9/eNcaXu7P/IzDxRf0wL93DkqTlcO2i59VdTbF0snPd/Mly4plzN9rKg0KGLevWu6+McfQI+9a2JTtEG+2NzLgxpzyxXHMevIbtdt4sO06UmSGL9nOSj7ULPM83I6AUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938789; c=relaxed/simple;
-	bh=rA+mUKiJI69pim4TCDDoSOl33S3cobNgb29korjCwFU=;
+	s=arc-20240116; t=1736938792; c=relaxed/simple;
+	bh=ah+zMvKMjd8upROTCtkHdQaFfBCraTQkYsTrhBSTp4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MhdL++f7BOVd7DHkubshVgHFrYG7T+bDSDP/NahbCCAhMJKXbDnYjcorxUl1ZE0vmB/qBhFlWkWZSLQMDXTIfKypFShW0daO9rtvmOjA8oGQ6aJxXZGYCibluBH9Q9ASn26Jqv3qvOoVfjm7Y7gZu9hhfqppW0+AyKNGDlWMBJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSi2LW/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uyV3FP8ivN0EWjE4xi3w3Clz32TTO3IX2sG6oeDBGEFb3zOc0PfbxREAEQhh+H9MQZC5M0obrJHwr81ONQmFPxyaKzJ4aXZbQXwOeRRO7KBDAxB9jAUcdJXiQnqeC7VGjEUrviRUXIjbEe4gR4CrS6rBeiMjWm6uHLsVrvpDabU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZJfABJJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSi2LW/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9D4C4CEDF;
-	Wed, 15 Jan 2025 10:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZJfABJJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD834C4CEDF;
+	Wed, 15 Jan 2025 10:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938788;
-	bh=rA+mUKiJI69pim4TCDDoSOl33S3cobNgb29korjCwFU=;
+	s=korg; t=1736938792;
+	bh=ah+zMvKMjd8upROTCtkHdQaFfBCraTQkYsTrhBSTp4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSi2LW/VAdN4R6lbyUQU9Q/qHTK64L9Xc8jyrY20D4R+YUztjFcsG07tkn7o0kuCq
-	 +Ib7TsAXEnM0v8veyHdOZ7RybfIsDRA7aLHYyMxxC0zzMRM23WbWJL+0tkPKZ85UM0
-	 i9zyuEhzJGFckiruYR0z5AUziMT+n4gBG9v/mTkw=
+	b=HZJfABJJR11J6KoJWqsuQA7Skp09ixysWgJwrh49AOL+pFAp7k4SNZkSRPOXgZTLN
+	 tecBHI3qFZIzSRweHy2B7f1NP25Zb6kWEMDjTgqlIJVMZY6UFk27Xu84yxp7bWXqhV
+	 QeVMh12nS1MKphMHkoqh1OJl+mMrS6WDJINdYF4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH 6.6 098/129] usb: gadget: f_uac2: Fix incorrect setting of bNumEndpoints
-Date: Wed, 15 Jan 2025 11:37:53 +0100
-Message-ID: <20250115103558.272377573@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.6 099/129] usb: typec: tcpm/tcpci_maxim: fix error code in max_contaminant_read_resistance_kohm()
+Date: Wed, 15 Jan 2025 11:37:54 +0100
+Message-ID: <20250115103558.309588394@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -44,42 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 057bd54dfcf68b1f67e6dfc32a47a72e12198495 upstream.
+commit b9711ff7cde0cfbcdd44cb1fac55b6eec496e690 upstream.
 
-Currently afunc_bind sets std_ac_if_desc.bNumEndpoints to 1 if
-controls (mute/volume) are enabled. During next afunc_bind call,
-bNumEndpoints would be unchanged and incorrectly set to 1 even
-if the controls aren't enabled.
+If max_contaminant_read_adc_mv() fails, then return the error code.  Don't
+return zero.
 
-Fix this by resetting the value of bNumEndpoints to 0 on every
-afunc_bind call.
-
-Fixes: eaf6cbe09920 ("usb: gadget: f_uac2: add volume and mute support")
+Fixes: 02b332a06397 ("usb: typec: maxim_contaminant: Implement check_contaminant callback")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/20241211115915.159864-1-quic_prashk@quicinc.com
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: André Draszik <andre.draszik@linaro.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/f1bf3768-419e-40dd-989c-f7f455d6c824@stanley.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac2.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/tcpm/maxim_contaminant.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -1176,6 +1176,7 @@ afunc_bind(struct usb_configuration *cfg
- 		uac2->as_in_alt = 0;
- 	}
+--- a/drivers/usb/typec/tcpm/maxim_contaminant.c
++++ b/drivers/usb/typec/tcpm/maxim_contaminant.c
+@@ -137,7 +137,7 @@ static int max_contaminant_read_resistan
  
-+	std_ac_if_desc.bNumEndpoints = 0;
- 	if (FUOUT_EN(uac2_opts) || FUIN_EN(uac2_opts)) {
- 		uac2->int_ep = usb_ep_autoconfig(gadget, &fs_ep_int_desc);
- 		if (!uac2->int_ep) {
+ 		mv = max_contaminant_read_adc_mv(chip, channel, sleep_msec, raw, true);
+ 		if (mv < 0)
+-			return ret;
++			return mv;
+ 
+ 		/* OVP enable */
+ 		ret = regmap_update_bits(regmap, TCPC_VENDOR_CC_CTRL2, CCOVPDIS, 0);
+@@ -159,7 +159,7 @@ static int max_contaminant_read_resistan
+ 
+ 	mv = max_contaminant_read_adc_mv(chip, channel, sleep_msec, raw, true);
+ 	if (mv < 0)
+-		return ret;
++		return mv;
+ 	/* Disable current source */
+ 	ret = regmap_update_bits(regmap, TCPC_VENDOR_CC_CTRL2, SBURPCTRL, 0);
+ 	if (ret < 0)
 
 
