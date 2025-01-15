@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1A4248BD1;
-	Wed, 15 Jan 2025 10:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB523594E;
+	Wed, 15 Jan 2025 10:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938633; cv=none; b=Gu8h5liDNxZZ6B8EBRq5yr2WmcCa/Iqj3nBsPCwoSO1yLEl1ffJ/owLW2gJQ79LqsQgfF7JLoQaDV91L4k+NCxTaiEWrvw6Z1Z2gH8w99mnyrgKwStIFXkrrDSocAKRYDKbPiMvgfEVNySRaL/DK1ut7pjCt6f0f9HHFWDTb9P4=
+	t=1736938636; cv=none; b=aHTQ+AzaubNdu2gT6K7f0Ws9Z+ZLuVX4hRmQ38J1gPTUiAEG3sGXsvxk5JTei3zLS2J0Qc+j8hYO1xWpurRlZeiyAolzCb5e8odtgrc99ABsQexfhI+Kc5l9FsUv4v2wDJ3fPMqOisJhfoTYEk4BgqW1/xBk7Xrmd6NTk2OKdiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938633; c=relaxed/simple;
-	bh=+CvVKcydw7hN65nZLkhDWML4Ibb/5X4NFAVrUdFUlng=;
+	s=arc-20240116; t=1736938636; c=relaxed/simple;
+	bh=yWWno3ZL6xf8VLUM8xPF3mAWtWA/o6Ia1gVKYB8j7vA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Km7PHKmC5hYfi4HnEM3JLCOnWAy61ln1/chTB0R3fnBegrILKrls15tisB/6YtN3piZ0GI9SHkMyO0S2cbz1DfKtReXqHwEVV7Cqd9oYEQV7X34J0arWJxqysoGXrTe2fvV6y/H6UuLbrpCu5JwmgN7CQ1/SitgzEZulLPMu+LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwhTfu/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJuW6bMw2eotKorKmN9GlYVwT9oPE8qpn60bt2RTwcYDFzisVB/ZFL0g/xpKPm8kHxqmgjfbArP0pqPtfSbNxkF/iJAlf+u+eogQHxGQWLBGS30dsMedcgJux7dPcch4VI7CqjCLgbBaflKlpsFpmToJIrQRDFt/Wj9UDxJKWIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBjnwuBK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwhTfu/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCAE8C4CEDF;
-	Wed, 15 Jan 2025 10:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBjnwuBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83E6C4CEDF;
+	Wed, 15 Jan 2025 10:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938633;
-	bh=+CvVKcydw7hN65nZLkhDWML4Ibb/5X4NFAVrUdFUlng=;
+	s=korg; t=1736938636;
+	bh=yWWno3ZL6xf8VLUM8xPF3mAWtWA/o6Ia1gVKYB8j7vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwhTfu/cCNgUhG+FrGuRuBsyWdjXAHErOQOs8c9TOheGslyxoZv838GHztHuSigHv
-	 LeMYVbfc95tx5CjfA0ao/YhXahdNQQsFHjQlYEW/McyKVDv5382nyshroSY7g+zxzP
-	 U3Im3hSMMMx0ci/ZKwRvnK/TJYv9molHydq1qwsE=
+	b=aBjnwuBK2fp3+fBbslcb0oqbpgvB9T/+BlrM6p98cSgZ+bMmBm5QV5hNctvtTepU/
+	 H8TlqHFRHdjwElkthW1ZkXw1BpAta5gT3Gn/GxXbLDUO0bEPh7GhZoofM+vo0wN5wm
+	 PWjDm9ysxyrdp2MKD4sK8PB8F6EdtfuDWRwdUg/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Liankun Yang <liankun.yang@mediatek.com>,
+	Guillaume Ranquet <granquet@baylibre.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/129] netfilter: nf_tables: imbalance in flowtable binding
-Date: Wed, 15 Jan 2025 11:36:57 +0100
-Message-ID: <20250115103556.052798229@linuxfoundation.org>
+Subject: [PATCH 6.6 051/129] drm/mediatek: Add return value check when reading DPCD
+Date: Wed, 15 Jan 2025 11:37:06 +0100
+Message-ID: <20250115103556.402353083@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -51,115 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Liankun Yang <liankun.yang@mediatek.com>
 
-[ Upstream commit 13210fc63f353fe78584048079343413a3cdf819 ]
+[ Upstream commit 522908140645865dc3e2fac70fd3b28834dfa7be ]
 
-All these cases cause imbalance between BIND and UNBIND calls:
+Check the return value of drm_dp_dpcd_readb() to confirm that
+AUX communication is successful. To simplify the code, replace
+drm_dp_dpcd_readb() and DP_GET_SINK_COUNT() with drm_dp_read_sink_count().
 
-- Delete an interface from a flowtable with multiple interfaces
-
-- Add a (device to a) flowtable with --check flag
-
-- Delete a netns containing a flowtable
-
-- In an interactive nft session, create a table with owner flag and
-  flowtable inside, then quit.
-
-Fix it by calling FLOW_BLOCK_UNBIND when unregistering hooks, then
-remove late FLOW_BLOCK_UNBIND call when destroying flowtable.
-
-Fixes: ff4bf2f42a40 ("netfilter: nf_tables: add nft_unregister_flowtable_hook()")
-Reported-by: Phil Sutter <phil@nwl.cc>
-Tested-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: Liankun Yang <liankun.yang@mediatek.com>
+Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241218113448.2992-1-liankun.yang@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index a110aad45fe4..1d1e998acd67 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8375,6 +8375,7 @@ static void nft_unregister_flowtable_hook(struct net *net,
- }
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 3e1b400febde..be4de26c77f9 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2005,7 +2005,6 @@ static enum drm_connector_status mtk_dp_bdg_detect(struct drm_bridge *bridge)
+ 	struct mtk_dp *mtk_dp = mtk_dp_from_bridge(bridge);
+ 	enum drm_connector_status ret = connector_status_disconnected;
+ 	bool enabled = mtk_dp->enabled;
+-	u8 sink_count = 0;
  
- static void __nft_unregister_flowtable_net_hooks(struct net *net,
-+						 struct nft_flowtable *flowtable,
- 						 struct list_head *hook_list,
- 					         bool release_netdev)
- {
-@@ -8382,6 +8383,8 @@ static void __nft_unregister_flowtable_net_hooks(struct net *net,
+ 	if (!mtk_dp->train_info.cable_plugged_in)
+ 		return ret;
+@@ -2020,8 +2019,8 @@ static enum drm_connector_status mtk_dp_bdg_detect(struct drm_bridge *bridge)
+ 	 * function, we just need to check the HPD connection to check
+ 	 * whether we connect to a sink device.
+ 	 */
+-	drm_dp_dpcd_readb(&mtk_dp->aux, DP_SINK_COUNT, &sink_count);
+-	if (DP_GET_SINK_COUNT(sink_count))
++
++	if (drm_dp_read_sink_count(&mtk_dp->aux) > 0)
+ 		ret = connector_status_connected;
  
- 	list_for_each_entry_safe(hook, next, hook_list, list) {
- 		nf_unregister_net_hook(net, &hook->ops);
-+		flowtable->data.type->setup(&flowtable->data, hook->ops.dev,
-+					    FLOW_BLOCK_UNBIND);
- 		if (release_netdev) {
- 			list_del(&hook->list);
- 			kfree_rcu(hook, rcu);
-@@ -8390,9 +8393,10 @@ static void __nft_unregister_flowtable_net_hooks(struct net *net,
- }
- 
- static void nft_unregister_flowtable_net_hooks(struct net *net,
-+					       struct nft_flowtable *flowtable,
- 					       struct list_head *hook_list)
- {
--	__nft_unregister_flowtable_net_hooks(net, hook_list, false);
-+	__nft_unregister_flowtable_net_hooks(net, flowtable, hook_list, false);
- }
- 
- static int nft_register_flowtable_net_hooks(struct net *net,
-@@ -9028,8 +9032,6 @@ static void nf_tables_flowtable_destroy(struct nft_flowtable *flowtable)
- 
- 	flowtable->data.type->free(&flowtable->data);
- 	list_for_each_entry_safe(hook, next, &flowtable->hook_list, list) {
--		flowtable->data.type->setup(&flowtable->data, hook->ops.dev,
--					    FLOW_BLOCK_UNBIND);
- 		list_del_rcu(&hook->list);
- 		kfree_rcu(hook, rcu);
- 	}
-@@ -10399,6 +10401,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 							   &nft_trans_flowtable_hooks(trans),
- 							   trans->msg_type);
- 				nft_unregister_flowtable_net_hooks(net,
-+								   nft_trans_flowtable(trans),
- 								   &nft_trans_flowtable_hooks(trans));
- 			} else {
- 				list_del_rcu(&nft_trans_flowtable(trans)->list);
-@@ -10407,6 +10410,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 							   NULL,
- 							   trans->msg_type);
- 				nft_unregister_flowtable_net_hooks(net,
-+						nft_trans_flowtable(trans),
- 						&nft_trans_flowtable(trans)->hook_list);
- 			}
- 			break;
-@@ -10659,11 +10663,13 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 		case NFT_MSG_NEWFLOWTABLE:
- 			if (nft_trans_flowtable_update(trans)) {
- 				nft_unregister_flowtable_net_hooks(net,
-+						nft_trans_flowtable(trans),
- 						&nft_trans_flowtable_hooks(trans));
- 			} else {
- 				nft_use_dec_restore(&trans->ctx.table->use);
- 				list_del_rcu(&nft_trans_flowtable(trans)->list);
- 				nft_unregister_flowtable_net_hooks(net,
-+						nft_trans_flowtable(trans),
- 						&nft_trans_flowtable(trans)->hook_list);
- 			}
- 			break;
-@@ -11224,7 +11230,8 @@ static void __nft_release_hook(struct net *net, struct nft_table *table)
- 	list_for_each_entry(chain, &table->chains, list)
- 		__nf_tables_unregister_hook(net, table, chain, true);
- 	list_for_each_entry(flowtable, &table->flowtables, list)
--		__nft_unregister_flowtable_net_hooks(net, &flowtable->hook_list,
-+		__nft_unregister_flowtable_net_hooks(net, flowtable,
-+						     &flowtable->hook_list,
- 						     true);
- }
- 
+ 	if (!enabled)
 -- 
 2.39.5
 
