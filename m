@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E245248BA1;
-	Wed, 15 Jan 2025 10:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C82248BC1;
+	Wed, 15 Jan 2025 10:50:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938240; cv=none; b=RLxIdOrFuYOvPeOqkqjqjkHG4t6qPF78MfD8qe0uoHEnJACYxelzlJzj7bBccPYbbDnML+0h14eqe+nssB4UunTHQIi+p00iNmrshpOnEDaQCJaYFonJ++YyNo1NfuYi2xWwZT/Fs+J9wkyIFEN7RfnIKUJI9GgVZY38Nvg7rhY=
+	t=1736938243; cv=none; b=fBCDoK8IJ12MkmhMy/RUlB8ddnWhxgbUn4bnTNzomqndNpcSdD+YMbtqbkYv3UdJ/TKOUJ7OD+xmnhFazOqFTJa88awgTvt9jrKmZtxKxiDhSAJ5vxbtt1PBiHOjOSMDJXzW1LXq00u+WNF1dmOHF/OPZ+uVihqyZFWQSUqA2SE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938240; c=relaxed/simple;
-	bh=9dqZpp2uIf+EqDdt7RoPHbhmffBeRFgxnkEB9qcByd4=;
+	s=arc-20240116; t=1736938243; c=relaxed/simple;
+	bh=Jjdjsm/30XAY1JPY/U1t+M0kZsE/E+KgimqHFT6vvZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WEDRpnojBzmTeDZiOBkI+f4EBpIG7bYcP5RwH9G9jg72KpyMflqg7yS+PbA+tf8/Gqu6K5u+BCu04gucczG+mf+GVgj1cqpTYTtCcDC0x2uDEq58kUIVP1wh552KmHN+2cdOfbDyu50q2iso0faf9bvzWjZicEhNUD9yJsN1qcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtvBVFBL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUWxFVNjoMwJygiUkK1iduvfiGLbM68v0ePClYgK86+jNDPQljsEseYKkJFqEgIQTJoC9sp4/L4duRYSqgEyM4Ch8tbfJWpToJSbpuuA8cMF5DwjY7TKVzMsV9o6Fiyk4e+fObwIZ0wLeRAhVT2HExWnhxQ5I6U03hB4jXJUvfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtHiavV4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtvBVFBL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85907C4CEDF;
-	Wed, 15 Jan 2025 10:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtHiavV4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B7DC4CEDF;
+	Wed, 15 Jan 2025 10:50:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938240;
-	bh=9dqZpp2uIf+EqDdt7RoPHbhmffBeRFgxnkEB9qcByd4=;
+	s=korg; t=1736938243;
+	bh=Jjdjsm/30XAY1JPY/U1t+M0kZsE/E+KgimqHFT6vvZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mtvBVFBLiNayadf0CdSrYBfqs2PIssxsN/iPBD8Z6cxoJ2g7dbgkB+eTggvWAZ75O
-	 dOylo5SHZdsuQO+VJvHL5MInCjKKqmkmD8AGoy1Ata6fpVF3e3aPeeLM9knuVSHM3S
-	 0xelz3FG6/vuJZkG2PZlVKizb83C4V4fe+Qp7A0U=
+	b=NtHiavV4d3RFeUunLLeG7lS4l3awQNb9zas9vrD7ECVOZqQNBpi9yxuPpafDTapU1
+	 L4EKOKjPWxmzgZ0pOzxCknq2PpcOo3H2ucKZmSaxQpus8SExQoZZa3Nh4v0u9XHmVB
+	 rESrhRQyu8kIPM3zbuwOudaXHT9flmY/jsNMK2Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <jesse.zhang@amd.com>,
+	Zhu Lingshan <lingshan.zhu@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 123/189] drm/amdkfd: fixed page fault when enable MES shader debugger
-Date: Wed, 15 Jan 2025 11:36:59 +0100
-Message-ID: <20250115103611.358185043@linuxfoundation.org>
+Subject: [PATCH 6.12 124/189] drm/amdkfd: wq_release signals dma_fence only when available
+Date: Wed, 15 Jan 2025 11:37:00 +0100
+Message-ID: <20250115103611.396009009@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -50,74 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse.zhang@amd.com <Jesse.zhang@amd.com>
+From: Zhu Lingshan <lingshan.zhu@amd.com>
 
-commit 9738609449c3e44d1afb73eecab4763362b57930 upstream.
+commit a993d319aebb7cce8a10c6e685344b7c2ad5c4c2 upstream.
 
-Initialize the process context address before setting the shader debugger.
+kfd_process_wq_release() signals eviction fence by
+dma_fence_signal() which wanrs if dma_fence
+is NULL.
 
-[  260.781212] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:32 vmid:0 pasid:0)
-[  260.781236] amdgpu 0000:03:00.0: amdgpu:   in page starting at address 0x0000000000000000 from client 10
-[  260.781255] amdgpu 0000:03:00.0: amdgpu: GCVM_L2_PROTECTION_FAULT_STATUS:0x00040A40
-[  260.781270] amdgpu 0000:03:00.0: amdgpu:      Faulty UTCL2 client ID: CPC (0x5)
-[  260.781284] amdgpu 0000:03:00.0: amdgpu:      MORE_FAULTS: 0x0
-[  260.781296] amdgpu 0000:03:00.0: amdgpu:      WALKER_ERROR: 0x0
-[  260.781308] amdgpu 0000:03:00.0: amdgpu:      PERMISSION_FAULTS: 0x4
-[  260.781320] amdgpu 0000:03:00.0: amdgpu:      MAPPING_ERROR: 0x0
-[  260.781332] amdgpu 0000:03:00.0: amdgpu:      RW: 0x1
-[  260.782017] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:32 vmid:0 pasid:0)
-[  260.782039] amdgpu 0000:03:00.0: amdgpu:   in page starting at address 0x0000000000000000 from client 10
-[  260.782058] amdgpu 0000:03:00.0: amdgpu: GCVM_L2_PROTECTION_FAULT_STATUS:0x00040A41
-[  260.782073] amdgpu 0000:03:00.0: amdgpu:      Faulty UTCL2 client ID: CPC (0x5)
-[  260.782087] amdgpu 0000:03:00.0: amdgpu:      MORE_FAULTS: 0x1
-[  260.782098] amdgpu 0000:03:00.0: amdgpu:      WALKER_ERROR: 0x0
-[  260.782110] amdgpu 0000:03:00.0: amdgpu:      PERMISSION_FAULTS: 0x4
-[  260.782122] amdgpu 0000:03:00.0: amdgpu:      MAPPING_ERROR: 0x0
-[  260.782137] amdgpu 0000:03:00.0: amdgpu:      RW: 0x1
-[  260.782155] amdgpu 0000:03:00.0: amdgpu: [gfxhub] page fault (src_id:0 ring:32 vmid:0 pasid:0)
-[  260.782166] amdgpu 0000:03:00.0: amdgpu:   in page starting at address 0x0000000000000000 from client 10
+kfd_process->ef is initialized by kfd_process_device_init_vm()
+through ioctl. That means the fence is NULL for a new
+created kfd_process, and close a kfd_process right
+after open it will trigger the warning.
 
-Fixes: 438b39ac74e2 ("drm/amdkfd: pause autosuspend when creating pdd")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3849
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+This commit conditionally signals the eviction fence
+in kfd_process_wq_release() only when it is available.
+
+[  503.660882] WARNING: CPU: 0 PID: 9 at drivers/dma-buf/dma-fence.c:467 dma_fence_signal+0x74/0xa0
+[  503.782940] Workqueue: kfd_process_wq kfd_process_wq_release [amdgpu]
+[  503.789640] RIP: 0010:dma_fence_signal+0x74/0xa0
+[  503.877620] Call Trace:
+[  503.880066]  <TASK>
+[  503.882168]  ? __warn+0xcd/0x260
+[  503.885407]  ? dma_fence_signal+0x74/0xa0
+[  503.889416]  ? report_bug+0x288/0x2d0
+[  503.893089]  ? handle_bug+0x53/0xa0
+[  503.896587]  ? exc_invalid_op+0x14/0x50
+[  503.900424]  ? asm_exc_invalid_op+0x16/0x20
+[  503.904616]  ? dma_fence_signal+0x74/0xa0
+[  503.908626]  kfd_process_wq_release+0x6b/0x370 [amdgpu]
+[  503.914081]  process_one_work+0x654/0x10a0
+[  503.918186]  worker_thread+0x6c3/0xe70
+[  503.921943]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  503.926735]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  503.931527]  ? __kthread_parkme+0x82/0x140
+[  503.935631]  ? __pfx_worker_thread+0x10/0x10
+[  503.939904]  kthread+0x2a8/0x380
+[  503.943132]  ? __pfx_kthread+0x10/0x10
+[  503.946882]  ret_from_fork+0x2d/0x70
+[  503.950458]  ? __pfx_kthread+0x10/0x10
+[  503.954210]  ret_from_fork_asm+0x1a/0x30
+[  503.958142]  </TASK>
+[  503.960328] ---[ end trace 0000000000000000 ]---
+
+Fixes: 967d226eaae8 ("dma-buf: add WARN_ON() illegal dma-fence signaling")
+Signed-off-by: Zhu Lingshan <lingshan.zhu@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5b231f5bc9ff02ec5737f2ec95cdf15ac95088e9)
+(cherry picked from commit 2774ef7625adb5fb9e9265c26a59dca7b8fd171e)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_debug.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_debug.c
-@@ -350,10 +350,27 @@ int kfd_dbg_set_mes_debug_mode(struct kf
- {
- 	uint32_t spi_dbg_cntl = pdd->spi_dbg_override | pdd->spi_dbg_launch_mode;
- 	uint32_t flags = pdd->process->dbg_flags;
-+	struct amdgpu_device *adev = pdd->dev->adev;
-+	int r;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index d0ee173acf82..edfe0b4788f4 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -1160,7 +1160,8 @@ static void kfd_process_wq_release(struct work_struct *work)
+ 	 */
+ 	synchronize_rcu();
+ 	ef = rcu_access_pointer(p->ef);
+-	dma_fence_signal(ef);
++	if (ef)
++		dma_fence_signal(ef);
  
- 	if (!kfd_dbg_is_per_vmid_supported(pdd->dev))
- 		return 0;
+ 	kfd_process_remove_sysfs(p);
  
-+	if (!pdd->proc_ctx_cpu_ptr) {
-+			r = amdgpu_amdkfd_alloc_gtt_mem(adev,
-+				AMDGPU_MES_PROC_CTX_SIZE,
-+				&pdd->proc_ctx_bo,
-+				&pdd->proc_ctx_gpu_addr,
-+				&pdd->proc_ctx_cpu_ptr,
-+				false);
-+		if (r) {
-+			dev_err(adev->dev,
-+			"failed to allocate process context bo\n");
-+			return r;
-+		}
-+		memset(pdd->proc_ctx_cpu_ptr, 0, AMDGPU_MES_PROC_CTX_SIZE);
-+	}
-+
- 	return amdgpu_mes_set_shader_debugger(pdd->dev->adev, pdd->proc_ctx_gpu_addr, spi_dbg_cntl,
- 						pdd->watch_points, flags, sq_trap_en);
- }
+-- 
+2.48.0
+
 
 
