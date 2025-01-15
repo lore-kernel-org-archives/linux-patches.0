@@ -1,56 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CA2248BAF;
-	Wed, 15 Jan 2025 11:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1679B248BAF;
+	Wed, 15 Jan 2025 11:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938883; cv=none; b=Jo5jx61AiXcvZI45lc1GCtsOWtgVM3UIAAqZYdbXV8tElOF+ra2w7uguRueLEE2KTKVvNexPWPK51ctCwTX7ACEBIuGWXpGOPQlr17qzKa+8UICcTY7Sk42uF9RrjtaDmdtMBv5LIrI8tsz+laE0gwnUBJJHKIJ/yDF0I6gfYs8=
+	t=1736938887; cv=none; b=nUhAMho1cPWKx3Rta2FMfVCuZTMAS4V/vbI3+JH7KOaVRuFio8Vtmk38n2TSSAST9AhBKneo8NkzLeHyRwDIx+usG/azlG0ISERnxvqUW0NVo9VUc1P8Z3wW6rKaTIXl5CIHc6NGy12znFANXdDlPqH7IRZPv7QfFEhB+tizKeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938883; c=relaxed/simple;
-	bh=zOdTszhpmSbDl9MrnTvkzJKXgpp17fd1HKjkRI1F7b0=;
+	s=arc-20240116; t=1736938887; c=relaxed/simple;
+	bh=F/iqnAxnaUy70A58Oqulryrr8aRjjoZOMNuqL8zKSfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZNohYx1j6ZDhwrEoi24M7nE8TG1tIFh0DAnz98u5GSjwIJz5HX/hnCzvfoiM4XoNuRoRJVu7Fujc2TpiL4KVhHfmp0oifb3feHrwZg9C07SfaSeia5UG9WyEkWiU6zD08jjLSt7RAmz+RpwBau9Zbo99Zhd0n0RbUKHuKsfPiG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZOLCqRW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D+oSWziuimMSiiD3IhyiPj+i2JMXgmdjUy3zk1g+BlpcoapMQEeDSjv3V15iMjWnkJOSikTriSGofPWljYNEqevhWRjfbmMS8Lz6dUZW0/SGbRqRl7xIoBrlNSeQ5bQBFQZdz3tO82VaxA/ikU8MRDZnIiLrUK2Z1Fea/0z9ix0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXkWNTh8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZOLCqRW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26010C4CEDF;
-	Wed, 15 Jan 2025 11:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXkWNTh8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1E6C4CEDF;
+	Wed, 15 Jan 2025 11:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938883;
-	bh=zOdTszhpmSbDl9MrnTvkzJKXgpp17fd1HKjkRI1F7b0=;
+	s=korg; t=1736938887;
+	bh=F/iqnAxnaUy70A58Oqulryrr8aRjjoZOMNuqL8zKSfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YZOLCqRWRV+18LMHbVnHPpwoPbW2E1WFf9tFsKgpeA3KpxKerJnYSeVyYXKrCzni5
-	 0a12CI1sg5ZUAOKIk8cHlV1WCbWTz2FJXMf1Ggyp5vXnlGXyXxcSGGPvFOClQfyrjK
-	 k3dgbOMZAtzSMLp1L2M1EHR7Iig+8uhwHlIIMIZ8=
+	b=UXkWNTh8Ughaa1jMVuMpPr4CJaTQfAfTDwLdY5IZvZO/WEOPHOgXiBnOg7ncjE3RN
+	 AOCxz6Y+OQF+CMHLweRr385eeBfpWj1cqNgwexaweFTIS6tMsjzKpoB6/lliTsV40z
+	 a2o3wH+U7CWXvJAEMIBzMPjipZdBG6cmEvALEO68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Borislav Petkov <bp@alien8.de>,
-	Boris Ostrovsky <boris.ostrovsky@oracle.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Juergen Gross <jgross@suse.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Ken Chen <kenneth.w.chen@intel.com>,
 	Muchun Song <muchun.song@linux.dev>,
-	"Naveen N. Rao" <naveen.n.rao@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Jane Chu <jane.chu@oracle.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/129] mm/hugetlb: enforce that PMD PT sharing has split PMD PT locks
-Date: Wed, 15 Jan 2025 11:38:21 +0100
-Message-ID: <20250115103559.378310687@linuxfoundation.org>
+Subject: [PATCH 6.6 127/129] mm: hugetlb: independent PMD page table shared count
+Date: Wed, 15 Jan 2025 11:38:22 +0100
+Message-ID: <20250115103559.417706542@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -69,123 +56,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 188cac58a8bcdf82c7f63275b68f7a46871e45d6 ]
+[ Upstream commit 59d9094df3d79443937add8700b2ef1a866b1081 ]
 
-Sharing page tables between processes but falling back to per-MM page
-table locks cannot possibly work.
+The folio refcount may be increased unexpectly through try_get_folio() by
+caller such as split_huge_pages.  In huge_pmd_unshare(), we use refcount
+to check whether a pmd page table is shared.  The check is incorrect if
+the refcount is increased by the above caller, and this can cause the page
+table leaked:
 
-So, let's make sure that we do have split PMD locks by adding a new
-Kconfig option and letting that depend on CONFIG_SPLIT_PMD_PTLOCKS.
+ BUG: Bad page state in process sh  pfn:109324
+ page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x66 pfn:0x109324
+ flags: 0x17ffff800000000(node=0|zone=2|lastcpupid=0xfffff)
+ page_type: f2(table)
+ raw: 017ffff800000000 0000000000000000 0000000000000000 0000000000000000
+ raw: 0000000000000066 0000000000000000 00000000f2000000 0000000000000000
+ page dumped because: nonzero mapcount
+ ...
+ CPU: 31 UID: 0 PID: 7515 Comm: sh Kdump: loaded Tainted: G    B              6.13.0-rc2master+ #7
+ Tainted: [B]=BAD_PAGE
+ Hardware name: QEMU KVM Virtual Machine, BIOS 0.0.0 02/06/2015
+ Call trace:
+  show_stack+0x20/0x38 (C)
+  dump_stack_lvl+0x80/0xf8
+  dump_stack+0x18/0x28
+  bad_page+0x8c/0x130
+  free_page_is_bad_report+0xa4/0xb0
+  free_unref_page+0x3cc/0x620
+  __folio_put+0xf4/0x158
+  split_huge_pages_all+0x1e0/0x3e8
+  split_huge_pages_write+0x25c/0x2d8
+  full_proxy_write+0x64/0xd8
+  vfs_write+0xcc/0x280
+  ksys_write+0x70/0x110
+  __arm64_sys_write+0x24/0x38
+  invoke_syscall+0x50/0x120
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x34/0x128
+  el0t_64_sync_handler+0xc8/0xd0
+  el0t_64_sync+0x190/0x198
 
-Link: https://lkml.kernel.org/r/20240726150728.3159964-3-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Boris Ostrovsky <boris.ostrovsky@oracle.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Juergen Gross <jgross@suse.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
+The issue may be triggered by damon, offline_page, page_idle, etc, which
+will increase the refcount of page table.
+
+1. The page table itself will be discarded after reporting the
+   "nonzero mapcount".
+
+2. The HugeTLB page mapped by the page table miss freeing since we
+   treat the page table as shared and a shared page table will not be
+   unmapped.
+
+Fix it by introducing independent PMD page table shared count.  As
+described by comment, pt_index/pt_mm/pt_frag_refcount are used for s390
+gmap, x86 pgds and powerpc, pt_share_count is used for x86/arm64/riscv
+pmds, so we can reuse the field as pt_share_count.
+
+Link: https://lkml.kernel.org/r/20241216071147.3984217-1-liushixin2@huawei.com
+Fixes: 39dde65c9940 ("[PATCH] shared page table for hugetlb page")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Ken Chen <kenneth.w.chen@intel.com>
 Cc: Muchun Song <muchun.song@linux.dev>
-Cc: "Naveen N. Rao" <naveen.n.rao@linux.ibm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Jane Chu <jane.chu@oracle.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/Kconfig              | 4 ++++
- include/linux/hugetlb.h | 5 ++---
- mm/hugetlb.c            | 8 ++++----
- 3 files changed, 10 insertions(+), 7 deletions(-)
+ include/linux/mm.h       |  1 +
+ include/linux/mm_types.h | 30 ++++++++++++++++++++++++++++++
+ mm/hugetlb.c             | 16 +++++++---------
+ 3 files changed, 38 insertions(+), 9 deletions(-)
 
-diff --git a/fs/Kconfig b/fs/Kconfig
-index 0ad3c7c7e984..02a9237807a7 100644
---- a/fs/Kconfig
-+++ b/fs/Kconfig
-@@ -284,6 +284,10 @@ config HUGETLB_PAGE_OPTIMIZE_VMEMMAP
- 	depends on ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP
- 	depends on SPARSEMEM_VMEMMAP
- 
-+config HUGETLB_PMD_PAGE_TABLE_SHARING
-+	def_bool HUGETLB_PAGE
-+	depends on ARCH_WANT_HUGE_PMD_SHARE && SPLIT_PMD_PTLOCKS
-+
- config ARCH_HAS_GIGANTIC_PAGE
- 	bool
- 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 0c50c4fceb95..0ca93c7574ad 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -1239,7 +1239,7 @@ static inline __init void hugetlb_cma_reserve(int order)
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index b6a4d6471b4a..209370f64436 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -3031,6 +3031,7 @@ static inline bool pagetable_pmd_ctor(struct ptdesc *ptdesc)
+ 	if (!pmd_ptlock_init(ptdesc))
+ 		return false;
+ 	__folio_set_pgtable(folio);
++	ptdesc_pmd_pts_init(ptdesc);
+ 	lruvec_stat_add_folio(folio, NR_PAGETABLE);
+ 	return true;
  }
- #endif
- 
--#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
+diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+index 1f224c55fb58..e77d4a5c0bac 100644
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -399,6 +399,7 @@ FOLIO_MATCH(compound_head, _head_2a);
+  * @__page_mapping:   Aliases with page->mapping. Unused for page tables.
+  * @pt_mm:            Used for x86 pgds.
+  * @pt_frag_refcount: For fragmented page table tracking. Powerpc only.
++ * @pt_share_count:   Used for HugeTLB PMD page table share count.
+  * @_pt_pad_2:        Padding to ensure proper alignment.
+  * @ptl:              Lock for the page table.
+  * @__page_type:      Same as page->page_type. Unused for page tables.
+@@ -424,6 +425,9 @@ struct ptdesc {
+ 	union {
+ 		struct mm_struct *pt_mm;
+ 		atomic_t pt_frag_refcount;
 +#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
- static inline bool hugetlb_pmd_shared(pte_t *pte)
- {
- 	return page_count(virt_to_page(pte)) > 1;
-@@ -1275,8 +1275,7 @@ bool __vma_private_lock(struct vm_area_struct *vma);
- static inline pte_t *
- hugetlb_walk(struct vm_area_struct *vma, unsigned long addr, unsigned long sz)
- {
--#if defined(CONFIG_HUGETLB_PAGE) && \
--	defined(CONFIG_ARCH_WANT_HUGE_PMD_SHARE) && defined(CONFIG_LOCKDEP)
-+#if defined(CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING) && defined(CONFIG_LOCKDEP)
- 	struct hugetlb_vma_lock *vma_lock = vma->vm_private_data;
++		atomic_t pt_share_count;
++#endif
+ 	};
  
- 	/*
+ 	union {
+@@ -468,6 +472,32 @@ static_assert(sizeof(struct ptdesc) <= sizeof(struct page));
+ 	const struct page *:		(const struct ptdesc *)(p),	\
+ 	struct page *:			(struct ptdesc *)(p)))
+ 
++#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
++static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
++{
++	atomic_set(&ptdesc->pt_share_count, 0);
++}
++
++static inline void ptdesc_pmd_pts_inc(struct ptdesc *ptdesc)
++{
++	atomic_inc(&ptdesc->pt_share_count);
++}
++
++static inline void ptdesc_pmd_pts_dec(struct ptdesc *ptdesc)
++{
++	atomic_dec(&ptdesc->pt_share_count);
++}
++
++static inline int ptdesc_pmd_pts_count(struct ptdesc *ptdesc)
++{
++	return atomic_read(&ptdesc->pt_share_count);
++}
++#else
++static inline void ptdesc_pmd_pts_init(struct ptdesc *ptdesc)
++{
++}
++#endif
++
+ /*
+  * Used for sizing the vmemmap region on some architectures
+  */
 diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 92b955cc5a41..5b8cc558ab6e 100644
+index 5b8cc558ab6e..21c12519a7ef 100644
 --- a/mm/hugetlb.c
 +++ b/mm/hugetlb.c
-@@ -6907,7 +6907,7 @@ long hugetlb_unreserve_pages(struct inode *inode, long start, long end,
- 	return 0;
- }
+@@ -7014,7 +7014,7 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ 			spte = hugetlb_walk(svma, saddr,
+ 					    vma_mmu_pagesize(svma));
+ 			if (spte) {
+-				get_page(virt_to_page(spte));
++				ptdesc_pmd_pts_inc(virt_to_ptdesc(spte));
+ 				break;
+ 			}
+ 		}
+@@ -7029,7 +7029,7 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ 				(pmd_t *)((unsigned long)spte & PAGE_MASK));
+ 		mm_inc_nr_pmds(mm);
+ 	} else {
+-		put_page(virt_to_page(spte));
++		ptdesc_pmd_pts_dec(virt_to_ptdesc(spte));
+ 	}
+ 	spin_unlock(&mm->page_table_lock);
+ out:
+@@ -7041,10 +7041,6 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ /*
+  * unmap huge page backed by shared pte.
+  *
+- * Hugetlb pte page is ref counted at the time of mapping.  If pte is shared
+- * indicated by page_count > 1, unmap is achieved by clearing pud and
+- * decrementing the ref count. If count == 1, the pte page is not shared.
+- *
+  * Called with page table lock held.
+  *
+  * returns: 1 successfully unmapped a shared pte page
+@@ -7053,18 +7049,20 @@ pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
+ int huge_pmd_unshare(struct mm_struct *mm, struct vm_area_struct *vma,
+ 					unsigned long addr, pte_t *ptep)
+ {
++	unsigned long sz = huge_page_size(hstate_vma(vma));
+ 	pgd_t *pgd = pgd_offset(mm, addr);
+ 	p4d_t *p4d = p4d_offset(pgd, addr);
+ 	pud_t *pud = pud_offset(p4d, addr);
  
--#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
-+#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
- static unsigned long page_table_shareable(struct vm_area_struct *svma,
- 				struct vm_area_struct *vma,
- 				unsigned long addr, pgoff_t idx)
-@@ -7069,7 +7069,7 @@ int huge_pmd_unshare(struct mm_struct *mm, struct vm_area_struct *vma,
+ 	i_mmap_assert_write_locked(vma->vm_file->f_mapping);
+ 	hugetlb_vma_assert_locked(vma);
+-	BUG_ON(page_count(virt_to_page(ptep)) == 0);
+-	if (page_count(virt_to_page(ptep)) == 1)
++	if (sz != PMD_SIZE)
++		return 0;
++	if (!ptdesc_pmd_pts_count(virt_to_ptdesc(ptep)))
+ 		return 0;
+ 
+ 	pud_clear(pud);
+-	put_page(virt_to_page(ptep));
++	ptdesc_pmd_pts_dec(virt_to_ptdesc(ptep));
+ 	mm_dec_nr_pmds(mm);
  	return 1;
  }
- 
--#else /* !CONFIG_ARCH_WANT_HUGE_PMD_SHARE */
-+#else /* !CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING */
- 
- pte_t *huge_pmd_share(struct mm_struct *mm, struct vm_area_struct *vma,
- 		      unsigned long addr, pud_t *pud)
-@@ -7092,7 +7092,7 @@ bool want_pmd_share(struct vm_area_struct *vma, unsigned long addr)
- {
- 	return false;
- }
--#endif /* CONFIG_ARCH_WANT_HUGE_PMD_SHARE */
-+#endif /* CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING */
- 
- #ifdef CONFIG_ARCH_WANT_GENERAL_HUGETLB
- pte_t *huge_pte_alloc(struct mm_struct *mm, struct vm_area_struct *vma,
-@@ -7190,7 +7190,7 @@ unsigned long hugetlb_mask_last_page(struct hstate *h)
- /* See description above.  Architectures can provide their own version. */
- __weak unsigned long hugetlb_mask_last_page(struct hstate *h)
- {
--#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
-+#ifdef CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING
- 	if (huge_page_size(h) == PMD_SIZE)
- 		return PUD_SIZE - PMD_SIZE;
- #endif
 -- 
 2.39.5
 
