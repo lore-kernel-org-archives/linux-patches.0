@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990FC248BC1;
-	Wed, 15 Jan 2025 10:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12141DB151;
+	Wed, 15 Jan 2025 10:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938319; cv=none; b=m7Tz6uH7G7ngDlfEADpmrvVEi68wxpcumWq22ZMZLAahtf4mRK5GrloXhIE6//Y7DHOEyi74dTonbFb9HHuQguc5waaege7aKnXJ6ktOGAmHxPQ7tYJOJ/AAdSQSJxfF/E39DSEcCBQgyEp9/V/kjA1Pepw/ClIld1fqVKDGQJs=
+	t=1736938323; cv=none; b=Z6GAci1LkKtmSiXgJiyS/iressrN1f5+wE7iIBGtfl2GSSrAzzyE7obPfNghSE6SvZzuSYyOljbYIHgvS5ShMR0P0eQT0UEgibHzhjcV4jA8IfA/Ab080pDrklcetEejdMy5+QbfPJWs3Xw9HBd5Q/16obRST/YCW2wzarxIXTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938319; c=relaxed/simple;
-	bh=tSoPxCGYbrkhtJqmz8MJs5AFvtT8oreoTm/Ru2urNT8=;
+	s=arc-20240116; t=1736938323; c=relaxed/simple;
+	bh=9XeOEvWB0kgzwPfGwBW7+CwxKYp7pBO6XdjMEoVdhsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q9DDahMjtauiz+jZHzCpZM/9/g/dc2xL7d3fHNWh2qSh9hSNZxJe+K+nsgVsRofiTvD20tGulDlwhHYVTR8tUYE+UpPQemuGXNMMVZ0gL8IHWhVY83ktU8I5iRAKDDGasijdYbrwiEdQgaQ4TDNXFgPCaRawbdlBRgOFvLaEwM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDp+P0hF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LtaJXir8onsEVQctmee870mLGrns115+8CeK/xNUGgcoNWqb3bfZvhV1hZZDRTFdjqQzNxk/RZtJVzppq/0b8A7EFLFiEvVsF6lfrVPDppEQ02hwn44N+2l1PKaXQaXxKGG3wPGE/Sv2uSw0ddPz/tCKF/zy3VwIS4nmJRZ7FbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGC23kfR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDp+P0hF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D6C4CEDF;
-	Wed, 15 Jan 2025 10:51:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGC23kfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBD4C4CEDF;
+	Wed, 15 Jan 2025 10:52:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938319;
-	bh=tSoPxCGYbrkhtJqmz8MJs5AFvtT8oreoTm/Ru2urNT8=;
+	s=korg; t=1736938322;
+	bh=9XeOEvWB0kgzwPfGwBW7+CwxKYp7pBO6XdjMEoVdhsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDp+P0hFtGrLOKe7o4JDgtKm3nRVgy24aofyyvajKniQOwa0cONox82HHHSEk9P3L
-	 hQreflBnURwMvNRaYiBDUDhU22hSupTnISDK6UPskY+LtDLOmF+jTnb3TJiuAdRr26
-	 uMzaV6HZAJhmT5IMTzWbywAm3Y4bi5hT/T/M4l00=
+	b=eGC23kfRvpOtZQw9pADCWlrNHJ8N8KoehvEs4fXky6p4SHfIt/E8ekI4QKqnDUOg8
+	 MXG/rWJFInCA1We3qXzG3K19H5x2MLrAa4Aj541RNn0pMwpVY5VrQAep6dJ+yi1auS
+	 ywrCrfESGEDMRCgB/zDT6p2m5DU4BWew8WH3k990=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ma Ke <make_ruc2021@163.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.12 147/189] usb: fix reference leak in usb_new_device()
-Date: Wed, 15 Jan 2025 11:37:23 +0100
-Message-ID: <20250115103612.284572548@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 148/189] usb: gadget: midi2: Reverse-select at the right place
+Date: Wed, 15 Jan 2025 11:37:24 +0100
+Message-ID: <20250115103612.324047753@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -51,54 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 0df11fa8cee5a9cf8753d4e2672bb3667138c652 upstream.
+commit 6f660ffce7c938f2a5d8473c0e0b45e4fb25ef7f upstream.
 
-When device_add(&udev->dev) succeeds and a later call fails,
-usb_new_device() does not properly call device_del(). As comment of
-device_add() says, 'if device_add() succeeds, you should call
-device_del() when you want to get rid of it. If device_add() has not
-succeeded, use only put_device() to drop the reference count'.
+We should do reverse selection of other components from
+CONFIG_USB_F_MIDI2 which is tristate, instead of
+CONFIG_USB_CONFIGFS_F_MIDI2 which is bool, for satisfying subtle
+module dependencies.
 
-Found by code review.
-
+Fixes: 8b645922b223 ("usb: gadget: Add support for USB MIDI 2.0 function driver")
 Cc: stable <stable@kernel.org>
-Fixes: 9f8b17e643fe ("USB: make usbdevices export their device nodes instead of using a separate class")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241218071346.2973980-1-make_ruc2021@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20250101131124.27599-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/Kconfig |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2663,13 +2663,13 @@ int usb_new_device(struct usb_device *ud
- 		err = sysfs_create_link(&udev->dev.kobj,
- 				&port_dev->dev.kobj, "port");
- 		if (err)
--			goto fail;
-+			goto out_del_dev;
+--- a/drivers/usb/gadget/Kconfig
++++ b/drivers/usb/gadget/Kconfig
+@@ -211,6 +211,8 @@ config USB_F_MIDI
  
- 		err = sysfs_create_link(&port_dev->dev.kobj,
- 				&udev->dev.kobj, "device");
- 		if (err) {
- 			sysfs_remove_link(&udev->dev.kobj, "port");
--			goto fail;
-+			goto out_del_dev;
- 		}
+ config USB_F_MIDI2
+ 	tristate
++	select SND_UMP
++	select SND_UMP_LEGACY_RAWMIDI
  
- 		if (!test_and_set_bit(port1, hub->child_usage_bits))
-@@ -2683,6 +2683,8 @@ int usb_new_device(struct usb_device *ud
- 	pm_runtime_put_sync_autosuspend(&udev->dev);
- 	return err;
- 
-+out_del_dev:
-+	device_del(&udev->dev);
- fail:
- 	usb_set_device_state(udev, USB_STATE_NOTATTACHED);
- 	pm_runtime_disable(&udev->dev);
+ config USB_F_HID
+ 	tristate
+@@ -445,8 +447,6 @@ config USB_CONFIGFS_F_MIDI2
+ 	depends on USB_CONFIGFS
+ 	depends on SND
+ 	select USB_LIBCOMPOSITE
+-	select SND_UMP
+-	select SND_UMP_LEGACY_RAWMIDI
+ 	select USB_F_MIDI2
+ 	help
+ 	  The MIDI 2.0 function driver provides the generic emulated
 
 
