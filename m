@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC681E98E6;
-	Wed, 15 Jan 2025 11:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20CC1E990E;
+	Wed, 15 Jan 2025 11:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938803; cv=none; b=bqbJtvzuwlxR6fzGoELwzIJHvlBZ9pWIset8NGK9tS4tcLvpNbmAegHwbSQZw6J4e6EU8IEtiubz4fF2ciBrBccXHYf9M97xj7RKvBEuveYW6LV67Mc82Wbg9PD1226XwCvTL1C+0GhUsXUZNTVVOTCLpc7eqU/eqsOy3OeMCtg=
+	t=1736938806; cv=none; b=klSYaeYz1Zux2tl/lMRWEyd4FVyi2i0ecRBu2WTS4v5a2ma4O9grWnNTfBaavf+ooOjUIh3NpyBBJ6S0/1KVOx7sp1VOAOeKD+64hYeDcDvd+kTFhampHMVZpqopRB98nugu9jsgC3xDyhZpvc52u1vl1FYFQQgjcleGsEGgDoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938803; c=relaxed/simple;
-	bh=ubiQMj+KsMC+7b78EAwXHIPrU/NLlCUCcf1WRgjtvbM=;
+	s=arc-20240116; t=1736938806; c=relaxed/simple;
+	bh=MUNOD1KJcBRgancNZOC+q2Y78U5XMZBYo1Mtg6pJY8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niy1bA9pbDVMv9XSXXT5IJSqz5LaIh+mKcQAys3PaNZV34bBCadmw5KnYgT7OWwgTgYZXQz/lVBXDuiTJ4/KMFPu6YEL9ZjOcUA/Ku3/m6swJzMqqtde4ODJhBr6vuve24o+e99rI6oThATYQnHNit9V+BPh0YVKMxqGSCJyTTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5zWIUej; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rq4Efw9eS8SOzeQsB8/X/uywgcaV5JKP7WGcz5WjIjHy1Z5yWx6Tr+JkSXxR/+JO8i2gjnEx8FIm2HbvLtiAexMlqZx5iqDaLmip60oq1Zb7tv1IHK8R07V9EtLLR4D0OrflXKrHnD5JfO7pQQRnHyoRIukEZwsuJyAHb+1I2ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9CFebsX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5zWIUej"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B84C4CEDF;
-	Wed, 15 Jan 2025 11:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9CFebsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF53C4CEDF;
+	Wed, 15 Jan 2025 11:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938802;
-	bh=ubiQMj+KsMC+7b78EAwXHIPrU/NLlCUCcf1WRgjtvbM=;
+	s=korg; t=1736938806;
+	bh=MUNOD1KJcBRgancNZOC+q2Y78U5XMZBYo1Mtg6pJY8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5zWIUejPmB2R2VJ26hEy8V41uA8+sRCQrNzQsQ4X+kR6ZEMuidkB82At52lE75KF
-	 Q5MHB4rwrRjRJ2+BT3uUwtRzKKPRDFFRKRX1bhPJRusboZs1CZyOAi6K+39FigNNrI
-	 Yp+Rj+rnu13qq6hfuZgQuABoI2VsgxmejREfkYY8=
+	b=P9CFebsXUmAYeaeG1g64hC7oYu6MPARusMbivzapgx97gG7nWVYNuXzP1pz2Hw7EX
+	 19JEh1bq1mOyKo/Fhelp4KdD/jIDJlRpd5gG2GufT04LJTz9VuQy8lxKIBwM0fKrpm
+	 QmIP8efZmh6XTkQZKPeb3SK0v6UUfQprIkg9lLWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 102/129] iio: pressure: zpa2326: fix information leak in triggered buffer
-Date: Wed, 15 Jan 2025 11:37:57 +0100
-Message-ID: <20250115103558.423066613@linuxfoundation.org>
+Subject: [PATCH 6.6 103/129] iio: dummy: iio_simply_dummy_buffer: fix information leak in triggered buffer
+Date: Wed, 15 Jan 2025 11:37:58 +0100
+Message-ID: <20250115103558.459119352@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -52,36 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 6007d10c5262f6f71479627c1216899ea7f09073 upstream.
+commit 333be433ee908a53f283beb95585dfc14c8ffb46 upstream.
 
-The 'sample' local struct is used to push data to user space from a
-triggered buffer, but it has a hole between the temperature and the
-timestamp (u32 pressure, u16 temperature, GAP, u64 timestamp).
-This hole is never initialized.
+The 'data' array is allocated via kmalloc() and it is used to push data
+to user space from a triggered buffer, but it does not set values for
+inactive channels, as it only uses iio_for_each_active_channel()
+to assign new values.
 
-Initialize the struct to zero before using it to avoid pushing
-uninitialized information to userspace.
+Use kzalloc for the memory allocation to avoid pushing uninitialized
+information to userspace.
 
 Cc: stable@vger.kernel.org
-Fixes: 03b262f2bbf4 ("iio:pressure: initial zpa2326 barometer support")
+Fixes: 415f79244757 ("iio: Move IIO Dummy Driver out of staging")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-3-0cb6e98d895c@gmail.com
+Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-9-0cb6e98d895c@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/pressure/zpa2326.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/dummy/iio_simple_dummy_buffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/pressure/zpa2326.c
-+++ b/drivers/iio/pressure/zpa2326.c
-@@ -586,6 +586,8 @@ static int zpa2326_fill_sample_buffer(st
- 	}   sample;
- 	int err;
+--- a/drivers/iio/dummy/iio_simple_dummy_buffer.c
++++ b/drivers/iio/dummy/iio_simple_dummy_buffer.c
+@@ -48,7 +48,7 @@ static irqreturn_t iio_simple_dummy_trig
+ 	int i = 0, j;
+ 	u16 *data;
  
-+	memset(&sample, 0, sizeof(sample));
-+
- 	if (test_bit(0, indio_dev->active_scan_mask)) {
- 		/* Get current pressure from hardware FIFO. */
- 		err = zpa2326_dequeue_pressure(indio_dev, &sample.pressure);
+-	data = kmalloc(indio_dev->scan_bytes, GFP_KERNEL);
++	data = kzalloc(indio_dev->scan_bytes, GFP_KERNEL);
+ 	if (!data)
+ 		goto done;
+ 
 
 
