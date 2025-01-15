@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00ED11EEA5D;
-	Wed, 15 Jan 2025 11:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB551E9905;
+	Wed, 15 Jan 2025 11:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938922; cv=none; b=qGGbBr2I9y/e3/78kefcySSTNCQaOBfPcyE4xkT/9oz4Bqg557rjQ72BxfBv/tcUiVvkmhm0uDpzLpvT2itzxqzWDFbo/FvFfSqImli7pG/BZTfHccE1Wjcm1IvbAmhZxRNFC85kuVF1+HMNMBXUgHEL6cZkq31LIRsor+auydM=
+	t=1736938925; cv=none; b=kneDrSlOH6cL5O6tBLBCf6XvSjNwcD6Cl+yw30um3gaxdeFFplQe38rfG5n8SpRatWGT69gRbahZn8GmhZjNwcTWCNQOt78dvaV0GhcnmDnssHZQuh/v4SN9xe5Op/JH0gzP6Vu8wLZ93xwIXI+KRD/St25dAF74Ep5MuVE8x5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938922; c=relaxed/simple;
-	bh=HR1Dm/ksAXxrOOkeMqIwgo3rLgBKVOgTDTZ1hXtjPMk=;
+	s=arc-20240116; t=1736938925; c=relaxed/simple;
+	bh=BmSAU7RkoOq02UHSbnGxyPu5Fx1KGEAR+yUqGv9YcgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkbRlT2GA0P+ZOSDAbe/MGjaKteIT3+WkH7he5WQwW/QLBALNRmIfRSJvdha5y44nMf1cpu0FMoTJ0wdHOR98O9P/7H7s0zx7Kjxq4AztX6ZfWdj53ztnjuFrGiGo09G5k3sGjSCS3vqVvZRVsmdn6ajIrfioNCM2Em8jvdN314=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UK0KIpNH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MypUv9xSUvRBGu/bCd6/4vSz13KgE1g85VmFxtb8jdwtL2p/7JCEd/SXM4I6uGKvdnr9b/OYFEwbQXcSV2XneKxzflQxjGOzGJA9PHJ+6KwWRGPEt96p9rJ4eOjapmxSPpQ9ryq5YqnbUa5VuC4JF1kUK5mytwkGMtS4JC0maxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSByk+d0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UK0KIpNH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22067C4CEDF;
-	Wed, 15 Jan 2025 11:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSByk+d0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97809C4CEDF;
+	Wed, 15 Jan 2025 11:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938921;
-	bh=HR1Dm/ksAXxrOOkeMqIwgo3rLgBKVOgTDTZ1hXtjPMk=;
+	s=korg; t=1736938925;
+	bh=BmSAU7RkoOq02UHSbnGxyPu5Fx1KGEAR+yUqGv9YcgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UK0KIpNHd5cJMdb8Jyn+/G5iLrCknwoFqlCCNdN1G4SA+rNqJWXnJQfZK84XJW8P/
-	 bZ/241qdZB+lnorY1kBEs3/hZK4JFuYd7iAdEYBJbvh+jEdoc9u3HDxyJU7GXkkoop
-	 QFV+Iq9pH5ulTR2OyaBynGxgz5drX0lo0rc5Hrt8=
+	b=dSByk+d0RziCL3X+PNlWVvWpih/32z5inbnkvkSbbGR6NYgoUcw7OiNcU4UaSpnc8
+	 T9h46DptzQRASS0/fKfhImV7zdCzFpHiA5aAtdinALTkMF69M8faVBcdIJLJrrSsTo
+	 UY+NmAsrLCoYag7QACeK8HbS4iGYIrPE798XVpfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 117/129] block, bfq: fix waker_bfqq UAF after bfq_split_bfqq()
-Date: Wed, 15 Jan 2025 11:38:12 +0100
-Message-ID: <20250115103559.020581210@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 108/129] iio: gyro: fxas21002c: Fix missing data update in trigger handler
+Date: Wed, 15 Jan 2025 11:38:03 +0100
+Message-ID: <20250115103558.656842494@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -53,199 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit fcede1f0a043ccefe9bc6ad57f12718e42f63f1d ]
+commit fa13ac6cdf9b6c358e7d77c29fb60145c7a87965 upstream.
 
-Our syzkaller report a following UAF for v6.6:
+The fxas21002c_trigger_handler() may fail to acquire sample data because
+the runtime PM enters the autosuspend state and sensor can not return
+sample data in standby mode..
 
-BUG: KASAN: slab-use-after-free in bfq_init_rq+0x175d/0x17a0 block/bfq-iosched.c:6958
-Read of size 8 at addr ffff8881b57147d8 by task fsstress/232726
+Resume the sensor before reading the sample data into the buffer within the
+trigger handler. After the data is read, place the sensor back into the
+autosuspend state.
 
-CPU: 2 PID: 232726 Comm: fsstress Not tainted 6.6.0-g3629d1885222 #39
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x91/0xf0 lib/dump_stack.c:106
- print_address_description.constprop.0+0x66/0x300 mm/kasan/report.c:364
- print_report+0x3e/0x70 mm/kasan/report.c:475
- kasan_report+0xb8/0xf0 mm/kasan/report.c:588
- hlist_add_head include/linux/list.h:1023 [inline]
- bfq_init_rq+0x175d/0x17a0 block/bfq-iosched.c:6958
- bfq_insert_request.isra.0+0xe8/0xa20 block/bfq-iosched.c:6271
- bfq_insert_requests+0x27f/0x390 block/bfq-iosched.c:6323
- blk_mq_insert_request+0x290/0x8f0 block/blk-mq.c:2660
- blk_mq_submit_bio+0x1021/0x15e0 block/blk-mq.c:3143
- __submit_bio+0xa0/0x6b0 block/blk-core.c:639
- __submit_bio_noacct_mq block/blk-core.c:718 [inline]
- submit_bio_noacct_nocheck+0x5b7/0x810 block/blk-core.c:747
- submit_bio_noacct+0xca0/0x1990 block/blk-core.c:847
- __ext4_read_bh fs/ext4/super.c:205 [inline]
- ext4_read_bh+0x15e/0x2e0 fs/ext4/super.c:230
- __read_extent_tree_block+0x304/0x6f0 fs/ext4/extents.c:567
- ext4_find_extent+0x479/0xd20 fs/ext4/extents.c:947
- ext4_ext_map_blocks+0x1a3/0x2680 fs/ext4/extents.c:4182
- ext4_map_blocks+0x929/0x15a0 fs/ext4/inode.c:660
- ext4_iomap_begin_report+0x298/0x480 fs/ext4/inode.c:3569
- iomap_iter+0x3dd/0x1010 fs/iomap/iter.c:91
- iomap_fiemap+0x1f4/0x360 fs/iomap/fiemap.c:80
- ext4_fiemap+0x181/0x210 fs/ext4/extents.c:5051
- ioctl_fiemap.isra.0+0x1b4/0x290 fs/ioctl.c:220
- do_vfs_ioctl+0x31c/0x11a0 fs/ioctl.c:811
- __do_sys_ioctl fs/ioctl.c:869 [inline]
- __se_sys_ioctl+0xae/0x190 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-Allocated by task 232719:
- kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- __kasan_slab_alloc+0x87/0x90 mm/kasan/common.c:328
- kasan_slab_alloc include/linux/kasan.h:188 [inline]
- slab_post_alloc_hook mm/slab.h:768 [inline]
- slab_alloc_node mm/slub.c:3492 [inline]
- kmem_cache_alloc_node+0x1b8/0x6f0 mm/slub.c:3537
- bfq_get_queue+0x215/0x1f00 block/bfq-iosched.c:5869
- bfq_get_bfqq_handle_split+0x167/0x5f0 block/bfq-iosched.c:6776
- bfq_init_rq+0x13a4/0x17a0 block/bfq-iosched.c:6938
- bfq_insert_request.isra.0+0xe8/0xa20 block/bfq-iosched.c:6271
- bfq_insert_requests+0x27f/0x390 block/bfq-iosched.c:6323
- blk_mq_insert_request+0x290/0x8f0 block/blk-mq.c:2660
- blk_mq_submit_bio+0x1021/0x15e0 block/blk-mq.c:3143
- __submit_bio+0xa0/0x6b0 block/blk-core.c:639
- __submit_bio_noacct_mq block/blk-core.c:718 [inline]
- submit_bio_noacct_nocheck+0x5b7/0x810 block/blk-core.c:747
- submit_bio_noacct+0xca0/0x1990 block/blk-core.c:847
- __ext4_read_bh fs/ext4/super.c:205 [inline]
- ext4_read_bh_nowait+0x15a/0x240 fs/ext4/super.c:217
- ext4_read_bh_lock+0xac/0xd0 fs/ext4/super.c:242
- ext4_bread_batch+0x268/0x500 fs/ext4/inode.c:958
- __ext4_find_entry+0x448/0x10f0 fs/ext4/namei.c:1671
- ext4_lookup_entry fs/ext4/namei.c:1774 [inline]
- ext4_lookup.part.0+0x359/0x6f0 fs/ext4/namei.c:1842
- ext4_lookup+0x72/0x90 fs/ext4/namei.c:1839
- __lookup_slow+0x257/0x480 fs/namei.c:1696
- lookup_slow fs/namei.c:1713 [inline]
- walk_component+0x454/0x5c0 fs/namei.c:2004
- link_path_walk.part.0+0x773/0xda0 fs/namei.c:2331
- link_path_walk fs/namei.c:3826 [inline]
- path_openat+0x1b9/0x520 fs/namei.c:3826
- do_filp_open+0x1b7/0x400 fs/namei.c:3857
- do_sys_openat2+0x5dc/0x6e0 fs/open.c:1428
- do_sys_open fs/open.c:1443 [inline]
- __do_sys_openat fs/open.c:1459 [inline]
- __se_sys_openat fs/open.c:1454 [inline]
- __x64_sys_openat+0x148/0x200 fs/open.c:1454
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-Freed by task 232726:
- kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- kasan_save_free_info+0x2b/0x50 mm/kasan/generic.c:522
- ____kasan_slab_free mm/kasan/common.c:236 [inline]
- __kasan_slab_free+0x12a/0x1b0 mm/kasan/common.c:244
- kasan_slab_free include/linux/kasan.h:164 [inline]
- slab_free_hook mm/slub.c:1827 [inline]
- slab_free_freelist_hook mm/slub.c:1853 [inline]
- slab_free mm/slub.c:3820 [inline]
- kmem_cache_free+0x110/0x760 mm/slub.c:3842
- bfq_put_queue+0x6a7/0xfb0 block/bfq-iosched.c:5428
- bfq_forget_entity block/bfq-wf2q.c:634 [inline]
- bfq_put_idle_entity+0x142/0x240 block/bfq-wf2q.c:645
- bfq_forget_idle+0x189/0x1e0 block/bfq-wf2q.c:671
- bfq_update_vtime block/bfq-wf2q.c:1280 [inline]
- __bfq_lookup_next_entity block/bfq-wf2q.c:1374 [inline]
- bfq_lookup_next_entity+0x350/0x480 block/bfq-wf2q.c:1433
- bfq_update_next_in_service+0x1c0/0x4f0 block/bfq-wf2q.c:128
- bfq_deactivate_entity+0x10a/0x240 block/bfq-wf2q.c:1188
- bfq_deactivate_bfqq block/bfq-wf2q.c:1592 [inline]
- bfq_del_bfqq_busy+0x2e8/0xad0 block/bfq-wf2q.c:1659
- bfq_release_process_ref+0x1cc/0x220 block/bfq-iosched.c:3139
- bfq_split_bfqq+0x481/0xdf0 block/bfq-iosched.c:6754
- bfq_init_rq+0xf29/0x17a0 block/bfq-iosched.c:6934
- bfq_insert_request.isra.0+0xe8/0xa20 block/bfq-iosched.c:6271
- bfq_insert_requests+0x27f/0x390 block/bfq-iosched.c:6323
- blk_mq_insert_request+0x290/0x8f0 block/blk-mq.c:2660
- blk_mq_submit_bio+0x1021/0x15e0 block/blk-mq.c:3143
- __submit_bio+0xa0/0x6b0 block/blk-core.c:639
- __submit_bio_noacct_mq block/blk-core.c:718 [inline]
- submit_bio_noacct_nocheck+0x5b7/0x810 block/blk-core.c:747
- submit_bio_noacct+0xca0/0x1990 block/blk-core.c:847
- __ext4_read_bh fs/ext4/super.c:205 [inline]
- ext4_read_bh+0x15e/0x2e0 fs/ext4/super.c:230
- __read_extent_tree_block+0x304/0x6f0 fs/ext4/extents.c:567
- ext4_find_extent+0x479/0xd20 fs/ext4/extents.c:947
- ext4_ext_map_blocks+0x1a3/0x2680 fs/ext4/extents.c:4182
- ext4_map_blocks+0x929/0x15a0 fs/ext4/inode.c:660
- ext4_iomap_begin_report+0x298/0x480 fs/ext4/inode.c:3569
- iomap_iter+0x3dd/0x1010 fs/iomap/iter.c:91
- iomap_fiemap+0x1f4/0x360 fs/iomap/fiemap.c:80
- ext4_fiemap+0x181/0x210 fs/ext4/extents.c:5051
- ioctl_fiemap.isra.0+0x1b4/0x290 fs/ioctl.c:220
- do_vfs_ioctl+0x31c/0x11a0 fs/ioctl.c:811
- __do_sys_ioctl fs/ioctl.c:869 [inline]
- __se_sys_ioctl+0xae/0x190 fs/ioctl.c:857
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x78/0xe2
-
-commit 1ba0403ac644 ("block, bfq: fix uaf for accessing waker_bfqq after
-splitting") fix the problem that if waker_bfqq is in the merge chain,
-and current is the only procress, waker_bfqq can be freed from
-bfq_split_bfqq(). However, the case that waker_bfqq is not in the merge
-chain is missed, and if the procress reference of waker_bfqq is 0,
-waker_bfqq can be freed as well.
-
-Fix the problem by checking procress reference if waker_bfqq is not in
-the merge_chain.
-
-Fixes: 1ba0403ac644 ("block, bfq: fix uaf for accessing waker_bfqq after splitting")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20250108084148.1549973-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a0701b6263ae ("iio: gyro: add core driver for fxas21002c")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20241116152945.4006374-1-Frank.Li@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/bfq-iosched.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/iio/gyro/fxas21002c_core.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index dd8ca3f7ba60..617d6802b8a0 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -6843,16 +6843,24 @@ static struct bfq_queue *bfq_waker_bfqq(struct bfq_queue *bfqq)
- 		if (new_bfqq == waker_bfqq) {
- 			/*
- 			 * If waker_bfqq is in the merge chain, and current
--			 * is the only procress.
-+			 * is the only process, waker_bfqq can be freed.
- 			 */
- 			if (bfqq_process_refs(waker_bfqq) == 1)
- 				return NULL;
--			break;
+--- a/drivers/iio/gyro/fxas21002c_core.c
++++ b/drivers/iio/gyro/fxas21002c_core.c
+@@ -730,14 +730,21 @@ static irqreturn_t fxas21002c_trigger_ha
+ 	int ret;
+ 
+ 	mutex_lock(&data->lock);
++	ret = fxas21002c_pm_get(data);
++	if (ret < 0)
++		goto out_unlock;
 +
-+			return waker_bfqq;
- 		}
+ 	ret = regmap_bulk_read(data->regmap, FXAS21002C_REG_OUT_X_MSB,
+ 			       data->buffer, CHANNEL_SCAN_MAX * sizeof(s16));
+ 	if (ret < 0)
+-		goto out_unlock;
++		goto out_pm_put;
  
- 		new_bfqq = new_bfqq->new_bfqq;
- 	}
+ 	iio_push_to_buffers_with_timestamp(indio_dev, data->buffer,
+ 					   data->timestamp);
  
-+	/*
-+	 * If waker_bfqq is not in the merge chain, and it's procress reference
-+	 * is 0, waker_bfqq can be freed.
-+	 */
-+	if (bfqq_process_refs(waker_bfqq) == 0)
-+		return NULL;
++out_pm_put:
++	fxas21002c_pm_put(data);
 +
- 	return waker_bfqq;
- }
+ out_unlock:
+ 	mutex_unlock(&data->lock);
  
--- 
-2.39.5
-
 
 
