@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974CF248BB2;
-	Wed, 15 Jan 2025 10:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FFC248BA6;
+	Wed, 15 Jan 2025 10:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938013; cv=none; b=UVwpm0t+LTQR9pxCmVh37mlr3KxWWLyhMrREZ0liPy8LuA3d2ZgKSOpm5tr5cuiiUDy/l7XCUReu6/1Pt3Gb8v5R5q41DyrOqU3y8ZrT6P/ZKSkOdfbC+yQwzQpR5ajW0iCMLvIYQraYE8OKdfN/MsGqXnOXHu38RovUMjppJRs=
+	t=1736938016; cv=none; b=lwuRd06nwLhgvd+winUOoiK3kBJ5gmEyhdZxXw1BpmeAhKZdqXAnxp4y6QzZ28BreiQKcY269kShCG4sQhtuFjgV4nTJxJb6Sa8ZOp5PTSWLB9NHKR3Ngvk0fKvo+8uz0iuMLsRc65tRfNxQYinzZgLAi2XGpxPonuTFkGJuCYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938013; c=relaxed/simple;
-	bh=XAcBmaa/bYLtToBt/BiG7ELznXMlnwhKy/iupvLs24g=;
+	s=arc-20240116; t=1736938016; c=relaxed/simple;
+	bh=OeEcRs6qqValeB50n03jYY+D6dOmCHMSv486BAiV9So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a/g2u0QYJ2Ury63YF7Lt5s6iz0X4/UO5vBjOLhtddOp82cTWktfGangVRT/ODBLxEW+aqqdN3MPk4v2Qkaxms9mgsKPtuwAbdjsGO9ur4DCRklwFcUObe8uFozdWJs1UR8Siy+rY5DQy7wlUdWMh0Cz195EGVegEcSg323wLykU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drYw/1DH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rKJt39pTYbWDkVCdNMPiHkhs0+f4+PZDnhFVapZiw0hGMLQJCUzyPtvWQOBy+hhZwHBXAlv8VrJVOUw8D9QkLOhreD3YSMtlGo4bAsUgQ5zd2TbZz/vrDgYcUHEUzLSphJX0k14Rq8ubD62p45iua2osOW7h3OkALLntrwCSolg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zMfh1z/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drYw/1DH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CE2C4CEDF;
-	Wed, 15 Jan 2025 10:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zMfh1z/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DABCC4CEDF;
+	Wed, 15 Jan 2025 10:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938013;
-	bh=XAcBmaa/bYLtToBt/BiG7ELznXMlnwhKy/iupvLs24g=;
+	s=korg; t=1736938016;
+	bh=OeEcRs6qqValeB50n03jYY+D6dOmCHMSv486BAiV9So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drYw/1DHrZOyaLcbe4kLbbBI2q3DlVq2UeRD/tOiPsQPEWPlPZNnAXtJXYhELiSaO
-	 CDRyTzJWbL83tHUSROd2T3+l5+lNGUWOLTf6vJcKIu4BQk8mRVU5RwS/MJJ5wpIxsu
-	 JfAd9H4wZ3GLnWvG+bhEF9tCFle3/+HF2v7gPCP8=
+	b=zMfh1z/kOTdjAlVCfWhCnuYoJw1qunRYPJ6HCG9LJEnUfHYDhWqrKkQq3CDiyXl7M
+	 ejtw5iDRZjnkbj0dz60fo/CIfXBcYKjt4IY1DpY9TScpgQmCcIAIhqjyTT8fYsW+M8
+	 cEtrQJiIodHhwXBKyKE+kquS81pzIBbtVFLjctgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Simon Horman <horms@kernel.org>,
-	Brett Creeley <brett.creeley@amd.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Parker Newman <pnewman@connecttech.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Thierry Reding <treding@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/189] pds_core: limit loop over fw name list
-Date: Wed, 15 Jan 2025 11:35:26 +0100
-Message-ID: <20250115103607.561393480@linuxfoundation.org>
+Subject: [PATCH 6.12 057/189] net: stmmac: dwmac-tegra: Read iommu stream id from device tree
+Date: Wed, 15 Jan 2025 11:35:53 +0100
+Message-ID: <20250115103608.636887415@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -54,40 +53,215 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Parker Newman <pnewman@connecttech.com>
 
-[ Upstream commit 8c817eb26230dc0ae553cee16ff43a4a895f6756 ]
+[ Upstream commit 426046e2d62dd19533808661e912b8e8a9eaec16 ]
 
-Add an array size limit to the for-loop to be sure we don't try
-to reference a fw_version string off the end of the fw info names
-array.  We know that our firmware only has a limited number
-of firmware slot names, but we shouldn't leave this unchecked.
+Nvidia's Tegra MGBE controllers require the IOMMU "Stream ID" (SID) to be
+written to the MGBE_WRAP_AXI_ASID0_CTRL register.
 
-Fixes: 45d76f492938 ("pds_core: set up device and adminq")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20250103195147.7408-1-shannon.nelson@amd.com
+The current driver is hard coded to use MGBE0's SID for all controllers.
+This causes softirq time outs and kernel panics when using controllers
+other than MGBE0.
+
+Example dmesg errors when an ethernet cable is connected to MGBE1:
+
+[  116.133290] tegra-mgbe 6910000.ethernet eth1: Link is Up - 1Gbps/Full - flow control rx/tx
+[  121.851283] tegra-mgbe 6910000.ethernet eth1: NETDEV WATCHDOG: CPU: 5: transmit queue 0 timed out 5690 ms
+[  121.851782] tegra-mgbe 6910000.ethernet eth1: Reset adapter.
+[  121.892464] tegra-mgbe 6910000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-0
+[  121.905920] tegra-mgbe 6910000.ethernet eth1: PHY [stmmac-1:00] driver [Aquantia AQR113] (irq=171)
+[  121.907356] tegra-mgbe 6910000.ethernet eth1: Enabling Safety Features
+[  121.907578] tegra-mgbe 6910000.ethernet eth1: IEEE 1588-2008 Advanced Timestamp supported
+[  121.908399] tegra-mgbe 6910000.ethernet eth1: registered PTP clock
+[  121.908582] tegra-mgbe 6910000.ethernet eth1: configuring for phy/10gbase-r link mode
+[  125.961292] tegra-mgbe 6910000.ethernet eth1: Link is Up - 1Gbps/Full - flow control rx/tx
+[  181.921198] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[  181.921404] rcu: 	7-....: (1 GPs behind) idle=540c/1/0x4000000000000002 softirq=1748/1749 fqs=2337
+[  181.921684] rcu: 	(detected by 4, t=6002 jiffies, g=1357, q=1254 ncpus=8)
+[  181.921878] Sending NMI from CPU 4 to CPUs 7:
+[  181.921886] NMI backtrace for cpu 7
+[  181.922131] CPU: 7 UID: 0 PID: 0 Comm: swapper/7 Kdump: loaded Not tainted 6.13.0-rc3+ #6
+[  181.922390] Hardware name: NVIDIA CTI Forge + Orin AGX/Jetson, BIOS 202402.1-Unknown 10/28/2024
+[  181.922658] pstate: 40400009 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  181.922847] pc : handle_softirqs+0x98/0x368
+[  181.922978] lr : __do_softirq+0x18/0x20
+[  181.923095] sp : ffff80008003bf50
+[  181.923189] x29: ffff80008003bf50 x28: 0000000000000008 x27: 0000000000000000
+[  181.923379] x26: ffffce78ea277000 x25: 0000000000000000 x24: 0000001c61befda0
+[  181.924486] x23: 0000000060400009 x22: ffffce78e99918bc x21: ffff80008018bd70
+[  181.925568] x20: ffffce78e8bb00d8 x19: ffff80008018bc20 x18: 0000000000000000
+[  181.926655] x17: ffff318ebe7d3000 x16: ffff800080038000 x15: 0000000000000000
+[  181.931455] x14: ffff000080816680 x13: ffff318ebe7d3000 x12: 000000003464d91d
+[  181.938628] x11: 0000000000000040 x10: ffff000080165a70 x9 : ffffce78e8bb0160
+[  181.945804] x8 : ffff8000827b3160 x7 : f9157b241586f343 x6 : eeb6502a01c81c74
+[  181.953068] x5 : a4acfcdd2e8096bb x4 : ffffce78ea277340 x3 : 00000000ffffd1e1
+[  181.960329] x2 : 0000000000000101 x1 : ffffce78ea277340 x0 : ffff318ebe7d3000
+[  181.967591] Call trace:
+[  181.970043]  handle_softirqs+0x98/0x368 (P)
+[  181.974240]  __do_softirq+0x18/0x20
+[  181.977743]  ____do_softirq+0x14/0x28
+[  181.981415]  call_on_irq_stack+0x24/0x30
+[  181.985180]  do_softirq_own_stack+0x20/0x30
+[  181.989379]  __irq_exit_rcu+0x114/0x140
+[  181.993142]  irq_exit_rcu+0x14/0x28
+[  181.996816]  el1_interrupt+0x44/0xb8
+[  182.000316]  el1h_64_irq_handler+0x14/0x20
+[  182.004343]  el1h_64_irq+0x80/0x88
+[  182.007755]  cpuidle_enter_state+0xc4/0x4a8 (P)
+[  182.012305]  cpuidle_enter+0x3c/0x58
+[  182.015980]  cpuidle_idle_call+0x128/0x1c0
+[  182.020005]  do_idle+0xe0/0xf0
+[  182.023155]  cpu_startup_entry+0x3c/0x48
+[  182.026917]  secondary_start_kernel+0xdc/0x120
+[  182.031379]  __secondary_switched+0x74/0x78
+[  212.971162] rcu: INFO: rcu_preempt detected expedited stalls on CPUs/tasks: { 7-.... } 6103 jiffies s: 417 root: 0x80/.
+[  212.985935] rcu: blocking rcu_node structures (internal RCU debug):
+[  212.992758] Sending NMI from CPU 0 to CPUs 7:
+[  212.998539] NMI backtrace for cpu 7
+[  213.004304] CPU: 7 UID: 0 PID: 0 Comm: swapper/7 Kdump: loaded Not tainted 6.13.0-rc3+ #6
+[  213.016116] Hardware name: NVIDIA CTI Forge + Orin AGX/Jetson, BIOS 202402.1-Unknown 10/28/2024
+[  213.030817] pstate: 40400009 (nZcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[  213.040528] pc : handle_softirqs+0x98/0x368
+[  213.046563] lr : __do_softirq+0x18/0x20
+[  213.051293] sp : ffff80008003bf50
+[  213.055839] x29: ffff80008003bf50 x28: 0000000000000008 x27: 0000000000000000
+[  213.067304] x26: ffffce78ea277000 x25: 0000000000000000 x24: 0000001c61befda0
+[  213.077014] x23: 0000000060400009 x22: ffffce78e99918bc x21: ffff80008018bd70
+[  213.087339] x20: ffffce78e8bb00d8 x19: ffff80008018bc20 x18: 0000000000000000
+[  213.097313] x17: ffff318ebe7d3000 x16: ffff800080038000 x15: 0000000000000000
+[  213.107201] x14: ffff000080816680 x13: ffff318ebe7d3000 x12: 000000003464d91d
+[  213.116651] x11: 0000000000000040 x10: ffff000080165a70 x9 : ffffce78e8bb0160
+[  213.127500] x8 : ffff8000827b3160 x7 : 0a37b344852820af x6 : 3f049caedd1ff608
+[  213.138002] x5 : cff7cfdbfaf31291 x4 : ffffce78ea277340 x3 : 00000000ffffde04
+[  213.150428] x2 : 0000000000000101 x1 : ffffce78ea277340 x0 : ffff318ebe7d3000
+[  213.162063] Call trace:
+[  213.165494]  handle_softirqs+0x98/0x368 (P)
+[  213.171256]  __do_softirq+0x18/0x20
+[  213.177291]  ____do_softirq+0x14/0x28
+[  213.182017]  call_on_irq_stack+0x24/0x30
+[  213.186565]  do_softirq_own_stack+0x20/0x30
+[  213.191815]  __irq_exit_rcu+0x114/0x140
+[  213.196891]  irq_exit_rcu+0x14/0x28
+[  213.202401]  el1_interrupt+0x44/0xb8
+[  213.207741]  el1h_64_irq_handler+0x14/0x20
+[  213.213519]  el1h_64_irq+0x80/0x88
+[  213.217541]  cpuidle_enter_state+0xc4/0x4a8 (P)
+[  213.224364]  cpuidle_enter+0x3c/0x58
+[  213.228653]  cpuidle_idle_call+0x128/0x1c0
+[  213.233993]  do_idle+0xe0/0xf0
+[  213.237928]  cpu_startup_entry+0x3c/0x48
+[  213.243791]  secondary_start_kernel+0xdc/0x120
+[  213.249830]  __secondary_switched+0x74/0x78
+
+This bug has existed since the dwmac-tegra driver was added in Dec 2022
+(See Fixes tag below for commit hash).
+
+The Tegra234 SOC has 4 MGBE controllers, however Nvidia's Developer Kit
+only uses MGBE0 which is why the bug was not found previously. Connect Tech
+has many products that use 2 (or more) MGBE controllers.
+
+The solution is to read the controller's SID from the existing "iommus"
+device tree property. The 2nd field of the "iommus" device tree property
+is the controller's SID.
+
+Device tree snippet from tegra234.dtsi showing MGBE1's "iommus" property:
+
+smmu_niso0: iommu@12000000 {
+        compatible = "nvidia,tegra234-smmu", "nvidia,smmu-500";
+...
+}
+
+/* MGBE1 */
+ethernet@6900000 {
+	compatible = "nvidia,tegra234-mgbe";
+...
+	iommus = <&smmu_niso0 TEGRA234_SID_MGBE_VF1>;
+...
+}
+
+Nvidia's arm-smmu driver reads the "iommus" property and stores the SID in
+the MGBE device's "fwspec" struct. The dwmac-tegra driver can access the
+SID using the tegra_dev_iommu_get_stream_id() helper function found in
+linux/iommu.h.
+
+Calling tegra_dev_iommu_get_stream_id() should not fail unless the "iommus"
+property is removed from the device tree or the IOMMU is disabled.
+
+While the Tegra234 SOC technically supports bypassing the IOMMU, it is not
+supported by the current firmware, has not been tested and not recommended.
+More detailed discussion with Thierry Reding from Nvidia linked below.
+
+Fixes: d8ca113724e7 ("net: stmmac: tegra: Add MGBE support")
+Link: https://lore.kernel.org/netdev/cover.1731685185.git.pnewman@connecttech.com
+Signed-off-by: Parker Newman <pnewman@connecttech.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/6fb97f32cf4accb4f7cf92846f6b60064ba0a3bd.1736284360.git.pnewman@connecttech.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/pds_core/devlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/pds_core/devlink.c b/drivers/net/ethernet/amd/pds_core/devlink.c
-index 2681889162a2..44971e71991f 100644
---- a/drivers/net/ethernet/amd/pds_core/devlink.c
-+++ b/drivers/net/ethernet/amd/pds_core/devlink.c
-@@ -118,7 +118,7 @@ int pdsc_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
- 	if (err && err != -EIO)
- 		return err;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
+index 6fdd94c8919e..2996bcdea9a2 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-tegra.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-only
++#include <linux/iommu.h>
+ #include <linux/platform_device.h>
+ #include <linux/of.h>
+ #include <linux/module.h>
+@@ -19,6 +20,8 @@ struct tegra_mgbe {
+ 	struct reset_control *rst_mac;
+ 	struct reset_control *rst_pcs;
  
--	listlen = fw_list.num_fw_slots;
-+	listlen = min(fw_list.num_fw_slots, ARRAY_SIZE(fw_list.fw_names));
- 	for (i = 0; i < listlen; i++) {
- 		if (i < ARRAY_SIZE(fw_slotnames))
- 			strscpy(buf, fw_slotnames[i], sizeof(buf));
++	u32 iommu_sid;
++
+ 	void __iomem *hv;
+ 	void __iomem *regs;
+ 	void __iomem *xpcs;
+@@ -50,7 +53,6 @@ struct tegra_mgbe {
+ #define MGBE_WRAP_COMMON_INTR_ENABLE	0x8704
+ #define MAC_SBD_INTR			BIT(2)
+ #define MGBE_WRAP_AXI_ASID0_CTRL	0x8400
+-#define MGBE_SID			0x6
+ 
+ static int __maybe_unused tegra_mgbe_suspend(struct device *dev)
+ {
+@@ -84,7 +86,7 @@ static int __maybe_unused tegra_mgbe_resume(struct device *dev)
+ 	writel(MAC_SBD_INTR, mgbe->regs + MGBE_WRAP_COMMON_INTR_ENABLE);
+ 
+ 	/* Program SID */
+-	writel(MGBE_SID, mgbe->hv + MGBE_WRAP_AXI_ASID0_CTRL);
++	writel(mgbe->iommu_sid, mgbe->hv + MGBE_WRAP_AXI_ASID0_CTRL);
+ 
+ 	value = readl(mgbe->xpcs + XPCS_WRAP_UPHY_STATUS);
+ 	if ((value & XPCS_WRAP_UPHY_STATUS_TX_P_UP) == 0) {
+@@ -241,6 +243,12 @@ static int tegra_mgbe_probe(struct platform_device *pdev)
+ 	if (IS_ERR(mgbe->xpcs))
+ 		return PTR_ERR(mgbe->xpcs);
+ 
++	/* get controller's stream id from iommu property in device tree */
++	if (!tegra_dev_iommu_get_stream_id(mgbe->dev, &mgbe->iommu_sid)) {
++		dev_err(mgbe->dev, "failed to get iommu stream id\n");
++		return -EINVAL;
++	}
++
+ 	res.addr = mgbe->regs;
+ 	res.irq = irq;
+ 
+@@ -346,7 +354,7 @@ static int tegra_mgbe_probe(struct platform_device *pdev)
+ 	writel(MAC_SBD_INTR, mgbe->regs + MGBE_WRAP_COMMON_INTR_ENABLE);
+ 
+ 	/* Program SID */
+-	writel(MGBE_SID, mgbe->hv + MGBE_WRAP_AXI_ASID0_CTRL);
++	writel(mgbe->iommu_sid, mgbe->hv + MGBE_WRAP_AXI_ASID0_CTRL);
+ 
+ 	plat->flags |= STMMAC_FLAG_SERDES_UP_AFTER_PHY_LINKUP;
+ 
 -- 
 2.39.5
 
