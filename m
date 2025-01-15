@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549DB1DB142;
-	Wed, 15 Jan 2025 10:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A329248BA1;
+	Wed, 15 Jan 2025 10:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938404; cv=none; b=A8v0hWLDrAJUywTKtjETx07Xl3T5DDZcVeGsd16CTj1j+aW6zIQM2taEUQ0zKN4GazL7sXmKGBJJ0mqK0MJfpKTgJ5Dhj4Qi80RJcPIyDsYgsnzwHpQyT38GT6Gmx72BNYUk1unH8hEjoyFG0SKwUQNRcQWjARHpYTq2K/aLqkM=
+	t=1736938407; cv=none; b=SRal0vug50N3YsQH+lg0pcMboXRFlGCtbLJEaZ799HXbAREH8peA3GnMeZtTaToMftTtQgsq9jWiFN/NMjEPcdvbLbXhMgNBVOS+TgAYI2i9Ln/I/sJnTOB079GyZlffNtH06kNZRs2M2WozolqdUmVBNs33Lz8iJlciUoYxgPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938404; c=relaxed/simple;
-	bh=uRGYcRnXwcuO7y54xG+EtU+8j1iG0qge34FuxYROSY0=;
+	s=arc-20240116; t=1736938407; c=relaxed/simple;
+	bh=nQEh4tnBgs8U/FRWQJ1rdAGoSsKjfen3e1eioWtwnRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VVcC/lRsd9CNdN7wRktiGhe6LJ4FnoHA0N/gp+QO+jRqNNfhrLWSA3mE0aEKOYRwfTkQoaR5lGik7lsqxaTeFPZpZFwsURZ8iLEtcT/395nDqrLcFBMl493haN+d17bucXi3Mhy2b+1Z66GMPfNhlxQR0J3Kgl0X06nB8CH0whI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ut4Rk1PD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YPHSwrRfkAfFDf5UMk49T4jpbOP4rksUQ0CohwxQclyumEDH//LBFlkptN9LeO4YvCON9K/1vv8SHFc3ZXCkRxWtTu/6HCMXCJ4QDvTX/UW+ksCYqTrTph4t5wB+1gpMsNRkDC1YyD5dJG+Q5eLVEA3KMVuplEF4PY+y+nxWCzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYRbMv3I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ut4Rk1PD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D472BC4CEDF;
-	Wed, 15 Jan 2025 10:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYRbMv3I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC96BC4CEE2;
+	Wed, 15 Jan 2025 10:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938404;
-	bh=uRGYcRnXwcuO7y54xG+EtU+8j1iG0qge34FuxYROSY0=;
+	s=korg; t=1736938407;
+	bh=nQEh4tnBgs8U/FRWQJ1rdAGoSsKjfen3e1eioWtwnRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ut4Rk1PDo4XmzLJJxMftatx/Z+Jz2tA4k5SyB5gLo68Rt5xOCNx1oxw6rbIQ4Kmim
-	 bg7GZdRI8BsxBkJ4MFvYJUYZlovr/Dv5Kf9DrLE3nQIo6ubCm/LRGxK+qeHasHL/IO
-	 etrxZ8mXl9vCvTx1M1rXA4TmBV9duWTVs4TIbj3E=
+	b=MYRbMv3I4mfqR4P/n0dnuydzauxw1CHhjlZxt6LwzWn0b11Lb/1Jv+o0EW4MKcwZ1
+	 oxsauI3Er9bV38naYjO+3Y1NfemuHJXNsh5tfMXoYhXvpoTcYzclbPYnPF992Em94X
+	 Km1v4KrA+35+p2OgknoaeX0B4sgaOlP1zZcAxWKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 173/189] iio: adc: ad7124: Disable all channels at probe time
-Date: Wed, 15 Jan 2025 11:37:49 +0100
-Message-ID: <20250115103613.307820468@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 174/189] io_uring/eventfd: ensure io_eventfd_signal() defers another RCU period
+Date: Wed, 15 Jan 2025 11:37:50 +0100
+Message-ID: <20250115103613.346350199@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -46,50 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 4be339af334c283a1a1af3cb28e7e448a0aa8a7c upstream.
+Commit c9a40292a44e78f71258b8522655bffaf5753bdb upstream.
 
-When during a measurement two channels are enabled, two measurements are
-done that are reported sequencially in the DATA register. As the code
-triggered by reading one of the sysfs properties expects that only one
-channel is enabled it only reads the first data set which might or might
-not belong to the intended channel.
+io_eventfd_do_signal() is invoked from an RCU callback, but when
+dropping the reference to the io_ev_fd, it calls io_eventfd_free()
+directly if the refcount drops to zero. This isn't correct, as any
+potential freeing of the io_ev_fd should be deferred another RCU grace
+period.
 
-To prevent this situation disable all channels during probe. This fixes
-a problem in practise because the reset default for channel 0 is
-enabled. So all measurements before the first measurement on channel 0
-(which disables channel 0 at the end) might report wrong values.
+Just call io_eventfd_put() rather than open-code the dec-and-test and
+free, which will correctly defer it another RCU grace period.
 
-Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20241104101905.845737-2-u.kleine-koenig@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 21a091b970cd ("io_uring: signal registered eventfd to process deferred task work")
+Reported-by: Jann Horn <jannh@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7124.c |    3 +++
- 1 file changed, 3 insertions(+)
+ io_uring/eventfd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -917,6 +917,9 @@ static int ad7124_setup(struct ad7124_st
- 		 * set all channels to this default value.
- 		 */
- 		ad7124_set_channel_odr(st, i, 10);
-+
-+		/* Disable all channels to prevent unintended conversions. */
-+		ad_sd_write_reg(&st->sd, AD7124_CHANNEL(i), 2, 0);
- 	}
+--- a/io_uring/eventfd.c
++++ b/io_uring/eventfd.c
+@@ -38,7 +38,7 @@ static void io_eventfd_do_signal(struct
+ 	eventfd_signal_mask(ev_fd->cq_ev_fd, EPOLL_URING_WAKE);
  
- 	ret = ad_sd_write_reg(&st->sd, AD7124_ADC_CONTROL, 2, st->adc_control);
+ 	if (refcount_dec_and_test(&ev_fd->refs))
+-		io_eventfd_free(rcu);
++		call_rcu(&ev_fd->rcu, io_eventfd_free);
+ }
+ 
+ void io_eventfd_signal(struct io_ring_ctx *ctx)
 
 
