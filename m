@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468431E98EE;
-	Wed, 15 Jan 2025 10:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE9E248BB2;
+	Wed, 15 Jan 2025 10:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938155; cv=none; b=KRjUeHPnPs2YApq81BPZU8m+dcPHysJ8eTulwdV9DJBZWg2xeyIkXZzc3KFcxhY9zRlKGW30QUlSarQ9PQdOZI4HGwO3EbuvVrzAV463jNf9U3dwy54yV99SjDYGyEQb3ov9ktpCN3l/q66oj5/kipG50Gp0Kx6O8lOQ5D7E87M=
+	t=1736938158; cv=none; b=nxMWV7hMltKLO/WDv11uykhfX1gWdEGtA6SPqTVZYcHtGIRPhCP5hAbp/1V+Jg0VbLwJRmH8BImdkf9R/3d//uGqks6lHvbEAZcNSBz4HXbdxyfXGez4FY3Kdy9w3U/mky59pEqJNJaw2nE1tnlza4pH59wXT+HzzQCzfvHl7lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938155; c=relaxed/simple;
-	bh=vrmVfkkabVLIfIPYbvpA1NdBat20q3XlgS4FqpA3GRc=;
+	s=arc-20240116; t=1736938158; c=relaxed/simple;
+	bh=y+Efa4BQr6Y7o6GWgK+ugNE4oSXC75NulGe2dSlGu4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMyFYN4XMU220Nt8yQWMsSjgTopGZ5syG+JHRYcB3j+2uzRJxS5KarOQCluzjzDnvVxqOY9ajAHw7fOsxyjnEqrXGSZMo/ycANN5TSWAJFgbHlfBb5Mstv2ncKaEE3iTH162TlYgp2Jcb4+JqfqP/i1mhtZ70tc+6HetIf7SfU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iglqo7kA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CxKdmw43dXkyPV1gK7Rk/VeXYBWWZsTPp4J63FiwL7dlCo0LSAVoFSE+XHm65NK+ejqVWE+mUeMuNWKjKVw3DNhPWJTGyeq7jIyhMrO348yAAEFzXj4Xjr4ViAjMUaWyUqyJk64fjZFrLQbbbbFbzwD03w637OP8BIHa7ppJcDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LOwWTlmC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iglqo7kA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C7EC4CEDF;
-	Wed, 15 Jan 2025 10:49:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LOwWTlmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D14DC4CEDF;
+	Wed, 15 Jan 2025 10:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938155;
-	bh=vrmVfkkabVLIfIPYbvpA1NdBat20q3XlgS4FqpA3GRc=;
+	s=korg; t=1736938158;
+	bh=y+Efa4BQr6Y7o6GWgK+ugNE4oSXC75NulGe2dSlGu4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iglqo7kAbj78XsNwzHslcVvWa2MbU0wyamhRm1ocWVtB6NTqw4Hb7X0wQGRlTPwMh
-	 h09rFVBqcuALaV9p9f79Rt++3/L+qwnab4Uth0uq5TOCUrCMILwT2khxp4JW17SIXi
-	 qYvx0viiJDE4kWh7nPuZEQUDLKKigCltqmSet69M=
+	b=LOwWTlmCG8fPmhYbjx0USETO3lOWu2FXSllT3Awpygy1pq8zIzYVJUUNy42H47lLS
+	 wVJB/IJbgO0sKIzISrwMlmaPvSZW+TdieBOen0Od1fbzQmOvu7is8MoseTtVex3cC/
+	 pvyUTAssdSm2RgPjnxZxduGJxjWX5N8H2yoMsAfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenguang Zhao <zhaochenguang@kylinos.cn>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/189] net/mlx5: Fix variable not being completed when function returns
-Date: Wed, 15 Jan 2025 11:35:55 +0100
-Message-ID: <20250115103608.716785368@linuxfoundation.org>
+	syzbot+e364f774c6f57f2c86d1@syzkaller.appspotmail.com,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 093/189] mptcp: sysctl: sched: avoid using current->nsproxy
+Date: Wed, 15 Jan 2025 11:36:29 +0100
+Message-ID: <20250115103610.037998932@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -53,62 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenguang Zhao <zhaochenguang@kylinos.cn>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 0e2909c6bec9048f49d0c8e16887c63b50b14647 ]
+commit d38e26e36206ae3d544d496513212ae931d1da0a upstream.
 
-When cmd_alloc_index(), fails cmd_work_handler() needs
-to complete ent->slotted before returning early.
-Otherwise the task which issued the command may hang:
+Using the 'net' structure via 'current' is not recommended for different
+reasons.
 
-   mlx5_core 0000:01:00.0: cmd_work_handler:877:(pid 3880418): failed to allocate command entry
-   INFO: task kworker/13:2:4055883 blocked for more than 120 seconds.
-         Not tainted 4.19.90-25.44.v2101.ky10.aarch64 #1
-   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-   kworker/13:2    D    0 4055883      2 0x00000228
-   Workqueue: events mlx5e_tx_dim_work [mlx5_core]
-   Call trace:
-      __switch_to+0xe8/0x150
-      __schedule+0x2a8/0x9b8
-      schedule+0x2c/0x88
-      schedule_timeout+0x204/0x478
-      wait_for_common+0x154/0x250
-      wait_for_completion+0x28/0x38
-      cmd_exec+0x7a0/0xa00 [mlx5_core]
-      mlx5_cmd_exec+0x54/0x80 [mlx5_core]
-      mlx5_core_modify_cq+0x6c/0x80 [mlx5_core]
-      mlx5_core_modify_cq_moderation+0xa0/0xb8 [mlx5_core]
-      mlx5e_tx_dim_work+0x54/0x68 [mlx5_core]
-      process_one_work+0x1b0/0x448
-      worker_thread+0x54/0x468
-      kthread+0x134/0x138
-      ret_from_fork+0x10/0x18
+First, if the goal is to use it to read or write per-netns data, this is
+inconsistent with how the "generic" sysctl entries are doing: directly
+by only using pointers set to the table entry, e.g. table->data. Linked
+to that, the per-netns data should always be obtained from the table
+linked to the netns it had been created for, which may not coincide with
+the reader's or writer's netns.
 
-Fixes: 485d65e13571 ("net/mlx5: Add a timeout to acquire the command queue semaphore")
-Signed-off-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Acked-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250108030009.68520-1-zhaochenguang@kylinos.cn
+Another reason is that access to current->nsproxy->netns can oops if
+attempted when current->nsproxy had been dropped when the current task
+is exiting. This is what syzbot found, when using acct(2):
+
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] PREEMPT SMP KASAN PTI
+  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+  CPU: 1 UID: 0 PID: 5924 Comm: syz-executor Not tainted 6.13.0-rc5-syzkaller-00004-gccb98ccef0e5 #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+  RIP: 0010:proc_scheduler+0xc6/0x3c0 net/mptcp/ctrl.c:125
+  Code: 03 42 80 3c 38 00 0f 85 fe 02 00 00 4d 8b a4 24 08 09 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d 7c 24 28 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 cc 02 00 00 4d 8b 7c 24 28 48 8d 84 24 c8 00 00
+  RSP: 0018:ffffc900034774e8 EFLAGS: 00010206
+
+  RAX: dffffc0000000000 RBX: 1ffff9200068ee9e RCX: ffffc90003477620
+  RDX: 0000000000000005 RSI: ffffffff8b08f91e RDI: 0000000000000028
+  RBP: 0000000000000001 R08: ffffc90003477710 R09: 0000000000000040
+  R10: 0000000000000040 R11: 00000000726f7475 R12: 0000000000000000
+  R13: ffffc90003477620 R14: ffffc90003477710 R15: dffffc0000000000
+  FS:  0000000000000000(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fee3cd452d8 CR3: 000000007d116000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   proc_sys_call_handler+0x403/0x5d0 fs/proc/proc_sysctl.c:601
+   __kernel_write_iter+0x318/0xa80 fs/read_write.c:612
+   __kernel_write+0xf6/0x140 fs/read_write.c:632
+   do_acct_process+0xcb0/0x14a0 kernel/acct.c:539
+   acct_pin_kill+0x2d/0x100 kernel/acct.c:192
+   pin_kill+0x194/0x7c0 fs/fs_pin.c:44
+   mnt_pin_kill+0x61/0x1e0 fs/fs_pin.c:81
+   cleanup_mnt+0x3ac/0x450 fs/namespace.c:1366
+   task_work_run+0x14e/0x250 kernel/task_work.c:239
+   exit_task_work include/linux/task_work.h:43 [inline]
+   do_exit+0xad8/0x2d70 kernel/exit.c:938
+   do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
+   get_signal+0x2576/0x2610 kernel/signal.c:3017
+   arch_do_signal_or_restart+0x90/0x7e0 arch/x86/kernel/signal.c:337
+   exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+   exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
+   __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+   syscall_exit_to_user_mode+0x150/0x2a0 kernel/entry/common.c:218
+   do_syscall_64+0xda/0x250 arch/x86/entry/common.c:89
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7fee3cb87a6a
+  Code: Unable to access opcode bytes at 0x7fee3cb87a40.
+  RSP: 002b:00007fffcccac688 EFLAGS: 00000202 ORIG_RAX: 0000000000000037
+  RAX: 0000000000000000 RBX: 00007fffcccac710 RCX: 00007fee3cb87a6a
+  RDX: 0000000000000041 RSI: 0000000000000000 RDI: 0000000000000003
+  RBP: 0000000000000003 R08: 00007fffcccac6ac R09: 00007fffcccacac7
+  R10: 00007fffcccac710 R11: 0000000000000202 R12: 00007fee3cd49500
+  R13: 00007fffcccac6ac R14: 0000000000000000 R15: 00007fee3cd4b000
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  RIP: 0010:proc_scheduler+0xc6/0x3c0 net/mptcp/ctrl.c:125
+  Code: 03 42 80 3c 38 00 0f 85 fe 02 00 00 4d 8b a4 24 08 09 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d 7c 24 28 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 cc 02 00 00 4d 8b 7c 24 28 48 8d 84 24 c8 00 00
+  RSP: 0018:ffffc900034774e8 EFLAGS: 00010206
+  RAX: dffffc0000000000 RBX: 1ffff9200068ee9e RCX: ffffc90003477620
+  RDX: 0000000000000005 RSI: ffffffff8b08f91e RDI: 0000000000000028
+  RBP: 0000000000000001 R08: ffffc90003477710 R09: 0000000000000040
+  R10: 0000000000000040 R11: 00000000726f7475 R12: 0000000000000000
+  R13: ffffc90003477620 R14: ffffc90003477710 R15: dffffc0000000000
+  FS:  0000000000000000(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fee3cd452d8 CR3: 000000007d116000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  ----------------
+  Code disassembly (best guess), 1 bytes skipped:
+     0:	42 80 3c 38 00       	cmpb   $0x0,(%rax,%r15,1)
+     5:	0f 85 fe 02 00 00    	jne    0x309
+     b:	4d 8b a4 24 08 09 00 	mov    0x908(%r12),%r12
+    12:	00
+    13:	48 b8 00 00 00 00 00 	movabs $0xdffffc0000000000,%rax
+    1a:	fc ff df
+    1d:	49 8d 7c 24 28       	lea    0x28(%r12),%rdi
+    22:	48 89 fa             	mov    %rdi,%rdx
+    25:	48 c1 ea 03          	shr    $0x3,%rdx
+  * 29:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1) <-- trapping instruction
+    2d:	0f 85 cc 02 00 00    	jne    0x2ff
+    33:	4d 8b 7c 24 28       	mov    0x28(%r12),%r15
+    38:	48                   	rex.W
+    39:	8d                   	.byte 0x8d
+    3a:	84 24 c8             	test   %ah,(%rax,%rcx,8)
+
+Here with 'net.mptcp.scheduler', the 'net' structure is not really
+needed, because the table->data already has a pointer to the current
+scheduler, the only thing needed from the per-netns data.
+Simply use 'data', instead of getting (most of the time) the same thing,
+but from a longer and indirect way.
+
+Fixes: 6963c508fd7a ("mptcp: only allow set existing scheduler for net.mptcp.scheduler")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+e364f774c6f57f2c86d1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-2-5df34b2083e8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/cmd.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/ctrl.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-index 6bd8a18e3af3..e733b81e18a2 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/cmd.c
-@@ -1013,6 +1013,7 @@ static void cmd_work_handler(struct work_struct *work)
- 				complete(&ent->done);
- 			}
- 			up(&cmd->vars.sem);
-+			complete(&ent->slotted);
- 			return;
- 		}
- 	} else {
--- 
-2.39.5
-
+--- a/net/mptcp/ctrl.c
++++ b/net/mptcp/ctrl.c
+@@ -102,16 +102,15 @@ static void mptcp_pernet_set_defaults(st
+ }
+ 
+ #ifdef CONFIG_SYSCTL
+-static int mptcp_set_scheduler(const struct net *net, const char *name)
++static int mptcp_set_scheduler(char *scheduler, const char *name)
+ {
+-	struct mptcp_pernet *pernet = mptcp_get_pernet(net);
+ 	struct mptcp_sched_ops *sched;
+ 	int ret = 0;
+ 
+ 	rcu_read_lock();
+ 	sched = mptcp_sched_find(name);
+ 	if (sched)
+-		strscpy(pernet->scheduler, name, MPTCP_SCHED_NAME_MAX);
++		strscpy(scheduler, name, MPTCP_SCHED_NAME_MAX);
+ 	else
+ 		ret = -ENOENT;
+ 	rcu_read_unlock();
+@@ -122,7 +121,7 @@ static int mptcp_set_scheduler(const str
+ static int proc_scheduler(const struct ctl_table *ctl, int write,
+ 			  void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	const struct net *net = current->nsproxy->net_ns;
++	char (*scheduler)[MPTCP_SCHED_NAME_MAX] = ctl->data;
+ 	char val[MPTCP_SCHED_NAME_MAX];
+ 	struct ctl_table tbl = {
+ 		.data = val,
+@@ -130,11 +129,11 @@ static int proc_scheduler(const struct c
+ 	};
+ 	int ret;
+ 
+-	strscpy(val, mptcp_get_scheduler(net), MPTCP_SCHED_NAME_MAX);
++	strscpy(val, *scheduler, MPTCP_SCHED_NAME_MAX);
+ 
+ 	ret = proc_dostring(&tbl, write, buffer, lenp, ppos);
+ 	if (write && ret == 0)
+-		ret = mptcp_set_scheduler(net, val);
++		ret = mptcp_set_scheduler(*scheduler, val);
+ 
+ 	return ret;
+ }
 
 
