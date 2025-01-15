@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AD0156644;
-	Wed, 15 Jan 2025 10:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E92F1E98EA;
+	Wed, 15 Jan 2025 10:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938533; cv=none; b=HazOktPYPGevqEF9bjHMX9Kz93IOmoLKT7fhpW3Y9FtWe0N3ftCGv3loRQLA5lyk0YKGrGeSXqpej8RcfrNczjJNDpqldBEcmUR6LSCIl1K2OhgZhsz+ePqJsNWFLyREi07eXDRQSkSPZio2RWdDMWORFCJoOi+EvtgL7Fqhc6A=
+	t=1736938536; cv=none; b=Hb7bksWdUJNJU2xZpEKNiB7gLXwVnRxzCrxNKx0B9OXXxnZW4EVFLbjq9+tfEr216Gb1sgiKdcVLOHtp3IoggJXAA5wCxVYiyB70XbEngENbIr/xFeTA1ogujM4ynfm8D5++LACWt/C0+hvMyGjFsaQ0+7QiJWpaYFvFaJznWFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938533; c=relaxed/simple;
-	bh=b3Otez9F8iJs5MKdNcUQMAlZyahyp11xU4lGnjVGGfQ=;
+	s=arc-20240116; t=1736938536; c=relaxed/simple;
+	bh=XVxZZtJKToOcLL3paivXlFqFpO4Q9SY1Fxrbznt9siY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKEykVV0Jtw6mf4LX3dUP74CIfhSfHQLjYjF2tjeQNUYwxzm2xX/OEyB0Q0D9oAikHAfuWfSLbOtdj6m9aWFuSxYKJVMocXIPZ2UN9xSZ5Awqn1RglOsfYwQUj7dqkqipqlbNGUOFfHg+zuf40SMxH7RxitJbTGW4fuMiAEFh8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0STQa4MC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UzNbOIXArXPI2ybnOCpnCa8AkzFhcHow4X0mLz7D+08mwi3y07aOcNfwtEBHK92Z5mDE/FPIQCThqC4tchMOWLWAOU4wrigKMAPVZYqhjybsAoTinMZv4B7Wn/DGOscL/3uWdfu/mcYp9vN9UVLO6sG22DhFVRsegtP9BfL4vpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3gDpMs4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0STQa4MC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB308C4CEDF;
-	Wed, 15 Jan 2025 10:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3gDpMs4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCB3C4CEDF;
+	Wed, 15 Jan 2025 10:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938533;
-	bh=b3Otez9F8iJs5MKdNcUQMAlZyahyp11xU4lGnjVGGfQ=;
+	s=korg; t=1736938536;
+	bh=XVxZZtJKToOcLL3paivXlFqFpO4Q9SY1Fxrbznt9siY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0STQa4MCREg8x2jgCKDJ3qq2bwqe5JF0CDNBV5mv6iKvXn7ihQuFKy8wLI2ZCYLdP
-	 fAhMuHauJIZauzJu8NqUzNLKcR+cISVe+FC37N5F6c0nAW6E6LVpujlpeLv+lCzdCS
-	 vGvgnepIP1v44lGDTEaWUJOEDdS3qe9MttIjGvqI=
+	b=I3gDpMs4XU0x1LhZWb7/mqTcEF0xXGWKxBRndSF1Ff6oFyi8/vaKRIYdT9cgFVt0G
+	 YPqrB7PpMAp/R1pmLzp5vdXMpdgU3IvNwJliCN4OPuri5v7iOymVUk0SiNSazxMQWL
+	 wJtyVLy/a6P0jOQjc3NS/05NO0hAvJiaM9J1dCQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
+	Zhongqiu Duan <dzq.aishenghu0@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/129] tcp/dccp: complete lockless accesses to sk->sk_max_ack_backlog
-Date: Wed, 15 Jan 2025 11:36:35 +0100
-Message-ID: <20250115103555.175348782@linuxfoundation.org>
+Subject: [PATCH 6.6 021/129] tcp/dccp: allow a connection when sk_max_ack_backlog is zero
+Date: Wed, 15 Jan 2025 11:36:36 +0100
+Message-ID: <20250115103555.214101613@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -52,35 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
 
-[ Upstream commit 9a79c65f00e2b036e17af3a3a607d7d732b7affb ]
+[ Upstream commit 3479c7549fb1dfa7a1db4efb7347c7b8ef50de4b ]
 
-Since commit 099ecf59f05b ("net: annotate lockless accesses to
-sk->sk_max_ack_backlog") decided to handle the sk_max_ack_backlog
-locklessly, there is one more function mostly called in TCP/DCCP
-cases. So this patch completes it:)
+If the backlog of listen() is set to zero, sk_acceptq_is_full() allows
+one connection to be made, but inet_csk_reqsk_queue_is_full() does not.
+When the net.ipv4.tcp_syncookies is zero, inet_csk_reqsk_queue_is_full()
+will cause an immediate drop before the sk_acceptq_is_full() check in
+tcp_conn_request(), resulting in no connection can be made.
 
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
+This patch tries to keep consistent with 64a146513f8f ("[NET]: Revert
+incorrect accept queue backlog changes.").
+
+Link: https://lore.kernel.org/netdev/20250102080258.53858-1-kuniyu@amazon.com/
+Fixes: ef547f2ac16b ("tcp: remove max_qlen_log")
+Signed-off-by: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240331090521.71965-1-kerneljasonxing@gmail.com
+Link: https://patch.msgid.link/20250102171426.915276-1-dzq.aishenghu0@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3479c7549fb1 ("tcp/dccp: allow a connection when sk_max_ack_backlog is zero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  include/net/inet_connection_sock.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
-index fee1e5650551..7b5e783ea24d 100644
+index 7b5e783ea24d..e85834722b8f 100644
 --- a/include/net/inet_connection_sock.h
 +++ b/include/net/inet_connection_sock.h
 @@ -282,7 +282,7 @@ static inline int inet_csk_reqsk_queue_len(const struct sock *sk)
  
  static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
  {
--	return inet_csk_reqsk_queue_len(sk) >= sk->sk_max_ack_backlog;
-+	return inet_csk_reqsk_queue_len(sk) >= READ_ONCE(sk->sk_max_ack_backlog);
+-	return inet_csk_reqsk_queue_len(sk) >= READ_ONCE(sk->sk_max_ack_backlog);
++	return inet_csk_reqsk_queue_len(sk) > READ_ONCE(sk->sk_max_ack_backlog);
  }
  
  bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
