@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B262822FDF1;
-	Wed, 15 Jan 2025 10:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C43156644;
+	Wed, 15 Jan 2025 10:45:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937951; cv=none; b=fdyNE4OzbwTVp85m+IrNd9U0/9Lls0JpdZMqeHk3os/ooSo+iWUa2kVH3Mfo8ZZEoBfZDEHty/7+Djtx9/QzN7y0kqdf7u3UciI+MgpEPTFms27vjAY+jM3EYSSVnPwxrJnLZHJ4FZ3Xf0q0/J/X8SBOVGoYZAf3ip9E1WsPBz8=
+	t=1736937954; cv=none; b=nTK7n/tt/ntij1Fx82Efm1+K3Fltx3FdP9C2aB5jn0SuK17/diyBCCyZIGNH0K2VgE2bE5Ra8p1fL5vyxNQNgZhgMAycoXpgo8wSMLSrxnqoNwIiyRMriz7OiRWaVM7tuDJ2UVVGOAcZWGnLpkI3D1q9Dko3XsRpga5c3aPLc/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937951; c=relaxed/simple;
-	bh=h88CLlunzx5YLP3myuI1OVXBSpfl89WiYzL+vHEZtMs=;
+	s=arc-20240116; t=1736937954; c=relaxed/simple;
+	bh=jjH1kyC/ETnT7xqB65rpjjhvzk69qRUNeZfq3fLpDi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=axfjKtEcewg6QEFPC8mengxIWRiIzLXwqgQ0koqgQUhd7l/hCvfwJIv78R3O+lJ/eNNx5XHdpb+4BUZYIZSqRVYhCSUWqSSzaOePAclIXCpvmsliw8EYUtZW9uPuvWgTipSWMWIYfvQlbTnAw7GsZdrQcxPR5F62fh8JtiYOOwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnygETxB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzzcu/JFrYic+zUbTXNEJj53HmxYVj4s6Lx9LZR4flJG6rq/HgJLLM0SZVOWUV+cVG2o9t5GjKg0hX5f4IjwaW+doIjZmEqEWICjJ/uBalaef2iR3kZl0Gy7Ja9H163PhakbTNVanFW79tzi/KaeQnDi/gJ7fCuWxsgxV9yREqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V58K7kRW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnygETxB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB5EC4CEDF;
-	Wed, 15 Jan 2025 10:45:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V58K7kRW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA416C4CEE4;
+	Wed, 15 Jan 2025 10:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937951;
-	bh=h88CLlunzx5YLP3myuI1OVXBSpfl89WiYzL+vHEZtMs=;
+	s=korg; t=1736937954;
+	bh=jjH1kyC/ETnT7xqB65rpjjhvzk69qRUNeZfq3fLpDi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnygETxBVGhNoOaaCfJHsh7JbGy4lZU/pnp7Xx++eQJOtuW/S68eFZIin0YJ7+UI7
-	 V7EQ2RcBoKfMqTtK2wDXxnxPts1ojjgqTDY+QQIdi9gMEOkKGx0Xj5qUNUvnayuQRo
-	 GmYInDHnX1NGeH1JN4ZlXopF0+yzj1cnXjArsqqc=
+	b=V58K7kRWoXWh5iti1qV0+dmiYU2lHhZ6KrTvSqTkqkE68fVTNyWHNy1HU2v4C0ixg
+	 DWep8Iuo99KEMz7c4frxijWI6jAFfDnSzZPdxv8Yx7pObFjDxvMB4n5xqe59M1qzfj
+	 cpnmz4NcV83uWTQyTgXjI2Qg3tee6onOU0Hwy81E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeroen de Borst <jeroendb@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/189] eth: gve: use appropriate helper to set xdp_features
-Date: Wed, 15 Jan 2025 11:35:36 +0100
-Message-ID: <20250115103607.959361796@linuxfoundation.org>
+Subject: [PATCH 6.12 041/189] Bluetooth: hci_sync: Fix not setting Random Address when required
+Date: Wed, 15 Jan 2025 11:35:37 +0100
+Message-ID: <20250115103607.998812701@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,57 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit db78475ba0d3c66d430f7ded2388cc041078a542 ]
+[ Upstream commit c2994b008492db033d40bd767be1620229a3035e ]
 
-Commit f85949f98206 ("xdp: add xdp_set_features_flag utility routine")
-added routines to inform the core about XDP flag changes.
-GVE support was added around the same time and missed using them.
+This fixes errors such as the following when Own address type is set to
+Random Address but it has not been programmed yet due to either be
+advertising or connecting:
 
-GVE only changes the flags on error recover or resume.
-Presumably the flags may change during resume if VM migrated.
-User would not get the notification and upper devices would
-not get a chance to recalculate their flags.
+< HCI Command: LE Set Exte.. (0x08|0x0041) plen 13
+        Own address type: Random (0x03)
+        Filter policy: Ignore not in accept list (0x01)
+        PHYs: 0x05
+        Entry 0: LE 1M
+          Type: Passive (0x00)
+          Interval: 60.000 msec (0x0060)
+          Window: 30.000 msec (0x0030)
+        Entry 1: LE Coded
+          Type: Passive (0x00)
+          Interval: 180.000 msec (0x0120)
+          Window: 90.000 msec (0x0090)
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Set Extended Scan Parameters (0x08|0x0041) ncmd 1
+        Status: Success (0x00)
+< HCI Command: LE Set Exten.. (0x08|0x0042) plen 6
+        Extended scan: Enabled (0x01)
+        Filter duplicates: Enabled (0x01)
+        Duration: 0 msec (0x0000)
+        Period: 0.00 sec (0x0000)
+> HCI Event: Command Complete (0x0e) plen 4
+      LE Set Extended Scan Enable (0x08|0x0042) ncmd 1
+        Status: Invalid HCI Command Parameters (0x12)
 
-Fixes: 75eaae158b1b ("gve: Add XDP DROP and TX support for GQI-QPL format")
-Reviewed-By: Jeroen de Borst <jeroendb@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20250106180210.1861784-1-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c45074d68a9b ("Bluetooth: Fix not generating RPA when required")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_main.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_sync.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index d404819ebc9b..f985a3cf2b11 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -2224,14 +2224,18 @@ static void gve_service_task(struct work_struct *work)
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index c86f4e42e69c..7b2b04d6b856 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -1031,9 +1031,9 @@ static bool adv_use_rpa(struct hci_dev *hdev, uint32_t flags)
  
- static void gve_set_netdev_xdp_features(struct gve_priv *priv)
+ static int hci_set_random_addr_sync(struct hci_dev *hdev, bdaddr_t *rpa)
  {
-+	xdp_features_t xdp_features;
-+
- 	if (priv->queue_format == GVE_GQI_QPL_FORMAT) {
--		priv->dev->xdp_features = NETDEV_XDP_ACT_BASIC;
--		priv->dev->xdp_features |= NETDEV_XDP_ACT_REDIRECT;
--		priv->dev->xdp_features |= NETDEV_XDP_ACT_NDO_XMIT;
--		priv->dev->xdp_features |= NETDEV_XDP_ACT_XSK_ZEROCOPY;
-+		xdp_features = NETDEV_XDP_ACT_BASIC;
-+		xdp_features |= NETDEV_XDP_ACT_REDIRECT;
-+		xdp_features |= NETDEV_XDP_ACT_NDO_XMIT;
-+		xdp_features |= NETDEV_XDP_ACT_XSK_ZEROCOPY;
- 	} else {
--		priv->dev->xdp_features = 0;
-+		xdp_features = 0;
- 	}
-+
-+	xdp_set_features_flag(priv->dev, xdp_features);
- }
- 
- static int gve_init_priv(struct gve_priv *priv, bool skip_describe_device)
+-	/* If we're advertising or initiating an LE connection we can't
+-	 * go ahead and change the random address at this time. This is
+-	 * because the eventual initiator address used for the
++	/* If a random_addr has been set we're advertising or initiating an LE
++	 * connection we can't go ahead and change the random address at this
++	 * time. This is because the eventual initiator address used for the
+ 	 * subsequently created connection will be undefined (some
+ 	 * controllers use the new address and others the one we had
+ 	 * when the operation started).
+@@ -1041,8 +1041,9 @@ static int hci_set_random_addr_sync(struct hci_dev *hdev, bdaddr_t *rpa)
+ 	 * In this kind of scenario skip the update and let the random
+ 	 * address be updated at the next cycle.
+ 	 */
+-	if (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
+-	    hci_lookup_le_connect(hdev)) {
++	if (bacmp(&hdev->random_addr, BDADDR_ANY) &&
++	    (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
++	    hci_lookup_le_connect(hdev))) {
+ 		bt_dev_dbg(hdev, "Deferring random address update");
+ 		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
+ 		return 0;
 -- 
 2.39.5
 
