@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DCF156644;
-	Wed, 15 Jan 2025 10:53:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549DB1DB142;
+	Wed, 15 Jan 2025 10:53:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938401; cv=none; b=u0dGDq/yG/r6eMMgcoCnRFT/mtyjuJzdWr2CacZ18ogxHBrvnDM3CR61bjRmdVqQS8cyvxWKRcSamfdiOe37BRKaa2XGVipJsVPaa/A9KNwsfU9viDbvK5zA+361buIMB4s+BixOfXnLVZSZmWtwKaHGkOVbXarRXclzvi09LsU=
+	t=1736938404; cv=none; b=A8v0hWLDrAJUywTKtjETx07Xl3T5DDZcVeGsd16CTj1j+aW6zIQM2taEUQ0zKN4GazL7sXmKGBJJ0mqK0MJfpKTgJ5Dhj4Qi80RJcPIyDsYgsnzwHpQyT38GT6Gmx72BNYUk1unH8hEjoyFG0SKwUQNRcQWjARHpYTq2K/aLqkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938401; c=relaxed/simple;
-	bh=xlmwhLE4b6kRDIzpZdpyu6nM2GCRhUfzb0lJFd6QL88=;
+	s=arc-20240116; t=1736938404; c=relaxed/simple;
+	bh=uRGYcRnXwcuO7y54xG+EtU+8j1iG0qge34FuxYROSY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ngvIc+ZrOOK7+4Mdf5oYEqEBnBYksbBdpgcNI1BExziPVTv04ooGpaSJ1RU3RXvfGOznC5yO7+gHofGHdvDEmAoVQcipKALfvrfy0q6ic32V30qF2MZ/pml+7iIzDWSyWyZ6Q6apJdvcpBgkEXHDxk2n2578JMNqGyuksOlPCUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1EKyCUeq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VVcC/lRsd9CNdN7wRktiGhe6LJ4FnoHA0N/gp+QO+jRqNNfhrLWSA3mE0aEKOYRwfTkQoaR5lGik7lsqxaTeFPZpZFwsURZ8iLEtcT/395nDqrLcFBMl493haN+d17bucXi3Mhy2b+1Z66GMPfNhlxQR0J3Kgl0X06nB8CH0whI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ut4Rk1PD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1EKyCUeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F34BC4CEDF;
-	Wed, 15 Jan 2025 10:53:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ut4Rk1PD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D472BC4CEDF;
+	Wed, 15 Jan 2025 10:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938401;
-	bh=xlmwhLE4b6kRDIzpZdpyu6nM2GCRhUfzb0lJFd6QL88=;
+	s=korg; t=1736938404;
+	bh=uRGYcRnXwcuO7y54xG+EtU+8j1iG0qge34FuxYROSY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EKyCUeqVWRl7ylE6Z/h1LTHOd8akCSNcTB3IFwBHKS+tofjcAsI5qePnE+hd7YFT
-	 B8DAGbO9rr3p7cyv6jy0jiqhETsJicxDa/KbUOdgOD9CLH+GCxjSGLxIC5RAEmeock
-	 XskoDdezYQU7HSV3IvDYOQbCqqrRgmm+YL4yIu+A=
+	b=Ut4Rk1PDo4XmzLJJxMftatx/Z+Jz2tA4k5SyB5gLo68Rt5xOCNx1oxw6rbIQ4Kmim
+	 bg7GZdRI8BsxBkJ4MFvYJUYZlovr/Dv5Kf9DrLE3nQIo6ubCm/LRGxK+qeHasHL/IO
+	 etrxZ8mXl9vCvTx1M1rXA4TmBV9duWTVs4TIbj3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nuno Sa <nuno.sa@analog.com>,
 	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Guillaume Ranquet <granquet@baylibre.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 172/189] iio: adc: ad7173: fix using shared static info struct
-Date: Wed, 15 Jan 2025 11:37:48 +0100
-Message-ID: <20250115103613.269879162@linuxfoundation.org>
+Subject: [PATCH 6.12 173/189] iio: adc: ad7124: Disable all channels at probe time
+Date: Wed, 15 Jan 2025 11:37:49 +0100
+Message-ID: <20250115103613.307820468@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -54,70 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-commit 36a44e05cd807a54e5ffad4b96d0d67f68ad8576 upstream.
+commit 4be339af334c283a1a1af3cb28e7e448a0aa8a7c upstream.
 
-Fix a possible race condition during driver probe in the ad7173 driver
-due to using a shared static info struct. If more that one instance of
-the driver is probed at the same time, some of the info could be
-overwritten by the other instance, leading to incorrect operation.
+When during a measurement two channels are enabled, two measurements are
+done that are reported sequencially in the DATA register. As the code
+triggered by reading one of the sysfs properties expects that only one
+channel is enabled it only reads the first data set which might or might
+not belong to the intended channel.
 
-To fix this, make the static info struct const so that it is read-only
-and make a copy of the info struct for each instance of the driver that
-can be modified.
+To prevent this situation disable all channels during probe. This fixes
+a problem in practise because the reset default for channel 0 is
+enabled. So all measurements before the first measurement on channel 0
+(which disables channel 0 at the end) might report wrong values.
 
-Reported-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Fixes: 76a1e6a42802 ("iio: adc: ad7173: add AD7173 driver")
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Tested-by: Guillaume Ranquet <granquet@baylibre.com>
-Link: https://patch.msgid.link/20241127-iio-adc-ad7313-fix-non-const-info-struct-v2-1-b6d7022b7466@baylibre.com
+Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
+Reviewed-by: Nuno Sa <nuno.sa@analog.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20241104101905.845737-2-u.kleine-koenig@baylibre.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7173.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7124.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/adc/ad7173.c
-+++ b/drivers/iio/adc/ad7173.c
-@@ -198,6 +198,7 @@ struct ad7173_channel {
+--- a/drivers/iio/adc/ad7124.c
++++ b/drivers/iio/adc/ad7124.c
+@@ -917,6 +917,9 @@ static int ad7124_setup(struct ad7124_st
+ 		 * set all channels to this default value.
+ 		 */
+ 		ad7124_set_channel_odr(st, i, 10);
++
++		/* Disable all channels to prevent unintended conversions. */
++		ad_sd_write_reg(&st->sd, AD7124_CHANNEL(i), 2, 0);
+ 	}
  
- struct ad7173_state {
- 	struct ad_sigma_delta sd;
-+	struct ad_sigma_delta_info sigma_delta_info;
- 	const struct ad7173_device_info *info;
- 	struct ad7173_channel *channels;
- 	struct regulator_bulk_data regulators[3];
-@@ -733,7 +734,7 @@ static int ad7173_disable_one(struct ad_
- 	return ad_sd_write_reg(sd, AD7173_REG_CH(chan), 2, 0);
- }
- 
--static struct ad_sigma_delta_info ad7173_sigma_delta_info = {
-+static const struct ad_sigma_delta_info ad7173_sigma_delta_info = {
- 	.set_channel = ad7173_set_channel,
- 	.append_status = ad7173_append_status,
- 	.disable_all = ad7173_disable_all,
-@@ -1371,7 +1372,7 @@ static int ad7173_fw_parse_device_config
- 	if (ret < 0)
- 		return dev_err_probe(dev, ret, "Interrupt 'rdy' is required\n");
- 
--	ad7173_sigma_delta_info.irq_line = ret;
-+	st->sigma_delta_info.irq_line = ret;
- 
- 	return ad7173_fw_parse_channel_config(indio_dev);
- }
-@@ -1404,8 +1405,9 @@ static int ad7173_probe(struct spi_devic
- 	spi->mode = SPI_MODE_3;
- 	spi_setup(spi);
- 
--	ad7173_sigma_delta_info.num_slots = st->info->num_configs;
--	ret = ad_sd_init(&st->sd, indio_dev, spi, &ad7173_sigma_delta_info);
-+	st->sigma_delta_info = ad7173_sigma_delta_info;
-+	st->sigma_delta_info.num_slots = st->info->num_configs;
-+	ret = ad_sd_init(&st->sd, indio_dev, spi, &st->sigma_delta_info);
- 	if (ret)
- 		return ret;
- 
+ 	ret = ad_sd_write_reg(&st->sd, AD7124_ADC_CONTROL, 2, st->adc_control);
 
 
