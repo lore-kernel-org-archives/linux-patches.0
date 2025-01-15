@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749021E7C02;
-	Wed, 15 Jan 2025 10:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058381DB13A;
+	Wed, 15 Jan 2025 10:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938452; cv=none; b=rTD6Ih8MURRBQsJtb1ln7i7maSHOu/i0QIUoc6InVykh03SgxxBBTt58NQEOCFQfxeFFDSSN2iKVHpUwDZ6xkowHN8FmERzKoHfMVgwbr+3+7WAQZPc3JsCoce9fXXmiR+utGXwex7apMeGV+cniwUKx1GLOQFXF3omVn6XPGLs=
+	t=1736938456; cv=none; b=Yluw1MmJdRlRfYyF6D7HoHamO31vUGPQ/8b8lMNnfvPsdoK3enoIdjTnOIBE2QUlqJtBoaz0ZkHgeMxQf21TepfqhcW6cbohKW9wmJ7vhJFqM3eCWBiEJX8XGBaNcQIXHX7hVUyd+1DDK/T00/1WoOHFxENpzNKjW4eZ5BSKOLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938452; c=relaxed/simple;
-	bh=BckolZOe6l0+wQ3obQh9hqL3R1VRYAXiaUKxYUf6lEc=;
+	s=arc-20240116; t=1736938456; c=relaxed/simple;
+	bh=Ns21EuwWW0XwkmiVjhkdb3fkeCsR9wDB1Pfe9f0nP9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UlYjNEHW9Dl4dOMwFSs6pHvdnOBAM0sgYTTszM0Yq1ymeJyOVHqGV3xKdYnpovE/3EBJ2WAwQUWb8jyLsvbS0PHTAmPhRFdjTSygox1y+qXUghrTsJ1VVgjj5uEAfvLN4tZXllpQtC4/3PDwFcMRb76vOyMyIOhDRb5OWDxZYLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2J7rZ84u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRJ1TpaRz+L6xLl355+kDgihPoqwST7KvhMHMdLA4GFLvwGLfih0BAcWnuLC9TTW6/QYEsI5KssqzHF25v5o29br1aJ/BAtwSe2t0TZ2zuGOW/RNf05Fo0QXPacu/WzamMZkddeEjahsiv8q1IOLIE/6iT/UmuulbV8mw3iG2oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHyKOhwE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2J7rZ84u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677FCC4CEDF;
-	Wed, 15 Jan 2025 10:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHyKOhwE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63725C4CEDF;
+	Wed, 15 Jan 2025 10:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938452;
-	bh=BckolZOe6l0+wQ3obQh9hqL3R1VRYAXiaUKxYUf6lEc=;
+	s=korg; t=1736938455;
+	bh=Ns21EuwWW0XwkmiVjhkdb3fkeCsR9wDB1Pfe9f0nP9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2J7rZ84uT+HwZdJh/SNDlT+GbPgWE+2sg4jMrm77Z9gF0XuU2jOz6Nfq726zWG8IA
-	 kOanoBkXMVmnWu0AY+NdwTZzWtYQXjhYiKEuApulyXrsEuh2JN9zbZNjj/WcR1dd1d
-	 Ro+ZtUvcX92PX7WwXwgFkX3g0qqUspdj70KRrqfU=
+	b=BHyKOhwEBxktn3QRBhyTda4URGh4Sd6He2eqFLItMsaY7nPSovfjSGURxz7HMHzqu
+	 4OFJ1xQ3XjjynAxCdOXfHbMNTdYLI93r8Dm4LTVHohysVnpwB4lJPjEz0lYzliFpYT
+	 BVptfJa0TVISn0e2TCFP3ogTVx7PQtxsvvn6oIFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 186/189] drm/mediatek: Only touch DISP_REG_OVL_PITCH_MSB if AFBC is supported
-Date: Wed, 15 Jan 2025 11:38:02 +0100
-Message-ID: <20250115103613.828562109@linuxfoundation.org>
+	Bui Quang Minh <minhquangbui99@gmail.com>,
+	lizetao <lizetao1@huawei.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 187/189] io_uring: dont touch sqd->thread off tw add
+Date: Wed, 15 Jan 2025 11:38:03 +0100
+Message-ID: <20250115103613.866085887@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,130 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit f8d9b91739e1fb436447c437a346a36deb676a36 ]
+commit bd2703b42decebdcddf76e277ba76b4c4a142d73 upstream.
 
-Touching DISP_REG_OVL_PITCH_MSB leads to video overlay on MT2701, MT7623N
-and probably other older SoCs being broken.
+With IORING_SETUP_SQPOLL all requests are created by the SQPOLL task,
+which means that req->task should always match sqd->thread. Since
+accesses to sqd->thread should be separately protected, use req->task
+in io_req_normal_work_add() instead.
 
-Move setting up AFBC layer configuration into a separate function only
-being called on hardware which actually supports AFBC which restores the
-behavior as it was before commit c410fa9b07c3 ("drm/mediatek: Add AFBC
-support to Mediatek DRM driver") on non-AFBC hardware.
+Note, in the eyes of io_req_normal_work_add(), the SQPOLL task struct
+is always pinned and alive, and sqd->thread can either be the task or
+NULL. It's only problematic if the compiler decides to reload the value
+after the null check, which is not so likely.
 
-Fixes: c410fa9b07c3 ("drm/mediatek: Add AFBC support to Mediatek DRM driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/c7fbd3c3e633c0b7dd6d1cd78ccbdded31e1ca0f.1734397800.git.daniel@makrotopia.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Bui Quang Minh <minhquangbui99@gmail.com>
+Reported-by: lizetao <lizetao1@huawei.com>
+Fixes: 78f9b61bd8e54 ("io_uring: wake SQPOLL task when task_work is added to an empty queue")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/1cbbe72cf32c45a8fee96026463024cd8564a7d7.1736541357.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 57 +++++++++++++------------
- 1 file changed, 29 insertions(+), 28 deletions(-)
+ io_uring/io_uring.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-index a3091bfcbd43..19b0d5083981 100644
---- a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-+++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-@@ -460,6 +460,29 @@ static unsigned int mtk_ovl_fmt_convert(struct mtk_disp_ovl *ovl,
- 	}
- }
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1244,10 +1244,7 @@ static void io_req_normal_work_add(struc
  
-+static void mtk_ovl_afbc_layer_config(struct mtk_disp_ovl *ovl,
-+				      unsigned int idx,
-+				      struct mtk_plane_pending_state *pending,
-+				      struct cmdq_pkt *cmdq_pkt)
-+{
-+	unsigned int pitch_msb = pending->pitch >> 16;
-+	unsigned int hdr_pitch = pending->hdr_pitch;
-+	unsigned int hdr_addr = pending->hdr_addr;
-+
-+	if (pending->modifier != DRM_FORMAT_MOD_LINEAR) {
-+		mtk_ddp_write_relaxed(cmdq_pkt, hdr_addr, &ovl->cmdq_reg, ovl->regs,
-+				      DISP_REG_OVL_HDR_ADDR(ovl, idx));
-+		mtk_ddp_write_relaxed(cmdq_pkt,
-+				      OVL_PITCH_MSB_2ND_SUBBUF | pitch_msb,
-+				      &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_PITCH_MSB(idx));
-+		mtk_ddp_write_relaxed(cmdq_pkt, hdr_pitch, &ovl->cmdq_reg, ovl->regs,
-+				      DISP_REG_OVL_HDR_PITCH(ovl, idx));
-+	} else {
-+		mtk_ddp_write_relaxed(cmdq_pkt, pitch_msb,
-+				      &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_PITCH_MSB(idx));
-+	}
-+}
-+
- void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
- 			  struct mtk_plane_state *state,
- 			  struct cmdq_pkt *cmdq_pkt)
-@@ -467,9 +490,7 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
- 	struct mtk_disp_ovl *ovl = dev_get_drvdata(dev);
- 	struct mtk_plane_pending_state *pending = &state->pending;
- 	unsigned int addr = pending->addr;
--	unsigned int hdr_addr = pending->hdr_addr;
--	unsigned int pitch = pending->pitch;
--	unsigned int hdr_pitch = pending->hdr_pitch;
-+	unsigned int pitch_lsb = pending->pitch & GENMASK(15, 0);
- 	unsigned int fmt = pending->format;
- 	unsigned int rotation = pending->rotation;
- 	unsigned int offset = (pending->y << 16) | pending->x;
-@@ -477,16 +498,6 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
- 	unsigned int blend_mode = state->base.pixel_blend_mode;
- 	unsigned int ignore_pixel_alpha = 0;
- 	unsigned int con;
--	bool is_afbc = pending->modifier != DRM_FORMAT_MOD_LINEAR;
--	union overlay_pitch {
--		struct split_pitch {
--			u16 lsb;
--			u16 msb;
--		} split_pitch;
--		u32 pitch;
--	} overlay_pitch;
+ 	/* SQPOLL doesn't need the task_work added, it'll run it itself */
+ 	if (ctx->flags & IORING_SETUP_SQPOLL) {
+-		struct io_sq_data *sqd = ctx->sq_data;
 -
--	overlay_pitch.pitch = pitch;
- 
- 	if (!pending->enable) {
- 		mtk_ovl_layer_off(dev, idx, cmdq_pkt);
-@@ -532,11 +543,12 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
+-		if (sqd->thread)
+-			__set_notify_signal(sqd->thread);
++		__set_notify_signal(req->task);
+ 		return;
  	}
  
- 	if (ovl->data->supports_afbc)
--		mtk_ovl_set_afbc(ovl, cmdq_pkt, idx, is_afbc);
-+		mtk_ovl_set_afbc(ovl, cmdq_pkt, idx,
-+				 pending->modifier != DRM_FORMAT_MOD_LINEAR);
- 
- 	mtk_ddp_write_relaxed(cmdq_pkt, con, &ovl->cmdq_reg, ovl->regs,
- 			      DISP_REG_OVL_CON(idx));
--	mtk_ddp_write_relaxed(cmdq_pkt, overlay_pitch.split_pitch.lsb | ignore_pixel_alpha,
-+	mtk_ddp_write_relaxed(cmdq_pkt, pitch_lsb | ignore_pixel_alpha,
- 			      &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_PITCH(idx));
- 	mtk_ddp_write_relaxed(cmdq_pkt, src_size, &ovl->cmdq_reg, ovl->regs,
- 			      DISP_REG_OVL_SRC_SIZE(idx));
-@@ -545,19 +557,8 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
- 	mtk_ddp_write_relaxed(cmdq_pkt, addr, &ovl->cmdq_reg, ovl->regs,
- 			      DISP_REG_OVL_ADDR(ovl, idx));
- 
--	if (is_afbc) {
--		mtk_ddp_write_relaxed(cmdq_pkt, hdr_addr, &ovl->cmdq_reg, ovl->regs,
--				      DISP_REG_OVL_HDR_ADDR(ovl, idx));
--		mtk_ddp_write_relaxed(cmdq_pkt,
--				      OVL_PITCH_MSB_2ND_SUBBUF | overlay_pitch.split_pitch.msb,
--				      &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_PITCH_MSB(idx));
--		mtk_ddp_write_relaxed(cmdq_pkt, hdr_pitch, &ovl->cmdq_reg, ovl->regs,
--				      DISP_REG_OVL_HDR_PITCH(ovl, idx));
--	} else {
--		mtk_ddp_write_relaxed(cmdq_pkt,
--				      overlay_pitch.split_pitch.msb,
--				      &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_PITCH_MSB(idx));
--	}
-+	if (ovl->data->supports_afbc)
-+		mtk_ovl_afbc_layer_config(ovl, idx, pending, cmdq_pkt);
- 
- 	mtk_ovl_set_bit_depth(dev, idx, fmt, cmdq_pkt);
- 	mtk_ovl_layer_on(dev, idx, cmdq_pkt);
--- 
-2.39.5
-
 
 
