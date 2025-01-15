@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E37248BA1;
-	Wed, 15 Jan 2025 10:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D06248BA1;
+	Wed, 15 Jan 2025 10:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937763; cv=none; b=FAGg184kFy61ZcV5MU0Q3qp7BpjKfDUI64vdLr+LjYaxuAiP2As3T4lFP6IteCFtbYaPgHe+STZsanZI9NEK5m28v+BqKOVse5qvn4bkWyBcCgdKG5rRvAIINcfsDqPhQxHHGT25J9NPXF6NmSI8P37F2og2bSJ0wyF2sFik3Bg=
+	t=1736937766; cv=none; b=igijZ0RQFhmzf0yDKZ1DoOb4pNmj6RWQ6OPdIeTBVgXXrMvMWEbbslufikvekwCO3yazTZBn/wLzAKh6mS/yUTmIb2LpnP0Y5srWD5U2HhIenT7xFNJt9GmUlMiqP4Q6Tjtw/oNvjsHZHaqMz/Yte4W58dmqOOWH6pc0An3I3Ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937763; c=relaxed/simple;
-	bh=2CSr10hLYzODpD5Uc/7oaR4Bs4dw4+uwKz5gb8/Szcg=;
+	s=arc-20240116; t=1736937766; c=relaxed/simple;
+	bh=Ae3BtkwsCSSavh4ms1LNzxu0cQGIh1aKCLH1vA2pyhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UFSZ+R+cR9LWzSBttPOMv59vuCfppEFeMrQjjW9AOV8f+4TkVOOP5hLEwQJ6aRa8qxZG4BYgazyULihThf+G2dFUU68pgyldhqytHQvcLOirYJ9g0Cu5nlpgFb7hFphlTJcjHeHgEMFtWNDhLgd6L0qhfRRAKA5oNgyWCyl0ess=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ougUxGfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lYLu5mthgGRQ+XIDJO1X1MnCwjEGjgTZ0JkouC8/TqeayqMUM0GyIuER7ek9pQd37d/ySBS3wUEb6/S27nJ4lQYG5TNR/az2a0gDeYMNgPwLUBirZYfKteaxfRJTkzAVqiGRzVOgJovz6+xV9ithKtRIhaWgEtVbG78ZQlmzCzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBxR2D8k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ougUxGfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858F0C4CEE2;
-	Wed, 15 Jan 2025 10:42:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBxR2D8k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A17C4CEE1;
+	Wed, 15 Jan 2025 10:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937762;
-	bh=2CSr10hLYzODpD5Uc/7oaR4Bs4dw4+uwKz5gb8/Szcg=;
+	s=korg; t=1736937766;
+	bh=Ae3BtkwsCSSavh4ms1LNzxu0cQGIh1aKCLH1vA2pyhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ougUxGfmSstbS/Is6pSPswR3zlLxIybGBMefW2HuOfJrX0FTg6s1VmpGcAA8o/L3t
-	 7TOamNeEVF86F+xL+L0++SGmdltoFXSLK6mZZlOV/hEbJN0b1Xj4GlAEr2m+kjmnmR
-	 rFFYMSrgshD1saZpJl6hSiKAMZauWzIwf9NcJ8mg=
+	b=MBxR2D8kzleCipO5YzJjY9JN1pjedt2Pd+RTs5ULNaadQ+UNsVw8fA1m3JsyvE16M
+	 KVZjIaGE/9ZiSCeEVWMHmgdFsiBlSLkpEvVPyHkSY88UUnBWJv1kIJz9AvureCLz+i
+	 ZTRTpv9fcOrZ0XiibrEf+4JhKvFnsnpV6xUOaZPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 57/92] USB: serial: cp210x: add Phoenix Contact UPS Device
-Date: Wed, 15 Jan 2025 11:37:15 +0100
-Message-ID: <20250115103549.836799400@linuxfoundation.org>
+	stable@kernel.org,
+	Fabio Estevam <festevam@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 75/92] iio: adc: ti-ads124s08: Use gpiod_set_value_cansleep()
+Date: Wed, 15 Jan 2025 11:37:33 +0100
+Message-ID: <20250115103550.551564739@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,90 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Fabio Estevam <festevam@gmail.com>
 
-commit 854eee93bd6e3dca619d47087af4d65b2045828e upstream.
+commit 2a8e34096ec70d73ebb6d9920688ea312700cbd9 upstream.
 
-Phoenix Contact sells UPS Quint devices [1] with a custom datacable [2]
-that embeds a Silicon Labs converter:
+Using gpiod_set_value() to control the reset GPIO causes some verbose
+warnings during boot when the reset GPIO is controlled by an I2C IO
+expander.
 
-Bus 001 Device 003: ID 1b93:1013 Silicon Labs Phoenix Contact UPS Device
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass            0
-  bDeviceSubClass         0
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x1b93
-  idProduct          0x1013
-  bcdDevice            1.00
-  iManufacturer           1 Silicon Labs
-  iProduct                2 Phoenix Contact UPS Device
-  iSerial                 3 <redacted>
-  bNumConfigurations	 1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0020
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass       255 Vendor Specific Class
-      bInterfaceSubClass      0
-      bInterfaceProtocol      0
-      iInterface              2 Phoenix Contact UPS Device
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x82  EP 2 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
+As the caller can sleep, use the gpiod_set_value_cansleep() variant to
+fix the issue.
 
-[1] https://www.phoenixcontact.com/en-pc/products/power-supply-unit-quint-ps-1ac-24dc-10-2866763
-[2] https://www.phoenixcontact.com/en-il/products/data-cable-preassembled-ifs-usb-datacable-2320500
+Tested on a custom i.MX93 board with a ADS124S08 ADC.
 
-Reported-by: Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Cc: stable@kernel.org
+Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
+Signed-off-by: Fabio Estevam <festevam@gmail.com>
+Link: https://patch.msgid.link/20241122164308.390340-1-festevam@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/ti-ads124s08.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -223,6 +223,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
- 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
- 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
-+	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
- 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
- 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
- 	{ USB_DEVICE(0x1D6F, 0x0010) }, /* Seluxit ApS RF Dongle */
+--- a/drivers/iio/adc/ti-ads124s08.c
++++ b/drivers/iio/adc/ti-ads124s08.c
+@@ -183,9 +183,9 @@ static int ads124s_reset(struct iio_dev
+ 	struct ads124s_private *priv = iio_priv(indio_dev);
+ 
+ 	if (priv->reset_gpio) {
+-		gpiod_set_value(priv->reset_gpio, 0);
++		gpiod_set_value_cansleep(priv->reset_gpio, 0);
+ 		udelay(200);
+-		gpiod_set_value(priv->reset_gpio, 1);
++		gpiod_set_value_cansleep(priv->reset_gpio, 1);
+ 	} else {
+ 		return ads124s_write_cmd(indio_dev, ADS124S08_CMD_RESET);
+ 	}
 
 
