@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6969C248BA0;
-	Wed, 15 Jan 2025 10:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A4F248BA7;
+	Wed, 15 Jan 2025 10:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937829; cv=none; b=C4ZCLlbFW3AOD17Rf7HDSn9w6L4rktPX31oBYSwOuic7WBMT3M8rkEh9L2slQQmYGy2w3fGmsS1L72VtI9F8GWAHln2HZr+tr+RlPttYlCH7xiH+WWBSyxpJwIbbr1h8kplXCNkMdwfqJ4NevyDiIg/AOcQlhdriiZjIKk1sEHk=
+	t=1736937833; cv=none; b=jdpLXAi/m+rSVUhZwdSE2mJzMKl/020NNuoJNKH68hmAZEfaQV0eiq2uck1KkHb0omzbJ60zzVqsakP8ureAgq9WOCmsVbWckq3ukMQN/va4Hg00kbe9biyX3kC10TNnDTcG54DgYVD5emsksqE1NnIsHB4Lk8JnHzjF8nU3elc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937829; c=relaxed/simple;
-	bh=Iev2BBi/3wFY/KT7ZwdXuLWiVuiQv3MkjW0J22frUSM=;
+	s=arc-20240116; t=1736937833; c=relaxed/simple;
+	bh=pDw5F8wIw/MgbADSg5EbXuMCcY5tJ4jhywH242pOfqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AdgBBqugYCTsCgNGA/reTKz61TCvKwW5Jt5H7b7FEitZFWnpYERP71/N/dwrWlIlpwvdiQCqh0mSMkonqVJaK2FxetGnq9FKdmnT6GitgLWCbPmfgkiHT2maynNuR8u6iCp8rKa3brE3HIYzNzieM6koRP6FacCp1/l0zeTHZ6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bEJsgoI7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BApMp+Qa6aqlPAI7FLtJENXpW3gM6MH6HPw6pjuUGlW7xWhbEfideNo2JUTPLtPnqbpuDHNnbIRzdViFU+tfsNOa8ds4A7kGftOsRWBvsU7W8f+1orsruuGk09tGLS+p0UJ8lY+crAiDfqsG5k8PahGOhVu/QQUE04VhB9T1JBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FB3V0Di4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bEJsgoI7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA452C4CEE1;
-	Wed, 15 Jan 2025 10:43:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FB3V0Di4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1647BC4CEE2;
+	Wed, 15 Jan 2025 10:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937829;
-	bh=Iev2BBi/3wFY/KT7ZwdXuLWiVuiQv3MkjW0J22frUSM=;
+	s=korg; t=1736937832;
+	bh=pDw5F8wIw/MgbADSg5EbXuMCcY5tJ4jhywH242pOfqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bEJsgoI702i4OliBxRJ9NvwRWXa2xVjBVOwcPt57/xXP/jLSPk/s1bSle96+WK7Es
-	 XBQCgbEfSegBLPIvolvaq6iO9Lv9zaNXwiPEz14jir4SwdWFGxOErpJ4pBMprCwLjT
-	 PBEYMQJWjxvb+k8sprM0fShOS3ln4JujJFwX0edI=
+	b=FB3V0Di4820glyzO1FFWFqbD+xwOsVDDf0f7owo4lvwfQDZFnxnWAo5EK7+0qW0r2
+	 tyg6utw05KxxAooHKhZM7iH7DbF0JMh+QJDd7EBBDqEA81IO7Y7eUFlXjeClDnecjs
+	 8BYWlYmncXoDlCcDSVVd/mmXekTsonfxhIbT/HMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 55/92] staging: iio: ad9832: Correct phase range check
-Date: Wed, 15 Jan 2025 11:37:13 +0100
-Message-ID: <20250115103549.740270343@linuxfoundation.org>
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 89/92] ocfs2: correct return value of ocfs2_local_free_info()
+Date: Wed, 15 Jan 2025 11:37:47 +0100
+Message-ID: <20250115103551.121319830@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,54 +58,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-commit 4636e859ebe0011f41e35fa79bab585b8004e9a3 upstream.
+[ Upstream commit d32840ad4a111c6abd651fbf6b5996e6123913da ]
 
-User Perspective:
-When a user sets the phase value, the ad9832_write_phase() is called.
-The phase register has a 12-bit resolution, so the valid range is 0 to
-4095. If the phase offset value of 4096 is input, it effectively exactly
-equals 0 in the lower 12 bits, meaning no offset.
+Now in ocfs2_local_free_info(), it returns 0 even if it actually fails.
+Though it doesn't cause any real problem since the only caller
+dquot_disable() ignores the return value, we'd better return correct as it
+is.
 
-Reasons for the Change:
-1) Original Condition (phase > BIT(AD9832_PHASE_BITS)):
-This condition allows a phase value equal to 2^12, which is 4096.
-However, this value exceeds the valid 12-bit range, as the maximum valid
-phase value should be 4095.
-2) Modified Condition (phase >= BIT(AD9832_PHASE_BITS)):
-Ensures that the phase value is within the valid range, preventing
-invalid datafrom being written.
-
-Impact on Subsequent Logic: st->data = cpu_to_be16(addr | phase):
-If the phase value is 2^12, i.e., 4096 (0001 0000 0000 0000), and addr
-is AD9832_REG_PHASE0 (1100 0000 0000 0000), then addr | phase results in
-1101 0000 0000 0000, occupying DB12. According to the section of WRITING
-TO A PHASE REGISTER in the datasheet, the MSB 12 PHASE0 bits should be
-DB11. The original condition leads to incorrect DB12 usage, which
-contradicts the datasheet and could pose potential issues for future
-updates if DB12 is used in such related cases.
-
-Fixes: ea707584bac1 ("Staging: IIO: DDS: AD9832 / AD9835 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Link: https://patch.msgid.link/20241107011015.2472600-3-quzicheng@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20230528132033.217664-1-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 5f3fd772d152 ("ocfs2: fix slab-use-after-free due to dangling pointer dqi_priv")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/iio/frequency/ad9832.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/quota_local.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/drivers/staging/iio/frequency/ad9832.c
-+++ b/drivers/staging/iio/frequency/ad9832.c
-@@ -158,7 +158,7 @@ static int ad9832_write_frequency(struct
- static int ad9832_write_phase(struct ad9832_state *st,
- 			      unsigned long addr, unsigned long phase)
- {
--	if (phase > BIT(AD9832_PHASE_BITS))
-+	if (phase >= BIT(AD9832_PHASE_BITS))
- 		return -EINVAL;
+diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
+index 404ca3a62508..257f13cdd14c 100644
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -815,7 +815,7 @@ static int ocfs2_local_free_info(struct super_block *sb, int type)
+ 	struct ocfs2_quota_chunk *chunk;
+ 	struct ocfs2_local_disk_chunk *dchunk;
+ 	int mark_clean = 1, len;
+-	int status;
++	int status = 0;
  
- 	st->phase_data[0] = cpu_to_be16((AD9832_CMD_PHA8BITSW << CMD_SHIFT) |
+ 	iput(oinfo->dqi_gqinode);
+ 	ocfs2_simple_drop_lockres(OCFS2_SB(sb), &oinfo->dqi_gqlock);
+@@ -857,17 +857,14 @@ static int ocfs2_local_free_info(struct super_block *sb, int type)
+ 				 oinfo->dqi_libh,
+ 				 olq_update_info,
+ 				 info);
+-	if (status < 0) {
++	if (status < 0)
+ 		mlog_errno(status);
+-		goto out;
+-	}
+-
+ out:
+ 	ocfs2_inode_unlock(sb_dqopt(sb)->files[type], 1);
+ 	brelse(oinfo->dqi_libh);
+ 	brelse(oinfo->dqi_lqi_bh);
+ 	kfree(oinfo);
+-	return 0;
++	return status;
+ }
+ 
+ static void olq_set_dquot(struct buffer_head *bh, void *private)
+-- 
+2.39.5
+
 
 
