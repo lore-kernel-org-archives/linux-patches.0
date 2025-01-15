@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD2F248BA0;
-	Wed, 15 Jan 2025 10:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E931248BA0;
+	Wed, 15 Jan 2025 10:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937727; cv=none; b=WdegG3g6mlkzDiAEViObas2d6vlvY9buTPm6XD/CAUhIqmSIfjgLZSLx5Y3Pi6Zn3DS16EYO4VVS0fxwhnec7I5oPgidC32+Vz/VCA6o7K1iUGzAB8YnOPdQzTKFmJeE+bsu0CBLrk07lft44iIIOq5WHOfXz0M6DRcwCp/cECQ=
+	t=1736937730; cv=none; b=YNYFDXANOiRK2lpATO4p/4BHfS7O6v8sbTvO9C0oxY85xYzGuHq9tM5nbE1WqEtbCyjerJHq/ZuDbgHEmJa6PslfJ6M7L4W11Vw7U40u9zIlATycxbe9aBNV0NSvhcck1eUvXA7hkO4ulMFx4YtcINAZ72+0iCt43gKQ62gDtMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937727; c=relaxed/simple;
-	bh=pPEU3w1y7GErYG+6gah+8Q5QSF+BU5KTfzzHUz+40qI=;
+	s=arc-20240116; t=1736937730; c=relaxed/simple;
+	bh=BH5SAzKi//Ev75ejqv1uUV8/iWnteixLZ7JNBdXWpBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBVq6IF59X/X05OUx+isOVdn8T0QotCsfF8jwyT0rMnkAGxuvdpEshxFdpLCg0We91XLpykbfFJcJ4WIXnk8BNISwuHxJSdpZfWHik76wMs2FD2TYdflPavsHDDSEQnhnm7A8jOZ4NaOIfPnXPRvS5Xs2M2c6F1wGrUK2oNf6fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGDqUBSP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eogGLoI4IfKQouLfeynRLoRcXEAmrBC2GppSgcdC5qKiql+yNRE3mMLKEaXqGc8zNzP3iuYFux+FHG3SJ5q8xI3VMWCekoSwhZgrLvxtWJUAY82bZAMhLUoMN6XfUZT3suMTWz93Vs0FjzFmJHH4EAQA/iAxdboKYlJqkbdHAMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iG1wBLn3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGDqUBSP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82117C4CEE3;
-	Wed, 15 Jan 2025 10:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iG1wBLn3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD1DC4CEE2;
+	Wed, 15 Jan 2025 10:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937726;
-	bh=pPEU3w1y7GErYG+6gah+8Q5QSF+BU5KTfzzHUz+40qI=;
+	s=korg; t=1736937730;
+	bh=BH5SAzKi//Ev75ejqv1uUV8/iWnteixLZ7JNBdXWpBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGDqUBSPOBIFAFw2dT/D2dB1d8CtQBLhTL0/ylKYb0miz6WX4arfGrGqt+Trb88jL
-	 p7IRCAm5th76lWPHAq02BRlVoGYKFaHt5eVFRzNUFzTsgfKjf5vNSMEy90IojGuo2J
-	 b2rTyjfqhCCtrur6j/NwQiCfxvLYMLcrJWD8/n0s=
+	b=iG1wBLn34YMvyHJ71Z+nt6nqu4VLYXKBBIxR5qs5ITpbZjJNe3DKEmD6bdOQvJD+l
+	 hgPXab3x8F9U34KeddG8tA6k6i9QVlOT2KZeZyUGFJI4J9+rTjSzYz3Q9B1/S9WApb
+	 7G7yTfs/LQbwvOiSbNkZnmWJ/fcMTsXkhyRKyYF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lubomir Rintel <lkundrak@v3.sk>,
+	Wayne Chang <waynec@nvidia.com>,
 	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 56/92] usb-storage: Add max sectors quirk for Nokia 208
-Date: Wed, 15 Jan 2025 11:37:14 +0100
-Message-ID: <20250115103549.788250758@linuxfoundation.org>
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 6.1 65/92] USB: core: Disable LPM only for non-suspended ports
+Date: Wed, 15 Jan 2025 11:37:23 +0100
+Message-ID: <20250115103550.149451431@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -51,66 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lubomir Rintel <lrintel@redhat.com>
+From: Kai-Heng Feng <kaihengf@nvidia.com>
 
-commit cdef30e0774802df2f87024d68a9d86c3b99ca2a upstream.
+commit 59bfeaf5454b7e764288d84802577f4a99bf0819 upstream.
 
-This fixes data corruption when accessing the internal SD card in mass
-storage mode.
+There's USB error when tegra board is shutting down:
+[  180.919315] usb 2-3: Failed to set U1 timeout to 0x0,error code -113
+[  180.919995] usb 2-3: Failed to set U1 timeout to 0xa,error code -113
+[  180.920512] usb 2-3: Failed to set U2 timeout to 0x4,error code -113
+[  186.157172] tegra-xusb 3610000.usb: xHCI host controller not responding, assume dead
+[  186.157858] tegra-xusb 3610000.usb: HC died; cleaning up
+[  186.317280] tegra-xusb 3610000.usb: Timeout while waiting for evaluate context command
 
-I am actually not too sure why. I didn't figure a straightforward way to
-reproduce the issue, but i seem to get garbage when issuing a lot (over 50)
-of large reads (over 120 sectors) are done in a quick succession. That is,
-time seems to matter here -- larger reads are fine if they are done with
-some delay between them.
+The issue is caused by disabling LPM on already suspended ports.
 
-But I'm not great at understanding this sort of things, so I'll assume
-the issue other, smarter, folks were seeing with similar phones is the
-same problem and I'll just put my quirk next to theirs.
+For USB2 LPM, the LPM is already disabled during port suspend. For USB3
+LPM, port won't transit to U1/U2 when it's already suspended in U3,
+hence disabling LPM is only needed for ports that are not suspended.
 
-The "Software details" screen on the phone is as follows:
-
-  V 04.06
-  07-08-13
-  RM-849
-  (c) Nokia
-
-TL;DR version of the device descriptor:
-
-  idVendor           0x0421 Nokia Mobile Phones
-  idProduct          0x06c2
-  bcdDevice            4.06
-  iManufacturer           1 Nokia
-  iProduct                2 Nokia 208
-
-The patch assumes older firmwares are broken too (I'm unable to test, but
-no biggie if they aren't I guess), and I have no idea if newer firmware
-exists.
-
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Cc: Wayne Chang <waynec@nvidia.com>
 Cc: stable <stable@kernel.org>
+Fixes: d920a2ed8620 ("usb: Disable USB3 LPM at shutdown")
+Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
 Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250101212206.2386207-1-lkundrak@v3.sk
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20241206074817.89189-1-kaihengf@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/core/port.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -255,6 +255,13 @@ UNUSUAL_DEV(  0x0421, 0x06aa, 0x1110, 0x
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_MAX_SECTORS_64 ),
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -412,10 +412,11 @@ static int usb_port_runtime_suspend(stru
+ static void usb_port_shutdown(struct device *dev)
+ {
+ 	struct usb_port *port_dev = to_usb_port(dev);
++	struct usb_device *udev = port_dev->child;
  
-+/* Added by Lubomir Rintel <lkundrak@v3.sk>, a very fine chap */
-+UNUSUAL_DEV(  0x0421, 0x06c2, 0x0000, 0x0406,
-+		"Nokia",
-+		"Nokia 208",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_MAX_SECTORS_64 ),
-+
- #ifdef NO_SDDR09
- UNUSUAL_DEV(  0x0436, 0x0005, 0x0100, 0x0100,
- 		"Microtech",
+-	if (port_dev->child) {
+-		usb_disable_usb2_hardware_lpm(port_dev->child);
+-		usb_unlocked_disable_lpm(port_dev->child);
++	if (udev && !udev->port_is_suspended) {
++		usb_disable_usb2_hardware_lpm(udev);
++		usb_unlocked_disable_lpm(udev);
+ 	}
+ }
+ 
 
 
