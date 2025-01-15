@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F4F248BD1;
-	Wed, 15 Jan 2025 10:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2BF248BB3;
+	Wed, 15 Jan 2025 10:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938083; cv=none; b=BgBK1pyTAZFV+jeCWw86OuQXhNgBSrlZHwxm2RhAz7yPGK8Ode+Yyca/d0cFNJHodRbDYiUxr8VJOk+bHpFjljXo9MjSjTCoLkdzYaiaJMwB0qmMN+R9lmVyUfPB+xkuRlct12GsmJwp1cEMr1YP560df94dQVQvUISZfoO4BJY=
+	t=1736938086; cv=none; b=HnDN/qqUWRA3JCdxbzzy5HRmCIuBGOfM0WW38lj9Npsy/qP8JMl93zZ2q29rjbR8t6VvShga8KrjygE+cIU2pxlWK/hxubevZauyLhurBFKkvH9kguMQqUaldGQru1Ci7Wlz0swCjUD0SFmgVYh6Xp89ibrnyUHeCHGnuZ2kO80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938083; c=relaxed/simple;
-	bh=ccb1rhupZfNODDWDjDr/nCZakpz8py4uInPfQfNEvxs=;
+	s=arc-20240116; t=1736938086; c=relaxed/simple;
+	bh=rwsnnensUPpC0zBgHkgQn7gdPKwwTR0kRf493AiB/+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hz+0rsf0BGtD6mJ8SKKLvgDs/xyY3jHygzsPEDazcsGbO8OVq5qfKURMa/lzyqJH3/KBQHO80oNwDNNkOF4eeTbxYyxKz7PclexFlpsBwjwlSQb+cLMKlq3a5n/kFEu7W9tWVgU9H/KGSCywAhj3nG6FUriFD2HS7wYcqkoEuLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BN9x1WMK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s16cngSRReJ+9tY/V2BGaLKEgVWn7r0HzgPo8K/oytS4J3wnD7U793w5rr/9FRhnfH/yci3SJwWH80XkXZzymliClIz9xnogSp4KjboNrL536yUUkG7OJDLyv7VSx4WHir+JnRPG3YpkUIWAH8wk1jtageC6f9cXT5r2U4VeSec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DT17ivt4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BN9x1WMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CB4C4CEDF;
-	Wed, 15 Jan 2025 10:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT17ivt4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C725C4CEDF;
+	Wed, 15 Jan 2025 10:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938083;
-	bh=ccb1rhupZfNODDWDjDr/nCZakpz8py4uInPfQfNEvxs=;
+	s=korg; t=1736938086;
+	bh=rwsnnensUPpC0zBgHkgQn7gdPKwwTR0kRf493AiB/+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BN9x1WMKiLJdpyqnMxvkVLW5JD8ducDkOe+RDhaVAcllggez//bDEgpunWOvqg/ZQ
-	 qhC+sk6jOIRzxuDWUTOuTs+bjxnwxc0j3QHofncdV5rcCXklOYsToqiDSzyWzPFbIV
-	 yEQ74um0Lk8EC0ZTwiOj5RREDFkHSDlZhL8dYqJE=
+	b=DT17ivt4FccADGGvinMuV6hRccAHTjPOF6SWmZLvGA5C6JBz7QbRJOjNjalRpZOkA
+	 0bLhMuskcpLrVbwO1hGxHXY0gcryeX8jVDjbzcYBSH9bJryq8A87aRJjXYV0iFrH8v
+	 2iA7RcRkBbsI1pMWFX9w97KTXPzdwmxlGxICYA2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/189] riscv: stacktrace: fix backtracing through exceptions
-Date: Wed, 15 Jan 2025 11:36:14 +0100
-Message-ID: <20250115103609.463357796@linuxfoundation.org>
+Subject: [PATCH 6.12 061/189] drm/mediatek: Move mtk_crtc_finish_page_flip() to ddp_cmdq_cb()
+Date: Wed, 15 Jan 2025 11:35:57 +0100
+Message-ID: <20250115103608.794256748@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -46,73 +46,107 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Clément Léger <cleger@rivosinc.com>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit 51356ce60e5915a6bd812873186ed54e45c2699d ]
+[ Upstream commit da03801ad08f2488c01e684509cd89e1aa5d17ec ]
 
-Prior to commit 5d5fc33ce58e ("riscv: Improve exception and system call
-latency"), backtrace through exception worked since ra was filled with
-ret_from_exception symbol address and the stacktrace code checked 'pc' to
-be equal to that symbol. Now that handle_exception uses regular 'call'
-instructions, this isn't working anymore and backtrace stops at
-handle_exception(). Since there are multiple call site to C code in the
-exception handling path, rather than checking multiple potential return
-addresses, add a new symbol at the end of exception handling and check pc
-to be in that range.
+mtk_crtc_finish_page_flip() is used to notify userspace that a
+page flip has been completed, allowing userspace to free the frame
+buffer of the last frame and commit the next frame.
 
-Fixes: 5d5fc33ce58e ("riscv: Improve exception and system call latency")
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Tested-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20241209155714.1239665-1-cleger@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+In MediaTek's hardware design for configuring display hardware by using
+GCE, `DRM_EVENT_FLIP_COMPLETE` should be notified to userspace after
+GCE has finished configuring all display hardware settings for each
+atomic_commit().
+
+Currently, mtk_crtc_finish_page_flip() cannot guarantee that GCE has
+configured all the display hardware settings of the last frame.
+Therefore, to increase the accuracy of the timing for notifying
+`DRM_EVENT_FLIP_COMPLETE` to userspace, mtk_crtc_finish_page_flip()
+should be moved to ddp_cmdq_cb().
+
+Fixes: 7f82d9c43879 ("drm/mediatek: Clear pending flag when cmdq packet is done")
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241211034716.29241-1-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/entry.S      | 1 +
- arch/riscv/kernel/stacktrace.c | 4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_crtc.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
-index c200d329d4bd..7a6c48e6d211 100644
---- a/arch/riscv/kernel/entry.S
-+++ b/arch/riscv/kernel/entry.S
-@@ -278,6 +278,7 @@ SYM_CODE_START_NOALIGN(ret_from_exception)
- #else
- 	sret
- #endif
-+SYM_INNER_LABEL(ret_from_exception_end, SYM_L_GLOBAL)
- SYM_CODE_END(ret_from_exception)
- ASM_NOKPROBE(ret_from_exception)
+diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
+index eb0e1233ad04..5674f5707cca 100644
+--- a/drivers/gpu/drm/mediatek/mtk_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
+@@ -112,6 +112,11 @@ static void mtk_drm_finish_page_flip(struct mtk_crtc *mtk_crtc)
  
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 153a2db4c5fa..d4355c770c36 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -17,6 +17,7 @@
- #ifdef CONFIG_FRAME_POINTER
+ 	drm_crtc_handle_vblank(&mtk_crtc->base);
  
- extern asmlinkage void handle_exception(void);
-+extern unsigned long ret_from_exception_end;
++#if IS_REACHABLE(CONFIG_MTK_CMDQ)
++	if (mtk_crtc->cmdq_client.chan)
++		return;
++#endif
++
+ 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
+ 	if (!mtk_crtc->config_updating && mtk_crtc->pending_needs_vblank) {
+ 		mtk_crtc_finish_page_flip(mtk_crtc);
+@@ -284,10 +289,8 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
+ 	state = to_mtk_crtc_state(mtk_crtc->base.state);
  
- static inline int fp_is_valid(unsigned long fp, unsigned long sp)
- {
-@@ -71,7 +72,8 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			fp = frame->fp;
- 			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
- 						   &frame->ra);
--			if (pc == (unsigned long)handle_exception) {
-+			if (pc >= (unsigned long)handle_exception &&
-+			    pc < (unsigned long)&ret_from_exception_end) {
- 				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
- 					break;
+ 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
+-	if (mtk_crtc->config_updating) {
+-		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
++	if (mtk_crtc->config_updating)
+ 		goto ddp_cmdq_cb_out;
+-	}
  
+ 	state->pending_config = false;
+ 
+@@ -315,10 +318,15 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
+ 		mtk_crtc->pending_async_planes = false;
+ 	}
+ 
+-	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
+-
+ ddp_cmdq_cb_out:
+ 
++	if (mtk_crtc->pending_needs_vblank) {
++		mtk_crtc_finish_page_flip(mtk_crtc);
++		mtk_crtc->pending_needs_vblank = false;
++	}
++
++	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
++
+ 	mtk_crtc->cmdq_vblank_cnt = 0;
+ 	wake_up(&mtk_crtc->cb_blocking_queue);
+ }
+@@ -606,13 +614,18 @@ static void mtk_crtc_update_config(struct mtk_crtc *mtk_crtc, bool needs_vblank)
+ 		 */
+ 		mtk_crtc->cmdq_vblank_cnt = 3;
+ 
++		spin_lock_irqsave(&mtk_crtc->config_lock, flags);
++		mtk_crtc->config_updating = false;
++		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
++
+ 		mbox_send_message(mtk_crtc->cmdq_client.chan, cmdq_handle);
+ 		mbox_client_txdone(mtk_crtc->cmdq_client.chan, 0);
+ 	}
+-#endif
++#else
+ 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
+ 	mtk_crtc->config_updating = false;
+ 	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
++#endif
+ 
+ 	mutex_unlock(&mtk_crtc->hw_lock);
+ }
 -- 
 2.39.5
 
