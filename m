@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8A41E98FC;
-	Wed, 15 Jan 2025 10:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1D71DB147;
+	Wed, 15 Jan 2025 10:46:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937971; cv=none; b=HXeE8iqjvMDSQWlnlouoRCvpwQ7XqMBWsWgqg88dCIGNqLks1c8T/lLobi9enQbGdsMM6jt95A+iXj9dbKXviVVCftVgIYjvlzDWPAySvcAmzaDyM75iI9KC/XpcDsXtG+O5w4UaVuY6aRTSNc475bp8N2b1puixez8buOWgA5M=
+	t=1736937975; cv=none; b=Aahe7zDabHGbOq6yc+CmMLeeO/RvsQPqpl3XB3OivyqrFnWDW/P1w6mjboWxi00iC7q1skGXPaHL9Dtc+bJyqT5yKxAVzQLWLnVJd4iHe5Ct1iWSVL9IUKosoDpbLSRclpCZZ2HqBNAiJke46fGoYwxUgZHZA/DKqOagh21/f0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937971; c=relaxed/simple;
-	bh=IHXylc2TCycl0RM4adsMqwhg+KGlrMpxY0aU8a/B01c=;
+	s=arc-20240116; t=1736937975; c=relaxed/simple;
+	bh=ccCZvnP0Izl+UJlrpMoqDlT1Bb2Z3r6kYYqpyRLLCdY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRSthKZlc9offZ+qsxZM5d1rCdw+e+nd65qO1tZRKGXoQ7nOCZOflRnwCqaaSARfV0rTdtT+mHEBAeOMsVbYRGeY7yhs/piCJhZGfFPAaA7ppjuKVKbPo4pCwzHgpk4ld7SUWKc7HYUv2xcFDk9TGxyrc27HoKn28xccqOv/PaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uSNFm+1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pBeMxPJ79TsCd3D+Hklia1Djz7KafVhusp0MMfqRwj6AKNGTRcC48asL1cHQZ97jbDHYbtMhTjpNSAHyctUSEHXobZ3DWXlfKsla/Hv79MR8QMlCAcmqA2cJPmQyCageMvO5fpwuFQKZ/zVOXUw5Zngovppy2mPcWoJrW+jfJXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=noVgbti+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uSNFm+1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5349DC4CEDF;
-	Wed, 15 Jan 2025 10:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="noVgbti+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDFCC4CEDF;
+	Wed, 15 Jan 2025 10:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937971;
-	bh=IHXylc2TCycl0RM4adsMqwhg+KGlrMpxY0aU8a/B01c=;
+	s=korg; t=1736937974;
+	bh=ccCZvnP0Izl+UJlrpMoqDlT1Bb2Z3r6kYYqpyRLLCdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uSNFm+1SqqPRKlPmVUixxMcIXwNmk2CcdiVNLoS3uCEN/BSkFv8/wuWcZIH+fnobi
-	 GBEZO8qEHaJMMJjAcNWEG0viW3Z9neaIHGlw3/wTeA1xcmnx7AwamGN4HQBXuf27m2
-	 c9wwvl0q+KVkWKrmZv2mG/DUh65BTTc36OZNrfJo=
+	b=noVgbti+59k6bNxPXDjE8UnLgacVq+zWGSqdj/JKKyoS6pJfPpdS+bL++ameGiIhu
+	 0tbA0SdkFyGRPTqrFWzQ77jOpFMloduWsBmTr9akk2xAdO2HVdSxTHucWAr7YtS0Q8
+	 l11zGlSDoBPM7rpmadgU9U+m6Uf+Kgxf87dJIsL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Lan <lanhao@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+339e9dbe3a2ca419b85d@syzkaller.appspotmail.com,
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/189] net: hns3: fixed reset failure issues caused by the incorrect reset type
-Date: Wed, 15 Jan 2025 11:35:42 +0100
-Message-ID: <20250115103608.198154942@linuxfoundation.org>
+Subject: [PATCH 6.12 029/189] btrfs: avoid NULL pointer dereference if no valid extent tree
+Date: Wed, 15 Jan 2025 11:35:25 +0100
+Message-ID: <20250115103607.521732986@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,240 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Lan <lanhao@huawei.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 5a4b584c67699a69981f0740618a144965a63237 ]
+[ Upstream commit 6aecd91a5c5b68939cf4169e32bc49f3cd2dd329 ]
 
-When a reset type that is not supported by the driver is input, a reset
-pending flag bit of the HNAE3_NONE_RESET type is generated in
-reset_pending. The driver does not have a mechanism to clear this type
-of error. As a result, the driver considers that the reset is not
-complete. This patch provides a mechanism to clear the
-HNAE3_NONE_RESET flag and the parameter of
-hnae3_ae_ops.set_default_reset_request is verified.
+[BUG]
+Syzbot reported a crash with the following call trace:
 
-The error message:
-hns3 0000:39:01.0: cmd failed -16
-hns3 0000:39:01.0: hclge device re-init failed, VF is disabled!
-hns3 0000:39:01.0: failed to reset VF stack
-hns3 0000:39:01.0: failed to reset VF(4)
-hns3 0000:39:01.0: prepare reset(2) wait done
-hns3 0000:39:01.0 eth4: already uninitialized
+  BTRFS info (device loop0): scrub: started on devid 1
+  BUG: kernel NULL pointer dereference, address: 0000000000000208
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 106e70067 P4D 106e70067 PUD 107143067 PMD 0
+  Oops: Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 1 UID: 0 PID: 689 Comm: repro Kdump: loaded Tainted: G           O       6.13.0-rc4-custom+ #206
+  Tainted: [O]=OOT_MODULE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS unknown 02/02/2022
+  RIP: 0010:find_first_extent_item+0x26/0x1f0 [btrfs]
+  Call Trace:
+   <TASK>
+   scrub_find_fill_first_stripe+0x13d/0x3b0 [btrfs]
+   scrub_simple_mirror+0x175/0x260 [btrfs]
+   scrub_stripe+0x5d4/0x6c0 [btrfs]
+   scrub_chunk+0xbb/0x170 [btrfs]
+   scrub_enumerate_chunks+0x2f4/0x5f0 [btrfs]
+   btrfs_scrub_dev+0x240/0x600 [btrfs]
+   btrfs_ioctl+0x1dc8/0x2fa0 [btrfs]
+   ? do_sys_openat2+0xa5/0xf0
+   __x64_sys_ioctl+0x97/0xc0
+   do_syscall_64+0x4f/0x120
+   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+   </TASK>
 
-Use the crash tool to view struct hclgevf_dev:
-struct hclgevf_dev {
-...
-	default_reset_request = 0x20,
-	reset_level = HNAE3_NONE_RESET,
-	reset_pending = 0x100,
-	reset_type = HNAE3_NONE_RESET,
-...
-};
+[CAUSE]
+The reproducer is using a corrupted image where extent tree root is
+corrupted, thus forcing to use "rescue=all,ro" mount option to mount the
+image.
 
-Fixes: 720bd5837e37 ("net: hns3: add set_default_reset_request in the hnae3_ae_ops")
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Link: https://patch.msgid.link/20250106143642.539698-2-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Then it triggered a scrub, but since scrub relies on extent tree to find
+where the data/metadata extents are, scrub_find_fill_first_stripe()
+relies on an non-empty extent root.
+
+But unfortunately scrub_find_fill_first_stripe() doesn't really expect
+an NULL pointer for extent root, it use extent_root to grab fs_info and
+triggered a NULL pointer dereference.
+
+[FIX]
+Add an extra check for a valid extent root at the beginning of
+scrub_find_fill_first_stripe().
+
+The new error path is introduced by 42437a6386ff ("btrfs: introduce
+mount option rescue=ignorebadroots"), but that's pretty old, and later
+commit b979547513ff ("btrfs: scrub: introduce helper to find and fill
+sector info for a scrub_stripe") changed how we do scrub.
+
+So for kernels older than 6.6, the fix will need manual backport.
+
+Reported-by: syzbot+339e9dbe3a2ca419b85d@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/67756935.050a0220.25abdd.0a12.GAE@google.com/
+Fixes: 42437a6386ff ("btrfs: introduce mount option rescue=ignorebadroots")
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 33 ++++++++++++++--
- .../hisilicon/hns3/hns3vf/hclgevf_main.c      | 38 ++++++++++++++++---
- 2 files changed, 61 insertions(+), 10 deletions(-)
+ fs/btrfs/scrub.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index bd86efd92a5a..35c618c794be 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -3584,6 +3584,17 @@ static int hclge_set_vf_link_state(struct hnae3_handle *handle, int vf,
- 	return ret;
- }
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index 3a3427428074..c73a41b1ad56 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -1541,6 +1541,10 @@ static int scrub_find_fill_first_stripe(struct btrfs_block_group *bg,
+ 	u64 extent_gen;
+ 	int ret;
  
-+static void hclge_set_reset_pending(struct hclge_dev *hdev,
-+				    enum hnae3_reset_type reset_type)
-+{
-+	/* When an incorrect reset type is executed, the get_reset_level
-+	 * function generates the HNAE3_NONE_RESET flag. As a result, this
-+	 * type do not need to pending.
-+	 */
-+	if (reset_type != HNAE3_NONE_RESET)
-+		set_bit(reset_type, &hdev->reset_pending);
-+}
-+
- static u32 hclge_check_event_cause(struct hclge_dev *hdev, u32 *clearval)
- {
- 	u32 cmdq_src_reg, msix_src_reg, hw_err_src_reg;
-@@ -3604,7 +3615,7 @@ static u32 hclge_check_event_cause(struct hclge_dev *hdev, u32 *clearval)
- 	 */
- 	if (BIT(HCLGE_VECTOR0_IMPRESET_INT_B) & msix_src_reg) {
- 		dev_info(&hdev->pdev->dev, "IMP reset interrupt\n");
--		set_bit(HNAE3_IMP_RESET, &hdev->reset_pending);
-+		hclge_set_reset_pending(hdev, HNAE3_IMP_RESET);
- 		set_bit(HCLGE_COMM_STATE_CMD_DISABLE, &hdev->hw.hw.comm_state);
- 		*clearval = BIT(HCLGE_VECTOR0_IMPRESET_INT_B);
- 		hdev->rst_stats.imp_rst_cnt++;
-@@ -3614,7 +3625,7 @@ static u32 hclge_check_event_cause(struct hclge_dev *hdev, u32 *clearval)
- 	if (BIT(HCLGE_VECTOR0_GLOBALRESET_INT_B) & msix_src_reg) {
- 		dev_info(&hdev->pdev->dev, "global reset interrupt\n");
- 		set_bit(HCLGE_COMM_STATE_CMD_DISABLE, &hdev->hw.hw.comm_state);
--		set_bit(HNAE3_GLOBAL_RESET, &hdev->reset_pending);
-+		hclge_set_reset_pending(hdev, HNAE3_GLOBAL_RESET);
- 		*clearval = BIT(HCLGE_VECTOR0_GLOBALRESET_INT_B);
- 		hdev->rst_stats.global_rst_cnt++;
- 		return HCLGE_VECTOR0_EVENT_RST;
-@@ -4062,7 +4073,7 @@ static void hclge_do_reset(struct hclge_dev *hdev)
- 	case HNAE3_FUNC_RESET:
- 		dev_info(&pdev->dev, "PF reset requested\n");
- 		/* schedule again to check later */
--		set_bit(HNAE3_FUNC_RESET, &hdev->reset_pending);
-+		hclge_set_reset_pending(hdev, HNAE3_FUNC_RESET);
- 		hclge_reset_task_schedule(hdev);
- 		break;
- 	default:
-@@ -4096,6 +4107,8 @@ static enum hnae3_reset_type hclge_get_reset_level(struct hnae3_ae_dev *ae_dev,
- 		clear_bit(HNAE3_FLR_RESET, addr);
- 	}
- 
-+	clear_bit(HNAE3_NONE_RESET, addr);
-+
- 	if (hdev->reset_type != HNAE3_NONE_RESET &&
- 	    rst_level < hdev->reset_type)
- 		return HNAE3_NONE_RESET;
-@@ -4237,7 +4250,7 @@ static bool hclge_reset_err_handle(struct hclge_dev *hdev)
- 		return false;
- 	} else if (hdev->rst_stats.reset_fail_cnt < MAX_RESET_FAIL_CNT) {
- 		hdev->rst_stats.reset_fail_cnt++;
--		set_bit(hdev->reset_type, &hdev->reset_pending);
-+		hclge_set_reset_pending(hdev, hdev->reset_type);
- 		dev_info(&hdev->pdev->dev,
- 			 "re-schedule reset task(%u)\n",
- 			 hdev->rst_stats.reset_fail_cnt);
-@@ -4480,8 +4493,20 @@ static void hclge_reset_event(struct pci_dev *pdev, struct hnae3_handle *handle)
- static void hclge_set_def_reset_request(struct hnae3_ae_dev *ae_dev,
- 					enum hnae3_reset_type rst_type)
- {
-+#define HCLGE_SUPPORT_RESET_TYPE \
-+	(BIT(HNAE3_FLR_RESET) | BIT(HNAE3_FUNC_RESET) | \
-+	BIT(HNAE3_GLOBAL_RESET) | BIT(HNAE3_IMP_RESET))
-+
- 	struct hclge_dev *hdev = ae_dev->priv;
- 
-+	if (!(BIT(rst_type) & HCLGE_SUPPORT_RESET_TYPE)) {
-+		/* To prevent reset triggered by hclge_reset_event */
-+		set_bit(HNAE3_NONE_RESET, &hdev->default_reset_request);
-+		dev_warn(&hdev->pdev->dev, "unsupported reset type %d\n",
-+			 rst_type);
-+		return;
++	if (unlikely(!extent_root)) {
++		btrfs_err(fs_info, "no valid extent root for scrub");
++		return -EUCLEAN;
 +	}
-+
- 	set_bit(rst_type, &hdev->default_reset_request);
- }
- 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 094a7c7b5592..ab54e6155e93 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -1395,6 +1395,17 @@ static int hclgevf_notify_roce_client(struct hclgevf_dev *hdev,
- 	return ret;
- }
- 
-+static void hclgevf_set_reset_pending(struct hclgevf_dev *hdev,
-+				      enum hnae3_reset_type reset_type)
-+{
-+	/* When an incorrect reset type is executed, the get_reset_level
-+	 * function generates the HNAE3_NONE_RESET flag. As a result, this
-+	 * type do not need to pending.
-+	 */
-+	if (reset_type != HNAE3_NONE_RESET)
-+		set_bit(reset_type, &hdev->reset_pending);
-+}
-+
- static int hclgevf_reset_wait(struct hclgevf_dev *hdev)
- {
- #define HCLGEVF_RESET_WAIT_US	20000
-@@ -1544,7 +1555,7 @@ static void hclgevf_reset_err_handle(struct hclgevf_dev *hdev)
- 		hdev->rst_stats.rst_fail_cnt);
- 
- 	if (hdev->rst_stats.rst_fail_cnt < HCLGEVF_RESET_MAX_FAIL_CNT)
--		set_bit(hdev->reset_type, &hdev->reset_pending);
-+		hclgevf_set_reset_pending(hdev, hdev->reset_type);
- 
- 	if (hclgevf_is_reset_pending(hdev)) {
- 		set_bit(HCLGEVF_RESET_PENDING, &hdev->reset_state);
-@@ -1664,6 +1675,8 @@ static enum hnae3_reset_type hclgevf_get_reset_level(unsigned long *addr)
- 		clear_bit(HNAE3_FLR_RESET, addr);
- 	}
- 
-+	clear_bit(HNAE3_NONE_RESET, addr);
-+
- 	return rst_level;
- }
- 
-@@ -1673,14 +1686,15 @@ static void hclgevf_reset_event(struct pci_dev *pdev,
- 	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(pdev);
- 	struct hclgevf_dev *hdev = ae_dev->priv;
- 
--	dev_info(&hdev->pdev->dev, "received reset request from VF enet\n");
--
- 	if (hdev->default_reset_request)
- 		hdev->reset_level =
- 			hclgevf_get_reset_level(&hdev->default_reset_request);
- 	else
- 		hdev->reset_level = HNAE3_VF_FUNC_RESET;
- 
-+	dev_info(&hdev->pdev->dev, "received reset request from VF enet, reset level is %d\n",
-+		 hdev->reset_level);
-+
- 	/* reset of this VF requested */
- 	set_bit(HCLGEVF_RESET_REQUESTED, &hdev->reset_state);
- 	hclgevf_reset_task_schedule(hdev);
-@@ -1691,8 +1705,20 @@ static void hclgevf_reset_event(struct pci_dev *pdev,
- static void hclgevf_set_def_reset_request(struct hnae3_ae_dev *ae_dev,
- 					  enum hnae3_reset_type rst_type)
- {
-+#define HCLGEVF_SUPPORT_RESET_TYPE \
-+	(BIT(HNAE3_VF_RESET) | BIT(HNAE3_VF_FUNC_RESET) | \
-+	BIT(HNAE3_VF_PF_FUNC_RESET) | BIT(HNAE3_VF_FULL_RESET) | \
-+	BIT(HNAE3_FLR_RESET) | BIT(HNAE3_VF_EXP_RESET))
-+
- 	struct hclgevf_dev *hdev = ae_dev->priv;
- 
-+	if (!(BIT(rst_type) & HCLGEVF_SUPPORT_RESET_TYPE)) {
-+		/* To prevent reset triggered by hclge_reset_event */
-+		set_bit(HNAE3_NONE_RESET, &hdev->default_reset_request);
-+		dev_info(&hdev->pdev->dev, "unsupported reset type %d\n",
-+			 rst_type);
-+		return;
-+	}
- 	set_bit(rst_type, &hdev->default_reset_request);
- }
- 
-@@ -1849,14 +1875,14 @@ static void hclgevf_reset_service_task(struct hclgevf_dev *hdev)
- 		 */
- 		if (hdev->reset_attempts > HCLGEVF_MAX_RESET_ATTEMPTS_CNT) {
- 			/* prepare for full reset of stack + pcie interface */
--			set_bit(HNAE3_VF_FULL_RESET, &hdev->reset_pending);
-+			hclgevf_set_reset_pending(hdev, HNAE3_VF_FULL_RESET);
- 
- 			/* "defer" schedule the reset task again */
- 			set_bit(HCLGEVF_RESET_PENDING, &hdev->reset_state);
- 		} else {
- 			hdev->reset_attempts++;
- 
--			set_bit(hdev->reset_level, &hdev->reset_pending);
-+			hclgevf_set_reset_pending(hdev, hdev->reset_level);
- 			set_bit(HCLGEVF_RESET_PENDING, &hdev->reset_state);
- 		}
- 		hclgevf_reset_task_schedule(hdev);
-@@ -1979,7 +2005,7 @@ static enum hclgevf_evt_cause hclgevf_check_evt_cause(struct hclgevf_dev *hdev,
- 		rst_ing_reg = hclgevf_read_dev(&hdev->hw, HCLGEVF_RST_ING);
- 		dev_info(&hdev->pdev->dev,
- 			 "receive reset interrupt 0x%x!\n", rst_ing_reg);
--		set_bit(HNAE3_VF_RESET, &hdev->reset_pending);
-+		hclgevf_set_reset_pending(hdev, HNAE3_VF_RESET);
- 		set_bit(HCLGEVF_RESET_PENDING, &hdev->reset_state);
- 		set_bit(HCLGE_COMM_STATE_CMD_DISABLE, &hdev->hw.hw.comm_state);
- 		*clearval = ~(1U << HCLGEVF_VECTOR0_RST_INT_B);
+ 	memset(stripe->sectors, 0, sizeof(struct scrub_sector_verification) *
+ 				   stripe->nr_sectors);
+ 	scrub_stripe_reset_bitmaps(stripe);
 -- 
 2.39.5
 
