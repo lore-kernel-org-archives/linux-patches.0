@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D007248BBD;
-	Wed, 15 Jan 2025 10:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938C1248BC1;
+	Wed, 15 Jan 2025 10:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938221; cv=none; b=p6uaPOyTCjRCci6roLiCYnKnZYe0zj0oARNNI8ozo55OH/7XUSSRwQucRCvP2dC1pplXymZ2QJxq9poH/R1rtGu9Uhnd5nqs/1OWuMx4QD36kOvcWH4cfmHbl/1V9lRqlvUzcWOOh3lKhb4EKNGKEHgLfZcT9MRcL+leGf7UkC8=
+	t=1736938223; cv=none; b=i9+XTfCMgENnc7/TmfiU+BSJvm47QIG0YI7g81TvncSJ0Zys+l7uc8T1/RvQCoFDUmNclbuoUJPBV8zbN+XqC+1b1mJ7CSkmuYYqb/INoMBZXHeNEsG6EShCgdCKTeUwDhFUMMnApkOa6vLmREp7oyyuqN5NNpw7CIRJgWaTWQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938221; c=relaxed/simple;
-	bh=b44RuxisT7mK8XP3oxs0uMApoOl0k8BZ+wahviy6/gE=;
+	s=arc-20240116; t=1736938223; c=relaxed/simple;
+	bh=W7FJ7JQT468TZ2B7eTmlsl10j1EY6NmEbLdkn7dRbkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZh16jDYoJFnd0lZSoQNRciJNjk7iz8o04UloRYcg0pJh99YQrsf2XqUuvaFt0yIGe7/cXNzueaN6jBR3N3VLQaNr1THBABaBlkgD92TU8lS2JEp5aO7ZuZIBsD6Qw/MrzZ5UgtPWMC0LZf22Oi2ZA25e+rlfXNnsRzg30ckpcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Te4vYnGK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oka9NbPb4AdXxaWF7EwFrO1blDK48Lr7ex3LO1HnjTxqwH1AYjFehpDGNDnGhJpqZJRWW3AChLmTgVrjSeekTId1ljbEgNDg3qP3C3+Pztx7uKu0xSNtHEE5Gbgsa4NxpoPFuc7EXE1Er6Inl1TdwgAjobRc/6fw8NlHyFa//BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr7GYU/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Te4vYnGK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7653FC4CEDF;
-	Wed, 15 Jan 2025 10:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr7GYU/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA48C4CEDF;
+	Wed, 15 Jan 2025 10:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938220;
-	bh=b44RuxisT7mK8XP3oxs0uMApoOl0k8BZ+wahviy6/gE=;
+	s=korg; t=1736938223;
+	bh=W7FJ7JQT468TZ2B7eTmlsl10j1EY6NmEbLdkn7dRbkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Te4vYnGK8lHeUzGEEo1br3s8Cz6JZhprmvHvR7wf/f8OJ7Rl49GnMtVzda4CvgFYp
-	 otQx2r/lSzxIiO+/4VnkR/URXW7hXBngpwAoysrHPK8dO8Nuk4gyknBB1AhtjfoFwF
-	 r86hZOUvCR7HGDFv7g0JQ/KH08FBLUAZCUxKaUT0=
+	b=Rr7GYU/TvQBOjIU/E8IxH9OH447hLYX3v8sCF+7Rg6E9Ca1x1Y1CTFqhrsVgqSuQn
+	 9S0XH4LH7s384ckL+ktRQ2cIHUxrg2P/xAwwRpSIFPNcv+m/pRD7rkzivKacMGbphx
+	 HeYcv1KwYlRA+rju13usFuLaqkb0Khb7Z2g4COpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Hongliang Wang <wanghongliang@loongson.cn>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 118/189] gpio: loongson: Fix Loongson-2K2000 ACPI GPIO register offset
-Date: Wed, 15 Jan 2025 11:36:54 +0100
-Message-ID: <20250115103611.167973729@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.12 119/189] ACPI: resource: Add TongFang GM5HG0A to irq1_edge_low_force_override[]
+Date: Wed, 15 Jan 2025 11:36:55 +0100
+Message-ID: <20250115103611.208479006@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,47 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Binbin Zhou <zhoubinbin@loongson.cn>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit e59f4c97172de0c302894cfd5616161c1f0c4d85 upstream.
+commit 7ed4e4a659d99499dc6968c61970d41b64feeac0 upstream.
 
-Since commit 3feb70a61740 ("gpio: loongson: add more gpio chip
-support"), the Loongson-2K2000 GPIO is supported.
+The TongFang GM5HG0A is a TongFang barebone design which is sold under
+various brand names.
 
-However, according to the firmware development specification, the
-Loongson-2K2000 ACPI GPIO register offsets in the driver do not match
-the register base addresses in the firmware, resulting in the registers
-not being accessed properly.
+The ACPI IRQ override for the keyboard IRQ must be used on these AMD Zen
+laptops in order for the IRQ to work.
 
-Now, we fix it to ensure the GPIO function works properly.
+At least on the SKIKK Vanaheim variant the DMI product- and board-name
+strings have been replaced by the OEM with "Vanaheim" so checking that
+board-name contains "GM5HG0A" as is usually done for TongFang barebones
+quirks does not work.
 
-Cc: stable@vger.kernel.org
-Cc: Yinbo Zhu <zhuyinbo@loongson.cn>
-Fixes: 3feb70a61740 ("gpio: loongson: add more gpio chip support")
-Co-developed-by: Hongliang Wang <wanghongliang@loongson.cn>
-Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Link: https://lore.kernel.org/r/20250107103856.1037222-1-zhoubinbin@loongson.cn
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+The DMI OEM strings do contain "GM5HG0A". I have looked at the dmidecode
+for a few other TongFang devices and the TongFang code-name string being
+in the OEM strings seems to be something which is consistently true.
+
+Add a quirk checking one of the DMI_OEM_STRING(s) is "GM5HG0A" in the hope
+that this will work for other OEM versions of the "GM5HG0A" too.
+
+Link: https://www.skikk.eu/en/laptops/vanaheim-15-rtx-4060
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219614
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241228164845.42381-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-loongson-64bit.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/resource.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/gpio/gpio-loongson-64bit.c
-+++ b/drivers/gpio/gpio-loongson-64bit.c
-@@ -237,9 +237,9 @@ static const struct loongson_gpio_chip_d
- static const struct loongson_gpio_chip_data loongson_gpio_ls2k2000_data2 = {
- 	.label = "ls2k2000_gpio",
- 	.mode = BIT_CTRL_MODE,
--	.conf_offset = 0x84,
--	.in_offset = 0x88,
--	.out_offset = 0x80,
-+	.conf_offset = 0x4,
-+	.in_offset = 0x8,
-+	.out_offset = 0x0,
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -646,6 +646,17 @@ static const struct dmi_system_id irq1_e
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxHGxx"),
+ 		},
+ 	},
++	{
++		/*
++		 * TongFang GM5HG0A in case of the SKIKK Vanaheim relabel the
++		 * board-name is changed, so check OEM strings instead. Note
++		 * OEM string matches are always exact matches.
++		 * https://bugzilla.kernel.org/show_bug.cgi?id=219614
++		 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_OEM_STRING, "GM5HG0A"),
++		},
++	},
+ 	{ }
  };
  
- static const struct loongson_gpio_chip_data loongson_gpio_ls3a5000_data = {
 
 
