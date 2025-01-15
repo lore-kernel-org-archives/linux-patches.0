@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CC6156644;
-	Wed, 15 Jan 2025 10:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E7B1E9906;
+	Wed, 15 Jan 2025 10:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938305; cv=none; b=fFbHK8G2AE8D17BvM77cdqITDF2Uhb1nOoLkq+54z+vHhQjLPqJ+7cmABfYakYuNnT08zO2F0p8K74iIthyzUJYQcF1XT6eeOisXj/MmR2vJyNA/agVFN5IMqwMEqpfRoHDQ3+bya2KEkK7oQBtrXa9IIelKf3gzM/mFBlUHwJE=
+	t=1736938308; cv=none; b=nP05sNhWh3VhlPSG8vonNw1UcW0HTX9AjQQwqjKLKzkbY/t8qBdm84C2CFHw2/YvNaAAvRyDU5HJvwLr3aYY/zPQE3MZ3iQnA6g/Lgjsh+ONt7EcWXesMUpOxCzN37kQkKpL4wktEjrcoyqz8zDQQLlwyXLvNCPbXgEoS/cL8fM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938305; c=relaxed/simple;
-	bh=3jLGme07+Zjw+TO1c44jG8JtPppcwJhSxgKbZQkge30=;
+	s=arc-20240116; t=1736938308; c=relaxed/simple;
+	bh=x9RyD+0YW0Jt3hO3Gxxmi58mHHjWso56SXd+gbdCOX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+MYNok5XU17ttgnR/ZOI+4vGC5wBSdPAf3H/SDa4ablloK6Onkpou+wTmECj2FJswFNoay28YKdO2iswAosr8RgfSjxnSKW2Ae1d4Q711JMNYA8lGyATrlIN5RGhETfxLFUt0tPS2k518pHQYNxRhwg8hI4yXPXUwUpeza8rqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvhrwLkz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4sPHJlCaiEwBYU7dShuZhNAXPVGS0e7d1r3Yoal5H+SY9qSDVUKvPuzfbMC0i8GcZLBzBeQ8NCOpFfaBQMU3BR3hirw8DKnCpH/uJ7HTIgPMjVhBHmFdwA6boXdDgc6SOaoGiX8bDCyerEKsImrOEvxwzgFEpfrDAiacGohJUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/Z1LfIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvhrwLkz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49F0C4CEDF;
-	Wed, 15 Jan 2025 10:51:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/Z1LfIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D0EC4CEE8;
+	Wed, 15 Jan 2025 10:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938305;
-	bh=3jLGme07+Zjw+TO1c44jG8JtPppcwJhSxgKbZQkge30=;
+	s=korg; t=1736938308;
+	bh=x9RyD+0YW0Jt3hO3Gxxmi58mHHjWso56SXd+gbdCOX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vvhrwLkzrTE930TvnhAIvpic0OicJCg7BDg+MzuiYI6KMne4qGUivZnbw+fx4fBf8
-	 2oyC+blD+L2BWgKYzxZp54ZkfCj+8AVh2GBuxWbHJZfVr5RqAxQlb3QK3aO4KTQqHP
-	 dmCA+g6Z7Q3ovVu13VG02lwpNFbTi+RQSAeGBjZA=
+	b=e/Z1LfIRkTZjirwRyLn7+lcXitcYcw+hqJH3/oL5bcbQYRKc8e1sjrQM3ciQd1NLM
+	 3ZgRB1IDOEWfRo6Iodi0uZN1RETFJuXv1rGWlU0NIp6mzDtyoM3WGgG41sQ07Dr/Rq
+	 dvIQUjxR816KxcDyzacIm9Ll1heWStqExy1He4V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.12 144/189] usb: dwc3-am62: Disable autosuspend during remove
-Date: Wed, 15 Jan 2025 11:37:20 +0100
-Message-ID: <20250115103612.167549504@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 127/189] drm/amd/display: increase MAX_SURFACES to the value supported by hw
+Date: Wed, 15 Jan 2025 11:37:03 +0100
+Message-ID: <20250115103611.510268843@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -51,35 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Melissa Wen <mwen@igalia.com>
 
-commit 625e70ccb7bbbb2cc912e23c63390946170c085c upstream.
+commit 21541bc6b44241e3f791f9e552352d8440b2b29e upstream.
 
-Runtime PM documentation (Section 5) mentions, during remove()
-callbacks, drivers should undo the runtime PM changes done in
-probe(). Usually this means calling pm_runtime_disable(),
-pm_runtime_dont_use_autosuspend() etc. Hence add missing
-function to disable autosuspend on dwc3-am62 driver unbind.
+As the hw supports up to 4 surfaces, increase the maximum number of
+surfaces to prevent the DC error when trying to use more than three
+planes.
 
-Fixes: e8784c0aec03 ("drivers: usb: dwc3: Add AM62 USB wrapper driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20241209105728.3216872-1-quic_prashk@quicinc.com
+[drm:dc_state_add_plane [amdgpu]] *ERROR* Surface: can not attach plane_state 000000003e2cb82c! Maximum is: 3
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3693
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b8d6daffc871a42026c3c20bff7b8fa0302298c1)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/dwc3-am62.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dc.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/dwc3-am62.c
-+++ b/drivers/usb/dwc3/dwc3-am62.c
-@@ -309,6 +309,7 @@ static void dwc3_ti_remove(struct platfo
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -57,7 +57,7 @@ struct dmub_notification;
  
- 	pm_runtime_put_sync(dev);
- 	pm_runtime_disable(dev);
-+	pm_runtime_dont_use_autosuspend(dev);
- 	pm_runtime_set_suspended(dev);
- }
+ #define DC_VER "3.2.301"
  
+-#define MAX_SURFACES 3
++#define MAX_SURFACES 4
+ #define MAX_PLANES 6
+ #define MAX_STREAMS 6
+ #define MIN_VIEWPORT_SIZE 12
 
 
