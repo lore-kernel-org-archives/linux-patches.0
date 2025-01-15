@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD85248BB2;
-	Wed, 15 Jan 2025 10:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66597248BA6;
+	Wed, 15 Jan 2025 10:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938265; cv=none; b=WS2nB/M6F8/8rNN/7Zqn8s0/T8QIAoUfR6nEKHFyqnOJimEf9NnbV8O2wAVMXWYBkZWUI+lVV3QdLsgJPuDNvd/jxs8pibD+KoXjv2kpTJ3jORH7RfSC/KXhoPn8aItUk/7ZAtrcVVc/nhYCl2SQQTiSR5sdRW66rpiW3lEAon8=
+	t=1736938268; cv=none; b=mUKSf3b5hQvPNlgAaWeBXbs0A1yt6rfh2IOAmml53exqSiqWHyW1xq3u313E4riUn1JgIIaFJS4KQGFKOZ2+fxIw4iHedU4TuCtKCODHzF6an1P92vfVq9g1q9P5AqvLJQaqGeh5frCAa2LuvJhqq4TWTK/M/ccTuPFmRCmZaiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938265; c=relaxed/simple;
-	bh=WcqCHEcHBtg8TI3WZuoskawLnd9+3eU0ln0yIv5kolA=;
+	s=arc-20240116; t=1736938268; c=relaxed/simple;
+	bh=yWCnOfxVxQbozFShAMwEnCDIoTbYkdyWrcVHNnCVqRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KISPDjCZR9EnYDORpHKEvriZSC46al1jBjsGRRqwy6XNYskepGXT1QmtdGVqOtFJGxQ3cgN/AR3cGnNsiM0PrTGv7szTsJsc0amDIjb14eA9WXKidjfcSvS6avhTembP4Sgnh1OinaPtJ5H2NPYGxKumTycoARiBwpsj7b4/XHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6wxlB/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTpALVepuemXcZ6EnDqh7c9hw/+0W9Ti0+zjtuIuMjNdAYXBd+DAlGv2NWdpIbQ7FjwQO9o2sKixJYRdT1G4IvUcFpGkqdXB277+Rw/fNmSCesa4P3XXZ2AeSQclm0NTPsYTT/qXB9hNM9CS4ku/+55v9VK0THZx8iydRSypse4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPcSaRcZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6wxlB/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047FAC4CEDF;
-	Wed, 15 Jan 2025 10:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPcSaRcZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B54FC4CEDF;
+	Wed, 15 Jan 2025 10:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938264;
-	bh=WcqCHEcHBtg8TI3WZuoskawLnd9+3eU0ln0yIv5kolA=;
+	s=korg; t=1736938268;
+	bh=yWCnOfxVxQbozFShAMwEnCDIoTbYkdyWrcVHNnCVqRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q6wxlB/cAMSSA9s4D3qksHR3hgmO83c6JPIAj6iF4d9q8l4h66lvY2OGdjdEwdR5l
-	 njA9b8AoEHO9BPqBAcYMKjvw+nqrJdrSzfHPZHZbh5krv1Gb3F4eupnh1mVDx4oUDm
-	 25nyTdapwvZYszml5LbEmZGGaGWXCEatDks+QtoU=
+	b=ZPcSaRcZeyd2183YIodPhP7pZqEkEYPbydDgIpYhjpm3WM3zoiwre0D4IURXDYMB2
+	 X4880z5lJ1dDoOL9REmpmrQsf3yrB8cYlKjiyipINvqzjBxuJA4Njqvdm42nukVULJ
+	 2j9Cw/cbGbY6OqQawZ6Oaw5pl1PjUvVR8B3K+1L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 101/189] ksmbd: Implement new SMB3 POSIX type
-Date: Wed, 15 Jan 2025 11:36:37 +0100
-Message-ID: <20250115103610.355375370@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 092/189] mptcp: sysctl: avail sched: remove write access
+Date: Wed, 15 Jan 2025 11:36:28 +0100
+Message-ID: <20250115103609.997650553@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -50,96 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit e8580b4c600e085b3c8e6404392de2f822d4c132 upstream.
+commit 771ec78dc8b48d562e6015bb535ed3cd37043d78 upstream.
 
-As SMB3 posix extension specification, Give posix file type to posix
-mode.
+'net.mptcp.available_schedulers' sysctl knob is there to list available
+schedulers, not to modify this list.
 
-https://www.samba.org/~slow/SMB3_POSIX/fscc_posix_extensions.html#posix-file-type-definition
+There are then no reasons to give write access to it.
 
+Nothing would have been written anyway, but no errors would have been
+returned, which is unexpected.
+
+Fixes: 73c900aa3660 ("mptcp: add net.mptcp.available_schedulers")
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-1-5df34b2083e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   40 ++++++++++++++++++++++++++++++++++++++++
- fs/smb/server/smb2pdu.h |   10 ++++++++++
- 2 files changed, 50 insertions(+)
+ net/mptcp/ctrl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3988,6 +3988,26 @@ static int smb2_populate_readdir_entry(s
- 		posix_info->DeviceId = cpu_to_le32(ksmbd_kstat->kstat->rdev);
- 		posix_info->HardLinks = cpu_to_le32(ksmbd_kstat->kstat->nlink);
- 		posix_info->Mode = cpu_to_le32(ksmbd_kstat->kstat->mode & 0777);
-+		switch (ksmbd_kstat->kstat->mode & S_IFMT) {
-+		case S_IFDIR:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFLNK:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFCHR:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFBLK:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFIFO:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFSOCK:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
-+		}
-+
- 		posix_info->Inode = cpu_to_le64(ksmbd_kstat->kstat->ino);
- 		posix_info->DosAttributes =
- 			S_ISDIR(ksmbd_kstat->kstat->mode) ?
-@@ -5176,6 +5196,26 @@ static int find_file_posix_info(struct s
- 	file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
- 	file_info->HardLinks = cpu_to_le32(stat.nlink);
- 	file_info->Mode = cpu_to_le32(stat.mode & 0777);
-+	switch (stat.mode & S_IFMT) {
-+	case S_IFDIR:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFLNK:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFCHR:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFBLK:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFIFO:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFSOCK:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
-+	}
-+
- 	file_info->DeviceId = cpu_to_le32(stat.rdev);
- 
- 	/*
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -502,4 +502,14 @@ static inline void *smb2_get_msg(void *b
- 	return buf + 4;
- }
- 
-+#define POSIX_TYPE_FILE		0
-+#define POSIX_TYPE_DIR		1
-+#define POSIX_TYPE_SYMLINK	2
-+#define POSIX_TYPE_CHARDEV	3
-+#define POSIX_TYPE_BLKDEV	4
-+#define POSIX_TYPE_FIFO		5
-+#define POSIX_TYPE_SOCKET	6
-+
-+#define POSIX_FILETYPE_SHIFT	12
-+
- #endif	/* _SMB2PDU_H */
+diff --git a/net/mptcp/ctrl.c b/net/mptcp/ctrl.c
+index 38d8121331d4..d9b57fab2a13 100644
+--- a/net/mptcp/ctrl.c
++++ b/net/mptcp/ctrl.c
+@@ -228,7 +228,7 @@ static struct ctl_table mptcp_sysctl_table[] = {
+ 	{
+ 		.procname = "available_schedulers",
+ 		.maxlen	= MPTCP_SCHED_BUF_MAX,
+-		.mode = 0644,
++		.mode = 0444,
+ 		.proc_handler = proc_available_schedulers,
+ 	},
+ 	{
+-- 
+2.48.0
+
 
 
