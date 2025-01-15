@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B180E248BB5;
-	Wed, 15 Jan 2025 10:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859C7248BB5;
+	Wed, 15 Jan 2025 10:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938769; cv=none; b=CXkxWmCd1MEd99qsNUt3ff85D7sveZnZUptSbiRAAKJWVvLCvLPA8BPWB+RwrtTFd7z5MSRF4Hp9lMrrH4RFC6GwGIqZydNX5COcZVwwP+IsAE2vUMOu2gB4iC5aKDQgkr8pJ+mRi0MDzolntGszMzrHF0+hybEVyzRixLkyWqY=
+	t=1736938772; cv=none; b=MFtUTG7IflsArZxSdm21OEmYcmQnPQbQ1Zy+wjkBcO/bUxjth0fOtPJ5qdzlKAS73BwoTPI8AgSAmQeXu7lEtFsa3hTuRpz3mAmohabRF328YEpnS3kNAuX4/7aRjqrxOaaMqQ7PMZuJvpmFPVePt9OmnB3EhyNMK+JE+A88JTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938769; c=relaxed/simple;
-	bh=WmY97jwT9vIQwufZCCPcIpX6ZZc/tTSa2UcTF1vHstk=;
+	s=arc-20240116; t=1736938772; c=relaxed/simple;
+	bh=C23+ACxZNYDw4+MtCa2Coa7OGbQcN3cK8sFtqH0yIFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3vDXPpWeH5pDWzwgI/vddc+jBUKxOQLsvu7xhUVV6NJBMq81MTD794ca6x1BIRbYr/siQVTbIkmj9GW0ArOROSuEvfiU104YIwJPDfa2LmfGmxhLDaMpOrZmLP/ILV9dOJrtd4qVzKLzBNO+RP0Rd/f3nbjxFr/uL+OVR58DZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skfskoCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hqhu8d0G/d1iZKdeAe3MuM7z4DRud+fhdzi+XO8sdL0FOdso6IFIEJd98UoNKFWOxuip3GJDJ15fq4GUlV5aiARXdQ0lqKdLFxrv0q5zMDj3IoPqe8Dh4ONSu/PmFxhe/ovcb2sYF7lCEHn54mXg5wBijBzwF3iflArKwPX12Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMtOUyBs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skfskoCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CAA8C4CEDF;
-	Wed, 15 Jan 2025 10:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMtOUyBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BED9C4CEE7;
+	Wed, 15 Jan 2025 10:59:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938769;
-	bh=WmY97jwT9vIQwufZCCPcIpX6ZZc/tTSa2UcTF1vHstk=;
+	s=korg; t=1736938772;
+	bh=C23+ACxZNYDw4+MtCa2Coa7OGbQcN3cK8sFtqH0yIFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skfskoCGg61Wiq5wW/SsAwXdQFPmsRgiIPKsTFO89LQAeunHWVjzFmRoGOVYFy87u
-	 lUevh1IKe0qb9Y/eyaAWtbUwmehHiuPgT1FEiwunrG7bSPvSDm/fezv0Y5IX+DAg/B
-	 7LU4F60RMBep9zEtRLvNFDKkapi9vujv/GPrN2+w=
+	b=eMtOUyBshb8pK4oFGgZEIzkwPfcAg+hV9aT7E5VK5wfW9rvFEzEDb5ilCoTEh0Fqg
+	 VjJ9UP/x/6sicioV2Qz6XSwl1n5bsNRM0IRW1gGIoyp6ML4BsGUfaW2dRQvFQkZ/4D
+	 O0vu/0HaamAQhKyxCIVCeP6dhVmfkIGtC3vEsqgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jun Yan <jerrysteve1101@gmail.com>
-Subject: [PATCH 6.6 093/129] USB: usblp: return error when setting unsupported protocol
-Date: Wed, 15 Jan 2025 11:37:48 +0100
-Message-ID: <20250115103558.078034927@linuxfoundation.org>
+	Christian Mazakas <christian.mazakas@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 076/129] io_uring/timeout: fix multishot updates
+Date: Wed, 15 Jan 2025 11:37:31 +0100
+Message-ID: <20250115103557.403293909@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -50,43 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yan <jerrysteve1101@gmail.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 7a3d76a0b60b3f6fc3375e4de2174bab43f64545 upstream.
+commit c83c846231db8b153bfcb44d552d373c34f78245 upstream.
 
-Fix the regression introduced by commit d8c6edfa3f4e ("USB:
-usblp: don't call usb_set_interface if there's a single alt"),
-which causes that unsupported protocols can also be set via
-ioctl when the num_altsetting of the device is 1.
+After update only the first shot of a multishot timeout request adheres
+to the new timeout value while all subsequent retries continue to use
+the old value. Don't forget to update the timeout stored in struct
+io_timeout_data.
 
-Move the check for protocol support to the earlier stage.
-
-Fixes: d8c6edfa3f4e ("USB: usblp: don't call usb_set_interface if there's a single alt")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
-Link: https://lore.kernel.org/r/20241212143852.671889-1-jerrysteve1101@gmail.com
+Cc: stable@vger.kernel.org
+Fixes: ea97f6c8558e8 ("io_uring: add support for multishot timeouts")
+Reported-by: Christian Mazakas <christian.mazakas@gmail.com>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/e6516c3304eb654ec234cfa65c88a9579861e597.1736015288.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usblp.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ io_uring/timeout.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/class/usblp.c
-+++ b/drivers/usb/class/usblp.c
-@@ -1337,11 +1337,12 @@ static int usblp_set_protocol(struct usb
- 	if (protocol < USBLP_FIRST_PROTOCOL || protocol > USBLP_LAST_PROTOCOL)
- 		return -EINVAL;
+--- a/io_uring/timeout.c
++++ b/io_uring/timeout.c
+@@ -413,10 +413,12 @@ static int io_timeout_update(struct io_r
  
-+	alts = usblp->protocol[protocol].alt_setting;
-+	if (alts < 0)
-+		return -EINVAL;
+ 	timeout->off = 0; /* noseq */
+ 	data = req->async_data;
++	data->ts = *ts;
 +
- 	/* Don't unnecessarily set the interface if there's a single alt. */
- 	if (usblp->intf->num_altsetting > 1) {
--		alts = usblp->protocol[protocol].alt_setting;
--		if (alts < 0)
--			return -EINVAL;
- 		r = usb_set_interface(usblp->dev, usblp->ifnum, alts);
- 		if (r < 0) {
- 			printk(KERN_ERR "usblp: can't set desired altsetting %d on interface %d\n",
+ 	list_add_tail(&timeout->list, &ctx->timeout_list);
+ 	hrtimer_init(&data->timer, io_timeout_get_clock(data), mode);
+ 	data->timer.function = io_timeout_fn;
+-	hrtimer_start(&data->timer, timespec64_to_ktime(*ts), mode);
++	hrtimer_start(&data->timer, timespec64_to_ktime(data->ts), mode);
+ 	return 0;
+ }
+ 
 
 
