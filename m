@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20CC1E990E;
-	Wed, 15 Jan 2025 11:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0B01E98E4;
+	Wed, 15 Jan 2025 11:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938806; cv=none; b=klSYaeYz1Zux2tl/lMRWEyd4FVyi2i0ecRBu2WTS4v5a2ma4O9grWnNTfBaavf+ooOjUIh3NpyBBJ6S0/1KVOx7sp1VOAOeKD+64hYeDcDvd+kTFhampHMVZpqopRB98nugu9jsgC3xDyhZpvc52u1vl1FYFQQgjcleGsEGgDoA=
+	t=1736938810; cv=none; b=qglLovGFU0EVFFr0lBSIIuQJexpAlang1JajbqKEvcxg3ngRokyKYlHKDD/xdLkBImyYVjNSUEGdTpcgdzWCTFt26Vymu/gu4bBogE2vnffsXTsYzSkDFUWRJih/xTw5iLvrvx0zf/kash2FZC6tk8Bj9Hzsi/tHpYEwdiOfAGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938806; c=relaxed/simple;
-	bh=MUNOD1KJcBRgancNZOC+q2Y78U5XMZBYo1Mtg6pJY8E=;
+	s=arc-20240116; t=1736938810; c=relaxed/simple;
+	bh=HYJt2j0OO1UA/KsRRr6TY0f2DqcVfy53sL9o0smbp50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rq4Efw9eS8SOzeQsB8/X/uywgcaV5JKP7WGcz5WjIjHy1Z5yWx6Tr+JkSXxR/+JO8i2gjnEx8FIm2HbvLtiAexMlqZx5iqDaLmip60oq1Zb7tv1IHK8R07V9EtLLR4D0OrflXKrHnD5JfO7pQQRnHyoRIukEZwsuJyAHb+1I2ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P9CFebsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POJg9aWDypmluD6QuQqvT5K7VcOWHVPxhaYm6AaOJPIL3nzFxuAi/kWi4JDwW0cRbdAPMxpqWWa7CWRwSGvYn3YK/+JddhQKrZ+D0SeYjfKp3MB0slP2v6Vl2/4BdQ/KlYY/Yr7Mw9AJ8pWnETYdkezqNm/l5ZmK7bmnxjh5rJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vbXQDk1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P9CFebsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF53C4CEDF;
-	Wed, 15 Jan 2025 11:00:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vbXQDk1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F2F6C4CEE4;
+	Wed, 15 Jan 2025 11:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938806;
-	bh=MUNOD1KJcBRgancNZOC+q2Y78U5XMZBYo1Mtg6pJY8E=;
+	s=korg; t=1736938810;
+	bh=HYJt2j0OO1UA/KsRRr6TY0f2DqcVfy53sL9o0smbp50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9CFebsXUmAYeaeG1g64hC7oYu6MPARusMbivzapgx97gG7nWVYNuXzP1pz2Hw7EX
-	 19JEh1bq1mOyKo/Fhelp4KdD/jIDJlRpd5gG2GufT04LJTz9VuQy8lxKIBwM0fKrpm
-	 QmIP8efZmh6XTkQZKPeb3SK0v6UUfQprIkg9lLWQ=
+	b=vbXQDk1AZ9batfHSk+Vq5d0mA/QFyyy0yri+kuxbb6S+DOtOWLOY0g4GpqJxVIpQn
+	 zs4aL9AFqTYvQdEtly+3f5rjUh5HHQITKT7dfWy+DXJ4rwxEJnukgV0EyLdhwKhqFc
+	 9UExWv4UK4o/TbuZVYoY9mi5HT8O+feuCs3IOZU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 103/129] iio: dummy: iio_simply_dummy_buffer: fix information leak in triggered buffer
-Date: Wed, 15 Jan 2025 11:37:58 +0100
-Message-ID: <20250115103558.459119352@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bin Lan <lanbincn@qq.com>
+Subject: [PATCH 6.6 077/129] f2fs: fix null-ptr-deref in f2fs_submit_page_bio()
+Date: Wed, 15 Jan 2025 11:37:32 +0100
+Message-ID: <20250115103557.440984416@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -50,38 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 333be433ee908a53f283beb95585dfc14c8ffb46 upstream.
+commit b7d0a97b28083084ebdd8e5c6bccd12e6ec18faa upstream.
 
-The 'data' array is allocated via kmalloc() and it is used to push data
-to user space from a triggered buffer, but it does not set values for
-inactive channels, as it only uses iio_for_each_active_channel()
-to assign new values.
+There's issue as follows when concurrently installing the f2fs.ko
+module and mounting the f2fs file system:
+KASAN: null-ptr-deref in range [0x0000000000000020-0x0000000000000027]
+RIP: 0010:__bio_alloc+0x2fb/0x6c0 [f2fs]
+Call Trace:
+ <TASK>
+ f2fs_submit_page_bio+0x126/0x8b0 [f2fs]
+ __get_meta_page+0x1d4/0x920 [f2fs]
+ get_checkpoint_version.constprop.0+0x2b/0x3c0 [f2fs]
+ validate_checkpoint+0xac/0x290 [f2fs]
+ f2fs_get_valid_checkpoint+0x207/0x950 [f2fs]
+ f2fs_fill_super+0x1007/0x39b0 [f2fs]
+ mount_bdev+0x183/0x250
+ legacy_get_tree+0xf4/0x1e0
+ vfs_get_tree+0x88/0x340
+ do_new_mount+0x283/0x5e0
+ path_mount+0x2b2/0x15b0
+ __x64_sys_mount+0x1fe/0x270
+ do_syscall_64+0x5f/0x170
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Use kzalloc for the memory allocation to avoid pushing uninitialized
-information to userspace.
+Above issue happens as the biset of the f2fs file system is not
+initialized before register "f2fs_fs_type".
+To address above issue just register "f2fs_fs_type" at the last in
+init_f2fs_fs(). Ensure that all f2fs file system resources are
+initialized.
 
-Cc: stable@vger.kernel.org
-Fixes: 415f79244757 ("iio: Move IIO Dummy Driver out of staging")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-9-0cb6e98d895c@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: f543805fcd60 ("f2fs: introduce private bioset")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Bin Lan <lanbincn@qq.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dummy/iio_simple_dummy_buffer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/dummy/iio_simple_dummy_buffer.c
-+++ b/drivers/iio/dummy/iio_simple_dummy_buffer.c
-@@ -48,7 +48,7 @@ static irqreturn_t iio_simple_dummy_trig
- 	int i = 0, j;
- 	u16 *data;
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4931,9 +4931,6 @@ static int __init init_f2fs_fs(void)
+ 	err = register_shrinker(&f2fs_shrinker_info, "f2fs-shrinker");
+ 	if (err)
+ 		goto free_sysfs;
+-	err = register_filesystem(&f2fs_fs_type);
+-	if (err)
+-		goto free_shrinker;
+ 	f2fs_create_root_stats();
+ 	err = f2fs_init_post_read_processing();
+ 	if (err)
+@@ -4956,7 +4953,12 @@ static int __init init_f2fs_fs(void)
+ 	err = f2fs_create_casefold_cache();
+ 	if (err)
+ 		goto free_compress_cache;
++	err = register_filesystem(&f2fs_fs_type);
++	if (err)
++		goto free_casefold_cache;
+ 	return 0;
++free_casefold_cache:
++	f2fs_destroy_casefold_cache();
+ free_compress_cache:
+ 	f2fs_destroy_compress_cache();
+ free_compress_mempool:
+@@ -4971,8 +4973,6 @@ free_post_read:
+ 	f2fs_destroy_post_read_processing();
+ free_root_stats:
+ 	f2fs_destroy_root_stats();
+-	unregister_filesystem(&f2fs_fs_type);
+-free_shrinker:
+ 	unregister_shrinker(&f2fs_shrinker_info);
+ free_sysfs:
+ 	f2fs_exit_sysfs();
+@@ -4996,6 +4996,7 @@ fail:
  
--	data = kmalloc(indio_dev->scan_bytes, GFP_KERNEL);
-+	data = kzalloc(indio_dev->scan_bytes, GFP_KERNEL);
- 	if (!data)
- 		goto done;
- 
+ static void __exit exit_f2fs_fs(void)
+ {
++	unregister_filesystem(&f2fs_fs_type);
+ 	f2fs_destroy_casefold_cache();
+ 	f2fs_destroy_compress_cache();
+ 	f2fs_destroy_compress_mempool();
+@@ -5004,7 +5005,6 @@ static void __exit exit_f2fs_fs(void)
+ 	f2fs_destroy_iostat_processing();
+ 	f2fs_destroy_post_read_processing();
+ 	f2fs_destroy_root_stats();
+-	unregister_filesystem(&f2fs_fs_type);
+ 	unregister_shrinker(&f2fs_shrinker_info);
+ 	f2fs_exit_sysfs();
+ 	f2fs_destroy_garbage_collection_cache();
 
 
