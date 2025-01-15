@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0566156644;
-	Wed, 15 Jan 2025 10:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECE71DB13A;
+	Wed, 15 Jan 2025 10:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938540; cv=none; b=kAQ1tg7dpy0GcHC+j9OnosNI7QjlE0HE29oPDY/cu6RNUzvbSIxbx0KHTBkcDzxCXiDgF3PDCyEAqUam57DZEaSUfoDZYUG+EEVQgAco8JYWm/cWb/QpDvnqpNQm9sq6vi2fYGYLT81eY0Q3gl2yWLU65JBzSssUqC9+Ci1ZN/g=
+	t=1736938543; cv=none; b=LJ8p9kWW2VNScbG/pyZa60NdZTYDcrF+y5Qkaomw4roAZhlCXLdYwlhobyPO4eXiZotq50sX1xiGeRBlL06X9vWfuTaivTO8XVnqZmftX8tDEFHO/2voQo5I3+AAbz/o6L+2TpFV3SIA59j5wH/ZWmkYX1dAJbaujmxB2SwQl2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938540; c=relaxed/simple;
-	bh=8LqhHz49Yufy+0KXXq4PgmipRacSeeWEjr2MjjrurvM=;
+	s=arc-20240116; t=1736938543; c=relaxed/simple;
+	bh=ENY2C5j1VD1oJM5ny3+fT1PEorqr9aZgUQXDgoOEA80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HXzEO0O7uHR4zID7byF7tjyOO/5Hfe5JNjRsirWInNZjC5qn4y0yP6pBlbHwy65YbMU4bN9VjZ7B9umL15D0Ekv4DL2c3465zj7VKVWknP5tWQ82c+dN3e9sM28siAfjrWGOnEh/FQHEaxdAmTO2irESMruzX6ViKAFRiNeb9rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyJrHLDm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nu3qlJbqCfz+sRWjy+P7xIWerYFuYifIs15m26FW29/TF+rn1fLJRc3taUKg9LxRIdH6lXjMXqUebGB5gwyZwMiTc/eLITLhN+pL4dan38xg3+4TO30FVE0LaR0ZIi4crTm/mYJUbm+/vp55X52IW8h4PVebo2mCSboMY+0qS3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mk0lZLta; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyJrHLDm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1BFC4CEDF;
-	Wed, 15 Jan 2025 10:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mk0lZLta"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DADC4CEDF;
+	Wed, 15 Jan 2025 10:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938539;
-	bh=8LqhHz49Yufy+0KXXq4PgmipRacSeeWEjr2MjjrurvM=;
+	s=korg; t=1736938543;
+	bh=ENY2C5j1VD1oJM5ny3+fT1PEorqr9aZgUQXDgoOEA80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NyJrHLDmuKY7jkmsDEWVtVzwaD4yAp6H4GjXEcqZL/xURmpir9DBK5ftWkJHSAJSb
-	 be62r662JtL9hbwjysjyELAK+fEKxSnVZGziKPgiSnaR+2VMdYgvS+49+nzCS/+ob3
-	 6QBbGqxRZDxjL4oUjmgsIvWb0zjWB/0Nq3wH3HL8=
+	b=mk0lZLtawE6GKMZB4dP/hFbZRrXttvNUN2sM+lhww+yBUkN3QFmFz8HNAqx6gsSrr
+	 ant8bQFAl0g2SAeaOvTlz08AOEGC3daw/ITHEJISotk8JGTbHyaEq7HlObpcnLbCQi
+	 87NZCi1EFCvSjeahY/sPwthJerZ/ISw8NfgbyQC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1dbb57d994e54aaa04d2@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	Jiawen Wu <jiawenwu@trustnetic.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/129] net_sched: cls_flow: validate TCA_FLOW_RSHIFT attribute
-Date: Wed, 15 Jan 2025 11:36:37 +0100
-Message-ID: <20250115103555.253776186@linuxfoundation.org>
+Subject: [PATCH 6.6 023/129] net: libwx: fix firmware mailbox abnormal return
+Date: Wed, 15 Jan 2025 11:36:38 +0100
+Message-ID: <20250115103555.291943420@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -52,72 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jiawen Wu <jiawenwu@trustnetic.com>
 
-[ Upstream commit a039e54397c6a75b713b9ce7894a62e06956aa92 ]
+[ Upstream commit 8ce4f287524c74a118b0af1eebd4b24a8efca57a ]
 
-syzbot found that TCA_FLOW_RSHIFT attribute was not validated.
-Right shitfing a 32bit integer is undefined for large shift values.
+The existing SW-FW interaction flow on the driver is wrong. Follow this
+wrong flow, driver would never return error if there is a unknown command.
+Since firmware writes back 'firmware ready' and 'unknown command' in the
+mailbox message if there is an unknown command sent by driver. So reading
+'firmware ready' does not timeout. Then driver would mistakenly believe
+that the interaction has completed successfully.
 
-UBSAN: shift-out-of-bounds in net/sched/cls_flow.c:329:23
-shift exponent 9445 is too large for 32-bit type 'u32' (aka 'unsigned int')
-CPU: 1 UID: 0 PID: 54 Comm: kworker/u8:3 Not tainted 6.13.0-rc3-syzkaller-00180-g4f619d518db9 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Workqueue: ipv6_addrconf addrconf_dad_work
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
-  ubsan_epilogue lib/ubsan.c:231 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x3c8/0x420 lib/ubsan.c:468
-  flow_classify+0x24d5/0x25b0 net/sched/cls_flow.c:329
-  tc_classify include/net/tc_wrapper.h:197 [inline]
-  __tcf_classify net/sched/cls_api.c:1771 [inline]
-  tcf_classify+0x420/0x1160 net/sched/cls_api.c:1867
-  sfb_classify net/sched/sch_sfb.c:260 [inline]
-  sfb_enqueue+0x3ad/0x18b0 net/sched/sch_sfb.c:318
-  dev_qdisc_enqueue+0x4b/0x290 net/core/dev.c:3793
-  __dev_xmit_skb net/core/dev.c:3889 [inline]
-  __dev_queue_xmit+0xf0e/0x3f50 net/core/dev.c:4400
-  dev_queue_xmit include/linux/netdevice.h:3168 [inline]
-  neigh_hh_output include/net/neighbour.h:523 [inline]
-  neigh_output include/net/neighbour.h:537 [inline]
-  ip_finish_output2+0xd41/0x1390 net/ipv4/ip_output.c:236
-  iptunnel_xmit+0x55d/0x9b0 net/ipv4/ip_tunnel_core.c:82
-  udp_tunnel_xmit_skb+0x262/0x3b0 net/ipv4/udp_tunnel_core.c:173
-  geneve_xmit_skb drivers/net/geneve.c:916 [inline]
-  geneve_xmit+0x21dc/0x2d00 drivers/net/geneve.c:1039
-  __netdev_start_xmit include/linux/netdevice.h:5002 [inline]
-  netdev_start_xmit include/linux/netdevice.h:5011 [inline]
-  xmit_one net/core/dev.c:3590 [inline]
-  dev_hard_start_xmit+0x27a/0x7d0 net/core/dev.c:3606
-  __dev_queue_xmit+0x1b73/0x3f50 net/core/dev.c:4434
+It tends to happen with the use of custom firmware. Move the check for
+'unknown command' out of the poll timeout for 'firmware ready'. And adjust
+the debug log so that mailbox messages are always printed when commands
+timeout.
 
-Fixes: e5dfb815181f ("[NET_SCHED]: Add flow classifier")
-Reported-by: syzbot+1dbb57d994e54aaa04d2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6777bf49.050a0220.178762.0040.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250103104546.3714168-1-edumazet@google.com
+Fixes: 1efa9bfe58c5 ("net: libwx: Implement interaction with firmware")
+Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
+Link: https://patch.msgid.link/20250103081013.1995939-1-jiawenwu@trustnetic.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_flow.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/wangxun/libwx/wx_hw.c | 24 ++++++++++------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/net/sched/cls_flow.c b/net/sched/cls_flow.c
-index 6ab317b48d6c..815216b564f3 100644
---- a/net/sched/cls_flow.c
-+++ b/net/sched/cls_flow.c
-@@ -356,7 +356,8 @@ static const struct nla_policy flow_policy[TCA_FLOW_MAX + 1] = {
- 	[TCA_FLOW_KEYS]		= { .type = NLA_U32 },
- 	[TCA_FLOW_MODE]		= { .type = NLA_U32 },
- 	[TCA_FLOW_BASECLASS]	= { .type = NLA_U32 },
--	[TCA_FLOW_RSHIFT]	= { .type = NLA_U32 },
-+	[TCA_FLOW_RSHIFT]	= NLA_POLICY_MAX(NLA_U32,
-+						 31 /* BITS_PER_U32 - 1 */),
- 	[TCA_FLOW_ADDEND]	= { .type = NLA_U32 },
- 	[TCA_FLOW_MASK]		= { .type = NLA_U32 },
- 	[TCA_FLOW_XOR]		= { .type = NLA_U32 },
+diff --git a/drivers/net/ethernet/wangxun/libwx/wx_hw.c b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+index 52130df26aee..d6bc2309d2a3 100644
+--- a/drivers/net/ethernet/wangxun/libwx/wx_hw.c
++++ b/drivers/net/ethernet/wangxun/libwx/wx_hw.c
+@@ -242,27 +242,25 @@ int wx_host_interface_command(struct wx *wx, u32 *buffer,
+ 	status = read_poll_timeout(rd32, hicr, hicr & WX_MNG_MBOX_CTL_FWRDY, 1000,
+ 				   timeout * 1000, false, wx, WX_MNG_MBOX_CTL);
+ 
++	buf[0] = rd32(wx, WX_MNG_MBOX);
++	if ((buf[0] & 0xff0000) >> 16 == 0x80) {
++		wx_err(wx, "Unknown FW command: 0x%x\n", buffer[0] & 0xff);
++		status = -EINVAL;
++		goto rel_out;
++	}
++
+ 	/* Check command completion */
+ 	if (status) {
+-		wx_dbg(wx, "Command has failed with no status valid.\n");
+-
+-		buf[0] = rd32(wx, WX_MNG_MBOX);
+-		if ((buffer[0] & 0xff) != (~buf[0] >> 24)) {
+-			status = -EINVAL;
+-			goto rel_out;
+-		}
+-		if ((buf[0] & 0xff0000) >> 16 == 0x80) {
+-			wx_dbg(wx, "It's unknown cmd.\n");
+-			status = -EINVAL;
+-			goto rel_out;
+-		}
+-
++		wx_err(wx, "Command has failed with no status valid.\n");
+ 		wx_dbg(wx, "write value:\n");
+ 		for (i = 0; i < dword_len; i++)
+ 			wx_dbg(wx, "%x ", buffer[i]);
+ 		wx_dbg(wx, "read value:\n");
+ 		for (i = 0; i < dword_len; i++)
+ 			wx_dbg(wx, "%x ", buf[i]);
++		wx_dbg(wx, "\ncheck: %x %x\n", buffer[0] & 0xff, ~buf[0] >> 24);
++
++		goto rel_out;
+ 	}
+ 
+ 	if (!return_data)
 -- 
 2.39.5
 
