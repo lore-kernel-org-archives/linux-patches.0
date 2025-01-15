@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F84248BD1;
-	Wed, 15 Jan 2025 10:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD85248BB2;
+	Wed, 15 Jan 2025 10:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938261; cv=none; b=QyMNFsE9mW2KmdTYqOxKoAXpDh4EWLhhkJIiTrkf42U4wLp7PSxEXULmSSrl3BmIP/THF0BEvA8kBIBO+uz3U7oiEvISZ9G/1kPv1RujYRi5FBkt3R6rnJRN9q0Z/cSUdcQosZikxi5t2vveHzZjIocTdnKBoOasUKrrH9/LSYU=
+	t=1736938265; cv=none; b=WS2nB/M6F8/8rNN/7Zqn8s0/T8QIAoUfR6nEKHFyqnOJimEf9NnbV8O2wAVMXWYBkZWUI+lVV3QdLsgJPuDNvd/jxs8pibD+KoXjv2kpTJ3jORH7RfSC/KXhoPn8aItUk/7ZAtrcVVc/nhYCl2SQQTiSR5sdRW66rpiW3lEAon8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938261; c=relaxed/simple;
-	bh=cc8QMFJ1xVx2hcrJq53Y9n5AxLvAz6Va/SyzoBzpnew=;
+	s=arc-20240116; t=1736938265; c=relaxed/simple;
+	bh=WcqCHEcHBtg8TI3WZuoskawLnd9+3eU0ln0yIv5kolA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0Av9Vv9KCPnQbV/tTkVmY2sxmjPqGmTWUC1nMmw57zDbQtvhOFZ2Dr84MGxQloY/h62yjQEsF3ZULC8n8RBgj/wuQ2thxAIr6hFpDhlTYZqYTSHJA7uFmIPZp/Wtbut1r5BoqPkaDnemLPe0XysqTs/xva9DuQt0R27QbLf/Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfoXg0jW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KISPDjCZR9EnYDORpHKEvriZSC46al1jBjsGRRqwy6XNYskepGXT1QmtdGVqOtFJGxQ3cgN/AR3cGnNsiM0PrTGv7szTsJsc0amDIjb14eA9WXKidjfcSvS6avhTembP4Sgnh1OinaPtJ5H2NPYGxKumTycoARiBwpsj7b4/XHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q6wxlB/c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfoXg0jW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82A7C4CEDF;
-	Wed, 15 Jan 2025 10:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q6wxlB/c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047FAC4CEDF;
+	Wed, 15 Jan 2025 10:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938261;
-	bh=cc8QMFJ1xVx2hcrJq53Y9n5AxLvAz6Va/SyzoBzpnew=;
+	s=korg; t=1736938264;
+	bh=WcqCHEcHBtg8TI3WZuoskawLnd9+3eU0ln0yIv5kolA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfoXg0jWmXK7ftFcH9GdHUBE1/FD894J9c2QTD+SVphBkLaeNaquCPq9sKOKNKYEf
-	 22cHzQ6u73cLDIfPe0CX4VMK1+XgO+KIOukzwXNtyB1t/h+qhBPGF7Y6WFb83Bbjfh
-	 b78xLDMDMt5V6QD1UxIUzt5h1tQY++NP4cSeGvmA=
+	b=q6wxlB/cAMSSA9s4D3qksHR3hgmO83c6JPIAj6iF4d9q8l4h66lvY2OGdjdEwdR5l
+	 njA9b8AoEHO9BPqBAcYMKjvw+nqrJdrSzfHPZHZbh5krv1Gb3F4eupnh1mVDx4oUDm
+	 25nyTdapwvZYszml5LbEmZGGaGWXCEatDks+QtoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 100/189] rds: sysctl: rds_tcp_{rcv,snd}buf: avoid using current->nsproxy
-Date: Wed, 15 Jan 2025 11:36:36 +0100
-Message-ID: <20250115103610.315942476@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 101/189] ksmbd: Implement new SMB3 POSIX type
+Date: Wed, 15 Jan 2025 11:36:37 +0100
+Message-ID: <20250115103610.355375370@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -51,117 +50,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 7f5611cbc4871c7fb1ad36c2e5a9edad63dca95c upstream.
+commit e8580b4c600e085b3c8e6404392de2f822d4c132 upstream.
 
-As mentioned in a previous commit of this series, using the 'net'
-structure via 'current' is not recommended for different reasons:
+As SMB3 posix extension specification, Give posix file type to posix
+mode.
 
-- Inconsistency: getting info from the reader's/writer's netns vs only
-  from the opener's netns.
+https://www.samba.org/~slow/SMB3_POSIX/fscc_posix_extensions.html#posix-file-type-definition
 
-- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
-  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
-  syzbot [1] using acct(2).
-
-The per-netns structure can be obtained from the table->data using
-container_of(), then the 'net' one can be retrieved from the listen
-socket (if available).
-
-Fixes: c6a58ffed536 ("RDS: TCP: Add sysctl tunables for sndbuf/rcvbuf on rds-tcp socket")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-9-5df34b2083e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/tcp.c |   39 ++++++++++++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 7 deletions(-)
+ fs/smb/server/smb2pdu.c |   40 ++++++++++++++++++++++++++++++++++++++++
+ fs/smb/server/smb2pdu.h |   10 ++++++++++
+ 2 files changed, 50 insertions(+)
 
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -61,8 +61,10 @@ static atomic_t rds_tcp_unloading = ATOM
- 
- static struct kmem_cache *rds_tcp_conn_slab;
- 
--static int rds_tcp_skbuf_handler(const struct ctl_table *ctl, int write,
--				 void *buffer, size_t *lenp, loff_t *fpos);
-+static int rds_tcp_sndbuf_handler(const struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos);
-+static int rds_tcp_rcvbuf_handler(const struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos);
- 
- static int rds_tcp_min_sndbuf = SOCK_MIN_SNDBUF;
- static int rds_tcp_min_rcvbuf = SOCK_MIN_RCVBUF;
-@@ -74,7 +76,7 @@ static struct ctl_table rds_tcp_sysctl_t
- 		/* data is per-net pointer */
- 		.maxlen         = sizeof(int),
- 		.mode           = 0644,
--		.proc_handler   = rds_tcp_skbuf_handler,
-+		.proc_handler   = rds_tcp_sndbuf_handler,
- 		.extra1		= &rds_tcp_min_sndbuf,
- 	},
- #define	RDS_TCP_RCVBUF	1
-@@ -83,7 +85,7 @@ static struct ctl_table rds_tcp_sysctl_t
- 		/* data is per-net pointer */
- 		.maxlen         = sizeof(int),
- 		.mode           = 0644,
--		.proc_handler   = rds_tcp_skbuf_handler,
-+		.proc_handler   = rds_tcp_rcvbuf_handler,
- 		.extra1		= &rds_tcp_min_rcvbuf,
- 	},
- };
-@@ -682,10 +684,10 @@ static void rds_tcp_sysctl_reset(struct
- 	spin_unlock_irq(&rds_tcp_conn_lock);
- }
- 
--static int rds_tcp_skbuf_handler(const struct ctl_table *ctl, int write,
-+static int rds_tcp_skbuf_handler(struct rds_tcp_net *rtn,
-+				 const struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *fpos)
- {
--	struct net *net = current->nsproxy->net_ns;
- 	int err;
- 
- 	err = proc_dointvec_minmax(ctl, write, buffer, lenp, fpos);
-@@ -694,11 +696,34 @@ static int rds_tcp_skbuf_handler(const s
- 			*(int *)(ctl->extra1));
- 		return err;
- 	}
--	if (write)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3988,6 +3988,26 @@ static int smb2_populate_readdir_entry(s
+ 		posix_info->DeviceId = cpu_to_le32(ksmbd_kstat->kstat->rdev);
+ 		posix_info->HardLinks = cpu_to_le32(ksmbd_kstat->kstat->nlink);
+ 		posix_info->Mode = cpu_to_le32(ksmbd_kstat->kstat->mode & 0777);
++		switch (ksmbd_kstat->kstat->mode & S_IFMT) {
++		case S_IFDIR:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFLNK:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFCHR:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFBLK:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFIFO:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
++			break;
++		case S_IFSOCK:
++			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
++		}
 +
-+	if (write && rtn->rds_tcp_listen_sock && rtn->rds_tcp_listen_sock->sk) {
-+		struct net *net = sock_net(rtn->rds_tcp_listen_sock->sk);
-+
- 		rds_tcp_sysctl_reset(net);
+ 		posix_info->Inode = cpu_to_le64(ksmbd_kstat->kstat->ino);
+ 		posix_info->DosAttributes =
+ 			S_ISDIR(ksmbd_kstat->kstat->mode) ?
+@@ -5176,6 +5196,26 @@ static int find_file_posix_info(struct s
+ 	file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
+ 	file_info->HardLinks = cpu_to_le32(stat.nlink);
+ 	file_info->Mode = cpu_to_le32(stat.mode & 0777);
++	switch (stat.mode & S_IFMT) {
++	case S_IFDIR:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFLNK:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFCHR:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFBLK:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFIFO:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
++		break;
++	case S_IFSOCK:
++		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
 +	}
 +
- 	return 0;
+ 	file_info->DeviceId = cpu_to_le32(stat.rdev);
+ 
+ 	/*
+--- a/fs/smb/server/smb2pdu.h
++++ b/fs/smb/server/smb2pdu.h
+@@ -502,4 +502,14 @@ static inline void *smb2_get_msg(void *b
+ 	return buf + 4;
  }
  
-+static int rds_tcp_sndbuf_handler(const struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos)
-+{
-+	struct rds_tcp_net *rtn = container_of(ctl->data, struct rds_tcp_net,
-+					       sndbuf_size);
++#define POSIX_TYPE_FILE		0
++#define POSIX_TYPE_DIR		1
++#define POSIX_TYPE_SYMLINK	2
++#define POSIX_TYPE_CHARDEV	3
++#define POSIX_TYPE_BLKDEV	4
++#define POSIX_TYPE_FIFO		5
++#define POSIX_TYPE_SOCKET	6
 +
-+	return rds_tcp_skbuf_handler(rtn, ctl, write, buffer, lenp, fpos);
-+}
++#define POSIX_FILETYPE_SHIFT	12
 +
-+static int rds_tcp_rcvbuf_handler(const struct ctl_table *ctl, int write,
-+				  void *buffer, size_t *lenp, loff_t *fpos)
-+{
-+	struct rds_tcp_net *rtn = container_of(ctl->data, struct rds_tcp_net,
-+					       rcvbuf_size);
-+
-+	return rds_tcp_skbuf_handler(rtn, ctl, write, buffer, lenp, fpos);
-+}
-+
- static void rds_tcp_exit(void)
- {
- 	rds_tcp_set_unloading();
+ #endif	/* _SMB2PDU_H */
 
 
