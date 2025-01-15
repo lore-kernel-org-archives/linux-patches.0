@@ -1,96 +1,267 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6848570801
-	for <patches@lists.linux.dev>; Wed, 15 Jan 2025 15:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AC11D63DF
+	for <patches@lists.linux.dev>; Wed, 15 Jan 2025 18:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736954765; cv=none; b=fXDkL8cEBthJtzO2flT2L9Uu51yRqMk9+yoJrRFRQR1RUUli73n95fxkTWyBJajGw4XTx5OqXIMXXZw3bNMAd9bIpTVHOtw0yZLQsVMjflXWkSChDa/6hBSfI0FE6OufS6VTbwpc1VpkW6JVXdb0HeH/veFGpkARbjwArQQx55c=
+	t=1736965253; cv=none; b=fQb5D8lImDFYOwOemZ7AZS/rGaRLL11qm/nByHN+l7krwwmCXg209d9USHOySr6w6pjVBwjP5jkeWtfqqgjY/+a/zc5Te5qZvyjNn8Gq839Lre1ZSo6lHRjfeRyiHYrl3ccLozIiGG1fK+nhCuUFq1ebL8RyKmxttIxKz/3EERU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736954765; c=relaxed/simple;
-	bh=oS5Bu0PKeMi1oxl+u86jkjs1sd8YAhS/wSqvsUauqe0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bEgXtiZtwOhK1AwkZC14iSNgn7fj6H8w1YoJXe5o7Gk65Rwqx2XM07RuUmSCJzaRgLlXX5nlZDCFrAJo+rTBqFcyxtYFhiikY1+HRBxmoYU11NwCUMW3lYsJZ+k2ln2NDbs3GajsPMeUq+sOcXnp6EsRps1YATsxcwYa86jNU8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WrktSgCk; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736965253; c=relaxed/simple;
+	bh=crkpbfr0cyZ1Z0pzWbXKtZoKR5PhDOvC4WlpehnMP2o=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qasJ8h0d1bolZfM9IvJCo9mIio3mBbSCa8j36x9K+RLzaGqFHy6KorWh6eVKYCk9THVrvfjyr35U6mu6mYSwjOE6cT4hMKSJQEW4YmetMmhEjPbSMq0P+6YU6NV2+ut2SIU2nsOJbR0L9oWqRUP9DYlOlRRBOmDZs19IRj2b1IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UKthHPrR; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WrktSgCk"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ef6ee55225so1393043a91.0
-        for <patches@lists.linux.dev>; Wed, 15 Jan 2025 07:26:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736954764; x=1737559564; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oS5Bu0PKeMi1oxl+u86jkjs1sd8YAhS/wSqvsUauqe0=;
-        b=WrktSgCkHAXrMBYvlwmZGtawqY4hK25zLB4VQEg3aXvg+DXaw69k3QCAFZe3N5NSG0
-         nzmAkUYBwrEyJqr5dF+Uowlg5btzJoREYQCbcBFa7qQuF4rr+2gdnln/XoS6FnhYOmxt
-         +Vsq1vpp+MqF/PiO4MM6cQitZ4vcFF5XKgrLt9Acc4VORe4+FzLrDOvQBmc9/RBEZryu
-         iuI9R6VCXqs2MzCDE1Kk+xC3UhgcP4H1c+SrKWCXe7FHCchEPsD7S/kScwQSxUeTYvuU
-         zr3xso6Gxokhe+c8F70kGK7TkSx7VEgR4rwQus4Ds32OhHpFM9Ow0R+jA4ZcoMeFq9sM
-         GXLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736954764; x=1737559564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oS5Bu0PKeMi1oxl+u86jkjs1sd8YAhS/wSqvsUauqe0=;
-        b=ThhyMBpauDsOIpV8mvuf2PMeJcM/CRnpL6DjDfYU2WEk2KOEmB4zdkTbIUIyfmzeQy
-         cxzmNgSICgTF2m/Zj2qAPQv00e2GHTmD5JNp9u3ntGuMFIxC+UPqrEmARwoW7WqQHT+v
-         P8pyQ4WqGn7PW2cZMhzJ1cwP/yQRw+NWoRM/8DG8CTiK19iM5H+CaIIfjnHA2HsVnqvc
-         Vgwb8Ax2e97fABn0B44gaRYqiC4FxhLASDS4NlTiHvrR5rfuUk45HOhaIw+WbYiz5Zxc
-         cS0VQ+Hl9TkGToni7YtgORZlZjfkHOvQMYEu+810VW2foZcrLfu9Wymc5hNBBaHc4aNA
-         +T5g==
-X-Forwarded-Encrypted: i=1; AJvYcCUmmnYuTWyC3oSA7ZXvsD8wReu85g6e3fKnmsgiH/lxBsEtDCWwVeoA9bvWtPN0wsWoP1+bbv+a@lists.linux.dev
-X-Gm-Message-State: AOJu0YyH/kvwSqk9C1QoSoHjBdIGfj/G513lxtVuWaRNRRVn/2/l8flF
-	LxkazuqXlKMPOpCoU/fd8fXySmbZN5/uKGmz5fbu0LCJ9gw6HNwy65CiQ5edMg9eBCcb+FpDdrR
-	hUFN26tnyKLYdSYw/hIxHm0utChI=
-X-Gm-Gg: ASbGncvNhT80kPxMFB8Bv2F0n8VGD5TME2otOP3RLbSDUBORUSJP2C/HxyRegrDj2A2
-	Rnqv+Ql3UTNpDeUrOrE5EfEKJNabFpTZ5i/mS6Q==
-X-Google-Smtp-Source: AGHT+IEuvaHjinrYdSDGGIHqYQ1y21shSye1Mm1xAH9Bg2IFjYO6qBwnOAGewySKKnoaj5WrOGhqbHAClvlRG3RF3c8=
-X-Received: by 2002:a17:90a:d88c:b0:2ea:c2d3:a079 with SMTP id
- 98e67ed59e1d1-2f548f3fc41mr16367753a91.3.1736954763662; Wed, 15 Jan 2025
- 07:26:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UKthHPrR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1736965252; x=1768501252;
+  h=date:message-id:from:to:cc:subject:in-reply-to:
+   references:mime-version;
+  bh=crkpbfr0cyZ1Z0pzWbXKtZoKR5PhDOvC4WlpehnMP2o=;
+  b=UKthHPrRDg0KyfLkGlutl/USfaMVE5ysJrj4ekFpybeT+MzXx9hAwjHG
+   08V35GFVOn4zpEvmcLHPdRtJxXzzUxGK7BOWvZL8UKv9m1EGvf4XpQDlg
+   qpZIUya+DNNPfqhkdbQzP7L3/VIgBbKqmdUvGX6oPtthLTl1D5KIgYSvn
+   DiIoLhshSkIUFRBUshsyeTSU8t6dJi65oH6vTv0mTjzrjW/y61dB6WclR
+   2/uerACL3UFtIeS/TROUTaDTYPia8K/8ICv74P+hNcFLqFQqV4DAekAXr
+   nBWzvW2LEtFkM0aQbXGK4OGR6kxkEjTBAcSpjoBrNj4oc/BKgb3T27C8J
+   g==;
+X-CSE-ConnectionGUID: Hx9PxoZ9QySn57F4z8+8eQ==
+X-CSE-MsgGUID: glJEnOOeRnm4a/E2pttu7g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11316"; a="37475050"
+X-IronPort-AV: E=Sophos;i="6.13,207,1732608000"; 
+   d="scan'208";a="37475050"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2025 10:20:51 -0800
+X-CSE-ConnectionGUID: yk22gKRuRe2WNuwm/8caiA==
+X-CSE-MsgGUID: v+TSuEM7TDKwJBVxL/o0nQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,207,1732608000"; 
+   d="scan'208";a="104996029"
+Received: from orsosgc001.jf.intel.com (HELO orsosgc001.intel.com) ([10.165.21.142])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jan 2025 10:20:52 -0800
+Date: Wed, 15 Jan 2025 10:20:51 -0800
+Message-ID: <85tta0djlo.wl-ashutosh.dixit@intel.com>
+From: "Dixit, Ashutosh" <ashutosh.dixit@intel.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 182/189] drm/xe/oa: Separate batch submission from waiting for completion
+In-Reply-To: <20250115103613.670557960@linuxfoundation.org>
+References: <20250115103606.357764746@linuxfoundation.org>	<20250115103613.670557960@linuxfoundation.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?ISO-8859-4?Q?Goj=F2?=) APEL-LB/10.8 EasyPG/1.0.0
+ Emacs/28.2 (x86_64-redhat-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20241112184455.855133-1-ojeda@kernel.org> <CANiq72=BvnriScFay8SpLNe9mNhjvGsBJ9W9UtdzU_6v_i+woA@mail.gmail.com>
- <CAABy=s12gOZadhYC+=6=TbbyN9j5L0B19ZLSGR_VFEdt1jhwEA@mail.gmail.com> <CANiq72kQKGG7j61bpsORnE0vzNo_dzwMZMLx=Z0xOnY0wefv6g@mail.gmail.com>
-In-Reply-To: <CANiq72kQKGG7j61bpsORnE0vzNo_dzwMZMLx=Z0xOnY0wefv6g@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 15 Jan 2025 16:25:51 +0100
-X-Gm-Features: AbW1kvZUpcYldFjbwOBXy94o_6lTFAyj-QS9S6GkQe2OruPN52aGDmHoW0Pxiqk
-Message-ID: <CANiq72k3YfiEGT6JV5semYJWn5St8GMF3nhDW0Bt6rX1z+oDng@mail.gmail.com>
-Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
-To: "Hong, Yifan" <elsk@google.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
 
-On Tue, Jan 14, 2025 at 11:46=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
+On Wed, 15 Jan 2025 02:37:58 -0800, Greg Kroah-Hartman wrote:
 >
-> On second thought, #731 probably only applies to `rustc` native flags
-> only, rather than those that are passed to the linker (e.g. if I pass
-> a dummy flag, it is passed as-is, so I doubt they will start checking,
-> and probably they shouldn't), so it may not help here after all.
 
-For completeness: `-Clink-args=3D` appends (and is allowed to be passed
-several times), rather than override. Moreover, the docs say so
-explicitly. So it is unlikely that one would change or that #731
-applies to it (i.e. as a whole vs. individual options inside it).
+Hi Greg,
 
-Cheers,
-Miguel
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+
+> This is a note to let you know that I've just added the patch titled
+>
+>     drm/xe/oa: Separate batch submission from waiting for completion
+>
+> to the 6.12-stable tree which can be found at:
+>     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+>
+> The filename of the patch is:
+>      drm-xe-oa-separate-batch-submission-from-waiting-for.patch
+> and it can be found in the queue-6.12 subdirectory.
+>
+> If you, or anyone else, feels it should not be added to the stable tree,
+> please let <stable@vger.kernel.org> know about it.
+
+I am writing about 3 emails I received (including this one) about 3 commits
+being added to stable. These are the 3 commits I am referring to (all
+commit SHA's refer to Linus' tree and first commit is at the bottom,
+everywhere in this email):
+
+    2fb4350a283af drm/xe/oa: Add input fence dependencies
+    c8507a25cebd1 drm/xe/oa/uapi: Define and parse OA sync properties
+    dddcb19ad4d4b drm/xe/oa: Separate batch submission from waiting for completion
+
+Apparently these are added to stable to avoid conflicts with this commit:
+
+    f0ed39830e606 xe/oa: Fix query mode of operation for OAR/OAC
+
+However, the 3 commits are part of a 7 commit series and are incomplete in
+themeselves and will break userspace. So we should add the remaining 4
+commits of the series to stable too. Thes are the ones:
+
+    85d3f9e84e062 drm/xe/oa: Allow only certain property changes from config
+    9920c8b88c5cf drm/xe/oa: Add syncs support to OA config ioctl
+    cc4e6994d5a23 drm/xe/oa: Move functions up so they can be reused for config ioctl
+    343dd246fd9b5 drm/xe/oa: Signal output fences
+
+The above list can be generated by running the following in Linus' tree:
+
+    git log --oneline -- drivers/gpu/drm/xe/xe_oa.c
+
+Thanks.
+--
+Ashutosh
+
+
+
+>
+> ------------------
+>
+> From: Ashutosh Dixit <ashutosh.dixit@intel.com>
+>
+> [ Upstream commit dddcb19ad4d4bbe943a72a1fb3266c6e8aa8d541 ]
+>
+> When we introduce xe_syncs, we don't wait for internal OA programming
+> batches to complete. That is, xe_syncs are signaled asynchronously. In
+> anticipation for this, separate out batch submission from waiting for
+> completion of those batches.
+>
+> v2: Change return type of xe_oa_submit_bb to "struct dma_fence *" (Matt B)
+> v3: Retain init "int err = 0;" in xe_oa_submit_bb (Jose)
+>
+> Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+> Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+> Link: https://patchwork.freedesktop.org/patch/msgid/20241022200352.1192560-2-ashutosh.dixit@intel.com
+> Stable-dep-of: f0ed39830e60 ("xe/oa: Fix query mode of operation for OAR/OAC")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/gpu/drm/xe/xe_oa.c | 57 +++++++++++++++++++++++++++++---------
+>  1 file changed, 44 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/xe/xe_oa.c b/drivers/gpu/drm/xe/xe_oa.c
+> index 78823f53d290..4962c9eb9a81 100644
+> --- a/drivers/gpu/drm/xe/xe_oa.c
+> +++ b/drivers/gpu/drm/xe/xe_oa.c
+> @@ -567,11 +567,10 @@ static __poll_t xe_oa_poll(struct file *file, poll_table *wait)
+>	return ret;
+>  }
+>
+> -static int xe_oa_submit_bb(struct xe_oa_stream *stream, struct xe_bb *bb)
+> +static struct dma_fence *xe_oa_submit_bb(struct xe_oa_stream *stream, struct xe_bb *bb)
+>  {
+>	struct xe_sched_job *job;
+>	struct dma_fence *fence;
+> -	long timeout;
+>	int err = 0;
+>
+>	/* Kernel configuration is issued on stream->k_exec_q, not stream->exec_q */
+> @@ -585,14 +584,9 @@ static int xe_oa_submit_bb(struct xe_oa_stream *stream, struct xe_bb *bb)
+>	fence = dma_fence_get(&job->drm.s_fence->finished);
+>	xe_sched_job_push(job);
+>
+> -	timeout = dma_fence_wait_timeout(fence, false, HZ);
+> -	dma_fence_put(fence);
+> -	if (timeout < 0)
+> -		err = timeout;
+> -	else if (!timeout)
+> -		err = -ETIME;
+> +	return fence;
+>  exit:
+> -	return err;
+> +	return ERR_PTR(err);
+>  }
+>
+>  static void write_cs_mi_lri(struct xe_bb *bb, const struct xe_oa_reg *reg_data, u32 n_regs)
+> @@ -656,6 +650,7 @@ static void xe_oa_store_flex(struct xe_oa_stream *stream, struct xe_lrc *lrc,
+>  static int xe_oa_modify_ctx_image(struct xe_oa_stream *stream, struct xe_lrc *lrc,
+>				  const struct flex *flex, u32 count)
+>  {
+> +	struct dma_fence *fence;
+>	struct xe_bb *bb;
+>	int err;
+>
+> @@ -667,7 +662,16 @@ static int xe_oa_modify_ctx_image(struct xe_oa_stream *stream, struct xe_lrc *lr
+>
+>	xe_oa_store_flex(stream, lrc, bb, flex, count);
+>
+> -	err = xe_oa_submit_bb(stream, bb);
+> +	fence = xe_oa_submit_bb(stream, bb);
+> +	if (IS_ERR(fence)) {
+> +		err = PTR_ERR(fence);
+> +		goto free_bb;
+> +	}
+> +	xe_bb_free(bb, fence);
+> +	dma_fence_put(fence);
+> +
+> +	return 0;
+> +free_bb:
+>	xe_bb_free(bb, NULL);
+>  exit:
+>	return err;
+> @@ -675,6 +679,7 @@ static int xe_oa_modify_ctx_image(struct xe_oa_stream *stream, struct xe_lrc *lr
+>
+>  static int xe_oa_load_with_lri(struct xe_oa_stream *stream, struct xe_oa_reg *reg_lri)
+>  {
+> +	struct dma_fence *fence;
+>	struct xe_bb *bb;
+>	int err;
+>
+> @@ -686,7 +691,16 @@ static int xe_oa_load_with_lri(struct xe_oa_stream *stream, struct xe_oa_reg *re
+>
+>	write_cs_mi_lri(bb, reg_lri, 1);
+>
+> -	err = xe_oa_submit_bb(stream, bb);
+> +	fence = xe_oa_submit_bb(stream, bb);
+> +	if (IS_ERR(fence)) {
+> +		err = PTR_ERR(fence);
+> +		goto free_bb;
+> +	}
+> +	xe_bb_free(bb, fence);
+> +	dma_fence_put(fence);
+> +
+> +	return 0;
+> +free_bb:
+>	xe_bb_free(bb, NULL);
+>  exit:
+>	return err;
+> @@ -914,15 +928,32 @@ static int xe_oa_emit_oa_config(struct xe_oa_stream *stream, struct xe_oa_config
+>  {
+>  #define NOA_PROGRAM_ADDITIONAL_DELAY_US 500
+>	struct xe_oa_config_bo *oa_bo;
+> -	int err, us = NOA_PROGRAM_ADDITIONAL_DELAY_US;
+> +	int err = 0, us = NOA_PROGRAM_ADDITIONAL_DELAY_US;
+> +	struct dma_fence *fence;
+> +	long timeout;
+>
+> +	/* Emit OA configuration batch */
+>	oa_bo = xe_oa_alloc_config_buffer(stream, config);
+>	if (IS_ERR(oa_bo)) {
+>		err = PTR_ERR(oa_bo);
+>		goto exit;
+>	}
+>
+> -	err = xe_oa_submit_bb(stream, oa_bo->bb);
+> +	fence = xe_oa_submit_bb(stream, oa_bo->bb);
+> +	if (IS_ERR(fence)) {
+> +		err = PTR_ERR(fence);
+> +		goto exit;
+> +	}
+> +
+> +	/* Wait till all previous batches have executed */
+> +	timeout = dma_fence_wait_timeout(fence, false, 5 * HZ);
+> +	dma_fence_put(fence);
+> +	if (timeout < 0)
+> +		err = timeout;
+> +	else if (!timeout)
+> +		err = -ETIME;
+> +	if (err)
+> +		drm_dbg(&stream->oa->xe->drm, "dma_fence_wait_timeout err %d\n", err);
+>
+>	/* Additional empirical delay needed for NOA programming after registers are written */
+>	usleep_range(us, 2 * us);
+> --
+> 2.39.5
+>
+>
+>
