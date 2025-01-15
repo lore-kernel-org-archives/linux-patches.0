@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA5E248BD9;
-	Wed, 15 Jan 2025 10:39:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA9D248BDB;
+	Wed, 15 Jan 2025 10:39:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937542; cv=none; b=BIok7iWAbq45/UgqdP1oslhF6up7LF49fve1Lg/fwMrw+n28YlMM50fRGUAyjzbh9/zWJYM2lz5rY45KcagUcRnRml/wSVUq5xbSdSc+ALAU/jYhbW9e97VJJCHaE3E0sx5+IAkznWSTI8CDHEdRj5gDohUEtVIUhy9MZtvTOIY=
+	t=1736937545; cv=none; b=U/pQ59J7znJTnt3Co4XpDM8Hek+C30wiylbNN+NF3QzRFsdhvGGEWZR8VHHTKD19tsO4sLZRpvYvcFrTCe+MKx02LuduDOb3hW6xmK5lyeK+2pk5+XOcx8T69fLyaCYgUs2dyPHIqOeqgoCquEd1VaAmNfIQad2omIIhT6tF9pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937542; c=relaxed/simple;
-	bh=JZtXvz4nLtfS60zg0VSQUZW7SjcW3y3/thaqnBPAzRU=;
+	s=arc-20240116; t=1736937545; c=relaxed/simple;
+	bh=2icrrqMpXnF9y4ojJlV6TWiuCFllTCOKp74qOrgJFsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6plFX9Okf67EiJhaRvZqSHtTiNGQnlbXb5/ss7w+DmOdngFcGlRxpcQBSWepTg5K0Io5QjjfsxXz4WLnEJwViQvcQfGV8/9/3M7SCbhrL/ngWmDKbwB2Pwi5/+bK7fRN8jo8fkFw9Vr2/B4RSK5tnIzIC4hVp54u9HQ9vmBCdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ud4/lY1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SNJb46whQhCV88w99zrsGMVLssNPC80eM296zgTce9yR9mB9qroDSrTpkiaRQde5XDgR4ebcMCNUknd7mwg7ml/nECwK7oRkWt0ZvYCC9/Szjmmx/mZRHJNaJFf1X5DRcmX4j3ozVYikRsr+cBlqkePQazzoqNmjKWPebZXUk4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c9zpU9hv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ud4/lY1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2954C4CEE2;
-	Wed, 15 Jan 2025 10:39:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c9zpU9hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08BFC4CEE2;
+	Wed, 15 Jan 2025 10:39:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937541;
-	bh=JZtXvz4nLtfS60zg0VSQUZW7SjcW3y3/thaqnBPAzRU=;
+	s=korg; t=1736937545;
+	bh=2icrrqMpXnF9y4ojJlV6TWiuCFllTCOKp74qOrgJFsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ud4/lY1hYXjq6ZUilPx0uMnz4whg3eTiWMLCib3TPqBwzmM15WpPlEvphXZoBQKpC
-	 vnVMSkHhcbzzm/Z2uf+IOdSu35qs80aDGT083Sfqa//fiEygRD2jVfE4LIQz1CSfFv
-	 wXo5LrhWfQn4RxwHQ1WkQg2OxVkz7ZDOR1biWSB4=
+	b=c9zpU9hvNPNv280fG4BUNhd3pD/FzgiAkgEa/5OmMs2xR3Xt8OzaPkL+SyyZewQwL
+	 wKbGwyIbsoq41hKP9MANM12MkW2m6cukVyP44/b0EVAzr0qKQfDnX8iw9biZjPnGAA
+	 2BuXTuqRLKLFNDbhRc3F4ZOXrhhyaP7Ukx0nFyMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Ching-Chun (Jim) Huang" <jserv@ccns.ncku.edu.tw>,
-	chuang@cs.nycu.edu.tw,
-	Ingo Molnar <mingo@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Shile Zhang <shile.zhang@linux.alibaba.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 11/92] scripts/sorttable: fix orc_sort_cmp() to maintain symmetry and transitivity
-Date: Wed, 15 Jan 2025 11:36:29 +0100
-Message-ID: <20250115103547.982736908@linuxfoundation.org>
+Subject: [PATCH 6.1 12/92] ASoC: mediatek: disable buffer pre-allocation
+Date: Wed, 15 Jan 2025 11:36:30 +0100
+Message-ID: <20250115103548.023744383@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -58,66 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-The orc_sort_cmp() function, used with qsort(), previously violated the
-symmetry and transitivity rules required by the C standard.  Specifically,
-when both entries are ORC_REG_UNDEFINED, it could result in both a < b
-and b < a, which breaks the required symmetry and transitivity.  This can
-lead to undefined behavior and incorrect sorting results, potentially
-causing memory corruption in glibc implementations [1].
+[ Upstream commit 32c9c06adb5b157ef259233775a063a43746d699 ]
 
-Symmetry: If x < y, then y > x.
-Transitivity: If x < y and y < z, then x < z.
+On Chromebooks based on Mediatek MT8195 or MT8188, the audio frontend
+(AFE) is limited to accessing a very small window (1 MiB) of memory,
+which is described as a reserved memory region in the device tree.
 
-Fix the comparison logic to return 0 when both entries are
-ORC_REG_UNDEFINED, ensuring compliance with qsort() requirements.
+On these two platforms, the maximum buffer size is given as 512 KiB.
+The MediaTek common code uses the same value for preallocations. This
+means that only the first two PCM substreams get preallocations, and
+then the whole space is exhausted, barring any other substreams from
+working. Since the substreams used are not always the first two, this
+means audio won't work correctly.
 
-Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
-Link: https://lkml.kernel.org/r/20241226140332.2670689-1-visitorckw@gmail.com
-Fixes: 57fa18994285 ("scripts/sorttable: Implement build-time ORC unwind table sorting")
-Fixes: fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in two")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
-Cc: <chuang@cs.nycu.edu.tw>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shile Zhang <shile.zhang@linux.alibaba.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 0210d251162f4033350a94a43f95b1c39ec84a90)
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+This is observed on the MT8188 Geralt Chromebooks, on which the
+"mediatek,dai-link" property was dropped when it was upstreamed. That
+property causes the driver to only register the PCM substreams listed
+in the property, and in the order given.
+
+Instead of trying to compute an optimal value and figuring out which
+streams are used, simply disable preallocation. The PCM buffers are
+managed by the core and are allocated and released on the fly. There
+should be no impact to any of the other MediaTek platforms.
+
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20241219105303.548437-1-wenst@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/sorttable.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/common/mtk-afe-platform-driver.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/sorttable.h b/scripts/sorttable.h
-index deb7c1d3e979..f0ba2bf5a886 100644
---- a/scripts/sorttable.h
-+++ b/scripts/sorttable.h
-@@ -110,7 +110,7 @@ static inline unsigned long orc_ip(const int *ip)
+diff --git a/sound/soc/mediatek/common/mtk-afe-platform-driver.c b/sound/soc/mediatek/common/mtk-afe-platform-driver.c
+index 01501d5747a7..52495c930ca3 100644
+--- a/sound/soc/mediatek/common/mtk-afe-platform-driver.c
++++ b/sound/soc/mediatek/common/mtk-afe-platform-driver.c
+@@ -120,8 +120,8 @@ int mtk_afe_pcm_new(struct snd_soc_component *component,
+ 	struct mtk_base_afe *afe = snd_soc_component_get_drvdata(component);
  
- static int orc_sort_cmp(const void *_a, const void *_b)
- {
--	struct orc_entry *orc_a;
-+	struct orc_entry *orc_a, *orc_b;
- 	const int *a = g_orc_ip_table + *(int *)_a;
- 	const int *b = g_orc_ip_table + *(int *)_b;
- 	unsigned long a_val = orc_ip(a);
-@@ -128,6 +128,10 @@ static int orc_sort_cmp(const void *_a, const void *_b)
- 	 * whitelisted .o files which didn't get objtool generation.
- 	 */
- 	orc_a = g_orc_table + (a - g_orc_ip_table);
-+	orc_b = g_orc_table + (b - g_orc_ip_table);
-+	if (orc_a->sp_reg == ORC_REG_UNDEFINED && !orc_a->end &&
-+	    orc_b->sp_reg == ORC_REG_UNDEFINED && !orc_b->end)
-+		return 0;
- 	return orc_a->sp_reg == ORC_REG_UNDEFINED && !orc_a->end ? -1 : 1;
+ 	size = afe->mtk_afe_hardware->buffer_bytes_max;
+-	snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+-				       afe->dev, size, size);
++	snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV, afe->dev, 0, size);
++
+ 	return 0;
  }
- 
+ EXPORT_SYMBOL_GPL(mtk_afe_pcm_new);
 -- 
 2.39.5
 
