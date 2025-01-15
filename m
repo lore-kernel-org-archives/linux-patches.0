@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68EB248BB2;
-	Wed, 15 Jan 2025 10:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFFFD248BCB;
+	Wed, 15 Jan 2025 10:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938182; cv=none; b=hSjb1NqMQ6AwdCekk+Cp/Dn3br1NBRYbCNl+lxZcvpXP8mlZNUYMLMpNu/U1kNaoRKSU9rQKtLaHyhAzQb/3XX+jUfPu+kV/kAqo0p/elynCYen/r2rU8hJ2zu/fBWOt9+pMLhHlRrZu6dtN6BntVfwl3lm0HOHJW0Lc4hbeSnE=
+	t=1736938184; cv=none; b=bccpHzpByyehUllL6x/IcmyV2O52zpacM9fVBybQJObo6zDEDcRqXri0pQLmElwfBrgmbnukDtYtyRA9ayS4mu2ZeyZ8Za+nNso8LbFIm25MpOSRaBx3JNYPOeLfynKTM2X44cqkA2D7bkU2hkD6EHglRBK4cgOICivHuFkjRbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938182; c=relaxed/simple;
-	bh=agWNYXdCgOwv8MlnlzMBYWM/Sd3kJeDRRdhiJxEgBBQ=;
+	s=arc-20240116; t=1736938184; c=relaxed/simple;
+	bh=kendwWK4MEyc+P0r6rqzKR+FImK8i9ZdmFdaTDB7osY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mv9bD7zOJsVcp7QQxAZS+IVr1pokqCbHZ4TT06UpFw/PisHNTXQNWO2EqwcdRJJB6R9qjoGsaFKp+1KvGOrCONCjyg+YpzMi4Nm8ZO3YawtBIfuhiTZxTklximjROHDgElUgXvaJGDg6BoRNDC9yw48jPZjTMKQ2iHMHUfj5MoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ik0dwO4/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g05a54yKhoYl5KwGXCXWfNzQkTXMUpV8HgtED9X9Jzxz6/r/RP9NIXrURSvwjkZ0kgIDaVQPZPMXWmqEfiFYdaf3tT6ykti1niknzOKxYr1C+5s9pqKCRI3EvS4s7HkKsmbcbWBP8DffAYeGrnMzbxdcp5nd+fdIJ/Au+cHGSEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBlspq8m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ik0dwO4/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D566DC4CEDF;
-	Wed, 15 Jan 2025 10:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBlspq8m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FAA2C4CEDF;
+	Wed, 15 Jan 2025 10:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938181;
-	bh=agWNYXdCgOwv8MlnlzMBYWM/Sd3kJeDRRdhiJxEgBBQ=;
+	s=korg; t=1736938184;
+	bh=kendwWK4MEyc+P0r6rqzKR+FImK8i9ZdmFdaTDB7osY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ik0dwO4//bl9jYJVsAY2qwNXsyte1KZMuF19wmMum4U2DmceVOcVgKgqULdZOnf6B
-	 UpBrtMrZpHiDIOJDh9Q+ZHJtV0H4OUxpN4oJiMU1N75K0iz6ZFexOdTLyBBnvPhP/2
-	 XlFqq7UMn928IhZ2t1dcp7SDSBuPDDq40uKNFTAc=
+	b=VBlspq8mUN6qk3U5gj3fmqIw/LQ0swtMTE8RIdeY2dJfAW8akO15UFQyAyRrLKWF4
+	 OdBtnfkaaKbFDQoWVQ/kgvZUYvGPEdwGBLIZTGP4DHGNkAoOaVWvg2nYLkyn7zpLgj
+	 kwiFadD459XBKMKTUWXMUes1zda5mbDLUyuVDEVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changwoo Min <changwoo@igalia.com>,
+	Honglei Wang <jameshongleiwang@126.com>,
 	Andrea Righi <arighi@nvidia.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/189] sched_ext: Replace rq_lock() to raw_spin_rq_lock() in scx_ops_bypass()
-Date: Wed, 15 Jan 2025 11:36:44 +0100
-Message-ID: <20250115103610.761184053@linuxfoundation.org>
+Subject: [PATCH 6.12 109/189] sched_ext: switch class when preempted by higher priority scheduler
+Date: Wed, 15 Jan 2025 11:36:45 +0100
+Message-ID: <20250115103610.800160691@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,74 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Changwoo Min <changwoo@igalia.com>
+From: Honglei Wang <jameshongleiwang@126.com>
 
-[ Upstream commit 6268d5bc10354fc2ab8d44a0cd3b042d49a0417e ]
+[ Upstream commit 68e449d849fd50bd5e61d8bd32b3458dbd3a3df6 ]
 
-scx_ops_bypass() iterates all CPUs to re-enqueue all the scx tasks.
-For each CPU, it acquires a lock using rq_lock() regardless of whether
-a CPU is offline or the CPU is currently running a task in a higher
-scheduler class (e.g., deadline). The rq_lock() is supposed to be used
-for online CPUs, and the use of rq_lock() may trigger an unnecessary
-warning in rq_pin_lock(). Therefore, replace rq_lock() to
-raw_spin_rq_lock() in scx_ops_bypass().
+ops.cpu_release() function, if defined, must be invoked when preempted by
+a higher priority scheduler class task. This scenario was skipped in
+commit f422316d7466 ("sched_ext: Remove switch_class_scx()"). Let's fix
+it.
 
-Without this change, we observe the following warning:
-
-===== START =====
-[    6.615205] rq->balance_callback && rq->balance_callback != &balance_push_callback
-[    6.615208] WARNING: CPU: 2 PID: 0 at kernel/sched/sched.h:1730 __schedule+0x1130/0x1c90
-=====  END  =====
-
-Fixes: 0e7ffff1b811 ("scx: Fix raciness in scx_ops_bypass()")
-Signed-off-by: Changwoo Min <changwoo@igalia.com>
+Fixes: f422316d7466 ("sched_ext: Remove switch_class_scx()")
+Signed-off-by: Honglei Wang <jameshongleiwang@126.com>
 Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/sched/ext.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 40f915f893e2..81235942555a 100644
+index 81235942555a..f3ca1a88375c 100644
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -4348,10 +4348,9 @@ static void scx_ops_bypass(bool bypass)
- 	 */
- 	for_each_possible_cpu(cpu) {
- 		struct rq *rq = cpu_rq(cpu);
--		struct rq_flags rf;
- 		struct task_struct *p, *n;
- 
--		rq_lock(rq, &rf);
-+		raw_spin_rq_lock(rq);
- 
- 		if (bypass) {
- 			WARN_ON_ONCE(rq->scx.flags & SCX_RQ_BYPASSING);
-@@ -4367,7 +4366,7 @@ static void scx_ops_bypass(bool bypass)
- 		 * sees scx_rq_bypassing() before moving tasks to SCX.
+@@ -2917,7 +2917,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
  		 */
- 		if (!scx_enabled()) {
--			rq_unlock(rq, &rf);
-+			raw_spin_rq_unlock(rq);
- 			continue;
+ 		if (p->scx.slice && !scx_rq_bypassing(rq)) {
+ 			dispatch_enqueue(&rq->scx.local_dsq, p, SCX_ENQ_HEAD);
+-			return;
++			goto switch_class;
  		}
  
-@@ -4387,10 +4386,11 @@ static void scx_ops_bypass(bool bypass)
- 			sched_enq_and_set_task(&ctx);
+ 		/*
+@@ -2934,6 +2934,7 @@ static void put_prev_task_scx(struct rq *rq, struct task_struct *p,
  		}
- 
--		rq_unlock(rq, &rf);
--
- 		/* resched to restore ticks and idle state */
--		resched_cpu(cpu);
-+		if (cpu_online(cpu) || cpu == smp_processor_id())
-+			resched_curr(rq);
-+
-+		raw_spin_rq_unlock(rq);
  	}
- unlock:
- 	raw_spin_unlock_irqrestore(&__scx_ops_bypass_lock, flags);
+ 
++switch_class:
+ 	if (next && next->sched_class != &ext_sched_class)
+ 		switch_class(rq, next);
+ }
 -- 
 2.39.5
 
