@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3ED6248BCB;
-	Wed, 15 Jan 2025 10:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00278248BBD;
+	Wed, 15 Jan 2025 10:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938106; cv=none; b=Msp32C4Bn8Lgr1j2gTvEU0JJdiR6xv5mn02Nz0TQ5N7jwRzuJ6/ud07BUUK9/+FqLINaCjoZpF5Wu/9x31+kCANsBRgALacQZ6wPBCTqiSHuyYnslLj5bwZ3iBiXFQSN0wqsB6kC2FTAvujnnmygpzoMbbt0aagVN5mfVSTGYnI=
+	t=1736938110; cv=none; b=ejOBip8EpovGr/dATwMTWQTLUXIofGu7dFy7Vfb9fRv9wf8Ax31BxI8qQdIF8MyYZjbFQIlwVS5Khv8v+UhIVilbRZLCmiHbehpqW3EVrKpMH4NDOMsjZRWZyyJn/RaXVDO+WIQMJX3vy1t/aZBg4ywGECTuM0TxJx6JzCP8wYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938106; c=relaxed/simple;
-	bh=17kX/6zlvNpM/Voa/QGBHvTcR/C8+882C9Gkn/AMQJQ=;
+	s=arc-20240116; t=1736938110; c=relaxed/simple;
+	bh=UI+4AuJ2c0DMYlSZGc3f3t+Aufb1fjOgq3ezBKV+t0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mi/MzX1eaU+EQf7uyQjtwehw6YBUFktYNgdRNdEBPWv2Dfg47+c4N1JkxUgmJPKshnUWvQraAbWIoCkuCsof4Zfkcn/ft8sN6AYdIvz7fjDQTX9N7DdCD0Uil/Dn26Ptk/LrsQ4MUezNc41tKWZBgKGgV4hLsmNxw+lKM6sVYpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjdFLh5k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RoVBszewMHiPthbW1An+0zxyaOfVAfH2LraUnJhsUebJ6FiRoDdIhfH8t5tEHOdoY3zgDi2P+ckqcDFq101+cvy0z+J5MgW5Slg80GaFDAmi0GFYun+snMGPe/RN4umFnP4/1aa77Tuj5oN3v9Lrhp2hwH6tpuA4MmExyac9OHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aRWtlcoo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjdFLh5k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C51FC4CEDF;
-	Wed, 15 Jan 2025 10:48:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aRWtlcoo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73511C4CEDF;
+	Wed, 15 Jan 2025 10:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938106;
-	bh=17kX/6zlvNpM/Voa/QGBHvTcR/C8+882C9Gkn/AMQJQ=;
+	s=korg; t=1736938109;
+	bh=UI+4AuJ2c0DMYlSZGc3f3t+Aufb1fjOgq3ezBKV+t0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjdFLh5kV04A/rZDUzHWxDj7NBB3SPv7W40Hdhu5XbXdpxYeu8p8+RcuNTDvlwbNJ
-	 HTz+WYdy8jUqKgoCAXwykYVuHk20+re7041/1GfpOEq/cpYORG5D3h5ObEYAWbpj5C
-	 xGrtOxm6wg54qZ/wnREsbucyLmQzbFyc6wS1qnRM=
+	b=aRWtlcoosQ7e0t26AgRy3prkEBOXY1XByE90e86i1ZDL69X9cSTX50mLQoqdA5Bf5
+	 GE46CgUQpRsQM493bIj4PRglmAwflS9KMsZ0j1p4bNzlBTkkI7loL8toVbHrZj4eWX
+	 v0hAh1vOpU99rbGF9sfA2U8VHTJim5fo7ZkWcgMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Atish Patra <atishp@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/189] drivers/perf: riscv: Return error for default case
-Date: Wed, 15 Jan 2025 11:36:20 +0100
-Message-ID: <20250115103609.692850467@linuxfoundation.org>
+	Krister Johansen <kjlx@templeofstupid.com>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.12 085/189] dm thin: make get_first_thin use rcu-safe list first function
+Date: Wed, 15 Jan 2025 11:36:21 +0100
+Message-ID: <20250115103609.730076127@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -51,53 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Atish Patra <atishp@rivosinc.com>
+From: Krister Johansen <kjlx@templeofstupid.com>
 
-[ Upstream commit 2c206cdede567f53035c622e846678a996f39d69 ]
+commit 80f130bfad1dab93b95683fc39b87235682b8f72 upstream.
 
-If the upper two bits has an invalid valid (0x1), the event mapping
-is not reliable as it returns an uninitialized variable.
+The documentation in rculist.h explains the absence of list_empty_rcu()
+and cautions programmers against relying on a list_empty() ->
+list_first() sequence in RCU safe code.  This is because each of these
+functions performs its own READ_ONCE() of the list head.  This can lead
+to a situation where the list_empty() sees a valid list entry, but the
+subsequent list_first() sees a different view of list head state after a
+modification.
 
-Return appropriate value for the default case.
+In the case of dm-thin, this author had a production box crash from a GP
+fault in the process_deferred_bios path.  This function saw a valid list
+head in get_first_thin() but when it subsequently dereferenced that and
+turned it into a thin_c, it got the inside of the struct pool, since the
+list was now empty and referring to itself.  The kernel on which this
+occurred printed both a warning about a refcount_t being saturated, and
+a UBSAN error for an out-of-bounds cpuid access in the queued spinlock,
+prior to the fault itself.  When the resulting kdump was examined, it
+was possible to see another thread patiently waiting in thin_dtr's
+synchronize_rcu.
 
-Fixes: f0c9363db2dd ("perf/riscv-sbi: Add platform specific firmware event handling")
+The thin_dtr call managed to pull the thin_c out of the active thins
+list (and have it be the last entry in the active_thins list) at just
+the wrong moment which lead to this crash.
 
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20241212-pmu_event_fixes_v2-v2-2-813e8a4f5962@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fortunately, the fix here is straight forward.  Switch get_first_thin()
+function to use list_first_or_null_rcu() which performs just a single
+READ_ONCE() and returns NULL if the list is already empty.
+
+This was run against the devicemapper test suite's thin-provisioning
+suites for delete and suspend and no regressions were observed.
+
+Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
+Fixes: b10ebd34ccca ("dm thin: fix rcu_read_lock being held in code that can sleep")
+Cc: stable@vger.kernel.org
+Acked-by: Ming-Hung Tsai <mtsai@redhat.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/perf/riscv_pmu_sbi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/md/dm-thin.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index 3473ba02abf3..da3651d32906 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -507,7 +507,7 @@ static int pmu_sbi_event_map(struct perf_event *event, u64 *econfig)
- {
- 	u32 type = event->attr.type;
- 	u64 config = event->attr.config;
--	int ret;
-+	int ret = -ENOENT;
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -2332,10 +2332,9 @@ static struct thin_c *get_first_thin(str
+ 	struct thin_c *tc = NULL;
  
- 	/*
- 	 * Ensure we are finished checking standard hardware events for
-@@ -551,10 +551,11 @@ static int pmu_sbi_event_map(struct perf_event *event, u64 *econfig)
- 			ret = SBI_PMU_EVENT_TYPE_FW << 16 | RISCV_PLAT_FW_EVENT;
- 			*econfig = config & RISCV_PMU_PLAT_FW_EVENT_MASK;
- 			break;
-+		default:
-+			break;
- 		}
- 		break;
- 	default:
--		ret = -ENOENT;
- 		break;
- 	}
+ 	rcu_read_lock();
+-	if (!list_empty(&pool->active_thins)) {
+-		tc = list_entry_rcu(pool->active_thins.next, struct thin_c, list);
++	tc = list_first_or_null_rcu(&pool->active_thins, struct thin_c, list);
++	if (tc)
+ 		thin_get(tc);
+-	}
+ 	rcu_read_unlock();
  
--- 
-2.39.5
-
+ 	return tc;
 
 
