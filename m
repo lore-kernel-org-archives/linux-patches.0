@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE13248BD1;
-	Wed, 15 Jan 2025 10:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B1E248BB2;
+	Wed, 15 Jan 2025 10:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938254; cv=none; b=EnQXv6JEmD26aYBZFIyAl52Fv7Wxngkmov9nlx7yZsUA3g+gS8ll+Q5aZ0vItWS53rtrWxrdRKICEfD7aalRO21A2//Xkz7Fe164+YycUjECEMsGmnz6dZBNUtJZE0DuUG4MKHyY53bxggA1+tRq/K16XK1vFi7K3TL0SEje3oc=
+	t=1736938257; cv=none; b=EXmTxT/HvbDOr5aZ6lVFEon0efYW4HMdDXEE1CvE1vUviXw/EWxeYvgXrzs2+ubYH9ICxqNy37gXb5sBwngI+dVLHzQnW2AVBtdGdhyKv41FqYEpOlKxH9qNC/7sqn/PrClZMXCY311QzjvvIVta2Lce2+Ns1ur3Hw3pWpMDOmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938254; c=relaxed/simple;
-	bh=hIH+24RAEibWf4+uGns6mG5niDs5POMN8n6CCo0oJls=;
+	s=arc-20240116; t=1736938257; c=relaxed/simple;
+	bh=qFQjom9t2KFF8ZBIOM/Pq4cJyuzc/QtwJbs3qc0fjvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bfbwh+0KgKds81OuTG9lfam+8rTxKf0ATsG2LSlOrL2HsgVI6VnwKAwmNT06V1GAZQwxbtvnSe0Z/UGXgUX0vmCWqk/r8DIXEJYD65E78j/nG6IeSRvSOWqqiv7hkujaYR3G4WtluPc7UtqCnKfIKBuu6+Bkll108fTpMSiPARY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/Wjpnat; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MZ6cw9xDvMKpZv8Y0IiKQmLmls5kuj1oVirhwKtN9SNMidg7h/JC3a16kzuob3Ix7fyTbktJLhiNf7Ihdo75MkOkJOgKhHAmy08jD2vjA5PK/Mv3Uzn09Z9UHO6TdviNFicf2XOzeL9VvE7dc4Px1Y8kntToz8GDoCG1CsCg7V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDCRGeVO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/Wjpnat"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CF3EC4CEE4;
-	Wed, 15 Jan 2025 10:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDCRGeVO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4267EC4CEDF;
+	Wed, 15 Jan 2025 10:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938254;
-	bh=hIH+24RAEibWf4+uGns6mG5niDs5POMN8n6CCo0oJls=;
+	s=korg; t=1736938257;
+	bh=qFQjom9t2KFF8ZBIOM/Pq4cJyuzc/QtwJbs3qc0fjvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/WjpnatSJlYbFKO/MdWKPBJxoplytIQSK4F6sgiF3z6dH3BgzkS0uSVej8gMUiYY
-	 ZaV5mPm2adkn4NG7HM2o3rnYvhdRvfH9tvNugZXQYWkainaF+qAblD6qN9W7dv9H8F
-	 x2eM11/4JQ0K1xf+QdSrcX0bE253rviZcmXTWofk=
+	b=rDCRGeVOhcVBjwJNH1zFE8mYJ4uKaQ6YtdtSfQG5XK3MuLVCfK7ls7xJfdRuhTdT4
+	 dVyRPwy8AcFpdkIwAgkqEC++1rxlt2x8EcPLtE7AttdWrP1KFs88fbCrkKQ38zoMtY
+	 ZDo9dM2uPQElS6zvQASZF6sDhqUftaZAnaQZMPvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 098/189] sctp: sysctl: udp_port: avoid using current->nsproxy
-Date: Wed, 15 Jan 2025 11:36:34 +0100
-Message-ID: <20250115103610.232138099@linuxfoundation.org>
+Subject: [PATCH 6.12 099/189] sctp: sysctl: plpmtud_probe_interval: avoid using current->nsproxy
+Date: Wed, 15 Jan 2025 11:36:35 +0100
+Message-ID: <20250115103610.277717362@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit c10377bbc1972d858eaf0ab366a311b39f8ef1b6 upstream.
+commit 6259d2484d0ceff42245d1f09cc8cb6ee72d847a upstream.
 
 As mentioned in a previous commit of this series, using the 'net'
 structure via 'current' is not recommended for different reasons:
@@ -68,32 +68,34 @@ structure via 'current' is not recommended for different reasons:
 The 'net' structure can be obtained from the table->data using
 container_of().
 
-Note that table->data could also be used directly, but that would
-increase the size of this fix, while 'sctp.ctl_sock' still needs to be
-retrieved from 'net' structure.
+Note that table->data could also be used directly, as this is the only
+member needed from the 'net' structure, but that would increase the size
+of this fix, to use '*data' everywhere 'net->sctp.probe_interval' is
+used.
 
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
+Fixes: d1e462a7a5f3 ("sctp: add probe_interval in sysctl and sock/asoc/transport")
 Cc: stable@vger.kernel.org
 Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
 Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-7-5df34b2083e8@kernel.org
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-8-5df34b2083e8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sysctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/sysctl.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 --- a/net/sctp/sysctl.c
 +++ b/net/sctp/sysctl.c
-@@ -528,7 +528,7 @@ static int proc_sctp_do_auth(const struc
- static int proc_sctp_do_udp_port(const struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *ppos)
+@@ -569,7 +569,8 @@ static int proc_sctp_do_udp_port(const s
+ static int proc_sctp_do_probe_interval(const struct ctl_table *ctl, int write,
+ 				       void *buffer, size_t *lenp, loff_t *ppos)
  {
 -	struct net *net = current->nsproxy->net_ns;
-+	struct net *net = container_of(ctl->data, struct net, sctp.udp_port);
- 	unsigned int min = *(unsigned int *)ctl->extra1;
- 	unsigned int max = *(unsigned int *)ctl->extra2;
++	struct net *net = container_of(ctl->data, struct net,
++				       sctp.probe_interval);
  	struct ctl_table tbl;
+ 	int ret, new_value;
+ 
 
 
