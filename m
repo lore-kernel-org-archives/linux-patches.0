@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B671DB142;
-	Wed, 15 Jan 2025 10:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AA9248BD0;
+	Wed, 15 Jan 2025 10:57:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938626; cv=none; b=RpwsA2+Uzw6QXbB6rorDjWp3RnrAXy6An1EfQamwY9P2TQ82U5f7W/MiZ3P9fzzm1C5+q2cePLFIzxDe8U0m6MXSHHpF5rJlKhLeR/hvHZildeJOF0EWVu5N8EO85I607ad1f5FaveFgN7SmLjnahkiH05WpKgQEu2EstbD8C2Y=
+	t=1736938630; cv=none; b=qVfU4REaCwl8wkRozdS/HLw5upzFWIZjY2hiFVVCGAPpR7uiwbn7QM0qFvul5QD3kTkicbJj1Z36D0bcnJFQkYFkcnZSySvqoV3zK/rknLB2WCzvx39Gd+XIxKARfbV+WmdbwblvxzhPRTAYckiZ/Vt8RWCSn1U2HIwnKnCsK7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938626; c=relaxed/simple;
-	bh=3bgHBCUI/ZAXugNTkD/Lj9RXbtG12LK9eR1HWmjwZgk=;
+	s=arc-20240116; t=1736938630; c=relaxed/simple;
+	bh=2MJ7gaYMZC8pCb5zE9wspCdjLOpgx8auGslOF6LJW2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgGV5DVBMjxFQAYD2YOwk2t9l1gAVtHXc+cEvrlfoNRVI2UQsrIivd7ma1qiibY2kLxFRYC6xrp4Lamfh6/PSit3y1mkAQqIXRObWf6YPlicLymMAempxH22xh2rDvKTheSXrnF6yt6JEfKeNiaZppFvEKlpvyVbDEdWLOY3Ez8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rcy4AP05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTmH0bPdR9z6OOLieI+ghUXMOGb6X6L6/a4/i2UkpVaCnxfwDnWH9JVBbDv7TvhmNZkmJB7v10CYrsLDHum8Dw2WJRa3BkupE1PpCYoSf6pAZw46rT3869izfaZhpnCXnpTqRxikUSTSacp/8jHlvPiJ1028lwkelNNB2Up7LJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFx7I74O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rcy4AP05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36775C4CEDF;
-	Wed, 15 Jan 2025 10:57:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFx7I74O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6177EC4CEDF;
+	Wed, 15 Jan 2025 10:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938626;
-	bh=3bgHBCUI/ZAXugNTkD/Lj9RXbtG12LK9eR1HWmjwZgk=;
+	s=korg; t=1736938629;
+	bh=2MJ7gaYMZC8pCb5zE9wspCdjLOpgx8auGslOF6LJW2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rcy4AP05v/cCuR8IJcrTqFMZ7X0zZdZMMgrtQnR+Un3BwQR8jx2uetBhRoQmIza00
-	 34QoHtme/E9uI3SuBDbh7cwlO0tzCufYaeVcCxA2CUg6F17USUOqRofO85Offo9Wu/
-	 x/ZujI9LGQ9k0b5mb1iyCGlLyt0xzIIwZOavTQO4=
+	b=cFx7I74Oju/8EM2645Xqq7RKteetrkxmSZj0Ni/HEEgpnjQBrJ+hO33eQLn5xefzZ
+	 f9NwRtyULKWHUjdlQ0ru7GWa+Xonti2Y+bZ13syPYiJVK7pO2tv3Q9dcZvVWQnGs7Q
+	 r+vCLy3nJ2FUfwzSPxKftM8ovNQv5mla3t4/0bdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/129] selftests/alsa: Fix circular dependency involving global-timer
-Date: Wed, 15 Jan 2025 11:36:32 +0100
-Message-ID: <20250115103555.057695762@linuxfoundation.org>
+Subject: [PATCH 6.6 008/129] exfat: fix the infinite loop in exfat_readdir()
+Date: Wed, 15 Jan 2025 11:36:23 +0100
+Message-ID: <20250115103554.697577241@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -55,50 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 55853cb829dc707427c3519f6b8686682a204368 ]
+[ Upstream commit fee873761bd978d077d8c55334b4966ac4cb7b59 ]
 
-The pattern rule `$(OUTPUT)/%: %.c` inadvertently included a circular
-dependency on the global-timer target due to its inclusion in
-$(TEST_GEN_PROGS_EXTENDED). This resulted in a circular dependency
-warning during the build process.
+If the file system is corrupted so that a cluster is linked to
+itself in the cluster chain, and there is an unused directory
+entry in the cluster, 'dentry' will not be incremented, causing
+condition 'dentry < max_dentries' unable to prevent an infinite
+loop.
 
-To resolve this, the dependency on $(TEST_GEN_PROGS_EXTENDED) has been
-replaced with an explicit dependency on $(OUTPUT)/libatest.so. This change
-ensures that libatest.so is built before any other targets that require it,
-without creating a circular dependency.
+This infinite loop causes s_lock not to be released, and other
+tasks will hang, such as exfat_sync_fs().
 
-This fix addresses the following warning:
+This commit stops traversing the cluster chain when there is unused
+directory entry in the cluster to avoid this infinite loop.
 
-make[4]: Entering directory 'tools/testing/selftests/alsa'
-make[4]: Circular default_modconfig/kselftest/alsa/global-timer <- default_modconfig/kselftest/alsa/global-timer dependency dropped.
-make[4]: Nothing to be done for 'all'.
-make[4]: Leaving directory 'tools/testing/selftests/alsa'
-
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Link: https://patch.msgid.link/20241218025931.914164-1-lizhijian@fujitsu.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=205c2644abdff9d3f9fc
+Tested-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
+Fixes: ca06197382bd ("exfat: add directory operations")
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/exfat/dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/alsa/Makefile b/tools/testing/selftests/alsa/Makefile
-index 5af9ba8a4645..140c7f821727 100644
---- a/tools/testing/selftests/alsa/Makefile
-+++ b/tools/testing/selftests/alsa/Makefile
-@@ -23,5 +23,5 @@ include ../lib.mk
- $(OUTPUT)/libatest.so: conf.c alsa-local.h
- 	$(CC) $(CFLAGS) -shared -fPIC $< $(LDLIBS) -o $@
+diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
+index 7a715016b96f..f4f81e349cef 100644
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -125,7 +125,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 			type = exfat_get_entry_type(ep);
+ 			if (type == TYPE_UNUSED) {
+ 				brelse(bh);
+-				break;
++				goto out;
+ 			}
  
--$(OUTPUT)/%: %.c $(TEST_GEN_PROGS_EXTENDED) alsa-local.h
-+$(OUTPUT)/%: %.c $(OUTPUT)/libatest.so alsa-local.h
- 	$(CC) $(CFLAGS) $< $(LDLIBS) -latest -o $@
+ 			if (type != TYPE_FILE && type != TYPE_DIR) {
+@@ -189,6 +189,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 		}
+ 	}
+ 
++out:
+ 	dir_entry->namebuf.lfn[0] = '\0';
+ 	*cpos = EXFAT_DEN_TO_B(dentry);
+ 	return 0;
 -- 
 2.39.5
 
