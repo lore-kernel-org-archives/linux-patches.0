@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543A918952C;
-	Wed, 15 Jan 2025 10:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65519248BDC;
+	Wed, 15 Jan 2025 10:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938410; cv=none; b=cT9pRTin12zPy0dAiveg94eJa+QJb7LjQvuD5OM2MBA+RvkDCBSFmNxaxCHU8aLXMFHR6No166Q3ejOkXF8WVEIhyrTELXFr+Z5IIxMSZ18Aw23FgkqrnmXAsYgJ3f4qm6GNlH6unwBABKjcaiJoiVGlQfatGcvBmsY/1qWSSxk=
+	t=1736938413; cv=none; b=WTpkqzmD/VYGO13/bmaBaYagVwFXUwYjH+gaTW/SLyX9IitYsdSDO2iMnqn7vU8t2n0JqqpQAw4QH3YoJueDt3KsSH4X4gCS6UGeKtCb6po1NtGJhO+RyOB+UVPAgxzAr8TLB/2nwycB9nYuigI9kETOC4VaMwdRW7PdrTzuyWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938410; c=relaxed/simple;
-	bh=CqzuPQegzPc+hoyTYKzdm/njAfdW5ls22CI+2LAGkT4=;
+	s=arc-20240116; t=1736938413; c=relaxed/simple;
+	bh=uE627QwAk6q/Hr+GQ1bsctU09aPJhJcRiQ6KWMmQ5D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxyPxq9TxEB9BU2wGpAZ9YsZWVSkLffDGb4uGpm2F8FOibkorZDJGOaWch5dY7jBcL0SEbR9Q6ofk2lEsbyol+g0OAsziY1M6xeSEgvEwDVg6PdVnGwb7psrMcQc9Boe6y4YHiNFUe74+E/XfB0Tzy7SpZ35CFfxUn9dtZfbBjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2A7WKGlT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtb6NJLiO7l8FNv4b2Y9xCKTd9aSaQ3o1tBPZHTReqASq9of5UE0BiRMCPHnLuKmGrJKHw8lnLEXR5BXmO/nV54drlShVJxRHTUb4XEdNU5IRBxJTYY2kUGQGGdKmOyYEvaQC2DQIhhN/v0gFGNAT37GoQ8wTDsoFR49A+coGWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MbgU7B70; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2A7WKGlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2405C4CEDF;
-	Wed, 15 Jan 2025 10:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MbgU7B70"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F20C4CEDF;
+	Wed, 15 Jan 2025 10:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938410;
-	bh=CqzuPQegzPc+hoyTYKzdm/njAfdW5ls22CI+2LAGkT4=;
+	s=korg; t=1736938413;
+	bh=uE627QwAk6q/Hr+GQ1bsctU09aPJhJcRiQ6KWMmQ5D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2A7WKGlTo9RMw36+iP8MxA/OxX0uvHSe5ApMfJNda83tmrSo38VkOaN7YUCyV8vza
-	 s+jdRdHpPHxXdCll3Ta2wOyLsRQ7CmJctY/8wWIejsVZLMwY8HAx/de1wMPnRD2OGs
-	 wa9Hukp9QXFhdwl4xIIYn3XSsd9eOoVqu/Mx83/4=
+	b=MbgU7B70Jku+327PlTvl0x3qDi4vN5jbhfOI5NVOm76LL3nCCpl9UuZbvkW47y0Nr
+	 K48JtyjjRMbMRB4kfl2/iueckXIX90CgA++WFOpi15tUF/iJIjXvluGKOalVWyLH1G
+	 ncaCgwZErMgm+pgNgL+DvQmHoIvTEi+01o8zgYDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
+	Jesse Taube <Mr.Bossman075@gmail.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 175/189] arm64: dts: imx95: correct the address length of netcmix_blk_ctrl
-Date: Wed, 15 Jan 2025 11:37:51 +0100
-Message-ID: <20250115103613.386532590@linuxfoundation.org>
+Subject: [PATCH 6.12 176/189] ARM: dts: imxrt1050: Fix clocks for mmc
+Date: Wed, 15 Jan 2025 11:37:52 +0100
+Message-ID: <20250115103613.430477513@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -51,35 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Jesse Taube <Mr.Bossman075@gmail.com>
 
-[ Upstream commit c5b8d2c370842e3f9a15655893d8c597e2d981d9 ]
+[ Upstream commit 5f122030061db3e5d2bddd9cf5c583deaa6c54ff ]
 
-The netc_blk_ctrl is controlled by the imx95-blk-ctl clock driver and
-provides relevant clock configurations for NETC, SAI and MQS. Its address
-length should be 8 bytes instead of 0x1000.
+One of the usdhc1 controller's clocks should be IMXRT1050_CLK_AHB_PODF not
+IMXRT1050_CLK_OSC.
 
-Fixes: 7764fef26ea9 ("arm64: dts: imx95: Add NETCMIX block control support")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Fixes: 1c4f01be3490 ("ARM: dts: imx: Add i.MXRT1050-EVK support")
+Signed-off-by: Jesse Taube <Mr.Bossman075@gmail.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95.dtsi | 2 +-
+ arch/arm/boot/dts/nxp/imx/imxrt1050.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
-index 03661e76550f..40cbb071f265 100644
---- a/arch/arm64/boot/dts/freescale/imx95.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
-@@ -1609,7 +1609,7 @@
- 
- 		netcmix_blk_ctrl: syscon@4c810000 {
- 			compatible = "nxp,imx95-netcmix-blk-ctrl", "syscon";
--			reg = <0x0 0x4c810000 0x0 0x10000>;
-+			reg = <0x0 0x4c810000 0x0 0x8>;
- 			#clock-cells = <1>;
- 			clocks = <&scmi_clk IMX95_CLK_BUSNETCMIX>;
- 			assigned-clocks = <&scmi_clk IMX95_CLK_BUSNETCMIX>;
+diff --git a/arch/arm/boot/dts/nxp/imx/imxrt1050.dtsi b/arch/arm/boot/dts/nxp/imx/imxrt1050.dtsi
+index dd714d235d5f..b0bad0d1ba36 100644
+--- a/arch/arm/boot/dts/nxp/imx/imxrt1050.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imxrt1050.dtsi
+@@ -87,7 +87,7 @@
+ 			reg = <0x402c0000 0x4000>;
+ 			interrupts = <110>;
+ 			clocks = <&clks IMXRT1050_CLK_IPG_PDOF>,
+-				<&clks IMXRT1050_CLK_OSC>,
++				<&clks IMXRT1050_CLK_AHB_PODF>,
+ 				<&clks IMXRT1050_CLK_USDHC1>;
+ 			clock-names = "ipg", "ahb", "per";
+ 			bus-width = <4>;
 -- 
 2.39.5
 
