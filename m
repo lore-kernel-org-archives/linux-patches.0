@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5B8248BB0;
-	Wed, 15 Jan 2025 10:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B108248BB0;
+	Wed, 15 Jan 2025 10:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938782; cv=none; b=kMxn0SHZltQ1aJyEEI542dNTuimBwTYFUf2s8ZGQ6ZCpkHnpiQ89uKOGq+oiZbjW4+WNpHzi3FYoLpu/a88AMQ3bPNxYtN5PLAIobM0hzxhluUDtMS0qmspAhX0TEvyFCmX1xkdFL7waMck8GLabVMvqdQZdEENmdhwPrCHAnO4=
+	t=1736938785; cv=none; b=TVI3a8ZCg92ezy7XU+VgymBWwJG3ex+Xc6CbNqpCqqCh/Hs7Cm156TkuOT8v212Ixc4ryqFRBSa+lXH/JXtTqUCOEAbdIcHPkn3rxFSkIq1XLYyu8MFQajcrCfDnOHhHDukfKrPAiJ5+c24oZajB723YK++SI/2rpBHg75cG4Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938782; c=relaxed/simple;
-	bh=y/USKRa0y9BAQOH3ASDfDYPT80rrzPPa6R0uREOylrs=;
+	s=arc-20240116; t=1736938785; c=relaxed/simple;
+	bh=NGOsI984LTN8JyOiJW7f67xi3yOa1f9nY+0Yho0kVLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nJqyKqpmy2wMmGM8u/n902CrxG+FdTG83oR1vKd/O8I65q7eoJNgsT3+ImbHVhRXjaeqFKpmkVaMAuhxqb/ARrlqlK1Nz4LOhFRVz8mrGz8d9K16xMtlZGha38IszEteu/LFJiHwJjcENFrNE8q10ZXMrOmn/ycAFT0Gll8Etk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJ8fwpJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HEjkJRSk6IU9kG8RuswgJllL2djJDMuROfHN7yET0dVMse4VEgvkX11dHLO8bYx/UZ2RlEPAtdCqg3QAERkJgdAFhNfhjPCNo8jCtoRAIX2vVGFx14qlhkET5N2aZha0Nc6FzsvhB1aYrAzDHXd8QshlTLagJeG8pjFfyX7bHFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXFHJBsv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJ8fwpJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281B8C4CEDF;
-	Wed, 15 Jan 2025 10:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXFHJBsv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD1CC4CEDF;
+	Wed, 15 Jan 2025 10:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938781;
-	bh=y/USKRa0y9BAQOH3ASDfDYPT80rrzPPa6R0uREOylrs=;
+	s=korg; t=1736938785;
+	bh=NGOsI984LTN8JyOiJW7f67xi3yOa1f9nY+0Yho0kVLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJ8fwpJRJCfXWymHTkVfJVKZCUStkeYZnNMlLpuXRGDd0XeokbDcGLxtSNSbFnyP4
-	 drLmRXty2fnaZLVPZ8htGjOOO26Dr5Gq7Z0oMeE+wHUKHPSprT142SLqza2SiGWrKx
-	 eyhuAEmsVMiLMax5akBWE7YUrUTjrocUm+VoEeTc=
+	b=eXFHJBsvz3PxF9DUoWrqqbblaZ5LiT3O4iAAus0kJY25hKclixxQwBekFbVgmxgWl
+	 g1OduJlB2x31LkZ421P9NzQ3uUI6PsyupCi2Soy3w29UAE9n+qxShwkJwfnkfTOOjc
+	 86sSNKUtEgvsNyQ4wypqY6Qxy8SS13W/l4Q/utl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 096/129] usb: gadget: midi2: Reverse-select at the right place
-Date: Wed, 15 Jan 2025 11:37:51 +0100
-Message-ID: <20250115103558.195799817@linuxfoundation.org>
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.6 097/129] usb: chipidea: ci_hdrc_imx: decrement devices refcount in .remove() and in the error path of .probe()
+Date: Wed, 15 Jan 2025 11:37:52 +0100
+Message-ID: <20250115103558.234546667@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -50,43 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit 6f660ffce7c938f2a5d8473c0e0b45e4fb25ef7f upstream.
+commit 74adad500346fb07d69af2c79acbff4adb061134 upstream.
 
-We should do reverse selection of other components from
-CONFIG_USB_F_MIDI2 which is tristate, instead of
-CONFIG_USB_CONFIGFS_F_MIDI2 which is bool, for satisfying subtle
-module dependencies.
+Current implementation of ci_hdrc_imx_driver does not decrement the
+refcount of the device obtained in usbmisc_get_init_data(). Add a
+put_device() call in .remove() and in .probe() before returning an
+error.
 
-Fixes: 8b645922b223 ("usb: gadget: Add support for USB MIDI 2.0 function driver")
+This bug was found by an experimental static analysis tool that I am
+developing.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20250101131124.27599-1-tiwai@suse.de
+Fixes: f40017e0f332 ("chipidea: usbmisc_imx: Add USB support for VF610 SoCs")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://lore.kernel.org/r/20241216015539.352579-1-joe@pf.is.s.u-tokyo.ac.jp
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/Kconfig |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/chipidea/ci_hdrc_imx.c |   25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/gadget/Kconfig
-+++ b/drivers/usb/gadget/Kconfig
-@@ -210,6 +210,8 @@ config USB_F_MIDI
+--- a/drivers/usb/chipidea/ci_hdrc_imx.c
++++ b/drivers/usb/chipidea/ci_hdrc_imx.c
+@@ -362,25 +362,29 @@ static int ci_hdrc_imx_probe(struct plat
+ 		data->pinctrl = devm_pinctrl_get(dev);
+ 		if (PTR_ERR(data->pinctrl) == -ENODEV)
+ 			data->pinctrl = NULL;
+-		else if (IS_ERR(data->pinctrl))
+-			return dev_err_probe(dev, PTR_ERR(data->pinctrl),
++		else if (IS_ERR(data->pinctrl)) {
++			ret = dev_err_probe(dev, PTR_ERR(data->pinctrl),
+ 					     "pinctrl get failed\n");
++			goto err_put;
++		}
  
- config USB_F_MIDI2
- 	tristate
-+	select SND_UMP
-+	select SND_UMP_LEGACY_RAWMIDI
+ 		data->hsic_pad_regulator =
+ 				devm_regulator_get_optional(dev, "hsic");
+ 		if (PTR_ERR(data->hsic_pad_regulator) == -ENODEV) {
+ 			/* no pad regulator is needed */
+ 			data->hsic_pad_regulator = NULL;
+-		} else if (IS_ERR(data->hsic_pad_regulator))
+-			return dev_err_probe(dev, PTR_ERR(data->hsic_pad_regulator),
++		} else if (IS_ERR(data->hsic_pad_regulator)) {
++			ret = dev_err_probe(dev, PTR_ERR(data->hsic_pad_regulator),
+ 					     "Get HSIC pad regulator error\n");
++			goto err_put;
++		}
  
- config USB_F_HID
- 	tristate
-@@ -444,8 +446,6 @@ config USB_CONFIGFS_F_MIDI2
- 	depends on USB_CONFIGFS
- 	depends on SND
- 	select USB_LIBCOMPOSITE
--	select SND_UMP
--	select SND_UMP_LEGACY_RAWMIDI
- 	select USB_F_MIDI2
- 	help
- 	  The MIDI 2.0 function driver provides the generic emulated
+ 		if (data->hsic_pad_regulator) {
+ 			ret = regulator_enable(data->hsic_pad_regulator);
+ 			if (ret) {
+ 				dev_err(dev,
+ 					"Failed to enable HSIC pad regulator\n");
+-				return ret;
++				goto err_put;
+ 			}
+ 		}
+ 	}
+@@ -394,13 +398,14 @@ static int ci_hdrc_imx_probe(struct plat
+ 			dev_err(dev,
+ 				"pinctrl_hsic_idle lookup failed, err=%ld\n",
+ 					PTR_ERR(pinctrl_hsic_idle));
+-			return PTR_ERR(pinctrl_hsic_idle);
++			ret = PTR_ERR(pinctrl_hsic_idle);
++			goto err_put;
+ 		}
+ 
+ 		ret = pinctrl_select_state(data->pinctrl, pinctrl_hsic_idle);
+ 		if (ret) {
+ 			dev_err(dev, "hsic_idle select failed, err=%d\n", ret);
+-			return ret;
++			goto err_put;
+ 		}
+ 
+ 		data->pinctrl_hsic_active = pinctrl_lookup_state(data->pinctrl,
+@@ -409,7 +414,8 @@ static int ci_hdrc_imx_probe(struct plat
+ 			dev_err(dev,
+ 				"pinctrl_hsic_active lookup failed, err=%ld\n",
+ 					PTR_ERR(data->pinctrl_hsic_active));
+-			return PTR_ERR(data->pinctrl_hsic_active);
++			ret = PTR_ERR(data->pinctrl_hsic_active);
++			goto err_put;
+ 		}
+ 	}
+ 
+@@ -513,6 +519,8 @@ disable_hsic_regulator:
+ 	if (pdata.flags & CI_HDRC_PMQOS)
+ 		cpu_latency_qos_remove_request(&data->pm_qos_req);
+ 	data->ci_pdev = NULL;
++err_put:
++	put_device(data->usbmisc_data->dev);
+ 	return ret;
+ }
+ 
+@@ -536,6 +544,7 @@ static void ci_hdrc_imx_remove(struct pl
+ 		if (data->hsic_pad_regulator)
+ 			regulator_disable(data->hsic_pad_regulator);
+ 	}
++	put_device(data->usbmisc_data->dev);
+ }
+ 
+ static void ci_hdrc_imx_shutdown(struct platform_device *pdev)
 
 
