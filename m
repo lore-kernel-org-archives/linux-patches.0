@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F24248BAF;
-	Wed, 15 Jan 2025 11:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5738248BAF;
+	Wed, 15 Jan 2025 11:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938877; cv=none; b=M0p20K+41s/GPJZ/wyEGmppnUWy3zOzBC0ahnOlEJNJAVFMQvdNfOPyBs67k7opz2k1sztPuTSkBQsydrlB1OsCEQl5MUPueykhVdP3nsywVldlsX+uyRGi+krPFntniTvo6A8L810t8xKCitCbuEaiGfBq9nWFOSo3M7TIbEtE=
+	t=1736938880; cv=none; b=oiL+qaqYx2VFMybN7+N/Dnqf/l4maVXV9B48azvQNWt13ow++JGrzpeau23ZheIaw4lUdUxDNemCZ9FU7N2dNRKKetlIBnz2G0frp/NwbfVawdp42ouI7U8VV/yLNRRJoxd9bcU5BNLgYWLh7YWBw9v+kOsuUKYRfmFn5OCcdwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938877; c=relaxed/simple;
-	bh=vyqcikisDEEY9eixgAtyyq1EN998fpwk9AvJOt12xu4=;
+	s=arc-20240116; t=1736938880; c=relaxed/simple;
+	bh=QJ/NhoJsx+CtvPbG6rK5HVzOy3TnZPoi/EI/38d45X4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4nSNrM1LVcRtXuFB/3K2YBaooMgBqc5MUqDAca6fLeGpmJaVbgrd5xMAdDqVHVYSVl3CSNXRUpNqJklu8wO+Co2bJgVCQRQtPXTFfuFSNwGbagvTMT9utBZiw3JMg4aUPAqt0K/K2g2veoBUj0KutZ82DCGLcFi3KBUlge0Xug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Akc4vR9X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lJJtrzBnxyqDGqDARNBSzZv5DYUvuncsK1ikuqkNdy6IQk+NraRBaMLlROs35hWrD/N7AmYDhaq9Z8x+4F7opIIfKjOOI26qdvTWyt3t4bNKcWYaH/u8hfipWstC5LES5XQ/Lb7IrCPzgMYDCtVQ6xWsG3KTlopq2jsi79YtGE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zENuh3Ce; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Akc4vR9X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF26C4CEDF;
-	Wed, 15 Jan 2025 11:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zENuh3Ce"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E24C4CEDF;
+	Wed, 15 Jan 2025 11:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938877;
-	bh=vyqcikisDEEY9eixgAtyyq1EN998fpwk9AvJOt12xu4=;
+	s=korg; t=1736938880;
+	bh=QJ/NhoJsx+CtvPbG6rK5HVzOy3TnZPoi/EI/38d45X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Akc4vR9XEgffYSVRftU9yRHdsYDW+JMGTbtkU+F34AJsrePBQGx1yoIpE1Kw+5JiW
-	 ZFRGkDzFKgGB3JLY/LjSQqx/QFUTq4Z0wJFmxCWktrWGvm8R6fWmt/m6u3xTmi+0fv
-	 HwST8k4Oz9Ryjkrae9evmScqxaFc1Bg20YPQsqp8=
+	b=zENuh3CeKvgDAFjGHTA8Gk8R1JCztT7xOViaKcqd+WZwYaZwy0R1p0QZBXMD4ROaz
+	 IaLiLHra3aM+QgKDt5dCbr2ZQkskQhpZ3hUlSoWS4OeYnC4fVQWp6a17f58Eknzvke
+	 zOAuLRCecYdtZ8qurZ/1LIuS81ZoW+D5Pw8Td0pA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Peter Xu <peterx@redhat.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 124/129] pgtable: fix s390 ptdesc field comments
-Date: Wed, 15 Jan 2025 11:38:19 +0100
-Message-ID: <20250115103559.300066372@linuxfoundation.org>
+Subject: [PATCH 6.6 125/129] fs/Kconfig: make hugetlbfs a menuconfig
+Date: Wed, 15 Jan 2025 11:38:20 +0100
+Message-ID: <20250115103559.336327000@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -54,48 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Peter Xu <peterx@redhat.com>
 
-[ Upstream commit 38ca8a185389716e9f7566bce4bb0085f71da61d ]
+[ Upstream commit cddba0af0b7919e93134469f6fdf29a7d362768a ]
 
-Patch series "minor ptdesc updates", v3.
+Hugetlb vmemmap default option (HUGETLB_PAGE_OPTIMIZE_VMEMMAP_DEFAULT_ON)
+is a sub-option to hugetlbfs, but it shows in the same level as hugetlbfs
+itself, under "Pesudo filesystems".
 
-This patch (of 2):
+Make the vmemmap option a sub-option to hugetlbfs, by changing hugetlbfs
+into a menuconfig.  When moving it, fix a typo 'v' spot by Randy.
 
-Since commit d08d4e7cd6bf ("s390/mm: use full 4KB page for 2KB PTE") there
-is no fragmented page tracking on s390.  Fix the corresponding comments.
-
-Link: https://lkml.kernel.org/r/cover.1700594815.git.agordeev@linux.ibm.com
-Link: https://lkml.kernel.org/r/2eead241f3a45bed26c7911cf66bded1e35670b8.1700594815.git.agordeev@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Suggested-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Link: https://lkml.kernel.org/r/20231124151902.1075697-1-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mm_types.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/Kconfig | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
-index 20c96ce98751..1f224c55fb58 100644
---- a/include/linux/mm_types.h
-+++ b/include/linux/mm_types.h
-@@ -398,11 +398,11 @@ FOLIO_MATCH(compound_head, _head_2a);
-  * @pmd_huge_pte:     Protected by ptdesc->ptl, used for THPs.
-  * @__page_mapping:   Aliases with page->mapping. Unused for page tables.
-  * @pt_mm:            Used for x86 pgds.
-- * @pt_frag_refcount: For fragmented page table tracking. Powerpc and s390 only.
-+ * @pt_frag_refcount: For fragmented page table tracking. Powerpc only.
-  * @_pt_pad_2:        Padding to ensure proper alignment.
-  * @ptl:              Lock for the page table.
-  * @__page_type:      Same as page->page_type. Unused for page tables.
-- * @_refcount:        Same as page refcount. Used for s390 page tables.
-+ * @_refcount:        Same as page refcount.
-  * @pt_memcg_data:    Memcg data. Tracked for page tables here.
-  *
-  * This struct overlays struct page for now. Do not modify without a good
+diff --git a/fs/Kconfig b/fs/Kconfig
+index aa7e03cc1941..0ad3c7c7e984 100644
+--- a/fs/Kconfig
++++ b/fs/Kconfig
+@@ -253,7 +253,7 @@ config TMPFS_QUOTA
+ config ARCH_SUPPORTS_HUGETLBFS
+ 	def_bool n
+ 
+-config HUGETLBFS
++menuconfig HUGETLBFS
+ 	bool "HugeTLB file system support"
+ 	depends on X86 || IA64 || SPARC64 || ARCH_SUPPORTS_HUGETLBFS || BROKEN
+ 	depends on (SYSFS || SYSCTL)
+@@ -265,22 +265,24 @@ config HUGETLBFS
+ 
+ 	  If unsure, say N.
+ 
+-config HUGETLB_PAGE
+-	def_bool HUGETLBFS
+-
+-config HUGETLB_PAGE_OPTIMIZE_VMEMMAP
+-	def_bool HUGETLB_PAGE
+-	depends on ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP
+-	depends on SPARSEMEM_VMEMMAP
+-
++if HUGETLBFS
+ config HUGETLB_PAGE_OPTIMIZE_VMEMMAP_DEFAULT_ON
+ 	bool "HugeTLB Vmemmap Optimization (HVO) defaults to on"
+ 	default n
+ 	depends on HUGETLB_PAGE_OPTIMIZE_VMEMMAP
+ 	help
+-	  The HugeTLB VmemmapvOptimization (HVO) defaults to off. Say Y here to
++	  The HugeTLB Vmemmap Optimization (HVO) defaults to off. Say Y here to
+ 	  enable HVO by default. It can be disabled via hugetlb_free_vmemmap=off
+ 	  (boot command line) or hugetlb_optimize_vmemmap (sysctl).
++endif # HUGETLBFS
++
++config HUGETLB_PAGE
++	def_bool HUGETLBFS
++
++config HUGETLB_PAGE_OPTIMIZE_VMEMMAP
++	def_bool HUGETLB_PAGE
++	depends on ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP
++	depends on SPARSEMEM_VMEMMAP
+ 
+ config ARCH_HAS_GIGANTIC_PAGE
+ 	bool
 -- 
 2.39.5
 
