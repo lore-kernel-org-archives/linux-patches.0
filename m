@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7773E248BB6;
-	Wed, 15 Jan 2025 10:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D440D1E9913;
+	Wed, 15 Jan 2025 10:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937904; cv=none; b=tMPH/M5cm6GhU2MsdQVBV6EKR2spsHRQxBwPvydqguIZTgN1Ik6INr8z/rDLCRmmtF3gMnr5PwBCuCoIUhKTObpSwhMmcA2LW30qYcxgXG2368amvAWBjt4z2tTckF8tBqj/R4mrOk6H88VsErYnY9kYe1DqwP84C23V0n0GxAE=
+	t=1736937907; cv=none; b=RK6m38A7GK/2TcY66/IZLihuWxqPIOfI/npRGE23w9QKmpr+dyYQvSZW6fb9p+G8ZXaD4m1C6gSrUIAzlRzthh1xr7Xph9GB2o0ZEYTN2okt7lAxCMJalfn+P87geTR5j5MgSp7KaCj3OAe4uUejZyZr3SwY3U/dq0s6yudOuCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937904; c=relaxed/simple;
-	bh=Q87Es01maS3qhhOdajXdGS+y55kQnqQjJmtyHRXnKzk=;
+	s=arc-20240116; t=1736937907; c=relaxed/simple;
+	bh=zb+Rf8iozRvD2P10y+17+qOVpczg2bTjGSsix/OQvi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rt0NVB+8YYm81kzrZU/krOMXLicOv2Q/wqSI1LaPf9pMY6rrbA1hgoUOg7OUP5NkN9gvxwN3K+3dyTw8FGTT8n+NLKhW8n3B55Jq7h9ad03Y2ve/wxW9DV1lHL8C6tVLCPjGD7KtxZDRDXBmTEYIjZV2UHjtGWds2jC4eLBhhXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fsitf7Tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xubo3k4P3AAjxqacEfH3AG01SNTM+mszfWXVNsxQZdAb1XdI964UqqBu1Dp3JW1UDgUjnbrWGuSzBn+cZsyVl4vtOhfmUwgf1HN3647F5wSvyjvHaj4mM8+mziq6l0/ZYjl3lkcMGwx9Wktb9tBDA43U9IEGCs4DwbkORmh0qns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOPxzHWN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fsitf7Tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A69C4CEE2;
-	Wed, 15 Jan 2025 10:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOPxzHWN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49119C4CEDF;
+	Wed, 15 Jan 2025 10:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937904;
-	bh=Q87Es01maS3qhhOdajXdGS+y55kQnqQjJmtyHRXnKzk=;
+	s=korg; t=1736937907;
+	bh=zb+Rf8iozRvD2P10y+17+qOVpczg2bTjGSsix/OQvi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fsitf7TxyS34gA8ODnBS2/7etXwiZjkiplII606d41EDa8Yz8Bnsmq2bsCLjjprDS
-	 qoKydtDnnP4zhHyTryqVJDXQ3B01oZKAamAJjStAmexIOpMqIO/8M8tfk0BTOmR7Qp
-	 YL4S6AFN8QRkLg7LaW2wHPpFXExsHtYF4EPxxBtM=
+	b=iOPxzHWNUpzotu21YkEJ4nJ7SLwXscgYoEP2O87szHZd2z1ZcoRnYVmGZPUZ1n99k
+	 e28x0lS86yqPLsogc9RA2iVFwxMDvKWpdeZruqKdbL754FpQXucs/rWfS0wsLcWuy7
+	 e0ewVYcjwdv114cAzQp76edNCu5BrTAjbuTxy9sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Pastor <antonio.pastor@gmail.com>,
+	Zhongqiu Duan <dzq.aishenghu0@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/189] net: 802: LLC+SNAP OID:PID lookup on start of skb data
-Date: Wed, 15 Jan 2025 11:35:21 +0100
-Message-ID: <20250115103607.362213187@linuxfoundation.org>
+Subject: [PATCH 6.12 026/189] tcp/dccp: allow a connection when sk_max_ack_backlog is zero
+Date: Wed, 15 Jan 2025 11:35:22 +0100
+Message-ID: <20250115103607.402974373@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -52,54 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Pastor <antonio.pastor@gmail.com>
+From: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
 
-[ Upstream commit 1e9b0e1c550c42c13c111d1a31e822057232abc4 ]
+[ Upstream commit 3479c7549fb1dfa7a1db4efb7347c7b8ef50de4b ]
 
-802.2+LLC+SNAP frames received by napi_complete_done() with GRO and DSA
-have skb->transport_header set two bytes short, or pointing 2 bytes
-before network_header & skb->data. This was an issue as snap_rcv()
-expected offset to point to SNAP header (OID:PID), causing packet to
-be dropped.
+If the backlog of listen() is set to zero, sk_acceptq_is_full() allows
+one connection to be made, but inet_csk_reqsk_queue_is_full() does not.
+When the net.ipv4.tcp_syncookies is zero, inet_csk_reqsk_queue_is_full()
+will cause an immediate drop before the sk_acceptq_is_full() check in
+tcp_conn_request(), resulting in no connection can be made.
 
-A fix at llc_fixup_skb() (a024e377efed) resets transport_header for any
-LLC consumers that may care about it, and stops SNAP packets from being
-dropped, but doesn't fix the problem which is that LLC and SNAP should
-not use transport_header offset.
+This patch tries to keep consistent with 64a146513f8f ("[NET]: Revert
+incorrect accept queue backlog changes.").
 
-Ths patch eliminates the use of transport_header offset for SNAP lookup
-of OID:PID so that SNAP does not rely on the offset at all.
-The offset is reset after pull for any SNAP packet consumers that may
-(but shouldn't) use it.
-
-Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
+Link: https://lore.kernel.org/netdev/20250102080258.53858-1-kuniyu@amazon.com/
+Fixes: ef547f2ac16b ("tcp: remove max_qlen_log")
+Signed-off-by: Zhongqiu Duan <dzq.aishenghu0@gmail.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250103012303.746521-1-antonio.pastor@gmail.com
+Link: https://patch.msgid.link/20250102171426.915276-1-dzq.aishenghu0@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/802/psnap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/inet_connection_sock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/802/psnap.c b/net/802/psnap.c
-index fca9d454905f..389df460c8c4 100644
---- a/net/802/psnap.c
-+++ b/net/802/psnap.c
-@@ -55,11 +55,11 @@ static int snap_rcv(struct sk_buff *skb, struct net_device *dev,
- 		goto drop;
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index c0deaafebfdc..4bd93571e6c1 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -281,7 +281,7 @@ static inline int inet_csk_reqsk_queue_len(const struct sock *sk)
  
- 	rcu_read_lock();
--	proto = find_snap_client(skb_transport_header(skb));
-+	proto = find_snap_client(skb->data);
- 	if (proto) {
- 		/* Pass the frame on. */
--		skb->transport_header += 5;
- 		skb_pull_rcsum(skb, 5);
-+		skb_reset_transport_header(skb);
- 		rc = proto->rcvfunc(skb, dev, &snap_packet_type, orig_dev);
- 	}
- 	rcu_read_unlock();
+ static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
+ {
+-	return inet_csk_reqsk_queue_len(sk) >= READ_ONCE(sk->sk_max_ack_backlog);
++	return inet_csk_reqsk_queue_len(sk) > READ_ONCE(sk->sk_max_ack_backlog);
+ }
+ 
+ bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
 -- 
 2.39.5
 
