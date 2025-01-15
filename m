@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A329248BA1;
-	Wed, 15 Jan 2025 10:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543A918952C;
+	Wed, 15 Jan 2025 10:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938407; cv=none; b=SRal0vug50N3YsQH+lg0pcMboXRFlGCtbLJEaZ799HXbAREH8peA3GnMeZtTaToMftTtQgsq9jWiFN/NMjEPcdvbLbXhMgNBVOS+TgAYI2i9Ln/I/sJnTOB079GyZlffNtH06kNZRs2M2WozolqdUmVBNs33Lz8iJlciUoYxgPM=
+	t=1736938410; cv=none; b=cT9pRTin12zPy0dAiveg94eJa+QJb7LjQvuD5OM2MBA+RvkDCBSFmNxaxCHU8aLXMFHR6No166Q3ejOkXF8WVEIhyrTELXFr+Z5IIxMSZ18Aw23FgkqrnmXAsYgJ3f4qm6GNlH6unwBABKjcaiJoiVGlQfatGcvBmsY/1qWSSxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938407; c=relaxed/simple;
-	bh=nQEh4tnBgs8U/FRWQJ1rdAGoSsKjfen3e1eioWtwnRU=;
+	s=arc-20240116; t=1736938410; c=relaxed/simple;
+	bh=CqzuPQegzPc+hoyTYKzdm/njAfdW5ls22CI+2LAGkT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YPHSwrRfkAfFDf5UMk49T4jpbOP4rksUQ0CohwxQclyumEDH//LBFlkptN9LeO4YvCON9K/1vv8SHFc3ZXCkRxWtTu/6HCMXCJ4QDvTX/UW+ksCYqTrTph4t5wB+1gpMsNRkDC1YyD5dJG+Q5eLVEA3KMVuplEF4PY+y+nxWCzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYRbMv3I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AxyPxq9TxEB9BU2wGpAZ9YsZWVSkLffDGb4uGpm2F8FOibkorZDJGOaWch5dY7jBcL0SEbR9Q6ofk2lEsbyol+g0OAsziY1M6xeSEgvEwDVg6PdVnGwb7psrMcQc9Boe6y4YHiNFUe74+E/XfB0Tzy7SpZ35CFfxUn9dtZfbBjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2A7WKGlT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYRbMv3I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC96BC4CEE2;
-	Wed, 15 Jan 2025 10:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2A7WKGlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2405C4CEDF;
+	Wed, 15 Jan 2025 10:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938407;
-	bh=nQEh4tnBgs8U/FRWQJ1rdAGoSsKjfen3e1eioWtwnRU=;
+	s=korg; t=1736938410;
+	bh=CqzuPQegzPc+hoyTYKzdm/njAfdW5ls22CI+2LAGkT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYRbMv3I4mfqR4P/n0dnuydzauxw1CHhjlZxt6LwzWn0b11Lb/1Jv+o0EW4MKcwZ1
-	 oxsauI3Er9bV38naYjO+3Y1NfemuHJXNsh5tfMXoYhXvpoTcYzclbPYnPF992Em94X
-	 Km1v4KrA+35+p2OgknoaeX0B4sgaOlP1zZcAxWKQ=
+	b=2A7WKGlTo9RMw36+iP8MxA/OxX0uvHSe5ApMfJNda83tmrSo38VkOaN7YUCyV8vza
+	 s+jdRdHpPHxXdCll3Ta2wOyLsRQ7CmJctY/8wWIejsVZLMwY8HAx/de1wMPnRD2OGs
+	 wa9Hukp9QXFhdwl4xIIYn3XSsd9eOoVqu/Mx83/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 174/189] io_uring/eventfd: ensure io_eventfd_signal() defers another RCU period
-Date: Wed, 15 Jan 2025 11:37:50 +0100
-Message-ID: <20250115103613.346350199@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 175/189] arm64: dts: imx95: correct the address length of netcmix_blk_ctrl
+Date: Wed, 15 Jan 2025 11:37:51 +0100
+Message-ID: <20250115103613.386532590@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -50,38 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Wei Fang <wei.fang@nxp.com>
 
-Commit c9a40292a44e78f71258b8522655bffaf5753bdb upstream.
+[ Upstream commit c5b8d2c370842e3f9a15655893d8c597e2d981d9 ]
 
-io_eventfd_do_signal() is invoked from an RCU callback, but when
-dropping the reference to the io_ev_fd, it calls io_eventfd_free()
-directly if the refcount drops to zero. This isn't correct, as any
-potential freeing of the io_ev_fd should be deferred another RCU grace
-period.
+The netc_blk_ctrl is controlled by the imx95-blk-ctl clock driver and
+provides relevant clock configurations for NETC, SAI and MQS. Its address
+length should be 8 bytes instead of 0x1000.
 
-Just call io_eventfd_put() rather than open-code the dec-and-test and
-free, which will correctly defer it another RCU grace period.
-
-Fixes: 21a091b970cd ("io_uring: signal registered eventfd to process deferred task work")
-Reported-by: Jann Horn <jannh@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7764fef26ea9 ("arm64: dts: imx95: Add NETCMIX block control support")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/eventfd.c |    2 +-
+ arch/arm64/boot/dts/freescale/imx95.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/eventfd.c
-+++ b/io_uring/eventfd.c
-@@ -38,7 +38,7 @@ static void io_eventfd_do_signal(struct
- 	eventfd_signal_mask(ev_fd->cq_ev_fd, EPOLL_URING_WAKE);
+diff --git a/arch/arm64/boot/dts/freescale/imx95.dtsi b/arch/arm64/boot/dts/freescale/imx95.dtsi
+index 03661e76550f..40cbb071f265 100644
+--- a/arch/arm64/boot/dts/freescale/imx95.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx95.dtsi
+@@ -1609,7 +1609,7 @@
  
- 	if (refcount_dec_and_test(&ev_fd->refs))
--		io_eventfd_free(rcu);
-+		call_rcu(&ev_fd->rcu, io_eventfd_free);
- }
- 
- void io_eventfd_signal(struct io_ring_ctx *ctx)
+ 		netcmix_blk_ctrl: syscon@4c810000 {
+ 			compatible = "nxp,imx95-netcmix-blk-ctrl", "syscon";
+-			reg = <0x0 0x4c810000 0x0 0x10000>;
++			reg = <0x0 0x4c810000 0x0 0x8>;
+ 			#clock-cells = <1>;
+ 			clocks = <&scmi_clk IMX95_CLK_BUSNETCMIX>;
+ 			assigned-clocks = <&scmi_clk IMX95_CLK_BUSNETCMIX>;
+-- 
+2.39.5
+
 
 
