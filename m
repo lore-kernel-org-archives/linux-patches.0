@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BAE248BA6;
-	Wed, 15 Jan 2025 10:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD2F248BA0;
+	Wed, 15 Jan 2025 10:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937724; cv=none; b=N++V3RhD1F6meohVeN10QkHZ3w+ivAtOADC+KOO4ntrdozF5wY1mbn5rkKc0N2Ncvo4qUotT0O/wANF9PXWaI02vkGlaFcRYE4dLzLV2AA39MzCgX+yLX+tvbfWmwain4zMMD5m/XjA3cOuLrBhXlL4eqhJjg/tsCNhIqUhYsmc=
+	t=1736937727; cv=none; b=WdegG3g6mlkzDiAEViObas2d6vlvY9buTPm6XD/CAUhIqmSIfjgLZSLx5Y3Pi6Zn3DS16EYO4VVS0fxwhnec7I5oPgidC32+Vz/VCA6o7K1iUGzAB8YnOPdQzTKFmJeE+bsu0CBLrk07lft44iIIOq5WHOfXz0M6DRcwCp/cECQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937724; c=relaxed/simple;
-	bh=ZkpkJrCaCPczV6Ur+TgaKPN3ouPQHIfKDUcI0L1zGjE=;
+	s=arc-20240116; t=1736937727; c=relaxed/simple;
+	bh=pPEU3w1y7GErYG+6gah+8Q5QSF+BU5KTfzzHUz+40qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YHC/dgockzKlgw3xWcHM1CozoMAO5Ser+naDqtM4UNkM2ApS+kzqwuzv0RoGzEdcr6ci2kdjvhRBUmzxhT5ybpe7TfkjvA/rIvBT4RcFTLL4uYRvdrfTagkBONXPvEqz4+kJyXI0qSoAi92Nv6E1O61ZGyt9RKhIETeMdJKOFU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Oqrks39; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OBVq6IF59X/X05OUx+isOVdn8T0QotCsfF8jwyT0rMnkAGxuvdpEshxFdpLCg0We91XLpykbfFJcJ4WIXnk8BNISwuHxJSdpZfWHik76wMs2FD2TYdflPavsHDDSEQnhnm7A8jOZ4NaOIfPnXPRvS5Xs2M2c6F1wGrUK2oNf6fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BGDqUBSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Oqrks39"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6F0C4CEE2;
-	Wed, 15 Jan 2025 10:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BGDqUBSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82117C4CEE3;
+	Wed, 15 Jan 2025 10:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937723;
-	bh=ZkpkJrCaCPczV6Ur+TgaKPN3ouPQHIfKDUcI0L1zGjE=;
+	s=korg; t=1736937726;
+	bh=pPEU3w1y7GErYG+6gah+8Q5QSF+BU5KTfzzHUz+40qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Oqrks39FPpOjQ5dDwRls1EQXUtShJYNr4l0S+q01gQNaF1BdAYY5AoA/KD/Kzm+x
-	 2Blmj+t2CHHad7j5s2w9TSqmO/TEht+0qLtTQX5S4x831NxWxvzx0PebATZ59nhwYX
-	 o06HhfSC9Cau11KnkyQpO1/3bFzpnJOzxs7PVRiQ=
+	b=BGDqUBSPOBIFAFw2dT/D2dB1d8CtQBLhTL0/ylKYb0miz6WX4arfGrGqt+Trb88jL
+	 p7IRCAm5th76lWPHAq02BRlVoGYKFaHt5eVFRzNUFzTsgfKjf5vNSMEy90IojGuo2J
+	 b2rTyjfqhCCtrur6j/NwQiCfxvLYMLcrJWD8/n0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 22/92] Bluetooth: hci_sync: Fix not setting Random Address when required
-Date: Wed, 15 Jan 2025 11:36:40 +0100
-Message-ID: <20250115103548.420275810@linuxfoundation.org>
+	Lubomir Rintel <lkundrak@v3.sk>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 56/92] usb-storage: Add max sectors quirk for Nokia 208
+Date: Wed, 15 Jan 2025 11:37:14 +0100
+Message-ID: <20250115103549.788250758@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,76 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Lubomir Rintel <lrintel@redhat.com>
 
-[ Upstream commit c2994b008492db033d40bd767be1620229a3035e ]
+commit cdef30e0774802df2f87024d68a9d86c3b99ca2a upstream.
 
-This fixes errors such as the following when Own address type is set to
-Random Address but it has not been programmed yet due to either be
-advertising or connecting:
+This fixes data corruption when accessing the internal SD card in mass
+storage mode.
 
-< HCI Command: LE Set Exte.. (0x08|0x0041) plen 13
-        Own address type: Random (0x03)
-        Filter policy: Ignore not in accept list (0x01)
-        PHYs: 0x05
-        Entry 0: LE 1M
-          Type: Passive (0x00)
-          Interval: 60.000 msec (0x0060)
-          Window: 30.000 msec (0x0030)
-        Entry 1: LE Coded
-          Type: Passive (0x00)
-          Interval: 180.000 msec (0x0120)
-          Window: 90.000 msec (0x0090)
-> HCI Event: Command Complete (0x0e) plen 4
-      LE Set Extended Scan Parameters (0x08|0x0041) ncmd 1
-        Status: Success (0x00)
-< HCI Command: LE Set Exten.. (0x08|0x0042) plen 6
-        Extended scan: Enabled (0x01)
-        Filter duplicates: Enabled (0x01)
-        Duration: 0 msec (0x0000)
-        Period: 0.00 sec (0x0000)
-> HCI Event: Command Complete (0x0e) plen 4
-      LE Set Extended Scan Enable (0x08|0x0042) ncmd 1
-        Status: Invalid HCI Command Parameters (0x12)
+I am actually not too sure why. I didn't figure a straightforward way to
+reproduce the issue, but i seem to get garbage when issuing a lot (over 50)
+of large reads (over 120 sectors) are done in a quick succession. That is,
+time seems to matter here -- larger reads are fine if they are done with
+some delay between them.
 
-Fixes: c45074d68a9b ("Bluetooth: Fix not generating RPA when required")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+But I'm not great at understanding this sort of things, so I'll assume
+the issue other, smarter, folks were seeing with similar phones is the
+same problem and I'll just put my quirk next to theirs.
+
+The "Software details" screen on the phone is as follows:
+
+  V 04.06
+  07-08-13
+  RM-849
+  (c) Nokia
+
+TL;DR version of the device descriptor:
+
+  idVendor           0x0421 Nokia Mobile Phones
+  idProduct          0x06c2
+  bcdDevice            4.06
+  iManufacturer           1 Nokia
+  iProduct                2 Nokia 208
+
+The patch assumes older firmwares are broken too (I'm unable to test, but
+no biggie if they aren't I guess), and I have no idea if newer firmware
+exists.
+
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Cc: stable <stable@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250101212206.2386207-1-lkundrak@v3.sk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index b7a7b2afaa04..c6108e68f5a9 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -1006,9 +1006,9 @@ static bool adv_use_rpa(struct hci_dev *hdev, uint32_t flags)
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -255,6 +255,13 @@ UNUSUAL_DEV(  0x0421, 0x06aa, 0x1110, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_MAX_SECTORS_64 ),
  
- static int hci_set_random_addr_sync(struct hci_dev *hdev, bdaddr_t *rpa)
- {
--	/* If we're advertising or initiating an LE connection we can't
--	 * go ahead and change the random address at this time. This is
--	 * because the eventual initiator address used for the
-+	/* If a random_addr has been set we're advertising or initiating an LE
-+	 * connection we can't go ahead and change the random address at this
-+	 * time. This is because the eventual initiator address used for the
- 	 * subsequently created connection will be undefined (some
- 	 * controllers use the new address and others the one we had
- 	 * when the operation started).
-@@ -1016,8 +1016,9 @@ static int hci_set_random_addr_sync(struct hci_dev *hdev, bdaddr_t *rpa)
- 	 * In this kind of scenario skip the update and let the random
- 	 * address be updated at the next cycle.
- 	 */
--	if (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
--	    hci_lookup_le_connect(hdev)) {
-+	if (bacmp(&hdev->random_addr, BDADDR_ANY) &&
-+	    (hci_dev_test_flag(hdev, HCI_LE_ADV) ||
-+	    hci_lookup_le_connect(hdev))) {
- 		bt_dev_dbg(hdev, "Deferring random address update");
- 		hci_dev_set_flag(hdev, HCI_RPA_EXPIRED);
- 		return 0;
--- 
-2.39.5
-
++/* Added by Lubomir Rintel <lkundrak@v3.sk>, a very fine chap */
++UNUSUAL_DEV(  0x0421, 0x06c2, 0x0000, 0x0406,
++		"Nokia",
++		"Nokia 208",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_MAX_SECTORS_64 ),
++
+ #ifdef NO_SDDR09
+ UNUSUAL_DEV(  0x0436, 0x0005, 0x0100, 0x0100,
+ 		"Microtech",
 
 
