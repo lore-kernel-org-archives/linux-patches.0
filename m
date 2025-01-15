@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DE1248BBB;
-	Wed, 15 Jan 2025 10:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC681E98E6;
+	Wed, 15 Jan 2025 11:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938799; cv=none; b=ZvuCQ6TLrEJJFVUy93gZCJZlZDTH0LUcQEWibdl+iS3GfWsfot6dsabRhXFXGDHShGlnMZxjTJFnC7UCbMgq8PCR1VholfRRa4X8oAIg0v+NMAfGvnBfnwCoguzVlniDB/KuxijcXZbW6BJ7cqKquFIskL3iX7PVVkelW//U0PM=
+	t=1736938803; cv=none; b=bqbJtvzuwlxR6fzGoELwzIJHvlBZ9pWIset8NGK9tS4tcLvpNbmAegHwbSQZw6J4e6EU8IEtiubz4fF2ciBrBccXHYf9M97xj7RKvBEuveYW6LV67Mc82Wbg9PD1226XwCvTL1C+0GhUsXUZNTVVOTCLpc7eqU/eqsOy3OeMCtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938799; c=relaxed/simple;
-	bh=STCif33F+JMX5pxXV3hm9jGeMzXsI59t2qiOQ6ig3SE=;
+	s=arc-20240116; t=1736938803; c=relaxed/simple;
+	bh=ubiQMj+KsMC+7b78EAwXHIPrU/NLlCUCcf1WRgjtvbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ex/hlZsPi23ZAqicLNFc68QJ0A1smVSL6H3ehwJe8u2iZa8OzGMXcHPIkTww/w0XhJkX7K6eT4PCIMnZ7klaukReCf9Rm9+wg/Uozjk5hFNEVrMcxK769OwWbMBDEImlpUhKXpz6QnNOcgxmCxLZN0z+bWzDzpSoOt/dhlsu3rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKs5Ti4B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=niy1bA9pbDVMv9XSXXT5IJSqz5LaIh+mKcQAys3PaNZV34bBCadmw5KnYgT7OWwgTgYZXQz/lVBXDuiTJ4/KMFPu6YEL9ZjOcUA/Ku3/m6swJzMqqtde4ODJhBr6vuve24o+e99rI6oThATYQnHNit9V+BPh0YVKMxqGSCJyTTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5zWIUej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKs5Ti4B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC5C5C4CEDF;
-	Wed, 15 Jan 2025 10:59:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5zWIUej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B84C4CEDF;
+	Wed, 15 Jan 2025 11:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938799;
-	bh=STCif33F+JMX5pxXV3hm9jGeMzXsI59t2qiOQ6ig3SE=;
+	s=korg; t=1736938802;
+	bh=ubiQMj+KsMC+7b78EAwXHIPrU/NLlCUCcf1WRgjtvbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKs5Ti4BhBYH3tehthhIRXFwmgPxmlBMlPfhIuIDgamBQlYpU8up48MtFUuppR2IH
-	 Az4oQPIEk/LiUif84hDl/f1ts5s7qBIBVNeUBpslPMwJchMZ/Cae+91099algEEXi7
-	 pjz5DovQ0QYKAzzIhyni6hL4uvWAFiX0apdpE7Xw=
+	b=P5zWIUejPmB2R2VJ26hEy8V41uA8+sRCQrNzQsQ4X+kR6ZEMuidkB82At52lE75KF
+	 Q5MHB4rwrRjRJ2+BT3uUwtRzKKPRDFFRKRX1bhPJRusboZs1CZyOAi6K+39FigNNrI
+	 Yp+Rj+rnu13qq6hfuZgQuABoI2VsgxmejREfkYY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ingo Rohloff <ingo.rohloff@lauterbach.com>
-Subject: [PATCH 6.6 101/129] usb: gadget: configfs: Ignore trailing LF for user strings to cdev
-Date: Wed, 15 Jan 2025 11:37:56 +0100
-Message-ID: <20250115103558.385069228@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 102/129] iio: pressure: zpa2326: fix information leak in triggered buffer
+Date: Wed, 15 Jan 2025 11:37:57 +0100
+Message-ID: <20250115103558.423066613@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -50,49 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ingo Rohloff <ingo.rohloff@lauterbach.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 9466545720e231fc02acd69b5f4e9138e09a26f6 upstream.
+commit 6007d10c5262f6f71479627c1216899ea7f09073 upstream.
 
-Since commit c033563220e0f7a8
-("usb: gadget: configfs: Attach arbitrary strings to cdev")
-a user can provide extra string descriptors to a USB gadget via configfs.
+The 'sample' local struct is used to push data to user space from a
+triggered buffer, but it has a hole between the temperature and the
+timestamp (u32 pressure, u16 temperature, GAP, u64 timestamp).
+This hole is never initialized.
 
-For "manufacturer", "product", "serialnumber", setting the string via
-configfs ignores a trailing LF.
+Initialize the struct to zero before using it to avoid pushing
+uninitialized information to userspace.
 
-For the arbitrary strings the LF was not ignored.
-
-This patch ignores a trailing LF to make this consistent with the existing
-behavior for "manufacturer", ...  string descriptors.
-
-Fixes: c033563220e0 ("usb: gadget: configfs: Attach arbitrary strings to cdev")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ingo Rohloff <ingo.rohloff@lauterbach.com>
-Link: https://lore.kernel.org/r/20241212154114.29295-1-ingo.rohloff@lauterbach.com
+Cc: stable@vger.kernel.org
+Fixes: 03b262f2bbf4 ("iio:pressure: initial zpa2326 barometer support")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-3-0cb6e98d895c@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/configfs.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/iio/pressure/zpa2326.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -824,11 +824,15 @@ static ssize_t gadget_string_s_store(str
- {
- 	struct gadget_string *string = to_gadget_string(item);
- 	int size = min(sizeof(string->string), len + 1);
-+	ssize_t cpy_len;
+--- a/drivers/iio/pressure/zpa2326.c
++++ b/drivers/iio/pressure/zpa2326.c
+@@ -586,6 +586,8 @@ static int zpa2326_fill_sample_buffer(st
+ 	}   sample;
+ 	int err;
  
- 	if (len > USB_MAX_STRING_LEN)
- 		return -EINVAL;
- 
--	return strscpy(string->string, page, size);
-+	cpy_len = strscpy(string->string, page, size);
-+	if (cpy_len > 0 && string->string[cpy_len - 1] == '\n')
-+		string->string[cpy_len - 1] = 0;
-+	return len;
- }
- CONFIGFS_ATTR(gadget_string_, s);
- 
++	memset(&sample, 0, sizeof(sample));
++
+ 	if (test_bit(0, indio_dev->active_scan_mask)) {
+ 		/* Get current pressure from hardware FIFO. */
+ 		err = zpa2326_dequeue_pressure(indio_dev, &sample.pressure);
 
 
