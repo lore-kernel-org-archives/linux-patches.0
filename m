@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851FF248BB1;
-	Wed, 15 Jan 2025 10:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE929248BAA;
+	Wed, 15 Jan 2025 10:40:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937646; cv=none; b=a87pxCWDWW6kRlLjEixFBJkbNEsEs/j+knZxouJQs1kYQ1U/vbQmAhDymP0hQLtpdlRoISaOFJW6/H8Mj5ihMcpT2drvMrVvuksiQRbhyWS/+wWXWuhsFMBg+Nebc04gh6UVogyCa2fXVQsMzK60Zr3PxGo5TB/8RoGVmib/YOI=
+	t=1736937650; cv=none; b=KZu9zurfzRow7sa4LW4kBi7H5DpSEfcIGsy68Gh7eWI0p8I7URPeIfYMQdLa15/ucZD2ilxUbXTVVbURB2py6UE2NOZai9LaIpsaTEaN2xzrQuKqtFJ9kkk2Pm5Bc5JtOgO8fv6924WWC2iWp1TytxQ7MU6QELjoulF+ZfS1/Kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937646; c=relaxed/simple;
-	bh=RTxXX4TJQHqKjy2jxJFwyNOHLG9AbYV4oiK3mYgBIgk=;
+	s=arc-20240116; t=1736937650; c=relaxed/simple;
+	bh=YcJszVYqnvSTwtEikeX6UrOw7PuQjlxNzlgjD3pDq6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zislz/HK/FYVL/QpY9+OQtMIRdJCMh8x5iahSz1RflOhMZWPdzSns3b4MLEsQaoBYv2oMwrqwr63eB7vwaCriVDL1vE5E46VTdUx8rWW9pD7BUe6k3OiuAm/9Y7MLQJGfd6y/P0ss96CSYa+elujfmLOR92A5Q8u1as5QwTtjIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=re+MqxHL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NcsvlUktubQLNfT7eFmBQscoLgSF3a5DtYhEkkvGsCzXPAxV8mQc+ioiUt9WO5gUOZMqtvmkRXkqIowKO1GyzX23Y8h4CELe0BdL4zDLSPsHuoKTf1/P2b8c6tgq/3OjujLsh6OFnLwl+dzeJkMp7qTcm6oX0cAO8is5BYZzPSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ooeu0oTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="re+MqxHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6886C4CEE2;
-	Wed, 15 Jan 2025 10:40:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ooeu0oTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C22DC4CEE2;
+	Wed, 15 Jan 2025 10:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937646;
-	bh=RTxXX4TJQHqKjy2jxJFwyNOHLG9AbYV4oiK3mYgBIgk=;
+	s=korg; t=1736937649;
+	bh=YcJszVYqnvSTwtEikeX6UrOw7PuQjlxNzlgjD3pDq6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=re+MqxHL+zv9AiaVVKAkJuRpptp92eFuuXlJ9F3L20mCr67uyWG7YMPl1GMkeyNcG
-	 9FqKzlgOkAO9i7ZmcuXG78LT/nIc8h3lM6YedfLyQFdiX+4ALbsudqoKRtZZHH5bc8
-	 qvDZK5Ju16sXXe7dF6Ts1EZ6mhTorzVeuBUCTNg8=
+	b=Ooeu0oTkeH0hrI/05zwlHyKocmobHR/YX9lz7ZHJakhebTZ+gPOySd3KuX6cjAg99
+	 5uJTYyT9o65Lx0v1v5wRoBGcqBtRjri0v+I+oO/Gl6+UGIwDcFJvPcYcN1R2k/wyZL
+	 2FXgkNFZsNJ0f2p1UzqK0R+4VyRDhQbhUDrmOXL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 41/92] sctp: sysctl: udp_port: avoid using current->nsproxy
-Date: Wed, 15 Jan 2025 11:36:59 +0100
-Message-ID: <20250115103549.168057819@linuxfoundation.org>
+	Phil Sutter <phil@nwl.cc>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 24/92] netfilter: nf_tables: imbalance in flowtable binding
+Date: Wed, 15 Jan 2025 11:36:42 +0100
+Message-ID: <20250115103548.496291480@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -51,49 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit c10377bbc1972d858eaf0ab366a311b39f8ef1b6 upstream.
+[ Upstream commit 13210fc63f353fe78584048079343413a3cdf819 ]
 
-As mentioned in a previous commit of this series, using the 'net'
-structure via 'current' is not recommended for different reasons:
+All these cases cause imbalance between BIND and UNBIND calls:
 
-- Inconsistency: getting info from the reader's/writer's netns vs only
-  from the opener's netns.
+- Delete an interface from a flowtable with multiple interfaces
 
-- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
-  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
-  syzbot [1] using acct(2).
+- Add a (device to a) flowtable with --check flag
 
-The 'net' structure can be obtained from the table->data using
-container_of().
+- Delete a netns containing a flowtable
 
-Note that table->data could also be used directly, but that would
-increase the size of this fix, while 'sctp.ctl_sock' still needs to be
-retrieved from 'net' structure.
+- In an interactive nft session, create a table with owner flag and
+  flowtable inside, then quit.
 
-Fixes: 046c052b475e ("sctp: enable udp tunneling socks")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
-Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-7-5df34b2083e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix it by calling FLOW_BLOCK_UNBIND when unregistering hooks, then
+remove late FLOW_BLOCK_UNBIND call when destroying flowtable.
+
+Fixes: ff4bf2f42a40 ("netfilter: nf_tables: add nft_unregister_flowtable_hook()")
+Reported-by: Phil Sutter <phil@nwl.cc>
+Tested-by: Phil Sutter <phil@nwl.cc>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sysctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -521,7 +521,7 @@ static int proc_sctp_do_auth(struct ctl_
- static int proc_sctp_do_udp_port(struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *ppos)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 07bcf9b7d779..8176533c50ab 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7979,6 +7979,7 @@ static void nft_unregister_flowtable_hook(struct net *net,
+ }
+ 
+ static void __nft_unregister_flowtable_net_hooks(struct net *net,
++						 struct nft_flowtable *flowtable,
+ 						 struct list_head *hook_list,
+ 					         bool release_netdev)
  {
--	struct net *net = current->nsproxy->net_ns;
-+	struct net *net = container_of(ctl->data, struct net, sctp.udp_port);
- 	unsigned int min = *(unsigned int *)ctl->extra1;
- 	unsigned int max = *(unsigned int *)ctl->extra2;
- 	struct ctl_table tbl;
+@@ -7986,6 +7987,8 @@ static void __nft_unregister_flowtable_net_hooks(struct net *net,
+ 
+ 	list_for_each_entry_safe(hook, next, hook_list, list) {
+ 		nf_unregister_net_hook(net, &hook->ops);
++		flowtable->data.type->setup(&flowtable->data, hook->ops.dev,
++					    FLOW_BLOCK_UNBIND);
+ 		if (release_netdev) {
+ 			list_del(&hook->list);
+ 			kfree_rcu(hook, rcu);
+@@ -7994,9 +7997,10 @@ static void __nft_unregister_flowtable_net_hooks(struct net *net,
+ }
+ 
+ static void nft_unregister_flowtable_net_hooks(struct net *net,
++					       struct nft_flowtable *flowtable,
+ 					       struct list_head *hook_list)
+ {
+-	__nft_unregister_flowtable_net_hooks(net, hook_list, false);
++	__nft_unregister_flowtable_net_hooks(net, flowtable, hook_list, false);
+ }
+ 
+ static int nft_register_flowtable_net_hooks(struct net *net,
+@@ -8618,8 +8622,6 @@ static void nf_tables_flowtable_destroy(struct nft_flowtable *flowtable)
+ 
+ 	flowtable->data.type->free(&flowtable->data);
+ 	list_for_each_entry_safe(hook, next, &flowtable->hook_list, list) {
+-		flowtable->data.type->setup(&flowtable->data, hook->ops.dev,
+-					    FLOW_BLOCK_UNBIND);
+ 		list_del_rcu(&hook->list);
+ 		kfree_rcu(hook, rcu);
+ 	}
+@@ -9902,6 +9904,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 							   &nft_trans_flowtable_hooks(trans),
+ 							   NFT_MSG_DELFLOWTABLE);
+ 				nft_unregister_flowtable_net_hooks(net,
++								   nft_trans_flowtable(trans),
+ 								   &nft_trans_flowtable_hooks(trans));
+ 			} else {
+ 				list_del_rcu(&nft_trans_flowtable(trans)->list);
+@@ -9910,6 +9913,7 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 							   &nft_trans_flowtable(trans)->hook_list,
+ 							   NFT_MSG_DELFLOWTABLE);
+ 				nft_unregister_flowtable_net_hooks(net,
++						nft_trans_flowtable(trans),
+ 						&nft_trans_flowtable(trans)->hook_list);
+ 			}
+ 			break;
+@@ -10140,11 +10144,13 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 		case NFT_MSG_NEWFLOWTABLE:
+ 			if (nft_trans_flowtable_update(trans)) {
+ 				nft_unregister_flowtable_net_hooks(net,
++						nft_trans_flowtable(trans),
+ 						&nft_trans_flowtable_hooks(trans));
+ 			} else {
+ 				nft_use_dec_restore(&trans->ctx.table->use);
+ 				list_del_rcu(&nft_trans_flowtable(trans)->list);
+ 				nft_unregister_flowtable_net_hooks(net,
++						nft_trans_flowtable(trans),
+ 						&nft_trans_flowtable(trans)->hook_list);
+ 			}
+ 			break;
+@@ -10685,7 +10691,8 @@ static void __nft_release_hook(struct net *net, struct nft_table *table)
+ 	list_for_each_entry(chain, &table->chains, list)
+ 		__nf_tables_unregister_hook(net, table, chain, true);
+ 	list_for_each_entry(flowtable, &table->flowtables, list)
+-		__nft_unregister_flowtable_net_hooks(net, &flowtable->hook_list,
++		__nft_unregister_flowtable_net_hooks(net, flowtable,
++						     &flowtable->hook_list,
+ 						     true);
+ }
+ 
+-- 
+2.39.5
+
 
 
