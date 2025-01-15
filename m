@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20060248BD0;
-	Wed, 15 Jan 2025 10:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24990248BD0;
+	Wed, 15 Jan 2025 10:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938695; cv=none; b=pXfwJD7Uw/CLooeeO3Bphsuil8Hl8k7GHSmTqRW60782JEyqet9n9vFVpquxmEWwE6XZFQHkw2esc/hGz1+I3e5phJKZ03xxN6vF9KuJQd3FY0HUqzgeyW/wFKI8m6VQ9PHqgZnY8v53NKKwYGYPUprtCMht//xqSWwXXeSZTZ4=
+	t=1736938697; cv=none; b=dgcoMvYko2Dyz4Yg12iNbcGUxSL4R+7pfi0Mt/Np254Z+RXZFkI58yhsQ7mF1itmE8ikRREmdoUjlYBXa6bR8jPQRUr0lq1+Re76eY3aG5/OrXJGkB2RitUc5qSzu4/TXPC4xLJ+IQ6V84AdDRTM2gPBQONIslx1719JVPsjoMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938695; c=relaxed/simple;
-	bh=c+kFFr2v3aID+t63o403I7SFHM8URDNQ+Fe0BTb/x6U=;
+	s=arc-20240116; t=1736938697; c=relaxed/simple;
+	bh=WdHDAmoxph8ZTvuSaALU0mZtqPldoJHaUCmy2B3kbB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGtbjGIQivu16GLLjUBt8T2srNxsLbKAgV3BXvUdzcPVgSYNNgnoSvDjgxng9krGdbzj7SH2wCYB7hd6O1Oo93fsf9f8NxYunVhUKX2FqXpWpWbmF4xZbB3278/HrED46p71UqLGaSzDFieshiac1JFDoS3q92QsF8ak4UNFeIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnJtEe4d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MirWqdYgu4penAJS0pz4oXs0HVSg6E59LV91ZF0ecHrae0jN/6GTDS8uSpaKNLg8ep9jJe6heZlwYTtmam0YyCtsjDl8g0OLLsUCJ6FFuDN9lmwfoV7No7GpMxsrY4VP483tiMxwXytEMb81S458ObLeerJRg9eMOTP+MsX+PBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wnh//ker; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnJtEe4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEB2C4CEDF;
-	Wed, 15 Jan 2025 10:58:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wnh//ker"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D077C4CEDF;
+	Wed, 15 Jan 2025 10:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938693;
-	bh=c+kFFr2v3aID+t63o403I7SFHM8URDNQ+Fe0BTb/x6U=;
+	s=korg; t=1736938697;
+	bh=WdHDAmoxph8ZTvuSaALU0mZtqPldoJHaUCmy2B3kbB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnJtEe4dA23NdrMJrrAQi0sP9nsQah0HN5TCDZdzvob1p3tbhMUrPN26UUgQkxcIV
-	 0iC1+0e+P+xva5bjmeTZGX3dxUmqvKXsTuELk1GlZs3lDvzIL0etgv05TAgo1NkX4Y
-	 cRRPJij+LZ1QI1iLU74qSrcvR1bpp93elOPbzoMw=
+	b=Wnh//kerV5dq3KcwW7nrUVNZ/ScAOPbxpuCYMKTOzHM5//Uz0CU7q7g0r9yJRYKH3
+	 rwsgwMThA0ZAbh8hL9g3DKJnP/vFrySEpGLBgI+/r3VU5oVCXrIRr5DufLUjoNq7sG
+	 th/rzjX6XnudGGAzhrIHpPLNoEH//Fr+qFJnrZ0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 067/129] ksmbd: Implement new SMB3 POSIX type
-Date: Wed, 15 Jan 2025 11:37:22 +0100
-Message-ID: <20250115103557.051304741@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alvin Lee <alvin.lee2@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 068/129] drm/amd/display: Add check for granularity in dml ceil/floor helpers
+Date: Wed, 15 Jan 2025 11:37:23 +0100
+Message-ID: <20250115103557.090880446@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -50,96 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Roman Li <Roman.Li@amd.com>
 
-commit e8580b4c600e085b3c8e6404392de2f822d4c132 upstream.
+commit 0881fbc4fd62e00a2b8e102725f76d10351b2ea8 upstream.
 
-As SMB3 posix extension specification, Give posix file type to posix
-mode.
+[Why]
+Wrapper functions for dcn_bw_ceil2() and dcn_bw_floor2()
+should check for granularity is non zero to avoid assert and
+divide-by-zero error in dcn_bw_ functions.
 
-https://www.samba.org/~slow/SMB3_POSIX/fscc_posix_extensions.html#posix-file-type-definition
+[How]
+Add check for granularity 0.
 
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f6e09701c3eb2ccb8cb0518e0b67f1c69742a4ec)
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |   40 ++++++++++++++++++++++++++++++++++++++++
- fs/smb/server/smb2pdu.h |   10 ++++++++++
- 2 files changed, 50 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3989,6 +3989,26 @@ static int smb2_populate_readdir_entry(s
- 		posix_info->DeviceId = cpu_to_le32(ksmbd_kstat->kstat->rdev);
- 		posix_info->HardLinks = cpu_to_le32(ksmbd_kstat->kstat->nlink);
- 		posix_info->Mode = cpu_to_le32(ksmbd_kstat->kstat->mode & 0777);
-+		switch (ksmbd_kstat->kstat->mode & S_IFMT) {
-+		case S_IFDIR:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFLNK:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFCHR:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFBLK:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFIFO:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
-+			break;
-+		case S_IFSOCK:
-+			posix_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
-+		}
-+
- 		posix_info->Inode = cpu_to_le64(ksmbd_kstat->kstat->ino);
- 		posix_info->DosAttributes =
- 			S_ISDIR(ksmbd_kstat->kstat->mode) ?
-@@ -5177,6 +5197,26 @@ static int find_file_posix_info(struct s
- 	file_info->AllocationSize = cpu_to_le64(stat.blocks << 9);
- 	file_info->HardLinks = cpu_to_le32(stat.nlink);
- 	file_info->Mode = cpu_to_le32(stat.mode & 0777);
-+	switch (stat.mode & S_IFMT) {
-+	case S_IFDIR:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_DIR << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFLNK:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SYMLINK << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFCHR:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_CHARDEV << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFBLK:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_BLKDEV << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFIFO:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_FIFO << POSIX_FILETYPE_SHIFT);
-+		break;
-+	case S_IFSOCK:
-+		file_info->Mode |= cpu_to_le32(POSIX_TYPE_SOCKET << POSIX_FILETYPE_SHIFT);
-+	}
-+
- 	file_info->DeviceId = cpu_to_le32(stat.rdev);
+--- a/drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h
++++ b/drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h
+@@ -66,11 +66,15 @@ static inline double dml_max5(double a,
  
- 	/*
---- a/fs/smb/server/smb2pdu.h
-+++ b/fs/smb/server/smb2pdu.h
-@@ -500,4 +500,14 @@ static inline void *smb2_get_msg(void *b
- 	return buf + 4;
+ static inline double dml_ceil(double a, double granularity)
+ {
++	if (granularity == 0)
++		return 0;
+ 	return (double) dcn_bw_ceil2(a, granularity);
  }
  
-+#define POSIX_TYPE_FILE		0
-+#define POSIX_TYPE_DIR		1
-+#define POSIX_TYPE_SYMLINK	2
-+#define POSIX_TYPE_CHARDEV	3
-+#define POSIX_TYPE_BLKDEV	4
-+#define POSIX_TYPE_FIFO		5
-+#define POSIX_TYPE_SOCKET	6
-+
-+#define POSIX_FILETYPE_SHIFT	12
-+
- #endif	/* _SMB2PDU_H */
+ static inline double dml_floor(double a, double granularity)
+ {
++	if (granularity == 0)
++		return 0;
+ 	return (double) dcn_bw_floor2(a, granularity);
+ }
+ 
+@@ -114,11 +118,15 @@ static inline double dml_ceil_2(double f
+ 
+ static inline double dml_ceil_ex(double x, double granularity)
+ {
++	if (granularity == 0)
++		return 0;
+ 	return (double) dcn_bw_ceil2(x, granularity);
+ }
+ 
+ static inline double dml_floor_ex(double x, double granularity)
+ {
++	if (granularity == 0)
++		return 0;
+ 	return (double) dcn_bw_floor2(x, granularity);
+ }
+ 
 
 
