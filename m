@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB523594E;
-	Wed, 15 Jan 2025 10:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D109248BD0;
+	Wed, 15 Jan 2025 10:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938636; cv=none; b=aHTQ+AzaubNdu2gT6K7f0Ws9Z+ZLuVX4hRmQ38J1gPTUiAEG3sGXsvxk5JTei3zLS2J0Qc+j8hYO1xWpurRlZeiyAolzCb5e8odtgrc99ABsQexfhI+Kc5l9FsUv4v2wDJ3fPMqOisJhfoTYEk4BgqW1/xBk7Xrmd6NTk2OKdiw=
+	t=1736938639; cv=none; b=shzJ8ADpCk9XyHrBEPURKb0fExBTVlzZSFFbRLwOTlTFYyt0QJYf+jog6JSEOeBKEuD3lnqzOc9UdqhIccibBkdZvmnfd91UJmQXP0JPMTSTnDN1Dq3hbSuTBd/97WEQG/1iwQx41XkR1Pw6E97VDK9lGEznzdaKR75N/4L+R+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938636; c=relaxed/simple;
-	bh=yWWno3ZL6xf8VLUM8xPF3mAWtWA/o6Ia1gVKYB8j7vA=;
+	s=arc-20240116; t=1736938639; c=relaxed/simple;
+	bh=CJSZrWYUf9aQ0Sc9lbVA0o+dLCdAqNU6hCmBTHp0j00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJuW6bMw2eotKorKmN9GlYVwT9oPE8qpn60bt2RTwcYDFzisVB/ZFL0g/xpKPm8kHxqmgjfbArP0pqPtfSbNxkF/iJAlf+u+eogQHxGQWLBGS30dsMedcgJux7dPcch4VI7CqjCLgbBaflKlpsFpmToJIrQRDFt/Wj9UDxJKWIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBjnwuBK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ONSx4Yqtt14h0XPVMNED9jFB9y4rWHNs1YxFYIaV2O7vIqBSaDtjp7OIEKXljbiLCFLNoDb3geBf4E66Uzt8zjtzy2evtG6EG8l4RiU0r9IHG4ZIqtSIRfsW5LWlZE2CbYitzaTZRURcXLf9wNm63pQjUExZ7oRVngfS/fnlRe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=duIYXOeT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBjnwuBK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83E6C4CEDF;
-	Wed, 15 Jan 2025 10:57:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="duIYXOeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC8AC4CEDF;
+	Wed, 15 Jan 2025 10:57:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938636;
-	bh=yWWno3ZL6xf8VLUM8xPF3mAWtWA/o6Ia1gVKYB8j7vA=;
+	s=korg; t=1736938639;
+	bh=CJSZrWYUf9aQ0Sc9lbVA0o+dLCdAqNU6hCmBTHp0j00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aBjnwuBK2fp3+fBbslcb0oqbpgvB9T/+BlrM6p98cSgZ+bMmBm5QV5hNctvtTepU/
-	 H8TlqHFRHdjwElkthW1ZkXw1BpAta5gT3Gn/GxXbLDUO0bEPh7GhZoofM+vo0wN5wm
-	 PWjDm9ysxyrdp2MKD4sK8PB8F6EdtfuDWRwdUg/0=
+	b=duIYXOeTRCXknWWXtFAFhxH00Hn7xXm+guM3mm3OmyNHiCJIyF9d0+628KQ/5ANrt
+	 W4OkGx9oCcSk2DewGL0TCRqxVnP/jezUL9qzmu6U7QYNiPmnxVJ/Rx8m/cJK4XkG+i
+	 VYdb4lqRpjnVdJ/gyeZVT1zpl49ktfd3QjITSTyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liankun Yang <liankun.yang@mediatek.com>,
-	Guillaume Ranquet <granquet@baylibre.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Wentao Liang <liangwentao@iscas.ac.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/129] drm/mediatek: Add return value check when reading DPCD
-Date: Wed, 15 Jan 2025 11:37:06 +0100
-Message-ID: <20250115103556.402353083@linuxfoundation.org>
+Subject: [PATCH 6.6 052/129] ksmbd: fix a missing return value check bug
+Date: Wed, 15 Jan 2025 11:37:07 +0100
+Message-ID: <20250115103556.447579908@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -52,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liankun Yang <liankun.yang@mediatek.com>
+From: Wentao Liang <liangwentao@iscas.ac.cn>
 
-[ Upstream commit 522908140645865dc3e2fac70fd3b28834dfa7be ]
+[ Upstream commit 4c16e1cadcbcaf3c82d5fc310fbd34d0f5d0db7c ]
 
-Check the return value of drm_dp_dpcd_readb() to confirm that
-AUX communication is successful. To simplify the code, replace
-drm_dp_dpcd_readb() and DP_GET_SINK_COUNT() with drm_dp_read_sink_count().
+In the smb2_send_interim_resp(), if ksmbd_alloc_work_struct()
+fails to allocate a node, it returns a NULL pointer to the
+in_work pointer. This can lead to an illegal memory write of
+in_work->response_buf when allocate_interim_rsp_buf() attempts
+to perform a kzalloc() on it.
 
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: Liankun Yang <liankun.yang@mediatek.com>
-Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241218113448.2992-1-liankun.yang@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+To address this issue, incorporating a check for the return
+value of ksmbd_alloc_work_struct() ensures that the function
+returns immediately upon allocation failure, thereby preventing
+the aforementioned illegal memory access.
+
+Fixes: 041bba4414cd ("ksmbd: fix wrong interim response on compound")
+Signed-off-by: Wentao Liang <liangwentao@iscas.ac.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index 3e1b400febde..be4de26c77f9 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -2005,7 +2005,6 @@ static enum drm_connector_status mtk_dp_bdg_detect(struct drm_bridge *bridge)
- 	struct mtk_dp *mtk_dp = mtk_dp_from_bridge(bridge);
- 	enum drm_connector_status ret = connector_status_disconnected;
- 	bool enabled = mtk_dp->enabled;
--	u8 sink_count = 0;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 2884ebdc0eda..94b4a2565b2a 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -695,6 +695,9 @@ void smb2_send_interim_resp(struct ksmbd_work *work, __le32 status)
+ 	struct smb2_hdr *rsp_hdr;
+ 	struct ksmbd_work *in_work = ksmbd_alloc_work_struct();
  
- 	if (!mtk_dp->train_info.cable_plugged_in)
- 		return ret;
-@@ -2020,8 +2019,8 @@ static enum drm_connector_status mtk_dp_bdg_detect(struct drm_bridge *bridge)
- 	 * function, we just need to check the HPD connection to check
- 	 * whether we connect to a sink device.
- 	 */
--	drm_dp_dpcd_readb(&mtk_dp->aux, DP_SINK_COUNT, &sink_count);
--	if (DP_GET_SINK_COUNT(sink_count))
++	if (!in_work)
++		return;
 +
-+	if (drm_dp_read_sink_count(&mtk_dp->aux) > 0)
- 		ret = connector_status_connected;
- 
- 	if (!enabled)
+ 	if (allocate_interim_rsp_buf(in_work)) {
+ 		pr_err("smb_allocate_rsp_buf failed!\n");
+ 		ksmbd_free_work_struct(in_work);
 -- 
 2.39.5
 
