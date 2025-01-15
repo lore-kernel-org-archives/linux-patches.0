@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D73D1E990E;
-	Wed, 15 Jan 2025 10:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79759248BC4;
+	Wed, 15 Jan 2025 10:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937632; cv=none; b=TKUDlvrJBbXuJ5cR2+6+e7mBHLAuy2A5dYbrlcjPShUOtexvwiKIYn1QOIse7j2AUYUAzBOAVHFCGrvZAhDlSH3sV1b2LhImZa01rm5xYWmMpJ59IBqbWWYfp7eCPwKmGKVEsYxaT4XIO4myGVuX5YBY/tRy0coFUCoMxbyyJUs=
+	t=1736937635; cv=none; b=mDgo1b7KbGxMnh1qh/pr2ABidQ6GE9Tw+m1BVoTz8HY9uov/+F3f5yPBNNIwmWrh/CRtF+quLSMdboZdA2vCS5ODeVan5jEFLPb2mgsv7165VsXrK0iq9kdF0U7nDGGAJ1gR9Irx0wBXVBo1en+3wWveg8LzuRxe4S+IY9HK2mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937632; c=relaxed/simple;
-	bh=JZzzSbgwQ5GzL9ZHypGyB0tyM9AsWQq/lgjcrj8LnfU=;
+	s=arc-20240116; t=1736937635; c=relaxed/simple;
+	bh=hc76LcOQB60j7H7uJ/hycBgaWFf/73SVvgzSYh0dPv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aSoYhufg0isrt2cfRnIhxoOvRjsRvqGxzTKqVaM3Oe8eIhHYQiHTxGfsqkJ7huEDVfIIEJP1MqsHcLtN3LzPPl6j8Uqtz9k0otmE4vlv9Q8sG2WqMOPjwHGKjZM2ei4/yN0NRcpAmWSdjsYFWQ2IvCDd/+uTJBLqSlApIJidpgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1tookXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UYPP9RmPM88roWTtwHtOOBqUJVMvA/PgaCAEUEO2vYDbWqpPtXmDz3AJ5F9zNamkhg4J/aD1xSwb1hhQlv649l5owgygthorStHDa1c763JZBgMkC1vB4U7F8MSnX0z+jtZOzcCYCmYxXSwqcR4XpjCbfIC6FbQVBeIQ+ILv+qI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qp66sTdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1tookXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48928C4CEE1;
-	Wed, 15 Jan 2025 10:40:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qp66sTdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D861FC4CEE1;
+	Wed, 15 Jan 2025 10:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937631;
-	bh=JZzzSbgwQ5GzL9ZHypGyB0tyM9AsWQq/lgjcrj8LnfU=;
+	s=korg; t=1736937635;
+	bh=hc76LcOQB60j7H7uJ/hycBgaWFf/73SVvgzSYh0dPv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1tookXXhwqerIFHM6HsJQis9a+iD+zy2dlal7zHrtl5JS91wlRR87GdeW2Bwm99l
-	 wmywZR9qqqEbNjVccp9iF45Q7xJF9gJ6Kl4ZiYUuEAVPqSMe40SH7wOMtNge6Ii2MG
-	 lhcfaRGpbZ5olgPEnaMkeNVOi6Xx6ahM7q6hnQak=
+	b=qp66sTdH64Er9x3ZlGd22JWYWCiPLAOTT92zqrSUi8tcBUXLN7nFeQMlpF+T6F4A/
+	 5canzfEtvAYqRdxlMw9gQcANEoilKxwYr21hiLdTmEHSHU2hgUF8aPEQuqqA6Y9t2a
+	 bOHYnNn1fcOBzcryyrfcuyarwfwQnukDjjYizmuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 37/92] dm-ebs: dont set the flag DM_TARGET_PASSES_INTEGRITY
-Date: Wed, 15 Jan 2025 11:36:55 +0100
-Message-ID: <20250115103549.010366888@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 38/92] sctp: sysctl: cookie_hmac_alg: avoid using current->nsproxy
+Date: Wed, 15 Jan 2025 11:36:56 +0100
+Message-ID: <20250115103549.047359820@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -49,33 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 47f33c27fc9565fb0bc7dfb76be08d445cd3d236 upstream.
+commit ea62dd1383913b5999f3d16ae99d411f41b528d4 upstream.
 
-dm-ebs uses dm-bufio to process requests that are not aligned on logical
-sector size. dm-bufio doesn't support passing integrity data (and it is
-unclear how should it do it), so we shouldn't set the
-DM_TARGET_PASSES_INTEGRITY flag.
+As mentioned in a previous commit of this series, using the 'net'
+structure via 'current' is not recommended for different reasons:
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+- Inconsistency: getting info from the reader's/writer's netns vs only
+  from the opener's netns.
+
+- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
+  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
+  syzbot [1] using acct(2).
+
+The 'net' structure can be obtained from the table->data using
+container_of().
+
+Note that table->data could also be used directly, as this is the only
+member needed from the 'net' structure, but that would increase the size
+of this fix, to use '*data' everywhere 'net->sctp.sctp_hmac_alg' is
+used.
+
+Fixes: 3c68198e7511 ("sctp: Make hmac algorithm selection for cookie generation dynamic")
 Cc: stable@vger.kernel.org
-Fixes: d3c7b35c20d6 ("dm: add emulated block size target")
+Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-4-5df34b2083e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ebs-target.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/sysctl.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-ebs-target.c
-+++ b/drivers/md/dm-ebs-target.c
-@@ -441,7 +441,7 @@ static int ebs_iterate_devices(struct dm
- static struct target_type ebs_target = {
- 	.name		 = "ebs",
- 	.version	 = {1, 0, 1},
--	.features	 = DM_TARGET_PASSES_INTEGRITY,
-+	.features	 = 0,
- 	.module		 = THIS_MODULE,
- 	.ctr		 = ebs_ctr,
- 	.dtr		 = ebs_dtr,
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -380,7 +380,8 @@ static struct ctl_table sctp_net_table[]
+ static int proc_sctp_do_hmac_alg(struct ctl_table *ctl, int write,
+ 				 void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	struct net *net = current->nsproxy->net_ns;
++	struct net *net = container_of(ctl->data, struct net,
++				       sctp.sctp_hmac_alg);
+ 	struct ctl_table tbl;
+ 	bool changed = false;
+ 	char *none = "none";
 
 
