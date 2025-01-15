@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8817A1E9909;
-	Wed, 15 Jan 2025 10:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAD4248BB2;
+	Wed, 15 Jan 2025 10:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937941; cv=none; b=tc5G1OEWkeQwu0Ju2H/5UUbJEAtXNoLacOrX6nivYCh8Lsxd2dUhSrrb9GTIeic50toRKNoMYL78zpJayPoFtaBE9sCkd37N+zvZfOXoBg9XK6dFk+8nd8x5cTmFAY2b7PawvqrAe7cZHBy9xisp7ymR+aDk4sSNrZ0ZujNGe2M=
+	t=1736937944; cv=none; b=LdADKw2NtC5/WuRBnq/XvCWdRmeQqi+AD9ip7WJwKJAet1uALgCZmN79s9G7o3KrQWPwNlVYxWhFPMa1/gd+T5pEpCSII/QB9+azy5/OVOfKPdSu743sm/6lOHDRMiGvx9QvhZzYaTi31BQHS0LZT8MMp6lHJewFJb+hhEpmZio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937941; c=relaxed/simple;
-	bh=SPikfIEURs41OVutNCJg1ZjvWKLKS1IGwOnNX/s7xww=;
+	s=arc-20240116; t=1736937944; c=relaxed/simple;
+	bh=SgdlEe02j9fAlXgAFdmtSniebkK1C8dHQxY1UBG/hQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbmc7QgrKLF0ci6e7sV34Oq4P72Hd2fp9s2jqKQy68I9gTKdTmTovJZr//kZNiwFt1hcZ9zPaOrV3QM6tJNtiQCimm8AcTAFvAHDVH95FGAJ/x8ISJmcJ63aQQK0et9VxwSB2F6eTxFJbCAGz8BzE/QdZg3f8Lw+H10aMITK9fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txNmmoqG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G6Y8zHkQUNf2dFI6ZDN/x4fyeiQmj4rSwSZBn4wUxjbISTRNH9vcIVlXp3o2TJXedqpKy57k5BzusrRS+paqci6GaYGYodsofWswUDUIdqB2QsqCYHF/zKAybhgU+hRV2saK5bACbDd/QEv89uhlLXKinnbCEFO8yosH2FNq274=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCVM2zMm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txNmmoqG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2325C4CEDF;
-	Wed, 15 Jan 2025 10:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCVM2zMm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0778C4CEDF;
+	Wed, 15 Jan 2025 10:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937941;
-	bh=SPikfIEURs41OVutNCJg1ZjvWKLKS1IGwOnNX/s7xww=;
+	s=korg; t=1736937944;
+	bh=SgdlEe02j9fAlXgAFdmtSniebkK1C8dHQxY1UBG/hQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txNmmoqGRCiBcsIQP17Ejz2K06/4S15DyPymnSYZhvosnX+QqsS/L3TSaBILdzFN7
-	 p+ZX/CBwKb/UAIvhpUtiDtt4H9Yd0igNtx+c4I7+7S610bkozUNrElQK6XF7cYCqTe
-	 WWyz+CdU0t5rgs86vcFTWYsyaea9gFQdBAs9fn6E=
+	b=cCVM2zMmwYao/Dw97f9eySnIkPReOjMYHvwzHApYi7qUTpRHEO7gkyzSzYeV7WVtE
+	 8LCTXq5Bar5m3m7BT/3nf/NF6QIAL2mlSaeVeUKBQX0YNxqsXAlDqcbm27yiwBY4dA
+	 MWc77Bqg4A7BWrV4RT/Y1z4X04jBv3tW/KI7I4aM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chia-Lin Kao (AceLan)" <acelan.kao@canonical.com>,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/189] igc: return early when failing to read EECD register
-Date: Wed, 15 Jan 2025 11:35:33 +0100
-Message-ID: <20250115103607.843616893@linuxfoundation.org>
+Subject: [PATCH 6.12 038/189] tls: Fix tls_sw_sendmsg error handling
+Date: Wed, 15 Jan 2025 11:35:34 +0100
+Message-ID: <20250115103607.882544682@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -54,76 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit bd2776e39c2a82ef4681d02678bb77b3d41e79be ]
+[ Upstream commit b341ca51d2679829d26a3f6a4aa9aee9abd94f92 ]
 
-When booting with a dock connected, the igc driver may get stuck for ~40
-seconds if PCIe link is lost during initialization.
+We've noticed that NFS can hang when using RPC over TLS on an unstable
+connection, and investigation shows that the RPC layer is stuck in a tight
+loop attempting to transmit, but forever getting -EBADMSG back from the
+underlying network.  The loop begins when tcp_sendmsg_locked() returns
+-EPIPE to tls_tx_records(), but that error is converted to -EBADMSG when
+calling the socket's error reporting handler.
 
-This happens because the driver access device after EECD register reads
-return all F's, indicating failed reads. Consequently, hw->hw_addr is set
-to NULL, which impacts subsequent rd32() reads. This leads to the driver
-hanging in igc_get_hw_semaphore_i225(), as the invalid hw->hw_addr
-prevents retrieving the expected value.
+Instead of converting errors from tcp_sendmsg_locked(), let's pass them
+along in this path.  The RPC layer handles -EPIPE by reconnecting the
+transport, which prevents the endless attempts to transmit on a broken
+connection.
 
-To address this, a validation check and a corresponding return value
-catch is added for the EECD register read result. If all F's are
-returned, indicating PCIe link loss, the driver will return -ENXIO
-immediately. This avoids the 40-second hang and significantly improves
-boot time when using a dock with an igc NIC.
-
-Log before the patch:
-[    0.911913] igc 0000:70:00.0: enabling device (0000 -> 0002)
-[    0.912386] igc 0000:70:00.0: PTM enabled, 4ns granularity
-[    1.571098] igc 0000:70:00.0 (unnamed net_device) (uninitialized): PCIe link lost, device now detached
-[   43.449095] igc_get_hw_semaphore_i225: igc 0000:70:00.0 (unnamed net_device) (uninitialized): Driver can't access device - SMBI bit is set.
-[   43.449186] igc 0000:70:00.0: probe with driver igc failed with error -13
-[   46.345701] igc 0000:70:00.0: enabling device (0000 -> 0002)
-[   46.345777] igc 0000:70:00.0: PTM enabled, 4ns granularity
-
-Log after the patch:
-[    1.031000] igc 0000:70:00.0: enabling device (0000 -> 0002)
-[    1.032097] igc 0000:70:00.0: PTM enabled, 4ns granularity
-[    1.642291] igc 0000:70:00.0 (unnamed net_device) (uninitialized): PCIe link lost, device now detached
-[    5.480490] igc 0000:70:00.0: enabling device (0000 -> 0002)
-[    5.480516] igc 0000:70:00.0: PTM enabled, 4ns granularity
-
-Fixes: ab4056126813 ("igc: Add NVM support")
-Cc: Chia-Lin Kao (AceLan) <acelan.kao@canonical.com>
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
-Reviewed-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Link: https://patch.msgid.link/9594185559881679d81f071b181a10eb07cd079f.1736004079.git.bcodding@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_base.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_base.c b/drivers/net/ethernet/intel/igc/igc_base.c
-index 9fae8bdec2a7..1613b562d17c 100644
---- a/drivers/net/ethernet/intel/igc/igc_base.c
-+++ b/drivers/net/ethernet/intel/igc/igc_base.c
-@@ -68,6 +68,10 @@ static s32 igc_init_nvm_params_base(struct igc_hw *hw)
- 	u32 eecd = rd32(IGC_EECD);
- 	u16 size;
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index bbf26cc4f6ee..7bcc9b4408a2 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -458,7 +458,7 @@ int tls_tx_records(struct sock *sk, int flags)
  
-+	/* failed to read reg and got all F's */
-+	if (!(~eecd))
-+		return -ENXIO;
-+
- 	size = FIELD_GET(IGC_EECD_SIZE_EX_MASK, eecd);
+ tx_err:
+ 	if (rc < 0 && rc != -EAGAIN)
+-		tls_err_abort(sk, -EBADMSG);
++		tls_err_abort(sk, rc);
  
- 	/* Added to a constant, "size" becomes the left-shift value
-@@ -221,6 +225,8 @@ static s32 igc_get_invariants_base(struct igc_hw *hw)
- 
- 	/* NVM initialization */
- 	ret_val = igc_init_nvm_params_base(hw);
-+	if (ret_val)
-+		goto out;
- 	switch (hw->mac.type) {
- 	case igc_i225:
- 		ret_val = igc_init_nvm_params_i225(hw);
+ 	return rc;
+ }
 -- 
 2.39.5
 
