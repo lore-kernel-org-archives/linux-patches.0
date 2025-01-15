@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0036248BA0;
-	Wed, 15 Jan 2025 10:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A85E248BBC;
+	Wed, 15 Jan 2025 10:43:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937835; cv=none; b=FhlGqS13t6ZIGgSLy4JZlpITe01/l6CmY87rteAzVMkoa3pEzGCRuR63QDIQwG7xkJ1LcJVIPyW22So8zxXhwQWIMK3hplgZTfvEnRS0Hwok5Wsl878B4lrIqZh7a/7g55y8fKlKdY2hDJcJZJaguUR/z65ihUpd7qai8bIcKfE=
+	t=1736937840; cv=none; b=A+DPY1q1gJQPb/022ssFfFCtrN+hvH8OcldX85+PAnZ9z7RfJ/2IdZV9zjYfudFt5j0ViH6DeBLdfHxMpSAyUAdKzZIVkxGftRvnw9o04pfY/AfdwT2MFnW7U+KOE+VhfonSACmJlu6hauCOWzGSxZF38pW65SbDkzqoFw7daP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937835; c=relaxed/simple;
-	bh=LXp+dqnqZgmSnI+NyUQBPjyCAE12X0WKPF3kHUIJahU=;
+	s=arc-20240116; t=1736937840; c=relaxed/simple;
+	bh=C3zt/TSU8SQ5fVEPRdyjYOKj3Yd1ycC8EV7/pNe34hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iY7oWy6KO4bBzxage1SU6zdb3fHCKi4A2fEgY3roQbgsKcMUXGjN7ffKVkOM/s890k8RN8/l4H12/D1ogepdYInp+kanZWjrAzUBUqFTi5Vn1oZNKEFmjSASohNkbiLayICXpGg2ErXzASgOCCKUihErHopwM+OI06/yGrjwCes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1wqPFx4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rScQWdJs0W7NXMkvmFxNfCPZZERSo0VbJ7qZJOf8L+xEvlOSpu9Ojc1j6j9qsOTHZeEHHgMz1ZTsdCti1Fl3a1pXdjnwV/Cnv8swpBImaq1bnQWw6eZ1OFyvgpM19br6TKZU6UScVfXdyQWpmMOfwBX9j1TY05kYiTSUdoHyUs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMZnwon+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1wqPFx4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D609C4CEE1;
-	Wed, 15 Jan 2025 10:43:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMZnwon+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52068C4CEE1;
+	Wed, 15 Jan 2025 10:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937835;
-	bh=LXp+dqnqZgmSnI+NyUQBPjyCAE12X0WKPF3kHUIJahU=;
+	s=korg; t=1736937838;
+	bh=C3zt/TSU8SQ5fVEPRdyjYOKj3Yd1ycC8EV7/pNe34hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1wqPFx4H0REJe1VNBeUZOsPTCO3Yrgc1zwfP3FpSVgQNtK/GOonDNml54PdFTXO+
-	 osjyhoFdVzg4UMgpcqp9gGWqYhLS7t+6ilIsSsj+L0/NUCuEOBcJBSrK51ZzHP10Kg
-	 VQ5dHTognIfjca+K+MfxBtR26qWukmBaHld305Z8=
+	b=tMZnwon+VSwc+k0NaUYtmpfXROe5qguzXCQtiCPOi0YSmLmFceqvKt5gJGs+ZY5Ez
+	 l3i+jGHsO0J4kToicrNKxiyt+fTzU9aBNIGDlAZkpNiQFlWxEzX48djxCjIkKK8OWH
+	 dC4l7BmcWpxTpntRZ5f6n3bmi8AbXIElwk2knc7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Lam <dennis.lamerice@gmail.com>,
-	syzbot+d173bf8a5a7faeede34c@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 90/92] ocfs2: fix slab-use-after-free due to dangling pointer dqi_priv
-Date: Wed, 15 Jan 2025 11:37:48 +0100
-Message-ID: <20250115103551.160313428@linuxfoundation.org>
+Subject: [PATCH 6.1 91/92] drm: bridge: adv7511: use dev_err_probe in probe function
+Date: Wed, 15 Jan 2025 11:37:49 +0100
+Message-ID: <20250115103551.199791504@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -58,71 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dennis Lam <dennis.lamerice@gmail.com>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit 5f3fd772d152229d94602bca243fbb658068a597 ]
+[ Upstream commit 2a865248399a13bb2b2bcc50297069a7521de258 ]
 
-When mounting ocfs2 and then remounting it as read-only, a
-slab-use-after-free occurs after the user uses a syscall to
-quota_getnextquota.  Specifically, sb_dqinfo(sb, type)->dqi_priv is the
-dangling pointer.
+adv7511 probe may need to be attempted multiple times before no
+-EPROBE_DEFER is returned. Currently, every such probe results in
+an error message:
 
-During the remounting process, the pointer dqi_priv is freed but is never
-set as null leaving it to be accessed.  Additionally, the read-only option
-for remounting sets the DQUOT_SUSPENDED flag instead of setting the
-DQUOT_USAGE_ENABLED flags.  Moreover, later in the process of getting the
-next quota, the function ocfs2_get_next_id is called and only checks the
-quota usage flags and not the quota suspended flags.
+[    4.534229] adv7511 1-003d: failed to find dsi host
+[    4.580288] adv7511 1-003d: failed to find dsi host
 
-To fix this, I set dqi_priv to null when it is freed after remounting with
-read-only and put a check for DQUOT_SUSPENDED in ocfs2_get_next_id.
+This is misleading, as there is no error and probe deferral is normal
+behavior. Fix this by using dev_err_probe that will suppress
+-EPROBE_DEFER errors. While at it, we touch all dev_err in the probe
+path. This makes the code more concise and included the error code
+everywhere to aid user in debugging.
 
-[akpm@linux-foundation.org: coding-style cleanups]
-Link: https://lkml.kernel.org/r/20241218023924.22821-2-dennis.lamerice@gmail.com
-Fixes: 8f9e8f5fcc05 ("ocfs2: Fix Q_GETNEXTQUOTA for filesystem without quotas")
-Signed-off-by: Dennis Lam <dennis.lamerice@gmail.com>
-Reported-by: syzbot+d173bf8a5a7faeede34c@syzkaller.appspotmail.com
-Tested-by: syzbot+d173bf8a5a7faeede34c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6731d26f.050a0220.1fb99c.014b.GAE@google.com/T/
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026125246.3188260-1-a.fatoum@pengutronix.de
+Stable-dep-of: 81adbd3ff21c ("drm: adv7511: Fix use-after-free in adv7533_attach_dsi()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/quota_global.c | 2 +-
- fs/ocfs2/quota_local.c  | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |  6 ++----
+ drivers/gpu/drm/bridge/adv7511/adv7533.c     | 20 ++++++++------------
+ 2 files changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/fs/ocfs2/quota_global.c b/fs/ocfs2/quota_global.c
-index dc9f76ab7e13..0dffd6a44d39 100644
---- a/fs/ocfs2/quota_global.c
-+++ b/fs/ocfs2/quota_global.c
-@@ -881,7 +881,7 @@ static int ocfs2_get_next_id(struct super_block *sb, struct kqid *qid)
- 	int status = 0;
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+index 9f9874acfb2b..cb6923eed7ca 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+@@ -1224,10 +1224,8 @@ static int adv7511_probe(struct i2c_client *i2c, const struct i2c_device_id *id)
+ 		return ret;
  
- 	trace_ocfs2_get_next_id(from_kqid(&init_user_ns, *qid), type);
--	if (!sb_has_quota_loaded(sb, type)) {
-+	if (!sb_has_quota_active(sb, type)) {
- 		status = -ESRCH;
- 		goto out;
- 	}
-diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
-index 257f13cdd14c..4b4fa58cd32f 100644
---- a/fs/ocfs2/quota_local.c
-+++ b/fs/ocfs2/quota_local.c
-@@ -864,6 +864,7 @@ static int ocfs2_local_free_info(struct super_block *sb, int type)
- 	brelse(oinfo->dqi_libh);
- 	brelse(oinfo->dqi_lqi_bh);
- 	kfree(oinfo);
-+	info->dqi_priv = NULL;
- 	return status;
+ 	ret = adv7511_init_regulators(adv7511);
+-	if (ret) {
+-		dev_err(dev, "failed to init regulators\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to init regulators\n");
+ 
+ 	/*
+ 	 * The power down GPIO is optional. If present, toggle it from active to
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c b/drivers/gpu/drm/bridge/adv7511/adv7533.c
+index 145b43f5e427..3a79297ca980 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
+@@ -146,16 +146,14 @@ int adv7533_attach_dsi(struct adv7511 *adv)
+ 						 };
+ 
+ 	host = of_find_mipi_dsi_host_by_node(adv->host_node);
+-	if (!host) {
+-		dev_err(dev, "failed to find dsi host\n");
+-		return -EPROBE_DEFER;
+-	}
++	if (!host)
++		return dev_err_probe(dev, -EPROBE_DEFER,
++				     "failed to find dsi host\n");
+ 
+ 	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
+-	if (IS_ERR(dsi)) {
+-		dev_err(dev, "failed to create dsi device\n");
+-		return PTR_ERR(dsi);
+-	}
++	if (IS_ERR(dsi))
++		return dev_err_probe(dev, PTR_ERR(dsi),
++				     "failed to create dsi device\n");
+ 
+ 	adv->dsi = dsi;
+ 
+@@ -165,10 +163,8 @@ int adv7533_attach_dsi(struct adv7511 *adv)
+ 			  MIPI_DSI_MODE_NO_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
+ 
+ 	ret = devm_mipi_dsi_attach(dev, dsi);
+-	if (ret < 0) {
+-		dev_err(dev, "failed to attach dsi to host\n");
+-		return ret;
+-	}
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "failed to attach dsi to host\n");
+ 
+ 	return 0;
  }
- 
 -- 
 2.39.5
 
