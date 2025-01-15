@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D9F248BD1;
-	Wed, 15 Jan 2025 10:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949CF248BD0;
+	Wed, 15 Jan 2025 10:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938670; cv=none; b=iSfohj/6fcPEbGHeMMhGfhotWycX9AOBEjdAiCAd4YzcchU2pxfiQMVt+vNkoQSP5IAxVJ3zphr2p2YzWJOmtoIL5cJSypLKbBZ36UdUbsCCvAg2mzih8XAHH4HfEjrl1zYG6CWE1ihz1cz8/fWxpkjwpJ783o4qqzpxWP4479M=
+	t=1736938673; cv=none; b=mqiNwSP704TbVOHQCUDiPVMKKMcjhAzSEuANa61GTUQf8KeDoovc9decut1/4lXWf00qrZVCnSNkWsvoyqQ/XbiyzDwWhjp1hbmFfpEqkg1jv+SbeLI0zTyvpjZE46Sk6JQwLc4uOLVFw6IQ48mpEae1nzWRaMIakWIQtnu8PA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938670; c=relaxed/simple;
-	bh=hKvbN5MIvKKmPEN9c+cJHxZxSFrEcAfTK29P16C6UdM=;
+	s=arc-20240116; t=1736938673; c=relaxed/simple;
+	bh=Jp8gsoEU2bATwCCVCKd2QjxgihGOT8w9YzIdGy5NgTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yu2Odr8WdAdPWgOx2GX/lxGIrQf0vRlWtrG1vuz00vgyepho1CbPlol+oSsWUKFrXgqODOIffBg2aNjWAEdOyLBdJkRrUtNS9zdIkNJGzNEfdlmUry8G2dkaMVqECTGlRI0irm5ZbFaaUQt5r8GmVA7FyjLZhgybpOah3H3OXdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ap7I9zhD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPvIl8I7nDPSSzlp5zu/hZ/UxVBRjxHUSQiuDupIz+yRu8UqghFmahpTuNpsreTcW7nJ3xaADH+h1s+ha7cRd+yO9BJctzsfizV2ARKcVATnv6FnmxU7YxW7HPuFAo7w//rzu0LyTUURLRfcB/JupZJZGN5NZlQQzLockp+nwvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fa+JBRqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ap7I9zhD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816EEC4CEDF;
-	Wed, 15 Jan 2025 10:57:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fa+JBRqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F69C4CEDF;
+	Wed, 15 Jan 2025 10:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938670;
-	bh=hKvbN5MIvKKmPEN9c+cJHxZxSFrEcAfTK29P16C6UdM=;
+	s=korg; t=1736938673;
+	bh=Jp8gsoEU2bATwCCVCKd2QjxgihGOT8w9YzIdGy5NgTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ap7I9zhDE3MnPJOzpNvq9L9YgSEnSiE8+rgA7Fh59UukzV92dhzFytaXOcQowD8cx
-	 oYLCb7Q1rkS3xaUy0oa4eF/9DFwz4zrjFWYuH6YJiJc5neRnv97HAKQHfNU+iYrU/p
-	 PT+aDCmoBsUKQlD1WEs/RViD/ufK41UFZqet3kww=
+	b=fa+JBRqC6B+ZNJ5uZrGE4iL/iW/DYAxsvlQN+an5EhbuZrLdSU63fQCnmlJsrkz0d
+	 JO82gVM8xI1f2dN/f1h10uZE2nKG1evqltkbo0myC0474LLu+j0VjEq84UGndf6oVg
+	 X5apYg6ww9WIzwOydzt1E8yonxLgVNrKry+fkTFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 043/129] netfilter: conntrack: clamp maximum hashtable size to INT_MAX
-Date: Wed, 15 Jan 2025 11:36:58 +0100
-Message-ID: <20250115103556.092986178@linuxfoundation.org>
+	syzbot+e364f774c6f57f2c86d1@syzkaller.appspotmail.com,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 061/129] mptcp: sysctl: sched: avoid using current->nsproxy
+Date: Wed, 15 Jan 2025 11:37:16 +0100
+Message-ID: <20250115103556.815073418@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -50,48 +53,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit b541ba7d1f5a5b7b3e2e22dc9e40e18a7d6dbc13 ]
+commit d38e26e36206ae3d544d496513212ae931d1da0a upstream.
 
-Use INT_MAX as maximum size for the conntrack hashtable. Otherwise, it
-is possible to hit WARN_ON_ONCE in __kvmalloc_node_noprof() when
-resizing hashtable because __GFP_NOWARN is unset. See:
+Using the 'net' structure via 'current' is not recommended for different
+reasons.
 
-  0708a0afe291 ("mm: Consider __GFP_NOWARN flag for oversized kvmalloc() calls")
+First, if the goal is to use it to read or write per-netns data, this is
+inconsistent with how the "generic" sysctl entries are doing: directly
+by only using pointers set to the table entry, e.g. table->data. Linked
+to that, the per-netns data should always be obtained from the table
+linked to the netns it had been created for, which may not coincide with
+the reader's or writer's netns.
 
-Note: hashtable resize is only possible from init_netns.
+Another reason is that access to current->nsproxy->netns can oops if
+attempted when current->nsproxy had been dropped when the current task
+is exiting. This is what syzbot found, when using acct(2):
 
-Fixes: 9cc1c73ad666 ("netfilter: conntrack: avoid integer overflow when resizing")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  Oops: general protection fault, probably for non-canonical address 0xdffffc0000000005: 0000 [#1] PREEMPT SMP KASAN PTI
+  KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+  CPU: 1 UID: 0 PID: 5924 Comm: syz-executor Not tainted 6.13.0-rc5-syzkaller-00004-gccb98ccef0e5 #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+  RIP: 0010:proc_scheduler+0xc6/0x3c0 net/mptcp/ctrl.c:125
+  Code: 03 42 80 3c 38 00 0f 85 fe 02 00 00 4d 8b a4 24 08 09 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d 7c 24 28 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 cc 02 00 00 4d 8b 7c 24 28 48 8d 84 24 c8 00 00
+  RSP: 0018:ffffc900034774e8 EFLAGS: 00010206
+
+  RAX: dffffc0000000000 RBX: 1ffff9200068ee9e RCX: ffffc90003477620
+  RDX: 0000000000000005 RSI: ffffffff8b08f91e RDI: 0000000000000028
+  RBP: 0000000000000001 R08: ffffc90003477710 R09: 0000000000000040
+  R10: 0000000000000040 R11: 00000000726f7475 R12: 0000000000000000
+  R13: ffffc90003477620 R14: ffffc90003477710 R15: dffffc0000000000
+  FS:  0000000000000000(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fee3cd452d8 CR3: 000000007d116000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   proc_sys_call_handler+0x403/0x5d0 fs/proc/proc_sysctl.c:601
+   __kernel_write_iter+0x318/0xa80 fs/read_write.c:612
+   __kernel_write+0xf6/0x140 fs/read_write.c:632
+   do_acct_process+0xcb0/0x14a0 kernel/acct.c:539
+   acct_pin_kill+0x2d/0x100 kernel/acct.c:192
+   pin_kill+0x194/0x7c0 fs/fs_pin.c:44
+   mnt_pin_kill+0x61/0x1e0 fs/fs_pin.c:81
+   cleanup_mnt+0x3ac/0x450 fs/namespace.c:1366
+   task_work_run+0x14e/0x250 kernel/task_work.c:239
+   exit_task_work include/linux/task_work.h:43 [inline]
+   do_exit+0xad8/0x2d70 kernel/exit.c:938
+   do_group_exit+0xd3/0x2a0 kernel/exit.c:1087
+   get_signal+0x2576/0x2610 kernel/signal.c:3017
+   arch_do_signal_or_restart+0x90/0x7e0 arch/x86/kernel/signal.c:337
+   exit_to_user_mode_loop kernel/entry/common.c:111 [inline]
+   exit_to_user_mode_prepare include/linux/entry-common.h:329 [inline]
+   __syscall_exit_to_user_mode_work kernel/entry/common.c:207 [inline]
+   syscall_exit_to_user_mode+0x150/0x2a0 kernel/entry/common.c:218
+   do_syscall_64+0xda/0x250 arch/x86/entry/common.c:89
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7fee3cb87a6a
+  Code: Unable to access opcode bytes at 0x7fee3cb87a40.
+  RSP: 002b:00007fffcccac688 EFLAGS: 00000202 ORIG_RAX: 0000000000000037
+  RAX: 0000000000000000 RBX: 00007fffcccac710 RCX: 00007fee3cb87a6a
+  RDX: 0000000000000041 RSI: 0000000000000000 RDI: 0000000000000003
+  RBP: 0000000000000003 R08: 00007fffcccac6ac R09: 00007fffcccacac7
+  R10: 00007fffcccac710 R11: 0000000000000202 R12: 00007fee3cd49500
+  R13: 00007fffcccac6ac R14: 0000000000000000 R15: 00007fee3cd4b000
+   </TASK>
+  Modules linked in:
+  ---[ end trace 0000000000000000 ]---
+  RIP: 0010:proc_scheduler+0xc6/0x3c0 net/mptcp/ctrl.c:125
+  Code: 03 42 80 3c 38 00 0f 85 fe 02 00 00 4d 8b a4 24 08 09 00 00 48 b8 00 00 00 00 00 fc ff df 49 8d 7c 24 28 48 89 fa 48 c1 ea 03 <80> 3c 02 00 0f 85 cc 02 00 00 4d 8b 7c 24 28 48 8d 84 24 c8 00 00
+  RSP: 0018:ffffc900034774e8 EFLAGS: 00010206
+  RAX: dffffc0000000000 RBX: 1ffff9200068ee9e RCX: ffffc90003477620
+  RDX: 0000000000000005 RSI: ffffffff8b08f91e RDI: 0000000000000028
+  RBP: 0000000000000001 R08: ffffc90003477710 R09: 0000000000000040
+  R10: 0000000000000040 R11: 00000000726f7475 R12: 0000000000000000
+  R13: ffffc90003477620 R14: ffffc90003477710 R15: dffffc0000000000
+  FS:  0000000000000000(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007fee3cd452d8 CR3: 000000007d116000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  ----------------
+  Code disassembly (best guess), 1 bytes skipped:
+     0:	42 80 3c 38 00       	cmpb   $0x0,(%rax,%r15,1)
+     5:	0f 85 fe 02 00 00    	jne    0x309
+     b:	4d 8b a4 24 08 09 00 	mov    0x908(%r12),%r12
+    12:	00
+    13:	48 b8 00 00 00 00 00 	movabs $0xdffffc0000000000,%rax
+    1a:	fc ff df
+    1d:	49 8d 7c 24 28       	lea    0x28(%r12),%rdi
+    22:	48 89 fa             	mov    %rdi,%rdx
+    25:	48 c1 ea 03          	shr    $0x3,%rdx
+  * 29:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1) <-- trapping instruction
+    2d:	0f 85 cc 02 00 00    	jne    0x2ff
+    33:	4d 8b 7c 24 28       	mov    0x28(%r12),%r15
+    38:	48                   	rex.W
+    39:	8d                   	.byte 0x8d
+    3a:	84 24 c8             	test   %ah,(%rax,%rcx,8)
+
+Here with 'net.mptcp.scheduler', the 'net' structure is not really
+needed, because the table->data already has a pointer to the current
+scheduler, the only thing needed from the per-netns data.
+Simply use 'data', instead of getting (most of the time) the same thing,
+but from a longer and indirect way.
+
+Fixes: 6963c508fd7a ("mptcp: only allow set existing scheduler for net.mptcp.scheduler")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+e364f774c6f57f2c86d1@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-2-5df34b2083e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mptcp/ctrl.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index e4ae2a08da6a..34ad5975fbf3 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -2568,12 +2568,15 @@ void *nf_ct_alloc_hashtable(unsigned int *sizep, int nulls)
- 	struct hlist_nulls_head *hash;
- 	unsigned int nr_slots, i;
+--- a/net/mptcp/ctrl.c
++++ b/net/mptcp/ctrl.c
+@@ -87,16 +87,15 @@ static void mptcp_pernet_set_defaults(st
+ }
  
--	if (*sizep > (UINT_MAX / sizeof(struct hlist_nulls_head)))
-+	if (*sizep > (INT_MAX / sizeof(struct hlist_nulls_head)))
- 		return NULL;
+ #ifdef CONFIG_SYSCTL
+-static int mptcp_set_scheduler(const struct net *net, const char *name)
++static int mptcp_set_scheduler(char *scheduler, const char *name)
+ {
+-	struct mptcp_pernet *pernet = mptcp_get_pernet(net);
+ 	struct mptcp_sched_ops *sched;
+ 	int ret = 0;
  
- 	BUILD_BUG_ON(sizeof(struct hlist_nulls_head) != sizeof(struct hlist_head));
- 	nr_slots = *sizep = roundup(*sizep, PAGE_SIZE / sizeof(struct hlist_nulls_head));
+ 	rcu_read_lock();
+ 	sched = mptcp_sched_find(name);
+ 	if (sched)
+-		strscpy(pernet->scheduler, name, MPTCP_SCHED_NAME_MAX);
++		strscpy(scheduler, name, MPTCP_SCHED_NAME_MAX);
+ 	else
+ 		ret = -ENOENT;
+ 	rcu_read_unlock();
+@@ -107,7 +106,7 @@ static int mptcp_set_scheduler(const str
+ static int proc_scheduler(struct ctl_table *ctl, int write,
+ 			  void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	const struct net *net = current->nsproxy->net_ns;
++	char (*scheduler)[MPTCP_SCHED_NAME_MAX] = ctl->data;
+ 	char val[MPTCP_SCHED_NAME_MAX];
+ 	struct ctl_table tbl = {
+ 		.data = val,
+@@ -115,11 +114,11 @@ static int proc_scheduler(struct ctl_tab
+ 	};
+ 	int ret;
  
-+	if (nr_slots > (INT_MAX / sizeof(struct hlist_nulls_head)))
-+		return NULL;
-+
- 	hash = kvcalloc(nr_slots, sizeof(struct hlist_nulls_head), GFP_KERNEL);
+-	strscpy(val, mptcp_get_scheduler(net), MPTCP_SCHED_NAME_MAX);
++	strscpy(val, *scheduler, MPTCP_SCHED_NAME_MAX);
  
- 	if (hash && nulls)
--- 
-2.39.5
-
+ 	ret = proc_dostring(&tbl, write, buffer, lenp, ppos);
+ 	if (write && ret == 0)
+-		ret = mptcp_set_scheduler(net, val);
++		ret = mptcp_set_scheduler(*scheduler, val);
+ 
+ 	return ret;
+ }
 
 
