@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F04248BB2;
-	Wed, 15 Jan 2025 10:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BF21E9917;
+	Wed, 15 Jan 2025 10:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938136; cv=none; b=NUMx8Qs4RL6wz73PvkfYYbdHzcqaZ6GYDwatdNZNfiMXbazwMYAk6z+Jbd5YhLWtqUjeVJVf3yyZR6oSnnaITt1NcTnx2eTZJ1zneY2WR4Yh7NuMb+jZuJ6k8xSGxvHQiPyiV5+Ke2vEk87pWEm9J4DkUjZbpx57rFKZ+5hAnbQ=
+	t=1736938139; cv=none; b=b8NuCGZdbveUo5HA4tI2Te21uxJjv4xfLq6Mrjzv3KPnLAAwiBEd3HAJlYo5A0AmGTCdg9MeztbUZN9o9/W8RuF/EBT6PbEdLLvj6nKuqZeqN6AeIdnQxHHhWiBPoaln1E60YQ1Hf2hGwQp3t40xi8qSzFRZ0yYN34XtjLe8HJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938136; c=relaxed/simple;
-	bh=de93QA5KliX6qjE4SMDl2QUE2WYsQMc99tnwbMXsSNQ=;
+	s=arc-20240116; t=1736938139; c=relaxed/simple;
+	bh=fEVdkf6VKAIzXbSZa7fuLzpcGsYTKOYZiqF6m//OcxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LyG2WEVWz9s0D0PLpNDJrxuoXCQauWczj8Q9rVcy4UFt3aMbdZTzqhpQF/2pM6hElVf0s8mF+MCL8n8UGEKjbp3GTf6ThzYAIMhCh/quXz8gvTsDRMxtmpFZyH4Gkv2y+jz3/kq8njcgN+mjze9xewmgfvcw+aIpj6ju63+tc1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnwggtTu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XHqs4k46R6p6j/mOhvo46zBgrr2wQWVVg70ZjlCXNuzAjd3LYzZ42aSz87SclY3tiHZzHW+Elvcz80tDQjyf9VCSkaH4H4A0WGMUYg0tzS1UcvBjbcri8xRVole92H7vhL+fYNtrjzrgcJQNwl8bQ7cbXMj3hRrGF8gJ1TCN5qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnY7/hpa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnwggtTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6501DC4CEE2;
-	Wed, 15 Jan 2025 10:48:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnY7/hpa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD17C4CEE2;
+	Wed, 15 Jan 2025 10:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938135;
-	bh=de93QA5KliX6qjE4SMDl2QUE2WYsQMc99tnwbMXsSNQ=;
+	s=korg; t=1736938138;
+	bh=fEVdkf6VKAIzXbSZa7fuLzpcGsYTKOYZiqF6m//OcxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rnwggtTuxXPXGYYRBRXEkvkZryS80Bo3zmoYR62UHMwpko4Nh0GNbZj1xkZDw8KNr
-	 pbyEnZ0UaeXIOzGSq3ZS84dfRR+/DYMXf586FHzDZ+CYcPqQNcHnFFqbrUt6oV2iR7
-	 uYQ5QbM98WObbrCDk3Mlib1PWM0G4JPleSnPLoF4=
+	b=NnY7/hpaZNqdEO6tlLCkhKtlOrvYLkW3leqHDjDqIK5Rdw9gXO/jjFlgEoC4FQchg
+	 oAucsu5GMr+HGI5pte9i0a3ak1GuUnqHy0zIjdPdqq6iKLhOimwUjb7d5z8ryHMxOa
+	 k7lGxN6/TV4h8IgUZcmcPrMLjiip3xpWuC9lLyqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
+	Liankun Yang <liankun.yang@mediatek.com>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 063/189] drm/mediatek: stop selecting foreign drivers
-Date: Wed, 15 Jan 2025 11:35:59 +0100
-Message-ID: <20250115103608.869290026@linuxfoundation.org>
+Subject: [PATCH 6.12 064/189] drm/mediatek: Fix YCbCr422 color format issue for DP
+Date: Wed, 15 Jan 2025 11:36:00 +0100
+Message-ID: <20250115103608.906127530@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -53,68 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Liankun Yang <liankun.yang@mediatek.com>
 
-[ Upstream commit 924d66011f2401a4145e2e814842c5c4572e439f ]
+[ Upstream commit ef24fbd8f12015ff827973fffefed3902ffd61cc ]
 
-The PHY portion of the mediatek hdmi driver was originally part of
-the driver it self and later split out into drivers/phy, which a
-'select' to keep the prior behavior.
+Setting up misc0 for Pixel Encoding Format.
 
-However, this leads to build failures when the PHY driver cannot
-be built:
+According to the definition of YCbCr in spec 1.2a Table 2-96,
+0x1 << 1 should be written to the register.
 
-WARNING: unmet direct dependencies detected for PHY_MTK_HDMI
-  Depends on [n]: (ARCH_MEDIATEK || COMPILE_TEST [=y]) && COMMON_CLK [=y] && OF [=y] && REGULATOR [=n]
-  Selected by [m]:
-  - DRM_MEDIATEK_HDMI [=m] && HAS_IOMEM [=y] && DRM [=m] && DRM_MEDIATEK [=m]
-ERROR: modpost: "devm_regulator_register" [drivers/phy/mediatek/phy-mtk-hdmi-drv.ko] undefined!
-ERROR: modpost: "rdev_get_drvdata" [drivers/phy/mediatek/phy-mtk-hdmi-drv.ko] undefined!
+Use switch case to distinguish RGB, YCbCr422,
+and unsupported color formats.
 
-The best option here is to just not select the phy driver and leave that
-up to the defconfig. Do the same for the other PHY and memory drivers
-selected here as well for consistency.
-
-Fixes: a481bf2f0ca4 ("drm/mediatek: Separate mtk_hdmi_phy to an independent module")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241218085837.2670434-1-arnd@kernel.org/
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: Liankun Yang <liankun.yang@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241025083036.8829-2-liankun.yang@mediatek.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/Kconfig | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/Kconfig b/drivers/gpu/drm/mediatek/Kconfig
-index 417ac8c9af41..a749c01199d4 100644
---- a/drivers/gpu/drm/mediatek/Kconfig
-+++ b/drivers/gpu/drm/mediatek/Kconfig
-@@ -13,9 +13,6 @@ config DRM_MEDIATEK
- 	select DRM_BRIDGE_CONNECTOR
- 	select DRM_MIPI_DSI
- 	select DRM_PANEL
--	select MEMORY
--	select MTK_SMI
--	select PHY_MTK_MIPI_DSI
- 	select VIDEOMODE_HELPERS
- 	help
- 	  Choose this option if you have a Mediatek SoCs.
-@@ -26,7 +23,6 @@ config DRM_MEDIATEK
- config DRM_MEDIATEK_DP
- 	tristate "DRM DPTX Support for MediaTek SoCs"
- 	depends on DRM_MEDIATEK
--	select PHY_MTK_DP
- 	select DRM_DISPLAY_HELPER
- 	select DRM_DISPLAY_DP_HELPER
- 	select DRM_DISPLAY_DP_AUX_BUS
-@@ -37,6 +33,5 @@ config DRM_MEDIATEK_HDMI
- 	tristate "DRM HDMI Support for Mediatek SoCs"
- 	depends on DRM_MEDIATEK
- 	select SND_SOC_HDMI_CODEC if SND_SOC
--	select PHY_MTK_HDMI
- 	help
- 	  DRM/KMS HDMI driver for Mediatek SoCs
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index f2bee617f063..bcc4d3fc77d8 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -543,18 +543,16 @@ static int mtk_dp_set_color_format(struct mtk_dp *mtk_dp,
+ 				   enum dp_pixelformat color_format)
+ {
+ 	u32 val;
+-
+-	/* update MISC0 */
+-	mtk_dp_update_bits(mtk_dp, MTK_DP_ENC0_P0_3034,
+-			   color_format << DP_TEST_COLOR_FORMAT_SHIFT,
+-			   DP_TEST_COLOR_FORMAT_MASK);
++	u32 misc0_color;
+ 
+ 	switch (color_format) {
+ 	case DP_PIXELFORMAT_YUV422:
+ 		val = PIXEL_ENCODE_FORMAT_DP_ENC0_P0_YCBCR422;
++		misc0_color = DP_COLOR_FORMAT_YCbCr422;
+ 		break;
+ 	case DP_PIXELFORMAT_RGB:
+ 		val = PIXEL_ENCODE_FORMAT_DP_ENC0_P0_RGB;
++		misc0_color = DP_COLOR_FORMAT_RGB;
+ 		break;
+ 	default:
+ 		drm_warn(mtk_dp->drm_dev, "Unsupported color format: %d\n",
+@@ -562,6 +560,11 @@ static int mtk_dp_set_color_format(struct mtk_dp *mtk_dp,
+ 		return -EINVAL;
+ 	}
+ 
++	/* update MISC0 */
++	mtk_dp_update_bits(mtk_dp, MTK_DP_ENC0_P0_3034,
++			   misc0_color,
++			   DP_TEST_COLOR_FORMAT_MASK);
++
+ 	mtk_dp_update_bits(mtk_dp, MTK_DP_ENC0_P0_303C,
+ 			   val, PIXEL_ENCODE_FORMAT_DP_ENC0_P0_MASK);
+ 	return 0;
 -- 
 2.39.5
 
