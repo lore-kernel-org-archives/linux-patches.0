@@ -1,93 +1,96 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076187711F;
-	Wed, 15 Jan 2025 15:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6848570801
+	for <patches@lists.linux.dev>; Wed, 15 Jan 2025 15:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736953670; cv=none; b=eM8v5OBTOoBjzYlVspAjqnMInphwcy4EbapVTTOwf2Hsqw6zG/a2E0Wp8h2aJ4XoCbRam1JY+IoPItRZ9tIqz8T4sNkQHLkFkh3PVwDTso6p9uor/hFyRzjttnH5Klsr6RpN+4ZX7WJjvrhjgteKhusA150Jvo6eNgaTLwhY1Cc=
+	t=1736954765; cv=none; b=fXDkL8cEBthJtzO2flT2L9Uu51yRqMk9+yoJrRFRQR1RUUli73n95fxkTWyBJajGw4XTx5OqXIMXXZw3bNMAd9bIpTVHOtw0yZLQsVMjflXWkSChDa/6hBSfI0FE6OufS6VTbwpc1VpkW6JVXdb0HeH/veFGpkARbjwArQQx55c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736953670; c=relaxed/simple;
-	bh=6tNY2Q8TLfNr3PgrRY67w8rUseQLL2cKPwzfJgy6s1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BN1W8yMhatyfB/6rEzVUHXeMzgN9OgZ91xQof5lbVY2Fwq6cmLcYusg9wEhiDI5F6Ojx9lhdh4DZ7BRKupOzH/1+lYIb0IHoGH7XL6HpKGelhtUrmtq1uxpzVkc8Eg6XZJuDC34t4p2StU1eFAvr/OW4v6hRgkizRHdd6TSH3gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2hHCbCq1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1736954765; c=relaxed/simple;
+	bh=oS5Bu0PKeMi1oxl+u86jkjs1sd8YAhS/wSqvsUauqe0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bEgXtiZtwOhK1AwkZC14iSNgn7fj6H8w1YoJXe5o7Gk65Rwqx2XM07RuUmSCJzaRgLlXX5nlZDCFrAJo+rTBqFcyxtYFhiikY1+HRBxmoYU11NwCUMW3lYsJZ+k2ln2NDbs3GajsPMeUq+sOcXnp6EsRps1YATsxcwYa86jNU8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WrktSgCk; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2hHCbCq1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE09AC4CED1;
-	Wed, 15 Jan 2025 15:07:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736953669;
-	bh=6tNY2Q8TLfNr3PgrRY67w8rUseQLL2cKPwzfJgy6s1M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=2hHCbCq1bcRvlmPNCNdcVWDY7pKTNQRquwo6xCz+YKQUve8IXHtpMFiy7gRGxxnB8
-	 sb0VnmdHeoFxJixQbj7rcNzFY95rm2ZySgJMJES2o8iv4nh0mDxWx7xhizH8BWGNe5
-	 EI3Og8PpOqw5uKBSr1vPhqKMJDw4WRKLjUmvLemY=
-Date: Wed, 15 Jan 2025 16:07:45 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
-Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 00/92] 6.1.125-rc1 review
-Message-ID: <2025011506-pronto-antirust-6ded@gregkh>
-References: <20250115103547.522503305@linuxfoundation.org>
- <Z4evJUkzHauW+zOU@duo.ucw.cz>
- <eb167e35-ab0d-4037-aa44-3fa74a450e69@w6rz.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WrktSgCk"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ef6ee55225so1393043a91.0
+        for <patches@lists.linux.dev>; Wed, 15 Jan 2025 07:26:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736954764; x=1737559564; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oS5Bu0PKeMi1oxl+u86jkjs1sd8YAhS/wSqvsUauqe0=;
+        b=WrktSgCkHAXrMBYvlwmZGtawqY4hK25zLB4VQEg3aXvg+DXaw69k3QCAFZe3N5NSG0
+         nzmAkUYBwrEyJqr5dF+Uowlg5btzJoREYQCbcBFa7qQuF4rr+2gdnln/XoS6FnhYOmxt
+         +Vsq1vpp+MqF/PiO4MM6cQitZ4vcFF5XKgrLt9Acc4VORe4+FzLrDOvQBmc9/RBEZryu
+         iuI9R6VCXqs2MzCDE1Kk+xC3UhgcP4H1c+SrKWCXe7FHCchEPsD7S/kScwQSxUeTYvuU
+         zr3xso6Gxokhe+c8F70kGK7TkSx7VEgR4rwQus4Ds32OhHpFM9Ow0R+jA4ZcoMeFq9sM
+         GXLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736954764; x=1737559564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oS5Bu0PKeMi1oxl+u86jkjs1sd8YAhS/wSqvsUauqe0=;
+        b=ThhyMBpauDsOIpV8mvuf2PMeJcM/CRnpL6DjDfYU2WEk2KOEmB4zdkTbIUIyfmzeQy
+         cxzmNgSICgTF2m/Zj2qAPQv00e2GHTmD5JNp9u3ntGuMFIxC+UPqrEmARwoW7WqQHT+v
+         P8pyQ4WqGn7PW2cZMhzJ1cwP/yQRw+NWoRM/8DG8CTiK19iM5H+CaIIfjnHA2HsVnqvc
+         Vgwb8Ax2e97fABn0B44gaRYqiC4FxhLASDS4NlTiHvrR5rfuUk45HOhaIw+WbYiz5Zxc
+         cS0VQ+Hl9TkGToni7YtgORZlZjfkHOvQMYEu+810VW2foZcrLfu9Wymc5hNBBaHc4aNA
+         +T5g==
+X-Forwarded-Encrypted: i=1; AJvYcCUmmnYuTWyC3oSA7ZXvsD8wReu85g6e3fKnmsgiH/lxBsEtDCWwVeoA9bvWtPN0wsWoP1+bbv+a@lists.linux.dev
+X-Gm-Message-State: AOJu0YyH/kvwSqk9C1QoSoHjBdIGfj/G513lxtVuWaRNRRVn/2/l8flF
+	LxkazuqXlKMPOpCoU/fd8fXySmbZN5/uKGmz5fbu0LCJ9gw6HNwy65CiQ5edMg9eBCcb+FpDdrR
+	hUFN26tnyKLYdSYw/hIxHm0utChI=
+X-Gm-Gg: ASbGncvNhT80kPxMFB8Bv2F0n8VGD5TME2otOP3RLbSDUBORUSJP2C/HxyRegrDj2A2
+	Rnqv+Ql3UTNpDeUrOrE5EfEKJNabFpTZ5i/mS6Q==
+X-Google-Smtp-Source: AGHT+IEuvaHjinrYdSDGGIHqYQ1y21shSye1Mm1xAH9Bg2IFjYO6qBwnOAGewySKKnoaj5WrOGhqbHAClvlRG3RF3c8=
+X-Received: by 2002:a17:90a:d88c:b0:2ea:c2d3:a079 with SMTP id
+ 98e67ed59e1d1-2f548f3fc41mr16367753a91.3.1736954763662; Wed, 15 Jan 2025
+ 07:26:03 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <eb167e35-ab0d-4037-aa44-3fa74a450e69@w6rz.net>
+References: <20241112184455.855133-1-ojeda@kernel.org> <CANiq72=BvnriScFay8SpLNe9mNhjvGsBJ9W9UtdzU_6v_i+woA@mail.gmail.com>
+ <CAABy=s12gOZadhYC+=6=TbbyN9j5L0B19ZLSGR_VFEdt1jhwEA@mail.gmail.com> <CANiq72kQKGG7j61bpsORnE0vzNo_dzwMZMLx=Z0xOnY0wefv6g@mail.gmail.com>
+In-Reply-To: <CANiq72kQKGG7j61bpsORnE0vzNo_dzwMZMLx=Z0xOnY0wefv6g@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Wed, 15 Jan 2025 16:25:51 +0100
+X-Gm-Features: AbW1kvZUpcYldFjbwOBXy94o_6lTFAyj-QS9S6GkQe2OruPN52aGDmHoW0Pxiqk
+Message-ID: <CANiq72k3YfiEGT6JV5semYJWn5St8GMF3nhDW0Bt6rX1z+oDng@mail.gmail.com>
+Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
+To: "Hong, Yifan" <elsk@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 15, 2025 at 06:09:06AM -0800, Ron Economos wrote:
-> On 1/15/25 04:50, Pavel Machek wrote:
-> > Hi!
-> > 
-> > > This is the start of the stable review cycle for the 6.1.125 release.
-> > > There are 92 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > Still building, but we already have failures on risc-v.
-> > 
-> > drivers/usb/core/port.c: In function 'usb_port_shutdown':
-> > 2912
-> > drivers/usb/core/port.c:417:26: error: 'struct usb_device' has no member named 'port_is_suspended'
-> > 2913
-> >    417 |         if (udev && !udev->port_is_suspended) {
-> > 2914
-> >        |                          ^~
-> > 2915
-> > make[4]: *** [scripts/Makefile.build:250: drivers/usb/core/port.o] Error 1
-> > 2916
-> > make[4]: *** Waiting for unfinished jobs....
-> > 2917
-> >    CC      drivers/gpu/drm/radeon/radeon_test.o
-> > 
-> > https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/1626266073
-> > 
-> > Best regards,
-> > 								Pavel
-> 
-> I'm seeing the build failure here also. Looks like it's due to not having
-> CONFIG_PM set in the config. The member "port_is_suspended" is inside of an
-> #ifdef CONFIG_PM in include/linux/usb.h. The #ifdef CONFIG_PM has been
-> removed at some point.
+On Tue, Jan 14, 2025 at 11:46=E2=80=AFPM Miguel Ojeda
+<miguel.ojeda.sandonis@gmail.com> wrote:
+>
+> On second thought, #731 probably only applies to `rustc` native flags
+> only, rather than those that are passed to the linker (e.g. if I pass
+> a dummy flag, it is passed as-is, so I doubt they will start checking,
+> and probably they shouldn't), so it may not help here after all.
 
-Yeah, it was fixed up in 6.4 with commit 130eac417085 ("xhci: use
-pm_ptr() instead of #ifdef for CONFIG_PM conditionals"), which is why we
-didn't see this as a dependency.  I'll see if I can figure that out
-tomorrow for how to backport it as it doesn't apply cleanly.
+For completeness: `-Clink-args=3D` appends (and is allowed to be passed
+several times), rather than override. Moreover, the docs say so
+explicitly. So it is unlikely that one would change or that #731
+applies to it (i.e. as a whole vs. individual options inside it).
 
-thanks,
-
-greg k-h
+Cheers,
+Miguel
