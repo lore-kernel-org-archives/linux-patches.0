@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0A248BBF;
-	Wed, 15 Jan 2025 10:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5306248BCE;
+	Wed, 15 Jan 2025 10:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937534; cv=none; b=VXLUxjfi5fzN/2zuqjkbQkeAvEokKwhzeaFme5iFN8uvVZ4kqhoNEWI7tQ73+4yW1yILdkHQW7l9t+9EWMpVAUQnoOKx3UExgQ2QGgi0YZohx4egtpmOAWHnxZR+Iif2kK4JRYEfzbTNKczMWPhVkxLtYVbSOJ1hODASq7y/qrQ=
+	t=1736937538; cv=none; b=FlxQanUwzw7q1VqRzh+ts+8xRdpCrYHk4ETV88sbb6TDTZmQ6jVm4AKCuLId5Ax4HOTQhERkTTFq9O9/j82EtlUe5pfLEUZTN/cPZiqkonKPX/1wz77qERk4l/+E9wpqXT2SCKfhOuGRlhnHCAHuhGOy2Sgtcg1oo8dmTcxXxDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937534; c=relaxed/simple;
-	bh=uemHpkaJiWzJa66Fkzw3h+8L61HfLAJ88oMcCMtvhAs=;
+	s=arc-20240116; t=1736937538; c=relaxed/simple;
+	bh=9CiB1H0CK72ZlTOLbBcHe73h8VTPgA0Y3pqBDAS0HnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a2zbVx5KCGCVr18IEr2xhXlZdUR04F2SMqrnDR4+CWnlMFRX3oKjWCcxVjrljsmnSO2wspKroMRiDkyg7+ml09dMgMEYJbO91+bZKIAKqjMurpu9/8c51+gj1TlDqJsKgXn25lK58Aqzy2kdI2Dt+eTlo/iwNWPva4OoJXmA7tI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jA/0aouq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uWRrVMnn0b5dUDa8NZDdMoAr6/F8DVquJMlL4JXLWLOUPK5r+UbIQ1IoD/9spx9WQxcyQ2RrYWxb+tVdkOoCK8SWQDJvRrWqzyQzWzSqKGjDVcy76cG7/HgRgzMas0TVxeb+8DjH4uoWE2VKA3zqrMbt2OLwfxUIQc0JbzkYoAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ET8YAEzI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jA/0aouq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CBDC4CEDF;
-	Wed, 15 Jan 2025 10:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ET8YAEzI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641F6C4CEE2;
+	Wed, 15 Jan 2025 10:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937534;
-	bh=uemHpkaJiWzJa66Fkzw3h+8L61HfLAJ88oMcCMtvhAs=;
+	s=korg; t=1736937538;
+	bh=9CiB1H0CK72ZlTOLbBcHe73h8VTPgA0Y3pqBDAS0HnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jA/0aouqtwtHmlWBzkEcuV06m4Sy43vVqnbnzQiP4Xd7mYJiAdvxI6aOk+6Kew3oq
-	 ONtlCH4a9hBF3UmtZ72ovNwUMCXfIRc5eeq7dJ1VSjD5szw2LVQ2cnCbd5/n5rYLHn
-	 VHIwHcGry2Fr5WtS4YLuUiwQfd/WJCvNKVLTAL88=
+	b=ET8YAEzI+PwMQHrtv8pUfHpgaQY2Hs2IXB3qNhYnsHzNtZmCscQdo9IT3ojjl0yvX
+	 acBHMoMqzGoLjBhmUJvC4w3+So4+inuhAs2ojJku537gxwSeA4rMIbUNK1Q5LXPRHm
+	 QkdH9irtAums/wBRL6tZVa6ouUBtw1hZMkMXLhGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dario=20Wei=C3=9Fer?= <dario@cure53.de>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 01/92] ceph: give up on paths longer than PATH_MAX
-Date: Wed, 15 Jan 2025 11:36:19 +0100
-Message-ID: <20250115103547.583898967@linuxfoundation.org>
+	syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 10/92] exfat: fix the infinite loop in __exfat_free_cluster()
+Date: Wed, 15 Jan 2025 11:36:28 +0100
+Message-ID: <20250115103547.943648051@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -46,56 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit 550f7ca98ee028a606aa75705a7e77b1bd11720f upstream.
+[ Upstream commit a5324b3a488d883aa2d42f72260054e87d0940a0 ]
 
-If the full path to be built by ceph_mdsc_build_path() happens to be
-longer than PATH_MAX, then this function will enter an endless (retry)
-loop, effectively blocking the whole task.  Most of the machine
-becomes unusable, making this a very simple and effective DoS
-vulnerability.
+In __exfat_free_cluster(), the cluster chain is traversed until the
+EOF cluster. If the cluster chain includes a loop due to file system
+corruption, the EOF cluster cannot be traversed, resulting in an
+infinite loop.
 
-I cannot imagine why this retry was ever implemented, but it seems
-rather useless and harmful to me.  Let's remove it and fail with
-ENAMETOOLONG instead.
+This commit uses the total number of clusters to prevent this infinite
+loop.
 
-Cc: stable@vger.kernel.org
-Reported-by: Dario Weißer <dario@cure53.de>
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[idryomov@gmail.com: backport to 6.1: pr_warn() is still in use]
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1de5a37cb85a2d536330
+Tested-by: syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com
+Fixes: 31023864e67a ("exfat: add fat entry operations")
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ fs/exfat/fatent.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -2447,12 +2447,11 @@ retry:
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index 41ae4cce1f42..fe007ae2f23c 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -216,6 +216,16 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
  
- 	if (pos < 0) {
- 		/*
--		 * A rename didn't occur, but somehow we didn't end up where
--		 * we thought we would. Throw a warning and try again.
-+		 * The path is longer than PATH_MAX and this function
-+		 * cannot ever succeed.  Creating paths that long is
-+		 * possible with Ceph, but Linux cannot use them.
- 		 */
--		pr_warn("build_path did not end path lookup where "
--			"expected, pos is %d\n", pos);
--		goto retry;
-+		return ERR_PTR(-ENAMETOOLONG);
+ 			if (err)
+ 				goto dec_used_clus;
++
++			if (num_clusters >= sbi->num_clusters - EXFAT_FIRST_CLUSTER) {
++				/*
++				 * The cluster chain includes a loop, scan the
++				 * bitmap to get the number of used clusters.
++				 */
++				exfat_count_used_clusters(sb, &sbi->used_clusters);
++
++				return 0;
++			}
+ 		} while (clu != EXFAT_EOF_CLUSTER);
  	}
  
- 	*pbase = base;
+-- 
+2.39.5
+
 
 
