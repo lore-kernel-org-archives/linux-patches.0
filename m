@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D2B248BA6;
-	Wed, 15 Jan 2025 10:44:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55484248BAC;
+	Wed, 15 Jan 2025 10:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937870; cv=none; b=JbsTgi5NH2PC18ig4k/ZJRVYu8Yq0BWCGkTNekFwuAcH5PX/XpD/9qd9ZdAh7ExpfMy+C6UxpuZHtjg8rh/gxW3at7ZBdo/2iu4ygZ8R11L0ypONEPzfPQ5t7Gj/w9lRxUSO/y18CIH/f1PQh+zkBjTzGGeeq0mInbacL9k1dio=
+	t=1736937873; cv=none; b=T6mNLtI7jDxAA2P53qVQ6r+2t+7M5NjzzlJutZ+ZTMJ4xN5KKRKWvTWc+BmxFyCKvseTAh6emNh/5l34ToyTbUKuiaxpdj6FsnlMTp9x2pzfBUFgQpFKR4GjJH6XA3LRJnNSuEf4CgJ0UaVY/SRcvgfQ12nEa+KFXfvIdP098Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937870; c=relaxed/simple;
-	bh=UjXA3FDKNBK5wSME/mmmSA/qXB9MsS0wXbskA1ENZSw=;
+	s=arc-20240116; t=1736937873; c=relaxed/simple;
+	bh=iqXm5OVQbaezFDccwb9isJXSxnhTCTDVem34jKnxyjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z5wPTeU9Rn6vIdzdG+Fhz8RtgNhSeQlA9TCkngQyHho72VwuMDbtjKTeup/rhmoQiCd9/ZSqKANbb7q4TCkgAVKA8OeqGha8/wpwgRVIB0n0hcpTpQgilE42CIBXfmFrYz6I4H1plrUKCWBpZ2aMP/D3NG/+hUjpXP8B4Cfk448=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qG7rIQcO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+wFiSHCZzbgkpqX8qWlwHatIIthu0qJqHtEjcoMKu7LRMnbbauea+Sl5dBMEIWu+R/3JayLU3GgXr70A7y3Ek5vFfyTVy3HAN/czxwhjnCx9k4vVdwWoW1v6Yf5UmC4DDaCp5pSyxtulPYh6PsYozUIKyqkXGvTmYlUBP+qCqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HoAAuiM4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qG7rIQcO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798C4C4CEDF;
-	Wed, 15 Jan 2025 10:44:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HoAAuiM4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74E5C4CEDF;
+	Wed, 15 Jan 2025 10:44:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937869;
-	bh=UjXA3FDKNBK5wSME/mmmSA/qXB9MsS0wXbskA1ENZSw=;
+	s=korg; t=1736937873;
+	bh=iqXm5OVQbaezFDccwb9isJXSxnhTCTDVem34jKnxyjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qG7rIQcOX+1cvGnf0lmd+W58JSy7VxUzo4um98HCrS+kUsE7vMtJ8AWZpgFIs9Gh8
-	 sda3riEojsunxYkkDscvuh2XREIHF9+mmDfKtONYJsVk81ECj8zzST7Idd4/AK9udW
-	 bwg86PUnHIUgVkWnfoX45jUMC2o3NbKpWbGmdumU=
+	b=HoAAuiM46NNdLacK4NsKnwHtQ6u17C52uEeUYzLIOVmgsCd/8oO2ghsI0l/jzHtBz
+	 lwbgRY+7hI411bvLcDSnfJLb1RYG9RIaxJoDgzrObqh/CuuyxV2G426zX+kGU0U+tS
+	 V2gMT4duayCw5CRqbNWYb4MuCuoiOTKpnqc2nB/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+91ae49e1c1a2634d20c0@syzkaller.appspotmail.com,
+	syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com,
 	Yuezhang Mo <Yuezhang.Mo@sony.com>,
 	Sungjong Seo <sj1557.seo@samsung.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 016/189] exfat: fix the new buffer was not zeroed before writing
-Date: Wed, 15 Jan 2025 11:35:12 +0100
-Message-ID: <20250115103607.006634155@linuxfoundation.org>
+Subject: [PATCH 6.12 017/189] exfat: fix the infinite loop in __exfat_free_cluster()
+Date: Wed, 15 Jan 2025 11:35:13 +0100
+Message-ID: <20250115103607.049578215@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -55,58 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit 98e2fb26d1a9eafe79f46d15d54e68e014d81d8c ]
+[ Upstream commit a5324b3a488d883aa2d42f72260054e87d0940a0 ]
 
-Before writing, if a buffer_head marked as new, its data must
-be zeroed, otherwise uninitialized data in the page cache will
-be written.
+In __exfat_free_cluster(), the cluster chain is traversed until the
+EOF cluster. If the cluster chain includes a loop due to file system
+corruption, the EOF cluster cannot be traversed, resulting in an
+infinite loop.
 
-So this commit uses folio_zero_new_buffers() to zero the new
-buffers before ->write_end().
+This commit uses the total number of clusters to prevent this infinite
+loop.
 
-Fixes: 6630ea49103c ("exfat: move extend valid_size into ->page_mkwrite()")
-Reported-by: syzbot+91ae49e1c1a2634d20c0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=91ae49e1c1a2634d20c0
-Tested-by: syzbot+91ae49e1c1a2634d20c0@syzkaller.appspotmail.com
+Reported-by: syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1de5a37cb85a2d536330
+Tested-by: syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com
+Fixes: 31023864e67a ("exfat: add fat entry operations")
 Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
 Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/file.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/exfat/fatent.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/exfat/file.c b/fs/exfat/file.c
-index fb38769c3e39..05b51e721783 100644
---- a/fs/exfat/file.c
-+++ b/fs/exfat/file.c
-@@ -545,6 +545,7 @@ static int exfat_extend_valid_size(struct file *file, loff_t new_valid_size)
- 	while (pos < new_valid_size) {
- 		u32 len;
- 		struct folio *folio;
-+		unsigned long off;
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index 773c320d68f3..9e5492ac409b 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -216,6 +216,16 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
  
- 		len = PAGE_SIZE - (pos & (PAGE_SIZE - 1));
- 		if (pos + len > new_valid_size)
-@@ -554,6 +555,9 @@ static int exfat_extend_valid_size(struct file *file, loff_t new_valid_size)
- 		if (err)
- 			goto out;
- 
-+		off = offset_in_folio(folio, pos);
-+		folio_zero_new_buffers(folio, off, off + len);
+ 			if (err)
+ 				goto dec_used_clus;
 +
- 		err = ops->write_end(file, mapping, pos, len, len, folio, NULL);
- 		if (err < 0)
- 			goto out;
-@@ -563,6 +567,8 @@ static int exfat_extend_valid_size(struct file *file, loff_t new_valid_size)
- 		cond_resched();
++			if (num_clusters >= sbi->num_clusters - EXFAT_FIRST_CLUSTER) {
++				/*
++				 * The cluster chain includes a loop, scan the
++				 * bitmap to get the number of used clusters.
++				 */
++				exfat_count_used_clusters(sb, &sbi->used_clusters);
++
++				return 0;
++			}
+ 		} while (clu != EXFAT_EOF_CLUSTER);
  	}
  
-+	return 0;
-+
- out:
- 	return err;
- }
 -- 
 2.39.5
 
