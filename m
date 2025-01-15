@@ -1,102 +1,121 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9424D1DB95E
-	for <patches@lists.linux.dev>; Wed, 15 Jan 2025 21:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004671D90DF
+	for <patches@lists.linux.dev>; Wed, 15 Jan 2025 21:44:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736976567; cv=none; b=PWr2Ksbc1P+mFDYtvsi1UdD4dNNP0YC86LbZfgBC7P8BXAKDw3RjmOs6enzMO/AtTu+rnC6aCUQ/3y+QNmEFmeWBwpNWI+MVMbYxvbMWZQfw+Q/twI/I6GAykN2vEB4mYbkW8sdYCBH3c2V2XiRETHmcyjGjKoJiWOnle8oD8Jg=
+	t=1736977488; cv=none; b=p7urKSVDp/OH3DPX/35UG6sEV/RFC5Cl7hx0Aax+stqoFG1lreQAupc8cO+VJ25X9W+E3RtNW3cpsWaDSRI742BZ/D9Z7i2a6i2HYu6KVPvR3xN0Wdn6kpdvvIlA2gKBzXQEQwqe4ZgXOgtQ2e3C5G8CwxW1thpd2IcmidR3CEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736976567; c=relaxed/simple;
-	bh=RJn9wLLW+Uqm3UXhw6lKi+ALKeUFLR2ponMqUsUMxF8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBRYBASnYEzlPcUBy5916W8OmaTb25GkuO+CHJ12j8p2hJCwSFpGbwEFLdFBn+GXyHHWTq+Aj6TpcCVt1uaqmZ+HAhFdasx3revc8xz0leNgkSKprTOdXXKUMncBz66uycAVmWoINemmCeGAZRmrGHWFZYUJ7g/SmSvSTP9vAcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=KzxO2nRV; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
+	s=arc-20240116; t=1736977488; c=relaxed/simple;
+	bh=ktwr+Bks+JGEYPz2bxmRQo+i2FTLq9SbvvFZOGDPuBM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NXcUB+4o6P5LYAo3wJi77150EjizRSofSXt3f8BeQzgQhm3FZhvFAvDmPRM1XfdDK1z0RNbbBpZ4OR5vFC8pPByEiIWpACgs2OZsyuKu+ReQNOlLOs4EuBR/X11vDadjYlnDElZJtiX0XwB9ea/+cZSNpD4gz/EguamOWU5saxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=c1+7s9X5; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="KzxO2nRV"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3ce76b8d5bcso1874285ab.0
-        for <patches@lists.linux.dev>; Wed, 15 Jan 2025 13:29:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="c1+7s9X5"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-216401de828so2760885ad.3
+        for <patches@lists.linux.dev>; Wed, 15 Jan 2025 13:44:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google; t=1736976563; x=1737581363; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NMxRqVKC1OS1+OO5j00J8Q528QAXBH6vrdlisTHHjvs=;
-        b=KzxO2nRV+TMKp5P1p8zi071n8VJEqm+fRd8c/f5fBaE9t4CORVBA2cODGIgCA4XHDe
-         6X/GVtrH+7MziPBQWH5lXcq4pY0bq2pylKD/faEG1p0s4d6eTw8O5lrF0w0rHh2zfTMr
-         B5f+cVJqk8xZxbLNCK4gecSgbVc34FlgU1xVs=
+        d=futuring-girl.com; s=google; t=1736977485; x=1737582285; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RvB57iWG41YV/c5cBE56VtHaQNyu0vUymV/5xtD6lV0=;
+        b=c1+7s9X5EWzjaC3vYxFhU2cV8ShL6g4+j2dPOzSWYpl3w299Hcd+SfZaxeDN017MdD
+         sN+xqDXSr3jO74xScywesIYXLbLV9F9s9IdcOambD+C7Yu3gZYA5VZ6SV2COjWFmYtel
+         4UelUrsHdA+VDn5ZhN53O2wThxXLn1SkQr+rpY0ILL42E/DxDO7f4XyaKsSgr9e0J1sR
+         Z4+JkreIGXZYX9J6yPDIdUBQoHTD30TCGTXdEbA0gaFCH0HVj3sVdaTuBDwZqAah+dPP
+         7nUydeeNYkpQ8sItItdBkieNOAwAgxEBatylD6Imh19UGmGSR8qodLqoY2SUDRHQ6p9q
+         YStA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736976563; x=1737581363;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1736977485; x=1737582285;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NMxRqVKC1OS1+OO5j00J8Q528QAXBH6vrdlisTHHjvs=;
-        b=QLnDsKr1GFHS6ZOqw+CLVwTqMJTBB9tV3RXFuJWZXV+bmDAZTtNcuCVTvqP711L96D
-         42LHxiH8EdOoWqkWFkoBZrT5klwTDPhCe/HrOCEQtEGYlhCQ3X+l1L+PYMsGXfnLryYV
-         k3gaWZqeaa/KXNTMdP6J1+9HRk7fPvjc4qDqPCzuNsCWVrMuHpm6QfpR1fZEyndvzeLi
-         GEev9eJ7hKJbgcfhs/5biD4/t7Pu82Gt1kowlJ/+kcfaSeg6Eot4GkyhOtarK12/XqL5
-         QemPZEf8fCOwF11rzAK2BHgKbMVSrT5vQI9JpK2bOGANHsnIOKtvMEy16t5NL9cdYGYT
-         YXkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWiNIBgKk05mlW4LvIMxZyA4ldSNGofwOSdeD6T8FN/bqwExukK0uNB4B5gZTuxFiWfm/JNGj+k@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1jPW5AYAJUkJfaAvsv2tQL/fpAOxPK+1H9hyKT9XuEYf2TM+J
-	LvbiAX6i13w4q+QDO9GpmNcOy0OSo/DeT9pSWl5KIx96XC7jZ/4uUYvgulGyyw==
-X-Gm-Gg: ASbGncvaJCDkEfRNvmrvLtzZc5HTmQ+rBQ7WtCcbNQq5WRfu3HsKMhn5OYix6LPKMLu
-	7mVXKNFvvRMzVQqUKXcfkO4dOPgut6Jzfjgzr0bkb5IXMXWGSivFitlUwdA1xWgEjhdDP9NB+Ku
-	F1liSsSsi4cYyLfo9zXnYQ1+I8d5bo7uSBZU2L5EGqPRlfxWeQbrk7D/CfXpVTFPx9a2vF8Oxb5
-	+ydPnD8RPzVU2eDnp5c89mEFUWVzy3oo7Ykwz2GTc/JF1A07U5IVmqZuSEw//uh0GKr4AHJ3A==
-X-Google-Smtp-Source: AGHT+IFg4MrRsXl7cwIJtfpy44aCizX1v4aAPKIAJI+qPE9zX1Qtehd7vvbt8lnNiLRKPOTTvfqDMw==
-X-Received: by 2002:a92:ca49:0:b0:3ce:87a0:f8a4 with SMTP id e9e14a558f8ab-3ce87a1033emr36591695ab.9.1736976563578;
-        Wed, 15 Jan 2025 13:29:23 -0800 (PST)
-Received: from fedora64.linuxtx.org ([72.42.103.70])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4ea1b5f93ffsm4318839173.18.2025.01.15.13.29.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2025 13:29:23 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 15 Jan 2025 14:29:21 -0700
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/189] 6.12.10-rc1 review
-Message-ID: <Z4gosZxzAJFF9pfo@fedora64.linuxtx.org>
-References: <20250115103606.357764746@linuxfoundation.org>
+        bh=RvB57iWG41YV/c5cBE56VtHaQNyu0vUymV/5xtD6lV0=;
+        b=ZTKZQa/m0GNjuMgujrhi8zlTJ8WJ8y9fV9urfNqLd/bgTanvBEq3q1hWbpYxUuZZUl
+         cMuyd+seJWsYpcXFRLalGsE1SDbNpn63RCYs0E2U3wRMeZQ3YSwKiEvxtD2vI0eOBS5I
+         YVKV5cTo/YuUQv9cxNrdCUo7DK37o3r1IC+FWwEs/mAN2cinv2DjxKwgb75Bn8x3gN7Z
+         7FBsv4rmNCXp8/kl7DRScY86mRkSGJ5mPRvq1+Tjiz7UtiurXqeRqQEDLDX9LqgTE5Jr
+         LK8MvTAhfA1OTbC5CRwWXcNgvJh9gbNKd12KQ66MLNA+bvhzl/0G1iTHZRXT/4dM6ys2
+         9r8g==
+X-Forwarded-Encrypted: i=1; AJvYcCW3FOXUvyITrha09ORQhbYbhoJuWLAP7CZidmrfYi80Ii2ioBKUHpqqN+2cXLdhpHIIE/eryQvZ@lists.linux.dev
+X-Gm-Message-State: AOJu0YwPYf46UZ++3oRKKmyYowRQysnwTd+sFFhuEJq+KTobjt2h1Hlp
+	MpGLv+h+VYEAQxbgYN55uw+cGBRXIBkkF3TQJXjoD4+v+lUL3/cLtF+TPEszYj5J7X/nMo4KmFM
+	F2b0vWw20+h1koIEwBzejY73w1uB+PyWU4uGklQ==
+X-Gm-Gg: ASbGnctqdYJBkx9eQsw39W//kHdhoQACedeOyS4jxx9wmer9JPRDRv18byEahjimjVK
+	ubuWD9dxX5GQh/9Q966Fz3ICEgcEgJ6zV2BQUlQ==
+X-Google-Smtp-Source: AGHT+IEYXpdn8fhLD//ERvKhi9v6Gra5TD7+h5eUOjnBpp4kMpMLPDHNmKwnTBtu9gBF333DQqP6e4pfNsr/yGZ1IAo=
+X-Received: by 2002:a17:90b:54cb:b0:2ee:8e75:4aeb with SMTP id
+ 98e67ed59e1d1-2f548ec9267mr49215825a91.17.1736977485235; Wed, 15 Jan 2025
+ 13:44:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20250115103606.357764746@linuxfoundation.org>
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Thu, 16 Jan 2025 06:44:34 +0900
+X-Gm-Features: AbW1kvbcxzww3783hiPRGUKquUIKhrVkJWtiveGXMEw6BJ3sW6loCB8MgyXi2MA
+Message-ID: <CAKL4bV5XnEP2ZgqGeHCwX-c0X5C4rPZ7iS0EUNW-hVd2TCHxKw@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/189] 6.12.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 15, 2025 at 11:34:56AM +0100, Greg Kroah-Hartman wrote:
+Hi Greg
+
+On Wed, Jan 15, 2025 at 7:45=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.12.10 release.
 > There are 189 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Fri, 17 Jan 2025 10:34:58 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.10-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.10-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
+>
 
-Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
-x86_64), and boot tested x86_64. No regressions noted.
+6.12.10-rc1 tested.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.12.10-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU
+Binutils) 2.43.1) #1 SMP PREEMPT_DYNAMIC Thu Jan 16 05:32:18 JST 2025
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
