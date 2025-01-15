@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42281ACE12;
-	Wed, 15 Jan 2025 10:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918E21E98FA;
+	Wed, 15 Jan 2025 10:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937914; cv=none; b=RjBzLo+hh0Y3wBTbG45klpc4og6sJma82ms0pU+VrUCYKwWeq/xz0Z5NGc9E7bN7GEbJttZZi6n8Aqoad0+N5Jkdg8Bu4oc7GFOiOKhr/w7LUvOO5iOwtVaL1nluXhL7ovPxNsKr/VW8ut6gDXYi8SkhiFiyJgLzgpd6CIKWoFs=
+	t=1736937918; cv=none; b=G9pamapJclxOsXt1gnQwVrFrrwmRQVE7/KXIxnOh+wUbTVLiMei2yIW/4EgLDy5vOZUM3mLu1djJJWidJmRBIuUae6gJKdQRVlJd2oPLlHUwlXngkgwMvoYGeZDDBEcoMT9Q7T43kjPg2g5IavpXvapFPgYF2uVw9F92s3qQB/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937914; c=relaxed/simple;
-	bh=oy3iwNhtaxHSwcSmCulxM8pPgyGwPWePVvi6CoE15cM=;
+	s=arc-20240116; t=1736937918; c=relaxed/simple;
+	bh=Y0R5b6+j3yv/njmmZ9SExVUPpS7IeKztbaeXaqU1ZoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGtfBQsD6eoEHbVL9Go+S/WtVkntTzCZhEzaedKR/srFn9xlMgVAFSLNjNcvR3lo8pUoewNeP7hPQgh5DhyyLdyN3XE9YEYSv9RT8W31qpqtRpmMUt/3v+bR4bafK0gNnyTTEHayYvpgY2F6Am2gtio1YcCAsw3FFMShprVVAzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i3q4CQtN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KK+8K+Wx8nVILCgP5m4el1YE6x+7oom8VwnJpaEOkBh/j049+xStO4B4TA3KB5UrUz6ceZFqy74I0oAEoV0I7hUmxf9M0Z5EXXMZYk1fm/yUuELx7a1Lgkc71R6b0/OtA6JprmvkKxh1zeMBFw266WBIkF8JjKsE1IyuudjKnvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCmCmHor; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i3q4CQtN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C44C4CEDF;
-	Wed, 15 Jan 2025 10:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCmCmHor"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE851C4CEDF;
+	Wed, 15 Jan 2025 10:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937914;
-	bh=oy3iwNhtaxHSwcSmCulxM8pPgyGwPWePVvi6CoE15cM=;
+	s=korg; t=1736937918;
+	bh=Y0R5b6+j3yv/njmmZ9SExVUPpS7IeKztbaeXaqU1ZoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i3q4CQtNeIUEypppYBuw5EK42OS6AZhjFAw9vT/s5kZUicaSbGEOgyBV4C7utexit
-	 bk/folercpevGVKZCIEhnNWzKjBdX36zH+dvnCseWfIxmObeddEsAUBJ4YKUgWHS1m
-	 vwgVE177Z/SzZuF2Q30K5QdlUKfgv49qjNKfh6UM=
+	b=VCmCmHor/iS4l2QMox43pSN4nab632sVhOynzNschxkacVF1PtVuTm8O+nyE2fg4j
+	 N3Dy/enfwpAO5venYRyeW+EdCe4XiNi3UpFPyjhpX04xLTftIUw9LejEInlWN6uicH
+	 XieCjGCQlhesrnMt/rF7hoCxwIuCxpLrPSO6L9uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Long Li <leo.lilong@huawei.com>,
 	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 004/189] iomap: pass byte granular end position to iomap_add_to_ioend
-Date: Wed, 15 Jan 2025 11:35:00 +0100
-Message-ID: <20250115103606.533989308@linuxfoundation.org>
+Subject: [PATCH 6.12 005/189] iomap: fix zero padding data issue in concurrent append writes
+Date: Wed, 15 Jan 2025 11:35:01 +0100
+Message-ID: <20250115103606.571186439@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -54,123 +55,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit b44679c63e4d3ac820998b6bd59fba89a72ad3e7 ]
+[ Upstream commit 51d20d1dacbec589d459e11fc88fbca419f84a99 ]
 
-This is a preparatory patch for fixing zero padding issues in concurrent
-append write scenarios. In the following patches, we need to obtain
-byte-granular writeback end position for io_size trimming after EOF
-handling.
+During concurrent append writes to XFS filesystem, zero padding data
+may appear in the file after power failure. This happens due to imprecise
+disk size updates when handling write completion.
 
-Due to concurrent writeback and truncate operations, inode size may
-shrink. Resampling inode size would force writeback code to handle the
-newly appeared post-EOF blocks, which is undesirable. As Dave
-explained in [1]:
+Consider this scenario with concurrent append writes same file:
 
-"Really, the issue is that writeback mappings have to be able to
-handle the range being mapped suddenly appear to be beyond EOF.
-This behaviour is a longstanding writeback constraint, and is what
-iomap_writepage_handle_eof() is attempting to handle.
+  Thread 1:                  Thread 2:
+  ------------               -----------
+  write [A, A+B]
+  update inode size to A+B
+  submit I/O [A, A+BS]
+                             write [A+B, A+B+C]
+                             update inode size to A+B+C
+  <I/O completes, updates disk size to min(A+B+C, A+BS)>
+  <power failure>
 
-We handle this by only sampling i_size_read() whilst we have the
-folio locked and can determine the action we should take with that
-folio (i.e. nothing, partial zeroing, or skip altogether). Once
-we've made the decision that the folio is within EOF and taken
-action on it (i.e. moved the folio to writeback state), we cannot
-then resample the inode size because a truncate may have started
-and changed the inode size."
+After reboot:
+  1) with A+B+C < A+BS, the file has zero padding in range [A+B, A+B+C]
 
-To avoid resampling inode size after EOF handling, we convert end_pos
-to byte-granular writeback position and return it from EOF handling
-function.
+  |<         Block Size (BS)      >|
+  |DDDDDDDDDDDDDDDD0000000000000000|
+  ^               ^        ^
+  A              A+B     A+B+C
+                         (EOF)
 
-Since iomap_set_range_dirty() can handle unaligned lengths, this
-conversion has no impact on it. However, iomap_find_dirty_range()
-requires aligned start and end range to find dirty blocks within the
-given range, so the end position needs to be rounded up when passed
-to it.
+  2) with A+B+C > A+BS, the file has zero padding in range [A+B, A+BS]
 
-LINK [1]: https://lore.kernel.org/linux-xfs/Z1Gg0pAa54MoeYME@localhost.localdomain/
+  |<         Block Size (BS)      >|<           Block Size (BS)    >|
+  |DDDDDDDDDDDDDDDD0000000000000000|00000000000000000000000000000000|
+  ^               ^                ^               ^
+  A              A+B              A+BS           A+B+C
+                                  (EOF)
 
+  D = Valid Data
+  0 = Zero Padding
+
+The issue stems from disk size being set to min(io_offset + io_size,
+inode->i_size) at I/O completion. Since io_offset+io_size is block
+size granularity, it may exceed the actual valid file data size. In
+the case of concurrent append writes, inode->i_size may be larger
+than the actual range of valid file data written to disk, leading to
+inaccurate disk size updates.
+
+This patch modifies the meaning of io_size to represent the size of
+valid data within EOF in an ioend. If the ioend spans beyond i_size,
+io_size will be trimmed to provide the file with more accurate size
+information. This is particularly useful for on-disk size updates
+at completion time.
+
+After this change, ioends that span i_size will not grow or merge with
+other ioends in concurrent scenarios. However, these cases that need
+growth/merging rarely occur and it seems no noticeable performance impact.
+Although rounding up io_size could enable ioend growth/merging in these
+scenarios, we decided to keep the code simple after discussion [1].
+
+Another benefit is that it makes the xfs_ioend_is_append() check more
+accurate, which can reduce unnecessary end bio callbacks of xfs_end_bio()
+in certain scenarios, such as repeated writes at the file tail without
+extending the file size.
+
+Link [1]: https://patchwork.kernel.org/project/xfs/patch/20241113091907.56937-1-leo.lilong@huawei.com
+
+Fixes: ae259a9c8593 ("fs: introduce iomap infrastructure") # goes further back than this
 Signed-off-by: Long Li <leo.lilong@huawei.com>
-Link: https://lore.kernel.org/r/20241209114241.3725722-2-leo.lilong@huawei.com
+Link: https://lore.kernel.org/r/20241209114241.3725722-3-leo.lilong@huawei.com
 Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 51d20d1dacbe ("iomap: fix zero padding data issue in concurrent append writes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/buffered-io.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ fs/iomap/buffered-io.c | 45 ++++++++++++++++++++++++++++++++++++++++++
+ include/linux/iomap.h  |  2 +-
+ 2 files changed, 46 insertions(+), 1 deletion(-)
 
 diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
-index ce73d2a48c1e..05e5cc3bf976 100644
+index 05e5cc3bf976..25d1ede6bb0e 100644
 --- a/fs/iomap/buffered-io.c
 +++ b/fs/iomap/buffered-io.c
-@@ -1764,7 +1764,8 @@ static bool iomap_can_add_to_ioend(struct iomap_writepage_ctx *wpc, loff_t pos)
-  */
- static int iomap_add_to_ioend(struct iomap_writepage_ctx *wpc,
- 		struct writeback_control *wbc, struct folio *folio,
--		struct inode *inode, loff_t pos, unsigned len)
-+		struct inode *inode, loff_t pos, loff_t end_pos,
-+		unsigned len)
- {
- 	struct iomap_folio_state *ifs = folio->private;
- 	size_t poff = offset_in_folio(folio, pos);
-@@ -1790,8 +1791,8 @@ static int iomap_add_to_ioend(struct iomap_writepage_ctx *wpc,
+@@ -1784,7 +1784,52 @@ static int iomap_add_to_ioend(struct iomap_writepage_ctx *wpc,
  
- static int iomap_writepage_map_blocks(struct iomap_writepage_ctx *wpc,
- 		struct writeback_control *wbc, struct folio *folio,
--		struct inode *inode, u64 pos, unsigned dirty_len,
--		unsigned *count)
-+		struct inode *inode, u64 pos, u64 end_pos,
-+		unsigned dirty_len, unsigned *count)
- {
- 	int error;
- 
-@@ -1816,7 +1817,7 @@ static int iomap_writepage_map_blocks(struct iomap_writepage_ctx *wpc,
- 			break;
- 		default:
- 			error = iomap_add_to_ioend(wpc, wbc, folio, inode, pos,
--					map_len);
-+					end_pos, map_len);
- 			if (!error)
- 				(*count)++;
- 			break;
-@@ -1887,11 +1888,11 @@ static bool iomap_writepage_handle_eof(struct folio *folio, struct inode *inode,
- 		 *    remaining memory is zeroed when mapped, and writes to that
- 		 *    region are not written out to the file.
- 		 *
--		 * Also adjust the writeback range to skip all blocks entirely
--		 * beyond i_size.
-+		 * Also adjust the end_pos to the end of file and skip writeback
-+		 * for all blocks entirely beyond i_size.
- 		 */
- 		folio_zero_segment(folio, poff, folio_size(folio));
--		*end_pos = round_up(isize, i_blocksize(inode));
-+		*end_pos = isize;
- 	}
- 
- 	return true;
-@@ -1904,6 +1905,7 @@ static int iomap_writepage_map(struct iomap_writepage_ctx *wpc,
- 	struct inode *inode = folio->mapping->host;
- 	u64 pos = folio_pos(folio);
- 	u64 end_pos = pos + folio_size(folio);
-+	u64 end_aligned = 0;
- 	unsigned count = 0;
- 	int error = 0;
- 	u32 rlen;
-@@ -1945,9 +1947,10 @@ static int iomap_writepage_map(struct iomap_writepage_ctx *wpc,
- 	/*
- 	 * Walk through the folio to find dirty areas to write back.
- 	 */
--	while ((rlen = iomap_find_dirty_range(folio, &pos, end_pos))) {
-+	end_aligned = round_up(end_pos, i_blocksize(inode));
-+	while ((rlen = iomap_find_dirty_range(folio, &pos, end_aligned))) {
- 		error = iomap_writepage_map_blocks(wpc, wbc, folio, inode,
--				pos, rlen, &count);
-+				pos, end_pos, rlen, &count);
- 		if (error)
- 			break;
- 		pos += rlen;
+ 	if (ifs)
+ 		atomic_add(len, &ifs->write_bytes_pending);
++
++	/*
++	 * Clamp io_offset and io_size to the incore EOF so that ondisk
++	 * file size updates in the ioend completion are byte-accurate.
++	 * This avoids recovering files with zeroed tail regions when
++	 * writeback races with appending writes:
++	 *
++	 *    Thread 1:                  Thread 2:
++	 *    ------------               -----------
++	 *    write [A, A+B]
++	 *    update inode size to A+B
++	 *    submit I/O [A, A+BS]
++	 *                               write [A+B, A+B+C]
++	 *                               update inode size to A+B+C
++	 *    <I/O completes, updates disk size to min(A+B+C, A+BS)>
++	 *    <power failure>
++	 *
++	 *  After reboot:
++	 *    1) with A+B+C < A+BS, the file has zero padding in range
++	 *       [A+B, A+B+C]
++	 *
++	 *    |<     Block Size (BS)   >|
++	 *    |DDDDDDDDDDDD0000000000000|
++	 *    ^           ^        ^
++	 *    A          A+B     A+B+C
++	 *                       (EOF)
++	 *
++	 *    2) with A+B+C > A+BS, the file has zero padding in range
++	 *       [A+B, A+BS]
++	 *
++	 *    |<     Block Size (BS)   >|<     Block Size (BS)    >|
++	 *    |DDDDDDDDDDDD0000000000000|00000000000000000000000000|
++	 *    ^           ^             ^           ^
++	 *    A          A+B           A+BS       A+B+C
++	 *                             (EOF)
++	 *
++	 *    D = Valid Data
++	 *    0 = Zero Padding
++	 *
++	 * Note that this defeats the ability to chain the ioends of
++	 * appending writes.
++	 */
+ 	wpc->ioend->io_size += len;
++	if (wpc->ioend->io_offset + wpc->ioend->io_size > end_pos)
++		wpc->ioend->io_size = end_pos - wpc->ioend->io_offset;
++
+ 	wbc_account_cgroup_owner(wbc, folio, len);
+ 	return 0;
+ }
+diff --git a/include/linux/iomap.h b/include/linux/iomap.h
+index f61407e3b121..d204dcd35063 100644
+--- a/include/linux/iomap.h
++++ b/include/linux/iomap.h
+@@ -330,7 +330,7 @@ struct iomap_ioend {
+ 	u16			io_type;
+ 	u16			io_flags;	/* IOMAP_F_* */
+ 	struct inode		*io_inode;	/* file being written to */
+-	size_t			io_size;	/* size of the extent */
++	size_t			io_size;	/* size of data within eof */
+ 	loff_t			io_offset;	/* offset in the file */
+ 	sector_t		io_sector;	/* start sector of ioend */
+ 	struct bio		io_bio;		/* MUST BE LAST! */
 -- 
 2.39.5
 
