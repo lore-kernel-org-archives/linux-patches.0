@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D78F248BA6;
-	Wed, 15 Jan 2025 10:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F04248BB2;
+	Wed, 15 Jan 2025 10:48:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938133; cv=none; b=KPUSXZRby6pNN/bXtzhBvCHTPoD++SUZRlZZ+Rhij9anB1MMAIHOPJxlNaMupl690OMMlvO2mN9jFFE96BqDSGtyGw8pNqXPacI34hBjpeJetW/Tl4xVHyM56v9zn2c8rjSc9zYCQP2r+pqr+hOlYpvn6pCUHJqUwubV9uEltOk=
+	t=1736938136; cv=none; b=NUMx8Qs4RL6wz73PvkfYYbdHzcqaZ6GYDwatdNZNfiMXbazwMYAk6z+Jbd5YhLWtqUjeVJVf3yyZR6oSnnaITt1NcTnx2eTZJ1zneY2WR4Yh7NuMb+jZuJ6k8xSGxvHQiPyiV5+Ke2vEk87pWEm9J4DkUjZbpx57rFKZ+5hAnbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938133; c=relaxed/simple;
-	bh=uvOpDJJrNToa+xn93Z91wbd6Uc3pgFVZu4oPUq/bipo=;
+	s=arc-20240116; t=1736938136; c=relaxed/simple;
+	bh=de93QA5KliX6qjE4SMDl2QUE2WYsQMc99tnwbMXsSNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O29jHQesZ0iPo/Uacp20LBSlHEQ3+uqylg2VB8ejsHdlvKGHmUhL5vKofoXO8eKTH6C5Ob++Ud3N5r0fi5GS4IOLjndjCWnRgKEga3+aTkNj0/5nNmtfcyG7AG73S1JaSAi6sbKprnkKV7uhUIQv2mTpx8laszgTLopeTC1tm6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YWrQjYjB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LyG2WEVWz9s0D0PLpNDJrxuoXCQauWczj8Q9rVcy4UFt3aMbdZTzqhpQF/2pM6hElVf0s8mF+MCL8n8UGEKjbp3GTf6ThzYAIMhCh/quXz8gvTsDRMxtmpFZyH4Gkv2y+jz3/kq8njcgN+mjze9xewmgfvcw+aIpj6ju63+tc1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnwggtTu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YWrQjYjB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32862C4CEE4;
-	Wed, 15 Jan 2025 10:48:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnwggtTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6501DC4CEE2;
+	Wed, 15 Jan 2025 10:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938132;
-	bh=uvOpDJJrNToa+xn93Z91wbd6Uc3pgFVZu4oPUq/bipo=;
+	s=korg; t=1736938135;
+	bh=de93QA5KliX6qjE4SMDl2QUE2WYsQMc99tnwbMXsSNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWrQjYjBYrFFbhtzXdXw0NnDdkeEYsoheeW6xw7EWXEReQOtDFJ0EmANHYgUg/ekx
-	 nlu8WtezmWka5HIG0nnE0KYJ6Ipx4YgAZJ4ebKI3JwshIxtqFfwNp54x2J0MYvruVy
-	 F8Fa9+ZXQhOaan3wY8yzS033FVJ+ZcblQvicUGaU=
+	b=rnwggtTuxXPXGYYRBRXEkvkZryS80Bo3zmoYR62UHMwpko4Nh0GNbZj1xkZDw8KNr
+	 pbyEnZ0UaeXIOzGSq3ZS84dfRR+/DYMXf586FHzDZ+CYcPqQNcHnFFqbrUt6oV2iR7
+	 uYQ5QbM98WObbrCDk3Mlib1PWM0G4JPleSnPLoF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milan Broz <gmazyland@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.12 091/189] dm-verity FEC: Fix RS FEC repair for roots unaligned to block size (take 2)
-Date: Wed, 15 Jan 2025 11:36:27 +0100
-Message-ID: <20250115103609.960089035@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 063/189] drm/mediatek: stop selecting foreign drivers
+Date: Wed, 15 Jan 2025 11:35:59 +0100
+Message-ID: <20250115103608.869290026@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -50,160 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milan Broz <gmazyland@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 6df90c02bae468a3a6110bafbc659884d0c4966c upstream.
+[ Upstream commit 924d66011f2401a4145e2e814842c5c4572e439f ]
 
-This patch fixes an issue that was fixed in the commit
-  df7b59ba9245 ("dm verity: fix FEC for RS roots unaligned to block size")
-but later broken again in the commit
-  8ca7cab82bda ("dm verity fec: fix misaligned RS roots IO")
+The PHY portion of the mediatek hdmi driver was originally part of
+the driver it self and later split out into drivers/phy, which a
+'select' to keep the prior behavior.
 
-If the Reed-Solomon roots setting spans multiple blocks, the code does not
-use proper parity bytes and randomly fails to repair even trivial errors.
+However, this leads to build failures when the PHY driver cannot
+be built:
 
-This bug cannot happen if the sector size is multiple of RS roots
-setting (Android case with roots 2).
+WARNING: unmet direct dependencies detected for PHY_MTK_HDMI
+  Depends on [n]: (ARCH_MEDIATEK || COMPILE_TEST [=y]) && COMMON_CLK [=y] && OF [=y] && REGULATOR [=n]
+  Selected by [m]:
+  - DRM_MEDIATEK_HDMI [=m] && HAS_IOMEM [=y] && DRM [=m] && DRM_MEDIATEK [=m]
+ERROR: modpost: "devm_regulator_register" [drivers/phy/mediatek/phy-mtk-hdmi-drv.ko] undefined!
+ERROR: modpost: "rdev_get_drvdata" [drivers/phy/mediatek/phy-mtk-hdmi-drv.ko] undefined!
 
-The previous solution was to find a dm-bufio block size that is multiple
-of the device sector size and roots size. Unfortunately, the optimization
-in commit 8ca7cab82bda ("dm verity fec: fix misaligned RS roots IO")
-is incorrect and uses data block size for some roots (for example, it uses
-4096 block size for roots = 20).
+The best option here is to just not select the phy driver and leave that
+up to the defconfig. Do the same for the other PHY and memory drivers
+selected here as well for consistency.
 
-This patch uses a different approach:
-
- - It always uses a configured data block size for dm-bufio to avoid
- possible misaligned IOs.
-
- - and it caches the processed parity bytes, so it can join it
- if it spans two blocks.
-
-As the RS calculation is called only if an error is detected and
-the process is computationally intensive, copying a few more bytes
-should not introduce performance issues.
-
-The issue was reported to cryptsetup with trivial reproducer
-  https://gitlab.com/cryptsetup/cryptsetup/-/issues/923
-
-Reproducer (with roots=20):
-
- # create verity device with RS FEC
- dd if=/dev/urandom of=data.img bs=4096 count=8 status=none
- veritysetup format data.img hash.img --fec-device=fec.img --fec-roots=20 | \
- awk '/^Root hash/{ print $3 }' >roothash
-
- # create an erasure that should always be repairable with this roots setting
- dd if=/dev/zero of=data.img conv=notrunc bs=1 count=4 seek=4 status=none
-
- # try to read it through dm-verity
- veritysetup open data.img test hash.img --fec-device=fec.img --fec-roots=20 $(cat roothash)
- dd if=/dev/mapper/test of=/dev/null bs=4096 status=noxfer
-
- Even now the log says it cannot repair it:
-   : verity-fec: 7:1: FEC 0: failed to correct: -74
-   : device-mapper: verity: 7:1: data block 0 is corrupted
-   ...
-
-With this fix, errors are properly repaired.
-   : verity-fec: 7:1: FEC 0: corrected 4 errors
-
-Signed-off-by: Milan Broz <gmazyland@gmail.com>
-Fixes: 8ca7cab82bda ("dm verity fec: fix misaligned RS roots IO")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a481bf2f0ca4 ("drm/mediatek: Separate mtk_hdmi_phy to an independent module")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241218085837.2670434-1-arnd@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-fec.c |   40 ++++++++++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/mediatek/Kconfig | 5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -60,15 +60,19 @@ static int fec_decode_rs8(struct dm_veri
-  * to the data block. Caller is responsible for releasing buf.
-  */
- static u8 *fec_read_parity(struct dm_verity *v, u64 rsb, int index,
--			   unsigned int *offset, struct dm_buffer **buf,
--			   unsigned short ioprio)
-+			   unsigned int *offset, unsigned int par_buf_offset,
-+			   struct dm_buffer **buf, unsigned short ioprio)
- {
- 	u64 position, block, rem;
- 	u8 *res;
- 
-+	/* We have already part of parity bytes read, skip to the next block */
-+	if (par_buf_offset)
-+		index++;
-+
- 	position = (index + rsb) * v->fec->roots;
- 	block = div64_u64_rem(position, v->fec->io_size, &rem);
--	*offset = (unsigned int)rem;
-+	*offset = par_buf_offset ? 0 : (unsigned int)rem;
- 
- 	res = dm_bufio_read_with_ioprio(v->fec->bufio, block, buf, ioprio);
- 	if (IS_ERR(res)) {
-@@ -128,11 +132,12 @@ static int fec_decode_bufs(struct dm_ver
- {
- 	int r, corrected = 0, res;
- 	struct dm_buffer *buf;
--	unsigned int n, i, offset;
--	u8 *par, *block;
-+	unsigned int n, i, offset, par_buf_offset = 0;
-+	u8 *par, *block, par_buf[DM_VERITY_FEC_RSM - DM_VERITY_FEC_MIN_RSN];
- 	struct bio *bio = dm_bio_from_per_bio_data(io, v->ti->per_io_data_size);
- 
--	par = fec_read_parity(v, rsb, block_offset, &offset, &buf, bio_prio(bio));
-+	par = fec_read_parity(v, rsb, block_offset, &offset,
-+			      par_buf_offset, &buf, bio_prio(bio));
- 	if (IS_ERR(par))
- 		return PTR_ERR(par);
- 
-@@ -142,7 +147,8 @@ static int fec_decode_bufs(struct dm_ver
- 	 */
- 	fec_for_each_buffer_rs_block(fio, n, i) {
- 		block = fec_buffer_rs_block(v, fio, n, i);
--		res = fec_decode_rs8(v, fio, block, &par[offset], neras);
-+		memcpy(&par_buf[par_buf_offset], &par[offset], v->fec->roots - par_buf_offset);
-+		res = fec_decode_rs8(v, fio, block, par_buf, neras);
- 		if (res < 0) {
- 			r = res;
- 			goto error;
-@@ -155,12 +161,21 @@ static int fec_decode_bufs(struct dm_ver
- 		if (block_offset >= 1 << v->data_dev_block_bits)
- 			goto done;
- 
--		/* read the next block when we run out of parity bytes */
--		offset += v->fec->roots;
-+		/* Read the next block when we run out of parity bytes */
-+		offset += (v->fec->roots - par_buf_offset);
-+		/* Check if parity bytes are split between blocks */
-+		if (offset < v->fec->io_size && (offset + v->fec->roots) > v->fec->io_size) {
-+			par_buf_offset = v->fec->io_size - offset;
-+			memcpy(par_buf, &par[offset], par_buf_offset);
-+			offset += par_buf_offset;
-+		} else
-+			par_buf_offset = 0;
-+
- 		if (offset >= v->fec->io_size) {
- 			dm_bufio_release(buf);
- 
--			par = fec_read_parity(v, rsb, block_offset, &offset, &buf, bio_prio(bio));
-+			par = fec_read_parity(v, rsb, block_offset, &offset,
-+					      par_buf_offset, &buf, bio_prio(bio));
- 			if (IS_ERR(par))
- 				return PTR_ERR(par);
- 		}
-@@ -724,10 +739,7 @@ int verity_fec_ctr(struct dm_verity *v)
- 		return -E2BIG;
- 	}
- 
--	if ((f->roots << SECTOR_SHIFT) & ((1 << v->data_dev_block_bits) - 1))
--		f->io_size = 1 << v->data_dev_block_bits;
--	else
--		f->io_size = v->fec->roots << SECTOR_SHIFT;
-+	f->io_size = 1 << v->data_dev_block_bits;
- 
- 	f->bufio = dm_bufio_client_create(f->dev->bdev,
- 					  f->io_size,
+diff --git a/drivers/gpu/drm/mediatek/Kconfig b/drivers/gpu/drm/mediatek/Kconfig
+index 417ac8c9af41..a749c01199d4 100644
+--- a/drivers/gpu/drm/mediatek/Kconfig
++++ b/drivers/gpu/drm/mediatek/Kconfig
+@@ -13,9 +13,6 @@ config DRM_MEDIATEK
+ 	select DRM_BRIDGE_CONNECTOR
+ 	select DRM_MIPI_DSI
+ 	select DRM_PANEL
+-	select MEMORY
+-	select MTK_SMI
+-	select PHY_MTK_MIPI_DSI
+ 	select VIDEOMODE_HELPERS
+ 	help
+ 	  Choose this option if you have a Mediatek SoCs.
+@@ -26,7 +23,6 @@ config DRM_MEDIATEK
+ config DRM_MEDIATEK_DP
+ 	tristate "DRM DPTX Support for MediaTek SoCs"
+ 	depends on DRM_MEDIATEK
+-	select PHY_MTK_DP
+ 	select DRM_DISPLAY_HELPER
+ 	select DRM_DISPLAY_DP_HELPER
+ 	select DRM_DISPLAY_DP_AUX_BUS
+@@ -37,6 +33,5 @@ config DRM_MEDIATEK_HDMI
+ 	tristate "DRM HDMI Support for Mediatek SoCs"
+ 	depends on DRM_MEDIATEK
+ 	select SND_SOC_HDMI_CODEC if SND_SOC
+-	select PHY_MTK_HDMI
+ 	help
+ 	  DRM/KMS HDMI driver for Mediatek SoCs
+-- 
+2.39.5
+
 
 
