@@ -1,90 +1,101 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408BC246A21
-	for <patches@lists.linux.dev>; Wed, 15 Jan 2025 09:10:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0A248BBF;
+	Wed, 15 Jan 2025 10:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736932248; cv=none; b=Fbn5pVpq0unVugJBkyhsSzMZtlrZKNQ32w5EZS2EXDlqFAstPfKVNC9+dsxpR57cYHjIhXHxuGsuLkbPADOemg2d2AwanwSg/K2tOu0n2F++HRQ2detxSF19aXdVYx97AAj8YP2N8EuWULhgtDvlY0HbclwFrxmfta5CNhphPjs=
+	t=1736937534; cv=none; b=VXLUxjfi5fzN/2zuqjkbQkeAvEokKwhzeaFme5iFN8uvVZ4kqhoNEWI7tQ73+4yW1yILdkHQW7l9t+9EWMpVAUQnoOKx3UExgQ2QGgi0YZohx4egtpmOAWHnxZR+Iif2kK4JRYEfzbTNKczMWPhVkxLtYVbSOJ1hODASq7y/qrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736932248; c=relaxed/simple;
-	bh=s4gowUCkR8ThPcXmpLKlGclM8lC6TIMzjSkqs9savQ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hqAs5hb+BpqifvBarFHovWDjCFkXe7MxNWQni1Ssy82r12bWsIsgPA9XKI+fYuWtpf8KT/M0LVKsY7dujmmMZbN8VJFYcZFbTMuZ+NxK8zesWANH5C50jrCvkARTX9bKibFodo9ne34VdOgO+DOwQmlly1RaD43SDgQzUjzwn80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nAlmyG1n; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736937534; c=relaxed/simple;
+	bh=uemHpkaJiWzJa66Fkzw3h+8L61HfLAJ88oMcCMtvhAs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=a2zbVx5KCGCVr18IEr2xhXlZdUR04F2SMqrnDR4+CWnlMFRX3oKjWCcxVjrljsmnSO2wspKroMRiDkyg7+ml09dMgMEYJbO91+bZKIAKqjMurpu9/8c51+gj1TlDqJsKgXn25lK58Aqzy2kdI2Dt+eTlo/iwNWPva4OoJXmA7tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jA/0aouq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nAlmyG1n"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2f615e14d0fso843545a91.3
-        for <patches@lists.linux.dev>; Wed, 15 Jan 2025 01:10:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736932246; x=1737537046; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s4gowUCkR8ThPcXmpLKlGclM8lC6TIMzjSkqs9savQ8=;
-        b=nAlmyG1nIz3j57MfjQsWLdUEoD5uZNdLhlQQ5k76d42IRsN1wFMZZWLliibKeOGAgU
-         GW1suCtOI1Bq1u9dA6eSz08VaIXnqVuaR043f8Ch4Sg+5iIlBqxnokBtBglNApKyagjp
-         QlbkaS+D2jk6pvrdhBGGbEnvSMiHpUzRb2YGWQzlppgLu8MOPivqvSNPr6Dr26Mxh0Ga
-         4hqykzxoA+juEvhWVB8KvFwKXYq12lNXno4npIqfWK8JruMaLQjMPMnmkrWSIhavnqlA
-         QMKvvvgAhW700HMiTuyGJoR7Dgj7gXR8byb+IAQjCnP14xhFJCAOuR0F7hkX1wKpcH8U
-         poDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736932246; x=1737537046;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s4gowUCkR8ThPcXmpLKlGclM8lC6TIMzjSkqs9savQ8=;
-        b=kXVLFTzBLr+33B3s+zcr2KwB43MPsyNvJ7b7EiuVbMZiw8Ym6Nz+nCXjN0XAXRXqjA
-         HF0cayn+UGP+BNwlJIJ6QyVjQh2KG4RRMhJRwb5ZCeo5bb2o1JpMuGaAPaRD/sqOtgLp
-         gi/kRrjvFZ8814GDhUiVYZ+W9LhmqEeqBOlmrc/m1cBL4M+C1BWXBcEbGuBFRiWEFBR3
-         4NnNAOuCROTgHFE/G/akC2Fz3aYffzOcmkND11DZyAEy4K7YVlTP7dJ1RCuoLY67JnRl
-         Ij9WhKxdt65Oo/4yM2atETlgV4EuOYh8HbmUzc6OaBqdXIshDmxp/7Nis76j3XkYrMpP
-         6arg==
-X-Forwarded-Encrypted: i=1; AJvYcCVf1Z2kwVNZBgKXdcR4ZZiwqeuO6AUduXy2XynUfbPyxcK7y/QNONhhK2vrfZqxYwGbEenfMXb0@lists.linux.dev
-X-Gm-Message-State: AOJu0YzLMe4rkhr/hLrRwothG0+SJCsbBRyXWnH3sqChCGliZhNT0g3p
-	mXU/YBmW6GUYl48iVzE8uO1nADLSs35Vo3OOHz9A+kxPgUuSrPtKAHM46NToz7/A8taoZCVBBJK
-	jtY0I5iyCwqOPNSd+y/Uu4mW3ICQ=
-X-Gm-Gg: ASbGncuq5DHfInQ9MPiuO0gIt5ZRqFNSamSv6so1rydK/1hV+yZuPCzDhXKNYwNc0S6
-	rg6pdqMP4b+bfP49u5Hq0Quhzk4LMaKWUHZdotw==
-X-Google-Smtp-Source: AGHT+IF5o5Fngx9F8mAKdkHS+kf8BLRmpwBINYjoHVCcfYVIb4s1YvcCTtZ+OZrv6w6UeWm6DL+Xl1deyoXsqkgUcPY=
-X-Received: by 2002:a17:90b:37c3:b0:2f2:f6e5:d28e with SMTP id
- 98e67ed59e1d1-2f548f1c677mr15527940a91.3.1736932246563; Wed, 15 Jan 2025
- 01:10:46 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jA/0aouq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CBDC4CEDF;
+	Wed, 15 Jan 2025 10:38:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1736937534;
+	bh=uemHpkaJiWzJa66Fkzw3h+8L61HfLAJ88oMcCMtvhAs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jA/0aouqtwtHmlWBzkEcuV06m4Sy43vVqnbnzQiP4Xd7mYJiAdvxI6aOk+6Kew3oq
+	 ONtlCH4a9hBF3UmtZ72ovNwUMCXfIRc5eeq7dJ1VSjD5szw2LVQ2cnCbd5/n5rYLHn
+	 VHIwHcGry2Fr5WtS4YLuUiwQfd/WJCvNKVLTAL88=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	=?UTF-8?q?Dario=20Wei=C3=9Fer?= <dario@cure53.de>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 01/92] ceph: give up on paths longer than PATH_MAX
+Date: Wed, 15 Jan 2025 11:36:19 +0100
+Message-ID: <20250115103547.583898967@linuxfoundation.org>
+X-Mailer: git-send-email 2.48.0
+In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
+References: <20250115103547.522503305@linuxfoundation.org>
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241112184455.855133-1-ojeda@kernel.org> <CANiq72m+k07miKu=vHfp1-A+nu092R+khau5b95Ugq8M8sksFQ@mail.gmail.com>
- <CAK7LNASXLdya8d2Cjo9H2j5J2d8ukj27aDNStqWEVbDQFgsP2w@mail.gmail.com>
-In-Reply-To: <CAK7LNASXLdya8d2Cjo9H2j5J2d8ukj27aDNStqWEVbDQFgsP2w@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Wed, 15 Jan 2025 10:10:33 +0100
-X-Gm-Features: AbW1kvablhI2XqwtFDUl4ZnT060edaVgVSWH6gDoFIWIPktYypdDmv7lacp_u_Q
-Message-ID: <CANiq72kpCMcDgpRuUA-5oJq5dYgtLW2bVkk+H7fU6CTtKAw4SA@mail.gmail.com>
-Subject: Re: [PATCH v3] kbuild: rust: add PROCMACROLDFLAGS
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, HONG Yifan <elsk@google.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 15, 2025 at 3:56=E2=80=AFAM Masahiro Yamada <masahiroy@kernel.o=
-rg> wrote:
->
-> Acked-by: Masahiro Yamada <masahiroy@kernel.org>
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Added, thanks a lot!
+------------------
 
-Cheers,
-Miguel
+From: Max Kellermann <max.kellermann@ionos.com>
+
+commit 550f7ca98ee028a606aa75705a7e77b1bd11720f upstream.
+
+If the full path to be built by ceph_mdsc_build_path() happens to be
+longer than PATH_MAX, then this function will enter an endless (retry)
+loop, effectively blocking the whole task.  Most of the machine
+becomes unusable, making this a very simple and effective DoS
+vulnerability.
+
+I cannot imagine why this retry was ever implemented, but it seems
+rather useless and harmful to me.  Let's remove it and fail with
+ENAMETOOLONG instead.
+
+Cc: stable@vger.kernel.org
+Reported-by: Dario Weißer <dario@cure53.de>
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[idryomov@gmail.com: backport to 6.1: pr_warn() is still in use]
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/ceph/mds_client.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -2447,12 +2447,11 @@ retry:
+ 
+ 	if (pos < 0) {
+ 		/*
+-		 * A rename didn't occur, but somehow we didn't end up where
+-		 * we thought we would. Throw a warning and try again.
++		 * The path is longer than PATH_MAX and this function
++		 * cannot ever succeed.  Creating paths that long is
++		 * possible with Ceph, but Linux cannot use them.
+ 		 */
+-		pr_warn("build_path did not end path lookup where "
+-			"expected, pos is %d\n", pos);
+-		goto retry;
++		return ERR_PTR(-ENAMETOOLONG);
+ 	}
+ 
+ 	*pbase = base;
+
+
