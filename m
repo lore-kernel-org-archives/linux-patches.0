@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0483248BA8;
-	Wed, 15 Jan 2025 10:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDCD248BA0;
+	Wed, 15 Jan 2025 10:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937678; cv=none; b=SftfVldYmaZG9SHhpLxH6UD50+TLkzkBsMCeJjClzOjckK0V0LxLhxNVCPte3FftzwydU/a9VVL/veGHhp5QgAnEdeRd+VQspeWBG/M6dmekCr7W7yCVRR13XFgg3RHo/TlnT1zgHkzNoM+aho/7Bdk8S6wdxTS/uA2LggeaD6o=
+	t=1736937682; cv=none; b=qsTZezS/IdCr06AnxKpLdDAWQ4u71EZQ8X7K8mKCeckXgjukFUPM6xNjzNh9VBLi6UPKWvT0fPC1Shcf0qX6rJ6iSYubb5+yGQKXQcFVDU6OO/PlPLnxb29EIigl3zjvi/RX0oCHzQwaiql+rM/EIE7pGWHWFxm2NrK+95Pza04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937678; c=relaxed/simple;
-	bh=sg36DisQ6/XUOvMPseLcsLqb6vU+HOwIdtAFzNRDbwU=;
+	s=arc-20240116; t=1736937682; c=relaxed/simple;
+	bh=PnGM9v7qNYd9t8GoxbFUmf+oOSpiLrAQ+TRh+rVtYSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h81+RSIdfmIa3pEFbDL9c9Jllj0hLjDfNO4QDN/2oTs4SZ+ui/0Nl5i2Ih9duu8d6yyeV7Lzve7Mj/XW3Vjvyyc/ns9CTN5W3s0qt34PYmmEmuvPS1pxjaygid4OpSrNdzqcAxS2qUfTFDh9VbOwyzWnUYVE5N3ZQf9Sp6yVlcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VECKCg6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I13SsheEZ/DTlmuy9lpqxqC569kYGo0zxgAcakFuc+IzZi2GZvTxrwxdrCwXWuHVBHyf40rdzCSlx0THGoN2eSU+KVn5YJkiS2rrcYb+W9ahMFUcPu1qAnGSXSg6QPHuMabvZEWfXHapBPPeaRq9Atx2k24UtUR2jrrk1e0wFP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTb3bVSI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VECKCg6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF84C4CEE3;
-	Wed, 15 Jan 2025 10:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTb3bVSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D89C4CEE1;
+	Wed, 15 Jan 2025 10:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937678;
-	bh=sg36DisQ6/XUOvMPseLcsLqb6vU+HOwIdtAFzNRDbwU=;
+	s=korg; t=1736937682;
+	bh=PnGM9v7qNYd9t8GoxbFUmf+oOSpiLrAQ+TRh+rVtYSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VECKCg6nqIPdi0G8xSYy3D3DlFUfZjuTLA8Cdp4aG9rwahN5Du9mGsmhy+zgW/nQH
-	 J3mUHXUDPpQzn4MGis8JT383gS0bnVjvXAXrQlzFLh9yQTQ72VWEtzi/rgtlNJzaiF
-	 t4cKjN5Xzn2uwQbjKmgGMuZBoGzROpvcqNITtjbk=
+	b=fTb3bVSIo702dY0P2WzZ1Ki/YNm+zS1FoB/o7kVYunSdh4FZt+AZsn8x5TIn0HGmU
+	 MTTt9Rfb7z63OmcjEwVNddvSqUXrfT73bAy2cvgkPZHlqIDAF/FxndkikYCtcy25rg
+	 xkuOFwDhbjdUa2qaoTojdaJaCblr6xhL4KxpzY7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Milan Broz <gmazyland@gmail.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 6.1 49/92] dm-verity FEC: Fix RS FEC repair for roots unaligned to block size (take 2)
-Date: Wed, 15 Jan 2025 11:37:07 +0100
-Message-ID: <20250115103549.492162002@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	BRUNO VERNAY <bruno.vernay@se.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 6.1 50/92] bpf: Add MEM_WRITE attribute
+Date: Wed, 15 Jan 2025 11:37:08 +0100
+Message-ID: <20250115103549.530434105@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -50,159 +53,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Milan Broz <gmazyland@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 6df90c02bae468a3a6110bafbc659884d0c4966c upstream.
+commit 6fad274f06f038c29660aa53fbad14241c9fd976 upstream.
 
-This patch fixes an issue that was fixed in the commit
-  df7b59ba9245 ("dm verity: fix FEC for RS roots unaligned to block size")
-but later broken again in the commit
-  8ca7cab82bda ("dm verity fec: fix misaligned RS roots IO")
+Add a MEM_WRITE attribute for BPF helper functions which can be used in
+bpf_func_proto to annotate an argument type in order to let the verifier
+know that the helper writes into the memory passed as an argument. In
+the past MEM_UNINIT has been (ab)used for this function, but the latter
+merely tells the verifier that the passed memory can be uninitialized.
 
-If the Reed-Solomon roots setting spans multiple blocks, the code does not
-use proper parity bytes and randomly fails to repair even trivial errors.
+There have been bugs with overloading the latter but aside from that
+there are also cases where the passed memory is read + written which
+currently cannot be expressed, see also 4b3786a6c539 ("bpf: Zero former
+ARG_PTR_TO_{LONG,INT} args in case of error").
 
-This bug cannot happen if the sector size is multiple of RS roots
-setting (Android case with roots 2).
-
-The previous solution was to find a dm-bufio block size that is multiple
-of the device sector size and roots size. Unfortunately, the optimization
-in commit 8ca7cab82bda ("dm verity fec: fix misaligned RS roots IO")
-is incorrect and uses data block size for some roots (for example, it uses
-4096 block size for roots = 20).
-
-This patch uses a different approach:
-
- - It always uses a configured data block size for dm-bufio to avoid
- possible misaligned IOs.
-
- - and it caches the processed parity bytes, so it can join it
- if it spans two blocks.
-
-As the RS calculation is called only if an error is detected and
-the process is computationally intensive, copying a few more bytes
-should not introduce performance issues.
-
-The issue was reported to cryptsetup with trivial reproducer
-  https://gitlab.com/cryptsetup/cryptsetup/-/issues/923
-
-Reproducer (with roots=20):
-
- # create verity device with RS FEC
- dd if=/dev/urandom of=data.img bs=4096 count=8 status=none
- veritysetup format data.img hash.img --fec-device=fec.img --fec-roots=20 | \
- awk '/^Root hash/{ print $3 }' >roothash
-
- # create an erasure that should always be repairable with this roots setting
- dd if=/dev/zero of=data.img conv=notrunc bs=1 count=4 seek=4 status=none
-
- # try to read it through dm-verity
- veritysetup open data.img test hash.img --fec-device=fec.img --fec-roots=20 $(cat roothash)
- dd if=/dev/mapper/test of=/dev/null bs=4096 status=noxfer
-
- Even now the log says it cannot repair it:
-   : verity-fec: 7:1: FEC 0: failed to correct: -74
-   : device-mapper: verity: 7:1: data block 0 is corrupted
-   ...
-
-With this fix, errors are properly repaired.
-   : verity-fec: 7:1: FEC 0: corrected 4 errors
-
-Signed-off-by: Milan Broz <gmazyland@gmail.com>
-Fixes: 8ca7cab82bda ("dm verity fec: fix misaligned RS roots IO")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Milan Broz <gmazyland@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20241021152809.33343-1-daniel@iogearbox.net
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: BRUNO VERNAY <bruno.vernay@se.com>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Stable-dep-of: 8ea607330a39 ("bpf: Fix overloading of MEM_UNINIT's meaning")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |   39 ++++++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 13 deletions(-)
+ include/linux/bpf.h      |   14 +++++++++++---
+ kernel/bpf/helpers.c     |   10 +++++-----
+ kernel/bpf/ringbuf.c     |    2 +-
+ kernel/bpf/syscall.c     |    2 +-
+ kernel/trace/bpf_trace.c |    4 ++--
+ net/core/filter.c        |    4 ++--
+ 6 files changed, 22 insertions(+), 14 deletions(-)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -60,14 +60,19 @@ static int fec_decode_rs8(struct dm_veri
-  * to the data block. Caller is responsible for releasing buf.
-  */
- static u8 *fec_read_parity(struct dm_verity *v, u64 rsb, int index,
--			   unsigned int *offset, struct dm_buffer **buf)
-+			   unsigned int *offset, unsigned int par_buf_offset,
-+			  struct dm_buffer **buf)
- {
- 	u64 position, block, rem;
- 	u8 *res;
- 
-+	/* We have already part of parity bytes read, skip to the next block */
-+	if (par_buf_offset)
-+		index++;
-+
- 	position = (index + rsb) * v->fec->roots;
- 	block = div64_u64_rem(position, v->fec->io_size, &rem);
--	*offset = (unsigned int)rem;
-+	*offset = par_buf_offset ? 0 : (unsigned int)rem;
- 
- 	res = dm_bufio_read(v->fec->bufio, block, buf);
- 	if (IS_ERR(res)) {
-@@ -127,10 +132,11 @@ static int fec_decode_bufs(struct dm_ver
- {
- 	int r, corrected = 0, res;
- 	struct dm_buffer *buf;
--	unsigned int n, i, offset;
--	u8 *par, *block;
-+	unsigned int n, i, offset, par_buf_offset = 0;
-+	u8 *par, *block, par_buf[DM_VERITY_FEC_RSM - DM_VERITY_FEC_MIN_RSN];
- 
--	par = fec_read_parity(v, rsb, block_offset, &offset, &buf);
-+	par = fec_read_parity(v, rsb, block_offset, &offset,
-+			      par_buf_offset, &buf);
- 	if (IS_ERR(par))
- 		return PTR_ERR(par);
- 
-@@ -140,7 +146,8 @@ static int fec_decode_bufs(struct dm_ver
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -464,6 +464,7 @@ enum bpf_type_flag {
  	 */
- 	fec_for_each_buffer_rs_block(fio, n, i) {
- 		block = fec_buffer_rs_block(v, fio, n, i);
--		res = fec_decode_rs8(v, fio, block, &par[offset], neras);
-+		memcpy(&par_buf[par_buf_offset], &par[offset], v->fec->roots - par_buf_offset);
-+		res = fec_decode_rs8(v, fio, block, par_buf, neras);
- 		if (res < 0) {
- 			r = res;
- 			goto error;
-@@ -153,12 +160,21 @@ static int fec_decode_bufs(struct dm_ver
- 		if (block_offset >= 1 << v->data_dev_block_bits)
- 			goto done;
+ 	PTR_UNTRUSTED		= BIT(6 + BPF_BASE_TYPE_BITS),
  
--		/* read the next block when we run out of parity bytes */
--		offset += v->fec->roots;
-+		/* Read the next block when we run out of parity bytes */
-+		offset += (v->fec->roots - par_buf_offset);
-+		/* Check if parity bytes are split between blocks */
-+		if (offset < v->fec->io_size && (offset + v->fec->roots) > v->fec->io_size) {
-+			par_buf_offset = v->fec->io_size - offset;
-+			memcpy(par_buf, &par[offset], par_buf_offset);
-+			offset += par_buf_offset;
-+		} else
-+			par_buf_offset = 0;
++	/* MEM can be uninitialized. */
+ 	MEM_UNINIT		= BIT(7 + BPF_BASE_TYPE_BITS),
+ 
+ 	/* DYNPTR points to memory local to the bpf program. */
+@@ -480,6 +481,13 @@ enum bpf_type_flag {
+ 	 */
+ 	MEM_ALIGNED		= BIT(17 + BPF_BASE_TYPE_BITS),
+ 
++	/* MEM is being written to, often combined with MEM_UNINIT. Non-presence
++	 * of MEM_WRITE means that MEM is only being read. MEM_WRITE without the
++	 * MEM_UNINIT means that memory needs to be initialized since it is also
++	 * read.
++	 */
++	MEM_WRITE		= BIT(18 + BPF_BASE_TYPE_BITS),
 +
- 		if (offset >= v->fec->io_size) {
- 			dm_bufio_release(buf);
+ 	__BPF_TYPE_FLAG_MAX,
+ 	__BPF_TYPE_LAST_FLAG	= __BPF_TYPE_FLAG_MAX - 1,
+ };
+@@ -537,10 +545,10 @@ enum bpf_arg_type {
+ 	ARG_PTR_TO_ALLOC_MEM_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_ALLOC_MEM,
+ 	ARG_PTR_TO_STACK_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_STACK,
+ 	ARG_PTR_TO_BTF_ID_OR_NULL	= PTR_MAYBE_NULL | ARG_PTR_TO_BTF_ID,
+-	/* pointer to memory does not need to be initialized, helper function must fill
+-	 * all bytes or clear them in error case.
++	/* Pointer to memory does not need to be initialized, since helper function
++	 * fills all bytes or clears them in error case.
+ 	 */
+-	ARG_PTR_TO_UNINIT_MEM		= MEM_UNINIT | ARG_PTR_TO_MEM,
++	ARG_PTR_TO_UNINIT_MEM		= MEM_UNINIT | MEM_WRITE | ARG_PTR_TO_MEM,
+ 	/* Pointer to valid memory of size known at compile time. */
+ 	ARG_PTR_TO_FIXED_SIZE_MEM	= MEM_FIXED_SIZE | ARG_PTR_TO_MEM,
  
--			par = fec_read_parity(v, rsb, block_offset, &offset, &buf);
-+			par = fec_read_parity(v, rsb, block_offset, &offset,
-+					      par_buf_offset, &buf);
- 			if (IS_ERR(par))
- 				return PTR_ERR(par);
- 		}
-@@ -743,10 +759,7 @@ int verity_fec_ctr(struct dm_verity *v)
- 		return -E2BIG;
- 	}
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -107,7 +107,7 @@ const struct bpf_func_proto bpf_map_pop_
+ 	.gpl_only	= false,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_CONST_MAP_PTR,
+-	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT,
++	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT | MEM_WRITE,
+ };
  
--	if ((f->roots << SECTOR_SHIFT) & ((1 << v->data_dev_block_bits) - 1))
--		f->io_size = 1 << v->data_dev_block_bits;
--	else
--		f->io_size = v->fec->roots << SECTOR_SHIFT;
-+	f->io_size = 1 << v->data_dev_block_bits;
+ BPF_CALL_2(bpf_map_peek_elem, struct bpf_map *, map, void *, value)
+@@ -120,7 +120,7 @@ const struct bpf_func_proto bpf_map_peek
+ 	.gpl_only	= false,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_CONST_MAP_PTR,
+-	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT,
++	.arg2_type	= ARG_PTR_TO_MAP_VALUE | MEM_UNINIT | MEM_WRITE,
+ };
  
- 	f->bufio = dm_bufio_client_create(f->dev->bdev,
- 					  f->io_size,
+ BPF_CALL_3(bpf_map_lookup_percpu_elem, struct bpf_map *, map, void *, key, u32, cpu)
+@@ -531,7 +531,7 @@ const struct bpf_func_proto bpf_strtol_p
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg4_size	= sizeof(s64),
+ };
+ 
+@@ -561,7 +561,7 @@ const struct bpf_func_proto bpf_strtoul_
+ 	.arg1_type	= ARG_PTR_TO_MEM | MEM_RDONLY,
+ 	.arg2_type	= ARG_CONST_SIZE,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg4_size	= sizeof(u64),
+ };
+ 
+@@ -1502,7 +1502,7 @@ static const struct bpf_func_proto bpf_d
+ 	.arg1_type	= ARG_PTR_TO_UNINIT_MEM,
+ 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_LOCAL | MEM_UNINIT,
++	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_LOCAL | MEM_UNINIT | MEM_WRITE,
+ };
+ 
+ BPF_CALL_5(bpf_dynptr_read, void *, dst, u32, len, struct bpf_dynptr_kern *, src,
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -618,7 +618,7 @@ const struct bpf_func_proto bpf_ringbuf_
+ 	.arg1_type	= ARG_CONST_MAP_PTR,
+ 	.arg2_type	= ARG_ANYTHING,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_RINGBUF | MEM_UNINIT,
++	.arg4_type	= ARG_PTR_TO_DYNPTR | DYNPTR_TYPE_RINGBUF | MEM_UNINIT | MEM_WRITE,
+ };
+ 
+ BPF_CALL_2(bpf_ringbuf_submit_dynptr, struct bpf_dynptr_kern *, ptr, u64, flags)
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -5265,7 +5265,7 @@ static const struct bpf_func_proto bpf_k
+ 	.arg1_type	= ARG_PTR_TO_MEM,
+ 	.arg2_type	= ARG_CONST_SIZE_OR_ZERO,
+ 	.arg3_type	= ARG_ANYTHING,
+-	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg4_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg4_size	= sizeof(u64),
+ };
+ 
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1192,7 +1192,7 @@ static const struct bpf_func_proto bpf_g
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+ 	.arg2_type	= ARG_ANYTHING,
+-	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg3_size	= sizeof(u64),
+ };
+ 
+@@ -1209,7 +1209,7 @@ static const struct bpf_func_proto bpf_g
+ 	.func		= get_func_ret,
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type	= ARG_PTR_TO_CTX,
+-	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg2_type	= ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg2_size	= sizeof(u64),
+ };
+ 
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -6243,7 +6243,7 @@ static const struct bpf_func_proto bpf_s
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
+@@ -6255,7 +6255,7 @@ static const struct bpf_func_proto bpf_x
+ 	.ret_type	= RET_INTEGER,
+ 	.arg1_type      = ARG_PTR_TO_CTX,
+ 	.arg2_type      = ARG_ANYTHING,
+-	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_ALIGNED,
++	.arg3_type      = ARG_PTR_TO_FIXED_SIZE_MEM | MEM_UNINIT | MEM_WRITE | MEM_ALIGNED,
+ 	.arg3_size	= sizeof(u32),
+ 	.arg4_type      = ARG_ANYTHING,
+ 	.arg5_type      = ARG_ANYTHING,
 
 
