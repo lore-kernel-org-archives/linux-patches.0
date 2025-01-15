@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539E5248BD1;
-	Wed, 15 Jan 2025 10:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE44D248BD0;
+	Wed, 15 Jan 2025 10:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938612; cv=none; b=bchGLsZflYhZW6r1LA3mnLHUJXiJco4LV6/S3hXiaJd0PqgQit0M6fVpqneNIyIX9lC4ySaNhmmsi5skzEZTeo0kxqTuD1njKkjngiCgNcRx7nUT9M7L1QxNQ/Jt29aLGpEaKnFmFXzF9NqTM3LjdC20xlErcaC2tfEzfpPmKME=
+	t=1736938616; cv=none; b=OAhOnI3kmcOmBy55rlpd4tIg5BFteLPbSaKWtf9rb9p6qhpuoiGe+fso3kWmQbXPyBJ0fySKMFFhho51jP6fJtZkGqLClCT6OOIroTtdSYu4U8TkbulXidpPSr4u0yFYZilyungmnQJReon9MuLA0XIJgjLApfKjbQHPh4iyzBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938612; c=relaxed/simple;
-	bh=8tHS2hnK5a2Jlq8fMGvOG5WBj5G4+hi7zSzaZRHC0U0=;
+	s=arc-20240116; t=1736938616; c=relaxed/simple;
+	bh=c7mfaYlJtr4oXjPiWf5T8O/EQF8jRATOMfgqMKhbP4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXvYWGn39+fD1ylIhCM+sDCAp9dOIx2OsOD6G15euGN8C5R5ePjPxfZC8YVayF4WZLUVJrH1rlECRUZ440NuOZAfPObDtaxF09hLL2HGMO+EToPaIoCrUBP/rMlAapBbnij5YYlzMR8FKgWWspcXx+hWVlxnUjybbOcx0oaJfeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FFVpRq+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9gDHdFHwQPR7QYuD4937qukAZc90A1JR7sorSnsuIbY/M/QFdHJJTkcyDFrYzwPrzWrV3YstNOUb9m6ml2HzHwj0swOaG/7ST5X16GeI/I1LuZKS5/J/TCwLvcUo1WJg1eIpcjMnukxEw4O4oh4RFuRCQbqGjiBfImBrEzAQW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TXQLytvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FFVpRq+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EA8C4CEDF;
-	Wed, 15 Jan 2025 10:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TXQLytvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28ACBC4CEDF;
+	Wed, 15 Jan 2025 10:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938612;
-	bh=8tHS2hnK5a2Jlq8fMGvOG5WBj5G4+hi7zSzaZRHC0U0=;
+	s=korg; t=1736938615;
+	bh=c7mfaYlJtr4oXjPiWf5T8O/EQF8jRATOMfgqMKhbP4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FFVpRq+FSQU/ihkhqRjii9L1x4AE/QkeCBmH0Jb1x/PbphLs5sUQSCbuaYSYKIR2
-	 CJrt4fgLljRtpQf9Por96OcvgLBijGMi4FpETFnw+psVtXRgqSU1eajbd/jllvfJTt
-	 7kTebcSkW8lDGBgBJDR4qeMtciML4JvlbhhwLMG0=
+	b=TXQLytvRe3Gj+axAnrXzNfaT5kUKNVS30veWQHBsqZ2C162j3A8chKwO4neeATKUz
+	 uvJHsDCCQRQ+Xqb8nfn7uJRpR5uxVbVfCFwVaU5bf9t3AUffO/2jAg6A4Q8HG0Uid6
+	 kMzeNc9f0CPlr/gUsDTUm2gpsXXUMkDimJaRgW6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4fc98ed414ae63d1ada2@syzkaller.appspotmail.com,
-	syzbot+de04e06b28cfecf2281c@syzkaller.appspotmail.com,
-	syzbot+c8c8238b394be4a1087d@syzkaller.appspotmail.com,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Chao Yu <chao@kernel.org>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/129] erofs: handle overlapped pclusters out of crafted images properly
-Date: Wed, 15 Jan 2025 11:36:28 +0100
-Message-ID: <20250115103554.900034081@linuxfoundation.org>
+Subject: [PATCH 6.6 014/129] erofs: fix PSI memstall accounting
+Date: Wed, 15 Jan 2025 11:36:29 +0100
+Message-ID: <20250115103554.938088566@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103554.357917208@linuxfoundation.org>
 References: <20250115103554.357917208@linuxfoundation.org>
@@ -55,160 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 9e2f9d34dd12e6e5b244ec488bcebd0c2d566c50 upstream.
+commit 1a2180f6859c73c674809f9f82e36c94084682ba upstream.
 
-syzbot reported a task hang issue due to a deadlock case where it is
-waiting for the folio lock of a cached folio that will be used for
-cache I/Os.
+Max Kellermann recently reported psi_group_cpu.tasks[NR_MEMSTALL] is
+incorrect in the 6.11.9 kernel.
 
-After looking into the crafted fuzzed image, I found it's formed with
-several overlapped big pclusters as below:
+The root cause appears to be that, since the problematic commit, bio
+can be NULL, causing psi_memstall_leave() to be skipped in
+z_erofs_submit_queue().
 
- Ext:   logical offset   |  length :     physical offset    |  length
-   0:        0..   16384 |   16384 :     151552..    167936 |   16384
-   1:    16384..   32768 |   16384 :     155648..    172032 |   16384
-   2:    32768..   49152 |   16384 :  537223168.. 537239552 |   16384
-...
-
-Here, extent 0/1 are physically overlapped although it's entirely
-_impossible_ for normal filesystem images generated by mkfs.
-
-First, managed folios containing compressed data will be marked as
-up-to-date and then unlocked immediately (unlike in-place folios) when
-compressed I/Os are complete.  If physical blocks are not submitted in
-the incremental order, there should be separate BIOs to avoid dependency
-issues.  However, the current code mis-arranges z_erofs_fill_bio_vec()
-and BIO submission which causes unexpected BIO waits.
-
-Second, managed folios will be connected to their own pclusters for
-efficient inter-queries.  However, this is somewhat hard to implement
-easily if overlapped big pclusters exist.  Again, these only appear in
-fuzzed images so let's simply fall back to temporary short-lived pages
-for correctness.
-
-Additionally, it justifies that referenced managed folios cannot be
-truncated for now and reverts part of commit 2080ca1ed3e4 ("erofs: tidy
-up `struct z_erofs_bvec`") for simplicity although it shouldn't be any
-difference.
-
-Reported-by: syzbot+4fc98ed414ae63d1ada2@syzkaller.appspotmail.com
-Reported-by: syzbot+de04e06b28cfecf2281c@syzkaller.appspotmail.com
-Reported-by: syzbot+c8c8238b394be4a1087d@syzkaller.appspotmail.com
-Tested-by: syzbot+4fc98ed414ae63d1ada2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/0000000000002fda01061e334873@google.com
-Fixes: 8e6c8fa9f2e9 ("erofs: enable big pcluster feature")
-Link: https://lore.kernel.org/r/20240910070847.3356592-1-hsiangkao@linux.alibaba.com
+Reported-by: Max Kellermann <max.kellermann@ionos.com>
+Closes: https://lore.kernel.org/r/CAKPOu+8tvSowiJADW2RuKyofL_CSkm_SuyZA7ME5vMLWmL6pqw@mail.gmail.com
+Fixes: 9e2f9d34dd12 ("erofs: handle overlapped pclusters out of crafted images properly")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20241127085236.3538334-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 59 +++++++++++++++++++++++++-----------------------
- 1 file changed, 31 insertions(+), 28 deletions(-)
+ fs/erofs/zdata.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index 1c0e6167d8e7..9fa07436a4da 100644
+index 9fa07436a4da..496e4c7c52a4 100644
 --- a/fs/erofs/zdata.c
 +++ b/fs/erofs/zdata.c
-@@ -1483,14 +1483,13 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
- 		goto out;
+@@ -1730,11 +1730,10 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
+ 			move_to_bypass_jobqueue(pcl, qtail, owned_head);
+ 	} while (owned_head != Z_EROFS_PCLUSTER_TAIL);
  
- 	lock_page(page);
--
--	/* only true if page reclaim goes wrong, should never happen */
--	DBG_BUGON(justfound && PagePrivate(page));
--
--	/* the page is still in manage cache */
--	if (page->mapping == mc) {
-+	if (likely(page->mapping == mc)) {
- 		WRITE_ONCE(pcl->compressed_bvecs[nr].page, page);
+-	if (bio) {
++	if (bio)
+ 		submit_bio(bio);
+-		if (memstall)
+-			psi_memstall_leave(&pflags);
+-	}
++	if (memstall)
++		psi_memstall_leave(&pflags);
  
-+		/*
-+		 * The cached folio is still in managed cache but without
-+		 * a valid `->private` pcluster hint.  Let's reconnect them.
-+		 */
- 		if (!PagePrivate(page)) {
- 			/*
- 			 * impossible to be !PagePrivate(page) for
-@@ -1504,22 +1503,24 @@ static struct page *pickup_page_for_submission(struct z_erofs_pcluster *pcl,
- 			SetPagePrivate(page);
- 		}
- 
--		/* no need to submit io if it is already up-to-date */
--		if (PageUptodate(page)) {
--			unlock_page(page);
--			page = NULL;
-+		if (likely(page->private == (unsigned long)pcl)) {
-+			/* don't submit cache I/Os again if already uptodate */
-+			if (PageUptodate(page)) {
-+				unlock_page(page);
-+				page = NULL;
-+
-+			}
-+			goto out;
- 		}
--		goto out;
-+		/*
-+		 * Already linked with another pcluster, which only appears in
-+		 * crafted images by fuzzers for now.  But handle this anyway.
-+		 */
-+		tocache = false;	/* use temporary short-lived pages */
-+	} else {
-+		DBG_BUGON(1); /* referenced managed folios can't be truncated */
-+		tocache = true;
- 	}
--
--	/*
--	 * the managed page has been truncated, it's unsafe to
--	 * reuse this one, let's allocate a new cache-managed page.
--	 */
--	DBG_BUGON(page->mapping);
--	DBG_BUGON(!justfound);
--
--	tocache = true;
- 	unlock_page(page);
- 	put_page(page);
- out_allocpage:
-@@ -1677,16 +1678,11 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 		end = cur + pcl->pclusterpages;
- 
- 		do {
--			struct page *page;
--
--			page = pickup_page_for_submission(pcl, i++,
--					&f->pagepool, mc);
--			if (!page)
--				continue;
-+			struct page *page = NULL;
- 
- 			if (bio && (cur != last_index + 1 ||
- 				    last_bdev != mdev.m_bdev)) {
--submit_bio_retry:
-+drain_io:
- 				submit_bio(bio);
- 				if (memstall) {
- 					psi_memstall_leave(&pflags);
-@@ -1695,6 +1691,13 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 				bio = NULL;
- 			}
- 
-+			if (!page) {
-+				page = pickup_page_for_submission(pcl, i++,
-+						&f->pagepool, mc);
-+				if (!page)
-+					continue;
-+			}
-+
- 			if (unlikely(PageWorkingset(page)) && !memstall) {
- 				psi_memstall_enter(&pflags);
- 				memstall = 1;
-@@ -1715,7 +1718,7 @@ static void z_erofs_submit_queue(struct z_erofs_decompress_frontend *f,
- 			}
- 
- 			if (bio_add_page(bio, page, PAGE_SIZE, 0) < PAGE_SIZE)
--				goto submit_bio_retry;
-+				goto drain_io;
- 
- 			last_index = cur;
- 			bypass = false;
+ 	/*
+ 	 * although background is preferred, no one is pending for submission.
 -- 
 2.39.5
 
