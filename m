@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EE8248BD5;
-	Wed, 15 Jan 2025 10:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61D0248BC9;
+	Wed, 15 Jan 2025 10:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736937549; cv=none; b=UyZ0/jC1pbXmWrNMCBCG7fReABLXVCPDelgZwdLGPTA5O3NAbqJY+ZsoT7NQsLYU7Ge2Hf//TKhqSOyLriuqiRl695BVqaDcjudWNxlk617JzJalDUap0WF0LYmwHKWBWFC7LfM7EQFYxAxWfe0axVSgpMNcHTbmFYWb7Aj/2/8=
+	t=1736937552; cv=none; b=EEWAClOPtBTTr3ERin0LQi48QXl3VjgieJf7L8jjjpkAFaYwFamprzk/hY2GEQsAQ+dJGQAFBeUKUNAeEW0pIZodzwvXl59cOJ47nt0WpJKyqhlObv7IERlmnXb8EvmF/whoBJy3fksHbu9hpdkgDOO9iXfzpAiUwczJd9dqUyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736937549; c=relaxed/simple;
-	bh=k5o0B9GDgcnVw3Wf5W2Q4YG/yz12LaQ00aYNcqRebpY=;
+	s=arc-20240116; t=1736937552; c=relaxed/simple;
+	bh=OqAMAcwmbG0+oGrSnPB3pD472RqTWDl6x+N2r8p+lkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aW5w7vtuoyMwDSNlIM+8A4F/qSbw663yyijvF1kRHRBZDEg0wKlgKOBu99kPxV5/bVRw0iAZPdFXKOlZgCdwcVYXdFa2wzGmFb3CKiEv1aCOFhWIPAs8RD11C+nDQ9GDFvh6DWD12KdTmgp9PTQ7XFY9vTzaUOgq2hJFb/JO+f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxadTR/I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfr56OD6we7jrYdIFXmaSn0cOzkIlC2k2+Qxrhg7YmrwrgHo1rdsfrRYAf5eU9x23S7zWX/uGkznKgvSp5eKpKKgtZXaCfxhMNrveUiUqVZVETsDZ3+LDr+5c6x/Q/zCKU/fLFjtv8pRs0W4ELhKZ72G6aON/Gw0wrrJSkG7weM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OVjijUq+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxadTR/I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22CD4C4CEE2;
-	Wed, 15 Jan 2025 10:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OVjijUq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87DEC4CEE2;
+	Wed, 15 Jan 2025 10:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736937548;
-	bh=k5o0B9GDgcnVw3Wf5W2Q4YG/yz12LaQ00aYNcqRebpY=;
+	s=korg; t=1736937552;
+	bh=OqAMAcwmbG0+oGrSnPB3pD472RqTWDl6x+N2r8p+lkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxadTR/I4GsmZKBz4svB27+iu/n8Jp6PIQKCHLid3/bLiBhoBUm2zL6DvjMGcO9Am
-	 71jiRKzq2LXt+OoPapFJmxhlZBKyRd0yESkGLu0yzAO9yPo1kOSTsjG716C8oTZenj
-	 CuuevI4DWRekBD9UYF3+Xo14SLDUyIYFdT+Alub4=
+	b=OVjijUq+yQFCopdmAM6jRHLFOfJZs+LNZCHw2UgiyH/aEWzZGBWf3ci8YM1iDgUEw
+	 6Y968ELXDrxpGBs9IG+WC7+BGo04DpXHEr+0aBpY6ftjaI/v6hHgyqn8U6YWJjXKAz
+	 u9FDtcLnN6Pb6jBqqI1/yzk6+vwxSDkOe59aOvtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	Simon Horman <horms@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	Antonio Pastor <antonio.pastor@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 13/92] ieee802154: ca8210: Add missing check for kfifo_alloc() in ca8210_probe()
-Date: Wed, 15 Jan 2025 11:36:31 +0100
-Message-ID: <20250115103548.070523646@linuxfoundation.org>
+Subject: [PATCH 6.1 14/92] net: 802: LLC+SNAP OID:PID lookup on start of skb data
+Date: Wed, 15 Jan 2025 11:36:32 +0100
+Message-ID: <20250115103548.111360112@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
 References: <20250115103547.522503305@linuxfoundation.org>
@@ -53,42 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Antonio Pastor <antonio.pastor@gmail.com>
 
-[ Upstream commit 2c87309ea741341c6722efdf1fb3f50dd427c823 ]
+[ Upstream commit 1e9b0e1c550c42c13c111d1a31e822057232abc4 ]
 
-ca8210_test_interface_init() returns the result of kfifo_alloc(),
-which can be non-zero in case of an error. The caller, ca8210_probe(),
-should check the return value and do error-handling if it fails.
+802.2+LLC+SNAP frames received by napi_complete_done() with GRO and DSA
+have skb->transport_header set two bytes short, or pointing 2 bytes
+before network_header & skb->data. This was an issue as snap_rcv()
+expected offset to point to SNAP header (OID:PID), causing packet to
+be dropped.
 
-Fixes: ded845a781a5 ("ieee802154: Add CA8210 IEEE 802.15.4 device driver")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/20241029182712.318271-1-keisuke.nishimura@inria.fr
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+A fix at llc_fixup_skb() (a024e377efed) resets transport_header for any
+LLC consumers that may care about it, and stops SNAP packets from being
+dropped, but doesn't fix the problem which is that LLC and SNAP should
+not use transport_header offset.
+
+Ths patch eliminates the use of transport_header offset for SNAP lookup
+of OID:PID so that SNAP does not rely on the offset at all.
+The offset is reset after pull for any SNAP packet consumers that may
+(but shouldn't) use it.
+
+Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
+Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250103012303.746521-1-antonio.pastor@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ieee802154/ca8210.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/802/psnap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ieee802154/ca8210.c b/drivers/net/ieee802154/ca8210.c
-index c2201e0adc46..1659bbffdb91 100644
---- a/drivers/net/ieee802154/ca8210.c
-+++ b/drivers/net/ieee802154/ca8210.c
-@@ -3078,7 +3078,11 @@ static int ca8210_probe(struct spi_device *spi_device)
- 	spi_set_drvdata(priv->spi, priv);
- 	if (IS_ENABLED(CONFIG_IEEE802154_CA8210_DEBUGFS)) {
- 		cascoda_api_upstream = ca8210_test_int_driver_write;
--		ca8210_test_interface_init(priv);
-+		ret = ca8210_test_interface_init(priv);
-+		if (ret) {
-+			dev_crit(&spi_device->dev, "ca8210_test_interface_init failed\n");
-+			goto error;
-+		}
- 	} else {
- 		cascoda_api_upstream = NULL;
+diff --git a/net/802/psnap.c b/net/802/psnap.c
+index 1406bfdbda13..dbd9647f2ef1 100644
+--- a/net/802/psnap.c
++++ b/net/802/psnap.c
+@@ -55,11 +55,11 @@ static int snap_rcv(struct sk_buff *skb, struct net_device *dev,
+ 		goto drop;
+ 
+ 	rcu_read_lock();
+-	proto = find_snap_client(skb_transport_header(skb));
++	proto = find_snap_client(skb->data);
+ 	if (proto) {
+ 		/* Pass the frame on. */
+-		skb->transport_header += 5;
+ 		skb_pull_rcsum(skb, 5);
++		skb_reset_transport_header(skb);
+ 		rc = proto->rcvfunc(skb, dev, &snap_packet_type, orig_dev);
  	}
+ 	rcu_read_unlock();
 -- 
 2.39.5
 
