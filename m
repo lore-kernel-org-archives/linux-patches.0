@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4A3248BBD;
-	Wed, 15 Jan 2025 10:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA6822FDFB;
+	Wed, 15 Jan 2025 10:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938371; cv=none; b=jw2S68Ct3ucRgnbNXOEocJ1142BBgW6tWq3f7W0Mi1OnpPL9iJcjR+XTKheGP6ZphDt7//fVYFKp6j7DKz4vyPrbnesqwdm3/HNIVPLotgRJNrDkppGX0Gmd+eMQ0dqQKWBiUhsd4MOOubbm7+Am1nm5z88mU2yOqCONlvJ4ME0=
+	t=1736938374; cv=none; b=ua+qZ8Cc3vJHcY9Af1eEFtekB4hG/mmGTFzZ38uRFc3gnvBuFZlbmnpyxOjah1P12j4vWJ2ZhGi6feZNIi/oMlbHR083ZUAF/0MQfERozPNkiGnoMq/L6UUWC365C8MN5Xt8qvpC9BlwK3r34TLtWWai3rtDwqTX72veZStOjdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938371; c=relaxed/simple;
-	bh=gokBo0wacx5GRrNuR8/oqDaB2VwOMwe976d4EQhjdjU=;
+	s=arc-20240116; t=1736938374; c=relaxed/simple;
+	bh=MuCzTasQ8y5TVnVxzCnws51e5Cvgi+SWGP1oHBKOSLk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UeAgk9Ax9/DvSKVV4bNq48bBVEyeOj/g08dJi/H9MhDEGydAb8EmXmprTzR98xtVMUVc+b31Pzzf2DUCXZ4Na4ojmVlJ5fTsqY2VBeI8mEWZyUW/SS1WRyte8hi26L/5H73BRDEDXQAQ0J1hlmbLY2jHhJxeZSP2iS89IlI7uMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twE4hKTC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6OPHxHczl6132vNXxGVOKrj832nOmK3XvRt0DyRnE5I7DcSB88Z+25EoOX7+Kq1uFb55k4G3+rrfLeLQ7BzI/9HmG/TdWm8LXDODA59Rt5m3tcOaVOnaYCK85EsCzmPBtzfwK+176sK/Zg126y9NGRhUQ7nR0pc72uKmf9XKIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euGrk09y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twE4hKTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8376BC4CEE4;
-	Wed, 15 Jan 2025 10:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euGrk09y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181BFC4CEDF;
+	Wed, 15 Jan 2025 10:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938371;
-	bh=gokBo0wacx5GRrNuR8/oqDaB2VwOMwe976d4EQhjdjU=;
+	s=korg; t=1736938374;
+	bh=MuCzTasQ8y5TVnVxzCnws51e5Cvgi+SWGP1oHBKOSLk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twE4hKTCqfh5O7MfYvI5CahMSHcvg/Ohvvw2s41hTWBbB2SPqZQ8dbGTHJElJU6dy
-	 rNZwPRtclVkN6TlKFxdGXhekd4wJ9xbqCCtd/wKG3/aqnH407UrksiECV+Pu4bhd3+
-	 9A16No5qW7OLM/3y6bNDVcwgS9sz2nb4i2PQnFZU=
+	b=euGrk09yzL2xCcFSrfcqp23eRC2MWvD0S7mCfhQ9JqSGkUsolxMW9rF9Y+B0GY935
+	 omvpzO3nbPbAhuSXWPbrGK2hc4a1sGgIeDxxI16OhoeTSIs4HhluUc0bKmxdJxNTUj
+	 YnknbM8fM6SUKfV2FPNnuAI5EOJX49B6GtEFUCnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hrusecky <michal.hrusecky@turris.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 131/189] USB: serial: option: add Neoway N723-EA support
-Date: Wed, 15 Jan 2025 11:37:07 +0100
-Message-ID: <20250115103611.672269754@linuxfoundation.org>
+	Zicheng Qu <quzicheng@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 132/189] staging: iio: ad9834: Correct phase range check
+Date: Wed, 15 Jan 2025 11:37:08 +0100
+Message-ID: <20250115103611.710231000@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -50,62 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Hrusecky <michal.hrusecky@turris.com>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-commit f5b435be70cb126866fa92ffc6f89cda9e112c75 upstream.
+commit c0599762f0c7e260b99c6b7bceb8eae69b804c94 upstream.
 
-Update the USB serial option driver to support Neoway N723-EA.
+User Perspective:
+When a user sets the phase value, the ad9834_write_phase() is called.
+The phase register has a 12-bit resolution, so the valid range is 0 to
+4095. If the phase offset value of 4096 is input, it effectively exactly
+equals 0 in the lower 12 bits, meaning no offset.
 
-ID 2949:8700 Marvell Mobile Composite Device Bus
+Reasons for the Change:
+1) Original Condition (phase > BIT(AD9834_PHASE_BITS)):
+This condition allows a phase value equal to 2^12, which is 4096.
+However, this value exceeds the valid 12-bit range, as the maximum valid
+phase value should be 4095.
+2) Modified Condition (phase >= BIT(AD9834_PHASE_BITS)):
+Ensures that the phase value is within the valid range, preventing
+invalid datafrom being written.
 
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2949 ProdID=8700 Rev= 1.00
-S:  Manufacturer=Marvell
-S:  Product=Mobile Composite Device Bus
-S:  SerialNumber=200806006809080000
-C:* #Ifs= 5 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0e(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+Impact on Subsequent Logic: st->data = cpu_to_be16(addr | phase):
+If the phase value is 2^12, i.e., 4096 (0001 0000 0000 0000), and addr
+is AD9834_REG_PHASE0 (1100 0000 0000 0000), then addr | phase results in
+1101 0000 0000 0000, occupying DB12. According to the section of WRITING
+TO A PHASE REGISTER in the datasheet, the MSB 12 PHASE0 bits should be
+DB11. The original condition leads to incorrect DB12 usage, which
+contradicts the datasheet and could pose potential issues for future
+updates if DB12 is used in such related cases.
 
-Tested successfully connecting to the Internet via rndis interface after
-dialing via AT commands on If#=4 or If#=6.
-
-Not sure of the purpose of the other serial interface.
-
-Signed-off-by: Michal Hrusecky <michal.hrusecky@turris.com>
+Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20241107011015.2472600-2-quzicheng@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/iio/frequency/ad9834.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2413,6 +2413,7 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
- 	  .driver_info = NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x2949, 0x8700, 0xff) },			/* Neoway N723-EA */
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+--- a/drivers/staging/iio/frequency/ad9834.c
++++ b/drivers/staging/iio/frequency/ad9834.c
+@@ -131,7 +131,7 @@ static int ad9834_write_frequency(struct
+ static int ad9834_write_phase(struct ad9834_state *st,
+ 			      unsigned long addr, unsigned long phase)
+ {
+-	if (phase > BIT(AD9834_PHASE_BITS))
++	if (phase >= BIT(AD9834_PHASE_BITS))
+ 		return -EINVAL;
+ 	st->data = cpu_to_be16(addr | phase);
+ 
 
 
