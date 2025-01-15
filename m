@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EF7248BC1;
-	Wed, 15 Jan 2025 10:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990FC248BC1;
+	Wed, 15 Jan 2025 10:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938315; cv=none; b=XF/8XUXz4dpbSdcZzJjDEQ9hnX5dcGfIZPAlil4x+jYQd2hKsAIh4fJ59c90L82B54z+IphRsO9k2wYLHOWLUmtAFTeo5pVd/a9Myj7RXSzA/BQov37RtY1LTnk93q+3WJfFmylIQ3CnuyxABdR+X4+6PJFVC8n5nmB/B7w5eqI=
+	t=1736938319; cv=none; b=m7Tz6uH7G7ngDlfEADpmrvVEi68wxpcumWq22ZMZLAahtf4mRK5GrloXhIE6//Y7DHOEyi74dTonbFb9HHuQguc5waaege7aKnXJ6ktOGAmHxPQ7tYJOJ/AAdSQSJxfF/E39DSEcCBQgyEp9/V/kjA1Pepw/ClIld1fqVKDGQJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938315; c=relaxed/simple;
-	bh=JDCNIK4YzvBaCLQFbdW9wrJrMfyO3N0yUmls7p4LsWM=;
+	s=arc-20240116; t=1736938319; c=relaxed/simple;
+	bh=tSoPxCGYbrkhtJqmz8MJs5AFvtT8oreoTm/Ru2urNT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Saf3RyOeWeoDqhc3lCk8Qb7ys/VCJP++vjxarheZVtWaJDIHHLyTWK/bseS9E0scGdqml/f+M5LE3nYCbQcFUoczQ969Ly9ee5q7bP5eMWTRB4ZqaZjrYy24IIa48XMQQ8+xCIhMcOvoq/Lt5sAVw1zGcudQWt8hZsE5p5ezE94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tMxwV7oC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9DDahMjtauiz+jZHzCpZM/9/g/dc2xL7d3fHNWh2qSh9hSNZxJe+K+nsgVsRofiTvD20tGulDlwhHYVTR8tUYE+UpPQemuGXNMMVZ0gL8IHWhVY83ktU8I5iRAKDDGasijdYbrwiEdQgaQ4TDNXFgPCaRawbdlBRgOFvLaEwM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDp+P0hF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tMxwV7oC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0685FC4CEDF;
-	Wed, 15 Jan 2025 10:51:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDp+P0hF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D6C4CEDF;
+	Wed, 15 Jan 2025 10:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938315;
-	bh=JDCNIK4YzvBaCLQFbdW9wrJrMfyO3N0yUmls7p4LsWM=;
+	s=korg; t=1736938319;
+	bh=tSoPxCGYbrkhtJqmz8MJs5AFvtT8oreoTm/Ru2urNT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMxwV7oCO+Q2ij+DA/gLjCnUrFyKPRBNebFs0A3LkJYXOrgHeZNUYYIbCzFSA29eZ
-	 KDDwg/OrlBHQXZDWj4aTGVFuJEc/8fYXJdcBTkhqewG5LLu4LLgJCYRp9EN6ZOPNGp
-	 HNjDrRJ7MOwCMEIwT4kXlTQWFqPfHPVlRiTLYNQE=
+	b=KDp+P0hFtGrLOKe7o4JDgtKm3nRVgy24aofyyvajKniQOwa0cONox82HHHSEk9P3L
+	 hQreflBnURwMvNRaYiBDUDhU22hSupTnISDK6UPskY+LtDLOmF+jTnb3TJiuAdRr26
+	 uMzaV6HZAJhmT5IMTzWbywAm3Y4bi5hT/T/M4l00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Chang <waynec@nvidia.com>,
 	stable <stable@kernel.org>,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Jon Hunter <jonathanh@nvidia.com>
-Subject: [PATCH 6.12 146/189] USB: core: Disable LPM only for non-suspended ports
-Date: Wed, 15 Jan 2025 11:37:22 +0100
-Message-ID: <20250115103612.247437436@linuxfoundation.org>
+	Ma Ke <make_ruc2021@163.com>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.12 147/189] usb: fix reference leak in usb_new_device()
+Date: Wed, 15 Jan 2025 11:37:23 +0100
+Message-ID: <20250115103612.284572548@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -53,52 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kaihengf@nvidia.com>
+From: Ma Ke <make_ruc2021@163.com>
 
-commit 59bfeaf5454b7e764288d84802577f4a99bf0819 upstream.
+commit 0df11fa8cee5a9cf8753d4e2672bb3667138c652 upstream.
 
-There's USB error when tegra board is shutting down:
-[  180.919315] usb 2-3: Failed to set U1 timeout to 0x0,error code -113
-[  180.919995] usb 2-3: Failed to set U1 timeout to 0xa,error code -113
-[  180.920512] usb 2-3: Failed to set U2 timeout to 0x4,error code -113
-[  186.157172] tegra-xusb 3610000.usb: xHCI host controller not responding, assume dead
-[  186.157858] tegra-xusb 3610000.usb: HC died; cleaning up
-[  186.317280] tegra-xusb 3610000.usb: Timeout while waiting for evaluate context command
+When device_add(&udev->dev) succeeds and a later call fails,
+usb_new_device() does not properly call device_del(). As comment of
+device_add() says, 'if device_add() succeeds, you should call
+device_del() when you want to get rid of it. If device_add() has not
+succeeded, use only put_device() to drop the reference count'.
 
-The issue is caused by disabling LPM on already suspended ports.
+Found by code review.
 
-For USB2 LPM, the LPM is already disabled during port suspend. For USB3
-LPM, port won't transit to U1/U2 when it's already suspended in U3,
-hence disabling LPM is only needed for ports that are not suspended.
-
-Cc: Wayne Chang <waynec@nvidia.com>
 Cc: stable <stable@kernel.org>
-Fixes: d920a2ed8620 ("usb: Disable USB3 LPM at shutdown")
-Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20241206074817.89189-1-kaihengf@nvidia.com
+Fixes: 9f8b17e643fe ("USB: make usbdevices export their device nodes instead of using a separate class")
+Signed-off-by: Ma Ke <make_ruc2021@163.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20241218071346.2973980-1-make_ruc2021@163.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/port.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/core/hub.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/core/port.c
-+++ b/drivers/usb/core/port.c
-@@ -452,10 +452,11 @@ static int usb_port_runtime_suspend(stru
- static void usb_port_shutdown(struct device *dev)
- {
- 	struct usb_port *port_dev = to_usb_port(dev);
-+	struct usb_device *udev = port_dev->child;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2663,13 +2663,13 @@ int usb_new_device(struct usb_device *ud
+ 		err = sysfs_create_link(&udev->dev.kobj,
+ 				&port_dev->dev.kobj, "port");
+ 		if (err)
+-			goto fail;
++			goto out_del_dev;
  
--	if (port_dev->child) {
--		usb_disable_usb2_hardware_lpm(port_dev->child);
--		usb_unlocked_disable_lpm(port_dev->child);
-+	if (udev && !udev->port_is_suspended) {
-+		usb_disable_usb2_hardware_lpm(udev);
-+		usb_unlocked_disable_lpm(udev);
- 	}
- }
+ 		err = sysfs_create_link(&port_dev->dev.kobj,
+ 				&udev->dev.kobj, "device");
+ 		if (err) {
+ 			sysfs_remove_link(&udev->dev.kobj, "port");
+-			goto fail;
++			goto out_del_dev;
+ 		}
  
+ 		if (!test_and_set_bit(port1, hub->child_usage_bits))
+@@ -2683,6 +2683,8 @@ int usb_new_device(struct usb_device *ud
+ 	pm_runtime_put_sync_autosuspend(&udev->dev);
+ 	return err;
+ 
++out_del_dev:
++	device_del(&udev->dev);
+ fail:
+ 	usb_set_device_state(udev, USB_STATE_NOTATTACHED);
+ 	pm_runtime_disable(&udev->dev);
 
 
