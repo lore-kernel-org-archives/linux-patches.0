@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2BF248BB3;
-	Wed, 15 Jan 2025 10:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532EB248BA6;
+	Wed, 15 Jan 2025 10:48:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736938086; cv=none; b=HnDN/qqUWRA3JCdxbzzy5HRmCIuBGOfM0WW38lj9Npsy/qP8JMl93zZ2q29rjbR8t6VvShga8KrjygE+cIU2pxlWK/hxubevZauyLhurBFKkvH9kguMQqUaldGQru1Ci7Wlz0swCjUD0SFmgVYh6Xp89ibrnyUHeCHGnuZ2kO80=
+	t=1736938090; cv=none; b=J2DHgWqatAPV79G6q4fdLRBVqTZtBvx0hVeT6yx201SbWJVBAsMItQj1xq+AYFGV29F1rfylqueluev/mQx74LxnVBhIBd8+fpaU+YYAN8eWa7IjeWzbswF1Om8Pl0Qn2deABJ9nmuH5Qh8otIHcb/tKsONGWWOsbFZcPay9ioY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736938086; c=relaxed/simple;
-	bh=rwsnnensUPpC0zBgHkgQn7gdPKwwTR0kRf493AiB/+8=;
+	s=arc-20240116; t=1736938090; c=relaxed/simple;
+	bh=k+J6I6zrFJUXCk0VGoV851RiEvkXrQ3dF1oVezqMKVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s16cngSRReJ+9tY/V2BGaLKEgVWn7r0HzgPo8K/oytS4J3wnD7U793w5rr/9FRhnfH/yci3SJwWH80XkXZzymliClIz9xnogSp4KjboNrL536yUUkG7OJDLyv7VSx4WHir+JnRPG3YpkUIWAH8wk1jtageC6f9cXT5r2U4VeSec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DT17ivt4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TV6iuu2gsD1Hx+EsBTtfiWjWMpq4a1G1yd/fPVDjiGCKhY3fyiHb/LNia/FLIY4dg5/cmOT8HxceTTVBwFXXTv8A59Z2dqLZh9bhmbbDFRvnjDho/BGICcWqu+QZWCTdSbMII3dAcL3ORqXENA92jxs3T4/LZoMv4YkCDE5PvFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fo3zZ0uw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DT17ivt4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C725C4CEDF;
-	Wed, 15 Jan 2025 10:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fo3zZ0uw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B50C4CEDF;
+	Wed, 15 Jan 2025 10:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1736938086;
-	bh=rwsnnensUPpC0zBgHkgQn7gdPKwwTR0kRf493AiB/+8=;
+	s=korg; t=1736938089;
+	bh=k+J6I6zrFJUXCk0VGoV851RiEvkXrQ3dF1oVezqMKVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DT17ivt4FccADGGvinMuV6hRccAHTjPOF6SWmZLvGA5C6JBz7QbRJOjNjalRpZOkA
-	 0bLhMuskcpLrVbwO1hGxHXY0gcryeX8jVDjbzcYBSH9bJryq8A87aRJjXYV0iFrH8v
-	 2iA7RcRkBbsI1pMWFX9w97KTXPzdwmxlGxICYA2c=
+	b=fo3zZ0uw7m6gybLjndv6cy2gzugHnYMMlMnDdPSANhMlf7UPAr3KlFqr9dCxUQYJ8
+	 cKupeWXdHMufli5vk5Cw5FMqrvhk3+U2SeWG7ouADNgCMmOj8Ru5Jn4WOPpfRo0ojv
+	 9SM5SSWBkl6i8cZalaAZUtmiTMtWOL29Kal3/dxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/189] drm/mediatek: Move mtk_crtc_finish_page_flip() to ddp_cmdq_cb()
-Date: Wed, 15 Jan 2025 11:35:57 +0100
-Message-ID: <20250115103608.794256748@linuxfoundation.org>
+Subject: [PATCH 6.12 079/189] riscv: use local label names instead of global ones in assembly
+Date: Wed, 15 Jan 2025 11:36:15 +0100
+Message-ID: <20250115103609.504260841@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250115103606.357764746@linuxfoundation.org>
 References: <20250115103606.357764746@linuxfoundation.org>
@@ -46,107 +46,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Clément Léger <cleger@rivosinc.com>
 
-[ Upstream commit da03801ad08f2488c01e684509cd89e1aa5d17ec ]
+[ Upstream commit 5cd900b8b7e42c492431eb4261c18927768db1f9 ]
 
-mtk_crtc_finish_page_flip() is used to notify userspace that a
-page flip has been completed, allowing userspace to free the frame
-buffer of the last frame and commit the next frame.
+Local labels should be prefix by '.L' or they'll be exported in the
+symbol table. Additionally, this messes up the backtrace by displaying
+an incorrect symbol:
 
-In MediaTek's hardware design for configuring display hardware by using
-GCE, `DRM_EVENT_FLIP_COMPLETE` should be notified to userspace after
-GCE has finished configuring all display hardware settings for each
-atomic_commit().
+  ...
+  [   12.751810] [<ffffffff80441628>] _copy_from_user+0x28/0xc2
+  [   12.752035] [<ffffffff800152ca>] handle_misaligned_load+0x1ca/0x2fc
+  [   12.752310] [<ffffffff80a033e8>] do_trap_load_misaligned+0x24/0xee
+  [   12.752596] [<ffffffff80a0dcae>] _new_vmalloc_restore_context_a0+0xc2/0xce
 
-Currently, mtk_crtc_finish_page_flip() cannot guarantee that GCE has
-configured all the display hardware settings of the last frame.
-Therefore, to increase the accuracy of the timing for notifying
-`DRM_EVENT_FLIP_COMPLETE` to userspace, mtk_crtc_finish_page_flip()
-should be moved to ddp_cmdq_cb().
+After:
+  ...
+  [   10.243916] [<ffffffff804415e4>] _copy_from_user+0x28/0xc2
+  [   10.244026] [<ffffffff800152ca>] handle_misaligned_load+0x1ca/0x2fc
+  [   10.244150] [<ffffffff80a033a0>] do_trap_load_misaligned+0x24/0xee
+  [   10.244268] [<ffffffff80a0dc66>] handle_exception+0x146/0x152
 
-Fixes: 7f82d9c43879 ("drm/mediatek: Clear pending flag when cmdq packet is done")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241211034716.29241-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Fixes: 503638e0babf3 ("riscv: Stop emitting preventive sfence.vma for new vmalloc mappings")
+Link: https://lore.kernel.org/r/20250103141814.508865-1-cleger@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_crtc.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ arch/riscv/kernel/entry.S | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
-index eb0e1233ad04..5674f5707cca 100644
---- a/drivers/gpu/drm/mediatek/mtk_crtc.c
-+++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
-@@ -112,6 +112,11 @@ static void mtk_drm_finish_page_flip(struct mtk_crtc *mtk_crtc)
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index 7a6c48e6d211..33a5a9f2a0d4 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -23,21 +23,21 @@
+ 	REG_S 	a0, TASK_TI_A0(tp)
+ 	csrr 	a0, CSR_CAUSE
+ 	/* Exclude IRQs */
+-	blt  	a0, zero, _new_vmalloc_restore_context_a0
++	blt  	a0, zero, .Lnew_vmalloc_restore_context_a0
  
- 	drm_crtc_handle_vblank(&mtk_crtc->base);
+ 	REG_S 	a1, TASK_TI_A1(tp)
+ 	/* Only check new_vmalloc if we are in page/protection fault */
+ 	li   	a1, EXC_LOAD_PAGE_FAULT
+-	beq  	a0, a1, _new_vmalloc_kernel_address
++	beq  	a0, a1, .Lnew_vmalloc_kernel_address
+ 	li   	a1, EXC_STORE_PAGE_FAULT
+-	beq  	a0, a1, _new_vmalloc_kernel_address
++	beq  	a0, a1, .Lnew_vmalloc_kernel_address
+ 	li   	a1, EXC_INST_PAGE_FAULT
+-	bne  	a0, a1, _new_vmalloc_restore_context_a1
++	bne  	a0, a1, .Lnew_vmalloc_restore_context_a1
  
-+#if IS_REACHABLE(CONFIG_MTK_CMDQ)
-+	if (mtk_crtc->cmdq_client.chan)
-+		return;
-+#endif
-+
- 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	if (!mtk_crtc->config_updating && mtk_crtc->pending_needs_vblank) {
- 		mtk_crtc_finish_page_flip(mtk_crtc);
-@@ -284,10 +289,8 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
- 	state = to_mtk_crtc_state(mtk_crtc->base.state);
+-_new_vmalloc_kernel_address:
++.Lnew_vmalloc_kernel_address:
+ 	/* Is it a kernel address? */
+ 	csrr 	a0, CSR_TVAL
+-	bge 	a0, zero, _new_vmalloc_restore_context_a1
++	bge 	a0, zero, .Lnew_vmalloc_restore_context_a1
  
- 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
--	if (mtk_crtc->config_updating) {
--		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+	if (mtk_crtc->config_updating)
- 		goto ddp_cmdq_cb_out;
--	}
+ 	/* Check if a new vmalloc mapping appeared that could explain the trap */
+ 	REG_S	a2, TASK_TI_A2(tp)
+@@ -69,7 +69,7 @@ _new_vmalloc_kernel_address:
+ 	/* Check the value of new_vmalloc for this cpu */
+ 	REG_L	a2, 0(a0)
+ 	and	a2, a2, a1
+-	beq	a2, zero, _new_vmalloc_restore_context
++	beq	a2, zero, .Lnew_vmalloc_restore_context
  
- 	state->pending_config = false;
+ 	/* Atomically reset the current cpu bit in new_vmalloc */
+ 	amoxor.d	a0, a1, (a0)
+@@ -83,11 +83,11 @@ _new_vmalloc_kernel_address:
+ 	csrw	CSR_SCRATCH, x0
+ 	sret
  
-@@ -315,10 +318,15 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
- 		mtk_crtc->pending_async_planes = false;
- 	}
+-_new_vmalloc_restore_context:
++.Lnew_vmalloc_restore_context:
+ 	REG_L 	a2, TASK_TI_A2(tp)
+-_new_vmalloc_restore_context_a1:
++.Lnew_vmalloc_restore_context_a1:
+ 	REG_L 	a1, TASK_TI_A1(tp)
+-_new_vmalloc_restore_context_a0:
++.Lnew_vmalloc_restore_context_a0:
+ 	REG_L	a0, TASK_TI_A0(tp)
+ .endm
  
--	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
--
- ddp_cmdq_cb_out:
- 
-+	if (mtk_crtc->pending_needs_vblank) {
-+		mtk_crtc_finish_page_flip(mtk_crtc);
-+		mtk_crtc->pending_needs_vblank = false;
-+	}
-+
-+	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
- 	mtk_crtc->cmdq_vblank_cnt = 0;
- 	wake_up(&mtk_crtc->cb_blocking_queue);
- }
-@@ -606,13 +614,18 @@ static void mtk_crtc_update_config(struct mtk_crtc *mtk_crtc, bool needs_vblank)
- 		 */
- 		mtk_crtc->cmdq_vblank_cnt = 3;
- 
-+		spin_lock_irqsave(&mtk_crtc->config_lock, flags);
-+		mtk_crtc->config_updating = false;
-+		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+
- 		mbox_send_message(mtk_crtc->cmdq_client.chan, cmdq_handle);
- 		mbox_client_txdone(mtk_crtc->cmdq_client.chan, 0);
- 	}
--#endif
-+#else
- 	spin_lock_irqsave(&mtk_crtc->config_lock, flags);
- 	mtk_crtc->config_updating = false;
- 	spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
-+#endif
- 
- 	mutex_unlock(&mtk_crtc->hw_lock);
- }
 -- 
 2.39.5
 
