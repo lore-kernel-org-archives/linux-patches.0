@@ -1,81 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8EA19D8A7;
-	Thu, 16 Jan 2025 23:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1C432AE8D
+	for <patches@lists.linux.dev>; Fri, 17 Jan 2025 02:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737071621; cv=none; b=V5R2T1Xp/sLDkGdZkmiSrzqIl2qM3tSHwS5mY47eA7kDhQ7JAePu38rJn/w/MjRxwnJ2gpr5zDlHlz1YGz2MuxHT94x64mvxCs7CTU9lQPgNQgJBZEKXT53HQDMKtgH4U3lwZIOiBtiebEyzoBBXNMJTeEUzovPeuzj29ggUBTA=
+	t=1737080704; cv=none; b=oLqBrXZW4DgNyc0psynG68sAgGHcEmFIam4zbRm/RJ2gxqOmnc+76qIiCIoRS9sUNa6qiV3VR8/urTg4A3x9bSw1kKj+h1OyTIpAP+z4TQw1paZZw+JpPQHgTAmGdPYm6+OYx7SOc7uUk5MWNBfV8cuvhcNYyy2r46qrkhWwXCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737071621; c=relaxed/simple;
-	bh=sUMbDwsTo0VJ3yJ0XkYGuivkZGTbbE1Ft7x2hokGYGg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QRkOpBVAIHV46nQwKKqUA44+m8epnWPQwKuLEZ/WoIrXBz6FGX5Raim8+tx6vrV0s+oXVbNj44l6N4Lzxzd9KToYf5ttaXlowZavvlPvLzkhU1cWEEw9/m5AnzEMl97f0Di1oGbVv5SZGqPxe2WRGzem8vLRwyTy4OWyxOBl9kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hEeAnDpb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737080704; c=relaxed/simple;
+	bh=K66+KBx0lgtFW+ZOCmttgm95Hz1kk6u/sIgx91pWfQs=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=PiPUP8oFoHNWI38ViUEiOiX49A71wsTKsXDcCHWQ1m3zPWwc/URA7iN6V3YirQTBZl8qIsEW9EOe/PQJUJOfrgrMFw1pYcM7OuUOvG5xqJB8wsB+/5ZoXs1QIJRkDmtwgVxxIaV4O/YCLjxMTm53TjSCNe/BV7LCCu4ldkV2Fb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=MDIT/uIU; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hEeAnDpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DF5C4CEDD;
-	Thu, 16 Jan 2025 23:53:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737071621;
-	bh=sUMbDwsTo0VJ3yJ0XkYGuivkZGTbbE1Ft7x2hokGYGg=;
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="MDIT/uIU"
+Received: by linux.microsoft.com (Postfix, from userid 1158)
+	id 3221520591AA; Thu, 16 Jan 2025 18:25:02 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3221520591AA
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1737080702;
+	bh=K66+KBx0lgtFW+ZOCmttgm95Hz1kk6u/sIgx91pWfQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEeAnDpb73UN8jwU4H4a31LgDSOEU5iyB350lkNGXr8LUY+apvKduRPNR78Tap0Gw
-	 SIT+X0m+PjWsKb0/xMDpecX86//CMY73U+13BZApm/PpCU3DekEPwEgM2Rkm9RO9W4
-	 TNOMyvz9DV/zb+iHl7ErKYjVvKsMCoWa2LpfFCFKoYlJYsCi/zddMgvy0Wodeoz6gT
-	 9G2zcFVWfhEMggPrvzir5GZnfUshgwUEEwzU7sTGOHuOg3DRUTq1z8WK3GFv82yldn
-	 djqGH5I9IGqcll+HQ3XhLfUgt7GcINYICVkVgq7GXvhu3nGC6ggTgAODMbaEdsAi2D
-	 zEBP0zm4YuOGA==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	b=MDIT/uIUjMkmQFNj8iWCBwmJgnL1i4x71GzljdXVv6Bju7VT21kr0yBYf0rYnzcTc
+	 ETcO1vibmY/I7hUhbYYVAI7pT8DtjYYgFUje3w1VHkva/VbJxrkTblPayLdqbg/ReJ
+	 h5ACweBO2TkCoMy3t0HVkphtKA7DXevHIphqXnlI=
+From: Hardik Garg <hargar@linux.microsoft.com>
+To: gregkh@linuxfoundation.org
+Cc: akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 2/2] spmi: hisi-spmi-controller: Drop duplicated OF node assignment in spmi_controller_probe()
-Date: Thu, 16 Jan 2025 15:53:38 -0800
-Message-ID: <20250116235339.300485-3-sboyd@kernel.org>
-X-Mailer: git-send-email 2.48.0.rc2.279.g1de40edade-goog
-In-Reply-To: <20250116235339.300485-1-sboyd@kernel.org>
-References: <20250116235339.300485-1-sboyd@kernel.org>
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	srw@sladewatkins.net,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re: [PATCH 6.1] 6.1.125-rc1 review
+Date: Thu, 16 Jan 2025 18:25:02 -0800
+Message-Id: <1737080702-23479-1-git-send-email-hargar@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <20250115103547.522503305@linuxfoundation.org>
+References: <20250115103547.522503305@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+The kernel, bpf tool, amd kselftest tool builds fine for v6.1.125-rc1 on x86 and arm64 Azure VM.
 
-spmi_controller_probe() assigns a parent device and an OF node to an
-SPMI controller. However, the operations are not needed as they are
-already assigned in spmi_controller_alloc(). Thus, remove the duplicated
-assignments. An unnecessary OF node reference acquisition is also
-dropped by this patch.
+Tested-by: Hardik Garg <hargar@linux.microsoft.com>
 
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Suggested-by: Stephen Boyd <sboyd@kernel.org>
-Link: https://lore.kernel.org/r/20250116044907.2947218-1-joe@pf.is.s.u-tokyo.ac.jp
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/spmi/hisi-spmi-controller.c | 3 ---
- 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/spmi/hisi-spmi-controller.c b/drivers/spmi/hisi-spmi-controller.c
-index 3cafdf22c909..122140b97579 100644
---- a/drivers/spmi/hisi-spmi-controller.c
-+++ b/drivers/spmi/hisi-spmi-controller.c
-@@ -300,9 +300,6 @@ static int spmi_controller_probe(struct platform_device *pdev)
- 
- 	spin_lock_init(&spmi_controller->lock);
- 
--	ctrl->dev.parent = pdev->dev.parent;
--	ctrl->dev.of_node = of_node_get(pdev->dev.of_node);
--
- 	/* Callbacks */
- 	ctrl->read_cmd = spmi_read_cmd;
- 	ctrl->write_cmd = spmi_write_cmd;
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
 
+
+Thanks,
+Hardik
