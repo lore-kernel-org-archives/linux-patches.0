@@ -1,103 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA721E0DAC
-	for <patches@lists.linux.dev>; Mon, 20 Jan 2025 12:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93E41B5EBC
+	for <patches@lists.linux.dev>; Mon, 20 Jan 2025 13:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737377991; cv=none; b=ixQwoioPZOEuLfewoWrrIInEUINyDYnhsLpA/kxY9wfUBoRgO8U02DL2yhQkfZyuf+M1j5Jt9dHdp0tQsWRders0gKA8AnGJrsz+0yYy6hgTNvL66zYr40YXrYYkQ8qJz9rKJg1519IDkuZP9LhuNVKQk6KY9bFjAPE+smkLUts=
+	t=1737378088; cv=none; b=BIx2T9Nb8YwQM0b2AbVYSSwjYbj9IkPdTE0iBy6LQpbnrK7B33zOVIC3CWG1CUbeaW3UZ5g4S92lzfZ9uwHyvs81L83MjZV4m0PuKVNKCaXOKuazXzGMFz46AY3RcLGGN28t9krMC1WkkU9BO9ZY5vhiYW9CUQdRjs6qnKCW0/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737377991; c=relaxed/simple;
-	bh=O0+0Zri+s/2DueyKTFACsawCn1enHn6tRY8p+PfVw18=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gArCSyrg6fJKDoXGvSe+UElgIO17tv9ccrvjmL+OF/7Ll5p6l1Vp9jkDTN+TEeGtcalkEOSVrhPRbZrHBFBnSDZYmBkP/CIxMwMIETivA0BXuKhc3l4kWHeeG/MZSOsv6x+YXT/vRG06EdRgvKkALsQkYdXOZ7rWE3WnhbI2690=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G6JZdA29; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G6JZdA29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150F6C4CEE1;
-	Mon, 20 Jan 2025 12:59:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737377991;
-	bh=O0+0Zri+s/2DueyKTFACsawCn1enHn6tRY8p+PfVw18=;
-	h=From:Date:Subject:To:Cc:From;
-	b=G6JZdA291903VcvjYxk0sNZ0iYLnsIWGdu+b9Xyy6CpgneOcN9ZUy+gURpchIJa7g
-	 /l9QA9dcPz9VPx63lXoyyQouJ3yh89AeqKubCvzLHylK6WZdtHMsk0+blqnWoDoRYf
-	 0fKZqJStDLQXRpL3xCzHFxRego1GB2jw+T+LQeBwnNKDZCENfgrzDQ+eoFzl8QX9gn
-	 scLQ8ZBRBOSma0bf/JJi/wW10To4hYLQddUWXCLWDszpTNejaXuYLwU1rbTl8RyyJ/
-	 1OlvPSiLJMP89VHioMuHc1pkO1ijNc7gzxd77mqc85/rSyD1Ma7yzjqkBX29SLMy/h
-	 VxdHXGgievW2Q==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Mon, 20 Jan 2025 05:59:44 -0700
-Subject: [PATCH] f2fs: Fix format specifier in sanity_check_inode()
+	s=arc-20240116; t=1737378088; c=relaxed/simple;
+	bh=dyw6WxkcXRQ6kae7WtfQYP2kSXG9+SMOK/v2HnzNsno=;
+	h=From:To:Cc:Date:Message-Id:Subject; b=NPrdcHwNUg0ioO7OWglnJnZ64yyvDAUM8EjxLGaiJN2CqRm+T/HDHlAjMP/48Q0buv0wu3GUY6GcURC54Tmv0LW8sPM5RUhfIGfx9TTJ7eytQRIdJK7ofEOAknCFII6gK+hXLtNHMtkHKl8iEqaG26Hom5DqFmFPxaBiU/DQWoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA682C4CEDD
+	for <patches@lists.linux.dev>; Mon, 20 Jan 2025 13:01:27 +0000 (UTC)
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Mon, 20 Jan 2025 13:01:25 +0000
+Resent-Message-ID: <Z45JJfAgzz6TOYZ9@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Mon, 20 Jan 2025 10:18:50 +0000
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=uoHi=UM=everest-semi.com=zhangyi@kernel.org>)
+	id 1tZoro-00C8tL-4i
+	for broonie@sirena.co.uk; Mon, 20 Jan 2025 10:18:50 +0000
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id 400735C585B
+	for <broonie@sirena.co.uk>; Mon, 20 Jan 2025 10:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id 8FE5FC4CEE0; Mon, 20 Jan 2025 10:18:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9A854C4CEDD
+	for <broonie@kernel.org>; Mon, 20 Jan 2025 10:18:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 9A854C4CEDD
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
+Received: from unknown (HELO zy-virtual-machine.localdomain)([180.159.108.222])
+	by sina.net (10.185.250.30) with ESMTP
+	id 678E22D8000040B3; Mon, 20 Jan 2025 18:18:01 +0800 (CST)
+X-Sender: zhangyi@everest-semi.com
+X-Auth-ID: zhangyi@everest-semi.com
+Authentication-Results: sina.net;
+	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=zhangyi@everest-semi.com
+X-SMAIL-MID: 53ABA6FF2E194F8DAB339DDAE6BA8BFF
+X-SMAIL-UIID: 53ABA6FF2E194F8DAB339DDAE6BA8BFF-20250120-181801
+From: Zhang Yi <zhangyi@everest-semi.com>
+To: alsa-devel@alsa-project.org,
+	broonie@kernel.org
+Cc: tiwai@suse.com,
+	amadeuszx.slawinski@linux.intel.com,
+	yangxiaohua@everest-semi.com,
+	zhuning@everest-semi.com,
+	zhangyi@everest-semi.com
+Date: Mon, 20 Jan 2025 18:17:58 +0800
+Message-Id: <20250120101758.13347-1-zhangyi@everest-semi.com>
+X-Mailer: git-send-email 2.17.1
+X-SA-Exim-Connect-IP: 2604:1380:4641:c500::1
+X-SA-Exim-Mail-From: SRS0=uoHi=UM=everest-semi.com=zhangyi@kernel.org
+Subject: [PATCH] ASoC: codecs: ES8326: Improved PSRR
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: 7krhvtOxV47C
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250120-f2fs-fix-wformat-min_inline_xattr_size-v1-1-508cac1474fe@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAL9IjmcC/x2N0QrCMAwAf2Xk2UBbV0R/RaSULdWAyyQpOhz79
- 5U93sPdrWCkTAa3bgWlLxvP0sCfOhheWZ6EPDaG4EJ0PjgsoRgWXvBXZp1yxYklsbxZKC25Vk3
- Gf8Jr9MN4drHvLwQt9lFq0jG6P7ZtB+TWzhV4AAAA
-X-Change-ID: 20250120-f2fs-fix-wformat-min_inline_xattr_size-951cd305447e
-To: Jaegeuk Kim <jaegeuk@kernel.org>, Chao Yu <chao@kernel.org>
-Cc: linux-f2fs-devel@lists.sourceforge.net, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2517; i=nathan@kernel.org;
- h=from:subject:message-id; bh=O0+0Zri+s/2DueyKTFACsawCn1enHn6tRY8p+PfVw18=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDOl9HkdfNdneFDTXPSN8t1CKr/Pr71T9jSdW36vMTd8RO
- f1RNP/8jlIWBjEuBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRF+oM/5QXFe00czgZu/X7
- CYeqVW6XinlWTpIML14zWdrbMt8rZAXDX9l/0oLreJc818lh8I24t+PQSvGChCO5q6c0eeg/WcE
- TzgkA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-When building for 32-bit platforms, for which 'size_t' is 'unsigned int',
-there is a warning due to an incorrect format specifier:
+Modified configuration to improve PSSR when ES8326 is working
 
-  fs/f2fs/inode.c:320:6: error: format specifies type 'unsigned long' but the argument has type 'unsigned int' [-Werror,-Wformat]
-    318 |                 f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, min: %lu, max: %lu",
-        |                                                                                                 ~~~
-        |                                                                                                 %u
-    319 |                           __func__, inode->i_ino, fi->i_inline_xattr_size,
-    320 |                           MIN_INLINE_XATTR_SIZE, MAX_INLINE_XATTR_SIZE);
-        |                           ^~~~~~~~~~~~~~~~~~~~~
-  fs/f2fs/f2fs.h:1855:46: note: expanded from macro 'f2fs_warn'
-   1855 |         f2fs_printk(sbi, false, KERN_WARNING fmt, ##__VA_ARGS__)
-        |                                              ~~~    ^~~~~~~~~~~
-  fs/f2fs/xattr.h:86:31: note: expanded from macro 'MIN_INLINE_XATTR_SIZE'
-     86 | #define MIN_INLINE_XATTR_SIZE (sizeof(struct f2fs_xattr_header) / sizeof(__le32))
-        |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use the format specifier for 'size_t', '%zu', to resolve the warning.
-
-Fixes: 5c1768b67250 ("f2fs: fix to do sanity check correctly on i_inline_xattr_size")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
 ---
- fs/f2fs/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/es8326.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 7de33da8b3ea..3dd25f64d6f1 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -315,7 +315,7 @@ static bool sanity_check_inode(struct inode *inode, struct page *node_page)
- 		f2fs_has_inline_xattr(inode) &&
- 		(fi->i_inline_xattr_size < MIN_INLINE_XATTR_SIZE ||
- 		fi->i_inline_xattr_size > MAX_INLINE_XATTR_SIZE)) {
--		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, min: %lu, max: %lu",
-+		f2fs_warn(sbi, "%s: inode (ino=%lx) has corrupted i_inline_xattr_size: %d, min: %zu, max: %lu",
- 			  __func__, inode->i_ino, fi->i_inline_xattr_size,
- 			  MIN_INLINE_XATTR_SIZE, MAX_INLINE_XATTR_SIZE);
- 		return false;
-
----
-base-commit: 5c1768b6725049e1fcfc841924d65f2872413000
-change-id: 20250120-f2fs-fix-wformat-min_inline_xattr_size-951cd305447e
-
-Best regards,
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index b06eead7e0f6..066d92b54312 100755
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -911,7 +911,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			regmap_write(es8326->regmap, ES8326_INT_SOURCE,
+ 					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
+ 			regmap_write(es8326->regmap, ES8326_SYS_BIAS, 0x1f);
+-			regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x08);
++			regmap_update_bits(es8326->regmap, ES8326_HP_DRIVER_REF, 0x0f, 0x0d);
+ 			queue_delayed_work(system_wq, &es8326->jack_detect_work,
+ 					msecs_to_jiffies(400));
+ 			es8326->hp = 1;
+@@ -1023,7 +1023,7 @@ static void es8326_init(struct snd_soc_component *component)
+ 	struct es8326_priv *es8326 = snd_soc_component_get_drvdata(component);
+ 
+ 	regmap_write(es8326->regmap, ES8326_RESET, 0x1f);
+-	regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x0E);
++	regmap_write(es8326->regmap, ES8326_VMIDSEL, 0x3E);
+ 	regmap_write(es8326->regmap, ES8326_ANA_LP, 0xf0);
+ 	usleep_range(10000, 15000);
+ 	regmap_write(es8326->regmap, ES8326_HPJACK_TIMER, 0xd9);
 -- 
-Nathan Chancellor <nathan@kernel.org>
+2.17.1
 
