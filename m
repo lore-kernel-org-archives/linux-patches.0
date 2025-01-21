@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827E71F7089;
-	Tue, 21 Jan 2025 18:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2EEC1F4275;
+	Tue, 21 Jan 2025 18:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482402; cv=none; b=DXcoQnrRyaWgTQHjlHgcTUtFb22fvSuJZ40MTBkerBhARO0OjuVYYQ8pr+SC5ZXV48+lExq/wsWUBAEHO9NNjPzI+iheGQdLgcy3RvADhCEhTwmZbTPat5uYiQBD2FiOuJhQSgscMx+yuSr+xDLt5ujPdshf5+iGNQ2DrLaaW7A=
+	t=1737482406; cv=none; b=HXCvl1nVKbniPrgK2hE4r1YIZtCXXvK4E8acUV7VHqCSw+P7PPGzmqgvk4wlB40mZITU6WG9/i7gq6oBbySduH2mtbV+BQk6I2dgB74TA/GLEdXFJuoFjqPeGOkLhgKNx6b3C1jvJgjx7+i6fgz5GNUy3p2IX/Ul6nGAd8/0oBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482402; c=relaxed/simple;
-	bh=17KwfBAAGY0Hyu4tia3ehFG8CSJ7UP58JLcCRmoXXPs=;
+	s=arc-20240116; t=1737482406; c=relaxed/simple;
+	bh=exL0RndZAqrMd+QWye+ub2oIRboiecmZoaS5U5bStxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSmsevGxL3H9DIzH+WryPZjX6NM1X8+RL4e2eNpo2vQkY1KgEEMkjTT6lkPn+sKOca8O/29aF/TBs01TnFDh8g+qLok1dmA533aD7+J6R/UR4CA8e8/NskenUbxbN3FGr1UXW0L4b0nXHpaZoUdLcJEiaWvj9faTk7oQzMt670E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TQN7pCax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YnXK5yL1AA5o8GqXVZoLoOB7mAxnmk0QenYDs1R4pvJuzd9yYAswYLJMKWGap1I4knedL47Ov6g8V6FiPCum3FMobZGNFnUs/i93solNyvJbVbOpASHJ1R6PUVAcAgSPsbUtqdnkjDUgdcl73pHPtuqwvC9Y6vZwmOelT3kEOxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsf7+KRX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TQN7pCax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC690C4CEDF;
-	Tue, 21 Jan 2025 18:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsf7+KRX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A71C4CEDF;
+	Tue, 21 Jan 2025 18:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482402;
-	bh=17KwfBAAGY0Hyu4tia3ehFG8CSJ7UP58JLcCRmoXXPs=;
+	s=korg; t=1737482405;
+	bh=exL0RndZAqrMd+QWye+ub2oIRboiecmZoaS5U5bStxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQN7pCaxYoTNgNOFgTlRyQaWMorVJtZAFQNQaOmTysZpS0E1i36lcJRuwdzJJkV2Q
-	 F594M/+Bg4XBK6gDEoXghRfD9hCIm2gyOCefQlLMGD/CGN3kHt3yPkzDa6EyzOX/Z/
-	 nQaoR1unxVnjJq7pMF3KxzU+d82Uq5dRDlhIqjQM=
+	b=qsf7+KRXfOTQBnfzMERMMS5N2zfBA3VB1NdYIdaBs5G01ZKP8k3Qo9WltnJulxCvS
+	 ilyR4a25Uo2bjdvtmYc/eFJLP/KVj5gTrr6zVCFSHUHEuMF2H0L0NQfZ4JRa8w/RZT
+	 xnel0W9v3AypgIx5hTVLQZuSTX9zYTuip4ZI+fz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Forbes <ian.forbes@broadcom.com>,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 034/122] drm/vmwgfx: Unreserve BO on error
-Date: Tue, 21 Jan 2025 18:51:22 +0100
-Message-ID: <20250121174534.301704853@linuxfoundation.org>
+Subject: [PATCH 6.12 035/122] drm/vmwgfx: Add new keep_resv BO param
+Date: Tue, 21 Jan 2025 18:51:23 +0100
+Message-ID: <20250121174534.339539088@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -53,77 +53,143 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit cb343ded122e0bf41e4b2a9f89386296451be109 ]
+[ Upstream commit b7d40627813799870e72729c6fc979a8a40d9ba6 ]
 
-Unlock BOs in reverse order.
-Add an acquire context so that lockdep doesn't complain.
+Adds a new BO param that keeps the reservation locked after creation.
+This removes the need to re-reserve the BO after creation which is a
+waste of cycles.
 
-Fixes: d6667f0ddf46 ("drm/vmwgfx: Fix handling of dumb buffers")
+This also fixes a bug in vmw_prime_import_sg_table where the imported
+reservation is unlocked twice.
+
 Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Fixes: b32233acceff ("drm/vmwgfx: Fix prime import/export")
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241210195535.2074918-1-ian.forbes@broadcom.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20250110185335.15301-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c         | 3 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.h         | 3 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c        | 7 ++-----
+ drivers/gpu/drm/vmwgfx/vmwgfx_gem.c        | 1 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_shader.c     | 7 ++-----
+ drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c | 5 ++---
+ 6 files changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index 10d596cb4b402..5f99f7437ae61 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -750,6 +750,7 @@ vmw_du_cursor_plane_atomic_update(struct drm_plane *plane,
- 	struct vmw_plane_state *old_vps = vmw_plane_state_to_vps(old_state);
- 	struct vmw_bo *old_bo = NULL;
- 	struct vmw_bo *new_bo = NULL;
-+	struct ww_acquire_ctx ctx;
- 	s32 hotspot_x, hotspot_y;
- 	int ret;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+index a0e433fbcba67..183cda50094cb 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+@@ -443,7 +443,8 @@ static int vmw_bo_init(struct vmw_private *dev_priv,
  
-@@ -769,9 +770,11 @@ vmw_du_cursor_plane_atomic_update(struct drm_plane *plane,
- 	if (du->cursor_surface)
- 		du->cursor_age = du->cursor_surface->snooper.age;
+ 	if (params->pin)
+ 		ttm_bo_pin(&vmw_bo->tbo);
+-	ttm_bo_unreserve(&vmw_bo->tbo);
++	if (!params->keep_resv)
++		ttm_bo_unreserve(&vmw_bo->tbo);
  
-+	ww_acquire_init(&ctx, &reservation_ww_class);
-+
- 	if (!vmw_user_object_is_null(&old_vps->uo)) {
- 		old_bo = vmw_user_object_buffer(&old_vps->uo);
--		ret = ttm_bo_reserve(&old_bo->tbo, false, false, NULL);
-+		ret = ttm_bo_reserve(&old_bo->tbo, false, false, &ctx);
- 		if (ret != 0)
- 			return;
- 	}
-@@ -779,9 +782,14 @@ vmw_du_cursor_plane_atomic_update(struct drm_plane *plane,
- 	if (!vmw_user_object_is_null(&vps->uo)) {
- 		new_bo = vmw_user_object_buffer(&vps->uo);
- 		if (old_bo != new_bo) {
--			ret = ttm_bo_reserve(&new_bo->tbo, false, false, NULL);
--			if (ret != 0)
-+			ret = ttm_bo_reserve(&new_bo->tbo, false, false, &ctx);
-+			if (ret != 0) {
-+				if (old_bo) {
-+					ttm_bo_unreserve(&old_bo->tbo);
-+					ww_acquire_fini(&ctx);
-+				}
- 				return;
-+			}
- 		} else {
- 			new_bo = NULL;
- 		}
-@@ -803,10 +811,12 @@ vmw_du_cursor_plane_atomic_update(struct drm_plane *plane,
- 						hotspot_x, hotspot_y);
- 	}
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
+index 43b5439ec9f76..c21ba7ff77368 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
+@@ -56,8 +56,9 @@ struct vmw_bo_params {
+ 	u32 domain;
+ 	u32 busy_domain;
+ 	enum ttm_bo_type bo_type;
+-	size_t size;
+ 	bool pin;
++	bool keep_resv;
++	size_t size;
+ 	struct dma_resv *resv;
+ 	struct sg_table *sg;
+ };
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+index 2825dd3149ed5..2e84e1029732d 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+@@ -401,7 +401,8 @@ static int vmw_dummy_query_bo_create(struct vmw_private *dev_priv)
+ 		.busy_domain = VMW_BO_DOMAIN_SYS,
+ 		.bo_type = ttm_bo_type_kernel,
+ 		.size = PAGE_SIZE,
+-		.pin = true
++		.pin = true,
++		.keep_resv = true,
+ 	};
  
--	if (old_bo)
--		ttm_bo_unreserve(&old_bo->tbo);
- 	if (new_bo)
- 		ttm_bo_unreserve(&new_bo->tbo);
-+	if (old_bo)
-+		ttm_bo_unreserve(&old_bo->tbo);
-+
-+	ww_acquire_fini(&ctx);
+ 	/*
+@@ -413,10 +414,6 @@ static int vmw_dummy_query_bo_create(struct vmw_private *dev_priv)
+ 	if (unlikely(ret != 0))
+ 		return ret;
  
- 	du->cursor_x = new_state->crtc_x + du->set_gui_x;
- 	du->cursor_y = new_state->crtc_y + du->set_gui_y;
+-	ret = ttm_bo_reserve(&vbo->tbo, false, true, NULL);
+-	BUG_ON(ret != 0);
+-	vmw_bo_pin_reserved(vbo, true);
+-
+ 	ret = ttm_bo_kmap(&vbo->tbo, 0, 1, &map);
+ 	if (likely(ret == 0)) {
+ 		result = ttm_kmap_obj_virtual(&map, &dummy);
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+index b9857f37ca1ac..ed5015ced3920 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+@@ -206,6 +206,7 @@ struct drm_gem_object *vmw_prime_import_sg_table(struct drm_device *dev,
+ 		.bo_type = ttm_bo_type_sg,
+ 		.size = attach->dmabuf->size,
+ 		.pin = false,
++		.keep_resv = true,
+ 		.resv = attach->dmabuf->resv,
+ 		.sg = table,
+ 
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
+index a01ca3226d0af..7fb1c88bcc475 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
+@@ -896,7 +896,8 @@ int vmw_compat_shader_add(struct vmw_private *dev_priv,
+ 		.busy_domain = VMW_BO_DOMAIN_SYS,
+ 		.bo_type = ttm_bo_type_device,
+ 		.size = size,
+-		.pin = true
++		.pin = true,
++		.keep_resv = true,
+ 	};
+ 
+ 	if (!vmw_shader_id_ok(user_key, shader_type))
+@@ -906,10 +907,6 @@ int vmw_compat_shader_add(struct vmw_private *dev_priv,
+ 	if (unlikely(ret != 0))
+ 		goto out;
+ 
+-	ret = ttm_bo_reserve(&buf->tbo, false, true, NULL);
+-	if (unlikely(ret != 0))
+-		goto no_reserve;
+-
+ 	/* Map and copy shader bytecode. */
+ 	ret = ttm_bo_kmap(&buf->tbo, 0, PFN_UP(size), &map);
+ 	if (unlikely(ret != 0)) {
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c b/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
+index 621d98b376bbb..5553892d7c3e0 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
+@@ -572,15 +572,14 @@ int vmw_bo_create_and_populate(struct vmw_private *dev_priv,
+ 		.busy_domain = domain,
+ 		.bo_type = ttm_bo_type_kernel,
+ 		.size = bo_size,
+-		.pin = true
++		.pin = true,
++		.keep_resv = true,
+ 	};
+ 
+ 	ret = vmw_bo_create(dev_priv, &bo_params, &vbo);
+ 	if (unlikely(ret != 0))
+ 		return ret;
+ 
+-	ret = ttm_bo_reserve(&vbo->tbo, false, true, NULL);
+-	BUG_ON(ret != 0);
+ 	ret = vmw_ttm_populate(vbo->tbo.bdev, vbo->tbo.ttm, &ctx);
+ 	if (likely(ret == 0)) {
+ 		struct vmw_ttm_tt *vmw_tt =
 -- 
 2.39.5
 
