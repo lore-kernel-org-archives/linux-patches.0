@@ -1,106 +1,197 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2048.outbound.protection.outlook.com [40.107.223.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC60B1F78ED
-	for <patches@lists.linux.dev>; Tue, 21 Jan 2025 20:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737493080; cv=none; b=A/IA/kbGuGDErOpX4ampDBgDf7eB6TFbqik0iAjO2Do1S0kjiVjStapRdoG+vvZc54+GAhsRYh/lz2DUaCjlm/98tDzzm6kGgsUvtwhcLCdLEIT5p+Hn2Csjwrea2HBRSysD6sHgm9YuYc7OwmuD32+/6f/kZvpoWRnlkWsxHIc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737493080; c=relaxed/simple;
-	bh=SH/w0jOyRPpsaM8zNIAVDam3A+/lLDTDWd2AYPXaqgA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZGK9bTOxqZSaRwBrVk+J+g1HOS4IaKJx1B1+RUI+EhuLN/PMecLWYaDAOrThTRKMBuFYIecYMdfIFxVTwwzgR44XTGd2PlLF4ZAMgLSAgSuyLX2o1WmXXJSo3h5YMXuEAYa63O1o2xYbNTtvCBCuBkhVu1Blkz+ocHKrfeRwuag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=kIegtL4C; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7265920E6;
+	Tue, 21 Jan 2025 21:02:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737493355; cv=fail; b=sWFtgRi3BYGFvKhj7QMwugctM0MwVvmb0EI6QCaMsM+7kT7OcC0PrsDx7LAq2swrIbkQGqzkLVno4Z9jz7X5SRvs/7l33x7ir1R99/ked7p8WLVlMI/vf8SKn2G/o6CbZBrS2dWlhUdt8x8TdKghrI8ZQEwzYqIscinkpv9aGBE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737493355; c=relaxed/simple;
+	bh=Gejx5C3yG0vKonvFQtG328q8phNa2Pt8nxNV+sX3qTg=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WqOO8vaBVReilUc90TWyW4KaCLhP0/ApxK0jyOtrSyapgsojDDjQ0OeZW0rToz35lLEQ7nVQVseIyXZAvoTPQePCxNN+DcpGgObWXCK9cIS99fGR/ByDsBo6/cRlmh0k6DrAarvA0hwJe96+O91kGj0RYc1Z405o3GMoRSLWr38=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=fGCw/5y6; arc=fail smtp.client-ip=40.107.223.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="kIegtL4C"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-385eed29d17so3295137f8f.0
-        for <patches@lists.linux.dev>; Tue, 21 Jan 2025 12:57:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1737493077; x=1738097877; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6DPeCcR/7ArujyerM9ik1ffW0lRE5V+zebUQdO2wq7U=;
-        b=kIegtL4CmJO0u16PQZtCUx0VsV57u5dMGg9P0xXQxvzy2AaehhNeqZdb0ZY5sTPB98
-         anvmyqRQJF+kQuT162dQM2TTrdJql0AK2wA9fo1tG55FrQV20iKgc95vBk0m0WNR9lmj
-         H4X9Qa6aa1NvfcWIPtKiwTI8EhF/kpZyAVQjMN72WlEorT+QeASwnC36zhR0McWHFCHM
-         ObyGFvk9EeXEGb72cUvzPz0OnE/WhXltYcwcrPNhdZDQsUktZJYDSrneY0vWUwMN/630
-         ZnsmOr938ypN+XW574wWAkqP8yolvdmU1We6hw0I2gPJaTYnJT/DKxW4iD6pRRHKQQ+s
-         cgEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737493077; x=1738097877;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6DPeCcR/7ArujyerM9ik1ffW0lRE5V+zebUQdO2wq7U=;
-        b=OYerAbxLMHeLrKgD/mlHyBkW9LvE6iUF/AlxLlhCztS+k+/OaWxOG3XJXJX8/RrfhL
-         LIsAR18Mp+VYsZ8fiMXozm2vrOXsUlHspt2gRqmJJKUbZUecjeeXsFkpSM9/+3FPDURN
-         ntmFbPR//wQF7m/SuAvl9Wvmsh2PWuPr7c2/RqyxWp7JQFLqv+uU9BO1BJruSn8+qLBv
-         YVpicG0f1QL+qsgoQWSSTOBSqZmEypVEAznGddgbrKzP2RbQCld/9Zpd56ukq8axpCCN
-         DWvs/Kc8raVsREngwV3NMXsfOtQkl7gcYJd/KyLdophRjcTsx0SXxYo9gb7oug9+Ylv/
-         iMkg==
-X-Gm-Message-State: AOJu0YwOlauZW08niZcobuxt67ehH+u4D8mlGQV/oAX2bCXJoCg6+eSh
-	Y3UICebpMGFKsb8DljIyqCf0Pog7gAPDpk09aYO/F6Vd6mXLP6A=
-X-Gm-Gg: ASbGncsW2Wwd4wSaa1bLN722KpyTiZZt1tPm/lhxBem5qTzPk5tZkS/aQvyzukHBvpb
-	SO+xbKglhB+KQAc6YAAQH79hpEytJEcjFG/zdtRjdMzp9upgumw8/qOTttyDfzNgaphDXJmKErK
-	oDSoKjKA1kN1P1D/yYJqIHu57VO5u6jptlz6rqf7pr9yN5EpTCbin7LG89grTnV1jw8SjzAti3q
-	ilxSNEW4uDx5cUzC3EUkYkUqGqQRIxcbwa8rkMmB4d/sXLlX4jlXlrB16RvsTZvEn3jGjVhu+3r
-	crJe2VLUZ8T15X4tHsKvfJicZ/3uYcXEdlVi3vO3ncEWFus=
-X-Google-Smtp-Source: AGHT+IFFi7Ca+tEzLoWs9MyM0STBlK5ZFJnqyvw/1itpkl7SgZc0PRXiUBycONOCl1uSI20zaWDc6w==
-X-Received: by 2002:a05:6000:1a85:b0:38b:ef22:d8c3 with SMTP id ffacd0b85a97d-38bf57a69b4mr18330242f8f.35.1737493076753;
-        Tue, 21 Jan 2025 12:57:56 -0800 (PST)
-Received: from [192.168.1.3] (p5b2ac60b.dip0.t-ipconnect.de. [91.42.198.11])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf322aab8sm14565637f8f.57.2025.01.21.12.57.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jan 2025 12:57:55 -0800 (PST)
-Message-ID: <7b50102b-64de-49e0-9b00-bb3bba613a21@googlemail.com>
-Date: Tue, 21 Jan 2025 21:57:54 +0100
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="fGCw/5y6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LTPUJa7IlafvhqnKrykeGA8LRhCG30Orc7iaZPVS8KVj5g6PK4hZOJjKf8Y7hdrug1xwnYA8lrqyThs/ycB73vJ9bwahBVmG2iO3KQBfyOu8GDRYhAYADGa59Fk9ndKXpWS53IukvfmW4SlyUMHt+RSEjKoGz7He1CV6jNHVNFjravUNM0o1IhHoKa0C7gp7uEQfyA1qfvye5oVKA9FQPDoGzPbS3H+QgQuVJjPCVNuGYshT4UIfi57gz3kwYITLSkIwNvhc2Z/Gyhe7dRJ6YXH6qH77rNXRn6GykLs4GTMWGXB+6ORdABTZTbDau/7qTnr87S+04O3A/2uy3DZGhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lU35b4mbEIGU6y/wwlJqRN5PGYXfOuAarC5EwKoytv0=;
+ b=uY8FYygloyYPat7GeuJbuIijZiUpazwHVasHDEl1BmNl8ZVKH5tf29h+JxjEmKKwhxDx9ZoK4J/kM4qlWc9rjsSIgiD62rwDFBXjBb6AwuoeuC83MxzRfUA8sI5Znd/9j2zUeQA5puuN9WhWnNFBD+jh0nxb2MDvPLjuUkEQCis1hFHN6YKLvQBgNgwH3DIvVnQby1TReAh5IvtR3adw7k92Oiz5309dima80TQyLPoFcelV9h2qeHiw1zODzrW+DKBxjmwoHeD8fMdRRdWMB8wFQi6eMTLSFmuEEB5TmvkNuUAoYG0nM7YjXyWCaSqh6oQldcrpVmvlQqEPev6lgA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lU35b4mbEIGU6y/wwlJqRN5PGYXfOuAarC5EwKoytv0=;
+ b=fGCw/5y6OOD0pJV5UuLd/5ZOI+CjB0TUEf8VB0YZ10XwAtxzhoJvK+cnvJmAI7Ns8S6UOKMoevaQLCtgjx/0pj4bv6Ic0/fMfLrhanosTimq2RpsOW7/5EsdaaXGBRFdrCQCZRbt6LcBDT6RFPdrhNPMKJAgv0IW/rIrpAcd0efqZrpVlXzP5HU8k3adKtqV8vdxxhnu31RuVOOSZiUGXC/Ldh979iqe7wbtExmMdfGlZBeerlOcA5GZuT5vAse3qIrWXUrkUkSsPWPQ3XQlbW/LDHpJVEaJG7Sq/ugDPLrCz8dMrTKQO4dh73wN8reMSBKVkj7RKALXxX1KNBb2dA==
+Received: from BN9PR03CA0648.namprd03.prod.outlook.com (2603:10b6:408:13b::23)
+ by DM6PR12MB4124.namprd12.prod.outlook.com (2603:10b6:5:221::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.22; Tue, 21 Jan
+ 2025 21:02:28 +0000
+Received: from BL6PEPF00022572.namprd02.prod.outlook.com
+ (2603:10b6:408:13b:cafe::6f) by BN9PR03CA0648.outlook.office365.com
+ (2603:10b6:408:13b::23) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8356.22 via Frontend Transport; Tue,
+ 21 Jan 2025 21:02:28 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BL6PEPF00022572.mail.protection.outlook.com (10.167.249.40) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8377.8 via Frontend Transport; Tue, 21 Jan 2025 21:02:28 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 21 Jan
+ 2025 13:02:23 -0800
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 21 Jan 2025 13:02:22 -0800
+Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.126.190.181)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Tue, 21 Jan 2025 13:02:18 -0800
+Date: Tue, 21 Jan 2025 13:02:16 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
+	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
+	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>, <eric.auger@redhat.com>,
+	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
+	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>,
+	<ddutile@redhat.com>, <yi.l.liu@intel.com>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v5 08/14] iommufd/viommu: Add iommufd_viommu_report_event
+ helper
+Message-ID: <Z5ALWFVTOSC/8+ji@nvidia.com>
+References: <Z4Vt6DAMDfEv6tb5@Asurada-Nvidia>
+ <20250113195433.GV5556@nvidia.com>
+ <Z4V7NbxGyYoQN0yV@Asurada-Nvidia>
+ <20250114134158.GC5556@nvidia.com>
+ <Z4rVg1Xg5TCiFlSb@nvidia.com>
+ <20250120181854.GQ5556@nvidia.com>
+ <Z463eXfgNArCOfPn@nvidia.com>
+ <20250121183611.GY5556@nvidia.com>
+ <Z4/7pGx6F1mpAUuV@nvidia.com>
+ <20250121200924.GZ5556@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 000/122] 6.12.11-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250121174532.991109301@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250121200924.GZ5556@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00022572:EE_|DM6PR12MB4124:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0e97d03c-2377-4a43-6be5-08dd3a5eea13
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|376014|36860700013|82310400026|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?qjKpNWiv7gdDYR/e3boNfwEaZnfB7oZ44iyj44te63YYtGIT4yBpPjnD2UrQ?=
+ =?us-ascii?Q?MGslxJjAuBcBMo4zs6iku6/Y6MYfongpmj6nyUA8co5SgNxqlM64uK37ADok?=
+ =?us-ascii?Q?lU+cnrYZr0taP3lwTACFrlcuHRQpT1MIuXcLA0lRFMBaFl1D7bm4mIQH/udS?=
+ =?us-ascii?Q?4zKQ/3PSsGkjt9FjXihedeNUiUr90JDBS6N9cSrtWCuqioaDbOldaNrFi/Xp?=
+ =?us-ascii?Q?yiRH0JXbh16lDQ9FQueZsTvCDzfCk49ydkv9Wngba8CpOI9WiN4uMj8l/mGr?=
+ =?us-ascii?Q?fWllyfb8FCpBS5cnMLhX5cMODEtpRlTlujHEOs0LnXVd6lZwTSCvANnc82//?=
+ =?us-ascii?Q?misNF0H9bQ/G2k/kEAKDXo3EdOeQwRIcBupvltEZrtVecaupFKWwjHeU1/vn?=
+ =?us-ascii?Q?0Mgk7cI7g0wP577ZL72DiyBRfFOw4G1gIgfa8WGbwwS9shaIbn5l4lG6R9RX?=
+ =?us-ascii?Q?ZXbIuP1QB3o1Ih+jvvWnaxGgqdaavjWoD00Ur+1srJUpCRKDMv4ZV9Yx9k51?=
+ =?us-ascii?Q?m2ZnrjqkAv59HXyiKSBkceeFSslZLLwKzPQlcY6niYkCvh4YwYFUA1CwNW+L?=
+ =?us-ascii?Q?aZ6mhD2dn0xx6A6WRQJCUc0aRdJuZ7UZ1Cgd5r6cUAWHHftyCNB3Alm+p0fx?=
+ =?us-ascii?Q?/d0rwfKB7uWzHZTrfl27mm0uhfDnuklLn/PMKSfqBOS8v3MdLqF2kc1Gcth8?=
+ =?us-ascii?Q?v8fKZ0h0eCGqZ3xZx8Z3KZ78VCuo3DN20eKzgCiyHgSF5Kqf8WK0lFvBGNFr?=
+ =?us-ascii?Q?YSD+bhxe81NhPB+vYO0tlDT4bc694ly4BWVe3mv7lZXq2TyZaQT8YPal63LY?=
+ =?us-ascii?Q?GeVbaaB8YJLzHGqdelFzF9MUJcTXz2iw/gbpJYvTZD89fRJSVdLiiXXhMC0P?=
+ =?us-ascii?Q?ibiERrmiA446ooXcTLaXDVI4z2XsCX9T28TxvnGk40qL8JT+akQuhC74NgfN?=
+ =?us-ascii?Q?SQ4r5Sg7kc6TMf5DRmrP74crQXm+jCn/MOACf1D52Md4Dv3tRei6obClc/HV?=
+ =?us-ascii?Q?znvqFWyUokIfZz/M1fTneDYbuCT24FuQoi9AMvH86jvV2AziK0vK9S71b811?=
+ =?us-ascii?Q?vIkp9gr3R2o4DJ5ecLxkiVfKue+Tl4bCmLT9rFWVN4p2coU2yMGKWAJVEdJC?=
+ =?us-ascii?Q?+NwdztRxNgEJlPBVLc7wiTPhBOUMXyZhXOREq8aUv0nxSgtGuOIV4+HwmRUg?=
+ =?us-ascii?Q?zdw67YcAlkUdyfJfBHITfOM0zmSAeBnJ9A7jRNlpjXVr7iRtZKNRDf/uL6+6?=
+ =?us-ascii?Q?r9ifrZCg6RySK5NIAgXOWWTxtKBB3xpA1q1DMYcA4bD568QTgRb60uXprPca?=
+ =?us-ascii?Q?nkdDROVDHLOcKEsdr5YK4HXff6ebhEjme7DceuvxBylhAZoQh7UgtVQEhYeB?=
+ =?us-ascii?Q?alpdiI+gA/TW1LptKEspDtDCvaR/7cVWvQZ1kLolRRbbbley1oQYtXdh3Bnc?=
+ =?us-ascii?Q?hL9K5tILNgMr6uAKBg1VfNIuLqD5U0sZbA5pdQjj+2iQ33m4bksNWLsAKkv+?=
+ =?us-ascii?Q?Namg6lqKuP9IwUk=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(376014)(36860700013)(82310400026)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jan 2025 21:02:28.3081
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e97d03c-2377-4a43-6be5-08dd3a5eea13
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL6PEPF00022572.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4124
 
-Am 21.01.2025 um 18:50 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.11 release.
-> There are 122 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Jan 21, 2025 at 04:09:24PM -0400, Jason Gunthorpe wrote:
+> On Tue, Jan 21, 2025 at 11:55:16AM -0800, Nicolin Chen wrote:
+> > > > > IOMMU_VEVENTQ_STATE_OVERFLOW with a 0 length event is seen if events
+> > > > > have been lost and no subsequent events are present. It exists to
+> > > > > ensure timely delivery of the overflow event to userspace. counter
+> > > > > will be the sequence number of the next successful event.
+> > > > 
+> > > > So userspace should first read the header to decide whether or not
+> > > > to read a vEVENT. If header is overflows, it should skip the vEVENT
+> > > > struct and read the next header?
+> > > 
+> > > Yes, but there won't be a next header. overflow would always be the
+> > > last thing in a read() response. If there is another event then
+> > > overflow is indicated by non-monotonic count.
+> > 
+> > I am not 100% sure why "overflow would always be the last thing
+> > in a read() response". I thought that kernel should immediately
+> > report an overflow to user space when the vEVENTQ is overflowed.
+> 
+> As below, if you observe overflow then it was at the end of the kernel
+> queue and there is no further events after it. So it should always end
+> up last.
+> 
+> Perhaps we could enforce this directly in the kernel's read by making
+> it the only, first and last, response to read.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+Hmm, since the overflow node is the last node in the list, isn't
+it already an enforcement it's the only/first/last node to read?
+(Assuming we choose to delete the overflow node from the list if
+ new event can be inserted.)
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+> > Yet, thinking about this once again: user space actually has its
+> > own queue. There's probably no point in letting it know about an
+> > overflow immediately when the kernel vEVENTQ overflows until its
+> > own user queue overflows after it reads the entire vEVENTQ so it
+> > can trigger a vHW event/irq to the VM?
+> 
+> The kernel has no idea what userspace is doing, the kernel's job
+> should be to ensure timely delivery of all events, if an event is lost
+> it should ensure timely delivery of the lost event notification. There
+> is little else it can do.
 
+Yet, "timely" means still having an entire-queue-size-long delay
+since the overflow node is at the end of the queue, right?
 
-Beste Grüße,
-Peter Schneider
-
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Thanks
+Nicolin
