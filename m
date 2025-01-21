@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349E61F472D;
-	Tue, 21 Jan 2025 18:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633D51F3FFE;
+	Tue, 21 Jan 2025 18:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482730; cv=none; b=HEfTQzU9UJqGgeHJSAWzGYSHt1qyDnei7sUN+W/OgCh/XwEwdJfscyQx0pwZvmOrR6Fc7tWw1lnhpLDws5NcoZNFpo3xB5cJ9M5cibXjThf9qVqLip9vZ1rnzQnJ6T42YCG0Ph0hQ31canQqtEc3zGwS+AQ8nOb+UZEq2KcrgwE=
+	t=1737482733; cv=none; b=NzTtdkHEDvW5+Sm6ULvom8xPorEMPir/0X4TowpBDxY4+HFMig1B8EoGgyvFgJtKnqaymJCz/CfFYeV7U5f6NB6j2NSFHqj9V/aTwYXrr95r4cUu4+oop8AgS0mtZplVA4HDpdpOneGavdhVnIMfLyy+vJjrN4Rt0SbPNs+ZxUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482730; c=relaxed/simple;
-	bh=KZsJGG7f6YZvNZtqMnDZEeW2xOQvGBmrbac6/drMANw=;
+	s=arc-20240116; t=1737482733; c=relaxed/simple;
+	bh=K2gOL4dI55FC0PbY6IBkGk2PPoQSXbjpf9iU3l/P7ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E2zK4BjNi3TLaWSBRnOK97RmPHF1GGjTQof0qbDqgquyRRdpVALNmKNMbEadwNlCVyQcXWrYkBLJwRgTBQhOuYDGpssy9jJ6ejtRbbMVHNa+QGGgOi/IwB6kgU+sAkixEkbZS9nQxW3PctLCdmF3+uwjdxxJ999s7zUJwos9K8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Cz93/cz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lqyYgqO3Hj/0COV0lYL2HN5lou/xUxWrUoxh+Hp59+7UYdazlKg7Xa8oZ8S4FGezI5c8iH7ThKTtA+3PvZtubfIH9S9m9zaSN57ybCDX9PmxrOPLWDK4nFUoaIws2M/w8VSTzC1yuful3V7kLPY40pK4VVpGKSh6ddDYNgBZiUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uUdQS386; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Cz93/cz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE62EC4CEDF;
-	Tue, 21 Jan 2025 18:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uUdQS386"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BA3C4CEDF;
+	Tue, 21 Jan 2025 18:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482730;
-	bh=KZsJGG7f6YZvNZtqMnDZEeW2xOQvGBmrbac6/drMANw=;
+	s=korg; t=1737482732;
+	bh=K2gOL4dI55FC0PbY6IBkGk2PPoQSXbjpf9iU3l/P7ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Cz93/cz/iz+KtdkS/NvkO4Er7yJsQnAeDWavDPsijPV87ERe2oxAwNpEW3sw2w/E
-	 M2BIvRl7NvjBKRGnS80TQ+qrwJwTltEnc1VLEMuCjli8cyMauOuFm3pJ9F2Lx+h2UU
-	 eE7+eOmFe9G1qXKqvdirL7xH/0NpVjOLnE1q4Mtc=
+	b=uUdQS386I/FlN8za7q4fvbOO8OOYE0ZOvZcybMM9LyOy/LSmZvvi/qn0EeKgQeDrW
+	 cJL1VLIaLSCwBdSqQ7Y4VG7Kwhclz9QLkXy08OKsDcfSQaHBrLNX+gRnCsMT4QFPMd
+	 eMNLuoFsPmXrhlMM7ZpkWFH565U9FbfGek1g21ho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.1 53/64] drm/amdgpu: fix usage slab after free
-Date: Tue, 21 Jan 2025 18:52:52 +0100
-Message-ID: <20250121174523.572011611@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	BRUNO VERNAY <bruno.vernay@se.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 6.1 54/64] block: fix uaf for flush rq while iterating tags
+Date: Tue, 21 Jan 2025 18:52:53 +0100
+Message-ID: <20250121174523.611156867@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -46,223 +47,168 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Prosyak <vitaly.prosyak@amd.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit b61badd20b443eabe132314669bb51a263982e5c upstream.
+commit 3802f73bd80766d70f319658f334754164075bc3 upstream.
 
-[  +0.000021] BUG: KASAN: slab-use-after-free in drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000027] Read of size 8 at addr ffff8881b8605f88 by task amd_pci_unplug/2147
+blk_mq_clear_flush_rq_mapping() is not called during scsi probe, by
+checking blk_queue_init_done(). However, QUEUE_FLAG_INIT_DONE is cleared
+in del_gendisk by commit aec89dc5d421 ("block: keep q_usage_counter in
+atomic mode after del_gendisk"), hence for disk like scsi, following
+blk_mq_destroy_queue() will not clear flush rq from tags->rqs[] as well,
+cause following uaf that is found by our syzkaller for v6.6:
 
-[  +0.000023] CPU: 6 PID: 2147 Comm: amd_pci_unplug Not tainted 6.10.0+ #1
-[  +0.000016] Hardware name: ASUS System Product Name/ROG STRIX B550-F GAMING (WI-FI), BIOS 1401 12/03/2020
-[  +0.000016] Call Trace:
-[  +0.000008]  <TASK>
-[  +0.000009]  dump_stack_lvl+0x76/0xa0
-[  +0.000017]  print_report+0xce/0x5f0
-[  +0.000017]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000019]  ? srso_return_thunk+0x5/0x5f
-[  +0.000015]  ? kasan_complete_mode_report_info+0x72/0x200
-[  +0.000016]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000019]  kasan_report+0xbe/0x110
-[  +0.000015]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000023]  __asan_report_load8_noabort+0x14/0x30
-[  +0.000014]  drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
-[  +0.000020]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? __kasan_check_write+0x14/0x30
-[  +0.000016]  ? __pfx_drm_sched_entity_flush+0x10/0x10 [gpu_sched]
-[  +0.000020]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? __kasan_check_write+0x14/0x30
-[  +0.000013]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? enable_work+0x124/0x220
-[  +0.000015]  ? __pfx_enable_work+0x10/0x10
-[  +0.000013]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? free_large_kmalloc+0x85/0xf0
-[  +0.000016]  drm_sched_entity_destroy+0x18/0x30 [gpu_sched]
-[  +0.000020]  amdgpu_vce_sw_fini+0x55/0x170 [amdgpu]
-[  +0.000735]  ? __kasan_check_read+0x11/0x20
-[  +0.000016]  vce_v4_0_sw_fini+0x80/0x110 [amdgpu]
-[  +0.000726]  amdgpu_device_fini_sw+0x331/0xfc0 [amdgpu]
-[  +0.000679]  ? mutex_unlock+0x80/0xe0
-[  +0.000017]  ? __pfx_amdgpu_device_fini_sw+0x10/0x10 [amdgpu]
-[  +0.000662]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? __kasan_check_write+0x14/0x30
-[  +0.000013]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? mutex_unlock+0x80/0xe0
-[  +0.000016]  amdgpu_driver_release_kms+0x16/0x80 [amdgpu]
-[  +0.000663]  drm_minor_release+0xc9/0x140 [drm]
-[  +0.000081]  drm_release+0x1fd/0x390 [drm]
-[  +0.000082]  __fput+0x36c/0xad0
-[  +0.000018]  __fput_sync+0x3c/0x50
-[  +0.000014]  __x64_sys_close+0x7d/0xe0
-[  +0.000014]  x64_sys_call+0x1bc6/0x2680
-[  +0.000014]  do_syscall_64+0x70/0x130
-[  +0.000014]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? irqentry_exit_to_user_mode+0x60/0x190
-[  +0.000015]  ? srso_return_thunk+0x5/0x5f
-[  +0.000014]  ? irqentry_exit+0x43/0x50
-[  +0.000012]  ? srso_return_thunk+0x5/0x5f
-[  +0.000013]  ? exc_page_fault+0x7c/0x110
-[  +0.000015]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[  +0.000014] RIP: 0033:0x7ffff7b14f67
-[  +0.000013] Code: ff e8 0d 16 02 00 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 41 c3 48 83 ec 18 89 7c 24 0c e8 73 ba f7 ff
-[  +0.000026] RSP: 002b:00007fffffffe378 EFLAGS: 00000246 ORIG_RAX: 0000000000000003
-[  +0.000019] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffff7b14f67
-[  +0.000014] RDX: 0000000000000000 RSI: 00007ffff7f6f47a RDI: 0000000000000003
-[  +0.000014] RBP: 00007fffffffe3a0 R08: 0000555555569890 R09: 0000000000000000
-[  +0.000014] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fffffffe5c8
-[  +0.000013] R13: 00005555555552a9 R14: 0000555555557d48 R15: 00007ffff7ffd040
-[  +0.000020]  </TASK>
+==================================================================
+BUG: KASAN: slab-use-after-free in blk_mq_find_and_get_req+0x16e/0x1a0 block/blk-mq-tag.c:261
+Read of size 4 at addr ffff88811c969c20 by task kworker/1:2H/224909
 
-[  +0.000016] Allocated by task 383 on cpu 7 at 26.880319s:
-[  +0.000014]  kasan_save_stack+0x28/0x60
-[  +0.000008]  kasan_save_track+0x18/0x70
-[  +0.000007]  kasan_save_alloc_info+0x38/0x60
-[  +0.000007]  __kasan_kmalloc+0xc1/0xd0
-[  +0.000007]  kmalloc_trace_noprof+0x180/0x380
-[  +0.000007]  drm_sched_init+0x411/0xec0 [gpu_sched]
-[  +0.000012]  amdgpu_device_init+0x695f/0xa610 [amdgpu]
-[  +0.000658]  amdgpu_driver_load_kms+0x1a/0x120 [amdgpu]
-[  +0.000662]  amdgpu_pci_probe+0x361/0xf30 [amdgpu]
-[  +0.000651]  local_pci_probe+0xe7/0x1b0
-[  +0.000009]  pci_device_probe+0x248/0x890
-[  +0.000008]  really_probe+0x1fd/0x950
-[  +0.000008]  __driver_probe_device+0x307/0x410
-[  +0.000007]  driver_probe_device+0x4e/0x150
-[  +0.000007]  __driver_attach+0x223/0x510
-[  +0.000006]  bus_for_each_dev+0x102/0x1a0
-[  +0.000007]  driver_attach+0x3d/0x60
-[  +0.000006]  bus_add_driver+0x2ac/0x5f0
-[  +0.000006]  driver_register+0x13d/0x490
-[  +0.000008]  __pci_register_driver+0x1ee/0x2b0
-[  +0.000007]  llc_sap_close+0xb0/0x160 [llc]
-[  +0.000009]  do_one_initcall+0x9c/0x3e0
-[  +0.000008]  do_init_module+0x241/0x760
-[  +0.000008]  load_module+0x51ac/0x6c30
-[  +0.000006]  __do_sys_init_module+0x234/0x270
-[  +0.000007]  __x64_sys_init_module+0x73/0xc0
-[  +0.000006]  x64_sys_call+0xe3/0x2680
-[  +0.000006]  do_syscall_64+0x70/0x130
-[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+CPU: 1 PID: 224909 Comm: kworker/1:2H Not tainted 6.6.0-ga836a5060850 #32
+Workqueue: kblockd blk_mq_timeout_work
+Call Trace:
 
-[  +0.000015] Freed by task 2147 on cpu 6 at 160.507651s:
-[  +0.000013]  kasan_save_stack+0x28/0x60
-[  +0.000007]  kasan_save_track+0x18/0x70
-[  +0.000007]  kasan_save_free_info+0x3b/0x60
-[  +0.000007]  poison_slab_object+0x115/0x1c0
-[  +0.000007]  __kasan_slab_free+0x34/0x60
-[  +0.000007]  kfree+0xfa/0x2f0
-[  +0.000007]  drm_sched_fini+0x19d/0x410 [gpu_sched]
-[  +0.000012]  amdgpu_fence_driver_sw_fini+0xc4/0x2f0 [amdgpu]
-[  +0.000662]  amdgpu_device_fini_sw+0x77/0xfc0 [amdgpu]
-[  +0.000653]  amdgpu_driver_release_kms+0x16/0x80 [amdgpu]
-[  +0.000655]  drm_minor_release+0xc9/0x140 [drm]
-[  +0.000071]  drm_release+0x1fd/0x390 [drm]
-[  +0.000071]  __fput+0x36c/0xad0
-[  +0.000008]  __fput_sync+0x3c/0x50
-[  +0.000007]  __x64_sys_close+0x7d/0xe0
-[  +0.000007]  x64_sys_call+0x1bc6/0x2680
-[  +0.000007]  do_syscall_64+0x70/0x130
-[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+__dump_stack lib/dump_stack.c:88 [inline]
+dump_stack_lvl+0x91/0xf0 lib/dump_stack.c:106
+print_address_description.constprop.0+0x66/0x300 mm/kasan/report.c:364
+print_report+0x3e/0x70 mm/kasan/report.c:475
+kasan_report+0xb8/0xf0 mm/kasan/report.c:588
+blk_mq_find_and_get_req+0x16e/0x1a0 block/blk-mq-tag.c:261
+bt_iter block/blk-mq-tag.c:288 [inline]
+__sbitmap_for_each_set include/linux/sbitmap.h:295 [inline]
+sbitmap_for_each_set include/linux/sbitmap.h:316 [inline]
+bt_for_each+0x455/0x790 block/blk-mq-tag.c:325
+blk_mq_queue_tag_busy_iter+0x320/0x740 block/blk-mq-tag.c:534
+blk_mq_timeout_work+0x1a3/0x7b0 block/blk-mq.c:1673
+process_one_work+0x7c4/0x1450 kernel/workqueue.c:2631
+process_scheduled_works kernel/workqueue.c:2704 [inline]
+worker_thread+0x804/0xe40 kernel/workqueue.c:2785
+kthread+0x346/0x450 kernel/kthread.c:388
+ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:293
 
-[  +0.000014] The buggy address belongs to the object at ffff8881b8605f80
-               which belongs to the cache kmalloc-64 of size 64
-[  +0.000020] The buggy address is located 8 bytes inside of
-               freed 64-byte region [ffff8881b8605f80, ffff8881b8605fc0)
+Allocated by task 942:
+kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+____kasan_kmalloc mm/kasan/common.c:374 [inline]
+__kasan_kmalloc mm/kasan/common.c:383 [inline]
+__kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:380
+kasan_kmalloc include/linux/kasan.h:198 [inline]
+__do_kmalloc_node mm/slab_common.c:1007 [inline]
+__kmalloc_node+0x69/0x170 mm/slab_common.c:1014
+kmalloc_node include/linux/slab.h:620 [inline]
+kzalloc_node include/linux/slab.h:732 [inline]
+blk_alloc_flush_queue+0x144/0x2f0 block/blk-flush.c:499
+blk_mq_alloc_hctx+0x601/0x940 block/blk-mq.c:3788
+blk_mq_alloc_and_init_hctx+0x27f/0x330 block/blk-mq.c:4261
+blk_mq_realloc_hw_ctxs+0x488/0x5e0 block/blk-mq.c:4294
+blk_mq_init_allocated_queue+0x188/0x860 block/blk-mq.c:4350
+blk_mq_init_queue_data block/blk-mq.c:4166 [inline]
+blk_mq_init_queue+0x8d/0x100 block/blk-mq.c:4176
+scsi_alloc_sdev+0x843/0xd50 drivers/scsi/scsi_scan.c:335
+scsi_probe_and_add_lun+0x77c/0xde0 drivers/scsi/scsi_scan.c:1189
+__scsi_scan_target+0x1fc/0x5a0 drivers/scsi/scsi_scan.c:1727
+scsi_scan_channel drivers/scsi/scsi_scan.c:1815 [inline]
+scsi_scan_channel+0x14b/0x1e0 drivers/scsi/scsi_scan.c:1791
+scsi_scan_host_selected+0x2fe/0x400 drivers/scsi/scsi_scan.c:1844
+scsi_scan+0x3a0/0x3f0 drivers/scsi/scsi_sysfs.c:151
+store_scan+0x2a/0x60 drivers/scsi/scsi_sysfs.c:191
+dev_attr_store+0x5c/0x90 drivers/base/core.c:2388
+sysfs_kf_write+0x11c/0x170 fs/sysfs/file.c:136
+kernfs_fop_write_iter+0x3fc/0x610 fs/kernfs/file.c:338
+call_write_iter include/linux/fs.h:2083 [inline]
+new_sync_write+0x1b4/0x2d0 fs/read_write.c:493
+vfs_write+0x76c/0xb00 fs/read_write.c:586
+ksys_write+0x127/0x250 fs/read_write.c:639
+do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
+entry_SYSCALL_64_after_hwframe+0x78/0xe2
 
-[  +0.000028] The buggy address belongs to the physical page:
-[  +0.000011] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1b8605
-[  +0.000008] anon flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
-[  +0.000007] page_type: 0xffffefff(slab)
-[  +0.000009] raw: 0017ffffc0000000 ffff8881000428c0 0000000000000000 dead000000000001
-[  +0.000006] raw: 0000000000000000 0000000000200020 00000001ffffefff 0000000000000000
-[  +0.000006] page dumped because: kasan: bad access detected
+Freed by task 244687:
+kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+kasan_save_free_info+0x2b/0x50 mm/kasan/generic.c:522
+____kasan_slab_free mm/kasan/common.c:236 [inline]
+__kasan_slab_free+0x12a/0x1b0 mm/kasan/common.c:244
+kasan_slab_free include/linux/kasan.h:164 [inline]
+slab_free_hook mm/slub.c:1815 [inline]
+slab_free_freelist_hook mm/slub.c:1841 [inline]
+slab_free mm/slub.c:3807 [inline]
+__kmem_cache_free+0xe4/0x520 mm/slub.c:3820
+blk_free_flush_queue+0x40/0x60 block/blk-flush.c:520
+blk_mq_hw_sysfs_release+0x4a/0x170 block/blk-mq-sysfs.c:37
+kobject_cleanup+0x136/0x410 lib/kobject.c:689
+kobject_release lib/kobject.c:720 [inline]
+kref_put include/linux/kref.h:65 [inline]
+kobject_put+0x119/0x140 lib/kobject.c:737
+blk_mq_release+0x24f/0x3f0 block/blk-mq.c:4144
+blk_free_queue block/blk-core.c:298 [inline]
+blk_put_queue+0xe2/0x180 block/blk-core.c:314
+blkg_free_workfn+0x376/0x6e0 block/blk-cgroup.c:144
+process_one_work+0x7c4/0x1450 kernel/workqueue.c:2631
+process_scheduled_works kernel/workqueue.c:2704 [inline]
+worker_thread+0x804/0xe40 kernel/workqueue.c:2785
+kthread+0x346/0x450 kernel/kthread.c:388
+ret_from_fork+0x4d/0x80 arch/x86/kernel/process.c:147
+ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:293
 
-[  +0.000012] Memory state around the buggy address:
-[  +0.000011]  ffff8881b8605e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[  +0.000015]  ffff8881b8605f00: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
-[  +0.000015] >ffff8881b8605f80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-[  +0.000013]                       ^
-[  +0.000011]  ffff8881b8606000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc
-[  +0.000014]  ffff8881b8606080: fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb fb
-[  +0.000013] ==================================================================
+Other than blk_mq_clear_flush_rq_mapping(), the flag is only used in
+blk_register_queue() from initialization path, hence it's safe not to
+clear the flag in del_gendisk. And since QUEUE_FLAG_REGISTERED already
+make sure that queue should only be registered once, there is no need
+to test the flag as well.
 
-The issue reproduced on VG20 during the IGT pci_unplug test.
-The root cause of the issue is that the function drm_sched_fini is called before drm_sched_entity_kill.
-In drm_sched_fini, the drm_sched_rq structure is freed, but this structure is later accessed by
-each entity within the run queue, leading to invalid memory access.
-To resolve this, the order of cleanup calls is updated:
-
-    Before:
-        amdgpu_fence_driver_sw_fini
-        amdgpu_device_ip_fini
-
-    After:
-        amdgpu_device_ip_fini
-        amdgpu_fence_driver_sw_fini
-
-This updated order ensures that all entities in the IPs are cleaned up first, followed by proper
-cleanup of the schedulers.
-
-Additional Investigation:
-
-During debugging, another issue was identified in the amdgpu_vce_sw_fini function. The vce.vcpu_bo
-buffer must be freed only as the final step in the cleanup process to prevent any premature
-access during earlier cleanup stages.
-
-v2: Using Christian suggestion call drm_sched_entity_destroy before drm_sched_fini.
-
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Fixes: 6cfeadbff3f8 ("blk-mq: don't clear flush_rq from tags->rqs[]")
+Depends-on: commit aec89dc5d421 ("block: keep q_usage_counter in atomic mode after del_gendisk")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20241104110005.1412161-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: BRUNO VERNAY <bruno.vernay@se.com>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c    |    6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ block/blk-sysfs.c |    6 ++----
+ block/genhd.c     |    9 +++------
+ 2 files changed, 5 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4131,8 +4131,8 @@ void amdgpu_device_fini_sw(struct amdgpu
- 	int idx;
- 	bool px;
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -858,10 +858,8 @@ unlock:
+ 	 * faster to shut down and is made fully functional here as
+ 	 * request_queues for non-existent devices never get registered.
+ 	 */
+-	if (!blk_queue_init_done(q)) {
+-		blk_queue_flag_set(QUEUE_FLAG_INIT_DONE, q);
+-		percpu_ref_switch_to_percpu(&q->q_usage_counter);
+-	}
++	blk_queue_flag_set(QUEUE_FLAG_INIT_DONE, q);
++	percpu_ref_switch_to_percpu(&q->q_usage_counter);
  
--	amdgpu_fence_driver_sw_fini(adev);
- 	amdgpu_device_ip_fini(adev);
-+	amdgpu_fence_driver_sw_fini(adev);
- 	release_firmware(adev->firmware.gpu_info_fw);
- 	adev->firmware.gpu_info_fw = NULL;
- 	adev->accel_working = false;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
-@@ -220,15 +220,15 @@ int amdgpu_vce_sw_fini(struct amdgpu_dev
+ 	return ret;
  
- 	drm_sched_entity_destroy(&adev->vce.entity);
- 
--	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,
--		(void **)&adev->vce.cpu_addr);
--
- 	for (i = 0; i < adev->vce.num_rings; i++)
- 		amdgpu_ring_fini(&adev->vce.ring[i]);
- 
- 	release_firmware(adev->vce.fw);
- 	mutex_destroy(&adev->vce.idle_mutex);
- 
-+	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,
-+		(void **)&adev->vce.cpu_addr);
-+
- 	return 0;
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -685,13 +685,10 @@ void del_gendisk(struct gendisk *disk)
+ 	 * If the disk does not own the queue, allow using passthrough requests
+ 	 * again.  Else leave the queue frozen to fail all I/O.
+ 	 */
+-	if (!test_bit(GD_OWNS_QUEUE, &disk->state)) {
+-		blk_queue_flag_clear(QUEUE_FLAG_INIT_DONE, q);
++	if (!test_bit(GD_OWNS_QUEUE, &disk->state))
+ 		__blk_mq_unfreeze_queue(q, true);
+-	} else {
+-		if (queue_is_mq(q))
+-			blk_mq_exit_queue(q);
+-	}
++	else if (queue_is_mq(q))
++		blk_mq_exit_queue(q);
  }
+ EXPORT_SYMBOL(del_gendisk);
  
 
 
