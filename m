@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74F891F542D;
-	Tue, 21 Jan 2025 18:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D8B1F472D;
+	Tue, 21 Jan 2025 18:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482721; cv=none; b=gW4SlVoJGQHnlNNdDW5+N4qBv5PG7hC9hFy3McVQixTXnUTr/Uz8yVWUTy4fZH/6jpDF/heAwD2SuBSjFAPGee+CbLOnmUkfJZlx2chQlGPbHHcQN+WqZ/hAoBg5A1dyMyczh9NThtI/+2Kcz/tKBoE7EertmYTZFViLuroP8bA=
+	t=1737482724; cv=none; b=GtxlOrxLvHKx1NwS0F+IfZT9FSNVEj1zzDBtZfRCI4+yqSrzFwyJMt28CQhOHtqoGiJCtJpnmgPS7Rse0RWB7yvejruRQnLdY7qGyvHJXGEooONEwOO8c2Yap/Z1JeBCgF79kpOaeuFFBMeB4S/AXz1gG5sr42rxKq7TmE8Bmi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482721; c=relaxed/simple;
-	bh=MVsIaCQQlU9L7Eia0JhFELRFq3PsoYe1eB1vi9xlj1c=;
+	s=arc-20240116; t=1737482724; c=relaxed/simple;
+	bh=fLXYgzZeui2qdx7G3ydbiZCdTkEQ0Oc/4+dPAAY72t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzpHSzJaaVObGjspmO2E16AvGcotZ/fGu251mAVghsCGtGLO4kMARy9BFzPHMB+BtrOW1EINzgtKiwJhSfhaoSLIaRWdjTSqdvd41bBYfFQlQikNOzObrKFQFzwkJcPOdcp4CPprI5GX6uDyXaYs+MOstWDVpFmK+TR2UiDaGfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdZCUCc9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liRH+++aqTVQJSx0KZpedpZsaf4kMHvFNyQfqIW3YPYpEaO6XcqnXtjNPTW1GQEXI7wYiqDFRKAc46wYwbKZ2EVMP/2KavwkqvGH9yqsfNU06bhLWSI5K31y2qhIi6ti74dGiM9ywl/bDavuSzScZgZA52ftn4K0ehoqYdN55Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAEy9x8m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdZCUCc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA7FC4CEDF;
-	Tue, 21 Jan 2025 18:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAEy9x8m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE6FEC4CEDF;
+	Tue, 21 Jan 2025 18:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482721;
-	bh=MVsIaCQQlU9L7Eia0JhFELRFq3PsoYe1eB1vi9xlj1c=;
+	s=korg; t=1737482724;
+	bh=fLXYgzZeui2qdx7G3ydbiZCdTkEQ0Oc/4+dPAAY72t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdZCUCc9D+djwK2i5iaTbvOUK06awvvd6DSHISHSk1MBk+ZPFVIyl5bnlvL6dSsHG
-	 wuHAEpq1GP1PW/qlrskIvYWAswvllPRUISuJrcBd9/nU72VJ93OvjUP0d8Dsi8qH7u
-	 QqrkfLum3FYw3wa6aN4i5GYkpqkJ49uPRB8gKQqo=
+	b=WAEy9x8mUjdstZxJigZhZVhokHvYcHQzgkgfqYUPwb7nB2Snrt1RawagxMuK9N3kj
+	 3kUWl3FS360yxJ1RNHCWWyhAK6ZotBHoHU6WVyNiTTN7/qzv/P+NoycBJdELI+Nyk6
+	 UcrUWULNhhXeBp/Bqdg8b9q1GUxccmyFhREfn7D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 50/64] iio: imu: inv_icm42600: fix timestamps after suspend if sensor is on
-Date: Tue, 21 Jan 2025 18:52:49 +0100
-Message-ID: <20250121174523.458725953@linuxfoundation.org>
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Bin Lan <lanbincn@qq.com>
+Subject: [PATCH 6.1 51/64] iio: adc: rockchip_saradc: fix information leak in triggered buffer
+Date: Tue, 21 Jan 2025 18:52:50 +0100
+Message-ID: <20250121174523.496379060@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -50,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 65a60a590142c54a3f3be11ff162db2d5b0e1e06 upstream.
+commit 38724591364e1e3b278b4053f102b49ea06ee17c upstream.
 
-Currently suspending while sensors are one will result in timestamping
-continuing without gap at resume. It can work with monotonic clock but
-not with other clocks. Fix that by resetting timestamping.
+The 'data' local struct is used to push data to user space from a
+triggered buffer, but it does not set values for inactive channels, as
+it only uses iio_for_each_active_channel() to assign new values.
 
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Initialize the struct to zero before using it to avoid pushing
+uninitialized information to userspace.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Link: https://patch.msgid.link/20241113-inv_icm42600-fix-timestamps-after-suspend-v1-1-dfc77c394173@tdk.com
+Fixes: 4e130dc7b413 ("iio: adc: rockchip_saradc: Add support iio buffers")
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-4-0cb6e98d895c@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Bin Lan <lanbincn@qq.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/adc/rockchip_saradc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
-@@ -720,6 +720,8 @@ out_unlock:
- static int __maybe_unused inv_icm42600_resume(struct device *dev)
- {
- 	struct inv_icm42600_state *st = dev_get_drvdata(dev);
-+	struct inv_icm42600_timestamp *gyro_ts = iio_priv(st->indio_gyro);
-+	struct inv_icm42600_timestamp *accel_ts = iio_priv(st->indio_accel);
+--- a/drivers/iio/adc/rockchip_saradc.c
++++ b/drivers/iio/adc/rockchip_saradc.c
+@@ -270,6 +270,8 @@ static irqreturn_t rockchip_saradc_trigg
  	int ret;
+ 	int i, j = 0;
  
- 	mutex_lock(&st->lock);
-@@ -740,9 +742,12 @@ static int __maybe_unused inv_icm42600_r
- 		goto out_unlock;
++	memset(&data, 0, sizeof(data));
++
+ 	mutex_lock(&i_dev->mlock);
  
- 	/* restore FIFO data streaming */
--	if (st->fifo.on)
-+	if (st->fifo.on) {
-+		inv_icm42600_timestamp_reset(gyro_ts);
-+		inv_icm42600_timestamp_reset(accel_ts);
- 		ret = regmap_write(st->map, INV_ICM42600_REG_FIFO_CONFIG,
- 				   INV_ICM42600_FIFO_CONFIG_STREAM);
-+	}
- 
- out_unlock:
- 	mutex_unlock(&st->lock);
+ 	for_each_set_bit(i, i_dev->active_scan_mask, i_dev->masklength) {
 
 
