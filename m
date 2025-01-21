@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA831F5439;
-	Tue, 21 Jan 2025 17:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C008185935;
+	Tue, 21 Jan 2025 17:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482193; cv=none; b=ttjeigapbQevMYO7+xtmvx3vn8h+c8iwXDNAlR1DpNX0qz+NMOsFzQLTN9R2B4HwLWFIkeNbY3FOXp7Y6y//mw+8fIrJM5lRN1A/3FmbbcInZ1HO1OahpnnIVnqCUS+92fox9qmty5++3l8OaZX66GnFvnUuJsLU9VbwqbuMUQM=
+	t=1737482196; cv=none; b=f+u3yHPR2soHibVZgWGO/7h1zN5wZ5AgMz/YLgp39msByutmnCjP0MZNAn5BuKFELtiMgPIp1EFdFUz7qW/VBQ97rf9CBmmZ5CKbL5p8nDNTM0lhjWfcNB8sKN1FAtkVb7q3qJYmkdeZ+Cw3cE5RXldh0OXMjN8htr1YrXwVgRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482193; c=relaxed/simple;
-	bh=IjODkHgrH5tojHz/7BLzQpePxh43RwnNA89bJx8aqpI=;
+	s=arc-20240116; t=1737482196; c=relaxed/simple;
+	bh=UD1Ay8Ucb7h8Fpv36e1qxNby2aCrRlYGEl03fyTNBrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7J5K+o3NGA67xRgvZdu72Scn5sFiydMkjHA0I74zwWn9QgsNFC52+Jgf/HXtLOln8UBo99l6M4trg9FixKjQroJmsOyHFCjyrsVINh1/rGnpCbyu6g+2pLqkPuQBnrIEMue2yAU9MV6YwYKMgKXP7VR6aK+tFiX91P0JPIu4eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cW75nArx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WxbRPEtNMruz59FUP/SUWqK1QgAKm2lI9AtkEInWCLW5GAPbGHfGbQrBRBZcVk/FBIaE5wzziGwXeEaUJWX3VMce1c7Hn7KJ8bahT8HKeeNPJJefhfH2Iu40PZXR2VM0OOpz/t82+oG1bJfyhsdNR126Ov1HGxJEV7zlY4IENZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDrYwq5J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cW75nArx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF6BC4CEDF;
-	Tue, 21 Jan 2025 17:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDrYwq5J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE2AC4CEE0;
+	Tue, 21 Jan 2025 17:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482192;
-	bh=IjODkHgrH5tojHz/7BLzQpePxh43RwnNA89bJx8aqpI=;
+	s=korg; t=1737482196;
+	bh=UD1Ay8Ucb7h8Fpv36e1qxNby2aCrRlYGEl03fyTNBrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cW75nArxcH6w1JU/JmKTDqGbbFtH1jaR3k0RWyK1NjFUzqkCCbB5NmE9P4XM61GvO
-	 vY5QoD8gCN+mkkrrBxweeyPFxPamGyHqPXOxPLUopjDJdMoBMJDtrQ0YfSqGrYxADS
-	 WTwrMOYeUVVYY7K5CNem8Sbe4/HkBBaP+cjVlMyY=
+	b=RDrYwq5J0bE4YZgZa/GuzNN4BkKnsVqZrtZqSY47gawwrFg+VMS+bOMQG35PWIgev
+	 9cIfDBRhwAZ2JadBPE+2RE7yM2pAq1EIH8+ZQkRMH0Bug+3wqF337/F9nfPXaYfYQY
+	 wulS8y0h3yOAohWb6B6EvdZlLNg/Bi808ftTKwfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dmitry Safonov <dima@arista.com>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 66/72] ovl: pass realinode to ovl_encode_real_fh() instead of realdentry
-Date: Tue, 21 Jan 2025 18:52:32 +0100
-Message-ID: <20250121174525.977509294@linuxfoundation.org>
+Subject: [PATCH 6.6 67/72] ovl: support encoding fid from inode with no alias
+Date: Tue, 21 Jan 2025 18:52:33 +0100
+Message-ID: <20250121174526.015766656@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -53,122 +54,159 @@ Content-Transfer-Encoding: 8bit
 
 From: Amir Goldstein <amir73il@gmail.com>
 
-commit 07aeefae7ff44d80524375253980b1bdee2396b0 upstream.
+commit c45beebfde34aa71afbc48b2c54cdda623515037 upstream.
 
-We want to be able to encode an fid from an inode with no alias.
+Dmitry Safonov reported that a WARN_ON() assertion can be trigered by
+userspace when calling inotify_show_fdinfo() for an overlayfs watched
+inode, whose dentry aliases were discarded with drop_caches.
 
+The WARN_ON() assertion in inotify_show_fdinfo() was removed, because
+it is possible for encoding file handle to fail for other reason, but
+the impact of failing to encode an overlayfs file handle goes beyond
+this assertion.
+
+As shown in the LTP test case mentioned in the link below, failure to
+encode an overlayfs file handle from a non-aliased inode also leads to
+failure to report an fid with FAN_DELETE_SELF fanotify events.
+
+As Dmitry notes in his analyzis of the problem, ovl_encode_fh() fails
+if it cannot find an alias for the inode, but this failure can be fixed.
+ovl_encode_fh() seldom uses the alias and in the case of non-decodable
+file handles, as is often the case with fanotify fid info,
+ovl_encode_fh() never needs to use the alias to encode a file handle.
+
+Defer finding an alias until it is actually needed so ovl_encode_fh()
+will not fail in the common case of FAN_DELETE_SELF fanotify events.
+
+Fixes: 16aac5ad1fa9 ("ovl: support encoding non-decodable file handles")
+Reported-by: Dmitry Safonov <dima@arista.com>
+Closes: https://lore.kernel.org/linux-fsdevel/CAOQ4uxiie81voLZZi2zXS1BziXZCM24nXqPAxbu8kxXCUWdwOg@mail.gmail.com/
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://lore.kernel.org/r/20250105162404.357058-2-amir73il@gmail.com
+Link: https://lore.kernel.org/r/20250105162404.357058-3-amir73il@gmail.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: c45beebfde34 ("ovl: support encoding fid from inode with no alias")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-[re-applied over v6.6.71 with conflict resolved]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c   |   11 ++++++-----
- fs/overlayfs/export.c    |    5 +++--
- fs/overlayfs/namei.c     |    4 ++--
- fs/overlayfs/overlayfs.h |    2 +-
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ fs/overlayfs/export.c |   46 +++++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -371,13 +371,13 @@ int ovl_set_attr(struct ovl_fs *ofs, str
- 	return err;
- }
- 
--struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct dentry *real,
-+struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct inode *realinode,
- 				  bool is_upper)
- {
- 	struct ovl_fh *fh;
- 	int fh_type, dwords;
- 	int buflen = MAX_HANDLE_SZ;
--	uuid_t *uuid = &real->d_sb->s_uuid;
-+	uuid_t *uuid = &realinode->i_sb->s_uuid;
- 	int err;
- 
- 	/* Make sure the real fid stays 32bit aligned */
-@@ -394,7 +394,8 @@ struct ovl_fh *ovl_encode_real_fh(struct
- 	 * the price or reconnecting the dentry.
- 	 */
- 	dwords = buflen >> 2;
--	fh_type = exportfs_encode_fh(real, (void *)fh->fb.fid, &dwords, 0);
-+	fh_type = exportfs_encode_inode_fh(realinode, (void *)fh->fb.fid,
-+					   &dwords, NULL, 0);
- 	buflen = (dwords << 2);
- 
- 	err = -EIO;
-@@ -438,7 +439,7 @@ int ovl_set_origin(struct ovl_fs *ofs, s
- 	 * up and a pure upper inode.
- 	 */
- 	if (ovl_can_decode_fh(lower->d_sb)) {
--		fh = ovl_encode_real_fh(ofs, lower, false);
-+		fh = ovl_encode_real_fh(ofs, d_inode(lower), false);
- 		if (IS_ERR(fh))
- 			return PTR_ERR(fh);
- 	}
-@@ -461,7 +462,7 @@ static int ovl_set_upper_fh(struct ovl_f
- 	const struct ovl_fh *fh;
- 	int err;
- 
--	fh = ovl_encode_real_fh(ofs, upper, true);
-+	fh = ovl_encode_real_fh(ofs, d_inode(upper), true);
- 	if (IS_ERR(fh))
- 		return PTR_ERR(fh);
- 
 --- a/fs/overlayfs/export.c
 +++ b/fs/overlayfs/export.c
-@@ -228,6 +228,7 @@ static int ovl_check_encode_origin(struc
- static int ovl_dentry_to_fid(struct ovl_fs *ofs, struct dentry *dentry,
+@@ -181,35 +181,37 @@ static int ovl_connect_layer(struct dent
+  *
+  * Return 0 for upper file handle, > 0 for lower file handle or < 0 on error.
+  */
+-static int ovl_check_encode_origin(struct dentry *dentry)
++static int ovl_check_encode_origin(struct inode *inode)
+ {
+-	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
++	struct ovl_fs *ofs = OVL_FS(inode->i_sb);
+ 	bool decodable = ofs->config.nfs_export;
++	struct dentry *dentry;
++	int err;
+ 
+ 	/* No upper layer? */
+ 	if (!ovl_upper_mnt(ofs))
+ 		return 1;
+ 
+ 	/* Lower file handle for non-upper non-decodable */
+-	if (!ovl_dentry_upper(dentry) && !decodable)
++	if (!ovl_inode_upper(inode) && !decodable)
+ 		return 1;
+ 
+ 	/* Upper file handle for pure upper */
+-	if (!ovl_dentry_lower(dentry))
++	if (!ovl_inode_lower(inode))
+ 		return 0;
+ 
+ 	/*
+ 	 * Root is never indexed, so if there's an upper layer, encode upper for
+ 	 * root.
+ 	 */
+-	if (dentry == dentry->d_sb->s_root)
++	if (inode == d_inode(inode->i_sb->s_root))
+ 		return 0;
+ 
+ 	/*
+ 	 * Upper decodable file handle for non-indexed upper.
+ 	 */
+-	if (ovl_dentry_upper(dentry) && decodable &&
+-	    !ovl_test_flag(OVL_INDEX, d_inode(dentry)))
++	if (ovl_inode_upper(inode) && decodable &&
++	    !ovl_test_flag(OVL_INDEX, inode))
+ 		return 0;
+ 
+ 	/*
+@@ -218,17 +220,25 @@ static int ovl_check_encode_origin(struc
+ 	 * ovl_connect_layer() will try to make origin's layer "connected" by
+ 	 * copying up a "connectable" ancestor.
+ 	 */
+-	if (d_is_dir(dentry) && decodable)
+-		return ovl_connect_layer(dentry);
++	if (!decodable || !S_ISDIR(inode->i_mode))
++		return 1;
++
++	dentry = d_find_any_alias(inode);
++	if (!dentry)
++		return -ENOENT;
++
++	err = ovl_connect_layer(dentry);
++	dput(dentry);
++	if (err < 0)
++		return err;
+ 
+ 	/* Lower file handle for indexed and non-upper dir/non-dir */
+ 	return 1;
+ }
+ 
+-static int ovl_dentry_to_fid(struct ovl_fs *ofs, struct dentry *dentry,
++static int ovl_dentry_to_fid(struct ovl_fs *ofs, struct inode *inode,
  			     u32 *fid, int buflen)
  {
-+	struct inode *inode = d_inode(dentry);
+-	struct inode *inode = d_inode(dentry);
  	struct ovl_fh *fh = NULL;
  	int err, enc_lower;
  	int len;
-@@ -241,8 +242,8 @@ static int ovl_dentry_to_fid(struct ovl_
+@@ -237,7 +247,7 @@ static int ovl_dentry_to_fid(struct ovl_
+ 	 * Check if we should encode a lower or upper file handle and maybe
+ 	 * copy up an ancestor to make lower file handle connectable.
+ 	 */
+-	err = enc_lower = ovl_check_encode_origin(dentry);
++	err = enc_lower = ovl_check_encode_origin(inode);
+ 	if (enc_lower < 0)
  		goto fail;
  
- 	/* Encode an upper or lower file handle */
--	fh = ovl_encode_real_fh(ofs, enc_lower ? ovl_dentry_lower(dentry) :
--				ovl_dentry_upper(dentry), !enc_lower);
-+	fh = ovl_encode_real_fh(ofs, enc_lower ? ovl_inode_lower(inode) :
-+				ovl_inode_upper(inode), !enc_lower);
- 	if (IS_ERR(fh))
- 		return PTR_ERR(fh);
+@@ -257,8 +267,8 @@ out:
+ 	return err;
  
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -523,7 +523,7 @@ int ovl_verify_set_fh(struct ovl_fs *ofs
- 	struct ovl_fh *fh;
- 	int err;
+ fail:
+-	pr_warn_ratelimited("failed to encode file handle (%pd2, err=%i)\n",
+-			    dentry, err);
++	pr_warn_ratelimited("failed to encode file handle (ino=%lu, err=%i)\n",
++			    inode->i_ino, err);
+ 	goto out;
+ }
  
--	fh = ovl_encode_real_fh(ofs, real, is_upper);
-+	fh = ovl_encode_real_fh(ofs, d_inode(real), is_upper);
- 	err = PTR_ERR(fh);
- 	if (IS_ERR(fh)) {
- 		fh = NULL;
-@@ -720,7 +720,7 @@ int ovl_get_index_name(struct ovl_fs *of
- 	struct ovl_fh *fh;
- 	int err;
+@@ -266,19 +276,13 @@ static int ovl_encode_fh(struct inode *i
+ 			 struct inode *parent)
+ {
+ 	struct ovl_fs *ofs = OVL_FS(inode->i_sb);
+-	struct dentry *dentry;
+ 	int bytes, buflen = *max_len << 2;
  
--	fh = ovl_encode_real_fh(ofs, origin, false);
-+	fh = ovl_encode_real_fh(ofs, d_inode(origin), false);
- 	if (IS_ERR(fh))
- 		return PTR_ERR(fh);
+ 	/* TODO: encode connectable file handles */
+ 	if (parent)
+ 		return FILEID_INVALID;
  
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -821,7 +821,7 @@ int ovl_copy_up_with_data(struct dentry
- int ovl_maybe_copy_up(struct dentry *dentry, int flags);
- int ovl_copy_xattr(struct super_block *sb, const struct path *path, struct dentry *new);
- int ovl_set_attr(struct ovl_fs *ofs, struct dentry *upper, struct kstat *stat);
--struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct dentry *real,
-+struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct inode *realinode,
- 				  bool is_upper);
- int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
- 		   struct dentry *upper);
+-	dentry = d_find_any_alias(inode);
+-	if (!dentry)
+-		return FILEID_INVALID;
+-
+-	bytes = ovl_dentry_to_fid(ofs, dentry, fid, buflen);
+-	dput(dentry);
++	bytes = ovl_dentry_to_fid(ofs, inode, fid, buflen);
+ 	if (bytes <= 0)
+ 		return FILEID_INVALID;
+ 
 
 
