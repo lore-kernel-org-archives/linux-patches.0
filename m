@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E381F470A;
-	Tue, 21 Jan 2025 18:01:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448AC1F756E;
+	Tue, 21 Jan 2025 18:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482484; cv=none; b=ufG+RMn3v5al9eDdnvxM9gJvyvQvtWp8iQMUK4xevWGdFCo98VgqpRO14eR32rvAEBoV/p2/mz1RkkpWmEOig041dA5NNpyHLS+vEmwQ/nufAdEPNf7J8BtY/iNIgmuZIT9Ul/jpTXe5vey9pySO122mDg9H7XYgRIyvOb/I75A=
+	t=1737482487; cv=none; b=Lt4ojZsyCkUhs5zjZzSKktctJTG/tbtN9pZUuGIRgr6ZAPWWyx7nm+JxE9HdACFnhUOIM8Bb4YkU+mYLrb0w7z4sDITzvnYswvGttNqvcvQgV7gEbtRI739M1BNGN8xX2ZcFBRFd6wW7K4iqwpzE4d+J8eN60taBwnI0So9O1eg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482484; c=relaxed/simple;
-	bh=win7LY7PuD5mTZHhB+nhrTDhpaCS56lPs51cweQHKsk=;
+	s=arc-20240116; t=1737482487; c=relaxed/simple;
+	bh=4oJaTfRVpe9U3mP2ku2FXnhvC/6biN7oKb2m83VmKTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tSGF2yccK5mKTBW46py6RTBgKDP/qHokWQxaIyQaEfw9PpxohojJzUsCCRoO2rpLoVVApgqQJj60UYlvMAH5qbQmBAjtT53PYrepVSoXnzbE4GtGwjzF30h+T1rDIuU7Yiu0RQ4cowGGnYIgGSdR6CHN0cOWgDT5frb3nLKuhpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeaNr6FK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WKyY3DEE4LKRbkUmYH/+E3aOl6IlU5EK2Xusp+Xsqi2n6JqyvtMFpJN7GweOgXCiMo5OsE9vfhgFpgdiVUx5q2Bym7fg5d4qACsM4h3sduae/gz+zp/hlyDZLaN0vxz1DZIXLRBP/wte7dJcAyY/JZz91t7VIYqF1eXqVJ/AP90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKxMWMaZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeaNr6FK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A05C4CEDF;
-	Tue, 21 Jan 2025 18:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKxMWMaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB28DC4CEE0;
+	Tue, 21 Jan 2025 18:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482484;
-	bh=win7LY7PuD5mTZHhB+nhrTDhpaCS56lPs51cweQHKsk=;
+	s=korg; t=1737482487;
+	bh=4oJaTfRVpe9U3mP2ku2FXnhvC/6biN7oKb2m83VmKTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeaNr6FKQ0+dwr4nGANAy2xRyCoPd9HswwvmdojjrMh1dZOnbIfJtqugBCwrw3Or5
-	 z09VwQaK98CeyuKK6W8RDVZMKgb6qrePb2EoweOY8cBtpKn2aDdsCme5oSLW5km0xT
-	 KBBwnS1WRQmF68mFZozuhTwJZneesE+xiLztWxzA=
+	b=SKxMWMaZEK85trYv7xjmsH8V+2MruR2f1SAl78yp6Ew1oIGanxTcdwB8ILHOF/gRf
+	 AeWwOOqI8HZDiGXX+9/wPtIvX1IKyuT4z56jRqnSLcfRM1WP4VqVc6s5jI5Im4u08V
+	 mPN1fnVGrf++vhcxxDABjcfsKdyHDzCI3p/kb+QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Nelissen <marco.nelissen@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 092/122] filemap: avoid truncating 64-bit offset to 32 bits
-Date: Tue, 21 Jan 2025 18:52:20 +0100
-Message-ID: <20250121174536.565017918@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 066/122] poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
+Date: Tue, 21 Jan 2025 18:51:54 +0100
+Message-ID: <20250121174535.539571245@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -51,35 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Nelissen <marco.nelissen@gmail.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit f505e6c91e7a22d10316665a86d79f84d9f0ba76 upstream.
+[ Upstream commit cacd9ae4bf801ff4125d8961bb9a3ba955e51680 ]
 
-On 32-bit kernels, folio_seek_hole_data() was inadvertently truncating a
-64-bit value to 32 bits, leading to a possible infinite loop when writing
-to an xfs filesystem.
+As the comment above waitqueue_active() explains, it can only be used
+if both waker and waiter have mb()'s that pair with each other. However
+__pollwait() is broken in this respect.
 
-Link: https://lkml.kernel.org/r/20250102190540.1356838-1-marco.nelissen@gmail.com
-Fixes: 54fa39ac2e00 ("iomap: use mapping_seek_hole_data")
-Signed-off-by: Marco Nelissen <marco.nelissen@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is not pipe-specific, but let's look at pipe_poll() for example:
+
+	poll_wait(...); // -> __pollwait() -> add_wait_queue()
+
+	LOAD(pipe->head);
+	LOAD(pipe->head);
+
+In theory these LOAD()'s can leak into the critical section inside
+add_wait_queue() and can happen before list_add(entry, wq_head), in this
+case pipe_poll() can race with wakeup_pipe_readers/writers which do
+
+	smp_mb();
+	if (waitqueue_active(wq_head))
+		wake_up_interruptible(wq_head);
+
+There are more __pollwait()-like functions (grep init_poll_funcptr), and
+it seems that at least ep_ptable_queue_proc() has the same problem, so the
+patch adds smp_mb() into poll_wait().
+
+Link: https://lore.kernel.org/all/20250102163320.GA17691@redhat.com/
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20250107162717.GA18922@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/poll.h | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3004,7 +3004,7 @@ static inline loff_t folio_seek_hole_dat
- 		if (ops->is_partially_uptodate(folio, offset, bsz) ==
- 							seek_data)
- 			break;
--		start = (start + bsz) & ~(bsz - 1);
-+		start = (start + bsz) & ~((u64)bsz - 1);
- 		offset += bsz;
- 	} while (offset < folio_size(folio));
- unlock:
+diff --git a/include/linux/poll.h b/include/linux/poll.h
+index d1ea4f3714a84..fc641b50f1298 100644
+--- a/include/linux/poll.h
++++ b/include/linux/poll.h
+@@ -41,8 +41,16 @@ typedef struct poll_table_struct {
+ 
+ static inline void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)
+ {
+-	if (p && p->_qproc && wait_address)
++	if (p && p->_qproc && wait_address) {
+ 		p->_qproc(filp, wait_address, p);
++		/*
++		 * This memory barrier is paired in the wq_has_sleeper().
++		 * See the comment above prepare_to_wait(), we need to
++		 * ensure that subsequent tests in this thread can't be
++		 * reordered with __add_wait_queue() in _qproc() paths.
++		 */
++		smp_mb();
++	}
+ }
+ 
+ /*
+-- 
+2.39.5
+
 
 
