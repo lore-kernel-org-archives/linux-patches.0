@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044F81F4275;
-	Tue, 21 Jan 2025 18:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C16081F427B;
+	Tue, 21 Jan 2025 18:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482592; cv=none; b=U7dJZxbDds7VGxYNDLwYNNoAkflvt5pXwJv3DUpnhqQtavjaMAgwQp4HyRIKX/uTDzSdMm4hRIaNLG6ADgP7F+1KXdlOb9bnTDIEgtAFgo7y6g/L+C+cXWmgBQd4gRmPqLEClbvznBVqHMtCF9Zwi2XgrhK/itRDvE4zkjBBQu4=
+	t=1737482594; cv=none; b=ijb/RMoyvBpbFzWNsHRQYI2acnW8lwxfnDgL/8F3p0vEoinTS76/ocGVlb990lvi1dkAYNBZI0e9rUADR4Vw++jyIcKxbBZOPxpP23WSoXxHChZpJe14wzlKB67vwXTC7XTnkFVa8yvBJdnd/7m1MDH0JfpBgqSGdXIEg1cZtOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482592; c=relaxed/simple;
-	bh=HuAwQqCjBxPjnqafluIV/yDNARuGzgcq3/aEjc5lrQI=;
+	s=arc-20240116; t=1737482594; c=relaxed/simple;
+	bh=BGeaN7N9jnjR2aRts8pXbr9ITfE8xuPpm6oxWipvXoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcwJEuOlLzCGuhji6yb3osQr/PPph7EF1PiC7vdyZR8FW4IbxPuYD01INrpjqSx4LtVINkoL26egEippPD5LpWpJ7Zc0HRx6RblRnwNH7dp/Z7qZalgzQqrxpMAEb5CqMFOhHmSNbnXM9emSdg8wqaaakUiFcdPfT7Pq9Gn2ZTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Er6vwevO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SHVVkOqZSrRRqystrq+c1F0sRFaPcSO8qVx1ENXD9qpVhemtUZXLfT6zqB+F1peVvGtwMV+AOuuF545ejJoKr7C7UtD0pofE4Vye4pKySKs/cV4hfg6KvRzDoDp8oT3PLZw/F+DGqD5IbhBBqNQpvlNj7fhqIsD3GeHRgHkHAIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T3UedjzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Er6vwevO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D61C4CEDF;
-	Tue, 21 Jan 2025 18:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T3UedjzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 432CFC4CEDF;
+	Tue, 21 Jan 2025 18:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482591;
-	bh=HuAwQqCjBxPjnqafluIV/yDNARuGzgcq3/aEjc5lrQI=;
+	s=korg; t=1737482594;
+	bh=BGeaN7N9jnjR2aRts8pXbr9ITfE8xuPpm6oxWipvXoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Er6vwevOknHsDPzmTuh7Ot+ABJJ6xMFv/L+RDolE8NjMI76ROGEeusMXCIOv99CbQ
-	 NeX2Rdb4EhXxR6jmsG9zSDWa0lEpO/1qGVCH2fH5QlbBEu1SDABVlZ9IlpYaMwFSl6
-	 GPznY4hRm4otPQn4uL5FVE1A7fTdR745xMPrtrxc=
+	b=T3UedjzQDnroO1Ot4xv/y6oR6Z5PLZGt0LZ6PLdzzdfkwTjUsJ8iqu9FTAvQayfOo
+	 j/sQP54RNLf+/+1am8EaAKzhLCPOOqj/YzatzLKMQEGjbtjBtkp4P6ttvtz3bZ1kTo
+	 GMTC2qAzoiH873TIq0XLPBYhJ95rUbI+vhkY0CIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Lal <quic_ylal@quicinc.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.12 104/122] irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
-Date: Tue, 21 Jan 2025 18:52:32 +0100
-Message-ID: <20250121174537.048718499@linuxfoundation.org>
+	Suren Baghdasaryan <surenb@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 095/122] tools: fix atomic_set() definition to set the value correctly
+Date: Tue, 21 Jan 2025 18:52:23 +0100
+Message-ID: <20250121174536.689048433@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -51,46 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Lal <quic_ylal@quicinc.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-commit 0d62a49ab55c99e8deb4593b8d9f923de1ab5c18 upstream.
+commit 4bbb6df62c54e6a2c1fcce4908df768f0cfa1e91 upstream.
 
-When a CPU attempts to enter low power mode, it disables the redistributor
-and Group 1 interrupts and reinitializes the system registers upon wakeup.
+Currently vma test is failing because of the new vma_assert_attached()
+assertion.  The check is failing because previous refcount_set() inside
+vma_mark_attached() is a NoOp.  Fix the definition of atomic_set() to
+correctly set the value of the atomic.
 
-If the transition into low power mode fails, then the CPU_PM framework
-invokes the PM notifier callback with CPU_PM_ENTER_FAILED to allow the
-drivers to undo the state changes.
-
-The GIC V3 driver ignores CPU_PM_ENTER_FAILED, which leaves the GIC in
-disabled state.
-
-Handle CPU_PM_ENTER_FAILED in the same way as CPU_PM_EXIT to restore normal
-operation.
-
-[ tglx: Massage change log, add Fixes tag ]
-
-Fixes: 3708d52fc6bb ("irqchip: gic-v3: Implement CPU PM notifier")
-Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241220093907.2747601-1-quic_ylal@quicinc.com
+Link: https://lkml.kernel.org/r/20241227222220.1726384-1-surenb@google.com
+Fixes: 9325b8b5a1cb ("tools: add skeleton code for userland testing of VMA logic")
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/shared/linux/maple_tree.h |    2 +-
+ tools/testing/vma/linux/atomic.h        |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -1522,7 +1522,7 @@ static int gic_retrigger(struct irq_data
- static int gic_cpu_pm_notifier(struct notifier_block *self,
- 			       unsigned long cmd, void *v)
- {
--	if (cmd == CPU_PM_EXIT) {
-+	if (cmd == CPU_PM_EXIT || cmd == CPU_PM_ENTER_FAILED) {
- 		if (gic_dist_security_disabled())
- 			gic_enable_redist(true);
- 		gic_cpu_sys_reg_enable();
+--- a/tools/testing/shared/linux/maple_tree.h
++++ b/tools/testing/shared/linux/maple_tree.h
+@@ -2,6 +2,6 @@
+ #define atomic_t int32_t
+ #define atomic_inc(x) uatomic_inc(x)
+ #define atomic_read(x) uatomic_read(x)
+-#define atomic_set(x, y) do {} while (0)
++#define atomic_set(x, y) uatomic_set(x, y)
+ #define U8_MAX UCHAR_MAX
+ #include "../../../../include/linux/maple_tree.h"
+--- a/tools/testing/vma/linux/atomic.h
++++ b/tools/testing/vma/linux/atomic.h
+@@ -6,7 +6,7 @@
+ #define atomic_t int32_t
+ #define atomic_inc(x) uatomic_inc(x)
+ #define atomic_read(x) uatomic_read(x)
+-#define atomic_set(x, y) do {} while (0)
++#define atomic_set(x, y) uatomic_set(x, y)
+ #define U8_MAX UCHAR_MAX
+ 
+ #endif	/* _LINUX_ATOMIC_H */
 
 
