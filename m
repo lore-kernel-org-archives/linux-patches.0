@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687321F55F7;
-	Tue, 21 Jan 2025 17:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37971F7064;
+	Tue, 21 Jan 2025 17:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482257; cv=none; b=i7A6JPzH0Pd1TqHZd4vjAOhLG36n5+UBWH6ADn7agxPH00R4JUTKaWKCbr6rd+Ge3N1DLsTjZMh5LTc0tzIq5ejpp8SbGGqYj+voJd08rScZZcrkWw73At31DveJU51B6gr8rN3F/+sSW3sxgUzolAlqMET4fCThEGo6M19N3VQ=
+	t=1737482259; cv=none; b=qpYc67nOJ6TyrvaSRFNuQ0zDorj/YfsASRc2JTtoPlhYsFx5693cIw2gWh+41iDsJPzbbNYjDKtkhmnSXkMBGZYekkmXy7NGcYvGA7kmttXumB0wX4hbz3qrNxlwRRx0DPD+4A8Jh7I5depTSTV/FBfvg3At+Sh6zsoYgLnxVkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482257; c=relaxed/simple;
-	bh=CpqLDlLCfTklK0C4/PLPyiZ6EKmAp07/8PdivTc49Kg=;
+	s=arc-20240116; t=1737482259; c=relaxed/simple;
+	bh=m6mxOopvVBiKthBFGRVBn008/6MMfOVZCZuhFmReANE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTdYvhsjmoHaSm2I7Li0xR3R8SRKDh+Rkwit9vbnTeNl6r7DpdHwkA/foImNabin5iCu0bmEl1ot9TJzZ4VyOtP63Zwji1pxw8cVUaYq/qpC75Jncjy1h+UJQ67Gvr7966lfYeU5fnoGOjFyUnwhQXtQCOJ20cXVpDO+74i8zeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adOYjTPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HkQ5G7idDjHVCejvDIWPGrhAfuI9mK//ZNP6FWKoIz0skttgNWmwwXYVLwHWhJ8dYHHWq0vss+3331z0/2olGI8U1Mj/11Cfi6ZXWJGq5A4D8VzZ3RY3ZG7AdBUlyy8RQph4iT7M4Tcyh9nv7dBA/9DxKWvV2ROwKsTIJ9I507M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JdugK7X/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adOYjTPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D287C4CEDF;
-	Tue, 21 Jan 2025 17:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JdugK7X/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C2A3C4CEDF;
+	Tue, 21 Jan 2025 17:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482256;
-	bh=CpqLDlLCfTklK0C4/PLPyiZ6EKmAp07/8PdivTc49Kg=;
+	s=korg; t=1737482259;
+	bh=m6mxOopvVBiKthBFGRVBn008/6MMfOVZCZuhFmReANE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adOYjTPpAK0GX1//RUqzaDcoCgGCtNHb5xK7sIffpzCurTvUNarLxRjigMQEjx6wm
-	 TGfUeAkoIa6Wwh6nC5rRuvfTSUGaXjKQOxYUnGIyBaQt7vwQO3kxZz9SJU2jy6g5RL
-	 iG8bOPRtlIOdSNdHgP/bJbbWtm76y60uWaG5sgv0=
+	b=JdugK7X/7669F4ddshTMuJfT8rFdPGFOI4IOqbtIq3EvzVWUYaOGBAqNlGFeKK1GR
+	 DIJu3o3AfdDa2eegSE4ix12lmdCSmZji0d1U/ek/pEzdcMdLn2K02n7u/1vByqRDew
+	 A0rXtx02J5MhKUs1RDFYjEw7C/KAQJLuvOobKCiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/122] cpuidle: teo: Update documentation after previous changes
-Date: Tue, 21 Jan 2025 18:51:03 +0100
-Message-ID: <20250121174533.592177962@linuxfoundation.org>
+Subject: [PATCH 6.12 016/122] btrfs: add the missing error handling inside get_canonical_dev_path
+Date: Tue, 21 Jan 2025 18:51:04 +0100
+Message-ID: <20250121174533.630617563@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -51,161 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 5a597a19a2148d1c5cd987907a60c042ab0f62d5 ]
+[ Upstream commit fe4de594f7a2e9bc49407de60fbd20809fad4192 ]
 
-After previous changes, the description of the teo governor in the
-documentation comment does not match the code any more, so update it
-as appropriate.
+Inside function get_canonical_dev_path(), we call d_path() to get the
+final device path.
 
-Fixes: 449914398083 ("cpuidle: teo: Remove recent intercepts metric")
-Fixes: 2662342079f5 ("cpuidle: teo: Gather statistics regarding whether or not to stop the tick")
-Fixes: 6da8f9ba5a87 ("cpuidle: teo: Skip tick_nohz_get_sleep_length() call in some cases")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/6120335.lOV4Wx5bFT@rjwysocki.net
-[ rjw: Corrected 3 typos found by Christian ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+But d_path() can return error, and in that case the next strscpy() call
+will trigger an invalid memory access.
+
+Add back the missing error handling for d_path().
+
+Reported-by: Boris Burkov <boris@bur.io>
+Fixes: 7e06de7c83a7 ("btrfs: canonicalize the device path before adding it")
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/teo.c | 91 +++++++++++++++++----------------
- 1 file changed, 48 insertions(+), 43 deletions(-)
+ fs/btrfs/volumes.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
-index f2992f92d8db8..173ddcac540ad 100644
---- a/drivers/cpuidle/governors/teo.c
-+++ b/drivers/cpuidle/governors/teo.c
-@@ -10,25 +10,27 @@
-  * DOC: teo-description
-  *
-  * The idea of this governor is based on the observation that on many systems
-- * timer events are two or more orders of magnitude more frequent than any
-- * other interrupts, so they are likely to be the most significant cause of CPU
-- * wakeups from idle states.  Moreover, information about what happened in the
-- * (relatively recent) past can be used to estimate whether or not the deepest
-- * idle state with target residency within the (known) time till the closest
-- * timer event, referred to as the sleep length, is likely to be suitable for
-- * the upcoming CPU idle period and, if not, then which of the shallower idle
-- * states to choose instead of it.
-+ * timer interrupts are two or more orders of magnitude more frequent than any
-+ * other interrupt types, so they are likely to dominate CPU wakeup patterns.
-+ * Moreover, in principle, the time when the next timer event is going to occur
-+ * can be determined at the idle state selection time, although doing that may
-+ * be costly, so it can be regarded as the most reliable source of information
-+ * for idle state selection.
-  *
-- * Of course, non-timer wakeup sources are more important in some use cases
-- * which can be covered by taking a few most recent idle time intervals of the
-- * CPU into account.  However, even in that context it is not necessary to
-- * consider idle duration values greater than the sleep length, because the
-- * closest timer will ultimately wake up the CPU anyway unless it is woken up
-- * earlier.
-+ * Of course, non-timer wakeup sources are more important in some use cases,
-+ * but even then it is generally unnecessary to consider idle duration values
-+ * greater than the time time till the next timer event, referred as the sleep
-+ * length in what follows, because the closest timer will ultimately wake up the
-+ * CPU anyway unless it is woken up earlier.
-  *
-- * Thus this governor estimates whether or not the prospective idle duration of
-- * a CPU is likely to be significantly shorter than the sleep length and selects
-- * an idle state for it accordingly.
-+ * However, since obtaining the sleep length may be costly, the governor first
-+ * checks if it can select a shallow idle state using wakeup pattern information
-+ * from recent times, in which case it can do without knowing the sleep length
-+ * at all.  For this purpose, it counts CPU wakeup events and looks for an idle
-+ * state whose target residency has not exceeded the idle duration (measured
-+ * after wakeup) in the majority of relevant recent cases.  If the target
-+ * residency of that state is small enough, it may be used right away and the
-+ * sleep length need not be determined.
-  *
-  * The computations carried out by this governor are based on using bins whose
-  * boundaries are aligned with the target residency parameter values of the CPU
-@@ -39,7 +41,11 @@
-  * idle state 2, the third bin spans from the target residency of idle state 2
-  * up to, but not including, the target residency of idle state 3 and so on.
-  * The last bin spans from the target residency of the deepest idle state
-- * supplied by the driver to infinity.
-+ * supplied by the driver to the scheduler tick period length or to infinity if
-+ * the tick period length is less than the target residency of that state.  In
-+ * the latter case, the governor also counts events with the measured idle
-+ * duration between the tick period length and the target residency of the
-+ * deepest idle state.
-  *
-  * Two metrics called "hits" and "intercepts" are associated with each bin.
-  * They are updated every time before selecting an idle state for the given CPU
-@@ -49,47 +55,46 @@
-  * sleep length and the idle duration measured after CPU wakeup fall into the
-  * same bin (that is, the CPU appears to wake up "on time" relative to the sleep
-  * length).  In turn, the "intercepts" metric reflects the relative frequency of
-- * situations in which the measured idle duration is so much shorter than the
-- * sleep length that the bin it falls into corresponds to an idle state
-- * shallower than the one whose bin is fallen into by the sleep length (these
-- * situations are referred to as "intercepts" below).
-+ * non-timer wakeup events for which the measured idle duration falls into a bin
-+ * that corresponds to an idle state shallower than the one whose bin is fallen
-+ * into by the sleep length (these events are also referred to as "intercepts"
-+ * below).
-  *
-  * In order to select an idle state for a CPU, the governor takes the following
-  * steps (modulo the possible latency constraint that must be taken into account
-  * too):
-  *
-- * 1. Find the deepest CPU idle state whose target residency does not exceed
-- *    the current sleep length (the candidate idle state) and compute 2 sums as
-- *    follows:
-+ * 1. Find the deepest enabled CPU idle state (the candidate idle state) and
-+ *    compute 2 sums as follows:
-  *
-- *    - The sum of the "hits" and "intercepts" metrics for the candidate state
-- *      and all of the deeper idle states (it represents the cases in which the
-- *      CPU was idle long enough to avoid being intercepted if the sleep length
-- *      had been equal to the current one).
-+ *    - The sum of the "hits" metric for all of the idle states shallower than
-+ *      the candidate one (it represents the cases in which the CPU was likely
-+ *      woken up by a timer).
-  *
-- *    - The sum of the "intercepts" metrics for all of the idle states shallower
-- *      than the candidate one (it represents the cases in which the CPU was not
-- *      idle long enough to avoid being intercepted if the sleep length had been
-- *      equal to the current one).
-+ *    - The sum of the "intercepts" metric for all of the idle states shallower
-+ *      than the candidate one (it represents the cases in which the CPU was
-+ *      likely woken up by a non-timer wakeup source).
-  *
-- * 2. If the second sum is greater than the first one the CPU is likely to wake
-- *    up early, so look for an alternative idle state to select.
-+ * 2. If the second sum computed in step 1 is greater than a half of the sum of
-+ *    both metrics for the candidate state bin and all subsequent bins(if any),
-+ *    a shallower idle state is likely to be more suitable, so look for it.
-  *
-- *    - Traverse the idle states shallower than the candidate one in the
-+ *    - Traverse the enabled idle states shallower than the candidate one in the
-  *      descending order.
-  *
-  *    - For each of them compute the sum of the "intercepts" metrics over all
-  *      of the idle states between it and the candidate one (including the
-  *      former and excluding the latter).
-  *
-- *    - If each of these sums that needs to be taken into account (because the
-- *      check related to it has indicated that the CPU is likely to wake up
-- *      early) is greater than a half of the corresponding sum computed in step
-- *      1 (which means that the target residency of the state in question had
-- *      not exceeded the idle duration in over a half of the relevant cases),
-- *      select the given idle state instead of the candidate one.
-+ *    - If this sum is greater than a half of the second sum computed in step 1,
-+ *      use the given idle state as the new candidate one.
-  *
-- * 3. By default, select the candidate state.
-+ * 3. If the current candidate state is state 0 or its target residency is short
-+ *    enough, return it and prevent the scheduler tick from being stopped.
-+ *
-+ * 4. Obtain the sleep length value and check if it is below the target
-+ *    residency of the current candidate state, in which case a new shallower
-+ *    candidate state needs to be found, so look for it.
-  */
- 
- #include <linux/cpuidle.h>
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 0c4d14c59ebec..395b8b880ce78 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -797,6 +797,10 @@ static int get_canonical_dev_path(const char *dev_path, char *canonical)
+ 	if (ret)
+ 		goto out;
+ 	resolved_path = d_path(&path, path_buf, PATH_MAX);
++	if (IS_ERR(resolved_path)) {
++		ret = PTR_ERR(resolved_path);
++		goto out;
++	}
+ 	ret = strscpy(canonical, resolved_path, PATH_MAX);
+ out:
+ 	kfree(path_buf);
 -- 
 2.39.5
 
