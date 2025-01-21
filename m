@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABAF1F3FFD;
-	Tue, 21 Jan 2025 17:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE601E9B38;
+	Tue, 21 Jan 2025 17:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482028; cv=none; b=Nkf/0TeR03PPTOBwY4VnnBYT6VA3f5jDaVXUuRhLbrpR5aZzP15D0GK23Ixe5u5CGSeGailG11U9MXgPwkAtFkrOiYXEuN760bBhYeUmx8B958y1eEfNIPh2+JrTXw6UiOMIBOHpOyBFRBqsxE+wh2OMF3SUAIrCahckKBvC4Tw=
+	t=1737482031; cv=none; b=hu/9oYAzMrNwwzbRrkuEda0RF+BPFAV6NlRhoweK/Q9MyOJGoFtbW+hb0bHY3KlWiQac2UzsJCrb+um9zYc94yHsB7QglzLhZdxGrr5quIuCCGwYZMvg5l2sLeN0jQuuxV/me37aZaIwc9gruimCOJ5BtdfaG4l7bLy9hGRQ2sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482028; c=relaxed/simple;
-	bh=nghB27j/AEmiS+uR//a4U6bxXmuvPXm2u4iJ0+u1oXA=;
+	s=arc-20240116; t=1737482031; c=relaxed/simple;
+	bh=0pxxFqZ5wFYqfj3EHSpZW5L2CiMM9XadsjEYUOMahEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TXFlulAGPai6aBb3KIpHmkY/Z8U2WTFXewRFzy+8Ps1Vk33fjqpq8SeB/ir90l4C9sl2Z0TgumK5vPQ4qEfNHTsxm2gqF9Q+SLtVez5/xRjUCeRtyH5dZKt80nXJUKphxvQDq/rm6c/4Mpl31ZS4adSGT+TXUpPxQeJuCxFERhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Omt6hxkj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q92uWsloQtIP5jHRa8gOxx0YpJWpoYIUO6NYOVXv4NYyfdeXMGQglF3C84V2CFUMVXBEESNUGZI0+oSFxXuUoxeb9ATDZW/WcixRUoO+g8krnvpbIreFd7QT8MvriDbnQlOUkfB58KZkJYY2rOdfFowRHySqhrGUvEiquvWofAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rex2QUjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Omt6hxkj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A95CC4CEDF;
-	Tue, 21 Jan 2025 17:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rex2QUjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBBAC4CEDF;
+	Tue, 21 Jan 2025 17:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482028;
-	bh=nghB27j/AEmiS+uR//a4U6bxXmuvPXm2u4iJ0+u1oXA=;
+	s=korg; t=1737482031;
+	bh=0pxxFqZ5wFYqfj3EHSpZW5L2CiMM9XadsjEYUOMahEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Omt6hxkjKEXueh27GUNZSMwsNnaIOLALquftcvxylaE9/vNuD3QXlns0SrPMpmKq3
-	 boI6+VqQyGQbLWfsPWAj+oVKqmdveyUVjZBT20cigIK2QaQ8uWsC12hriT10ACsIzF
-	 rjTCBVtopO61wqMERlB3lg2Tw20fPI7HuN42uCvU=
+	b=Rex2QUjfrS1ZwmS4pgS0xkTiaeFl0ww+ZGzR5yba15J+PPUpcdwCudicoW+DfnKKZ
+	 Sw+R6KITFCZi0UTplj1Ro0mdIpg4mErq4cukAQnptW/7Rd7ckvt9KsWtIooW8q5jcA
+	 bBMA4adifYRrOHSuED38hBp4Mq/cZeGV2TmJvcWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Kevin Groeneveld <kgroeneveld@lenbrook.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Wei Fang <wei.fang@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 10/72] net: xilinx: axienet: Fix IRQ coalescing packet count overflow
-Date: Tue, 21 Jan 2025 18:51:36 +0100
-Message-ID: <20250121174523.826548067@linuxfoundation.org>
+Subject: [PATCH 6.6 11/72] net: fec: handle page_pool_dev_alloc_pages error
+Date: Tue, 21 Jan 2025 18:51:37 +0100
+Message-ID: <20250121174523.864731959@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -53,46 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Kevin Groeneveld <kgroeneveld@lenbrook.com>
 
-[ Upstream commit c17ff476f53afb30f90bb3c2af77de069c81a622 ]
+[ Upstream commit 001ba0902046cb6c352494df610718c0763e77a5 ]
 
-If coalesce_count is greater than 255 it will not fit in the register and
-will overflow. This can be reproduced by running
+The fec_enet_update_cbd function calls page_pool_dev_alloc_pages but did
+not handle the case when it returned NULL. There was a WARN_ON(!new_page)
+but it would still proceed to use the NULL pointer and then crash.
 
-    # ethtool -C ethX rx-frames 256
+This case does seem somewhat rare but when the system is under memory
+pressure it can happen. One case where I can duplicate this with some
+frequency is when writing over a smbd share to a SATA HDD attached to an
+imx6q.
 
-which will result in a timeout of 0us instead. Fix this by checking for
-invalid values and reporting an error.
+Setting /proc/sys/vm/min_free_kbytes to higher values also seems to solve
+the problem for my test case. But it still seems wrong that the fec driver
+ignores the memory allocation error and can crash.
 
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20250113163001.2335235-1-sean.anderson@linux.dev
+This commit handles the allocation error by dropping the current packet.
+
+Fixes: 95698ff6177b5 ("net: fec: using page pool to manage RX buffers")
+Signed-off-by: Kevin Groeneveld <kgroeneveld@lenbrook.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20250113154846.1765414-1-kgroeneveld@lenbrook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/freescale/fec_main.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index 9f779653ed622..02e11827440b5 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -1571,6 +1571,12 @@ axienet_ethtools_set_coalesce(struct net_device *ndev,
- 		return -EFAULT;
- 	}
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index e8d9a0eba4d6b..8f5cc1f233188 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1572,19 +1572,22 @@ static void fec_enet_tx(struct net_device *ndev, int budget)
+ 		fec_enet_tx_queue(ndev, i, budget);
+ }
  
-+	if (ecoalesce->rx_max_coalesced_frames > 255 ||
-+	    ecoalesce->tx_max_coalesced_frames > 255) {
-+		NL_SET_ERR_MSG(extack, "frames must be less than 256");
-+		return -EINVAL;
-+	}
+-static void fec_enet_update_cbd(struct fec_enet_priv_rx_q *rxq,
++static int fec_enet_update_cbd(struct fec_enet_priv_rx_q *rxq,
+ 				struct bufdesc *bdp, int index)
+ {
+ 	struct page *new_page;
+ 	dma_addr_t phys_addr;
+ 
+ 	new_page = page_pool_dev_alloc_pages(rxq->page_pool);
+-	WARN_ON(!new_page);
+-	rxq->rx_skb_info[index].page = new_page;
++	if (unlikely(!new_page))
++		return -ENOMEM;
+ 
++	rxq->rx_skb_info[index].page = new_page;
+ 	rxq->rx_skb_info[index].offset = FEC_ENET_XDP_HEADROOM;
+ 	phys_addr = page_pool_get_dma_addr(new_page) + FEC_ENET_XDP_HEADROOM;
+ 	bdp->cbd_bufaddr = cpu_to_fec32(phys_addr);
 +
- 	if (ecoalesce->rx_max_coalesced_frames)
- 		lp->coalesce_count_rx = ecoalesce->rx_max_coalesced_frames;
- 	if (ecoalesce->rx_coalesce_usecs)
++	return 0;
+ }
+ 
+ static u32
+@@ -1679,6 +1682,7 @@ fec_enet_rx_queue(struct net_device *ndev, int budget, u16 queue_id)
+ 	int cpu = smp_processor_id();
+ 	struct xdp_buff xdp;
+ 	struct page *page;
++	__fec32 cbd_bufaddr;
+ 	u32 sub_len = 4;
+ 
+ #if !defined(CONFIG_M5272)
+@@ -1743,12 +1747,17 @@ fec_enet_rx_queue(struct net_device *ndev, int budget, u16 queue_id)
+ 
+ 		index = fec_enet_get_bd_index(bdp, &rxq->bd);
+ 		page = rxq->rx_skb_info[index].page;
++		cbd_bufaddr = bdp->cbd_bufaddr;
++		if (fec_enet_update_cbd(rxq, bdp, index)) {
++			ndev->stats.rx_dropped++;
++			goto rx_processing_done;
++		}
++
+ 		dma_sync_single_for_cpu(&fep->pdev->dev,
+-					fec32_to_cpu(bdp->cbd_bufaddr),
++					fec32_to_cpu(cbd_bufaddr),
+ 					pkt_len,
+ 					DMA_FROM_DEVICE);
+ 		prefetch(page_address(page));
+-		fec_enet_update_cbd(rxq, bdp, index);
+ 
+ 		if (xdp_prog) {
+ 			xdp_buff_clear_frags_flag(&xdp);
 -- 
 2.39.5
 
