@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B369C1F4275;
-	Tue, 21 Jan 2025 18:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868361F4275;
+	Tue, 21 Jan 2025 18:03:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482600; cv=none; b=JQpJH5zkW9hkhGGx9ob65o6sDWZkHavQUadbfTMkWbVQLZyHaiSHJjhPaY3pyJZc72VxuDygvdpPHOU8QPDGIZ+UpuvsNnd1U4OFnwoks8KpsDwzDvkbjKeyFcN4SNZBk0CKd3mCbBYM72JXNudQ8IHQ9X80Yt9joShidmny3QA=
+	t=1737482603; cv=none; b=lQZYAtNpJD7wLPTbsV8n5d+aiOLMO9mZet6lcC59eZ/KH3sDeg9goWr+3BdUdyzgYAP5JCYddkh3r40uuy4Ft3fTSNU9UV5JDz4xuE4QkGX3bs2JUo7U90LO5q+z/LNQ6jHrMBpc28gN6GMNWMFJWl0FlugC+Y0F249AcCGLRro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482600; c=relaxed/simple;
-	bh=k2kXuEM9jbg7o1Jufu7QPz2PKcgr7HwKnx7+U3p+e1U=;
+	s=arc-20240116; t=1737482603; c=relaxed/simple;
+	bh=PyqewibvtKPx2SI5DVEZN8+3qIi1h9zV6vCyfI8XjF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KLq/Ku697kQ0Zs/T/9xgaTAsyf0wVHr/8/zkmRBb4/xMu9i1sAf3ad78yqSVz0N5PvODxuQ01v3QWhgNezth+99+OGbXt0kxn6NSsx5LbfQ7MFvh9KD3ZBC1Q4lh+8s4kpZQ1XUbUq9+FgVDomoMoznye/x2TH+/KUO1e2jCc9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0R4noMcw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sRy7RsMqHl/lUrq3GKxb6vw3DTcejXnlVhz5BOB8z3UhXMtZzaa3kOPk3zPH+uaZckMPZLn3kNR7fPTs9g0D/3LGh9WUJ/yOjpvcZZLVeYtjkm85UEOXognZZ+xtN9H4sbOBrMALW/k3Hdtd25m+lVXqmZCuOyi1cJlfIsn+7y8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOhLU/ed; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0R4noMcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CC7C4CEDF;
-	Tue, 21 Jan 2025 18:03:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOhLU/ed"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A92C4CEDF;
+	Tue, 21 Jan 2025 18:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482600;
-	bh=k2kXuEM9jbg7o1Jufu7QPz2PKcgr7HwKnx7+U3p+e1U=;
+	s=korg; t=1737482603;
+	bh=PyqewibvtKPx2SI5DVEZN8+3qIi1h9zV6vCyfI8XjF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0R4noMcwWaGDC0StMZU5QWpoFfKncp2IM8CHD8JttVdnF7X6sv63mvb/GOoxWDpk9
-	 SdwzjjOHxOaWOhCRIM0WFCfmnrl4zWmJa2hJEA4gu4CuwNyM0PCAEdRjheLuM9XliQ
-	 iixEGsRic5x7T863kRE438CMngd9g8PoAfdkHxeU=
+	b=UOhLU/ed2R9uVrSbVvVUVuqC0uNQggC/vlNKs2Vg/0+QNoxsT4rLEx2eRwVyWoLRF
+	 VMnJrhHo/rLUtoelWF4wHl6prSQmYROm4nffZoxukznvupAH3EPsrF6q8NQ0D+Ys1S
+	 TpZgyfOz2E+myAn4YwRBEVMvJSGd5OKmU0LJRl70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/64] net: xilinx: axienet: Fix IRQ coalescing packet count overflow
-Date: Tue, 21 Jan 2025 18:52:09 +0100
-Message-ID: <20250121174521.957830909@linuxfoundation.org>
+Subject: [PATCH 6.1 11/64] net/mlx5: Fix RDMA TX steering prio
+Date: Tue, 21 Jan 2025 18:52:10 +0100
+Message-ID: <20250121174521.994924769@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -53,46 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit c17ff476f53afb30f90bb3c2af77de069c81a622 ]
+[ Upstream commit c08d3e62b2e73e14da318a1d20b52d0486a28ee0 ]
 
-If coalesce_count is greater than 255 it will not fit in the register and
-will overflow. This can be reproduced by running
+User added steering rules at RDMA_TX were being added to the first prio,
+which is the counters prio.
+Fix that so that they are correctly added to the BYPASS_PRIO instead.
 
-    # ethtool -C ethX rx-frames 256
-
-which will result in a timeout of 0us instead. Fix this by checking for
-invalid values and reporting an error.
-
-Fixes: 8a3b7a252dca ("drivers/net/ethernet/xilinx: added Xilinx AXI Ethernet driver")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://patch.msgid.link/20250113163001.2335235-1-sean.anderson@linux.dev
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 24670b1a3166 ("net/mlx5: Add support for RDMA TX steering")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index ce0dd78826af0..a957721581761 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -1570,6 +1570,12 @@ axienet_ethtools_set_coalesce(struct net_device *ndev,
- 		return -EFAULT;
- 	}
- 
-+	if (ecoalesce->rx_max_coalesced_frames > 255 ||
-+	    ecoalesce->tx_max_coalesced_frames > 255) {
-+		NL_SET_ERR_MSG(extack, "frames must be less than 256");
-+		return -EINVAL;
-+	}
-+
- 	if (ecoalesce->rx_max_coalesced_frames)
- 		lp->coalesce_count_rx = ecoalesce->rx_max_coalesced_frames;
- 	if (ecoalesce->rx_coalesce_usecs)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index 50fdc3cbb778e..2717450e96661 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -2421,6 +2421,7 @@ struct mlx5_flow_namespace *mlx5_get_flow_namespace(struct mlx5_core_dev *dev,
+ 		break;
+ 	case MLX5_FLOW_NAMESPACE_RDMA_TX:
+ 		root_ns = steering->rdma_tx_root_ns;
++		prio = RDMA_TX_BYPASS_PRIO;
+ 		break;
+ 	case MLX5_FLOW_NAMESPACE_RDMA_RX_COUNTERS:
+ 		root_ns = steering->rdma_rx_root_ns;
 -- 
 2.39.5
 
