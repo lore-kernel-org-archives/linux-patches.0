@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770FD1F667C;
-	Tue, 21 Jan 2025 18:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67651F667C;
+	Tue, 21 Jan 2025 18:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482991; cv=none; b=iNOdEE8jfGhNPnZ0CGSrnlZ3ONW1q8odNx/Uzv2G8u7mAdch+wr2AJTVnziIQErLKZZ7oJPG6UJKYvTJRRHySsl4MR5+OyUraByNM4HP0o+wZn4fV5EOuai5+FEsxP2FAQahL92w0vCjtLME66P9hLMsNX0OzvshTaZrb4QeWpk=
+	t=1737482994; cv=none; b=VLyLC0s9YB7lKT2vfOcbhKSsEqkR4HfTJFNfUVkpv3S3/ejumeEfExv+ev3Db978P2I1XIRG7q9QBXJhvqKViiQCTWDLAeSrsaOWUArW3jX9WSXEZs9tgSBYphwYgCmY3OZ4jbXN7w9u66BRHw82rMzzvZGZRr51SkgqK/z8jvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482991; c=relaxed/simple;
-	bh=gNfjIRPqYptJd4ei6ce+CFivfsxfRtEXpQBUhCv7QoI=;
+	s=arc-20240116; t=1737482994; c=relaxed/simple;
+	bh=aPaGfQW9//d91fy3Ulbjp1JNUdq8dLzb9iaFO/KuoFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxKtTiWv8YNx2D7l+0M4oDThgpRcjdQKfVZGIGcyS5DoIBDwsODymeZWQi63zyFIpWK0v78x3PtrRGVK9c/JEIOB9xtE7HLfSNBtY6aXqmqQMjSQXTs4favuuj1Sk93ng/+g0crZAKIvkGW2PeKlQaVEznsJsALSETBpQs1ItDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcubZvBj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aXa0CxTOaoQV8ss5KDp3pEqNNpO5wqomybrKGvwUautAf4eYOewm3CCEbVsUDiAcPCC71w7qNbD68yo+q+WthV1n6VZleUEvxIgu8aNA4yS1bh2hHhUdAM1MalQzjYzc1542UAtHBGQU/+KTiUHO8P2OrxZ/ie2S/glnCEYcb7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITUIWqaw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcubZvBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE72C4CEDF;
-	Tue, 21 Jan 2025 18:09:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITUIWqaw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09F4C4CEDF;
+	Tue, 21 Jan 2025 18:09:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482991;
-	bh=gNfjIRPqYptJd4ei6ce+CFivfsxfRtEXpQBUhCv7QoI=;
+	s=korg; t=1737482994;
+	bh=aPaGfQW9//d91fy3Ulbjp1JNUdq8dLzb9iaFO/KuoFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcubZvBj0gIcg4pfTAiv2O3dnhJkfWW5NdzwRN7hCQf/bW6oxLU4UPcXWR+9y8V2A
-	 gPonq5GY3TtWPrhS0ff24Z2r6bX4i3ZLHQ9exb/bjRpFzab6aTGgaN8WW3/FJMA0F1
-	 olKmtlHc6smPGrt0atBWJVuaeLyyukAg6zeEnYFs=
+	b=ITUIWqawVZgjSptgpEws1omYNiG2tcnA6M01ijpQZwq9jp3CwrDfeSUgMRWmYlKDd
+	 Krj43cbUEB9yUb6Dxx7OtWMLVRjxugK/RPhiM1jNYdgKlBmI0FJ2U0b2D58TJBbSMq
+	 LHEeHsPg7ug7tfNqA3C+9DLUBaKpTG0+Mj7pmprY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheer Kumar Doredla <s-doredla@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/127] net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()
-Date: Tue, 21 Jan 2025 18:52:31 +0100
-Message-ID: <20250121174532.704222513@linuxfoundation.org>
+Subject: [PATCH 5.15 080/127] bpf: Fix bpf_sk_select_reuseport() memory leak
+Date: Tue, 21 Jan 2025 18:52:32 +0100
+Message-ID: <20250121174532.740869715@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -54,84 +52,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudheer Kumar Doredla <s-doredla@ti.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 03d120f27d050336f7e7d21879891542c4741f81 ]
+[ Upstream commit b3af60928ab9129befa65e6df0310d27300942bf ]
 
-CPSW ALE has 75-bit ALE entries stored across three 32-bit words.
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions support
-ALE field entries spanning up to two words at the most.
+As pointed out in the original comment, lookup in sockmap can return a TCP
+ESTABLISHED socket. Such TCP socket may have had SO_ATTACH_REUSEPORT_EBPF
+set before it was ESTABLISHED. In other words, a non-NULL sk_reuseport_cb
+does not imply a non-refcounted socket.
 
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions work as
-expected when ALE field spanned across word1 and word2, but fails when
-ALE field spanned across word2 and word3.
+Drop sk's reference in both error paths.
 
-For example, while reading the ALE field spanned across word2 and word3
-(i.e. bits 62 to 64), the word3 data shifted to an incorrect position
-due to the index becoming zero while flipping.
-The same issue occurred when setting an ALE entry.
+unreferenced object 0xffff888101911800 (size 2048):
+  comm "test_progs", pid 44109, jiffies 4297131437
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    80 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 9336483b):
+    __kmalloc_noprof+0x3bf/0x560
+    __reuseport_alloc+0x1d/0x40
+    reuseport_alloc+0xca/0x150
+    reuseport_attach_prog+0x87/0x140
+    sk_reuseport_attach_bpf+0xc8/0x100
+    sk_setsockopt+0x1181/0x1990
+    do_sock_setsockopt+0x12b/0x160
+    __sys_setsockopt+0x7b/0xc0
+    __x64_sys_setsockopt+0x1b/0x30
+    do_syscall_64+0x93/0x180
+    entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-This issue has not been seen in practice but will be an issue in the future
-if the driver supports accessing ALE fields spanning word2 and word3
-
-Fix the methods to handle getting/setting fields spanning up to two words.
-
-Fixes: b685f1a58956 ("net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()/cpsw_ale_set_field()")
-Signed-off-by: Sudheer Kumar Doredla <s-doredla@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20250108172433.311694-1-s-doredla@ti.com
+Fixes: 64d85290d79c ("bpf: Allow bpf_map_lookup_elem for SOCKMAP and SOCKHASH")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20250110-reuseport-memleak-v1-1-fa1ddab0adfe@rbox.co
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_ale.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/core/filter.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
-index 8c59e34d8bcaf..348a05454fcaa 100644
---- a/drivers/net/ethernet/ti/cpsw_ale.c
-+++ b/drivers/net/ethernet/ti/cpsw_ale.c
-@@ -104,15 +104,15 @@ struct cpsw_ale_dev_id {
+diff --git a/net/core/filter.c b/net/core/filter.c
+index d6042d285aa21..84ec1b14b23f3 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -10509,6 +10509,7 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
+ 	bool is_sockarray = map->map_type == BPF_MAP_TYPE_REUSEPORT_SOCKARRAY;
+ 	struct sock_reuseport *reuse;
+ 	struct sock *selected_sk;
++	int err;
  
- static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
- {
--	int idx, idx2;
-+	int idx, idx2, index;
- 	u32 hi_val = 0;
+ 	selected_sk = map->ops->map_lookup_elem(map, key);
+ 	if (!selected_sk)
+@@ -10516,10 +10517,6 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
  
- 	idx    = start / 32;
- 	idx2 = (start + bits - 1) / 32;
- 	/* Check if bits to be fetched exceed a word */
- 	if (idx != idx2) {
--		idx2 = 2 - idx2; /* flip */
--		hi_val = ale_entry[idx2] << ((idx2 * 32) - start);
-+		index = 2 - idx2; /* flip */
-+		hi_val = ale_entry[index] << ((idx2 * 32) - start);
+ 	reuse = rcu_dereference(selected_sk->sk_reuseport_cb);
+ 	if (!reuse) {
+-		/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
+-		if (sk_is_refcounted(selected_sk))
+-			sock_put(selected_sk);
+-
+ 		/* reuseport_array has only sk with non NULL sk_reuseport_cb.
+ 		 * The only (!reuse) case here is - the sk has already been
+ 		 * unhashed (e.g. by close()), so treat it as -ENOENT.
+@@ -10527,24 +10524,33 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
+ 		 * Other maps (e.g. sock_map) do not provide this guarantee and
+ 		 * the sk may never be in the reuseport group to begin with.
+ 		 */
+-		return is_sockarray ? -ENOENT : -EINVAL;
++		err = is_sockarray ? -ENOENT : -EINVAL;
++		goto error;
  	}
- 	start -= idx * 32;
- 	idx    = 2 - idx; /* flip */
-@@ -122,16 +122,16 @@ static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
- static inline void cpsw_ale_set_field(u32 *ale_entry, u32 start, u32 bits,
- 				      u32 value)
- {
--	int idx, idx2;
-+	int idx, idx2, index;
  
- 	value &= BITMASK(bits);
- 	idx = start / 32;
- 	idx2 = (start + bits - 1) / 32;
- 	/* Check if bits to be set exceed a word */
- 	if (idx != idx2) {
--		idx2 = 2 - idx2; /* flip */
--		ale_entry[idx2] &= ~(BITMASK(bits + start - (idx2 * 32)));
--		ale_entry[idx2] |= (value >> ((idx2 * 32) - start));
-+		index = 2 - idx2; /* flip */
-+		ale_entry[index] &= ~(BITMASK(bits + start - (idx2 * 32)));
-+		ale_entry[index] |= (value >> ((idx2 * 32) - start));
+ 	if (unlikely(reuse->reuseport_id != reuse_kern->reuseport_id)) {
+ 		struct sock *sk = reuse_kern->sk;
+ 
+-		if (sk->sk_protocol != selected_sk->sk_protocol)
+-			return -EPROTOTYPE;
+-		else if (sk->sk_family != selected_sk->sk_family)
+-			return -EAFNOSUPPORT;
+-
+-		/* Catch all. Likely bound to a different sockaddr. */
+-		return -EBADFD;
++		if (sk->sk_protocol != selected_sk->sk_protocol) {
++			err = -EPROTOTYPE;
++		} else if (sk->sk_family != selected_sk->sk_family) {
++			err = -EAFNOSUPPORT;
++		} else {
++			/* Catch all. Likely bound to a different sockaddr. */
++			err = -EBADFD;
++		}
++		goto error;
  	}
- 	start -= idx * 32;
- 	idx = 2 - idx; /* flip */
+ 
+ 	reuse_kern->selected_sk = selected_sk;
+ 
+ 	return 0;
++error:
++	/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
++	if (sk_is_refcounted(selected_sk))
++		sock_put(selected_sk);
++
++	return err;
+ }
+ 
+ static const struct bpf_func_proto sk_select_reuseport_proto = {
 -- 
 2.39.5
 
