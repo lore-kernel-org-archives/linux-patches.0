@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F961F707F;
-	Tue, 21 Jan 2025 17:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687321F55F7;
+	Tue, 21 Jan 2025 17:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482256; cv=none; b=SafOa0i6VwqNMK17iXn7GcAa47TTUic9tM1y2izz1oyRPa5RFHJMbxNcp+OH7lWyd+FuD+fsPctFgQPoH0ZlPFtFgrpM/+w5yQ/Dq4faD0jGmTIqs/rOIgDD4r/azRvDykRNv+5muYYMDes4owKJDnuxgT9CNZ1F+cFYhXexXus=
+	t=1737482257; cv=none; b=i7A6JPzH0Pd1TqHZd4vjAOhLG36n5+UBWH6ADn7agxPH00R4JUTKaWKCbr6rd+Ge3N1DLsTjZMh5LTc0tzIq5ejpp8SbGGqYj+voJd08rScZZcrkWw73At31DveJU51B6gr8rN3F/+sSW3sxgUzolAlqMET4fCThEGo6M19N3VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482256; c=relaxed/simple;
-	bh=bw/nIy0+tcPjRV0ijpBnSeMi0ZSuY5/qPly2e0BpKTQ=;
+	s=arc-20240116; t=1737482257; c=relaxed/simple;
+	bh=CpqLDlLCfTklK0C4/PLPyiZ6EKmAp07/8PdivTc49Kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AV6XoqEhRkvbvBoK1ogEc5K1cb2jWaRSwFK3H2jpB0WFp/7cZDhQlGcFHOfZvksiEG2LQVmd3XcZu1atHxRdZE6sZNPXA04C/Cr+0bAJS/e67fshhm+O+VqcabWiVmUU7AFQHPV3iHibNkdrGN4btbUgr3sVgeJemoOKoY8Cs1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1CjEjUX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTdYvhsjmoHaSm2I7Li0xR3R8SRKDh+Rkwit9vbnTeNl6r7DpdHwkA/foImNabin5iCu0bmEl1ot9TJzZ4VyOtP63Zwji1pxw8cVUaYq/qpC75Jncjy1h+UJQ67Gvr7966lfYeU5fnoGOjFyUnwhQXtQCOJ20cXVpDO+74i8zeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adOYjTPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1CjEjUX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B67FC4CEE0;
-	Tue, 21 Jan 2025 17:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adOYjTPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D287C4CEDF;
+	Tue, 21 Jan 2025 17:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482254;
-	bh=bw/nIy0+tcPjRV0ijpBnSeMi0ZSuY5/qPly2e0BpKTQ=;
+	s=korg; t=1737482256;
+	bh=CpqLDlLCfTklK0C4/PLPyiZ6EKmAp07/8PdivTc49Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1CjEjUXnJ1cYlg6+eY+mz8/W6YA7PM+q7YV6F1LfANpLeltE4ESKDdeoFcVUqw6U
-	 wg0UqMLQUXc6gwZEnBvrW779deuoJj36Kwgc1qgpZzDEKMfznlSuncoGPYuGRxrr3B
-	 cJRNr9QTdNUvI4zH7m1fh4oROB7982ThscpyZIzg=
+	b=adOYjTPpAK0GX1//RUqzaDcoCgGCtNHb5xK7sIffpzCurTvUNarLxRjigMQEjx6wm
+	 TGfUeAkoIa6Wwh6nC5rRuvfTSUGaXjKQOxYUnGIyBaQt7vwQO3kxZz9SJU2jy6g5RL
+	 iG8bOPRtlIOdSNdHgP/bJbbWtm76y60uWaG5sgv0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>,
-	Karol Kolacinski <karol.kolacinski@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.12 014/122] ice: Add correct PHY lane assignment
-Date: Tue, 21 Jan 2025 18:51:02 +0100
-Message-ID: <20250121174533.549931886@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 015/122] cpuidle: teo: Update documentation after previous changes
+Date: Tue, 21 Jan 2025 18:51:03 +0100
+Message-ID: <20250121174533.592177962@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -55,301 +51,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karol Kolacinski <karol.kolacinski@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 258f5f905815979f15d5151d2ea4f20d8e057fe1 ]
+[ Upstream commit 5a597a19a2148d1c5cd987907a60c042ab0f62d5 ]
 
-Driver always naively assumes, that for PTP purposes, PHY lane to
-configure is corresponding to PF ID.
+After previous changes, the description of the teo governor in the
+documentation comment does not match the code any more, so update it
+as appropriate.
 
-This is not true for some port configurations, e.g.:
-- 2x50G per quad, where lanes used are 0 and 2 on each quad, but PF IDs
-  are 0 and 1
-- 100G per quad on 2 quads, where lanes used are 0 and 4, but PF IDs are
-  0 and 1
-
-Use correct PHY lane assignment by getting and parsing port options.
-This is read from the NVM by the FW and provided to the driver with
-the indication of active port split.
-
-Remove ice_is_muxed_topo(), which is no longer needed.
-
-Fixes: 4409ea1726cb ("ice: Adjust PTP init for 2x50G E825C devices")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>
-Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 449914398083 ("cpuidle: teo: Remove recent intercepts metric")
+Fixes: 2662342079f5 ("cpuidle: teo: Gather statistics regarding whether or not to stop the tick")
+Fixes: 6da8f9ba5a87 ("cpuidle: teo: Skip tick_nohz_get_sleep_length() call in some cases")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Link: https://patch.msgid.link/6120335.lOV4Wx5bFT@rjwysocki.net
+[ rjw: Corrected 3 typos found by Christian ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/ice/ice_adminq_cmd.h   |  1 +
- drivers/net/ethernet/intel/ice/ice_common.c   | 51 +++++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_common.h   |  1 +
- drivers/net/ethernet/intel/ice/ice_main.c     |  6 +--
- drivers/net/ethernet/intel/ice/ice_ptp.c      | 23 ++++-----
- drivers/net/ethernet/intel/ice/ice_ptp.h      |  4 +-
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c   | 26 +---------
- drivers/net/ethernet/intel/ice/ice_type.h     |  1 -
- 8 files changed, 68 insertions(+), 45 deletions(-)
+ drivers/cpuidle/governors/teo.c | 91 +++++++++++++++++----------------
+ 1 file changed, 48 insertions(+), 43 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-index 79a6edd0be0ec..80f3dfd271243 100644
---- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-+++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
-@@ -1648,6 +1648,7 @@ struct ice_aqc_get_port_options_elem {
- #define ICE_AQC_PORT_OPT_MAX_LANE_25G	5
- #define ICE_AQC_PORT_OPT_MAX_LANE_50G	6
- #define ICE_AQC_PORT_OPT_MAX_LANE_100G	7
-+#define ICE_AQC_PORT_OPT_MAX_LANE_200G	8
- 
- 	u8 global_scid[2];
- 	u8 phy_scid[2];
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index f1324e25b2af1..068a467de1d56 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -4074,6 +4074,57 @@ ice_aq_set_port_option(struct ice_hw *hw, u8 lport, u8 lport_valid,
- 	return ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
- }
- 
-+/**
-+ * ice_get_phy_lane_number - Get PHY lane number for current adapter
-+ * @hw: pointer to the hw struct
+diff --git a/drivers/cpuidle/governors/teo.c b/drivers/cpuidle/governors/teo.c
+index f2992f92d8db8..173ddcac540ad 100644
+--- a/drivers/cpuidle/governors/teo.c
++++ b/drivers/cpuidle/governors/teo.c
+@@ -10,25 +10,27 @@
+  * DOC: teo-description
+  *
+  * The idea of this governor is based on the observation that on many systems
+- * timer events are two or more orders of magnitude more frequent than any
+- * other interrupts, so they are likely to be the most significant cause of CPU
+- * wakeups from idle states.  Moreover, information about what happened in the
+- * (relatively recent) past can be used to estimate whether or not the deepest
+- * idle state with target residency within the (known) time till the closest
+- * timer event, referred to as the sleep length, is likely to be suitable for
+- * the upcoming CPU idle period and, if not, then which of the shallower idle
+- * states to choose instead of it.
++ * timer interrupts are two or more orders of magnitude more frequent than any
++ * other interrupt types, so they are likely to dominate CPU wakeup patterns.
++ * Moreover, in principle, the time when the next timer event is going to occur
++ * can be determined at the idle state selection time, although doing that may
++ * be costly, so it can be regarded as the most reliable source of information
++ * for idle state selection.
+  *
+- * Of course, non-timer wakeup sources are more important in some use cases
+- * which can be covered by taking a few most recent idle time intervals of the
+- * CPU into account.  However, even in that context it is not necessary to
+- * consider idle duration values greater than the sleep length, because the
+- * closest timer will ultimately wake up the CPU anyway unless it is woken up
+- * earlier.
++ * Of course, non-timer wakeup sources are more important in some use cases,
++ * but even then it is generally unnecessary to consider idle duration values
++ * greater than the time time till the next timer event, referred as the sleep
++ * length in what follows, because the closest timer will ultimately wake up the
++ * CPU anyway unless it is woken up earlier.
+  *
+- * Thus this governor estimates whether or not the prospective idle duration of
+- * a CPU is likely to be significantly shorter than the sleep length and selects
+- * an idle state for it accordingly.
++ * However, since obtaining the sleep length may be costly, the governor first
++ * checks if it can select a shallow idle state using wakeup pattern information
++ * from recent times, in which case it can do without knowing the sleep length
++ * at all.  For this purpose, it counts CPU wakeup events and looks for an idle
++ * state whose target residency has not exceeded the idle duration (measured
++ * after wakeup) in the majority of relevant recent cases.  If the target
++ * residency of that state is small enough, it may be used right away and the
++ * sleep length need not be determined.
+  *
+  * The computations carried out by this governor are based on using bins whose
+  * boundaries are aligned with the target residency parameter values of the CPU
+@@ -39,7 +41,11 @@
+  * idle state 2, the third bin spans from the target residency of idle state 2
+  * up to, but not including, the target residency of idle state 3 and so on.
+  * The last bin spans from the target residency of the deepest idle state
+- * supplied by the driver to infinity.
++ * supplied by the driver to the scheduler tick period length or to infinity if
++ * the tick period length is less than the target residency of that state.  In
++ * the latter case, the governor also counts events with the measured idle
++ * duration between the tick period length and the target residency of the
++ * deepest idle state.
+  *
+  * Two metrics called "hits" and "intercepts" are associated with each bin.
+  * They are updated every time before selecting an idle state for the given CPU
+@@ -49,47 +55,46 @@
+  * sleep length and the idle duration measured after CPU wakeup fall into the
+  * same bin (that is, the CPU appears to wake up "on time" relative to the sleep
+  * length).  In turn, the "intercepts" metric reflects the relative frequency of
+- * situations in which the measured idle duration is so much shorter than the
+- * sleep length that the bin it falls into corresponds to an idle state
+- * shallower than the one whose bin is fallen into by the sleep length (these
+- * situations are referred to as "intercepts" below).
++ * non-timer wakeup events for which the measured idle duration falls into a bin
++ * that corresponds to an idle state shallower than the one whose bin is fallen
++ * into by the sleep length (these events are also referred to as "intercepts"
++ * below).
+  *
+  * In order to select an idle state for a CPU, the governor takes the following
+  * steps (modulo the possible latency constraint that must be taken into account
+  * too):
+  *
+- * 1. Find the deepest CPU idle state whose target residency does not exceed
+- *    the current sleep length (the candidate idle state) and compute 2 sums as
+- *    follows:
++ * 1. Find the deepest enabled CPU idle state (the candidate idle state) and
++ *    compute 2 sums as follows:
+  *
+- *    - The sum of the "hits" and "intercepts" metrics for the candidate state
+- *      and all of the deeper idle states (it represents the cases in which the
+- *      CPU was idle long enough to avoid being intercepted if the sleep length
+- *      had been equal to the current one).
++ *    - The sum of the "hits" metric for all of the idle states shallower than
++ *      the candidate one (it represents the cases in which the CPU was likely
++ *      woken up by a timer).
+  *
+- *    - The sum of the "intercepts" metrics for all of the idle states shallower
+- *      than the candidate one (it represents the cases in which the CPU was not
+- *      idle long enough to avoid being intercepted if the sleep length had been
+- *      equal to the current one).
++ *    - The sum of the "intercepts" metric for all of the idle states shallower
++ *      than the candidate one (it represents the cases in which the CPU was
++ *      likely woken up by a non-timer wakeup source).
+  *
+- * 2. If the second sum is greater than the first one the CPU is likely to wake
+- *    up early, so look for an alternative idle state to select.
++ * 2. If the second sum computed in step 1 is greater than a half of the sum of
++ *    both metrics for the candidate state bin and all subsequent bins(if any),
++ *    a shallower idle state is likely to be more suitable, so look for it.
+  *
+- *    - Traverse the idle states shallower than the candidate one in the
++ *    - Traverse the enabled idle states shallower than the candidate one in the
+  *      descending order.
+  *
+  *    - For each of them compute the sum of the "intercepts" metrics over all
+  *      of the idle states between it and the candidate one (including the
+  *      former and excluding the latter).
+  *
+- *    - If each of these sums that needs to be taken into account (because the
+- *      check related to it has indicated that the CPU is likely to wake up
+- *      early) is greater than a half of the corresponding sum computed in step
+- *      1 (which means that the target residency of the state in question had
+- *      not exceeded the idle duration in over a half of the relevant cases),
+- *      select the given idle state instead of the candidate one.
++ *    - If this sum is greater than a half of the second sum computed in step 1,
++ *      use the given idle state as the new candidate one.
+  *
+- * 3. By default, select the candidate state.
++ * 3. If the current candidate state is state 0 or its target residency is short
++ *    enough, return it and prevent the scheduler tick from being stopped.
 + *
-+ * Return: PHY lane number on success, negative error code otherwise.
-+ */
-+int ice_get_phy_lane_number(struct ice_hw *hw)
-+{
-+	struct ice_aqc_get_port_options_elem *options;
-+	unsigned int lport = 0;
-+	unsigned int lane;
-+	int err;
-+
-+	options = kcalloc(ICE_AQC_PORT_OPT_MAX, sizeof(*options), GFP_KERNEL);
-+	if (!options)
-+		return -ENOMEM;
-+
-+	for (lane = 0; lane < ICE_MAX_PORT_PER_PCI_DEV; lane++) {
-+		u8 options_count = ICE_AQC_PORT_OPT_MAX;
-+		u8 speed, active_idx, pending_idx;
-+		bool active_valid, pending_valid;
-+
-+		err = ice_aq_get_port_options(hw, options, &options_count, lane,
-+					      true, &active_idx, &active_valid,
-+					      &pending_idx, &pending_valid);
-+		if (err)
-+			goto err;
-+
-+		if (!active_valid)
-+			continue;
-+
-+		speed = options[active_idx].max_lane_speed;
-+		/* If we don't get speed for this lane, it's unoccupied */
-+		if (speed > ICE_AQC_PORT_OPT_MAX_LANE_200G)
-+			continue;
-+
-+		if (hw->pf_id == lport) {
-+			kfree(options);
-+			return lane;
-+		}
-+
-+		lport++;
-+	}
-+
-+	/* PHY lane not found */
-+	err = -ENXIO;
-+err:
-+	kfree(options);
-+	return err;
-+}
-+
- /**
-  * ice_aq_sff_eeprom
-  * @hw: pointer to the HW struct
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.h b/drivers/net/ethernet/intel/ice/ice_common.h
-index 27208a60cece5..fe6f88cfd9486 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.h
-+++ b/drivers/net/ethernet/intel/ice/ice_common.h
-@@ -193,6 +193,7 @@ ice_aq_get_port_options(struct ice_hw *hw,
- int
- ice_aq_set_port_option(struct ice_hw *hw, u8 lport, u8 lport_valid,
- 		       u8 new_option);
-+int ice_get_phy_lane_number(struct ice_hw *hw);
- int
- ice_aq_sff_eeprom(struct ice_hw *hw, u16 lport, u8 bus_addr,
- 		  u16 mem_addr, u8 page, u8 set_page, u8 *data, u8 length,
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 8f2e758c39427..45eefe22fb5b7 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -1144,7 +1144,7 @@ ice_link_event(struct ice_pf *pf, struct ice_port_info *pi, bool link_up,
- 	if (link_up == old_link && link_speed == old_link_speed)
- 		return 0;
- 
--	ice_ptp_link_change(pf, pf->hw.pf_id, link_up);
-+	ice_ptp_link_change(pf, link_up);
- 
- 	if (ice_is_dcb_active(pf)) {
- 		if (test_bit(ICE_FLAG_DCB_ENA, pf->flags))
-@@ -6744,7 +6744,7 @@ static int ice_up_complete(struct ice_vsi *vsi)
- 		ice_print_link_msg(vsi, true);
- 		netif_tx_start_all_queues(vsi->netdev);
- 		netif_carrier_on(vsi->netdev);
--		ice_ptp_link_change(pf, pf->hw.pf_id, true);
-+		ice_ptp_link_change(pf, true);
- 	}
- 
- 	/* Perform an initial read of the statistics registers now to
-@@ -7214,7 +7214,7 @@ int ice_down(struct ice_vsi *vsi)
- 
- 	if (vsi->netdev) {
- 		vlan_err = ice_vsi_del_vlan_zero(vsi);
--		ice_ptp_link_change(vsi->back, vsi->back->hw.pf_id, false);
-+		ice_ptp_link_change(vsi->back, false);
- 		netif_carrier_off(vsi->netdev);
- 		netif_tx_disable(vsi->netdev);
- 	}
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 0b3dd87a331c7..7c6f81beaee46 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -1466,10 +1466,9 @@ ice_ptp_port_phy_restart(struct ice_ptp_port *ptp_port)
- /**
-  * ice_ptp_link_change - Reconfigure PTP after link status change
-  * @pf: Board private structure
-- * @port: Port for which the PHY start is set
-  * @linkup: Link is up or down
++ * 4. Obtain the sleep length value and check if it is below the target
++ *    residency of the current candidate state, in which case a new shallower
++ *    candidate state needs to be found, so look for it.
   */
--void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup)
-+void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
- {
- 	struct ice_ptp_port *ptp_port;
- 	struct ice_hw *hw = &pf->hw;
-@@ -1477,14 +1476,7 @@ void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup)
- 	if (pf->ptp.state != ICE_PTP_READY)
- 		return;
  
--	if (WARN_ON_ONCE(port >= hw->ptp.num_lports))
--		return;
--
- 	ptp_port = &pf->ptp.port;
--	if (ice_is_e825c(hw) && hw->ptp.is_2x50g_muxed_topo)
--		port *= 2;
--	if (WARN_ON_ONCE(ptp_port->port_num != port))
--		return;
- 
- 	/* Update cached link status for this port immediately */
- 	ptp_port->link_up = linkup;
-@@ -3383,10 +3375,17 @@ void ice_ptp_init(struct ice_pf *pf)
- {
- 	struct ice_ptp *ptp = &pf->ptp;
- 	struct ice_hw *hw = &pf->hw;
--	int err;
-+	int lane_num, err;
- 
- 	ptp->state = ICE_PTP_INITIALIZING;
- 
-+	lane_num = ice_get_phy_lane_number(hw);
-+	if (lane_num < 0) {
-+		err = lane_num;
-+		goto err_exit;
-+	}
-+
-+	ptp->port.port_num = (u8)lane_num;
- 	ice_ptp_init_hw(hw);
- 
- 	ice_ptp_init_tx_interrupt_mode(pf);
-@@ -3407,10 +3406,6 @@ void ice_ptp_init(struct ice_pf *pf)
- 	if (err)
- 		goto err_exit;
- 
--	ptp->port.port_num = hw->pf_id;
--	if (ice_is_e825c(hw) && hw->ptp.is_2x50g_muxed_topo)
--		ptp->port.port_num = hw->pf_id * 2;
--
- 	err = ice_ptp_init_port(pf, &ptp->port);
- 	if (err)
- 		goto err_exit;
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index 5615efc42c624..f1cfa6aa4e76b 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -332,7 +332,7 @@ void ice_ptp_prepare_for_reset(struct ice_pf *pf,
- 			       enum ice_reset_req reset_type);
- void ice_ptp_init(struct ice_pf *pf);
- void ice_ptp_release(struct ice_pf *pf);
--void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup);
-+void ice_ptp_link_change(struct ice_pf *pf, bool linkup);
- #else /* IS_ENABLED(CONFIG_PTP_1588_CLOCK) */
- static inline int ice_ptp_set_ts_config(struct ice_pf *pf, struct ifreq *ifr)
- {
-@@ -380,7 +380,7 @@ static inline void ice_ptp_prepare_for_reset(struct ice_pf *pf,
- }
- static inline void ice_ptp_init(struct ice_pf *pf) { }
- static inline void ice_ptp_release(struct ice_pf *pf) { }
--static inline void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup)
-+static inline void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
- {
- }
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index 28bd4815ebcf3..7190fde16c868 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -2698,26 +2698,6 @@ static int ice_get_phy_tx_tstamp_ready_eth56g(struct ice_hw *hw, u8 port,
- 	return 0;
- }
- 
--/**
-- * ice_is_muxed_topo - detect breakout 2x50G topology for E825C
-- * @hw: pointer to the HW struct
-- *
-- * Return: true if it's 2x50 breakout topology, false otherwise
-- */
--static bool ice_is_muxed_topo(struct ice_hw *hw)
--{
--	u8 link_topo;
--	bool mux;
--	u32 val;
--
--	val = rd32(hw, GLGEN_SWITCH_MODE_CONFIG);
--	mux = FIELD_GET(GLGEN_SWITCH_MODE_CONFIG_25X4_QUAD_M, val);
--	val = rd32(hw, GLGEN_MAC_LINK_TOPO);
--	link_topo = FIELD_GET(GLGEN_MAC_LINK_TOPO_LINK_TOPO_M, val);
--
--	return (mux && link_topo == ICE_LINK_TOPO_UP_TO_2_LINKS);
--}
--
- /**
-  * ice_ptp_init_phy_e825 - initialize PHY parameters
-  * @hw: pointer to the HW struct
-@@ -2740,12 +2720,8 @@ static void ice_ptp_init_phy_e825(struct ice_hw *hw)
- 
- 	ice_sb_access_ena_eth56g(hw, true);
- 	err = ice_read_phy_eth56g(hw, hw->pf_id, PHY_REG_REVISION, &phy_rev);
--	if (err || phy_rev != PHY_REVISION_ETH56G) {
-+	if (err || phy_rev != PHY_REVISION_ETH56G)
- 		ptp->phy_model = ICE_PHY_UNSUP;
--		return;
--	}
--
--	ptp->is_2x50g_muxed_topo = ice_is_muxed_topo(hw);
- }
- 
- /* E822 family functions
-diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
-index 479227bdff75e..609f31e0dfded 100644
---- a/drivers/net/ethernet/intel/ice/ice_type.h
-+++ b/drivers/net/ethernet/intel/ice/ice_type.h
-@@ -880,7 +880,6 @@ struct ice_ptp_hw {
- 	union ice_phy_params phy;
- 	u8 num_lports;
- 	u8 ports_per_phy;
--	bool is_2x50g_muxed_topo;
- };
- 
- /* Port hardware description */
+ #include <linux/cpuidle.h>
 -- 
 2.39.5
 
