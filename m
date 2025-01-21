@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B84A1F540C;
-	Tue, 21 Jan 2025 18:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349E61F472D;
+	Tue, 21 Jan 2025 18:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482727; cv=none; b=GwQpdJoMS3QYeioK1jDcSvQPdpOQ0fGQQbwy4VWes4giElhSJJBTspW7Dkru0do06LkU8EyJwJxvV7WiBLXq/JPKAzFzlbUD4Aj0vRjQ9gZZlAS1ixG2ai8II7r/whTtdz3onqFySp1j2KnT5zUrIUM+aRzN+orqAFUWjS6KbEQ=
+	t=1737482730; cv=none; b=HEfTQzU9UJqGgeHJSAWzGYSHt1qyDnei7sUN+W/OgCh/XwEwdJfscyQx0pwZvmOrR6Fc7tWw1lnhpLDws5NcoZNFpo3xB5cJ9M5cibXjThf9qVqLip9vZ1rnzQnJ6T42YCG0Ph0hQ31canQqtEc3zGwS+AQ8nOb+UZEq2KcrgwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482727; c=relaxed/simple;
-	bh=xCYRcKOeNN2cCrSUhicL4Rs4nb5+rosENxIDtw6DZCc=;
+	s=arc-20240116; t=1737482730; c=relaxed/simple;
+	bh=KZsJGG7f6YZvNZtqMnDZEeW2xOQvGBmrbac6/drMANw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCuVVRk6xcibtAcxPK3HmfshxSZdgT1R5GP3G/LguyR/XeEu62rnbVrsWNd/tuFEYOXr8Em2Mi+7xE5exBj3qM6gfqs6/rO/W5ngRevnf6PWWxG1TWU4w7w5BRHp+WvfBQQ5d/GkuixM3gphVqbrVC8zWCZgIgBBnueV9+mtVQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=czms5A7T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E2zK4BjNi3TLaWSBRnOK97RmPHF1GGjTQof0qbDqgquyRRdpVALNmKNMbEadwNlCVyQcXWrYkBLJwRgTBQhOuYDGpssy9jJ6ejtRbbMVHNa+QGGgOi/IwB6kgU+sAkixEkbZS9nQxW3PctLCdmF3+uwjdxxJ999s7zUJwos9K8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Cz93/cz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="czms5A7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1D7C4CEDF;
-	Tue, 21 Jan 2025 18:05:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Cz93/cz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE62EC4CEDF;
+	Tue, 21 Jan 2025 18:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482727;
-	bh=xCYRcKOeNN2cCrSUhicL4Rs4nb5+rosENxIDtw6DZCc=;
+	s=korg; t=1737482730;
+	bh=KZsJGG7f6YZvNZtqMnDZEeW2xOQvGBmrbac6/drMANw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=czms5A7Tg5FFJHKgAzxBIqG3RQcJhwy6jEJGskL/G8HwlE5Ug+V4qWr5dXupafLjz
-	 CP7U6pdRhLbEVCnzTIiCuzIyZETLC4bQ5iM0PyvGtvDoxwnZAoGCCTxcFHYKAE4Obc
-	 jmMNGE5XbeKG5AfzYL1G/JSGfeX7pPBPdX0aRlV4=
+	b=0Cz93/cz/iz+KtdkS/NvkO4Er7yJsQnAeDWavDPsijPV87ERe2oxAwNpEW3sw2w/E
+	 M2BIvRl7NvjBKRGnS80TQ+qrwJwTltEnc1VLEMuCjli8cyMauOuFm3pJ9F2Lx+h2UU
+	 eE7+eOmFe9G1qXKqvdirL7xH/0NpVjOLnE1q4Mtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Bin Lan <lanbincn@qq.com>
-Subject: [PATCH 6.1 52/64] drm/amd/display: Fix out-of-bounds access in dcn21_link_encoder_create
-Date: Tue, 21 Jan 2025 18:52:51 +0100
-Message-ID: <20250121174523.533878477@linuxfoundation.org>
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.1 53/64] drm/amdgpu: fix usage slab after free
+Date: Tue, 21 Jan 2025 18:52:52 +0100
+Message-ID: <20250121174523.572011611@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -52,112 +46,223 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-commit 63de35a8fcfca59ae8750d469a7eb220c7557baf upstream.
+commit b61badd20b443eabe132314669bb51a263982e5c upstream.
 
-An issue was identified in the dcn21_link_encoder_create function where
-an out-of-bounds access could occur when the hpd_source index was used
-to reference the link_enc_hpd_regs array. This array has a fixed size
-and the index was not being checked against the array's bounds before
-accessing it.
+[  +0.000021] BUG: KASAN: slab-use-after-free in drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
+[  +0.000027] Read of size 8 at addr ffff8881b8605f88 by task amd_pci_unplug/2147
 
-This fix adds a conditional check to ensure that the hpd_source index is
-within the valid range of the link_enc_hpd_regs array. If the index is
-out of bounds, the function now returns NULL to prevent undefined
-behavior.
+[  +0.000023] CPU: 6 PID: 2147 Comm: amd_pci_unplug Not tainted 6.10.0+ #1
+[  +0.000016] Hardware name: ASUS System Product Name/ROG STRIX B550-F GAMING (WI-FI), BIOS 1401 12/03/2020
+[  +0.000016] Call Trace:
+[  +0.000008]  <TASK>
+[  +0.000009]  dump_stack_lvl+0x76/0xa0
+[  +0.000017]  print_report+0xce/0x5f0
+[  +0.000017]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
+[  +0.000019]  ? srso_return_thunk+0x5/0x5f
+[  +0.000015]  ? kasan_complete_mode_report_info+0x72/0x200
+[  +0.000016]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
+[  +0.000019]  kasan_report+0xbe/0x110
+[  +0.000015]  ? drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
+[  +0.000023]  __asan_report_load8_noabort+0x14/0x30
+[  +0.000014]  drm_sched_entity_flush+0x6cb/0x7a0 [gpu_sched]
+[  +0.000020]  ? srso_return_thunk+0x5/0x5f
+[  +0.000013]  ? __kasan_check_write+0x14/0x30
+[  +0.000016]  ? __pfx_drm_sched_entity_flush+0x10/0x10 [gpu_sched]
+[  +0.000020]  ? srso_return_thunk+0x5/0x5f
+[  +0.000013]  ? __kasan_check_write+0x14/0x30
+[  +0.000013]  ? srso_return_thunk+0x5/0x5f
+[  +0.000013]  ? enable_work+0x124/0x220
+[  +0.000015]  ? __pfx_enable_work+0x10/0x10
+[  +0.000013]  ? srso_return_thunk+0x5/0x5f
+[  +0.000014]  ? free_large_kmalloc+0x85/0xf0
+[  +0.000016]  drm_sched_entity_destroy+0x18/0x30 [gpu_sched]
+[  +0.000020]  amdgpu_vce_sw_fini+0x55/0x170 [amdgpu]
+[  +0.000735]  ? __kasan_check_read+0x11/0x20
+[  +0.000016]  vce_v4_0_sw_fini+0x80/0x110 [amdgpu]
+[  +0.000726]  amdgpu_device_fini_sw+0x331/0xfc0 [amdgpu]
+[  +0.000679]  ? mutex_unlock+0x80/0xe0
+[  +0.000017]  ? __pfx_amdgpu_device_fini_sw+0x10/0x10 [amdgpu]
+[  +0.000662]  ? srso_return_thunk+0x5/0x5f
+[  +0.000014]  ? __kasan_check_write+0x14/0x30
+[  +0.000013]  ? srso_return_thunk+0x5/0x5f
+[  +0.000013]  ? mutex_unlock+0x80/0xe0
+[  +0.000016]  amdgpu_driver_release_kms+0x16/0x80 [amdgpu]
+[  +0.000663]  drm_minor_release+0xc9/0x140 [drm]
+[  +0.000081]  drm_release+0x1fd/0x390 [drm]
+[  +0.000082]  __fput+0x36c/0xad0
+[  +0.000018]  __fput_sync+0x3c/0x50
+[  +0.000014]  __x64_sys_close+0x7d/0xe0
+[  +0.000014]  x64_sys_call+0x1bc6/0x2680
+[  +0.000014]  do_syscall_64+0x70/0x130
+[  +0.000014]  ? srso_return_thunk+0x5/0x5f
+[  +0.000014]  ? irqentry_exit_to_user_mode+0x60/0x190
+[  +0.000015]  ? srso_return_thunk+0x5/0x5f
+[  +0.000014]  ? irqentry_exit+0x43/0x50
+[  +0.000012]  ? srso_return_thunk+0x5/0x5f
+[  +0.000013]  ? exc_page_fault+0x7c/0x110
+[  +0.000015]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[  +0.000014] RIP: 0033:0x7ffff7b14f67
+[  +0.000013] Code: ff e8 0d 16 02 00 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 03 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 41 c3 48 83 ec 18 89 7c 24 0c e8 73 ba f7 ff
+[  +0.000026] RSP: 002b:00007fffffffe378 EFLAGS: 00000246 ORIG_RAX: 0000000000000003
+[  +0.000019] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007ffff7b14f67
+[  +0.000014] RDX: 0000000000000000 RSI: 00007ffff7f6f47a RDI: 0000000000000003
+[  +0.000014] RBP: 00007fffffffe3a0 R08: 0000555555569890 R09: 0000000000000000
+[  +0.000014] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fffffffe5c8
+[  +0.000013] R13: 00005555555552a9 R14: 0000555555557d48 R15: 00007ffff7ffd040
+[  +0.000020]  </TASK>
 
-References:
+[  +0.000016] Allocated by task 383 on cpu 7 at 26.880319s:
+[  +0.000014]  kasan_save_stack+0x28/0x60
+[  +0.000008]  kasan_save_track+0x18/0x70
+[  +0.000007]  kasan_save_alloc_info+0x38/0x60
+[  +0.000007]  __kasan_kmalloc+0xc1/0xd0
+[  +0.000007]  kmalloc_trace_noprof+0x180/0x380
+[  +0.000007]  drm_sched_init+0x411/0xec0 [gpu_sched]
+[  +0.000012]  amdgpu_device_init+0x695f/0xa610 [amdgpu]
+[  +0.000658]  amdgpu_driver_load_kms+0x1a/0x120 [amdgpu]
+[  +0.000662]  amdgpu_pci_probe+0x361/0xf30 [amdgpu]
+[  +0.000651]  local_pci_probe+0xe7/0x1b0
+[  +0.000009]  pci_device_probe+0x248/0x890
+[  +0.000008]  really_probe+0x1fd/0x950
+[  +0.000008]  __driver_probe_device+0x307/0x410
+[  +0.000007]  driver_probe_device+0x4e/0x150
+[  +0.000007]  __driver_attach+0x223/0x510
+[  +0.000006]  bus_for_each_dev+0x102/0x1a0
+[  +0.000007]  driver_attach+0x3d/0x60
+[  +0.000006]  bus_add_driver+0x2ac/0x5f0
+[  +0.000006]  driver_register+0x13d/0x490
+[  +0.000008]  __pci_register_driver+0x1ee/0x2b0
+[  +0.000007]  llc_sap_close+0xb0/0x160 [llc]
+[  +0.000009]  do_one_initcall+0x9c/0x3e0
+[  +0.000008]  do_init_module+0x241/0x760
+[  +0.000008]  load_module+0x51ac/0x6c30
+[  +0.000006]  __do_sys_init_module+0x234/0x270
+[  +0.000007]  __x64_sys_init_module+0x73/0xc0
+[  +0.000006]  x64_sys_call+0xe3/0x2680
+[  +0.000006]  do_syscall_64+0x70/0x130
+[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-[   65.920507] ------------[ cut here ]------------
-[   65.920510] UBSAN: array-index-out-of-bounds in drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn21/dcn21_resource.c:1312:29
-[   65.920519] index 7 is out of range for type 'dcn10_link_enc_hpd_registers [5]'
-[   65.920523] CPU: 3 PID: 1178 Comm: modprobe Tainted: G           OE      6.8.0-cleanershaderfeatureresetasdntipmi200nv2132 #13
-[   65.920525] Hardware name: AMD Majolica-RN/Majolica-RN, BIOS WMJ0429N_Weekly_20_04_2 04/29/2020
-[   65.920527] Call Trace:
-[   65.920529]  <TASK>
-[   65.920532]  dump_stack_lvl+0x48/0x70
-[   65.920541]  dump_stack+0x10/0x20
-[   65.920543]  __ubsan_handle_out_of_bounds+0xa2/0xe0
-[   65.920549]  dcn21_link_encoder_create+0xd9/0x140 [amdgpu]
-[   65.921009]  link_create+0x6d3/0xed0 [amdgpu]
-[   65.921355]  create_links+0x18a/0x4e0 [amdgpu]
-[   65.921679]  dc_create+0x360/0x720 [amdgpu]
-[   65.921999]  ? dmi_matches+0xa0/0x220
-[   65.922004]  amdgpu_dm_init+0x2b6/0x2c90 [amdgpu]
-[   65.922342]  ? console_unlock+0x77/0x120
-[   65.922348]  ? dev_printk_emit+0x86/0xb0
-[   65.922354]  dm_hw_init+0x15/0x40 [amdgpu]
-[   65.922686]  amdgpu_device_init+0x26a8/0x33a0 [amdgpu]
-[   65.922921]  amdgpu_driver_load_kms+0x1b/0xa0 [amdgpu]
-[   65.923087]  amdgpu_pci_probe+0x1b7/0x630 [amdgpu]
-[   65.923087]  local_pci_probe+0x4b/0xb0
-[   65.923087]  pci_device_probe+0xc8/0x280
-[   65.923087]  really_probe+0x187/0x300
-[   65.923087]  __driver_probe_device+0x85/0x130
-[   65.923087]  driver_probe_device+0x24/0x110
-[   65.923087]  __driver_attach+0xac/0x1d0
-[   65.923087]  ? __pfx___driver_attach+0x10/0x10
-[   65.923087]  bus_for_each_dev+0x7d/0xd0
-[   65.923087]  driver_attach+0x1e/0x30
-[   65.923087]  bus_add_driver+0xf2/0x200
-[   65.923087]  driver_register+0x64/0x130
-[   65.923087]  ? __pfx_amdgpu_init+0x10/0x10 [amdgpu]
-[   65.923087]  __pci_register_driver+0x61/0x70
-[   65.923087]  amdgpu_init+0x7d/0xff0 [amdgpu]
-[   65.923087]  do_one_initcall+0x49/0x310
-[   65.923087]  ? kmalloc_trace+0x136/0x360
-[   65.923087]  do_init_module+0x6a/0x270
-[   65.923087]  load_module+0x1fce/0x23a0
-[   65.923087]  init_module_from_file+0x9c/0xe0
-[   65.923087]  ? init_module_from_file+0x9c/0xe0
-[   65.923087]  idempotent_init_module+0x179/0x230
-[   65.923087]  __x64_sys_finit_module+0x5d/0xa0
-[   65.923087]  do_syscall_64+0x76/0x120
-[   65.923087]  entry_SYSCALL_64_after_hwframe+0x6e/0x76
-[   65.923087] RIP: 0033:0x7f2d80f1e88d
-[   65.923087] Code: 5b 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 b5 0f 00 f7 d8 64 89 01 48
-[   65.923087] RSP: 002b:00007ffc7bc1aa78 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-[   65.923087] RAX: ffffffffffffffda RBX: 0000564c9c1db130 RCX: 00007f2d80f1e88d
-[   65.923087] RDX: 0000000000000000 RSI: 0000564c9c1e5480 RDI: 000000000000000f
-[   65.923087] RBP: 0000000000040000 R08: 0000000000000000 R09: 0000000000000002
-[   65.923087] R10: 000000000000000f R11: 0000000000000246 R12: 0000564c9c1e5480
-[   65.923087] R13: 0000564c9c1db260 R14: 0000000000000000 R15: 0000564c9c1e54b0
-[   65.923087]  </TASK>
-[   65.923927] ---[ end trace ]---
+[  +0.000015] Freed by task 2147 on cpu 6 at 160.507651s:
+[  +0.000013]  kasan_save_stack+0x28/0x60
+[  +0.000007]  kasan_save_track+0x18/0x70
+[  +0.000007]  kasan_save_free_info+0x3b/0x60
+[  +0.000007]  poison_slab_object+0x115/0x1c0
+[  +0.000007]  __kasan_slab_free+0x34/0x60
+[  +0.000007]  kfree+0xfa/0x2f0
+[  +0.000007]  drm_sched_fini+0x19d/0x410 [gpu_sched]
+[  +0.000012]  amdgpu_fence_driver_sw_fini+0xc4/0x2f0 [amdgpu]
+[  +0.000662]  amdgpu_device_fini_sw+0x77/0xfc0 [amdgpu]
+[  +0.000653]  amdgpu_driver_release_kms+0x16/0x80 [amdgpu]
+[  +0.000655]  drm_minor_release+0xc9/0x140 [drm]
+[  +0.000071]  drm_release+0x1fd/0x390 [drm]
+[  +0.000071]  __fput+0x36c/0xad0
+[  +0.000008]  __fput_sync+0x3c/0x50
+[  +0.000007]  __x64_sys_close+0x7d/0xe0
+[  +0.000007]  x64_sys_call+0x1bc6/0x2680
+[  +0.000007]  do_syscall_64+0x70/0x130
+[  +0.000007]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Roman Li <roman.li@amd.com>
+[  +0.000014] The buggy address belongs to the object at ffff8881b8605f80
+               which belongs to the cache kmalloc-64 of size 64
+[  +0.000020] The buggy address is located 8 bytes inside of
+               freed 64-byte region [ffff8881b8605f80, ffff8881b8605fc0)
+
+[  +0.000028] The buggy address belongs to the physical page:
+[  +0.000011] page: refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1b8605
+[  +0.000008] anon flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
+[  +0.000007] page_type: 0xffffefff(slab)
+[  +0.000009] raw: 0017ffffc0000000 ffff8881000428c0 0000000000000000 dead000000000001
+[  +0.000006] raw: 0000000000000000 0000000000200020 00000001ffffefff 0000000000000000
+[  +0.000006] page dumped because: kasan: bad access detected
+
+[  +0.000012] Memory state around the buggy address:
+[  +0.000011]  ffff8881b8605e80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+[  +0.000015]  ffff8881b8605f00: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+[  +0.000015] >ffff8881b8605f80: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
+[  +0.000013]                       ^
+[  +0.000011]  ffff8881b8606000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fc
+[  +0.000014]  ffff8881b8606080: fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb fb
+[  +0.000013] ==================================================================
+
+The issue reproduced on VG20 during the IGT pci_unplug test.
+The root cause of the issue is that the function drm_sched_fini is called before drm_sched_entity_kill.
+In drm_sched_fini, the drm_sched_rq structure is freed, but this structure is later accessed by
+each entity within the run queue, leading to invalid memory access.
+To resolve this, the order of cleanup calls is updated:
+
+    Before:
+        amdgpu_fence_driver_sw_fini
+        amdgpu_device_ip_fini
+
+    After:
+        amdgpu_device_ip_fini
+        amdgpu_fence_driver_sw_fini
+
+This updated order ensures that all entities in the IPs are cleaned up first, followed by proper
+cleanup of the schedulers.
+
+Additional Investigation:
+
+During debugging, another issue was identified in the amdgpu_vce_sw_fini function. The vce.vcpu_bo
+buffer must be freed only as the final step in the cleanup process to prevent any premature
+access during earlier cleanup stages.
+
+v2: Using Christian suggestion call drm_sched_entity_destroy before drm_sched_fini.
+
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Bin Lan <lanbincn@qq.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn21/dcn21_resource.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c    |    6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn21/dcn21_resource.c
-@@ -1340,7 +1340,7 @@ static struct link_encoder *dcn21_link_e
- 		kzalloc(sizeof(struct dcn21_link_encoder), GFP_KERNEL);
- 	int link_regs_id;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4131,8 +4131,8 @@ void amdgpu_device_fini_sw(struct amdgpu
+ 	int idx;
+ 	bool px;
  
--	if (!enc21)
-+	if (!enc21 || enc_init_data->hpd_source >= ARRAY_SIZE(link_enc_hpd_regs))
- 		return NULL;
+-	amdgpu_fence_driver_sw_fini(adev);
+ 	amdgpu_device_ip_fini(adev);
++	amdgpu_fence_driver_sw_fini(adev);
+ 	release_firmware(adev->firmware.gpu_info_fw);
+ 	adev->firmware.gpu_info_fw = NULL;
+ 	adev->accel_working = false;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c
+@@ -220,15 +220,15 @@ int amdgpu_vce_sw_fini(struct amdgpu_dev
  
- 	link_regs_id =
+ 	drm_sched_entity_destroy(&adev->vce.entity);
+ 
+-	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,
+-		(void **)&adev->vce.cpu_addr);
+-
+ 	for (i = 0; i < adev->vce.num_rings; i++)
+ 		amdgpu_ring_fini(&adev->vce.ring[i]);
+ 
+ 	release_firmware(adev->vce.fw);
+ 	mutex_destroy(&adev->vce.idle_mutex);
+ 
++	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,
++		(void **)&adev->vce.cpu_addr);
++
+ 	return 0;
+ }
+ 
 
 
