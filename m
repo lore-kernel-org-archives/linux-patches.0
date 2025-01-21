@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA3AE571;
-	Tue, 21 Jan 2025 18:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4497DE571;
+	Tue, 21 Jan 2025 18:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482522; cv=none; b=Vm/G0AA2R0rs4ylHyscRfRdXhaFHAjSPh01MCcdPNzDswC8C/DtG5CbpZcL77NUKDRxYP4b4QtDq0Ynr+TXN+wxe4axlcSxDst3ywTt5KMvQIa1ydX4yEB4em9eS8Bg8jfqVvu0MQXucnrYWIWDrXPPFWw2PUtjalR2MxIYlJ78=
+	t=1737482525; cv=none; b=Ng+mVjRKEuowZIF8dmk9DMViP/lJZvFfyy7OswvYhz6+NfoUeCFrcWAuqci+vpTYz48NgP3l5SFrPpdjbTHAA37mX0itVwCqSpTlv6czXpLrhtOkTjil7xmiLtgTlwCLHwpqCxaU8BVk+6jsp5C+D/dwPhHPk2Kdp1+A5dNOlng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482522; c=relaxed/simple;
-	bh=2P/HjZrHK3YPmmqIl5o+WqF+6RizUSlMd5ktSeAoxn8=;
+	s=arc-20240116; t=1737482525; c=relaxed/simple;
+	bh=Ikg7oLP2dEsYY8AMnZbhgbmqVzbCKam7UiZOozKW85Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sjyb8HoXnlU+gHz4DcToM7/XBkliJBt8o5kyw8Qx7Mv+hONoItAhoBWbc/MNPbLAdQJzMhD2E4wzQ7K+01rM5utcEGEaJVPEGXuMadOIyK5Wg8TdINKD+G0hr7rpcfcdcj05o61uhxFLo1yQEGZIf3LA5bQQw+uGd6U9XjPcBGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRfN3SDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WwsSmrbX1mZ3gkZNNWlZQ0Jv9Bq7/gTcIIyOz87ey9V1/28pUmrxIOBEkb9lczaFZVo85NGC3fFDYAgwhrwSNxY5ihh8LbfszXZOohWTEm4cHbZHFpAPRY7orz5LD8Yq+LvuhPIF/p4Gb2t/WANzwSfc4KRz+Mw41yhHn9rC7CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryhbPFn/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRfN3SDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61A4C4CEDF;
-	Tue, 21 Jan 2025 18:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryhbPFn/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD352C4CEDF;
+	Tue, 21 Jan 2025 18:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482522;
-	bh=2P/HjZrHK3YPmmqIl5o+WqF+6RizUSlMd5ktSeAoxn8=;
+	s=korg; t=1737482525;
+	bh=Ikg7oLP2dEsYY8AMnZbhgbmqVzbCKam7UiZOozKW85Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRfN3SDsOQIs+TMuMemum2GtXBJk0oGEw+OeRa0XUEBc4Kklgy7lhD4bAu6j6a7gS
-	 e/97S37WiiSbBw2InPBS7lDqDdEjsnikF/jgNDGNhZc4zR0I+z9rqvHybyOUmRXKl2
-	 JjqSg1aLZFniZm0ZlcuyzpsC0P9qFmbC0gEUohdk=
+	b=ryhbPFn/Lb+Cvec7opGN3rfrgo1PTIiNy2Ju9XIBA1ex+nZQ7aQt96J9wyX9LhL62
+	 oSyuzgSxx99Jlqti5zA7RNlL+hFH8+5txlg6OjOtGkW7OGCCfhdBOeNE8waeLEHQwj
+	 YgA+ilnjcoXahl6xbd50aFz+yqiW9/maj4eBH4jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.12 106/122] hrtimers: Handle CPU state correctly on hotplug
-Date: Tue, 21 Jan 2025 18:52:34 +0100
-Message-ID: <20250121174537.126406386@linuxfoundation.org>
+Subject: [PATCH 6.12 107/122] timers/migration: Fix another race between hotplug and idle entry/exit
+Date: Tue, 21 Jan 2025 18:52:35 +0100
+Message-ID: <20250121174537.164063933@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -50,101 +50,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 2f8dea1692eef2b7ba6a256246ed82c365fdc686 upstream.
+commit b729cc1ec21a5899b7879ccfbe1786664928d597 upstream.
 
-Consider a scenario where a CPU transitions from CPUHP_ONLINE to halfway
-through a CPU hotunplug down to CPUHP_HRTIMERS_PREPARE, and then back to
-CPUHP_ONLINE:
+Commit 10a0e6f3d3db ("timers/migration: Move hierarchy setup into
+cpuhotplug prepare callback") fixed a race between idle exit and CPU
+hotplug up leading to a wrong "0" value migrator assigned to the top
+level. However there is still a situation that remains unhandled:
 
-Since hrtimers_prepare_cpu() does not run, cpu_base.hres_active remains set
-to 1 throughout. However, during a CPU unplug operation, the tick and the
-clockevents are shut down at CPUHP_AP_TICK_DYING. On return to the online
-state, for instance CFS incorrectly assumes that the hrtick is already
-active, and the chance of the clockevent device to transition to oneshot
-mode is also lost forever for the CPU, unless it goes back to a lower state
-than CPUHP_HRTIMERS_PREPARE once.
+         [GRP0:0]
+        migrator  = TMIGR_NONE
+        active    = NONE
+        groupmask = 0
+        /     \      \
+       0       1     2..7
+     idle      idle   idle
 
-This round-trip reveals another issue; cpu_base.online is not set to 1
-after the transition, which appears as a WARN_ON_ONCE in enqueue_hrtimer().
+0) The system is fully idle.
 
-Aside of that, the bulk of the per CPU state is not reset either, which
-means there are dangling pointers in the worst case.
+         [GRP0:0]
+        migrator  = CPU 0
+        active    = CPU 0
+        groupmask = 0
+        /     \      \
+       0       1     2..7
+     active   idle   idle
 
-Address this by adding a corresponding startup() callback, which resets the
-stale per CPU state and sets the online flag.
+1) CPU 0 is activating. It has done the cmpxchg on the top's ->migr_state
+but it hasn't yet returned to __walk_groups().
 
-[ tglx: Make the new callback unconditionally available, remove the online
-  	modification in the prepare() callback and clear the remaining
-  	state in the starting callback instead of the prepare callback ]
+         [GRP0:0]
+        migrator  = CPU 0
+        active    = CPU 0, CPU 1
+        groupmask = 0
+        /     \      \
+       0       1     2..7
+     active  active  idle
 
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
+2) CPU 1 is activating. CPU 0 stays the migrator (still stuck in
+__walk_groups(), delayed by #VMEXIT for example).
+
+                 [GRP1:0]
+              migrator = TMIGR_NONE
+              active   = NONE
+              groupmask = 0
+              /                  \
+        [GRP0:0]                      [GRP0:1]
+       migrator  = CPU 0           migrator = TMIGR_NONE
+       active    = CPU 0, CPU1     active   = NONE
+       groupmask = 2               groupmask = 1
+       /     \      \
+      0       1     2..7                   8
+    active  active  idle              !online
+
+3) CPU 8 is preparing to boot. CPUHP_TMIGR_PREPARE is being ran by CPU 1
+which has created the GRP0:1 and the new top GRP1:0 connected to GRP0:1
+and GRP0:0. The groupmask of GRP0:0 is now 2. CPU 1 hasn't yet
+propagated its activation up to GRP1:0.
+
+                 [GRP1:0]
+              migrator = 0 (!!!)
+              active   = NONE
+              groupmask = 0
+              /                  \
+        [GRP0:0]                  [GRP0:1]
+       migrator  = CPU 0           migrator = TMIGR_NONE
+       active    = CPU 0, CPU1     active   = NONE
+       groupmask = 2               groupmask = 1
+       /     \      \
+      0       1     2..7                   8
+    active  active  idle                !online
+
+4) CPU 0 finally resumed after its #VMEXIT. It's in __walk_groups()
+returning from tmigr_cpu_active(). The new top GRP1:0 is visible and
+fetched but the freshly updated groupmask of GRP0:0 may not be visible
+due to lack of ordering! As a result tmigr_active_up() is called to
+GRP0:0 with a child's groupmask of "0". This buggy "0" groupmask then
+becomes the migrator for GRP1:0 forever. As a result, timers on a fully
+idle system get ignored.
+
+One possible fix would be to define TMIGR_NONE as "0" so that such a
+race would have no effect. And after all TMIGR_NONE doesn't need to be
+anything else. However this would leave an uncomfortable state machine
+where gears happen not to break by chance but are vulnerable to future
+modifications.
+
+Keep TMIGR_NONE as is instead and pre-initialize to "1" the groupmask of
+any newly created top level. This groupmask is guaranteed to be visible
+upon fetching the corresponding group for the 1st time:
+
+_ By the upcoming CPU thanks to CPU hotplug synchronization between the
+  control CPU (BP) and the booting one (AP).
+
+_ By the control CPU since the groupmask and parent pointers are
+  initialized locally.
+
+_ By all CPUs belonging to the same group than the control CPU because
+  they must wait for it to ever become idle before needing to walk to
+  the new top. The cmpcxhg() on ->migr_state then makes sure its
+  groupmask is visible.
+
+With this pre-initialization, it is guaranteed that if a future top level
+is linked to an old one, it is walked through with a valid groupmask.
+
+Fixes: 10a0e6f3d3db ("timers/migration: Move hierarchy setup into cpuhotplug prepare callback")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241220134421.3809834-1-koichiro.den@canonical.com
+Link: https://lore.kernel.org/all/20250114231507.21672-2-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hrtimer.h |    1 +
- kernel/cpu.c            |    2 +-
- kernel/time/hrtimer.c   |   11 ++++++++++-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ kernel/time/timer_migration.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -379,6 +379,7 @@ extern void __init hrtimers_init(void);
- extern void sysrq_timer_list_show(void);
+diff --git a/kernel/time/timer_migration.c b/kernel/time/timer_migration.c
+index 8d57f7686bb0..c8a8ea2e5b98 100644
+--- a/kernel/time/timer_migration.c
++++ b/kernel/time/timer_migration.c
+@@ -1487,6 +1487,21 @@ static void tmigr_init_group(struct tmigr_group *group, unsigned int lvl,
+ 	s.seq = 0;
+ 	atomic_set(&group->migr_state, s.state);
  
- int hrtimers_prepare_cpu(unsigned int cpu);
-+int hrtimers_cpu_starting(unsigned int cpu);
- #ifdef CONFIG_HOTPLUG_CPU
- int hrtimers_cpu_dying(unsigned int cpu);
- #else
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -2179,7 +2179,7 @@ static struct cpuhp_step cpuhp_hp_states
- 	},
- 	[CPUHP_AP_HRTIMERS_DYING] = {
- 		.name			= "hrtimers:dying",
--		.startup.single		= NULL,
-+		.startup.single		= hrtimers_cpu_starting,
- 		.teardown.single	= hrtimers_cpu_dying,
- 	},
- 	[CPUHP_AP_TICK_DYING] = {
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2156,6 +2156,15 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	}
- 
- 	cpu_base->cpu = cpu;
-+	hrtimer_cpu_base_init_expiry_lock(cpu_base);
-+	return 0;
-+}
++	/*
++	 * If this is a new top-level, prepare its groupmask in advance.
++	 * This avoids accidents where yet another new top-level is
++	 * created in the future and made visible before the current groupmask.
++	 */
++	if (list_empty(&tmigr_level_list[lvl])) {
++		group->groupmask = BIT(0);
++		/*
++		 * The previous top level has prepared its groupmask already,
++		 * simply account it as the first child.
++		 */
++		if (lvl > 0)
++			group->num_children = 1;
++	}
 +
-+int hrtimers_cpu_starting(unsigned int cpu)
-+{
-+	struct hrtimer_cpu_base *cpu_base = this_cpu_ptr(&hrtimer_bases);
+ 	timerqueue_init_head(&group->events);
+ 	timerqueue_init(&group->groupevt.nextevt);
+ 	group->groupevt.nextevt.expires = KTIME_MAX;
+@@ -1550,8 +1565,20 @@ static void tmigr_connect_child_parent(struct tmigr_group *child,
+ 	raw_spin_lock_irq(&child->lock);
+ 	raw_spin_lock_nested(&parent->lock, SINGLE_DEPTH_NESTING);
+ 
++	if (activate) {
++		/*
++		 * @child is the old top and @parent the new one. In this
++		 * case groupmask is pre-initialized and @child already
++		 * accounted, along with its new sibling corresponding to the
++		 * CPU going up.
++		 */
++		WARN_ON_ONCE(child->groupmask != BIT(0) || parent->num_children != 2);
++	} else {
++		/* Adding @child for the CPU going up to @parent. */
++		child->groupmask = BIT(parent->num_children++);
++	}
 +
-+	/* Clear out any left over state from a CPU down operation */
- 	cpu_base->active_bases = 0;
- 	cpu_base->hres_active = 0;
- 	cpu_base->hang_detected = 0;
-@@ -2164,7 +2173,6 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	cpu_base->expires_next = KTIME_MAX;
- 	cpu_base->softirq_expires_next = KTIME_MAX;
- 	cpu_base->online = 1;
--	hrtimer_cpu_base_init_expiry_lock(cpu_base);
- 	return 0;
- }
+ 	child->parent = parent;
+-	child->groupmask = BIT(parent->num_children++);
  
-@@ -2240,6 +2248,7 @@ int hrtimers_cpu_dying(unsigned int dyin
- void __init hrtimers_init(void)
- {
- 	hrtimers_prepare_cpu(smp_processor_id());
-+	hrtimers_cpu_starting(smp_processor_id());
- 	open_softirq(HRTIMER_SOFTIRQ, hrtimer_run_softirq);
- }
- 
+ 	raw_spin_unlock(&parent->lock);
+ 	raw_spin_unlock_irq(&child->lock);
+-- 
+2.48.1
+
 
 
