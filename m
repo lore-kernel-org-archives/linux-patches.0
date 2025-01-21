@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040531F0E36;
-	Tue, 21 Jan 2025 18:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECF21F0E36;
+	Tue, 21 Jan 2025 18:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482774; cv=none; b=tsmvV/w156JSnLed1j7Y3v+hrNZjREQJ6onE/86iChT/bJ0nIn6HOVyfShNmcn8PB3um9JVrbgLMFzQae4KD0KUGM0dbLejq3v0oXDXT3r/KuGR2AcitsVNset3rStSDdetRF/oaRK9xJSdm9GD3ueoxXYI9iW2+3aF6woReUA0=
+	t=1737482777; cv=none; b=NeBq3lJbVZQohvHOLi3jjyXYDRYoHrEU4YiYDUm5Hsb7LEw4erjtvBxR2mBsjF5CQn0MM3wryoBkMQzD3orBa61XyhhZSgKLJM8/01Z5b3zrkGV/CSm2KVQOQnVFjXhrRwUZ7LxmcXUPmZK+7Vh+33B8HS85+rSgmN8Wcg5IgsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482774; c=relaxed/simple;
-	bh=lIn1Va9hUMaJIQUC+doKcq3EOmxTLNOItbxaAiReEh8=;
+	s=arc-20240116; t=1737482777; c=relaxed/simple;
+	bh=JCh1/gGELveHuvEzYNvDjOL4R1CR+jAEpn1oRBi698o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8xVOOKEWGYBvhXqzVrZ2mo5qvGvlh2rkLCxgwLmbEB8peOsrEkMt6RTP7o/scVs2c5DY0QmWcJDHYN96f57HtrFHqRNZhwqdvrP7CuRBcgkvfk9xhL7p8G3qKMvZQzNSmyFGheKCWnMgBxUD/+b0Ln/Ix0NiyV4IfeqTYXMLSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYZQKGyN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p7MJk97RC0JupIq5s4/CaQ3m813MtaXd92pSpmnD1FjnePp1Y20f8yhAxuCMGncgZTWBwaH+Tcgu9cZtjj8PZ3CkuR/X1z5UEpCJC2gvyuP6+erY8tAIrDKdb4m6ZkkVNHn5aT6x5VCbdPoN07RDmqPQepnOVI2xCOXKKw/dTnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GSY6N+96; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYZQKGyN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6FFC4CEDF;
-	Tue, 21 Jan 2025 18:06:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GSY6N+96"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66803C4CEDF;
+	Tue, 21 Jan 2025 18:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482773;
-	bh=lIn1Va9hUMaJIQUC+doKcq3EOmxTLNOItbxaAiReEh8=;
+	s=korg; t=1737482776;
+	bh=JCh1/gGELveHuvEzYNvDjOL4R1CR+jAEpn1oRBi698o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYZQKGyNxDiUIGoKoGem4nPhdsKovv3orqptfqHBICTGfRtJbhX8QX+E7u0sntBeJ
-	 oFA4lupXYv4dla09S6YWP65Mkkui7vNKKPTSh25a0mahLOObDMY5mwIqmGqrk32JK4
-	 bwksUydjFLyqN3lKhoEJnIjsW3pVT7hrVzZN/EWI=
+	b=GSY6N+96SEOYx5+Fku00/JaRtM8D/Hl606XmweKuu3bPfcM1ay1b3gvgb2BdsEVYX
+	 MvVlHj/kd2gsZmZJ3dO9VOuMk7fGTAPSkboZ0hzDpmLsLcCos8vPYc90RKJGTbsSBz
+	 gpOgvPSJyJo7O1a45Z7unFxdr/wh9elbrLqY1UBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 28/64] poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
-Date: Tue, 21 Jan 2025 18:52:27 +0100
-Message-ID: <20250121174522.628694311@linuxfoundation.org>
+	Youzhong Yang <youzhong@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 62/64] nfsd: add list_head nf_gc to struct nfsd_file
+Date: Tue, 21 Jan 2025 18:53:01 +0100
+Message-ID: <20250121174523.923852042@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -51,66 +51,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Youzhong Yang <youzhong@gmail.com>
 
-[ Upstream commit cacd9ae4bf801ff4125d8961bb9a3ba955e51680 ]
+commit 8e6e2ffa6569a205f1805cbaeca143b556581da6 upstream.
 
-As the comment above waitqueue_active() explains, it can only be used
-if both waker and waiter have mb()'s that pair with each other. However
-__pollwait() is broken in this respect.
+nfsd_file_put() in one thread can race with another thread doing
+garbage collection (running nfsd_file_gc() -> list_lru_walk() ->
+nfsd_file_lru_cb()):
 
-This is not pipe-specific, but let's look at pipe_poll() for example:
+  * In nfsd_file_put(), nf->nf_ref is 1, so it tries to do nfsd_file_lru_add().
+  * nfsd_file_lru_add() returns true (with NFSD_FILE_REFERENCED bit set)
+  * garbage collector kicks in, nfsd_file_lru_cb() clears REFERENCED bit and
+    returns LRU_ROTATE.
+  * garbage collector kicks in again, nfsd_file_lru_cb() now decrements nf->nf_ref
+    to 0, runs nfsd_file_unhash(), removes it from the LRU and adds to the dispose
+    list [list_lru_isolate_move(lru, &nf->nf_lru, head)]
+  * nfsd_file_put() detects NFSD_FILE_HASHED bit is cleared, so it tries to remove
+    the 'nf' from the LRU [if (!nfsd_file_lru_remove(nf))]. The 'nf' has been added
+    to the 'dispose' list by nfsd_file_lru_cb(), so nfsd_file_lru_remove(nf) simply
+    treats it as part of the LRU and removes it, which leads to its removal from
+    the 'dispose' list.
+  * At this moment, 'nf' is unhashed with its nf_ref being 0, and not on the LRU.
+    nfsd_file_put() continues its execution [if (refcount_dec_and_test(&nf->nf_ref))],
+    as nf->nf_ref is already 0, nf->nf_ref is set to REFCOUNT_SATURATED, and the 'nf'
+    gets no chance of being freed.
 
-	poll_wait(...); // -> __pollwait() -> add_wait_queue()
+nfsd_file_put() can also race with nfsd_file_cond_queue():
+  * In nfsd_file_put(), nf->nf_ref is 1, so it tries to do nfsd_file_lru_add().
+  * nfsd_file_lru_add() sets REFERENCED bit and returns true.
+  * Some userland application runs 'exportfs -f' or something like that, which triggers
+    __nfsd_file_cache_purge() -> nfsd_file_cond_queue().
+  * In nfsd_file_cond_queue(), it runs [if (!nfsd_file_unhash(nf))], unhash is done
+    successfully.
+  * nfsd_file_cond_queue() runs [if (!nfsd_file_get(nf))], now nf->nf_ref goes to 2.
+  * nfsd_file_cond_queue() runs [if (nfsd_file_lru_remove(nf))], it succeeds.
+  * nfsd_file_cond_queue() runs [if (refcount_sub_and_test(decrement, &nf->nf_ref))]
+    (with "decrement" being 2), so the nf->nf_ref goes to 0, the 'nf' is added to the
+    dispose list [list_add(&nf->nf_lru, dispose)]
+  * nfsd_file_put() detects NFSD_FILE_HASHED bit is cleared, so it tries to remove
+    the 'nf' from the LRU [if (!nfsd_file_lru_remove(nf))], although the 'nf' is not
+    in the LRU, but it is linked in the 'dispose' list, nfsd_file_lru_remove() simply
+    treats it as part of the LRU and removes it. This leads to its removal from
+    the 'dispose' list!
+  * Now nf->ref is 0, unhashed. nfsd_file_put() continues its execution and set
+    nf->nf_ref to REFCOUNT_SATURATED.
 
-	LOAD(pipe->head);
-	LOAD(pipe->head);
+As shown in the above analysis, using nf_lru for both the LRU list and dispose list
+can cause the leaks. This patch adds a new list_head nf_gc in struct nfsd_file, and uses
+it for the dispose list. This does not fix the nfsd_file leaking issue completely.
 
-In theory these LOAD()'s can leak into the critical section inside
-add_wait_queue() and can happen before list_add(entry, wq_head), in this
-case pipe_poll() can race with wakeup_pipe_readers/writers which do
-
-	smp_mb();
-	if (waitqueue_active(wq_head))
-		wake_up_interruptible(wq_head);
-
-There are more __pollwait()-like functions (grep init_poll_funcptr), and
-it seems that at least ep_ptable_queue_proc() has the same problem, so the
-patch adds smp_mb() into poll_wait().
-
-Link: https://lore.kernel.org/all/20250102163320.GA17691@redhat.com/
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20250107162717.GA18922@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Youzhong Yang <youzhong@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/poll.h | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/nfsd/filecache.c |   18 ++++++++++--------
+ fs/nfsd/filecache.h |    1 +
+ 2 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/include/linux/poll.h b/include/linux/poll.h
-index d1ea4f3714a84..fc641b50f1298 100644
---- a/include/linux/poll.h
-+++ b/include/linux/poll.h
-@@ -41,8 +41,16 @@ typedef struct poll_table_struct {
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -219,6 +219,7 @@ nfsd_file_alloc(struct net *net, struct
+ 		return NULL;
  
- static inline void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)
- {
--	if (p && p->_qproc && wait_address)
-+	if (p && p->_qproc && wait_address) {
- 		p->_qproc(filp, wait_address, p);
-+		/*
-+		 * This memory barrier is paired in the wq_has_sleeper().
-+		 * See the comment above prepare_to_wait(), we need to
-+		 * ensure that subsequent tests in this thread can't be
-+		 * reordered with __add_wait_queue() in _qproc() paths.
-+		 */
-+		smp_mb();
-+	}
+ 	INIT_LIST_HEAD(&nf->nf_lru);
++	INIT_LIST_HEAD(&nf->nf_gc);
+ 	nf->nf_birthtime = ktime_get();
+ 	nf->nf_file = NULL;
+ 	nf->nf_cred = get_current_cred();
+@@ -396,8 +397,8 @@ nfsd_file_dispose_list(struct list_head
+ 	struct nfsd_file *nf;
+ 
+ 	while (!list_empty(dispose)) {
+-		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
+-		list_del_init(&nf->nf_lru);
++		nf = list_first_entry(dispose, struct nfsd_file, nf_gc);
++		list_del_init(&nf->nf_gc);
+ 		nfsd_file_free(nf);
+ 	}
  }
+@@ -414,12 +415,12 @@ nfsd_file_dispose_list_delayed(struct li
+ {
+ 	while(!list_empty(dispose)) {
+ 		struct nfsd_file *nf = list_first_entry(dispose,
+-						struct nfsd_file, nf_lru);
++						struct nfsd_file, nf_gc);
+ 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
+ 		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
  
- /*
--- 
-2.39.5
-
+ 		spin_lock(&l->lock);
+-		list_move_tail(&nf->nf_lru, &l->freeme);
++		list_move_tail(&nf->nf_gc, &l->freeme);
+ 		spin_unlock(&l->lock);
+ 		queue_work(nfsd_filecache_wq, &l->work);
+ 	}
+@@ -476,7 +477,8 @@ nfsd_file_lru_cb(struct list_head *item,
+ 
+ 	/* Refcount went to zero. Unhash it and queue it to the dispose list */
+ 	nfsd_file_unhash(nf);
+-	list_lru_isolate_move(lru, &nf->nf_lru, head);
++	list_lru_isolate(lru, &nf->nf_lru);
++	list_add(&nf->nf_gc, head);
+ 	this_cpu_inc(nfsd_file_evictions);
+ 	trace_nfsd_file_gc_disposed(nf);
+ 	return LRU_REMOVED;
+@@ -555,7 +557,7 @@ nfsd_file_cond_queue(struct nfsd_file *n
+ 
+ 	/* If refcount goes to 0, then put on the dispose list */
+ 	if (refcount_sub_and_test(decrement, &nf->nf_ref)) {
+-		list_add(&nf->nf_lru, dispose);
++		list_add(&nf->nf_gc, dispose);
+ 		trace_nfsd_file_closing(nf);
+ 	}
+ }
+@@ -631,8 +633,8 @@ nfsd_file_close_inode_sync(struct inode
+ 
+ 	nfsd_file_queue_for_close(inode, &dispose);
+ 	while (!list_empty(&dispose)) {
+-		nf = list_first_entry(&dispose, struct nfsd_file, nf_lru);
+-		list_del_init(&nf->nf_lru);
++		nf = list_first_entry(&dispose, struct nfsd_file, nf_gc);
++		list_del_init(&nf->nf_gc);
+ 		nfsd_file_free(nf);
+ 	}
+ 	flush_delayed_fput();
+--- a/fs/nfsd/filecache.h
++++ b/fs/nfsd/filecache.h
+@@ -44,6 +44,7 @@ struct nfsd_file {
+ 
+ 	struct nfsd_file_mark	*nf_mark;
+ 	struct list_head	nf_lru;
++	struct list_head	nf_gc;
+ 	struct rcu_head		nf_rcu;
+ 	ktime_t			nf_birthtime;
+ };
 
 
