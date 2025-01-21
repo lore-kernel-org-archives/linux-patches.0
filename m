@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065291F55F0;
-	Tue, 21 Jan 2025 18:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694FBE571;
+	Tue, 21 Jan 2025 18:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482452; cv=none; b=slEwGnmRs33BL9meuVo3Qrrp2xqkB3fD4fon2YxcYnH7oVU/Kkje3ycRrwyotF3yK0h/+DNtPqAuFxSk52YEhL3mRauDwv+danyc8M/wyvI+Cf+yXAQWFsfjL5te/om0TdrFn4PNgwbwgh16HOfcfw4otlBQLRj0UmuHKLsHieY=
+	t=1737482455; cv=none; b=lt79YCD4wtKbTGYrZF1VjOULrNHd4Vz5j5aVqS5RPulk9hbQVXm9PPdSTKm50LZryLkaPL5IHdgqPz5qoRKIQqik53eABb+wbkSkMaoNhL/2OItDSMBDLD0TlggkUeJoVAI4TVAiOJG0AIdykFt0VNuiUjxPVOiwR7bvMKaRQ9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482452; c=relaxed/simple;
-	bh=Vy7Ln0sOSx7MugrkP4AXkTYd8HOft1/9iY14k27SwZw=;
+	s=arc-20240116; t=1737482455; c=relaxed/simple;
+	bh=w+xs83tv6xklk7WgfWuDjxymha0G3iCTBG0tKccIlHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i4R7poHO9AdAX/bzwOpFVEyjH2QFK6AbECLRvhDgq1PK2TqjOwMvL++DYJDdatZ8VffNJ2yGZ+spyrGyOlH+tmjkyXEMNPW61FzsPVzYj6WH+dif7kJ0vuPDvEqlFiSQZNFLkE02ymbes2olrNpIG1AZt2rvuQUxvxfNYEg22rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRlrIwsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3shaRpQFR+9sg7e3BQorAjxlBPP5XNvfiMnE1bhVtcJ69u7KtKcEJI/rbx/stFdmIfJzjtLbpox5JYDbFoWM14ZiPVygtV3rL/i6knxF9SH4dQQ8sPmTajK3j30PIt4UTyxnZiIXdAMP6uLDQUwav2QHcDThLr31RaK/yHRAi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q120UFmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRlrIwsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAB3C4CEDF;
-	Tue, 21 Jan 2025 18:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q120UFmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F993C4CEDF;
+	Tue, 21 Jan 2025 18:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482451;
-	bh=Vy7Ln0sOSx7MugrkP4AXkTYd8HOft1/9iY14k27SwZw=;
+	s=korg; t=1737482454;
+	bh=w+xs83tv6xklk7WgfWuDjxymha0G3iCTBG0tKccIlHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRlrIwsXcQ5wVDNmoA8Ct3kaWv570G9a2UYk4DCFO8pQkq3aLsVuXi25NgmMek/Ol
-	 DWqyA9HCZPR2h5o21uc1ImaNJ5XzGE+kOIkGs6t8iVx7UW9RjOPSOSLNYEWJm3yphn
-	 WefMO7pauLwsfHNGQ3gGa/a+sh6lOfLNDFoWc298=
+	b=q120UFmPB1lx47RvkJsCv6dTBfV4bYhlYsI5EKJjkT99VwO3qknTlX0cer/pk2zwA
+	 QwPHCFdMnb3umzLYkl9F8FANrPLbBmrKhjF/HR7DoINfPEJg6XIEMjf//5nMl7mMVW
+	 D0jF1ii2MYM7atVZtM45oIItGIPu0KrLzXlqDGSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 082/122] selftests: mptcp: avoid spurious errors on disconnect
-Date: Tue, 21 Jan 2025 18:52:10 +0100
-Message-ID: <20250121174536.171443909@linuxfoundation.org>
+	syzbot+76f33569875eb708e575@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 065/122] afs: Fix merge preference rule failure condition
+Date: Tue, 21 Jan 2025 18:51:53 +0100
+Message-ID: <20250121174535.501629770@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -45,132 +49,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-commit 218cc166321fb3cc8786677ffe0d09a78778a910 upstream.
+[ Upstream commit 17a4fde81d3a7478d97d15304a6d61094a10c2e3 ]
 
-The disconnect test-case generates spurious errors:
+syzbot reported a lock held when returning to userspace[1].  This is
+because if argc is less than 0 and the function returns directly, the held
+inode lock is not released.
 
-  INFO: disconnect
-  INFO: extra options: -I 3 -i /tmp/tmp.r43niviyoI
-  01 ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP (duration 140ms) [FAIL]
-  file received by server does not match (in, out):
-  Unexpected revents: POLLERR/POLLNVAL(19)
-  -rw-r--r-- 1 root root 10028676 Jan 10 10:47 /tmp/tmp.r43niviyoI.disconnect
-  Trailing bytes are:
-  ��\����R���!8��u2��5N%
-  -rw------- 1 root root 9992290 Jan 10 10:47 /tmp/tmp.Os4UbnWbI1
-  Trailing bytes are:
-  ��\����R���!8��u2��5N%
-  02 ns1 MPTCP -> ns1 (dead:beef:1::1:10001) MPTCP (duration 206ms) [ OK ]
-  03 ns1 MPTCP -> ns1 (dead:beef:1::1:10002) TCP   (duration  31ms) [ OK ]
-  04 ns1 TCP   -> ns1 (dead:beef:1::1:10003) MPTCP (duration  26ms) [ OK ]
-  [FAIL] Tests of the full disconnection have failed
-  Time: 2 seconds
+Fix this by store the error in ret and jump to done to clean up instead of
+returning directly.
 
-The root cause is actually in the user-space bits: the test program
-currently disconnects as soon as all the pending data has been spooled,
-generating an FASTCLOSE. If such option reaches the peer before the
-latter has reached the closed status, the msk socket will report an
-error to the user-space, as per protocol specification, causing the
-above failure.
+[dh: Modified Lizhi Xu's original patch to make it honour the error code
+from afs_split_string()]
 
-Address the issue explicitly waiting for all the relevant sockets to
-reach a closed status before performing the disconnect.
+[1]
+WARNING: lock held when returning to user space!
+6.13.0-rc3-syzkaller-00209-g499551201b5f #0 Not tainted
+------------------------------------------------
+syz-executor133/5823 is leaving the kernel with locks still held!
+1 lock held by syz-executor133/5823:
+ #0: ffff888071cffc00 (&sb->s_type->i_mutex_key#9){++++}-{4:4}, at: inode_lock include/linux/fs.h:818 [inline]
+ #0: ffff888071cffc00 (&sb->s_type->i_mutex_key#9){++++}-{4:4}, at: afs_proc_addr_prefs_write+0x2bb/0x14e0 fs/afs/addr_prefs.c:388
 
-Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250113-net-mptcp-connect-st-flakes-v1-3-0d986ee7b1b6@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+76f33569875eb708e575@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=76f33569875eb708e575
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20241226012616.2348907-1-lizhi.xu@windriver.com/
+Link: https://lore.kernel.org/r/529850.1736261552@warthog.procyon.org.uk
+Tested-by: syzbot+76f33569875eb708e575@syzkaller.appspotmail.com
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.c |   43 ++++++++++++++++------
- 1 file changed, 32 insertions(+), 11 deletions(-)
+ fs/afs/addr_prefs.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
-@@ -25,6 +25,8 @@
- #include <sys/types.h>
- #include <sys/mman.h>
+diff --git a/fs/afs/addr_prefs.c b/fs/afs/addr_prefs.c
+index a189ff8a5034e..c0384201b8feb 100644
+--- a/fs/afs/addr_prefs.c
++++ b/fs/afs/addr_prefs.c
+@@ -413,8 +413,10 @@ int afs_proc_addr_prefs_write(struct file *file, char *buf, size_t size)
  
-+#include <arpa/inet.h>
-+
- #include <netdb.h>
- #include <netinet/in.h>
+ 	do {
+ 		argc = afs_split_string(&buf, argv, ARRAY_SIZE(argv));
+-		if (argc < 0)
+-			return argc;
++		if (argc < 0) {
++			ret = argc;
++			goto done;
++		}
+ 		if (argc < 2)
+ 			goto inval;
  
-@@ -1211,23 +1213,42 @@ static void parse_setsock_options(const
- 	exit(1);
- }
- 
--void xdisconnect(int fd, int addrlen)
-+void xdisconnect(int fd)
- {
--	struct sockaddr_storage empty;
-+	socklen_t addrlen = sizeof(struct sockaddr_storage);
-+	struct sockaddr_storage addr, empty;
- 	int msec_sleep = 10;
--	int queued = 1;
--	int i;
-+	void *raw_addr;
-+	int i, cmdlen;
-+	char cmd[128];
-+
-+	/* get the local address and convert it to string */
-+	if (getsockname(fd, (struct sockaddr *)&addr, &addrlen) < 0)
-+		xerror("getsockname");
-+
-+	if (addr.ss_family == AF_INET)
-+		raw_addr = &(((struct sockaddr_in *)&addr)->sin_addr);
-+	else if (addr.ss_family == AF_INET6)
-+		raw_addr = &(((struct sockaddr_in6 *)&addr)->sin6_addr);
-+	else
-+		xerror("bad family");
-+
-+	strcpy(cmd, "ss -M | grep -q ");
-+	cmdlen = strlen(cmd);
-+	if (!inet_ntop(addr.ss_family, raw_addr, &cmd[cmdlen],
-+		       sizeof(cmd) - cmdlen))
-+		xerror("inet_ntop");
- 
- 	shutdown(fd, SHUT_WR);
- 
--	/* while until the pending data is completely flushed, the later
-+	/*
-+	 * wait until the pending data is completely flushed and all
-+	 * the MPTCP sockets reached the closed status.
- 	 * disconnect will bypass/ignore/drop any pending data.
- 	 */
- 	for (i = 0; ; i += msec_sleep) {
--		if (ioctl(fd, SIOCOUTQ, &queued) < 0)
--			xerror("can't query out socket queue: %d", errno);
--
--		if (!queued)
-+		/* closed socket are not listed by 'ss' */
-+		if (system(cmd) != 0)
- 			break;
- 
- 		if (i > poll_timeout)
-@@ -1281,9 +1302,9 @@ again:
- 		return ret;
- 
- 	if (cfg_truncate > 0) {
--		xdisconnect(fd, peer->ai_addrlen);
-+		xdisconnect(fd);
- 	} else if (--cfg_repeat > 0) {
--		xdisconnect(fd, peer->ai_addrlen);
-+		xdisconnect(fd);
- 
- 		/* the socket could be unblocking at this point, we need the
- 		 * connect to be blocking
+-- 
+2.39.5
+
 
 
