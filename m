@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A251F55E3;
-	Tue, 21 Jan 2025 18:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2551F3FFE;
+	Tue, 21 Jan 2025 18:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482869; cv=none; b=rAhV/9/8ocflZ9orjCe4cAra1GjIQSRMFvxoJU3StsA0suny3DN+xIymMXIAhrztMedvPj2aeS3UedOP46hxXSU166o0LKvxAs5hdqvhvC+ZJHN512z//DsAIitiUiTCnjmeg1cky4iOQeB22oud03vVIcSgRrymPTx0Wl10SxA=
+	t=1737482872; cv=none; b=EOD79kqNaqZRrc/ecrWNTeQmbjQ6GQ8P8/PusTYuqAVTlwVgJwzRB9cMokWyIKZAjPVFFtwh78KU4RO+Y0DCIrc6rnmatc/dKsNBzvbxAvKfTTFALdwXf7cSbwB5JyX9VL0UPGvyj1Zwnwgyl4bvTmCRPhQ5iK+AkHEkz8zSuXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482869; c=relaxed/simple;
-	bh=hsYYrNCceu0D5WdIM+j5sCVDHL4t1SbquTBzL352WDQ=;
+	s=arc-20240116; t=1737482872; c=relaxed/simple;
+	bh=ryUJMSpHDhfVOiEwMrYCeKDFhkdtbE3/o7HINqPgAog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7OYihgrq1NYu4Ui+oBzkj+Cgzs/zNUX/EukXDvwGNlGzPPGa5RzpJM0oYZJO4iCcA6/ujuNZr8WlrAX8uhmaACt+FGryJX3WRHrpcvJA5Ru2ffTYiCisXEJ1x8t9Dx+iuH9pjkcWcnAbFOI2P8Qgpw7T1cPwP2RxByLqGHdrVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mui/f7xu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6FYLV+f2hDWO6S9YzCPB3QbMyv7AJmotPbQvD//k8nO9YbAm8PL+U6Gl/H6H7NSYlN6dJhIAsH9hE//4QklldelIQSR2/ssAMp4+M2iz4LSrdB5y04Q3j2ZwSXOZTdKt4AlRACyW+wxD2/smzZtsunx4RRFc1h6ZyxP7wT2zO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IfFpuzGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mui/f7xu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EC3C4CEDF;
-	Tue, 21 Jan 2025 18:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IfFpuzGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8909C4CEDF;
+	Tue, 21 Jan 2025 18:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482869;
-	bh=hsYYrNCceu0D5WdIM+j5sCVDHL4t1SbquTBzL352WDQ=;
+	s=korg; t=1737482872;
+	bh=ryUJMSpHDhfVOiEwMrYCeKDFhkdtbE3/o7HINqPgAog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mui/f7xuy3vHneVVhL3q9O4nMLN77gXwLPYr06yg8Wg5VXKwNGs6dD4WbbdHN5eMw
-	 Ig4bsJr85oDGYNlIYOQwNdhorMl0YYSMY9d+32qS9nBG+L5/fITMdz9c7SNb19x4ta
-	 4nI1kbCkg+GKmUYY7QjCpSERswQ+6ltQdawXXMAM=
+	b=IfFpuzGhpRL+U9BMaBeweQfY1m7fIvVUCJOJwLPDxvf9EnHXXKWFRqGrX+XOLF7Uq
+	 /5wpGVYq6WkHM0Aalop1UfUB+KNE5G/2sAqObK+90TeaKibLbQUoBG9bfBOBNt1U9j
+	 Ga1p82KU2iX02T1UdXEosZ6D9xdXbWX9yAsvrGgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com,
+	syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com,
 	Yuezhang Mo <Yuezhang.Mo@sony.com>,
 	Sungjong Seo <sj1557.seo@samsung.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/127] exfat: fix the infinite loop in exfat_readdir()
-Date: Tue, 21 Jan 2025 18:51:18 +0100
-Message-ID: <20250121174529.920282352@linuxfoundation.org>
+Subject: [PATCH 5.15 007/127] exfat: fix the infinite loop in __exfat_free_cluster()
+Date: Tue, 21 Jan 2025 18:51:19 +0100
+Message-ID: <20250121174529.958173617@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -55,53 +55,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-[ Upstream commit fee873761bd978d077d8c55334b4966ac4cb7b59 ]
+[ Upstream commit a5324b3a488d883aa2d42f72260054e87d0940a0 ]
 
-If the file system is corrupted so that a cluster is linked to
-itself in the cluster chain, and there is an unused directory
-entry in the cluster, 'dentry' will not be incremented, causing
-condition 'dentry < max_dentries' unable to prevent an infinite
+In __exfat_free_cluster(), the cluster chain is traversed until the
+EOF cluster. If the cluster chain includes a loop due to file system
+corruption, the EOF cluster cannot be traversed, resulting in an
+infinite loop.
+
+This commit uses the total number of clusters to prevent this infinite
 loop.
 
-This infinite loop causes s_lock not to be released, and other
-tasks will hang, such as exfat_sync_fs().
-
-This commit stops traversing the cluster chain when there is unused
-directory entry in the cluster to avoid this infinite loop.
-
-Reported-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=205c2644abdff9d3f9fc
-Tested-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
-Fixes: ca06197382bd ("exfat: add directory operations")
+Reported-by: syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1de5a37cb85a2d536330
+Tested-by: syzbot+1de5a37cb85a2d536330@syzkaller.appspotmail.com
+Fixes: 31023864e67a ("exfat: add fat entry operations")
 Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
 Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/dir.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/exfat/fatent.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
-index 0a1b1de032ef..70d0849826f2 100644
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -126,7 +126,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
- 			type = exfat_get_entry_type(ep);
- 			if (type == TYPE_UNUSED) {
- 				brelse(bh);
--				break;
-+				goto out;
- 			}
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index 421c27353104..8f07504e5345 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -215,6 +215,16 @@ static int __exfat_free_cluster(struct inode *inode, struct exfat_chain *p_chain
  
- 			if (type != TYPE_FILE && type != TYPE_DIR) {
-@@ -186,6 +186,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
- 		}
+ 			if (err)
+ 				goto dec_used_clus;
++
++			if (num_clusters >= sbi->num_clusters - EXFAT_FIRST_CLUSTER) {
++				/*
++				 * The cluster chain includes a loop, scan the
++				 * bitmap to get the number of used clusters.
++				 */
++				exfat_count_used_clusters(sb, &sbi->used_clusters);
++
++				return 0;
++			}
+ 		} while (clu != EXFAT_EOF_CLUSTER);
  	}
  
-+out:
- 	dir_entry->namebuf.lfn[0] = '\0';
- 	*cpos = EXFAT_DEN_TO_B(dentry);
- 	return 0;
 -- 
 2.39.5
 
