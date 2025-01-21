@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623941F63EF;
-	Tue, 21 Jan 2025 18:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642FC1F63EF;
+	Tue, 21 Jan 2025 18:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483128; cv=none; b=EXQG3ocWgphkFprSAgT69F9hDjnHUhqYYGydF34Fdn4gV3d+EOOfqve0GCEQQd2QiLPbuPuJQYdaVQIE+ou92PD+YPt22aotlLaga1F4y14n0tdYTHZM0vC4tM5zWIG+ze3dQepG2GsQi4I5Cc/uz7JK+drAw9u72h9zhU+XtVw=
+	t=1737483131; cv=none; b=fUmgYR5FWpCdu6zQXaKb+5peYgkywZvkr0s4Cv/KeEdQMWB+UYuWBPfnFdlV54PkQX+BOjcggcrCtEmNkA6Qt5xxIXwXc4J9YAtUIcNOhwAhypbtC2LseHO2bOPKJF5v/+XPWQZVbPpvR1vdU/nrLrdMVQ7r3ZJu/1jonB8CECc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483128; c=relaxed/simple;
-	bh=rv/KecJhIA9+H6yjpZgmKz5fh4thTadPcrTkEtqGOEs=;
+	s=arc-20240116; t=1737483131; c=relaxed/simple;
+	bh=3y0u2kqf1p/hoJ0SvUmIuLf1bIVKOGQZg0MFJKuKcIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoAw6E8q+LqRtwa0E9/F0G5NmKJomXiwtaZ7PCMqpmmlGCiykzrC+lUV+PM0wdDbIxZrMFlSq3eDcwadyblcfU4PjEr8HDLBmX1gd9ad/qfVDjtFCdLghQg9JHAuXAiBG37CVnL7qvSP9FgjZPMEBppvlDjjF4UmF8bNEHGFFaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9kbZJoS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwLbFQz2LUNzZMOmKrM1w7xh0YaAbpZ8CQoZeXfL5qCz2t8sfjmiZtIXiZzAOvrIEomzhyesjvI/mYJ6l5F1T0AEFEjAWn+nRE+f/bkMGPttQVcy0MW6yGkaZlx86quy4V4nh24Nn86MnHcwz2SM5LfdafGYyqtdAJtEQVht3YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJ5qwYUx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9kbZJoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DE7C4CEE1;
-	Tue, 21 Jan 2025 18:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJ5qwYUx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F92C4CEDF;
+	Tue, 21 Jan 2025 18:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483127;
-	bh=rv/KecJhIA9+H6yjpZgmKz5fh4thTadPcrTkEtqGOEs=;
+	s=korg; t=1737483130;
+	bh=3y0u2kqf1p/hoJ0SvUmIuLf1bIVKOGQZg0MFJKuKcIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9kbZJoShHGrx2mkAdJmoqlMVG8BVgVWmIHsE8WSvfIM8iafhOvyadxbkLHAfHTGU
-	 n9V3I4sZJtcK5HgAXii6zQBBfo7b4ypE8IbKMf+3LBEFAC1tRehzNoUc2wnux5ENDw
-	 nZwNAaMwbfshEERjoAEUvuxalVQjwf89+3sLmdBM=
+	b=IJ5qwYUxkE1yzFNWRBmp3W7y3y8VTICN+QZ3cGwLLZgZHgVQ4Kr6GVHOoIb3Mc20D
+	 ttl/j2ml73OSpjadC7kgzekH+sPdRa+W3L9SCQVtcQUDNJUvNEYY8xEAm0U4R1Kykr
+	 EdJP42XntkE68po03qYKeFtjOgT7o5DOsX1zpllQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"stable@vger.kernel.org, Juergen Gross" <jgross@suse.com>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.15 125/127] x86/xen: fix SLS mitigation in xen_hypercall_iret()
-Date: Tue, 21 Jan 2025 18:53:17 +0100
-Message-ID: <20250121174534.454806322@linuxfoundation.org>
+	syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com,
+	Suraj Sonawane <surajsonawane0215@gmail.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	BRUNO VERNAY <bruno.vernay@se.com>,
+	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Subject: [PATCH 5.15 126/127] scsi: sg: Fix slab-use-after-free read in sg_release()
+Date: Tue, 21 Jan 2025 18:53:18 +0100
+Message-ID: <20250121174534.491726823@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -50,28 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Suraj Sonawane <surajsonawane0215@gmail.com>
 
-The backport of upstream patch a2796dff62d6 ("x86/xen: don't do PV iret
-hypercall through hypercall page") missed to adapt the SLS mitigation
-config check from CONFIG_MITIGATION_SLS to CONFIG_SLS.
+commit f10593ad9bc36921f623361c9e3dd96bd52d85ee upstream.
 
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fix a use-after-free bug in sg_release(), detected by syzbot with KASAN:
+
+BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30
+kernel/locking/lockdep.c:5838
+__mutex_unlock_slowpath+0xe2/0x750 kernel/locking/mutex.c:912
+sg_release+0x1f4/0x2e0 drivers/scsi/sg.c:407
+
+In sg_release(), the function kref_put(&sfp->f_ref, sg_remove_sfp) is
+called before releasing the open_rel_lock mutex. The kref_put() call may
+decrement the reference count of sfp to zero, triggering its cleanup
+through sg_remove_sfp(). This cleanup includes scheduling deferred work
+via sg_remove_sfp_usercontext(), which ultimately frees sfp.
+
+After kref_put(), sg_release() continues to unlock open_rel_lock and may
+reference sfp or sdp. If sfp has already been freed, this results in a
+slab-use-after-free error.
+
+Move the kref_put(&sfp->f_ref, sg_remove_sfp) call after unlocking the
+open_rel_lock mutex. This ensures:
+
+ - No references to sfp or sdp occur after the reference count is
+   decremented.
+
+ - Cleanup functions such as sg_remove_sfp() and
+   sg_remove_sfp_usercontext() can safely execute without impacting the
+   mutex handling in sg_release().
+
+The fix has been tested and validated by syzbot. This patch closes the
+bug reported at the following syzkaller link and ensures proper
+sequencing of resource cleanup and mutex operations, eliminating the
+risk of use-after-free errors in sg_release().
+
+Reported-by: syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7efb5850a17ba6ce098b
+Tested-by: syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com
+Fixes: cc833acbee9d ("sg: O_EXCL and other lock handling")
+Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
+Link: https://lore.kernel.org/r/20241120125944.88095-1-surajsonawane0215@gmail.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: BRUNO VERNAY <bruno.vernay@se.com>
+Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/xen-asm.S |    2 +-
+ drivers/scsi/sg.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/xen/xen-asm.S
-+++ b/arch/x86/xen/xen-asm.S
-@@ -214,7 +214,7 @@ SYM_CODE_END(xen_early_idt_handler_array
- 	push %rax
- 	mov  $__HYPERVISOR_iret, %eax
- 	syscall		/* Do the IRET. */
--#ifdef CONFIG_MITIGATION_SLS
-+#ifdef CONFIG_SLS
- 	int3
- #endif
- .endm
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -391,7 +391,6 @@ sg_release(struct inode *inode, struct f
+ 
+ 	mutex_lock(&sdp->open_rel_lock);
+ 	scsi_autopm_put_device(sdp->device);
+-	kref_put(&sfp->f_ref, sg_remove_sfp);
+ 	sdp->open_cnt--;
+ 
+ 	/* possibly many open()s waiting on exlude clearing, start many;
+@@ -403,6 +402,7 @@ sg_release(struct inode *inode, struct f
+ 		wake_up_interruptible(&sdp->open_wait);
+ 	}
+ 	mutex_unlock(&sdp->open_rel_lock);
++	kref_put(&sfp->f_ref, sg_remove_sfp);
+ 	return 0;
+ }
+ 
 
 
