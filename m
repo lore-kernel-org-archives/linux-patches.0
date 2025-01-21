@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7261F63FD;
-	Tue, 21 Jan 2025 18:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CE51F6675;
+	Tue, 21 Jan 2025 18:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483058; cv=none; b=r/W2wvuBchb+K8YFMN7p9Sl3EP09kZkld850LlYcVep7sszqgJXQlQrXA6uPesTbbMWsu4ABs2HILOViGi7CJiLjFJNj5WyW1BGrAm9f8yrlZWbYfGFfZddo6Rfc8VDc14iWPNm2M9iZJ72B5fGhAsI193w96eWZVDpj6drEJTY=
+	t=1737483060; cv=none; b=kUvRfmVSY6fTFXU5+pzAetf/6VWShsH0HXhXw/kFPxp4pmcGHiSelVO/46NyXAS78jO7vErvNhc0FjE4ylMcOVuohVj45aoPLvH3+cHhGf4o79fLPrZ2S0QV1ZvOX7cG453wj6WMVjl1qIeB3IsA8/uhaf3heNeYxLaNW5s6uls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483058; c=relaxed/simple;
-	bh=JLvwYs+EK3PXsZBq2SZwdtAXJ1SlgWe11lxBPusU528=;
+	s=arc-20240116; t=1737483060; c=relaxed/simple;
+	bh=++Th5RWli3M+6FX1TZOzJ+fPCmV6p8zVNZv74rkdQ5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iN95nkBA/t3C/ah4yoeTuBlhVI8bpXkjoO9SUzfcMgUbuYhORxuOVtQk9lRJd5vye0dI0/Hh2E9anMJlEnXipHB4m268sjUliJrBxns02o1Jr3kazy7uLnB1Aa7flggpS7F92H4jsvCvMrq/DHp2rP5+UsYfardZmgGPQzhZ9Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JliOpd7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HioThMsZQr7lOTuQN1n5hwoFfpd+YU0pRq3UchCI8nBxFndkQneZDQKK/BljqZyb/GKDot0bgjO1nQjKbIzBnPkezalXha5O4+zxNzONrZ7Lj56+8OeYEsD0qqkLJksqQAuWiylDvmXQdmqSWCAgpNsl7FbeXdORXR4/yizcvVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WqUPOc51; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JliOpd7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66018C4CEE0;
-	Tue, 21 Jan 2025 18:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WqUPOc51"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2B7C4CEDF;
+	Tue, 21 Jan 2025 18:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483057;
-	bh=JLvwYs+EK3PXsZBq2SZwdtAXJ1SlgWe11lxBPusU528=;
+	s=korg; t=1737483060;
+	bh=++Th5RWli3M+6FX1TZOzJ+fPCmV6p8zVNZv74rkdQ5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JliOpd7L97mebU4tWeJSICuf3h5fWprLDbm7+azkgM/QUAwzZR2D7FkNnm2QxJl4L
-	 Qwd9RQzTbMt+KXP4mJbN+Z1wLl+0u1ciBSiuIjDHq4rpzNJIpU8xu/2RWuvu3NgQl/
-	 cC/b9rhbj1smwZCr+dkIn5YG7a2AyxFHyjT2vdMs=
+	b=WqUPOc51gS6TIZxG42Qdx9306ckhWET2McW0ez0mLJO5Tgg7ypJ3yNjpeF9a9ecOg
+	 G/wYAwyq2/Dw4tiAkm1LxtWMerFtP+pSvj2FMIDlr+xVvxNHHcYD+GPKsfl0nu/+Ie
+	 W7TVl9KTIpZP7uB73JZ0X7GzAdsCrMMyqO6ZtVfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Joseph Qi <jiangqi903@gmail.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/127] phy: usb: Toggle the PHY power during init
-Date: Tue, 21 Jan 2025 18:52:24 +0100
-Message-ID: <20250121174532.442494785@linuxfoundation.org>
+Subject: [PATCH 5.15 073/127] ocfs2: correct return value of ocfs2_local_free_info()
+Date: Tue, 21 Jan 2025 18:52:25 +0100
+Message-ID: <20250121174532.480154372@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,41 +58,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 0a92ea87bdd6f77ca4e17fe19649882cf5209edd ]
+[ Upstream commit d32840ad4a111c6abd651fbf6b5996e6123913da ]
 
-When bringing up the PHY, it might be in a bad state if left powered.
-One case is we lose the PLL lock if the PLL is gated while the PHY
-is powered. Toggle the PHY power so we can start from a known state.
+Now in ocfs2_local_free_info(), it returns 0 even if it actually fails.
+Though it doesn't cause any real problem since the only caller
+dquot_disable() ignores the return value, we'd better return correct as it
+is.
 
-Fixes: 4e5b9c9a73b3 ("phy: usb: Add support for new Synopsys USB controller on the 7216")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://lore.kernel.org/r/20241024213540.1059412-1-justin.chen@broadcom.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lkml.kernel.org/r/20230528132033.217664-1-joseph.qi@linux.alibaba.com
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Joseph Qi <jiangqi903@gmail.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 5f3fd772d152 ("ocfs2: fix slab-use-after-free due to dangling pointer dqi_priv")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ocfs2/quota_local.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-index d2524b70ea16..fa54da35719f 100644
---- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -309,6 +309,12 @@ static void usb_init_common_7216(struct brcm_usb_init_params *params)
- 	void __iomem *ctrl = params->regs[BRCM_REGS_CTRL];
+diff --git a/fs/ocfs2/quota_local.c b/fs/ocfs2/quota_local.c
+index 7a1c8da9e44b..fbab536741e2 100644
+--- a/fs/ocfs2/quota_local.c
++++ b/fs/ocfs2/quota_local.c
+@@ -815,7 +815,7 @@ static int ocfs2_local_free_info(struct super_block *sb, int type)
+ 	struct ocfs2_quota_chunk *chunk;
+ 	struct ocfs2_local_disk_chunk *dchunk;
+ 	int mark_clean = 1, len;
+-	int status;
++	int status = 0;
  
- 	USB_CTRL_UNSET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
-+
-+	/*
-+	 * The PHY might be in a bad state if it is already powered
-+	 * up. Toggle the power just in case.
-+	 */
-+	USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
- 	USB_CTRL_UNSET(ctrl, USB_PM, USB_PWRDN);
+ 	iput(oinfo->dqi_gqinode);
+ 	ocfs2_simple_drop_lockres(OCFS2_SB(sb), &oinfo->dqi_gqlock);
+@@ -857,17 +857,14 @@ static int ocfs2_local_free_info(struct super_block *sb, int type)
+ 				 oinfo->dqi_libh,
+ 				 olq_update_info,
+ 				 info);
+-	if (status < 0) {
++	if (status < 0)
+ 		mlog_errno(status);
+-		goto out;
+-	}
+-
+ out:
+ 	ocfs2_inode_unlock(sb_dqopt(sb)->files[type], 1);
+ 	brelse(oinfo->dqi_libh);
+ 	brelse(oinfo->dqi_lqi_bh);
+ 	kfree(oinfo);
+-	return 0;
++	return status;
+ }
  
- 	/* 1 millisecond - for USB clocks to settle down */
+ static void olq_set_dquot(struct buffer_head *bh, void *private)
 -- 
 2.39.5
 
