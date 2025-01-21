@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52CB1F55F7;
-	Tue, 21 Jan 2025 18:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C903E571;
+	Tue, 21 Jan 2025 18:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482464; cv=none; b=JbIhIAadxbHVgdvI7/jenW/d0MS7xZuXc4gWrqIRh9lb0KXNI2AhVuHRfS+SBmHmhcD04CYmtv+IvqFEz6nBOJr2l4ilWeFayc84stVJBWsN2d4Wxu/J1tpP/2aKDA9KaIHS2Dl4pLz+8/grcePK0p9qkVLxUsXhXgB9ucFsL24=
+	t=1737482467; cv=none; b=NHcdAr97xyAFJ7DnTcxQzENuv/BmrN/LNVQxQ+lfyb/uh/UJ2WNZbV7Xj8fFHWedaNEgqutCeiOSJ/L5jkcc7OsqfOs1396uKGjUsffvgYin9zAbsYEmzG39h70dnoWFJlYTUa5hWYdF29j/lxpURdaBIPDnIgu13hq26WrSNh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482464; c=relaxed/simple;
-	bh=1RDcraMVFqwQaRIDSwoxBi6jaEeWwbPwrNSP5cSi/eA=;
+	s=arc-20240116; t=1737482467; c=relaxed/simple;
+	bh=Nj4kOafyC7I9fjZ8SoQEg4fPB888/+HNb+HWQLatvjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GGo28aDl+QB3pWhNv7MSige/oS1yFpr6xfo6zH9dTufb7DnuTwSk9MQHo3TN3VZOci2gDMzA3bjqmblPVL+x4B3Q7CY2jF0wq5eg/uifGlfjxt46KJkmJRnLpRVZq+BjK4on7ThCgu0D2YcQnnKvnhGoEMRuy2GNKkDVtT23hzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/Guwcy2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=COe0LNMrlG42G3CIF5c4D68q6X7YtjccycnDRNN+/PUx99yjPQTvKzNq1rB7wFKpYCdKpjBnXPs63b7StrMl9Q7bIxA/pWo1Aa2ypjLZWCKJuxra1qHjcerMGr5dORa9inIEUCfwhjJCdz+zEJu3sV4Mv4cH+VF71DX5sciMhDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdR4eLZu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/Guwcy2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C696C4CEDF;
-	Tue, 21 Jan 2025 18:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdR4eLZu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E1F0C4CEE0;
+	Tue, 21 Jan 2025 18:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482463;
-	bh=1RDcraMVFqwQaRIDSwoxBi6jaEeWwbPwrNSP5cSi/eA=;
+	s=korg; t=1737482466;
+	bh=Nj4kOafyC7I9fjZ8SoQEg4fPB888/+HNb+HWQLatvjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/Guwcy2BiLhTUW20i//EaktM2hbbbDkqmjmbEONagvWHNYcSWS6KxChK6BGuZ0le
-	 oI7/2pKqdeYkRVek5CrL423+FET4n2CmqjeUNDD2Haxva4SWhXVKlEoU8jlkzmFb5K
-	 FJftN9u5mzOTw8CURbrpQdB6/rGFVVHwCFnwByd4=
+	b=kdR4eLZuA0DPaPh4anhh5g4sVt9bHZ2O+6SBaZ1RjYyBkooYTn3FO5dBfDpTuJ4ZJ
+	 AYCAImo0TmHy7B1lbZiYkeoLWN0P1arOjnbpo4wTxTgfTOYjghNkcPlIQn3P4BYDRX
+	 s3N5IhqhtCeDOHJG5RU69vSV95saobjIi7mUIIEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hyunwoo Kim <v4bel@theori.io>,
-	Wongi Lee <qwerty@theori.io>,
 	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 085/122] vsock/virtio: discard packets if the transport changes
-Date: Tue, 21 Jan 2025 18:52:13 +0100
-Message-ID: <20250121174536.289361114@linuxfoundation.org>
+Subject: [PATCH 6.12 086/122] vsock/virtio: cancel close work in the destructor
+Date: Tue, 21 Jan 2025 18:52:14 +0100
+Message-ID: <20250121174536.333401238@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -54,45 +54,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 2cb7c756f605ec02ffe562fb26828e4bcc5fdfc1 upstream.
+commit df137da9d6d166e87e40980e36eb8e0bc90483ef upstream.
 
-If the socket has been de-assigned or assigned to another transport,
-we must discard any packets received because they are not expected
-and would cause issues when we access vsk->transport.
+During virtio_transport_release() we can schedule a delayed work to
+perform the closing of the socket before destruction.
 
-A possible scenario is described by Hyunwoo Kim in the attached link,
-where after a first connect() interrupted by a signal, and a second
-connect() failed, we can find `vsk->transport` at NULL, leading to a
-NULL pointer dereference.
+The destructor is called either when the socket is really destroyed
+(reference counter to zero), or it can also be called when we are
+de-assigning the transport.
+
+In the former case, we are sure the delayed work has completed, because
+it holds a reference until it completes, so the destructor will
+definitely be called after the delayed work is finished.
+But in the latter case, the destructor is called by AF_VSOCK core, just
+after the release(), so there may still be delayed work scheduled.
+
+Refactor the code, moving the code to delete the close work already in
+the do_close() to a new function. Invoke it during destruction to make
+sure we don't leave any pending work.
 
 Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
 Cc: stable@vger.kernel.org
 Reported-by: Hyunwoo Kim <v4bel@theori.io>
-Reported-by: Wongi Lee <qwerty@theori.io>
-Closes: https://lore.kernel.org/netdev/Z2LvdTTQR7dBmPb5@v4bel-B760M-AORUS-ELITE-AX/
+Closes: https://lore.kernel.org/netdev/Z37Sh+utS+iV3+eb@v4bel-B760M-AORUS-ELITE-AX/
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Hyunwoo Kim <v4bel@theori.io>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Tested-by: Hyunwoo Kim <v4bel@theori.io>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
 --- a/net/vmw_vsock/virtio_transport_common.c
 +++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -1628,8 +1628,11 @@ void virtio_transport_recv_pkt(struct vi
+@@ -26,6 +26,9 @@
+ /* Threshold for detecting small packets to copy */
+ #define GOOD_COPY_LEN  128
  
- 	lock_sock(sk);
++static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
++					       bool cancel_timeout);
++
+ static const struct virtio_transport *
+ virtio_transport_get_ops(struct vsock_sock *vsk)
+ {
+@@ -1109,6 +1112,8 @@ void virtio_transport_destruct(struct vs
+ {
+ 	struct virtio_vsock_sock *vvs = vsk->trans;
  
--	/* Check if sk has been closed before lock_sock */
--	if (sock_flag(sk, SOCK_DONE)) {
-+	/* Check if sk has been closed or assigned to another transport before
-+	 * lock_sock (note: listener sockets are not assigned to any transport)
-+	 */
-+	if (sock_flag(sk, SOCK_DONE) ||
-+	    (sk->sk_state != TCP_LISTEN && vsk->transport != &t->transport)) {
- 		(void)virtio_transport_reset_no_sock(t, skb);
- 		release_sock(sk);
- 		sock_put(sk);
++	virtio_transport_cancel_close_work(vsk, true);
++
+ 	kfree(vvs);
+ 	vsk->trans = NULL;
+ }
+@@ -1204,17 +1209,11 @@ static void virtio_transport_wait_close(
+ 	}
+ }
+ 
+-static void virtio_transport_do_close(struct vsock_sock *vsk,
+-				      bool cancel_timeout)
++static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
++					       bool cancel_timeout)
+ {
+ 	struct sock *sk = sk_vsock(vsk);
+ 
+-	sock_set_flag(sk, SOCK_DONE);
+-	vsk->peer_shutdown = SHUTDOWN_MASK;
+-	if (vsock_stream_has_data(vsk) <= 0)
+-		sk->sk_state = TCP_CLOSING;
+-	sk->sk_state_change(sk);
+-
+ 	if (vsk->close_work_scheduled &&
+ 	    (!cancel_timeout || cancel_delayed_work(&vsk->close_work))) {
+ 		vsk->close_work_scheduled = false;
+@@ -1226,6 +1225,20 @@ static void virtio_transport_do_close(st
+ 	}
+ }
+ 
++static void virtio_transport_do_close(struct vsock_sock *vsk,
++				      bool cancel_timeout)
++{
++	struct sock *sk = sk_vsock(vsk);
++
++	sock_set_flag(sk, SOCK_DONE);
++	vsk->peer_shutdown = SHUTDOWN_MASK;
++	if (vsock_stream_has_data(vsk) <= 0)
++		sk->sk_state = TCP_CLOSING;
++	sk->sk_state_change(sk);
++
++	virtio_transport_cancel_close_work(vsk, cancel_timeout);
++}
++
+ static void virtio_transport_close_timeout(struct work_struct *work)
+ {
+ 	struct vsock_sock *vsk =
 
 
