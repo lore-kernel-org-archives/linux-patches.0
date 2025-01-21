@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13BC1F63EF;
-	Tue, 21 Jan 2025 18:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC771F78E5;
+	Tue, 21 Jan 2025 18:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483136; cv=none; b=g3YnYcllL21EybWgdFRiSzJJoeuSnbIeoY7haYxUddOpC2w9vIJ87pFyspV5UfEGbrLT4XkgZqs6iafLeBr43Q31cUkbyC4Jy45M6zmL2K3GlkUTss5rBDEtkjW80Ky/675xuKA9+fwi+cDritJEUrIFKG1HitQ0VMiV+rKLkYs=
+	t=1737483139; cv=none; b=OduqCCJdxRTqVIvax8PevxsHd9TqSQwIcRRBAo8vqAS+WX7eA6+Nz4LOncC8xM1tuwA2dRHPdkj/xmbtftm4R3Qm8p1We9Hl9itgsQ8iJPKgmmf9c9mYUsObDblFqVfKNn69d3eCsZ4TikcicOR5UIPyVE6sx1B+QueQwro2yIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483136; c=relaxed/simple;
-	bh=400yZGuiW6bZXFNcy0Pperb59RzFjuJZg2ts+pM3bz0=;
+	s=arc-20240116; t=1737483139; c=relaxed/simple;
+	bh=AbCnEvUXGJ+uV74RbojU176U1lZhAQ+pEDk4KiyBmSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6Bjj7dbVk07XPLyPqIELbpXYQZiNWRU/k2/u5pJvYoKccdS5LwxNf9tSHsP1grE+RD3vMT0WWZUN16Xfa7SOY8iQDW4eqp/UTO9ZykQciYvn1b8G5brcaZ2fzkFQIzLFQPMgc8U5ruelnKJcwqxyfEhxMLBNpOqjULxmmrDAOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylb+cUuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fATKqckW6T/0Dd3WirmcaWoVhTXkC3yCTq0/jTNQm1DfIQl7c4U9WKUJ8mgHNniLhKyV6ZyOrBkYy8aLg5SdnUcKLii9qxCCZjGcMb0OUikGfR5Yy/xuRdFHAb7yjOwhtbbPeu3P2rk+wxcj/j1MNhK7RMHtw+8s9dPeq41dP+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FyfjV8kf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylb+cUuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A7EC4CEDF;
-	Tue, 21 Jan 2025 18:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FyfjV8kf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E169FC4CEDF;
+	Tue, 21 Jan 2025 18:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483136;
-	bh=400yZGuiW6bZXFNcy0Pperb59RzFjuJZg2ts+pM3bz0=;
+	s=korg; t=1737483139;
+	bh=AbCnEvUXGJ+uV74RbojU176U1lZhAQ+pEDk4KiyBmSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylb+cUuAERcyrk8YV//ZO7IKs8MqRTDGJCKhP4ChoZEesmBy2Thy201rf2cHtWe9V
-	 xPI9dAg7qDhjjN35rDglRUAyShcrRm/U82n85vPSmOKpMimMqommAoKwV5ilPgkd7u
-	 ygWrEN/54soQPHCf6uQZfNNzuWjs/uWXkCbGV2xQ=
+	b=FyfjV8kf3Rwz4A5UqYhkHODhDohhT/JljWMmDFmyYaH2RDfWlvi3nTUkCMZZUWevb
+	 JPMyzDXHiGLdTfCxhHULKMdFx3aYK8EVKhRV/7e2eUPVGi+1rkJ6mhSh0H1CXcnzv0
+	 5ej1fMo/T9qth2BYNTlDc6mAmCMWTAjpWspd9iIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Juergen Gross <jgross@suse.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/127] zram: fix potential UAF of zram table
-Date: Tue, 21 Jan 2025 18:52:55 +0100
-Message-ID: <20250121174533.625164090@linuxfoundation.org>
+Subject: [PATCH 5.15 104/127] x86/asm: Make serialize() always_inline
+Date: Tue, 21 Jan 2025 18:52:56 +0100
+Message-ID: <20250121174533.662306710@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit 212fe1c0df4a150fb6298db2cfff267ceaba5402 ]
+[ Upstream commit ae02ae16b76160f0aeeae2c5fb9b15226d00a4ef ]
 
-If zram_meta_alloc failed early, it frees allocated zram->table without
-setting it NULL.  Which will potentially cause zram_meta_free to access
-the table if user reset an failed and uninitialized device.
+In order to allow serialize() to be used from noinstr code, make it
+__always_inline.
 
-Link: https://lkml.kernel.org/r/20250107065446.86928-1-ryncsn@gmail.com
-Fixes: 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing device")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by:  Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
+Closes: https://lore.kernel.org/oe-kbuild-all/202412181756.aJvzih2K-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20241218100918.22167-1-jgross@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/include/asm/special_insns.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index 4e008cd0ef655..6da0c98a1016f 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1174,6 +1174,7 @@ static bool zram_meta_alloc(struct zram *zram, u64 disksize)
- 	zram->mem_pool = zs_create_pool(zram->disk->disk_name);
- 	if (!zram->mem_pool) {
- 		vfree(zram->table);
-+		zram->table = NULL;
- 		return false;
- 	}
+diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
+index 68c257a3de0d3..147e83fa86e25 100644
+--- a/arch/x86/include/asm/special_insns.h
++++ b/arch/x86/include/asm/special_insns.h
+@@ -224,7 +224,7 @@ static inline void clwb(volatile void *__p)
  
+ #define nop() asm volatile ("nop")
+ 
+-static inline void serialize(void)
++static __always_inline void serialize(void)
+ {
+ 	/* Instruction opcode for SERIALIZE; supported in binutils >= 2.35. */
+ 	asm volatile(".byte 0xf, 0x1, 0xe8" ::: "memory");
 -- 
 2.39.5
 
