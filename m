@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA0D1F755D;
-	Tue, 21 Jan 2025 17:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF30D1F55E3;
+	Tue, 21 Jan 2025 17:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482205; cv=none; b=mlVx5GXjsebUGnYUT/ttWd6zXStp02jnmZQHKc95aWOVqyu34SzeKj7B8D2Ukf7SFldnoSTGF0qZpAu6CnpMAwxPz5JR/DvcPe8nbnVKAWGQXnLLeUn3kJs/rLCYILFJei27G6vpQKZFdFUoCurUqTJh5WQTSNMS/u7TFBKD99c=
+	t=1737482208; cv=none; b=QsvQCRQEV9e0DZs4eRyNhVq8zi2Cl4vjvmVN/JtEPPtcFbOsptGmMs/7P8p1pTSJS176Op/X2+Q4Ge6+5KrEwpzqvLxfteOourW/CmfBW+tG9+V1BxFjKGHBaDS78/llhkxFGmhu2blqq/ahdq8Uh2K0NURa5Jt/Ksow0lfy3xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482205; c=relaxed/simple;
-	bh=a3eoufQP/5n66W9ZYCFhKWDUvk4XAWDf5JtIkf7653k=;
+	s=arc-20240116; t=1737482208; c=relaxed/simple;
+	bh=jnq2J5uRjQlAmSNfi/w4qyDRZqZTtxFKNMDK0W+mle8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEdd/kMYy66QjCRgbSVoKlFgPJlANDkc28w/Q+NRdKcGrFjKiN/uYNlJCfPzYNbLzVnJlGz/JV+r2KpXKUoHPhzz6mkoYrlmqYsCyI/ay0CiuPae9UX9+XVcoeaKF8kKeXkansVncRLgcvlC45lX4fga3PytTCIDAjIfrCI629Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fU6Y6MMn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QW/Vcf9x2IYD/Iib1D4YNtlXkP6+QzAsGIANlrrjiTMm4Js8gVcP9sbgLTnwFc3VWFEitI8qoNhiphYvfnl/O4wNHIXV1QoNcWo42WFo87r+6rvSs0Y6O9j7FDGYNdp+JH5mn7iXbmkpU+1N7o1b1lAOkObzPGmgr+ipJUst6as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEUCsaPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fU6Y6MMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770CAC4CEDF;
-	Tue, 21 Jan 2025 17:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEUCsaPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760D1C4CEDF;
+	Tue, 21 Jan 2025 17:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482204;
-	bh=a3eoufQP/5n66W9ZYCFhKWDUvk4XAWDf5JtIkf7653k=;
+	s=korg; t=1737482207;
+	bh=jnq2J5uRjQlAmSNfi/w4qyDRZqZTtxFKNMDK0W+mle8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fU6Y6MMnK1hdma1c2zNTCxbKOcfPDYCI7Se9zX+A9DGK/oV+rR6moROHqnKIA5x4H
-	 29/3dy1b3XhxYWR52xf/1pLCgC6QdqPD/2Tjn1FWh/fwj+Y2hFCIsWsgbzVBjz2pqI
-	 brSFuUdY8Hv45spET/1tZuOvQzzrzcaCXlqmlbWU=
+	b=AEUCsaPUrQaeN0ExmbTgTYo3eqNTYq2DlIHWbOXLPxchbD+RqGXO4hO89SlbufRBB
+	 t95risCSBpnDjhj0OtHITb41mOO4CmfKYCXiUcK3dUGHxJrk0V+e2lr/29g3j8AwCb
+	 rAzqC950QdjufRGZbVh6Uh6D0x6W2xOZg4KMoT4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youzhong Yang <youzhong@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 70/72] nfsd: add list_head nf_gc to struct nfsd_file
-Date: Tue, 21 Jan 2025 18:52:36 +0100
-Message-ID: <20250121174526.130556663@linuxfoundation.org>
+	Sean Anderson <sean.anderson@linux.dev>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 6.6 53/72] gpio: xilinx: Convert gpio_lock to raw spinlock
+Date: Tue, 21 Jan 2025 18:52:19 +0100
+Message-ID: <20250121174525.472060737@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -51,139 +50,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youzhong Yang <youzhong@gmail.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-commit 8e6e2ffa6569a205f1805cbaeca143b556581da6 upstream.
+commit 9860370c2172704b6b4f0075a0c2a29fd84af96a upstream.
 
-nfsd_file_put() in one thread can race with another thread doing
-garbage collection (running nfsd_file_gc() -> list_lru_walk() ->
-nfsd_file_lru_cb()):
+irq_chip functions may be called in raw spinlock context. Therefore, we
+must also use a raw spinlock for our own internal locking.
 
-  * In nfsd_file_put(), nf->nf_ref is 1, so it tries to do nfsd_file_lru_add().
-  * nfsd_file_lru_add() returns true (with NFSD_FILE_REFERENCED bit set)
-  * garbage collector kicks in, nfsd_file_lru_cb() clears REFERENCED bit and
-    returns LRU_ROTATE.
-  * garbage collector kicks in again, nfsd_file_lru_cb() now decrements nf->nf_ref
-    to 0, runs nfsd_file_unhash(), removes it from the LRU and adds to the dispose
-    list [list_lru_isolate_move(lru, &nf->nf_lru, head)]
-  * nfsd_file_put() detects NFSD_FILE_HASHED bit is cleared, so it tries to remove
-    the 'nf' from the LRU [if (!nfsd_file_lru_remove(nf))]. The 'nf' has been added
-    to the 'dispose' list by nfsd_file_lru_cb(), so nfsd_file_lru_remove(nf) simply
-    treats it as part of the LRU and removes it, which leads to its removal from
-    the 'dispose' list.
-  * At this moment, 'nf' is unhashed with its nf_ref being 0, and not on the LRU.
-    nfsd_file_put() continues its execution [if (refcount_dec_and_test(&nf->nf_ref))],
-    as nf->nf_ref is already 0, nf->nf_ref is set to REFCOUNT_SATURATED, and the 'nf'
-    gets no chance of being freed.
+This fixes the following lockdep splat:
 
-nfsd_file_put() can also race with nfsd_file_cond_queue():
-  * In nfsd_file_put(), nf->nf_ref is 1, so it tries to do nfsd_file_lru_add().
-  * nfsd_file_lru_add() sets REFERENCED bit and returns true.
-  * Some userland application runs 'exportfs -f' or something like that, which triggers
-    __nfsd_file_cache_purge() -> nfsd_file_cond_queue().
-  * In nfsd_file_cond_queue(), it runs [if (!nfsd_file_unhash(nf))], unhash is done
-    successfully.
-  * nfsd_file_cond_queue() runs [if (!nfsd_file_get(nf))], now nf->nf_ref goes to 2.
-  * nfsd_file_cond_queue() runs [if (nfsd_file_lru_remove(nf))], it succeeds.
-  * nfsd_file_cond_queue() runs [if (refcount_sub_and_test(decrement, &nf->nf_ref))]
-    (with "decrement" being 2), so the nf->nf_ref goes to 0, the 'nf' is added to the
-    dispose list [list_add(&nf->nf_lru, dispose)]
-  * nfsd_file_put() detects NFSD_FILE_HASHED bit is cleared, so it tries to remove
-    the 'nf' from the LRU [if (!nfsd_file_lru_remove(nf))], although the 'nf' is not
-    in the LRU, but it is linked in the 'dispose' list, nfsd_file_lru_remove() simply
-    treats it as part of the LRU and removes it. This leads to its removal from
-    the 'dispose' list!
-  * Now nf->ref is 0, unhashed. nfsd_file_put() continues its execution and set
-    nf->nf_ref to REFCOUNT_SATURATED.
+[    5.349336] =============================
+[    5.353349] [ BUG: Invalid wait context ]
+[    5.357361] 6.13.0-rc5+ #69 Tainted: G        W
+[    5.363031] -----------------------------
+[    5.367045] kworker/u17:1/44 is trying to lock:
+[    5.371587] ffffff88018b02c0 (&chip->gpio_lock){....}-{3:3}, at: xgpio_irq_unmask (drivers/gpio/gpio-xilinx.c:433 (discriminator 8))
+[    5.380079] other info that might help us debug this:
+[    5.385138] context-{5:5}
+[    5.387762] 5 locks held by kworker/u17:1/44:
+[    5.392123] #0: ffffff8800014958 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work (kernel/workqueue.c:3204)
+[    5.402260] #1: ffffffc082fcbdd8 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work (kernel/workqueue.c:3205)
+[    5.411528] #2: ffffff880172c900 (&dev->mutex){....}-{4:4}, at: __device_attach (drivers/base/dd.c:1006)
+[    5.419929] #3: ffffff88039c8268 (request_class#2){+.+.}-{4:4}, at: __setup_irq (kernel/irq/internals.h:156 kernel/irq/manage.c:1596)
+[    5.428331] #4: ffffff88039c80c8 (lock_class#2){....}-{2:2}, at: __setup_irq (kernel/irq/manage.c:1614)
+[    5.436472] stack backtrace:
+[    5.439359] CPU: 2 UID: 0 PID: 44 Comm: kworker/u17:1 Tainted: G        W          6.13.0-rc5+ #69
+[    5.448690] Tainted: [W]=WARN
+[    5.451656] Hardware name: xlnx,zynqmp (DT)
+[    5.455845] Workqueue: events_unbound deferred_probe_work_func
+[    5.461699] Call trace:
+[    5.464147] show_stack+0x18/0x24 C
+[    5.467821] dump_stack_lvl (lib/dump_stack.c:123)
+[    5.471501] dump_stack (lib/dump_stack.c:130)
+[    5.474824] __lock_acquire (kernel/locking/lockdep.c:4828 kernel/locking/lockdep.c:4898 kernel/locking/lockdep.c:5176)
+[    5.478758] lock_acquire (arch/arm64/include/asm/percpu.h:40 kernel/locking/lockdep.c:467 kernel/locking/lockdep.c:5851 kernel/locking/lockdep.c:5814)
+[    5.482429] _raw_spin_lock_irqsave (include/linux/spinlock_api_smp.h:111 kernel/locking/spinlock.c:162)
+[    5.486797] xgpio_irq_unmask (drivers/gpio/gpio-xilinx.c:433 (discriminator 8))
+[    5.490737] irq_enable (kernel/irq/internals.h:236 kernel/irq/chip.c:170 kernel/irq/chip.c:439 kernel/irq/chip.c:432 kernel/irq/chip.c:345)
+[    5.494060] __irq_startup (kernel/irq/internals.h:241 kernel/irq/chip.c:180 kernel/irq/chip.c:250)
+[    5.497645] irq_startup (kernel/irq/chip.c:270)
+[    5.501143] __setup_irq (kernel/irq/manage.c:1807)
+[    5.504728] request_threaded_irq (kernel/irq/manage.c:2208)
 
-As shown in the above analysis, using nf_lru for both the LRU list and dispose list
-can cause the leaks. This patch adds a new list_head nf_gc in struct nfsd_file, and uses
-it for the dispose list. This does not fix the nfsd_file leaking issue completely.
-
-Signed-off-by: Youzhong Yang <youzhong@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: a32c7caea292 ("gpio: gpio-xilinx: Add interrupt support")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250110163354.2012654-1-sean.anderson@linux.dev
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/filecache.c |   18 ++++++++++--------
- fs/nfsd/filecache.h |    1 +
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ drivers/gpio/gpio-xilinx.c |   32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
---- a/fs/nfsd/filecache.c
-+++ b/fs/nfsd/filecache.c
-@@ -219,6 +219,7 @@ nfsd_file_alloc(struct net *net, struct
- 		return NULL;
+--- a/drivers/gpio/gpio-xilinx.c
++++ b/drivers/gpio/gpio-xilinx.c
+@@ -66,7 +66,7 @@ struct xgpio_instance {
+ 	DECLARE_BITMAP(state, 64);
+ 	DECLARE_BITMAP(last_irq_read, 64);
+ 	DECLARE_BITMAP(dir, 64);
+-	spinlock_t gpio_lock;	/* For serializing operations */
++	raw_spinlock_t gpio_lock;	/* For serializing operations */
+ 	int irq;
+ 	DECLARE_BITMAP(enable, 64);
+ 	DECLARE_BITMAP(rising_edge, 64);
+@@ -180,14 +180,14 @@ static void xgpio_set(struct gpio_chip *
+ 	struct xgpio_instance *chip = gpiochip_get_data(gc);
+ 	int bit = xgpio_to_bit(chip, gpio);
  
- 	INIT_LIST_HEAD(&nf->nf_lru);
-+	INIT_LIST_HEAD(&nf->nf_gc);
- 	nf->nf_birthtime = ktime_get();
- 	nf->nf_file = NULL;
- 	nf->nf_cred = get_current_cred();
-@@ -396,8 +397,8 @@ nfsd_file_dispose_list(struct list_head
- 	struct nfsd_file *nf;
+-	spin_lock_irqsave(&chip->gpio_lock, flags);
++	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
  
- 	while (!list_empty(dispose)) {
--		nf = list_first_entry(dispose, struct nfsd_file, nf_lru);
--		list_del_init(&nf->nf_lru);
-+		nf = list_first_entry(dispose, struct nfsd_file, nf_gc);
-+		list_del_init(&nf->nf_gc);
- 		nfsd_file_free(nf);
- 	}
+ 	/* Write to GPIO signal and set its direction to output */
+ 	__assign_bit(bit, chip->state, val);
+ 
+ 	xgpio_write_ch(chip, XGPIO_DATA_OFFSET, bit, chip->state);
+ 
+-	spin_unlock_irqrestore(&chip->gpio_lock, flags);
++	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
  }
-@@ -414,12 +415,12 @@ nfsd_file_dispose_list_delayed(struct li
- {
- 	while(!list_empty(dispose)) {
- 		struct nfsd_file *nf = list_first_entry(dispose,
--						struct nfsd_file, nf_lru);
-+						struct nfsd_file, nf_gc);
- 		struct nfsd_net *nn = net_generic(nf->nf_net, nfsd_net_id);
- 		struct nfsd_fcache_disposal *l = nn->fcache_disposal;
  
- 		spin_lock(&l->lock);
--		list_move_tail(&nf->nf_lru, &l->freeme);
-+		list_move_tail(&nf->nf_gc, &l->freeme);
- 		spin_unlock(&l->lock);
- 		queue_work(nfsd_filecache_wq, &l->work);
- 	}
-@@ -476,7 +477,8 @@ nfsd_file_lru_cb(struct list_head *item,
+ /**
+@@ -211,7 +211,7 @@ static void xgpio_set_multiple(struct gp
+ 	bitmap_remap(hw_mask, mask, chip->sw_map, chip->hw_map, 64);
+ 	bitmap_remap(hw_bits, bits, chip->sw_map, chip->hw_map, 64);
  
- 	/* Refcount went to zero. Unhash it and queue it to the dispose list */
- 	nfsd_file_unhash(nf);
--	list_lru_isolate_move(lru, &nf->nf_lru, head);
-+	list_lru_isolate(lru, &nf->nf_lru);
-+	list_add(&nf->nf_gc, head);
- 	this_cpu_inc(nfsd_file_evictions);
- 	trace_nfsd_file_gc_disposed(nf);
- 	return LRU_REMOVED;
-@@ -555,7 +557,7 @@ nfsd_file_cond_queue(struct nfsd_file *n
+-	spin_lock_irqsave(&chip->gpio_lock, flags);
++	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
  
- 	/* If refcount goes to 0, then put on the dispose list */
- 	if (refcount_sub_and_test(decrement, &nf->nf_ref)) {
--		list_add(&nf->nf_lru, dispose);
-+		list_add(&nf->nf_gc, dispose);
- 		trace_nfsd_file_closing(nf);
- 	}
+ 	bitmap_replace(state, chip->state, hw_bits, hw_mask, 64);
+ 
+@@ -219,7 +219,7 @@ static void xgpio_set_multiple(struct gp
+ 
+ 	bitmap_copy(chip->state, state, 64);
+ 
+-	spin_unlock_irqrestore(&chip->gpio_lock, flags);
++	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
  }
-@@ -631,8 +633,8 @@ nfsd_file_close_inode_sync(struct inode
  
- 	nfsd_file_queue_for_close(inode, &dispose);
- 	while (!list_empty(&dispose)) {
--		nf = list_first_entry(&dispose, struct nfsd_file, nf_lru);
--		list_del_init(&nf->nf_lru);
-+		nf = list_first_entry(&dispose, struct nfsd_file, nf_gc);
-+		list_del_init(&nf->nf_gc);
- 		nfsd_file_free(nf);
+ /**
+@@ -237,13 +237,13 @@ static int xgpio_dir_in(struct gpio_chip
+ 	struct xgpio_instance *chip = gpiochip_get_data(gc);
+ 	int bit = xgpio_to_bit(chip, gpio);
+ 
+-	spin_lock_irqsave(&chip->gpio_lock, flags);
++	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
+ 
+ 	/* Set the GPIO bit in shadow register and set direction as input */
+ 	__set_bit(bit, chip->dir);
+ 	xgpio_write_ch(chip, XGPIO_TRI_OFFSET, bit, chip->dir);
+ 
+-	spin_unlock_irqrestore(&chip->gpio_lock, flags);
++	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -266,7 +266,7 @@ static int xgpio_dir_out(struct gpio_chi
+ 	struct xgpio_instance *chip = gpiochip_get_data(gc);
+ 	int bit = xgpio_to_bit(chip, gpio);
+ 
+-	spin_lock_irqsave(&chip->gpio_lock, flags);
++	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
+ 
+ 	/* Write state of GPIO signal */
+ 	__assign_bit(bit, chip->state, val);
+@@ -276,7 +276,7 @@ static int xgpio_dir_out(struct gpio_chi
+ 	__clear_bit(bit, chip->dir);
+ 	xgpio_write_ch(chip, XGPIO_TRI_OFFSET, bit, chip->dir);
+ 
+-	spin_unlock_irqrestore(&chip->gpio_lock, flags);
++	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -404,7 +404,7 @@ static void xgpio_irq_mask(struct irq_da
+ 	int bit = xgpio_to_bit(chip, irq_offset);
+ 	u32 mask = BIT(bit / 32), temp;
+ 
+-	spin_lock_irqsave(&chip->gpio_lock, flags);
++	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
+ 
+ 	__clear_bit(bit, chip->enable);
+ 
+@@ -414,7 +414,7 @@ static void xgpio_irq_mask(struct irq_da
+ 		temp &= ~mask;
+ 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, temp);
  	}
- 	flush_delayed_fput();
---- a/fs/nfsd/filecache.h
-+++ b/fs/nfsd/filecache.h
-@@ -44,6 +44,7 @@ struct nfsd_file {
+-	spin_unlock_irqrestore(&chip->gpio_lock, flags);
++	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
  
- 	struct nfsd_file_mark	*nf_mark;
- 	struct list_head	nf_lru;
-+	struct list_head	nf_gc;
- 	struct rcu_head		nf_rcu;
- 	ktime_t			nf_birthtime;
- };
+ 	gpiochip_disable_irq(&chip->gc, irq_offset);
+ }
+@@ -434,7 +434,7 @@ static void xgpio_irq_unmask(struct irq_
+ 
+ 	gpiochip_enable_irq(&chip->gc, irq_offset);
+ 
+-	spin_lock_irqsave(&chip->gpio_lock, flags);
++	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
+ 
+ 	__set_bit(bit, chip->enable);
+ 
+@@ -453,7 +453,7 @@ static void xgpio_irq_unmask(struct irq_
+ 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, val);
+ 	}
+ 
+-	spin_unlock_irqrestore(&chip->gpio_lock, flags);
++	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
+ }
+ 
+ /**
+@@ -518,7 +518,7 @@ static void xgpio_irqhandler(struct irq_
+ 
+ 	chained_irq_enter(irqchip, desc);
+ 
+-	spin_lock(&chip->gpio_lock);
++	raw_spin_lock(&chip->gpio_lock);
+ 
+ 	xgpio_read_ch_all(chip, XGPIO_DATA_OFFSET, all);
+ 
+@@ -535,7 +535,7 @@ static void xgpio_irqhandler(struct irq_
+ 	bitmap_copy(chip->last_irq_read, all, 64);
+ 	bitmap_or(all, rising, falling, 64);
+ 
+-	spin_unlock(&chip->gpio_lock);
++	raw_spin_unlock(&chip->gpio_lock);
+ 
+ 	dev_dbg(gc->parent, "IRQ rising %*pb falling %*pb\n", 64, rising, 64, falling);
+ 
+@@ -626,7 +626,7 @@ static int xgpio_probe(struct platform_d
+ 	bitmap_set(chip->hw_map,  0, width[0]);
+ 	bitmap_set(chip->hw_map, 32, width[1]);
+ 
+-	spin_lock_init(&chip->gpio_lock);
++	raw_spin_lock_init(&chip->gpio_lock);
+ 
+ 	chip->gc.base = -1;
+ 	chip->gc.ngpio = bitmap_weight(chip->hw_map, 64);
 
 
