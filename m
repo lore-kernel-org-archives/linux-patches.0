@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A09A1F540C;
-	Tue, 21 Jan 2025 18:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89901F7064;
+	Tue, 21 Jan 2025 18:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482837; cv=none; b=CsBTrukxCKwo6Vk96tz8a4Jyd/IfSt8jW2/383zs1JIZI+9gB9XH5R4mNpAyoCi3dz8QZczuR4hLRPEmX2TBf+nNnD7S18cU9nTjTe+etsCEbTxu80AamlvzDie9PmWUWv+JeWY8gwJjBqeKJgLv5ZDZhzCmvNMHDHAl+Sb8fl4=
+	t=1737482838; cv=none; b=TjQZj9t7CxQsFaWGOLsTznVL5F3sBb527UoFFtih8JqaGQeBforBLMJyu4Zxgy5batK1SZt9zx3O6x65zG5opTSYt4Mxl6yVu3s6NIfPBZ+eA3S0x6p7iWWJMTBSAfWpdvOmKy10HY7XpkeOwDT1VeCe16FFa3+ZBc80GC6U2nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482837; c=relaxed/simple;
-	bh=2nQUHW9ATwQxlY4gl9GqosFLqec8ISuPVFNmBk4da+0=;
+	s=arc-20240116; t=1737482838; c=relaxed/simple;
+	bh=68PTr0uGuNFS/zI+xkBWcdH7EdiXDHElxKebOq+h6oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OETjXeElTUAoxfhE9FlT8DoycrLCOneKwE5dzXcvhf9BOquYubUnj0EYoO9ADYXa9sDnrF+3/3i2/mMAKQVoYAnytW0JMR9FimqbOB325ni3Lf2/5KupvDRTltaIr8pAvXy71N76biYDVvw+4emO1imwiquwjEVJomdDH7onti8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1ImT2n9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxWgixxwiELiTdHHgrqXEtns3Bof5W1yN16p7JtIUEgexbS6T40Q5c+MVXG0C/k0w17cAhAjnV7+gJgHx/ZAbeH4IAUPBDixAJljQyzEG2itYLf1ggmqIeopCeJMruS7JKyzmcbWS/KjyYGl6h4J3T1+VwPF+GUf5GZXyl/SHrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nII64vCR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1ImT2n9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AE4C4CEDF;
-	Tue, 21 Jan 2025 18:07:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nII64vCR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B46C4CEE3;
+	Tue, 21 Jan 2025 18:07:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482835;
-	bh=2nQUHW9ATwQxlY4gl9GqosFLqec8ISuPVFNmBk4da+0=;
+	s=korg; t=1737482837;
+	bh=68PTr0uGuNFS/zI+xkBWcdH7EdiXDHElxKebOq+h6oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1ImT2n92gvme+jHrwUAqwmq4U26LFOFaztvVWQf9Qop/bseA8MphijrEnJrb0wX8
-	 F2KaE49SPWezoCbER7be5TtFCS/jnweiqaD59EDaSydbBY7nrMfbcnXSecTaccofrD
-	 66Fsc/9LA4nZ0q8DhPzhcsr/UHYk23m4a9uHGq6U=
+	b=nII64vCRfKmdTHdfCMB+r08Ai4Ppfcg7FahEX+hLQnDUmpKmjsraAmOqjWYRwrXB8
+	 cU14ZnJ10vfMFpyM3AfoIgmnbyXp94DGzb6+KL7NDTGw+fQcz3Hn25YHO7MNBIJCFL
+	 5AcgHQtReX08jtzJyRe+G8DBO6pQKLVJINyI3h/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 024/127] sctp: sysctl: cookie_hmac_alg: avoid using current->nsproxy
-Date: Tue, 21 Jan 2025 18:51:36 +0100
-Message-ID: <20250121174530.605953925@linuxfoundation.org>
+Subject: [PATCH 5.15 025/127] sctp: sysctl: rto_min/max: avoid using current->nsproxy
+Date: Tue, 21 Jan 2025 18:51:37 +0100
+Message-ID: <20250121174530.642442349@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -53,7 +53,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit ea62dd1383913b5999f3d16ae99d411f41b528d4 upstream.
+commit 9fc17b76fc70763780aa78b38fcf4742384044a5 upstream.
 
 As mentioned in a previous commit of this series, using the 'net'
 structure via 'current' is not recommended for different reasons:
@@ -70,32 +70,39 @@ container_of().
 
 Note that table->data could also be used directly, as this is the only
 member needed from the 'net' structure, but that would increase the size
-of this fix, to use '*data' everywhere 'net->sctp.sctp_hmac_alg' is
-used.
+of this fix, to use '*data' everywhere 'net->sctp.rto_min/max' is used.
 
-Fixes: 3c68198e7511 ("sctp: Make hmac algorithm selection for cookie generation dynamic")
+Fixes: 4f3fdf3bc59c ("sctp: add check rto_min and rto_max in sysctl")
 Cc: stable@vger.kernel.org
 Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
 Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-4-5df34b2083e8@kernel.org
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-5-5df34b2083e8@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/sysctl.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sctp/sysctl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 --- a/net/sctp/sysctl.c
 +++ b/net/sctp/sysctl.c
-@@ -380,7 +380,8 @@ static struct ctl_table sctp_net_table[]
- static int proc_sctp_do_hmac_alg(struct ctl_table *ctl, int write,
- 				 void *buffer, size_t *lenp, loff_t *ppos)
+@@ -426,7 +426,7 @@ static int proc_sctp_do_hmac_alg(struct
+ static int proc_sctp_do_rto_min(struct ctl_table *ctl, int write,
+ 				void *buffer, size_t *lenp, loff_t *ppos)
  {
 -	struct net *net = current->nsproxy->net_ns;
-+	struct net *net = container_of(ctl->data, struct net,
-+				       sctp.sctp_hmac_alg);
++	struct net *net = container_of(ctl->data, struct net, sctp.rto_min);
+ 	unsigned int min = *(unsigned int *) ctl->extra1;
+ 	unsigned int max = *(unsigned int *) ctl->extra2;
  	struct ctl_table tbl;
- 	bool changed = false;
- 	char *none = "none";
+@@ -454,7 +454,7 @@ static int proc_sctp_do_rto_min(struct c
+ static int proc_sctp_do_rto_max(struct ctl_table *ctl, int write,
+ 				void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	struct net *net = current->nsproxy->net_ns;
++	struct net *net = container_of(ctl->data, struct net, sctp.rto_max);
+ 	unsigned int min = *(unsigned int *) ctl->extra1;
+ 	unsigned int max = *(unsigned int *) ctl->extra2;
+ 	struct ctl_table tbl;
 
 
