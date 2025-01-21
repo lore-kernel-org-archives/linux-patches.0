@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062731F543F;
-	Tue, 21 Jan 2025 18:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66F11F7552;
+	Tue, 21 Jan 2025 18:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482815; cv=none; b=GyCHfTOVpjlwJBDwQdPv66nwy5vJYsooBsrjPXVSoYdfkoxOKrqc1GbGBB7+rtfRb0rK3dG4Hhdi0paelp/OXcV0nUqeWl1jNVPFoyBz6eVxBXbgsFSMDaM5OWGgLgTHc1LqmgGA3ItHcpXpibmygPqYDKOLb8sJ3npH+Y39pVo=
+	t=1737482818; cv=none; b=fCVxZs9EKJQB167artr1r1ksgo0fRe92FZqXE2KpEePV7CVVCmeyyxuBhq7m70xFac/1AK/Nx/mZ2wFjFcApBvEdbtdmUNoDqLN/9Sby9mjvqKiS+tPiarzdxFeuzegtc3gVIjqPTlrtQNCASn3VSwhANNuSAb+QS7BAg54VpZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482815; c=relaxed/simple;
-	bh=gYDnXxhjroIFCS6Dlw5a6jqprzTm3b8PajVn8HEocm4=;
+	s=arc-20240116; t=1737482818; c=relaxed/simple;
+	bh=ZEK6D5mMPArTG9DI9GKcWcwVi0tH8TvzRGgHlxgAMNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qluP70GR+2KnP2a6DmArcSNNsitnpUcftk5FmgH64zxZKmmOAOvXXek50qzzWw/oPb4/GdE2RScmh5poFswxs3tsSWiqQezR+8/DrDnnxsf3SS9ruyGsJSObun7+4FX+17PUH1h1KJYGhniG4haWLjggzpoUuMNzofBh1Qr2rUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tV41eqgo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oEirCoxlmw6WQsRRAsP2NYJ3wfms6W5CPCwiEWl8RHrrBtErvgHfd5jmiipTGS7liE3Isg6UJX13Kb+ZWAC7DSe9LPDJ9zGB226haP55z0683b6ZaOFbre0VvKz0yb3G8yfsCCNewwby3R4fU1ekXPoCa56rATxHovI2w7HqMcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM0D54oO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tV41eqgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D1FC4CEDF;
-	Tue, 21 Jan 2025 18:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM0D54oO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD11C4CEE3;
+	Tue, 21 Jan 2025 18:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482814;
-	bh=gYDnXxhjroIFCS6Dlw5a6jqprzTm3b8PajVn8HEocm4=;
+	s=korg; t=1737482817;
+	bh=ZEK6D5mMPArTG9DI9GKcWcwVi0tH8TvzRGgHlxgAMNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tV41eqgo7+igMccKuaKeEO28PYh6PLwS0/5HGD/KA+OY+cGQrgTS6lkmmR68p9/u6
-	 +iJniUl8RcZ9+UPwVx50lEz35RDNuxmy2aRb/34rXiAhhPdW+yhMUtEw+wGTe3nxJK
-	 DVTuqbS4rxX8VkGQpgk+OoBd4yVa01hTUbROhSLg=
+	b=qM0D54oOObTykmFbVMX4Yw5AE1mqgjyQfYnfQ+nVqOIDmNZ7jokz5wjSRj0dfJlnQ
+	 6m7iTH2xXIa8rxMnbC0Ka1H/a4UX6a0hIpgQ6ceUxdrQ9uW/44Fp5Vq1EaKoykXU7b
+	 wjoC54cKIdl/dyeCrM4da06cqirQP2RcRsUang5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/127] netfilter: conntrack: clamp maximum hashtable size to INT_MAX
-Date: Tue, 21 Jan 2025 18:51:30 +0100
-Message-ID: <20250121174530.375677325@linuxfoundation.org>
+Subject: [PATCH 5.15 019/127] drm/mediatek: Add support for 180-degree rotation in the display driver
+Date: Tue, 21 Jan 2025 18:51:31 +0100
+Message-ID: <20250121174530.414242005@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -50,46 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
 
-[ Upstream commit b541ba7d1f5a5b7b3e2e22dc9e40e18a7d6dbc13 ]
+[ Upstream commit 5c9d7e79ba154e8e1f0bfdeb7b495f454c1a3eba ]
 
-Use INT_MAX as maximum size for the conntrack hashtable. Otherwise, it
-is possible to hit WARN_ON_ONCE in __kvmalloc_node_noprof() when
-resizing hashtable because __GFP_NOWARN is unset. See:
+mediatek-drm driver reported the capability of 180-degree rotation by
+adding `DRM_MODE_ROTATE_180` to the plane property, as flip-x combined
+with flip-y equals a 180-degree rotation. However, we did not handle
+the rotation property in the driver and lead to rotation issues.
 
-  0708a0afe291 ("mm: Consider __GFP_NOWARN flag for oversized kvmalloc() calls")
-
-Note: hashtable resize is only possible from init_netns.
-
-Fixes: 9cc1c73ad666 ("netfilter: conntrack: avoid integer overflow when resizing")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 74608d8feefd ("drm/mediatek: Add DRM_MODE_ROTATE_0 to rotation property")
+Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20241118025126.30808-1-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index be6031886f94..00a97743507d 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -2589,12 +2589,15 @@ void *nf_ct_alloc_hashtable(unsigned int *sizep, int nulls)
- 	struct hlist_nulls_head *hash;
- 	unsigned int nr_slots, i;
+diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
+index c54d56fb7b4c..77397bf0b5b4 100644
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
+@@ -302,6 +302,7 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
+ 	unsigned int addr = pending->addr;
+ 	unsigned int pitch = pending->pitch & 0xffff;
+ 	unsigned int fmt = pending->format;
++	unsigned int rotation = pending->rotation;
+ 	unsigned int offset = (pending->y << 16) | pending->x;
+ 	unsigned int src_size = (pending->height << 16) | pending->width;
+ 	unsigned int con;
+@@ -315,12 +316,19 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
+ 	if (state->base.fb && state->base.fb->format->has_alpha)
+ 		con |= OVL_CON_AEN | OVL_CON_ALPHA;
  
--	if (*sizep > (UINT_MAX / sizeof(struct hlist_nulls_head)))
-+	if (*sizep > (INT_MAX / sizeof(struct hlist_nulls_head)))
- 		return NULL;
- 
- 	BUILD_BUG_ON(sizeof(struct hlist_nulls_head) != sizeof(struct hlist_head));
- 	nr_slots = *sizep = roundup(*sizep, PAGE_SIZE / sizeof(struct hlist_nulls_head));
- 
-+	if (nr_slots > (INT_MAX / sizeof(struct hlist_nulls_head)))
-+		return NULL;
+-	if (pending->rotation & DRM_MODE_REFLECT_Y) {
++	/*
++	 * Treat rotate 180 as flip x + flip y, and XOR the original rotation value
++	 * to flip x + flip y to support both in the same time.
++	 */
++	if (rotation & DRM_MODE_ROTATE_180)
++		rotation ^= DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y;
 +
- 	hash = kvcalloc(nr_slots, sizeof(struct hlist_nulls_head), GFP_KERNEL);
++	if (rotation & DRM_MODE_REFLECT_Y) {
+ 		con |= OVL_CON_VIRT_FLIP;
+ 		addr += (pending->height - 1) * pending->pitch;
+ 	}
  
- 	if (hash && nulls)
+-	if (pending->rotation & DRM_MODE_REFLECT_X) {
++	if (rotation & DRM_MODE_REFLECT_X) {
+ 		con |= OVL_CON_HORZ_FLIP;
+ 		addr += pending->pitch - 1;
+ 	}
 -- 
 2.39.5
 
