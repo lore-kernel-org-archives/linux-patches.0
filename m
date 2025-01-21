@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0949C1F7064;
-	Tue, 21 Jan 2025 17:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F961F707F;
+	Tue, 21 Jan 2025 17:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482251; cv=none; b=Nup9AL5Im2/RSJA94wPGAwdz9CJlCBA7P8WGsFVpJufPa098KTiWUP8RtU8AO8OO9gXq9DUVNbr9E1WtYad2TBwaR7LzUBUJ8KEIc77MVOkoP/Brd9FyCUx7HDYaSyvDdU81k1jPCLjh0uVpTd4lgav3gaeNb/o21w2xZgAr3Zk=
+	t=1737482256; cv=none; b=SafOa0i6VwqNMK17iXn7GcAa47TTUic9tM1y2izz1oyRPa5RFHJMbxNcp+OH7lWyd+FuD+fsPctFgQPoH0ZlPFtFgrpM/+w5yQ/Dq4faD0jGmTIqs/rOIgDD4r/azRvDykRNv+5muYYMDes4owKJDnuxgT9CNZ1F+cFYhXexXus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482251; c=relaxed/simple;
-	bh=bkpX84lhoAwaScr+fSrjLFaIn5dogAiqBZ+SkoKDROA=;
+	s=arc-20240116; t=1737482256; c=relaxed/simple;
+	bh=bw/nIy0+tcPjRV0ijpBnSeMi0ZSuY5/qPly2e0BpKTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwspeuQhgXpu91NSZQDq7gpguiMbWqL/Y+kOYGa00dZu2hyHpxTCUhNrib/rWujgqPmKVj70IeuWZhJ7HyILZNgEmDPpq/bxyG60efD2ya2JyecUq2l8RwPS6z/sBEghmBepkXKR9sp0baXqqM3GeajRSYkB8yo84Wsra1Cjx/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMIHYRgX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AV6XoqEhRkvbvBoK1ogEc5K1cb2jWaRSwFK3H2jpB0WFp/7cZDhQlGcFHOfZvksiEG2LQVmd3XcZu1atHxRdZE6sZNPXA04C/Cr+0bAJS/e67fshhm+O+VqcabWiVmUU7AFQHPV3iHibNkdrGN4btbUgr3sVgeJemoOKoY8Cs1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1CjEjUX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMIHYRgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83089C4CEE1;
-	Tue, 21 Jan 2025 17:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1CjEjUX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B67FC4CEE0;
+	Tue, 21 Jan 2025 17:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482250;
-	bh=bkpX84lhoAwaScr+fSrjLFaIn5dogAiqBZ+SkoKDROA=;
+	s=korg; t=1737482254;
+	bh=bw/nIy0+tcPjRV0ijpBnSeMi0ZSuY5/qPly2e0BpKTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nMIHYRgXNiR3G7KmwGR76NxKNGcTtUu6lajNRNFUhAMcR5r6gg0mV76LhfIgisfhx
-	 hgd7dSfFQxd3F8aEgN3Fke/sOb/3u3cNBYFEg1iEq3TshX7mH1VeNvOXaWr3oIIAEG
-	 +84G1CgKHVBvSwTAMYB6mFgwCmNu+plFYlm6RHVo=
+	b=Z1CjEjUXnJ1cYlg6+eY+mz8/W6YA7PM+q7YV6F1LfANpLeltE4ESKDdeoFcVUqw6U
+	 wg0UqMLQUXc6gwZEnBvrW779deuoJj36Kwgc1qgpZzDEKMfznlSuncoGPYuGRxrr3B
+	 cJRNr9QTdNUvI4zH7m1fh4oROB7982ThscpyZIzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Temerkhanov <sergey.temerkhanov@intel.com>,
 	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>,
+	Karol Kolacinski <karol.kolacinski@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.12 013/122] ice: Use ice_adapter for PTP shared data instead of auxdev
-Date: Tue, 21 Jan 2025 18:51:01 +0100
-Message-ID: <20250121174533.510575132@linuxfoundation.org>
+Subject: [PATCH 6.12 014/122] ice: Add correct PHY lane assignment
+Date: Tue, 21 Jan 2025 18:51:02 +0100
+Message-ID: <20250121174533.549931886@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -54,421 +55,301 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+From: Karol Kolacinski <karol.kolacinski@intel.com>
 
-[ Upstream commit e800654e85b5b27966fc6493201f5f8cf658beb6 ]
+[ Upstream commit 258f5f905815979f15d5151d2ea4f20d8e057fe1 ]
 
-Use struct ice_adapter to hold shared PTP data and control PTP
-related actions instead of auxbus. This allows significant code
-simplification and faster access to the container fields used in
-the PTP support code.
+Driver always naively assumes, that for PTP purposes, PHY lane to
+configure is corresponding to PF ID.
 
-Move the PTP port list to the ice_adapter container to simplify
-the code and avoid race conditions which could occur due to the
-synchronous nature of the initialization/access and
-certain memory saving can be achieved by moving PTP data into
-the ice_adapter itself.
+This is not true for some port configurations, e.g.:
+- 2x50G per quad, where lanes used are 0 and 2 on each quad, but PF IDs
+  are 0 and 1
+- 100G per quad on 2 quads, where lanes used are 0 and 4, but PF IDs are
+  0 and 1
 
-Signed-off-by: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+Use correct PHY lane assignment by getting and parsing port options.
+This is read from the NVM by the FW and provided to the driver with
+the indication of active port split.
+
+Remove ice_is_muxed_topo(), which is no longer needed.
+
+Fixes: 4409ea1726cb ("ice: Adjust PTP init for 2x50G E825C devices")
 Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Arkadiusz Kubalewski <Arkadiusz.kubalewski@intel.com>
+Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
 Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 258f5f905815 ("ice: Add correct PHY lane assignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_adapter.c |   6 +
- drivers/net/ethernet/intel/ice/ice_adapter.h |  17 +++
- drivers/net/ethernet/intel/ice/ice_ptp.c     | 115 ++++++++++++-------
- drivers/net/ethernet/intel/ice/ice_ptp.h     |   5 +-
- drivers/net/ethernet/intel/ice/ice_ptp_hw.h  |   5 +
- 5 files changed, 105 insertions(+), 43 deletions(-)
+ .../net/ethernet/intel/ice/ice_adminq_cmd.h   |  1 +
+ drivers/net/ethernet/intel/ice/ice_common.c   | 51 +++++++++++++++++++
+ drivers/net/ethernet/intel/ice/ice_common.h   |  1 +
+ drivers/net/ethernet/intel/ice/ice_main.c     |  6 +--
+ drivers/net/ethernet/intel/ice/ice_ptp.c      | 23 ++++-----
+ drivers/net/ethernet/intel/ice/ice_ptp.h      |  4 +-
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c   | 26 +---------
+ drivers/net/ethernet/intel/ice/ice_type.h     |  1 -
+ 8 files changed, 68 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.c b/drivers/net/ethernet/intel/ice/ice_adapter.c
-index ad84d8ad49a63..f3e195974a8ef 100644
---- a/drivers/net/ethernet/intel/ice/ice_adapter.c
-+++ b/drivers/net/ethernet/intel/ice/ice_adapter.c
-@@ -40,11 +40,17 @@ static struct ice_adapter *ice_adapter_new(void)
- 	spin_lock_init(&adapter->ptp_gltsyn_time_lock);
- 	refcount_set(&adapter->refcount, 1);
+diff --git a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+index 79a6edd0be0ec..80f3dfd271243 100644
+--- a/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
++++ b/drivers/net/ethernet/intel/ice/ice_adminq_cmd.h
+@@ -1648,6 +1648,7 @@ struct ice_aqc_get_port_options_elem {
+ #define ICE_AQC_PORT_OPT_MAX_LANE_25G	5
+ #define ICE_AQC_PORT_OPT_MAX_LANE_50G	6
+ #define ICE_AQC_PORT_OPT_MAX_LANE_100G	7
++#define ICE_AQC_PORT_OPT_MAX_LANE_200G	8
  
-+	mutex_init(&adapter->ports.lock);
-+	INIT_LIST_HEAD(&adapter->ports.ports);
-+
- 	return adapter;
+ 	u8 global_scid[2];
+ 	u8 phy_scid[2];
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index f1324e25b2af1..068a467de1d56 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -4074,6 +4074,57 @@ ice_aq_set_port_option(struct ice_hw *hw, u8 lport, u8 lport_valid,
+ 	return ice_aq_send_cmd(hw, &desc, NULL, 0, NULL);
  }
- 
- static void ice_adapter_free(struct ice_adapter *adapter)
- {
-+	WARN_ON(!list_empty(&adapter->ports.ports));
-+	mutex_destroy(&adapter->ports.lock);
-+
- 	kfree(adapter);
- }
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_adapter.h b/drivers/net/ethernet/intel/ice/ice_adapter.h
-index eb7cac01c2427..e233225848b38 100644
---- a/drivers/net/ethernet/intel/ice/ice_adapter.h
-+++ b/drivers/net/ethernet/intel/ice/ice_adapter.h
-@@ -4,18 +4,34 @@
- #ifndef _ICE_ADAPTER_H_
- #define _ICE_ADAPTER_H_
- 
-+#include <linux/types.h>
- #include <linux/spinlock_types.h>
- #include <linux/refcount_types.h>
- 
- struct pci_dev;
- struct ice_pf;
  
 +/**
-+ * struct ice_port_list - data used to store the list of adapter ports
++ * ice_get_phy_lane_number - Get PHY lane number for current adapter
++ * @hw: pointer to the hw struct
 + *
-+ * This structure contains data used to maintain a list of adapter ports
-+ *
-+ * @ports: list of ports
-+ * @lock: protect access to the ports list
++ * Return: PHY lane number on success, negative error code otherwise.
 + */
-+struct ice_port_list {
-+	struct list_head ports;
-+	/* To synchronize the ports list operations */
-+	struct mutex lock;
-+};
++int ice_get_phy_lane_number(struct ice_hw *hw)
++{
++	struct ice_aqc_get_port_options_elem *options;
++	unsigned int lport = 0;
++	unsigned int lane;
++	int err;
++
++	options = kcalloc(ICE_AQC_PORT_OPT_MAX, sizeof(*options), GFP_KERNEL);
++	if (!options)
++		return -ENOMEM;
++
++	for (lane = 0; lane < ICE_MAX_PORT_PER_PCI_DEV; lane++) {
++		u8 options_count = ICE_AQC_PORT_OPT_MAX;
++		u8 speed, active_idx, pending_idx;
++		bool active_valid, pending_valid;
++
++		err = ice_aq_get_port_options(hw, options, &options_count, lane,
++					      true, &active_idx, &active_valid,
++					      &pending_idx, &pending_valid);
++		if (err)
++			goto err;
++
++		if (!active_valid)
++			continue;
++
++		speed = options[active_idx].max_lane_speed;
++		/* If we don't get speed for this lane, it's unoccupied */
++		if (speed > ICE_AQC_PORT_OPT_MAX_LANE_200G)
++			continue;
++
++		if (hw->pf_id == lport) {
++			kfree(options);
++			return lane;
++		}
++
++		lport++;
++	}
++
++	/* PHY lane not found */
++	err = -ENXIO;
++err:
++	kfree(options);
++	return err;
++}
 +
  /**
-  * struct ice_adapter - PCI adapter resources shared across PFs
-  * @ptp_gltsyn_time_lock: Spinlock protecting access to the GLTSYN_TIME
-  *                        register of the PTP clock.
-  * @refcount: Reference count. struct ice_pf objects hold the references.
-  * @ctrl_pf: Control PF of the adapter
-+ * @ports: Ports list
-  */
- struct ice_adapter {
- 	refcount_t refcount;
-@@ -23,6 +39,7 @@ struct ice_adapter {
- 	spinlock_t ptp_gltsyn_time_lock;
+  * ice_aq_sff_eeprom
+  * @hw: pointer to the HW struct
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.h b/drivers/net/ethernet/intel/ice/ice_common.h
+index 27208a60cece5..fe6f88cfd9486 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.h
++++ b/drivers/net/ethernet/intel/ice/ice_common.h
+@@ -193,6 +193,7 @@ ice_aq_get_port_options(struct ice_hw *hw,
+ int
+ ice_aq_set_port_option(struct ice_hw *hw, u8 lport, u8 lport_valid,
+ 		       u8 new_option);
++int ice_get_phy_lane_number(struct ice_hw *hw);
+ int
+ ice_aq_sff_eeprom(struct ice_hw *hw, u16 lport, u8 bus_addr,
+ 		  u16 mem_addr, u8 page, u8 set_page, u8 *data, u8 length,
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 8f2e758c39427..45eefe22fb5b7 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -1144,7 +1144,7 @@ ice_link_event(struct ice_pf *pf, struct ice_port_info *pi, bool link_up,
+ 	if (link_up == old_link && link_speed == old_link_speed)
+ 		return 0;
  
- 	struct ice_pf *ctrl_pf;
-+	struct ice_port_list ports;
- };
+-	ice_ptp_link_change(pf, pf->hw.pf_id, link_up);
++	ice_ptp_link_change(pf, link_up);
  
- struct ice_adapter *ice_adapter_get(const struct pci_dev *pdev);
+ 	if (ice_is_dcb_active(pf)) {
+ 		if (test_bit(ICE_FLAG_DCB_ENA, pf->flags))
+@@ -6744,7 +6744,7 @@ static int ice_up_complete(struct ice_vsi *vsi)
+ 		ice_print_link_msg(vsi, true);
+ 		netif_tx_start_all_queues(vsi->netdev);
+ 		netif_carrier_on(vsi->netdev);
+-		ice_ptp_link_change(pf, pf->hw.pf_id, true);
++		ice_ptp_link_change(pf, true);
+ 	}
+ 
+ 	/* Perform an initial read of the statistics registers now to
+@@ -7214,7 +7214,7 @@ int ice_down(struct ice_vsi *vsi)
+ 
+ 	if (vsi->netdev) {
+ 		vlan_err = ice_vsi_del_vlan_zero(vsi);
+-		ice_ptp_link_change(vsi->back, vsi->back->hw.pf_id, false);
++		ice_ptp_link_change(vsi->back, false);
+ 		netif_carrier_off(vsi->netdev);
+ 		netif_tx_disable(vsi->netdev);
+ 	}
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 2fb73ab41bc20..0b3dd87a331c7 100644
+index 0b3dd87a331c7..7c6f81beaee46 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -21,7 +21,7 @@ static struct ice_pf *ice_get_ctrl_pf(struct ice_pf *pf)
- 	return !pf->adapter ? NULL : pf->adapter->ctrl_pf;
- }
- 
--static __maybe_unused struct ice_ptp *ice_get_ctrl_ptp(struct ice_pf *pf)
-+static struct ice_ptp *ice_get_ctrl_ptp(struct ice_pf *pf)
- {
- 	struct ice_pf *ctrl_pf = ice_get_ctrl_pf(pf);
- 
-@@ -812,8 +812,8 @@ static enum ice_tx_tstamp_work ice_ptp_tx_tstamp_owner(struct ice_pf *pf)
- 	struct ice_ptp_port *port;
- 	unsigned int i;
- 
--	mutex_lock(&pf->ptp.ports_owner.lock);
--	list_for_each_entry(port, &pf->ptp.ports_owner.ports, list_member) {
-+	mutex_lock(&pf->adapter->ports.lock);
-+	list_for_each_entry(port, &pf->adapter->ports.ports, list_node) {
- 		struct ice_ptp_tx *tx = &port->tx;
- 
- 		if (!tx || !tx->init)
-@@ -821,7 +821,7 @@ static enum ice_tx_tstamp_work ice_ptp_tx_tstamp_owner(struct ice_pf *pf)
- 
- 		ice_ptp_process_tx_tstamp(tx);
- 	}
--	mutex_unlock(&pf->ptp.ports_owner.lock);
-+	mutex_unlock(&pf->adapter->ports.lock);
- 
- 	for (i = 0; i < ICE_GET_QUAD_NUM(pf->hw.ptp.num_lports); i++) {
- 		u64 tstamp_ready;
-@@ -986,7 +986,7 @@ ice_ptp_flush_all_tx_tracker(struct ice_pf *pf)
- {
- 	struct ice_ptp_port *port;
- 
--	list_for_each_entry(port, &pf->ptp.ports_owner.ports, list_member)
-+	list_for_each_entry(port, &pf->adapter->ports.ports, list_node)
- 		ice_ptp_flush_tx_tracker(ptp_port_to_pf(port), &port->tx);
- }
- 
-@@ -1586,10 +1586,10 @@ static void ice_ptp_restart_all_phy(struct ice_pf *pf)
- {
- 	struct list_head *entry;
- 
--	list_for_each(entry, &pf->ptp.ports_owner.ports) {
-+	list_for_each(entry, &pf->adapter->ports.ports) {
- 		struct ice_ptp_port *port = list_entry(entry,
- 						       struct ice_ptp_port,
--						       list_member);
-+						       list_node);
- 
- 		if (port->link_up)
- 			ice_ptp_port_phy_restart(port);
-@@ -2906,6 +2906,50 @@ void ice_ptp_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
- 	dev_err(ice_pf_to_dev(pf), "PTP reset failed %d\n", err);
- }
- 
-+static bool ice_is_primary(struct ice_hw *hw)
-+{
-+	return ice_is_e825c(hw) && ice_is_dual(hw) ?
-+		!!(hw->dev_caps.nac_topo.mode & ICE_NAC_TOPO_PRIMARY_M) : true;
-+}
-+
-+static int ice_ptp_setup_adapter(struct ice_pf *pf)
-+{
-+	if (!ice_pf_src_tmr_owned(pf) || !ice_is_primary(&pf->hw))
-+		return -EPERM;
-+
-+	pf->adapter->ctrl_pf = pf;
-+
-+	return 0;
-+}
-+
-+static int ice_ptp_setup_pf(struct ice_pf *pf)
-+{
-+	struct ice_ptp *ctrl_ptp = ice_get_ctrl_ptp(pf);
-+	struct ice_ptp *ptp = &pf->ptp;
-+
-+	if (WARN_ON(!ctrl_ptp) || ice_get_phy_model(&pf->hw) == ICE_PHY_UNSUP)
-+		return -ENODEV;
-+
-+	INIT_LIST_HEAD(&ptp->port.list_node);
-+	mutex_lock(&pf->adapter->ports.lock);
-+
-+	list_add(&ptp->port.list_node,
-+		 &pf->adapter->ports.ports);
-+	mutex_unlock(&pf->adapter->ports.lock);
-+
-+	return 0;
-+}
-+
-+static void ice_ptp_cleanup_pf(struct ice_pf *pf)
-+{
-+	struct ice_ptp *ptp = &pf->ptp;
-+
-+	if (ice_get_phy_model(&pf->hw) != ICE_PHY_UNSUP) {
-+		mutex_lock(&pf->adapter->ports.lock);
-+		list_del(&ptp->port.list_node);
-+		mutex_unlock(&pf->adapter->ports.lock);
-+	}
-+}
+@@ -1466,10 +1466,9 @@ ice_ptp_port_phy_restart(struct ice_ptp_port *ptp_port)
  /**
-  * ice_ptp_aux_dev_to_aux_pf - Get auxiliary PF handle for the auxiliary device
-  * @aux_dev: auxiliary device to get the auxiliary PF for
-@@ -2957,9 +3001,9 @@ static int ice_ptp_auxbus_probe(struct auxiliary_device *aux_dev,
- 	if (WARN_ON(!owner_pf))
- 		return -ENODEV;
- 
--	INIT_LIST_HEAD(&aux_pf->ptp.port.list_member);
-+	INIT_LIST_HEAD(&aux_pf->ptp.port.list_node);
- 	mutex_lock(&owner_pf->ptp.ports_owner.lock);
--	list_add(&aux_pf->ptp.port.list_member,
-+	list_add(&aux_pf->ptp.port.list_node,
- 		 &owner_pf->ptp.ports_owner.ports);
- 	mutex_unlock(&owner_pf->ptp.ports_owner.lock);
- 
-@@ -2976,7 +3020,7 @@ static void ice_ptp_auxbus_remove(struct auxiliary_device *aux_dev)
- 	struct ice_pf *aux_pf = ice_ptp_aux_dev_to_aux_pf(aux_dev);
- 
- 	mutex_lock(&owner_pf->ptp.ports_owner.lock);
--	list_del(&aux_pf->ptp.port.list_member);
-+	list_del(&aux_pf->ptp.port.list_node);
- 	mutex_unlock(&owner_pf->ptp.ports_owner.lock);
- }
- 
-@@ -3036,7 +3080,7 @@ ice_ptp_auxbus_create_id_table(struct ice_pf *pf, const char *name)
-  * ice_ptp_register_auxbus_driver - Register PTP auxiliary bus driver
+  * ice_ptp_link_change - Reconfigure PTP after link status change
   * @pf: Board private structure
+- * @port: Port for which the PHY start is set
+  * @linkup: Link is up or down
   */
--static int ice_ptp_register_auxbus_driver(struct ice_pf *pf)
-+static int __always_unused ice_ptp_register_auxbus_driver(struct ice_pf *pf)
+-void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup)
++void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
  {
- 	struct auxiliary_driver *aux_driver;
- 	struct ice_ptp *ptp;
-@@ -3079,7 +3123,7 @@ static int ice_ptp_register_auxbus_driver(struct ice_pf *pf)
-  * ice_ptp_unregister_auxbus_driver - Unregister PTP auxiliary bus driver
-  * @pf: Board private structure
-  */
--static void ice_ptp_unregister_auxbus_driver(struct ice_pf *pf)
-+static void __always_unused ice_ptp_unregister_auxbus_driver(struct ice_pf *pf)
- {
- 	struct auxiliary_driver *aux_driver = &pf->ptp.ports_owner.aux_driver;
- 
-@@ -3098,15 +3142,12 @@ static void ice_ptp_unregister_auxbus_driver(struct ice_pf *pf)
-  */
- int ice_ptp_clock_index(struct ice_pf *pf)
- {
--	struct auxiliary_device *aux_dev;
--	struct ice_pf *owner_pf;
-+	struct ice_ptp *ctrl_ptp = ice_get_ctrl_ptp(pf);
- 	struct ptp_clock *clock;
- 
--	aux_dev = &pf->ptp.port.aux_dev;
--	owner_pf = ice_ptp_aux_dev_to_owner_pf(aux_dev);
--	if (!owner_pf)
-+	if (!ctrl_ptp)
- 		return -1;
--	clock = owner_pf->ptp.clock;
-+	clock = ctrl_ptp->clock;
- 
- 	return clock ? ptp_clock_index(clock) : -1;
- }
-@@ -3166,15 +3207,7 @@ static int ice_ptp_init_owner(struct ice_pf *pf)
- 	if (err)
- 		goto err_clk;
- 
--	err = ice_ptp_register_auxbus_driver(pf);
--	if (err) {
--		dev_err(ice_pf_to_dev(pf), "Failed to register PTP auxbus driver");
--		goto err_aux;
--	}
--
- 	return 0;
--err_aux:
--	ptp_clock_unregister(pf->ptp.clock);
- err_clk:
- 	pf->ptp.clock = NULL;
- err_exit:
-@@ -3250,7 +3283,7 @@ static void ice_ptp_release_auxbus_device(struct device *dev)
-  * ice_ptp_create_auxbus_device - Create PTP auxiliary bus device
-  * @pf: Board private structure
-  */
--static int ice_ptp_create_auxbus_device(struct ice_pf *pf)
-+static __always_unused int ice_ptp_create_auxbus_device(struct ice_pf *pf)
- {
- 	struct auxiliary_device *aux_dev;
- 	struct ice_ptp *ptp;
-@@ -3297,7 +3330,7 @@ static int ice_ptp_create_auxbus_device(struct ice_pf *pf)
-  * ice_ptp_remove_auxbus_device - Remove PTP auxiliary bus device
-  * @pf: Board private structure
-  */
--static void ice_ptp_remove_auxbus_device(struct ice_pf *pf)
-+static __always_unused void ice_ptp_remove_auxbus_device(struct ice_pf *pf)
- {
- 	struct auxiliary_device *aux_dev = &pf->ptp.port.aux_dev;
- 
-@@ -3361,19 +3394,26 @@ void ice_ptp_init(struct ice_pf *pf)
- 	/* If this function owns the clock hardware, it must allocate and
- 	 * configure the PTP clock device to represent it.
- 	 */
--	if (ice_pf_src_tmr_owned(pf)) {
-+	if (ice_pf_src_tmr_owned(pf) && ice_is_primary(hw)) {
-+		err = ice_ptp_setup_adapter(pf);
-+		if (err)
-+			goto err_exit;
- 		err = ice_ptp_init_owner(pf);
- 		if (err)
--			goto err;
-+			goto err_exit;
- 	}
- 
-+	err = ice_ptp_setup_pf(pf);
-+	if (err)
-+		goto err_exit;
-+
- 	ptp->port.port_num = hw->pf_id;
- 	if (ice_is_e825c(hw) && hw->ptp.is_2x50g_muxed_topo)
- 		ptp->port.port_num = hw->pf_id * 2;
- 
- 	err = ice_ptp_init_port(pf, &ptp->port);
- 	if (err)
--		goto err;
-+		goto err_exit;
- 
- 	/* Start the PHY timestamping block */
- 	ice_ptp_reset_phy_timestamping(pf);
-@@ -3381,20 +3421,16 @@ void ice_ptp_init(struct ice_pf *pf)
- 	/* Configure initial Tx interrupt settings */
- 	ice_ptp_cfg_tx_interrupt(pf);
- 
--	err = ice_ptp_create_auxbus_device(pf);
--	if (err)
--		goto err;
--
- 	ptp->state = ICE_PTP_READY;
- 
- 	err = ice_ptp_init_work(pf, ptp);
- 	if (err)
--		goto err;
-+		goto err_exit;
- 
- 	dev_info(ice_pf_to_dev(pf), "PTP init successful\n");
- 	return;
- 
--err:
-+err_exit:
- 	/* If we registered a PTP clock, release it */
- 	if (pf->ptp.clock) {
- 		ptp_clock_unregister(ptp->clock);
-@@ -3421,7 +3457,7 @@ void ice_ptp_release(struct ice_pf *pf)
- 	/* Disable timestamping for both Tx and Rx */
- 	ice_ptp_disable_timestamp_mode(pf);
- 
--	ice_ptp_remove_auxbus_device(pf);
-+	ice_ptp_cleanup_pf(pf);
- 
- 	ice_ptp_release_tx_tracker(pf, &pf->ptp.port.tx);
- 
-@@ -3436,9 +3472,6 @@ void ice_ptp_release(struct ice_pf *pf)
- 		pf->ptp.kworker = NULL;
- 	}
- 
--	if (ice_pf_src_tmr_owned(pf))
--		ice_ptp_unregister_auxbus_driver(pf);
--
- 	if (!pf->ptp.clock)
+ 	struct ice_ptp_port *ptp_port;
+ 	struct ice_hw *hw = &pf->hw;
+@@ -1477,14 +1476,7 @@ void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup)
+ 	if (pf->ptp.state != ICE_PTP_READY)
  		return;
  
+-	if (WARN_ON_ONCE(port >= hw->ptp.num_lports))
+-		return;
+-
+ 	ptp_port = &pf->ptp.port;
+-	if (ice_is_e825c(hw) && hw->ptp.is_2x50g_muxed_topo)
+-		port *= 2;
+-	if (WARN_ON_ONCE(ptp_port->port_num != port))
+-		return;
+ 
+ 	/* Update cached link status for this port immediately */
+ 	ptp_port->link_up = linkup;
+@@ -3383,10 +3375,17 @@ void ice_ptp_init(struct ice_pf *pf)
+ {
+ 	struct ice_ptp *ptp = &pf->ptp;
+ 	struct ice_hw *hw = &pf->hw;
+-	int err;
++	int lane_num, err;
+ 
+ 	ptp->state = ICE_PTP_INITIALIZING;
+ 
++	lane_num = ice_get_phy_lane_number(hw);
++	if (lane_num < 0) {
++		err = lane_num;
++		goto err_exit;
++	}
++
++	ptp->port.port_num = (u8)lane_num;
+ 	ice_ptp_init_hw(hw);
+ 
+ 	ice_ptp_init_tx_interrupt_mode(pf);
+@@ -3407,10 +3406,6 @@ void ice_ptp_init(struct ice_pf *pf)
+ 	if (err)
+ 		goto err_exit;
+ 
+-	ptp->port.port_num = hw->pf_id;
+-	if (ice_is_e825c(hw) && hw->ptp.is_2x50g_muxed_topo)
+-		ptp->port.port_num = hw->pf_id * 2;
+-
+ 	err = ice_ptp_init_port(pf, &ptp->port);
+ 	if (err)
+ 		goto err_exit;
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index 2db2257a0fb2f..5615efc42c624 100644
+index 5615efc42c624..f1cfa6aa4e76b 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp.h
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -169,7 +169,7 @@ struct ice_ptp_tx {
-  * ready for PTP functionality. It is used to track the port initialization
-  * and determine when the port's PHY offset is valid.
-  *
-- * @list_member: list member structure of auxiliary device
-+ * @list_node: list member structure
-  * @tx: Tx timestamp tracking for this port
-  * @aux_dev: auxiliary device associated with this port
-  * @ov_work: delayed work task for tracking when PHY offset is valid
-@@ -179,7 +179,7 @@ struct ice_ptp_tx {
-  * @port_num: the port number this structure represents
-  */
- struct ice_ptp_port {
--	struct list_head list_member;
-+	struct list_head list_node;
- 	struct ice_ptp_tx tx;
- 	struct auxiliary_device aux_dev;
- 	struct kthread_delayed_work ov_work;
-@@ -205,6 +205,7 @@ enum ice_ptp_tx_interrupt {
-  * @ports: list of porst handled by this port owner
-  * @lock: protect access to ports list
-  */
-+
- struct ice_ptp_port_owner {
- 	struct auxiliary_driver aux_driver;
- 	struct list_head ports;
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-index 4c8b845713442..3499062218b59 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.h
-@@ -452,6 +452,11 @@ static inline u64 ice_get_base_incval(struct ice_hw *hw)
- 	}
+@@ -332,7 +332,7 @@ void ice_ptp_prepare_for_reset(struct ice_pf *pf,
+ 			       enum ice_reset_req reset_type);
+ void ice_ptp_init(struct ice_pf *pf);
+ void ice_ptp_release(struct ice_pf *pf);
+-void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup);
++void ice_ptp_link_change(struct ice_pf *pf, bool linkup);
+ #else /* IS_ENABLED(CONFIG_PTP_1588_CLOCK) */
+ static inline int ice_ptp_set_ts_config(struct ice_pf *pf, struct ifreq *ifr)
+ {
+@@ -380,7 +380,7 @@ static inline void ice_ptp_prepare_for_reset(struct ice_pf *pf,
+ }
+ static inline void ice_ptp_init(struct ice_pf *pf) { }
+ static inline void ice_ptp_release(struct ice_pf *pf) { }
+-static inline void ice_ptp_link_change(struct ice_pf *pf, u8 port, bool linkup)
++static inline void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
+ {
  }
  
-+static inline bool ice_is_dual(struct ice_hw *hw)
-+{
-+	return !!(hw->dev_caps.nac_topo.mode & ICE_NAC_TOPO_DUAL_M);
-+}
-+
- #define PFTSYN_SEM_BYTES	4
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index 28bd4815ebcf3..7190fde16c868 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -2698,26 +2698,6 @@ static int ice_get_phy_tx_tstamp_ready_eth56g(struct ice_hw *hw, u8 port,
+ 	return 0;
+ }
  
- #define ICE_PTP_CLOCK_INDEX_0	0x00
+-/**
+- * ice_is_muxed_topo - detect breakout 2x50G topology for E825C
+- * @hw: pointer to the HW struct
+- *
+- * Return: true if it's 2x50 breakout topology, false otherwise
+- */
+-static bool ice_is_muxed_topo(struct ice_hw *hw)
+-{
+-	u8 link_topo;
+-	bool mux;
+-	u32 val;
+-
+-	val = rd32(hw, GLGEN_SWITCH_MODE_CONFIG);
+-	mux = FIELD_GET(GLGEN_SWITCH_MODE_CONFIG_25X4_QUAD_M, val);
+-	val = rd32(hw, GLGEN_MAC_LINK_TOPO);
+-	link_topo = FIELD_GET(GLGEN_MAC_LINK_TOPO_LINK_TOPO_M, val);
+-
+-	return (mux && link_topo == ICE_LINK_TOPO_UP_TO_2_LINKS);
+-}
+-
+ /**
+  * ice_ptp_init_phy_e825 - initialize PHY parameters
+  * @hw: pointer to the HW struct
+@@ -2740,12 +2720,8 @@ static void ice_ptp_init_phy_e825(struct ice_hw *hw)
+ 
+ 	ice_sb_access_ena_eth56g(hw, true);
+ 	err = ice_read_phy_eth56g(hw, hw->pf_id, PHY_REG_REVISION, &phy_rev);
+-	if (err || phy_rev != PHY_REVISION_ETH56G) {
++	if (err || phy_rev != PHY_REVISION_ETH56G)
+ 		ptp->phy_model = ICE_PHY_UNSUP;
+-		return;
+-	}
+-
+-	ptp->is_2x50g_muxed_topo = ice_is_muxed_topo(hw);
+ }
+ 
+ /* E822 family functions
+diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
+index 479227bdff75e..609f31e0dfded 100644
+--- a/drivers/net/ethernet/intel/ice/ice_type.h
++++ b/drivers/net/ethernet/intel/ice/ice_type.h
+@@ -880,7 +880,6 @@ struct ice_ptp_hw {
+ 	union ice_phy_params phy;
+ 	u8 num_lports;
+ 	u8 ports_per_phy;
+-	bool is_2x50g_muxed_topo;
+ };
+ 
+ /* Port hardware description */
 -- 
 2.39.5
 
