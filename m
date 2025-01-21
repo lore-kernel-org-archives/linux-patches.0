@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67651F667C;
-	Tue, 21 Jan 2025 18:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2725E1F7060;
+	Tue, 21 Jan 2025 18:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482994; cv=none; b=VLyLC0s9YB7lKT2vfOcbhKSsEqkR4HfTJFNfUVkpv3S3/ejumeEfExv+ev3Db978P2I1XIRG7q9QBXJhvqKViiQCTWDLAeSrsaOWUArW3jX9WSXEZs9tgSBYphwYgCmY3OZ4jbXN7w9u66BRHw82rMzzvZGZRr51SkgqK/z8jvY=
+	t=1737482997; cv=none; b=ll7jnNU6pqmRB3NRcIUeBzyS9YpCQP09jzj//g61yLSbwk4szo4tEqB06YppeE+fStfu22wH6CULhuB70aWG1sxgMBrDk6DvLBuvPR0Of59zAeZA3q55NkySjO+kWuzQJMnA6kzOsREO8/yzx+0AFN3AwZl0PiZCC096LsJaDbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482994; c=relaxed/simple;
-	bh=aPaGfQW9//d91fy3Ulbjp1JNUdq8dLzb9iaFO/KuoFQ=;
+	s=arc-20240116; t=1737482997; c=relaxed/simple;
+	bh=HwHU/jR5YPPAvD+mMxKEMawjuWUzBXhBSt05Vcko4Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXa0CxTOaoQV8ss5KDp3pEqNNpO5wqomybrKGvwUautAf4eYOewm3CCEbVsUDiAcPCC71w7qNbD68yo+q+WthV1n6VZleUEvxIgu8aNA4yS1bh2hHhUdAM1MalQzjYzc1542UAtHBGQU/+KTiUHO8P2OrxZ/ie2S/glnCEYcb7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITUIWqaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T2SdDP02mGBWsGx6DNffXA4Np29RqcSjneXeprBengWlssSwmEiFP8+d+Z6gtxeatQAPzEynu2nmmI/5Y55eZKyspNSySD4r5p3dc02iU5y0UogJ1L2mUkx+h4Mb4nmal+18FzU230VBfekc0qaCS8Gb4kVPAZdAMuVssRRglKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSaIUVhQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITUIWqaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C09F4C4CEDF;
-	Tue, 21 Jan 2025 18:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSaIUVhQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE64C4CEDF;
+	Tue, 21 Jan 2025 18:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482994;
-	bh=aPaGfQW9//d91fy3Ulbjp1JNUdq8dLzb9iaFO/KuoFQ=;
+	s=korg; t=1737482997;
+	bh=HwHU/jR5YPPAvD+mMxKEMawjuWUzBXhBSt05Vcko4Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ITUIWqawVZgjSptgpEws1omYNiG2tcnA6M01ijpQZwq9jp3CwrDfeSUgMRWmYlKDd
-	 Krj43cbUEB9yUb6Dxx7OtWMLVRjxugK/RPhiM1jNYdgKlBmI0FJ2U0b2D58TJBbSMq
-	 LHEeHsPg7ug7tfNqA3C+9DLUBaKpTG0+Mj7pmprY=
+	b=gSaIUVhQPMsLmsSxB5O+pjz0mIBi9SmVZ2UUB7/o6fED34OH35RS1cpnAGNjFbmo5
+	 X0tNeBElanJQB0eyvo1ATEgo1fEc1svD4z0Mc3/UMnuiInzUVeZe/G132Bue/Hg/GA
+	 gMyv36eJNCEK/0xXxBbYMNnMDL3SFy/oUD+v39v8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 080/127] bpf: Fix bpf_sk_select_reuseport() memory leak
-Date: Tue, 21 Jan 2025 18:52:32 +0100
-Message-ID: <20250121174532.740869715@linuxfoundation.org>
+Subject: [PATCH 5.15 081/127] pktgen: Avoid out-of-bounds access in get_imix_entries
+Date: Tue, 21 Jan 2025 18:52:33 +0100
+Message-ID: <20250121174532.777668928@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,110 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit b3af60928ab9129befa65e6df0310d27300942bf ]
+[ Upstream commit 76201b5979768500bca362871db66d77cb4c225e ]
 
-As pointed out in the original comment, lookup in sockmap can return a TCP
-ESTABLISHED socket. Such TCP socket may have had SO_ATTACH_REUSEPORT_EBPF
-set before it was ESTABLISHED. In other words, a non-NULL sk_reuseport_cb
-does not imply a non-refcounted socket.
+Passing a sufficient amount of imix entries leads to invalid access to the
+pkt_dev->imix_entries array because of the incorrect boundary check.
 
-Drop sk's reference in both error paths.
+UBSAN: array-index-out-of-bounds in net/core/pktgen.c:874:24
+index 20 is out of range for type 'imix_pkt [20]'
+CPU: 2 PID: 1210 Comm: bash Not tainted 6.10.0-rc1 #121
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+<TASK>
+dump_stack_lvl lib/dump_stack.c:117
+__ubsan_handle_out_of_bounds lib/ubsan.c:429
+get_imix_entries net/core/pktgen.c:874
+pktgen_if_write net/core/pktgen.c:1063
+pde_write fs/proc/inode.c:334
+proc_reg_write fs/proc/inode.c:346
+vfs_write fs/read_write.c:593
+ksys_write fs/read_write.c:644
+do_syscall_64 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe arch/x86/entry/entry_64.S:130
 
-unreferenced object 0xffff888101911800 (size 2048):
-  comm "test_progs", pid 44109, jiffies 4297131437
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    80 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 9336483b):
-    __kmalloc_noprof+0x3bf/0x560
-    __reuseport_alloc+0x1d/0x40
-    reuseport_alloc+0xca/0x150
-    reuseport_attach_prog+0x87/0x140
-    sk_reuseport_attach_bpf+0xc8/0x100
-    sk_setsockopt+0x1181/0x1990
-    do_sock_setsockopt+0x12b/0x160
-    __sys_setsockopt+0x7b/0xc0
-    __x64_sys_setsockopt+0x1b/0x30
-    do_syscall_64+0x93/0x180
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 64d85290d79c ("bpf: Allow bpf_map_lookup_elem for SOCKMAP and SOCKHASH")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250110-reuseport-memleak-v1-1-fa1ddab0adfe@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 52a62f8603f9 ("pktgen: Parse internet mix (imix) input")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+[ fp: allow to fill the array completely; minor changelog cleanup ]
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ net/core/pktgen.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index d6042d285aa21..84ec1b14b23f3 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -10509,6 +10509,7 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 	bool is_sockarray = map->map_type == BPF_MAP_TYPE_REUSEPORT_SOCKARRAY;
- 	struct sock_reuseport *reuse;
- 	struct sock *selected_sk;
-+	int err;
+diff --git a/net/core/pktgen.c b/net/core/pktgen.c
+index a539f26fe4bea..5d5f03471eb0c 100644
+--- a/net/core/pktgen.c
++++ b/net/core/pktgen.c
+@@ -849,6 +849,9 @@ static ssize_t get_imix_entries(const char __user *buffer,
+ 		unsigned long weight;
+ 		unsigned long size;
  
- 	selected_sk = map->ops->map_lookup_elem(map, key);
- 	if (!selected_sk)
-@@ -10516,10 +10517,6 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 
- 	reuse = rcu_dereference(selected_sk->sk_reuseport_cb);
- 	if (!reuse) {
--		/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
--		if (sk_is_refcounted(selected_sk))
--			sock_put(selected_sk);
--
- 		/* reuseport_array has only sk with non NULL sk_reuseport_cb.
- 		 * The only (!reuse) case here is - the sk has already been
- 		 * unhashed (e.g. by close()), so treat it as -ENOENT.
-@@ -10527,24 +10524,33 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 		 * Other maps (e.g. sock_map) do not provide this guarantee and
- 		 * the sk may never be in the reuseport group to begin with.
- 		 */
--		return is_sockarray ? -ENOENT : -EINVAL;
-+		err = is_sockarray ? -ENOENT : -EINVAL;
-+		goto error;
- 	}
- 
- 	if (unlikely(reuse->reuseport_id != reuse_kern->reuseport_id)) {
- 		struct sock *sk = reuse_kern->sk;
- 
--		if (sk->sk_protocol != selected_sk->sk_protocol)
--			return -EPROTOTYPE;
--		else if (sk->sk_family != selected_sk->sk_family)
--			return -EAFNOSUPPORT;
--
--		/* Catch all. Likely bound to a different sockaddr. */
--		return -EBADFD;
-+		if (sk->sk_protocol != selected_sk->sk_protocol) {
-+			err = -EPROTOTYPE;
-+		} else if (sk->sk_family != selected_sk->sk_family) {
-+			err = -EAFNOSUPPORT;
-+		} else {
-+			/* Catch all. Likely bound to a different sockaddr. */
-+			err = -EBADFD;
-+		}
-+		goto error;
- 	}
- 
- 	reuse_kern->selected_sk = selected_sk;
- 
- 	return 0;
-+error:
-+	/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
-+	if (sk_is_refcounted(selected_sk))
-+		sock_put(selected_sk);
++		if (pkt_dev->n_imix_entries >= MAX_IMIX_ENTRIES)
++			return -E2BIG;
 +
-+	return err;
- }
+ 		len = num_arg(&buffer[i], max_digits, &size);
+ 		if (len < 0)
+ 			return len;
+@@ -878,9 +881,6 @@ static ssize_t get_imix_entries(const char __user *buffer,
  
- static const struct bpf_func_proto sk_select_reuseport_proto = {
+ 		i++;
+ 		pkt_dev->n_imix_entries++;
+-
+-		if (pkt_dev->n_imix_entries > MAX_IMIX_ENTRIES)
+-			return -E2BIG;
+ 	} while (c == ' ');
+ 
+ 	return i;
 -- 
 2.39.5
 
