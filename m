@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694FBE571;
-	Tue, 21 Jan 2025 18:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C7D1F427B;
+	Tue, 21 Jan 2025 18:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482455; cv=none; b=lt79YCD4wtKbTGYrZF1VjOULrNHd4Vz5j5aVqS5RPulk9hbQVXm9PPdSTKm50LZryLkaPL5IHdgqPz5qoRKIQqik53eABb+wbkSkMaoNhL/2OItDSMBDLD0TlggkUeJoVAI4TVAiOJG0AIdykFt0VNuiUjxPVOiwR7bvMKaRQ9c=
+	t=1737482458; cv=none; b=qFkZr4TnnBGqxUFc80TAveZmWo0Zu4+uivMTFZlcH05ybPGmXyXP4H/DMPFMyRcdlcQk/7+h5ZZfyxsHIUNH6SQb+aCYXiDZByEjOn68DD5H8DVcxctTwWdInbqYaK7vZrJYUyfaughai/52G473+8hEGtDshXMPh11VgnDcuPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482455; c=relaxed/simple;
-	bh=w+xs83tv6xklk7WgfWuDjxymha0G3iCTBG0tKccIlHU=;
+	s=arc-20240116; t=1737482458; c=relaxed/simple;
+	bh=Cww9yStY+A3Ez+vTlkRr/Lhxdwf1M0K7gUEEoXiv1JY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3shaRpQFR+9sg7e3BQorAjxlBPP5XNvfiMnE1bhVtcJ69u7KtKcEJI/rbx/stFdmIfJzjtLbpox5JYDbFoWM14ZiPVygtV3rL/i6knxF9SH4dQQ8sPmTajK3j30PIt4UTyxnZiIXdAMP6uLDQUwav2QHcDThLr31RaK/yHRAi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q120UFmP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaWdtCLmr9fgJDwEqZbs7RFzRi4PyaCl5CHpsIqbARKcwLjQjg+5mYl3hz0FIt9EVwACEftiZQvDivI5ZBw+82Stn6CbuWLuhv7I8klIKPQujCmTBN+INSV/sEXvJHsyVhH28JaURO2aqGhPmxNCaRrs1ZFlRgUIRDreZbe83C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEq6oSpy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q120UFmP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F993C4CEDF;
-	Tue, 21 Jan 2025 18:00:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEq6oSpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF09C4CEDF;
+	Tue, 21 Jan 2025 18:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482454;
-	bh=w+xs83tv6xklk7WgfWuDjxymha0G3iCTBG0tKccIlHU=;
+	s=korg; t=1737482457;
+	bh=Cww9yStY+A3Ez+vTlkRr/Lhxdwf1M0K7gUEEoXiv1JY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q120UFmPB1lx47RvkJsCv6dTBfV4bYhlYsI5EKJjkT99VwO3qknTlX0cer/pk2zwA
-	 QwPHCFdMnb3umzLYkl9F8FANrPLbBmrKhjF/HR7DoINfPEJg6XIEMjf//5nMl7mMVW
-	 D0jF1ii2MYM7atVZtM45oIItGIPu0KrLzXlqDGSk=
+	b=gEq6oSpy+T1BD6n9I7ZfIoIB65Dwfjy5R5pfHa2nsfs5ftq8sFfgcOWbunYyU01+V
+	 qudzpAHufl2WhAHZDuM/1i++PeMdZa9EDZ8nQnaBJjsXnllIYGJxoYYIkxztmI+7GM
+	 QDS16i2vx2ZEAW+tRlGmDQ6P84iRB3BejApmeYiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+76f33569875eb708e575@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/122] afs: Fix merge preference rule failure condition
-Date: Tue, 21 Jan 2025 18:51:53 +0100
-Message-ID: <20250121174535.501629770@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 083/122] net: ethernet: xgbe: re-add aneg to supported features in PHY quirks
+Date: Tue, 21 Jan 2025 18:52:11 +0100
+Message-ID: <20250121174536.210678964@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -55,63 +50,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 17a4fde81d3a7478d97d15304a6d61094a10c2e3 ]
+commit 6be7aca91009865d8c2b73589270224a6b6e67ab upstream.
 
-syzbot reported a lock held when returning to userspace[1].  This is
-because if argc is less than 0 and the function returns directly, the held
-inode lock is not released.
+In 4.19, before the switch to linkmode bitmaps, PHY_GBIT_FEATURES
+included feature bits for aneg and TP/MII ports.
 
-Fix this by store the error in ret and jump to done to clean up instead of
-returning directly.
+				 SUPPORTED_TP | \
+				 SUPPORTED_MII)
 
-[dh: Modified Lizhi Xu's original patch to make it honour the error code
-from afs_split_string()]
+				 SUPPORTED_10baseT_Full)
 
-[1]
-WARNING: lock held when returning to user space!
-6.13.0-rc3-syzkaller-00209-g499551201b5f #0 Not tainted
-------------------------------------------------
-syz-executor133/5823 is leaving the kernel with locks still held!
-1 lock held by syz-executor133/5823:
- #0: ffff888071cffc00 (&sb->s_type->i_mutex_key#9){++++}-{4:4}, at: inode_lock include/linux/fs.h:818 [inline]
- #0: ffff888071cffc00 (&sb->s_type->i_mutex_key#9){++++}-{4:4}, at: afs_proc_addr_prefs_write+0x2bb/0x14e0 fs/afs/addr_prefs.c:388
+				 SUPPORTED_100baseT_Full)
 
-Reported-by: syzbot+76f33569875eb708e575@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=76f33569875eb708e575
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20241226012616.2348907-1-lizhi.xu@windriver.com/
-Link: https://lore.kernel.org/r/529850.1736261552@warthog.procyon.org.uk
-Tested-by: syzbot+76f33569875eb708e575@syzkaller.appspotmail.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+				 SUPPORTED_1000baseT_Full)
+
+				 PHY_100BT_FEATURES | \
+				 PHY_DEFAULT_FEATURES)
+
+				 PHY_1000BT_FEATURES)
+
+Referenced commit expanded PHY_GBIT_FEATURES, silently removing
+PHY_DEFAULT_FEATURES. The removed part can be re-added by using
+the new PHY_GBIT_FEATURES definition.
+Not clear to me is why nobody seems to have noticed this issue.
+
+I stumbled across this when checking what it takes to make
+phy_10_100_features_array et al private to phylib.
+
+Fixes: d0939c26c53a ("net: ethernet: xgbe: expand PHY_GBIT_FEAUTRES")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/46521973-7738-4157-9f5e-0bb6f694acba@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/addr_prefs.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c |   19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
 
-diff --git a/fs/afs/addr_prefs.c b/fs/afs/addr_prefs.c
-index a189ff8a5034e..c0384201b8feb 100644
---- a/fs/afs/addr_prefs.c
-+++ b/fs/afs/addr_prefs.c
-@@ -413,8 +413,10 @@ int afs_proc_addr_prefs_write(struct file *file, char *buf, size_t size)
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -923,7 +923,6 @@ static void xgbe_phy_free_phy_device(str
  
- 	do {
- 		argc = afs_split_string(&buf, argv, ARRAY_SIZE(argv));
--		if (argc < 0)
--			return argc;
-+		if (argc < 0) {
-+			ret = argc;
-+			goto done;
-+		}
- 		if (argc < 2)
- 			goto inval;
+ static bool xgbe_phy_finisar_phy_quirks(struct xgbe_prv_data *pdata)
+ {
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
+ 	struct xgbe_phy_data *phy_data = pdata->phy_data;
+ 	unsigned int phy_id = phy_data->phydev->phy_id;
  
--- 
-2.39.5
-
+@@ -945,14 +944,7 @@ static bool xgbe_phy_finisar_phy_quirks(
+ 	phy_write(phy_data->phydev, 0x04, 0x0d01);
+ 	phy_write(phy_data->phydev, 0x00, 0x9140);
+ 
+-	linkmode_set_bit_array(phy_10_100_features_array,
+-			       ARRAY_SIZE(phy_10_100_features_array),
+-			       supported);
+-	linkmode_set_bit_array(phy_gbit_features_array,
+-			       ARRAY_SIZE(phy_gbit_features_array),
+-			       supported);
+-
+-	linkmode_copy(phy_data->phydev->supported, supported);
++	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
+ 
+ 	phy_support_asym_pause(phy_data->phydev);
+ 
+@@ -964,7 +956,6 @@ static bool xgbe_phy_finisar_phy_quirks(
+ 
+ static bool xgbe_phy_belfuse_phy_quirks(struct xgbe_prv_data *pdata)
+ {
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
+ 	struct xgbe_phy_data *phy_data = pdata->phy_data;
+ 	struct xgbe_sfp_eeprom *sfp_eeprom = &phy_data->sfp_eeprom;
+ 	unsigned int phy_id = phy_data->phydev->phy_id;
+@@ -1028,13 +1019,7 @@ static bool xgbe_phy_belfuse_phy_quirks(
+ 	reg = phy_read(phy_data->phydev, 0x00);
+ 	phy_write(phy_data->phydev, 0x00, reg & ~0x00800);
+ 
+-	linkmode_set_bit_array(phy_10_100_features_array,
+-			       ARRAY_SIZE(phy_10_100_features_array),
+-			       supported);
+-	linkmode_set_bit_array(phy_gbit_features_array,
+-			       ARRAY_SIZE(phy_gbit_features_array),
+-			       supported);
+-	linkmode_copy(phy_data->phydev->supported, supported);
++	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
+ 	phy_support_asym_pause(phy_data->phydev);
+ 
+ 	netif_dbg(pdata, drv, pdata->netdev,
 
 
