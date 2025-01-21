@@ -1,133 +1,121 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486951F8674
-	for <patches@lists.linux.dev>; Tue, 21 Jan 2025 21:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9061F03C6
+	for <patches@lists.linux.dev>; Tue, 21 Jan 2025 23:05:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737496635; cv=none; b=ZJoarKyTI0cOgciw/G7YLTaZBCCPFHyPuzb9OIJoMpmwBCNPf0pXAD2l3BpUltjWmYsXHzBL9oicEQlVW0mPFoyYBCuOK5LchihGI7i6QYmbrTzpAjzi5U6FgHLZylBNL0wEttS+fJkSbZV/013UUgfK58YIaFV2y/psf7gHetA=
+	t=1737500758; cv=none; b=Ngv0WUpjrkw+HD8uGhmIRyuuLoNjH/mNnI6ZsVCmcNZmutajkQ1cF7lP1MAGsILogkqykyTjE/8M8FxutUUgdbhJsZk8Vjzx6FTrUr8rAkuipHw2uXGo1TsiiG7oDxA1pL4clMBcPuYfCuW23sLGMz97hSuZGSyt8WZfUwN6sdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737496635; c=relaxed/simple;
-	bh=GOHjZrdx+5J3OV+KNYZN9SaSqHV7RronhTFCYvpWXfY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SUIRK1t6NukJOn6V4XgTz/kzMh8nkgmOjUBMXzOlmx4U0hchdkY48hGuVvfjTuQ1ohQj1e/TIII3NM+nyW/k/gM0BlWK/KXK82NqFirFa8TAzWhMXDEXt7KW4nxP2w3iKy/x8FMhq4k8bNrvb4MuArxK3x5YW2KCpQ0bVIsvgpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SUxeCJAs; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737500758; c=relaxed/simple;
+	bh=F43YpV97/2e34lwkgwRzcQwPcwiyx7mnf0CMM3+/Oeg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q51KoERqCMoDCEYJ8A6Cnkt5j+fes/rYMmOHD4H6/AZdhhGQiJXsIHqS2PGU/VeMTl0niNDt54BzH3WApJGUi3MQH+P6xC2AeNiqLD2dXZBKdYOmtP5/I1Ue5VlbnxiJTDJW4TctwwfqQjKXDS2+12Z9tBH5we6u01JmAMs4FuY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=Tmw2T51n; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SUxeCJAs"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aa6a92f863cso1155347766b.1
-        for <patches@lists.linux.dev>; Tue, 21 Jan 2025 13:57:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="Tmw2T51n"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ee709715d9so8721861a91.3
+        for <patches@lists.linux.dev>; Tue, 21 Jan 2025 15:05:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737496631; x=1738101431; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n5YOtinlKIQcBOdKFHM/q6wdfeRS3f/aMXRUpTGEphI=;
-        b=SUxeCJAs1i+616ur+Dy7QzFukigrQVXNZkwJGkiQ4LSUBRTEPYR0Q/o0HgwSaFy2XL
-         6SSXcA64XW/NBxh6GPUgwwJMDfLelkCzaLumEvvuNTcu0OmEiK7jzgov2c+HQtK1bZjy
-         vtONQ7rNgyXr58KaidjESJFNMaguZIgfLDmrmWlOxw1SOp7YLfjSDdZGMZ5SbFoBTeas
-         WdBxgjDraFiJAGq0tDUW+V7jXyrSxT/IZYerBAbr5yfXCjAqG+vHOgsX37e2Giz/h/ih
-         Ft00n8VD2B1Umo6DjuJGX/bu1xBp6pnCYteXhWewybfgkIXJpxVJA+NbDAyelff4umZb
-         +uNg==
+        d=futuring-girl.com; s=google; t=1737500755; x=1738105555; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cbc+hOIvCMSLBiq+LSaps9a+lLu/i8zz4uUX9B6mAUs=;
+        b=Tmw2T51n8z5/74f2+eodCZc4kFttKxVzYerPPzqDrkEcuYyUepcvmO0eWQSAOj7ryD
+         I189e/gC8gxRU+6Wq1Y6elvm/SEPaOPbLN6pavl5vHSB0ahrL2b/c1UBfuGGRm8fFuL8
+         oe65HCCeUUgQ+Cje4rPsNGBso69/X3/4ejv6eQFmQcXXh3PV6R4IdGpj1S23bNEe40yQ
+         QMh6jjkaaZHt19tDlbjQsdZlUNv6IJMvJovxAZgxBKpDWkjyStWiMyoRjh2YrCMMyo15
+         SBfREa5jOFx7Dwu1wZB5HHzC3cZ0heBrG+3cLRsnJ+E8GWqejnXqNofltKn5cBb33nkS
+         1pvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737496631; x=1738101431;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1737500755; x=1738105555;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=n5YOtinlKIQcBOdKFHM/q6wdfeRS3f/aMXRUpTGEphI=;
-        b=OThGRCUMVOUprLCdI3QJKuHumcX9kL52CSCakcDcW+44CRreJVxPSdjvSoqTL9Zs3Q
-         BVvmJ4FQx1McaN62l6Wjhu7/j2JO5HBeNqmuCI3jkZZxX3vXu8KIlIynxtqLC8TFiw27
-         YfXfWcKsHmO/koMYpEasDPgonIZ4KSYbRKOkxBYvJ89qy4IT0rQWQmpc7SArOMVklOmN
-         x2P4c6S38Hn7LXJsNhfkQd9NJbxVjARcuJW9R0YjjCopRIPJ+jRJYO23b67/hyroU4oB
-         UU7T0Gkyf/TAYZPv89tDZx309q8W3GZbPW5RKW9F4jhIiv35fyp56EWmyL2GET8DmWaK
-         m/wg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKjMxzFlCCcUR+ybf/QRCgAGdjTdgE+vzgCS1D2I/saG+WOfYfKGj+6+pDQOwtrVbXQeFiJaA1@lists.linux.dev
-X-Gm-Message-State: AOJu0YyIZE23MOfVV8BUoUQev02F/oM4RTz4yKODIYRlHG62CdMzz7l9
-	DHugxFRP3bDeNgHdzkjXSyMlTV45hE6N2TcCHRCy38jVLUAa9bhE
-X-Gm-Gg: ASbGncun4jnYbD6bWqVUlWFR8QmNXaqAV4QKmFlDAkmvCFrw6odlYaFDZAjOifG4buO
-	xbkFxoCLVHwzUqWgzAu0T0QWfr7XHM80NpTeB3HlvGwS7EaqxfR6sTupSuHLVmZwX6c3P+In5gc
-	d89xCSowJCKBRYCEQ7HPriwHd914pEfxyVCs9RflwVV4Nx4bJzT7uoqSqrMYRPQVJLIwNygXDCc
-	vF7aLj4qYYhEX8dUcSTW7p8ZXas2RwFguqzN9Q90Uy5pTsgPMctr4EXvvIgBqjDo+LMpTkeJ95f
-	lEzKhT69+8G+nQT8mJAVw7CMZHs=
-X-Google-Smtp-Source: AGHT+IE4LJkfhcAMnZo3rroqxamUV2ROsiauNTWDdyhouPCMGma/ueNsQqxJypcf1fu2I0NSj8qkdg==
-X-Received: by 2002:a17:907:969f:b0:aa6:18b6:310e with SMTP id a640c23a62f3a-ab38b429787mr1999288066b.38.1737496631424;
-        Tue, 21 Jan 2025 13:57:11 -0800 (PST)
-Received: from eldamar.lan (c-82-192-244-13.customer.ggaweb.ch. [82.192.244.13])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab384f1e404sm815579266b.98.2025.01.21.13.57.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 13:57:10 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id BABC6BE2EE7; Tue, 21 Jan 2025 22:57:09 +0100 (CET)
-Date: Tue, 21 Jan 2025 22:57:09 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Peter Schneider <pschneider1968@googlemail.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 00/64] 6.1.127-rc1 review
-Message-ID: <Z5AYNaxIm-SwmUHb@eldamar.lan>
-References: <20250121174521.568417761@linuxfoundation.org>
- <b5f7b88a-0f6a-4815-8344-bf6bf941bc91@googlemail.com>
+        bh=cbc+hOIvCMSLBiq+LSaps9a+lLu/i8zz4uUX9B6mAUs=;
+        b=byKc4G+8K2JWRv+va/BvFixfLc6/lMp1GL1xY+vylYXqviCvPVsTuFbKcZklq7bZTk
+         QvJmQVVzornDToGy5P6WH/Dgig3Zw0rt1J04iiE1i4FlySISuIXzJRCKIPpRG3hX7ZrH
+         eOrDxWCA/kkkscjYTPb+pyRt+1PW7IYyAKMfBaR9vEeSVek1wVbk1H+ckHpJ/fLJmb+Y
+         DdmOy67Jg/fLPexW4EGM9m/+aE8Nx5aBX33e6zB0ZfNWGTwIo6DbhTdPh5U+y2UIlrvG
+         zg/sGcEPlA1JSLHbTI5TnoaDd8pE7ijAOfPJZmpMy302mhGiy9DZ1b2BHohTMj12vZlJ
+         alVw==
+X-Forwarded-Encrypted: i=1; AJvYcCV5iMJJYBjVc/x0crB+n7eZnmttWil6mjeIgDTEweCUjjyAIMwhoGf+lsXXYXLViqtGTRKnlPlX@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy94iWps8m93biU/m39mQ+JSqzyXfi87y6M5SqJS2Wf2EUx+ODM
+	EkN1FH0Cul3gNqbElEP2piDq1abtmiHGZ1oH7RRg5jdeomQ83hCmilU9wk4lsPiV8aEpBkO6tPL
+	CUU/ULoAzU+oxX6ezgpcb2To32Ui71hczqaj4UA==
+X-Gm-Gg: ASbGnctGmmhTx3StJkq5cB+Jeqdxnsl8/TD7UfQiZQtO9U37XREjlqs6p4wfq7Osg0q
+	hSWVJ567AxJ/+5CknaWMTXnYgYQLLGo0g/2VSzAf/aFpyPOGxfzzM3k2xNNQeAg==
+X-Google-Smtp-Source: AGHT+IHkVyzJhhaQnkoo0AJ3z3opglPTYUcs4UNSGyTQPF9cYLQEHNy4jQCtu9Xo+kRPGM/3YECqs1hsiy+Rk+liXg0=
+X-Received: by 2002:a17:90b:3a0c:b0:2ee:e113:815d with SMTP id
+ 98e67ed59e1d1-2f782c70168mr27143860a91.8.1737500754764; Tue, 21 Jan 2025
+ 15:05:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b5f7b88a-0f6a-4815-8344-bf6bf941bc91@googlemail.com>
+References: <20250121174532.991109301@linuxfoundation.org>
+In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 22 Jan 2025 08:05:43 +0900
+X-Gm-Features: AbW1kvYfVZK62JDtxQbJM_cj5GViCl6ulHuCvzA9Y8vq2d1LiNMgoRG34ryGx7I
+Message-ID: <CAKL4bV6wb6uVUTQHxAokCp=fR+82_d8gfnRSUokGjACrW5pCxQ@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/122] 6.12.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Greg
 
-On Tue, Jan 21, 2025 at 08:32:01PM +0100, Peter Schneider wrote:
-> Am 21.01.2025 um 18:51 schrieb Greg Kroah-Hartman:
-> > This is the start of the stable review cycle for the 6.1.127 release.
-> > There are 64 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> 
-> 
-> On my 2-socket Ivy Bridge Xeon E5-2697 v2 server, I get a build error:
-> 
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn303.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn31.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn314.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn315.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn316.o
->   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn32.o
->   LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
->   AR      drivers/gpu/built-in.a
->   AR      drivers/built-in.a
->   AR      built-in.a
->   AR      vmlinux.a
->   LD      vmlinux.o
->   OBJCOPY modules.builtin.modinfo
->   GEN     modules.builtin
->   GEN     .vmlinux.objs
->   MODPOST Module.symvers
-> ERROR: modpost: module inv-icm42600-spi uses symbol
-> inv_icm42600_spi_regmap_config from namespace IIO_ICM42600, but does not
-> import it.
-> make[1]: *** [scripts/Makefile.modpost:127: Module.symvers] Fehler 1
-> make: *** [Makefile:1961: modpost] Fehler 2
-> root@linus:/usr/src/linux-stable-rc#
-> 
-> I have attached my .config file.
+On Wed, Jan 22, 2025 at 2:59=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.11 release.
+> There are 122 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 23 Jan 2025 17:45:02 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.11-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Reverting c0f866de4ce447bca3191b9cefac60c4b36a7922 would solve the
-problem, but then maybe the other icm42600 related commits are
-incorrect? Guess it's a missing prequisite for that commit missing in
-6.1.y.
+6.12.11-rc1 tested.
 
-Can confirm the failure as well in a test build for Debian.
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-Regards,
-Salvatore
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.12.11-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU
+Binutils) 2.43.1) #1 SMP PREEMPT_DYNAMIC Wed Jan 22 07:38:39 JST 2025
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
