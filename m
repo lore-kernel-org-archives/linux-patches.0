@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0901F7089;
-	Tue, 21 Jan 2025 17:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781581F708A;
+	Tue, 21 Jan 2025 17:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482330; cv=none; b=HJktsY6ukqyJxFyjTaHhV0QKZoB7ijWNgXTFUuLDt6A60lZJzbrvihLxmo7vSMH5XeLQTcDQyAbSGqNm6hiljcVoQavi7yfGi4+sdXy5zomcbvF4QzYME4Fvih0G5HqbhR4f1XLJQ6GrKbznTHz0xruUwAdoGbYvss8+EUtgLPQ=
+	t=1737482332; cv=none; b=qXfBaAY43TWKVTLo9lRiIInl9dK2F6Uu/q3VGoAHtEdoI2Z37ME81uyyLHyeMgxNhTylZA9ukcP7ZdElcwrF2QoTOcoGltReh7WTyfsdv0qY6cTA9G3m5JErAKRHC+p+3H+RlHgD9P/TgnaIJfrz+4ry6nJ93/ShW4l7W6QzmfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482330; c=relaxed/simple;
-	bh=tqWNI3YGsPp7axxVsS5R2aIA1j6yTTl9KJSbVom3uJY=;
+	s=arc-20240116; t=1737482332; c=relaxed/simple;
+	bh=8PHG7NSRP0QNKGMCLBfmZrGG7QsA/YpGhuF0EdGbrFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kY3wbAgl3N2WaVW/kiK7ATqWry9UAqbw5A4FH1hYclBIfv36CnkhXlxYsJxhX/2OQSm8HW1FgQR+uaM8rYxwG49kE16ush4A4Aeq/caRE9IeVl9ivMf+ELygKa516vf9/KIi9LLXQrQ2nctNA/FZJKPuNRrRco0w32kibavYyPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLOX18ef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TqBCijLMK//d0PF3Sx5tMzF6BXog0TXRmjj8e+6P8qoWl18P+l8gngJGtXy5ADsk5BY9aIDtodAdBw1VbO9kZ7/1J8Lz0Puok/h+YB+tJQbO2FEtr21aQwNi9KZTcQgR1/GCvQE9XtBltBTS81r8ROSpleASb4GSWYcOil+ml/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lT88oqXl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLOX18ef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CEBCC4CEE0;
-	Tue, 21 Jan 2025 17:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lT88oqXl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2249C4CEDF;
+	Tue, 21 Jan 2025 17:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482329;
-	bh=tqWNI3YGsPp7axxVsS5R2aIA1j6yTTl9KJSbVom3uJY=;
+	s=korg; t=1737482332;
+	bh=8PHG7NSRP0QNKGMCLBfmZrGG7QsA/YpGhuF0EdGbrFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLOX18efM4AlHSHAJXGSVoVfbkHCc1rJJZgFCniV1oLNEmzPj1fRmIzNDO4yQGTRt
-	 Cp2FBPJ6bXB/b/jt89PGm41lP/KQ9GbJUMOoj6uY4vzQWg4KwxKv849jC+ugPXhbYf
-	 /looroemNV88PJn/jrgLSD1HTxGpJ1THruriJNgY=
+	b=lT88oqXlZpHqZLe6doYLQcCdbhLd3DWFAvH4z7ubAzhMJK2cZVXKpeW52TgqEEh0C
+	 seH/SG6TwQLC/JVNZPRt8zEeVWxxVq1nybONcwqEKDipyQFHtUpVu3ERaQvNgzXZBa
+	 2Q8Lr39S8WxZE4BmdjpURqIdB/iMINV3zxbdsCrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hans de Goede <hdegoede@redhat.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 040/122] platform/x86: dell-uart-backlight: fix serdev race
-Date: Tue, 21 Jan 2025 18:51:28 +0100
-Message-ID: <20250121174534.528129518@linuxfoundation.org>
+Subject: [PATCH 6.12 041/122] platform/x86: lenovo-yoga-tab2-pro-1380-fastcharger: fix serdev race
+Date: Tue, 21 Jan 2025 18:51:29 +0100
+Message-ID: <20250121174534.563731849@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -55,9 +55,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-[ Upstream commit 1b2128aa2d45ab20b22548dcf4b48906298ca7fd ]
+[ Upstream commit 59616a91e5e74833b2008b56c66879857c616006 ]
 
-The dell_uart_bl_serdev_probe() function calls devm_serdev_device_open()
+The yt2_1380_fc_serdev_probe() function calls devm_serdev_device_open()
 before setting the client ops via serdev_device_set_client_ops(). This
 ordering can trigger a NULL pointer dereference in the serdev controller's
 receive_buf handler, as it assumes serdev->ops is valid when
@@ -74,40 +74,39 @@ devm_serdev_device_open().
 Note, serdev_device_set_baudrate() and serdev_device_set_flow_control()
 calls should be after the devm_serdev_device_open() call.
 
-Fixes: 484bae9e4d6a ("platform/x86: Add new Dell UART backlight driver")
+Fixes: b2ed33e8d486 ("platform/x86: Add lenovo-yoga-tab2-pro-1380-fastcharger driver")
 Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20250111180118.2274516-1-chenyuan0y@gmail.com
+Link: https://lore.kernel.org/r/20250111180951.2277757-1-chenyuan0y@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell/dell-uart-backlight.c | 5 +++--
+ drivers/platform/x86/lenovo-yoga-tab2-pro-1380-fastcharger.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/dell/dell-uart-backlight.c b/drivers/platform/x86/dell/dell-uart-backlight.c
-index 3995f90add456..c45bc332af7a0 100644
---- a/drivers/platform/x86/dell/dell-uart-backlight.c
-+++ b/drivers/platform/x86/dell/dell-uart-backlight.c
-@@ -283,6 +283,9 @@ static int dell_uart_bl_serdev_probe(struct serdev_device *serdev)
- 	init_waitqueue_head(&dell_bl->wait_queue);
- 	dell_bl->dev = dev;
+diff --git a/drivers/platform/x86/lenovo-yoga-tab2-pro-1380-fastcharger.c b/drivers/platform/x86/lenovo-yoga-tab2-pro-1380-fastcharger.c
+index d525bdc8ca9b3..32d9b6009c422 100644
+--- a/drivers/platform/x86/lenovo-yoga-tab2-pro-1380-fastcharger.c
++++ b/drivers/platform/x86/lenovo-yoga-tab2-pro-1380-fastcharger.c
+@@ -199,14 +199,15 @@ static int yt2_1380_fc_serdev_probe(struct serdev_device *serdev)
+ 	if (ret)
+ 		return ret;
  
-+	serdev_device_set_drvdata(serdev, dell_bl);
-+	serdev_device_set_client_ops(serdev, &dell_uart_bl_serdev_ops);
++	serdev_device_set_drvdata(serdev, fc);
++	serdev_device_set_client_ops(serdev, &yt2_1380_fc_serdev_ops);
 +
  	ret = devm_serdev_device_open(dev, serdev);
  	if (ret)
  		return dev_err_probe(dev, ret, "opening UART device\n");
-@@ -290,8 +293,6 @@ static int dell_uart_bl_serdev_probe(struct serdev_device *serdev)
- 	/* 9600 bps, no flow control, these are the default but set them to be sure */
- 	serdev_device_set_baudrate(serdev, 9600);
- 	serdev_device_set_flow_control(serdev, false);
--	serdev_device_set_drvdata(serdev, dell_bl);
--	serdev_device_set_client_ops(serdev, &dell_uart_bl_serdev_ops);
  
- 	get_version[0] = DELL_SOF(GET_CMD_LEN);
- 	get_version[1] = CMD_GET_VERSION;
+ 	serdev_device_set_baudrate(serdev, 600);
+ 	serdev_device_set_flow_control(serdev, false);
+-	serdev_device_set_drvdata(serdev, fc);
+-	serdev_device_set_client_ops(serdev, &yt2_1380_fc_serdev_ops);
+ 
+ 	ret = devm_extcon_register_notifier_all(dev, fc->extcon, &fc->nb);
+ 	if (ret)
 -- 
 2.39.5
 
