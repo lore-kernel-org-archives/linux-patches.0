@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A8F1F4275;
-	Tue, 21 Jan 2025 18:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD8F1F55FA;
+	Tue, 21 Jan 2025 18:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482686; cv=none; b=pz1Z+FsngDoRbIyzUPCGAyRC7VUsq9ZHZZ6RLUh82YL9fq/+JWJ882sSjGsu2YjTYIl2mjmu+mtQOy9aoQuWg9sLXLHIAMoHyaXewl1tFBuQpTYI54RhgM2g+s4DbdBB2nOtXThGEDv76CC4JxdJuNpqjoe13M2hDE86oPSV+JE=
+	t=1737482689; cv=none; b=Td6cRe08Es66DrHjSX+YGwB/NybyepHLHy7WGwo9QiSWmCbuKJ35bNYg3zKMfbNKbMJI9Sqg0qSkT4cAUtfcdUCPV/2INGiRSlRtnTX1CM4CyvS8HWeBmzqcaRGnGKNZUBj83Z/Ddubv6mcUmbJIhybGuwLJfkChvQI1FYV//EE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482686; c=relaxed/simple;
-	bh=h3wv/Ly/3ERIObe/ZBmeVv1dQbvGzxWXKBGYJAVQnpg=;
+	s=arc-20240116; t=1737482689; c=relaxed/simple;
+	bh=inY4IZjI1ncpszNYoPlt//lmdZOxxBN56Zq5HxRb3Tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ecci3557MtOBP3YDHvM+kZ87sr0pieUy58YFkN6ynkqDKaVnBZrZw6iwznjEt5V7tgSZZoMFYOelUJfPwW4vM0COGQJMWtUaTBcpWGH+0o+1reVvvo3+ybEYY+lDNb9zOylWlP7zoSJ/L361vD5gyYq4z7ryK4BV17OD9t8xAP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvGxuI2z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTKiCjlOSV7HpYTNJdKBiz9y1/CGsuHDW4LTpLAIZD0FHI/t8QBn7Rt/TX8mqePOcrKJWY+SLMN9/qX2XDa3OB/wxx8ezKf6KBy1/E9JU1u6pLgnqKDsL5jzO6lbSD6MUl1Px/KwGcHHCbnI62UWD+UmzkOw2eTCRtrqcKgp5qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j45DlxAj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvGxuI2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A10F3C4CEDF;
-	Tue, 21 Jan 2025 18:04:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j45DlxAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749D3C4CEDF;
+	Tue, 21 Jan 2025 18:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482686;
-	bh=h3wv/Ly/3ERIObe/ZBmeVv1dQbvGzxWXKBGYJAVQnpg=;
+	s=korg; t=1737482688;
+	bh=inY4IZjI1ncpszNYoPlt//lmdZOxxBN56Zq5HxRb3Tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvGxuI2ztVcMyAofHbFjUKuk+7S3o/Wa1undTKMgd52tyX/5dvbl8N82M9IzaSlwv
-	 mLwqyLJ4jGuyK5rb+bl2AVj/R/8tcDm7WpmqREbgrHawdTO8paX+ru/o6lOKRyu4sx
-	 9ML/dcRJxwsdrybm9Zc+WwP03uh6T6BeoA8n5BTk=
+	b=j45DlxAjH5MnjEQx8tYau+gAo9Uu3TkFnXDFDVOvjYto5eJ7fQ4MNatgP53cMetOR
+	 3edqcDiuKQvzf2EdIxhYLfVkOU6INlqi6XdH6IKg1wL1kyb4kFyzvgX6/WFBEW00SK
+	 mizdn3u5xvEP/aJTJvnLF5CGXvXOLBzdWsGQFvek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Nelissen <marco.nelissen@gmail.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Rik van Riel <riel@surriel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 39/64] filemap: avoid truncating 64-bit offset to 32 bits
-Date: Tue, 21 Jan 2025 18:52:38 +0100
-Message-ID: <20250121174523.041178965@linuxfoundation.org>
+Subject: [PATCH 6.1 40/64] fs/proc: fix softlockup in __read_vmcore (part 2)
+Date: Tue, 21 Jan 2025 18:52:39 +0100
+Message-ID: <20250121174523.083127262@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -51,35 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Nelissen <marco.nelissen@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit f505e6c91e7a22d10316665a86d79f84d9f0ba76 upstream.
+commit cbc5dde0a461240046e8a41c43d7c3b76d5db952 upstream.
 
-On 32-bit kernels, folio_seek_hole_data() was inadvertently truncating a
-64-bit value to 32 bits, leading to a possible infinite loop when writing
-to an xfs filesystem.
+Since commit 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore") the
+number of softlockups in __read_vmcore at kdump time have gone down, but
+they still happen sometimes.
 
-Link: https://lkml.kernel.org/r/20250102190540.1356838-1-marco.nelissen@gmail.com
-Fixes: 54fa39ac2e00 ("iomap: use mapping_seek_hole_data")
-Signed-off-by: Marco Nelissen <marco.nelissen@gmail.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+In a memory constrained environment like the kdump image, a softlockup is
+not just a harmless message, but it can interfere with things like RCU
+freeing memory, causing the crashdump to get stuck.
+
+The second loop in __read_vmcore has a lot more opportunities for natural
+sleep points, like scheduling out while waiting for a data write to
+happen, but apparently that is not always enough.
+
+Add a cond_resched() to the second loop in __read_vmcore to (hopefully)
+get rid of the softlockups.
+
+Link: https://lkml.kernel.org/r/20250110102821.2a37581b@fangorn
+Fixes: 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/vmcore.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -2938,7 +2938,7 @@ static inline loff_t folio_seek_hole_dat
- 		if (ops->is_partially_uptodate(folio, offset, bsz) ==
- 							seek_data)
- 			break;
--		start = (start + bsz) & ~(bsz - 1);
-+		start = (start + bsz) & ~((u64)bsz - 1);
- 		offset += bsz;
- 	} while (offset < folio_size(folio));
- unlock:
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -404,6 +404,8 @@ static ssize_t __read_vmcore(struct iov_
+ 			if (!iov_iter_count(iter))
+ 				return acc;
+ 		}
++
++		cond_resched();
+ 	}
+ 
+ 	return acc;
 
 
