@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227D81F0E36;
-	Tue, 21 Jan 2025 18:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EED1F0E36;
+	Tue, 21 Jan 2025 18:04:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482658; cv=none; b=YkFmF2Xvvn5TUsxQCT1VUweL5UuDu/OdgcZjIXntrBgcxaSsjIuWeBLpb9LmnnMay++IE14PJaCEb0grH7iNq4p38MWBaH7Dg50gm9u/rjVfUw3KWfnwwdIOMQrfYNdP+zjMk/KnojGMuIDMXEpStrdA2YuPe33TVQ6IX8yAieA=
+	t=1737482659; cv=none; b=a0kf9b3fXUOtszJBwJvbeRZReLuN2c9p0HpCZuC4NV7geYDytjxYIGEBrA+XNqVUiUkpDo0MpGVujmuxHWjc7c2HDLtdv5WLf9FQ1L75tyc8mB1BIOeldhfkWCZz8vDwRwVoyFe2JKAk/Ijrwu3a02e8GBFkh9zGpI6f5GGCCQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482658; c=relaxed/simple;
-	bh=E5gq1dvVkuIDpcNTUMbIeJXC1dMFbkVbsLa8pE/Jr/w=;
+	s=arc-20240116; t=1737482659; c=relaxed/simple;
+	bh=b9v1UpAu/YDMKaGTWKBg74vfWBJle+dQ9soawflD/c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCFF+Yu309AtmA0wOJjusZIixM7L1Vxxgg7H3Iq1bVM982/SF8yS0yk7zGQbHXycGE2imdMNKtfdOG+ngnyEzo5KBWo2PNwLUdUVg7a/AEr+A7L40N8SebRDIdq/itwlHqorDQRac65+0dvN0mSZYT1hIvGlyuETRlHfKOhNz+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mw8f2OXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=od51LLNEMlhVWN9IDj23oQ7ftQWOuTuaj8EYR1qld9yCdISsLijU23FXk6EFMLQHl71SHwPz+XlBh2geipExsjopfnkhjeUAg1Y512CkSPZlgB+m4YNboInACx+SKMZfELY4yhctHDbnUTSEQwI8qXvmcZXu69LmfUxHYQ5WKsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AA2m7x+x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mw8f2OXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093BDC4CEDF;
-	Tue, 21 Jan 2025 18:04:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AA2m7x+x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4A7C4CEDF;
+	Tue, 21 Jan 2025 18:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482656;
-	bh=E5gq1dvVkuIDpcNTUMbIeJXC1dMFbkVbsLa8pE/Jr/w=;
+	s=korg; t=1737482659;
+	bh=b9v1UpAu/YDMKaGTWKBg74vfWBJle+dQ9soawflD/c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mw8f2OXX6GeL6FogHF9ch8YgmArtVKx7xTWAH7jzcNkdAWQ6KaM2gCt1lv0myTNED
-	 lK74BWYcw9K51ocwnePO5s/lDg8vh2gq9jBRexLbR6XGjOoy1ThLuqkfA52vjEgYds
-	 o3hZa0IN7G7CEm/IPbdKvd7IkI1N6uWmW+dn5JBU=
+	b=AA2m7x+xRILz0xmRJ6GuZaigrA31V0urcldm1DeY/f/4i0b5+d+dabjIMGE2dOn5E
+	 W73ngJTdWxvCEZ06WSHW+8trBv/frVdOWqhJB89/2EUGFysv9u2GA5LyfsWKhV/45n
+	 dEk7g+ZzKxoYom/zwnpymh3eDCW1FO57UYIEsqmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Weber <f.weber@proxmox.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Aaron Conole <aconole@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/64] openvswitch: fix lockup on tx to unregistering netdev with carrier
-Date: Tue, 21 Jan 2025 18:52:02 +0100
-Message-ID: <20250121174521.699851425@linuxfoundation.org>
+Subject: [PATCH 6.1 04/64] pktgen: Avoid out-of-bounds access in get_imix_entries
+Date: Tue, 21 Jan 2025 18:52:03 +0100
+Message-ID: <20250121174521.737846150@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -53,77 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit 47e55e4b410f7d552e43011baa5be1aab4093990 ]
+[ Upstream commit 76201b5979768500bca362871db66d77cb4c225e ]
 
-Commit in a fixes tag attempted to fix the issue in the following
-sequence of calls:
+Passing a sufficient amount of imix entries leads to invalid access to the
+pkt_dev->imix_entries array because of the incorrect boundary check.
 
-    do_output
-    -> ovs_vport_send
-       -> dev_queue_xmit
-          -> __dev_queue_xmit
-             -> netdev_core_pick_tx
-                -> skb_tx_hash
+UBSAN: array-index-out-of-bounds in net/core/pktgen.c:874:24
+index 20 is out of range for type 'imix_pkt [20]'
+CPU: 2 PID: 1210 Comm: bash Not tainted 6.10.0-rc1 #121
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+Call Trace:
+<TASK>
+dump_stack_lvl lib/dump_stack.c:117
+__ubsan_handle_out_of_bounds lib/ubsan.c:429
+get_imix_entries net/core/pktgen.c:874
+pktgen_if_write net/core/pktgen.c:1063
+pde_write fs/proc/inode.c:334
+proc_reg_write fs/proc/inode.c:346
+vfs_write fs/read_write.c:593
+ksys_write fs/read_write.c:644
+do_syscall_64 arch/x86/entry/common.c:83
+entry_SYSCALL_64_after_hwframe arch/x86/entry/entry_64.S:130
 
-When device is unregistering, the 'dev->real_num_tx_queues' goes to
-zero and the 'while (unlikely(hash >= qcount))' loop inside the
-'skb_tx_hash' becomes infinite, locking up the core forever.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-But unfortunately, checking just the carrier status is not enough to
-fix the issue, because some devices may still be in unregistering
-state while reporting carrier status OK.
-
-One example of such device is a net/dummy.  It sets carrier ON
-on start, but it doesn't implement .ndo_stop to set the carrier off.
-And it makes sense, because dummy doesn't really have a carrier.
-Therefore, while this device is unregistering, it's still easy to hit
-the infinite loop in the skb_tx_hash() from the OVS datapath.  There
-might be other drivers that do the same, but dummy by itself is
-important for the OVS ecosystem, because it is frequently used as a
-packet sink for tcpdump while debugging OVS deployments.  And when the
-issue is hit, the only way to recover is to reboot.
-
-Fix that by also checking if the device is running.  The running
-state is handled by the net core during unregistering, so it covers
-unregistering case better, and we don't really need to send packets
-to devices that are not running anyway.
-
-While only checking the running state might be enough, the carrier
-check is preserved.  The running and the carrier states seem disjoined
-throughout the code and different drivers.  And other core functions
-like __dev_direct_xmit() check both before attempting to transmit
-a packet.  So, it seems safer to check both flags in OVS as well.
-
-Fixes: 066b86787fa3 ("net: openvswitch: fix race on port output")
-Reported-by: Friedrich Weber <f.weber@proxmox.com>
-Closes: https://mail.openvswitch.org/pipermail/ovs-discuss/2025-January/053423.html
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Tested-by: Friedrich Weber <f.weber@proxmox.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20250109122225.4034688-1-i.maximets@ovn.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 52a62f8603f9 ("pktgen: Parse internet mix (imix) input")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+[ fp: allow to fill the array completely; minor changelog cleanup ]
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/core/pktgen.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index 21102ffe44709..18d360aaf09bc 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -913,7 +913,9 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
- {
- 	struct vport *vport = ovs_vport_rcu(dp, out_port);
+diff --git a/net/core/pktgen.c b/net/core/pktgen.c
+index 471d4effa8b49..a2fb951996b85 100644
+--- a/net/core/pktgen.c
++++ b/net/core/pktgen.c
+@@ -850,6 +850,9 @@ static ssize_t get_imix_entries(const char __user *buffer,
+ 		unsigned long weight;
+ 		unsigned long size;
  
--	if (likely(vport && netif_carrier_ok(vport->dev))) {
-+	if (likely(vport &&
-+		   netif_running(vport->dev) &&
-+		   netif_carrier_ok(vport->dev))) {
- 		u16 mru = OVS_CB(skb)->mru;
- 		u32 cutlen = OVS_CB(skb)->cutlen;
++		if (pkt_dev->n_imix_entries >= MAX_IMIX_ENTRIES)
++			return -E2BIG;
++
+ 		len = num_arg(&buffer[i], max_digits, &size);
+ 		if (len < 0)
+ 			return len;
+@@ -879,9 +882,6 @@ static ssize_t get_imix_entries(const char __user *buffer,
  
+ 		i++;
+ 		pkt_dev->n_imix_entries++;
+-
+-		if (pkt_dev->n_imix_entries > MAX_IMIX_ENTRIES)
+-			return -E2BIG;
+ 	} while (c == ' ');
+ 
+ 	return i;
 -- 
 2.39.5
 
