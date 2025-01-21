@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48561F5439;
-	Tue, 21 Jan 2025 18:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862B61F5439;
+	Tue, 21 Jan 2025 18:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482715; cv=none; b=kdKd3/rI2tTu1iME8JSdtiAoB2dN7y/StUvZWzVTK1yfTBvfmWhotPM0s8qjZ4osYlRfyDgyCpWQ+US9GzmtqdE4mvrgqVYivbKtPAzmBa460+AyCmPiYA/UIw5eYRlp/6WMsZ+jR345qCqdksKPJnVNSFGPE78Jk9Ka513oBMk=
+	t=1737482718; cv=none; b=pW8YEVQBzk12gxJQu81ZHl4swS+GTsOpemUu0YZJMTvlx/YdzX1aziVz01dTndXf+PMw9u8897ah8IeL4u5Y1b/rjkaQdRnqZadCfb/Cb+pXoDVC93+WiGczX+jZ5nfpMcoGSVFlzWpDS91Px2lfc4GhaznWXCaz7nV7CnXdUYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482715; c=relaxed/simple;
-	bh=Pu/MUSER2zQSWOEJoRq4dXAmZiKAoQ5SwA0f4Kkla5s=;
+	s=arc-20240116; t=1737482718; c=relaxed/simple;
+	bh=JZZN21rBoKtg+zgx8gPgcHg/7hC0TiNXFirBRxyliK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXLNO/swegC7Cuxr9eVSobYcTJurbIrIZJc43qubQoPo5xFYisZqSx3of3in9wRftpzYPXeoy5d/dWsZWLtOne03LK1xztsqJCLuFMY5Lfyh7xxMqNnzGpZaUJBaa6V07VrtA6zdzczx69JfahSDSUQ3oztG5rng7IGEfUHL6n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKgf9v6a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ukg1EENOiSK8IVRt9/GNz2P3to6FwgwwbbeIn4E+Azx4wDQ3Ez8U9X9bwCQhmCYV6Lo9jq6OEg+eX+Y6Wq5xT57lSvOcHlkXpv5jMH2MjPU0xebd9P1VgAo6fhaTs5vo8Ntsb+OK3d8fNp17giUwUr4GavK9g5WZc4OK8bbP9cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JnppINhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKgf9v6a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E728C4CEDF;
-	Tue, 21 Jan 2025 18:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JnppINhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3BBC4CEDF;
+	Tue, 21 Jan 2025 18:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482715;
-	bh=Pu/MUSER2zQSWOEJoRq4dXAmZiKAoQ5SwA0f4Kkla5s=;
+	s=korg; t=1737482718;
+	bh=JZZN21rBoKtg+zgx8gPgcHg/7hC0TiNXFirBRxyliK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKgf9v6a4kIJvJro3qzax9RYxlMyKaKNFcF1zarmbZ9MSLnIPG9372EvnhWsEFO5r
-	 PhD62dKn5QZ4Om0CUKVy/tXDy96h0NSF42kJtqQp5q3bLCbhnrDwCXCnIM2t27MG8W
-	 MKHgvFe5neWPlX1ofbMLFbTmoT8nPoDsNJ/829o0=
+	b=JnppINhzE3YxL3mVd8wCh6qNblxgz3W6FjuEq/FsOuk+G+y8+YoN1ZLIhO7GidwDW
+	 X7n+YkZqYgcYD5CWKIOJ6IbXAPBBRUiVPSYGA4zjnsgYdPMZzWIIN4yDdmHju8ylA7
+	 +cEVAkuRD7pFY/5GOCsEYoAovs4Mo/6zzWIGIB+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Tritton <terry.tritton@linaro.org>
-Subject: [PATCH 6.1 48/64] Revert "PCI: Use preserve_config in place of pci_flags"
-Date: Tue, 21 Jan 2025 18:52:47 +0100
-Message-ID: <20250121174523.384995870@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 49/64] iio: imu: inv_icm42600: fix spi burst write not supported
+Date: Tue, 21 Jan 2025 18:52:48 +0100
+Message-ID: <20250121174523.422222419@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -49,69 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Terry Tritton <terry.tritton@linaro.org>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-This reverts commit f858b0fab28d8bc2d0f0e8cd4afc3216f347cfcc which is
-commit 7246a4520b4bf1494d7d030166a11b5226f6d508 upstream.
+commit c0f866de4ce447bca3191b9cefac60c4b36a7922 upstream.
 
-This patch causes a regression in cuttlefish/crossvm boot on arm64.
+Burst write with SPI is not working for all icm42600 chips. It was
+only used for setting user offsets with regmap_bulk_write.
 
-The patch was part of a series that when applied will not cause a regression
-but this patch was backported to the 6.1 branch by itself.
+Add specific SPI regmap config for using only single write with SPI.
 
-The other patches do not apply cleanly to the 6.1 branch.
-
-Signed-off-by: Terry Tritton <terry.tritton@linaro.org>
+Fixes: 9f9ff91b775b ("iio: imu: inv_icm42600: add SPI driver for inv_icm42600 driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Link: https://patch.msgid.link/20241112-inv-icm42600-fix-spi-burst-write-not-supported-v2-1-97690dc03607@tdk.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-host-common.c |    4 ++++
- drivers/pci/probe.c                      |   20 +++++++++++---------
- 2 files changed, 15 insertions(+), 9 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600.h      |    1 +
+ drivers/iio/imu/inv_icm42600/inv_icm42600_core.c |   11 +++++++++++
+ drivers/iio/imu/inv_icm42600/inv_icm42600_spi.c  |    3 ++-
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pci-host-common.c
-+++ b/drivers/pci/controller/pci-host-common.c
-@@ -73,6 +73,10 @@ int pci_host_common_probe(struct platfor
- 	if (IS_ERR(cfg))
- 		return PTR_ERR(cfg);
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600.h
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600.h
+@@ -360,6 +360,7 @@ struct inv_icm42600_state {
+ typedef int (*inv_icm42600_bus_setup)(struct inv_icm42600_state *);
  
-+	/* Do not reassign resources if probe only */
-+	if (!pci_has_flag(PCI_PROBE_ONLY))
-+		pci_add_flags(PCI_REASSIGN_ALL_BUS);
+ extern const struct regmap_config inv_icm42600_regmap_config;
++extern const struct regmap_config inv_icm42600_spi_regmap_config;
+ extern const struct dev_pm_ops inv_icm42600_pm_ops;
+ 
+ const struct iio_mount_matrix *
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_core.c
+@@ -43,6 +43,17 @@ const struct regmap_config inv_icm42600_
+ };
+ EXPORT_SYMBOL_GPL(inv_icm42600_regmap_config);
+ 
++/* define specific regmap for SPI not supporting burst write */
++const struct regmap_config inv_icm42600_spi_regmap_config = {
++	.reg_bits = 8,
++	.val_bits = 8,
++	.max_register = 0x4FFF,
++	.ranges = inv_icm42600_regmap_ranges,
++	.num_ranges = ARRAY_SIZE(inv_icm42600_regmap_ranges),
++	.use_single_write = true,
++};
++EXPORT_SYMBOL_NS_GPL(inv_icm42600_spi_regmap_config, IIO_ICM42600);
 +
- 	bridge->sysdata = cfg;
- 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
- 	bridge->msi_domain = true;
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -3082,18 +3082,20 @@ int pci_host_probe(struct pci_host_bridg
+ struct inv_icm42600_hw {
+ 	uint8_t whoami;
+ 	const char *name;
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_spi.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_spi.c
+@@ -59,7 +59,8 @@ static int inv_icm42600_probe(struct spi
+ 		return -EINVAL;
+ 	chip = (uintptr_t)match;
  
- 	bus = bridge->bus;
+-	regmap = devm_regmap_init_spi(spi, &inv_icm42600_regmap_config);
++	/* use SPI specific regmap */
++	regmap = devm_regmap_init_spi(spi, &inv_icm42600_spi_regmap_config);
+ 	if (IS_ERR(regmap))
+ 		return PTR_ERR(regmap);
  
--	/* If we must preserve the resource configuration, claim now */
--	if (bridge->preserve_config)
--		pci_bus_claim_resources(bus);
--
- 	/*
--	 * Assign whatever was left unassigned. If we didn't claim above,
--	 * this will reassign everything.
-+	 * We insert PCI resources into the iomem_resource and
-+	 * ioport_resource trees in either pci_bus_claim_resources()
-+	 * or pci_bus_assign_resources().
- 	 */
--	pci_assign_unassigned_root_bus_resources(bus);
-+	if (pci_has_flag(PCI_PROBE_ONLY)) {
-+		pci_bus_claim_resources(bus);
-+	} else {
-+		pci_bus_size_bridges(bus);
-+		pci_bus_assign_resources(bus);
- 
--	list_for_each_entry(child, &bus->children, node)
--		pcie_bus_configure_settings(child);
-+		list_for_each_entry(child, &bus->children, node)
-+			pcie_bus_configure_settings(child);
-+	}
- 
- 	pci_bus_add_devices(bus);
- 	return 0;
 
 
