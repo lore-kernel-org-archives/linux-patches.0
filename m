@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D86F1F427B;
-	Tue, 21 Jan 2025 18:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921BE1F708C;
+	Tue, 21 Jan 2025 18:04:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482651; cv=none; b=HJ//NMh1Ra301XKA8pQAJKPcMKpzNBhGMLIlrDPzMCNqtsRc4sWvTUQItvALjFYt0IqW/lqvGlmhMX/JvSqGS2JCt6mUuJ+wMiWcDcsudsYBk1FYxOjAk7DMWnMBsul4kIeL9+QYMMvj3j5rs25DEPHgvHvwcd3krpm9Y8vVMG0=
+	t=1737482653; cv=none; b=M83DMqwMyj5ysjlfRoEJxTe/q3Bq6xrirbeFgkHORuQclbHYivr89erAaa0ZkDI0ZwTWMtW7PDK5WNF0HhFQXqsCQJxDaXwVmk+vDIngA2836ABFyTXZop4FNsrhrA8Kw4hcVvbOqsolPGvxdWI6U80hf6XwV1tCdc5GOv4N+nI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482651; c=relaxed/simple;
-	bh=342yvIiHyrGHBeU8+eYkUsgQ/y/YcY43svtIwywKv/o=;
+	s=arc-20240116; t=1737482653; c=relaxed/simple;
+	bh=R7rIrg2Uad/PB8V0YTB7TdFLhjlUMVJR47j71DeRu6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N5z9qNNGjfcyU5F5c0hbRrjWDBgfhYxt5hN9BkcShTtHtqrzWG6/WSVKGDU8qBlsIyRCUZRQOKW89G6WRyRaOGej/XYdemK713ZnVSsqu5gh+c85aD52O3e9Itxy0hWrUabxvmEK34Sfk0w71BJtHCdx+p7PTfTmOLvFn3x0ynM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jryo1Vde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uf2MQDDkcA9EyP5KF47X6SgMjzEeH/OEi+lGHMDqCBJZzymdbZigOfacxx5At2zQ/NRmuqrF0XXWi3CP6zh+MLCSODl6wArSAt272CCpwnGw6+5BZvdRl2gUuaoNSHHkVQMCvSO2oXc1IOqTL5p+5O7pXSXsyT/h82ohvi0JGaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c1VLGdvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jryo1Vde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3825EC4CEDF;
-	Tue, 21 Jan 2025 18:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c1VLGdvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102DBC4CEE1;
+	Tue, 21 Jan 2025 18:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482650;
-	bh=342yvIiHyrGHBeU8+eYkUsgQ/y/YcY43svtIwywKv/o=;
+	s=korg; t=1737482653;
+	bh=R7rIrg2Uad/PB8V0YTB7TdFLhjlUMVJR47j71DeRu6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jryo1VdeXmeV1JwsqeTN6K5+4j8svz5mB5qXimSX3B4jgXEBqdlPXH6T3ye7nCgfR
-	 zpe9qdoAZ61HAuR5gndo2kfC1sj5/6YnVVfSzW1qGq2REF/+xJ2UIvyvZOcB2Cbkqx
-	 5E2ZQnnikd7ssL0/9Hfwqr1UZ0HpIjAdwgggmhp4=
+	b=c1VLGdvpBiBb84/+prdYcRMC6qyM/eL270dTv9QgPEj+rT6k3B0UcZn/KaibT/h0K
+	 gPqqp0AJ/Y9/KUyhqaOuXdlEnJ24q0w8ialWMqwYFmI/BL25I6PBqAKV0Rxu3mvXli
+	 3JeRf9vP6AaOEWKEc1MSwyzHe9ni0k+xMPjuDsEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Marco Nelissen <marco.nelissen@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 26/64] ACPI: resource: acpi_dev_irq_override(): Check DMI match last
-Date: Tue, 21 Jan 2025 18:52:25 +0100
-Message-ID: <20250121174522.553832255@linuxfoundation.org>
+Subject: [PATCH 6.1 27/64] iomap: avoid avoid truncating 64-bit offset to 32 bits
+Date: Tue, 21 Jan 2025 18:52:26 +0100
+Message-ID: <20250121174522.591576761@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -52,46 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Marco Nelissen <marco.nelissen@gmail.com>
 
-[ Upstream commit cd4a7b2e6a2437a5502910c08128ea3bad55a80b ]
+[ Upstream commit c13094b894de289514d84b8db56d1f2931a0bade ]
 
-acpi_dev_irq_override() gets called approx. 30 times during boot (15 legacy
-IRQs * 2 override_table entries). Of these 30 calls at max 1 will match
-the non DMI checks done by acpi_dev_irq_override(). The dmi_check_system()
-check is by far the most expensive check done by acpi_dev_irq_override(),
-make this call the last check done by acpi_dev_irq_override() so that it
-will be called at max 1 time instead of 30 times.
+on 32-bit kernels, iomap_write_delalloc_scan() was inadvertently using a
+32-bit position due to folio_next_index() returning an unsigned long.
+This could lead to an infinite loop when writing to an xfs filesystem.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20241228165253.42584-1-hdegoede@redhat.com
-[ rjw: Subject edit ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Marco Nelissen <marco.nelissen@gmail.com>
+Link: https://lore.kernel.org/r/20250109041253.2494374-1-marco.nelissen@gmail.com
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/iomap/buffered-io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index 6e041d40cad50..34cb7894e54ee 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -663,11 +663,11 @@ static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
- 	for (i = 0; i < ARRAY_SIZE(override_table); i++) {
- 		const struct irq_override_cmp *entry = &override_table[i];
+diff --git a/fs/iomap/buffered-io.c b/fs/iomap/buffered-io.c
+index 47f44b02c17de..70e246f7e8fe8 100644
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -907,7 +907,7 @@ static int iomap_write_delalloc_scan(struct inode *inode,
+ 		}
  
--		if (dmi_check_system(entry->system) &&
--		    entry->irq == gsi &&
-+		if (entry->irq == gsi &&
- 		    entry->triggering == triggering &&
- 		    entry->polarity == polarity &&
--		    entry->shareable == shareable)
-+		    entry->shareable == shareable &&
-+		    dmi_check_system(entry->system))
- 			return entry->override;
+ 		/* move offset to start of next folio in range */
+-		start_byte = folio_next_index(folio) << PAGE_SHIFT;
++		start_byte = folio_pos(folio) + folio_size(folio);
+ 		folio_unlock(folio);
+ 		folio_put(folio);
  	}
- 
 -- 
 2.39.5
 
