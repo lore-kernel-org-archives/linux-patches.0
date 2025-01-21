@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A790C1F470A;
-	Tue, 21 Jan 2025 18:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816511F470A;
+	Tue, 21 Jan 2025 18:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482472; cv=none; b=Pg+F/rhvoQ+p11B0zuUHvwyvmQuVYzqqEi6YkA10MUA1t24gMRnKJqHA0qPVigRyDhG3WOJoT9giZ26MSSodH5OMU+OetLXJATC4Ndc7agYX45ht3BI5FGQMRdP6hqu08XKIB/MnTjQrCdsK1AV5jWKjA/9rSz5EOKNE8XksIcQ=
+	t=1737482475; cv=none; b=tLMuYiSHS6a6DavXlmMcvfg9L4EVgi6ziOlolaLHxQLGVsieYOY3Wyy10cqZ/JD5WNWut6JOCt0YRh6GE0p/eh9fFbwFpAOqf5R2UGHatHtLOSU5H6SQexKxqV4IL7pgFPWoPff51czrUhY55bnNf1U44ZGbzcbMf/I5G0OSD68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482472; c=relaxed/simple;
-	bh=Eb0Zrk8A14PckJMlsWZrz6whEwrZIRzKWtNQosD9oLM=;
+	s=arc-20240116; t=1737482475; c=relaxed/simple;
+	bh=rVJSzcP5GfbgK6iuHl2zRNcBlUpHv/jAG+NmlUT0Mrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A91DkwuPcI+ct4LLRxyZmIoZ3d+dvn1wfs5oQ6p0bRwiugEc/IRMsQn9L/6PfJ1JKfKhCyokU9QSQMxZ76IAv/1/kpRIm4Wo5nA6YEwWEK8/Fs1iV1yOCKg4LOmnOd4IK46DEB9Kvm4jeEdyhbGHIFQyaWhatvtlExTHZGr5Jhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YsgQZon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BiIX82CCEbRClUgxm6m9mwLcdQms/4N1Bq9p0aB0PVhI4T9lokFVZvKEtf0CLXfmX01Iin9ySgXfy3mluAiu/6GCPE8rIkrPy27ELWDhkxs47t9FCmcQU9O6Zwrc7cxppSaSzYz1vO/jIKHX46EUJpoFwUyMNw3tGSRkOaKVlr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrzAzLzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YsgQZon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE98C4CEDF;
-	Tue, 21 Jan 2025 18:01:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrzAzLzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04031C4CEDF;
+	Tue, 21 Jan 2025 18:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482472;
-	bh=Eb0Zrk8A14PckJMlsWZrz6whEwrZIRzKWtNQosD9oLM=;
+	s=korg; t=1737482475;
+	bh=rVJSzcP5GfbgK6iuHl2zRNcBlUpHv/jAG+NmlUT0Mrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YsgQZonvMgIL62KB8wb9JqH01DXSr1JrtiG+0rDVfyuvEyI2Ma/hP3sm0fXqYxBI
-	 XI60R6BcretbDlyrZvBG0e/afRiaDtM8nC1/V6FWBaTfC/gXaWxUi6NyvUKOvCwRMt
-	 VSo20d4TxSpynn1EM1OdbOdJBfVy/lKBYxR4ZAOc=
+	b=RrzAzLzkcwrAa6hdzE4xEpNTMDikDv4DFY1dAgSsAJtrmrtrQjc6RR7hwAxpn+/OY
+	 HezYwBVBtlQ5910LMyshrMsHxupCrTaUee2jB1bTovOKm1Sv8R7sjxmCKRMpzgVvTH
+	 2zICbM/wOZNVLvKe2mi0gXITbNIUpy1eaHzZ+hus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Wongi Lee <qwerty@theori.io>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 088/122] vsock: prevent null-ptr-deref in vsock_*[has_data|has_space]
-Date: Tue, 21 Jan 2025 18:52:16 +0100
-Message-ID: <20250121174536.411800070@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 089/122] nouveau/fence: handle cross device fences properly
+Date: Tue, 21 Jan 2025 18:52:17 +0100
+Message-ID: <20250121174536.449809284@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -53,70 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 91751e248256efc111e52e15115840c35d85abaf upstream.
+commit 1f9910b41c857a892b83801feebdc7bdf38c5985 upstream.
 
-Recent reports have shown how we sometimes call vsock_*_has_data()
-when a vsock socket has been de-assigned from a transport (see attached
-links), but we shouldn't.
+The fence sync logic doesn't handle a fence sync across devices
+as it tries to write to a channel offset from one device into
+the fence bo from a different device, which won't work so well.
 
-Previous commits should have solved the real problems, but we may have
-more in the future, so to avoid null-ptr-deref, we can return 0
-(no space, no data available) but with a warning.
+This patch fixes that to avoid using the sync path in the case
+where the fences come from different nouveau drm devices.
 
-This way the code should continue to run in a nearly consistent state
-and have a warning that allows us to debug future problems.
+This works fine on a single device as the fence bo is shared
+across the devices, and mapped into each channels vma space,
+the channel offsets are therefore okay to pass between sides,
+so one channel can sync on the seqnos from the other by using
+the offset into it's vma.
 
-Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/netdev/Z2K%2FI4nlHdfMRTZC@v4bel-B760M-AORUS-ELITE-AX/
-Link: https://lore.kernel.org/netdev/5ca20d4c-1017-49c2-9516-f6f75fd331e9@rbox.co/
-Link: https://lore.kernel.org/netdev/677f84a8.050a0220.25a300.01b3.GAE@google.com/
-Co-developed-by: Hyunwoo Kim <v4bel@theori.io>
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Co-developed-by: Wongi Lee <qwerty@theori.io>
-Signed-off-by: Wongi Lee <qwerty@theori.io>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Reviewed-by: Hyunwoo Kim <v4bel@theori.io>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+[ Fix compilation issue; remove version log from commit messsage.
+  - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250109005553.623947-1-airlied@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/nouveau/nouveau_fence.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -879,6 +879,9 @@ EXPORT_SYMBOL_GPL(vsock_create_connected
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -387,11 +387,13 @@ nouveau_fence_sync(struct nouveau_bo *nv
+ 			if (f) {
+ 				struct nouveau_channel *prev;
+ 				bool must_wait = true;
++				bool local;
  
- s64 vsock_stream_has_data(struct vsock_sock *vsk)
- {
-+	if (WARN_ON(!vsk->transport))
-+		return 0;
-+
- 	return vsk->transport->stream_has_data(vsk);
- }
- EXPORT_SYMBOL_GPL(vsock_stream_has_data);
-@@ -887,6 +890,9 @@ s64 vsock_connectible_has_data(struct vs
- {
- 	struct sock *sk = sk_vsock(vsk);
- 
-+	if (WARN_ON(!vsk->transport))
-+		return 0;
-+
- 	if (sk->sk_type == SOCK_SEQPACKET)
- 		return vsk->transport->seqpacket_has_data(vsk);
- 	else
-@@ -896,6 +902,9 @@ EXPORT_SYMBOL_GPL(vsock_connectible_has_
- 
- s64 vsock_stream_has_space(struct vsock_sock *vsk)
- {
-+	if (WARN_ON(!vsk->transport))
-+		return 0;
-+
- 	return vsk->transport->stream_has_space(vsk);
- }
- EXPORT_SYMBOL_GPL(vsock_stream_has_space);
+ 				rcu_read_lock();
+ 				prev = rcu_dereference(f->channel);
+-				if (prev && (prev == chan ||
+-					     fctx->sync(f, prev, chan) == 0))
++				local = prev && prev->cli->drm == chan->cli->drm;
++				if (local && (prev == chan ||
++					      fctx->sync(f, prev, chan) == 0))
+ 					must_wait = false;
+ 				rcu_read_unlock();
+ 				if (!must_wait)
 
 
