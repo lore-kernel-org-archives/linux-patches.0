@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FBF1F540C;
-	Tue, 21 Jan 2025 18:07:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A251F55E3;
+	Tue, 21 Jan 2025 18:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482866; cv=none; b=hORTK3ZZ8XjbmA5k3FDf5dhfKNlpHUvdpbVWPF6xiNoT4yvxYMX+/2+zLK9WxYaLmNvpPXoW9f2MQS4c34UYV8IGU8naMqHgHJKaWtHW3Zp22F8XtzjilHdMZ8lxCmA0JIEecrBjBHS4FTKJyMJL5ZYq7HoutJbGvoihyU0GJ88=
+	t=1737482869; cv=none; b=rAhV/9/8ocflZ9orjCe4cAra1GjIQSRMFvxoJU3StsA0suny3DN+xIymMXIAhrztMedvPj2aeS3UedOP46hxXSU166o0LKvxAs5hdqvhvC+ZJHN512z//DsAIitiUiTCnjmeg1cky4iOQeB22oud03vVIcSgRrymPTx0Wl10SxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482866; c=relaxed/simple;
-	bh=EpCy4vQ8k2J8q+fH98U+2+d+zaMsErQ4yez0J2L+TyQ=;
+	s=arc-20240116; t=1737482869; c=relaxed/simple;
+	bh=hsYYrNCceu0D5WdIM+j5sCVDHL4t1SbquTBzL352WDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O7Kz+0l27qHFGAwA+nUsZXAYYkMakOigm0U70x0IudF1CvbzOcSFMGL87bNym1YTtlGoLbDXq4M79/6jEPt2UAoYKSA+A8AW4z28uTvOY5lML86VJC38Bytc9R1VR58Cq6e/IahXudyp51Kds0U92A6PIe31TYY4Z1KqnKRmYy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC9NYW1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p7OYihgrq1NYu4Ui+oBzkj+Cgzs/zNUX/EukXDvwGNlGzPPGa5RzpJM0oYZJO4iCcA6/ujuNZr8WlrAX8uhmaACt+FGryJX3WRHrpcvJA5Ru2ffTYiCisXEJ1x8t9Dx+iuH9pjkcWcnAbFOI2P8Qgpw7T1cPwP2RxByLqGHdrVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mui/f7xu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC9NYW1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010E3C4CEDF;
-	Tue, 21 Jan 2025 18:07:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mui/f7xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EC3C4CEDF;
+	Tue, 21 Jan 2025 18:07:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482866;
-	bh=EpCy4vQ8k2J8q+fH98U+2+d+zaMsErQ4yez0J2L+TyQ=;
+	s=korg; t=1737482869;
+	bh=hsYYrNCceu0D5WdIM+j5sCVDHL4t1SbquTBzL352WDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GC9NYW1Ov+9dtV1JvWj+v86eXfJfXqo1NLjhcuXyY67SwBCbPEAyK24U2Rt9ZN+6k
-	 JEP557Q5WzCMugml7tDMI5G0o8rk/fLoTZh/M6V9yOxQqQY+NbbsaPwYweh2ERY1O5
-	 RHn8D1LeS/Z7624LNR0BP68jErGtEkXffmBL4yTI=
+	b=Mui/f7xuy3vHneVVhL3q9O4nMLN77gXwLPYr06yg8Wg5VXKwNGs6dD4WbbdHN5eMw
+	 Ig4bsJr85oDGYNlIYOQwNdhorMl0YYSMY9d+32qS9nBG+L5/fITMdz9c7SNb19x4ta
+	 4nI1kbCkg+GKmUYY7QjCpSERswQ+6ltQdawXXMAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Nitin Gupta <ngupta@vflare.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>
-Subject: [PATCH 5.15 034/127] drivers/block/zram/zram_drv.c: do not keep dangling zcomp pointer after zram reset
-Date: Tue, 21 Jan 2025 18:51:46 +0100
-Message-ID: <20250121174530.999716773@linuxfoundation.org>
+	syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com,
+	Yuezhang Mo <Yuezhang.Mo@sony.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 006/127] exfat: fix the infinite loop in exfat_readdir()
+Date: Tue, 21 Jan 2025 18:51:18 +0100
+Message-ID: <20250121174529.920282352@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -54,62 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Yuezhang Mo <Yuezhang.Mo@sony.com>
 
-commit 6d2453c3dbc5f70eafc1c866289a90a1fc57ce18 upstream.
+[ Upstream commit fee873761bd978d077d8c55334b4966ac4cb7b59 ]
 
-We do all reset operations under write lock, so we don't need to save
-->disksize and ->comp to stack variables.  Another thing is that ->comp is
-freed during zram reset, but comp pointer is not NULL-ed, so zram keeps
-the freed pointer value.
+If the file system is corrupted so that a cluster is linked to
+itself in the cluster chain, and there is an unused directory
+entry in the cluster, 'dentry' will not be incremented, causing
+condition 'dentry < max_dentries' unable to prevent an infinite
+loop.
 
-Link: https://lkml.kernel.org/r/20220824035100.971816-1-senozhatsky@chromium.org
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Nitin Gupta <ngupta@vflare.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing device")
+This infinite loop causes s_lock not to be released, and other
+tasks will hang, such as exfat_sync_fs().
+
+This commit stops traversing the cluster chain when there is unused
+directory entry in the cluster to avoid this infinite loop.
+
+Reported-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=205c2644abdff9d3f9fc
+Tested-by: syzbot+205c2644abdff9d3f9fc@syzkaller.appspotmail.com
+Fixes: ca06197382bd ("exfat: add directory operations")
+Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/zram/zram_drv.c |   13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ fs/exfat/dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1695,9 +1695,6 @@ out:
+diff --git a/fs/exfat/dir.c b/fs/exfat/dir.c
+index 0a1b1de032ef..70d0849826f2 100644
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -126,7 +126,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 			type = exfat_get_entry_type(ep);
+ 			if (type == TYPE_UNUSED) {
+ 				brelse(bh);
+-				break;
++				goto out;
+ 			}
  
- static void zram_reset_device(struct zram *zram)
- {
--	struct zcomp *comp;
--	u64 disksize;
--
- 	down_write(&zram->init_lock);
- 
- 	zram->limit_pages = 0;
-@@ -1707,18 +1704,16 @@ static void zram_reset_device(struct zra
- 		return;
+ 			if (type != TYPE_FILE && type != TYPE_DIR) {
+@@ -186,6 +186,7 @@ static int exfat_readdir(struct inode *inode, loff_t *cpos, struct exfat_dir_ent
+ 		}
  	}
  
--	comp = zram->comp;
--	disksize = zram->disksize;
--	zram->disksize = 0;
--
- 	set_capacity_and_notify(zram->disk, 0);
- 	part_stat_set_all(zram->disk->part0, 0);
- 
- 	up_write(&zram->init_lock);
- 	/* I/O operation under all of CPU are done so let's free */
--	zram_meta_free(zram, disksize);
-+	zram_meta_free(zram, zram->disksize);
-+	zram->disksize = 0;
- 	memset(&zram->stats, 0, sizeof(zram->stats));
--	zcomp_destroy(comp);
-+	zcomp_destroy(zram->comp);
-+	zram->comp = NULL;
- 	reset_bdev(zram);
- }
- 
++out:
+ 	dir_entry->namebuf.lfn[0] = '\0';
+ 	*cpos = EXFAT_DEN_TO_B(dentry);
+ 	return 0;
+-- 
+2.39.5
+
 
 
