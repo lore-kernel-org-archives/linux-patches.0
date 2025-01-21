@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82361F5404;
-	Tue, 21 Jan 2025 18:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC17F1F540C;
+	Tue, 21 Jan 2025 18:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482782; cv=none; b=R8yZMLMIFpAi9HZv59qkhFbVvMNU8/4FO6cbEFFzkkSBgaOH64I6dfLvSTDtP6gsfbOcYk5mK0MoederHsInhApD98EB92xx3EGS1FgnpoWpItJA7FvRcHbGAfjg07W5RjIaC52QT1prGFmAcdt/sKTa/HH6byAs37pmm37nGhw=
+	t=1737482785; cv=none; b=jbkGSGGKIkQG2a7Mb72u0Y/UGAApgee5mxGf1LTbOoeQ3DTMpQsT9lEXMOk+GbU8Ms/SkymdY4qODwE66IJTb3Rpo7NC9mpjoj2t3MF/TYkuoXPXrbfr3kziNl0GTjeDLbbaJrmJISnxzV6Y36NmPNrr2WhLWM6QzoswNPE8jTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482782; c=relaxed/simple;
-	bh=8lC2oF/Jgsb3c+j/utCX/F/UCWkTGM1a0VMFjq4VzDI=;
+	s=arc-20240116; t=1737482785; c=relaxed/simple;
+	bh=ZHEQSy7nKCohJvpNZjNbBZP2jI1R13WoVvy0mT0SRQw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jAnp6sMY+65ieUpv20jm8J7orsO3D58MNWYhIfnNJDfe67uk/gas0Ych+GqxzJVTGh4pAtxjP3TuZ/i/OagDal/8fbmE269yy05Y6dtKa4NmDy+ptHJqjnlaX9y4CqwRgB4kps0In3q/udbgzUlbCKw3rlI1a7wClVWgCrRyO/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPoX3Plr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nHXPx4yEtOTwOawHLz2JsvDsf67UtuQzk8NWRf7nA72OTMgBqQUIHOhEljhjjKKWhMfxHPFYmR4Hpp6Ncv+OKhEuPX3MGYNsJ81ZCBw/k1Sntfayl5tnXRN6qLxB8OE+S5SJQfGxKYij2c5GI3CbLfp0NcNjCiiOTj8+mzG9+DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5fw7eAD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPoX3Plr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D827C4CEDF;
-	Tue, 21 Jan 2025 18:06:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5fw7eAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 351FEC4CEDF;
+	Tue, 21 Jan 2025 18:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482782;
-	bh=8lC2oF/Jgsb3c+j/utCX/F/UCWkTGM1a0VMFjq4VzDI=;
+	s=korg; t=1737482785;
+	bh=ZHEQSy7nKCohJvpNZjNbBZP2jI1R13WoVvy0mT0SRQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPoX3PlrckqFxhw3h9V6/WLYSaWICKH0y5T4VOzDCXKozKv7G2/ErL2oRlKMWDEHm
-	 aralfohD4Bz2pPotM6eHgGczCGxmSxvnYJ2un5g47RI70wSMz6mC1F0CM2YHBPcubu
-	 3DE/pqtBxK347aIvJgXZYctYLXJlidC43p+idNw4=
+	b=D5fw7eADWOtfmXjSU28LEA/3NP3CmFjOq5tStLnFNEexz42B7iuTdJ8EmFli4MeES
+	 9IR/pbtb6ijXIbWhcYzqGzYt1bitfp6K4Fj12hQeIzCNWpSyRjpx3mS8mfpKlllF2e
+	 ec1W3jdB5d1J8dSa+Jp+mVo61BGCGWDNvjoEhEmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Wang Liang <wangliang74@huawei.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.1 64/64] net: fix data-races around sk->sk_forward_alloc
-Date: Tue, 21 Jan 2025 18:53:03 +0100
-Message-ID: <20250121174523.998561129@linuxfoundation.org>
+	syzbot+6c0b301317aa0156f9eb@syzkaller.appspotmail.com,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.1 61/64] erofs: handle NONHEAD !delta[1] lclusters gracefully
+Date: Tue, 21 Jan 2025 18:53:00 +0100
+Message-ID: <20250121174523.886309044@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -52,141 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-commit 073d89808c065ac4c672c0a613a71b27a80691cb upstream.
+commit 0bc8061ffc733a0a246b8689b2d32a3e9204f43c upstream.
 
-Syzkaller reported this warning:
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 16 at net/ipv4/af_inet.c:156 inet_sock_destruct+0x1c5/0x1e0
- Modules linked in:
- CPU: 0 UID: 0 PID: 16 Comm: ksoftirqd/0 Not tainted 6.12.0-rc5 #26
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
- RIP: 0010:inet_sock_destruct+0x1c5/0x1e0
- Code: 24 12 4c 89 e2 5b 48 c7 c7 98 ec bb 82 41 5c e9 d1 18 17 ff 4c 89 e6 5b 48 c7 c7 d0 ec bb 82 41 5c e9 bf 18 17 ff 0f 0b eb 83 <0f> 0b eb 97 0f 0b eb 87 0f 0b e9 68 ff ff ff 66 66 2e 0f 1f 84 00
- RSP: 0018:ffffc9000008bd90 EFLAGS: 00010206
- RAX: 0000000000000300 RBX: ffff88810b172a90 RCX: 0000000000000007
- RDX: 0000000000000002 RSI: 0000000000000300 RDI: ffff88810b172a00
- RBP: ffff88810b172a00 R08: ffff888104273c00 R09: 0000000000100007
- R10: 0000000000020000 R11: 0000000000000006 R12: ffff88810b172a00
- R13: 0000000000000004 R14: 0000000000000000 R15: ffff888237c31f78
- FS:  0000000000000000(0000) GS:ffff888237c00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007ffc63fecac8 CR3: 000000000342e000 CR4: 00000000000006f0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  ? __warn+0x88/0x130
-  ? inet_sock_destruct+0x1c5/0x1e0
-  ? report_bug+0x18e/0x1a0
-  ? handle_bug+0x53/0x90
-  ? exc_invalid_op+0x18/0x70
-  ? asm_exc_invalid_op+0x1a/0x20
-  ? inet_sock_destruct+0x1c5/0x1e0
-  __sk_destruct+0x2a/0x200
-  rcu_do_batch+0x1aa/0x530
-  ? rcu_do_batch+0x13b/0x530
-  rcu_core+0x159/0x2f0
-  handle_softirqs+0xd3/0x2b0
-  ? __pfx_smpboot_thread_fn+0x10/0x10
-  run_ksoftirqd+0x25/0x30
-  smpboot_thread_fn+0xdd/0x1d0
-  kthread+0xd3/0x100
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork+0x34/0x50
-  ? __pfx_kthread+0x10/0x10
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
- ---[ end trace 0000000000000000 ]---
+syzbot reported a WARNING in iomap_iter_done:
+ iomap_fiemap+0x73b/0x9b0 fs/iomap/fiemap.c:80
+ ioctl_fiemap fs/ioctl.c:220 [inline]
 
-Its possible that two threads call tcp_v6_do_rcv()/sk_forward_alloc_add()
-concurrently when sk->sk_state == TCP_LISTEN with sk->sk_lock unlocked,
-which triggers a data-race around sk->sk_forward_alloc:
-tcp_v6_rcv
-    tcp_v6_do_rcv
-        skb_clone_and_charge_r
-            sk_rmem_schedule
-                __sk_mem_schedule
-                    sk_forward_alloc_add()
-            skb_set_owner_r
-                sk_mem_charge
-                    sk_forward_alloc_add()
-        __kfree_skb
-            skb_release_all
-                skb_release_head_state
-                    sock_rfree
-                        sk_mem_uncharge
-                            sk_forward_alloc_add()
-                            sk_mem_reclaim
-                                // set local var reclaimable
-                                __sk_mem_reclaim
-                                    sk_forward_alloc_add()
+Generally, NONHEAD lclusters won't have delta[1]==0, except for crafted
+images and filesystems created by pre-1.0 mkfs versions.
 
-In this syzkaller testcase, two threads call
-tcp_v6_do_rcv() with skb->truesize=768, the sk_forward_alloc changes like
-this:
- (cpu 1)             | (cpu 2)             | sk_forward_alloc
- ...                 | ...                 | 0
- __sk_mem_schedule() |                     | +4096 = 4096
-                     | __sk_mem_schedule() | +4096 = 8192
- sk_mem_charge()     |                     | -768  = 7424
-                     | sk_mem_charge()     | -768  = 6656
- ...                 |    ...              |
- sk_mem_uncharge()   |                     | +768  = 7424
- reclaimable=7424    |                     |
-                     | sk_mem_uncharge()   | +768  = 8192
-                     | reclaimable=8192    |
- __sk_mem_reclaim()  |                     | -4096 = 4096
-                     | __sk_mem_reclaim()  | -8192 = -4096 != 0
+Previously, it would immediately bail out if delta[1]==0, which led to
+inadequate decompressed lengths (thus FIEMAP is impacted).  Treat it as
+delta[1]=1 to work around these legacy mkfs versions.
 
-The skb_clone_and_charge_r() should not be called in tcp_v6_do_rcv() when
-sk->sk_state is TCP_LISTEN, it happens later in tcp_v6_syn_recv_sock().
-Fix the same issue in dccp_v6_do_rcv().
+`lclusterbits > 14` is illegal for compact indexes, error out too.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Fixes: e994b2f0fb92 ("tcp: do not lock listener to process SYN packets")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Link: https://patch.msgid.link/20241107023405.889239-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Reported-by: syzbot+6c0b301317aa0156f9eb@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/67373c0c.050a0220.2a2fcc.0079.GAE@google.com
+Tested-by: syzbot+6c0b301317aa0156f9eb@syzkaller.appspotmail.com
+Fixes: d95ae5e25326 ("erofs: add support for the full decompressed length")
+Fixes: 001b8ccd0650 ("erofs: fix compact 4B support for 16k block size")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20241115173651.3339514-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/dccp/ipv6.c     |    2 +-
- net/ipv6/tcp_ipv6.c |    4 +---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ fs/erofs/zmap.c |   17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -615,7 +615,7 @@ static int dccp_v6_do_rcv(struct sock *s
- 	   by tcp. Feel free to propose better solution.
- 					       --ANK (980728)
- 	 */
--	if (np->rxopt.all)
-+	if (np->rxopt.all && sk->sk_state != DCCP_LISTEN)
- 		opt_skb = skb_clone_and_charge_r(skb, sk);
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -256,7 +256,7 @@ static int compacted_load_cluster_from_d
+ 	unsigned int amortizedshift;
+ 	erofs_off_t pos;
  
- 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1463,7 +1463,7 @@ int tcp_v6_do_rcv(struct sock *sk, struc
- 	   by tcp. Feel free to propose better solution.
- 					       --ANK (980728)
- 	 */
--	if (np->rxopt.all)
-+	if (np->rxopt.all && sk->sk_state != TCP_LISTEN)
- 		opt_skb = skb_clone_and_charge_r(skb, sk);
+-	if (lcn >= totalidx)
++	if (lcn >= totalidx || vi->z_logical_clusterbits > 14)
+ 		return -EINVAL;
  
- 	reason = SKB_DROP_REASON_NOT_SPECIFIED;
-@@ -1502,8 +1502,6 @@ int tcp_v6_do_rcv(struct sock *sk, struc
- 		if (nsk != sk) {
- 			if (tcp_child_process(sk, nsk, skb))
- 				goto reset;
--			if (opt_skb)
--				__kfree_skb(opt_skb);
- 			return 0;
+ 	m->lcn = lcn;
+@@ -441,7 +441,7 @@ static int z_erofs_get_extent_decompress
+ 	u64 lcn = m->lcn, headlcn = map->m_la >> lclusterbits;
+ 	int err;
+ 
+-	do {
++	while (1) {
+ 		/* handle the last EOF pcluster (no next HEAD lcluster) */
+ 		if ((lcn << lclusterbits) >= inode->i_size) {
+ 			map->m_llen = inode->i_size - map->m_la;
+@@ -453,14 +453,16 @@ static int z_erofs_get_extent_decompress
+ 			return err;
+ 
+ 		if (m->type == Z_EROFS_LCLUSTER_TYPE_NONHEAD) {
+-			DBG_BUGON(!m->delta[1] &&
+-				  m->clusterofs != 1 << lclusterbits);
++			/* work around invalid d1 generated by pre-1.0 mkfs */
++			if (unlikely(!m->delta[1])) {
++				m->delta[1] = 1;
++				DBG_BUGON(1);
++			}
+ 		} else if (m->type == Z_EROFS_LCLUSTER_TYPE_PLAIN ||
+ 			   m->type == Z_EROFS_LCLUSTER_TYPE_HEAD1 ||
+ 			   m->type == Z_EROFS_LCLUSTER_TYPE_HEAD2) {
+-			/* go on until the next HEAD lcluster */
+ 			if (lcn != headlcn)
+-				break;
++				break;	/* ends at the next HEAD lcluster */
+ 			m->delta[1] = 1;
+ 		} else {
+ 			erofs_err(inode->i_sb, "unknown type %u @ lcn %llu of nid %llu",
+@@ -469,8 +471,7 @@ static int z_erofs_get_extent_decompress
+ 			return -EOPNOTSUPP;
  		}
- 	} else
+ 		lcn += m->delta[1];
+-	} while (m->delta[1]);
+-
++	}
+ 	map->m_llen = (lcn << lclusterbits) + m->clusterofs - map->m_la;
+ 	return 0;
+ }
 
 
