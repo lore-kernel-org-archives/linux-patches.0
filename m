@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFB51F427B;
-	Tue, 21 Jan 2025 18:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBCD1F470A;
+	Tue, 21 Jan 2025 18:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482577; cv=none; b=bnU5iSbhG+3RhBukUmZYbSouu3BGPr4dG6ytoCCk4vQSoYHN4h0D/exGswvgFmskRZU8cQqkrJxWmc9RBBc8OV+CDsjjasKZ+tS4ke4e+/f0GROkoO8KCvg+a6w1JjUZ23Ps5cCzfDGqE4xk0P5cBc5RdXMnz58e1BL0M7nc/NE=
+	t=1737482580; cv=none; b=pBR/kOfUXoC0u12nW6lngR8BLqY0xigGHXvma6u370OzBLU1rjc3Nba9qN7em8oUUheGG5bCSgphXc1nsYq/B3oLW6KIY3ol2TktvldEMWkxyhfWS09l1rhcfCT3AASG4jbb7gUsCcrj0hnfk5x1wCQqmyv6HAR0Tt/e3GQpnig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482577; c=relaxed/simple;
-	bh=UOLplJFC3swR62M89obnrYZ7Gf4j76yaXMi4j1loCZ4=;
+	s=arc-20240116; t=1737482580; c=relaxed/simple;
+	bh=dsqaxQBPwY/p8ZBWWkqqZz/xYxcGnknOOsIt6Xhs6Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dw4fCICkxn9uhihTeJige1k+AeAfsFsjv0xc87a5LihGNUh3aJGXNsjUYwQG13qkWqhVBcb+lNGHr4A0VOYAADX61DMygG5EMAW58C4YEppkAHTCnqs2NviVaoUb+4bpYHzPyjyRHntsk34vDRrwWAeeH76jk7TGpwxAljUhyig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGfifD1x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pXA9DOzw/pT9cYAwIMop9/eaywE9MeTk99utoSK86CFalMwfXbV0lKBj4CVjptqkNHHOKaD2lyCcK8nZmF2mbrARFfexgOGSSfJDNbeigaadhM0NLoXA8IK4AHxpotWNCnmU54DtoHm5hNYUk4DQJmsShek1h+G1Vr9+p6aLmAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCh3UKNW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGfifD1x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EC9C4CEDF;
-	Tue, 21 Jan 2025 18:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCh3UKNW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1AAC4CEDF;
+	Tue, 21 Jan 2025 18:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482577;
-	bh=UOLplJFC3swR62M89obnrYZ7Gf4j76yaXMi4j1loCZ4=;
+	s=korg; t=1737482580;
+	bh=dsqaxQBPwY/p8ZBWWkqqZz/xYxcGnknOOsIt6Xhs6Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGfifD1xH7hELX+hqVHFo+jHoP/cl+eRxz+3feFJ4c96ppelFOcIk8eZFVApX/bAA
-	 xoxea+Ro2w+TofhrduvJDeD4xk1zr2MMu0TBLxRnGUObsHi/ayjtqYiOVOk5lmllYu
-	 1OVxAU37dY+5eSC9yoGL82M03OpSg4YYDBlOIjfg=
+	b=HCh3UKNWmQ6F0q/dxaNLiwNEEGTdKq9lRjJfssaAMzWrGxWHraAtMoz/AvQgxwPnl
+	 DKHqN6A3Daa2NzB/fdI/5/vOjDPki5fYC/0QpC8ESNCBwwUzm3VWk6RRRlOMc3FMw0
+	 F2a7wgTANCpALSERDPfCQA+vhXtgBsUvWrX2NPP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 099/122] drm/amd/display: Do not elevate mem_type change to full update
-Date: Tue, 21 Jan 2025 18:52:27 +0100
-Message-ID: <20250121174536.847849603@linuxfoundation.org>
+	=?UTF-8?q?Miko=C5=82aj=20Lenczewski?= <miko.lenczewski@arm.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 100/122] mm: clear uffd-wp PTE/PMD state on mremap()
+Date: Tue, 21 Jan 2025 18:52:28 +0100
+Message-ID: <20250121174536.888704597@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -46,97 +54,203 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leo Li <sunpeng.li@amd.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 35ca53b7b0f0ffd16c6675fd76abac9409cf83e0 upstream.
+commit 0cef0bb836e3cfe00f08f9606c72abd72fe78ca3 upstream.
 
-[Why]
+When mremap()ing a memory region previously registered with userfaultfd as
+write-protected but without UFFD_FEATURE_EVENT_REMAP, an inconsistency in
+flag clearing leads to a mismatch between the vma flags (which have
+uffd-wp cleared) and the pte/pmd flags (which do not have uffd-wp
+cleared).  This mismatch causes a subsequent mprotect(PROT_WRITE) to
+trigger a warning in page_table_check_pte_flags() due to setting the pte
+to writable while uffd-wp is still set.
 
-There should not be any need to revalidate bandwidth on memory placement
-change, since the fb is expected to be pinned to DCN-accessable memory
-before scanout. For APU it's DRAM, and DGPU, it's VRAM. However, async
-flips + memory type change needs to be rejected.
+Fix this by always explicitly clearing the uffd-wp pte/pmd flags on any
+such mremap() so that the values are consistent with the existing clearing
+of VM_UFFD_WP.  Be careful to clear the logical flag regardless of its
+physical form; a PTE bit, a swap PTE bit, or a PTE marker.  Cover PTE,
+huge PMD and hugetlb paths.
 
-[How]
-
-Do not set lock_and_validation_needed on mem_type change. Instead,
-reject an async_flip request if the crtc's buffer(s) changed mem_type.
-
-This may fix stuttering/corruption experienced with PSR SU and PSR1
-panels, if the compositor allocates fbs in both VRAM carveout and GTT
-and flips between them.
-
-Fixes: a7c0cad0dc06 ("drm/amd/display: ensure async flips are only accepted for fast updates")
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Leo Li <sunpeng.li@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 4caacd1671b7a013ad04cd8b6398f002540bdd4d)
-Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20250107144755.1871363-2-ryan.roberts@arm.com
+Co-developed-by: Mikołaj Lenczewski <miko.lenczewski@arm.com>
+Signed-off-by: Mikołaj Lenczewski <miko.lenczewski@arm.com>
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Closes: https://lore.kernel.org/linux-mm/810b44a8-d2ae-4107-b665-5a42eae2d948@arm.com/
+Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   29 +++++++++++++++++-----
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ include/linux/userfaultfd_k.h |   12 ++++++++++++
+ mm/huge_memory.c              |   12 ++++++++++++
+ mm/hugetlb.c                  |   14 +++++++++++++-
+ mm/mremap.c                   |   32 +++++++++++++++++++++++++++++++-
+ 4 files changed, 68 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -11370,6 +11370,25 @@ static int dm_crtc_get_cursor_mode(struc
- 	return 0;
+--- a/include/linux/userfaultfd_k.h
++++ b/include/linux/userfaultfd_k.h
+@@ -247,6 +247,13 @@ static inline bool vma_can_userfault(str
+ 	    vma_is_shmem(vma);
  }
  
-+static bool amdgpu_dm_crtc_mem_type_changed(struct drm_device *dev,
-+					    struct drm_atomic_state *state,
-+					    struct drm_crtc_state *crtc_state)
++static inline bool vma_has_uffd_without_event_remap(struct vm_area_struct *vma)
 +{
-+	struct drm_plane *plane;
-+	struct drm_plane_state *new_plane_state, *old_plane_state;
++	struct userfaultfd_ctx *uffd_ctx = vma->vm_userfaultfd_ctx.ctx;
 +
-+	drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
-+		new_plane_state = drm_atomic_get_plane_state(state, plane);
-+		old_plane_state = drm_atomic_get_plane_state(state, plane);
-+
-+		if (old_plane_state->fb && new_plane_state->fb &&
-+		    get_mem_type(old_plane_state->fb) != get_mem_type(new_plane_state->fb))
-+			return true;
-+	}
-+
-+	return false;
++	return uffd_ctx && (uffd_ctx->features & UFFD_FEATURE_EVENT_REMAP) == 0;
 +}
 +
- /**
-  * amdgpu_dm_atomic_check() - Atomic check implementation for AMDgpu DM.
-  *
-@@ -11567,10 +11586,6 @@ static int amdgpu_dm_atomic_check(struct
+ extern int dup_userfaultfd(struct vm_area_struct *, struct list_head *);
+ extern void dup_userfaultfd_complete(struct list_head *);
+ void dup_userfaultfd_fail(struct list_head *);
+@@ -401,6 +408,11 @@ static inline bool userfaultfd_wp_async(
+ {
+ 	return false;
+ }
++
++static inline bool vma_has_uffd_without_event_remap(struct vm_area_struct *vma)
++{
++	return false;
++}
  
- 	/* Remove exiting planes if they are modified */
- 	for_each_oldnew_plane_in_descending_zpos(state, plane, old_plane_state, new_plane_state) {
--		if (old_plane_state->fb && new_plane_state->fb &&
--		    get_mem_type(old_plane_state->fb) !=
--		    get_mem_type(new_plane_state->fb))
--			lock_and_validation_needed = true;
+ #endif /* CONFIG_USERFAULTFD */
  
- 		ret = dm_update_plane_state(dc, state, plane,
- 					    old_plane_state,
-@@ -11865,9 +11880,11 @@ static int amdgpu_dm_atomic_check(struct
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2132,6 +2132,16 @@ static pmd_t move_soft_dirty_pmd(pmd_t p
+ 	return pmd;
+ }
  
- 		/*
- 		 * Only allow async flips for fast updates that don't change
--		 * the FB pitch, the DCC state, rotation, etc.
-+		 * the FB pitch, the DCC state, rotation, mem_type, etc.
- 		 */
--		if (new_crtc_state->async_flip && lock_and_validation_needed) {
-+		if (new_crtc_state->async_flip &&
-+		    (lock_and_validation_needed ||
-+		     amdgpu_dm_crtc_mem_type_changed(dev, state, new_crtc_state))) {
- 			drm_dbg_atomic(crtc->dev,
- 				       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
- 				       crtc->base.id, crtc->name);
++static pmd_t clear_uffd_wp_pmd(pmd_t pmd)
++{
++	if (pmd_present(pmd))
++		pmd = pmd_clear_uffd_wp(pmd);
++	else if (is_swap_pmd(pmd))
++		pmd = pmd_swp_clear_uffd_wp(pmd);
++
++	return pmd;
++}
++
+ bool move_huge_pmd(struct vm_area_struct *vma, unsigned long old_addr,
+ 		  unsigned long new_addr, pmd_t *old_pmd, pmd_t *new_pmd)
+ {
+@@ -2170,6 +2180,8 @@ bool move_huge_pmd(struct vm_area_struct
+ 			pgtable_trans_huge_deposit(mm, new_pmd, pgtable);
+ 		}
+ 		pmd = move_soft_dirty_pmd(pmd);
++		if (vma_has_uffd_without_event_remap(vma))
++			pmd = clear_uffd_wp_pmd(pmd);
+ 		set_pmd_at(mm, new_addr, new_pmd, pmd);
+ 		if (force_flush)
+ 			flush_pmd_tlb_range(vma, old_addr, old_addr + PMD_SIZE);
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5395,6 +5395,7 @@ static void move_huge_pte(struct vm_area
+ 			  unsigned long new_addr, pte_t *src_pte, pte_t *dst_pte,
+ 			  unsigned long sz)
+ {
++	bool need_clear_uffd_wp = vma_has_uffd_without_event_remap(vma);
+ 	struct hstate *h = hstate_vma(vma);
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	spinlock_t *src_ptl, *dst_ptl;
+@@ -5411,7 +5412,18 @@ static void move_huge_pte(struct vm_area
+ 		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
+ 
+ 	pte = huge_ptep_get_and_clear(mm, old_addr, src_pte);
+-	set_huge_pte_at(mm, new_addr, dst_pte, pte, sz);
++
++	if (need_clear_uffd_wp && pte_marker_uffd_wp(pte))
++		huge_pte_clear(mm, new_addr, dst_pte, sz);
++	else {
++		if (need_clear_uffd_wp) {
++			if (pte_present(pte))
++				pte = huge_pte_clear_uffd_wp(pte);
++			else if (is_swap_pte(pte))
++				pte = pte_swp_clear_uffd_wp(pte);
++		}
++		set_huge_pte_at(mm, new_addr, dst_pte, pte, sz);
++	}
+ 
+ 	if (src_ptl != dst_ptl)
+ 		spin_unlock(src_ptl);
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -138,6 +138,7 @@ static int move_ptes(struct vm_area_stru
+ 		struct vm_area_struct *new_vma, pmd_t *new_pmd,
+ 		unsigned long new_addr, bool need_rmap_locks)
+ {
++	bool need_clear_uffd_wp = vma_has_uffd_without_event_remap(vma);
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	pte_t *old_pte, *new_pte, pte;
+ 	spinlock_t *old_ptl, *new_ptl;
+@@ -207,7 +208,18 @@ static int move_ptes(struct vm_area_stru
+ 			force_flush = true;
+ 		pte = move_pte(pte, old_addr, new_addr);
+ 		pte = move_soft_dirty_pte(pte);
+-		set_pte_at(mm, new_addr, new_pte, pte);
++
++		if (need_clear_uffd_wp && pte_marker_uffd_wp(pte))
++			pte_clear(mm, new_addr, new_pte);
++		else {
++			if (need_clear_uffd_wp) {
++				if (pte_present(pte))
++					pte = pte_clear_uffd_wp(pte);
++				else if (is_swap_pte(pte))
++					pte = pte_swp_clear_uffd_wp(pte);
++			}
++			set_pte_at(mm, new_addr, new_pte, pte);
++		}
+ 	}
+ 
+ 	arch_leave_lazy_mmu_mode();
+@@ -269,6 +281,15 @@ static bool move_normal_pmd(struct vm_ar
+ 	if (WARN_ON_ONCE(!pmd_none(*new_pmd)))
+ 		return false;
+ 
++	/* If this pmd belongs to a uffd vma with remap events disabled, we need
++	 * to ensure that the uffd-wp state is cleared from all pgtables. This
++	 * means recursing into lower page tables in move_page_tables(), and we
++	 * can reuse the existing code if we simply treat the entry as "not
++	 * moved".
++	 */
++	if (vma_has_uffd_without_event_remap(vma))
++		return false;
++
+ 	/*
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
+@@ -324,6 +345,15 @@ static bool move_normal_pud(struct vm_ar
+ 	if (WARN_ON_ONCE(!pud_none(*new_pud)))
+ 		return false;
+ 
++	/* If this pud belongs to a uffd vma with remap events disabled, we need
++	 * to ensure that the uffd-wp state is cleared from all pgtables. This
++	 * means recursing into lower page tables in move_page_tables(), and we
++	 * can reuse the existing code if we simply treat the entry as "not
++	 * moved".
++	 */
++	if (vma_has_uffd_without_event_remap(vma))
++		return false;
++
+ 	/*
+ 	 * We don't have to worry about the ordering of src and dst
+ 	 * ptlocks because exclusive mmap_lock prevents deadlock.
 
 
