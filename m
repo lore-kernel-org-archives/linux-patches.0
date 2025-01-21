@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2725E1F7060;
-	Tue, 21 Jan 2025 18:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0371F55E4;
+	Tue, 21 Jan 2025 18:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482997; cv=none; b=ll7jnNU6pqmRB3NRcIUeBzyS9YpCQP09jzj//g61yLSbwk4szo4tEqB06YppeE+fStfu22wH6CULhuB70aWG1sxgMBrDk6DvLBuvPR0Of59zAeZA3q55NkySjO+kWuzQJMnA6kzOsREO8/yzx+0AFN3AwZl0PiZCC096LsJaDbA=
+	t=1737483000; cv=none; b=Oa2GgZ3AqIkDXGo/99kY65QlBxbBCB6CwMDnXaM44//Fxncr0Ldp0wka0twONtKV7i8zjSNCPF3kOtjZvR7U7vUGTakt54b0ib8gEmB2//nvrWtJqL4Lb/XCuCd4uoxviUW6Ao8WDIHkPahn9+bRfeLuFJCufNKbCRAZPARNeXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482997; c=relaxed/simple;
-	bh=HwHU/jR5YPPAvD+mMxKEMawjuWUzBXhBSt05Vcko4Tc=;
+	s=arc-20240116; t=1737483000; c=relaxed/simple;
+	bh=wwCljFcI4a3OR/mrRavRSmr/xXazSZ0sGFj519F70ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T2SdDP02mGBWsGx6DNffXA4Np29RqcSjneXeprBengWlssSwmEiFP8+d+Z6gtxeatQAPzEynu2nmmI/5Y55eZKyspNSySD4r5p3dc02iU5y0UogJ1L2mUkx+h4Mb4nmal+18FzU230VBfekc0qaCS8Gb4kVPAZdAMuVssRRglKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSaIUVhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GQN4nP9ezVbsYwlyZJO9688BuY7YjJxDPj0RppRDUwLY3zD8Wj8w9Bj9VEg6ZKPLMmoADj7BYiTL7MhuQ1Sz3DniT2d7pluhIbpIfx/orlEN2xbgarAndV90RZy5ILUzDiFFFS0ECRlMG2ZWrNNTE6b1wOJz7EWocrGTMFQVi+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWsK0/sA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSaIUVhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE64C4CEDF;
-	Tue, 21 Jan 2025 18:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWsK0/sA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B155C4CEDF;
+	Tue, 21 Jan 2025 18:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482997;
-	bh=HwHU/jR5YPPAvD+mMxKEMawjuWUzBXhBSt05Vcko4Tc=;
+	s=korg; t=1737482999;
+	bh=wwCljFcI4a3OR/mrRavRSmr/xXazSZ0sGFj519F70ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSaIUVhQPMsLmsSxB5O+pjz0mIBi9SmVZ2UUB7/o6fED34OH35RS1cpnAGNjFbmo5
-	 X0tNeBElanJQB0eyvo1ATEgo1fEc1svD4z0Mc3/UMnuiInzUVeZe/G132Bue/Hg/GA
-	 gMyv36eJNCEK/0xXxBbYMNnMDL3SFy/oUD+v39v8=
+	b=fWsK0/sAiMVIs/3GmZxT814KElbDWo/W6i4hqd9ZxbvdFYmuB0BzGnWya2bOXibIs
+	 N5ybmMcUqnz/W6SP6JnP+H20hiqbaaRUK2eV3beOqcHRNlApZpouHg1C5+OWxRh7BI
+	 XdFqsJtYVsUB5z2pE4TD/3pkB47zbP6kvPmXqN2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/127] pktgen: Avoid out-of-bounds access in get_imix_entries
-Date: Tue, 21 Jan 2025 18:52:33 +0100
-Message-ID: <20250121174532.777668928@linuxfoundation.org>
+Subject: [PATCH 5.15 082/127] net: add exit_batch_rtnl() method
+Date: Tue, 21 Jan 2025 18:52:34 +0100
+Message-ID: <20250121174532.813984483@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,66 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 76201b5979768500bca362871db66d77cb4c225e ]
+[ Upstream commit fd4f101edbd9f99567ab2adb1f2169579ede7c13 ]
 
-Passing a sufficient amount of imix entries leads to invalid access to the
-pkt_dev->imix_entries array because of the incorrect boundary check.
+Many (struct pernet_operations)->exit_batch() methods have
+to acquire rtnl.
 
-UBSAN: array-index-out-of-bounds in net/core/pktgen.c:874:24
-index 20 is out of range for type 'imix_pkt [20]'
-CPU: 2 PID: 1210 Comm: bash Not tainted 6.10.0-rc1 #121
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
-<TASK>
-dump_stack_lvl lib/dump_stack.c:117
-__ubsan_handle_out_of_bounds lib/ubsan.c:429
-get_imix_entries net/core/pktgen.c:874
-pktgen_if_write net/core/pktgen.c:1063
-pde_write fs/proc/inode.c:334
-proc_reg_write fs/proc/inode.c:346
-vfs_write fs/read_write.c:593
-ksys_write fs/read_write.c:644
-do_syscall_64 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe arch/x86/entry/entry_64.S:130
+In presence of rtnl mutex pressure, this makes cleanup_net()
+very slow.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This patch adds a new exit_batch_rtnl() method to reduce
+number of rtnl acquisitions from cleanup_net().
 
-Fixes: 52a62f8603f9 ("pktgen: Parse internet mix (imix) input")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-[ fp: allow to fill the array completely; minor changelog cleanup ]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+exit_batch_rtnl() handlers are called while rtnl is locked,
+and devices to be killed can be queued in a list provided
+as their second argument.
+
+A single unregister_netdevice_many() is called right
+before rtnl is released.
+
+exit_batch_rtnl() handlers are called before ->exit() and
+->exit_batch() handlers.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://lore.kernel.org/r/20240206144313.2050392-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 46841c7053e6 ("gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/pktgen.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/net_namespace.h |  3 +++
+ net/core/net_namespace.c    | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index a539f26fe4bea..5d5f03471eb0c 100644
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -849,6 +849,9 @@ static ssize_t get_imix_entries(const char __user *buffer,
- 		unsigned long weight;
- 		unsigned long size;
+diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
+index c47baa623ba58..d184b832166b6 100644
+--- a/include/net/net_namespace.h
++++ b/include/net/net_namespace.h
+@@ -389,6 +389,9 @@ struct pernet_operations {
+ 	void (*pre_exit)(struct net *net);
+ 	void (*exit)(struct net *net);
+ 	void (*exit_batch)(struct list_head *net_exit_list);
++	/* Following method is called with RTNL held. */
++	void (*exit_batch_rtnl)(struct list_head *net_exit_list,
++				struct list_head *dev_kill_list);
+ 	unsigned int *id;
+ 	size_t size;
+ };
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index 3addbce20f8ed..1e9e76c4ff5be 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -313,8 +313,9 @@ static __net_init int setup_net(struct net *net, struct user_namespace *user_ns)
+ {
+ 	/* Must be called with pernet_ops_rwsem held */
+ 	const struct pernet_operations *ops, *saved_ops;
+-	int error = 0;
+ 	LIST_HEAD(net_exit_list);
++	LIST_HEAD(dev_kill_list);
++	int error = 0;
  
-+		if (pkt_dev->n_imix_entries >= MAX_IMIX_ENTRIES)
-+			return -E2BIG;
+ 	refcount_set(&net->ns.count, 1);
+ 	refcount_set(&net->passive, 1);
+@@ -350,6 +351,15 @@ static __net_init int setup_net(struct net *net, struct user_namespace *user_ns)
+ 
+ 	synchronize_rcu();
+ 
++	ops = saved_ops;
++	rtnl_lock();
++	list_for_each_entry_continue_reverse(ops, &pernet_list, list) {
++		if (ops->exit_batch_rtnl)
++			ops->exit_batch_rtnl(&net_exit_list, &dev_kill_list);
++	}
++	unregister_netdevice_many(&dev_kill_list);
++	rtnl_unlock();
 +
- 		len = num_arg(&buffer[i], max_digits, &size);
- 		if (len < 0)
- 			return len;
-@@ -878,9 +881,6 @@ static ssize_t get_imix_entries(const char __user *buffer,
+ 	ops = saved_ops;
+ 	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+ 		ops_exit_list(ops, &net_exit_list);
+@@ -554,6 +564,7 @@ static void cleanup_net(struct work_struct *work)
+ 	struct net *net, *tmp, *last;
+ 	struct llist_node *net_kill_list;
+ 	LIST_HEAD(net_exit_list);
++	LIST_HEAD(dev_kill_list);
  
- 		i++;
- 		pkt_dev->n_imix_entries++;
--
--		if (pkt_dev->n_imix_entries > MAX_IMIX_ENTRIES)
--			return -E2BIG;
- 	} while (c == ' ');
+ 	/* Atomically snapshot the list of namespaces to cleanup */
+ 	net_kill_list = llist_del_all(&cleanup_list);
+@@ -594,6 +605,14 @@ static void cleanup_net(struct work_struct *work)
+ 	 */
+ 	synchronize_rcu();
  
- 	return i;
++	rtnl_lock();
++	list_for_each_entry_reverse(ops, &pernet_list, list) {
++		if (ops->exit_batch_rtnl)
++			ops->exit_batch_rtnl(&net_exit_list, &dev_kill_list);
++	}
++	unregister_netdevice_many(&dev_kill_list);
++	rtnl_unlock();
++
+ 	/* Run all of the network namespace exit methods */
+ 	list_for_each_entry_reverse(ops, &pernet_list, list)
+ 		ops_exit_list(ops, &net_exit_list);
+@@ -1134,7 +1153,17 @@ static void free_exit_list(struct pernet_operations *ops, struct list_head *net_
+ {
+ 	ops_pre_exit_list(ops, net_exit_list);
+ 	synchronize_rcu();
++
++	if (ops->exit_batch_rtnl) {
++		LIST_HEAD(dev_kill_list);
++
++		rtnl_lock();
++		ops->exit_batch_rtnl(net_exit_list, &dev_kill_list);
++		unregister_netdevice_many(&dev_kill_list);
++		rtnl_unlock();
++	}
+ 	ops_exit_list(ops, net_exit_list);
++
+ 	ops_free_list(ops, net_exit_list);
+ }
+ 
 -- 
 2.39.5
 
