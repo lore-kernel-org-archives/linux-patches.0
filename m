@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C892F1F757F;
-	Tue, 21 Jan 2025 18:09:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2659B1F757F;
+	Tue, 21 Jan 2025 18:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482976; cv=none; b=Uoq2ggB34TKg34aES30Ir49Hy9BXaCyhN8zYc3XuptaLamRZe7Dqlz0R9M/EhpbjI+FdpBwcY2NvQZGuHMcOiBSW5sU2dwCme5Zr09/SFJrUHxU101HDOLqolgQKYeCtoTbgPDSiel521xAZJTPpSNJQfdB3vrYNMc1KZEb1bk0=
+	t=1737482981; cv=none; b=FgKmhsmqrWw02mji54lKPbUZZmenjRMy2uhmMH4Ai6fnFdXHdx/oKU71CTTOPcyfMpDyNrGxK5wiBHi1EuE94LXEzOlMAyDAAnmyBNDdv+L2Ew4xsHWYeX/nRoYEzypv8kLfnZPdb84u1zKG+VHIaTLPBstNulz3ohrCo3Mpj2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482976; c=relaxed/simple;
-	bh=M3sN1nyfYDdSRnZKPGB9gEEcZFvdZPw/FwYhYQxnOiE=;
+	s=arc-20240116; t=1737482981; c=relaxed/simple;
+	bh=51qGPWiRRrY0hpE+rMwIsWqa8Bx3j8wCqa0MTgHqfrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G67RMzWDA4VGicFQ/Z0GagZSUg8UERR7zhGX4Hkb2mf8odPaXsEPSb1nfumWZg1txx2syuHjjlowVoQ1kgLom/Tw7wDiK73iRPoJzCl3OV4S7+Ad5t+m1RXWjjv++t8M2coPiqpd60rz/ZQJVtjldmIkKuNQtBhj6bwhEWgqO7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZPZr+fWh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JBU6W/7R35BxyrRSOvNg40Z9pJ6sNebxPsdZ/LYh9G/NqR3InI0JKSn7QZv3gYQyyg/tjWQw9X3vX0FumSgR0B4xUocj1v3avEYXF8f91vKyWLiDqKXsuAi6wetIrpXWv2YoMD5T9rVoMarNYQPe5I2UD/wdZUek2ZEHvD41ORY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPB02qcc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZPZr+fWh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4666EC4CEDF;
-	Tue, 21 Jan 2025 18:09:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPB02qcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38312C4CEE0;
+	Tue, 21 Jan 2025 18:09:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482976;
-	bh=M3sN1nyfYDdSRnZKPGB9gEEcZFvdZPw/FwYhYQxnOiE=;
+	s=korg; t=1737482979;
+	bh=51qGPWiRRrY0hpE+rMwIsWqa8Bx3j8wCqa0MTgHqfrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZPZr+fWh3ZY/miw6FN/cmRtHTANgbKHFMOWR0e5TmruKEQ1MiUbK7p7eSZTSVfTL4
-	 F+bJ45s98IrMU9BpBjgZBRXn/AOfn/6gwRi/t35tuRAX0nOK2w0bXaNPgqo4xpI5eo
-	 6FTpdHM56YfDxTbn1dKBmsSc31bjAE94DblygVcg=
+	b=EPB02qcc4134ku1LXekplqfPhsM/y/0Rv5rJ6aFrH9uOFV8KHZ0WYVfRMgKQYyEd/
+	 56jFs+TxlOCZsnj7GVi1tZFCV3psBrCEQ04VeVnV8kY/0eHOHmjI1lmGa5YLVmUD37
+	 QlboJ745WdsmHv6uqhaaIdHQm35Y8B5JYZcL2l9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lubomir Rintel <lkundrak@v3.sk>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.15 043/127] usb-storage: Add max sectors quirk for Nokia 208
-Date: Tue, 21 Jan 2025 18:51:55 +0100
-Message-ID: <20250121174531.337069541@linuxfoundation.org>
+	Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 044/127] USB: serial: cp210x: add Phoenix Contact UPS Device
+Date: Tue, 21 Jan 2025 18:51:56 +0100
+Message-ID: <20250121174531.375532892@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -51,66 +50,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lubomir Rintel <lrintel@redhat.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit cdef30e0774802df2f87024d68a9d86c3b99ca2a upstream.
+commit 854eee93bd6e3dca619d47087af4d65b2045828e upstream.
 
-This fixes data corruption when accessing the internal SD card in mass
-storage mode.
+Phoenix Contact sells UPS Quint devices [1] with a custom datacable [2]
+that embeds a Silicon Labs converter:
 
-I am actually not too sure why. I didn't figure a straightforward way to
-reproduce the issue, but i seem to get garbage when issuing a lot (over 50)
-of large reads (over 120 sectors) are done in a quick succession. That is,
-time seems to matter here -- larger reads are fine if they are done with
-some delay between them.
+Bus 001 Device 003: ID 1b93:1013 Silicon Labs Phoenix Contact UPS Device
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.00
+  bDeviceClass            0
+  bDeviceSubClass         0
+  bDeviceProtocol         0
+  bMaxPacketSize0        64
+  idVendor           0x1b93
+  idProduct          0x1013
+  bcdDevice            1.00
+  iManufacturer           1 Silicon Labs
+  iProduct                2 Phoenix Contact UPS Device
+  iSerial                 3 <redacted>
+  bNumConfigurations	 1
+  Configuration Descriptor:
+    bLength                 9
+    bDescriptorType         2
+    wTotalLength       0x0020
+    bNumInterfaces          1
+    bConfigurationValue     1
+    iConfiguration          0
+    bmAttributes         0x80
+      (Bus Powered)
+    MaxPower              100mA
+    Interface Descriptor:
+      bLength                 9
+      bDescriptorType         4
+      bInterfaceNumber        0
+      bAlternateSetting       0
+      bNumEndpoints           2
+      bInterfaceClass       255 Vendor Specific Class
+      bInterfaceSubClass      0
+      bInterfaceProtocol      0
+      iInterface              2 Phoenix Contact UPS Device
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x01  EP 1 OUT
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               0
+      Endpoint Descriptor:
+        bLength                 7
+        bDescriptorType         5
+        bEndpointAddress     0x82  EP 2 IN
+        bmAttributes            2
+          Transfer Type            Bulk
+          Synch Type               None
+          Usage Type               Data
+        wMaxPacketSize     0x0040  1x 64 bytes
+        bInterval               0
 
-But I'm not great at understanding this sort of things, so I'll assume
-the issue other, smarter, folks were seeing with similar phones is the
-same problem and I'll just put my quirk next to theirs.
+[1] https://www.phoenixcontact.com/en-pc/products/power-supply-unit-quint-ps-1ac-24dc-10-2866763
+[2] https://www.phoenixcontact.com/en-il/products/data-cable-preassembled-ifs-usb-datacable-2320500
 
-The "Software details" screen on the phone is as follows:
-
-  V 04.06
-  07-08-13
-  RM-849
-  (c) Nokia
-
-TL;DR version of the device descriptor:
-
-  idVendor           0x0421 Nokia Mobile Phones
-  idProduct          0x06c2
-  bcdDevice            4.06
-  iManufacturer           1 Nokia
-  iProduct                2 Nokia 208
-
-The patch assumes older firmwares are broken too (I'm unable to test, but
-no biggie if they aren't I guess), and I have no idea if newer firmware
-exists.
-
-Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20250101212206.2386207-1-lkundrak@v3.sk
+Reported-by: Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -255,6 +255,13 @@ UNUSUAL_DEV(  0x0421, 0x06aa, 0x1110, 0x
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_MAX_SECTORS_64 ),
- 
-+/* Added by Lubomir Rintel <lkundrak@v3.sk>, a very fine chap */
-+UNUSUAL_DEV(  0x0421, 0x06c2, 0x0000, 0x0406,
-+		"Nokia",
-+		"Nokia 208",
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
-+		US_FL_MAX_SECTORS_64 ),
-+
- #ifdef NO_SDDR09
- UNUSUAL_DEV(  0x0436, 0x0005, 0x0100, 0x0100,
- 		"Microtech",
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -223,6 +223,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
+ 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
+ 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
++	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
+ 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
+ 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
+ 	{ USB_DEVICE(0x1D6F, 0x0010) }, /* Seluxit ApS RF Dongle */
 
 
