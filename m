@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AA6E571;
-	Tue, 21 Jan 2025 18:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404A1F5404;
+	Tue, 21 Jan 2025 18:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482571; cv=none; b=g1W/C84VpqtdCQOoiKk23BtadJhq5DfYCed5881hU7tdkSZwY0yaspCxruncsekZWv/8Yq7+CyEzYo9Z2Hz+ZD4qGafmmX09ycY8fwT8d4gk6N+tnTC3APXKbkhOUQRGCLx0GjrFxcZGU8/cXG5yCdKR8jmCLDGfQSqBTIN/wGs=
+	t=1737482574; cv=none; b=KbaVd8scwTgEY7//DrosSR5Xp7AuTe2Uspd/itHljEa+DBWKYGPr1WIvZJc3nS0l43tZFuED5fEA2vfEdpRs5SWK58eudOG2wMIsxG7jHzISmDyA6mR2BVE1aGBRgmR2ODsnoqdmXXmeyYaPj/WurYfQqrk+crsulxAg/EEqL+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482571; c=relaxed/simple;
-	bh=c0EvetZpJEePMr4juIsAAkpoyWAsadgNFVzZ2Xd90ok=;
+	s=arc-20240116; t=1737482574; c=relaxed/simple;
+	bh=pSHzfc3LV5aEz3xE9MkKSfOLJOCawAQA4Gh2aBMrSFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2eQly27blYOTKRaKbSaTVT2bs7h3+V+6S7feT4K7VAzPcxi8tx9m7Qisw6oOBcN1YLHQuasV8EMloVpiY2C7d8razc2vx/DH6ggPmX2oRzX+VsbbfUXYlFEylAGZZVGe41h17lyfOFyTpBa/0Mx8EUBbti9uyoEM26Y9J7/EtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFBi7bXW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmNDsFfYr2HOjS+G5AcCdhJUMFTd/hTrEOfUmrT5kUuYb8wKbjrAxv1V163G6CLmW0kIDfiMgqJW7XppbItdVrParueihVcu18Z3pGAYSlLM0lcuUmlLJV9bs3mRVF4HBZ7Rcv9hWm0QjIYpUn1jrV5f4Ux+Hj3CUEYS5p6rLPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bffD4Uhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFBi7bXW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0A0C4CEDF;
-	Tue, 21 Jan 2025 18:02:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bffD4Uhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B108CC4CEDF;
+	Tue, 21 Jan 2025 18:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482571;
-	bh=c0EvetZpJEePMr4juIsAAkpoyWAsadgNFVzZ2Xd90ok=;
+	s=korg; t=1737482574;
+	bh=pSHzfc3LV5aEz3xE9MkKSfOLJOCawAQA4Gh2aBMrSFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFBi7bXWO4/duqksF2L7XlkUvKfOuxoFy63Fi1Tz3jMzaAV3MvTRe1IZEoGd5JOz3
-	 M0c7b7ZJtzvEKmObf58MbwO+9L6IZgne//4zLnakCvcM0stAaGF1gJ/DWPTyfbBmlv
-	 Pg82tr546Q8VpyV7blGhVNdS7g1yewp/7FVf4pNc=
+	b=bffD4Uhz/zWtS2PzlQivAs8w1Qc3nvZyJ3k/p2djeto0il4yDSwDRnM5nBMb42Bkx
+	 2fSGJq0KgLlIKV2P1Pfct2AdqfTPQkMWM6z9BhzXAVaO2qHNMAQzCD3W2uV26PW4XU
+	 ym472cRYxotUN9uuVolnKNijSKvC8LF1gmDrchEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Lee <ryan.lee@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
-	Paul Kramme <kramme@digitalmanufaktur.com>
-Subject: [PATCH 6.12 122/122] apparmor: allocate xmatch for nullpdb inside aa_alloc_null
-Date: Tue, 21 Jan 2025 18:52:50 +0100
-Message-ID: <20250121174537.764233969@linuxfoundation.org>
+	Ryan Roberts <ryan.roberts@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 098/122] selftests/mm: set allocated memory to non-zero content in cow test
+Date: Tue, 21 Jan 2025 18:52:26 +0100
+Message-ID: <20250121174536.809993058@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -51,34 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Lee <ryan.lee@canonical.com>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-commit 17d0d04f3c999e7784648bad70ce1766c3b49d69 upstream.
+commit a32bf5bb7933fde6f39747499f8ec232b5b5400f upstream.
 
-attach->xmatch was not set when allocating a null profile, which is used in
-complain mode to allocate a learning profile. This was causing downstream
-failures in find_attach, which expected a valid xmatch but did not find
-one under a certain sequence of profile transitions in complain mode.
+After commit b1f202060afe ("mm: remap unused subpages to shared zeropage
+when splitting isolated thp"), cow test cases involving swapping out THPs
+via madvise(MADV_PAGEOUT) started to be skipped due to the subsequent
+check via pagemap determining that the memory was not actually swapped
+out.  Logs similar to this were emitted:
 
-This patch ensures the xmatch is set up properly for null profiles.
+   ...
 
-Signed-off-by: Ryan Lee <ryan.lee@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Cc: Paul Kramme <kramme@digitalmanufaktur.com>
+   # [RUN] Basic COW after fork() ... with swapped-out, PTE-mapped THP (16 kB)
+   ok 2 # SKIP MADV_PAGEOUT did not work, is swap enabled?
+   # [RUN] Basic COW after fork() ... with single PTE of swapped-out THP (16 kB)
+   ok 3 # SKIP MADV_PAGEOUT did not work, is swap enabled?
+   # [RUN] Basic COW after fork() ... with swapped-out, PTE-mapped THP (32 kB)
+   ok 4 # SKIP MADV_PAGEOUT did not work, is swap enabled?
+
+   ...
+
+The commit in question introduces the behaviour of scanning THPs and if
+their content is predominantly zero, it splits them and replaces the pages
+which are wholly zero with the zero page.  These cow test cases were
+getting caught up in this.
+
+So let's avoid that by filling the contents of all allocated memory with
+a non-zero value. With this in place, the tests are passing again.
+
+Link: https://lkml.kernel.org/r/20250107142555.1870101-1-ryan.roberts@arm.com
+Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/policy.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/mm/cow.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -626,6 +626,7 @@ struct aa_profile *aa_alloc_null(struct
+--- a/tools/testing/selftests/mm/cow.c
++++ b/tools/testing/selftests/mm/cow.c
+@@ -758,7 +758,7 @@ static void do_run_with_base_page(test_f
+ 	}
  
- 	/* TODO: ideally we should inherit abi from parent */
- 	profile->label.flags |= FLAG_NULL;
-+	profile->attach.xmatch = aa_get_pdb(nullpdb);
- 	rules = list_first_entry(&profile->rules, typeof(*rules), list);
- 	rules->file = aa_get_pdb(nullpdb);
- 	rules->policy = aa_get_pdb(nullpdb);
+ 	/* Populate a base page. */
+-	memset(mem, 0, pagesize);
++	memset(mem, 1, pagesize);
+ 
+ 	if (swapout) {
+ 		madvise(mem, pagesize, MADV_PAGEOUT);
+@@ -824,12 +824,12 @@ static void do_run_with_thp(test_fn fn,
+ 	 * Try to populate a THP. Touch the first sub-page and test if
+ 	 * we get the last sub-page populated automatically.
+ 	 */
+-	mem[0] = 0;
++	mem[0] = 1;
+ 	if (!pagemap_is_populated(pagemap_fd, mem + thpsize - pagesize)) {
+ 		ksft_test_result_skip("Did not get a THP populated\n");
+ 		goto munmap;
+ 	}
+-	memset(mem, 0, thpsize);
++	memset(mem, 1, thpsize);
+ 
+ 	size = thpsize;
+ 	switch (thp_run) {
+@@ -1012,7 +1012,7 @@ static void run_with_hugetlb(test_fn fn,
+ 	}
+ 
+ 	/* Populate an huge page. */
+-	memset(mem, 0, hugetlbsize);
++	memset(mem, 1, hugetlbsize);
+ 
+ 	/*
+ 	 * We need a total of two hugetlb pages to handle COW/unsharing
 
 
