@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27D71F470A;
-	Tue, 21 Jan 2025 18:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14C41F666B;
+	Tue, 21 Jan 2025 18:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482492; cv=none; b=bZvzlbTGRhwjIYDFwroip+J8kvRuaOHD+9tKHjLE5WahxjlbQt+s5onS6SKNArHR78MVXF5WmWjeueeOxlWtMXLnIkCY0jzEPBWHffPMzOFGtaKtifjQiMoQeQuRvly8sI94fPo5lC08lOc6tbcVEldujNzxC6d1Nm11mg0A0so=
+	t=1737482496; cv=none; b=P+/6WzNfkndAzKutaR9BNAfBjbgO+WaO/d6rzy9EtvmpTl+zIaUYbveaMgdcoOqVKPfQhk+t4vjqfMpfnQYaKRpSKz4DF2WurcmKSkJ4wB5cQBrvKccjigZ/U0KS4h52EHAauDjjTQWy9tEShpOyoPoIK2ieN2CZ8l+VtFfjpfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482492; c=relaxed/simple;
-	bh=MwnNgOomN7suKITmtcHt7wQHLsQqtg3eEwoc9Yc0pW4=;
+	s=arc-20240116; t=1737482496; c=relaxed/simple;
+	bh=/cLdjGsBwaKwKOfv0jYDO//2xEBW1yyTtt3oRKuFjVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6tZeSs9JhAJxmL+6xx5SkSIkDbyaZFi4dHButLYFXE3mExCDhSaq4KJzlCoYEyUCxmEMYo3+WT6SVsiDzb6CbcxC02hUOauvhkri4tXaANcuA35EhXhKdecxZ7gz/GrRbdxKtPWn642vVSuqib9nvrpVaw5VsXT5sdNDrSqRF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZ2ziqJd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a46/dIu1oWZ+jLIGGK9RZfe4aLff8Ka3u5OhZ+RU/6B9Lw0uNsgfZr29V46AcyCcW1VF6FdaFxgt7bhT39Z52t01/oIpJdb+a1h3wd45Bmosyl/0x1/yKMDFt3CaE53VVWNNsq3OePAOYXQb/uMHseTpQV7hlVH9hVRC8fZSONQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/3LxBM5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZ2ziqJd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2A4C4CEDF;
-	Tue, 21 Jan 2025 18:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/3LxBM5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CC9C4CEDF;
+	Tue, 21 Jan 2025 18:01:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482492;
-	bh=MwnNgOomN7suKITmtcHt7wQHLsQqtg3eEwoc9Yc0pW4=;
+	s=korg; t=1737482495;
+	bh=/cLdjGsBwaKwKOfv0jYDO//2xEBW1yyTtt3oRKuFjVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZ2ziqJdiawkKpzOiUiybxbDRvyzoIPcOWeppda+xz4Kd6bj9celIFBoDMpDyVag5
-	 J+AQHxNFuqrpevWeV4Jg+ymjM1xMvp1Gzrh2W9a0ZfOgyD5QQpq/ISjsyDAE34LsDp
-	 QiBZwZGU1kuMiySi++9gTWCGJdLEhg9NPPoFeiFg=
+	b=k/3LxBM5Yuu5FFdVKA8uoZKB3T7ZkFz2ZNn6z4y0JWPoqvZbwNXx6rwpXuKc+sZvX
+	 236O3G+XwGni9Z3q/TetF2HGbv2Tg7bGk59Bxt7XacRLmq/UKtr8ViXBhujeMn5/oJ
+	 lLo6MegxAcogiJmsoClNzGT9JhfJv6OXrmg3M7Pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.12 094/122] gpio: xilinx: Convert gpio_lock to raw spinlock
-Date: Tue, 21 Jan 2025 18:52:22 +0100
-Message-ID: <20250121174536.648642765@linuxfoundation.org>
+	Ihor Solodrai <ihor.solodrai@pm.me>,
+	Andrea Righi <arighi@nvidia.com>,
+	David Vernet <void@manifault.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 067/122] selftests/sched_ext: fix build after renames in sched_ext API
+Date: Tue, 21 Jan 2025 18:51:55 +0100
+Message-ID: <20250121174535.578429923@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -50,200 +53,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Ihor Solodrai <ihor.solodrai@pm.me>
 
-commit 9860370c2172704b6b4f0075a0c2a29fd84af96a upstream.
+[ Upstream commit ef7009decc30eb2515a64253791d61b72229c119 ]
 
-irq_chip functions may be called in raw spinlock context. Therefore, we
-must also use a raw spinlock for our own internal locking.
+The selftests are falining to build on current tip of bpf-next and
+sched_ext [1]. This has broken BPF CI [2] after merge from upstream.
 
-This fixes the following lockdep splat:
+Use appropriate function names in the selftests according to the
+recent changes in the sched_ext API [3].
 
-[    5.349336] =============================
-[    5.353349] [ BUG: Invalid wait context ]
-[    5.357361] 6.13.0-rc5+ #69 Tainted: G        W
-[    5.363031] -----------------------------
-[    5.367045] kworker/u17:1/44 is trying to lock:
-[    5.371587] ffffff88018b02c0 (&chip->gpio_lock){....}-{3:3}, at: xgpio_irq_unmask (drivers/gpio/gpio-xilinx.c:433 (discriminator 8))
-[    5.380079] other info that might help us debug this:
-[    5.385138] context-{5:5}
-[    5.387762] 5 locks held by kworker/u17:1/44:
-[    5.392123] #0: ffffff8800014958 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work (kernel/workqueue.c:3204)
-[    5.402260] #1: ffffffc082fcbdd8 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work (kernel/workqueue.c:3205)
-[    5.411528] #2: ffffff880172c900 (&dev->mutex){....}-{4:4}, at: __device_attach (drivers/base/dd.c:1006)
-[    5.419929] #3: ffffff88039c8268 (request_class#2){+.+.}-{4:4}, at: __setup_irq (kernel/irq/internals.h:156 kernel/irq/manage.c:1596)
-[    5.428331] #4: ffffff88039c80c8 (lock_class#2){....}-{2:2}, at: __setup_irq (kernel/irq/manage.c:1614)
-[    5.436472] stack backtrace:
-[    5.439359] CPU: 2 UID: 0 PID: 44 Comm: kworker/u17:1 Tainted: G        W          6.13.0-rc5+ #69
-[    5.448690] Tainted: [W]=WARN
-[    5.451656] Hardware name: xlnx,zynqmp (DT)
-[    5.455845] Workqueue: events_unbound deferred_probe_work_func
-[    5.461699] Call trace:
-[    5.464147] show_stack+0x18/0x24 C
-[    5.467821] dump_stack_lvl (lib/dump_stack.c:123)
-[    5.471501] dump_stack (lib/dump_stack.c:130)
-[    5.474824] __lock_acquire (kernel/locking/lockdep.c:4828 kernel/locking/lockdep.c:4898 kernel/locking/lockdep.c:5176)
-[    5.478758] lock_acquire (arch/arm64/include/asm/percpu.h:40 kernel/locking/lockdep.c:467 kernel/locking/lockdep.c:5851 kernel/locking/lockdep.c:5814)
-[    5.482429] _raw_spin_lock_irqsave (include/linux/spinlock_api_smp.h:111 kernel/locking/spinlock.c:162)
-[    5.486797] xgpio_irq_unmask (drivers/gpio/gpio-xilinx.c:433 (discriminator 8))
-[    5.490737] irq_enable (kernel/irq/internals.h:236 kernel/irq/chip.c:170 kernel/irq/chip.c:439 kernel/irq/chip.c:432 kernel/irq/chip.c:345)
-[    5.494060] __irq_startup (kernel/irq/internals.h:241 kernel/irq/chip.c:180 kernel/irq/chip.c:250)
-[    5.497645] irq_startup (kernel/irq/chip.c:270)
-[    5.501143] __setup_irq (kernel/irq/manage.c:1807)
-[    5.504728] request_threaded_irq (kernel/irq/manage.c:2208)
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/bpf/bpf-next.git/commit/?id=fc39fb56917bb3cb53e99560ca3612a84456ada2
+[2] https://github.com/kernel-patches/bpf/actions/runs/11959327258/job/33340923745
+[3] https://lore.kernel.org/all/20241109194853.580310-1-tj@kernel.org/
 
-Fixes: a32c7caea292 ("gpio: gpio-xilinx: Add interrupt support")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250110163354.2012654-1-sean.anderson@linux.dev
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ihor Solodrai <ihor.solodrai@pm.me>
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Acked-by: David Vernet <void@manifault.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-xilinx.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ .../testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c | 2 +-
+ .../selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c        | 4 ++--
+ tools/testing/selftests/sched_ext/dsp_local_on.bpf.c      | 2 +-
+ .../selftests/sched_ext/enq_select_cpu_fails.bpf.c        | 2 +-
+ tools/testing/selftests/sched_ext/exit.bpf.c              | 4 ++--
+ tools/testing/selftests/sched_ext/maximal.bpf.c           | 4 ++--
+ tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c    | 2 +-
+ .../selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c   | 2 +-
+ .../testing/selftests/sched_ext/select_cpu_dispatch.bpf.c | 2 +-
+ .../selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c | 2 +-
+ .../selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c | 4 ++--
+ tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c  | 8 ++++----
+ 12 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/gpio/gpio-xilinx.c
-+++ b/drivers/gpio/gpio-xilinx.c
-@@ -65,7 +65,7 @@ struct xgpio_instance {
- 	DECLARE_BITMAP(state, 64);
- 	DECLARE_BITMAP(last_irq_read, 64);
- 	DECLARE_BITMAP(dir, 64);
--	spinlock_t gpio_lock;	/* For serializing operations */
-+	raw_spinlock_t gpio_lock;	/* For serializing operations */
- 	int irq;
- 	DECLARE_BITMAP(enable, 64);
- 	DECLARE_BITMAP(rising_edge, 64);
-@@ -179,14 +179,14 @@ static void xgpio_set(struct gpio_chip *
- 	struct xgpio_instance *chip = gpiochip_get_data(gc);
- 	int bit = xgpio_to_bit(chip, gpio);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	/* Write to GPIO signal and set its direction to output */
- 	__assign_bit(bit, chip->state, val);
- 
- 	xgpio_write_ch(chip, XGPIO_DATA_OFFSET, bit, chip->state);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- }
- 
- /**
-@@ -210,7 +210,7 @@ static void xgpio_set_multiple(struct gp
- 	bitmap_remap(hw_mask, mask, chip->sw_map, chip->hw_map, 64);
- 	bitmap_remap(hw_bits, bits, chip->sw_map, chip->hw_map, 64);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	bitmap_replace(state, chip->state, hw_bits, hw_mask, 64);
- 
-@@ -218,7 +218,7 @@ static void xgpio_set_multiple(struct gp
- 
- 	bitmap_copy(chip->state, state, 64);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- }
- 
- /**
-@@ -236,13 +236,13 @@ static int xgpio_dir_in(struct gpio_chip
- 	struct xgpio_instance *chip = gpiochip_get_data(gc);
- 	int bit = xgpio_to_bit(chip, gpio);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	/* Set the GPIO bit in shadow register and set direction as input */
- 	__set_bit(bit, chip->dir);
- 	xgpio_write_ch(chip, XGPIO_TRI_OFFSET, bit, chip->dir);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- 
- 	return 0;
- }
-@@ -265,7 +265,7 @@ static int xgpio_dir_out(struct gpio_chi
- 	struct xgpio_instance *chip = gpiochip_get_data(gc);
- 	int bit = xgpio_to_bit(chip, gpio);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	/* Write state of GPIO signal */
- 	__assign_bit(bit, chip->state, val);
-@@ -275,7 +275,7 @@ static int xgpio_dir_out(struct gpio_chi
- 	__clear_bit(bit, chip->dir);
- 	xgpio_write_ch(chip, XGPIO_TRI_OFFSET, bit, chip->dir);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- 
- 	return 0;
- }
-@@ -398,7 +398,7 @@ static void xgpio_irq_mask(struct irq_da
- 	int bit = xgpio_to_bit(chip, irq_offset);
- 	u32 mask = BIT(bit / 32), temp;
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	__clear_bit(bit, chip->enable);
- 
-@@ -408,7 +408,7 @@ static void xgpio_irq_mask(struct irq_da
- 		temp &= ~mask;
- 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, temp);
+diff --git a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+index 37d9bf6fb7458..6f4c3f5a1c5d9 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c
+@@ -20,7 +20,7 @@ s32 BPF_STRUCT_OPS(ddsp_bogus_dsq_fail_select_cpu, struct task_struct *p,
+ 		 * If we dispatch to a bogus DSQ that will fall back to the
+ 		 * builtin global DSQ, we fail gracefully.
+ 		 */
+-		scx_bpf_dispatch_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
++		scx_bpf_dsq_insert_vtime(p, 0xcafef00d, SCX_SLICE_DFL,
+ 				       p->scx.dsq_vtime, 0);
+ 		return cpu;
  	}
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
+diff --git a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+index dffc97d9cdf14..e4a55027778fd 100644
+--- a/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
++++ b/tools/testing/selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c
+@@ -17,8 +17,8 @@ s32 BPF_STRUCT_OPS(ddsp_vtimelocal_fail_select_cpu, struct task_struct *p,
  
- 	gpiochip_disable_irq(&chip->gc, irq_offset);
- }
-@@ -428,7 +428,7 @@ static void xgpio_irq_unmask(struct irq_
- 
- 	gpiochip_enable_irq(&chip->gc, irq_offset);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	__set_bit(bit, chip->enable);
- 
-@@ -447,7 +447,7 @@ static void xgpio_irq_unmask(struct irq_
- 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, val);
+ 	if (cpu >= 0) {
+ 		/* Shouldn't be allowed to vtime dispatch to a builtin DSQ. */
+-		scx_bpf_dispatch_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
+-				       p->scx.dsq_vtime, 0);
++		scx_bpf_dsq_insert_vtime(p, SCX_DSQ_LOCAL, SCX_SLICE_DFL,
++					 p->scx.dsq_vtime, 0);
+ 		return cpu;
  	}
  
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
+diff --git a/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c b/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
+index 6a7db1502c29e..6325bf76f47ee 100644
+--- a/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
++++ b/tools/testing/selftests/sched_ext/dsp_local_on.bpf.c
+@@ -45,7 +45,7 @@ void BPF_STRUCT_OPS(dsp_local_on_dispatch, s32 cpu, struct task_struct *prev)
+ 
+ 	target = bpf_get_prandom_u32() % nr_cpus;
+ 
+-	scx_bpf_dispatch(p, SCX_DSQ_LOCAL_ON | target, SCX_SLICE_DFL, 0);
++	scx_bpf_dsq_insert(p, SCX_DSQ_LOCAL_ON | target, SCX_SLICE_DFL, 0);
+ 	bpf_task_release(p);
  }
  
- /**
-@@ -512,7 +512,7 @@ static void xgpio_irqhandler(struct irq_
+diff --git a/tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c b/tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c
+index 1efb50d61040a..a7cf868d5e311 100644
+--- a/tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c
++++ b/tools/testing/selftests/sched_ext/enq_select_cpu_fails.bpf.c
+@@ -31,7 +31,7 @@ void BPF_STRUCT_OPS(enq_select_cpu_fails_enqueue, struct task_struct *p,
+ 	/* Can only call from ops.select_cpu() */
+ 	scx_bpf_select_cpu_dfl(p, 0, 0, &found);
  
- 	chained_irq_enter(irqchip, desc);
+-	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
+ }
  
--	spin_lock(&chip->gpio_lock);
-+	raw_spin_lock(&chip->gpio_lock);
+ SEC(".struct_ops.link")
+diff --git a/tools/testing/selftests/sched_ext/exit.bpf.c b/tools/testing/selftests/sched_ext/exit.bpf.c
+index d75d4faf07f6d..4bc36182d3ffc 100644
+--- a/tools/testing/selftests/sched_ext/exit.bpf.c
++++ b/tools/testing/selftests/sched_ext/exit.bpf.c
+@@ -33,7 +33,7 @@ void BPF_STRUCT_OPS(exit_enqueue, struct task_struct *p, u64 enq_flags)
+ 	if (exit_point == EXIT_ENQUEUE)
+ 		EXIT_CLEANLY();
  
- 	xgpio_read_ch_all(chip, XGPIO_DATA_OFFSET, all);
+-	scx_bpf_dispatch(p, DSQ_ID, SCX_SLICE_DFL, enq_flags);
++	scx_bpf_dsq_insert(p, DSQ_ID, SCX_SLICE_DFL, enq_flags);
+ }
  
-@@ -529,7 +529,7 @@ static void xgpio_irqhandler(struct irq_
- 	bitmap_copy(chip->last_irq_read, all, 64);
- 	bitmap_or(all, rising, falling, 64);
+ void BPF_STRUCT_OPS(exit_dispatch, s32 cpu, struct task_struct *p)
+@@ -41,7 +41,7 @@ void BPF_STRUCT_OPS(exit_dispatch, s32 cpu, struct task_struct *p)
+ 	if (exit_point == EXIT_DISPATCH)
+ 		EXIT_CLEANLY();
  
--	spin_unlock(&chip->gpio_lock);
-+	raw_spin_unlock(&chip->gpio_lock);
+-	scx_bpf_consume(DSQ_ID);
++	scx_bpf_dsq_move_to_local(DSQ_ID);
+ }
  
- 	dev_dbg(gc->parent, "IRQ rising %*pb falling %*pb\n", 64, rising, 64, falling);
+ void BPF_STRUCT_OPS(exit_enable, struct task_struct *p)
+diff --git a/tools/testing/selftests/sched_ext/maximal.bpf.c b/tools/testing/selftests/sched_ext/maximal.bpf.c
+index 4d4cd8d966dba..4c005fa718103 100644
+--- a/tools/testing/selftests/sched_ext/maximal.bpf.c
++++ b/tools/testing/selftests/sched_ext/maximal.bpf.c
+@@ -20,7 +20,7 @@ s32 BPF_STRUCT_OPS(maximal_select_cpu, struct task_struct *p, s32 prev_cpu,
  
-@@ -620,7 +620,7 @@ static int xgpio_probe(struct platform_d
- 	bitmap_set(chip->hw_map,  0, width[0]);
- 	bitmap_set(chip->hw_map, 32, width[1]);
+ void BPF_STRUCT_OPS(maximal_enqueue, struct task_struct *p, u64 enq_flags)
+ {
+-	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
+ }
  
--	spin_lock_init(&chip->gpio_lock);
-+	raw_spin_lock_init(&chip->gpio_lock);
+ void BPF_STRUCT_OPS(maximal_dequeue, struct task_struct *p, u64 deq_flags)
+@@ -28,7 +28,7 @@ void BPF_STRUCT_OPS(maximal_dequeue, struct task_struct *p, u64 deq_flags)
  
- 	chip->gc.base = -1;
- 	chip->gc.ngpio = bitmap_weight(chip->hw_map, 64);
+ void BPF_STRUCT_OPS(maximal_dispatch, s32 cpu, struct task_struct *prev)
+ {
+-	scx_bpf_consume(SCX_DSQ_GLOBAL);
++	scx_bpf_dsq_move_to_local(SCX_DSQ_GLOBAL);
+ }
+ 
+ void BPF_STRUCT_OPS(maximal_runnable, struct task_struct *p, u64 enq_flags)
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c
+index f171ac4709706..13d0f5be788d1 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_dfl.bpf.c
+@@ -30,7 +30,7 @@ void BPF_STRUCT_OPS(select_cpu_dfl_enqueue, struct task_struct *p,
+ 	}
+ 	scx_bpf_put_idle_cpumask(idle_mask);
+ 
+-	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
++	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, enq_flags);
+ }
+ 
+ SEC(".struct_ops.link")
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c
+index 9efdbb7da9288..815f1d5d61ac4 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_dfl_nodispatch.bpf.c
+@@ -67,7 +67,7 @@ void BPF_STRUCT_OPS(select_cpu_dfl_nodispatch_enqueue, struct task_struct *p,
+ 		saw_local = true;
+ 	}
+ 
+-	scx_bpf_dispatch(p, dsq_id, SCX_SLICE_DFL, enq_flags);
++	scx_bpf_dsq_insert(p, dsq_id, SCX_SLICE_DFL, enq_flags);
+ }
+ 
+ s32 BPF_STRUCT_OPS(select_cpu_dfl_nodispatch_init_task,
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c
+index 59bfc4f36167a..4bb99699e9209 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_dispatch.bpf.c
+@@ -29,7 +29,7 @@ s32 BPF_STRUCT_OPS(select_cpu_dispatch_select_cpu, struct task_struct *p,
+ 	cpu = prev_cpu;
+ 
+ dispatch:
+-	scx_bpf_dispatch(p, dsq_id, SCX_SLICE_DFL, 0);
++	scx_bpf_dsq_insert(p, dsq_id, SCX_SLICE_DFL, 0);
+ 	return cpu;
+ }
+ 
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c
+index 3bbd5fcdfb18e..2a75de11b2cfd 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_dispatch_bad_dsq.bpf.c
+@@ -18,7 +18,7 @@ s32 BPF_STRUCT_OPS(select_cpu_dispatch_bad_dsq_select_cpu, struct task_struct *p
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	/* Dispatching to a random DSQ should fail. */
+-	scx_bpf_dispatch(p, 0xcafef00d, SCX_SLICE_DFL, 0);
++	scx_bpf_dsq_insert(p, 0xcafef00d, SCX_SLICE_DFL, 0);
+ 
+ 	return prev_cpu;
+ }
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c
+index 0fda57fe0ecfa..99d075695c974 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c
+@@ -18,8 +18,8 @@ s32 BPF_STRUCT_OPS(select_cpu_dispatch_dbl_dsp_select_cpu, struct task_struct *p
+ 		   s32 prev_cpu, u64 wake_flags)
+ {
+ 	/* Dispatching twice in a row is disallowed. */
+-	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
+-	scx_bpf_dispatch(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
++	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
++	scx_bpf_dsq_insert(p, SCX_DSQ_GLOBAL, SCX_SLICE_DFL, 0);
+ 
+ 	return prev_cpu;
+ }
+diff --git a/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c b/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
+index e6c67bcf5e6e3..bfcb96cd4954b 100644
+--- a/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
++++ b/tools/testing/selftests/sched_ext/select_cpu_vtime.bpf.c
+@@ -2,8 +2,8 @@
+ /*
+  * A scheduler that validates that enqueue flags are properly stored and
+  * applied at dispatch time when a task is directly dispatched from
+- * ops.select_cpu(). We validate this by using scx_bpf_dispatch_vtime(), and
+- * making the test a very basic vtime scheduler.
++ * ops.select_cpu(). We validate this by using scx_bpf_dsq_insert_vtime(),
++ * and making the test a very basic vtime scheduler.
+  *
+  * Copyright (c) 2024 Meta Platforms, Inc. and affiliates.
+  * Copyright (c) 2024 David Vernet <dvernet@meta.com>
+@@ -47,13 +47,13 @@ s32 BPF_STRUCT_OPS(select_cpu_vtime_select_cpu, struct task_struct *p,
+ 	cpu = prev_cpu;
+ 	scx_bpf_test_and_clear_cpu_idle(cpu);
+ ddsp:
+-	scx_bpf_dispatch_vtime(p, VTIME_DSQ, SCX_SLICE_DFL, task_vtime(p), 0);
++	scx_bpf_dsq_insert_vtime(p, VTIME_DSQ, SCX_SLICE_DFL, task_vtime(p), 0);
+ 	return cpu;
+ }
+ 
+ void BPF_STRUCT_OPS(select_cpu_vtime_dispatch, s32 cpu, struct task_struct *p)
+ {
+-	if (scx_bpf_consume(VTIME_DSQ))
++	if (scx_bpf_dsq_move_to_local(VTIME_DSQ))
+ 		consumed = true;
+ }
+ 
+-- 
+2.39.5
+
 
 
