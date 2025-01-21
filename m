@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CFA1F55F3;
-	Tue, 21 Jan 2025 18:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0451F55F3;
+	Tue, 21 Jan 2025 18:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483084; cv=none; b=lNr4kch++ENHJjMg4FxMH7FrBBQvvwBgMy7Weq5cdvoEUw0EGIaDrBVOHnXM2vZPIxrEt5Tu21pVWgHc6hLeSDFnMFz5RrXmD4Vd62vS5Hy0UxfpnmB9vCYSep2H7FULPeVJLvdbsHOmJUy0pl5GbFrgNdYKceqWBEusMrcUGwU=
+	t=1737483087; cv=none; b=On9hwLwsuUS9EtfJATwvmDnPkCFP3HrUq+igUYq++lg5qF1SLosk2eAU9s8r4y0hLLIWoeJcXsmGLb//nk0ZAdAuxYFZtUHgVcKAKMcRgoZCIBrutyir+mnXconozebdHA0ppRIihQ3d6SdBkhEzmRCfcJixBtigUF/+lbyJlhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483084; c=relaxed/simple;
-	bh=b8YLeYWsByOVyP5UxE2x5F0IqQ1CqBzWHt4Az5eKATw=;
+	s=arc-20240116; t=1737483087; c=relaxed/simple;
+	bh=J6pfEOmpyAcUuBnp927onHdOhd0HTyEJLooKnQCxYHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcfqTypwgF1401lAhWvGwxAi36Sa6z06ArZBzmoI+Of+0kJu5P9pZ4mruQ6Nk/39ZOYeHoCukbwXHS98wj+eQSdDL3nZtvwuhKhXEy5akfoctEn99aOsiBaB7dHT3sHgSsWmTWh5eML7WREgwmUpx/CaMKvnM3yBBbLkfLVYBdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySJwqPfo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEO7bkj+xi5PvQrbongNC2tz9ycVbfFnNBE9lpPU9sfVXbAfmHpN8Ce2wHnTrBuWQrWNn+F/rNoK6teg0KIHkHdnvX0660XvmItGdgu2OzOIXDE2TVq15h1XAElEIT/3IKKzy6HZG3f22DxfoqHaRLo4+9hH0HKtTxx8BACQ19s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdEten3U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySJwqPfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80636C4CEDF;
-	Tue, 21 Jan 2025 18:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdEten3U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81413C4CEDF;
+	Tue, 21 Jan 2025 18:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483083;
-	bh=b8YLeYWsByOVyP5UxE2x5F0IqQ1CqBzWHt4Az5eKATw=;
+	s=korg; t=1737483086;
+	bh=J6pfEOmpyAcUuBnp927onHdOhd0HTyEJLooKnQCxYHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySJwqPfoiTcknSGPt/iEFf6p7x8uP190LvCoUv5bfis646NqIKfKD8QSvltSLoXt5
-	 M5UdRt0sLW5/q1QEpBCaG7W7CyZLKLHAwLu7SK44kGrLubtWpftO30XW19z6e5ia9F
-	 xKVoWBQVLcT6+qmoAC3VsRNMpJCTfz62yhpdo84E=
+	b=WdEten3UgRmWTXu+PtmBLeP4athFxaY7DZf4cOJccUYiZw5tl+8GHz7CQAp6kz07i
+	 uBINcp0o242DKR74GbNkVWxpWvE4OcM6ZJP+xvwY6MyMHCFE5wCHt97ja8yB+7+96p
+	 PMyMGAETO8yk2kn9hWpC6RULhx5rANqLF62D1IW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bruno VERNAY <bruno.vernay@se.com>,
-	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 5.15 111/127] gpiolib: cdev: Fix use after free in lineinfo_changed_notify
-Date: Tue, 21 Jan 2025 18:53:03 +0100
-Message-ID: <20250121174533.929888217@linuxfoundation.org>
+	Yogesh Lal <quic_ylal@quicinc.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.15 112/127] irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
+Date: Tue, 21 Jan 2025 18:53:04 +0100
+Message-ID: <20250121174533.967472744@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,72 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Yogesh Lal <quic_ylal@quicinc.com>
 
-commit 02f6b0e1ec7e0e7d059dddc893645816552039da upstream.
+commit 0d62a49ab55c99e8deb4593b8d9f923de1ab5c18 upstream.
 
-The use-after-free issue occurs as follows: when the GPIO chip device file
-is being closed by invoking gpio_chrdev_release(), watched_lines is freed
-by bitmap_free(), but the unregistration of lineinfo_changed_nb notifier
-chain failed due to waiting write rwsem. Additionally, one of the GPIO
-chip's lines is also in the release process and holds the notifier chain's
-read rwsem. Consequently, a race condition leads to the use-after-free of
-watched_lines.
+When a CPU attempts to enter low power mode, it disables the redistributor
+and Group 1 interrupts and reinitializes the system registers upon wakeup.
 
-Here is the typical stack when issue happened:
+If the transition into low power mode fails, then the CPU_PM framework
+invokes the PM notifier callback with CPU_PM_ENTER_FAILED to allow the
+drivers to undo the state changes.
 
-[free]
-gpio_chrdev_release()
-  --> bitmap_free(cdev->watched_lines)                  <-- freed
-  --> blocking_notifier_chain_unregister()
-    --> down_write(&nh->rwsem)                          <-- waiting rwsem
-          --> __down_write_common()
-            --> rwsem_down_write_slowpath()
-                  --> schedule_preempt_disabled()
-                    --> schedule()
+The GIC V3 driver ignores CPU_PM_ENTER_FAILED, which leaves the GIC in
+disabled state.
 
-[use]
-st54spi_gpio_dev_release()
-  --> gpio_free()
-    --> gpiod_free()
-      --> gpiod_free_commit()
-        --> gpiod_line_state_notify()
-          --> blocking_notifier_call_chain()
-            --> down_read(&nh->rwsem);                  <-- held rwsem
-            --> notifier_call_chain()
-              --> lineinfo_changed_notify()
-                --> test_bit(xxxx, cdev->watched_lines) <-- use after free
+Handle CPU_PM_ENTER_FAILED in the same way as CPU_PM_EXIT to restore normal
+operation.
 
-The side effect of the use-after-free issue is that a GPIO line event is
-being generated for userspace where it shouldn't. However, since the chrdev
-is being closed, userspace won't have the chance to read that event anyway.
+[ tglx: Massage change log, add Fixes tag ]
 
-To fix the issue, call the bitmap_free() function after the unregistration
-of lineinfo_changed_nb notifier chain.
-
-Fixes: 51c1064e82e7 ("gpiolib: add new ioctl() for monitoring changes in line info")
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Link: https://lore.kernel.org/r/20240505141156.2944912-1-quic_zhonhan@quicinc.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Bruno VERNAY <bruno.vernay@se.com>
-Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
+Fixes: 3708d52fc6bb ("irqchip: gic-v3: Implement CPU PM notifier")
+Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20241220093907.2747601-1-quic_ylal@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |    2 +-
+ drivers/irqchip/irq-gic-v3.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -2506,9 +2506,9 @@ static int gpio_chrdev_release(struct in
- 	struct gpio_chardev_data *cdev = file->private_data;
- 	struct gpio_device *gdev = cdev->gdev;
- 
--	bitmap_free(cdev->watched_lines);
- 	blocking_notifier_chain_unregister(&gdev->notifier,
- 					   &cdev->lineinfo_changed_nb);
-+	bitmap_free(cdev->watched_lines);
- 	put_device(&gdev->dev);
- 	kfree(cdev);
- 
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -1340,7 +1340,7 @@ static int gic_retrigger(struct irq_data
+ static int gic_cpu_pm_notifier(struct notifier_block *self,
+ 			       unsigned long cmd, void *v)
+ {
+-	if (cmd == CPU_PM_EXIT) {
++	if (cmd == CPU_PM_EXIT || cmd == CPU_PM_ENTER_FAILED) {
+ 		if (gic_dist_security_disabled())
+ 			gic_enable_redist(true);
+ 		gic_cpu_sys_reg_init();
 
 
