@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF30D1F55E3;
-	Tue, 21 Jan 2025 17:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5331F7578;
+	Tue, 21 Jan 2025 17:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482208; cv=none; b=QsvQCRQEV9e0DZs4eRyNhVq8zi2Cl4vjvmVN/JtEPPtcFbOsptGmMs/7P8p1pTSJS176Op/X2+Q4Ge6+5KrEwpzqvLxfteOourW/CmfBW+tG9+V1BxFjKGHBaDS78/llhkxFGmhu2blqq/ahdq8Uh2K0NURa5Jt/Ksow0lfy3xM=
+	t=1737482211; cv=none; b=Q9P+9OrSc0iZW6iFL6nh3sGvxgtABkurXVVCRdGwyRv5lBbySZvASq0vSLRcvlmLAJkcecuD7nkB6II7wXvDv18P5S60IvuUa6yI/qXLJBsiR5bnlrhf3s9d8H01QUE7fNhNpBwqmDn9YAAaj/lLastkfD06++At7+rIbJUS5ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482208; c=relaxed/simple;
-	bh=jnq2J5uRjQlAmSNfi/w4qyDRZqZTtxFKNMDK0W+mle8=;
+	s=arc-20240116; t=1737482211; c=relaxed/simple;
+	bh=EE0ZojvnZGfV46b003ctVwVurCABehLUwX22FKZd/v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QW/Vcf9x2IYD/Iib1D4YNtlXkP6+QzAsGIANlrrjiTMm4Js8gVcP9sbgLTnwFc3VWFEitI8qoNhiphYvfnl/O4wNHIXV1QoNcWo42WFo87r+6rvSs0Y6O9j7FDGYNdp+JH5mn7iXbmkpU+1N7o1b1lAOkObzPGmgr+ipJUst6as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEUCsaPU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=da05BFKqpTZX2fXNYp65Pm6Vz7My4zWc88QEuLUxkp9LakV9h5pBEX1TaSdI0MotYHVhPsPIicy3TAxep5A7AcBst8AW+BcuUvDlrB7Am1sZUTcYmOIFiU5QBaewNaISi7EwuCRpq/QRScfDWl0ZwYcPbL5UafvRsML8ZF+L2pM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkPamKDo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEUCsaPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760D1C4CEDF;
-	Tue, 21 Jan 2025 17:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkPamKDo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF00C4CEDF;
+	Tue, 21 Jan 2025 17:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482207;
-	bh=jnq2J5uRjQlAmSNfi/w4qyDRZqZTtxFKNMDK0W+mle8=;
+	s=korg; t=1737482210;
+	bh=EE0ZojvnZGfV46b003ctVwVurCABehLUwX22FKZd/v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEUCsaPUrQaeN0ExmbTgTYo3eqNTYq2DlIHWbOXLPxchbD+RqGXO4hO89SlbufRBB
-	 t95risCSBpnDjhj0OtHITb41mOO4CmfKYCXiUcK3dUGHxJrk0V+e2lr/29g3j8AwCb
-	 rAzqC950QdjufRGZbVh6Uh6D0x6W2xOZg4KMoT4k=
+	b=WkPamKDokzxVCYrU+I9PBd5h9+QWYGWgrCZaYnFjRQ9fExOEpxjWl9BcvHGO9ivc9
+	 8tXcIrR2mXu7venakpwESgrldOu8X7es6osV1e5pDuYxYQXKj1UU8tys6Q+it1oIvY
+	 ib37bw0dNZlI2LHgnVjGMdknylyEiW66nESNGI+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 6.6 53/72] gpio: xilinx: Convert gpio_lock to raw spinlock
-Date: Tue, 21 Jan 2025 18:52:19 +0100
-Message-ID: <20250121174525.472060737@linuxfoundation.org>
+	"stable@vger.kernel.org, Juergen Gross" <jgross@suse.com>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 6.6 71/72] x86/xen: fix SLS mitigation in xen_hypercall_iret()
+Date: Tue, 21 Jan 2025 18:52:37 +0100
+Message-ID: <20250121174526.168510888@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -50,200 +50,28 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Juergen Gross <jgross@suse.com>
 
-commit 9860370c2172704b6b4f0075a0c2a29fd84af96a upstream.
+The backport of upstream patch a2796dff62d6 ("x86/xen: don't do PV iret
+hypercall through hypercall page") missed to adapt the SLS mitigation
+config check from CONFIG_MITIGATION_SLS to CONFIG_SLS.
 
-irq_chip functions may be called in raw spinlock context. Therefore, we
-must also use a raw spinlock for our own internal locking.
-
-This fixes the following lockdep splat:
-
-[    5.349336] =============================
-[    5.353349] [ BUG: Invalid wait context ]
-[    5.357361] 6.13.0-rc5+ #69 Tainted: G        W
-[    5.363031] -----------------------------
-[    5.367045] kworker/u17:1/44 is trying to lock:
-[    5.371587] ffffff88018b02c0 (&chip->gpio_lock){....}-{3:3}, at: xgpio_irq_unmask (drivers/gpio/gpio-xilinx.c:433 (discriminator 8))
-[    5.380079] other info that might help us debug this:
-[    5.385138] context-{5:5}
-[    5.387762] 5 locks held by kworker/u17:1/44:
-[    5.392123] #0: ffffff8800014958 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work (kernel/workqueue.c:3204)
-[    5.402260] #1: ffffffc082fcbdd8 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work (kernel/workqueue.c:3205)
-[    5.411528] #2: ffffff880172c900 (&dev->mutex){....}-{4:4}, at: __device_attach (drivers/base/dd.c:1006)
-[    5.419929] #3: ffffff88039c8268 (request_class#2){+.+.}-{4:4}, at: __setup_irq (kernel/irq/internals.h:156 kernel/irq/manage.c:1596)
-[    5.428331] #4: ffffff88039c80c8 (lock_class#2){....}-{2:2}, at: __setup_irq (kernel/irq/manage.c:1614)
-[    5.436472] stack backtrace:
-[    5.439359] CPU: 2 UID: 0 PID: 44 Comm: kworker/u17:1 Tainted: G        W          6.13.0-rc5+ #69
-[    5.448690] Tainted: [W]=WARN
-[    5.451656] Hardware name: xlnx,zynqmp (DT)
-[    5.455845] Workqueue: events_unbound deferred_probe_work_func
-[    5.461699] Call trace:
-[    5.464147] show_stack+0x18/0x24 C
-[    5.467821] dump_stack_lvl (lib/dump_stack.c:123)
-[    5.471501] dump_stack (lib/dump_stack.c:130)
-[    5.474824] __lock_acquire (kernel/locking/lockdep.c:4828 kernel/locking/lockdep.c:4898 kernel/locking/lockdep.c:5176)
-[    5.478758] lock_acquire (arch/arm64/include/asm/percpu.h:40 kernel/locking/lockdep.c:467 kernel/locking/lockdep.c:5851 kernel/locking/lockdep.c:5814)
-[    5.482429] _raw_spin_lock_irqsave (include/linux/spinlock_api_smp.h:111 kernel/locking/spinlock.c:162)
-[    5.486797] xgpio_irq_unmask (drivers/gpio/gpio-xilinx.c:433 (discriminator 8))
-[    5.490737] irq_enable (kernel/irq/internals.h:236 kernel/irq/chip.c:170 kernel/irq/chip.c:439 kernel/irq/chip.c:432 kernel/irq/chip.c:345)
-[    5.494060] __irq_startup (kernel/irq/internals.h:241 kernel/irq/chip.c:180 kernel/irq/chip.c:250)
-[    5.497645] irq_startup (kernel/irq/chip.c:270)
-[    5.501143] __setup_irq (kernel/irq/manage.c:1807)
-[    5.504728] request_threaded_irq (kernel/irq/manage.c:2208)
-
-Fixes: a32c7caea292 ("gpio: gpio-xilinx: Add interrupt support")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20250110163354.2012654-1-sean.anderson@linux.dev
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-xilinx.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ arch/x86/xen/xen-asm.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-xilinx.c
-+++ b/drivers/gpio/gpio-xilinx.c
-@@ -66,7 +66,7 @@ struct xgpio_instance {
- 	DECLARE_BITMAP(state, 64);
- 	DECLARE_BITMAP(last_irq_read, 64);
- 	DECLARE_BITMAP(dir, 64);
--	spinlock_t gpio_lock;	/* For serializing operations */
-+	raw_spinlock_t gpio_lock;	/* For serializing operations */
- 	int irq;
- 	DECLARE_BITMAP(enable, 64);
- 	DECLARE_BITMAP(rising_edge, 64);
-@@ -180,14 +180,14 @@ static void xgpio_set(struct gpio_chip *
- 	struct xgpio_instance *chip = gpiochip_get_data(gc);
- 	int bit = xgpio_to_bit(chip, gpio);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	/* Write to GPIO signal and set its direction to output */
- 	__assign_bit(bit, chip->state, val);
- 
- 	xgpio_write_ch(chip, XGPIO_DATA_OFFSET, bit, chip->state);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- }
- 
- /**
-@@ -211,7 +211,7 @@ static void xgpio_set_multiple(struct gp
- 	bitmap_remap(hw_mask, mask, chip->sw_map, chip->hw_map, 64);
- 	bitmap_remap(hw_bits, bits, chip->sw_map, chip->hw_map, 64);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	bitmap_replace(state, chip->state, hw_bits, hw_mask, 64);
- 
-@@ -219,7 +219,7 @@ static void xgpio_set_multiple(struct gp
- 
- 	bitmap_copy(chip->state, state, 64);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- }
- 
- /**
-@@ -237,13 +237,13 @@ static int xgpio_dir_in(struct gpio_chip
- 	struct xgpio_instance *chip = gpiochip_get_data(gc);
- 	int bit = xgpio_to_bit(chip, gpio);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	/* Set the GPIO bit in shadow register and set direction as input */
- 	__set_bit(bit, chip->dir);
- 	xgpio_write_ch(chip, XGPIO_TRI_OFFSET, bit, chip->dir);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- 
- 	return 0;
- }
-@@ -266,7 +266,7 @@ static int xgpio_dir_out(struct gpio_chi
- 	struct xgpio_instance *chip = gpiochip_get_data(gc);
- 	int bit = xgpio_to_bit(chip, gpio);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	/* Write state of GPIO signal */
- 	__assign_bit(bit, chip->state, val);
-@@ -276,7 +276,7 @@ static int xgpio_dir_out(struct gpio_chi
- 	__clear_bit(bit, chip->dir);
- 	xgpio_write_ch(chip, XGPIO_TRI_OFFSET, bit, chip->dir);
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- 
- 	return 0;
- }
-@@ -404,7 +404,7 @@ static void xgpio_irq_mask(struct irq_da
- 	int bit = xgpio_to_bit(chip, irq_offset);
- 	u32 mask = BIT(bit / 32), temp;
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	__clear_bit(bit, chip->enable);
- 
-@@ -414,7 +414,7 @@ static void xgpio_irq_mask(struct irq_da
- 		temp &= ~mask;
- 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, temp);
- 	}
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- 
- 	gpiochip_disable_irq(&chip->gc, irq_offset);
- }
-@@ -434,7 +434,7 @@ static void xgpio_irq_unmask(struct irq_
- 
- 	gpiochip_enable_irq(&chip->gc, irq_offset);
- 
--	spin_lock_irqsave(&chip->gpio_lock, flags);
-+	raw_spin_lock_irqsave(&chip->gpio_lock, flags);
- 
- 	__set_bit(bit, chip->enable);
- 
-@@ -453,7 +453,7 @@ static void xgpio_irq_unmask(struct irq_
- 		xgpio_writereg(chip->regs + XGPIO_IPIER_OFFSET, val);
- 	}
- 
--	spin_unlock_irqrestore(&chip->gpio_lock, flags);
-+	raw_spin_unlock_irqrestore(&chip->gpio_lock, flags);
- }
- 
- /**
-@@ -518,7 +518,7 @@ static void xgpio_irqhandler(struct irq_
- 
- 	chained_irq_enter(irqchip, desc);
- 
--	spin_lock(&chip->gpio_lock);
-+	raw_spin_lock(&chip->gpio_lock);
- 
- 	xgpio_read_ch_all(chip, XGPIO_DATA_OFFSET, all);
- 
-@@ -535,7 +535,7 @@ static void xgpio_irqhandler(struct irq_
- 	bitmap_copy(chip->last_irq_read, all, 64);
- 	bitmap_or(all, rising, falling, 64);
- 
--	spin_unlock(&chip->gpio_lock);
-+	raw_spin_unlock(&chip->gpio_lock);
- 
- 	dev_dbg(gc->parent, "IRQ rising %*pb falling %*pb\n", 64, rising, 64, falling);
- 
-@@ -626,7 +626,7 @@ static int xgpio_probe(struct platform_d
- 	bitmap_set(chip->hw_map,  0, width[0]);
- 	bitmap_set(chip->hw_map, 32, width[1]);
- 
--	spin_lock_init(&chip->gpio_lock);
-+	raw_spin_lock_init(&chip->gpio_lock);
- 
- 	chip->gc.base = -1;
- 	chip->gc.ngpio = bitmap_weight(chip->hw_map, 64);
+--- a/arch/x86/xen/xen-asm.S
++++ b/arch/x86/xen/xen-asm.S
+@@ -221,7 +221,7 @@ SYM_CODE_END(xen_early_idt_handler_array
+ 	push %rax
+ 	mov  $__HYPERVISOR_iret, %eax
+ 	syscall		/* Do the IRET. */
+-#ifdef CONFIG_MITIGATION_SLS
++#ifdef CONFIG_SLS
+ 	int3
+ #endif
+ .endm
 
 
