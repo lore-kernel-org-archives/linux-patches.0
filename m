@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0BD1F890F;
-	Tue, 21 Jan 2025 18:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B7E1F55E5;
+	Tue, 21 Jan 2025 18:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483072; cv=none; b=d5L69Y6I2R7Yphtgmy5kKdat7URPJ25PWdWAggbqK3R4bQOVSN+n+bG7Ckxfx3bYS65SmOwSlTGf5WC9ar1R6RnqOD2yih/voC4kLnyh7QGGvLYF63za0aL0AubzmwZoL6urOKjmvIaGbRSaexrSONu12nT5Q5KxzOxnmG+LsSc=
+	t=1737483078; cv=none; b=prRYKbT+WLoBoZBWBKbnUqIWk3h7tW0tYdMKPhFRA2xKC+D9dM1g+7GKAQRxFfP825naZtcrC3FofsFIxzttzF0zDP2dVunLmhi/8gOeM7YE2RvvYFp9kZl7hWpynliEaQOzr3iRBiO6pPWFwp581MYzNFZxB2Dhr+Zj8wDMY/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483072; c=relaxed/simple;
-	bh=qBo1T62zOja2KvKG+Df3KguH6Howrt9LRJc+GJ9J8F4=;
+	s=arc-20240116; t=1737483078; c=relaxed/simple;
+	bh=AztWnKitjxvibDih7de6Iiesr38ORTwj8yIhgPKxzSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aeGYXW9pReF2TzzeOq+xKRqtR5nJD4CLwLjkHa8Nkx3oWr3O8bLiOM4/JcMxwQzsnmlSXElOf4ZtX6wW6MxhOxuRVN+2ClpOhAPDpTuvZzv0o0QqMWghF3YkCrtVsxQcI6Kom3gFwulcxSMT6rYoWPm5M4Ese73dPpfVWpwM2BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnqqUsiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fu0OJn2kX2yU+1nVaLQSkCWj0tcixlcCbNlx5IQHa4CQUM2Wlhq+DVUg9lwdZALzyrgIY503+brU5MrwclaCcyf0twugm+UFAVOZ8xCBuMf3usVlk76G1rDHO+0zgqkM5uBAxngoR9WcTF20346uN8dDN2Mvaltn9Txb+w4ptT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGGH74eL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnqqUsiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5607C4CEE0;
-	Tue, 21 Jan 2025 18:11:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGGH74eL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD51AC4CEE0;
+	Tue, 21 Jan 2025 18:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483072;
-	bh=qBo1T62zOja2KvKG+Df3KguH6Howrt9LRJc+GJ9J8F4=;
+	s=korg; t=1737483078;
+	bh=AztWnKitjxvibDih7de6Iiesr38ORTwj8yIhgPKxzSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnqqUsiJ05NWoUdftTN0leiwFlD71VPCdu19pC5L6DQHG8Dim9bLLsyQ+8+2QNmYh
-	 jMC2zlqGrDOkvnIecPsPaFO2wF6AxwVO6q+zvL8yIDzamYgNGSXekpBA+f1CBjgg3j
-	 AE9GrbpOaMUHU6WfqXQjc6KJUQ1LOmxgDWAYsMoY=
+	b=DGGH74eLAO/n/J/ie1S4myLRFWWr/kHYo9HD/Yg402FeRKrrUy5rAfWIm9PYFMTp+
+	 UKwrfmvrSsNyCQt08j2KfIbi7cyMFMYb3/KKvRcXnLpKKqYFLj4n/gyqPzkGBRlTTV
+	 R5YqSnfNy2JetQqS1NVTSjR4AFa9NfJIe9jeWuW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justinpopo6@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 077/127] phy: usb: Use slow clock for wake enabled suspend
-Date: Tue, 21 Jan 2025 18:52:29 +0100
-Message-ID: <20250121174532.629110369@linuxfoundation.org>
+	Oleg Nesterov <oleg@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 101/127] poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
+Date: Tue, 21 Jan 2025 18:52:53 +0100
+Message-ID: <20250121174533.549930266@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -51,41 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justinpopo6@gmail.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-commit 700c44b508020a3ea29d297c677f8d4ab14b7e6a upstream.
+[ Upstream commit cacd9ae4bf801ff4125d8961bb9a3ba955e51680 ]
 
-The logic was incorrect when switching to slow clock. We want the slow
-clock if wake_enabled is set.
+As the comment above waitqueue_active() explains, it can only be used
+if both waker and waiter have mb()'s that pair with each other. However
+__pollwait() is broken in this respect.
 
-Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-6-git-send-email-justinpopo6@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is not pipe-specific, but let's look at pipe_poll() for example:
+
+	poll_wait(...); // -> __pollwait() -> add_wait_queue()
+
+	LOAD(pipe->head);
+	LOAD(pipe->head);
+
+In theory these LOAD()'s can leak into the critical section inside
+add_wait_queue() and can happen before list_add(entry, wq_head), in this
+case pipe_poll() can race with wakeup_pipe_readers/writers which do
+
+	smp_mb();
+	if (waitqueue_active(wq_head))
+		wake_up_interruptible(wq_head);
+
+There are more __pollwait()-like functions (grep init_poll_funcptr), and
+it seems that at least ep_ptable_queue_proc() has the same problem, so the
+patch adds smp_mb() into poll_wait().
+
+Link: https://lore.kernel.org/all/20250102163320.GA17691@redhat.com/
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20250107162717.GA18922@redhat.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/linux/poll.h | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -337,13 +337,12 @@ static void usb_uninit_common_7216(struc
+diff --git a/include/linux/poll.h b/include/linux/poll.h
+index 7e0fdcf905d2e..a4af5e14dffed 100644
+--- a/include/linux/poll.h
++++ b/include/linux/poll.h
+@@ -43,8 +43,16 @@ typedef struct poll_table_struct {
  
- 	pr_debug("%s\n", __func__);
- 
--	if (!params->wake_enabled) {
--		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
--
-+	if (params->wake_enabled) {
- 		/* Switch to using slower clock during suspend to save power */
- 		USB_CTRL_SET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
--	} else {
- 		usb_wake_enable_7216(params, true);
-+	} else {
-+		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
- 	}
+ static inline void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)
+ {
+-	if (p && p->_qproc && wait_address)
++	if (p && p->_qproc && wait_address) {
+ 		p->_qproc(filp, wait_address, p);
++		/*
++		 * This memory barrier is paired in the wq_has_sleeper().
++		 * See the comment above prepare_to_wait(), we need to
++		 * ensure that subsequent tests in this thread can't be
++		 * reordered with __add_wait_queue() in _qproc() paths.
++		 */
++		smp_mb();
++	}
  }
  
+ /*
+-- 
+2.39.5
+
 
 
