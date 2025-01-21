@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8151F543F;
-	Tue, 21 Jan 2025 18:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FA61F5439;
+	Tue, 21 Jan 2025 18:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482852; cv=none; b=hz/x1IHbJBa2x/ouygp2aHVDFD7t/OE4cuFkM16oHWD9UCvj67U6wvVsXE5pALqoqGMq0DfAlhbcCzyEJj63KYhfgxXcl3g6Tq5koTWmhO0Fu7gxzOog99lbO/Qr75eZEY77MhoeRf8yhp7IyFeO2tsopiXwQX5QEpDRr1wLkvI=
+	t=1737482855; cv=none; b=PZjrgTeu4Nzw57RQgPTJMo/CliIXC+FNvJjo0HTKlXaGulOKQwrcQngf9gH11x8+9Q6+CEwH4NlVSE+6UVhGJKYmvyhGPBncLv5ZHlV3Y8Bu+yyrmHHe1pk3QtKguF9Rn5Avp4nZtiawAKFq611wzLmpp86r6BbHLDO7AJxqGe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482852; c=relaxed/simple;
-	bh=1xVD8KAgdgcRC/ErQDJHCHL7lg/OKD9zrnqEMe0CezQ=;
+	s=arc-20240116; t=1737482855; c=relaxed/simple;
+	bh=aOkyX8HyZLN4PyfEQHVZqDnpBgSu8zCQd+MraqZK0rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3WToIv6JmnGizVb7aQaf91tC5K9hP0eFLr+F6Du5UOHazWdk/6G6935Fh+R+4UcEIyu+l20OGauTCis0/3p6Ke0ZuvyK3nh5o+50GNTSh/t9NHu03Q+QL3fkMAg/iNSIpO3N/nFXviXUWwbwX9Jqw1TaxcutfrKqQr13L/bGDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLjtYPcn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SWkLdJITBMqA/jW4haTqBo/uS1Dtb9uIsvwurKr65poRNGw5jTMODRRPHVeRsZN1hK8FATGNNf0suVp6c97GT9ybfAUTq+MkB2D3kaqk4MS7nPsswAgpbA+40TgDSMSTujAI7ungmpLbe4OubMwd6aYIN+aCXLhdrACBAETW8cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axJRf+fR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLjtYPcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C85FC4CEDF;
-	Tue, 21 Jan 2025 18:07:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axJRf+fR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A632C4CEDF;
+	Tue, 21 Jan 2025 18:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482852;
-	bh=1xVD8KAgdgcRC/ErQDJHCHL7lg/OKD9zrnqEMe0CezQ=;
+	s=korg; t=1737482854;
+	bh=aOkyX8HyZLN4PyfEQHVZqDnpBgSu8zCQd+MraqZK0rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hLjtYPcnDK6dtRRhYqvkUXXNqquDnBQ4/qkoE84hgakdsyLTApXsnjmMiFmye+iTY
-	 FJ5JPLtSZKgG5h3qMXJngkxNikxsejBM4jISA9ts0oqgNB4r63lY/S+EWrImk1bhGG
-	 9tTHTfm1SS3lUTt8DeZVg4acugVSykWoay1UQFf0=
+	b=axJRf+fRo/iQHzUWxSWyoAL3xruSSOOVu0+fbFoRaYK7vZ0whL5kRXe8BJv9RFQeU
+	 N2o3Fh8bcggGkVPJQOx+Z9Cb9XfU4mFwk1Wgcrkcc9ZHuon2jAL1DrpPf8LrsAKbsQ
+	 /KwoCBAQSn29CQ+mvGK0WYRrA4qNc7ejYdR+xcBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 030/127] riscv: Fix sleeping in invalid context in die()
-Date: Tue, 21 Jan 2025 18:51:42 +0100
-Message-ID: <20250121174530.831080839@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 031/127] ACPI: resource: Add TongFang GM5HG0A to irq1_edge_low_force_override[]
+Date: Tue, 21 Jan 2025 18:51:43 +0100
+Message-ID: <20250121174530.882685111@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -51,74 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 6a97f4118ac07cfdc316433f385dbdc12af5025e upstream.
+commit 7ed4e4a659d99499dc6968c61970d41b64feeac0 upstream.
 
-die() can be called in exception handler, and therefore cannot sleep.
-However, die() takes spinlock_t which can sleep with PREEMPT_RT enabled.
-That causes the following warning:
+The TongFang GM5HG0A is a TongFang barebone design which is sold under
+various brand names.
 
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 285, name: mutex
-preempt_count: 110001, expected: 0
-RCU nest depth: 0, expected: 0
-CPU: 0 UID: 0 PID: 285 Comm: mutex Not tainted 6.12.0-rc7-00022-ge19049cf7d56-dirty #234
-Hardware name: riscv-virtio,qemu (DT)
-Call Trace:
-    dump_backtrace+0x1c/0x24
-    show_stack+0x2c/0x38
-    dump_stack_lvl+0x5a/0x72
-    dump_stack+0x14/0x1c
-    __might_resched+0x130/0x13a
-    rt_spin_lock+0x2a/0x5c
-    die+0x24/0x112
-    do_trap_insn_illegal+0xa0/0xea
-    _new_vmalloc_restore_context_a0+0xcc/0xd8
-Oops - illegal instruction [#1]
+The ACPI IRQ override for the keyboard IRQ must be used on these AMD Zen
+laptops in order for the IRQ to work.
 
-Switch to use raw_spinlock_t, which does not sleep even with PREEMPT_RT
-enabled.
+At least on the SKIKK Vanaheim variant the DMI product- and board-name
+strings have been replaced by the OEM with "Vanaheim" so checking that
+board-name contains "GM5HG0A" as is usually done for TongFang barebones
+quirks does not work.
 
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20241118091333.1185288-1-namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+The DMI OEM strings do contain "GM5HG0A". I have looked at the dmidecode
+for a few other TongFang devices and the TongFang code-name string being
+in the OEM strings seems to be something which is consistently true.
+
+Add a quirk checking one of the DMI_OEM_STRING(s) is "GM5HG0A" in the hope
+that this will work for other OEM versions of the "GM5HG0A" too.
+
+Link: https://www.skikk.eu/en/laptops/vanaheim-15-rtx-4060
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219614
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241228164845.42381-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/traps.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/acpi/resource.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -27,7 +27,7 @@
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -618,6 +618,17 @@ static const struct dmi_system_id lg_lap
+ 			DMI_MATCH(DMI_BOARD_NAME, "GMxHGxx"),
+ 		},
+ 	},
++	{
++		/*
++		 * TongFang GM5HG0A in case of the SKIKK Vanaheim relabel the
++		 * board-name is changed, so check OEM strings instead. Note
++		 * OEM string matches are always exact matches.
++		 * https://bugzilla.kernel.org/show_bug.cgi?id=219614
++		 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_OEM_STRING, "GM5HG0A"),
++		},
++	},
+ 	{ }
+ };
  
- int show_unhandled_signals = 1;
- 
--static DEFINE_SPINLOCK(die_lock);
-+static DEFINE_RAW_SPINLOCK(die_lock);
- 
- void die(struct pt_regs *regs, const char *str)
- {
-@@ -38,7 +38,7 @@ void die(struct pt_regs *regs, const cha
- 
- 	oops_enter();
- 
--	spin_lock_irqsave(&die_lock, flags);
-+	raw_spin_lock_irqsave(&die_lock, flags);
- 	console_verbose();
- 	bust_spinlocks(1);
- 
-@@ -55,7 +55,7 @@ void die(struct pt_regs *regs, const cha
- 
- 	bust_spinlocks(0);
- 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
--	spin_unlock_irqrestore(&die_lock, flags);
-+	raw_spin_unlock_irqrestore(&die_lock, flags);
- 	oops_exit();
- 
- 	if (in_interrupt())
 
 
