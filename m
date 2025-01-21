@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D2F1F0E36;
-	Tue, 21 Jan 2025 18:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E15B1F757F;
+	Tue, 21 Jan 2025 18:09:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482959; cv=none; b=ZDwXJQk4ccxjI+WXSyxr4WvfZnM47vfIxOHHE2PVFBwlA9AUHcVbpFoklVR8/ClkAaX7V/cDVYW2qW6vT+8co6Y7Xq7mKB/dl8UR+OMm/gRhwmSwG6IIvCNkMC/q8w8kpOHuUEWQaVNYodIzQnDJX5DGIEsO/FnXWv6lWfhyADk=
+	t=1737482962; cv=none; b=aIqJpnm21Z1YkcTeYUWm/rJ6pEtwDKuRxBYPBkCr7mSkATa1jnNj/ffypgbPqK7jL2SibyIQPVCj3Z6gOclYenj7/EuwNmtkzFppl9xKp3oFbYnF3EbYMpWCoLh8azQKJQCDUuwviLbSV3Rq331TyO9NsnrtnT3d74+VZ6zi7yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482959; c=relaxed/simple;
-	bh=xwSi6YDx05EgVd7uQK6IpsSolf1ukVkdm8q/Ec9TEfQ=;
+	s=arc-20240116; t=1737482962; c=relaxed/simple;
+	bh=tUujoiEWYucH4JLfbrbzp8kiZt0/8yV3EnMIajwInUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tLxUaYmtkEt1uHXtLyVqTchVGfVE1R6Pdk/RKaeS/W+ufr15AKSfZ4+ocRfHEoxMnHRUr7NAjfKWioWlnjHjn9WwQ8+mAJFOkDO3q1LUwngu+ebVdaNNX+foJM+pdEl+fVH0WHdCf8DlIJT6xoC20LCes+uG6pLYIYMsbCfH4xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pS3GD/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XXmxQJmHuZ142unRz31DqGy4qiLwkXGTYdZW8o5pnrB9WM5RwGSIz964z2oPm+sd3tLB9ZarFKOipj/Ir7UKWlTfweIhEVkdVg/VXAu25u5cd3EB/ZQMZWB5+/hUTbvryGmcVR9bNMR75d/UD9k1DxR6gZ9ZI5JctA4hdiJ/kZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNhnNr1Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pS3GD/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4844C4CEDF;
-	Tue, 21 Jan 2025 18:09:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNhnNr1Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9520EC4CEDF;
+	Tue, 21 Jan 2025 18:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482959;
-	bh=xwSi6YDx05EgVd7uQK6IpsSolf1ukVkdm8q/Ec9TEfQ=;
+	s=korg; t=1737482962;
+	bh=tUujoiEWYucH4JLfbrbzp8kiZt0/8yV3EnMIajwInUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pS3GD/qmoqn8rPIpsJOvXgcCewfW558Wmacp4L9YNRxZgBi7nQSQn7DPYqE7NJPK
-	 VpcLZsWqWJYyLk4q9su3cTGcrxnyBbumxfKKLaTg0eNbWghNcWrXWNOrZtsphRbLl+
-	 xp/CF907HZP6DXrzRTYNiZayt5gqVBn+bSepnUtY=
+	b=HNhnNr1ZAwFqG6JHmMq5PS+zgFX/yUPNUR5YqwBPupjz4sabUeaxqA+zvtoI5CjFG
+	 /KSpXpVDoW2CoW/LIMZyVVdfzJ3/6RX3hCMjed3DJLJzbNbx+NUWiQjsclDFObQxbE
+	 g5mzXz2Ykb9tR/SAWME2+Fcj+tWB6WAx/JsZzGOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Herve Codina <herve.codina@bootlin.com>,
 	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/127] of/address: Add support for 3 address cell bus
-Date: Tue, 21 Jan 2025 18:52:18 +0100
-Message-ID: <20250121174532.215689974@linuxfoundation.org>
+Subject: [PATCH 5.15 067/127] of: address: Fix address translation when address-size is greater than 2
+Date: Tue, 21 Jan 2025 18:52:19 +0100
+Message-ID: <20250121174532.252759913@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -50,187 +51,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring <robh@kernel.org>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit 3d5089c4263d3594dc055e0f9c5cb990505cdd64 ]
+[ Upstream commit 42604f8eb7ba04b589375049cc76282dad4677d2 ]
 
-There's a few custom bus bindings (e.g. fsl,qoriq-mc) which use a
-3 cell format with custom flags in the high cell. We can match these
-buses as a fallback if we didn't match on PCI bus which is the only
-standard bus binding with 3 address cells.
+With the recent addition of of_pci_prop_ranges() in commit 407d1a51921e
+("PCI: Create device tree node for bridge"), the ranges property can
+have a 3 cells child address, a 3 cells parent address and a 2 cells
+child size.
 
-Link: https://lore.kernel.org/r/20230328-dt-address-helpers-v1-3-e2456c3e77ab@kernel.org
+A range item property for a PCI device is filled as follow:
+  <BAR_nbr> 0 0 <phys.hi> <phys.mid> <phys.low> <BAR_sizeh> <BAR_sizel>
+  <-- Child --> <-- Parent (PCI definition) --> <- BAR size (64bit) -->
+
+This allow to translate BAR addresses from the DT. For instance:
+pci@0,0 {
+  #address-cells = <0x03>;
+  #size-cells = <0x02>;
+  device_type = "pci";
+  compatible = "pci11ab,100", "pciclass,060400", "pciclass,0604";
+  ranges = <0x82000000 0x00 0xe8000000
+            0x82000000 0x00 0xe8000000
+	    0x00 0x4400000>;
+  ...
+  dev@0,0 {
+    #address-cells = <0x03>;
+    #size-cells = <0x02>;
+    compatible = "pci1055,9660", "pciclass,020000", "pciclass,0200";
+    /* Translations for BAR0 to BAR5 */
+    ranges = <0x00 0x00 0x00 0x82010000 0x00 0xe8000000 0x00 0x2000000
+              0x01 0x00 0x00 0x82010000 0x00 0xea000000 0x00 0x1000000
+              0x02 0x00 0x00 0x82010000 0x00 0xeb000000 0x00 0x800000
+              0x03 0x00 0x00 0x82010000 0x00 0xeb800000 0x00 0x800000
+              0x04 0x00 0x00 0x82010000 0x00 0xec000000 0x00 0x20000
+              0x05 0x00 0x00 0x82010000 0x00 0xec020000 0x00 0x2000>;
+    ...
+    pci-ep-bus@0 {
+      #address-cells = <0x01>;
+      #size-cells = <0x01>;
+      compatible = "simple-bus";
+      /* Translate 0xe2000000 to BAR0 and 0xe0000000 to BAR1 */
+      ranges = <0xe2000000 0x00 0x00 0x00 0x2000000
+                0xe0000000 0x01 0x00 0x00 0x1000000>;
+      ...
+    };
+  };
+};
+
+During the translation process, the "default-flags" map() function is
+used to select the matching item in the ranges table and determine the
+address offset from this matching item.
+This map() function simply calls of_read_number() and when address-size
+is greater than 2, the map() function skips the extra high address part
+(ie part over 64bit). This lead to a wrong matching item and a wrong
+offset computation.
+Also during the translation itself, the extra high part related to the
+parent address is not present in the translated address.
+
+Fix the "default-flags" map() and translate() in order to take into
+account the child extra high address part in map() and the parent extra
+high address part in translate() and so having a correct address
+translation for ranges patterns such as the one given in the example
+above.
+
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20231017110221.189299-2-herve.codina@bootlin.com
 Signed-off-by: Rob Herring <robh@kernel.org>
 Stable-dep-of: 7f05e20b989a ("of: address: Preserve the flags portion on 1:1 dma-ranges mapping")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/address.c                        | 22 ++++++++
- drivers/of/unittest-data/tests-address.dtsi |  9 +++-
- drivers/of/unittest.c                       | 58 ++++++++++++++++++++-
- 3 files changed, 87 insertions(+), 2 deletions(-)
+ drivers/of/address.c | 30 ++++++++++++++++++++++++++++--
+ 1 file changed, 28 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/of/address.c b/drivers/of/address.c
-index 60ead6105471..a95b57cea0d0 100644
+index a95b57cea0d0..7e74fe909282 100644
 --- a/drivers/of/address.c
 +++ b/drivers/of/address.c
-@@ -95,11 +95,17 @@ static int of_bus_default_translate(__be32 *addr, u64 offset, int na)
- 	return 0;
- }
- 
-+static unsigned int of_bus_default_flags_get_flags(const __be32 *addr)
-+{
-+	return of_read_number(addr, 1);
-+}
-+
- static unsigned int of_bus_default_get_flags(const __be32 *addr)
- {
+@@ -105,6 +105,32 @@ static unsigned int of_bus_default_get_flags(const __be32 *addr)
  	return IORESOURCE_MEM;
  }
  
++static u64 of_bus_default_flags_map(__be32 *addr, const __be32 *range, int na,
++				    int ns, int pna)
++{
++	u64 cp, s, da;
 +
++	/* Check that flags match */
++	if (*addr != *range)
++		return OF_BAD_ADDR;
++
++	/* Read address values, skipping high cell */
++	cp = of_read_number(range + 1, na - 1);
++	s  = of_read_number(range + na + pna, ns);
++	da = of_read_number(addr + 1, na - 1);
++
++	pr_debug("default flags map, cp=%llx, s=%llx, da=%llx\n", cp, s, da);
++
++	if (da < cp || da >= (cp + s))
++		return OF_BAD_ADDR;
++	return da - cp;
++}
++
++static int of_bus_default_flags_translate(__be32 *addr, u64 offset, int na)
++{
++	/* Keep "flags" part (high cell) in translated address */
++	return of_bus_default_translate(addr + 1, offset, na - 1);
++}
+ 
  #ifdef CONFIG_PCI
  static unsigned int of_bus_pci_get_flags(const __be32 *addr)
- {
-@@ -319,6 +325,11 @@ static unsigned int of_bus_isa_get_flags(const __be32 *addr)
- 	return flags;
- }
- 
-+static int of_bus_default_flags_match(struct device_node *np)
-+{
-+	return of_bus_n_addr_cells(np) == 3;
-+}
-+
- /*
-  * Array of bus specific translators
-  */
-@@ -348,6 +359,17 @@ static struct of_bus of_busses[] = {
+@@ -365,8 +391,8 @@ static struct of_bus of_busses[] = {
+ 		.addresses = "reg",
+ 		.match = of_bus_default_flags_match,
+ 		.count_cells = of_bus_default_count_cells,
+-		.map = of_bus_default_map,
+-		.translate = of_bus_default_translate,
++		.map = of_bus_default_flags_map,
++		.translate = of_bus_default_flags_translate,
  		.has_flags = true,
- 		.get_flags = of_bus_isa_get_flags,
+ 		.get_flags = of_bus_default_flags_get_flags,
  	},
-+	/* Default with flags cell */
-+	{
-+		.name = "default-flags",
-+		.addresses = "reg",
-+		.match = of_bus_default_flags_match,
-+		.count_cells = of_bus_default_count_cells,
-+		.map = of_bus_default_map,
-+		.translate = of_bus_default_translate,
-+		.has_flags = true,
-+		.get_flags = of_bus_default_flags_get_flags,
-+	},
- 	/* Default */
- 	{
- 		.name = "default",
-diff --git a/drivers/of/unittest-data/tests-address.dtsi b/drivers/of/unittest-data/tests-address.dtsi
-index 6604a52bf6cb..bc0029cbf8ea 100644
---- a/drivers/of/unittest-data/tests-address.dtsi
-+++ b/drivers/of/unittest-data/tests-address.dtsi
-@@ -14,7 +14,7 @@
- 			#size-cells = <1>;
- 			/* ranges here is to make sure we don't use it for
- 			 * dma-ranges translation */
--			ranges = <0x70000000 0x70000000 0x40000000>,
-+			ranges = <0x70000000 0x70000000 0x50000000>,
- 				 <0x00000000 0xd0000000 0x20000000>;
- 			dma-ranges = <0x0 0x20000000 0x40000000>;
- 
-@@ -43,6 +43,13 @@
- 					     <0x42000000 0x0 0xc0000000 0x20000000 0x0 0x10000000>;
- 			};
- 
-+			bus@a0000000 {
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				ranges = <0xf00baa 0x0 0x0 0xa0000000 0x0 0x100000>,
-+					 <0xf00bee 0x1 0x0 0xb0000000 0x0 0x200000>;
-+			};
-+
- 		};
- 	};
- };
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index a020296fbf41..d6a250cd7a40 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -1045,7 +1045,7 @@ static void __init of_unittest_bus_ranges(void)
- 			"for_each_of_range wrong flags on node %pOF flags=%x (expected %x)\n",
- 			np, range.flags, IORESOURCE_MEM);
- 		if (!i) {
--			unittest(range.size == 0x40000000,
-+			unittest(range.size == 0x50000000,
- 				 "for_each_of_range wrong size on node %pOF size=%llx\n",
- 				 np, range.size);
- 			unittest(range.cpu_addr == 0x70000000,
-@@ -1071,6 +1071,61 @@ static void __init of_unittest_bus_ranges(void)
- 	of_node_put(np);
- }
- 
-+static void __init of_unittest_bus_3cell_ranges(void)
-+{
-+	struct device_node *np;
-+	struct of_range range;
-+	struct of_range_parser parser;
-+	int i = 0;
-+
-+	np = of_find_node_by_path("/testcase-data/address-tests/bus@a0000000");
-+	if (!np) {
-+		pr_err("missing testcase data\n");
-+		return;
-+	}
-+
-+	if (of_range_parser_init(&parser, np)) {
-+		pr_err("missing ranges property\n");
-+		return;
-+	}
-+
-+	/*
-+	 * Get the "ranges" from the device tree
-+	 */
-+	for_each_of_range(&parser, &range) {
-+		if (!i) {
-+			unittest(range.flags == 0xf00baa,
-+				 "for_each_of_range wrong flags on node %pOF flags=%x\n",
-+				 np, range.flags);
-+			unittest(range.size == 0x100000,
-+				 "for_each_of_range wrong size on node %pOF size=%llx\n",
-+				 np, range.size);
-+			unittest(range.cpu_addr == 0xa0000000,
-+				 "for_each_of_range wrong CPU addr (%llx) on node %pOF",
-+				 range.cpu_addr, np);
-+			unittest(range.bus_addr == 0x0,
-+				 "for_each_of_range wrong bus addr (%llx) on node %pOF",
-+				 range.pci_addr, np);
-+		} else {
-+			unittest(range.flags == 0xf00bee,
-+				 "for_each_of_range wrong flags on node %pOF flags=%x\n",
-+				 np, range.flags);
-+			unittest(range.size == 0x200000,
-+				 "for_each_of_range wrong size on node %pOF size=%llx\n",
-+				 np, range.size);
-+			unittest(range.cpu_addr == 0xb0000000,
-+				 "for_each_of_range wrong CPU addr (%llx) on node %pOF",
-+				 range.cpu_addr, np);
-+			unittest(range.bus_addr == 0x100000000,
-+				 "for_each_of_range wrong bus addr (%llx) on node %pOF",
-+				 range.pci_addr, np);
-+		}
-+		i++;
-+	}
-+
-+	of_node_put(np);
-+}
-+
- static void __init of_unittest_parse_interrupts(void)
- {
- 	struct device_node *np;
-@@ -3377,6 +3432,7 @@ static int __init of_unittest(void)
- 	of_unittest_parse_dma_ranges();
- 	of_unittest_pci_dma_ranges();
- 	of_unittest_bus_ranges();
-+	of_unittest_bus_3cell_ranges();
- 	of_unittest_match_node();
- 	of_unittest_platform_populate();
- 	of_unittest_overlay();
 -- 
 2.39.5
 
