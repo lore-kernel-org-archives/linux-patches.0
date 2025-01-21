@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F165A1F63EF;
-	Tue, 21 Jan 2025 17:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEECD1F63EF;
+	Tue, 21 Jan 2025 17:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482286; cv=none; b=HScKcB1ts3zhApw/1R7pn29qIErypJ6a+lJItTALodig7idi6cJVJidh7Ii+2knoD/ecJ+NHDYeVJWs6zKjtcs+KpQQ9paFOSTAgZvlN8kv4b8feArIovNJduekyF0vSWJAN93JptrM8EF8iO2ueGUnrsa5pVVCfE2PjaWuRTpA=
+	t=1737482288; cv=none; b=k4edQZuo6h+q3EUQAAxf5bFUoPix3X78bun8g9RLKKeYmfhkvnn3Y9kUG+d6ZDMnpENs+7iDGqcBXLYaAF4vcBrLkRG/7yqV+Zrw0JtBhvfYOaf0zuDNQE8uefcIfcV00K2unsqNMjr6Zkn++DGyUBFv0NFyOTlCH8GXn+mOrvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482286; c=relaxed/simple;
-	bh=xxpuAPT7FMHrzsE6o6wL8xnErBIDLSQu/JzUpdAm7AU=;
+	s=arc-20240116; t=1737482288; c=relaxed/simple;
+	bh=6aWUOQIx5iuhehR10qAp103YeTsWfjEYU4xSmHrt+nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXGnnazfYxdax5MYdl3affUBNDsaklV+pww2ERxP59hcCHnPY0Gtu80EaRI6tIXoQ6ngidXFCRETp62GaQ/vaIE3CAv6lYArmWw6Fr7MMNhf/q9Giic2fIWNgxB8sd3YDIBaSngDKf9uT0wy7JcvOzcjXwF1yRXomYjpGSX5gcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFJaHSDf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/bmum/Y3WrcaBTmDs4JF5rtEpWYRH1JXhZ6ivCr3yulzRUyw8e1J4E6cxsx9V8IaGQOCUT69vLr5HHXu5S0w0BaC+8jskGTGDfSR35ivVzr3LjVIVfsaBID6MSHgC1BRNt0mpcbPqEeD8w1XJK2/BhjmsgYTjdbvBdU66E9tYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg9bs/Qd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFJaHSDf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB51C4CEDF;
-	Tue, 21 Jan 2025 17:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg9bs/Qd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E96C4CEDF;
+	Tue, 21 Jan 2025 17:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482285;
-	bh=xxpuAPT7FMHrzsE6o6wL8xnErBIDLSQu/JzUpdAm7AU=;
+	s=korg; t=1737482288;
+	bh=6aWUOQIx5iuhehR10qAp103YeTsWfjEYU4xSmHrt+nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFJaHSDfMrckmSFq8BFWB+CZQ5UYAeSPnqnCmPrF6eohepP0Iuz7vDQ6+M1tBxV0y
-	 IWHywpcQAkPs8Os9vf8WSkYrLe4RVfBYkExm4/32gVXYhHi91VAobNTDmHFt3a2Jth
-	 4oQopoVK3iqtPWNf/d7EvZov6YvV3saGLI3WJSuo=
+	b=Zg9bs/QdXzNTYpAkNfPKLa7sYoOffB9wrbBJ+dEvwLvYshH3o1dTfFDuuVPrYZy0t
+	 oWZ6Ilspqqjb4LHbY7PzwfUEtGrlfSlGQ2OxTREG+/WwWdiijFuXPZ6G1dlTS/5kpO
+	 pzzx3MukmVMnrAHtg2F8coipZXz45nE5ZM/VCFTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	David Wei <dw@davidwei.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/122] net: make page_pool_ref_netmem work with net iovs
-Date: Tue, 21 Jan 2025 18:51:12 +0100
-Message-ID: <20250121174533.930128755@linuxfoundation.org>
+Subject: [PATCH 6.12 025/122] net/mlx5: Fix RDMA TX steering prio
+Date: Tue, 21 Jan 2025 18:51:13 +0100
+Message-ID: <20250121174533.967410224@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -52,37 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit cbc16bceea784210d585a42ac9f8f10ce62b300e ]
+[ Upstream commit c08d3e62b2e73e14da318a1d20b52d0486a28ee0 ]
 
-page_pool_ref_netmem() should work with either netmem representation, but
-currently it casts to a page with netmem_to_page(), which will fail with
-net iovs. Use netmem_get_pp_ref_count_ref() instead.
+User added steering rules at RDMA_TX were being added to the first prio,
+which is the counters prio.
+Fix that so that they are correctly added to the BYPASS_PRIO instead.
 
-Fixes: 8ab79ed50cf1 ("page_pool: devmem support")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: David Wei <dw@davidwei.uk>
-Link: https://lore.kernel.org/20250108220644.3528845-2-dw@davidwei.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 24670b1a3166 ("net/mlx5: Add support for RDMA TX steering")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/page_pool/helpers.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/page_pool/helpers.h b/include/net/page_pool/helpers.h
-index 793e6fd78bc5c..60a5347922bec 100644
---- a/include/net/page_pool/helpers.h
-+++ b/include/net/page_pool/helpers.h
-@@ -294,7 +294,7 @@ static inline long page_pool_unref_page(struct page *page, long nr)
- 
- static inline void page_pool_ref_netmem(netmem_ref netmem)
- {
--	atomic_long_inc(&netmem_to_page(netmem)->pp_ref_count);
-+	atomic_long_inc(netmem_get_pp_ref_count_ref(netmem));
- }
- 
- static inline void page_pool_ref_page(struct page *page)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+index 2eabfcc247c6a..0ce999706d412 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fs_core.c
+@@ -2709,6 +2709,7 @@ struct mlx5_flow_namespace *mlx5_get_flow_namespace(struct mlx5_core_dev *dev,
+ 		break;
+ 	case MLX5_FLOW_NAMESPACE_RDMA_TX:
+ 		root_ns = steering->rdma_tx_root_ns;
++		prio = RDMA_TX_BYPASS_PRIO;
+ 		break;
+ 	case MLX5_FLOW_NAMESPACE_RDMA_RX_COUNTERS:
+ 		root_ns = steering->rdma_rx_root_ns;
 -- 
 2.39.5
 
