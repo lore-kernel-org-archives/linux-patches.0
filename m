@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0451F55F3;
-	Tue, 21 Jan 2025 18:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013011F5614;
+	Tue, 21 Jan 2025 18:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483087; cv=none; b=On9hwLwsuUS9EtfJATwvmDnPkCFP3HrUq+igUYq++lg5qF1SLosk2eAU9s8r4y0hLLIWoeJcXsmGLb//nk0ZAdAuxYFZtUHgVcKAKMcRgoZCIBrutyir+mnXconozebdHA0ppRIihQ3d6SdBkhEzmRCfcJixBtigUF/+lbyJlhw=
+	t=1737483090; cv=none; b=o3VhgVXv098qdBdnS5LxFm9Octvjcv9sqMbuChByoztuuiWF0bH66eBc0ep83yw8b3tQhqJsjXhBfj87som2wvD9O0n2Fm3DVK3L223uQTLP3cVxkPg3HmqU4Nm57qGkWdd+onccHZIaQ/okPSSuutiZEVyyjyXIzcZeUyIfdiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483087; c=relaxed/simple;
-	bh=J6pfEOmpyAcUuBnp927onHdOhd0HTyEJLooKnQCxYHo=;
+	s=arc-20240116; t=1737483090; c=relaxed/simple;
+	bh=3Ft9lBSBqNiFdhY0ZdKCtnti1dz1sy86eI8OvqVhJXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEO7bkj+xi5PvQrbongNC2tz9ycVbfFnNBE9lpPU9sfVXbAfmHpN8Ce2wHnTrBuWQrWNn+F/rNoK6teg0KIHkHdnvX0660XvmItGdgu2OzOIXDE2TVq15h1XAElEIT/3IKKzy6HZG3f22DxfoqHaRLo4+9hH0HKtTxx8BACQ19s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdEten3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BywfqGZt0LLfz5cbqzhlxzKkvlT7UGk3O6ygZZEo78W5qvWqoeZAcEFULyz44ldL5N+wvwKLv0lt2tG/kqMQ5vJdVj8EBpe1wuYLkB9IhW3vLWxc/TI6KJLWfNQlCRTNOWJJ2ZjDLUUAjqa8fT9YsfFy3VpLL3fR/5SeY1idQSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5Ov2YoK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdEten3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81413C4CEDF;
-	Tue, 21 Jan 2025 18:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5Ov2YoK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 744FEC4CEE0;
+	Tue, 21 Jan 2025 18:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483086;
-	bh=J6pfEOmpyAcUuBnp927onHdOhd0HTyEJLooKnQCxYHo=;
+	s=korg; t=1737483089;
+	bh=3Ft9lBSBqNiFdhY0ZdKCtnti1dz1sy86eI8OvqVhJXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WdEten3UgRmWTXu+PtmBLeP4athFxaY7DZf4cOJccUYiZw5tl+8GHz7CQAp6kz07i
-	 uBINcp0o242DKR74GbNkVWxpWvE4OcM6ZJP+xvwY6MyMHCFE5wCHt97ja8yB+7+96p
-	 PMyMGAETO8yk2kn9hWpC6RULhx5rANqLF62D1IW8=
+	b=w5Ov2YoKewdgo+t67m0h09cAGQQZ0cHZYurrbzRQjxjrscHHycL82jBvd9xz0vdx+
+	 ufoQoGvctAdVyv5sOhbuzzBms85und0rajEk9zrEPpt/GGjoB2uVlQ2rpfg2S1HQ51
+	 38IuCzdz0Vw8+Y76FKoX8d6P4YwHJDDEeNkzVlys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Lal <quic_ylal@quicinc.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 5.15 112/127] irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
-Date: Tue, 21 Jan 2025 18:53:04 +0100
-Message-ID: <20250121174533.967472744@linuxfoundation.org>
+	Koichiro Den <koichiro.den@canonical.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 113/127] hrtimers: Handle CPU state correctly on hotplug
+Date: Tue, 21 Jan 2025 18:53:05 +0100
+Message-ID: <20250121174534.004512885@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -51,46 +50,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Lal <quic_ylal@quicinc.com>
+From: Koichiro Den <koichiro.den@canonical.com>
 
-commit 0d62a49ab55c99e8deb4593b8d9f923de1ab5c18 upstream.
+commit 2f8dea1692eef2b7ba6a256246ed82c365fdc686 upstream.
 
-When a CPU attempts to enter low power mode, it disables the redistributor
-and Group 1 interrupts and reinitializes the system registers upon wakeup.
+Consider a scenario where a CPU transitions from CPUHP_ONLINE to halfway
+through a CPU hotunplug down to CPUHP_HRTIMERS_PREPARE, and then back to
+CPUHP_ONLINE:
 
-If the transition into low power mode fails, then the CPU_PM framework
-invokes the PM notifier callback with CPU_PM_ENTER_FAILED to allow the
-drivers to undo the state changes.
+Since hrtimers_prepare_cpu() does not run, cpu_base.hres_active remains set
+to 1 throughout. However, during a CPU unplug operation, the tick and the
+clockevents are shut down at CPUHP_AP_TICK_DYING. On return to the online
+state, for instance CFS incorrectly assumes that the hrtick is already
+active, and the chance of the clockevent device to transition to oneshot
+mode is also lost forever for the CPU, unless it goes back to a lower state
+than CPUHP_HRTIMERS_PREPARE once.
 
-The GIC V3 driver ignores CPU_PM_ENTER_FAILED, which leaves the GIC in
-disabled state.
+This round-trip reveals another issue; cpu_base.online is not set to 1
+after the transition, which appears as a WARN_ON_ONCE in enqueue_hrtimer().
 
-Handle CPU_PM_ENTER_FAILED in the same way as CPU_PM_EXIT to restore normal
-operation.
+Aside of that, the bulk of the per CPU state is not reset either, which
+means there are dangling pointers in the worst case.
 
-[ tglx: Massage change log, add Fixes tag ]
+Address this by adding a corresponding startup() callback, which resets the
+stale per CPU state and sets the online flag.
 
-Fixes: 3708d52fc6bb ("irqchip: gic-v3: Implement CPU PM notifier")
-Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+[ tglx: Make the new callback unconditionally available, remove the online
+  	modification in the prepare() callback and clear the remaining
+  	state in the starting callback instead of the prepare callback ]
+
+Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
+Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241220093907.2747601-1-quic_ylal@quicinc.com
+Link: https://lore.kernel.org/all/20241220134421.3809834-1-koichiro.den@canonical.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/hrtimer.h |    1 +
+ kernel/cpu.c            |    2 +-
+ kernel/time/hrtimer.c   |   11 ++++++++++-
+ 3 files changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3.c
-+++ b/drivers/irqchip/irq-gic-v3.c
-@@ -1340,7 +1340,7 @@ static int gic_retrigger(struct irq_data
- static int gic_cpu_pm_notifier(struct notifier_block *self,
- 			       unsigned long cmd, void *v)
+--- a/include/linux/hrtimer.h
++++ b/include/linux/hrtimer.h
+@@ -532,6 +532,7 @@ extern void __init hrtimers_init(void);
+ extern void sysrq_timer_list_show(void);
+ 
+ int hrtimers_prepare_cpu(unsigned int cpu);
++int hrtimers_cpu_starting(unsigned int cpu);
+ #ifdef CONFIG_HOTPLUG_CPU
+ int hrtimers_cpu_dying(unsigned int cpu);
+ #else
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -1766,7 +1766,7 @@ static struct cpuhp_step cpuhp_hp_states
+ 	},
+ 	[CPUHP_AP_HRTIMERS_DYING] = {
+ 		.name			= "hrtimers:dying",
+-		.startup.single		= NULL,
++		.startup.single		= hrtimers_cpu_starting,
+ 		.teardown.single	= hrtimers_cpu_dying,
+ 	},
+ 
+--- a/kernel/time/hrtimer.c
++++ b/kernel/time/hrtimer.c
+@@ -2176,6 +2176,15 @@ int hrtimers_prepare_cpu(unsigned int cp
+ 	}
+ 
+ 	cpu_base->cpu = cpu;
++	hrtimer_cpu_base_init_expiry_lock(cpu_base);
++	return 0;
++}
++
++int hrtimers_cpu_starting(unsigned int cpu)
++{
++	struct hrtimer_cpu_base *cpu_base = this_cpu_ptr(&hrtimer_bases);
++
++	/* Clear out any left over state from a CPU down operation */
+ 	cpu_base->active_bases = 0;
+ 	cpu_base->hres_active = 0;
+ 	cpu_base->hang_detected = 0;
+@@ -2184,7 +2193,6 @@ int hrtimers_prepare_cpu(unsigned int cp
+ 	cpu_base->expires_next = KTIME_MAX;
+ 	cpu_base->softirq_expires_next = KTIME_MAX;
+ 	cpu_base->online = 1;
+-	hrtimer_cpu_base_init_expiry_lock(cpu_base);
+ 	return 0;
+ }
+ 
+@@ -2262,6 +2270,7 @@ int hrtimers_cpu_dying(unsigned int dyin
+ void __init hrtimers_init(void)
  {
--	if (cmd == CPU_PM_EXIT) {
-+	if (cmd == CPU_PM_EXIT || cmd == CPU_PM_ENTER_FAILED) {
- 		if (gic_dist_security_disabled())
- 			gic_enable_redist(true);
- 		gic_cpu_sys_reg_init();
+ 	hrtimers_prepare_cpu(smp_processor_id());
++	hrtimers_cpu_starting(smp_processor_id());
+ 	open_softirq(HRTIMER_SOFTIRQ, hrtimer_run_softirq);
+ }
+ 
 
 
