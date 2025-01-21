@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9941F55E4;
-	Tue, 21 Jan 2025 18:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661F1F540A;
+	Tue, 21 Jan 2025 18:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483066; cv=none; b=QSotqXd+XXh8fSqxp/XBlmOxcwMkh0AInDyNZoNwZCn0JhNOUN7q0iDHKj/wnA71FIre4D+MX9iYaamenCkkKRsNLEz/x9TbJgyfbro7L1/OKrA2eYQgYXPckSl9wS6t/LjLJwMGbO37EOkSzTkNfCQcPIasFHgqH1mQoDS5iv4=
+	t=1737483070; cv=none; b=eDHq0AkQi1ltFQl/ENnAfGIYTztL+dzSeXMNHnL9MweT5Z+JPYkGI6ySb4RfGxGKxFHY30/NC7a/VsO5YV7L3TA6z8S00J9iu7yWo2jnd5e5BoynkEN6jmuHVrWOOn+VepBsJCJ2Ld4JJkO1CYVyr7lhxvqaQoEgJn11vHAEe9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483066; c=relaxed/simple;
-	bh=s+DCodL/M1YGpLXWQNtcMKQ61/RHZ9GgkowSvOsw01E=;
+	s=arc-20240116; t=1737483070; c=relaxed/simple;
+	bh=Ctz7YIN5wSeh4y0w8TDVGuQmWkffHGYr3Tbw4OFBAYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVQGE6Fa2j8sbZKPVrP6+N5zj+4JnPaHjrvmS2EOJSq9oVyWMBVBfYvX8Dz96Pog6FxMM32czvZ3eA+3iVbjW23JZ4EzXonuImIjYFN/b76swtrTImBhKPhg3tdem/1RPlLuj8HgoJ/awozdastJxPkwd/4bGHwcG95RRtZ/wuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKwOZQvx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOOktIcDyfy39fCXhErWuwgaITYqyLeotSb5s4V4ftQbUhckXtGOjYJlhs29QE8FQrbLRX9b0vFFm6z+qK/x3zyhQrEXg7QtQmKVfULCbMB9nxiChxW3DlAiJoD1mTN8eMd5hHpprqeYZ742mAE4e9uQRvMF2voeM+8shv90MEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNGON3W4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKwOZQvx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B89CC4CEDF;
-	Tue, 21 Jan 2025 18:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNGON3W4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BF9C4CEE0;
+	Tue, 21 Jan 2025 18:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483066;
-	bh=s+DCodL/M1YGpLXWQNtcMKQ61/RHZ9GgkowSvOsw01E=;
+	s=korg; t=1737483069;
+	bh=Ctz7YIN5wSeh4y0w8TDVGuQmWkffHGYr3Tbw4OFBAYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mKwOZQvxGEOIjF5Qx+K72o8ED+QXMM09iXJg7N3w2M1hlnbsuo+i41fWJH1OB1jXf
-	 Pr4pH4dgnajxUNic7MmuWIcaSZhhvdtDoIBVEkze4BxmxwyQRBg4mQa4b7OBZ9jtvY
-	 CzauVoJIYcYmVJDJa64f/T+gg6x8NjADM5VsE4KY=
+	b=ZNGON3W4OurDMPGC+ETVUjMdXjy0Pa4yQG4bLLl7K3U09y6O7FbGPJzHbmPcfiOqX
+	 oFmAFpg92olLacHQE7TDKkm+xk44oJryT5JemYV6XQnSqsHA5PIiqUyDaZdtXtUg9V
+	 mCGg3hOlA41VGZPigvxdoVefWKXSYLNjXVQ9LSmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang.tang@suse.com>,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	syzbot+38a095a81f30d82884c1@syzkaller.appspotmail.com,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/127] mptcp: drop port parameter of mptcp_pm_add_addr_signal
-Date: Tue, 21 Jan 2025 18:52:27 +0100
-Message-ID: <20250121174532.553967515@linuxfoundation.org>
+Subject: [PATCH 5.15 076/127] mptcp: fix TCP options overflow.
+Date: Tue, 21 Jan 2025 18:52:28 +0100
+Message-ID: <20250121174532.590632798@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,95 +54,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit af7939f390de17bde4a10a3bf0e337627fb42591 ]
+[ Upstream commit cbb26f7d8451fe56ccac802c6db48d16240feebd ]
 
-Drop the port parameter of mptcp_pm_add_addr_signal() and reflect it to
-avoid passing too many parameters.
+Syzbot reported the following splat:
 
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+CPU: 1 UID: 0 PID: 5836 Comm: sshd Not tainted 6.13.0-rc3-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 11/25/2024
+RIP: 0010:_compound_head include/linux/page-flags.h:242 [inline]
+RIP: 0010:put_page+0x23/0x260 include/linux/mm.h:1552
+Code: 90 90 90 90 90 90 90 55 41 57 41 56 53 49 89 fe 48 bd 00 00 00 00 00 fc ff df e8 f8 5e 12 f8 49 8d 5e 08 48 89 d8 48 c1 e8 03 <80> 3c 28 00 74 08 48 89 df e8 8f c7 78 f8 48 8b 1b 48 89 de 48 83
+RSP: 0000:ffffc90003916c90 EFLAGS: 00010202
+RAX: 0000000000000001 RBX: 0000000000000008 RCX: ffff888030458000
+RDX: 0000000000000100 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffffffff898ca81d R09: 1ffff110054414ac
+R10: dffffc0000000000 R11: ffffed10054414ad R12: 0000000000000007
+R13: ffff88802a20a542 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f34f496e800(0000) GS:ffff8880b8700000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f9d6ec9ec28 CR3: 000000004d260000 CR4: 00000000003526f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ skb_page_unref include/linux/skbuff_ref.h:43 [inline]
+ __skb_frag_unref include/linux/skbuff_ref.h:56 [inline]
+ skb_release_data+0x483/0x8a0 net/core/skbuff.c:1119
+ skb_release_all net/core/skbuff.c:1190 [inline]
+ __kfree_skb+0x55/0x70 net/core/skbuff.c:1204
+ tcp_clean_rtx_queue net/ipv4/tcp_input.c:3436 [inline]
+ tcp_ack+0x2442/0x6bc0 net/ipv4/tcp_input.c:4032
+ tcp_rcv_state_process+0x8eb/0x44e0 net/ipv4/tcp_input.c:6805
+ tcp_v4_do_rcv+0x77d/0xc70 net/ipv4/tcp_ipv4.c:1939
+ tcp_v4_rcv+0x2dc0/0x37f0 net/ipv4/tcp_ipv4.c:2351
+ ip_protocol_deliver_rcu+0x22e/0x440 net/ipv4/ip_input.c:205
+ ip_local_deliver_finish+0x341/0x5f0 net/ipv4/ip_input.c:233
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ NF_HOOK+0x3a4/0x450 include/linux/netfilter.h:314
+ __netif_receive_skb_one_core net/core/dev.c:5672 [inline]
+ __netif_receive_skb+0x2bf/0x650 net/core/dev.c:5785
+ process_backlog+0x662/0x15b0 net/core/dev.c:6117
+ __napi_poll+0xcb/0x490 net/core/dev.c:6883
+ napi_poll net/core/dev.c:6952 [inline]
+ net_rx_action+0x89b/0x1240 net/core/dev.c:7074
+ handle_softirqs+0x2d4/0x9b0 kernel/softirq.c:561
+ __do_softirq kernel/softirq.c:595 [inline]
+ invoke_softirq kernel/softirq.c:435 [inline]
+ __irq_exit_rcu+0xf7/0x220 kernel/softirq.c:662
+ irq_exit_rcu+0x9/0x30 kernel/softirq.c:678
+ instr_sysvec_apic_timer_interrupt arch/x86/kernel/apic/apic.c:1049 [inline]
+ sysvec_apic_timer_interrupt+0x57/0xc0 arch/x86/kernel/apic/apic.c:1049
+ asm_sysvec_apic_timer_interrupt+0x1a/0x20 arch/x86/include/asm/idtentry.h:702
+RIP: 0033:0x7f34f4519ad5
+Code: 85 d2 74 0d 0f 10 02 48 8d 54 24 20 0f 11 44 24 20 64 8b 04 25 18 00 00 00 85 c0 75 27 41 b8 08 00 00 00 b8 0f 01 00 00 0f 05 <48> 3d 00 f0 ff ff 76 75 48 8b 15 24 73 0d 00 f7 d8 64 89 02 48 83
+RSP: 002b:00007ffec5b32ce0 EFLAGS: 00000246
+RAX: 0000000000000001 RBX: 00000000000668a0 RCX: 00007f34f4519ad5
+RDX: 00007ffec5b32d00 RSI: 0000000000000004 RDI: 0000564f4bc6cae0
+RBP: 0000564f4bc6b5a0 R08: 0000000000000008 R09: 0000000000000000
+R10: 00007ffec5b32de8 R11: 0000000000000246 R12: 0000564f48ea8aa4
+R13: 0000000000000001 R14: 0000564f48ea93e8 R15: 00007ffec5b32d68
+ </TASK>
+
+Eric noted a probable shinfo->nr_frags corruption, which indeed
+occurs.
+
+The root cause is a buggy MPTCP option len computation in some
+circumstances: the ADD_ADDR option should be mutually exclusive
+with DSS since the blamed commit.
+
+Still, mptcp_established_options_add_addr() tries to set the
+relevant info in mptcp_out_options, if the remaining space is
+large enough even when DSS is present.
+
+Since the ADD_ADDR infos and the DSS share the same union
+fields, adding first corrupts the latter. In the worst-case
+scenario, such corruption increases the DSS binary layout,
+exceeding the computed length and possibly overwriting the
+skb shared info.
+
+Address the issue by enforcing mutual exclusion in
+mptcp_established_options_add_addr(), too.
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+38a095a81f30d82884c1@syzkaller.appspotmail.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/538
+Fixes: 1bff1e43a30e ("mptcp: optimize out option generation")
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/025d9df8cde3c9a557befc47e9bc08fbbe3476e5.1734771049.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: cbb26f7d8451 ("mptcp: fix TCP options overflow.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c  | 5 ++---
- net/mptcp/pm.c       | 7 ++++---
- net/mptcp/protocol.h | 2 +-
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ net/mptcp/options.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index e654701685a8..31bec175886c 100644
+index 31bec175886c..bdabc5e889b7 100644
 --- a/net/mptcp/options.c
 +++ b/net/mptcp/options.c
-@@ -651,7 +651,6 @@ static bool mptcp_established_options_add_addr(struct sock *sk, struct sk_buff *
- 	bool drop_other_suboptions = false;
- 	unsigned int opt_size = *size;
- 	bool echo;
--	bool port;
- 	int len;
- 
- 	/* add addr will strip the existing options, be sure to avoid breaking
-@@ -660,12 +659,12 @@ static bool mptcp_established_options_add_addr(struct sock *sk, struct sk_buff *
- 	if (!mptcp_pm_should_add_signal(msk) ||
- 	    (opts->suboptions & (OPTION_MPTCP_MPJ_ACK | OPTION_MPTCP_MPC_ACK)) ||
- 	    !mptcp_pm_add_addr_signal(msk, skb, opt_size, remaining, &opts->addr,
--		    &echo, &port, &drop_other_suboptions))
-+		    &echo, &drop_other_suboptions))
+@@ -662,8 +662,15 @@ static bool mptcp_established_options_add_addr(struct sock *sk, struct sk_buff *
+ 		    &echo, &drop_other_suboptions))
  		return false;
  
++	/*
++	 * Later on, mptcp_write_options() will enforce mutually exclusion with
++	 * DSS, bail out if such option is set and we can't drop it.
++	 */
  	if (drop_other_suboptions)
  		remaining += opt_size;
--	len = mptcp_add_addr_len(opts->addr.family, echo, port);
-+	len = mptcp_add_addr_len(opts->addr.family, echo, !!opts->addr.port);
++	else if (opts->suboptions & OPTION_MPTCP_DSS)
++		return false;
++
+ 	len = mptcp_add_addr_len(opts->addr.family, echo, !!opts->addr.port);
  	if (remaining < len)
  		return false;
- 
-diff --git a/net/mptcp/pm.c b/net/mptcp/pm.c
-index b14eb6bccd36..4fa31301fe84 100644
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -265,11 +265,12 @@ void mptcp_pm_mp_fail_received(struct sock *sk, u64 fail_seq)
- bool mptcp_pm_add_addr_signal(struct mptcp_sock *msk, const struct sk_buff *skb,
- 			      unsigned int opt_size, unsigned int remaining,
- 			      struct mptcp_addr_info *addr, bool *echo,
--			      bool *port, bool *drop_other_suboptions)
-+			      bool *drop_other_suboptions)
- {
- 	int ret = false;
- 	u8 add_addr;
- 	u8 family;
-+	bool port;
- 
- 	spin_lock_bh(&msk->pm.lock);
- 
-@@ -287,10 +288,10 @@ bool mptcp_pm_add_addr_signal(struct mptcp_sock *msk, const struct sk_buff *skb,
- 	}
- 
- 	*echo = mptcp_pm_should_add_signal_echo(msk);
--	*port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
-+	port = !!(*echo ? msk->pm.remote.port : msk->pm.local.port);
- 
- 	family = *echo ? msk->pm.remote.family : msk->pm.local.family;
--	if (remaining < mptcp_add_addr_len(family, *echo, *port))
-+	if (remaining < mptcp_add_addr_len(family, *echo, port))
- 		goto out_unlock;
- 
- 	if (*echo) {
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 8f5e5a66babf..6026f0bcdea6 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -823,7 +823,7 @@ static inline int mptcp_rm_addr_len(const struct mptcp_rm_list *rm_list)
- bool mptcp_pm_add_addr_signal(struct mptcp_sock *msk, const struct sk_buff *skb,
- 			      unsigned int opt_size, unsigned int remaining,
- 			      struct mptcp_addr_info *addr, bool *echo,
--			      bool *port, bool *drop_other_suboptions);
-+			      bool *drop_other_suboptions);
- bool mptcp_pm_rm_addr_signal(struct mptcp_sock *msk, unsigned int remaining,
- 			     struct mptcp_rm_list *rm_list);
- int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
 -- 
 2.39.5
 
