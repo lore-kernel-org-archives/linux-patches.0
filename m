@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E601F5438;
-	Tue, 21 Jan 2025 18:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532421F472D;
+	Tue, 21 Jan 2025 18:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482645; cv=none; b=Z+ycwIp04nfpBL3dH5O8SCYRboiGvcnRKYqEMIBdJh9ihuFso3PKtcEqVX1x8T+s+ufVqtUW8Eq1UwcVif0cuur/IaqQP7U55oxScvWi54eoIAlDsBiLgkd/Rg2ji1XJA9t8MVyNUJCxq8nfRWL2ka6xZSjH2zB5pfv8+vrMJI0=
+	t=1737482648; cv=none; b=q0A8OF+cs7xK8Td/xxf8K4g1blM0gAl+qn2+6wZB2wxKAXvaxhjscBeuLOMo6bIbAW7bGkFDhhRWOrKBGYn8u/HfkDqcEj47/2y5J7p0BvVmmYGm+BZ23qejdVSWy9AvqmWAjf9sdeeFZti6q3Qne1o76OPALSwUfbG/Gjdn5Ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482645; c=relaxed/simple;
-	bh=i3mSLQXv0M7g9wvlW3SdoSqGoAp+FBbyusMifDo6uIU=;
+	s=arc-20240116; t=1737482648; c=relaxed/simple;
+	bh=mCBniI7UqLpToS1nW6ZUfhUqgEbtQLU78ZbgmxIFRsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gC1+wjp55r5Xo5HQMKn9Uu9/cURTRC2tSJtTpu3rpRvX8ZPJmobJ7j0mmruQbED1bHs569mHmA+2IGm9/jFt706gyUwd325XErQO/2+QX4vh6Tor6BnsIRibIi48tVXyIZXNMVgt2kk5FxUBjA+c/dIxY2GJg/jim5sAmjo2t9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jl8zVDzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OrZmr+XVsbhh6g96IHpyuIg8sC+QNmFJIHSJ7Cga4NxylslhbbA37PPbxpzdmsJ6ch2fY45BaIToLBEckrPH8GVrKpyofeNsnnyoM6K3peBflj59MRxNoOiCp3Ml7dYiL2Y8mx493fAxhPi1xDl8mMiC5xrR1+zKb39V/U7O+RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqkiGDze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jl8zVDzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 676E5C4CEE1;
-	Tue, 21 Jan 2025 18:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqkiGDze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60C79C4CEDF;
+	Tue, 21 Jan 2025 18:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482644;
-	bh=i3mSLQXv0M7g9wvlW3SdoSqGoAp+FBbyusMifDo6uIU=;
+	s=korg; t=1737482647;
+	bh=mCBniI7UqLpToS1nW6ZUfhUqgEbtQLU78ZbgmxIFRsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jl8zVDzR/lr4EE5mB2I9KrCTKuRh9UuR+m5ZoAuFDA9pOC9EqOJ4Vpy49bfum+eTc
-	 m68Rikw7Gs9NY8bVa2a6vWsLNovHCtDGccu+HRYGb4UNsi2WCsTNb1N4IMUE1iAcFY
-	 8E7dyVWxhzxN0eOKyGxeoA1mu4pVyJLOLzNk7uM4=
+	b=ZqkiGDzeMhMUWuyMOSOnnkymNfFFH91HgvmhBhYnh8rAN2vkFQN7MBxWb0qf9KlBu
+	 ziuXF8jGr/ACWuUvrOkWSHWFI01HGzrYkzqU5Tu4IIayufTww/RVbYbivsFePIHYUJ
+	 U7hCHLjX2C6YPRHyFgPyDtMP0WfLI2I1SqdguNac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/64] scsi: ufs: core: Honor runtime/system PM levels if set by host controller drivers
-Date: Tue, 21 Jan 2025 18:52:23 +0100
-Message-ID: <20250121174522.479067379@linuxfoundation.org>
+Subject: [PATCH 6.1 25/64] selftests: tc-testing: reduce rshift value
+Date: Tue, 21 Jan 2025 18:52:24 +0100
+Message-ID: <20250121174522.516459648@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -52,47 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit bb9850704c043e48c86cc9df90ee102e8a338229 ]
+[ Upstream commit e95274dfe86490ec2a5633035c24b2de6722841f ]
 
-Otherwise, the default levels will override the levels set by the host
-controller drivers.
+After previous change rshift >= 32 is no longer allowed.
+Modify the test to use 31, the test doesn't seem to send
+any traffic so the exact value shouldn't matter.
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20241219-ufs-qcom-suspend-fix-v3-2-63c4b95a70b9@linaro.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250103182458.1213486-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/testing/selftests/tc-testing/tc-tests/filters/flow.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 1ea7ae78fca2c..c5115f6adbdc2 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9879,14 +9879,17 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
- 	}
- 
- 	/*
--	 * Set the default power management level for runtime and system PM.
-+	 * Set the default power management level for runtime and system PM if
-+	 * not set by the host controller drivers.
- 	 * Default power saving mode is to keep UFS link in Hibern8 state
- 	 * and UFS device in sleep state.
- 	 */
--	hba->rpm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
-+	if (!hba->rpm_lvl)
-+		hba->rpm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
- 						UFS_SLEEP_PWR_MODE,
- 						UIC_LINK_HIBERN8_STATE);
--	hba->spm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
-+	if (!hba->spm_lvl)
-+		hba->spm_lvl = ufs_get_desired_pm_lvl_for_dev_link_state(
- 						UFS_SLEEP_PWR_MODE,
- 						UIC_LINK_HIBERN8_STATE);
- 
+diff --git a/tools/testing/selftests/tc-testing/tc-tests/filters/flow.json b/tools/testing/selftests/tc-testing/tc-tests/filters/flow.json
+index 58189327f6444..383fbda07245c 100644
+--- a/tools/testing/selftests/tc-testing/tc-tests/filters/flow.json
++++ b/tools/testing/selftests/tc-testing/tc-tests/filters/flow.json
+@@ -78,10 +78,10 @@
+         "setup": [
+             "$TC qdisc add dev $DEV1 ingress"
+         ],
+-        "cmdUnderTest": "$TC filter add dev $DEV1 parent ffff: handle 1 prio 1 protocol ip flow map key dst rshift 0xff",
++        "cmdUnderTest": "$TC filter add dev $DEV1 parent ffff: handle 1 prio 1 protocol ip flow map key dst rshift 0x1f",
+         "expExitCode": "0",
+         "verifyCmd": "$TC filter get dev $DEV1 parent ffff: handle 1 protocol ip prio 1 flow",
+-        "matchPattern": "filter parent ffff: protocol ip pref 1 flow chain [0-9]+ handle 0x1 map keys dst rshift 255 baseclass",
++        "matchPattern": "filter parent ffff: protocol ip pref 1 flow chain [0-9]+ handle 0x1 map keys dst rshift 31 baseclass",
+         "matchCount": "1",
+         "teardown": [
+             "$TC qdisc del dev $DEV1 ingress"
 -- 
 2.39.5
 
