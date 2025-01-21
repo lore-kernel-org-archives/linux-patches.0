@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902811F667C;
-	Tue, 21 Jan 2025 18:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770FD1F667C;
+	Tue, 21 Jan 2025 18:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482988; cv=none; b=Xuq3zBGdiT8XjBz4lAGMs2e4ztKYQFvo7azKRAarFlSJSSANhxeO0WdGOrh86dHdevox3g/hzzU+T/McDJBClQzML2T4v5aWr23q4iY5k47UzqdhhUmjAJVZnzk+25Uhia0Wny6l2WoWmVqyZaacXLUJkt4bJ/3TAw241wzwavA=
+	t=1737482991; cv=none; b=iNOdEE8jfGhNPnZ0CGSrnlZ3ONW1q8odNx/Uzv2G8u7mAdch+wr2AJTVnziIQErLKZZ7oJPG6UJKYvTJRRHySsl4MR5+OyUraByNM4HP0o+wZn4fV5EOuai5+FEsxP2FAQahL92w0vCjtLME66P9hLMsNX0OzvshTaZrb4QeWpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482988; c=relaxed/simple;
-	bh=yzPo/8TVQEEXBE1OmG5i41Oi70k1erWmladbmNNvw1s=;
+	s=arc-20240116; t=1737482991; c=relaxed/simple;
+	bh=gNfjIRPqYptJd4ei6ce+CFivfsxfRtEXpQBUhCv7QoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DhVYpTQXx3/hdsj5T55zKGyhCVTRV5vTGyVuHB4F3wkPDJD+GQjNMJTVvrS3xl6+J+3TwnHjun2+wXgd/RxpBIgXkBZhNRLixT4G3RD2Y9YTuTDBgN1cZMAm6aVPa5sEjO2b2KfsrCemx1dMeinWDVOpEaWdill60t8XUUkdev8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FytNX8dY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxKtTiWv8YNx2D7l+0M4oDThgpRcjdQKfVZGIGcyS5DoIBDwsODymeZWQi63zyFIpWK0v78x3PtrRGVK9c/JEIOB9xtE7HLfSNBtY6aXqmqQMjSQXTs4favuuj1Sk93ng/+g0crZAKIvkGW2PeKlQaVEznsJsALSETBpQs1ItDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NcubZvBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FytNX8dY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FAB1C4CEDF;
-	Tue, 21 Jan 2025 18:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NcubZvBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE72C4CEDF;
+	Tue, 21 Jan 2025 18:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482988;
-	bh=yzPo/8TVQEEXBE1OmG5i41Oi70k1erWmladbmNNvw1s=;
+	s=korg; t=1737482991;
+	bh=gNfjIRPqYptJd4ei6ce+CFivfsxfRtEXpQBUhCv7QoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FytNX8dYpvpIScpcTLJarfGy9uih/QCT1qko/p/yjnaYLmYf3Ys6t+PtU4B8PQBR3
-	 Dn2lc1yi4gWPsTonwDyaOvCBN+VOTzevMoPUXlqbVivljBD3jzVkOH87xNxqmDP3ys
-	 Y9PX2jC5FUu/Vh4NhFhYz9zCS+rvmvOvBU7fCygc=
+	b=NcubZvBj0gIcg4pfTAiv2O3dnhJkfWW5NdzwRN7hCQf/bW6oxLU4UPcXWR+9y8V2A
+	 gPonq5GY3TtWPrhS0ff24Z2r6bX4i3ZLHQ9exb/bjRpFzab6aTGgaN8WW3/FJMA0F1
+	 olKmtlHc6smPGrt0atBWJVuaeLyyukAg6zeEnYFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justinpopo6@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 078/127] phy: usb: Fix clock imbalance for suspend/resume
-Date: Tue, 21 Jan 2025 18:52:30 +0100
-Message-ID: <20250121174532.666823195@linuxfoundation.org>
+	Sudheer Kumar Doredla <s-doredla@ti.com>,
+	Simon Horman <horms@kernel.org>,
+	Roger Quadros <rogerq@kernel.org>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 079/127] net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()
+Date: Tue, 21 Jan 2025 18:52:31 +0100
+Message-ID: <20250121174532.704222513@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -51,76 +54,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justinpopo6@gmail.com>
+From: Sudheer Kumar Doredla <s-doredla@ti.com>
 
-commit 8484199c09347bdd5d81ee8a2bc530850f900797 upstream.
+[ Upstream commit 03d120f27d050336f7e7d21879891542c4741f81 ]
 
-We should be disabling clocks when wake from USB is not needed. Since
-this wasn't done, we had a clock imbalance since clocks were always
-being enabled on resume.
+CPSW ALE has 75-bit ALE entries stored across three 32-bit words.
+The cpsw_ale_get_field() and cpsw_ale_set_field() functions support
+ALE field entries spanning up to two words at the most.
 
-Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
-Fixes: b0c0b66c0b43 ("phy: usb: Add support for wake and USB low power mode for 7211 S2/S5")
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-7-git-send-email-justinpopo6@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The cpsw_ale_get_field() and cpsw_ale_set_field() functions work as
+expected when ALE field spanned across word1 and word2, but fails when
+ALE field spanned across word2 and word3.
+
+For example, while reading the ALE field spanned across word2 and word3
+(i.e. bits 62 to 64), the word3 data shifted to an incorrect position
+due to the index becoming zero while flipping.
+The same issue occurred when setting an ALE entry.
+
+This issue has not been seen in practice but will be an issue in the future
+if the driver supports accessing ALE fields spanning word2 and word3
+
+Fix the methods to handle getting/setting fields spanning up to two words.
+
+Fixes: b685f1a58956 ("net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()/cpsw_ale_set_field()")
+Signed-off-by: Sudheer Kumar Doredla <s-doredla@ti.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Link: https://patch.msgid.link/20250108172433.311694-1-s-doredla@ti.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c |    2 --
- drivers/phy/broadcom/phy-brcm-usb-init.h          |    1 -
- drivers/phy/broadcom/phy-brcm-usb.c               |    8 +++++---
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/ti/cpsw_ale.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -430,7 +430,6 @@ void brcm_usb_dvr_init_7216(struct brcm_
+diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
+index 8c59e34d8bcaf..348a05454fcaa 100644
+--- a/drivers/net/ethernet/ti/cpsw_ale.c
++++ b/drivers/net/ethernet/ti/cpsw_ale.c
+@@ -104,15 +104,15 @@ struct cpsw_ale_dev_id {
  
- 	params->family_name = "7216";
- 	params->ops = &bcm7216_ops;
--	params->suspend_with_clocks = true;
- }
- 
- void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
-@@ -440,5 +439,4 @@ void brcm_usb_dvr_init_7211b0(struct brc
- 
- 	params->family_name = "7211";
- 	params->ops = &bcm7211b0_ops;
--	params->suspend_with_clocks = true;
- }
---- a/drivers/phy/broadcom/phy-brcm-usb-init.h
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init.h
-@@ -61,7 +61,6 @@ struct  brcm_usb_init_params {
- 	const struct brcm_usb_init_ops *ops;
- 	struct regmap *syscon_piarbctl;
- 	bool wake_enabled;
--	bool suspend_with_clocks;
- };
- 
- void brcm_usb_dvr_init_4908(struct brcm_usb_init_params *params);
---- a/drivers/phy/broadcom/phy-brcm-usb.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb.c
-@@ -598,7 +598,7 @@ static int brcm_usb_phy_suspend(struct d
- 		 * and newer XHCI->2.0-clks/3.0-clks.
- 		 */
- 
--		if (!priv->ini.suspend_with_clocks) {
-+		if (!priv->ini.wake_enabled) {
- 			if (priv->phys[BRCM_USB_PHY_3_0].inited)
- 				clk_disable_unprepare(priv->usb_30_clk);
- 			if (priv->phys[BRCM_USB_PHY_2_0].inited ||
-@@ -615,8 +615,10 @@ static int brcm_usb_phy_resume(struct de
+ static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
  {
- 	struct brcm_usb_phy_data *priv = dev_get_drvdata(dev);
+-	int idx, idx2;
++	int idx, idx2, index;
+ 	u32 hi_val = 0;
  
--	clk_prepare_enable(priv->usb_20_clk);
--	clk_prepare_enable(priv->usb_30_clk);
-+	if (!priv->ini.wake_enabled) {
-+		clk_prepare_enable(priv->usb_20_clk);
-+		clk_prepare_enable(priv->usb_30_clk);
-+	}
- 	brcm_usb_init_ipp(&priv->ini);
+ 	idx    = start / 32;
+ 	idx2 = (start + bits - 1) / 32;
+ 	/* Check if bits to be fetched exceed a word */
+ 	if (idx != idx2) {
+-		idx2 = 2 - idx2; /* flip */
+-		hi_val = ale_entry[idx2] << ((idx2 * 32) - start);
++		index = 2 - idx2; /* flip */
++		hi_val = ale_entry[index] << ((idx2 * 32) - start);
+ 	}
+ 	start -= idx * 32;
+ 	idx    = 2 - idx; /* flip */
+@@ -122,16 +122,16 @@ static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
+ static inline void cpsw_ale_set_field(u32 *ale_entry, u32 start, u32 bits,
+ 				      u32 value)
+ {
+-	int idx, idx2;
++	int idx, idx2, index;
  
- 	/*
+ 	value &= BITMASK(bits);
+ 	idx = start / 32;
+ 	idx2 = (start + bits - 1) / 32;
+ 	/* Check if bits to be set exceed a word */
+ 	if (idx != idx2) {
+-		idx2 = 2 - idx2; /* flip */
+-		ale_entry[idx2] &= ~(BITMASK(bits + start - (idx2 * 32)));
+-		ale_entry[idx2] |= (value >> ((idx2 * 32) - start));
++		index = 2 - idx2; /* flip */
++		ale_entry[index] &= ~(BITMASK(bits + start - (idx2 * 32)));
++		ale_entry[index] |= (value >> ((idx2 * 32) - start));
+ 	}
+ 	start -= idx * 32;
+ 	idx = 2 - idx; /* flip */
+-- 
+2.39.5
+
 
 
