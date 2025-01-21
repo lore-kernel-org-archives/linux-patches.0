@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3DDF1F4283;
-	Tue, 21 Jan 2025 18:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4A91F668A;
+	Tue, 21 Jan 2025 18:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482433; cv=none; b=mjkv09EjHy4gAQHk7A+0Ra/sJSLkou1nJ+vPqBrR6JBS5pEw65vuXGsSHRfMTsjmJo+cZwm9vphWQpvPFmw1VRFc3vtvSkJCxfCkAr4HSpKUYobdkzWUjsJdZxG1w01nW3TyzaLncW3A6y4x6UBEROZzper1TqejnuKr2OhvO+M=
+	t=1737482434; cv=none; b=b+V1xh1DVLYxGhLLHeqRJMXhg0oAMSYlE7zpnET4WpERbUCXsm+sD7y+n/1GfLaOWgC4TO1sgEneUM5K4byHNqrvJ/V/SYPJqkZcJ82Ikfs8AaOL3gZvEGqDY+zp4xMhfnUGs/dR7HY1EVSPpKPRkF+ALzF2xLpZnKwEgQq7GwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482433; c=relaxed/simple;
-	bh=SJgD87Ed1Kwf+CQjonBgC9iGyNZU9/muRxeyRAZWw9I=;
+	s=arc-20240116; t=1737482434; c=relaxed/simple;
+	bh=lc4dfNYlW1Ny4wtk2Nce7cLiz7e94TszWyVSwBm9Xqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8yYkvRpgt7fzIyarIjSLcQ9vwCB2X5SXKHpR+Si2N1sBsvSCmBx/U1b2sgRHbhGfm15RAgk3UupYCaPEtJZk1R0fvkpoINR+sF+oWWSIK/wXgp7OppLWGxLNeMgH+A17IEn66Rqc+IJJBI9riKJiA3z6LxhBC8oIfYrykSSxo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWTYhk21; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C86u8WUKa/BemKUC9HSbEeHbtZJCXKHc49mafTVq/ItOGtd4M30GVit4ac9wRG356fwXCzzZ+LQPp8l+Ihi8/D3iLHWMoKZ5ve7FQ54vJF8d8DEwqRIBpXrvMLnXbAb+bGmGqw5ehbKo7/FcYde71qc3ajMddM5BFAtXpeSYf4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7pikory; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWTYhk21"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3A7C4CEDF;
-	Tue, 21 Jan 2025 18:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7pikory"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E08C4CEDF;
+	Tue, 21 Jan 2025 18:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482431;
-	bh=SJgD87Ed1Kwf+CQjonBgC9iGyNZU9/muRxeyRAZWw9I=;
+	s=korg; t=1737482434;
+	bh=lc4dfNYlW1Ny4wtk2Nce7cLiz7e94TszWyVSwBm9Xqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWTYhk219nWkahRnriHSe9ufVDVhwpAUk4f9UqXyBLkHzw82yq9F5D+k8mwwMNqjd
-	 DIXpDoEv1Al3hGupjUy1FGHDkiXJ5tbUzRKgbIxPIsBrCZKeUSWxT3mIC4kYVOtnkj
-	 sKvlrTHSvA6p/0pbAc8oznMyY6GToy+W/d0IyvYo=
+	b=u7pikoryzM1bYxG0ljvEW84uZQ9e8LlqVk4h1saj8ASLeSi/nH9l7P5yVjxNNEo40
+	 1bnXs5tlztfjEyWZR66xE8mN4wI/MKXMxEpV2DCB5S1EJHDKL4nv9OBvLWYKK0aDAd
+	 I+EmO54Vf2puAln2sIVC50rzPwfPFxvTtQ21wecU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 075/122] ALSA: hda/realtek: Add support for Ayaneo System using CS35L41 HDA
-Date: Tue, 21 Jan 2025 18:52:03 +0100
-Message-ID: <20250121174535.883319430@linuxfoundation.org>
+Subject: [PATCH 6.12 076/122] ALSA: hda/realtek: fixup ASUS GA605W
+Date: Tue, 21 Jan 2025 18:52:04 +0100
+Message-ID: <20250121174535.937283607@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -50,17 +50,16 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-commit de5afaddd5a7af6b9c48900741b410ca03e453ae upstream.
+commit f67b1ef261f4370c48e3a7d19907de136be2d5bd upstream.
 
-Add support for Ayaneo Portable Game System.
+The GA605W laptop has almost the exact same codec setup as the GA403
+and so the same quirks apply to it.
 
-System use 2 CS35L41 Amps with HDA, using Internal boost, with I2C
-
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20250109165455.645810-1-sbinding@opensource.cirrus.com
+Link: https://patch.msgid.link/20250111022754.177551-1-luke@ljones.dev
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -69,13 +68,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10979,6 +10979,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+@@ -10625,6 +10625,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x1e1f, "ASUS Vivobook 15 X1504VAP", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1e51, "ASUS Zephyrus M15", ALC294_FIXUP_ASUS_GU502_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x1e5e, "ASUS ROG Strix G513", ALC294_FIXUP_ASUS_G513_PINS),
++	SND_PCI_QUIRK(0x1043, 0x1e83, "ASUS GA605W", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x1043, 0x1e8e, "ASUS Zephyrus G15", ALC289_FIXUP_ASUS_GA401),
+ 	SND_PCI_QUIRK(0x1043, 0x1eb3, "ASUS Ally RCLA72", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x1ed3, "ASUS HN7306W", ALC287_FIXUP_CS35L41_I2C_2),
 
 
