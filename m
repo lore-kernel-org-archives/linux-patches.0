@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FEF1F55E3;
-	Tue, 21 Jan 2025 17:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF781F55F5;
+	Tue, 21 Jan 2025 17:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482099; cv=none; b=Lbcq2+WDNlDLK5i/EVtep54N43qUlppunUnSPMmAjnh1F3eut53KGrqtKjYN/637guDoqikZfFmXEc6bpMDqH6mKOksBxEgINO08uGv0w3NxFK2eOmNtpLbWq6CaCrboydvjqge7bnGMuSODJiL36qTVc46W9UTLVY+4xDO+0ms=
+	t=1737482102; cv=none; b=rC7Bl2cewg8Whkm2zIYOoPZ413qkNDdu0vYjw+ReiC7uPFevDACpA2s+9IgI5d8nT1pmNxwpwpnjUDYNXeUHpPMSiekNzqdEwtrQwrRj/Du9SzAGAE0+pihWEwmB0w77ML24UfrlZ9j1HzjvBy0e7AP8D+6uRoAr1e2URYopNk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482099; c=relaxed/simple;
-	bh=nmcLxghLpavFelkmunwhmgsbCStfGTUVeB2pBHaRwaM=;
+	s=arc-20240116; t=1737482102; c=relaxed/simple;
+	bh=U+F3Tz94q1ZaMs/gD9L67wpU97MEqEAGzI3fHx5VRO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vexjd4fc1zHEBmYmfpVZLITiuo63PMlgc/FL4E1glYLclv5uOfRDZfRZdejZ85KVeOI4D3+yFNmmJAEbxmpEkWBifcv8y5AAtRzuACZbhYH7h1PTlelE9xZkvIg+On4qLB+VnlF9WPWoyn8UT+2Nez2S1rRsI3qMY//wPpkfcss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/Oy0BBW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFgmmcvivJ11tuNUFAuLLba9fw2dwvRLfeJWK5/FwqEzDdRieOUYweWTyaQvW83xZVPuO66VsYSEuojxKaENwy0lFvOR5yXawAjcDNGHnGQltPy0iBqn5ti7C8nYe58f7Wi+m9pHqxV7rhZ5CwXEWumPwO+inqkmTMwWpu+CF6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFEMet2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/Oy0BBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08FEC4CEDF;
-	Tue, 21 Jan 2025 17:54:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFEMet2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B89C4CEDF;
+	Tue, 21 Jan 2025 17:55:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482099;
-	bh=nmcLxghLpavFelkmunwhmgsbCStfGTUVeB2pBHaRwaM=;
+	s=korg; t=1737482102;
+	bh=U+F3Tz94q1ZaMs/gD9L67wpU97MEqEAGzI3fHx5VRO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/Oy0BBWospFdf26A8jsSFKKgZszVuqe3oooPA5co/PWcYYDs3MkgqRc0Qsn/E8Bb
-	 7hYpciNTaxydmc8JCSJzweGpEl0S2SVDGVtApoG+EEmS993KGxs5krr3E/ySPnAd4X
-	 opqizdUrewO6ljmzETEaQYn4BD40737ksrN8qZ30=
+	b=jFEMet2ZMlGMcupZ6YS0A6NeCMwnEXibZJQE1hOuWB2OG+4sIg1g/qktjp2s18d0Y
+	 EV3JRdeA4h4t34CK8DG2vYidahhbsicUcEVhwPvIEic/oIepIpCNEjQqAMblMqtfS3
+	 JvRpuROfZ3vEDXJiii75mgxxiTmYrubx/eJimU40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Saravanan Vajravel <saravanan.vajravel@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 34/72] poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
-Date: Tue, 21 Jan 2025 18:52:00 +0100
-Message-ID: <20250121174524.736780078@linuxfoundation.org>
+Subject: [PATCH 6.6 35/72] RDMA/bnxt_re: Fix to export port num to ib_query_qp
+Date: Tue, 21 Jan 2025 18:52:01 +0100
+Message-ID: <20250121174524.775140460@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -51,64 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Hongguang Gao <hongguang.gao@broadcom.com>
 
-[ Upstream commit cacd9ae4bf801ff4125d8961bb9a3ba955e51680 ]
+[ Upstream commit 34db8ec931b84d1426423f263b1927539e73b397 ]
 
-As the comment above waitqueue_active() explains, it can only be used
-if both waker and waiter have mb()'s that pair with each other. However
-__pollwait() is broken in this respect.
+Current driver implementation doesn't populate the port_num
+field in query_qp. Adding the code to convert internal firmware
+port id to ibv defined port number and export it.
 
-This is not pipe-specific, but let's look at pipe_poll() for example:
-
-	poll_wait(...); // -> __pollwait() -> add_wait_queue()
-
-	LOAD(pipe->head);
-	LOAD(pipe->head);
-
-In theory these LOAD()'s can leak into the critical section inside
-add_wait_queue() and can happen before list_add(entry, wq_head), in this
-case pipe_poll() can race with wakeup_pipe_readers/writers which do
-
-	smp_mb();
-	if (waitqueue_active(wq_head))
-		wake_up_interruptible(wq_head);
-
-There are more __pollwait()-like functions (grep init_poll_funcptr), and
-it seems that at least ep_ptable_queue_proc() has the same problem, so the
-patch adds smp_mb() into poll_wait().
-
-Link: https://lore.kernel.org/all/20250102163320.GA17691@redhat.com/
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20250107162717.GA18922@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Saravanan Vajravel <saravanan.vajravel@broadcom.com>
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/20241211083931.968831-5-kalesh-anakkur.purayil@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/poll.h | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 1 +
+ drivers/infiniband/hw/bnxt_re/ib_verbs.h | 4 ++++
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c | 1 +
+ drivers/infiniband/hw/bnxt_re/qplib_fp.h | 1 +
+ 4 files changed, 7 insertions(+)
 
-diff --git a/include/linux/poll.h b/include/linux/poll.h
-index d1ea4f3714a84..fc641b50f1298 100644
---- a/include/linux/poll.h
-+++ b/include/linux/poll.h
-@@ -41,8 +41,16 @@ typedef struct poll_table_struct {
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index 13c65ec582568..08da793969ee5 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -2220,6 +2220,7 @@ int bnxt_re_query_qp(struct ib_qp *ib_qp, struct ib_qp_attr *qp_attr,
+ 	qp_attr->retry_cnt = qplib_qp->retry_cnt;
+ 	qp_attr->rnr_retry = qplib_qp->rnr_retry;
+ 	qp_attr->min_rnr_timer = qplib_qp->min_rnr_timer;
++	qp_attr->port_num = __to_ib_port_num(qplib_qp->port_id);
+ 	qp_attr->rq_psn = qplib_qp->rq.psn;
+ 	qp_attr->max_rd_atomic = qplib_qp->max_rd_atomic;
+ 	qp_attr->sq_psn = qplib_qp->sq.psn;
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.h b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+index 98baea98fc176..ef910e6e2ccb7 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.h
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.h
+@@ -245,6 +245,10 @@ void bnxt_re_dealloc_ucontext(struct ib_ucontext *context);
+ int bnxt_re_mmap(struct ib_ucontext *context, struct vm_area_struct *vma);
+ void bnxt_re_mmap_free(struct rdma_user_mmap_entry *rdma_entry);
  
- static inline void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)
- {
--	if (p && p->_qproc && wait_address)
-+	if (p && p->_qproc && wait_address) {
- 		p->_qproc(filp, wait_address, p);
-+		/*
-+		 * This memory barrier is paired in the wq_has_sleeper().
-+		 * See the comment above prepare_to_wait(), we need to
-+		 * ensure that subsequent tests in this thread can't be
-+		 * reordered with __add_wait_queue() in _qproc() paths.
-+		 */
-+		smp_mb();
-+	}
- }
++static inline u32 __to_ib_port_num(u16 port_id)
++{
++	return (u32)port_id + 1;
++}
  
- /*
+ unsigned long bnxt_re_lock_cqs(struct bnxt_re_qp *qp);
+ void bnxt_re_unlock_cqs(struct bnxt_re_qp *qp, unsigned long flags);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.c b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+index 871a49315c880..c4f10498c79d8 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.c
+@@ -1460,6 +1460,7 @@ int bnxt_qplib_query_qp(struct bnxt_qplib_res *res, struct bnxt_qplib_qp *qp)
+ 	qp->dest_qpn = le32_to_cpu(sb->dest_qp_id);
+ 	memcpy(qp->smac, sb->src_mac, 6);
+ 	qp->vlan_id = le16_to_cpu(sb->vlan_pcp_vlan_dei_vlan_id);
++	qp->port_id = le16_to_cpu(sb->port_id);
+ bail:
+ 	dma_free_coherent(&rcfw->pdev->dev, sbuf.size,
+ 			  sbuf.sb, sbuf.dma_addr);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+index b5c53e864fbb3..55fd840359ef2 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
++++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
+@@ -297,6 +297,7 @@ struct bnxt_qplib_qp {
+ 	u32				dest_qpn;
+ 	u8				smac[6];
+ 	u16				vlan_id;
++	u16				port_id;
+ 	u8				nw_type;
+ 	struct bnxt_qplib_ah		ah;
+ 
 -- 
 2.39.5
 
