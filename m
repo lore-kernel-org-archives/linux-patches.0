@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270F11F5612;
-	Tue, 21 Jan 2025 17:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0590E1F63E2;
+	Tue, 21 Jan 2025 17:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482126; cv=none; b=QuDvLzTyuWOwQRzt5a+5jm2PlpCFGJkc3aCDY3F2OXKZMkhEBM9LBlspURGOhlAPADQuQmVLC4BrjfPdxYLSMPRhDMwI4a/VmQuMRscJBYXFp3h5o9ZiFBKAE5yKqSRLHOND5mpVvfy0P0mbGQSEK3CaVmT3yU8CALOMYd2mCxw=
+	t=1737482129; cv=none; b=E+JcmiCOKx+VNSCb2Tkh0SS03upS216mv/W7Ni5WBy+703d5TX56oUQN/pWAbKSSTH2PwpvoZKxZm1LC1oecA4siw1T0ai3LdwK6prFtItxIwEbWJY/TXymFriyF4waZWJsvRdQMNnmFdY8iGkYBKhGFHIxrxy21kxjeRAoOVFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482126; c=relaxed/simple;
-	bh=S/6OH3P3KMRKwKrHZcdGTa/PUlESFUTnWEeAsXb33kk=;
+	s=arc-20240116; t=1737482129; c=relaxed/simple;
+	bh=BExzrTdnpjs2U3q9qPk38+vIIoZ3B6/NRnguDBnmk/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lkjkS66M08pZ7okmbtzP31W5ItcY5f27f7KijxAeS80XbhZr16jFud1JsQH4TyyN6+I1NaPtPTDsVxSA2UicBcY3eh/Ag84bBrlPteSvLvpkegFo7KLaD/NFxZexiQejMBt0TLi+X8t3ClrCOKJ0zxKmAFRy02fcErYKdpXpLnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsqwBhj9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ac+1JRAcJWwCRPGKe7CNSKAhaUKnj2P9UU+WupuApQcD1pLsWZYo7N+wvEKHebX0T4iVUmir7IKImiNWlPCeksdRU/b6WRElxlr5llVNuGFm3RWoTQyfyehOyyrpUlw3zcI1suxurmbUO/nnp/A25QT9grE3FWtxhL2UTgdX7WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jK+Qx5qA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsqwBhj9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4903C4CEE1;
-	Tue, 21 Jan 2025 17:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jK+Qx5qA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8207CC4CEE1;
+	Tue, 21 Jan 2025 17:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482126;
-	bh=S/6OH3P3KMRKwKrHZcdGTa/PUlESFUTnWEeAsXb33kk=;
+	s=korg; t=1737482128;
+	bh=BExzrTdnpjs2U3q9qPk38+vIIoZ3B6/NRnguDBnmk/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsqwBhj90gqVReNdJkM8tNS+s0UTs48HZe2vrTEUj23VjblulXQBYcwhXZNoNbGBN
-	 BTOcBtnaSHwFKOggynIViwd7bDrOFaadTRgiOhlbYDe0AGf3aSNZ6GS3q+ViWvLaDz
-	 9X2qTLjmh3Kv+6IBcKt4l3aeWhjizujuRBx63HPc=
+	b=jK+Qx5qAACoUV/+mBOCi7IgCFggHQ6YPLIiErwpYJSTGPGDCDsqxX8w+OCivgaWTG
+	 lXJ8rjww1Iqo8SxuQwq1ogxIMJXiHKgb0LcUWUyr1f48IKhflZrPeNcxP/wi6uPPF/
+	 YUIE7b3o61KYj54DbvMaSu9+ntTN8vxuskoXpBkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 42/72] mptcp: fix spurious wake-up on under memory pressure
-Date: Tue, 21 Jan 2025 18:52:08 +0100
-Message-ID: <20250121174525.044117629@linuxfoundation.org>
+Subject: [PATCH 6.6 43/72] selftests: mptcp: avoid spurious errors on disconnect
+Date: Tue, 21 Jan 2025 18:52:09 +0100
+Message-ID: <20250121174525.081545487@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -45,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
@@ -53,45 +54,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit e226d9259dc4f5d2c19e6682ad1356fa97cf38f4 upstream.
+commit 218cc166321fb3cc8786677ffe0d09a78778a910 upstream.
 
-The wake-up condition currently implemented by mptcp_epollin_ready()
-is wrong, as it could mark the MPTCP socket as readable even when
-no data are present and the system is under memory pressure.
+The disconnect test-case generates spurious errors:
 
-Explicitly check for some data being available in the receive queue.
+  INFO: disconnect
+  INFO: extra options: -I 3 -i /tmp/tmp.r43niviyoI
+  01 ns1 MPTCP -> ns1 (10.0.1.1:10000      ) MPTCP (duration 140ms) [FAIL]
+  file received by server does not match (in, out):
+  Unexpected revents: POLLERR/POLLNVAL(19)
+  -rw-r--r-- 1 root root 10028676 Jan 10 10:47 /tmp/tmp.r43niviyoI.disconnect
+  Trailing bytes are:
+  ��\����R���!8��u2��5N%
+  -rw------- 1 root root 9992290 Jan 10 10:47 /tmp/tmp.Os4UbnWbI1
+  Trailing bytes are:
+  ��\����R���!8��u2��5N%
+  02 ns1 MPTCP -> ns1 (dead:beef:1::1:10001) MPTCP (duration 206ms) [ OK ]
+  03 ns1 MPTCP -> ns1 (dead:beef:1::1:10002) TCP   (duration  31ms) [ OK ]
+  04 ns1 TCP   -> ns1 (dead:beef:1::1:10003) MPTCP (duration  26ms) [ OK ]
+  [FAIL] Tests of the full disconnection have failed
+  Time: 2 seconds
 
-Fixes: 5684ab1a0eff ("mptcp: give rcvlowat some love")
+The root cause is actually in the user-space bits: the test program
+currently disconnects as soon as all the pending data has been spooled,
+generating an FASTCLOSE. If such option reaches the peer before the
+latter has reached the closed status, the msk socket will report an
+error to the user-space, as per protocol specification, causing the
+above failure.
+
+Address the issue explicitly waiting for all the relevant sockets to
+reach a closed status before performing the disconnect.
+
+Fixes: 05be5e273c84 ("selftests: mptcp: add disconnect tests")
 Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20250113-net-mptcp-connect-st-flakes-v1-2-0d986ee7b1b6@kernel.org
+Link: https://patch.msgid.link/20250113-net-mptcp-connect-st-flakes-v1-3-0d986ee7b1b6@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.h |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_connect.c |   43 ++++++++++++++++------
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -685,10 +685,15 @@ static inline u64 mptcp_data_avail(const
+--- a/tools/testing/selftests/net/mptcp/mptcp_connect.c
++++ b/tools/testing/selftests/net/mptcp/mptcp_connect.c
+@@ -25,6 +25,8 @@
+ #include <sys/types.h>
+ #include <sys/mman.h>
  
- static inline bool mptcp_epollin_ready(const struct sock *sk)
++#include <arpa/inet.h>
++
+ #include <netdb.h>
+ #include <netinet/in.h>
+ 
+@@ -1211,23 +1213,42 @@ static void parse_setsock_options(const
+ 	exit(1);
+ }
+ 
+-void xdisconnect(int fd, int addrlen)
++void xdisconnect(int fd)
  {
-+	u64 data_avail = mptcp_data_avail(mptcp_sk(sk));
+-	struct sockaddr_storage empty;
++	socklen_t addrlen = sizeof(struct sockaddr_storage);
++	struct sockaddr_storage addr, empty;
+ 	int msec_sleep = 10;
+-	int queued = 1;
+-	int i;
++	void *raw_addr;
++	int i, cmdlen;
++	char cmd[128];
 +
-+	if (!data_avail)
-+		return false;
++	/* get the local address and convert it to string */
++	if (getsockname(fd, (struct sockaddr *)&addr, &addrlen) < 0)
++		xerror("getsockname");
 +
- 	/* mptcp doesn't have to deal with small skbs in the receive queue,
--	 * at it can always coalesce them
-+	 * as it can always coalesce them
++	if (addr.ss_family == AF_INET)
++		raw_addr = &(((struct sockaddr_in *)&addr)->sin_addr);
++	else if (addr.ss_family == AF_INET6)
++		raw_addr = &(((struct sockaddr_in6 *)&addr)->sin6_addr);
++	else
++		xerror("bad family");
++
++	strcpy(cmd, "ss -M | grep -q ");
++	cmdlen = strlen(cmd);
++	if (!inet_ntop(addr.ss_family, raw_addr, &cmd[cmdlen],
++		       sizeof(cmd) - cmdlen))
++		xerror("inet_ntop");
+ 
+ 	shutdown(fd, SHUT_WR);
+ 
+-	/* while until the pending data is completely flushed, the later
++	/*
++	 * wait until the pending data is completely flushed and all
++	 * the MPTCP sockets reached the closed status.
+ 	 * disconnect will bypass/ignore/drop any pending data.
  	 */
--	return (mptcp_data_avail(mptcp_sk(sk)) >= sk->sk_rcvlowat) ||
-+	return (data_avail >= sk->sk_rcvlowat) ||
- 	       (mem_cgroup_sockets_enabled && sk->sk_memcg &&
- 		mem_cgroup_under_socket_pressure(sk->sk_memcg)) ||
- 	       READ_ONCE(tcp_memory_pressure);
+ 	for (i = 0; ; i += msec_sleep) {
+-		if (ioctl(fd, SIOCOUTQ, &queued) < 0)
+-			xerror("can't query out socket queue: %d", errno);
+-
+-		if (!queued)
++		/* closed socket are not listed by 'ss' */
++		if (system(cmd) != 0)
+ 			break;
+ 
+ 		if (i > poll_timeout)
+@@ -1281,9 +1302,9 @@ again:
+ 		return ret;
+ 
+ 	if (cfg_truncate > 0) {
+-		xdisconnect(fd, peer->ai_addrlen);
++		xdisconnect(fd);
+ 	} else if (--cfg_repeat > 0) {
+-		xdisconnect(fd, peer->ai_addrlen);
++		xdisconnect(fd);
+ 
+ 		/* the socket could be unblocking at this point, we need the
+ 		 * connect to be blocking
 
 
