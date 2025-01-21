@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CBC1F63CF;
-	Tue, 21 Jan 2025 17:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8C01F5611;
+	Tue, 21 Jan 2025 17:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482143; cv=none; b=ZRJGvBFd2ov5w05Ide/mEYFJNsU757qtzig732WEvZqTAPmVffp9ih9Uh7xumsctoOtlXgeDIm9lVw+rlp/HNoKshCHW0HL8VGjliuaOV58Xsp4ky9iI4ioRsd0Kn467cwpD1IgBv2o/rzBikYxG+oXYHGW66DP6Cs0wDXyiVUw=
+	t=1737482146; cv=none; b=d5XpF7rgAfQ1KhaI2JUuH0YmH7S0gSsyvzu7A0OTWsWAbeGBv6DZshf0NiUWRk2Ii2B1c16b9EqykfINqnRuuy0J5Fcg0Du8edJM6YAPgyT+Nl5IvDL518C81WXSs2HPiXQA1vVhmUTEhzMDa7MqbFA1GtsmGucJBILPzim/7vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482143; c=relaxed/simple;
-	bh=Alh9ABgvDAHIs4G8BAVSB9uLrPFHog/bM7wjhlv0Lr0=;
+	s=arc-20240116; t=1737482146; c=relaxed/simple;
+	bh=rGzlink40xaTbaCZAHyczYeBGx1VQKQQL3Q41mP0F+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YWmr6WXPRGhJj1PzlzK7mW/KcifM3x5EomPDGjTvzEGr3MDloRu/gjmjQxr37HvhaNTRQh6QTCjCuNMnuMhBzrtqd74fwgW2H15ibnJr+w9s1i8lL42JhQ6ZqYZ4RH0Ub5eSofB+C0s3i6j+M66Kkuyhjlsbpy8uhXPVX6nVQRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Itf+JCPt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UnD4mGtFMd0k5ylhEFxqy6FBtU9lkKxK8LSNcjkZc5KJn84RpYMuUgJnZjSk6VY2e4S0wDJ4pFaZxFI/HU1ypE3qjLmQiYCK8jwNp9OzyQpgiaKz2YxNZRouqGxdKJPUgaQW2XI5Pnmy0qQBIpQHiI/2qoTfEQbl3u55Rm063uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGSRx+4f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Itf+JCPt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7B8C4CEE0;
-	Tue, 21 Jan 2025 17:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGSRx+4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23F6C4CEDF;
+	Tue, 21 Jan 2025 17:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482143;
-	bh=Alh9ABgvDAHIs4G8BAVSB9uLrPFHog/bM7wjhlv0Lr0=;
+	s=korg; t=1737482146;
+	bh=rGzlink40xaTbaCZAHyczYeBGx1VQKQQL3Q41mP0F+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Itf+JCPtC2C+42FWuV4wxTAVOE0hEZbstkfrciHlIBjm26dbGGEpE850Cz6O92wNV
-	 cT4DnusI4twsATUop9EFRF5h42LOYdBL8WTaYGP2l3Eib2+F66HLl7oCxcewqI/ak0
-	 Wqs/OHCjLfbegvn2GyytBL/sI5ERbD5bfzh2ttDE=
+	b=jGSRx+4flGGu38Bn65Tf7+Of631VK1ejzBJ2i6LdLXIoVn86/2jteAIu5xFnGxSGB
+	 yKxeCKLTw3gW2RosS1PjFpVvsSIGY3/txcG9PA03M3x9Gjrp5ejl1U3yp7uH/kUWAV
+	 CTGeynuMxNTk1Ar3H+loiv9NrsMLIqC2RV8SVaXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 21/72] Revert "mtd: spi-nor: core: replace dummy buswidth from addr to data"
-Date: Tue, 21 Jan 2025 18:51:47 +0100
-Message-ID: <20250121174524.243421410@linuxfoundation.org>
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 48/72] vsock: reset socket state when de-assigning the transport
+Date: Tue, 21 Jan 2025 18:52:14 +0100
+Message-ID: <20250121174525.275964278@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -53,78 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <pratyush@kernel.org>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit d15638bf76ad47874ecb5dc386f0945fc0b2a875 ]
+commit a24009bc9be60242651a21702609381b5092459e upstream.
 
-This reverts commit 98d1fb94ce75f39febd456d6d3cbbe58b6678795.
+Transport's release() and destruct() are called when de-assigning the
+vsock transport. These callbacks can touch some socket state like
+sock flags, sk_state, and peer_shutdown.
 
-The commit uses data nbits instead of addr nbits for dummy phase. This
-causes a regression for all boards where spi-tx-bus-width is smaller
-than spi-rx-bus-width. It is a common pattern for boards to have
-spi-tx-bus-width == 1 and spi-rx-bus-width > 1. The regression causes
-all reads with a dummy phase to become unavailable for such boards,
-leading to a usually slower 0-dummy-cycle read being selected.
+Since we are reassigning the socket to a new transport during
+vsock_connect(), let's reset these fields to have a clean state with
+the new transport.
 
-Most controllers' supports_op hooks call spi_mem_default_supports_op().
-In spi_mem_default_supports_op(), spi_mem_check_buswidth() is called to
-check if the buswidths for the op can actually be supported by the
-board's wiring. This wiring information comes from (among other things)
-the spi-{tx,rx}-bus-width DT properties. Based on these properties,
-SPI_TX_* or SPI_RX_* flags are set by of_spi_parse_dt().
-spi_mem_check_buswidth() then uses these flags to make the decision
-whether an op can be supported by the board's wiring (in a way,
-indirectly checking against spi-{rx,tx}-bus-width).
-
-Now the tricky bit here is that spi_mem_check_buswidth() does:
-
-	if (op->dummy.nbytes &&
-	    spi_check_buswidth_req(mem, op->dummy.buswidth, true))
-		return false;
-
-The true argument to spi_check_buswidth_req() means the op is treated as
-a TX op. For a board that has say 1-bit TX and 4-bit RX, a 4-bit dummy
-TX is considered as unsupported, and the op gets rejected.
-
-The commit being reverted uses the data buswidth for dummy buswidth. So
-for reads, the RX buswidth gets used for the dummy phase, uncovering
-this issue. In reality, a dummy phase is neither RX nor TX. As the name
-suggests, these are just dummy cycles that send or receive no data, and
-thus don't really need to have any buswidth at all.
-
-Ideally, dummy phases should not be checked against the board's wiring
-capabilities at all, and should only be sanity-checked for having a sane
-buswidth value. Since we are now at rc7 and such a change might
-introduce many unexpected bugs, revert the commit for now. It can be
-sent out later along with the spi_mem_check_buswidth() fix.
-
-Fixes: 98d1fb94ce75 ("mtd: spi-nor: core: replace dummy buswidth from addr to data")
-Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Closes: https://lore.kernel.org/linux-mtd/3342163.44csPzL39Z@steina-w/
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 8d75a66775cb1..1b0c6770c14e4 100644
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -89,7 +89,7 @@ void spi_nor_spimem_setup_op(const struct spi_nor *nor,
- 		op->addr.buswidth = spi_nor_get_protocol_addr_nbits(proto);
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -490,6 +490,15 @@ int vsock_assign_transport(struct vsock_
+ 		 */
+ 		vsk->transport->release(vsk);
+ 		vsock_deassign_transport(vsk);
++
++		/* transport's release() and destruct() can touch some socket
++		 * state, since we are reassigning the socket to a new transport
++		 * during vsock_connect(), let's reset these fields to have a
++		 * clean state.
++		 */
++		sock_reset_flag(sk, SOCK_DONE);
++		sk->sk_state = TCP_CLOSE;
++		vsk->peer_shutdown = 0;
+ 	}
  
- 	if (op->dummy.nbytes)
--		op->dummy.buswidth = spi_nor_get_protocol_data_nbits(proto);
-+		op->dummy.buswidth = spi_nor_get_protocol_addr_nbits(proto);
- 
- 	if (op->data.nbytes)
- 		op->data.buswidth = spi_nor_get_protocol_data_nbits(proto);
--- 
-2.39.5
-
+ 	/* We increase the module refcnt to prevent the transport unloading
 
 
