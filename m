@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F711F55E4;
-	Tue, 21 Jan 2025 18:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98FF1F668A;
+	Tue, 21 Jan 2025 18:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483002; cv=none; b=gxgGt+H8eU+/gA7yUlQsKB9t1tQitJRgfrnS4s0ZzZA7TDwP9gVNpSV1GvOdIuZ92JvQPqZqAE2UQHRQ6JMwLZZ/Ivxiy4GM6lXEpWR0FtKwwo/qg8ZYbU7cb6kO0EAwL5f4HYujLhDQXZX0BUAsshuqTdmfR5t927+DoGL3DYg=
+	t=1737483005; cv=none; b=ZI+zsNlHhj7qr4i+mb/nLIelLb99oXkdrmmqSq2vpJ7DxAVX7J8nXKuGHBzJSRZPgv+K+WOAMEQDq2RqpfirYZMvJCZ+c9zuqAPR//IhLst+4ghiNpOXgg/M36k8vf7EtONC0uJn46w0qrREuOopkpCb8jK4dBOKYMzh5xBLpAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483002; c=relaxed/simple;
-	bh=1UFk6+wpqJQ5J1FOawmSs2r6Du0tUuxzSDwCmz3VZUk=;
+	s=arc-20240116; t=1737483005; c=relaxed/simple;
+	bh=o1u39yU1xJmNb1A975VBI+M1ALbZ0gJe3rQmWZKe3zM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AULC8HL7Ab/vLnNNIPQvzbrul9mrkfw5bKu1aWI+Djp52W3EBMuyofSH2uKggsGMtbCOTOlopzFgmC3mvipqAZlY/HU4h1Juwkp5y5spu+pRQIa/6a9z/YL1zzDJzs3XSR51PKZGfTu2lwrzWW1xIMbfnjjtcVaOj0g7b0GawgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3osCx/U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pq+MDBbPw8T8sEAeSFHL41IA4wa5oMKy9ZJshTI5NuS0vKKj9VFsHVN6ab6HyEkJqplsTnD4aedUuR/C2MINroF13Yt0zsJAVnQ5Rz/10GRZOjnVhDSlY4vdp06fh97J/pVW+c7STcG3e1hfujUMMiq5hLzmjnK3D4IiWFhiC1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cY5nVI5A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3osCx/U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E81AC4CEDF;
-	Tue, 21 Jan 2025 18:10:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cY5nVI5A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26081C4CEE1;
+	Tue, 21 Jan 2025 18:10:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483002;
-	bh=1UFk6+wpqJQ5J1FOawmSs2r6Du0tUuxzSDwCmz3VZUk=;
+	s=korg; t=1737483005;
+	bh=o1u39yU1xJmNb1A975VBI+M1ALbZ0gJe3rQmWZKe3zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3osCx/UcGm6JbSoZ/gxTS1DM2u0mqoxLxFbNggMFFLdXvZOgAnLiMZDrDiLZaYpV
-	 PT4VuUCghZ67xfKj1HkKydn/EXJpp7ZEFeD5yLyCCzrdcS6asgMjci84QNR7CN99Rw
-	 IUGluCEqeLoaiamBBkSNNXD0DtdvME2tnVvRnt7Q=
+	b=cY5nVI5AOTVvbohvXO3/au16lZjBQfAMF3Z4KGt9ccOUfmZHzikEjP5w7UHmtL8oi
+	 S2F5pz9NFZcpOBacXTT1GVCb3XcCHiNoLR9OBPuhSQ+2e7mGttvt7Fta7D4HtztkrX
+	 e/bVmn1LlR9/go1CaCd8URD69nyXfOIBm0QVR2C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiao Liang <shaw.leon@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/127] gtp: use exit_batch_rtnl() method
-Date: Tue, 21 Jan 2025 18:52:35 +0100
-Message-ID: <20250121174532.853755065@linuxfoundation.org>
+Subject: [PATCH 5.15 084/127] gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().
+Date: Tue, 21 Jan 2025 18:52:36 +0100
+Message-ID: <20250121174532.893149210@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -52,64 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 6eedda01b2bfdcf427b37759e053dc27232f3af1 ]
+[ Upstream commit 46841c7053e6d25fb33e0534ef023833bf03e382 ]
 
-exit_batch_rtnl() is called while RTNL is held,
-and devices to be unregistered can be queued in the dev_kill_list.
+gtp_newlink() links the gtp device to a list in dev_net(dev).
 
-This saves one rtnl_lock()/rtnl_unlock() pair per netns
-and one unregister_netdevice_many() call per netns.
+However, even after the gtp device is moved to another netns,
+it stays on the list but should be invisible.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Antoine Tenart <atenart@kernel.org>
-Link: https://lore.kernel.org/r/20240206144313.2050392-8-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 46841c7053e6 ("gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().")
+Let's use for_each_netdev_rcu() for netdev traversal in
+gtp_genl_dump_pdp().
+
+Note that gtp_dev_list is no longer used under RCU, so list
+helpers are converted to the non-RCU variant.
+
+Fixes: 459aa660eb1d ("gtp: add initial driver for datapath of GPRS Tunneling Protocol (GTP-U)")
+Reported-by: Xiao Liang <shaw.leon@gmail.com>
+Closes: https://lore.kernel.org/netdev/CABAhCOQdBL6h9M2C+kd+bGivRJ9Q72JUxW+-gur0nub_=PmFPA@mail.gmail.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/gtp.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/net/gtp.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/gtp.c b/drivers/net/gtp.c
-index 2509d7bccb2b3..67dcdd471a659 100644
+index 67dcdd471a659..e4d29c22a0a79 100644
 --- a/drivers/net/gtp.c
 +++ b/drivers/net/gtp.c
-@@ -1403,23 +1403,23 @@ static int __net_init gtp_net_init(struct net *net)
- 	return 0;
+@@ -698,7 +698,7 @@ static int gtp_newlink(struct net *src_net, struct net_device *dev,
+ 	}
+ 
+ 	gn = net_generic(dev_net(dev), gtp_net_id);
+-	list_add_rcu(&gtp->list, &gn->gtp_dev_list);
++	list_add(&gtp->list, &gn->gtp_dev_list);
+ 	dev->priv_destructor = gtp_destructor;
+ 
+ 	netdev_dbg(dev, "registered new GTP interface\n");
+@@ -724,7 +724,7 @@ static void gtp_dellink(struct net_device *dev, struct list_head *head)
+ 		hlist_for_each_entry_safe(pctx, next, &gtp->tid_hash[i], hlist_tid)
+ 			pdp_context_delete(pctx);
+ 
+-	list_del_rcu(&gtp->list);
++	list_del(&gtp->list);
+ 	unregister_netdevice_queue(dev, head);
  }
  
--static void __net_exit gtp_net_exit(struct net *net)
-+static void __net_exit gtp_net_exit_batch_rtnl(struct list_head *net_list,
-+					       struct list_head *dev_to_kill)
- {
--	struct gtp_net *gn = net_generic(net, gtp_net_id);
--	struct gtp_dev *gtp;
--	LIST_HEAD(list);
-+	struct net *net;
+@@ -1305,16 +1305,19 @@ static int gtp_genl_dump_pdp(struct sk_buff *skb,
+ 	struct gtp_dev *last_gtp = (struct gtp_dev *)cb->args[2], *gtp;
+ 	int i, j, bucket = cb->args[0], skip = cb->args[1];
+ 	struct net *net = sock_net(skb->sk);
++	struct net_device *dev;
+ 	struct pdp_ctx *pctx;
+-	struct gtp_net *gn;
+-
+-	gn = net_generic(net, gtp_net_id);
  
--	rtnl_lock();
--	list_for_each_entry(gtp, &gn->gtp_dev_list, list)
--		gtp_dellink(gtp->dev, &list);
-+	list_for_each_entry(net, net_list, exit_list) {
-+		struct gtp_net *gn = net_generic(net, gtp_net_id);
-+		struct gtp_dev *gtp;
+ 	if (cb->args[4])
+ 		return 0;
  
--	unregister_netdevice_many(&list);
--	rtnl_unlock();
-+		list_for_each_entry(gtp, &gn->gtp_dev_list, list)
-+			gtp_dellink(gtp->dev, dev_to_kill);
-+	}
+ 	rcu_read_lock();
+-	list_for_each_entry_rcu(gtp, &gn->gtp_dev_list, list) {
++	for_each_netdev_rcu(net, dev) {
++		if (dev->rtnl_link_ops != &gtp_link_ops)
++			continue;
++
++		gtp = netdev_priv(dev);
++
+ 		if (last_gtp && last_gtp != gtp)
+ 			continue;
+ 		else
+@@ -1410,9 +1413,9 @@ static void __net_exit gtp_net_exit_batch_rtnl(struct list_head *net_list,
+ 
+ 	list_for_each_entry(net, net_list, exit_list) {
+ 		struct gtp_net *gn = net_generic(net, gtp_net_id);
+-		struct gtp_dev *gtp;
++		struct gtp_dev *gtp, *gtp_next;
+ 
+-		list_for_each_entry(gtp, &gn->gtp_dev_list, list)
++		list_for_each_entry_safe(gtp, gtp_next, &gn->gtp_dev_list, list)
+ 			gtp_dellink(gtp->dev, dev_to_kill);
+ 	}
  }
- 
- static struct pernet_operations gtp_net_ops = {
- 	.init	= gtp_net_init,
--	.exit	= gtp_net_exit,
-+	.exit_batch_rtnl = gtp_net_exit_batch_rtnl,
- 	.id	= &gtp_net_id,
- 	.size	= sizeof(struct gtp_net),
- };
 -- 
 2.39.5
 
