@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532241F75AC;
-	Tue, 21 Jan 2025 18:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326D91F4275;
+	Tue, 21 Jan 2025 18:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482680; cv=none; b=fO29bvgDO/uJeiCSkRzo1JKElD3XTrMMNu6jPLuYENid5GCZljOdKMLylNbN4Npy3h1RhubdGELvVMaDbv5c6vWacqphEbypIRlSbtqNfwHTS7Js6vzKhokiAYOjoW4yIf0MGF8+VbpU1EuuhZpfbWrNY5mzhdgJdG96WsbjVyU=
+	t=1737482683; cv=none; b=E3b5K3pLvQ+coxYVHQA0BDnmBSxQ3eXdmmn6BIwdsluJmMFEwF3W1ImM3T7uhfbFdv1+Mpz9Av7uV3cSlZLF3frehP1YcH+OVjgSL+X3KpPh9LTItzFd6VUxMa/xVyLe0pSuYoq68tkPnQiUfPJjp2sBM/XWy4ow14elMVcLBvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482680; c=relaxed/simple;
-	bh=ZW6g8NYQBHrY9aEMwOxACgB1Gt130oeppY6WvqNgqcE=;
+	s=arc-20240116; t=1737482683; c=relaxed/simple;
+	bh=3NxHsCxMcJk+PygIVTmEVR6BV1F+jtRz2DZRsqTTbNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SakpfaB1IdsLywejE4SXh5gfSCNrZYRc2uxkX/aHIaMaHX9pFmsLyKdphEDZNqantON2oeRiwjFOFhd/OultT+k4Y0GXuMpp8LHba9hN/K5o8U1lhl59DHv4RGsAuVBEHXl+56MSa7c92EIg0bgZiu0/5ZDUHNl4EBCAV1VMqAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKaq7gbv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smssKSZtFpqeej4ybpDSFG3G58jsSgQtPwqpcv2D1q5VbyXEbzCzQnaSz2A/OOrDbZbepv+iCFwciirdDMYsq08Wve5sYih7JOtUbdFpEVVRPfcEwsQppOFsvsIOAw620SggrYZXhqIOL+5Og4HcnFcVgK7WF5raZwG1jrXNCUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OGSVu2ro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKaq7gbv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF3AC4CEE0;
-	Tue, 21 Jan 2025 18:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OGSVu2ro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB0DCC4CEDF;
+	Tue, 21 Jan 2025 18:04:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482680;
-	bh=ZW6g8NYQBHrY9aEMwOxACgB1Gt130oeppY6WvqNgqcE=;
+	s=korg; t=1737482683;
+	bh=3NxHsCxMcJk+PygIVTmEVR6BV1F+jtRz2DZRsqTTbNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKaq7gbvZb8kczt3RHXE0mq+PUV6xkGHRsfR93lfmdI7SrMMJqn1A8JOXuRuhJN//
-	 QeuIneTgvY67OQXpIS2O+b52UgFhxcFAk6Bdg1iFQ+YU9wGLGFU4ORBV90JSy00iAR
-	 5E0Z0JYu5WNoP5+mNEy0dcge6H6AJ6d2ytWW5Pmw=
+	b=OGSVu2rorRyQFG+DPn+BZqc3TrUNGAeF4IllMn5qpvNOU08rjnEubjKLCgS/Alf24
+	 UAckafes5O4K6ik+sarasNsHRGu6S5/5GkwsAuzrn/W4EjtRFB8kqv/FhLN1j2EM3S
+	 9lnplta8GLwJwD884MPiYGn5WaLVjL10COGXsmNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Juergen Gross <jgross@suse.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 29/64] x86/asm: Make serialize() always_inline
-Date: Tue, 21 Jan 2025 18:52:28 +0100
-Message-ID: <20250121174522.665891871@linuxfoundation.org>
+	Hyunwoo Kim <v4bel@theori.io>,
+	Wongi Lee <qwerty@theori.io>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 38/64] vsock: prevent null-ptr-deref in vsock_*[has_data|has_space]
+Date: Tue, 21 Jan 2025 18:52:37 +0100
+Message-ID: <20250121174523.004791309@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -52,39 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Juergen Gross <jgross@suse.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit ae02ae16b76160f0aeeae2c5fb9b15226d00a4ef ]
+commit 91751e248256efc111e52e15115840c35d85abaf upstream.
 
-In order to allow serialize() to be used from noinstr code, make it
-__always_inline.
+Recent reports have shown how we sometimes call vsock_*_has_data()
+when a vsock socket has been de-assigned from a transport (see attached
+links), but we shouldn't.
 
-Fixes: 0ef8047b737d ("x86/static-call: provide a way to do very early static-call updates")
-Closes: https://lore.kernel.org/oe-kbuild-all/202412181756.aJvzih2K-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20241218100918.22167-1-jgross@suse.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Previous commits should have solved the real problems, but we may have
+more in the future, so to avoid null-ptr-deref, we can return 0
+(no space, no data available) but with a warning.
+
+This way the code should continue to run in a nearly consistent state
+and have a warning that allows us to debug future problems.
+
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/netdev/Z2K%2FI4nlHdfMRTZC@v4bel-B760M-AORUS-ELITE-AX/
+Link: https://lore.kernel.org/netdev/5ca20d4c-1017-49c2-9516-f6f75fd331e9@rbox.co/
+Link: https://lore.kernel.org/netdev/677f84a8.050a0220.25a300.01b3.GAE@google.com/
+Co-developed-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
+Co-developed-by: Wongi Lee <qwerty@theori.io>
+Signed-off-by: Wongi Lee <qwerty@theori.io>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Reviewed-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/special_insns.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/af_vsock.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/arch/x86/include/asm/special_insns.h b/arch/x86/include/asm/special_insns.h
-index c2e322189f853..373aed0f14220 100644
---- a/arch/x86/include/asm/special_insns.h
-+++ b/arch/x86/include/asm/special_insns.h
-@@ -225,7 +225,7 @@ static inline void clwb(volatile void *__p)
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -873,6 +873,9 @@ EXPORT_SYMBOL_GPL(vsock_create_connected
  
- #define nop() asm volatile ("nop")
- 
--static inline void serialize(void)
-+static __always_inline void serialize(void)
+ s64 vsock_stream_has_data(struct vsock_sock *vsk)
  {
- 	/* Instruction opcode for SERIALIZE; supported in binutils >= 2.35. */
- 	asm volatile(".byte 0xf, 0x1, 0xe8" ::: "memory");
--- 
-2.39.5
-
++	if (WARN_ON(!vsk->transport))
++		return 0;
++
+ 	return vsk->transport->stream_has_data(vsk);
+ }
+ EXPORT_SYMBOL_GPL(vsock_stream_has_data);
+@@ -881,6 +884,9 @@ static s64 vsock_connectible_has_data(st
+ {
+ 	struct sock *sk = sk_vsock(vsk);
+ 
++	if (WARN_ON(!vsk->transport))
++		return 0;
++
+ 	if (sk->sk_type == SOCK_SEQPACKET)
+ 		return vsk->transport->seqpacket_has_data(vsk);
+ 	else
+@@ -889,6 +895,9 @@ static s64 vsock_connectible_has_data(st
+ 
+ s64 vsock_stream_has_space(struct vsock_sock *vsk)
+ {
++	if (WARN_ON(!vsk->transport))
++		return 0;
++
+ 	return vsk->transport->stream_has_space(vsk);
+ }
+ EXPORT_SYMBOL_GPL(vsock_stream_has_space);
 
 
