@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E0E1E9B38;
-	Tue, 21 Jan 2025 17:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E481E9B38;
+	Tue, 21 Jan 2025 17:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482052; cv=none; b=F4CuWqiafmt6IJSDBw2esTEKkxXw63F1Yj/sw7sdD1Mne/35xtvGs+64NXBEHlYpRYIvlxQwTmDfnMhSvCFmYVtRoOTuk88SdbchEjXJNpYiyacqlIZrEBXK8kCD0P6ZvO1J1fKeAaG6lk0kbpRCXh1oEp6Fx5Na0Fu+BWkOXLo=
+	t=1737482055; cv=none; b=sQubsVlKsSf+oIWTvPvbtLuyakB649aVpsfw8AxJ42+B0UeLVi80qPvQE1+Y5aVinUkVxKulT/HpfvPQUcAl++IPZVN2fhVYgV5bRrdqhuzrOkNSfSIbLveJ0YIpCa3T5qrL6l098IyHCbJZObNwv1S5Cbv9fEiotMscjEJ/i34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482052; c=relaxed/simple;
-	bh=viA+rUs+l2NlRUgw/e3v9w4YuTotkpG2uSJTJV5czRk=;
+	s=arc-20240116; t=1737482055; c=relaxed/simple;
+	bh=sdcBJZv764CMjFeLvAgZbmstGdY0mraVSzaUEkpJBPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=emo/fs6k1eaUOjgB8UnqYe36MwIeYRNVZss+msTpNUKPs8eVjvujXwUEOTpFP15GKVu1yM/A+PMmK82JORkIoZGkBKAyxZlm8SQcyyFc/Nv1rBvDZkP/xrJcBSJVI+RzCkx4l+C2Dgqc/y8g3TjvCHOL527GcK/XKzh7n0LAveA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0v4/fX+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFptfoZqRgTdhjjXDnnCnPh15UkeTpd1/+IpHqASx6ebfdXmjxyfPez14sludYAHRzRoneW3hq7UGJ8YorHzjbcidHQu6aZbMgvbf77pLwDS0iqXQ441/0WxIKWfwy3ge29mkOUA+7rv0OX7FeX0FrBOnYttr7vXimAQY1gnmhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7En0bGN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0v4/fX+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AD0C4CEDF;
-	Tue, 21 Jan 2025 17:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7En0bGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7136C4CEDF;
+	Tue, 21 Jan 2025 17:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482052;
-	bh=viA+rUs+l2NlRUgw/e3v9w4YuTotkpG2uSJTJV5czRk=;
+	s=korg; t=1737482055;
+	bh=sdcBJZv764CMjFeLvAgZbmstGdY0mraVSzaUEkpJBPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k0v4/fX+uf0eI4iuRJWBRoRVnLfKVU6/MWuvJuHcP2+TnR+ycuqUfYiSf23eLBV/u
-	 1hOAT1l4bwtMAPk9HVJmkVHCWyvoQib6Fw6jWt8V7UyzP9N3CIawRrsHzVzNqbUvN9
-	 M31TafGA4ebkGBqi0rmmncXx+j02+fHzOV5yQBXI=
+	b=B7En0bGN9/SbyLTpFJVRHR1erif+mP1qL0DKn4FLasqiVH0lIkMUv8990jwMjpxZT
+	 vAVyXVSoZuYJEtamgTcLL3vv/INTxhYeZV97XY0cnrPKZlH7A6LgZc8xufLXhk+dW6
+	 HrXFhC9/bCjmH/BTjFz8ylfnWJd7xIk9PRP7fyQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Friedrich Weber <f.weber@proxmox.com>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Aaron Conole <aconole@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 02/72] bpf: Fix bpf_sk_select_reuseport() memory leak
-Date: Tue, 21 Jan 2025 18:51:28 +0100
-Message-ID: <20250121174523.527001104@linuxfoundation.org>
+Subject: [PATCH 6.6 03/72] openvswitch: fix lockup on tx to unregistering netdev with carrier
+Date: Tue, 21 Jan 2025 18:51:29 +0100
+Message-ID: <20250121174523.564640881@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -52,110 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Ilya Maximets <i.maximets@ovn.org>
 
-[ Upstream commit b3af60928ab9129befa65e6df0310d27300942bf ]
+[ Upstream commit 47e55e4b410f7d552e43011baa5be1aab4093990 ]
 
-As pointed out in the original comment, lookup in sockmap can return a TCP
-ESTABLISHED socket. Such TCP socket may have had SO_ATTACH_REUSEPORT_EBPF
-set before it was ESTABLISHED. In other words, a non-NULL sk_reuseport_cb
-does not imply a non-refcounted socket.
+Commit in a fixes tag attempted to fix the issue in the following
+sequence of calls:
 
-Drop sk's reference in both error paths.
+    do_output
+    -> ovs_vport_send
+       -> dev_queue_xmit
+          -> __dev_queue_xmit
+             -> netdev_core_pick_tx
+                -> skb_tx_hash
 
-unreferenced object 0xffff888101911800 (size 2048):
-  comm "test_progs", pid 44109, jiffies 4297131437
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    80 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 9336483b):
-    __kmalloc_noprof+0x3bf/0x560
-    __reuseport_alloc+0x1d/0x40
-    reuseport_alloc+0xca/0x150
-    reuseport_attach_prog+0x87/0x140
-    sk_reuseport_attach_bpf+0xc8/0x100
-    sk_setsockopt+0x1181/0x1990
-    do_sock_setsockopt+0x12b/0x160
-    __sys_setsockopt+0x7b/0xc0
-    __x64_sys_setsockopt+0x1b/0x30
-    do_syscall_64+0x93/0x180
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
+When device is unregistering, the 'dev->real_num_tx_queues' goes to
+zero and the 'while (unlikely(hash >= qcount))' loop inside the
+'skb_tx_hash' becomes infinite, locking up the core forever.
 
-Fixes: 64d85290d79c ("bpf: Allow bpf_map_lookup_elem for SOCKMAP and SOCKHASH")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250110-reuseport-memleak-v1-1-fa1ddab0adfe@rbox.co
+But unfortunately, checking just the carrier status is not enough to
+fix the issue, because some devices may still be in unregistering
+state while reporting carrier status OK.
+
+One example of such device is a net/dummy.  It sets carrier ON
+on start, but it doesn't implement .ndo_stop to set the carrier off.
+And it makes sense, because dummy doesn't really have a carrier.
+Therefore, while this device is unregistering, it's still easy to hit
+the infinite loop in the skb_tx_hash() from the OVS datapath.  There
+might be other drivers that do the same, but dummy by itself is
+important for the OVS ecosystem, because it is frequently used as a
+packet sink for tcpdump while debugging OVS deployments.  And when the
+issue is hit, the only way to recover is to reboot.
+
+Fix that by also checking if the device is running.  The running
+state is handled by the net core during unregistering, so it covers
+unregistering case better, and we don't really need to send packets
+to devices that are not running anyway.
+
+While only checking the running state might be enough, the carrier
+check is preserved.  The running and the carrier states seem disjoined
+throughout the code and different drivers.  And other core functions
+like __dev_direct_xmit() check both before attempting to transmit
+a packet.  So, it seems safer to check both flags in OVS as well.
+
+Fixes: 066b86787fa3 ("net: openvswitch: fix race on port output")
+Reported-by: Friedrich Weber <f.weber@proxmox.com>
+Closes: https://mail.openvswitch.org/pipermail/ovs-discuss/2025-January/053423.html
+Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
+Tested-by: Friedrich Weber <f.weber@proxmox.com>
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Link: https://patch.msgid.link/20250109122225.4034688-1-i.maximets@ovn.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ net/openvswitch/actions.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 34320ce70096a..5881944f1681c 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -11190,6 +11190,7 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 	bool is_sockarray = map->map_type == BPF_MAP_TYPE_REUSEPORT_SOCKARRAY;
- 	struct sock_reuseport *reuse;
- 	struct sock *selected_sk;
-+	int err;
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index 4f5cbcaa38386..9445ca97163b4 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -918,7 +918,9 @@ static void do_output(struct datapath *dp, struct sk_buff *skb, int out_port,
+ {
+ 	struct vport *vport = ovs_vport_rcu(dp, out_port);
  
- 	selected_sk = map->ops->map_lookup_elem(map, key);
- 	if (!selected_sk)
-@@ -11197,10 +11198,6 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
+-	if (likely(vport && netif_carrier_ok(vport->dev))) {
++	if (likely(vport &&
++		   netif_running(vport->dev) &&
++		   netif_carrier_ok(vport->dev))) {
+ 		u16 mru = OVS_CB(skb)->mru;
+ 		u32 cutlen = OVS_CB(skb)->cutlen;
  
- 	reuse = rcu_dereference(selected_sk->sk_reuseport_cb);
- 	if (!reuse) {
--		/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
--		if (sk_is_refcounted(selected_sk))
--			sock_put(selected_sk);
--
- 		/* reuseport_array has only sk with non NULL sk_reuseport_cb.
- 		 * The only (!reuse) case here is - the sk has already been
- 		 * unhashed (e.g. by close()), so treat it as -ENOENT.
-@@ -11208,24 +11205,33 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 		 * Other maps (e.g. sock_map) do not provide this guarantee and
- 		 * the sk may never be in the reuseport group to begin with.
- 		 */
--		return is_sockarray ? -ENOENT : -EINVAL;
-+		err = is_sockarray ? -ENOENT : -EINVAL;
-+		goto error;
- 	}
- 
- 	if (unlikely(reuse->reuseport_id != reuse_kern->reuseport_id)) {
- 		struct sock *sk = reuse_kern->sk;
- 
--		if (sk->sk_protocol != selected_sk->sk_protocol)
--			return -EPROTOTYPE;
--		else if (sk->sk_family != selected_sk->sk_family)
--			return -EAFNOSUPPORT;
--
--		/* Catch all. Likely bound to a different sockaddr. */
--		return -EBADFD;
-+		if (sk->sk_protocol != selected_sk->sk_protocol) {
-+			err = -EPROTOTYPE;
-+		} else if (sk->sk_family != selected_sk->sk_family) {
-+			err = -EAFNOSUPPORT;
-+		} else {
-+			/* Catch all. Likely bound to a different sockaddr. */
-+			err = -EBADFD;
-+		}
-+		goto error;
- 	}
- 
- 	reuse_kern->selected_sk = selected_sk;
- 
- 	return 0;
-+error:
-+	/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
-+	if (sk_is_refcounted(selected_sk))
-+		sock_put(selected_sk);
-+
-+	return err;
- }
- 
- static const struct bpf_func_proto sk_select_reuseport_proto = {
 -- 
 2.39.5
 
