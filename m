@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A9B1F0E36;
-	Tue, 21 Jan 2025 18:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8CF1F540C;
+	Tue, 21 Jan 2025 18:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482823; cv=none; b=iV5OEShdR7i5Z9xbCR+2PLrXbh5qJXW3BAHxbyp65TAsgvRmCjpKCe8XjmDxRxwkEqP5VnH9jX8VRc8YU9Eqg3XlXAuozA0U4DpD3Jn/mMOGJGtqc4pQPQoUrCePr4i6wLfbVhesxG5xFQ83YT8NH0aQrc53GohSRSC7X5mFQr4=
+	t=1737482826; cv=none; b=R5MuTkjsIDAAvyDeZ/CV75FJbrrtbALvv5ivPZxktmSYsF81Uc6tHR8AcIP0QCEBiJW/EYG3P6AwVbMbaOXgEdtQawwHFQVcGuVXnaL4h8geGjueIKe/wwF3tiBfeDUi6d8vEAbI6oO9LqeBQ7e44NAD1sbRoixcTqamLmrFC5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482823; c=relaxed/simple;
-	bh=2AadXVLgZ6EQYqT1EMXjPWrrKr1XmmZnl1emmjvWmpU=;
+	s=arc-20240116; t=1737482826; c=relaxed/simple;
+	bh=469MClTjW5jlMESj3ilpsbtZDZpjCrN19yHoCUpVoNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F1YHiTSPmEVQ7ELfz73oRMo9V2ZABG0HqU5LdOCuKZEQ5Hd3wuO+uytXx/MBWKzvhpCRFJunhYbzXUnxCqxHUjDNTBLMCPAqVW9mONrMBsD8yFSa7gxlSG8PqeX0yY8kYB/gnywBCcH+yONigsYTNgRmA3oyrd4W2wHBMd2SfYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xlS0Fid6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjzQQw+wWNkruTLT6zAu5PaEb9AbPIMyJO+gGQnWh+yIvnUCpqKpen8FAzWyoW3JCjIHdv1BfXqk45OHVY0wjsTB6lIsrqFykLEKi2BUQe/yA8i+0qULEiqO7gldZKnSe2Qvn8rGd4ZQbteq4IihKEnmiWK8rF5/eNDMEJbPqJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAbJIZXd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xlS0Fid6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B31C4CEDF;
-	Tue, 21 Jan 2025 18:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAbJIZXd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032CAC4CEDF;
+	Tue, 21 Jan 2025 18:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482823;
-	bh=2AadXVLgZ6EQYqT1EMXjPWrrKr1XmmZnl1emmjvWmpU=;
+	s=korg; t=1737482826;
+	bh=469MClTjW5jlMESj3ilpsbtZDZpjCrN19yHoCUpVoNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xlS0Fid6i9b0ZK5pxRKnAYMOblJy/vZGcFHaTih+stBNy/wJHBuJ0ZXCjQPUMTZB8
-	 eUxwyL7TbHbgYJBbV1d4vDlPOebaM2OG7fsaZ0873vQtGCrzqrN2RFL60Mj/V1UmLk
-	 nMD2Bc8EFj84nOdCvy/90nSLob9yNIsR11BVXn4Y=
+	b=OAbJIZXdSVfdJRPaA00C0Pm4XwGscuPNDESZuQVrEK/q0ewca4cSviFXAptmp0+18
+	 cWrvuYLWgexvrkVRsC6pX5rGGYY9jPku5rxnoTV6Wk2qD2b13JcHo6MImBs4XFs0bJ
+	 hoiKu3hVIBpXg7iMa32xUORNM0b/mpUFB9v7My2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7848fee1f1e5c53f912b@syzkaller.appspotmail.com,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Joe Thornber <thornber@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/127] afs: Fix the maximum cell name length
-Date: Tue, 21 Jan 2025 18:51:33 +0100
-Message-ID: <20250121174530.492325680@linuxfoundation.org>
+Subject: [PATCH 5.15 004/127] dm array: fix unreleased btree blocks on closing a faulty array cursor
+Date: Tue, 21 Jan 2025 18:51:16 +0100
+Message-ID: <20250121174529.846017872@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -54,110 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit 8fd56ad6e7c90ac2bddb0741c6b248c8c5d56ac8 ]
+[ Upstream commit 626f128ee9c4133b1cfce4be2b34a1508949370e ]
 
-The kafs filesystem limits the maximum length of a cell to 256 bytes, but a
-problem occurs if someone actually does that: kafs tries to create a
-directory under /proc/net/afs/ with the name of the cell, but that fails
-with a warning:
+The cached block pointer in dm_array_cursor might be NULL if it reaches
+an unreadable array block, or the array is empty. Therefore,
+dm_array_cursor_end() should call dm_btree_cursor_end() unconditionally,
+to prevent leaving unreleased btree blocks.
 
-        WARNING: CPU: 0 PID: 9 at fs/proc/generic.c:405
+This fix can be verified using the "array_cursor/iterate/empty" test
+in dm-unit:
+  dm-unit run /pdata/array_cursor/iterate/empty --kernel-dir <KERNEL_DIR>
 
-because procfs limits the maximum filename length to 255.
-
-However, the DNS limits the maximum lookup length and, by extension, the
-maximum cell name, to 255 less two (length count and trailing NUL).
-
-Fix this by limiting the maximum acceptable cellname length to 253.  This
-also allows us to be sure we can create the "/afs/.<cell>/" mountpoint too.
-
-Further, split the YFS VL record cell name maximum to be the 256 allowed by
-the protocol and ignore the record retrieved by YFSVL.GetCellName if it
-exceeds 253.
-
-Fixes: c3e9f888263b ("afs: Implement client support for the YFSVL.GetCellName RPC op")
-Reported-by: syzbot+7848fee1f1e5c53f912b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6776d25d.050a0220.3a8527.0048.GAE@google.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/376236.1736180460@warthog.procyon.org.uk
-Tested-by: syzbot+7848fee1f1e5c53f912b@syzkaller.appspotmail.com
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: fdd1315aa5f0 ("dm array: introduce cursor api")
+Reviewed-by: Joe Thornber <thornber@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/afs.h      | 2 +-
- fs/afs/afs_vl.h   | 1 +
- fs/afs/vl_alias.c | 8 ++++++--
- fs/afs/vlclient.c | 2 +-
- 4 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/md/persistent-data/dm-array.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/afs/afs.h b/fs/afs/afs.h
-index 432cb4b23961..3ea5f3e3c922 100644
---- a/fs/afs/afs.h
-+++ b/fs/afs/afs.h
-@@ -10,7 +10,7 @@
+diff --git a/drivers/md/persistent-data/dm-array.c b/drivers/md/persistent-data/dm-array.c
+index 33bc4b38911a..a2d9493d3593 100644
+--- a/drivers/md/persistent-data/dm-array.c
++++ b/drivers/md/persistent-data/dm-array.c
+@@ -954,10 +954,10 @@ EXPORT_SYMBOL_GPL(dm_array_cursor_begin);
  
- #include <linux/in.h>
- 
--#define AFS_MAXCELLNAME		256  	/* Maximum length of a cell name */
-+#define AFS_MAXCELLNAME		253  	/* Maximum length of a cell name (DNS limited) */
- #define AFS_MAXVOLNAME		64  	/* Maximum length of a volume name */
- #define AFS_MAXNSERVERS		8   	/* Maximum servers in a basic volume record */
- #define AFS_NMAXNSERVERS	13  	/* Maximum servers in a N/U-class volume record */
-diff --git a/fs/afs/afs_vl.h b/fs/afs/afs_vl.h
-index 9c65ffb8a523..8da0899fbc08 100644
---- a/fs/afs/afs_vl.h
-+++ b/fs/afs/afs_vl.h
-@@ -13,6 +13,7 @@
- #define AFS_VL_PORT		7003	/* volume location service port */
- #define VL_SERVICE		52	/* RxRPC service ID for the Volume Location service */
- #define YFS_VL_SERVICE		2503	/* Service ID for AuriStor upgraded VL service */
-+#define YFS_VL_MAXCELLNAME	256  	/* Maximum length of a cell name in YFS protocol */
- 
- enum AFSVL_Operations {
- 	VLGETENTRYBYID		= 503,	/* AFS Get VLDB entry by ID */
-diff --git a/fs/afs/vl_alias.c b/fs/afs/vl_alias.c
-index f04a80e4f5c3..83cf1bfbe343 100644
---- a/fs/afs/vl_alias.c
-+++ b/fs/afs/vl_alias.c
-@@ -302,6 +302,7 @@ static char *afs_vl_get_cell_name(struct afs_cell *cell, struct key *key)
- static int yfs_check_canonical_cell_name(struct afs_cell *cell, struct key *key)
+ void dm_array_cursor_end(struct dm_array_cursor *c)
  {
- 	struct afs_cell *master;
-+	size_t name_len;
- 	char *cell_name;
+-	if (c->block) {
++	if (c->block)
+ 		unlock_ablock(c->info, c->block);
+-		dm_btree_cursor_end(&c->cursor);
+-	}
++
++	dm_btree_cursor_end(&c->cursor);
+ }
+ EXPORT_SYMBOL_GPL(dm_array_cursor_end);
  
- 	cell_name = afs_vl_get_cell_name(cell, key);
-@@ -313,8 +314,11 @@ static int yfs_check_canonical_cell_name(struct afs_cell *cell, struct key *key)
- 		return 0;
- 	}
- 
--	master = afs_lookup_cell(cell->net, cell_name, strlen(cell_name),
--				 NULL, false);
-+	name_len = strlen(cell_name);
-+	if (!name_len || name_len > AFS_MAXCELLNAME)
-+		master = ERR_PTR(-EOPNOTSUPP);
-+	else
-+		master = afs_lookup_cell(cell->net, cell_name, name_len, NULL, false);
- 	kfree(cell_name);
- 	if (IS_ERR(master))
- 		return PTR_ERR(master);
-diff --git a/fs/afs/vlclient.c b/fs/afs/vlclient.c
-index 00fca3c66ba6..16653f2ffe4f 100644
---- a/fs/afs/vlclient.c
-+++ b/fs/afs/vlclient.c
-@@ -671,7 +671,7 @@ static int afs_deliver_yfsvl_get_cell_name(struct afs_call *call)
- 			return ret;
- 
- 		namesz = ntohl(call->tmp);
--		if (namesz > AFS_MAXCELLNAME)
-+		if (namesz > YFS_VL_MAXCELLNAME)
- 			return afs_protocol_error(call, afs_eproto_cellname_len);
- 		paddedsz = (namesz + 3) & ~3;
- 		call->count = namesz;
 -- 
 2.39.5
 
