@@ -1,512 +1,621 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0470E1F55F7;
-	Tue, 21 Jan 2025 17:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED27F1F55FA;
+	Tue, 21 Jan 2025 17:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482321; cv=none; b=G67wJ/pJbRJMxh7a9prrYty3WDEzsTnBz3wxPr8SMgLzYmQB9ChxB3jz4GMuE58L4YgDHjZn/Y4qptOdw77gLeEXMNJQBrTpqcbEdoowjUCP+TbYm4I+drJmHBaQBxZXGXUC03Diqm3pWykv4Wq6l3u+JoUJeuN5vXQO1Dk2sws=
+	t=1737482324; cv=none; b=o4z5tdWdLi3hZpofwRFx7YaC2ZunSXSq6QcFJtAu+6FWp1LgIVIc3pHi7BhWMhFB1C3Yn9MtEFWHh1WKLoUzLkVagri3M2Wr+MgxGjvh1gjDlrIz3/GsJ0jmMsPAu7r7HT6mJ9Div9+VMRAbajSudNibP/L9HUshD6I0F1kB5J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482321; c=relaxed/simple;
-	bh=XO2JK/Na0rMVoOUdyFphUhoe+xj8h0mo2FwvFWBtmzA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d103val0AuV6Zil/5S+lEJp9UZhuWhGHKm88bVzW8J7CSHn/dGBAQt12q+TcLIaOB8QSiQNMgS7UjrOXKpsmfsAoWCpCtv/romZio/uqlwdVS9vVeFsq7RqCL6fxuAyYQlTBQ0hL4JEM+GmhXnnMkh49VRlhAEHz1qcsamlk4SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PpPUi1ny; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737482324; c=relaxed/simple;
+	bh=DBEo77WMxmY/TVa7KCoDSR1q8si6OcIj/63dvJhTbQo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Ofx2pci68Ea47+SzEOTF6bAbXm4kLoOxPUcuQR4ezBrnBqsBOIZ470Dn1tMSByPyYDiELT/NPyz4IS+eUCC4vs/uQ/2MNIXZ5044c2Lad9TGuKCWlXve1uKqMEg3auYFABs1JL4pKc4aki6ubeH2oKTYk9o51z16lfDwui16OJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkeLGLLA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PpPUi1ny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F361C4CEDF;
-	Tue, 21 Jan 2025 17:58:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkeLGLLA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F7DC4CEDF;
+	Tue, 21 Jan 2025 17:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482320;
-	bh=XO2JK/Na0rMVoOUdyFphUhoe+xj8h0mo2FwvFWBtmzA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpPUi1nyqE3HT9ZM77HyQuVLRmMIG3UXadoqbySxt8rN78xGf/UneqU1SPJl77Txz
-	 h+4RY5WCRz2XbaQselH+aMmiiJLPSweEOxCAlVdqrK1dUgbZmthlilxMUGzmYNqNu7
-	 otezDiDvh9N4BbCN39kbrq9D1rbkDHz9qLn3Rq/4=
+	s=korg; t=1737482323;
+	bh=DBEo77WMxmY/TVa7KCoDSR1q8si6OcIj/63dvJhTbQo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=RkeLGLLApbQVvRt6HaZvOn8oneh85/eI3m+aBgamjZm+zMDMBC6eLf6+R9Y61SYVl
+	 Hnjgj8egwCRKHVMm6sK9NlVNJuGw0lcD+MBOF2KnnT15VerT8VAT9rYQuLl0ATiqjY
+	 K2NVQaKn0ZyvOFDLdICXJTq5OrhY/qJuRXjBZevA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Karol Kolacinski <karol.kolacinski@intel.com>,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.12 009/122] ice: Fix quad registers read on E825
-Date: Tue, 21 Jan 2025 18:50:57 +0100
-Message-ID: <20250121174533.354568772@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org
+Subject: [PATCH 6.12 000/122] 6.12.11-rc1 review
+Date: Tue, 21 Jan 2025 18:50:48 +0100
+Message-ID: <20250121174532.991109301@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
-References: <20250121174532.991109301@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.11-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.12.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.12.11-rc1
+X-KernelTest-Deadline: 2025-01-23T17:45+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.12.11 release.
+There are 122 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Thu, 23 Jan 2025 17:45:02 +0000.
+Anything received after that time might be too late.
 
-From: Karol Kolacinski <karol.kolacinski@intel.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.11-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+and the diffstat can be found below.
 
-[ Upstream commit dc26548d729e5f732197d2b210fb77c745b01495 ]
+thanks,
 
-Quad registers are read/written incorrectly. E825 devices always use
-quad 0 address and differentiate between the PHYs by changing SBQ
-destination device (phy_0 or phy_0_peer).
+greg k-h
 
-Add helpers for reading/writing PTP registers shared per quad and use
-correct quad address and SBQ destination device based on port.
+-------------
+Pseudo-Shortlog of commits:
 
-Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 219 ++++++++++++--------
- drivers/net/ethernet/intel/ice/ice_type.h   |   1 -
- 2 files changed, 133 insertions(+), 87 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.12.11-rc1
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-index f6816c2f71438..64c36620a02f3 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
-@@ -877,31 +877,46 @@ static void ice_ptp_exec_tmr_cmd(struct ice_hw *hw)
-  * The following functions operate on devices with the ETH 56G PHY.
-  */
- 
-+/**
-+ * ice_ptp_get_dest_dev_e825 - get destination PHY for given port number
-+ * @hw: pointer to the HW struct
-+ * @port: destination port
-+ *
-+ * Return: destination sideband queue PHY device.
-+ */
-+static enum ice_sbq_msg_dev ice_ptp_get_dest_dev_e825(struct ice_hw *hw,
-+						      u8 port)
-+{
-+	/* On a single complex E825, PHY 0 is always destination device phy_0
-+	 * and PHY 1 is phy_0_peer.
-+	 */
-+	if (port >= hw->ptp.ports_per_phy)
-+		return eth56g_phy_1;
-+	else
-+		return eth56g_phy_0;
-+}
-+
- /**
-  * ice_write_phy_eth56g - Write a PHY port register
-  * @hw: pointer to the HW struct
-- * @phy_idx: PHY index
-+ * @port: destination port
-  * @addr: PHY register address
-  * @val: Value to write
-  *
-  * Return: 0 on success, other error codes when failed to write to PHY
-  */
--static int ice_write_phy_eth56g(struct ice_hw *hw, u8 phy_idx, u32 addr,
--				u32 val)
-+static int ice_write_phy_eth56g(struct ice_hw *hw, u8 port, u32 addr, u32 val)
- {
--	struct ice_sbq_msg_input phy_msg;
-+	struct ice_sbq_msg_input msg = {
-+		.dest_dev = ice_ptp_get_dest_dev_e825(hw, port),
-+		.opcode = ice_sbq_msg_wr,
-+		.msg_addr_low = lower_16_bits(addr),
-+		.msg_addr_high = upper_16_bits(addr),
-+		.data = val
-+	};
- 	int err;
- 
--	phy_msg.opcode = ice_sbq_msg_wr;
--
--	phy_msg.msg_addr_low = lower_16_bits(addr);
--	phy_msg.msg_addr_high = upper_16_bits(addr);
--
--	phy_msg.data = val;
--	phy_msg.dest_dev = hw->ptp.phy.eth56g.phy_addr[phy_idx];
--
--	err = ice_sbq_rw_reg(hw, &phy_msg, ICE_AQ_FLAG_RD);
--
-+	err = ice_sbq_rw_reg(hw, &msg, ICE_AQ_FLAG_RD);
- 	if (err)
- 		ice_debug(hw, ICE_DBG_PTP, "PTP failed to send msg to phy %d\n",
- 			  err);
-@@ -912,41 +927,36 @@ static int ice_write_phy_eth56g(struct ice_hw *hw, u8 phy_idx, u32 addr,
- /**
-  * ice_read_phy_eth56g - Read a PHY port register
-  * @hw: pointer to the HW struct
-- * @phy_idx: PHY index
-+ * @port: destination port
-  * @addr: PHY register address
-  * @val: Value to write
-  *
-  * Return: 0 on success, other error codes when failed to read from PHY
-  */
--static int ice_read_phy_eth56g(struct ice_hw *hw, u8 phy_idx, u32 addr,
--			       u32 *val)
-+static int ice_read_phy_eth56g(struct ice_hw *hw, u8 port, u32 addr, u32 *val)
- {
--	struct ice_sbq_msg_input phy_msg;
-+	struct ice_sbq_msg_input msg = {
-+		.dest_dev = ice_ptp_get_dest_dev_e825(hw, port),
-+		.opcode = ice_sbq_msg_rd,
-+		.msg_addr_low = lower_16_bits(addr),
-+		.msg_addr_high = upper_16_bits(addr)
-+	};
- 	int err;
- 
--	phy_msg.opcode = ice_sbq_msg_rd;
--
--	phy_msg.msg_addr_low = lower_16_bits(addr);
--	phy_msg.msg_addr_high = upper_16_bits(addr);
--
--	phy_msg.data = 0;
--	phy_msg.dest_dev = hw->ptp.phy.eth56g.phy_addr[phy_idx];
--
--	err = ice_sbq_rw_reg(hw, &phy_msg, ICE_AQ_FLAG_RD);
--	if (err) {
-+	err = ice_sbq_rw_reg(hw, &msg, ICE_AQ_FLAG_RD);
-+	if (err)
- 		ice_debug(hw, ICE_DBG_PTP, "PTP failed to send msg to phy %d\n",
- 			  err);
--		return err;
--	}
--
--	*val = phy_msg.data;
-+	else
-+		*val = msg.data;
- 
--	return 0;
-+	return err;
- }
- 
- /**
-  * ice_phy_res_address_eth56g - Calculate a PHY port register address
-- * @port: Port number to be written
-+ * @hw: pointer to the HW struct
-+ * @lane: Lane number to be written
-  * @res_type: resource type (register/memory)
-  * @offset: Offset from PHY port register base
-  * @addr: The result address
-@@ -955,17 +965,19 @@ static int ice_read_phy_eth56g(struct ice_hw *hw, u8 phy_idx, u32 addr,
-  * * %0      - success
-  * * %EINVAL - invalid port number or resource type
-  */
--static int ice_phy_res_address_eth56g(u8 port, enum eth56g_res_type res_type,
--				      u32 offset, u32 *addr)
-+static int ice_phy_res_address_eth56g(struct ice_hw *hw, u8 lane,
-+				      enum eth56g_res_type res_type,
-+				      u32 offset,
-+				      u32 *addr)
- {
--	u8 lane = port % ICE_PORTS_PER_QUAD;
--	u8 phy = ICE_GET_QUAD_NUM(port);
--
- 	if (res_type >= NUM_ETH56G_PHY_RES)
- 		return -EINVAL;
- 
--	*addr = eth56g_phy_res[res_type].base[phy] +
-+	/* Lanes 4..7 are in fact 0..3 on a second PHY */
-+	lane %= hw->ptp.ports_per_phy;
-+	*addr = eth56g_phy_res[res_type].base[0] +
- 		lane * eth56g_phy_res[res_type].step + offset;
-+
- 	return 0;
- }
- 
-@@ -985,19 +997,17 @@ static int ice_phy_res_address_eth56g(u8 port, enum eth56g_res_type res_type,
- static int ice_write_port_eth56g(struct ice_hw *hw, u8 port, u32 offset,
- 				 u32 val, enum eth56g_res_type res_type)
- {
--	u8 phy_port = port % hw->ptp.ports_per_phy;
--	u8 phy_idx = port / hw->ptp.ports_per_phy;
- 	u32 addr;
- 	int err;
- 
- 	if (port >= hw->ptp.num_lports)
- 		return -EINVAL;
- 
--	err = ice_phy_res_address_eth56g(phy_port, res_type, offset, &addr);
-+	err = ice_phy_res_address_eth56g(hw, port, res_type, offset, &addr);
- 	if (err)
- 		return err;
- 
--	return ice_write_phy_eth56g(hw, phy_idx, addr, val);
-+	return ice_write_phy_eth56g(hw, port, addr, val);
- }
- 
- /**
-@@ -1016,19 +1026,17 @@ static int ice_write_port_eth56g(struct ice_hw *hw, u8 port, u32 offset,
- static int ice_read_port_eth56g(struct ice_hw *hw, u8 port, u32 offset,
- 				u32 *val, enum eth56g_res_type res_type)
- {
--	u8 phy_port = port % hw->ptp.ports_per_phy;
--	u8 phy_idx = port / hw->ptp.ports_per_phy;
- 	u32 addr;
- 	int err;
- 
- 	if (port >= hw->ptp.num_lports)
- 		return -EINVAL;
- 
--	err = ice_phy_res_address_eth56g(phy_port, res_type, offset, &addr);
-+	err = ice_phy_res_address_eth56g(hw, port, res_type, offset, &addr);
- 	if (err)
- 		return err;
- 
--	return ice_read_phy_eth56g(hw, phy_idx, addr, val);
-+	return ice_read_phy_eth56g(hw, port, addr, val);
- }
- 
- /**
-@@ -1177,6 +1185,56 @@ static int ice_write_port_mem_eth56g(struct ice_hw *hw, u8 port, u16 offset,
- 	return ice_write_port_eth56g(hw, port, offset, val, ETH56G_PHY_MEM_PTP);
- }
- 
-+/**
-+ * ice_write_quad_ptp_reg_eth56g - Write a PHY quad register
-+ * @hw: pointer to the HW struct
-+ * @offset: PHY register offset
-+ * @port: Port number
-+ * @val: Value to write
-+ *
-+ * Return:
-+ * * %0     - success
-+ * * %EIO  - invalid port number or resource type
-+ * * %other - failed to write to PHY
-+ */
-+static int ice_write_quad_ptp_reg_eth56g(struct ice_hw *hw, u8 port,
-+					 u32 offset, u32 val)
-+{
-+	u32 addr;
-+
-+	if (port >= hw->ptp.num_lports)
-+		return -EIO;
-+
-+	addr = eth56g_phy_res[ETH56G_PHY_REG_PTP].base[0] + offset;
-+
-+	return ice_write_phy_eth56g(hw, port, addr, val);
-+}
-+
-+/**
-+ * ice_read_quad_ptp_reg_eth56g - Read a PHY quad register
-+ * @hw: pointer to the HW struct
-+ * @offset: PHY register offset
-+ * @port: Port number
-+ * @val: Value to read
-+ *
-+ * Return:
-+ * * %0     - success
-+ * * %EIO  - invalid port number or resource type
-+ * * %other - failed to read from PHY
-+ */
-+static int ice_read_quad_ptp_reg_eth56g(struct ice_hw *hw, u8 port,
-+					u32 offset, u32 *val)
-+{
-+	u32 addr;
-+
-+	if (port >= hw->ptp.num_lports)
-+		return -EIO;
-+
-+	addr = eth56g_phy_res[ETH56G_PHY_REG_PTP].base[0] + offset;
-+
-+	return ice_read_phy_eth56g(hw, port, addr, val);
-+}
-+
- /**
-  * ice_is_64b_phy_reg_eth56g - Check if this is a 64bit PHY register
-  * @low_addr: the low address to check
-@@ -1896,7 +1954,6 @@ ice_phy_get_speed_eth56g(struct ice_link_status *li)
-  */
- static int ice_phy_cfg_parpcs_eth56g(struct ice_hw *hw, u8 port)
- {
--	u8 port_blk = port & ~(ICE_PORTS_PER_QUAD - 1);
- 	u32 val;
- 	int err;
- 
-@@ -1911,8 +1968,8 @@ static int ice_phy_cfg_parpcs_eth56g(struct ice_hw *hw, u8 port)
- 	switch (ice_phy_get_speed_eth56g(&hw->port_info->phy.link_info)) {
- 	case ICE_ETH56G_LNK_SPD_1G:
- 	case ICE_ETH56G_LNK_SPD_2_5G:
--		err = ice_read_ptp_reg_eth56g(hw, port_blk,
--					      PHY_GPCS_CONFIG_REG0, &val);
-+		err = ice_read_quad_ptp_reg_eth56g(hw, port,
-+						   PHY_GPCS_CONFIG_REG0, &val);
- 		if (err) {
- 			ice_debug(hw, ICE_DBG_PTP, "Failed to read PHY_GPCS_CONFIG_REG0, status: %d",
- 				  err);
-@@ -1923,8 +1980,8 @@ static int ice_phy_cfg_parpcs_eth56g(struct ice_hw *hw, u8 port)
- 		val |= FIELD_PREP(PHY_GPCS_CONFIG_REG0_TX_THR_M,
- 				  ICE_ETH56G_NOMINAL_TX_THRESH);
- 
--		err = ice_write_ptp_reg_eth56g(hw, port_blk,
--					       PHY_GPCS_CONFIG_REG0, val);
-+		err = ice_write_quad_ptp_reg_eth56g(hw, port,
-+						    PHY_GPCS_CONFIG_REG0, val);
- 		if (err) {
- 			ice_debug(hw, ICE_DBG_PTP, "Failed to write PHY_GPCS_CONFIG_REG0, status: %d",
- 				  err);
-@@ -1965,50 +2022,47 @@ static int ice_phy_cfg_parpcs_eth56g(struct ice_hw *hw, u8 port)
-  */
- int ice_phy_cfg_ptp_1step_eth56g(struct ice_hw *hw, u8 port)
- {
--	u8 port_blk = port & ~(ICE_PORTS_PER_QUAD - 1);
--	u8 blk_port = port & (ICE_PORTS_PER_QUAD - 1);
-+	u8 quad_lane = port % ICE_PORTS_PER_QUAD;
-+	u32 addr, val, peer_delay;
- 	bool enable, sfd_ena;
--	u32 val, peer_delay;
- 	int err;
- 
- 	enable = hw->ptp.phy.eth56g.onestep_ena;
- 	peer_delay = hw->ptp.phy.eth56g.peer_delay;
- 	sfd_ena = hw->ptp.phy.eth56g.sfd_ena;
- 
--	/* PHY_PTP_1STEP_CONFIG */
--	err = ice_read_ptp_reg_eth56g(hw, port_blk, PHY_PTP_1STEP_CONFIG, &val);
-+	addr = PHY_PTP_1STEP_CONFIG;
-+	err = ice_read_quad_ptp_reg_eth56g(hw, port, addr, &val);
- 	if (err)
- 		return err;
- 
- 	if (enable)
--		val |= blk_port;
-+		val |= BIT(quad_lane);
- 	else
--		val &= ~blk_port;
-+		val &= ~BIT(quad_lane);
- 
- 	val &= ~(PHY_PTP_1STEP_T1S_UP64_M | PHY_PTP_1STEP_T1S_DELTA_M);
- 
--	err = ice_write_ptp_reg_eth56g(hw, port_blk, PHY_PTP_1STEP_CONFIG, val);
-+	err = ice_write_quad_ptp_reg_eth56g(hw, port, addr, val);
- 	if (err)
- 		return err;
- 
--	/* PHY_PTP_1STEP_PEER_DELAY */
-+	addr = PHY_PTP_1STEP_PEER_DELAY(quad_lane);
- 	val = FIELD_PREP(PHY_PTP_1STEP_PD_DELAY_M, peer_delay);
- 	if (peer_delay)
- 		val |= PHY_PTP_1STEP_PD_ADD_PD_M;
- 	val |= PHY_PTP_1STEP_PD_DLY_V_M;
--	err = ice_write_ptp_reg_eth56g(hw, port_blk,
--				       PHY_PTP_1STEP_PEER_DELAY(blk_port), val);
-+	err = ice_write_quad_ptp_reg_eth56g(hw, port, addr, val);
- 	if (err)
- 		return err;
- 
- 	val &= ~PHY_PTP_1STEP_PD_DLY_V_M;
--	err = ice_write_ptp_reg_eth56g(hw, port_blk,
--				       PHY_PTP_1STEP_PEER_DELAY(blk_port), val);
-+	err = ice_write_quad_ptp_reg_eth56g(hw, port, addr, val);
- 	if (err)
- 		return err;
- 
--	/* PHY_MAC_XIF_MODE */
--	err = ice_read_mac_reg_eth56g(hw, port, PHY_MAC_XIF_MODE, &val);
-+	addr = PHY_MAC_XIF_MODE;
-+	err = ice_read_mac_reg_eth56g(hw, port, addr, &val);
- 	if (err)
- 		return err;
- 
-@@ -2028,7 +2082,7 @@ int ice_phy_cfg_ptp_1step_eth56g(struct ice_hw *hw, u8 port)
- 	       FIELD_PREP(PHY_MAC_XIF_TS_BIN_MODE_M, enable) |
- 	       FIELD_PREP(PHY_MAC_XIF_TS_SFD_ENA_M, sfd_ena);
- 
--	return ice_write_mac_reg_eth56g(hw, port, PHY_MAC_XIF_MODE, val);
-+	return ice_write_mac_reg_eth56g(hw, port, addr, val);
- }
- 
- /**
-@@ -2070,21 +2124,22 @@ static u32 ice_ptp_calc_bitslip_eth56g(struct ice_hw *hw, u8 port, u32 bs,
- 				       bool fc, bool rs,
- 				       enum ice_eth56g_link_spd spd)
- {
--	u8 port_offset = port & (ICE_PORTS_PER_QUAD - 1);
--	u8 port_blk = port & ~(ICE_PORTS_PER_QUAD - 1);
- 	u32 bitslip;
- 	int err;
- 
- 	if (!bs || rs)
- 		return 0;
- 
--	if (spd == ICE_ETH56G_LNK_SPD_1G || spd == ICE_ETH56G_LNK_SPD_2_5G)
-+	if (spd == ICE_ETH56G_LNK_SPD_1G || spd == ICE_ETH56G_LNK_SPD_2_5G) {
- 		err = ice_read_gpcs_reg_eth56g(hw, port, PHY_GPCS_BITSLIP,
- 					       &bitslip);
--	else
--		err = ice_read_ptp_reg_eth56g(hw, port_blk,
--					      PHY_REG_SD_BIT_SLIP(port_offset),
--					      &bitslip);
-+	} else {
-+		u8 quad_lane = port % ICE_PORTS_PER_QUAD;
-+		u32 addr;
-+
-+		addr = PHY_REG_SD_BIT_SLIP(quad_lane);
-+		err = ice_read_quad_ptp_reg_eth56g(hw, port, addr, &bitslip);
-+	}
- 	if (err)
- 		return 0;
- 
-@@ -2679,8 +2734,6 @@ static void ice_ptp_init_phy_e825(struct ice_hw *hw)
- 	params->onestep_ena = false;
- 	params->peer_delay = 0;
- 	params->sfd_ena = false;
--	params->phy_addr[0] = eth56g_phy_0;
--	params->phy_addr[1] = eth56g_phy_1;
- 	params->num_phys = 2;
- 	ptp->ports_per_phy = 4;
- 	ptp->num_lports = params->num_phys * ptp->ports_per_phy;
-@@ -2711,10 +2764,9 @@ static void ice_fill_phy_msg_e82x(struct ice_hw *hw,
- 				  struct ice_sbq_msg_input *msg, u8 port,
- 				  u16 offset)
- {
--	int phy_port, phy, quadtype;
-+	int phy_port, quadtype;
- 
- 	phy_port = port % hw->ptp.ports_per_phy;
--	phy = port / hw->ptp.ports_per_phy;
- 	quadtype = ICE_GET_QUAD_NUM(port) %
- 		   ICE_GET_QUAD_NUM(hw->ptp.ports_per_phy);
- 
-@@ -2726,12 +2778,7 @@ static void ice_fill_phy_msg_e82x(struct ice_hw *hw,
- 		msg->msg_addr_high = P_Q1_H(P_4_BASE + offset, phy_port);
- 	}
- 
--	if (phy == 0)
--		msg->dest_dev = rmn_0;
--	else if (phy == 1)
--		msg->dest_dev = rmn_1;
--	else
--		msg->dest_dev = rmn_2;
-+	msg->dest_dev = rmn_0;
- }
- 
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_type.h b/drivers/net/ethernet/intel/ice/ice_type.h
-index 45768796691fe..479227bdff75e 100644
---- a/drivers/net/ethernet/intel/ice/ice_type.h
-+++ b/drivers/net/ethernet/intel/ice/ice_type.h
-@@ -850,7 +850,6 @@ struct ice_mbx_data {
- 
- struct ice_eth56g_params {
- 	u8 num_phys;
--	u8 phy_addr[2];
- 	bool onestep_ena;
- 	bool sfd_ena;
- 	u32 peer_delay;
--- 
-2.39.5
+Ryan Lee <ryan.lee@canonical.com>
+    apparmor: allocate xmatch for nullpdb inside aa_alloc_null
 
+Wayne Lin <Wayne.Lin@amd.com>
+    drm/amd/display: Validate mdoe under MST LCT=1 case as well
+
+Nicholas Susanto <Nicholas.Susanto@amd.com>
+    Revert "drm/amd/display: Enable urgent latency adjustments for DCN35"
+
+Leo Li <sunpeng.li@amd.com>
+    drm/amd/display: Do not wait for PSR disable on vbl enable
+
+Tom Chung <chiahsuan.chung@amd.com>
+    drm/amd/display: Disable replay and psr while VRR is enabled
+
+Tom Chung <chiahsuan.chung@amd.com>
+    drm/amd/display: Fix PSR-SU not support but still call the amdgpu_dm_psr_enable
+
+Christian König <christian.koenig@amd.com>
+    drm/amdgpu: always sync the GFX pipe on ctx switch
+
+Kenneth Feng <kenneth.feng@amd.com>
+    drm/amdgpu: disable gfxoff with the compute workload on gfx12
+
+Gui Chengming <Jack.Gui@amd.com>
+    drm/amdgpu: fix fw attestation for MP0_14_0_{2/3}
+
+Alex Deucher <alexander.deucher@amd.com>
+    drm/amdgpu/smu13: update powersave optimizations
+
+Ashutosh Dixit <ashutosh.dixit@intel.com>
+    drm/xe/oa: Add missing VISACTL mux registers
+
+Matthew Brost <matthew.brost@intel.com>
+    drm/xe: Mark ComputeCS read mode as UC on iGPU
+
+Ville Syrjälä <ville.syrjala@linux.intel.com>
+    drm/i915/fb: Relax clear color alignment to 64 bytes
+
+Xin Li (Intel) <xin@zytor.com>
+    x86/fred: Fix the FRED RSP0 MSR out of sync with its per-CPU cache
+
+Frederic Weisbecker <frederic@kernel.org>
+    timers/migration: Enforce group initialization visibility to tree walkers
+
+Frederic Weisbecker <frederic@kernel.org>
+    timers/migration: Fix another race between hotplug and idle entry/exit
+
+Koichiro Den <koichiro.den@canonical.com>
+    hrtimers: Handle CPU state correctly on hotplug
+
+Tomas Krcka <krckatom@amazon.de>
+    irqchip/gic-v3-its: Don't enable interrupts in its_irq_set_vcpu_affinity()
+
+Yogesh Lal <quic_ylal@quicinc.com>
+    irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
+
+Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+    irqchip: Plug a OF node reference leak in platform_irqchip_probe()
+
+Steven Rostedt <rostedt@goodmis.org>
+    tracing: gfp: Fix the GFP enum values shown for user space tracing tools
+
+Donet Tom <donettom@linux.ibm.com>
+    mm: vmscan : pgdemote vmstat is not getting updated when MGLRU is enabled.
+
+Ryan Roberts <ryan.roberts@arm.com>
+    mm: clear uffd-wp PTE/PMD state on mremap()
+
+Leo Li <sunpeng.li@amd.com>
+    drm/amd/display: Do not elevate mem_type change to full update
+
+Ryan Roberts <ryan.roberts@arm.com>
+    selftests/mm: set allocated memory to non-zero content in cow test
+
+Guo Weikang <guoweikang.kernel@gmail.com>
+    mm/kmemleak: fix percpu memory leak detection failure
+
+Xiaolei Wang <xiaolei.wang@windriver.com>
+    pmdomain: imx8mp-blk-ctrl: add missing loop break condition
+
+Suren Baghdasaryan <surenb@google.com>
+    tools: fix atomic_set() definition to set the value correctly
+
+Sean Anderson <sean.anderson@linux.dev>
+    gpio: xilinx: Convert gpio_lock to raw spinlock
+
+Rik van Riel <riel@surriel.com>
+    fs/proc: fix softlockup in __read_vmcore (part 2)
+
+Marco Nelissen <marco.nelissen@gmail.com>
+    filemap: avoid truncating 64-bit offset to 32 bits
+
+Paul Fertser <fercerpav@gmail.com>
+    net/ncsi: fix locking in Get MAC Address handling
+
+Takashi Iwai <tiwai@suse.de>
+    drm/nouveau/disp: Fix missing backlight control on Macbook 5,1
+
+Dave Airlie <airlied@redhat.com>
+    nouveau/fence: handle cross device fences properly
+
+Stefano Garzarella <sgarzare@redhat.com>
+    vsock: prevent null-ptr-deref in vsock_*[has_data|has_space]
+
+Stefano Garzarella <sgarzare@redhat.com>
+    vsock: reset socket state when de-assigning the transport
+
+Stefano Garzarella <sgarzare@redhat.com>
+    vsock/virtio: cancel close work in the destructor
+
+Stefano Garzarella <sgarzare@redhat.com>
+    vsock/virtio: discard packets if the transport changes
+
+Stefano Garzarella <sgarzare@redhat.com>
+    vsock/bpf: return early if transport is not assigned
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    net: ethernet: xgbe: re-add aneg to supported features in PHY quirks
+
+Paolo Abeni <pabeni@redhat.com>
+    selftests: mptcp: avoid spurious errors on disconnect
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: fix spurious wake-up on under memory pressure
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: be sure to send ack when mptcp-level window re-opens
+
+Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
+    i2c: atr: Fix client detach
+
+Kairui Song <kasong@tencent.com>
+    zram: fix potential UAF of zram table
+
+Luke D. Jones <luke@ljones.dev>
+    ALSA: hda/realtek: fixup ASUS H7606W
+
+Luke D. Jones <luke@ljones.dev>
+    ALSA: hda/realtek: fixup ASUS GA605W
+
+Stefan Binding <sbinding@opensource.cirrus.com>
+    ALSA: hda/realtek: Add support for Ayaneo System using CS35L41 HDA
+
+Juergen Gross <jgross@suse.com>
+    x86/asm: Make serialize() always_inline
+
+Peter Zijlstra <peterz@infradead.org>
+    sched/fair: Fix update_cfs_group() vs DELAY_DEQUEUE
+
+Peter Zijlstra <peterz@infradead.org>
+    sched/fair: Fix EEVDF entity placement bug causing scheduling lag
+
+Luis Chamberlain <mcgrof@kernel.org>
+    nvmet: propagate npwg topology
+
+Tejun Heo <tj@kernel.org>
+    sched_ext: Fix dsq_local_on selftest
+
+Hongguang Gao <hongguang.gao@broadcom.com>
+    RDMA/bnxt_re: Fix to export port num to ib_query_qp
+
+David Vernet <void@manifault.com>
+    scx: Fix maximal BPF selftest prog
+
+Ihor Solodrai <ihor.solodrai@pm.me>
+    selftests/sched_ext: fix build after renames in sched_ext API
+
+Oleg Nesterov <oleg@redhat.com>
+    poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
+
+Lizhi Xu <lizhi.xu@windriver.com>
+    afs: Fix merge preference rule failure condition
+
+Marco Nelissen <marco.nelissen@gmail.com>
+    iomap: avoid avoid truncating 64-bit offset to 32 bits
+
+Henry Huang <henry.hj@antgroup.com>
+    sched_ext: keep running prev when prev->scx.slice != 0
+
+Hans de Goede <hdegoede@redhat.com>
+    ACPI: resource: acpi_dev_irq_override(): Check DMI match last
+
+Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+    platform/x86: ISST: Add Clearwater Forest to support list
+
+Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+    platform/x86/intel: power-domains: Add Clearwater Forest support
+
+Jakub Kicinski <kuba@kernel.org>
+    selftests: tc-testing: reduce rshift value
+
+Koichiro Den <koichiro.den@canonical.com>
+    gpio: sim: lock up configfs that an instantiated device depends on
+
+Koichiro Den <koichiro.den@canonical.com>
+    gpio: virtuser: lock up configfs that an instantiated device depends on
+
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+    scsi: ufs: core: Honor runtime/system PM levels if set by host controller drivers
+
+Max Kellermann <max.kellermann@ionos.com>
+    cachefiles: Parse the "secctx" immediately
+
+David Howells <dhowells@redhat.com>
+    netfs: Fix non-contiguous donation between completed reads
+
+David Howells <dhowells@redhat.com>
+    kheaders: Ignore silly-rename files
+
+Zhang Kunbo <zhangkunbo@huawei.com>
+    fs: fix missing declaration of init_files
+
+Brahmajit Das <brahmajit.xyz@gmail.com>
+    fs/qnx6: Fix building with GCC 15
+
+Leo Stone <leocstone@gmail.com>
+    hfs: Sanity check the root record
+
+Lizhi Xu <lizhi.xu@windriver.com>
+    mac802154: check local interfaces before deleting sdata list
+
+Paulo Alcantara <pc@manguebit.com>
+    smb: client: fix double free of TCP_Server_Info::hostname
+
+David Lechner <dlechner@baylibre.com>
+    hwmon: (ltc2991) Fix mixed signed/unsigned in DIV_ROUND_CLOSEST
+
+Wolfram Sang <wsa+renesas@sang-engineering.com>
+    i2c: testunit: on errors, repeat NACK until STOP
+
+Wolfram Sang <wsa+renesas@sang-engineering.com>
+    i2c: rcar: fix NACK handling when being a target
+
+Wolfram Sang <wsa+renesas@sang-engineering.com>
+    i2c: mux: demux-pinctrl: check initial mux selection, too
+
+Pratyush Yadav <pratyush@kernel.org>
+    Revert "mtd: spi-nor: core: replace dummy buswidth from addr to data"
+
+David Lechner <dlechner@baylibre.com>
+    hwmon: (tmp513) Fix division of negative numbers
+
+Chenyuan Yang <chenyuan0y@gmail.com>
+    platform/x86: lenovo-yoga-tab2-pro-1380-fastcharger: fix serdev race
+
+Chenyuan Yang <chenyuan0y@gmail.com>
+    platform/x86: dell-uart-backlight: fix serdev race
+
+Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+    i2c: core: fix reference leak in i2c_register_adapter()
+
+MD Danish Anwar <danishanwar@ti.com>
+    soc: ti: pruss: Fix pruss APIs
+
+Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+    reset: rzg2l-usbphy-ctrl: Assign proper of node to the allocated device
+
+Maíra Canal <mcanal@igalia.com>
+    drm/v3d: Ensure job pointer is set to NULL after job completion
+
+Ian Forbes <ian.forbes@broadcom.com>
+    drm/vmwgfx: Add new keep_resv BO param
+
+Ian Forbes <ian.forbes@broadcom.com>
+    drm/vmwgfx: Unreserve BO on error
+
+Yu-Chun Lin <eleanor15x@gmail.com>
+    drm/tests: helpers: Fix compiler warning
+
+Jakub Kicinski <kuba@kernel.org>
+    netdev: avoid CFI problems with sock priv helpers
+
+Leon Romanovsky <leon@kernel.org>
+    net/mlx5e: Always start IPsec sequence number from 1
+
+Leon Romanovsky <leon@kernel.org>
+    net/mlx5e: Rely on reqid in IPsec tunnel mode
+
+Leon Romanovsky <leon@kernel.org>
+    net/mlx5e: Fix inversion dependency warning while enabling IPsec tunnel
+
+Mark Zhang <markzhang@nvidia.com>
+    net/mlx5: Clear port select structure when fail to create
+
+Chris Mi <cmi@nvidia.com>
+    net/mlx5: SF, Fix add port error handling
+
+Yishai Hadas <yishaih@nvidia.com>
+    net/mlx5: Fix a lockdep warning as part of the write combining test
+
+Patrisious Haddad <phaddad@nvidia.com>
+    net/mlx5: Fix RDMA TX steering prio
+
+Pavel Begunkov <asml.silence@gmail.com>
+    net: make page_pool_ref_netmem work with net iovs
+
+Kevin Groeneveld <kgroeneveld@lenbrook.com>
+    net: fec: handle page_pool_dev_alloc_pages error
+
+Sean Anderson <sean.anderson@linux.dev>
+    net: xilinx: axienet: Fix IRQ coalescing packet count overflow
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    nfp: bpf: prevent integer overflow in nfp_bpf_event_output()
+
+Viresh Kumar <viresh.kumar@linaro.org>
+    cpufreq: Move endif to the end of Kconfig file
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    pfcp: Destroy device along with udp socket's netns dismantle.
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    gtp: Destroy device along with udp socket's netns dismantle.
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().
+
+Qu Wenruo <wqu@suse.com>
+    btrfs: add the missing error handling inside get_canonical_dev_path
+
+Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+    cpuidle: teo: Update documentation after previous changes
+
+Karol Kolacinski <karol.kolacinski@intel.com>
+    ice: Add correct PHY lane assignment
+
+Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+    ice: Use ice_adapter for PTP shared data instead of auxdev
+
+Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+    ice: Add ice_get_ctrl_ptp() wrapper to simplify the code
+
+Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+    ice: Introduce ice_get_phy_model() wrapper
+
+Karol Kolacinski <karol.kolacinski@intel.com>
+    ice: Fix ETH56G FC-FEC Rx offset value
+
+Karol Kolacinski <karol.kolacinski@intel.com>
+    ice: Fix quad registers read on E825
+
+Karol Kolacinski <karol.kolacinski@intel.com>
+    ice: Fix E825 initialization
+
+Artem Chernyshev <artem.chernyshev@red-soft.ru>
+    pktgen: Avoid out-of-bounds access in get_imix_entries
+
+Ilya Maximets <i.maximets@ovn.org>
+    openvswitch: fix lockup on tx to unregistering netdev with carrier
+
+Paul Barker <paul.barker.ct@bp.renesas.com>
+    net: ravb: Fix max TX frame size for RZ/V2M
+
+Jakub Kicinski <kuba@kernel.org>
+    eth: bnxt: always recalculate features after XDP clearing, fix null-deref
+
+Michal Luczaj <mhal@rbox.co>
+    bpf: Fix bpf_sk_select_reuseport() memory leak
+
+Sudheer Kumar Doredla <s-doredla@ti.com>
+    net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()
+
+Ard Biesheuvel <ardb@kernel.org>
+    efi/zboot: Limit compression options to GZIP and ZSTD
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ arch/x86/include/asm/special_insns.h               |   2 +-
+ arch/x86/kernel/fred.c                             |   8 +-
+ drivers/acpi/resource.c                            |   6 +-
+ drivers/block/zram/zram_drv.c                      |   1 +
+ drivers/cpufreq/Kconfig                            |   4 +-
+ drivers/cpuidle/governors/teo.c                    |  91 +++----
+ drivers/firmware/efi/Kconfig                       |   4 -
+ drivers/firmware/efi/libstub/Makefile.zboot        |  18 +-
+ drivers/gpio/gpio-sim.c                            |  48 +++-
+ drivers/gpio/gpio-virtuser.c                       |  49 +++-
+ drivers/gpio/gpio-xilinx.c                         |  32 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd.c         |   5 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fw_attestation.c |   4 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c             |   4 +-
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  41 ++-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crc.c  |  25 +-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c |   4 +-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.h |   2 +-
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_debugfs.c  |   2 +-
+ .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |  14 +-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.c  |  35 ++-
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_psr.h  |   3 +-
+ .../gpu/drm/amd/display/dc/dml/dcn35/dcn35_fpu.c   |   4 +-
+ .../gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c   |  11 +-
+ drivers/gpu/drm/i915/display/intel_fb.c            |   2 +-
+ drivers/gpu/drm/nouveau/nouveau_fence.c            |   6 +-
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/mcp77.c   |   1 +
+ drivers/gpu/drm/tests/drm_kunit_helpers.c          |   3 +-
+ drivers/gpu/drm/v3d/v3d_irq.c                      |   4 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c                 |   3 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.h                 |   3 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c                |   7 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_gem.c                |   1 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c                |  20 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_shader.c             |   7 +-
+ drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c         |   5 +-
+ drivers/gpu/drm/xe/xe_hw_engine.c                  |   2 +-
+ drivers/gpu/drm/xe/xe_oa.c                         |   1 +
+ drivers/hwmon/ltc2991.c                            |   2 +-
+ drivers/hwmon/tmp513.c                             |   7 +-
+ drivers/i2c/busses/i2c-rcar.c                      |  20 +-
+ drivers/i2c/i2c-atr.c                              |   2 +-
+ drivers/i2c/i2c-core-base.c                        |   1 +
+ drivers/i2c/i2c-slave-testunit.c                   |  19 +-
+ drivers/i2c/muxes/i2c-demux-pinctrl.c              |   4 +-
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c           |   1 +
+ drivers/infiniband/hw/bnxt_re/ib_verbs.h           |   4 +
+ drivers/infiniband/hw/bnxt_re/qplib_fp.c           |   1 +
+ drivers/infiniband/hw/bnxt_re/qplib_fp.h           |   1 +
+ drivers/irqchip/irq-gic-v3-its.c                   |   2 +-
+ drivers/irqchip/irq-gic-v3.c                       |   2 +-
+ drivers/irqchip/irqchip.c                          |   4 +-
+ drivers/mtd/spi-nor/core.c                         |   2 +-
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c        |  19 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c          |  25 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h          |   2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c      |   7 -
+ drivers/net/ethernet/freescale/fec_main.c          |  19 +-
+ drivers/net/ethernet/intel/ice/ice.h               |   5 +
+ drivers/net/ethernet/intel/ice/ice_adapter.c       |   6 +
+ drivers/net/ethernet/intel/ice/ice_adapter.h       |  22 +-
+ drivers/net/ethernet/intel/ice/ice_adminq_cmd.h    |   1 +
+ drivers/net/ethernet/intel/ice/ice_common.c        |  51 ++++
+ drivers/net/ethernet/intel/ice/ice_common.h        |   1 +
+ drivers/net/ethernet/intel/ice/ice_main.c          |   6 +-
+ drivers/net/ethernet/intel/ice/ice_ptp.c           | 165 +++++++-----
+ drivers/net/ethernet/intel/ice/ice_ptp.h           |   9 +-
+ drivers/net/ethernet/intel/ice/ice_ptp_consts.h    |   2 +-
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c        | 285 +++++++++++----------
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.h        |   5 +
+ drivers/net/ethernet/intel/ice/ice_type.h          |   2 -
+ .../ethernet/mellanox/mlx5/core/en_accel/ipsec.c   |  22 +-
+ .../mellanox/mlx5/core/en_accel/ipsec_fs.c         |  12 +-
+ .../mellanox/mlx5/core/en_accel/ipsec_offload.c    |  11 +-
+ drivers/net/ethernet/mellanox/mlx5/core/fs_core.c  |   1 +
+ .../net/ethernet/mellanox/mlx5/core/lag/port_sel.c |   4 +-
+ .../net/ethernet/mellanox/mlx5/core/sf/devlink.c   |   1 +
+ drivers/net/ethernet/mellanox/mlx5/core/wc.c       |  24 +-
+ drivers/net/ethernet/netronome/nfp/bpf/offload.c   |   3 +-
+ drivers/net/ethernet/renesas/ravb_main.c           |   1 +
+ drivers/net/ethernet/ti/cpsw_ale.c                 |  14 +-
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c  |   6 +
+ drivers/net/gtp.c                                  |  26 +-
+ drivers/net/pfcp.c                                 |  15 +-
+ drivers/nvme/target/io-cmd-bdev.c                  |   2 +-
+ drivers/platform/x86/dell/dell-uart-backlight.c    |   5 +-
+ .../x86/intel/speed_select_if/isst_if_common.c     |   1 +
+ drivers/platform/x86/intel/tpmi_power_domains.c    |   1 +
+ .../x86/lenovo-yoga-tab2-pro-1380-fastcharger.c    |   5 +-
+ drivers/pmdomain/imx/imx8mp-blk-ctrl.c             |   2 +-
+ drivers/reset/reset-rzg2l-usbphy-ctrl.c            |   1 +
+ drivers/ufs/core/ufshcd.c                          |   9 +-
+ fs/afs/addr_prefs.c                                |   6 +-
+ fs/btrfs/volumes.c                                 |   4 +
+ fs/cachefiles/daemon.c                             |  14 +-
+ fs/cachefiles/internal.h                           |   3 +-
+ fs/cachefiles/security.c                           |   6 +-
+ fs/file.c                                          |   1 +
+ fs/hfs/super.c                                     |   4 +-
+ fs/iomap/buffered-io.c                             |   2 +-
+ fs/netfs/read_collect.c                            |   9 +-
+ fs/proc/vmcore.c                                   |   2 +
+ fs/qnx6/inode.c                                    |  11 +-
+ fs/smb/client/connect.c                            |   3 +-
+ include/linux/hrtimer.h                            |   1 +
+ include/linux/poll.h                               |  10 +-
+ include/linux/pruss_driver.h                       |  12 +-
+ include/linux/userfaultfd_k.h                      |  12 +
+ include/net/page_pool/helpers.h                    |   2 +-
+ include/trace/events/mmflags.h                     |  63 +++++
+ kernel/cpu.c                                       |   2 +-
+ kernel/gen_kheaders.sh                             |   1 +
+ kernel/sched/ext.c                                 |  11 +-
+ kernel/sched/fair.c                                | 151 ++---------
+ kernel/time/hrtimer.c                              |  11 +-
+ kernel/time/timer_migration.c                      |  43 +++-
+ mm/filemap.c                                       |   2 +-
+ mm/huge_memory.c                                   |  12 +
+ mm/hugetlb.c                                       |  14 +-
+ mm/kmemleak.c                                      |   2 +-
+ mm/mremap.c                                        |  32 ++-
+ mm/vmscan.c                                        |   3 +
+ net/core/filter.c                                  |  30 ++-
+ net/core/netdev-genl-gen.c                         |  14 +-
+ net/core/pktgen.c                                  |   6 +-
+ net/mac802154/iface.c                              |   4 +
+ net/mptcp/options.c                                |   6 +-
+ net/mptcp/protocol.h                               |   9 +-
+ net/ncsi/internal.h                                |   2 +
+ net/ncsi/ncsi-manage.c                             |  16 +-
+ net/ncsi/ncsi-rsp.c                                |  19 +-
+ net/openvswitch/actions.c                          |   4 +-
+ net/vmw_vsock/af_vsock.c                           |  18 ++
+ net/vmw_vsock/virtio_transport_common.c            |  38 ++-
+ net/vmw_vsock/vsock_bpf.c                          |   9 +
+ security/apparmor/policy.c                         |   1 +
+ sound/pci/hda/patch_realtek.c                      |   3 +
+ tools/net/ynl/ynl-gen-c.py                         |  16 +-
+ tools/testing/selftests/mm/cow.c                   |   8 +-
+ tools/testing/selftests/net/mptcp/mptcp_connect.c  |  43 +++-
+ .../selftests/sched_ext/ddsp_bogus_dsq_fail.bpf.c  |   2 +-
+ .../selftests/sched_ext/ddsp_vtimelocal_fail.bpf.c |   4 +-
+ .../testing/selftests/sched_ext/dsp_local_on.bpf.c |   7 +-
+ tools/testing/selftests/sched_ext/dsp_local_on.c   |   5 +-
+ .../selftests/sched_ext/enq_select_cpu_fails.bpf.c |   2 +-
+ tools/testing/selftests/sched_ext/exit.bpf.c       |   4 +-
+ tools/testing/selftests/sched_ext/maximal.bpf.c    |   8 +-
+ .../selftests/sched_ext/select_cpu_dfl.bpf.c       |   2 +-
+ .../sched_ext/select_cpu_dfl_nodispatch.bpf.c      |   2 +-
+ .../selftests/sched_ext/select_cpu_dispatch.bpf.c  |   2 +-
+ .../sched_ext/select_cpu_dispatch_bad_dsq.bpf.c    |   2 +-
+ .../sched_ext/select_cpu_dispatch_dbl_dsp.bpf.c    |   4 +-
+ .../selftests/sched_ext/select_cpu_vtime.bpf.c     |   8 +-
+ .../tc-testing/tc-tests/filters/flow.json          |   4 +-
+ tools/testing/shared/linux/maple_tree.h            |   2 +-
+ tools/testing/vma/linux/atomic.h                   |   2 +-
+ 157 files changed, 1345 insertions(+), 766 deletions(-)
 
 
