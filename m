@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDA11F0E44;
-	Tue, 21 Jan 2025 18:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101821F7080;
+	Tue, 21 Jan 2025 18:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482418; cv=none; b=b+IP82WiDpJ1BIh9ZsD2Ot0jVCwinEcQa5wy0Bb+GZcjhDtKv9fTtfK1AAH2SUs1jWCa3Co4KTUP+cubPg5B6cxxHhK0ediOidbyq3xqr976Od3vLuCwEISKmMhAs7WhomR8dygL04vZdtHuEJ0CX2QAnFe8/7kieUdlxP1Mi3Q=
+	t=1737482420; cv=none; b=g2SkQwiWkaU9f3DtMud8Hu2rhVVDpcTmibmrWLhQl9HJkCUWdLOV21K3XYA7gBLX513+729Eb9/CfkLB074GMqeWI61jqdYhYd+q9KEI+3UvS39qzS8GYAYI1qBnx09JIBmUdGfVS1VrEEo2f4ieQ/2MN/diK1LqWO6D6XNSh8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482418; c=relaxed/simple;
-	bh=Xw5khCM+XjYe+IG94e2Q9gPWVC4hCOJot0xOCsN1ZMI=;
+	s=arc-20240116; t=1737482420; c=relaxed/simple;
+	bh=3NAa/ZBY5rQLwCSII+NqW1Br2e7xSM+CiwvFOHjIyfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3c11Ii+IGpVgmcbiQTiJSQKO7te34p1kSWpebdnnmOnvGkTzNkkBhCBV90LanKOmpcXm5rcJNKxAKreM1eNpmIn3XyR4Jg/8/eJuMXzB8QA2PBOSuV86lpp2wUcQ1gCw9qqSa9EJ+cIbUSVUpjxLnrDvYWpYoINgnC/iQ+Wh80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X58nOzJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HaIYZWIXOO4MdORAsrlVinaA4+B01UAH60Gh/hu3gmvnLnnoxrBqqttlLABLWYhd3lDC0jm269+wm15XEkpugicKmjSKahsd9BVpMd+0kskGuTaHIL0yAySu6PURbeKdmDd97WA0SylK5fc1aaaQn92LFrnbDwYlCdFFRY7R+WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz91+dYA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X58nOzJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B371C4CEE3;
-	Tue, 21 Jan 2025 18:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz91+dYA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83196C4CEE3;
+	Tue, 21 Jan 2025 18:00:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482417;
-	bh=Xw5khCM+XjYe+IG94e2Q9gPWVC4hCOJot0xOCsN1ZMI=;
+	s=korg; t=1737482419;
+	bh=3NAa/ZBY5rQLwCSII+NqW1Br2e7xSM+CiwvFOHjIyfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X58nOzJEdSI4RcChKK5Tyeiqsos235383REyO4dIEyS2R6pxJLwVqVHtuIjvqahO3
-	 +IACOKlz4Uhqp22K3K9obEHl/btt+Azg4RNsbUO+G4k8buuBzzPDaBkmWKqtW7QpzW
-	 1yGbS7U2vSm5cueorsLzUE69QellEJ4PV+0x+LM4=
+	b=iz91+dYATN+1ij1qmF1SZIXBVuIlnX9ItNrQjC74rQCfcgp5nIB/a/o6pg9PiBZ5r
+	 k3IECFdVukCfjLXvKULihTsus4xmJxv+Wp2/DSLEbKCnTEGv1mNPdCOnJ+1O755h+3
+	 1ayDYic5qeYRUwSIMMzfyVZ8WjnJleDtDDegB3r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/122] i2c: core: fix reference leak in i2c_register_adapter()
-Date: Tue, 21 Jan 2025 18:51:27 +0100
-Message-ID: <20250121174534.491586824@linuxfoundation.org>
+Subject: [PATCH 6.12 030/122] net/mlx5e: Rely on reqid in IPsec tunnel mode
+Date: Tue, 21 Jan 2025 18:51:18 +0100
+Message-ID: <20250121174534.154843023@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -51,37 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 3f8c4f5e9a57868fa107016c81165686d23325f2 ]
+[ Upstream commit 25f23524dfa227959beb3b2c2c0f38e0222f4cfa ]
 
-The reference count of the device incremented in device_initialize() is
-not decremented when device_add() fails. Add a put_device() call before
-returning from the function.
+All packet offloads SAs have reqid in it to make sure they have
+corresponding policy. While it is not strictly needed for transparent
+mode, it is extremely important in tunnel mode. In that mode, policy and
+SAs have different match criteria.
 
-This bug was found by an experimental static analysis tool that I am
-developing.
+Policy catches the whole subnet addresses, and SA catches the tunnel gateways
+addresses. The source address of such tunnel is not known during egress packet
+traversal in flow steering as it is added only after successful encryption.
 
-Fixes: 60f68597024d ("i2c: core: Setup i2c_adapter runtime-pm before calling device_add()")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+As reqid is required for packet offload and it is unique for every SA,
+we can safely rely on it only.
+
+The output below shows the configured egress policy and SA by strongswan:
+
+[leonro@vm ~]$ sudo ip x s
+src 192.169.101.2 dst 192.169.101.1
+        proto esp spi 0xc88b7652 reqid 1 mode tunnel
+        replay-window 0 flag af-unspec esn
+        aead rfc4106(gcm(aes)) 0xe406a01083986e14d116488549094710e9c57bc6 128
+        anti-replay esn context:
+         seq-hi 0x0, seq 0x0, oseq-hi 0x0, oseq 0x0
+         replay_window 1, bitmap-length 1
+         00000000
+        crypto offload parameters: dev eth2 dir out mode packet
+
+[leonro@064 ~]$ sudo ip x p
+src 192.170.0.0/16 dst 192.170.0.0/16
+        dir out priority 383615 ptype main
+        tmpl src 192.169.101.2 dst 192.169.101.1
+                proto esp spi 0xc88b7652 reqid 1 mode tunnel
+        crypto offload parameters: dev eth2 mode packet
+
+Fixes: b3beba1fb404 ("net/mlx5e: Allow policies with reqid 0, to support IKE policy holes")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-core-base.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c  | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-index 7c810893bfa33..75d30861ffe21 100644
---- a/drivers/i2c/i2c-core-base.c
-+++ b/drivers/i2c/i2c-core-base.c
-@@ -1562,6 +1562,7 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
- 	res = device_add(&adap->dev);
- 	if (res) {
- 		pr_err("adapter '%s': can't register device (%d)\n", adap->name, res);
-+		put_device(&adap->dev);
- 		goto out_list;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index e51b03d4c717f..57861d34d46f8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -1718,23 +1718,21 @@ static int tx_add_rule(struct mlx5e_ipsec_sa_entry *sa_entry)
+ 		goto err_alloc;
  	}
  
+-	if (attrs->family == AF_INET)
+-		setup_fte_addr4(spec, &attrs->saddr.a4, &attrs->daddr.a4);
+-	else
+-		setup_fte_addr6(spec, attrs->saddr.a6, attrs->daddr.a6);
+-
+ 	setup_fte_no_frags(spec);
+ 	setup_fte_upper_proto_match(spec, &attrs->upspec);
+ 
+ 	switch (attrs->type) {
+ 	case XFRM_DEV_OFFLOAD_CRYPTO:
++		if (attrs->family == AF_INET)
++			setup_fte_addr4(spec, &attrs->saddr.a4, &attrs->daddr.a4);
++		else
++			setup_fte_addr6(spec, attrs->saddr.a6, attrs->daddr.a6);
+ 		setup_fte_spi(spec, attrs->spi, false);
+ 		setup_fte_esp(spec);
+ 		setup_fte_reg_a(spec);
+ 		break;
+ 	case XFRM_DEV_OFFLOAD_PACKET:
+-		if (attrs->reqid)
+-			setup_fte_reg_c4(spec, attrs->reqid);
++		setup_fte_reg_c4(spec, attrs->reqid);
+ 		err = setup_pkt_reformat(ipsec, attrs, &flow_act);
+ 		if (err)
+ 			goto err_pkt_reformat;
 -- 
 2.39.5
 
