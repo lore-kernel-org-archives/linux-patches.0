@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE661F5614;
-	Tue, 21 Jan 2025 18:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73631F5614;
+	Tue, 21 Jan 2025 18:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482944; cv=none; b=Dzffod7zb9tM40HwKxYqA/hWtpB1HuojvXiOBVOceqKtmLF1QI3jukjoZl0/cINwSKdc0wTszv+c/9CKdBAGehSo9mYwvbDxa+jFpr/zYkCo00pU2S4BfhHQ3oxKFeydEorDQNT6Z80xDiWZo7i9u0FW8fUji74GNucv72FNyVs=
+	t=1737482947; cv=none; b=OCwN/EZPy+JP66emuMCsmi+sechVEnrzvjIMVT6X3gfkQBs97rgrLuWK/hNq/dWHuwz7Uu+oAO66Nwp56sw8qMD6Sft7aCCLyIG5nIx2crEccGFQVfps18JDLCquPqaQzJ0gCYuzREuZ58ihPjOQ/urhAdwC59ZZ3MQS44pXaaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482944; c=relaxed/simple;
-	bh=Cj1+s0406oGT38aYwYNILtoQsuGahFBCRdA+jMKMyzc=;
+	s=arc-20240116; t=1737482947; c=relaxed/simple;
+	bh=SFW/KTSbYql5+tpsMh5V6qb00GqMso41Uu0RRBHJ4MM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V4BPWCnfy3Wrn75quT9EOlUTexT9LomS6Q7GJr7w85v469jLGpsDKcx/TdGqmdWAZUVm6RXFpkuAelJdDYq05QSwMNVOwlX77g/O8YZ+DP8XSNy/WMIsQANyY5p758kbdPVbdpxmZOQEbaLStdY7PQk8rqMnmWe+N7ZqZXa7wG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7tgDtJ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcsDvB8Jt6GpHpFJXG1V+crdxwg4M2CWD4xnDhm/CLRovLDShD3gpATZdYESAc5V5REzfeS/FNwBOrtiSmOKnnrcrC9njwtsDQQGRgFiAYITTd4sUIlx0j1UWjFGwTaeXz7BYslo0o30XgL0rADjk3bS7VaJujAc+yBMCHeCvGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYXiRleE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7tgDtJ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DF9C4CEDF;
-	Tue, 21 Jan 2025 18:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYXiRleE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8CEC4CEDF;
+	Tue, 21 Jan 2025 18:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482944;
-	bh=Cj1+s0406oGT38aYwYNILtoQsuGahFBCRdA+jMKMyzc=;
+	s=korg; t=1737482947;
+	bh=SFW/KTSbYql5+tpsMh5V6qb00GqMso41Uu0RRBHJ4MM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7tgDtJ1XyRstdwDNOjKfN/24abn9enU5QqDjfoTrkWomkSyTOMb+SNA/I+Nvy3rX
-	 h4wEOFDhgJvcwKv3Iz/beutRcmrR0UjZa6wnDKxDPCq7kz5CSAX429ROV7nVfTHSUA
-	 9dTx7dIr2ExglL4QAA/ALFOAPg5HNCuw7MqDf03s=
+	b=PYXiRleE9W85Id7r/RZ8/VWNdZMGnrChvVPNvR/4Zomt99LEyCBACeLVpT2Juqmge
+	 pIrK32e7pXcyYrK8YFB9oQwu3LLj6lzyogHWmOoyZA28gxkSccoMUtWO8k4t4YMsTt
+	 jFrDbjt5/hKKUbI0V7Tg+CFnbTADx8Tc6KO2aS04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 062/127] iio: adc: ad7124: Disable all channels at probe time
-Date: Tue, 21 Jan 2025 18:52:14 +0100
-Message-ID: <20250121174532.058483592@linuxfoundation.org>
+	Hou Tao <houtao1@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 063/127] block, bfq: fix waker_bfqq UAF after bfq_split_bfqq()
+Date: Tue, 21 Jan 2025 18:52:15 +0100
+Message-ID: <20250121174532.104484082@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -46,50 +47,205 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit 4be339af334c283a1a1af3cb28e7e448a0aa8a7c upstream.
+[ Upstream commit fcede1f0a043ccefe9bc6ad57f12718e42f63f1d ]
 
-When during a measurement two channels are enabled, two measurements are
-done that are reported sequencially in the DATA register. As the code
-triggered by reading one of the sysfs properties expects that only one
-channel is enabled it only reads the first data set which might or might
-not belong to the intended channel.
+Our syzkaller report a following UAF for v6.6:
 
-To prevent this situation disable all channels during probe. This fixes
-a problem in practise because the reset default for channel 0 is
-enabled. So all measurements before the first measurement on channel 0
-(which disables channel 0 at the end) might report wrong values.
+BUG: KASAN: slab-use-after-free in bfq_init_rq+0x175d/0x17a0 block/bfq-iosched.c:6958
+Read of size 8 at addr ffff8881b57147d8 by task fsstress/232726
 
-Fixes: 7b8d045e497a ("iio: adc: ad7124: allow more than 8 channels")
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://patch.msgid.link/20241104101905.845737-2-u.kleine-koenig@baylibre.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CPU: 2 PID: 232726 Comm: fsstress Not tainted 6.6.0-g3629d1885222 #39
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x91/0xf0 lib/dump_stack.c:106
+ print_address_description.constprop.0+0x66/0x300 mm/kasan/report.c:364
+ print_report+0x3e/0x70 mm/kasan/report.c:475
+ kasan_report+0xb8/0xf0 mm/kasan/report.c:588
+ hlist_add_head include/linux/list.h:1023 [inline]
+ bfq_init_rq+0x175d/0x17a0 block/bfq-iosched.c:6958
+ bfq_insert_request.isra.0+0xe8/0xa20 block/bfq-iosched.c:6271
+ bfq_insert_requests+0x27f/0x390 block/bfq-iosched.c:6323
+ blk_mq_insert_request+0x290/0x8f0 block/blk-mq.c:2660
+ blk_mq_submit_bio+0x1021/0x15e0 block/blk-mq.c:3143
+ __submit_bio+0xa0/0x6b0 block/blk-core.c:639
+ __submit_bio_noacct_mq block/blk-core.c:718 [inline]
+ submit_bio_noacct_nocheck+0x5b7/0x810 block/blk-core.c:747
+ submit_bio_noacct+0xca0/0x1990 block/blk-core.c:847
+ __ext4_read_bh fs/ext4/super.c:205 [inline]
+ ext4_read_bh+0x15e/0x2e0 fs/ext4/super.c:230
+ __read_extent_tree_block+0x304/0x6f0 fs/ext4/extents.c:567
+ ext4_find_extent+0x479/0xd20 fs/ext4/extents.c:947
+ ext4_ext_map_blocks+0x1a3/0x2680 fs/ext4/extents.c:4182
+ ext4_map_blocks+0x929/0x15a0 fs/ext4/inode.c:660
+ ext4_iomap_begin_report+0x298/0x480 fs/ext4/inode.c:3569
+ iomap_iter+0x3dd/0x1010 fs/iomap/iter.c:91
+ iomap_fiemap+0x1f4/0x360 fs/iomap/fiemap.c:80
+ ext4_fiemap+0x181/0x210 fs/ext4/extents.c:5051
+ ioctl_fiemap.isra.0+0x1b4/0x290 fs/ioctl.c:220
+ do_vfs_ioctl+0x31c/0x11a0 fs/ioctl.c:811
+ __do_sys_ioctl fs/ioctl.c:869 [inline]
+ __se_sys_ioctl+0xae/0x190 fs/ioctl.c:857
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+Allocated by task 232719:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ __kasan_slab_alloc+0x87/0x90 mm/kasan/common.c:328
+ kasan_slab_alloc include/linux/kasan.h:188 [inline]
+ slab_post_alloc_hook mm/slab.h:768 [inline]
+ slab_alloc_node mm/slub.c:3492 [inline]
+ kmem_cache_alloc_node+0x1b8/0x6f0 mm/slub.c:3537
+ bfq_get_queue+0x215/0x1f00 block/bfq-iosched.c:5869
+ bfq_get_bfqq_handle_split+0x167/0x5f0 block/bfq-iosched.c:6776
+ bfq_init_rq+0x13a4/0x17a0 block/bfq-iosched.c:6938
+ bfq_insert_request.isra.0+0xe8/0xa20 block/bfq-iosched.c:6271
+ bfq_insert_requests+0x27f/0x390 block/bfq-iosched.c:6323
+ blk_mq_insert_request+0x290/0x8f0 block/blk-mq.c:2660
+ blk_mq_submit_bio+0x1021/0x15e0 block/blk-mq.c:3143
+ __submit_bio+0xa0/0x6b0 block/blk-core.c:639
+ __submit_bio_noacct_mq block/blk-core.c:718 [inline]
+ submit_bio_noacct_nocheck+0x5b7/0x810 block/blk-core.c:747
+ submit_bio_noacct+0xca0/0x1990 block/blk-core.c:847
+ __ext4_read_bh fs/ext4/super.c:205 [inline]
+ ext4_read_bh_nowait+0x15a/0x240 fs/ext4/super.c:217
+ ext4_read_bh_lock+0xac/0xd0 fs/ext4/super.c:242
+ ext4_bread_batch+0x268/0x500 fs/ext4/inode.c:958
+ __ext4_find_entry+0x448/0x10f0 fs/ext4/namei.c:1671
+ ext4_lookup_entry fs/ext4/namei.c:1774 [inline]
+ ext4_lookup.part.0+0x359/0x6f0 fs/ext4/namei.c:1842
+ ext4_lookup+0x72/0x90 fs/ext4/namei.c:1839
+ __lookup_slow+0x257/0x480 fs/namei.c:1696
+ lookup_slow fs/namei.c:1713 [inline]
+ walk_component+0x454/0x5c0 fs/namei.c:2004
+ link_path_walk.part.0+0x773/0xda0 fs/namei.c:2331
+ link_path_walk fs/namei.c:3826 [inline]
+ path_openat+0x1b9/0x520 fs/namei.c:3826
+ do_filp_open+0x1b7/0x400 fs/namei.c:3857
+ do_sys_openat2+0x5dc/0x6e0 fs/open.c:1428
+ do_sys_open fs/open.c:1443 [inline]
+ __do_sys_openat fs/open.c:1459 [inline]
+ __se_sys_openat fs/open.c:1454 [inline]
+ __x64_sys_openat+0x148/0x200 fs/open.c:1454
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+Freed by task 232726:
+ kasan_save_stack+0x22/0x50 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ kasan_save_free_info+0x2b/0x50 mm/kasan/generic.c:522
+ ____kasan_slab_free mm/kasan/common.c:236 [inline]
+ __kasan_slab_free+0x12a/0x1b0 mm/kasan/common.c:244
+ kasan_slab_free include/linux/kasan.h:164 [inline]
+ slab_free_hook mm/slub.c:1827 [inline]
+ slab_free_freelist_hook mm/slub.c:1853 [inline]
+ slab_free mm/slub.c:3820 [inline]
+ kmem_cache_free+0x110/0x760 mm/slub.c:3842
+ bfq_put_queue+0x6a7/0xfb0 block/bfq-iosched.c:5428
+ bfq_forget_entity block/bfq-wf2q.c:634 [inline]
+ bfq_put_idle_entity+0x142/0x240 block/bfq-wf2q.c:645
+ bfq_forget_idle+0x189/0x1e0 block/bfq-wf2q.c:671
+ bfq_update_vtime block/bfq-wf2q.c:1280 [inline]
+ __bfq_lookup_next_entity block/bfq-wf2q.c:1374 [inline]
+ bfq_lookup_next_entity+0x350/0x480 block/bfq-wf2q.c:1433
+ bfq_update_next_in_service+0x1c0/0x4f0 block/bfq-wf2q.c:128
+ bfq_deactivate_entity+0x10a/0x240 block/bfq-wf2q.c:1188
+ bfq_deactivate_bfqq block/bfq-wf2q.c:1592 [inline]
+ bfq_del_bfqq_busy+0x2e8/0xad0 block/bfq-wf2q.c:1659
+ bfq_release_process_ref+0x1cc/0x220 block/bfq-iosched.c:3139
+ bfq_split_bfqq+0x481/0xdf0 block/bfq-iosched.c:6754
+ bfq_init_rq+0xf29/0x17a0 block/bfq-iosched.c:6934
+ bfq_insert_request.isra.0+0xe8/0xa20 block/bfq-iosched.c:6271
+ bfq_insert_requests+0x27f/0x390 block/bfq-iosched.c:6323
+ blk_mq_insert_request+0x290/0x8f0 block/blk-mq.c:2660
+ blk_mq_submit_bio+0x1021/0x15e0 block/blk-mq.c:3143
+ __submit_bio+0xa0/0x6b0 block/blk-core.c:639
+ __submit_bio_noacct_mq block/blk-core.c:718 [inline]
+ submit_bio_noacct_nocheck+0x5b7/0x810 block/blk-core.c:747
+ submit_bio_noacct+0xca0/0x1990 block/blk-core.c:847
+ __ext4_read_bh fs/ext4/super.c:205 [inline]
+ ext4_read_bh+0x15e/0x2e0 fs/ext4/super.c:230
+ __read_extent_tree_block+0x304/0x6f0 fs/ext4/extents.c:567
+ ext4_find_extent+0x479/0xd20 fs/ext4/extents.c:947
+ ext4_ext_map_blocks+0x1a3/0x2680 fs/ext4/extents.c:4182
+ ext4_map_blocks+0x929/0x15a0 fs/ext4/inode.c:660
+ ext4_iomap_begin_report+0x298/0x480 fs/ext4/inode.c:3569
+ iomap_iter+0x3dd/0x1010 fs/iomap/iter.c:91
+ iomap_fiemap+0x1f4/0x360 fs/iomap/fiemap.c:80
+ ext4_fiemap+0x181/0x210 fs/ext4/extents.c:5051
+ ioctl_fiemap.isra.0+0x1b4/0x290 fs/ioctl.c:220
+ do_vfs_ioctl+0x31c/0x11a0 fs/ioctl.c:811
+ __do_sys_ioctl fs/ioctl.c:869 [inline]
+ __se_sys_ioctl+0xae/0x190 fs/ioctl.c:857
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x70/0x120 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x78/0xe2
+
+commit 1ba0403ac644 ("block, bfq: fix uaf for accessing waker_bfqq after
+splitting") fix the problem that if waker_bfqq is in the merge chain,
+and current is the only procress, waker_bfqq can be freed from
+bfq_split_bfqq(). However, the case that waker_bfqq is not in the merge
+chain is missed, and if the procress reference of waker_bfqq is 0,
+waker_bfqq can be freed as well.
+
+Fix the problem by checking procress reference if waker_bfqq is not in
+the merge_chain.
+
+Fixes: 1ba0403ac644 ("block, bfq: fix uaf for accessing waker_bfqq after splitting")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20250108084148.1549973-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7124.c |    3 +++
- 1 file changed, 3 insertions(+)
+ block/bfq-iosched.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -856,6 +856,9 @@ static int ad7124_setup(struct ad7124_st
- 		 * set all channels to this default value.
- 		 */
- 		ad7124_set_channel_odr(st, i, 10);
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index c985c944fa65..d830ed169e65 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -6577,16 +6577,24 @@ static struct bfq_queue *bfq_waker_bfqq(struct bfq_queue *bfqq)
+ 		if (new_bfqq == waker_bfqq) {
+ 			/*
+ 			 * If waker_bfqq is in the merge chain, and current
+-			 * is the only procress.
++			 * is the only process, waker_bfqq can be freed.
+ 			 */
+ 			if (bfqq_process_refs(waker_bfqq) == 1)
+ 				return NULL;
+-			break;
 +
-+		/* Disable all channels to prevent unintended conversions. */
-+		ad_sd_write_reg(&st->sd, AD7124_CHANNEL(i), 2, 0);
++			return waker_bfqq;
+ 		}
+ 
+ 		new_bfqq = new_bfqq->new_bfqq;
  	}
  
- 	return ret;
++	/*
++	 * If waker_bfqq is not in the merge chain, and it's procress reference
++	 * is 0, waker_bfqq can be freed.
++	 */
++	if (bfqq_process_refs(waker_bfqq) == 0)
++		return NULL;
++
+ 	return waker_bfqq;
+ }
+ 
+-- 
+2.39.5
+
 
 
