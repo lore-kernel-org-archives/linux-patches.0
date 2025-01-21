@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448AC1F756E;
-	Tue, 21 Jan 2025 18:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FDB1F3FFE;
+	Tue, 21 Jan 2025 18:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482487; cv=none; b=Lt4ojZsyCkUhs5zjZzSKktctJTG/tbtN9pZUuGIRgr6ZAPWWyx7nm+JxE9HdACFnhUOIM8Bb4YkU+mYLrb0w7z4sDITzvnYswvGttNqvcvQgV7gEbtRI739M1BNGN8xX2ZcFBRFd6wW7K4iqwpzE4d+J8eN60taBwnI0So9O1eg=
+	t=1737482490; cv=none; b=JJ/Zh6i75dBwjBNYibURzz6g0cdrfl4RcWrMoMH67f7icjuRd8LmqR8JeWXwrA0wg2YVi6ys/rdTO9kJir9RnJIITxN0/KLIeRyLEsYzymNXQVgah76zE3pEXx89qKhf8sinEkTj7kW8zCTSCC1ex5GcObVJtJRNuiT2UO3E1Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482487; c=relaxed/simple;
-	bh=4oJaTfRVpe9U3mP2ku2FXnhvC/6biN7oKb2m83VmKTU=;
+	s=arc-20240116; t=1737482490; c=relaxed/simple;
+	bh=Udxng/LlAxACw6O3UV8aZxrOC/B/q8UXwgdQUPlvtPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKyY3DEE4LKRbkUmYH/+E3aOl6IlU5EK2Xusp+Xsqi2n6JqyvtMFpJN7GweOgXCiMo5OsE9vfhgFpgdiVUx5q2Bym7fg5d4qACsM4h3sduae/gz+zp/hlyDZLaN0vxz1DZIXLRBP/wte7dJcAyY/JZz91t7VIYqF1eXqVJ/AP90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKxMWMaZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=otFRrCJfZrnyeqFcozSOdcRZ4YrszJbpQPru4MYc466cK1wXNlflnuFpZD6Ksm+FNT7UgdaSKP4NEb9Alc/HUd8tRf5sT3GjnE+1T+65EFR/lvP3TZRVEtifL7u+FuhCyoBpRNuH4PK67V4guV7y9Ui8oBnhQ40Ev+Ms61bjAgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oP27npwM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKxMWMaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB28DC4CEE0;
-	Tue, 21 Jan 2025 18:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oP27npwM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0AFC4CEDF;
+	Tue, 21 Jan 2025 18:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482487;
-	bh=4oJaTfRVpe9U3mP2ku2FXnhvC/6biN7oKb2m83VmKTU=;
+	s=korg; t=1737482489;
+	bh=Udxng/LlAxACw6O3UV8aZxrOC/B/q8UXwgdQUPlvtPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKxMWMaZEK85trYv7xjmsH8V+2MruR2f1SAl78yp6Ew1oIGanxTcdwB8ILHOF/gRf
-	 AeWwOOqI8HZDiGXX+9/wPtIvX1IKyuT4z56jRqnSLcfRM1WP4VqVc6s5jI5Im4u08V
-	 mPN1fnVGrf++vhcxxDABjcfsKdyHDzCI3p/kb+QQ=
+	b=oP27npwM9ciwc3zZiWJs98RfRd/W3NCrQBTQWCaKFI1LSP8DDSSQ9KNdazDRTawXL
+	 pgRmX7kbkpeLxZQ1tg5b4j1sWVnrvlpDn2jpqFtHsEenz70NIx0t7Vm2rsrPoutKSE
+	 /LvQSBdsifsdMxHF7rdMQYysPfJTOaBE9fxTmrFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/122] poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
-Date: Tue, 21 Jan 2025 18:51:54 +0100
-Message-ID: <20250121174535.539571245@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 093/122] fs/proc: fix softlockup in __read_vmcore (part 2)
+Date: Tue, 21 Jan 2025 18:52:21 +0100
+Message-ID: <20250121174536.607129165@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -51,66 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit cacd9ae4bf801ff4125d8961bb9a3ba955e51680 ]
+commit cbc5dde0a461240046e8a41c43d7c3b76d5db952 upstream.
 
-As the comment above waitqueue_active() explains, it can only be used
-if both waker and waiter have mb()'s that pair with each other. However
-__pollwait() is broken in this respect.
+Since commit 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore") the
+number of softlockups in __read_vmcore at kdump time have gone down, but
+they still happen sometimes.
 
-This is not pipe-specific, but let's look at pipe_poll() for example:
+In a memory constrained environment like the kdump image, a softlockup is
+not just a harmless message, but it can interfere with things like RCU
+freeing memory, causing the crashdump to get stuck.
 
-	poll_wait(...); // -> __pollwait() -> add_wait_queue()
+The second loop in __read_vmcore has a lot more opportunities for natural
+sleep points, like scheduling out while waiting for a data write to
+happen, but apparently that is not always enough.
 
-	LOAD(pipe->head);
-	LOAD(pipe->head);
+Add a cond_resched() to the second loop in __read_vmcore to (hopefully)
+get rid of the softlockups.
 
-In theory these LOAD()'s can leak into the critical section inside
-add_wait_queue() and can happen before list_add(entry, wq_head), in this
-case pipe_poll() can race with wakeup_pipe_readers/writers which do
-
-	smp_mb();
-	if (waitqueue_active(wq_head))
-		wake_up_interruptible(wq_head);
-
-There are more __pollwait()-like functions (grep init_poll_funcptr), and
-it seems that at least ep_ptable_queue_proc() has the same problem, so the
-patch adds smp_mb() into poll_wait().
-
-Link: https://lore.kernel.org/all/20250102163320.GA17691@redhat.com/
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20250107162717.GA18922@redhat.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20250110102821.2a37581b@fangorn
+Fixes: 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/poll.h | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/proc/vmcore.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/poll.h b/include/linux/poll.h
-index d1ea4f3714a84..fc641b50f1298 100644
---- a/include/linux/poll.h
-+++ b/include/linux/poll.h
-@@ -41,8 +41,16 @@ typedef struct poll_table_struct {
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -404,6 +404,8 @@ static ssize_t __read_vmcore(struct iov_
+ 			if (!iov_iter_count(iter))
+ 				return acc;
+ 		}
++
++		cond_resched();
+ 	}
  
- static inline void poll_wait(struct file * filp, wait_queue_head_t * wait_address, poll_table *p)
- {
--	if (p && p->_qproc && wait_address)
-+	if (p && p->_qproc && wait_address) {
- 		p->_qproc(filp, wait_address, p);
-+		/*
-+		 * This memory barrier is paired in the wq_has_sleeper().
-+		 * See the comment above prepare_to_wait(), we need to
-+		 * ensure that subsequent tests in this thread can't be
-+		 * reordered with __add_wait_queue() in _qproc() paths.
-+		 */
-+		smp_mb();
-+	}
- }
- 
- /*
--- 
-2.39.5
-
+ 	return acc;
 
 
