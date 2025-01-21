@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B47041E9B38;
-	Tue, 21 Jan 2025 17:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17401E9B38;
+	Tue, 21 Jan 2025 17:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482046; cv=none; b=LVBdC/HigGF8pDgF4ZCQ42ZyJVZXVoOzJetJ9P55i47Io/By42vLf66qafvOBdtLjhaDw4vsWQUjGwD/XrTfKwoK50tXyJesus3dhtmxr5nwBfCo+bt2y8JeikuLiwGNmlqFHQQJpQRXSj6PNcCqZsRojF9vdMoSMpEmqH7SSms=
+	t=1737482050; cv=none; b=pVgMiyIAdbn/z/qIcEPoGS4vw/SgEKHJcVZSVPjEdk83IAPm1gEHQX0X0rF6S6dXONyPOTBsoYIzEjaI13QmtaBOsRPL4LpzKKBK9mel7F2wGlfB0QKPVE0ztekGFpM2fuMql8CW2le4L3MGDPdAuwsUALK+RZOLelU/hFVQSiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482046; c=relaxed/simple;
-	bh=H3zocbM/MusqMJHS5xNeliYqFJYcvnKNTaJDDYNCO5E=;
+	s=arc-20240116; t=1737482050; c=relaxed/simple;
+	bh=z/ok41YhEHhjSX8OZIhD+XHjUFu3RlDTBMoSa3FLW2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NjBQJ+x0Gky2C99YsI7z7kCBBG+Lm7djzWuF/nCe8AFZESvC/a3IZcjNlo+Trb0ln56Q5547GFWPAr/kQ4/TJKzjLW5aJB0wX/WDUWhOWeZp5f0/xq6SXJcs/eti4G4uDiR8AcaVkNMl7EVKQg0zdZhdXmG2amSArUohnOBAJg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ihmdsusz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dwGWbbBdXqDYW8EJaFYt79hTC90x2/o2qMNMOey4QMU1M/xQSgR/9raBfy8theg4PNypr5tRwve374G8f4RVzKcFul0HDG19mmPKHtzKdXc8MuWJ3kojB9BoecQ5OwEUjax9rJu2r5hENzWibZiqcVl5Y/Ld35aZMzptVQUkqAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gfj/oUnx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ihmdsusz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9649C4CEDF;
-	Tue, 21 Jan 2025 17:54:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gfj/oUnx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20B9C4CEDF;
+	Tue, 21 Jan 2025 17:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482046;
-	bh=H3zocbM/MusqMJHS5xNeliYqFJYcvnKNTaJDDYNCO5E=;
+	s=korg; t=1737482049;
+	bh=z/ok41YhEHhjSX8OZIhD+XHjUFu3RlDTBMoSa3FLW2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ihmdsusznCVvKq2u62/eNy+KXm65oIaUODZKwhShOmvSb0BCmJzSwhJ9tQzS0M02l
-	 TwS4Nich6OvBvTIQNGbmZDqcJvHOnY37zr2CqahSSPmpi9S76UzQXLGQf6YqsDR/ry
-	 KEYCSOM/kF7tehD3w7NbH+eBcjJpHgaQrEogGBy4=
+	b=Gfj/oUnxAeMHYG60rYXFA60fBV9JCv6GARwlPu65HcBgPLy1GssZIgFPPT5uEgoXb
+	 o1RnQW/bVDLQyxyYpsIuvk7NCQP9BAf1ls0HN1COvHKDeXBXzkzDdncpIprKfzdAHc
+	 i5425dGVUqUpzM/ILRhHptdtyqPIiGm2W9Lh1VHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 16/72] net/mlx5e: Always start IPsec sequence number from 1
-Date: Tue, 21 Jan 2025 18:51:42 +0100
-Message-ID: <20250121174524.051656261@linuxfoundation.org>
+Subject: [PATCH 6.6 17/72] drm/vmwgfx: Add new keep_resv BO param
+Date: Tue, 21 Jan 2025 18:51:43 +0100
+Message-ID: <20250121174524.090299000@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -53,83 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit 7f95b0247764acd739d949ff247db4b76138e55a ]
+[ Upstream commit b7d40627813799870e72729c6fc979a8a40d9ba6 ]
 
-According to RFC4303, section "3.3.3. Sequence Number Generation",
-the first packet sent using a given SA will contain a sequence
-number of 1.
+Adds a new BO param that keeps the reservation locked after creation.
+This removes the need to re-reserve the BO after creation which is a
+waste of cycles.
 
-This is applicable to both ESN and non-ESN mode, which was not covered
-in commit mentioned in Fixes line.
+This also fixes a bug in vmw_prime_import_sg_table where the imported
+reservation is unlocked twice.
 
-Fixes: 3d42c8cc67a8 ("net/mlx5e: Ensure that IPsec sequence packet number starts from 1")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Fixes: b32233acceff ("drm/vmwgfx: Fix prime import/export")
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250110185335.15301-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c  |  6 ++++++
- .../mellanox/mlx5/core/en_accel/ipsec_offload.c       | 11 ++++++++---
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c         | 3 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.h         | 3 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c        | 7 ++-----
+ drivers/gpu/drm/vmwgfx/vmwgfx_gem.c        | 1 +
+ drivers/gpu/drm/vmwgfx/vmwgfx_shader.c     | 7 ++-----
+ drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c | 5 ++---
+ 6 files changed, 11 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index 9fc6dbc83d141..463c23ae0ad1e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -719,6 +719,12 @@ static int mlx5e_xfrm_add_state(struct xfrm_state *x,
- 	/* check esn */
- 	if (x->props.flags & XFRM_STATE_ESN)
- 		mlx5e_ipsec_update_esn_state(sa_entry);
-+	else
-+		/* According to RFC4303, section "3.3.3. Sequence Number Generation",
-+		 * the first packet sent using a given SA will contain a sequence
-+		 * number of 1.
-+		 */
-+		sa_entry->esn_state.esn = 1;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+index fdc34283eeb97..ec6ca264ce11f 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+@@ -412,7 +412,8 @@ static int vmw_bo_init(struct vmw_private *dev_priv,
  
- 	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, &sa_entry->attrs);
+ 	if (params->pin)
+ 		ttm_bo_pin(&vmw_bo->tbo);
+-	ttm_bo_unreserve(&vmw_bo->tbo);
++	if (!params->keep_resv)
++		ttm_bo_unreserve(&vmw_bo->tbo);
  
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-index de83567aae791..940e350058d10 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-@@ -90,8 +90,9 @@ u32 mlx5_ipsec_device_caps(struct mlx5_core_dev *mdev)
- EXPORT_SYMBOL_GPL(mlx5_ipsec_device_caps);
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
+index 156ea612fc2a4..a3ac61b991bf6 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.h
+@@ -53,8 +53,9 @@ struct vmw_bo_params {
+ 	u32 domain;
+ 	u32 busy_domain;
+ 	enum ttm_bo_type bo_type;
+-	size_t size;
+ 	bool pin;
++	bool keep_resv;
++	size_t size;
+ 	struct dma_resv *resv;
+ 	struct sg_table *sg;
+ };
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+index bea576434e475..4655c266924fe 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+@@ -399,7 +399,8 @@ static int vmw_dummy_query_bo_create(struct vmw_private *dev_priv)
+ 		.busy_domain = VMW_BO_DOMAIN_SYS,
+ 		.bo_type = ttm_bo_type_kernel,
+ 		.size = PAGE_SIZE,
+-		.pin = true
++		.pin = true,
++		.keep_resv = true,
+ 	};
  
- static void mlx5e_ipsec_packet_setup(void *obj, u32 pdn,
--				     struct mlx5_accel_esp_xfrm_attrs *attrs)
-+				     struct mlx5e_ipsec_sa_entry *sa_entry)
- {
-+	struct mlx5_accel_esp_xfrm_attrs *attrs = &sa_entry->attrs;
- 	void *aso_ctx;
+ 	/*
+@@ -411,10 +412,6 @@ static int vmw_dummy_query_bo_create(struct vmw_private *dev_priv)
+ 	if (unlikely(ret != 0))
+ 		return ret;
  
- 	aso_ctx = MLX5_ADDR_OF(ipsec_obj, obj, ipsec_aso);
-@@ -119,8 +120,12 @@ static void mlx5e_ipsec_packet_setup(void *obj, u32 pdn,
- 	 * active.
- 	 */
- 	MLX5_SET(ipsec_obj, obj, aso_return_reg, MLX5_IPSEC_ASO_REG_C_4_5);
--	if (attrs->dir == XFRM_DEV_OFFLOAD_OUT)
-+	if (attrs->dir == XFRM_DEV_OFFLOAD_OUT) {
- 		MLX5_SET(ipsec_aso, aso_ctx, mode, MLX5_IPSEC_ASO_INC_SN);
-+		if (!attrs->replay_esn.trigger)
-+			MLX5_SET(ipsec_aso, aso_ctx, mode_parameter,
-+				 sa_entry->esn_state.esn);
-+	}
+-	ret = ttm_bo_reserve(&vbo->tbo, false, true, NULL);
+-	BUG_ON(ret != 0);
+-	vmw_bo_pin_reserved(vbo, true);
+-
+ 	ret = ttm_bo_kmap(&vbo->tbo, 0, 1, &map);
+ 	if (likely(ret == 0)) {
+ 		result = ttm_kmap_obj_virtual(&map, &dummy);
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+index d6bcaf078b1f4..0dc3dacc5beee 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+@@ -163,6 +163,7 @@ struct drm_gem_object *vmw_prime_import_sg_table(struct drm_device *dev,
+ 		.bo_type = ttm_bo_type_sg,
+ 		.size = attach->dmabuf->size,
+ 		.pin = false,
++		.keep_resv = true,
+ 		.resv = attach->dmabuf->resv,
+ 		.sg = table,
  
- 	if (attrs->lft.hard_packet_limit != XFRM_INF) {
- 		MLX5_SET(ipsec_aso, aso_ctx, remove_flow_pkt_cnt,
-@@ -173,7 +178,7 @@ static int mlx5_create_ipsec_obj(struct mlx5e_ipsec_sa_entry *sa_entry)
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
+index a01ca3226d0af..7fb1c88bcc475 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
+@@ -896,7 +896,8 @@ int vmw_compat_shader_add(struct vmw_private *dev_priv,
+ 		.busy_domain = VMW_BO_DOMAIN_SYS,
+ 		.bo_type = ttm_bo_type_device,
+ 		.size = size,
+-		.pin = true
++		.pin = true,
++		.keep_resv = true,
+ 	};
  
- 	res = &mdev->mlx5e_res.hw_objs;
- 	if (attrs->type == XFRM_DEV_OFFLOAD_PACKET)
--		mlx5e_ipsec_packet_setup(obj, res->pdn, attrs);
-+		mlx5e_ipsec_packet_setup(obj, res->pdn, sa_entry);
+ 	if (!vmw_shader_id_ok(user_key, shader_type))
+@@ -906,10 +907,6 @@ int vmw_compat_shader_add(struct vmw_private *dev_priv,
+ 	if (unlikely(ret != 0))
+ 		goto out;
  
- 	err = mlx5_cmd_exec(mdev, in, sizeof(in), out, sizeof(out));
- 	if (!err)
+-	ret = ttm_bo_reserve(&buf->tbo, false, true, NULL);
+-	if (unlikely(ret != 0))
+-		goto no_reserve;
+-
+ 	/* Map and copy shader bytecode. */
+ 	ret = ttm_bo_kmap(&buf->tbo, 0, PFN_UP(size), &map);
+ 	if (unlikely(ret != 0)) {
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c b/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
+index fcb87d83760ef..75cf9e76df2ed 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_ttm_buffer.c
+@@ -604,15 +604,14 @@ int vmw_bo_create_and_populate(struct vmw_private *dev_priv,
+ 		.busy_domain = domain,
+ 		.bo_type = ttm_bo_type_kernel,
+ 		.size = bo_size,
+-		.pin = true
++		.pin = true,
++		.keep_resv = true,
+ 	};
+ 
+ 	ret = vmw_bo_create(dev_priv, &bo_params, &vbo);
+ 	if (unlikely(ret != 0))
+ 		return ret;
+ 
+-	ret = ttm_bo_reserve(&vbo->tbo, false, true, NULL);
+-	BUG_ON(ret != 0);
+ 	ret = vmw_ttm_populate(vbo->tbo.bdev, vbo->tbo.ttm, &ctx);
+ 	if (likely(ret == 0)) {
+ 		struct vmw_ttm_tt *vmw_tt =
 -- 
 2.39.5
 
