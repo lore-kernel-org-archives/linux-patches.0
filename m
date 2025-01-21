@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E99E185935;
-	Tue, 21 Jan 2025 17:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA831F5439;
+	Tue, 21 Jan 2025 17:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482190; cv=none; b=QAHSDX2QIBfFfC5xkilSwG7MR7TJPICGnCl9zKMdcl1ZyeF8aX7gZg5+NnUu3edCDbuKy5QPrr2zRRc+ASckdLyEeMCtOOFIa/nh3Q+//dFOyg844LW2RwIczVQ1z6mBl4Z2iEh1nokUp9/sjDTxPmbGO9RJNagLKgUO2Gh2OWc=
+	t=1737482193; cv=none; b=ttjeigapbQevMYO7+xtmvx3vn8h+c8iwXDNAlR1DpNX0qz+NMOsFzQLTN9R2B4HwLWFIkeNbY3FOXp7Y6y//mw+8fIrJM5lRN1A/3FmbbcInZ1HO1OahpnnIVnqCUS+92fox9qmty5++3l8OaZX66GnFvnUuJsLU9VbwqbuMUQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482190; c=relaxed/simple;
-	bh=gaXI52KyD0JZTUtOwW8lRcQSu/zKHs74tXY+TLqD1Pw=;
+	s=arc-20240116; t=1737482193; c=relaxed/simple;
+	bh=IjODkHgrH5tojHz/7BLzQpePxh43RwnNA89bJx8aqpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sln5UwWVznTSmBX2u2FowXu1yVhg3mjmFbL6HZYDbc9vo6S62Jrg8VSn/I9wQUR51Ehh/qjuphrOROMLElQ2QJrx+UDxpVcnOnMLKHpTBTH9INzfaPp+gVNaV7lHyksI1AoAzKDGEnLXsotfx5WiBVT6d1Lueac2GXIjwyIYcHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h16aiutY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7J5K+o3NGA67xRgvZdu72Scn5sFiydMkjHA0I74zwWn9QgsNFC52+Jgf/HXtLOln8UBo99l6M4trg9FixKjQroJmsOyHFCjyrsVINh1/rGnpCbyu6g+2pLqkPuQBnrIEMue2yAU9MV6YwYKMgKXP7VR6aK+tFiX91P0JPIu4eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cW75nArx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h16aiutY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DF1C4CEDF;
-	Tue, 21 Jan 2025 17:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cW75nArx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF6BC4CEDF;
+	Tue, 21 Jan 2025 17:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482189;
-	bh=gaXI52KyD0JZTUtOwW8lRcQSu/zKHs74tXY+TLqD1Pw=;
+	s=korg; t=1737482192;
+	bh=IjODkHgrH5tojHz/7BLzQpePxh43RwnNA89bJx8aqpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h16aiutYSne+wRaErrUIPETJiATh3bEaBb7tbFIsV7HJ5WQUrt3C8oQHSa8Ky8JNE
-	 wFElZXC+HvoxiSyxOZtr5EyTTIxGpHNuxeZ4m/QM61wZKY2YriE6HvftWZRBNZ5oWb
-	 bNnzyc1sIf8QhcZS2NpCEXjge1LrU9FFS/sltD3M=
+	b=cW75nArxcH6w1JU/JmKTDqGbbFtH1jaR3k0RWyK1NjFUzqkCCbB5NmE9P4XM61GvO
+	 vY5QoD8gCN+mkkrrBxweeyPFxPamGyHqPXOxPLUopjDJdMoBMJDtrQ0YfSqGrYxADS
+	 WTwrMOYeUVVYY7K5CNem8Sbe4/HkBBaP+cjVlMyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammed Anees <pvmohammedanees2003@gmail.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	syzbot+e0055ea09f1f5e6fabdd@syzkaller.appspotmail.com,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Xingyu Li <xli399@ucr.edu>,
-	Zheng Zhang <zzhan173@ucr.edu>
-Subject: [PATCH 6.6 65/72] ocfs2: fix deadlock in ocfs2_get_system_file_inode
-Date: Tue, 21 Jan 2025 18:52:31 +0100
-Message-ID: <20250121174525.940188035@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 66/72] ovl: pass realinode to ovl_encode_real_fh() instead of realdentry
+Date: Tue, 21 Jan 2025 18:52:32 +0100
+Message-ID: <20250121174525.977509294@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -60,78 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohammed Anees <pvmohammedanees2003@gmail.com>
+From: Amir Goldstein <amir73il@gmail.com>
 
-commit 7bf1823e010e8db2fb649c790bd1b449a75f52d8 upstream.
+commit 07aeefae7ff44d80524375253980b1bdee2396b0 upstream.
 
-syzbot has found a possible deadlock in ocfs2_get_system_file_inode [1].
+We want to be able to encode an fid from an inode with no alias.
 
-The scenario is depicted here,
-
-	CPU0					CPU1
-lock(&ocfs2_file_ip_alloc_sem_key);
-                               lock(&osb->system_file_mutex);
-                               lock(&ocfs2_file_ip_alloc_sem_key);
-lock(&osb->system_file_mutex);
-
-The function calls which could lead to this are:
-
-CPU0
-ocfs2_mknod - lock(&ocfs2_file_ip_alloc_sem_key);
-.
-.
-.
-ocfs2_get_system_file_inode - lock(&osb->system_file_mutex);
-
-CPU1 -
-ocfs2_fill_super - lock(&osb->system_file_mutex);
-.
-.
-.
-ocfs2_read_virt_blocks - lock(&ocfs2_file_ip_alloc_sem_key);
-
-This issue can be resolved by making the down_read -> down_read_try
-in the ocfs2_read_virt_blocks.
-
-[1] https://syzkaller.appspot.com/bug?extid=e0055ea09f1f5e6fabdd
-
-Link: https://lkml.kernel.org/r/20240924093257.7181-1-pvmohammedanees2003@gmail.com
-Signed-off-by: Mohammed Anees <pvmohammedanees2003@gmail.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reported-by: <syzbot+e0055ea09f1f5e6fabdd@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=e0055ea09f1f5e6fabdd
-Tested-by: syzbot+e0055ea09f1f5e6fabdd@syzkaller.appspotmail.com
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc:  <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Xingyu Li <xli399@ucr.edu>
-Cc: Zheng Zhang <zzhan173@ucr.edu>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://lore.kernel.org/r/20250105162404.357058-2-amir73il@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: c45beebfde34 ("ovl: support encoding fid from inode with no alias")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[re-applied over v6.6.71 with conflict resolved]
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/extent_map.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c   |   11 ++++++-----
+ fs/overlayfs/export.c    |    5 +++--
+ fs/overlayfs/namei.c     |    4 ++--
+ fs/overlayfs/overlayfs.h |    2 +-
+ 4 files changed, 12 insertions(+), 10 deletions(-)
 
---- a/fs/ocfs2/extent_map.c
-+++ b/fs/ocfs2/extent_map.c
-@@ -973,7 +973,13 @@ int ocfs2_read_virt_blocks(struct inode
- 	}
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -371,13 +371,13 @@ int ovl_set_attr(struct ovl_fs *ofs, str
+ 	return err;
+ }
  
- 	while (done < nr) {
--		down_read(&OCFS2_I(inode)->ip_alloc_sem);
-+		if (!down_read_trylock(&OCFS2_I(inode)->ip_alloc_sem)) {
-+			rc = -EAGAIN;
-+			mlog(ML_ERROR,
-+				 "Inode #%llu ip_alloc_sem is temporarily unavailable\n",
-+				 (unsigned long long)OCFS2_I(inode)->ip_blkno);
-+			break;
-+		}
- 		rc = ocfs2_extent_map_get_blocks(inode, v_block + done,
- 						 &p_block, &p_count, NULL);
- 		up_read(&OCFS2_I(inode)->ip_alloc_sem);
+-struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct dentry *real,
++struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct inode *realinode,
+ 				  bool is_upper)
+ {
+ 	struct ovl_fh *fh;
+ 	int fh_type, dwords;
+ 	int buflen = MAX_HANDLE_SZ;
+-	uuid_t *uuid = &real->d_sb->s_uuid;
++	uuid_t *uuid = &realinode->i_sb->s_uuid;
+ 	int err;
+ 
+ 	/* Make sure the real fid stays 32bit aligned */
+@@ -394,7 +394,8 @@ struct ovl_fh *ovl_encode_real_fh(struct
+ 	 * the price or reconnecting the dentry.
+ 	 */
+ 	dwords = buflen >> 2;
+-	fh_type = exportfs_encode_fh(real, (void *)fh->fb.fid, &dwords, 0);
++	fh_type = exportfs_encode_inode_fh(realinode, (void *)fh->fb.fid,
++					   &dwords, NULL, 0);
+ 	buflen = (dwords << 2);
+ 
+ 	err = -EIO;
+@@ -438,7 +439,7 @@ int ovl_set_origin(struct ovl_fs *ofs, s
+ 	 * up and a pure upper inode.
+ 	 */
+ 	if (ovl_can_decode_fh(lower->d_sb)) {
+-		fh = ovl_encode_real_fh(ofs, lower, false);
++		fh = ovl_encode_real_fh(ofs, d_inode(lower), false);
+ 		if (IS_ERR(fh))
+ 			return PTR_ERR(fh);
+ 	}
+@@ -461,7 +462,7 @@ static int ovl_set_upper_fh(struct ovl_f
+ 	const struct ovl_fh *fh;
+ 	int err;
+ 
+-	fh = ovl_encode_real_fh(ofs, upper, true);
++	fh = ovl_encode_real_fh(ofs, d_inode(upper), true);
+ 	if (IS_ERR(fh))
+ 		return PTR_ERR(fh);
+ 
+--- a/fs/overlayfs/export.c
++++ b/fs/overlayfs/export.c
+@@ -228,6 +228,7 @@ static int ovl_check_encode_origin(struc
+ static int ovl_dentry_to_fid(struct ovl_fs *ofs, struct dentry *dentry,
+ 			     u32 *fid, int buflen)
+ {
++	struct inode *inode = d_inode(dentry);
+ 	struct ovl_fh *fh = NULL;
+ 	int err, enc_lower;
+ 	int len;
+@@ -241,8 +242,8 @@ static int ovl_dentry_to_fid(struct ovl_
+ 		goto fail;
+ 
+ 	/* Encode an upper or lower file handle */
+-	fh = ovl_encode_real_fh(ofs, enc_lower ? ovl_dentry_lower(dentry) :
+-				ovl_dentry_upper(dentry), !enc_lower);
++	fh = ovl_encode_real_fh(ofs, enc_lower ? ovl_inode_lower(inode) :
++				ovl_inode_upper(inode), !enc_lower);
+ 	if (IS_ERR(fh))
+ 		return PTR_ERR(fh);
+ 
+--- a/fs/overlayfs/namei.c
++++ b/fs/overlayfs/namei.c
+@@ -523,7 +523,7 @@ int ovl_verify_set_fh(struct ovl_fs *ofs
+ 	struct ovl_fh *fh;
+ 	int err;
+ 
+-	fh = ovl_encode_real_fh(ofs, real, is_upper);
++	fh = ovl_encode_real_fh(ofs, d_inode(real), is_upper);
+ 	err = PTR_ERR(fh);
+ 	if (IS_ERR(fh)) {
+ 		fh = NULL;
+@@ -720,7 +720,7 @@ int ovl_get_index_name(struct ovl_fs *of
+ 	struct ovl_fh *fh;
+ 	int err;
+ 
+-	fh = ovl_encode_real_fh(ofs, origin, false);
++	fh = ovl_encode_real_fh(ofs, d_inode(origin), false);
+ 	if (IS_ERR(fh))
+ 		return PTR_ERR(fh);
+ 
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -821,7 +821,7 @@ int ovl_copy_up_with_data(struct dentry
+ int ovl_maybe_copy_up(struct dentry *dentry, int flags);
+ int ovl_copy_xattr(struct super_block *sb, const struct path *path, struct dentry *new);
+ int ovl_set_attr(struct ovl_fs *ofs, struct dentry *upper, struct kstat *stat);
+-struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct dentry *real,
++struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct inode *realinode,
+ 				  bool is_upper);
+ int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
+ 		   struct dentry *upper);
 
 
