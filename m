@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F5C21F7060;
-	Tue, 21 Jan 2025 17:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103E21F669F;
+	Tue, 21 Jan 2025 17:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482315; cv=none; b=MDU9yhhtM1ZuhK/xaab4iNSAa/2GYzslH89ml1dbnRpglWmazRS6md7gu2vdGPUlO3AnhjQglx2Mw5bxOKgW888Y0GDpvUiPA0MO30Ch0cE6ky/VvnAFWfGTT3TLd39My/SM03snUexHlVm+zPksVTujKX2KdLdEI5vc033WJBY=
+	t=1737482318; cv=none; b=CNmAVeFjmsw37q9Idg7V2tzst7wy1ocEf7LglyAdz+kFSlT1rpBFwdaOCtbyBmdM+4bJeAMDVl/p5sf9xCJfQsBatnd+5OrzRFZLXmbAQnVO7Y/Ok+6QA3XCYprlZdvxwUT1kz2LNAkqHyn+f2c+LqYwnkZIvEEsgg8fBZ1zWow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482315; c=relaxed/simple;
-	bh=81X0MaPb3j4/zKTRp34ftpbW/v8mWeKCuiY/zvzbMK8=;
+	s=arc-20240116; t=1737482318; c=relaxed/simple;
+	bh=+y481ZHyJuFM/2IUtNA2DXSFSpHDoGX1mxzxc3W5YcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPTquANQYIWdWvoRygG4l7wgAkKi/xDDMQVQwTGS6hNH3UNhP2H6qIxZatzC5adVLFGlrEdPq8LNW0ylycG9aprbHtzoqBW48kVIKTy3w1jwEy8w0i+Ll+SSHwhqCxLtgeTwgbPbxjJ/vDNkz/IhKxu+PRtO/oB+VfkBejoZ02Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHQ1wU0T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPB3x7/B5DsJesBru+aebECA7b9FuJJaDI7DKqgLJsWXNuK+AXwDU3KBdia16u1gSqD8HAytGmhb/GXpH2jGTVNllJg7Xf7yCR5owoSSeJxfmTZW2Vw0bodAgNTwwllZpiGuYQDwlPu36c92tGGrsvGrRmgFoI4fzNGMYlOB3ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJqRJ8EX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHQ1wU0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66D8C4CEDF;
-	Tue, 21 Jan 2025 17:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJqRJ8EX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C242C4CEDF;
+	Tue, 21 Jan 2025 17:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482315;
-	bh=81X0MaPb3j4/zKTRp34ftpbW/v8mWeKCuiY/zvzbMK8=;
+	s=korg; t=1737482317;
+	bh=+y481ZHyJuFM/2IUtNA2DXSFSpHDoGX1mxzxc3W5YcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHQ1wU0TsWwL+xkeY4Q5/araemgXH8sBHqNlfbafOR9IIQ3Tc+E0mjO93U8HXPA4k
-	 OPJNzD0FDBYepiDgzzpo0lkqjN5fpRTnbTMlLarJwDVdN0aAtGZUJqBDMtlyVeblYm
-	 9/O1OqrhAV0cfw6xF0p3NsoWbZDq9eE3gcu7e/10=
+	b=bJqRJ8EXRv4Y/y6nWzSo1hJFJhatulT7Ssmikb4GIg/8zcISWW5qxG4tUeHyuC+1U
+	 /YpSNQpKmc4uiOLYCDX1xOzsZPi3DWw94GUsiM5UjPjq98w08n9bvt4ctmVX2m5AKH
+	 QXGLDLJfROm3YAAXEbdivpQsjnFLH6BXXvkb9RLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/122] pktgen: Avoid out-of-bounds access in get_imix_entries
-Date: Tue, 21 Jan 2025 18:50:55 +0100
-Message-ID: <20250121174533.275569114@linuxfoundation.org>
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Karol Kolacinski <karol.kolacinski@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.12 008/122] ice: Fix E825 initialization
+Date: Tue, 21 Jan 2025 18:50:56 +0100
+Message-ID: <20250121174533.316285360@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -52,66 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Karol Kolacinski <karol.kolacinski@intel.com>
 
-[ Upstream commit 76201b5979768500bca362871db66d77cb4c225e ]
+[ Upstream commit d79c304c76e9b30ff5527afc176b5c4f9f0374b6 ]
 
-Passing a sufficient amount of imix entries leads to invalid access to the
-pkt_dev->imix_entries array because of the incorrect boundary check.
+Current implementation checks revision of all PHYs on all PFs, which is
+incorrect and may result in initialization failure. Check only the
+revision of the current PHY.
 
-UBSAN: array-index-out-of-bounds in net/core/pktgen.c:874:24
-index 20 is out of range for type 'imix_pkt [20]'
-CPU: 2 PID: 1210 Comm: bash Not tainted 6.10.0-rc1 #121
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
-Call Trace:
-<TASK>
-dump_stack_lvl lib/dump_stack.c:117
-__ubsan_handle_out_of_bounds lib/ubsan.c:429
-get_imix_entries net/core/pktgen.c:874
-pktgen_if_write net/core/pktgen.c:1063
-pde_write fs/proc/inode.c:334
-proc_reg_write fs/proc/inode.c:346
-vfs_write fs/read_write.c:593
-ksys_write fs/read_write.c:644
-do_syscall_64 arch/x86/entry/common.c:83
-entry_SYSCALL_64_after_hwframe arch/x86/entry/entry_64.S:130
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 52a62f8603f9 ("pktgen: Parse internet mix (imix) input")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-[ fp: allow to fill the array completely; minor changelog cleanup ]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Signed-off-by: Karol Kolacinski <karol.kolacinski@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/pktgen.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp_hw.c | 22 +++++++++------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index 34f68ef74b8f2..b6db4910359bb 100644
---- a/net/core/pktgen.c
-+++ b/net/core/pktgen.c
-@@ -851,6 +851,9 @@ static ssize_t get_imix_entries(const char __user *buffer,
- 		unsigned long weight;
- 		unsigned long size;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+index 3816e45b6ab44..f6816c2f71438 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp_hw.c
+@@ -2664,14 +2664,15 @@ static bool ice_is_muxed_topo(struct ice_hw *hw)
+ }
  
-+		if (pkt_dev->n_imix_entries >= MAX_IMIX_ENTRIES)
-+			return -E2BIG;
-+
- 		len = num_arg(&buffer[i], max_digits, &size);
- 		if (len < 0)
- 			return len;
-@@ -880,9 +883,6 @@ static ssize_t get_imix_entries(const char __user *buffer,
+ /**
+- * ice_ptp_init_phy_e825c - initialize PHY parameters
++ * ice_ptp_init_phy_e825 - initialize PHY parameters
+  * @hw: pointer to the HW struct
+  */
+-static void ice_ptp_init_phy_e825c(struct ice_hw *hw)
++static void ice_ptp_init_phy_e825(struct ice_hw *hw)
+ {
+ 	struct ice_ptp_hw *ptp = &hw->ptp;
+ 	struct ice_eth56g_params *params;
+-	u8 phy;
++	u32 phy_rev;
++	int err;
  
- 		i++;
- 		pkt_dev->n_imix_entries++;
+ 	ptp->phy_model = ICE_PHY_ETH56G;
+ 	params = &ptp->phy.eth56g;
+@@ -2685,15 +2686,10 @@ static void ice_ptp_init_phy_e825c(struct ice_hw *hw)
+ 	ptp->num_lports = params->num_phys * ptp->ports_per_phy;
+ 
+ 	ice_sb_access_ena_eth56g(hw, true);
+-	for (phy = 0; phy < params->num_phys; phy++) {
+-		u32 phy_rev;
+-		int err;
 -
--		if (pkt_dev->n_imix_entries > MAX_IMIX_ENTRIES)
--			return -E2BIG;
- 	} while (c == ' ');
+-		err = ice_read_phy_eth56g(hw, phy, PHY_REG_REVISION, &phy_rev);
+-		if (err || phy_rev != PHY_REVISION_ETH56G) {
+-			ptp->phy_model = ICE_PHY_UNSUP;
+-			return;
+-		}
++	err = ice_read_phy_eth56g(hw, hw->pf_id, PHY_REG_REVISION, &phy_rev);
++	if (err || phy_rev != PHY_REVISION_ETH56G) {
++		ptp->phy_model = ICE_PHY_UNSUP;
++		return;
+ 	}
  
- 	return i;
+ 	ptp->is_2x50g_muxed_topo = ice_is_muxed_topo(hw);
+@@ -5395,7 +5391,7 @@ void ice_ptp_init_hw(struct ice_hw *hw)
+ 	else if (ice_is_e810(hw))
+ 		ice_ptp_init_phy_e810(ptp);
+ 	else if (ice_is_e825c(hw))
+-		ice_ptp_init_phy_e825c(hw);
++		ice_ptp_init_phy_e825(hw);
+ 	else
+ 		ptp->phy_model = ICE_PHY_UNSUP;
+ }
 -- 
 2.39.5
 
