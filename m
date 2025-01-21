@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95BA1F5421;
-	Tue, 21 Jan 2025 17:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9601D1F7087;
+	Tue, 21 Jan 2025 17:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482081; cv=none; b=VuYJvipfWCD1tt0aplOnAMmWjHBO97LIKLPBjEpcnu4uwFTSh7YM5hdpZLWXavp3f1xZgpQAbandxgidvu8S4cK+MSlh2ugrvx8mAkbiTrMa6RXLfiAhWeNL8GyunN8qdw0BwhogwC9nHFjbd0VRJURcnEDjvig9TkvLeHvAzFI=
+	t=1737482084; cv=none; b=ENFRTCWq3vNcwoWpjL5qfvxF+mx40ADhgPMjXKT4InWeumtxJ8x+38Ju/vSlO3y7Ns6rh4ErmHttWbjsfp/nX0OmAOWyevgqR7ctkvbrY4+TsYP4pQ/IltF/bgZ2I0wH4UgDNZFWOifRtBQQCh15d4+9kL3W+wBmR7EVUFb6jqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482081; c=relaxed/simple;
-	bh=LznHj3P0y4u3InOUm0GqT5gUP/G3uHRNGk1MzYvIRN8=;
+	s=arc-20240116; t=1737482084; c=relaxed/simple;
+	bh=J+anIHbwtfdbf8kurZ1HnNOg/H6Uyc6DB/TX0jkYwcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z6YGeB0I4OBu6jIDjPvGg14yyRCxps38xLxUhXVQOOxwOJ1+LYZmCBkTlZwPYw4JPUJ1jqpOiDBKYGdLvrUf0CGr32KB5ciK0Iz7HH26yGOUlKBZarJuqRx+0U+Iy3Y5eUxC+CrpqDEXS/kxf4/34IlGwVm9cK3c0LeDta40XdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kgtPiiXR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ciqn8HI7P69cZE8hC22EWSOtEAo7CNnhY5USJ64IGEvUbMmOiyiNDs0LO/6GqZj5wJO9LCXUrwxMLH449MnnhsnwW1sPZADwR/WVRUx9hjkHzBw83vnI4+hXeGf/J7XURylP4Zg/MzDr5YpGfI839/XgK0nQX/VHQ5QL8LPglHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GffJO0JT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kgtPiiXR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331F9C4CEE0;
-	Tue, 21 Jan 2025 17:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GffJO0JT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE4AC4CEE1;
+	Tue, 21 Jan 2025 17:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482081;
-	bh=LznHj3P0y4u3InOUm0GqT5gUP/G3uHRNGk1MzYvIRN8=;
+	s=korg; t=1737482084;
+	bh=J+anIHbwtfdbf8kurZ1HnNOg/H6Uyc6DB/TX0jkYwcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kgtPiiXR8bNPItu47uih0g77igx8nvp7AEYKuz9y/bcXtAzefSTSGi+AnmymmRg5W
-	 j6z/ZOV4ygVJR2MvYgQhNGee7WUwQKE0AI+fralcKHkIy/0aClANcElTws9YI7ZRs7
-	 EssyJ9EKE4egNBn5QhcRSuiHxIEy/Xc6uFK141VQ=
+	b=GffJO0JTGieRzGopNFZMhFeWFNKybf1x/AlWDsGGWwOR+3oFFdYRnf+eyfIzeel9c
+	 VnOkbaRDMISb11VoigPiMmlLsy3EAFOThTQoSfwWSvOFL6Uk28UAiDWLB9860ZoYPP
+	 9yKrtIFIxv0JAIgNBa9/K6IJfhMAeFFxKYREHOaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Max Kellermann <max.kellermann@ionos.com>,
 	David Howells <dhowells@redhat.com>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	linux-nfs@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 28/72] kheaders: Ignore silly-rename files
-Date: Tue, 21 Jan 2025 18:51:54 +0100
-Message-ID: <20250121174524.509553308@linuxfoundation.org>
+Subject: [PATCH 6.6 29/72] cachefiles: Parse the "secctx" immediately
+Date: Tue, 21 Jan 2025 18:51:55 +0100
+Message-ID: <20250121174524.547035125@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
 References: <20250121174523.429119852@linuxfoundation.org>
@@ -56,58 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-[ Upstream commit 973b710b8821c3401ad7a25360c89e94b26884ac ]
+[ Upstream commit e5a8b6446c0d370716f193771ccacf3260a57534 ]
 
-Tell tar to ignore silly-rename files (".__afs*" and ".nfs*") when building
-the header archive.  These occur when a file that is open is unlinked
-locally, but hasn't yet been closed.  Such files are visible to the user
-via the getdents() syscall and so programs may want to do things with them.
+Instead of storing an opaque string, call security_secctx_to_secid()
+right in the "secctx" command handler and store only the numeric
+"secid".  This eliminates an unnecessary string allocation and allows
+the daemon to receive errors when writing the "secctx" command instead
+of postponing the error to the "bind" command handler.  For example,
+if the kernel was built without `CONFIG_SECURITY`, "bind" will return
+`EOPNOTSUPP`, but the daemon doesn't know why.  With this patch, the
+"secctx" will instead return `EOPNOTSUPP` which is the right context
+for this error.
 
-During the kernel build, such files may be made during the processing of
-header files and the cleanup may get deferred by fput() which may result in
-tar seeing these files when it reads the directory, but they may have
-disappeared by the time it tries to open them, causing tar to fail with an
-error.  Further, we don't want to include them in the tarball if they still
-exist.
+This patch adds a boolean flag `have_secid` because I'm not sure if we
+can safely assume that zero is the special secid value for "not set".
+This appears to be true for SELinux, Smack and AppArmor, but since
+this attribute is not documented, I'm unable to derive a stable
+guarantee for that.
 
-With CONFIG_HEADERS_INSTALL=y, something like the following may be seen:
-
-   find: './kernel/.tmp_cpio_dir/include/dt-bindings/reset/.__afs2080': No such file or directory
-   tar: ./include/linux/greybus/.__afs3C95: File removed before we read it
-
-The find warning doesn't seem to cause a problem.
-
-Fix this by telling tar when called from in gen_kheaders.sh to exclude such
-files.  This only affects afs and nfs; cifs uses the Windows Hidden
-attribute to prevent the file from being seen.
-
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20241213135013.2964079-2-dhowells@redhat.com
-cc: Masahiro Yamada <masahiroy@kernel.org>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: linux-nfs@vger.kernel.org
-cc: linux-kernel@vger.kernel.org
+Link: https://lore.kernel.org/r/20241209141554.638708-1-max.kellermann@ionos.com/
+Link: https://lore.kernel.org/r/20241213135013.2964079-6-dhowells@redhat.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gen_kheaders.sh | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cachefiles/daemon.c   | 14 +++++++-------
+ fs/cachefiles/internal.h |  3 ++-
+ fs/cachefiles/security.c |  6 +++---
+ 3 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
-index 383fd43ac6122..7e1340da5acae 100755
---- a/kernel/gen_kheaders.sh
-+++ b/kernel/gen_kheaders.sh
-@@ -89,6 +89,7 @@ find $cpio_dir -type f -print0 |
+diff --git a/fs/cachefiles/daemon.c b/fs/cachefiles/daemon.c
+index 89b11336a8369..1806bff8e59bc 100644
+--- a/fs/cachefiles/daemon.c
++++ b/fs/cachefiles/daemon.c
+@@ -15,6 +15,7 @@
+ #include <linux/namei.h>
+ #include <linux/poll.h>
+ #include <linux/mount.h>
++#include <linux/security.h>
+ #include <linux/statfs.h>
+ #include <linux/ctype.h>
+ #include <linux/string.h>
+@@ -576,7 +577,7 @@ static int cachefiles_daemon_dir(struct cachefiles_cache *cache, char *args)
+  */
+ static int cachefiles_daemon_secctx(struct cachefiles_cache *cache, char *args)
+ {
+-	char *secctx;
++	int err;
  
- # Create archive and try to normalize metadata for reproducibility.
- tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
-+    --exclude=".__afs*" --exclude=".nfs*" \
-     --owner=0 --group=0 --sort=name --numeric-owner --mode=u=rw,go=r,a+X \
-     -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
+ 	_enter(",%s", args);
  
+@@ -585,16 +586,16 @@ static int cachefiles_daemon_secctx(struct cachefiles_cache *cache, char *args)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (cache->secctx) {
++	if (cache->have_secid) {
+ 		pr_err("Second security context specified\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	secctx = kstrdup(args, GFP_KERNEL);
+-	if (!secctx)
+-		return -ENOMEM;
++	err = security_secctx_to_secid(args, strlen(args), &cache->secid);
++	if (err)
++		return err;
+ 
+-	cache->secctx = secctx;
++	cache->have_secid = true;
+ 	return 0;
+ }
+ 
+@@ -820,7 +821,6 @@ static void cachefiles_daemon_unbind(struct cachefiles_cache *cache)
+ 	put_cred(cache->cache_cred);
+ 
+ 	kfree(cache->rootdirname);
+-	kfree(cache->secctx);
+ 	kfree(cache->tag);
+ 
+ 	_leave("");
+diff --git a/fs/cachefiles/internal.h b/fs/cachefiles/internal.h
+index 111ad6ecd4baf..4421a12960a66 100644
+--- a/fs/cachefiles/internal.h
++++ b/fs/cachefiles/internal.h
+@@ -122,7 +122,6 @@ struct cachefiles_cache {
+ #define CACHEFILES_STATE_CHANGED	3	/* T if state changed (poll trigger) */
+ #define CACHEFILES_ONDEMAND_MODE	4	/* T if in on-demand read mode */
+ 	char				*rootdirname;	/* name of cache root directory */
+-	char				*secctx;	/* LSM security context */
+ 	char				*tag;		/* cache binding tag */
+ 	refcount_t			unbind_pincount;/* refcount to do daemon unbind */
+ 	struct xarray			reqs;		/* xarray of pending on-demand requests */
+@@ -130,6 +129,8 @@ struct cachefiles_cache {
+ 	struct xarray			ondemand_ids;	/* xarray for ondemand_id allocation */
+ 	u32				ondemand_id_next;
+ 	u32				msg_id_next;
++	u32				secid;		/* LSM security id */
++	bool				have_secid;	/* whether "secid" was set */
+ };
+ 
+ static inline bool cachefiles_in_ondemand_mode(struct cachefiles_cache *cache)
+diff --git a/fs/cachefiles/security.c b/fs/cachefiles/security.c
+index fe777164f1d89..fc6611886b3b5 100644
+--- a/fs/cachefiles/security.c
++++ b/fs/cachefiles/security.c
+@@ -18,7 +18,7 @@ int cachefiles_get_security_ID(struct cachefiles_cache *cache)
+ 	struct cred *new;
+ 	int ret;
+ 
+-	_enter("{%s}", cache->secctx);
++	_enter("{%u}", cache->have_secid ? cache->secid : 0);
+ 
+ 	new = prepare_kernel_cred(current);
+ 	if (!new) {
+@@ -26,8 +26,8 @@ int cachefiles_get_security_ID(struct cachefiles_cache *cache)
+ 		goto error;
+ 	}
+ 
+-	if (cache->secctx) {
+-		ret = set_security_override_from_ctx(new, cache->secctx);
++	if (cache->have_secid) {
++		ret = set_security_override(new, cache->secid);
+ 		if (ret < 0) {
+ 			put_cred(new);
+ 			pr_err("Security denies permission to nominate security context: error %d\n",
 -- 
 2.39.5
 
