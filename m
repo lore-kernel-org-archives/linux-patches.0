@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66F11F7552;
-	Tue, 21 Jan 2025 18:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D013E1F0E36;
+	Tue, 21 Jan 2025 18:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482818; cv=none; b=fCVxZs9EKJQB167artr1r1ksgo0fRe92FZqXE2KpEePV7CVVCmeyyxuBhq7m70xFac/1AK/Nx/mZ2wFjFcApBvEdbtdmUNoDqLN/9Sby9mjvqKiS+tPiarzdxFeuzegtc3gVIjqPTlrtQNCASn3VSwhANNuSAb+QS7BAg54VpZ8=
+	t=1737482820; cv=none; b=JfIv1wpRjFE6DTFeHQX78vrfLUOmWmPLiWCSXeGfMj7W1F9Arf4zSOw0ti0B81+A/qF8uFX6B6TxECRy3+1/6yImzOjtrC3owWNZvs3kP6IIkvaDAzxxNypwYDSpQ3L1hTigjsPKqzf4QPaFEO+J5KUKxoq2IMxPgZejx0teRSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482818; c=relaxed/simple;
-	bh=ZEK6D5mMPArTG9DI9GKcWcwVi0tH8TvzRGgHlxgAMNI=;
+	s=arc-20240116; t=1737482820; c=relaxed/simple;
+	bh=MFC2MdanUD1PfAlC0cSkdsSFJJxabNjOl+L9Tp+hGmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEirCoxlmw6WQsRRAsP2NYJ3wfms6W5CPCwiEWl8RHrrBtErvgHfd5jmiipTGS7liE3Isg6UJX13Kb+ZWAC7DSe9LPDJ9zGB226haP55z0683b6ZaOFbre0VvKz0yb3G8yfsCCNewwby3R4fU1ekXPoCa56rATxHovI2w7HqMcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qM0D54oO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jg+W5GR7nFquhDowyS3wa2aPCKh0ST2op7opPAQYMnFgUJUddn9KdV8htlSBPl+9PA2RmJ6RgjYSfx6rnzG93GxQa5kN0c0uU6mBonfLM55A5hffZj45qy2K3cSHdr8BQkGnDTiQ7eJQ958sf1JgiOYl8osely8hojqNsTB+vDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1uoit/N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qM0D54oO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD11C4CEE3;
-	Tue, 21 Jan 2025 18:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1uoit/N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DC4C4CEDF;
+	Tue, 21 Jan 2025 18:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482817;
-	bh=ZEK6D5mMPArTG9DI9GKcWcwVi0tH8TvzRGgHlxgAMNI=;
+	s=korg; t=1737482820;
+	bh=MFC2MdanUD1PfAlC0cSkdsSFJJxabNjOl+L9Tp+hGmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qM0D54oOObTykmFbVMX4Yw5AE1mqgjyQfYnfQ+nVqOIDmNZ7jokz5wjSRj0dfJlnQ
-	 6m7iTH2xXIa8rxMnbC0Ka1H/a4UX6a0hIpgQ6ceUxdrQ9uW/44Fp5Vq1EaKoykXU7b
-	 wjoC54cKIdl/dyeCrM4da06cqirQP2RcRsUang5E=
+	b=X1uoit/N2WTdD8hAskSJ/SBmbx+oXGqbYBhsjKe7DScRpXvzL8cR29nqmHMDJaIMA
+	 qAGBzEwCbn7SSqhwJVJu7kTjMEtDwD+YwJDJaNjdT8Se+BiNNxF1lUPaSX0VQdWKpp
+	 pQhiLt0IZJDjEXi/Bt0alBNYrFcMRtz72gYG26n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Wentao Liang <liangwentao@iscas.ac.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 019/127] drm/mediatek: Add support for 180-degree rotation in the display driver
-Date: Tue, 21 Jan 2025 18:51:31 +0100
-Message-ID: <20250121174530.414242005@linuxfoundation.org>
+Subject: [PATCH 5.15 020/127] ksmbd: fix a missing return value check bug
+Date: Tue, 21 Jan 2025 18:51:32 +0100
+Message-ID: <20250121174530.454506304@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -53,60 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Wentao Liang <liangwentao@iscas.ac.cn>
 
-[ Upstream commit 5c9d7e79ba154e8e1f0bfdeb7b495f454c1a3eba ]
+[ Upstream commit 4c16e1cadcbcaf3c82d5fc310fbd34d0f5d0db7c ]
 
-mediatek-drm driver reported the capability of 180-degree rotation by
-adding `DRM_MODE_ROTATE_180` to the plane property, as flip-x combined
-with flip-y equals a 180-degree rotation. However, we did not handle
-the rotation property in the driver and lead to rotation issues.
+In the smb2_send_interim_resp(), if ksmbd_alloc_work_struct()
+fails to allocate a node, it returns a NULL pointer to the
+in_work pointer. This can lead to an illegal memory write of
+in_work->response_buf when allocate_interim_rsp_buf() attempts
+to perform a kzalloc() on it.
 
-Fixes: 74608d8feefd ("drm/mediatek: Add DRM_MODE_ROTATE_0 to rotation property")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20241118025126.30808-1-jason-jh.lin@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+To address this issue, incorporating a check for the return
+value of ksmbd_alloc_work_struct() ensures that the function
+returns immediately upon allocation failure, thereby preventing
+the aforementioned illegal memory access.
+
+Fixes: 041bba4414cd ("ksmbd: fix wrong interim response on compound")
+Signed-off-by: Wentao Liang <liangwentao@iscas.ac.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/ksmbd/smb2pdu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-index c54d56fb7b4c..77397bf0b5b4 100644
---- a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-+++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
-@@ -302,6 +302,7 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
- 	unsigned int addr = pending->addr;
- 	unsigned int pitch = pending->pitch & 0xffff;
- 	unsigned int fmt = pending->format;
-+	unsigned int rotation = pending->rotation;
- 	unsigned int offset = (pending->y << 16) | pending->x;
- 	unsigned int src_size = (pending->height << 16) | pending->width;
- 	unsigned int con;
-@@ -315,12 +316,19 @@ void mtk_ovl_layer_config(struct device *dev, unsigned int idx,
- 	if (state->base.fb && state->base.fb->format->has_alpha)
- 		con |= OVL_CON_AEN | OVL_CON_ALPHA;
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 7f9297a5f3ef..82b6be188ad4 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -714,6 +714,9 @@ void smb2_send_interim_resp(struct ksmbd_work *work, __le32 status)
+ 	struct smb2_hdr *rsp_hdr;
+ 	struct ksmbd_work *in_work = ksmbd_alloc_work_struct();
  
--	if (pending->rotation & DRM_MODE_REFLECT_Y) {
-+	/*
-+	 * Treat rotate 180 as flip x + flip y, and XOR the original rotation value
-+	 * to flip x + flip y to support both in the same time.
-+	 */
-+	if (rotation & DRM_MODE_ROTATE_180)
-+		rotation ^= DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y;
++	if (!in_work)
++		return;
 +
-+	if (rotation & DRM_MODE_REFLECT_Y) {
- 		con |= OVL_CON_VIRT_FLIP;
- 		addr += (pending->height - 1) * pending->pitch;
- 	}
- 
--	if (pending->rotation & DRM_MODE_REFLECT_X) {
-+	if (rotation & DRM_MODE_REFLECT_X) {
- 		con |= OVL_CON_HORZ_FLIP;
- 		addr += pending->pitch - 1;
- 	}
+ 	if (allocate_interim_rsp_buf(in_work)) {
+ 		pr_err("smb_allocate_rsp_buf failed!\n");
+ 		ksmbd_free_work_struct(in_work);
 -- 
 2.39.5
 
