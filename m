@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404A1F5404;
-	Tue, 21 Jan 2025 18:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFB51F427B;
+	Tue, 21 Jan 2025 18:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482574; cv=none; b=KbaVd8scwTgEY7//DrosSR5Xp7AuTe2Uspd/itHljEa+DBWKYGPr1WIvZJc3nS0l43tZFuED5fEA2vfEdpRs5SWK58eudOG2wMIsxG7jHzISmDyA6mR2BVE1aGBRgmR2ODsnoqdmXXmeyYaPj/WurYfQqrk+crsulxAg/EEqL+0=
+	t=1737482577; cv=none; b=bnU5iSbhG+3RhBukUmZYbSouu3BGPr4dG6ytoCCk4vQSoYHN4h0D/exGswvgFmskRZU8cQqkrJxWmc9RBBc8OV+CDsjjasKZ+tS4ke4e+/f0GROkoO8KCvg+a6w1JjUZ23Ps5cCzfDGqE4xk0P5cBc5RdXMnz58e1BL0M7nc/NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482574; c=relaxed/simple;
-	bh=pSHzfc3LV5aEz3xE9MkKSfOLJOCawAQA4Gh2aBMrSFQ=;
+	s=arc-20240116; t=1737482577; c=relaxed/simple;
+	bh=UOLplJFC3swR62M89obnrYZ7Gf4j76yaXMi4j1loCZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fmNDsFfYr2HOjS+G5AcCdhJUMFTd/hTrEOfUmrT5kUuYb8wKbjrAxv1V163G6CLmW0kIDfiMgqJW7XppbItdVrParueihVcu18Z3pGAYSlLM0lcuUmlLJV9bs3mRVF4HBZ7Rcv9hWm0QjIYpUn1jrV5f4Ux+Hj3CUEYS5p6rLPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bffD4Uhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dw4fCICkxn9uhihTeJige1k+AeAfsFsjv0xc87a5LihGNUh3aJGXNsjUYwQG13qkWqhVBcb+lNGHr4A0VOYAADX61DMygG5EMAW58C4YEppkAHTCnqs2NviVaoUb+4bpYHzPyjyRHntsk34vDRrwWAeeH76jk7TGpwxAljUhyig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGfifD1x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bffD4Uhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B108CC4CEDF;
-	Tue, 21 Jan 2025 18:02:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGfifD1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EC9C4CEDF;
+	Tue, 21 Jan 2025 18:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482574;
-	bh=pSHzfc3LV5aEz3xE9MkKSfOLJOCawAQA4Gh2aBMrSFQ=;
+	s=korg; t=1737482577;
+	bh=UOLplJFC3swR62M89obnrYZ7Gf4j76yaXMi4j1loCZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bffD4Uhz/zWtS2PzlQivAs8w1Qc3nvZyJ3k/p2djeto0il4yDSwDRnM5nBMb42Bkx
-	 2fSGJq0KgLlIKV2P1Pfct2AdqfTPQkMWM6z9BhzXAVaO2qHNMAQzCD3W2uV26PW4XU
-	 ym472cRYxotUN9uuVolnKNijSKvC8LF1gmDrchEA=
+	b=IGfifD1xH7hELX+hqVHFo+jHoP/cl+eRxz+3feFJ4c96ppelFOcIk8eZFVApX/bAA
+	 xoxea+Ro2w+TofhrduvJDeD4xk1zr2MMu0TBLxRnGUObsHi/ayjtqYiOVOk5lmllYu
+	 1OVxAU37dY+5eSC9yoGL82M03OpSg4YYDBlOIjfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Usama Arif <usamaarif642@gmail.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 098/122] selftests/mm: set allocated memory to non-zero content in cow test
-Date: Tue, 21 Jan 2025 18:52:26 +0100
-Message-ID: <20250121174536.809993058@linuxfoundation.org>
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 099/122] drm/amd/display: Do not elevate mem_type change to full update
+Date: Tue, 21 Jan 2025 18:52:27 +0100
+Message-ID: <20250121174536.847849603@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174532.991109301@linuxfoundation.org>
 References: <20250121174532.991109301@linuxfoundation.org>
@@ -53,82 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit a32bf5bb7933fde6f39747499f8ec232b5b5400f upstream.
+commit 35ca53b7b0f0ffd16c6675fd76abac9409cf83e0 upstream.
 
-After commit b1f202060afe ("mm: remap unused subpages to shared zeropage
-when splitting isolated thp"), cow test cases involving swapping out THPs
-via madvise(MADV_PAGEOUT) started to be skipped due to the subsequent
-check via pagemap determining that the memory was not actually swapped
-out.  Logs similar to this were emitted:
+[Why]
 
-   ...
+There should not be any need to revalidate bandwidth on memory placement
+change, since the fb is expected to be pinned to DCN-accessable memory
+before scanout. For APU it's DRAM, and DGPU, it's VRAM. However, async
+flips + memory type change needs to be rejected.
 
-   # [RUN] Basic COW after fork() ... with swapped-out, PTE-mapped THP (16 kB)
-   ok 2 # SKIP MADV_PAGEOUT did not work, is swap enabled?
-   # [RUN] Basic COW after fork() ... with single PTE of swapped-out THP (16 kB)
-   ok 3 # SKIP MADV_PAGEOUT did not work, is swap enabled?
-   # [RUN] Basic COW after fork() ... with swapped-out, PTE-mapped THP (32 kB)
-   ok 4 # SKIP MADV_PAGEOUT did not work, is swap enabled?
+[How]
 
-   ...
+Do not set lock_and_validation_needed on mem_type change. Instead,
+reject an async_flip request if the crtc's buffer(s) changed mem_type.
 
-The commit in question introduces the behaviour of scanning THPs and if
-their content is predominantly zero, it splits them and replaces the pages
-which are wholly zero with the zero page.  These cow test cases were
-getting caught up in this.
+This may fix stuttering/corruption experienced with PSR SU and PSR1
+panels, if the compositor allocates fbs in both VRAM carveout and GTT
+and flips between them.
 
-So let's avoid that by filling the contents of all allocated memory with
-a non-zero value. With this in place, the tests are passing again.
-
-Link: https://lkml.kernel.org/r/20250107142555.1870101-1-ryan.roberts@arm.com
-Fixes: b1f202060afe ("mm: remap unused subpages to shared zeropage when splitting isolated thp")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: Yu Zhao <yuzhao@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: a7c0cad0dc06 ("drm/amd/display: ensure async flips are only accepted for fast updates")
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 4caacd1671b7a013ad04cd8b6398f002540bdd4d)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/cow.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   29 +++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/mm/cow.c
-+++ b/tools/testing/selftests/mm/cow.c
-@@ -758,7 +758,7 @@ static void do_run_with_base_page(test_f
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11370,6 +11370,25 @@ static int dm_crtc_get_cursor_mode(struc
+ 	return 0;
+ }
  
- 	/* Populate a base page. */
--	memset(mem, 0, pagesize);
-+	memset(mem, 1, pagesize);
++static bool amdgpu_dm_crtc_mem_type_changed(struct drm_device *dev,
++					    struct drm_atomic_state *state,
++					    struct drm_crtc_state *crtc_state)
++{
++	struct drm_plane *plane;
++	struct drm_plane_state *new_plane_state, *old_plane_state;
++
++	drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
++		new_plane_state = drm_atomic_get_plane_state(state, plane);
++		old_plane_state = drm_atomic_get_plane_state(state, plane);
++
++		if (old_plane_state->fb && new_plane_state->fb &&
++		    get_mem_type(old_plane_state->fb) != get_mem_type(new_plane_state->fb))
++			return true;
++	}
++
++	return false;
++}
++
+ /**
+  * amdgpu_dm_atomic_check() - Atomic check implementation for AMDgpu DM.
+  *
+@@ -11567,10 +11586,6 @@ static int amdgpu_dm_atomic_check(struct
  
- 	if (swapout) {
- 		madvise(mem, pagesize, MADV_PAGEOUT);
-@@ -824,12 +824,12 @@ static void do_run_with_thp(test_fn fn,
- 	 * Try to populate a THP. Touch the first sub-page and test if
- 	 * we get the last sub-page populated automatically.
- 	 */
--	mem[0] = 0;
-+	mem[0] = 1;
- 	if (!pagemap_is_populated(pagemap_fd, mem + thpsize - pagesize)) {
- 		ksft_test_result_skip("Did not get a THP populated\n");
- 		goto munmap;
- 	}
--	memset(mem, 0, thpsize);
-+	memset(mem, 1, thpsize);
+ 	/* Remove exiting planes if they are modified */
+ 	for_each_oldnew_plane_in_descending_zpos(state, plane, old_plane_state, new_plane_state) {
+-		if (old_plane_state->fb && new_plane_state->fb &&
+-		    get_mem_type(old_plane_state->fb) !=
+-		    get_mem_type(new_plane_state->fb))
+-			lock_and_validation_needed = true;
  
- 	size = thpsize;
- 	switch (thp_run) {
-@@ -1012,7 +1012,7 @@ static void run_with_hugetlb(test_fn fn,
- 	}
+ 		ret = dm_update_plane_state(dc, state, plane,
+ 					    old_plane_state,
+@@ -11865,9 +11880,11 @@ static int amdgpu_dm_atomic_check(struct
  
- 	/* Populate an huge page. */
--	memset(mem, 0, hugetlbsize);
-+	memset(mem, 1, hugetlbsize);
- 
- 	/*
- 	 * We need a total of two hugetlb pages to handle COW/unsharing
+ 		/*
+ 		 * Only allow async flips for fast updates that don't change
+-		 * the FB pitch, the DCC state, rotation, etc.
++		 * the FB pitch, the DCC state, rotation, mem_type, etc.
+ 		 */
+-		if (new_crtc_state->async_flip && lock_and_validation_needed) {
++		if (new_crtc_state->async_flip &&
++		    (lock_and_validation_needed ||
++		     amdgpu_dm_crtc_mem_type_changed(dev, state, new_crtc_state))) {
+ 			drm_dbg_atomic(crtc->dev,
+ 				       "[CRTC:%d:%s] async flips are only supported for fast updates\n",
+ 				       crtc->base.id, crtc->name);
 
 
