@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C11F0E36;
-	Tue, 21 Jan 2025 18:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950F61F4275;
+	Tue, 21 Jan 2025 18:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737482706; cv=none; b=QOUfO4kUie0g3g9Sqrb/HNLAaeArp35/d8vt8sRMQu+ApWFIkeBlsq7NfYyEJL6ZuLyAAszCM/KFCuGKYmuAycl+uKjKMw6bL7CJXPVajJW1KMpgQdjMF52dFHVfgMhrrfZVrec4anUXXYbkm3s83400g7cSSlG3f4oSAxRGXSc=
+	t=1737482709; cv=none; b=eI8eG2TFT7bX3purTrovhuyRL4Fh0M9ZUCuF1s0XApcqGoYvcd5i+ZFYZKw4IrP/OsqN7oR4fiyqdWR9RgC0Srwed2lYHAQH6tK3Xn0y9t7/7X3H4CLogGTddceN7pZDhb4z8wXJ7B52lXWrqKlSsSuOR2wcnY2WDUSvPGsBh8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737482706; c=relaxed/simple;
-	bh=T7see3fQyaAnCe2GbyD4G/P16wiAd2fPzNHRpF4mwbM=;
+	s=arc-20240116; t=1737482709; c=relaxed/simple;
+	bh=UUGU7bYLylqngRYmnbybCc8924AID9S46lMDLGyaTsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCIZM4DJooq0xYbHoABLEhyRPeeDAvFasBMLgqTCq6E4cZLkC4UMj2kbre5Q03VyyXSUFP0RoKDrDhs+sZpH4IGGouS1xFRJQM8Wjag3MYcW4Or//Dp0HvoW7PApoy1J/drJ8z+e0JgQsXOY2WTtyRROvNMoiDa0ICsW8MViObc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsSfKCAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pjWope3014KsU/aWK5rtrs/mHVreaV0HZWDlSWo5e6YR6bnOXSwiEMwu6rPU9z9wXxihsavnZgAfJ7Jnw679t6RHY1hnB1JD/V6USP9GblF/KWNjBcyskvCVjjeFRfA1uxefPHfcVipjoF6JkXXm6fzNpgEHJc3ZoLPOKyIWbRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjTNwonA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsSfKCAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E3FC4CEDF;
-	Tue, 21 Jan 2025 18:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjTNwonA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDD9C4CEDF;
+	Tue, 21 Jan 2025 18:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737482706;
-	bh=T7see3fQyaAnCe2GbyD4G/P16wiAd2fPzNHRpF4mwbM=;
+	s=korg; t=1737482709;
+	bh=UUGU7bYLylqngRYmnbybCc8924AID9S46lMDLGyaTsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YsSfKCARulGSMFm6pCigkn+D1R0wIqR6kuVAiNy00Bu9cgksyIBf8tCsl4CfNhygF
-	 U7w5SOjMRdmehkGVZI+y94QDRjt9hBhQo+VE77jcV6kTlVGYcn69PioEa4uHlb5Ap+
-	 u076wz1OKJKgBWmqJjs1NMg14g0GfxWgFAoHCu7U=
+	b=gjTNwonAj28Gy3eP3kjA8CSKm0kFulahYlJO74Jzjg+WuowYKafQIvBJG7DX2aOGe
+	 3QKO1h51ftUKc2ctXdWICUY6nU57OlaFogUCB6cP9deU/N1/VvHV7l2pqSjmfRR2eZ
+	 ZBiS/E9LUcR7bD3qiZBEXT9VHI6NuvkqJ0708WkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 46/64] hrtimers: Handle CPU state correctly on hotplug
-Date: Tue, 21 Jan 2025 18:52:45 +0100
-Message-ID: <20250121174523.310228993@linuxfoundation.org>
+	Sagar Ghuge <sagar.ghuge@intel.com>,
+	Nanley Chery <nanley.g.chery@intel.com>,
+	Xi Ruoyao <xry111@xry111.site>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.1 47/64] drm/i915/fb: Relax clear color alignment to 64 bytes
+Date: Tue, 21 Jan 2025 18:52:46 +0100
+Message-ID: <20250121174523.345975512@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174521.568417761@linuxfoundation.org>
 References: <20250121174521.568417761@linuxfoundation.org>
@@ -44,107 +48,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 2f8dea1692eef2b7ba6a256246ed82c365fdc686 upstream.
+commit 1a5401ec3018c101c456cdbda2eaef9482db6786 upstream.
 
-Consider a scenario where a CPU transitions from CPUHP_ONLINE to halfway
-through a CPU hotunplug down to CPUHP_HRTIMERS_PREPARE, and then back to
-CPUHP_ONLINE:
+Mesa changed its clear color alignment from 4k to 64 bytes
+without informing the kernel side about the change. This
+is now likely to cause framebuffer creation to fail.
 
-Since hrtimers_prepare_cpu() does not run, cpu_base.hres_active remains set
-to 1 throughout. However, during a CPU unplug operation, the tick and the
-clockevents are shut down at CPUHP_AP_TICK_DYING. On return to the online
-state, for instance CFS incorrectly assumes that the hrtick is already
-active, and the chance of the clockevent device to transition to oneshot
-mode is also lost forever for the CPU, unless it goes back to a lower state
-than CPUHP_HRTIMERS_PREPARE once.
+The only thing we do with the clear color buffer in i915 is:
+1. map a single page
+2. read out bytes 16-23 from said page
+3. unmap the page
 
-This round-trip reveals another issue; cpu_base.online is not set to 1
-after the transition, which appears as a WARN_ON_ONCE in enqueue_hrtimer().
+So the only requirement we really have is that those 8 bytes
+are all contained within one page. Thus we can deal with the
+Mesa regression by reducing the alignment requiment from 4k
+to the same 64 bytes in the kernel. We could even go as low as
+32 bytes, but IIRC 64 bytes is the hardware requirement on
+the 3D engine side so matching that seems sensible.
 
-Aside of that, the bulk of the per CPU state is not reset either, which
-means there are dangling pointers in the worst case.
+Note that the Mesa alignment chages were partially undone
+so the regression itself was already fixed on userspace
+side.
 
-Address this by adding a corresponding startup() callback, which resets the
-stale per CPU state and sets the online flag.
-
-[ tglx: Make the new callback unconditionally available, remove the online
-  	modification in the prepare() callback and clear the remaining
-  	state in the starting callback instead of the prepare callback ]
-
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241220134421.3809834-1-koichiro.den@canonical.com
+Cc: Sagar Ghuge <sagar.ghuge@intel.com>
+Cc: Nanley Chery <nanley.g.chery@intel.com>
+Reported-by: Xi Ruoyao <xry111@xry111.site>
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/13057
+Closes: https://lore.kernel.org/all/45a5bba8de009347262d86a4acb27169d9ae0d9f.camel@xry111.site/
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/commit/17f97a69c13832a6c1b0b3aad45b06f07d4b852f
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/commit/888f63cf1baf34bc95e847a30a041dc7798edddb
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241129065014.8363-2-ville.syrjala@linux.intel.com
+Tested-by: Xi Ruoyao <xry111@xry111.site>
+Reviewed-by: José Roberto de Souza <jose.souza@intel.com>
+(cherry picked from commit ed3a892e5e3d6b3f6eeb76db7c92a968aeb52f3d)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hrtimer.h |    1 +
- kernel/cpu.c            |    2 +-
- kernel/time/hrtimer.c   |   11 ++++++++++-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_fb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -532,6 +532,7 @@ extern void __init hrtimers_init(void);
- extern void sysrq_timer_list_show(void);
- 
- int hrtimers_prepare_cpu(unsigned int cpu);
-+int hrtimers_cpu_starting(unsigned int cpu);
- #ifdef CONFIG_HOTPLUG_CPU
- int hrtimers_cpu_dying(unsigned int cpu);
- #else
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1824,7 +1824,7 @@ static struct cpuhp_step cpuhp_hp_states
- 	},
- 	[CPUHP_AP_HRTIMERS_DYING] = {
- 		.name			= "hrtimers:dying",
--		.startup.single		= NULL,
-+		.startup.single		= hrtimers_cpu_starting,
- 		.teardown.single	= hrtimers_cpu_dying,
- 	},
- 
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2177,6 +2177,15 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	}
- 
- 	cpu_base->cpu = cpu;
-+	hrtimer_cpu_base_init_expiry_lock(cpu_base);
-+	return 0;
-+}
-+
-+int hrtimers_cpu_starting(unsigned int cpu)
-+{
-+	struct hrtimer_cpu_base *cpu_base = this_cpu_ptr(&hrtimer_bases);
-+
-+	/* Clear out any left over state from a CPU down operation */
- 	cpu_base->active_bases = 0;
- 	cpu_base->hres_active = 0;
- 	cpu_base->hang_detected = 0;
-@@ -2185,7 +2194,6 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	cpu_base->expires_next = KTIME_MAX;
- 	cpu_base->softirq_expires_next = KTIME_MAX;
- 	cpu_base->online = 1;
--	hrtimer_cpu_base_init_expiry_lock(cpu_base);
- 	return 0;
- }
- 
-@@ -2263,6 +2271,7 @@ int hrtimers_cpu_dying(unsigned int dyin
- void __init hrtimers_init(void)
- {
- 	hrtimers_prepare_cpu(smp_processor_id());
-+	hrtimers_cpu_starting(smp_processor_id());
- 	open_softirq(HRTIMER_SOFTIRQ, hrtimer_run_softirq);
- }
- 
+--- a/drivers/gpu/drm/i915/display/intel_fb.c
++++ b/drivers/gpu/drm/i915/display/intel_fb.c
+@@ -1571,7 +1571,7 @@ int intel_fill_fb_info(struct drm_i915_p
+ 		 * arithmetic related to alignment and offset calculation.
+ 		 */
+ 		if (is_gen12_ccs_cc_plane(&fb->base, i)) {
+-			if (IS_ALIGNED(fb->base.offsets[i], PAGE_SIZE))
++			if (IS_ALIGNED(fb->base.offsets[i], 64))
+ 				continue;
+ 			else
+ 				return -EINVAL;
 
 
