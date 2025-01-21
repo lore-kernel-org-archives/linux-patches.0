@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7CE1F543D;
-	Tue, 21 Jan 2025 18:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627981F7080;
+	Tue, 21 Jan 2025 18:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737483113; cv=none; b=QPvoq3toTtDlAhjIPhKt5ajOZHv6960uZlS7/nKkBvnY92k95WQj1CWE+zu08+xciWDq6ouN6WWwid/9lqwikOIOmhTo7Q0oBhQsDsfAXj5aU1N2euiLFj8D/jHiT7ge7+jfF/m+yOCtwtNsufGqupP/5NrxnNe7m2+zN0QQqVI=
+	t=1737483116; cv=none; b=O7VgmlBwy053IeJZxbbBAS0SY+k+YLRVFYPVsDqD5kUlF4raa171eRw55U6dN4lpxD/vVa2aDjJ98vdFm6ymqC0yaZJblHlMvTOd14zxeygZpgJOJB3rQ6z/7Ar8kt2N0Qsk6klEjlpAE7puEKX2SBfc1EnTFZfiKUGfRdyQzZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737483113; c=relaxed/simple;
-	bh=afMTiyGptUvHbjYAD3p9l8gQU0nV+jtuY4Wsl0mzxDA=;
+	s=arc-20240116; t=1737483116; c=relaxed/simple;
+	bh=YYnyDiCZTRQmj0n3swrKHqVrz1IGa4HECNNloZjql9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uicyMQfuju1t2b890XAd/VTE6Zyibb7gFLxneWbXve9/tgY+T15N74wVtOxca8A92rai+uc//xstg77UAyTFiTVPV9FP9je25MyeFlH4jZVbbKCFYiznZfbW2K1KDai/IIU6+VwE4nxw/6YLJ9AepW4WN/EactaRoa0+nvFAmOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HqhvP6kQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ovyIjga8S1fiM6SkfmzJ4t1NnSIXzhuOw28h3wWQZM/va5e5YJKbY6nT0CjpcXTVpgqxDa8703kxFEQdJ+tScV7urYu5/1z/OoiAvpNO+sKgOQSKId9HyiVWE3hzAur5N27puGt/kYKUOrFK+vWXBHh/EHcJoQNw6pGSkrwPob0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulmvuJhg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HqhvP6kQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B6FC4CEDF;
-	Tue, 21 Jan 2025 18:11:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulmvuJhg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF294C4CEDF;
+	Tue, 21 Jan 2025 18:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737483113;
-	bh=afMTiyGptUvHbjYAD3p9l8gQU0nV+jtuY4Wsl0mzxDA=;
+	s=korg; t=1737483116;
+	bh=YYnyDiCZTRQmj0n3swrKHqVrz1IGa4HECNNloZjql9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HqhvP6kQJEvV6G0k/2Y4KNqBtGvhMWMV9WqRREFwyiY3c/ugLb6rios06lhKsZoPK
-	 gg3FdJAnAPDMhkrLxfhj9dqvr/DM+bK5t7M4tAO2hGOOKklwshxFN4JhuHWs34cNo9
-	 taA3TZpA3OcgCirCDJHxmOSgLD+h1Y72yM6HK5lI=
+	b=ulmvuJhge4bRTa3HPRqYYaoDzFS8XdgRlrAN2AGoau4DMSUne7U7fJJwHRGUSR8oX
+	 PYAopXUKcLXSt7o3bO+vGLk1Zt2moqIb409vg4ORHnYpa4D9YbszUBMqU4I37nXLU4
+	 C+CY4osiuM+p4W0LyFyoiEktPaqiIFHm0HabGM34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 5.15 120/127] Revert "regmap: detach regmap from dev on regmap_exit"
-Date: Tue, 21 Jan 2025 18:53:12 +0100
-Message-ID: <20250121174534.267126367@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Abagail ren <renzezhongucas@gmail.com>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 121/127] blk-cgroup: Fix UAF in blkcg_unpin_online()
+Date: Tue, 21 Jan 2025 18:53:13 +0100
+Message-ID: <20250121174534.303943517@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250121174529.674452028@linuxfoundation.org>
 References: <20250121174529.674452028@linuxfoundation.org>
@@ -51,49 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Tejun Heo <tj@kernel.org>
 
-This reverts commit f373a189817584d0af5f922e91cad40e45f12314 which is
-commit 3061e170381af96d1e66799d34264e6414d428a7 upstream.
+commit 86e6ca55b83c575ab0f2e105cf08f98e58d3d7af upstream.
 
-It was backported incorrectly, a fixed version will be applied later.
+blkcg_unpin_online() walks up the blkcg hierarchy putting the online pin. To
+walk up, it uses blkcg_parent(blkcg) but it was calling that after
+blkcg_destroy_blkgs(blkcg) which could free the blkcg, leading to the
+following UAF:
 
-Cc: Cosmin Tanislav <demonsingur@gmail.com>
-Cc: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20250115033244.2540522-1-tzungbi@kernel.org
-Reported-by: Tzung-Bi Shih <tzungbi@kernel.org>
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in blkcg_unpin_online+0x15a/0x270
+  Read of size 8 at addr ffff8881057678c0 by task kworker/9:1/117
+
+  CPU: 9 UID: 0 PID: 117 Comm: kworker/9:1 Not tainted 6.13.0-rc1-work-00182-gb8f52214c61a-dirty #48
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 02/02/2022
+  Workqueue: cgwb_release cgwb_release_workfn
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x27/0x80
+   print_report+0x151/0x710
+   kasan_report+0xc0/0x100
+   blkcg_unpin_online+0x15a/0x270
+   cgwb_release_workfn+0x194/0x480
+   process_scheduled_works+0x71b/0xe20
+   worker_thread+0x82a/0xbd0
+   kthread+0x242/0x2c0
+   ret_from_fork+0x33/0x70
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+  ...
+  Freed by task 1944:
+   kasan_save_track+0x2b/0x70
+   kasan_save_free_info+0x3c/0x50
+   __kasan_slab_free+0x33/0x50
+   kfree+0x10c/0x330
+   css_free_rwork_fn+0xe6/0xb30
+   process_scheduled_works+0x71b/0xe20
+   worker_thread+0x82a/0xbd0
+   kthread+0x242/0x2c0
+   ret_from_fork+0x33/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+Note that the UAF is not easy to trigger as the free path is indirected
+behind a couple RCU grace periods and a work item execution. I could only
+trigger it with artifical msleep() injected in blkcg_unpin_online().
+
+Fix it by reading the parent pointer before destroying the blkcg's blkg's.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Abagail ren <renzezhongucas@gmail.com>
+Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Fixes: 4308a434e5e0 ("blkcg: don't offline parent blkcg first")
+Cc: stable@vger.kernel.org # v5.7+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap.c |   12 ------------
- 1 file changed, 12 deletions(-)
+ include/linux/blk-cgroup.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -663,17 +663,6 @@ int regmap_attach_dev(struct device *dev
+--- a/include/linux/blk-cgroup.h
++++ b/include/linux/blk-cgroup.h
+@@ -433,10 +433,14 @@ static inline void blkcg_pin_online(stru
+ static inline void blkcg_unpin_online(struct blkcg *blkcg)
+ {
+ 	do {
++		struct blkcg *parent;
++
+ 		if (!refcount_dec_and_test(&blkcg->online_pin))
+ 			break;
++
++		parent = blkcg_parent(blkcg);
+ 		blkcg_destroy_blkgs(blkcg);
+-		blkcg = blkcg_parent(blkcg);
++		blkcg = parent;
+ 	} while (blkcg);
  }
- EXPORT_SYMBOL_GPL(regmap_attach_dev);
- 
--static int dev_get_regmap_match(struct device *dev, void *res, void *data);
--
--static int regmap_detach_dev(struct device *dev, struct regmap *map)
--{
--	if (!dev)
--		return 0;
--
--	return devres_release(dev, dev_get_regmap_release,
--			      dev_get_regmap_match, (void *)map->name);
--}
--
- static enum regmap_endian regmap_get_reg_endian(const struct regmap_bus *bus,
- 					const struct regmap_config *config)
- {
-@@ -1508,7 +1497,6 @@ int regmap_reinit_cache(struct regmap *m
- {
- 	int ret;
- 
--	regmap_detach_dev(map->dev, map);
- 	regcache_exit(map);
- 	regmap_debugfs_exit(map);
  
 
 
