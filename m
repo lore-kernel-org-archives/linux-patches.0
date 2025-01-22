@@ -1,361 +1,174 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2043.outbound.protection.outlook.com [40.107.93.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0202C8F7D;
-	Wed, 22 Jan 2025 08:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737533046; cv=none; b=H6N3LcSBK8uVnhidMdbsvSACrXFrKh/EQI+5JNE7O2XEaP4DeF8yn3F6/uyOdtf+wqcGjsDfaQK2E9GyPlNXX7VTy5X/Bc0zy0+7MXLUwQSMJBq8Efeta4D19IPMW5KgnILlZH8oqUyhg0Hnnzr2c47PM0ToAVMQk/0VSW+ecEI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737533046; c=relaxed/simple;
-	bh=lDNf1377s3qK19SA3yKSsFCXRbUWio08xgcUSjFjdts=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aeSX7k59qr6j0nYKU7vcn8YUQkm/P+15zwU522IhNuo49KyOHlTZBGstdnq0e4qppKlooDx47jG6eyT+HbTTlfndqUgM/9dxOMdm2lXbQHiAedXYTzwgfE4uwr1+ay2CQofc90TGQXv79abqGzve2Az6dCOfRatWtqUNV8VBB4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vc+24iDM; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40DE8F7D;
+	Wed, 22 Jan 2025 08:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.93.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737533149; cv=fail; b=GsUd7dWZsuB4ga8FZw46y0/egLNaYAZdKElLawPGQq+XZsg/bOw+5iWlw0jKfV7EfH9ZuRzV4Px2bf/HH+8aCmQYBPX8S5N5YHXNe2Z1n9tgH7vOy5tRqPqhQd0Dv8VNoBbRLxO6yTQW0dYFjUB+mw9egDRbiMMlkDZNmlNG4bM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737533149; c=relaxed/simple;
+	bh=PEdC2LhEg60lro0U11/Z7tD/CGRY0GtVO4O657tZbGQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XKpO0WpDYahKlg9kR4mJldV2RD2LTLiF8gHTXJgi5XOSmaxdiQMT+DDvHcUmywf5sw0FrbfFzKmukpYYUJC3zDJzQ4z4n1nl3d/qL62RxkUeGCcSmElT7DLZA7dYpWPV0p37b9KRxrKcR8oEUqLa/Ccf6o0EOTbE1n02FJB0n9M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=YaXdqCqM; arc=fail smtp.client-ip=40.107.93.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc+24iDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02A5C4CEE4;
-	Wed, 22 Jan 2025 08:04:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1737533045;
-	bh=lDNf1377s3qK19SA3yKSsFCXRbUWio08xgcUSjFjdts=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Vc+24iDMAtiBGRNrstSpmzoCAb8Nxcj1KBMf/3QsIenrxFy9NHvRnPKzrNZgj10+i
-	 JmNKCkNhmh553weieN2fvNBCz/VWGKquXR8sDjaPDtXPSaEo5N3Tu3q9pKp8eJx4Tz
-	 KDElWdKjij2r6tYSevJazUtJpq2ChG3s2xFFK1mE=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org
-Subject: [PATCH 6.1 00/64] 6.1.127-rc2 review
-Date: Wed, 22 Jan 2025 09:04:01 +0100
-Message-ID: <20250122073827.056636718@linuxfoundation.org>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="YaXdqCqM"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ktll2yiSOX+xmv58QK602U/Reevso32AyekkCKjf/7tXZDixCSXyx6yXLSlUZVrEGX9syFCR48UhJQa22vFGB0AnvV5P+i4yzcBdmRSWdlK9r7AbYmComAp8baJuVKG8luykBx0ixgbKG2p9wVgrK+d32YTgZB+t05uqk+FsAvEfrFnKnJQ0g8ElHW4rsHwEyv0g3QBHTO6org/0tX2uUAU3Lbq+L77t4u9Yc8NOBtmudaY8a7t5i88OV4XZIrjoxxIdaNpx+jTKe+p8bkAteBViqgDZlV6IV6Gy5QoaVp0WmaLPwYkGas5owZl1MfPQVvRwPbv9JzPuCKSMJgCRww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ubF/gbwnxhF0YG2iCjGvMkPSPY2jfUoMjouIJewvoGU=;
+ b=rf6pGt2S0LdMts5HchY7FOrvCv8GQjVv0hHS7y6Fb3Fgs4WY2Hkf/cqvQC8nckCY+aOj5lyr8LIyJKJeZOxyHd0sGs/N9AKaXmP6Ec81uTK34m67pGaYVL1qfDrzr7xxaajxAlfEn87ryeA4NZHzYSLauLL+t7AhgA8qxUJopXGJX20kydnqczpDAjkoc2a1Yd9mFtTeapOSlFB7OJupGOJx4rxwbrhVTDQVyrJgiXIAaJRqlznwPnqg5K83Nd4NZYjmFxlv17Wb3rJ1yRIa5AZNHYEnZmE6kOUh3CMpBF+SVqU+Eq26tv8jgOILGww/ADSBgn8xqPO+uzV2uD6wSg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ubF/gbwnxhF0YG2iCjGvMkPSPY2jfUoMjouIJewvoGU=;
+ b=YaXdqCqMpWROJHqDSWKMLMmj3U/cLzXim8bSDQ8x1i1ndFZkHDXGgMwHTZ+Xi97V4fzohi5pcjGbt001bJvPpAx6/1ZboqUkyTZQDggbvOL89QLZM9OtEuDP0m/yhZyLz70/etk/D/9tiasjIUmwkgSv+2rG3vDFmjqfOEosxXFE+ZQhyTqVVsOKaaJIHN7bylNQ25Ax6WpMxbkckrSprhxmWiBB3pdooppr6if3lESu/0ipeek03Pjcq1JpChhdLwV3ri72CGkoO976fbdH+OljhEgPTgQtGNz2PJZdoH7l2cPTL29q52HbYD6i4HH/TIXSRIdUqvsQpnfm2f9YYw==
+Received: from DM5PR07CA0090.namprd07.prod.outlook.com (2603:10b6:4:ae::19) by
+ DS0PR12MB8788.namprd12.prod.outlook.com (2603:10b6:8:14f::11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8356.21; Wed, 22 Jan 2025 08:05:44 +0000
+Received: from DS3PEPF000099D7.namprd04.prod.outlook.com
+ (2603:10b6:4:ae:cafe::ce) by DM5PR07CA0090.outlook.office365.com
+ (2603:10b6:4:ae::19) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8356.22 via Frontend Transport; Wed,
+ 22 Jan 2025 08:05:44 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ DS3PEPF000099D7.mail.protection.outlook.com (10.167.17.8) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8377.8 via Frontend Transport; Wed, 22 Jan 2025 08:05:44 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 22 Jan
+ 2025 00:05:25 -0800
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 22 Jan
+ 2025 00:05:25 -0800
+Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.129.68.10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Wed, 22 Jan 2025 00:05:19 -0800
+Date: Wed, 22 Jan 2025 00:05:17 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
+	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
+	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
+	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
+	<linux-doc@vger.kernel.org>, <eric.auger@redhat.com>,
+	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
+	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>,
+	<ddutile@redhat.com>, <yi.l.liu@intel.com>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v5 08/14] iommufd/viommu: Add iommufd_viommu_report_event
+ helper
+Message-ID: <Z5Cmvfp4JW9vmMTP@nvidia.com>
+References: <20250114134158.GC5556@nvidia.com>
+ <Z4rVg1Xg5TCiFlSb@nvidia.com>
+ <20250120181854.GQ5556@nvidia.com>
+ <Z463eXfgNArCOfPn@nvidia.com>
+ <20250121183611.GY5556@nvidia.com>
+ <Z4/7pGx6F1mpAUuV@nvidia.com>
+ <20250121200924.GZ5556@nvidia.com>
+ <Z5ALWFVTOSC/8+ji@nvidia.com>
+ <20250121211404.GB5556@nvidia.com>
+ <Z5AUNVHzJPATVqAY@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.127-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.1.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.1.127-rc2
-X-KernelTest-Deadline: 2025-01-24T07:38+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-This is the start of the stable review cycle for the 6.1.127 release.
-There are 64 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Fri, 24 Jan 2025 07:38:08 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.127-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.1.127-rc2
-
-Wang Liang <wangliang74@huawei.com>
-    net: fix data-races around sk->sk_forward_alloc
-
-Juergen Gross <jgross@suse.com>
-    x86/xen: fix SLS mitigation in xen_hypercall_iret()
-
-Youzhong Yang <youzhong@gmail.com>
-    nfsd: add list_head nf_gc to struct nfsd_file
-
-Gao Xiang <xiang@kernel.org>
-    erofs: handle NONHEAD !delta[1] lclusters gracefully
-
-Gao Xiang <xiang@kernel.org>
-    erofs: tidy up EROFS on-disk naming
-
-Kang Yang <quic_kangyang@quicinc.com>
-    wifi: ath10k: avoid NULL pointer error during sdio remove
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "regmap: detach regmap from dev on regmap_exit"
-
-Suraj Sonawane <surajsonawane0215@gmail.com>
-    scsi: sg: Fix slab-use-after-free read in sg_release()
-
-Zhu Yanjun <yanjun.zhu@linux.dev>
-    RDMA/rxe: Fix the qp flush warnings in req
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "drm/amdgpu: rework resume handling for display (v2)"
-
-Yu Kuai <yukuai3@huawei.com>
-    block: fix uaf for flush rq while iterating tags
-
-Vitaly Prosyak <vitaly.prosyak@amd.com>
-    drm/amdgpu: fix usage slab after free
-
-Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-    drm/amd/display: Fix out-of-bounds access in 'dcn21_link_encoder_create'
-
-Javier Carrasco <javier.carrasco.cruz@gmail.com>
-    iio: adc: rockchip_saradc: fix information leak in triggered buffer
-
-Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-    iio: imu: inv_icm42600: fix timestamps after suspend if sensor is on
-
-Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-    iio: imu: inv_icm42600: fix spi burst write not supported
-
-Terry Tritton <terry.tritton@linaro.org>
-    Revert "PCI: Use preserve_config in place of pci_flags"
-
-Ville Syrjälä <ville.syrjala@linux.intel.com>
-    drm/i915/fb: Relax clear color alignment to 64 bytes
-
-Koichiro Den <koichiro.den@canonical.com>
-    hrtimers: Handle CPU state correctly on hotplug
-
-Tomas Krcka <krckatom@amazon.de>
-    irqchip/gic-v3-its: Don't enable interrupts in its_irq_set_vcpu_affinity()
-
-Yogesh Lal <quic_ylal@quicinc.com>
-    irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
-
-Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-    irqchip: Plug a OF node reference leak in platform_irqchip_probe()
-
-Xiaolei Wang <xiaolei.wang@windriver.com>
-    pmdomain: imx8mp-blk-ctrl: add missing loop break condition
-
-Zhongqiu Han <quic_zhonhan@quicinc.com>
-    gpiolib: cdev: Fix use after free in lineinfo_changed_notify
-
-Rik van Riel <riel@surriel.com>
-    fs/proc: fix softlockup in __read_vmcore (part 2)
-
-Marco Nelissen <marco.nelissen@gmail.com>
-    filemap: avoid truncating 64-bit offset to 32 bits
-
-Stefano Garzarella <sgarzare@redhat.com>
-    vsock: prevent null-ptr-deref in vsock_*[has_data|has_space]
-
-Stefano Garzarella <sgarzare@redhat.com>
-    vsock: reset socket state when de-assigning the transport
-
-Stefano Garzarella <sgarzare@redhat.com>
-    vsock/virtio: cancel close work in the destructor
-
-Stefano Garzarella <sgarzare@redhat.com>
-    vsock/virtio: discard packets if the transport changes
-
-Heiner Kallweit <hkallweit1@gmail.com>
-    net: ethernet: xgbe: re-add aneg to supported features in PHY quirks
-
-Paolo Abeni <pabeni@redhat.com>
-    selftests: mptcp: avoid spurious errors on disconnect
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: be sure to send ack when mptcp-level window re-opens
-
-Kairui Song <kasong@tencent.com>
-    zram: fix potential UAF of zram table
-
-Stefan Binding <sbinding@opensource.cirrus.com>
-    ALSA: hda/realtek: Add support for Ayaneo System using CS35L41 HDA
-
-Juergen Gross <jgross@suse.com>
-    x86/asm: Make serialize() always_inline
-
-Oleg Nesterov <oleg@redhat.com>
-    poll_wait: add mb() to fix theoretical race between waitqueue_active() and .poll()
-
-Marco Nelissen <marco.nelissen@gmail.com>
-    iomap: avoid avoid truncating 64-bit offset to 32 bits
-
-Hans de Goede <hdegoede@redhat.com>
-    ACPI: resource: acpi_dev_irq_override(): Check DMI match last
-
-Jakub Kicinski <kuba@kernel.org>
-    selftests: tc-testing: reduce rshift value
-
-Manivannan Sadhasivam <mani@kernel.org>
-    scsi: ufs: core: Honor runtime/system PM levels if set by host controller drivers
-
-Max Kellermann <max.kellermann@ionos.com>
-    cachefiles: Parse the "secctx" immediately
-
-David Howells <dhowells@redhat.com>
-    kheaders: Ignore silly-rename files
-
-Zhang Kunbo <zhangkunbo@huawei.com>
-    fs: fix missing declaration of init_files
-
-Leo Stone <leocstone@gmail.com>
-    hfs: Sanity check the root record
-
-Lizhi Xu <lizhi.xu@windriver.com>
-    mac802154: check local interfaces before deleting sdata list
-
-Luis Chamberlain <mcgrof@kernel.org>
-    nvmet: propagate npwg topology
-
-Wolfram Sang <wsa+renesas@sang-engineering.com>
-    i2c: rcar: fix NACK handling when being a target
-
-Wolfram Sang <wsa+renesas@sang-engineering.com>
-    i2c: mux: demux-pinctrl: check initial mux selection, too
-
-Pratyush Yadav <pratyush@kernel.org>
-    Revert "mtd: spi-nor: core: replace dummy buswidth from addr to data"
-
-David Lechner <dlechner@baylibre.com>
-    hwmon: (tmp513) Fix division of negative numbers
-
-Maíra Canal <mcanal@igalia.com>
-    drm/v3d: Ensure job pointer is set to NULL after job completion
-
-Mark Zhang <markzhang@nvidia.com>
-    net/mlx5: Clear port select structure when fail to create
-
-Patrisious Haddad <phaddad@nvidia.com>
-    net/mlx5: Fix RDMA TX steering prio
-
-Sean Anderson <sean.anderson@linux.dev>
-    net: xilinx: axienet: Fix IRQ coalescing packet count overflow
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    nfp: bpf: prevent integer overflow in nfp_bpf_event_output()
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    gtp: Destroy device along with udp socket's netns dismantle.
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().
-
-Eric Dumazet <edumazet@google.com>
-    gtp: use exit_batch_rtnl() method
-
-Eric Dumazet <edumazet@google.com>
-    net: add exit_batch_rtnl() method
-
-Artem Chernyshev <artem.chernyshev@red-soft.ru>
-    pktgen: Avoid out-of-bounds access in get_imix_entries
-
-Ilya Maximets <i.maximets@ovn.org>
-    openvswitch: fix lockup on tx to unregistering netdev with carrier
-
-Michal Luczaj <mhal@rbox.co>
-    bpf: Fix bpf_sk_select_reuseport() memory leak
-
-Sudheer Kumar Doredla <s-doredla@ti.com>
-    net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |   4 +-
- arch/x86/include/asm/special_insns.h               |   2 +-
- arch/x86/xen/xen-asm.S                             |   2 +-
- block/blk-sysfs.c                                  |   6 +-
- block/genhd.c                                      |   9 +-
- drivers/acpi/resource.c                            |   6 +-
- drivers/base/regmap/regmap.c                       |  12 --
- drivers/block/zram/zram_drv.c                      |   1 +
- drivers/gpio/gpiolib-cdev.c                        |   2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c         |  47 +------
- drivers/gpu/drm/amd/amdgpu/amdgpu_vce.c            |   6 +-
- .../gpu/drm/amd/display/dc/dcn21/dcn21_resource.c  |   2 +-
- drivers/gpu/drm/i915/display/intel_fb.c            |   2 +-
- drivers/gpu/drm/v3d/v3d_irq.c                      |   4 +
- drivers/hwmon/tmp513.c                             |   7 +-
- drivers/i2c/busses/i2c-rcar.c                      |  20 ++-
- drivers/i2c/muxes/i2c-demux-pinctrl.c              |   4 +-
- drivers/iio/adc/rockchip_saradc.c                  |   2 +
- drivers/iio/imu/inv_icm42600/inv_icm42600.h        |   1 +
- drivers/iio/imu/inv_icm42600/inv_icm42600_core.c   |  18 ++-
- drivers/iio/imu/inv_icm42600/inv_icm42600_spi.c    |   3 +-
- drivers/infiniband/sw/rxe/rxe_req.c                |   6 +-
- drivers/irqchip/irq-gic-v3-its.c                   |   2 +-
- drivers/irqchip/irq-gic-v3.c                       |   2 +-
- drivers/irqchip/irqchip.c                          |   4 +-
- drivers/mtd/spi-nor/core.c                         |   2 +-
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c        |  19 +--
- drivers/net/ethernet/mellanox/mlx5/core/fs_core.c  |   1 +
- .../net/ethernet/mellanox/mlx5/core/lag/port_sel.c |   4 +-
- drivers/net/ethernet/netronome/nfp/bpf/offload.c   |   3 +-
- drivers/net/ethernet/ti/cpsw_ale.c                 |  14 +-
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c  |   6 +
- drivers/net/gtp.c                                  |  42 +++---
- drivers/net/wireless/ath/ath10k/sdio.c             |   4 +-
- drivers/nvme/target/io-cmd-bdev.c                  |   2 +-
- drivers/pci/controller/pci-host-common.c           |   4 +
- drivers/pci/probe.c                                |  20 +--
- drivers/scsi/sg.c                                  |   2 +-
- drivers/soc/imx/imx8mp-blk-ctrl.c                  |   2 +-
- drivers/ufs/core/ufshcd.c                          |   9 +-
- fs/cachefiles/daemon.c                             |  14 +-
- fs/cachefiles/internal.h                           |   3 +-
- fs/cachefiles/security.c                           |   6 +-
- fs/erofs/erofs_fs.h                                | 143 +++++++++------------
- fs/erofs/zmap.c                                    | 133 ++++++++++---------
- fs/file.c                                          |   1 +
- fs/hfs/super.c                                     |   4 +-
- fs/iomap/buffered-io.c                             |   2 +-
- fs/nfsd/filecache.c                                |  18 +--
- fs/nfsd/filecache.h                                |   1 +
- fs/proc/vmcore.c                                   |   2 +
- include/linux/hrtimer.h                            |   1 +
- include/linux/poll.h                               |  10 +-
- include/net/net_namespace.h                        |   3 +
- kernel/cpu.c                                       |   2 +-
- kernel/gen_kheaders.sh                             |   1 +
- kernel/time/hrtimer.c                              |  11 +-
- mm/filemap.c                                       |   2 +-
- net/core/filter.c                                  |  30 +++--
- net/core/net_namespace.c                           |  31 ++++-
- net/core/pktgen.c                                  |   6 +-
- net/dccp/ipv6.c                                    |   2 +-
- net/ipv6/tcp_ipv6.c                                |   4 +-
- net/mac802154/iface.c                              |   4 +
- net/mptcp/options.c                                |   6 +-
- net/openvswitch/actions.c                          |   4 +-
- net/vmw_vsock/af_vsock.c                           |  18 +++
- net/vmw_vsock/virtio_transport_common.c            |  38 ++++--
- sound/pci/hda/patch_realtek.c                      |   1 +
- tools/testing/selftests/net/mptcp/mptcp_connect.c  |  43 +++++--
- .../tc-testing/tc-tests/filters/flow.json          |   4 +-
- 71 files changed, 477 insertions(+), 379 deletions(-)
-
-
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <Z5AUNVHzJPATVqAY@nvidia.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099D7:EE_|DS0PR12MB8788:EE_
+X-MS-Office365-Filtering-Correlation-Id: dfb1e901-92ce-4dbe-7971-08dd3abb9267
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|82310400026|7416014|1800799024|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?8/6HX69zayoBH37fHzvDODjPfIcaAXKBUX9CWt4/woF5XQH4hYSF1ROmKONl?=
+ =?us-ascii?Q?cViBPIX03teYOwnmZmRQmM4S01Ky65858Pn+1z28V85023IiyWyc1D0Zkmx6?=
+ =?us-ascii?Q?uMbylKKDHl7/PgS/3v2lMzf2ugYc8N9aKXrJSjz7t8qGuCa9C4qsBPQfWMew?=
+ =?us-ascii?Q?kRGrfscCYBZiwqAwQAoaB3yqNFf2Ne2+vTFkRhevMNkviVHnlImRBP0g8VsE?=
+ =?us-ascii?Q?ca79vnXB+51CBixlndjmbzCUSMsGV2vv/DCplygRE12E9iys39v9p1NP3OW4?=
+ =?us-ascii?Q?q3Z5FVF1r/unwdIAW08zNk/XoZUiiks0eXaLyjh3gZqap7NaWCVs+gVtRQym?=
+ =?us-ascii?Q?OExKneVKB7pdiwZBguaY63BguHvcdQ1qAVs0kyjBaajGfFaeeTOKPBYByT3e?=
+ =?us-ascii?Q?egVzaUgWl3epd6E1GFJTrFN0yJhYS0znrkBhV8CALWioF0IXBs+WYfqFFQSM?=
+ =?us-ascii?Q?LHSriooLC8Es+mWqSfP3Pgp2ISDNtaY2k5a8/WXvTyW27J1usSoKew5wiwlf?=
+ =?us-ascii?Q?AuXjqYk3R4cryKNjhfVb/FlVGTY5+fw9cwNBU1aoMR3vrfQ658ctNee31kSr?=
+ =?us-ascii?Q?8/vRJ6wVgU7kCKTB1CmKKq9RleVhwi/lYfwo7sfQviEK7om7DGI7XnBQxOpj?=
+ =?us-ascii?Q?U0+mbXA1PTRTLRsl84pZ6YO6EAQnSmysc+3AVavg0uLc4X8BbnSs2cSCpUkW?=
+ =?us-ascii?Q?4wIYdkTX8Hh+9w+tT7vEd082m2x6MJsQOZd5r5NULDX5KAL1aLo3B7hHxAqA?=
+ =?us-ascii?Q?I8ZpqgIrpDNFEW5stXYHdbfOo/Q/VsfsYL9PS13tdCKxfXAYrFT7LkIKX7xG?=
+ =?us-ascii?Q?9bVCJwEHcqVd6ahxJhoA0mr6ATLpVE6C5Yj23iXF0r3gUddjDoPB0B11HJYK?=
+ =?us-ascii?Q?bLHSnk1hsy9UcgluTxSSDZ9a7q9HLjAagfCPtQDfROlXHTIF9kmMh2N6HCIx?=
+ =?us-ascii?Q?qIKGCr2jRId0EG+rUsqoyI9haWsAnWC+wcTZUQVCjnPh39UeQPSpU9Exbzxc?=
+ =?us-ascii?Q?DRcYPe5xjRSsKwAgYDZZYEtTxVhOjG4YxrZNtT68C+eqTePYATqVDX+MsLc3?=
+ =?us-ascii?Q?5WLwcV0SXvzo4hmfuIRaYuel4K9s/vYz471z9z3j1PsX4IPesEKGSQglOr0m?=
+ =?us-ascii?Q?cttY/pOLlfQZTdAmoHMNC2oZcGRYUFngKtSzCB8Ytn5TZxAQIDNwUKaVZR5e?=
+ =?us-ascii?Q?MYEkDlHHaLNp2dDE9+YfPFN6KpBibYUvsqDt3YIsuPcX//A+MTdeSekN863O?=
+ =?us-ascii?Q?xtLyeXpgs2rANWB/q2cLBUdOWH5eIxk/XzIY+7j3lgwqgdcUd/yRFjtZsm5m?=
+ =?us-ascii?Q?elJEqiMhyYBIGeJiEpk4tt/57GGWRDRkcqCtLs8aXqV6WffAYKWfPq4ReNrk?=
+ =?us-ascii?Q?YJVfkzZVK7DYBxdAFmVtCKHtklZosdgTWCieuVhyizYL/FDGE2zsrqzs3WVg?=
+ =?us-ascii?Q?pR3cZGvDFg4Xn1aMinNoj2E8xZnvGdrvIYZI6F90s7L7VIIAJqO276+bcKc/?=
+ =?us-ascii?Q?Yv6TXu8IMEDvKzs=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(82310400026)(7416014)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2025 08:05:44.4466
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dfb1e901-92ce-4dbe-7971-08dd3abb9267
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS3PEPF000099D7.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8788
+
+On Tue, Jan 21, 2025 at 01:40:13PM -0800, Nicolin Chen wrote:
+> On Tue, Jan 21, 2025 at 05:14:04PM -0400, Jason Gunthorpe wrote:
+> > Since we don't hold the spinlock the whole time there is a race where
+> > we could pull the overflow off and then another entry could be pushed
+> > while we do the copy_to_user.
+> 
+> I see. I'll be careful around that. I can imagine that one tricky
+> thing can be to restore the overflow node back to the list when a
+> copy_to_user fails..
+
+Hmm, it gets trickier because the overflow node is a preallocated
+single node per vEVENTQ. We must not only check list_empty for its
+restore, but also protect the overflow->header.sequence from races
+between atomic_inc and copy_to_user. However, we can't use a mutex
+because copy_to_user might DOS...
+
+A simple solution could be to just duplicate overflow nodes, each
+of which contains a different sequence, like a regular vEVENT node.
+This certainly changes the uAPI for read(). Though the duplication
+of overflow nodes doesn't sound optimal, it's acceptable since the
+duplicated nodes would have been regular vEVENT nodes if there was
+no overflow (i.e. no extra overhead)?
+
+Thanks
+Nicolin
