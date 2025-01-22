@@ -1,174 +1,102 @@
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2083.outbound.protection.outlook.com [40.107.100.83])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8416F17D355;
-	Wed, 22 Jan 2025 07:16:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.83
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737530166; cv=fail; b=h25fmPAdVFUpXa9xgAk/7hxo8lwa0K0Xosk66WS/XMxqtULTAnoWeUxsGo1fHJzXl1djrIZB2CYvnkRgNtkVo4RPFp9+zWYbqfWqfJtTEH7lr9H455jeUKeCOYbUc5OhzEiHY34RAdu8EbUl65t0CciXAbJHa8G56NHfL0ZLbSo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737530166; c=relaxed/simple;
-	bh=qlsUIL7PKqEU3Dkfdxy7IG9ZmynB7cmLOJIsaF7ylA0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lWoueLZbEli67a6f5PmKMHQL8EBvLu8mE/DEeGCnvpNR0uMxWZdqxVzJ5X97BdttC2O2zDdw+lbIHJal0uko+g8MkcISEUy/PcYmHF+zgWKyEP/H0tSdsidY/0Nb1mbYQuUP38Wj2JuWWyVGC20sK7QoFIDvrhNkaUYAv+fq0E0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=r7saYjTo; arc=fail smtp.client-ip=40.107.100.83
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F99E1DFFD;
+	Wed, 22 Jan 2025 07:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737531315; cv=none; b=R+c3tcB37sxIiz2CagykOTLZPbo6UJ9IjQNMFS8D1wOD5klQveuJB4pf7dzqMPXQLmqsW+CGrblEAiJ28eF3bPLbkPtuDHMUc5K93I4tXOYsDjGEX1ohGVbCyNpRL+0YWkINL55o2xhSUmzmZLEmx7f+19loKAJ9kCAWTpD2oMc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737531315; c=relaxed/simple;
+	bh=a5QHtHVLyhLuhEE3Mv1rm+vMRptEsx69289G4WrZtuE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Evl69jXvUAM0S1BULjb/8TsyB0u7JMWHHgoQonPDqwpkf55/rT9T8VH5KZH0hfxgwid22+3TlxmHxFEXH5dUAXOOaVD0aXeAfiRJ+faKJDGazYvcJ0l7AxT2A8TaL1mMCemRqrwJ72/DTmi+atvne6bYisUjBz03F354P1AASqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLR0U35n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="r7saYjTo"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XKL/F/kGvJqMB1nuwPVbcedv+THNm/3X0iejhJpMbVDEoINe0aOdhXy9dT7z+fC3b/3+PsfKiP4O+E4VDipZKuSoG6HjxsukRWpdXsuMxIW2HL/pzVde39OAX+hxDfvVHqhQZKOzcrhrvrVmmU7XZmJTtYgPkkgOT71pSflQLNe91/zzEc+FDfczOkBZXHBVtZAl1mJv1dLmN7eRUwKxv1DuOT0uIxFM0grPSIwavSUpGHsXMaAAWisqBYxG5OsWFTz2g8FDfBfVyT4WJT4x9YAT/waNSNRJMSZOqaxWyZjOqsDlJOxgP0L8IX0qQlLqAVuaMGquy3tlFElMocoYHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0hhWPgTtRw8HFH6N8rgW5HV+TT3s9L6Lbj53zgNmAjg=;
- b=IYxc1DQL1pBX3gl4O+HLnKlUbtkfShUxQ9fs64bEhGnGF3jWZUzfgMkDPgqtH01QV8RdYROTs9FXFtmkjD3hQVQnOx8QIm8lqsRgzjn6+29/rzUsR0QVdAC1YoqNe4LkSKXo1VISyW6SPMCLySU5GeykR+PuAHEHMG3+AAa4o9VITlrTBqkjlywQvEygGOrGIqdf/Addmn2cZ2nLm5TZmifBGsZ6PY7zgX/tvEfHz0Atd7C/hz0MOtieMuCGbX8IXXTStIShjUXnp7qE9mFoAGqPYBNkz26huV9unL6CNYD4DkndSEg8hsp+UuQ683lUogrVKHXZg+mqA7iniIsDiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0hhWPgTtRw8HFH6N8rgW5HV+TT3s9L6Lbj53zgNmAjg=;
- b=r7saYjToR1PYcfSb/1fvVaYim/qrmiC9ZXgW7ZFNhTX9LobIbIWB0I3cKxTv00o4OL59Zz4BfueZvaiMkG/0pXp6bkHUoEQnV+OcPQlU9T8puwGHTpKmUI1ohGM4wxPhVv3UMe02qzqmMt0EMKaC2LRurgB7zrnbsbNgPkw1WEVtbZzUyectWaRUprJuIgLxavuM8hTUBpR4xkzHce170jy0s2PypH4KjHK+WbfozAYs4aEfJZ/zg+us/66jPBmXwSDRo0+ebFBaa8tz4omB/6rrkclk48KPEOQEtuI1vJ2Dp3oK5bqpKk4QeiLX2tmMS9S0zUSD5CGd5rsyRZAukA==
-Received: from DS7PR03CA0091.namprd03.prod.outlook.com (2603:10b6:5:3b7::6) by
- PH7PR12MB8155.namprd12.prod.outlook.com (2603:10b6:510:2b2::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8293.15; Wed, 22 Jan
- 2025 07:15:59 +0000
-Received: from CY4PEPF0000EDD6.namprd03.prod.outlook.com
- (2603:10b6:5:3b7:cafe::e0) by DS7PR03CA0091.outlook.office365.com
- (2603:10b6:5:3b7::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8356.22 via Frontend Transport; Wed,
- 22 Jan 2025 07:15:59 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CY4PEPF0000EDD6.mail.protection.outlook.com (10.167.241.202) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8377.8 via Frontend Transport; Wed, 22 Jan 2025 07:15:58 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 21 Jan
- 2025 23:15:43 -0800
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 21 Jan
- 2025 23:15:42 -0800
-Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.129.68.6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 21 Jan 2025 23:15:37 -0800
-Date: Tue, 21 Jan 2025 23:15:36 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <kevin.tian@intel.com>, <corbet@lwn.net>, <will@kernel.org>,
-	<joro@8bytes.org>, <suravee.suthikulpanit@amd.com>, <robin.murphy@arm.com>,
-	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <shuah@kernel.org>,
-	<linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kselftest@vger.kernel.org>,
-	<linux-doc@vger.kernel.org>, <eric.auger@redhat.com>,
-	<jean-philippe@linaro.org>, <mdf@kernel.org>, <mshavit@google.com>,
-	<shameerali.kolothum.thodi@huawei.com>, <smostafa@google.com>,
-	<ddutile@redhat.com>, <yi.l.liu@intel.com>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v5 08/14] iommufd/viommu: Add iommufd_viommu_report_event
- helper
-Message-ID: <Z5CbGKYbwy+qPjyh@nvidia.com>
-References: <Z4rVg1Xg5TCiFlSb@nvidia.com>
- <20250120181854.GQ5556@nvidia.com>
- <Z463eXfgNArCOfPn@nvidia.com>
- <20250121183611.GY5556@nvidia.com>
- <Z4/7pGx6F1mpAUuV@nvidia.com>
- <20250121200924.GZ5556@nvidia.com>
- <Z5ALWFVTOSC/8+ji@nvidia.com>
- <20250121211404.GB5556@nvidia.com>
- <Z5AUNVHzJPATVqAY@nvidia.com>
- <20250122002128.GC5556@nvidia.com>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLR0U35n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0A8C4CED6;
+	Wed, 22 Jan 2025 07:35:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1737531313;
+	bh=a5QHtHVLyhLuhEE3Mv1rm+vMRptEsx69289G4WrZtuE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YLR0U35n+h+ZAh/5lWBzN4tms0Iyz1blGE4IODytbLJrXW/JTehJjIUZn56XcCCFF
+	 AXziHPBpGGHDU6rjZNQ5KYzsL5rpV8/0CxpICQGOdRgI9rsK8sVesgpuw7P54gez4t
+	 MLxeMcomiTygoF1mleYhhj5JJcHrX0AUs/1ibDok=
+Date: Wed, 22 Jan 2025 08:35:11 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Salvatore Bonaccorso <carnil@debian.org>
+Cc: Peter Schneider <pschneider1968@googlemail.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 00/64] 6.1.127-rc1 review
+Message-ID: <2025012244-rigor-boat-b44d@gregkh>
+References: <20250121174521.568417761@linuxfoundation.org>
+ <b5f7b88a-0f6a-4815-8344-bf6bf941bc91@googlemail.com>
+ <Z5AYNaxIm-SwmUHb@eldamar.lan>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250122002128.GC5556@nvidia.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD6:EE_|PH7PR12MB8155:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b8b0ee0-f085-4118-ea67-08dd3ab49ece
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|1800799024|376014|7416014|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?EtLlpyMoRLEagzYxjU/1QdeFtEMTYT+zwi+rP2qN4ke08Pn+qi+WJJ4mkT7w?=
- =?us-ascii?Q?HtrucRz+7+WJP7UphLm51AXmoKZShIfmSesyKD7N3wCoWFLE6xLkrlQb0zn7?=
- =?us-ascii?Q?zRpBGKqkHk00EPpufXl047t2jCNPxeRzSbC/Wd2/rlATZZDVHe4UaKMOKwME?=
- =?us-ascii?Q?Tjt7jvQV2Ps05P8OfBC+qqInSNmJWmtD7ayzgv0O6Y43ZFw83uDHIKv3FX8c?=
- =?us-ascii?Q?jNOnMowxiJmrA9OehCD13UTff/ihRA0W8odBcO2KgvRgUclTXwMzXV/St142?=
- =?us-ascii?Q?6frzHOSzC9AubyR0TN3LUllKR8x0q1y4JO/000HUBlkZGbthfgTljEPjrH9o?=
- =?us-ascii?Q?o3+K/TDl6W/xgr3Xuxal0twRHgWrHUWH3rsnJ+ik4YIbc7E6vA7wHqDrsPZe?=
- =?us-ascii?Q?xcChuruZ6un9hzGmFHTfU3o2TAXdvHUOpqiWdEXhPldygFDJRWp0SgYk/Bmo?=
- =?us-ascii?Q?Htx2kyDktf4tkYBVWwo5F3KbIGkH858SA8eJXqyjLM/K5OZSR63+uUnKr7hD?=
- =?us-ascii?Q?ylbAIFW6+QPWYRKupotYB2DW2nIo+dmW1++U9DMcnxCG/jLrRiuJzw6Lcdgg?=
- =?us-ascii?Q?RI0PjkvIGR8txkbgyZoA9gWUPllqkKFQ0mfQzbYPScSTq8cNAgvSNvtokUd2?=
- =?us-ascii?Q?EJz8M283itlorhSo0OP//8hdlo7iQYXntWRFNicLSKXrIcsXs08OKBsCBDp1?=
- =?us-ascii?Q?aOS4p41PWb6lHmEJKxtyWekKc0F3pLueHsRM5Bhky28ywjtiZevV788a+c5h?=
- =?us-ascii?Q?IpG+u3QYBletAn0gSam5V/X+KdvtxSuzLw/SPTmGQUL0kK+2TQkPDp3fwVA2?=
- =?us-ascii?Q?2dFWX3Rn0zH3bt+cJBzYYr/581pfOcHRCVPlJe2HAqfcSE6b9/oSXH2G6BPm?=
- =?us-ascii?Q?gqBNr64QCvoDHMEWwPICqv7z4idA+aamWsIK6DzW7SzBro+uzPJ4D3RHmc85?=
- =?us-ascii?Q?ovdxUsnKGT/rDDQFelKOthvIbXE20SSh9q6A77YZ0kZWS/mgc8T8Qy2a22Wc?=
- =?us-ascii?Q?/dl7ybMRrRm5f3qNF7YIAB8PV+DDcRGYpLhFUL3SGzjoV8ye7htGl1RpmHMt?=
- =?us-ascii?Q?jou1odJh+x+xfjAHRCmeMfErMNdElaef9NAvSNJk3eavv4iEjRWeyOpJJkhJ?=
- =?us-ascii?Q?IPrB16LJW8wJrFi0jP3gwoxap1HHlvBtRrtWN1DpaYm6ekilyxVcqOCgF49b?=
- =?us-ascii?Q?QLk1iXxJKVfJRo6H2G1xTNtVynVD0ta7Yn8BMtJqhe83Y+P7dk1OGWxkoRg9?=
- =?us-ascii?Q?J20YYP9hDJweEps/jVlfo1mxzS/CqducpPf2UXpp2+xV9csH1pQVwKz6DxYU?=
- =?us-ascii?Q?utuEv6wWLPWYrs+sBkYJzd45oQyJRT9fr8RX30vL807WfDneDqUOoYFldqhs?=
- =?us-ascii?Q?aNQCsdKEntPSHxmaO3tFMhcWl+/+X/EMBCIv/KFhun0dI/avjGpludW8LsT6?=
- =?us-ascii?Q?ubS5jF9PK8IuAYTZPn5lQ5y4bBdDDja66cILlElqnFy0tV6E4NBE7Ln3WaLE?=
- =?us-ascii?Q?Y2BdHMzFNPoAC2Y=3D?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(376014)(7416014)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jan 2025 07:15:58.8738
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b8b0ee0-f085-4118-ea67-08dd3ab49ece
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CY4PEPF0000EDD6.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8155
+In-Reply-To: <Z5AYNaxIm-SwmUHb@eldamar.lan>
 
-On Tue, Jan 21, 2025 at 08:21:28PM -0400, Jason Gunthorpe wrote:
-> On Tue, Jan 21, 2025 at 01:40:05PM -0800, Nicolin Chen wrote:
-> > > There is also the minor detail of what happens if the hypervisor HW
-> > > queue overflows - I don't know the answer here. It is security
-> > > concerning since the VM can spam DMA errors at high rate. :|
+On Tue, Jan 21, 2025 at 10:57:09PM +0100, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> On Tue, Jan 21, 2025 at 08:32:01PM +0100, Peter Schneider wrote:
+> > Am 21.01.2025 um 18:51 schrieb Greg Kroah-Hartman:
+> > > This is the start of the stable review cycle for the 6.1.127 release.
+> > > There are 64 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
 > > 
-> > In my view, the hypervisor queue is the vHW queue for the VM, so
-> > it should act like a HW, which means it's up to the guest kernel
-> > driver that handles the high rate DMA errors..
+> > 
+> > On my 2-socket Ivy Bridge Xeon E5-2697 v2 server, I get a build error:
+> > 
+> >   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn303.o
+> >   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn31.o
+> >   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn314.o
+> >   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn315.o
+> >   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn316.o
+> >   CC [M]  drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn32.o
+> >   LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
+> >   AR      drivers/gpu/built-in.a
+> >   AR      drivers/built-in.a
+> >   AR      built-in.a
+> >   AR      vmlinux.a
+> >   LD      vmlinux.o
+> >   OBJCOPY modules.builtin.modinfo
+> >   GEN     modules.builtin
+> >   GEN     .vmlinux.objs
+> >   MODPOST Module.symvers
+> > ERROR: modpost: module inv-icm42600-spi uses symbol
+> > inv_icm42600_spi_regmap_config from namespace IIO_ICM42600, but does not
+> > import it.
+> > make[1]: *** [scripts/Makefile.modpost:127: Module.symvers] Fehler 1
+> > make: *** [Makefile:1961: modpost] Fehler 2
+> > root@linus:/usr/src/linux-stable-rc#
+> > 
+> > I have attached my .config file.
 > 
-> I'm mainly wondering what happens if the single physical kernel
-> event queue overflows because it is DOS'd by a VM and the hypervisor
-> cannot drain it fast enough?
+> Reverting c0f866de4ce447bca3191b9cefac60c4b36a7922 would solve the
+> problem, but then maybe the other icm42600 related commits are
+> incorrect? Guess it's a missing prequisite for that commit missing in
+> 6.1.y.
 > 
-> I haven't looked closely but is there some kind of rate limiting or
-> otherwise to mitigate DOS attacks on the shared event queue from VMs?
+> Can confirm the failure as well in a test build for Debian.
 
-SMMUv3 reads the event out of the physical kernel event queue,
-and adds that to faultq or veventq or prints it out. So, it'd
-not overflow because of DOS? And all other drivers should do
-the same?
+Ok, let me go fix this up, it's due to the namespace symbol stuff not
+being in 6.1.y, I'll hand edit the offending commit and push out a -rc2.
 
-Thanks
-Nicolin
+thanks,
+
+greg k-h
