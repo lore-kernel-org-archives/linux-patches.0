@@ -1,145 +1,121 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D31212B2B
-	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 14:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC2B42065
+	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 14:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737555350; cv=none; b=JBEfkRppgoQNn+mWz2cKkDf11Bn16+X4Gn5tR3udLW/S9VN5Mue+kCW52GW+yScaVGtMJtDQf9fdDQoGR+SWvYxVLCeJbwgpGtYmMF3npraqBJ4nC4texQ0WgTyKuVl2Orhe3/huJvi4d2Init03YZBx2Q0VomQhAcRqGciP8Wk=
+	t=1737556845; cv=none; b=sBR6Vse4Jec7j9WkalC2DWDimZ4R1liF1EqwGJnoNuiJg9f3PSILrHIcRrPHUA/w5AJiRO+OqwFXCTp1cJRzPNjA4VQ30pwZcX4NVMc9RL8A9kCXGCBLXG7uv0Q0TaZiNHjQtsJtP5jCaL4Rr5bZStKO/vlVxt7tK6LwRg/NteM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737555350; c=relaxed/simple;
-	bh=ifNohGdpUqWQ47/CXhBXDrJaEzMyrlem/6QM08CYmD8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=EI0bjlrXOfmEr6oYZEvDQm0svNUYJ9uYFUV6Gnx0d5KYNH5ZhH2kd9+Mr+ndbwaNsKgfqjv7KfAOf3wNo//DSksXZ456MVqB1wvooGPc6Is4AWygM47gCh7yEUL3ZzptK+0/1cc2V5PiO8PkLW237wcCY14mA/8rTSK/0NghIY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=UJvJ4GRA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B4eMGu91; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1737556845; c=relaxed/simple;
+	bh=LsfukF/yBfh1ci0CeM4YPAlN1I2R2qkAxmEyopkVvGc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T7aeFs5us190mDZ53H8EziOnne3CEyAow6MuetxUwwTdNdc5qfbgdT8rOrAlVJELV53S9Y8uE/knk32p002FbB/2ZagW3s/hsM0iZKY6hHBNawXnJwvm5/N1E2XLoN+532I7Yak7X/44mMzybvk9WH1uRadWQylcH3bUth+to78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=e466cZTw; arc=none smtp.client-ip=209.85.216.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="UJvJ4GRA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B4eMGu91"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 304351380142;
-	Wed, 22 Jan 2025 09:15:47 -0500 (EST)
-Received: from phl-imap-11 ([10.202.2.101])
-  by phl-compute-10.internal (MEProxy); Wed, 22 Jan 2025 09:15:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737555347;
-	 x=1737641747; bh=ROq5OThraGrb++mZF0iSUSBCXiZf4G06ZRoPar4RRqA=; b=
-	UJvJ4GRAIXmQFjhjzkhc4pDxHgJ2P4xvmSSo79V6XK1dCimvJHnCwWROvGrzJ5wv
-	X2fgju4ekNo97thfKZoIsSFnvzhKgkSv3fRa/0hjIvXJo902o3KvjfZU1R8/vO6+
-	uO1eTob6u90SFAf+XZ4BXlJaDktYdiYaYID6SiJJa9EZgGYrJ6EIYj+gcdMZR1Ul
-	/bSNPm0EjaKfm25pm5sgz6SmAetH4gX+ZUFjFLcZMv4oEYRX3xnnlDj6WyvMNc+9
-	EyGh4H9i9y4HMH0hYf0MTAFn6kfWjruD8ANHi7dSx0+eNBdyGUgyXxxAoXA5Vc36
-	vXVu/D5uLSXICTl3R6/HMQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737555347; x=
-	1737641747; bh=ROq5OThraGrb++mZF0iSUSBCXiZf4G06ZRoPar4RRqA=; b=B
-	4eMGu91mFR+n2fuPts9P9IFBDHDyFEFRfO0aThjO+Gjxb5HHqIsj/plMp8HJB/x3
-	kXlHKGMc47PLBY8CzKYtiSjq84dQjnyl6DRCtW92n6MlzjP9TkAcigNhaTxeMetb
-	I2B50LBIdn2iFvhWBM0snrX/lilvabL9O4EwJ9Ra0A3nSyqhwZX1x9fQBl54ARt0
-	bso3nbGvRHG3y7MQWwhZMCqzI/zlBauXCKeVB+ZLzwaSfq8scEIdsy0mxumlZ5Gf
-	R5o1Q/qmg/YSr0LGexLtYj7n+yEqje8N6xcPqGYsI24Wp/atlvKeKkLcWm8ATKiX
-	5XA0BDK/SJIysS+qJwyMw==
-X-ME-Sender: <xms:kv2QZ39AwKnN3XEo10BJCOybgrkjVfIQdOLUY0HGWDSueconMydj4A>
-    <xme:kv2QZzus1983hIA-FCRYPx5pP3OVkKNGfMj0j3Sr7zc1u2QXSfhm6geEGzPjA2vKS
-    zmW0xxe4yloZZdNd4w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudekjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredt
-    tdenucfhrhhomhepfdetrhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusg
-    druggvqeenucggtffrrghtthgvrhhnpefhtdfhvddtfeehudekteeggffghfejgeegteef
-    gffgvedugeduveelvdekhfdvieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegrrhhnugesrghrnhgusgdruggvpdhnsggprhgtphhtthhopedv
-    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgrvhgvlhesuggvnhigrdguvg
-    dprhgtphhtthhopehfrdhfrghinhgvlhhlihesghhmrghilhdrtghomhdprhgtphhtthho
-    pehsuhguihhpmhdrmhhukhhhvghrjhgvvgesghhmrghilhdrtghomhdprhgtphhtthhope
-    hrfigrrhhsohifsehgmhigrdguvgdprhgtphhtthhopegsrhhoohhnihgvsehkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegtohhnohhrsehkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehshhhurghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvghssehk
-    vghrnhgvlhgtihdrohhrghdprhgtphhtthhopegrnhguvghrshdrrhhogigvlhhlsehlih
-    hnrghrohdrohhrgh
-X-ME-Proxy: <xmx:kv2QZ1CvVfvmS7sVpxBNmBWTRUB7vajCp4Mcj8omensbbRZaQaQBLA>
-    <xmx:kv2QZzfxoEFvbdp_CSoiUnaY4dcm9tBmNYbBE23HXEq0AN--c8u-iw>
-    <xmx:kv2QZ8PiNdf1UDVLe2K5VxWiC12PUw4q55rCSL2oDEGwL86j_WbpgQ>
-    <xmx:kv2QZ1lbV7Jt9eeDJwSr5ZHbzrxHpUVk1dV_NzjpfLGL-WUZyb537A>
-    <xmx:k_2QZ62IVKtFn2bqineyDyGkUc7IxwlEcT-Cn6-gZqfPvrortF5LV5zg>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A32262220072; Wed, 22 Jan 2025 09:15:46 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="e466cZTw"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ee74291415so9489511a91.3
+        for <patches@lists.linux.dev>; Wed, 22 Jan 2025 06:40:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1737556843; x=1738161643; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t6McvFRaJ5osHAYhUEUYsvwZIqCtrxvJxDD2sjjhlt4=;
+        b=e466cZTwsQdcZK+FjUkfaLsjTTKu+hj+xC/YqeccYEBUrsRavfwCTFIfBlBH4UcBND
+         I7UQLGtyIQrp9fIevE9WSNplCNCofeK3wpXwfoDrFm1a0LSYePL2eikcC6/78fbn8PWd
+         jdszUPpqJ6jBTPKpY17j/pH1bwBiBWQUUA8huTsk3sL4cFdeskydB+jULP9TndqVS77s
+         YwL44dVsRqxq4q+QDq4o5i2RbyP+3pX8pSzxps4Snn9P3dTxZjTZBOtAdv4/W8guf3ok
+         gy603/XPyO4yfJvPRvZBcDxIhywtywFcugPGn+Lp+QIL/Jfs5khVbl89cJKKckXbBaQj
+         8W5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737556843; x=1738161643;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t6McvFRaJ5osHAYhUEUYsvwZIqCtrxvJxDD2sjjhlt4=;
+        b=XyucP244P64Drqq2d6bQq3dLX4PPXOuA0TXgKLmIVUsyPzc+AY51YiWAUbcMKoKUWN
+         w1xnZXnNVp4cDQmO6il84xt8l75901RBx17nAS0Nd+SsdA07Dm7PhwBJYZ4f0WvhCo6W
+         7/Ahoe9i6JtIWeuBZXfSkzWK71OEfQjdeDCVOircinyoYBwCdgSYRfPgXo1JLuvBdoqR
+         5CuDbvGU7XY+aixoqm9dezOuqDIYVkRZOzyvahge/yi2Oeh+JIU+Oee+JLmBa0Wryk3Z
+         lX3pb1Zn3w04Cq2syXPNi3O4840RG52+W0PbPW4AUrXEBUKSYlXZMBCamLgfQmNzRPsf
+         JMLw==
+X-Forwarded-Encrypted: i=1; AJvYcCUVJK0/ZJhaX+mx+VrRXCpeF5hANgydDuD3AuI0thLqxVmMn5VU5egsH9EfxiYF0uBxnt2BPCSV@lists.linux.dev
+X-Gm-Message-State: AOJu0YxYgcPG6yTW/syeaFSTyD7I/jpR3aaNEyyS2RZ21uUm4jYRaQP+
+	8oYFdqnDWrIFaPN6Kk3u/Rb7wR7bVkb6zxrpnrEkEV88BFsZ4gWk6mCYHWRymfbTbNKlbwZ3CrF
+	8njhsKBDkwIliTuuS0tDpvethBkGmLXeWm5a00g==
+X-Gm-Gg: ASbGncsg/d6SOZu5VjNB+e5z65Sxgt/rSJLHLVhS9RfydmlzP2gq38fuJb2sUttTy8i
+	l4tzdIub4KNtr0tKERjqbP9n2et5+vMZg7FK29xuxI0KqgFyR/Oc=
+X-Google-Smtp-Source: AGHT+IGv+GlnSom+dKcknTxqk+ZtvCUMMUd9EnJqMxMxHc4PjBjG5A40osvTg2dwXP9e/EwXwhDwjK1mVEA5Iz+pJ9U=
+X-Received: by 2002:a17:90b:2c84:b0:2f6:d266:f462 with SMTP id
+ 98e67ed59e1d1-2f782d8c84fmr31882295a91.35.1737556842998; Wed, 22 Jan 2025
+ 06:40:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Date: Wed, 22 Jan 2025 15:15:26 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Naresh Kamboju" <naresh.kamboju@linaro.org>,
- "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- "Linus Torvalds" <torvalds@linux-foundation.org>,
- "Andrew Morton" <akpm@linux-foundation.org>,
- "Guenter Roeck" <linux@roeck-us.net>, shuah <shuah@kernel.org>,
- patches@kernelci.org, lkft-triage@lists.linaro.org,
- "Pavel Machek" <pavel@denx.de>, "Jon Hunter" <jonathanh@nvidia.com>,
- "Florian Fainelli" <f.fainelli@gmail.com>,
- "Sudip Mukherjee" <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
- rwarsow@gmx.de, "Conor Dooley" <conor@kernel.org>, hargar@microsoft.com,
- "Mark Brown" <broonie@kernel.org>,
- "Anders Roxell" <anders.roxell@linaro.org>,
- "Dan Carpenter" <dan.carpenter@linaro.org>
-Message-Id: <eec53047-6118-4a73-9535-335babf68685@app.fastmail.com>
-In-Reply-To: 
- <CA+G9fYvacKD7aFkMCW6nwjZ4t-cpH0deLiPY-cFvGkRn5hgK3w@mail.gmail.com>
-References: <20250122073830.779239943@linuxfoundation.org>
- <CA+G9fYvacKD7aFkMCW6nwjZ4t-cpH0deLiPY-cFvGkRn5hgK3w@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/127] 5.15.177-rc2 review
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+References: <20250122093007.141759421@linuxfoundation.org>
+In-Reply-To: <20250122093007.141759421@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 22 Jan 2025 23:40:32 +0900
+X-Gm-Features: AbW1kvaxMa-1XgosJuFYYbAaAUZODb3Ltxzlan0oN98CplTBoHkdtELScykbKVA
+Message-ID: <CAKL4bV72AK1qSnPFE2JK18D-Q4mBvNPef3u5sqHKoOP4UvB0Vw@mail.gmail.com>
+Subject: Re: [PATCH 6.12 000/121] 6.12.11-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 22, 2025, at 15:08, Naresh Kamboju wrote:
+Hi Greg
 
-> -------
-> fs/ext4/readpage.c: In function 'ext4_mpage_readpages':
-> fs/ext4/readpage.c:413:1: warning: the frame size of 1132 bytes is
-> larger than 1024 bytes [-Wframe-larger-than=]
->   413 | }
->       | ^
-> 2025/01/22 08:45:53 socat-internal[1491] W waitpid(-1, {}, WNOHANG):
-> no child has exited
-> fs/mpage.c: In function 'do_mpage_readpage':
-> fs/mpage.c:336:1: warning: the frame size of 1092 bytes is larger than
-> 1024 bytes [-Wframe-larger-than=]
->   336 | }
->       | ^
-> fs/mpage.c: In function '__mpage_writepage':
-> fs/mpage.c:672:1: warning: the frame size of 1156 bytes is larger than
-> 1024 bytes [-Wframe-larger-than=]
->   672 | }
+On Wed, Jan 22, 2025 at 6:30=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.11 release.
+> There are 121 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 24 Jan 2025 09:29:33 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.11-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-I don't see anything touching these recently, probably not
-a new regression but still a bit scary.
+6.12.11-rc2 tested.
 
-> drivers/usb/core/port.c: In function 'usb_port_shutdown':
-> drivers/usb/core/port.c:299:26: error: 'struct usb_device' has no
-> member named 'port_is_suspended'
->   299 |         if (udev && !udev->port_is_suspended) {
->       |                          ^~
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-Caused by the backport of 59bfeaf5454b ("USB: core: Disable LPM
-only for non-suspended ports"), should be fixed by backporting
-130eac417085 ("xhci: use pm_ptr() instead of #ifdef for CONFIG_PM
-conditionals") as well. That one was originally a fix for a
-different bug, but the new 59bfeaf5454b commit builds on that.
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-      Arnd
+[    0.000000] Linux version 6.12.11-rc2rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.2.1 20240910, GNU ld (GNU
+Binutils) 2.43.1) #1 SMP PREEMPT_DYNAMIC Wed Jan 22 23:19:39 JST 2025
 
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
