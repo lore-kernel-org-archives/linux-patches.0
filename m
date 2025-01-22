@@ -1,91 +1,123 @@
-Received: from gimli.kloenk.de (gimli.kloenk.de [49.12.72.200])
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F43212B2C
-	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 13:16:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.72.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E0B18E25
+	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 13:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737551795; cv=none; b=RPk6V7kHqh4mGDxmcQqzT2cUbpzyv8qSgva/ypNonqmwvdyJZIZmfPG8aVbz7G/EU3+tVBQi2cUn7qXuAYufgZizDpTWxMt92YDXS/Q0uYUoGB6P2/86etuxQcG6NnAqg1O87S09f+ine5ep2smriHGMtGigdXdk67+4wWdPtS0=
+	t=1737552061; cv=none; b=HLMUsCAtH+Br63FItgTGFdI6L0GO71tB28BSAdaTLSK18n5hRUZGc5pcz79Q3ws39/F6rNU6X3CPPxDnlSDLOK8O7J2oCwnMFBlvYrx2Wwpz8UriAIA+auI/B4WKjhy44GszHci74xVlSTNbAvcLNCWO0wKSJA1kf20v4kRWQEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737551795; c=relaxed/simple;
-	bh=JbahiaYhyjDQQ6SJtM8xFQdt3S5Maf3AaeaUXSZCRjI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uwp3BKgYMgpGRrhi4pW6PBBYp4fKzuOUnc3cRqENaJkm6pFDcZZHDzh2GebaEUcG7e3NdnWqnRSewItx1O2CVTnQIIiQD5i7C/eSiOlfssqDB6FZ2tID7/42EQgyuXgyrhpb89+K63hP3lp1k6OfHCYV2qDmVr+vfa7d6Xq03C0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev; spf=pass smtp.mailfrom=kloenk.dev; dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b=d7iEzrOQ; arc=none smtp.client-ip=49.12.72.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kloenk.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kloenk.dev
+	s=arc-20240116; t=1737552061; c=relaxed/simple;
+	bh=TjlJAB4wY+0AGDIhAo5uuFZnp2hsjh4Fhz/GogWCaTM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WffVMK4NBaLm+TbTROEuu3VX6JPlm1raO0DsO8QEvhbAnGiwp3QGrgWcCcIhvrq444lu9UWs9PU3du+nTcx3K3vGjuvW9PcA/I/hXN/mpgDK7Wa4CJiHT5La2ZVORQPMDPgR/ibdjtE1/wJGacK8oXDVwADpmgk7iO0nYcjJl/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Xtiid8aK; arc=none smtp.client-ip=35.89.44.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kloenk.dev header.i=@kloenk.dev header.b="d7iEzrOQ"
-From: Fiona Behrens <me@kloenk.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kloenk.dev; s=mail;
-	t=1737551789; bh=DUZUvW9JunMerFCzRdTj1ODqPJnTnSdCAg2yVMAOD1Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d7iEzrOQ0Qd2+4lPSraNPiw5fxRPaxK/DtHzm8dQzmjPSzObSzxdC2troaknQqdPx
-	 CkVnx+PIqB69sSnUhDdixUOFo+onyuwuapagnI16KmZL5EmIr/MROaOru970m6OvI+
-	 ZxYgU1pA99zCLVZxFM0GaDYtebkY4z9d9mFNc5no=
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>,
- Benno Lossin <benno.lossin@proton.me>,
- Andreas Hindborg <a.hindborg@kernel.org>, Alice Ryhl <aliceryhl@google.com>,
- Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: init: use explicit ABI to clean warning in future
- compilers
-Date: Wed, 22 Jan 2025 14:16:28 +0100
-Message-ID: <0B29578D-2A15-4466-BC7B-B21484DD8DF4@kloenk.dev>
-In-Reply-To: <20250121200934.222075-1-ojeda@kernel.org>
-References: <20250121200934.222075-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Xtiid8aK"
+Received: from eig-obgw-6002a.ext.cloudfilter.net ([10.0.30.222])
+	by cmsmtp with ESMTPS
+	id aXCxtxED0AfjwaafCtHhDo; Wed, 22 Jan 2025 13:20:58 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id aafBtAzIrPWBNaafCtsHYW; Wed, 22 Jan 2025 13:20:58 +0000
+X-Authority-Analysis: v=2.4 cv=A/+nPLWG c=1 sm=1 tr=0 ts=6790f0ba
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=VdSt8ZQiCzkA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=-Qcm0AZxhyoZnww38z8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=j2zsya5L0S6eRk9iAMF6kTfvmywm0qNtG2RPlpAsIfM=; b=Xtiid8aKRnMEG2C72zWzf8nlno
+	UkOu3V3iThucgpsYHs77kCYLwGzgy8BZ8hS/Gir4vojARw7BTCHViaSlksCKPxBryzDzMX2LgRtdm
+	SPRqR0KeZw9xLZIPgM4Kn1M3X0ysMrwh2X/85egz5nLt91f4pPwJrFnG6aDAIiUjKBDxxj7E8Hbgb
+	dkaVGObf6+DRx7Z/bpCNlG1nZ+xBq5uzgB/CgWtBTp3iKcEfen7RY/YPSIyhcYhc7TPVVK3xzXbrR
+	WLsocmzmkBEGEL9a0Y6aDJei3YjeS4XEcMh9fASw9hW40O7fnh04bXBy+jJrVcUDveR6aKLtPnNYT
+	g+iFJWgg==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:33540 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1taafA-001IoG-2T;
+	Wed, 22 Jan 2025 06:20:56 -0700
+Message-ID: <010553d5-4504-40d9-a358-8404f57ebe9a@w6rz.net>
+Date: Wed, 22 Jan 2025 05:20:54 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.15 000/127] 5.15.177-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250122073830.779239943@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250122073830.779239943@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1taafA-001IoG-2T
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:33540
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 17
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfIjZdPlaFkFkUg+KYYMn1JIh/7pkBYpendO98UouDBTe8mZXYPhHsjPuY0cKl0Mgalstz211YGrAnTcR+OiejMPS3xejzwYaH4kUIoBfCfUOGsKwdRoZ
+ oClBzEiYqwynwPJIep6JyixtpzLcwbqPXGh5LpATDUgZsuidbpzKHWdaJ9ow2eak6oi9jp0v6GO5hQ==
 
-
-
-On 21 Jan 2025, at 21:09, Miguel Ojeda wrote:
-
-> Starting with Rust 1.86.0 (currently in nightly, to be released on
-> 2025-04-03), the `missing_abi` lint is warn-by-default [1]:
+On 1/22/25 00:03, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.177 release.
+> There are 127 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
->     error: extern declarations without an explicit ABI are deprecated
->         --> rust/doctests_kernel_generated.rs:3158:1
->          |
->     3158 | extern {
->          | ^^^^^^ help: explicitly specify the C ABI: `extern "C"`
->          |
->          = note: `-D missing-abi` implied by `-D warnings`
->          = help: to override `-D warnings` add `#[allow(missing_abi)]`
+> Responses should be made by Fri, 24 Jan 2025 07:38:04 +0000.
+> Anything received after that time might be too late.
 >
-> Thus clean it up.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.177-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
 >
-> Link: https://github.com/rust-lang/rust/pull/132397 [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> thanks,
+>
+> greg k-h
 
-Reviewed-by: Fiona Behrens <me@kloenk.dev>
+The build fails with:
 
-> ---
->  rust/kernel/init.rs | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/rust/kernel/init.rs b/rust/kernel/init.rs
-> index 347049df556b..c962029f96e1 100644
-> --- a/rust/kernel/init.rs
-> +++ b/rust/kernel/init.rs
-> @@ -854,7 +854,7 @@ pub unsafe trait PinInit<T: ?Sized, E = Infallible>: Sized {
->      /// use kernel::{types::Opaque, init::pin_init_from_closure};
->      /// #[repr(C)]
->      /// struct RawFoo([u8; 16]);
-> -    /// extern {
-> +    /// extern "C" {
->      ///     fn init_foo(_: *mut RawFoo);
->      /// }
->      ///
->
-> base-commit: 100ceb4817a2ac650e29f107cf97161ce3e2289a
-> -- 
-> 2.48.1
+drivers/usb/core/port.c: In function 'usb_port_shutdown':
+drivers/usb/core/port.c:299:26: error: 'struct usb_device' has no member 
+named 'port_is_suspended'
+   299 |         if (udev && !udev->port_is_suspended) {
+       |                          ^~
+make[3]: *** [scripts/Makefile.build:289: drivers/usb/core/port.o] Error 1
+make[2]: *** [scripts/Makefile.build:552: drivers/usb/core] Error 2
+make[1]: *** [scripts/Makefile.build:552: drivers/usb] Error 2
+
+Same issue as with 6.1.125-rc1 last week. Needs the fixup patch in 6.1.126.
+
