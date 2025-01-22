@@ -1,113 +1,144 @@
-Received: from gw2.atmark-techno.com (gw2.atmark-techno.com [35.74.137.57])
+Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFED3FD4
-	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 00:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.74.137.57
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC35196
+	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 05:32:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737505824; cv=none; b=U3/NaO1q6waXVErG8gGGONKCYU0d96q1Z/VuTBJKA5ZI2jLDbR5hKbA+c3/WJuFnuobRxr9j4w/c/fjhGTZrbq9ilXIowkEOOirYx/E86c34b0kUlCIBMntnRlqlZBTVVuS18IlR6JvxI0L2F5dV49KUd6PObFsOnlF63ovbKJg=
+	t=1737523940; cv=none; b=RTgOEKmHf9kcEoM6xQUa28dSjFZLambyhbyBeiwWJJsbZ8ZHlZn2ZMoap4eQpUcbhpn3RsIapUOgS8c9FgwkGc8oQan5o9Bp0phuw+b2bWTq0Hufy1Y+Ocb2ltuGLVzKdf+tRm3bYA/CvtklqJjzRgFAI0iNsRP5iWOz5ks+Axw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737505824; c=relaxed/simple;
-	bh=DPkLAf7+HErf4szdsvzc51ZrGaUYw7BrIYp1rs8ZBOo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLR2KfJc9XhXev59GmHBKfsKEP7rGA8QFpBUQOMoPyIaOrztgyl/PJRY7mnJz6JmKhYH+uV8fljL2+gm60MUOY7FpqBznulDpR6qsD/qlE7+oH7rcX35emn1R0f8ZOUkEwjrEwcq6By95MtRlzhx8zac/EaI5Vzd1nlO9FZgeBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com; spf=pass smtp.mailfrom=atmark-techno.com; dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b=S1vuzXBi; arc=none smtp.client-ip=35.74.137.57
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=atmark-techno.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atmark-techno.com
+	s=arc-20240116; t=1737523940; c=relaxed/simple;
+	bh=TBGIerr9So+B+FpwEYdO2GNEcpZGfOj6u5Tu+F54hCU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XVJpzH1fuTXXZhjvuBwxQTrAdH0CiAGrOx6c035UzpYXfz0kfkJ8espxtrC5KSWkT+8OERu4MONKOowlpxR1bxiS26ow1m8TtKt8hkTAoWmgOJVsAmoc246SCUOBZuAQ5F9t9ylw6qo/8cVIcXo+8XIHplSGuqR/o74kpx9LEpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Q5ukFDhU; arc=none smtp.client-ip=35.89.44.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=atmark-techno.com header.i=@atmark-techno.com header.b="S1vuzXBi"
-Authentication-Results: gw2.atmark-techno.com;
-	dkim=pass (2048-bit key; unprotected) header.d=atmark-techno.com header.i=@atmark-techno.com header.a=rsa-sha256 header.s=google header.b=S1vuzXBi;
-	dkim-atps=neutral
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by gw2.atmark-techno.com (Postfix) with ESMTPS id 8E4F01B3
-	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 09:21:24 +0900 (JST)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-21648ddd461so129122855ad.0
-        for <patches@lists.linux.dev>; Tue, 21 Jan 2025 16:21:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atmark-techno.com; s=google; t=1737505283; x=1738110083; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a1TLfeOz9Q4gtSY6IBD+sYaU477uQa7FYhohbKlqeeU=;
-        b=S1vuzXBiAozwfTUFJ/KBCe4bF6Blhr8i4ewkXhb092fA3Pj+1qIX3w4ux7XGn5LB+W
-         Rg8MZfnxyLDn9zzAPkiIdQh5D+PtqvsmqrdbHXwecaVB/I6Tww9K+gvmgPBViddIWmmM
-         HSIcjX5KLv5KBJszIyJRHKfl0dqQRg1J/ayfUzxeZ0e0EzirNbogAhh1gf2xMAoSSEXb
-         zhQh5ofzmQXiJjt/FC9vte+d84OFBPgXTOob1isj/sMfT2qTPrOZhJ9DemjAnf0yVopz
-         S6HkNV5Kq0JhxWyoMCIpSIfUSwm3e/5r+JLrP3LNkW9CyxZ6buyS/Lsv1Ah+t+eSuSAm
-         23ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737505283; x=1738110083;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a1TLfeOz9Q4gtSY6IBD+sYaU477uQa7FYhohbKlqeeU=;
-        b=kNgEBiccJC2ENbwBVpCUKAn5XiOTzq4bSQoO9v5ISciTuFkHrB7hXSKZWjJmuWsBNv
-         GD0eOKLLHRq3/+LNAqybel4YSaYfB6ny9YJiD6yoOENCjGu9ypGwMb5GSfNtBh1Rm8MR
-         FQ7dm9FYQTTAqcSpXAjfo+34xqTi1WRG0uD1Sabk8lCTKnt/Zqqtt63lpBepoPfeq6lb
-         C+4QPO7twKqslBLTxgHh6iLkEbHluD0e4uWrdPGeeDQ0zmZ02w5rlpKZKBO9NOLwx4jX
-         ryTgsQVCoR/+uzHzY5sHEft61ENptzxcClhIkdjdVbpoe/HfjKlwSq2x+jeSedcDtS3P
-         OYJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUz3YnwmJj56XXIe58krPVdnpNK82UOBjpURfCZzTGTcMzx3VtFq+++iYS4gG7yHECy6luORLfc@lists.linux.dev
-X-Gm-Message-State: AOJu0YxjXkIG6f8w9u04gxBWDwbrKVqlTybttUx+U0NQgK3MCzuhNt6u
-	qYQftHUAqLRsPBkYBnrc0nWdu0NwrSMsqmZ45IZZkYLY5tvkUsUVTpN751vRhqB94J22olI6/ey
-	ttCEvTKJ1/UjAczyO4yv3m3eSur7OOH9cRcldP4+kVPvOR89Xc/KemLd0
-X-Gm-Gg: ASbGnctr6XkjYCdYeRmN29ErWVlnjGytlHlTn8iDs6tG9zQg+JFT4VxiJcMUe3MN+vG
-	wKNiw9jLxPiRdqpY81oSbVYSxSZIEs+hkvV50eURVcmzteYKwQtpILP+2+LOofbY3HOKXoUUayB
-	/W21+aBfSVFx1RO04KKZbaFLvUsrDxqMP3XDHKJ4ZtfW1WTsrQszbMvs4mW94BpiUQUiMl/DIYq
-	I1LVtzMpn3Jz/S7E8fSAUstaC8ZkB2MZBpwnJpNLWTTnkO0r0nH8TJBXrKRVUY5JtVKArU7rmHF
-	8nYPIFE2WF03KaEzgQlY/AAOtzL94nU8rglhlQFX15cKI+6JP51dKw==
-X-Received: by 2002:a05:6a20:7f89:b0:1e0:dc34:2e7d with SMTP id adf61e73a8af0-1eb214650camr28305976637.5.1737505283640;
-        Tue, 21 Jan 2025 16:21:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHMk4BHzoOUBtE5QE8ZHEBytolUrs3TXUxb7D2pbR8ua6hwu/NV+x2bdDU+hUiQJm1/xA/0BQ==
-X-Received: by 2002:a05:6a20:7f89:b0:1e0:dc34:2e7d with SMTP id adf61e73a8af0-1eb214650camr28305951637.5.1737505283357;
-        Tue, 21 Jan 2025 16:21:23 -0800 (PST)
-Received: from localhost (103.131.189.35.bc.googleusercontent.com. [35.189.131.103])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72daba5340asm9637484b3a.150.2025.01.21.16.21.22
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Jan 2025 16:21:22 -0800 (PST)
-Date: Wed, 22 Jan 2025 09:21:10 +0900
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Minchan Kim <minchan@kernel.org>, Nitin Gupta <ngupta@vflare.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 034/127] drivers/block/zram/zram_drv.c: do not keep
- dangling zcomp pointer after zram reset
-Message-ID: <Z5A59tcFS22YMZAt@atmark-techno.com>
-References: <20250121174529.674452028@linuxfoundation.org>
- <20250121174530.999716773@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Q5ukFDhU"
+Received: from eig-obgw-6009a.ext.cloudfilter.net ([10.0.30.184])
+	by cmsmtp with ESMTPS
+	id aO7RtDa7HWuHKaTLXtkYoa; Wed, 22 Jan 2025 05:32:11 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id aTLWt9pOAjBGzaTLWtgx8a; Wed, 22 Jan 2025 05:32:10 +0000
+X-Authority-Analysis: v=2.4 cv=HJvFFJtv c=1 sm=1 tr=0 ts=679082da
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=VdSt8ZQiCzkA:10 a=7vwVE5O1G3EA:10
+ a=MxsrI0xeJYWERC35mTAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=hiNkqIA+PSBuWzpSlengkjlEK020pb1szEliO93dE1M=; b=Q5ukFDhUgNaBPU7hq1XBwzOkvA
+	dhIpdF/AzdVYGlpbxL78ja6VbNwi5TyASA4wvNnnXIe9mmVAYq1hkYz+vD+zyodvdNpTAnME/FfYs
+	K7SJ95SJ6sD50GIJXmrHY1BWuJDQSMbQCSICGtPt1w1kqtqE4XjOhyhtfcKKe0Uh+48aF6k5GR02A
+	Sf3vs1xb6M0I3vHJsJ2UbVag0i29bgzeF2ccR9KMd/y1fPgLsQKMe2yiEq9VDflc0E5DeiC0qTCi2
+	pWFtIbhjlgP7eVP4odnpoep5gHYghh062riou7rM7H0zXb/IbJ8j9d96yYe6SSlXBAgtz/GTTVM6T
+	svyV1JtQ==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:58508 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1taTLV-002ouN-0u;
+	Tue, 21 Jan 2025 22:32:09 -0700
+Message-ID: <fc55aea2-4493-499c-8ff9-93c7a3486da4@w6rz.net>
+Date: Tue, 21 Jan 2025 21:32:06 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250121174530.999716773@linuxfoundation.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 00/64] 6.1.127-rc1 review
+To: Peter Schneider <pschneider1968@googlemail.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250121174521.568417761@linuxfoundation.org>
+ <b5f7b88a-0f6a-4815-8344-bf6bf941bc91@googlemail.com>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <b5f7b88a-0f6a-4815-8344-bf6bf941bc91@googlemail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1taTLV-002ouN-0u
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:58508
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 17
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfNEn7WxRloOSBf/P/6JBpWPpBQ0dk+hYKvm3Ih6WaPJ/ajFX2wbRXE53j+6VZufFmcOgkMVaTgweutUpFdUMhfNbphZQSS4bB9a6jbaZfmzaYKVIn7sQ
+ 7Qw9EjR7Og3QgN+eVdbE1JLE5pIKujaVHEHV5jN2arYUyrsZP7Vk5vNa1/WmKAhLso+D+HeoQrwKxg==
 
-Greg Kroah-Hartman wrote on Tue, Jan 21, 2025 at 06:51:46PM +0100:
-> 5.15-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Sergey Senozhatsky <senozhatsky@chromium.org>
-> 
-> commit 6d2453c3dbc5f70eafc1c866289a90a1fc57ce18 upstream.
+On 1/21/25 11:32, Peter Schneider wrote:
+> Am 21.01.2025 um 18:51 schrieb Greg Kroah-Hartman:
+>> This is the start of the stable review cycle for the 6.1.127 release.
+>> There are 64 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
 >
-> We do all reset operations under write lock, so we don't need to save
+>
+> On my 2-socket Ivy Bridge Xeon E5-2697 v2 server, I get a build error:
+>
+>   CC [M] drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn303.o
+>   CC [M] drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn31.o
+>   CC [M] drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn314.o
+>   CC [M] drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn315.o
+>   CC [M] drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn316.o
+>   CC [M] drivers/gpu/drm/amd/amdgpu/../display/dmub/src/dmub_dcn32.o
+>   LD [M]  drivers/gpu/drm/amd/amdgpu/amdgpu.o
+>   AR      drivers/gpu/built-in.a
+>   AR      drivers/built-in.a
+>   AR      built-in.a
+>   AR      vmlinux.a
+>   LD      vmlinux.o
+>   OBJCOPY modules.builtin.modinfo
+>   GEN     modules.builtin
+>   GEN     .vmlinux.objs
+>   MODPOST Module.symvers
+> ERROR: modpost: module inv-icm42600-spi uses symbol 
+> inv_icm42600_spi_regmap_config from namespace IIO_ICM42600, but does 
+> not import it.
+> make[1]: *** [scripts/Makefile.modpost:127: Module.symvers] Fehler 1
+> make: *** [Makefile:1961: modpost] Fehler 2
+> root@linus:/usr/src/linux-stable-rc#
+>
+> I have attached my .config file.
+>
+>
+> Beste Grüße,
+> Peter Schneider
+>
+Seeing this on RISC-V also. Commit 
+9737085ba4040357da943b5eb975ce8444283b62 "iio: imu: inv_icm42600: fix 
+spi burst write not supported" is the culprit.
 
-This branch does not have said write lock, please either also pick
-6f1637795f28 ("zram: fix race between zram_reset_device() and
-disksize_store()") or drop the 3 zram patches from 5.15
-(see https://lore.kernel.org/all/Z4YUmMI5e2yPmzHl@atmark-techno.com/T/#u ;
-sorry I didn't follow up more thoroughly. As said there, I believe that
-with the extra patch this backport is now sound, but given this isn't a
-security fix my opinion is that this was too complex of a backport for
-an uninvolved party like me to do)
+The line:
 
-Thank you either way,
--- 
-Dominique
+EXPORT_SYMBOL_NS_GPL(inv_icm42600_spi_regmap_config, IIO_ICM42600);
+
+should probably be:
+
+EXPORT_SYMBOL_GPL(inv_icm42600_spi_regmap_config);
+
