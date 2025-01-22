@@ -1,98 +1,114 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from omta34.uswest2.a.cloudfilter.net (omta34.uswest2.a.cloudfilter.net [35.89.44.33])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046CB170A15
-	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 09:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95E520FA90
+	for <patches@lists.linux.dev>; Wed, 22 Jan 2025 09:25:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737536993; cv=none; b=EYhphHueB/fI9Jt1/BmksT+s+K+y/on8YfH3ayeF+YkZIgvrI6+Xc4XC0B+CruqmCOArWKn2NU2Pryvkek88yCVd6npbTqQVO4J9TBf0sQPF4Ew0Bag8E6J/7XVgkLt5fy1FoCQU0UFd7tGPpL8erRrrTpBjINrhVJ8jL3n5R0c=
+	t=1737537919; cv=none; b=ATda0phajYaf9BzBoP7s1cZAxeW8bwEPxfDG8g/hVbMmC9mM9DLdMKANyIcC3RhOmxVEke380gw493FGahi+JTxvsiKtBmwXETh8MWPALrWJg/rifXR0u3iKAnn29PxyYveuuvB4Asq4XlJZTBomItM43Z3sTXPIpqcaU1BqAwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737536993; c=relaxed/simple;
-	bh=2WAv1fZWi6FSo+sNAeuewqpsZCPg9rKwCFH+MiQwAa0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PH12b7ohjIo+cNaQcffnlCESv8wcz0k5VLaw+koU1sFq/7rmvkctGeYVE/NVWayYk+2vCMlwe65IsUtFgqstFeq6WCHw2fTV3k7qTjx8omJpGxniFnPnkR+ileL4Hi8ZKHMoG3rveJW7XAPAKHjuUn5u27qmwXCyIV+l7kZzjHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=rfTNYQSG; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1737537919; c=relaxed/simple;
+	bh=8pNMb0JP4o/bvyW+Pk9DSWQUwdyag3bbbosZK/1Qo0k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ppkVnyjd3W0VBGAGB7ftrmy/qBZOwzJNez2FKbZxaKpVxxfytIAk6DWV77u/TXr94r+p5oUJYqwDmWep+wSjSnTBz+fCIM38LkuARB1eHDnEcH2H9jKZgtnR+eHABF8iOM7qsbDMHZvRwzm3DsKAEA3V1R0WHfP7KW9Q4ES7JBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=EPUDDcJM; arc=none smtp.client-ip=35.89.44.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rfTNYQSG"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3863c36a731so5561045f8f.1
-        for <patches@lists.linux.dev>; Wed, 22 Jan 2025 01:09:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737536990; x=1738141790; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LAtNzABgivJyMHl67AxVlrKNNT4N7NGsuX2tPsVc4oE=;
-        b=rfTNYQSGMJ2iGmcXvhNns2E81QtbNLWuI9QwtwPqGzCgNHtWXjtCoaoodtBPX+6knA
-         T+DqanNofJjoqTYBTtnTRWZiFS6GbhbcHFVMj7WugH6S/Ca+evZ8AFOMbwBHvoLtZXDd
-         YDD+PPVMjsq4fppXusUp9+AC3ry0ekK26GcfKDYLUDWsG4xDNSD1ToQmU8h/9djG8D2g
-         htfuPv/zys3Hosx+hwhiDq8SimQBLzoqP/QH6c/29miGYc095RI27MvH0PItxdkhngF1
-         Op1cvXb/YnhsFKNGShSifTwwQrKLGd8EfeNwjJTw0jVz5p6ZkwdDzLlw1A2bzWXBzObF
-         Pk4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737536990; x=1738141790;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LAtNzABgivJyMHl67AxVlrKNNT4N7NGsuX2tPsVc4oE=;
-        b=FpeC+HnjtA3Zq4jM3wSo2srfYAfnTWrdnzNLWPtCAeTBYwOB5dv21nP6HQDQy4nuFi
-         jGqT6VhIQgZnC9sAljPb5eh2FTAn0NgEKul88aJkz5mhSm2DMLXxrKJSlBDn5PpgXEIp
-         RTjR716LGCTvrXmjS3VC9scDjFteOO07Opwsu95c5rIlXW6RLv/nX4+NcVccQRBeEVOT
-         EeWr3Qn2XJnk48UHI2SLKkrG+d2ynZZT1t4+5J2A8Rr8t+p+0nkyt/p4yqC0b16JcXoq
-         oGfyJJDPQ58RioXIUwGE3TolMgCReIRx9jrRjReV/StHwX8CQmUCpyeVlTL+M3qdzTVM
-         1sRw==
-X-Forwarded-Encrypted: i=1; AJvYcCWLF7vFI/Vg0J6NVFw+7bI9aLz66evepN8vMD2azWeM84zAeqFUwDu0P5UpIM0maDctUOUkDQKV@lists.linux.dev
-X-Gm-Message-State: AOJu0YwhU/HYl5ov4AKQPXOnMtobfPPBPcztiK1A44cJ9EmsjeItHAgx
-	KCLsw7kHwA6mUEEz+s+QbK46WG7sPbmBYi1IWa2DWNEfr7tv5CsDSxP11+kmfXpNhkYUHvdJleh
-	+eZYGF1p9eSCoOnqjzTdcmu6IxqeEmd30y5aw
-X-Gm-Gg: ASbGnctvI3MWSyvBQs8TVrjW4PuzNV/2RGv3VdMG7qJQxnAxhKbB+hGZpvqBN9oHPd2
-	xISeTue4NuddWvYJdy6jJPmUKaOteiw0gGzLA9gBGGNeXDxmUb1ikdtR6zzqs48Wh2RqUiZ1NV8
-	fAmA9f
-X-Google-Smtp-Source: AGHT+IE8sISUJ0sbUjuJ5vU8uBRJi5Fk4KbIbU8O3jiSMDOjh27QXtxILwzagCqnqCojBFBUcdB3Q2ffYFEPyhRlpFo=
-X-Received: by 2002:a5d:6d82:0:b0:388:c61d:43e0 with SMTP id
- ffacd0b85a97d-38bf59ef478mr21993524f8f.48.1737536990282; Wed, 22 Jan 2025
- 01:09:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="EPUDDcJM"
+Received: from eig-obgw-5006a.ext.cloudfilter.net ([10.0.29.179])
+	by cmsmtp with ESMTPS
+	id aJTntCHLeWuHKaWz6tlges; Wed, 22 Jan 2025 09:25:16 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id aWz5tmniLmsRzaWz5tSq1H; Wed, 22 Jan 2025 09:25:15 +0000
+X-Authority-Analysis: v=2.4 cv=EJ8A0UZC c=1 sm=1 tr=0 ts=6790b97b
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=VdSt8ZQiCzkA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=Uq39ju6kSRtdd0OyVAAA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=rWrATLw9KAaYe5G7DDzhULa7ryqVnKqVpE7hyRK1FeE=; b=EPUDDcJMATiNkD+FjcHFoL6Yrx
+	PW1NO8ZmJfBn4VpzbN8RjsDCb2h6HlvkYRaYNIVYP0Y0pQQZlRtAk431S3oadrj6wyz7uYU3bWpo5
+	l5d2gibTkRK7hXFiNP8tE+PVxs6d6FwimXJjxgHNFgU5QjFCC4+ShpdYmEEJaUWt1opGEZRieZ1s6
+	Porm6zJeR1RNy72ERcQ0FOkIOMgseTBQlxpxhCUP22S0OUvVhzIwbEZoCI/sRxi2r+W+f0tJVCrrX
+	OdSbRCHJ3X9zAgKaTEvOZ6h+UmLx9Vuk6gtWXPoEYsrZ5QQd65OP/cbc7MApNn/mFUifqL7K37Szn
+	3Ei37MFA==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:36776 helo=[10.0.1.116])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1taWz4-004HMI-0k;
+	Wed, 22 Jan 2025 02:25:14 -0700
+Message-ID: <02c15e0e-d2f7-4335-9627-5ced7dae36a2@w6rz.net>
+Date: Wed, 22 Jan 2025 01:25:12 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250121200934.222075-1-ojeda@kernel.org>
-In-Reply-To: <20250121200934.222075-1-ojeda@kernel.org>
-From: Alice Ryhl <aliceryhl@google.com>
-Date: Wed, 22 Jan 2025 10:09:38 +0100
-X-Gm-Features: AbW1kvYgEPke0Mm4asQAeuWGL9gs90635G5kOjS1vZYCD4ylQc7U1G4SnIpfKoA
-Message-ID: <CAH5fLgizcjPgnQ0WcZ6q-pjzxaJT53cwsFh0r==m6pmnfYObeg@mail.gmail.com>
-Subject: Re: [PATCH] rust: init: use explicit ABI to clean warning in future compilers
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
-	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.6 00/72] 6.6.74-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250121174523.429119852@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20250121174523.429119852@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1taWz4-004HMI-0k
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.116]) [73.223.253.157]:36776
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 38
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfE8tbLD6hSqZlw263jiUlaTjXlwj+PAXP3zeLsFigLfIigT5MSGEgwr7evDQeAEY2GQAsGuFk5eiRkTgqxtvmwgCNUcLU3R5C7XOb+EurxGkNtYSPjmb
+ ZRcajjT3g70gCnN6UD2uxBD3QRD/FhoAN11WB7XzWEfjHLEev/nzD/9rV00I+3IQ3sPmW/xWxDOmiQ==
 
-On Tue, Jan 21, 2025 at 9:10=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
+On 1/21/25 09:51, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.74 release.
+> There are 72 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Starting with Rust 1.86.0 (currently in nightly, to be released on
-> 2025-04-03), the `missing_abi` lint is warn-by-default [1]:
+> Responses should be made by Thu, 23 Jan 2025 17:45:02 +0000.
+> Anything received after that time might be too late.
 >
->     error: extern declarations without an explicit ABI are deprecated
->         --> rust/doctests_kernel_generated.rs:3158:1
->          |
->     3158 | extern {
->          | ^^^^^^ help: explicitly specify the C ABI: `extern "C"`
->          |
->          =3D note: `-D missing-abi` implied by `-D warnings`
->          =3D help: to override `-D warnings` add `#[allow(missing_abi)]`
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.74-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
 >
-> Thus clean it up.
+> thanks,
 >
-> Link: https://github.com/rust-lang/rust/pull/132397 [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> greg k-h
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+Tested-by: Ron Economos <re@w6rz.net>
+
