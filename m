@@ -1,41 +1,87 @@
-Received: from szxga05-in.huawei.com (szxga05-in.huawei.com [45.249.212.191])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBB715AF6;
-	Thu, 23 Jan 2025 09:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.191
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737623224; cv=none; b=IMwCRc7rmgZ5/PtfVMoPaJwfGvD2CqmMHxxYnze5KtxACAsb8tmM+vjydy5lozi8f2wCvyFNpvzldRmBDexdeaFk5Cm5oc089wyL2wb/LLMpLzt+fBhvEp8Mt0giI1fV06qlzX2tmdFVY71rU8OsIzid1Ok9cU30Vmt8gxjVZNc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737623224; c=relaxed/simple;
-	bh=jsYgGwDXjoD7lbJi5TWtQno9T386TZfovqcenXGzaD4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACF820CCFA;
+	Thu, 23 Jan 2025 09:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737626129; cv=fail; b=iujseZshgD+v98Wz3A3XUU32BfNHZpktPa2sBw1j+WUGb1pOH5kep3cNrYx5e7cfTW3h8hFSDSdUiYwt+anjnEpTLn/TH3sTKwPsN/+rD26dqfniKY6s2WKMMFCERvZoL5/lsVKSRVej5s5XrQXWZx4xAqcQAEXZNu75C9csHRc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737626129; c=relaxed/simple;
+	bh=hw7/8InROQgTq+Lm7kM3LekZZmSSVxEnpJ4TL28jDK0=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ZTIQ63M/Mhx5mVbn4gA70x5MchJ5wCCPNTiXz+TphLHo9sQAfOuC8yC9ff1Mecp1j7hqtyq2OsmvBC0nfEx5E9nnyp0sO7nJzGJWegR5FxaybRQgMrMjKrfAUCyB/UxIXtWjH4DAqgjku+voIowgTlpalwXQPwfrJRgJQJwz038=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.112])
-	by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4Ydw5q0xrkz1JFR3;
-	Thu, 23 Jan 2025 17:05:51 +0800 (CST)
-Received: from kwepemd500022.china.huawei.com (unknown [7.221.188.61])
-	by mail.maildlp.com (Postfix) with ESMTPS id 8BAF714010C;
-	Thu, 23 Jan 2025 17:06:52 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- kwepemd500022.china.huawei.com (7.221.188.61) with Microsoft SMTP Server
+	 Content-Type:MIME-Version; b=dyI0lSuqjzLyqb9IuUaB74B6TAhdVKwRebC2vwoBNdujFSqw/N8V1LslaQ2vx0OpnRgrqWWBUSqVfhS1zfWH/TlJRIpZJ6MGK4Fm0hNWFyXNsMNuDFfCEuDfaS6DO9fis6PKFyw6N32ztGkxFcg672dKnTK7yD8OGhZd5qWicE8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lpY3sJjM; arc=fail smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lpY3sJjM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1737626128; x=1769162128;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=hw7/8InROQgTq+Lm7kM3LekZZmSSVxEnpJ4TL28jDK0=;
+  b=lpY3sJjMCSGQlu9nXaVduEkGPS9Xh92eeInOtbTYakMiaG7B++7v0ZCH
+   y8n/QazozAb6nRXuOTc5JIW3g6Bs8iIQV/BRm3OnofnN235UOtgQm6UOc
+   /HrKx89zwDnnoLYdIlukqdVZNCWfZAZRtP8rmM+vj2PFJWdblxWFYKw1V
+   WWkM/XWcasyOCeQaygSjC3evn7jK9tsI3M3RGKVpohE+gZa+gWIdX9DBf
+   pH1npGknMv27ZO4t03gVGlyRLcNNN2D+9Y0enc0UJZgr6wnQe0ueVY7AF
+   2yk1VSQHJAKOIKFByb0DnjYo2aS2h23rQSrTIBRBKzKF/BRNnTz0QzEe/
+   A==;
+X-CSE-ConnectionGUID: /mRqKd0lShmmurEdL8px7g==
+X-CSE-MsgGUID: jwDxrwk0R66fy8ZPZEUM3A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="49107599"
+X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; 
+   d="scan'208";a="49107599"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 01:55:27 -0800
+X-CSE-ConnectionGUID: VWkWw5l/TIi/cCLcc3PwmA==
+X-CSE-MsgGUID: L7ouFwImSrO71KDDNIRm6g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; 
+   d="scan'208";a="138274479"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+  by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 23 Jan 2025 01:55:28 -0800
+Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44; Thu, 23 Jan 2025 01:55:26 -0800
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.44 via Frontend Transport; Thu, 23 Jan 2025 01:55:26 -0800
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.40) by
+ edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Thu, 23 Jan 2025 17:06:51 +0800
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 23 Jan 2025 10:06:49 +0100
-From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+ 15.1.2507.44; Thu, 23 Jan 2025 01:55:26 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bAXdDFCTCCShmR3TLTzvmNEIAumJYTegB0XdwJzzDM9HhxPArraDrQdSVy66Ysn545YksEf5etfVe/6j47AArcMBM8hHdSfZF7W+067caNzUGNbj4YbPwRPqDUT0bVMUCE4n47MjCVb5cdyBJW+XbWAYdKWSyArjotYe8+5cz/WB0idX0zwU3HoKPwVeIsLLO6VVnfLAdv1ocd9w14aU+uhCWat3sY8xHxkKsYfjCJClf3rLjFKwRVSM3H2XmzXPURydsNAhkFQi4qhYujEKF8eY27rhk/c+0yRqobEZ0DFXlya/yfjDCsbGJZsh3RdQGYd7JdafyXVfaoX4c4kaQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XZchnmybd503GLJj/xY2CL3dWGLxJtcsMpZrBTzBWLk=;
+ b=ZT9P+wOU45vjMFG7vWivbRs0uWhsTEjgTgx2rBcssSBQXQbj0GvCgd/j8Lenjsilfh6eIlxuEO3IqzHlZXbzj1kwkkAHDBzpi0WGQDBLLDZ4zzkNnQPpvLfbCwmn+Na6Hx3wer+BlX/nL/23t/MVCsYcyt7RhfNetinYd5JG6Ti8IbWMskGZGfIytv1QGsFs+8ipQt6wW636kGj+QZVgao1B9bCr/CcG7IMebpKvpXx3pt4Ri9W/aTcN6ckQSGczC5UQ42Sx/CyT1Mi38Y/jTCZWY+ZCSGhaAmghAWGEuF3HFdyEWWCLaDyNCxBLpcmpSnhfnJHUxRJRBtwB0Fbx8Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by LV8PR11MB8722.namprd11.prod.outlook.com (2603:10b6:408:207::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.21; Thu, 23 Jan
+ 2025 09:54:39 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::b576:d3bd:c8e0:4bc1%7]) with mapi id 15.20.8356.020; Thu, 23 Jan 2025
+ 09:54:39 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
 To: Nicolin Chen <nicolinc@nvidia.com>, "will@kernel.org" <will@kernel.org>,
 	"robin.murphy@arm.com" <robin.murphy@arm.com>, "jgg@nvidia.com"
-	<jgg@nvidia.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
-	"tglx@linutronix.de" <tglx@linutronix.de>, "maz@kernel.org" <maz@kernel.org>,
-	"alex.williamson@redhat.com" <alex.williamson@redhat.com>
+	<jgg@nvidia.com>, "tglx@linutronix.de" <tglx@linutronix.de>, "maz@kernel.org"
+	<maz@kernel.org>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
 CC: "joro@8bytes.org" <joro@8bytes.org>, "shuah@kernel.org"
-	<shuah@kernel.org>, "reinette.chatre@intel.com" <reinette.chatre@intel.com>,
-	"eric.auger@redhat.com" <eric.auger@redhat.com>, "yebin (H)"
+	<shuah@kernel.org>, "Chatre, Reinette" <reinette.chatre@intel.com>,
+	"eric.auger@redhat.com" <eric.auger@redhat.com>, "yebin10@huawei.com"
 	<yebin10@huawei.com>, "apatel@ventanamicro.com" <apatel@ventanamicro.com>,
 	"shivamurthy.shastri@linutronix.de" <shivamurthy.shastri@linutronix.de>,
 	"bhelgaas@google.com" <bhelgaas@google.com>, "anna-maria@linutronix.de"
@@ -48,21 +94,86 @@ CC: "joro@8bytes.org" <joro@8bytes.org>, "shuah@kernel.org"
 	<linux-kselftest@vger.kernel.org>, "patches@lists.linux.dev"
 	<patches@lists.linux.dev>, "jean-philippe@linaro.org"
 	<jean-philippe@linaro.org>, "mdf@kernel.org" <mdf@kernel.org>,
-	"mshavit@google.com" <mshavit@google.com>, "smostafa@google.com"
+	"mshavit@google.com" <mshavit@google.com>,
+	"shameerali.kolothum.thodi@huawei.com"
+	<shameerali.kolothum.thodi@huawei.com>, "smostafa@google.com"
 	<smostafa@google.com>, "ddutile@redhat.com" <ddutile@redhat.com>
-Subject: RE: [PATCH RFCv2 00/13] iommu: Add MSI mapping support with nested
- SMMU
-Thread-Topic: [PATCH RFCv2 00/13] iommu: Add MSI mapping support with nested
- SMMU
-Thread-Index: AQHbY9mJD8uWl8wEh0eGXlblGWaZErMkIJUA
-Date: Thu, 23 Jan 2025 09:06:49 +0000
-Message-ID: <4946ea266bdc4b1e8796dee1b228bd8f@huawei.com>
+Subject: RE: [PATCH RFCv2 05/13] iommu: Turn fault_data to iommufd private
+ pointer
+Thread-Topic: [PATCH RFCv2 05/13] iommu: Turn fault_data to iommufd private
+ pointer
+Thread-Index: AQHbY9mMQKJM3+xWnUiAmabYLU/PVbMkMaLQ
+Date: Thu, 23 Jan 2025 09:54:38 +0000
+Message-ID: <BN9PR11MB52760606D49DAF6ABD86835A8CE02@BN9PR11MB5276.namprd11.prod.outlook.com>
 References: <cover.1736550979.git.nicolinc@nvidia.com>
-In-Reply-To: <cover.1736550979.git.nicolinc@nvidia.com>
-Accept-Language: en-GB, en-US
+ <3b26ce04e8ecb5e47f028fe5cae48e5235e68420.1736550979.git.nicolinc@nvidia.com>
+In-Reply-To: <3b26ce04e8ecb5e47f028fe5cae48e5235e68420.1736550979.git.nicolinc@nvidia.com>
+Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|LV8PR11MB8722:EE_
+x-ms-office365-filtering-correlation-id: b5bbdd38-d8d9-4020-3bcc-08dd3b93f39e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?w3sq5/vtNEC85rqR8jNes17LlOQwfyxhBLsRHireuKl0oZiEZBByhHXQBgei?=
+ =?us-ascii?Q?v55A433nBnoTz+DWTm+hh5BqO/reC2LYohkSsA4ZwY5YUl7LWcNqPtVPMGHm?=
+ =?us-ascii?Q?fVtEyaspGvxbGeMmjN0nxx9YvxbjDiiVJtYfOtTby0I4su0R46BxzzTVoEA8?=
+ =?us-ascii?Q?vh4Yi/qo2YWbNXk5krmSB5iEYzdj4pEmS4A4pxTATCBE4Tup4MXozDX57u8x?=
+ =?us-ascii?Q?HxMLob8IxbF3RLP3wNgkO2+Vvlq5w7+hIBedmFIFz40uUha8vvFsdK75kcpH?=
+ =?us-ascii?Q?MQJOOPyBOsZ0IrsCrmkwtytf61ghuwurNrW3+mGJdkUhuk63PRvWLXkWnL4D?=
+ =?us-ascii?Q?Z4X9npyem2dN/NlSP3tdE6N0QBdH81mUyPAsghPjTjcC+wvexO2GU6R4G3U2?=
+ =?us-ascii?Q?wmbBfs0oj3aYcN8KzYEi3U1NygVYU5fMgmjPcbxnuIWlTksGvpShJzL00/Di?=
+ =?us-ascii?Q?WOUW9XE7x/5utbehUopT4mTJxxVqw1w3dY8PU/t1wwy/P15Ebr32jL+EoEdB?=
+ =?us-ascii?Q?dCpe/tBLfYJKtCxNlJN3LuUSMvIsrvz22Hb8wE8oP/SFuHL9ABBhRuAp63mE?=
+ =?us-ascii?Q?1py7lubr9u6C3+6pnKQjLarNsOWpCrEtBq1vty2CgH3CSkhUVbF/JBqnzNmM?=
+ =?us-ascii?Q?/oAHuN9G/PB3A0cimw41SreZFf7cs5DHLTl3RVjenFN5qKGYpznU4t7Tj773?=
+ =?us-ascii?Q?WSAsg9iCVEA+4vxgC3bHq5XviNwhkxEVOUmHLul32lguapcH4oWA/m3ktzmy?=
+ =?us-ascii?Q?JaEWFLUTWvDKirQIs4wuQST1jdtY7d67w8wyBRdfy5Z80w6FZhuRS5Pl6S4J?=
+ =?us-ascii?Q?B/QbHtgwaZYRjwLDB8QyI9zZDyQPDwfFrYDvBTm/pQypTtUVain+u4OxUJca?=
+ =?us-ascii?Q?CT1cgKiP5f44O6GLl6e5nYX/tsEFPvw2AuZ+PHGa96Ee9jb/9zoGllE+wwR+?=
+ =?us-ascii?Q?xd+tBJ0EXe3ud3sUVFvrVUAiJc3/82wUm3PsZv2anGpM8ajSewk5oUeov8zo?=
+ =?us-ascii?Q?cU/Zn5+/sVrVg5RTB12Ae2ESVNd04FzAkuoQq96D7DkagHboWZzOn/i2vKbc?=
+ =?us-ascii?Q?8+SHZ0O8XjDPcupRjlIBkUlzbdZfdngp8f/S3ClLRl4QA/LG24KayAswHw9V?=
+ =?us-ascii?Q?Fik94bFltefh8DQoxQ6HaSh3wT+zJEPgeG/XxdMSBqknJ9BuHLlfIEqsCAGj?=
+ =?us-ascii?Q?9XYYdBJPxBpk4AEmQ/SagoaNVuSx9N5HZ0D0AV/0mKWqLgXx7CNE+KgA7lKY?=
+ =?us-ascii?Q?d0Hh466IB1ZZRus+HimlikZsZLROJh0yxrggdoXm+AkNHcp1xdHUER3/peCk?=
+ =?us-ascii?Q?4LJM4NZD/iqYq44m8wGnRFgE/v/Gtr7j/3F5ffDcOerPomd8UX/OMmF42/Mt?=
+ =?us-ascii?Q?mrrRte6S2DaABq1dWPLDBi+mVazNQ6RbIAYkoqTWML4l6e7jWbH/n/gscjl4?=
+ =?us-ascii?Q?9iYaCZxFwOeKkA44bO6dwjJtnZSPbqRo?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ERJByL/QD/t/iPsDN6ttqaJzKfBdZm3T3oZM0W/Uv0XvALGsIjFW/TaKAL7/?=
+ =?us-ascii?Q?A1XUWvv9QlpILoiUlC/FwYcHcH3zip8tmBFqnDtOw3KIztvzH4qmRthhRVAv?=
+ =?us-ascii?Q?+H30k1Z4ab9GhoCbbsAnXAKpO0Iy9gV34F7bS176T+Zhm5ej8UPwWvwS2InX?=
+ =?us-ascii?Q?mqFGR6UdIbb5l/3pEAfEC4qn0arFIU+uIyp2cojicsoHlwi0FNjzQ43sP4G0?=
+ =?us-ascii?Q?MHOvb8/maVmxmGxKCZnH84d+YQcTjzpiqi/vo6geDVdhVTFXNYvmvq3MK2Z7?=
+ =?us-ascii?Q?Pb2Ygzd8g9MRcnC/8n/EKW0dFqil5NBocbWwjRe2C6UEXUM5XVusw3HX522O?=
+ =?us-ascii?Q?8B2aSPtWY0uUPl2nl8DXgvyiQyl1hXp7+6htL89iL6N44qhmsrHwzDiL9Oez?=
+ =?us-ascii?Q?ILMTcY1pThoZztEKBvT8271fPSE/x3KilJ1HLS7elbnyf8Nq/d5zNRhkM4Yi?=
+ =?us-ascii?Q?s+NQkl1jAW4rykdRIFLk9AhobOtCzLzYjJD+SpGiaRlCzIota3uINRkDLG8a?=
+ =?us-ascii?Q?qY0DUCc2WBhGsZTLBOCbSvIA//7WArSmlEEeo8aCpCzo7gHnv0ef5kbw3GlD?=
+ =?us-ascii?Q?Re3rGqCnFIcZuKIUqGq9WEClJKZio3x9li2+53uoZqI6oyJLexkZrxZ/7Zz/?=
+ =?us-ascii?Q?gMYZmlIhpBczszvlkHR8z5odYcWkkL8JdOhCAP8q1QnBe8NEytWrZX854WBK?=
+ =?us-ascii?Q?y9XU/UIMXv+rUn0ogD9iiLFDebJda3hA6w8a9o081OBkC87xKQH1Jje4BCel?=
+ =?us-ascii?Q?UyaOc3ohnhBPDLjWW74WDxi7vdxDk9N74UshticTTKFlOjlYoGgJHRtE96Mz?=
+ =?us-ascii?Q?AApdXsILWMDWDLwPWbGd0JiV1yN9N25nfTw0vZmiOoY7OZU5LZZWzPNia3Jb?=
+ =?us-ascii?Q?6hzQIrEFreZeye+lbjfIB6PJmW04qmGsbR6xkQvv0ERVg4hAyCWSGgxQtceE?=
+ =?us-ascii?Q?u/43TVTQ2uEY3dSBPYtdfs0NqaObgrqMkl7dviVCHgsDxVUK6NWz6WLrgAeR?=
+ =?us-ascii?Q?3q56pHyqhx2rMtvkxhw9/s/piTGIrgYTXLOtp7Zt5RQj6UtgY3MnI+wlH3xO?=
+ =?us-ascii?Q?df3CN2C7lQJj2vDZRhhKnvzuM2jxwr8r+u+or90VJtKZNnk+0u5YSgqx6X5B?=
+ =?us-ascii?Q?zNhRmcMLRNVaNmTxalJDr8psnK1U/rBde6jx+V2DERuJESxt1Wn1HCEXO1qk?=
+ =?us-ascii?Q?pKoShx9tlhdaz4dfE5lWN3Xbn3zzQjnV0eAFR86chshwaKETK8+76vHXMRSD?=
+ =?us-ascii?Q?BkJvp5iU0Rl00t+dKh5Vxsg0R6j8p0k6bXVvocfH9aBdjn8U+f9SqGHmSu11?=
+ =?us-ascii?Q?fQSIk+eAjks0i6KPq3bNvFfhqPHXUDMRxjyUTWdwvmq3SWZcx1BMUKVRNkzU?=
+ =?us-ascii?Q?issCrsDTu5PKNpKSuYAhwXvIEL10PTWfk0vBFaC57c5s/7qNP5q2uPMrlUId?=
+ =?us-ascii?Q?3rtuuJCvarC/zSRPyLDmz965XVr/8CR6YEamPj/QGvSvyJrgZxF8XeqP1eKK?=
+ =?us-ascii?Q?FrbapLlYeX0CZWe0Id0wxPshO/DUVS/VsrUnaIHhbuquYtCYqJSvZh6abwMP?=
+ =?us-ascii?Q?cXrmLq84scROu0tXa91mRNpl2k9cnWRUAAn44gwI?=
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -71,118 +182,32 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b5bbdd38-d8d9-4020-3bcc-08dd3b93f39e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jan 2025 09:54:38.9558
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: HdyHQm6dYiehcLPSD4YJlnoS+zgvZJRnjccGm9kNg6TGmM6dGP7SlaRU5G9jQybHrbYOuu+RZ/njG0j3sXAZ7g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR11MB8722
+X-OriginatorOrg: intel.com
 
-Hi Nicolin,
-
-> -----Original Message-----
 > From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Saturday, January 11, 2025 3:32 AM
-> To: will@kernel.org; robin.murphy@arm.com; jgg@nvidia.com;
-> kevin.tian@intel.com; tglx@linutronix.de; maz@kernel.org;
-> alex.williamson@redhat.com
-> Cc: joro@8bytes.org; shuah@kernel.org; reinette.chatre@intel.com;
-> eric.auger@redhat.com; yebin (H) <yebin10@huawei.com>;
-> apatel@ventanamicro.com; shivamurthy.shastri@linutronix.de;
-> bhelgaas@google.com; anna-maria@linutronix.de; yury.norov@gmail.com;
-> nipun.gupta@amd.com; iommu@lists.linux.dev; linux-
-> kernel@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
-> kvm@vger.kernel.org; linux-kselftest@vger.kernel.org;
-> patches@lists.linux.dev; jean-philippe@linaro.org; mdf@kernel.org;
-> mshavit@google.com; Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; smostafa@google.com;
-> ddutile@redhat.com
-> Subject: [PATCH RFCv2 00/13] iommu: Add MSI mapping support with
-> nested SMMU
+> Sent: Saturday, January 11, 2025 11:32 AM
 >=20
-> [ Background ]
-> On ARM GIC systems and others, the target address of the MSI is translate=
-d
-> by the IOMMU. For GIC, the MSI address page is called "ITS" page. When
-> the
-> IOMMU is disabled, the MSI address is programmed to the physical location
-> of the GIC ITS page (e.g. 0x20200000). When the IOMMU is enabled, the ITS
-> page is behind the IOMMU, so the MSI address is programmed to an
-> allocated
-> IO virtual address (a.k.a IOVA), e.g. 0xFFFF0000, which must be mapped to
-> the physical ITS page: IOVA (0xFFFF0000) =3D=3D=3D> PA (0x20200000).
-> When a 2-stage translation is enabled, IOVA will be still used to program
-> the MSI address, though the mappings will be in two stages:
->   IOVA (0xFFFF0000) =3D=3D=3D> IPA (e.g. 0x80900000) =3D=3D=3D> PA (0x202=
-00000)
-> (IPA stands for Intermediate Physical Address).
+> @@ -224,8 +224,10 @@ struct iommu_domain {
+>  		      phys_addr_t msi_addr);
+>  #endif
 >=20
-> If the device that generates MSI is attached to an IOMMU_DOMAIN_DMA,
-> the
-> IOVA is dynamically allocated from the top of the IOVA space. If attached
-> to an IOMMU_DOMAIN_UNMANAGED (e.g. a VFIO passthrough device), the
-> IOVA is
-> fixed to an MSI window reported by the IOMMU driver via
-> IOMMU_RESV_SW_MSI,
-> which is hardwired to MSI_IOVA_BASE (IOVA=3D=3D0x8000000) for ARM
-> IOMMUs.
->=20
-> So far, this IOMMU_RESV_SW_MSI works well as kernel is entirely in charge
-> of the IOMMU translation (1-stage translation), since the IOVA for the IT=
-S
-> page is fixed and known by kernel. However, with virtual machine enabling
-> a nested IOMMU translation (2-stage), a guest kernel directly controls th=
-e
-> stage-1 translation with an IOMMU_DOMAIN_DMA, mapping a vITS page (at
-> an
-> IPA 0x80900000) onto its own IOVA space (e.g. 0xEEEE0000). Then, the host
-> kernel can't know that guest-level IOVA to program the MSI address.
->=20
-> There have been two approaches to solve this problem:
-> 1. Create an identity mapping in the stage-1. VMM could insert a few RMRs
->    (Reserved Memory Regions) in guest's IORT. Then the guest kernel would
->    fetch these RMR entries from the IORT and create an
-> IOMMU_RESV_DIRECT
->    region per iommu group for a direct mapping. Eventually, the mappings
->    would look like: IOVA (0x8000000) =3D=3D=3D IPA (0x8000000) =3D=3D=3D>=
- 0x20200000
->    This requires an IOMMUFD ioctl for kernel and VMM to agree on the IPA.
-> 2. Forward the guest-level MSI IOVA captured by VMM to the host-level GIC
->    driver, to program the correct MSI IOVA. Forward the VMM-defined vITS
->    page location (IPA) to the kernel for the stage-2 mapping. Eventually:
->    IOVA (0xFFFF0000) =3D=3D=3D> IPA (0x80900000) =3D=3D=3D> PA (0x2020000=
-0)
->    This requires a VFIO ioctl (for IOVA) and an IOMMUFD ioctl (for IPA).
->=20
-> Worth mentioning that when Eric Auger was working on the same topic
-> with
-> the VFIO iommu uAPI, he had the approach (2) first, and then switched to
-> the approach (1), suggested by Jean-Philippe for reduction of complexity.
->=20
-> The approach (1) basically feels like the existing VFIO passthrough that
-> has a 1-stage mapping for the unmanaged domain, yet only by shifting the
-> MSI mapping from stage 1 (guest-has-no-iommu case) to stage 2 (guest-has-
-> iommu case). So, it could reuse the existing IOMMU_RESV_SW_MSI piece,
-> by
-> sharing the same idea of "VMM leaving everything to the kernel".
->=20
-> The approach (2) is an ideal solution, yet it requires additional effort
-> for kernel to be aware of the 1-stage gIOVA(s) and 2-stage IPAs for vITS
-> page(s), which demands VMM to closely cooperate.
->  * It also brings some complicated use cases to the table where the host
->    or/and guest system(s) has/have multiple ITS pages.
+> -	void *fault_data;
+> -	union {
+> +	union { /* Pointer usable by owner of the domain */
+> +		struct iommufd_hw_pagetable *iommufd_hwpt; /* iommufd
+> */
+> +	};
+> +	union { /* Fault handler */
 
-I had done some basic sanity tests with this series and the Qemu branches y=
-ou
-provided on a HiSilicon hardwrae. The basic dev assignment works fine. I wi=
-ll=20
-rebase my Qemu smuv3-accel branch on top of this and will do some more test=
-s.
-
-One confusion I have about the above text is, do we still plan to support t=
-he
-approach -1( Using RMR in Qemu) or you are just mentioning it here because
-it is still possible to make use of that. I think from previous discussions=
- the=20
-argument was to adopt a more dedicated MSI pass-through model which I
-think is  approach-2 here.  Could you please confirm.
-
-Thanks,
-Shameer
-
-
-
+hmm is it better to rename it as "void *private;" and let the caller
+do type conversion?
