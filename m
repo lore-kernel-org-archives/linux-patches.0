@@ -1,294 +1,114 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from relay5.mymailcheap.com (relay5.mymailcheap.com [159.100.248.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7311B1C2325;
-	Thu, 23 Jan 2025 10:08:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737626882; cv=fail; b=a6dxcqL3ZUjRDWXkLqMXiSuEZsRAb5pPHcorF/w/gfpei/oq9KG0t+pcF/950/WopV9Q/ED+8jblX0pljb8+vE71OGWaA/GLwUT7WkAowlTA5z4Z02h2A3VpqkrrbcmDAyjNJ0S1M5XuZhyFHYFcyFpDTf/RfNHYCiGlrV+DKnY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737626882; c=relaxed/simple;
-	bh=k+XpKYn+jHW5zyCSAiokk9TL69AL7WdWreP+wEHd8U4=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=a7C5ltD2bhHTNMg8evvn/7nzTAGuTYemc0zDPgmvPit+WLviZXmiIfJCvbvTZA7nCl1TcgL3Z9P8/pDREVxEcWRsXe2vbiVIHEyDtl3E3r5+2DrZc8AfwHS17Bgkb4aqrmyPWwxdej0K4IyebKahfmqH2810DgQeJxzjxQrHHeE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e8fqAKm3; arc=fail smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB88A1CAA75
+	for <patches@lists.linux.dev>; Thu, 23 Jan 2025 10:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.100.248.207
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737629148; cv=none; b=Zhz+ofswgxYLHWhtNqJIjwqAYr9bb2AEwXDeuN/o+jxxFv88FhMRueHhqm0R1ziWKVRXNOLmXA98H+SRb3Su6maYReggeqEsJDeZn3gRHYPIn9dXEsmKW6Gdd3rBCAVy6hg2jEfCKO/CiuFsWlkCbxgFUyATNkQHisa1viHSPPM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737629148; c=relaxed/simple;
+	bh=t6r5R30HmKhEBwCKmDzhZUZM/A05ztud4qCW0TZtgt8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X3e6g/vXO0KT9+WbFStx8k66zmlvAFcY+DbmA5gq3MA3hb47/sCnX4G+6xMZhAZYUJZR6ocyv3dZm7kBfXUIW9YVfhMR5pNxoEQVwcV7QLZwN7yoQ6bpXW9KFoR9R0AVMFVAT3pyCByNjKxh+FDZ7Y/RgJ1oBBrOZ8E4xKPn+1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io; spf=pass smtp.mailfrom=aosc.io; dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b=ri+pBhTJ; arc=none smtp.client-ip=159.100.248.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aosc.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e8fqAKm3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1737626880; x=1769162880;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=k+XpKYn+jHW5zyCSAiokk9TL69AL7WdWreP+wEHd8U4=;
-  b=e8fqAKm3rVsatVwbQ6z3WSyqE7NdgqNiBELx09UXzojINFSMnSVjdU+I
-   nK+RDFF4Kzrq/VcKwRaMAqRfAnjQp5m5Yiapd0QFL+io2tKTx65EvFJSI
-   EYHASD/qkErihfaH86GmUIrizeMhYfuqCs/9jvNdhsSdx2/i+tpSJZc1Z
-   UsqYijgpONCxrgKsBrL8zSfpR5GhuN11L1BiFFTsChpTQbA3WD0ehlc2u
-   nuiyOeky0SwchwQb2rBes/jM2dEy4ZSbgdVzeMq4w31uGxAK/gKeC06v+
-   TAsVy06TH8Ipwd7NoolPNEX/CaCH7/nuZqYbDBHfpBU3zfOvYorhMGF3P
-   A==;
-X-CSE-ConnectionGUID: FBuuNqaGTOWTtIdkhyFDEw==
-X-CSE-MsgGUID: MBJhUjhpTgyatyTyRELHrQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11323"; a="49511630"
-X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; 
-   d="scan'208";a="49511630"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jan 2025 02:08:00 -0800
-X-CSE-ConnectionGUID: kUkAq3dZQK2YQnnYurBgzQ==
-X-CSE-MsgGUID: aJ2yjeNhSkWP0Kn1C+sZ/g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,228,1732608000"; 
-   d="scan'208";a="107524508"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by fmviesa008.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 23 Jan 2025 02:07:59 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Thu, 23 Jan 2025 02:07:57 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Thu, 23 Jan 2025 02:07:57 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.173)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Thu, 23 Jan 2025 02:07:56 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IEGjCernjmE9gHkbr9ScxSXD2Qla8DXxk295XVSbDe3IIsB6u+YuzSkLL5XSGo09lZ8PTucjIC7J8Gghux5P6l3ptOh8tp+VbuRIbZMt2HZTD8Fuf+8NnU8z9Wr9ExaBeft4CSuLPdVugtL419qsklTnTlicbGTmQBc2m3Lf+m08AdkWD8mRPInx41bpa7aNQwnSIDUMFW4Cs/EshLIllRNFXtk0ZN0TJdTKIGhSGt5WGC9xTuZq0dpkU1nKGTpAuvwueTKYm6PKEkksW+vjGye4L60kHUVqH4EnxtaUfBbxkBnuTlF0zdXDUWNSV1vb6ZDMCPtQZtlSRC8sjGUtXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EtzrdqUjM2C2lItnIF+unxoYCqnMYuD2nMx6G9bOOXs=;
- b=r070k22VYQKFcCLG8/MzBJSVlXnqNxHHeNi4ByPv+/JNbp+vAgKaxUHOS5H3nzi7Cn8A99SYEtrje9phaZSxJxSti703y6iE6vC9TkXIz4Km21LWSVi157oJh7RM8joWrGEf5JoZCuej3b2NC0uzXg2k5QEiB+7S1kloHx1QV/RDUTUnHjL23oJ5Yht9wPI/CLRcEVBCrI5YlgEWWlmAqt/XltgvFyjExVZCnX8yHufb6BNE8QeT+61AxT3hgav+hs/GVD5i6qTIeZF2U+XkpniXvssdQRz/i8M83XYS+P1b03lxWmf0s0XFsuh2XV+EAH1TVDaFA1GhxDZy6VQETg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by PH0PR11MB4807.namprd11.prod.outlook.com (2603:10b6:510:3a::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.16; Thu, 23 Jan
- 2025 10:07:13 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::b576:d3bd:c8e0:4bc1%7]) with mapi id 15.20.8356.020; Thu, 23 Jan 2025
- 10:07:13 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, "will@kernel.org" <will@kernel.org>,
-	"robin.murphy@arm.com" <robin.murphy@arm.com>, "jgg@nvidia.com"
-	<jgg@nvidia.com>, "tglx@linutronix.de" <tglx@linutronix.de>, "maz@kernel.org"
-	<maz@kernel.org>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
-CC: "joro@8bytes.org" <joro@8bytes.org>, "shuah@kernel.org"
-	<shuah@kernel.org>, "Chatre, Reinette" <reinette.chatre@intel.com>,
-	"eric.auger@redhat.com" <eric.auger@redhat.com>, "yebin10@huawei.com"
-	<yebin10@huawei.com>, "apatel@ventanamicro.com" <apatel@ventanamicro.com>,
-	"shivamurthy.shastri@linutronix.de" <shivamurthy.shastri@linutronix.de>,
-	"bhelgaas@google.com" <bhelgaas@google.com>, "anna-maria@linutronix.de"
-	<anna-maria@linutronix.de>, "yury.norov@gmail.com" <yury.norov@gmail.com>,
-	"nipun.gupta@amd.com" <nipun.gupta@amd.com>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "kvm@vger.kernel.org"
-	<kvm@vger.kernel.org>, "linux-kselftest@vger.kernel.org"
-	<linux-kselftest@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>, "jean-philippe@linaro.org"
-	<jean-philippe@linaro.org>, "mdf@kernel.org" <mdf@kernel.org>,
-	"mshavit@google.com" <mshavit@google.com>,
-	"shameerali.kolothum.thodi@huawei.com"
-	<shameerali.kolothum.thodi@huawei.com>, "smostafa@google.com"
-	<smostafa@google.com>, "ddutile@redhat.com" <ddutile@redhat.com>
-Subject: RE: [PATCH RFCv2 09/13] iommufd: Add IOMMU_OPTION_SW_MSI_START/SIZE
- ioctls
-Thread-Topic: [PATCH RFCv2 09/13] iommufd: Add IOMMU_OPTION_SW_MSI_START/SIZE
- ioctls
-Thread-Index: AQHbY9mYUm9C6M8MQEmAe5nZdSx/ErMkMh1A
-Date: Thu, 23 Jan 2025 10:07:13 +0000
-Message-ID: <BN9PR11MB527616A2EA6C64824576E58F8CE02@BN9PR11MB5276.namprd11.prod.outlook.com>
-References: <cover.1736550979.git.nicolinc@nvidia.com>
- <d3cb1694e07be0e214dc44dcb2cb74f014606560.1736550979.git.nicolinc@nvidia.com>
-In-Reply-To: <d3cb1694e07be0e214dc44dcb2cb74f014606560.1736550979.git.nicolinc@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|PH0PR11MB4807:EE_
-x-ms-office365-filtering-correlation-id: 793105a2-536a-4cb4-d697-08dd3b95b552
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?2S+1H+nhEbyouS8/gQ0MFfZRHQQTZ32+A3Iqe22cfDw3MzlN9vWoFtJFad6n?=
- =?us-ascii?Q?7Pc6hrNTLocyN8MNlUhbn54KerJ9qjvHt4Z+K9Di/qO1swrPxKR65/pY+veG?=
- =?us-ascii?Q?FqbFsk2q2sabLA9Ffy8na75FsMXZnde15UwdwmoPfXZnF/IbLnirKPoiHei1?=
- =?us-ascii?Q?RSFTPtaR3UmneGV5gX2rrjdAubWz4OmJee4BOrBeZt8bMffQ9uKhrnlBpQvB?=
- =?us-ascii?Q?WDptq7evEpD4mIa/SLFZ6azVE4RVcC3jJTi7KN0TiSc9NLaisa7GzUzoSaMb?=
- =?us-ascii?Q?Cu9plFn+vOK12TQKBR5ppzpGEewK35lZz74J/jVAy1pRNgd63r5vspYQvf8j?=
- =?us-ascii?Q?qioNDPwc83xlzny4fxcFeUEYx1Wyv/hpy6NMzQuR3ZfXcL9bVhNUiwtF8qxV?=
- =?us-ascii?Q?LCNL5SQaR7roBQBexuqfJMUMfmUFe3Ig2N2lKIy4SBTOWfpwUAR+soxcYiex?=
- =?us-ascii?Q?AGTjpFulZp49Aqrkl1kEu0E4f0Vb04kyOhdoYZuDpT58TeO0TacaU7Jly/bz?=
- =?us-ascii?Q?NMw9imlR/e5yi/+6SgQw/rln8FrMJn2dXzJ94QQ7DBIMEDBpa+yJSaAkD0/Y?=
- =?us-ascii?Q?M6lMuUb/rSwOPbpB+6kNwVoXtj1KYjMeI4LOSfpoHPvKakqPV0VM4md7eCY9?=
- =?us-ascii?Q?2GYHp6mMRtvkZ1yYOB1Y1iyroBlsCE+EmoTz72I2OSKgTMSI6R/HvLFNRM9o?=
- =?us-ascii?Q?8Ed2C9pyLg594ANouSSXl+HQRBZTaPpjQGJ0nIjsvhqEwqAH4TUKzczcVfA4?=
- =?us-ascii?Q?ZjQIpew48ibMjZ/pMdgUfaZgV2F7FNzDjN7V4Y8ZaMc/yWfAcbCCLkZhK7XH?=
- =?us-ascii?Q?gG+G1hisDADiPhQs8xX2mcj/eyIKPZ4uMu2xRbEfm4iaIc9jtOYTmdcKQSiu?=
- =?us-ascii?Q?dj/D9eXcT7dB0juZ/nTcN05j507uUu4ryC4f0Q9/Unr5nCECJ3ooplxPZaNX?=
- =?us-ascii?Q?+zi/ik3TgtGivaCUQA2r/7+REDvxlG3QGTWTrgsBdcFMyUZuk0R3YYLuCcSA?=
- =?us-ascii?Q?BxrE9bEAZqE940KugX5N+cZJDQcbKP+WF9GqOjG4O3NvqK+nm0eFJ0GEfzlJ?=
- =?us-ascii?Q?hycbrm4lsIYRZ1tf0ZBPMLlU4kbpuv0iZ+Wp1E3OZg1JOOIsA+UzSwrdF/a9?=
- =?us-ascii?Q?4ATsr41tIIQqsSdr3vfXqM3XJuMPzi2gKdFkOqXxOVYy5dYiuAaO3alzOKD/?=
- =?us-ascii?Q?JQ24C0deSFK2fC/3Nvk+TUVfX7IsW/wtFPLbtdd3l7i8L7oHMCc0X1YpaBec?=
- =?us-ascii?Q?mnoIsK3VxxzDsNBmVMtZ+C6xuvSBMjQ2+knOzaFC+ai3Zr6S7d3eaJvg2pcR?=
- =?us-ascii?Q?0s7umaerDAODYRWDqt4p1zQNEnGiqT1vL3qPVbhJNrDtFL2KsF/kSnRkox8J?=
- =?us-ascii?Q?EM3Htu4e+kR8qbfDlWTqg5pfCGSrhVW2PpQPSnYeAl8Bey/pgwG5uakTQAA3?=
- =?us-ascii?Q?GMANafwILcru02PQPbWhgiLAdbxXlvf3?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?+VJa7WJtQVWVF/NfhF+3DZhCBMofn9HDnNp1nBTLvex96saYt5jPn4UwpDsO?=
- =?us-ascii?Q?XtGLt1YwI7FAbh84tSCZsXPVQB9LPYJShWKDdDObsTrkm6PLJRPMTnur8g6V?=
- =?us-ascii?Q?51ED1Nh03Zz5XfFEvpH4tq0nqS8DZO3WOSY8iViyc67XtOpCkla/WSeBwPTe?=
- =?us-ascii?Q?BBY4ZqmB400GozSufXYj94yrFlzK7CFR+hTzAWnvumbfsz4mlBNnPEVulSZu?=
- =?us-ascii?Q?Dx6LMtSCpR7KLfg5zCgwFDMacfQL9JbZ6/TxgeKghsDHLIQL0w3OOLzVHxPU?=
- =?us-ascii?Q?ZIvwq1ijEZbceoC4sHFXHv0QKuQwKZArX07WLXSSJIjQozRFX6qsVk7aSggN?=
- =?us-ascii?Q?tiPYMHy9oARvjYUw2x1Ug3GmLYhWcdX62m6Sw9RKZcB+p1u+o5nim9lauCxN?=
- =?us-ascii?Q?5WduKtzWuVEcSgNWZtHYd+Bx/sVTN37gFkPl+qLOyOEbFERZj/Rhkj5qHqAU?=
- =?us-ascii?Q?80eNLf93CQC6DgXwpeAPARs/zUPh8bKmZUT0F9AnNCLcGM0PhXbt/uvo6PKU?=
- =?us-ascii?Q?O9fqD4ueBBBTpAijK4hnNbXB7xiFEm5CQCLr2JN89jLPj5SQhoWLFzbUlXKP?=
- =?us-ascii?Q?+tIVwNiuBQwmTz76Ezu2HAkmqTpD2SMrNyv+oVrhwPWYExMTYDsjUloNXtnG?=
- =?us-ascii?Q?UXKqLp+Xb3hOutwDuCGEJwqAv5GMP/3wB79NNshUxVG5wk5NvkFZUvxvfe88?=
- =?us-ascii?Q?+z7ItpqXFgidinYXHGan5IwKQjr/oLiEv67pKpsQxbrNSQhtwZTPqhEmYThn?=
- =?us-ascii?Q?d522y/OIg75k0GGiTLKA/MIwnC0qaVj5t2QDq4+lh8vuvumxQ4YqG3pqHYQX?=
- =?us-ascii?Q?epPjn/rU0q28KvdOg8/D+3QVJtYxK3SSTQcXDd8raUvIq2gwMpq08gQpvWDn?=
- =?us-ascii?Q?rltnD/9NURblwzplj6VptPjQDunS0Y095TOf/YFjkMu94OpGno9deuEuyRE4?=
- =?us-ascii?Q?FxQWE91eH+U96nQ8Ha3I+Hzdbo7lcg3lpOmT7F4KE1k+TbHctVq+jkq0CJtV?=
- =?us-ascii?Q?VN0l/5x1C+k/phEcMdL5JmcPYkOrZfTNZRqr2Ug/Zp9yDfJ2rQxzk59ZVvt6?=
- =?us-ascii?Q?82HIyKMm0szRdewNGG3xRJNPAA06lbzL385RGv5nMitsXWltbp8SqALHKfKy?=
- =?us-ascii?Q?+Va5mYZlF1O95Tweo8yYusF2SE1pJiolkbJsFzAM9plrILY4uAL9HVN2Sp1n?=
- =?us-ascii?Q?jAXLZCqqozduH8FNQImpqG49/893ly+ke0pq5Ge2cBuoGu5zLCF3ZhBX/jnq?=
- =?us-ascii?Q?7ccw02uYYcW1gmZ7b33bEtX11ldg4SIgD/jrXtcD3jwF6tu7fuPWgOcj/wMk?=
- =?us-ascii?Q?yK9+2FFnqqaAejxYEFjnTZSU12U5aJ6ThtfS7Iky4zpaAmscekid90GVqQEX?=
- =?us-ascii?Q?ZiKA9y+5Tm4Az+8oGmCoy4tnCGeufOFlSZeirxXR+34wc1Lc28pD/6sG0Dgu?=
- =?us-ascii?Q?aCddJprPWy4QIpscjn8gzzLY35N8Pc9VzyeaDSTtQWAMZMcmkp71nJ3WQB8u?=
- =?us-ascii?Q?lahuprrxgzxZSveOAwsDIlL7E/Ba2uYcfogRJd5LhZe0DQkmwpW3yTVzxFxq?=
- =?us-ascii?Q?K/XAVF3j8lR/e+9HWVNjAam7Yw01FU3jphNqKafn?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b="ri+pBhTJ"
+Received: from relay3.mymailcheap.com (relay3.mymailcheap.com [217.182.119.157])
+	by relay5.mymailcheap.com (Postfix) with ESMTPS id 7C3B2260F7
+	for <patches@lists.linux.dev>; Thu, 23 Jan 2025 10:45:38 +0000 (UTC)
+Received: from nf2.mymailcheap.com (nf2.mymailcheap.com [54.39.180.165])
+	by relay3.mymailcheap.com (Postfix) with ESMTPS id 651323E8F3;
+	Thu, 23 Jan 2025 10:45:31 +0000 (UTC)
+Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
+	by nf2.mymailcheap.com (Postfix) with ESMTPSA id 7BD36400B0;
+	Thu, 23 Jan 2025 10:45:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
+	t=1737629129; bh=t6r5R30HmKhEBwCKmDzhZUZM/A05ztud4qCW0TZtgt8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ri+pBhTJmgMhM0dxbXeZMio2sSJ82iPl7iam7E88zrRTPlYJ8EB3w4WPhgbhAU4vx
+	 NwX00cN1HFe6sVgrFnY++UeKJiA0dtdULUjngxdjttbXnyn1pULYvD7eVA/RG+AMko
+	 NPRRW1Kvp8yu2SSvZnB5l7H9ewfHGQXdc0D+pTbY=
+Received: from [198.18.0.1] (unknown [58.32.41.254])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail20.mymailcheap.com (Postfix) with ESMTPSA id C568B43B9C;
+	Thu, 23 Jan 2025 10:45:18 +0000 (UTC)
+Message-ID: <efbf6aac-17c5-4af6-b898-d0d10ed34b3d@aosc.io>
+Date: Thu, 23 Jan 2025 18:45:09 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 793105a2-536a-4cb4-d697-08dd3b95b552
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jan 2025 10:07:13.4504
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: v1fI0e6TnYIqiustShhgbeXr1nUIwlFml3EeM5x6kJseaX10BqMHzmzanzesgRe0a2BsJGerpwJ9KAEkckJ4qA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB4807
-X-OriginatorOrg: intel.com
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH 6.12 000/121] 6.12.11-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
+References: <20250122093007.141759421@linuxfoundation.org>
+Content-Language: en-US
+From: Kexy Biscuit <kexybiscuit@aosc.io>
+In-Reply-To: <20250122093007.141759421@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 7BD36400B0
+X-Rspamd-Server: nf2.mymailcheap.com
+X-Spamd-Result: default: False [1.41 / 10.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	ARC_NA(0.00)[];
+	RCVD_COUNT_ONE(0.00)[1];
+	ASN(0.00)[asn:16276, ipnet:51.83.0.0/16, country:FR];
+	MIME_TRACE(0.00)[0:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	SPFBL_URIBL_EMAIL_FAIL(0.00)[kexybiscuit.aosc.io:server fail];
+	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,denx.de,nvidia.com,gmail.com,sladewatkins.net,gmx.de,microsoft.com];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Action: no action
 
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Saturday, January 11, 2025 11:32 AM
->=20
-> @@ -294,7 +294,9 @@ struct iommu_ioas_unmap {
->=20
->  /**
->   * enum iommufd_option - ioctl(IOMMU_OPTION_RLIMIT_MODE) and
-> - *                       ioctl(IOMMU_OPTION_HUGE_PAGES)
-> + *                       ioctl(IOMMU_OPTION_HUGE_PAGES) and
-> + *                       ioctl(IOMMU_OPTION_SW_MSI_START) and
-> + *                       ioctl(IOMMU_OPTION_SW_MSI_SIZE)
->   * @IOMMU_OPTION_RLIMIT_MODE:
->   *    Change how RLIMIT_MEMLOCK accounting works. The caller must have
-> privilege
->   *    to invoke this. Value 0 (default) is user based accounting, 1 uses=
- process
-> @@ -304,10 +306,24 @@ struct iommu_ioas_unmap {
->   *    iommu mappings. Value 0 disables combining, everything is mapped t=
-o
->   *    PAGE_SIZE. This can be useful for benchmarking.  This is a per-IOA=
-S
->   *    option, the object_id must be the IOAS ID.
-> + * @IOMMU_OPTION_SW_MSI_START:
-> + *    Change the base address of the IOMMU mapping region for MSI
-> doorbell(s).
-> + *    It must be set this before attaching a device to an IOAS/HWPT,
+On 1/22/2025 5:30 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.11 release.
+> There are 121 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 24 Jan 2025 09:29:33 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.11-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+Building passed on amd64, arm64, loongarch64, mips64el, ppc64el, and 
+riscv64. Smoke testing passed on 9 amd64, 2 arm64, 2 loongarch64 and 1 
+mips64el test systems.
 
-remove 'this'
+Tested-by: Kexy Biscuit <kexybiscuit@aosc.io>
 
-> otherwise
-> + *    this option will be not effective on that IOAS/HWPT. User can=20
-
-Do we want to explicitly check this instead of leaving it no effect
-silently?
-
-> choose to
-> + *    let kernel pick a base address, by simply ignoring this option or =
-setting
-> + *    a value 0 to IOMMU_OPTION_SW_MSI_SIZE. Global option, object_id
-> must be 0
-> + * @IOMMU_OPTION_SW_MSI_SIZE:
-> + *    Change the size of the IOMMU mapping region for MSI doorbell(s). I=
-t
-> must
-> + *    be set this before attaching a device to an IOAS/HWPT, otherwise i=
-t
-> won't
-> + *    be effective on that IOAS/HWPT. The value is in MB, and the minimu=
-m
-> value
-> + *    is 1 MB. A value 0 (default) will invalidate the MSI doorbell base=
- address
-> + *    value set to IOMMU_OPTION_SW_MSI_START. Global option, object_id
-> must be 0
-
-hmm there is no check on the minimal value and enable the effect
-of value 0 in this patch.
-
->  iommufd_device_attach_reserved_iova(struct iommufd_device *idev,
->  				    struct iommufd_hwpt_paging
-> *hwpt_paging)
->  {
-> +	struct iommufd_ctx *ictx =3D idev->ictx;
->  	int rc;
->=20
->  	lockdep_assert_held(&idev->igroup->lock);
->=20
-> +	/* Override it with a user-programmed SW_MSI region */
-> +	if (ictx->sw_msi_size && ictx->sw_msi_start !=3D PHYS_ADDR_MAX)
-> +		idev->igroup->sw_msi_start =3D ictx->sw_msi_start;
->  	rc =3D iopt_table_enforce_dev_resv_regions(&hwpt_paging->ioas->iopt,
->  						 idev->dev,
->  						 &idev->igroup-
-> >sw_msi_start);
-
-what about moving above additions into=20
-iopt_table_enforce_dev_resv_regions() which is all about finding
-a sw_msi address and can check the user setting internally?
-
-> diff --git a/drivers/iommu/iommufd/io_pagetable.c
-> b/drivers/iommu/iommufd/io_pagetable.c
-> index 8a790e597e12..5d7f5ca1eecf 100644
-> --- a/drivers/iommu/iommufd/io_pagetable.c
-> +++ b/drivers/iommu/iommufd/io_pagetable.c
-> @@ -1446,7 +1446,9 @@ int iopt_table_enforce_dev_resv_regions(struct
-> io_pagetable *iopt,
->  		if (sw_msi_start && resv->type =3D=3D IOMMU_RESV_MSI)
->  			num_hw_msi++;
->  		if (sw_msi_start && resv->type =3D=3D IOMMU_RESV_SW_MSI) {
-> -			*sw_msi_start =3D resv->start;
-> +			/* Bypass the driver-defined SW_MSI region, if preset
-> */
-> +			if (*sw_msi_start =3D=3D PHYS_ADDR_MAX)
-> +				*sw_msi_start =3D resv->start;
-
-the code is not about bypass. Instead it's to use the driver-defined
-region if user doesn't set it.
-
+https://github.com/AOSC-Dev/aosc-os-abbs/pull/9406
+-- 
+Best Regards,
+Kexy Biscuit
