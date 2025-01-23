@@ -1,124 +1,199 @@
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2083.outbound.protection.outlook.com [40.107.223.83])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF67320B
-	for <patches@lists.linux.dev>; Thu, 23 Jan 2025 13:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062542101AF;
+	Thu, 23 Jan 2025 13:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.223.83
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737639729; cv=pass; b=pXUHEoavm1AOlQC72KIRduE1Dot2r6EFvgZ4H4UMOz8KOPoYDU4uTFGrdGQ/r5K8sNfnl3XZCEHNcqZE/HhutClVNP7usCEtcN7CrLlaCPSYSqcXwOyVhvR9Y4FKebcYTxMNkav8dyscwSN03kOlyX5676TPM+cDdfeaTIL8siI=
+	t=1737639752; cv=fail; b=d7yD/BBGtiHXdO4vtI+XUCesr6yhmBIDSDEA0CYtZh+MDvOFhsnSMTQsMy7VW7FFVZy3+Wu7rxN7xVYHUUIBLOeNOjjGjjb90zcfYvWhVS1QqhkslaqOD4sRAe7/+wx94DKaJzc2XEF9sJhhLjsPvQJ/WbhMuIjUZrCRO3z4L5Y=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737639729; c=relaxed/simple;
-	bh=zb52plhhpG97x9+fLMA1zvPEbWHuvd7b09ZY188XepY=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Zr52lm95Qk51k9eM1xXuGfagWFL/c+j+JPDJPXK2SoZ/lKSFvZMPsIdYtw7GQcs9h3NC47Hp8RFokRwqPtIzTn59qw/OaGFGbWRqudjKNPBW9WjJwyeeb3EU5drWdvukU5ZYn+AiHUMayqILt1lCPBioF9GVFhqRC9c2eraoo3w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b=eM1KfWAA; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+	s=arc-20240116; t=1737639752; c=relaxed/simple;
+	bh=HanO+Zcst3+B9ytBqmG0WAb5viMS6Yh3fggjCLQfj+M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=aijt4EMi/ekOJyfL0CAtgCzomPdxvUkA6MNc8TANoiYIwHBMqtproUR1zD6r4qXcKzvqL0XlWHgWvI/3B0/SIoJ+8+CZHNd561Q4438pQlxuo8WmtpyQd9uYuX1lZRvLjsGCGv9Wm7I7YBn6hqiRmtxaNmiBAN41xqWIDGQFhfI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ckWq1ZTZ; arc=fail smtp.client-ip=40.107.223.83
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=Usama.Anjum@collabora.com header.b="eM1KfWAA"
-ARC-Seal: i=1; a=rsa-sha256; t=1737639716; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=AAqworgE75vpPDMyJyyEu7fW9p0GP50TgQMJrRa7QynF9OhUMn8b6oGsBBzDFMJKSjEI+wlT1DgbMeekSLc/MGptShe/rLodL4yS1n1Wj/gPkU7TOfjsy6edo7tVILDn5grMOLMK2jXEouJrtsSXj9DDX6Hyr0fGOZUvYQ9Gq3U=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1737639716; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=0XUElGNugRDuLIKHlQXSokKY2Ws3jPy8Fm6nuH0Ud98=; 
-	b=PSy2BiVWuyFXgRVFR2x2JQw6feUZbQtw95h3gWTGNKSegTRN4fW0Zlk6SMvtNwXtzFpiDzV8Te7k6/BpQ8m8J73JU9lCUDLpVDIjsMkVcApgDu1qj+2DcHaN8waixxr4jMvUkjY3SmxId54aIApZ4ipXKiDznEzKTQm0CsRiPUk=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=Usama.Anjum@collabora.com;
-	dmarc=pass header.from=<Usama.Anjum@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737639716;
-	s=zohomail; d=collabora.com; i=Usama.Anjum@collabora.com;
-	h=Message-ID:Date:Date:MIME-Version:Cc:Cc:Subject:Subject:To:To:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=0XUElGNugRDuLIKHlQXSokKY2Ws3jPy8Fm6nuH0Ud98=;
-	b=eM1KfWAAsyQa8eVqPk3FDF5MIRUlMFXdMGTKhzMtKcU2VyO82m4TY91kSKjfuorR
-	hMdWi8bg1g6/CmAhYJ5RhbHBld3atSlNouf06wmEyIernp1PR07rY+ZG3aWbfdmhuSH
-	z0g5J+S0uVrMGxAvt4FhdL6GtN+ucGFTRNEoH6YM=
-Received: by mx.zohomail.com with SMTPS id 1737639709008252.96416316737213;
-	Thu, 23 Jan 2025 05:41:49 -0800 (PST)
-Message-ID: <c7f148fb-9d3d-4af0-ac19-f375f64a46f4@collabora.com>
-Date: Thu, 23 Jan 2025 18:42:13 +0500
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ckWq1ZTZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=I8lP8CV5k+sZd+g7CPj1sk6exolJM2zztyLRdHnkVdlY1wAuVed1LH40OfwlJQfKhbv2s+6cK84ppDgdFixIWJ5kDuUKHMHceMoox5xE45ossMD1/Hv6a4oyk/9/UL7FNfkEyL6CMwyZJ3w4y7mcIcIwkM3V6jgS96Ggb1Ce/yvZyUmmlK+le0zCNEmqTAQF/m3UpUiGdENKguk11FVOiSJ/p91FjrTc75fBLbEYCV7cu43L8G4iGp61/4DytYrXX4aZvBCarXZZGDvMabdCFuxYwNjaApAJiapJpEG//Lflr8scjZ9RcwBzRY/L+Ujcvr46vAnWBIIOrEMFOwzsAQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oUGch3vPqFbwnj2tUWVTi2tqRZ1yFDaf7B+D8HbJvpw=;
+ b=dQi2uAxleFRL1VClxOyFBd2XzO4Yr6o2pk0QhWOL7fr/fsECUpEeLt9XHbxFwRkfUqM4RYEhd1foVcZdsIRW9cUQkG9YrjD+LT5P2eyc4rCp1xWk6ymnjoCw4VwJv8aUCPEB7eDqBUcAI66ub8gABlpk/xNitzfq3W3IdxoSNT2CF3QJM6jpOdSguStg6Tea6/dU3aK+kPIYdafBxhCTVUuKsWumw3XZ7+HX5CnF6LF3mqo2ipcDlS7h4Il57EBFNRUcqCSvHZSoENWzrforQ43NiWJNEXOxMp3uXIiSRieCjTcp5+CiiV8hbl5JpWkxu4VE8Qh4iAjHvs8RF6fuOw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oUGch3vPqFbwnj2tUWVTi2tqRZ1yFDaf7B+D8HbJvpw=;
+ b=ckWq1ZTZQSsgfTR+3GS4Vjh119lK4cX32yxva9SUwGmetvwKOYfvEQf/F9iWoA+K0q4swI9udFKOsQFcxIB7gWJvkcdBAhvwHbb6LqOVqlwV6DEVj7djt3KoGulqxAz0pLTFQIc7siHx2/r+1Gkty1yE0d7YI9H6ArahibGsLhU1h/BKzr0neWPdsImmg7E5ZjHo3JhCDTumFcWBFuJNimLsfTGLCRlrLJmAc/Xn6HIN23Q2uM7MeL2B35CBYo0IRWMuex8SyojMHWGYhAcsUmTANrULTPA8jhxHUBeI5P6CCZH9He1Ilzd8QvSj3r54+7GIO7jz+fBaDl0mtoOJEw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by SN7PR12MB7252.namprd12.prod.outlook.com (2603:10b6:806:2ac::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8356.20; Thu, 23 Jan
+ 2025 13:42:27 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%5]) with mapi id 15.20.8356.010; Thu, 23 Jan 2025
+ 13:42:27 +0000
+Date: Thu, 23 Jan 2025 09:42:26 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: "Tian, Kevin" <kevin.tian@intel.com>, "corbet@lwn.net" <corbet@lwn.net>,
+	"will@kernel.org" <will@kernel.org>,
+	"joro@8bytes.org" <joro@8bytes.org>,
+	"suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
+	"robin.murphy@arm.com" <robin.murphy@arm.com>,
+	"dwmw2@infradead.org" <dwmw2@infradead.org>,
+	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+	"shuah@kernel.org" <shuah@kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"eric.auger@redhat.com" <eric.auger@redhat.com>,
+	"jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+	"mdf@kernel.org" <mdf@kernel.org>,
+	"mshavit@google.com" <mshavit@google.com>,
+	"shameerali.kolothum.thodi@huawei.com" <shameerali.kolothum.thodi@huawei.com>,
+	"smostafa@google.com" <smostafa@google.com>,
+	"ddutile@redhat.com" <ddutile@redhat.com>,
+	"Liu, Yi L" <yi.l.liu@intel.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH v5 08/14] iommufd/viommu: Add iommufd_viommu_report_event
+ helper
+Message-ID: <20250123134226.GO5556@nvidia.com>
+References: <20250121183611.GY5556@nvidia.com>
+ <Z4/7pGx6F1mpAUuV@nvidia.com>
+ <20250121200924.GZ5556@nvidia.com>
+ <Z5ALWFVTOSC/8+ji@nvidia.com>
+ <20250121211404.GB5556@nvidia.com>
+ <Z5AUNVHzJPATVqAY@nvidia.com>
+ <20250122002128.GC5556@nvidia.com>
+ <Z5CbGKYbwy+qPjyh@nvidia.com>
+ <BN9PR11MB527600A5B8DC271075936A918CE12@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <Z5FNDOqkiPq90c16@nvidia.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z5FNDOqkiPq90c16@nvidia.com>
+X-ClientProxiedBy: MN2PR10CA0009.namprd10.prod.outlook.com
+ (2603:10b6:208:120::22) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: Usama.Anjum@collabora.com, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org
-Subject: Re: [PATCH 6.12 000/121] 6.12.11-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-References: <20250122093007.141759421@linuxfoundation.org>
-Content-Language: en-US
-From: Muhammad Usama Anjum <Usama.Anjum@collabora.com>
-In-Reply-To: <20250122093007.141759421@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SN7PR12MB7252:EE_
+X-MS-Office365-Filtering-Correlation-Id: 50f74521-38e6-4fe5-9f70-08dd3bb3c670
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?hkQw+SiKk+9wn1k6K1wLHAr12fitfThXoTdIFYyCsxx728XIhehI3zQP4rk5?=
+ =?us-ascii?Q?GrV4gPh2lG8LZJAKc8AHtjEisp8tCBNA0BYBC+cKFy1X3e5mBeMwzR/vGL/d?=
+ =?us-ascii?Q?lV6xCI20KDT3BhyhugUVFMQJvGXZwe321hmSUrB3akMqsB2mT0thLu8jH/PD?=
+ =?us-ascii?Q?qMkV8RK1KGtQBUUw23d1LemsGVe7F76Mke3RVbQPkby7gCdndj42OnLwnR0m?=
+ =?us-ascii?Q?Lv0Gz0Amd3RdrizWhdQBdw5+dozNeZUx3kBaDs9EeIYoAZ14kt5TK+AOf51i?=
+ =?us-ascii?Q?bKmpSmQ06JiHgoQVtBjeMcuTrNI09KCFkjKLSvT9thrfNDEPROQjdNtBzy76?=
+ =?us-ascii?Q?Lnl4nRoHsHiOQHP0flc7f6xa6jzgzjGoc1+y8Fs2Gg12+bzHvpXEy0IHY/3m?=
+ =?us-ascii?Q?edYIp1QkeVYHbfFgKwvqNdr+XUeYEaF64n+y3x53FZMvekimTvBqMLqXdmj7?=
+ =?us-ascii?Q?naM2o3GJur/uwUHaejfAJihFXNL7tIjlx61INfbfuxfItn6bydulNGLwUmzm?=
+ =?us-ascii?Q?JESeailcQfVkYfB+JGNSkuAaJl/bb0TbdlPBeqBkM0oLP4GQJ7N/zTXsqO4C?=
+ =?us-ascii?Q?QShlsksff99kX4ByHjB4I4MofRmoLH0QgsHSUf9DWDBWkM2cDIB4dyDUS5ug?=
+ =?us-ascii?Q?baC+JuInkphVTGK5QXZPV0nOV/4PYtovtW1yHj12Zf+li41T8zdK+TRmb2YK?=
+ =?us-ascii?Q?roliEqJr7bp0GidU/TuCsvutUlLHGFcI81mTj0QY7n8Bu6YUz61c80+EiTTi?=
+ =?us-ascii?Q?QqhTClEVQa4+yjit6WXRyXTqIesBhcPdlcgw8Y9gaL2+JjBkqlaBhY/X0A0w?=
+ =?us-ascii?Q?Zykv0hcHqJXXQ8Worn8iOa8/cpDPvJnAsK6QPIVCi3/9Zc5PP8iAMCWP8q34?=
+ =?us-ascii?Q?JLD0iQyr+EApwMhyVDB+75pYQisY7pY0lT79VufXi7Gd92P1LkwVoQdM3Ggz?=
+ =?us-ascii?Q?W2YkLsGj1AfYcZ8cyu6O/sFwZug3Jjyq4JXet1L6PwjcrscFeUqEfO+Sb7or?=
+ =?us-ascii?Q?Gm7Ww22J1rOdzwA9FG2vGtsmcifjwFkMs61rHfT1wgtwV7fiB11ps15+ggi+?=
+ =?us-ascii?Q?ZxP3dV7ioc2vK2q22HF0zIn6ZHZjIkpH5eJbjC1X0fD32PdsQq+4PqeLbgry?=
+ =?us-ascii?Q?4j8dINbcIiFE1ZMOoV46c1r8Nqt1o/eQOXcaggj3c7Wcb7n815h+nawIsVpq?=
+ =?us-ascii?Q?ZYFxVi9UxkGPaioJ3NFGw5CsfqAz5wSs5k8wVay3N5qMCJ1M1PhUUuLRliAT?=
+ =?us-ascii?Q?TJTQVRho63+opyzCnoPo3HLYJjHvyzwbayRE5oDK8ikAOo8FOcBmjBXpI/x9?=
+ =?us-ascii?Q?LtRoxlpL1hKmOZax4GpLQ8QTlnOu8jLBmRuoZ2VHpzXQ2db7NuExlAee1Asg?=
+ =?us-ascii?Q?gQFvVk8EF45q4/RMn5tBVFJcfDBe?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?uebmAnfpF6jwrM1VX1ztD7t7d9KWoYY07QC1HFvbG7AL795mU5NCnleno+VI?=
+ =?us-ascii?Q?YkRP+txBuQW8b+1CZtNS+QWhK+1DPsClBLeFOQ/83ZzUTtFD9nQbdu9P+u1e?=
+ =?us-ascii?Q?ggRdtVq/o0w5u/iCOmVSMyeB267EyTrzUKvSA+3geoK/Lab6Xccdqferi9Hd?=
+ =?us-ascii?Q?Wp5d2RQNXrLcxw8qqfG9/dfxKsIlxpkmM/D3gpYaKlRdcXCEuNEcs66VN9pO?=
+ =?us-ascii?Q?HHy4fAywB7QyQh6Yph5b9HttCEGkRH2ucxKjQiLWAnRNeRhvPhFOUMBNPPWI?=
+ =?us-ascii?Q?EOUK3PRIQPtr1JKvDGZtf0q5wqW2Hl57MmOtbdgIkQ6mMXUiZgRlM8Yo3+vi?=
+ =?us-ascii?Q?cWPtye0K8CZOEP9/iP3yuCYKuARBohjTb58QT7WFuYPVkcvucAea3zqJiehY?=
+ =?us-ascii?Q?oSM58EPR83dRi+1DBS0NcS/gJ7LXC/sA2MmpMyJ0DaJLeUf1qPkT6SevgcdP?=
+ =?us-ascii?Q?tz9i3R1ThXgIhjyxVGKc/Je4XjcogZt0b3XId8qflvtpqBScu3N3OrfuaZYz?=
+ =?us-ascii?Q?NpXrtBgpvUSwUFN1iyQ/FW6xPU3Sfz/0my5Nr0Z+GYftr0MZ5/4d3Wpqz7AC?=
+ =?us-ascii?Q?Za5AGgBJNU0I/mGPZUWOKhjG/kIB/r3WWEvglMGSREfk7L40oZLBx6vPDLUB?=
+ =?us-ascii?Q?LP4khoAfm+/3oOn+HauiF/F7x6klOIWJv9d3fiLUZZQV4oMdYRCzzDHszz51?=
+ =?us-ascii?Q?xaeJpt10jHgyrP9Y6s4UT7N9faRcxmNMO4hOQF8ep02efDBplvylQQ4MNGxd?=
+ =?us-ascii?Q?+fSqAazsPglyhNYvJjNR6v5t7EsX/jvbW2LFQRYE2f+N0L0sbuHb6BI5lsqe?=
+ =?us-ascii?Q?Yh2VDQKypqbX0QnPVdt8j7/PX9HkoQnZEaz34VqoJSjutQGA/N1zvOH753wf?=
+ =?us-ascii?Q?Sp4hbw0YlfXOvzf/5IaBBt0/TvQdxTycJA3Dbbv9RYS5ACQ3Iyh83ugQQ/8S?=
+ =?us-ascii?Q?Ram4CzNtpu1BwotJs+ztkq5so300uo/APRm2v6ox19qAGOGXHln7P7SdH8T6?=
+ =?us-ascii?Q?cndUbSEqXCC3LlEZaFfQUGvxxgrCMpi2KEUkB8VinaXAw99qvMLzWBJqcWRz?=
+ =?us-ascii?Q?CiCNETQolGubnwMAo7frKdPyJ81jJ13JI2ivVWW6wReGyrMDdmaT4pX8HpsA?=
+ =?us-ascii?Q?/fHbSiHVLPeT+4RnW49uQKDuGPiDPnvw1l0FW/vr0ymNzsS8/dExR09Zzmwq?=
+ =?us-ascii?Q?jDeFrek4U24Ywq74x4wqize0Ah25wLS+xPRMqfNl7ZuswxJRsuqP8gaOl/90?=
+ =?us-ascii?Q?VRSKvQA1395oDtnc4OV8oIxJXrM7UOK+vHAwnkJOQ7ohhr9rw0cIFCwtPWA9?=
+ =?us-ascii?Q?Df7ZsLoxjRoGIh/VNYVzkasHr3vLP2rmrsgJxEviuTMUxAGR0xmtc4OvuBnE?=
+ =?us-ascii?Q?SfwfUQ1Oe8muH+M/5jgwbmmTUBR20IuCC3u+Qlbeow7r1fz+lqzZ4Qi5CHoD?=
+ =?us-ascii?Q?Y5N91fUKunrqXSiA49YXaSFhIyAF+r9mJDvg2AjwhvJhzwCMVuSrSuLVzeHm?=
+ =?us-ascii?Q?keHi+TpZjOmOGllaZ11ys9g4DHZVr7PGkDaoOcaRIMxOTq4OBktMAouBDAav?=
+ =?us-ascii?Q?OPw1AH1MicIXGQje/SNPTq6LQwm8aW+cgJDE9qhj?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50f74521-38e6-4fe5-9f70-08dd3bb3c670
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jan 2025 13:42:27.2442
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8Ci3ihd5n9pBte2N/abOaAWRcRvaeVCuvW44mEOxl4y4yr7RrsK2FQqao1U4cMFW
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7252
 
-On 1/22/25 2:30 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.11 release.
-> There are 121 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Jan 22, 2025 at 11:54:52AM -0800, Nicolin Chen wrote:
+
+> ARM seems to also have an interesting event merging feature:
+>  STE.MEV, bit [83]
+>  Merge Events arising from terminated transactions from this stream.
+>    0b0 Do not merge similar fault records
+>    0b1 Permit similar fault records to be merged
+>  The SMMU might be able to reduce the usage of the Event queue by
+>  coalescing fault records that share the same page granule of address,
+>  access type and SubstreamID.
+>    Setting MEV == 1 does not guarantee that faults will be coalesced.
+>    Setting MEV == 0 causes a physical SMMU to prevent coalescing of
+>    fault records, however, a hypervisor might not honour this setting
+>    if it deems a guest to be too verbose.
+>  Note: Software must expect, and be able to deal with, coalesced fault
+>  records even when MEV == 0.
 > 
-> Responses should be made by Fri, 24 Jan 2025 09:29:33 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.11-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
-> -------------
-OVERVIEW
+> Yet, the driver doesn't seem to care setting it at this moment.
 
-        Builds: 41 passed, 0 failed
+Yeah, we will eventually need to implement whatever DOS mitigations
+are included in the IOMMU architectures..
 
-    Boot tests: 693 passed, 1 failed
+I think DOS testing the event architecture should be part of the
+testing/qualification.
 
-    CI systems: broonie, maestro
+It should be quite easy to make a DOS spammer using VFIO in userspace
+in the VM to test it with the mlx5 vfio driver.. (though you need VFIO
+to work in a VM which RMR will prevent, but that can be hacked around
+I guess)
 
-REVISION
-
-    Commit
-        name: v6.12.10-122-g0bde21f27343
-        hash: 0bde21f273434bad90411f296c22f02c62c07b2e
-    Checked out from
-        https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-
-
-BUILDS
-
-    No build failures found
-
-BOOT TESTS
-
-    Failures
-
-      arm64:(defconfig)
-      -mt8195-cherry-tomato-r2
-	BUG: KASAN: slab-use-after-free in __mutex_lock+0x6dc/0x8b4
-	https://kcidb.kernelci.org/d/test/test?var-datasource=edquppk2ghfcwc&var-origin=maestro&var-build_architecture=$__all&var-build_config_name=$__all&var-id=maestro:6790e14309f33884b18dc40f&from=now-100y&to=now&timezone=browser&var-test_path=&var-issue_presence=$__all
-      CI system: maestro
-
-See complete and up-to-date report at:
-
-    https://kcidb.kernelci.org/d/revision/revision?orgId=1&var-git_commit_hash=0bde21f273434bad90411f296c22f02c62c07b2e&var-patchset_hash=
-
-
-Tested-by: kernelci.org bot <bot@kernelci.org>
-
-Thanks,
-KernelCI team
+Jason
