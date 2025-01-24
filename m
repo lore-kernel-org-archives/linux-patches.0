@@ -1,40 +1,40 @@
 Received: from smtp-relay-canonical-0.canonical.com (smtp-relay-canonical-0.canonical.com [185.125.188.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94D63232;
-	Fri, 24 Jan 2025 21:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 138F71DB14B
+	for <patches@lists.linux.dev>; Fri, 24 Jan 2025 22:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737755986; cv=none; b=XB0X5IaeCgUkYX6CO/gIYZZS6vjIH2cllm6lBeXZ532/Cv6JK/7TLSjywcTIiW7nl0XVhudIGEnW+xtjwJHreyQszeuuop/nfpBDtD7OMJeFNWa7PRfiR699RJQ9nrQCkscdSqw/6ghnriCzmdmw9/qxQSwn8ItAC4+CgYlTXO8=
+	t=1737756153; cv=none; b=i6vThNflSUuTcG6P7NwOezmrSodnEk2KGuckxLA7UeD69UUmujszNzSQvRj8OD6byBLE8BWteL4faetNt4pGYrqxoOtIbUjlQyVd65tFrP6wtTVlAaNhTNpYoJE70bXcRyo9HEtidqinXq9Osz4/tof8gfBrYvSE+jMeJGSTX2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737755986; c=relaxed/simple;
-	bh=20aEpxQNko3NkId9Veoz6QAg5OBmgLrK3vGSfIv5KVI=;
+	s=arc-20240116; t=1737756153; c=relaxed/simple;
+	bh=tnBZNQWOaVOKz/iP4SAHicFuq1EeGHKyWsQBBrY1FdA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IPk1qOrd/mPhm4U/VXx8W3ebFRZ+SS6mP397P/HXBenB1diy4ungydNWXEtQvq9wAswF9tSNyZg1xOFPp9qNRSFPjjlOGOyc5bDVu3EKfePeAU3VDup90wDyi1Ze96J4rThQpsV4ta4uKqyGSEpSZr6RKd21hPscH6yL9sHI/MQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=TRysiucF; arc=none smtp.client-ip=185.125.188.120
+	 In-Reply-To:Content-Type; b=MZvK/mfiU3zl/OKdjVD9z+rVlxgOFMNb26vQHsuxTKVFGjZoFl4hjaxHnVm0zW9WBZ/jYo4f5DubMf3mutA3Wnb+bLweO1pgc1XLjzAX0FkZSAPnmCpKYWDKPpU230UswgO8fjk2D8lD4rMdS9v/TFOfvuDwQlbrRhXMwqNe72Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=muBMgFwo; arc=none smtp.client-ip=185.125.188.120
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="TRysiucF"
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="muBMgFwo"
 Received: from [192.168.192.85] (unknown [50.39.104.138])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 601E33FBAB;
-	Fri, 24 Jan 2025 21:59:38 +0000 (UTC)
+	by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 0338F3F925;
+	Fri, 24 Jan 2025 22:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1737755979;
-	bh=UzAV6c2tj+Gz46sK4WwRJnge7aAxaiZDlcKh2m8wnrQ=;
+	s=20210705; t=1737756150;
+	bh=PtlQGxw99o3A1cTQfevkPdg/9d7CG5J/2wIyYL6ZAWQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
 	 In-Reply-To:Content-Type;
-	b=TRysiucFsweGOubBvi9HkcGEY/i6JqoY6Bfr4GoGTgBPf7sp1xR8Imk0XcIpeK/dJ
-	 ggImWtwRumZrW1r6WPvk+3FpvNpbSB0BJr1HTN5JsezLdD8e3HecdnFEJOBWo2EC51
-	 9In3XEC6FcCHcQUUH6h9cu5upidD5rFpKEbT3WDUxEW2bZ8ooalUfGdU9SU6BL77Ny
-	 liSlu7I4TyYJqZd2juXGWe2ufn9PWQeXuoCwdnVGDLjlanroySpb1MTD4rDwwl3Wsv
-	 Rm8FhwDnCcqgq46jIzwpj0QZWAuVyRDZE7GKEV6fKbgb/2R9utJjqAmodPqzeC/nKq
-	 lwLSPRtnm9EWA==
-Message-ID: <15e13942-965b-49f9-bf69-36579237a4cb@canonical.com>
-Date: Fri, 24 Jan 2025 13:59:36 -0800
+	b=muBMgFwoe6+LwF+LrVcK7nwPcGZKlTdb5fFm8+p8WRxWCaI/SMTDaYWzxOf8ryLeG
+	 k8B7+CmtgNm+5YHZPVBLNsL8RLT1Y3jUoGrj7xNFPsY7/S89ODaQdyLNRYG2xgMbWC
+	 RzY51sTmiSkVpF7TEh1l60bN0v8E67ZTN21wtU+xP/DuEv8KvvjmvJVSEuZRk73hXx
+	 3Q7qUcynxWSwaubZxb4nQDE/nxkgn0Q9pTUWQJvT8T3t08hfRbn44npDp64gFeYjvY
+	 36v+mHFljNVH+pFQO3BqxoMPo6vwDKrBkzWOkBw4Pwb63AcIRsCbpHE9qIy+yisR0p
+	 SOqnogtTS6dnw==
+Message-ID: <e66188a9-15d5-47af-9a85-6b8a6537701b@canonical.com>
+Date: Fri, 24 Jan 2025 14:02:27 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,13 +42,12 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] apparmor: Fix checking address of an array in
- accum_label_info()
+Subject: Re: [PATCH] apparmor: Remove unused variable 'sock' in
+ __file_sock_perm()
 To: Nathan Chancellor <nathan@kernel.org>
 Cc: apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev,
- kernel test robot <lkp@intel.com>
-References: <20250120-apparmor-pointer-bool-conversion-label-v1-1-5957d28ffde6@kernel.org>
+ patches@lists.linux.dev, kernel test robot <lkp@intel.com>
+References: <20250120-apparmor-fix-unused-sock-__file_sock_perm-v1-1-8d17bd672c6a@kernel.org>
 Content-Language: en-US
 From: John Johansen <john.johansen@canonical.com>
 Autocrypt: addr=john.johansen@canonical.com; keydata=
@@ -94,51 +93,58 @@ Autocrypt: addr=john.johansen@canonical.com; keydata=
  +T7sv9+iY+e0Y+SolyJgTxMYeRnDWE6S77g6gzYYHmcQOWP7ZMX+MtD4SKlf0+Q8li/F9GUL
  p0rw8op9f0p1+YAhyAd+dXWNKf7zIfZ2ME+0qKpbQnr1oizLHuJX/Telo8KMmHter28DPJ03 lT9Q
 Organization: Canonical
-In-Reply-To: <20250120-apparmor-pointer-bool-conversion-label-v1-1-5957d28ffde6@kernel.org>
+In-Reply-To: <20250120-apparmor-fix-unused-sock-__file_sock_perm-v1-1-8d17bd672c6a@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/20/25 05:12, Nathan Chancellor wrote:
-> clang warns:
+On 1/20/25 05:21, Nathan Chancellor wrote:
+> When CONFIG_SECURITY_APPARMOR_DEBUG_ASSERTS is disabled, there is a
+> warning that sock is unused:
 > 
->    security/apparmor/label.c:206:15: error: address of array 'new->vec' will always evaluate to 'true' [-Werror,-Wpointer-bool-conversion]
->      206 |         AA_BUG(!new->vec);
->          |                ~~~~~~^~~
+>    security/apparmor/file.c: In function '__file_sock_perm':
+>    security/apparmor/file.c:544:24: warning: unused variable 'sock' [-Wunused-variable]
+>      544 |         struct socket *sock = (struct socket *) file->private_data;
+>          |                        ^~~~
 > 
-> The address of this array can never be NULL because it is not at the
-> beginning of a structure. Convert the assertion to check that the new
-> pointer is not NULL.
+> sock was moved into aa_sock_file_perm(), where the same check is
+> present, so remove sock and the assertion from __file_sock_perm() to fix
+> the warning.
 > 
-> Fixes: de4754c801f4 ("apparmor: carry mediation check on label")
+> Fixes: c05e705812d1 ("apparmor: add fine grained af_unix mediation")
 > Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202501191802.bDp2voTJ-lkp@intel.com/
+> Closes: https://lore.kernel.org/oe-kbuild-all/202501190757.myuLxLyL-lkp@intel.com/
 > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 
+yep, thanks
 Acked-by: John Johansen <john.johansen@canonical.com>
 
 I have pulled this into my tree
 
+
 > ---
->   security/apparmor/label.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   security/apparmor/file.c | 3 ---
+>   1 file changed, 3 deletions(-)
 > 
-> diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-> index afded9996f61..79be2d3d604b 100644
-> --- a/security/apparmor/label.c
-> +++ b/security/apparmor/label.c
-> @@ -203,7 +203,7 @@ static void accum_label_info(struct aa_label *new)
->   	long u = FLAG_UNCONFINED;
->   	int i;
+> diff --git a/security/apparmor/file.c b/security/apparmor/file.c
+> index 85f89814af1e..e3a858649942 100644
+> --- a/security/apparmor/file.c
+> +++ b/security/apparmor/file.c
+> @@ -541,11 +541,8 @@ static int __file_sock_perm(const char *op, const struct cred *subj_cred,
+>   			    struct aa_label *flabel, struct file *file,
+>   			    u32 request, u32 denied)
+>   {
+> -	struct socket *sock = (struct socket *) file->private_data;
+>   	int error;
 >   
-> -	AA_BUG(!new->vec);
-> +	AA_BUG(!new);
->   
->   	/* size == 1 is a profile and flags must be set as part of creation */
->   	if (new->size == 1)
+> -	AA_BUG(!sock);
+> -
+>   	/* revalidation due to label out of date. No revocation at this time */
+>   	if (!denied && aa_label_is_subset(flabel, label))
+>   		return 0;
 > 
 > ---
 > base-commit: e6b087676954e36a7b1ed51249362bb499f8c1c2
-> change-id: 20250120-apparmor-pointer-bool-conversion-label-7c1027964c7f
+> change-id: 20250120-apparmor-fix-unused-sock-__file_sock_perm-0e4627bcefb7
 > 
 > Best regards,
 
