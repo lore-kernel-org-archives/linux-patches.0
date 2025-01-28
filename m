@@ -1,179 +1,139 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065521DED59;
-	Tue, 28 Jan 2025 08:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D4F768FC
+	for <patches@lists.linux.dev>; Tue, 28 Jan 2025 11:47:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738052496; cv=none; b=ocOg8Lfj/nQnhg+pJDSpClQGj+I/lcW36lVtFQqIhdpU0RQTmZoBtCQ7gFQQTFfMp5rc4CuJarmyb+lY3Ceu+F7TkDzOgJp1JpAqhPHcPr+XBou6Q+4DKmNOyzF35z2st7YjDwhXLeGpyuXcrf7GelOhfziuv3CT/R590idjbgM=
+	t=1738064824; cv=none; b=aV7gTlEiGh5C3kxoDWGVdBWKDZd60GnNrLrlRkTxe7BIhgGux+tl70mmBN7Xi0H+sb4sBgiFU2VUw9l9prn4+TYMgxhvgFf3usqYTlhI5LD0VhDhFM57IS9a0km2tis86gNQ+A8U1GQTQdA2/n7w/n01+KBBt3V6rPSfQP12MAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738052496; c=relaxed/simple;
-	bh=RSQ/gaKSYUHj2DbU1SSchGtbIQBxw/a/cur2nGw8Xnw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KN6HiBUGDLZCaGpw+lk7RQfOkiRq3/DZib2Cn0k7mbSP6ye1XpOPFpUF6i4NeGobI+JV599L1bab2cp3kE64FYQnRYfiOCOjs3Sdx87PTV7r2euHiTx1fXnvm9pBY9y68zmyLk1ojN+FRHSqusy6OoXwJKxUT+sonwXRTpi/KxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KKJZdeiM; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738064824; c=relaxed/simple;
+	bh=GVWqD6G9D5b/cE9nTKzbdprXQjD9z1HweCRQ+qLjFFk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=VibuIzbD0DLZiL033RMCQZ48+UlHBH9XjDmVzqoEXH/1OOmgtrdXjPLJMRQECKlGrTi4N1TlF9y0lfg6U3/sUqnX5FBVOO2R9ZuOulTomCWhmLMJ386LyOY24WS9pmu2uytCneIwQ7jOLEN/9tSD30Y11lepTKDi/UWfRAPsvrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=efault@gmx.de header.b=kaVI8ecB; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KKJZdeiM"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2165cb60719so93976735ad.0;
-        Tue, 28 Jan 2025 00:21:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738052494; x=1738657294; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3fMuy/pYgza/riIVTVPhUzUfkiZ2bVUecFPV047zGXs=;
-        b=KKJZdeiMLfqTheXuuQ7GbFN+6RlrjIddX60oqgx6TYJoQ/2Ra3WxV+M5unEE3YoZf+
-         RGoTEBU4V01qBQP/fmwbvnVqVJARTtvWn7eG3QB2KiozSXryaR7Kb7DCoUbpXx3rRxAU
-         AcE2IIfDekUCMX5LCdCCwqEiEelxBL6XU3GITguino4+eSzkBp0GwnCeBpkLor2nC9f/
-         UVBtMLhjs6xzpHN8ywiw/wDELL3yQE8LttnKFMLKgbt3XM/dLkPEu/WhMjGoFc6uDobY
-         9abMGMFuUaSfUPDcFnWi2/eFDgyJAUkoJXC7PrubNgk5OdWAqJLTv1S7mkBNotwQe9yx
-         1Zuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738052494; x=1738657294;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3fMuy/pYgza/riIVTVPhUzUfkiZ2bVUecFPV047zGXs=;
-        b=AGzbVlkhcLSh8FSZw5Kp5AlkhuRnZgBZ3Q+oE7U8e2KgBzUPiIXP8K/XWTDzGA365D
-         JBEoyY2NNeFPz01CSo+AHBysQcNQyRYKHAAKcmnOkK/YIbQgSBwbRAgiRo+dLBBB2Qc7
-         D6Gu4kynI4kHnWADvl/LnT/4XipSZMnqO6TFnE+vKHntYslghgHo00f5xjDYKgKk77XW
-         eQ6SkOMKmqwLXymHKbXb+1jDEJgVAlmg+b7MmRf2Ny9js/SF+DM0qQkMMeMlWMy0Lk9R
-         E2XdzhrbypzS57U8pu9f6AIJdzh/ynXTw0sYwonNnrrl5RiHXv/c8rR0YbZJ7p7rv6S+
-         ccCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVM/iRBz1aXOxonVDFEJLMyQFiLVNkB7ebRaADpgAsvId9hD6C4CtRwUYhNrTtyoquEit0nvQ==@lists.linux.dev, AJvYcCXKH40rUTfF+1SvVounHV2HdWEWmphBmtPxcyIOYnNC3+JBEMOSqPDWMq+Z+ZTd+nIkQztQkjSlug==@lists.linux.dev
-X-Gm-Message-State: AOJu0YxpfqfLLpZ6BCCJ9RwTkmxQHGI1W73za275UzinC/on5HMpxAaF
-	/3MougpQB1ZRwUZCecQ4jOX82pqA3SG9FckQ9ViKx1G2dZ4heYs3
-X-Gm-Gg: ASbGncsBfJ3dCr6uvsZvpcQatstyd3f7Vf30aKnBExI5BviSfbmrYNGiFmJF0xGT42j
-	Gt17aq0QeRgUHmAfNEKwzvYGjp+8+SqD44SNx2i8xWh0DBAQWAhqws/dPpcmNREYKYYBgv/eGt+
-	qOy5r+mIuNNz0EyW+TUyOALPy06WBzL59OBWlCkEoDwqNWGmBgo4fmx+OdAMJOCGlunVCmjZgsz
-	4TMzhXv2ryD05KYKO33JZFYZeJO0/Xn385PoPxD7pGzgFrDUL/ZebtPmUj21KzbCt00SZqGENib
-	QfDTiFIUaOFDPbA=
-X-Google-Smtp-Source: AGHT+IGA23Ky/6K1hLSlTaGOzyYMHc1wGHqIfEJ8xAUCi8at04bQFz8GD3I/8Kj7sYnVrWvjXsXjWg==
-X-Received: by 2002:a17:902:e80a:b0:216:6769:9ed7 with SMTP id d9443c01a7336-21c355c7dc2mr753720045ad.40.1738052494133;
-        Tue, 28 Jan 2025 00:21:34 -0800 (PST)
-Received: from archie.me ([103.124.138.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da3d9e173sm76602675ad.32.2025.01.28.00.21.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2025 00:21:33 -0800 (PST)
-Received: by archie.me (Postfix, from userid 1000)
-	id 88B8C420A74B; Tue, 28 Jan 2025 15:21:25 +0700 (WIB)
-Date: Tue, 28 Jan 2025 15:21:25 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
-	kevin.tian@intel.com, corbet@lwn.net, will@kernel.org
-Cc: joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
-	dwmw2@infradead.org, baolu.lu@linux.intel.com, shuah@kernel.org,
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
-	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
-	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
-	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v6 11/14] Documentation: userspace-api: iommufd: Update
- FAULT and VEVENTQ
-Message-ID: <Z5iThcDwBmBHZBJd@archie.me>
-References: <cover.1737754129.git.nicolinc@nvidia.com>
- <300d03449b9420d756c1589e1c24bb8b4d508293.1737754129.git.nicolinc@nvidia.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=efault@gmx.de header.b="kaVI8ecB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1738064770; x=1738669570; i=efault@gmx.de;
+	bh=DKW3PGnLpxp0eBpGt94GZs93L4UL5AMwdX8B5I369cI=;
+	h=X-UI-Sender-Class:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
+	 References:Content-Type:MIME-Version:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=kaVI8ecBP1WDLgh5ucOveomVWrFbpXtSKf3fEf40WJNHVubDOBKb+kPEpv2DVHiB
+	 +nWZXaUfa0h8+8oUhP0sduFFSjdNfV30rAb68pbu8123VzrKxGCdMzTZWyGB4hN6V
+	 GPMT4IRK8z1zSsDNjTAko52WG+/4160AfpsTxvyy28ueSFexIEVjmzKphas4Hu3lO
+	 fWP0N2XKOrGS/XYB69dYrw16e8KlYZo11VoFAQlbFCp2qdqCKczT82/m+TN7fdPfB
+	 Zg+1NVY93Ux7kaQ0Ulu3iAbkHPd6QWIusf73KcCb47juVH8XKf9W4sONtO0yIYQSv
+	 vN+MvMbwF7I2qHjuMQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from homer.fritz.box ([91.212.106.53]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mlf4S-1tCmtX3AIs-00ddMH; Tue, 28
+ Jan 2025 12:46:09 +0100
+Message-ID: <bfc6d9c18eaa856cddb062ebc07c398a16d91353.camel@gmx.de>
+Subject: Re: [PATCH 6.12 000/122] 6.12.11-rc1 review
+From: Mike Galbraith <efault@gmx.de>
+To: Ron Economos <re@w6rz.net>, Peter Zijlstra <peterz@infradead.org>, Arnd
+	Bergmann <arnd@arndb.de>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev,  linux-kernel@vger.kernel.org, Linus Torvalds
+ <torvalds@linux-foundation.org>,  Andrew Morton
+ <akpm@linux-foundation.org>, Guenter Roeck <linux@roeck-us.net>, shuah
+ <shuah@kernel.org>,  patches@kernelci.org, lkft-triage@lists.linaro.org,
+ Pavel Machek <pavel@denx.de>,  Jon Hunter <jonathanh@nvidia.com>, Florian
+ Fainelli <f.fainelli@gmail.com>, Sudip Mukherjee
+ <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net, rwarsow@gmx.de, Conor
+ Dooley <conor@kernel.org>, hargar@microsoft.com, Mark Brown
+ <broonie@kernel.org>,  Anders Roxell <anders.roxell@linaro.org>, Vincent
+ Guittot <vincent.guittot@linaro.org>, Dan Carpenter
+ <dan.carpenter@linaro.org>
+Date: Tue, 28 Jan 2025 12:46:07 +0100
+In-Reply-To: <faa9e4ef-05f5-4db1-8c36-e901e156caea@w6rz.net>
+References: <20250121174532.991109301@linuxfoundation.org>
+	 <CA+G9fYtv3NNpxuipt8Dxa_=0DhieWWc07kDgCDBM+o0gKRi4Dw@mail.gmail.com>
+	 <cc947edf-bece-498c-bcb0-5bc403141257@app.fastmail.com>
+	 <20250122105949.GK7145@noisy.programming.kicks-ass.net>
+	 <faa9e4ef-05f5-4db1-8c36-e901e156caea@w6rz.net>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.4 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m1sZIbxqV2u1bbA+"
-Content-Disposition: inline
-In-Reply-To: <300d03449b9420d756c1589e1c24bb8b4d508293.1737754129.git.nicolinc@nvidia.com>
-
-
---m1sZIbxqV2u1bbA+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LNd3PNtVtBWcaN0qY6J2BQCF9cxhKokTA2IeDesDglvUGDt3Qjs
+ 0zC827kqaRKoRzQWzfQttSjwySiBD9JHxtD9AAMWt1bVDIv9x21wODFzJsywbv5fnR8hJRb
+ T1n37+XOLRSLcMTQ3XSySTYbrnfjvJDlOtrhihTNXxV7TMIwPSqwwWJiLffqzkY9HGOjCGo
+ epHlDMCyO9AhMfKmKJZNg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Mx5CRPGPBrI=;TL8UPd/L2cg5suTaAQbInBWk8kw
+ K9G0OSYscgZ5rM++qcOh1ug89flTbw34+Ei94xcjXgnBFEIx4AfbLbzECkKk5qn4nIfD/6zqq
+ IevWCQIoIF7qF2d0yOSUxh1ltU/tvLWWa2KrJUU0p31sUtmFomRvV6s2t9TKJwJeMU5TmeCgt
+ XbxKVzET0EGTajLQQjHh7I1rTl8klxgNBHiSx/nuT5OdaSDc4aF9JEkw4V6kVHH+pMI1hHn1H
+ WD8vgXP7NFaswB5Q5JTNZNOV1zj+LefJ40bA6UyOGPTEsovgMjfazBlny+Dp51pu/5czBXONC
+ jyvBd28B7J3739tS4MX1ys9L8/8vjdxsT8D6MgAw5etM1PG9mBk5I+TXu+aOHEmxgwhe+ux0s
+ N7BgSXGRKTyjJaRVymh1OHeYp861W6AREK4xOqU8hjRBd7XCtvuEe1dnF7U8HGwCaNibZx97S
+ r1ZJqcBOdEvbEoO8uivGAefZp45Enz5MvnhkqqqSJivl1EeEbdYD7zmINdspHFuu5cdxavlRQ
+ QNhxCeskmue9II/HbSd4wtcx9dR9+1kSPEp6i/zhQlk/W0GBnRiGX8H8dzeMhISTFc+lytb+a
+ UTYb6xLfV83pk0oxFIVur4OL1oif94dr2iBVtcNembR5943soJhjJ6wYVxY5YBGz8UmA8gr64
+ xoIA2OCz28t/WwmyzisilDDONszDLaPY9jgkKqgyIenA6ts1bGcJUix+dSdxnu4cGipYq9W8s
+ eMMDLK/Bux37PpCpWHfDKlj3F7FRn42TVBccjGe7JfBAF4LnkZe9MF9cwpbXI+tZyo1gjmga3
+ GQRVZCr5WWuFNBCwinrIgmq0Keq11V42F6o4WOQqzsphRRhoUGJqYHt2l1aLPC0tf6SezzZNq
+ hy+I9duvYGulLF3yfkmHHZ2W0bOz/w7erpFDvmdPijN2OMULLgC/IgAO8TZ9gPwKGHnC/c9Rt
+ MSz/l2+UMQOi8GtYxAkPQCYXRMLu2T/4c7jflR1CtK8bXRYIdCMq7DnRrPJsN17DBZ12imK/h
+ 69a0CSURzp8bOIbjZjwsckaY4ucAj4NTrom9rzPUixq9LZWH3sgYsAo6W6CS3XZOpc1y8JiVn
+ HvDL9EVUPAmRRSWZaggyl0nsAiXYkOycbYv5oPqeUstn8YsCi2aY+222lotX0vRHaxZdg9jlN
+ M39yjrT8VDqSozlZIE0sHJxUag23a5moTCXCysnSr6w==
 
-On Fri, Jan 24, 2025 at 04:30:40PM -0800, Nicolin Chen wrote:
-> diff --git a/Documentation/userspace-api/iommufd.rst b/Documentation/user=
-space-api/iommufd.rst
-> index 70289d6815d2..b0df15865dec 100644
-> --- a/Documentation/userspace-api/iommufd.rst
-> +++ b/Documentation/userspace-api/iommufd.rst
-> @@ -63,6 +63,13 @@ Following IOMMUFD objects are exposed to userspace:
->    space usually has mappings from guest-level I/O virtual addresses to g=
-uest-
->    level physical addresses.
-> =20
-> +- IOMMUFD_FAULT, representing a software queue for an HWPT reporting IO =
-page
-> +  faults using the IOMMU HW's PRI (Page Request Interface). This queue o=
-bject
-> +  provides user space an FD to poll the page fault events and also to re=
-spond
-> +  to those events. A FAULT object must be created first to get a fault_i=
-d that
-> +  could be then used to allocate a fault-enabled HWPT via the IOMMU_HWPT=
-_ALLOC
-> +  command by setting the IOMMU_HWPT_FAULT_ID_VALID bit in its flags fiel=
-d.
-> +
->  - IOMMUFD_OBJ_VIOMMU, representing a slice of the physical IOMMU instanc=
-e,
->    passed to or shared with a VM. It may be some HW-accelerated virtualiz=
-ation
->    features and some SW resources used by the VM. For examples:
-> @@ -109,6 +116,14 @@ Following IOMMUFD objects are exposed to userspace:
->    vIOMMU, which is a separate ioctl call from attaching the same device =
-to an
->    HWPT_PAGING that the vIOMMU holds.
-> =20
-> +- IOMMUFD_OBJ_VEVENTQ, representing a software queue for a vIOMMU to rep=
-ort its
-> +  events such as translation faults occurred to a nested stage-1 (exclud=
-ing I/O
-> +  page faults that should go through IOMMUFD_OBJ_FAULT) and HW-specific =
-events.
-> +  This queue object provides user space an FD to poll/read the vIOMMU ev=
-ents. A
-> +  vIOMMU object must be created first to get its viommu_id, which could =
-be then
-> +  used to allocate a vEVENTQ. Each vIOMMU can support multiple types of =
-vEVENTS,
-> +  but is confined to one vEVENTQ per vEVENTQ type.
-> +
->  All user-visible objects are destroyed via the IOMMU_DESTROY uAPI.
-> =20
->  The diagrams below show relationships between user-visible objects and k=
-ernel
-> @@ -251,8 +266,10 @@ User visible objects are backed by following datastr=
-uctures:
->  - iommufd_device for IOMMUFD_OBJ_DEVICE.
->  - iommufd_hwpt_paging for IOMMUFD_OBJ_HWPT_PAGING.
->  - iommufd_hwpt_nested for IOMMUFD_OBJ_HWPT_NESTED.
-> +- iommufd_fault for IOMMUFD_OBJ_FAULT.
->  - iommufd_viommu for IOMMUFD_OBJ_VIOMMU.
->  - iommufd_vdevice for IOMMUFD_OBJ_VDEVICE.
-> +- iommufd_veventq for IOMMUFD_OBJ_VEVENTQ.
-> =20
->  Several terminologies when looking at these datastructures:
-> =20
+On Wed, 2025-01-22 at 03:11 -0800, Ron Economos wrote:
+> On 1/22/25 02:59, Peter Zijlstra wrote:
+> > On Wed, Jan 22, 2025 at 11:56:13AM +0100, Arnd Bergmann wrote:
+> > > On Wed, Jan 22, 2025, at 11:04, Naresh Kamboju wrote:
+> > > > On Tue, 21 Jan 2025 at 23:28, Greg Kroah-Hartman
+> > > > <gregkh@linuxfoundation.org> wrote:
+> > > > 0000000000000000
+> > > > <4>[=C2=A0 160.712071] Call trace:
+> > > > <4>[ 160.712597] place_entity (kernel/sched/fair.c:5250 (discrimin=
+ator 1))
+> > > > <4>[ 160.713221] reweight_entity (kernel/sched/fair.c:3813)
+> > > > <4>[ 160.713802] update_cfs_group (kernel/sched/fair.c:3975 (discr=
+iminator 1))
+> > > > <4>[ 160.714277] dequeue_entities (kernel/sched/fair.c:7091)
+> > > > <4>[ 160.714903] dequeue_task_fair (kernel/sched/fair.c:7144 (disc=
+riminator 1))
+> > > > <4>[ 160.716502] move_queued_task.isra.0 (kernel/sched/core.c:2437
+> > > > (discriminator 1))
+> > > I don't see anything that immediately sticks out as causing this,
+> > > but I do see five scheduler patches backported in stable-rc
+> > > on top of v6.12.8, these are the original commits:
+> > >
+> > > 66951e4860d3 ("sched/fair: Fix update_cfs_group() vs DELAY_DEQUEUE")
+> > This one reworks reweight_entity(), but I've been running with that on
+> > top of 13-rc6 for a week or so and not seen this.
+>
+> The offending commit is 6d71a9c6160479899ee744d2c6d6602a191deb1f
+> "sched/fair: Fix EEVDF entity placement bug causing scheduling lag"
+>
+> It works fine on 6.13, at least on RISC-V (which is the only arch I test=
+).
 
-Looks good, thanks!
+Seems 6.13 is gripe free thanks to it containing 4423af84b297.
 
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
+I stumbled upon a reproducer for my x86_64 desktop box: all I need do
+is fire up a kvm guest in an enterprise configured host.  That inspires
+libvirt goop to engage group scheduling, splat follows instantly.
 
---=20
-An old man doll... just what I always wanted! - Clara
+Back 4423af84b297 out of 6.13, it starts griping, add it to a 6.12 tree
+containing 6d71a9c61604, it stops doing so.
 
---m1sZIbxqV2u1bbA+
-Content-Type: application/pgp-signature; name="signature.asc"
+> It's already been reverted and 6.12.11-rc2 has been pushed out.
 
------BEGIN PGP SIGNATURE-----
+So stable should perhaps take 4423af84b297 along with 6d71a9c61604?
 
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZ5iTgAAKCRD2uYlJVVFO
-ozC2AQDPP1Rr/NEdpC96sqjf+s6u1DgXFgQ1dghVRl94136J4AD/UQWE5HkY2pgd
-+/5yHWzPSekTkat+mn1D4NZcmc/8IQI=
-=M8Cm
------END PGP SIGNATURE-----
-
---m1sZIbxqV2u1bbA+--
+	-Mike
