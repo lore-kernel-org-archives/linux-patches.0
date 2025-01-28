@@ -1,156 +1,179 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96694D8C8
-	for <patches@lists.linux.dev>; Sun, 26 Jan 2025 07:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 065521DED59;
+	Tue, 28 Jan 2025 08:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737876392; cv=none; b=QTKYMAkaSTBODAk5oy+DfUqmVTyF5MJUXxxE0h8/JZsQw75Zt7j5Dd2MhnjtiQB4YNVSCY4FMMz9pJfsnz6X9WYKbS3mLvKFMfD1AAQEXQr3TBbUY+L54szMK5bdt4dEMtY6DjjpoHGJreUna/IAj3xPAF4IT0WiiI7eFif2U18=
+	t=1738052496; cv=none; b=ocOg8Lfj/nQnhg+pJDSpClQGj+I/lcW36lVtFQqIhdpU0RQTmZoBtCQ7gFQQTFfMp5rc4CuJarmyb+lY3Ceu+F7TkDzOgJp1JpAqhPHcPr+XBou6Q+4DKmNOyzF35z2st7YjDwhXLeGpyuXcrf7GelOhfziuv3CT/R590idjbgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737876392; c=relaxed/simple;
-	bh=NyRI9Satwu4DQJH+8IfZu6r0UeUiVWZIi2bjDu2lW2M=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GCwOgWFL/6sOf2CK/TDzgTOZ0DlRfq7hQwtPWSqFUOAfGUabLFDm9OVxPm+6O5Pvt/4Q6Il0d+PlWvxkmPH+oxNCfI9JMHxWaYK7PDfHXXeBWqkDEuXB6u50p9viiEyMb9Sgi1F6gtTq5EMCtq+0fZmGEH+0Gj0uJuaNNbeksdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BFue5N2r; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1738052496; c=relaxed/simple;
+	bh=RSQ/gaKSYUHj2DbU1SSchGtbIQBxw/a/cur2nGw8Xnw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KN6HiBUGDLZCaGpw+lk7RQfOkiRq3/DZib2Cn0k7mbSP6ye1XpOPFpUF6i4NeGobI+JV599L1bab2cp3kE64FYQnRYfiOCOjs3Sdx87PTV7r2euHiTx1fXnvm9pBY9y68zmyLk1ojN+FRHSqusy6OoXwJKxUT+sonwXRTpi/KxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KKJZdeiM; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BFue5N2r"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2164b1f05caso58676445ad.3
-        for <patches@lists.linux.dev>; Sat, 25 Jan 2025 23:26:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KKJZdeiM"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2165cb60719so93976735ad.0;
+        Tue, 28 Jan 2025 00:21:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737876390; x=1738481190; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZFI0HaY8q73gv6QwNnnXtgPC3k8vf0PbOjWX90oh3Ew=;
-        b=BFue5N2rfXiXdlMxqu5Zew1fFpZlFRXl7y6FDkBmiIe8xENksg52aw4g1E/lGNAHdc
-         5txpq/H9BADSbT1Adu9hmVRQDI+PbeHJ3Tq1Jooj7cNPBXKT2gFakUOVkBvkoiiMn30D
-         QC7H0AFJb3bIvFD11nwKBORGYmw8ozLSzQ+vQdM0hAo73tS1NPsc0H10TBbNGUWsj/AE
-         u35Rg2io8Of0slIUWYzV6LQ7WAL+xxd6VITJKC0fJa/wz0U+e3m3QBckWBd64Y7aaKAF
-         DZTA/lk7uxjO4O17GFuZLUl6clLJ5XoR1uTMVE7YNJCED45oAk6uI9L78sjDq8L5AT0x
-         8LtQ==
+        d=gmail.com; s=20230601; t=1738052494; x=1738657294; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3fMuy/pYgza/riIVTVPhUzUfkiZ2bVUecFPV047zGXs=;
+        b=KKJZdeiMLfqTheXuuQ7GbFN+6RlrjIddX60oqgx6TYJoQ/2Ra3WxV+M5unEE3YoZf+
+         RGoTEBU4V01qBQP/fmwbvnVqVJARTtvWn7eG3QB2KiozSXryaR7Kb7DCoUbpXx3rRxAU
+         AcE2IIfDekUCMX5LCdCCwqEiEelxBL6XU3GITguino4+eSzkBp0GwnCeBpkLor2nC9f/
+         UVBtMLhjs6xzpHN8ywiw/wDELL3yQE8LttnKFMLKgbt3XM/dLkPEu/WhMjGoFc6uDobY
+         9abMGMFuUaSfUPDcFnWi2/eFDgyJAUkoJXC7PrubNgk5OdWAqJLTv1S7mkBNotwQe9yx
+         1Zuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737876390; x=1738481190;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZFI0HaY8q73gv6QwNnnXtgPC3k8vf0PbOjWX90oh3Ew=;
-        b=PlxZ0CihLdjWbwxNs51i2mD+zwXbISq0DXbG+Iu34/mx9KYeKDrPDoP3dIhFN+zjuO
-         tDiAJSTS6EMBJRJLdNEaSSUU817xI9Ts4NauHTdMxx3UxX091t3CDsEs++KRofzD72sp
-         /5dKK5yA4nQrhQ6Yuq6jUADfK/j/IZVrKdeSHOD17vYgknGo6BIa7o0WgIVrPv4nLLEe
-         4Z4mSmZSgpY4lPvpwLBRhBOkZbflaaFOt6fY7cUlgMrrnkfkBQsA+k5dqF+RwWgIFhth
-         HfxwGjS8ByjS/K8Cuts3ufbft+a4vnYahPosivL+D8Z5Uoo+NUBS1VHgtHAi0BSAOQgK
-         5izw==
-X-Forwarded-Encrypted: i=1; AJvYcCWvxxWtf/2xVvkxWE++cggq0xSixlW9lcRydoKc/RvtMLQDYdoSawyX411djq8tk5Wz6YO+P8NC@lists.linux.dev
-X-Gm-Message-State: AOJu0YzfDqjeyZ7F8NK14f4u3fpq4SZfWOJrGnG+Q3Tfub6RJ4sfohnt
-	hVoDaQfbcEYRn8qwOOT9VTAhWXSAbU+f/9Bkf/KbjAyhY/DWxa4y
-X-Gm-Gg: ASbGncuKGojVYlskS2fATlCHbDAevwTQlTn7TyKu3vqQORqdDZHdFij6xz724C2xS57
-	8+WKsHUBmXRkj/C+ktBR4FWDRmkbDNJItnjPSSxIuQystRlhyQ7ZYqJADMqjbT6tcxzu4OJNN9T
-	epxQAJmPxLuWc1rj/vjdFIyTEo4Wq0DPSwakzD+/Rt7y0a95UiFtXc1PtVduCov9sQdLB8wBEbZ
-	8QQRrG9uFtvWfWO7nyxxHNp3jgX5IDZhnaxrpzIuI8/hQGGu1wp/f2FsP1ciHrDAxYXYlRjFgrI
-	UhnHTRmJo/D1ZpC33FXLBSOdOwQO
-X-Google-Smtp-Source: AGHT+IHWPwQzogsNSXBVIXjCZN69QYpzzS/w7TRxE9yb6ZQtXD/7HhfNnYiRm8XxIUmD11zSTcGaAA==
-X-Received: by 2002:a17:903:1ce:b0:216:4a06:e87a with SMTP id d9443c01a7336-21c355dc64bmr580552455ad.40.1737876389737;
-        Sat, 25 Jan 2025 23:26:29 -0800 (PST)
-Received: from jren-d3.localdomain ([221.222.59.31])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da3d9c605sm41804905ad.41.2025.01.25.23.26.26
+        d=1e100.net; s=20230601; t=1738052494; x=1738657294;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3fMuy/pYgza/riIVTVPhUzUfkiZ2bVUecFPV047zGXs=;
+        b=AGzbVlkhcLSh8FSZw5Kp5AlkhuRnZgBZ3Q+oE7U8e2KgBzUPiIXP8K/XWTDzGA365D
+         JBEoyY2NNeFPz01CSo+AHBysQcNQyRYKHAAKcmnOkK/YIbQgSBwbRAgiRo+dLBBB2Qc7
+         D6Gu4kynI4kHnWADvl/LnT/4XipSZMnqO6TFnE+vKHntYslghgHo00f5xjDYKgKk77XW
+         eQ6SkOMKmqwLXymHKbXb+1jDEJgVAlmg+b7MmRf2Ny9js/SF+DM0qQkMMeMlWMy0Lk9R
+         E2XdzhrbypzS57U8pu9f6AIJdzh/ynXTw0sYwonNnrrl5RiHXv/c8rR0YbZJ7p7rv6S+
+         ccCg==
+X-Forwarded-Encrypted: i=1; AJvYcCVM/iRBz1aXOxonVDFEJLMyQFiLVNkB7ebRaADpgAsvId9hD6C4CtRwUYhNrTtyoquEit0nvQ==@lists.linux.dev, AJvYcCXKH40rUTfF+1SvVounHV2HdWEWmphBmtPxcyIOYnNC3+JBEMOSqPDWMq+Z+ZTd+nIkQztQkjSlug==@lists.linux.dev
+X-Gm-Message-State: AOJu0YxpfqfLLpZ6BCCJ9RwTkmxQHGI1W73za275UzinC/on5HMpxAaF
+	/3MougpQB1ZRwUZCecQ4jOX82pqA3SG9FckQ9ViKx1G2dZ4heYs3
+X-Gm-Gg: ASbGncsBfJ3dCr6uvsZvpcQatstyd3f7Vf30aKnBExI5BviSfbmrYNGiFmJF0xGT42j
+	Gt17aq0QeRgUHmAfNEKwzvYGjp+8+SqD44SNx2i8xWh0DBAQWAhqws/dPpcmNREYKYYBgv/eGt+
+	qOy5r+mIuNNz0EyW+TUyOALPy06WBzL59OBWlCkEoDwqNWGmBgo4fmx+OdAMJOCGlunVCmjZgsz
+	4TMzhXv2ryD05KYKO33JZFYZeJO0/Xn385PoPxD7pGzgFrDUL/ZebtPmUj21KzbCt00SZqGENib
+	QfDTiFIUaOFDPbA=
+X-Google-Smtp-Source: AGHT+IGA23Ky/6K1hLSlTaGOzyYMHc1wGHqIfEJ8xAUCi8at04bQFz8GD3I/8Kj7sYnVrWvjXsXjWg==
+X-Received: by 2002:a17:902:e80a:b0:216:6769:9ed7 with SMTP id d9443c01a7336-21c355c7dc2mr753720045ad.40.1738052494133;
+        Tue, 28 Jan 2025 00:21:34 -0800 (PST)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da3d9e173sm76602675ad.32.2025.01.28.00.21.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 25 Jan 2025 23:26:29 -0800 (PST)
-From: Imkanmod Khan <imkanmodkhan@gmail.com>
-To: stable@vger.kernel.org
-Cc: luis.henriques@linux.dev,
-	tytso@mit.edu,
-	patches@lists.linux.dev,
-	gregkh@linuxfoundation.org,
-	adilger.kernel@dilger.ca,
-	linux-ext4@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@kernel.org,
-	Imkanmod Khan <imkanmodkhan@gmail.com>
-Subject: [PATCH 6.6.y] ext4: fix access to uninitialised lock in fc replay path
-Date: Sun, 26 Jan 2025 15:26:20 +0800
-Message-ID: <20250126072620.8474-1-imkanmodkhan@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        Tue, 28 Jan 2025 00:21:33 -0800 (PST)
+Received: by archie.me (Postfix, from userid 1000)
+	id 88B8C420A74B; Tue, 28 Jan 2025 15:21:25 +0700 (WIB)
+Date: Tue, 28 Jan 2025 15:21:25 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, jgg@nvidia.com,
+	kevin.tian@intel.com, corbet@lwn.net, will@kernel.org
+Cc: joro@8bytes.org, suravee.suthikulpanit@amd.com, robin.murphy@arm.com,
+	dwmw2@infradead.org, baolu.lu@linux.intel.com, shuah@kernel.org,
+	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kselftest@vger.kernel.org, linux-doc@vger.kernel.org,
+	eric.auger@redhat.com, jean-philippe@linaro.org, mdf@kernel.org,
+	mshavit@google.com, shameerali.kolothum.thodi@huawei.com,
+	smostafa@google.com, ddutile@redhat.com, yi.l.liu@intel.com,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v6 11/14] Documentation: userspace-api: iommufd: Update
+ FAULT and VEVENTQ
+Message-ID: <Z5iThcDwBmBHZBJd@archie.me>
+References: <cover.1737754129.git.nicolinc@nvidia.com>
+ <300d03449b9420d756c1589e1c24bb8b4d508293.1737754129.git.nicolinc@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="m1sZIbxqV2u1bbA+"
+Content-Disposition: inline
+In-Reply-To: <300d03449b9420d756c1589e1c24bb8b4d508293.1737754129.git.nicolinc@nvidia.com>
 
-From: "Luis Henriques (SUSE)" <luis.henriques@linux.dev>
 
-[ commit 23dfdb56581ad92a9967bcd720c8c23356af74c1 upstream ]
+--m1sZIbxqV2u1bbA+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The following kernel trace can be triggered with fstest generic/629 when
-executed against a filesystem with fast-commit feature enabled:
+On Fri, Jan 24, 2025 at 04:30:40PM -0800, Nicolin Chen wrote:
+> diff --git a/Documentation/userspace-api/iommufd.rst b/Documentation/user=
+space-api/iommufd.rst
+> index 70289d6815d2..b0df15865dec 100644
+> --- a/Documentation/userspace-api/iommufd.rst
+> +++ b/Documentation/userspace-api/iommufd.rst
+> @@ -63,6 +63,13 @@ Following IOMMUFD objects are exposed to userspace:
+>    space usually has mappings from guest-level I/O virtual addresses to g=
+uest-
+>    level physical addresses.
+> =20
+> +- IOMMUFD_FAULT, representing a software queue for an HWPT reporting IO =
+page
+> +  faults using the IOMMU HW's PRI (Page Request Interface). This queue o=
+bject
+> +  provides user space an FD to poll the page fault events and also to re=
+spond
+> +  to those events. A FAULT object must be created first to get a fault_i=
+d that
+> +  could be then used to allocate a fault-enabled HWPT via the IOMMU_HWPT=
+_ALLOC
+> +  command by setting the IOMMU_HWPT_FAULT_ID_VALID bit in its flags fiel=
+d.
+> +
+>  - IOMMUFD_OBJ_VIOMMU, representing a slice of the physical IOMMU instanc=
+e,
+>    passed to or shared with a VM. It may be some HW-accelerated virtualiz=
+ation
+>    features and some SW resources used by the VM. For examples:
+> @@ -109,6 +116,14 @@ Following IOMMUFD objects are exposed to userspace:
+>    vIOMMU, which is a separate ioctl call from attaching the same device =
+to an
+>    HWPT_PAGING that the vIOMMU holds.
+> =20
+> +- IOMMUFD_OBJ_VEVENTQ, representing a software queue for a vIOMMU to rep=
+ort its
+> +  events such as translation faults occurred to a nested stage-1 (exclud=
+ing I/O
+> +  page faults that should go through IOMMUFD_OBJ_FAULT) and HW-specific =
+events.
+> +  This queue object provides user space an FD to poll/read the vIOMMU ev=
+ents. A
+> +  vIOMMU object must be created first to get its viommu_id, which could =
+be then
+> +  used to allocate a vEVENTQ. Each vIOMMU can support multiple types of =
+vEVENTS,
+> +  but is confined to one vEVENTQ per vEVENTQ type.
+> +
+>  All user-visible objects are destroyed via the IOMMU_DESTROY uAPI.
+> =20
+>  The diagrams below show relationships between user-visible objects and k=
+ernel
+> @@ -251,8 +266,10 @@ User visible objects are backed by following datastr=
+uctures:
+>  - iommufd_device for IOMMUFD_OBJ_DEVICE.
+>  - iommufd_hwpt_paging for IOMMUFD_OBJ_HWPT_PAGING.
+>  - iommufd_hwpt_nested for IOMMUFD_OBJ_HWPT_NESTED.
+> +- iommufd_fault for IOMMUFD_OBJ_FAULT.
+>  - iommufd_viommu for IOMMUFD_OBJ_VIOMMU.
+>  - iommufd_vdevice for IOMMUFD_OBJ_VDEVICE.
+> +- iommufd_veventq for IOMMUFD_OBJ_VEVENTQ.
+> =20
+>  Several terminologies when looking at these datastructures:
+> =20
 
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 0 PID: 866 Comm: mount Not tainted 6.10.0+ #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x66/0x90
- register_lock_class+0x759/0x7d0
- __lock_acquire+0x85/0x2630
- ? __find_get_block+0xb4/0x380
- lock_acquire+0xd1/0x2d0
- ? __ext4_journal_get_write_access+0xd5/0x160
- _raw_spin_lock+0x33/0x40
- ? __ext4_journal_get_write_access+0xd5/0x160
- __ext4_journal_get_write_access+0xd5/0x160
- ext4_reserve_inode_write+0x61/0xb0
- __ext4_mark_inode_dirty+0x79/0x270
- ? ext4_ext_replay_set_iblocks+0x2f8/0x450
- ext4_ext_replay_set_iblocks+0x330/0x450
- ext4_fc_replay+0x14c8/0x1540
- ? jread+0x88/0x2e0
- ? rcu_is_watching+0x11/0x40
- do_one_pass+0x447/0xd00
- jbd2_journal_recover+0x139/0x1b0
- jbd2_journal_load+0x96/0x390
- ext4_load_and_init_journal+0x253/0xd40
- ext4_fill_super+0x2cc6/0x3180
-...
+Looks good, thanks!
 
-In the replay path there's an attempt to lock sbi->s_bdev_wb_lock in
-function ext4_check_bdev_write_error().  Unfortunately, at this point this
-spinlock has not been initialized yet.  Moving it's initialization to an
-earlier point in __ext4_fill_super() fixes this splat.
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
-Link: https://patch.msgid.link/20240718094356.7863-1-luis.henriques@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Imkanmod Khan <imkanmodkhan@gmail.com>
----
- fs/ext4/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+--=20
+An old man doll... just what I always wanted! - Clara
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 71ced0ada9a2..f019ce64eba4 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5366,6 +5366,8 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 	INIT_LIST_HEAD(&sbi->s_orphan); /* unlinked but open files */
- 	mutex_init(&sbi->s_orphan_lock);
- 
-+	spin_lock_init(&sbi->s_bdev_wb_lock);
-+
- 	ext4_fast_commit_init(sb);
- 
- 	sb->s_root = NULL;
-@@ -5586,7 +5588,6 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 	 * Save the original bdev mapping's wb_err value which could be
- 	 * used to detect the metadata async write error.
- 	 */
--	spin_lock_init(&sbi->s_bdev_wb_lock);
- 	errseq_check_and_advance(&sb->s_bdev->bd_inode->i_mapping->wb_err,
- 				 &sbi->s_bdev_wb_err);
- 	EXT4_SB(sb)->s_mount_state |= EXT4_ORPHAN_FS;
--- 
-2.25.1
+--m1sZIbxqV2u1bbA+
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZ5iTgAAKCRD2uYlJVVFO
+ozC2AQDPP1Rr/NEdpC96sqjf+s6u1DgXFgQ1dghVRl94136J4AD/UQWE5HkY2pgd
++/5yHWzPSekTkat+mn1D4NZcmc/8IQI=
+=M8Cm
+-----END PGP SIGNATURE-----
+
+--m1sZIbxqV2u1bbA+--
