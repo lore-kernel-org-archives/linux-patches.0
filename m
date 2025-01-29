@@ -1,128 +1,131 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D621AB6DE
-	for <patches@lists.linux.dev>; Tue, 28 Jan 2025 15:21:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB6F1AAA10
+	for <patches@lists.linux.dev>; Wed, 29 Jan 2025 10:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738077683; cv=none; b=gw8/umnhUrDaGAvz0fx9knCtroLhEfez22NVGPWRjGUsfiw+3hiDlglhbwZgFpg99vVQrcDYvbFxdFS7XTl7SwghBszNhw8cffJWPVi1kCmRnsHd9rZhnW6WbYWnjP6a3Bph50IIqVKiI+BrdsTd35XR0knF4EIXc+Cyvs/Vbgo=
+	t=1738147459; cv=none; b=O3B5CgMcvEHiPPamwSM4/En5pt3ihWv7XC/FCBSQJ4XTwgv6UA+jR0SkoqE5zE1YaVvYfgSLxfxcIRQHM95xhwrdP7c9TRAxZrx9ybZedVOfsingU+3yMmrMTm27gTv53XGF2hJlQNtg4tbI6afCjL1lTf1aBJy6Iz7EvCOKcxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738077683; c=relaxed/simple;
-	bh=x/B9yX/e7R0UrYl5d1VDIwIS7elP7kUmpSEP5ElElyI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=St+VNtLtzyFNsKVEAGBOB4Pr5aebsav2pelH+Uq48JXABKA6v2VFIZHvU4i29x+yjxFGJ9xuAPLtbLcxrgbPelIzr48TVUoaKyK8d2I912XK8rhbtoAP5UwzyC3Pws/DDz1m8WGwocIDJ3kX6bL/Yb/RuKA/9BdNmXtS+SGra50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=efault@gmx.de header.b=MYpoSbYL; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1738147459; c=relaxed/simple;
+	bh=nv4VuGjSok28KFpMvnhhes+J9LZ2fUvq+BQK0GUr/X4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cULxzuKpW8YQRnKMVewPzYXzYtXwCX71+qg0w0aYCmoq1IfVWHCEDExbXf3PQNydxurXTPRl8Z2fZuHcJ9zW6qaGfCNfK2//CiVYL2Ztg0NiqDKEqLRm9EQErt4Mf3XXHaoAXdeBDfwynddYV7wfogyIFTT5yYj0lGgFb75uPEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=DT1Mli4v; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=efault@gmx.de header.b="MYpoSbYL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1738077659; x=1738682459; i=efault@gmx.de;
-	bh=x/B9yX/e7R0UrYl5d1VDIwIS7elP7kUmpSEP5ElElyI=;
-	h=X-UI-Sender-Class:Message-ID:Subject:From:To:Cc:Date:In-Reply-To:
-	 References:Content-Type:MIME-Version:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=MYpoSbYLi1Y9+ZFa2/1a0yI0UYq9nS4dBGsxzMnozk9a6k3xc7QZpxNRlh4lVxff
-	 RsJqhjRjfBUHWjUX8NkzeJy6Thq/aaPjc7OUM0fKRl9PZ5kW3paTOOggKHypWpCzl
-	 fGGg8HYkjrcOi/8OdHNuYuYHHkZlb7/jnJyOanUx0brq0JbhjOeXpa4SIMB/uojbG
-	 Io6zZNCstZyJtrYWO0HrENr66vAs0M2aG/jtmL2LtvyV6IUWYnZtsFo5pW80uamQx
-	 9QKPW/IM3NP2H6GCRLp7t0tXtMx3IVMx/LfvYxYBOBZegockoSTXd8T0NP1rXH9QQ
-	 Ob+VBQSxfqbKyWVE0A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from homer.fritz.box ([91.212.106.53]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0oBr-1tHwUQ2yCD-011heh; Tue, 28
- Jan 2025 16:20:59 +0100
-Message-ID: <b51f217d565609ae87395c8e23e62b15e489a0a4.camel@gmx.de>
-Subject: Re: [PATCH 6.12 000/122] 6.12.11-rc1 review
-From: Mike Galbraith <efault@gmx.de>
-To: Peter Zijlstra <peterz@infradead.org>
-Cc: Ron Economos <re@w6rz.net>, Arnd Bergmann <arnd@arndb.de>, Naresh
- Kamboju <naresh.kamboju@linaro.org>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,  stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,  Linus Torvalds
- <torvalds@linux-foundation.org>, Andrew Morton <akpm@linux-foundation.org>,
- Guenter Roeck <linux@roeck-us.net>, shuah <shuah@kernel.org>,
- patches@kernelci.org,  lkft-triage@lists.linaro.org, Pavel Machek
- <pavel@denx.de>, Jon Hunter <jonathanh@nvidia.com>, Florian Fainelli
- <f.fainelli@gmail.com>, Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
- srw@sladewatkins.net, rwarsow@gmx.de, Conor Dooley <conor@kernel.org>,
- hargar@microsoft.com, Mark Brown <broonie@kernel.org>,  Anders Roxell
- <anders.roxell@linaro.org>, Vincent Guittot <vincent.guittot@linaro.org>,
- Dan Carpenter <dan.carpenter@linaro.org>
-Date: Tue, 28 Jan 2025 16:20:57 +0100
-In-Reply-To: <20250128143949.GD7145@noisy.programming.kicks-ass.net>
-References: <20250121174532.991109301@linuxfoundation.org>
-	 <CA+G9fYtv3NNpxuipt8Dxa_=0DhieWWc07kDgCDBM+o0gKRi4Dw@mail.gmail.com>
-	 <cc947edf-bece-498c-bcb0-5bc403141257@app.fastmail.com>
-	 <20250122105949.GK7145@noisy.programming.kicks-ass.net>
-	 <faa9e4ef-05f5-4db1-8c36-e901e156caea@w6rz.net>
-	 <bfc6d9c18eaa856cddb062ebc07c398a16d91353.camel@gmx.de>
-	 <20250128143949.GD7145@noisy.programming.kicks-ass.net>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="DT1Mli4v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1738147457;
+	h=from:from:reply-to:reply-to:subject:subject:date:date:
+	 message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+	 content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yWrkOMQp0EgA1n2/2fll/3eIYbXZEI0l3kIseupr1do=;
+	b=DT1Mli4vvSphGLWtdulCl2AC1Y2EEPXg1HhiJ3fQ6E0ygcsOwMIGIlJtY5+NWbrR/hv/Yo
+	fSBrhiTvGLmKAwFHBSagp3vN1l1Ugpl4bQj2iwhel7ySuNJv4dNH2RknBITZmgG54GrqWi
+	er+IjrCLRAEOxHUhyEMAkwxCCPy5IP4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-EDJgvMXrOsWztsPrBgn9hQ-1; Wed, 29 Jan 2025 05:44:16 -0500
+X-MC-Unique: EDJgvMXrOsWztsPrBgn9hQ-1
+X-Mimecast-MFC-AGG-ID: EDJgvMXrOsWztsPrBgn9hQ
+Received: by mail-wm1-f71.google.com with SMTP id 5b1f17b1804b1-436219070b4so31446825e9.1
+        for <patches@lists.linux.dev>; Wed, 29 Jan 2025 02:44:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738147455; x=1738752255;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yWrkOMQp0EgA1n2/2fll/3eIYbXZEI0l3kIseupr1do=;
+        b=G4L9cZvzSPln48PxVV3vtWEpmizUarLUbf8u5toYqC5CQxs6Jt8wh/Q3CYTQNznrQD
+         ZF+OqEUNzKX3Qu8DISXrOBOVHl0IMw5bJ2tWr5HvY00zLX9bZ7NATGunScoAWEeukJma
+         XJD25yw7ySW1Vo9Vjm7iRK7tf33oc/wd2Js5OjgjeybY85OmQ7tMnhUE4mTVivfT//jh
+         u9vyf17l1Uc5c+DoX0wCoshb9gXOtGL450Io/MI++QEzXezJ8Yr9W1HPjiTFk/RuZ5JY
+         9YUjBcuf+v3yLRLXK9nHTnS2DVsIYBEuA75q51s3ANmqwu5nstzimyi+r86GEewqZUCy
+         0LkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWtWDWe71wKRq/uru+xYp0CRwqOBc9L4/SxXD/BB/jf9rw3FgSakzn/Y2YGzmrY36iDDXlhUFfy@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx+uzSF/tBRkdSFAu2D5/mayDwRboogX4JVYwzJLikztOnN1Oll
+	b5LTWvPqZau3hXvkt+0zDf2W1tsvbmuSj7fO15XAFWz7nDtotQ1OTkO3iclz6hLKGXjYyIPswCL
+	BFfR4JzlvLdmHW0LWWuddivTNJvdE8MfqcSWojlfKx3kLgiAqo8LAd3E=
+X-Gm-Gg: ASbGncsiylfZW5+HkyfuOaySpO+6+JNpOZt9iTkTLZNh3mifIbZwuKDj22wLuqLqzVq
+	My79BqCdEU8PGvtTS52B5dtsqypSQj//fuurCBua+ymKVmSS0BlGtswyFSkCeFgSIJUCimnDZw6
+	Y5DLXsI4YLIaaxckHLeo+RulzAOa0BVcPKvozJ5ET95PxNFtLKXeyIrsH6N1ZcHb09UBIvI89Eo
+	o+ia9EO8rfeAZXNbLvpzuyp/c7Ggq/Q3sW3aVnNhnuh/x+fbeSKetswhGVktThwNTQRG+ADrtYl
+	4KCPywSEvyfCduOGuFCBJy6/sQuJ/GKnDFx8EsZJa2APRA5wnHc8
+X-Received: by 2002:a05:600c:3d9b:b0:434:ff08:202b with SMTP id 5b1f17b1804b1-438dc3c360dmr20853805e9.12.1738147454885;
+        Wed, 29 Jan 2025 02:44:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHzPWEOLliL6813Vkt1ndANuVcfYh0Tyo6krKSjX7AbgdnEUM8NRt3/67xnxrixA9ILfXf4Jg==
+X-Received: by 2002:a05:600c:3d9b:b0:434:ff08:202b with SMTP id 5b1f17b1804b1-438dc3c360dmr20853365e9.12.1738147454482;
+        Wed, 29 Jan 2025 02:44:14 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874? ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438dcc2f73asm18251195e9.24.2025.01.29.02.44.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jan 2025 02:44:13 -0800 (PST)
+Message-ID: <840e41b8-15c7-4c4f-a503-818fb4729913@redhat.com>
+Date: Wed, 29 Jan 2025 11:44:11 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: base64
-X-Provags-ID: V03:K1:pGEnJgsdnuVPnK9+wy2jIlrs/IgmyWsstwKE6mY6h1zLm5a3qo/
- Zx9voJFFFp4Amcd6mKF0W3IeHBLKbcj1j58Gm6mvT1KzffonJ7zTB//nPsaMXZU41ovy1cS
- MY56Cksk2FxF4pcmzwjNJqvno6iVXYLSY2hQGdPVG1+oZo14AYOoMbAmM5wIshfy0KCqp/4
- nxXxBKpapmcvexNwyFlVA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:FEY3YyLg3tg=;3mCrZednNtJwNNT6r0uHLr2aleV
- D38J3OWjKaGKttY/gqHLTbC0mx8xFIFqqghaHpHLSzpoAbgKPoCToRQyRvrIoqb8hDvdwrNrO
- zfrNa3K0CUz+Xd7dwAe+cg3bnbg3zVfEcMn/njNMjZ1DKvWVzCmxpj94a4QGsMDgjWUmTYDtH
- uMr8lZgmvHNwCMEI2/YhkXkn7lTDMCQBRreJVZlwf+cSvOVWlHaksTqFIQkTPr+KIXWEtWuFp
- Ow8MiMHw4B1YxnoycvpQ0sqtf9b26l3LrbnfG449lEqwaMgBfKWN8lQcAdEbFcqp3I5OAp4Df
- K+nMOdV7leBPAUAE23/H/GNYQROafSlhdFDP60FC6CXKrHd6QVPFiAGwMPkVeRA2jjZSKEe/9
- OcjJ6Ti5Zzy83cpvC2Iplydx9Zjn8PuVc9/BtTQjn63CxCKPTxJax2I8aTh2VeLSRMSvtvdzd
- YdjLCI5WYEyhkeqbphqutZueIAf32LGCS2Qk/dzrLYeNeJOU26nMzbC+447YAFAap6V131p4m
- Jp/E8fq67/IL7SKj3NvF6AV/oF3rVwG8H4GZuDPxqhKheXh/igHSNkb2G46UTfmjpZ603/hX7
- jIOvK3kxoQKg6JIhRVczpb2iAdDKZur1L34UAfY5o8yDLjpdU5VUifFe3ACPr6w20ScIwLkiH
- XWr2Of/74drxmKPB+DdpgXCobrhoKop0VBJMfx5lZAtgSBHKH8KEKx9Inhd9TDsg07vj07uZl
- LZvVJd3Je72GNaXKoZh3LwR90YKadVo5e6E591ghl6vdV6Rl1Mi4tdp+T3dBJJ81LZVRoy+kD
- mnRH4AbZrWnoDZ1B+P8h382sTPYKTfTRCdOn+lf2UihAZH0DUid3PnpigTTUv0nKedXZrWXeE
- /TAgQXRv1qWJG8XlrsP3YEmiHoMHX/KVWOnrsKBIzILtmsyO7Hs6hP8xvuGo8tGD2QSRpi/73
- Xnoo/lfPgnycpm3ifjspNGmdeBEVEwgo/h8SSLGeapiZKsEkgkvYo10xV/uwCrFnH5a4Qinjk
- 2TXiygmWVZL7sPYzyqGqHYRP9+tB5QJcDn0Mqovy+jQg0FEpPVouRC6ByGCJU4cP9oq5WNviw
- YlDZuTKWUU/4336IICM2L+BM2tYYKlvblLgEDU7KMS0g4HQhazBETA3ydGsjQt6hpilrI6Dxa
- FV51ZHcwK8aAbrB88wp58gOFX+mAM0gAus0d9/f8BKQ==
+User-Agent: Mozilla Thunderbird
+Reply-To: eric.auger@redhat.com
+Subject: Re: [PATCH RFCv2 02/13] genirq/msi: Rename
+ iommu_dma_compose_msi_msg() to msi_msg_set_msi_addr()
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, will@kernel.org,
+ robin.murphy@arm.com, kevin.tian@intel.com, tglx@linutronix.de,
+ maz@kernel.org, alex.williamson@redhat.com, joro@8bytes.org,
+ shuah@kernel.org, reinette.chatre@intel.com, yebin10@huawei.com,
+ apatel@ventanamicro.com, shivamurthy.shastri@linutronix.de,
+ bhelgaas@google.com, anna-maria@linutronix.de, yury.norov@gmail.com,
+ nipun.gupta@amd.com, iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, kvm@vger.kernel.org,
+ linux-kselftest@vger.kernel.org, patches@lists.linux.dev,
+ jean-philippe@linaro.org, mdf@kernel.org, mshavit@google.com,
+ shameerali.kolothum.thodi@huawei.com, smostafa@google.com, ddutile@redhat.com
+References: <cover.1736550979.git.nicolinc@nvidia.com>
+ <242034456c0bfcd7ecf75cb29d8e5c99db0675d6.1736550979.git.nicolinc@nvidia.com>
+ <fa9b443d-e068-41bc-ad03-9f04818c72e0@redhat.com>
+ <20250123185002.GV5556@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250123185002.GV5556@nvidia.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 34F0yjaS0uNe0ilXrFYlKVul88yvWcUPve0zm7G61j0_1738147455
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-T24gVHVlLCAyMDI1LTAxLTI4IGF0IDE1OjM5ICswMTAwLCBQZXRlciBaaWpsc3RyYSB3cm90ZToN
-Cj4gT24gVHVlLCBKYW4gMjgsIDIwMjUgYXQgMTI6NDY6MDdQTSArMDEwMCwgTWlrZSBHYWxicmFp
-dGggd3JvdGU6DQo+IA0KPiA+IFNlZW1zIDYuMTMgaXMgZ3JpcGUgZnJlZSB0aGFua3MgdG8gaXQg
-Y29udGFpbmluZyA0NDIzYWY4NGIyOTcuDQo+ID4gDQo+ID4gSSBzdHVtYmxlZCB1cG9uIGEgcmVw
-cm9kdWNlciBmb3IgbXkgeDg2XzY0IGRlc2t0b3AgYm94OiBhbGwgSSBuZWVkIGRvDQo+ID4gaXMg
-ZmlyZSB1cCBhIGt2bSBndWVzdCBpbiBhbiBlbnRlcnByaXNlIGNvbmZpZ3VyZWQgaG9zdC7CoCBU
-aGF0IGluc3BpcmVzDQo+ID4gbGlidmlydCBnb29wIHRvIGVuZ2FnZSBncm91cCBzY2hlZHVsaW5n
-LCBzcGxhdCBmb2xsb3dzIGluc3RhbnRseS4NCj4gPiANCj4gPiBCYWNrIDQ0MjNhZjg0YjI5NyBv
-dXQgb2YgNi4xMywgaXQgc3RhcnRzIGdyaXBpbmcsIGFkZCBpdCB0byBhIDYuMTIgdHJlZQ0KPiA+
-IGNvbnRhaW5pbmcgNmQ3MWE5YzYxNjA0LCBpdCBzdG9wcyBkb2luZyBzby4NCj4gDQo+IE9vaCwg
-ZG9lcyBzb21ldGhpbmcgbGlrZSB0aGUgYmVsb3cgKCstIHJldmVyc2UtcmVuYW1lcyBhcyBhcHBs
-aWNhYmxlIHRvDQo+IC4xMikgYWxzbyBoZWxwPw0KDQpZdXAsIHNlZW1zIHRvLCA2LjEzIHNhbnMg
-NDQyM2FmODRiMjk3IHN0b3BwZWQgZ3JpcGluZy4NCg0KPiAtLS0NCj4gZGlmZiAtLWdpdCBhL2tl
-cm5lbC9zY2hlZC9mYWlyLmMgYi9rZXJuZWwvc2NoZWQvZmFpci5jDQo+IGluZGV4IGI2NzIyMmRl
-YTQ5MS4uODc2NmY3ZDNkMjk3IDEwMDY0NA0KPiAtLS0gYS9rZXJuZWwvc2NoZWQvZmFpci5jDQo+
-ICsrKyBiL2tlcm5lbC9zY2hlZC9mYWlyLmMNCj4gQEAgLTM3ODEsNiArMzc4MSw3IEBAIHN0YXRp
-YyB2b2lkIHJld2VpZ2h0X2VudGl0eShzdHJ1Y3QgY2ZzX3JxICpjZnNfcnEsIHN0cnVjdCBzY2hl
-ZF9lbnRpdHkgKnNlLA0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHVwZGF0ZV9l
-bnRpdHlfbGFnKGNmc19ycSwgc2UpOw0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oHNlLT5kZWFkbGluZSAtPSBzZS0+dnJ1bnRpbWU7DQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgc2UtPnJlbF9kZWFkbGluZSA9IDE7DQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqBjZnNfcnEtPm5yX3F1ZXVlZC0tOw0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoGlmICghY3VycikNCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgX19kZXF1ZXVlX2VudGl0eShjZnNfcnEsIHNlKTsNCj4gwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqB1cGRhdGVfbG9hZF9zdWIoJmNmc19ycS0+bG9hZCwgc2UtPmxv
-YWQud2VpZ2h0KTsNCj4gQEAgLTM4MTEsNiArMzgxMiw3IEBAIHN0YXRpYyB2b2lkIHJld2VpZ2h0
-X2VudGl0eShzdHJ1Y3QgY2ZzX3JxICpjZnNfcnEsIHN0cnVjdCBzY2hlZF9lbnRpdHkgKnNlLA0K
-PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHBsYWNlX2VudGl0eShjZnNfcnEsIHNl
-LCAwKTsNCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBpZiAoIWN1cnIpDQo+IMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoF9fZW5xdWV1ZV9l
-bnRpdHkoY2ZzX3JxLCBzZSk7DQo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBjZnNf
-cnEtPm5yX3F1ZXVlZCsrOw0KPiDCoA0KPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oC8qDQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICogVGhlIGVudGl0eSdzIHZy
-dW50aW1lIGhhcyBiZWVuIGFkanVzdGVkLCBzbyBsZXQncyBjaGVjaw0KDQo=
+Hi Jason,
+
+
+On 1/23/25 7:50 PM, Jason Gunthorpe wrote:
+> On Thu, Jan 23, 2025 at 06:10:54PM +0100, Eric Auger wrote:
+>
+>>> -/**
+>>> - * iommu_dma_compose_msi_msg() - Apply translation to an MSI message
+>>> - * @desc: MSI descriptor prepared by iommu_dma_prepare_msi()
+>>> - * @msg: MSI message containing target physical address
+>>> - */
+>>> -static inline void iommu_dma_compose_msi_msg(struct msi_desc *desc,
+>>> -					     struct msi_msg *msg)
+>>> +static inline void msi_msg_set_msi_addr(struct msi_desc *desc,
+>>> +					struct msi_msg *msg, u64 msi_addr)
+>> nit: msi_msg_set_addr(ess) may be enough as the populated fields are
+>> address_lo/hi
+> Not sure I follow, you suggest to use msi_msg_set_addr() as the
+> function name? Seems Ok
+Yes my minor point was just about removing the "msi" redundancy
+
+Eric
+>
+> Jason
+>
+
