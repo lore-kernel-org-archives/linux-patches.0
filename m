@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B351E522;
-	Thu, 30 Jan 2025 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979561E522;
+	Thu, 30 Jan 2025 14:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247297; cv=none; b=SPItvrfSWAQYjobWIvW+Fm79cSofV+7+K9b8TuRDcOJ4KtNX2UdlKS2wFMBh4V2EdINpA/qUitMfDhdaBSHkyprPPSkPD86ZsTAhVvVwMTaGkQLlhLU24rMPOWPr4gN07yK4cSUyrD0xyyqMP/zN79OqZLjrz5CSruAv5z4lQLM=
+	t=1738247300; cv=none; b=B3fPTxbllGUDn3jaj5J3zgEODmWn1eAGRY7JaYLKWymvR60Qm8tfAFMv+13WUlL67OQXs7+Y19diiq1CFIDY1+k2twHeHiyYCxCOz+l+CwtgJAU/8xzEKdpNqWGhc422AfMLM8B/bhz8PHPGu+4AbkTjgmxpG/8rcFNepw8TcEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247297; c=relaxed/simple;
-	bh=A/KZO45pPPXc33zgC/gjKvAIULTh+cBWXE8OVUaNjGk=;
+	s=arc-20240116; t=1738247300; c=relaxed/simple;
+	bh=W0kOuUbum31y2JTChW65NnK2kRC/jozW4rIiOnfzvik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H/pePh20JYxEiFqOGAyWcsnfiPvReosx5ZahTJvBKMlhR4LzJ68k17231dkALrjlyLWj6rmQSBYF+2ANRT4SQhPuj4wu5JJGIueSLOnB//v9KjPsSfww1150fpde3nQ/Te2TccJDT4Tb1yYTQKyyIW8NWDqbWLxqIz4QE+jo+uY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4wq7kzG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m8FpD35ssgipd5cHkafWdzavj2K7FnjxhFkwb7/FcjbV66x0Yc8CSUTusUs0jPR4kD0GrFVJIse59GPYuPrJTxcroGBY+aaL8w3397R1PcXz/NxwnL02G1+/9BeXSsawl+BzwKGxXiy+9UTrwwOmgiG0jqKRdDQW7OB0DUQRdtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkIC+Dme; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4wq7kzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D35C4CED2;
-	Thu, 30 Jan 2025 14:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkIC+Dme"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD3A6C4CED2;
+	Thu, 30 Jan 2025 14:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247297;
-	bh=A/KZO45pPPXc33zgC/gjKvAIULTh+cBWXE8OVUaNjGk=;
+	s=korg; t=1738247300;
+	bh=W0kOuUbum31y2JTChW65NnK2kRC/jozW4rIiOnfzvik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4wq7kzGTGyt70uBaxYCyjNEeQq+GDkLzVbggkdrSrzfp6CFCXlB1uc3a4Iehga71
-	 fLsdpO7w3DJfVKNdKQxXK/A5NXWQFWlYJEjgplP3SNzTqcxT2o1eHCProRQXawPC6W
-	 wMiDzG22aTLjN/sYjIVR5I+YLQF6CaSiTLC66QgM=
+	b=AkIC+DmefKJTwHWHcPZWHQKHkbV5Dj0z5Wh3QRD0BhBcj1d2ISIWDfti448O343pr
+	 194A3DNAXWJx3u0oP1es2iNgpwUXwbPQYg6SYrUk3N5Eq5Wqc1imhQskXgzsGRnMmQ
+	 MBoOUToJ0JHluEAx5mz5+gHyqvysD72n6rn96Jz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 08/24] mptcp: dont always assume copied data in mptcp_cleanup_rbuf()
-Date: Thu, 30 Jan 2025 15:02:00 +0100
-Message-ID: <20250130140127.632501332@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Kun Hu <huk23@m.fudan.edu.cn>
+Subject: [PATCH 5.15 09/24] gfs2: Truncate address space when flipping GFS2_DIF_JDATA flag
+Date: Thu, 30 Jan 2025 15:02:01 +0100
+Message-ID: <20250130140127.672374688@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140127.295114276@linuxfoundation.org>
 References: <20250130140127.295114276@linuxfoundation.org>
@@ -52,102 +50,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit 551844f26da2a9f76c0a698baaffa631d1178645 upstream.
+commit 7c9d9223802fbed4dee1ae301661bf346964c9d2 upstream.
 
-Under some corner cases the MPTCP protocol can end-up invoking
-mptcp_cleanup_rbuf() when no data has been copied, but such helper
-assumes the opposite condition.
+Truncate an inode's address space when flipping the GFS2_DIF_JDATA flag:
+depending on that flag, the pages in the address space will either use
+buffer heads or iomap_folio_state structs, and we cannot mix the two.
 
-Explicitly drop such assumption and performs the costly call only
-when strictly needed - before releasing the msk socket lock.
-
-Fixes: fd8976790a6c ("mptcp: be careful on MPTCP-level ack.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20241230-net-mptcp-rbuf-fixes-v1-2-8608af434ceb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in this version, because commit 581302298524 ("mptcp: error
-  out earlier on disconnect") has not been backported to this version,
-  and there was no need to do so. The only conflict was in protocol.c,
-  and easy to resolve: the context was different, but the same addition
-  can still be made at the same spot in mptcp_recvmsg(). ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reported-by: Kun Hu <huk23@m.fudan.edu.cn>, Jiaji Qin <jjtan24@m.fudan.edu.cn>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/gfs2/file.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -462,13 +462,13 @@ static void mptcp_send_ack(struct mptcp_
- 		mptcp_subflow_send_ack(mptcp_subflow_tcp_sock(subflow));
- }
- 
--static void mptcp_subflow_cleanup_rbuf(struct sock *ssk)
-+static void mptcp_subflow_cleanup_rbuf(struct sock *ssk, int copied)
- {
- 	bool slow;
- 
- 	slow = lock_sock_fast(ssk);
- 	if (tcp_can_send_ack(ssk))
--		tcp_cleanup_rbuf(ssk, 1);
-+		tcp_cleanup_rbuf(ssk, copied);
- 	unlock_sock_fast(ssk, slow);
- }
- 
-@@ -485,7 +485,7 @@ static bool mptcp_subflow_could_cleanup(
- 			      (ICSK_ACK_PUSHED2 | ICSK_ACK_PUSHED)));
- }
- 
--static void mptcp_cleanup_rbuf(struct mptcp_sock *msk)
-+static void mptcp_cleanup_rbuf(struct mptcp_sock *msk, int copied)
- {
- 	int old_space = READ_ONCE(msk->old_wspace);
- 	struct mptcp_subflow_context *subflow;
-@@ -493,14 +493,14 @@ static void mptcp_cleanup_rbuf(struct mp
- 	int space =  __mptcp_space(sk);
- 	bool cleanup, rx_empty;
- 
--	cleanup = (space > 0) && (space >= (old_space << 1));
--	rx_empty = !__mptcp_rmem(sk);
-+	cleanup = (space > 0) && (space >= (old_space << 1)) && copied;
-+	rx_empty = !__mptcp_rmem(sk) && copied;
- 
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 
- 		if (cleanup || mptcp_subflow_could_cleanup(ssk, rx_empty))
--			mptcp_subflow_cleanup_rbuf(ssk);
-+			mptcp_subflow_cleanup_rbuf(ssk, copied);
+--- a/fs/gfs2/file.c
++++ b/fs/gfs2/file.c
+@@ -257,6 +257,7 @@ static int do_gfs2_set_flags(struct inod
+ 		error = filemap_fdatawait(inode->i_mapping);
+ 		if (error)
+ 			goto out;
++		truncate_inode_pages(inode->i_mapping, 0);
+ 		if (new_flags & GFS2_DIF_JDATA)
+ 			gfs2_ordered_del_inode(ip);
  	}
- }
- 
-@@ -2098,9 +2098,6 @@ static int mptcp_recvmsg(struct sock *sk
- 
- 		copied += bytes_read;
- 
--		/* be sure to advertise window change */
--		mptcp_cleanup_rbuf(msk);
--
- 		if (skb_queue_empty(&msk->receive_queue) && __mptcp_move_skbs(msk))
- 			continue;
- 
-@@ -2152,9 +2149,12 @@ static int mptcp_recvmsg(struct sock *sk
- 		}
- 
- 		pr_debug("block timeout %ld\n", timeo);
-+		mptcp_cleanup_rbuf(msk, copied);
- 		sk_wait_data(sk, &timeo, NULL);
- 	}
- 
-+	mptcp_cleanup_rbuf(msk, copied);
-+
- out_err:
- 	if (cmsg_flags && copied >= 0) {
- 		if (cmsg_flags & MPTCP_CMSG_TS)
 
 
