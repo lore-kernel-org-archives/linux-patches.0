@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2D21E6DCF;
-	Thu, 30 Jan 2025 14:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9001E6DCF;
+	Thu, 30 Jan 2025 14:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247262; cv=none; b=O9ySV5i9RgcH85GsPplyNuCwX25V8o4OfefmhHBWw6tAonA/k0YypSPLd0siPuilJQuP04SxvY4FlhFEBPeFolvdAACbu2ehIDOEd3PcDgj+mbu+ExcwBqZy6rBPDKEBR3fSMQQmwQemoTlb/deoLvingM+MQDQ9Yp+sVmi5r8w=
+	t=1738247265; cv=none; b=cElAwCSd2NR6XVxSe9I9x4J+a0b65I4swFvJp8PSl1wwwGrtlFmy2h78fW36EjAOgxSAnlfdOQHqnlAh1COOrXCy9PcSnL2ytcttdH6gsCvxryxleGE8OOx/tAGNHkSdm4f8r3JWm9ePJX42fUaA0I+nkJYKLBjp7aDy4lpuaPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247262; c=relaxed/simple;
-	bh=rnShHZtUrRSR6DY4tBLADhQTNwVZf49jDRA3D+fgmOg=;
+	s=arc-20240116; t=1738247265; c=relaxed/simple;
+	bh=xOn24Caz58MOdsrI4DUkXdwc3jqXMiQPD7BeMv6JK7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRMHfLfyjhMu/uaQihnV6SNndARwNqoEpJRlFZUK4HtN2CAdycqN8elhEvK0s/5644wA/Ji75rQrYXn/rb5fvqTnNunL1VVadFjknlk+b/Dv7711dUhKT6hJYvlBTpv3jMt2hbtolSq3Nrmax1dlNn3ZYlRFXJdT6sA3xLmtiRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=magKraLi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vBmEMV1yqDFJSUsX6cbFRN1u+g9EyPuI+2wyzW4Ip3KgwT9XW9qTmtzZwFMoHaxCFOGdB3nFu9PQ/1tY8nldDs+mh8iQGtZn+/rVyc2OJbwS44mjpKLbRTDZoTvrP7kINEksW0fsBjDNdpzRUuehyGwzOhb6Vo/iFoVJQSEq9cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aIYpxnXf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="magKraLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA7DC4CED2;
-	Thu, 30 Jan 2025 14:27:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aIYpxnXf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E49C4CED2;
+	Thu, 30 Jan 2025 14:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247262;
-	bh=rnShHZtUrRSR6DY4tBLADhQTNwVZf49jDRA3D+fgmOg=;
+	s=korg; t=1738247264;
+	bh=xOn24Caz58MOdsrI4DUkXdwc3jqXMiQPD7BeMv6JK7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=magKraLiTKtksPandRDiv7/bE/PV8A8tPRuICqLkuJ7BiLWci8vuptoA4DHqJocWy
-	 d2sTYiNBupaxOSAoNCWPkbS2P4OKDMt8jsppfVVcY3BBOUpZYM6AFA282Waysksp7J
-	 VS/C2OFzKZAD7oto18isIUrCeX34Gi01qB8D6DxQ=
+	b=aIYpxnXfr/R0wXxpCXJ66WtgLToLAJINWYA9U2ZKHe4sJtXOz81OqoD4BxJylg67o
+	 qElkmbRm4nCbn+RbQTDIB9Vn05/4w6YGkfZDUDPaw7ZEAGUr26ZyL9YWXlNjDm+N56
+	 VG6qkuwFygxT4L801CfaT02ryUBwlfIcg2LhuQbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	stable <stable@kernel.org>,
-	Lianqin Hu <hulianqin@vivo.com>
-Subject: [PATCH 5.10 130/133] Revert "usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null"
-Date: Thu, 30 Jan 2025 15:01:59 +0100
-Message-ID: <20250130140147.764128486@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 131/133] Input: atkbd - map F23 key to support default copilot shortcut
+Date: Thu, 30 Jan 2025 15:02:00 +0100
+Message-ID: <20250130140147.802593602@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,47 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit 086fd062bc3883ae1ce4166cff5355db315ad879 upstream.
+commit 907bc9268a5a9f823ffa751957a5c1dd59f83f42 upstream.
 
-This reverts commit 13014969cbf07f18d62ceea40bd8ca8ec9d36cec.
+Microsoft defined Meta+Shift+F23 as the Copilot shortcut instead of a
+dedicated keycode, and multiple vendors have their keyboards emit this
+sequence in response to users pressing a dedicated "Copilot" key.
+Unfortunately the default keymap table in atkbd does not map scancode
+0x6e (F23) and so the key combination does not work even if userspace
+is ready to handle it.
 
-It is reported to cause crashes on Tegra systems, so revert it for now.
+Because this behavior is common between multiple vendors and the
+scancode is currently unused map 0x6e to keycode 193 (KEY_F23) so that
+key sequence is generated properly.
 
-Link: https://lore.kernel.org/r/1037c1ad-9230-4181-b9c3-167dbaa47644@nvidia.com
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable <stable@kernel.org>
-Cc: Lianqin Hu <hulianqin@vivo.com>
-Link: https://lore.kernel.org/r/2025011711-yippee-fever-a737@gregkh
+MS documentation for the scan code:
+https://learn.microsoft.com/en-us/windows/win32/inputdev/about-keyboard-input#scan-codes
+Confirmed on Lenovo, HP and Dell machines by Canonical.
+Tested on Lenovo T14s G6 AMD.
+
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20250107034554.25843-1-mpearson-lenovo@squebb.ca
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/keyboard/atkbd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -1395,10 +1395,6 @@ void gserial_disconnect(struct gserial *
- 	/* REVISIT as above: how best to track this? */
- 	port->port_line_coding = gser->port_line_coding;
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -90,7 +90,7 @@ static const unsigned short atkbd_set2_k
+ 	  0, 46, 45, 32, 18,  5,  4, 95,  0, 57, 47, 33, 20, 19,  6,183,
+ 	  0, 49, 48, 35, 34, 21,  7,184,  0,  0, 50, 36, 22,  8,  9,185,
+ 	  0, 51, 37, 23, 24, 11, 10,  0,  0, 52, 53, 38, 39, 25, 12,  0,
+-	  0, 89, 40,  0, 26, 13,  0,  0, 58, 54, 28, 27,  0, 43,  0, 85,
++	  0, 89, 40,  0, 26, 13,  0,193, 58, 54, 28, 27,  0, 43,  0, 85,
+ 	  0, 86, 91, 90, 92,  0, 14, 94,  0, 79,124, 75, 71,121,  0,  0,
+ 	 82, 83, 80, 76, 77, 72,  1, 69, 87, 78, 81, 74, 55, 73, 70, 99,
  
--	/* disable endpoints, aborting down any active I/O */
--	usb_ep_disable(gser->out);
--	usb_ep_disable(gser->in);
--
- 	port->port_usb = NULL;
- 	gser->ioport = NULL;
- 	if (port->port.count > 0) {
-@@ -1410,6 +1406,10 @@ void gserial_disconnect(struct gserial *
- 	spin_unlock(&port->port_lock);
- 	spin_unlock_irqrestore(&serial_port_lock, flags);
- 
-+	/* disable endpoints, aborting down any active I/O */
-+	usb_ep_disable(gser->out);
-+	usb_ep_disable(gser->in);
-+
- 	/* finally, free any unused/unusable I/O buffers */
- 	spin_lock_irqsave(&port->port_lock, flags);
- 	if (port->port.count == 0)
 
 
