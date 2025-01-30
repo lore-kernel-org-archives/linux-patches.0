@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89491DDC22;
-	Thu, 30 Jan 2025 14:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CA919DFAB;
+	Thu, 30 Jan 2025 14:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246551; cv=none; b=FOFsPY8k3Gi2RD97vXx1Rbi362ZDIiaZ+t7SRJIRXrbt5qW9yfozk3ejBdkIzGyW2EEpoj4gZ8xgJmcuZ2Hw6l/pNOgAt3s1eFkpTwgkbZE0qLpisFQf2pGvZy3+elVQnNN9Mp7rQbromssSmUpP9kBGohaMzL6f68NEHYIoT+c=
+	t=1738246554; cv=none; b=ZRPDmg7g8WmGVEFXCjF8onYp7B0KkAp38TcUmLnD6yLIGmCz74U1hLGDyrr/qvjbZabLs3SE6guvJT2wbichvLdWbkFuIKWSi6HpY6AqJNiY/mogeGng6zri57+NQCgd5qDji5zs4URle9pZ62TQLvUF2YpvY8ximF3ZqGj9ahM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246551; c=relaxed/simple;
-	bh=qfWP0gMwouGu2bS34AyVR3J5qEoRH94ERzMgy43XIBE=;
+	s=arc-20240116; t=1738246554; c=relaxed/simple;
+	bh=cf+63jA6mvjzQJpw72zDaZHKev77fLXGYXOfFdfKBuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z5ysG/w92AN8ZeyZMnQBaueDs9kpA0I5yFvtDSuHOEmOASuhig6nO1ML53RtLV5HMLJNRz8KjKM85vnOKzH7fjrM57lMBV/vfYVosf0KiOyi2blK3xnscMHC6rOlH7aZ72ZJFFqaQ5Gufwm0AO6+Mxw6bxPX8v2N3X0UXndsdBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek3d8ehA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VR9O4tizLDks6NNug4Yj8xOrboB82KYbQ9fxRYMJEe54m4cPTtA4qGvVd1oexY1rLDX9x19J5cCt8X2lWc6TgEiZyizRl2YAQwBfrAA9Q83e71Gsf2MPdJNA+i/rX+IojsI3i84d/0wvHVO6wnYzZQ7/IHKqCCjEdW2kOPbY6PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PnN4lDxC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek3d8ehA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AC4C4CED2;
-	Thu, 30 Jan 2025 14:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PnN4lDxC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D6CC4CEE2;
+	Thu, 30 Jan 2025 14:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246551;
-	bh=qfWP0gMwouGu2bS34AyVR3J5qEoRH94ERzMgy43XIBE=;
+	s=korg; t=1738246554;
+	bh=cf+63jA6mvjzQJpw72zDaZHKev77fLXGYXOfFdfKBuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ek3d8ehAP+t4M+CHhPOnsflmuFSGBGLyQYkUFApmc3reqdci1Bz6jhMzKfS/ZhsDY
-	 ZNvGnKsVThpMc7hxo1Fm/7cuUdFusmtH2KOgB6pWHj0Py6hXnhPVD1yWrdIKtyn10f
-	 A9I52OXxceOH+Cov6z16J3FLrHUZVLjV8TM7EwLA=
+	b=PnN4lDxCceBMWOStoRApgu+i2PgM+tnT7/MTO8QT5Peh1s4C0IUYN9QCn/earpBjh
+	 CgcyHO+YXMKFXqGltOtXkTxq8dszifjzk6b/PUb8ws3YrKXT5WgumUlMD9m4urCUDl
+	 f+QSmJsD+SBPFGCtMCmRWhDiW94C2T7HsWNwRtvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Bruno VERNAY <bruno.vernay@se.com>,
-	Victor Giraud <vgiraud.opensource@witekio.com>
-Subject: [PATCH 6.6 31/43] ext4: fix access to uninitialised lock in fc replay path
-Date: Thu, 30 Jan 2025 14:59:38 +0100
-Message-ID: <20250130133500.153996883@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.6 32/43] ipv4: ip_tunnel: Fix suspicious RCU usage warning in ip_tunnel_find()
+Date: Thu, 30 Jan 2025 14:59:39 +0100
+Message-ID: <20250130133500.194816590@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133458.903274626@linuxfoundation.org>
 References: <20250130133458.903274626@linuxfoundation.org>
@@ -53,78 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 23dfdb56581ad92a9967bcd720c8c23356af74c1 upstream.
+commit 90e0569dd3d32f4f4d2ca691d3fa5a8a14a13c12 upstream.
 
-The following kernel trace can be triggered with fstest generic/629 when
-executed against a filesystem with fast-commit feature enabled:
+The per-netns IP tunnel hash table is protected by the RTNL mutex and
+ip_tunnel_find() is only called from the control path where the mutex is
+taken.
 
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 0 PID: 866 Comm: mount Not tainted 6.10.0+ #11
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-prebuilt.qemu.org 04/01/2014
+Add a lockdep expression to hlist_for_each_entry_rcu() in
+ip_tunnel_find() in order to validate that the mutex is held and to
+silence the suspicious RCU usage warning [1].
+
+[1]
+WARNING: suspicious RCU usage
+6.12.0-rc3-custom-gd95d9a31aceb #139 Not tainted
+-----------------------------
+net/ipv4/ip_tunnel.c:221 RCU-list traversed in non-reader section!!
+
+other info that might help us debug this:
+
+rcu_scheduler_active = 2, debug_locks = 1
+1 lock held by ip/362:
+ #0: ffffffff86fc7cb0 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x377/0xf60
+
+stack backtrace:
+CPU: 12 UID: 0 PID: 362 Comm: ip Not tainted 6.12.0-rc3-custom-gd95d9a31aceb #139
+Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
 Call Trace:
  <TASK>
- dump_stack_lvl+0x66/0x90
- register_lock_class+0x759/0x7d0
- __lock_acquire+0x85/0x2630
- ? __find_get_block+0xb4/0x380
- lock_acquire+0xd1/0x2d0
- ? __ext4_journal_get_write_access+0xd5/0x160
- _raw_spin_lock+0x33/0x40
- ? __ext4_journal_get_write_access+0xd5/0x160
- __ext4_journal_get_write_access+0xd5/0x160
- ext4_reserve_inode_write+0x61/0xb0
- __ext4_mark_inode_dirty+0x79/0x270
- ? ext4_ext_replay_set_iblocks+0x2f8/0x450
- ext4_ext_replay_set_iblocks+0x330/0x450
- ext4_fc_replay+0x14c8/0x1540
- ? jread+0x88/0x2e0
- ? rcu_is_watching+0x11/0x40
- do_one_pass+0x447/0xd00
- jbd2_journal_recover+0x139/0x1b0
- jbd2_journal_load+0x96/0x390
- ext4_load_and_init_journal+0x253/0xd40
- ext4_fill_super+0x2cc6/0x3180
-...
+ dump_stack_lvl+0xba/0x110
+ lockdep_rcu_suspicious.cold+0x4f/0xd6
+ ip_tunnel_find+0x435/0x4d0
+ ip_tunnel_newlink+0x517/0x7a0
+ ipgre_newlink+0x14c/0x170
+ __rtnl_newlink+0x1173/0x19c0
+ rtnl_newlink+0x6c/0xa0
+ rtnetlink_rcv_msg+0x3cc/0xf60
+ netlink_rcv_skb+0x171/0x450
+ netlink_unicast+0x539/0x7f0
+ netlink_sendmsg+0x8c1/0xd80
+ ____sys_sendmsg+0x8f9/0xc20
+ ___sys_sendmsg+0x197/0x1e0
+ __sys_sendmsg+0x122/0x1f0
+ do_syscall_64+0xbb/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-In the replay path there's an attempt to lock sbi->s_bdev_wb_lock in
-function ext4_check_bdev_write_error().  Unfortunately, at this point this
-spinlock has not been initialized yet.  Moving it's initialization to an
-earlier point in __ext4_fill_super() fixes this splat.
-
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
-Link: https://patch.msgid.link/20240718094356.7863-1-luis.henriques@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Bruno VERNAY <bruno.vernay@se.com>
-Signed-off-by: Victor Giraud <vgiraud.opensource@witekio.com>
+Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20241023123009.749764-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/ip_tunnel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5366,6 +5366,8 @@ static int __ext4_fill_super(struct fs_c
- 	INIT_LIST_HEAD(&sbi->s_orphan); /* unlinked but open files */
- 	mutex_init(&sbi->s_orphan_lock);
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -218,7 +218,7 @@ static struct ip_tunnel *ip_tunnel_find(
+ 	struct ip_tunnel *t = NULL;
+ 	struct hlist_head *head = ip_bucket(itn, parms);
  
-+	spin_lock_init(&sbi->s_bdev_wb_lock);
-+
- 	ext4_fast_commit_init(sb);
- 
- 	sb->s_root = NULL;
-@@ -5586,7 +5588,6 @@ static int __ext4_fill_super(struct fs_c
- 	 * Save the original bdev mapping's wb_err value which could be
- 	 * used to detect the metadata async write error.
- 	 */
--	spin_lock_init(&sbi->s_bdev_wb_lock);
- 	errseq_check_and_advance(&sb->s_bdev->bd_inode->i_mapping->wb_err,
- 				 &sbi->s_bdev_wb_err);
- 	EXT4_SB(sb)->s_mount_state |= EXT4_ORPHAN_FS;
+-	hlist_for_each_entry_rcu(t, head, hash_node) {
++	hlist_for_each_entry_rcu(t, head, hash_node, lockdep_rtnl_is_held()) {
+ 		if (local == t->parms.iph.saddr &&
+ 		    remote == t->parms.iph.daddr &&
+ 		    link == READ_ONCE(t->parms.link) &&
 
 
