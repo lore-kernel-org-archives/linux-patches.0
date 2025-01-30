@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9103A1BDA95;
-	Thu, 30 Jan 2025 14:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873251BDA95;
+	Thu, 30 Jan 2025 14:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246841; cv=none; b=me3KltVJluzEnXFxZYXyZX56FEvhlJsTVGgGuQdwNhIp+egdHlYb3Z1iGjSLBGI9PJP98mztHnmSJVYoZ/U4oJeWwHXTjOtVAvW9k6Ex9HEMsAKK6QTxoIjigRgDvjFndwmS+Xxyy4VAgydEYcHA13ypIqlSLAaC4L+nLfjSc68=
+	t=1738246844; cv=none; b=jOsG3H2enMi4UoEnW3o7Y1Nen6dvLedwHkPSZcTAVytV+g20G/hFXhEmeYa+O+1sVubH+tal46oYj2fdCdvce3/Tiv6zJ9r+iFxdua84gbknBNjEwIu6ZcvKpug0mwcgydXipypSCaosPNJdODDw8jWgGtA2rhn2YnBDlDflCEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246841; c=relaxed/simple;
-	bh=3SuANs+H/QGvL1tsSwOzluKuJA9HFlZRZytxnxzEIl0=;
+	s=arc-20240116; t=1738246844; c=relaxed/simple;
+	bh=rbMBHQigajn+MmK9xxFqxW9T+x5tNwg6pr5GI9dLkaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVS0vjgFieFD0tQbLXMIPw1Z0JyxD/TBjivIO1i81lUDRzwT1MvhxTK+ete7fsq05utVY0cBkqmOdXQjcayrVxW06q0jfcqTHI/MwfztAtNEWfD9sQ3fxgogpAxMoGPWqamtCr2fazqPr5vzLSpT9At/ELbRITmbjmeV7Agt56Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i12vF6v1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Urug4oZMHKYt0RMZ5/Y/bpU0524xL4PaEz3URYkj8BMG7q6y+kfzyRqa1Z3+ha2MKqYMCUCqsGQx7pvIzQbNA1/TxqaKRoO9i0W4CDRiwwctBQzpAQzDeXi1sMmlwpgPsw/KXJ37B1ZwqQeiIwFhLFcX8EBirBAxgSOayCfPl1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJFGzNOq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i12vF6v1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4D8C4CED2;
-	Thu, 30 Jan 2025 14:20:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJFGzNOq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1263BC4CED2;
+	Thu, 30 Jan 2025 14:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246841;
-	bh=3SuANs+H/QGvL1tsSwOzluKuJA9HFlZRZytxnxzEIl0=;
+	s=korg; t=1738246844;
+	bh=rbMBHQigajn+MmK9xxFqxW9T+x5tNwg6pr5GI9dLkaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i12vF6v1WDY+Vb5W0WfxkL3IBscI523LdmAt0UGnIuuNZWOZY7/Zxbl4GAyUAYmbp
-	 fl0rMehYFlTUzsgffVUe7niJIf+aRJzXJ+rUfp5Gh3avywroj0ziHC4EVvSZOYCkB8
-	 Bv7fCzLHwMPsJqPaXxOorgmDo2VHD/8zLGHj3B8g=
+	b=cJFGzNOq4RnWUuaQ7//ACSAELKJHqXiHLyg8xMw8ZJhwqClkFVS9cIRjD3dinyMmg
+	 bxlYwClaDrMNVApo7ctdBtyj6XL0DTgxXyA7UcqZSXlUVHo5/cuBYKZYrgGrIe0Q3M
+	 J/nUZU/UdbXtE2ERqKntcuz3Euf0nTl8b1esx7HQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Shaoying Xu <shaoyi@amazon.com>
-Subject: [PATCH 5.4 86/91] ext4: fix slab-use-after-free in ext4_split_extent_at()
-Date: Thu, 30 Jan 2025 15:01:45 +0100
-Message-ID: <20250130140137.143733383@linuxfoundation.org>
+	syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 87/91] USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
+Date: Thu, 30 Jan 2025 15:01:46 +0100
+Message-ID: <20250130140137.182631296@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -54,128 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit c26ab35702f8cd0cdc78f96aa5856bfb77be798f upstream.
+commit 575a5adf48b06a2980c9eeffedf699ed5534fade upstream.
 
-We hit the following use-after-free:
+This patch addresses a null-ptr-deref in qt2_process_read_urb() due to
+an incorrect bounds check in the following:
 
-==================================================================
-BUG: KASAN: slab-use-after-free in ext4_split_extent_at+0xba8/0xcc0
-Read of size 2 at addr ffff88810548ed08 by task kworker/u20:0/40
-CPU: 0 PID: 40 Comm: kworker/u20:0 Not tainted 6.9.0-dirty #724
-Call Trace:
- <TASK>
- kasan_report+0x93/0xc0
- ext4_split_extent_at+0xba8/0xcc0
- ext4_split_extent.isra.0+0x18f/0x500
- ext4_split_convert_extents+0x275/0x750
- ext4_ext_handle_unwritten_extents+0x73e/0x1580
- ext4_ext_map_blocks+0xe20/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
+       if (newport > serial->num_ports) {
+               dev_err(&port->dev,
+                       "%s - port change to invalid port: %i\n",
+                       __func__, newport);
+               break;
+       }
 
-Allocated by task 40:
- __kmalloc_noprof+0x1ac/0x480
- ext4_find_extent+0xf3b/0x1e70
- ext4_ext_map_blocks+0x188/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
+The condition doesn't account for the valid range of the serial->port
+buffer, which is from 0 to serial->num_ports - 1. When newport is equal
+to serial->num_ports, the assignment of "port" in the
+following code is out-of-bounds and NULL:
 
-Freed by task 40:
- kfree+0xf1/0x2b0
- ext4_find_extent+0xa71/0x1e70
- ext4_ext_insert_extent+0xa22/0x3260
- ext4_split_extent_at+0x3ef/0xcc0
- ext4_split_extent.isra.0+0x18f/0x500
- ext4_split_convert_extents+0x275/0x750
- ext4_ext_handle_unwritten_extents+0x73e/0x1580
- ext4_ext_map_blocks+0xe20/0x2dc0
- ext4_map_blocks+0x724/0x1700
- ext4_do_writepages+0x12d6/0x2a70
-[...]
-==================================================================
+       serial_priv->current_port = newport;
+       port = serial->port[serial_priv->current_port];
 
-The flow of issue triggering is as follows:
+The fix checks if newport is greater than or equal to serial->num_ports
+indicating it is out-of-bounds.
 
-ext4_split_extent_at
-  path = *ppath
-  ext4_ext_insert_extent(ppath)
-    ext4_ext_create_new_leaf(ppath)
-      ext4_find_extent(orig_path)
-        path = *orig_path
-        read_extent_tree_block
-          // return -ENOMEM or -EIO
-        ext4_free_ext_path(path)
-          kfree(path)
-        *orig_path = NULL
-  a. If err is -ENOMEM:
-  ext4_ext_dirty(path + path->p_depth)
-  // path use-after-free !!!
-  b. If err is -EIO and we have EXT_DEBUG defined:
-  ext4_ext_show_leaf(path)
-    eh = path[depth].p_hdr
-    // path also use-after-free !!!
-
-So when trying to zeroout or fix the extent length, call ext4_find_extent()
-to update the path.
-
-In addition we use *ppath directly as an ext4_ext_show_leaf() input to
-avoid possible use-after-free when EXT_DEBUG is defined, and to avoid
-unnecessary path updates.
-
-Fixes: dfe5080939ea ("ext4: drop EXT4_EX_NOFREE_ON_ERR from rest of extents handling code")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-4-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
+Reported-by: syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=506479ebf12fe435d01a
+Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
+Cc: <stable@vger.kernel.org>      # 3.5
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c |   21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/usb/serial/quatech2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3440,6 +3440,25 @@ static int ext4_split_extent_at(handle_t
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
- 		goto out;
+--- a/drivers/usb/serial/quatech2.c
++++ b/drivers/usb/serial/quatech2.c
+@@ -555,7 +555,7 @@ static void qt2_process_read_urb(struct
  
-+	/*
-+	 * Update path is required because previous ext4_ext_insert_extent()
-+	 * may have freed or reallocated the path. Using EXT4_EX_NOFAIL
-+	 * guarantees that ext4_find_extent() will not return -ENOMEM,
-+	 * otherwise -ENOMEM will cause a retry in do_writepages(), and a
-+	 * WARN_ON may be triggered in ext4_da_update_reserve_space() due to
-+	 * an incorrect ee_len causing the i_reserved_data_blocks exception.
-+	 */
-+	path = ext4_find_extent(inode, ee_block, ppath,
-+				flags | EXT4_EX_NOFAIL);
-+	if (IS_ERR(path)) {
-+		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
-+				 split, PTR_ERR(path));
-+		return PTR_ERR(path);
-+	}
-+	depth = ext_depth(inode);
-+	ex = path[depth].p_ext;
-+	*ppath = path;
-+
- 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
- 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
- 			if (split_flag & EXT4_EXT_DATA_VALID1) {
-@@ -3488,7 +3507,7 @@ fix_extent_len:
- 	ext4_ext_dirty(handle, inode, path + path->p_depth);
- 	return err;
- out:
--	ext4_ext_show_leaf(inode, path);
-+	ext4_ext_show_leaf(inode, *ppath);
- 	return err;
- }
+ 				newport = *(ch + 3);
  
+-				if (newport > serial->num_ports) {
++				if (newport >= serial->num_ports) {
+ 					dev_err(&port->dev,
+ 						"%s - port change to invalid port: %i\n",
+ 						__func__, newport);
 
 
