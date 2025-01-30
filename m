@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1461DDE9;
-	Thu, 30 Jan 2025 14:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2071E7C08;
+	Thu, 30 Jan 2025 14:17:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246651; cv=none; b=PSKZO5dcguzgpiFEasHWo6+F+hcDL0kEnkbcM5ulVNf6NdRcW4MSHe+ANO2T0MRrn0r4vYoAhZnkc+NQQkzQJ5iA2eLJBqiDTZwzeAOtScdkWJHBegh0wZ+UHRQq9A98rTnWn2EP/PXi9892bI9qQiyWVrqh5R3Xg7xDMg8ltaA=
+	t=1738246654; cv=none; b=PSXdJUfbKOHcb4cZ+6LrdwwdIC0VZdRHUbMIXcIfm8MaepHu+SHwWNWwoPpGkW6xHftzShPbSoE7ujZM1y3NNH4ueIA6rIbBdZ6wi/LhqLAB2EboVlVRtAHev9yYw9azEQ6pepNH6TVLCJAPQFHoJi7rF7jaYzqnzorA8ueTWDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246651; c=relaxed/simple;
-	bh=jt7EUpJ+31LnRg9BxxLWQ6LC4uWfPQ79J3EI1NhSclQ=;
+	s=arc-20240116; t=1738246654; c=relaxed/simple;
+	bh=tl4D2k/M1EX0vbGsV5F9AvrhNABv+Zcg1p6/UnvNKAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XugsH7AcotYbmOjkda4vMhNxZpTyfcYdb3TQpv0XW1sUFxB3x577oPuWR5kfMyTNKGartikgGkDTReMJDXqKzK7zrJHDnNU0BZQ5AX/ZIRvgsLIPFtLL/PqnhXXZMjVAYAiBqc7KGVPh0usXUHcBhVmkAYrgRQzGPxxrNY4osqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LVP/WG6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cc92xXP0UZQyXvM0htmGwFh8eGeHMA4ZT/qIH05FpIZRaYULRVd5uuVu3bJsQUOw1kIiFx0qe0jsYfKCut68J3QPuFCZAWuF/fWkvSUXGXVv0ePZmTfFAd8MWbJJUJzYnvXPfpHuDiHW0LAwtI26pmR3IbWw3D8s3aPs8oFZ70g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4Q9ZAgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LVP/WG6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D80C4CED2;
-	Thu, 30 Jan 2025 14:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4Q9ZAgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66976C4CED2;
+	Thu, 30 Jan 2025 14:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246650;
-	bh=jt7EUpJ+31LnRg9BxxLWQ6LC4uWfPQ79J3EI1NhSclQ=;
+	s=korg; t=1738246653;
+	bh=tl4D2k/M1EX0vbGsV5F9AvrhNABv+Zcg1p6/UnvNKAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LVP/WG6mVuZ6f6GNZuYEvQ/TDCEfdJ0gZ2rT3OXZvksfp8eFBMb20dfFJvXCVco2+
-	 kbUn2ZZmt8WYoQl/ysQPx4Ac+BbqHyW2N8oPDy/Vqt4kTkdjn2DmAzyPiqnyQOP1b5
-	 0fd+zLGIpzMYUt9Y8H1xwDGOi2YTq2YSt4mQ9jV4=
+	b=S4Q9ZAgw1N3SGuCkUeFDRuMQB6rfQf/KBLegJSmoOU2UkFdDA/UQfFCt9g4v2ZgY3
+	 qPdCsYrYGTfdwXcq3mok4GI3kZxoguNxUtnxza9W4tSZKxoKA5GGoAOh1XXRHNa4xP
+	 xws729ZyedSYH5MjilFQpMG+qnRnkXKfbyBQ7VYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zicheng Qu <quzicheng@huawei.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 21/91] staging: iio: ad9832: Correct phase range check
-Date: Thu, 30 Jan 2025 15:00:40 +0100
-Message-ID: <20250130140134.515465720@linuxfoundation.org>
+	Lubomir Rintel <lkundrak@v3.sk>,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 5.4 22/91] usb-storage: Add max sectors quirk for Nokia 208
+Date: Thu, 30 Jan 2025 15:00:41 +0100
+Message-ID: <20250130140134.556171171@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -50,54 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zicheng Qu <quzicheng@huawei.com>
+From: Lubomir Rintel <lrintel@redhat.com>
 
-commit 4636e859ebe0011f41e35fa79bab585b8004e9a3 upstream.
+commit cdef30e0774802df2f87024d68a9d86c3b99ca2a upstream.
 
-User Perspective:
-When a user sets the phase value, the ad9832_write_phase() is called.
-The phase register has a 12-bit resolution, so the valid range is 0 to
-4095. If the phase offset value of 4096 is input, it effectively exactly
-equals 0 in the lower 12 bits, meaning no offset.
+This fixes data corruption when accessing the internal SD card in mass
+storage mode.
 
-Reasons for the Change:
-1) Original Condition (phase > BIT(AD9832_PHASE_BITS)):
-This condition allows a phase value equal to 2^12, which is 4096.
-However, this value exceeds the valid 12-bit range, as the maximum valid
-phase value should be 4095.
-2) Modified Condition (phase >= BIT(AD9832_PHASE_BITS)):
-Ensures that the phase value is within the valid range, preventing
-invalid datafrom being written.
+I am actually not too sure why. I didn't figure a straightforward way to
+reproduce the issue, but i seem to get garbage when issuing a lot (over 50)
+of large reads (over 120 sectors) are done in a quick succession. That is,
+time seems to matter here -- larger reads are fine if they are done with
+some delay between them.
 
-Impact on Subsequent Logic: st->data = cpu_to_be16(addr | phase):
-If the phase value is 2^12, i.e., 4096 (0001 0000 0000 0000), and addr
-is AD9832_REG_PHASE0 (1100 0000 0000 0000), then addr | phase results in
-1101 0000 0000 0000, occupying DB12. According to the section of WRITING
-TO A PHASE REGISTER in the datasheet, the MSB 12 PHASE0 bits should be
-DB11. The original condition leads to incorrect DB12 usage, which
-contradicts the datasheet and could pose potential issues for future
-updates if DB12 is used in such related cases.
+But I'm not great at understanding this sort of things, so I'll assume
+the issue other, smarter, folks were seeing with similar phones is the
+same problem and I'll just put my quirk next to theirs.
 
-Fixes: ea707584bac1 ("Staging: IIO: DDS: AD9832 / AD9835 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
-Link: https://patch.msgid.link/20241107011015.2472600-3-quzicheng@huawei.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The "Software details" screen on the phone is as follows:
+
+  V 04.06
+  07-08-13
+  RM-849
+  (c) Nokia
+
+TL;DR version of the device descriptor:
+
+  idVendor           0x0421 Nokia Mobile Phones
+  idProduct          0x06c2
+  bcdDevice            4.06
+  iManufacturer           1 Nokia
+  iProduct                2 Nokia 208
+
+The patch assumes older firmwares are broken too (I'm unable to test, but
+no biggie if they aren't I guess), and I have no idea if newer firmware
+exists.
+
+Signed-off-by: Lubomir Rintel <lkundrak@v3.sk>
+Cc: stable <stable@kernel.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20250101212206.2386207-1-lkundrak@v3.sk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/frequency/ad9832.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/unusual_devs.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/staging/iio/frequency/ad9832.c
-+++ b/drivers/staging/iio/frequency/ad9832.c
-@@ -158,7 +158,7 @@ static int ad9832_write_frequency(struct
- static int ad9832_write_phase(struct ad9832_state *st,
- 			      unsigned long addr, unsigned long phase)
- {
--	if (phase > BIT(AD9832_PHASE_BITS))
-+	if (phase >= BIT(AD9832_PHASE_BITS))
- 		return -EINVAL;
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -255,6 +255,13 @@ UNUSUAL_DEV(  0x0421, 0x06aa, 0x1110, 0x
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_MAX_SECTORS_64 ),
  
- 	st->phase_data[0] = cpu_to_be16((AD9832_CMD_PHA8BITSW << CMD_SHIFT) |
++/* Added by Lubomir Rintel <lkundrak@v3.sk>, a very fine chap */
++UNUSUAL_DEV(  0x0421, 0x06c2, 0x0000, 0x0406,
++		"Nokia",
++		"Nokia 208",
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
++		US_FL_MAX_SECTORS_64 ),
++
+ #ifdef NO_SDDR09
+ UNUSUAL_DEV(  0x0436, 0x0005, 0x0100, 0x0100,
+ 		"Microtech",
 
 
