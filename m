@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D867482;
-	Thu, 30 Jan 2025 14:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78E57482;
+	Thu, 30 Jan 2025 14:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247444; cv=none; b=Jyr5opoAnVPu8szkpGwVFXgUBcdyUwmSTHIthIaKVcds2E/NV1BGCKQTMCZbaZNclDlcXTssa7VSSgpyNcYl/UNBELuLWxms1GZP8MvXC24ps0bDYpK3UpEHhyOIj1jhCDedHuXwiujPDEJ6tR5a1AtVMm/5Qwl2QPuzp/9PpiE=
+	t=1738247447; cv=none; b=YZ95UTItpcs9/OOyROS6bpilfo7PPubIQP4hmCNcTN/nZhB9ZplApc2W4xxHrbeS+qdsaMJYI+73SGSvPpDgWVapQdzKYUgClbfQMIbkUB1KFWyaWaPWshzYNoxQ7coW5o8jf1OeLLhhxUPiuO5Qup9R5lldXn/66Mo0R42liMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247444; c=relaxed/simple;
-	bh=MMtG3p6BNyubDc2K13ukIUhtVasoaRlQkNnGXsi5rjA=;
+	s=arc-20240116; t=1738247447; c=relaxed/simple;
+	bh=6mF4ZFolWLQOGJZZxqHe8Juxjb3uVZJzTTXoU7/MgjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7y0wpetXGInvHxe50Qp61b7HXbTLG3O/cJrzXWnbiMbpbS/N5w35PeefC0pm1hsFOcQZtOuNldE/UuvWF9f+QHzAUWJoMfFRXyGGvBxZ2/1ce4ddSDCauVanul7seasRJ4YFnHU8VS78nL4QFXV6u4DXeWza/FfXIrLEUg08SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAivf8AK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YklI/iRRGh8GNXGtK3ZvUPu6TIoZsnU6Nm4pq8x7C7mREQRzZHmkZkq8XUNpqiDlIp5CDRxQGD7IyyvQG7C0Hc5QvjaN8hYhAh3dJ6U88uoHMwWrwudN0eP95QnQ6eT5qFyZmx3pgZnMyBXWQPZccgKn/faiiNTs5XF+uDtgHRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2Gt5N++; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAivf8AK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FADCC4CED2;
-	Thu, 30 Jan 2025 14:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2Gt5N++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F032CC4CED2;
+	Thu, 30 Jan 2025 14:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247443;
-	bh=MMtG3p6BNyubDc2K13ukIUhtVasoaRlQkNnGXsi5rjA=;
+	s=korg; t=1738247446;
+	bh=6mF4ZFolWLQOGJZZxqHe8Juxjb3uVZJzTTXoU7/MgjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAivf8AKBin1Jko0O4PMOeUo26BlRKcdEgzU2FTcwrf12bTL3r/IjOD+vtBSilVh/
-	 pfzG3Xzka+D0OB1EGt4l5OEKNjbFmD0vtS8VB8wmSXARfE7hWyZjk/z2dH96uzyFyi
-	 HEl2jAgLV9HtN+LqmjyZI96XjZrb2c8cQHgCcYIM=
+	b=m2Gt5N++/3+tODvcIIJvIQ/+kNyt7V0TCjCdfY3LudfqhpFQ+b72e/zoYybr7eoFd
+	 nPkIhjUpyk+LA7YQdj76m30S5hgIz1pBN4N5rk5JPcx+E2BeQ9JSaiHWGSBQicW6xh
+	 0Ag52f1PmMtRqO1INfB5875fylblC2M6FiehVQNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 40/49] wifi: iwlwifi: add a few rate index validity checks
-Date: Thu, 30 Jan 2025 15:02:16 +0100
-Message-ID: <20250130140135.437974360@linuxfoundation.org>
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 41/49] smb: client: fix UAF in async decryption
+Date: Thu, 30 Jan 2025 15:02:17 +0100
+Message-ID: <20250130140135.477695017@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
 References: <20250130140133.825446496@linuxfoundation.org>
@@ -51,75 +50,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-commit efbe8f81952fe469d38655744627d860879dcde8 upstream.
+commit b0abcd65ec545701b8793e12bc27dc98042b151a upstream.
 
-Validate index before access iwl_rate_mcs to keep rate->index
-inside the valid boundaries. Use MCS_0_INDEX if index is less
-than MCS_0_INDEX and MCS_9_INDEX if index is greater then
-MCS_9_INDEX.
+Doing an async decryption (large read) crashes with a
+slab-use-after-free way down in the crypto API.
 
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230614123447.79f16b3aef32.If1137f894775d6d07b78cbf3a6163ffce6399507@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reproducer:
+    # mount.cifs -o ...,seal,esize=1 //srv/share /mnt
+    # dd if=/mnt/largefile of=/dev/null
+    ...
+    [  194.196391] ==================================================================
+    [  194.196844] BUG: KASAN: slab-use-after-free in gf128mul_4k_lle+0xc1/0x110
+    [  194.197269] Read of size 8 at addr ffff888112bd0448 by task kworker/u77:2/899
+    [  194.197707]
+    [  194.197818] CPU: 12 UID: 0 PID: 899 Comm: kworker/u77:2 Not tainted 6.11.0-lku-00028-gfca3ca14a17a-dirty #43
+    [  194.198400] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-prebuilt.qemu.org 04/01/2014
+    [  194.199046] Workqueue: smb3decryptd smb2_decrypt_offload [cifs]
+    [  194.200032] Call Trace:
+    [  194.200191]  <TASK>
+    [  194.200327]  dump_stack_lvl+0x4e/0x70
+    [  194.200558]  ? gf128mul_4k_lle+0xc1/0x110
+    [  194.200809]  print_report+0x174/0x505
+    [  194.201040]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+    [  194.201352]  ? srso_return_thunk+0x5/0x5f
+    [  194.201604]  ? __virt_addr_valid+0xdf/0x1c0
+    [  194.201868]  ? gf128mul_4k_lle+0xc1/0x110
+    [  194.202128]  kasan_report+0xc8/0x150
+    [  194.202361]  ? gf128mul_4k_lle+0xc1/0x110
+    [  194.202616]  gf128mul_4k_lle+0xc1/0x110
+    [  194.202863]  ghash_update+0x184/0x210
+    [  194.203103]  shash_ahash_update+0x184/0x2a0
+    [  194.203377]  ? __pfx_shash_ahash_update+0x10/0x10
+    [  194.203651]  ? srso_return_thunk+0x5/0x5f
+    [  194.203877]  ? crypto_gcm_init_common+0x1ba/0x340
+    [  194.204142]  gcm_hash_assoc_remain_continue+0x10a/0x140
+    [  194.204434]  crypt_message+0xec1/0x10a0 [cifs]
+    [  194.206489]  ? __pfx_crypt_message+0x10/0x10 [cifs]
+    [  194.208507]  ? srso_return_thunk+0x5/0x5f
+    [  194.209205]  ? srso_return_thunk+0x5/0x5f
+    [  194.209925]  ? srso_return_thunk+0x5/0x5f
+    [  194.210443]  ? srso_return_thunk+0x5/0x5f
+    [  194.211037]  decrypt_raw_data+0x15f/0x250 [cifs]
+    [  194.212906]  ? __pfx_decrypt_raw_data+0x10/0x10 [cifs]
+    [  194.214670]  ? srso_return_thunk+0x5/0x5f
+    [  194.215193]  smb2_decrypt_offload+0x12a/0x6c0 [cifs]
+
+This is because TFM is being used in parallel.
+
+Fix this by allocating a new AEAD TFM for async decryption, but keep
+the existing one for synchronous READ cases (similar to what is done
+in smb3_calc_signature()).
+
+Also remove the calls to aead_request_set_callback() and
+crypto_wait_req() since it's always going to be a synchronous operation.
+
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/rs.c |    9 ++++++---
- drivers/net/wireless/intel/iwlwifi/mvm/rs.c |    9 ++++++---
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ fs/smb/client/smb2ops.c |   47 ++++++++++++++++++++++++++++-------------------
+ fs/smb/client/smb2pdu.c |    6 ++++++
+ 2 files changed, 34 insertions(+), 19 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-@@ -2,7 +2,7 @@
- /******************************************************************************
-  *
-  * Copyright(c) 2005 - 2014 Intel Corporation. All rights reserved.
-- * Copyright (C) 2019 - 2020, 2022 Intel Corporation
-+ * Copyright (C) 2019 - 2020, 2022 - 2023 Intel Corporation
-  *****************************************************************************/
- #include <linux/kernel.h>
- #include <linux/skbuff.h>
-@@ -125,7 +125,7 @@ static int iwl_hwrate_to_plcp_idx(u32 ra
- 				return idx;
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -4488,7 +4488,7 @@ smb2_get_enc_key(struct TCP_Server_Info
+  */
+ static int
+ crypt_message(struct TCP_Server_Info *server, int num_rqst,
+-	      struct smb_rqst *rqst, int enc)
++	      struct smb_rqst *rqst, int enc, struct crypto_aead *tfm)
+ {
+ 	struct smb2_transform_hdr *tr_hdr =
+ 		(struct smb2_transform_hdr *)rqst[0].rq_iov[0].iov_base;
+@@ -4499,8 +4499,6 @@ crypt_message(struct TCP_Server_Info *se
+ 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
+ 	struct aead_request *req;
+ 	u8 *iv;
+-	DECLARE_CRYPTO_WAIT(wait);
+-	struct crypto_aead *tfm;
+ 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
+ 	void *creq;
+ 
+@@ -4511,14 +4509,6 @@ crypt_message(struct TCP_Server_Info *se
+ 		return rc;
  	}
  
--	return -1;
-+	return IWL_RATE_INVALID;
- }
+-	rc = smb3_crypto_aead_allocate(server);
+-	if (rc) {
+-		cifs_server_dbg(VFS, "%s: crypto alloc failed\n", __func__);
+-		return rc;
+-	}
+-
+-	tfm = enc ? server->secmech.enc : server->secmech.dec;
+-
+ 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
+ 		(server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
+ 		rc = crypto_aead_setkey(tfm, key, SMB3_GCM256_CRYPTKEY_SIZE);
+@@ -4557,11 +4547,7 @@ crypt_message(struct TCP_Server_Info *se
+ 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
+ 	aead_request_set_ad(req, assoc_data_len);
  
- static void rs_rate_scale_perform(struct iwl_priv *priv,
-@@ -3146,7 +3146,10 @@ static ssize_t rs_sta_dbgfs_scale_table_
- 	for (i = 0; i < LINK_QUAL_MAX_RETRY_NUM; i++) {
- 		index = iwl_hwrate_to_plcp_idx(
- 			le32_to_cpu(lq_sta->lq.rs_table[i].rate_n_flags));
--		if (is_legacy(tbl->lq_type)) {
-+		if (index == IWL_RATE_INVALID) {
-+			desc += sprintf(buff + desc, " rate[%d] 0x%X invalid rate\n",
-+				i, le32_to_cpu(lq_sta->lq.rs_table[i].rate_n_flags));
-+		} else if (is_legacy(tbl->lq_type)) {
- 			desc += sprintf(buff+desc, " rate[%d] 0x%X %smbps\n",
- 				i, le32_to_cpu(lq_sta->lq.rs_table[i].rate_n_flags),
- 				iwl_rate_mcs[index].mbps);
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-@@ -1072,10 +1072,13 @@ static void rs_get_lower_rate_down_colum
+-	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+-				  crypto_req_done, &wait);
+-
+-	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
+-				: crypto_aead_decrypt(req), &wait);
++	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
  
- 		rate->bw = RATE_MCS_CHAN_WIDTH_20;
+ 	if (!rc && enc)
+ 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
+@@ -4650,7 +4636,7 @@ smb3_init_transform_rq(struct TCP_Server
+ 	/* fill the 1st iov with a transform header */
+ 	fill_transform_hdr(tr_hdr, orig_len, old_rq, server->cipher_type);
  
--		WARN_ON_ONCE(rate->index < IWL_RATE_MCS_0_INDEX ||
--			     rate->index > IWL_RATE_MCS_9_INDEX);
-+		if (WARN_ON_ONCE(rate->index < IWL_RATE_MCS_0_INDEX))
-+			rate->index = rs_ht_to_legacy[IWL_RATE_MCS_0_INDEX];
-+		else if (WARN_ON_ONCE(rate->index > IWL_RATE_MCS_9_INDEX))
-+			rate->index = rs_ht_to_legacy[IWL_RATE_MCS_9_INDEX];
+-	rc = crypt_message(server, num_rqst, new_rq, 1);
++	rc = crypt_message(server, num_rqst, new_rq, 1, server->secmech.enc);
+ 	cifs_dbg(FYI, "Encrypt message returned %d\n", rc);
+ 	if (rc)
+ 		goto err_free;
+@@ -4676,8 +4662,9 @@ decrypt_raw_data(struct TCP_Server_Info
+ 		 unsigned int npages, unsigned int page_data_size,
+ 		 bool is_offloaded)
+ {
+-	struct kvec iov[2];
++	struct crypto_aead *tfm;
+ 	struct smb_rqst rqst = {NULL};
++	struct kvec iov[2];
+ 	int rc;
+ 
+ 	iov[0].iov_base = buf;
+@@ -4692,9 +4679,31 @@ decrypt_raw_data(struct TCP_Server_Info
+ 	rqst.rq_pagesz = PAGE_SIZE;
+ 	rqst.rq_tailsz = (page_data_size % PAGE_SIZE) ? : PAGE_SIZE;
+ 
+-	rc = crypt_message(server, 1, &rqst, 0);
++	if (is_offloaded) {
++		if ((server->cipher_type == SMB2_ENCRYPTION_AES128_GCM) ||
++		    (server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
++			tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
 +		else
-+			rate->index = rs_ht_to_legacy[rate->index];
++			tfm = crypto_alloc_aead("ccm(aes)", 0, 0);
++		if (IS_ERR(tfm)) {
++			rc = PTR_ERR(tfm);
++			cifs_server_dbg(VFS, "%s: Failed alloc decrypt TFM, rc=%d\n", __func__, rc);
++
++			return rc;
++		}
++	} else {
++		if (unlikely(!server->secmech.dec))
++			return -EIO;
++
++		tfm = server->secmech.dec;
++	}
++
++	rc = crypt_message(server, 1, &rqst, 0, tfm);
+ 	cifs_dbg(FYI, "Decrypt message returned %d\n", rc);
  
--		rate->index = rs_ht_to_legacy[rate->index];
- 		rate->ldpc = false;
- 	} else {
- 		/* Downgrade to SISO with same MCS if in MIMO  */
++	if (is_offloaded)
++		crypto_free_aead(tfm);
++
+ 	if (rc)
+ 		return rc;
+ 
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1105,6 +1105,12 @@ SMB2_negotiate(const unsigned int xid,
+ 		else
+ 			cifs_server_dbg(VFS, "Missing expected negotiate contexts\n");
+ 	}
++
++	if (server->cipher_type && !rc) {
++		rc = smb3_crypto_aead_allocate(server);
++		if (rc)
++			cifs_server_dbg(VFS, "%s: crypto alloc failed, rc=%d\n", __func__, rc);
++	}
+ neg_exit:
+ 	free_rsp_buf(resp_buftype, rsp);
+ 	return rc;
 
 
