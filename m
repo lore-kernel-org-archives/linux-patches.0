@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3D91E6DCF;
-	Thu, 30 Jan 2025 14:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DAA1E3DC8;
+	Thu, 30 Jan 2025 14:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246826; cv=none; b=rfmMymrliU8h3oQ/QVAHWQi5MdpmCxwf+ayVBkj1nrKq3rJ34FVDS8ApmFrq468QEF9yflGIzCZbafkH3SKAxFkfzbXSJ2Nx7VvWD5RCaUdd5fzqiobfTiZPm4Od8Ju8e7ytgLsOURqv7SMTZ640mfgfGT21Lqpx7Y1b83xbibM=
+	t=1738246829; cv=none; b=MPLyjZJXsiwmMH9kqQlyjIZowrESWwpAHZVOumY4GPPXlZ8HnhQM2ZOKYJm2KYQH4cPcrkHYtbMvdut4ROn/UZXHREdAJvqjY40ddvbCSR35iMZbC7lO1K6mYvC9QPD9B8D/0AS+kF0NRKcgMLJG3pQVAy9uG/cClOMuHyebXSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246826; c=relaxed/simple;
-	bh=7ZdkU8b2bqz8FZeYZtnQS2eVtseggYO0NQ6Q2u1EJXI=;
+	s=arc-20240116; t=1738246829; c=relaxed/simple;
+	bh=hapBAqyn4bvwHpvdTyQTpOOa6Au4jvPfN4YCEQ0wRYA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWm0+lyW8O+oNJ93TVU0/UZJc8XRgM5FnBmJM42jhnZuqR3aNolM5sTYInbPH8r97IijKEmZW/nFePmZm/+/ZBETnsMP7BiZWHrmcBv8x2WXC27DKvMtpHhaayCNGZOtWk7baxQ0wjQvgc0KENXktpGND3H9Uk6UuVZWLldrO60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dl7kOJ7U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdrP4+6yZOYR4XeLW5fkkYoJ4mwToX0WyznWmsiCF/fZwMvg1mw7H1yN++VlqXThhnEfpVPn72bcbOIDo5+WnRs+gnhAc2eZhoTFqzijxfraoiakvP9WtGmMdxydmp2hUVFI6CiHw1cVj8tvSIk15dbgj4yjHqDqd73iSYM9cAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EDXZ26Mq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dl7kOJ7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D76FCC4CED2;
-	Thu, 30 Jan 2025 14:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EDXZ26Mq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56ADDC4CED2;
+	Thu, 30 Jan 2025 14:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246826;
-	bh=7ZdkU8b2bqz8FZeYZtnQS2eVtseggYO0NQ6Q2u1EJXI=;
+	s=korg; t=1738246829;
+	bh=hapBAqyn4bvwHpvdTyQTpOOa6Au4jvPfN4YCEQ0wRYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dl7kOJ7UQ2Uu0XpcviIuQKH7qgQ4idGrpd9O+aGtGd75y1aVnjmfHwCHPTV00ze1W
-	 Y6hrwb6Q33R9VI2ZzuEGYhnZz/w89FX+Rggi1SckxYFe1SHaYyM7fcDOCEkFo21Yf0
-	 aBp4csYb6GVGDow3xAsvo+eTngVBmkDQXfr8fvho=
+	b=EDXZ26Mqjx7WBajI/r4VZTP52Ud5PJBxzcGX7RB28/NsUl9sV6xdQyZqujqeBhLYO
+	 82NXsIa/d43WBtdgQX+kuGDqQyqHwHCVeETdbMhN5gPCRbOQgYQNZomvh/b7bTLKMM
+	 OxfHrSZ3VOO+uOQqjCP/wWPpFmbsB0LI28KukXlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 51/91] riscv: Fix sleeping in invalid context in die()
-Date: Thu, 30 Jan 2025 15:01:10 +0100
-Message-ID: <20250130140135.711640722@linuxfoundation.org>
+	Olof Johansson <olof@lixom.net>,
+	Paul Walmsley <paul.walmsley@sifive.com>
+Subject: [PATCH 5.4 52/91] riscv: prefix IRQ_ macro names with an RV_ namespace
+Date: Thu, 30 Jan 2025 15:01:11 +0100
+Message-ID: <20250130140135.751296849@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -52,79 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Paul Walmsley <paul.walmsley@sifive.com>
 
-[ Upstream commit 6a97f4118ac07cfdc316433f385dbdc12af5025e ]
+commit 2f3035da4019780250658d1ffe486bc324e04805 upstream.
 
-die() can be called in exception handler, and therefore cannot sleep.
-However, die() takes spinlock_t which can sleep with PREEMPT_RT enabled.
-That causes the following warning:
+"IRQ_TIMER", used in the arch/riscv CSR header file, is a sufficiently
+generic macro name that it's used by several source files across the
+Linux code base.  Some of these other files ultimately include the
+arch/riscv CSR include file, causing collisions.  Fix by prefixing the
+RISC-V csr.h IRQ_ macro names with an RV_ prefix.
 
-BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:48
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 285, name: mutex
-preempt_count: 110001, expected: 0
-RCU nest depth: 0, expected: 0
-CPU: 0 UID: 0 PID: 285 Comm: mutex Not tainted 6.12.0-rc7-00022-ge19049cf7d56-dirty #234
-Hardware name: riscv-virtio,qemu (DT)
-Call Trace:
-    dump_backtrace+0x1c/0x24
-    show_stack+0x2c/0x38
-    dump_stack_lvl+0x5a/0x72
-    dump_stack+0x14/0x1c
-    __might_resched+0x130/0x13a
-    rt_spin_lock+0x2a/0x5c
-    die+0x24/0x112
-    do_trap_insn_illegal+0xa0/0xea
-    _new_vmalloc_restore_context_a0+0xcc/0xd8
-Oops - illegal instruction [#1]
-
-Switch to use raw_spinlock_t, which does not sleep even with PREEMPT_RT
-enabled.
-
-Fixes: 76d2a0493a17 ("RISC-V: Init and Halt Code")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Cc: stable@vger.kernel.org
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20241118091333.1185288-1-namcao@linutronix.de
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a4c3733d32a72 ("riscv: abstract out CSR names for supervisor vs machine mode")
+Reported-by: Olof Johansson <olof@lixom.net>
+Acked-by: Olof Johansson <olof@lixom.net>
+Signed-off-by: Paul Walmsley <paul.walmsley@sifive.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/traps.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/riscv/include/asm/csr.h      |   18 +++++++++---------
+ arch/riscv/kernel/irq.c           |    6 +++---
+ drivers/irqchip/irq-sifive-plic.c |    2 +-
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
-index d255d88cf522..fbc918f127dc 100644
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -23,7 +23,7 @@
+--- a/arch/riscv/include/asm/csr.h
++++ b/arch/riscv/include/asm/csr.h
+@@ -114,9 +114,9 @@
+ # define SR_PIE		SR_MPIE
+ # define SR_PP		SR_MPP
  
- int show_unhandled_signals = 1;
+-# define IRQ_SOFT	IRQ_M_SOFT
+-# define IRQ_TIMER	IRQ_M_TIMER
+-# define IRQ_EXT	IRQ_M_EXT
++# define RV_IRQ_SOFT		IRQ_M_SOFT
++# define RV_IRQ_TIMER	IRQ_M_TIMER
++# define RV_IRQ_EXT		IRQ_M_EXT
+ #else /* CONFIG_RISCV_M_MODE */
+ # define CSR_STATUS	CSR_SSTATUS
+ # define CSR_IE		CSR_SIE
+@@ -131,15 +131,15 @@
+ # define SR_PIE		SR_SPIE
+ # define SR_PP		SR_SPP
  
--static DEFINE_SPINLOCK(die_lock);
-+static DEFINE_RAW_SPINLOCK(die_lock);
+-# define IRQ_SOFT	IRQ_S_SOFT
+-# define IRQ_TIMER	IRQ_S_TIMER
+-# define IRQ_EXT	IRQ_S_EXT
++# define RV_IRQ_SOFT		IRQ_S_SOFT
++# define RV_IRQ_TIMER	IRQ_S_TIMER
++# define RV_IRQ_EXT		IRQ_S_EXT
+ #endif /* CONFIG_RISCV_M_MODE */
  
- void die(struct pt_regs *regs, const char *str)
- {
-@@ -34,7 +34,7 @@ void die(struct pt_regs *regs, const char *str)
+ /* IE/IP (Supervisor/Machine Interrupt Enable/Pending) flags */
+-#define IE_SIE		(_AC(0x1, UL) << IRQ_SOFT)
+-#define IE_TIE		(_AC(0x1, UL) << IRQ_TIMER)
+-#define IE_EIE		(_AC(0x1, UL) << IRQ_EXT)
++#define IE_SIE		(_AC(0x1, UL) << RV_IRQ_SOFT)
++#define IE_TIE		(_AC(0x1, UL) << RV_IRQ_TIMER)
++#define IE_EIE		(_AC(0x1, UL) << RV_IRQ_EXT)
  
- 	oops_enter();
+ #ifndef __ASSEMBLY__
  
--	spin_lock_irqsave(&die_lock, flags);
-+	raw_spin_lock_irqsave(&die_lock, flags);
- 	console_verbose();
- 	bust_spinlocks(1);
+--- a/arch/riscv/kernel/irq.c
++++ b/arch/riscv/kernel/irq.c
+@@ -23,11 +23,11 @@ asmlinkage __visible void __irq_entry do
  
-@@ -51,7 +51,7 @@ void die(struct pt_regs *regs, const char *str)
+ 	irq_enter();
+ 	switch (regs->cause & ~CAUSE_IRQ_FLAG) {
+-	case IRQ_TIMER:
++	case RV_IRQ_TIMER:
+ 		riscv_timer_interrupt();
+ 		break;
+ #ifdef CONFIG_SMP
+-	case IRQ_SOFT:
++	case RV_IRQ_SOFT:
+ 		/*
+ 		 * We only use software interrupts to pass IPIs, so if a non-SMP
+ 		 * system gets one, then we don't know what to do.
+@@ -35,7 +35,7 @@ asmlinkage __visible void __irq_entry do
+ 		riscv_software_interrupt();
+ 		break;
+ #endif
+-	case IRQ_EXT:
++	case RV_IRQ_EXT:
+ 		handle_arch_irq(regs);
+ 		break;
+ 	default:
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -262,7 +262,7 @@ static int __init plic_init(struct devic
+ 		 * Skip contexts other than external interrupts for our
+ 		 * privilege level.
+ 		 */
+-		if (parent.args[0] != IRQ_EXT)
++		if (parent.args[0] != RV_IRQ_EXT)
+ 			continue;
  
- 	bust_spinlocks(0);
- 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
--	spin_unlock_irqrestore(&die_lock, flags);
-+	raw_spin_unlock_irqrestore(&die_lock, flags);
- 	oops_exit();
- 
- 	if (in_interrupt())
--- 
-2.39.5
-
+ 		hartid = plic_find_hart_id(parent.np);
 
 
