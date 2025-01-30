@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735F51E7C27;
-	Thu, 30 Jan 2025 14:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4721DDE9;
+	Thu, 30 Jan 2025 14:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246630; cv=none; b=oQdfG5mkvBzvOBbcMZK09YuqhL67RBGAKEZWJIPu0Q2weiU8lOxhUP0HEA6PUhQdOSxEqHSUY7urTqwl9rt3ypS9ugsej5A+txB3mE6c1Ju8f9Ub4oFSteN0YWu2RwJE5ZfYJk3lkzyUuQ7mMHLc/H64bNVJVlOxlLKJ4Qlj6qU=
+	t=1738246633; cv=none; b=NkQDPLSiaoSKOFKNqdI9QSAM5cBPsug9z3eg9Vm5jTDVfJTzucHe6NkwDtuWpLclxdOf1YLCVvp62ucekpnxiOxlBIPi7d5yJPDv7DbVqaEjZwfX61AXzYNCRT7AQ9U4yP7x5MNbv6rLUxQ2N6yRZTnA8Zz81kUs247IIE0kxD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246630; c=relaxed/simple;
-	bh=n6x1dmNfDTzIopLpXUlF1B869fgQIzrZ2PtTpFtZfPE=;
+	s=arc-20240116; t=1738246633; c=relaxed/simple;
+	bh=5vCsNbS/cDwM7t8qflC3tn/BjIaWi5C7ZcXcKwy0iMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqBnNqexAvg5aZ979hfgpfgkGFHEjBs5MdTE+AJgE6kgGqf33DzagagYceY+V6CNh4b+ecGNAa4IYmBy5fc2XQAEaEZLXfKLNUIq+EdUuVk9qMnyOM0qD4yalDeL8CM/FiloPbfE7ohKtsZs47fATsXoxZ8pnQu/hR2PgxTPW1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RIHu9Hh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0bbMazRR7j6i6UFyBKMGjBrWfbTdfZE0LP1+RssF6co3Ph24wxmXkVA/T2Hg3xDe3DyKXqiAqtCd2ug3f4njyZdyMWgd/nFvCuXCb7N2tgx+7GR4ZO0a2J8nmTFLBZGvhDG+/mRYjSiHGwyQr6Tz7WhfeZ1dC59Nwvy5yrPnJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EA2QKibj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RIHu9Hh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09B8C4CED2;
-	Thu, 30 Jan 2025 14:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EA2QKibj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85FAC4CED2;
+	Thu, 30 Jan 2025 14:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246630;
-	bh=n6x1dmNfDTzIopLpXUlF1B869fgQIzrZ2PtTpFtZfPE=;
+	s=korg; t=1738246633;
+	bh=5vCsNbS/cDwM7t8qflC3tn/BjIaWi5C7ZcXcKwy0iMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2RIHu9HhzV4if/36ECU736YEgEcjN4PxlIk2khfHTcoyZAldm3c542bokq+5KDnkc
-	 jqmiQ1OJh6mh0NmzqjHYAWCBcneCotuWL33n0WfMV2dl+50yn7A27mJBgzpc3sYMak
-	 0VIRyDZ6m+plvn+cjgiIPTKdKqhl1VF/6WPtBNKs=
+	b=EA2QKibjrqtxK7xTHoynwXyWyRbACUNhPPZWKV4FbUX13UH0hxGd2nijBw0cNb/S7
+	 SKnXDKMkE/9KsmHnsoau1+AJuvWepuk5aYkiiXWL6Tyy8DkcMXRihaUf1gLGTEOnd+
+	 k1mLropI36ZKDXxZGNT4HGRGhgLNHl2yrI/qFwco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antonio Pastor <antonio.pastor@gmail.com>,
+	Jason Xing <kernelxing@tencent.com>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/91] net: 802: LLC+SNAP OID:PID lookup on start of skb data
-Date: Thu, 30 Jan 2025 15:00:25 +0100
-Message-ID: <20250130140133.926482003@linuxfoundation.org>
+Subject: [PATCH 5.4 07/91] tcp/dccp: complete lockless accesses to sk->sk_max_ack_backlog
+Date: Thu, 30 Jan 2025 15:00:26 +0100
+Message-ID: <20250130140133.965144277@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -52,54 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antonio Pastor <antonio.pastor@gmail.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 1e9b0e1c550c42c13c111d1a31e822057232abc4 ]
+[ Upstream commit 9a79c65f00e2b036e17af3a3a607d7d732b7affb ]
 
-802.2+LLC+SNAP frames received by napi_complete_done() with GRO and DSA
-have skb->transport_header set two bytes short, or pointing 2 bytes
-before network_header & skb->data. This was an issue as snap_rcv()
-expected offset to point to SNAP header (OID:PID), causing packet to
-be dropped.
+Since commit 099ecf59f05b ("net: annotate lockless accesses to
+sk->sk_max_ack_backlog") decided to handle the sk_max_ack_backlog
+locklessly, there is one more function mostly called in TCP/DCCP
+cases. So this patch completes it:)
 
-A fix at llc_fixup_skb() (a024e377efed) resets transport_header for any
-LLC consumers that may care about it, and stops SNAP packets from being
-dropped, but doesn't fix the problem which is that LLC and SNAP should
-not use transport_header offset.
-
-Ths patch eliminates the use of transport_header offset for SNAP lookup
-of OID:PID so that SNAP does not rely on the offset at all.
-The offset is reset after pull for any SNAP packet consumers that may
-(but shouldn't) use it.
-
-Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
-Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250103012303.746521-1-antonio.pastor@gmail.com
+Link: https://lore.kernel.org/r/20240331090521.71965-1-kerneljasonxing@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 3479c7549fb1 ("tcp/dccp: allow a connection when sk_max_ack_backlog is zero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/802/psnap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/inet_connection_sock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/802/psnap.c b/net/802/psnap.c
-index 40ab2aea7b31..7431ec077273 100644
---- a/net/802/psnap.c
-+++ b/net/802/psnap.c
-@@ -55,11 +55,11 @@ static int snap_rcv(struct sk_buff *skb, struct net_device *dev,
- 		goto drop;
+diff --git a/include/net/inet_connection_sock.h b/include/net/inet_connection_sock.h
+index 180ff3ca823a..c81bbfc5f4df 100644
+--- a/include/net/inet_connection_sock.h
++++ b/include/net/inet_connection_sock.h
+@@ -285,7 +285,7 @@ static inline int inet_csk_reqsk_queue_len(const struct sock *sk)
  
- 	rcu_read_lock();
--	proto = find_snap_client(skb_transport_header(skb));
-+	proto = find_snap_client(skb->data);
- 	if (proto) {
- 		/* Pass the frame on. */
--		skb->transport_header += 5;
- 		skb_pull_rcsum(skb, 5);
-+		skb_reset_transport_header(skb);
- 		rc = proto->rcvfunc(skb, dev, &snap_packet_type, orig_dev);
- 	}
- 	rcu_read_unlock();
+ static inline int inet_csk_reqsk_queue_is_full(const struct sock *sk)
+ {
+-	return inet_csk_reqsk_queue_len(sk) >= sk->sk_max_ack_backlog;
++	return inet_csk_reqsk_queue_len(sk) >= READ_ONCE(sk->sk_max_ack_backlog);
+ }
+ 
+ bool inet_csk_reqsk_queue_drop(struct sock *sk, struct request_sock *req);
 -- 
 2.39.5
 
