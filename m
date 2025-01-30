@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CCD1E3775;
-	Thu, 30 Jan 2025 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F971E3775;
+	Thu, 30 Jan 2025 13:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245594; cv=none; b=rP7rJrJI0cU2bZrdnVFyXFWZqAfuug3cJZ787KnACxxmx4lWz/1rJhm0TC4rc8t3qLP4TZgNO3HyArfDuWI1FRDYz4VteORZPqa74JUZVG+xsuXPHM3jAlwG3LGsdL7qb90likBwOskKdoqpMkge+lUjT19uAlOHZYXTrHlPriI=
+	t=1738245597; cv=none; b=FpGLH93Fs2Q4fF8y7V1u2aLxAkGo8zX76Ba+NXdtJV17wJ2CzrEYj7Hhy9JqhDsDy/hdZeQ0qS/nHurlTW69iKnUTFzgJ27ySGt13HOj1Xhj1mg5bvjSo/aZAJdgDXs3QykQhzf12aJUFBgXFF1JKDbU9igGf6MtDLaHI5AGDdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245594; c=relaxed/simple;
-	bh=ujKFZ/vZnEQCrw2DlcMxpZGbUV91UyEHvn5OxUmfRVw=;
+	s=arc-20240116; t=1738245597; c=relaxed/simple;
+	bh=NSfHs+EZmkefQgTEaN+EUTLO/45491pZMr4HQjBGQR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FW1cFdqrugwC22Q87xb5BMr0/lQUCJPHcBB9zJPBH0iuUmnY4tBWvo7vyEweBuwxcOvAGPRG90n0dSZTKvykT51POuvEpY0fzwTex6yH/Je0dEWeifvQi8nlRlLP1Ka6Te0EX7Q1EnayfbGzFGlbeq+KNzLBhYRDJJCtPY6KXFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cL66fBHR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FIDKXmnWwKlrTofmYk/KruF5cA4jWCb/3uBB6J1W9fGi5pUo00v/m7kDjKPV109MWWK9JawJgih9mVBmdigNM1DdZrmZmpP//0ytbV29KpYbPCxkE6w34BvxKVIOO51Yr6INE/Nlvw/kCAGw9CIG6cJeYmLta8YAOTYu8jY41T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaSAT5Jw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cL66fBHR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB68C4CED2;
-	Thu, 30 Jan 2025 13:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaSAT5Jw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851E9C4CED2;
+	Thu, 30 Jan 2025 13:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245594;
-	bh=ujKFZ/vZnEQCrw2DlcMxpZGbUV91UyEHvn5OxUmfRVw=;
+	s=korg; t=1738245596;
+	bh=NSfHs+EZmkefQgTEaN+EUTLO/45491pZMr4HQjBGQR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cL66fBHRbUMg3XkpDRPxcS7VBoRuffVvU59ddvAcuc/Cic3F8ns4yXZp6wJjAybk5
-	 0tFT8Ky4sMveR9kguKMrCCjuefXcEVXoxWDfEa0nRIj9ow0FlcInqMwNa4aSO4oN+O
-	 DH2LmU2syL7hs86Zi9psIGn4XPleYBAnYYD8TinA=
+	b=GaSAT5JwJ2uwRGqzJmYgHwhqXLi77qG1zF21Ce18zf1YaeWlxDafVyd9efMdD+cyw
+	 aZtozPR2CE8BFb8m/CybXF1MFRD/dB6mIWld7MPyp2M0VyEAFuMZ78YV5AonUxyNTa
+	 rrPoJK4MXnkcvFOWwNSHEhwXONokZqAiSXwimopA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Yang Erkun <yangerkun@huawei.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.13 02/25] libfs: Return ENOSPC when the directory offset range is exhausted
-Date: Thu, 30 Jan 2025 14:58:48 +0100
-Message-ID: <20250130133457.016233651@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.13 20/25] Input: atkbd - map F23 key to support default copilot shortcut
+Date: Thu, 30 Jan 2025 14:59:06 +0100
+Message-ID: <20250130133457.750762915@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133456.914329400@linuxfoundation.org>
 References: <20250130133456.914329400@linuxfoundation.org>
@@ -52,46 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit 903dc9c43a155e0893280c7472d4a9a3a83d75a6 upstream.
+commit 907bc9268a5a9f823ffa751957a5c1dd59f83f42 upstream.
 
-Testing shows that the EBUSY error return from mtree_alloc_cyclic()
-leaks into user space. The ERRORS section of "man creat(2)" says:
+Microsoft defined Meta+Shift+F23 as the Copilot shortcut instead of a
+dedicated keycode, and multiple vendors have their keyboards emit this
+sequence in response to users pressing a dedicated "Copilot" key.
+Unfortunately the default keymap table in atkbd does not map scancode
+0x6e (F23) and so the key combination does not work even if userspace
+is ready to handle it.
 
->	EBUSY	O_EXCL was specified in flags and pathname refers
->		to a block device that is in use by the system
->		(e.g., it is mounted).
+Because this behavior is common between multiple vendors and the
+scancode is currently unused map 0x6e to keycode 193 (KEY_F23) so that
+key sequence is generated properly.
 
-ENOSPC is closer to what applications expect in this situation.
+MS documentation for the scan code:
+https://learn.microsoft.com/en-us/windows/win32/inputdev/about-keyboard-input#scan-codes
+Confirmed on Lenovo, HP and Dell machines by Canonical.
+Tested on Lenovo T14s G6 AMD.
 
-Note that the normal range of simple directory offset values is
-2..2^63, so hitting this error is going to be rare to impossible.
-
-Fixes: 6faddda69f62 ("libfs: Add directory operations for stable offsets")
-Cc: stable@vger.kernel.org # v6.9+
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Yang Erkun <yangerkun@huawei.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/20241228175522.1854234-2-cel@kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20250107034554.25843-1-mpearson-lenovo@squebb.ca
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/libfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/keyboard/atkbd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -292,8 +292,8 @@ int simple_offset_add(struct offset_ctx
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -89,7 +89,7 @@ static const unsigned short atkbd_set2_k
+ 	  0, 46, 45, 32, 18,  5,  4, 95,  0, 57, 47, 33, 20, 19,  6,183,
+ 	  0, 49, 48, 35, 34, 21,  7,184,  0,  0, 50, 36, 22,  8,  9,185,
+ 	  0, 51, 37, 23, 24, 11, 10,  0,  0, 52, 53, 38, 39, 25, 12,  0,
+-	  0, 89, 40,  0, 26, 13,  0,  0, 58, 54, 28, 27,  0, 43,  0, 85,
++	  0, 89, 40,  0, 26, 13,  0,193, 58, 54, 28, 27,  0, 43,  0, 85,
+ 	  0, 86, 91, 90, 92,  0, 14, 94,  0, 79,124, 75, 71,121,  0,  0,
+ 	 82, 83, 80, 76, 77, 72,  1, 69, 87, 78, 81, 74, 55, 73, 70, 99,
  
- 	ret = mtree_alloc_cyclic(&octx->mt, &offset, dentry, DIR_OFFSET_MIN,
- 				 LONG_MAX, &octx->next_offset, GFP_KERNEL);
--	if (ret < 0)
--		return ret;
-+	if (unlikely(ret < 0))
-+		return ret == -EBUSY ? -ENOSPC : ret;
- 
- 	offset_set(dentry, offset);
- 	return 0;
 
 
