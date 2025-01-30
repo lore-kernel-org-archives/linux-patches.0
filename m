@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88398C13D;
-	Thu, 30 Jan 2025 14:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02F3C13D;
+	Thu, 30 Jan 2025 14:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245639; cv=none; b=diBGpBG8+k7Mm30emcpbGsjvgrCx/RKmWirUm1tgVrQY3nlVEM1J838ByDAKEoCyX3V3VanP4Ky8omi1yIfvR11k2Iihv6U+9DTWks/EKN06zxZYHMnVQUpfajw+cVasHCjue7dKzLsVGBsc0Y7WeJXTdQ/IB9WWhEP7fYs2Pgw=
+	t=1738245642; cv=none; b=Q6fFz4kuxC5E8FgO6ip85NflFgN+1Nuuz2tdLyI7hrCuAxh5IRccxEa8qwinXjU5IrkunJWW+5bcFplG8GgLgOOKjoPZ2Dh56Ch7hlp68Bu7+LrUdwItY5gq4fVTU34eY49Cq2vW1pLUXHtwUX2R2DnZJ8qP7hJG56IwNZjGgJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245639; c=relaxed/simple;
-	bh=PV1ekjZx1T7hH3REmmPLemaUcRL5Ny4hoI6tmValFkk=;
+	s=arc-20240116; t=1738245642; c=relaxed/simple;
+	bh=tE+RuztCcSnsQT/2+KrW64cfShqAoYbpkgdrV6khcmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nfq05L3UNnFq13icvlMtWYdDYMAA9kGGvqv3ulC/kHLxTMhFjKQFns/g5K1m/xuIJk7jfxN6Ejr0iKDk361s/uDKyZSQf/9TM5Q3wMzrD8bjY5F91y4UGngXqYwmLgoUuRucgJ9xNaf7NOvWfLiKn6/zCCmjkB9MYSHYINcmCQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkAIxP7b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+xGNRwzUWP20RGJNKWsYkWQ/WvxKI/g6tUFWoAFf7aJao7tWJUu2Mk75xxGlZcXxkA+O/7/eBVEumthTJHxYGUolPB6434VfV0kDeoekkViSTMgMpGcRdtL/pCSpZGaM3EUCz9bOhE+PvccywqQPhj3zphakuFiIF5o1ttzzsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWCvSzB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkAIxP7b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941B7C4CED2;
-	Thu, 30 Jan 2025 14:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWCvSzB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB89C4CED2;
+	Thu, 30 Jan 2025 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245639;
-	bh=PV1ekjZx1T7hH3REmmPLemaUcRL5Ny4hoI6tmValFkk=;
+	s=korg; t=1738245641;
+	bh=tE+RuztCcSnsQT/2+KrW64cfShqAoYbpkgdrV6khcmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SkAIxP7bCjsw6SXIhODiigDUFSgJUFWqT8T4wR+q/e3mUuatwGb7hMsFrUrv1WmYj
-	 u6rqpC22gusJakL2sDoIC6U5LaY3FWiHt1g3AremjoKFtGYu70RGom9duF/Z79AuBJ
-	 zRZNbEuQ8ZWqMgXJHsGcVijfTjIYqb4e9gkAdpO4=
+	b=fWCvSzB6fvp+C+z3Gx2S9CwRovwJbx3aCY/zEc9gqcjQrfDdHJij6WDz52ud08cqZ
+	 Qacs8hNtCNFe679GtFHr6njiBgdRHIm9eYcof1JEazR/k72Oy2JuYOO4ew2LBpNV2i
+	 TKwYWy9xyvqyUyp/XVM+p2BRsAp0tHpnDiqsJPuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yage Geng <icoderdev@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 10/40] ALSA: hda/realtek: Fix volume adjustment issue on Lenovo ThinkBook 16P Gen5
-Date: Thu, 30 Jan 2025 14:59:10 +0100
-Message-ID: <20250130133500.123290733@linuxfoundation.org>
+Subject: [PATCH 6.12 11/40] drm/connector: hdmi: Validate supported_formats matches ycbcr_420_allowed
+Date: Thu, 30 Jan 2025 14:59:11 +0100
+Message-ID: <20250130133500.163136557@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -51,39 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yage Geng <icoderdev@gmail.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 34c8e74cd6667ef5da90d448a1af702c4b873bd3 ]
+[ Upstream commit f2f96619590f944f74f3c2b0b57a6dcc5d13cd9f ]
 
-This patch fixes the volume adjustment issue on the Lenovo ThinkBook 16P Gen5
-by applying the necessary quirk configuration for the Realtek ALC287 codec.
+Ensure HDMI connector initialization fails when the presence of
+HDMI_COLORSPACE_YUV420 in the given supported_formats bitmask doesn't
+match the value of drm_connector->ycbcr_420_allowed.
 
-The issue was caused by incorrect configuration in the driver,
-which prevented proper volume control on certain systems.
-
-Signed-off-by: Yage Geng <icoderdev@gmail.com>
-Link: https://patch.msgid.link/20250113085208.15351-1-icoderdev@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241224-bridge-conn-fmt-prio-v4-3-a9ceb5671379@collabora.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_connector.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index a9f6138b59b0c..8c4de5a253add 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10916,8 +10916,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38e0, "Yoga Y990 Intel VECO Dual", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38f8, "Yoga Book 9i", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x38df, "Y990 YG DUAL", ALC287_FIXUP_TAS2781_I2C),
--	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
--	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
-+	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38fd, "ThinkBook plus Gen5 Hybrid", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
- 	SND_PCI_QUIRK(0x17aa, 0x3913, "Lenovo 145", ALC236_FIXUP_LENOVO_INV_DMIC),
+diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connector.c
+index fc35f47e2849e..ca7f43c8d6f1b 100644
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -507,6 +507,9 @@ int drmm_connector_hdmi_init(struct drm_device *dev,
+ 	if (!supported_formats || !(supported_formats & BIT(HDMI_COLORSPACE_RGB)))
+ 		return -EINVAL;
+ 
++	if (connector->ycbcr_420_allowed != !!(supported_formats & BIT(HDMI_COLORSPACE_YUV420)))
++		return -EINVAL;
++
+ 	if (!(max_bpc == 8 || max_bpc == 10 || max_bpc == 12))
+ 		return -EINVAL;
+ 
 -- 
 2.39.5
 
