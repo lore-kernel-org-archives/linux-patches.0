@@ -1,131 +1,220 @@
-Received: from fanzine2.igalia.com (fanzine.igalia.com [178.60.130.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E0B1E98F3;
-	Thu, 30 Jan 2025 15:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.60.130.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBAC1E8837
+	for <patches@lists.linux.dev>; Thu, 30 Jan 2025 15:58:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738252604; cv=none; b=qCiUQazwReMtH3Tfs9+0l5d+gajQaCiMxfDJ1yuJqqvxLPNP7IQ6YREw9Euw5lZRUxuZnxmr+wQwbnfGz9IOoaO8H9SREvvjUA769ZF8qrWc+gGD/d4VypZwreZjFp5HKmnbMltZM8pYaxxK5aOk90SGpJBuKXKEYBx3GcadpBo=
+	t=1738252718; cv=none; b=MGhiyfNs2wnagqSbyidrTBn2Mkn45LEgcn2ZmfnHE2Pw5YCT4JakDkMDVDKaWNOxxY2Tp/WQDYcNcGljz7IJqObr3diZ2VFnWYUKYNBRypGLY85dzV+NnAkPfoey4tchp51kK3G2UVi/WvIPJD8WAmK4ALvnwAndYNpvtWM98wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738252604; c=relaxed/simple;
-	bh=kyueqhJCMqDvblVFcCdgbr8Ha4b8qWO7dbnUxsJEkrQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F2yjtUIM1Bw/mpu/8PSxcuTrfyocJnwC6PnhA7FPhdLjQTwlgfUE2FF9tVW2Sa3vXXPnhgsizaU+AJ+MXeo5dn4L1+Blogy0PoSRYqgyrrF2BjYkV7nH0yZKSHbLYl42JvBSvhdfuD4SxBeKeZTQdbomyilewYc5jvA2yhFZHRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=IJaRPwpF; arc=none smtp.client-ip=178.60.130.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+	s=arc-20240116; t=1738252718; c=relaxed/simple;
+	bh=QoRQmh6++CdHMehWXd5zc5R/DgqgxVbl/8RQ4uaQYNg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TbOKoTpFehBbpbEJeBG4MydPXdhmxMz1VagBq9q2OZA5gyugSmJZ4S+tzqgP5Za3aAhHR3q1gqbTEoeDupTnHR9xrvSS3qwhboZn4eMaAJBBtzsjHJt2GBepgfOd0HKMlSH2cYWRa5bG00QTmYB0bLxG4sNlbFAf8NuiUnxW6Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ljW9CHSQ; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="IJaRPwpF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=y8WowStiuFjtFiRY/j+QKKzZT9+b6Vju/ceYoKEPRYk=; b=IJaRPwpF4gbIObU8fUTSiyhgEV
-	YzFhvVx5h9DEqE71We2TGaRnvnxdE5eOYMlC9VTAXR2D8jNDz0y/6UhAB9g0+NqouafIrwCk8eeEe
-	lbgAqNWAloEDPV0fpDPqfoLyTiBkzU9WrdIVZO7ItX24my+5om2eKhgnMHFPONTCKAjSJVwXMpM3H
-	9JdXbU8/H002fEFaicIwfZAHtpwPViyeSL/TlvuoJASByGPKOXIoXVp+Pd+wUMqSqhzEfWQqv7Xy4
-	zmLUVLGBedQRamU+BLYl3UjZ8p3kX6e/u+qrdYjfmU1gVTtdZnjA23u9mPIdSTGI6re29MvUObz3T
-	XefyNjTQ==;
-Received: from [189.16.81.54] (helo=[10.154.220.147])
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
-	id 1tdWu1-0015Mv-1g; Thu, 30 Jan 2025 16:56:31 +0100
-Message-ID: <12607ce2-01f3-4fb6-8b50-33a9f7f26381@igalia.com>
-Date: Thu, 30 Jan 2025 12:56:25 -0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljW9CHSQ"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2f441904a42so1685859a91.1
+        for <patches@lists.linux.dev>; Thu, 30 Jan 2025 07:58:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738252716; x=1738857516; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HGZwZ9nhCeLmj/jBSs08wJin9wLaCBKJ3rsqMQyq/+Q=;
+        b=ljW9CHSQfatdqCUPSOgKixx3jTzPJrsXHCbgbdECk867YrRJ2nZPDz1/QJXWJ7Vnlv
+         sjx4maxerPoVL02J+NlyHFZ+cwtKOIIKGbNQckB7gAMvM+wyZfbyJ2hm3YUIl3DO3Un9
+         5+4EiorJ6pAHJVUddH46kb8+4SBY2XNryVpiEDSE7XSqcLfDu9IUu+rO7g9d+GRi5kZo
+         a/tCY+gfe00RnT6MxR3MHZK+g9j2NJ+qiJ8mBCdHBK6wrv2rKK1GkDJ53qID0YQnNwj7
+         eRjVh+gUCYwLk8EG6AouT2RKLI2qzOAqK6DFliND9cU5zXLlOKRQPpEZcuZdhRzykdfj
+         HF9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738252716; x=1738857516;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HGZwZ9nhCeLmj/jBSs08wJin9wLaCBKJ3rsqMQyq/+Q=;
+        b=xSTokvbDZ0oUHnIeLM5wRUMSv2+JHAj330/r3fPksQSrIJdcKVud/hIA4eAEmCUpTq
+         zFa/D4o5Mf5Vr0bCZK78Wl9zwox6Dei/22VNO6pwnTlAVURUUuZsjhB0qkLINZh4GdKf
+         L9/MJktJVO/vf4FgL1AfqX1i9Yj96oF2CNT13SOyQ9KUY30rOQRRvyDXKCY5Q6bWl1mv
+         RncKogNw8UvpUxS2YtMkDmiI/glsnwgLZbmnAsb8sejLH+S7Do7/jpZt6RtXuA73Wi52
+         gLLNqet+Okc41i4JfJ+dWyaHfoPx3MHjNU9Om5LER5XmorqdyslA2aVI85jARJv2Ja2D
+         +xNw==
+X-Forwarded-Encrypted: i=1; AJvYcCUosX/RXbAbVl2cSAMBdAvt0OTR8LL/vffDw3kMWDIPWzw3lfAcKx4VGmYbI+GSMc5n/Xie0knl@lists.linux.dev
+X-Gm-Message-State: AOJu0YxBreK/JbcTLsdI5vNDZwkXQHyNw+oORbyhCjoJnrgLxqpLzZgc
+	u84pcIejCa+cGKAwGAgpdBQSc3ZBMpigLLAOdN+RvU7c/tM+pcqqeMii4biAabO7itHc/lsdE2C
+	5777nu+6kOw8K1WgBXQEu4ZsND4Q=
+X-Gm-Gg: ASbGnctgrd9jQlvf5wXT9Dm6r4dsSBogkUz/Q2HWL3Riod2WFEcnCWpQgQYDFBHDNwt
+	defZtv+niB9QiN36KJ8hfmTBNb4O3SRo4W2/1EwqmsCbyQgkRwXU12CUaDG6MxFFaRGoOTHwhvJ
+	1drIMPKwmcJIs=
+X-Google-Smtp-Source: AGHT+IG/HecaiqVoxH5jPAOWTeIt+9mgmj6BMHMBqq555NR5Iq6fH52PZ9mOh4IGweXpch0m3azI93uwYeyJTOEfL28=
+X-Received: by 2002:a17:90b:53c4:b0:2ee:d63f:d77 with SMTP id
+ 98e67ed59e1d1-2f83abd7ccfmr12066158a91.9.1738252715615; Thu, 30 Jan 2025
+ 07:58:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 082/133] drm/v3d: Ensure job pointer is set to NULL
- after job completion
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev,
- Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
- Sasha Levin <sashal@kernel.org>
-References: <20250130140142.491490528@linuxfoundation.org>
- <20250130140145.823285670@linuxfoundation.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>
-In-Reply-To: <20250130140145.823285670@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20250130133456.914329400@linuxfoundation.org>
+In-Reply-To: <20250130133456.914329400@linuxfoundation.org>
+From: Luna Jernberg <droidbittin@gmail.com>
+Date: Thu, 30 Jan 2025 16:58:23 +0100
+X-Gm-Features: AWEUYZlu5-eS8fzqAeNwcfG3zpiErf9DOFZPfYUz3QMizdmJ6bBIV_1fYaOerjw
+Message-ID: <CADo9pHgCDcSp46UH9VANw8svKb9bZZuh5U4Yc8r0XG6fQ0G=4Q@mail.gmail.com>
+Subject: Re: [PATCH 6.13 00/25] 6.13.1-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Greg,
+Tested-by: Luna Jernberg <droidbittin@gmail.com>
 
-This patch introduced a race-condition that was fixed in
-6e64d6b3a3c39655de56682ec83e894978d23412 ("drm/v3d: Assign job pointer
-to NULL before signaling the fence") - already in torvalds/master. Is it
-possible to push the two patches together? This way we wouldn't break
-any devices.
+AMD Ryzen 5 5600 6-Core Processor:
+https://www.inet.se/produkt/5304697/amd-ryzen-5-5600-3-5-ghz-35mb on a
+https://www.gigabyte.com/Motherboard/B550-AORUS-ELITE-V2-rev-12
+https://www.inet.se/produkt/1903406/gigabyte-b550-aorus-elite-v2
+motherboard :)
 
-If possible, same thing for 5.4.
+running Arch Linux with the testing repos enabled:
+https://archlinux.org/ https://archboot.com/
+https://wiki.archlinux.org/title/Arch_Testing_Team
 
-Best Regards,
-- Maíra
-
-On 30/01/25 11:01, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Maíra Canal <mcanal@igalia.com>
-> 
-> [ Upstream commit e4b5ccd392b92300a2b341705cc4805681094e49 ]
-> 
-> After a job completes, the corresponding pointer in the device must
-> be set to NULL. Failing to do so triggers a warning when unloading
-> the driver, as it appears the job is still active. To prevent this,
-> assign the job pointer to NULL after completing the job, indicating
-> the job has finished.
-> 
-> Fixes: 14d1d1908696 ("drm/v3d: Remove the bad signaled() implementation.")
-> Signed-off-by: Maíra Canal <mcanal@igalia.com>
-> Reviewed-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20250113154741.67520-1-mcanal@igalia.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   drivers/gpu/drm/v3d/v3d_irq.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
-> index c88686489b888..22aa02d75c5cc 100644
-> --- a/drivers/gpu/drm/v3d/v3d_irq.c
-> +++ b/drivers/gpu/drm/v3d/v3d_irq.c
-> @@ -103,6 +103,7 @@ v3d_irq(int irq, void *arg)
->   
->   		trace_v3d_bcl_irq(&v3d->drm, fence->seqno);
->   		dma_fence_signal(&fence->base);
-> +		v3d->bin_job = NULL;
->   		status = IRQ_HANDLED;
->   	}
->   
-> @@ -112,6 +113,7 @@ v3d_irq(int irq, void *arg)
->   
->   		trace_v3d_rcl_irq(&v3d->drm, fence->seqno);
->   		dma_fence_signal(&fence->base);
-> +		v3d->render_job = NULL;
->   		status = IRQ_HANDLED;
->   	}
->   
-> @@ -121,6 +123,7 @@ v3d_irq(int irq, void *arg)
->   
->   		trace_v3d_csd_irq(&v3d->drm, fence->seqno);
->   		dma_fence_signal(&fence->base);
-> +		v3d->csd_job = NULL;
->   		status = IRQ_HANDLED;
->   	}
->   
-> @@ -157,6 +160,7 @@ v3d_hub_irq(int irq, void *arg)
->   
->   		trace_v3d_tfu_irq(&v3d->drm, fence->seqno);
->   		dma_fence_signal(&fence->base);
-> +		v3d->tfu_job = NULL;
->   		status = IRQ_HANDLED;
->   	}
->   
-
+Den tors 30 jan. 2025 kl 14:59 skrev Greg Kroah-Hartman
+<gregkh@linuxfoundation.org>:
+>
+> This is the start of the stable review cycle for the 6.13.1 release.
+> There are 25 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 01 Feb 2025 13:34:42 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.13.1-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.13.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+> Pseudo-Shortlog of commits:
+>
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Linux 6.13.1-rc1
+>
+> Jack Greiner <jack@emoss.org>
+>     Input: xpad - add support for wooting two he (arm)
+>
+> Matheos Mattsson <matheos.mattsson@gmail.com>
+>     Input: xpad - add support for Nacon Evol-X Xbox One Controller
+>
+> Leonardo Brondani Schenkel <leonardo@schenkel.net>
+>     Input: xpad - improve name of 8BitDo controller 2dc8:3106
+>
+> Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
+>     Input: xpad - add QH Electronics VID/PID
+>
+> Nilton Perim Neto <niltonperimneto@gmail.com>
+>     Input: xpad - add unofficial Xbox 360 wireless receiver clone
+>
+> Mark Pearson <mpearson-lenovo@squebb.ca>
+>     Input: atkbd - map F23 key to support default copilot shortcut
+>
+> Nicolas Nobelis <nicolas@nobelis.eu>
+>     Input: xpad - add support for Nacon Pro Compact
+>
+> Jann Horn <jannh@google.com>
+>     io_uring/rsrc: require cloned buffers to share accounting contexts
+>
+> Jason Gerecke <jason.gerecke@wacom.com>
+>     HID: wacom: Initialize brightness of LED trigger
+>
+> Hans de Goede <hdegoede@redhat.com>
+>     wifi: rtl8xxxu: add more missing rtl8192cu USB IDs
+>
+> Lianqin Hu <hulianqin@vivo.com>
+>     ALSA: usb-audio: Add delay quirk for USB Audio Device
+>
+> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>     Revert "usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null"
+>
+> Qasim Ijaz <qasdev00@gmail.com>
+>     USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
+>
+> Easwar Hariharan <eahariha@linux.microsoft.com>
+>     scsi: storvsc: Ratelimit warning logs to prevent VM denial of service
+>
+> Alex Williamson <alex.williamson@redhat.com>
+>     vfio/platform: check the bounds of read/write syscalls
+>
+> Linus Torvalds <torvalds@linux-foundation.org>
+>     cachestat: fix page cache statistics permission checking
+>
+> Jiri Kosina <jikos@kernel.org>
+>     Revert "HID: multitouch: Add support for lenovo Y9000P Touchpad"
+>
+> Jamal Hadi Salim <jhs@mojatatu.com>
+>     net: sched: fix ets qdisc OOB Indexing
+>
+> Paulo Alcantara <pc@manguebit.com>
+>     smb: client: handle lack of EA support in smb2_query_path_info()
+>
+> Chuck Lever <chuck.lever@oracle.com>
+>     libfs: Use d_children list to iterate simple_offset directories
+>
+> Chuck Lever <chuck.lever@oracle.com>
+>     libfs: Replace simple_offset end-of-directory detection
+>
+> Chuck Lever <chuck.lever@oracle.com>
+>     Revert "libfs: fix infinite directory reads for offset dir"
+>
+> Chuck Lever <chuck.lever@oracle.com>
+>     Revert "libfs: Add simple_offset_empty()"
+>
+> Chuck Lever <chuck.lever@oracle.com>
+>     libfs: Return ENOSPC when the directory offset range is exhausted
+>
+> Andreas Gruenbacher <agruenba@redhat.com>
+>     gfs2: Truncate address space when flipping GFS2_DIF_JDATA flag
+>
+>
+> -------------
+>
+> Diffstat:
+>
+>  Makefile                                     |   4 +-
+>  drivers/hid/hid-ids.h                        |   1 -
+>  drivers/hid/hid-multitouch.c                 |   8 +-
+>  drivers/hid/wacom_sys.c                      |  24 ++--
+>  drivers/input/joystick/xpad.c                |   9 +-
+>  drivers/input/keyboard/atkbd.c               |   2 +-
+>  drivers/net/wireless/realtek/rtl8xxxu/core.c |  20 ++++
+>  drivers/scsi/storvsc_drv.c                   |   8 +-
+>  drivers/usb/gadget/function/u_serial.c       |   8 +-
+>  drivers/usb/serial/quatech2.c                |   2 +-
+>  drivers/vfio/platform/vfio_platform_common.c |  10 ++
+>  fs/gfs2/file.c                               |   1 +
+>  fs/libfs.c                                   | 162 +++++++++++++--------------
+>  fs/smb/client/smb2inode.c                    | 104 ++++++++++++-----
+>  include/linux/fs.h                           |   1 -
+>  io_uring/rsrc.c                              |   7 ++
+>  mm/filemap.c                                 |  17 +++
+>  mm/shmem.c                                   |   4 +-
+>  net/sched/sch_ets.c                          |   2 +
+>  sound/usb/quirks.c                           |   2 +
+>  20 files changed, 251 insertions(+), 145 deletions(-)
+>
+>
+>
