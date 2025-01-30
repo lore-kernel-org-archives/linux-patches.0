@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAEA13FEE;
-	Thu, 30 Jan 2025 14:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C531E9B15;
+	Thu, 30 Jan 2025 14:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246885; cv=none; b=FII6GZrsqWdddx0JNjFB9jeHgu2xElS/RG38C74uHxmXm4nhf82ZE1LBbM5l0SFq+FHvdIoioG6+P9V4X+N3btrJREx5rEgMm3byi5XKpjGTHFt5l13V4m5iruJJ3NsjbhuiBTiQNL39ffbuRDMAzE1Vp1qrqgbxR2xyHiDZGEA=
+	t=1738246887; cv=none; b=EcnvtQsLZVV5JhPd4NMDfU+DWzL6YoOSJVt2u/Q/Bkvu9G7G5lzYOPC2SqQdkBIAYUG0/gjZhqO5ssbVhiXSEYW3A9nnkk5cL2KecONU4Pg21TPvrmo254PZUkSK2wUITbSCZQc4RAnWeSyO/1qfDa7R5xZjmbTHpSRVZAetrVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246885; c=relaxed/simple;
-	bh=5X/0vMENPAGJa/TNCGPqo+cvco4KsBHgMj7h71jyx/w=;
+	s=arc-20240116; t=1738246887; c=relaxed/simple;
+	bh=VIx+FR5e7AFgJiU4Bxcj7NoPpYOt9dUezzSAX7y8Fcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uGGTXpq9bgEj8unIQ11NJMcWhlnEO0/x5upstevstfABKdEn7cX1eRQm8txPLj9b9UvDCE/VeEyZjEDbSFFGgkORGbq2IChtNb3icCdPUvv/kQ5NxvsYbbZ4InkS7nLQ5lmh1E5McKZ2cjw48mO7Y11DutmqkLJEGpC+uNew1Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e6cqX2lu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXPu1gdCejiExQy0FMlWVSf2mJVj/J+J89NLN2LgoFnD5EL+uGhp4wLp5i+OHcO1pN/UzbQjSMt2LnTuqL8q2Xo4L6xQZdVHr7zx+tqqO6ocyvV0VG6Cq0+DqW5IrXY6GV7dKOSE77SuD3jg/ue3Z03YekAPiFSVp3EglSFtQrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwnb7NYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e6cqX2lu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78354C4CEE0;
-	Thu, 30 Jan 2025 14:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwnb7NYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FB69C4CEE5;
+	Thu, 30 Jan 2025 14:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246884;
-	bh=5X/0vMENPAGJa/TNCGPqo+cvco4KsBHgMj7h71jyx/w=;
+	s=korg; t=1738246887;
+	bh=VIx+FR5e7AFgJiU4Bxcj7NoPpYOt9dUezzSAX7y8Fcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e6cqX2luua6KgOGzWjX2S1NboHFHy3wkf1bSHqnk0CrwfALvU66dqqxtXFCmAuRhE
-	 6FPUJuipUDFPdIgicxPZxdigmOx4mSXyzcDNoJdIcnPG0V3QufkUAQkqkjVc2RfMdw
-	 iLFQjeIIo95Xd9v7HFYBDiBvxz0CDakxaqj2Amrk=
+	b=pwnb7NYw0F76CYV0SkN+4oJXXkuTnSr3UW5DFgwKrGONfE22PtH27DvXb6qc5xC6z
+	 ZueyX2BJJltmeoKX6BWa3fsmh1Wj9B7I0MNs7bbVA5QbVLQnS7NUPqwixa/EiB6WyP
+	 mOHBWVZNlMKpfpYDPuOM71HgkQ4gC+4xyZrza+N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dario=20Wei=C3=9Fer?= <dario@cure53.de>,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.10 001/133] ceph: give up on paths longer than PATH_MAX
-Date: Thu, 30 Jan 2025 14:59:50 +0100
-Message-ID: <20250130140142.554181278@linuxfoundation.org>
+	Antonio Pastor <antonio.pastor@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 010/133] net: 802: LLC+SNAP OID:PID lookup on start of skb data
+Date: Thu, 30 Jan 2025 14:59:59 +0100
+Message-ID: <20250130140142.913299684@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -46,56 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Antonio Pastor <antonio.pastor@gmail.com>
 
-commit 550f7ca98ee028a606aa75705a7e77b1bd11720f upstream.
+[ Upstream commit 1e9b0e1c550c42c13c111d1a31e822057232abc4 ]
 
-If the full path to be built by ceph_mdsc_build_path() happens to be
-longer than PATH_MAX, then this function will enter an endless (retry)
-loop, effectively blocking the whole task.  Most of the machine
-becomes unusable, making this a very simple and effective DoS
-vulnerability.
+802.2+LLC+SNAP frames received by napi_complete_done() with GRO and DSA
+have skb->transport_header set two bytes short, or pointing 2 bytes
+before network_header & skb->data. This was an issue as snap_rcv()
+expected offset to point to SNAP header (OID:PID), causing packet to
+be dropped.
 
-I cannot imagine why this retry was ever implemented, but it seems
-rather useless and harmful to me.  Let's remove it and fail with
-ENAMETOOLONG instead.
+A fix at llc_fixup_skb() (a024e377efed) resets transport_header for any
+LLC consumers that may care about it, and stops SNAP packets from being
+dropped, but doesn't fix the problem which is that LLC and SNAP should
+not use transport_header offset.
 
-Cc: stable@vger.kernel.org
-Reported-by: Dario Weißer <dario@cure53.de>
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[idryomov@gmail.com: backport to 6.1: pr_warn() is still in use]
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Ths patch eliminates the use of transport_header offset for SNAP lookup
+of OID:PID so that SNAP does not rely on the offset at all.
+The offset is reset after pull for any SNAP packet consumers that may
+(but shouldn't) use it.
+
+Fixes: fda55eca5a33 ("net: introduce skb_transport_header_was_set()")
+Signed-off-by: Antonio Pastor <antonio.pastor@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20250103012303.746521-1-antonio.pastor@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ net/802/psnap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -2451,12 +2451,11 @@ retry:
+diff --git a/net/802/psnap.c b/net/802/psnap.c
+index 4492e8d7ad20..ed6e17c8cce9 100644
+--- a/net/802/psnap.c
++++ b/net/802/psnap.c
+@@ -55,11 +55,11 @@ static int snap_rcv(struct sk_buff *skb, struct net_device *dev,
+ 		goto drop;
  
- 	if (pos < 0) {
- 		/*
--		 * A rename didn't occur, but somehow we didn't end up where
--		 * we thought we would. Throw a warning and try again.
-+		 * The path is longer than PATH_MAX and this function
-+		 * cannot ever succeed.  Creating paths that long is
-+		 * possible with Ceph, but Linux cannot use them.
- 		 */
--		pr_warn("build_path did not end path lookup where "
--			"expected, pos is %d\n", pos);
--		goto retry;
-+		return ERR_PTR(-ENAMETOOLONG);
+ 	rcu_read_lock();
+-	proto = find_snap_client(skb_transport_header(skb));
++	proto = find_snap_client(skb->data);
+ 	if (proto) {
+ 		/* Pass the frame on. */
+-		skb->transport_header += 5;
+ 		skb_pull_rcsum(skb, 5);
++		skb_reset_transport_header(skb);
+ 		rc = proto->rcvfunc(skb, dev, &snap_packet_type, orig_dev);
  	}
- 
- 	*pbase = base;
+ 	rcu_read_unlock();
+-- 
+2.39.5
+
 
 
