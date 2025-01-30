@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD8E7482;
-	Thu, 30 Jan 2025 14:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0B17482;
+	Thu, 30 Jan 2025 14:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247467; cv=none; b=Tko57tdUOsnwcFdALeanUE/NibibCBXctkRAJmYdvborY+/i3Jwa28/CFmA7nMor73cvmX9o2VsFpO1Zn1ndpAJiR6gF+hoK+dEEVaq3I4EPfQYxW0s0tp7NiETlSLBOVg3uOgx2ckI2XsFuqnuFBkjwZRXYO7Z8Yebp+MKro+A=
+	t=1738247469; cv=none; b=llwGgVv72CJ3MQ7a0jFWHQ+vg1rlT2BjOEAy7UkYZLGqcJNzF08kBoUBh5XWK3bdppFd/6HnrhLyjJqAU/ISEhD/ldKR79Ah1X2FAjDEO/G6VzKhcmNDfBlUWbgR0AkRkvGbIzvfpkvqSonVknK9UfNGNNZMx5p5YHwX+jZtfbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247467; c=relaxed/simple;
-	bh=15B9W2fQ//di4X7BlexFlmD5jyB0pa332ud6PfAutEE=;
+	s=arc-20240116; t=1738247469; c=relaxed/simple;
+	bh=kFHxwBeD/gUN03BBMNysgpYvslun7ThVR+gX/OZTguM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIerdOM6q7veBCp3b/vq1rgGGNFYODqfoB9Z0eN7PBNydj0iuNHNo25pFJI+fQ+g1iXwRzMRNyituQe+MKo2jnCgklBZ00LSKJ1Sp6WJVaSrbqZlHXGwMkWUSuZCQipp0q95kErfZzC/fn1SN+f/CessXHFrTulqbqwWVyS2b0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3UZuR/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lkl9gGiQjh+RmdNMW9Rpt3sSFHtI1kmnUSPevZ9lnlykvdfcxZN9LcNIDGUSizRadE23gW3THouHH6w/7nzGO7C8xiKkfAxF0ntGxVOkLXPPdMdnTRf0ZZAt9PGHN75A5UePZzJScVJycA2tPYRHbP4qcpoSLGsGcfVVxlP+r7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUeQXFlk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3UZuR/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2D2C4CED2;
-	Thu, 30 Jan 2025 14:31:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUeQXFlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FA8C4CED2;
+	Thu, 30 Jan 2025 14:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247466;
-	bh=15B9W2fQ//di4X7BlexFlmD5jyB0pa332ud6PfAutEE=;
+	s=korg; t=1738247469;
+	bh=kFHxwBeD/gUN03BBMNysgpYvslun7ThVR+gX/OZTguM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3UZuR/fQuFggxWFSOVCfLrssJVPnjL4KT6stt1DildsZ1kZaHQ1nSji25vMnQ3uu
-	 DCMkVbpV4YqlFUNqNChAAaMgFcJpMor4DHJ7f9OgWQnpHQn/kwGLAWG98wxTd0ZObf
-	 pAiT+Xjq+JEv9Oi0Fp+A8ZZUfB0UeFUXkEJpTQu0=
+	b=BUeQXFlkWbxZTmbvgpPEKPU3IZwjD1tuhhxKYbCx2+a83CEjU66A1pPG1jxOMyHf4
+	 6sYIBz+unwCxQoTIIx/ojGh2i8s00+W6BddpR3qRjNZaWOiAgc8oT2HpSBKbm+kEax
+	 Zuk7hvCYG2ge8t1AELZaOLyQUpPLg9oKytIiNs0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Talpey <tom@talpey.com>,
-	Jianhong Yin <jiyin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 48/49] smb: client: fix NULL ptr deref in crypto_aead_setkey()
-Date: Thu, 30 Jan 2025 15:02:24 +0100
-Message-ID: <20250130140135.751793326@linuxfoundation.org>
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 49/49] ASoC: samsung: midas_wm1811: Fix Headphone Switch control creation
+Date: Thu, 30 Jan 2025 15:02:25 +0100
+Message-ID: <20250130140135.791584413@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
 References: <20250130140133.825446496@linuxfoundation.org>
@@ -52,121 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-commit 4bdec0d1f658f7c98749bd2c5a486e6cfa8565d2 upstream.
+commit 48c6253fefa38556e0c5c2942edd9181529407e4 upstream.
 
-Neither SMB3.0 or SMB3.02 supports encryption negotiate context, so
-when SMB2_GLOBAL_CAP_ENCRYPTION flag is set in the negotiate response,
-the client uses AES-128-CCM as the default cipher.  See MS-SMB2
-3.3.5.4.
+'Headphone Switch' control is already registered from
+sound/soc/codecs/wm_hubs.c:479, so duplicating it in midas_wm1811
+causes following probe failure:
 
-Commit b0abcd65ec54 ("smb: client: fix UAF in async decryption") added
-a @server->cipher_type check to conditionally call
-smb3_crypto_aead_allocate(), but that check would always be false as
-@server->cipher_type is unset for SMB3.02.
+midas-audio sound: control 2:0:0:Headphone Switch:0 is already present
+midas-audio sound: ASoC: Failed to add Headphone Switch: -16
+midas-audio sound: Failed to register card: -16
+midas-audio: probe of sound failed with error -16
 
-Fix the following KASAN splat by setting @server->cipher_type for
-SMB3.02 as well.
+Fix this by dropping duplicated control.
 
-mount.cifs //srv/share /mnt -o vers=3.02,seal,...
-
-BUG: KASAN: null-ptr-deref in crypto_aead_setkey+0x2c/0x130
-Read of size 8 at addr 0000000000000020 by task mount.cifs/1095
-CPU: 1 UID: 0 PID: 1095 Comm: mount.cifs Not tainted 6.12.0 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-3.fc41
-04/01/2014
-Call Trace:
- <TASK>
- dump_stack_lvl+0x5d/0x80
- ? crypto_aead_setkey+0x2c/0x130
- kasan_report+0xda/0x110
- ? crypto_aead_setkey+0x2c/0x130
- crypto_aead_setkey+0x2c/0x130
- crypt_message+0x258/0xec0 [cifs]
- ? __asan_memset+0x23/0x50
- ? __pfx_crypt_message+0x10/0x10 [cifs]
- ? mark_lock+0xb0/0x6a0
- ? hlock_class+0x32/0xb0
- ? mark_lock+0xb0/0x6a0
- smb3_init_transform_rq+0x352/0x3f0 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- smb_send_rqst+0x144/0x230 [cifs]
- ? __pfx_smb_send_rqst+0x10/0x10 [cifs]
- ? hlock_class+0x32/0xb0
- ? smb2_setup_request+0x225/0x3a0 [cifs]
- ? __pfx_cifs_compound_last_callback+0x10/0x10 [cifs]
- compound_send_recv+0x59b/0x1140 [cifs]
- ? __pfx_compound_send_recv+0x10/0x10 [cifs]
- ? __create_object+0x5e/0x90
- ? hlock_class+0x32/0xb0
- ? do_raw_spin_unlock+0x9a/0xf0
- cifs_send_recv+0x23/0x30 [cifs]
- SMB2_tcon+0x3ec/0xb30 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? __pfx_lock_release+0x10/0x10
- ? do_raw_spin_trylock+0xc6/0x120
- ? lock_acquire+0x3f/0x90
- ? _get_xid+0x16/0xd0 [cifs]
- ? __pfx_SMB2_tcon+0x10/0x10 [cifs]
- ? cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- cifs_get_smb_ses+0xcdd/0x10a0 [cifs]
- ? __pfx_cifs_get_smb_ses+0x10/0x10 [cifs]
- ? cifs_get_tcp_session+0xaa0/0xca0 [cifs]
- cifs_mount_get_session+0x8a/0x210 [cifs]
- dfs_mount_share+0x1b0/0x11d0 [cifs]
- ? __pfx___lock_acquire+0x10/0x10
- ? __pfx_dfs_mount_share+0x10/0x10 [cifs]
- ? lock_acquire.part.0+0xf4/0x2a0
- ? find_held_lock+0x8a/0xa0
- ? hlock_class+0x32/0xb0
- ? lock_release+0x203/0x5d0
- cifs_mount+0xb3/0x3d0 [cifs]
- ? do_raw_spin_trylock+0xc6/0x120
- ? __pfx_cifs_mount+0x10/0x10 [cifs]
- ? lock_acquire+0x3f/0x90
- ? find_nls+0x16/0xa0
- ? smb3_update_mnt_flags+0x372/0x3b0 [cifs]
- cifs_smb3_do_mount+0x1e2/0xc80 [cifs]
- ? __pfx_vfs_parse_fs_string+0x10/0x10
- ? __pfx_cifs_smb3_do_mount+0x10/0x10 [cifs]
- smb3_get_tree+0x1bf/0x330 [cifs]
- vfs_get_tree+0x4a/0x160
- path_mount+0x3c1/0xfb0
- ? kasan_quarantine_put+0xc7/0x1d0
- ? __pfx_path_mount+0x10/0x10
- ? kmem_cache_free+0x118/0x3e0
- ? user_path_at+0x74/0xa0
- __x64_sys_mount+0x1a6/0x1e0
- ? __pfx___x64_sys_mount+0x10/0x10
- ? mark_held_locks+0x1a/0x90
- do_syscall_64+0xbb/0x1d0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Cc: Tom Talpey <tom@talpey.com>
-Reported-by: Jianhong Yin <jiyin@redhat.com>
-Cc: stable@vger.kernel.org # v6.12
-Fixes: b0abcd65ec54 ("smb: client: fix UAF in async decryption")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: d27224a45e54 ("ASoC: samsung: midas_wm1811: Map missing jack kcontrols")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20230809100446.2105825-1-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/samsung/midas_wm1811.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1070,7 +1070,9 @@ SMB2_negotiate(const unsigned int xid,
- 	 * SMB3.0 supports only 1 cipher and doesn't have a encryption neg context
- 	 * Set the cipher type manually.
- 	 */
--	if (server->dialect == SMB30_PROT_ID && (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
-+	if ((server->dialect == SMB30_PROT_ID ||
-+	     server->dialect == SMB302_PROT_ID) &&
-+	    (server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
- 		server->cipher_type = SMB2_ENCRYPTION_AES128_CCM;
+--- a/sound/soc/samsung/midas_wm1811.c
++++ b/sound/soc/samsung/midas_wm1811.c
+@@ -257,7 +257,6 @@ static const struct snd_kcontrol_new mid
+ 	SOC_DAPM_PIN_SWITCH("Main Mic"),
+ 	SOC_DAPM_PIN_SWITCH("Sub Mic"),
+ 	SOC_DAPM_PIN_SWITCH("Headset Mic"),
+-	SOC_DAPM_PIN_SWITCH("Headphone"),
  
- 	security_blob = smb2_get_data_area_len(&blob_offset, &blob_length,
+ 	SOC_DAPM_PIN_SWITCH("FM In"),
+ };
 
 
