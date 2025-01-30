@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A9B1DDC22;
-	Thu, 30 Jan 2025 14:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595341E522;
+	Thu, 30 Jan 2025 14:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247133; cv=none; b=PwX9l4xb8j0pzirHP2Z5jcsFkqkOfqSR1BYSE40OQhYA3oDE3Hd19V/0kOUZNIBHjvcWdWgdzgp2/cer4jAYvi/jfrO0T2Pkuto8p0Yo8DvId2DoKKOcTxOM5sOaeOw4zaGWCGlQ8MX6/Lk5gEGRRHEsr+wtdU1aMJw9esGmUmU=
+	t=1738247136; cv=none; b=GMYtRCVg9p1YTBYd277NEl30cJCkQYozmIGKBbNXZRa8j8j5+aCIwKKrq+49l6D7+6/4kQ1c30q+A9LhdRTqxj8hvY9WqZWy1xhB8gz7lJTftzxUQogGyIQ9XZ4+ckHIXZteJsyUfO3HykD9bZIgnfgrFsBnPHofKld1ibxJT0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247133; c=relaxed/simple;
-	bh=/NvR8DuToIcXPkPe0o/kQIVfIyh/XewsVLgCsD0OCNA=;
+	s=arc-20240116; t=1738247136; c=relaxed/simple;
+	bh=LUX/OuDxYktPTiJjedhR3LBjr05rfpZ7HyamEB0VaEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kp2PlcPPBHy+oqotT98jNG5RasJMZewKzclvFoh2YV7gABgoSGacgWs2GYTP4aOVR1RXZJGnM2eIDY+pY60io8Zf9dCG2radzoXA3+QHZc0JtNZhdQDzxUEqDJHzwJuqzOsoPq0zeh+5t6FuiBVmhk8arSUXAMYTZRqMe8mb6lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VB7duHDA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eOzo4doKJFUmUyDYdLbCkPM8jbZoJj/G7E18r16phKeriiKmdFpjLMSoIUiZ5O8uFUQuEywQUICWhC1t+BNjd5uVcvhoyWv7q+iZ40hPMq0i9M+t6D99TLmWSj3HKSz2Wkobwedq5yz+XZ9yxMpT644fk6ZdePo8YmfoCjVOlHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxBlmdRt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VB7duHDA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E606CC4CED2;
-	Thu, 30 Jan 2025 14:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxBlmdRt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5230C4CED2;
+	Thu, 30 Jan 2025 14:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247133;
-	bh=/NvR8DuToIcXPkPe0o/kQIVfIyh/XewsVLgCsD0OCNA=;
+	s=korg; t=1738247136;
+	bh=LUX/OuDxYktPTiJjedhR3LBjr05rfpZ7HyamEB0VaEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VB7duHDAb7pxU7oAysvNA91qowFBTjpj9ao19Y6g4OTuH0stM1TraBx+OMDGmvA5X
-	 kC5lgO18FQx2sGcvwzXiDKAjhwor2ZXrgTVw1oDxp+Sv6gKlVV/LSb8i+GGtNZzk9X
-	 JObSGd625/zbsCvSv06KiDAZXyhFTU8IZu5NLjXg=
+	b=gxBlmdRtsxP7AoPxVXAcKax5USzqH8Wf81xHKwl4GuKrxfOKL/ebD8mxbVPbCb4Av
+	 pGP/NhAWgNb/VJ1Q6rifFY1YZ9tLsVBoYxfJRroBuQu/IuO+vFOjH4ic1EzibA+/6M
+	 6zqx4Bae0auEboTmUpQQqMh/3ZYsch6k6M9FxqQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 092/133] net: ethernet: xgbe: re-add aneg to supported features in PHY quirks
-Date: Thu, 30 Jan 2025 15:01:21 +0100
-Message-ID: <20250130140146.222242670@linuxfoundation.org>
+	Hyunwoo Kim <v4bel@theori.io>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 093/133] vsock/virtio: cancel close work in the destructor
+Date: Thu, 30 Jan 2025 15:01:22 +0100
+Message-ID: <20250130140146.271980539@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -50,93 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit 6be7aca91009865d8c2b73589270224a6b6e67ab upstream.
+commit df137da9d6d166e87e40980e36eb8e0bc90483ef upstream.
 
-In 4.19, before the switch to linkmode bitmaps, PHY_GBIT_FEATURES
-included feature bits for aneg and TP/MII ports.
+During virtio_transport_release() we can schedule a delayed work to
+perform the closing of the socket before destruction.
 
-				 SUPPORTED_TP | \
-				 SUPPORTED_MII)
+The destructor is called either when the socket is really destroyed
+(reference counter to zero), or it can also be called when we are
+de-assigning the transport.
 
-				 SUPPORTED_10baseT_Full)
+In the former case, we are sure the delayed work has completed, because
+it holds a reference until it completes, so the destructor will
+definitely be called after the delayed work is finished.
+But in the latter case, the destructor is called by AF_VSOCK core, just
+after the release(), so there may still be delayed work scheduled.
 
-				 SUPPORTED_100baseT_Full)
+Refactor the code, moving the code to delete the close work already in
+the do_close() to a new function. Invoke it during destruction to make
+sure we don't leave any pending work.
 
-				 SUPPORTED_1000baseT_Full)
-
-				 PHY_100BT_FEATURES | \
-				 PHY_DEFAULT_FEATURES)
-
-				 PHY_1000BT_FEATURES)
-
-Referenced commit expanded PHY_GBIT_FEATURES, silently removing
-PHY_DEFAULT_FEATURES. The removed part can be re-added by using
-the new PHY_GBIT_FEATURES definition.
-Not clear to me is why nobody seems to have noticed this issue.
-
-I stumbled across this when checking what it takes to make
-phy_10_100_features_array et al private to phylib.
-
-Fixes: d0939c26c53a ("net: ethernet: xgbe: expand PHY_GBIT_FEAUTRES")
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/46521973-7738-4157-9f5e-0bb6f694acba@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Hyunwoo Kim <v4bel@theori.io>
+Closes: https://lore.kernel.org/netdev/Z37Sh+utS+iV3+eb@v4bel-B760M-AORUS-ELITE-AX/
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Tested-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c |   19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c |   29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -856,7 +856,6 @@ static void xgbe_phy_free_phy_device(str
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -26,6 +26,9 @@
+ /* Threshold for detecting small packets to copy */
+ #define GOOD_COPY_LEN  128
  
- static bool xgbe_phy_finisar_phy_quirks(struct xgbe_prv_data *pdata)
++static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
++					       bool cancel_timeout);
++
+ static const struct virtio_transport *
+ virtio_transport_get_ops(struct vsock_sock *vsk)
  {
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
- 	struct xgbe_phy_data *phy_data = pdata->phy_data;
- 	unsigned int phy_id = phy_data->phydev->phy_id;
+@@ -686,6 +689,8 @@ void virtio_transport_destruct(struct vs
+ {
+ 	struct virtio_vsock_sock *vvs = vsk->trans;
  
-@@ -878,14 +877,7 @@ static bool xgbe_phy_finisar_phy_quirks(
- 	phy_write(phy_data->phydev, 0x04, 0x0d01);
- 	phy_write(phy_data->phydev, 0x00, 0x9140);
++	virtio_transport_cancel_close_work(vsk, true);
++
+ 	kfree(vvs);
+ 	vsk->trans = NULL;
+ }
+@@ -775,17 +780,11 @@ static void virtio_transport_wait_close(
+ 	}
+ }
  
--	linkmode_set_bit_array(phy_10_100_features_array,
--			       ARRAY_SIZE(phy_10_100_features_array),
--			       supported);
--	linkmode_set_bit_array(phy_gbit_features_array,
--			       ARRAY_SIZE(phy_gbit_features_array),
--			       supported);
+-static void virtio_transport_do_close(struct vsock_sock *vsk,
+-				      bool cancel_timeout)
++static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
++					       bool cancel_timeout)
+ {
+ 	struct sock *sk = sk_vsock(vsk);
+ 
+-	sock_set_flag(sk, SOCK_DONE);
+-	vsk->peer_shutdown = SHUTDOWN_MASK;
+-	if (vsock_stream_has_data(vsk) <= 0)
+-		sk->sk_state = TCP_CLOSING;
+-	sk->sk_state_change(sk);
 -
--	linkmode_copy(phy_data->phydev->supported, supported);
-+	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
+ 	if (vsk->close_work_scheduled &&
+ 	    (!cancel_timeout || cancel_delayed_work(&vsk->close_work))) {
+ 		vsk->close_work_scheduled = false;
+@@ -797,6 +796,20 @@ static void virtio_transport_do_close(st
+ 	}
+ }
  
- 	phy_support_asym_pause(phy_data->phydev);
- 
-@@ -897,7 +889,6 @@ static bool xgbe_phy_finisar_phy_quirks(
- 
- static bool xgbe_phy_belfuse_phy_quirks(struct xgbe_prv_data *pdata)
++static void virtio_transport_do_close(struct vsock_sock *vsk,
++				      bool cancel_timeout)
++{
++	struct sock *sk = sk_vsock(vsk);
++
++	sock_set_flag(sk, SOCK_DONE);
++	vsk->peer_shutdown = SHUTDOWN_MASK;
++	if (vsock_stream_has_data(vsk) <= 0)
++		sk->sk_state = TCP_CLOSING;
++	sk->sk_state_change(sk);
++
++	virtio_transport_cancel_close_work(vsk, cancel_timeout);
++}
++
+ static void virtio_transport_close_timeout(struct work_struct *work)
  {
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
- 	struct xgbe_phy_data *phy_data = pdata->phy_data;
- 	struct xgbe_sfp_eeprom *sfp_eeprom = &phy_data->sfp_eeprom;
- 	unsigned int phy_id = phy_data->phydev->phy_id;
-@@ -961,13 +952,7 @@ static bool xgbe_phy_belfuse_phy_quirks(
- 	reg = phy_read(phy_data->phydev, 0x00);
- 	phy_write(phy_data->phydev, 0x00, reg & ~0x00800);
- 
--	linkmode_set_bit_array(phy_10_100_features_array,
--			       ARRAY_SIZE(phy_10_100_features_array),
--			       supported);
--	linkmode_set_bit_array(phy_gbit_features_array,
--			       ARRAY_SIZE(phy_gbit_features_array),
--			       supported);
--	linkmode_copy(phy_data->phydev->supported, supported);
-+	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
- 	phy_support_asym_pause(phy_data->phydev);
- 
- 	netif_dbg(pdata, drv, pdata->netdev,
+ 	struct vsock_sock *vsk =
 
 
