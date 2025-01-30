@@ -1,275 +1,255 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FDA13B7A3;
-	Thu, 30 Jan 2025 14:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34A71BB6BC;
+	Thu, 30 Jan 2025 14:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247493; cv=none; b=J352qiEp6n4wIxlihxd8oRNLDq0n7b79wStSgdw9hA+VNImtMYNt9FVojiFrzn9Xq32bZ/bkwJUnchYkRQNedVARYq3C4MJK9gHPwP+SmvIjdm2Bqes7U34NZCOU2NmGi3lgHlD3peizFeZoudWIHcxjdSzTkASCMA/NH4deRyg=
+	t=1738248121; cv=none; b=owYiZNCpdpKT43u2LlnRv48vFXO5sF0Db+1Pq4noMAIT3GMaguObLOjfUI+9jCOmGmpj/Cfrxlt0TPPan6+x1PdbSYmIS6ewWG/mVdaJFcDYnYq1BPzrTpfRIl32HI/BzzBL6+BD5PSMMPwjndAYAuLGoPSZE6pPMSNXYyskNtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247493; c=relaxed/simple;
-	bh=uIWGd4s6Bvc9MqAZoxg6jpKgZhLfc/6RHzGBTERy6TA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eWdRK7Nn7m9rDhTIRtWfZNjLssNB7oZ9GeeJ3YNBnWWIXpeIJHRQgi9Cid6iVwIVOyODL9WU27u6seWh3B2Jes6QLf+mJEuRkSROuJkygOM+3nzNioVZ7HpBREA9z7vcHHzR6olYoBZCD4NA93uL2NPtPeqYe1n3iYTz68DC680=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlNY1nxq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1738248121; c=relaxed/simple;
+	bh=r3sv6fFRRGZvTveb8sHIdX5RYZnqpIFZKrqWClagnCk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JBRC2MjMANXxRh04CAiRP9qAqjBeqt9ZJ3Yw2XIDH042q+7dP8aRhE4qZnSnpBCdvqSytI9qvGSG0CpuZ9rTB2ADzbFbLxQ/BrfIhClBwJ8lIlaBkq5GksfoyMQ+88WVpxNUawJHZtXuFZQxWiX8XHAa/b6z6ndNOePjNlrCrY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezpbYUzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlNY1nxq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF76C4CED2;
-	Thu, 30 Jan 2025 14:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezpbYUzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCA7C4CED2;
+	Thu, 30 Jan 2025 14:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247492;
-	bh=uIWGd4s6Bvc9MqAZoxg6jpKgZhLfc/6RHzGBTERy6TA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlNY1nxq2ljs6uOosNwbA5VDkTtCUGUD6BXsE+Zp2g7+TZriDceuqAtWJcj6lw5Kg
-	 /CGdVg6tPMwZ488+xUjVIHB17Z8Fr8FOvSQv3STCm6EfAowqXih42xYQlU14K/E76X
-	 AceMcfsrSCqbTKjq7mh0tgqh0QTvwyXmS3hmY0aU=
+	s=korg; t=1738248121;
+	bh=r3sv6fFRRGZvTveb8sHIdX5RYZnqpIFZKrqWClagnCk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ezpbYUzCiCj79iNYFDeRZh32VGlr0cWFvTT4A3p0wNJB+QVaQYmoW3mqow+D0w+Nt
+	 LYeeCvGLPU77cDku/+cDQMm+P36hyNKwxjInMMN8sKX6V5pmJdZcoC/+L6Iz/5ve8X
+	 Avxqw58LyemzOIkBghhWUH4E7hSBbtuG1pdWJIYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catherine Hoang <catherine.hoang@oracle.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 20/49] xfs: allow read IO and FICLONE to run concurrently
-Date: Thu, 30 Jan 2025 15:01:56 +0100
-Message-ID: <20250130140134.651541857@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org
+Subject: [PATCH 6.12 00/41] 6.12.12-rc2 review
+Date: Thu, 30 Jan 2025 15:41:57 +0100
+Message-ID: <20250130144136.126780286@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
-References: <20250130140133.825446496@linuxfoundation.org>
-User-Agent: quilt/0.68
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.68
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.12-rc2.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.12.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.12.12-rc2
+X-KernelTest-Deadline: 2025-02-01T14:41+00:00
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.12.12 release.
+There are 41 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 01 Feb 2025 14:41:19 +0000.
+Anything received after that time might be too late.
 
-From: Catherine Hoang <catherine.hoang@oracle.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.12-rc2.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+and the diffstat can be found below.
 
-[ Upstream commit 14a537983b228cb050ceca3a5b743d01315dc4aa ]
+thanks,
 
-One of our VM cluster management products needs to snapshot KVM image
-files so that they can be restored in case of failure. Snapshotting is
-done by redirecting VM disk writes to a sidecar file and using reflink
-on the disk image, specifically the FICLONE ioctl as used by
-"cp --reflink". Reflink locks the source and destination files while it
-operates, which means that reads from the main vm disk image are blocked,
-causing the vm to stall. When an image file is heavily fragmented, the
-copy process could take several minutes. Some of the vm image files have
-50-100 million extent records, and duplicating that much metadata locks
-the file for 30 minutes or more. Having activities suspended for such
-a long time in a cluster node could result in node eviction.
+greg k-h
 
-Clone operations and read IO do not change any data in the source file,
-so they should be able to run concurrently. Demote the exclusive locks
-taken by FICLONE to shared locks to allow reads while cloning. While a
-clone is in progress, writes will take the IOLOCK_EXCL, so they block
-until the clone completes.
+-------------
+Pseudo-Shortlog of commits:
 
-Link: https://lore.kernel.org/linux-xfs/8911B94D-DD29-4D6E-B5BC-32EAF1866245@oracle.com/
-Signed-off-by: Catherine Hoang <catherine.hoang@oracle.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/xfs/xfs_file.c    |   63 ++++++++++++++++++++++++++++++++++++++++-----------
- fs/xfs/xfs_inode.c   |   17 +++++++++++++
- fs/xfs/xfs_inode.h   |    9 +++++++
- fs/xfs/xfs_reflink.c |    4 +++
- 4 files changed, 80 insertions(+), 13 deletions(-)
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.12.12-rc2
 
---- a/fs/xfs/xfs_file.c
-+++ b/fs/xfs/xfs_file.c
-@@ -214,6 +214,43 @@ xfs_ilock_iocb(
- 	return 0;
- }
- 
-+static int
-+xfs_ilock_iocb_for_write(
-+	struct kiocb		*iocb,
-+	unsigned int		*lock_mode)
-+{
-+	ssize_t			ret;
-+	struct xfs_inode	*ip = XFS_I(file_inode(iocb->ki_filp));
-+
-+	ret = xfs_ilock_iocb(iocb, *lock_mode);
-+	if (ret)
-+		return ret;
-+
-+	if (*lock_mode == XFS_IOLOCK_EXCL)
-+		return 0;
-+	if (!xfs_iflags_test(ip, XFS_IREMAPPING))
-+		return 0;
-+
-+	xfs_iunlock(ip, *lock_mode);
-+	*lock_mode = XFS_IOLOCK_EXCL;
-+	return xfs_ilock_iocb(iocb, *lock_mode);
-+}
-+
-+static unsigned int
-+xfs_ilock_for_write_fault(
-+	struct xfs_inode	*ip)
-+{
-+	/* get a shared lock if no remapping in progress */
-+	xfs_ilock(ip, XFS_MMAPLOCK_SHARED);
-+	if (!xfs_iflags_test(ip, XFS_IREMAPPING))
-+		return XFS_MMAPLOCK_SHARED;
-+
-+	/* wait for remapping to complete */
-+	xfs_iunlock(ip, XFS_MMAPLOCK_SHARED);
-+	xfs_ilock(ip, XFS_MMAPLOCK_EXCL);
-+	return XFS_MMAPLOCK_EXCL;
-+}
-+
- STATIC ssize_t
- xfs_file_dio_read(
- 	struct kiocb		*iocb,
-@@ -523,7 +560,7 @@ xfs_file_dio_write_aligned(
- 	unsigned int		iolock = XFS_IOLOCK_SHARED;
- 	ssize_t			ret;
- 
--	ret = xfs_ilock_iocb(iocb, iolock);
-+	ret = xfs_ilock_iocb_for_write(iocb, &iolock);
- 	if (ret)
- 		return ret;
- 	ret = xfs_file_write_checks(iocb, from, &iolock);
-@@ -590,7 +627,7 @@ retry_exclusive:
- 		flags = IOMAP_DIO_FORCE_WAIT;
- 	}
- 
--	ret = xfs_ilock_iocb(iocb, iolock);
-+	ret = xfs_ilock_iocb_for_write(iocb, &iolock);
- 	if (ret)
- 		return ret;
- 
-@@ -1158,7 +1195,7 @@ xfs_file_remap_range(
- 	if (xfs_file_sync_writes(file_in) || xfs_file_sync_writes(file_out))
- 		xfs_log_force_inode(dest);
- out_unlock:
--	xfs_iunlock2_io_mmap(src, dest);
-+	xfs_iunlock2_remapping(src, dest);
- 	if (ret)
- 		trace_xfs_reflink_remap_range_error(dest, ret, _RET_IP_);
- 	/*
-@@ -1313,6 +1350,7 @@ __xfs_filemap_fault(
- 	struct inode		*inode = file_inode(vmf->vma->vm_file);
- 	struct xfs_inode	*ip = XFS_I(inode);
- 	vm_fault_t		ret;
-+	unsigned int		lock_mode = 0;
- 
- 	trace_xfs_filemap_fault(ip, pe_size, write_fault);
- 
-@@ -1321,25 +1359,24 @@ __xfs_filemap_fault(
- 		file_update_time(vmf->vma->vm_file);
- 	}
- 
-+	if (IS_DAX(inode) || write_fault)
-+		lock_mode = xfs_ilock_for_write_fault(XFS_I(inode));
-+
- 	if (IS_DAX(inode)) {
- 		pfn_t pfn;
- 
--		xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
- 		ret = xfs_dax_fault(vmf, pe_size, write_fault, &pfn);
- 		if (ret & VM_FAULT_NEEDDSYNC)
- 			ret = dax_finish_sync_fault(vmf, pe_size, pfn);
--		xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
-+	} else if (write_fault) {
-+		ret = iomap_page_mkwrite(vmf, &xfs_page_mkwrite_iomap_ops);
- 	} else {
--		if (write_fault) {
--			xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
--			ret = iomap_page_mkwrite(vmf,
--					&xfs_page_mkwrite_iomap_ops);
--			xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
--		} else {
--			ret = filemap_fault(vmf);
--		}
-+		ret = filemap_fault(vmf);
- 	}
- 
-+	if (lock_mode)
-+		xfs_iunlock(XFS_I(inode), lock_mode);
-+
- 	if (write_fault)
- 		sb_end_pagefault(inode->i_sb);
- 	return ret;
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -3644,6 +3644,23 @@ xfs_iunlock2_io_mmap(
- 		inode_unlock(VFS_I(ip1));
- }
- 
-+/* Drop the MMAPLOCK and the IOLOCK after a remap completes. */
-+void
-+xfs_iunlock2_remapping(
-+	struct xfs_inode	*ip1,
-+	struct xfs_inode	*ip2)
-+{
-+	xfs_iflags_clear(ip1, XFS_IREMAPPING);
-+
-+	if (ip1 != ip2)
-+		xfs_iunlock(ip1, XFS_MMAPLOCK_SHARED);
-+	xfs_iunlock(ip2, XFS_MMAPLOCK_EXCL);
-+
-+	if (ip1 != ip2)
-+		inode_unlock_shared(VFS_I(ip1));
-+	inode_unlock(VFS_I(ip2));
-+}
-+
- /*
-  * Reload the incore inode list for this inode.  Caller should ensure that
-  * the link count cannot change, either by taking ILOCK_SHARED or otherwise
---- a/fs/xfs/xfs_inode.h
-+++ b/fs/xfs/xfs_inode.h
-@@ -347,6 +347,14 @@ static inline bool xfs_inode_has_large_e
- /* Quotacheck is running but inode has not been added to quota counts. */
- #define XFS_IQUOTAUNCHECKED	(1 << 14)
- 
-+/*
-+ * Remap in progress. Callers that wish to update file data while
-+ * holding a shared IOLOCK or MMAPLOCK must drop the lock and retake
-+ * the lock in exclusive mode. Relocking the file will block until
-+ * IREMAPPING is cleared.
-+ */
-+#define XFS_IREMAPPING		(1U << 15)
-+
- /* All inode state flags related to inode reclaim. */
- #define XFS_ALL_IRECLAIM_FLAGS	(XFS_IRECLAIMABLE | \
- 				 XFS_IRECLAIM | \
-@@ -595,6 +603,7 @@ void xfs_end_io(struct work_struct *work
- 
- int xfs_ilock2_io_mmap(struct xfs_inode *ip1, struct xfs_inode *ip2);
- void xfs_iunlock2_io_mmap(struct xfs_inode *ip1, struct xfs_inode *ip2);
-+void xfs_iunlock2_remapping(struct xfs_inode *ip1, struct xfs_inode *ip2);
- 
- static inline bool
- xfs_inode_unlinked_incomplete(
---- a/fs/xfs/xfs_reflink.c
-+++ b/fs/xfs/xfs_reflink.c
-@@ -1539,6 +1539,10 @@ xfs_reflink_remap_prep(
- 	if (ret)
- 		goto out_unlock;
- 
-+	xfs_iflags_set(src, XFS_IREMAPPING);
-+	if (inode_in != inode_out)
-+		xfs_ilock_demote(src, XFS_IOLOCK_EXCL | XFS_MMAPLOCK_EXCL);
-+
- 	return 0;
- out_unlock:
- 	xfs_iunlock2_io_mmap(src, dest);
+Jann Horn <jannh@google.com>
+    io_uring/rsrc: require cloned buffers to share accounting contexts
+
+Jack Greiner <jack@emoss.org>
+    Input: xpad - add support for wooting two he (arm)
+
+Matheos Mattsson <matheos.mattsson@gmail.com>
+    Input: xpad - add support for Nacon Evol-X Xbox One Controller
+
+Leonardo Brondani Schenkel <leonardo@schenkel.net>
+    Input: xpad - improve name of 8BitDo controller 2dc8:3106
+
+Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
+    Input: xpad - add QH Electronics VID/PID
+
+Nilton Perim Neto <niltonperimneto@gmail.com>
+    Input: xpad - add unofficial Xbox 360 wireless receiver clone
+
+Mark Pearson <mpearson-lenovo@squebb.ca>
+    Input: atkbd - map F23 key to support default copilot shortcut
+
+Nicolas Nobelis <nicolas@nobelis.eu>
+    Input: xpad - add support for Nacon Pro Compact
+
+Jason Gerecke <jason.gerecke@wacom.com>
+    HID: wacom: Initialize brightness of LED trigger
+
+Hans de Goede <hdegoede@redhat.com>
+    wifi: rtl8xxxu: add more missing rtl8192cu USB IDs
+
+Lianqin Hu <hulianqin@vivo.com>
+    ALSA: usb-audio: Add delay quirk for USB Audio Device
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Revert "usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null"
+
+Qasim Ijaz <qasdev00@gmail.com>
+    USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
+
+Easwar Hariharan <eahariha@linux.microsoft.com>
+    scsi: storvsc: Ratelimit warning logs to prevent VM denial of service
+
+Alex Williamson <alex.williamson@redhat.com>
+    vfio/platform: check the bounds of read/write syscalls
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    cachestat: fix page cache statistics permission checking
+
+Jiri Kosina <jikos@kernel.org>
+    Revert "HID: multitouch: Add support for lenovo Y9000P Touchpad"
+
+Jamal Hadi Salim <jhs@mojatatu.com>
+    net: sched: fix ets qdisc OOB Indexing
+
+Paulo Alcantara <pc@manguebit.com>
+    smb: client: handle lack of EA support in smb2_query_path_info()
+
+Chuck Lever <chuck.lever@oracle.com>
+    libfs: Use d_children list to iterate simple_offset directories
+
+Chuck Lever <chuck.lever@oracle.com>
+    libfs: Replace simple_offset end-of-directory detection
+
+Chuck Lever <chuck.lever@oracle.com>
+    Revert "libfs: fix infinite directory reads for offset dir"
+
+Chuck Lever <chuck.lever@oracle.com>
+    Revert "libfs: Add simple_offset_empty()"
+
+Chuck Lever <chuck.lever@oracle.com>
+    libfs: Return ENOSPC when the directory offset range is exhausted
+
+Andreas Gruenbacher <agruenba@redhat.com>
+    gfs2: Truncate address space when flipping GFS2_DIF_JDATA flag
+
+Yosry Ahmed <yosryahmed@google.com>
+    mm: zswap: move allocations during CPU init outside the lock
+
+Yosry Ahmed <yosryahmed@google.com>
+    mm: zswap: properly synchronize freeing resources during CPU hotunplug
+
+Charles Keepax <ckeepax@opensource.cirrus.com>
+    ASoC: samsung: Add missing depends on I2C
+
+Russell Harmon <russ@har.mn>
+    hwmon: (drivetemp) Set scsi command timeout to 10s
+
+Philippe Simons <simons.philippe@gmail.com>
+    irqchip/sunxi-nmi: Add missing SKIP_WAKE flag
+
+Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+    drm/connector: hdmi: Validate supported_formats matches ycbcr_420_allowed
+
+Yage Geng <icoderdev@gmail.com>
+    ALSA: hda/realtek: Fix volume adjustment issue on Lenovo ThinkBook 16P Gen5
+
+Rob Herring (Arm) <robh@kernel.org>
+    of/unittest: Add test that of_address_to_resource() fails on non-translatable address
+
+Alex Hung <alex.hung@amd.com>
+    drm/amd/display: Initialize denominator defaults to 1
+
+Tom Chung <chiahsuan.chung@amd.com>
+    drm/amd/display: Use HW lock mgr for PSR1
+
+Xiang Zhang <hawkxiang.cpp@gmail.com>
+    scsi: iscsi: Fix redundant response for ISCSI_UEVENT_GET_HOST_STATS request
+
+Maciej Strozek <mstrozek@opensource.cirrus.com>
+    ASoC: cs42l43: Add codec force suspend/resume ops
+
+Linus Walleij <linus.walleij@linaro.org>
+    seccomp: Stub for !CONFIG_SECCOMP
+
+Charles Keepax <ckeepax@opensource.cirrus.com>
+    ASoC: samsung: Add missing selects for MFD_WM8994
+
+Marian Postevca <posteuca@mutex.one>
+    ASoC: codecs: es8316: Fix HW rate calculation for 48Mhz MCLK
+
+Charles Keepax <ckeepax@opensource.cirrus.com>
+    ASoC: wm8994: Add depends on MFD core
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |   4 +-
+ .../gpu/drm/amd/display/dc/dce/dmub_hw_lock_mgr.c  |   3 +-
+ .../dml21/src/dml2_core/dml2_core_dcn4_calcs.c     |   4 +-
+ drivers/gpu/drm/drm_connector.c                    |   3 +
+ drivers/hid/hid-ids.h                              |   1 -
+ drivers/hid/hid-multitouch.c                       |   8 +-
+ drivers/hid/wacom_sys.c                            |  24 +--
+ drivers/hwmon/drivetemp.c                          |   2 +-
+ drivers/input/joystick/xpad.c                      |   9 +-
+ drivers/input/keyboard/atkbd.c                     |   2 +-
+ drivers/irqchip/irq-sunxi-nmi.c                    |   3 +-
+ drivers/net/wireless/realtek/rtl8xxxu/core.c       |  20 +++
+ drivers/of/unittest-data/tests-platform.dtsi       |  13 ++
+ drivers/of/unittest.c                              |  14 ++
+ drivers/scsi/scsi_transport_iscsi.c                |   4 +-
+ drivers/scsi/storvsc_drv.c                         |   8 +-
+ drivers/usb/gadget/function/u_serial.c             |   8 +-
+ drivers/usb/serial/quatech2.c                      |   2 +-
+ drivers/vfio/platform/vfio_platform_common.c       |  10 ++
+ fs/gfs2/file.c                                     |   1 +
+ fs/libfs.c                                         | 162 ++++++++++-----------
+ fs/smb/client/smb2inode.c                          | 104 +++++++++----
+ include/linux/fs.h                                 |   1 -
+ include/linux/seccomp.h                            |   2 +-
+ io_uring/rsrc.c                                    |   7 +
+ mm/filemap.c                                       |  19 +++
+ mm/shmem.c                                         |   4 +-
+ mm/zswap.c                                         |  90 ++++++++----
+ net/sched/sch_ets.c                                |   2 +
+ sound/pci/hda/patch_realtek.c                      |   4 +-
+ sound/soc/codecs/Kconfig                           |   1 +
+ sound/soc/codecs/cs42l43.c                         |   1 +
+ sound/soc/codecs/es8316.c                          |  10 +-
+ sound/soc/samsung/Kconfig                          |   6 +-
+ sound/usb/quirks.c                                 |   2 +
+ 35 files changed, 374 insertions(+), 184 deletions(-)
 
 
