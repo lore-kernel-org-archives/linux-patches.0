@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9441C13D;
-	Thu, 30 Jan 2025 14:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F81C13D;
+	Thu, 30 Jan 2025 14:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245670; cv=none; b=iiH7Zbp6FR7jvcSQP4l8OK2XrzgogAjlPULu8oK7AA+3jQrAYKrhCSHOLdNuvew0s2v6qUCEapUvBY6db4vNXeeWggIfq4ceUuSoXqNw8yU3kGX6y55tt/ZTtkhqgjPwTaGXlMLReHXyGODQOSCYkGfONL10ivt816aU9XWbrmE=
+	t=1738245674; cv=none; b=PyA6ZtvifKD2Ius3LuaWI767r9ksZ+5NCdeIffThXu4oOM09Z8RnornY0Md9xNpK48iAZqOZOlgX0n1hu46YsyouHM+bQzxWgGX3VrW71Gzr+yzUktMnI451I3r2nCdnld1hzJ0ZWJxU40oWcZd/2y5vbQFaA2odcw884Qkt2fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245670; c=relaxed/simple;
-	bh=ucypYNoh6E3IQhQTQJ6DnpL4zhTrmyrisqUkRIQJqOg=;
+	s=arc-20240116; t=1738245674; c=relaxed/simple;
+	bh=qPfx9kAU1/oyHdAGh+bC+tCwAngXMQSwXokJEtqfAYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HwBsMM3tc8AXF7fbe5yMQYSIZcqDzB0jxXE5zwl09mTbeYzihlL0QGMmm+1i0WRU815j+BnCPMgxW47dyWoasooMCRF8mCP5KvFfacyA3wIAEDSV9D5dDCVmW+orRl2Sf1Gjgs8GqK5W5Y8ZecHe64YnHha+hn2c4s1p1mERlEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+8prLNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvNg8W97esoCQuPVx95Ku/B4BCTsNWp2qh/j988ABWYirv1hGCXksQuJiPUeZ9UrWBGgkG1XbgjbQ5COulKYUaNzk/7Wxg2GkMH8R8JcdEg3s5oUmCiM2jf1unxJZi/QvaQA/Uy58aiUkwHNGAkU2d5v18umhMrz6L1dKR0iREw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgVRXd3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+8prLNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F04C4CED2;
-	Thu, 30 Jan 2025 14:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgVRXd3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCFBC4CED2;
+	Thu, 30 Jan 2025 14:01:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245670;
-	bh=ucypYNoh6E3IQhQTQJ6DnpL4zhTrmyrisqUkRIQJqOg=;
+	s=korg; t=1738245673;
+	bh=qPfx9kAU1/oyHdAGh+bC+tCwAngXMQSwXokJEtqfAYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+8prLNY/HmTfnb+p59s972efq+flmFRbdUFxslJvXpTar5Y+mK6i6TlYmQNtelk8
-	 /eVxzpwSp0h4TaSd/j7O4d2WCIRWpXY5/Q+q4ljOF1iQhntTnHCaIV5A6aZqO2sDOK
-	 k1mrQ7TFMwkNlXsIGHo0sqgerHggFhgvLrQ7wBiM=
+	b=MgVRXd3hk43pDHb1IGvcgzIPyh+TXTxa+2DxpkvZzUZF2DRgsGvYp54nkGNysMZ3u
+	 E7GtVtEjkv8h8SYKI0/IkZE8hy+XkzBxkcaeE7BK86+hy5I7l2bSNWzAOaNAlKFiQg
+	 r74QHl0+KrGDY9Vp08f9gGXa6k6ZtJ7cREc9rtXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
 	Chuck Lever <chuck.lever@oracle.com>,
-	Yang Erkun <yangerkun@huawei.com>,
 	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 20/40] Revert "libfs: fix infinite directory reads for offset dir"
-Date: Thu, 30 Jan 2025 14:59:20 +0100
-Message-ID: <20250130133500.522228964@linuxfoundation.org>
+Subject: [PATCH 6.12 21/40] libfs: Replace simple_offset end-of-directory detection
+Date: Thu, 30 Jan 2025 14:59:21 +0100
+Message-ID: <20250130133500.561438053@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -54,147 +52,147 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-commit b662d858131da9a8a14e68661656989b14dbf113 upstream.
+commit 68a3a65003145644efcbb651e91db249ccd96281 upstream.
 
-The current directory offset allocator (based on mtree_alloc_cyclic)
-stores the next offset value to return in octx->next_offset. This
-mechanism typically returns values that increase monotonically over
-time. Eventually, though, the newly allocated offset value wraps
-back to a low number (say, 2) which is smaller than other already-
-allocated offset values.
+According to getdents(3), the d_off field in each returned directory
+entry points to the next entry in the directory. The d_off field in
+the last returned entry in the readdir buffer must contain a valid
+offset value, but if it points to an actual directory entry, then
+readdir/getdents can loop.
 
-Yu Kuai <yukuai3@huawei.com> reports that, after commit 64a7ce76fb90
-("libfs: fix infinite directory reads for offset dir"), if a
-directory's offset allocator wraps, existing entries are no longer
-visible via readdir/getdents because offset_readdir() stops listing
-entries once an entry's offset is larger than octx->next_offset.
-These entries vanish persistently -- they can be looked up, but will
-never again appear in readdir(3) output.
+This patch introduces a specific fixed offset value that is placed
+in the d_off field of the last entry in a directory. Some user space
+applications assume that the EOD offset value is larger than the
+offsets of real directory entries, so the largest valid offset value
+is reserved for this purpose. This new value is never allocated by
+simple_offset_add().
 
-The reason for this is that the commit treats directory offsets as
-monotonically increasing integer values rather than opaque cookies,
-and introduces this comparison:
+When ->iterate_dir() returns, getdents{64} inserts the ctx->pos
+value into the d_off field of the last valid entry in the readdir
+buffer. When it hits EOD, offset_readdir() sets ctx->pos to the EOD
+offset value so the last entry is updated to point to the EOD marker.
 
-	if (dentry2offset(dentry) >= last_index) {
+When trying to read the entry at the EOD offset, offset_readdir()
+terminates immediately.
 
-On 64-bit platforms, the directory offset value upper bound is
-2^63 - 1. Directory offsets will monotonically increase for millions
-of years without wrapping.
+It is worth noting that using a Maple tree for directory offset
+value allocation does not guarantee a 63-bit range of values --
+on platforms where "long" is a 32-bit type, the directory offset
+value range is still 0..(2^31 - 1). For broad compatibility with
+32-bit user space, the largest tmpfs directory cookie value is now
+S32_MAX.
 
-On 32-bit platforms, however, LONG_MAX is 2^31 - 1. The allocator
-can wrap after only a few weeks (at worst).
-
-Revert commit 64a7ce76fb90 ("libfs: fix infinite directory reads for
-offset dir") to prepare for a fix that can work properly on 32-bit
-systems and might apply to recent LTS kernels where shmem employs
-the simple_offset mechanism.
-
-Reported-by: Yu Kuai <yukuai3@huawei.com>
+Fixes: 796432efab1e ("libfs: getdents() should return 0 after reaching EOD")
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/20241228175522.1854234-4-cel@kernel.org
-Reviewed-by: Yang Erkun <yangerkun@huawei.com>
+Link: https://lore.kernel.org/r/20241228175522.1854234-5-cel@kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/libfs.c |   35 +++++++++++------------------------
- 1 file changed, 11 insertions(+), 24 deletions(-)
+ fs/libfs.c |   37 +++++++++++++++++++++----------------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
 
 --- a/fs/libfs.c
 +++ b/fs/libfs.c
-@@ -418,14 +418,6 @@ void simple_offset_destroy(struct offset
- 	mtree_destroy(&octx->mt);
- }
+@@ -241,9 +241,15 @@ const struct inode_operations simple_dir
+ };
+ EXPORT_SYMBOL(simple_dir_inode_operations);
  
--static int offset_dir_open(struct inode *inode, struct file *file)
--{
--	struct offset_ctx *ctx = inode->i_op->get_offset_ctx(inode);
--
--	file->private_data = (void *)ctx->next_offset;
--	return 0;
--}
--
- /**
-  * offset_dir_llseek - Advance the read position of a directory descriptor
-  * @file: an open directory whose position is to be updated
-@@ -439,9 +431,6 @@ static int offset_dir_open(struct inode
-  */
- static loff_t offset_dir_llseek(struct file *file, loff_t offset, int whence)
- {
--	struct inode *inode = file->f_inode;
--	struct offset_ctx *ctx = inode->i_op->get_offset_ctx(inode);
--
- 	switch (whence) {
- 	case SEEK_CUR:
- 		offset += file->f_pos;
-@@ -455,8 +444,7 @@ static loff_t offset_dir_llseek(struct f
+-/* 0 is '.', 1 is '..', so always start with offset 2 or more */
++/* simple_offset_add() never assigns these to a dentry */
+ enum {
+-	DIR_OFFSET_MIN	= 2,
++	DIR_OFFSET_EOD		= S32_MAX,
++};
++
++/* simple_offset_add() allocation range */
++enum {
++	DIR_OFFSET_MIN		= 2,
++	DIR_OFFSET_MAX		= DIR_OFFSET_EOD - 1,
+ };
+ 
+ static void offset_set(struct dentry *dentry, long offset)
+@@ -287,7 +293,8 @@ int simple_offset_add(struct offset_ctx
+ 		return -EBUSY;
+ 
+ 	ret = mtree_alloc_cyclic(&octx->mt, &offset, dentry, DIR_OFFSET_MIN,
+-				 LONG_MAX, &octx->next_offset, GFP_KERNEL);
++				 DIR_OFFSET_MAX, &octx->next_offset,
++				 GFP_KERNEL);
+ 	if (unlikely(ret < 0))
+ 		return ret == -EBUSY ? -ENOSPC : ret;
+ 
+@@ -443,8 +450,6 @@ static loff_t offset_dir_llseek(struct f
+ 		return -EINVAL;
  	}
  
- 	/* In this case, ->private_data is protected by f_pos_lock */
--	if (!offset)
--		file->private_data = (void *)ctx->next_offset;
-+	file->private_data = NULL;
+-	/* In this case, ->private_data is protected by f_pos_lock */
+-	file->private_data = NULL;
  	return vfs_setpos(file, offset, LONG_MAX);
  }
  
-@@ -487,7 +475,7 @@ static bool offset_dir_emit(struct dir_c
+@@ -454,7 +459,7 @@ static struct dentry *offset_find_next(s
+ 	struct dentry *child, *found = NULL;
+ 
+ 	rcu_read_lock();
+-	child = mas_find(&mas, LONG_MAX);
++	child = mas_find(&mas, DIR_OFFSET_MAX);
+ 	if (!child)
+ 		goto out;
+ 	spin_lock(&child->d_lock);
+@@ -475,7 +480,7 @@ static bool offset_dir_emit(struct dir_c
  			  inode->i_ino, fs_umode_to_dtype(inode->i_mode));
  }
  
--static void offset_iterate_dir(struct inode *inode, struct dir_context *ctx, long last_index)
-+static void *offset_iterate_dir(struct inode *inode, struct dir_context *ctx)
+-static void *offset_iterate_dir(struct inode *inode, struct dir_context *ctx)
++static void offset_iterate_dir(struct inode *inode, struct dir_context *ctx)
  {
  	struct offset_ctx *octx = inode->i_op->get_offset_ctx(inode);
  	struct dentry *dentry;
-@@ -495,21 +483,17 @@ static void offset_iterate_dir(struct in
+@@ -483,7 +488,7 @@ static void *offset_iterate_dir(struct i
  	while (true) {
  		dentry = offset_find_next(octx, ctx->pos);
  		if (!dentry)
--			return;
--
--		if (dentry2offset(dentry) >= last_index) {
--			dput(dentry);
--			return;
--		}
-+			return ERR_PTR(-ENOENT);
+-			return ERR_PTR(-ENOENT);
++			goto out_eod;
  
  		if (!offset_dir_emit(ctx, dentry)) {
  			dput(dentry);
--			return;
-+			break;
- 		}
- 
+@@ -493,7 +498,10 @@ static void *offset_iterate_dir(struct i
  		ctx->pos = dentry2offset(dentry) + 1;
  		dput(dentry);
  	}
-+	return NULL;
+-	return NULL;
++	return;
++
++out_eod:
++	ctx->pos = DIR_OFFSET_EOD;
  }
  
  /**
-@@ -536,19 +520,22 @@ static void offset_iterate_dir(struct in
- static int offset_readdir(struct file *file, struct dir_context *ctx)
- {
- 	struct dentry *dir = file->f_path.dentry;
--	long last_index = (long)file->private_data;
- 
- 	lockdep_assert_held(&d_inode(dir)->i_rwsem);
+@@ -513,6 +521,8 @@ static void *offset_iterate_dir(struct i
+  *
+  * On return, @ctx->pos contains an offset that will read the next entry
+  * in this directory when offset_readdir() is called again with @ctx.
++ * Caller places this value in the d_off field of the last entry in the
++ * user's buffer.
+  *
+  * Return values:
+  *   %0 - Complete
+@@ -525,13 +535,8 @@ static int offset_readdir(struct file *f
  
  	if (!dir_emit_dots(file, ctx))
  		return 0;
- 
--	offset_iterate_dir(d_inode(dir), ctx, last_index);
-+	/* In this case, ->private_data is protected by f_pos_lock */
-+	if (ctx->pos == DIR_OFFSET_MIN)
-+		file->private_data = NULL;
-+	else if (file->private_data == ERR_PTR(-ENOENT))
-+		return 0;
-+	file->private_data = offset_iterate_dir(d_inode(dir), ctx);
+-
+-	/* In this case, ->private_data is protected by f_pos_lock */
+-	if (ctx->pos == DIR_OFFSET_MIN)
+-		file->private_data = NULL;
+-	else if (file->private_data == ERR_PTR(-ENOENT))
+-		return 0;
+-	file->private_data = offset_iterate_dir(d_inode(dir), ctx);
++	if (ctx->pos != DIR_OFFSET_EOD)
++		offset_iterate_dir(d_inode(dir), ctx);
  	return 0;
  }
  
- const struct file_operations simple_offset_dir_operations = {
--	.open		= offset_dir_open,
- 	.llseek		= offset_dir_llseek,
- 	.iterate_shared	= offset_readdir,
- 	.read		= generic_read_dir,
 
 
