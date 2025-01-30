@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AB81DDC22;
-	Thu, 30 Jan 2025 14:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40D1E7C25;
+	Thu, 30 Jan 2025 14:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247010; cv=none; b=qyConSV4kKzGlJ47IzkF35zt2xVHORB/Gonuzf/6eqpWd/GZt+QTyV6O0074H8m8piuJsVVlzwopzzYyb2+w1D4mB+BpDbQCOfQM5Qj0Puoks0ZRNOWe1SB9OTMXjrFOngFqNDbcKxcsCjaFVyH9Py4kwwRg8crYGeyuSNEPxlw=
+	t=1738247013; cv=none; b=D83hdntQ7kNN+7wFDV6+mY6RisOTuUgrekXBFeBZ4W03uPqM5Vp6Dx9Yh7pALc8vjGaNEGPPfnR2V4VfA+OmaCyvNH9mtFaK18v7HYbjbAhdXXrtzLPH76MZDO69K6BMaCilBTcWf11Q6vU1AfWkiPuRcakBx3b6MLw/sNU3wJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247010; c=relaxed/simple;
-	bh=tpGEHgLzXDAgDnTSPnvIc6ctLMCPKLWlLNrhsW+2so4=;
+	s=arc-20240116; t=1738247013; c=relaxed/simple;
+	bh=vHg8RaP+ffeI2NadiPfSypBft9onevZ1EmHUeN3szyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dWz2No9mtxFSSivIbp7A9c8Ftaby3khSAHyh8vlbf7sxdbWh5sQpZEF3X7zBCX8NcuxaIGdDmngBcghIeKEdjYabJCEQNIk37BJYvbQ6iQKzTsevRl/nqAwVqD7KnGdXNnzolZrwHM1DI0RUbTKhYdbXmcXTtsK+Rcq8jDen0HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vjk9rDCG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYtckmKiUS5Wgtk9qz4FyKhP8FrSbATDz5pQZ1dHpN+soJn3Pn+DR/lhAqYw78ByPrXvrPagvPdYjOP/aNI1ZxiHyWQu+7FzKpaq+2q+1qayVjTHHh4FqQiBKDls6ZwHjCSkROIAlyGPeej7wFo5mTwqT4+xRD5QnOgHmcY57xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHaXJxOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vjk9rDCG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A570C4CEE0;
-	Thu, 30 Jan 2025 14:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHaXJxOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C43CC4CED2;
+	Thu, 30 Jan 2025 14:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247009;
-	bh=tpGEHgLzXDAgDnTSPnvIc6ctLMCPKLWlLNrhsW+2so4=;
+	s=korg; t=1738247012;
+	bh=vHg8RaP+ffeI2NadiPfSypBft9onevZ1EmHUeN3szyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vjk9rDCGhVtmd4ixvXsbCsmsvi95c97A0C0YVUXAF32kyL0cy4oekk7CrclPLy6fU
-	 1geJ2hSv3g1p/pb2aCSfxoaqzyZVDIJjiv/nppIE5NQWslCKVgFXP/xlCNNJwE8baw
-	 z+jIbmS4R7YyKbGDh+xfXvUhUbL3CobHtZGxD9RY=
+	b=OHaXJxOE/3ABT+BKVhhuk6LzYH3FguBpBQFtBoFWJ7xceTpy/dbDqTiBVnJXytFhz
+	 8BLB5y1U2gtDeTptYuul1L0FguuqTjAZIeSs30JjOfasRW2A9wzrW+3/BEClmwHATB
+	 WJVaIuDoOrDJvoIG46tVDxbQywcZ8YcwulCtpU9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Jonker <jbx6244@gmail.com>,
+	Peter Geis <pgwipeout@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/133] arm64: dts: rockchip: add #power-domain-cells to power domain nodes
-Date: Thu, 30 Jan 2025 15:00:40 +0100
-Message-ID: <20250130140144.575948832@linuxfoundation.org>
+Subject: [PATCH 5.10 052/133] arm64: dts: rockchip: add hevc power domain clock to rk3328
+Date: Thu, 30 Jan 2025 15:00:41 +0100
+Message-ID: <20250130140144.615304471@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,252 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Jonker <jbx6244@gmail.com>
+From: Peter Geis <pgwipeout@gmail.com>
 
-[ Upstream commit 837188d49823230f47afdbbec7556740e89a8557 ]
+[ Upstream commit 3699f2c43ea9984e00d70463f8c29baaf260ea97 ]
 
-Add #power-domain-cells to power domain nodes, because they
-are required by power-domain.yaml
+There is a race condition at startup between disabling power domains not
+used and disabling clocks not used on the rk3328. When the clocks are
+disabled first, the hevc power domain fails to shut off leading to a
+splat of failures. Add the hevc core clock to the rk3328 power domain
+node to prevent this condition.
 
-Signed-off-by: Johan Jonker <jbx6244@gmail.com>
-Link: https://lore.kernel.org/r/20210417112952.8516-9-jbx6244@gmail.com
+rcu: INFO: rcu_sched detected expedited stalls on CPUs/tasks: { 3-.... }
+1087 jiffies s: 89 root: 0x8/.
+rcu: blocking rcu_node structures (internal RCU debug):
+Sending NMI from CPU 0 to CPUs 3:
+NMI backtrace for cpu 3
+CPU: 3 UID: 0 PID: 86 Comm: kworker/3:3 Not tainted 6.12.0-rc5+ #53
+Hardware name: Firefly ROC-RK3328-CC (DT)
+Workqueue: pm genpd_power_off_work_fn
+pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : regmap_unlock_spinlock+0x18/0x30
+lr : regmap_read+0x60/0x88
+sp : ffff800081123c00
+x29: ffff800081123c00 x28: ffff2fa4c62cad80 x27: 0000000000000000
+x26: ffffd74e6e660eb8 x25: ffff2fa4c62cae00 x24: 0000000000000040
+x23: ffffd74e6d2f3ab8 x22: 0000000000000001 x21: ffff800081123c74
+x20: 0000000000000000 x19: ffff2fa4c0412000 x18: 0000000000000000
+x17: 77202c31203d2065 x16: 6c6469203a72656c x15: 6c6f72746e6f632d
+x14: 7265776f703a6e6f x13: 2063766568206e69 x12: 616d6f64202c3431
+x11: 347830206f742030 x10: 3430303034783020 x9 : ffffd74e6c7369e0
+x8 : 3030316666206e69 x7 : 205d383738353733 x6 : 332e31202020205b
+x5 : ffffd74e6c73fc88 x4 : ffffd74e6c73fcd4 x3 : ffffd74e6c740b40
+x2 : ffff800080015484 x1 : 0000000000000000 x0 : ffff2fa4c0412000
+Call trace:
+regmap_unlock_spinlock+0x18/0x30
+rockchip_pmu_set_idle_request+0xac/0x2c0
+rockchip_pd_power+0x144/0x5f8
+rockchip_pd_power_off+0x1c/0x30
+_genpd_power_off+0x9c/0x180
+genpd_power_off.part.0.isra.0+0x130/0x2a8
+genpd_power_off_work_fn+0x6c/0x98
+process_one_work+0x170/0x3f0
+worker_thread+0x290/0x4a8
+kthread+0xec/0xf8
+ret_from_fork+0x10/0x20
+rockchip-pm-domain ff100000.syscon:power-controller: failed to get ack on domain 'hevc', val=0x88220
+
+Fixes: 52e02d377a72 ("arm64: dts: rockchip: add core dtsi file for RK3328 SoCs")
+Signed-off-by: Peter Geis <pgwipeout@gmail.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://lore.kernel.org/r/20241214224339.24674-1-pgwipeout@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Stable-dep-of: 3699f2c43ea9 ("arm64: dts: rockchip: add hevc power domain clock to rk3328")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/px30.dtsi   |  8 ++++++++
- arch/arm64/boot/dts/rockchip/rk3328.dtsi |  3 +++
- arch/arm64/boot/dts/rockchip/rk3399.dtsi | 20 ++++++++++++++++++++
- 3 files changed, 31 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/px30.dtsi b/arch/arm64/boot/dts/rockchip/px30.dtsi
-index f241e7c318bc..91e4d92d2ab2 100644
---- a/arch/arm64/boot/dts/rockchip/px30.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/px30.dtsi
-@@ -250,12 +250,14 @@
- 					 <&cru HCLK_OTG>,
- 					 <&cru SCLK_OTG_ADP>;
- 				pm_qos = <&qos_usb_host>, <&qos_usb_otg>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_SDCARD {
- 				reg = <PX30_PD_SDCARD>;
- 				clocks = <&cru HCLK_SDMMC>,
- 					 <&cru SCLK_SDMMC>;
- 				pm_qos = <&qos_sdmmc>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_GMAC {
- 				reg = <PX30_PD_GMAC>;
-@@ -264,6 +266,7 @@
- 					 <&cru SCLK_MAC_REF>,
- 					 <&cru SCLK_GMAC_RX_TX>;
- 				pm_qos = <&qos_gmac>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_MMC_NAND {
- 				reg = <PX30_PD_MMC_NAND>;
-@@ -277,6 +280,7 @@
- 					  <&cru SCLK_SFC>;
- 				pm_qos = <&qos_emmc>, <&qos_nand>,
- 					 <&qos_sdio>, <&qos_sfc>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_VPU {
- 				reg = <PX30_PD_VPU>;
-@@ -284,6 +288,7 @@
- 					 <&cru HCLK_VPU>,
- 					 <&cru SCLK_CORE_VPU>;
- 				pm_qos = <&qos_vpu>, <&qos_vpu_r128>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_VO {
- 				reg = <PX30_PD_VO>;
-@@ -300,6 +305,7 @@
- 					 <&cru SCLK_VOPB_PWM>;
- 				pm_qos = <&qos_rga_rd>, <&qos_rga_wr>,
- 					 <&qos_vop_m0>, <&qos_vop_m1>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_VI {
- 				reg = <PX30_PD_VI>;
-@@ -311,11 +317,13 @@
- 				pm_qos = <&qos_isp_128>, <&qos_isp_rd>,
- 					 <&qos_isp_wr>, <&qos_isp_m1>,
- 					 <&qos_vip>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@PX30_PD_GPU {
- 				reg = <PX30_PD_GPU>;
- 				clocks = <&cru SCLK_GPU>;
- 				pm_qos = <&qos_gpu>;
-+				#power-domain-cells = <0>;
- 			};
- 		};
- 	};
 diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-index 9e1701f42184..5a706b8ffc72 100644
+index 5a706b8ffc72..28c861ac20f7 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-@@ -320,13 +320,16 @@
+@@ -320,6 +320,7 @@
  
  			power-domain@RK3328_PD_HEVC {
  				reg = <RK3328_PD_HEVC>;
-+				#power-domain-cells = <0>;
++				clocks = <&cru SCLK_VENC_CORE>;
+ 				#power-domain-cells = <0>;
  			};
  			power-domain@RK3328_PD_VIDEO {
- 				reg = <RK3328_PD_VIDEO>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3328_PD_VPU {
- 				reg = <RK3328_PD_VPU>;
- 				clocks = <&cru ACLK_VPU>, <&cru HCLK_VPU>;
-+				#power-domain-cells = <0>;
- 			};
- 		};
- 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399.dtsi b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-index e2515218ff73..bf71f390f8a6 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3399.dtsi
-@@ -1005,6 +1005,7 @@
- 				clocks = <&cru ACLK_IEP>,
- 					 <&cru HCLK_IEP>;
- 				pm_qos = <&qos_iep>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_RGA {
- 				reg = <RK3399_PD_RGA>;
-@@ -1012,12 +1013,14 @@
- 					 <&cru HCLK_RGA>;
- 				pm_qos = <&qos_rga_r>,
- 					 <&qos_rga_w>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_VCODEC {
- 				reg = <RK3399_PD_VCODEC>;
- 				clocks = <&cru ACLK_VCODEC>,
- 					 <&cru HCLK_VCODEC>;
- 				pm_qos = <&qos_video_m0>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_VDU {
- 				reg = <RK3399_PD_VDU>;
-@@ -1027,6 +1030,7 @@
- 					 <&cru SCLK_VDU_CORE>;
- 				pm_qos = <&qos_video_m1_r>,
- 					 <&qos_video_m1_w>;
-+				#power-domain-cells = <0>;
- 			};
- 
- 			/* These power domains are grouped by VD_GPU */
-@@ -1034,53 +1038,63 @@
- 				reg = <RK3399_PD_GPU>;
- 				clocks = <&cru ACLK_GPU>;
- 				pm_qos = <&qos_gpu>;
-+				#power-domain-cells = <0>;
- 			};
- 
- 			/* These power domains are grouped by VD_LOGIC */
- 			power-domain@RK3399_PD_EDP {
- 				reg = <RK3399_PD_EDP>;
- 				clocks = <&cru PCLK_EDP_CTRL>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_EMMC {
- 				reg = <RK3399_PD_EMMC>;
- 				clocks = <&cru ACLK_EMMC>;
- 				pm_qos = <&qos_emmc>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_GMAC {
- 				reg = <RK3399_PD_GMAC>;
- 				clocks = <&cru ACLK_GMAC>,
- 					 <&cru PCLK_GMAC>;
- 				pm_qos = <&qos_gmac>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_SD {
- 				reg = <RK3399_PD_SD>;
- 				clocks = <&cru HCLK_SDMMC>,
- 					 <&cru SCLK_SDMMC>;
- 				pm_qos = <&qos_sd>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_SDIOAUDIO {
- 				reg = <RK3399_PD_SDIOAUDIO>;
- 				clocks = <&cru HCLK_SDIO>;
- 				pm_qos = <&qos_sdioaudio>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_TCPD0 {
- 				reg = <RK3399_PD_TCPD0>;
- 				clocks = <&cru SCLK_UPHY0_TCPDCORE>,
- 					 <&cru SCLK_UPHY0_TCPDPHY_REF>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_TCPD1 {
- 				reg = <RK3399_PD_TCPD1>;
- 				clocks = <&cru SCLK_UPHY1_TCPDCORE>,
- 					 <&cru SCLK_UPHY1_TCPDPHY_REF>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_USB3 {
- 				reg = <RK3399_PD_USB3>;
- 				clocks = <&cru ACLK_USB3>;
- 				pm_qos = <&qos_usb_otg0>,
- 					 <&qos_usb_otg1>;
-+				#power-domain-cells = <0>;
- 			};
- 			power-domain@RK3399_PD_VIO {
- 				reg = <RK3399_PD_VIO>;
-+				#power-domain-cells = <1>;
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 
-@@ -1090,6 +1104,7 @@
- 						 <&cru HCLK_HDCP>,
- 						 <&cru PCLK_HDCP>;
- 					pm_qos = <&qos_hdcp>;
-+					#power-domain-cells = <0>;
- 				};
- 				power-domain@RK3399_PD_ISP0 {
- 					reg = <RK3399_PD_ISP0>;
-@@ -1097,6 +1112,7 @@
- 						 <&cru HCLK_ISP0>;
- 					pm_qos = <&qos_isp0_m0>,
- 						 <&qos_isp0_m1>;
-+					#power-domain-cells = <0>;
- 				};
- 				power-domain@RK3399_PD_ISP1 {
- 					reg = <RK3399_PD_ISP1>;
-@@ -1104,9 +1120,11 @@
- 						 <&cru HCLK_ISP1>;
- 					pm_qos = <&qos_isp1_m0>,
- 						 <&qos_isp1_m1>;
-+					#power-domain-cells = <0>;
- 				};
- 				power-domain@RK3399_PD_VO {
- 					reg = <RK3399_PD_VO>;
-+					#power-domain-cells = <1>;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -1116,12 +1134,14 @@
- 							 <&cru HCLK_VOP0>;
- 						pm_qos = <&qos_vop_big_r>,
- 							 <&qos_vop_big_w>;
-+						#power-domain-cells = <0>;
- 					};
- 					power-domain@RK3399_PD_VOPL {
- 						reg = <RK3399_PD_VOPL>;
- 						clocks = <&cru ACLK_VOP1>,
- 							 <&cru HCLK_VOP1>;
- 						pm_qos = <&qos_vop_little>;
-+						#power-domain-cells = <0>;
- 					};
- 				};
- 			};
 -- 
 2.39.5
 
