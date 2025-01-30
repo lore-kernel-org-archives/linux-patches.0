@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E0E1E990D;
-	Thu, 30 Jan 2025 14:16:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58EC383;
+	Thu, 30 Jan 2025 14:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246612; cv=none; b=Ui/6v5JAseBRlFsCrf26ZGeRKet/OV3BQEOpii+scgQ4iohFcRkFj9+KfEL66IFhiwc6tjKhGv0y6htEam373yEXMn4mxdocZCiWVf/pM+DZdrTyeOdBJ9HNgvbny9YR34CBU5JMoTE7uWZviICEKxhsX7mMY7grv0WwO/4WUSA=
+	t=1738246615; cv=none; b=fWH/ypG6I5wXT57kOKvtbV/dnms/Hc4bdU4ZgIhPHw4waiAH6KYZrfI+WOWZBh3msZBVWU/kOCqzJcMLMxcofTnwVHJS2tsecV2l2K6rMRFhgfqYrnLkB/tj0mo0yeImNwhGsLvsckQrFK3INCLqJS2BTcEK+V3ihVHOf8XZhT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246612; c=relaxed/simple;
-	bh=sLeSR9UzgQL74RSjRbpyUbr0tPqvwiF/PwHbHvelT+I=;
+	s=arc-20240116; t=1738246615; c=relaxed/simple;
+	bh=wKjOASAGi2hVUYoAy8Be70JZmjgVFJ6H5kwgi+ySfDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GmE4oh/oWUclXU8dgkWSvBqNzWkrF647YusOB93mBKMNAIU90Wcw+MozCwS7ZmbJQZ0kR7kk156QlvIX3VHSPXm6KcIyO378eNVp4lrlPyGNNIHBmXeObJ3idvcL0Mwrh8rMHB1WFQd7V6H9CZr0KBlZWG5qV5JwxV3W5scqzF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3J+wZjq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W7AuXMJ/rOev3MX+v3bXIKl4Vya0xBmK45vaYz7S4Hb24sSh0qLfCKumhty5bCWu2WnLeq9VlUT2zZevWogUMPtAWdfs9/lMWOZk385PFO9zAQII/MdEEOEUjvIvskOvHW6QhFWBx/7OnhrJP8GnS1y301mwq5S5TqfBjpzUsbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqgcHtmp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3J+wZjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D37FC4CED2;
-	Thu, 30 Jan 2025 14:16:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqgcHtmp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE97C4CED2;
+	Thu, 30 Jan 2025 14:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246612;
-	bh=sLeSR9UzgQL74RSjRbpyUbr0tPqvwiF/PwHbHvelT+I=;
+	s=korg; t=1738246615;
+	bh=wKjOASAGi2hVUYoAy8Be70JZmjgVFJ6H5kwgi+ySfDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3J+wZjqmKr9ebKCb30HU9WXslqJl1nreUD7y2gxkc8Fsiz9WAPeM7MGq+IFTB1ie
-	 4TO3OB9G/MlPa6wKrSu6JfksHy+Y820WeiWwibSCGHd7uWcCpq+j4Kek6JkeWBsyGl
-	 vvb7TGQX5KPaduDQf8twSzDRTy71mdiAmHFS40jw=
+	b=XqgcHtmpdvcMqjTYFyKBdWTn/vXFkvStWcYdGI/J2h4lddSZcpQZR2KripTPY6UE/
+	 0pATO1U1b8rb+h9KCKm4YDWMC41u0vPnF7ZZxkmQ2S9b/YREjYxL8Ye3wS6IflOSgn
+	 /A2SuT8db+aaUWorci9ea/KAfWlKXdo77vj6pjJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 15/43] libfs: Re-arrange locking in offset_iterate_dir()
-Date: Thu, 30 Jan 2025 14:59:22 +0100
-Message-ID: <20250130133459.514969822@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 01/91] jbd2: flush filesystem device before updating tail sequence
+Date: Thu, 30 Jan 2025 15:00:20 +0100
+Message-ID: <20250130140133.723945042@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250130133458.903274626@linuxfoundation.org>
-References: <20250130133458.903274626@linuxfoundation.org>
+In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
+References: <20250130140133.662535583@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,86 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 3f6d810665dfde0d33785420618ceb03fba0619d ]
+[ Upstream commit a0851ea9cd555c333795b85ddd908898b937c4e1 ]
 
-Liam and Matthew say that once the RCU read lock is released,
-xa_state is not safe to re-use for the next xas_find() call. But the
-RCU read lock must be released on each loop iteration so that
-dput(), which might_sleep(), can be called safely.
+When committing transaction in jbd2_journal_commit_transaction(), the
+disk caches for the filesystem device should be flushed before updating
+the journal tail sequence. However, this step is missed if the journal
+is not located on the filesystem device. As a result, the filesystem may
+become inconsistent following a power failure or system crash. Fix it by
+ensuring that the filesystem device is flushed appropriately.
 
-Thus we are forced to walk the offset tree with fresh state for each
-directory entry. xa_find() can do this for us, though it might be a
-little less efficient than maintaining xa_state locally.
-
-We believe that in the current code base, inode->i_rwsem provides
-protection for the xa_state maintained in
-offset_iterate_dir(). However, there is no guarantee that will
-continue to be the case in the future.
-
-Since offset_iterate_dir() doesn't build xa_state locally any more,
-there's no longer a strong need for offset_find_next(). Clean up by
-rolling these two helpers together.
-
-Suggested-by: Liam R. Howlett <Liam.Howlett@Oracle.com>
-Message-ID: <170785993027.11135.8830043889278631735.stgit@91.116.238.104.host.secureserver.net>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://lore.kernel.org/r/170820142021.6328.15047865406275957018.stgit@91.116.238.104.host.secureserver.net
+Fixes: 3339578f0578 ("jbd2: cleanup journal tail after transaction commit")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://lore.kernel.org/r/20241203014407.805916-3-yi.zhang@huaweicloud.com
 Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ fs/jbd2/commit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -401,12 +401,13 @@ static loff_t offset_dir_llseek(struct f
- 	return vfs_setpos(file, offset, U32_MAX);
- }
- 
--static struct dentry *offset_find_next(struct xa_state *xas)
-+static struct dentry *offset_find_next(struct offset_ctx *octx, loff_t offset)
- {
- 	struct dentry *child, *found = NULL;
-+	XA_STATE(xas, &octx->xa, offset);
- 
- 	rcu_read_lock();
--	child = xas_next_entry(xas, U32_MAX);
-+	child = xas_next_entry(&xas, U32_MAX);
- 	if (!child)
- 		goto out;
- 	spin_lock(&child->d_lock);
-@@ -429,12 +430,11 @@ static bool offset_dir_emit(struct dir_c
- 
- static void *offset_iterate_dir(struct inode *inode, struct dir_context *ctx)
- {
--	struct offset_ctx *so_ctx = inode->i_op->get_offset_ctx(inode);
--	XA_STATE(xas, &so_ctx->xa, ctx->pos);
-+	struct offset_ctx *octx = inode->i_op->get_offset_ctx(inode);
- 	struct dentry *dentry;
- 
- 	while (true) {
--		dentry = offset_find_next(&xas);
-+		dentry = offset_find_next(octx, ctx->pos);
- 		if (!dentry)
- 			return ERR_PTR(-ENOENT);
- 
-@@ -443,8 +443,8 @@ static void *offset_iterate_dir(struct i
- 			break;
- 		}
- 
-+		ctx->pos = dentry2offset(dentry) + 1;
- 		dput(dentry);
--		ctx->pos = xas.xa_index + 1;
- 	}
- 	return NULL;
- }
+diff --git a/fs/jbd2/commit.c b/fs/jbd2/commit.c
+index 255026497b8c..8c435c11664d 100644
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -770,9 +770,9 @@ void jbd2_journal_commit_transaction(journal_t *journal)
+ 	/* 
+ 	 * If the journal is not located on the file system device,
+ 	 * then we must flush the file system device before we issue
+-	 * the commit record
++	 * the commit record and update the journal tail sequence.
+ 	 */
+-	if (commit_transaction->t_need_data_flush &&
++	if ((commit_transaction->t_need_data_flush || update_tail) &&
+ 	    (journal->j_fs_dev != journal->j_dev) &&
+ 	    (journal->j_flags & JBD2_BARRIER))
+ 		blkdev_issue_flush(journal->j_fs_dev, GFP_NOFS, NULL);
+-- 
+2.39.5
+
 
 
