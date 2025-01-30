@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD461E522;
-	Thu, 30 Jan 2025 14:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810401E522;
+	Thu, 30 Jan 2025 14:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247288; cv=none; b=ZaHOXaMO+shCRGx3b7IM5kpeq83VxaZ3x7QcWbR9p0iFs0Z5QQba40JiHfb+AuEFT21MFHFGzwc9pBH4Y3Wxic7gUu/EMURs/m7mGRepNea3PQ4hCt6J3Xd7ptAKEJiNO45sTN7RdDWpqo4qW6vumUOUcPa/z1UIROse0NBReMg=
+	t=1738247291; cv=none; b=Wg0J8xQoVOO3JkI5IIdfPx6iLJeNMTBHq+49PYkPQeDN7PGhezyx/dwEIIidzI9skngrAljC5e1PPIWjzp1x71ZRqeFD4BsQpJB4GzUNEe+leNq2LRDvzcPcjOvoxrwymAG6isv0eDz9+726MyxntvXP8zgsURV3Mlf+2XpEmjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247288; c=relaxed/simple;
-	bh=Wjh1F6PIxS1YlxTaQFcT3HQ/JJZUT1dpvgSC1d1lUI8=;
+	s=arc-20240116; t=1738247291; c=relaxed/simple;
+	bh=ouAfgo4k4j3CSmmlOu5K+UQWE2ECBlx6AmavgktZdY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kUS2oR/XMYFsF6eAwYLL/3dmzw2v48wl7b/AQTa6o6gf05Wt6R7OS2eeYwEFJBymGNzrNKamOlcw5ZijlM3Vn2din2dCAcuf+NSw0gMCTgt5m0KXlxFIj7YigmssfuLGf2alMZIMYOWMeNO2ZVUj6t/uxYMEdxpV8JlWAkzOnCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+BXskHw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FzGVuE6huEO/SlVdbtYONohyqpWWvFJwRGXHcBm9c4S/yRd3BcrH0fQ8w1UWA0cE8HSgI21oDxeM48Dx27bhaQv/lLB60ygcSeBRbs0zicF7Fcr+JStXSyrLKnOgYWu2v9rK7xOZQSbEYLzTsF/yhwClRZVea2skss8w8nRidr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/WyZjhA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+BXskHw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294ECC4CED2;
-	Thu, 30 Jan 2025 14:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/WyZjhA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BB72C4CED2;
+	Thu, 30 Jan 2025 14:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247288;
-	bh=Wjh1F6PIxS1YlxTaQFcT3HQ/JJZUT1dpvgSC1d1lUI8=;
+	s=korg; t=1738247291;
+	bh=ouAfgo4k4j3CSmmlOu5K+UQWE2ECBlx6AmavgktZdY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+BXskHwrtHEspucMo+lEWr8qbMwnJ101NN7VN33vMULxiXUwsvNwZ71A7cHapGCE
-	 vJ0Jvsx3ya/JMPkbdWlVmzhAMC8KAu5WTT9AsSJt5CkW2ba+it8BNYEjMhGtQ/DNF3
-	 /+4r/2Lh1++KoDvrNYND1/cO0KIXqp9OsbQBnwTo=
+	b=O/WyZjhA6Dmu6otZsaGTeNgkuu59q0HJHpCvLhR2+J2vY4ZUw02Fp3WLvys9eqrJO
+	 tqKjy1KIkTWd8bWc2IF1nMexeAvGc6+gQRIqs/C9n7coTDSVhpocc9yQX9Yec4FW14
+	 9aYyzUU+oQgL4g9cseH4o1mE+L/zkjAJQgO3vhqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philippe Simons <simons.philippe@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/24] irqchip/sunxi-nmi: Add missing SKIP_WAKE flag
-Date: Thu, 30 Jan 2025 15:01:57 +0100
-Message-ID: <20250130140127.513721537@linuxfoundation.org>
+Subject: [PATCH 5.15 06/24] ASoC: samsung: Add missing depends on I2C
+Date: Thu, 30 Jan 2025 15:01:58 +0100
+Message-ID: <20250130140127.551868625@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140127.295114276@linuxfoundation.org>
 References: <20250130140127.295114276@linuxfoundation.org>
@@ -51,42 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philippe Simons <simons.philippe@gmail.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 3a748d483d80f066ca4b26abe45cdc0c367d13e9 ]
+[ Upstream commit 704dbe97a68153a84319ad63f526e12ba868b88e ]
 
-Some boards with Allwinner SoCs connect the PMIC's IRQ pin to the SoC's NMI
-pin instead of a normal GPIO. Since the power key is connected to the PMIC,
-and people expect to wake up a suspended system via this key, the NMI IRQ
-controller must stay alive when the system goes into suspend.
+When switching to selects for MFD_WM8994 a dependency should have also
+been added for I2C, as the dependency on MFD_WM8994 will not be
+considered by the select.
 
-Add the SKIP_WAKE flag to prevent the sunxi NMI controller from going to
-sleep, so that the power key can wake up those systems.
-
-[ tglx: Fixed up coding style ]
-
-Signed-off-by: Philippe Simons <simons.philippe@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250112123402.388520-1-simons.philippe@gmail.com
+Fixes: fd55c6065bec ("ASoC: samsung: Add missing selects for MFD_WM8994")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501082020.2bpGGVTW-lkp@intel.com/
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250108134828.246570-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-sunxi-nmi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/samsung/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-sunxi-nmi.c b/drivers/irqchip/irq-sunxi-nmi.c
-index 21d49791f8552..83c7417611fa5 100644
---- a/drivers/irqchip/irq-sunxi-nmi.c
-+++ b/drivers/irqchip/irq-sunxi-nmi.c
-@@ -187,7 +187,8 @@ static int __init sunxi_sc_nmi_irq_init(struct device_node *node,
- 	gc->chip_types[0].chip.irq_unmask	= irq_gc_mask_set_bit;
- 	gc->chip_types[0].chip.irq_eoi		= irq_gc_ack_set_bit;
- 	gc->chip_types[0].chip.irq_set_type	= sunxi_sc_nmi_set_type;
--	gc->chip_types[0].chip.flags		= IRQCHIP_EOI_THREADED | IRQCHIP_EOI_IF_HANDLED;
-+	gc->chip_types[0].chip.flags		= IRQCHIP_EOI_THREADED | IRQCHIP_EOI_IF_HANDLED |
-+						  IRQCHIP_SKIP_SET_WAKE;
- 	gc->chip_types[0].regs.ack		= reg_offs->pend;
- 	gc->chip_types[0].regs.mask		= reg_offs->enable;
- 	gc->chip_types[0].regs.type		= reg_offs->ctrl;
+diff --git a/sound/soc/samsung/Kconfig b/sound/soc/samsung/Kconfig
+index 159bc501186f9..c04c38d58804c 100644
+--- a/sound/soc/samsung/Kconfig
++++ b/sound/soc/samsung/Kconfig
+@@ -214,7 +214,7 @@ config SND_SOC_SAMSUNG_TM2_WM5110
+ 
+ config SND_SOC_SAMSUNG_ARIES_WM8994
+ 	tristate "SoC I2S Audio support for WM8994 on Aries"
+-	depends on SND_SOC_SAMSUNG && IIO && EXTCON
++	depends on SND_SOC_SAMSUNG && I2C && IIO && EXTCON
+ 	select SND_SOC_BT_SCO
+ 	select MFD_WM8994
+ 	select SND_SOC_WM8994
+@@ -228,7 +228,7 @@ config SND_SOC_SAMSUNG_ARIES_WM8994
+ 
+ config SND_SOC_SAMSUNG_MIDAS_WM1811
+ 	tristate "SoC I2S Audio support for Midas boards"
+-	depends on SND_SOC_SAMSUNG
++	depends on SND_SOC_SAMSUNG && I2C
+ 	select SND_SAMSUNG_I2S
+ 	select MFD_WM8994
+ 	select SND_SOC_WM8994
 -- 
 2.39.5
 
