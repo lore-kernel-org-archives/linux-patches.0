@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBAC1E3775;
-	Thu, 30 Jan 2025 14:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AACE1E9B17;
+	Thu, 30 Jan 2025 14:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245743; cv=none; b=K/DseeB9hYxQryrhlnDYqeg5p7LsnH9iFIy/YTGHTt4sIFzjviG1dpsT6NVhQ8OnbzBPkPoRhTt05eWhsKuEhAoELxEKmLh/FogxsFCGDHOInm4w8+k4zxDqSoNZUYuY/MYQ2zyq6y4MzixXjJZz3ZoxLErktO47CAQzb8LK/gM=
+	t=1738245746; cv=none; b=mxEO2djvd3c8FfJsilSmKqM6BboX1rqJdr6eV+VUJs/Cfg1dHagLRFS8LRaPtJqc8f9Jscis56RjjtmXYOHs/LRzfm74AoOWfLYHoOdXvmIRdhc3nnX4STgpDGhxP+rD53SFIXsWbPSsIsEuHsM8w1dH4iOq5806ge+msIUuCTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245743; c=relaxed/simple;
-	bh=u36Fl07e/GGClLsWnjSqIT1UvLKsZnXZMJNpG4oFf/Y=;
+	s=arc-20240116; t=1738245746; c=relaxed/simple;
+	bh=JWsTQt3+uQ2F9RjC/J4JVm44tX+alLUKcmJnw5DMTno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y149asAdQSMnoeZbJD3OLchsm0ufw46q6ojtHqjuoJag5Z/JdMST9DQr141qDfvNpkx78daW16kHRZwWOUAmgKl1d36BOTQHZ6c07atf8EIOJXUF7dDLugm4NKv945SYXaqIXXfjX91O7HQ4Py6ermnbS3wcr1t39h/VF18CWpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqKhM4NI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWFCTC9sSSB82KeQr5p4fPKDs/7BE2nmCH9tVzVNxR+/SLPFMXOiEuf0u8AhSkN9aVOgUCJeOlN/hl2y5QoFg4VUC/XXkn4tGqMUalaQ4TRCMr8NSPP2y/scgKOnAEZLsVK6erE9rauGusi5ywcSv/S0JTLT0cHNONQFU5mNZRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bpn+XHMI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqKhM4NI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A1CC4CED2;
-	Thu, 30 Jan 2025 14:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bpn+XHMI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4FEC4CEE5;
+	Thu, 30 Jan 2025 14:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245743;
-	bh=u36Fl07e/GGClLsWnjSqIT1UvLKsZnXZMJNpG4oFf/Y=;
+	s=korg; t=1738245746;
+	bh=JWsTQt3+uQ2F9RjC/J4JVm44tX+alLUKcmJnw5DMTno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xqKhM4NIA2FuHAnY6hVubiBcEIWP9MYn9BCKZwpy76foJbI7XZeabpSWCKe9HqDm+
-	 K9zDKE2U02QYDl2F0IYkolT07u1tvRz7kuo2RYTTi5Kapti0DNu3i6Cs7CDQV/BKgQ
-	 WMa9NNnEGrPW87sQ/zz5FreFCoL5VUYxPi+ddYOA=
+	b=Bpn+XHMICzCxUcy5VoanJLn9Pw4sfUN1OsNiXucsPu3CRGgqNgcNceD8xey73qPgL
+	 CcWGfH6NuAwTc/Vehlrb0WKJ3gLnAXSlPIL57On5vH6sBRp7OCljxgL7fZkJFsSbzm
+	 mWmsBNCoujyBZ3WPrz1zhcv+kbnSH8aO6soHoW4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>,
-	Qasim Ijaz <qasdev00@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 29/40] USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
-Date: Thu, 30 Jan 2025 14:59:29 +0100
-Message-ID: <20250130133500.872759401@linuxfoundation.org>
+	Jon Hunter <jonathanh@nvidia.com>,
+	stable <stable@kernel.org>,
+	Lianqin Hu <hulianqin@vivo.com>
+Subject: [PATCH 6.12 30/40] Revert "usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null"
+Date: Thu, 30 Jan 2025 14:59:30 +0100
+Message-ID: <20250130133500.913155753@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -51,53 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qasim Ijaz <qasdev00@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 575a5adf48b06a2980c9eeffedf699ed5534fade upstream.
+commit 086fd062bc3883ae1ce4166cff5355db315ad879 upstream.
 
-This patch addresses a null-ptr-deref in qt2_process_read_urb() due to
-an incorrect bounds check in the following:
+This reverts commit 13014969cbf07f18d62ceea40bd8ca8ec9d36cec.
 
-       if (newport > serial->num_ports) {
-               dev_err(&port->dev,
-                       "%s - port change to invalid port: %i\n",
-                       __func__, newport);
-               break;
-       }
+It is reported to cause crashes on Tegra systems, so revert it for now.
 
-The condition doesn't account for the valid range of the serial->port
-buffer, which is from 0 to serial->num_ports - 1. When newport is equal
-to serial->num_ports, the assignment of "port" in the
-following code is out-of-bounds and NULL:
-
-       serial_priv->current_port = newport;
-       port = serial->port[serial_priv->current_port];
-
-The fix checks if newport is greater than or equal to serial->num_ports
-indicating it is out-of-bounds.
-
-Reported-by: syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=506479ebf12fe435d01a
-Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
-Cc: <stable@vger.kernel.org>      # 3.5
-Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://lore.kernel.org/r/1037c1ad-9230-4181-b9c3-167dbaa47644@nvidia.com
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Cc: stable <stable@kernel.org>
+Cc: Lianqin Hu <hulianqin@vivo.com>
+Link: https://lore.kernel.org/r/2025011711-yippee-fever-a737@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/quatech2.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_serial.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/quatech2.c
-+++ b/drivers/usb/serial/quatech2.c
-@@ -503,7 +503,7 @@ static void qt2_process_read_urb(struct
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -1420,10 +1420,6 @@ void gserial_disconnect(struct gserial *
+ 	/* REVISIT as above: how best to track this? */
+ 	port->port_line_coding = gser->port_line_coding;
  
- 				newport = *(ch + 3);
+-	/* disable endpoints, aborting down any active I/O */
+-	usb_ep_disable(gser->out);
+-	usb_ep_disable(gser->in);
+-
+ 	port->port_usb = NULL;
+ 	gser->ioport = NULL;
+ 	if (port->port.count > 0) {
+@@ -1435,6 +1431,10 @@ void gserial_disconnect(struct gserial *
+ 	spin_unlock(&port->port_lock);
+ 	spin_unlock_irqrestore(&serial_port_lock, flags);
  
--				if (newport > serial->num_ports) {
-+				if (newport >= serial->num_ports) {
- 					dev_err(&port->dev,
- 						"%s - port change to invalid port: %i\n",
- 						__func__, newport);
++	/* disable endpoints, aborting down any active I/O */
++	usb_ep_disable(gser->out);
++	usb_ep_disable(gser->in);
++
+ 	/* finally, free any unused/unusable I/O buffers */
+ 	spin_lock_irqsave(&port->port_lock, flags);
+ 	if (port->port.count == 0)
 
 
