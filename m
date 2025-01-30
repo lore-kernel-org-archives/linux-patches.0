@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1DF1BDA95;
-	Thu, 30 Jan 2025 14:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217D71E8824;
+	Thu, 30 Jan 2025 14:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246794; cv=none; b=XP3zjsUD8igFOgzAd2VG1aL2jNeCK27tnQY48jJ0G6GGi9lTP5NVC4L+2UaeWyqk8Jm0WKwKaDoKl9gqfxx6w6Fre3g0CrrNkoqoxW+SsMN3TLNklYn5xh2j/Qpn02uIX3tF9I6I4D0qvHswTN1qOhPtv0pirLQpwZxzEUgDvo4=
+	t=1738246797; cv=none; b=ddVgSgI+bIFUQJ97WrmUbzxUJ09yKuhZBT9hqRKWBP1i7JETlO/qTLl1pAZr3T+YzAXyQgFdKXKU85cpeusODlbPPdAQYkwiUXxbS4E8NZ2GiAHVxZbPc2Dh2kYvhipMQ0WH8tbRenVUl2IVpOz0kPSu/2PVwl/4tUJkA168BKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246794; c=relaxed/simple;
-	bh=TYN1mia7HSXR3MdAdta+9rzchaAhXo9ErAWj4SlXXTQ=;
+	s=arc-20240116; t=1738246797; c=relaxed/simple;
+	bh=qBG190h32KFK4iwueHmbce2Mn3TULEIzwsT9IcEQ3dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFnBkcU3W+491QY10x1Ue93j0Wqaow87EQw05nU9wAbc4jLkxLhMktEqpM3NhXUzPkBISppXcBJ6Mo/eI28E99Zuex5v7QHfx1tnI2PgVlPSDu3PoZjUgy/Ncl6vYsYwVWHAKF4NdCdh3t1A73DBdhzE1NLh2AHhs3WXav7Z+PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW/7Xbt/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9umUdjSwUQ/0y6LxVYBTU+KdLrGYWGT0zrWRz6uD4Os8Edh4LsYULRyte9wSRBkObIHbY9xggn47sG9oOKmexpuyv9a4rFKQfw13uQvlIOc6MXUlP2dhIZqKtAbAMveXk9XGtXz/vfs/P+Vv15mdgH80GTn5lTphwnCPBcRgTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F0pgzDgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW/7Xbt/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB598C4CED2;
-	Thu, 30 Jan 2025 14:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F0pgzDgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC50C4CED2;
+	Thu, 30 Jan 2025 14:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246794;
-	bh=TYN1mia7HSXR3MdAdta+9rzchaAhXo9ErAWj4SlXXTQ=;
+	s=korg; t=1738246797;
+	bh=qBG190h32KFK4iwueHmbce2Mn3TULEIzwsT9IcEQ3dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PW/7Xbt/GSD6Mltq5ILBZCFEYJSGKM0o+x+SaRelcXLWf7NwHIZlIrv4QeUFcE3Rg
-	 y4aqWgrcN8cG1OO+Kq7rh+VML9Hh2GooBLkf6sJTew/oVIW1j4EwTtYTrq7ETLHYa5
-	 wuz8V8VS22qGLJYtC2uZTjGxURbcajOEqCXrnt9k=
+	b=F0pgzDgfsI1c0BPjMpOxjApP15/uqRAxXIZHAoQsKHBmQE7Cfq5zTwaJz674jk3sf
+	 Goov3OkYxnlHSM4HMKGVY3D4wZ0zeh3yART7Y8McfRu9QWRjibju3LZAdgEHhQU8nX
+	 tUHu9cM9ZoJt2TrpCozX1fJiVolNKew2H4ZyQCss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rik van Riel <riel@surriel.com>,
-	Breno Leitao <leitao@debian.org>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 69/91] fs/proc: fix softlockup in __read_vmcore (part 2)
-Date: Thu, 30 Jan 2025 15:01:28 +0100
-Message-ID: <20250130140136.450883098@linuxfoundation.org>
+	Yogesh Lal <quic_ylal@quicinc.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.4 70/91] irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
+Date: Thu, 30 Jan 2025 15:01:29 +0100
+Message-ID: <20250130140136.493146788@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -54,49 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Yogesh Lal <quic_ylal@quicinc.com>
 
-commit cbc5dde0a461240046e8a41c43d7c3b76d5db952 upstream.
+commit 0d62a49ab55c99e8deb4593b8d9f923de1ab5c18 upstream.
 
-Since commit 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore") the
-number of softlockups in __read_vmcore at kdump time have gone down, but
-they still happen sometimes.
+When a CPU attempts to enter low power mode, it disables the redistributor
+and Group 1 interrupts and reinitializes the system registers upon wakeup.
 
-In a memory constrained environment like the kdump image, a softlockup is
-not just a harmless message, but it can interfere with things like RCU
-freeing memory, causing the crashdump to get stuck.
+If the transition into low power mode fails, then the CPU_PM framework
+invokes the PM notifier callback with CPU_PM_ENTER_FAILED to allow the
+drivers to undo the state changes.
 
-The second loop in __read_vmcore has a lot more opportunities for natural
-sleep points, like scheduling out while waiting for a data write to
-happen, but apparently that is not always enough.
+The GIC V3 driver ignores CPU_PM_ENTER_FAILED, which leaves the GIC in
+disabled state.
 
-Add a cond_resched() to the second loop in __read_vmcore to (hopefully)
-get rid of the softlockups.
+Handle CPU_PM_ENTER_FAILED in the same way as CPU_PM_EXIT to restore normal
+operation.
 
-Link: https://lkml.kernel.org/r/20250110102821.2a37581b@fangorn
-Fixes: 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore")
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Reported-by: Breno Leitao <leitao@debian.org>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ tglx: Massage change log, add Fixes tag ]
+
+Fixes: 3708d52fc6bb ("irqchip: gic-v3: Implement CPU PM notifier")
+Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20241220093907.2747601-1-quic_ylal@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/vmcore.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/irqchip/irq-gic-v3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/proc/vmcore.c
-+++ b/fs/proc/vmcore.c
-@@ -397,6 +397,8 @@ static ssize_t __read_vmcore(char *buffe
- 			if (buflen == 0)
- 				return acc;
- 		}
-+
-+		cond_resched();
- 	}
- 
- 	return acc;
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -1185,7 +1185,7 @@ static int gic_set_affinity(struct irq_d
+ static int gic_cpu_pm_notifier(struct notifier_block *self,
+ 			       unsigned long cmd, void *v)
+ {
+-	if (cmd == CPU_PM_EXIT) {
++	if (cmd == CPU_PM_EXIT || cmd == CPU_PM_ENTER_FAILED) {
+ 		if (gic_dist_security_disabled())
+ 			gic_enable_redist(true);
+ 		gic_cpu_sys_reg_init();
 
 
