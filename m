@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7771E522;
-	Thu, 30 Jan 2025 14:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BBE1E522;
+	Thu, 30 Jan 2025 14:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246946; cv=none; b=iqzJDQYXuG5tSqzUAVYkQTDpx2NiK/pCW506Q4e6VYrZy283XBGofw2Kx7zbQzE3wwiN4RnNpY/apVaV6Q+ya9Yqoy/4pQwwmuMNsYqDev7zqsPVTJHz7nbAkHykl5VKLOWjBjTRdwopaTDhtT5FGiQlRuQZxItud2jRS5JQ8FE=
+	t=1738246949; cv=none; b=ND1pSI8ybWw3ptfU2DUDjtmIdAioXOknau6+NrGCsRk7VPtpKeAyExvAYYlEzdhGz2os6o1TmoRjT482K6Afd4I3OpZ0RjRKS9HD6XiRpFfAKE0pUivCQgAvf6NK1O96y7LaGM5Xo/ilXGZ+ttpkzEr6Hi3a3nDZAf2gq3cKMM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246946; c=relaxed/simple;
-	bh=efKWKMNkTg+rMGcJYCBICdJuWB56Gm0Fa4GLWoOyNR8=;
+	s=arc-20240116; t=1738246949; c=relaxed/simple;
+	bh=q1IsPQAsihT/gpOWocAL95ps0BlEsvWDTnFDJJp3CvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djFTLb3LAu5I31nbo8648KqH1ZhkOKlFwKPffcvDF40h0UEFcOfE3iCmRt6K/nIfcyhU2Sht28KnpoeTAMV7trYNzvkWcjsaqHRYMM9YiQd5OMIxpZeAscyS7XOqpR6MsAsNxI1IJ+np86xFW953OunqRJuu+SH5GEeQiklLeYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t15g+U38; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YuZW5SGc7I2kJF9PrZOgPjbIIK6mnd4LrGZsRV6o2wdGFAhjLGhpuQt5lTUM9oCJKUzDWJ97p87cyoC21FYCDjwP+i9k+C/jBKxnZ4YW6fT4zdfz6zrfE5ppZGsx6irAPXuG/gWo0O8OUEHF0DIIp9qgVuzY60KiZErJNj0c0lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtJKTBcc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t15g+U38"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD94DC4CED2;
-	Thu, 30 Jan 2025 14:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtJKTBcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968C8C4CED2;
+	Thu, 30 Jan 2025 14:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246946;
-	bh=efKWKMNkTg+rMGcJYCBICdJuWB56Gm0Fa4GLWoOyNR8=;
+	s=korg; t=1738246949;
+	bh=q1IsPQAsihT/gpOWocAL95ps0BlEsvWDTnFDJJp3CvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t15g+U38XrYurv09dVV47lVISpJvPcjS9AfkXm6OeQVeOQF9jDmrWZVcyspvp/zsU
-	 4NJa15cS1HeSokCDEsO3XK8P5r9cYn6CD1Fhn/vwqtiDuCX2fUZ4/uj7HErNEV8Awa
-	 oFUwJIDPOmsdkOufHYAhXV81Ytug0Pm+PZvIy4ts=
+	b=mtJKTBcc8NZPX/RiP3j+tULQOu3o717ArkTagUFtT58h1CkxAiYCWs30IBCmlDiu+
+	 +p8nukrOrImFOfEnWZMfGmDkLaFXHZOqLpto7VML4qu0hsd3bS/yMt52imgks6rwel
+	 qsPnw/Yicl4VEGiDEmpibjhmdx++sxpJLhZWiy14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joe Thornber <thornber@redhat.com>,
 	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/133] dm array: fix releasing a faulty array block twice in dm_array_cursor_end
-Date: Thu, 30 Jan 2025 14:59:52 +0100
-Message-ID: <20250130140142.635529570@linuxfoundation.org>
+Subject: [PATCH 5.10 004/133] dm array: fix unreleased btree blocks on closing a faulty array cursor
+Date: Thu, 30 Jan 2025 14:59:53 +0100
+Message-ID: <20250130140142.674546483@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -54,59 +54,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Ming-Hung Tsai <mtsai@redhat.com>
 
-[ Upstream commit f2893c0804d86230ffb8f1c8703fdbb18648abc8 ]
+[ Upstream commit 626f128ee9c4133b1cfce4be2b34a1508949370e ]
 
-When dm_bm_read_lock() fails due to locking or checksum errors, it
-releases the faulty block implicitly while leaving an invalid output
-pointer behind. The caller of dm_bm_read_lock() should not operate on
-this invalid dm_block pointer, or it will lead to undefined result.
-For example, the dm_array_cursor incorrectly caches the invalid pointer
-on reading a faulty array block, causing a double release in
-dm_array_cursor_end(), then hitting the BUG_ON in dm-bufio cache_put().
+The cached block pointer in dm_array_cursor might be NULL if it reaches
+an unreadable array block, or the array is empty. Therefore,
+dm_array_cursor_end() should call dm_btree_cursor_end() unconditionally,
+to prevent leaving unreleased btree blocks.
 
-Reproduce steps:
-
-1. initialize a cache device
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
-dmsetup create corig --table "0 524288 linear /dev/sdc $262144"
-dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1
-dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-
-2. wipe the second array block offline
-
-dmsteup remove cache cmeta cdata corig
-mapping_root=$(dd if=/dev/sdc bs=1c count=8 skip=192 \
-2>/dev/null | hexdump -e '1/8 "%u\n"')
-ablock=$(dd if=/dev/sdc bs=1c count=8 skip=$((4096*mapping_root+2056)) \
-2>/dev/null | hexdump -e '1/8 "%u\n"')
-dd if=/dev/zero of=/dev/sdc bs=4k count=1 seek=$ablock
-
-3. try reopen the cache device
-
-dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
-dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
-dmsetup create corig --table "0 524288 linear /dev/sdc $262144"
-dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
-/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
-
-Kernel logs:
-
-(snip)
-device-mapper: array: array_block_check failed: blocknr 0 != wanted 10
-device-mapper: block manager: array validator check failed for block 10
-device-mapper: array: get_ablock failed
-device-mapper: cache metadata: dm_array_cursor_next for mapping failed
-------------[ cut here ]------------
-kernel BUG at drivers/md/dm-bufio.c:638!
-
-Fix by setting the cached block pointer to NULL on errors.
-
-In addition to the reproducer described above, this fix can be
-verified using the "array_cursor/damaged" test in dm-unit:
-  dm-unit run /pdata/array_cursor/damaged --kernel-dir <KERNEL_DIR>
+This fix can be verified using the "array_cursor/iterate/empty" test
+in dm-unit:
+  dm-unit run /pdata/array_cursor/iterate/empty --kernel-dir <KERNEL_DIR>
 
 Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
 Fixes: fdd1315aa5f0 ("dm array: introduce cursor api")
@@ -114,44 +71,26 @@ Reviewed-by: Joe Thornber <thornber@redhat.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/persistent-data/dm-array.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/md/persistent-data/dm-array.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/md/persistent-data/dm-array.c b/drivers/md/persistent-data/dm-array.c
-index 185dc60360b5..849eb1b97c43 100644
+index 849eb1b97c43..f97de343a398 100644
 --- a/drivers/md/persistent-data/dm-array.c
 +++ b/drivers/md/persistent-data/dm-array.c
-@@ -907,23 +907,27 @@ static int load_ablock(struct dm_array_cursor *c)
- 	if (c->block)
+@@ -950,10 +950,10 @@ EXPORT_SYMBOL_GPL(dm_array_cursor_begin);
+ 
+ void dm_array_cursor_end(struct dm_array_cursor *c)
+ {
+-	if (c->block) {
++	if (c->block)
  		unlock_ablock(c->info, c->block);
- 
--	c->block = NULL;
--	c->ab = NULL;
- 	c->index = 0;
- 
- 	r = dm_btree_cursor_get_value(&c->cursor, &key, &value_le);
- 	if (r) {
- 		DMERR("dm_btree_cursor_get_value failed");
 -		dm_btree_cursor_end(&c->cursor);
-+		goto out;
- 
- 	} else {
- 		r = get_ablock(c->info, le64_to_cpu(value_le), &c->block, &c->ab);
- 		if (r) {
- 			DMERR("get_ablock failed");
--			dm_btree_cursor_end(&c->cursor);
-+			goto out;
- 		}
- 	}
- 
-+	return 0;
+-	}
 +
-+out:
 +	dm_btree_cursor_end(&c->cursor);
-+	c->block = NULL;
-+	c->ab = NULL;
- 	return r;
  }
+ EXPORT_SYMBOL_GPL(dm_array_cursor_end);
  
 -- 
 2.39.5
