@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBAA1E6DCF;
-	Thu, 30 Jan 2025 14:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2900C1E522;
+	Thu, 30 Jan 2025 14:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247189; cv=none; b=n4eYxv08tHNgINLT9XuyCN5sX0vytfEWIR4HrvuGUZ9TyW/w5/FtG6T8EWj7dWdNQ9JbP8Tvmi8FNzLyTiVmnyU++OEqP5TsVkjXafmrTKws7upE/YtXBqddZKjhYweAO8CxioCSp9zAxjRQQtD90p879X6+XtVbk20EM2K9LJs=
+	t=1738247192; cv=none; b=iED/d6iET4j64wkPslvzqatUW9x5GZaSfZs4MGseqWn1wfYkUwhHCvGlc1qIfbXFwPrCntI/kDZhedci6XEGpdE3kMvY79f5o2MYlPhB/UaGdtOgP2a52oqpjs80USaBYe1zXYYjxssmaH2tUwP+kcHqnq4HM73GfmuepMAqKb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247189; c=relaxed/simple;
-	bh=Jtq+P5jKQVDJKAQWUI9/SNXGvcFLFn5B668jWcaboxk=;
+	s=arc-20240116; t=1738247192; c=relaxed/simple;
+	bh=P9JOufGnYVwfwba3QyNh765ejfMewHcW2532r1eYiBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBQs8ksKWLE295n0fkU6gc5aDZd/lwgcKk82KH2RfzYWvaQGM+xKG33hmezlXY1UiWOwlbX/NF8kzhab81Un+tnMQttmRxAJwM87Fh6oTVtIdE/D/Nn83D4z4aB5CxgZENB3/XJgnLGrO9oTjySuZMsu2ne39HahC0bOZ4ZQYMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoP9FMvV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eogrC7VEJivyIKTrAMLKV4EAw8bufC0tJ4zuIe7JdtmQj0nDl0vl35Y8AD1edcuK0wv6hxQFkBOsYX3P1IN1zazfWcme4r49iURHWllwZgtJJ/wt7MyDgh15FIguI8gBeQGoj11tGsemtAnS3eGf+fMp29k8Ifc2deFoixU2Ax4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf2OoBVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoP9FMvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD258C4CED2;
-	Thu, 30 Jan 2025 14:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf2OoBVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1CCC4CED2;
+	Thu, 30 Jan 2025 14:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247189;
-	bh=Jtq+P5jKQVDJKAQWUI9/SNXGvcFLFn5B668jWcaboxk=;
+	s=korg; t=1738247192;
+	bh=P9JOufGnYVwfwba3QyNh765ejfMewHcW2532r1eYiBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AoP9FMvVRL/I5DZWaxG/IIAYl1RYcR0x/GpfWZ10BlSpGTJ3B8A2Wmm/gi8McOL+M
-	 4zOA0IK29HBFqWqhVbKtLUUnUT+KZjubWdfZEZ+Pysxjr5DGnVrDWiBeWjxhKHIR10
-	 jVZz5zimylJUMVVEf2pRyyNs+iCzbAgAgVh6VdHU=
+	b=nf2OoBVlu6t5qKqOclsl4TgRXca18lzNNn8hRVYM2qZ0FNzU6PXffbJbLThX84goV
+	 plsBVA/L0n5FcJi2g5nkKLq9F6IHsbtJIsdrm6ckAcCUbTxqlK/6dfkb2LR3cNrKj2
+	 Vu2PZOLtUWscgKjpqoIOKhB3rqaMctXzCStJh3Cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com,
-	Suraj Sonawane <surajsonawane0215@gmail.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	BRUNO VERNAY <bruno.vernay@se.com>,
+	Zhongqiu Han <quic_zhonhan@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Bruno VERNAY <bruno.vernay@se.com>,
 	Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
-Subject: [PATCH 5.10 113/133] scsi: sg: Fix slab-use-after-free read in sg_release()
-Date: Thu, 30 Jan 2025 15:01:42 +0100
-Message-ID: <20250130140147.082961793@linuxfoundation.org>
+Subject: [PATCH 5.10 096/133] gpiolib: cdev: Fix use after free in lineinfo_changed_notify
+Date: Thu, 30 Jan 2025 15:01:25 +0100
+Message-ID: <20250130140146.394623527@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -54,74 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Sonawane <surajsonawane0215@gmail.com>
+From: Zhongqiu Han <quic_zhonhan@quicinc.com>
 
-commit f10593ad9bc36921f623361c9e3dd96bd52d85ee upstream.
+commit 02f6b0e1ec7e0e7d059dddc893645816552039da upstream.
 
-Fix a use-after-free bug in sg_release(), detected by syzbot with KASAN:
+The use-after-free issue occurs as follows: when the GPIO chip device file
+is being closed by invoking gpio_chrdev_release(), watched_lines is freed
+by bitmap_free(), but the unregistration of lineinfo_changed_nb notifier
+chain failed due to waiting write rwsem. Additionally, one of the GPIO
+chip's lines is also in the release process and holds the notifier chain's
+read rwsem. Consequently, a race condition leads to the use-after-free of
+watched_lines.
 
-BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30
-kernel/locking/lockdep.c:5838
-__mutex_unlock_slowpath+0xe2/0x750 kernel/locking/mutex.c:912
-sg_release+0x1f4/0x2e0 drivers/scsi/sg.c:407
+Here is the typical stack when issue happened:
 
-In sg_release(), the function kref_put(&sfp->f_ref, sg_remove_sfp) is
-called before releasing the open_rel_lock mutex. The kref_put() call may
-decrement the reference count of sfp to zero, triggering its cleanup
-through sg_remove_sfp(). This cleanup includes scheduling deferred work
-via sg_remove_sfp_usercontext(), which ultimately frees sfp.
+[free]
+gpio_chrdev_release()
+  --> bitmap_free(cdev->watched_lines)                  <-- freed
+  --> blocking_notifier_chain_unregister()
+    --> down_write(&nh->rwsem)                          <-- waiting rwsem
+          --> __down_write_common()
+            --> rwsem_down_write_slowpath()
+                  --> schedule_preempt_disabled()
+                    --> schedule()
 
-After kref_put(), sg_release() continues to unlock open_rel_lock and may
-reference sfp or sdp. If sfp has already been freed, this results in a
-slab-use-after-free error.
+[use]
+st54spi_gpio_dev_release()
+  --> gpio_free()
+    --> gpiod_free()
+      --> gpiod_free_commit()
+        --> gpiod_line_state_notify()
+          --> blocking_notifier_call_chain()
+            --> down_read(&nh->rwsem);                  <-- held rwsem
+            --> notifier_call_chain()
+              --> lineinfo_changed_notify()
+                --> test_bit(xxxx, cdev->watched_lines) <-- use after free
 
-Move the kref_put(&sfp->f_ref, sg_remove_sfp) call after unlocking the
-open_rel_lock mutex. This ensures:
+The side effect of the use-after-free issue is that a GPIO line event is
+being generated for userspace where it shouldn't. However, since the chrdev
+is being closed, userspace won't have the chance to read that event anyway.
 
- - No references to sfp or sdp occur after the reference count is
-   decremented.
+To fix the issue, call the bitmap_free() function after the unregistration
+of lineinfo_changed_nb notifier chain.
 
- - Cleanup functions such as sg_remove_sfp() and
-   sg_remove_sfp_usercontext() can safely execute without impacting the
-   mutex handling in sg_release().
-
-The fix has been tested and validated by syzbot. This patch closes the
-bug reported at the following syzkaller link and ensures proper
-sequencing of resource cleanup and mutex operations, eliminating the
-risk of use-after-free errors in sg_release().
-
-Reported-by: syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7efb5850a17ba6ce098b
-Tested-by: syzbot+7efb5850a17ba6ce098b@syzkaller.appspotmail.com
-Fixes: cc833acbee9d ("sg: O_EXCL and other lock handling")
-Signed-off-by: Suraj Sonawane <surajsonawane0215@gmail.com>
-Link: https://lore.kernel.org/r/20241120125944.88095-1-surajsonawane0215@gmail.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: BRUNO VERNAY <bruno.vernay@se.com>
+Fixes: 51c1064e82e7 ("gpiolib: add new ioctl() for monitoring changes in line info")
+Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
+Link: https://lore.kernel.org/r/20240505141156.2944912-1-quic_zhonhan@quicinc.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Bruno VERNAY <bruno.vernay@se.com>
 Signed-off-by: Hugo SIMELIERE <hsimeliere.opensource@witekio.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c |    2 +-
+ drivers/gpio/gpiolib-cdev.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -390,7 +390,6 @@ sg_release(struct inode *inode, struct f
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2352,9 +2352,9 @@ static int gpio_chrdev_release(struct in
+ 	struct gpio_chardev_data *cdev = file->private_data;
+ 	struct gpio_device *gdev = cdev->gdev;
  
- 	mutex_lock(&sdp->open_rel_lock);
- 	scsi_autopm_put_device(sdp->device);
--	kref_put(&sfp->f_ref, sg_remove_sfp);
- 	sdp->open_cnt--;
- 
- 	/* possibly many open()s waiting on exlude clearing, start many;
-@@ -402,6 +401,7 @@ sg_release(struct inode *inode, struct f
- 		wake_up_interruptible(&sdp->open_wait);
- 	}
- 	mutex_unlock(&sdp->open_rel_lock);
-+	kref_put(&sfp->f_ref, sg_remove_sfp);
- 	return 0;
- }
+-	bitmap_free(cdev->watched_lines);
+ 	blocking_notifier_chain_unregister(&gdev->notifier,
+ 					   &cdev->lineinfo_changed_nb);
++	bitmap_free(cdev->watched_lines);
+ 	put_device(&gdev->dev);
+ 	kfree(cdev);
  
 
 
