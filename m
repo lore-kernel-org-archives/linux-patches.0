@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C281E522;
-	Thu, 30 Jan 2025 14:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BE91DDC22;
+	Thu, 30 Jan 2025 14:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247098; cv=none; b=EPE3afEkI3Q+B6egbjU42W+UApfUwiKmqcT4UpcesBb50AtLCIwr1PK3RgtJVY1kJhbwXzucf+2aisKOgTazYDcjPxsAgQQ9hL9HPw+P9eTa9Ki+AtZSf1xbGD4cIi1CY4ICiNUQGUju8s1UdelfzEjBWBpT3+CfuRp5k4DTgRg=
+	t=1738247101; cv=none; b=gjyWJ/OU4aidjyfqXqU5Yarx5LSE12wmd9iTxNOi42UGI+vD3k5pP1y9GQljUXTjB+qBOm1BPugZMN5RZdiEwihHG97t8pqAsPW4CvSoiA9Wk5vlF9hljdlF801X0KprKgTZeEgjPy7wYVD8UUf5H8Rvzd6GdxuqtBSX62nhKjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247098; c=relaxed/simple;
-	bh=mVpKx64Hv7VDivFnXEX4sujzREahTM6d4cd9OUeyt3k=;
+	s=arc-20240116; t=1738247101; c=relaxed/simple;
+	bh=nPfpUEhEMbgAeaadhogWbOXiIDD52axYu1AXQpHIEOU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3GcILqcm9w/kin/HNQVXwmTzeZJvWS82kmdNplx1Vwz8C447EszBrIkKF/+4Driv7wbVhrx8Vbrnfwp4fkWgooMRcBih5EIleovAz+Q1ObIWJEfneNdWGIIQvk+25PgyGPT/J208cB7VBsB3qdc3H7sljGehMHwyVQu/ztpmj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/4VQFHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=peR49Qr5o3RIN+rFdUx5PEnrYdsTWwU1B28hT+tsMk/08PQRQz4PMC+SC6xeSoEUY1jxXhq3bmupphHKt7kbWANvknGGxuW4KMdX9oYafcegaggALQuYLyzNHEL7eXEX7mY9/6uS7ypvjnAUCWl+vQlLqRsGKZ1ucXbRwhdctGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LJctpbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/4VQFHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19F3C4CED2;
-	Thu, 30 Jan 2025 14:24:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LJctpbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70BFC4CED2;
+	Thu, 30 Jan 2025 14:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247098;
-	bh=mVpKx64Hv7VDivFnXEX4sujzREahTM6d4cd9OUeyt3k=;
+	s=korg; t=1738247101;
+	bh=nPfpUEhEMbgAeaadhogWbOXiIDD52axYu1AXQpHIEOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/4VQFHOfdeaqdziHe+w9Wp8wMvpTKGR44vZzfOZiy8i4MOOAknjtO2bVymszJWWl
-	 Ro4QnfioWRygwUwXmxnsjnb4MLG5iR5BfeY+Ymp5KNG/KwgJjzO4ysv5o1Cl7x5nL2
-	 F8z2Sg01F+Hxdk/rHR3z2X9AaS06TYQVXiJ2Yd7I=
+	b=2LJctpbpHhebXtx6eaDdHIC4v/Pvf9u8v+dWwsnpUdCxFDHcp8lPbTjx7yf4RBfW3
+	 JgwRe7JLjJGdDed+CSy42Z0wGxQTxXnvycHgA02VBdZC1UPBFgnZFoLxsZvL+Rwint
+	 4cn4BWfAuvaR86FnNER8O32xgwQajCC7/wlfOpWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Ravnborg <sam@ravnborg.org>,
-	John Stultz <john.stultz@linaro.org>,
-	Maxime Ripard <maxime@cerno.tech>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/133] drm/bridge: adv7533: Switch to devm MIPI-DSI helpers
-Date: Thu, 30 Jan 2025 15:00:53 +0100
-Message-ID: <20250130140145.095394956@linuxfoundation.org>
+Subject: [PATCH 5.10 082/133] drm/v3d: Ensure job pointer is set to NULL after job completion
+Date: Thu, 30 Jan 2025 15:01:11 +0100
+Message-ID: <20250130140145.823285670@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -46,102 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit ee9418808bcce77e2c31dbbfc58621ea99a05597 ]
+[ Upstream commit e4b5ccd392b92300a2b341705cc4805681094e49 ]
 
-Let's switch to the new devm MIPI-DSI function to register and attach
-our secondary device. This also avoids leaking the device when we detach
-the bridge.
+After a job completes, the corresponding pointer in the device must
+be set to NULL. Failing to do so triggers a warning when unloading
+the driver, as it appears the job is still active. To prevent this,
+assign the job pointer to NULL after completing the job, indicating
+the job has finished.
 
-Acked-by: Sam Ravnborg <sam@ravnborg.org>
-Tested-by: John Stultz <john.stultz@linaro.org>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211025151536.1048186-2-maxime@cerno.tech
-Stable-dep-of: 81adbd3ff21c ("drm: adv7511: Fix use-after-free in adv7533_attach_dsi()")
+Fixes: 14d1d1908696 ("drm/v3d: Remove the bad signaled() implementation.")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250113154741.67520-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511.h     |  1 -
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |  2 --
- drivers/gpu/drm/bridge/adv7511/adv7533.c     | 20 ++++----------------
- 3 files changed, 4 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/v3d/v3d_irq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511.h b/drivers/gpu/drm/bridge/adv7511/adv7511.h
-index e95abeb64b93..dcb792adc62c 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511.h
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511.h
-@@ -399,7 +399,6 @@ enum drm_mode_status adv7533_mode_valid(struct adv7511 *adv,
- int adv7533_patch_registers(struct adv7511 *adv);
- int adv7533_patch_cec_registers(struct adv7511 *adv);
- int adv7533_attach_dsi(struct adv7511 *adv);
--void adv7533_detach_dsi(struct adv7511 *adv);
- int adv7533_parse_dt(struct device_node *np, struct adv7511 *adv);
+diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
+index c88686489b888..22aa02d75c5cc 100644
+--- a/drivers/gpu/drm/v3d/v3d_irq.c
++++ b/drivers/gpu/drm/v3d/v3d_irq.c
+@@ -103,6 +103,7 @@ v3d_irq(int irq, void *arg)
  
- #ifdef CONFIG_DRM_I2C_ADV7511_AUDIO
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-index 60400efe1dd3..42d93f314699 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-@@ -1339,8 +1339,6 @@ static int adv7511_remove(struct i2c_client *i2c)
- {
- 	struct adv7511 *adv7511 = i2c_get_clientdata(i2c);
- 
--	if (adv7511->type == ADV7533 || adv7511->type == ADV7535)
--		adv7533_detach_dsi(adv7511);
- 	i2c_unregister_device(adv7511->i2c_cec);
- 	clk_disable_unprepare(adv7511->cec_clk);
- 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-index 2cade7ae0c0d..ec624b9d5077 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -151,11 +151,10 @@ int adv7533_attach_dsi(struct adv7511 *adv)
- 		return -EPROBE_DEFER;
+ 		trace_v3d_bcl_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->bin_job = NULL;
+ 		status = IRQ_HANDLED;
  	}
  
--	dsi = mipi_dsi_device_register_full(host, &info);
-+	dsi = devm_mipi_dsi_device_register_full(dev, host, &info);
- 	if (IS_ERR(dsi)) {
- 		dev_err(dev, "failed to create dsi device\n");
--		ret = PTR_ERR(dsi);
--		goto err_dsi_device;
-+		return PTR_ERR(dsi);
+@@ -112,6 +113,7 @@ v3d_irq(int irq, void *arg)
+ 
+ 		trace_v3d_rcl_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->render_job = NULL;
+ 		status = IRQ_HANDLED;
  	}
  
- 	adv->dsi = dsi;
-@@ -165,24 +164,13 @@ int adv7533_attach_dsi(struct adv7511 *adv)
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
- 			  MIPI_DSI_MODE_EOT_PACKET | MIPI_DSI_MODE_VIDEO_HSE;
+@@ -121,6 +123,7 @@ v3d_irq(int irq, void *arg)
  
--	ret = mipi_dsi_attach(dsi);
-+	ret = devm_mipi_dsi_attach(dev, dsi);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to attach dsi to host\n");
--		goto err_dsi_attach;
-+		return ret;
+ 		trace_v3d_csd_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->csd_job = NULL;
+ 		status = IRQ_HANDLED;
  	}
  
- 	return 0;
--
--err_dsi_attach:
--	mipi_dsi_device_unregister(dsi);
--err_dsi_device:
--	return ret;
--}
--
--void adv7533_detach_dsi(struct adv7511 *adv)
--{
--	mipi_dsi_detach(adv->dsi);
--	mipi_dsi_device_unregister(adv->dsi);
- }
+@@ -157,6 +160,7 @@ v3d_hub_irq(int irq, void *arg)
  
- int adv7533_parse_dt(struct device_node *np, struct adv7511 *adv)
+ 		trace_v3d_tfu_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->tfu_job = NULL;
+ 		status = IRQ_HANDLED;
+ 	}
+ 
 -- 
 2.39.5
 
