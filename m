@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB7C1DDC22;
-	Thu, 30 Jan 2025 14:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E382B1E7C25;
+	Thu, 30 Jan 2025 14:24:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247063; cv=none; b=Paf8BcSoCUHbdSkIuwsSGll8fMYmAAagZIpzERRYdTKoidO1c11FtyuObB3QWNWBmTCH8LZK4Chy7l+mI4Jg9wtnL5muO+qZ7aJkbKb6DjhNE18YIzcr4/VwHB31Yr6KNEQ1bE/Du2KoHR2+8KXeipiw3HigNlIRYc5GG50Dm9s=
+	t=1738247067; cv=none; b=rXQ4X5UoK84UUJ5jTSB0Z9wAlg6EgJD/fNp3HaT/uGBHd7o/n4prCs4fepgTxko+ZLE8tAaQQkzBnYnc4/QRMudxRTIuXkigca4O4HWToBYY8OMpOKUu6AgpWEdVJz0l+9+6hOzUNYajEFxA9yr1HTKP9yl9t60lsdaQmEs2p08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247063; c=relaxed/simple;
-	bh=0n9FiblZ5ElYa7taYtutX6zNwWFyVoiHlCqTRe/r7d8=;
+	s=arc-20240116; t=1738247067; c=relaxed/simple;
+	bh=PggC1I/mMTVKyrVKgKjf6qD/ACyOswhL3vW9yTra5Dc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uz7hpLff+yexXqfBf+iii2ZsLkjtioyG29GGnNzeSWgKszGBK2hQbqww8a1ZJn/lwPwp4/tmi5BEKgV4DuXUCV29hgK1gaf6UqUl7LlWG5HNdYJHN+V82uxNnrHX2A52VQDgBVvwHwQSKNe/4Ki+7+S/gi+hSsVdDZJG6htdrZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G/wbWht9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avysYkxAM35n8wQV/37C1tGInDXdkqZzvle0mekBhdsflkm1/cWBAmLGhmqGxmGj33t3CIlmRW52D79wq+RcjYkDO8xbhjnYbCvyDBs5e94BH5YXHwOXCqJVdE51La+4rxC84LyauMDXrZB4lyYD0Pxa2hbIEm9vuCs6aajcoUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7rQ4Cbn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G/wbWht9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18102C4CED2;
-	Thu, 30 Jan 2025 14:24:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7rQ4Cbn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA82C4CED2;
+	Thu, 30 Jan 2025 14:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247063;
-	bh=0n9FiblZ5ElYa7taYtutX6zNwWFyVoiHlCqTRe/r7d8=;
+	s=korg; t=1738247066;
+	bh=PggC1I/mMTVKyrVKgKjf6qD/ACyOswhL3vW9yTra5Dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/wbWht98Cs8PG9q9QtURGi7xEMhukEu0dwH19RIUoTUF/SBCauEGBVBrO01uT/fE
-	 cell0siox5wR8anc/hlG1oPZFNbXKwJMkVw3ypIIzkw1rBPVInJDxLgo4qRM+PuErN
-	 MqKKS4D0H1IiQktgfFAZE7+G7pcDxxKmlXkqPM3k=
+	b=r7rQ4CbnTNpKnlaPoVwkfBvYU0GeZUxykJJA8iPh0wV5BF4HXkMMDEKT5vMMiL/kM
+	 qn2gx6+CT98K2ew/9m7Dvzd8oe4iGjgOWG+WhxZaz9LNWfqy0OaTtQMt26l5VEts0B
+	 W/WfTWIEUOXrOmBT9tv+U4oDxoWujQWtzrJQy8j0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <2045gemini@gmail.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 5.10 029/133] md/raid5: fix atomicity violation in raid5_cache_count
-Date: Thu, 30 Jan 2025 15:00:18 +0100
-Message-ID: <20250130140143.683914814@linuxfoundation.org>
+	Andrzej Hajda <a.hajda@samsung.com>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 063/133] drm/mipi-dsi: Create devm device attachment
+Date: Thu, 30 Jan 2025 15:00:52 +0100
+Message-ID: <20250130140145.053563613@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,114 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <2045gemini@gmail.com>
+From: Maxime Ripard <maxime@cerno.tech>
 
-commit dfd2bf436709b2bccb78c2dda550dde93700efa7 upstream.
+[ Upstream commit db6568498b35a4d5d5a99420df27ed25fae31406 ]
 
-In raid5_cache_count():
-    if (conf->max_nr_stripes < conf->min_nr_stripes)
-        return 0;
-    return conf->max_nr_stripes - conf->min_nr_stripes;
-The current check is ineffective, as the values could change immediately
-after being checked.
+MIPI-DSI devices need to call mipi_dsi_attach() when their probe is done
+to attach against their host.
 
-In raid5_set_cache_size():
-    ...
-    conf->min_nr_stripes = size;
-    ...
-    while (size > conf->max_nr_stripes)
-        conf->min_nr_stripes = conf->max_nr_stripes;
-    ...
+However, at removal or when an error occurs, that attachment needs to be
+undone through a call to mipi_dsi_detach().
 
-Due to intermediate value updates in raid5_set_cache_size(), concurrent
-execution of raid5_cache_count() and raid5_set_cache_size() may lead to
-inconsistent reads of conf->max_nr_stripes and conf->min_nr_stripes.
-The current checks are ineffective as values could change immediately
-after being checked, raising the risk of conf->min_nr_stripes exceeding
-conf->max_nr_stripes and potentially causing an integer overflow.
+Let's create a device-managed variant of the attachment function that
+will automatically detach the device at unbind.
 
-This possible bug is found by an experimental static analysis tool
-developed by our team. This tool analyzes the locking APIs to extract
-function pairs that can be concurrently executed, and then analyzes the
-instructions in the paired functions to identify possible concurrency bugs
-including data races and atomicity violations. The above possible bug is
-reported when our tool analyzes the source code of Linux 6.2.
-
-To resolve this issue, it is suggested to introduce local variables
-'min_stripes' and 'max_stripes' in raid5_cache_count() to ensure the
-values remain stable throughout the check. Adding locks in
-raid5_cache_count() fails to resolve atomicity violations, as
-raid5_set_cache_size() may hold intermediate values of
-conf->min_nr_stripes while unlocked. With this patch applied, our tool no
-longer reports the bug, with the kernel configuration allyesconfig for
-x86_64. Due to the lack of associated hardware, we cannot test the patch
-in runtime testing, and just verify it according to the code logic.
-
-Fixes: edbe83ab4c27 ("md/raid5: allow the stripe_cache to grow and shrink.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <2045gemini@gmail.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240112071017.16313-1-2045gemini@gmail.com
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210910101218.1632297-5-maxime@cerno.tech
+Stable-dep-of: 81adbd3ff21c ("drm: adv7511: Fix use-after-free in adv7533_attach_dsi()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_mipi_dsi.c | 35 ++++++++++++++++++++++++++++++++++
+ include/drm/drm_mipi_dsi.h     |  1 +
+ 2 files changed, 36 insertions(+)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -2349,7 +2349,7 @@ static int grow_one_stripe(struct r5conf
- 	atomic_inc(&conf->active_stripes);
- 
- 	raid5_release_stripe(sh);
--	conf->max_nr_stripes++;
-+	WRITE_ONCE(conf->max_nr_stripes, conf->max_nr_stripes + 1);
- 	return 1;
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index e53a5b14b47b..468a3a7cb6a5 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -405,6 +405,41 @@ int mipi_dsi_detach(struct mipi_dsi_device *dsi)
  }
+ EXPORT_SYMBOL(mipi_dsi_detach);
  
-@@ -2646,7 +2646,7 @@ static int drop_one_stripe(struct r5conf
- 	shrink_buffers(sh);
- 	free_stripe(conf->slab_cache, sh);
- 	atomic_dec(&conf->active_stripes);
--	conf->max_nr_stripes--;
-+	WRITE_ONCE(conf->max_nr_stripes, conf->max_nr_stripes - 1);
- 	return 1;
- }
- 
-@@ -6575,7 +6575,7 @@ raid5_set_cache_size(struct mddev *mddev
- 	if (size <= 16 || size > 32768)
- 		return -EINVAL;
- 
--	conf->min_nr_stripes = size;
-+	WRITE_ONCE(conf->min_nr_stripes, size);
- 	mutex_lock(&conf->cache_size_mutex);
- 	while (size < conf->max_nr_stripes &&
- 	       drop_one_stripe(conf))
-@@ -6587,7 +6587,7 @@ raid5_set_cache_size(struct mddev *mddev
- 	mutex_lock(&conf->cache_size_mutex);
- 	while (size > conf->max_nr_stripes)
- 		if (!grow_one_stripe(conf, GFP_KERNEL)) {
--			conf->min_nr_stripes = conf->max_nr_stripes;
-+			WRITE_ONCE(conf->min_nr_stripes, conf->max_nr_stripes);
- 			result = -ENOMEM;
- 			break;
- 		}
-@@ -7151,11 +7151,13 @@ static unsigned long raid5_cache_count(s
- 				       struct shrink_control *sc)
++static void devm_mipi_dsi_detach(void *arg)
++{
++	struct mipi_dsi_device *dsi = arg;
++
++	mipi_dsi_detach(dsi);
++}
++
++/**
++ * devm_mipi_dsi_attach - Attach a MIPI-DSI device to its DSI Host
++ * @dev: device to tie the MIPI-DSI device attachment lifetime to
++ * @dsi: DSI peripheral
++ *
++ * This is the managed version of mipi_dsi_attach() which automatically
++ * calls mipi_dsi_detach() when @dev is unbound.
++ *
++ * Returns:
++ * 0 on success, a negative error code on failure.
++ */
++int devm_mipi_dsi_attach(struct device *dev,
++			 struct mipi_dsi_device *dsi)
++{
++	int ret;
++
++	ret = mipi_dsi_attach(dsi);
++	if (ret)
++		return ret;
++
++	ret = devm_add_action_or_reset(dev, devm_mipi_dsi_detach, dsi);
++	if (ret)
++		return ret;
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(devm_mipi_dsi_attach);
++
+ static ssize_t mipi_dsi_device_transfer(struct mipi_dsi_device *dsi,
+ 					struct mipi_dsi_msg *msg)
  {
- 	struct r5conf *conf = container_of(shrink, struct r5conf, shrinker);
-+	int max_stripes = READ_ONCE(conf->max_nr_stripes);
-+	int min_stripes = READ_ONCE(conf->min_nr_stripes);
- 
--	if (conf->max_nr_stripes < conf->min_nr_stripes)
-+	if (max_stripes < min_stripes)
- 		/* unlikely, but not impossible */
- 		return 0;
--	return conf->max_nr_stripes - conf->min_nr_stripes;
-+	return max_stripes - min_stripes;
- }
- 
- static struct r5conf *setup_conf(struct mddev *mddev)
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index af8ed48749eb..75995f3f2099 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -230,6 +230,7 @@ devm_mipi_dsi_device_register_full(struct device *dev, struct mipi_dsi_host *hos
+ struct mipi_dsi_device *of_find_mipi_dsi_device_by_node(struct device_node *np);
+ int mipi_dsi_attach(struct mipi_dsi_device *dsi);
+ int mipi_dsi_detach(struct mipi_dsi_device *dsi);
++int devm_mipi_dsi_attach(struct device *dev, struct mipi_dsi_device *dsi);
+ int mipi_dsi_shutdown_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_turn_on_peripheral(struct mipi_dsi_device *dsi);
+ int mipi_dsi_set_maximum_return_packet_size(struct mipi_dsi_device *dsi,
+-- 
+2.39.5
+
 
 
