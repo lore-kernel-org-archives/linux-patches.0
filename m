@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452101E6DCF;
-	Thu, 30 Jan 2025 14:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8DE1DDC22;
+	Thu, 30 Jan 2025 14:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247069; cv=none; b=rMiy6wiDpXh3WOsu4QrmUp1h8Dqfu6pIvBd6waNKT7u1E75MYTpc1QPaBi1p8nfeNzMzXyW01O3FnvtHkBNPgaC5ra20gi1LpeQA6qk7CSDCSoS2zVamjTgLwoXpWnt5avysak/Y3Aly+ZDBKab+jd3+Bpd1vr2hoWmtzezbzmQ=
+	t=1738247072; cv=none; b=XkG4D+P2P4Dbx774reffMraNlSZA5ix2xK8JtiUF/DFEAcvfyZguZEGZtnsdVcngxPZIR62vIN/x3B7boDLz6D0qxjJlXZwKNXXdL5J4KC1IaGqi4C8ipqkW3fTOTY8u30DpVCukyC6jDsJ4HOpJloeCcLveJjp5Z/kjfgmjwYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247069; c=relaxed/simple;
-	bh=AnnWwZv72z3ghZj69XIMif2AhVqcIpKzIOgF3zqnTVg=;
+	s=arc-20240116; t=1738247072; c=relaxed/simple;
+	bh=l2HO871PnC/gMzUE6ioSzgQzMWFAm5EvTWNcKz+2g1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/WGmCz42X92eDLwOx82Js7ElBDqujR2pWPGB4aLyyO5UZq7Htom27edJbRzLqxnVv3KmaAMuQhxDehOVnaqq4VTKQpXrR4imlxVjPTiwUybcsouCylmtgnuu7Cqz/AEH/FmISfL7mC6Ni5Bi1hJEliP/w5815Ek3EtX3PVbK4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vLhgavI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CUdbDASeA2iKb6Wl8asrJ/fC9PtTZbObCDnZCcQShGxuEWzWx5d8J5jT2+5FvFhYjsC6aL5WFvQTtl5KC82MuvDlhfg+SmZPs77rl9LJ/PQoBrrpmGOG6GNAGxmszrjrRnVe8lH89VdTllCKSNQBtnWA2y4nEe1J8u2Vig30gzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBzjOwh1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vLhgavI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5567C4CED2;
-	Thu, 30 Jan 2025 14:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBzjOwh1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A986DC4CEE0;
+	Thu, 30 Jan 2025 14:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247069;
-	bh=AnnWwZv72z3ghZj69XIMif2AhVqcIpKzIOgF3zqnTVg=;
+	s=korg; t=1738247072;
+	bh=l2HO871PnC/gMzUE6ioSzgQzMWFAm5EvTWNcKz+2g1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vLhgavIuMAp8X7Eow+xFtzm5IrIRVzU/nDfaB0r58dUvfuAV2gHgNP1LobQu6oc4
-	 ytF1uw000HLViL9LurrHdaP3pVaNR80tqDDqhBz4asMUUr+20WlDdJlsZRACUG2k5R
-	 mJJq3pgA0EaRFJYzY7/P01PiRcBMsROjDVtviRv4=
+	b=XBzjOwh1gYYGNmxMq9yCaDpik0iYiOnX/VtMbUHTJP0wW9z5kJsGVkq8xP2ZDeJBU
+	 djSKLzXNy7Fac8PlEtHiuaJlaMCPQwl7r/3mWg75pnM1Z/MfdwckosHV/o7Lqp4V31
+	 W1h3+tE8vi1bRPSJiI4ezU9kVx3f2vi4cIqPnhPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 072/133] bpf: Fix bpf_sk_select_reuseport() memory leak
-Date: Thu, 30 Jan 2025 15:01:01 +0100
-Message-ID: <20250130140145.417685513@linuxfoundation.org>
+Subject: [PATCH 5.10 073/133] net: net_namespace: Optimize the code
+Date: Thu, 30 Jan 2025 15:01:02 +0100
+Message-ID: <20250130140145.455758822@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -52,110 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit b3af60928ab9129befa65e6df0310d27300942bf ]
+[ Upstream commit 41467d2ff4dfe1837cbb0f45e2088e6e787580c6 ]
 
-As pointed out in the original comment, lookup in sockmap can return a TCP
-ESTABLISHED socket. Such TCP socket may have had SO_ATTACH_REUSEPORT_EBPF
-set before it was ESTABLISHED. In other words, a non-NULL sk_reuseport_cb
-does not imply a non-refcounted socket.
+There is only one caller for ops_free(), so inline it.
+Separate net_drop_ns() and net_free(), so the net_free()
+can be called directly.
+Add free_exit_list() helper function for free net_exit_list.
 
-Drop sk's reference in both error paths.
+====================
+v2:
+ - v1 does not apply, rebase it.
+====================
 
-unreferenced object 0xffff888101911800 (size 2048):
-  comm "test_progs", pid 44109, jiffies 4297131437
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    80 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace (crc 9336483b):
-    __kmalloc_noprof+0x3bf/0x560
-    __reuseport_alloc+0x1d/0x40
-    reuseport_alloc+0xca/0x150
-    reuseport_attach_prog+0x87/0x140
-    sk_reuseport_attach_bpf+0xc8/0x100
-    sk_setsockopt+0x1181/0x1990
-    do_sock_setsockopt+0x12b/0x160
-    __sys_setsockopt+0x7b/0xc0
-    __x64_sys_setsockopt+0x1b/0x30
-    do_syscall_64+0x93/0x180
-    entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Fixes: 64d85290d79c ("bpf: Allow bpf_map_lookup_elem for SOCKMAP and SOCKHASH")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250110-reuseport-memleak-v1-1-fa1ddab0adfe@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 46841c7053e6 ("gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ net/core/net_namespace.c | 52 +++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 28 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index b80203274d3fc..d9f4d98acc45b 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -10016,6 +10016,7 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 	bool is_sockarray = map->map_type == BPF_MAP_TYPE_REUSEPORT_SOCKARRAY;
- 	struct sock_reuseport *reuse;
- 	struct sock *selected_sk;
-+	int err;
- 
- 	selected_sk = map->ops->map_lookup_elem(map, key);
- 	if (!selected_sk)
-@@ -10023,10 +10024,6 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 
- 	reuse = rcu_dereference(selected_sk->sk_reuseport_cb);
- 	if (!reuse) {
--		/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
--		if (sk_is_refcounted(selected_sk))
--			sock_put(selected_sk);
--
- 		/* reuseport_array has only sk with non NULL sk_reuseport_cb.
- 		 * The only (!reuse) case here is - the sk has already been
- 		 * unhashed (e.g. by close()), so treat it as -ENOENT.
-@@ -10034,24 +10031,33 @@ BPF_CALL_4(sk_select_reuseport, struct sk_reuseport_kern *, reuse_kern,
- 		 * Other maps (e.g. sock_map) do not provide this guarantee and
- 		 * the sk may never be in the reuseport group to begin with.
- 		 */
--		return is_sockarray ? -ENOENT : -EINVAL;
-+		err = is_sockarray ? -ENOENT : -EINVAL;
-+		goto error;
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index 6192a05ebcce2..ef19a0eaa55aa 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -113,7 +113,7 @@ static int net_assign_generic(struct net *net, unsigned int id, void *data)
  	}
  
- 	if (unlikely(reuse->reuseport_id != reuse_kern->reuseport_id)) {
- 		struct sock *sk = reuse_kern->sk;
+ 	ng = net_alloc_generic();
+-	if (ng == NULL)
++	if (!ng)
+ 		return -ENOMEM;
  
--		if (sk->sk_protocol != selected_sk->sk_protocol)
--			return -EPROTOTYPE;
--		else if (sk->sk_family != selected_sk->sk_family)
--			return -EAFNOSUPPORT;
--
--		/* Catch all. Likely bound to a different sockaddr. */
--		return -EBADFD;
-+		if (sk->sk_protocol != selected_sk->sk_protocol) {
-+			err = -EPROTOTYPE;
-+		} else if (sk->sk_family != selected_sk->sk_family) {
-+			err = -EAFNOSUPPORT;
-+		} else {
-+			/* Catch all. Likely bound to a different sockaddr. */
-+			err = -EBADFD;
-+		}
-+		goto error;
- 	}
- 
- 	reuse_kern->selected_sk = selected_sk;
- 
- 	return 0;
-+error:
-+	/* Lookup in sock_map can return TCP ESTABLISHED sockets. */
-+	if (sk_is_refcounted(selected_sk))
-+		sock_put(selected_sk);
-+
-+	return err;
+ 	/*
+@@ -170,13 +170,6 @@ static int ops_init(const struct pernet_operations *ops, struct net *net)
+ 	return err;
  }
  
- static const struct bpf_func_proto sk_select_reuseport_proto = {
+-static void ops_free(const struct pernet_operations *ops, struct net *net)
+-{
+-	if (ops->id && ops->size) {
+-		kfree(net_generic(net, *ops->id));
+-	}
+-}
+-
+ static void ops_pre_exit_list(const struct pernet_operations *ops,
+ 			      struct list_head *net_exit_list)
+ {
+@@ -208,7 +201,7 @@ static void ops_free_list(const struct pernet_operations *ops,
+ 	struct net *net;
+ 	if (ops->size && ops->id) {
+ 		list_for_each_entry(net, net_exit_list, exit_list)
+-			ops_free(ops, net);
++			kfree(net_generic(net, *ops->id));
+ 	}
+ }
+ 
+@@ -454,15 +447,18 @@ static struct net *net_alloc(void)
+ 
+ static void net_free(struct net *net)
+ {
+-	kfree(rcu_access_pointer(net->gen));
+-	kmem_cache_free(net_cachep, net);
++	if (refcount_dec_and_test(&net->passive)) {
++		kfree(rcu_access_pointer(net->gen));
++		kmem_cache_free(net_cachep, net);
++	}
+ }
+ 
+ void net_drop_ns(void *p)
+ {
+-	struct net *ns = p;
+-	if (ns && refcount_dec_and_test(&ns->passive))
+-		net_free(ns);
++	struct net *net = (struct net *)p;
++
++	if (net)
++		net_free(net);
+ }
+ 
+ struct net *copy_net_ns(unsigned long flags,
+@@ -502,7 +498,7 @@ struct net *copy_net_ns(unsigned long flags,
+ 		key_remove_domain(net->key_domain);
+ #endif
+ 		put_user_ns(user_ns);
+-		net_drop_ns(net);
++		net_free(net);
+ dec_ucounts:
+ 		dec_net_namespaces(ucounts);
+ 		return ERR_PTR(rv);
+@@ -636,7 +632,7 @@ static void cleanup_net(struct work_struct *work)
+ 		key_remove_domain(net->key_domain);
+ #endif
+ 		put_user_ns(net->user_ns);
+-		net_drop_ns(net);
++		net_free(net);
+ 	}
+ }
+ 
+@@ -1160,6 +1156,14 @@ static int __init net_ns_init(void)
+ 
+ pure_initcall(net_ns_init);
+ 
++static void free_exit_list(struct pernet_operations *ops, struct list_head *net_exit_list)
++{
++	ops_pre_exit_list(ops, net_exit_list);
++	synchronize_rcu();
++	ops_exit_list(ops, net_exit_list);
++	ops_free_list(ops, net_exit_list);
++}
++
+ #ifdef CONFIG_NET_NS
+ static int __register_pernet_operations(struct list_head *list,
+ 					struct pernet_operations *ops)
+@@ -1185,10 +1189,7 @@ static int __register_pernet_operations(struct list_head *list,
+ out_undo:
+ 	/* If I have an error cleanup all namespaces I initialized */
+ 	list_del(&ops->list);
+-	ops_pre_exit_list(ops, &net_exit_list);
+-	synchronize_rcu();
+-	ops_exit_list(ops, &net_exit_list);
+-	ops_free_list(ops, &net_exit_list);
++	free_exit_list(ops, &net_exit_list);
+ 	return error;
+ }
+ 
+@@ -1201,10 +1202,8 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
+ 	/* See comment in __register_pernet_operations() */
+ 	for_each_net(net)
+ 		list_add_tail(&net->exit_list, &net_exit_list);
+-	ops_pre_exit_list(ops, &net_exit_list);
+-	synchronize_rcu();
+-	ops_exit_list(ops, &net_exit_list);
+-	ops_free_list(ops, &net_exit_list);
++
++	free_exit_list(ops, &net_exit_list);
+ }
+ 
+ #else
+@@ -1227,10 +1226,7 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
+ 	} else {
+ 		LIST_HEAD(net_exit_list);
+ 		list_add(&init_net.exit_list, &net_exit_list);
+-		ops_pre_exit_list(ops, &net_exit_list);
+-		synchronize_rcu();
+-		ops_exit_list(ops, &net_exit_list);
+-		ops_free_list(ops, &net_exit_list);
++		free_exit_list(ops, &net_exit_list);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
