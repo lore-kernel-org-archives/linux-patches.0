@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478DA1DDE9;
-	Thu, 30 Jan 2025 14:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB891DDE9;
+	Thu, 30 Jan 2025 14:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246694; cv=none; b=TR4SKe/UypRl/4mwR3/DbyKJ8U+EkBEd00RLXAseM6l4tljdRULY668rhlioOa1J34YJUCaHFrnQHKQeSldq2acZciIkfirlti1FzUG5kXPNjQsA6vOgm+J3/nSCgNbFh3sdbbPz8pEuZ0IOfIDU71qR8GgxoUPSHZqsrImP7Cs=
+	t=1738246697; cv=none; b=b4cIo0xf0eup4sI0YpXDZg8E42f1333T2eaGbobtErfV6bvo5asav6+z2dJfNeCXPRmMMtvhWSzYp/8i8Qo1U83y5GvMm121CPXbmnmHHaoUiJN1MD0G8/ng1Bxl69Bdm+olEAq9i6Hmoj7cTyFgcg3CQRUxZgm6bD01qD4qUyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246694; c=relaxed/simple;
-	bh=Tj+/OS6scBFUpajOe8gp97ZpSjpcR9RsjC+vGe9p19U=;
+	s=arc-20240116; t=1738246697; c=relaxed/simple;
+	bh=9DqfUMu/pCYX6O1xoMdJifKxXISFWgTVdVX1Ht3Oa1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cqngqDMUJomW1WpXs8D2OC9lU7D4KaGYMW/sSAww1GC1+AIq+7Oz4+tRTAKe4i9UyI65jR9i3VLGfwex5XNT3gGOx+657M35Gl3vXTfDm+F9Ad6nyFAE5UN988Pph9X0ePo8DtM9GTjNET3HYKfP59GANiPtU6wGhTzlRtVh3GE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJodVtxw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tej42fgINzE26h3EwBnL4RWZ2jOWNcFSjwjzSpRmUohqyCViA97iKzUXRYenFSYYd4AbI/2FrrlkJfQxO/jURT74i4H40TYLNt4J/pxZ/WJjXQHFg+iOOAiCSk3UDoQuGQ5Ppk6X6ZSCssweTJsL03rPH8jJRWXJGNHgcXY1qA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwRKtfiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJodVtxw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C474CC4CED2;
-	Thu, 30 Jan 2025 14:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwRKtfiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A93D7C4CED2;
+	Thu, 30 Jan 2025 14:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246694;
-	bh=Tj+/OS6scBFUpajOe8gp97ZpSjpcR9RsjC+vGe9p19U=;
+	s=korg; t=1738246697;
+	bh=9DqfUMu/pCYX6O1xoMdJifKxXISFWgTVdVX1Ht3Oa1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJodVtxwqQbgiYXxb/JrmUwKciXFbFQ4ZNkumy9oY+Y1lvIcRkynDJCZyC/0mQP6t
-	 UrL/AnHx08GttUc2y5jBLLguh7As5nE0OtHJYBo929aDId/mJeuhvuLlYvSq8ZSWKH
-	 rJivErxO55AD+yNknl5/PKFwWERVjKpPmyVivC4M=
+	b=xwRKtfiLhIFM3svhDT7hebq+DN93Cc+CfExFDheMmreGaUBDFZwMclnDq7OMC7UIh
+	 rEOLp8bJ8Asr2tKXp7w34gQGh75uvZHAQhKzpxj2joWMMX5bHQD0RTGBZSWb3p89QT
+	 W442mkMM0oEdITIVJ9xM+fQ2FtKBhuM8VatqR3Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Fabio Estevam <festevam@gmail.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 35/91] iio: adc: ti-ads124s08: Use gpiod_set_value_cansleep()
-Date: Thu, 30 Jan 2025 15:00:54 +0100
-Message-ID: <20250130140135.073637259@linuxfoundation.org>
+Subject: [PATCH 5.4 36/91] iio: adc: at91: call input_free_device() on allocated iio_dev
+Date: Thu, 30 Jan 2025 15:00:55 +0100
+Message-ID: <20250130140135.114843517@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -51,42 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-commit 2a8e34096ec70d73ebb6d9920688ea312700cbd9 upstream.
+commit de6a73bad1743e9e81ea5a24c178c67429ff510b upstream.
 
-Using gpiod_set_value() to control the reset GPIO causes some verbose
-warnings during boot when the reset GPIO is controlled by an I2C IO
-expander.
+Current implementation of at91_ts_register() calls input_free_deivce()
+on st->ts_input, however, the err label can be reached before the
+allocated iio_dev is stored to st->ts_input. Thus call
+input_free_device() on input instead of st->ts_input.
 
-As the caller can sleep, use the gpiod_set_value_cansleep() variant to
-fix the issue.
-
-Tested on a custom i.MX93 board with a ADS124S08 ADC.
-
-Cc: stable@kernel.org
-Fixes: e717f8c6dfec ("iio: adc: Add the TI ads124s08 ADC code")
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Link: https://patch.msgid.link/20241122164308.390340-1-festevam@gmail.com
+Fixes: 84882b060301 ("iio: adc: at91_adc: Add support for touchscreens without TSMR")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20241207043045.1255409-1-joe@pf.is.s.u-tokyo.ac.jp
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-ads124s08.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/at91_adc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ti-ads124s08.c
-+++ b/drivers/iio/adc/ti-ads124s08.c
-@@ -182,9 +182,9 @@ static int ads124s_reset(struct iio_dev
- 	struct ads124s_private *priv = iio_priv(indio_dev);
+--- a/drivers/iio/adc/at91_adc.c
++++ b/drivers/iio/adc/at91_adc.c
+@@ -1139,7 +1139,7 @@ static int at91_ts_register(struct at91_
+ 	return ret;
  
- 	if (priv->reset_gpio) {
--		gpiod_set_value(priv->reset_gpio, 0);
-+		gpiod_set_value_cansleep(priv->reset_gpio, 0);
- 		udelay(200);
--		gpiod_set_value(priv->reset_gpio, 1);
-+		gpiod_set_value_cansleep(priv->reset_gpio, 1);
- 	} else {
- 		return ads124s_write_cmd(indio_dev, ADS124S08_CMD_RESET);
- 	}
+ err:
+-	input_free_device(st->ts_input);
++	input_free_device(input);
+ 	return ret;
+ }
+ 
 
 
