@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2481DDC22;
-	Thu, 30 Jan 2025 14:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A9B1DDC22;
+	Thu, 30 Jan 2025 14:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247130; cv=none; b=bbHIww8kbJP/PNAr6YBozlSy4im12qOUJWp4szQ5jAPtUvjmPgIQ6vm927qNs02gahdKrQv3lHkGPXptLxXuPQw2JCyAqMujYKS5z5DmIYYeORncMSTgy4VInF8GFBx8r02+3YIw5QeDBEx6DukeUdftOvv/GKO0RcwtvnWkS90=
+	t=1738247133; cv=none; b=PwX9l4xb8j0pzirHP2Z5jcsFkqkOfqSR1BYSE40OQhYA3oDE3Hd19V/0kOUZNIBHjvcWdWgdzgp2/cer4jAYvi/jfrO0T2Pkuto8p0Yo8DvId2DoKKOcTxOM5sOaeOw4zaGWCGlQ8MX6/Lk5gEGRRHEsr+wtdU1aMJw9esGmUmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247130; c=relaxed/simple;
-	bh=0DZCFOhy77OC9MaoJwRQu/aKwpvNz/lnY6cOlTdQB2c=;
+	s=arc-20240116; t=1738247133; c=relaxed/simple;
+	bh=/NvR8DuToIcXPkPe0o/kQIVfIyh/XewsVLgCsD0OCNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QcfOHpoX5o55Y4+8daXPMKh/+OF61QYHsNRPjMrkdXFkY1QYsQG1yi+Kp59zyCNygLP5dxUE6a3eiwzH/M4XECmwA2DQJVPyO1v5FLO/jL8gGGX8kPI21Vfia0ZBFbLGG1B4fAs4Riu5Fbl+uu6sdotWlGkw6vYuEnTFmfFAh9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=argv7UDb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kp2PlcPPBHy+oqotT98jNG5RasJMZewKzclvFoh2YV7gABgoSGacgWs2GYTP4aOVR1RXZJGnM2eIDY+pY60io8Zf9dCG2radzoXA3+QHZc0JtNZhdQDzxUEqDJHzwJuqzOsoPq0zeh+5t6FuiBVmhk8arSUXAMYTZRqMe8mb6lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VB7duHDA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="argv7UDb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11C7C4CED2;
-	Thu, 30 Jan 2025 14:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VB7duHDA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E606CC4CED2;
+	Thu, 30 Jan 2025 14:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247130;
-	bh=0DZCFOhy77OC9MaoJwRQu/aKwpvNz/lnY6cOlTdQB2c=;
+	s=korg; t=1738247133;
+	bh=/NvR8DuToIcXPkPe0o/kQIVfIyh/XewsVLgCsD0OCNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=argv7UDbnpX/fw72z2pPujXeOWMU0tLqWRM1SHwEJuQvVcJLeZUOcXf7mfbmTqX8I
-	 vbnLyfFL8St7uqKjQwl7M2sTzju4ecycM2YLDwzZNDO/LE+L7Kq9VliL/DB4cc4/Kz
-	 k5r6gzzD9NmqVF6716Vp6rdDyMXhrvAZE6S9b9ms=
+	b=VB7duHDAb7pxU7oAysvNA91qowFBTjpj9ao19Y6g4OTuH0stM1TraBx+OMDGmvA5X
+	 kC5lgO18FQx2sGcvwzXiDKAjhwor2ZXrgTVw1oDxp+Sv6gKlVV/LSb8i+GGtNZzk9X
+	 JObSGd625/zbsCvSv06KiDAZXyhFTU8IZu5NLjXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
-	Robert Foss <robert.foss@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/133] drm: bridge: adv7511: unregister cec i2c device after cec adapter
-Date: Thu, 30 Jan 2025 15:00:54 +0100
-Message-ID: <20250130140145.134729345@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 092/133] net: ethernet: xgbe: re-add aneg to supported features in PHY quirks
+Date: Thu, 30 Jan 2025 15:01:21 +0100
+Message-ID: <20250130140146.222242670@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -45,90 +44,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alvin Šipraga <alsi@bang-olufsen.dk>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 40cdb02cb9f965732eb543d47f15bef8d10f0f5f ]
+commit 6be7aca91009865d8c2b73589270224a6b6e67ab upstream.
 
-cec_unregister_adapter() assumes that the underlying adapter ops are
-callable. For example, if the CEC adapter currently has a valid physical
-address, then the unregistration procedure will invalidate the physical
-address by setting it to f.f.f.f. Whence the following kernel oops
-observed after removing the adv7511 module:
+In 4.19, before the switch to linkmode bitmaps, PHY_GBIT_FEATURES
+included feature bits for aneg and TP/MII ports.
 
-    Unable to handle kernel execution of user memory at virtual address 0000000000000000
-    Internal error: Oops: 86000004 [#1] PREEMPT_RT SMP
-    Call trace:
-     0x0
-     adv7511_cec_adap_log_addr+0x1ac/0x1c8 [adv7511]
-     cec_adap_unconfigure+0x44/0x90 [cec]
-     __cec_s_phys_addr.part.0+0x68/0x230 [cec]
-     __cec_s_phys_addr+0x40/0x50 [cec]
-     cec_unregister_adapter+0xb4/0x118 [cec]
-     adv7511_remove+0x60/0x90 [adv7511]
-     i2c_device_remove+0x34/0xe0
-     device_release_driver_internal+0x114/0x1f0
-     driver_detach+0x54/0xe0
-     bus_remove_driver+0x60/0xd8
-     driver_unregister+0x34/0x60
-     i2c_del_driver+0x2c/0x68
-     adv7511_exit+0x1c/0x67c [adv7511]
-     __arm64_sys_delete_module+0x154/0x288
-     invoke_syscall+0x48/0x100
-     el0_svc_common.constprop.0+0x48/0xe8
-     do_el0_svc+0x28/0x88
-     el0_svc+0x1c/0x50
-     el0t_64_sync_handler+0xa8/0xb0
-     el0t_64_sync+0x15c/0x160
-    Code: bad PC value
-    ---[ end trace 0000000000000000 ]---
+				 SUPPORTED_TP | \
+				 SUPPORTED_MII)
 
-Protect against this scenario by unregistering i2c_cec after
-unregistering the CEC adapter. Duly disable the CEC clock afterwards
-too.
+				 SUPPORTED_10baseT_Full)
 
-Fixes: 3b1b975003e4 ("drm: adv7511/33: add HDMI CEC support")
-Signed-off-by: Alvin Šipraga <alsi@bang-olufsen.dk>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220612144854.2223873-3-alvin@pqrs.dk
-Stable-dep-of: 81adbd3ff21c ("drm: adv7511: Fix use-after-free in adv7533_attach_dsi()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+				 SUPPORTED_100baseT_Full)
+
+				 SUPPORTED_1000baseT_Full)
+
+				 PHY_100BT_FEATURES | \
+				 PHY_DEFAULT_FEATURES)
+
+				 PHY_1000BT_FEATURES)
+
+Referenced commit expanded PHY_GBIT_FEATURES, silently removing
+PHY_DEFAULT_FEATURES. The removed part can be re-added by using
+the new PHY_GBIT_FEATURES definition.
+Not clear to me is why nobody seems to have noticed this issue.
+
+I stumbled across this when checking what it takes to make
+phy_10_100_features_array et al private to phylib.
+
+Fixes: d0939c26c53a ("net: ethernet: xgbe: expand PHY_GBIT_FEAUTRES")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/46521973-7738-4157-9f5e-0bb6f694acba@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c |   19 ++-----------------
+ 1 file changed, 2 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-index 42d93f314699..9e8f45fa5c5e 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-@@ -1339,9 +1339,6 @@ static int adv7511_remove(struct i2c_client *i2c)
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -856,7 +856,6 @@ static void xgbe_phy_free_phy_device(str
+ 
+ static bool xgbe_phy_finisar_phy_quirks(struct xgbe_prv_data *pdata)
  {
- 	struct adv7511 *adv7511 = i2c_get_clientdata(i2c);
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
+ 	struct xgbe_phy_data *phy_data = pdata->phy_data;
+ 	unsigned int phy_id = phy_data->phydev->phy_id;
  
--	i2c_unregister_device(adv7511->i2c_cec);
--	clk_disable_unprepare(adv7511->cec_clk);
+@@ -878,14 +877,7 @@ static bool xgbe_phy_finisar_phy_quirks(
+ 	phy_write(phy_data->phydev, 0x04, 0x0d01);
+ 	phy_write(phy_data->phydev, 0x00, 0x9140);
+ 
+-	linkmode_set_bit_array(phy_10_100_features_array,
+-			       ARRAY_SIZE(phy_10_100_features_array),
+-			       supported);
+-	linkmode_set_bit_array(phy_gbit_features_array,
+-			       ARRAY_SIZE(phy_gbit_features_array),
+-			       supported);
 -
- 	adv7511_uninit_regulators(adv7511);
+-	linkmode_copy(phy_data->phydev->supported, supported);
++	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
  
- 	drm_bridge_remove(&adv7511->bridge);
-@@ -1349,6 +1346,8 @@ static int adv7511_remove(struct i2c_client *i2c)
- 	adv7511_audio_exit(adv7511);
+ 	phy_support_asym_pause(phy_data->phydev);
  
- 	cec_unregister_adapter(adv7511->cec_adap);
-+	i2c_unregister_device(adv7511->i2c_cec);
-+	clk_disable_unprepare(adv7511->cec_clk);
+@@ -897,7 +889,6 @@ static bool xgbe_phy_finisar_phy_quirks(
  
- 	i2c_unregister_device(adv7511->i2c_packet);
- 	i2c_unregister_device(adv7511->i2c_edid);
--- 
-2.39.5
-
+ static bool xgbe_phy_belfuse_phy_quirks(struct xgbe_prv_data *pdata)
+ {
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
+ 	struct xgbe_phy_data *phy_data = pdata->phy_data;
+ 	struct xgbe_sfp_eeprom *sfp_eeprom = &phy_data->sfp_eeprom;
+ 	unsigned int phy_id = phy_data->phydev->phy_id;
+@@ -961,13 +952,7 @@ static bool xgbe_phy_belfuse_phy_quirks(
+ 	reg = phy_read(phy_data->phydev, 0x00);
+ 	phy_write(phy_data->phydev, 0x00, reg & ~0x00800);
+ 
+-	linkmode_set_bit_array(phy_10_100_features_array,
+-			       ARRAY_SIZE(phy_10_100_features_array),
+-			       supported);
+-	linkmode_set_bit_array(phy_gbit_features_array,
+-			       ARRAY_SIZE(phy_gbit_features_array),
+-			       supported);
+-	linkmode_copy(phy_data->phydev->supported, supported);
++	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
+ 	phy_support_asym_pause(phy_data->phydev);
+ 
+ 	netif_dbg(pdata, drv, pdata->netdev,
 
 
