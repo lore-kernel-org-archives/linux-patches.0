@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A810E1E98F3;
-	Thu, 30 Jan 2025 14:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9140E1E9B00;
+	Thu, 30 Jan 2025 14:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246720; cv=none; b=q51uFhzcWZeA3AERuCmFag4+IrA3HQ6Q265ljBLue3EsAPoEB2UHyGgPGI4TC40tJcAtVub/RsjJGU/hoTGG96/+1DhUh+xKpK+sdcPMrMQZ5Vryv8GRqQW6y75i3RvxR21QCTdkUqPmNQH1aeQr06gHs5dciLJcN3Qj5p7TxFA=
+	t=1738246723; cv=none; b=B/AyVwl8pbr6mqFHTJdhm1he7A8ZFW5qXFuC3YhVHh/fqKSonn2CjPTd0xvSI9MgrHucxz+2bj0h9sOPrW2OHJAP6Oo/icKri4CUZypY3o9gNZDJYnha7TubkSub3BoUdX4yIHXyQKx5GWGNAbDUKm5LbWPGBGhVaQR8cbCp/Do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246720; c=relaxed/simple;
-	bh=R56qUIE5lnvR3SUO2gJGgKlkWdpiBWS0ajMFDs3WfJo=;
+	s=arc-20240116; t=1738246723; c=relaxed/simple;
+	bh=esaLkNNwb4X2vx6345dLn//+lD7Yk/gZ4n36iid5fjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eYz09QB5lmg/h6BUwLSmBVY3CP77ZamtouKeHrYJM0WhOstJnS0b/wSuxs312u4OV2MXCQ+GSI1Z+AwJCpXeiew81c7n1h94jMzc2X/ophSiBxYgop/Z+8c6i+Lipprfxl977yJ2PRzsLfq33W4lQdtsiKvVgGPA18K3X/egvLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cmwptpcm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iijFqyKKdKA7aA+v0ZU3cEbdk9Fc24tWgC066CuS70V2xN1cQu6uaYrRfHNiSXjAszMuT0lnNGIM2lL6jFowoY1a652uT63CHkAxZRwFeNbQuapL3ALlmoBrJ6Mrx3MjLHklyWDrKIQ7ox7ZAP79UzVcC1BiVSNFPDMx8RSXMfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R4szNzAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cmwptpcm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F805C4CED2;
-	Thu, 30 Jan 2025 14:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R4szNzAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13807C4CEE2;
+	Thu, 30 Jan 2025 14:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246720;
-	bh=R56qUIE5lnvR3SUO2gJGgKlkWdpiBWS0ajMFDs3WfJo=;
+	s=korg; t=1738246723;
+	bh=esaLkNNwb4X2vx6345dLn//+lD7Yk/gZ4n36iid5fjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cmwptpcmakwvoNWKKTNKxF0OsS0+VElZ0F9uiEmxNquTuPDdQi1yYnBDHBvzLO9ng
-	 7yay1dZEXMqYfu3CUsO7IaNFt6oO0SLFvKmN11KyX5YWa6MRIVGrkwp50F/9YmVCqv
-	 GCvQTXv2GDIcTeYZeMRLNRzt5qlgcQ4vxRM1uGBc=
+	b=R4szNzAqd4Ng3eSSUVsjQmFIDHd1yJXa8G6bNIY3T64b13RtlPNJqpA8+hHgBx82v
+	 /lq+7Xun5tV8u8iOjcBTSbj9ZszyZx2f1br9CyENHwX2oqWp+BfmObnO2P9Ycb3Ogl
+	 pYTlm4WaNFnC/+yxh+6EQf81GMRwe7Vo+F9Suw8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 14/91] drm/amd/display: Add check for granularity in dml ceil/floor helpers
-Date: Thu, 30 Jan 2025 15:00:33 +0100
-Message-ID: <20250130140134.236618854@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 15/91] ACPI: resource: Add TongFang GM5HG0A to irq1_edge_low_force_override[]
+Date: Thu, 30 Jan 2025 15:00:34 +0100
+Message-ID: <20250130140134.274257056@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -53,63 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Li <Roman.Li@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 0881fbc4fd62e00a2b8e102725f76d10351b2ea8 upstream.
+commit 7ed4e4a659d99499dc6968c61970d41b64feeac0 upstream.
 
-[Why]
-Wrapper functions for dcn_bw_ceil2() and dcn_bw_floor2()
-should check for granularity is non zero to avoid assert and
-divide-by-zero error in dcn_bw_ functions.
+The TongFang GM5HG0A is a TongFang barebone design which is sold under
+various brand names.
 
-[How]
-Add check for granularity 0.
+The ACPI IRQ override for the keyboard IRQ must be used on these AMD Zen
+laptops in order for the IRQ to work.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Roman Li <Roman.Li@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f6e09701c3eb2ccb8cb0518e0b67f1c69742a4ec)
-Cc: stable@vger.kernel.org
+At least on the SKIKK Vanaheim variant the DMI product- and board-name
+strings have been replaced by the OEM with "Vanaheim" so checking that
+board-name contains "GM5HG0A" as is usually done for TongFang barebones
+quirks does not work.
+
+The DMI OEM strings do contain "GM5HG0A". I have looked at the dmidecode
+for a few other TongFang devices and the TongFang code-name string being
+in the OEM strings seems to be something which is consistently true.
+
+Add a quirk checking one of the DMI_OEM_STRING(s) is "GM5HG0A" in the hope
+that this will work for other OEM versions of the "GM5HG0A" too.
+
+Link: https://www.skikk.eu/en/laptops/vanaheim-15-rtx-4060
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219614
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://patch.msgid.link/20241228164845.42381-1-hdegoede@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/acpi/resource.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dml_inline_defs.h
-@@ -67,11 +67,15 @@ static inline double dml_max5(double a,
- 
- static inline double dml_ceil(double a, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_ceil2(a, granularity);
- }
- 
- static inline double dml_floor(double a, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_floor2(a, granularity);
- }
- 
-@@ -97,11 +101,15 @@ static inline double dml_ceil_2(double f
- 
- static inline double dml_ceil_ex(double x, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_ceil2(x, granularity);
- }
- 
- static inline double dml_floor_ex(double x, double granularity)
- {
-+	if (granularity == 0)
-+		return 0;
- 	return (double) dcn_bw_floor2(x, granularity);
- }
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -514,6 +514,17 @@ static const struct dmi_system_id asus_l
+ 			DMI_MATCH(DMI_BOARD_NAME, "16T90SP"),
+ 		},
+ 	},
++	{
++		/*
++		 * TongFang GM5HG0A in case of the SKIKK Vanaheim relabel the
++		 * board-name is changed, so check OEM strings instead. Note
++		 * OEM string matches are always exact matches.
++		 * https://bugzilla.kernel.org/show_bug.cgi?id=219614
++		 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_OEM_STRING, "GM5HG0A"),
++		},
++	},
+ 	{ }
+ };
  
 
 
