@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B71E7C27;
-	Thu, 30 Jan 2025 14:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002FD1E522;
+	Thu, 30 Jan 2025 14:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247376; cv=none; b=NYVCLP82/0jEiLrjYsfOJSInVB8Qdgo/8VJ0+CLne8RG8DQzAHmnfMgN2RRUWR/KqFGNBf1JuS29URrPIgIWVxHATV5v7DfVTTpYWjIH+aoN1LRqHwMQ0d2pgK3pSwsoGG/xt9QhwrdbUQ9XEOS232TCFzKPRcxN9k3efJMsYSQ=
+	t=1738247379; cv=none; b=cIaByLF8ViORfkJyln7JyDZkn12GV2Gva1vAKs1jkoaEGF7O76R+ByGQrPyrCckoMAufmTQ8cdOwU2+w0nIKNZHP0Pg8kF92DIx4vQ2FThe7HJ1NLrJJEkjVpJfQJd5RQha5fxXldRihleMi+1PC+Gogg9pNykrtnWb6j1XgtWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247376; c=relaxed/simple;
-	bh=BG3O/gBkSgzS9aifryPckHxc4EdSedBANfnj8ob6DY8=;
+	s=arc-20240116; t=1738247379; c=relaxed/simple;
+	bh=H7WZCGQ8O29NIKtByRsKSSLOwefeeMJoO5WE/OHvwfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d6NngdwIIHgiKNIT+Nlg/P2MJfgcxjINcXh1FDlikfZO9CDinWPYJFf7b+pc+bcjivaj3s1iUGbOupvTAfitXk0uSTTVjpeS3rHDgLShB9zy/cQfMMKtgjRfHsPevJN1h4sCPjl6+E5/AWdZB15sqRaiA8qFuKVymZN6H60Ja94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fruw3jzm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vp2ay813OSfyRZptNjBBEYn5dkmDc9TbJTsfX0hF9Asztd5xqNVRkclx/2KNYrtWNO/YbgWNBRl+kpxuPFKP7nlRfrnKguIhAes4mzU5A9fUhzrHR8/eTyavI4IWVdaDPDSfS1NNpEseWH28fBc8DwMfsNYS4LlfFqMzcq7f0Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zKUJLD6z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fruw3jzm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D38DC4CED2;
-	Thu, 30 Jan 2025 14:29:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zKUJLD6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F001C4CED2;
+	Thu, 30 Jan 2025 14:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247376;
-	bh=BG3O/gBkSgzS9aifryPckHxc4EdSedBANfnj8ob6DY8=;
+	s=korg; t=1738247378;
+	bh=H7WZCGQ8O29NIKtByRsKSSLOwefeeMJoO5WE/OHvwfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fruw3jzmYgO/bSluqUuaARmOm0t+tyFrSdfhGQYqinKe7kUsBErkx5ibyTG2vIXIl
-	 DbWIAp9Xe4d9+tWFPisUT2daHOgGzKGhrkcV1av/N9dZyPHfbb/J8ccsRD2nP0zjDB
-	 YHVW2DYCTLuD9ZginG2UVhjzga9I4lGJ07Zrw5Dk=
+	b=zKUJLD6zoNVqdhsE2r6O8H8WQK7FTzY6QRmQCQw+0DDtcgpilLl4s5WdaFfjvjsxa
+	 gSVZxhtJF1dkxMJNNyPOEaKmNBVrWrdq2Wl0wgsSg3CP7qMgKRdnMzXCDyKT7BPgME
+	 lrgKZazwfZHIlrN5LVyL8o1eX/hsOFvpIP+FedXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Lin <cheng.lin130@zte.com.cn>,
+	Christoph Hellwig <hch@lst.de>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Chandan Babu R <chandanbabu@kernel.org>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 18/49] xfs: introduce protection for drop nlink
-Date: Thu, 30 Jan 2025 15:01:54 +0100
-Message-ID: <20250130140134.572636448@linuxfoundation.org>
+Subject: [PATCH 6.1 19/49] xfs: handle nimaps=0 from xfs_bmapi_write in xfs_alloc_file_space
+Date: Thu, 30 Jan 2025 15:01:55 +0100
+Message-ID: <20250130140134.611180323@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
 References: <20250130140133.825446496@linuxfoundation.org>
@@ -52,37 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Lin <cheng.lin130@zte.com.cn>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 2b99e410b28f5a75ae417e6389e767c7745d6fce ]
+[ Upstream commit 35dc55b9e80cb9ec4bcb969302000b002b2ed850 ]
 
-When abnormal drop_nlink are detected on the inode,
-return error, to avoid corruption propagation.
+If xfs_bmapi_write finds a delalloc extent at the requested range, it
+tries to convert the entire delalloc extent to a real allocation.
 
-Signed-off-by: Cheng Lin <cheng.lin130@zte.com.cn>
+But if the allocator cannot find a single free extent large enough to
+cover the start block of the requested range, xfs_bmapi_write will
+return 0 but leave *nimaps set to 0.
+
+In that case we simply need to keep looping with the same startoffset_fsb
+so that one of the following allocations will eventually reach the
+requested range.
+
+Note that this could affect any caller of xfs_bmapi_write that covers
+an existing delayed allocation.  As far as I can tell we do not have
+any other such caller, though - the regular writeback path uses
+xfs_bmapi_convert_delalloc to convert delayed allocations to real ones,
+and direct I/O invalidates the page cache first.
+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_inode.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/xfs_bmap_util.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/fs/xfs/xfs_inode.c
-+++ b/fs/xfs/xfs_inode.c
-@@ -919,6 +919,13 @@ xfs_droplink(
- 	xfs_trans_t *tp,
- 	xfs_inode_t *ip)
+--- a/fs/xfs/xfs_bmap_util.c
++++ b/fs/xfs/xfs_bmap_util.c
+@@ -780,12 +780,10 @@ xfs_alloc_file_space(
  {
-+	if (VFS_I(ip)->i_nlink == 0) {
-+		xfs_alert(ip->i_mount,
-+			  "%s: Attempt to drop inode (%llu) with nlink zero.",
-+			  __func__, ip->i_ino);
-+		return -EFSCORRUPTED;
-+	}
-+
- 	xfs_trans_ichgtime(tp, ip, XFS_ICHGTIME_CHG);
+ 	xfs_mount_t		*mp = ip->i_mount;
+ 	xfs_off_t		count;
+-	xfs_filblks_t		allocated_fsb;
+ 	xfs_filblks_t		allocatesize_fsb;
+ 	xfs_extlen_t		extsz, temp;
+ 	xfs_fileoff_t		startoffset_fsb;
+ 	xfs_fileoff_t		endoffset_fsb;
+-	int			nimaps;
+ 	int			rt;
+ 	xfs_trans_t		*tp;
+ 	xfs_bmbt_irec_t		imaps[1], *imapp;
+@@ -808,7 +806,6 @@ xfs_alloc_file_space(
  
- 	drop_nlink(VFS_I(ip));
+ 	count = len;
+ 	imapp = &imaps[0];
+-	nimaps = 1;
+ 	startoffset_fsb	= XFS_B_TO_FSBT(mp, offset);
+ 	endoffset_fsb = XFS_B_TO_FSB(mp, offset + count);
+ 	allocatesize_fsb = endoffset_fsb - startoffset_fsb;
+@@ -819,6 +816,7 @@ xfs_alloc_file_space(
+ 	while (allocatesize_fsb && !error) {
+ 		xfs_fileoff_t	s, e;
+ 		unsigned int	dblocks, rblocks, resblks;
++		int		nimaps = 1;
+ 
+ 		/*
+ 		 * Determine space reservations for data/realtime.
+@@ -884,15 +882,19 @@ xfs_alloc_file_space(
+ 		if (error)
+ 			break;
+ 
+-		allocated_fsb = imapp->br_blockcount;
+-
+-		if (nimaps == 0) {
+-			error = -ENOSPC;
+-			break;
++		/*
++		 * If the allocator cannot find a single free extent large
++		 * enough to cover the start block of the requested range,
++		 * xfs_bmapi_write will return 0 but leave *nimaps set to 0.
++		 *
++		 * In that case we simply need to keep looping with the same
++		 * startoffset_fsb so that one of the following allocations
++		 * will eventually reach the requested range.
++		 */
++		if (nimaps) {
++			startoffset_fsb += imapp->br_blockcount;
++			allocatesize_fsb -= imapp->br_blockcount;
+ 		}
+-
+-		startoffset_fsb += allocated_fsb;
+-		allocatesize_fsb -= allocated_fsb;
+ 	}
+ 
+ 	return error;
 
 
