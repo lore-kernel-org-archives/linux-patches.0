@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25F31E98F1;
-	Thu, 30 Jan 2025 14:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88731E522;
+	Thu, 30 Jan 2025 14:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247156; cv=none; b=Dh69OqZmno11/UP409hFUrJ8ieWlEVn42cTDgockrt+Vi1CTMMjwNpewwq7mDYtOvaYKVCjk+xxlG5E7jQavlN9Rk9aqOrTUwJls27IAIWjEdFqLgleH1uYeVzYXb8+IOTyYdDF21rRpB3R47Dt5UE7nVMpkgoZXzvkRzGn/yvs=
+	t=1738247159; cv=none; b=JO/59GrnjZHJFaHirwHTeMCCbwiXDkLodk8RZYqrejgEOmtspY7IoiXpiH0scxD2RSbKlf2D2L34IPovFZdlbjE+tQWKrPI+5ucbvYLL/OqOEtOXn3tPfBfxLpq9P9SS+9FOt16QF3Ug4B73sJqDhrvAXzdHibpsnTjakA3b6Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247156; c=relaxed/simple;
-	bh=ar9bApVvHLTMr9/ngIDonaJPMbij4ploO4Tzl0kJ2Nc=;
+	s=arc-20240116; t=1738247159; c=relaxed/simple;
+	bh=O4OAZmX0+AE/yf3+6Z8MCqWrKvPk+8IGB8FuOxR05JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZnT3SjjqNdpPxvhUGrMYAwArRGoaOO3PAr+5z/UFkV59Fktz/3LzFQa42UjjjkRo90Qy80wiDJ7ygPL7K/8IhgH3KjbggmbaKkv17DVy+xIcGAg1X9pzZHBetTlE6/EBY8uQg43h/igzQSCGZzA4+NRMf9PnXg927yfBQM9cKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+qakpaA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t9OSnl1bCyuedBBNNBo8iy8jA8s41j0E4YiQ9gfAx66rDacFV55lh7S5HmJYbhdoPcfgKtmhs0u1YYc+vrweQffUGMMdN28stdP/i/1DbU/aR/5xe/WZSFOQa0XEq3+2nRkJt85Kex3SN5MMCYKQiyh3CylMvBP1JT2plW3AYRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BC80XJ1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+qakpaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F84C4CED2;
-	Thu, 30 Jan 2025 14:25:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BC80XJ1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5253CC4CED2;
+	Thu, 30 Jan 2025 14:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247156;
-	bh=ar9bApVvHLTMr9/ngIDonaJPMbij4ploO4Tzl0kJ2Nc=;
+	s=korg; t=1738247159;
+	bh=O4OAZmX0+AE/yf3+6Z8MCqWrKvPk+8IGB8FuOxR05JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+qakpaAdjY+b99G3C60m3oClSZ4PltzvSbryfW283TPGk4vuGcD7pAI5dQ1l3RGj
-	 xaH5PcwufAxKMfwuNC475KRiVhTGsqXVuBX6pEMu/td3G/RodVCy+fdrTYJ7Rxr5gN
-	 f7T1/MkmqivDOOkdym+13ZtJtYF58zN5IWLcg99I=
+	b=BC80XJ1JIiacaRnyJTIg0EejD1aXGzWqqG1jFpA02G/z0iFymquGNrLGziXBAlClR
+	 1spvItWAp6H1+dIb58RpXmZKJ2hHhOTIljyvW+lxyxEZgv3W+kwwnCERGdNwuTpCNi
+	 zTK/PwKnJcKWjsZUTQL30RzZNYYaoB4Lg4940ffc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrzej Hajda <a.hajda@samsung.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/133] drm/mipi-dsi: Create devm device registration
-Date: Thu, 30 Jan 2025 15:00:51 +0100
-Message-ID: <20250130140145.015753362@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 095/133] fs/proc: fix softlockup in __read_vmcore (part 2)
+Date: Thu, 30 Jan 2025 15:01:24 +0100
+Message-ID: <20250130140146.354651512@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,103 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Ripard <maxime@cerno.tech>
+From: Rik van Riel <riel@surriel.com>
 
-[ Upstream commit a1419fb4a73e47f0eab2985dff594ed52397471b ]
+commit cbc5dde0a461240046e8a41c43d7c3b76d5db952 upstream.
 
-Devices that take their data through the MIPI-DSI bus but are controlled
-through a secondary bus like I2C have to register a secondary device on
-the MIPI-DSI bus through the mipi_dsi_device_register_full() function.
+Since commit 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore") the
+number of softlockups in __read_vmcore at kdump time have gone down, but
+they still happen sometimes.
 
-At removal or when an error occurs, that device needs to be removed
-through a call to mipi_dsi_device_unregister().
+In a memory constrained environment like the kdump image, a softlockup is
+not just a harmless message, but it can interfere with things like RCU
+freeing memory, causing the crashdump to get stuck.
 
-Let's create a device-managed variant of the registration function that
-will automatically unregister the device at unbind.
+The second loop in __read_vmcore has a lot more opportunities for natural
+sleep points, like scheduling out while waiting for a data write to
+happen, but apparently that is not always enough.
 
-Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20210910101218.1632297-4-maxime@cerno.tech
-Stable-dep-of: 81adbd3ff21c ("drm: adv7511: Fix use-after-free in adv7533_attach_dsi()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a cond_resched() to the second loop in __read_vmcore to (hopefully)
+get rid of the softlockups.
+
+Link: https://lkml.kernel.org/r/20250110102821.2a37581b@fangorn
+Fixes: 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c | 46 ++++++++++++++++++++++++++++++++++
- include/drm/drm_mipi_dsi.h     |  3 +++
- 2 files changed, 49 insertions(+)
+ fs/proc/vmcore.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-index 107a98484f50..e53a5b14b47b 100644
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -246,6 +246,52 @@ void mipi_dsi_device_unregister(struct mipi_dsi_device *dsi)
- }
- EXPORT_SYMBOL(mipi_dsi_device_unregister);
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -396,6 +396,8 @@ static ssize_t __read_vmcore(char *buffe
+ 			if (buflen == 0)
+ 				return acc;
+ 		}
++
++		cond_resched();
+ 	}
  
-+static void devm_mipi_dsi_device_unregister(void *arg)
-+{
-+	struct mipi_dsi_device *dsi = arg;
-+
-+	mipi_dsi_device_unregister(dsi);
-+}
-+
-+/**
-+ * devm_mipi_dsi_device_register_full - create a managed MIPI DSI device
-+ * @dev: device to tie the MIPI-DSI device lifetime to
-+ * @host: DSI host to which this device is connected
-+ * @info: pointer to template containing DSI device information
-+ *
-+ * Create a MIPI DSI device by using the device information provided by
-+ * mipi_dsi_device_info template
-+ *
-+ * This is the managed version of mipi_dsi_device_register_full() which
-+ * automatically calls mipi_dsi_device_unregister() when @dev is
-+ * unbound.
-+ *
-+ * Returns:
-+ * A pointer to the newly created MIPI DSI device, or, a pointer encoded
-+ * with an error
-+ */
-+struct mipi_dsi_device *
-+devm_mipi_dsi_device_register_full(struct device *dev,
-+				   struct mipi_dsi_host *host,
-+				   const struct mipi_dsi_device_info *info)
-+{
-+	struct mipi_dsi_device *dsi;
-+	int ret;
-+
-+	dsi = mipi_dsi_device_register_full(host, info);
-+	if (IS_ERR(dsi))
-+		return dsi;
-+
-+	ret = devm_add_action_or_reset(dev,
-+				       devm_mipi_dsi_device_unregister,
-+				       dsi);
-+	if (ret)
-+		return ERR_PTR(ret);
-+
-+	return dsi;
-+}
-+EXPORT_SYMBOL_GPL(devm_mipi_dsi_device_register_full);
-+
- static DEFINE_MUTEX(host_lock);
- static LIST_HEAD(host_list);
- 
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index 0dbed65c0ca5..af8ed48749eb 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -224,6 +224,9 @@ struct mipi_dsi_device *
- mipi_dsi_device_register_full(struct mipi_dsi_host *host,
- 			      const struct mipi_dsi_device_info *info);
- void mipi_dsi_device_unregister(struct mipi_dsi_device *dsi);
-+struct mipi_dsi_device *
-+devm_mipi_dsi_device_register_full(struct device *dev, struct mipi_dsi_host *host,
-+				   const struct mipi_dsi_device_info *info);
- struct mipi_dsi_device *of_find_mipi_dsi_device_by_node(struct device_node *np);
- int mipi_dsi_attach(struct mipi_dsi_device *dsi);
- int mipi_dsi_detach(struct mipi_dsi_device *dsi);
--- 
-2.39.5
-
+ 	return acc;
 
 
