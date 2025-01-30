@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8DE1DDC22;
-	Thu, 30 Jan 2025 14:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A87A1E6DCF;
+	Thu, 30 Jan 2025 14:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247072; cv=none; b=XkG4D+P2P4Dbx774reffMraNlSZA5ix2xK8JtiUF/DFEAcvfyZguZEGZtnsdVcngxPZIR62vIN/x3B7boDLz6D0qxjJlXZwKNXXdL5J4KC1IaGqi4C8ipqkW3fTOTY8u30DpVCukyC6jDsJ4HOpJloeCcLveJjp5Z/kjfgmjwYk=
+	t=1738247075; cv=none; b=u+bf7lum603HN3EjgmTGTwq2CTlACf7QWilMMFC6rLnK6XOzku/20RN0/xvuM1UhM/wF5C9PAdhobEAepjaEcVfvte1Sw5Aeln+OqOXBWG0xPNk3N/PyqTmdzPCQb7ntl2Jx4o+9UIouawW00a16gt+5v/CUlXRKk/mfavfe4vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247072; c=relaxed/simple;
-	bh=l2HO871PnC/gMzUE6ioSzgQzMWFAm5EvTWNcKz+2g1k=;
+	s=arc-20240116; t=1738247075; c=relaxed/simple;
+	bh=Zn8SFY+yQo93XWo5cUFlkzONTGEQN6MLj1inZq5yJ2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUdbDASeA2iKb6Wl8asrJ/fC9PtTZbObCDnZCcQShGxuEWzWx5d8J5jT2+5FvFhYjsC6aL5WFvQTtl5KC82MuvDlhfg+SmZPs77rl9LJ/PQoBrrpmGOG6GNAGxmszrjrRnVe8lH89VdTllCKSNQBtnWA2y4nEe1J8u2Vig30gzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBzjOwh1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kq6TUU2N/yoQ86baA6q4je0EGZeTcy4oP0E4/TmO7AusQcGoh3k0+28pQUbFh/7mWIssGy8upOOUDGVsXSFpyxiyF90SM3SIOFgIaJFBTCnrQyuapWthwPtHiwhqnjdguOr12HyGjUQUvqyaoXt3MDwCs2xvzJJAvJ+N3n1eDZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vY4AX+AG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBzjOwh1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A986DC4CEE0;
-	Thu, 30 Jan 2025 14:24:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vY4AX+AG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901A9C4CED2;
+	Thu, 30 Jan 2025 14:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247072;
-	bh=l2HO871PnC/gMzUE6ioSzgQzMWFAm5EvTWNcKz+2g1k=;
+	s=korg; t=1738247075;
+	bh=Zn8SFY+yQo93XWo5cUFlkzONTGEQN6MLj1inZq5yJ2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBzjOwh1gYYGNmxMq9yCaDpik0iYiOnX/VtMbUHTJP0wW9z5kJsGVkq8xP2ZDeJBU
-	 djSKLzXNy7Fac8PlEtHiuaJlaMCPQwl7r/3mWg75pnM1Z/MfdwckosHV/o7Lqp4V31
-	 W1h3+tE8vi1bRPSJiI4ezU9kVx3f2vi4cIqPnhPM=
+	b=vY4AX+AGIsIb/BCNaTTRvLDF5EvZbu4/xqJodD54rvSbQWWfcL97lyELLafTKkpq4
+	 vlEtOlL7BtivW8W5cqRppKbldRhj8utdfRxsB0pmjbkJ9go8lCHn62yVBqAXjBjPv1
+	 7evGmBZmvQ1r3n5mufHnuplRfeQsqUEfDB+2n/wM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yajun Deng <yajun.deng@linux.dev>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/133] net: net_namespace: Optimize the code
-Date: Thu, 30 Jan 2025 15:01:02 +0100
-Message-ID: <20250130140145.455758822@linuxfoundation.org>
+Subject: [PATCH 5.10 074/133] net: add exit_batch_rtnl() method
+Date: Thu, 30 Jan 2025 15:01:03 +0100
+Message-ID: <20250130140145.497215377@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,156 +52,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yajun Deng <yajun.deng@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 41467d2ff4dfe1837cbb0f45e2088e6e787580c6 ]
+[ Upstream commit fd4f101edbd9f99567ab2adb1f2169579ede7c13 ]
 
-There is only one caller for ops_free(), so inline it.
-Separate net_drop_ns() and net_free(), so the net_free()
-can be called directly.
-Add free_exit_list() helper function for free net_exit_list.
+Many (struct pernet_operations)->exit_batch() methods have
+to acquire rtnl.
 
-====================
-v2:
- - v1 does not apply, rebase it.
-====================
+In presence of rtnl mutex pressure, this makes cleanup_net()
+very slow.
 
-Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This patch adds a new exit_batch_rtnl() method to reduce
+number of rtnl acquisitions from cleanup_net().
+
+exit_batch_rtnl() handlers are called while rtnl is locked,
+and devices to be killed can be queued in a list provided
+as their second argument.
+
+A single unregister_netdevice_many() is called right
+before rtnl is released.
+
+exit_batch_rtnl() handlers are called before ->exit() and
+->exit_batch() handlers.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://lore.kernel.org/r/20240206144313.2050392-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 46841c7053e6 ("gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/net_namespace.c | 52 +++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 28 deletions(-)
+ include/net/net_namespace.h |  3 +++
+ net/core/net_namespace.c    | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
 
+diff --git a/include/net/net_namespace.h b/include/net/net_namespace.h
+index eb0e7731f3b1c..c41e922fdd97e 100644
+--- a/include/net/net_namespace.h
++++ b/include/net/net_namespace.h
+@@ -393,6 +393,9 @@ struct pernet_operations {
+ 	void (*pre_exit)(struct net *net);
+ 	void (*exit)(struct net *net);
+ 	void (*exit_batch)(struct list_head *net_exit_list);
++	/* Following method is called with RTNL held. */
++	void (*exit_batch_rtnl)(struct list_head *net_exit_list,
++				struct list_head *dev_kill_list);
+ 	unsigned int *id;
+ 	size_t size;
+ };
 diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
-index 6192a05ebcce2..ef19a0eaa55aa 100644
+index ef19a0eaa55aa..bcf3533cb8ff1 100644
 --- a/net/core/net_namespace.c
 +++ b/net/core/net_namespace.c
-@@ -113,7 +113,7 @@ static int net_assign_generic(struct net *net, unsigned int id, void *data)
- 	}
- 
- 	ng = net_alloc_generic();
--	if (ng == NULL)
-+	if (!ng)
- 		return -ENOMEM;
- 
- 	/*
-@@ -170,13 +170,6 @@ static int ops_init(const struct pernet_operations *ops, struct net *net)
- 	return err;
- }
- 
--static void ops_free(const struct pernet_operations *ops, struct net *net)
--{
--	if (ops->id && ops->size) {
--		kfree(net_generic(net, *ops->id));
--	}
--}
--
- static void ops_pre_exit_list(const struct pernet_operations *ops,
- 			      struct list_head *net_exit_list)
+@@ -331,8 +331,9 @@ static __net_init int setup_net(struct net *net, struct user_namespace *user_ns)
  {
-@@ -208,7 +201,7 @@ static void ops_free_list(const struct pernet_operations *ops,
- 	struct net *net;
- 	if (ops->size && ops->id) {
- 		list_for_each_entry(net, net_exit_list, exit_list)
--			ops_free(ops, net);
-+			kfree(net_generic(net, *ops->id));
- 	}
- }
+ 	/* Must be called with pernet_ops_rwsem held */
+ 	const struct pernet_operations *ops, *saved_ops;
+-	int error = 0;
+ 	LIST_HEAD(net_exit_list);
++	LIST_HEAD(dev_kill_list);
++	int error = 0;
  
-@@ -454,15 +447,18 @@ static struct net *net_alloc(void)
+ 	refcount_set(&net->count, 1);
+ 	refcount_set(&net->passive, 1);
+@@ -365,6 +366,15 @@ static __net_init int setup_net(struct net *net, struct user_namespace *user_ns)
  
- static void net_free(struct net *net)
- {
--	kfree(rcu_access_pointer(net->gen));
--	kmem_cache_free(net_cachep, net);
-+	if (refcount_dec_and_test(&net->passive)) {
-+		kfree(rcu_access_pointer(net->gen));
-+		kmem_cache_free(net_cachep, net);
+ 	synchronize_rcu();
+ 
++	ops = saved_ops;
++	rtnl_lock();
++	list_for_each_entry_continue_reverse(ops, &pernet_list, list) {
++		if (ops->exit_batch_rtnl)
++			ops->exit_batch_rtnl(&net_exit_list, &dev_kill_list);
 +	}
- }
++	unregister_netdevice_many(&dev_kill_list);
++	rtnl_unlock();
++
+ 	ops = saved_ops;
+ 	list_for_each_entry_continue_reverse(ops, &pernet_list, list)
+ 		ops_exit_list(ops, &net_exit_list);
+@@ -569,6 +579,7 @@ static void cleanup_net(struct work_struct *work)
+ 	struct net *net, *tmp, *last;
+ 	struct llist_node *net_kill_list;
+ 	LIST_HEAD(net_exit_list);
++	LIST_HEAD(dev_kill_list);
  
- void net_drop_ns(void *p)
+ 	/* Atomically snapshot the list of namespaces to cleanup */
+ 	net_kill_list = llist_del_all(&cleanup_list);
+@@ -609,6 +620,14 @@ static void cleanup_net(struct work_struct *work)
+ 	 */
+ 	synchronize_rcu();
+ 
++	rtnl_lock();
++	list_for_each_entry_reverse(ops, &pernet_list, list) {
++		if (ops->exit_batch_rtnl)
++			ops->exit_batch_rtnl(&net_exit_list, &dev_kill_list);
++	}
++	unregister_netdevice_many(&dev_kill_list);
++	rtnl_unlock();
++
+ 	/* Run all of the network namespace exit methods */
+ 	list_for_each_entry_reverse(ops, &pernet_list, list)
+ 		ops_exit_list(ops, &net_exit_list);
+@@ -1160,7 +1179,17 @@ static void free_exit_list(struct pernet_operations *ops, struct list_head *net_
  {
--	struct net *ns = p;
--	if (ns && refcount_dec_and_test(&ns->passive))
--		net_free(ns);
-+	struct net *net = (struct net *)p;
+ 	ops_pre_exit_list(ops, net_exit_list);
+ 	synchronize_rcu();
 +
-+	if (net)
-+		net_free(net);
- }
- 
- struct net *copy_net_ns(unsigned long flags,
-@@ -502,7 +498,7 @@ struct net *copy_net_ns(unsigned long flags,
- 		key_remove_domain(net->key_domain);
- #endif
- 		put_user_ns(user_ns);
--		net_drop_ns(net);
-+		net_free(net);
- dec_ucounts:
- 		dec_net_namespaces(ucounts);
- 		return ERR_PTR(rv);
-@@ -636,7 +632,7 @@ static void cleanup_net(struct work_struct *work)
- 		key_remove_domain(net->key_domain);
- #endif
- 		put_user_ns(net->user_ns);
--		net_drop_ns(net);
-+		net_free(net);
- 	}
- }
- 
-@@ -1160,6 +1156,14 @@ static int __init net_ns_init(void)
- 
- pure_initcall(net_ns_init);
- 
-+static void free_exit_list(struct pernet_operations *ops, struct list_head *net_exit_list)
-+{
-+	ops_pre_exit_list(ops, net_exit_list);
-+	synchronize_rcu();
-+	ops_exit_list(ops, net_exit_list);
-+	ops_free_list(ops, net_exit_list);
-+}
++	if (ops->exit_batch_rtnl) {
++		LIST_HEAD(dev_kill_list);
 +
- #ifdef CONFIG_NET_NS
- static int __register_pernet_operations(struct list_head *list,
- 					struct pernet_operations *ops)
-@@ -1185,10 +1189,7 @@ static int __register_pernet_operations(struct list_head *list,
- out_undo:
- 	/* If I have an error cleanup all namespaces I initialized */
- 	list_del(&ops->list);
--	ops_pre_exit_list(ops, &net_exit_list);
--	synchronize_rcu();
--	ops_exit_list(ops, &net_exit_list);
--	ops_free_list(ops, &net_exit_list);
-+	free_exit_list(ops, &net_exit_list);
- 	return error;
- }
- 
-@@ -1201,10 +1202,8 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
- 	/* See comment in __register_pernet_operations() */
- 	for_each_net(net)
- 		list_add_tail(&net->exit_list, &net_exit_list);
--	ops_pre_exit_list(ops, &net_exit_list);
--	synchronize_rcu();
--	ops_exit_list(ops, &net_exit_list);
--	ops_free_list(ops, &net_exit_list);
++		rtnl_lock();
++		ops->exit_batch_rtnl(net_exit_list, &dev_kill_list);
++		unregister_netdevice_many(&dev_kill_list);
++		rtnl_unlock();
++	}
+ 	ops_exit_list(ops, net_exit_list);
 +
-+	free_exit_list(ops, &net_exit_list);
- }
- 
- #else
-@@ -1227,10 +1226,7 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
- 	} else {
- 		LIST_HEAD(net_exit_list);
- 		list_add(&init_net.exit_list, &net_exit_list);
--		ops_pre_exit_list(ops, &net_exit_list);
--		synchronize_rcu();
--		ops_exit_list(ops, &net_exit_list);
--		ops_free_list(ops, &net_exit_list);
-+		free_exit_list(ops, &net_exit_list);
- 	}
+ 	ops_free_list(ops, net_exit_list);
  }
  
 -- 
