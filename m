@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3EF1E9901;
-	Thu, 30 Jan 2025 14:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE15D1E571B;
+	Thu, 30 Jan 2025 14:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245702; cv=none; b=lAh7KjJF83RqzTHxeLBue8Q9n9dEBrcBzfD115R+5cp5P4UbxHakuRJQbG8Utwbk2djm2vGq2A27FyMrw1dRdJVefXTYdlfP/hdiw2JW6jAoWOitmcvrKvJ70IBrSwEunoh/f0wQGTaV+PivP1qr4PTC7Og/YOY//0Grnrx5Qos=
+	t=1738245705; cv=none; b=ahagfXwbINglP2c3Vpre1eNgkpXct/dNbZFWUnGqrrnyNr//dS4w9h7TM3BdREA0OoScQM0LnN2FPauvSabzxmNi1cH5jIInllyx4ftuB0kkM/zwjDU/pv6FrYH8J24uh90L3Hx8SMio5OznQZBANFoW4y6LZtsNuUCVdNJOrjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245702; c=relaxed/simple;
-	bh=8qUYwvUHX7OBYmJ93/x8ZlvFESFcHY8Ol2sDNINDkr0=;
+	s=arc-20240116; t=1738245705; c=relaxed/simple;
+	bh=T7y4KmHOywGts9kAK9w0T+anEluJq1CjmqIgEeFVZzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q+KR5p/mCb4KP/LUU1p+J6NK7cZr815FENNxAB7ztpAs0B9rWVhnZnIbKzIv+seqvP9jN2948ZbZfsAjuvfR9mviBTeEXjx8qesS4Wh+zUifocW2sMoxBWtjfyycULN6B3jyuUMMgAAGBcNc41xgFvJhzg53rLUuJW06+8nEX58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nv7YqxM2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LFjQnrpliPSJUCnBa7WWe8LYukKZq5t6Y20WVgw6Z9kAicKJFtGZDaNkPNdv/mNd+4I5YQtJRl/RkslE1kwGkU0/+m9ylPvvR7jn6C5vrViDd0h5h/xgBItlloNTOOBAH4jQsZJg+cFNBPfyklD3u/2jdxJ5y7JdxDQRDK0CBcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kl+4XlxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nv7YqxM2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F2DC4CED2;
-	Thu, 30 Jan 2025 14:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kl+4XlxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337B7C4CED2;
+	Thu, 30 Jan 2025 14:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245702;
-	bh=8qUYwvUHX7OBYmJ93/x8ZlvFESFcHY8Ol2sDNINDkr0=;
+	s=korg; t=1738245705;
+	bh=T7y4KmHOywGts9kAK9w0T+anEluJq1CjmqIgEeFVZzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nv7YqxM2/Yx7dFtYwVNx3KOZ9aFlZuhBTmJ98Np4UcVr37eJQcjyhUCOtdkkdnWHR
-	 jPLjO4Rp+S8giyCHlAJz6KZ0c7QVeFzWeTfuHlssSskULsGC4DE+B8Mp0CUtbVTIl0
-	 gwhLLTxLw7TaZHScpbVFrxGrGIfhchDYNRi0Y3fs=
+	b=kl+4XlxQROfHPBaAlwpHyj87MuHF8GEv9TTpdpDgjhyiX6Up5EQbVi9rS7Dr5ybhw
+	 oML5DNhy4ohPt7T66qSP+kKxqZwoMSFR98bvaPPLpnKAJ1j6AKF+e3wlggNl5kOHAb
+	 OcNr6EHZIwXJRnzHk/EJ6DyQuTAUeZoOIG1RUhuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Robinson <pbrobinson@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.12 32/40] wifi: rtl8xxxu: add more missing rtl8192cu USB IDs
-Date: Thu, 30 Jan 2025 14:59:32 +0100
-Message-ID: <20250130133500.991956038@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.12 33/40] HID: wacom: Initialize brightness of LED trigger
+Date: Thu, 30 Jan 2025 14:59:33 +0100
+Message-ID: <20250130133501.030376782@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -51,106 +50,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jason Gerecke <jason.gerecke@wacom.com>
 
-commit 31be3175bd7be89e39c82b3973c9d4ff55a17583 upstream.
+commit 88006b8eca63467cf1b28fed839f4954c578eeff upstream.
 
-The rtl8xxxu has all the rtl8192cu USB IDs from rtlwifi/rtl8192cu/sw.c
-except for the following 10, add these to the untested section so they
-can be used with the rtl8xxxu as the rtl8192cu are well supported.
+If an LED has a default_trigger set prior to being registered with
+the subsystem, that trigger will be executed with a brightness value
+defined by `trigger->brightness`. Our driver was not setting this
+value, which was causing problems. It would cause the selected LED
+to be turned off, as well as corrupt the hlv/llv values assigned to
+other LEDs (since calling `wacom_led_brightness_set` will overite
+these values).
 
-This fixes these wifi modules not working on distributions which have
-disabled CONFIG_RTL8192CU replacing it with CONFIG_RTL8XXXU_UNTESTED,
-like Fedora.
+This patch sets the value of `trigger->brightness` to an appropriate
+value. We use `wacom_leds_brightness_get` to transform the llv/hlv
+values into a brightness that is understood by the rest of the LED
+subsystem.
 
-Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2321540
-Cc: stable@vger.kernel.org
-Cc: Peter Robinson <pbrobinson@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Peter Robinson <pbrobinson@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20241107140833.274986-1-hdegoede@redhat.com
+Fixes: 822c91e72eac ("leds: trigger: Store brightness set by led_trigger_event()")
+Cc: stable@vger.kernel.org # v6.10+
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/core.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/hid/wacom_sys.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -8147,6 +8147,8 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x817e, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x8186, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x818a, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x317f, 0xff, 0xff, 0xff),
-@@ -8157,12 +8159,18 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x050d, 0x1102, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x050d, 0x11f2, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe033, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x07b8, 0x8188, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x07b8, 0x8189, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9041, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9043, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x17ba, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x1e1e, 0xff, 0xff, 0xff),
-@@ -8179,6 +8187,10 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3357, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3358, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3359, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330b, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x2019, 0x4902, 0xff, 0xff, 0xff),
-@@ -8193,6 +8205,8 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x4856, 0x0091, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x9846, 0x9041, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0xcdab, 0x8010, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x04f2, 0xaff7, 0xff, 0xff, 0xff),
-@@ -8218,6 +8232,8 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x0586, 0x341f, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe033, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe035, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x17ab, 0xff, 0xff, 0xff),
-@@ -8226,6 +8242,8 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x0df6, 0x0070, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x0df6, 0x0077, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x0789, 0x016d, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x07aa, 0x0056, 0xff, 0xff, 0xff),
-@@ -8248,6 +8266,8 @@ static const struct usb_device_id dev_ta
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330a, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
-+{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330d, 0xff, 0xff, 0xff),
-+	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x2019, 0xab2b, 0xff, 0xff, 0xff),
- 	.driver_info = (unsigned long)&rtl8192cu_fops},
- {USB_DEVICE_AND_INTERFACE_INFO(0x20f4, 0x624d, 0xff, 0xff, 0xff),
+diff --git a/drivers/hid/wacom_sys.c b/drivers/hid/wacom_sys.c
+index 9843b52bd017..34428349fa31 100644
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -1370,17 +1370,6 @@ static int wacom_led_register_one(struct device *dev, struct wacom *wacom,
+ 	if (!name)
+ 		return -ENOMEM;
+ 
+-	if (!read_only) {
+-		led->trigger.name = name;
+-		error = devm_led_trigger_register(dev, &led->trigger);
+-		if (error) {
+-			hid_err(wacom->hdev,
+-				"failed to register LED trigger %s: %d\n",
+-				led->cdev.name, error);
+-			return error;
+-		}
+-	}
+-
+ 	led->group = group;
+ 	led->id = id;
+ 	led->wacom = wacom;
+@@ -1397,6 +1386,19 @@ static int wacom_led_register_one(struct device *dev, struct wacom *wacom,
+ 		led->cdev.brightness_set = wacom_led_readonly_brightness_set;
+ 	}
+ 
++	if (!read_only) {
++		led->trigger.name = name;
++		if (id == wacom->led.groups[group].select)
++			led->trigger.brightness = wacom_leds_brightness_get(led);
++		error = devm_led_trigger_register(dev, &led->trigger);
++		if (error) {
++			hid_err(wacom->hdev,
++				"failed to register LED trigger %s: %d\n",
++				led->cdev.name, error);
++			return error;
++		}
++	}
++
+ 	error = devm_led_classdev_register(dev, &led->cdev);
+ 	if (error) {
+ 		hid_err(wacom->hdev,
+-- 
+2.48.1
+
 
 
