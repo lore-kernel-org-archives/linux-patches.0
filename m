@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F981E8824;
-	Thu, 30 Jan 2025 14:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1DF1BDA95;
+	Thu, 30 Jan 2025 14:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246791; cv=none; b=Notsb/VEREdNKTBbPCRuNNq6vlArZ7kVifsVXWVFFtouOoKt6cBguB/7Aaog+skO8XcZ/zSBYz/rmvTKqofQ/PUVm7/Yve/44hwsmlQcQmErsFoJ7ypWk5V76qlMl1rdoOg+CMS5dUODwWkw8UZ2E7W2QNIRgbXgXIAFCouVKww=
+	t=1738246794; cv=none; b=XP3zjsUD8igFOgzAd2VG1aL2jNeCK27tnQY48jJ0G6GGi9lTP5NVC4L+2UaeWyqk8Jm0WKwKaDoKl9gqfxx6w6Fre3g0CrrNkoqoxW+SsMN3TLNklYn5xh2j/Qpn02uIX3tF9I6I4D0qvHswTN1qOhPtv0pirLQpwZxzEUgDvo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246791; c=relaxed/simple;
-	bh=ehL/gh5BQM4nJpGKG/A0iXq+TZr+Wm5Pu5bwPfqhZr8=;
+	s=arc-20240116; t=1738246794; c=relaxed/simple;
+	bh=TYN1mia7HSXR3MdAdta+9rzchaAhXo9ErAWj4SlXXTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JX//pRHspf+mAJG93+z+nlo2xhrla9ELlT7/VE0NLsTrIqZet+/eURrWNRipDYlA9LLNkm3T5E4iPwAMUkHuLC3B1z5mssQ4rOqv2sSWEqxydRQ09Nl+wHB4cbW8kPch3jQSzcri/oKVp7FodxAcZUF2rkZ3uQwb9B2UL1g3A3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjIq5eEW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFnBkcU3W+491QY10x1Ue93j0Wqaow87EQw05nU9wAbc4jLkxLhMktEqpM3NhXUzPkBISppXcBJ6Mo/eI28E99Zuex5v7QHfx1tnI2PgVlPSDu3PoZjUgy/Ncl6vYsYwVWHAKF4NdCdh3t1A73DBdhzE1NLh2AHhs3WXav7Z+PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW/7Xbt/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjIq5eEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D435DC4CEE2;
-	Thu, 30 Jan 2025 14:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW/7Xbt/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB598C4CED2;
+	Thu, 30 Jan 2025 14:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246791;
-	bh=ehL/gh5BQM4nJpGKG/A0iXq+TZr+Wm5Pu5bwPfqhZr8=;
+	s=korg; t=1738246794;
+	bh=TYN1mia7HSXR3MdAdta+9rzchaAhXo9ErAWj4SlXXTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WjIq5eEWqFUmzLPamVetdCS5KcTXGrx1jTV5jo+3YiNxmz0+1bIXkSHjNIGLKFre+
-	 lZehGmJB9oq7dwzJMW/j5uc65zQ3pqfAvE5vu+u3jRIT84SifjdQw6PSJZwKWt7Z2L
-	 JIjUOq0u9/ROJGGpR5TG3wsiHIIgP9t20lfU7Zvk=
+	b=PW/7Xbt/GSD6Mltq5ILBZCFEYJSGKM0o+x+SaRelcXLWf7NwHIZlIrv4QeUFcE3Rg
+	 y4aqWgrcN8cG1OO+Kq7rh+VML9Hh2GooBLkf6sJTew/oVIW1j4EwTtYTrq7ETLHYa5
+	 wuz8V8VS22qGLJYtC2uZTjGxURbcajOEqCXrnt9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 68/91] net: ethernet: xgbe: re-add aneg to supported features in PHY quirks
-Date: Thu, 30 Jan 2025 15:01:27 +0100
-Message-ID: <20250130140136.408948376@linuxfoundation.org>
+	Rik van Riel <riel@surriel.com>,
+	Breno Leitao <leitao@debian.org>,
+	Baoquan He <bhe@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 69/91] fs/proc: fix softlockup in __read_vmcore (part 2)
+Date: Thu, 30 Jan 2025 15:01:28 +0100
+Message-ID: <20250130140136.450883098@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -50,93 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Rik van Riel <riel@surriel.com>
 
-commit 6be7aca91009865d8c2b73589270224a6b6e67ab upstream.
+commit cbc5dde0a461240046e8a41c43d7c3b76d5db952 upstream.
 
-In 4.19, before the switch to linkmode bitmaps, PHY_GBIT_FEATURES
-included feature bits for aneg and TP/MII ports.
+Since commit 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore") the
+number of softlockups in __read_vmcore at kdump time have gone down, but
+they still happen sometimes.
 
-				 SUPPORTED_TP | \
-				 SUPPORTED_MII)
+In a memory constrained environment like the kdump image, a softlockup is
+not just a harmless message, but it can interfere with things like RCU
+freeing memory, causing the crashdump to get stuck.
 
-				 SUPPORTED_10baseT_Full)
+The second loop in __read_vmcore has a lot more opportunities for natural
+sleep points, like scheduling out while waiting for a data write to
+happen, but apparently that is not always enough.
 
-				 SUPPORTED_100baseT_Full)
+Add a cond_resched() to the second loop in __read_vmcore to (hopefully)
+get rid of the softlockups.
 
-				 SUPPORTED_1000baseT_Full)
-
-				 PHY_100BT_FEATURES | \
-				 PHY_DEFAULT_FEATURES)
-
-				 PHY_1000BT_FEATURES)
-
-Referenced commit expanded PHY_GBIT_FEATURES, silently removing
-PHY_DEFAULT_FEATURES. The removed part can be re-added by using
-the new PHY_GBIT_FEATURES definition.
-Not clear to me is why nobody seems to have noticed this issue.
-
-I stumbled across this when checking what it takes to make
-phy_10_100_features_array et al private to phylib.
-
-Fixes: d0939c26c53a ("net: ethernet: xgbe: expand PHY_GBIT_FEAUTRES")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://patch.msgid.link/46521973-7738-4157-9f5e-0bb6f694acba@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20250110102821.2a37581b@fangorn
+Fixes: 5cbcb62dddf5 ("fs/proc: fix softlockup in __read_vmcore")
+Signed-off-by: Rik van Riel <riel@surriel.com>
+Reported-by: Breno Leitao <leitao@debian.org>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c |   19 ++-----------------
- 1 file changed, 2 insertions(+), 17 deletions(-)
+ fs/proc/vmcore.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -855,7 +855,6 @@ static void xgbe_phy_free_phy_device(str
+--- a/fs/proc/vmcore.c
++++ b/fs/proc/vmcore.c
+@@ -397,6 +397,8 @@ static ssize_t __read_vmcore(char *buffe
+ 			if (buflen == 0)
+ 				return acc;
+ 		}
++
++		cond_resched();
+ 	}
  
- static bool xgbe_phy_finisar_phy_quirks(struct xgbe_prv_data *pdata)
- {
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
- 	struct xgbe_phy_data *phy_data = pdata->phy_data;
- 	unsigned int phy_id = phy_data->phydev->phy_id;
- 
-@@ -877,14 +876,7 @@ static bool xgbe_phy_finisar_phy_quirks(
- 	phy_write(phy_data->phydev, 0x04, 0x0d01);
- 	phy_write(phy_data->phydev, 0x00, 0x9140);
- 
--	linkmode_set_bit_array(phy_10_100_features_array,
--			       ARRAY_SIZE(phy_10_100_features_array),
--			       supported);
--	linkmode_set_bit_array(phy_gbit_features_array,
--			       ARRAY_SIZE(phy_gbit_features_array),
--			       supported);
--
--	linkmode_copy(phy_data->phydev->supported, supported);
-+	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
- 
- 	phy_support_asym_pause(phy_data->phydev);
- 
-@@ -896,7 +888,6 @@ static bool xgbe_phy_finisar_phy_quirks(
- 
- static bool xgbe_phy_belfuse_phy_quirks(struct xgbe_prv_data *pdata)
- {
--	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
- 	struct xgbe_phy_data *phy_data = pdata->phy_data;
- 	struct xgbe_sfp_eeprom *sfp_eeprom = &phy_data->sfp_eeprom;
- 	unsigned int phy_id = phy_data->phydev->phy_id;
-@@ -960,13 +951,7 @@ static bool xgbe_phy_belfuse_phy_quirks(
- 	reg = phy_read(phy_data->phydev, 0x00);
- 	phy_write(phy_data->phydev, 0x00, reg & ~0x00800);
- 
--	linkmode_set_bit_array(phy_10_100_features_array,
--			       ARRAY_SIZE(phy_10_100_features_array),
--			       supported);
--	linkmode_set_bit_array(phy_gbit_features_array,
--			       ARRAY_SIZE(phy_gbit_features_array),
--			       supported);
--	linkmode_copy(phy_data->phydev->supported, supported);
-+	linkmode_copy(phy_data->phydev->supported, PHY_GBIT_FEATURES);
- 	phy_support_asym_pause(phy_data->phydev);
- 
- 	netif_dbg(pdata, drv, pdata->netdev,
+ 	return acc;
 
 
