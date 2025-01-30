@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C550A1E7C27;
-	Thu, 30 Jan 2025 14:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA061E3DC8;
+	Thu, 30 Jan 2025 14:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246656; cv=none; b=L5aAoiApLbUF9d2+eDF/NdIqG9ZhX8RuMnLjhyig7h9pu28n4BRljOzqT1kIlPUvirmSKjCpWYjq4VbmEGSYG6tHyMUyTPN/lK7y/0I3iP8oW7WbcbHXX1qf7kaG7a4dFxZ/BLCTW8VUxK+/gzEDBRrDRwm+xteo9a4qvdZ7ANI=
+	t=1738246660; cv=none; b=Uwbd9V4Wd38AZKgI5QYJnYzGEF6aYqIHqVkyAFb67l0lnPZMRYcyolNmqgQalJnMFpZgwj39KhyMDOhb/hM7ljZahtug+fAHRyg3kGUR7GEFb4bv3ciCm6Uf7p4QSZFoi03TKHRMnb3nntNhgInJOM/RdHibTy4dNXMq1UziR6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246656; c=relaxed/simple;
-	bh=kDFylhuwTKtMQgVm3i21iw70JjfnNz7o24VfrlrYV8E=;
+	s=arc-20240116; t=1738246660; c=relaxed/simple;
+	bh=6YA6MUrdalOmzQA9qge9ygTNVhhRga7PiuGZ0Kr9jNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K0JB5EGSa4Vfz0HlOBXt57l+6OVOfgwr2l9oDj3iMPvnaG4aXaYuHWo2nToyKpVsiPRCI2Qwhf/U/zpbMEJ0lXoXNz48XoFHOG3qLhvzTkr1VqQUj6zb84cEVIpY5NB7TkfBmoRkRnloksf2oBLubhuIpNxtAr6g2zYV1r7i7EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1R/ALS5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iH14GyntTII+tz0mVLcriW3sdrYd9rO4J76631BW+YqoYHG+ulzxT5iAQir1ZLUGT59s6Jk+CBI9aqQTPsAPwFdZ9aBjQD7pXLetSVDPKQmEV2vEeZjGcMSJk9crX9poeQum8Mxa/2ln3k8b/Yhm5VcOWudwKAPb32jlg1m8YUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo66+Wjk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1R/ALS5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48528C4CED2;
-	Thu, 30 Jan 2025 14:17:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo66+Wjk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31F56C4CEE0;
+	Thu, 30 Jan 2025 14:17:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246656;
-	bh=kDFylhuwTKtMQgVm3i21iw70JjfnNz7o24VfrlrYV8E=;
+	s=korg; t=1738246659;
+	bh=6YA6MUrdalOmzQA9qge9ygTNVhhRga7PiuGZ0Kr9jNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1R/ALS5taQ3oVJggtR+HDDY62NC4ACezM0GPxlLuI9Hh1vxwHHBzEUXSyji2azze
-	 d9FY7W7hvQWzgakmKbsRXBZECIWC2kfwdT6q0yo7EXZyK6mIcQJmBwLi9B+5HU7+G6
-	 5x7oZ0DxmFcjGabuL3IcJqkL0yceDzH+AcKodXR0=
+	b=zo66+Wjk9HtAvia7LCHTUXoGO3C4blquS7v3BWyKayYmft+wLEoL5uxyJPU2+XBoV
+	 4kD0v28WnU3ZZgzCHLzNFOXH59owhTvQPmHxYXDSlZeukTX5RBJz7fUSEvZl6+Kqwx
+	 W5vFwoTq31oRlBoySU7L8egzOPZ5AewPk9Co3fck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 23/91] USB: serial: cp210x: add Phoenix Contact UPS Device
-Date: Thu, 30 Jan 2025 15:00:42 +0100
-Message-ID: <20250130140134.595300782@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Lianqin Hu <hulianqin@vivo.com>
+Subject: [PATCH 5.4 24/91] usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null
+Date: Thu, 30 Jan 2025 15:00:43 +0100
+Message-ID: <20250130140134.635173399@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -50,90 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit 854eee93bd6e3dca619d47087af4d65b2045828e upstream.
+commit 13014969cbf07f18d62ceea40bd8ca8ec9d36cec upstream.
 
-Phoenix Contact sells UPS Quint devices [1] with a custom datacable [2]
-that embeds a Silicon Labs converter:
+Considering that in some extreme cases, when performing the
+unbinding operation, gserial_disconnect has cleared gser->ioport,
+which triggers gadget reconfiguration, and then calls gs_read_complete,
+resulting in access to a null pointer. Therefore, ep is disabled before
+gserial_disconnect sets port to null to prevent this from happening.
 
-Bus 001 Device 003: ID 1b93:1013 Silicon Labs Phoenix Contact UPS Device
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass            0
-  bDeviceSubClass         0
-  bDeviceProtocol         0
-  bMaxPacketSize0        64
-  idVendor           0x1b93
-  idProduct          0x1013
-  bcdDevice            1.00
-  iManufacturer           1 Silicon Labs
-  iProduct                2 Phoenix Contact UPS Device
-  iSerial                 3 <redacted>
-  bNumConfigurations	 1
-  Configuration Descriptor:
-    bLength                 9
-    bDescriptorType         2
-    wTotalLength       0x0020
-    bNumInterfaces          1
-    bConfigurationValue     1
-    iConfiguration          0
-    bmAttributes         0x80
-      (Bus Powered)
-    MaxPower              100mA
-    Interface Descriptor:
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        0
-      bAlternateSetting       0
-      bNumEndpoints           2
-      bInterfaceClass       255 Vendor Specific Class
-      bInterfaceSubClass      0
-      bInterfaceProtocol      0
-      iInterface              2 Phoenix Contact UPS Device
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x01  EP 1 OUT
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
-      Endpoint Descriptor:
-        bLength                 7
-        bDescriptorType         5
-        bEndpointAddress     0x82  EP 2 IN
-        bmAttributes            2
-          Transfer Type            Bulk
-          Synch Type               None
-          Usage Type               Data
-        wMaxPacketSize     0x0040  1x 64 bytes
-        bInterval               0
+Call trace:
+ gs_read_complete+0x58/0x240
+ usb_gadget_giveback_request+0x40/0x160
+ dwc3_remove_requests+0x170/0x484
+ dwc3_ep0_out_start+0xb0/0x1d4
+ __dwc3_gadget_start+0x25c/0x720
+ kretprobe_trampoline.cfi_jt+0x0/0x8
+ kretprobe_trampoline.cfi_jt+0x0/0x8
+ udc_bind_to_driver+0x1d8/0x300
+ usb_gadget_probe_driver+0xa8/0x1dc
+ gadget_dev_desc_UDC_store+0x13c/0x188
+ configfs_write_iter+0x160/0x1f4
+ vfs_write+0x2d0/0x40c
+ ksys_write+0x7c/0xf0
+ __arm64_sys_write+0x20/0x30
+ invoke_syscall+0x60/0x150
+ el0_svc_common+0x8c/0xf8
+ do_el0_svc+0x28/0xa0
+ el0_svc+0x24/0x84
 
-[1] https://www.phoenixcontact.com/en-pc/products/power-supply-unit-quint-ps-1ac-24dc-10-2866763
-[2] https://www.phoenixcontact.com/en-il/products/data-cable-preassembled-ifs-usb-datacable-2320500
-
-Reported-by: Giuseppe Corbelli <giuseppe.corbelli@antaresvision.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Cc: stable <stable@kernel.org>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Link: https://lore.kernel.org/r/TYUPR06MB621733B5AC690DBDF80A0DCCD2042@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/function/u_serial.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -224,6 +224,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x19CF, 0x3000) }, /* Parrot NMEA GPS Flight Recorder */
- 	{ USB_DEVICE(0x1ADB, 0x0001) }, /* Schweitzer Engineering C662 Cable */
- 	{ USB_DEVICE(0x1B1C, 0x1C00) }, /* Corsair USB Dongle */
-+	{ USB_DEVICE(0x1B93, 0x1013) }, /* Phoenix Contact UPS Device */
- 	{ USB_DEVICE(0x1BA4, 0x0002) },	/* Silicon Labs 358x factory default */
- 	{ USB_DEVICE(0x1BE3, 0x07A6) }, /* WAGO 750-923 USB Service Cable */
- 	{ USB_DEVICE(0x1D6F, 0x0010) }, /* Seluxit ApS RF Dongle */
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -1369,6 +1369,10 @@ void gserial_disconnect(struct gserial *
+ 	/* REVISIT as above: how best to track this? */
+ 	port->port_line_coding = gser->port_line_coding;
+ 
++	/* disable endpoints, aborting down any active I/O */
++	usb_ep_disable(gser->out);
++	usb_ep_disable(gser->in);
++
+ 	port->port_usb = NULL;
+ 	gser->ioport = NULL;
+ 	if (port->port.count > 0 || port->openclose) {
+@@ -1378,10 +1382,6 @@ void gserial_disconnect(struct gserial *
+ 	}
+ 	spin_unlock_irqrestore(&port->port_lock, flags);
+ 
+-	/* disable endpoints, aborting down any active I/O */
+-	usb_ep_disable(gser->out);
+-	usb_ep_disable(gser->in);
+-
+ 	/* finally, free any unused/unusable I/O buffers */
+ 	spin_lock_irqsave(&port->port_lock, flags);
+ 	if (port->port.count == 0 && !port->openclose)
 
 
