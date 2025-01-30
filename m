@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00A6C13D;
-	Thu, 30 Jan 2025 14:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A855F2941C;
+	Thu, 30 Jan 2025 14:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245617; cv=none; b=eGZFKPTUfycFtObXo7uGIwRmCHMyG+W3iA0xTeZNPp4wJNwX88Mz5mb6B5+fvegv/fz6nHIrEkeVl0XnNXFXl4/X19dyfFLhSY6RDi71QirZmvC5vZww4AYrMYC+plwJLwX22FN9CLvhosjrWKUvjWHkfM9zZ/YDmp9yk8cIj1U=
+	t=1738245620; cv=none; b=MBym2DodkzbCfDVpL0wzvy0YnRgX7FRKCZavXhirvj5evJccD442pWan5YtMzWLhNxsxZz1fUCIHEBjM7Poqx7lWxALeM+ZBACcdnJ0Gm6/7DB6eloEznZLGdnCU0PlIg5WACYgYgwyjvqx/STNGLGxrQHPGuuNho3++9y9rK70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245617; c=relaxed/simple;
-	bh=KZma5isz8+ID+XSPTZfEJtvHvUiD07Lf6e6TbHphaxs=;
+	s=arc-20240116; t=1738245620; c=relaxed/simple;
+	bh=Pa8dlBLgPNpygLTJqNCs+vSvGZH7A6gEhzOW83F47oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oU//y06UT65SM/3LUHMJtgaEFp6nQqQh09g1+ft9tOv5IptpLKEH0FRaPKtvrXzxNGVPgekrCxdzSWUyL+EvF2wwOMeujjF2Pg8n2om8GIN7ANe2DqWxqcQFdFQiXv8fmurbmaAytEwF7vyMibsQ8LOO2KNZ+dMfbqX7Q0Z9F2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMmCeDfH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AG5ryi3NM3UuiOrkCCWOydAh6OGV2f0l4q2b1vGyieibwf2Tb3KYFN/SrHLoiaiYylAjNPqJwP5NUO8GVyDDPATDXOXV4KNwHNI/VPL4z5trXmTNA/ccwmkzNuMs0NFoGlz2sah1e+TIlk6zsZ3Ld9BhdkLxIrE+bEt77WcVJe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OAxrenuz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMmCeDfH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A023C4CED2;
-	Thu, 30 Jan 2025 14:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OAxrenuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33923C4CED2;
+	Thu, 30 Jan 2025 14:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245617;
-	bh=KZma5isz8+ID+XSPTZfEJtvHvUiD07Lf6e6TbHphaxs=;
+	s=korg; t=1738245620;
+	bh=Pa8dlBLgPNpygLTJqNCs+vSvGZH7A6gEhzOW83F47oQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMmCeDfH1re7EgllkP5P6+TeiKiNv828ak8uVuPfi0MQJET/2U6XC5AZIO3YKWJHm
-	 o5Dpt8bdXqrJn0FjemV9cn4e8VRirCq0TIRVHmFnSpyF+PIqRdXAhnZN0q/YkshCZ2
-	 zRAbmqGWIkllAa2pg3d+Ys1Sh7NksRc6HpB94+R8=
+	b=OAxrenuzByV6IUb/sRCjwOU2uzXSH8wIZ9FtmGq0GK0KLZiMgsGJ++pVmFhIVHGQP
+	 pGjjvfsb/oNL0T8SlwdT0RJS9xw0re44P3Ju3XEw1qNMJX/Mfc7KlfosP+zpSih1e3
+	 wdrwr+jb2sG0nB8nEyaSyihTo9moYbGm64V+w7lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.13 07/25] smb: client: handle lack of EA support in smb2_query_path_info()
-Date: Thu, 30 Jan 2025 14:58:53 +0100
-Message-ID: <20250130133457.221649728@linuxfoundation.org>
+	Haowei Yan <g1042620637@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.13 08/25] net: sched: fix ets qdisc OOB Indexing
+Date: Thu, 30 Jan 2025 14:58:54 +0100
+Message-ID: <20250130133457.261174674@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133456.914329400@linuxfoundation.org>
 References: <20250130133456.914329400@linuxfoundation.org>
@@ -45,201 +47,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-commit 3681c74d342db75b0d641ba60de27bf73e16e66b upstream.
+commit d62b04fca4340a0d468d7853bd66e511935a18cb upstream.
 
-If the server doesn't support both EAs and reparse point in a file,
-the SMB2_QUERY_INFO request will fail with either
-STATUS_NO_EAS_ON_FILE or STATUS_EAS_NOT_SUPPORT in the compound chain,
-so ignore it as long as reparse point isn't
-IO_REPARSE_TAG_LX_(CHR|BLK), which would require the EAs to know about
-major/minor numbers.
+Haowei Yan <g1042620637@gmail.com> found that ets_class_from_arg() can
+index an Out-Of-Bound class in ets_class_from_arg() when passed clid of
+0. The overflow may cause local privilege escalation.
 
-Reported-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ [   18.852298] ------------[ cut here ]------------
+ [   18.853271] UBSAN: array-index-out-of-bounds in net/sched/sch_ets.c:93:20
+ [   18.853743] index 18446744073709551615 is out of range for type 'ets_class [16]'
+ [   18.854254] CPU: 0 UID: 0 PID: 1275 Comm: poc Not tainted 6.12.6-dirty #17
+ [   18.854821] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+ [   18.856532] Call Trace:
+ [   18.857441]  <TASK>
+ [   18.858227]  dump_stack_lvl+0xc2/0xf0
+ [   18.859607]  dump_stack+0x10/0x20
+ [   18.860908]  __ubsan_handle_out_of_bounds+0xa7/0xf0
+ [   18.864022]  ets_class_change+0x3d6/0x3f0
+ [   18.864322]  tc_ctl_tclass+0x251/0x910
+ [   18.864587]  ? lock_acquire+0x5e/0x140
+ [   18.865113]  ? __mutex_lock+0x9c/0xe70
+ [   18.866009]  ? __mutex_lock+0xa34/0xe70
+ [   18.866401]  rtnetlink_rcv_msg+0x170/0x6f0
+ [   18.866806]  ? __lock_acquire+0x578/0xc10
+ [   18.867184]  ? __pfx_rtnetlink_rcv_msg+0x10/0x10
+ [   18.867503]  netlink_rcv_skb+0x59/0x110
+ [   18.867776]  rtnetlink_rcv+0x15/0x30
+ [   18.868159]  netlink_unicast+0x1c3/0x2b0
+ [   18.868440]  netlink_sendmsg+0x239/0x4b0
+ [   18.868721]  ____sys_sendmsg+0x3e2/0x410
+ [   18.869012]  ___sys_sendmsg+0x88/0xe0
+ [   18.869276]  ? rseq_ip_fixup+0x198/0x260
+ [   18.869563]  ? rseq_update_cpu_node_id+0x10a/0x190
+ [   18.869900]  ? trace_hardirqs_off+0x5a/0xd0
+ [   18.870196]  ? syscall_exit_to_user_mode+0xcc/0x220
+ [   18.870547]  ? do_syscall_64+0x93/0x150
+ [   18.870821]  ? __memcg_slab_free_hook+0x69/0x290
+ [   18.871157]  __sys_sendmsg+0x69/0xd0
+ [   18.871416]  __x64_sys_sendmsg+0x1d/0x30
+ [   18.871699]  x64_sys_call+0x9e2/0x2670
+ [   18.871979]  do_syscall_64+0x87/0x150
+ [   18.873280]  ? do_syscall_64+0x93/0x150
+ [   18.874742]  ? lock_release+0x7b/0x160
+ [   18.876157]  ? do_user_addr_fault+0x5ce/0x8f0
+ [   18.877833]  ? irqentry_exit_to_user_mode+0xc2/0x210
+ [   18.879608]  ? irqentry_exit+0x77/0xb0
+ [   18.879808]  ? clear_bhb_loop+0x15/0x70
+ [   18.880023]  ? clear_bhb_loop+0x15/0x70
+ [   18.880223]  ? clear_bhb_loop+0x15/0x70
+ [   18.880426]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ [   18.880683] RIP: 0033:0x44a957
+ [   18.880851] Code: ff ff e8 fc 00 00 00 66 2e 0f 1f 84 00 00 00 00 00 66 90 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 89 54 24 1c 48 8974 24 10
+ [   18.881766] RSP: 002b:00007ffcdd00fad8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+ [   18.882149] RAX: ffffffffffffffda RBX: 00007ffcdd010db8 RCX: 000000000044a957
+ [   18.882507] RDX: 0000000000000000 RSI: 00007ffcdd00fb70 RDI: 0000000000000003
+ [   18.885037] RBP: 00007ffcdd010bc0 R08: 000000000703c770 R09: 000000000703c7c0
+ [   18.887203] R10: 0000000000000080 R11: 0000000000000246 R12: 0000000000000001
+ [   18.888026] R13: 00007ffcdd010da8 R14: 00000000004ca7d0 R15: 0000000000000001
+ [   18.888395]  </TASK>
+ [   18.888610] ---[ end trace ]---
+
+Fixes: dcc68b4d8084 ("net: sch_ets: Add a new Qdisc")
+Reported-by: Haowei Yan <g1042620637@gmail.com>
+Suggested-by: Haowei Yan <g1042620637@gmail.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/20250111145740.74755-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |   92 ++++++++++++++++++++++++++++++++++------------
- 1 file changed, 69 insertions(+), 23 deletions(-)
+ net/sched/sch_ets.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -176,27 +176,27 @@ static int smb2_compound_op(const unsign
- 			    struct kvec *out_iov, int *out_buftype, struct dentry *dentry)
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -91,6 +91,8 @@ ets_class_from_arg(struct Qdisc *sch, un
  {
+ 	struct ets_sched *q = qdisc_priv(sch);
  
--	struct reparse_data_buffer *rbuf;
-+	struct smb2_query_info_rsp *qi_rsp = NULL;
- 	struct smb2_compound_vars *vars = NULL;
--	struct kvec *rsp_iov, *iov;
--	struct smb_rqst *rqst;
--	int rc;
--	__le16 *utf16_path = NULL;
- 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
--	struct cifs_fid fid;
-+	struct cifs_open_info_data *idata;
- 	struct cifs_ses *ses = tcon->ses;
-+	struct reparse_data_buffer *rbuf;
- 	struct TCP_Server_Info *server;
--	int num_rqst = 0, i;
- 	int resp_buftype[MAX_COMPOUND];
--	struct smb2_query_info_rsp *qi_rsp = NULL;
--	struct cifs_open_info_data *idata;
-+	int retries = 0, cur_sleep = 1;
-+	__u8 delete_pending[8] = {1,};
-+	struct kvec *rsp_iov, *iov;
- 	struct inode *inode = NULL;
--	int flags = 0;
--	__u8 delete_pending[8] = {1, 0, 0, 0, 0, 0, 0, 0};
-+	__le16 *utf16_path = NULL;
-+	struct smb_rqst *rqst;
- 	unsigned int size[2];
--	void *data[2];
-+	struct cifs_fid fid;
-+	int num_rqst = 0, i;
- 	unsigned int len;
--	int retries = 0, cur_sleep = 1;
-+	int tmp_rc, rc;
-+	int flags = 0;
-+	void *data[2];
- 
- replay_again:
- 	/* reinitialize for possible replay */
-@@ -637,7 +637,14 @@ finished:
- 		tcon->need_reconnect = true;
- 	}
- 
-+	tmp_rc = rc;
- 	for (i = 0; i < num_cmds; i++) {
-+		char *buf = rsp_iov[i + i].iov_base;
-+
-+		if (buf && resp_buftype[i + 1] != CIFS_NO_BUFFER)
-+			rc = server->ops->map_error(buf, false);
-+		else
-+			rc = tmp_rc;
- 		switch (cmds[i]) {
- 		case SMB2_OP_QUERY_INFO:
- 			idata = in_iov[i].iov_base;
-@@ -803,6 +810,7 @@ finished:
- 		}
- 	}
- 	SMB2_close_free(&rqst[num_rqst]);
-+	rc = tmp_rc;
- 
- 	num_cmds += 2;
- 	if (out_iov && out_buftype) {
-@@ -858,22 +866,52 @@ static int parse_create_response(struct
- 	return rc;
- }
- 
-+/* Check only if SMB2_OP_QUERY_WSL_EA command failed in the compound chain */
-+static bool ea_unsupported(int *cmds, int num_cmds,
-+			   struct kvec *out_iov, int *out_buftype)
-+{
-+	int i;
-+
-+	if (cmds[num_cmds - 1] != SMB2_OP_QUERY_WSL_EA)
-+		return false;
-+
-+	for (i = 1; i < num_cmds - 1; i++) {
-+		struct smb2_hdr *hdr = out_iov[i].iov_base;
-+
-+		if (out_buftype[i] == CIFS_NO_BUFFER || !hdr ||
-+		    hdr->Status != STATUS_SUCCESS)
-+			return false;
-+	}
-+	return true;
-+}
-+
-+static inline void free_rsp_iov(struct kvec *iovs, int *buftype, int count)
-+{
-+	int i;
-+
-+	for (i = 0; i < count; i++) {
-+		free_rsp_buf(buftype[i], iovs[i].iov_base);
-+		memset(&iovs[i], 0, sizeof(*iovs));
-+		buftype[i] = CIFS_NO_BUFFER;
-+	}
-+}
-+
- int smb2_query_path_info(const unsigned int xid,
- 			 struct cifs_tcon *tcon,
- 			 struct cifs_sb_info *cifs_sb,
- 			 const char *full_path,
- 			 struct cifs_open_info_data *data)
- {
-+	struct kvec in_iov[3], out_iov[5] = {};
-+	struct cached_fid *cfid = NULL;
- 	struct cifs_open_parms oparms;
--	__u32 create_options = 0;
- 	struct cifsFileInfo *cfile;
--	struct cached_fid *cfid = NULL;
-+	__u32 create_options = 0;
-+	int out_buftype[5] = {};
- 	struct smb2_hdr *hdr;
--	struct kvec in_iov[3], out_iov[3] = {};
--	int out_buftype[3] = {};
-+	int num_cmds = 0;
- 	int cmds[3];
- 	bool islink;
--	int i, num_cmds = 0;
- 	int rc, rc2;
- 
- 	data->adjust_tz = false;
-@@ -943,14 +981,14 @@ int smb2_query_path_info(const unsigned
- 		if (rc || !data->reparse_point)
- 			goto out;
- 
--		if (!tcon->posix_extensions)
--			cmds[num_cmds++] = SMB2_OP_QUERY_WSL_EA;
- 		/*
- 		 * Skip SMB2_OP_GET_REPARSE if symlink already parsed in create
- 		 * response.
- 		 */
- 		if (data->reparse.tag != IO_REPARSE_TAG_SYMLINK)
- 			cmds[num_cmds++] = SMB2_OP_GET_REPARSE;
-+		if (!tcon->posix_extensions)
-+			cmds[num_cmds++] = SMB2_OP_QUERY_WSL_EA;
- 
- 		oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
- 				     FILE_READ_ATTRIBUTES |
-@@ -958,9 +996,18 @@ int smb2_query_path_info(const unsigned
- 				     FILE_OPEN, create_options |
- 				     OPEN_REPARSE_POINT, ACL_NO_MODE);
- 		cifs_get_readable_path(tcon, full_path, &cfile);
-+		free_rsp_iov(out_iov, out_buftype, ARRAY_SIZE(out_iov));
- 		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path,
- 				      &oparms, in_iov, cmds, num_cmds,
--				      cfile, NULL, NULL, NULL);
-+				      cfile, out_iov, out_buftype, NULL);
-+		if (rc && ea_unsupported(cmds, num_cmds,
-+					 out_iov, out_buftype)) {
-+			if (data->reparse.tag != IO_REPARSE_TAG_LX_BLK &&
-+			    data->reparse.tag != IO_REPARSE_TAG_LX_CHR)
-+				rc = 0;
-+			else
-+				rc = -EOPNOTSUPP;
-+		}
- 		break;
- 	case -EREMOTE:
- 		break;
-@@ -978,8 +1025,7 @@ int smb2_query_path_info(const unsigned
- 	}
- 
- out:
--	for (i = 0; i < ARRAY_SIZE(out_buftype); i++)
--		free_rsp_buf(out_buftype[i], out_iov[i].iov_base);
-+	free_rsp_iov(out_iov, out_buftype, ARRAY_SIZE(out_iov));
- 	return rc;
++	if (arg == 0 || arg > q->nbands)
++		return NULL;
+ 	return &q->classes[arg - 1];
  }
  
 
