@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35F31DDC22;
-	Thu, 30 Jan 2025 14:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25F31E98F1;
+	Thu, 30 Jan 2025 14:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247154; cv=none; b=DOma67baFhHgSZN14iLQbsU4D01MxBBvG2HXyLw/2KuwZo2RecVj5tU/3bqg8sCpxd/+9rcZzxIDxahOJPKiQEsxmd0NXaJnh7HJgLxiVANKJguc/PsIfkrdnBZGKJZVaq6iKq3+VGeBzBxuR07bIjLAQ13Q+OAcTSG+gJvKEYg=
+	t=1738247156; cv=none; b=Dh69OqZmno11/UP409hFUrJ8ieWlEVn42cTDgockrt+Vi1CTMMjwNpewwq7mDYtOvaYKVCjk+xxlG5E7jQavlN9Rk9aqOrTUwJls27IAIWjEdFqLgleH1uYeVzYXb8+IOTyYdDF21rRpB3R47Dt5UE7nVMpkgoZXzvkRzGn/yvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247154; c=relaxed/simple;
-	bh=ZSdQMKo2LvL/kJUYSuMAJYwZdmieqYnw6d1MPsBHogc=;
+	s=arc-20240116; t=1738247156; c=relaxed/simple;
+	bh=ar9bApVvHLTMr9/ngIDonaJPMbij4ploO4Tzl0kJ2Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLIszM3mIXLHenKbyLdx4THfvGmbtm4bmuUP4vC1IbxrRt3mzqI2gy8hg4/38K0ccJai5QCYgxpjZwZMWU94OK6ExFJs49qrk4k8EnpQabDQ6Mn2l9yzoBqngVWvENe+Eql3WO0AN9xOZJdvUtgXfTv2C1HfbWcJYgcDJXzEYng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNSi7Gct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZnT3SjjqNdpPxvhUGrMYAwArRGoaOO3PAr+5z/UFkV59Fktz/3LzFQa42UjjjkRo90Qy80wiDJ7ygPL7K/8IhgH3KjbggmbaKkv17DVy+xIcGAg1X9pzZHBetTlE6/EBY8uQg43h/igzQSCGZzA4+NRMf9PnXg927yfBQM9cKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+qakpaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNSi7Gct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8F1C4CED2;
-	Thu, 30 Jan 2025 14:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+qakpaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F84C4CED2;
+	Thu, 30 Jan 2025 14:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247153;
-	bh=ZSdQMKo2LvL/kJUYSuMAJYwZdmieqYnw6d1MPsBHogc=;
+	s=korg; t=1738247156;
+	bh=ar9bApVvHLTMr9/ngIDonaJPMbij4ploO4Tzl0kJ2Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNSi7GctiVoZsrAlzJ6rM7Zz3nkNAtpQj1fTMsw7yuJWXMXvI/fSmI+ETofaDa5M0
-	 f9qtH20RXWKtHSJ655D/ur+5CQciTW77ZjTTyUhllflXMbcm0gXXXkDx9VcMsv8m2P
-	 bVzG3T27JU2j+e8qP32qDp+X0X+j7bj+FDOx80iA=
+	b=D+qakpaAdjY+b99G3C60m3oClSZ4PltzvSbryfW283TPGk4vuGcD7pAI5dQ1l3RGj
+	 xaH5PcwufAxKMfwuNC475KRiVhTGsqXVuBX6pEMu/td3G/RodVCy+fdrTYJ7Rxr5gN
+	 f7T1/MkmqivDOOkdym+13ZtJtYF58zN5IWLcg99I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheer Kumar Doredla <s-doredla@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrzej Hajda <a.hajda@samsung.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 071/133] net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()
-Date: Thu, 30 Jan 2025 15:01:00 +0100
-Message-ID: <20250130140145.377728568@linuxfoundation.org>
+Subject: [PATCH 5.10 062/133] drm/mipi-dsi: Create devm device registration
+Date: Thu, 30 Jan 2025 15:00:51 +0100
+Message-ID: <20250130140145.015753362@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -54,84 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudheer Kumar Doredla <s-doredla@ti.com>
+From: Maxime Ripard <maxime@cerno.tech>
 
-[ Upstream commit 03d120f27d050336f7e7d21879891542c4741f81 ]
+[ Upstream commit a1419fb4a73e47f0eab2985dff594ed52397471b ]
 
-CPSW ALE has 75-bit ALE entries stored across three 32-bit words.
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions support
-ALE field entries spanning up to two words at the most.
+Devices that take their data through the MIPI-DSI bus but are controlled
+through a secondary bus like I2C have to register a secondary device on
+the MIPI-DSI bus through the mipi_dsi_device_register_full() function.
 
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions work as
-expected when ALE field spanned across word1 and word2, but fails when
-ALE field spanned across word2 and word3.
+At removal or when an error occurs, that device needs to be removed
+through a call to mipi_dsi_device_unregister().
 
-For example, while reading the ALE field spanned across word2 and word3
-(i.e. bits 62 to 64), the word3 data shifted to an incorrect position
-due to the index becoming zero while flipping.
-The same issue occurred when setting an ALE entry.
+Let's create a device-managed variant of the registration function that
+will automatically unregister the device at unbind.
 
-This issue has not been seen in practice but will be an issue in the future
-if the driver supports accessing ALE fields spanning word2 and word3
-
-Fix the methods to handle getting/setting fields spanning up to two words.
-
-Fixes: b685f1a58956 ("net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()/cpsw_ale_set_field()")
-Signed-off-by: Sudheer Kumar Doredla <s-doredla@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20250108172433.311694-1-s-doredla@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20210910101218.1632297-4-maxime@cerno.tech
+Stable-dep-of: 81adbd3ff21c ("drm: adv7511: Fix use-after-free in adv7533_attach_dsi()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_ale.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/drm_mipi_dsi.c | 46 ++++++++++++++++++++++++++++++++++
+ include/drm/drm_mipi_dsi.h     |  3 +++
+ 2 files changed, 49 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
-index 73efc8b453643..bec6a68a973c4 100644
---- a/drivers/net/ethernet/ti/cpsw_ale.c
-+++ b/drivers/net/ethernet/ti/cpsw_ale.c
-@@ -104,15 +104,15 @@ struct cpsw_ale_dev_id {
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index 107a98484f50..e53a5b14b47b 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -246,6 +246,52 @@ void mipi_dsi_device_unregister(struct mipi_dsi_device *dsi)
+ }
+ EXPORT_SYMBOL(mipi_dsi_device_unregister);
  
- static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
- {
--	int idx, idx2;
-+	int idx, idx2, index;
- 	u32 hi_val = 0;
++static void devm_mipi_dsi_device_unregister(void *arg)
++{
++	struct mipi_dsi_device *dsi = arg;
++
++	mipi_dsi_device_unregister(dsi);
++}
++
++/**
++ * devm_mipi_dsi_device_register_full - create a managed MIPI DSI device
++ * @dev: device to tie the MIPI-DSI device lifetime to
++ * @host: DSI host to which this device is connected
++ * @info: pointer to template containing DSI device information
++ *
++ * Create a MIPI DSI device by using the device information provided by
++ * mipi_dsi_device_info template
++ *
++ * This is the managed version of mipi_dsi_device_register_full() which
++ * automatically calls mipi_dsi_device_unregister() when @dev is
++ * unbound.
++ *
++ * Returns:
++ * A pointer to the newly created MIPI DSI device, or, a pointer encoded
++ * with an error
++ */
++struct mipi_dsi_device *
++devm_mipi_dsi_device_register_full(struct device *dev,
++				   struct mipi_dsi_host *host,
++				   const struct mipi_dsi_device_info *info)
++{
++	struct mipi_dsi_device *dsi;
++	int ret;
++
++	dsi = mipi_dsi_device_register_full(host, info);
++	if (IS_ERR(dsi))
++		return dsi;
++
++	ret = devm_add_action_or_reset(dev,
++				       devm_mipi_dsi_device_unregister,
++				       dsi);
++	if (ret)
++		return ERR_PTR(ret);
++
++	return dsi;
++}
++EXPORT_SYMBOL_GPL(devm_mipi_dsi_device_register_full);
++
+ static DEFINE_MUTEX(host_lock);
+ static LIST_HEAD(host_list);
  
- 	idx    = start / 32;
- 	idx2 = (start + bits - 1) / 32;
- 	/* Check if bits to be fetched exceed a word */
- 	if (idx != idx2) {
--		idx2 = 2 - idx2; /* flip */
--		hi_val = ale_entry[idx2] << ((idx2 * 32) - start);
-+		index = 2 - idx2; /* flip */
-+		hi_val = ale_entry[index] << ((idx2 * 32) - start);
- 	}
- 	start -= idx * 32;
- 	idx    = 2 - idx; /* flip */
-@@ -122,16 +122,16 @@ static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
- static inline void cpsw_ale_set_field(u32 *ale_entry, u32 start, u32 bits,
- 				      u32 value)
- {
--	int idx, idx2;
-+	int idx, idx2, index;
- 
- 	value &= BITMASK(bits);
- 	idx = start / 32;
- 	idx2 = (start + bits - 1) / 32;
- 	/* Check if bits to be set exceed a word */
- 	if (idx != idx2) {
--		idx2 = 2 - idx2; /* flip */
--		ale_entry[idx2] &= ~(BITMASK(bits + start - (idx2 * 32)));
--		ale_entry[idx2] |= (value >> ((idx2 * 32) - start));
-+		index = 2 - idx2; /* flip */
-+		ale_entry[index] &= ~(BITMASK(bits + start - (idx2 * 32)));
-+		ale_entry[index] |= (value >> ((idx2 * 32) - start));
- 	}
- 	start -= idx * 32;
- 	idx = 2 - idx; /* flip */
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 0dbed65c0ca5..af8ed48749eb 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -224,6 +224,9 @@ struct mipi_dsi_device *
+ mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+ 			      const struct mipi_dsi_device_info *info);
+ void mipi_dsi_device_unregister(struct mipi_dsi_device *dsi);
++struct mipi_dsi_device *
++devm_mipi_dsi_device_register_full(struct device *dev, struct mipi_dsi_host *host,
++				   const struct mipi_dsi_device_info *info);
+ struct mipi_dsi_device *of_find_mipi_dsi_device_by_node(struct device_node *np);
+ int mipi_dsi_attach(struct mipi_dsi_device *dsi);
+ int mipi_dsi_detach(struct mipi_dsi_device *dsi);
 -- 
 2.39.5
 
