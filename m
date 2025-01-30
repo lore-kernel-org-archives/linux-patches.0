@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013C41E7C25;
-	Thu, 30 Jan 2025 14:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE2F1E8855;
+	Thu, 30 Jan 2025 14:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246645; cv=none; b=o8F43fWdDcd8xJFbR1bkKAxmgmBJ3PYo/4WsCXibVkP8x4HAfdev+QTGCx/rjpwIRxA+9Wh7UQigXKbPZ2ivODQfgHVXsClbu8OA/lkeynsuhRp0XJgznc6mEYhbqDaojAYtHs43+t7rK0t5p6YWdeK1qaDVVqMYPd3GDeqleY4=
+	t=1738246648; cv=none; b=kTRyDDAPk0ZSWKIhIng4eyzdzY85Z0/wCVQ4B+RER91PKilbl74vJ/kI1APYLMF3RoHL0AZdx3MXZg6XkMZKmACFHeGpUAzflBPm5E1p8YYu38px+w2TyZCmQYt63zX8n94AHb1z/VrMFqWlBJAQBqlVcxBRWAMfHoC2vDgUqTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246645; c=relaxed/simple;
-	bh=UJ+aj+mXbfMQDVGaNKlNDXjJ/FZ5mN5+Ka38Fd1QYzU=;
+	s=arc-20240116; t=1738246648; c=relaxed/simple;
+	bh=v89qz152XzJRLwKfc3Fi/i5oWZpi9u/sFFYYZHAXb3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fp2ZW5jHFpapXnb1K9SJoe33QC6CjWH903jxMTLkCVApsdfe1XnMwJQYCK9RbQZ5S6ZJdBs1PCBi6947UJ2SNmvBd7lF9CMxqJjIp8xY0ZFetbwH0hEVKefqdR9gquOSSMf04xS2gUCaAom0zEtXd5sk7BJXoU8KvkzlD3uW++Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+BH0Fhm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTvOTVGnkk+ppXHikDi1zeyNq20Qz4Ek8YGe6iF2DVJzjR0A89TxROxDBOpzSR70Gnk5snuMcX1KEoUJSictqAiX5i/YEIQborXJZAeb5rvsnsNV1BApQB62R+TthY9EbLnndoXeBkV1h3QiNl2OFJbMToxvXv9iMj9DTCiIjrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZqRP3X0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+BH0Fhm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81483C4CED2;
-	Thu, 30 Jan 2025 14:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZqRP3X0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7DBC4CEE0;
+	Thu, 30 Jan 2025 14:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246644;
-	bh=UJ+aj+mXbfMQDVGaNKlNDXjJ/FZ5mN5+Ka38Fd1QYzU=;
+	s=korg; t=1738246647;
+	bh=v89qz152XzJRLwKfc3Fi/i5oWZpi9u/sFFYYZHAXb3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y+BH0FhmQ4t6Frk25OMndaXRYfi2zvznkpPV8kBb17kjWzxjgH+zXQCV23OZfEunz
-	 tMJPY5SpKyP2Cpg/cRoB/rsDsmWrzu22uK/v1YX3o2v7PbPPONlXsLxCyDxBnULQdt
-	 nUF15FZ8pq++R3OudcNaGSdXYEksliuAotBjwZOg=
+	b=AZqRP3X0vKmAKDEC9Lz085ZemHpWkaATfLD0TPy9+wL3PBGzbqWu4O9JnO/Eb+X3L
+	 j1XrX23b9PvKgYVIg4Q2VRnPZFJ4aftHiQQd65CbXMVZpxqA/faVMI1XdAx+KZYNCv
+	 rG7tuFelH4Yp/hLhz35YyES4x9SZxoDLEeq5ITSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Ming-Hung Tsai <mtsai@redhat.com>,
-	Mikulas Patocka <mpatocka@redhat.com>
-Subject: [PATCH 5.4 11/91] dm thin: make get_first_thin use rcu-safe list first function
-Date: Thu, 30 Jan 2025 15:00:30 +0100
-Message-ID: <20250130140134.120699220@linuxfoundation.org>
+	Zicheng Qu <quzicheng@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.4 20/91] staging: iio: ad9834: Correct phase range check
+Date: Thu, 30 Jan 2025 15:00:39 +0100
+Message-ID: <20250130140134.473939306@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -51,64 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krister Johansen <kjlx@templeofstupid.com>
+From: Zicheng Qu <quzicheng@huawei.com>
 
-commit 80f130bfad1dab93b95683fc39b87235682b8f72 upstream.
+commit c0599762f0c7e260b99c6b7bceb8eae69b804c94 upstream.
 
-The documentation in rculist.h explains the absence of list_empty_rcu()
-and cautions programmers against relying on a list_empty() ->
-list_first() sequence in RCU safe code.  This is because each of these
-functions performs its own READ_ONCE() of the list head.  This can lead
-to a situation where the list_empty() sees a valid list entry, but the
-subsequent list_first() sees a different view of list head state after a
-modification.
+User Perspective:
+When a user sets the phase value, the ad9834_write_phase() is called.
+The phase register has a 12-bit resolution, so the valid range is 0 to
+4095. If the phase offset value of 4096 is input, it effectively exactly
+equals 0 in the lower 12 bits, meaning no offset.
 
-In the case of dm-thin, this author had a production box crash from a GP
-fault in the process_deferred_bios path.  This function saw a valid list
-head in get_first_thin() but when it subsequently dereferenced that and
-turned it into a thin_c, it got the inside of the struct pool, since the
-list was now empty and referring to itself.  The kernel on which this
-occurred printed both a warning about a refcount_t being saturated, and
-a UBSAN error for an out-of-bounds cpuid access in the queued spinlock,
-prior to the fault itself.  When the resulting kdump was examined, it
-was possible to see another thread patiently waiting in thin_dtr's
-synchronize_rcu.
+Reasons for the Change:
+1) Original Condition (phase > BIT(AD9834_PHASE_BITS)):
+This condition allows a phase value equal to 2^12, which is 4096.
+However, this value exceeds the valid 12-bit range, as the maximum valid
+phase value should be 4095.
+2) Modified Condition (phase >= BIT(AD9834_PHASE_BITS)):
+Ensures that the phase value is within the valid range, preventing
+invalid datafrom being written.
 
-The thin_dtr call managed to pull the thin_c out of the active thins
-list (and have it be the last entry in the active_thins list) at just
-the wrong moment which lead to this crash.
+Impact on Subsequent Logic: st->data = cpu_to_be16(addr | phase):
+If the phase value is 2^12, i.e., 4096 (0001 0000 0000 0000), and addr
+is AD9834_REG_PHASE0 (1100 0000 0000 0000), then addr | phase results in
+1101 0000 0000 0000, occupying DB12. According to the section of WRITING
+TO A PHASE REGISTER in the datasheet, the MSB 12 PHASE0 bits should be
+DB11. The original condition leads to incorrect DB12 usage, which
+contradicts the datasheet and could pose potential issues for future
+updates if DB12 is used in such related cases.
 
-Fortunately, the fix here is straight forward.  Switch get_first_thin()
-function to use list_first_or_null_rcu() which performs just a single
-READ_ONCE() and returns NULL if the list is already empty.
-
-This was run against the devicemapper test suite's thin-provisioning
-suites for delete and suspend and no regressions were observed.
-
-Signed-off-by: Krister Johansen <kjlx@templeofstupid.com>
-Fixes: b10ebd34ccca ("dm thin: fix rcu_read_lock being held in code that can sleep")
+Fixes: 12b9d5bf76bf ("Staging: IIO: DDS: AD9833 / AD9834 driver")
 Cc: stable@vger.kernel.org
-Acked-by: Ming-Hung Tsai <mtsai@redhat.com>
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Zicheng Qu <quzicheng@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20241107011015.2472600-2-quzicheng@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/staging/iio/frequency/ad9834.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -2325,10 +2325,9 @@ static struct thin_c *get_first_thin(str
- 	struct thin_c *tc = NULL;
+--- a/drivers/staging/iio/frequency/ad9834.c
++++ b/drivers/staging/iio/frequency/ad9834.c
+@@ -132,7 +132,7 @@ static int ad9834_write_frequency(struct
+ static int ad9834_write_phase(struct ad9834_state *st,
+ 			      unsigned long addr, unsigned long phase)
+ {
+-	if (phase > BIT(AD9834_PHASE_BITS))
++	if (phase >= BIT(AD9834_PHASE_BITS))
+ 		return -EINVAL;
+ 	st->data = cpu_to_be16(addr | phase);
  
- 	rcu_read_lock();
--	if (!list_empty(&pool->active_thins)) {
--		tc = list_entry_rcu(pool->active_thins.next, struct thin_c, list);
-+	tc = list_first_or_null_rcu(&pool->active_thins, struct thin_c, list);
-+	if (tc)
- 		thin_get(tc);
--	}
- 	rcu_read_unlock();
- 
- 	return tc;
 
 
