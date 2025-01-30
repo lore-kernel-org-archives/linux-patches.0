@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279F219DFAB;
-	Thu, 30 Jan 2025 14:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AC31DDE9;
+	Thu, 30 Jan 2025 14:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246668; cv=none; b=aWLQ8jwTd0eXs5wM12sIF46bhrUYxz8yj1YsC+22zLN+mXw0mDdWhUwQzFvARSXpnJTA5yDVjFY1GJEqGOWXTAflhPRI2aM168S6RmJLqLA1VSAKV99Hfe+MrTbjuqd2i2+SL9qScNTpIL2ILFxm3opsjbKFmKPTFLAB5NT5iPs=
+	t=1738246671; cv=none; b=pXKN9q0KpSseVgnW6T3Nw6XoVAyz5Qo1kKpOFVZKcBr2KnYQlRLg/Z9RbZe2ThrXBUfPv0eeDsdlnymPfJkB4rFY3i8/xxhZGuSo3a19mPYAD37mJp89fjTCy19/wLRbx9AYEqANBSSNN86wpBbIOYxI5M/11E1jKm2+Ll0n7zM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246668; c=relaxed/simple;
-	bh=k6PNCexuCTAE23O0zZoXXQxVZkF0VJ3hmJ1krEBVhwk=;
+	s=arc-20240116; t=1738246671; c=relaxed/simple;
+	bh=Zsbl8CpHyqtDY7xePEk4xYEESeTY0p6qayuk2lnCD2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvhYcJ0DrpIX13VYSxW8EZ0xIlw0EB+nbeVtz9FQepEKrmj2LCJmrySzwvcDBWZ0u6aFyezpEdVE12SHB3cxZ91DszSO9qMV4DxGVeXIpU9RPiRrAAkJCKBvHJt0FR0R+CNMjObq6qqVbEwWns1Sx/7J9xkcYll6ewbUNVzjrU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSBMbqqA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhFXZgzOgc6p/P4S83IENku2qKrZQUyo2okVaKYjhCvexRSTrGp7XeepBF/seR0W6QUw6Sfxln9tO0KmrAcQofKkAmjWlrhuF0bDk4adyO+1qD2X4E7O+uwojHoC75HPuBR8rtnLph37Zvm6qhE5O9pIHtXips1pHaGho+/Jv9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4Lxl8hG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSBMbqqA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA779C4CED2;
-	Thu, 30 Jan 2025 14:17:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4Lxl8hG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931D4C4CED2;
+	Thu, 30 Jan 2025 14:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246668;
-	bh=k6PNCexuCTAE23O0zZoXXQxVZkF0VJ3hmJ1krEBVhwk=;
+	s=korg; t=1738246671;
+	bh=Zsbl8CpHyqtDY7xePEk4xYEESeTY0p6qayuk2lnCD2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OSBMbqqAGwuxzfN8nRqLDxofl7BoK0MIyGpzFU/1PGH2xBkV32yNyLhqsTn52H0Nd
-	 /tjI4jSPVm8nkPNhSPTOYlNHKWBe9oaRQhgjyhiuMVRc2K5u8ZqMipfHHLZKDzi3qx
-	 HKcNexa0BqbTh1duFkscI8LC1iI7GVJ+R7OpueAE=
+	b=M4Lxl8hGty4CGcxl6kgh48IUbxp1n3yFEGqEP1+jl1aNwSs5GUAvDAK2rx+GW5A26
+	 XnR2DPvwBSotJT0ybh1rx2hoOx8YSvrUpFQkLrv5kK1nRCZ5f7fKbAHRlG1bxsZfdV
+	 OZ7jWRIbUUPI2u5Qi4UKNEocNbDBpzyWqdqDHHa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Ma Ke <make_ruc2021@163.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.4 27/91] usb: fix reference leak in usb_new_device()
-Date: Thu, 30 Jan 2025 15:00:46 +0100
-Message-ID: <20250130140134.757390990@linuxfoundation.org>
+	Akash M <akash.m5@samsung.com>
+Subject: [PATCH 5.4 28/91] usb: gadget: f_fs: Remove WARN_ON in functionfs_bind
+Date: Thu, 30 Jan 2025 15:00:47 +0100
+Message-ID: <20250130140134.798667586@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -51,54 +50,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make_ruc2021@163.com>
+From: Akash M <akash.m5@samsung.com>
 
-commit 0df11fa8cee5a9cf8753d4e2672bb3667138c652 upstream.
+commit dfc51e48bca475bbee984e90f33fdc537ce09699 upstream.
 
-When device_add(&udev->dev) succeeds and a later call fails,
-usb_new_device() does not properly call device_del(). As comment of
-device_add() says, 'if device_add() succeeds, you should call
-device_del() when you want to get rid of it. If device_add() has not
-succeeded, use only put_device() to drop the reference count'.
+This commit addresses an issue related to below kernel panic where
+panic_on_warn is enabled. It is caused by the unnecessary use of WARN_ON
+in functionsfs_bind, which easily leads to the following scenarios.
 
-Found by code review.
+1.adb_write in adbd               2. UDC write via configfs
+  =================	             =====================
 
+->usb_ffs_open_thread()           ->UDC write
+ ->open_functionfs()               ->configfs_write_iter()
+  ->adb_open()                      ->gadget_dev_desc_UDC_store()
+   ->adb_write()                     ->usb_gadget_register_driver_owner
+                                      ->driver_register()
+->StartMonitor()                       ->bus_add_driver()
+ ->adb_read()                           ->gadget_bind_driver()
+<times-out without BIND event>           ->configfs_composite_bind()
+                                          ->usb_add_function()
+->open_functionfs()                        ->ffs_func_bind()
+ ->adb_open()                               ->functionfs_bind()
+                                       <ffs->state !=FFS_ACTIVE>
+
+The adb_open, adb_read, and adb_write operations are invoked from the
+daemon, but trying to bind the function is a process that is invoked by
+UDC write through configfs, which opens up the possibility of a race
+condition between the two paths. In this race scenario, the kernel panic
+occurs due to the WARN_ON from functionfs_bind when panic_on_warn is
+enabled. This commit fixes the kernel panic by removing the unnecessary
+WARN_ON.
+
+Kernel panic - not syncing: kernel: panic_on_warn set ...
+[   14.542395] Call trace:
+[   14.542464]  ffs_func_bind+0x1c8/0x14a8
+[   14.542468]  usb_add_function+0xcc/0x1f0
+[   14.542473]  configfs_composite_bind+0x468/0x588
+[   14.542478]  gadget_bind_driver+0x108/0x27c
+[   14.542483]  really_probe+0x190/0x374
+[   14.542488]  __driver_probe_device+0xa0/0x12c
+[   14.542492]  driver_probe_device+0x3c/0x220
+[   14.542498]  __driver_attach+0x11c/0x1fc
+[   14.542502]  bus_for_each_dev+0x104/0x160
+[   14.542506]  driver_attach+0x24/0x34
+[   14.542510]  bus_add_driver+0x154/0x270
+[   14.542514]  driver_register+0x68/0x104
+[   14.542518]  usb_gadget_register_driver_owner+0x48/0xf4
+[   14.542523]  gadget_dev_desc_UDC_store+0xf8/0x144
+[   14.542526]  configfs_write_iter+0xf0/0x138
+
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
 Cc: stable <stable@kernel.org>
-Fixes: 9f8b17e643fe ("USB: make usbdevices export their device nodes instead of using a separate class")
-Signed-off-by: Ma Ke <make_ruc2021@163.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20241218071346.2973980-1-make_ruc2021@163.com
+Signed-off-by: Akash M <akash.m5@samsung.com>
+Link: https://lore.kernel.org/r/20241219125221.1679-1-akash.m5@samsung.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2592,13 +2592,13 @@ int usb_new_device(struct usb_device *ud
- 		err = sysfs_create_link(&udev->dev.kobj,
- 				&port_dev->dev.kobj, "port");
- 		if (err)
--			goto fail;
-+			goto out_del_dev;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1875,7 +1875,7 @@ static int functionfs_bind(struct ffs_da
  
- 		err = sysfs_create_link(&port_dev->dev.kobj,
- 				&udev->dev.kobj, "device");
- 		if (err) {
- 			sysfs_remove_link(&udev->dev.kobj, "port");
--			goto fail;
-+			goto out_del_dev;
- 		}
+ 	ENTER();
  
- 		if (!test_and_set_bit(port1, hub->child_usage_bits))
-@@ -2610,6 +2610,8 @@ int usb_new_device(struct usb_device *ud
- 	pm_runtime_put_sync_autosuspend(&udev->dev);
- 	return err;
+-	if (WARN_ON(ffs->state != FFS_ACTIVE
++	if ((ffs->state != FFS_ACTIVE
+ 		 || test_and_set_bit(FFS_FL_BOUND, &ffs->flags)))
+ 		return -EBADFD;
  
-+out_del_dev:
-+	device_del(&udev->dev);
- fail:
- 	usb_set_device_state(udev, USB_STATE_NOTATTACHED);
- 	pm_runtime_disable(&udev->dev);
 
 
