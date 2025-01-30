@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EE81DDC22;
-	Thu, 30 Jan 2025 14:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075131E522;
+	Thu, 30 Jan 2025 14:23:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247019; cv=none; b=FUpBzfntwQ47Qbte65WpM/LRSov3v1EBYDeDxNOVs1Rp+ux7AoM08okchC1gcb/dZRVgnHH/qrB7zvHyXvw6+Z+jM7xoZmeEoCHX18pwIXjBrG1mRyqkqDj1hvb1ealSjPWV1C+DUY7uZ7izfA5uHtUdD8kr/GGNr+n2w/eI6IQ=
+	t=1738247023; cv=none; b=kYr5CLJLNirxUXG/UU+MbsI1xtpWeaPCXIfgfagYocK8pN+npVJ/PGQle4jvl4eNMirCzp4xY5SIdENg21evZmQ4lJ+BuUiWln6Ss7VahnitoHBtIv0IpholeHNIDWOi5YzegZ3zgiP8NhTPRjE5TYVaZQFFB2pF3WCOWzCS568=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247019; c=relaxed/simple;
-	bh=opQkO7I1hobNu7evjEcJoZNzVKIW68a0SwxXLSZMzwQ=;
+	s=arc-20240116; t=1738247023; c=relaxed/simple;
+	bh=nrlP7m5FLc71ZfOjw3W2CIdW7bxB/4iA3Rn9UiSngO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6+rEMSprlfCa6CTB9PGUqGOhjwWCsD5jsH8Q6yBSTgyCixmlLeHxrnylr/UpR+U0650K7AxijkXvD6uy17xxEQXKgoXJyQh5BenltXwCdG4urSNuBn5GlVnYmXX01PB85eb9mr6M4sWtfCr4rMu5lhEUOPRJdhNeUvWBoztCWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqYkwJ+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgfyaFFmeChgyJ2vo8dkfSrjcqDKbY+e5rDgYQlynIexVNiylaTwpBO/+rYsOqNLtE71UnwZDmJil4V6D/TdPABp8P3Gs43WmpYMiWfn36zm0VLp2qNS1jYk6Hh/e9Opk1NEpieE8Td1onft2+j/rgwqoXL/7mS8ojrcfm3oy6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBYywJ5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqYkwJ+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60AB1C4CED2;
-	Thu, 30 Jan 2025 14:23:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBYywJ5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF8AC4CEE0;
+	Thu, 30 Jan 2025 14:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247019;
-	bh=opQkO7I1hobNu7evjEcJoZNzVKIW68a0SwxXLSZMzwQ=;
+	s=korg; t=1738247022;
+	bh=nrlP7m5FLc71ZfOjw3W2CIdW7bxB/4iA3Rn9UiSngO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqYkwJ+XfDcYwWQRF8wHRB+b3BtJipWM41E04ZAqVpe5lKTBon7yW/iggDfsbx594
-	 6RfW7e6daQGV6UsjQQFO9hZC7cMfwipS5Mn8pEbEYJmMvJ2vuzuQeRAczk7RY/zGwr
-	 1Yyc6OX0nTMqUjAiz3jlqZrlvA5xONFJC+GFamg4=
+	b=BBYywJ5O6CJ6/7DloCIPQzcwXuFGKR93S8HGCjt8rW2vzyvgB34NCmRsea/8CxFwS
+	 8+08m/BQRkJsK2XB9u8tdHlyJW7v0+bnncAT9ZQ566pk9i41W80g85jyzLXOboEKhc
+	 qOKncKUPDrmRtI28rEcqfGHGfB9xa+OTnVQqDwGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christoph Hellwig <hch@lst.de>,
 	Hannes Reinecke <hare@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 054/133] nvme: let set_capacity_revalidate_and_notify update the bdev size
-Date: Thu, 30 Jan 2025 15:00:43 +0100
-Message-ID: <20250130140144.691864125@linuxfoundation.org>
+Subject: [PATCH 5.10 055/133] sd: update the bdev size in sd_revalidate_disk
+Date: Thu, 30 Jan 2025 15:00:44 +0100
+Message-ID: <20250130140144.729793315@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -54,49 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 5dd55749b79cdf471ca0966ad91541daebac3e2f ]
+[ Upstream commit b200e38c493b2a5acff4f86d40a3e45d546c664c ]
 
-There is no good reason to call revalidate_disk_size separately.
+This avoids the extra call to revalidate_disk_size in sd_rescan and
+is otherwise a no-op because the size did not change, or we are in
+the probe path.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
+Acked-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 74363ec674cb ("zram: fix uninitialized ZRAM not releasing backing device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/scsi/sd.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index bee55902fe6c..c8e64a1e2fc0 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -2132,7 +2132,7 @@ static void nvme_update_disk_info(struct gendisk *disk,
- 			capacity = 0;
- 	}
+diff --git a/drivers/scsi/sd.c b/drivers/scsi/sd.c
+index 2f2ca2878876..355d38cab862 100644
+--- a/drivers/scsi/sd.c
++++ b/drivers/scsi/sd.c
+@@ -1767,10 +1767,8 @@ static int sd_sync_cache(struct scsi_disk *sdkp, struct scsi_sense_hdr *sshdr)
+ static void sd_rescan(struct device *dev)
+ {
+ 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+-	int ret;
  
--	set_capacity_revalidate_and_notify(disk, capacity, false);
-+	set_capacity_revalidate_and_notify(disk, capacity, true);
- 
- 	nvme_config_discard(disk, ns);
- 	nvme_config_write_zeroes(disk->queue, ns->ctrl);
-@@ -2213,7 +2213,6 @@ static int nvme_update_ns_info(struct nvme_ns *ns, struct nvme_id_ns *id)
- 		blk_stack_limits(&ns->head->disk->queue->limits,
- 				 &ns->queue->limits, 0);
- 		blk_queue_update_readahead(ns->head->disk->queue);
--		nvme_update_bdev_size(ns->head->disk);
- 		blk_mq_unfreeze_queue(ns->head->disk->queue);
- 	}
- #endif
-@@ -4095,8 +4094,6 @@ static void nvme_validate_ns(struct nvme_ns *ns, struct nvme_ns_ids *ids)
- 	 */
- 	if (ret > 0 && (ret & NVME_SC_DNR))
- 		nvme_ns_remove(ns);
--	else
--		revalidate_disk_size(ns->disk, true);
+-	ret = sd_revalidate_disk(sdkp->disk);
+-	revalidate_disk_size(sdkp->disk, ret == 0);
++	sd_revalidate_disk(sdkp->disk);
  }
  
- static void nvme_validate_or_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid)
+ static int sd_ioctl(struct block_device *bdev, fmode_t mode,
+@@ -3295,7 +3293,7 @@ static int sd_revalidate_disk(struct gendisk *disk)
+ 	sdkp->first_scan = 0;
+ 
+ 	set_capacity_revalidate_and_notify(disk,
+-		logical_to_sectors(sdp, sdkp->capacity), false);
++		logical_to_sectors(sdp, sdkp->capacity), true);
+ 	sd_config_write_same(sdkp);
+ 	kfree(buffer);
+ 
+@@ -3305,7 +3303,7 @@ static int sd_revalidate_disk(struct gendisk *disk)
+ 	 * capacity to 0.
+ 	 */
+ 	if (sd_zbc_revalidate_zones(sdkp))
+-		set_capacity_revalidate_and_notify(disk, 0, false);
++		set_capacity_revalidate_and_notify(disk, 0, true);
+ 
+  out:
+ 	return 0;
 -- 
 2.39.5
 
