@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760A11BD9D3;
-	Thu, 30 Jan 2025 14:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4857A1E6DCF;
+	Thu, 30 Jan 2025 14:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247256; cv=none; b=VSSpdP7Tz8YDN1HjJlQ9+rEkfjf0CXyATDGiqZRYym15a6xb2Ot+vIzEvAS31RVw/R0+pz3yfrXaeLk1FcRI47o6qZznbAjX3Zl++vGmvQjqWY3waPORGl8TqxkV39XkVCEMMNWcsPR1olYBFtKLUsoFVohnHHzf/b8Ix7tSRJ8=
+	t=1738247259; cv=none; b=MLib2vmkyP68FiVtFAz7opIFnlOTv4cTP/tKoxo+88CNQXyEzH6FdDH1UfeZ5KCs0dicehka34TyktcrzRPW3ENLxGAL181M15cYs3MnQKMXSdidXSGoed+UeT7wKYgDokJ0XGG9DBcS9qyWw31M7r1vb3Pyhf4Eprmej7wGouM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247256; c=relaxed/simple;
-	bh=lQjJDOW+wa1suQW1lVCAn2uMiqFS9q1f2Mu9WP/A1gE=;
+	s=arc-20240116; t=1738247259; c=relaxed/simple;
+	bh=cVDEHMLB6I1ypLMxdZKoP4nHnegURcCAG9oaz70N2IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDCs/livod8NM3tjNwmhSzqNRxE5p2Rur3TnQQjbPnC1ffCPlkR9OTGPfQmBHLb9w+KCfh04vHEjEVP2f0RWmmSaS4X7pjL5b6UY3SvmgwQ19yQipw7f8Wj/vXsMCKSRqV0NCpJWmMEsYLOY31x+xDBaNQ0E/aKoDOWRwZZJp9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvdeN9b0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hpsH7SvIsTFWUGOJm85vAVr9NdXSVfou0JlTtP8X7lNT3Mh1JKtYirQFfG0gLf1S5U4kNG8wl2mTtAnidovlXPldNpPUSzzEmm2DB6JkKhtNAc93E3PmS00p8aK8F62m3LI2uJ+1jDZNLj020kd928UYIZL9x1SCWMa9k5ZMIEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D/LOoHZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvdeN9b0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008B9C4CED2;
-	Thu, 30 Jan 2025 14:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D/LOoHZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98D3C4CED2;
+	Thu, 30 Jan 2025 14:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247256;
-	bh=lQjJDOW+wa1suQW1lVCAn2uMiqFS9q1f2Mu9WP/A1gE=;
+	s=korg; t=1738247259;
+	bh=cVDEHMLB6I1ypLMxdZKoP4nHnegURcCAG9oaz70N2IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SvdeN9b0Wgm3M9F/+UdX+6uVykhGrZWYua5Hbu5cElfFNY4nn+HbAd44edS0uoeqz
-	 AVhJOKaaNKzqgO8AB5t7L7/w9cQ+x08FeLZAEhAQFgQYf7tH1FG765iERqkeT1QQn1
-	 QsUQpbcvjcCaWed5wr56kyYOm1JD1V4v7PlyC/84=
+	b=D/LOoHZcWPr1SQfyP8m1bK97Zs2YWCMr86nSQ6iWR3sANBe3LrFXM3CF2GXa3P/tg
+	 /gDhTPI8JDz42t7cKbKRb0UeQlJ4DuPlM8OhTvc+4dqGmfbTmHwKtfZaMmGNMAU1ks
+	 2kXEivnfPhCRKlb1821qCpmK/92oosNj+5bC7MIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.10 128/133] wifi: iwlwifi: add a few rate index validity checks
-Date: Thu, 30 Jan 2025 15:01:57 +0100
-Message-ID: <20250130140147.680911558@linuxfoundation.org>
+	syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 129/133] USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
+Date: Thu, 30 Jan 2025 15:01:58 +0100
+Message-ID: <20250130140147.720600695@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,66 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit efbe8f81952fe469d38655744627d860879dcde8 upstream.
+commit 575a5adf48b06a2980c9eeffedf699ed5534fade upstream.
 
-Validate index before access iwl_rate_mcs to keep rate->index
-inside the valid boundaries. Use MCS_0_INDEX if index is less
-than MCS_0_INDEX and MCS_9_INDEX if index is greater then
-MCS_9_INDEX.
+This patch addresses a null-ptr-deref in qt2_process_read_urb() due to
+an incorrect bounds check in the following:
 
-Signed-off-by: Anjaneyulu <pagadala.yesu.anjaneyulu@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230614123447.79f16b3aef32.If1137f894775d6d07b78cbf3a6163ffce6399507@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+       if (newport > serial->num_ports) {
+               dev_err(&port->dev,
+                       "%s - port change to invalid port: %i\n",
+                       __func__, newport);
+               break;
+       }
+
+The condition doesn't account for the valid range of the serial->port
+buffer, which is from 0 to serial->num_ports - 1. When newport is equal
+to serial->num_ports, the assignment of "port" in the
+following code is out-of-bounds and NULL:
+
+       serial_priv->current_port = newport;
+       port = serial->port[serial_priv->current_port];
+
+The fix checks if newport is greater than or equal to serial->num_ports
+indicating it is out-of-bounds.
+
+Reported-by: syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=506479ebf12fe435d01a
+Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
+Cc: <stable@vger.kernel.org>      # 3.5
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/rs.c |    7 +++++--
- drivers/net/wireless/intel/iwlwifi/mvm/rs.c |    9 ++++++---
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/usb/serial/quatech2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/rs.c
-@@ -130,7 +130,7 @@ static int iwl_hwrate_to_plcp_idx(u32 ra
- 				return idx;
- 	}
+--- a/drivers/usb/serial/quatech2.c
++++ b/drivers/usb/serial/quatech2.c
+@@ -540,7 +540,7 @@ static void qt2_process_read_urb(struct
  
--	return -1;
-+	return IWL_RATE_INVALID;
- }
+ 				newport = *(ch + 3);
  
- static void rs_rate_scale_perform(struct iwl_priv *priv,
-@@ -3151,7 +3151,10 @@ static ssize_t rs_sta_dbgfs_scale_table_
- 	for (i = 0; i < LINK_QUAL_MAX_RETRY_NUM; i++) {
- 		index = iwl_hwrate_to_plcp_idx(
- 			le32_to_cpu(lq_sta->lq.rs_table[i].rate_n_flags));
--		if (is_legacy(tbl->lq_type)) {
-+		if (index == IWL_RATE_INVALID) {
-+			desc += sprintf(buff + desc, " rate[%d] 0x%X invalid rate\n",
-+				i, le32_to_cpu(lq_sta->lq.rs_table[i].rate_n_flags));
-+		} else if (is_legacy(tbl->lq_type)) {
- 			desc += sprintf(buff+desc, " rate[%d] 0x%X %smbps\n",
- 				i, le32_to_cpu(lq_sta->lq.rs_table[i].rate_n_flags),
- 				iwl_rate_mcs[index].mbps);
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rs.c
-@@ -1120,10 +1120,13 @@ static void rs_get_lower_rate_down_colum
- 
- 		rate->bw = RATE_MCS_CHAN_WIDTH_20;
- 
--		WARN_ON_ONCE(rate->index < IWL_RATE_MCS_0_INDEX ||
--			     rate->index > IWL_RATE_MCS_9_INDEX);
-+		if (WARN_ON_ONCE(rate->index < IWL_RATE_MCS_0_INDEX))
-+			rate->index = rs_ht_to_legacy[IWL_RATE_MCS_0_INDEX];
-+		else if (WARN_ON_ONCE(rate->index > IWL_RATE_MCS_9_INDEX))
-+			rate->index = rs_ht_to_legacy[IWL_RATE_MCS_9_INDEX];
-+		else
-+			rate->index = rs_ht_to_legacy[rate->index];
- 
--		rate->index = rs_ht_to_legacy[rate->index];
- 		rate->ldpc = false;
- 	} else {
- 		/* Downgrade to SISO with same MCS if in MIMO  */
+-				if (newport > serial->num_ports) {
++				if (newport >= serial->num_ports) {
+ 					dev_err(&port->dev,
+ 						"%s - port change to invalid port: %i\n",
+ 						__func__, newport);
 
 
