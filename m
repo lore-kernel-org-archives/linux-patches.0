@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78E57482;
-	Thu, 30 Jan 2025 14:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3808BFF;
+	Thu, 30 Jan 2025 14:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247447; cv=none; b=YZ95UTItpcs9/OOyROS6bpilfo7PPubIQP4hmCNcTN/nZhB9ZplApc2W4xxHrbeS+qdsaMJYI+73SGSvPpDgWVapQdzKYUgClbfQMIbkUB1KFWyaWaPWshzYNoxQ7coW5o8jf1OeLLhhxUPiuO5Qup9R5lldXn/66Mo0R42liMA=
+	t=1738247449; cv=none; b=meRnmGFa227mrVwznJz50LWCp6R9NsTqa844o5bxwbPESkYQ9H4Hvdak4mQO+fGHSzOr2k6EYRylam97pOAmIgco8AlJoQvu7rjHdvfAzLjHKvf51v4X4OhSfakpiCgWHjlhhibB7OnEQRO689Y5RKW2Yno51ni9eVuDE2ZXt8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247447; c=relaxed/simple;
-	bh=6mF4ZFolWLQOGJZZxqHe8Juxjb3uVZJzTTXoU7/MgjU=;
+	s=arc-20240116; t=1738247449; c=relaxed/simple;
+	bh=LXzBgQ/t9VxWgQbdawCX0GNxPKYldM9Tv4QUORZPSH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YklI/iRRGh8GNXGtK3ZvUPu6TIoZsnU6Nm4pq8x7C7mREQRzZHmkZkq8XUNpqiDlIp5CDRxQGD7IyyvQG7C0Hc5QvjaN8hYhAh3dJ6U88uoHMwWrwudN0eP95QnQ6eT5qFyZmx3pgZnMyBXWQPZccgKn/faiiNTs5XF+uDtgHRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2Gt5N++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ni73u15YeWr5cRmdXNs+PryUu07aVav84EGp5Az907Gx9JB7M0A6uveJCWZ5h/BK0EGSZV/zj3Y9/dXpahGNr15UF4ybUdXBXmXZ/YzZVFAFmGkcIE7Z/l2rL2F/0Dyp8oXJqVjamKTvRk7OBqn3g34JBHC2sex5nIf2jiy7olc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJwTnz1o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2Gt5N++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F032CC4CED2;
-	Thu, 30 Jan 2025 14:30:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJwTnz1o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B21C4CEE3;
+	Thu, 30 Jan 2025 14:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247446;
-	bh=6mF4ZFolWLQOGJZZxqHe8Juxjb3uVZJzTTXoU7/MgjU=;
+	s=korg; t=1738247449;
+	bh=LXzBgQ/t9VxWgQbdawCX0GNxPKYldM9Tv4QUORZPSH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2Gt5N++/3+tODvcIIJvIQ/+kNyt7V0TCjCdfY3LudfqhpFQ+b72e/zoYybr7eoFd
-	 nPkIhjUpyk+LA7YQdj76m30S5hgIz1pBN4N5rk5JPcx+E2BeQ9JSaiHWGSBQicW6xh
-	 0Ag52f1PmMtRqO1INfB5875fylblC2M6FiehVQNE=
+	b=bJwTnz1onTrsxJSyqQ2aCGu6tg3V7TqOCuDq7ypUxBVY2eVknthm06Ma6L9M16E3R
+	 vHpVtsOr4Elg5cV6w4qCqixZFaZN5hntY2GhiVHjSUhQbzS42TC6NhcPOg2k0Knt31
+	 3HegrdNPRRthaHBIE0eMFdobnjIM0IIqdKBVMBpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 41/49] smb: client: fix UAF in async decryption
-Date: Thu, 30 Jan 2025 15:02:17 +0100
-Message-ID: <20250130140135.477695017@linuxfoundation.org>
+	syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 42/49] USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
+Date: Thu, 30 Jan 2025 15:02:18 +0100
+Message-ID: <20250130140135.517060947@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
 References: <20250130140133.825446496@linuxfoundation.org>
@@ -50,185 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Enzo Matsumiya <ematsumiya@suse.de>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit b0abcd65ec545701b8793e12bc27dc98042b151a upstream.
+commit 575a5adf48b06a2980c9eeffedf699ed5534fade upstream.
 
-Doing an async decryption (large read) crashes with a
-slab-use-after-free way down in the crypto API.
+This patch addresses a null-ptr-deref in qt2_process_read_urb() due to
+an incorrect bounds check in the following:
 
-Reproducer:
-    # mount.cifs -o ...,seal,esize=1 //srv/share /mnt
-    # dd if=/mnt/largefile of=/dev/null
-    ...
-    [  194.196391] ==================================================================
-    [  194.196844] BUG: KASAN: slab-use-after-free in gf128mul_4k_lle+0xc1/0x110
-    [  194.197269] Read of size 8 at addr ffff888112bd0448 by task kworker/u77:2/899
-    [  194.197707]
-    [  194.197818] CPU: 12 UID: 0 PID: 899 Comm: kworker/u77:2 Not tainted 6.11.0-lku-00028-gfca3ca14a17a-dirty #43
-    [  194.198400] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.2-3-gd478f380-prebuilt.qemu.org 04/01/2014
-    [  194.199046] Workqueue: smb3decryptd smb2_decrypt_offload [cifs]
-    [  194.200032] Call Trace:
-    [  194.200191]  <TASK>
-    [  194.200327]  dump_stack_lvl+0x4e/0x70
-    [  194.200558]  ? gf128mul_4k_lle+0xc1/0x110
-    [  194.200809]  print_report+0x174/0x505
-    [  194.201040]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-    [  194.201352]  ? srso_return_thunk+0x5/0x5f
-    [  194.201604]  ? __virt_addr_valid+0xdf/0x1c0
-    [  194.201868]  ? gf128mul_4k_lle+0xc1/0x110
-    [  194.202128]  kasan_report+0xc8/0x150
-    [  194.202361]  ? gf128mul_4k_lle+0xc1/0x110
-    [  194.202616]  gf128mul_4k_lle+0xc1/0x110
-    [  194.202863]  ghash_update+0x184/0x210
-    [  194.203103]  shash_ahash_update+0x184/0x2a0
-    [  194.203377]  ? __pfx_shash_ahash_update+0x10/0x10
-    [  194.203651]  ? srso_return_thunk+0x5/0x5f
-    [  194.203877]  ? crypto_gcm_init_common+0x1ba/0x340
-    [  194.204142]  gcm_hash_assoc_remain_continue+0x10a/0x140
-    [  194.204434]  crypt_message+0xec1/0x10a0 [cifs]
-    [  194.206489]  ? __pfx_crypt_message+0x10/0x10 [cifs]
-    [  194.208507]  ? srso_return_thunk+0x5/0x5f
-    [  194.209205]  ? srso_return_thunk+0x5/0x5f
-    [  194.209925]  ? srso_return_thunk+0x5/0x5f
-    [  194.210443]  ? srso_return_thunk+0x5/0x5f
-    [  194.211037]  decrypt_raw_data+0x15f/0x250 [cifs]
-    [  194.212906]  ? __pfx_decrypt_raw_data+0x10/0x10 [cifs]
-    [  194.214670]  ? srso_return_thunk+0x5/0x5f
-    [  194.215193]  smb2_decrypt_offload+0x12a/0x6c0 [cifs]
+       if (newport > serial->num_ports) {
+               dev_err(&port->dev,
+                       "%s - port change to invalid port: %i\n",
+                       __func__, newport);
+               break;
+       }
 
-This is because TFM is being used in parallel.
+The condition doesn't account for the valid range of the serial->port
+buffer, which is from 0 to serial->num_ports - 1. When newport is equal
+to serial->num_ports, the assignment of "port" in the
+following code is out-of-bounds and NULL:
 
-Fix this by allocating a new AEAD TFM for async decryption, but keep
-the existing one for synchronous READ cases (similar to what is done
-in smb3_calc_signature()).
+       serial_priv->current_port = newport;
+       port = serial->port[serial_priv->current_port];
 
-Also remove the calls to aead_request_set_callback() and
-crypto_wait_req() since it's always going to be a synchronous operation.
+The fix checks if newport is greater than or equal to serial->num_ports
+indicating it is out-of-bounds.
 
-Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=506479ebf12fe435d01a
+Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
+Cc: <stable@vger.kernel.org>      # 3.5
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2ops.c |   47 ++++++++++++++++++++++++++++-------------------
- fs/smb/client/smb2pdu.c |    6 ++++++
- 2 files changed, 34 insertions(+), 19 deletions(-)
+ drivers/usb/serial/quatech2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -4488,7 +4488,7 @@ smb2_get_enc_key(struct TCP_Server_Info
-  */
- static int
- crypt_message(struct TCP_Server_Info *server, int num_rqst,
--	      struct smb_rqst *rqst, int enc)
-+	      struct smb_rqst *rqst, int enc, struct crypto_aead *tfm)
- {
- 	struct smb2_transform_hdr *tr_hdr =
- 		(struct smb2_transform_hdr *)rqst[0].rq_iov[0].iov_base;
-@@ -4499,8 +4499,6 @@ crypt_message(struct TCP_Server_Info *se
- 	u8 key[SMB3_ENC_DEC_KEY_SIZE];
- 	struct aead_request *req;
- 	u8 *iv;
--	DECLARE_CRYPTO_WAIT(wait);
--	struct crypto_aead *tfm;
- 	unsigned int crypt_len = le32_to_cpu(tr_hdr->OriginalMessageSize);
- 	void *creq;
+--- a/drivers/usb/serial/quatech2.c
++++ b/drivers/usb/serial/quatech2.c
+@@ -511,7 +511,7 @@ static void qt2_process_read_urb(struct
  
-@@ -4511,14 +4509,6 @@ crypt_message(struct TCP_Server_Info *se
- 		return rc;
- 	}
+ 				newport = *(ch + 3);
  
--	rc = smb3_crypto_aead_allocate(server);
--	if (rc) {
--		cifs_server_dbg(VFS, "%s: crypto alloc failed\n", __func__);
--		return rc;
--	}
--
--	tfm = enc ? server->secmech.enc : server->secmech.dec;
--
- 	if ((server->cipher_type == SMB2_ENCRYPTION_AES256_CCM) ||
- 		(server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
- 		rc = crypto_aead_setkey(tfm, key, SMB3_GCM256_CRYPTKEY_SIZE);
-@@ -4557,11 +4547,7 @@ crypt_message(struct TCP_Server_Info *se
- 	aead_request_set_crypt(req, sg, sg, crypt_len, iv);
- 	aead_request_set_ad(req, assoc_data_len);
- 
--	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
--				  crypto_req_done, &wait);
--
--	rc = crypto_wait_req(enc ? crypto_aead_encrypt(req)
--				: crypto_aead_decrypt(req), &wait);
-+	rc = enc ? crypto_aead_encrypt(req) : crypto_aead_decrypt(req);
- 
- 	if (!rc && enc)
- 		memcpy(&tr_hdr->Signature, sign, SMB2_SIGNATURE_SIZE);
-@@ -4650,7 +4636,7 @@ smb3_init_transform_rq(struct TCP_Server
- 	/* fill the 1st iov with a transform header */
- 	fill_transform_hdr(tr_hdr, orig_len, old_rq, server->cipher_type);
- 
--	rc = crypt_message(server, num_rqst, new_rq, 1);
-+	rc = crypt_message(server, num_rqst, new_rq, 1, server->secmech.enc);
- 	cifs_dbg(FYI, "Encrypt message returned %d\n", rc);
- 	if (rc)
- 		goto err_free;
-@@ -4676,8 +4662,9 @@ decrypt_raw_data(struct TCP_Server_Info
- 		 unsigned int npages, unsigned int page_data_size,
- 		 bool is_offloaded)
- {
--	struct kvec iov[2];
-+	struct crypto_aead *tfm;
- 	struct smb_rqst rqst = {NULL};
-+	struct kvec iov[2];
- 	int rc;
- 
- 	iov[0].iov_base = buf;
-@@ -4692,9 +4679,31 @@ decrypt_raw_data(struct TCP_Server_Info
- 	rqst.rq_pagesz = PAGE_SIZE;
- 	rqst.rq_tailsz = (page_data_size % PAGE_SIZE) ? : PAGE_SIZE;
- 
--	rc = crypt_message(server, 1, &rqst, 0);
-+	if (is_offloaded) {
-+		if ((server->cipher_type == SMB2_ENCRYPTION_AES128_GCM) ||
-+		    (server->cipher_type == SMB2_ENCRYPTION_AES256_GCM))
-+			tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
-+		else
-+			tfm = crypto_alloc_aead("ccm(aes)", 0, 0);
-+		if (IS_ERR(tfm)) {
-+			rc = PTR_ERR(tfm);
-+			cifs_server_dbg(VFS, "%s: Failed alloc decrypt TFM, rc=%d\n", __func__, rc);
-+
-+			return rc;
-+		}
-+	} else {
-+		if (unlikely(!server->secmech.dec))
-+			return -EIO;
-+
-+		tfm = server->secmech.dec;
-+	}
-+
-+	rc = crypt_message(server, 1, &rqst, 0, tfm);
- 	cifs_dbg(FYI, "Decrypt message returned %d\n", rc);
- 
-+	if (is_offloaded)
-+		crypto_free_aead(tfm);
-+
- 	if (rc)
- 		return rc;
- 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1105,6 +1105,12 @@ SMB2_negotiate(const unsigned int xid,
- 		else
- 			cifs_server_dbg(VFS, "Missing expected negotiate contexts\n");
- 	}
-+
-+	if (server->cipher_type && !rc) {
-+		rc = smb3_crypto_aead_allocate(server);
-+		if (rc)
-+			cifs_server_dbg(VFS, "%s: crypto alloc failed, rc=%d\n", __func__, rc);
-+	}
- neg_exit:
- 	free_rsp_buf(resp_buftype, rsp);
- 	return rc;
+-				if (newport > serial->num_ports) {
++				if (newport >= serial->num_ports) {
+ 					dev_err(&port->dev,
+ 						"%s - port change to invalid port: %i\n",
+ 						__func__, newport);
 
 
