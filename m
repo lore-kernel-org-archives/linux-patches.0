@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9091E3772;
-	Thu, 30 Jan 2025 14:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598051E98F3;
+	Thu, 30 Jan 2025 14:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246766; cv=none; b=BWUDrDjqS2/Tnif3QjWzM1ijXbpPh/dD0hY9CD9/xcV7HXIQv4Xxmpd/nK2LCBrwvZ06jU74ZknnLwG7pK06h+3QtMN73TAeVDgLUoLFa2KBBF8gDoe2RfLwYFTNq7QXynFT4HQnSnDfXoUsl/XFfHs7vkftW+iVSyXAgZuBOHs=
+	t=1738246768; cv=none; b=QoBJCkjgFYnUl6WqZATuvbTPo8Zh1Gznfc4h8M+Ub/ZOwxQVBl+eA023TxNe51a/Kc/lKQ0eUqnzgTKFC4vzmHadPM9jPhoRnYEjJt4LnSeYIgb8UzNbssSiCYeMPwjmXAtehoU1Zavu/q8U3upwluL3XBt4+7ghz8PudcJmJ/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246766; c=relaxed/simple;
-	bh=1ye3U2HpcEeyubcy2la6UmMS2LK4r/oaGnNiwTnt008=;
+	s=arc-20240116; t=1738246768; c=relaxed/simple;
+	bh=wcaOjBWqis6DlC5mbWXnJU7tK+QPgamDkIgpUR7m85Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZpQ0Rfxtj9L/G9PD2qcQYL9vPxDeXUIxQuCvr1v7eIufb9cb1iCkWOm5IYNGVPdtIaF6yzLQx2uoToaU4GAjAJR+8Ay9063pb4vyQx3wwNokE/+oCOzMUC2p9b6WzS5IC2Bj/p14M+p8XBJ5ZRwGhspwfyQZIbuKVdkGKgUB1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MLE8efia; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jNP7204USooG32AJ2rvob/KeC5nUQFgQCgjZLZQzW71AR7RCJUBp+dyBaaCIws9DlZGeBsS2pDW9uVjugPk0iJ9+Rt9rzNSti372rwN/mdThIrb7Tdl+11Jxk0m+uBUgXkk4oce8K9t4HrEsI9UuhNR4ZKyT9FwbdAclOZ7hFYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzXG4xdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MLE8efia"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E24C4CEE2;
-	Thu, 30 Jan 2025 14:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzXG4xdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0C2C4CED2;
+	Thu, 30 Jan 2025 14:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246765;
-	bh=1ye3U2HpcEeyubcy2la6UmMS2LK4r/oaGnNiwTnt008=;
+	s=korg; t=1738246768;
+	bh=wcaOjBWqis6DlC5mbWXnJU7tK+QPgamDkIgpUR7m85Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MLE8efiaIXsi/oe4WeouuYeFlkPTlj09DjD6f7pIG8ymK6p/ClRkERQzyggI9cBWn
-	 iVMF7CJhuaBGd3/xiE0+APidFvCx0c5Y3p19Yigcoox9xYm1ctnBH2OlGn6Hrs0z6H
-	 wjbEIxD24Wi5FTSEMuHOH38ddveYGNKlKdR2UeEs=
+	b=rzXG4xdHU3KvmjHLUmVOUGPM0hYFVIH/G4sUguWErfcgUw4gNV/qjnNiAVRIUN+ly
+	 xKkE5t+Rr0kdWwewHuGLoGBALgV/9UPy80jLLO2q4jyMzWpwNn5o3KdnPBHTABDHHl
+	 kqUoWpy7Q2fzE0FhrxoCEjg5Yawp39utDRbQSoKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 60/91] nfp: bpf: prevent integer overflow in nfp_bpf_event_output()
-Date: Thu, 30 Jan 2025 15:01:19 +0100
-Message-ID: <20250130140136.076379228@linuxfoundation.org>
+Subject: [PATCH 5.4 61/91] drm/v3d: Ensure job pointer is set to NULL after job completion
+Date: Thu, 30 Jan 2025 15:01:20 +0100
+Message-ID: <20250130140136.123058408@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -45,43 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 16ebb6f5b6295c9688749862a39a4889c56227f8 ]
+[ Upstream commit e4b5ccd392b92300a2b341705cc4805681094e49 ]
 
-The "sizeof(struct cmsg_bpf_event) + pkt_size + data_size" math could
-potentially have an integer wrapping bug on 32bit systems.  Check for
-this and return an error.
+After a job completes, the corresponding pointer in the device must
+be set to NULL. Failing to do so triggers a warning when unloading
+the driver, as it appears the job is still active. To prevent this,
+assign the job pointer to NULL after completing the job, indicating
+the job has finished.
 
-Fixes: 9816dd35ecec ("nfp: bpf: perf event output helpers support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/6074805b-e78d-4b8a-bf05-e929b5377c28@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 14d1d1908696 ("drm/v3d: Remove the bad signaled() implementation.")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20250113154741.67520-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/bpf/offload.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/v3d/v3d_irq.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/bpf/offload.c b/drivers/net/ethernet/netronome/nfp/bpf/offload.c
-index 7ff388ecc7e3a..409b636c76474 100644
---- a/drivers/net/ethernet/netronome/nfp/bpf/offload.c
-+++ b/drivers/net/ethernet/netronome/nfp/bpf/offload.c
-@@ -454,7 +454,8 @@ int nfp_bpf_event_output(struct nfp_app_bpf *bpf, const void *data,
- 	map_id_full = be64_to_cpu(cbe->map_ptr);
- 	map_id = map_id_full;
+diff --git a/drivers/gpu/drm/v3d/v3d_irq.c b/drivers/gpu/drm/v3d/v3d_irq.c
+index 662e67279a7bb..aa27b7654dee5 100644
+--- a/drivers/gpu/drm/v3d/v3d_irq.c
++++ b/drivers/gpu/drm/v3d/v3d_irq.c
+@@ -103,6 +103,7 @@ v3d_irq(int irq, void *arg)
  
--	if (len < sizeof(struct cmsg_bpf_event) + pkt_size + data_size)
-+	if (size_add(pkt_size, data_size) > INT_MAX ||
-+	    len < sizeof(struct cmsg_bpf_event) + pkt_size + data_size)
- 		return -EINVAL;
- 	if (cbe->hdr.ver != NFP_CCM_ABI_VERSION)
- 		return -EINVAL;
+ 		trace_v3d_bcl_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->bin_job = NULL;
+ 		status = IRQ_HANDLED;
+ 	}
+ 
+@@ -112,6 +113,7 @@ v3d_irq(int irq, void *arg)
+ 
+ 		trace_v3d_rcl_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->render_job = NULL;
+ 		status = IRQ_HANDLED;
+ 	}
+ 
+@@ -121,6 +123,7 @@ v3d_irq(int irq, void *arg)
+ 
+ 		trace_v3d_csd_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->csd_job = NULL;
+ 		status = IRQ_HANDLED;
+ 	}
+ 
+@@ -157,6 +160,7 @@ v3d_hub_irq(int irq, void *arg)
+ 
+ 		trace_v3d_tfu_irq(&v3d->drm, fence->seqno);
+ 		dma_fence_signal(&fence->base);
++		v3d->tfu_job = NULL;
+ 		status = IRQ_HANDLED;
+ 	}
+ 
 -- 
 2.39.5
 
