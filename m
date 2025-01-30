@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5081DFDA5;
-	Thu, 30 Jan 2025 14:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBAC1E3775;
+	Thu, 30 Jan 2025 14:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245740; cv=none; b=QJlOB0IS1qcgnNIaysGEZoFqEMMREIZC3/STAFSgEaV+cH4wE9O3wIjgrTxYb1RTDrT7mqbtEr4enriNAPjJVc/kPYW+rUfApIBV28EtkdjfDlnm5h6MHn0Y/W1/hw5EH/ouRa309Wr6qF+KF4iEKiLgrOwn/2nzPwhwx6+w6Fw=
+	t=1738245743; cv=none; b=K/DseeB9hYxQryrhlnDYqeg5p7LsnH9iFIy/YTGHTt4sIFzjviG1dpsT6NVhQ8OnbzBPkPoRhTt05eWhsKuEhAoELxEKmLh/FogxsFCGDHOInm4w8+k4zxDqSoNZUYuY/MYQ2zyq6y4MzixXjJZz3ZoxLErktO47CAQzb8LK/gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245740; c=relaxed/simple;
-	bh=YPzYqc7/dTru1AzrBVUBSTSbheLy6sqDzbD2RWpUHBY=;
+	s=arc-20240116; t=1738245743; c=relaxed/simple;
+	bh=u36Fl07e/GGClLsWnjSqIT1UvLKsZnXZMJNpG4oFf/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZqYgtqnT7OYDadY/fZLRKdZMZW3pTtMkCmPNAThgUzMuAq5I8vlY/2nhpsRbE43nqkqnY6ks+Mt08Y01FCm1sPZC2P3RVPvol2w1MzssEAXq3KiCiHCL7eU9/pOlWh6RVXjsnd7PgSHbx3aVPG8hqA9afc0hRkfhX32AX/8pdag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ple7GK5T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y149asAdQSMnoeZbJD3OLchsm0ufw46q6ojtHqjuoJag5Z/JdMST9DQr141qDfvNpkx78daW16kHRZwWOUAmgKl1d36BOTQHZ6c07atf8EIOJXUF7dDLugm4NKv945SYXaqIXXfjX91O7HQ4Py6ermnbS3wcr1t39h/VF18CWpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xqKhM4NI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ple7GK5T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E922AC4CED2;
-	Thu, 30 Jan 2025 14:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xqKhM4NI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A1CC4CED2;
+	Thu, 30 Jan 2025 14:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245740;
-	bh=YPzYqc7/dTru1AzrBVUBSTSbheLy6sqDzbD2RWpUHBY=;
+	s=korg; t=1738245743;
+	bh=u36Fl07e/GGClLsWnjSqIT1UvLKsZnXZMJNpG4oFf/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ple7GK5TWGKDmTsjCR2+q6oiI+c/K6v20/TmOULeK2rA85VQVKlVTJua54i44YZFZ
-	 5zTUoACN7ti9T4owp/f2mRlN+fyMk/XcQk0TLO1qW3XhNscZWIz2G0WcdPj9n8hIB5
-	 fnqjpFtbNHwEzea/NQSUEHi1PSOIJgDSGpEJT6K8=
+	b=xqKhM4NIA2FuHAnY6hVubiBcEIWP9MYn9BCKZwpy76foJbI7XZeabpSWCKe9HqDm+
+	 K9zDKE2U02QYDl2F0IYkolT07u1tvRz7kuo2RYTTi5Kapti0DNu3i6Cs7CDQV/BKgQ
+	 WMa9NNnEGrPW87sQ/zz5FreFCoL5VUYxPi+ddYOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Easwar Hariharan <eahariha@linux.microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 28/40] scsi: storvsc: Ratelimit warning logs to prevent VM denial of service
-Date: Thu, 30 Jan 2025 14:59:28 +0100
-Message-ID: <20250130133500.830380226@linuxfoundation.org>
+	syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>,
+	Qasim Ijaz <qasdev00@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 29/40] USB: serial: quatech2: fix null-ptr-deref in qt2_process_read_urb()
+Date: Thu, 30 Jan 2025 14:59:29 +0100
+Message-ID: <20250130133500.872759401@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -51,48 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
+From: Qasim Ijaz <qasdev00@gmail.com>
 
-commit d2138eab8cde61e0e6f62d0713e45202e8457d6d upstream.
+commit 575a5adf48b06a2980c9eeffedf699ed5534fade upstream.
 
-If there's a persistent error in the hypervisor, the SCSI warning for
-failed I/O can flood the kernel log and max out CPU utilization,
-preventing troubleshooting from the VM side. Ratelimit the warning so
-it doesn't DoS the VM.
+This patch addresses a null-ptr-deref in qt2_process_read_urb() due to
+an incorrect bounds check in the following:
 
-Closes: https://github.com/microsoft/WSL/issues/9173
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20250107-eahariha-ratelimit-storvsc-v1-1-7fc193d1f2b0@linux.microsoft.com
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+       if (newport > serial->num_ports) {
+               dev_err(&port->dev,
+                       "%s - port change to invalid port: %i\n",
+                       __func__, newport);
+               break;
+       }
+
+The condition doesn't account for the valid range of the serial->port
+buffer, which is from 0 to serial->num_ports - 1. When newport is equal
+to serial->num_ports, the assignment of "port" in the
+following code is out-of-bounds and NULL:
+
+       serial_priv->current_port = newport;
+       port = serial->port[serial_priv->current_port];
+
+The fix checks if newport is greater than or equal to serial->num_ports
+indicating it is out-of-bounds.
+
+Reported-by: syzbot <syzbot+506479ebf12fe435d01a@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=506479ebf12fe435d01a
+Fixes: f7a33e608d9a ("USB: serial: add quatech2 usb to serial driver")
+Cc: <stable@vger.kernel.org>      # 3.5
+Signed-off-by: Qasim Ijaz <qasdev00@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/serial/quatech2.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -171,6 +171,12 @@ do {								\
- 		dev_warn(&(dev)->device, fmt, ##__VA_ARGS__);	\
- } while (0)
+--- a/drivers/usb/serial/quatech2.c
++++ b/drivers/usb/serial/quatech2.c
+@@ -503,7 +503,7 @@ static void qt2_process_read_urb(struct
  
-+#define storvsc_log_ratelimited(dev, level, fmt, ...)				\
-+do {										\
-+	if (do_logging(level))							\
-+		dev_warn_ratelimited(&(dev)->device, fmt, ##__VA_ARGS__);	\
-+} while (0)
-+
- struct vmscsi_request {
- 	u16 length;
- 	u8 srb_status;
-@@ -1177,7 +1183,7 @@ static void storvsc_on_io_completion(str
- 		int loglevel = (stor_pkt->vm_srb.cdb[0] == TEST_UNIT_READY) ?
- 			STORVSC_LOGGING_WARN : STORVSC_LOGGING_ERROR;
+ 				newport = *(ch + 3);
  
--		storvsc_log(device, loglevel,
-+		storvsc_log_ratelimited(device, loglevel,
- 			"tag#%d cmd 0x%x status: scsi 0x%x srb 0x%x hv 0x%x\n",
- 			scsi_cmd_to_rq(request->cmd)->tag,
- 			stor_pkt->vm_srb.cdb[0],
+-				if (newport > serial->num_ports) {
++				if (newport >= serial->num_ports) {
+ 					dev_err(&port->dev,
+ 						"%s - port change to invalid port: %i\n",
+ 						__func__, newport);
 
 
