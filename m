@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47661E7C25;
-	Thu, 30 Jan 2025 14:29:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1AB1BD9D3;
+	Thu, 30 Jan 2025 14:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247367; cv=none; b=oHQGl8zxGzR+HWI8dDoB/Kionpotv0z8+vhymr3ZTDOxuGhb9VJxw+/5Q5lFYCmOpEn/yKFwbDcy3gl2QAkbQ06uULvsanSMpnJ2yJqped6rrlBe88sk98eBv6FMzw5Q3QAqWpy4QDM/a+UVUOm+vVvca+HyjfxvdROkSWEOdDs=
+	t=1738247370; cv=none; b=P5E7Htx1queBkqdpEFOxSigzkvzGJ6SH4pbT/gNLnohF+xM7gV7gRqmxCVPJAhkE5Qa8xqNhknExw8xG/0lQMS1gU8Pj+lcKf56JGf40ZByPt7WFcDQu0esPbZB2Tmi5alk1wQ8wGp4orT+60UuUXkgFDWOQxG3xo3/iNZg3/R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247367; c=relaxed/simple;
-	bh=jmTa+mBg+GdIY68vjpw0InxFtykQE7+xshVDSGCMzHg=;
+	s=arc-20240116; t=1738247370; c=relaxed/simple;
+	bh=cneMccY0a2cLwh7L7UmisHWi9QAsIImji/KzIRJKoKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oWXgBY7LLsAojSSsdDUQVjqk5atHpfZmZVrWQBklrFm12WF94CbLm4n3ZE46F3Kbfi8Rw2az2wbg2xwdyOUoiQT+1lZs4ODAZmendINYFUiwlB+G9NhcTdNWQxJQynmA8iM9LSp3nASaho5vOaZJ+cCgmKIOyGTCWU//IjQ2qaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asjjO6O/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7HRtMcQL+6aulUBJv98l31Js5d5d8DhJ0+1OMfCcVkf6vp1tqYT3nckNrzcdIFbEIOThUkEFoINZ2AzBmMBKprRovXhNFFobYOt6wIY3aNx3pUlFXqR7paQXa1yK79wDglXFao9Ldq/ERWXz7ZLCvdquNPQjTtMlAnmLD7rK6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AtH0PeVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asjjO6O/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9C4C4CED2;
-	Thu, 30 Jan 2025 14:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AtH0PeVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC3FC4CEE5;
+	Thu, 30 Jan 2025 14:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247367;
-	bh=jmTa+mBg+GdIY68vjpw0InxFtykQE7+xshVDSGCMzHg=;
+	s=korg; t=1738247370;
+	bh=cneMccY0a2cLwh7L7UmisHWi9QAsIImji/KzIRJKoKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asjjO6O/vg7PPwC/KyMmbMqOsnKC66DSmH7IJ4V2UxWfoTwYc3pL+eoSgPpCT19Ck
-	 kdtAMfhzlgh28kNxHVKAyfHNAcN1EJlZB7nIG5BAzDwcOvtpe42iyEQrD4vPlIjiKp
-	 BvkUjongpLQUscYi7o7RMRf/+KKxBBvzozjUdMNw=
+	b=AtH0PeVxkcQ8ci9BvhcSid3TzggP29pSTeYC7L3Wx5yELIizQlGR0pp+UjX0cko8z
+	 D/RZt4u7Y0tQrAlF2X01HWOGiepLn0pCyWoxDwcV8HeW22wicP0K+ZeHyulRWqnCYI
+	 qdB+7gWYpTAmhIS/BXbI89vIzixylvxMP6Q30Qyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Leah Rumancik <leah.rumancik@gmail.com>
-Subject: [PATCH 6.1 15/49] xfs: rt stubs should return negative errnos when rt disabled
-Date: Thu, 30 Jan 2025 15:01:51 +0100
-Message-ID: <20250130140134.445811278@linuxfoundation.org>
+Subject: [PATCH 6.1 16/49] xfs: fix units conversion error in xfs_bmap_del_extent_delay
+Date: Thu, 30 Jan 2025 15:01:52 +0100
+Message-ID: <20250130140134.492596228@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
 References: <20250130140133.825446496@linuxfoundation.org>
@@ -53,59 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit c2988eb5cff75c02bc57e02c323154aa08f55b78 ]
+[ Upstream commit ddd98076d5c075c8a6c49d9e6e8ee12844137f23 ]
 
-When realtime support is not compiled into the kernel, these functions
-should return negative errnos, not positive errnos.  While we're at it,
-fix a broken macro declaration.
+The unit conversions in this function do not make sense.  First we
+convert a block count to bytes, then divide that bytes value by
+rextsize, which is in blocks, to get an rt extent count.  You can't
+divide bytes by blocks to get a (possibly multiblock) extent value.
 
+Fortunately nobody uses delalloc on the rt volume so this hasn't
+mattered.
+
+Fixes: fa5c836ca8eb5 ("xfs: refactor xfs_bunmapi_cow")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_rtalloc.h |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ fs/xfs/libxfs/xfs_bmap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_rtalloc.h
-+++ b/fs/xfs/xfs_rtalloc.h
-@@ -141,17 +141,17 @@ int xfs_rtalloc_extent_is_free(struct xf
- 			       bool *is_free);
- int xfs_rtalloc_reinit_frextents(struct xfs_mount *mp);
- #else
--# define xfs_rtallocate_extent(t,b,min,max,l,f,p,rb)    (ENOSYS)
--# define xfs_rtfree_extent(t,b,l)                       (ENOSYS)
--# define xfs_rtfree_blocks(t,rb,rl)			(ENOSYS)
--# define xfs_rtpick_extent(m,t,l,rb)                    (ENOSYS)
--# define xfs_growfs_rt(mp,in)                           (ENOSYS)
--# define xfs_rtalloc_query_range(t,l,h,f,p)             (ENOSYS)
--# define xfs_rtalloc_query_all(m,t,f,p)                 (ENOSYS)
--# define xfs_rtbuf_get(m,t,b,i,p)                       (ENOSYS)
--# define xfs_verify_rtbno(m, r)			(false)
--# define xfs_rtalloc_extent_is_free(m,t,s,l,i)          (ENOSYS)
--# define xfs_rtalloc_reinit_frextents(m)                (0)
-+# define xfs_rtallocate_extent(t,b,min,max,l,f,p,rb)	(-ENOSYS)
-+# define xfs_rtfree_extent(t,b,l)			(-ENOSYS)
-+# define xfs_rtfree_blocks(t,rb,rl)			(-ENOSYS)
-+# define xfs_rtpick_extent(m,t,l,rb)			(-ENOSYS)
-+# define xfs_growfs_rt(mp,in)				(-ENOSYS)
-+# define xfs_rtalloc_query_range(m,t,l,h,f,p)		(-ENOSYS)
-+# define xfs_rtalloc_query_all(m,t,f,p)			(-ENOSYS)
-+# define xfs_rtbuf_get(m,t,b,i,p)			(-ENOSYS)
-+# define xfs_verify_rtbno(m, r)				(false)
-+# define xfs_rtalloc_extent_is_free(m,t,s,l,i)		(-ENOSYS)
-+# define xfs_rtalloc_reinit_frextents(m)		(0)
- static inline int		/* error */
- xfs_rtmount_init(
- 	xfs_mount_t	*mp)	/* file system mount structure */
-@@ -162,7 +162,7 @@ xfs_rtmount_init(
- 	xfs_warn(mp, "Not built with CONFIG_XFS_RT");
- 	return -ENOSYS;
- }
--# define xfs_rtmount_inodes(m)  (((mp)->m_sb.sb_rblocks == 0)? 0 : (ENOSYS))
-+# define xfs_rtmount_inodes(m)  (((mp)->m_sb.sb_rblocks == 0)? 0 : (-ENOSYS))
- # define xfs_rtunmount_inodes(m)
- #endif	/* CONFIG_XFS_RT */
+--- a/fs/xfs/libxfs/xfs_bmap.c
++++ b/fs/xfs/libxfs/xfs_bmap.c
+@@ -4807,7 +4807,7 @@ xfs_bmap_del_extent_delay(
+ 	ASSERT(got_endoff >= del_endoff);
  
+ 	if (isrt) {
+-		uint64_t rtexts = XFS_FSB_TO_B(mp, del->br_blockcount);
++		uint64_t	rtexts = del->br_blockcount;
+ 
+ 		do_div(rtexts, mp->m_sb.sb_rextsize);
+ 		xfs_mod_frextents(mp, rtexts);
 
 
