@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541AD1E522;
-	Thu, 30 Jan 2025 14:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B351E522;
+	Thu, 30 Jan 2025 14:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247294; cv=none; b=SJdiSD8xnUJRA27tBg/an++rM9y2XZlcfi/SE9FQqNmmtE9Ibk/EsuCt7Oj36t4ClTDO1Za7o1tYdaRBfeID3oGSK2qdbK0apWndlnM+M+Thytu9xlAkxb2CpwHdwpMjd56CMm+ao86iKAAvpcgBfniTwDPKKwwJJewMpqbhKPI=
+	t=1738247297; cv=none; b=SPItvrfSWAQYjobWIvW+Fm79cSofV+7+K9b8TuRDcOJ4KtNX2UdlKS2wFMBh4V2EdINpA/qUitMfDhdaBSHkyprPPSkPD86ZsTAhVvVwMTaGkQLlhLU24rMPOWPr4gN07yK4cSUyrD0xyyqMP/zN79OqZLjrz5CSruAv5z4lQLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247294; c=relaxed/simple;
-	bh=F69TeJAhEODsZzoqGKVsgaZqdZ+d0VcwJG+hlElDlHE=;
+	s=arc-20240116; t=1738247297; c=relaxed/simple;
+	bh=A/KZO45pPPXc33zgC/gjKvAIULTh+cBWXE8OVUaNjGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qx4iSLDmOXCdpsH+SlGFnxYjOyCnYFqn3X73JzNV2SOv5dk7SFKFOHMUblXS1yNCkpUaopSA8rdbtRfpxx+5U4rK2mUPprU1F6GWCO7jyTvndCu2yd6ZYR7SMxKAPXrpP8rrE957mM3i62Q+JBkeeawjHzdTZhVQUVlRxCgX/LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9lMuyNq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H/pePh20JYxEiFqOGAyWcsnfiPvReosx5ZahTJvBKMlhR4LzJ68k17231dkALrjlyLWj6rmQSBYF+2ANRT4SQhPuj4wu5JJGIueSLOnB//v9KjPsSfww1150fpde3nQ/Te2TccJDT4Tb1yYTQKyyIW8NWDqbWLxqIz4QE+jo+uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4wq7kzG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9lMuyNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB7EC4CED2;
-	Thu, 30 Jan 2025 14:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4wq7kzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D35C4CED2;
+	Thu, 30 Jan 2025 14:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247294;
-	bh=F69TeJAhEODsZzoqGKVsgaZqdZ+d0VcwJG+hlElDlHE=;
+	s=korg; t=1738247297;
+	bh=A/KZO45pPPXc33zgC/gjKvAIULTh+cBWXE8OVUaNjGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9lMuyNqNQGum8nbijlejy+m5XBdzSXqma5XqmBGLnwg9ZLoOvIZyDw1SKzGh0Wex
-	 cwkOax7S8LLntdhfNm6vaNQ7FwdpTlJV40hLS7FWdoLbXJuIWESkHGp9MYht9B1IM6
-	 qj84jQeBdlxXYlBSqooVPn42Ms+IS0G5bDhkgeS4=
+	b=X4wq7kzGTGyt70uBaxYCyjNEeQq+GDkLzVbggkdrSrzfp6CFCXlB1uc3a4Iehga71
+	 fLsdpO7w3DJfVKNdKQxXK/A5NXWQFWlYJEjgplP3SNzTqcxT2o1eHCProRQXawPC6W
+	 wMiDzG22aTLjN/sYjIVR5I+YLQF6CaSiTLC66QgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <demonsingur@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 5.15 07/24] regmap: detach regmap from dev on regmap_exit
-Date: Thu, 30 Jan 2025 15:01:59 +0100
-Message-ID: <20250130140127.591593912@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 08/24] mptcp: dont always assume copied data in mptcp_cleanup_rbuf()
+Date: Thu, 30 Jan 2025 15:02:00 +0100
+Message-ID: <20250130140127.632501332@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140127.295114276@linuxfoundation.org>
 References: <20250130140127.295114276@linuxfoundation.org>
@@ -51,62 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Tanislav <demonsingur@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 3061e170381af96d1e66799d34264e6414d428a7 upstream.
+commit 551844f26da2a9f76c0a698baaffa631d1178645 upstream.
 
-At the end of __regmap_init(), if dev is not NULL, regmap_attach_dev()
-is called, which adds a devres reference to the regmap, to be able to
-retrieve a dev's regmap by name using dev_get_regmap().
+Under some corner cases the MPTCP protocol can end-up invoking
+mptcp_cleanup_rbuf() when no data has been copied, but such helper
+assumes the opposite condition.
 
-When calling regmap_exit, the opposite does not happen, and the
-reference is kept until the dev is detached.
+Explicitly drop such assumption and performs the costly call only
+when strictly needed - before releasing the msk socket lock.
 
-Add a regmap_detach_dev() function and call it in regmap_exit() to make
-sure that the devres reference is not kept.
-
+Fixes: fd8976790a6c ("mptcp: be careful on MPTCP-level ack.")
 Cc: stable@vger.kernel.org
-Fixes: 72b39f6f2b5a ("regmap: Implement dev_get_regmap()")
-Signed-off-by: Cosmin Tanislav <demonsingur@gmail.com>
-Rule: add
-Link: https://lore.kernel.org/stable/20241128130554.362486-1-demonsingur%40gmail.com
-Link: https://patch.msgid.link/20241128131625.363835-1-demonsingur@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20250115033314.2540588-1-tzungbi@kernel.org
-Link: https://lore.kernel.org/r/20250115033244.2540522-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20241230-net-mptcp-rbuf-fixes-v1-2-8608af434ceb@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in this version, because commit 581302298524 ("mptcp: error
+  out earlier on disconnect") has not been backported to this version,
+  and there was no need to do so. The only conflict was in protocol.c,
+  and easy to resolve: the context was different, but the same addition
+  can still be made at the same spot in mptcp_recvmsg(). ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/mptcp/protocol.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -663,6 +663,17 @@ int regmap_attach_dev(struct device *dev
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -462,13 +462,13 @@ static void mptcp_send_ack(struct mptcp_
+ 		mptcp_subflow_send_ack(mptcp_subflow_tcp_sock(subflow));
  }
- EXPORT_SYMBOL_GPL(regmap_attach_dev);
  
-+static int dev_get_regmap_match(struct device *dev, void *res, void *data);
-+
-+static int regmap_detach_dev(struct device *dev, struct regmap *map)
-+{
-+	if (!dev)
-+		return 0;
-+
-+	return devres_release(dev, dev_get_regmap_release,
-+			      dev_get_regmap_match, (void *)map->name);
-+}
-+
- static enum regmap_endian regmap_get_reg_endian(const struct regmap_bus *bus,
- 					const struct regmap_config *config)
+-static void mptcp_subflow_cleanup_rbuf(struct sock *ssk)
++static void mptcp_subflow_cleanup_rbuf(struct sock *ssk, int copied)
  {
-@@ -1531,6 +1542,7 @@ void regmap_exit(struct regmap *map)
- {
- 	struct regmap_async *async;
+ 	bool slow;
  
-+	regmap_detach_dev(map->dev, map);
- 	regcache_exit(map);
- 	regmap_debugfs_exit(map);
- 	regmap_range_exit(map);
+ 	slow = lock_sock_fast(ssk);
+ 	if (tcp_can_send_ack(ssk))
+-		tcp_cleanup_rbuf(ssk, 1);
++		tcp_cleanup_rbuf(ssk, copied);
+ 	unlock_sock_fast(ssk, slow);
+ }
+ 
+@@ -485,7 +485,7 @@ static bool mptcp_subflow_could_cleanup(
+ 			      (ICSK_ACK_PUSHED2 | ICSK_ACK_PUSHED)));
+ }
+ 
+-static void mptcp_cleanup_rbuf(struct mptcp_sock *msk)
++static void mptcp_cleanup_rbuf(struct mptcp_sock *msk, int copied)
+ {
+ 	int old_space = READ_ONCE(msk->old_wspace);
+ 	struct mptcp_subflow_context *subflow;
+@@ -493,14 +493,14 @@ static void mptcp_cleanup_rbuf(struct mp
+ 	int space =  __mptcp_space(sk);
+ 	bool cleanup, rx_empty;
+ 
+-	cleanup = (space > 0) && (space >= (old_space << 1));
+-	rx_empty = !__mptcp_rmem(sk);
++	cleanup = (space > 0) && (space >= (old_space << 1)) && copied;
++	rx_empty = !__mptcp_rmem(sk) && copied;
+ 
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 
+ 		if (cleanup || mptcp_subflow_could_cleanup(ssk, rx_empty))
+-			mptcp_subflow_cleanup_rbuf(ssk);
++			mptcp_subflow_cleanup_rbuf(ssk, copied);
+ 	}
+ }
+ 
+@@ -2098,9 +2098,6 @@ static int mptcp_recvmsg(struct sock *sk
+ 
+ 		copied += bytes_read;
+ 
+-		/* be sure to advertise window change */
+-		mptcp_cleanup_rbuf(msk);
+-
+ 		if (skb_queue_empty(&msk->receive_queue) && __mptcp_move_skbs(msk))
+ 			continue;
+ 
+@@ -2152,9 +2149,12 @@ static int mptcp_recvmsg(struct sock *sk
+ 		}
+ 
+ 		pr_debug("block timeout %ld\n", timeo);
++		mptcp_cleanup_rbuf(msk, copied);
+ 		sk_wait_data(sk, &timeo, NULL);
+ 	}
+ 
++	mptcp_cleanup_rbuf(msk, copied);
++
+ out_err:
+ 	if (cmsg_flags && copied >= 0) {
+ 		if (cmsg_flags & MPTCP_CMSG_TS)
 
 
