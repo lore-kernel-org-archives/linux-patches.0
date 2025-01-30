@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669A01E522;
-	Thu, 30 Jan 2025 14:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7C81E522;
+	Thu, 30 Jan 2025 14:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247221; cv=none; b=NkPudA3lo6EL1cDehrNW30TUfs6sJetQqLswdZB+3J+bVP+V3Ysk2UKffXjEBy9ENeMDM14lTmZO/oAM1ZYqvfWebBN0rYgZVUlBVEfMrir4zZCeGzb1UZa44yCMKtBunRX5cC9USYPgxn+neboiuNqjjy6a6ppkuqQLH9ATuUQ=
+	t=1738247224; cv=none; b=DX5q8MCMK+DSnzJ21zn6oweqL+k/4PG9HIxkioBy+sPWOY3hQjAFdsbuv2FGjdDIh345gJ2nukbAyU28Au6MmtvmaphNd5X4g+XQi5l7s6aiXxFVzs4NZG3mz68IxDqg/4Y6pvQY3ku4s7v4nrg+GrZlhq57aqqJjF1671woKkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247221; c=relaxed/simple;
-	bh=AonuH7t9rRb/xcLVyTl6gSeINaZV5Z6ov8IXj0821UE=;
+	s=arc-20240116; t=1738247224; c=relaxed/simple;
+	bh=iRtI6m5YMliFpIkoRxEpnQzZEoMZ9Vp2JwzPWn4MWdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VazkvmIB9W+iiUYuKC2cy6fCmOOFPGNcW3c3gss5NpYGAd2D0QoIuFq/5F+p440Dgsnmx86inN/K6SRbReGje3BvLZ8M9+puyccweaxeKImcuJxcgftorRC8CO3dudJ8EcRFrcbVgKQAWptDVcxZkqg4SyDpYVQ8bu1rP4JMmbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z66pknyp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDlxVnnApYiun4JXE96kbwW6fGdkfMh5gdT/xGI7DKjgg4SNlFOMXxDAFeQxgPLYgOJ9X4Wkuzv8gJF1tBxMY51SMg5ju4G9jhWUrL9YYYFdOPxmSsgvvyaTkmFbEtUjAEm4AvE7hb65zxbRKTB3mpVbGPIXAIEXvHCOuFnHloI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yvc6AOvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z66pknyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD022C4CED2;
-	Thu, 30 Jan 2025 14:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yvc6AOvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD721C4CED2;
+	Thu, 30 Jan 2025 14:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247221;
-	bh=AonuH7t9rRb/xcLVyTl6gSeINaZV5Z6ov8IXj0821UE=;
+	s=korg; t=1738247224;
+	bh=iRtI6m5YMliFpIkoRxEpnQzZEoMZ9Vp2JwzPWn4MWdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z66pknyp7C4gE220wbk+D1LYQWV62rQvyevJSopzpSQo2oIfXqm3wtz1F7Zk0elZ5
-	 xkbcAS+rp5czatxWgMA9GdDH4/dxPDCAMFTsovk5EP7/XWrbQDq2/ndm2yOouiEjej
-	 ilCmLw64ZrCnbvk//cvzQqgFQsFGYy6KQpGSgKbs=
+	b=yvc6AOvR8ixw2QYA7bHqvihTAwJBT1AjdwPPlmdK8RnWZmJmVuALmsKO96ImG/K5J
+	 5KJwJazDq3aAHB3gGxUfm+Dsk441I//jkt5crYcBY2Exi5jeZc1bQgOdFsc6LL0tl1
+	 gTIAbp4AOXG9vQaAcNRrDKdoKVpvUbtUHWlMM+bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 5.10 123/133] m68k: Update ->thread.esp0 before calling syscall_trace() in ret_from_signal
-Date: Thu, 30 Jan 2025 15:01:52 +0100
-Message-ID: <20250130140147.484112328@linuxfoundation.org>
+	Yogesh Lal <quic_ylal@quicinc.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.10 097/133] irqchip/gic-v3: Handle CPU_PM_ENTER_FAILED correctly
+Date: Thu, 30 Jan 2025 15:01:26 +0100
+Message-ID: <20250130140146.436691109@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -52,39 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Yogesh Lal <quic_ylal@quicinc.com>
 
-commit 50e43a57334400668952f8e551c9d87d3ed2dfef upstream.
+commit 0d62a49ab55c99e8deb4593b8d9f923de1ab5c18 upstream.
 
-We get there when sigreturn has performed obscene acts on kernel stack;
-in particular, the location of pt_regs has shifted.  We are about to call
-syscall_trace(), which might stop for tracer.  If that happens, we'd better
-have task_pt_regs() returning correct result...
+When a CPU attempts to enter low power mode, it disables the redistributor
+and Group 1 interrupts and reinitializes the system registers upon wakeup.
 
-Fucked-up-by: Al Viro <viro@zeniv.linux.org.uk>
-Fixes: bd6f56a75bb2 ("m68k: Missing syscall_trace() on sigreturn")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Tested-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
-Tested-by: Finn Thain <fthain@linux-m68k.org>
-Link: https://lore.kernel.org/r/YP2dMWeV1LkHiOpr@zeniv-ca.linux.org.uk
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+If the transition into low power mode fails, then the CPU_PM framework
+invokes the PM notifier callback with CPU_PM_ENTER_FAILED to allow the
+drivers to undo the state changes.
+
+The GIC V3 driver ignores CPU_PM_ENTER_FAILED, which leaves the GIC in
+disabled state.
+
+Handle CPU_PM_ENTER_FAILED in the same way as CPU_PM_EXIT to restore normal
+operation.
+
+[ tglx: Massage change log, add Fixes tag ]
+
+Fixes: 3708d52fc6bb ("irqchip: gic-v3: Implement CPU PM notifier")
+Signed-off-by: Yogesh Lal <quic_ylal@quicinc.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20241220093907.2747601-1-quic_ylal@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/kernel/entry.S |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/irqchip/irq-gic-v3.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/m68k/kernel/entry.S
-+++ b/arch/m68k/kernel/entry.S
-@@ -189,6 +189,8 @@ ENTRY(ret_from_signal)
- 	movel	%curptr@(TASK_STACK),%a1
- 	tstb	%a1@(TINFO_FLAGS+2)
- 	jge	1f
-+	lea	%sp@(SWITCH_STACK_SIZE),%a1
-+	movel	%a1,%curptr@(TASK_THREAD+THREAD_ESP0)
- 	jbsr	syscall_trace
- 1:	RESTORE_SWITCH_STACK
- 	addql	#4,%sp
+--- a/drivers/irqchip/irq-gic-v3.c
++++ b/drivers/irqchip/irq-gic-v3.c
+@@ -1309,7 +1309,7 @@ static int gic_retrigger(struct irq_data
+ static int gic_cpu_pm_notifier(struct notifier_block *self,
+ 			       unsigned long cmd, void *v)
+ {
+-	if (cmd == CPU_PM_EXIT) {
++	if (cmd == CPU_PM_EXIT || cmd == CPU_PM_ENTER_FAILED) {
+ 		if (gic_dist_security_disabled())
+ 			gic_enable_redist(true);
+ 		gic_cpu_sys_reg_init();
 
 
