@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D3383;
-	Thu, 30 Jan 2025 14:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A0F383;
+	Thu, 30 Jan 2025 14:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246567; cv=none; b=GHmnK/0iHgrZeDuyd3g9oYZRx6DNPvns6Nw4rJgP3eNUQONXwebMwqEtex/l4RnDQLS2znNAF5U0d1/wDxiHGrK4LCRYuFrg4VI5k13815EGQ42KCldgK9y+6HIywYovXuJ/dFhRXCdIfUHIJAf8FETClfLXxr1pS6Xu/PatNh0=
+	t=1738246569; cv=none; b=Ft7eb5NADuSGNjo5CZVBEPkOtqKB40jvUEYShYVGjPGSAd0Iw1j4YOf1IPGUfKjbx2pM/og+epDfHLW4HT8zgeONXkNaJi5nd0uKhrq1+ZPAYiuGKp3CVBblo4FrIwO+tV9E63yUTLZI/45UR2ehCHoyGWSYQSJhgfOyU71NWrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246567; c=relaxed/simple;
-	bh=mMFk/8+jUnxGGjFGBKytrVIj64m0dBfKIAz0voLX1wY=;
+	s=arc-20240116; t=1738246569; c=relaxed/simple;
+	bh=fVdw0WSD6ymYFgMN/guWEsGJNBAScUEZmdbCKAC886w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2xyKR+dq7LwJzUz5PpWPQWeuACHCkE7mHZHSPAzN1OKA5l7Uu7FRSy5GTMiO+vdZBbabrhpyamCOIeCPbFhtXHXtZhmp281HmE+Uuy5AV2+Eo1m/VjSa8onQiHdh+DrLt5ahdjcgpgqiQnVb2sidhJ/mQgiPvMypSebVATjB+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vr8l/N24; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzAcelNL7HuFC7uK5dFnuoSDgtY35ByLJez72szVgZdUwby5V5wuw3raOt9JTc0iY2SuUix+BcfJXkkFtLpUziCiRToZ5/+KkHUMUeokvHt1HZAyX+Qp92YVuew7vnuz5eRQv/giI4HTSlEWyIeeZWCN3FfzXehJp4BenYatPQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRY/bYCF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vr8l/N24"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6455C4CED2;
-	Thu, 30 Jan 2025 14:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRY/bYCF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A27C4CED2;
+	Thu, 30 Jan 2025 14:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246566;
-	bh=mMFk/8+jUnxGGjFGBKytrVIj64m0dBfKIAz0voLX1wY=;
+	s=korg; t=1738246568;
+	bh=fVdw0WSD6ymYFgMN/guWEsGJNBAScUEZmdbCKAC886w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vr8l/N242EuCu+pGj+GfyNjhpHqfxHS9cicYY/Mw+Cdcks2k9wXbV+lJ2utfZ30rI
-	 bU39nH1+tH1nHY+4GUWZfc1jHLrZE8GPMXufxYqalWB5bbgY96k6JrppjRuEpHYNwE
-	 g/EZTMInXRQ+iHjwllyQW4SVTTSsZDlgcRXvrSUw=
+	b=MRY/bYCFEWHGacj1N2J2XTYvbROMeA0cSocjGE1TeYx5GkC1BT+LQb/d+OaQKVgxR
+	 olDU2VIkfTm6NYazQp4LmT3oaWQvwOIldTQ1R1jnhK8p4u+mjo6rpi5DtXgzf3geYL
+	 tpvBqyV2qXA3eUODBcZjPZhcadtFvUpY6ctNqpI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	stable <stable@kernel.org>,
-	Lianqin Hu <hulianqin@vivo.com>
-Subject: [PATCH 6.6 35/43] Revert "usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null"
-Date: Thu, 30 Jan 2025 14:59:42 +0100
-Message-ID: <20250130133500.316055501@linuxfoundation.org>
+	Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 36/43] ALSA: usb-audio: Add delay quirk for USB Audio Device
+Date: Thu, 30 Jan 2025 14:59:43 +0100
+Message-ID: <20250130133500.354319607@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133458.903274626@linuxfoundation.org>
 References: <20250130133458.903274626@linuxfoundation.org>
@@ -51,47 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit 086fd062bc3883ae1ce4166cff5355db315ad879 upstream.
+commit ad5b205f9e022b407d91f952faddd05718be2866 upstream.
 
-This reverts commit 13014969cbf07f18d62ceea40bd8ca8ec9d36cec.
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
 
-It is reported to cause crashes on Tegra systems, so revert it for now.
+usb 1-1: New USB device found, idVendor=0d8c, idProduct=0014
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+usb 1-1: Product: USB Audio Device
+usb 1-1: Manufacturer: C-Media Electronics Inc.
 
-Link: https://lore.kernel.org/r/1037c1ad-9230-4181-b9c3-167dbaa47644@nvidia.com
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable <stable@kernel.org>
-Cc: Lianqin Hu <hulianqin@vivo.com>
-Link: https://lore.kernel.org/r/2025011711-yippee-fever-a737@gregkh
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/TYUPR06MB6217E94D922B9BF422A73F32D2192@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -1398,10 +1398,6 @@ void gserial_disconnect(struct gserial *
- 	/* REVISIT as above: how best to track this? */
- 	port->port_line_coding = gser->port_line_coding;
- 
--	/* disable endpoints, aborting down any active I/O */
--	usb_ep_disable(gser->out);
--	usb_ep_disable(gser->in);
--
- 	port->port_usb = NULL;
- 	gser->ioport = NULL;
- 	if (port->port.count > 0) {
-@@ -1413,6 +1409,10 @@ void gserial_disconnect(struct gserial *
- 	spin_unlock(&port->port_lock);
- 	spin_unlock_irqrestore(&serial_port_lock, flags);
- 
-+	/* disable endpoints, aborting down any active I/O */
-+	usb_ep_disable(gser->out);
-+	usb_ep_disable(gser->in);
-+
- 	/* finally, free any unused/unusable I/O buffers */
- 	spin_lock_irqsave(&port->port_lock, flags);
- 	if (port->port.count == 0)
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2139,6 +2139,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	DEVICE_FLG(0x0d8c, 0x0014, /* USB Audio Device */
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
 
 
