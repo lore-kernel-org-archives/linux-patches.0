@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0C21DDE9;
-	Thu, 30 Jan 2025 14:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C221DDE9;
+	Thu, 30 Jan 2025 14:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246662; cv=none; b=YEXkESkJumPQWOODZ15X4OsAUWE1S11vU+AoM2rTNj6pSuE0MB4/PxrNggctwdjsrYePSL4aM/giygmTA9ZfU4vpI5B8FUiDpd8mu90TXeRkzHpzeKcXHO9u0oK6c02etAWgrifj+51K8oUrXA+mIqncpsvh9cRerR8XqB8GqLU=
+	t=1738246665; cv=none; b=ZPwOgccJs/vjEa+k+Ip+9jgTTNuzQy5G2QtaRKIQ8L/T5+lOjx72BWjKW+GxQLvuNd8U4ytYxWopz9+Uq9MkreSBNugvXvwcMG6051uomZRPFMXqWGcmYQSk8rFBRWnNz30rn5tl0dPpkjYCdgsr9MsbrFtmBxDMj1ttVJ/5Hzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246662; c=relaxed/simple;
-	bh=KinoeGizS3zOHRfZQlfzZizHGY9PYlXSfB8uS+OZC50=;
+	s=arc-20240116; t=1738246665; c=relaxed/simple;
+	bh=nNOCzqR/mfSNdNSv07j/avyHBNwsAb6WrIs0ti+Rh4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pa0JcIZTv5W2MUI4mE+SO/NYJrLGYHLTNPcdmFi5beN5IqfXE0tYOetJ7eWeiBBGy9f2flKA6E7S5swMUVjmKbD+yFcPquwrpcC00BO/+rvY/SepC0B7QeNMv4mqYBvUoDONOpfFdW3wgqNRoL6j0lBQDx9LrR9WyZpHnGVlaAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9NylLtF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GKWtdQyHG7InliSTiq9tIfPR/kC3w5Q011e4f5iBwsN2uci/DJ4Hqo0DLZZuvvP+w39bfUAtcGfGEBNBmlGFajUxA8r7GJIoohSstsSrjSLBYFjTuI3vKjtLnxX/K51hUbKQCkhKw6d6NRn7vScqbmV+CWvDVbqfRHZboj8hYmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKEc23SH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9NylLtF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0666FC4CED2;
-	Thu, 30 Jan 2025 14:17:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKEc23SH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA92BC4CED2;
+	Thu, 30 Jan 2025 14:17:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246662;
-	bh=KinoeGizS3zOHRfZQlfzZizHGY9PYlXSfB8uS+OZC50=;
+	s=korg; t=1738246665;
+	bh=nNOCzqR/mfSNdNSv07j/avyHBNwsAb6WrIs0ti+Rh4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9NylLtF01eHLAI66M5wt1QNS5fwfm5Dcfre4CAw4y5ekZ6t81KOTAaIdp7pJv/Pw
-	 Z0Rm8kSCNmcwyRSYWpTSYc83f+6ffjgTe8gbD6gfRm4gMlWPgRcLltNd/1AMQWkKDz
-	 SOCfjP4XmcJt5UIwJERWoxawk5SC76WzMOwAB8aQ=
+	b=nKEc23SHupOA+RePO4c6llXpbWkLP0M0w/VrwJcQZJwI8+KGSCzuG3BTljSj3/jbD
+	 g6FoO1JqozA83E38/TbSCZ5+g2BMHgWmXP5GYmJphibXDyFNvyFeqOA3iH4BVFbR2+
+	 sOoTjslsKUCJfRSRXne93GAhkZ/ldVTsTpjaNSGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Wayne Chang <waynec@nvidia.com>,
 	stable <stable@kernel.org>,
-	Jun Yan <jerrysteve1101@gmail.com>
-Subject: [PATCH 5.4 25/91] USB: usblp: return error when setting unsupported protocol
-Date: Thu, 30 Jan 2025 15:00:44 +0100
-Message-ID: <20250130140134.679138547@linuxfoundation.org>
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 5.4 26/91] USB: core: Disable LPM only for non-suspended ports
+Date: Thu, 30 Jan 2025 15:00:45 +0100
+Message-ID: <20250130140134.718094999@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -50,43 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Yan <jerrysteve1101@gmail.com>
+From: Kai-Heng Feng <kaihengf@nvidia.com>
 
-commit 7a3d76a0b60b3f6fc3375e4de2174bab43f64545 upstream.
+commit 59bfeaf5454b7e764288d84802577f4a99bf0819 upstream.
 
-Fix the regression introduced by commit d8c6edfa3f4e ("USB:
-usblp: don't call usb_set_interface if there's a single alt"),
-which causes that unsupported protocols can also be set via
-ioctl when the num_altsetting of the device is 1.
+There's USB error when tegra board is shutting down:
+[  180.919315] usb 2-3: Failed to set U1 timeout to 0x0,error code -113
+[  180.919995] usb 2-3: Failed to set U1 timeout to 0xa,error code -113
+[  180.920512] usb 2-3: Failed to set U2 timeout to 0x4,error code -113
+[  186.157172] tegra-xusb 3610000.usb: xHCI host controller not responding, assume dead
+[  186.157858] tegra-xusb 3610000.usb: HC died; cleaning up
+[  186.317280] tegra-xusb 3610000.usb: Timeout while waiting for evaluate context command
 
-Move the check for protocol support to the earlier stage.
+The issue is caused by disabling LPM on already suspended ports.
 
-Fixes: d8c6edfa3f4e ("USB: usblp: don't call usb_set_interface if there's a single alt")
+For USB2 LPM, the LPM is already disabled during port suspend. For USB3
+LPM, port won't transit to U1/U2 when it's already suspended in U3,
+hence disabling LPM is only needed for ports that are not suspended.
+
+Cc: Wayne Chang <waynec@nvidia.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jun Yan <jerrysteve1101@gmail.com>
-Link: https://lore.kernel.org/r/20241212143852.671889-1-jerrysteve1101@gmail.com
+Fixes: d920a2ed8620 ("usb: Disable USB3 LPM at shutdown")
+Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20241206074817.89189-1-kaihengf@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/usblp.c |    7 ++++---
+ drivers/usb/core/port.c |    7 ++++---
  1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/class/usblp.c
-+++ b/drivers/usb/class/usblp.c
-@@ -1337,11 +1337,12 @@ static int usblp_set_protocol(struct usb
- 	if (protocol < USBLP_FIRST_PROTOCOL || protocol > USBLP_LAST_PROTOCOL)
- 		return -EINVAL;
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -294,10 +294,11 @@ static int usb_port_runtime_suspend(stru
+ static void usb_port_shutdown(struct device *dev)
+ {
+ 	struct usb_port *port_dev = to_usb_port(dev);
++	struct usb_device *udev = port_dev->child;
  
-+	alts = usblp->protocol[protocol].alt_setting;
-+	if (alts < 0)
-+		return -EINVAL;
-+
- 	/* Don't unnecessarily set the interface if there's a single alt. */
- 	if (usblp->intf->num_altsetting > 1) {
--		alts = usblp->protocol[protocol].alt_setting;
--		if (alts < 0)
--			return -EINVAL;
- 		r = usb_set_interface(usblp->dev, usblp->ifnum, alts);
- 		if (r < 0) {
- 			printk(KERN_ERR "usblp: can't set desired altsetting %d on interface %d\n",
+-	if (port_dev->child) {
+-		usb_disable_usb2_hardware_lpm(port_dev->child);
+-		usb_unlocked_disable_lpm(port_dev->child);
++	if (udev && !udev->port_is_suspended) {
++		usb_disable_usb2_hardware_lpm(udev);
++		usb_unlocked_disable_lpm(udev);
+ 	}
+ }
+ 
 
 
