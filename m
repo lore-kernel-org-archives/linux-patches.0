@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0446B1E6DCF;
-	Thu, 30 Jan 2025 14:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000AB1E522;
+	Thu, 30 Jan 2025 14:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247166; cv=none; b=MUdx16NvQLiZ6JAhA79fv0iwyf3tfZt+Gj5fGUpB6MSQbydM4V2fDO86iixcbLPFw1z8uHoZRBosIXeuXnhI5TrszXm6OH4cwi/Uealvg0Y3Xqnjh9r9DcUKAN3MpkMrZLkHbKcfitIeO67bEDuKmAGcdpxqq1eK9nx+ulCwwMs=
+	t=1738247169; cv=none; b=NcOKlvx1EhCSLEt7UvaXu8xQlwSaTOcLu83GlqVotv97c7XbWF5Or3B9bLgqcobjmmhS6buSt3U6/uvUhyo/skGUwFbF4AcOYOYMQacuk5bUi2+tUeZ+3MsT9kVd0t8078XJ2Hc85N6Al0Kfk9vPgp5GMqFBztJha3ukjaseJOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247166; c=relaxed/simple;
-	bh=ORTrMVxZCiCoNax+e/6yAsyF5HwUx/i+AE7pbq8wfBY=;
+	s=arc-20240116; t=1738247169; c=relaxed/simple;
+	bh=mj05R9ycKLZelLZyEsf6zEL5CzECNq9HdDbKNiCcBaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1tO7mQR3o0yfHjpjSFNEhkA16lj+kfweqZqNVlSVizHr+WGw0Es52xuofa60UjBkM/caqUQ/h1jkEGhZ992YmBps4qp3ALRR26C3Be6OPvGUmEeyWg/XSsboHwcPkpgHVfwBOBRp/HI+xQmLpai0zXVMdMvCIdKuuyymY4lAdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpNlrHpo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tXSmoirqRLn/TN935XGjqNVRpPzad4zgVNI8T3W1f+avVcKdQi5hOa/hnVIelgeM8ZXuJxUVJr6RbmnbKfVhqghhL42qutdO7BMrMFWhMTkTIwDH+Ios5PPyE+ZbZRR3/kM1gQVUFTJFaYLv41FTTjGL4QN2mo+7TvAyb74TvVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UINeGbOJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpNlrHpo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C01FC4CED2;
-	Thu, 30 Jan 2025 14:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UINeGbOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767B5C4CEE0;
+	Thu, 30 Jan 2025 14:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247165;
-	bh=ORTrMVxZCiCoNax+e/6yAsyF5HwUx/i+AE7pbq8wfBY=;
+	s=korg; t=1738247168;
+	bh=mj05R9ycKLZelLZyEsf6zEL5CzECNq9HdDbKNiCcBaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpNlrHpoibGMxtUJRpBNSR+XIqpkKVmEd7Q9rfe8n2AtWJTesAhCfdPEWeH+v+Fuf
-	 hQurjE4gzHFx10kocTw06P7KNvVh0eLUDMnI6xVvr/h0FVl+8uqV5ZzK073vgwFK2E
-	 RWuQ1UyVcP2i5HhljcZnTpVp+ZaZZ8dnuFrq1RWQ=
+	b=UINeGbOJvx5SnMz/nUWbnifSiBP27F1U0XFedkBWIjilK4gtJKebEOjzAD43VnWCV
+	 8o3PXe225tM5pSjG4LGGSdEP9gjGKUSx+gbLhbl80hntRdcmP+ITFtx14C8C4Dg0bd
+	 jAgmcUnZ048d6MvG+1rFtbubwtQ+jlJM3jS3EWso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 5.10 105/133] RDMA/hns: Fix deadlock on SRQ async events.
-Date: Thu, 30 Jan 2025 15:01:34 +0100
-Message-ID: <20250130140146.767195010@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Abagail ren <renzezhongucas@gmail.com>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 106/133] blk-cgroup: Fix UAF in blkcg_unpin_online()
+Date: Thu, 30 Jan 2025 15:01:35 +0100
+Message-ID: <20250130140146.804744141@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,62 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit b46494b6f9c19f141114a57729e198698f40af37 upstream.
+commit 86e6ca55b83c575ab0f2e105cf08f98e58d3d7af upstream.
 
-xa_lock for SRQ table may be required in AEQ. Use xa_store_irq()/
-xa_erase_irq() to avoid deadlock.
+blkcg_unpin_online() walks up the blkcg hierarchy putting the online pin. To
+walk up, it uses blkcg_parent(blkcg) but it was calling that after
+blkcg_destroy_blkgs(blkcg) which could free the blkcg, leading to the
+following UAF:
 
-Fixes: 81fce6291d99 ("RDMA/hns: Add SRQ asynchronous event support")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240412091616.370789-5-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  ==================================================================
+  BUG: KASAN: slab-use-after-free in blkcg_unpin_online+0x15a/0x270
+  Read of size 8 at addr ffff8881057678c0 by task kworker/9:1/117
+
+  CPU: 9 UID: 0 PID: 117 Comm: kworker/9:1 Not tainted 6.13.0-rc1-work-00182-gb8f52214c61a-dirty #48
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS unknown 02/02/2022
+  Workqueue: cgwb_release cgwb_release_workfn
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x27/0x80
+   print_report+0x151/0x710
+   kasan_report+0xc0/0x100
+   blkcg_unpin_online+0x15a/0x270
+   cgwb_release_workfn+0x194/0x480
+   process_scheduled_works+0x71b/0xe20
+   worker_thread+0x82a/0xbd0
+   kthread+0x242/0x2c0
+   ret_from_fork+0x33/0x70
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+  ...
+  Freed by task 1944:
+   kasan_save_track+0x2b/0x70
+   kasan_save_free_info+0x3c/0x50
+   __kasan_slab_free+0x33/0x50
+   kfree+0x10c/0x330
+   css_free_rwork_fn+0xe6/0xb30
+   process_scheduled_works+0x71b/0xe20
+   worker_thread+0x82a/0xbd0
+   kthread+0x242/0x2c0
+   ret_from_fork+0x33/0x70
+   ret_from_fork_asm+0x1a/0x30
+
+Note that the UAF is not easy to trigger as the free path is indirected
+behind a couple RCU grace periods and a work item execution. I could only
+trigger it with artifical msleep() injected in blkcg_unpin_online().
+
+Fix it by reading the parent pointer before destroying the blkcg's blkg's.
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Abagail ren <renzezhongucas@gmail.com>
+Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Fixes: 4308a434e5e0 ("blkcg: don't offline parent blkcg first")
+Cc: stable@vger.kernel.org # v5.7+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_main.c |    1 +
- drivers/infiniband/hw/hns/hns_roce_srq.c  |    6 +++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ include/linux/blk-cgroup.h |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/hw/hns/hns_roce_main.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_main.c
-@@ -37,6 +37,7 @@
- #include <rdma/ib_smi.h>
- #include <rdma/ib_user_verbs.h>
- #include <rdma/ib_cache.h>
-+#include "hnae3.h"
- #include "hns_roce_common.h"
- #include "hns_roce_device.h"
- #include <rdma/hns-abi.h>
---- a/drivers/infiniband/hw/hns/hns_roce_srq.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_srq.c
-@@ -120,7 +120,7 @@ static int alloc_srqc(struct hns_roce_de
- 		goto err_out;
- 	}
+--- a/include/linux/blk-cgroup.h
++++ b/include/linux/blk-cgroup.h
+@@ -428,10 +428,14 @@ static inline void blkcg_pin_online(stru
+ static inline void blkcg_unpin_online(struct blkcg *blkcg)
+ {
+ 	do {
++		struct blkcg *parent;
++
+ 		if (!refcount_dec_and_test(&blkcg->online_pin))
+ 			break;
++
++		parent = blkcg_parent(blkcg);
+ 		blkcg_destroy_blkgs(blkcg);
+-		blkcg = blkcg_parent(blkcg);
++		blkcg = parent;
+ 	} while (blkcg);
+ }
  
--	ret = xa_err(xa_store(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
-+	ret = xa_err(xa_store_irq(&srq_table->xa, srq->srqn, srq, GFP_KERNEL));
- 	if (ret) {
- 		ibdev_err(ibdev, "failed to store SRQC, ret = %d.\n", ret);
- 		goto err_put;
-@@ -149,7 +149,7 @@ static int alloc_srqc(struct hns_roce_de
- 	return ret;
- 
- err_xa:
--	xa_erase(&srq_table->xa, srq->srqn);
-+	xa_erase_irq(&srq_table->xa, srq->srqn);
- 
- err_put:
- 	hns_roce_table_put(hr_dev, &srq_table->table, srq->srqn);
-@@ -169,7 +169,7 @@ static void free_srqc(struct hns_roce_de
- 		dev_err(hr_dev->dev, "DESTROY_SRQ failed (%d) for SRQN %06lx\n",
- 			ret, srq->srqn);
- 
--	xa_erase(&srq_table->xa, srq->srqn);
-+	xa_erase_irq(&srq_table->xa, srq->srqn);
- 
- 	if (atomic_dec_and_test(&srq->refcount))
- 		complete(&srq->free);
 
 
