@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42EF1E522;
-	Thu, 30 Jan 2025 14:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B571E1E522;
+	Thu, 30 Jan 2025 14:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247311; cv=none; b=MP171uujSdG7P12ksD3rfACVWm7S/d6rLXEcgVkgsA6HIhDf5nmTN0GDDfvHL8suNcAog8wcKz0Pkq8CzvCJfhnTi/Sc1GfC5tH+nNGnfRyOZvs7IZKqSLs/aGQNcOpQunY/ynYszgEE1wMruzKEz0RLHrebyRR+KI4gquubZIg=
+	t=1738247314; cv=none; b=uea0POnh+PrvgZFjWT18IFSLb48ffAzbvqHD1qJUxEbvndV1yIXGONa+zAAQF0AvtMmy1qywhubeegI+FWDg5+cLF4BY6pjW5BzahouswITjbkdGGgDw0wyGYvMwtyHVJt9l4txNM7lx7WQzXSFBY0860LTg58nqoG6F625KIQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247311; c=relaxed/simple;
-	bh=Ez8md6XMe9NTFIxkmRZXJ90C/84F9e4nBRgC28dNw1I=;
+	s=arc-20240116; t=1738247314; c=relaxed/simple;
+	bh=zhi0NJYFk+7JtpKfZ86At0kmrthBmMsaHUXGuXeug50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLyjcEbHUjZ1njLIEbIueME0I13NEAvYqv93iR+LySHSl4JZ2StXu0O6HgWE4WTKAs2RLYxZ+BhJ6D9R/ib+GNYx3kE7dXJR13KhGkWLSUFYb4avRp68AJRlGxZaqBJRx2PlQeV0ftNb4U0QFt7sE04BlYGElaSB2gje9uNli2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/38spJz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lb6zl7iKQ+AIpyo2t4owMbm/evVYPCI+BvpNQMCCFYz/N+vB0HAWvyp7dsAQ68B3mvL7JHptKpriYJYAGb7C4MbgJb6nmrdcBdl1gFAkDnObf1qxq2nqSXrkXK46e+rvFWgkT+sw7aKwG4OJTU5GYzMZ8fmbhfPTyElF9KeuwOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rbBg7Kcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/38spJz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F468C4CED2;
-	Thu, 30 Jan 2025 14:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rbBg7Kcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A112C4CED2;
+	Thu, 30 Jan 2025 14:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247311;
-	bh=Ez8md6XMe9NTFIxkmRZXJ90C/84F9e4nBRgC28dNw1I=;
+	s=korg; t=1738247314;
+	bh=zhi0NJYFk+7JtpKfZ86At0kmrthBmMsaHUXGuXeug50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/38spJzAGelxpWfOzrBRU3prr+cHaxuZO2UzzA9faNEH7YUr3ZmKvCZJCaoLnUf6
-	 i4f45HxzC+2FEcwSeKDQgNii7Bxnd3l2reZsS3O7ejFBwkEj+gSo+A7Dn+EowFif2V
-	 JY5zTOo1Zl5VX/ve6sp9wuiUp9Y9n519QLeuWgwo=
+	b=rbBg7Kcf2r/ZpRjfKawU16HeMh3GN8unmammS+55E7P8HWQqswsUOu5Xdm2mxDEgD
+	 yacIAV2RJtuIuXisUPzRsMhQni09xXoLPiNqR6K5U9dRAaWTCiOm5QPUFF7OniuaNq
+	 k1mtNFuzYzF97CEcLMAoAQF+MX8qdNst+TluVv5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 21/24] ALSA: usb-audio: Add delay quirk for USB Audio Device
-Date: Thu, 30 Jan 2025 15:02:13 +0100
-Message-ID: <20250130140128.138878937@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 22/24] Input: atkbd - map F23 key to support default copilot shortcut
+Date: Thu, 30 Jan 2025 15:02:14 +0100
+Message-ID: <20250130140128.177813970@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140127.295114276@linuxfoundation.org>
 References: <20250130140127.295114276@linuxfoundation.org>
@@ -50,37 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit ad5b205f9e022b407d91f952faddd05718be2866 upstream.
+commit 907bc9268a5a9f823ffa751957a5c1dd59f83f42 upstream.
 
-Audio control requests that sets sampling frequency sometimes fail on
-this card. Adding delay between control messages eliminates that problem.
+Microsoft defined Meta+Shift+F23 as the Copilot shortcut instead of a
+dedicated keycode, and multiple vendors have their keyboards emit this
+sequence in response to users pressing a dedicated "Copilot" key.
+Unfortunately the default keymap table in atkbd does not map scancode
+0x6e (F23) and so the key combination does not work even if userspace
+is ready to handle it.
 
-usb 1-1: New USB device found, idVendor=0d8c, idProduct=0014
-usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-usb 1-1: Product: USB Audio Device
-usb 1-1: Manufacturer: C-Media Electronics Inc.
+Because this behavior is common between multiple vendors and the
+scancode is currently unused map 0x6e to keycode 193 (KEY_F23) so that
+key sequence is generated properly.
 
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/TYUPR06MB6217E94D922B9BF422A73F32D2192@TYUPR06MB6217.apcprd06.prod.outlook.com
+MS documentation for the scan code:
+https://learn.microsoft.com/en-us/windows/win32/inputdev/about-keyboard-input#scan-codes
+Confirmed on Lenovo, HP and Dell machines by Canonical.
+Tested on Lenovo T14s G6 AMD.
+
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20250107034554.25843-1-mpearson-lenovo@squebb.ca
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/keyboard/atkbd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1836,6 +1836,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x0d8c, 0x0014, /* USB Audio Device */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
- 		   QUIRK_FLAG_FIXED_RATE),
- 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+--- a/drivers/input/keyboard/atkbd.c
++++ b/drivers/input/keyboard/atkbd.c
+@@ -90,7 +90,7 @@ static const unsigned short atkbd_set2_k
+ 	  0, 46, 45, 32, 18,  5,  4, 95,  0, 57, 47, 33, 20, 19,  6,183,
+ 	  0, 49, 48, 35, 34, 21,  7,184,  0,  0, 50, 36, 22,  8,  9,185,
+ 	  0, 51, 37, 23, 24, 11, 10,  0,  0, 52, 53, 38, 39, 25, 12,  0,
+-	  0, 89, 40,  0, 26, 13,  0,  0, 58, 54, 28, 27,  0, 43,  0, 85,
++	  0, 89, 40,  0, 26, 13,  0,193, 58, 54, 28, 27,  0, 43,  0, 85,
+ 	  0, 86, 91, 90, 92,  0, 14, 94,  0, 79,124, 75, 71,121,  0,  0,
+ 	 82, 83, 80, 76, 77, 72,  1, 69, 87, 78, 81, 74, 55, 73, 70, 99,
+ 
 
 
