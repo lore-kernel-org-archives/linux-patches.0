@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460551E522;
-	Thu, 30 Jan 2025 14:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7771E522;
+	Thu, 30 Jan 2025 14:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246943; cv=none; b=Q/+vgP3UBFqRe+Z0+Wuj86eauCjfmw0qVgRjjNHcFDoanDfAG/CmW8tvQSl/0U1bdSBsaDSCb+I2sqfVu+a5DagSwYcdGkXb9wWdLuEJPn5hMf8ANbc+w1JIkZ+9/ssU3WL3iq8LYyv/BsNqD6y6vsggIA/9oJwKEbyr36kwQA8=
+	t=1738246946; cv=none; b=iqzJDQYXuG5tSqzUAVYkQTDpx2NiK/pCW506Q4e6VYrZy283XBGofw2Kx7zbQzE3wwiN4RnNpY/apVaV6Q+ya9Yqoy/4pQwwmuMNsYqDev7zqsPVTJHz7nbAkHykl5VKLOWjBjTRdwopaTDhtT5FGiQlRuQZxItud2jRS5JQ8FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246943; c=relaxed/simple;
-	bh=5rjPvy8nHEO1TAaNPKUCpWiQfjCAlNDzAV3kKJtpMk8=;
+	s=arc-20240116; t=1738246946; c=relaxed/simple;
+	bh=efKWKMNkTg+rMGcJYCBICdJuWB56Gm0Fa4GLWoOyNR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MUhT5qivWNGXZERdNXfSBUoMf8bdUdiJutg1Asu1QRSltWn10f5z/8AYSEgpH9U8qkqX9Ka4afsoa/hm5CARyLCxXqxXee/JzGKNfXqKcaWwZP5CC/QVeliC/iHJiHG55Fj0vMyPwW+AbrDDaQp3XlzbYwz1xb8Vsnls8o8My48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLzCstQ/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djFTLb3LAu5I31nbo8648KqH1ZhkOKlFwKPffcvDF40h0UEFcOfE3iCmRt6K/nIfcyhU2Sht28KnpoeTAMV7trYNzvkWcjsaqHRYMM9YiQd5OMIxpZeAscyS7XOqpR6MsAsNxI1IJ+np86xFW953OunqRJuu+SH5GEeQiklLeYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t15g+U38; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLzCstQ/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA498C4CED2;
-	Thu, 30 Jan 2025 14:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t15g+U38"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD94DC4CED2;
+	Thu, 30 Jan 2025 14:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246943;
-	bh=5rjPvy8nHEO1TAaNPKUCpWiQfjCAlNDzAV3kKJtpMk8=;
+	s=korg; t=1738246946;
+	bh=efKWKMNkTg+rMGcJYCBICdJuWB56Gm0Fa4GLWoOyNR8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TLzCstQ/XMrZvpN6oYXnZc53j4XOqOumhJCrZj+zcfAEZEHst0fG1msPPso4/Fqwu
-	 YQM7WxGFvOgDRpbMJolPbDW6gfANCZOmWiASEDWOmCp092l/1fsC9w33t3MD5+2qma
-	 epAchk3koZA9zG5OrAnZcddFJFMdXX/NBIgIu9I4=
+	b=t15g+U38XrYurv09dVV47lVISpJvPcjS9AfkXm6OeQVeOQF9jDmrWZVcyspvp/zsU
+	 4NJa15cS1HeSokCDEsO3XK8P5r9cYn6CD1Fhn/vwqtiDuCX2fUZ4/uj7HErNEV8Awa
+	 oFUwJIDPOmsdkOufHYAhXV81Ytug0Pm+PZvIy4ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Ching-Chun (Jim) Huang" <jserv@ccns.ncku.edu.tw>,
-	chuang@cs.nycu.edu.tw,
-	Ingo Molnar <mingo@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Shile Zhang <shile.zhang@linux.alibaba.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 028/133] scripts/sorttable: fix orc_sort_cmp() to maintain symmetry and transitivity
-Date: Thu, 30 Jan 2025 15:00:17 +0100
-Message-ID: <20250130140143.645489718@linuxfoundation.org>
+	Ming-Hung Tsai <mtsai@redhat.com>,
+	Joe Thornber <thornber@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 003/133] dm array: fix releasing a faulty array block twice in dm_array_cursor_end
+Date: Thu, 30 Jan 2025 14:59:52 +0100
+Message-ID: <20250130140142.635529570@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -57,68 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Ming-Hung Tsai <mtsai@redhat.com>
 
-commit 0210d251162f4033350a94a43f95b1c39ec84a90 upstream.
+[ Upstream commit f2893c0804d86230ffb8f1c8703fdbb18648abc8 ]
 
-The orc_sort_cmp() function, used with qsort(), previously violated the
-symmetry and transitivity rules required by the C standard.  Specifically,
-when both entries are ORC_TYPE_UNDEFINED, it could result in both a < b
-and b < a, which breaks the required symmetry and transitivity.  This can
-lead to undefined behavior and incorrect sorting results, potentially
-causing memory corruption in glibc implementations [1].
+When dm_bm_read_lock() fails due to locking or checksum errors, it
+releases the faulty block implicitly while leaving an invalid output
+pointer behind. The caller of dm_bm_read_lock() should not operate on
+this invalid dm_block pointer, or it will lead to undefined result.
+For example, the dm_array_cursor incorrectly caches the invalid pointer
+on reading a faulty array block, causing a double release in
+dm_array_cursor_end(), then hitting the BUG_ON in dm-bufio cache_put().
 
-Symmetry: If x < y, then y > x.
-Transitivity: If x < y and y < z, then x < z.
+Reproduce steps:
 
-Fix the comparison logic to return 0 when both entries are
-ORC_TYPE_UNDEFINED, ensuring compliance with qsort() requirements.
+1. initialize a cache device
 
-Link: https://www.qualys.com/2024/01/30/qsort.txt [1]
-Link: https://lkml.kernel.org/r/20241226140332.2670689-1-visitorckw@gmail.com
-Fixes: 57fa18994285 ("scripts/sorttable: Implement build-time ORC unwind table sorting")
-Fixes: fb799447ae29 ("x86,objtool: Split UNWIND_HINT_EMPTY in two")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Cc: Ching-Chun (Jim) Huang <jserv@ccns.ncku.edu.tw>
-Cc: <chuang@cs.nycu.edu.tw>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Shile Zhang <shile.zhang@linux.alibaba.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc $262144"
+dd if=/dev/zero of=/dev/mapper/cmeta bs=4k count=1
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+2. wipe the second array block offline
+
+dmsteup remove cache cmeta cdata corig
+mapping_root=$(dd if=/dev/sdc bs=1c count=8 skip=192 \
+2>/dev/null | hexdump -e '1/8 "%u\n"')
+ablock=$(dd if=/dev/sdc bs=1c count=8 skip=$((4096*mapping_root+2056)) \
+2>/dev/null | hexdump -e '1/8 "%u\n"')
+dd if=/dev/zero of=/dev/sdc bs=4k count=1 seek=$ablock
+
+3. try reopen the cache device
+
+dmsetup create cmeta --table "0 8192 linear /dev/sdc 0"
+dmsetup create cdata --table "0 65536 linear /dev/sdc 8192"
+dmsetup create corig --table "0 524288 linear /dev/sdc $262144"
+dmsetup create cache --table "0 524288 cache /dev/mapper/cmeta \
+/dev/mapper/cdata /dev/mapper/corig 128 2 metadata2 writethrough smq 0"
+
+Kernel logs:
+
+(snip)
+device-mapper: array: array_block_check failed: blocknr 0 != wanted 10
+device-mapper: block manager: array validator check failed for block 10
+device-mapper: array: get_ablock failed
+device-mapper: cache metadata: dm_array_cursor_next for mapping failed
+------------[ cut here ]------------
+kernel BUG at drivers/md/dm-bufio.c:638!
+
+Fix by setting the cached block pointer to NULL on errors.
+
+In addition to the reproducer described above, this fix can be
+verified using the "array_cursor/damaged" test in dm-unit:
+  dm-unit run /pdata/array_cursor/damaged --kernel-dir <KERNEL_DIR>
+
+Signed-off-by: Ming-Hung Tsai <mtsai@redhat.com>
+Fixes: fdd1315aa5f0 ("dm array: introduce cursor api")
+Reviewed-by: Joe Thornber <thornber@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/sorttable.h |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/md/persistent-data/dm-array.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/scripts/sorttable.h
-+++ b/scripts/sorttable.h
-@@ -103,7 +103,7 @@ static inline unsigned long orc_ip(const
+diff --git a/drivers/md/persistent-data/dm-array.c b/drivers/md/persistent-data/dm-array.c
+index 185dc60360b5..849eb1b97c43 100644
+--- a/drivers/md/persistent-data/dm-array.c
++++ b/drivers/md/persistent-data/dm-array.c
+@@ -907,23 +907,27 @@ static int load_ablock(struct dm_array_cursor *c)
+ 	if (c->block)
+ 		unlock_ablock(c->info, c->block);
  
- static int orc_sort_cmp(const void *_a, const void *_b)
- {
--	struct orc_entry *orc_a;
-+	struct orc_entry *orc_a, *orc_b;
- 	const int *a = g_orc_ip_table + *(int *)_a;
- 	const int *b = g_orc_ip_table + *(int *)_b;
- 	unsigned long a_val = orc_ip(a);
-@@ -120,8 +120,12 @@ static int orc_sort_cmp(const void *_a,
- 	 * These terminator entries exist to handle any gaps created by
- 	 * whitelisted .o files which didn't get objtool generation.
- 	 */
--	orc_a = g_orc_table + (a - g_orc_ip_table);
--	return orc_a->sp_reg == ORC_REG_UNDEFINED && !orc_a->end ? -1 : 1;
-+ 	orc_a = g_orc_table + (a - g_orc_ip_table);
-+	orc_b = g_orc_table + (b - g_orc_ip_table);
-+	if (orc_a->sp_reg == ORC_REG_UNDEFINED && !orc_a->end &&
-+	    orc_b->sp_reg == ORC_REG_UNDEFINED && !orc_b->end)
-+		return 0;
-+ 	return orc_a->sp_reg == ORC_REG_UNDEFINED && !orc_a->end ? -1 : 1;
+-	c->block = NULL;
+-	c->ab = NULL;
+ 	c->index = 0;
+ 
+ 	r = dm_btree_cursor_get_value(&c->cursor, &key, &value_le);
+ 	if (r) {
+ 		DMERR("dm_btree_cursor_get_value failed");
+-		dm_btree_cursor_end(&c->cursor);
++		goto out;
+ 
+ 	} else {
+ 		r = get_ablock(c->info, le64_to_cpu(value_le), &c->block, &c->ab);
+ 		if (r) {
+ 			DMERR("get_ablock failed");
+-			dm_btree_cursor_end(&c->cursor);
++			goto out;
+ 		}
+ 	}
+ 
++	return 0;
++
++out:
++	dm_btree_cursor_end(&c->cursor);
++	c->block = NULL;
++	c->ab = NULL;
+ 	return r;
  }
  
- static void *sort_orctable(void *arg)
+-- 
+2.39.5
+
 
 
