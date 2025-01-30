@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEBB1E8855;
-	Thu, 30 Jan 2025 14:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2070E1E522;
+	Thu, 30 Jan 2025 14:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247142; cv=none; b=oPyzjxiEx8mlSLxu3I8msgFsSeAznyd6Ujl3NZMHs+2CIfvfBA4YGVdDz1RBSMUwPRa6Yva5yfbivJz5RKOpJI4hKVHK4yTGynyljpRsUWzjeO8b4mNyjYUYN13LYDtSO8KjcM9lU1coDgPw6uGEHqbwJthWe6zHpgvTe2yTwRA=
+	t=1738247145; cv=none; b=NiPPH3cSkhj0PT57o0JIUNfZZRz72FkM9UcBwsoib8x+173UimBNYjG7k1okXXOCbCHiOt/dBmdKMIrxBtnOOI8Nx+I9HqTrDpU5ioaoy8IQ2RWRYNIG6hgF5IYigU0eQ7pEh+EiQPWszn2zfZ5AO3SD0QYwfRU3DEvkP13c4fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247142; c=relaxed/simple;
-	bh=0dwb1vwzYNNWfiTuCMs+EhaWEz+Q02v0YA97IBSUTpc=;
+	s=arc-20240116; t=1738247145; c=relaxed/simple;
+	bh=bboYFjkZ6wCECpog+seGstMumN4izbkCR/Og4PYF+wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U/4tKPURbIbwmVLjCA+q4w1ojPU/P1kVjUTXh5eP9wWAlfcjcSu7dQgJuV/bApaUT8G9EJ08j1jey+qQ1xhlCG2pIcGlxAxggenDnCXYKIki66E5Nr50ge0PtgHO3YupYjtVRy9gy+lvTLZAzFKzoBf+NQBbuE7cz9aPumNqIUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eni489q8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aJsEBCFVqtgPW9mQOSrZIxzP1qpT+mDl9bv+dr/nJfMnIkkJFeMXRY/qSeAZ1vz9RVoUA+8GF126gCCwItdlleJtTy5ymrP6CB8TeYV125PIzeTPLAL1dt881FCahfUvRZOkSFK2U0moNIZ+QCTK28+MfEv0jx/N78O2pxcGdrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pfrdiAC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eni489q8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4152C4CED2;
-	Thu, 30 Jan 2025 14:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pfrdiAC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 991A3C4CED2;
+	Thu, 30 Jan 2025 14:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247142;
-	bh=0dwb1vwzYNNWfiTuCMs+EhaWEz+Q02v0YA97IBSUTpc=;
+	s=korg; t=1738247145;
+	bh=bboYFjkZ6wCECpog+seGstMumN4izbkCR/Og4PYF+wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eni489q85N0LI07KF+X4Z4nwvvFhhycECew28DJ1h2966kE5TszOHiR7CKbWTm32E
-	 YS+nylzpLsn2KMOrWw9CN2bm5md3ZueW/iguAA3MCHklZaU9/gbf6l9a+o+rVMrWBl
-	 Wx+IePL/9w12a1hfzmR8EfCuhmXwk9qmuJWy8+YA=
+	b=pfrdiAC8t6U8GbNBsWpHV/qgtZUd7XZcdAA2RWzrOJy5PzQAlPRdIiTuXwtDArsl+
+	 /Cx1mhrRjx+jj07KnpizfAAwNei0EYOzguOFhphURQOD6DZ6fWlEso0oaMIEiYUm7G
+	 U34U6DK1FoN9bAy5JlyU+CQVWwtFP2x87TFJ4a2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/133] drm: adv7511: Fix use-after-free in adv7533_attach_dsi()
-Date: Thu, 30 Jan 2025 15:00:56 +0100
-Message-ID: <20250130140145.214783446@linuxfoundation.org>
+Subject: [PATCH 5.10 068/133] sctp: sysctl: rto_min/max: avoid using current->nsproxy
+Date: Thu, 30 Jan 2025 15:00:57 +0100
+Message-ID: <20250130140145.254801662@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -46,82 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 81adbd3ff21c1182e06aa02c6be0bfd9ea02d8e8 ]
+[ Upstream commit 9fc17b76fc70763780aa78b38fcf4742384044a5 ]
 
-The host_node pointer was assigned and freed in adv7533_parse_dt(), and
-later, adv7533_attach_dsi() uses the same. Fix this use-after-free issue
-by dropping of_node_put() in adv7533_parse_dt() and calling of_node_put()
-in error path of probe() and also in the remove().
+As mentioned in a previous commit of this series, using the 'net'
+structure via 'current' is not recommended for different reasons:
 
-Fixes: 1e4d58cd7f88 ("drm/bridge: adv7533: Create a MIPI DSI device")
+- Inconsistency: getting info from the reader's/writer's netns vs only
+  from the opener's netns.
+
+- current->nsproxy can be NULL in some cases, resulting in an 'Oops'
+  (null-ptr-deref), e.g. when the current task is exiting, as spotted by
+  syzbot [1] using acct(2).
+
+The 'net' structure can be obtained from the table->data using
+container_of().
+
+Note that table->data could also be used directly, as this is the only
+member needed from the 'net' structure, but that would increase the size
+of this fix, to use '*data' everywhere 'net->sctp.rto_min/max' is used.
+
+Fixes: 4f3fdf3bc59c ("sctp: add check rto_min and rto_max in sysctl")
 Cc: stable@vger.kernel.org
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241119192040.152657-2-biju.das.jz@bp.renesas.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/67769ecb.050a0220.3a8527.003f.GAE@google.com [1]
+Suggested-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250108-net-sysctl-current-nsproxy-v1-5-5df34b2083e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7511_drv.c | 10 ++++++++--
- drivers/gpu/drm/bridge/adv7511/adv7533.c     |  2 --
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ net/sctp/sysctl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-index 9255bce51753..46782f72564b 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
-@@ -1220,8 +1220,10 @@ static int adv7511_probe(struct i2c_client *i2c, const struct i2c_device_id *id)
- 		return ret;
- 
- 	ret = adv7511_init_regulators(adv7511);
--	if (ret)
--		return dev_err_probe(dev, ret, "failed to init regulators\n");
-+	if (ret) {
-+		dev_err_probe(dev, ret, "failed to init regulators\n");
-+		goto err_of_node_put;
-+	}
- 
- 	/*
- 	 * The power down GPIO is optional. If present, toggle it from active to
-@@ -1329,6 +1331,8 @@ static int adv7511_probe(struct i2c_client *i2c, const struct i2c_device_id *id)
- 	i2c_unregister_device(adv7511->i2c_edid);
- uninit_regulators:
- 	adv7511_uninit_regulators(adv7511);
-+err_of_node_put:
-+	of_node_put(adv7511->host_node);
- 
- 	return ret;
- }
-@@ -1337,6 +1341,8 @@ static int adv7511_remove(struct i2c_client *i2c)
+diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
+index 8be80096fbb6..82b736843c9d 100644
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -396,7 +396,7 @@ static int proc_sctp_do_hmac_alg(struct ctl_table *ctl, int write,
+ static int proc_sctp_do_rto_min(struct ctl_table *ctl, int write,
+ 				void *buffer, size_t *lenp, loff_t *ppos)
  {
- 	struct adv7511 *adv7511 = i2c_get_clientdata(i2c);
- 
-+	of_node_put(adv7511->host_node);
-+
- 	adv7511_uninit_regulators(adv7511);
- 
- 	drm_bridge_remove(&adv7511->bridge);
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-index f8d5fa6652af..ee33e7a033ef 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -184,8 +184,6 @@ int adv7533_parse_dt(struct device_node *np, struct adv7511 *adv)
- 	if (!adv->host_node)
- 		return -ENODEV;
- 
--	of_node_put(adv->host_node);
--
- 	adv->use_timing_gen = !of_property_read_bool(np,
- 						"adi,disable-timing-generator");
- 
+-	struct net *net = current->nsproxy->net_ns;
++	struct net *net = container_of(ctl->data, struct net, sctp.rto_min);
+ 	unsigned int min = *(unsigned int *) ctl->extra1;
+ 	unsigned int max = *(unsigned int *) ctl->extra2;
+ 	struct ctl_table tbl;
+@@ -424,7 +424,7 @@ static int proc_sctp_do_rto_min(struct ctl_table *ctl, int write,
+ static int proc_sctp_do_rto_max(struct ctl_table *ctl, int write,
+ 				void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	struct net *net = current->nsproxy->net_ns;
++	struct net *net = container_of(ctl->data, struct net, sctp.rto_max);
+ 	unsigned int min = *(unsigned int *) ctl->extra1;
+ 	unsigned int max = *(unsigned int *) ctl->extra2;
+ 	struct ctl_table tbl;
 -- 
 2.39.5
 
