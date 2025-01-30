@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECA51E493C;
-	Thu, 30 Jan 2025 14:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A320E1BDA95;
+	Thu, 30 Jan 2025 14:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246729; cv=none; b=jGHudeSpgiFjSOwAM5jqQPMn4csXAJKAqFwJ13xBZGUipS6L/PpnfxfHfk/SzB0hVx/fvb+MaH5E8+Ojf56TYj6Ih1+qLFJhwLxXNQ9GvPw3BfU4YPOk/vGe5ndr0HvOXlxP7esKeGHbSpt5yMXNkHi3iNAgTCXJktWgKk7Tio8=
+	t=1738246732; cv=none; b=OeFUYMTRwsi+8VvoJ8115tkXl9RCYyvmEWzlTs+2+2DHGWqA7yDjv9bf9w34n+HHtVoU7S02L6RGFstnbBGufCduFXDAc6XhzxYJegQmNeM81WvoCNS5Hz3LjNTnOYKsBhvTl/lWXDppG8HaB1qjpU/DZHXxakcfex1ICOjtMCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246729; c=relaxed/simple;
-	bh=BGl04HCkT/vzgTiSXp30AVo/nmSlBGp6riJZij8tVL0=;
+	s=arc-20240116; t=1738246732; c=relaxed/simple;
+	bh=4XcfYoGuwo/nyiUCRSK4xfncYEJSxTfck5cokqMW92E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lc437M3w/s7phZhL/R3Qo0L7KC+iPcfdkHdtapz7d+MYXiZGpvqNg4m8dXKtSTHbKNnTR/BSdZmMJ1HMEEHdm+Co5xtohTWe4bvr7tpOjX0nfN91+V6OTOxY387OGZM/DtmLppgzc1cfEheegSsblWhDzJpOEYKGYnh8Bw2Jzyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqtMkC6u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEzjIBC05pZfi7eOPgokn6h3PxfdcORP0ZHD6xZ/BAIN+PsGd3ga96yE1Gf2JnPFZAcGPXrOPayWJYUW01n+OYvtrIetw93NfLC7SwyOB+/UeS3PjZ3SC2fVs71uWKA1F+RQTGbFA7XU0nN9gGMUFUBA5+9eHzxR378xCbOk6xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ino5zOko; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqtMkC6u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECBAC4CED2;
-	Thu, 30 Jan 2025 14:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ino5zOko"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C22C6C4CED2;
+	Thu, 30 Jan 2025 14:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246729;
-	bh=BGl04HCkT/vzgTiSXp30AVo/nmSlBGp6riJZij8tVL0=;
+	s=korg; t=1738246732;
+	bh=4XcfYoGuwo/nyiUCRSK4xfncYEJSxTfck5cokqMW92E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqtMkC6uBCkfKQabKR5SmnJWDANeSerirpws4h6qQSDueOO7CeUgcXkrmhcFxCqgD
-	 M7Vhpt4+ByhHJjgOybpc90CGfcSBWsAw5bsco51mY5s0MveA4bzTlzr9k5WhH3lkOQ
-	 C/mDseZHynw+izgaFjnJZ+jmnAwkET/0SYh5tUKg=
+	b=ino5zOkowjXkG4lH0LqZMl/+rE5NTrqnxEmTzPVhOwZi0C+UKHjTD0BpgzzcPeTy7
+	 XN5MnfjX8OdhjNDqs6RJlUiDd6RnKeUjR2euXlLS+7wvCfdahs6oDrXE/4OeOSrth7
+	 g9hDcJO41yXdot/F8u1BT4IbeDIWQ+x3xeCo3koo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 17/91] drm/amd/display: increase MAX_SURFACES to the value supported by hw
-Date: Thu, 30 Jan 2025 15:00:36 +0100
-Message-ID: <20250130140134.351774623@linuxfoundation.org>
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.4 18/91] USB: serial: option: add MeiG Smart SRM815
+Date: Thu, 30 Jan 2025 15:00:37 +0100
+Message-ID: <20250130140134.390174250@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -51,38 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-commit 21541bc6b44241e3f791f9e552352d8440b2b29e upstream.
+commit c1947d244f807b1f95605b75a4059e7b37b5dcc3 upstream.
 
-As the hw supports up to 4 surfaces, increase the maximum number of
-surfaces to prevent the DC error when trying to use more than three
-planes.
+It looks like SRM815 shares ID with SRM825L.
 
-[drm:dc_state_add_plane [amdgpu]] *ERROR* Surface: can not attach plane_state 000000003e2cb82c! Maximum is: 3
+T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=2dee ProdID=4d22 Rev= 4.14
+S:  Manufacturer=MEIG
+S:  Product=LTE-A Module
+S:  SerialNumber=123456
+C:* #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/3693
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b8d6daffc871a42026c3c20bff7b8fa0302298c1)
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/lkml/20241215100027.1970930-1-amadeus@jmu.edu.cn/
+Link: https://lore.kernel.org/all/4333b4d0-281f-439d-9944-5570cbc4971d@gmail.com/
 Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -41,7 +41,7 @@
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -621,7 +621,7 @@ static void option_instat_callback(struc
  
- #define DC_VER "3.2.48"
- 
--#define MAX_SURFACES 3
-+#define MAX_SURFACES 4
- #define MAX_PLANES 6
- #define MAX_STREAMS 6
- #define MAX_SINKS_PER_LINK 4
+ /* MeiG Smart Technology products */
+ #define MEIGSMART_VENDOR_ID			0x2dee
+-/* MeiG Smart SRM825L based on Qualcomm 315 */
++/* MeiG Smart SRM815/SRM825L based on Qualcomm 315 */
+ #define MEIGSMART_PRODUCT_SRM825L		0x4d22
+ /* MeiG Smart SLM320 based on UNISOC UIS8910 */
+ #define MEIGSMART_PRODUCT_SLM320		0x4d41
+@@ -2405,6 +2405,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
 
 
