@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E679C13D;
-	Thu, 30 Jan 2025 14:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12604C13D;
+	Thu, 30 Jan 2025 14:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245691; cv=none; b=c9bVUYl7epes2DIeQHNqIUmEDl6Z6AcoJ3svxrdhuhe4XiTpXwuWC6h4jMcIMwzVRNhwoWcOLqGPFtekpqS1H/OBRYLGz8Uzt63JQBbdPsaAxvC2cD7JAfmYM7sg0ujkiXT7r8dCNAWkieMdFBLUsXTmZ+HCYH1r4AfS2IbKZMQ=
+	t=1738245694; cv=none; b=BV4NW6JLa/DCgeXM2MuT4qO80viwmPRrmo+M2DARFHZ3cXd63N06ZLaHdecIK2CA0SVkzQb3RXTkCP9CFWnPt/N/JnNdei1GYf6n3QYHNFNim7E3SWnmsmbGhcdIFwYCIxakTmiprZcfnh1uG1rmQVXHY1iN+mg1wdJGwRkuhFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245691; c=relaxed/simple;
-	bh=hoFzjedfnoq/56QprmeLuSidtMl6DaafCsyYVVd+zAU=;
+	s=arc-20240116; t=1738245694; c=relaxed/simple;
+	bh=JK6JNFn8feJa724BTXnezrDSb9Vt+tqK6uWGjjrIjH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaD9Px0CaGxv1uqAUHsDMfI6eFyeeyhotBptL5Leh26TSjr2GSYhwZVI440ggeaiHu/iNINYrgyIWmbf9v25E5ZxAcLzh9TEw/CHj7e8dAgX8taQxbuRfkDQc37K7LxT/1M7QbsJtYNJvGaXWZuUc0e2mGyu68qNbDJaSHpv7+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fRn/7QsG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g85hW6NYJzTp+ESLLuKijhV3HUna4mwDU9DR325RZ+sZyDHUl8hSNGncCxbJLoxPwatDKJcGH85PeahSqVVnQ0ih7DCDxS67k7UETkWVLSMwqzZFsORmwLpRiyW3iib0Z6wRjMVwP1dU4SlbaAhwKghB/wK3EDp/ve/vKHcQK2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VzmBbBZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fRn/7QsG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87BFC4CED2;
-	Thu, 30 Jan 2025 14:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VzmBbBZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA0DC4CED2;
+	Thu, 30 Jan 2025 14:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245691;
-	bh=hoFzjedfnoq/56QprmeLuSidtMl6DaafCsyYVVd+zAU=;
+	s=korg; t=1738245693;
+	bh=JK6JNFn8feJa724BTXnezrDSb9Vt+tqK6uWGjjrIjH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRn/7QsGKyaz5R2v8fnT202Fp2OP0NEjPU0MfSCtG8SUX4VE/UOBRMw9E3RpNDLfp
-	 K9SuFd1K9025S2AoXFsPygh7sq25QbdmkkgNNuZzSAaWz0jfBo/Zn8XhMW8KQpfuyF
-	 49CPsWUJ+KkpYdn5YT3ppCI/LIJ7QIr7InZOJrq8=
+	b=VzmBbBZGPACMOeRoScJccwcL5UBZoa3R8YgGRkVDD9Znt41HgfJp2DOY101KHSCRf
+	 5rBH/KKCuKzMtBa+FvMD+8jjGaGA3qJbSQn+havGbiHShjQmWIPCKB7F7UckuZzcq8
+	 N1mnBUpr1T5CKxV3NVM+HShEmTHtKred5nq2CgXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Austin Zheng <austin.zheng@amd.com>,
-	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 08/40] drm/amd/display: Initialize denominator defaults to 1
-Date: Thu, 30 Jan 2025 14:59:08 +0100
-Message-ID: <20250130133500.047477297@linuxfoundation.org>
+Subject: [PATCH 6.12 09/40] of/unittest: Add test that of_address_to_resource() fails on non-translatable address
+Date: Thu, 30 Jan 2025 14:59:09 +0100
+Message-ID: <20250130133500.085480974@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -55,42 +50,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-[ Upstream commit 36b23e3baf9129d5b6c3a3a85b6b7ffb75ae287c ]
+[ Upstream commit 44748065ed321041db6e18cdcaa8c2a9554768ac ]
 
-[WHAT & HOW]
-Variables, used as denominators and maybe not assigned to other values,
-should be initialized to non-zero to avoid DIVIDE_BY_ZERO, as reported
-by Coverity.
+of_address_to_resource() on a non-translatable address should return an
+error. Additionally, this case also triggers a spurious WARN for
+missing #address-cells/#size-cells.
 
-Reviewed-by: Austin Zheng <austin.zheng@amd.com>
-Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e2c4c6c10542ccfe4a0830bb6c9fd5b177b7bbb7)
+Link: https://lore.kernel.org/r/20250110215030.3637845-1-robh@kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c        | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/of/unittest-data/tests-platform.dtsi | 13 +++++++++++++
+ drivers/of/unittest.c                        | 14 ++++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-index 3ea54fd52e468..e2a3764d9d181 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2/dml21/src/dml2_core/dml2_core_dcn4_calcs.c
-@@ -578,8 +578,8 @@ static void CalculateBytePerPixelAndBlockSizes(
+diff --git a/drivers/of/unittest-data/tests-platform.dtsi b/drivers/of/unittest-data/tests-platform.dtsi
+index fa39611071b32..cd310b26b50c8 100644
+--- a/drivers/of/unittest-data/tests-platform.dtsi
++++ b/drivers/of/unittest-data/tests-platform.dtsi
+@@ -34,5 +34,18 @@ dev@100 {
+ 				};
+ 			};
+ 		};
++
++		platform-tests-2 {
++			// No #address-cells or #size-cells
++			node {
++				#address-cells = <1>;
++				#size-cells = <1>;
++
++				test-device@100 {
++					compatible = "test-sub-device";
++					reg = <0x100 1>;
++				};
++			};
++		};
+ 	};
+ };
+diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
+index daf9a2dddd7e0..576e9beefc7c8 100644
+--- a/drivers/of/unittest.c
++++ b/drivers/of/unittest.c
+@@ -1342,6 +1342,7 @@ static void __init of_unittest_bus_3cell_ranges(void)
+ static void __init of_unittest_reg(void)
  {
- 	*BytePerPixelDETY = 0;
- 	*BytePerPixelDETC = 0;
--	*BytePerPixelY = 0;
--	*BytePerPixelC = 0;
-+	*BytePerPixelY = 1;
-+	*BytePerPixelC = 1;
+ 	struct device_node *np;
++	struct resource res;
+ 	int ret;
+ 	u64 addr, size;
  
- 	if (SourcePixelFormat == dml2_444_64) {
- 		*BytePerPixelDETY = 8;
+@@ -1358,6 +1359,19 @@ static void __init of_unittest_reg(void)
+ 		np, addr);
+ 
+ 	of_node_put(np);
++
++	np = of_find_node_by_path("/testcase-data/platform-tests-2/node/test-device@100");
++	if (!np) {
++		pr_err("missing testcase data\n");
++		return;
++	}
++
++	ret = of_address_to_resource(np, 0, &res);
++	unittest(ret == -EINVAL, "of_address_to_resource(%pOF) expected error on untranslatable address\n",
++		 np);
++
++	of_node_put(np);
++
+ }
+ 
+ struct of_unittest_expected_res {
 -- 
 2.39.5
 
