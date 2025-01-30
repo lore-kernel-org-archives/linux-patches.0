@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CCF41BDA95;
-	Thu, 30 Jan 2025 14:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2661E7C08;
+	Thu, 30 Jan 2025 14:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246736; cv=none; b=tg4HFDQ1difz5zofKGEnaL+zfAJSDc6VLmDzxX6By/gB/un9ZO8GXY9tfuGqJEELrIoDLyJocmN/L3QgcdP+TI1RMKMSz0g9WCoOFLQFFyjgyKPbqHJ+RskVdSJ9nELdn0dREEc26p/1bbjxrdotP96/BaJ2uVjTZbQvQfoSV4w=
+	t=1738246738; cv=none; b=Qwq5/97V2iWQ4ZEW9TK/06AAraCJqi7Wa0pY+DEVRhh3CmwM2NgFI36L6n8sJWj+wI4tUDBQ0egrueXxjD3JLM6KTtV8jkJBvA7aS8erGiQduEoCANHDPsQ3PKeGkWoVqQ6SkNPczB51h0Vw4bbogZU9BzCt7F6jZf/pVQLoJcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246736; c=relaxed/simple;
-	bh=dUErjhxfhgRD4UKKDAGLtI0xSuf1G8IDFUwqztl/o/w=;
+	s=arc-20240116; t=1738246738; c=relaxed/simple;
+	bh=PiFVp/AUjgRmVD2Ex9RmJbhgpUUVxUU33tMEp45RVns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvLmxdsqi5CPVta7T4S/1aNKGRGoceiiqbXMIFQnjTlex2bygAMRBlpAFggaNbNvBuc+uc6HB0WuhxvQGKfMTHk+dtp9M2JqcOgxSYfZxyPC2PnGe/jGsnnsRp4hSowx9h7HWRTGmJWHfrwVZOlF4hNacAIWYAnq+x+VSvEArP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nexuAr/Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PoVXQWUQzckU1fQKhCPxa774fz/XGjDrABCL4cQne0QxIFnOqEne4bjlSx+bGMROGaO2HOi1ULu3+AaDBdMFYStuQLVOg2+6lf6X1kSoZqbEC4gGmMcqXrRNurBVTMbosq3mf3g3FwVlug2QIw0wUR4LX8xqiYuw5MEw1Q7bL9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UchU6tpO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nexuAr/Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC60DC4CED2;
-	Thu, 30 Jan 2025 14:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UchU6tpO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B18DAC4CED2;
+	Thu, 30 Jan 2025 14:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246735;
-	bh=dUErjhxfhgRD4UKKDAGLtI0xSuf1G8IDFUwqztl/o/w=;
+	s=korg; t=1738246738;
+	bh=PiFVp/AUjgRmVD2Ex9RmJbhgpUUVxUU33tMEp45RVns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nexuAr/Y+WwNqibKPGaaD+lUW9w8X32T2LzGPPno3Hh6tWPv6YE+EWHhyO4o0cNhK
-	 8O6YL90J4FjiaRHshTPphs/ulfU5aBU4afqc/lZ3xsnJbgLtSpIRnC9JjpacoQhDbB
-	 7x9IiblrnQMkchcJupp6DRaej78RU21kMS5TWcME=
+	b=UchU6tpOFlj0Ks1yCdlIC8oaNQY48Fmpr/IiCQW2pgroZb4vfxILsr4MQFA4bSNSa
+	 Gqhnpn+oz0bU56zZtyZcOSzo9/pay/IiGAMmyvijbxnz3tmvKOChsSluuL4VZ0u4eP
+	 aXTpKM4Z1a0DbuexhnoKazbUzs62VYPNFeQ2HAiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Hrusecky <michal.hrusecky@turris.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.4 19/91] USB: serial: option: add Neoway N723-EA support
-Date: Thu, 30 Jan 2025 15:00:38 +0100
-Message-ID: <20250130140134.430799501@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 10/91] tls: Fix tls_sw_sendmsg error handling
+Date: Thu, 30 Jan 2025 15:00:29 +0100
+Message-ID: <20250130140134.081481749@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -50,62 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Hrusecky <michal.hrusecky@turris.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit f5b435be70cb126866fa92ffc6f89cda9e112c75 upstream.
+[ Upstream commit b341ca51d2679829d26a3f6a4aa9aee9abd94f92 ]
 
-Update the USB serial option driver to support Neoway N723-EA.
+We've noticed that NFS can hang when using RPC over TLS on an unstable
+connection, and investigation shows that the RPC layer is stuck in a tight
+loop attempting to transmit, but forever getting -EBADMSG back from the
+underlying network.  The loop begins when tcp_sendmsg_locked() returns
+-EPIPE to tls_tx_records(), but that error is converted to -EBADMSG when
+calling the socket's error reporting handler.
 
-ID 2949:8700 Marvell Mobile Composite Device Bus
+Instead of converting errors from tcp_sendmsg_locked(), let's pass them
+along in this path.  The RPC layer handles -EPIPE by reconnecting the
+transport, which prevents the endless attempts to transmit on a broken
+connection.
 
-T:  Bus=02 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2949 ProdID=8700 Rev= 1.00
-S:  Manufacturer=Marvell
-S:  Product=Mobile Composite Device Bus
-S:  SerialNumber=200806006809080000
-C:* #Ifs= 5 Cfg#= 1 Atr=c0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=03
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=e0(wlcon) Sub=01 Prot=03 Driver=rndis_host
-E:  Ad=87(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=rndis_host
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=86(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0e(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=88(I) Atr=03(Int.) MxPS=  64 Ivl=4096ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Tested successfully connecting to the Internet via rndis interface after
-dialing via AT commands on If#=4 or If#=6.
-
-Not sure of the purpose of the other serial interface.
-
-Signed-off-by: Michal Hrusecky <michal.hrusecky@turris.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Link: https://patch.msgid.link/9594185559881679d81f071b181a10eb07cd079f.1736004079.git.bcodding@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/tls/tls_sw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2413,6 +2413,7 @@ static const struct usb_device_id option
- 	  .driver_info = NCTRL(1) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x1bbb, 0x0640, 0xff),			/* TCL IK512 ECM */
- 	  .driver_info = NCTRL(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x2949, 0x8700, 0xff) },			/* Neoway N723-EA */
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 910da98d6bfb..03f608da594e 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -425,7 +425,7 @@ int tls_tx_records(struct sock *sk, int flags)
+ 
+ tx_err:
+ 	if (rc < 0 && rc != -EAGAIN)
+-		tls_err_abort(sk, -EBADMSG);
++		tls_err_abort(sk, rc);
+ 
+ 	return rc;
+ }
+-- 
+2.39.5
+
 
 
