@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D591E3DF8;
-	Thu, 30 Jan 2025 14:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0141E3DF8;
+	Thu, 30 Jan 2025 14:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245720; cv=none; b=iBLFxUsiAXVq4Q2Eydalg24s3JO7RjBKK7UoSW479QqezjyTUO6Svbq6cdtWv+XLnpnzCRhaCoxBx13MQoDPQPTFQV+Z57U5cjn+PjsGMWRdDZpdkJ1pTdT5KAQh5c6gVHYd0gKPyV41z118VTQ87ETg1/sQXDmQhMFb7dptsIY=
+	t=1738245723; cv=none; b=NrAtXF9Tz17GhmWHt7EXT1YKHM+X6GAsEonBgLXXNu5zOzDXsg+VfQb1OY5ngYQ6RNTwbqFxGvZSdx4b1zwDT+PeDuzCXzBPB3tVLC8Jwbcjw/oGebt4oQoeNKgG9Fs+tylUhC0sV+dIcFB/HCQz367j56hwTZbCBonCHEdDQ0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245720; c=relaxed/simple;
-	bh=On8IxywVXAx4BwQzkbH//yux45S3CUBAVvSAV9EEaw8=;
+	s=arc-20240116; t=1738245723; c=relaxed/simple;
+	bh=t/KmDtZ1H0U3NS5RNeMKgG5VonH4lLaX6aRKLxxm0/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/nuzc0nLXxYDDGNlaig5oZSU7JuDOdNOdLCTrl4BzFOQswGk09kvBih84DMOYRS+aXkSJJeous5l+JIulknBKWUJbkAY9+LVJnbrXJungpOI7CAQqHckhzn2rMH9CklbkhEQ9cOGNSvAScVKGzL1YtloVCI79K5KcZ09bG4POo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGgLNwWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KkA8hdt/6+yGnRHr5MKQk0dPmz2czqjPV69w4cvesx78zUYIy0LlVrA+wL8kCD4xig6csZsAJzv4SYNhqIzZotC46U9FbZOcc1L3U+ePm6iOKMSlLf7LrUaZGwJ6yQVB1zZJvoqnBNz+pT7MBoDlcBvtjpTGl4a3udn10y6wVwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNOQMpXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGgLNwWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBBDC4CED2;
-	Thu, 30 Jan 2025 14:01:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNOQMpXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B32C4CED2;
+	Thu, 30 Jan 2025 14:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245720;
-	bh=On8IxywVXAx4BwQzkbH//yux45S3CUBAVvSAV9EEaw8=;
+	s=korg; t=1738245723;
+	bh=t/KmDtZ1H0U3NS5RNeMKgG5VonH4lLaX6aRKLxxm0/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hGgLNwWMpDu6baq3pTAqO6s8CVaSNRS8nllVnTLRIMybOZ2SX10w77xp+xpFpcfH3
-	 HL7pvgtsQW1pqKAoMmubVAaAPWi+Qh8TahVNxT5pRkufcm+LdUfm/igDeIOh+KuPeV
-	 j6xyszqXXMJ/fc3M+9X1JBRkcdV9Uu+aqIx8TBT0=
+	b=vNOQMpXAC3bNsgeIS1r8lN8+HjJqKlH0Plw9uzwq/RM4wDjQORH78JIZOBE7Gymkr
+	 j3/cHQoJwEE4LFc3tMATXvZ6TCZQ/S1Na/su0Az7Sq1sEvtzxdtpZVLtOU9wLRREdS
+	 9fHVvhpAMZMKgfD2bcB4kTmaI+4/bTUsNp9owNDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonardo Brondani Schenkel <leonardo@schenkel.net>,
+	Matheos Mattsson <matheos.mattsson@gmail.com>,
 	Pavel Rojtberg <rojtberg@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 38/40] Input: xpad - improve name of 8BitDo controller 2dc8:3106
-Date: Thu, 30 Jan 2025 14:59:38 +0100
-Message-ID: <20250130133501.232381405@linuxfoundation.org>
+Subject: [PATCH 6.12 39/40] Input: xpad - add support for Nacon Evol-X Xbox One Controller
+Date: Thu, 30 Jan 2025 14:59:39 +0100
+Message-ID: <20250130133501.273984317@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -51,37 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leonardo Brondani Schenkel <leonardo@schenkel.net>
+From: Matheos Mattsson <matheos.mattsson@gmail.com>
 
-commit 66372fa9936088bf29c4f47907efeff03c51a2c8 upstream.
+commit 3a6e5ed2372bcb2a3c554fda32419efd91ff9b0c upstream.
 
-8BitDo Pro 2 Wired Controller shares the same USB identifier
-(2dc8:3106) as a different device, so amend name to reflect that and
-reduce confusion as the user might think the controller was misdetected.
+Add Nacon Evol-X Xbox One to the list of supported devices.
 
-Because Pro 2 Wired will not work in XTYPE_XBOXONE mode (button presses
-won't register), tagging it as XTYPE_XBOX360 remains appropriate.
-
-Signed-off-by: Leonardo Brondani Schenkel <leonardo@schenkel.net>
+Signed-off-by: Matheos Mattsson <matheos.mattsson@gmail.com>
 Signed-off-by: Pavel Rojtberg <rojtberg@gmail.com>
-Link: https://lore.kernel.org/r/20250107192830.414709-2-rojtberg@gmail.com
+Link: https://lore.kernel.org/r/20250107192830.414709-9-rojtberg@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/joystick/xpad.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/joystick/xpad.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -375,7 +375,7 @@ static const struct xpad_device {
- 	{ 0x294b, 0x3303, "Snakebyte GAMEPAD BASE X", 0, XTYPE_XBOXONE },
- 	{ 0x294b, 0x3404, "Snakebyte GAMEPAD RGB X", 0, XTYPE_XBOXONE },
- 	{ 0x2dc8, 0x2000, "8BitDo Pro 2 Wired Controller fox Xbox", 0, XTYPE_XBOXONE },
--	{ 0x2dc8, 0x3106, "8BitDo Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
-+	{ 0x2dc8, 0x3106, "8BitDo Ultimate Wireless / Pro 2 Wired Controller", 0, XTYPE_XBOX360 },
- 	{ 0x2dc8, 0x310a, "8BitDo Ultimate 2C Wireless Controller", 0, XTYPE_XBOX360 },
- 	{ 0x2e24, 0x0652, "Hyperkin Duke X-Box One pad", 0, XTYPE_XBOXONE },
- 	{ 0x31e3, 0x1100, "Wooting One", 0, XTYPE_XBOX360 },
+@@ -386,6 +386,7 @@ static const struct xpad_device {
+ 	{ 0x31e3, 0x1310, "Wooting 60HE (ARM)", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0607, "Nacon GC-100", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0646, "Nacon Pro Compact", 0, XTYPE_XBOXONE },
++	{ 0x3285, 0x0663, "Nacon Evol-X", 0, XTYPE_XBOXONE },
+ 	{ 0x3537, 0x1004, "GameSir T4 Kaleid", 0, XTYPE_XBOX360 },
+ 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
+ 	{ 0xffff, 0xffff, "Chinese-made Xbox Controller", 0, XTYPE_XBOX },
+@@ -534,6 +535,7 @@ static const struct usb_device_id xpad_t
+ 	XPAD_XBOX360_VENDOR(0x2f24),		/* GameSir controllers */
+ 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
+ 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
++	XPAD_XBOXONE_VENDOR(0x3285),		/* Nacon Evol-X */
+ 	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
+ 	XPAD_XBOXONE_VENDOR(0x3537),		/* GameSir Controllers */
+ 	{ }
 
 
