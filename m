@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35238383;
-	Thu, 30 Jan 2025 14:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7418C383;
+	Thu, 30 Jan 2025 14:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246540; cv=none; b=iNUQHPOkRmQnEUH1GyPTkt9QkVXjVdRBKoRGPCkJfBWWmNKm5uU/lIpnA95t7+ryMRyv7qu0s2iw2GGayURGg7ZbQ5weCxivIHQKCl0R7vyGc7VJ630MbQGLiXnRchCbXzDZJzLuXeLWEr8Z10gbex/SF417fgMMzAvI4Kd8GZ0=
+	t=1738246543; cv=none; b=LeDcFc6Z8+S0aQnIRn0DUyMCaS6hZYvtm3+KzwkFBkKoKAdy9ZltuTx+fHbHD4lnXHkgmj2AC4Nxu57zwMLlvLkdWTHt3l9egLy731Zl+gjwz1Ybn1tM3H3NB1SyqJA2d9GYNGK4v0hQYMh0LeWYWAVCtR31EZH0wn0M14QS7+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246540; c=relaxed/simple;
-	bh=3nrZeS71jK+EwtMfm5RWqaHpnCwWj6rLjt9BRaj+Y2M=;
+	s=arc-20240116; t=1738246543; c=relaxed/simple;
+	bh=eMSUE2GUSNubm/AB3iC3b4NQLn5EQ48+GHGWm/xMsts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHqENAM0cHdISzY/mMMRLkWLdY0rs7zyZSgIW+hDe5da39HCL8cwX8sLT6v+tUQLA8M2/6g0Q3/WL++LWS2/Sxe6wzg69SDXq1GnaILjiJI+VMsifnpEMEHKoBaW5n1vZe4EY4U+f8faii9utMMnCSlvPFd7X97G7tRuoVx7atE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gucs9gXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BurQFzxAQL1PTBO4hGEjs9ggcm4gs9jtx+kj9odpe0zLSLsEf7TOWcxlOxUOS7A5/XWVS/c84+XunlEerQhL0ZnPd5REsGHi72w+dn4QPCa+LbpAfQkFtYHBPhYSpbRE8wkl66mLaBtlX5w3Md1NT4EweXU8OawQ3zTDo9016qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLdX2lO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gucs9gXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B806AC4CEE0;
-	Thu, 30 Jan 2025 14:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLdX2lO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E41DC4CED2;
+	Thu, 30 Jan 2025 14:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246540;
-	bh=3nrZeS71jK+EwtMfm5RWqaHpnCwWj6rLjt9BRaj+Y2M=;
+	s=korg; t=1738246542;
+	bh=eMSUE2GUSNubm/AB3iC3b4NQLn5EQ48+GHGWm/xMsts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gucs9gXqboDqMsOalVkr83pXlu10x1GUzkWi6a2NpgCLFKheP5yQQEE2QL2UUbZkc
-	 xVOSgRm1Cd6ixqQDwUNEe5CSgIhTX+LFxB/bLfhH3vxx/NvZG1z6YasJHiKczsUEC7
-	 JZH4alB/SWluvpI1Q5YYoubIIFjwIFc+JruwGj7g=
+	b=wLdX2lO58iE5Q5N2jOhEa38egdbBMo2vSIBr6OXC8xv6NJUfILuafr6bskjFfdg6i
+	 rN0VMheBGOG7GFIrhQJt5mtZJAkD7Uj4oZR8xWgj050xNr/iG3bv55DlWQKTc1EDGc
+	 urK1qYpipBiPhd8khnCZtUe7KHc7jX4aJadt7zjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Rajani Kantha <rajanikantha@engineer.com>
-Subject: [PATCH 6.6 27/43] block: fix integer overflow in BLKSECDISCARD
-Date: Thu, 30 Jan 2025 14:59:34 +0100
-Message-ID: <20250130133459.995930116@linuxfoundation.org>
+	=?UTF-8?q?Ulrich=20M=C3=BCller?= <ulm@gentoo.org>,
+	WangYuli <wangyuli@uniontech.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 28/43] Revert "HID: multitouch: Add support for lenovo Y9000P Touchpad"
+Date: Thu, 30 Jan 2025 14:59:35 +0100
+Message-ID: <20250130133500.036245956@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133458.903274626@linuxfoundation.org>
 References: <20250130133458.903274626@linuxfoundation.org>
@@ -45,77 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Jiri Kosina <jkosina@suse.com>
 
-commit 697ba0b6ec4ae04afb67d3911799b5e2043b4455 upstream.
+commit 3d88ba86ba6f35a0467f25a88c38aa5639190d04 upstream.
 
-I independently rediscovered
+This reverts commit 251efae73bd46b097deec4f9986d926813aed744.
 
-	commit 22d24a544b0d49bbcbd61c8c0eaf77d3c9297155
-	block: fix overflow in blk_ioctl_discard()
+Quoting Wang Yuli:
 
-but for secure erase.
+	"The 27C6:01E0 touchpad doesn't require the workaround and applying it
+	would actually break functionality.
 
-Same problem:
+	The initial report came from a BBS forum, but we suspect the
+	information provided by the forum user may be incorrect which could
+	happen sometimes. [1]
 
-	uint64_t r[2] = {512, 18446744073709551104ULL};
-	ioctl(fd, BLKSECDISCARD, r);
+	Further investigation showed that the Lenovo Y9000P 2024 doesn't even
+	use a Goodix touchpad. [2]
 
-will enter near infinite loop inside blkdev_issue_secure_erase():
+	For the broader issue of 27c6:01e0 being unusable on some devices, it
+	just need to address it with a libinput quirk.
 
-	a.out: attempt to access beyond end of device
-	loop0: rw=5, sector=3399043073, nr_sectors = 1024 limit=2048
-	bio_check_eod: 3286214 callbacks suppressed
+	In conclusion, we should revert this commit, which is the best
+	solution."
 
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Link: https://lore.kernel.org/r/9e64057f-650a-46d1-b9f7-34af391536ef@p183
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Rajani Kantha <rajanikantha@engineer.com>
+Reported-by: Ulrich Müller <ulm@gentoo.org>
+Reported-by: WangYuli <wangyuli@uniontech.com>
+Link: https://lore.kernel.org/all/uikt4wwpw@gentoo.org/
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/hid/hid-ids.h        |    1 -
+ drivers/hid/hid-multitouch.c |    8 ++------
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -115,7 +115,7 @@ static int blk_ioctl_discard(struct bloc
- 		return -EINVAL;
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -506,7 +506,6 @@
+ #define USB_DEVICE_ID_GENERAL_TOUCH_WIN8_PIT_E100 0xe100
  
- 	filemap_invalidate_lock(inode->i_mapping);
--	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
-+	err = truncate_bdev_range(bdev, mode, start, end - 1);
- 	if (err)
- 		goto fail;
- 	err = blkdev_issue_discard(bdev, start >> 9, len >> 9, GFP_KERNEL);
-@@ -127,7 +127,7 @@ fail:
- static int blk_ioctl_secure_erase(struct block_device *bdev, blk_mode_t mode,
- 		void __user *argp)
+ #define I2C_VENDOR_ID_GOODIX		0x27c6
+-#define I2C_DEVICE_ID_GOODIX_01E0	0x01e0
+ #define I2C_DEVICE_ID_GOODIX_01E8	0x01e8
+ #define I2C_DEVICE_ID_GOODIX_01E9	0x01e9
+ #define I2C_DEVICE_ID_GOODIX_01F0	0x01f0
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1447,8 +1447,7 @@ static __u8 *mt_report_fixup(struct hid_
  {
--	uint64_t start, len;
-+	uint64_t start, len, end;
- 	uint64_t range[2];
- 	int err;
+ 	if (hdev->vendor == I2C_VENDOR_ID_GOODIX &&
+ 	    (hdev->product == I2C_DEVICE_ID_GOODIX_01E8 ||
+-	     hdev->product == I2C_DEVICE_ID_GOODIX_01E9 ||
+-		 hdev->product == I2C_DEVICE_ID_GOODIX_01E0)) {
++	     hdev->product == I2C_DEVICE_ID_GOODIX_01E9)) {
+ 		if (rdesc[607] == 0x15) {
+ 			rdesc[607] = 0x25;
+ 			dev_info(
+@@ -2073,10 +2072,7 @@ static const struct hid_device_id mt_dev
+ 		     I2C_DEVICE_ID_GOODIX_01E8) },
+ 	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
+ 	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
+-		     I2C_DEVICE_ID_GOODIX_01E9) },
+-	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU,
+-	  HID_DEVICE(BUS_I2C, HID_GROUP_ANY, I2C_VENDOR_ID_GOODIX,
+-		     I2C_DEVICE_ID_GOODIX_01E0) },
++		     I2C_DEVICE_ID_GOODIX_01E8) },
  
-@@ -142,11 +142,12 @@ static int blk_ioctl_secure_erase(struct
- 	len = range[1];
- 	if ((start & 511) || (len & 511))
- 		return -EINVAL;
--	if (start + len > bdev_nr_bytes(bdev))
-+	if (check_add_overflow(start, len, &end) ||
-+	    end > bdev_nr_bytes(bdev))
- 		return -EINVAL;
- 
- 	filemap_invalidate_lock(bdev->bd_inode->i_mapping);
--	err = truncate_bdev_range(bdev, mode, start, start + len - 1);
-+	err = truncate_bdev_range(bdev, mode, start, end - 1);
- 	if (!err)
- 		err = blkdev_issue_secure_erase(bdev, start >> 9, len >> 9,
- 						GFP_KERNEL);
+ 	/* GoodTouch panels */
+ 	{ .driver_data = MT_CLS_NSMU,
 
 
