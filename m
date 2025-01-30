@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED77E1E522;
-	Thu, 30 Jan 2025 14:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62F31E522;
+	Thu, 30 Jan 2025 14:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247233; cv=none; b=jdBKGXY6Lt/8aAGPk39aSHlv7PCVBVsF55KRP8sBhFBp1g4Bc6x6mdGBOHa99+mZoWnkyaUgNX2lWrDfNtzVZYIZNmLWwYdiLiVP9vJJsJGvdb0VmU6r7q3k9kJ+f0jDdxOnlBoZENdttotCwd90iBpZVOmI6Zf+QFF4rIHG2Z8=
+	t=1738247236; cv=none; b=I8ZKEZvoNy++5dx5O4cew77tGEK+T8CCorPX/aKTgEcf68Pemmi+MnzH698m7AQk/QI7HtrcN2pPkoFGK4wPdo8CSVbCThIWr7BJA5I1zBZhjURge80dvA1mDhIDOQdJubvp2ZIyDH1QmoqfUJGF8uuWhTHcNj5tE1sKQSBl66w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247233; c=relaxed/simple;
-	bh=J+WoMOtQjxjfCZPKi8CGpR+ba2g34LrRV24rokynz/w=;
+	s=arc-20240116; t=1738247236; c=relaxed/simple;
+	bh=D5mSuqxdK+vyi49Ww1+I7DMzuXmV9hoba5atpKYK2wI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ja2kduN61PLc8K/3IHXG/5SQUzW1nFmm5mdM7EQgKf09myCxgX4vToVaj28WXNAfZ6jwsNuOWZ6vauoTz62PHH4mJTswpGnyRDjf0ilFLEOO/QG4zbrDeHX2fkOZ+SmKuK9Y/AW2zqIcxGGEEbxjt8ij7WwJ1t+urweatByZFy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQwQSlnk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nkLqfcUBrVhHnrUkE95VLxIz5EvXSlel54X+xPyqP5QayVtYdz0N/wiXc1imgvH681usbHBAeT+FuHUTOv7gEVByja12hg+EJuqzcM21tS8YCZbgBoYS76IbPxQXL6KoZusypbnKKyQSPAGvkiLhjDMFbmZhF5eWLWokRGeNjWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZQzYoFB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQwQSlnk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76640C4CED2;
-	Thu, 30 Jan 2025 14:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZQzYoFB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F3BC4CED2;
+	Thu, 30 Jan 2025 14:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247232;
-	bh=J+WoMOtQjxjfCZPKi8CGpR+ba2g34LrRV24rokynz/w=;
+	s=korg; t=1738247235;
+	bh=D5mSuqxdK+vyi49Ww1+I7DMzuXmV9hoba5atpKYK2wI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQwQSlnkcgWUsPCpTw5ZVw/MM/49mMXaQKaVGZCWXcxEnX022LScKJ+YBo1E7Vw3G
-	 m270cfVT0p6ArDvQuZ+H4lkBppLpTe2BdhIODb6ohAVrYal/vCyzVi+1ose8UJBGzD
-	 FFM5OHnqlfWtT8k+8vfeQ/tQcA+9foKUdpTSgHAQ=
+	b=MZQzYoFBY+vdJAz+H3Fn4i7fNGxEpA3EyCuybWKu0zx13H61/qJQyOSvrlwZJ2kQ+
+	 cPqvqsiHa3So5AVG3ocBa5xkfrjGdYnPAvUxh+RTdA6TMLqNfCnRVUSt4aJvkP9eCE
+	 QL7b5iZTBvG/jJqGyKaDIVp9Kb7qwnPn1SIlAxpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <koichiro.den@canonical.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 098/133] hrtimers: Handle CPU state correctly on hotplug
-Date: Thu, 30 Jan 2025 15:01:27 +0100
-Message-ID: <20250130140146.477586347@linuxfoundation.org>
+	Terry Tritton <terry.tritton@linaro.org>
+Subject: [PATCH 5.10 099/133] Revert "PCI: Use preserve_config in place of pci_flags"
+Date: Thu, 30 Jan 2025 15:01:28 +0100
+Message-ID: <20250130140146.517696293@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -50,101 +49,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <koichiro.den@canonical.com>
+From: Terry Tritton <terry.tritton@linaro.org>
 
-commit 2f8dea1692eef2b7ba6a256246ed82c365fdc686 upstream.
+This reverts commit 0dde3ae52a0dcc5cdfe2185ec58ec52b43fda22e which is
+commit 7246a4520b4bf1494d7d030166a11b5226f6d508 upstream.
 
-Consider a scenario where a CPU transitions from CPUHP_ONLINE to halfway
-through a CPU hotunplug down to CPUHP_HRTIMERS_PREPARE, and then back to
-CPUHP_ONLINE:
+This patch causes a regression in cuttlefish/crossvm boot on arm64.
 
-Since hrtimers_prepare_cpu() does not run, cpu_base.hres_active remains set
-to 1 throughout. However, during a CPU unplug operation, the tick and the
-clockevents are shut down at CPUHP_AP_TICK_DYING. On return to the online
-state, for instance CFS incorrectly assumes that the hrtick is already
-active, and the chance of the clockevent device to transition to oneshot
-mode is also lost forever for the CPU, unless it goes back to a lower state
-than CPUHP_HRTIMERS_PREPARE once.
+The patch was part of a series that when applied will not cause a regression
+but this patch was backported to the 5.10 branch by itself.
 
-This round-trip reveals another issue; cpu_base.online is not set to 1
-after the transition, which appears as a WARN_ON_ONCE in enqueue_hrtimer().
+The other patches do not apply cleanly to the 5.10 branch.
 
-Aside of that, the bulk of the per CPU state is not reset either, which
-means there are dangling pointers in the worst case.
-
-Address this by adding a corresponding startup() callback, which resets the
-stale per CPU state and sets the online flag.
-
-[ tglx: Make the new callback unconditionally available, remove the online
-  	modification in the prepare() callback and clear the remaining
-  	state in the starting callback instead of the prepare callback ]
-
-Fixes: 5c0930ccaad5 ("hrtimers: Push pending hrtimers away from outgoing CPU earlier")
-Signed-off-by: Koichiro Den <koichiro.den@canonical.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20241220134421.3809834-1-koichiro.den@canonical.com
+Signed-off-by: Terry Tritton <terry.tritton@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hrtimer.h |    1 +
- kernel/cpu.c            |    2 +-
- kernel/time/hrtimer.c   |   11 ++++++++++-
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-host-common.c |    4 ++++
+ drivers/pci/probe.c                      |   20 +++++++++++---------
+ 2 files changed, 15 insertions(+), 9 deletions(-)
 
---- a/include/linux/hrtimer.h
-+++ b/include/linux/hrtimer.h
-@@ -527,6 +527,7 @@ extern void __init hrtimers_init(void);
- extern void sysrq_timer_list_show(void);
+--- a/drivers/pci/controller/pci-host-common.c
++++ b/drivers/pci/controller/pci-host-common.c
+@@ -71,6 +71,10 @@ int pci_host_common_probe(struct platfor
+ 	if (IS_ERR(cfg))
+ 		return PTR_ERR(cfg);
  
- int hrtimers_prepare_cpu(unsigned int cpu);
-+int hrtimers_cpu_starting(unsigned int cpu);
- #ifdef CONFIG_HOTPLUG_CPU
- int hrtimers_cpu_dying(unsigned int cpu);
- #else
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -1664,7 +1664,7 @@ static struct cpuhp_step cpuhp_hp_states
- 	},
- 	[CPUHP_AP_HRTIMERS_DYING] = {
- 		.name			= "hrtimers:dying",
--		.startup.single		= NULL,
-+		.startup.single		= hrtimers_cpu_starting,
- 		.teardown.single	= hrtimers_cpu_dying,
- 	},
- 
---- a/kernel/time/hrtimer.c
-+++ b/kernel/time/hrtimer.c
-@@ -2074,6 +2074,15 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	}
- 
- 	cpu_base->cpu = cpu;
-+	hrtimer_cpu_base_init_expiry_lock(cpu_base);
-+	return 0;
-+}
++	/* Do not reassign resources if probe only */
++	if (!pci_has_flag(PCI_PROBE_ONLY))
++		pci_add_flags(PCI_REASSIGN_ALL_BUS);
 +
-+int hrtimers_cpu_starting(unsigned int cpu)
-+{
-+	struct hrtimer_cpu_base *cpu_base = this_cpu_ptr(&hrtimer_bases);
-+
-+	/* Clear out any left over state from a CPU down operation */
- 	cpu_base->active_bases = 0;
- 	cpu_base->hres_active = 0;
- 	cpu_base->hang_detected = 0;
-@@ -2082,7 +2091,6 @@ int hrtimers_prepare_cpu(unsigned int cp
- 	cpu_base->expires_next = KTIME_MAX;
- 	cpu_base->softirq_expires_next = KTIME_MAX;
- 	cpu_base->online = 1;
--	hrtimer_cpu_base_init_expiry_lock(cpu_base);
+ 	bridge->sysdata = cfg;
+ 	bridge->ops = (struct pci_ops *)&ops->pci_ops;
+ 
+--- a/drivers/pci/probe.c
++++ b/drivers/pci/probe.c
+@@ -3018,18 +3018,20 @@ int pci_host_probe(struct pci_host_bridg
+ 
+ 	bus = bridge->bus;
+ 
+-	/* If we must preserve the resource configuration, claim now */
+-	if (bridge->preserve_config)
+-		pci_bus_claim_resources(bus);
+-
+ 	/*
+-	 * Assign whatever was left unassigned. If we didn't claim above,
+-	 * this will reassign everything.
++	 * We insert PCI resources into the iomem_resource and
++	 * ioport_resource trees in either pci_bus_claim_resources()
++	 * or pci_bus_assign_resources().
+ 	 */
+-	pci_assign_unassigned_root_bus_resources(bus);
++	if (pci_has_flag(PCI_PROBE_ONLY)) {
++		pci_bus_claim_resources(bus);
++	} else {
++		pci_bus_size_bridges(bus);
++		pci_bus_assign_resources(bus);
+ 
+-	list_for_each_entry(child, &bus->children, node)
+-		pcie_bus_configure_settings(child);
++		list_for_each_entry(child, &bus->children, node)
++			pcie_bus_configure_settings(child);
++	}
+ 
+ 	pci_bus_add_devices(bus);
  	return 0;
- }
- 
-@@ -2160,6 +2168,7 @@ int hrtimers_cpu_dying(unsigned int dyin
- void __init hrtimers_init(void)
- {
- 	hrtimers_prepare_cpu(smp_processor_id());
-+	hrtimers_cpu_starting(smp_processor_id());
- 	open_softirq(HRTIMER_SOFTIRQ, hrtimer_run_softirq);
- }
- 
 
 
