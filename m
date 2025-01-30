@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8051A1E9901;
-	Thu, 30 Jan 2025 14:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743171E9B17;
+	Thu, 30 Jan 2025 14:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245769; cv=none; b=sqy4ahXLpiOQzORRY7ahSF5yya+4kk8c6ij+IxGEho6WIPJwd0nXylHE2VGXdqlE/DWKDdIHrFDJ9av5VUvaSOdNkVhjzY4cVwtS0j0Y0JPFPYplq3FyTc/sLTWEN4Xm8/53JSX+Ve/mWEeGKku5F2ooUj2Ev57j8UAsOiutM/g=
+	t=1738246504; cv=none; b=qXM6Ys1QbJmTQqWn+VzP8t6CZyyGdcQGyKRlHSIQ3xu6vb6YiARYiTihe5rjEE+t3qiRUJ5e7WZ4jw8nvyeveV7yBDdYHRnaMXyH9mbXhmTba6B+Iaty+QqXaPV3NhZbpcj9toZwVV8pjfssaTQBHmOXyUncBg+dJRfpYRSgU8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245769; c=relaxed/simple;
-	bh=fAURZL/Fn/HsnjWgxI9CqxGi4cxj9vmGDKItVMQxAjk=;
+	s=arc-20240116; t=1738246504; c=relaxed/simple;
+	bh=kpDbO71tfKWgArVDFriL2lpe8yTMzgqWbOo3AJT/52Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkAPtJrYgrn3vq8P64u3l4nn0WooGKRFKC6ssa+Y1sm2JPgDUgUqoI+Oco/haJqmGjNx/j1tzhYIdB288yuJJ9jClLA/bosSRveP1w5djQhOpebG8nO7vjRkV2dUWm4gLZ6Ur6IQZ8lL6fuf2xmzIZNjRtAEqiZVtZESHlZ+Kyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=In+4LUwO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SukAn/LhB1Atjp5RHMEJBhqZf3t32913nAePONsTHHOZg696g+ZyUie5GXcSjqQJEtPxNF563stvvB9XA5lyxIzcnF/IYjO6RljOJqnlodRo9SOAKeGuN8V8mkxHjspW4KgKPS6IKaoH5aWYmcnJLwZaY5eqMh08z64ZRsLO3hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fkcoxn4/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="In+4LUwO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEC0C4CED2;
-	Thu, 30 Jan 2025 14:02:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fkcoxn4/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B83AAC4CED2;
+	Thu, 30 Jan 2025 14:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245769;
-	bh=fAURZL/Fn/HsnjWgxI9CqxGi4cxj9vmGDKItVMQxAjk=;
+	s=korg; t=1738246504;
+	bh=kpDbO71tfKWgArVDFriL2lpe8yTMzgqWbOo3AJT/52Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=In+4LUwO8K1RSkcYXaUZFwg3h2OoRDssp1b03ugR2Y+wmw1HATqlz3W5evZGgyFUe
-	 53oodximpW7cPmqdLQyQx26Vr244ZAPezm/StMJDlfWDfVsFpHMyma81ouYO3B7Xuf
-	 hbp4yQ19X6FZa0pd0bHnJuxGW1c7L76/0a3CMFdE=
+	b=Fkcoxn4/XqS1jmNhkcLJOGvbWBLjAgHVbyf58IhOO3shwrkqPagLYHiyCfKOvj67i
+	 6AAv59LC53A8VfoIowSxrKyu65Hc2AG+rcunX/eWA5xL9XmLgcse0n0MA+sOsMqOLD
+	 hCCGYJT0z7SYqRnWNWk4w2RMGJ5V9RNAVvDrZvF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
-	Kun Hu <huk23@m.fudan.edu.cn>
-Subject: [PATCH 6.6 14/43] gfs2: Truncate address space when flipping GFS2_DIF_JDATA flag
-Date: Thu, 30 Jan 2025 14:59:21 +0100
-Message-ID: <20250130133459.475292847@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 02/43] ASoC: samsung: Add missing selects for MFD_WM8994
+Date: Thu, 30 Jan 2025 14:59:09 +0100
+Message-ID: <20250130133459.001819630@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133458.903274626@linuxfoundation.org>
 References: <20250130133458.903274626@linuxfoundation.org>
@@ -50,30 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-commit 7c9d9223802fbed4dee1ae301661bf346964c9d2 upstream.
+[ Upstream commit fd55c6065bec5268740e944a1800e6fad00974d9 ]
 
-Truncate an inode's address space when flipping the GFS2_DIF_JDATA flag:
-depending on that flag, the pages in the address space will either use
-buffer heads or iomap_folio_state structs, and we cannot mix the two.
+Anything selecting SND_SOC_WM8994 should also select MFD_WM8994, as
+SND_SOC_WM8994 does not automatically do so. Add the missing selects.
 
-Reported-by: Kun Hu <huk23@m.fudan.edu.cn>, Jiaji Qin <jjtan24@m.fudan.edu.cn>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501071530.UwIXs7OL-lkp@intel.com/
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250107104134.12147-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/file.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/samsung/Kconfig | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/gfs2/file.c
-+++ b/fs/gfs2/file.c
-@@ -251,6 +251,7 @@ static int do_gfs2_set_flags(struct inod
- 		error = filemap_fdatawait(inode->i_mapping);
- 		if (error)
- 			goto out;
-+		truncate_inode_pages(inode->i_mapping, 0);
- 		if (new_flags & GFS2_DIF_JDATA)
- 			gfs2_ordered_del_inode(ip);
- 	}
+diff --git a/sound/soc/samsung/Kconfig b/sound/soc/samsung/Kconfig
+index 93c2b1b08d0a6..77d3beea1d715 100644
+--- a/sound/soc/samsung/Kconfig
++++ b/sound/soc/samsung/Kconfig
+@@ -127,8 +127,9 @@ config SND_SOC_SAMSUNG_TM2_WM5110
+ 
+ config SND_SOC_SAMSUNG_ARIES_WM8994
+ 	tristate "SoC I2S Audio support for WM8994 on Aries"
+-	depends on SND_SOC_SAMSUNG && MFD_WM8994 && IIO && EXTCON
++	depends on SND_SOC_SAMSUNG && IIO && EXTCON
+ 	select SND_SOC_BT_SCO
++	select MFD_WM8994
+ 	select SND_SOC_WM8994
+ 	select SND_SAMSUNG_I2S
+ 	help
+@@ -142,6 +143,7 @@ config SND_SOC_SAMSUNG_MIDAS_WM1811
+ 	tristate "SoC I2S Audio support for Midas boards"
+ 	depends on SND_SOC_SAMSUNG
+ 	select SND_SAMSUNG_I2S
++	select MFD_WM8994
+ 	select SND_SOC_WM8994
+ 	help
+ 	  Say Y if you want to add support for SoC audio on the Midas boards.
+-- 
+2.39.5
+
 
 
