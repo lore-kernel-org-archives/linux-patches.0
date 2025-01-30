@@ -1,255 +1,187 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2061.outbound.protection.outlook.com [40.107.220.61])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7C1188938;
-	Thu, 30 Jan 2025 19:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.220.61
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738264598; cv=fail; b=UtItomWoUWNun1uFtJKv8MIYrKtHF6vwuNqHs6TXoNcIYAKDq+kYBvi8mEcuJ2yEL/NkklJg3WZmcWVlz86eLzxaNEPtpAP7ML4dQZqVhgKBsEGMGDbxMMedx9lxp3a6Vxc81jI0H+BPHPMJJtHHbNGPlRs0muWgQM/n435rwIc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738264598; c=relaxed/simple;
-	bh=QRQ91yBXFA4NG/zejPN7roMIpsibJIB5fcN6QqLQNTg=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Qn4P5f2naP+QPhT8bZ0WWJUDbcnFKmo6CTJLZ4p6wi82PhO4/eHQ/WvzJPkouNWmDhahwHXeIhxRr5X5TAukDwVHl9VcYMdmt6l3JIg+oXO62tE71URYk0R3stSSIyzoWOpJlcrvKhEdik1a7z0wpUrMuvypg1DKdMoI20yYDBU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=vJ5olkEH; arc=fail smtp.client-ip=40.107.220.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B276A1E8823
+	for <patches@lists.linux.dev>; Thu, 30 Jan 2025 19:35:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1738265756; cv=none; b=mS5DV08/h50SUrryXOgrmTTsOvvkyNfCS5+O9lWOs7xRAUFw7mvPuZ19/B/DXsOkBM/lvCqIjOHs5kd3eVLVbYPpSIrrKNmt1/71kb6jNDla4HTf5tND3wRTIoTrRDYPE1VxKYNfVWt6qKmKAQ9F/ePlmiYgCZB+5aS90eorNoA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1738265756; c=relaxed/simple;
+	bh=tc/PDcSzixb+iXX1akNgTyMJBuee/WcKU6Flx+8L31o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bqG42OvwAf6rLOoZEC6zCc2ScVfV090/C3eR/sZnLZCdEOjwZ4knkOoobkNd5bIkj0sHJfsJOJolwWJkKF2UgI74iNqWPngsejnbiC6DAYV8Y+h2sYRqWMplBU55zKVT4syhr3dFQK2plHD31fd/+u4D3b0xQTX8Fxvcq3UE6JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EBRU31Fy; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="vJ5olkEH"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AqK1LsO0+sicK4EN6YjkwxA/Df5PxM1z2VH86yOXeiQAlCwZlogNeWj/aAsRUz1JBR/urem4YozIETlNIg78qLzk/LH1U2BUplVfmMRPmppM0A+lWV0wMYYC8aoA3VOuZwNuXtsDOdD+C1CjwygdGZbQ/AVt/AjOGFGY/NjQoh/NVriWoYc/yb0B5ogf0W/77Cs7hRENOmxlzniBWRpfdAfhmi+QbzCRqyCpCu7FeJsspqAu6Yhgauj7LxovjH/TVQnF/LDg+iGEG+ruL+O5AgZoB3Egai4av9ykORl/RV92aK1wepSWSnN+WpaSln9ojjZoFQZLelySkSwxfTk9rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ziaLN93CvV7iwvnovWzzUEsBXnPc0RJm1JkGlLLnIrA=;
- b=cWkWsAnUJBGDA2neuuX4e44FKQNTdTztBuANkcl48lP1GW7nkPJPD5favgwlVAv13RFY827MkRVT6E0t0fhfYuL+d55tNZkd0PEGhs03KztMtjJi69FcO1pxSkf5DpFnatvqsKkdqNTXN7t65kalBxaPeSzb7YefWq4GUrJXpbpfwD7IMjlyjyYRmunhPwXTgil8v7mQpjoqAu6UbhCkRRPRHbz2Ry4N8Qba2ZCkeHjXR7z6jrzKiKLb1k8vhfvwJ1mFREo2KRrshslNIsFeJpPqxLK4t77tJlzftUvsSBhRwOoTpTGi7mMao8PKU61QOu+pWZz1+VAfInu3IsaUaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ziaLN93CvV7iwvnovWzzUEsBXnPc0RJm1JkGlLLnIrA=;
- b=vJ5olkEH3FvHMu1C5QWOUl7AFq1UEnu558B9X8rNswuYnAoILrsT3ejTbPqP2Anj1oKIvc74/4/tdw1ydbg/BEoN98bnGpL7fXPs1xemrHM5Has+seh5+x1GZw1DhTB2tOISZV6/iYxQK6CgtvudHYPC6kSSFSWmxfNKQCqCRwQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CO6PR12MB5427.namprd12.prod.outlook.com (2603:10b6:5:358::13)
- by CYXPR12MB9278.namprd12.prod.outlook.com (2603:10b6:930:e5::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.20; Thu, 30 Jan
- 2025 19:16:30 +0000
-Received: from CO6PR12MB5427.namprd12.prod.outlook.com
- ([fe80::1c2f:5c82:2d9c:6062]) by CO6PR12MB5427.namprd12.prod.outlook.com
- ([fe80::1c2f:5c82:2d9c:6062%4]) with mapi id 15.20.8398.018; Thu, 30 Jan 2025
- 19:16:30 +0000
-Message-ID: <b1c960e3-6663-434c-9b01-a94175c153b5@amd.com>
-Date: Thu, 30 Jan 2025 14:16:25 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/amd/display: Increase sanitizer frame larger than
- limit when compile testing with clang
-To: Nathan Chancellor <nathan@kernel.org>,
- Greg KH <gregkh@linuxfoundation.org>
-Cc: Alex Deucher <alexdeucher@gmail.com>,
- Chaitanya Dhere <chaitanya.dhere@amd.com>, Jun Lei <jun.lei@amd.com>,
- Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xinhui Pan <Xinhui.Pan@amd.com>, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, kernel test robot <lkp@intel.com>
-References: <20241219-amdgpu-dml2-address-clang-frame-larger-than-allconfig-v1-1-8c53a644d486@kernel.org>
- <CADnq5_Pun+zN1=B0eFMw1w8k_oD3fw626SdaEug24YRg8aOLKw@mail.gmail.com>
- <2025013058-fasting-gibberish-9718@gregkh>
- <2025013003-audience-opposing-7f95@gregkh>
- <5d1cfcee-b575-4e01-8ec0-dd1bcbba9bc0@amd.com>
- <20250130175103.GA3394637@ax162>
-Content-Language: en-US
-From: Harry Wentland <harry.wentland@amd.com>
-In-Reply-To: <20250130175103.GA3394637@ax162>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQZPR01CA0156.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:8c::28) To CO6PR12MB5427.namprd12.prod.outlook.com
- (2603:10b6:5:358::13)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBRU31Fy"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-85c5a91374cso626913241.3
+        for <patches@lists.linux.dev>; Thu, 30 Jan 2025 11:35:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1738265753; x=1738870553; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/s8I8F9pmlrzQR5tZezmCD4RoX0HPxCcaLCSVaDRDLw=;
+        b=EBRU31FynTFqVss+dLiyeEkPYDy4XT9nUroPX576ETKfOrVnrrA0BhfcIdcUR8CErS
+         FeFG6YDJ6NSm2JSfwdbDripgceqbvKx0sR2iVgDkU72xNmIgda89o5CJQ1RsR48Kz4sn
+         gWhmL+DH4tMmeKgpe01duRytiGk5WId1f30XBDjj2/+I/1rTt1qAyhjU/U9L7adtbg7u
+         GcB3CsJ+V/+JXgowjrfgjWKSSc8PlruZM8wJ+TiGmRM1djGqlx+uatKZPbwbtYu9tT5K
+         T6nFU2CWoFdQN3BEhj49u+NixwsokjE1W26PhJkMjpG0sP5QlDHCgdvccGUUJgP7xyUA
+         q7zQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738265753; x=1738870553;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/s8I8F9pmlrzQR5tZezmCD4RoX0HPxCcaLCSVaDRDLw=;
+        b=lge5rnuMZVmTeNzeL9ufqVaDdFhRct+dBqrXu4nsenZIVFEvwti2K8s9Y7R8ubbEoQ
+         P9nCBPfaKLY1oULO0Cm4qwjw+b5iG95h+HqcRRJI1xREDxHf2dsSOqdHqUF/VvPwin2e
+         cFf7hDBoqVFDZOOKgwB3FIPZCoKiA2asfV2DDSNyiiTxem9uPOjvcRfJai1G75eb+16/
+         hVkwPTE1zdPoz3f2T+mMC/79KXxmhrKtMcUKd77On6b+haYM8OsPekahO0A6vOzGOPVm
+         E0auGt2wYjdAvsgRAH0hx3U0vBedWY3QqwhHPBBXrzXvL4C37tlwBNrNRCXMmaBpATAk
+         b4uA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVq4pxREhSaXWTiqakJhixLUkMjQCGH4N7rlSEgJsgefp8hywsv4b34fh2AjPUbCfQiTD+0iFL@lists.linux.dev
+X-Gm-Message-State: AOJu0YxfAvKvBdDIkbTz07UzIWa3rHGLvGzQGLVQMwYCCGBcb1cjL7g4
+	QR65i936m/vcQ/c7pufXd/VjVERjjf6rBojNQWocQ2Dy6t2bDRu6R/0eUTGyJU4ozoG6vuUfqar
+	o1HYc5lp3rZOD+ZyygqXbg18qdcE2T5wREfcYcg==
+X-Gm-Gg: ASbGnctpzU2WeuZAPaGTAVB9F9OqCWpo2Y4RkeVsvMncPw75nR448WBj1j2X7ivrCAd
+	PW58TeeHBfccKPVX/c69MfEUendp8LdvJe7kME4fqm5vT+DxroCX4WWa4N66eCi9VPyGFbwHlTP
+	+auH1MWf/pgPRGTd6CIQQmFq+3IFv9
+X-Google-Smtp-Source: AGHT+IGiEPzFzPkapPW9tYKkO6D7+5pRUyuylUBuGphS/MvvFc6gbIMXzc0fsmezXugCb4QptmMQodulfJJCcyzSat4=
+X-Received: by 2002:a05:6102:800e:b0:4b2:5d10:58f2 with SMTP id
+ ada2fe7eead31-4b9a4fc15bdmr7858997137.14.1738265753545; Thu, 30 Jan 2025
+ 11:35:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5427:EE_|CYXPR12MB9278:EE_
-X-MS-Office365-Filtering-Correlation-Id: 56348ee9-6092-4ede-d2f5-08dd416299f0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Q0hCK1dXbDc3TVp3K1dJbXVHOUo2ckdSS0QrTEhFb3YxanNJZTNMZzhrUFND?=
- =?utf-8?B?dlBXMXFiZkczbFNDdDhPMFBpVENYb1JHYXhrWEltcSt4dk9lcFlVMUp5YmVU?=
- =?utf-8?B?aVBKdTZzWElHVlMvY0ZUcEk3ZGNsb0FJT1BUeFFZSzJKY1dmN3lEZVZ4ZGY0?=
- =?utf-8?B?bHUvZmRXWTludiswekoxUXJuY1NJbnlYOXFQQUNMTEZtSGRwSWlnMndUWFFK?=
- =?utf-8?B?OGFkcU56cHYzQVBoa29XUGcyVzdGRk9hczhSa1FHRlBKY0dqSktQZCs3eGZ3?=
- =?utf-8?B?a2lNRXBEOXdpalh4MWtqTzd1QUM5MzAvRGdma0NaMURPQ1VUVkdKVUVqbmRx?=
- =?utf-8?B?LytqWjJTSEpISEpsSklScWFhOUwzZE5ON1RPSVBLbUMzSURjYUc1a0kybWdy?=
- =?utf-8?B?cjlHNC9uMVk0SnU5OFkweDh2ZnhKQm1RSTE2TTdKMCtRUHg3MnR5bStTbi9k?=
- =?utf-8?B?VUV2S3BrYmJxeXhtOTNidUhDRjAvUnBqOGFRQjF4S0I3TDMwR2k2NmdMbmRD?=
- =?utf-8?B?elFOUzQ2b1hGSVl3aFpLcWlTUWRHQlpuKzlONDRrM0RMSGx2MDR6WEc4WXdW?=
- =?utf-8?B?bFppOVdYUThETGNObWdNdzBjTm1tdklmK0VmWmxCVVYwYWs1QUlwZnZHbWJ5?=
- =?utf-8?B?VlhJRVpmNDZCNmdyN2tvcytCYTFwODBObC9nV0s1aDUxR2ZYQXdkN1luZTZW?=
- =?utf-8?B?ZkxhY0VRdUlUS29uelJHR3Iwc0g1aDhaU3RldGpGV2hKeVNUeGRBVlBIRldK?=
- =?utf-8?B?RW5hbHRFN2EyU3MwdHprMnViTjNkYTFnck50RWhrNm9NNm03aDhITkp2QWRl?=
- =?utf-8?B?UEJVcmNlYUxTeFRtMVZzL1ZpcXJlODRpNENQMy93WjdTNTRYWXlTcE1uZFpB?=
- =?utf-8?B?ZitBTFQxL2R2RzZLY25IL3gwVTFCZC9DaGNRZUxxUkNLQUtpU1VqQWFjSVRr?=
- =?utf-8?B?clY1S2VaTDJaQkt4UDArZklsV2NZUDVvc0dFcVlxdTlwanJDTTJTZlFaa0E3?=
- =?utf-8?B?WFk3V24rMVpVQ1grT1A3c3JxTGVTN1RMdTRDWDV5cGpJT3VoaHVrYXpwdzNp?=
- =?utf-8?B?dnBtWWNMdTB4MHRrSkwzcE9vWGdtREJNSXJqdURyQlJydU5MWklEUzFoMUQ0?=
- =?utf-8?B?MHROSElIaHlmVXVhRTViWm42SUh4L3BsUFBjdW5VWnBZbE81UmJrM1JUL3dx?=
- =?utf-8?B?bEUxZzcwcXh5N0pQazM1VzA5RUJNN0d4ZGV3VFZaNkV1RmRKUmNhY3FuNFdO?=
- =?utf-8?B?YWhjUUh4RVplTWMzekQ0UjB1cXdid09vSmFPaEFCU1puQ0RrcmV4ZytQQVpG?=
- =?utf-8?B?ZjdFeUVienRESkZlRm14VmI0QjdWTzdla2hBV1RmK1FUa1lIZWl4bFR3Yld6?=
- =?utf-8?B?NVZrS08xVUxxVnlRWDE5L3JDYjRzZzAyUWo1enZwb1B2Rms4M3g4a2VtcVpL?=
- =?utf-8?B?ekE2UEhCK05QVXU1dDc3UWRveExsQ051dDQxMUFwQm9vbWw5ZVdEVERqeE13?=
- =?utf-8?B?WkpYT3hIaFI4dkxNSkdBTHRGdUNMam1lcGVvZCs0ei9jb05jVmlnMDNCSXdh?=
- =?utf-8?B?RXQ5aVlwT2xZcllFY2xING9rUjM4MklqQi94emEwdHFnbmY2bTluaUs2Kzhx?=
- =?utf-8?B?R2tzbVlsSHlTSGZua1NOZ1JsMjJnRGhDdCtaUFJGR1NQQUREajFJQ01UUENN?=
- =?utf-8?B?TEFOSXhPaWRjRnhiWWN0YWdzNmFHWnc0ZkhoR2U5YVV1c05GWG0zQUN5TjJR?=
- =?utf-8?B?YWc4VlZIaGNWOGpXUXd3SlN4bGZKbFpqNStMRXdsempQSHhBem1CbHErREV4?=
- =?utf-8?B?YlRLQktLQ1UxcENZU2hTbFZxZmhzWTVPYTVhazROZXV6bnJTNjlrYmxNcTVt?=
- =?utf-8?Q?1XUbNqw/h8eS5?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5427.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?MStybjB4b2VxMUxJNWFBZ212WlVJdStvQU93VHZEYUdXWjVVTFlsT1dFSWk3?=
- =?utf-8?B?SXArS1pNREQxa2Z3OEE2aTkxZXJ3Q0RoZHR3aVV3UjFpUmdhanZNTzhudTZz?=
- =?utf-8?B?aFFRZTVlaGhMZWZSMGEyekIrNUdYM21wQldMTVNrL1E4bkhwQWIvWUZlNlVB?=
- =?utf-8?B?TjQ4dTRJY3FXemoxSjlvSTM2OVk5N2Z4R1ZwZHVqaityRDcvRGduRm1VMmt1?=
- =?utf-8?B?UURBZkljQ0c0akpERXljdnFoalBmZmNwQlJYVUZWam4xK2dEZVRocTFobXc4?=
- =?utf-8?B?QTBaYU5FbnJJMTF3T0NEOURQQ0FZc3Q5Q0cwUEl6OFZSajA2dnhWMkFxSnRr?=
- =?utf-8?B?M2kwT1g4bFFrWG0zeE5jT2NXR2xtUUYzWHdQMk8yL04zQS83SkNQb3FvNExy?=
- =?utf-8?B?MmhjN09hK05wUkxQTGtJcVZ2SE8vNjk2QUsyQTJ5OFdZMThlMVEwbmVzaHZi?=
- =?utf-8?B?aEpiRm5OSHJoa1I3NlBkRGw0VGR1YVhMQWlFbUFkYmoyclAraEVIMmM0c1Q2?=
- =?utf-8?B?OWI0UlNEajY1a2JwMFJoN3NRTTVqeUN1aXp0b3RJY3JSa1NOcy9YZ2x5b0Ew?=
- =?utf-8?B?QU8yejBzdi9vclFuOXhNaFBmSnJ1Nnp5cDFWUlBxaHV4S0tqNDRBRWlXTVdo?=
- =?utf-8?B?K2FwalovWjFockxZTVpINTNJR0pVaU9lY2pjM0ZINXRRSzhRUVpkSncxUENu?=
- =?utf-8?B?WEF4djBXTzh4UFk3VGhNTXNmWDRzYlQ1M2wxMWdqY09Uc3BBYU9McHF5WmN1?=
- =?utf-8?B?R0x6TkFVRmlJRmtrUEJaczAzRmo5RDErMlI5WWhicDl1cEFjc2FaZWpidUd0?=
- =?utf-8?B?VExyNlpSS0Fwa0ZHdjREbU9EVTNoYUhSN2x5VU5OanEvWExKWHJZbnhVT1oz?=
- =?utf-8?B?MGNSUTFpa3JtM3N6cHozRzRUVmYzaVI5ZTN4V2VxOEl4SXZFNGloTVE0N003?=
- =?utf-8?B?cm9oZ3Bwb00rR3dSMXFuUUVwZVUxRWZhdFBjRzAwaG82N3ZrcytsemdubmJ2?=
- =?utf-8?B?NDJNSEowZVBjVm5wL0pIMTBHV0MweHN0dTJaNG56N3lNbWZsVVRoeEVockw2?=
- =?utf-8?B?QkJBa3hwYnc2R2pSU2VsTU1UMjYxbUNkdWEyR1RVbzZGYXdDaEhwRlI3Z2tX?=
- =?utf-8?B?SHFCUEZMRmZtVEhmcG4wTzUxaGE0c2czOG1uSEJGcDU5b3hUQTNsSmdBS204?=
- =?utf-8?B?VWx3NVFWTzBNVDcyYXZXSGl0Z3BCa2FQMUlndTVqTEhJZVRLcUdMTVBLdElL?=
- =?utf-8?B?allBa2hlaUZucFhyMkg4YjU1ejJnR0t3bmp3ZU5YamlMdmFUak82SGhNUGcv?=
- =?utf-8?B?Nm5JeHdYMGdUMUdwMm9GQ2hxdlluK3NhUEU4QzRmRHNDWXBpQllEUzZ2cVdU?=
- =?utf-8?B?d05Ga0xBUG9HcTdFZlRCTjlIakJJNlFEaTNqWlJxTlJudnpkbWtnNGRkaVQy?=
- =?utf-8?B?N09yMnhVWTJLT3VpSFBiWW0wRVhUMVJrNmNOOUpDTS8wZU1QTk9QLzQ2NnVQ?=
- =?utf-8?B?ZEppQllQbVEwZmxxWTNWaHVNUi9EOUZJYjJCZ0RRazlmbTJ3Ty9TbzM1NW1h?=
- =?utf-8?B?bXBsSHpQWG1lb1JoU0lGeFE5UWFwblhnVDNJTllHMjE3YnJMM0J3Q04wTUtO?=
- =?utf-8?B?VE8zbnpxR1lhVkUyRjl1SngxdHlZN290b0diMVEvMzM3aE8vYUU5UTlVYTVL?=
- =?utf-8?B?b0pCQko1eEt0V25wVUFHYXZLVmpELzNHSmtXQ1dDdE8rY3Bra05pVittbGtq?=
- =?utf-8?B?M1h5ejRJVDh1eXVTdlhuc2hiN3hkdHlKWC9QTGhCQmlERFZWYWU1aE1oaEhw?=
- =?utf-8?B?UUlUZU1SUE95NzU1VENYdi84SWtCSDdhRDBqeWdYQ3RnNHg0OWtzc3pmTUNo?=
- =?utf-8?B?cDA5d2hFeDVJb29NbFBkNWdtYkIrM3RVWnNYZUhVaFVjL1VkS1pNcXdnWExo?=
- =?utf-8?B?bDlURTRkTXFQb2tPK01pUDUzRGs0VFhUMmxPazdNcnI2bkN4UTBMbnMrV1JE?=
- =?utf-8?B?b0pPOXREb2xoTVNOdThJOEZSMTA0MWJUR1ViSG9xNVo4RjV0eXhrR1hldUk1?=
- =?utf-8?B?TkkxMTB1azZDQWoxR25OMlFmbFR2UTJHVng1dDkzSlhzclJhN0szSStmZjhV?=
- =?utf-8?Q?an1PPULVcP7KKHUEDF65ogASX?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 56348ee9-6092-4ede-d2f5-08dd416299f0
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5427.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jan 2025 19:16:30.3786
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: n1r5xCcR64i6/bNBXfuCyJ4SQZkNrQ2ul9yOnORAJJkJ8GR853e7pS3B4q/t0s5Z2Zr2I1JDGYHYEM/fDAK7ww==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR12MB9278
+References: <20250130140133.662535583@linuxfoundation.org>
+In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 31 Jan 2025 01:05:40 +0530
+X-Gm-Features: AWEUYZkm0r6LQxZqc8VnDXBKmK1_Cm3f9f2joOD8H6qqpOf194TFrPp8tavbzQE
+Message-ID: <CA+G9fYsiw4GSjL7Sf51OaGM_-uWAQYaLCb14L_RC81nwoZJJzA@mail.gmail.com>
+Subject: Re: [PATCH 5.4 00/91] 5.4.290-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, Arnd Bergmann <arnd@arndb.de>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Vincent Guittot <vincent.guittot@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+
+On Thu, 30 Jan 2025 at 19:47, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.4.290 release.
+> There are 91 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 01 Feb 2025 14:01:13 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.290-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
 
+The following build regressions were noticed and reported last time
+on 5.15 and found here again on arc, arm, mips, parisc, powerpc with
+gcc and clang toolchains on 5.4.290-rc1 and 5.10.234-rc1.
 
-On 2025-01-30 12:51, Nathan Chancellor wrote:
-> Hey Greg and Harry,
-> 
+Build regression: arc, arm, mips, parisc, powerpc,
+drivers/usb/core/port.c struct usb_device has no member named
+port_is_suspended
 
-[snip]
+First seen on Linux (5.4.290-rc1)
+  Good: v5.4.289
+  Bad: Linux 5.4.290-rc1 (v5.4.289-92-gd06b29df5286)
 
->> A more robust solution would be to do a greater-than check here
->> (for all the cases) and only set -Wframe-larger-than if the value
->> is greater than the one defined by CONFIG_FRAME_WARN. There are
->> a few "-gt" uses in other Makefiles, so I would think it's fine
->> to use that.
->>
->> I'm no Makefile expert but if this seems like a reasonable course
->> of action I can take a stab at it.
-> 
-> Something like this would work I think? I added indentation because it
-> was getting a little gnarly. I am happy to write a formal patch and send
-> it off if this looks acceptable.
+* arc:
+  build:
+  - gcc-9-axs103_defconfig
+  - gcc-9-vdk_hs38_smp_defconfig
 
-Thanks. That's exactly what I was thinking of. If you send a formal
-patch I'll be happy to give my RB.
+* arm:
+  build:
+  - clang-19-axm55xx_defconfig
+  - clang-19-footbridge_defconfig
+  - gcc-12-axm55xx_defconfig
+  - gcc-12-footbridge_defconfig
+  - gcc-8-axm55xx_defconfig
+  - gcc-8-footbridge_defconfig
 
-Harry
+* mips:
+  build:
+  - gcc-12-ath79_defconfig
+  - gcc-12-bcm47xx_defconfig
+  - gcc-12-rt305x_defconfig
+  - gcc-8-ath79_defconfig
+  - gcc-8-bcm47xx_defconfig
+  - gcc-8-rt305x_defconfig
 
-> 
-> diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-> index 46f9c05de16e..e1d500633dfa 100644
-> --- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-> +++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-> @@ -29,11 +29,15 @@ dml_ccflags := $(CC_FLAGS_FPU)
->  dml_rcflags := $(CC_FLAGS_NO_FPU)
->  
->  ifneq ($(CONFIG_FRAME_WARN),0)
-> -ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
-> -frame_warn_flag := -Wframe-larger-than=3072
-> -else
-> -frame_warn_flag := -Wframe-larger-than=2048
-> -endif
-> +    ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
-> +        frame_warn_limit := 3072
-> +    else
-> +        frame_warn_limit := 2048
-> +    endif
-> +
-> +    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
-> +        frame_warn_flag := -Wframe-larger-than=$(frame_warn_limit)
-> +    endif
->  endif
->  
->  CFLAGS_$(AMDDALPATH)/dc/dml/display_mode_lib.o := $(dml_ccflags)
-> diff --git a/drivers/gpu/drm/amd/display/dc/dml2/Makefile b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
-> index 91c4f3b4bd5f..21fd466dba26 100644
-> --- a/drivers/gpu/drm/amd/display/dc/dml2/Makefile
-> +++ b/drivers/gpu/drm/amd/display/dc/dml2/Makefile
-> @@ -28,15 +28,19 @@ dml2_ccflags := $(CC_FLAGS_FPU)
->  dml2_rcflags := $(CC_FLAGS_NO_FPU)
->  
->  ifneq ($(CONFIG_FRAME_WARN),0)
-> -ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
-> -ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
-> -frame_warn_flag := -Wframe-larger-than=4096
-> -else
-> -frame_warn_flag := -Wframe-larger-than=3072
-> -endif
-> -else
-> -frame_warn_flag := -Wframe-larger-than=2048
-> -endif
-> +    ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
-> +        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
-> +            frame_warn_limit := 4096
-> +        else
-> +            frame_warn_limit := 3072
-> +        endif
-> +    else
-> +        frame_warn_limit := 2048
-> +    endif
-> +
-> +    ifeq ($(call test-lt, $(CONFIG_FRAME_WARN), $(frame_warn_limit)),y)
-> +        frame_warn_flag := -Wframe-larger-than=$(frame_warn_limit)
-> +    endif
->  endif
->  
->  subdir-ccflags-y += -I$(FULL_AMD_DISPLAY_PATH)/dc/dml2
+* parisc:
+  build:
+  - gcc-11-allyesconfig
+  - gcc-11-defconfig
 
+* powerpc:
+  build:
+  - clang-19-ppc64e_defconfig
+  - gcc-12-cell_defconfig
+  - gcc-12-ppc64e_defconfig
+  - gcc-8-cell_defconfig
+  - gcc-8-ppc64e_defconfig
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+
+Build log:
+-------
+drivers/usb/core/port.c:299:21: error: no member named
+'port_is_suspended' in 'struct usb_device'
+  299 |         if (udev && !udev->port_is_suspended) {
+      |                      ~~~~  ^
+1 error generated.
+
+metadata:
+---------
+* Build log: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.289-92-gd06b29df5286/testrun/27079097/suite/build/test/clang-19-footbridge_defconfig/log
+* Details: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.289-92-gd06b29df5286/testrun/27079097/suite/build/test/clang-19-footbridge_defconfig/details/
+* build: https://storage.tuxsuite.com/public/linaro/lkft/builds/2sLvp68rK3neoKGJil8eoZjIS1y/
+* Kernel config:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2sLvp68rK3neoKGJil8eoZjIS1y/config
+* git_describe: v5.4.289-92-gd06b29df5286
+* git_repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git_sha: d06b29df52866ecaf06746ab6997a9ffabfd4357
+* Architectures: arc, arm, mips, parisc, powerpc
+* Toolchain version: gcc-12, gcc-11, gcc-8 and clang-19
+
+Please find the lore email discussion
+Link: https://lore.kernel.org/stable/eec53047-6118-4a73-9535-335babf68685@app.fastmail.com/
+Link: https://lore.kernel.org/stable/CA+G9fYvacKD7aFkMCW6nwjZ4t-cpH0deLiPY-cFvGkRn5hgK3w@mail.gmail.com/
+
+Steps to reproduce:
+------
+$ tuxmake --runtime podman --target-arch arm --toolchain gcc-12
+--kconfig footbridge_defconfig
+$ tuxmake --runtime podman --target-arch sh --toolchain gcc-11
+--kconfig defconfig
+
+--
+Linaro LKFT
+https://lkft.linaro.org
