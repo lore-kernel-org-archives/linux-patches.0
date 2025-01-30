@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22731BEF85;
-	Thu, 30 Jan 2025 13:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27E31BEF85;
+	Thu, 30 Jan 2025 13:59:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245579; cv=none; b=tPyHxbHhatKWUz9ubW3TZOY9LA5XvMVPkhsuqfYKkxV4zrPSUQoWwNCs284w0S7rQXcdCNwXc4QsEJt4rs9Xrt5ex0Ws5QXouVaFuI9nzgS5K5huPEgdS1A7tupGzux4SMNdKxsaSyKOR/WTxY4XplD8TTnV4kJ9mmj+9iP9iiY=
+	t=1738245582; cv=none; b=W4YogkABSqv/AmYClWnghNqgOu62YFwrE2ofpoq/vWDmrPHkF9XNwJxx/lLHgZkbG7/xywbOpXe47ikVPsVgG6OUvv6wc5RLVlkAjw8GyrrY7f+M3V5/Fve2OQtSFAgUn+GFha63Hur7joYhqaSfrip0J/Zshc+BeNjGl4cTkcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245579; c=relaxed/simple;
-	bh=7w9xN2YnAthjeOrGloTz/DMTRLnZljQnTTc9kZb9mas=;
+	s=arc-20240116; t=1738245582; c=relaxed/simple;
+	bh=fzE7lCc4Df/nZWsxpA+JJrwRe7xMSADFt1Bx4EHRsXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BxJM+OUZWBhvJsVFkPkRddPwa2HoM3fCUPEcSF5DEblW+inUKThOVE1wwn1+g5LQQPxlkrvbmC0IFSvVHyVANsEoRdZS/mUgDK2Cus+TZioI0JQoBu/IYOyQVbQ4A5FDfi1NxnlP9nxkJdUbj7eUVPXXPuP5BYV49RXG4+1M98M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ND98tvCF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkHVweB9qI8LXXs/7/HEDM4bG6RrZ2fA+LQ9qJR6sNNL+uS9SF9SfKA3ka7Ov3dK0/AfOcPO5mEK96SfBXHoUZ1fAlglZ0qqrbGSJR0gk/YGiumA5qiJVqf2xremE+7EEZuGb802BQgl6JuatyzNWc5aCrF7EHdFs0sUtKbFxyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gpJYBkiH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ND98tvCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AED1C4CED2;
-	Thu, 30 Jan 2025 13:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gpJYBkiH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBDDC4CED2;
+	Thu, 30 Jan 2025 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245579;
-	bh=7w9xN2YnAthjeOrGloTz/DMTRLnZljQnTTc9kZb9mas=;
+	s=korg; t=1738245582;
+	bh=fzE7lCc4Df/nZWsxpA+JJrwRe7xMSADFt1Bx4EHRsXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ND98tvCFugit4CgUwoS2g99ntXbmz3ReB7LKcjqzA6zH+M5k9ffjlY9vVG9xGrf7o
-	 U3ezIwNsboUCGtWMvO+ZVnjpj/F+A9QmyXJ+bA1Bn6BacKIXbzqhsJCfNRdWOpkUyG
-	 BEOhSpmBRT0vgbvDdpEDOpP0cGy9Db266nSt+Rmk=
+	b=gpJYBkiHv58bOdvJPYaKu4QmmhUIDk2jXJNLT0ZG5MR26K9iZoucByzeu2zP7tj88
+	 ZMd3El0vaWg4wf9hyNO1Gly5INo4cnFqIcfMWvm1mKaOYCVQjS95z8F2PGAwRs9LwI
+	 zPBpsXMTgoaiZcGmbpoREARKx+xNfQCS3s6Q28ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.13 15/25] ALSA: usb-audio: Add delay quirk for USB Audio Device
-Date: Thu, 30 Jan 2025 14:59:01 +0100
-Message-ID: <20250130133457.555009268@linuxfoundation.org>
+	Peter Robinson <pbrobinson@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.13 16/25] wifi: rtl8xxxu: add more missing rtl8192cu USB IDs
+Date: Thu, 30 Jan 2025 14:59:02 +0100
+Message-ID: <20250130133457.593483572@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133456.914329400@linuxfoundation.org>
 References: <20250130133456.914329400@linuxfoundation.org>
@@ -50,37 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit ad5b205f9e022b407d91f952faddd05718be2866 upstream.
+commit 31be3175bd7be89e39c82b3973c9d4ff55a17583 upstream.
 
-Audio control requests that sets sampling frequency sometimes fail on
-this card. Adding delay between control messages eliminates that problem.
+The rtl8xxxu has all the rtl8192cu USB IDs from rtlwifi/rtl8192cu/sw.c
+except for the following 10, add these to the untested section so they
+can be used with the rtl8xxxu as the rtl8192cu are well supported.
 
-usb 1-1: New USB device found, idVendor=0d8c, idProduct=0014
-usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-usb 1-1: Product: USB Audio Device
-usb 1-1: Manufacturer: C-Media Electronics Inc.
+This fixes these wifi modules not working on distributions which have
+disabled CONFIG_RTL8192CU replacing it with CONFIG_RTL8XXXU_UNTESTED,
+like Fedora.
 
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/TYUPR06MB6217E94D922B9BF422A73F32D2192@TYUPR06MB6217.apcprd06.prod.outlook.com
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2321540
+Cc: stable@vger.kernel.org
+Cc: Peter Robinson <pbrobinson@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Peter Robinson <pbrobinson@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241107140833.274986-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2239,6 +2239,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
- 		   QUIRK_FLAG_GET_SAMPLE_RATE),
-+	DEVICE_FLG(0x0d8c, 0x0014, /* USB Audio Device */
-+		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
- 		   QUIRK_FLAG_FIXED_RATE),
- 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -8147,6 +8147,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x817e, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x8186, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x818a, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x317f, 0xff, 0xff, 0xff),
+@@ -8157,12 +8159,18 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x050d, 0x1102, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x050d, 0x11f2, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe033, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x07b8, 0x8188, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x07b8, 0x8189, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9041, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9043, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x17ba, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x1e1e, 0xff, 0xff, 0xff),
+@@ -8179,6 +8187,10 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3357, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3358, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3359, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330b, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2019, 0x4902, 0xff, 0xff, 0xff),
+@@ -8193,6 +8205,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x4856, 0x0091, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x9846, 0x9041, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0xcdab, 0x8010, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x04f2, 0xaff7, 0xff, 0xff, 0xff),
+@@ -8218,6 +8232,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0586, 0x341f, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe033, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe035, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x17ab, 0xff, 0xff, 0xff),
+@@ -8226,6 +8242,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0df6, 0x0070, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x0df6, 0x0077, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0789, 0x016d, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x07aa, 0x0056, 0xff, 0xff, 0xff),
+@@ -8248,6 +8266,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330a, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330d, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2019, 0xab2b, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x20f4, 0x624d, 0xff, 0xff, 0xff),
 
 
