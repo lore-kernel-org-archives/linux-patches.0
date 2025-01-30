@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBC51E522;
-	Thu, 30 Jan 2025 14:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D976B1E522;
+	Thu, 30 Jan 2025 14:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247115; cv=none; b=TmriIC73gqywAt46GHJ9Sh60xCDFAf/THLnodc2eZf3GIcwm0h5+ONn/EdTFy60GxF19Xeww8u5hIkToTvEFSbOnDBpwrPenZNR1PCLGuDG3ja1hhvSw7nZuKZS1AW2aGmmCwBTp7QlUAeuTRPmO66YCQOATiSb+Z14221JiI1E=
+	t=1738247119; cv=none; b=p3HsT/tOkKb+c1YZSDdJKZDLOKF7Byl6qMBAyWuAkcxhcguu6taYsz5IjlCW6xCb3+NWChkZOeOov2wCffB2TYLhHJPkQ76oNeaU9pGZKwgtozq1aG3xcUT/tu7Wfw1VRZjOHB4xz7v/khMkkke/VXs3jsAMaY2ZvynshoV4+Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247115; c=relaxed/simple;
-	bh=diP1WdGfgCYj72zzxwiPP54UOl0HhLlj22iTFQorBFw=;
+	s=arc-20240116; t=1738247119; c=relaxed/simple;
+	bh=ZRgpEW34JMjQh3hedWGfqmmuz6l889KGJ7H7rlpzn/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IjDY6Cegia4MBnag+eWRVIz/L/w/4C88OsecVN+UwkPZLzb8dAguy6T4+niCujonmI170m5nQhag5fLc+LEavX41MuvaBy9GlaLnXtRRGAK+c6P8Ynu0qb5Y0rYan6e9yvJ4ujPi2e2kxi8Tg+M95bT8SsfbdMiM/20Br2dsqyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TklKE2b9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=He/+GPLaBCV/iGcsd4IfXWpTisXHMrSREk6hFjd8MBz7yBKKf/ydz65Y0YlvjtqlTLdGD1U63AMmdKxxfKGdL8f1QyN4jP6amsKYlCTqvApJBaW16y2hHq1YQ42nuzrKnBrno19xMSmnWCBCa7JLOQvpTgI3y22CG8qK0fM1imA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUuon1/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TklKE2b9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390F9C4CED2;
-	Thu, 30 Jan 2025 14:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUuon1/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B45C4CED2;
+	Thu, 30 Jan 2025 14:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247115;
-	bh=diP1WdGfgCYj72zzxwiPP54UOl0HhLlj22iTFQorBFw=;
+	s=korg; t=1738247118;
+	bh=ZRgpEW34JMjQh3hedWGfqmmuz6l889KGJ7H7rlpzn/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TklKE2b9OfB6fRnQs6+hAJS339Po4gjLu46dY5HVB+Djaf7TQG9zVawRPUiPRRXEo
-	 FpMaKsKGewb/V+ED17z6uxQGwuA9ZG2/uyONS1eADuBQ9CP3Rdgeur1+qYSb1p6Xin
-	 LONbH4aecQSGagQ8eftnaARlF4mUYO36VYyFxWKw=
+	b=bUuon1/dcX9Y/dRuQYRLKtIUDpRWsvSomT0c47PLN2hg6y/0Hhltsm+MoXsJ6s8Cc
+	 D+xRJvguZWlEJCGH8HSAbcd8xatucjak764TD2cm1bKKc1D7S35cwdKV7Tdzeevjog
+	 BYLZtUEKl9Laxe/uKY52GT9W9ZQKsOnu8nHsTeWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Kunbo <zhangkunbo@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	linux-nfs@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/133] fs: fix missing declaration of init_files
-Date: Thu, 30 Jan 2025 15:01:16 +0100
-Message-ID: <20250130140146.022322323@linuxfoundation.org>
+Subject: [PATCH 5.10 088/133] kheaders: Ignore silly-rename files
+Date: Thu, 30 Jan 2025 15:01:17 +0100
+Message-ID: <20250130140146.063287842@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,34 +56,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Kunbo <zhangkunbo@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2b2fc0be98a828cf33a88a28e9745e8599fb05cf ]
+[ Upstream commit 973b710b8821c3401ad7a25360c89e94b26884ac ]
 
-fs/file.c should include include/linux/init_task.h  for
- declaration of init_files. This fixes the sparse warning:
+Tell tar to ignore silly-rename files (".__afs*" and ".nfs*") when building
+the header archive.  These occur when a file that is open is unlinked
+locally, but hasn't yet been closed.  Such files are visible to the user
+via the getdents() syscall and so programs may want to do things with them.
 
-fs/file.c:501:21: warning: symbol 'init_files' was not declared. Should it be static?
+During the kernel build, such files may be made during the processing of
+header files and the cleanup may get deferred by fput() which may result in
+tar seeing these files when it reads the directory, but they may have
+disappeared by the time it tries to open them, causing tar to fail with an
+error.  Further, we don't want to include them in the tarball if they still
+exist.
 
-Signed-off-by: Zhang Kunbo <zhangkunbo@huawei.com>
-Link: https://lore.kernel.org/r/20241217071836.2634868-1-zhangkunbo@huawei.com
+With CONFIG_HEADERS_INSTALL=y, something like the following may be seen:
+
+   find: './kernel/.tmp_cpio_dir/include/dt-bindings/reset/.__afs2080': No such file or directory
+   tar: ./include/linux/greybus/.__afs3C95: File removed before we read it
+
+The find warning doesn't seem to cause a problem.
+
+Fix this by telling tar when called from in gen_kheaders.sh to exclude such
+files.  This only affects afs and nfs; cifs uses the Windows Hidden
+attribute to prevent the file from being seen.
+
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://lore.kernel.org/r/20241213135013.2964079-2-dhowells@redhat.com
+cc: Masahiro Yamada <masahiroy@kernel.org>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: linux-nfs@vger.kernel.org
+cc: linux-kernel@vger.kernel.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c | 1 +
+ kernel/gen_kheaders.sh | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/fs/file.c b/fs/file.c
-index 40a7fc127f37a..975b1227a2f6d 100644
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -21,6 +21,7 @@
- #include <linux/rcupdate.h>
- #include <linux/close_range.h>
- #include <net/sock.h>
-+#include <linux/init_task.h>
+diff --git a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
+index 206ab3d41ee76..7fc44d8da2052 100755
+--- a/kernel/gen_kheaders.sh
++++ b/kernel/gen_kheaders.sh
+@@ -84,6 +84,7 @@ find $cpio_dir -type f -print0 |
  
- #include "internal.h"
+ # Create archive and try to normalize metadata for reproducibility.
+ tar "${KBUILD_BUILD_TIMESTAMP:+--mtime=$KBUILD_BUILD_TIMESTAMP}" \
++    --exclude=".__afs*" --exclude=".nfs*" \
+     --owner=0 --group=0 --sort=name --numeric-owner --mode=u=rw,go=r,a+X \
+     -I $XZ -cf $tarfile -C $cpio_dir/ . > /dev/null
  
 -- 
 2.39.5
