@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67081E98F1;
-	Thu, 30 Jan 2025 14:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EBF1E9B02;
+	Thu, 30 Jan 2025 14:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247028; cv=none; b=ZfojbCXC4TPTcHqWBlUt0dpTFl0VVil0kpDIgUMwVjPLdh/TjgZjr9vf/MAfZ5mnF88EN35rdEdi9E1gkdD/TRk1jsJFKJxySB+SfmJ22GuTtu8Z5/2JDjp4OFjxM8PNaEnQghp5IffYcAk+2oa5zKPfcRgx2ogj0NkUMPshdBY=
+	t=1738247032; cv=none; b=SQUGC/BXyqkvMmtL7HmGWihI/nl272YmDRHWxjS0Devd3uspdztH08ln+6y0xoAkDCb70uGaXlOqoomdgEnjot5dsj6MTSVarV/gMwVOIxBIodbXUlBQGKyr8HZrt0bZ3Me0uMPrrm/UQg852ar9KHxuKjC+9DSrn+I4ohunSYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247028; c=relaxed/simple;
-	bh=vcqM8/ZiXLgs3q21ADpRcy+5tCoxo+UtqinHuCSpF4s=;
+	s=arc-20240116; t=1738247032; c=relaxed/simple;
+	bh=NToUlQcKU0wy7jwVeSWpiLiuI2EvIRKsEVj+mbK4+wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BN7w20bPkkTT0goN5yuJJIwTyQh1Bn9FFkFqGgc/T+TRewpx2FOeuI5hb5Gm6x7fM3TuXIcWB4wAumzXPEA8q1QMhdRVOLEcUahef6xdmKI3k6JHSqZ2ahPLKawPqJZL+Zm+Jo1CfRSm0Ne56xrkgjLKgsO+VFZIgC6CYFer6Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZU0jq36/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoO0o1yysnpeIwGq3fYVfW/1OMY9mHChryUq1tKwnB9bnpnroIzVTglGeQk4aPYyMS0JkWHNJ4UuBVBahXtiY+2QG4Fr0R+Pgno8FN11QDwVEkjMZB5oAwTng8wN8qtJRf7BLxfUvrWZVs/uZ6r77e/8YKpiopcO5riurc/53TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKWB8ciS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZU0jq36/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52810C4CED2;
-	Thu, 30 Jan 2025 14:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKWB8ciS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D904C4CEE0;
+	Thu, 30 Jan 2025 14:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247028;
-	bh=vcqM8/ZiXLgs3q21ADpRcy+5tCoxo+UtqinHuCSpF4s=;
+	s=korg; t=1738247031;
+	bh=NToUlQcKU0wy7jwVeSWpiLiuI2EvIRKsEVj+mbK4+wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZU0jq36/Axa5lw3AoZq8Vn0s0aAnAv1WO0F2Fubet9FCSdLWMZv88hc3DDtEWlUEd
-	 i5OdVCDBq9coRcDHZaCBEzf2GSYew3t8c6kHPte7sWLI6oLfmpRBF4wuedwov/Ys6s
-	 a1fKsBDGllAwbGIPtHUuxaykF2AEC6gXGVBDTQ8Q=
+	b=PKWB8ciSJI97u7B4p/3eBnKMXgg1cReDGRp1LFd+CYtYGz3YhP165//nhdJN/AhlV
+	 dmaRJbO3IKvn1G24MGcFDvAfp1ofT2V/vNtI2ZahjtNF64AsziyvGAdBsqbO9cmFYh
+	 KDoz6F3iocM4SbjzMD/BzB6yyqnoLCEzB7Rso5D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Cooper <alcooperx@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 057/133] phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers
-Date: Thu, 30 Jan 2025 15:00:46 +0100
-Message-ID: <20250130140144.814734853@linuxfoundation.org>
+Subject: [PATCH 5.10 058/133] phy: usb: Toggle the PHY power during init
+Date: Thu, 30 Jan 2025 15:00:47 +0100
+Message-ID: <20250130140144.855522692@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -52,132 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Cooper <alcooperx@gmail.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit ae532b2b7aa5a3dad036aef4e0b177607172d276 ]
+[ Upstream commit 0a92ea87bdd6f77ca4e17fe19649882cf5209edd ]
 
-Add "wake on" support for the newer Synopsis based XHCI only controller.
-This works on the 72165 and 72164 and newer chips and does not work
-on 7216 based systems. Also switch the USB sysclk to a slower clock
-on suspend to save additional power in S2. The clock switch will only
-save power on the 72165b0 and newer chips and is a nop on older chips.
+When bringing up the PHY, it might be in a bad state if left powered.
+One case is we lose the PLL lock if the PLL is gated while the PHY
+is powered. Toggle the PHY power so we can start from a known state.
 
-Signed-off-by: Al Cooper <alcooperx@gmail.com>
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20220215032422.5179-1-f.fainelli@gmail.com
+Fixes: 4e5b9c9a73b3 ("phy: usb: Add support for new Synopsys USB controller on the 7216")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Acked-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://lore.kernel.org/r/20241024213540.1059412-1-justin.chen@broadcom.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 0a92ea87bdd6 ("phy: usb: Toggle the PHY power during init")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../phy/broadcom/phy-brcm-usb-init-synopsys.c | 46 +++++++++++++++----
- 1 file changed, 38 insertions(+), 8 deletions(-)
+ drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-index e63457e145c7..d2524b70ea16 100644
+index d2524b70ea16..fa54da35719f 100644
 --- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
 +++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -47,6 +47,8 @@
- #define   USB_CTRL_USB_PM_SOFT_RESET_MASK		0x40000000
- #define   USB_CTRL_USB_PM_BDC_SOFT_RESETB_MASK		0x00800000
- #define   USB_CTRL_USB_PM_XHC_SOFT_RESETB_MASK		0x00400000
-+#define   USB_CTRL_USB_PM_XHC_PME_EN_MASK		0x00000010
-+#define   USB_CTRL_USB_PM_XHC_S2_CLK_SWITCH_EN_MASK	0x00000008
- #define USB_CTRL_USB_PM_STATUS		0x08
- #define USB_CTRL_USB_DEVICE_CTL1	0x10
- #define   USB_CTRL_USB_DEVICE_CTL1_PORT_MODE_MASK	0x00000003
-@@ -190,10 +192,6 @@ static void usb_init_common(struct brcm_usb_init_params *params)
- 
- 	pr_debug("%s\n", __func__);
- 
--	USB_CTRL_UNSET(ctrl, USB_PM, USB_PWRDN);
--	/* 1 millisecond - for USB clocks to settle down */
--	usleep_range(1000, 2000);
--
- 	if (USB_CTRL_MASK(USB_DEVICE_CTL1, PORT_MODE)) {
- 		reg = brcm_usb_readl(USB_CTRL_REG(ctrl, USB_DEVICE_CTL1));
- 		reg &= ~USB_CTRL_MASK(USB_DEVICE_CTL1, PORT_MODE);
-@@ -222,6 +220,17 @@ static void usb_wake_enable_7211b0(struct brcm_usb_init_params *params,
- 		USB_CTRL_UNSET(ctrl, CTLR_CSHCR, ctl_pme_en);
- }
- 
-+static void usb_wake_enable_7216(struct brcm_usb_init_params *params,
-+				 bool enable)
-+{
-+	void __iomem *ctrl = params->regs[BRCM_REGS_CTRL];
-+
-+	if (enable)
-+		USB_CTRL_SET(ctrl, USB_PM, XHC_PME_EN);
-+	else
-+		USB_CTRL_UNSET(ctrl, USB_PM, XHC_PME_EN);
-+}
-+
- static void usb_init_common_7211b0(struct brcm_usb_init_params *params)
- {
- 	void __iomem *ctrl = params->regs[BRCM_REGS_CTRL];
-@@ -295,6 +304,20 @@ static void usb_init_common_7211b0(struct brcm_usb_init_params *params)
- 	usb2_eye_fix_7211b0(params);
- }
- 
-+static void usb_init_common_7216(struct brcm_usb_init_params *params)
-+{
-+	void __iomem *ctrl = params->regs[BRCM_REGS_CTRL];
-+
-+	USB_CTRL_UNSET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
-+	USB_CTRL_UNSET(ctrl, USB_PM, USB_PWRDN);
-+
-+	/* 1 millisecond - for USB clocks to settle down */
-+	usleep_range(1000, 2000);
-+
-+	usb_wake_enable_7216(params, false);
-+	usb_init_common(params);
-+}
-+
- static void usb_init_xhci(struct brcm_usb_init_params *params)
- {
- 	pr_debug("%s\n", __func__);
-@@ -302,14 +325,20 @@ static void usb_init_xhci(struct brcm_usb_init_params *params)
- 	xhci_soft_reset(params, 0);
- }
- 
--static void usb_uninit_common(struct brcm_usb_init_params *params)
-+static void usb_uninit_common_7216(struct brcm_usb_init_params *params)
- {
+@@ -309,6 +309,12 @@ static void usb_init_common_7216(struct brcm_usb_init_params *params)
  	void __iomem *ctrl = params->regs[BRCM_REGS_CTRL];
  
- 	pr_debug("%s\n", __func__);
+ 	USB_CTRL_UNSET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
++
++	/*
++	 * The PHY might be in a bad state if it is already powered
++	 * up. Toggle the power just in case.
++	 */
++	USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
+ 	USB_CTRL_UNSET(ctrl, USB_PM, USB_PWRDN);
  
--	USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
-+	if (!params->wake_enabled) {
-+		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
- 
-+		/* Switch to using slower clock during suspend to save power */
-+		USB_CTRL_SET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
-+	} else {
-+		usb_wake_enable_7216(params, true);
-+	}
- }
- 
- static void usb_uninit_common_7211b0(struct brcm_usb_init_params *params)
-@@ -371,9 +400,9 @@ static void usb_set_dual_select(struct brcm_usb_init_params *params, int mode)
- 
- static const struct brcm_usb_init_ops bcm7216_ops = {
- 	.init_ipp = usb_init_ipp,
--	.init_common = usb_init_common,
-+	.init_common = usb_init_common_7216,
- 	.init_xhci = usb_init_xhci,
--	.uninit_common = usb_uninit_common,
-+	.uninit_common = usb_uninit_common_7216,
- 	.uninit_xhci = usb_uninit_xhci,
- 	.get_dual_select = usb_get_dual_select,
- 	.set_dual_select = usb_set_dual_select,
-@@ -396,6 +425,7 @@ void brcm_usb_dvr_init_7216(struct brcm_usb_init_params *params)
- 
- 	params->family_name = "7216";
- 	params->ops = &bcm7216_ops;
-+	params->suspend_with_clocks = true;
- }
- 
- void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
+ 	/* 1 millisecond - for USB clocks to settle down */
 -- 
 2.39.5
 
