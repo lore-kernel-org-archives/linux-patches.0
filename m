@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3EC1E7C27;
-	Thu, 30 Jan 2025 14:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3EF1E9901;
+	Thu, 30 Jan 2025 14:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245699; cv=none; b=jneEV4lk0nM3jVV848VMYn4uX9NMst4E9SNPMYN9fiH3FnJ1k20EJm1WvgITzQrzbLefT6/O9MNhsPYXLINOjeelzbHmv9G7Nt0MMexia7Bxh+EG8nw0XGmtgbYcT3WtFqjjSGSAiz0FgRayAsgQ0DfOR2ieL2MbZcOoL7GOMmE=
+	t=1738245702; cv=none; b=lAh7KjJF83RqzTHxeLBue8Q9n9dEBrcBzfD115R+5cp5P4UbxHakuRJQbG8Utwbk2djm2vGq2A27FyMrw1dRdJVefXTYdlfP/hdiw2JW6jAoWOitmcvrKvJ70IBrSwEunoh/f0wQGTaV+PivP1qr4PTC7Og/YOY//0Grnrx5Qos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245699; c=relaxed/simple;
-	bh=nyD/tg5uwkea0cV2FJrwEoiqIGKu7EFLn31JquKIzu0=;
+	s=arc-20240116; t=1738245702; c=relaxed/simple;
+	bh=8qUYwvUHX7OBYmJ93/x8ZlvFESFcHY8Ol2sDNINDkr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RCn9lgRVkpZ0N94TpsF6C9sI6idzdIjIhXr2rPRc4pOvwZebkiqwJdz6NEgp6NwA8QFWCt4EK0PzdvHkDuQTjB6ofcp3G7VCiMJC76dQVY257QrLUTAviUPQFEpbe72Sds9PyCj3ofoILqJPdfPiXcI8p8+WJl7fB/n0mNB8tF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DiiBhK1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q+KR5p/mCb4KP/LUU1p+J6NK7cZr815FENNxAB7ztpAs0B9rWVhnZnIbKzIv+seqvP9jN2948ZbZfsAjuvfR9mviBTeEXjx8qesS4Wh+zUifocW2sMoxBWtjfyycULN6B3jyuUMMgAAGBcNc41xgFvJhzg53rLUuJW06+8nEX58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nv7YqxM2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DiiBhK1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67596C4CEE2;
-	Thu, 30 Jan 2025 14:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nv7YqxM2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F2DC4CED2;
+	Thu, 30 Jan 2025 14:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245699;
-	bh=nyD/tg5uwkea0cV2FJrwEoiqIGKu7EFLn31JquKIzu0=;
+	s=korg; t=1738245702;
+	bh=8qUYwvUHX7OBYmJ93/x8ZlvFESFcHY8Ol2sDNINDkr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DiiBhK1Y1D93i4dzTPKYRQb3DX/xrDeBGIlfBgq0PV3ZzWn8fMFrocDzrJ/003E+T
-	 ZZgyaU0tPFPCm4odbujD2lKCeI+a29nWCxZPGjl/We8wovwRNY4jcPB6r1+Svv1HWH
-	 OutpOIBYwCXf0VD8yZF/PO1rnpvRl8ypHNf2GAdA=
+	b=Nv7YqxM2/Yx7dFtYwVNx3KOZ9aFlZuhBTmJ98Np4UcVr37eJQcjyhUCOtdkkdnWHR
+	 jPLjO4Rp+S8giyCHlAJz6KZ0c7QVeFzWeTfuHlssSskULsGC4DE+B8Mp0CUtbVTIl0
+	 gwhLLTxLw7TaZHScpbVFrxGrGIfhchDYNRi0Y3fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 23/40] smb: client: handle lack of EA support in smb2_query_path_info()
-Date: Thu, 30 Jan 2025 14:59:23 +0100
-Message-ID: <20250130133500.637530138@linuxfoundation.org>
+	Peter Robinson <pbrobinson@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.12 32/40] wifi: rtl8xxxu: add more missing rtl8192cu USB IDs
+Date: Thu, 30 Jan 2025 14:59:32 +0100
+Message-ID: <20250130133500.991956038@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -45,202 +45,112 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 3681c74d342db75b0d641ba60de27bf73e16e66b upstream.
+commit 31be3175bd7be89e39c82b3973c9d4ff55a17583 upstream.
 
-If the server doesn't support both EAs and reparse point in a file,
-the SMB2_QUERY_INFO request will fail with either
-STATUS_NO_EAS_ON_FILE or STATUS_EAS_NOT_SUPPORT in the compound chain,
-so ignore it as long as reparse point isn't
-IO_REPARSE_TAG_LX_(CHR|BLK), which would require the EAs to know about
-major/minor numbers.
+The rtl8xxxu has all the rtl8192cu USB IDs from rtlwifi/rtl8192cu/sw.c
+except for the following 10, add these to the untested section so they
+can be used with the rtl8xxxu as the rtl8192cu are well supported.
 
-Reported-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This fixes these wifi modules not working on distributions which have
+disabled CONFIG_RTL8192CU replacing it with CONFIG_RTL8XXXU_UNTESTED,
+like Fedora.
+
+Closes: https://bugzilla.redhat.com/show_bug.cgi?id=2321540
+Cc: stable@vger.kernel.org
+Cc: Peter Robinson <pbrobinson@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Peter Robinson <pbrobinson@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20241107140833.274986-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2inode.c |   92 ++++++++++++++++++++++++++++++++++------------
- 1 file changed, 69 insertions(+), 23 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c |   20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -176,27 +176,27 @@ static int smb2_compound_op(const unsign
- 			    struct kvec *out_iov, int *out_buftype, struct dentry *dentry)
- {
- 
--	struct reparse_data_buffer *rbuf;
-+	struct smb2_query_info_rsp *qi_rsp = NULL;
- 	struct smb2_compound_vars *vars = NULL;
--	struct kvec *rsp_iov, *iov;
--	struct smb_rqst *rqst;
--	int rc;
--	__le16 *utf16_path = NULL;
- 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
--	struct cifs_fid fid;
-+	struct cifs_open_info_data *idata;
- 	struct cifs_ses *ses = tcon->ses;
-+	struct reparse_data_buffer *rbuf;
- 	struct TCP_Server_Info *server;
--	int num_rqst = 0, i;
- 	int resp_buftype[MAX_COMPOUND];
--	struct smb2_query_info_rsp *qi_rsp = NULL;
--	struct cifs_open_info_data *idata;
-+	int retries = 0, cur_sleep = 1;
-+	__u8 delete_pending[8] = {1,};
-+	struct kvec *rsp_iov, *iov;
- 	struct inode *inode = NULL;
--	int flags = 0;
--	__u8 delete_pending[8] = {1, 0, 0, 0, 0, 0, 0, 0};
-+	__le16 *utf16_path = NULL;
-+	struct smb_rqst *rqst;
- 	unsigned int size[2];
--	void *data[2];
-+	struct cifs_fid fid;
-+	int num_rqst = 0, i;
- 	unsigned int len;
--	int retries = 0, cur_sleep = 1;
-+	int tmp_rc, rc;
-+	int flags = 0;
-+	void *data[2];
- 
- replay_again:
- 	/* reinitialize for possible replay */
-@@ -637,7 +637,14 @@ finished:
- 		tcon->need_reconnect = true;
- 	}
- 
-+	tmp_rc = rc;
- 	for (i = 0; i < num_cmds; i++) {
-+		char *buf = rsp_iov[i + i].iov_base;
-+
-+		if (buf && resp_buftype[i + 1] != CIFS_NO_BUFFER)
-+			rc = server->ops->map_error(buf, false);
-+		else
-+			rc = tmp_rc;
- 		switch (cmds[i]) {
- 		case SMB2_OP_QUERY_INFO:
- 			idata = in_iov[i].iov_base;
-@@ -803,6 +810,7 @@ finished:
- 		}
- 	}
- 	SMB2_close_free(&rqst[num_rqst]);
-+	rc = tmp_rc;
- 
- 	num_cmds += 2;
- 	if (out_iov && out_buftype) {
-@@ -858,22 +866,52 @@ static int parse_create_response(struct
- 	return rc;
- }
- 
-+/* Check only if SMB2_OP_QUERY_WSL_EA command failed in the compound chain */
-+static bool ea_unsupported(int *cmds, int num_cmds,
-+			   struct kvec *out_iov, int *out_buftype)
-+{
-+	int i;
-+
-+	if (cmds[num_cmds - 1] != SMB2_OP_QUERY_WSL_EA)
-+		return false;
-+
-+	for (i = 1; i < num_cmds - 1; i++) {
-+		struct smb2_hdr *hdr = out_iov[i].iov_base;
-+
-+		if (out_buftype[i] == CIFS_NO_BUFFER || !hdr ||
-+		    hdr->Status != STATUS_SUCCESS)
-+			return false;
-+	}
-+	return true;
-+}
-+
-+static inline void free_rsp_iov(struct kvec *iovs, int *buftype, int count)
-+{
-+	int i;
-+
-+	for (i = 0; i < count; i++) {
-+		free_rsp_buf(buftype[i], iovs[i].iov_base);
-+		memset(&iovs[i], 0, sizeof(*iovs));
-+		buftype[i] = CIFS_NO_BUFFER;
-+	}
-+}
-+
- int smb2_query_path_info(const unsigned int xid,
- 			 struct cifs_tcon *tcon,
- 			 struct cifs_sb_info *cifs_sb,
- 			 const char *full_path,
- 			 struct cifs_open_info_data *data)
- {
-+	struct kvec in_iov[3], out_iov[5] = {};
-+	struct cached_fid *cfid = NULL;
- 	struct cifs_open_parms oparms;
--	__u32 create_options = 0;
- 	struct cifsFileInfo *cfile;
--	struct cached_fid *cfid = NULL;
-+	__u32 create_options = 0;
-+	int out_buftype[5] = {};
- 	struct smb2_hdr *hdr;
--	struct kvec in_iov[3], out_iov[3] = {};
--	int out_buftype[3] = {};
-+	int num_cmds = 0;
- 	int cmds[3];
- 	bool islink;
--	int i, num_cmds = 0;
- 	int rc, rc2;
- 
- 	data->adjust_tz = false;
-@@ -943,14 +981,14 @@ int smb2_query_path_info(const unsigned
- 		if (rc || !data->reparse_point)
- 			goto out;
- 
--		if (!tcon->posix_extensions)
--			cmds[num_cmds++] = SMB2_OP_QUERY_WSL_EA;
- 		/*
- 		 * Skip SMB2_OP_GET_REPARSE if symlink already parsed in create
- 		 * response.
- 		 */
- 		if (data->reparse.tag != IO_REPARSE_TAG_SYMLINK)
- 			cmds[num_cmds++] = SMB2_OP_GET_REPARSE;
-+		if (!tcon->posix_extensions)
-+			cmds[num_cmds++] = SMB2_OP_QUERY_WSL_EA;
- 
- 		oparms = CIFS_OPARMS(cifs_sb, tcon, full_path,
- 				     FILE_READ_ATTRIBUTES |
-@@ -958,9 +996,18 @@ int smb2_query_path_info(const unsigned
- 				     FILE_OPEN, create_options |
- 				     OPEN_REPARSE_POINT, ACL_NO_MODE);
- 		cifs_get_readable_path(tcon, full_path, &cfile);
-+		free_rsp_iov(out_iov, out_buftype, ARRAY_SIZE(out_iov));
- 		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path,
- 				      &oparms, in_iov, cmds, num_cmds,
--				      cfile, NULL, NULL, NULL);
-+				      cfile, out_iov, out_buftype, NULL);
-+		if (rc && ea_unsupported(cmds, num_cmds,
-+					 out_iov, out_buftype)) {
-+			if (data->reparse.tag != IO_REPARSE_TAG_LX_BLK &&
-+			    data->reparse.tag != IO_REPARSE_TAG_LX_CHR)
-+				rc = 0;
-+			else
-+				rc = -EOPNOTSUPP;
-+		}
- 		break;
- 	case -EREMOTE:
- 		break;
-@@ -978,8 +1025,7 @@ int smb2_query_path_info(const unsigned
- 	}
- 
- out:
--	for (i = 0; i < ARRAY_SIZE(out_buftype); i++)
--		free_rsp_buf(out_buftype[i], out_iov[i].iov_base);
-+	free_rsp_iov(out_iov, out_buftype, ARRAY_SIZE(out_iov));
- 	return rc;
- }
- 
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -8147,6 +8147,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x817e, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x8186, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x818a, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x317f, 0xff, 0xff, 0xff),
+@@ -8157,12 +8159,18 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x050d, 0x1102, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x050d, 0x11f2, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe033, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x07b8, 0x8188, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x07b8, 0x8189, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9041, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9043, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x17ba, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(USB_VENDOR_ID_REALTEK, 0x1e1e, 0xff, 0xff, 0xff),
+@@ -8179,6 +8187,10 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3357, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3358, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x13d3, 0x3359, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330b, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2019, 0x4902, 0xff, 0xff, 0xff),
+@@ -8193,6 +8205,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x4856, 0x0091, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x9846, 0x9041, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0xcdab, 0x8010, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x04f2, 0xaff7, 0xff, 0xff, 0xff),
+@@ -8218,6 +8232,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0586, 0x341f, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe033, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x06f8, 0xe035, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x17ab, 0xff, 0xff, 0xff),
+@@ -8226,6 +8242,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0df6, 0x0070, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x0df6, 0x0077, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x0789, 0x016d, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x07aa, 0x0056, 0xff, 0xff, 0xff),
+@@ -8248,6 +8266,8 @@ static const struct usb_device_id dev_ta
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330a, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
++{USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x330d, 0xff, 0xff, 0xff),
++	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x2019, 0xab2b, 0xff, 0xff, 0xff),
+ 	.driver_info = (unsigned long)&rtl8192cu_fops},
+ {USB_DEVICE_AND_INTERFACE_INFO(0x20f4, 0x624d, 0xff, 0xff, 0xff),
 
 
