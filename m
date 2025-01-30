@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61F6C13D;
-	Thu, 30 Jan 2025 14:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A29CC13D;
+	Thu, 30 Jan 2025 14:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245650; cv=none; b=I4mrQtTWNNxA2jUONvBaZibPnAnpo3Xlhdd0gZXivkHKOgezmSfyg/DoHBLN1bbOxzYo+bIw5i9wYo/jtQadf5UM1cNk0eh2S1Vv4NXpkpe1WD5JI52/heuAnZox7FWJKe362tap5J7I+yuwwK/7vst772yPc6UmZJ2GkgziA/U=
+	t=1738245655; cv=none; b=ZKoGi4LUvMT0afMwyGZ1vSHianN97O9JQxOJbvLvVc5+vZ8GmEemK4qnhHlOhdBIy8uenK51fncMa5T6o/I1UpY9ZzqMhLg4YtVymFervZkOD3TJ8hmjVyYNvb1GYLue2s+M4gTq1/FVGY/vdDwzUhNFiX56M+JKpPYLIm9ba5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245650; c=relaxed/simple;
-	bh=hUjhuZN4yBJJwrFee//X8yp85555ywD6JycqsD2sddg=;
+	s=arc-20240116; t=1738245655; c=relaxed/simple;
+	bh=+6RNtAUr/ssLNJ81Mq8MgtuiPGfZW4mfukPuJ0kLW80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9F5M1+YuBx12+l3WA0Q67k1GvfJjHs9PoDZCn8tW7J8508aZzCtjLIqbZcTCiT56B1uImUI2ZE8f5WtUYdUR2MgpCHx/+wJd7Ziq4VD/UDZFOvk+EolK4vGOblkaV1KlVnPcKzMOSgr/mou4nveYsN88KqUb/+CNUZGaq1syBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OQWU+m6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VjokuhXAS2kWtXS8urJ1pgZeOVSnHtiT578ERtOioN+zoTB129PZYPTjqPNmOI2bOBbdLiBjH67RsCbb8b3PmfHjD3wBwA7VgTyi9ccNbbowNM8KCQfZ7sdgUdW5qVAtVpt5/zGmxWM/9o4hE3gtzRJzQw3INSyAfifqGFNWXTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9bMMyXU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OQWU+m6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD99C4CED2;
-	Thu, 30 Jan 2025 14:00:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9bMMyXU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE05C4CED2;
+	Thu, 30 Jan 2025 14:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245650;
-	bh=hUjhuZN4yBJJwrFee//X8yp85555ywD6JycqsD2sddg=;
+	s=korg; t=1738245653;
+	bh=+6RNtAUr/ssLNJ81Mq8MgtuiPGfZW4mfukPuJ0kLW80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1OQWU+m6X7DJcREjW6ZzZ/RWvANCn8lO8CatNT3ShdBKzpXZTAg/e6jV/by8p2DDE
-	 3Hznu9fbHdXfzvJitiCb7VSrCjJexIPSTi1p94MzSjpL0D4bhHZrMk0IMYRu8O2L/g
-	 EzUtWu/E4h4nbK46CJbVe9IupinzTk9OlHJEmCdY=
+	b=l9bMMyXUN2OUujTFar2hDBe33XddE404HSQyypQ/UH0uY2Nufpb3OMcC+4iDOl0o8
+	 DN1d4omM5qjZ6l5Nlluilu5BAqcg4z1u4ESHrZGhL00hrOksB6qqd6MGJ9yueEUudA
+	 668uxKsUQfcRwKnEiG9r0muMzrRPAXZAH+yWxtMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 14/40] ASoC: samsung: Add missing depends on I2C
-Date: Thu, 30 Jan 2025 14:59:14 +0100
-Message-ID: <20250130133500.284018481@linuxfoundation.org>
+	Yosry Ahmed <yosryahmed@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Sam Sun <samsun1006219@gmail.com>,
+	Barry Song <baohua@kernel.org>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Kanchana P Sridhar <kanchana.p.sridhar@intel.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Vitaly Wool <vitalywool@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 15/40] mm: zswap: properly synchronize freeing resources during CPU hotunplug
+Date: Thu, 30 Jan 2025 14:59:15 +0100
+Message-ID: <20250130133500.322711653@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -52,49 +57,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Yosry Ahmed <yosryahmed@google.com>
 
-[ Upstream commit 704dbe97a68153a84319ad63f526e12ba868b88e ]
+commit 12dcb0ef540629a281533f9dedc1b6b8e14cfb65 upstream.
 
-When switching to selects for MFD_WM8994 a dependency should have also
-been added for I2C, as the dependency on MFD_WM8994 will not be
-considered by the select.
+In zswap_compress() and zswap_decompress(), the per-CPU acomp_ctx of the
+current CPU at the beginning of the operation is retrieved and used
+throughout.  However, since neither preemption nor migration are disabled,
+it is possible that the operation continues on a different CPU.
 
-Fixes: fd55c6065bec ("ASoC: samsung: Add missing selects for MFD_WM8994")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202501082020.2bpGGVTW-lkp@intel.com/
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20250108134828.246570-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the original CPU is hotunplugged while the acomp_ctx is still in use,
+we run into a UAF bug as some of the resources attached to the acomp_ctx
+are freed during hotunplug in zswap_cpu_comp_dead() (i.e.
+acomp_ctx.buffer, acomp_ctx.req, or acomp_ctx.acomp).
+
+The problem was introduced in commit 1ec3b5fe6eec ("mm/zswap: move to use
+crypto_acomp API for hardware acceleration") when the switch to the
+crypto_acomp API was made.  Prior to that, the per-CPU crypto_comp was
+retrieved using get_cpu_ptr() which disables preemption and makes sure the
+CPU cannot go away from under us.  Preemption cannot be disabled with the
+crypto_acomp API as a sleepable context is needed.
+
+Use the acomp_ctx.mutex to synchronize CPU hotplug callbacks allocating
+and freeing resources with compression/decompression paths.  Make sure
+that acomp_ctx.req is NULL when the resources are freed.  In the
+compression/decompression paths, check if acomp_ctx.req is NULL after
+acquiring the mutex (meaning the CPU was offlined) and retry on the new
+CPU.
+
+The initialization of acomp_ctx.mutex is moved from the CPU hotplug
+callback to the pool initialization where it belongs (where the mutex is
+allocated).  In addition to adding clarity, this makes sure that CPU
+hotplug cannot reinitialize a mutex that is already locked by
+compression/decompression.
+
+Previously a fix was attempted by holding cpus_read_lock() [1].  This
+would have caused a potential deadlock as it is possible for code already
+holding the lock to fall into reclaim and enter zswap (causing a
+deadlock).  A fix was also attempted using SRCU for synchronization, but
+Johannes pointed out that synchronize_srcu() cannot be used in CPU hotplug
+notifiers [2].
+
+Alternative fixes that were considered/attempted and could have worked:
+- Refcounting the per-CPU acomp_ctx. This involves complexity in
+  handling the race between the refcount dropping to zero in
+  zswap_[de]compress() and the refcount being re-initialized when the
+  CPU is onlined.
+- Disabling migration before getting the per-CPU acomp_ctx [3], but
+  that's discouraged and is a much bigger hammer than needed, and could
+  result in subtle performance issues.
+
+[1]https://lkml.kernel.org/20241219212437.2714151-1-yosryahmed@google.com/
+[2]https://lkml.kernel.org/20250107074724.1756696-2-yosryahmed@google.com/
+[3]https://lkml.kernel.org/20250107222236.2715883-2-yosryahmed@google.com/
+
+[yosryahmed@google.com: remove comment]
+  Link: https://lkml.kernel.org/r/CAJD7tkaxS1wjn+swugt8QCvQ-rVF5RZnjxwPGX17k8x9zSManA@mail.gmail.com
+Link: https://lkml.kernel.org/r/20250108222441.3622031-1-yosryahmed@google.com
+Fixes: 1ec3b5fe6eec ("mm/zswap: move to use crypto_acomp API for hardware acceleration")
+Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
+Reported-by: Johannes Weiner <hannes@cmpxchg.org>
+Closes: https://lore.kernel.org/lkml/20241113213007.GB1564047@cmpxchg.org/
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Closes: https://lore.kernel.org/lkml/CAEkJfYMtSdM5HceNsXUDf5haghD5+o2e7Qv4OcuruL4tPg6OaQ@mail.gmail.com/
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Kanchana P Sridhar <kanchana.p.sridhar@intel.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Vitaly Wool <vitalywool@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/samsung/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/zswap.c |   58 ++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 44 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/samsung/Kconfig b/sound/soc/samsung/Kconfig
-index 1a05f0e7078d3..60b4b7b752155 100644
---- a/sound/soc/samsung/Kconfig
-+++ b/sound/soc/samsung/Kconfig
-@@ -127,7 +127,7 @@ config SND_SOC_SAMSUNG_TM2_WM5110
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -251,7 +251,7 @@ static struct zswap_pool *zswap_pool_cre
+ 	struct zswap_pool *pool;
+ 	char name[38]; /* 'zswap' + 32 char (max) num + \0 */
+ 	gfp_t gfp = __GFP_NORETRY | __GFP_NOWARN | __GFP_KSWAPD_RECLAIM;
+-	int ret;
++	int ret, cpu;
  
- config SND_SOC_SAMSUNG_ARIES_WM8994
- 	tristate "SoC I2S Audio support for WM8994 on Aries"
--	depends on SND_SOC_SAMSUNG && IIO && EXTCON
-+	depends on SND_SOC_SAMSUNG && I2C && IIO && EXTCON
- 	select SND_SOC_BT_SCO
- 	select MFD_WM8994
- 	select SND_SOC_WM8994
-@@ -141,7 +141,7 @@ config SND_SOC_SAMSUNG_ARIES_WM8994
+ 	if (!zswap_has_pool) {
+ 		/* if either are unset, pool initialization failed, and we
+@@ -285,6 +285,9 @@ static struct zswap_pool *zswap_pool_cre
+ 		goto error;
+ 	}
  
- config SND_SOC_SAMSUNG_MIDAS_WM1811
- 	tristate "SoC I2S Audio support for Midas boards"
--	depends on SND_SOC_SAMSUNG && IIO
-+	depends on SND_SOC_SAMSUNG && I2C && IIO
- 	select SND_SAMSUNG_I2S
- 	select MFD_WM8994
- 	select SND_SOC_WM8994
--- 
-2.39.5
-
++	for_each_possible_cpu(cpu)
++		mutex_init(&per_cpu_ptr(pool->acomp_ctx, cpu)->mutex);
++
+ 	ret = cpuhp_state_add_instance(CPUHP_MM_ZSWP_POOL_PREPARE,
+ 				       &pool->node);
+ 	if (ret)
+@@ -816,11 +819,12 @@ static int zswap_cpu_comp_prepare(unsign
+ 	struct acomp_req *req;
+ 	int ret;
+ 
+-	mutex_init(&acomp_ctx->mutex);
+-
++	mutex_lock(&acomp_ctx->mutex);
+ 	acomp_ctx->buffer = kmalloc_node(PAGE_SIZE * 2, GFP_KERNEL, cpu_to_node(cpu));
+-	if (!acomp_ctx->buffer)
+-		return -ENOMEM;
++	if (!acomp_ctx->buffer) {
++		ret = -ENOMEM;
++		goto buffer_fail;
++	}
+ 
+ 	acomp = crypto_alloc_acomp_node(pool->tfm_name, 0, 0, cpu_to_node(cpu));
+ 	if (IS_ERR(acomp)) {
+@@ -850,12 +854,15 @@ static int zswap_cpu_comp_prepare(unsign
+ 	acomp_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
+ 				   crypto_req_done, &acomp_ctx->wait);
+ 
++	mutex_unlock(&acomp_ctx->mutex);
+ 	return 0;
+ 
+ req_fail:
+ 	crypto_free_acomp(acomp_ctx->acomp);
+ acomp_fail:
+ 	kfree(acomp_ctx->buffer);
++buffer_fail:
++	mutex_unlock(&acomp_ctx->mutex);
+ 	return ret;
+ }
+ 
+@@ -864,17 +871,45 @@ static int zswap_cpu_comp_dead(unsigned
+ 	struct zswap_pool *pool = hlist_entry(node, struct zswap_pool, node);
+ 	struct crypto_acomp_ctx *acomp_ctx = per_cpu_ptr(pool->acomp_ctx, cpu);
+ 
++	mutex_lock(&acomp_ctx->mutex);
+ 	if (!IS_ERR_OR_NULL(acomp_ctx)) {
+ 		if (!IS_ERR_OR_NULL(acomp_ctx->req))
+ 			acomp_request_free(acomp_ctx->req);
++		acomp_ctx->req = NULL;
+ 		if (!IS_ERR_OR_NULL(acomp_ctx->acomp))
+ 			crypto_free_acomp(acomp_ctx->acomp);
+ 		kfree(acomp_ctx->buffer);
+ 	}
++	mutex_unlock(&acomp_ctx->mutex);
+ 
+ 	return 0;
+ }
+ 
++static struct crypto_acomp_ctx *acomp_ctx_get_cpu_lock(struct zswap_pool *pool)
++{
++	struct crypto_acomp_ctx *acomp_ctx;
++
++	for (;;) {
++		acomp_ctx = raw_cpu_ptr(pool->acomp_ctx);
++		mutex_lock(&acomp_ctx->mutex);
++		if (likely(acomp_ctx->req))
++			return acomp_ctx;
++		/*
++		 * It is possible that we were migrated to a different CPU after
++		 * getting the per-CPU ctx but before the mutex was acquired. If
++		 * the old CPU got offlined, zswap_cpu_comp_dead() could have
++		 * already freed ctx->req (among other things) and set it to
++		 * NULL. Just try again on the new CPU that we ended up on.
++		 */
++		mutex_unlock(&acomp_ctx->mutex);
++	}
++}
++
++static void acomp_ctx_put_unlock(struct crypto_acomp_ctx *acomp_ctx)
++{
++	mutex_unlock(&acomp_ctx->mutex);
++}
++
+ static bool zswap_compress(struct folio *folio, struct zswap_entry *entry)
+ {
+ 	struct crypto_acomp_ctx *acomp_ctx;
+@@ -887,10 +922,7 @@ static bool zswap_compress(struct folio
+ 	gfp_t gfp;
+ 	u8 *dst;
+ 
+-	acomp_ctx = raw_cpu_ptr(entry->pool->acomp_ctx);
+-
+-	mutex_lock(&acomp_ctx->mutex);
+-
++	acomp_ctx = acomp_ctx_get_cpu_lock(entry->pool);
+ 	dst = acomp_ctx->buffer;
+ 	sg_init_table(&input, 1);
+ 	sg_set_folio(&input, folio, PAGE_SIZE, 0);
+@@ -943,7 +975,7 @@ unlock:
+ 	else if (alloc_ret)
+ 		zswap_reject_alloc_fail++;
+ 
+-	mutex_unlock(&acomp_ctx->mutex);
++	acomp_ctx_put_unlock(acomp_ctx);
+ 	return comp_ret == 0 && alloc_ret == 0;
+ }
+ 
+@@ -954,9 +986,7 @@ static void zswap_decompress(struct zswa
+ 	struct crypto_acomp_ctx *acomp_ctx;
+ 	u8 *src;
+ 
+-	acomp_ctx = raw_cpu_ptr(entry->pool->acomp_ctx);
+-	mutex_lock(&acomp_ctx->mutex);
+-
++	acomp_ctx = acomp_ctx_get_cpu_lock(entry->pool);
+ 	src = zpool_map_handle(zpool, entry->handle, ZPOOL_MM_RO);
+ 	/*
+ 	 * If zpool_map_handle is atomic, we cannot reliably utilize its mapped buffer
+@@ -980,10 +1010,10 @@ static void zswap_decompress(struct zswa
+ 	acomp_request_set_params(acomp_ctx->req, &input, &output, entry->length, PAGE_SIZE);
+ 	BUG_ON(crypto_wait_req(crypto_acomp_decompress(acomp_ctx->req), &acomp_ctx->wait));
+ 	BUG_ON(acomp_ctx->req->dlen != PAGE_SIZE);
+-	mutex_unlock(&acomp_ctx->mutex);
+ 
+ 	if (src != acomp_ctx->buffer)
+ 		zpool_unmap_handle(zpool, entry->handle);
++	acomp_ctx_put_unlock(acomp_ctx);
+ }
+ 
+ /*********************************
 
 
