@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00301E98F3;
-	Thu, 30 Jan 2025 14:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A04E1BD9D3;
+	Thu, 30 Jan 2025 14:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247317; cv=none; b=X0T7MudY/Kk/XQ2jYDHxIM4EC196TT1PrX3kYuisztp3B6UJvkD/tef3D24GxNbyExPZqkExliF6WEnBE/Ztb+wEcwLPS0iI7c1YuSXquQI7DM0ahQWGyovGIEAzApUUTxT75NOtzKdgmxaxK6PL1po49Gu6KxnCP9y+pKTlmxA=
+	t=1738247321; cv=none; b=NkH2mASud+t9w2dYGYm32jYGk8ivXPUXwj9VLUStrSskn11/oXdajK2nDylbXMEfitJXw3MQ0FYV3VpYZeFmuHFYkGvLosK0x95k6xIQ5FEJ5nrJam6aO9kA9LtKaVj9ORHUofdz9DM6Lc+0WrVjfzPU4jlEV893kTXmLByaSDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247317; c=relaxed/simple;
-	bh=P1UMMPEYLzp0VvA+BdmCX4t9LKiFw389mxjxsKLBCNE=;
+	s=arc-20240116; t=1738247321; c=relaxed/simple;
+	bh=4dNFhGXueTJHoSXibmMXkBp+gf9ypQxuFRbFesC50ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqOhwupbv48kbzLRzU6z6x+Bt+2wdhbllwhJOSSJ6hUYCJ7c7fX/+exdg+1Fg+oh97jYWN331DPPNCMLBs1Ly3c026meUIJZritY8UvR9m+g3581COal/BPWlD+1VoI4hf1mGB6IAyRaziAhui1d/IVxEas+cnY1JCGVBpHEoXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LDDmXRFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fbiY19T/My7hSKRMZHIOL8DKxOQftCIDhyO+30MvkPOSiq7WkvI346bE5tasxQSbPGjdSb5j/2BZT376pGNsqyaK3py28qwkjWC/NE8BVx/2k8vo1FDKaOheE4DbOj51ZzgqZmdLNu4ZwzCenu2LI4psyTbRQMxwlSn0xkNFdUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfcI9WaF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LDDmXRFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2585BC4CED2;
-	Thu, 30 Jan 2025 14:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfcI9WaF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A3CC4CED2;
+	Thu, 30 Jan 2025 14:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247317;
-	bh=P1UMMPEYLzp0VvA+BdmCX4t9LKiFw389mxjxsKLBCNE=;
+	s=korg; t=1738247320;
+	bh=4dNFhGXueTJHoSXibmMXkBp+gf9ypQxuFRbFesC50ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDDmXRFwy/VCphzASdmGmIvvLSIwomIrTf5YB/sO7KGLAzVk4pQ2EyCNfDdlKtPTs
-	 kiXhqQ6bIsKVb0YDO9KaBRl/PBdxU3So3GouHW41pAH0a3f6L+YLOsvTtv6rI1NJmj
-	 SrSHwj/eLOKncconkWsaxa567BUTn2gi2ouJG1M0=
+	b=wfcI9WaFNC1szzWLcMgiqr6rG+QkMdpHmEf12pArE0fuwvFEUMKHB9ZKgTGK95Vvl
+	 IDomi1vkI96RGyle/ZFIDfgsExaSGZk67yPe6K2Hpe6jdkur/o2aWW/GFWELht2b7V
+	 cEYyddvr62Pj+bkivntY4Bv2sTUth7aT+ks2ruOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilton Perim Neto <niltonperimneto@gmail.com>,
+	Jack Greiner <jack@emoss.org>,
 	Pavel Rojtberg <rojtberg@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 23/24] Input: xpad - add unofficial Xbox 360 wireless receiver clone
-Date: Thu, 30 Jan 2025 15:02:15 +0100
-Message-ID: <20250130140128.217546638@linuxfoundation.org>
+Subject: [PATCH 5.15 24/24] Input: xpad - add support for wooting two he (arm)
+Date: Thu, 30 Jan 2025 15:02:16 +0100
+Message-ID: <20250130140128.256839687@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140127.295114276@linuxfoundation.org>
 References: <20250130140127.295114276@linuxfoundation.org>
@@ -51,19 +51,15 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilton Perim Neto <niltonperimneto@gmail.com>
+From: Jack Greiner <jack@emoss.org>
 
-commit e4940fe6322c851659c17852b671c6e7b1aa9f56 upstream.
+commit 222f3390c15c4452a9f7e26f5b7d9138e75d00d5 upstream.
 
-Although it mimics the Microsoft's VendorID, it is in fact a clone.
-Taking into account that the original Microsoft Receiver is not being
-manufactured anymore, this drive can solve dpad issues encontered by
-those who still use the original 360 Wireless controller
-but are using a receiver clone.
+Add Wooting Two HE (ARM) to the list of supported devices.
 
-Signed-off-by: Nilton Perim Neto <niltonperimneto@gmail.com>
+Signed-off-by: Jack Greiner <jack@emoss.org>
 Signed-off-by: Pavel Rojtberg <rojtberg@gmail.com>
-Link: https://lore.kernel.org/r/20250107192830.414709-12-rojtberg@gmail.com
+Link: https://lore.kernel.org/r/20250107192830.414709-3-rojtberg@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -73,13 +69,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/input/joystick/xpad.c
 +++ b/drivers/input/joystick/xpad.c
-@@ -129,6 +129,7 @@ static const struct xpad_device {
- 	{ 0x045e, 0x028e, "Microsoft X-Box 360 pad", 0, XTYPE_XBOX360 },
- 	{ 0x045e, 0x028f, "Microsoft X-Box 360 pad v2", 0, XTYPE_XBOX360 },
- 	{ 0x045e, 0x0291, "Xbox 360 Wireless Receiver (XBOX)", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360W },
-+	{ 0x045e, 0x02a9, "Xbox 360 Wireless Receiver (Unofficial)", MAP_DPAD_TO_BUTTONS, XTYPE_XBOX360W },
- 	{ 0x045e, 0x02d1, "Microsoft X-Box One pad", 0, XTYPE_XBOXONE },
- 	{ 0x045e, 0x02dd, "Microsoft X-Box One pad (Firmware 2015)", 0, XTYPE_XBOXONE },
- 	{ 0x045e, 0x02e3, "Microsoft X-Box One Elite pad", 0, XTYPE_XBOXONE },
+@@ -349,6 +349,7 @@ static const struct xpad_device {
+ 	{ 0x31e3, 0x1200, "Wooting Two", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1210, "Wooting Lekker", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1220, "Wooting Two HE", 0, XTYPE_XBOX360 },
++	{ 0x31e3, 0x1230, "Wooting Two HE (ARM)", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1300, "Wooting 60HE (AVR)", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1310, "Wooting 60HE (ARM)", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0607, "Nacon GC-100", 0, XTYPE_XBOX360 },
 
 
