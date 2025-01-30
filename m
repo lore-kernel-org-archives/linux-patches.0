@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92921E7C25;
-	Thu, 30 Jan 2025 14:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE1D1E6DCF;
+	Thu, 30 Jan 2025 14:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247177; cv=none; b=SSqJtbFXT/TfNq8Vd0iesk+ArURg6Y4PIfqJSuxf7OlJ3Jxha9uL5hhEe7tbhM8lwP4B2agAdv3c0ha0EQN5EB8w1FJ4Sc77KEv83zlZkEMMseqX6cjusozE8BzLFZ/Hmp3ZJC+R1KUhsy9fjxeQAYWpyoZ8jl1TmSgVcRzcQqI=
+	t=1738247180; cv=none; b=efZiH6IOyAdMb6E+Ynl+jjvDJ6E9Fm/9nY3nqsGtQDuJFSG6rrvnNnx6C8c/GaW33Fd5rSsIMyK+9DSNXyGRmW9artT7d5tWFPLK41EOH79AiWyZUibfGeCfDg7DTHH4AKe53IDDdi3FxwEL1pXvooMm4hLOTXohCIsgMcsSWl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247177; c=relaxed/simple;
-	bh=bquP7pQfJklJtsvttCHnh7PcjPY9QKlenpNPUn8GX2M=;
+	s=arc-20240116; t=1738247180; c=relaxed/simple;
+	bh=fa/zWRuCudoT732iosczLnGzUFll5/ItHGkjhX6RwUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEXU2ShdNug8KA0tL2sCIGOLXLiotC/lSwHTUIiD9YJesH6TZpAiw5vLBLhQNHA7GvdcDP9f8Pwx8PyZHGmgcqo76YEwZIsqNgEJlQ0w7P8CfF7fpLkwNwgrA5Irx0ICZNNr4o9L0s44ZaAzc8TnaW/6wctcfLEZ3VypV+vvLzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrwdHr5v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OolBv4xB+uKNp7wQ3WYFdhgXLSkGCDDqw9ocZN8jGOU/wudX4+vpmac1WvMVhVoJWjn+qEXzIj0C+LJ9WYjRKAp6lnU+vBCty5/w86Q3x2eim7tmJVzcwb16Rz8NE805kDJF2sjZ5B6zzJlP581sWArFxsETLFCDlnBJb1SIyq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGb54TGr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrwdHr5v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DCCC4CED2;
-	Thu, 30 Jan 2025 14:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGb54TGr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236A2C4CED2;
+	Thu, 30 Jan 2025 14:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247177;
-	bh=bquP7pQfJklJtsvttCHnh7PcjPY9QKlenpNPUn8GX2M=;
+	s=korg; t=1738247180;
+	bh=fa/zWRuCudoT732iosczLnGzUFll5/ItHGkjhX6RwUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrwdHr5vfEQBEywGD2jasulVpAfCDT07tv80wHqdWKC7bqTZpBqzhWSeoIkLTIk1W
-	 lJtateyIkj5YSLVUnLD7QX81iCv8NDsb4x+YwUcREsAajWbvDRjhHd6FNpqP/eENUC
-	 +VZjqh3s6VmQTmNDggU4oRC5rLpVS5Cs9auDRmBo=
+	b=JGb54TGr1cCCnUKdNatMImWIcehIzTU5VZrxC7/SrtVt4brMa0fB8VsLIX1LPR0vB
+	 GucToAGNt2WcMY8RF0UOsBddSNFkzjF+jnoj0AZ+daFWQ2jq9BkmArji+x9eWTRGjH
+	 PhRCCPmhVPTqhjaos7C01Hl5yN2XYm5EXBv4rD9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 109/133] fou: remove warn in gue_gro_receive on unsupported protocol
-Date: Thu, 30 Jan 2025 15:01:38 +0100
-Message-ID: <20250130140146.925714822@linuxfoundation.org>
+	Hyunwoo Kim <v4bel@theori.io>,
+	Wongi Lee <qwerty@theori.io>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 110/133] vsock/virtio: discard packets if the transport changes
+Date: Thu, 30 Jan 2025 15:01:39 +0100
+Message-ID: <20250130140146.965543328@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -51,41 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-commit dd89a81d850fa9a65f67b4527c0e420d15bf836c upstream.
+commit 2cb7c756f605ec02ffe562fb26828e4bcc5fdfc1 upstream.
 
-Drop the WARN_ON_ONCE inn gue_gro_receive if the encapsulated type is
-not known or does not have a GRO handler.
+If the socket has been de-assigned or assigned to another transport,
+we must discard any packets received because they are not expected
+and would cause issues when we access vsk->transport.
 
-Such a packet is easily constructed. Syzbot generates them and sets
-off this warning.
+A possible scenario is described by Hyunwoo Kim in the attached link,
+where after a first connect() interrupted by a signal, and a second
+connect() failed, we can find `vsk->transport` at NULL, leading to a
+NULL pointer dereference.
 
-Remove the warning as it is expected and not actionable.
-
-The warning was previously reduced from WARN_ON to WARN_ON_ONCE in
-commit 270136613bf7 ("fou: Do WARN_ON_ONCE in gue_gro_receive for bad
-proto callbacks").
-
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20240614122552.1649044-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Cc: stable@vger.kernel.org
+Reported-by: Hyunwoo Kim <v4bel@theori.io>
+Reported-by: Wongi Lee <qwerty@theori.io>
+Closes: https://lore.kernel.org/netdev/Z2LvdTTQR7dBmPb5@v4bel-B760M-AORUS-ELITE-AX/
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[SG: fixed context conflict since this tree is missing commit 71dc9ec9ac7d
+ ("virtio/vsock: replace virtio_vsock_pkt with sk_buff")]
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/fou.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/vmw_vsock/virtio_transport_common.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/ipv4/fou.c
-+++ b/net/ipv4/fou.c
-@@ -453,7 +453,7 @@ next_proto:
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1171,8 +1171,11 @@ void virtio_transport_recv_pkt(struct vi
  
- 	offloads = NAPI_GRO_CB(skb)->is_ipv6 ? inet6_offloads : inet_offloads;
- 	ops = rcu_dereference(offloads[proto]);
--	if (WARN_ON_ONCE(!ops || !ops->callbacks.gro_receive))
-+	if (!ops || !ops->callbacks.gro_receive)
- 		goto out;
+ 	lock_sock(sk);
  
- 	pp = call_gro_receive(ops->callbacks.gro_receive, head, skb);
+-	/* Check if sk has been closed before lock_sock */
+-	if (sock_flag(sk, SOCK_DONE)) {
++	/* Check if sk has been closed or assigned to another transport before
++	 * lock_sock (note: listener sockets are not assigned to any transport)
++	 */
++	if (sock_flag(sk, SOCK_DONE) ||
++	    (sk->sk_state != TCP_LISTEN && vsk->transport != &t->transport)) {
+ 		(void)virtio_transport_reset_no_sock(t, pkt);
+ 		release_sock(sk);
+ 		sock_put(sk);
 
 
