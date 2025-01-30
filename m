@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A651E9B03;
-	Thu, 30 Jan 2025 14:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8550D1DDC22;
+	Thu, 30 Jan 2025 14:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246989; cv=none; b=qlywylE5+YI+JIEjQcKRUfB1atscvFHMSJzQ5ycU3PI5Bo7AwOmYk7T9lWq98X9rKsma0Dtwj17wB1XpsZDvlH9NjvQCx6bgvWKkfpGTjkkursq3W7lgBJF4iKg8+NuyrOGZRBNI64ZWTMui+d0dCroVgiqeUIKIcEKXQnD6B/g=
+	t=1738246992; cv=none; b=pTQlFTcAeFc8betVB3WN73B2FcxPnfI30fnWAWjaQuabUrH+TTunRLZwMG4Xn4AidmYWgRNGY/U7mtupidQorPkwH60HZCN10InVUIBIJjAsb4tmziagGbh5UkhEge01Rkp4DclIjjGyITLUWK2lPw/toizWKeO7//URPhlHHmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246989; c=relaxed/simple;
-	bh=fsrPpCyResezhB94a5ZRqYnxhC3UvmRsHA4u5bWmdgo=;
+	s=arc-20240116; t=1738246992; c=relaxed/simple;
+	bh=5GqecZssZM20UJl+tre7+eoVC9wHih4f12WiuvIthos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UDINFW5gLdVOx/7HHvTPsSvdbwNps/aIEMtR0HgLjJ6PX953MzSZLLZhtluaomb81eCd1ng0g4pEkntq26EZ7G79p8U7/cs7/0wmwgrrGREfmzTBqYXjtpCVu7BtlHmR+SksEy4/6YHlQtm0pGTV2mLHQvPS9W0qBjNQP1MRCpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2gXBtf3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgDLIxbnZw6/NvvAWRevGcKKWN4ICxAWr7ktokR8LBYaPU0gbNzALe0jhZ38bePkOBgdtLYUXyuSsxs/afqB+FIbzZg5bIYsQu70Ia9FbL5yJZYjZntppOhHHkH+5rty8e7HoEOULdSO1QFZDWP/gI6w+F606dCEoYidBkEztsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTD19DG4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2gXBtf3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C34C4CED2;
-	Thu, 30 Jan 2025 14:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTD19DG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED99C4CED2;
+	Thu, 30 Jan 2025 14:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246989;
-	bh=fsrPpCyResezhB94a5ZRqYnxhC3UvmRsHA4u5bWmdgo=;
+	s=korg; t=1738246992;
+	bh=5GqecZssZM20UJl+tre7+eoVC9wHih4f12WiuvIthos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gXBtf3UYSOsUk9XeErwmusYtaWcMqtMcNxLw7pyQBhUOQ1EMAMuTjZawtWEinufD
-	 b1FFwHxugLUOD5B2tD3gJTc50GJXV+dFcWchBLeVs26vj875UvcXNCVksdsoibtYUI
-	 fdLPwHZZMC9Qi/yiTYzh5fv8EvmvBT3OWMAnwkXc=
+	b=VTD19DG4GeV37rLNHFaiuC877mbn+mR9bAaphpmFWSgBpUmMAEYL37eLHCy6SXAEZ
+	 OUqk+t4+jVT0kxV/SiRB3ePqSfu0Eqoon5kyy8zGh0RxiELD0Hr22noaMTuSyEaelC
+	 Pr+SjGXeTExT9rNLwu3sbODYTqNiMEYvgxEOhJ/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 045/133] iio: imu: kmx61: fix information leak in triggered buffer
-Date: Thu, 30 Jan 2025 15:00:34 +0100
-Message-ID: <20250130140144.328039962@linuxfoundation.org>
+Subject: [PATCH 5.10 046/133] iio: adc: ti-ads8688: fix information leak in triggered buffer
+Date: Thu, 30 Jan 2025 15:00:35 +0100
+Message-ID: <20250130140144.366344160@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-commit 6ae053113f6a226a2303caa4936a4c37f3bfff7b upstream.
+commit 2a7377ccfd940cd6e9201756aff1e7852c266e69 upstream.
 
 The 'buffer' local array is used to push data to user space from a
 triggered buffer, but it does not set values for inactive channels, as
@@ -62,25 +62,25 @@ Initialize the array to zero before using it to avoid pushing
 uninitialized information to userspace.
 
 Cc: stable@vger.kernel.org
-Fixes: c3a23ecc0901 ("iio: imu: kmx61: Add support for data ready triggers")
+Fixes: 61fa5dfa5f52 ("iio: adc: ti-ads8688: Fix alignment of buffer in iio_push_to_buffers_with_timestamp()")
 Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-5-0cb6e98d895c@gmail.com
+Link: https://patch.msgid.link/20241125-iio_memset_scan_holes-v1-8-0cb6e98d895c@gmail.com
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/kmx61.c |    2 +-
+ drivers/iio/adc/ti-ads8688.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/kmx61.c
-+++ b/drivers/iio/imu/kmx61.c
-@@ -1198,7 +1198,7 @@ static irqreturn_t kmx61_trigger_handler
- 	struct kmx61_data *data = kmx61_get_data(indio_dev);
- 	int bit, ret, i = 0;
- 	u8 base;
--	s16 buffer[8];
-+	s16 buffer[8] = { };
+--- a/drivers/iio/adc/ti-ads8688.c
++++ b/drivers/iio/adc/ti-ads8688.c
+@@ -384,7 +384,7 @@ static irqreturn_t ads8688_trigger_handl
+ 	struct iio_poll_func *pf = p;
+ 	struct iio_dev *indio_dev = pf->indio_dev;
+ 	/* Ensure naturally aligned timestamp */
+-	u16 buffer[ADS8688_MAX_CHANNELS + sizeof(s64)/sizeof(u16)] __aligned(8);
++	u16 buffer[ADS8688_MAX_CHANNELS + sizeof(s64)/sizeof(u16)] __aligned(8) = { };
+ 	int i, j = 0;
  
- 	if (indio_dev == data->acc_indio_dev)
- 		base = KMX61_ACC_XOUT_L;
+ 	for (i = 0; i < indio_dev->masklength; i++) {
 
 
