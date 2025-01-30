@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF3F1E9B03;
-	Thu, 30 Jan 2025 14:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5581E9901;
+	Thu, 30 Jan 2025 14:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246969; cv=none; b=bwBBgJ1fn49EPCJakbTNYoixKSSKzmw67CtJqnK/2Uu4MJT2e+G/b/kyL+Z4Onhyn1bltb3vZtY6Z7hwL88nkgbZsMAW54lG9MbsNZJ5pOOE5qhOZcBG3rVHC9QWl6Xy7K8V8UHW/FxR4z+9D2OIsXRZ7fWoicfCS9MApfqzmZU=
+	t=1738246972; cv=none; b=AZBEjHFPO0stkNcSpkZSPYLelco6F7CqhlEchE8hJ768F5sDbuwPKjRM9iS61OvuCQaE6GJqLbdNLUZu1yG90BsWmL5c9aXrlf5mK6TLUHNDeMe+8ZIUX3OWuz7Y2Jhjj4StWWGW2DMP34xqu7nbsYKOwvqDjBXu//h4JuaVZmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246969; c=relaxed/simple;
-	bh=NzCkwX+K5OyPpCMG+sLwoGWwoNCdXpapywfnPCg7rGo=;
+	s=arc-20240116; t=1738246972; c=relaxed/simple;
+	bh=wbrM/Y7CuYfeJXX9+ih5fOfvl2WZH7/xPxnGS5m0Qn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=et+vdDqnwnKGL8RNdSyds1rE4ht3/dLVhmAS3oxu8XD72cbBY6quOryCeoiFI5XfMIQO8GTKR6Hde5UKLUt7kTDNjFBrf262v45QqRgxM4jVmSNIzZyOvUJicaHLbMWFaOivY62xSaqIKiD7qGGWqoci5PeVQkMv+M2A1UiRxro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xc1u6Brk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QKXrt8JGNniyNFF8FhtXiRr4g2MvZPHEa3Nj8M4T5htWzE9Lvk9koR1QIej+q5IWR2o2FRRqxnTuQl0ilrNqzmxlw3rafN27mDvXDettxObro9ImL1dxd2J8mk2ay9rw4Sk593k4d0e7DBVKvYUJpD4qdWr3if9R2UIJTblPHSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l1J9WSrJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xc1u6Brk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30EAC4CED2;
-	Thu, 30 Jan 2025 14:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l1J9WSrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0815C4CED2;
+	Thu, 30 Jan 2025 14:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246969;
-	bh=NzCkwX+K5OyPpCMG+sLwoGWwoNCdXpapywfnPCg7rGo=;
+	s=korg; t=1738246972;
+	bh=wbrM/Y7CuYfeJXX9+ih5fOfvl2WZH7/xPxnGS5m0Qn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xc1u6BrkdAa4EXT+NVFkP8rSnc3z7/+6wndu82J9dcRfJnYlCSQB960PiT5giouw8
-	 Q4zVzlblDvaFaY75YkMAIkftxOi0Vh4nV2FtkWq3ojhoTDEsXBb4PzjL7qyxljlbjc
-	 IucdbT9XVhhrn46GPSCHH3qvnUtzo7yDF0LZgGPg=
+	b=l1J9WSrJiiJTamf1bfHEYa4VT6YV/kMiekgrikOsJf7rVVACL/XIuWysHWRSxQC1N
+	 JwiH4u03Gud0mBGx77ZnS5T60IZXAqc2HhGgxkY5dxQXrldSW39z/HwntYEVCyqW1w
+	 23MeET5v+lP4sAG3RcOtOPXIcS9xhatFk6QaqRCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 030/133] USB: serial: option: add MeiG Smart SRM815
-Date: Thu, 30 Jan 2025 15:00:19 +0100
-Message-ID: <20250130140143.724417407@linuxfoundation.org>
+	Wayne Chang <waynec@nvidia.com>,
+	stable <stable@kernel.org>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Jon Hunter <jonathanh@nvidia.com>
+Subject: [PATCH 5.10 039/133] USB: core: Disable LPM only for non-suspended ports
+Date: Thu, 30 Jan 2025 15:00:28 +0100
+Message-ID: <20250130140144.086638030@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -50,66 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Kai-Heng Feng <kaihengf@nvidia.com>
 
-commit c1947d244f807b1f95605b75a4059e7b37b5dcc3 upstream.
+commit 59bfeaf5454b7e764288d84802577f4a99bf0819 upstream.
 
-It looks like SRM815 shares ID with SRM825L.
+There's USB error when tegra board is shutting down:
+[  180.919315] usb 2-3: Failed to set U1 timeout to 0x0,error code -113
+[  180.919995] usb 2-3: Failed to set U1 timeout to 0xa,error code -113
+[  180.920512] usb 2-3: Failed to set U2 timeout to 0x4,error code -113
+[  186.157172] tegra-xusb 3610000.usb: xHCI host controller not responding, assume dead
+[  186.157858] tegra-xusb 3610000.usb: HC died; cleaning up
+[  186.317280] tegra-xusb 3610000.usb: Timeout while waiting for evaluate context command
 
-T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=2dee ProdID=4d22 Rev= 4.14
-S:  Manufacturer=MEIG
-S:  Product=LTE-A Module
-S:  SerialNumber=123456
-C:* #Ifs= 5 Cfg#= 1 Atr=80 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+The issue is caused by disabling LPM on already suspended ports.
 
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/lkml/20241215100027.1970930-1-amadeus@jmu.edu.cn/
-Link: https://lore.kernel.org/all/4333b4d0-281f-439d-9944-5570cbc4971d@gmail.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+For USB2 LPM, the LPM is already disabled during port suspend. For USB3
+LPM, port won't transit to U1/U2 when it's already suspended in U3,
+hence disabling LPM is only needed for ports that are not suspended.
+
+Cc: Wayne Chang <waynec@nvidia.com>
+Cc: stable <stable@kernel.org>
+Fixes: d920a2ed8620 ("usb: Disable USB3 LPM at shutdown")
+Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20241206074817.89189-1-kaihengf@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/core/port.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -621,7 +621,7 @@ static void option_instat_callback(struc
+--- a/drivers/usb/core/port.c
++++ b/drivers/usb/core/port.c
+@@ -294,10 +294,11 @@ static int usb_port_runtime_suspend(stru
+ static void usb_port_shutdown(struct device *dev)
+ {
+ 	struct usb_port *port_dev = to_usb_port(dev);
++	struct usb_device *udev = port_dev->child;
  
- /* MeiG Smart Technology products */
- #define MEIGSMART_VENDOR_ID			0x2dee
--/* MeiG Smart SRM825L based on Qualcomm 315 */
-+/* MeiG Smart SRM815/SRM825L based on Qualcomm 315 */
- #define MEIGSMART_PRODUCT_SRM825L		0x4d22
- /* MeiG Smart SLM320 based on UNISOC UIS8910 */
- #define MEIGSMART_PRODUCT_SLM320		0x4d41
-@@ -2405,6 +2405,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, LUAT_PRODUCT_AIR720U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM320, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SLM770A, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(MEIGSMART_VENDOR_ID, MEIGSMART_PRODUCT_SRM825L, 0xff, 0xff, 0x60) },
+-	if (port_dev->child) {
+-		usb_disable_usb2_hardware_lpm(port_dev->child);
+-		usb_unlocked_disable_lpm(port_dev->child);
++	if (udev && !udev->port_is_suspended) {
++		usb_disable_usb2_hardware_lpm(udev);
++		usb_unlocked_disable_lpm(udev);
+ 	}
+ }
+ 
 
 
