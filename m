@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A891DDC22;
-	Thu, 30 Jan 2025 14:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3C91E8855;
+	Thu, 30 Jan 2025 14:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247148; cv=none; b=hZrI9GPXxOuEPKqeae7L1m97HmZjbB8ZT/0gq30ce3RsqvRBEhwaa+PiLWG1mKR/4RCJ5QlMp29zYZVaVc+dxnMVD+9EjwpIcnkx076hlqThm6ga7c+o12ho3Ih5A9bE2JG2y2mzRTM+9nne7SI8rJ7MlZwJ70eE6yyQQo2j3v4=
+	t=1738247151; cv=none; b=Zs4xH+68jRfbtk4R/+BeI4wNZpdlx9h1D1UQw5gYqFygSxVHsvTXXz3CHKTKPnK4/d2INtO1wmWUQM/sUqNh2XQoMhE+wxlRbeXFGYz/j6DJIFP0KNSu/idAdal6bDQArQqJe/jMSZKIe4DGU0e2S87ltwS1dFmrTeRwOqU+4E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247148; c=relaxed/simple;
-	bh=hCggc3UQhTgY7kcUhr8LcZn03K4EkJQUjV+19eMciYE=;
+	s=arc-20240116; t=1738247151; c=relaxed/simple;
+	bh=lwkWeI4f9tOgFPJqiSSw0tWa2ctkqEeQQ4p1hv6mI+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K74HEbxGv3XKg9AqyurEk08s4ARzRYXmcl/Uxze2MN+SRNPzxsxz2QkJD4ah0sdJ5vmYXJ+4NFvZKiuvmYYtWpuR4SFYWyw97dycxfuetUJvgFMWzdRwZG/h2SARano9q34vs5CHd2WnAK6hO54z82MUGnHe+tJ2k2I9bXLoCSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XY2Wx4/M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OGbyvx0/mZ6aPD4iqTltM1WP7mGBfXn1qcyMcNKe7u91YqOBIkzpYy6QGFyTjNRMhBCcZXIoqZQPj6Ea2lXg5NUr+w8ubt7nu9iHQ/zDsVBoAfQqSwjhuDMIIru8HEqLmGf7HDwMUU1NA7e2T4pIvPrH/6jckwtNYIJedW0TLzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYbn+jFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XY2Wx4/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1EEC4CED2;
-	Thu, 30 Jan 2025 14:25:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYbn+jFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75499C4CED2;
+	Thu, 30 Jan 2025 14:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247148;
-	bh=hCggc3UQhTgY7kcUhr8LcZn03K4EkJQUjV+19eMciYE=;
+	s=korg; t=1738247150;
+	bh=lwkWeI4f9tOgFPJqiSSw0tWa2ctkqEeQQ4p1hv6mI+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XY2Wx4/Mke5hbJMlx1VzkHx+D/bvNQmX9ZWf7qPKcr6eOY4ZekYg3r2eKQSz29V4W
-	 LRknEG2Uw3Gp+1B+2Xmz6pLXYfWZWbHb7jDUt3BszbG3XR9YuiIa3C3tyom6zU/P8F
-	 GMgN8mgxO0VOXPOpXjmMmroEZBXHUArH1tNyMQnQ=
+	b=SYbn+jFvUPlhI+exTSUJVZ34eZIrA+3lJOWi5h+aPXQ8OUrQGMICc+DUD6prkK0sR
+	 2Z/ESKuAxsNLiI5FBL/4l2aSmisWRIiBYju2UGYDvv2yxq982OmyNQeIJ/9i+X3Akh
+	 XQECyLu9ceJvZVTKs+G/zK9bME1MxMyTLqRV6ktY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Justin Chen <justinpopo6@gmail.com>,
 	Florian Fainelli <f.fainelli@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 069/133] phy: usb: Use slow clock for wake enabled suspend
-Date: Thu, 30 Jan 2025 15:00:58 +0100
-Message-ID: <20250130140145.296671794@linuxfoundation.org>
+Subject: [PATCH 5.10 070/133] phy: usb: Fix clock imbalance for suspend/resume
+Date: Thu, 30 Jan 2025 15:00:59 +0100
+Message-ID: <20250130140145.339383890@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -53,39 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Chen <justinpopo6@gmail.com>
 
-commit 700c44b508020a3ea29d297c677f8d4ab14b7e6a upstream.
+commit 8484199c09347bdd5d81ee8a2bc530850f900797 upstream.
 
-The logic was incorrect when switching to slow clock. We want the slow
-clock if wake_enabled is set.
+We should be disabling clocks when wake from USB is not needed. Since
+this wasn't done, we had a clock imbalance since clocks were always
+being enabled on resume.
 
 Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
+Fixes: b0c0b66c0b43 ("phy: usb: Add support for wake and USB low power mode for 7211 S2/S5")
 Signed-off-by: Justin Chen <justinpopo6@gmail.com>
 Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-6-git-send-email-justinpopo6@gmail.com
+Link: https://lore.kernel.org/r/1665005418-15807-7-git-send-email-justinpopo6@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c |    2 --
+ drivers/phy/broadcom/phy-brcm-usb-init.h          |    1 -
+ drivers/phy/broadcom/phy-brcm-usb.c               |    8 +++++---
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
 --- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
 +++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -337,13 +337,12 @@ static void usb_uninit_common_7216(struc
+@@ -430,7 +430,6 @@ void brcm_usb_dvr_init_7216(struct brcm_
  
- 	pr_debug("%s\n", __func__);
- 
--	if (!params->wake_enabled) {
--		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
--
-+	if (params->wake_enabled) {
- 		/* Switch to using slower clock during suspend to save power */
- 		USB_CTRL_SET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
--	} else {
- 		usb_wake_enable_7216(params, true);
-+	} else {
-+		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
- 	}
+ 	params->family_name = "7216";
+ 	params->ops = &bcm7216_ops;
+-	params->suspend_with_clocks = true;
  }
  
+ void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
+@@ -440,5 +439,4 @@ void brcm_usb_dvr_init_7211b0(struct brc
+ 
+ 	params->family_name = "7211";
+ 	params->ops = &bcm7211b0_ops;
+-	params->suspend_with_clocks = true;
+ }
+--- a/drivers/phy/broadcom/phy-brcm-usb-init.h
++++ b/drivers/phy/broadcom/phy-brcm-usb-init.h
+@@ -61,7 +61,6 @@ struct  brcm_usb_init_params {
+ 	const struct brcm_usb_init_ops *ops;
+ 	struct regmap *syscon_piarbctl;
+ 	bool wake_enabled;
+-	bool suspend_with_clocks;
+ };
+ 
+ void brcm_usb_dvr_init_7445(struct brcm_usb_init_params *params);
+--- a/drivers/phy/broadcom/phy-brcm-usb.c
++++ b/drivers/phy/broadcom/phy-brcm-usb.c
+@@ -585,7 +585,7 @@ static int brcm_usb_phy_suspend(struct d
+ 		 * and newer XHCI->2.0-clks/3.0-clks.
+ 		 */
+ 
+-		if (!priv->ini.suspend_with_clocks) {
++		if (!priv->ini.wake_enabled) {
+ 			if (priv->phys[BRCM_USB_PHY_3_0].inited)
+ 				clk_disable_unprepare(priv->usb_30_clk);
+ 			if (priv->phys[BRCM_USB_PHY_2_0].inited ||
+@@ -602,8 +602,10 @@ static int brcm_usb_phy_resume(struct de
+ {
+ 	struct brcm_usb_phy_data *priv = dev_get_drvdata(dev);
+ 
+-	clk_prepare_enable(priv->usb_20_clk);
+-	clk_prepare_enable(priv->usb_30_clk);
++	if (!priv->ini.wake_enabled) {
++		clk_prepare_enable(priv->usb_20_clk);
++		clk_prepare_enable(priv->usb_30_clk);
++	}
+ 	brcm_usb_init_ipp(&priv->ini);
+ 
+ 	/*
 
 
