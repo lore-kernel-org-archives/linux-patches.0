@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D766D1E3775;
-	Thu, 30 Jan 2025 14:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61F6C13D;
+	Thu, 30 Jan 2025 14:00:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738245647; cv=none; b=i+aroD3zmdkpz9ezrBlQ8LV0oBIbXtqltZIbI3R04CiYsHwK1GqIHkxJsp1bskbs9TPH8skTJnDt7g8N2b5nshz14SF1OEnT4siFKTwNmpGiooUZ16KMnYX0P9UPgnYsxgzMPC6ZuVpr6MQWj/Qe2bjqZFBVXjHeqjRElZBanZw=
+	t=1738245650; cv=none; b=I4mrQtTWNNxA2jUONvBaZibPnAnpo3Xlhdd0gZXivkHKOgezmSfyg/DoHBLN1bbOxzYo+bIw5i9wYo/jtQadf5UM1cNk0eh2S1Vv4NXpkpe1WD5JI52/heuAnZox7FWJKe362tap5J7I+yuwwK/7vst772yPc6UmZJ2GkgziA/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738245647; c=relaxed/simple;
-	bh=zW7mPTSc0wXYZXreDAnpxrgrmSR8P0R+XEH4gtc+Vso=;
+	s=arc-20240116; t=1738245650; c=relaxed/simple;
+	bh=hUjhuZN4yBJJwrFee//X8yp85555ywD6JycqsD2sddg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5f8kCnkupiNne+4P/UFBjFLtchgC1LRm0degr60zLWT+k6RUmsoPEW/dOeFGcPadiE/hN1z6HlR4AU5yM4bch61OQnXVvwXx9JTBAfiPdqDYh5JPx4WrxC/ckXyOtNRgHQa22MruRimbG5kHe4S7dGuwT0RYwlMZY2l0tAU7mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QglLPuJ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L9F5M1+YuBx12+l3WA0Q67k1GvfJjHs9PoDZCn8tW7J8508aZzCtjLIqbZcTCiT56B1uImUI2ZE8f5WtUYdUR2MgpCHx/+wJd7Ziq4VD/UDZFOvk+EolK4vGOblkaV1KlVnPcKzMOSgr/mou4nveYsN88KqUb/+CNUZGaq1syBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OQWU+m6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QglLPuJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605D2C4CED2;
-	Thu, 30 Jan 2025 14:00:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OQWU+m6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD99C4CED2;
+	Thu, 30 Jan 2025 14:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738245647;
-	bh=zW7mPTSc0wXYZXreDAnpxrgrmSR8P0R+XEH4gtc+Vso=;
+	s=korg; t=1738245650;
+	bh=hUjhuZN4yBJJwrFee//X8yp85555ywD6JycqsD2sddg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QglLPuJ3HrsRL3zVu3JukqkjDVpaXFw8zZIItWyJBl8k/xUfuPKENAJyVKwaCRaJd
-	 0+PoVF9gWGfQRXOfE3TlzZc5MnsODEZy9i9gKOi9x6NJwnvVe0whelpSkwvew0T4Wv
-	 /HbkrRFDdDXuLSrdLMrNpb7VA6yJPEWyHcWXEppc=
+	b=1OQWU+m6X7DJcREjW6ZzZ/RWvANCn8lO8CatNT3ShdBKzpXZTAg/e6jV/by8p2DDE
+	 3Hznu9fbHdXfzvJitiCb7VSrCjJexIPSTi1p94MzSjpL0D4bhHZrMk0IMYRu8O2L/g
+	 EzUtWu/E4h4nbK46CJbVe9IupinzTk9OlHJEmCdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Harmon <russ@har.mn>,
-	Guenter Roeck <linux@roeck-us.net>,
+	kernel test robot <lkp@intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 13/40] hwmon: (drivetemp) Set scsi command timeout to 10s
-Date: Thu, 30 Jan 2025 14:59:13 +0100
-Message-ID: <20250130133500.241310238@linuxfoundation.org>
+Subject: [PATCH 6.12 14/40] ASoC: samsung: Add missing depends on I2C
+Date: Thu, 30 Jan 2025 14:59:14 +0100
+Message-ID: <20250130133500.284018481@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130133459.700273275@linuxfoundation.org>
 References: <20250130133459.700273275@linuxfoundation.org>
@@ -51,38 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell Harmon <russ@har.mn>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit b46ba47d7bb461a0969317be1f2e165c0571d6c5 ]
+[ Upstream commit 704dbe97a68153a84319ad63f526e12ba868b88e ]
 
-There's at least one drive (MaxDigitalData OOS14000G) such that if it
-receives a large amount of I/O while entering an idle power state will
-first exit idle before responding, including causing SMART temperature
-requests to be delayed.
+When switching to selects for MFD_WM8994 a dependency should have also
+been added for I2C, as the dependency on MFD_WM8994 will not be
+considered by the select.
 
-This causes the drivetemp request to exceed its timeout of 1 second.
-
-Signed-off-by: Russell Harmon <russ@har.mn>
-Link: https://lore.kernel.org/r/20250115131340.3178988-1-russ@har.mn
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: fd55c6065bec ("ASoC: samsung: Add missing selects for MFD_WM8994")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202501082020.2bpGGVTW-lkp@intel.com/
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20250108134828.246570-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/drivetemp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/samsung/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/drivetemp.c b/drivers/hwmon/drivetemp.c
-index 2a4ec55ddb47e..291d91f686467 100644
---- a/drivers/hwmon/drivetemp.c
-+++ b/drivers/hwmon/drivetemp.c
-@@ -194,7 +194,7 @@ static int drivetemp_scsi_command(struct drivetemp_data *st,
- 	scsi_cmd[14] = ata_command;
+diff --git a/sound/soc/samsung/Kconfig b/sound/soc/samsung/Kconfig
+index 1a05f0e7078d3..60b4b7b752155 100644
+--- a/sound/soc/samsung/Kconfig
++++ b/sound/soc/samsung/Kconfig
+@@ -127,7 +127,7 @@ config SND_SOC_SAMSUNG_TM2_WM5110
  
- 	err = scsi_execute_cmd(st->sdev, scsi_cmd, op, st->smartdata,
--			       ATA_SECT_SIZE, HZ, 5, NULL);
-+			       ATA_SECT_SIZE, 10 * HZ, 5, NULL);
- 	if (err > 0)
- 		err = -EIO;
- 	return err;
+ config SND_SOC_SAMSUNG_ARIES_WM8994
+ 	tristate "SoC I2S Audio support for WM8994 on Aries"
+-	depends on SND_SOC_SAMSUNG && IIO && EXTCON
++	depends on SND_SOC_SAMSUNG && I2C && IIO && EXTCON
+ 	select SND_SOC_BT_SCO
+ 	select MFD_WM8994
+ 	select SND_SOC_WM8994
+@@ -141,7 +141,7 @@ config SND_SOC_SAMSUNG_ARIES_WM8994
+ 
+ config SND_SOC_SAMSUNG_MIDAS_WM1811
+ 	tristate "SoC I2S Audio support for Midas boards"
+-	depends on SND_SOC_SAMSUNG && IIO
++	depends on SND_SOC_SAMSUNG && I2C && IIO
+ 	select SND_SAMSUNG_I2S
+ 	select MFD_WM8994
+ 	select SND_SOC_WM8994
 -- 
 2.39.5
 
