@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAD21E7C27;
-	Thu, 30 Jan 2025 14:24:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC4A1E6DCF;
+	Thu, 30 Jan 2025 14:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247055; cv=none; b=u0t4DSWmfN+A8pBWfpjup9ieDVEZz1erlMbwR3SSES2GK3rYytS/RrdOVfwWxwTW95eG+MZsSkEdk9S6F/LIaQ5rT9go15smru3nwnLd3O1T0CfeuVEmo29zM+dH/4G2Zgrv9/FoZH2EtVknkm6QKAhKnH6/PtEuy7d0+yP18n8=
+	t=1738247057; cv=none; b=PnRikh+BcM1C2HFaeJAjQvjoLRVQQicc4ibjaLAJmkS7XUhys+tvA7GJsOD7CaKqtuVSJdhIh/zJcAHS0E6JT76ZwecmAwmeW1iTNHGXdBeIh3YoCSwXLrCbcuuYrNWwgP/tDgZA+drZueXlepfEeicr+30kwE/yOgeekWB6/pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247055; c=relaxed/simple;
-	bh=UHs4XaAuTEXkM2kVeoO+svMYGTNUw6xjHPmipYQkcuc=;
+	s=arc-20240116; t=1738247057; c=relaxed/simple;
+	bh=ma0Zy0WAdQ4Wa7AVAeJmiC/WHyltCXp9jf1qDGBmTE8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t3sXRiTXnlgOn5FBGpY24XevjVrm0Z8YT8J4DtWwWkjWO4cYG5JMapsSwoRZg9jagCJIko1OYbT5dBy8p9EGTjiYGZh9qM36fxW7sznr2cYWtbtBv1I0fP27ZKCyvR1uRIIPiKOGdn+hczaRKaXVjCDsLZ70kTB2pNjJRrndTZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJtA7f2a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=stCQYIqWy6/mHq5cZ/6mcFU1Vq+nU1FIf3YzNwTItrPpdhKEjXnePbttz4Uhjbv/tD6vSYZSeanivvfP4fnBGiwL3z2CbAjJ4qjZpFlXWHWsHQ3IGOyWiC6VNERYqlR1vHDNWAkNX+vrDGXlbnIt6uigbrcDMq1ndPsZ0heNrxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFQAB9qM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJtA7f2a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74514C4CED2;
-	Thu, 30 Jan 2025 14:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFQAB9qM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB69C4CED2;
+	Thu, 30 Jan 2025 14:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247054;
-	bh=UHs4XaAuTEXkM2kVeoO+svMYGTNUw6xjHPmipYQkcuc=;
+	s=korg; t=1738247057;
+	bh=ma0Zy0WAdQ4Wa7AVAeJmiC/WHyltCXp9jf1qDGBmTE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJtA7f2auncJ0VNP5FMb+C39ey9x7D/4hM2o1BohC1kx3p8y3YVThE69HnGXhQ3cn
-	 w3U/TuLLnmcsm1nQB/I07FAjkY3CKcQzNiqrAveC9F7B2L59HMnipXbSx3NnI7wTPs
-	 wsTMIlwiBMeyxb2e83OfNlKlYONDvobB3gwc9t8k=
+	b=jFQAB9qMS2yZxICAxZf/oJTH/EiHzoUX3U3B/ooXWSRdcIWhrzBEtOKs+wJy7Lxlj
+	 ctYmuQcPG19bvkfvi/zUgUjESfKewR/oBrAqYvG3/Fi2j62NYboRgrjfrBh+bWENM4
+	 dPzeJYR6+dOqotSEOnLKQ939x69I5eSJRoK+BtqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.10 036/133] usb: dwc3: gadget: fix writing NYET threshold
-Date: Thu, 30 Jan 2025 15:00:25 +0100
-Message-ID: <20250130140143.960132479@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Lianqin Hu <hulianqin@vivo.com>
+Subject: [PATCH 5.10 037/133] usb: gadget: u_serial: Disable ep before setting port to null to fix the crash caused by port being null
+Date: Thu, 30 Jan 2025 15:00:26 +0100
+Message-ID: <20250130140144.000573190@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140142.491490528@linuxfoundation.org>
 References: <20250130140142.491490528@linuxfoundation.org>
@@ -44,63 +44,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-commit 01ea6bf5cb58b20cc1bd159f0cf74a76cf04bb69 upstream.
+commit 13014969cbf07f18d62ceea40bd8ca8ec9d36cec upstream.
 
-Before writing a new value to the register, the old value needs to be
-masked out for the new value to be programmed as intended, because at
-least in some cases the reset value of that field is 0xf (max value).
+Considering that in some extreme cases, when performing the
+unbinding operation, gserial_disconnect has cleared gser->ioport,
+which triggers gadget reconfiguration, and then calls gs_read_complete,
+resulting in access to a null pointer. Therefore, ep is disabled before
+gserial_disconnect sets port to null to prevent this from happening.
 
-At the moment, the dwc3 core initialises the threshold to the maximum
-value (0xf), with the option to override it via a DT. No upstream DTs
-seem to override it, therefore this commit doesn't change behaviour for
-any upstream platform. Nevertheless, the code should be fixed to have
-the desired outcome.
+Call trace:
+ gs_read_complete+0x58/0x240
+ usb_gadget_giveback_request+0x40/0x160
+ dwc3_remove_requests+0x170/0x484
+ dwc3_ep0_out_start+0xb0/0x1d4
+ __dwc3_gadget_start+0x25c/0x720
+ kretprobe_trampoline.cfi_jt+0x0/0x8
+ kretprobe_trampoline.cfi_jt+0x0/0x8
+ udc_bind_to_driver+0x1d8/0x300
+ usb_gadget_probe_driver+0xa8/0x1dc
+ gadget_dev_desc_UDC_store+0x13c/0x188
+ configfs_write_iter+0x160/0x1f4
+ vfs_write+0x2d0/0x40c
+ ksys_write+0x7c/0xf0
+ __arm64_sys_write+0x20/0x30
+ invoke_syscall+0x60/0x150
+ el0_svc_common+0x8c/0xf8
+ do_el0_svc+0x28/0xa0
+ el0_svc+0x24/0x84
 
-Do so.
-
-Fixes: 80caf7d21adc ("usb: dwc3: add lpm erratum support")
-Cc: stable@vger.kernel.org # 5.10+ (needs adjustment for 5.4)
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20241209-dwc3-nyet-fix-v2-1-02755683345b@linaro.org
+Fixes: c1dca562be8a ("usb gadget: split out serial core")
+Cc: stable <stable@kernel.org>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Link: https://lore.kernel.org/r/TYUPR06MB621733B5AC690DBDF80A0DCCD2042@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.h   |    1 +
- drivers/usb/dwc3/gadget.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/u_serial.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -422,6 +422,7 @@
- #define DWC3_DCTL_TRGTULST_SS_INACT	(DWC3_DCTL_TRGTULST(6))
+--- a/drivers/usb/gadget/function/u_serial.c
++++ b/drivers/usb/gadget/function/u_serial.c
+@@ -1395,6 +1395,10 @@ void gserial_disconnect(struct gserial *
+ 	/* REVISIT as above: how best to track this? */
+ 	port->port_line_coding = gser->port_line_coding;
  
- /* These apply for core versions 1.94a and later */
-+#define DWC3_DCTL_NYET_THRES_MASK	(0xf << 20)
- #define DWC3_DCTL_NYET_THRES(n)		(((n) & 0xf) << 20)
++	/* disable endpoints, aborting down any active I/O */
++	usb_ep_disable(gser->out);
++	usb_ep_disable(gser->in);
++
+ 	port->port_usb = NULL;
+ 	gser->ioport = NULL;
+ 	if (port->port.count > 0) {
+@@ -1406,10 +1410,6 @@ void gserial_disconnect(struct gserial *
+ 	spin_unlock(&port->port_lock);
+ 	spin_unlock_irqrestore(&serial_port_lock, flags);
  
- #define DWC3_DCTL_KEEP_CONNECT		BIT(19)
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -3519,8 +3519,10 @@ static void dwc3_gadget_conndone_interru
- 		WARN_ONCE(DWC3_VER_IS_PRIOR(DWC3, 240A) && dwc->has_lpm_erratum,
- 				"LPM Erratum not available on dwc3 revisions < 2.40a\n");
- 
--		if (dwc->has_lpm_erratum && !DWC3_VER_IS_PRIOR(DWC3, 240A))
-+		if (dwc->has_lpm_erratum && !DWC3_VER_IS_PRIOR(DWC3, 240A)) {
-+			reg &= ~DWC3_DCTL_NYET_THRES_MASK;
- 			reg |= DWC3_DCTL_NYET_THRES(dwc->lpm_nyet_threshold);
-+		}
- 
- 		dwc3_gadget_dctl_write_safe(dwc, reg);
- 	} else {
+-	/* disable endpoints, aborting down any active I/O */
+-	usb_ep_disable(gser->out);
+-	usb_ep_disable(gser->in);
+-
+ 	/* finally, free any unused/unusable I/O buffers */
+ 	spin_lock_irqsave(&port->port_lock, flags);
+ 	if (port->port.count == 0)
 
 
