@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0B17482;
-	Thu, 30 Jan 2025 14:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D547482;
+	Thu, 30 Jan 2025 14:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738247469; cv=none; b=llwGgVv72CJ3MQ7a0jFWHQ+vg1rlT2BjOEAy7UkYZLGqcJNzF08kBoUBh5XWK3bdppFd/6HnrhLyjJqAU/ISEhD/ldKR79Ah1X2FAjDEO/G6VzKhcmNDfBlUWbgR0AkRkvGbIzvfpkvqSonVknK9UfNGNNZMx5p5YHwX+jZtfbU=
+	t=1738247472; cv=none; b=ilJA4UkQ/6lhleF25deyTyoW19WkAyWpEo/rpNJh3sGHHUa/A4M9t+zNIx+MTBw+rydciQNFxMs+l5VFu/+Xy67qE60ARXms9sa9FNZbkExVqWyg/bHulbsr/y872OK0Fhumyp5w5Qpz/aZJaDDkxZ/m1d7JsbYd5We9+sxUXqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738247469; c=relaxed/simple;
-	bh=kFHxwBeD/gUN03BBMNysgpYvslun7ThVR+gX/OZTguM=;
+	s=arc-20240116; t=1738247472; c=relaxed/simple;
+	bh=pdlNiUOS/rVm08pp4PCiKllsxhv7IZAwRF9s2hZfAGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lkl9gGiQjh+RmdNMW9Rpt3sSFHtI1kmnUSPevZ9lnlykvdfcxZN9LcNIDGUSizRadE23gW3THouHH6w/7nzGO7C8xiKkfAxF0ntGxVOkLXPPdMdnTRf0ZZAt9PGHN75A5UePZzJScVJycA2tPYRHbP4qcpoSLGsGcfVVxlP+r7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUeQXFlk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WLxln8DybYKRTzqGPYubIx/f0k50M2MtaWR9+AjsFS6VkYQDfVVsZXL56Nb9hPJ6n+rQ1tNk0x3d6489lqRVRtmbk8bIuMTqNNvM9O1Xjuv6iy6H48huP1XvEaPvB7V59waY/8GejLcXw3GT6yWlR7UbFGt9+PO5eOP4+ChLVN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCItqMMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUeQXFlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FA8C4CED2;
-	Thu, 30 Jan 2025 14:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCItqMMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0824C4CED2;
+	Thu, 30 Jan 2025 14:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738247469;
-	bh=kFHxwBeD/gUN03BBMNysgpYvslun7ThVR+gX/OZTguM=;
+	s=korg; t=1738247472;
+	bh=pdlNiUOS/rVm08pp4PCiKllsxhv7IZAwRF9s2hZfAGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUeQXFlkWbxZTmbvgpPEKPU3IZwjD1tuhhxKYbCx2+a83CEjU66A1pPG1jxOMyHf4
-	 6sYIBz+unwCxQoTIIx/ojGh2i8s00+W6BddpR3qRjNZaWOiAgc8oT2HpSBKbm+kEax
-	 Zuk7hvCYG2ge8t1AELZaOLyQUpPLg9oKytIiNs0w=
+	b=RCItqMMpMjTsUTPuHwkqe5uZRH9Oj9vfVkS8iI5dx9vtp94EPW0/jbe8IAHGdC6eX
+	 j1SeM5FCQnVl81XlSg9PzoUF8KGahldHsHlOtMzNwuZqj3ro4BnSvktG+006YS50Nu
+	 F5gqZB1IoeBYSVe0cvMm5ni/B77qT5d1hqtfdVB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 49/49] ASoC: samsung: midas_wm1811: Fix Headphone Switch control creation
-Date: Thu, 30 Jan 2025 15:02:25 +0100
-Message-ID: <20250130140135.791584413@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Leah Rumancik <leah.rumancik@gmail.com>
+Subject: [PATCH 6.1 23/49] xfs: only remap the written blocks in xfs_reflink_end_cow_extent
+Date: Thu, 30 Jan 2025 15:01:59 +0100
+Message-ID: <20250130140134.770341691@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.825446496@linuxfoundation.org>
 References: <20250130140133.825446496@linuxfoundation.org>
@@ -50,39 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 48c6253fefa38556e0c5c2942edd9181529407e4 upstream.
+[ Upstream commit 55f669f34184ecb25b8353f29c7f6f1ae5b313d1 ]
 
-'Headphone Switch' control is already registered from
-sound/soc/codecs/wm_hubs.c:479, so duplicating it in midas_wm1811
-causes following probe failure:
+xfs_reflink_end_cow_extent looks up the COW extent and the data fork
+extent at offset_fsb, and then proceeds to remap the common subset
+between the two.
 
-midas-audio sound: control 2:0:0:Headphone Switch:0 is already present
-midas-audio sound: ASoC: Failed to add Headphone Switch: -16
-midas-audio sound: Failed to register card: -16
-midas-audio: probe of sound failed with error -16
+It does however not limit the remapped extent to the passed in
+[*offset_fsbm end_fsb] range and thus potentially remaps more blocks than
+the one handled by the current I/O completion.  This means that with
+sufficiently large data and COW extents we could be remapping COW fork
+mappings that have not been written to, leading to a stale data exposure
+on a powerfail event.
 
-Fix this by dropping duplicated control.
+We use to have a xfs_trim_range to make the remap fit the I/O completion
+range, but that got (apparently accidentally) removed in commit
+df2fd88f8ac7 ("xfs: rewrite xfs_reflink_end_cow to use intents").
 
-Fixes: d27224a45e54 ("ASoC: samsung: midas_wm1811: Map missing jack kcontrols")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20230809100446.2105825-1-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Note that I've only found this by code inspection, and a test case would
+probably require very specific delay and error injection.
+
+Fixes: df2fd88f8ac7 ("xfs: rewrite xfs_reflink_end_cow to use intents")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/samsung/midas_wm1811.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/xfs/xfs_reflink.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/samsung/midas_wm1811.c
-+++ b/sound/soc/samsung/midas_wm1811.c
-@@ -257,7 +257,6 @@ static const struct snd_kcontrol_new mid
- 	SOC_DAPM_PIN_SWITCH("Main Mic"),
- 	SOC_DAPM_PIN_SWITCH("Sub Mic"),
- 	SOC_DAPM_PIN_SWITCH("Headset Mic"),
--	SOC_DAPM_PIN_SWITCH("Headphone"),
+--- a/fs/xfs/xfs_reflink.c
++++ b/fs/xfs/xfs_reflink.c
+@@ -783,6 +783,7 @@ xfs_reflink_end_cow_extent(
+ 		}
+ 	}
+ 	del = got;
++	xfs_trim_extent(&del, *offset_fsb, end_fsb - *offset_fsb);
  
- 	SOC_DAPM_PIN_SWITCH("FM In"),
- };
+ 	/* Grab the corresponding mapping in the data fork. */
+ 	nmaps = 1;
 
 
