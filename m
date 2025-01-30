@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161E71E8855;
-	Thu, 30 Jan 2025 14:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C151E7C25;
+	Thu, 30 Jan 2025 14:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246747; cv=none; b=Jod4QgfHTbQWy0q9iknEf9vBQ7BmqIAMDNk72BC62hD6Y6gHHuAh6k4nVACT7OJtUPPn1IrIH/gmTFrnkER0tDFnrl3zWKE1GNbPJ0UVAsOiXm2l16ip8ER6FIxBaA8RBb7sgHN6tEDfKzcRIHS8dd25mikI61wO/QRqrVJFhiQ=
+	t=1738246750; cv=none; b=rt9iJl2DGGWPdetRBqjIOPU8DY/YG155bnL56mO2Uchp9rm0zNTerPD0z0Wzj8CYnezouqerDZser/H0L+WxmuHVhi+OrgkR0YS96IwJQ2w2BJad1scBesbNS2pgfcqgTUmNFHoN4nEHPWonzLSAMnL8AxOe8hzH5xhMTyU5+q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246747; c=relaxed/simple;
-	bh=fnfe4Qems97e9rwXHO2rkKZDNLilJeF3KP6DNc9Z4fk=;
+	s=arc-20240116; t=1738246750; c=relaxed/simple;
+	bh=oGRS5VESMEZC9LvRCc8PLRoTIiJFHB860Nr4pXt5sL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3NcC29NgWD9ZnCjPfpeWog08CUq1tw+zISYVHe7s7IxiUOe5joaDTI9EF3uSrS6s7MzxIq8C1AjTCkTsHjoLC/Ruu8iGeC1Fixwt6YkTqQbCmA9HXB14suiOJqDI+L0Hl1CfOgdjXifOYIJ5V2DP2xZogZ5kL6Dc+ygugCJE4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpAb/CYU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=euX3RtwyYd5K74VWzaw95m8Jp2gbmVG3FgZofCoR8BwsF6eJSN1N7eDXKiTpQ89I6pESNe0lrt/NJRTYrQtxV9yQdqSGEpiLJU8Uif1b9hdW417vsZbWyqM77VWz8Rh4nDB9fNN1Q1X4rAhaXueN1crcPzBwXW9f9rUCulPqUSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ij+rNBON; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpAb/CYU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFB0C4CED2;
-	Thu, 30 Jan 2025 14:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ij+rNBON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF75C4CED2;
+	Thu, 30 Jan 2025 14:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738246747;
-	bh=fnfe4Qems97e9rwXHO2rkKZDNLilJeF3KP6DNc9Z4fk=;
+	s=korg; t=1738246750;
+	bh=oGRS5VESMEZC9LvRCc8PLRoTIiJFHB860Nr4pXt5sL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpAb/CYUxCGbwmvMycATy+z3o4C8zOzVnWwOyxDZwICU8ze+nMCQWhJEzaeXXy6xV
-	 cz3ca70/Zmlw6id+l9MAGaznoO3DUi5YvlO54m+juJUfPKh9C9ZpW6pHNiUQytF0Te
-	 mFmToK1oEDsWOgShAFR0e0+SB2vWiPVNaYo/zV+c=
+	b=ij+rNBONCZOB2+4eVM5dnR/a5RFURu9mwP2g68nUHGHJp+iphC+d6XBLUWozUixWG
+	 veuPeW1uv8O3qyf/DKmXG6IoCugtNiJxjjJ20G+wSouZ2cAqF+KjBVDaTU7HMN3TAG
+	 WMuy5f6zWMUFBrdy9+BjAumBB1YQeb3iVVGtkYOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheer Kumar Doredla <s-doredla@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 54/91] net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()
-Date: Thu, 30 Jan 2025 15:01:13 +0100
-Message-ID: <20250130140135.834718327@linuxfoundation.org>
+Subject: [PATCH 5.4 55/91] net: net_namespace: Optimize the code
+Date: Thu, 30 Jan 2025 15:01:14 +0100
+Message-ID: <20250130140135.871621164@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250130140133.662535583@linuxfoundation.org>
 References: <20250130140133.662535583@linuxfoundation.org>
@@ -54,84 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudheer Kumar Doredla <s-doredla@ti.com>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit 03d120f27d050336f7e7d21879891542c4741f81 ]
+[ Upstream commit 41467d2ff4dfe1837cbb0f45e2088e6e787580c6 ]
 
-CPSW ALE has 75-bit ALE entries stored across three 32-bit words.
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions support
-ALE field entries spanning up to two words at the most.
+There is only one caller for ops_free(), so inline it.
+Separate net_drop_ns() and net_free(), so the net_free()
+can be called directly.
+Add free_exit_list() helper function for free net_exit_list.
 
-The cpsw_ale_get_field() and cpsw_ale_set_field() functions work as
-expected when ALE field spanned across word1 and word2, but fails when
-ALE field spanned across word2 and word3.
+====================
+v2:
+ - v1 does not apply, rebase it.
+====================
 
-For example, while reading the ALE field spanned across word2 and word3
-(i.e. bits 62 to 64), the word3 data shifted to an incorrect position
-due to the index becoming zero while flipping.
-The same issue occurred when setting an ALE entry.
-
-This issue has not been seen in practice but will be an issue in the future
-if the driver supports accessing ALE fields spanning word2 and word3
-
-Fix the methods to handle getting/setting fields spanning up to two words.
-
-Fixes: b685f1a58956 ("net: ethernet: ti: cpsw_ale: Fix cpsw_ale_get_field()/cpsw_ale_set_field()")
-Signed-off-by: Sudheer Kumar Doredla <s-doredla@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20250108172433.311694-1-s-doredla@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 46841c7053e6 ("gtp: Use for_each_netdev_rcu() in gtp_genl_dump_pdp().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/cpsw_ale.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/core/net_namespace.c | 52 +++++++++++++++++++---------------------
+ 1 file changed, 24 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
-index f17619c545ae5..9280601961c79 100644
---- a/drivers/net/ethernet/ti/cpsw_ale.c
-+++ b/drivers/net/ethernet/ti/cpsw_ale.c
-@@ -60,15 +60,15 @@
- 
- static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
- {
--	int idx, idx2;
-+	int idx, idx2, index;
- 	u32 hi_val = 0;
- 
- 	idx    = start / 32;
- 	idx2 = (start + bits - 1) / 32;
- 	/* Check if bits to be fetched exceed a word */
- 	if (idx != idx2) {
--		idx2 = 2 - idx2; /* flip */
--		hi_val = ale_entry[idx2] << ((idx2 * 32) - start);
-+		index = 2 - idx2; /* flip */
-+		hi_val = ale_entry[index] << ((idx2 * 32) - start);
+diff --git a/net/core/net_namespace.c b/net/core/net_namespace.c
+index c94179d30d426..c4bcedc06822b 100644
+--- a/net/core/net_namespace.c
++++ b/net/core/net_namespace.c
+@@ -98,7 +98,7 @@ static int net_assign_generic(struct net *net, unsigned int id, void *data)
  	}
- 	start -= idx * 32;
- 	idx    = 2 - idx; /* flip */
-@@ -78,16 +78,16 @@ static inline int cpsw_ale_get_field(u32 *ale_entry, u32 start, u32 bits)
- static inline void cpsw_ale_set_field(u32 *ale_entry, u32 start, u32 bits,
- 				      u32 value)
- {
--	int idx, idx2;
-+	int idx, idx2, index;
  
- 	value &= BITMASK(bits);
- 	idx = start / 32;
- 	idx2 = (start + bits - 1) / 32;
- 	/* Check if bits to be set exceed a word */
- 	if (idx != idx2) {
--		idx2 = 2 - idx2; /* flip */
--		ale_entry[idx2] &= ~(BITMASK(bits + start - (idx2 * 32)));
--		ale_entry[idx2] |= (value >> ((idx2 * 32) - start));
-+		index = 2 - idx2; /* flip */
-+		ale_entry[index] &= ~(BITMASK(bits + start - (idx2 * 32)));
-+		ale_entry[index] |= (value >> ((idx2 * 32) - start));
+ 	ng = net_alloc_generic();
+-	if (ng == NULL)
++	if (!ng)
+ 		return -ENOMEM;
+ 
+ 	/*
+@@ -155,13 +155,6 @@ static int ops_init(const struct pernet_operations *ops, struct net *net)
+ 	return err;
+ }
+ 
+-static void ops_free(const struct pernet_operations *ops, struct net *net)
+-{
+-	if (ops->id && ops->size) {
+-		kfree(net_generic(net, *ops->id));
+-	}
+-}
+-
+ static void ops_pre_exit_list(const struct pernet_operations *ops,
+ 			      struct list_head *net_exit_list)
+ {
+@@ -193,7 +186,7 @@ static void ops_free_list(const struct pernet_operations *ops,
+ 	struct net *net;
+ 	if (ops->size && ops->id) {
+ 		list_for_each_entry(net, net_exit_list, exit_list)
+-			ops_free(ops, net);
++			kfree(net_generic(net, *ops->id));
  	}
- 	start -= idx * 32;
- 	idx = 2 - idx; /* flip */
+ }
+ 
+@@ -448,15 +441,18 @@ static struct net *net_alloc(void)
+ 
+ static void net_free(struct net *net)
+ {
+-	kfree(rcu_access_pointer(net->gen));
+-	kmem_cache_free(net_cachep, net);
++	if (refcount_dec_and_test(&net->passive)) {
++		kfree(rcu_access_pointer(net->gen));
++		kmem_cache_free(net_cachep, net);
++	}
+ }
+ 
+ void net_drop_ns(void *p)
+ {
+-	struct net *ns = p;
+-	if (ns && refcount_dec_and_test(&ns->passive))
+-		net_free(ns);
++	struct net *net = (struct net *)p;
++
++	if (net)
++		net_free(net);
+ }
+ 
+ struct net *copy_net_ns(unsigned long flags,
+@@ -496,7 +492,7 @@ struct net *copy_net_ns(unsigned long flags,
+ 		key_remove_domain(net->key_domain);
+ #endif
+ 		put_user_ns(user_ns);
+-		net_drop_ns(net);
++		net_free(net);
+ dec_ucounts:
+ 		dec_net_namespaces(ucounts);
+ 		return ERR_PTR(rv);
+@@ -630,7 +626,7 @@ static void cleanup_net(struct work_struct *work)
+ 		key_remove_domain(net->key_domain);
+ #endif
+ 		put_user_ns(net->user_ns);
+-		net_drop_ns(net);
++		net_free(net);
+ 	}
+ }
+ 
+@@ -1150,6 +1146,14 @@ static int __init net_ns_init(void)
+ 
+ pure_initcall(net_ns_init);
+ 
++static void free_exit_list(struct pernet_operations *ops, struct list_head *net_exit_list)
++{
++	ops_pre_exit_list(ops, net_exit_list);
++	synchronize_rcu();
++	ops_exit_list(ops, net_exit_list);
++	ops_free_list(ops, net_exit_list);
++}
++
+ #ifdef CONFIG_NET_NS
+ static int __register_pernet_operations(struct list_head *list,
+ 					struct pernet_operations *ops)
+@@ -1175,10 +1179,7 @@ static int __register_pernet_operations(struct list_head *list,
+ out_undo:
+ 	/* If I have an error cleanup all namespaces I initialized */
+ 	list_del(&ops->list);
+-	ops_pre_exit_list(ops, &net_exit_list);
+-	synchronize_rcu();
+-	ops_exit_list(ops, &net_exit_list);
+-	ops_free_list(ops, &net_exit_list);
++	free_exit_list(ops, &net_exit_list);
+ 	return error;
+ }
+ 
+@@ -1191,10 +1192,8 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
+ 	/* See comment in __register_pernet_operations() */
+ 	for_each_net(net)
+ 		list_add_tail(&net->exit_list, &net_exit_list);
+-	ops_pre_exit_list(ops, &net_exit_list);
+-	synchronize_rcu();
+-	ops_exit_list(ops, &net_exit_list);
+-	ops_free_list(ops, &net_exit_list);
++
++	free_exit_list(ops, &net_exit_list);
+ }
+ 
+ #else
+@@ -1217,10 +1216,7 @@ static void __unregister_pernet_operations(struct pernet_operations *ops)
+ 	} else {
+ 		LIST_HEAD(net_exit_list);
+ 		list_add(&init_net.exit_list, &net_exit_list);
+-		ops_pre_exit_list(ops, &net_exit_list);
+-		synchronize_rcu();
+-		ops_exit_list(ops, &net_exit_list);
+-		ops_free_list(ops, &net_exit_list);
++		free_exit_list(ops, &net_exit_list);
+ 	}
+ }
+ 
 -- 
 2.39.5
 
