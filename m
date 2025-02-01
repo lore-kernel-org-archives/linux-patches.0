@@ -1,72 +1,49 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay1.mymailcheap.com (relay1.mymailcheap.com [149.56.97.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D951E519
-	for <patches@lists.linux.dev>; Sat,  1 Feb 2025 12:53:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B928D1EB2E
+	for <patches@lists.linux.dev>; Sat,  1 Feb 2025 13:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=149.56.97.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738414384; cv=none; b=uFdze5f/8C5aFLzlkbKagoxDhPAmMKqcs/BDqzc7TAM7icfiGUe33kl7LP3RWhnI8wpn3ZN3+KFNeLQUbfoNzowelVn0tSdjKgHgnWMYdPT0SyWnA7YOrtoLRLndfMH36Fk8bylJDvi2MZ+4jBkspCyjYjsblWibhk3UkDPcmMY=
+	t=1738415968; cv=none; b=OivblI49ZRi+OajZsF7twlJQv6s1hYd9AD7wm76kOY5mITu2LBey8Lnf8KUt/0ESA9QBSR1T+Hhx39bEIriwbuq8vt9jgGY9jd+gvSNDbKFrVMM/KT4nsAOjulQjQrljtY70FHAKi7Ws9mizEYfQv2PrW0ZajJ3E1MGAw6SfHMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738414384; c=relaxed/simple;
-	bh=B0TIGEWdZpaL3Lol4tNzKJ12SBSCVyy6C3L/uyc1s+I=;
+	s=arc-20240116; t=1738415968; c=relaxed/simple;
+	bh=zS/5Ci1eFBdrFOgAjh5ugHowWx8ek2XDTISF9JHtRDs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HICEsZg/PavcBYGu7qJkUAtdTSBwrgQA//qm5FPwLpMk32qvhrwMcitGQQ44I4PqFXnMVHhM0w/I7OQRvzpaMdKuMBkmygDOVnC4p+1QV9CLZAVHelvNLDDhwcAqm4zcJW7LCm7v3AzaTGqz9om2YUDEUvzeO3kLm/qY1tR7+5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=GpMPf6we; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=D/lKDhqvrQe5Ioss86K4CdagJhq/BLH3YBSxdw2EsO8fT6cEtaUKfA/OyckpxtqjkHyT658yR/8Mbyx/Bh7KizKQYmahkdr7IDl6u25bLpTGrpl91A4itVJTIAcajzlFYvzAekTCSVB1KIZuatV7vIVEWsaq8B4tx9F1MItW4aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io; spf=pass smtp.mailfrom=aosc.io; dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b=mxUbyPNU; arc=none smtp.client-ip=149.56.97.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=aosc.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aosc.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="GpMPf6we"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-385de59c1a0so1541664f8f.2
-        for <patches@lists.linux.dev>; Sat, 01 Feb 2025 04:53:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1738414381; x=1739019181; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xGsxzwmsm4FqEEWuqRJ4yrtu6EGS8XgJezR8MjxJnBo=;
-        b=GpMPf6wenayMgpFIitmOWSbX/H2/K/a8z0IKzwVFbxzcBm5j6EpVcLjVOXFYawzsco
-         mIMEmvsQPgwvG3hdq7HjmwfDNAclfXyi2AvEnNha6G+rimSujISFEMcYvv2lCkkc6aW/
-         Su8yt+0kguCg8BZdA9WYxa0CqCoaozzYfkSRw7v4mdhqWTqab+2P8rQyGp7brYdLOMD5
-         f2aAwCCTFff1NNt1QKlStwY8RZ1LiJgUZq7TQrJkxffE65Y9fdDGJURSIn7Wdo6rZvHW
-         IkDkUEfohok5MaTqpAs3hJkRo6U4kSwY2+IQRcMyW2gdwJ5XEHsdS9dEfRpf3AdJd4tB
-         C8Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738414381; x=1739019181;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xGsxzwmsm4FqEEWuqRJ4yrtu6EGS8XgJezR8MjxJnBo=;
-        b=EN7lla4X9xVBcGjTCMItnXUOh6BAVKUSNdLSVRrLuVOzhCtGpWD3tGtnCTjSMcovBv
-         xuou/r9klbx4drCK8eJTe936wOw1fbTxXEqYAESfdMFqT1t+cdZR0h8qvI7ty56lEN3Z
-         XvzaHjfyQYhpi4zD+ubATRMhzshUtb7Xp9Hn8gMmdIEAN88u3OCSFoxO9/Qf3x7K6x++
-         m9/XPnH4niQmCUJCA+xKV4DcXb+omtGJjWc0maEaIzc/wrkyUTcKTe8FhfjqfKkMZsb1
-         n0AHp75Ppbo4PIwkqR5bcQPiU/Iy48/uKl5PmQ+owW2Gdp+px/6sqr5xItF0UIol23/7
-         +wRQ==
-X-Gm-Message-State: AOJu0YwR/h2Oj0OW2QgTN2q3yOtqckPCtgaV8w/ncbi6oiIQ2Mppui6J
-	LFnGNqJYylW4K4Y0VOcPhnNXyBVRY4H+u8DQcFZEpGuC3OXa/gI=
-X-Gm-Gg: ASbGncu6lH3wzIE8otGaD8yPcXAoLtoCngwG4B4pGT4kJg4zxd9tFGSad6Ij2zTsm55
-	cKs495SYRLuIYgoxCcvNISJzTcDUP4p2dvX1+mT/tnfcYQH2qrRlQ/T2uxSeAn68OzXYirL4DEZ
-	YHtrSwx0/4BBRtgLRm6yjQwOQZ36hJU1rOtDuQIE/YeRS+qyQroMq//2IFurElvtMt1xCgEXyKj
-	PW9HRA+YeSIR/i++aIN3ApA038Vp6iT+Y3KyzCSd7VTZgDztDGr/pC/ewyNl0xSuu7Buz1VdZ04
-	iDbsd6pjS4XLK5CoXRlmc7C+L6/Ih2HTpDN7AnlOsuxs6tY3/tYKJUENHSTccRnyH55T
-X-Google-Smtp-Source: AGHT+IGCEfyjj5b9m0JsQ34ThpMuBHu2HSDT2p4ga66c/LCQW36I9RZZqckINSMYQRGkgTGzxtY3Hg==
-X-Received: by 2002:a5d:584a:0:b0:385:f72a:a3b0 with SMTP id ffacd0b85a97d-38c5209664emr12028127f8f.55.1738414380613;
-        Sat, 01 Feb 2025 04:53:00 -0800 (PST)
-Received: from [192.168.1.3] (p5b0573ac.dip0.t-ipconnect.de. [91.5.115.172])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c0ecc80sm7385784f8f.16.2025.02.01.04.52.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 01 Feb 2025 04:52:59 -0800 (PST)
-Message-ID: <b1fa39ca-be06-4f64-8595-75b6626442d3@googlemail.com>
-Date: Sat, 1 Feb 2025 13:52:58 +0100
+	dkim=pass (1024-bit key) header.d=aosc.io header.i=@aosc.io header.b="mxUbyPNU"
+Received: from nf2.mymailcheap.com (nf2.mymailcheap.com [54.39.180.165])
+	by relay1.mymailcheap.com (Postfix) with ESMTPS id C00063E92F;
+	Sat,  1 Feb 2025 13:19:24 +0000 (UTC)
+Received: from mail20.mymailcheap.com (mail20.mymailcheap.com [51.83.111.147])
+	by nf2.mymailcheap.com (Postfix) with ESMTPSA id 7334940099;
+	Sat,  1 Feb 2025 13:19:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=aosc.io; s=default;
+	t=1738415963; bh=zS/5Ci1eFBdrFOgAjh5ugHowWx8ek2XDTISF9JHtRDs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mxUbyPNUuqqHJ/NyrU81sXDeBqad27xu/XwQg1fLhCfjhpzFmkWU6WKomUO5G8quY
+	 2clEqiae4nJMFAk/7DL8q4ay3BY3DYE/kNrrRVu7infryoPv91RDXkUlDXjDR78X0i
+	 sYvmKggUqJSto11Dx9VjCCJcidQcEL+j8fdb3gVA=
+Received: from [198.18.0.1] (unknown [58.32.25.108])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail20.mymailcheap.com (Postfix) with ESMTPSA id A4D3B4016D;
+	Sat,  1 Feb 2025 13:19:08 +0000 (UTC)
+Message-ID: <4df8733f-b124-44d2-b6be-9a9afbcff063@aosc.io>
+Date: Sat, 1 Feb 2025 21:19:02 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.6 00/43] 6.6.75-rc1 review
-Content-Language: de-DE
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH 6.12 00/41] 6.12.12-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -74,33 +51,62 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
  rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org
-References: <20250130133458.903274626@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20250130133458.903274626@linuxfoundation.org>
+References: <20250130144136.126780286@linuxfoundation.org>
+Content-Language: en-US
+From: Kexy Biscuit <kexybiscuit@aosc.io>
+In-Reply-To: <20250130144136.126780286@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 7334940099
+X-Rspamd-Server: nf2.mymailcheap.com
+X-Spamd-Result: default: False [1.41 / 10.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MIME_GOOD(-0.10)[text/plain];
+	XM_UA_NO_VERSION(0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	ARC_NA(0.00)[];
+	RCVD_COUNT_ONE(0.00)[1];
+	ASN(0.00)[asn:16276, ipnet:51.83.0.0/16, country:FR];
+	MIME_TRACE(0.00)[0:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	SPFBL_URIBL_EMAIL_FAIL(0.00)[kexybiscuit.aosc.io:server fail];
+	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,denx.de,nvidia.com,gmail.com,sladewatkins.net,gmx.de,microsoft.com];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Action: no action
 
-Am 30.01.2025 um 14:59 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.6.75 release.
-> There are 43 patches in this series, all will be posted as a response
+On 1/30/2025 10:41 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.12 release.
+> There are 41 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+> 
+> Responses should be made by Sat, 01 Feb 2025 14:41:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.12-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg 
-oddities or regressions found.
+Building passed on amd64, arm64, loongarch64, mips64el, ppc64el, and 
+riscv64. Smoke testing passed on 3 amd64, 2 arm64, and 2 loongarch64 
+test systems.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+Tested-by: Kexy Biscuit <kexybiscuit@aosc.io>
 
-
-Beste Grüße,
-Peter Schneider
-
+https://github.com/AOSC-Dev/aosc-os-abbs/pull/9524
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Best Regards,
+Kexy Biscuit
