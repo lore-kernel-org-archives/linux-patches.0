@@ -1,33 +1,32 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AC421B8F7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5377A21C168;
 	Tue,  4 Feb 2025 22:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738709853; cv=none; b=BK08vYjxvvaWGYHzyMCFXNiTLxZwGUlwRuxVczCAas9TT1hE6vpcmEvwJZHzOLxfAok09W8xqwCjcoQMjtmuc+E9ezGlVOxwc7ewNNbfEBRmdJP5d8GP+ymfWaokJePoOZqfktcPfMrXNH2ozLfu/ld/ELK1Jag0+ZfPh+tpU78=
+	t=1738709853; cv=none; b=WcSUw80NKwRnwwFxRZ5upNeO400Tdg/UqoLwgV3gdo7wxV5maDCtbQf97QPY5oqjpn9fIzsMTaVInccJgPJ6mGxiirgA4ztZyOpPRlEPKP3w3kET5fIinLje1VcFrAISC2UtHiYQviq/WMB3PBQlzfUyFx9OHbOQEwb4HFMz0fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738709853; c=relaxed/simple;
-	bh=rGGmHFEY6+I2QsPlKgaRgK9IKJ9e/bHNPu0Y/4PxGFk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRn02EoVe7Xnfo6aL308mtUnx6y5luP4giDhUeRNmcAXzaz1VjpRPydIoH34mRHedWhO70r0C3EuR7/esEB5YZ3FJdrVgGlOtgBmm0UQluvTOFNFUOhmPjRnaFrOsPhDOO5OWUO+sapF2lvlSYX9mLxRZ+gqT98IP7sRIOZUxPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=A8eVT3Yz; arc=none smtp.client-ip=198.137.202.133
+	bh=mTY+DrKg05PZUhHlWuukW5rELcmGnBoUUOaEVnlcjr8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=E9F++ZGAavoHnv3KpJiQSQ83sxxziB85I4+fqLFyfAVAfh+B+qPWZtmA4vKL4WODELn2TNhYT0eIo4iOYAXJHmw5PXitcbXeJDdiPbhMVYu5zBWzSsrxDmqbjc0lhQ/EhFCYKu6AUtTV8PIJlL+RsglIG8FIbgPJ4R/d0ii1lCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ogIH2AeD; arc=none smtp.client-ip=198.137.202.133
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="A8eVT3Yz"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ogIH2AeD"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=/WSr4eK+w8nCw+zDhetQoEDG+PACdKmOWZPtoiEN+Zw=; b=A8eVT3YzKL3M3vkDHj6/+swUXh
-	pKUwDHBnQD+sLQ8RDRChyea59dqB6Svafu8nvOftsfAERbDG9BOHKa7cym8MbxMqasKarANe5s7QM
-	yJgGmSXexhW5uiXjuUvb3HCayTen19ZQJsICAx4BMvheg4Y5+udF1g//fFECx64wIQATOUecsimq5
-	HePyBeR6VK1s1yyVSBk9BmLocgmJLbowsrzDP073sV5LgCvWuwvJYF68KzRmjYSX17eoAXee1m9vZ
-	wpBkJd+EvpE57koBjM+2EmLVXNWKi4PQTOB0oe08J/lLS4o9X9ikE5hd8DOegibrE0jSwhkhLVSMK
-	8SlQy1nQ==;
+	MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=ORxEaFpzeoq4+yV0cPvXeAvVVVHMpbAET1BB2wadKeI=; b=ogIH2AeDYoCIw6OTZLcwNDZ7Xb
+	7dDdeqDlvRiHayjDWA1o6/pFKKhvl8k4Fp1+V6CVzqM0IejHvEGkgMFDvX//tHWNi7qiAlhAMCki7
+	aQHgBe+pLZ6H+IR3rJjz3Zr/S39OhNrmU+cYHTVknwHzJOdsxpXNJkLlG8n5oqdkekPjDP0Slzj7Y
+	U5JMK236kZuWPHvigcx6lRvzK+c3C2/b0D/kqr4ZgNKsx/TnpOd5g27r5w75/8CVW3VIifCShmzRf
+	RFJe/FdS1fR0xV23aiRLQui4BXzSu/P/Tih1I87JfwiChYXggtLlrMEhqA+zPbShJTw9OB5rd+Jvu
+	l7q6coSQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1tfRrH-00000001m21-1QEZ;
+	id 1tfRrH-00000001m1x-1AaE;
 	Tue, 04 Feb 2025 22:57:31 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: shinichiro.kawasaki@wdc.com
@@ -36,12 +35,10 @@ Cc: linux-block@vger.kernel.org,
 	patches@lists.linux.dev,
 	gost.dev@samsung.com,
 	mcgrof@kernel.org
-Subject: [PATCH blktests v2 2/4] common/xfs: use min io for fs blocksize
-Date: Tue,  4 Feb 2025 14:57:27 -0800
-Message-ID: <20250204225729.422949-3-mcgrof@kernel.org>
+Subject: [PATCH blktests v2 0/4] enable bs > ps device testing 
+Date: Tue,  4 Feb 2025 14:57:25 -0800
+Message-ID: <20250204225729.422949-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250204225729.422949-1-mcgrof@kernel.org>
-References: <20250204225729.422949-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,36 +48,36 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Use the min io for the target block size. Likewise we need to increase
-the log size if using a bs > 4096.
+This v2 series addresses the feedback from the first series [0], namely:
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- common/xfs | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+  - uses less device specific names
+  - checks for fio arguments --filename or --directory to extract the
+    min io target or path
+  - adds a new patch to verify the sector size will work before creating
+    a filesystem
+  - a diagram is provided to help easily disect why we use statx
+    blocksize, although not included in the docs we could later if
+    it helps
 
-diff --git a/common/xfs b/common/xfs
-index 569770fecd53..8b068837fa37 100644
---- a/common/xfs
-+++ b/common/xfs
-@@ -13,10 +13,16 @@ _have_xfs() {
- _xfs_mkfs_and_mount() {
- 	local bdev=$1
- 	local mount_dir=$2
-+	local bs=$(_min_io $bdev)
-+	local xfs_logsize="64m"
-+
-+	if [[ $bs -gt 4096 ]]; then
-+		xfs_logsize="128m"
-+	fi
- 
- 	mkdir -p "${mount_dir}"
- 	umount "${mount_dir}"
--	mkfs.xfs -l size=64m -f "${bdev}" || return $?
-+	mkfs.xfs -l size=$xfs_logsize -f "${bdev}" -b size=$bs || return $?
- 	mount "${bdev}" "${mount_dir}"
- }
- 
+This goes tested against a 64k sector size NVMe drive, the patches for
+which will be posted soon rebased on v6.14-rc1.
+
+[0] https://lkml.kernel.org/r/20241218112153.3917518-1-mcgrof@kernel.org
+[1] https://docs.google.com/drawings/d/e/2PACX-1vQeZaBq2a0dgg9RDyd_XAJBSH-wbuGCtm95sLp2oFj66oghHWmXunib7tYOTPr84AlQ791VGiaKWvKF/pub?w=1006&h=929                                                  
+Luis Chamberlain (4):
+  common: add and use min io for fio
+  common/xfs: use min io for fs blocksize
+  tests: use test device min io to support bs > ps
+  common/xfs: check for max supported sector size
+
+ common/fio      | 23 +++++++++++++++++++++--
+ common/rc       | 21 +++++++++++++++++++++
+ common/xfs      | 15 ++++++++++++++-
+ tests/block/003 |  4 +++-
+ tests/block/007 |  3 ++-
+ tests/nvme/049  |  8 ++++++--
+ 6 files changed, 67 insertions(+), 7 deletions(-)
+
 -- 
 2.45.2
 
