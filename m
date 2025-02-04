@@ -1,166 +1,196 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2057.outbound.protection.outlook.com [40.107.237.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2B1153828;
-	Tue,  4 Feb 2025 19:06:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738695978; cv=none; b=PX3Cox4lpMDnHwWt4uJRcBExFtlbDu45e9E3zKOepEZ9sGBVPyBCewbmcZMYwG5QXH2CQo7ZbVTNkaUMSf6qSB46Lh7LsZxZJ/2yweJMjiSaaKJxGDYgybu+dJX8RHGME9J16AcRucrGLALAahhJzFSkWSOpl1hDXcywInBbNyY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738695978; c=relaxed/simple;
-	bh=KPY6FiGeI2uAKz4QBIHBmHTN/34Yd6fAL5zcch4KjRE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q5QHXeXmzfMTXUGDf7eyp3JuOKsvclR2s+TBnV7A2Qr8f0QjwxrFn2jpZjqM60sMJ0VTrsyo6CM6/8kYLo06wsYHewcJIcWj/L4guGcTusuAbZLslmUow9bzLPujKJthsSDmmVzisRQLEWMgiAZZ2ZS1MojOgc0BDeoLWj97U+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HdnusxaI; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0F0204F8B
+	for <patches@lists.linux.dev>; Tue,  4 Feb 2025 19:18:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1738696710; cv=fail; b=nojgZB0H5MfLU5VNKYp1TlsWEEUIlXlLuGDlnlGsb5wrvJ93jXgWD2hsKpQr+s8cFr2C8nv0OZcGRkrGqRDurBDa0kLRFgE11SsqfpWvXpwEO1rqoqsEKOMXxM30eVgHcWHBNcmCX5s/vaFnmGE0R3XhncszKafg2iDy0KCxehQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1738696710; c=relaxed/simple;
+	bh=W19kMwIdWcw782W7tadeU/XAX3dwKH76ZDdoVQIISWY=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=lMuVpe2x+mp7aWCbNOnVwFwEo6jo2/Z5kygQsSQxdLVy9xZZ/M8ueDaeuxgJCj31+0WC+bbytEOu+GYnbLr7xlmFsXVo0wNo0IZ7RvFd79uNJbSenVcgLQoWFNYKQrBvA6otsGMV7YOZFji0s7ZYj3ZtwebTVny7BjO1Drl7cyw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=C2upQGZg; arc=fail smtp.client-ip=40.107.237.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HdnusxaI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6ABC4CEDF;
-	Tue,  4 Feb 2025 19:06:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738695978;
-	bh=KPY6FiGeI2uAKz4QBIHBmHTN/34Yd6fAL5zcch4KjRE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HdnusxaI90WGvCJINHmcHTv2Hdb6NOERcICiGiohUg08fBeptefdzRm3vtJgH7qb/
-	 uA5LjjjyUy/NFeLSUV3hF7yvBxyOxHStjTozuVCwQfoJGC/4RkAM+GJGSOcYGczTJ6
-	 JOuSQfnZxaixEienN/SggYDD1MJUFiqO8Aq5zP5zcB45MMoREhryRnU0wfxYf1Bnkb
-	 TDvGbbhHzxDwiBN767jKYKZoJZUivAJq6wPS//WALcnMz74xgvgNB9kEIRV26sQWAi
-	 wuE38b6/TQflXCa/gVYpoVZVTvsNirpzOB+pbYCiYjLX/j7StYV73ijjCd2C1l6yhS
-	 /Qo2HGdx0Uq9g==
-Date: Tue, 4 Feb 2025 11:06:16 -0800
-From: Luis Chamberlain <mcgrof@kernel.org>
-To: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Cc: "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>,
-	"hare@suse.de" <hare@suse.de>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"gost.dev@samsung.com" <gost.dev@samsung.com>
-Subject: Re: [PATCH blktests 1/4] common: add and use min io for fio
-Message-ID: <Z6JlKNhtRChvmMNR@bombadil.infradead.org>
-References: <20241218112153.3917518-1-mcgrof@kernel.org>
- <20241218112153.3917518-2-mcgrof@kernel.org>
- <dn545vjkmyinrejvdfb45ve6xa3cebbcwvhdajkxzbhtl2yww4@oktw5u5q6jki>
- <Z3i0mwKXBUiut3DN@bombadil.infradead.org>
- <cjfenlexiawyze5trlgbpb4agu4olkosrgbfpyiuiefo4siott@smbcjylq2zwe>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="C2upQGZg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Q+zTZ3NhQ9kWFPXs0KDWatZBUoER4t3RHugnKzrr9XX4TB9Q+c5Hr/j+PKYphIYOlcXTPoeEIFpOENkIeNSwGyYEyHJUMnJg5g44JVOVT3pD2O0lPv8+vEqF+K8fnffQweZYQ8z1l9ESuvY9VirWCv4xnIjss6v1rznqkYat82p5Pbe3827b3geVC5jtdebsOj5XfXKe+UuF3a1Huf9cH1ObAvYnJfaRwuVk5KudXQqqiILQY9FlHbx8Nr5F5C4vnslpV/lHcbWHXG6AP7EWMLBRrfW6ErN60k4Ued7BmyX73I8r1LesyimwcillbSSiNQUqqYf4viWN7IeYzR0QVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EK/RAY4n14QYeD3A0kV6ZTFL0ePMSGFDT0U6kS5J/wQ=;
+ b=T5arDWf/OYO4Yj9XvN0BidbRANJmwMDrha1CWl8B6/gYRgu/jAl05wMMSBTjtd+gi4Vv3dWgczl5HKSrp7jqBNZXY/iW9IjWdGauZkSVDmMa03zudSKoWgqITCwbLQNDdeNk+qRj3j/3z2epqeWjT0ukYvJM/XSd1qubYA/835shAWAqZlSZWnnx0+GR44lMgcQWOeH9Uc4vdHABd/Ynrssl3A/5QlTdLPo7ymZ27CdXN2E7yYw2I4aPQL50bCwkhptJ7x1hlXpPkadpewZKgNltLl97rVIAW3NE8vlE4fGSTS92lAVPlIU0QMtuRrbj+adoNaMdRoDt2N7uVq/+Rw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EK/RAY4n14QYeD3A0kV6ZTFL0ePMSGFDT0U6kS5J/wQ=;
+ b=C2upQGZgrsGM/wGICu65D2Zj6c1td2hju0dbdxv/aBCcfI6uHoJasPzfRoI2kBOdTomzSgBvaqd7zAsm55ax8lvuZObZDLGc4aIRI60+fAY3I602ev4pL4avFJzMPiMYNbg+6y/JuZAg0KHs0na+kum8/uxcybuGhcMfQaPEg6spT/0u/+W+veR/15m08hgWjRNhKmkQFlDLL/I4yR0Q9xizfEzy1Cga9LiupT92YE1uh5DxjhpI5O1znoUSbCRKqn5waXsJE3hCIHVlZ3mG9FBbft6dG4vpN5gPORsALQNBeG6GrdAs5yD6Rpx1Lv1uiINmaAGi5x8ApryF6I82yw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by MW3PR12MB4426.namprd12.prod.outlook.com (2603:10b6:303:58::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8398.24; Tue, 4 Feb
+ 2025 19:18:21 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%6]) with mapi id 15.20.8398.025; Tue, 4 Feb 2025
+ 19:18:20 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: David Airlie <airlied@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Thierry Reding <thierry.reding@gmail.com>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>,
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Joerg Roedel <jroedel@suse.de>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	patches@lists.linux.dev
+Subject: [PATCH rc] gpu: host1x: Do not assume that a NULL domain means no DMA IOMMU
+Date: Tue,  4 Feb 2025 15:18:19 -0400
+Message-ID: <0-v1-10dcc8ce3869+3a7-host1x_identity_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BN0PR02CA0053.namprd02.prod.outlook.com
+ (2603:10b6:408:e5::28) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cjfenlexiawyze5trlgbpb4agu4olkosrgbfpyiuiefo4siott@smbcjylq2zwe>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|MW3PR12MB4426:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3f7beb3a-c403-4e3e-e41f-08dd4550afb8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?3VpUSLsizm7vSqoFoGVgS3ktTUGDsY+jbXDWesjlkttiWIgKV2N/rg6lkOtM?=
+ =?us-ascii?Q?oAn+G+7RsvikN6s7qmgUu5c1SkNiWtLPMq9VWAzZKdTWc7MrSBgIeLeIGDnf?=
+ =?us-ascii?Q?0DvsjW1TRHbRlJontu2C9uaSPDhFSclTwIKXYtfIEJH/YM2y+jvGllG9VaoE?=
+ =?us-ascii?Q?ppQGjD/0P5aB6fcUWTqNXmigdqihLstjYZlOwfFnQiHkPnClH45iaeAdcJK3?=
+ =?us-ascii?Q?FixnG3N3GK/QpinBLUI9XTmvMPyyU+Ug0OLQiblH1u3lAX6WFN7QFHCGp/B9?=
+ =?us-ascii?Q?ga4JFoRaoxmqJs8eIQc+tRGbiQY/qRtYQCB3X1GGrMy3aU8fY/Aoje7QHUBC?=
+ =?us-ascii?Q?xa0gBiYb1z4f/TJtrv8VQIJyC3+91moRItoRGtWiohb5MS00dCdwfiS1jQVh?=
+ =?us-ascii?Q?P5VpYPRfwiuWxj8I4V35OQ9GA63Pj+zs5Zk2d3/XuwVAiRLZCbC6L92vs0zC?=
+ =?us-ascii?Q?tHwsX4F5rvwj4eioxjHarLcBgpgtFQHdZGNkevTZhmTzOio0nkqiMidou0ZO?=
+ =?us-ascii?Q?DqHj+hztKPv2Fd3nXmmyJuZLm3oogynLPCMu2b6Qs8+C2fhiKzExeh5whDL1?=
+ =?us-ascii?Q?dSNG1aHT5xazXb+o+D1AKodDjkwJzDFGeIJH82BI3i+DZkjFUy3jS2Hr4CSb?=
+ =?us-ascii?Q?OGcb/yqPSivfqgO1Y8pUpcUq0hbWC7+Pc2uw06oxYuqQoilLqqljSWfKcIep?=
+ =?us-ascii?Q?s7vIBxdKlHfA8UxLI/amWOkS/b0Bxb3Pbq5JsCiee5O1Eb6n8vGcG3cYwjrM?=
+ =?us-ascii?Q?OaoLSEnP3O/JcUB5xVIMeIgwHAeLSsGyb9t0FXBSj4hdtT64ykJ8FAYSZF1c?=
+ =?us-ascii?Q?u0IpZnl31eRS2FDF0mTzr7FwE0hcVSEnBVt8c0mPdiz9cHaViR2o/TXIy9Kn?=
+ =?us-ascii?Q?PicWe0hXjz0mut+jRyDtdorT54tPno5RipswH00eJdAqv7nUDkVEmGE8dSRs?=
+ =?us-ascii?Q?JSXnfyTjeZKcGt59Z7u1rMTYy367zrEGmiz3RRI0jK6tpCcPswiWCoCUY254?=
+ =?us-ascii?Q?BnPTpoUO9JH3jULgXNZyp6kr5epxM9Al9h8sy13+YNxdV3O84O0ug3YUY/u9?=
+ =?us-ascii?Q?awQk3QNr/L4sPyjkJTY2ROXFwysbW/Dc29OTeFE3pHYiMzXn5YdPvXk8LN/v?=
+ =?us-ascii?Q?iM4FIBAzC3LZeNbCtYg22vibk2uXmDHd6EnYqbm9ponkx5xl1iBLZsaHVYF3?=
+ =?us-ascii?Q?r3kbyhyaZosJoDwLihhSckECVFmSqSrdYtMevb8VSCi0ZQoa6025lBpCsTLF?=
+ =?us-ascii?Q?qP79RuiBgWuWxyx4C7ivRFjvkI+edjIH6zBJoBCmFHwcQU0z6KGLcnvCb8U+?=
+ =?us-ascii?Q?XPdyW3fd2PdBLO9Mfl2ohz3v+GCNCSkljTwSnqgqcqTpzkUlmt5Woj2xMZ7A?=
+ =?us-ascii?Q?6jqbv9La4wk+G5xKsR6Bsc6QiwTL?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB8659.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?xUcHQRr1N6FR9RMKNefBHMy0bVEBQ1DqMDc2smZKwY74AvfAVoCLZSK+5vHy?=
+ =?us-ascii?Q?aT4xfo3ALmxdYKTZ/q7HaSWrhW32q6XpqTZwJQlAY3FrRafvBu1TUA7gtMCb?=
+ =?us-ascii?Q?TC0OYOdDGMjBkBjctMfEw7aEgHkTtV6esW+E+T5LxfZDxVoj+36LKys7Oth6?=
+ =?us-ascii?Q?KXszA7+66Qd2nZ7rJE1c9LbcJyC3SPMNe8N0bu6+QivnhEyNdUM7zhLaC1IH?=
+ =?us-ascii?Q?oDiJoeuYCR3T8gMfD4hr9CrqsKrr72xZsIbMSD8O8N/scbD2JTpRSH/vLHl3?=
+ =?us-ascii?Q?IpNvVhPuYY/2ZXX2HfJAewBhro0qaXSZSkQX9KugPZNHAfqdQAMYa3ISOAUs?=
+ =?us-ascii?Q?r/wzwu6f1gonexSAf85rfHny9hzZWf1Fau+WvoL/EO19ZHrchjao48tY2WiF?=
+ =?us-ascii?Q?ASoL+BmwzQwv8R3/7YTd+7txUXJNFSuiSQmepXhlzPrJk8Ty2QCG/m9aJOja?=
+ =?us-ascii?Q?1yV81sslvftxmGMQpjPLBTzjq6q71pmOAZ+HhJGALgE9xbrIxOdbgdBStQtc?=
+ =?us-ascii?Q?w/LWbrnDU90EwlCTrF0ai65o1K3OI3L/nSDA7rCxLWFL3jL/T5++OeAOG7iD?=
+ =?us-ascii?Q?tceQ5cypReDg6buqu2NDSBvB4ags7ra1/2hPaMcjJ24vIoRx0RYoL1QYIzpF?=
+ =?us-ascii?Q?aL1xdMiYYAn7sXu5C0TZmMSW24HXVcpJvRP3LePLdb1CAom3g2rQU3DV8pX+?=
+ =?us-ascii?Q?MvEcRCZX2ybuUzyaKAU4lcpIEH297wtsFCrU8PRJGyf8hP4ZWLXDEhfZTIIR?=
+ =?us-ascii?Q?sthM6fcYfeKtIrVTk3bOkztVU0XGQtbO4xyNOJlv3uJzJ08Lalm0ZsYLUjuB?=
+ =?us-ascii?Q?wMix5QVBPxplp+Akqx9+NK7MjNQOFQi46Bz1H4QjbEsVvRVBp/Dy7uHjSUZA?=
+ =?us-ascii?Q?CSklOv+ci3ySYTDQBh8IUK+ZnHPjdZ/5g+3G+QGfoaqlnGuOBrr/X7v/VE3t?=
+ =?us-ascii?Q?p5VVxHjrXxtb+zmVin+isLEEkuKDZViUkhROEtXskF/SmSO1S4qstzewKM5n?=
+ =?us-ascii?Q?3a+JsHyOo2YSMs3eNTpZbI8ZWIJhIk6AG2NiiS8O8xRkFlyoipeCvueLscA2?=
+ =?us-ascii?Q?GKMj8XywKyG6YG8FN49EkcWVS5F/xRFfHpTCRg+xUqnelNQMZ6yUQEFl1FFa?=
+ =?us-ascii?Q?4faE4o90wsBIaEjD0yQUeq8VpUJZ6RNZH/lc7d0crz1lfZZukoQLvAYEUf/z?=
+ =?us-ascii?Q?K8PJdktws+5D0/pg3ufkmjS8TNG1tGaTw/jlQfIrSvlKqDM4JAWx7r6t+kro?=
+ =?us-ascii?Q?eCbb538m4jBiW38DTie6pKJdrVQuFqiBucED7rHYl2v90waVcFXwH6vc5b3S?=
+ =?us-ascii?Q?7ZeAI5LK/5CNieK2j3b9DOGfo8lHmVKw5Vfl49yYYgzL/k2Om5s3g8Z4naIg?=
+ =?us-ascii?Q?iWYKjACgM+AHUvxMnteiXD5SyA2kMqHwqpmUxKjd6ZismuJ6G9dl04h7sohw?=
+ =?us-ascii?Q?pwnOi2H0x1ibEpEYZszMn7o+v11RVcWsyiAEknVIgZ+6l5KSDtnsgzJD4wzL?=
+ =?us-ascii?Q?VWsRIu5VRk3gC7ZENFgIidbtAAjgF3jK8hK9lA6/wikRtUNYKmcQHvUdoSIF?=
+ =?us-ascii?Q?vgqWliKH0bTOG0kV2z8=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3f7beb3a-c403-4e3e-e41f-08dd4550afb8
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2025 19:18:20.5724
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: f8irhnZPFgzIMEGQJT/zuCYXR4llhEHE4emisa5k/+2MvpN52/g9if/HJn1V7zwg
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4426
 
-On Tue, Jan 07, 2025 at 05:19:01AM +0000, Shinichiro Kawasaki wrote:
-> On Jan 03, 2025 / 20:10, Luis Chamberlain wrote:
-> > On Mon, Dec 23, 2024 at 09:37:48AM +0000, Shinichiro Kawasaki wrote:
-> > > Hi Luis, thanks for this patch. Please find my comments in line.
-> > > 
-> > > On Dec 18, 2024 / 03:21, Luis Chamberlain wrote:
-> > > > When using fio we should not issue IOs smaller than the device supports.
-> > > > Today a lot of places have in place 4k, but soon we will have devices
-> > > > which support bs > ps. For those devices we should check the minimum
-> > > > supported IO.
-> > > > 
-> > > > However, since we also have a min optimal IO, we might as well use that
-> > > > as well. By using this we can also leverage the same lookup with stat
-> > > > whether or not the target file is a block device or a file.
-> > > > 
-> > > > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> > > > ---
-> > > >  common/fio |  6 ++++--
-> > > >  common/rc  | 10 ++++++++++
-> > > >  2 files changed, 14 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/common/fio b/common/fio
-> > > > index b9ea087fc6c5..5676338d3c97 100644
-> > > > --- a/common/fio
-> > > > +++ b/common/fio
-> > > > @@ -192,12 +192,14 @@ _run_fio() {
-> > > >  # Wrapper around _run_fio used if you need some I/O but don't really care much
-> > > >  # about the details
-> > > >  _run_fio_rand_io() {
-> > > > -	_run_fio --bs=4k --rw=randread --norandommap --numjobs="$(nproc)" \
-> > > > +	local test_dev_bs=$(_test_dev_min_io $TEST_DEV)
-> > > 
-> > > Some of the test cases that calls _run_fio_rand_io  can not refer to $TEST_DEV
-> > > e.g., nvme/040. Instead of $TEST_DEV, the device should be extracted from the
-> > > --filename=X option in the arguments.
-> > 
-> > Sure, I will fix all that, it will make it clearer its not always
-> > TEST_DEV.
-> > 
-> > > I suggest to introduce a helper function
-> > > as follows (_min_io is the function I suggest to rename from _test_dev_min_io).
-> > > 
-> > > # If --filename=file option exists in the given options and if the
-> > > # specified file is a block device or a character device, try to get its
-> > > # minimum IO size. Otherwise return 4096 as the default minimum IO size.
-> > > _fio_opts_to_min_io() {
-> > >         local arg dev
-> > >         local -i min_io=4096
-> > > 
-> > >         for arg in "$@"; do
-> > >                 [[ "$arg" =~ ^--filename= ]] || continue
-> > >                 dev="${arg##*=}"
-> > >                 if [[ -b "$dev" || -c "$dev" ]] &&
-> > >                            ! min_io=$(_min_io "$dev"); then
-> > >                         echo "Failed to get min_io from fio opts" >> "$FULL"
-> > >                         return 1
-> > >                 fi
-> > >                 # Keep 4K minimum IO size for historical consistency
-> > >                 ((min_io < 4096)) && min_io=4096
-> > 
-> > But here the file may be a regular file, and if you use 4k as the
-> > default on a 16k XFS filesystem it won't work.
-> 
-> I guessed that the 16k XFS filesystem will allow 4k writes to regular files
-> (In case this is wrong, correct me). 
+Previously with tegra-smmu, even with CONFIG_IOMMU_DMA, the default domain
+could have been left as NULL. The NULL domain is specially recognized by
+host1x_iommu_attach() as meaning it is not the DMA domain and
+should be replaced with the special shared domain.
 
-If the filesystem has a 4k sector size it will be allowed, but if both
-the fs block size and the fs sector size is 16k then no 4k IOs will be
-allowed.
+This happened prior to the below commit because tegra-smmu was using the
+NULL domain to mean IDENTITY.
 
-> Do you mean that 16k writes will be more
-> appropriate blktests condition on 16k XFS filesystem?
+Now that the domain is properly labled the test in DRM doesn't see NULL.
+Check for IDENTITY as well to enable the special domains.
 
-And yes this too. Even if you do allow 4k writes with a 16k fs block
-size but with a 4k fs sector size, you still want 16k IO writes on this fs.
-One reason for exampe to want this is to avoid RMW which can happen on
-4k IO writes.
+This is the same issue and basic fix as seen in
+commit fae6e669cdc5 ("drm/tegra: Do not assume that a NULL domain means no
+DMA IOMMU").
 
-> If this is the case, I agree with it.
+Fixes: c8cc2655cc6c ("iommu/tegra-smmu: Implement an IDENTITY domain")
+Reported-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Closes: https://lore.kernel.org/all/c6a6f114-3acd-4d56-a13b-b88978e927dc@tecnico.ulisboa.pt/
+Tested-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/gpu/host1x/dev.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Great.
+diff --git a/drivers/gpu/host1x/dev.c b/drivers/gpu/host1x/dev.c
+index 7b1d091f3c090c..5d27662019d28b 100644
+--- a/drivers/gpu/host1x/dev.c
++++ b/drivers/gpu/host1x/dev.c
+@@ -361,6 +361,10 @@ static bool host1x_wants_iommu(struct host1x *host1x)
+ 	return true;
+ }
+ 
++/*
++ * Returns ERR_PTR on failure, NULL if the translation is IDENTITY, otherwise a
++ * valid paging domain.
++ */
+ static struct iommu_domain *host1x_iommu_attach(struct host1x *host)
+ {
+ 	struct iommu_domain *domain = iommu_get_domain_for_dev(host->dev);
+@@ -385,6 +389,8 @@ static struct iommu_domain *host1x_iommu_attach(struct host1x *host)
+ 	 * Similarly, if host1x is already attached to an IOMMU (via the DMA
+ 	 * API), don't try to attach again.
+ 	 */
++	if (domain && domain->type == IOMMU_DOMAIN_IDENTITY)
++		domain = NULL;
+ 	if (!host1x_wants_iommu(host) || domain)
+ 		return domain;
+ 
 
-> > This can be simplified
-> > because using statx block size would be then be the correct thing to do
-> > for a file. Then, it so turns out the the min-io can be obtained by
-> > the same statx call to a block device as well.
-> 
-> Ah, now I see why you used the "stat --printf=%o" command.
-> 
-> I find that _xfs_run_fio_verify_io() and zbd/009,010 call _run_fio_verify_io()
-> with the --directory fio option. To cover this case, _fio_opts_to_min_io() above
-> will need change to cover both --filename and --directory options. When the
-> --directory option is specified, we need to get the min_io size from the
-> directory. Assuming that the "stat --printf=%o" command works for directories, I
+base-commit: 2014c95afecee3e76ca4a56956a936e23283f05b
+-- 
+2.43.0
 
-Yes it does, this is with a 64k bs XFS fs:
-
-stat --print=%o /mnt/poo
-65536
-
-The same fs statx would be used. Right now only XFS will
-support LBS so its the only fs where we can test this currently on
-x86_64.
-
-The usage of statx --print=%o for this purpose is summarized in this
-diagram:
-
-https://docs.google.com/drawings/d/e/2PACX-1vQeZaBq2a0dgg9RDyd_XAJBSH-wbuGCtm95sLp2oFj66oghHWmXunib7tYOTPr84AlQ791VGiaKWvKF/pub?w=1006&h=929
-
-> agree that this statx call approach will be simpler.
-
-OK will follow through with this, thanks.
-
-  Luis
