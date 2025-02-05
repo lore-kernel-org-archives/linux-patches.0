@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BD01519AA;
-	Wed,  5 Feb 2025 14:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E66713C9C4;
+	Wed,  5 Feb 2025 14:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764751; cv=none; b=GHN3WMHuWehtVwvK71R0jC74ifC7KlxBWieXYV88kJVEwb9W3R5caoK7hsX+/oCcJJuyquhvE98UyTAyFJBHu2FEDVjUngLFzrJUkvWICswP8T3govuB9UU9QhaiAsIba0ZwkDF/jIvUw6fMbSzN05yWR8FxWFdseELpyAcesWo=
+	t=1738764755; cv=none; b=FR8JIeHb+8c5E4Q2/V/y6KryBcGQ1hJKsc5Rhnmp/RGHjfK66JZtlDjSeVHvakQo1lp5Wx7Y+6+0VadsYyVG0LkX6ERwN/vKpcrXh8vQgpA+nd1rVnkOhltQOn+Vo5a8O/XW+JqOJLQfOjq8oqEMJuGqPZ6iv2Dtx/H1cG89bak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764751; c=relaxed/simple;
-	bh=ulzquLmNMBv1jMjzoethRy+JUtM37Ttrj/22EJRsBS8=;
+	s=arc-20240116; t=1738764755; c=relaxed/simple;
+	bh=zc6QAxHXSQu6tFhOnwwWemlGWyJMnj3HFkgxLNlzbow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hycOS/dMaYL6TMaFqQkEARrMd+Ysr+tTivYL4RBVEqYCmuFGuOTtLjSXfd225A54T4RuzJ+35alXyN5jGfiCaxQrytVB4asoUvljnKh9+Df025Menz/Gx8JySIA3zFYLGzApHRg1BkiWE1qVtDqUVucU14WyIg6zuOX0aNzQD+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ryq3i6yx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tKHN5e88F+h5j9js12YDvuxc6PsKLSiF5uHq2swoYRDwJIUeIMAv1Qcr9OcAMGGX6JEFX7iJA+LQIEYIu0u3YucmclR6VwJqjpYrswHb1WY7pmEWDoSxAxYgcXrc44xN3vS2L9Re+OT7E394JR4zEceYd5RMvQflnvU1NCYrZX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8mB6p5x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ryq3i6yx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E12CC4CED1;
-	Wed,  5 Feb 2025 14:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8mB6p5x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BCFCC4CED1;
+	Wed,  5 Feb 2025 14:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764751;
-	bh=ulzquLmNMBv1jMjzoethRy+JUtM37Ttrj/22EJRsBS8=;
+	s=korg; t=1738764754;
+	bh=zc6QAxHXSQu6tFhOnwwWemlGWyJMnj3HFkgxLNlzbow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ryq3i6yxbHXr4DB9w3Ag6zvkhhKjrQHDpcoGo3y/PF3D3HvYSWB2P+e+Bqld9kdeo
-	 zroQ/krq8x9H3iFesy6Ba7P7U9zBhjTyzPL8viYedwANIwolAUReIgXAqzCtXo8z3x
-	 wA6LoHModdgkdgzGG8zZj+8UPzFJYgL1P5rHtiyI=
+	b=y8mB6p5x9rmkKdXbwUHUfakGGZzBZoEdm6xP0qcpx21vxR/ja8dpuhSypKyOJw+Kg
+	 iq4L9zlVR//dj1J+QrJm3C5v4h/fVwoc20XgRpnTa4KM2+aQYaydUYTKahipJqqpO3
+	 0AC0NOEfSiaGSRPb38dFzxwEUEYu/OcTisRlT7xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 201/393] arm64: dts: mediatek: mt8516: reserve 192 KiB for TF-A
-Date: Wed,  5 Feb 2025 14:42:00 +0100
-Message-ID: <20250205134427.992654450@linuxfoundation.org>
+Subject: [PATCH 6.12 155/590] hwmon: Fix help text for aspeed-g6-pwm-tach
+Date: Wed,  5 Feb 2025 14:38:30 +0100
+Message-ID: <20250205134501.215135860@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Joel Stanley <joel@jms.id.au>
 
-[ Upstream commit 2561c7d5d497b988deccc36fe5eac7fd50b937f8 ]
+[ Upstream commit c8571eab11131cce6dcce76b3345c1524e074071 ]
 
-The Android DTB for the related MT8167 reserves 0x30000. This is likely
-correct for MT8516 Android devices as well, and there's never any harm
-in reserving 64KiB more.
+The help text has the wrong module name mentioned, and the capitalisation
+of the title is inconsistent.
 
-Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
-Signed-off-by: Val Packett <val@packett.cool>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20241204190524.21862-5-val@packett.cool
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/r/20250110114737.64035-1-joel@jms.id.au
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8516.dtsi | 4 ++--
+ drivers/hwmon/Kconfig | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-index 1ca1393fcc593..6b89505a64379 100644
---- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
-@@ -144,10 +144,10 @@
- 		#size-cells = <2>;
- 		ranges;
+diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
+index 08a3c863f80a2..58480a3f4683f 100644
+--- a/drivers/hwmon/Kconfig
++++ b/drivers/hwmon/Kconfig
+@@ -413,7 +413,7 @@ config SENSORS_ASPEED
+ 	  will be called aspeed_pwm_tacho.
  
--		/* 128 KiB reserved for ARM Trusted Firmware (BL31) */
-+		/* 192 KiB reserved for ARM Trusted Firmware (BL31) */
- 		bl31_secmon_reserved: secmon@43000000 {
- 			no-map;
--			reg = <0 0x43000000 0 0x20000>;
-+			reg = <0 0x43000000 0 0x30000>;
- 		};
- 	};
+ config SENSORS_ASPEED_G6
+-	tristate "ASPEED g6 PWM and Fan tach driver"
++	tristate "ASPEED G6 PWM and Fan tach driver"
+ 	depends on ARCH_ASPEED || COMPILE_TEST
+ 	depends on PWM
+ 	help
+@@ -421,7 +421,7 @@ config SENSORS_ASPEED_G6
+ 	  controllers.
  
+ 	  This driver can also be built as a module. If so, the module
+-	  will be called aspeed_pwm_tacho.
++	  will be called aspeed_g6_pwm_tach.
+ 
+ config SENSORS_ATXP1
+ 	tristate "Attansic ATXP1 VID controller"
 -- 
 2.39.5
 
