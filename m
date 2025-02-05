@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589761519B4;
-	Wed,  5 Feb 2025 15:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FADEDF59;
+	Wed,  5 Feb 2025 15:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768168; cv=none; b=sq57lsewXwH/XZJlZN0oo2l9Rms3YW+8B1p7bbGA6zuQ/mOdbjYsIO0n0NSJ9FsV1c/NX9ExSd2t6espgMDcZ+ctCqjVfeFmGW4l0kBYjJZhGU8nlJtgR7uFUG73FfQgXt7I//7mcrKi4Pni28x5FQcPBIVU9cZDDCOHhoGd+CY=
+	t=1738768172; cv=none; b=aW1VoHw9ZQuOK+R1UrNGCeUkadmq4YZE2+VfuaOPVAKKRGe88Zb1sxBngwMi9rWQVbM4ltyB3miJTsLSrEq6N3uhu8xhxLfo+UsrSvp/+ZnfroRxsnw9ujxcrLrrlE2nHEzk1jryCfaCCHY5NyrFaS1SlW0AE9sBN42LKBZ41Bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768168; c=relaxed/simple;
-	bh=lczxkPYquTk2UYZdy4iU52CvK5AdF0Nk+DejiedzTlQ=;
+	s=arc-20240116; t=1738768172; c=relaxed/simple;
+	bh=zBohVMKDf1hcI9PgrikyzhUkx23surPYGJnNTzC92BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NglrUJFkSU+PbFiA5rpFInn5V3uDfBXmoDNlCzP6hpZBmZmqoKLd2hJO2TcA9m4jMaZEhl7SIzmFoIv2SWv5n0AyOndnjtXFk8zXvTsRsOxfpeVm1qN/ltjGIVa33v8v4y4s3zuGf4+Un1mO01g73sKUfkLrEWtNcwrFbornr5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5pN9NHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EoCL8mPvmtad6lK/zL+t6GjoQHkTqcS47rfs7QIKCUEJUZvE55qMuod4Y1NW1gjBmzMtJhsJVr5GwNcdClSobo8eJk6HJLL70kuNemFEmjLc8TT3v9ANP3M08RDVIpMI/OJdCZP9aAgfmygOmOL+WhgjshyVRejpW3FyFGhKaAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8gpOg62; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5pN9NHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4E8C4CED1;
-	Wed,  5 Feb 2025 15:09:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8gpOg62"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2054C4CED1;
+	Wed,  5 Feb 2025 15:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768168;
-	bh=lczxkPYquTk2UYZdy4iU52CvK5AdF0Nk+DejiedzTlQ=;
+	s=korg; t=1738768172;
+	bh=zBohVMKDf1hcI9PgrikyzhUkx23surPYGJnNTzC92BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5pN9NHJMRcP04LY9f6VccpfTO4H19PdeUuHFL3VCqhA5mpIV2qI/DyuDjkGcFSpQ
-	 ZFv/+o6ZRTUzv5EJMD0AzPYatVPhq3r4bMWjcTqo6PFhrSaF+K1D03NvsV0a2ojdvP
-	 p1LQGRnBot1w1BhlBnCAHXfEvjtRXDSzRk7fw3fw=
+	b=c8gpOg62oXf5kHkhLXnrQP3k4oU095qkRMjlzEZN7MahBC0qeJmPIBI366j/4Hfs7
+	 pYE2hUkgqH03CJTvIPN09szy+i9EX6knrXfhwccwCsxIZZsy1p0HDc7E1kRbUlnCjV
+	 PSiagQ82Jo2eh/5OoyNnx8+ONZbDCyNN93hsAVME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Dimitri Fedrau <dima.fedrau@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 507/623] net: phy: marvell-88q2xxx: Fix temperature measurement with reset-gpios
-Date: Wed,  5 Feb 2025 14:44:09 +0100
-Message-ID: <20250205134515.615199779@linuxfoundation.org>
+	syzbot+cd16e79c1e45f3fe0377@syzkaller.appspotmail.com,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 563/590] mptcp: pm: only set fullmesh for subflow endp
+Date: Wed,  5 Feb 2025 14:45:18 +0100
+Message-ID: <20250205134516.807435215@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,107 +46,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dimitri Fedrau <dima.fedrau@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit a197004cf3c2e6c8cc0695c787a97e62e3229754 ]
+commit 1bb0d1348546ad059f55c93def34e67cb2a034a6 upstream.
 
-When using temperature measurement on Marvell 88Q2XXX devices and the
-reset-gpios property is set in DT, the device does a hardware reset when
-interface is brought down and up again. That means that the content of
-the register MDIO_MMD_PCS_MV_TEMP_SENSOR2 is reset to default and that
-leads to permanent deactivation of the temperature measurement, because
-activation is done in mv88q2xxx_probe. To fix this move activation of
-temperature measurement to mv88q222x_config_init.
+With the in-kernel path-manager, it is possible to change the 'fullmesh'
+flag. The code in mptcp_pm_nl_fullmesh() expects to change it only on
+'subflow' endpoints, to recreate more or less subflows using the linked
+address.
 
-Fixes: a557a92e6881 ("net: phy: marvell-88q2xxx: add support for temperature sensor")
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Dimitri Fedrau <dima.fedrau@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250118-marvell-88q2xxx-fix-hwmon-v2-1-402e62ba2dcb@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Unfortunately, the set_flags() hook was a bit more permissive, and
+allowed 'implicit' endpoints to get the 'fullmesh' flag while it is not
+allowed before.
+
+That's what syzbot found, triggering the following warning:
+
+  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 __mark_subflow_endp_available net/mptcp/pm_netlink.c:1496 [inline]
+  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 mptcp_pm_nl_fullmesh net/mptcp/pm_netlink.c:1980 [inline]
+  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 mptcp_nl_set_flags net/mptcp/pm_netlink.c:2003 [inline]
+  WARNING: CPU: 0 PID: 6499 at net/mptcp/pm_netlink.c:1496 mptcp_pm_nl_set_flags+0x974/0xdc0 net/mptcp/pm_netlink.c:2064
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 6499 Comm: syz.1.413 Not tainted 6.13.0-rc5-syzkaller-00172-gd1bf27c4e176 #0
+  Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
+  RIP: 0010:__mark_subflow_endp_available net/mptcp/pm_netlink.c:1496 [inline]
+  RIP: 0010:mptcp_pm_nl_fullmesh net/mptcp/pm_netlink.c:1980 [inline]
+  RIP: 0010:mptcp_nl_set_flags net/mptcp/pm_netlink.c:2003 [inline]
+  RIP: 0010:mptcp_pm_nl_set_flags+0x974/0xdc0 net/mptcp/pm_netlink.c:2064
+  Code: 01 00 00 49 89 c5 e8 fb 45 e8 f5 e9 b8 fc ff ff e8 f1 45 e8 f5 4c 89 f7 be 03 00 00 00 e8 44 1d 0b f9 eb a0 e8 dd 45 e8 f5 90 <0f> 0b 90 e9 17 ff ff ff 89 d9 80 e1 07 38 c1 0f 8c c9 fc ff ff 48
+  RSP: 0018:ffffc9000d307240 EFLAGS: 00010293
+  RAX: ffffffff8bb72e03 RBX: 0000000000000000 RCX: ffff88807da88000
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: ffffc9000d307430 R08: ffffffff8bb72cf0 R09: 1ffff1100b842a5e
+  R10: dffffc0000000000 R11: ffffed100b842a5f R12: ffff88801e2e5ac0
+  R13: ffff88805c214800 R14: ffff88805c2152e8 R15: 1ffff1100b842a5d
+  FS:  00005555619f6500(0000) GS:ffff8880b8600000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000020002840 CR3: 00000000247e6000 CR4: 00000000003526f0
+  DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  Call Trace:
+   <TASK>
+   genl_family_rcv_msg_doit net/netlink/genetlink.c:1115 [inline]
+   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+   genl_rcv_msg+0xb14/0xec0 net/netlink/genetlink.c:1210
+   netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2542
+   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+   netlink_unicast_kernel net/netlink/af_netlink.c:1321 [inline]
+   netlink_unicast+0x7f6/0x990 net/netlink/af_netlink.c:1347
+   netlink_sendmsg+0x8e4/0xcb0 net/netlink/af_netlink.c:1891
+   sock_sendmsg_nosec net/socket.c:711 [inline]
+   __sock_sendmsg+0x221/0x270 net/socket.c:726
+   ____sys_sendmsg+0x52a/0x7e0 net/socket.c:2583
+   ___sys_sendmsg net/socket.c:2637 [inline]
+   __sys_sendmsg+0x269/0x350 net/socket.c:2669
+   do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+   do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f5fe8785d29
+  Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007fff571f5558 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007f5fe8975fa0 RCX: 00007f5fe8785d29
+  RDX: 0000000000000000 RSI: 0000000020000480 RDI: 0000000000000007
+  RBP: 00007f5fe8801b08 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  R13: 00007f5fe8975fa0 R14: 00007f5fe8975fa0 R15: 00000000000011f4
+   </TASK>
+
+Here, syzbot managed to set the 'fullmesh' flag on an 'implicit' and
+used -- according to 'id_avail_bitmap' -- endpoint, causing the PM to
+try decrement the local_addr_used counter which is only incremented for
+the 'subflow' endpoint.
+
+Note that 'no type' endpoints -- not 'subflow', 'signal', 'implicit' --
+are fine, because their ID will not be marked as used in the 'id_avail'
+bitmap, and setting 'fullmesh' can help forcing the creation of subflow
+when receiving an ADD_ADDR.
+
+Fixes: 73c762c1f07d ("mptcp: set fullmesh flag in pm_netlink")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+cd16e79c1e45f3fe0377@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/6786ac51.050a0220.216c54.00a6.GAE@google.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/540
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20250123-net-mptcp-syzbot-issues-v1-2-af73258a726f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/marvell-88q2xxx.c | 33 ++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ net/mptcp/pm_netlink.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/marvell-88q2xxx.c b/drivers/net/phy/marvell-88q2xxx.c
-index 5107f58338aff..376b499d6e8eb 100644
---- a/drivers/net/phy/marvell-88q2xxx.c
-+++ b/drivers/net/phy/marvell-88q2xxx.c
-@@ -95,6 +95,10 @@
- 
- #define MDIO_MMD_PCS_MV_TDR_OFF_CUTOFF			65246
- 
-+struct mv88q2xxx_priv {
-+	bool enable_temp;
-+};
-+
- struct mmd_val {
- 	int devad;
- 	u32 regnum;
-@@ -710,17 +714,12 @@ static const struct hwmon_chip_info mv88q2xxx_hwmon_chip_info = {
- 
- static int mv88q2xxx_hwmon_probe(struct phy_device *phydev)
- {
-+	struct mv88q2xxx_priv *priv = phydev->priv;
- 	struct device *dev = &phydev->mdio.dev;
- 	struct device *hwmon;
- 	char *hwmon_name;
--	int ret;
--
--	/* Enable temperature sense */
--	ret = phy_modify_mmd(phydev, MDIO_MMD_PCS, MDIO_MMD_PCS_MV_TEMP_SENSOR2,
--			     MDIO_MMD_PCS_MV_TEMP_SENSOR2_DIS_MASK, 0);
--	if (ret < 0)
--		return ret;
- 
-+	priv->enable_temp = true;
- 	hwmon_name = devm_hwmon_sanitize_name(dev, dev_name(dev));
- 	if (IS_ERR(hwmon_name))
- 		return PTR_ERR(hwmon_name);
-@@ -743,6 +742,14 @@ static int mv88q2xxx_hwmon_probe(struct phy_device *phydev)
- 
- static int mv88q2xxx_probe(struct phy_device *phydev)
- {
-+	struct mv88q2xxx_priv *priv;
-+
-+	priv = devm_kzalloc(&phydev->mdio.dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	phydev->priv = priv;
-+
- 	return mv88q2xxx_hwmon_probe(phydev);
- }
- 
-@@ -810,6 +817,18 @@ static int mv88q222x_revb1_revb2_config_init(struct phy_device *phydev)
- 
- static int mv88q222x_config_init(struct phy_device *phydev)
- {
-+	struct mv88q2xxx_priv *priv = phydev->priv;
-+	int ret;
-+
-+	/* Enable temperature sense */
-+	if (priv->enable_temp) {
-+		ret = phy_modify_mmd(phydev, MDIO_MMD_PCS,
-+				     MDIO_MMD_PCS_MV_TEMP_SENSOR2,
-+				     MDIO_MMD_PCS_MV_TEMP_SENSOR2_DIS_MASK, 0);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	if (phydev->c45_ids.device_ids[MDIO_MMD_PMAPMD] == PHY_ID_88Q2220_REVB0)
- 		return mv88q222x_revb0_config_init(phydev);
- 	else
--- 
-2.39.5
-
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -2049,7 +2049,8 @@ int mptcp_pm_nl_set_flags(struct sk_buff
+ 		return -EINVAL;
+ 	}
+ 	if ((addr.flags & MPTCP_PM_ADDR_FLAG_FULLMESH) &&
+-	    (entry->flags & MPTCP_PM_ADDR_FLAG_SIGNAL)) {
++	    (entry->flags & (MPTCP_PM_ADDR_FLAG_SIGNAL |
++			     MPTCP_PM_ADDR_FLAG_IMPLICIT))) {
+ 		spin_unlock_bh(&pernet->lock);
+ 		GENL_SET_ERR_MSG(info, "invalid addr flags");
+ 		return -EINVAL;
 
 
