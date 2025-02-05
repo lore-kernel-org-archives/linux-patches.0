@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7B114A4E9;
-	Wed,  5 Feb 2025 13:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B01214A4E9;
+	Wed,  5 Feb 2025 13:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763819; cv=none; b=KNuc6LBLm4MDS2YCnqDRJJlmyMyYJ3Xy2Hdsnade2TT2m4Tbn0uBEX0mYfL/HgNF+baNpjxNdy0Z2w9VAxEwozdz/tnF+6ZfG4mRYDz1QiiuZeXyO6yorpAm8YmRCKcGYB5NMVO6NOhlIwxjCo8Ia9NFzb+v5JAKGXtm2JuUIyU=
+	t=1738763822; cv=none; b=W2vNEKgcIYGOiQ3wx6oMR78lFf1r3/E4sf/hWY3XzUsT+YNTtl6jYbSnY25AXDpdjmaa1eJ7jbS0ag4/eGGWotBnGv0f0ph3qtG1nJtt6ZuuJzBk2kL6oisr3CYRuw2UJYbdRg1iCpomonUKfc0s54TyQexaEOxkck9+zdqMDLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763819; c=relaxed/simple;
-	bh=92j3FbzGWaSMCBS2WYE13ze11pJx4f3w9MkmfFQ4/fo=;
+	s=arc-20240116; t=1738763822; c=relaxed/simple;
+	bh=pA4ufWrSsj2awzUW7ZREFgacDO3jvchQGHOH5l0GyXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXQM/Q1I6jTLh6byD5M0Z+UC+wEM3bIwdfHiUmNKpPf0rdVyW8E0Z5HdVIkiKAisHALHkr5IhIwDrlNR74dD/ftIlm2+MwrOL3Lm0G0+mYHkTDpt8xXSYMVrRMkDrpc5W5cR5Dc4AstQkMGhcNtK+cqoHEB+ZkWSA742Z6VfQhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4Cv77h4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sOF1Zrfu8Pj3fmi9MJ4+pdwsG+N0GzkGINZeHP7xBijvicizR6Jo9hU0urVUMJ2rO++PbVKTCx7WpBnN952gu2lk5rUU+j+PR3lej929BJ2zV6+Y4PtrZz/0EkXnlAVFQeXXd+det1tBQANUMy6KD8t6F9V65aJYhPwQo+ZixLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdgqNG2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4Cv77h4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F8E2C4CED1;
-	Wed,  5 Feb 2025 13:56:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdgqNG2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB84CC4CEDD;
+	Wed,  5 Feb 2025 13:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763819;
-	bh=92j3FbzGWaSMCBS2WYE13ze11pJx4f3w9MkmfFQ4/fo=;
+	s=korg; t=1738763822;
+	bh=pA4ufWrSsj2awzUW7ZREFgacDO3jvchQGHOH5l0GyXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4Cv77h4rNj1eehGUH2oMNYOSs9dbTgZraQE9AhnIKjkqtJOO74XkZFS/JV5T0XPs
-	 s8pU5NEju6wtBWTeh7nT0fAaTQXLa06wcj56ujtInOCfpItnlusvLQBAXQOxiwqnlS
-	 +F4BmJVimbarh81D/B6UqPZ3qqKnDnxdDZ6489P4=
+	b=jdgqNG2WYpEosiCRt+r000VKk/tVXHVhOGKK3pcCHHCLy8Lm4fGeQbgzTEThaZPbH
+	 0Lq7rkLj4LJ5dDzluIWktJW1swfo3GxFxp37QWVJfpNNMHzWlbwPVEbszAlhE2t7qu
+	 xXExqBPjp/5Vy4tl3uPPbrnsJfCASj1fpQFC4fHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keisuke Nishimura <keisuke.nishimura@inria.fr>,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 021/623] nvme: Add error check for xa_store in nvme_get_effects_log
-Date: Wed,  5 Feb 2025 14:36:03 +0100
-Message-ID: <20250205134457.039126755@linuxfoundation.org>
+	Dragan Simic <dsimic@manjaro.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Frank Oltmanns <frank@oltmanns.dev>,
+	Stuart Gathman <stuart@gathman.org>
+Subject: [PATCH 6.6 090/393] dt-bindings: clock: sunxi: Export PLL_VIDEO_2X and PLL_MIPI
+Date: Wed,  5 Feb 2025 14:40:09 +0100
+Message-ID: <20250205134423.737283148@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +51,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Keisuke Nishimura <keisuke.nishimura@inria.fr>
+From: Vasily Khoruzhick <anarsoul@gmail.com>
 
-[ Upstream commit ac32057acc7f3d7a238dafaa9b2aa2bc9750080e ]
+[ Upstream commit 9897831de614f1d8d5184547f0e7bf7665eed436 ]
 
-The xa_store() may fail due to memory allocation failure because there
-is no guarantee that the index csi is already used. This fix adds an
-error check of the return value of xa_store() in nvme_get_effects_log().
+Export PLL_VIDEO_2X and PLL_MIPI, these will be used to explicitly
+select TCON0 clock parent in dts
 
-Fixes: 1cf7a12e09aa ("nvme: use an xarray to lookup the Commands Supported and Effects log")
-Signed-off-by: Keisuke Nishimura <keisuke.nishimura@inria.fr>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: ca1170b69968 ("clk: sunxi-ng: a64: force select PLL_MIPI in TCON0 mux")
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
+Tested-by: Frank Oltmanns <frank@oltmanns.dev> # on PinePhone
+Tested-by: Stuart Gathman <stuart@gathman.org> # on OG Pinebook
+Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Link: https://patch.msgid.link/20250104074035.1611136-2-anarsoul@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Stable-dep-of: 0f368cb7ef10 ("clk: sunxi-ng: a64: drop redundant CLK_PLL_VIDEO0_2X and CLK_PLL_MIPI")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ include/dt-bindings/clock/sun50i-a64-ccu.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index a970168a3014e..315692cb2e614 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3092,7 +3092,7 @@ int nvme_get_log(struct nvme_ctrl *ctrl, u32 nsid, u8 log_page, u8 lsp, u8 csi,
- static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 				struct nvme_effects_log **log)
- {
--	struct nvme_effects_log	*cel = xa_load(&ctrl->cels, csi);
-+	struct nvme_effects_log *old, *cel = xa_load(&ctrl->cels, csi);
- 	int ret;
+diff --git a/include/dt-bindings/clock/sun50i-a64-ccu.h b/include/dt-bindings/clock/sun50i-a64-ccu.h
+index 175892189e9dc..4f220ea7a23cc 100644
+--- a/include/dt-bindings/clock/sun50i-a64-ccu.h
++++ b/include/dt-bindings/clock/sun50i-a64-ccu.h
+@@ -44,7 +44,9 @@
+ #define _DT_BINDINGS_CLK_SUN50I_A64_H_
  
- 	if (cel)
-@@ -3109,7 +3109,11 @@ static int nvme_get_effects_log(struct nvme_ctrl *ctrl, u8 csi,
- 		return ret;
- 	}
+ #define CLK_PLL_VIDEO0		7
++#define CLK_PLL_VIDEO0_2X	8
+ #define CLK_PLL_PERIPH0		11
++#define CLK_PLL_MIPI		17
  
--	xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	old = xa_store(&ctrl->cels, csi, cel, GFP_KERNEL);
-+	if (xa_is_err(old)) {
-+		kfree(cel);
-+		return xa_err(old);
-+	}
- out:
- 	*log = cel;
- 	return 0;
+ #define CLK_CPUX		21
+ #define CLK_BUS_MIPI_DSI	28
 -- 
 2.39.5
 
