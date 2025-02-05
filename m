@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F191519BF;
-	Wed,  5 Feb 2025 15:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DC61C6BE;
+	Wed,  5 Feb 2025 15:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768060; cv=none; b=XZKRl6PgMY+Ji9zB1qby7/3Q69OiP58EjlD5yfqS7Jslefy7gTXxR6ebQWL6VsBYJTd2pGPc+Wf3JQyay2h7I12JGHDsJ8OKvRDz7abKgGzau8H586aiz3pG0kex0wUV8l49ISjAgFgq1s7VN5rhqClYIbc4N5L0n22hHTva15E=
+	t=1738768064; cv=none; b=Git5VDy1RwUzTicQfrgQJGhCB6z08aVauTffILUt2T77A7E3cAx7AcNibLlgDkbqXqH0EE6AHsiUibOgkHX+0KgBfLSIOiSoMyVUESKRkW5TMA/i8p6fDrCFuOkwtmbvRaZL7jyK6irXt74hU68zIG8HFCektk/ZahRHLg0uCik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768060; c=relaxed/simple;
-	bh=4GGV5UA1aoq/dXIBr+P2suvL4R2cngJAU/QPSVPKRHw=;
+	s=arc-20240116; t=1738768064; c=relaxed/simple;
+	bh=P/GkLfi5hJbt/fEUCVZl9299yiJxIJ9MAe0GCiEz2SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DhHXnonHPjRJwNGlUjdmVeP3SkgVarckH3Cwo0bJZjuKRCs1krcippqeEYFT8MHdsXzdHAPoT4Cqbv2dQ8jRyCMoF77i5JsT0NUWBe5tM+mjTbW5GM4M4Dh3zNXVWNwl32lWXXJ0zLRQ34tr/zGlnvYQvZkntetzboYEmiHsd0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdn9BNRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBFGO4DnBOTcYg5rbVi/hfYEJ8g3Wp+5KRwDONcp8pz/WKqLB22josjlDFa9ZW4KwXzeYmYeTGrKwkURFKw3rOO1lScmOzwI5maVep1NAJvH39OU8G5ZRX9SdW6dYRViRfHXU9Omlg3bLZpz9sSUtNIg4tFTekla0Xmjl0FCg1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fw1hur8G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdn9BNRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FC6C4CED1;
-	Wed,  5 Feb 2025 15:07:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fw1hur8G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D7EC4CED1;
+	Wed,  5 Feb 2025 15:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768060;
-	bh=4GGV5UA1aoq/dXIBr+P2suvL4R2cngJAU/QPSVPKRHw=;
+	s=korg; t=1738768064;
+	bh=P/GkLfi5hJbt/fEUCVZl9299yiJxIJ9MAe0GCiEz2SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdn9BNROhe1Qdol86mPkxIimC1S3Zns2HKJNbj1a3V6swefnkincHpfuCbEMqQ/o8
-	 A8gLA4JhGUzQvoHSc19YDulHbJT7jG4fxh8TPySAVIH6LXiTGK4fDPi025BNHwhM6k
-	 SlLOVDjoa5SDIdRGZwNjh8acBVYNkESHXZwzxcms=
+	b=Fw1hur8G6Nc2vfyjR7MTwKbchfKMSs6I4f+MtOQWe7Ycnmfzt9XygnyAiM3HaxLLq
+	 Te1er3kUrr3XTDIDRjIj1jfMPP8Y8bbs4udR/y2/fzYqSAuGC8rzg6gBAw0WTk4t86
+	 tUJN1tYObMrpdMxCgLZhY3El8E35KY7Q1wTavy6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 490/623] NFSv4.2: mark OFFLOAD_CANCEL MOVEABLE
-Date: Wed,  5 Feb 2025 14:43:52 +0100
-Message-ID: <20250205134514.963069318@linuxfoundation.org>
+	John Hawley <warthog9@eaglescrag.net>,
+	"Ricardo B. Marliere" <rbm@suse.com>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.12 548/590] ktest.pl: Check kernelrelease return in get_version
+Date: Wed,  5 Feb 2025 14:45:03 +0100
+Message-ID: <20250205134516.235653593@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Ricardo B. Marliere <rbm@suse.com>
 
-[ Upstream commit 668135b9348c53fd205f5e07d11e82b10f31b55b ]
+commit a4e17a8f239a545c463f8ec27db4ed6e74b31841 upstream.
 
-OFFLOAD_CANCEL should be marked MOVEABLE for when we need to move
-tasks off a non-functional transport.
+In the case of a test that uses the special option ${KERNEL_VERSION} in one
+of its settings but has no configuration available in ${OUTPUT_DIR}, for
+example if it's a new empty directory, then the `make kernelrelease` call
+will fail and the subroutine will chomp an empty string, silently. Fix that
+by adding an empty configuration and retrying.
 
-Fixes: c975c2092657 ("NFS send OFFLOAD_CANCEL when COPY killed")
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: John Hawley <warthog9@eaglescrag.net>
+Fixes: 5f9b6ced04a4e ("ktest: Bisecting, install modules, add logging")
+Link: https://lore.kernel.org/20241205-ktest_kver_fallback-v2-1-869dae4c7777@suse.com
+Signed-off-by: Ricardo B. Marliere <rbm@suse.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs42proc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index 531c9c20ef1d1..9f0d69e652644 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -552,7 +552,7 @@ static int nfs42_do_offload_cancel_async(struct file *dst,
- 		.rpc_message = &msg,
- 		.callback_ops = &nfs42_offload_cancel_ops,
- 		.workqueue = nfsiod_workqueue,
--		.flags = RPC_TASK_ASYNC,
-+		.flags = RPC_TASK_ASYNC | RPC_TASK_MOVEABLE,
- 	};
- 	int status;
- 
--- 
-2.39.5
-
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -2419,6 +2419,11 @@ sub get_version {
+     return if ($have_version);
+     doprint "$make kernelrelease ... ";
+     $version = `$make -s kernelrelease | tail -1`;
++    if (!length($version)) {
++	run_command "$make allnoconfig" or return 0;
++	doprint "$make kernelrelease ... ";
++	$version = `$make -s kernelrelease | tail -1`;
++    }
+     chomp($version);
+     doprint "$version\n";
+     $have_version = 1;
 
 
