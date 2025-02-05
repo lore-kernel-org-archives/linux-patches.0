@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048831519BE;
-	Wed,  5 Feb 2025 14:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2A3156F39;
+	Wed,  5 Feb 2025 14:21:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765279; cv=none; b=OeXjuew9rYOnvBSQ2CH84ZLDZEzlo6WBRen2MPyexAMT7G/1VTTqfUCIdgJ/z5OvGrjd/0IJIl5zQOfwVQTPRGqQsmhr7tT5nkYfKfOGWdMjWvDEt56Et8i/SUxbRDycjKQlh5dQP1HDDzixJ4KYkNytmO4un74N112ENhAdBlQ=
+	t=1738765282; cv=none; b=lzzh2/yIOEDw5J+0I+onJqwnibHFNDhhvj7tUn2vNo8eedmn08IZhXdGeilb2ZKhR9Ah/ZMtSrh/Z7FPfHFF8E33Tlkrd0ofFh8FcCCHXifQEhw1fjHpjKy7RHnB6u5ZxCBjBngBZuNEYrjABgJ0rObtLQzMhlLLuNlQ4Kjw6GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765279; c=relaxed/simple;
-	bh=/zfueHGcZNzwx/29k/6kYWu1/4imQ6UfJScZOwyFW3c=;
+	s=arc-20240116; t=1738765282; c=relaxed/simple;
+	bh=Sm5/i4ROrzV9+yK7A7Fw3ylTGDq12rNbVv7e56DLCSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOIsz1OcwWx/4X6qAo2qF5/mmlEKp0cvemOhm2+2ra98A7WmQU6CyeVeridiKGzNvB3p7y9/vYULupLnMNLrF1fZA2wgroqTW4fkkzaHzgLhat47xcKiO8Z3v4VafmNUIoAwrryirM/UlK+yGtIaiOz+rC/f4invfODCE9VW3sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouDhQMWQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dpj7vN9Ty8u/v9+t6G965OQbXvBYmnz/6+Bv3pGLu+ynXhpblhKVkmBPJ8Vj45WK8/Fd0R3kcqRWS+1wSWZNFq9sqdJhwN6hGCGnDtGk70KK84LJT30ukl2hNlRbHVLQB8Ki/vnPhpGKq2nEfiiqOmG51Iy4nMEPTrgBNissOwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s/DUf93H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouDhQMWQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66767C4CED1;
-	Wed,  5 Feb 2025 14:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s/DUf93H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4691C4CEE2;
+	Wed,  5 Feb 2025 14:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765278;
-	bh=/zfueHGcZNzwx/29k/6kYWu1/4imQ6UfJScZOwyFW3c=;
+	s=korg; t=1738765282;
+	bh=Sm5/i4ROrzV9+yK7A7Fw3ylTGDq12rNbVv7e56DLCSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ouDhQMWQnxGXCeSutEZStmXGYN8i7Z3XTW7KJcbBoLn1fWfNixgtWK2EqqXLNMZyt
-	 EHUtOUaUw8Bqozrh1VOLeDiP8aw3I4fII3RDeJhuGJcRgzNkH7Orlr8JWOsl+u7cEh
-	 O93rl0Gt9Zxp5chzQeiVb8LF3qcx0jPgTpPuklDE=
+	b=s/DUf93HNTcZv+GwTe/2KUzRXQZx614n3rIIXtLFKvB5ZmRwOvsCGqo5nXUGtKw+H
+	 vry4NPSj3EvEaH+YHupaFoRR1RvZRdMW5+MdtxDSflj33iXCbeNOfsv3ppwsP5l5Pl
+	 A+jrdpjTl451UVgKOtc7Le38UwjWXmug6HgERHLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Benjamin Lin <benjamin-jw.lin@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 162/623] wifi: mt76: mt7915: Fix mesh scan on MT7916 DBDC
-Date: Wed,  5 Feb 2025 14:38:24 +0100
-Message-ID: <20250205134502.431439178@linuxfoundation.org>
+Subject: [PATCH 6.12 206/590] wifi: mt76: mt7996: fix incorrect indexing of MIB FW event
+Date: Wed,  5 Feb 2025 14:39:21 +0100
+Message-ID: <20250205134503.163495199@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+From: Benjamin Lin <benjamin-jw.lin@mediatek.com>
 
-[ Upstream commit f21b77cb556296116b1cce1d62295d13e35da574 ]
+[ Upstream commit 5c2a25a1ab76a2976dddc5ffd58498866f3ef7c2 ]
 
-commit c4f075582304 ("wifi: mt76: mt7915: fix command timeout in AP stop
-period") changes the behavior of mt7915_bss_info_changed() in mesh mode
-when enable_beacon becomes false: it calls mt7915_mcu_add_bss_info(...,
-false) and mt7915_mcu_add_sta(..., false) while the previous code
-didn't.  These sends mcu commands that apparently confuse the firmware.
+Fix wrong calculation of the channel times due to incorrect
+interpretation from the FW event.
 
-This breaks scanning while in mesh mode on AsiaRF MT7916 DBDC-based cards:
-scanning works but no mesh frames get sent afterwards and the firmware
-seems to be hosed.  It breaks on MT7916 DBDC but not on MT7915 DBDC.
-
-Fixes: c4f075582304 ("wifi: mt76: mt7915: fix command timeout in AP stop period")
-Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
-Link: https://patch.msgid.link/20240927085350.4594-1-nicolas.cavallari@green-communications.fr
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Benjamin Lin <benjamin-jw.lin@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250114101026.3587702-4-shayne.chen@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7996/mcu.c   | 45 ++++++++++++-------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-index c6f498fc81ffd..8183708a9b355 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
-@@ -619,8 +619,9 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
- 	if (changed & BSS_CHANGED_ASSOC)
- 		set_bss_info = vif->cfg.assoc;
- 	if (changed & BSS_CHANGED_BEACON_ENABLED &&
-+	    info->enable_beacon &&
- 	    vif->type != NL80211_IFTYPE_AP)
--		set_bss_info = set_sta = info->enable_beacon;
-+		set_bss_info = set_sta = 1;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index 6c445a9dbc03d..d6d80b1b2d697 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -3666,6 +3666,13 @@ int mt7996_mcu_get_chip_config(struct mt7996_dev *dev, u32 *cap)
  
- 	if (set_bss_info == 1)
- 		mt7915_mcu_add_bss_info(phy, vif, true);
+ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ {
++	enum {
++		IDX_TX_TIME,
++		IDX_RX_TIME,
++		IDX_OBSS_AIRTIME,
++		IDX_NON_WIFI_TIME,
++		IDX_NUM
++	};
+ 	struct {
+ 		struct {
+ 			u8 band;
+@@ -3675,16 +3682,15 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ 			__le16 tag;
+ 			__le16 len;
+ 			__le32 offs;
+-		} data[4];
++		} data[IDX_NUM];
+ 	} __packed req = {
+ 		.hdr.band = phy->mt76->band_idx,
+ 	};
+-	/* strict order */
+ 	static const u32 offs[] = {
+-		UNI_MIB_TX_TIME,
+-		UNI_MIB_RX_TIME,
+-		UNI_MIB_OBSS_AIRTIME,
+-		UNI_MIB_NON_WIFI_TIME,
++		[IDX_TX_TIME] = UNI_MIB_TX_TIME,
++		[IDX_RX_TIME] = UNI_MIB_RX_TIME,
++		[IDX_OBSS_AIRTIME] = UNI_MIB_OBSS_AIRTIME,
++		[IDX_NON_WIFI_TIME] = UNI_MIB_NON_WIFI_TIME,
+ 	};
+ 	struct mt76_channel_state *state = phy->mt76->chan_state;
+ 	struct mt76_channel_state *state_ts = &phy->state_ts;
+@@ -3693,7 +3699,7 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ 	struct sk_buff *skb;
+ 	int i, ret;
+ 
+-	for (i = 0; i < 4; i++) {
++	for (i = 0; i < IDX_NUM; i++) {
+ 		req.data[i].tag = cpu_to_le16(UNI_CMD_MIB_DATA);
+ 		req.data[i].len = cpu_to_le16(sizeof(req.data[i]));
+ 		req.data[i].offs = cpu_to_le32(offs[i]);
+@@ -3712,17 +3718,24 @@ int mt7996_mcu_get_chan_mib_info(struct mt7996_phy *phy, bool chan_switch)
+ 		goto out;
+ 
+ #define __res_u64(s) le64_to_cpu(res[s].data)
+-	state->cc_tx += __res_u64(1) - state_ts->cc_tx;
+-	state->cc_bss_rx += __res_u64(2) - state_ts->cc_bss_rx;
+-	state->cc_rx += __res_u64(2) + __res_u64(3) - state_ts->cc_rx;
+-	state->cc_busy += __res_u64(0) + __res_u64(1) + __res_u64(2) + __res_u64(3) -
++	state->cc_tx += __res_u64(IDX_TX_TIME) - state_ts->cc_tx;
++	state->cc_bss_rx += __res_u64(IDX_RX_TIME) - state_ts->cc_bss_rx;
++	state->cc_rx += __res_u64(IDX_RX_TIME) +
++			__res_u64(IDX_OBSS_AIRTIME) -
++			state_ts->cc_rx;
++	state->cc_busy += __res_u64(IDX_TX_TIME) +
++			  __res_u64(IDX_RX_TIME) +
++			  __res_u64(IDX_OBSS_AIRTIME) +
++			  __res_u64(IDX_NON_WIFI_TIME) -
+ 			  state_ts->cc_busy;
+-
+ out:
+-	state_ts->cc_tx = __res_u64(1);
+-	state_ts->cc_bss_rx = __res_u64(2);
+-	state_ts->cc_rx = __res_u64(2) + __res_u64(3);
+-	state_ts->cc_busy = __res_u64(0) + __res_u64(1) + __res_u64(2) + __res_u64(3);
++	state_ts->cc_tx = __res_u64(IDX_TX_TIME);
++	state_ts->cc_bss_rx = __res_u64(IDX_RX_TIME);
++	state_ts->cc_rx = __res_u64(IDX_RX_TIME) + __res_u64(IDX_OBSS_AIRTIME);
++	state_ts->cc_busy = __res_u64(IDX_TX_TIME) +
++			    __res_u64(IDX_RX_TIME) +
++			    __res_u64(IDX_OBSS_AIRTIME) +
++			    __res_u64(IDX_NON_WIFI_TIME);
+ #undef __res_u64
+ 
+ 	dev_kfree_skb(skb);
 -- 
 2.39.5
 
