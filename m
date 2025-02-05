@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF991FDE14;
-	Wed,  5 Feb 2025 14:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57ACC1FE474;
+	Wed,  5 Feb 2025 14:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766504; cv=none; b=gjGiY3GJCq5seMIUJ7GbvpZGbzxxoTEFBT5bfIjRPDupHIUIoOcqe8mn5b9K5Hufa+/nBo3w3Zwe7SKXn5P0FlKhSvF9ZI8Xza9w0g4diPmec31/wcMs3a0jQroQxcpGjXKDKr/XqIa3b0FIZ0QSFmzT7KBRVFS/3YqpV0Bu78g=
+	t=1738766507; cv=none; b=dQxoM3pi9AnybtzWMZv7mZpEelUZqTWFTi4sHIgzapEtvnXjTaw4lN5GU4t1KY/LLArkdy+W4/piy2svFmKiCEwifoN/xjh4RcAgP0TQocJriD6AWGUJ29Lp/itB4zdUeXS7pXQhPdNmwgKabBOzHHr0jEP4la5vMqIW343wMnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766504; c=relaxed/simple;
-	bh=OKSLxRZYrKlzFz+AAMcS3v+ZH4y5Mk9lBX7tRFniT+g=;
+	s=arc-20240116; t=1738766507; c=relaxed/simple;
+	bh=wSl/hMyr4Ac03tQIsuq0AUjpYWe3xg6I8MJKQuI84V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atrd6WzdfSjd5EkoLBSnBo0SjC2804BMNKnHB5A7XhgA3mUI4YX2Ks9PxqrA4mFS32UIWDuNIGNi1Z0TfGyNVAQCipFsZMpxxQwSn30jDQFZugCZX2EkkW9i54AjNDb6S0FQJpihFa7dIjo3d5Cij5KaoBkEK3yF4+JCmUIRk3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ywtx6uW0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TJLeC2EPBkgFL0lXgsAjMwmK5vHzg7MJYB6eAu7dzotORfHd791YMOJ8Yd0d97cBURCUUAE/BB8xOviR0i8zF7XMSz+Pq+DSt/B85WpgUBnZS7lBexOFqtG67zqeFmRmmCGraFrJeXLMCLDXvhYTsfZ68a1vqY6Yw35Pel9VOjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Cny9qC3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ywtx6uW0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54585C4CEDD;
-	Wed,  5 Feb 2025 14:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Cny9qC3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFDCC4CED1;
+	Wed,  5 Feb 2025 14:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766503;
-	bh=OKSLxRZYrKlzFz+AAMcS3v+ZH4y5Mk9lBX7tRFniT+g=;
+	s=korg; t=1738766507;
+	bh=wSl/hMyr4Ac03tQIsuq0AUjpYWe3xg6I8MJKQuI84V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywtx6uW0V0/b/9yyw3aNiPlt4KZddQShDbCA+BqvK1LoOHVp4SzQ76/uUvjaFTAvt
-	 wqk9xrDDZ6t3reSKkAxIptVxh9vsCPO2u2H7e11j6uCq2THGFAlTpnJHMb1oJ0/ryE
-	 M2Wqa6yAQGj11zqxz9ojOh/7jFLSV2CcVlXB85lE=
+	b=2Cny9qC3gXrEbuUEgj6EDzkkl6PKruITMFL+dy1Rae9uqQu76Pekoum7TApixhoo7
+	 f/Sh3FmsydnOapVbjfP6iwM7WVo2SLCM3J3mgyK9Bs1+M+n8xsjCGSyO4nFLtrdDT8
+	 aAGCLvxnY/nMuqS95/D2FQPxTKZsNGwf/FKA3r98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Hsin-Te Yuan <yuanhsinte@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 282/623] bpf: Use refcount_t instead of atomic_t for mmap_count
-Date: Wed,  5 Feb 2025 14:40:24 +0100
-Message-ID: <20250205134507.019607953@linuxfoundation.org>
+Subject: [PATCH 6.12 330/590] arm64: dts: mediatek: mt8183: willow: Support second source touchscreen
+Date: Wed,  5 Feb 2025 14:41:25 +0100
+Message-ID: <20250205134507.902759852@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Hsin-Te Yuan <yuanhsinte@chromium.org>
 
-[ Upstream commit dfa94ce54f4139c893b9c4ec17df6f7c6a7515d3 ]
+[ Upstream commit 9594935260d76bffe200bea6cfab6ba0752e70d9 ]
 
-Use an API that resembles more the actual use of mmap_count.
+Some willow devices use second source touchscreen.
 
-Found by cocci:
-kernel/bpf/arena.c:245:6-25: WARNING: atomic_dec_and_test variation before object free at line 249.
-
-Fixes: b90d77e5fd78 ("bpf: Fix remap of arena.")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202412292037.LXlYSHKl-lkp@intel.com/
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/6ecce439a6bc81adb85d5080908ea8959b792a50.1735542814.git.xiaopei01@kylinos.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f006bcf1c972 ("arm64: dts: mt8183: Add kukui-jacuzzi-willow board")
+Signed-off-by: Hsin-Te Yuan <yuanhsinte@chromium.org>
+Link: https://lore.kernel.org/r/20241213-touchscreen-v3-2-7c1f670913f9@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 945a5680f6a54..8caf56a308d96 100644
---- a/kernel/bpf/arena.c
-+++ b/kernel/bpf/arena.c
-@@ -218,7 +218,7 @@ static u64 arena_map_mem_usage(const struct bpf_map *map)
- struct vma_list {
- 	struct vm_area_struct *vma;
- 	struct list_head head;
--	atomic_t mmap_count;
-+	refcount_t mmap_count;
- };
+diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
+index 76d33540166f9..c942e461a177e 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-willow.dtsi
+@@ -6,6 +6,21 @@
+ /dts-v1/;
+ #include "mt8183-kukui-jacuzzi.dtsi"
  
- static int remember_vma(struct bpf_arena *arena, struct vm_area_struct *vma)
-@@ -228,7 +228,7 @@ static int remember_vma(struct bpf_arena *arena, struct vm_area_struct *vma)
- 	vml = kmalloc(sizeof(*vml), GFP_KERNEL);
- 	if (!vml)
- 		return -ENOMEM;
--	atomic_set(&vml->mmap_count, 1);
-+	refcount_set(&vml->mmap_count, 1);
- 	vma->vm_private_data = vml;
- 	vml->vma = vma;
- 	list_add(&vml->head, &arena->vma_list);
-@@ -239,7 +239,7 @@ static void arena_vm_open(struct vm_area_struct *vma)
- {
- 	struct vma_list *vml = vma->vm_private_data;
- 
--	atomic_inc(&vml->mmap_count);
-+	refcount_inc(&vml->mmap_count);
- }
- 
- static void arena_vm_close(struct vm_area_struct *vma)
-@@ -248,7 +248,7 @@ static void arena_vm_close(struct vm_area_struct *vma)
- 	struct bpf_arena *arena = container_of(map, struct bpf_arena, map);
- 	struct vma_list *vml = vma->vm_private_data;
- 
--	if (!atomic_dec_and_test(&vml->mmap_count))
-+	if (!refcount_dec_and_test(&vml->mmap_count))
- 		return;
- 	guard(mutex)(&arena->lock);
- 	/* update link list under lock */
++&i2c0 {
++	touchscreen@40 {
++		compatible = "hid-over-i2c";
++		reg = <0x40>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&touchscreen_pins>;
++
++		interrupts-extended = <&pio 155 IRQ_TYPE_LEVEL_LOW>;
++
++		post-power-on-delay-ms = <70>;
++		hid-descr-addr = <0x0001>;
++	};
++};
++
+ &i2c2 {
+ 	trackpad@2c {
+ 		compatible = "hid-over-i2c";
 -- 
 2.39.5
 
