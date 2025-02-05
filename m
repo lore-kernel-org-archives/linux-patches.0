@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2217155A30;
-	Wed,  5 Feb 2025 15:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFD635946;
+	Wed,  5 Feb 2025 15:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768036; cv=none; b=WjjAFvqYGCwh2ZX4/h3/38QtzwEw6d/dTfj3VkaC9kDXgVfVnfqhWRC/QWCPbxXOXwH2kZrLmvRv1zzefeI3PZpGxNbuJSUUEkVVKo0hzkVhWu9RMFYkbOtTtY+6vgVtbe2ILTuq/4MhglfAew9ogDInI8uibvCt5Ucdn4PyOY8=
+	t=1738768040; cv=none; b=fYxp3LOipXwB5en94FOdOnmAD3WB+kEZjHXu9vhVK8tt0eot9oZrVCV23Z044FZy1Do2zjxD1ilQCbu5X5gvNVIviIG/EsN2HTqLtBfLR610MPurdqXazkB1g3bkVNdbWDmpoDun8olD0kybFgdmY/HHmpnCA5x3K4kcmAccU78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768036; c=relaxed/simple;
-	bh=hRygtiYMDYqNINQGoqYeWIHeYNuD9H2yJBI5SmLuMes=;
+	s=arc-20240116; t=1738768040; c=relaxed/simple;
+	bh=PaSw4c/Y4kmiCLrDfBdxBE7q6SJ4ndmMnIxPQ6XsJu8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERricIKQNJ/8Cp6Dswmgaj1xj2njr8GeFC4oFWpxJc+hWmMF8bCW1s40OReOWFoxqIPPVbNLPY0YqHOqRvhzNpT6oIZ6iRJ/o060WG/Kux0OHgXd49Cc8lEqqNdrM4S1utizUGdSJ7zIoVajZJCqg5nBjHPZnV8evqnRqsFmwrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wn5oneP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CUFsiCXKn5opvkS4ZLSqCO5iK4f8thP+v+/CTtgOENHLlIfZqa5I1ABnkUvzRNupiCYpE56MFxGQHHHJtDteTnadXSyPKQZN5wY1dvGmuj6d978CpvFkTBtH1a8CnBHQNlgjqE7x86GXLoM2IF9kTyukpWeYCUvWF6HKrxDNXoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXfG31Da; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wn5oneP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59615C4CED1;
-	Wed,  5 Feb 2025 15:07:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXfG31Da"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F8AC4CED1;
+	Wed,  5 Feb 2025 15:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768036;
-	bh=hRygtiYMDYqNINQGoqYeWIHeYNuD9H2yJBI5SmLuMes=;
+	s=korg; t=1738768040;
+	bh=PaSw4c/Y4kmiCLrDfBdxBE7q6SJ4ndmMnIxPQ6XsJu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wn5oneP0FP5CwVq9ZCrJkADQ81qYiTO+A9X1mM8xwdxVF6sJu4eQWAOHpz7zNdhCv
-	 FVDCsfnzACAJTCrkPxeMJD4hzqU8kP3PiO9RffFswhNRO/FuDg6i8Q0jRTgDrrWrFJ
-	 WsNWpbuxC9WMCWZkBAt4DcUFKh9CBoSpZLCXUGKs=
+	b=wXfG31DaBeUq3DT9HmnUihRdYJez68eOUaD92FsQAQQPKmyaR1opXWz/d44P0ENg/
+	 LN16HSXuFHfI3bEyXUHTZItJmK6f2rRGXlPGbOw+yg5EODuXVlpTzi/rNQVMg+8LQB
+	 OS+/YVYSNbKx0uzJmqp6YdbWx9t9NC/J2LFqrbjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noam Rathaus <noamr@ssd-disclosure.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.12 544/590] netfilter: nf_tables: reject mismatching sum of field_len with set key length
-Date: Wed,  5 Feb 2025 14:44:59 +0100
-Message-ID: <20250205134516.084453829@linuxfoundation.org>
+	John Ogness <john.ogness@linutronix.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Wander Lairson Costa <wander@redhat.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 487/623] serial: 8250: Adjust the timeout for FIFO mode
+Date: Wed,  5 Feb 2025 14:43:49 +0100
+Message-ID: <20250205134514.849481640@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +49,126 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: John Ogness <john.ogness@linutronix.de>
 
-commit 1b9335a8000fb70742f7db10af314104b6ace220 upstream.
+[ Upstream commit d91f98be26510f5f81ec66425bb0306d1ccd571a ]
 
-The field length description provides the length of each separated key
-field in the concatenation, each field gets rounded up to 32-bits to
-calculate the pipapo rule width from pipapo_init(). The set key length
-provides the total size of the key aligned to 32-bits.
+After a console has written a record into UART_TX, it uses
+wait_for_xmitr() to wait until the data has been sent out before
+returning. However, wait_for_xmitr() will timeout after 10ms,
+regardless if the data has been transmitted or not.
 
-Register-based arithmetics still allows for combining mismatching set
-key length and field length description, eg. set key length 10 and field
-description [ 5, 4 ] leading to pipapo width of 12.
+For single bytes, this timeout is sufficient even at very slow
+baud rates, such as 1200bps. However, when FIFO mode is used,
+there may be 64 bytes pushed into the FIFO at once. At a baud
+rate of 115200bps, the 10ms timeout is still sufficient. But
+when using lower baud rates (such as 57600bps), the timeout
+is _not_ sufficient. This causes longer lines to be cut off,
+resulting in lost and horribly misformatted output on the
+console.
 
-Cc: stable@vger.kernel.org
-Fixes: 3ce67e3793f4 ("netfilter: nf_tables: do not allow mismatch field size and set key length")
-Reported-by: Noam Rathaus <noamr@ssd-disclosure.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+When using FIFO mode, take the number of bytes into account to
+determine an appropriate maximum timeout. Increasing the timeout
+does not affect performance since ideally the timeout never
+occurs.
+
+Fixes: 8f3631f0f6eb ("serial/8250: Use fifo in 8250 console driver")
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Wander Lairson Costa <wander@redhat.com>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20250107212702.169493-2-john.ogness@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_port.c | 32 +++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4968,7 +4968,7 @@ static int nft_set_desc_concat_parse(con
- static int nft_set_desc_concat(struct nft_set_desc *desc,
- 			       const struct nlattr *nla)
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index 649e74e9b52f6..b8babbdec8f3f 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2079,7 +2079,8 @@ static void serial8250_break_ctl(struct uart_port *port, int break_state)
+ 	serial8250_rpm_put(up);
+ }
+ 
+-static void wait_for_lsr(struct uart_8250_port *up, int bits)
++/* Returns true if @bits were set, false on timeout */
++static bool wait_for_lsr(struct uart_8250_port *up, int bits)
  {
--	u32 num_regs = 0, key_num_regs = 0;
-+	u32 len = 0, num_regs;
- 	struct nlattr *attr;
- 	int rem, err, i;
+ 	unsigned int status, tmout = 10000;
  
-@@ -4982,12 +4982,12 @@ static int nft_set_desc_concat(struct nf
+@@ -2094,11 +2095,11 @@ static void wait_for_lsr(struct uart_8250_port *up, int bits)
+ 		udelay(1);
+ 		touch_nmi_watchdog();
  	}
++
++	return (tmout != 0);
+ }
  
- 	for (i = 0; i < desc->field_count; i++)
--		num_regs += DIV_ROUND_UP(desc->field_len[i], sizeof(u32));
-+		len += round_up(desc->field_len[i], sizeof(u32));
+-/*
+- *	Wait for transmitter & holding register to empty
+- */
++/* Wait for transmitter and holding register to empty with timeout */
+ static void wait_for_xmitr(struct uart_8250_port *up, int bits)
+ {
+ 	unsigned int tmout;
+@@ -3317,6 +3318,16 @@ static void serial8250_console_restore(struct uart_8250_port *up)
+ 	serial8250_out_MCR(up, up->mcr | UART_MCR_DTR | UART_MCR_RTS);
+ }
  
--	key_num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
--	if (key_num_regs != num_regs)
-+	if (len != desc->klen)
- 		return -EINVAL;
++static void fifo_wait_for_lsr(struct uart_8250_port *up, unsigned int count)
++{
++	unsigned int i;
++
++	for (i = 0; i < count; i++) {
++		if (wait_for_lsr(up, UART_LSR_THRE))
++			return;
++	}
++}
++
+ /*
+  * Print a string to the serial port using the device FIFO
+  *
+@@ -3326,13 +3337,15 @@ static void serial8250_console_restore(struct uart_8250_port *up)
+ static void serial8250_console_fifo_write(struct uart_8250_port *up,
+ 					  const char *s, unsigned int count)
+ {
+-	int i;
+ 	const char *end = s + count;
+ 	unsigned int fifosize = up->tx_loadsz;
++	unsigned int tx_count = 0;
+ 	bool cr_sent = false;
++	unsigned int i;
  
-+	num_regs = DIV_ROUND_UP(desc->klen, sizeof(u32));
- 	if (num_regs > NFT_REG32_COUNT)
- 		return -E2BIG;
+ 	while (s != end) {
+-		wait_for_lsr(up, UART_LSR_THRE);
++		/* Allow timeout for each byte of a possibly full FIFO */
++		fifo_wait_for_lsr(up, fifosize);
  
+ 		for (i = 0; i < fifosize && s != end; ++i) {
+ 			if (*s == '\n' && !cr_sent) {
+@@ -3343,7 +3356,14 @@ static void serial8250_console_fifo_write(struct uart_8250_port *up,
+ 				cr_sent = false;
+ 			}
+ 		}
++		tx_count = i;
+ 	}
++
++	/*
++	 * Allow timeout for each byte written since the caller will only wait
++	 * for UART_LSR_BOTH_EMPTY using the timeout of a single character
++	 */
++	fifo_wait_for_lsr(up, tx_count);
+ }
+ 
+ /*
+-- 
+2.39.5
+
 
 
