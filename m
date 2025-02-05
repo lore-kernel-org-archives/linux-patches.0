@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6846D156C5E;
-	Wed,  5 Feb 2025 15:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6441494DF;
+	Wed,  5 Feb 2025 15:13:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768398; cv=none; b=O/Hzb8cNLq6tESYxeWsIuvIgr0bF+j+5WBnJFy7AzZx6Q5HoVUvy9itaZKzbf/GMUnQ2f99lcqMXjUB8iWSEhvgOkBgkJcQDHeYYWd9mZelMzpvUVWmhj35N4CqVzNx7iIkGGBdp0SQhSP5QqUebFIGsUAnI/fINY2+E2KaOwKE=
+	t=1738768401; cv=none; b=I11l5vCZfMTHw/qqh4W4k2napMiOt4nYkDk0bq6S72sakFXO4GSoOjtqHjJ4bm01I684BTFXObnvm83p7pPROVoqad8qZ/r2Hie/RvXdUOeGVtAfmilg1u0Uf20i5Hr3f2+JIj9ygauUi39okIz651lzFN+tJUWmO4PDKgVttGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768398; c=relaxed/simple;
-	bh=SQPTs65JFDwS8ZzZw3eB1VOyQm2vw0wRPtf39v+ymKA=;
+	s=arc-20240116; t=1738768401; c=relaxed/simple;
+	bh=pNXpN99s1QHLRv8NnU1/uJ0hafcgDFQdAhR4cGsAlqs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4MNmEKhdXct30NOqDsqmFDDhBQvYiYNPtVC++zuvaAvcmFez7zSwcDq4UunhZBjI4X15X02c31mRyoCcmdgeO6i8FbJ0+peGyazxe8xydqbUDGQTW1YKUX7Pll9/ayCI5ZAJ801J53ZQpAsp+qIexRAa2Ma7gdsOnWkCZyQYjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y86P5Laj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XRiwiu+4B7a2HcAEj05x0Av/LSY6L0ypHmf69QjGuF5V739NWIEOlp2izjT69zCn6HCHZ2JRJCTRNmWLdpJHQGj3rCrXgYO6pwQDhrK2Y698T2AHLXwMxcUPP0Kf7cFjGij67JVEk8irEJIxFVCi5J/5+13YhD+SVyatAOe7PKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJAbdR0n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y86P5Laj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26F07C4CEDD;
-	Wed,  5 Feb 2025 15:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJAbdR0n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B5DC4CED1;
+	Wed,  5 Feb 2025 15:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768397;
-	bh=SQPTs65JFDwS8ZzZw3eB1VOyQm2vw0wRPtf39v+ymKA=;
+	s=korg; t=1738768401;
+	bh=pNXpN99s1QHLRv8NnU1/uJ0hafcgDFQdAhR4cGsAlqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y86P5Laj1OPQdYjtCaXd0CvrcFOniwIh0Y0OVxEgyEfucXxSlHDu57c6ZHBJ39d/H
-	 TB5R1m5QQdN0cIVJ2ZQYgTl4U4U77N844cnZrhkJuNfSB9unkEum5H53p8uWm+jxCR
-	 wiH/1ZrZl39Q6dCjMpoRyNyfHh0JoyCmg7KR25HE=
+	b=XJAbdR0nPIw22rtK/sUH9sr7l1U5U2TyJuXaMvLR7rmSVDp0+vZiXjsQBPlu/2LMk
+	 h1jwy16UwNKBjjRVBZ3cBhVXrQwJQD+Ft4mS9W/ZCL3c/8MVs90Xf4L1k/yCL3fPgC
+	 eWIbmY8JjeARlQFCfHGaWvriQNP+9x9sSkK0TZIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 543/623] Bluetooth: btnxpuart: Fix glitches seen in dual A2DP streaming
-Date: Wed,  5 Feb 2025 14:44:45 +0100
-Message-ID: <20250205134516.996101028@linuxfoundation.org>
+Subject: [PATCH 6.13 544/623] vsock: Keep the binding until socket destruction
+Date: Wed,  5 Feb 2025 14:44:46 +0100
+Message-ID: <20250205134517.034256003@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,48 +52,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 7de119bb79a63f6a1959b83117a98734914fb0b0 ]
+[ Upstream commit fcdd2242c0231032fc84e1404315c245ae56322a ]
 
-This fixes a regression caused by previous commit for fixing truncated
-ACL data, which is causing some intermittent glitches when running two
-A2DP streams.
+Preserve sockets bindings; this includes both resulting from an explicit
+bind() and those implicitly bound through autobind during connect().
 
-serdev_device_write_buf() is the root cause of the glitch, which is
-reverted, and the TX work will continue to write until the queue is empty.
+Prevents socket unbinding during a transport reassignment, which fixes a
+use-after-free:
 
-This change fixes both issues. No A2DP streaming glitches or truncated
-ACL data issue observed.
+    1. vsock_create() (refcnt=1) calls vsock_insert_unbound() (refcnt=2)
+    2. transport->release() calls vsock_remove_bound() without checking if
+       sk was bound and moved to bound list (refcnt=1)
+    3. vsock_bind() assumes sk is in unbound list and before
+       __vsock_insert_bound(vsock_bound_sockets()) calls
+       __vsock_remove_bound() which does:
+           list_del_init(&vsk->bound_table); // nop
+           sock_put(&vsk->sk);               // refcnt=0
 
-Fixes: 8023dd220425 ("Bluetooth: btnxpuart: Fix driver sending truncated data")
-Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+BUG: KASAN: slab-use-after-free in __vsock_bind+0x62e/0x730
+Read of size 4 at addr ffff88816b46a74c by task a.out/2057
+ dump_stack_lvl+0x68/0x90
+ print_report+0x174/0x4f6
+ kasan_report+0xb9/0x190
+ __vsock_bind+0x62e/0x730
+ vsock_bind+0x97/0xe0
+ __sys_bind+0x154/0x1f0
+ __x64_sys_bind+0x6e/0xb0
+ do_syscall_64+0x93/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Allocated by task 2057:
+ kasan_save_stack+0x1e/0x40
+ kasan_save_track+0x10/0x30
+ __kasan_slab_alloc+0x85/0x90
+ kmem_cache_alloc_noprof+0x131/0x450
+ sk_prot_alloc+0x5b/0x220
+ sk_alloc+0x2c/0x870
+ __vsock_create.constprop.0+0x2e/0xb60
+ vsock_create+0xe4/0x420
+ __sock_create+0x241/0x650
+ __sys_socket+0xf2/0x1a0
+ __x64_sys_socket+0x6e/0xb0
+ do_syscall_64+0x93/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Freed by task 2057:
+ kasan_save_stack+0x1e/0x40
+ kasan_save_track+0x10/0x30
+ kasan_save_free_info+0x37/0x60
+ __kasan_slab_free+0x4b/0x70
+ kmem_cache_free+0x1a1/0x590
+ __sk_destruct+0x388/0x5a0
+ __vsock_bind+0x5e1/0x730
+ vsock_bind+0x97/0xe0
+ __sys_bind+0x154/0x1f0
+ __x64_sys_bind+0x6e/0xb0
+ do_syscall_64+0x93/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 7 PID: 2057 at lib/refcount.c:25 refcount_warn_saturate+0xce/0x150
+RIP: 0010:refcount_warn_saturate+0xce/0x150
+ __vsock_bind+0x66d/0x730
+ vsock_bind+0x97/0xe0
+ __sys_bind+0x154/0x1f0
+ __x64_sys_bind+0x6e/0xb0
+ do_syscall_64+0x93/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+refcount_t: underflow; use-after-free.
+WARNING: CPU: 7 PID: 2057 at lib/refcount.c:28 refcount_warn_saturate+0xee/0x150
+RIP: 0010:refcount_warn_saturate+0xee/0x150
+ vsock_remove_bound+0x187/0x1e0
+ __vsock_release+0x383/0x4a0
+ vsock_release+0x90/0x120
+ __sock_release+0xa3/0x250
+ sock_close+0x14/0x20
+ __fput+0x359/0xa80
+ task_work_run+0x107/0x1d0
+ do_exit+0x847/0x2560
+ do_group_exit+0xb8/0x250
+ __x64_sys_exit_group+0x3a/0x50
+ x64_sys_call+0xfec/0x14f0
+ do_syscall_64+0x93/0x1b0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: c0cfa2d8a788 ("vsock: add multi-transports support")
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Link: https://patch.msgid.link/20250128-vsock-transport-vs-autobind-v3-1-1cf57065b770@rbox.co
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/vmw_vsock/af_vsock.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index 1230045d78a5f..aa5ec1d444a9d 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1381,13 +1381,12 @@ static void btnxpuart_tx_work(struct work_struct *work)
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index fa9d1b49599bf..cfe18bc8fdbe7 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -337,7 +337,10 @@ EXPORT_SYMBOL_GPL(vsock_find_connected_socket);
  
- 	while ((skb = nxp_dequeue(nxpdev))) {
- 		len = serdev_device_write_buf(serdev, skb->data, skb->len);
--		serdev_device_wait_until_sent(serdev, 0);
- 		hdev->stat.byte_tx += len;
+ void vsock_remove_sock(struct vsock_sock *vsk)
+ {
+-	vsock_remove_bound(vsk);
++	/* Transport reassignment must not remove the binding. */
++	if (sock_flag(sk_vsock(vsk), SOCK_DEAD))
++		vsock_remove_bound(vsk);
++
+ 	vsock_remove_connected(vsk);
+ }
+ EXPORT_SYMBOL_GPL(vsock_remove_sock);
+@@ -821,12 +824,13 @@ static void __vsock_release(struct sock *sk, int level)
+ 	 */
+ 	lock_sock_nested(sk, level);
  
- 		skb_pull(skb, len);
- 		if (skb->len > 0) {
- 			skb_queue_head(&nxpdev->txq, skb);
--			break;
-+			continue;
- 		}
++	sock_orphan(sk);
++
+ 	if (vsk->transport)
+ 		vsk->transport->release(vsk);
+ 	else if (sock_type_connectible(sk->sk_type))
+ 		vsock_remove_sock(vsk);
  
- 		switch (hci_skb_pkt_type(skb)) {
+-	sock_orphan(sk);
+ 	sk->sk_shutdown = SHUTDOWN_MASK;
+ 
+ 	skb_queue_purge(&sk->sk_receive_queue);
 -- 
 2.39.5
 
