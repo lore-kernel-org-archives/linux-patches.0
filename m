@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C10151988;
-	Wed,  5 Feb 2025 14:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCB4151988;
+	Wed,  5 Feb 2025 14:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766129; cv=none; b=uOY8DPKGcDZNKhp8CJ68YUje1AhysTQxE/Gcq5/ir9j5a1EOnzHB+jAjMIhx32w+LxT7ZKZxrSu6ge2O4jKPBmeI0TdR1G3YPMjW1RxIogE55iimmmpU24dIwaM5/5lTNDE1eAVpoMqc4czQger8IBniuv4oqtpV3n6q7EkVsq4=
+	t=1738766133; cv=none; b=J8ybwfnOJZGTMVb5YbiCfLxnVmNK1m6Y5r76CqFPhp6ib87JuDXkznQcvIqBvZkSSwFw/41sxOrIXgYWYZl2uE91aL01MmAFodvvXp6zYYJhYDRXWjY5Uhf7CARoboWdqX/12kOPO6bnTcMssRS4V8TfeiGY8HLLaxytMoB6Qpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766129; c=relaxed/simple;
-	bh=ep0An/c+E9V/tJt+mG7FrrTer5bu3vJ5Qo28ucqgcxo=;
+	s=arc-20240116; t=1738766133; c=relaxed/simple;
+	bh=dB/QCwemnRnKyfgwa3YUZgTeDq4yhkrWYdiAGekmLpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hl+dJkRCy7t8XVIH7pgNYDzkdsAav24vbWgjvwzNQpl0hNat7h2QfHWvK5CsFZSYFx3FkCFhxN8uj7nnenk3mHTZJzNRd7yXCZ5QIQaFsH33FuVB9njdc5hweZjztjw4Iifn0wrxMjTkoccsV51hnwQGWL8+hd4t1PPMPBTLUes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=osL9P6yF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BlTMEqILTmKuZTO5td2qSzap7aykwJann7AmbQdBLgRdRc2vcqpdU0QMEWvfyeOLHdmRcgYpp8v/Yjbe5Ge9fmrkVbMI2BB4yvUOcECwbR8bgJWZ2TMr4XwJt8KTKjQIH9irgNJRmx6Kgreyymxr4AePggwx22EiulxnA3WUehU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMGPg0qa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="osL9P6yF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4410DC4CED1;
-	Wed,  5 Feb 2025 14:35:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMGPg0qa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86387C4CED1;
+	Wed,  5 Feb 2025 14:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766129;
-	bh=ep0An/c+E9V/tJt+mG7FrrTer5bu3vJ5Qo28ucqgcxo=;
+	s=korg; t=1738766132;
+	bh=dB/QCwemnRnKyfgwa3YUZgTeDq4yhkrWYdiAGekmLpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=osL9P6yFr3YIyhTWWZvHH2XIZ+S9QyxkiIas/yAlX0kmTrAmU+XGbB5fj1eQYYOne
-	 A32ImDUbnOvDI8b5OxQ/zuX0GQMgNFTVlI9tiartjKU+Nosyjvp42XHztPrdtH06aO
-	 7Lk5F6Eo9MB9sjibz1Vx66uSJZqn7LNKPBRGA+/c=
+	b=DMGPg0qa5+Qxv3MPRx7Bqf019JWj/oOJYm7Qt7GsJjRemkuMKbDE3oWFX2NDPA8C8
+	 QoOY+/ZUn/okNwRL3ptCFiyFJwVkD80r05EZrLtLCMhY2acoCQgNLMcCIdjZjhMtYS
+	 pr7XskDVKnIZh600/f/svms3gdt5EDL+dTTrWMhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	David Thompson <davthompson@nvidia.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 245/623] platform/mellanox: mlxbf-pmc: incorrect type in assignment
-Date: Wed,  5 Feb 2025 14:39:47 +0100
-Message-ID: <20250205134505.599561703@linuxfoundation.org>
+Subject: [PATCH 6.12 278/590] ALSA: hda: Fix compilation of snd_hdac_adsp_xxx() helpers
+Date: Wed,  5 Feb 2025 14:40:33 +0100
+Message-ID: <20250205134505.914986834@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +46,201 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b5dbb8e23cb334460acdb37910ce3784926e1cf1 ]
+[ Upstream commit 7579790915387396e26041ceafbc07348658edef ]
 
-Fix sparse warnings:
-expected 'void __iomem *addr', but got 'void *addr'
+The snd_hdac_adsp_xxx() wrap snd_hdac_reg_xxx() helpers to simplify
+register access for AudioDSP drivers e.g.: the avs-driver. Byte- and
+word-variants of said helps do not expand to bare readx/writex()
+operations but functions instead and, due to pointer type
+incompatibility, cause compilation to fail.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202411121935.cgFcEMO4-lkp@intel.com/
-Fixes: 423c3361855c ("platform/mellanox: mlxbf-pmc: Add support for BlueField-3")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: David Thompson <davthompson@nvidia.com>
-Link: https://lore.kernel.org/r/fece26ad40620b1e0beb733b9bba3de3ce325761.1732088929.git.xiaopei01@kylinos.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+As the macros are utilized by the avs-driver alone, relocate the code
+introduced with commit c19bd02e9029 ("ALSA: hda: Add helper macros for
+DSP capable devices") into the avs/ directory and update it to operate
+on 'adev' i.e.: the avs-driver-context directly to fix the issue.
+
+Fixes: c19bd02e9029 ("ALSA: hda: Add helper macros for DSP capable devices")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Acked-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20250110113326.3809897-2-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/sound/hdaudio_ext.h     | 45 ---------------------------------
+ sound/soc/intel/avs/apl.c       |  1 +
+ sound/soc/intel/avs/cnl.c       |  1 +
+ sound/soc/intel/avs/registers.h | 45 +++++++++++++++++++++++++++++++++
+ sound/soc/intel/avs/skl.c       |  1 +
+ 5 files changed, 48 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index 9d18dfca6a673..9ff7b487dc489 100644
---- a/drivers/platform/mellanox/mlxbf-pmc.c
-+++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -1168,7 +1168,7 @@ static int mlxbf_pmc_program_l3_counter(unsigned int blk_num, u32 cnt_num, u32 e
- /* Method to handle crspace counter programming */
- static int mlxbf_pmc_program_crspace_counter(unsigned int blk_num, u32 cnt_num, u32 evt)
- {
--	void *addr;
-+	void __iomem *addr;
- 	u32 word;
- 	int ret;
+diff --git a/include/sound/hdaudio_ext.h b/include/sound/hdaudio_ext.h
+index 957295364a5e3..4c7a40e149a59 100644
+--- a/include/sound/hdaudio_ext.h
++++ b/include/sound/hdaudio_ext.h
+@@ -2,8 +2,6 @@
+ #ifndef __SOUND_HDAUDIO_EXT_H
+ #define __SOUND_HDAUDIO_EXT_H
  
-@@ -1192,7 +1192,7 @@ static int mlxbf_pmc_program_crspace_counter(unsigned int blk_num, u32 cnt_num,
- /* Method to clear crspace counter value */
- static int mlxbf_pmc_clear_crspace_counter(unsigned int blk_num, u32 cnt_num)
- {
--	void *addr;
-+	void __iomem *addr;
+-#include <linux/io-64-nonatomic-lo-hi.h>
+-#include <linux/iopoll.h>
+ #include <sound/hdaudio.h>
  
- 	addr = pmc->block[blk_num].mmio_base +
- 		MLXBF_PMC_CRSPACE_PERFMON_VAL0(pmc->block[blk_num].counters) +
-@@ -1405,7 +1405,7 @@ static int mlxbf_pmc_read_l3_event(unsigned int blk_num, u32 cnt_num, u64 *resul
- static int mlxbf_pmc_read_crspace_event(unsigned int blk_num, u32 cnt_num, u64 *result)
- {
- 	u32 word, evt;
--	void *addr;
-+	void __iomem *addr;
- 	int ret;
+ int snd_hdac_ext_bus_init(struct hdac_bus *bus, struct device *dev,
+@@ -119,49 +117,6 @@ int snd_hdac_ext_bus_link_put(struct hdac_bus *bus, struct hdac_ext_link *hlink)
  
- 	addr = pmc->block[blk_num].mmio_base +
+ void snd_hdac_ext_bus_link_power(struct hdac_device *codec, bool enable);
+ 
+-#define snd_hdac_adsp_writeb(chip, reg, value) \
+-	snd_hdac_reg_writeb(chip, (chip)->dsp_ba + (reg), value)
+-#define snd_hdac_adsp_readb(chip, reg) \
+-	snd_hdac_reg_readb(chip, (chip)->dsp_ba + (reg))
+-#define snd_hdac_adsp_writew(chip, reg, value) \
+-	snd_hdac_reg_writew(chip, (chip)->dsp_ba + (reg), value)
+-#define snd_hdac_adsp_readw(chip, reg) \
+-	snd_hdac_reg_readw(chip, (chip)->dsp_ba + (reg))
+-#define snd_hdac_adsp_writel(chip, reg, value) \
+-	snd_hdac_reg_writel(chip, (chip)->dsp_ba + (reg), value)
+-#define snd_hdac_adsp_readl(chip, reg) \
+-	snd_hdac_reg_readl(chip, (chip)->dsp_ba + (reg))
+-#define snd_hdac_adsp_writeq(chip, reg, value) \
+-	snd_hdac_reg_writeq(chip, (chip)->dsp_ba + (reg), value)
+-#define snd_hdac_adsp_readq(chip, reg) \
+-	snd_hdac_reg_readq(chip, (chip)->dsp_ba + (reg))
+-
+-#define snd_hdac_adsp_updateb(chip, reg, mask, val) \
+-	snd_hdac_adsp_writeb(chip, reg, \
+-			(snd_hdac_adsp_readb(chip, reg) & ~(mask)) | (val))
+-#define snd_hdac_adsp_updatew(chip, reg, mask, val) \
+-	snd_hdac_adsp_writew(chip, reg, \
+-			(snd_hdac_adsp_readw(chip, reg) & ~(mask)) | (val))
+-#define snd_hdac_adsp_updatel(chip, reg, mask, val) \
+-	snd_hdac_adsp_writel(chip, reg, \
+-			(snd_hdac_adsp_readl(chip, reg) & ~(mask)) | (val))
+-#define snd_hdac_adsp_updateq(chip, reg, mask, val) \
+-	snd_hdac_adsp_writeq(chip, reg, \
+-			(snd_hdac_adsp_readq(chip, reg) & ~(mask)) | (val))
+-
+-#define snd_hdac_adsp_readb_poll(chip, reg, val, cond, delay_us, timeout_us) \
+-	readb_poll_timeout((chip)->dsp_ba + (reg), val, cond, \
+-			   delay_us, timeout_us)
+-#define snd_hdac_adsp_readw_poll(chip, reg, val, cond, delay_us, timeout_us) \
+-	readw_poll_timeout((chip)->dsp_ba + (reg), val, cond, \
+-			   delay_us, timeout_us)
+-#define snd_hdac_adsp_readl_poll(chip, reg, val, cond, delay_us, timeout_us) \
+-	readl_poll_timeout((chip)->dsp_ba + (reg), val, cond, \
+-			   delay_us, timeout_us)
+-#define snd_hdac_adsp_readq_poll(chip, reg, val, cond, delay_us, timeout_us) \
+-	readq_poll_timeout((chip)->dsp_ba + (reg), val, cond, \
+-			   delay_us, timeout_us)
+-
+ struct hdac_ext_device;
+ 
+ /* ops common to all codec drivers */
+diff --git a/sound/soc/intel/avs/apl.c b/sound/soc/intel/avs/apl.c
+index d443fe8d51aee..3dccf0a57a3a1 100644
+--- a/sound/soc/intel/avs/apl.c
++++ b/sound/soc/intel/avs/apl.c
+@@ -12,6 +12,7 @@
+ #include "avs.h"
+ #include "messages.h"
+ #include "path.h"
++#include "registers.h"
+ #include "topology.h"
+ 
+ static irqreturn_t avs_apl_dsp_interrupt(struct avs_dev *adev)
+diff --git a/sound/soc/intel/avs/cnl.c b/sound/soc/intel/avs/cnl.c
+index bd3c4bb8bf5a1..03f8fb0dc187f 100644
+--- a/sound/soc/intel/avs/cnl.c
++++ b/sound/soc/intel/avs/cnl.c
+@@ -9,6 +9,7 @@
+ #include <sound/hdaudio_ext.h>
+ #include "avs.h"
+ #include "messages.h"
++#include "registers.h"
+ 
+ static void avs_cnl_ipc_interrupt(struct avs_dev *adev)
+ {
+diff --git a/sound/soc/intel/avs/registers.h b/sound/soc/intel/avs/registers.h
+index f76e91cff2a9a..5b6d60eb3c18b 100644
+--- a/sound/soc/intel/avs/registers.h
++++ b/sound/soc/intel/avs/registers.h
+@@ -9,6 +9,8 @@
+ #ifndef __SOUND_SOC_INTEL_AVS_REGS_H
+ #define __SOUND_SOC_INTEL_AVS_REGS_H
+ 
++#include <linux/io-64-nonatomic-lo-hi.h>
++#include <linux/iopoll.h>
+ #include <linux/sizes.h>
+ 
+ #define AZX_PCIREG_PGCTL		0x44
+@@ -98,4 +100,47 @@
+ #define avs_downlink_addr(adev) \
+ 	avs_sram_addr(adev, AVS_DOWNLINK_WINDOW)
+ 
++#define snd_hdac_adsp_writeb(adev, reg, value) \
++	snd_hdac_reg_writeb(&(adev)->base.core, (adev)->dsp_ba + (reg), value)
++#define snd_hdac_adsp_readb(adev, reg) \
++	snd_hdac_reg_readb(&(adev)->base.core, (adev)->dsp_ba + (reg))
++#define snd_hdac_adsp_writew(adev, reg, value) \
++	snd_hdac_reg_writew(&(adev)->base.core, (adev)->dsp_ba + (reg), value)
++#define snd_hdac_adsp_readw(adev, reg) \
++	snd_hdac_reg_readw(&(adev)->base.core, (adev)->dsp_ba + (reg))
++#define snd_hdac_adsp_writel(adev, reg, value) \
++	snd_hdac_reg_writel(&(adev)->base.core, (adev)->dsp_ba + (reg), value)
++#define snd_hdac_adsp_readl(adev, reg) \
++	snd_hdac_reg_readl(&(adev)->base.core, (adev)->dsp_ba + (reg))
++#define snd_hdac_adsp_writeq(adev, reg, value) \
++	snd_hdac_reg_writeq(&(adev)->base.core, (adev)->dsp_ba + (reg), value)
++#define snd_hdac_adsp_readq(adev, reg) \
++	snd_hdac_reg_readq(&(adev)->base.core, (adev)->dsp_ba + (reg))
++
++#define snd_hdac_adsp_updateb(adev, reg, mask, val) \
++	snd_hdac_adsp_writeb(adev, reg, \
++			(snd_hdac_adsp_readb(adev, reg) & ~(mask)) | (val))
++#define snd_hdac_adsp_updatew(adev, reg, mask, val) \
++	snd_hdac_adsp_writew(adev, reg, \
++			(snd_hdac_adsp_readw(adev, reg) & ~(mask)) | (val))
++#define snd_hdac_adsp_updatel(adev, reg, mask, val) \
++	snd_hdac_adsp_writel(adev, reg, \
++			(snd_hdac_adsp_readl(adev, reg) & ~(mask)) | (val))
++#define snd_hdac_adsp_updateq(adev, reg, mask, val) \
++	snd_hdac_adsp_writeq(adev, reg, \
++			(snd_hdac_adsp_readq(adev, reg) & ~(mask)) | (val))
++
++#define snd_hdac_adsp_readb_poll(adev, reg, val, cond, delay_us, timeout_us) \
++	readb_poll_timeout((adev)->dsp_ba + (reg), val, cond, \
++			   delay_us, timeout_us)
++#define snd_hdac_adsp_readw_poll(adev, reg, val, cond, delay_us, timeout_us) \
++	readw_poll_timeout((adev)->dsp_ba + (reg), val, cond, \
++			   delay_us, timeout_us)
++#define snd_hdac_adsp_readl_poll(adev, reg, val, cond, delay_us, timeout_us) \
++	readl_poll_timeout((adev)->dsp_ba + (reg), val, cond, \
++			   delay_us, timeout_us)
++#define snd_hdac_adsp_readq_poll(adev, reg, val, cond, delay_us, timeout_us) \
++	readq_poll_timeout((adev)->dsp_ba + (reg), val, cond, \
++			   delay_us, timeout_us)
++
+ #endif /* __SOUND_SOC_INTEL_AVS_REGS_H */
+diff --git a/sound/soc/intel/avs/skl.c b/sound/soc/intel/avs/skl.c
+index 34f859d6e5a49..d66ef000de9ee 100644
+--- a/sound/soc/intel/avs/skl.c
++++ b/sound/soc/intel/avs/skl.c
+@@ -12,6 +12,7 @@
+ #include "avs.h"
+ #include "cldma.h"
+ #include "messages.h"
++#include "registers.h"
+ 
+ void avs_skl_ipc_interrupt(struct avs_dev *adev)
+ {
 -- 
 2.39.5
 
