@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1BB1519AA;
-	Wed,  5 Feb 2025 14:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5D6F510;
+	Wed,  5 Feb 2025 14:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764433; cv=none; b=H3f+ooqjuN/nHRgNTLgCkrw6mAjtJJ8L1locsjjBr2ikMrqDgy67fG7y8hlKqUXcWt5RvULCFFjLRPfWk41zCroNqN6VUr1wLCn/wFl3+dCic01p5j7ewmSLI8w1E2r7p6ljCdS9s9oLvv9VDJo3kBZmU7O7cG1Iz2DkMs/7uOI=
+	t=1738764436; cv=none; b=MTkZ1QQl0fKqmW7pOydL9yVrp/XbiuHFb0wKOEe2myCSLCw8hpBKUtsCTOJa6MqQiLYUYSHj3EXh8bjMidvlkI6JDmWNujPDC0gqSGLAaHeOLbxabTTFSmqbKwVOYXz+4amWD0VyHBO8wIa0FVsOrSNlx+i9krCEPzl+BTp4QK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764433; c=relaxed/simple;
-	bh=RKKSZsU+4Ywa95KqkGkTh5LILB4toSSx6cOMFGmyRS8=;
+	s=arc-20240116; t=1738764436; c=relaxed/simple;
+	bh=tNsUcXFzmt0QykcNrFTI7jgyiqMB22Mb6lJ61fcPr+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qpx9giF9CpL+DbdANhkVqZFJsUUtfXxYYGLZcXHQKAGZ/acENea0hHKgFR65xiz7kUSCHa/VLW9OaSL1msyYacvNfntMFAhuNC6lHjjv7XA+c2fEfxKXwVEOM5BcQxMjUBdgvy9UeR1wajbyEMk7kmHyw07CWRKDhi0KSV1nmM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZVH84Ip; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRtucJM69UzFgFTkZUHOQd5FzQUThGwJMdw0QXpKrPW1t/ZVB+Bfm6NmxqdpywCVNEOwBhHG7L8DHzGukeB+GhecEY+e0MeGGqDM6YNuBi8Eg9FZjksyAOJXoToC18U38gwBjFAMyB3mvGtXEWM40XqoZqcCj3TCj7gOAH9O51Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TnnfSaKM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZVH84Ip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D36C4CED1;
-	Wed,  5 Feb 2025 14:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TnnfSaKM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDE8C4CEDD;
+	Wed,  5 Feb 2025 14:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764432;
-	bh=RKKSZsU+4Ywa95KqkGkTh5LILB4toSSx6cOMFGmyRS8=;
+	s=korg; t=1738764436;
+	bh=tNsUcXFzmt0QykcNrFTI7jgyiqMB22Mb6lJ61fcPr+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZVH84IpZWAetPxsr5UzsGAJK7VnJBLt3yosAmh7w/DXl/duQdrRZO62UE37U4o2K
-	 +y8Tpn49QrEkY4VC5828V+Wvva15y6vzo8eFANLuWxqIQ94I7ldSyCQSUcJhKr6Vwd
-	 4HbrfqQHWJbre/W/WQxeq9cCqTjFRf27mu0EooQQ=
+	b=TnnfSaKM5iwtfLyqCs7M5Iytn/TZjYw/uzSrLdc008wNi4DJaCaNNHhfItlK+hoix
+	 uinOqjyqUofaOd5Fpnap9KjQx+Mz/KPe6PDPO8WtODfdBR+PdQaSoPk6g6MMYlrHMX
+	 gXkOE6wM2Tkg9R9UezU6yT06ZP6iytEzpUxaWUUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengfei Li <pengfei.li_1@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Hermes Wu <hermes.wu@ite.com.tw>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 123/590] clk: imx93: Move IMX93_CLK_END macro to clk driver
-Date: Wed,  5 Feb 2025 14:37:58 +0100
-Message-ID: <20250205134459.968031371@linuxfoundation.org>
+Subject: [PATCH 6.13 078/623] drm/bridge: it6505: Change definition of AUX_FIFO_MAX_SIZE
+Date: Wed,  5 Feb 2025 14:37:00 +0100
+Message-ID: <20250205134459.209886696@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengfei Li <pengfei.li_1@nxp.com>
+From: Hermes Wu <hermes.wu@ite.com.tw>
 
-[ Upstream commit 0af18ba60752e8a4ba34404c1d9a4a799da690f5 ]
+[ Upstream commit c14870218c14532b0f0a7805b96a4d3c92d06fb2 ]
 
-IMX93_CLK_END was previously defined in imx93-clock.h to indicate
-the number of clocks. However, it is not part of the ABI. For starters
-it does no really appear in DTS. But what's more important - new clocks
-are described later, which contradicts this define in binding header.
-So move this macro to clock driver.
+The hardware AUX FIFO is 16 bytes
+Change definition of AUX_FIFO_MAX_SIZE to 16
 
-Signed-off-by: Pengfei Li <pengfei.li_1@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20241023184651.381265-2-pengfei.li_1@nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Stable-dep-of: 6a7853544482 ("clk: imx93: Add IMX93_CLK_SPDIF_IPG clock")
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241230-v7-upstream-v7-1-e0fdd4844703@ite.corp-partner.google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx93.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/ite-it6505.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
-index c6a9bc8ecc1fc..c8b65146e76ea 100644
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -15,6 +15,8 @@
- 
- #include "clk.h"
- 
-+#define IMX93_CLK_END 202
-+
- enum clk_sel {
- 	LOW_SPEED_IO_SEL,
- 	NON_IO_SEL,
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index 008d86cc562af..cf891e7677c0e 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -300,7 +300,7 @@
+ #define MAX_CR_LEVEL 0x03
+ #define MAX_EQ_LEVEL 0x03
+ #define AUX_WAIT_TIMEOUT_MS 15
+-#define AUX_FIFO_MAX_SIZE 32
++#define AUX_FIFO_MAX_SIZE 16
+ #define PIXEL_CLK_DELAY 1
+ #define PIXEL_CLK_INVERSE 0
+ #define ADJUST_PHASE_THRESHOLD 80000
 -- 
 2.39.5
 
