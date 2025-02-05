@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F381C6BE;
-	Wed,  5 Feb 2025 15:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699E31519BF;
+	Wed,  5 Feb 2025 15:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767881; cv=none; b=hyjC3Rx0WRYwXxX+hLLIjSgpQWH7XrJvVcasrBsVvbudmZWQrxICBDe9GENbTYgQroZ09KepyGgYARqRjeE7LMGzYiiUSCz8EmJakesFH6r2BF7ZEsGD6pbyzdLp8OieXQWseWKnSwqXnxxLYI6MLYbmQDsRe8nft+/efU4woKo=
+	t=1738767884; cv=none; b=S10vUl1hVIRqxZgbtiY3j9eRNSEOc6y/63Rjyj+nszZ/y+VAPFV1Hbiu1XPOrPs/4Sdi1jjnZzBQYPZAw38pbqo4MvzLGdq22b4dZqhY0iohxLsSA5Fknu5i320ilfo2QfFm9t707Yu+U4iSpiYerJUoM8yVNTpcSp/TWdZGy7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767881; c=relaxed/simple;
-	bh=+Totolw3kj1DxV9w5f+ouYvzR2TmBNaulCaAOBFx7N0=;
+	s=arc-20240116; t=1738767884; c=relaxed/simple;
+	bh=YAO0DKD9rG4F1ekmicqgPsgYxHDyv1M2bAgLKjsqVLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bkUEk2qmqXLSukSQDtooTcc1aVZgqvcmnmPesrhyNP6fQNez+u1Z7W4+5LCaotKKZdCvB6XkKfMKI1yGPSHKhYboxl4mbA0rTMriiWKO3b+RUSP+wlw7Lh77/dSDLIjtozGHpPPDDFbJTkStVO7PY9oFdk+Js2+SOYle/XT+uUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSt7eotp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FxI+Ts8n4JZkg9qyejgfZq2R8bNzddAZCFOv0tObmhDXz7h1SU8tVw/q4PopfTmqrvRWJDU56VmBJTCd4PwertBfQ5wpdMvXpY0C/CgVWcG+L9zMJlAIz+EV/8BG6xJT6uPjYaeBR8CeepPNc1Su1RN9FOAfLuSd3Mh4ZSQ2JTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YJOcghvL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSt7eotp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AD4C4CED1;
-	Wed,  5 Feb 2025 15:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YJOcghvL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F1DC4CED1;
+	Wed,  5 Feb 2025 15:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767880;
-	bh=+Totolw3kj1DxV9w5f+ouYvzR2TmBNaulCaAOBFx7N0=;
+	s=korg; t=1738767884;
+	bh=YAO0DKD9rG4F1ekmicqgPsgYxHDyv1M2bAgLKjsqVLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSt7eotp3MrgUGMoYTtG20bHWL/6Hb9UcFIdk+R7wxlURro4MZXvLAB/MtcdZEw6g
-	 qHUiI9y2egMbkN4gtaEcojtsxCosj96+GUcLne/X1jWx3A3v43vioCKNbk0WL8+LaJ
-	 9X6paBDhGuHyLYc5Sl29BrBarai8atk0i9eBrRpA=
+	b=YJOcghvLAVqtflRa+2uJuakYI+fxgRbCBFouFPTfJ0KS1oVpSowcBouBkJbsPMEOL
+	 xq0kFZM3ZcyLFGNFmpRg5MMQgodXvw8ZdKPvpYoC0KNGwQ25fgcUwt/rxLnQWp54tC
+	 mcKvFd06pDgrxWL30V/L+kspMnWUZa/Wl3Gm+rEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Zijun Hu <quic_zijuhu@quicinc.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 466/623] PCI: imx6: Deassert apps_reset in imx_pcie_deassert_core_reset()
-Date: Wed,  5 Feb 2025 14:43:28 +0100
-Message-ID: <20250205134514.045914186@linuxfoundation.org>
+Subject: [PATCH 6.13 444/623] PCI: endpoint: Destroy the EPC device in devm_pci_epc_destroy()
+Date: Wed,  5 Feb 2025 14:43:06 +0100
+Message-ID: <20250205134513.203390043@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -48,44 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit ef61c7d8d032adb467f99d03ccfaa293b417ac75 ]
+[ Upstream commit d4929755e4d02bd3de3ae5569dab69cb9502c54f ]
 
-Since the apps_reset is asserted in imx_pcie_assert_core_reset(), it should
-be deasserted in imx_pcie_deassert_core_reset().
+The devm_pci_epc_destroy() comment says destroys the EPC device, but it
+does not actually do that since devres_destroy() does not call
+devm_pci_epc_release(), and it also can not fully undo what the API
+devm_pci_epc_create() does, so it is faulty.
 
-Fixes: 9b3fe6796d7c ("PCI: imx6: Add code to support i.MX7D")
-Link: https://lore.kernel.org/r/20241126075702.4099164-6-hongxing.zhu@nxp.com
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Fortunately, the faulty API has not been used by current kernel tree.  Use
+devres_release() instead of devres_destroy() so the EPC device will be
+released.
+
+Link: https://lore.kernel.org/r/20241210-pci-epc-core_fix-v3-1-4d86dd573e4b@quicinc.com
+Fixes: 5e8cb4033807 ("PCI: endpoint: Add EP core layer to enable EP controller and EP functions")
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/endpoint/pci-epc-core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 22bf21846b79d..94f5246b3a720 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -775,6 +775,7 @@ static void imx_pcie_assert_core_reset(struct imx_pcie *imx_pcie)
- static int imx_pcie_deassert_core_reset(struct imx_pcie *imx_pcie)
+diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+index bed7c7d1fe3c3..75c6688290034 100644
+--- a/drivers/pci/endpoint/pci-epc-core.c
++++ b/drivers/pci/endpoint/pci-epc-core.c
+@@ -942,7 +942,7 @@ void devm_pci_epc_destroy(struct device *dev, struct pci_epc *epc)
  {
- 	reset_control_deassert(imx_pcie->pciephy_reset);
-+	reset_control_deassert(imx_pcie->apps_reset);
+ 	int r;
  
- 	if (imx_pcie->drvdata->core_reset)
- 		imx_pcie->drvdata->core_reset(imx_pcie, false);
+-	r = devres_destroy(dev, devm_pci_epc_release, devm_pci_epc_match,
++	r = devres_release(dev, devm_pci_epc_release, devm_pci_epc_match,
+ 			   epc);
+ 	dev_WARN_ONCE(dev, r, "couldn't find PCI EPC resource\n");
+ }
 -- 
 2.39.5
 
