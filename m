@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A740126C18;
-	Wed,  5 Feb 2025 13:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7A9139CFA;
+	Wed,  5 Feb 2025 13:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763268; cv=none; b=OoZSjIXpf1KlsHKQkpUnCnfYNFKrIqske47/M6cbUY7TGW4dvV4AheSg1QgBHgx1A1ARU2wt+3oJbrWvMtdN1uQuKPtHw3Bz/FGpXNagZ9h8X37PXaA64IPOUuwuF02KHoQkp8FfzIq8Cn6QDUdmPmlV06PYOEF/4rDKnAvcYtE=
+	t=1738763271; cv=none; b=YrFWz5EqZsiucaFgYjfbUj15bHHRpNl7lHuYvA14K2movB9YBpUsjOGbTkG1MjpQLVRk8Hq+qh0wtBuBOQ4L7XCyIC0zlJSpIag0VkuMiN8/J1McpKzu7/SQ98QgV8HUfOol2jgUzf6x59G1rncthJUDgHfy2zH2sufLWlpiNy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763268; c=relaxed/simple;
-	bh=fq6UoVuQ+1yt4uQAIdLlDCVHRwgYSF8qxCUx8ivqFBI=;
+	s=arc-20240116; t=1738763271; c=relaxed/simple;
+	bh=LnImW4EvlwaQ1Mu9EWSLPlYBhlDz8zvCmUofz6qzutw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHPcAnLBS9GMsUzSUzzQ22O0M2p09ZFQ60Tgs3MChAbYxAYvDzYIDN18ap9V+s7Koc/kvzC0gBvupT7lqY8zjqgMp3h7rHs4NF28eyTYTYtMGRPMbxCKL5e7dH9aGhUDwsdEvFylqqvnMbwOgo8Iw1kro0Tyz1lwkJsBrDxw5Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMWbWN+s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDfDU8LU6Dw6feesjJUSE4WEzmpkksBB9aQ1C7mwFkLmykYCMKKWgtXSe/2Ypod6sOlHlt8Cs8hzVxxJvj/4O1SZniJblNzpdk7LaxdhpM2Owq0x5t5BqcA0S593ElxsKplg3BspaAtFcdmuinkqfrHdn/cGTLeJELD02CW85UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGVxcXgR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMWbWN+s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A2EC4CED1;
-	Wed,  5 Feb 2025 13:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGVxcXgR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF1CC4CEDD;
+	Wed,  5 Feb 2025 13:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763267;
-	bh=fq6UoVuQ+1yt4uQAIdLlDCVHRwgYSF8qxCUx8ivqFBI=;
+	s=korg; t=1738763271;
+	bh=LnImW4EvlwaQ1Mu9EWSLPlYBhlDz8zvCmUofz6qzutw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMWbWN+sNtBcTuJ1OlEuBnvfAUvmRaKHrara7yoVtXCayXl5JTS8QcznV9Dj0Sjwb
-	 Ysvp1tO2Zr4hQ4dw4xkZ6FX+Y3wD+fkJ1i2oW57JEaVjqUiIViZBLgsOuTCTbURZuX
-	 aTJcol2BJ3Fkh1UVazhW9M7MQQQhe07qQLNXgYLA=
+	b=eGVxcXgRD5ckre1RbHn/qbTrSgQOo9UlYLbTPWA1INGQ7n/VI055fLeZeEMh7zWdn
+	 Ne691uhv24SVqj3gl8lMQNpi+hCD9YvxLJAj4Q/k5KglQBJnfIBVD8tG3qTyTFGJXY
+	 hMkiVdyuCj1goNRL0ruy46arZTfKUsJEzecu6gIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/393] drm/amd/pm: Fix an error handling path in vega10_enable_se_edc_force_stall_config()
-Date: Wed,  5 Feb 2025 14:39:04 +0100
-Message-ID: <20250205134421.263972719@linuxfoundation.org>
+Subject: [PATCH 6.6 008/393] nbd: dont allow reconnect after disconnect
+Date: Wed,  5 Feb 2025 14:38:47 +0100
+Message-ID: <20250205134420.611132116@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,44 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit a3300782d5375e280ba7040f323d01960bfe3396 ]
+[ Upstream commit 844b8cdc681612ff24df62cdefddeab5772fadf1 ]
 
-In case of error after a amdgpu_gfx_rlc_enter_safe_mode() call, it is not
-balanced by a corresponding amdgpu_gfx_rlc_exit_safe_mode() call.
+Following process can cause nbd_config UAF:
 
-Add the missing call.
+1) grab nbd_config temporarily;
 
-Fixes: 9b7b8154cdb8 ("drm/amd/powerplay: added didt support for vega10")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+2) nbd_genl_disconnect() flush all recv_work() and release the
+initial reference:
+
+  nbd_genl_disconnect
+   nbd_disconnect_and_put
+    nbd_disconnect
+     flush_workqueue(nbd->recv_workq)
+    if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF, ...))
+     nbd_config_put
+     -> due to step 1), reference is still not zero
+
+3) nbd_genl_reconfigure() queue recv_work() again;
+
+  nbd_genl_reconfigure
+   config = nbd_get_config_unlocked(nbd)
+   if (!config)
+   -> succeed
+   if (!test_bit(NBD_RT_BOUND, ...))
+   -> succeed
+   nbd_reconnect_socket
+    queue_work(nbd->recv_workq, &args->work)
+
+4) step 1) release the reference;
+
+5) Finially, recv_work() will trigger UAF:
+
+  recv_work
+   nbd_config_put(nbd)
+   -> nbd_config is freed
+   atomic_dec(&config->recv_threads)
+   -> UAF
+
+Fix the problem by clearing NBD_RT_BOUND in nbd_genl_disconnect(), so
+that nbd_genl_reconfigure() will fail.
+
+Fixes: b7aa3d39385d ("nbd: add a reconfigure netlink command")
+Reported-by: syzbot+6b0df248918b92c33e6a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/675bfb65.050a0220.1a2d0d.0006.GAE@google.com/
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20250103092859.3574648-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/block/nbd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
-index 3007b054c873c..776d58ea63ae9 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_powertune.c
-@@ -1120,13 +1120,14 @@ static int vega10_enable_se_edc_force_stall_config(struct pp_hwmgr *hwmgr)
- 	result = vega10_program_didt_config_registers(hwmgr, SEEDCForceStallPatternConfig_Vega10, VEGA10_CONFIGREG_DIDT);
- 	result |= vega10_program_didt_config_registers(hwmgr, SEEDCCtrlForceStallConfig_Vega10, VEGA10_CONFIGREG_DIDT);
- 	if (0 != result)
--		return result;
-+		goto exit_safe_mode;
+diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
+index 96b349148e578..2203686156bfe 100644
+--- a/drivers/block/nbd.c
++++ b/drivers/block/nbd.c
+@@ -2164,6 +2164,7 @@ static void nbd_disconnect_and_put(struct nbd_device *nbd)
+ 	flush_workqueue(nbd->recv_workq);
+ 	nbd_clear_que(nbd);
+ 	nbd->task_setup = NULL;
++	clear_bit(NBD_RT_BOUND, &nbd->config->runtime_flags);
+ 	mutex_unlock(&nbd->config_lock);
  
- 	vega10_didt_set_mask(hwmgr, false);
- 
-+exit_safe_mode:
- 	amdgpu_gfx_rlc_exit_safe_mode(adev, 0);
- 
--	return 0;
-+	return result;
- }
- 
- static int vega10_disable_se_edc_force_stall_config(struct pp_hwmgr *hwmgr)
+ 	if (test_and_clear_bit(NBD_RT_HAS_CONFIG_REF,
 -- 
 2.39.5
 
