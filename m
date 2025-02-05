@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B2D1531C1;
-	Wed,  5 Feb 2025 13:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D0114D28C;
+	Wed,  5 Feb 2025 13:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763843; cv=none; b=jbbEmGS3JBMR21o9GMSAoHqwx5wfxEkjFu217HMmUmloolI7K0T4q+PmK4/lrWwBYCxxcslV+YCoU9bheWn+2sRlC/5tkdtxBl/InTfCd7M8z97//K7ojzl6yyR6dsWlFALm0Gvfce/GqSgRA1jHV1oa5jypnfq4lvgzLQt8QyU=
+	t=1738763846; cv=none; b=owq1BtLW/T8IDMQfwX2Eh0q57VlgHUeadPyv04tHVRwtA3r8tCHRPNiLTGWa7xM2eaH6JgktG2aFDD0lcl9zPzHQ2jgJytJ0dSdCxbwQvHF5/iB+SlXsOnt+Gr+yqQQizsMHSh2jjOmrF6CJDF345KxCGjKBvQcQ+kISfLG9TAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763843; c=relaxed/simple;
-	bh=y7zeRa/3MC9Syo/h9pO/0RyFgFEfR6FjsFFstVAThUw=;
+	s=arc-20240116; t=1738763846; c=relaxed/simple;
+	bh=xsZ7UqPuKGByM0oa2NHaD1Cv3dxz4Jw62g9JSnOBdk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UiA/DXTQL2xi6cRhMxq3ebjOTJqqmbdgyC5bLXnPvx5VtQVb7wv99dRLTwVT2jy9AIoKP5c1HvUc7QYT4B95y6X7b86Pgl+FqJ75PEebkS2c26U86fvRz9rrBm2kDkuSwXS+zUyz+gSfA52Cy2L4BGeEMjHq8Uy8VSbAz5pH39w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kC+N+1NH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rf9yrVXJMw8d0mp416Cf8Y7m8bg8Xt1C/6oMHFPaLjIb+qTDlYrOnGXLyGMuQXGyP1vVONMpSummUhNnfOXY3hCpslHaW6LgeDwp2G/hD99aEwUyw/VvBuMfE+UbeR9VSQ3FkGYM6rFrjuNj+2cmrhtGYgD3WDk22zLSpkyRryQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNDwv0W3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kC+N+1NH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55942C4CEDD;
-	Wed,  5 Feb 2025 13:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNDwv0W3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C972AC4CED1;
+	Wed,  5 Feb 2025 13:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763842;
-	bh=y7zeRa/3MC9Syo/h9pO/0RyFgFEfR6FjsFFstVAThUw=;
+	s=korg; t=1738763846;
+	bh=xsZ7UqPuKGByM0oa2NHaD1Cv3dxz4Jw62g9JSnOBdk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kC+N+1NHIfb4RsZWkEC5ACkfmuLU4PZ2FEaiq6pqTs9VHua3mjUhrmY4qvcNZcFFh
-	 NmesaVAwf2KjmZXDwF+P856Qq4sJjTuT2p0q8gyTssEo36WAEpmdzW556kMwvqOPS9
-	 mRZpNYcISgt5rY1z6Tygek0LZz0dtLpY3n+tRAio=
+	b=LNDwv0W3cjQouJuZzlg9uzOShxvXCFLwt+8rm5N7FTwh/bODTHY6uGZA578jch/U+
+	 frZaCzfqPdMLZc/xhMNhyLkRFlke/k4YPQBzLXKr2zASLtwO7k6Ptiomls57hhC8mO
+	 /bkziMrKTHollFdjz4aJ8JESUGYG+dpSd1Otnfpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 023/623] selftests/powerpc: Fix argument order to timer_sub()
-Date: Wed,  5 Feb 2025 14:36:05 +0100
-Message-ID: <20250205134457.115766280@linuxfoundation.org>
+Subject: [PATCH 6.12 066/590] drm/msm: Check return value of of_dma_configure()
+Date: Wed,  5 Feb 2025 14:37:01 +0100
+Message-ID: <20250205134457.782293401@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Sui Jingfeng <sui.jingfeng@linux.dev>
 
-[ Upstream commit 2bf66e66d2e6feece6175ec09ec590a0a8563bdd ]
+[ Upstream commit b34a7401ffaee45354e81b38a4d072794079cfd6 ]
 
-Commit c814bf958926 ("powerpc/selftests: Use timersub() for
-gettimeofday()"), got the order of arguments to timersub() wrong,
-leading to a negative time delta being reported, eg:
+Because the of_dma_configure() will returns '-EPROBE_DEFER' if the probe
+procedure of the specific platform IOMMU driver is not finished yet. It
+can also return other error code for various reasons.
 
-  test: gettimeofday
-  tags: git_version:v6.12-rc5-409-gdddf291c3030
-  time = -3.297781
-  success: gettimeofday
+Stop pretending that it will always suceess, quit if it fail.
 
-The correct order is minuend, subtrahend, which in this case is end,
-start. Which gives:
-
-  test: gettimeofday
-  tags: git_version:v6.12-rc5-409-gdddf291c3030-dirty
-  time = 3.300650
-  success: gettimeofday
-
-Fixes: c814bf958926 ("powerpc/selftests: Use timersub() for gettimeofday()")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20241218114347.428108-1-mpe@ellerman.id.au
+Signed-off-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Fixes: 29ac8979cdf7 ("drm/msm/a6xx: use msm_gem for GMU memory objects")
+Fixes: 5a903a44a984 ("drm/msm/a6xx: Introduce GMU wrapper support")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/622782/
+Link: https://lore.kernel.org/r/20241104090738.529848-1-sui.jingfeng@linux.dev
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/benchmarks/gettimeofday.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c b/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-index 580fcac0a09f3..b71ef8a493ed1 100644
---- a/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-+++ b/tools/testing/selftests/powerpc/benchmarks/gettimeofday.c
-@@ -20,7 +20,7 @@ static int test_gettimeofday(void)
- 		gettimeofday(&tv_end, NULL);
- 	}
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index 14db7376c712d..e386b059187ac 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -1603,7 +1603,9 @@ int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
  
--	timersub(&tv_start, &tv_end, &tv_diff);
-+	timersub(&tv_end, &tv_start, &tv_diff);
+ 	gmu->dev = &pdev->dev;
  
- 	printf("time = %.6f\n", tv_diff.tv_sec + (tv_diff.tv_usec) * 1e-6);
+-	of_dma_configure(gmu->dev, node, true);
++	ret = of_dma_configure(gmu->dev, node, true);
++	if (ret)
++		return ret;
  
+ 	pm_runtime_enable(gmu->dev);
+ 
+@@ -1668,7 +1670,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 
+ 	gmu->dev = &pdev->dev;
+ 
+-	of_dma_configure(gmu->dev, node, true);
++	ret = of_dma_configure(gmu->dev, node, true);
++	if (ret)
++		return ret;
+ 
+ 	/* Fow now, don't do anything fancy until we get our feet under us */
+ 	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
 -- 
 2.39.5
 
