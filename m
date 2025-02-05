@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59CB1494DF;
-	Wed,  5 Feb 2025 13:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5318014A4E9;
+	Wed,  5 Feb 2025 13:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763647; cv=none; b=PUVXphp4zon7/S1EjVb4FkkNfwSNNYdxrXpuyuBvF9sL8uYMtwYUhZFwBrMg4+mS/IAQXSLdAR3podyk/iaUF3ohRiF1a1J3V0xMMqKUwQ6WlzPOaUjRVzb7obIzPn4JCZxCTKvZIyhLfUv33CUu76Ts39oE3BuhUL6c20N4SCY=
+	t=1738763650; cv=none; b=S1ambSp2MarfCfWUoJznsG1Yc6YL+rSwJ4rfZeJECMUecghZMM50oszv9zSpQYM/xH73FDgeyX88p+oKNHW0Y7NCe+q2F3E6cMF0BXDODE2Qf5cU8KFFR2wNUl43WwP1X6IuCPjllOBhqDyXYm8vLaH8FuXD6B6PWEURO+n8vUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763647; c=relaxed/simple;
-	bh=mgh3xNPZC64oMlIOl7QyUa1wUdlg2YZpKKNOI83O6OY=;
+	s=arc-20240116; t=1738763650; c=relaxed/simple;
+	bh=GIm9ZT/NeA0R2iakg/aJ+pBiuzbXcdbrlCmo8hkNE8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDndCJE188Ajhg+b1xS0PoDcvsCudRvdExuLV1QU6BLEVpl04pfOaFWXVUp8pvgsPR5ZmZRWylxCAo+CTk3055YPlDCnFCzif3Gz9gWeWDPuzeYaoj/EwuW9IWx145ADApcqVlQ/M7JHnafyXSMv3VPHjE/M2m08/ZLHqyGKWoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tVoePS1B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pmBRwWGI94Hi/7rOVKbhN/JWVmJTX+RjFQw0/LBrV4ny14UN0sJMUQNbfk/gzuVj/7oVqI4XqVxj+k4NH03TccnXdR2+dLE1PkoGQG1QtLSs6OpYvIxGciOmB1L7z5jWFwl0UZP5i3Vteymt80+uXpV3DPorQcmbGOc3XvlQNZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1XzRFmUg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tVoePS1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 543E3C4CED1;
-	Wed,  5 Feb 2025 13:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1XzRFmUg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B505DC4CED1;
+	Wed,  5 Feb 2025 13:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763646;
-	bh=mgh3xNPZC64oMlIOl7QyUa1wUdlg2YZpKKNOI83O6OY=;
+	s=korg; t=1738763650;
+	bh=GIm9ZT/NeA0R2iakg/aJ+pBiuzbXcdbrlCmo8hkNE8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tVoePS1BKUe8tz2gsnyWMQXcptiCuH5Kby7hVgZsbbUyvCAEWTs5k3oSQkumtYzqK
-	 kvqvLUz3SyFQo+tn1NxKwbOOn7d//2X4EG3xAbyQW2NRTBaPwQElgOsDjpHrnbPH6q
-	 8xfIa3tJ/69IRy+RV1EDv7efIzRIAqntK2irFZw4=
+	b=1XzRFmUg7cETQDKAw38Gw1ZgE6S3vueZ/5CUK/9XbxwJVsH+zhnJa2nZ/vmOkQgre
+	 8L2OQdBkTVP5cqim2V2nZhBzkBv2q48S7Ee1OAE7U22kLq7ux4dabQMQC7m+6cmVip
+	 v0L6J2CqbuYFhG7BDb6wRB6XzBeGZWCDIOPA4MbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Foreman <derek.foreman@collabora.com>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/590] drm/rockchip: vop2: Fix cluster windows alpha ctrl regsiters offset
-Date: Wed,  5 Feb 2025 14:36:39 +0100
-Message-ID: <20250205134456.942432705@linuxfoundation.org>
+Subject: [PATCH 6.6 093/393] regulator: of: Implement the unwind path of of_regulator_match()
+Date: Wed,  5 Feb 2025 14:40:12 +0100
+Message-ID: <20250205134423.854425670@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,69 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 17b4b10a0df1a1421d5fbdc03bad0bd3799bc966 ]
+[ Upstream commit dddca3b2fc676113c58b04aaefe84bfb958ac83e ]
 
-The phy_id of cluster windws are not increase one for each window.
+of_regulator_match() does not release the OF node reference in the error
+path, resulting in an OF node leak. Therefore, call of_node_put() on the
+obtained nodes before returning the EINVAL error.
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Tested-by: Derek Foreman <derek.foreman@collabora.com>
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241209122943.2781431-6-andyshrk@163.com
+Since it is possible that some drivers call this function and do not
+exit on failure, such as s2mps11_pmic_driver, clear the init_data and
+of_node in the error path.
+
+This was reported by an experimental verification tool that I am
+developing. As I do not have access to actual devices nor the QEMU board
+configuration to test drivers that call this function, no runtime test
+was able to be performed.
+
+Fixes: 1c8fa58f4750 ("regulator: Add generic DT parsing for regulators")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Link: https://patch.msgid.link/20250104080453.2153592-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/regulator/of_regulator.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 30d03ff6c01f0..594923303a850 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -2159,7 +2159,6 @@ static int vop2_find_start_mixer_id_for_vp(struct vop2 *vop2, u8 port_id)
+diff --git a/drivers/regulator/of_regulator.c b/drivers/regulator/of_regulator.c
+index 59e71fd0db439..f23c12f4ffbfa 100644
+--- a/drivers/regulator/of_regulator.c
++++ b/drivers/regulator/of_regulator.c
+@@ -435,7 +435,7 @@ int of_regulator_match(struct device *dev, struct device_node *node,
+ 					"failed to parse DT for regulator %pOFn\n",
+ 					child);
+ 				of_node_put(child);
+-				return -EINVAL;
++				goto err_put;
+ 			}
+ 			match->of_node = of_node_get(child);
+ 			count++;
+@@ -444,6 +444,18 @@ int of_regulator_match(struct device *dev, struct device_node *node,
+ 	}
  
- static void vop2_setup_cluster_alpha(struct vop2 *vop2, struct vop2_win *main_win)
- {
--	u32 offset = (main_win->data->phys_id * 0x10);
- 	struct vop2_alpha_config alpha_config;
- 	struct vop2_alpha alpha;
- 	struct drm_plane_state *bottom_win_pstate;
-@@ -2167,6 +2166,7 @@ static void vop2_setup_cluster_alpha(struct vop2 *vop2, struct vop2_win *main_wi
- 	u16 src_glb_alpha_val, dst_glb_alpha_val;
- 	bool premulti_en = false;
- 	bool swap = false;
-+	u32 offset = 0;
- 
- 	/* At one win mode, win0 is dst/bottom win, and win1 is a all zero src/top win */
- 	bottom_win_pstate = main_win->base.state;
-@@ -2185,6 +2185,22 @@ static void vop2_setup_cluster_alpha(struct vop2 *vop2, struct vop2_win *main_wi
- 	vop2_parse_alpha(&alpha_config, &alpha);
- 
- 	alpha.src_color_ctrl.bits.src_dst_swap = swap;
+ 	return count;
 +
-+	switch (main_win->data->phys_id) {
-+	case ROCKCHIP_VOP2_CLUSTER0:
-+		offset = 0x0;
-+		break;
-+	case ROCKCHIP_VOP2_CLUSTER1:
-+		offset = 0x10;
-+		break;
-+	case ROCKCHIP_VOP2_CLUSTER2:
-+		offset = 0x20;
-+		break;
-+	case ROCKCHIP_VOP2_CLUSTER3:
-+		offset = 0x30;
-+		break;
++err_put:
++	for (i = 0; i < num_matches; i++) {
++		struct of_regulator_match *match = &matches[i];
++
++		match->init_data = NULL;
++		if (match->of_node) {
++			of_node_put(match->of_node);
++			match->of_node = NULL;
++		}
 +	}
-+
- 	vop2_writel(vop2, RK3568_CLUSTER0_MIX_SRC_COLOR_CTRL + offset,
- 		    alpha.src_color_ctrl.val);
- 	vop2_writel(vop2, RK3568_CLUSTER0_MIX_DST_COLOR_CTRL + offset,
++	return -EINVAL;
+ }
+ EXPORT_SYMBOL_GPL(of_regulator_match);
+ 
 -- 
 2.39.5
 
