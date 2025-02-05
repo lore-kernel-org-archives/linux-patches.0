@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4159F156C76;
-	Wed,  5 Feb 2025 14:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FE214B959;
+	Wed,  5 Feb 2025 14:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765714; cv=none; b=qhySeFsbfBbpbNTbie6PwO9W2jRYhKTEKOT+YsPKEonVEVBFW+vC4SE2BnfZFnSeEXABzCwXg8kUPAHIp7YR94ZQB1wEqjwrY+A25k6eKUIrnlfDk3PR6BlpIEkXz/RALqlWgWTEBcUAPF5QVqGky5/nBS38apqTFKJ6binhJcg=
+	t=1738765717; cv=none; b=TnrRdHCksS/OBj/M8FB98vD2dOxOb6w0aSqKthDP+4hL6m3y7OM0Xsh8dG9CY00Hq3nJbh8r/LEocjbsMBrGXwLI6J9+cj0oRvnwNkIHaBGpRdTSUBCUI+vJ7DKGOdunB1QKWEbu3FLbf/Ftd8RWYV9Y6X15FAYArx34pudSmSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765714; c=relaxed/simple;
-	bh=P4bqZLSvZrfmvwjRexe1l61wq1vLZFB8KqxxDEcieLs=;
+	s=arc-20240116; t=1738765717; c=relaxed/simple;
+	bh=oUZSv87kMfzGZY/he1gmFLiHpyl5uj7rczah5zmJ4TE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BCyci2BCzpw4Ty2emEa20R6XAIcBaZ9xXGiqRrLUymvl3seEecnd2goq1k7qpZvkIADq2cWylHl62f8UhdjtR98WNSDDkmc2E5P9MMXKd4zpWg0oxwMfZL9wMlR0XMc+QdGOgV9I5kTfXrdipDB6zFLt8qUI6c0pXhuvTMyB720=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pJ8T0rrx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E+KMP6FOVMsWnyzXKsyd8oWOnfEM6ZAV//6fPLec1ZukSi6d1RNFmxQpg3kCJUBJy71f3+xMG3dS/vXsOAOO953QpUPdyxJnZjkBEfRC9SPKAxl4yHBaIhKWREFEpU/lrtdw9zBBvI9Fa0mX72nhPQ893zAIEhf0UEdBwe9uRIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UeqO7pg7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pJ8T0rrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350CCC4CED1;
-	Wed,  5 Feb 2025 14:28:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UeqO7pg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21B8C4CED1;
+	Wed,  5 Feb 2025 14:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765713;
-	bh=P4bqZLSvZrfmvwjRexe1l61wq1vLZFB8KqxxDEcieLs=;
+	s=korg; t=1738765717;
+	bh=oUZSv87kMfzGZY/he1gmFLiHpyl5uj7rczah5zmJ4TE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pJ8T0rrxLPp5diRKgifd30CToD2copLXYS7NtJVNXN+dLyFT9jt4c8Eeqn5GDP8vO
-	 Tq0h5+g4aHB0J0r/pkuhjpFCwNZh15XMdYAVviCj/DpY2dqezIv7IG6pFmRkpCm6r/
-	 UtK3yz5MHDDtmH6HtvjsX6bhwOIEGIzv4ZH+QzxY=
+	b=UeqO7pg7v2o87pgx7OMc6UyUrA+llEdN1QvtDIU+Sk4L924nHeOk+R2BEvYvDvRUB
+	 ktuTQV69Cvz/wxaXFDlG96LdkYPmX+rbQd8z48tatM6sLM+MJY+Gu3BzKcoqI0Le2n
+	 JB2LyBzq5jGvW3eNLPXgjrzNvfT9qakhmveeLpU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shengyu Qu <wiagn233@outlook.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 292/393] mtd: hyperbus: hbmc-am654: Convert to platform remove callback returning void
-Date: Wed,  5 Feb 2025 14:43:31 +0100
-Message-ID: <20250205134431.485341156@linuxfoundation.org>
+Subject: [PATCH 6.13 207/623] wifi: mt76: mt7915: fix register mapping
+Date: Wed,  5 Feb 2025 14:39:09 +0100
+Message-ID: <20250205134504.148420921@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,71 +46,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit 59bd56760df17506bc2f828f19b40a2243edd0d0 ]
+[ Upstream commit dd1649ef966bb87053c17385ea2cfd1758f5385b ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Bypass the entry when ofs is equal to dev->reg.map[i].size.
+Without this patch, it would get incorrect register mapping when the CR
+address is located at the boundary of an entry.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
-
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/linux-mtd/20231008200143.196369-10-u.kleine-koenig@pengutronix.de
-Stable-dep-of: bf5821909eb9 ("mtd: hyperbus: hbmc-am654: fix an OF node reference leak")
+Fixes: cd4c314a65d3 ("mt76: mt7915: refine register definition")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shengyu Qu <wiagn233@outlook.com>
+Link: https://patch.msgid.link/OSZPR01MB843401EAA1DA6BD7AEF356F298132@OSZPR01MB8434.jpnprd01.prod.outlook.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/hyperbus/hbmc-am654.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mmio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/hyperbus/hbmc-am654.c b/drivers/mtd/hyperbus/hbmc-am654.c
-index a6161ce340d4e..dbe3eb361cca2 100644
---- a/drivers/mtd/hyperbus/hbmc-am654.c
-+++ b/drivers/mtd/hyperbus/hbmc-am654.c
-@@ -229,7 +229,7 @@ static int am654_hbmc_probe(struct platform_device *pdev)
- 	return ret;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+index 44e112b8b5b36..2e7604eed27b0 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mmio.c
+@@ -484,7 +484,7 @@ static u32 __mt7915_reg_addr(struct mt7915_dev *dev, u32 addr)
+ 			continue;
  
--static int am654_hbmc_remove(struct platform_device *pdev)
-+static void am654_hbmc_remove(struct platform_device *pdev)
- {
- 	struct am654_hbmc_priv *priv = platform_get_drvdata(pdev);
- 	struct am654_hbmc_device_priv *dev_priv = priv->hbdev.priv;
-@@ -241,8 +241,6 @@ static int am654_hbmc_remove(struct platform_device *pdev)
+ 		ofs = addr - dev->reg.map[i].phys;
+-		if (ofs > dev->reg.map[i].size)
++		if (ofs >= dev->reg.map[i].size)
+ 			continue;
  
- 	if (dev_priv->rx_chan)
- 		dma_release_channel(dev_priv->rx_chan);
--
--	return 0;
- }
- 
- static const struct of_device_id am654_hbmc_dt_ids[] = {
-@@ -256,7 +254,7 @@ MODULE_DEVICE_TABLE(of, am654_hbmc_dt_ids);
- 
- static struct platform_driver am654_hbmc_platform_driver = {
- 	.probe = am654_hbmc_probe,
--	.remove = am654_hbmc_remove,
-+	.remove_new = am654_hbmc_remove,
- 	.driver = {
- 		.name = "hbmc-am654",
- 		.of_match_table = am654_hbmc_dt_ids,
+ 		return dev->reg.map[i].maps + ofs;
 -- 
 2.39.5
 
