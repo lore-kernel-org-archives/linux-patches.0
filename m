@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2451917F1;
-	Wed,  5 Feb 2025 14:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB0C18FDA5;
+	Wed,  5 Feb 2025 14:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766546; cv=none; b=m8hGr1SbME9e/I07oEaArLMbguAxzrZfUIj7j6Ak+6yTZ7cWa85AKTCNhCx38GSuePW8S/Yfaf7COz1VeVCV3Fq43qJODIN5n4z3boe3iYEwrN0Hdcta4rk3tz2z6S4/sdKHhaNXGv0W+SkhYQqB5buFeTacjiSdCmT2zHR6Zt0=
+	t=1738766549; cv=none; b=SW8h23y/Y+NqkwsbXAdbwEb+A9H2TK75fpV35NQmVG0wmEmENPmdrZEaFziElgSp1DEUdWNlA9YN+qs0eUa3GXPscmkovrGERsOIke3C0sRApn6f1NdRLgZ82mxv3hndUWPmpaaWSm+eVdX890xQTv9o/U/8yDbsZem1EWbrT14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766546; c=relaxed/simple;
-	bh=d/UvbPlxNXHo9UVAjvfMLOJA2DrwcsWWLnZpOVD1GAE=;
+	s=arc-20240116; t=1738766549; c=relaxed/simple;
+	bh=YAiMKh5m4dyLF36mTjiZ3TTb6oF+iqFH0LVgS23Yo/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWGC56kyj/nJudysl4PsD5LouqhGr810N+KopLvNZqMm4OPQlwnr4Un5dWHNEbypbZQq3i84j/MQi3epOKWZ58geCRzmVPSLT1fRzpXoaGnJORl8GLyBqdvlVt8Uoao2rBApmPXxE4kogwVSShAzfY3+dxVwYXtHJhz0CqMGfVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxiQXzKS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DO4AOziadE5611Pp3egWa8AN/3lnD/CiSTlip9nXMlISsGdBn6DkHUhJ2VMC5ksnbgSY5x54vnskQdUN/B4gFfe5qW3eTLY0tgbCQ9SABbLxXJV268On+TNH6SC/LUQwfX+renQOS4XZysXUWwaA2h3R145BXDL7N67Crm9xt7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uPNPVsF3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxiQXzKS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084B7C4CED1;
-	Wed,  5 Feb 2025 14:42:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uPNPVsF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40364C4CED1;
+	Wed,  5 Feb 2025 14:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766546;
-	bh=d/UvbPlxNXHo9UVAjvfMLOJA2DrwcsWWLnZpOVD1GAE=;
+	s=korg; t=1738766549;
+	bh=YAiMKh5m4dyLF36mTjiZ3TTb6oF+iqFH0LVgS23Yo/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxiQXzKS3YKYifKbpXEaIwO/6EGoSk78Hc3MXoXy65IT6hab5OV8TydY9r2XbsJx5
-	 TT/G6kyvzTG7frh1ZfjqKYIyGYmPGa1aiKzN9CKMofuOfi6v2vsZbbIm4fk3CDgVuV
-	 7WwIleL5JvST8C06h8sp4o6+pTtKGW/UQs8B5E4g=
+	b=uPNPVsF3uCPm2ZPWczC9V2Lbn65ODXhknE+xfFVXts1OiKp1mMAwzoCegwblD+Aj6
+	 jcjazteL3Lq9VhlsbkiouaQtvbhrBlV8L4KzR/ZHU9XO6GzMBCdkfiOF6db1AqRG2G
+	 VNdlOSLs2bMVM3kYQgAJElal3YEKcaSw+4nI5MsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <mrpre@163.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 286/623] selftests/bpf: Avoid generating untracked files when running bpf selftests
-Date: Wed,  5 Feb 2025 14:40:28 +0100
-Message-ID: <20250205134507.171880031@linuxfoundation.org>
+Subject: [PATCH 6.12 334/590] ARM: dts: stm32: Swap USART3 and UART8 alias on STM32MP15xx DHCOM SoM
+Date: Wed,  5 Feb 2025 14:41:29 +0100
+Message-ID: <20250205134508.056673528@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,78 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <mrpre@163.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 73b9075f334f5debf28646884a320b796b27768d ]
+[ Upstream commit 479b8227ffc433929ba49200182b6383569f9615 ]
 
-Currently, when we run the BPF selftests with the following command:
+Swap USART3 and UART8 aliases on STM32MP15xx DHCOM SoM,
+make sure UART8 is listed first, USART3 second, because
+the UART8 is labeled as UART2 on the SoM pinout, while
+USART3 is labeled as UART3 on the SoM pinout.
 
-  make -C tools/testing/selftests TARGETS=bpf SKIP_TARGETS=""
-
-The command generates untracked files and directories with make version
-less than 4.4:
-
-'''
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	tools/testing/selftests/bpfFEATURE-DUMP.selftests
-	tools/testing/selftests/bpffeature/
-'''
-
-We lost slash after word "bpf". The reason is slash appending code is as
-follow:
-
-'''
-OUTPUT := $(OUTPUT)/
-$(eval include ../../../build/Makefile.feature)
-OUTPUT := $(patsubst %/,%,$(OUTPUT))
-'''
-
-This way of assigning values to OUTPUT will never be effective for the
-variable OUTPUT provided via the command argument [1] and BPF makefile
-is called from parent Makfile(tools/testing/selftests/Makefile) like:
-
-'''
-all:
-  ...
-	$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET
-'''
-
-According to GNU make, we can use override Directive to fix this issue [2].
-
-  [1] https://www.gnu.org/software/make/manual/make.html#Overriding
-  [2] https://www.gnu.org/software/make/manual/make.html#Override-Directive
-
-Fixes: dc3a8804d790 ("selftests/bpf: Adapt OUTPUT appending logic to lower versions of Make")
-Signed-off-by: Jiayuan Chen <mrpre@163.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20241224075957.288018-1-mrpre@163.com
+Fixes: 34e0c7847dcf ("ARM: dts: stm32: Add DH Electronics DHCOM STM32MP1 SoM and PDK2 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 4 ++--
+ arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index 7eeb3cbe18c70..8d206266d98c8 100644
---- a/tools/testing/selftests/bpf/Makefile
-+++ b/tools/testing/selftests/bpf/Makefile
-@@ -203,9 +203,9 @@ ifeq ($(shell expr $(MAKE_VERSION) \>= 4.4), 1)
- $(let OUTPUT,$(OUTPUT)/,\
- 	$(eval include ../../../build/Makefile.feature))
- else
--OUTPUT := $(OUTPUT)/
-+override OUTPUT := $(OUTPUT)/
- $(eval include ../../../build/Makefile.feature)
--OUTPUT := $(patsubst %/,%,$(OUTPUT))
-+override OUTPUT := $(patsubst %/,%,$(OUTPUT))
- endif
- endif
+diff --git a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
+index 086d3a60ccce2..142d4a8731f8d 100644
+--- a/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp15xx-dhcom-som.dtsi
+@@ -15,8 +15,8 @@
+ 		rtc0 = &hwrtc;
+ 		rtc1 = &rtc;
+ 		serial0 = &uart4;
+-		serial1 = &usart3;
+-		serial2 = &uart8;
++		serial1 = &uart8;
++		serial2 = &usart3;
+ 	};
  
+ 	chosen {
 -- 
 2.39.5
 
