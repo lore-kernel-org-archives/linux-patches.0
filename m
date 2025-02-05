@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA4A1E89C;
-	Wed,  5 Feb 2025 14:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C3013C8E2;
+	Wed,  5 Feb 2025 14:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767583; cv=none; b=Qo07g/gSfXU+lb8VAdzV8NQw9Vto7uXTH6eKvHrqMMsshkBffKKxKMmb2dO6D4xC4nH11m6dxuiW7uF3u5S1qbh3k2AXBbFOUoUeQ4pRBZT6L2B/Gqj9CDB2LR0CLMsj5EOYTSj2cxLLCrfr5xGBSH5CaG4IeB6XfPba9tb6vLQ=
+	t=1738767585; cv=none; b=qPaiZuEV7MB2lmipSMjVqxQzm+OIsuBegJYxgGZGeH7R/ui4TFrkUZOPEbF2Ni12HPPsJ9ZpuVvK0a5RAZyMp0pYa/qLDT3wIMFpTq9ywxjHikRlSKwB6ItB6Ci2DnQn8FYX/FHWWbuf0ZLrwPOnUIyStLy+5QFKbf1tbTECodM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767583; c=relaxed/simple;
-	bh=7Aqi+ZImQYxogtlqyjxtySZcHrVWy81q+bOjKWSTJ2Q=;
+	s=arc-20240116; t=1738767585; c=relaxed/simple;
+	bh=y50EIaukuFV8n2z+V/VqvnY/2LEEQe0Qki/x3IFN8O8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eiy/OrirSWAY3b1YoLaq4fbYPhNT1fzmkrx+fyUtyCW81+/RqzYCQBitz1JLAXYkI+Eo6rcJwpFwEGrladIzDvMPNYU8cEQmmjjf61Y1bWKgCJ9KmLyxzKngTlKeX+NUdXLVVkp7TaO94fQ56HFB7gx1xSuUvboRX2Ux9fTk+F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2qUocKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NXX+pdxsCMmbJHiVZoye5zBBwo0dSmicwf0ZWAvnRbE8O2Vk91sCUiUXFhXhI39E/1U0waAOFErzHcEFnxQUNOlRmEHgCtK3KM1BjawcC/PTFXjn9nU11NZs/l5mLFfYZXaGRVa/dLfZDK6RAKWM1GE8/5+sUbTCjF+s40TmCZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0YIcVTy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2qUocKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEF0C4CED1;
-	Wed,  5 Feb 2025 14:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0YIcVTy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319F8C4CED1;
+	Wed,  5 Feb 2025 14:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767582;
-	bh=7Aqi+ZImQYxogtlqyjxtySZcHrVWy81q+bOjKWSTJ2Q=;
+	s=korg; t=1738767585;
+	bh=y50EIaukuFV8n2z+V/VqvnY/2LEEQe0Qki/x3IFN8O8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2qUocKsAOE1Wh5pBjh7VFN/ElnkArlqpjqEnr2AJbUxLrTIWXu+cNp4UJ2v+MIcW
-	 r68FnuJFUo38u1h3emlHoghTbuVuTtBtCOiQczfee3BwgJU5amgRN6k10/GcYlBbtX
-	 8OOF4J5wPoBqOqfwovOkqqhneWD+zJdx9hYYcbeM=
+	b=0YIcVTy8gELcMT/KmTjoPGKUlF503aXLam3GXYp9EtmZ/vghCNHA3T3LsomA+8WHN
+	 QX10izac+zD3uEfPDqMKRHhaQ2MzZH7lh8V/V6HCrg1sUyFmznn4wWf/lXZNmIUq8a
+	 mo1HFkoRfSXSVA/8kfmWi8wdpUF5mbwQeq5pgu2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 478/590] ipmr: do not call mr_mfc_uses_dev() for unres entries
-Date: Wed,  5 Feb 2025 14:43:53 +0100
-Message-ID: <20250205134513.549171771@linuxfoundation.org>
+Subject: [PATCH 6.13 425/623] fbdev: omapfb: Fix an OF node leak in dss_of_port_get_parent_device()
+Date: Wed,  5 Feb 2025 14:42:47 +0100
+Message-ID: <20250205134512.483619567@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,73 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 15a901361ec3fb1c393f91880e1cbf24ec0a88bd ]
+[ Upstream commit de124b61e179e690277116e6be512e4f422b5dd8 ]
 
-syzbot found that calling mr_mfc_uses_dev() for unres entries
-would crash [1], because c->mfc_un.res.minvif / c->mfc_un.res.maxvif
-alias to "struct sk_buff_head unresolved", which contain two pointers.
+dss_of_port_get_parent_device() leaks an OF node reference when i >= 2
+and struct device_node *np is present. Since of_get_next_parent()
+obtains a reference of the returned OF node, call of_node_put() before
+returning NULL.
 
-This code never worked, lets remove it.
+This was found by an experimental verifier that I am developing, and no
+runtime test was able to be performed due to that lack of actual
+devices.
 
-[1]
-Unable to handle kernel paging request at virtual address ffff5fff2d536613
-KASAN: maybe wild-memory-access in range [0xfffefff96a9b3098-0xfffefff96a9b309f]
-Modules linked in:
-CPU: 1 UID: 0 PID: 7321 Comm: syz.0.16 Not tainted 6.13.0-rc7-syzkaller-g1950a0af2d55 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline]
- pc : mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334
- lr : mr_mfc_uses_dev net/ipv4/ipmr_base.c:289 [inline]
- lr : mr_table_dump+0x694/0x8b0 net/ipv4/ipmr_base.c:334
-Call trace:
-  mr_mfc_uses_dev net/ipv4/ipmr_base.c:290 [inline] (P)
-  mr_table_dump+0x5a4/0x8b0 net/ipv4/ipmr_base.c:334 (P)
-  mr_rtm_dumproute+0x254/0x454 net/ipv4/ipmr_base.c:382
-  ipmr_rtm_dumproute+0x248/0x4b4 net/ipv4/ipmr.c:2648
-  rtnl_dump_all+0x2e4/0x4e8 net/core/rtnetlink.c:4327
-  rtnl_dumpit+0x98/0x1d0 net/core/rtnetlink.c:6791
-  netlink_dump+0x4f0/0xbc0 net/netlink/af_netlink.c:2317
-  netlink_recvmsg+0x56c/0xe64 net/netlink/af_netlink.c:1973
-  sock_recvmsg_nosec net/socket.c:1033 [inline]
-  sock_recvmsg net/socket.c:1055 [inline]
-  sock_read_iter+0x2d8/0x40c net/socket.c:1125
-  new_sync_read fs/read_write.c:484 [inline]
-  vfs_read+0x740/0x970 fs/read_write.c:565
-  ksys_read+0x15c/0x26c fs/read_write.c:708
-
-Fixes: cb167893f41e ("net: Plumb support for filtering ipv4 and ipv6 multicast route dumps")
-Reported-by: syzbot+5cfae50c0e5f2c500013@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/678fe2d1.050a0220.15cac.00b3.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250121181241.841212-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f76ee892a99e ("omapfb: copy omapdss & displays for omapfb")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr_base.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/video/fbdev/omap2/omapfb/dss/dss-of.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/ipmr_base.c b/net/ipv4/ipmr_base.c
-index 03b6eee407a24..28d77d454d442 100644
---- a/net/ipv4/ipmr_base.c
-+++ b/net/ipv4/ipmr_base.c
-@@ -330,9 +330,6 @@ int mr_table_dump(struct mr_table *mrt, struct sk_buff *skb,
- 	list_for_each_entry(mfc, &mrt->mfc_unres_queue, list) {
- 		if (e < s_e)
- 			goto next_entry2;
--		if (filter->dev &&
--		    !mr_mfc_uses_dev(mrt, mfc, filter->dev))
--			goto next_entry2;
+diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c b/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
+index c04cbe0ef173d..7c636db798825 100644
+--- a/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
++++ b/drivers/video/fbdev/omap2/omapfb/dss/dss-of.c
+@@ -36,6 +36,7 @@ struct device_node *dss_of_port_get_parent_device(struct device_node *port)
+ 		np = of_get_next_parent(np);
+ 	}
  
- 		err = fill(mrt, skb, NETLINK_CB(cb->skb).portid,
- 			   cb->nlh->nlmsg_seq, mfc, RTM_NEWROUTE, flags);
++	of_node_put(np);
+ 	return NULL;
+ }
+ 
 -- 
 2.39.5
 
