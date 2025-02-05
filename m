@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0628634E;
-	Wed,  5 Feb 2025 14:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293D214B080;
+	Wed,  5 Feb 2025 14:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765490; cv=none; b=o1gqk6G9kn9ciDJRkCKy5x4z4sqUTIRz5QDwjCGDBIke/WWVtWUxn1b5QOMKv+tSH3Rr7fZkXn1POlH1WgB3XOIYy9lvVPeCOqiLXNrPpYak2RxaWvUCpQ3q4D/ZgyordnYrAprd+gKOzHYLlMWz94sOoDi4Szo5C9u7QagX9q4=
+	t=1738765494; cv=none; b=OLQb8WHeApUDFJgnps4rBR4Jq5udpVUWCavCyNU+YWhSY/dkLGPzHR1iGxi0yxs4lopDrDclPnkzrwbiH0Ydt/wjr3zUgON6FYLShAFJnqizQr0Am3dR1y8nBrCrSFnWA/hVFR5dbE8vigAN4DiIv3IkXFf3nq9S9t4igOzbIEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765490; c=relaxed/simple;
-	bh=KLVNfbjW8JJrPmXi9P7ma4NcXd427AqCDkfpp4JmIBM=;
+	s=arc-20240116; t=1738765494; c=relaxed/simple;
+	bh=wpiuAH4y89GQq36jqc39oqi608EYdZQQ7KsWdHPrrlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pkXQX1U8BHyPinTfBd8WR3iUQdlh4yAYs+hmHhB/hb/W5Oq+ZZr7t1j1hjzOMTPXlaFuXBL+gBiNkkWxt91vt/fhwPeHBWgZLTNeKq+UBD0/Zo+vX8vmnEQK8KVrk5XGonGXflKG6fwo+cD9fdqLGDvJeDdT+Zm7ZMflhaLbk+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nDk5NF5P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oGLzTr06oUE7YCwqW5BCa3zwMP94fzF9K+jy7kBc0JJgX8SI9wml0JuNTnuOiezF7nmbjF15AZX302fnX1lKJqpIQohawKmgBWcVcrnOf/Xm6hXXqQeg9zUVcQwTbuf8BEDABmckqTSn/y8pKcY716y9FWZDB3IEL4zXg8Jcl38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dXaMpOgc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nDk5NF5P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13157C4CED1;
-	Wed,  5 Feb 2025 14:24:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dXaMpOgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A328C4CED1;
+	Wed,  5 Feb 2025 14:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765490;
-	bh=KLVNfbjW8JJrPmXi9P7ma4NcXd427AqCDkfpp4JmIBM=;
+	s=korg; t=1738765494;
+	bh=wpiuAH4y89GQq36jqc39oqi608EYdZQQ7KsWdHPrrlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDk5NF5PjG+RX92xIHHRkttDTIkvJnCN/wlLi2tpuGB+6xW4BrUKuI3KJ4XEG1I6R
-	 Wd6LPWo4mHKqm4tJBgnf3yJUndn5iaDP9wvlQgqt02+QdCCfOt3vK28WumO0aLqtPN
-	 xoNQDEzFqQkx9RmrszneNmrJqO/FE1CAYmrEO/F0=
+	b=dXaMpOgcdaybMPOWoNaeFZrtzbl/zLJv2mxoSMv7NVlhoZB7/zoE9s5QUd5qBKIqX
+	 TEAqI/07eGLC+WeOTMIB2MS6Jn7rUJhOYNXISj82MPoegyQVC1NDPGWiHvCMNwkdhw
+	 VZyuN1eZFwUJqa3og1sARcPh3FWgEJx1NiZZrQdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinas Rasheed <srasheed@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 224/590] octeon_ep: remove firmware stats fetch in ndo_get_stats64
-Date: Wed,  5 Feb 2025 14:39:39 +0100
-Message-ID: <20250205134503.855926677@linuxfoundation.org>
+Subject: [PATCH 6.6 272/393] arm64: tegra: Fix DMA ID for SPI2
+Date: Wed,  5 Feb 2025 14:43:11 +0100
+Message-ID: <20250205134430.718524178@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shinas Rasheed <srasheed@marvell.com>
+From: Akhil R <akhilrajeev@nvidia.com>
 
-[ Upstream commit 1f64255bb76c11d0c41a7d81d7cec68e49d5362d ]
+[ Upstream commit 346bf459db26325c09ed841fdfd6678de1b1cb3a ]
 
-The firmware stats fetch call that happens in ndo_get_stats64()
-is currently not required, and causes a warning to issue.
+DMA ID for SPI2 is '16'. Update the incorrect value in the devicetree.
 
-The warn log is given below:
-
-[  123.316837] ------------[ cut here ]------------
-[  123.316840] Voluntary context switch within RCU read-side critical section!
-[  123.316917] pc : rcu_note_context_switch+0x2e4/0x300
-[  123.316919] lr : rcu_note_context_switch+0x2e4/0x300
-[  123.316947] Call trace:
-[  123.316949]  rcu_note_context_switch+0x2e4/0x300
-[  123.316952]  __schedule+0x84/0x584
-[  123.316955]  schedule+0x38/0x90
-[  123.316956]  schedule_timeout+0xa0/0x1d4
-[  123.316959]  octep_send_mbox_req+0x190/0x230 [octeon_ep]
-[  123.316966]  octep_ctrl_net_get_if_stats+0x78/0x100 [octeon_ep]
-[  123.316970]  octep_get_stats64+0xd4/0xf0 [octeon_ep]
-[  123.316975]  dev_get_stats+0x4c/0x114
-[  123.316977]  dev_seq_printf_stats+0x3c/0x11c
-[  123.316980]  dev_seq_show+0x1c/0x40
-[  123.316982]  seq_read_iter+0x3cc/0x4e0
-[  123.316985]  seq_read+0xc8/0x110
-[  123.316987]  proc_reg_read+0x9c/0xec
-[  123.316990]  vfs_read+0xc8/0x2ec
-[  123.316993]  ksys_read+0x70/0x100
-[  123.316995]  __arm64_sys_read+0x20/0x30
-[  123.316997]  invoke_syscall.constprop.0+0x7c/0xd0
-[  123.317000]  do_el0_svc+0xb4/0xd0
-[  123.317002]  el0_svc+0xe8/0x1f4
-[  123.317005]  el0t_64_sync_handler+0x134/0x150
-[  123.317006]  el0t_64_sync+0x17c/0x180
-[  123.317008] ---[ end trace 63399811432ab69b ]---
-
-Fixes: 6a610a46bad1 ("octeon_ep: add support for ndo ops")
-Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Link: https://patch.msgid.link/20250117094653.2588578-2-srasheed@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bb9667d8187b ("arm64: tegra: Add SPI device tree nodes for Tegra234")
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Link: https://lore.kernel.org/r/20241206105201.53596-1-akhilrajeev@nvidia.com
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index 549436efc2048..730aa5632ccee 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -995,12 +995,6 @@ static void octep_get_stats64(struct net_device *netdev,
- 	struct octep_device *oct = netdev_priv(netdev);
- 	int q;
- 
--	if (netif_running(netdev))
--		octep_ctrl_net_get_if_stats(oct,
--					    OCTEP_CTRL_NET_INVALID_VFID,
--					    &oct->iface_rx_stats,
--					    &oct->iface_tx_stats);
--
- 	tx_packets = 0;
- 	tx_bytes = 0;
- 	rx_packets = 0;
-@@ -1018,10 +1012,6 @@ static void octep_get_stats64(struct net_device *netdev,
- 	stats->tx_bytes = tx_bytes;
- 	stats->rx_packets = rx_packets;
- 	stats->rx_bytes = rx_bytes;
--	stats->multicast = oct->iface_rx_stats.mcast_pkts;
--	stats->rx_errors = oct->iface_rx_stats.err_pkts;
--	stats->collisions = oct->iface_tx_stats.xscol;
--	stats->tx_fifo_errors = oct->iface_tx_stats.undflw;
- }
- 
- /**
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index ac69eacf8a6ba..be30072fb7471 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -1794,7 +1794,7 @@
+ 			assigned-clock-parents = <&bpmp TEGRA234_CLK_PLLP_OUT0>;
+ 			resets = <&bpmp TEGRA234_RESET_SPI2>;
+ 			reset-names = "spi";
+-			dmas = <&gpcdma 19>, <&gpcdma 19>;
++			dmas = <&gpcdma 16>, <&gpcdma 16>;
+ 			dma-names = "rx", "tx";
+ 			dma-coherent;
+ 			status = "disabled";
 -- 
 2.39.5
 
