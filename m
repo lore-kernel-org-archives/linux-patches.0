@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85ADA1519AA;
-	Wed,  5 Feb 2025 14:07:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB26FC0B;
+	Wed,  5 Feb 2025 14:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764422; cv=none; b=nWGdX/RsfpigY86HE0uy/cujB8sHFo9tix9VRKSJJtOZuv0I3BK2HyIgj0LVDdfdsDNAy0Jz52LFNTqLydqef9PKotMOmEhlNIacodjTTJGpd6u8V98jnJwgb5PBwsieQ8sTzqWSn7EI9yDIDli9gzqowJKfLNTjK7O+m3notZY=
+	t=1738764426; cv=none; b=dfNUWYp7VyUtqErUeMQofOQVj3+mLi3uH/cb4cEejwyJGe/tZ3f3dnRbUPL37pnYETZ55bYFEN6cwvBthZMXZhzAsUhKN5bJiFdCMF1TI2iBKECiLmF3AUvuSOicVlhaWVdStqAGPKPUTTSchXv5rCvSxjOnXMADGxEylIVJ/Zs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764422; c=relaxed/simple;
-	bh=L/QnnBlmvgIE1caUgRQv74Fp/OsgrcQOS6pln8rT294=;
+	s=arc-20240116; t=1738764426; c=relaxed/simple;
+	bh=h6HNJbIXx0B5ivdGiARFdlpeUdjBn/NmNsJ/Hu5cMMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfsYeOlKaqyFWy9klsVN8anh6fotqQEU2ZD9IoCUeVrNu9XeiM+cvXEuPEMDmuSKuNItZ/of1riOnXysNXibs3yUQJk120jPCwNKlcG18lAeWzfYqjIhCqeRtQNAlqm8ds7lkR9lTEK7ogO6WOVitCg7ArbO+C8LuAzL+rmshsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCxmE+WB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1/zg7nT8Ne73NnHtfArqucQ5ygrWTfErZHN1SYwSlt0CkwoqimIgSrU7yGFzL7/fpCGQtZVJSLGZ8F6M3cszze9saRR3eXrYP+TcaL256QwX396AkVZX0rO2P+6xQczVJXXwPIKxdqNuTTjuhyQXvlFmFTBjVQjdaCu/6F9xLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eBpghUOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCxmE+WB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E44CFC4CED1;
-	Wed,  5 Feb 2025 14:07:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eBpghUOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A85C4CED1;
+	Wed,  5 Feb 2025 14:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764422;
-	bh=L/QnnBlmvgIE1caUgRQv74Fp/OsgrcQOS6pln8rT294=;
+	s=korg; t=1738764425;
+	bh=h6HNJbIXx0B5ivdGiARFdlpeUdjBn/NmNsJ/Hu5cMMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCxmE+WBokES8Hi7DGWV9omfmSTb62pnRvobcfqmYs1FqMlKgpFV5coqB76zTNn3e
-	 PXEHzqZ4eLylDARuBaa96lVTXHmI9dXhLhnXSe+RFwOvCo11xX3mN4pO9Ff0GeJmYp
-	 RZPuDORiw5ivj/UJqnZ//BZ1f6LHvXwgqITAjq9o=
+	b=eBpghUOQSVg58gFdC1OAv8YphGDBE/yylSqt5v+pkHK+lLgMA1Yl1x/WZ78crC19W
+	 0eFFKWkxUoOp2WA8VzxrJYYXXvPVdb9yRjf7mSdHkZD1X5flZJJj/MUk8+HLLQg3tQ
+	 X0EKEe045nvOljGf/yjGIehDEIzGNr0btibcubV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 122/590] dt-bindings: clock: imx93: Add SPDIF IPG clk
-Date: Wed,  5 Feb 2025 14:37:57 +0100
-Message-ID: <20250205134459.929716769@linuxfoundation.org>
+Subject: [PATCH 6.13 077/623] drm/msm/mdp4: correct LCDC regulator name
+Date: Wed,  5 Feb 2025 14:36:59 +0100
+Message-ID: <20250205134459.171746252@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,39 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 32e9dea2645fa10dfa08b4e333918affaf1e4de5 ]
+[ Upstream commit 8aa337cbe7a61a5a98a4d3f446fc968b3bac914a ]
 
-Add SPDIF IPG clk. The SPDIF IPG clock and root clock
-share same clock gate.
+Correct c&p error from the conversion of LCDC regulators to the bulk
+API.
 
-Fixes: 1c4a4f7362fd ("arm64: dts: imx93: Add audio device nodes")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20241119015805.3840606-2-shengjiu.wang@nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Fixes: 54f1fbcb47d4 ("drm/msm/mdp4: use bulk regulators API for LCDC encoder")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/590412/
+Link: https://lore.kernel.org/r/20240420-mdp4-fixes-v1-3-96a70f64fa85@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/clock/imx93-clock.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/dt-bindings/clock/imx93-clock.h b/include/dt-bindings/clock/imx93-clock.h
-index 6c685067288b5..c393fad3a3469 100644
---- a/include/dt-bindings/clock/imx93-clock.h
-+++ b/include/dt-bindings/clock/imx93-clock.h
-@@ -209,5 +209,6 @@
- #define IMX91_CLK_ENET2_REGULAR     204
- #define IMX91_CLK_ENET2_REGULAR_GATE		205
- #define IMX91_CLK_ENET1_QOS_TSN_GATE		206
-+#define IMX93_CLK_SPDIF_IPG		207
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+index 576995ddce37e..8bbc7fb881d59 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+@@ -389,7 +389,7 @@ struct drm_encoder *mdp4_lcdc_encoder_init(struct drm_device *dev,
  
- #endif
+ 	/* TODO: different regulators in other cases? */
+ 	mdp4_lcdc_encoder->regs[0].supply = "lvds-vccs-3p3v";
+-	mdp4_lcdc_encoder->regs[1].supply = "lvds-vccs-3p3v";
++	mdp4_lcdc_encoder->regs[1].supply = "lvds-pll-vdda";
+ 	mdp4_lcdc_encoder->regs[2].supply = "lvds-vdda";
+ 
+ 	ret = devm_regulator_bulk_get(dev->dev,
 -- 
 2.39.5
 
