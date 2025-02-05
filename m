@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 135C91519BF;
-	Wed,  5 Feb 2025 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D31C1519BF;
+	Wed,  5 Feb 2025 15:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767731; cv=none; b=NgbRCY45Ov/0m8qHOmWItwPBkFMID5hagD0MfIt5z0OVCiPuYkl9lpKFX+9I/ZaLpXLoBa9yQgnGzxBBiO1jnHn2KOYK/XlkdWhlQiS+MANeWNlfI+x5gz19sTW4/NWeNJ59yXwP0q9sEK9xhSu/DqxHOdmIAU/G/U2mzgQrh80=
+	t=1738767733; cv=none; b=fKukyjMsKf32M4lDudfVIe6e2Xys1hwnOSD1EK1zg+J4KbtakujZxmdtOZzMDsP1MLej+0rrQgQAuUVeodx4ASU/Ah9YQNEUTIV2fnDMBmwb9WCPoteC7C0Lpc7pcKCJJyX+jSNw0rPMkvFletwQNoe2vQB1Eb39bjJ9QJOpLdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767731; c=relaxed/simple;
-	bh=Liym+K2wNX3b2R6vux0NrpVUGNM0rsNGQ8uGsfKqDm4=;
+	s=arc-20240116; t=1738767733; c=relaxed/simple;
+	bh=aAw29CDT7b67tvHc1qEFU/UupJR3A5AypnHuLb6bzA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QumwpvcZW1jQogoqp3mt3YkVVaAUmc2TQX6Ig9Z2CfdEYQeVZ2jpGAw8pPsupBhiUIa/oE0Zj7ebccKrEp708yOg5lHzcCYQ5l59WrO0miABb6s5fvaPfSnjHdzek5eIMLzmF4Q0Qe+OcnQWQ+BgEKNTikrSJnrSmni4XF/7an4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJiW6wFu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CHi05Joce7M5Qm/IuWUqjoZIbiEnYsfmDbebIfAyw8CjAOLHqIGfEz9zzd2bLIC88qBhASC2EZyPckQNXQ16koJYIP+OiIWaKCmWaEueSOMpnapRqngDhuDIIYX19dB4q1/0rZ9DWhOVHo0KIddayBz+fYWjSLgokdapJ5iewuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqiO1AZF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJiW6wFu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15162C4CED1;
-	Wed,  5 Feb 2025 15:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqiO1AZF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F51C4CED1;
+	Wed,  5 Feb 2025 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767729;
-	bh=Liym+K2wNX3b2R6vux0NrpVUGNM0rsNGQ8uGsfKqDm4=;
+	s=korg; t=1738767732;
+	bh=aAw29CDT7b67tvHc1qEFU/UupJR3A5AypnHuLb6bzA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJiW6wFuSTivGHIOgxCl6uchYeQPxOYcMY4oqPx38rDdlCRpqJMFBm6JAV0bbPyMS
-	 3CH30+5FlLfIz7025oRnCYDMhwzJZEHBRSnUaaK/DdpPUwdkLm5s5ARTZkQJbrBcpg
-	 tujJ4mOgaQhMcCmRlHlZ73C5F/8KU4F4ygwcQp2c=
+	b=yqiO1AZFDvWiiAg5D3ssVdePwp7N1I5HLcsbruMX/HJ1ehGfhAidHDLHHVx+rYJwM
+	 6grja1Ga4nLQv957ETxt/uHzojk1VGOzL+NaUjcO+6DCD0fEaz3WZjnwPqnsq0o9ui
+	 7ZfiYnwR0LXORe6qHny2Zzxcavjpf8TEIpQvHyuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Wang <wangming01@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jan Stancek <jstancek@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 470/590] rtc: loongson: clear TOY_MATCH0_REG in loongson_rtc_isr()
-Date: Wed,  5 Feb 2025 14:43:45 +0100
-Message-ID: <20250205134513.241350189@linuxfoundation.org>
+Subject: [PATCH 6.12 497/590] selftests: net/{lib,openvswitch}: extend CFLAGS to keep options from environment
+Date: Wed,  5 Feb 2025 14:44:12 +0100
+Message-ID: <20250205134514.283073234@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -53,64 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Wang <wangming01@loongson.cn>
+From: Jan Stancek <jstancek@redhat.com>
 
-[ Upstream commit 09471d8f5b390883eaf21b917c4bf3ced1b8a1df ]
+[ Upstream commit 9b06d5b956131bde535f5c045cf8c1ff6bfba76c ]
 
-The TOY_MATCH0_REG should be cleared to 0 in the RTC interrupt handler,
-otherwise the interrupt cannot be cleared, which will cause the
-loongson_rtc_isr() to be triggered multiple times.
+Package build environments like Fedora rpmbuild introduced hardening
+options (e.g. -pie -Wl,-z,now) by passing a -spec option to CFLAGS
+and LDFLAGS.
 
-The previous code cleared TOY_MATCH0_REG in the loongson_rtc_handler(),
-which is an ACPI interrupt. This did not prevent loongson_rtc_isr()
-from being triggered multiple times.
+Some Makefiles currently override CFLAGS but not LDFLAGS, which leads
+to a mismatch and build failure, for example:
+  /usr/bin/ld: /tmp/ccd2apay.o: relocation R_X86_64_32 against
+    `.rodata.str1.1' can not be used when making a PIE object; recompile with -fPIE
+  /usr/bin/ld: failed to set dynamic section sizes: bad value
+  collect2: error: ld returned 1 exit status
+  make[1]: *** [../../lib.mk:222: tools/testing/selftests/net/lib/csum] Error 1
 
-This commit moves the clearing of TOY_MATCH0_REG to the
-loongson_rtc_isr() to ensure that the interrupt is properly cleared.
+openvswitch/Makefile CFLAGS currently do not appear to be used, but
+fix it anyway for the case when new tests are introduced in future.
 
-Fixes: 1b733a9ebc3d ("rtc: Add rtc driver for the Loongson family chips")
-Signed-off-by: Ming Wang <wangming01@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Keguang Zhang <keguang.zhang@gmail.com> # on LS1B
-Tested-by: Keguang Zhang <keguang.zhang@gmail.com>
-Link: https://lore.kernel.org/r/20241205114307.1891418-1-wangming01@loongson.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 1d0dc857b5d8 ("selftests: drv-net: add checksum tests")
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Acked-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/3d173603ee258f419d0403363765c9f9494ff79a.1737635092.git.jstancek@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-loongson.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ tools/testing/selftests/net/lib/Makefile         | 2 +-
+ tools/testing/selftests/net/openvswitch/Makefile | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-loongson.c b/drivers/rtc/rtc-loongson.c
-index e8ffc1ab90b02..90e9d97a86b48 100644
---- a/drivers/rtc/rtc-loongson.c
-+++ b/drivers/rtc/rtc-loongson.c
-@@ -114,6 +114,13 @@ static irqreturn_t loongson_rtc_isr(int irq, void *id)
- 	struct loongson_rtc_priv *priv = (struct loongson_rtc_priv *)id;
+diff --git a/tools/testing/selftests/net/lib/Makefile b/tools/testing/selftests/net/lib/Makefile
+index 82c3264b115ee..704b88b6a8d2a 100644
+--- a/tools/testing/selftests/net/lib/Makefile
++++ b/tools/testing/selftests/net/lib/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
  
- 	rtc_update_irq(priv->rtcdev, 1, RTC_AF | RTC_IRQF);
-+
-+	/*
-+	 * The TOY_MATCH0_REG should be cleared 0 here,
-+	 * otherwise the interrupt cannot be cleared.
-+	 */
-+	regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+
- 	return IRQ_HANDLED;
- }
+-CFLAGS =  -Wall -Wl,--no-as-needed -O2 -g
++CFLAGS += -Wall -Wl,--no-as-needed -O2 -g
+ CFLAGS += -I../../../../../usr/include/ $(KHDR_INCLUDES)
+ # Additional include paths needed by kselftest.h
+ CFLAGS += -I../../
+diff --git a/tools/testing/selftests/net/openvswitch/Makefile b/tools/testing/selftests/net/openvswitch/Makefile
+index 2f1508abc826b..3fd1da2ec07d5 100644
+--- a/tools/testing/selftests/net/openvswitch/Makefile
++++ b/tools/testing/selftests/net/openvswitch/Makefile
+@@ -2,7 +2,7 @@
  
-@@ -131,11 +138,7 @@ static u32 loongson_rtc_handler(void *id)
- 	writel(RTC_STS, priv->pm_base + PM1_STS_REG);
- 	spin_unlock(&priv->lock);
+ top_srcdir = ../../../../..
  
--	/*
--	 * The TOY_MATCH0_REG should be cleared 0 here,
--	 * otherwise the interrupt cannot be cleared.
--	 */
--	return regmap_write(priv->regmap, TOY_MATCH0_REG, 0);
-+	return ACPI_INTERRUPT_HANDLED;
- }
+-CFLAGS =  -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
++CFLAGS += -Wall -Wl,--no-as-needed -O2 -g -I$(top_srcdir)/usr/include $(KHDR_INCLUDES)
  
- static int loongson_rtc_set_enabled(struct device *dev)
+ TEST_PROGS := openvswitch.sh
+ 
 -- 
 2.39.5
 
