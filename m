@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59361DF59;
-	Wed,  5 Feb 2025 15:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAF21519BF;
+	Wed,  5 Feb 2025 15:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767937; cv=none; b=uvZckH7ux/7GHjLYy2lJdWaqIgx+J15gSjcf7Micruv2lNh3cd1DO2cPkOFj5rlMQyqextSj9Sg5chNG/sTOatmqI6saxQ37N7o7vQEAXQxHy0jt0HADHc+sPPMpoKhQi7Lwt08BsEL1Ib/FxOFgDUixQWJl20Kbf4q1chpOJDg=
+	t=1738767940; cv=none; b=WMvuGvKUUdh8qftZXMDeaTHGLefNka+UTKbmPymIvbUtn1GxpqDTFepxcZ7Op4PGRpza4nzKiMDJG08jNcBwKLhNE+SIxlzSIrcApFD1+ROTMzzGb+CqYtV9citYfOnpmtlxbexPMDlVUaPRmXvxbjUKbsfhyx12uEJCNsoYJg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767937; c=relaxed/simple;
-	bh=LOL/dlrlkx4qNdibXQfTxk393YABYQgOi1s27iADxBY=;
+	s=arc-20240116; t=1738767940; c=relaxed/simple;
+	bh=FtsVO4oTvuUf77Y0QQJsu7aH8qMrQYH5fvEuHV0Ri/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RymK5T5k1oWDvlANhTXRAPABPJSeRgzcYaqE0q2EHiVrFLwJr9hm7NMPFffLNw6dWrUx8nowJLdY09dWB7A1O0C2JwYvjCngWtbWGe2TGCgSJ4wqJRheWLs6reJwaBH+GZIyi733ELvg2xc2ZXdbVF8FYK6aKH3AmXyEABD6css=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzGM6BKe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rYjFO1MOBA0ZnW4AA9ZkqjxBlCN1nUQfgVsHp/sRKQOJOazleA05Zm/oZTdDD8H54gMZKgPjPzzAgBu9OllgLjtnMcm2RuB4ehStFa/V8jwe0PgH33XUSa6IDn+YByGOww5deAzGHjf0yhEBT7xzY5hUHA06CsnEo89gy8seqxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaIR72M+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzGM6BKe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB56EC4CED1;
-	Wed,  5 Feb 2025 15:05:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaIR72M+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEB9C4CED1;
+	Wed,  5 Feb 2025 15:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767937;
-	bh=LOL/dlrlkx4qNdibXQfTxk393YABYQgOi1s27iADxBY=;
+	s=korg; t=1738767940;
+	bh=FtsVO4oTvuUf77Y0QQJsu7aH8qMrQYH5fvEuHV0Ri/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzGM6BKekJGgZHRkbPzOkD3YxUaQ9XJrpPiIJULmjypySTczyEOsxz92/7QDnbTpA
-	 7onwFvVLE661yaWmXOmbkGbS1Z1id7JnnEaQsv5VYBYIeJVEtXgM/Ad48c9YzqFU/K
-	 INJeZImLyGVWOHLU3e0wYpvPNGGA95webL7zJcd0=
+	b=jaIR72M+P/rtJlRVrFQah50vOwnmluyc4fTZlHpcoBfLqK6SywBskabcziozDLxT6
+	 j3J6QrhB0yXVAb0iOYhvIFX5aELXVqfcOMFmC0sTvHwspuNkZwBE6ufnQ3LgreKswH
+	 Hs0ET+pFLlALQrnyT1tND2TMqAVbdgelRoZuVx/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Guixin Liu <kanie@linux.alibaba.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 532/590] kconfig: fix file name in warnings when loading KCONFIG_DEFCONFIG_LIST
-Date: Wed,  5 Feb 2025 14:44:47 +0100
-Message-ID: <20250205134515.620275135@linuxfoundation.org>
+Subject: [PATCH 6.13 475/623] scsi: mpi3mr: Fix possible crash when setting up bsg fails
+Date: Wed,  5 Feb 2025 14:43:37 +0100
+Message-ID: <20250205134514.389782347@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,75 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Guixin Liu <kanie@linux.alibaba.com>
 
-[ Upstream commit a314f52a0210730d0d556de76bb7388e76d4597d ]
+[ Upstream commit 295006f6e8c17212d3098811166e29627d19e05c ]
 
-Most 'make *config' commands use .config as the base configuration file.
+If bsg_setup_queue() fails, the bsg_queue is assigned a non-NULL value.
+Consequently, in mpi3mr_bsg_exit(), the condition "if(!mrioc->bsg_queue)"
+will not be satisfied, preventing execution from entering
+bsg_remove_queue(), which could lead to the following crash:
 
-When .config does not exist, Kconfig tries to load a file listed in
-KCONFIG_DEFCONFIG_LIST instead.
+BUG: kernel NULL pointer dereference, address: 000000000000041c
+Call Trace:
+  <TASK>
+  mpi3mr_bsg_exit+0x1f/0x50 [mpi3mr]
+  mpi3mr_remove+0x6f/0x340 [mpi3mr]
+  pci_device_remove+0x3f/0xb0
+  device_release_driver_internal+0x19d/0x220
+  unbind_store+0xa4/0xb0
+  kernfs_fop_write_iter+0x11f/0x200
+  vfs_write+0x1fc/0x3e0
+  ksys_write+0x67/0xe0
+  do_syscall_64+0x38/0x80
+  entry_SYSCALL_64_after_hwframe+0x78/0xe2
 
-However, since commit b75b0a819af9 ("kconfig: change defconfig_list
-option to environment variable"), warning messages have displayed an
-incorrect file name in such cases.
-
-Below is a demonstration using Debian Trixie. While loading
-/boot/config-6.12.9-amd64, the warning messages incorrectly show .config
-as the file name.
-
-With this commit, the correct file name is displayed in warnings.
-
-[Before]
-
-  $ rm -f .config
-  $ make config
-  #
-  # using defaults found in /boot/config-6.12.9-amd64
-  #
-  .config:6804:warning: symbol value 'm' invalid for FB_BACKLIGHT
-  .config:9895:warning: symbol value 'm' invalid for ANDROID_BINDER_IPC
-
-[After]
-
-  $ rm -f .config
-  $ make config
-  #
-  # using defaults found in /boot/config-6.12.9-amd64
-  #
-  /boot/config-6.12.9-amd64:6804:warning: symbol value 'm' invalid for FB_BACKLIGHT
-  /boot/config-6.12.9-amd64:9895:warning: symbol value 'm' invalid for ANDROID_BINDER_IPC
-
-Fixes: b75b0a819af9 ("kconfig: change defconfig_list option to environment variable")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 4268fa751365 ("scsi: mpi3mr: Add bsg device support")
+Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20250107022032.24006-1-kanie@linux.alibaba.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/confdata.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_app.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/kconfig/confdata.c b/scripts/kconfig/confdata.c
-index 4286d5e7f95dc..3b55e7a4131d9 100644
---- a/scripts/kconfig/confdata.c
-+++ b/scripts/kconfig/confdata.c
-@@ -360,10 +360,12 @@ int conf_read_simple(const char *name, int def)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
+index 10b8e4dc64f8b..7589f48aebc80 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_app.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
+@@ -2951,6 +2951,7 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
+ 		.max_hw_sectors		= MPI3MR_MAX_APP_XFER_SECTORS,
+ 		.max_segments		= MPI3MR_MAX_APP_XFER_SEGMENTS,
+ 	};
++	struct request_queue *q;
  
- 			*p = '\0';
+ 	device_initialize(bsg_dev);
  
--			in = zconf_fopen(env);
-+			name = env;
+@@ -2966,14 +2967,17 @@ void mpi3mr_bsg_init(struct mpi3mr_ioc *mrioc)
+ 		return;
+ 	}
+ 
+-	mrioc->bsg_queue = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
++	q = bsg_setup_queue(bsg_dev, dev_name(bsg_dev), &lim,
+ 			mpi3mr_bsg_request, NULL, 0);
+-	if (IS_ERR(mrioc->bsg_queue)) {
++	if (IS_ERR(q)) {
+ 		ioc_err(mrioc, "%s: bsg registration failed\n",
+ 		    dev_name(bsg_dev));
+ 		device_del(bsg_dev);
+ 		put_device(bsg_dev);
++		return;
+ 	}
 +
-+			in = zconf_fopen(name);
- 			if (in) {
- 				conf_message("using defaults found in %s",
--					     env);
-+					     name);
- 				goto load;
- 			}
++	mrioc->bsg_queue = q;
+ }
  
+ /**
 -- 
 2.39.5
 
