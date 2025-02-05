@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6920E18F2CF;
-	Wed,  5 Feb 2025 14:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53508155747;
+	Wed,  5 Feb 2025 14:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767309; cv=none; b=OS01nbZKx/POujgwPqbgfNFJ5PwFU1FTJ3jEUJ6b/vYIm9cZ5Hkb+CLozwbGZUTI/MLhcK35ZJVAiOrbdeIKpgOehNJHqJVA2y9QhM7re+BqVcgM3X854QX4kp3bv5gAY3VYtzBQ2y9lWzYfeXi6SEG9H6zH00gqg52nv28x6qU=
+	t=1738767313; cv=none; b=hchVhySljHOV1AydG/5cUc/aGpyy6AL2xTw1J3zCGTh7xJniZvakLTsHd5TTSWviaRbi4Hn1GeFjnQnMoZeTSjggU7O+3L2iT9PwSdm1JOOCOTp1eV6GqepP2fbP3gNhmStAc/pj5+b/BGCV3QrNpSUWGgvcEFGawDyZwZlpSBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767309; c=relaxed/simple;
-	bh=TR4gmKzBG1s6PaCQMo0LP8NJQQ6IZUtI7TbGkGGZr1E=;
+	s=arc-20240116; t=1738767313; c=relaxed/simple;
+	bh=zdjufYvF+M96yn8xRcsvm5XYc1Iflg/daaJi4ixZMrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcAFUArrCxgzu/z4cLmALJB7t88PV3xuzcQJPS5XajpK/wT9DdoUBrwuCDzild5RVPPH3yqeyNwEF/9Zy444ebx6hHjy75KBK1zgUCbPjo1snTAXEx+Vn+207nd5I9meZY9o6xrFntAlbakMLz07QjcSoq4wVInYlmCCcUCkmWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fc5Bv96D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I42hjTJQ1Xz4q7c0YpKhkIfWCDWe6ZVgOEbGxsEHrgoA4ixnHynjzWfD8dL2aZtyFiYwvmPjfRQKUbEYdVBUhKAL1qP32Josx6CAzc7Ng4qeLViIny3uvJw0bsichfvX8eQUO5iGizXZIWhyNSWvOCPH5pb795NxIaXsnu6EZc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRTWJAXN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fc5Bv96D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB063C4CED1;
-	Wed,  5 Feb 2025 14:55:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRTWJAXN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CB2C4CEDD;
+	Wed,  5 Feb 2025 14:55:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767309;
-	bh=TR4gmKzBG1s6PaCQMo0LP8NJQQ6IZUtI7TbGkGGZr1E=;
+	s=korg; t=1738767312;
+	bh=zdjufYvF+M96yn8xRcsvm5XYc1Iflg/daaJi4ixZMrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fc5Bv96DSTyyqnzXNzHlD1rJi/rWnOhQhMi1lqC0Rzbc+aqT15CbGv83RP/KKwsDu
-	 L9SwEXZgBt/Jr63m1pUmvW/jGT+pgXNBPFilQGCCJzuB6JSzm9MdK3LIcULZdgsUmL
-	 03Kr4vfu8HWjDE+SDx4ykEakKSOnFg4xNghPZyh4=
+	b=hRTWJAXNroTY0wEq/xSiasFzrHB1VL7Invw9vsv6Zy2nVwB0LLTXy3thyJkNWT617
+	 1IexczBAIOz8r2HQ/j7uqOT4IlPzSRhahkXkYCfTH7E+oMDfv2AfNsR3kNDGKaxE05
+	 vNOksBmWrBDqObnTHHboyFY75B+C2wY9LNsY7Onc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 386/623] arm64: dts: qcom: sm6375: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:08 +0100
-Message-ID: <20250205134510.990772101@linuxfoundation.org>
+Subject: [PATCH 6.12 420/590] media: nxp: imx8-isi: fix v4l2-compliance test errors
+Date: Wed,  5 Feb 2025 14:42:55 +0100
+Message-ID: <20250205134511.334673512@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
 
-[ Upstream commit 223382c94f1f07c475d39713e4c058401480b441 ]
+[ Upstream commit 7b12ab055edef2f51733d155617a401a05237bcc ]
 
-The SM6375 platform uses PM6125 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+Running the v4l2-compliance (1.27.0-5208, SHA: af114250d48d) on the m2m
+device fails on the MMAP streaming tests, with the following messages:
 
-Fixes: 59d34ca97f91 ("arm64: dts: qcom: Add initial device tree for SM6375")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-12-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+fail: v4l2-test-buffers.cpp(240): g_field() == V4L2_FIELD_ANY
+fail: v4l2-test-buffers.cpp(1508): buf.qbuf(node)
+
+Apparently, the driver does not properly set the field member of
+vb2_v4l2_buffer struct, returning the default V4L2_FIELD_ANY value which
+is against the guidelines.
+
+Fixes: cf21f328fcaf ("media: nxp: Add i.MX8 ISI driver")
+Signed-off-by: Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240924103304.124085-1-laurentiu.palcu@oss.nxp.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6375.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375.dtsi b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-index e0b1c54e98c0e..7c929168ed080 100644
---- a/arch/arm64/boot/dts/qcom/sm6375.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6375.dtsi
-@@ -29,7 +29,7 @@
+diff --git a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+index 4091f1c0e78bd..a71eb30323c8d 100644
+--- a/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
++++ b/drivers/media/platform/nxp/imx8-isi/imx8-isi-video.c
+@@ -861,6 +861,7 @@ int mxc_isi_video_buffer_prepare(struct mxc_isi_dev *isi, struct vb2_buffer *vb2
+ 				 const struct mxc_isi_format_info *info,
+ 				 const struct v4l2_pix_format_mplane *pix)
+ {
++	struct vb2_v4l2_buffer *v4l2_buf = to_vb2_v4l2_buffer(vb2);
+ 	unsigned int i;
  
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
--			clock-frequency = <32000>;
-+			clock-frequency = <32764>;
- 			#clock-cells = <0>;
- 		};
- 	};
+ 	for (i = 0; i < info->mem_planes; i++) {
+@@ -875,6 +876,8 @@ int mxc_isi_video_buffer_prepare(struct mxc_isi_dev *isi, struct vb2_buffer *vb2
+ 		vb2_set_plane_payload(vb2, i, size);
+ 	}
+ 
++	v4l2_buf->field = pix->field;
++
+ 	return 0;
+ }
+ 
 -- 
 2.39.5
 
