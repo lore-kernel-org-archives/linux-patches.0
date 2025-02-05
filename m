@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46188189F5C;
-	Wed,  5 Feb 2025 14:45:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC334189905;
+	Wed,  5 Feb 2025 14:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766740; cv=none; b=htGXatgxJN3lnij5gPoIKcni+Z13Ak19TBf4YocVTDsofonkty+cXXekGi0SfaT1AdyKtLFrMAozBJm7YsIIeb9f1EId1ZnZa8me6tP406/ZzXo+fEWUWdH1oHRTge6ixxgrFUEQij8ql6QLcnzgmaLUv6af2PhQ3ZXCLJRDSLE=
+	t=1738766744; cv=none; b=fUSLtka68pTvl0NEA7Bgm9obrQTKT2Od13QA7nVYeaMMiueqnGWgDrJnHxojDG5itoI/ag8HPB9BISy7mMq+2COaEQOgLK0iN2sPq9D9xEeieW9j1Ol6E97rp2HMvVuuE+HEA1QhNKmZQa4fLa516eu7U24a6KfcWvh4wwvbu0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766740; c=relaxed/simple;
-	bh=zfjWMXMTnrKN7V1qc48+Zc3tRwlfC7qTNzCUfXo8TU0=;
+	s=arc-20240116; t=1738766744; c=relaxed/simple;
+	bh=mLWYPtFDnMSh8f0fLzwDB1I43FI9KMSdQ5c3KXKeKcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCPU19GH6FiUmR/cVsSVFJnvK7Ef8esWZ+lNrYZVMdY8v1gl6oMS7y7PJ7He8BclIlzqv7gWHqQ2EiAhBz7Kh9SN65JvndK14XxTY6EHzCqCuoDl6ywPE7/tPmp7TX+QD0Z3RZ9qJ94LXecnESUyhVX8Ts69pMX4absW+HJaQ+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qgnig561; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=igbGZuS4CQp6zcZ3zKXq2ULzbH/kxHYZc9eXJBV26w5ocy1S/A6++cUZNS3xC3FaHcCdIOnz3lW1LvJqIBc8qnFpwljCXdXaEQQZmSNyNGDX8TAO0ZtQmgbD5MqMajIbPgwEHOVpV7LnnXumDKTnnYm5bo9wmEmKENWEc2qP+ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6+l6wZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qgnig561"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84EEC4CED1;
-	Wed,  5 Feb 2025 14:45:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6+l6wZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D8FC4CED1;
+	Wed,  5 Feb 2025 14:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766740;
-	bh=zfjWMXMTnrKN7V1qc48+Zc3tRwlfC7qTNzCUfXo8TU0=;
+	s=korg; t=1738766743;
+	bh=mLWYPtFDnMSh8f0fLzwDB1I43FI9KMSdQ5c3KXKeKcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgnig561VBW62N7Pl8tQnfUwBce5crTgkqJIse/OyLhdcitOED2bLCiiNzt2cb5kx
-	 gY3XSfR7Swtiu7qID6q8QfmD9+tRyfkyteNj1FfL50r6hC9B4p6Jj0kir9gcodWQm+
-	 BgEMmXXVsLbeE4ksX4LcbwRwEo+kQbXhL1TciTZA=
+	b=o6+l6wZzE9Humj2l2vf/+m84tJYMuFSHr4ncxThXQqPCydrPgho/+mW6iUL+pVcm0
+	 nJuAIiOdVQTgX3yYlYmIwup7AB5WBph6/CM/DhQazr/CiTst7FLHuA124BnvuhGpNz
+	 uxPVWNqlpadLqMfrQd7xox7JneSfN3YO3UikYa1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kyle Tso <kyletso@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Badhri Jagan Sridharan <badhri@google.com>
-Subject: [PATCH 6.6 382/393] usb: typec: tcpci: Prevent Sink disconnection before vPpsShutdown in SPR PPS
-Date: Wed,  5 Feb 2025 14:45:01 +0100
-Message-ID: <20250205134434.910782469@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.6 392/393] s390: Add -std=gnu11 to decompressor and purgatory CFLAGS
+Date: Wed,  5 Feb 2025 14:45:11 +0100
+Message-ID: <20250205134435.292327230@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -52,100 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Tso <kyletso@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 4d27afbf256028a1f54363367f30efc8854433c3 upstream.
+commit 3b8b80e993766dc96d1a1c01c62f5d15fafc79b9 upstream.
 
-The Source can drop its output voltage to the minimum of the requested
-PPS APDO voltage range when it is in Current Limit Mode. If this voltage
-falls within the range of vPpsShutdown, the Source initiates a Hard
-Reset and discharges Vbus. However, currently the Sink may disconnect
-before the voltage reaches vPpsShutdown, leading to unexpected behavior.
+GCC changed the default C standard dialect from gnu17 to gnu23,
+which should not have impacted the kernel because it explicitly requests
+the gnu11 standard in the main Makefile. However, there are certain
+places in the s390 code that use their own CFLAGS without a '-std='
+value, which break with this dialect change because of the kernel's own
+definitions of bool, false, and true conflicting with the C23 reserved
+keywords.
 
-Prevent premature disconnection by setting the Sink's disconnect
-threshold to the minimum vPpsShutdown value. Additionally, consider the
-voltage drop due to IR drop when calculating the appropriate threshold.
-This ensures a robust and reliable interaction between the Source and
-Sink during SPR PPS Current Limit Mode operation.
+  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+     11 |         false   = 0,
+        |         ^~~~~
+  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
+     35 | typedef _Bool                   bool;
+        |                                 ^~~~
+  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
 
-Fixes: 4288debeaa4e ("usb: typec: tcpci: Fix up sink disconnect thresholds for PD")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kyle Tso <kyletso@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Badhri Jagan Sridharan <badhri@google.com>
-Link: https://lore.kernel.org/r/20250114142435.2093857-1-kyletso@google.com
+Add '-std=gnu11' to the decompressor and purgatory CFLAGS to eliminate
+these errors and make the C standard version of these areas match the
+rest of the kernel.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/r/20250122-s390-fix-std-for-gcc-15-v1-1-8b00cadee083@kernel.org
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/tcpm/tcpci.c |   13 +++++++++----
- drivers/usb/typec/tcpm/tcpm.c  |    8 +++++---
- include/linux/usb/tcpm.h       |    3 ++-
- 3 files changed, 16 insertions(+), 8 deletions(-)
+ arch/s390/Makefile           |    2 +-
+ arch/s390/purgatory/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/typec/tcpm/tcpci.c
-+++ b/drivers/usb/typec/tcpm/tcpci.c
-@@ -26,6 +26,7 @@
- #define	VPPS_NEW_MIN_PERCENT			95
- #define	VPPS_VALID_MIN_MV			100
- #define	VSINKDISCONNECT_PD_MIN_PERCENT		90
-+#define	VPPS_SHUTDOWN_MIN_PERCENT		85
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -21,7 +21,7 @@ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FL
+ ifndef CONFIG_AS_IS_LLVM
+ KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
+ endif
+-KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack
++KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack -std=gnu11
+ KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float -mbackchain
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -21,7 +21,7 @@ UBSAN_SANITIZE := n
+ KASAN_SANITIZE := n
+ KCSAN_SANITIZE := n
  
- struct tcpci {
- 	struct device *dev;
-@@ -337,7 +338,8 @@ static int tcpci_enable_auto_vbus_discha
- }
- 
- static int tcpci_set_auto_vbus_discharge_threshold(struct tcpc_dev *dev, enum typec_pwr_opmode mode,
--						   bool pps_active, u32 requested_vbus_voltage_mv)
-+						   bool pps_active, u32 requested_vbus_voltage_mv,
-+						   u32 apdo_min_voltage_mv)
- {
- 	struct tcpci *tcpci = tcpc_to_tcpci(dev);
- 	unsigned int pwr_ctrl, threshold = 0;
-@@ -359,9 +361,12 @@ static int tcpci_set_auto_vbus_discharge
- 		threshold = AUTO_DISCHARGE_DEFAULT_THRESHOLD_MV;
- 	} else if (mode == TYPEC_PWR_MODE_PD) {
- 		if (pps_active)
--			threshold = ((VPPS_NEW_MIN_PERCENT * requested_vbus_voltage_mv / 100) -
--				     VSINKPD_MIN_IR_DROP_MV - VPPS_VALID_MIN_MV) *
--				     VSINKDISCONNECT_PD_MIN_PERCENT / 100;
-+			/*
-+			 * To prevent disconnect when the source is in Current Limit Mode.
-+			 * Set the threshold to the lowest possible voltage vPpsShutdown (min)
-+			 */
-+			threshold = VPPS_SHUTDOWN_MIN_PERCENT * apdo_min_voltage_mv / 100 -
-+				    VSINKPD_MIN_IR_DROP_MV;
- 		else
- 			threshold = ((VSRC_NEW_MIN_PERCENT * requested_vbus_voltage_mv / 100) -
- 				     VSINKPD_MIN_IR_DROP_MV - VSRC_VALID_MIN_MV) *
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -2326,10 +2326,12 @@ static int tcpm_set_auto_vbus_discharge_
- 		return 0;
- 
- 	ret = port->tcpc->set_auto_vbus_discharge_threshold(port->tcpc, mode, pps_active,
--							    requested_vbus_voltage);
-+							    requested_vbus_voltage,
-+							    port->pps_data.min_volt);
- 	tcpm_log_force(port,
--		       "set_auto_vbus_discharge_threshold mode:%d pps_active:%c vbus:%u ret:%d",
--		       mode, pps_active ? 'y' : 'n', requested_vbus_voltage, ret);
-+		       "set_auto_vbus_discharge_threshold mode:%d pps_active:%c vbus:%u pps_apdo_min_volt:%u ret:%d",
-+		       mode, pps_active ? 'y' : 'n', requested_vbus_voltage,
-+		       port->pps_data.min_volt, ret);
- 
- 	return ret;
- }
---- a/include/linux/usb/tcpm.h
-+++ b/include/linux/usb/tcpm.h
-@@ -150,7 +150,8 @@ struct tcpc_dev {
- 	void (*frs_sourcing_vbus)(struct tcpc_dev *dev);
- 	int (*enable_auto_vbus_discharge)(struct tcpc_dev *dev, bool enable);
- 	int (*set_auto_vbus_discharge_threshold)(struct tcpc_dev *dev, enum typec_pwr_opmode mode,
--						 bool pps_active, u32 requested_vbus_voltage);
-+						 bool pps_active, u32 requested_vbus_voltage,
-+						 u32 pps_apdo_min_voltage);
- 	bool (*is_vbus_vsafe0v)(struct tcpc_dev *dev);
- 	void (*set_partner_usb_comm_capable)(struct tcpc_dev *dev, bool enable);
- 	void (*check_contaminant)(struct tcpc_dev *dev);
+-KBUILD_CFLAGS := -fno-strict-aliasing -Wall -Wstrict-prototypes
++KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
+ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -Os -m64 -msoft-float -fno-common
 
 
