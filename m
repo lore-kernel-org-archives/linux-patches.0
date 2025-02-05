@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97C7195811;
-	Wed,  5 Feb 2025 14:41:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71AD51A83E7;
+	Wed,  5 Feb 2025 14:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766469; cv=none; b=rT22gcVrnEoAb1D/UgnDZ8bMMg2bmUq7lalQHvy0WW5EJDH8aW+/cFsZkz+Hz3zXpQ3AZnia4ISi63+gMj+m1IgMnX5U6aSJiTOOuBnUOtTyMPTUn0t0tw5VcxvaVGA1csfF9umDsaKKcCE7wa6J+fzBVwB1ty5Pvdmi8nnwbok=
+	t=1738766473; cv=none; b=uGJQsaAmqp3dibcH7EYMmneW2iT4f6CED8CC/gNIssJfdsBrlV47QfT0ixOt3K3MKFt8P//N9BrhKaVq7D/w0OX6axc46jsUm1uG3bqQ5xdVjRN8a2MFkSTZ2rP4eLX4XyhZdb18U5E1D1wc1klLGueCL4MoNYGzGfobCH+qgu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766469; c=relaxed/simple;
-	bh=zPvB/gozm8Di/91X9jmSGnjvbdKatgBTMdaFIub/Kwg=;
+	s=arc-20240116; t=1738766473; c=relaxed/simple;
+	bh=QMl5L3R6E6pwPElOaW62Fgg0cnYmZFv8q3WLmiQMH2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7Kn/dvzX0/BFL67U3Ouqugrlk5LX68HRzmzKzwPOyffOwytXOnzeESTVrKTecR9jC7uAMUdM9jdlbS3KDl7u/ocFX+TDW7o6Bs7TFwT9L+qvF1DTgSNu3iFycI02PgHf8LyBj0zIXaefaqPb3v4Xy0fvX3AeRk26qZWZ5AVSD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmLvc16J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kpoJXrHW9DXTInjNZOxiM8/mMn47rCFnGIDB5lGT0TwJIDy9yXBMzDy9nBpDyprQY5W65I+Y0OjA1KmhPa6/tA7t6E5S6HYEqo2QpGpuvttALCAHUDgKBycYVqpphUW5CaPfbYIYDzDwMB61jb/9R1GWMgAwTU09+GdKcYj4yZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMlxMDtN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmLvc16J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D187C4AF11;
-	Wed,  5 Feb 2025 14:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMlxMDtN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A84C4CED6;
+	Wed,  5 Feb 2025 14:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766469;
-	bh=zPvB/gozm8Di/91X9jmSGnjvbdKatgBTMdaFIub/Kwg=;
+	s=korg; t=1738766473;
+	bh=QMl5L3R6E6pwPElOaW62Fgg0cnYmZFv8q3WLmiQMH2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DmLvc16JsE0hFntb7yf001cu6CQABxiMT0yGcRjTOhpUkugDgR9971M94rwu68P9g
-	 58NhoLuohMQ3kihalMPBUDmtFiwIN4pInejkXZzFqOnv+DY5Oo04pFYCSsCLXwhpFP
-	 l31ljN1OOEOfux+dgblEmV0DHE/cq5InoCLf3iNw=
+	b=QMlxMDtNhVqfuUiNI8096uRmxFo51o7aHcZ9LquNwGnZGhA0g8uSkGoKxGrAN5fIg
+	 u/oJhTjpAjkvdcBqoLHVJdZuV+X8ArnQgNXrjOBpP4TdPu38EQ1eavKfh3JXvw165+
+	 KwY8JRJlISZwHCkDHbrQl2Z3UFUj/nVln6qfbpvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Mamta Shukla <mamta.shukla@leica-geosystems.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 279/623] crypto: ixp4xx - fix OF node reference leaks in init_ixp_crypto()
-Date: Wed,  5 Feb 2025 14:40:21 +0100
-Message-ID: <20250205134506.903913521@linuxfoundation.org>
+Subject: [PATCH 6.12 327/590] arm: dts: socfpga: use reset-name "stmmaceth-ocp" instead of "ahb"
+Date: Wed,  5 Feb 2025 14:41:22 +0100
+Message-ID: <20250205134507.784752605@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +48,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Mamta Shukla <mamta.shukla@leica-geosystems.com>
 
-[ Upstream commit 472a989029aac2b78ef2f0b18b27c568bf76d104 ]
+[ Upstream commit 62a40a0d5634834790f7166ab592be247390d857 ]
 
-init_ixp_crypto() calls of_parse_phandle_with_fixed_args() multiple
-times, but does not release all the obtained refcounts. Fix it by adding
-of_node_put() calls.
+The ahb reset is deasserted in probe before first register access, while the
+stmmacheth-ocp reset needs to be asserted every time before changing the phy
+mode in Arria10[1].
 
-This bug was found by an experimental static analysis tool that I am
-developing.
+Changed in Upstream to "ahb"(331085a423b  arm64: dts: socfpga: change the
+reset-name of "stmmaceth-ocp" to "ahb" ).This change was intended for arm64
+socfpga and it is not applicable to Arria10.
 
-Fixes: 76f24b4f46b8 ("crypto: ixp4xx - Add device tree support")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Further with STMMAC-SELFTEST Driver enabled, ethtool test also FAILS.
+$ ethtool -t eth0
+[  322.946709] socfpga-dwmac ff800000.ethernet eth0: entered promiscuous mode
+[  323.374558] socfpga-dwmac ff800000.ethernet eth0: left promiscuous mode
+The test result is FAIL
+The test extra info:
+ 1. MAC Loopback                 0
+ 2. PHY Loopback                 -110
+ 3. MMC Counters                 -110
+ 4. EEE                          -95
+ 5. Hash Filter MC               0
+ 6. Perfect Filter UC            -110
+ 7. MC Filter                    -110
+ 8. UC Filter                    0
+ 9. Flow Control                 -110
+10. RSS                          -95
+11. VLAN Filtering               -95
+12. VLAN Filtering (perf)        -95
+13. Double VLAN Filter           -95
+14. Double VLAN Filter (perf)    -95
+15. Flexible RX Parser           -95
+16. SA Insertion (desc)          -95
+17. SA Replacement (desc)        -95
+18. SA Insertion (reg)           -95
+19. SA Replacement (reg)         -95
+20. VLAN TX Insertion            -95
+21. SVLAN TX Insertion           -95
+22. L3 DA Filtering              -95
+23. L3 SA Filtering              -95
+24. L4 DA TCP Filtering          -95
+25. L4 SA TCP Filtering          -95
+26. L4 DA UDP Filtering          -95
+27. L4 SA UDP Filtering          -95
+28. ARP Offload                  -95
+29. Jumbo Frame                  -110
+30. Multichannel Jumbo           -95
+31. Split Header                 -95
+32. TBS (ETF Scheduler)          -95
+
+[  324.881327] socfpga-dwmac ff800000.ethernet eth0: Link is Down
+[  327.995360] socfpga-dwmac ff800000.ethernet eth0: Link is Up - 1Gbps/Full - flow control rx/tx
+
+Link:[1] https://www.intel.com/content/www/us/en/docs/programmable/683711/21-2/functional-description-of-the-emac.html
+Fixes: 331085a423b ("arm64: dts: socfpga: change the reset-name of "stmmaceth-ocp" to "ahb")
+Signed-off-by: Mamta Shukla <mamta.shukla@leica-geosystems.com>
+Tested-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/intel/socfpga/socfpga_arria10.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-index 449c6d3ab2db1..fcc0cf4df637d 100644
---- a/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-+++ b/drivers/crypto/intel/ixp4xx/ixp4xx_crypto.c
-@@ -471,6 +471,7 @@ static int init_ixp_crypto(struct device *dev)
- 			return -ENODEV;
- 		}
- 		npe_id = npe_spec.args[0];
-+		of_node_put(npe_spec.np);
- 
- 		ret = of_parse_phandle_with_fixed_args(np, "queue-rx", 1, 0,
- 						       &queue_spec);
-@@ -479,6 +480,7 @@ static int init_ixp_crypto(struct device *dev)
- 			return -ENODEV;
- 		}
- 		recv_qid = queue_spec.args[0];
-+		of_node_put(queue_spec.np);
- 
- 		ret = of_parse_phandle_with_fixed_args(np, "queue-txready", 1, 0,
- 						       &queue_spec);
-@@ -487,6 +489,7 @@ static int init_ixp_crypto(struct device *dev)
- 			return -ENODEV;
- 		}
- 		send_qid = queue_spec.args[0];
-+		of_node_put(queue_spec.np);
- 	} else {
- 		/*
- 		 * Hardcoded engine when using platform data, this goes away
+diff --git a/arch/arm/boot/dts/intel/socfpga/socfpga_arria10.dtsi b/arch/arm/boot/dts/intel/socfpga/socfpga_arria10.dtsi
+index 6b6e77596ffa8..b108265e9bde4 100644
+--- a/arch/arm/boot/dts/intel/socfpga/socfpga_arria10.dtsi
++++ b/arch/arm/boot/dts/intel/socfpga/socfpga_arria10.dtsi
+@@ -440,7 +440,7 @@
+ 			clocks = <&l4_mp_clk>, <&peri_emac_ptp_clk>;
+ 			clock-names = "stmmaceth", "ptp_ref";
+ 			resets = <&rst EMAC0_RESET>, <&rst EMAC0_OCP_RESET>;
+-			reset-names = "stmmaceth", "ahb";
++			reset-names = "stmmaceth", "stmmaceth-ocp";
+ 			snps,axi-config = <&socfpga_axi_setup>;
+ 			status = "disabled";
+ 		};
+@@ -460,7 +460,7 @@
+ 			clocks = <&l4_mp_clk>, <&peri_emac_ptp_clk>;
+ 			clock-names = "stmmaceth", "ptp_ref";
+ 			resets = <&rst EMAC1_RESET>, <&rst EMAC1_OCP_RESET>;
+-			reset-names = "stmmaceth", "ahb";
++			reset-names = "stmmaceth", "stmmaceth-ocp";
+ 			snps,axi-config = <&socfpga_axi_setup>;
+ 			status = "disabled";
+ 		};
+@@ -480,7 +480,7 @@
+ 			clocks = <&l4_mp_clk>, <&peri_emac_ptp_clk>;
+ 			clock-names = "stmmaceth", "ptp_ref";
+ 			resets = <&rst EMAC2_RESET>, <&rst EMAC2_OCP_RESET>;
+-			reset-names = "stmmaceth", "ahb";
++			reset-names = "stmmaceth", "stmmaceth-ocp";
+ 			snps,axi-config = <&socfpga_axi_setup>;
+ 			status = "disabled";
+ 		};
 -- 
 2.39.5
 
