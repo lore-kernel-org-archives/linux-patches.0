@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4BC33993;
-	Wed,  5 Feb 2025 14:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F69F33993;
+	Wed,  5 Feb 2025 14:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767248; cv=none; b=MJPfmFUszgfejvTpYzeO3Q+o8aZ5BaxIC9X7BwO5TqrnNS4wN81DvMoMfGm0eee1R7Aru1v6JQ7WVCdiVT9zWE2JInAGousU5HPXaw8f9XuHOccsZlWNWGi3QbMTjmCGhYzWuQXUdXJmHYXgkhCQVzxb3V5SeZcGtRoIr4kZieg=
+	t=1738767252; cv=none; b=aqm4w9FyC1zpWqU776rF44E+AvXOiFEq9td/DP63LWSOwjdI2yQ+JN3uaHCypR+CaxLHGyfKp3NtomM4bbA2Vr6PkTExjWDQSQKlm1LNy1e5IFpIDaDW1zDR7M/SBUlHbv1W6rVftoDiOZYNVDgtYPY0XWIa0F0+bIv/AJy7OSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767248; c=relaxed/simple;
-	bh=9nqX5HzN8GobDWVhUgNmTsms4vdtRuUg1Ki1fKc30sg=;
+	s=arc-20240116; t=1738767252; c=relaxed/simple;
+	bh=S2oKUbDr8Rn2W4H62mCRbREoWbVe9M3KSb6znvApeQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y+OJGYhRiOScY2gM9NTAGOb+GXjAlJPmKwchQqEg16Cgso8DBJYmCGLFkKXdZs2+idWUSB7prHiQGKnRYiJrx00oGnkVy1f3ckM155NMYcsCA/CjnizzOzw0zOt/cxshGPQ19j+A95kq7OC6a0J2APNtkmAIcykmlKVpPCuFxus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2syTNd1y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sVpZFm9bZUlsZKkRe8Xw3BMptQD+Een0NxjAIhApJ1EBmWwBV9adjFAApkYBVN89VpJVKFfzPLbYpGzpWL/sIwUhSz9pPqucOpGLKwZS/3FLJsmFseTDvZNr5xlFaU+Qo9NTgEUhdsXLP3uus0XxaGHUwC1AiF6OJiKvUVALA0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtgxBM1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2syTNd1y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02880C4CED1;
-	Wed,  5 Feb 2025 14:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtgxBM1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C57C4CED1;
+	Wed,  5 Feb 2025 14:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767248;
-	bh=9nqX5HzN8GobDWVhUgNmTsms4vdtRuUg1Ki1fKc30sg=;
+	s=korg; t=1738767252;
+	bh=S2oKUbDr8Rn2W4H62mCRbREoWbVe9M3KSb6znvApeQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2syTNd1ygidaxCE4dlXr0kkoL12CYmYH/JQJ4fLY3O+DNB36rM63ER5AJmLw9MmZo
-	 zJwkY8NGAxdbBs7reURoYiXvdqCOIhW0sHVx/SX0MGcF0rKUnWY/EjpihqvXdFUUVX
-	 s3xr+QU9G4gC5OWF6EwYoICi8nlhpQDL6zf4cExU=
+	b=VtgxBM1+kYZY/Fzu8+HR6XlGr1rUvNuokkLqF1eTosEJs5lehE3qNXNVYcEGPf5PO
+	 qVujCzu92NIQTRvDeeKubGxNZu5klAvrBPYpbGcXrZ0+lc4twNem18NEm2U27DBcW6
+	 +hZwkBDZDzAeCxQr8Rhg0IHiElY+7qb6kP9BZGkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 429/590] PCI: qcom: Update ICC and OPP values after Link Up event
-Date: Wed,  5 Feb 2025 14:43:04 +0100
-Message-ID: <20250205134511.677914027@linuxfoundation.org>
+Subject: [PATCH 6.13 378/623] arm64: dts: qcom: msm8994: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:42:00 +0100
+Message-ID: <20250205134510.679486951@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit f0639013d340580b72df95d012a93f35eeb0da64 ]
+[ Upstream commit a4148d869d47d8c86da0291dd95d411a5ebe90c8 ]
 
-4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in
-'global_irq' interrupt") added the Link Up-based enumeration support, but
-did not update the ICC/OPP vote once link is up. Before that, the update
-happened during probe and the endpoints may or may not be enumerated at
-that time, so the ICC/OPP vote was not guaranteed to be accurate.
+The MSM8994 platform uses PM8994/6 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-With Link Up-based enumeration support, the driver can request the accurate
-vote based on the PCIe link.
-
-Call qcom_pcie_icc_opp_update() in qcom_pcie_global_irq_thread() after
-enumerating the endpoints.
-
-Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
-Link: https://lore.kernel.org/r/20241123-remove_wait2-v5-3-b5f9e6b794c2@quicinc.com
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Fixes: feeaf56ac78d ("arm64: dts: msm8994 SoC and Huawei Angler (Nexus 6P) support")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-3-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8994.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 6483e1874477e..4c141e05f84e9 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1559,6 +1559,8 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 		pci_lock_rescan_remove();
- 		pci_rescan_bus(pp->bridge->bus);
- 		pci_unlock_rescan_remove();
-+
-+		qcom_pcie_icc_opp_update(pcie);
- 	} else {
- 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
- 			      status);
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index 8c0b1e3a99a76..b5cbdd620bb9e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -34,7 +34,7 @@
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+-			clock-frequency = <32768>;
++			clock-frequency = <32764>;
+ 			clock-output-names = "sleep_clk";
+ 		};
+ 	};
 -- 
 2.39.5
 
