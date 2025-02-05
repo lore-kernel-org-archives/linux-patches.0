@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B1CFC0B;
-	Wed,  5 Feb 2025 13:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06677FC0B;
+	Wed,  5 Feb 2025 13:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763629; cv=none; b=oEwR/IV5CjWgasOxUM4ZsYwpnZ92lb6RfP82F3ZO+0ZmbpL7uTGT/d07W087W1w4e6GsSCmCbNOhoDBRU2OBjgb7+/7zWOLR+z+t5XbD6RVBlTkD3WNC3tHs2MJ7ZGz9Lkl+ER4/1x+XAqCdqIhjV2pyIDzMFjQm/pcBq5W3a4o=
+	t=1738763633; cv=none; b=c85q/j1kQZQcKcjPnUFpP/sfpC2Zh+jI47XM4IhnK3u70A+mQF81YeZ5BG4uSGUN1YNJPyHpNea6T3PCY8Q6iBmzmRbRvXkjbitRISgV1fyI3do5eGuVrO2Rl3HbuROB5uuJDDKjktPfqyWll0aa9gLMvsIzLG7lWp5ni+qrZPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763629; c=relaxed/simple;
-	bh=pTprCUDyBfQQlRn7vVnR8ryhJqRxB97adwmSIBAYO/0=;
+	s=arc-20240116; t=1738763633; c=relaxed/simple;
+	bh=cgLfk44nvmtOPfIPka9OLBHvt8e4eeAn1ROCT+L3RpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=udIR9I/Gs0wowy024HiIapICPSsNPDE0snIAjo7TkcP27mqNPJdk0ZtUlgs3Bk8p2nqjsWSx/xfQoiMquUCGDXJQMEs9h+mH1lCFbYNjTm39DSRzcoiF1EaU+s19KS8lpT13yerlRmRX4Ol6BUsxdzYxmdPtFzPsQ501Yw0ATlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDuE7nuR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tVYU1yPkyUWWK74xcd/R46Mh4fyBTJz7rBAreP8biIUZQJekgbdA20JmHE590NPWMDO6vDyVz3clrC90UElKgDKMRdt6Le0lw1FHuaMs8B1HdBV0NIRGFrApbb1rAM3X/anpY4Kv4raoEllJNH2kOQc5Rdlad9VpNk3PePHQcBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d2BmY7EZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDuE7nuR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E585FC4CED1;
-	Wed,  5 Feb 2025 13:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d2BmY7EZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66939C4CED1;
+	Wed,  5 Feb 2025 13:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763629;
-	bh=pTprCUDyBfQQlRn7vVnR8ryhJqRxB97adwmSIBAYO/0=;
+	s=korg; t=1738763632;
+	bh=cgLfk44nvmtOPfIPka9OLBHvt8e4eeAn1ROCT+L3RpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDuE7nuRwL/C6B0VG9v6DZHN7yZdCvlB+xhqoMDEib+qs8bKIiES3HmZJvEDx7A3u
-	 mwzIX5mfl4pSN0rIkZ+JSiN8fxhG85zTUKkiSflpyc2nktmivJToV4t/VFcz40PJvi
-	 EqokhkhgP8K45DNwOLFZqvcXSWZ0/7Bfe+ZdAp4E=
+	b=d2BmY7EZ4iUR2cxWacmFYYMBvvi69EZ8UOrb7+4ehKEPB0a+CRA+mYBxB1W+QpbzJ
+	 5K7o61tUrlUPI6YbpHzuV+aGvSne+y6Cc58tjMDaKzBeaOF6lM9T5aDZnweqB7hBbj
+	 ZBXou/wrj6cKIGPJGR0OyroPnjo6O6FdnufFME9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Frank Oltmanns <frank@oltmanns.dev>,
-	Stuart Gathman <stuart@gathman.org>
-Subject: [PATCH 6.6 091/393] clk: sunxi-ng: a64: drop redundant CLK_PLL_VIDEO0_2X and CLK_PLL_MIPI
-Date: Wed,  5 Feb 2025 14:40:10 +0100
-Message-ID: <20250205134423.775963348@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 004/623] dlm: fix srcu_read_lock() return type to int
+Date: Wed,  5 Feb 2025 14:35:46 +0100
+Message-ID: <20250205134456.398206794@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,50 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit 0f368cb7ef103f284f75e962c4c89da5aa8ccec7 ]
+[ Upstream commit 57cdd1a1cf1464199678f9338049b63fb5d5b41c ]
 
-Drop redundant CLK_PLL_VIDEO0_2X and CLK_PLL.MIPI. These are now
-defined in dt-bindings/clock/sun50i-a64-ccu.h
+The return type of srcu_read_lock() is int and not bool. Whereas we
+using the ret variable only to evaluate a bool type of
+dlm_lowcomms_con_has_addr() to check if an address is already being set.
 
-Fixes: ca1170b69968 ("clk: sunxi-ng: a64: force select PLL_MIPI in TCON0 mux")
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Reviewed-by: Chen-Yu Tsai <wens@csie.org>
-Tested-by: Frank Oltmanns <frank@oltmanns.dev> # on pinephone
-Tested-by: Stuart Gathman <stuart@gathman.org> # on OG pinebook
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-Link: https://patch.msgid.link/20250104074035.1611136-3-anarsoul@gmail.com
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Fixes: 6f0b0b5d7ae7 ("fs: dlm: remove dlm_node_addrs lookup list")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun50i-a64.h | 2 --
- 1 file changed, 2 deletions(-)
+ fs/dlm/lowcomms.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun50i-a64.h b/drivers/clk/sunxi-ng/ccu-sun50i-a64.h
-index a8c11c0b4e067..dfba88a5ad0f7 100644
---- a/drivers/clk/sunxi-ng/ccu-sun50i-a64.h
-+++ b/drivers/clk/sunxi-ng/ccu-sun50i-a64.h
-@@ -21,7 +21,6 @@
+diff --git a/fs/dlm/lowcomms.c b/fs/dlm/lowcomms.c
+index df40c3fd10702..d28141829c051 100644
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -462,7 +462,8 @@ static bool dlm_lowcomms_con_has_addr(const struct connection *con,
+ int dlm_lowcomms_addr(int nodeid, struct sockaddr_storage *addr)
+ {
+ 	struct connection *con;
+-	bool ret, idx;
++	bool ret;
++	int idx;
  
- /* PLL_VIDEO0 exported for HDMI PHY */
- 
--#define CLK_PLL_VIDEO0_2X		8
- #define CLK_PLL_VE			9
- #define CLK_PLL_DDR0			10
- 
-@@ -32,7 +31,6 @@
- #define CLK_PLL_PERIPH1_2X		14
- #define CLK_PLL_VIDEO1			15
- #define CLK_PLL_GPU			16
--#define CLK_PLL_MIPI			17
- #define CLK_PLL_HSIC			18
- #define CLK_PLL_DE			19
- #define CLK_PLL_DDR1			20
+ 	idx = srcu_read_lock(&connections_srcu);
+ 	con = nodeid2con(nodeid, GFP_NOFS);
 -- 
 2.39.5
 
