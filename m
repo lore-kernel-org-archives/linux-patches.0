@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889051519BE;
-	Wed,  5 Feb 2025 14:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B85F1459F6;
+	Wed,  5 Feb 2025 14:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765302; cv=none; b=uWlipZClzrNijtLJMHQl2y7WGYjcNS/0rGs1FpZdGD79UYx/TJzPnyV0Ogl0Pfnt3u/KnL1BuLZumg6Swwrg9cNwrkeoaZRYjQ60JaynWZrYPdQROa3+WH+H/Qhz0R+t1WWFFgxq/NAoq+1wmCnmWs5aWKlNGSs4GQP2I7W/lj8=
+	t=1738765305; cv=none; b=LYHgYVbV5Xxhbh71EZLgH1IH1majEeb/loeoOg35E2iwwV/eAJVUJzjIP3TK+kbhL60hAblKiGc14/nx9Cvkvd5WR2q+VK+pFLY5sdhi+yqYIlMjyvZNqaIApKHrSlSvEjiDVVrJes9qengSVQu61vBshpfTWdxLpnKUhYpZtvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765302; c=relaxed/simple;
-	bh=UXb83zwmOUkNt5hVI+n8cZsDWMNNd9jNS9Rd1NROzqE=;
+	s=arc-20240116; t=1738765305; c=relaxed/simple;
+	bh=NY7TNak3BcL689FgxuikWxDpjuVmlR7wWKJTgP/xQEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWS0m+LY40JAYmVZWR6qrCvrJpPsZtJ7RuLoU/TFdz2qP+b+DF2lxp2qp9CgYXvSuCG+/N/GB8OwIpllNDOE2zEisZvt4oGk4BP0/pVUi43LrmFBf1g9NRV5O2yUYou1TX3oHHhWTs4KL9m+wSvJC8Rut2SVaUBhSMOv2sN2Hy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtnfCuUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GTZAjcziU66aM+3rpTU4d9vTyUSfuuoxv76niLGCyEjp9w8oqmR2zgUVA42zRuKH1kYzTkRsjmx3qD0U1x2nnHuvsTTuKYAE7VkkUo6/202JBKRDiz4Sn50V2ANBOZZvJHBQy1mE9ygOfXmVsVz90tfGaM0ZfQxDGOpYda+P+b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQY5hfZs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtnfCuUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD96C4CED1;
-	Wed,  5 Feb 2025 14:21:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQY5hfZs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A758C4CED1;
+	Wed,  5 Feb 2025 14:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765302;
-	bh=UXb83zwmOUkNt5hVI+n8cZsDWMNNd9jNS9Rd1NROzqE=;
+	s=korg; t=1738765305;
+	bh=NY7TNak3BcL689FgxuikWxDpjuVmlR7wWKJTgP/xQEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtnfCuUYqcpRt74Zbs+nVq+hDwQ/dRufLxASn+80hxXYmiItFCHx6oVYjOLrdSvE/
-	 krXABbVUvsfBg/nLFFaQw/0F75SOQULDYW1tr0xkdKzYTPs4eL/8L2I0l0GyQBp5Gn
-	 3efuTGrmtSJ6pH64dKS6prPZI6ojBpiVH91hNccs=
+	b=PQY5hfZslIk/9MxKnhUrcvtRGUtZPvD1O6wEeumdiK0xt+5mkq7IpKbhUrBbladeh
+	 K5DtR1gCd8h2iVn/CRAZf4gf9EtSYNFZY7VYbwBR2E82B2F7rzDiY0GmMOQ47W3GRf
+	 Ibjpduvl3BnZZkeMPlKkTyFfwZkynvVi2FGD/cho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Peter Chiu <chui-hao.chiu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 164/623] wifi: iwlwifi: mvm: avoid NULL pointer dereference
-Date: Wed,  5 Feb 2025 14:38:26 +0100
-Message-ID: <20250205134502.509895741@linuxfoundation.org>
+Subject: [PATCH 6.12 208/590] wifi: mt76: mt7996: fix ldpc setting
+Date: Wed,  5 Feb 2025 14:39:23 +0100
+Message-ID: <20250205134503.240773700@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Peter Chiu <chui-hao.chiu@mediatek.com>
 
-[ Upstream commit cf704a7624f99eb2ffca1a16c69183e85544a613 ]
+[ Upstream commit da8352da1e4f476fdbf549a4efce4f3c618fde3b ]
 
-When iterating over the links of a vif, we need to make sure that the
-pointer is valid (in other words - that the link exists) before
-dereferncing it.
-Use for_each_vif_active_link that also does the check.
+The non-AP interfaces would not use conf->vht_ldpc so they never set
+STA_CAP_VHT_LDPC even if peer-station support LDPC.
+Check conf->vht_ldpc only for AP interface.
 
-Fixes: 2b7ee1a10a72 ("wifi: iwlwiif: mvm: handle the new BT notif")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Link: https://patch.msgid.link/20241229164246.31d41f7d3eab.I7fb7036a0b187c1636b01970207259cb2327952c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Without this patch, station only uses BCC to transmit packet in VHT mode.
+
+Fixes: dda423dd65c3 ("wifi: mt76: mt7996: remove mt7996_mcu_beacon_check_caps()")
+Signed-off-by: Peter Chiu <chui-hao.chiu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250114101026.3587702-7-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/coex.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/coex.c b/drivers/net/wireless/intel/iwlwifi/mvm/coex.c
-index 36726ea4b822a..21641d41a958c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/coex.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/coex.c
-@@ -530,18 +530,15 @@ static void iwl_mvm_bt_coex_notif_iterator(void *_data, u8 *mac,
- 					   struct ieee80211_vif *vif)
- {
- 	struct iwl_mvm *mvm = _data;
-+	struct ieee80211_bss_conf *link_conf;
-+	unsigned int link_id;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index d6d80b1b2d697..265958f7b7871 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -2070,7 +2070,7 @@ mt7996_mcu_sta_rate_ctrl_tlv(struct sk_buff *skb, struct mt7996_dev *dev,
+ 			cap |= STA_CAP_VHT_TX_STBC;
+ 		if (sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_RXSTBC_1)
+ 			cap |= STA_CAP_VHT_RX_STBC;
+-		if (vif->bss_conf.vht_ldpc &&
++		if ((vif->type != NL80211_IFTYPE_AP || vif->bss_conf.vht_ldpc) &&
+ 		    (sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_RXLDPC))
+ 			cap |= STA_CAP_VHT_LDPC;
  
- 	lockdep_assert_held(&mvm->mutex);
- 
- 	if (vif->type != NL80211_IFTYPE_STATION)
- 		return;
- 
--	for (int link_id = 0;
--	     link_id < IEEE80211_MLD_MAX_NUM_LINKS;
--	     link_id++) {
--		struct ieee80211_bss_conf *link_conf =
--			rcu_dereference_check(vif->link_conf[link_id],
--					      lockdep_is_held(&mvm->mutex));
-+	for_each_vif_active_link(vif, link_conf, link_id) {
- 		struct ieee80211_chanctx_conf *chanctx_conf =
- 			rcu_dereference_check(link_conf->chanctx_conf,
- 					      lockdep_is_held(&mvm->mutex));
 -- 
 2.39.5
 
