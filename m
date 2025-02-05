@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E8F376;
-	Wed,  5 Feb 2025 15:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525D11519BF;
+	Wed,  5 Feb 2025 15:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767960; cv=none; b=LwyUBuwNjZ776S2ZcgS/XHMTo9+Jq57JdxgC8LoNv2NxtDBTV7vlqY25PRWdGvYfKGTlc+a2dm0Q0TCn3iLaKuCRp17CCPLwOl4vvhWMLaDXWFKMtIDHXtnZWy0SWXdLwbqO34KFiQCad/CHgZ52HOtUiG9uHNtPFCFKN/E72Ns=
+	t=1738767968; cv=none; b=POBhgRsB5RKfRC1vy938gA1NBPYOBdX9N2dMKhYiHHhFj2gNoEWt+R2v6VfnExNI43fpzGuCQdzSD512fZ/l5J3nhOu3iQa0n6BTAjWZBzKvwTBJpUKMXBkMgFlG55kMjIuWoAjr5QY3rqVxqHYFc9tuxhi+7cVsNaoSFq3Ny3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767960; c=relaxed/simple;
-	bh=J/iDce8Qug0V4m+Ksj3NL08z75Qx4pYonPIb/ZrtIac=;
+	s=arc-20240116; t=1738767968; c=relaxed/simple;
+	bh=TiEnP1lUnw5SqR8F+X1R6goTGbbYKEv6Sn5ZLg7eqbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aUuxLXrTJgJiBWUcxQ8v3AidOIEx5mN64b7Z2NOFjbP19er9WHKBOasWS+qqF+woJWB7q1wQeh9WZ2dBF1EBUOsbg2+vn3Rk3wNy/bbZHaylQKL/7IlGAW2mp7CaizqkBugEuGMlTP4VlJGjzHpFWtp64EiLpypSXMiIFJvp9YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnSIi1ZP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNJ1p/oZ/BHWj5uhhXAokmiXfw3643RtOqfoTnJX8LGzeK2o7M0tx/NxYIAO+pImFH+Byr7k6pyB19B6D9A6Tb4OVzoCw5b7XLVcytdvgnGYXPqzuv5tIEJSp6NBWFWNmNwDdcuncPCfxw8WP4izB0OE0fUmS4XTFVekyO9w6zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKfWIN8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnSIi1ZP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F14BC4CED1;
-	Wed,  5 Feb 2025 15:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKfWIN8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73C4C4CED1;
+	Wed,  5 Feb 2025 15:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767959;
-	bh=J/iDce8Qug0V4m+Ksj3NL08z75Qx4pYonPIb/ZrtIac=;
+	s=korg; t=1738767968;
+	bh=TiEnP1lUnw5SqR8F+X1R6goTGbbYKEv6Sn5ZLg7eqbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnSIi1ZP6JmJVWJfnHivSuPPYeJfuwdb0WdkuiguSe3NcJYBbcDNPC8za2VKB2M44
-	 RpCVoOlSMha38TtDaxppliJLlsYNg7FNEzu0kcjiTg+MAWj97K2D+r1LjcLuqs3B8Z
-	 LQ96cWApNRXZzvQWVlMNaI2Rfxik+P7nveogV0zo=
+	b=GKfWIN8qXAaVVZqt6YsbmyxO6uqUaELAqjpmwQTdP6gcfafgQZSeD+3vacnZQnSpT
+	 soVylZVQWnVmtYI0kssXOG5zt4mvVaRbypWFREYaYfTbPHln/8N17o5rdz4NaaKUnN
+	 tNZRji7KJuBwNAalqcw9iJtcpxzB41P25NupF8R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Yujun <linyujun809@huawei.com>,
-	Brian Cain <bcain@quicinc.com>,
-	Brian Cain <brian.cain@oss.qualcomm.com>,
+	Su Yue <glass.su@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 535/590] hexagon: Fix unbalanced spinlock in die()
-Date: Wed,  5 Feb 2025 14:44:50 +0100
-Message-ID: <20250205134515.734304980@linuxfoundation.org>
+Subject: [PATCH 6.13 478/623] ocfs2: mark dquot as inactive if failed to start trans while releasing dquot
+Date: Wed,  5 Feb 2025 14:43:40 +0100
+Message-ID: <20250205134514.503757672@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +53,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lin Yujun <linyujun809@huawei.com>
+From: Su Yue <glass.su@suse.com>
 
-[ Upstream commit 03410e87563a122075c3721acc7d5510e41d8332 ]
+[ Upstream commit 276c61385f6bc3223a5ecd307cf4aba2dfbb9a31 ]
 
-die executes holding the spinlock of &die.lock and unlock
-it after printing the oops message.
-However in the code if the notify_die() returns NOTIFY_STOP
-, die() exit with returning 1 but never unlocked the spinlock.
+While running fstests generic/329, the kernel workqueue
+quota_release_workfn is dead looping in calling ocfs2_release_dquot().
+The ocfs2 state is already readonly but ocfs2_release_dquot wants to
+start a transaction but fails and returns.
 
-Fix this by adding spin_unlock_irq(&die.lock) before returning.
+=====================================================================
+[ 2918.123602 ][  T275 ] On-disk corruption discovered. Please run
+fsck.ocfs2 once the filesystem is unmounted.
+[ 2918.124034 ][  T275 ] (kworker/u135:1,275,11):ocfs2_release_dquot:765
+ERROR: status = -30
+[ 2918.124452 ][  T275 ] (kworker/u135:1,275,11):ocfs2_release_dquot:795
+ERROR: status = -30
+[ 2918.124883 ][  T275 ] (kworker/u135:1,275,11):ocfs2_start_trans:357
+ERROR: status = -30
+[ 2918.125276 ][  T275 ] OCFS2: abort (device dm-0): ocfs2_start_trans:
+Detected aborted journal
+[ 2918.125710 ][  T275 ] On-disk corruption discovered. Please run
+fsck.ocfs2 once the filesystem is unmounted.
+=====================================================================
 
-Fixes: cf9750bae262 ("Hexagon: Provide basic debugging and system trap support.")
-Signed-off-by: Lin Yujun <linyujun809@huawei.com>
-Link: https://lore.kernel.org/r/20230522025608.2515558-1-linyujun809@huawei.com
-Signed-off-by: Brian Cain <bcain@quicinc.com>
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+ocfs2_release_dquot() is much like dquot_release(), which is called by
+ext4 to handle similar situation.  So here fix it by marking the dquot as
+inactive like what dquot_release() does.
+
+Link: https://lkml.kernel.org/r/20250106140653.92292-1-glass.su@suse.com
+Fixes: 9e33d69f553a ("ocfs2: Implementation of local and global quota file handling")
+Signed-off-by: Su Yue <glass.su@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/hexagon/kernel/traps.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ocfs2/quota_global.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/hexagon/kernel/traps.c b/arch/hexagon/kernel/traps.c
-index 75e062722d285..040a958de1dfc 100644
---- a/arch/hexagon/kernel/traps.c
-+++ b/arch/hexagon/kernel/traps.c
-@@ -195,8 +195,10 @@ int die(const char *str, struct pt_regs *regs, long err)
- 	printk(KERN_EMERG "Oops: %s[#%d]:\n", str, ++die.counter);
- 
- 	if (notify_die(DIE_OOPS, str, regs, err, pt_cause(regs), SIGSEGV) ==
--	    NOTIFY_STOP)
-+	    NOTIFY_STOP) {
-+		spin_unlock_irq(&die.lock);
- 		return 1;
-+	}
- 
- 	print_modules();
- 	show_regs(regs);
+diff --git a/fs/ocfs2/quota_global.c b/fs/ocfs2/quota_global.c
+index 3404e7a30c330..15d9acd456ecc 100644
+--- a/fs/ocfs2/quota_global.c
++++ b/fs/ocfs2/quota_global.c
+@@ -761,6 +761,11 @@ static int ocfs2_release_dquot(struct dquot *dquot)
+ 	handle = ocfs2_start_trans(osb,
+ 		ocfs2_calc_qdel_credits(dquot->dq_sb, dquot->dq_id.type));
+ 	if (IS_ERR(handle)) {
++		/*
++		 * Mark dquot as inactive to avoid endless cycle in
++		 * quota_release_workfn().
++		 */
++		clear_bit(DQ_ACTIVE_B, &dquot->dq_flags);
+ 		status = PTR_ERR(handle);
+ 		mlog_errno(status);
+ 		goto out_ilock;
 -- 
 2.39.5
 
