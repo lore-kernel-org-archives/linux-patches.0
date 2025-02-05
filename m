@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014A1519A4;
-	Wed,  5 Feb 2025 14:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A24B1519AA;
+	Wed,  5 Feb 2025 14:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764936; cv=none; b=TH77F30oGsCO6Q4seeXVmg0Ny1b3CMXjN34WC9OuGrpHiliZP9xolZxGn35n01s8JXvmTQ1q8Z3GIm7++GoCNReCJGAO3qwEXclNtkSH9GhC2o4qMw+rExcgSyShNDiNwIfeoImoF+HVgzQbb7S49wsXutsViYLeS8RYS24lc+s=
+	t=1738764939; cv=none; b=q5/LUFnKuurVcWWF/f2MaIdE8dNugHiA6ATBjgKb//ifQ6zfay2CN9zTORgOg4yLFDvU0eB79W9y5y9SayNIw/O+iva9Ja7y/KRWxCAseTGi0yEmEytmc8FLzRaW6zdufmi8Db/4T1AM1Y0U2f/S7tgM+OtAgGwRzagECTpjAMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764936; c=relaxed/simple;
-	bh=YB5JXLR0q7BQQ8DZA3F+R5LLJz4KwlUjh2N/Jas+dTE=;
+	s=arc-20240116; t=1738764939; c=relaxed/simple;
+	bh=zeL7aHKWv0TdM8bSECDDuRRQt/Lbtbq5LE7dI4zAZeQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Syoj9C8zwNoLWGlljtKMPhDSx6VftlTX7+Q3aohtkbXsqZyty2B42UsWXhZ5IFJVoSsFGQzv1WCxLuEtv8NzVIztTDtmfZjxk8Cdm0rjYk9IrNXKpjWp0DoC+IQ0O8XTeYJqkB3TRhYXmzD4kdYSDubqwLDPmqHlEyRo0px+Li8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pvdhMCe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FoN/cjVUE4XzcuYn96xS7JcRDK4cidVXjcpPsndmRDJwp4AZ83lzGN3G4D5M4WBdD8VglHsdg7miG2CORtaTHWULg04d93UJ8D5e0pqcqgDR9iNRGG6NC9jUtJhTSvtNXx/JSnkBwjZWozea2tL3C0wQ3Nj0RT8HMnzmwoiqoxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vjc/Wv8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pvdhMCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1002C4CEDD;
-	Wed,  5 Feb 2025 14:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vjc/Wv8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04361C4CED1;
+	Wed,  5 Feb 2025 14:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764936;
-	bh=YB5JXLR0q7BQQ8DZA3F+R5LLJz4KwlUjh2N/Jas+dTE=;
+	s=korg; t=1738764939;
+	bh=zeL7aHKWv0TdM8bSECDDuRRQt/Lbtbq5LE7dI4zAZeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pvdhMCe9vYDDdWz8MR1K/nu096lLfiaCmp41cotE+k6FhJTO8gCQ5bRWXx6+FgVd
-	 7gA4pTtjGbAw6PQU3Gapo93xI+pk0HcuQTmYi5k7fKa/KpByLgEVbln8gBRTldgeVI
-	 G1EFhNkbpS0kBJVsNATk00Lb0aQvnt3C5y7dX9bs=
+	b=Vjc/Wv8twp5zjcd221zsfiLH0HOALgg0iYaVpeygxHz3h/xPZpN4bnvx99CRGbE3E
+	 HPS2VPT89CPbDk3GIeqCrdL8AGV6op/p3ohFVUpsZnNauDlm1OhOOycPRUC6s6q1V0
+	 yYoBnzqXotLTn5O+Pr3mitG4IExhY1+9vnhSbjec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 128/623] cpufreq: qcom: Implement clk_ops::determine_rate() for qcom_cpufreq* clocks
-Date: Wed,  5 Feb 2025 14:37:50 +0100
-Message-ID: <20250205134501.123061799@linuxfoundation.org>
+	zhenwei pi <pizhenwei@bytedance.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>
+Subject: [PATCH 6.6 217/393] RDMA/rxe: Fix mismatched max_msg_sz
+Date: Wed,  5 Feb 2025 14:42:16 +0100
+Message-ID: <20250205134428.606383808@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,68 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: zhenwei pi <pizhenwei@bytedance.com>
 
-[ Upstream commit a9ba290d0b829012574b6821ba08815046e60c94 ]
+[ Upstream commit db03b70969aab4ef111a3369cfd90ea4da3a6aa0 ]
 
-determine_rate() callback is used by the clk_set_rate() API to get the
-closest rate of the target rate supported by the clock. If this callback
-is not implemented (nor round_rate() callback), then the API will assume
-that the clock cannot set the requested rate. And since there is no parent,
-it will return -EINVAL.
+User mode queries max_msg_sz as 0x800000 by command 'ibv_devinfo -v',
+however ibv_post_send/ibv_post_recv has a limit of 2^31. Fix this
+mismatched information.
 
-This is not an issue right now as clk_set_rate() mistakenly compares the
-target rate with cached rate and bails out early. But once that is fixed
-to compare the target rate with the actual rate of the clock (returned by
-recalc_rate()), then clk_set_rate() for this clock will start to fail as
-below:
-
-cpu cpu0: _opp_config_clk_single: failed to set clock rate: -22
-
-So implement the determine_rate() callback that just returns the actual
-rate at which the clock is passed to the CPUs in a domain.
-
-Fixes: 4370232c727b ("cpufreq: qcom-hw: Add CPU clock provider support")
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Suggested-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Fixes: f605f26ea196 ("RDMA/rxe: Protect QP state with qp->state_lock")
+Fixes: 5bf944f24129 ("RDMA/rxe: Add error messages")
+Link: https://patch.msgid.link/20241216121953.765331-1-pizhenwei@bytedance.com
+Review-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_param.h | 2 +-
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 5 ++---
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index c145ab7b0bb21..b2e7e89feaac4 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -626,8 +626,21 @@ static unsigned long qcom_cpufreq_hw_recalc_rate(struct clk_hw *hw, unsigned lon
- 	return __qcom_cpufreq_hw_get(data->policy) * HZ_PER_KHZ;
- }
+diff --git a/drivers/infiniband/sw/rxe/rxe_param.h b/drivers/infiniband/sw/rxe/rxe_param.h
+index d2f57ead78ad1..003f681e5dc02 100644
+--- a/drivers/infiniband/sw/rxe/rxe_param.h
++++ b/drivers/infiniband/sw/rxe/rxe_param.h
+@@ -129,7 +129,7 @@ enum rxe_device_param {
+ enum rxe_port_param {
+ 	RXE_PORT_GID_TBL_LEN		= 1024,
+ 	RXE_PORT_PORT_CAP_FLAGS		= IB_PORT_CM_SUP,
+-	RXE_PORT_MAX_MSG_SZ		= 0x800000,
++	RXE_PORT_MAX_MSG_SZ		= (1UL << 31),
+ 	RXE_PORT_BAD_PKEY_CNTR		= 0,
+ 	RXE_PORT_QKEY_VIOL_CNTR		= 0,
+ 	RXE_PORT_LID			= 0,
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index b00d611857e0f..dbb9baa4ffd00 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -688,7 +688,7 @@ static int validate_send_wr(struct rxe_qp *qp, const struct ib_send_wr *ibwr,
+ 		for (i = 0; i < ibwr->num_sge; i++)
+ 			length += ibwr->sg_list[i].length;
  
-+/*
-+ * Since we cannot determine the closest rate of the target rate, let's just
-+ * return the actual rate at which the clock is running at. This is needed to
-+ * make clk_set_rate() API work properly.
-+ */
-+static int qcom_cpufreq_hw_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
-+{
-+	req->rate = qcom_cpufreq_hw_recalc_rate(hw, 0);
-+
-+	return 0;
-+}
-+
- static const struct clk_ops qcom_cpufreq_hw_clk_ops = {
- 	.recalc_rate = qcom_cpufreq_hw_recalc_rate,
-+	.determine_rate = qcom_cpufreq_hw_determine_rate,
- };
+-		if (length > (1UL << 31)) {
++		if (length > RXE_PORT_MAX_MSG_SZ) {
+ 			rxe_err_qp(qp, "message length too long\n");
+ 			break;
+ 		}
+@@ -977,8 +977,7 @@ static int post_one_recv(struct rxe_rq *rq, const struct ib_recv_wr *ibwr)
+ 	for (i = 0; i < num_sge; i++)
+ 		length += ibwr->sg_list[i].length;
  
- static int qcom_cpufreq_hw_driver_probe(struct platform_device *pdev)
+-	/* IBA max message size is 2^31 */
+-	if (length >= (1UL<<31)) {
++	if (length > RXE_PORT_MAX_MSG_SZ) {
+ 		err = -EINVAL;
+ 		rxe_dbg("message length too long\n");
+ 		goto err_out;
 -- 
 2.39.5
 
