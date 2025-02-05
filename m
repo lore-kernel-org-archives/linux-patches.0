@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE58BF510;
-	Wed,  5 Feb 2025 14:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B5CF510;
+	Wed,  5 Feb 2025 14:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764340; cv=none; b=b+2O/sDHgmeerX3YJ1A5TUijB5mtp0/i3idHMJYdRkTIxpn9vaS+S+F0+LO7lX2aWabixOfAglhqkdAaQx+5x25/rDB+Ljog7sBr3j6JhPUQrE4Mi3+GKTLXBqgY9jRTh0k19VdDjg443L8swti9zsYPy64/bcsuyg1lpWrKbxY=
+	t=1738764344; cv=none; b=DSua8X4B8Rh8RgI6qggh6LMK4xlc0tb2cI4yNQgVTykiZ+qQOeREtHUrjaiuUsbD0IWBxhlgT7DhDC0U2W/2wOvqowv4vabeONi3xSGy2QuAxg4EiCt2f8gSmu2mDorm9LZeFi5REdHFFUmLXhsU1kyQ6EkUwC9UjB0i7hkNeM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764340; c=relaxed/simple;
-	bh=2GhGc52CwLJAuavqlSCXLBMjSCGzEz4nxHNuf/7CD0Y=;
+	s=arc-20240116; t=1738764344; c=relaxed/simple;
+	bh=UIDtfOLE+9UQb4pE09RXLo6xmeFlp/2sMDW9fabR67c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdvP6bgIJvpln/OxEcupttyyNj54/eJXTUhOrV2tRZVor5VeN5COMvImsp+Mb9WgJiu+1+gEAjbkcoIxoKcxVdgmavmNErYhQa2EniQU9tD4cvm7THrSCmsnEELYC0j3YOhftf0O0c9fgaNCN+lpOfpLuJWlnPExiCdw+KbpDAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGV2SVBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDdUqk3l2sMQf1Tab61jm3+NorHSv+zLmEzo1NWl0ek6zd9FQy2G8TXFMOQ1bQ2DAmQNc+fsnyP8LPXgmLLptaEqnDQEKk7UWfqI07om9PwDRylqbQg0hBqn2wDg03rmMyeuKCSl+nJm+PE+a4tBr5azuR4G/oz+JmcPliirLF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=goVwdUbB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGV2SVBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17486C4CED1;
-	Wed,  5 Feb 2025 14:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="goVwdUbB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBB1C4CED1;
+	Wed,  5 Feb 2025 14:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764340;
-	bh=2GhGc52CwLJAuavqlSCXLBMjSCGzEz4nxHNuf/7CD0Y=;
+	s=korg; t=1738764343;
+	bh=UIDtfOLE+9UQb4pE09RXLo6xmeFlp/2sMDW9fabR67c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGV2SVBUJ4CGiVdarg6lnEyZFX3jahD7RwRGoOfDY3ixwWzRsP7PonHboOdyv3h1a
-	 1+HutlkGjY+E3RDAMB/ML6BvCdAllzR5x/GLXCaF7DbMg3XL+GJocQVxkntbFr2XZR
-	 pT3LTXDvNYuHY82VmNjSQqXCM5i3wqWXZThOyHto=
+	b=goVwdUbBTRV/fLP/wcaa/ByxzvBc2t5Vxw03wu8i11lm7Gcy2BzdW9LHnAz8CRgIK
+	 fnIe2WHM1YhHPLJTwQwmSa4EJWPXcRvnkpUrtS1XCp6uGRfMHvTYkiDx/4tDYi9SCL
+	 AbaIgPJ9vgBVVA8wXMyk02e4gHUsU5KprfAL+tnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Mark Brown <broonie@kernel.org>,
+	Marco Leogrande <leogrande@google.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/393] ASoC: renesas: rz-ssi: Use only the proper amount of dividers
-Date: Wed,  5 Feb 2025 14:41:22 +0100
-Message-ID: <20250205134426.535278444@linuxfoundation.org>
+Subject: [PATCH 6.6 154/393] tools/testing/selftests/bpf/test_tc_tunnel.sh: Fix wait for server bind
+Date: Wed,  5 Feb 2025 14:41:13 +0100
+Message-ID: <20250205134426.193947094@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -52,39 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Marco Leogrande <leogrande@google.com>
 
-[ Upstream commit 55c209cd4318c701e6e88e0b2512a0f12dd02a7d ]
+[ Upstream commit e2f0791124a1b6ca8d570110cbd487969d9d41ef ]
 
-There is no need to populate the ckdv[] with invalid dividers as that
-part will not be indexed anyway. The ssi->audio_mck/bclk_rate should
-always be >= 0. While at it, change the ckdv type as u8, as the divider
-128 was previously using the s8 sign bit.
+Commit f803bcf9208a ("selftests/bpf: Prevent client connect before
+server bind in test_tc_tunnel.sh") added code that waits for the
+netcat server to start before the netcat client attempts to connect to
+it. However, not all calls to 'server_listen' were guarded.
 
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Fixes: 03e786bd43410fa9 ("ASoC: sh: Add RZ/G2L SSIF-2 driver")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20241210170953.2936724-6-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch adds the existing 'wait_for_port' guard after the remaining
+call to 'server_listen'.
+
+Fixes: f803bcf9208a ("selftests/bpf: Prevent client connect before server bind in test_tc_tunnel.sh")
+Signed-off-by: Marco Leogrande <leogrande@google.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://lore.kernel.org/r/20241202204530.1143448-1-leogrande@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sh/rz-ssi.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/bpf/test_tc_tunnel.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/sh/rz-ssi.c b/sound/soc/sh/rz-ssi.c
-index 1588b93cc35d0..353863f49b313 100644
---- a/sound/soc/sh/rz-ssi.c
-+++ b/sound/soc/sh/rz-ssi.c
-@@ -245,8 +245,7 @@ static void rz_ssi_stream_quit(struct rz_ssi_priv *ssi,
- static int rz_ssi_clk_setup(struct rz_ssi_priv *ssi, unsigned int rate,
- 			    unsigned int channels)
- {
--	static s8 ckdv[16] = { 1,  2,  4,  8, 16, 32, 64, 128,
--			       6, 12, 24, 48, 96, -1, -1, -1 };
-+	static u8 ckdv[] = { 1,  2,  4,  8, 16, 32, 64, 128, 6, 12, 24, 48, 96 };
- 	unsigned int channel_bits = 32;	/* System Word Length */
- 	unsigned long bclk_rate = rate * channels * channel_bits;
- 	unsigned int div;
+diff --git a/tools/testing/selftests/bpf/test_tc_tunnel.sh b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+index 7989ec6084545..cb55a908bb0d7 100755
+--- a/tools/testing/selftests/bpf/test_tc_tunnel.sh
++++ b/tools/testing/selftests/bpf/test_tc_tunnel.sh
+@@ -305,6 +305,7 @@ else
+ 	client_connect
+ 	verify_data
+ 	server_listen
++	wait_for_port ${port} ${netcat_opt}
+ fi
+ 
+ # serverside, use BPF for decap
 -- 
 2.39.5
 
