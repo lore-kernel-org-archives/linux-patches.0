@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C3E8634E;
-	Wed,  5 Feb 2025 14:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA648634E;
+	Wed,  5 Feb 2025 14:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765561; cv=none; b=pn9xtNb4XQljWOdZDFzRu3H4aiK/E9bfJDXE73Jf3e9sB8tJip2YVJTWxEQ2/UbAF2GGWtE5irFKHrkEbmg8nu34R1Igi7SbK1vqtlygZVIItLARWfSVan8H0/fDo6XqarofHw1KnAEcg4tdEE3erUCWftQJiPRntEuPJktpIo8=
+	t=1738765564; cv=none; b=lqy7thYlXTEK1AHO0/QNMGue9kw7r+9XUl34bXQkL0CBxx3PiZYTp77roZ1xzG8SJ0cuP8W31FsfBmikJnliYAipogSed/j2Auyuf4k6sK0+QuEz/Ke9we4k/4mqef5cRoYfbGPhA7ngH8wxIS+slaoSZIfxhWRulquJulEBCm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765561; c=relaxed/simple;
-	bh=8ZDdbXKgTVFW/ysLytLRwfA5TjHLYfqzGlowYoRVi7U=;
+	s=arc-20240116; t=1738765564; c=relaxed/simple;
+	bh=DgpNqQjjYPMvi+MRQgsPwDuTi+QI0dzxTnMS4v7vrIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jpW8TryE4g43Nca83sKI9KqdzoH1ty/GiMlj4Q+bhZ72KijwF5JOPcIYw0ekPy8WNxrsbM/OCDej4ok7ve11W+YhSzEPz7VnVb1HYsTLictaS+Ip8+8niJA672D5GRvY0AQW74SgaZ7XfhDPIbKQNHmMfBja7iAkPcp8SuNOM0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voQMLYei; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d4zNXuKQQuwIQwfltBeM7s/Kh2dTsGcMYNAEne8WJ8pFgCN1AR3FdDxLCbSyWKjIVQjfN6qIG3RTlDflN/WXhlnO+9gIIhsqh8mvXRQw8YrOVgGdsUBOKdleDhodrzHsrsQhSq3CRl35cEQPj2PGPx84geQw+JgST7JvSEWbbk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gJqX6NCB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voQMLYei"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9309C4CED1;
-	Wed,  5 Feb 2025 14:26:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gJqX6NCB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A467C4CED1;
+	Wed,  5 Feb 2025 14:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765561;
-	bh=8ZDdbXKgTVFW/ysLytLRwfA5TjHLYfqzGlowYoRVi7U=;
+	s=korg; t=1738765564;
+	bh=DgpNqQjjYPMvi+MRQgsPwDuTi+QI0dzxTnMS4v7vrIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voQMLYeiC0ZpqufzjcbccJBX8Cjmw9Q6FyLWnCFuYVo8L8c3rAUwWWLu01z5FaOpr
-	 eS9Z1bZY4Nf0kzomougVbpmiMy6l3NcazBEyDlV7LlLs/+WYA+DkPq3AtyDN/ntGQh
-	 GuRzrF/d0n/4/gIjMC+5QsjI4h9jG5WkIS/BeGh0=
+	b=gJqX6NCBVCD8WX7+etBinDXswqZA0kpcOn/s9FJRzzkhwRXVpZSWGif4LdgVpSC7Y
+	 d1zr5RqJUyoHWfW0OCifIpgwxtHarqh2zholueYkbpgQLpvCbnVJzGEWroVatBMrTA
+	 NVri/pNurlBgHEmYc+GX8eVeqh52W52X2FQfhOLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Joe Klein <joe.klein812@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 278/393] RDMA/rxe: Fix the warning "__rxe_cleanup+0x12c/0x170 [rdma_rxe]"
-Date: Wed,  5 Feb 2025 14:43:17 +0100
-Message-ID: <20250205134430.946159795@linuxfoundation.org>
+Subject: [PATCH 6.13 189/623] wifi: mt76: mt7925: Fix incorrect WCID assignment for MLO
+Date: Wed,  5 Feb 2025 14:38:51 +0100
+Message-ID: <20250205134503.468627749@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,101 +48,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit edc4ef0e0154096d6c0cf5e06af6fc330dbad9d1 ]
+[ Upstream commit 4911e4cb157cf87d5bdb3fa8e0c200032443371e ]
 
-The Call Trace is as below:
-"
-  <TASK>
-  ? show_regs.cold+0x1a/0x1f
-  ? __rxe_cleanup+0x12c/0x170 [rdma_rxe]
-  ? __warn+0x84/0xd0
-  ? __rxe_cleanup+0x12c/0x170 [rdma_rxe]
-  ? report_bug+0x105/0x180
-  ? handle_bug+0x46/0x80
-  ? exc_invalid_op+0x19/0x70
-  ? asm_exc_invalid_op+0x1b/0x20
-  ? __rxe_cleanup+0x12c/0x170 [rdma_rxe]
-  ? __rxe_cleanup+0x124/0x170 [rdma_rxe]
-  rxe_destroy_qp.cold+0x24/0x29 [rdma_rxe]
-  ib_destroy_qp_user+0x118/0x190 [ib_core]
-  rdma_destroy_qp.cold+0x43/0x5e [rdma_cm]
-  rtrs_cq_qp_destroy.cold+0x1d/0x2b [rtrs_core]
-  rtrs_srv_close_work.cold+0x1b/0x31 [rtrs_server]
-  process_one_work+0x21d/0x3f0
-  worker_thread+0x4a/0x3c0
-  ? process_one_work+0x3f0/0x3f0
-  kthread+0xf0/0x120
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x22/0x30
-  </TASK>
-"
-When too many rdma resources are allocated, rxe needs more time to
-handle these rdma resources. Sometimes with the current timeout, rxe
-can not release the rdma resources correctly.
+For MLO, each link must have a corresponding WCID.
 
-Compared with other rdma drivers, a bigger timeout is used.
-
-Fixes: 215d0a755e1b ("RDMA/rxe: Stop lookup of partially built objects")
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20250110160927.55014-1-yanjun.zhu@linux.dev
-Tested-by: Joe Klein <joe.klein812@gmail.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20241211011926.5002-3-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_pool.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7925/mac.c   |  2 +-
+ .../net/wireless/mediatek/mt76/mt7925/main.c  | 19 ++++++++++---------
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_pool.c b/drivers/infiniband/sw/rxe/rxe_pool.c
-index 6215c6de3a840..368e366f254d4 100644
---- a/drivers/infiniband/sw/rxe/rxe_pool.c
-+++ b/drivers/infiniband/sw/rxe/rxe_pool.c
-@@ -178,7 +178,6 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+index ddd406969061e..a095fb31e391a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
+@@ -49,7 +49,7 @@ static void mt7925_mac_sta_poll(struct mt792x_dev *dev)
+ 			break;
+ 		mlink = list_first_entry(&sta_poll_list,
+ 					 struct mt792x_link_sta, wcid.poll_list);
+-		msta = container_of(mlink, struct mt792x_sta, deflink);
++		msta = mlink->sta;
+ 		spin_lock_bh(&dev->mt76.sta_poll_lock);
+ 		list_del_init(&mlink->wcid.poll_list);
+ 		spin_unlock_bh(&dev->mt76.sta_poll_lock);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index c45396b17a8af..cbc7a50810256 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -837,6 +837,7 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
+ 	u8 link_id = link_sta->link_id;
+ 	struct mt792x_link_sta *mlink;
+ 	struct mt792x_sta *msta;
++	struct mt76_wcid *wcid;
+ 	int ret, idx;
+ 
+ 	msta = (struct mt792x_sta *)link_sta->sta->drv_priv;
+@@ -855,6 +856,15 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
+ 	mlink->last_txs = jiffies;
+ 	mlink->wcid.link_id = link_sta->link_id;
+ 	mlink->wcid.link_valid = !!link_sta->sta->valid_links;
++	mlink->sta = msta;
++
++	wcid = &mlink->wcid;
++	ewma_signal_init(&wcid->rssi);
++	rcu_assign_pointer(dev->mt76.wcid[wcid->idx], wcid);
++	mt76_wcid_init(wcid);
++	ewma_avg_signal_init(&mlink->avg_ack_signal);
++	memset(mlink->airtime_ac, 0,
++	       sizeof(msta->deflink.airtime_ac));
+ 
+ 	ret = mt76_connac_pm_wake(&dev->mphy, &dev->pm);
+ 	if (ret)
+@@ -904,7 +914,6 @@ mt7925_mac_sta_add_links(struct mt792x_dev *dev, struct ieee80211_vif *vif,
+ 			 struct ieee80211_sta *sta, unsigned long new_links)
  {
- 	struct rxe_pool *pool = elem->pool;
- 	struct xarray *xa = &pool->xa;
--	static int timeout = RXE_POOL_TIMEOUT;
- 	int ret, err = 0;
- 	void *xa_ret;
+ 	struct mt792x_sta *msta = (struct mt792x_sta *)sta->drv_priv;
+-	struct mt76_wcid *wcid;
+ 	unsigned int link_id;
+ 	int err = 0;
  
-@@ -202,19 +201,19 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
- 	 * return to rdma-core
- 	 */
- 	if (sleepable) {
--		if (!completion_done(&elem->complete) && timeout) {
-+		if (!completion_done(&elem->complete)) {
- 			ret = wait_for_completion_timeout(&elem->complete,
--					timeout);
-+					msecs_to_jiffies(50000));
- 
- 			/* Shouldn't happen. There are still references to
- 			 * the object but, rather than deadlock, free the
- 			 * object or pass back to rdma-core.
- 			 */
- 			if (WARN_ON(!ret))
--				err = -EINVAL;
-+				err = -ETIMEDOUT;
+@@ -921,14 +930,6 @@ mt7925_mac_sta_add_links(struct mt792x_dev *dev, struct ieee80211_vif *vif,
+ 				err = -ENOMEM;
+ 				break;
+ 			}
+-
+-			wcid = &mlink->wcid;
+-			ewma_signal_init(&wcid->rssi);
+-			rcu_assign_pointer(dev->mt76.wcid[wcid->idx], wcid);
+-			mt76_wcid_init(wcid);
+-			ewma_avg_signal_init(&mlink->avg_ack_signal);
+-			memset(mlink->airtime_ac, 0,
+-			       sizeof(msta->deflink.airtime_ac));
  		}
- 	} else {
--		unsigned long until = jiffies + timeout;
-+		unsigned long until = jiffies + RXE_POOL_TIMEOUT;
  
- 		/* AH objects are unique in that the destroy_ah verb
- 		 * can be called in atomic context. This delay
-@@ -226,7 +225,7 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
- 			mdelay(1);
- 
- 		if (WARN_ON(!completion_done(&elem->complete)))
--			err = -EINVAL;
-+			err = -ETIMEDOUT;
- 	}
- 
- 	if (pool->cleanup)
+ 		msta->valid_links |= BIT(link_id);
 -- 
 2.39.5
 
