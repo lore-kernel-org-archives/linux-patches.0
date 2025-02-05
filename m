@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638171DDA32;
-	Wed,  5 Feb 2025 15:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447701FBEB4;
+	Wed,  5 Feb 2025 15:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768263; cv=none; b=lg12aETWCLXmcxDSjypAVqkmT4GiL6m+FGlvtALmcJZRrNkcmRaHoH7b88GpCfCJRXZxwA2K5paF6H8dGf+9Lsc834ZTgRWTwZo5mYyLticeKR5Ynfk81SU73CSbA5+C/2h+dpiIhErTFlQSTOoCMU9FEt3erIhe+CKNkQlErBk=
+	t=1738768266; cv=none; b=md7ZeEMe24RUVHAumXXolvXsd8VJummN4nxbepRELCC2ebOXYmf0Okp9QdUR6CE5Ert//Ye59bcEGNIUuKwL/nfIdX9EB18N4qd5Ck5S/8ifPS3lfKGRVqxgp1jgCMrGCTQURTTltUrhjEcyFV7VP3fI6tbA+GEM6TnDeB3VFYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768263; c=relaxed/simple;
-	bh=vSq+kaDfZuYHiIDaW60C8USh3WJo28k5cIFX4PTymsM=;
+	s=arc-20240116; t=1738768266; c=relaxed/simple;
+	bh=07I4CGfOmh2wTbXV9ROOpbLgSBK+I3MByCIh4r69k1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LPdimPskFtlhL8tMmmp8skD6w73EwmABU6pyJ4tNH7ZVmNIhs/ZzdZMpMlKLfbIN40D02TNVdnEW1ZG5UoqqukurQ/7+ClF3zDSojWdOsZYrYmJP/1nG6+XH/mf40lzfyaHMLiyjUtw89JHHFpP1KVhkvXO4uluC47Fu7LTEW4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTGeQKfu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PI90Ga6ijIqyVGf7E3+P3qFhbEo6Asii+FVa0q1odJmcI2v9IG04A0DnskDUwXTksPX0x3D+Q4FHx+//SzMEO9tMr8Aja+sCnPFr3DRrLt2NGkaIGsdHiD8dccn/OO9+sLO7M6zUa8KXnQxaP5lf6oQA+YZqIkwZ9VYq29STVsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jOx9lhMc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTGeQKfu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CFFC4AF0B;
-	Wed,  5 Feb 2025 15:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jOx9lhMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98ECC4CED6;
+	Wed,  5 Feb 2025 15:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768262;
-	bh=vSq+kaDfZuYHiIDaW60C8USh3WJo28k5cIFX4PTymsM=;
+	s=korg; t=1738768266;
+	bh=07I4CGfOmh2wTbXV9ROOpbLgSBK+I3MByCIh4r69k1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NTGeQKfuAnBpUZop8BH57i0JJ3XvP0ctlm6p7Rsc/5pwfPjvnFWxGMuLdkwXLzZFN
-	 xQiksm9PyhpvtX8spdFuvGPuEID2OoxS7XoS+A5dupUSZjcagP/kFKiMZ31BJBZ0p+
-	 wftFeK2xXNAGXfBPXx8bhV0PwE4z7jpULFc9ofcA=
+	b=jOx9lhMclxnbNfrDVTeu1iPzsqa8xB0DFMIFu9rkPf0CI6G9JCgOBH+bIEUVBnyI6
+	 ms+K/nxyX1JdGUBZEFrHkWiC1gynEwqLNYkUhd14BVlU8TaucYb756BI904t5tFMgK
+	 G182V+j/pd+o+USb+S1uCnMd858Wha3CGMToIvkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
-	syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
-Subject: [PATCH 6.12 552/590] net: usb: rtl8150: enable basic endpoint checking
-Date: Wed,  5 Feb 2025 14:45:07 +0100
-Message-ID: <20250205134516.390201036@linuxfoundation.org>
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 497/623] xfrm: delete intermediate secpath entry in packet offload mode
+Date: Wed,  5 Feb 2025 14:43:59 +0100
+Message-ID: <20250205134515.229576538@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,120 +48,173 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-commit 90b7f2961798793275b4844348619b622f983907 upstream.
+[ Upstream commit 600258d555f0710b9c47fb78d2d80a4aecd608cc ]
 
-Syzkaller reports [1] encountering a common issue of utilizing a wrong
-usb endpoint type during URB submitting stage. This, in turn, triggers
-a warning shown below.
+Packets handled by hardware have added secpath as a way to inform XFRM
+core code that this path was already handled. That secpath is not needed
+at all after policy is checked and it is removed later in the stack.
 
-For now, enable simple endpoint checking (specifically, bulk and
-interrupt eps, testing control one is not essential) to mitigate
-the issue with a view to do other related cosmetic changes later,
-if they are necessary.
+However, in the case of IP forwarding is enabled (/proc/sys/net/ipv4/ip_forward),
+that secpath is not removed and packets which already were handled are reentered
+to the driver TX path with xfrm_offload set.
 
-[1] Syzkaller report:
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 1 PID: 2586 at drivers/usb/core/urb.c:503 usb_submit_urb+0xe4b/0x1730 driv>
-Modules linked in:
-CPU: 1 UID: 0 PID: 2586 Comm: dhcpcd Not tainted 6.11.0-rc4-syzkaller-00069-gfc88bb11617>
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
-RIP: 0010:usb_submit_urb+0xe4b/0x1730 drivers/usb/core/urb.c:503
-Code: 84 3c 02 00 00 e8 05 e4 fc fc 4c 89 ef e8 fd 25 d7 fe 45 89 e0 89 e9 4c 89 f2 48 8>
-RSP: 0018:ffffc9000441f740 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff888112487a00 RCX: ffffffff811a99a9
-RDX: ffff88810df6ba80 RSI: ffffffff811a99b6 RDI: 0000000000000001
-RBP: 0000000000000003 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 0000000000000001
-R13: ffff8881023bf0a8 R14: ffff888112452a20 R15: ffff888112487a7c
-FS:  00007fc04eea5740(0000) GS:ffff8881f6300000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f0a1de9f870 CR3: 000000010dbd0000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- rtl8150_open+0x300/0xe30 drivers/net/usb/rtl8150.c:733
- __dev_open+0x2d4/0x4e0 net/core/dev.c:1474
- __dev_change_flags+0x561/0x720 net/core/dev.c:8838
- dev_change_flags+0x8f/0x160 net/core/dev.c:8910
- devinet_ioctl+0x127a/0x1f10 net/ipv4/devinet.c:1177
- inet_ioctl+0x3aa/0x3f0 net/ipv4/af_inet.c:1003
- sock_do_ioctl+0x116/0x280 net/socket.c:1222
- sock_ioctl+0x22e/0x6c0 net/socket.c:1341
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:907 [inline]
- __se_sys_ioctl fs/ioctl.c:893 [inline]
- __x64_sys_ioctl+0x193/0x220 fs/ioctl.c:893
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fc04ef73d49
-...
+The following kernel panic is observed in mlx5 in such case:
 
-This change has not been tested on real hardware.
+ mlx5_core 0000:04:00.0 enp4s0f0np0: Link up
+ mlx5_core 0000:04:00.1 enp4s0f1np1: Link up
+ Initializing XFRM netlink socket
+ IPsec XFRM device driver
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor instruction fetch in kernel mode
+ #PF: error_code(0x0010) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0010 [#1] PREEMPT SMP
+ CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc1-alex #3
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+ RIP: 0010:0x0
+ Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+ RSP: 0018:ffffb87380003800 EFLAGS: 00010206
+ RAX: ffff8df004e02600 RBX: ffffb873800038d8 RCX: 00000000ffff98cf
+ RDX: ffff8df00733e108 RSI: ffff8df00521fb80 RDI: ffff8df001661f00
+ RBP: ffffb87380003850 R08: ffff8df013980000 R09: 0000000000000010
+ R10: 0000000000000002 R11: 0000000000000002 R12: ffff8df001661f00
+ R13: ffff8df00521fb80 R14: ffff8df00733e108 R15: ffff8df011faf04e
+ FS:  0000000000000000(0000) GS:ffff8df46b800000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: ffffffffffffffd6 CR3: 0000000106384000 CR4: 0000000000350ef0
+ Call Trace:
+  <IRQ>
+  ? show_regs+0x63/0x70
+  ? __die_body+0x20/0x60
+  ? __die+0x2b/0x40
+  ? page_fault_oops+0x15c/0x550
+  ? do_user_addr_fault+0x3ed/0x870
+  ? exc_page_fault+0x7f/0x190
+  ? asm_exc_page_fault+0x27/0x30
+  mlx5e_ipsec_handle_tx_skb+0xe7/0x2f0 [mlx5_core]
+  mlx5e_xmit+0x58e/0x1980 [mlx5_core]
+  ? __fib_lookup+0x6a/0xb0
+  dev_hard_start_xmit+0x82/0x1d0
+  sch_direct_xmit+0xfe/0x390
+  __dev_queue_xmit+0x6d8/0xee0
+  ? __fib_lookup+0x6a/0xb0
+  ? internal_add_timer+0x48/0x70
+  ? mod_timer+0xe2/0x2b0
+  neigh_resolve_output+0x115/0x1b0
+  __neigh_update+0x26a/0xc50
+  neigh_update+0x14/0x20
+  arp_process+0x2cb/0x8e0
+  ? __napi_build_skb+0x5e/0x70
+  arp_rcv+0x11e/0x1c0
+  ? dev_gro_receive+0x574/0x820
+  __netif_receive_skb_list_core+0x1cf/0x1f0
+  netif_receive_skb_list_internal+0x183/0x2a0
+  napi_complete_done+0x76/0x1c0
+  mlx5e_napi_poll+0x234/0x7a0 [mlx5_core]
+  __napi_poll+0x2d/0x1f0
+  net_rx_action+0x1a6/0x370
+  ? atomic_notifier_call_chain+0x3b/0x50
+  ? irq_int_handler+0x15/0x20 [mlx5_core]
+  handle_softirqs+0xb9/0x2f0
+  ? handle_irq_event+0x44/0x60
+  irq_exit_rcu+0xdb/0x100
+  common_interrupt+0x98/0xc0
+  </IRQ>
+  <TASK>
+  asm_common_interrupt+0x27/0x40
+ RIP: 0010:pv_native_safe_halt+0xb/0x10
+ Code: 09 c3 66 66 2e 0f 1f 84 00 00 00 00 00 66 90 0f 22
+ 0f 1f 84 00 00 00 00 00 90 eb 07 0f 00 2d 7f e9 36 00 fb
+40 00 83 ff 07 77 21 89 ff ff 24 fd 88 3d a1 bd 0f 21 f8
+ RSP: 0018:ffffffffbe603de8 EFLAGS: 00000202
+ RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000f92f46680
+ RDX: 0000000000000037 RSI: 00000000ffffffff RDI: 00000000000518d4
+ RBP: ffffffffbe603df0 R08: 000000cd42e4dffb R09: ffffffffbe603d70
+ R10: 0000004d80d62680 R11: 0000000000000001 R12: ffffffffbe60bf40
+ R13: 0000000000000000 R14: 0000000000000000 R15: ffffffffbe60aff8
+  ? default_idle+0x9/0x20
+  arch_cpu_idle+0x9/0x10
+  default_idle_call+0x29/0xf0
+  do_idle+0x1f2/0x240
+  cpu_startup_entry+0x2c/0x30
+  rest_init+0xe7/0x100
+  start_kernel+0x76b/0xb90
+  x86_64_start_reservations+0x18/0x30
+  x86_64_start_kernel+0xc0/0x110
+  ? setup_ghcb+0xe/0x130
+  common_startup_64+0x13e/0x141
+  </TASK>
+ Modules linked in: esp4_offload esp4 xfrm_interface
+xfrm6_tunnel tunnel4 tunnel6 xfrm_user xfrm_algo binfmt_misc
+intel_rapl_msr intel_rapl_common kvm_amd ccp kvm input_leds serio_raw
+qemu_fw_cfg sch_fq_codel dm_multipath scsi_dh_rdac scsi_dh_emc
+scsi_dh_alua efi_pstore ip_tables x_tables autofs4 raid10 raid456
+async_raid6_recov async_memcpy async_pq raid6_pq async_xor xor async_tx
+libcrc32c raid1 raid0 mlx5_core crct10dif_pclmul crc32_pclmul
+polyval_clmulni polyval_generic ghash_clmulni_intel sha256_ssse3
+sha1_ssse3 ahci mlxfw i2c_i801 libahci i2c_mux i2c_smbus psample
+virtio_rng pci_hyperv_intf aesni_intel crypto_simd cryptd
+ CR2: 0000000000000000
+ ---[ end trace 0000000000000000 ]---
+ RIP: 0010:0x0
+ Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+ RSP: 0018:ffffb87380003800 EFLAGS: 00010206
+ RAX: ffff8df004e02600 RBX: ffffb873800038d8 RCX: 00000000ffff98cf
+ RDX: ffff8df00733e108 RSI: ffff8df00521fb80 RDI: ffff8df001661f00
+ RBP: ffffb87380003850 R08: ffff8df013980000 R09: 0000000000000010
+ R10: 0000000000000002 R11: 0000000000000002 R12: ffff8df001661f00
+ R13: ffff8df00521fb80 R14: ffff8df00733e108 R15: ffff8df011faf04e
+ FS:  0000000000000000(0000) GS:ffff8df46b800000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: ffffffffffffffd6 CR3: 0000000106384000 CR4: 0000000000350ef0
+ Kernel panic - not syncing: Fatal exception in interrupt
+ Kernel Offset: 0x3b800000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+ ---[ end Kernel panic - not syncing: Fatal exception in interrupt ]---
 
-Reported-and-tested-by: syzbot+d7e968426f644b567e31@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d7e968426f644b567e31
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20250124093020.234642-1-n.zhandarovich@fintech.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5958372ddf62 ("xfrm: add RX datapath protection for IPsec packet offload mode")
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rtl8150.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ include/net/xfrm.h | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/rtl8150.c
-+++ b/drivers/net/usb/rtl8150.c
-@@ -71,6 +71,14 @@
- #define MSR_SPEED		(1<<3)
- #define MSR_LINK		(1<<2)
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 32c09e85a64ce..2c4eda6a85966 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -1224,9 +1224,19 @@ static inline int __xfrm_policy_check2(struct sock *sk, int dir,
  
-+/* USB endpoints */
-+enum rtl8150_usb_ep {
-+	RTL8150_USB_EP_CONTROL = 0,
-+	RTL8150_USB_EP_BULK_IN = 1,
-+	RTL8150_USB_EP_BULK_OUT = 2,
-+	RTL8150_USB_EP_INT_IN = 3,
-+};
+ 	if (xo) {
+ 		x = xfrm_input_state(skb);
+-		if (x->xso.type == XFRM_DEV_OFFLOAD_PACKET)
+-			return (xo->flags & CRYPTO_DONE) &&
+-			       (xo->status & CRYPTO_SUCCESS);
++		if (x->xso.type == XFRM_DEV_OFFLOAD_PACKET) {
++			bool check = (xo->flags & CRYPTO_DONE) &&
++				     (xo->status & CRYPTO_SUCCESS);
 +
- /* Interrupt pipe data */
- #define INT_TSR			0x00
- #define INT_RSR			0x01
-@@ -867,6 +875,13 @@ static int rtl8150_probe(struct usb_inte
- 	struct usb_device *udev = interface_to_usbdev(intf);
- 	rtl8150_t *dev;
- 	struct net_device *netdev;
-+	static const u8 bulk_ep_addr[] = {
-+		RTL8150_USB_EP_BULK_IN | USB_DIR_IN,
-+		RTL8150_USB_EP_BULK_OUT | USB_DIR_OUT,
-+		0};
-+	static const u8 int_ep_addr[] = {
-+		RTL8150_USB_EP_INT_IN | USB_DIR_IN,
-+		0};
- 
- 	netdev = alloc_etherdev(sizeof(rtl8150_t));
- 	if (!netdev)
-@@ -880,6 +895,13 @@ static int rtl8150_probe(struct usb_inte
- 		return -ENOMEM;
++			/* The packets here are plain ones and secpath was
++			 * needed to indicate that hardware already handled
++			 * them and there is no need to do nothing in addition.
++			 *
++			 * Consume secpath which was set by drivers.
++			 */
++			secpath_reset(skb);
++			return check;
++		}
  	}
  
-+	/* Verify that all required endpoints are present */
-+	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
-+	    !usb_check_int_endpoints(intf, int_ep_addr)) {
-+		dev_err(&intf->dev, "couldn't find required endpoints\n");
-+		goto out;
-+	}
-+
- 	tasklet_setup(&dev->tl, rx_fixup);
- 	spin_lock_init(&dev->rx_pool_lock);
- 
+ 	return __xfrm_check_nopolicy(net, skb, dir) ||
+-- 
+2.39.5
+
 
 
