@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E3B1FDE12;
-	Wed,  5 Feb 2025 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB801FDE12;
+	Wed,  5 Feb 2025 14:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766980; cv=none; b=tIqZajTvqkdpCq3cCuapIUDFQeZTQF1YsujiyGw0HKYlFO2PhMSDrQBejZU0mbmJ3YMYyNWw/B5HAecjwN6JAjVRbQC3Zu694R64ireCVw/vTMzUZdHfXZUL5ElPCKqFKP4bkm111FfndMC4B5lKB0IIbsmRFf6QOr65Mmossys=
+	t=1738766983; cv=none; b=vD3H154VRqBisYMu5qRhImJpbiY/mLqNX1JdgKqbDjnuozZpk+5C2kEmGDmDXfRjjv74/L7s2OOViYw9W3byUcrJWBFVWjZCRHLANzEEpP1B1GXx9jrTyGStcIa3xZlU+naCbGqIGFJoyuxFmlo+SKIF6t4OCsmt2n3xax/uFJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766980; c=relaxed/simple;
-	bh=PsR/Gzfn3XzvgnsDHb3k3rJuwQ2zdlAMOaqIc22VZ9g=;
+	s=arc-20240116; t=1738766983; c=relaxed/simple;
+	bh=b0oYSoP/TUPY7Ze0b5XvpSy/KvaUz1Tm/Rqc18ulq4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EWCCeT6G08uxSbJJhyzbW5Pt7f996zUiw1dc1JfeCN1PDRInD6LebFhqO/+cUMDvI28Y4VhlfUArVoDQpEsEMSFJjd2MeZ1vnpN5yfSMVunKftxK5pP6/Agiyy3CsoZd+wcE8fKtUyyruOslkL4ZiY6sF/kql8NJBBha3M3N7RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNNNl1f/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ARt7s5nd7Ya8JQxRPxQqm2JCkMBAXuZjZiZXnL9fAGgiufG4fOflKOM1WhyeNzxvQnMbIhLgOP/GzOxqYMTSO/hWf0dhrytA+r2dAWMXQX79Yw1TfGbokXgv5o118Iazpxd+CPSzkO9S9IDwAmNsAmhovgeO8V6yHUUmNymPMzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCN/88Yj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNNNl1f/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A4FC4CED1;
-	Wed,  5 Feb 2025 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCN/88Yj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16297C4CEDD;
+	Wed,  5 Feb 2025 14:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766980;
-	bh=PsR/Gzfn3XzvgnsDHb3k3rJuwQ2zdlAMOaqIc22VZ9g=;
+	s=korg; t=1738766983;
+	bh=b0oYSoP/TUPY7Ze0b5XvpSy/KvaUz1Tm/Rqc18ulq4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNNNl1f/Flui/uHRkrYW6BqT071136p6ssimwUXspucsbnjMP+FngB+eUOJAAEh6q
-	 JoBzvykTvls/5KF/Yvl4OyKY1Gd5DPkG7KZwPWaosrhmZ2eDuLzjxYdHYuAC/Ldgfv
-	 mK6nMuVlZHX8JHn2FHvJQhn45HUuyIV+SS7UYZkI=
+	b=zCN/88Yj7pc5HDYnJxBt8FaDweyggrbotSmZjqqgAZ0vi6yLi33Xsa4vfqzbVPaw7
+	 0HwepMQxS54SFB5Kn+V96XUmwbjQ7AmUUGl6o2b+bjyOaeJ7ZCWYaHaC94DUbc9yC7
+	 s1SWy/9WBH4XYRTPVv0dDKoDQCIYhkQRjRwbvb0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-media@vger.kernel.org,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Val Packett <val@packett.cool>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 388/590] ARM: dts: mediatek: mt7623: fix IR nodename
-Date: Wed,  5 Feb 2025 14:42:23 +0100
-Message-ID: <20250205134510.112586029@linuxfoundation.org>
+Subject: [PATCH 6.13 337/623] arm64: dts: mediatek: mt8516: add i2c clock-div property
+Date: Wed,  5 Feb 2025 14:41:19 +0100
+Message-ID: <20250205134509.119402450@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +45,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit 90234cf9b37c57201a24b78c217a91a8af774109 ]
+[ Upstream commit eb72341fd92b7af510d236e5a8554d855ed38d3c ]
 
-Fix following validation error:
-arch/arm/boot/dts/mediatek/mt7623a-rfb-emmc.dtb: cir@10013000: $nodename:0: 'cir@10013000' does not match '^ir(-receiver)?(@[a-f0-9]+)?$'
-        from schema $id: http://devicetree.org/schemas/media/mediatek,mt7622-cir.yaml#
+Move the clock-div property from the pumpkin board dtsi to the SoC's
+since it belongs to the SoC itself and is required on other devices.
 
-Fixes: 91044f38dae7 ("arm: dts: mt7623: add ir nodes to the mt7623.dtsi file")
-Cc: linux-media@vger.kernel.org
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20240617094634.23173-1-zajec5@gmail.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 5236347bde42 ("arm64: dts: mediatek: add dtsi for MT8516")
+Signed-off-by: Val Packett <val@packett.cool>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20241204190524.21862-4-val@packett.cool
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/mediatek/mt7623.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8516.dtsi         | 3 +++
+ arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi | 2 --
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/mediatek/mt7623.dtsi b/arch/arm/boot/dts/mediatek/mt7623.dtsi
-index 814586abc2979..fd7a89cc337d6 100644
---- a/arch/arm/boot/dts/mediatek/mt7623.dtsi
-+++ b/arch/arm/boot/dts/mediatek/mt7623.dtsi
-@@ -308,7 +308,7 @@
- 		clock-names = "spi", "wrap";
- 	};
+diff --git a/arch/arm64/boot/dts/mediatek/mt8516.dtsi b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
+index 098c32ebf6788..dd17d8a88c190 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8516.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8516.dtsi
+@@ -344,6 +344,7 @@
+ 			reg = <0 0x11009000 0 0x90>,
+ 			      <0 0x11000180 0 0x80>;
+ 			interrupts = <GIC_SPI 80 IRQ_TYPE_LEVEL_LOW>;
++			clock-div = <2>;
+ 			clocks = <&topckgen CLK_TOP_I2C0>,
+ 				 <&topckgen CLK_TOP_APDMA>;
+ 			clock-names = "main", "dma";
+@@ -358,6 +359,7 @@
+ 			reg = <0 0x1100a000 0 0x90>,
+ 			      <0 0x11000200 0 0x80>;
+ 			interrupts = <GIC_SPI 81 IRQ_TYPE_LEVEL_LOW>;
++			clock-div = <2>;
+ 			clocks = <&topckgen CLK_TOP_I2C1>,
+ 				 <&topckgen CLK_TOP_APDMA>;
+ 			clock-names = "main", "dma";
+@@ -372,6 +374,7 @@
+ 			reg = <0 0x1100b000 0 0x90>,
+ 			      <0 0x11000280 0 0x80>;
+ 			interrupts = <GIC_SPI 82 IRQ_TYPE_LEVEL_LOW>;
++			clock-div = <2>;
+ 			clocks = <&topckgen CLK_TOP_I2C2>,
+ 				 <&topckgen CLK_TOP_APDMA>;
+ 			clock-names = "main", "dma";
+diff --git a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
+index ec8dfb3d1c6d6..a356db5fcc5f3 100644
+--- a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
++++ b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
+@@ -47,7 +47,6 @@
+ };
  
--	cir: cir@10013000 {
-+	cir: ir-receiver@10013000 {
- 		compatible = "mediatek,mt7623-cir";
- 		reg = <0 0x10013000 0 0x1000>;
- 		interrupts = <GIC_SPI 87 IRQ_TYPE_LEVEL_LOW>;
+ &i2c0 {
+-	clock-div = <2>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c0_pins_a>;
+ 	status = "okay";
+@@ -156,7 +155,6 @@
+ };
+ 
+ &i2c2 {
+-	clock-div = <2>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&i2c2_pins_a>;
+ 	status = "okay";
 -- 
 2.39.5
 
