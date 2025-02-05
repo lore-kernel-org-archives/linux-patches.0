@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01E133993;
-	Wed,  5 Feb 2025 14:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370EC18C93C;
+	Wed,  5 Feb 2025 14:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767258; cv=none; b=p6edz1OtZcS7JzoBIGXKR9UfzEK0041lQ9/LNVhwIrUijPTWGygsi2HSoFvT1lLXKid9v3xxYgOUM8SSylqtgRv7JDojeYG7WhKeJcLAYMqBkJQ6EpIHb3+gHjGEtZe3fSkTQh8hPdtqV4BfC2h5FXUldu3LHQH+zVBFhEBfpBk=
+	t=1738767262; cv=none; b=OcmSvKhuERoRhf2S6CEWaKGCHiGX12IFzV85DqRGe1n5aRWO/hGE+qRAO2Cw03Mn1Hlgiz4LlN/hSlnBvRC2nQvERhFF+vZgeUZi1gKSeghJju3UIlVnXnCaI2dxNlfXWgROtEQ8G7+O6Ax4Wdm0xc/cRftFFDwUYzzq3wB7tnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767258; c=relaxed/simple;
-	bh=6D2hJoBvLvUYh0v4QSAHbkRgxFMYpKCw/JYPX/lvn1o=;
+	s=arc-20240116; t=1738767262; c=relaxed/simple;
+	bh=KsC/tyqT/TyHDVo5FQAT4yZYndeFTwiwCCr7iwwFpJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVBzzHszqNlUP5sjR0E5q7cf13U4bCIFpBJzIwBgjBeVrGzhlc3o6cb5TQkyGkZgIo1yDMRbjWt0vc/9NHy6oUqhaTzxwYjXdVlmHwyY1ccrJVQUNWX4msP9vrWpM1/zeMJLVw01h5PHDFQvEKvg/cXaZhKGNsYEHFXx6fOg3C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuVniH3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ndo7s00C1L3HgOPr50Af8w6JG90LEG9VXs8cgwtcZE3oZx6O/0MTD0U1mjuC+mF5F8gcAqd2rrVI6WHDETVB0RwOBsJtNkBnnQdAUejVHgyB6buLMOxkQlf88lN4+tSCIRR4rKaNjYwsW4XrgfnwoJtF6P8C3GviSinFWb2GoQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efOY8sBD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuVniH3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DCBAC4CEDD;
-	Wed,  5 Feb 2025 14:54:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efOY8sBD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B00C4CED6;
+	Wed,  5 Feb 2025 14:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767258;
-	bh=6D2hJoBvLvUYh0v4QSAHbkRgxFMYpKCw/JYPX/lvn1o=;
+	s=korg; t=1738767262;
+	bh=KsC/tyqT/TyHDVo5FQAT4yZYndeFTwiwCCr7iwwFpJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuVniH3YvrGrj3GU5AenGI6xfcSpYB6TrKI+85w7QPUT2T1PuMC3hJyXDsoaZwjAl
-	 LJoPVi0ztHliq/hgJIaph/qQZ+1VhJLu9IBJr9yc9KZe1gaBuvF00tuxF/08N6jPho
-	 QWn+J42bzwlvVF5Nw4xcME2uUBk+KmE6NZfWr01E=
+	b=efOY8sBDwxTZnX08c8Vr2Q0k6CaKWQIRpZIQ1bNJqD5dLQDa85d0S9/u/1fskuf4F
+	 okcvq9FGMohBarVL7htoiNWlEiu11nzQZ5g/GF7Ns3q7zdSf4Ms71dRZZDibrlxyZC
+	 g4GG3QU1cXIH1bWS5wiUqw2v8Pv/RGuKUGcyMnxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Mohamed Khalfella <khalfella@gmail.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 379/623] arm64: dts: qcom: qcs404: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:01 +0100
-Message-ID: <20250205134510.716921821@linuxfoundation.org>
+Subject: [PATCH 6.12 431/590] PCI: endpoint: pci-epf-test: Set dma_chan_rx pointer to NULL on error
+Date: Wed,  5 Feb 2025 14:43:06 +0100
+Message-ID: <20250205134511.756161941@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +48,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Mohamed Khalfella <khalfella@gmail.com>
 
-[ Upstream commit 1473ff0b69de68b23ce9874548cdabc64d72725e ]
+[ Upstream commit b1b1f4b12969130c0a6ec0cf0299460cb01e799c ]
 
-The QCS40x platforms use PMS405 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+If dma_chan_tx allocation fails, set dma_chan_rx to NULL after it is
+freed.
 
-Fixes: 9181bb939984 ("arm64: dts: qcom: Add SDX75 platform and IDP board support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-4-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20241227160841.92382-1-khalfella@gmail.com
+Fixes: 8353813c88ef ("PCI: endpoint: Enable DMA tests for endpoints with DMA capabilities")
+Signed-off-by: Mohamed Khalfella <khalfella@gmail.com>
+[kwilczynski: commit log]
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 2 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 215ba146207af..2862474f33b0e 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -28,7 +28,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 		};
- 	};
+diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+index 7c2ed6eae53ad..f51ebd6b45c9b 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-test.c
++++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+@@ -251,7 +251,7 @@ static int pci_epf_test_init_dma_chan(struct pci_epf_test *epf_test)
  
+ fail_back_rx:
+ 	dma_release_channel(epf_test->dma_chan_rx);
+-	epf_test->dma_chan_tx = NULL;
++	epf_test->dma_chan_rx = NULL;
+ 
+ fail_back_tx:
+ 	dma_cap_zero(mask);
 -- 
 2.39.5
 
