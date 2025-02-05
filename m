@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4CE1591E3;
-	Wed,  5 Feb 2025 14:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8783F1FCD0C;
+	Wed,  5 Feb 2025 14:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766851; cv=none; b=Lc2JIYXRVJVmj1eb/Z9D/iVrUpNoCb9d362zNKUxOI3G9tyxXd2rh3Y/55t8ro+kxma7KW8VbS1AxZarztjjkOBCtOodiEvqeotBsWlcDDp6Qt+9RODEt/3pNuSe9czt4w+I3hfrz7KMmrTDOu+NwU4CRgsyC/1AHbnDpGEXipU=
+	t=1738766855; cv=none; b=LDog7vg5aY+LyaH4tOYkO9ff74f7pp8aRuAkW20RSgkbSPqpiTgEKtZ8iAUcpjkuDlHm0TfJgtCfNYBRmOr84zrzwHH4M8Tj4KwSNIPiPDCcqQCwK2SIsTIbN9WyG+IX7kndTAz04U8927KpdoknG/Pna816J7jBtn9O5fd6ihU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766851; c=relaxed/simple;
-	bh=ziKt5O+2CJgERT69w7Ltz1wWdfJHwUiB6LnmQUZD7hU=;
+	s=arc-20240116; t=1738766855; c=relaxed/simple;
+	bh=ArSJnTiD+Wmu+VabDeNKYxUsmJz901KGwBaOOHhOdLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X+Gl5yuLz6i2UaHYZRyZcxKTFpWxJ0TqXBvcDO4PgFcfpLUO2g7gDARVzlFPPJTVtvirLC9hEN1AOr3TaNdp4TQAMeYIQdj3omRRumn1rmdnlLoGEhP/wpEcfpZ6OI0Unnr/jLvIoqjEOSSVypOt7FkkQQDa6KJZ/LQAk08pEPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/Wu9F1F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tEMq/Q/FWPAIihScWVo2yJ8zZlWwzJq1ryRyU32RAsPvLRGyz+r3G7Ie2Rlj0DdFem7iw69Jp96dxzvYt+xr5+BARGsCb1PhK+t5hsxOgRhO83iVE6jUrg7dQk/D0Ea/H4PtRCNBYU97gj7CsyxYsPNNPTld5CNPWk0EaNHkX3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6r5dqO6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/Wu9F1F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1891CC4CED1;
-	Wed,  5 Feb 2025 14:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6r5dqO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2FBC4CED1;
+	Wed,  5 Feb 2025 14:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766851;
-	bh=ziKt5O+2CJgERT69w7Ltz1wWdfJHwUiB6LnmQUZD7hU=;
+	s=korg; t=1738766855;
+	bh=ArSJnTiD+Wmu+VabDeNKYxUsmJz901KGwBaOOHhOdLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/Wu9F1FhtEaF0B3xkhovEz15grA6NrjVot1Z488TH+/yLZwC0AkVqsfoHDc4ZjEs
-	 CSKjRaLw5j+VkaEPOMt+eVc7v/Q71ncw5+k0zBSA6NNxHWPFWblJvwirE2hEzNEaEM
-	 nqmxYpY+4M7uWaG+kqh3gr0NQWhNWj58f+KwEaws=
+	b=t6r5dqO6wlbMtLvhChZiMMFsvVwAZ0+3B2aWbyce9hsV2mae6FsT/N+LDM6s/hHv9
+	 Xv4qmN1ZzPCCw1fZANFazWz1vbkq5sSXPd9RypPk6jq5+KCyf5bEinJj8egqkeBzh0
+	 1YBnhrhmFJJQiCnz8YF+NrLxv58GJKrJaWW7ZYU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 343/590] arm64: dts: qcom: msm8916: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:41:38 +0100
-Message-ID: <20250205134508.394401839@linuxfoundation.org>
+Subject: [PATCH 6.13 316/623] iommu/amd: Remove dev == NULL checks
+Date: Wed,  5 Feb 2025 14:40:58 +0100
+Message-ID: <20250205134508.311492696@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,104 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit f088b921890cef28862913e5627bb2e2b5f82125 ]
+[ Upstream commit 02bcd1a8b991c6fc29271fa02250bea1b61fb742 ]
 
-The MSM8916 platform uses PM8916 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+This is no longer possible, amd_iommu_domain_alloc_paging_flags() is never
+called with dev = NULL from the core code. Similarly
+get_amd_iommu_from_dev() can never be NULL either.
 
-Fixes: f4fb6aeafaaa ("arm64: dts: qcom: msm8916: Add fixed rate on-board oscillators")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-1-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/3-v2-9776c53c2966+1c7-amd_paging_flags_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 082f1bcae8d1 ("iommu/amd: Fully decode all combinations of alloc_paging_flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/iommu.c | 30 ++++++++++--------------------
+ 1 file changed, 10 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 0ee44706b70ba..800bfe83dbf83 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -125,7 +125,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 		};
- 	};
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 96d87406f8946..12c416abdce7d 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2344,13 +2344,10 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
+ 						  u32 flags, int pgtable)
+ {
+ 	bool dirty_tracking = flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
++	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev);
+ 	struct protection_domain *domain;
+-	struct amd_iommu *iommu = NULL;
+ 	int ret;
  
+-	if (dev)
+-		iommu = get_amd_iommu_from_dev(dev);
+-
+ 	/*
+ 	 * Since DTE[Mode]=0 is prohibited on SNP-enabled system,
+ 	 * default to use IOMMU_DOMAIN_DMA[_FQ].
+@@ -2358,8 +2355,7 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
+ 	if (amd_iommu_snp_en && (type == IOMMU_DOMAIN_IDENTITY))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	domain = protection_domain_alloc(type,
+-					 dev ? dev_to_node(dev) : NUMA_NO_NODE);
++	domain = protection_domain_alloc(type, dev_to_node(dev));
+ 	if (!domain)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -2375,13 +2371,11 @@ static struct iommu_domain *do_iommu_domain_alloc(unsigned int type,
+ 	domain->domain.geometry.force_aperture = true;
+ 	domain->domain.pgsize_bitmap = domain->iop.pgtbl.cfg.pgsize_bitmap;
+ 
+-	if (iommu) {
+-		domain->domain.type = type;
+-		domain->domain.ops = iommu->iommu.ops->default_domain_ops;
++	domain->domain.type = type;
++	domain->domain.ops = iommu->iommu.ops->default_domain_ops;
+ 
+-		if (dirty_tracking)
+-			domain->domain.dirty_ops = &amd_dirty_ops;
+-	}
++	if (dirty_tracking)
++		domain->domain.dirty_ops = &amd_dirty_ops;
+ 
+ 	return &domain->domain;
+ }
+@@ -2392,13 +2386,10 @@ amd_iommu_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 
+ {
+ 	unsigned int type = IOMMU_DOMAIN_UNMANAGED;
+-	struct amd_iommu *iommu = NULL;
++	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev);
+ 	const u32 supported_flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING |
+ 						IOMMU_HWPT_ALLOC_PASID;
+ 
+-	if (dev)
+-		iommu = get_amd_iommu_from_dev(dev);
+-
+ 	if ((flags & ~supported_flags) || user_data)
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 
+@@ -2412,10 +2403,9 @@ amd_iommu_domain_alloc_paging_flags(struct device *dev, u32 flags,
+ 
+ 	/* Allocate domain with v1 page table for dirty tracking */
+ 	if (flags & IOMMU_HWPT_ALLOC_DIRTY_TRACKING) {
+-		if (iommu && amd_iommu_hd_support(iommu)) {
+-			return do_iommu_domain_alloc(type, dev,
+-						     flags, AMD_IOMMU_V1);
+-		}
++		if (amd_iommu_hd_support(iommu))
++			return do_iommu_domain_alloc(type, dev, flags,
++						     AMD_IOMMU_V1);
+ 
+ 		return ERR_PTR(-EOPNOTSUPP);
+ 	}
 -- 
 2.39.5
 
