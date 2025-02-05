@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8231519A4;
-	Wed,  5 Feb 2025 14:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53104A28;
+	Wed,  5 Feb 2025 14:17:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765037; cv=none; b=tRWuP3gLRak06AFBUtThTnLbg3yHdoQyophBdOcnrTyqFWm0f+CuIRLr2E4QuhXlr5TEU4BUWOwHsGpjGrb3PM1YZ9clzBLNk1baodNP6MLb6117aV5kKz2qfPa2oZyiGt0t+bhGgVB3rBTBRodYfafcLIzkLkwtci48kSQb64Q=
+	t=1738765040; cv=none; b=CRH+sXlGSVEMkp0PjFUcMJYoDJmEoVFwePvjNS87NX+wQq7Z4fZpvViY21v7YHhMVOU9pW/fgIfZdba6ZVwkOe0zLGO3WGzl+GSMYrgEp3/E38Tyve5f3P87Mn0MDPr6JY3+11PDvOOBrosTB74K19nf9uCPoXq6oMN1UVResN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765037; c=relaxed/simple;
-	bh=RE1u27Hgx8D79JZaayIRibi8YYg/ymqWeuHTllbpTq0=;
+	s=arc-20240116; t=1738765040; c=relaxed/simple;
+	bh=rT27cQsUM7HPKpNBibBzT9knr4hUwfFG7ckCDL/nrso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEsAN2kJppbq/gbuZMo+xoA9nqz9GhilV+fuZODkdcdRhQbUanSp65LEJWwUjNkOXTMmfCL45odaxiVDTUABW8TaOdlAV0v4Ev/OcSKckH8GdxoUwhWTfoQvIGkxkCCW5Iq+ZiyXLsqIn9A6o8sSXQipT+KBNsFvjHxnd5ChTYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPt8YPFV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JAAvWClR82XSr3gqygX/l3bILrMiW6u/aZ+Ghewfz3Dcs3LRk25XNK+Q86B7sq9qmyIrian4D7M5Sgcoba1XEyWSsfDovj+zwSx0FRjWNxTOI7LaoidLqBMUAF5ga8+kX1xy8I5GfV+hV9oCv2veZ9JWWisAB3RhBMyUCdGeHvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0awEUyQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPt8YPFV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB8CC4CED1;
-	Wed,  5 Feb 2025 14:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0awEUyQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD9CC4CED1;
+	Wed,  5 Feb 2025 14:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765037;
-	bh=RE1u27Hgx8D79JZaayIRibi8YYg/ymqWeuHTllbpTq0=;
+	s=korg; t=1738765040;
+	bh=rT27cQsUM7HPKpNBibBzT9knr4hUwfFG7ckCDL/nrso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPt8YPFVbzIrGS6C3u3NRv2gDow1LiU/qjiInqCxyBP4kNlmMbsFAogyCWjh9Lhaw
-	 eB4yutzJAapFTCAnav4QGY5TH6LQHzXmzPrGjr5zDhikPNuOcha9U8wReTfYV/HDwE
-	 XW13gsCzbDfjddWwq0KWatu0LQ1JSwvPBZGmmjSQ=
+	b=z0awEUyQgUsDSRObrRPYvif4STWvsq6GLhQBR5AYdUWCXuE7J9hH64H+nmik6o/Fd
+	 30qpUQwDP/yt9j3VA4QWo5dkdSOf6H+MhUG8ciOI0hlMN+0lLgxtmAqn5rhMqae2sO
+	 ce5JXjjAKgrLU5tQNrm9BRlVt/B9L9F/1eU4bYCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"allan.wang" <allan.wang@mediatek.com>,
-	Sean Wang <sean.wang@mediatek.com>,
+	Xu Rao <raoxu@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 184/590] wifi: mt76: mt7925: Fix incorrect WCID phy_idx assignment
-Date: Wed,  5 Feb 2025 14:38:59 +0100
-Message-ID: <20250205134502.319605729@linuxfoundation.org>
+Subject: [PATCH 6.12 172/590] wifi: mt76: mt76u_vendor_request: Do not print error messages when -EPROTO
+Date: Wed,  5 Feb 2025 14:38:47 +0100
+Message-ID: <20250205134501.863214016@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
 References: <20250205134455.220373560@linuxfoundation.org>
@@ -46,50 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: allan.wang <allan.wang@mediatek.com>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 4f741a2378b27a6be5e63b829cae4eb9cf2484e7 ]
+[ Upstream commit f1b1e133a770fcdbd89551651232b034d2f7a27a ]
 
-Fix incorrect WCID phy_idx assignment.
+When initializing the network card, unplugging the device will
+trigger an -EPROTO error, resulting in a flood of error messages
+being printed frantically.
 
-Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: allan.wang <allan.wang@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-5-sean.wang@kernel.org
+The exception is printed as follows：
+
+         mt76x2u 2-2.4:1.0: vendor request req:47 off:9018 failed:-71
+         mt76x2u 2-2.4:1.0: vendor request req:47 off:9018 failed:-71
+         ...
+
+It will continue to print more than 2000 times for about 5 minutes,
+causing the usb device to be unable to be disconnected. During this
+period, the usb port cannot recognize the new device because the old
+device has not disconnected.
+
+There may be other operating methods that cause -EPROTO, but -EPROTO is
+a low-level hardware error. It is unwise to repeat vendor requests
+expecting to read correct data. It is a better choice to treat -EPROTO
+and -ENODEV the same way.
+
+Similar to commit 9b0f100c1970 ("mt76: usb: process URBs with status
+EPROTO properly") do no schedule rx_worker for urb marked with status
+set  -EPROTO. I also reproduced this situation when plugging and
+unplugging the device, and this patch is effective.
+
+Just do not vendor request again for urb marked with status set -EPROTO.
+
+Link: https://lore.kernel.org/all/531681bd-30f5-4a70-a156-bf8754b8e072@intel.com/
+Link: https://lore.kernel.org/all/D4B9CC1FFC0CBAC3+20250105040607.154706-1-wangyuli@uniontech.com/
+Fixes: b40b15e1521f ("mt76: add usb support to mt76 layer")
+Co-developed-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: Xu Rao <raoxu@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Link: https://patch.msgid.link/9DD7DE7AAB497CB7+20250113070241.63590-1-wangyuli@uniontech.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 4 ++--
+ drivers/net/wireless/mediatek/mt76/usb.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index cbc7a50810256..268d216f09e20 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -384,7 +384,7 @@ static int mt7925_mac_link_bss_add(struct mt792x_dev *dev,
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index 58ff068233894..f9e67b8c3b3c8 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -33,9 +33,9 @@ int __mt76u_vendor_request(struct mt76_dev *dev, u8 req, u8 req_type,
  
- 	INIT_LIST_HEAD(&mlink->wcid.poll_list);
- 	mlink->wcid.idx = idx;
--	mlink->wcid.phy_idx = mconf->mt76.band_idx;
-+	mlink->wcid.phy_idx = 0;
- 	mlink->wcid.hw_key_idx = -1;
- 	mlink->wcid.tx_info |= MT_WCID_TX_INFO_SET;
- 	mt76_wcid_init(&mlink->wcid);
-@@ -851,7 +851,7 @@ static int mt7925_mac_link_sta_add(struct mt76_dev *mdev,
- 	INIT_LIST_HEAD(&mlink->wcid.poll_list);
- 	mlink->wcid.sta = 1;
- 	mlink->wcid.idx = idx;
--	mlink->wcid.phy_idx = mconf->mt76.band_idx;
-+	mlink->wcid.phy_idx = 0;
- 	mlink->wcid.tx_info |= MT_WCID_TX_INFO_SET;
- 	mlink->last_txs = jiffies;
- 	mlink->wcid.link_id = link_sta->link_id;
+ 		ret = usb_control_msg(udev, pipe, req, req_type, val,
+ 				      offset, buf, len, MT_VEND_REQ_TOUT_MS);
+-		if (ret == -ENODEV)
++		if (ret == -ENODEV || ret == -EPROTO)
+ 			set_bit(MT76_REMOVED, &dev->phy.state);
+-		if (ret >= 0 || ret == -ENODEV)
++		if (ret >= 0 || ret == -ENODEV || ret == -EPROTO)
+ 			return ret;
+ 		usleep_range(5000, 10000);
+ 	}
 -- 
 2.39.5
 
