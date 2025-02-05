@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149F815CD74;
-	Wed,  5 Feb 2025 14:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA393347CC;
+	Wed,  5 Feb 2025 14:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765939; cv=none; b=TAWO5LQuLWcY/GYwUGioADU1hZ64otaRjQB4R546gfRm9zEVs+4atzJ4yjspna2HemJ/0Up3SNLnouie1ICOrolDT19C0jviWDP5hLZV4wZ93EKAvrMQABeCc40XLzs7bjs5YeFP+hzg9OB3K/8iPhJXwdqGas2pbGsFp1kCVeU=
+	t=1738765942; cv=none; b=EMHSvg15b45Z29Knj5+fahnIMvDK7lrHkBVsrcDHftEBrz7tx9uwYH2iI5EEFktHQ7/neROH9iUw5sLFWlciygluq0M9iF4aqdoTTDvuEqtiRpRd2rw3kY7N2Om5YIa7DUAZAcZ3H1ab+1/YGRm2H5ofQqgC8DbJ3u1g8xNkHt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765939; c=relaxed/simple;
-	bh=5D0kLIVzGFhiYwnyUi3d/WkxNnnu8WCgTJjqkOVWxac=;
+	s=arc-20240116; t=1738765942; c=relaxed/simple;
+	bh=UAuFK6gAkmRvNNJYki1VptUrm31kDgvRDqUVnv/SssU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjXdV5zY8bOc9efeOB4mijHXW27GIyS3wIm2+P+C2w73lzQhPRIoOFRkPw8a/jX3ooeqLsqaal94dF1QktM4MHQ00tMJc6ukzsf6nLu0csDAg/EW5a1InVwySROUV0y/HBXRnVRwALUFfRlsxmp3Vcd0ODMZE6l9lh5P3DaeeB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC3b8uJg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1u7R/AjP1V447fmH9etaenLztiVEP5BYsLMvW7tK4RZcSUEpZ0bxxvmziG9jsDpBKzcdnO/TlkxRZua3ZxLafs5f8nTyho/XD0C/baxnp4Ka4CbqagiMTVkBGCuo/v9YLp72CkzDO+Z+V5Xcwnlykb2ZNJjJOt953GQtSyNJjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJVn2pS1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC3b8uJg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484EEC4CED1;
-	Wed,  5 Feb 2025 14:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJVn2pS1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA4C4CED1;
+	Wed,  5 Feb 2025 14:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765939;
-	bh=5D0kLIVzGFhiYwnyUi3d/WkxNnnu8WCgTJjqkOVWxac=;
+	s=korg; t=1738765942;
+	bh=UAuFK6gAkmRvNNJYki1VptUrm31kDgvRDqUVnv/SssU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QC3b8uJgDL1k1xI/AXyNEWnsTKay57OCusYM3zo6Kvuv+Y0URp5FNTCDqp+LijCzb
-	 O0zhIsv2jRNH7qTyeTIaye3zCad/umk5D1bcrc4rew1R5HMdiU3zD4hoIKutNoYJHI
-	 MJYF9PppfbOsLzfxnBY0AMLtj0hlSx8hrIXHTmP0=
+	b=hJVn2pS184kBTagzaY6k7pEHp/3EG2+UgD0mOCMjjNEYbch2DrBJoHU8iJa5og00U
+	 RHq6g8MnEaI/TU3coE2ifF2uhWxb3tj+/SuQzWIhMYTYHD3Mid4H8d0g/cJYw5zdoA
+	 LH8r+1VXTxin2WIZOC9fRGkEfbb8JvDnxbr/h+BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Ian Rogers <irogers@google.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Qunqin Zhao <zhaoqunqin@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 269/590] perf maps: Fix display of kernel symbols
-Date: Wed,  5 Feb 2025 14:40:24 +0100
-Message-ID: <20250205134505.565747500@linuxfoundation.org>
+Subject: [PATCH 6.6 314/393] LoongArch: Fix warnings during S3 suspend
+Date: Wed,  5 Feb 2025 14:43:53 +0100
+Message-ID: <20250205134432.328355630@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -56,75 +47,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit dae29277fddaaf6670d17dfcbb916a2ca29c912f ]
+[ Upstream commit 26c0a2d93af55d30a46d5f45d3e9c42cde730168 ]
 
-Since commit 659ad3492b913c90 ("perf maps: Switch from rbtree to lazily
-sorted array for addresses"), perf doesn't display anymore kernel
-symbols on powerpc, allthough it still detects them as kernel addresses.
+The enable_gpe_wakeup() function calls acpi_enable_all_wakeup_gpes(),
+and the later one may call the preempt_schedule_common() function,
+resulting in a thread switch and causing the CPU to be in an interrupt
+enabled state after the enable_gpe_wakeup() function returns, leading
+to the warnings as follow.
 
-	# Overhead  Command     Shared Object  Symbol
-	# ........  ..........  ............. ......................................
-	#
-	    80.49%  Coeur main  [unknown]      [k] 0xc005f0f8
-	     3.91%  Coeur main  gau            [.] engine_loop.constprop.0.isra.0
-	     1.72%  Coeur main  [unknown]      [k] 0xc005f11c
-	     1.09%  Coeur main  [unknown]      [k] 0xc01f82c8
-	     0.44%  Coeur main  libc.so.6      [.] epoll_wait
-	     0.38%  Coeur main  [unknown]      [k] 0xc0011718
-	     0.36%  Coeur main  [unknown]      [k] 0xc01f45c0
+[ C0] WARNING: ... at kernel/time/timekeeping.c:845 ktime_get+0xbc/0xc8
+[ C0]          ...
+[ C0] Call Trace:
+[ C0] [<90000000002243b4>] show_stack+0x64/0x188
+[ C0] [<900000000164673c>] dump_stack_lvl+0x60/0x88
+[ C0] [<90000000002687e4>] __warn+0x8c/0x148
+[ C0] [<90000000015e9978>] report_bug+0x1c0/0x2b0
+[ C0] [<90000000016478e4>] do_bp+0x204/0x3b8
+[ C0] [<90000000025b1924>] exception_handlers+0x1924/0x10000
+[ C0] [<9000000000343bbc>] ktime_get+0xbc/0xc8
+[ C0] [<9000000000354c08>] tick_sched_timer+0x30/0xb0
+[ C0] [<90000000003408e0>] __hrtimer_run_queues+0x160/0x378
+[ C0] [<9000000000341f14>] hrtimer_interrupt+0x144/0x388
+[ C0] [<9000000000228348>] constant_timer_interrupt+0x38/0x48
+[ C0] [<90000000002feba4>] __handle_irq_event_percpu+0x64/0x1e8
+[ C0] [<90000000002fed48>] handle_irq_event_percpu+0x20/0x80
+[ C0] [<9000000000306b9c>] handle_percpu_irq+0x5c/0x98
+[ C0] [<90000000002fd4a0>] generic_handle_domain_irq+0x30/0x48
+[ C0] [<9000000000d0c7b0>] handle_cpu_irq+0x70/0xa8
+[ C0] [<9000000001646b30>] handle_loongarch_irq+0x30/0x48
+[ C0] [<9000000001646bc8>] do_vint+0x80/0xe0
+[ C0] [<90000000002aea1c>] finish_task_switch.isra.0+0x8c/0x2a8
+[ C0] [<900000000164e34c>] __schedule+0x314/0xa48
+[ C0] [<900000000164ead8>] schedule+0x58/0xf0
+[ C0] [<9000000000294a2c>] worker_thread+0x224/0x498
+[ C0] [<900000000029d2f0>] kthread+0xf8/0x108
+[ C0] [<9000000000221f28>] ret_from_kernel_thread+0xc/0xa4
+[ C0]
+[ C0] ---[ end trace 0000000000000000 ]---
 
-This is because function maps__find_next_entry() now returns current
-entry instead of next entry, leading to kernel map end address getting
-mis-configured with its own start address instead of the start address
-of the following map.
+The root cause is acpi_enable_all_wakeup_gpes() uses a mutex to protect
+acpi_hw_enable_all_wakeup_gpes(), and acpi_ut_acquire_mutex() may cause
+a thread switch. Since there is no longer concurrent execution during
+loongarch_acpi_suspend(), we can call acpi_hw_enable_all_wakeup_gpes()
+directly in enable_gpe_wakeup().
 
-Fix it by really taking the next entry, also make sure that entry
-follows current one by making sure entries are sorted.
+The solution is similar to commit 22db06337f590d01 ("ACPI: sleep: Avoid
+breaking S3 wakeup due to might_sleep()").
 
-Fixes: 659ad3492b913c90 ("perf maps: Switch from rbtree to lazily sorted array for addresses")
-Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/2ea4501209d5363bac71a6757fe91c0747558a42.1736329923.git.christophe.leroy@csgroup.eu
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 366bb35a8e48 ("LoongArch: Add suspend (ACPI S3) support")
+Signed-off-by: Qunqin Zhao <zhaoqunqin@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/maps.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/loongarch/power/platform.c | 2 +-
+ drivers/acpi/acpica/achware.h   | 2 --
+ include/acpi/acpixf.h           | 1 +
+ 3 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/perf/util/maps.c b/tools/perf/util/maps.c
-index 432399cbe5dd3..09c9cc326c08d 100644
---- a/tools/perf/util/maps.c
-+++ b/tools/perf/util/maps.c
-@@ -1136,8 +1136,13 @@ struct map *maps__find_next_entry(struct maps *maps, struct map *map)
- 	struct map *result = NULL;
+diff --git a/arch/loongarch/power/platform.c b/arch/loongarch/power/platform.c
+index 3ea8e07aa225f..6c7735cda4d83 100644
+--- a/arch/loongarch/power/platform.c
++++ b/arch/loongarch/power/platform.c
+@@ -17,7 +17,7 @@ void enable_gpe_wakeup(void)
+ 	if (acpi_gbl_reduced_hardware)
+ 	       return;
  
- 	down_read(maps__lock(maps));
-+	while (!maps__maps_by_address_sorted(maps)) {
-+		up_read(maps__lock(maps));
-+		maps__sort_by_address(maps);
-+		down_read(maps__lock(maps));
-+	}
- 	i = maps__by_address_index(maps, map);
--	if (i < maps__nr_maps(maps))
-+	if (++i < maps__nr_maps(maps))
- 		result = map__get(maps__maps_by_address(maps)[i]);
+-	acpi_enable_all_wakeup_gpes();
++	acpi_hw_enable_all_wakeup_gpes();
+ }
  
- 	up_read(maps__lock(maps));
+ void enable_pci_wakeup(void)
+diff --git a/drivers/acpi/acpica/achware.h b/drivers/acpi/acpica/achware.h
+index 79bbfe00d241f..b8543a34caead 100644
+--- a/drivers/acpi/acpica/achware.h
++++ b/drivers/acpi/acpica/achware.h
+@@ -103,8 +103,6 @@ acpi_hw_get_gpe_status(struct acpi_gpe_event_info *gpe_event_info,
+ 
+ acpi_status acpi_hw_enable_all_runtime_gpes(void);
+ 
+-acpi_status acpi_hw_enable_all_wakeup_gpes(void);
+-
+ u8 acpi_hw_check_all_gpes(acpi_handle gpe_skip_device, u32 gpe_skip_number);
+ 
+ acpi_status
+diff --git a/include/acpi/acpixf.h b/include/acpi/acpixf.h
+index a3c9dd4a1ac33..7e9e7e7690436 100644
+--- a/include/acpi/acpixf.h
++++ b/include/acpi/acpixf.h
+@@ -763,6 +763,7 @@ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status
+ 						     *event_status))
+ ACPI_HW_DEPENDENT_RETURN_UINT32(u32 acpi_dispatch_gpe(acpi_handle gpe_device, u32 gpe_number))
+ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_hw_disable_all_gpes(void))
++ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_hw_enable_all_wakeup_gpes(void))
+ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_disable_all_gpes(void))
+ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_enable_all_runtime_gpes(void))
+ ACPI_HW_DEPENDENT_RETURN_STATUS(acpi_status acpi_enable_all_wakeup_gpes(void))
 -- 
 2.39.5
 
