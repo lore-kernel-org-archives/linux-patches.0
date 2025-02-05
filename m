@@ -1,41 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC334189905;
-	Wed,  5 Feb 2025 14:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7F8189905;
+	Wed,  5 Feb 2025 14:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766744; cv=none; b=fUSLtka68pTvl0NEA7Bgm9obrQTKT2Od13QA7nVYeaMMiueqnGWgDrJnHxojDG5itoI/ag8HPB9BISy7mMq+2COaEQOgLK0iN2sPq9D9xEeieW9j1Ol6E97rp2HMvVuuE+HEA1QhNKmZQa4fLa516eu7U24a6KfcWvh4wwvbu0k=
+	t=1738766747; cv=none; b=krVkhYSCmAUxO4CEj+bh2iHKnwbhvR2JMD+RSWQolEUvNwSaXG6vZLVNq809NVlfk2AEHSbRRkHUQepbBtn4HHnlxdjKEHgIgz6PFqMRASazM1jxKMV5v/33+Iyf7a/htLTNW5WMGuCSdIgKxMvJw48nMyHigD5/qmA8rIermeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766744; c=relaxed/simple;
-	bh=mLWYPtFDnMSh8f0fLzwDB1I43FI9KMSdQ5c3KXKeKcs=;
+	s=arc-20240116; t=1738766747; c=relaxed/simple;
+	bh=XGV62LnKzW8Zsy7ZiEGn8wxeubYO4R3z0RA1uh4kt+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=igbGZuS4CQp6zcZ3zKXq2ULzbH/kxHYZc9eXJBV26w5ocy1S/A6++cUZNS3xC3FaHcCdIOnz3lW1LvJqIBc8qnFpwljCXdXaEQQZmSNyNGDX8TAO0ZtQmgbD5MqMajIbPgwEHOVpV7LnnXumDKTnnYm5bo9wmEmKENWEc2qP+ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o6+l6wZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iv+/FVJowXIfQlug2e+7ImrIEPLgXdqVaHZYTkQ88LCTy/P5PghZd/rGMHUMJ8CCm8sVNCWb/MBB5sYHgaAoA+gGgs6QBj74XYNhNTGbxJHfsJWAa0Fsz2E1Tb8aQIG7Tp9FYEOFgo+8/Di004UzYHF64vdA6h0l501ETjKc+5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTKDzHlj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o6+l6wZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D8FC4CED1;
-	Wed,  5 Feb 2025 14:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTKDzHlj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CBAC4CED1;
+	Wed,  5 Feb 2025 14:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766743;
-	bh=mLWYPtFDnMSh8f0fLzwDB1I43FI9KMSdQ5c3KXKeKcs=;
+	s=korg; t=1738766746;
+	bh=XGV62LnKzW8Zsy7ZiEGn8wxeubYO4R3z0RA1uh4kt+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o6+l6wZzE9Humj2l2vf/+m84tJYMuFSHr4ncxThXQqPCydrPgho/+mW6iUL+pVcm0
-	 nJuAIiOdVQTgX3yYlYmIwup7AB5WBph6/CM/DhQazr/CiTst7FLHuA124BnvuhGpNz
-	 uxPVWNqlpadLqMfrQd7xox7JneSfN3YO3UikYa1I=
+	b=zTKDzHljoZP3PJNdgAcsieV27QD/LZ08F/SnB0uKGEIhufWXUqcR1WZxtsJ6vnpI0
+	 Z0RberlFiROAKtAr5ugacWNisUG03QJE494v9UHXnSd905fQBHqersoVEs4X1iU/er
+	 PXvv5qWarp6wTPri40NFQUQH34FAPvq7LgNLdulw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.6 392/393] s390: Add -std=gnu11 to decompressor and purgatory CFLAGS
-Date: Wed,  5 Feb 2025 14:45:11 +0100
-Message-ID: <20250205134435.292327230@linuxfoundation.org>
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 303/623] perf test stat: Avoid hybrid assumption when virtualized
+Date: Wed,  5 Feb 2025 14:40:45 +0100
+Message-ID: <20250205134507.819821449@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +56,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ian Rogers <irogers@google.com>
 
-commit 3b8b80e993766dc96d1a1c01c62f5d15fafc79b9 upstream.
+[ Upstream commit f9c506fb69bdcfb9d7138281378129ff037f2aa1 ]
 
-GCC changed the default C standard dialect from gnu17 to gnu23,
-which should not have impacted the kernel because it explicitly requests
-the gnu11 standard in the main Makefile. However, there are certain
-places in the s390 code that use their own CFLAGS without a '-std='
-value, which break with this dialect change because of the kernel's own
-definitions of bool, false, and true conflicting with the C23 reserved
-keywords.
+The cycles event will fallback to task-clock in the hybrid test when
+running virtualized. Change the test to not fail for this.
 
-  include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
-     11 |         false   = 0,
-        |         ^~~~~
-  include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
-  include/linux/types.h:35:33: error: 'bool' cannot be defined via 'typedef'
-     35 | typedef _Bool                   bool;
-        |                                 ^~~~
-  include/linux/types.h:35:33: note: 'bool' is a keyword with '-std=c23' onwards
-
-Add '-std=gnu11' to the decompressor and purgatory CFLAGS to eliminate
-these errors and make the C standard version of these areas match the
-rest of the kernel.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/r/20250122-s390-fix-std-for-gcc-15-v1-1-8b00cadee083@kernel.org
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 65d11821910bd910 ("perf test: Add a test for default perf stat command")
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20241212173354.9860-1-irogers@google.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Makefile           |    2 +-
- arch/s390/purgatory/Makefile |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/tests/shell/stat.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/s390/Makefile
-+++ b/arch/s390/Makefile
-@@ -21,7 +21,7 @@ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FL
- ifndef CONFIG_AS_IS_LLVM
- KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
- endif
--KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack
-+KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack -std=gnu11
- KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float -mbackchain
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
---- a/arch/s390/purgatory/Makefile
-+++ b/arch/s390/purgatory/Makefile
-@@ -21,7 +21,7 @@ UBSAN_SANITIZE := n
- KASAN_SANITIZE := n
- KCSAN_SANITIZE := n
+diff --git a/tools/perf/tests/shell/stat.sh b/tools/perf/tests/shell/stat.sh
+index 7a8adf81e4b39..68323d636fb77 100755
+--- a/tools/perf/tests/shell/stat.sh
++++ b/tools/perf/tests/shell/stat.sh
+@@ -187,7 +187,11 @@ test_hybrid() {
+   # Run default Perf stat
+   cycles_events=$(perf stat -- true 2>&1 | grep -E "/cycles/[uH]*|  cycles[:uH]*  " -c)
  
--KBUILD_CFLAGS := -fno-strict-aliasing -Wall -Wstrict-prototypes
-+KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
- KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
- KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
- KBUILD_CFLAGS += -Os -m64 -msoft-float -fno-common
+-  if [ "$pmus" -ne "$cycles_events" ]
++  # The expectation is that default output will have a cycles events on each
++  # hybrid PMU. In situations with no cycles PMU events, like virtualized, this
++  # can fall back to task-clock and so the end count may be 0. Fail if neither
++  # condition holds.
++  if [ "$pmus" -ne "$cycles_events" ] && [ "0" -ne "$cycles_events" ]
+   then
+     echo "hybrid test [Found $pmus PMUs but $cycles_events cycles events. Failed]"
+     err=1
+-- 
+2.39.5
+
 
 
