@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CFE31519AA;
-	Wed,  5 Feb 2025 14:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7A01519AA;
+	Wed,  5 Feb 2025 14:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764850; cv=none; b=k454ny7hJAwSIQ8RbFtQFl8oKXjEBrbJEOlONjunHe7ZWGVAPJm7RhT5OBYDZw0m3AeFfaXVZwIeiZq7D/XaIFCpVTeV/Pnw5PlDdzU1ZgVlv7xp/z9KyjrJeB+Q8Mplln5ogEkGqlrWBGOecun9yXGTKHCEZ9/rt7XX9DhnOQ8=
+	t=1738764854; cv=none; b=G+yTZZ5KWVc/VANuYNoam04JzYrQGPqM6P3wb8+jPWqwqKxDW5TfdQyPoInMze80IH9v4zjROP5SgxMNtO/ddMm6cwnIEa1R4UYWECb2OYLidun52qK+y7VFaKzSnrfYIvu/znwFfV04JrKQBAHgZJVijXCi+gQ4qQi2sABk7L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764850; c=relaxed/simple;
-	bh=iGdu366h5LqlRUxMgHwHMnqBFCnIvJjSu/M/2NilJD0=;
+	s=arc-20240116; t=1738764854; c=relaxed/simple;
+	bh=MDwUTO2MLSnCoVTiw+DXu8Vw5qY1SKOZ5nfZGSX2Ekg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoR6Qt7bLD5VPZekdwktfzKtjmeD9x0+M8X1tRX1ZeqpRn4UCI3QHwsNhjzAPdoADTMruW+P7LVaRUsuOdRRLbHp/c7ee9hybSziiGgMILVyxKRcKvtZJKN6ZBkOkn8QbtajBcxkggHJ76nOZ6u9eX1pRkgcsVEHLxtUu7RydaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1BgHrFf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xvzwm+lkMl8DicTUkEV7eb/LmQuT1seEjh3D6I7fBDrK2lnBxQfklN8Ttv/WtooSr1YL8yYZYogDrdlWq6uBuSt7mP3/qGouUbd2Glv7z9OyimJR3J1S/WWVdCoqjq8AkouHXRJGaoAug5d3f67ALrOLExyqvA7XWdjWV6hnIXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=crPdnwXl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1BgHrFf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC375C4CED1;
-	Wed,  5 Feb 2025 14:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="crPdnwXl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5621BC4CED1;
+	Wed,  5 Feb 2025 14:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764850;
-	bh=iGdu366h5LqlRUxMgHwHMnqBFCnIvJjSu/M/2NilJD0=;
+	s=korg; t=1738764853;
+	bh=MDwUTO2MLSnCoVTiw+DXu8Vw5qY1SKOZ5nfZGSX2Ekg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1BgHrFfErrF9LhoSsT/m8UysjLrcaB5/9RJHv4H/cUNvxvStOcBCOkMhgVL+6QE5
-	 /5hshhiFrGgXNCmmP7vx59M/3CeBiBMZ68bT3GO3nER1Th65fnoeRUwrHnxSv2dZFk
-	 QmLdS9xvrKEd3v/J4A9RmqC9wl/8ZcQ0ANQaQ0tA=
+	b=crPdnwXlNBoUcMkVjnLC68QWLaLQfno7y3moua3+dLptT68PdMCwUsTEpYynbfcn5
+	 m5UqGgJonevBlsaVkQJsp/ZLdKoaBRK3KHh55rcMIJITAtTsfq2m6N3qwoc0K6u67t
+	 5ALqZzh3nEuS5Ngz7EafLmPthsb+j9N6/40fRzTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 119/623] inetpeer: update inetpeer timestamp in inet_getpeer()
-Date: Wed,  5 Feb 2025 14:37:41 +0100
-Message-ID: <20250205134500.773829226@linuxfoundation.org>
+Subject: [PATCH 6.6 210/393] arm64: dts: mediatek: mt8173-elm: Fix MT6397 PMIC sub-node names
+Date: Wed,  5 Feb 2025 14:42:09 +0100
+Message-ID: <20250205134428.333610625@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +47,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 50b362f21d6c10b0f7939c1482c6a1b43da82f1a ]
+[ Upstream commit beb06b727194f68b0a4b5183e50c88265ce185af ]
 
-inet_putpeer() will be removed in the following patch,
-because we will no longer use refcounts.
+The MT6397 PMIC bindings specify exact names for its sub-nodes. The
+names used in the current dts don't match, causing a validation error.
 
-Update inetpeer timestamp (p->dtime) at lookup time.
+Fix up the names. Also drop the label for the regulators node, since
+any reference should be against the individual regulator sub-nodes.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20241215175629.1248773-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a853c609504e ("inetpeer: do not get a refcount in inet_getpeer()")
+Fixes: 689b937bedde ("arm64: dts: mediatek: add mt8173 elm and hana board")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20241210092614.3951748-1-wenst@chromium.org
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inetpeer.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/inetpeer.c b/net/ipv4/inetpeer.c
-index bc79cc9d13ebb..28c3ae5bc4a0b 100644
---- a/net/ipv4/inetpeer.c
-+++ b/net/ipv4/inetpeer.c
-@@ -95,6 +95,7 @@ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
- {
- 	struct rb_node **pp, *parent, *next;
- 	struct inet_peer *p;
-+	u32 now;
+diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
+index 855babfdd8f0e..8df919d39e5ba 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
+@@ -938,7 +938,7 @@
+ 		interrupt-controller;
+ 		#interrupt-cells = <2>;
  
- 	pp = &base->rb_root.rb_node;
- 	parent = NULL;
-@@ -110,6 +111,9 @@ static struct inet_peer *lookup(const struct inetpeer_addr *daddr,
- 		if (cmp == 0) {
- 			if (!refcount_inc_not_zero(&p->refcnt))
- 				break;
-+			now = jiffies;
-+			if (READ_ONCE(p->dtime) != now)
-+				WRITE_ONCE(p->dtime, now);
- 			return p;
- 		}
- 		if (gc_stack) {
-@@ -150,9 +154,6 @@ static void inet_peer_gc(struct inet_peer_base *base,
- 	for (i = 0; i < gc_cnt; i++) {
- 		p = gc_stack[i];
+-		clock: mt6397clock {
++		clock: clocks {
+ 			compatible = "mediatek,mt6397-clk";
+ 			#clock-cells = <1>;
+ 		};
+@@ -949,7 +949,7 @@
+ 			#gpio-cells = <2>;
+ 		};
  
--		/* The READ_ONCE() pairs with the WRITE_ONCE()
--		 * in inet_putpeer()
--		 */
- 		delta = (__u32)jiffies - READ_ONCE(p->dtime);
+-		regulator: mt6397regulator {
++		regulators {
+ 			compatible = "mediatek,mt6397-regulator";
  
- 		if (delta < ttl || !refcount_dec_if_one(&p->refcnt))
-@@ -224,11 +225,6 @@ EXPORT_SYMBOL_GPL(inet_getpeer);
+ 			mt6397_vpca15_reg: buck_vpca15 {
+@@ -1115,7 +1115,7 @@
+ 			};
+ 		};
  
- void inet_putpeer(struct inet_peer *p)
- {
--	/* The WRITE_ONCE() pairs with itself (we run lockless)
--	 * and the READ_ONCE() in inet_peer_gc()
--	 */
--	WRITE_ONCE(p->dtime, (__u32)jiffies);
--
- 	if (refcount_dec_and_test(&p->refcnt))
- 		kfree_rcu(p, rcu);
- }
+-		rtc: mt6397rtc {
++		rtc: rtc {
+ 			compatible = "mediatek,mt6397-rtc";
+ 		};
+ 
 -- 
 2.39.5
 
