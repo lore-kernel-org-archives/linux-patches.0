@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F8515198D;
-	Wed,  5 Feb 2025 14:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9D915198D;
+	Wed,  5 Feb 2025 14:03:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764217; cv=none; b=VOO7OI5FNK4+uGza8ZKlSMl10HbZf7nt2GVRrYgEvIBTd+2IcXki5Y20KtZ4WRSmqHgWi6TTuVszacnQ3WKeSNxtyLCwkxJDK06FqAav6BmerMw7tFTtIvPR3lbf5cFX3aZ5uOBuRnYI2dI2hdH1iBFsCykmGf4MHWg+OHYKoPc=
+	t=1738764220; cv=none; b=O9yY392Xtxy9atcOMlnitlZSOugBx/iKVSvoT5SAlOg/1qPRTXsCowOORvfRLwjIqoY3wFcuX62bRAN0g0Z83vxqTAYO+QCmSev6WDgrSGTx+R5yeAx/QZK+tcpeRwuFBwJyCuCac4XoXFkhcKDjLQl3s3TY6K6kuBI5MoOsJl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764217; c=relaxed/simple;
-	bh=QKCyNgU1tXjpw5eQbpgjcNIijBVi/C4ro1xHKmw+Bew=;
+	s=arc-20240116; t=1738764220; c=relaxed/simple;
+	bh=NlER7QQQFkLtxSZ/DvnQYsG0lnZHPUbcRz8X9eI6fiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PmIGkNpHfdH9L6q3TqNPqIwQr94pKny7+AzTJ+cUxPn8jtNZNEm8nrjRoQBUkIhdqEsw8KOYa7NJKl36Ss8sgpYeryUpy7aPYuxotvydeLnkIGiV5IICxLBJYjOiHB7yBQpKPSqPlp119BAWUJz0Ij0tzuN7eQ1JphDC54IImJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2X31SRRZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TTrSl/AsPwLmOLNhFwDHs5RcEUbTgKFgziNfF7j7XbyiGkvyfNryo2ZRf6Grm7aga0N3Pt64c2Z/JcxtwMGsociA+jUtwTptN9OOeUnUbTe9cBOY4MgwnjqXakdwaSQL4NjHwv0QcTyY/7w34wiCBdi2wa4aoNS91MISFCsXuYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQbRlzgA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2X31SRRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96AC4C4CED1;
-	Wed,  5 Feb 2025 14:03:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQbRlzgA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 142FAC4CED1;
+	Wed,  5 Feb 2025 14:03:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764217;
-	bh=QKCyNgU1tXjpw5eQbpgjcNIijBVi/C4ro1xHKmw+Bew=;
+	s=korg; t=1738764220;
+	bh=NlER7QQQFkLtxSZ/DvnQYsG0lnZHPUbcRz8X9eI6fiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2X31SRRZeCyUh09uL+Fyoas0xk6roaFNHIjSgzNbGB8oM4y6RNcXy76KC03cIVM3X
-	 o4qcv5H8lKk1X0N0cgmFuPEQ0yXmqsKyTowLz4JSgeS7VgRYR9DEHqd8U5FcLiiJ9g
-	 oreDdcqYc7sOoVXpqKW+0RWgaCb3yL5wxaFUWd5g=
+	b=dQbRlzgA8KhAyEaCqQALPPzGOqRMzUGIcW7+kfnNCwHWT19nn/4DAXnJMyZ4tzo67
+	 g84aa/OebB/roRwXs56t1YDiBOlXqE2Prrvsomz9TBSUgxeZz3xnpzZTvNlPwamHO5
+	 ygV1s/PoQaG5u417pjhXixSH4cbpx5NhTIHN2kI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/393] net: ethernet: ti: am65-cpsw: fix freeing IRQ in am65_cpsw_nuss_remove_tx_chns()
-Date: Wed,  5 Feb 2025 14:41:09 +0100
-Message-ID: <20250205134426.041317061@linuxfoundation.org>
+Subject: [PATCH 6.13 058/623] drm/rockchip: vop2: Set AXI id for rk3588
+Date: Wed,  5 Feb 2025 14:36:40 +0100
+Message-ID: <20250205134458.447349841@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,62 +49,206 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 4395a44acb15850e492dd1de9ec4b6479d96bc80 ]
+[ Upstream commit 7b256880fdb2d7f23393b87bb557090f049e686a ]
 
-When getting the IRQ we use k3_udma_glue_tx_get_irq() which returns
-negative error value on error. So not NULL check is not sufficient
-to deteremine if IRQ is valid. Check that IRQ is greater then zero
-to ensure it is valid.
+There are two AXI bus in vop2, windows attached on the same bus must
+have a unique channel YUV and RGB channel ID.
 
-There is no issue at probe time but at runtime user can invoke
-.set_channels which results in the following call chain.
-am65_cpsw_set_channels()
- am65_cpsw_nuss_update_tx_rx_chns()
-  am65_cpsw_nuss_remove_tx_chns()
-  am65_cpsw_nuss_init_tx_chns()
+The default IDs will conflict with each other on the rk3588, so they
+need to be reassigned.
 
-At this point if am65_cpsw_nuss_init_tx_chns() fails due to
-k3_udma_glue_tx_get_irq() then tx_chn->irq will be set to a
-negative value.
-
-Then, at subsequent .set_channels with higher channel count we
-will attempt to free an invalid IRQ in am65_cpsw_nuss_remove_tx_chns()
-leading to a kernel warning.
-
-The issue is present in the original commit that introduced this driver,
-although there, am65_cpsw_nuss_update_tx_rx_chns() existed as
-am65_cpsw_nuss_update_tx_chns().
-
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5a028e8f062f ("drm/rockchip: vop2: Add support for rk3588")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Tested-by: Detlev Casanova <detlev.casanova@collabora.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-4-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 14 +++++++++++
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.h |  9 +++++++
+ drivers/gpu/drm/rockchip/rockchip_vop2_reg.c | 26 +++++++++++++++++++-
+ 3 files changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index d556e705ec000..8ffc1fbb036f9 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -1651,7 +1651,7 @@ void am65_cpsw_nuss_remove_tx_chns(struct am65_cpsw_common *common)
- 	for (i = 0; i < common->tx_ch_num; i++) {
- 		struct am65_cpsw_tx_chn *tx_chn = &common->tx_chns[i];
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 60b498ffd41aa..cd3fb906d0089 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1320,6 +1320,12 @@ static void vop2_plane_atomic_update(struct drm_plane *plane,
+ 		&fb->format->format,
+ 		afbc_en ? "AFBC" : "", &yrgb_mst);
  
--		if (tx_chn->irq)
-+		if (tx_chn->irq > 0)
- 			devm_free_irq(dev, tx_chn->irq, tx_chn);
++	if (vop2->data->soc_id > 3568) {
++		vop2_win_write(win, VOP2_WIN_AXI_BUS_ID, win->data->axi_bus_id);
++		vop2_win_write(win, VOP2_WIN_AXI_YRGB_R_ID, win->data->axi_yrgb_r_id);
++		vop2_win_write(win, VOP2_WIN_AXI_UV_R_ID, win->data->axi_uv_r_id);
++	}
++
+ 	if (vop2_cluster_window(win))
+ 		vop2_win_write(win, VOP2_WIN_AFBC_HALF_BLOCK_EN, half_block_en);
  
- 		netif_napi_del(&tx_chn->napi_tx);
+@@ -2908,6 +2914,10 @@ static struct reg_field vop2_cluster_regs[VOP2_WIN_MAX_REG] = {
+ 	[VOP2_WIN_Y2R_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 8, 8),
+ 	[VOP2_WIN_R2Y_EN] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 9, 9),
+ 	[VOP2_WIN_CSC_MODE] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL0, 10, 11),
++	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 0, 3),
++	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_CLUSTER_WIN_CTRL2, 5, 8),
++	/* RK3588 only, reserved bit on rk3568*/
++	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3568_CLUSTER_CTRL, 13, 13),
+ 
+ 	/* Scale */
+ 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_CLUSTER_WIN_SCL_FACTOR_YRGB, 0, 15),
+@@ -3000,6 +3010,10 @@ static struct reg_field vop2_esmart_regs[VOP2_WIN_MAX_REG] = {
+ 	[VOP2_WIN_YMIRROR] = REG_FIELD(RK3568_SMART_CTRL1, 31, 31),
+ 	[VOP2_WIN_COLOR_KEY] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 0, 29),
+ 	[VOP2_WIN_COLOR_KEY_EN] = REG_FIELD(RK3568_SMART_COLOR_KEY_CTRL, 31, 31),
++	[VOP2_WIN_AXI_YRGB_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 4, 8),
++	[VOP2_WIN_AXI_UV_R_ID] = REG_FIELD(RK3568_SMART_CTRL1, 12, 16),
++	/* RK3588 only, reserved register on rk3568 */
++	[VOP2_WIN_AXI_BUS_ID] = REG_FIELD(RK3588_SMART_AXI_CTRL, 1, 1),
+ 
+ 	/* Scale */
+ 	[VOP2_WIN_SCALE_YRGB_X] = REG_FIELD(RK3568_SMART_REGION0_SCL_FACTOR_YRGB, 0, 15),
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+index 615a16196aff6..1c4204324f9f5 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.h
+@@ -78,6 +78,9 @@ enum vop2_win_regs {
+ 	VOP2_WIN_COLOR_KEY,
+ 	VOP2_WIN_COLOR_KEY_EN,
+ 	VOP2_WIN_DITHER_UP,
++	VOP2_WIN_AXI_BUS_ID,
++	VOP2_WIN_AXI_YRGB_R_ID,
++	VOP2_WIN_AXI_UV_R_ID,
+ 
+ 	/* scale regs */
+ 	VOP2_WIN_SCALE_YRGB_X,
+@@ -140,6 +143,10 @@ struct vop2_win_data {
+ 	unsigned int layer_sel_id;
+ 	uint64_t feature;
+ 
++	uint8_t axi_bus_id;
++	uint8_t axi_yrgb_r_id;
++	uint8_t axi_uv_r_id;
++
+ 	unsigned int max_upscale_factor;
+ 	unsigned int max_downscale_factor;
+ 	const u8 dly[VOP2_DLY_MODE_MAX];
+@@ -308,6 +315,7 @@ enum dst_factor_mode {
+ 
+ #define RK3568_CLUSTER_WIN_CTRL0		0x00
+ #define RK3568_CLUSTER_WIN_CTRL1		0x04
++#define RK3568_CLUSTER_WIN_CTRL2		0x08
+ #define RK3568_CLUSTER_WIN_YRGB_MST		0x10
+ #define RK3568_CLUSTER_WIN_CBR_MST		0x14
+ #define RK3568_CLUSTER_WIN_VIR			0x18
+@@ -330,6 +338,7 @@ enum dst_factor_mode {
+ /* (E)smart register definition, offset relative to window base */
+ #define RK3568_SMART_CTRL0			0x00
+ #define RK3568_SMART_CTRL1			0x04
++#define RK3588_SMART_AXI_CTRL			0x08
+ #define RK3568_SMART_REGION0_CTRL		0x10
+ #define RK3568_SMART_REGION0_YRGB_MST		0x14
+ #define RK3568_SMART_REGION0_CBR_MST		0x18
+diff --git a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+index f9d87a0abc8b0..6a6c15f2c9cc7 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
++++ b/drivers/gpu/drm/rockchip/rockchip_vop2_reg.c
+@@ -313,7 +313,7 @@ static const struct vop2_video_port_data rk3588_vop_video_ports[] = {
+  * AXI1 is a read only bus.
+  *
+  * Every window on a AXI bus must assigned two unique
+- * read id(yrgb_id/uv_id, valid id are 0x1~0xe).
++ * read id(yrgb_r_id/uv_r_id, valid id are 0x1~0xe).
+  *
+  * AXI0:
+  * Cluster0/1, Esmart0/1, WriteBack
+@@ -333,6 +333,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 0,
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 2,
++		.axi_uv_r_id = 3,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -349,6 +352,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_PRIMARY,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 6,
++		.axi_uv_r_id = 7,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -364,6 +370,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_PRIMARY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 2,
++		.axi_uv_r_id = 3,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -379,6 +388,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.supported_rotations = DRM_MODE_ROTATE_90 | DRM_MODE_ROTATE_270 |
+ 				       DRM_MODE_REFLECT_X | DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_PRIMARY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 6,
++		.axi_uv_r_id = 7,
+ 		.max_upscale_factor = 4,
+ 		.max_downscale_factor = 4,
+ 		.dly = { 4, 26, 29 },
+@@ -393,6 +405,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 2,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 0x0a,
++		.axi_uv_r_id = 0x0b,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
+@@ -406,6 +421,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 3,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 0,
++		.axi_yrgb_r_id = 0x0c,
++		.axi_uv_r_id = 0x01,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
+@@ -419,6 +437,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 6,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 0x0a,
++		.axi_uv_r_id = 0x0b,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
+@@ -432,6 +453,9 @@ static const struct vop2_win_data rk3588_vop_win_data[] = {
+ 		.layer_sel_id = 7,
+ 		.supported_rotations = DRM_MODE_REFLECT_Y,
+ 		.type = DRM_PLANE_TYPE_OVERLAY,
++		.axi_bus_id = 1,
++		.axi_yrgb_r_id = 0x0c,
++		.axi_uv_r_id = 0x0d,
+ 		.max_upscale_factor = 8,
+ 		.max_downscale_factor = 8,
+ 		.dly = { 23, 45, 48 },
 -- 
 2.39.5
 
