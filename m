@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E3415198D;
-	Wed,  5 Feb 2025 14:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8F7155725;
+	Wed,  5 Feb 2025 14:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764183; cv=none; b=l8x/Rq+gBh3nVhwuyfqnNfGXuuzn769y4B91z48HY71OOsRuTgPQlzmYzkpC7PxLNaxMiWxNMv6hcPehFIUkC2OcDQxWi06/Jw/9079hfVoDeaQGVpAG70A9VZ1QHP+Y/pM+9uSOtoqMpjbUVGI1C09I9jHqOoBnfqDrZwjxZ6M=
+	t=1738764187; cv=none; b=lIH5HcK49XwmcYJlQC5oR8c3R7FeKrBkQDPcdrsdwI7yK3L0Sj/Vxy3H1jKfXuayoEAxeXhPRqQzqX2bNIQ4/vP+k6Qa1sZ+tSOedRYmTTlUmXDpy7/h9VenDUszvdp7MN9GVfgmMA/unxO+bnHigwsW8NukOTLnUEQcyM/DCYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764183; c=relaxed/simple;
-	bh=efanxkhi+a32k/TFP0cZ5uBZC4T6HxzxhzIEmY+4yCs=;
+	s=arc-20240116; t=1738764187; c=relaxed/simple;
+	bh=3oKG2auMqKCjybaDN5SVTA0VS1W2hEZiT9hnNaSrsro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPZXjq2WQl9onAtYdWwJ9+hpS3AuwK8XA+UEzZlxyaDA4N54uUDYDyAJitSLr5LEp3cKQF801I5AQyt9GBeYwwJOuGpP6K5Sb7CCw7YQtHkeqVHM0dx/5mFANnu8N/Ci4iOrpsCeRhLudq7upIeWdhH67rCXXXwQsMnnZPLOFfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FatZdOTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQuPlnz9+1hEJplyk/p6zQ0fOxEJX940tlKboe19/sQ5tkkqSob0v1bqOkHCFwfw3vSwUi5tJUdF5ldx9Xl7UlLRjVdq0PvhA5nDXmESu4wr97xigto2ibX4OF01+ZZimIeX7jNksefVKuvflAzYSfJR50ITMOBGtnU1QMjxb3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OetYJYbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FatZdOTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E51C4CEE3;
-	Wed,  5 Feb 2025 14:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OetYJYbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B41C4CEE7;
+	Wed,  5 Feb 2025 14:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764183;
-	bh=efanxkhi+a32k/TFP0cZ5uBZC4T6HxzxhzIEmY+4yCs=;
+	s=korg; t=1738764186;
+	bh=3oKG2auMqKCjybaDN5SVTA0VS1W2hEZiT9hnNaSrsro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FatZdOTI2l6nRsQNG2BaUDARJi3XeMN3lV9yxfsttexftV7uxJpmZolXGMMyL2teX
-	 hx1jEZDHWWDOwNN9ZZV07th9asKUrivri6c5QFMLgBpGdVAtG9RfeCWBpJhe89La/R
-	 NvQrkQu71De4V575MrdcSTWUfIht51/q6JFqKGes=
+	b=OetYJYbxfuOqK6VamKm6KcjJniMffcMjmfgn6BmkeKgeQaT9nhtA8bg/t+jm5RAAj
+	 Wv9kwvBW+Aorg3iInRvMu1P/r7T9BnmMd/+DFdIIElLMDIPnUHH5uzWxBmbnG4k5gz
+	 6OgLJjqVgB2lGEXBigsmOQ6cHvyFYxblcSfVsCO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Derek Foreman <derek.foreman@collabora.com>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 147/393] netfilter: nft_set_rbtree: prefer sync gc to async worker
-Date: Wed,  5 Feb 2025 14:41:06 +0100
-Message-ID: <20250205134425.927193640@linuxfoundation.org>
+Subject: [PATCH 6.13 055/623] drm/rockchip: vop2: Fix the windows switch between different layers
+Date: Wed,  5 Feb 2025 14:36:37 +0100
+Message-ID: <20250205134458.335099386@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,256 +48,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 7d259f021aaa78904b6c836d975e8e00d83a182a ]
+[ Upstream commit 0ca953ac226eaffbe1a795f5e517095a8d494921 ]
 
-There is no need for asynchronous garbage collection, rbtree inserts
-can only happen from the netlink control plane.
+Every layer of vop2 should bind a window, and we also need to make
+sure that this window is not used by other layer.
 
-We already perform on-demand gc on insertion, in the area of the
-tree where the insertion takes place, but we don't do a full tree
-walk there for performance reasons.
+0x5 is a reserved layer sel value on rk3568, but it will select
+Cluster3 on rk3588, configure unused layers to 0x5  will lead
+alpha blending error on rk3588.
 
-Do a full gc walk at the end of the transaction instead and
-remove the async worker.
+When we bind a window from layerM to layerN, we move the old window
+on layerN to layerM.
 
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 8d738c1869f6 ("netfilter: nf_tables: fix set size with rbtree backend")
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Tested-by: Derek Foreman <derek.foreman@collabora.com>
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20241214081719.3330518-3-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 124 +++++++++++++++++----------------
- 1 file changed, 65 insertions(+), 59 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 47 ++++++++++++++------
+ 1 file changed, 34 insertions(+), 13 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 896a9a7024b04..26af6008861a6 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -19,7 +19,7 @@ struct nft_rbtree {
- 	struct rb_root		root;
- 	rwlock_t		lock;
- 	seqcount_rwlock_t	count;
--	struct delayed_work	gc_work;
-+	unsigned long		last_gc;
- };
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 630a204440ba8..60b498ffd41aa 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2330,7 +2330,10 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 	struct drm_plane *plane;
+ 	u32 layer_sel = 0;
+ 	u32 port_sel;
+-	unsigned int nlayer, ofs;
++	u8 layer_id;
++	u8 old_layer_id;
++	u8 layer_sel_id;
++	unsigned int ofs;
+ 	u32 ovl_ctrl;
+ 	int i;
+ 	struct vop2_video_port *vp0 = &vop2->vps[0];
+@@ -2374,9 +2377,30 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 	for (i = 0; i < vp->id; i++)
+ 		ofs += vop2->vps[i].nlayers;
  
- struct nft_rbtree_elem {
-@@ -48,8 +48,7 @@ static int nft_rbtree_cmp(const struct nft_set *set,
- 
- static bool nft_rbtree_elem_expired(const struct nft_rbtree_elem *rbe)
- {
--	return nft_set_elem_expired(&rbe->ext) ||
--	       nft_set_elem_is_dead(&rbe->ext);
-+	return nft_set_elem_expired(&rbe->ext);
- }
- 
- static bool __nft_rbtree_lookup(const struct net *net, const struct nft_set *set,
-@@ -508,6 +507,15 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	return err;
- }
- 
-+static void nft_rbtree_erase(struct nft_rbtree *priv, struct nft_rbtree_elem *rbe)
-+{
-+	write_lock_bh(&priv->lock);
-+	write_seqcount_begin(&priv->count);
-+	rb_erase(&rbe->node, &priv->root);
-+	write_seqcount_end(&priv->count);
-+	write_unlock_bh(&priv->lock);
-+}
+-	nlayer = 0;
+ 	drm_atomic_crtc_for_each_plane(plane, &vp->crtc) {
+ 		struct vop2_win *win = to_vop2_win(plane);
++		struct vop2_win *old_win;
 +
- static void nft_rbtree_remove(const struct net *net,
- 			      const struct nft_set *set,
- 			      const struct nft_set_elem *elem)
-@@ -515,11 +523,7 @@ static void nft_rbtree_remove(const struct net *net,
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	struct nft_rbtree_elem *rbe = elem->priv;
- 
--	write_lock_bh(&priv->lock);
--	write_seqcount_begin(&priv->count);
--	rb_erase(&rbe->node, &priv->root);
--	write_seqcount_end(&priv->count);
--	write_unlock_bh(&priv->lock);
-+	nft_rbtree_erase(priv, rbe);
- }
- 
- static void nft_rbtree_activate(const struct net *net,
-@@ -611,45 +615,40 @@ static void nft_rbtree_walk(const struct nft_ctx *ctx,
- 	read_unlock_bh(&priv->lock);
- }
- 
--static void nft_rbtree_gc(struct work_struct *work)
-+static void nft_rbtree_gc_remove(struct net *net, struct nft_set *set,
-+				 struct nft_rbtree *priv,
-+				 struct nft_rbtree_elem *rbe)
- {
-+	struct nft_set_elem elem = {
-+		.priv	= rbe,
-+	};
++		layer_id = (u8)(plane->state->normalized_zpos + ofs);
 +
-+	nft_setelem_data_deactivate(net, set, &elem);
-+	nft_rbtree_erase(priv, rbe);
-+}
-+
-+static void nft_rbtree_gc(struct nft_set *set)
-+{
-+	struct nft_rbtree *priv = nft_set_priv(set);
- 	struct nft_rbtree_elem *rbe, *rbe_end = NULL;
- 	struct nftables_pernet *nft_net;
--	struct nft_rbtree *priv;
-+	struct rb_node *node, *next;
- 	struct nft_trans_gc *gc;
--	struct rb_node *node;
--	struct nft_set *set;
--	unsigned int gc_seq;
- 	struct net *net;
- 
--	priv = container_of(work, struct nft_rbtree, gc_work.work);
- 	set  = nft_set_container_of(priv);
- 	net  = read_pnet(&set->net);
- 	nft_net = nft_pernet(net);
--	gc_seq  = READ_ONCE(nft_net->gc_seq);
- 
--	if (nft_set_gc_is_pending(set))
--		goto done;
--
--	gc = nft_trans_gc_alloc(set, gc_seq, GFP_KERNEL);
-+	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
- 	if (!gc)
--		goto done;
--
--	read_lock_bh(&priv->lock);
--	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
-+		return;
- 
--		/* Ruleset has been updated, try later. */
--		if (READ_ONCE(nft_net->gc_seq) != gc_seq) {
--			nft_trans_gc_destroy(gc);
--			gc = NULL;
--			goto try_later;
--		}
-+	for (node = rb_first(&priv->root); node ; node = next) {
-+		next = rb_next(node);
- 
- 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
- 
--		if (nft_set_elem_is_dead(&rbe->ext))
--			goto dead_elem;
--
- 		/* elements are reversed in the rbtree for historical reasons,
- 		 * from highest to lowest value, that is why end element is
- 		 * always visited before the start element.
-@@ -661,37 +660,34 @@ static void nft_rbtree_gc(struct work_struct *work)
- 		if (!nft_set_elem_expired(&rbe->ext))
- 			continue;
- 
--		nft_set_elem_dead(&rbe->ext);
--
--		if (!rbe_end)
--			continue;
--
--		nft_set_elem_dead(&rbe_end->ext);
--
--		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
- 		if (!gc)
- 			goto try_later;
- 
--		nft_trans_gc_elem_add(gc, rbe_end);
--		rbe_end = NULL;
--dead_elem:
--		gc = nft_trans_gc_queue_async(gc, gc_seq, GFP_ATOMIC);
-+		/* end element needs to be removed first, it has
-+		 * no timeout extension.
++		/*
++		 * Find the layer this win bind in old state.
 +		 */
-+		if (rbe_end) {
-+			nft_rbtree_gc_remove(net, set, priv, rbe_end);
-+			nft_trans_gc_elem_add(gc, rbe_end);
-+			rbe_end = NULL;
++		for (old_layer_id = 0; old_layer_id < vop2->data->win_size; old_layer_id++) {
++			layer_sel_id = (layer_sel >> (4 * old_layer_id)) & 0xf;
++			if (layer_sel_id == win->data->layer_sel_id)
++				break;
 +		}
 +
-+		gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
- 		if (!gc)
- 			goto try_later;
++		/*
++		 * Find the win bind to this layer in old state
++		 */
++		for (i = 0; i < vop2->data->win_size; i++) {
++			old_win = &vop2->win[i];
++			layer_sel_id = (layer_sel >> (4 * layer_id)) & 0xf;
++			if (layer_sel_id == old_win->data->layer_sel_id)
++				break;
++		}
  
-+		nft_rbtree_gc_remove(net, set, priv, rbe);
- 		nft_trans_gc_elem_add(gc, rbe);
+ 		switch (win->data->phys_id) {
+ 		case ROCKCHIP_VOP2_CLUSTER0:
+@@ -2421,17 +2445,14 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 			break;
+ 		}
+ 
+-		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(plane->state->normalized_zpos + ofs,
+-							  0x7);
+-		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(plane->state->normalized_zpos + ofs,
+-							 win->data->layer_sel_id);
+-		nlayer++;
+-	}
+-
+-	/* configure unused layers to 0x5 (reserved) */
+-	for (; nlayer < vp->nlayers; nlayer++) {
+-		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(nlayer + ofs, 0x7);
+-		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(nlayer + ofs, 5);
++		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(layer_id, 0x7);
++		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(layer_id, win->data->layer_sel_id);
++		/*
++		 * When we bind a window from layerM to layerN, we also need to move the old
++		 * window on layerN to layerM to avoid one window selected by two or more layers.
++		 */
++		layer_sel &= ~RK3568_OVL_LAYER_SEL__LAYER(old_layer_id, 0x7);
++		layer_sel |= RK3568_OVL_LAYER_SEL__LAYER(old_layer_id, old_win->data->layer_sel_id);
  	}
  
--	gc = nft_trans_gc_catchall_async(gc, gc_seq);
--
- try_later:
--	read_unlock_bh(&priv->lock);
- 
--	if (gc)
--		nft_trans_gc_queue_async_done(gc);
--done:
--	queue_delayed_work(system_power_efficient_wq, &priv->gc_work,
--			   nft_set_gc_interval(set));
-+	if (gc) {
-+		gc = nft_trans_gc_catchall_sync(gc);
-+		nft_trans_gc_queue_sync_done(gc);
-+		priv->last_gc = jiffies;
-+	}
- }
- 
- static u64 nft_rbtree_privsize(const struct nlattr * const nla[],
-@@ -710,11 +706,6 @@ static int nft_rbtree_init(const struct nft_set *set,
- 	seqcount_rwlock_init(&priv->count, &priv->lock);
- 	priv->root = RB_ROOT;
- 
--	INIT_DEFERRABLE_WORK(&priv->gc_work, nft_rbtree_gc);
--	if (set->flags & NFT_SET_TIMEOUT)
--		queue_delayed_work(system_power_efficient_wq, &priv->gc_work,
--				   nft_set_gc_interval(set));
--
- 	return 0;
- }
- 
-@@ -725,8 +716,6 @@ static void nft_rbtree_destroy(const struct nft_ctx *ctx,
- 	struct nft_rbtree_elem *rbe;
- 	struct rb_node *node;
- 
--	cancel_delayed_work_sync(&priv->gc_work);
--	rcu_barrier();
- 	while ((node = priv->root.rb_node) != NULL) {
- 		rb_erase(node, &priv->root);
- 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
-@@ -752,6 +741,21 @@ static bool nft_rbtree_estimate(const struct nft_set_desc *desc, u32 features,
- 	return true;
- }
- 
-+static void nft_rbtree_commit(struct nft_set *set)
-+{
-+	struct nft_rbtree *priv = nft_set_priv(set);
-+
-+	if (time_after_eq(jiffies, priv->last_gc + nft_set_gc_interval(set)))
-+		nft_rbtree_gc(set);
-+}
-+
-+static void nft_rbtree_gc_init(const struct nft_set *set)
-+{
-+	struct nft_rbtree *priv = nft_set_priv(set);
-+
-+	priv->last_gc = jiffies;
-+}
-+
- const struct nft_set_type nft_set_rbtree_type = {
- 	.features	= NFT_SET_INTERVAL | NFT_SET_MAP | NFT_SET_OBJECT | NFT_SET_TIMEOUT,
- 	.ops		= {
-@@ -765,6 +769,8 @@ const struct nft_set_type nft_set_rbtree_type = {
- 		.deactivate	= nft_rbtree_deactivate,
- 		.flush		= nft_rbtree_flush,
- 		.activate	= nft_rbtree_activate,
-+		.commit		= nft_rbtree_commit,
-+		.gc_init	= nft_rbtree_gc_init,
- 		.lookup		= nft_rbtree_lookup,
- 		.walk		= nft_rbtree_walk,
- 		.get		= nft_rbtree_get,
+ 	vop2_writel(vop2, RK3568_OVL_LAYER_SEL, layer_sel);
 -- 
 2.39.5
 
