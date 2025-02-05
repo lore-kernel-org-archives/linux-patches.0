@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B01126C18;
-	Wed,  5 Feb 2025 13:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276C0126C18;
+	Wed,  5 Feb 2025 13:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763392; cv=none; b=g0O5ghTPrhFfk6xNot2k48oPDjBY79D0UmoeVwgjTMUM0CfG+nNefdHZxjY2VWd3FjRiWCMlvEM4bvDW0EpbGMfRSJLX62807MrnqpK5b7iNZB3dwLMEe8oeolre9lmqA0GuxqGLOM+AfthmwCg9mS8/lE7cOkigsKTdwInLyIc=
+	t=1738763396; cv=none; b=BtArDhvLTqwVGOFM7U8ZF6MKJZ+wXXTf2ZAgTOIR7RtA2Xz5SLgow3hdLLUl4sNF34FOCn3HgkJW4AujB4/nwIbIvB97JbCPTdGXG2x+RSAp5SWB30oECKler3Yw93oBn4kFGauA4qH54wtSf8PjvoQTIGmX6pG+j4AAx8XiNzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763392; c=relaxed/simple;
-	bh=2Ick2i8k8bDhfSQAUPmu8OC1uMcENJTV+9+5DMTvhDk=;
+	s=arc-20240116; t=1738763396; c=relaxed/simple;
+	bh=sYAkjZb+djFqN1q8sFx5G+TbrRV7w56wFYpNB9/AdIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDgnre0btrICj2hdX4td8qg16dIYnniOTKHsUxKLkJKuZEseP1Qfw8YduRykGRM36E1aXJ3EzaOSmiX/CtAs9X6wYbnEOws1YaVAsG/7k23xovROYEH1MGZcUm5nL77CZW+iZ1T8vff6vo5etVdQfSdec6TtBA/J+4tYJBM0Pl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nqP+fBx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=spqKLBlUHek/+Qce2Y1sIemJgpGtRoY9W4rDyzB8iCJ6446XY9Ue4fhB5v6XO4yMRKpoJ0JzovPqpUfLt/7LtN0lMNVCYqNHY1ejWeJgrrGOFm5/SR10zAb8ceogN55Ki3yEi4iv6NC3AfiYUv3doqwPx/qB00hPGYBggv5kYMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwuqjX35; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nqP+fBx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 144DFC4CED6;
-	Wed,  5 Feb 2025 13:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwuqjX35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7E1C4CED1;
+	Wed,  5 Feb 2025 13:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763392;
-	bh=2Ick2i8k8bDhfSQAUPmu8OC1uMcENJTV+9+5DMTvhDk=;
+	s=korg; t=1738763396;
+	bh=sYAkjZb+djFqN1q8sFx5G+TbrRV7w56wFYpNB9/AdIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqP+fBx0XGV+xCpanPnPzLMHXKPBeOsqzNUXAneeoJsKfNd7A1jYOLPjbBUBTrIAC
-	 HdK7zxcBPBAG9d5spKJumrHwgkrt7HgMEr2mj7nAE5E7DfDCkWcT9LWilhpHdklKKw
-	 dpm+btpHKtb+FB0v55OGtVCPNllOIb/A9Na8dW8I=
+	b=EwuqjX350W0Mt0y6iThOGOyW7msHdoaqgjiUk91SgkKL6eMCtnkJKq0BoylEx/PXd
+	 axFCc2cQ57UDgPRdXE748L8Ts2xGYPQoOEtYyQlFQSTAotgWM87wFMtuVBFXbkGRpV
+	 UYWcYjunssTo7W5mc+WvKE1VN0YnmBut75WZiQn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
-	Christian Brauner <brauner@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/590] afs: Fix cleanup of immediately failed async calls
-Date: Wed,  5 Feb 2025 14:36:02 +0100
-Message-ID: <20250205134455.513571809@linuxfoundation.org>
+Subject: [PATCH 6.6 056/393] net_sched: sch_sfq: handle bigger packets
+Date: Wed,  5 Feb 2025 14:39:35 +0100
+Message-ID: <20250205134422.440477024@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
+References: <20250205134420.279368572@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,117 +46,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9750be93b2be12b6d92323b97d7c055099d279e6 ]
+[ Upstream commit e4650d7ae4252f67e997a632adfae0dd74d3a99a ]
 
-If we manage to begin an async call, but fail to transmit any data on it
-due to a signal, we then abort it which causes a race between the
-notification of call completion from rxrpc and our attempt to cancel the
-notification.  The notification will be necessary, however, for async
-FetchData to terminate the netfs subrequest.
+SFQ has an assumption on dealing with packets smaller than 64KB.
 
-However, since we get a notification from rxrpc upon completion of a call
-(aborted or otherwise), we can just leave it to that.
+Even before BIG TCP, TCA_STAB can provide arbitrary big values
+in qdisc_pkt_len(skb)
 
-This leads to calls not getting cleaned up, but appearing in
-/proc/net/rxrpc/calls as being aborted with code 6.
+It is time to switch (struct sfq_slot)->allot to a 32bit field.
 
-Fix this by making the "error_do_abort:" case of afs_make_call() abort the
-call and then abandon it to the notification handler.
+sizeof(struct sfq_slot) is now 64 bytes, giving better cache locality.
 
-Fixes: 34fa47612bfe ("afs: Fix race in async call refcounting")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/20241216204124.3752367-25-dhowells@redhat.com
-cc: linux-afs@lists.infradead.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Link: https://patch.msgid.link/20241008111603.653140-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 10685681bafc ("net_sched: sch_sfq: don't allow 1 packet limit")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/internal.h          |  9 +++++++++
- fs/afs/rxrpc.c             | 12 +++++++++---
- include/trace/events/afs.h |  2 ++
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ net/sched/sch_sfq.c | 39 +++++++++++++--------------------------
+ 1 file changed, 13 insertions(+), 26 deletions(-)
 
-diff --git a/fs/afs/internal.h b/fs/afs/internal.h
-index c9d620175e80c..d9760b2a8d8de 100644
---- a/fs/afs/internal.h
-+++ b/fs/afs/internal.h
-@@ -1346,6 +1346,15 @@ extern void afs_send_simple_reply(struct afs_call *, const void *, size_t);
- extern int afs_extract_data(struct afs_call *, bool);
- extern int afs_protocol_error(struct afs_call *, enum afs_eproto_cause);
+diff --git a/net/sched/sch_sfq.c b/net/sched/sch_sfq.c
+index ed362eefeea9a..7d4feae2fae36 100644
+--- a/net/sched/sch_sfq.c
++++ b/net/sched/sch_sfq.c
+@@ -77,12 +77,6 @@
+ #define SFQ_EMPTY_SLOT		0xffff
+ #define SFQ_DEFAULT_HASH_DIVISOR 1024
  
-+static inline void afs_see_call(struct afs_call *call, enum afs_call_trace why)
-+{
-+	int r = refcount_read(&call->ref);
-+
-+	trace_afs_call(call->debug_id, why, r,
-+		       atomic_read(&call->net->nr_outstanding_calls),
-+		       __builtin_return_address(0));
-+}
-+
- static inline void afs_make_op_call(struct afs_operation *op, struct afs_call *call,
- 				    gfp_t gfp)
- {
-diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
-index 9f2a3bb56ec69..a122c6366ce19 100644
---- a/fs/afs/rxrpc.c
-+++ b/fs/afs/rxrpc.c
-@@ -430,11 +430,16 @@ void afs_make_call(struct afs_call *call, gfp_t gfp)
- 	return;
+-/* We use 16 bits to store allot, and want to handle packets up to 64K
+- * Scale allot by 8 (1<<3) so that no overflow occurs.
+- */
+-#define SFQ_ALLOT_SHIFT		3
+-#define SFQ_ALLOT_SIZE(X)	DIV_ROUND_UP(X, 1 << SFQ_ALLOT_SHIFT)
+-
+ /* This type should contain at least SFQ_MAX_DEPTH + 1 + SFQ_MAX_FLOWS values */
+ typedef u16 sfq_index;
  
- error_do_abort:
--	if (ret != -ECONNABORTED) {
-+	if (ret != -ECONNABORTED)
- 		rxrpc_kernel_abort_call(call->net->socket, rxcall,
- 					RX_USER_ABORT, ret,
- 					afs_abort_send_data_error);
--	} else {
-+	if (call->async) {
-+		afs_see_call(call, afs_call_trace_async_abort);
-+		return;
-+	}
-+
-+	if (ret == -ECONNABORTED) {
- 		len = 0;
- 		iov_iter_kvec(&msg.msg_iter, ITER_DEST, NULL, 0, 0);
- 		rxrpc_kernel_recv_data(call->net->socket, rxcall,
-@@ -445,6 +450,8 @@ void afs_make_call(struct afs_call *call, gfp_t gfp)
- 	call->error = ret;
- 	trace_afs_call_done(call);
- error_kill_call:
-+	if (call->async)
-+		afs_see_call(call, afs_call_trace_async_kill);
- 	if (call->type->done)
- 		call->type->done(call);
+@@ -104,7 +98,7 @@ struct sfq_slot {
+ 	sfq_index	next; /* next slot in sfq RR chain */
+ 	struct sfq_head dep; /* anchor in dep[] chains */
+ 	unsigned short	hash; /* hash value (index in ht[]) */
+-	short		allot; /* credit for this slot */
++	int		allot; /* credit for this slot */
  
-@@ -602,7 +609,6 @@ static void afs_deliver_to_call(struct afs_call *call)
- 	abort_code = 0;
- call_complete:
- 	afs_set_call_complete(call, ret, remote_abort);
--	state = AFS_CALL_COMPLETE;
- 	goto done;
+ 	unsigned int    backlog;
+ 	struct red_vars vars;
+@@ -120,7 +114,6 @@ struct sfq_sched_data {
+ 	siphash_key_t 	perturbation;
+ 	u8		cur_depth;	/* depth of longest slot */
+ 	u8		flags;
+-	unsigned short  scaled_quantum; /* SFQ_ALLOT_SIZE(quantum) */
+ 	struct tcf_proto __rcu *filter_list;
+ 	struct tcf_block *block;
+ 	sfq_index	*ht;		/* Hash table ('divisor' slots) */
+@@ -456,7 +449,7 @@ sfq_enqueue(struct sk_buff *skb, struct Qdisc *sch, struct sk_buff **to_free)
+ 		 */
+ 		q->tail = slot;
+ 		/* We could use a bigger initial quantum for new flows */
+-		slot->allot = q->scaled_quantum;
++		slot->allot = q->quantum;
+ 	}
+ 	if (++sch->q.qlen <= q->limit)
+ 		return NET_XMIT_SUCCESS;
+@@ -493,7 +486,7 @@ sfq_dequeue(struct Qdisc *sch)
+ 	slot = &q->slots[a];
+ 	if (slot->allot <= 0) {
+ 		q->tail = slot;
+-		slot->allot += q->scaled_quantum;
++		slot->allot += q->quantum;
+ 		goto next_slot;
+ 	}
+ 	skb = slot_dequeue_head(slot);
+@@ -512,7 +505,7 @@ sfq_dequeue(struct Qdisc *sch)
+ 		}
+ 		q->tail->next = next_a;
+ 	} else {
+-		slot->allot -= SFQ_ALLOT_SIZE(qdisc_pkt_len(skb));
++		slot->allot -= qdisc_pkt_len(skb);
+ 	}
+ 	return skb;
+ }
+@@ -595,7 +588,7 @@ static void sfq_rehash(struct Qdisc *sch)
+ 				q->tail->next = x;
+ 			}
+ 			q->tail = slot;
+-			slot->allot = q->scaled_quantum;
++			slot->allot = q->quantum;
+ 		}
+ 	}
+ 	sch->q.qlen -= dropped;
+@@ -628,7 +621,8 @@ static void sfq_perturbation(struct timer_list *t)
+ 	rcu_read_unlock();
  }
  
-diff --git a/include/trace/events/afs.h b/include/trace/events/afs.h
-index a0aed1a428a18..9a75590227f26 100644
---- a/include/trace/events/afs.h
-+++ b/include/trace/events/afs.h
-@@ -118,6 +118,8 @@ enum yfs_cm_operation {
-  */
- #define afs_call_traces \
- 	EM(afs_call_trace_alloc,		"ALLOC") \
-+	EM(afs_call_trace_async_abort,		"ASYAB") \
-+	EM(afs_call_trace_async_kill,		"ASYKL") \
- 	EM(afs_call_trace_free,			"FREE ") \
- 	EM(afs_call_trace_get,			"GET  ") \
- 	EM(afs_call_trace_put,			"PUT  ") \
+-static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
++static int sfq_change(struct Qdisc *sch, struct nlattr *opt,
++		      struct netlink_ext_ack *extack)
+ {
+ 	struct sfq_sched_data *q = qdisc_priv(sch);
+ 	struct tc_sfq_qopt *ctl = nla_data(opt);
+@@ -646,14 +640,10 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
+ 	    (!is_power_of_2(ctl->divisor) || ctl->divisor > 65536))
+ 		return -EINVAL;
+ 
+-	/* slot->allot is a short, make sure quantum is not too big. */
+-	if (ctl->quantum) {
+-		unsigned int scaled = SFQ_ALLOT_SIZE(ctl->quantum);
+-
+-		if (scaled <= 0 || scaled > SHRT_MAX)
+-			return -EINVAL;
++	if ((int)ctl->quantum < 0) {
++		NL_SET_ERR_MSG_MOD(extack, "invalid quantum");
++		return -EINVAL;
+ 	}
+-
+ 	if (ctl_v1 && !red_check_params(ctl_v1->qth_min, ctl_v1->qth_max,
+ 					ctl_v1->Wlog, ctl_v1->Scell_log, NULL))
+ 		return -EINVAL;
+@@ -663,10 +653,8 @@ static int sfq_change(struct Qdisc *sch, struct nlattr *opt)
+ 			return -ENOMEM;
+ 	}
+ 	sch_tree_lock(sch);
+-	if (ctl->quantum) {
++	if (ctl->quantum)
+ 		q->quantum = ctl->quantum;
+-		q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
+-	}
+ 	WRITE_ONCE(q->perturb_period, ctl->perturb_period * HZ);
+ 	if (ctl->flows)
+ 		q->maxflows = min_t(u32, ctl->flows, SFQ_MAX_FLOWS);
+@@ -762,12 +750,11 @@ static int sfq_init(struct Qdisc *sch, struct nlattr *opt,
+ 	q->divisor = SFQ_DEFAULT_HASH_DIVISOR;
+ 	q->maxflows = SFQ_DEFAULT_FLOWS;
+ 	q->quantum = psched_mtu(qdisc_dev(sch));
+-	q->scaled_quantum = SFQ_ALLOT_SIZE(q->quantum);
+ 	q->perturb_period = 0;
+ 	get_random_bytes(&q->perturbation, sizeof(q->perturbation));
+ 
+ 	if (opt) {
+-		int err = sfq_change(sch, opt);
++		int err = sfq_change(sch, opt, extack);
+ 		if (err)
+ 			return err;
+ 	}
+@@ -878,7 +865,7 @@ static int sfq_dump_class_stats(struct Qdisc *sch, unsigned long cl,
+ 	if (idx != SFQ_EMPTY_SLOT) {
+ 		const struct sfq_slot *slot = &q->slots[idx];
+ 
+-		xstats.allot = slot->allot << SFQ_ALLOT_SHIFT;
++		xstats.allot = slot->allot;
+ 		qs.qlen = slot->qlen;
+ 		qs.backlog = slot->backlog;
+ 	}
 -- 
 2.39.5
 
