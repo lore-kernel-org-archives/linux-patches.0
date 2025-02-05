@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8B41519BE;
-	Wed,  5 Feb 2025 14:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048831519BE;
+	Wed,  5 Feb 2025 14:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765275; cv=none; b=nUYxCiO6wHP/vVl3r3nEdX51uSquq8KYZ+CUWs0+QjWMLuGzvjjQydZ/X8ywk6WvzR7NwZwRFsk0XxWOK9JrliSCyjKP1PT2A7HsaktRcOuJkffnes42aHIfjPJUSDTsRuLfpzVKjj/O+VbMdML9PZr0oDLlhT3z+wL4ay90lvs=
+	t=1738765279; cv=none; b=OeXjuew9rYOnvBSQ2CH84ZLDZEzlo6WBRen2MPyexAMT7G/1VTTqfUCIdgJ/z5OvGrjd/0IJIl5zQOfwVQTPRGqQsmhr7tT5nkYfKfOGWdMjWvDEt56Et8i/SUxbRDycjKQlh5dQP1HDDzixJ4KYkNytmO4un74N112ENhAdBlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765275; c=relaxed/simple;
-	bh=a/pXn9UsVwUjdjfjX4TSk0G77Wm3Z5Pjuvn42nhodLI=;
+	s=arc-20240116; t=1738765279; c=relaxed/simple;
+	bh=/zfueHGcZNzwx/29k/6kYWu1/4imQ6UfJScZOwyFW3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TggP31E9t4Wr0Mjf3PRLIZeCPxBVYUbnNgHcMAzNfzA2Aiop78diuKXATlmVEP2PkT9V1Z7xrjTwi9s0t6rlYRTLh77TGCIt4J/QvAuaPA8ohlqt8OmfYZin9wBvuPmf7OJ3AsogYi+kbNf9IgzxADT0i9yWXSdHwt4pDocj/ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQt1ZVKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOIsz1OcwWx/4X6qAo2qF5/mmlEKp0cvemOhm2+2ra98A7WmQU6CyeVeridiKGzNvB3p7y9/vYULupLnMNLrF1fZA2wgroqTW4fkkzaHzgLhat47xcKiO8Z3v4VafmNUIoAwrryirM/UlK+yGtIaiOz+rC/f4invfODCE9VW3sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ouDhQMWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQt1ZVKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C699C4CED1;
-	Wed,  5 Feb 2025 14:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ouDhQMWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66767C4CED1;
+	Wed,  5 Feb 2025 14:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765275;
-	bh=a/pXn9UsVwUjdjfjX4TSk0G77Wm3Z5Pjuvn42nhodLI=;
+	s=korg; t=1738765278;
+	bh=/zfueHGcZNzwx/29k/6kYWu1/4imQ6UfJScZOwyFW3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQt1ZVKYB0ZI8ghYnK5bRl7uGu627TDYcMnxmT9Y6NzJk2qnHKaDakjN0kbpuQYU9
-	 a0T5HJPNvKR/2WXzJvoW4/8yRzhLIdwzq3mH6YUd6DQZECPLjFOCpNqCRKLoTbC2C9
-	 qOkPSmTTAx3jgX5hjJDD2Mk2sTiMwQwXQcrW0W/Q=
+	b=ouDhQMWQnxGXCeSutEZStmXGYN8i7Z3XTW7KJcbBoLn1fWfNixgtWK2EqqXLNMZyt
+	 EHUtOUaUw8Bqozrh1VOLeDiP8aw3I4fII3RDeJhuGJcRgzNkH7Orlr8JWOsl+u7cEh
+	 O93rl0Gt9Zxp5chzQeiVb8LF3qcx0jPgTpPuklDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mihai Sain <mihai.sain@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 249/393] ARM: dts: microchip: sama5d27_wlsom1_ek: Remove mmc-ddr-3_3v property from sdmmc0 node
-Date: Wed,  5 Feb 2025 14:42:48 +0100
-Message-ID: <20250205134429.834582579@linuxfoundation.org>
+Subject: [PATCH 6.13 162/623] wifi: mt76: mt7915: Fix mesh scan on MT7916 DBDC
+Date: Wed,  5 Feb 2025 14:38:24 +0100
+Message-ID: <20250205134502.431439178@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +47,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mihai Sain <mihai.sain@microchip.com>
+From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
 
-[ Upstream commit 2a7f1848d9d65a4deb366726ff8f33c9c64ac43b ]
+[ Upstream commit f21b77cb556296116b1cce1d62295d13e35da574 ]
 
-On board the sdmmc0 interface is wired to a SD Card socket.
-According with mmc-controller bindings, the mmc-ddr-3_3v property
-is used for eMMC devices to enable high-speed DDR mode (3.3V I/O).
-Remove the mmc-ddr-3_3v property from sdmmc0 node.
+commit c4f075582304 ("wifi: mt76: mt7915: fix command timeout in AP stop
+period") changes the behavior of mt7915_bss_info_changed() in mesh mode
+when enable_beacon becomes false: it calls mt7915_mcu_add_bss_info(...,
+false) and mt7915_mcu_add_sta(..., false) while the previous code
+didn't.  These sends mcu commands that apparently confuse the firmware.
 
-Signed-off-by: Mihai Sain <mihai.sain@microchip.com>
-Link: https://lore.kernel.org/r/20231204072537.2991-1-mihai.sain@microchip.com
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Stable-dep-of: 4d9e5965df04 ("ARM: dts: microchip: sama5d27_wlsom1_ek: Add no-1-8-v property to sdmmc0 node")
+This breaks scanning while in mesh mode on AsiaRF MT7916 DBDC-based cards:
+scanning works but no mesh frames get sent afterwards and the firmware
+seems to be hosed.  It breaks on MT7916 DBDC but not on MT7915 DBDC.
+
+Fixes: c4f075582304 ("wifi: mt76: mt7915: fix command timeout in AP stop period")
+Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Link: https://patch.msgid.link/20240927085350.4594-1-nicolas.cavallari@green-communications.fr
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-index e055b9e2fe344..15239834d886e 100644
---- a/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-+++ b/arch/arm/boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts
-@@ -197,7 +197,6 @@
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/main.c b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+index c6f498fc81ffd..8183708a9b355 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/main.c
+@@ -619,8 +619,9 @@ static void mt7915_bss_info_changed(struct ieee80211_hw *hw,
+ 	if (changed & BSS_CHANGED_ASSOC)
+ 		set_bss_info = vif->cfg.assoc;
+ 	if (changed & BSS_CHANGED_BEACON_ENABLED &&
++	    info->enable_beacon &&
+ 	    vif->type != NL80211_IFTYPE_AP)
+-		set_bss_info = set_sta = info->enable_beacon;
++		set_bss_info = set_sta = 1;
  
- &sdmmc0 {
- 	bus-width = <4>;
--	mmc-ddr-3_3v;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_sdmmc0_default>;
- 	status = "okay";
+ 	if (set_bss_info == 1)
+ 		mt7915_mcu_add_bss_info(phy, vif, true);
 -- 
 2.39.5
 
