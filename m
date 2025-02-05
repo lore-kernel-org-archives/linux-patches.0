@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792ED17B505;
-	Wed,  5 Feb 2025 15:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE6B35946;
+	Wed,  5 Feb 2025 15:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768432; cv=none; b=MWrrvnT9NmvK08PKaWT30vkiFC9NmMgGmtOSd2uqjHeYCs05mp1B5Snnn/cIPzkhiD4laUSTR/gti3IM+w2qZ225W9t0di7/qAzKLfcnH4uQFi5HtSTTIdhzN6N3Cx1ogE6P6Vs14aK9uTcScYgbu+2QZeb5Sp6Z6VzYwX0Oo4Q=
+	t=1738768437; cv=none; b=VmMheYPsPrxHy/QMzEN47Lx4wY4uwy/1cbP/nRimjPBIim2p5PXBnihyvE6rFpRS1LEde8R4qB/gSxxq1HfKbUaiuBMfWymnhogw6Rsn5DkIfWzmMDEklpY1CWF7eX87g31pc+xkfERC/p4EOQl/8adgCqk2oezVAKRM9OjjHEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768432; c=relaxed/simple;
-	bh=+OVF3VXv2pr6ZcsK9J5+s9dfpUp2oUPmPOCfcVdH0WM=;
+	s=arc-20240116; t=1738768437; c=relaxed/simple;
+	bh=HjxDT1VAgJrxFsN4+5HqlQgkf0aslvtaTv3rNPzPSu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hhBWsJyygBWwTV+EWMkoSFByfJ936oOaSrjeT4NJtxOxJ8KaAWZGh98GMvR85J69dbR2hbN+6T5516ozjslgZLwIsHH0xrXqJ+3jV1RJChEGrx3aOlJTXh6tQZpD12o4yqoHWgJmGKw4quUDZ0JQRlwcuB2X1J/GKBAXTmWosqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdqSN3Sw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F3CdIhB4ZXnIqGhLGWe6mixuJnm2hS6GmrsF52BFpwMJe5GekDFNi/s0OB3Nw/6q6hS5RYx/mngTTyU8Orp8HXQ5ihWKYivG/JpIDDmeHKRWQXJ/jaxMsMLCO3akLzubO0WucqHAuaL1T6TwAlAU32DrefHlFd+to5TttKyKKsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gyow0Wbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdqSN3Sw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4F29C4CED1;
-	Wed,  5 Feb 2025 15:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gyow0Wbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A1DC4CED1;
+	Wed,  5 Feb 2025 15:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768432;
-	bh=+OVF3VXv2pr6ZcsK9J5+s9dfpUp2oUPmPOCfcVdH0WM=;
+	s=korg; t=1738768435;
+	bh=HjxDT1VAgJrxFsN4+5HqlQgkf0aslvtaTv3rNPzPSu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdqSN3SwB2XO33D5sf9DrwVqHEFp8VQ8wpJyZ+MBxdII6yvZaa0eQvXJYYEGis5vv
-	 zp9OSSpsHdictZoASXVqHovM9+KGSfxvVd+0mToREcdbJ/iZpi+10St7LJlj7MQVGb
-	 iAW1k+qYCTHSlxOhOag0AvCita8f7Zwd4NEAwPiI=
+	b=gyow0Wbvv0/AQcPjoG75IHRXT1XCDAnFJhaVg5PSHhYZOzlIo9Q0WWPfbQRQ1W2Yw
+	 7HdOqioftQbcE/DSyg4K5zIPbTaKHL4yKPWKKsbdoxXmsRe8pnDeaU8Nb8JqlZyCO4
+	 14uEoX/mVKZSOwh/hUVcIkpTMm6fl9u1gZGHc2Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Charlie Jenkins <charlie@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 548/623] net: xdp: Disallow attaching device-bound programs in generic mode
-Date: Wed,  5 Feb 2025 14:44:50 +0100
-Message-ID: <20250205134517.186978837@linuxfoundation.org>
+Subject: [PATCH 6.13 557/623] RISC-V: Mark riscv_v_init() as __init
+Date: Wed,  5 Feb 2025 14:44:59 +0100
+Message-ID: <20250205134517.529562387@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -49,57 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Palmer Dabbelt <palmer@rivosinc.com>
 
-[ Upstream commit 3595599fa8360bb3c7afa7ee50c810b4a64106ea ]
+[ Upstream commit 9d87cf525fd2e1a5fcbbb40ee3df216d1d266c88 ]
 
-Device-bound programs are used to support RX metadata kfuncs. These
-kfuncs are driver-specific and rely on the driver context to read the
-metadata. This means they can't work in generic XDP mode. However, there
-is no check to disallow such programs from being attached in generic
-mode, in which case the metadata kfuncs will be called in an invalid
-context, leading to crashes.
+This trips up with Xtheadvector enabled, but as far as I can tell it's
+just been an issue since the original patchset.
 
-Fix this by adding a check to disallow attaching device-bound programs
-in generic mode.
-
-Fixes: 2b3486bc2d23 ("bpf: Introduce device-bound XDP programs")
-Reported-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Closes: https://lore.kernel.org/r/dae862ec-43b5-41a0-8edf-46c59071cdda@hetzner-cloud.de
-Tested-by: Marcus Wichelmann <marcus.wichelmann@hetzner-cloud.de>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250127131344.238147-1-toke@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7ca7a7b9b635 ("riscv: Add sysctl to set the default vector rule for new processes")
+Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+Link: https://lore.kernel.org/r/20250115180251.31444-1-palmer@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/riscv/kernel/vector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index a994b1c725098..fbb796375aa0e 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -9699,6 +9699,10 @@ static int dev_xdp_attach(struct net_device *dev, struct netlink_ext_ack *extack
- 			NL_SET_ERR_MSG(extack, "Program bound to different device");
- 			return -EINVAL;
- 		}
-+		if (bpf_prog_is_dev_bound(new_prog->aux) && mode == XDP_MODE_SKB) {
-+			NL_SET_ERR_MSG(extack, "Can't attach device-bound programs in generic mode");
-+			return -EINVAL;
-+		}
- 		if (new_prog->expected_attach_type == BPF_XDP_DEVMAP) {
- 			NL_SET_ERR_MSG(extack, "BPF_XDP_DEVMAP programs can not be attached to a device");
- 			return -EINVAL;
+diff --git a/arch/riscv/kernel/vector.c b/arch/riscv/kernel/vector.c
+index 821818886fab0..39f0577f580de 100644
+--- a/arch/riscv/kernel/vector.c
++++ b/arch/riscv/kernel/vector.c
+@@ -309,7 +309,7 @@ static int __init riscv_v_sysctl_init(void)
+ static int __init riscv_v_sysctl_init(void) { return 0; }
+ #endif /* ! CONFIG_SYSCTL */
+ 
+-static int riscv_v_init(void)
++static int __init riscv_v_init(void)
+ {
+ 	return riscv_v_sysctl_init();
+ }
 -- 
 2.39.5
 
