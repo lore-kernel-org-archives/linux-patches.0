@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E1EF8634E;
-	Wed,  5 Feb 2025 14:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00244522A;
+	Wed,  5 Feb 2025 14:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765624; cv=none; b=QERju8MludgfF/c6qvQqVqvNLp8SDqQWrzOEwAsbcVIaXDNhFI73u3RMElD9t/IWT9e1jJmLaxvq1igVt60YsmKgv0Of0wE5fpr399V3WSloHOqLDWM514IR5ZwIIldrPZhhWv3Qb/RZXX+mglZrDDfN2d/HWa15Wa7KIoje5fg=
+	t=1738765628; cv=none; b=oI0Q0ysa3/pjezD2t8uNHIl62HcDVtgTI6UTyDo0vdbnVvOoDdyg/RZB6nNSDxkJM02B4SI80Q1sDPquBgAGIEfLJnN+ReBbaiFUqbqvL0gWeFBz1VQ3atdm4TQDUkVMLhIplNQaSRcM+c/8EsRTHqMnIZMalOYLDIlW+XTy5cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765624; c=relaxed/simple;
-	bh=1Z+wy04SYjttT+OfywbrKmfFnMl0fJIK8P80oyREnS8=;
+	s=arc-20240116; t=1738765628; c=relaxed/simple;
+	bh=eNGrD/MhLYRWRK/rIj9IyhaiPeo9pggo0WuwYhfdJZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wc0nhdgto+aW1eNwDDpkfcMP8BIAMuFUNuVOjShN3h7qq0GQXIb8inwDUEHw2EDhcu03iSzRR5m65njxXcG7IZd2KnSPXc2DXGLD5KoVJQ6YCcCu18hwQxwHQCUjriYUOqouL107SMJldrKDong+x6GmtWggXf5Slls0svE014Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TMEyZEEv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngoOwcHyw/5JWrbLKJVj6oSBoQrvlPqMalx4Ry0HnpcKDqHCrfCAWA3ZeMXBJNlmjYMn0/j37Pp5j5+fEn1GVMyvN2dfYJUClWGZjft+oVJkDFNwS6p2mjvYex2QJj0nQDC/kQty7sYC6GJz/4o7x14ETO0OzK+HOJF74/od8/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2b7cwXmg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TMEyZEEv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0026CC4CED1;
-	Wed,  5 Feb 2025 14:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2b7cwXmg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632E7C4CED1;
+	Wed,  5 Feb 2025 14:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765624;
-	bh=1Z+wy04SYjttT+OfywbrKmfFnMl0fJIK8P80oyREnS8=;
+	s=korg; t=1738765627;
+	bh=eNGrD/MhLYRWRK/rIj9IyhaiPeo9pggo0WuwYhfdJZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TMEyZEEvwH0pOY7j7ueFx3DF6xCCaS1zmwv8tRPAEaynWWrTfB++AdMhIHewqihnh
-	 9Aa6yOiKNTe8I0yGC2lxSInlFUao05L8ku7yF5IrvKaahzJmzfFBdItN4ZnodbjarM
-	 2K/Q5jwF+kryOU1MjaDLvO054DoaP0u/ZzmlZyxU=
+	b=2b7cwXmg6OxNo03Jlysx+evfZM5FoqpFa5nKxswKgC1D1SW0mov8sgnqVDriFDcsh
+	 t0ZSfQuuQXbyL1oStIxwZUfqmwYzq4FYXVDy+Aft9oHq2X6unzl9DfVRGbR7k0e1ty
+	 f1hq84SuSrg5DV8EUrC5czQ2qvPUTkD4nmFj4kT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Yen <leon.yen@mediatek.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
 	Sean Wang <sean.wang@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 192/623] wifi: mt76: mt7925: Fix CNM Timeout with Single Active Link in MLO
-Date: Wed,  5 Feb 2025 14:38:54 +0100
-Message-ID: <20250205134503.582114056@linuxfoundation.org>
+Subject: [PATCH 6.13 199/623] wifi: mt76: mt7925: Init secondary link PM state
+Date: Wed,  5 Feb 2025 14:39:01 +0100
+Message-ID: <20250205134503.845404408@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -52,54 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Yen <leon.yen@mediatek.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 4a596010b246816d7589d8d775b83833a59e63f9 ]
+[ Upstream commit 28045ef2bc5bbeec4717da98bf31aca0faaccf02 ]
 
-Fix CNM command timeout issue when only a single active link is available
-during MLO connection to fix the following kernel log error.
-
-[  741.931030] wlan0: [link 1] local address be:90:e0:22:c4:22, AP link address 08:0c:43:7a:19:2a
-[  741.931042] wlan0: [link 1] determined AP 08:0c:43:7a:19:2a to be EHT
-[  741.931052] wlan0: [link 1] connecting with EHT mode, max bandwidth 160 MHz
-[  741.931071] wlan0: WMM AC=0 acm=0 aifs=2 cWmin=3 cWmax=7 txop=47 uapsd=0, downgraded=0
-[  741.931076] wlan0: WMM AC=1 acm=0 aifs=2 cWmin=7 cWmax=15 txop=94 uapsd=0, downgraded=0
-[  741.931080] wlan0: WMM AC=2 acm=0 aifs=3 cWmin=15 cWmax=1023 txop=0 uapsd=0, downgraded=0
-[  741.931085] wlan0: WMM AC=3 acm=0 aifs=7 cWmin=15 cWmax=1023 txop=0 uapsd=0, downgraded=0
-[  741.931095] wlan0: moving STA 22:0c:43:7a:19:2a to state 3
-[  749.090928] mt7925e 0000:2b:00.0: Message 00020002 (seq 15) timeout
-[  752.162972] mt7925e 0000:2b:00.0: Message 00020003 (seq 1) timeout
-[  755.234975] mt7925e 0000:2b:00.0: Message 00020002 (seq 2) timeout
-[  758.306971] mt7925e 0000:2b:00.0: Message 00020004 (seq 3) timeout
+Initialize secondary link PM state.
 
 Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
-Signed-off-by: Leon Yen <leon.yen@mediatek.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Link: https://patch.msgid.link/20241211011926.5002-7-sean.wang@kernel.org
+Link: https://patch.msgid.link/20241211011926.5002-14-sean.wang@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 23d0b1d97956e..60a12b0e45ee6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -1151,7 +1151,12 @@ int mt7925_mcu_set_mlo_roc(struct mt792x_bss_conf *mconf, u16 sel_links,
- 			u8 rsv[4];
- 		} __packed hdr;
- 		struct roc_acquire_tlv roc[2];
--	} __packed req;
-+	} __packed req = {
-+			.roc[0].tag = cpu_to_le16(UNI_ROC_NUM),
-+			.roc[0].len = cpu_to_le16(sizeof(struct roc_acquire_tlv)),
-+			.roc[1].tag = cpu_to_le16(UNI_ROC_NUM),
-+			.roc[1].len = cpu_to_le16(sizeof(struct roc_acquire_tlv))
-+	};
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index dcdb9bcff3c40..a2d1c43098d3c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1991,6 +1991,8 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 			goto free;
  
- 	if (!mconf || hweight16(vif->valid_links) < 2 ||
- 	    hweight16(sel_links) != 2)
+ 		if (mconf != &mvif->bss_conf) {
++			mt7925_mcu_set_bss_pm(dev, link_conf, true);
++
+ 			err = mt7925_set_mlo_roc(phy, &mvif->bss_conf,
+ 						 vif->active_links);
+ 			if (err < 0)
 -- 
 2.39.5
 
