@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF7A16EB42;
-	Wed,  5 Feb 2025 15:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643C616EB42;
+	Wed,  5 Feb 2025 15:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768367; cv=none; b=qW1+ucwzorLVk1QmSgCRPDwBwV3dnbWWvQOzaze/Zqv/62nI4nN2FDz2p16sNak13tYxzimOU+7pMROQBWWcD4rgZ8XycWTz/KCT4fSnR59AXRGl6Z4ka2BEwFANugERCTA7qYoBBbQwX9MEihGNchD8naMthRITZ8N0tMto3DA=
+	t=1738768370; cv=none; b=aGz3wJ9jDKuZkgA8E1kLVBWr+6BGivjmw0dFuJhouSlipODsEHrIJuFztrWP64Q4Fwsp1Cccpu+dBnw+USy+JccY8WwhPhg/BxQoHIm3ECMBwSXg7L37cOXH3kBbfI4ZWNRanZaJEYFLbxUc/GSRdjl85k2cFavjAQXwr+zo00E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768367; c=relaxed/simple;
-	bh=FQczMoDCk5yZjYBJKdYiG4YLY7ldWxmIREp36DVeegg=;
+	s=arc-20240116; t=1738768370; c=relaxed/simple;
+	bh=MQXEJz2jUXOkXHD3UHpbtDEGZ2NFGCCBd14aDjdYHv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rC42rjKHiO2ch+PpUivYeCH6ZuTJ76GuVQKUEpYjnZO3OZqsh33eH46ru5PkFT4zbn9m7MbVf4txBliLq4Jjp8XNFQ+54rz8lXxspa4nSQfuKkJVwSIdVK8zhg7ouPD3VSJEoXwSeYiMBul9RGGsgjn+hAz1FkIhjZqa9COGKeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ajo7zJTK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSdNwVJt3eab1336jF9u8YzxEUX7RTFJLd3cGlrTjd1jMsbuGezMmJ/h7j4mPoXPI7OysTAwSIZy5y/ygnFJgd/Pei3QAqozEcHQ7SqWJH544JIqBjacZ2QpquEjSBOvEly60bXmze1XmVoh/BEdS4K1IcFqSYJ4xydaLGUCyr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fwYzYvRm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ajo7zJTK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A084C4CED6;
-	Wed,  5 Feb 2025 15:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fwYzYvRm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6A8DC4CEE4;
+	Wed,  5 Feb 2025 15:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768366;
-	bh=FQczMoDCk5yZjYBJKdYiG4YLY7ldWxmIREp36DVeegg=;
+	s=korg; t=1738768370;
+	bh=MQXEJz2jUXOkXHD3UHpbtDEGZ2NFGCCBd14aDjdYHv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ajo7zJTKtDpIO+NShmMrvB91qrvHlkoK/+HSpjmaWpkp4qT1V83UtvSdQAVgxBGJq
-	 P7pq2T9XAoTorzjfQcxfOFTlhQXiOQzM2m0c9rP6V24cphpfNrO/8ltaydsd2o5fwf
-	 Ii3xCtC5fTm04NUtGacvmuDiHDTIUkRsm15PRwmY=
+	b=fwYzYvRmsV0e3UMfDtW8C5E/MWt6aDwErhVGEEdFcgNsf/rG6abWpJds9OP6L1OCr
+	 wsiaaSfqS9Dy3tY9mPOGR7Njno2FhLzsFG7BVcH0bxNzOJmMQRVZf5tmQrlgeQdHa9
+	 KiGPYyXwgbDyqJgLIREM+k4AHNk7zGMBn86ysgYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Yanteng Si <si.yanteng@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 536/623] net: stmmac: Limit FIFO size by hardware capability
-Date: Wed,  5 Feb 2025 14:44:38 +0100
-Message-ID: <20250205134516.729977655@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.12 590/590] btrfs: do proper folio cleanup when run_delalloc_nocow() failed
+Date: Wed,  5 Feb 2025 14:45:45 +0100
+Message-ID: <20250205134517.834681199@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,278 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 044f2fbaa2725696ecbf1f02ba7ab0a8ccb7e1ae ]
+commit c2b47df81c8e20a8e8cd94f0d7df211137ae94ed upstream.
 
-Tx/Rx FIFO size is specified by the parameter "{tx,rx}-fifo-depth" from
-stmmac_platform layer.
+[BUG]
+With CONFIG_DEBUG_VM set, test case generic/476 has some chance to crash
+with the following VM_BUG_ON_FOLIO():
 
-However, these values are constrained by upper limits determined by the
-capabilities of each hardware feature. There is a risk that the upper
-bits will be truncated due to the calculation, so it's appropriate to
-limit them to the upper limit values and display a warning message.
+  BTRFS error (device dm-3): cow_file_range failed, start 1146880 end 1253375 len 106496 ret -28
+  BTRFS error (device dm-3): run_delalloc_nocow failed, start 1146880 end 1253375 len 106496 ret -28
+  page: refcount:4 mapcount:0 mapping:00000000592787cc index:0x12 pfn:0x10664
+  aops:btrfs_aops [btrfs] ino:101 dentry name(?):"f1774"
+  flags: 0x2fffff80004028(uptodate|lru|private|node=0|zone=2|lastcpupid=0xfffff)
+  page dumped because: VM_BUG_ON_FOLIO(!folio_test_locked(folio))
+  ------------[ cut here ]------------
+  kernel BUG at mm/page-writeback.c:2992!
+  Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
+  CPU: 2 UID: 0 PID: 3943513 Comm: kworker/u24:15 Tainted: G           OE      6.12.0-rc7-custom+ #87
+  Tainted: [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+  Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
+  Workqueue: events_unbound btrfs_async_reclaim_data_space [btrfs]
+  pc : folio_clear_dirty_for_io+0x128/0x258
+  lr : folio_clear_dirty_for_io+0x128/0x258
+  Call trace:
+   folio_clear_dirty_for_io+0x128/0x258
+   btrfs_folio_clamp_clear_dirty+0x80/0xd0 [btrfs]
+   __process_folios_contig+0x154/0x268 [btrfs]
+   extent_clear_unlock_delalloc+0x5c/0x80 [btrfs]
+   run_delalloc_nocow+0x5f8/0x760 [btrfs]
+   btrfs_run_delalloc_range+0xa8/0x220 [btrfs]
+   writepage_delalloc+0x230/0x4c8 [btrfs]
+   extent_writepage+0xb8/0x358 [btrfs]
+   extent_write_cache_pages+0x21c/0x4e8 [btrfs]
+   btrfs_writepages+0x94/0x150 [btrfs]
+   do_writepages+0x74/0x190
+   filemap_fdatawrite_wbc+0x88/0xc8
+   start_delalloc_inodes+0x178/0x3a8 [btrfs]
+   btrfs_start_delalloc_roots+0x174/0x280 [btrfs]
+   shrink_delalloc+0x114/0x280 [btrfs]
+   flush_space+0x250/0x2f8 [btrfs]
+   btrfs_async_reclaim_data_space+0x180/0x228 [btrfs]
+   process_one_work+0x164/0x408
+   worker_thread+0x25c/0x388
+   kthread+0x100/0x118
+   ret_from_fork+0x10/0x20
+  Code: 910a8021 a90363f7 a9046bf9 94012379 (d4210000)
+  ---[ end trace 0000000000000000 ]---
 
-This only works if the hardware capability has the upper limit values.
+[CAUSE]
+The first two lines of extra debug messages show the problem is caused
+by the error handling of run_delalloc_nocow().
 
-Fixes: e7877f52fd4a ("stmmac: Read tx-fifo-depth and rx-fifo-depth from the devicetree")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Reviewed-by: Yanteng Si <si.yanteng@linux.dev>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+E.g. we have the following dirtied range (4K blocksize 4K page size):
+
+    0                 16K                  32K
+    |//////////////////////////////////////|
+    |  Pre-allocated  |
+
+And the range [0, 16K) has a preallocated extent.
+
+- Enter run_delalloc_nocow() for range [0, 16K)
+  Which found range [0, 16K) is preallocated, can do the proper NOCOW
+  write.
+
+- Enter fallback_to_fow() for range [16K, 32K)
+  Since the range [16K, 32K) is not backed by preallocated extent, we
+  have to go COW.
+
+- cow_file_range() failed for range [16K, 32K)
+  So cow_file_range() will do the clean up by clearing folio dirty,
+  unlock the folios.
+
+  Now the folios in range [16K, 32K) is unlocked.
+
+- Enter extent_clear_unlock_delalloc() from run_delalloc_nocow()
+  Which is called with PAGE_START_WRITEBACK to start page writeback.
+  But folios can only be marked writeback when it's properly locked,
+  thus this triggered the VM_BUG_ON_FOLIO().
+
+Furthermore there is another hidden but common bug that
+run_delalloc_nocow() is not clearing the folio dirty flags in its error
+handling path.
+This is the common bug shared between run_delalloc_nocow() and
+cow_file_range().
+
+[FIX]
+- Clear folio dirty for range [@start, @cur_offset)
+  Introduce a helper, cleanup_dirty_folios(), which
+  will find and lock the folio in the range, clear the dirty flag and
+  start/end the writeback, with the extra handling for the
+  @locked_folio.
+
+- Introduce a helper to clear folio dirty, start and end writeback
+
+- Introduce a helper to record the last failed COW range end
+  This is to trace which range we should skip, to avoid double
+  unlocking.
+
+- Skip the failed COW range for the error handling
+
+CC: stable@vger.kernel.org
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/btrfs/inode.c   |   95 +++++++++++++++++++++++++++++++++++++++++++++++++----
+ fs/btrfs/subpage.h |   13 +++++++
+ 2 files changed, 102 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 17a5be4f57c8d..1bed3e7629faa 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7190,6 +7190,21 @@ static int stmmac_hw_init(struct stmmac_priv *priv)
- 		priv->plat->tx_queues_to_use = priv->dma_cap.number_tx_queues;
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -2002,6 +2002,53 @@ static int can_nocow_file_extent(struct
+ }
+ 
+ /*
++ * Cleanup the dirty folios which will never be submitted due to error.
++ *
++ * When running a delalloc range, we may need to split the ranges (due to
++ * fragmentation or NOCOW). If we hit an error in the later part, we will error
++ * out and previously successfully executed range will never be submitted, thus
++ * we have to cleanup those folios by clearing their dirty flag, starting and
++ * finishing the writeback.
++ */
++static void cleanup_dirty_folios(struct btrfs_inode *inode,
++				 struct folio *locked_folio,
++				 u64 start, u64 end, int error)
++{
++	struct btrfs_fs_info *fs_info = inode->root->fs_info;
++	struct address_space *mapping = inode->vfs_inode.i_mapping;
++	pgoff_t start_index = start >> PAGE_SHIFT;
++	pgoff_t end_index = end >> PAGE_SHIFT;
++	u32 len;
++
++	ASSERT(end + 1 - start < U32_MAX);
++	ASSERT(IS_ALIGNED(start, fs_info->sectorsize) &&
++	       IS_ALIGNED(end + 1, fs_info->sectorsize));
++	len = end + 1 - start;
++
++	/*
++	 * Handle the locked folio first.
++	 * The btrfs_folio_clamp_*() helpers can handle range out of the folio case.
++	 */
++	btrfs_folio_clamp_finish_io(fs_info, locked_folio, start, len);
++
++	for (pgoff_t index = start_index; index <= end_index; index++) {
++		struct folio *folio;
++
++		/* Already handled at the beginning. */
++		if (index == locked_folio->index)
++			continue;
++		folio = __filemap_get_folio(mapping, index, FGP_LOCK, GFP_NOFS);
++		/* Cache already dropped, no need to do any cleanup. */
++		if (IS_ERR(folio))
++			continue;
++		btrfs_folio_clamp_finish_io(fs_info, locked_folio, start, len);
++		folio_unlock(folio);
++		folio_put(folio);
++	}
++	mapping_set_error(mapping, error);
++}
++
++/*
+  * when nowcow writeback call back.  This checks for snapshots or COW copies
+  * of the extents that exist in the file, and COWs the file as required.
+  *
+@@ -2016,6 +2063,11 @@ static noinline int run_delalloc_nocow(s
+ 	struct btrfs_root *root = inode->root;
+ 	struct btrfs_path *path;
+ 	u64 cow_start = (u64)-1;
++	/*
++	 * If not 0, represents the inclusive end of the last fallback_to_cow()
++	 * range. Only for error handling.
++	 */
++	u64 cow_end = 0;
+ 	u64 cur_offset = start;
+ 	int ret;
+ 	bool check_prev = true;
+@@ -2176,6 +2228,7 @@ must_cow:
+ 					      found_key.offset - 1);
+ 			cow_start = (u64)-1;
+ 			if (ret) {
++				cow_end = found_key.offset - 1;
+ 				btrfs_dec_nocow_writers(nocow_bg);
+ 				goto error;
+ 			}
+@@ -2249,11 +2302,12 @@ must_cow:
+ 		cow_start = cur_offset;
+ 
+ 	if (cow_start != (u64)-1) {
+-		cur_offset = end;
+ 		ret = fallback_to_cow(inode, locked_folio, cow_start, end);
+ 		cow_start = (u64)-1;
+-		if (ret)
++		if (ret) {
++			cow_end = end;
+ 			goto error;
++		}
  	}
  
-+	if (priv->dma_cap.rx_fifo_size &&
-+	    priv->plat->rx_fifo_size > priv->dma_cap.rx_fifo_size) {
-+		dev_warn(priv->device,
-+			 "Rx FIFO size (%u) exceeds dma capability\n",
-+			 priv->plat->rx_fifo_size);
-+		priv->plat->rx_fifo_size = priv->dma_cap.rx_fifo_size;
-+	}
-+	if (priv->dma_cap.tx_fifo_size &&
-+	    priv->plat->tx_fifo_size > priv->dma_cap.tx_fifo_size) {
-+		dev_warn(priv->device,
-+			 "Tx FIFO size (%u) exceeds dma capability\n",
-+			 priv->plat->tx_fifo_size);
-+		priv->plat->tx_fifo_size = priv->dma_cap.tx_fifo_size;
-+	}
+ 	btrfs_free_path(path);
+@@ -2261,12 +2315,41 @@ must_cow:
+ 
+ error:
+ 	/*
++	 * There are several error cases:
++	 *
++	 * 1) Failed without falling back to COW
++	 *    start         cur_offset             end
++	 *    |/////////////|                      |
++	 *
++	 *    For range [start, cur_offset) the folios are already unlocked (except
++	 *    @locked_folio), EXTENT_DELALLOC already removed.
++	 *    Only need to clear the dirty flag as they will never be submitted.
++	 *    Ordered extent and extent maps are handled by
++	 *    btrfs_mark_ordered_io_finished() inside run_delalloc_range().
++	 *
++	 * 2) Failed with error from fallback_to_cow()
++	 *    start         cur_offset  cow_end    end
++	 *    |/////////////|-----------|          |
++	 *
++	 *    For range [start, cur_offset) it's the same as case 1).
++	 *    But for range [cur_offset, cow_end), the folios have dirty flag
++	 *    cleared and unlocked, EXTENT_DEALLLOC cleared by cow_file_range().
++	 *
++	 *    Thus we should not call extent_clear_unlock_delalloc() on range
++	 *    [cur_offset, cow_end), as the folios are already unlocked.
++	 *
++	 * So clear the folio dirty flags for [start, cur_offset) first.
++	 */
++	if (cur_offset > start)
++		cleanup_dirty_folios(inode, locked_folio, start, cur_offset - 1, ret);
 +
- 	priv->hw->vlan_fail_q_en =
- 		(priv->plat->flags & STMMAC_FLAG_VLAN_FAIL_Q_EN);
- 	priv->hw->vlan_fail_q = priv->plat->vlan_fail_q;
--- 
-2.39.5
-
++	/*
+ 	 * If an error happened while a COW region is outstanding, cur_offset
+-	 * needs to be reset to cow_start to ensure the COW region is unlocked
+-	 * as well.
++	 * needs to be reset to @cow_end + 1 to skip the COW range, as
++	 * cow_file_range() will do the proper cleanup at error.
+ 	 */
+-	if (cow_start != (u64)-1)
+-		cur_offset = cow_start;
++	if (cow_end)
++		cur_offset = cow_end + 1;
+ 
+ 	/*
+ 	 * We need to lock the extent here because we're clearing DELALLOC and
+--- a/fs/btrfs/subpage.h
++++ b/fs/btrfs/subpage.h
+@@ -152,6 +152,19 @@ DECLARE_BTRFS_SUBPAGE_OPS(writeback);
+ DECLARE_BTRFS_SUBPAGE_OPS(ordered);
+ DECLARE_BTRFS_SUBPAGE_OPS(checked);
+ 
++/*
++ * Helper for error cleanup, where a folio will have its dirty flag cleared,
++ * with writeback started and finished.
++ */
++static inline void btrfs_folio_clamp_finish_io(struct btrfs_fs_info *fs_info,
++					       struct folio *locked_folio,
++					       u64 start, u32 len)
++{
++	btrfs_folio_clamp_clear_dirty(fs_info, locked_folio, start, len);
++	btrfs_folio_clamp_set_writeback(fs_info, locked_folio, start, len);
++	btrfs_folio_clamp_clear_writeback(fs_info, locked_folio, start, len);
++}
++
+ bool btrfs_subpage_clear_and_test_dirty(const struct btrfs_fs_info *fs_info,
+ 					struct folio *folio, u64 start, u32 len);
+ 
 
 
