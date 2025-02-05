@@ -1,41 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E879F1519BF;
-	Wed,  5 Feb 2025 15:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378231519B4;
+	Wed,  5 Feb 2025 15:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768001; cv=none; b=GUioXNkOElQgZoZl1LZfE9yTMPbNTyoC94qDvXcIL99YjchunN4xWShgxNQRD6w+A7K2raHenzsVmrT6TBaH8DRNM1iyo6ks+SCihqihV7AIJ19QSK96xPSKLSoDhNkYT/ll2ix4dqHWEJlruwZ8MLyL5jWj1mMgyb2UmhXCY0U=
+	t=1738768004; cv=none; b=lWYvm9cAxrKoowOJHFMxK5xZt9y456lxKG4I6MgtL3Px+yWd2c+y1Uua9vZMH8kFAJ3bPbCSHK152ScIxxAVg9wDk0CZae8EVA8RD1xrKGdgpY/hi8+SbkGDK1Fp0DCwHtq4wtfvwHiUb8+591igSpoPO5BQcBT+tws0XuDbpY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768001; c=relaxed/simple;
-	bh=bAaNfa2KGDHkN8tc4SpowXDvGr5Xv/6A9v+k2PX3d64=;
+	s=arc-20240116; t=1738768004; c=relaxed/simple;
+	bh=TLf4tgFsYIjoKgXw3qzkxj9YcjKyTRxmAjutopU04iI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bez8JNaiTRqRnTzAlo7vqo6w1lArvZ+GimgHWUqK+bE9FYywG56yh5HX490Cbi/ub5pW9ACm5Y9PibBy1X4DFzVlLk3DoCszWRHpbSegKGBJDs6c+MwjRPNpvY/bZP1WoAGja5WwWYeQrUvaFapUdLrJjUnvSDFT3aEsuqstC9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc3KpqjM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HENAJ0Pz6f/phF++TvaNOX/NEw6sYff0ERhfGLsSkBLW/awJuUdMybwzksgrk5/+BYSSeXWK++V6wuw5w/4cWwErE0/BVa22VmHCUgFKCg4lg2qWjyXm9SuL855CJjc/IckAg2Qlo51j4ZH7zPeYd/jvEGHXPPyeBY2eT7nhTBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oR3Ejf0+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc3KpqjM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B65C4CED1;
-	Wed,  5 Feb 2025 15:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oR3Ejf0+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6857DC4CED1;
+	Wed,  5 Feb 2025 15:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768000;
-	bh=bAaNfa2KGDHkN8tc4SpowXDvGr5Xv/6A9v+k2PX3d64=;
+	s=korg; t=1738768004;
+	bh=TLf4tgFsYIjoKgXw3qzkxj9YcjKyTRxmAjutopU04iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cc3KpqjMNFeWcXBm9UOdfzvWMNfgJkSKC2Odn+hj3zZX+1r6sm+aem8kpWvWxLkdo
-	 7eK7IuUisNvUAhUBfxSDrYzB9SeoxaKpYhq4i8yR6tEiTLQ3wN4B5zsvCGooWpSjfe
-	 I/z9fiHm605etH4UYuMoMssbFlhk+DPnuvPxJ7pc=
+	b=oR3Ejf0+wdpBvEMpYdg0aCM0wHxZKGOUmXlFu5e/+pNq/wciGs2NIF1LoyRNpRaXq
+	 B48Y+E5/Fccx25wyXer06W5rS9eoU+vGBcLqilDjl/DoJvwpecI/kPFzqGPiDF7nU0
+	 ENETZ66jfeZCGMTOYEv/+/sLo4jCYKuw1Oyz0um0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
-	Yu Kuai <yukuai1@huaweicloud.com>
-Subject: [PATCH 6.12 540/590] md/raid5: implement pers->bitmap_sector()
-Date: Wed,  5 Feb 2025 14:44:55 +0100
-Message-ID: <20250205134515.932763878@linuxfoundation.org>
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Helge Deller <deller@gmx.de>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Naveen N Rao <naveen@kernel.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>,
+	linux-parisc@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.13 483/623] module: Extend the preempt disabled section in dereference_symbol_descriptor().
+Date: Wed,  5 Feb 2025 14:43:45 +0100
+Message-ID: <20250205134514.696049230@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,111 +59,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 9c89f604476cf15c31fbbdb043cff7fbf1dbe0cb upstream.
+[ Upstream commit a145c848d69f9c6f32008d8319edaa133360dd74 ]
 
-Bitmap is used for the whole array for raid1/raid10, hence IO for the
-array can be used directly for bitmap. However, bitmap is used for
-underlying disks for raid5, hence IO for the array can't be used
-directly for bitmap.
+dereference_symbol_descriptor() needs to obtain the module pointer
+belonging to pointer in order to resolve that pointer.
+The returned mod pointer is obtained under RCU-sched/ preempt_disable()
+guarantees and needs to be used within this section to ensure that the
+module is not removed in the meantime.
 
-Implement pers->bitmap_sector() for raid5 to convert IO ranges from the
-array to the underlying disks.
+Extend the preempt_disable() section to also cover
+dereference_module_function_descriptor().
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20250109015145.158868-5-yukuai1@huaweicloud.com
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Yu Kuai <yukuai1@huaweicloud.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 04b8eb7a4ccd9 ("symbol lookup: introduce dereference_symbol_descriptor()")
+Cc: James E.J. Bottomley <James.Bottomley@HansenPartnership.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Naveen N Rao <naveen@kernel.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Sergey Senozhatsky <sergey.senozhatsky.work@gmail.com>
+Cc: linux-parisc@vger.kernel.org
+Cc: linuxppc-dev@lists.ozlabs.org
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://lore.kernel.org/r/20250108090457.512198-2-bigeasy@linutronix.de
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c |   51 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ include/linux/kallsyms.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -5919,6 +5919,54 @@ static enum reshape_loc get_reshape_loc(
- 	return LOC_BEHIND_RESHAPE;
+diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
+index c3f075e8f60cb..1c6a6c1704d8d 100644
+--- a/include/linux/kallsyms.h
++++ b/include/linux/kallsyms.h
+@@ -57,10 +57,10 @@ static inline void *dereference_symbol_descriptor(void *ptr)
+ 
+ 	preempt_disable();
+ 	mod = __module_address((unsigned long)ptr);
+-	preempt_enable();
+ 
+ 	if (mod)
+ 		ptr = dereference_module_function_descriptor(mod, ptr);
++	preempt_enable();
+ #endif
+ 	return ptr;
  }
- 
-+static void raid5_bitmap_sector(struct mddev *mddev, sector_t *offset,
-+				unsigned long *sectors)
-+{
-+	struct r5conf *conf = mddev->private;
-+	sector_t start = *offset;
-+	sector_t end = start + *sectors;
-+	sector_t prev_start = start;
-+	sector_t prev_end = end;
-+	int sectors_per_chunk;
-+	enum reshape_loc loc;
-+	int dd_idx;
-+
-+	sectors_per_chunk = conf->chunk_sectors *
-+		(conf->raid_disks - conf->max_degraded);
-+	start = round_down(start, sectors_per_chunk);
-+	end = round_up(end, sectors_per_chunk);
-+
-+	start = raid5_compute_sector(conf, start, 0, &dd_idx, NULL);
-+	end = raid5_compute_sector(conf, end, 0, &dd_idx, NULL);
-+
-+	/*
-+	 * For LOC_INSIDE_RESHAPE, this IO will wait for reshape to make
-+	 * progress, hence it's the same as LOC_BEHIND_RESHAPE.
-+	 */
-+	loc = get_reshape_loc(mddev, conf, prev_start);
-+	if (likely(loc != LOC_AHEAD_OF_RESHAPE)) {
-+		*offset = start;
-+		*sectors = end - start;
-+		return;
-+	}
-+
-+	sectors_per_chunk = conf->prev_chunk_sectors *
-+		(conf->previous_raid_disks - conf->max_degraded);
-+	prev_start = round_down(prev_start, sectors_per_chunk);
-+	prev_end = round_down(prev_end, sectors_per_chunk);
-+
-+	prev_start = raid5_compute_sector(conf, prev_start, 1, &dd_idx, NULL);
-+	prev_end = raid5_compute_sector(conf, prev_end, 1, &dd_idx, NULL);
-+
-+	/*
-+	 * for LOC_AHEAD_OF_RESHAPE, reshape can make progress before this IO
-+	 * is handled in make_stripe_request(), we can't know this here hence
-+	 * we set bits for both.
-+	 */
-+	*offset = min(start, prev_start);
-+	*sectors = max(end, prev_end) - *offset;
-+}
-+
- static enum stripe_result make_stripe_request(struct mddev *mddev,
- 		struct r5conf *conf, struct stripe_request_ctx *ctx,
- 		sector_t logical_sector, struct bio *bi)
-@@ -8967,6 +9015,7 @@ static struct md_personality raid6_perso
- 	.takeover	= raid6_takeover,
- 	.change_consistency_policy = raid5_change_consistency_policy,
- 	.prepare_suspend = raid5_prepare_suspend,
-+	.bitmap_sector	= raid5_bitmap_sector,
- };
- static struct md_personality raid5_personality =
- {
-@@ -8992,6 +9041,7 @@ static struct md_personality raid5_perso
- 	.takeover	= raid5_takeover,
- 	.change_consistency_policy = raid5_change_consistency_policy,
- 	.prepare_suspend = raid5_prepare_suspend,
-+	.bitmap_sector	= raid5_bitmap_sector,
- };
- 
- static struct md_personality raid4_personality =
-@@ -9018,6 +9068,7 @@ static struct md_personality raid4_perso
- 	.takeover	= raid4_takeover,
- 	.change_consistency_policy = raid5_change_consistency_policy,
- 	.prepare_suspend = raid5_prepare_suspend,
-+	.bitmap_sector	= raid5_bitmap_sector,
- };
- 
- static int __init raid5_init(void)
+-- 
+2.39.5
+
 
 
