@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8035522A;
-	Wed,  5 Feb 2025 14:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813F686348;
+	Wed,  5 Feb 2025 14:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765149; cv=none; b=IxoMD5zPaKPnOxe+f1kf1XsWuHJZbmpUCtWdZeySKoiZUgICoFgufyvXmX2vL4v63xZ3TITKEpDkF9UWVQ6B9bfWSFy//Jf05oCKXolLRWlqmByXaXGnG/1thKmeavah6bzt6dMsx8iclGTgK8Q0oNOTUaOOlw0eV6m8Bwt7xJ0=
+	t=1738765153; cv=none; b=C8U9LFNWFRodQZ7cxTk/PNcR4aTK7kyLMkPTawXZqL3OOUXMdlejTT0dGYh58YWGz89v1kE9eYWrdK0j9RMH2lXyQsAvuyhzLf3JKeeq4Lse0zgrljnPP5yyNfTdKPPRdyv/QADzUmgBf9Ii/I4UQakdqTweW25L9TZCJHBJPho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765149; c=relaxed/simple;
-	bh=kJSy77rIMKAmPHX0VYr0iavw0f4o+nfcX5DTtobi/Fw=;
+	s=arc-20240116; t=1738765153; c=relaxed/simple;
+	bh=hJ4iLKUGH1tCXV338NVCobMjE6HVoSqtVnaaac0nFOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhY8HLGX5wZneDH63muExUak2ZHhPv3EDQIQIyMc95UJ+VF68QzcOj/pAp+2I/KhXzOYpObiIbtvdHqYJBCHZ6pgP+VmQyNa3UkjuqSBm9wc7wx6BUT/oEBqVr7CBiR4gLB07YIfyuImi4IHYutFp2Hkn4rmW8sgt+VlNSvfmtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyuULlba; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJ1L4zdM8SEv48NZeLjbHOE2SehHuhrgmAqUQQoJmjydgaTsQaMdvrrrTmbXEItP9YE8Z4do6S++E87Htd9mLXStOCmmnDFn2NFwBYGU/yyq8nf7A54etDDBsjR9iqvWzP1L+0tKg/m0/FPxoi9W6TDJp3+1xq8DYOk1bypmuJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AfVZxiLR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyuULlba"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1069DC4CEDD;
-	Wed,  5 Feb 2025 14:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AfVZxiLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFDFC4CED1;
+	Wed,  5 Feb 2025 14:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765149;
-	bh=kJSy77rIMKAmPHX0VYr0iavw0f4o+nfcX5DTtobi/Fw=;
+	s=korg; t=1738765153;
+	bh=hJ4iLKUGH1tCXV338NVCobMjE6HVoSqtVnaaac0nFOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dyuULlbarytXBNOBni8yRgTtYLh7NeM3hgdV4NSkKglxlU/GbPf7ntVPX8F8QgBMl
-	 2T4WV/tdBlMGOOKOWDBxgcce/SmW1DbmvE/wOIn0jht2jGxlypHdjMG4P1YE7LzDKu
-	 oGYRjjv6TF8fleiNzTf+J4Tchg51cTJtn+nHgXtc=
+	b=AfVZxiLR8aJzXpoNTy9TXnVcodI3Be1n8G20wSG4L+93lef5R5mDjhHjtrq4UH1Gi
+	 NNSZn/han8/5oCtFsGgq3+6udQDkBbfdSmXJS+zHnmIo2VE2Vm0FWvCi30+9FAe9/v
+	 rtJIndQ84aVn6/w7fGD7pz+ioxnbY1Nf9+Ahhffc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 238/393] arm64: dts: qcom: qcs404: correct sleep clock frequency
-Date: Wed,  5 Feb 2025 14:42:37 +0100
-Message-ID: <20250205134429.411755006@linuxfoundation.org>
+Subject: [PATCH 6.13 151/623] wifi: mt76: mt7996: fix invalid interface combinations
+Date: Wed,  5 Feb 2025 14:38:13 +0100
+Message-ID: <20250205134502.012461483@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit 1473ff0b69de68b23ce9874548cdabc64d72725e ]
+[ Upstream commit 89aca45f26879dfbbf8374c425c4811f69cfc2df ]
 
-The QCS40x platforms use PMS405 to provide sleep clock. According to the
-documentation, that clock has 32.7645 kHz frequency. Correct the sleep
-clock definition.
+Setting beacon_int_min_gcd and NL80211_IFTYPE_ADHOC in the same interface
+combination is invalid, which will trigger the following warning trace
+and get error returned from wiphy_register().
 
-Fixes: 9181bb939984 ("arm64: dts: qcom: Add SDX75 platform and IDP board support")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-4-e9b08fbeadd3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+[   10.080325] Call trace:
+[   10.082761]  wiphy_register+0xc4/0x76c [cfg80211]
+[   10.087465]  ieee80211_register_hw+0x800/0xac4 [mac80211]
+[   10.092868]  mt76_register_device+0x16c/0x2c0 [mt76]
+[   10.097829]  mt7996_register_device+0x740/0x844 [mt7996e]
+
+Fix this by removing unused adhoc iftype.
+
+Fixes: 948f65249868 ("wifi: mt76: mt7996: advertize beacon_int_min_gcd")
+Reported-by: Frank Wunderlich <frank-w@public-files.de>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Tested-By: Frank Wunderlich <frank-w@public-files.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://patch.msgid.link/20241007135133.5336-1-shayne.chen@mediatek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcs404.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-index 2721f32dfb710..cbe469cc159e9 100644
---- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
-@@ -28,7 +28,7 @@
- 		sleep_clk: sleep-clk {
- 			compatible = "fixed-clock";
- 			#clock-cells = <0>;
--			clock-frequency = <32768>;
-+			clock-frequency = <32764>;
- 		};
- 	};
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index 5e96973226bbb..efa7b0697a406 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -16,9 +16,6 @@
  
+ static const struct ieee80211_iface_limit if_limits[] = {
+ 	{
+-		.max = 1,
+-		.types = BIT(NL80211_IFTYPE_ADHOC)
+-	}, {
+ 		.max = 16,
+ 		.types = BIT(NL80211_IFTYPE_AP)
+ #ifdef CONFIG_MAC80211_MESH
 -- 
 2.39.5
 
