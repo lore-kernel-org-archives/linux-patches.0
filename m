@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66A113C3F6;
-	Wed,  5 Feb 2025 14:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9A213C3F6;
+	Wed,  5 Feb 2025 14:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765333; cv=none; b=TNnp6AypregwGDo5HC2TwGd3HBwW9lVAO6aSnBBR7QKp1O/vZEBwEFxJgobfAr4MTzSaS8k58s1jGl1zCMKvMw5RXYi9Ry1JvPsCEizaPP6nH4tDwsNP/y1+0oe5C6ip2WKmBJH42p1e+xMVDdeTTfygy4oEblMAbI423Zm7498=
+	t=1738765336; cv=none; b=Nrx+olEhAbfL63L04s0fojakLdRLI31kJfxgn0Nxyc0ICOsQc7DO+zbd8/2fO0uztxXIf2JoEmIHBnWPKqbAk5gT4kSZPwvoIIObNdWqsT3vmS90lrKvsde8vaVhwW6iYuC1qUderQyQBlQZj4jsCbL0zyNYYzgqY8giHccFCqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765333; c=relaxed/simple;
-	bh=oR7QzoYlosWqrxV7rAkZ6JKYt26IVQhQAViNwy3Y+XI=;
+	s=arc-20240116; t=1738765336; c=relaxed/simple;
+	bh=uv4b6EFox4E3aeVhDCjh3NpkIhTHLyGJMfbCE3CfCLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LjvRm4sDbvC5hh7NFAAdeX0Hm0vLZGHJY/sVd5P7XMhSFb5/Fpy3BhfwbBWAz6LNTKztpi9Lw6Hpil9RYzyLfLrJgukSXWdYl+uFUQNrliZeBWdYYQGGJnlj3LbMvHU3BUMmUPI1+W3V+cRNafUrTfTI6oUScapfF/t95Aj1W3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZLrHYeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHOyLdbS7ohG1v+uE2ml2MgQMiaATd1IphnlqHvN/dSWgZ/kLe/6+ykxcjSdsvHQ3KVf8Py1W/KjlE7/f/ETB/AiKnWLTRQ5SF+FZ390SnJHZbXXCrv06yXLXa2nHMceclI+DyVGF1RfC/BXW46UzOgeDdX8QrSPqiD6WVTuAuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBTp5I0i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZLrHYeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9386C4CED1;
-	Wed,  5 Feb 2025 14:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBTp5I0i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292B0C4CED1;
+	Wed,  5 Feb 2025 14:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765333;
-	bh=oR7QzoYlosWqrxV7rAkZ6JKYt26IVQhQAViNwy3Y+XI=;
+	s=korg; t=1738765336;
+	bh=uv4b6EFox4E3aeVhDCjh3NpkIhTHLyGJMfbCE3CfCLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZLrHYeEqYEIrO8/h4c7u8o/VZV5b5+KFazpbBplC1txPeclgn/yEXHwwRgKmpNsc
-	 gpbXr3CyRcC7PT2tNvRYaLH+JyD9sEuemVX75+kHFfMfeEf35QvWuS4w86ob4O8NWe
-	 G2hVKcuZcyb7L7NqPVWuSnB1F/ekalfkn8g0vVLQ=
+	b=jBTp5I0ioFM3u1To8nw4bp1xlvvqui35oyUZy9eqVnBNLMl9pCHUZqtn7SGYMwQIQ
+	 Ag8suG6+ztINskiRrs+VyNk0Z4cfX1YGoMHhA4nqOGpHIvBTXCMvBSDUh0kxgzw111
+	 wNuBp2RleNjz73Sv9KxxxT9ECGuKOVd2KzuSIg8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c5d8e65f23569a8ffec@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 167/623] wifi: mac80211: prohibit deactivating all links
-Date: Wed,  5 Feb 2025 14:38:29 +0100
-Message-ID: <20250205134502.623377428@linuxfoundation.org>
+Subject: [PATCH 6.12 193/590] wifi: mt76: mt7925: Init secondary link PM state
+Date: Wed,  5 Feb 2025 14:39:08 +0100
+Message-ID: <20250205134502.663015502@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +48,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 7553477cbfd784b128297f9ed43751688415bbaa ]
+[ Upstream commit 28045ef2bc5bbeec4717da98bf31aca0faaccf02 ]
 
-In the internal API this calls this is a WARN_ON, but that
-should remain since internally we want to know about bugs
-that may cause this. Prevent deactivating all links in the
-debugfs write directly.
+Initialize secondary link PM state.
 
-Reported-by: syzbot+0c5d8e65f23569a8ffec@syzkaller.appspotmail.com
-Fixes: 3d9011029227 ("wifi: mac80211: implement link switching")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://patch.msgid.link/20241230091408.505bd125c35a.Ic3c1f9572b980a952a444cad62b09b9c6721732b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 86c051f2c418 ("wifi: mt76: mt7925: enabling MLO when the firmware supports it")
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Link: https://patch.msgid.link/20241211011926.5002-14-sean.wang@kernel.org
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/debugfs_netdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7925/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/debugfs_netdev.c b/net/mac80211/debugfs_netdev.c
-index a9bc2fd59f55a..e7687a7b16835 100644
---- a/net/mac80211/debugfs_netdev.c
-+++ b/net/mac80211/debugfs_netdev.c
-@@ -727,7 +727,7 @@ static ssize_t ieee80211_if_parse_active_links(struct ieee80211_sub_if_data *sda
- {
- 	u16 active_links;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index dcdb9bcff3c40..a2d1c43098d3c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -1991,6 +1991,8 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 			goto free;
  
--	if (kstrtou16(buf, 0, &active_links))
-+	if (kstrtou16(buf, 0, &active_links) || !active_links)
- 		return -EINVAL;
- 
- 	return ieee80211_set_active_links(&sdata->vif, active_links) ?: buflen;
+ 		if (mconf != &mvif->bss_conf) {
++			mt7925_mcu_set_bss_pm(dev, link_conf, true);
++
+ 			err = mt7925_set_mlo_roc(phy, &mvif->bss_conf,
+ 						 vif->active_links);
+ 			if (err < 0)
 -- 
 2.39.5
 
