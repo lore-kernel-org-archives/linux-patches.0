@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D459188CD8;
-	Wed,  5 Feb 2025 15:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7543815854F;
+	Wed,  5 Feb 2025 15:16:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738768600; cv=none; b=GaLwv7NlBf/dA2+9coPxZ6GfpwIa7rCo0kgrkYO8344BG/yxtQ6Hxj7WXXlmrMV41SNA5Q80qsUgazrtSHcplnccX74rPFI6CNgQe+01q1ro8CBd+NbQWmZWA7ngyFCj0Y4lsDDCXoMOTW0Qkbv5ybBdqCe9d6eJ3JMxvqMDJR8=
+	t=1738768604; cv=none; b=MGFqn5ymYtOtFD2sm5nKPoXnItrxvUl93ZcRcRdSbtqtGUzGdP4A2o+hZ2sio7RWYmfYJtCPS2H4u8bOZ6X5Zy0oj4l77xLNyqAmvTe6cMfknAXY7ZHVhHRMkZ3EocQD6hgGRq6QnKYiLSkq74FJwAWL96UfAYKQkbLMP802pBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738768600; c=relaxed/simple;
-	bh=HDgfLj+WsYICB/30AKc9vitQgGQ5Lpq653WdUePvOMw=;
+	s=arc-20240116; t=1738768604; c=relaxed/simple;
+	bh=fSy7GbPdoDuH8yVm1J0fx7hyfC3C96x+PsTYJUYfxmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nm/WkTHd35BuflxL0oJ8Fvwd0Kvu71LU9p5HzovcE2rgGLB7+h022XV5U4iP4zcxdaS2fVglMhkicQgcoFSjme9rxwYC3q2ZRxD4v9aeCT3s7Mciw+emXiLl9Hl0g5ULyWMFs41AuQ9L958r2x68nGsEvJUxdIDi5TEDFiwaLts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/gzk1Pj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aGyrRniebgg0fUE9n8a3I7Mi13CVfOqlBWOBMB6pgtNa4qZ7lBPgQq+G5YM/O39LfXvTjPOhhUPJX3Gi4lO5/56VGf9fbo8F4ZiKeCMjdDaYcfLv2MQ+lO2ahUN8iyES/iXQqT73wZiYcWpcveb9TvAB+7HNPQZW5fSxlXn0Zo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+X3rswU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/gzk1Pj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FFCC4CED1;
-	Wed,  5 Feb 2025 15:16:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+X3rswU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC76FC4CED1;
+	Wed,  5 Feb 2025 15:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738768600;
-	bh=HDgfLj+WsYICB/30AKc9vitQgGQ5Lpq653WdUePvOMw=;
+	s=korg; t=1738768603;
+	bh=fSy7GbPdoDuH8yVm1J0fx7hyfC3C96x+PsTYJUYfxmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/gzk1Pj461WXissXOT3Xa3PYaXSPdXroRf3QzhNMHWubFSeDYOBKWjrrmKNaMFUb
-	 fCuTMQQeQAaoo4evTw4IsR32A5MwUkXhP7gUK2AQ4R1iNcP6doStlHayffMN6bmxp2
-	 lRqH7HkiOUAJaiAyykmdDaiXdeu0dU7Lt7nMvCPs=
+	b=L+X3rswUV4iXX4gK4NbkslfRgd8KjdYmyW5l6BWmelnV/0Vv0GlWCEmNXJbQS2DR0
+	 XELNBay4sZe3XgGaxSa6rZtpio/KJ7NiwqzF7D8ksiQuONIk2KkFEvz5lF/f8KsZka
+	 ydUxtczljuWi6HWwFDSdqtf36kXiCB7C/dp36YGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: [PATCH 6.13 603/623] RDMA/mlx5: Fix implicit ODP use after free
-Date: Wed,  5 Feb 2025 14:45:45 +0100
-Message-ID: <20250205134519.291208331@linuxfoundation.org>
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.13 604/623] remoteproc: core: Fix ida_free call while not allocated
+Date: Wed,  5 Feb 2025 14:45:46 +0100
+Message-ID: <20250205134519.328770750@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
 References: <20250205134456.221272033@linuxfoundation.org>
@@ -51,115 +50,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
 
-commit d3d930411ce390e532470194296658a960887773 upstream.
+commit 7378aeb664e5ebc396950b36a1f2dedf5aabec20 upstream.
 
-Prevent double queueing of implicit ODP mr destroy work by using
-__xa_cmpxchg() to make sure this is the only time we are destroying this
-specific mr.
+In the rproc_alloc() function, on error, put_device(&rproc->dev) is
+called, leading to the call of the rproc_type_release() function.
+An error can occurs before ida_alloc is called.
 
-Without this change, we could try to invalidate this mr twice, which in
-turn could result in queuing a MR work destroy twice, and eventually the
-second work could execute after the MR was freed due to the first work,
-causing a user after free and trace below.
+In such case in rproc_type_release(), the condition (rproc->index >= 0) is
+true as rproc->index has been  initialized to 0.
+ida_free() is called reporting a warning:
+[    4.181906] WARNING: CPU: 1 PID: 24 at lib/idr.c:525 ida_free+0x100/0x164
+[    4.186378] stm32-display-dsi 5a000000.dsi: Fixed dependency cycle(s) with /soc/dsi@5a000000/panel@0
+[    4.188854] ida_free called for id=0 which is not allocated.
+[    4.198256] mipi-dsi 5a000000.dsi.0: Fixed dependency cycle(s) with /soc/dsi@5a000000
+[    4.203556] Modules linked in: panel_orisetech_otm8009a dw_mipi_dsi_stm(+) gpu_sched dw_mipi_dsi stm32_rproc stm32_crc32 stm32_ipcc(+) optee(+)
+[    4.224307] CPU: 1 UID: 0 PID: 24 Comm: kworker/u10:0 Not tainted 6.12.0 #442
+[    4.231481] Hardware name: STM32 (Device Tree Support)
+[    4.236627] Workqueue: events_unbound deferred_probe_work_func
+[    4.242504] Call trace:
+[    4.242522]  unwind_backtrace from show_stack+0x10/0x14
+[    4.250218]  show_stack from dump_stack_lvl+0x50/0x64
+[    4.255274]  dump_stack_lvl from __warn+0x80/0x12c
+[    4.260134]  __warn from warn_slowpath_fmt+0x114/0x188
+[    4.265199]  warn_slowpath_fmt from ida_free+0x100/0x164
+[    4.270565]  ida_free from rproc_type_release+0x38/0x60
+[    4.275832]  rproc_type_release from device_release+0x30/0xa0
+[    4.281601]  device_release from kobject_put+0xc4/0x294
+[    4.286762]  kobject_put from rproc_alloc.part.0+0x208/0x28c
+[    4.292430]  rproc_alloc.part.0 from devm_rproc_alloc+0x80/0xc4
+[    4.298393]  devm_rproc_alloc from stm32_rproc_probe+0xd0/0x844 [stm32_rproc]
+[    4.305575]  stm32_rproc_probe [stm32_rproc] from platform_probe+0x5c/0xbc
 
-   refcount_t: underflow; use-after-free.
-   WARNING: CPU: 2 PID: 12178 at lib/refcount.c:28 refcount_warn_saturate+0x12b/0x130
-   Modules linked in: bonding ib_ipoib vfio_pci ip_gre geneve nf_tables ip6_gre gre ip6_tunnel tunnel6 ipip tunnel4 ib_umad rdma_ucm mlx5_vfio_pci vfio_pci_core vfio_iommu_type1 mlx5_ib vfio ib_uverbs mlx5_core iptable_raw openvswitch nsh rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink xt_addrtype iptable_nat nf_nat br_netfilter rpcsec_gss_krb5 auth_rpcgss oid_registry overlay zram zsmalloc fuse [last unloaded: ib_uverbs]
-   CPU: 2 PID: 12178 Comm: kworker/u20:5 Not tainted 6.5.0-rc1_net_next_mlx5_58c644e #1
-   Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-   Workqueue: events_unbound free_implicit_child_mr_work [mlx5_ib]
-   RIP: 0010:refcount_warn_saturate+0x12b/0x130
-   Code: 48 c7 c7 38 95 2a 82 c6 05 bc c6 fe 00 01 e8 0c 66 aa ff 0f 0b 5b c3 48 c7 c7 e0 94 2a 82 c6 05 a7 c6 fe 00 01 e8 f5 65 aa ff <0f> 0b 5b c3 90 8b 07 3d 00 00 00 c0 74 12 83 f8 01 74 13 8d 50 ff
-   RSP: 0018:ffff8881008e3e40 EFLAGS: 00010286
-   RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000027
-   RDX: ffff88852c91b5c8 RSI: 0000000000000001 RDI: ffff88852c91b5c0
-   RBP: ffff8881dacd4e00 R08: 00000000ffffffff R09: 0000000000000019
-   R10: 000000000000072e R11: 0000000063666572 R12: ffff88812bfd9e00
-   R13: ffff8881c792d200 R14: ffff88810011c005 R15: ffff8881002099c0
-   FS:  0000000000000000(0000) GS:ffff88852c900000(0000) knlGS:0000000000000000
-   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-   CR2: 00007f5694b5e000 CR3: 00000001153f6003 CR4: 0000000000370ea0
-   DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-   DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-   Call Trace:
-    <TASK>
-    ? refcount_warn_saturate+0x12b/0x130
-    free_implicit_child_mr_work+0x180/0x1b0 [mlx5_ib]
-    process_one_work+0x1cc/0x3c0
-    worker_thread+0x218/0x3c0
-    kthread+0xc6/0xf0
-    ret_from_fork+0x1f/0x30
-    </TASK>
+Calling ida_alloc earlier in rproc_alloc ensures that the rproc->index is
+properly set.
 
-Fixes: 5256edcb98a1 ("RDMA/mlx5: Rework implicit ODP destroy")
+Fixes: 08333b911f01 ("remoteproc: Directly use ida_alloc()/free()")
+Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/r/c96b8645a81085abff739e6b06e286a350d1283d.1737274283.git.leon@kernel.org
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20241122175127.2188037-1-arnaud.pouliquen@foss.st.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/mlx5/odp.c |   30 ++++++++++++++++++++++--------
- 1 file changed, 22 insertions(+), 8 deletions(-)
+ drivers/remoteproc/remoteproc_core.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/infiniband/hw/mlx5/odp.c
-+++ b/drivers/infiniband/hw/mlx5/odp.c
-@@ -228,13 +228,27 @@ static void destroy_unused_implicit_chil
- 	unsigned long idx = ib_umem_start(odp) >> MLX5_IMR_MTT_SHIFT;
- 	struct mlx5_ib_mr *imr = mr->parent;
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -2486,6 +2486,13 @@ struct rproc *rproc_alloc(struct device
+ 	rproc->dev.driver_data = rproc;
+ 	idr_init(&rproc->notifyids);
  
-+	/*
-+	 * If userspace is racing freeing the parent implicit ODP MR then we can
-+	 * loose the race with parent destruction. In this case
-+	 * mlx5_ib_free_odp_mr() will free everything in the implicit_children
-+	 * xarray so NOP is fine. This child MR cannot be destroyed here because
-+	 * we are under its umem_mutex.
-+	 */
- 	if (!refcount_inc_not_zero(&imr->mmkey.usecount))
- 		return;
- 
--	xa_erase(&imr->implicit_children, idx);
-+	xa_lock(&imr->implicit_children);
-+	if (__xa_cmpxchg(&imr->implicit_children, idx, mr, NULL, GFP_KERNEL) !=
-+	    mr) {
-+		xa_unlock(&imr->implicit_children);
-+		return;
++	/* Assign a unique device index and name */
++	rproc->index = ida_alloc(&rproc_dev_index, GFP_KERNEL);
++	if (rproc->index < 0) {
++		dev_err(dev, "ida_alloc failed: %d\n", rproc->index);
++		goto put_device;
 +	}
 +
- 	if (MLX5_CAP_ODP(mr_to_mdev(mr)->mdev, mem_page_fault))
--		xa_erase(&mr_to_mdev(mr)->odp_mkeys,
--			 mlx5_base_mkey(mr->mmkey.key));
-+		__xa_erase(&mr_to_mdev(mr)->odp_mkeys,
-+			   mlx5_base_mkey(mr->mmkey.key));
-+	xa_unlock(&imr->implicit_children);
+ 	rproc->name = kstrdup_const(name, GFP_KERNEL);
+ 	if (!rproc->name)
+ 		goto put_device;
+@@ -2496,13 +2503,6 @@ struct rproc *rproc_alloc(struct device
+ 	if (rproc_alloc_ops(rproc, ops))
+ 		goto put_device;
  
- 	/* Freeing a MR is a sleeping operation, so bounce to a work queue */
- 	INIT_WORK(&mr->odp_destroy.work, free_implicit_child_mr_work);
-@@ -500,18 +514,18 @@ static struct mlx5_ib_mr *implicit_get_c
- 		refcount_inc(&ret->mmkey.usecount);
- 		goto out_lock;
- 	}
--	xa_unlock(&imr->implicit_children);
+-	/* Assign a unique device index and name */
+-	rproc->index = ida_alloc(&rproc_dev_index, GFP_KERNEL);
+-	if (rproc->index < 0) {
+-		dev_err(dev, "ida_alloc failed: %d\n", rproc->index);
+-		goto put_device;
+-	}
+-
+ 	dev_set_name(&rproc->dev, "remoteproc%d", rproc->index);
  
- 	if (MLX5_CAP_ODP(dev->mdev, mem_page_fault)) {
--		ret = xa_store(&dev->odp_mkeys, mlx5_base_mkey(mr->mmkey.key),
--			       &mr->mmkey, GFP_KERNEL);
-+		ret = __xa_store(&dev->odp_mkeys, mlx5_base_mkey(mr->mmkey.key),
-+				 &mr->mmkey, GFP_KERNEL);
- 		if (xa_is_err(ret)) {
- 			ret = ERR_PTR(xa_err(ret));
--			xa_erase(&imr->implicit_children, idx);
--			goto out_mr;
-+			__xa_erase(&imr->implicit_children, idx);
-+			goto out_lock;
- 		}
- 		mr->mmkey.type = MLX5_MKEY_IMPLICIT_CHILD;
- 	}
-+	xa_unlock(&imr->implicit_children);
- 	mlx5_ib_dbg(mr_to_mdev(imr), "key %x mr %p\n", mr->mmkey.key, mr);
- 	return mr;
- 
+ 	atomic_set(&rproc->power, 0);
 
 
