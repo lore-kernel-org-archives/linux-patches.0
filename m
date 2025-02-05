@@ -1,53 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF981519AA;
-	Wed,  5 Feb 2025 14:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCFD1519AA;
+	Wed,  5 Feb 2025 14:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738764318; cv=none; b=cgDLtjZMBsJRyfk2d41czPhJ8o7eua33PDQ2TK4crcRB19RkxmI5YeT83rhIDnU1lOQzcVQOOZYjeV4qF9a9uNMWJ3YKurDaZnHRb1/eY2TR2FWnT2Wcs/rERfmgbojZn69gYXdxUfGOKDwAIOFQXl6iX9KgteXLWBlcBs3CHq8=
+	t=1738764321; cv=none; b=kHKYoVIWOl74PIONyMk0EAOsLdAOeze8MEUFCoFxBfAoE6fpklvfH4gIC3uXh1XVfGJ/0cKecgdENE5dmmpSZzT8pMjjM2HOJ8AkwDNGRdn7pTu6te5IQCarUd+cwxhKPBimolxl1vpSCZ0Psbftci2qE5b34aJStLBgYUdclz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738764318; c=relaxed/simple;
-	bh=+nFf8HdaDThP0AZmuTY2FDRHhLUjK1lPljetGVWZBqI=;
+	s=arc-20240116; t=1738764321; c=relaxed/simple;
+	bh=rqXOBcuo0V1nQOS9b4AE3usMWHZ5EYqy44VJUkY/bQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qwtACJZu8fhhQBfq883FdYEMIKHfoad43k+hWzx47rNVcCwWKiEbA9dSpyYT44gIsv7CoZoLhhuqQF0N1llIA7rJIKkw5n9FpG3WxyxwnN5MbLf/dBWfeyrQYUE0TNP0HfgpzKxWznHjcOCvhHEim5g9B8mCwKXCzpIt29B42wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGFyta6h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OL5vAcSpA6/7cgshdmN/sNk+1WuR49vlp/HpAdQW7QlaNpBymQRV3LjmloImcPGcS5QihVhVIAUKJJ8LjYJn1q+yolwDKiO+hFt+gV0orUXnyW3NyVQkB8J7lIl3r2bUOS5LTuxKBR1wJ891jlbKWnheshlBuSc+4E4FLQ2N+wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RWEj3Yyu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGFyta6h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0F3C4CED1;
-	Wed,  5 Feb 2025 14:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RWEj3Yyu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F82C4CED1;
+	Wed,  5 Feb 2025 14:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738764318;
-	bh=+nFf8HdaDThP0AZmuTY2FDRHhLUjK1lPljetGVWZBqI=;
+	s=korg; t=1738764321;
+	bh=rqXOBcuo0V1nQOS9b4AE3usMWHZ5EYqy44VJUkY/bQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGFyta6hqh8ng/9fcpRfsRWlE7ifdqNFP8dxIlVyq6hqlM2A+FS6gpxrJXmGv/2Xw
-	 SLIaU9vsKibMYQejQZ6/SarsssjIZEjzKvawFBeBS/dlZME14SusFt8zHGdqO42hBW
-	 ZoF+j5jfbQ75E+Vaa8m0c6byp+KcPnB3q/FHi/z8=
+	b=RWEj3Yyu20Zy53Mu/EjdHhVjmU3OoqG9WlsjvqQlnCmo2PEED84fVbfHcQWBXHbKV
+	 woIWTj5oBAeq/0WXSGGCYAhwkcTzf16LQUy6URNZVj34Ce8F0KC3bk6yVegA4uBhgE
+	 7WT2tA2kfj9e6kIyl6vn1EnvKNFyZyxP8P+HqGX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Zhongqiu Han <quic_zhonhan@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/393] perf header: Fix one memory leakage in process_bpf_prog_info()
-Date: Wed,  5 Feb 2025 14:41:20 +0100
-Message-ID: <20250205134426.460728007@linuxfoundation.org>
+Subject: [PATCH 6.13 067/623] drm/msm/dpu: provide DSPP and correct LM config for SDM670
+Date: Wed,  5 Feb 2025 14:36:49 +0100
+Message-ID: <20250205134458.788477468@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
-References: <20250205134420.279368572@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -59,101 +47,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhongqiu Han <quic_zhonhan@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a7da6c7030e1aec32f0a41c7b4fa70ec96042019 ]
+[ Upstream commit 9a20f33495bfd45ca6712213f30697f686d0b6fd ]
 
-Function __perf_env__insert_bpf_prog_info() will return without inserting
-bpf prog info node into perf env again due to a duplicate bpf prog info
-node insertion, causing the temporary info_linear and info_node memory to
-leak. Modify the return type of this function to bool and add a check to
-ensure the memory is freed if the function returns false.
+On SDM670 the DPU has two DSPP blocks compared to 4 DSPP blocks on
+SDM845. Currently SDM670 just reuses LMs and DSPPs from SDM845. Define
+platform-specific configuration for those blocks.
 
-Fixes: 606f972b1361f477 ("perf bpf: Save bpf_prog_info information as headers to perf.data")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Zhongqiu Han <quic_zhonhan@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20241205084500.823660-3-quic_zhonhan@quicinc.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: e140b7e496b7 ("drm/msm/dpu: Add hw revision 4.1 (SDM670)")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/629951/
+Link: https://lore.kernel.org/r/20241220-dpu-fix-catalog-v2-1-38fa961ea992@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/env.c    | 5 +++--
- tools/perf/util/env.h    | 2 +-
- tools/perf/util/header.c | 5 ++++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ .../msm/disp/dpu1/catalog/dpu_4_1_sdm670.h    | 54 ++++++++++++++++++-
+ 1 file changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
-index d2c7b6e6eae51..1f1a95bfd4a59 100644
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -28,7 +28,7 @@ void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 	up_write(&env->bpf_progs.lock);
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
+index cbbdaebe357ec..daef07924886a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_1_sdm670.h
+@@ -65,6 +65,54 @@ static const struct dpu_sspp_cfg sdm670_sspp[] = {
+ 	},
+ };
  
--void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info_node *info_node)
- {
- 	__u32 prog_id = info_node->info_linear->info.id;
- 	struct bpf_prog_info_node *node;
-@@ -46,13 +46,14 @@ void __perf_env__insert_bpf_prog_info(struct perf_env *env, struct bpf_prog_info
- 			p = &(*p)->rb_right;
- 		} else {
- 			pr_debug("duplicated bpf prog info %u\n", prog_id);
--			return;
-+			return false;
- 		}
- 	}
- 
- 	rb_link_node(&info_node->rb_node, parent, p);
- 	rb_insert_color(&info_node->rb_node, &env->bpf_progs.infos);
- 	env->bpf_progs.infos_cnt++;
-+	return true;
- }
- 
- struct bpf_prog_info_node *perf_env__find_bpf_prog_info(struct perf_env *env,
-diff --git a/tools/perf/util/env.h b/tools/perf/util/env.h
-index 359eff51cb85b..7d1360ff79fd8 100644
---- a/tools/perf/util/env.h
-+++ b/tools/perf/util/env.h
-@@ -164,7 +164,7 @@ const char *perf_env__raw_arch(struct perf_env *env);
- int perf_env__nr_cpus_avail(struct perf_env *env);
- 
- void perf_env__init(struct perf_env *env);
--void __perf_env__insert_bpf_prog_info(struct perf_env *env,
-+bool __perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				      struct bpf_prog_info_node *info_node);
- void perf_env__insert_bpf_prog_info(struct perf_env *env,
- 				    struct bpf_prog_info_node *info_node);
-diff --git a/tools/perf/util/header.c b/tools/perf/util/header.c
-index 34d3b567ae772..0b44176826bfd 100644
---- a/tools/perf/util/header.c
-+++ b/tools/perf/util/header.c
-@@ -3177,7 +3177,10 @@ static int process_bpf_prog_info(struct feat_fd *ff, void *data __maybe_unused)
- 		/* after reading from file, translate offset to address */
- 		bpil_offs_to_addr(info_linear);
- 		info_node->info_linear = info_linear;
--		__perf_env__insert_bpf_prog_info(env, info_node);
-+		if (!__perf_env__insert_bpf_prog_info(env, info_node)) {
-+			free(info_linear);
-+			free(info_node);
-+		}
- 	}
- 
- 	up_write(&env->bpf_progs.lock);
++static const struct dpu_lm_cfg sdm670_lm[] = {
++	{
++		.name = "lm_0", .id = LM_0,
++		.base = 0x44000, .len = 0x320,
++		.features = MIXER_SDM845_MASK,
++		.sblk = &sdm845_lm_sblk,
++		.lm_pair = LM_1,
++		.pingpong = PINGPONG_0,
++		.dspp = DSPP_0,
++	}, {
++		.name = "lm_1", .id = LM_1,
++		.base = 0x45000, .len = 0x320,
++		.features = MIXER_SDM845_MASK,
++		.sblk = &sdm845_lm_sblk,
++		.lm_pair = LM_0,
++		.pingpong = PINGPONG_1,
++		.dspp = DSPP_1,
++	}, {
++		.name = "lm_2", .id = LM_2,
++		.base = 0x46000, .len = 0x320,
++		.features = MIXER_SDM845_MASK,
++		.sblk = &sdm845_lm_sblk,
++		.lm_pair = LM_5,
++		.pingpong = PINGPONG_2,
++	}, {
++		.name = "lm_5", .id = LM_5,
++		.base = 0x49000, .len = 0x320,
++		.features = MIXER_SDM845_MASK,
++		.sblk = &sdm845_lm_sblk,
++		.lm_pair = LM_2,
++		.pingpong = PINGPONG_3,
++	},
++};
++
++static const struct dpu_dspp_cfg sdm670_dspp[] = {
++	{
++		.name = "dspp_0", .id = DSPP_0,
++		.base = 0x54000, .len = 0x1800,
++		.features = DSPP_SC7180_MASK,
++		.sblk = &sdm845_dspp_sblk,
++	}, {
++		.name = "dspp_1", .id = DSPP_1,
++		.base = 0x56000, .len = 0x1800,
++		.features = DSPP_SC7180_MASK,
++		.sblk = &sdm845_dspp_sblk,
++	},
++};
++
+ static const struct dpu_dsc_cfg sdm670_dsc[] = {
+ 	{
+ 		.name = "dsc_0", .id = DSC_0,
+@@ -88,8 +136,10 @@ const struct dpu_mdss_cfg dpu_sdm670_cfg = {
+ 	.ctl = sdm845_ctl,
+ 	.sspp_count = ARRAY_SIZE(sdm670_sspp),
+ 	.sspp = sdm670_sspp,
+-	.mixer_count = ARRAY_SIZE(sdm845_lm),
+-	.mixer = sdm845_lm,
++	.mixer_count = ARRAY_SIZE(sdm670_lm),
++	.mixer = sdm670_lm,
++	.dspp_count = ARRAY_SIZE(sdm670_dspp),
++	.dspp = sdm670_dspp,
+ 	.pingpong_count = ARRAY_SIZE(sdm845_pp),
+ 	.pingpong = sdm845_pp,
+ 	.dsc_count = ARRAY_SIZE(sdm670_dsc),
 -- 
 2.39.5
 
