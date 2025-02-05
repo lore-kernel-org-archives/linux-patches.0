@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A523514F136;
-	Wed,  5 Feb 2025 13:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA3C126C18;
+	Wed,  5 Feb 2025 13:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738763416; cv=none; b=iaAeeOI/nF5nVmBYudEKPlS7Sl1Cz8bgYWqtDvqF06CBMA5Y3XZgrnHFbrS+Nk02h2i2FtnBa/UZnASrlnJ/Dkd9BQ4qNDkj1wGYemIql8gxE8WMfn8aiiPioxTAb8OtA9P7/v5uv1GOaYI9Xjrrnfa7OaGGdiijlJjznYPTC0g=
+	t=1738763420; cv=none; b=tVUDN4mum3l6CAy3Zkg4+8lyIdZzRiwvUH6I3WXu4m/tfJuPxdMrbUxXYyqAOlBxhu9Fzes+PfNh7GQdJdPPwuzXE6MiiHglpA3bxsN9IDrBFJY2tly/LIVpn5ooH03ySDCXWsz+v0wl9mAmcgmybyJCJ3QV1bfYMe9xbwY1vfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738763416; c=relaxed/simple;
-	bh=SUDjy7bID0l3kfwnKxQ57/Un+L7Ery41Ln+ca9ZBy00=;
+	s=arc-20240116; t=1738763420; c=relaxed/simple;
+	bh=jcV7gu+jnOMc1qszcGQV5NOye3r211rbQd3RjFlc2yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mEqgqLzQqinONHSluZGtxyfwujVCj2IakKqGZ6mz15rokFT7DTuw/Vwozk26Ty2a0jh1nBWx8+ZNFXpSx8XSf/YtwpqAAnzHQkL4l8C9fHzXFWarCboe199RF5uq+JQYq7hHxRig6LB2+vpYDxaFzUl1KxIe2b9fRN1In+iPVhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B7kD7ELA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pc6Uzt5HvbXvCC4bvlwKpVPEJ+ZodiR4Uj18ZjWoxByPBOLgmyxR4gT3svTaKHkhjZiMAfiqaRH2jGskJOl3+Gjw/zYMMF+JqRBVp1Dm1TRAhVTJUMr15YV5ms0JrxuV9tPQS1Ea9ZM+iY9dhDEMyJ0UtnrItYki0M1/iNEmcmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lXFT3P86; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B7kD7ELA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B261C4CED6;
-	Wed,  5 Feb 2025 13:50:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lXFT3P86"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF4CC4CED1;
+	Wed,  5 Feb 2025 13:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738763416;
-	bh=SUDjy7bID0l3kfwnKxQ57/Un+L7Ery41Ln+ca9ZBy00=;
+	s=korg; t=1738763419;
+	bh=jcV7gu+jnOMc1qszcGQV5NOye3r211rbQd3RjFlc2yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B7kD7ELASWN8EvLzdUaiQ2qrB8xbsOhsBHBeAQBuhXp+OGwV3TadPdnhbFTAuSb0o
-	 W9X2QTBKBfMyz/TLjWn0xzZcLJMWRpTJZb+B8goWBUBpWIhKto9bCieMlBkqHxufqA
-	 Rz6m6vwrsgpwJJaqx6dsnjb5Vp8rdddmL/P1JWxs=
+	b=lXFT3P869nRqEwAWSWWCGrGq/GyKplHHrrStPp8MKbyQU0xAXyfAsHXPTUEEA9HIO
+	 ZqZlCTZ/OF2gkckKjEO7Mpi+Q1lNMA5p3oiI7SfnUn7ib4uc3IexruxOGVDJMU5Orq
+	 M/aBviQwnJMrfv+wctZT6kIt7OjR5azglGgJBMvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 030/393] drm/rockchip: vop2: set bg dly and prescan dly at vop2_post_config
-Date: Wed,  5 Feb 2025 14:39:09 +0100
-Message-ID: <20250205134421.456976108@linuxfoundation.org>
+Subject: [PATCH 6.6 059/393] rxrpc: Fix handling of received connection abort
+Date: Wed,  5 Feb 2025 14:39:38 +0100
+Message-ID: <20250205134422.553747190@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250205134420.279368572@linuxfoundation.org>
 References: <20250205134420.279368572@linuxfoundation.org>
@@ -51,78 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 075a5b3969becb1ebc2f1d4fa1a1fe9163679273 ]
+[ Upstream commit 0e56ebde245e4799ce74d38419426f2a80d39950 ]
 
-We need to setup background delay cycle and prescan
-delay cycle when a mode is enable to avoid trigger
-POST_BUF_EMPTY irq on rk3588.
+Fix the handling of a connection abort that we've received.  Though the
+abort is at the connection level, it needs propagating to the calls on that
+connection.  Whilst the propagation bit is performed, the calls aren't then
+woken up to go and process their termination, and as no further input is
+forthcoming, they just hang.
 
-Note: RK356x has no such requirement.
+Also add some tracing for the logging of connection aborts.
 
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231211115815.1785131-1-andyshrk@163.com
-Stable-dep-of: 0ca953ac226e ("drm/rockchip: vop2: Fix the windows switch between different layers")
+Fixes: 248f219cb8bc ("rxrpc: Rewrite the data and ack handling code")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://patch.msgid.link/20241204074710.990092-3-dhowells@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 26 ++++++++------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ include/trace/events/rxrpc.h | 25 +++++++++++++++++++++++++
+ net/rxrpc/conn_event.c       | 12 ++++++++----
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index 2504e2f762358..1295aaffe868a 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -1397,8 +1397,18 @@ static void vop2_post_config(struct drm_crtc *crtc)
- 	u32 top_margin = 100, bottom_margin = 100;
- 	u16 hsize = hdisplay * (left_margin + right_margin) / 200;
- 	u16 vsize = vdisplay * (top_margin + bottom_margin) / 200;
-+	u16 hsync_len = mode->crtc_hsync_end - mode->crtc_hsync_start;
- 	u16 hact_end, vact_end;
- 	u32 val;
-+	u32 bg_dly;
-+	u32 pre_scan_dly;
-+
-+	bg_dly = vp->data->pre_scan_max_dly[3];
-+	vop2_writel(vp->vop2, RK3568_VP_BG_MIX_CTRL(vp->id),
-+		    FIELD_PREP(RK3568_VP_BG_MIX_CTRL__BG_DLY, bg_dly));
-+
-+	pre_scan_dly = ((bg_dly + (hdisplay >> 1) - 1) << 16) | hsync_len;
-+	vop2_vp_write(vp, RK3568_VP_PRE_SCAN_HTIMING, pre_scan_dly);
+diff --git a/include/trace/events/rxrpc.h b/include/trace/events/rxrpc.h
+index ed36f5f577a9d..252bb90aca599 100644
+--- a/include/trace/events/rxrpc.h
++++ b/include/trace/events/rxrpc.h
+@@ -117,6 +117,7 @@
+ #define rxrpc_call_poke_traces \
+ 	EM(rxrpc_call_poke_abort,		"Abort")	\
+ 	EM(rxrpc_call_poke_complete,		"Compl")	\
++	EM(rxrpc_call_poke_conn_abort,		"Conn-abort")	\
+ 	EM(rxrpc_call_poke_error,		"Error")	\
+ 	EM(rxrpc_call_poke_idle,		"Idle")		\
+ 	EM(rxrpc_call_poke_start,		"Start")	\
+@@ -278,6 +279,7 @@
+ 	EM(rxrpc_call_see_activate_client,	"SEE act-clnt") \
+ 	EM(rxrpc_call_see_connect_failed,	"SEE con-fail") \
+ 	EM(rxrpc_call_see_connected,		"SEE connect ") \
++	EM(rxrpc_call_see_conn_abort,		"SEE conn-abt") \
+ 	EM(rxrpc_call_see_disconnected,		"SEE disconn ") \
+ 	EM(rxrpc_call_see_distribute_error,	"SEE dist-err") \
+ 	EM(rxrpc_call_see_input,		"SEE input   ") \
+@@ -961,6 +963,29 @@ TRACE_EVENT(rxrpc_rx_abort,
+ 		      __entry->abort_code)
+ 	    );
  
- 	vsize = rounddown(vsize, 2);
- 	hsize = rounddown(hsize, 2);
-@@ -1915,11 +1925,6 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 	u32 layer_sel = 0;
- 	u32 port_sel;
- 	unsigned int nlayer, ofs;
--	struct drm_display_mode *adjusted_mode;
--	u16 hsync_len;
--	u16 hdisplay;
--	u32 bg_dly;
--	u32 pre_scan_dly;
- 	u32 ovl_ctrl;
- 	int i;
- 	struct vop2_video_port *vp0 = &vop2->vps[0];
-@@ -1927,17 +1932,6 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 	struct vop2_video_port *vp2 = &vop2->vps[2];
- 	struct rockchip_crtc_state *vcstate = to_rockchip_crtc_state(vp->crtc.state);
++TRACE_EVENT(rxrpc_rx_conn_abort,
++	    TP_PROTO(const struct rxrpc_connection *conn, const struct sk_buff *skb),
++
++	    TP_ARGS(conn, skb),
++
++	    TP_STRUCT__entry(
++		    __field(unsigned int,	conn)
++		    __field(rxrpc_serial_t,	serial)
++		    __field(u32,		abort_code)
++			     ),
++
++	    TP_fast_assign(
++		    __entry->conn = conn->debug_id;
++		    __entry->serial = rxrpc_skb(skb)->hdr.serial;
++		    __entry->abort_code = skb->priority;
++			   ),
++
++	    TP_printk("C=%08x ABORT %08x ac=%d",
++		      __entry->conn,
++		      __entry->serial,
++		      __entry->abort_code)
++	    );
++
+ TRACE_EVENT(rxrpc_rx_challenge,
+ 	    TP_PROTO(struct rxrpc_connection *conn, rxrpc_serial_t serial,
+ 		     u32 version, u32 nonce, u32 min_level),
+diff --git a/net/rxrpc/conn_event.c b/net/rxrpc/conn_event.c
+index 598b4ee389fc1..2a1396cd892f3 100644
+--- a/net/rxrpc/conn_event.c
++++ b/net/rxrpc/conn_event.c
+@@ -63,11 +63,12 @@ int rxrpc_abort_conn(struct rxrpc_connection *conn, struct sk_buff *skb,
+ /*
+  * Mark a connection as being remotely aborted.
+  */
+-static bool rxrpc_input_conn_abort(struct rxrpc_connection *conn,
++static void rxrpc_input_conn_abort(struct rxrpc_connection *conn,
+ 				   struct sk_buff *skb)
+ {
+-	return rxrpc_set_conn_aborted(conn, skb, skb->priority, -ECONNABORTED,
+-				      RXRPC_CALL_REMOTELY_ABORTED);
++	trace_rxrpc_rx_conn_abort(conn, skb);
++	rxrpc_set_conn_aborted(conn, skb, skb->priority, -ECONNABORTED,
++			       RXRPC_CALL_REMOTELY_ABORTED);
+ }
  
--	adjusted_mode = &vp->crtc.state->adjusted_mode;
--	hsync_len = adjusted_mode->crtc_hsync_end - adjusted_mode->crtc_hsync_start;
--	hdisplay = adjusted_mode->crtc_hdisplay;
--
--	bg_dly = vp->data->pre_scan_max_dly[3];
--	vop2_writel(vop2, RK3568_VP_BG_MIX_CTRL(vp->id),
--		    FIELD_PREP(RK3568_VP_BG_MIX_CTRL__BG_DLY, bg_dly));
--
--	pre_scan_dly = ((bg_dly + (hdisplay >> 1) - 1) << 16) | hsync_len;
--	vop2_vp_write(vp, RK3568_VP_PRE_SCAN_HTIMING, pre_scan_dly);
--
- 	ovl_ctrl = vop2_readl(vop2, RK3568_OVL_CTRL);
- 	ovl_ctrl |= RK3568_OVL_CTRL__LAYERSEL_REGDONE_IMD;
- 	if (vcstate->yuv_overlay)
+ /*
+@@ -202,11 +203,14 @@ static void rxrpc_abort_calls(struct rxrpc_connection *conn)
+ 
+ 	for (i = 0; i < RXRPC_MAXCALLS; i++) {
+ 		call = conn->channels[i].call;
+-		if (call)
++		if (call) {
++			rxrpc_see_call(call, rxrpc_call_see_conn_abort);
+ 			rxrpc_set_call_completion(call,
+ 						  conn->completion,
+ 						  conn->abort_code,
+ 						  conn->error);
++			rxrpc_poke_call(call, rxrpc_call_poke_conn_abort);
++		}
+ 	}
+ 
+ 	_leave("");
 -- 
 2.39.5
 
