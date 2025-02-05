@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6ED913C3F6;
-	Wed,  5 Feb 2025 14:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739C31519BE;
+	Wed,  5 Feb 2025 14:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765256; cv=none; b=Zs6ALCm8QV5D1QsAH1F+5MffOwQHj9uGcZ8vCNGd099+t635TLrfDWdewW7qZ0h4RiUxuvbpEtTj0cpbTmElQxDmKWY9/kaKdbHqy6FkQ/dnEtJNuHbCMuCPt2duzudjW1KDdPybUwxW4j9A29rev91x4JKf+j5x/32JdZb3q/k=
+	t=1738765259; cv=none; b=Y/5OCoongs1FIsZuodMWNAaPLWd/3yEJX9FxF8fUnhBMkY4TL4gKfp8TnzJStFgjEPTWm5znL4N4hOVHsJG7r71vnyXmKAP0k0Dpvdhr/0jzylQAcXkPAgTZWThSg+lEfPiwWxg+XmolwZsndVPUnvP07k1pqhD/HCX+G98tnBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765256; c=relaxed/simple;
-	bh=y8u3lP9UMTxeXtkTiWXQmfN3IGOm9eDHXcYdJGju+TE=;
+	s=arc-20240116; t=1738765259; c=relaxed/simple;
+	bh=RRyRaVz06PuSNp7kJDQIBNOGg91ssuOCrAf+Eq0OBsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ndEntpyLHKquy0cNyO7nLpxh8XTOY1r4Bj70KQos2AClRy2oep1LU0FOdErrKobbWMnHGL+tVaXOAmx175JtvFB7TQljYqTnku0KTGo0G4g4TL2kdy2pprgbPVkNVucG0vDBE8JeW7hpZ2zLNPz75g1rl+3ufk5Xn7biGMftRvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/Yl4A/2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NOH2gniYvJtC+0d4sDcRwEFRpmyiJDh8P5tAj89QrdoUJVlWmGNT+k/SXykLLz1m8BpTv2xXkVREyMabVkQSmWYtjh4BTYNicuXAtJwx2sTTyXBE5wWmFddGXRQHmyYeBWCSZw5buKyydIJYrIEBcThpy6awrBjwnqZSRY7vXnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nM7/N/Oy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/Yl4A/2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C02BC4CED1;
-	Wed,  5 Feb 2025 14:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nM7/N/Oy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D28DFC4CED1;
+	Wed,  5 Feb 2025 14:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765255;
-	bh=y8u3lP9UMTxeXtkTiWXQmfN3IGOm9eDHXcYdJGju+TE=;
+	s=korg; t=1738765259;
+	bh=RRyRaVz06PuSNp7kJDQIBNOGg91ssuOCrAf+Eq0OBsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O/Yl4A/2K0SH32munXaGpewvSCnYGIwiJVtluR5NHb+oLEYM+sXhC5lAsgdF+wGt7
-	 Fd3MLxhtAfUac8VeQS5irbLuw+SOCMKITvXZtwQJxBX+Sk9DI39II8jK0BOBElgvDn
-	 6x4pDS+EzysWrJh61o2KaUZ+HJn1LiV4OYGhVV1Y=
+	b=nM7/N/OyRGDO7vzlFCJKbsQRWDAuCchT0MRgNVW7x9BOT3Uh1BjTeU9SxMAb0Gv4f
+	 P63BFZCioVbqHpoprNIb9LsjCqRYoSiWfWWZPwnUfBiXZ2cWYXD1haTSMWt0dvo6UL
+	 vDocglpMzXVYn1tSIEry9H4vRCQF0K2YvzN6BcEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Howard Hsu <howard-yh.hsu@mediatek.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 160/623] hwmon: Fix help text for aspeed-g6-pwm-tach
-Date: Wed,  5 Feb 2025 14:38:22 +0100
-Message-ID: <20250205134502.356787890@linuxfoundation.org>
+Subject: [PATCH 6.12 204/590] wifi: mt76: mt7996: fix the capability of reception of EHT MU PPDU
+Date: Wed,  5 Feb 2025 14:39:19 +0100
+Message-ID: <20250205134503.085870981@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joel Stanley <joel@jms.id.au>
+From: Howard Hsu <howard-yh.hsu@mediatek.com>
 
-[ Upstream commit c8571eab11131cce6dcce76b3345c1524e074071 ]
+[ Upstream commit 2ffbdfc1bd78ba944c5754791c84f32232b513c6 ]
 
-The help text has the wrong module name mentioned, and the capitalisation
-of the title is inconsistent.
+This commit includes two changes. First, enable "EHT MU PPDU With 4x
+EHT-LTF And 0.8us GI" in EHT Phy capabilities element since hardware
+can support. Second, fix the value of "Maximum number of supported
+EHT LTFs" in the same element, where the previous setting of 3 in
+Bit 3-4 was incorrect.
 
-Fixes: 7e1449cd15d1 ("hwmon: (aspeed-g6-pwm-tacho): Support for ASPEED g6 PWM/Fan tach")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20250110114737.64035-1-joel@jms.id.au
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 348533eb968d ("wifi: mt76: mt7996: add EHT capability init")
+Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Link: https://patch.msgid.link/20250114101026.3587702-2-shayne.chen@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/Kconfig b/drivers/hwmon/Kconfig
-index dd376602f3f19..9afa70f877cc1 100644
---- a/drivers/hwmon/Kconfig
-+++ b/drivers/hwmon/Kconfig
-@@ -413,7 +413,7 @@ config SENSORS_ASPEED
- 	  will be called aspeed_pwm_tacho.
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index 50ee1e443dfa4..e04abd57b3b3a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -1232,21 +1232,20 @@ mt7996_init_eht_caps(struct mt7996_phy *phy, enum nl80211_band band,
+ 		IEEE80211_EHT_PHY_CAP3_CODEBOOK_7_5_MU_FDBK;
  
- config SENSORS_ASPEED_G6
--	tristate "ASPEED g6 PWM and Fan tach driver"
-+	tristate "ASPEED G6 PWM and Fan tach driver"
- 	depends on ARCH_ASPEED || COMPILE_TEST
- 	depends on PWM
- 	help
-@@ -421,7 +421,7 @@ config SENSORS_ASPEED_G6
- 	  controllers.
+ 	eht_cap_elem->phy_cap_info[4] =
++		IEEE80211_EHT_PHY_CAP4_EHT_MU_PPDU_4_EHT_LTF_08_GI |
+ 		u8_encode_bits(min_t(int, sts - 1, 2),
+ 			       IEEE80211_EHT_PHY_CAP4_MAX_NC_MASK);
  
- 	  This driver can also be built as a module. If so, the module
--	  will be called aspeed_pwm_tacho.
-+	  will be called aspeed_g6_pwm_tach.
+ 	eht_cap_elem->phy_cap_info[5] =
+ 		u8_encode_bits(IEEE80211_EHT_PHY_CAP5_COMMON_NOMINAL_PKT_PAD_16US,
+ 			       IEEE80211_EHT_PHY_CAP5_COMMON_NOMINAL_PKT_PAD_MASK) |
+-		u8_encode_bits(u8_get_bits(0x11, GENMASK(1, 0)),
++		u8_encode_bits(u8_get_bits(1, GENMASK(1, 0)),
+ 			       IEEE80211_EHT_PHY_CAP5_MAX_NUM_SUPP_EHT_LTF_MASK);
  
- config SENSORS_ATXP1
- 	tristate "Attansic ATXP1 VID controller"
+ 	val = width == NL80211_CHAN_WIDTH_320 ? 0xf :
+ 	      width == NL80211_CHAN_WIDTH_160 ? 0x7 :
+ 	      width == NL80211_CHAN_WIDTH_80 ? 0x3 : 0x1;
+ 	eht_cap_elem->phy_cap_info[6] =
+-		u8_encode_bits(u8_get_bits(0x11, GENMASK(4, 2)),
+-			       IEEE80211_EHT_PHY_CAP6_MAX_NUM_SUPP_EHT_LTF_MASK) |
+ 		u8_encode_bits(val, IEEE80211_EHT_PHY_CAP6_MCS15_SUPP_MASK);
+ 
+ 	val = u8_encode_bits(nss, IEEE80211_EHT_MCS_NSS_RX) |
 -- 
 2.39.5
 
