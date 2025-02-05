@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C7D18CBFB;
-	Wed,  5 Feb 2025 14:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F3518C039;
+	Wed,  5 Feb 2025 14:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766869; cv=none; b=UZ7P0wnSn9BoN6LJ2ubGdNLPfd6u1GIzGaaSxpDrB7y7DwrlabIyWq+0FCI2deW6AONpYlRXY99vDAQq8vhHyFE5HLLqZrJu7FRswKtLaj+E9sp6e5tL8EkT6tAxNNOcIutcJO8l1AQcDhDn4mdwRl3h81gMtWH3mUa0huI0vR0=
+	t=1738766872; cv=none; b=aSpBKmyymlCftWASL6nzkOY81NQ4yheKLYwPhDmoiNqb6cT4Gj5d+fsFIDOTTw0Nfg6Dc/H480fBfGUQULnY43bJnM19RUP79PSiwXLHX0vnbYGjOgOCgRm3Z9cKY6wKg7O8YQuAounWIVcE1BrI7aTAVNZaC9zjxtuAwRUTPBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766869; c=relaxed/simple;
-	bh=9pz0X81Ci+a0nNaFZsYePP9/MMXypdeDMa+WfJWcmtE=;
+	s=arc-20240116; t=1738766872; c=relaxed/simple;
+	bh=sBboVCvzpXUXeYlByk6qVXbm9CuvP6c7/YebJCadnHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hyRIKRQK7/nbRIpWkTaV1RTkKd7yir+B4lCzgRDydUcP3A0UMjppW5HqcCWI9zkOMdn/IMg4nNFaWXyUwmXdEcT4cnGhgh+QgVN82s3BUaOg5l09OelxBImG/MurLmrdRwLPS8jXg5kXeFOWvRP2Ggk42W81J3rmcoFEvYb3auw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tc5hT5+I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gM8zPIVxbUdDj4HFUIlYrAiui3CMAI2W76TKiAZ9kDp1VKoQkAdVUdclvRqSyxY8fopnNc51qsb/tfNf/V66O7W9BfFrxEg2x3QDrbRfCxBRlMMkA53l+mFqYq9Vb+jYJX4fUdA6Lug198tKnoG3YyuqAUCnQ59SmljJrnTB6NM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WxGB3SVg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tc5hT5+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 630F5C4CED1;
-	Wed,  5 Feb 2025 14:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WxGB3SVg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A19C4CED1;
+	Wed,  5 Feb 2025 14:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766868;
-	bh=9pz0X81Ci+a0nNaFZsYePP9/MMXypdeDMa+WfJWcmtE=;
+	s=korg; t=1738766872;
+	bh=sBboVCvzpXUXeYlByk6qVXbm9CuvP6c7/YebJCadnHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tc5hT5+IGygbd6GynR5OX/TjbinFol2R5yh+oMV0AbYitU2/feZqmazSeNPdommmv
-	 7M/01zwduB++i1KKaVABZfHh65ghNxx3XBw3o7TtXuaH8cNcee5gYQOWixDdLTPH0S
-	 OQ0uXtPtfjcjNRSumcwWDlJKZCK9scCPP0HMDAtc=
+	b=WxGB3SVgKuw0AA7Iql8bR7ymVHL1x8Le6XNLZedkdEWSKIO2w+0loyjp2jv6Zue1a
+	 FUScQczlVzQkuFVryCFiupZAa86m12xvvWi27mMcyqeJ1V41uXsEUebM7MXxzqiYk2
+	 9gMjA25wT+Nv27SeQ5HgLR5MEN7T4nYKbgJJMIIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Chun-Tse Shao <ctshao@google.com>,
-	nick.forrington@arm.com,
+	Douglas Anderson <dianders@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 322/623] perf lock: Fix parse_lock_type which only retrieve one lock flag
-Date: Wed,  5 Feb 2025 14:41:04 +0100
-Message-ID: <20250205134508.539352175@linuxfoundation.org>
+Subject: [PATCH 6.12 374/590] arm64: dts: qcom: sc7180-trogdor-quackingstick: add missing avee-supply
+Date: Wed,  5 Feb 2025 14:42:09 +0100
+Message-ID: <20250205134509.579147852@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,165 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chun-Tse Shao <ctshao@google.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 1be9264158ef4818393e5d8144887a1a5d3cc480 ]
+[ Upstream commit aa09de104d421e7ff8d8cde9af98568ce62a002c ]
 
-`parse_lock_type` can only add the first lock flag in `lock_type_table`
-given input `str`. For example, for `Y rwlock`, it only adds `rwlock:R`
-into this perf session. Another example is for `-Y mutex`, it only adds
-the mutex without `LCB_F_SPIN` flag. The patch fixes this issue, makes
-sure both `rwlock:R` and `rwlock:W` will be added with `-Y rwlock`, and
-so on.
+The bindings requires the avee-supply, use the same regulator as
+the avdd (positive voltage) which would also provide the negative
+voltage by definition.
 
-Testing:
-  $ ./perf lock con -ab -Y mutex,rwlock -- perf bench sched pipe
-  # Running 'sched/pipe' benchmark:
-  # Executed 1000000 pipe operations between two processes
+The fixes:
+sc7180-trogdor-quackingstick-r0.dts: panel@0: 'avee-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/display/panel/boe,tv101wum-nl6.yaml#
 
-       Total time: 9.313 [sec]
-
-         9.313976 usecs/op
-           107365 ops/sec
-   contended   total wait     max wait     avg wait         type   caller
-
-         176      1.65 ms     19.43 us      9.38 us        mutex   pipe_read+0x57
-          34    180.14 us     10.93 us      5.30 us        mutex   pipe_write+0x50
-           7     77.48 us     16.09 us     11.07 us        mutex   do_epoll_wait+0x24d
-           7     74.70 us     13.50 us     10.67 us        mutex   do_epoll_wait+0x24d
-           3     35.97 us     14.44 us     11.99 us     rwlock:W   ep_done_scan+0x2d
-           3     35.00 us     12.23 us     11.66 us     rwlock:W   do_epoll_wait+0x255
-           2     15.88 us     11.96 us      7.94 us     rwlock:W   do_epoll_wait+0x47c
-           1     15.23 us     15.23 us     15.23 us     rwlock:W   do_epoll_wait+0x4d0
-           1     14.26 us     14.26 us     14.26 us     rwlock:W   ep_done_scan+0x2d
-           2     14.00 us      7.99 us      7.00 us        mutex   pipe_read+0x282
-           1     12.29 us     12.29 us     12.29 us     rwlock:R   ep_poll_callback+0x35
-           1     12.02 us     12.02 us     12.02 us     rwlock:W   do_epoll_ctl+0xb65
-           1     10.25 us     10.25 us     10.25 us     rwlock:R   ep_poll_callback+0x35
-           1      7.86 us      7.86 us      7.86 us        mutex   do_epoll_ctl+0x6c1
-           1      5.04 us      5.04 us      5.04 us        mutex   do_epoll_ctl+0x3d4
-
-[namhyung: Add a comment and rename to 'mutex:spin' for consistency
-
-Fixes: d783ea8f62c4 ("perf lock contention: Simplify parse_lock_type()")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Chun-Tse Shao <ctshao@google.com>
-Cc: nick.forrington@arm.com
-Link: https://lore.kernel.org/r/20250116235838.2769691-1-ctshao@google.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20241230-topic-misc-dt-fixes-v4-3-1e6880e9dda3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-lock.c | 66 ++++++++++++++++++++++++---------------
- 1 file changed, 41 insertions(+), 25 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
-index 062e2b56a2ab5..33a456980664a 100644
---- a/tools/perf/builtin-lock.c
-+++ b/tools/perf/builtin-lock.c
-@@ -1591,8 +1591,8 @@ static const struct {
- 	{ LCB_F_PERCPU | LCB_F_WRITE,	"pcpu-sem:W",	"percpu-rwsem" },
- 	{ LCB_F_MUTEX,			"mutex",	"mutex" },
- 	{ LCB_F_MUTEX | LCB_F_SPIN,	"mutex",	"mutex" },
--	/* alias for get_type_flag() */
--	{ LCB_F_MUTEX | LCB_F_SPIN,	"mutex-spin",	"mutex" },
-+	/* alias for optimistic spinning only */
-+	{ LCB_F_MUTEX | LCB_F_SPIN,	"mutex:spin",	"mutex-spin" },
- };
- 
- static const char *get_type_str(unsigned int flags)
-@@ -1617,19 +1617,6 @@ static const char *get_type_name(unsigned int flags)
- 	return "unknown";
- }
- 
--static unsigned int get_type_flag(const char *str)
--{
--	for (unsigned int i = 0; i < ARRAY_SIZE(lock_type_table); i++) {
--		if (!strcmp(lock_type_table[i].name, str))
--			return lock_type_table[i].flags;
--	}
--	for (unsigned int i = 0; i < ARRAY_SIZE(lock_type_table); i++) {
--		if (!strcmp(lock_type_table[i].str, str))
--			return lock_type_table[i].flags;
--	}
--	return UINT_MAX;
--}
--
- static void lock_filter_finish(void)
- {
- 	zfree(&filters.types);
-@@ -2350,29 +2337,58 @@ static int parse_lock_type(const struct option *opt __maybe_unused, const char *
- 			   int unset __maybe_unused)
- {
- 	char *s, *tmp, *tok;
--	int ret = 0;
- 
- 	s = strdup(str);
- 	if (s == NULL)
- 		return -1;
- 
- 	for (tok = strtok_r(s, ", ", &tmp); tok; tok = strtok_r(NULL, ", ", &tmp)) {
--		unsigned int flags = get_type_flag(tok);
-+		bool found = false;
- 
--		if (flags == -1U) {
--			pr_err("Unknown lock flags: %s\n", tok);
--			ret = -1;
--			break;
-+		/* `tok` is `str` in `lock_type_table` if it contains ':'. */
-+		if (strchr(tok, ':')) {
-+			for (unsigned int i = 0; i < ARRAY_SIZE(lock_type_table); i++) {
-+				if (!strcmp(lock_type_table[i].str, tok) &&
-+				    add_lock_type(lock_type_table[i].flags)) {
-+					found = true;
-+					break;
-+				}
-+			}
-+
-+			if (!found) {
-+				pr_err("Unknown lock flags name: %s\n", tok);
-+				free(s);
-+				return -1;
-+			}
-+
-+			continue;
- 		}
- 
--		if (!add_lock_type(flags)) {
--			ret = -1;
--			break;
-+		/*
-+		 * Otherwise `tok` is `name` in `lock_type_table`.
-+		 * Single lock name could contain multiple flags.
-+		 */
-+		for (unsigned int i = 0; i < ARRAY_SIZE(lock_type_table); i++) {
-+			if (!strcmp(lock_type_table[i].name, tok)) {
-+				if (add_lock_type(lock_type_table[i].flags)) {
-+					found = true;
-+				} else {
-+					free(s);
-+					return -1;
-+				}
-+			}
- 		}
-+
-+		if (!found) {
-+			pr_err("Unknown lock name: %s\n", tok);
-+			free(s);
-+			return -1;
-+		}
-+
- 	}
- 
- 	free(s);
--	return ret;
-+	return 0;
- }
- 
- static bool add_lock_addr(unsigned long addr)
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+index 00229b1515e60..ff8996b4de4e1 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
+@@ -78,6 +78,7 @@
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&lcd_rst>;
+ 		avdd-supply = <&ppvar_lcd>;
++		avee-supply = <&ppvar_lcd>;
+ 		pp1800-supply = <&v1p8_disp>;
+ 		pp3300-supply = <&pp3300_dx_edp>;
+ 		backlight = <&backlight>;
 -- 
 2.39.5
 
