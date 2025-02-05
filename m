@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D5618A6D7;
-	Wed,  5 Feb 2025 14:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922581FC0FC;
+	Wed,  5 Feb 2025 14:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738767232; cv=none; b=oDmnpoSkeCTFw/rASW5tOtMoiKTyicyl+Emt51CmE6a1X8+r0fByESy2Darj0I0v36pM/NUEFymSf/518Uc0dyTa+P3lmXTHkJxye3EGQLxEtv1Gc6tLV69nMjvPljWOvXxhijuMx1Q2AqrIh/bXUC5BTgSeiA2LzXDNzGi0604=
+	t=1738767235; cv=none; b=Q2JWujqhQ7z9elWuOjds8RMkMVRg0rAAX7Q7is02ky6Dha6Hhev2fKw+2jVLICTjAM1TQuK9A4PI6lROORJVJbLkOFjfO5sEbnkq1WAN5Ti91rycqGWXNzJt8BuI+KBPziwqI1FLaMHFm2OKPntNWJWGW+/yuWtmxcSLoXxoZ1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738767232; c=relaxed/simple;
-	bh=ZmUwcjh3s0vgxXfgt/VY/Te+b1oNtWSN/gUKACgiw6o=;
+	s=arc-20240116; t=1738767235; c=relaxed/simple;
+	bh=DvZwyeDAd7X377xuCUKXBQxW6u1gL+6i0NnjlhXsLtk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QaEN8GjlAm6H3x1s7et9seBcXhcJufQg/IDxkSSmWvc22i1r8TzV0T5RuIHOGBZgR/3TPa7R/qy9C9M8unCs/JXptG+I0Gmc2LD7gL3tV0V06Lnfc7PNsM0HVyJteK1CUar8VceTNxZfbbi7WuTNNBkczOOnZcGLjqWOsWlO3wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcaqZK3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=umMuE4cLORJAmBZSOEEmcUeRVLTpM4Yv5IeA6ZrGEbvOMjj+bhsbliERy+/qarJUeFwKq8oz5GaKPn0rvxk8D7PZOFau3XWG9yC3bq90uMNDJPQ4WXtO2+mCfbdr4cBRqK2yBv9e3iCtKXW+rG+jfFudSCwk+FB3V6PXzVbi1GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBVr7Qo4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcaqZK3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE5FC4CED1;
-	Wed,  5 Feb 2025 14:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBVr7Qo4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B23AC4CED1;
+	Wed,  5 Feb 2025 14:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738767232;
-	bh=ZmUwcjh3s0vgxXfgt/VY/Te+b1oNtWSN/gUKACgiw6o=;
+	s=korg; t=1738767235;
+	bh=DvZwyeDAd7X377xuCUKXBQxW6u1gL+6i0NnjlhXsLtk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BcaqZK3o9g3cl4nSqao0a2f3UqOaRfbfJ7brVH7Dk+Y7tfvL5LrZ+dfzqjBQvxJLG
-	 PeDG3BDKIKO6mxgCFsyG+XGi2ign5JO4KLjJd2V+fTXM63Sr8jKpP+vDHtH4VXZwP6
-	 ZJdIQdJLu5uLjQpTtp2NZTTAkM7GxBYY4pK3uSPs=
+	b=RBVr7Qo4wNifVM818yLtKu7yKoMm/Ht7M3MBHigjvi2jhuL6yBArrteyNTOxJZytM
+	 HzD1nHHS1vr4mwdflacE8NykmqWSi24HwC2TsZHCjHSFuFw6ps7ZpvH+VzlkemDo3A
+	 AGsPfmYb3Eb9yHZHNndptV319cur2dsKAz0oT+kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 427/590] PCI: imx6: Deassert apps_reset in imx_pcie_deassert_core_reset()
-Date: Wed,  5 Feb 2025 14:43:02 +0100
-Message-ID: <20250205134511.601149772@linuxfoundation.org>
+Subject: [PATCH 6.13 376/623] arm64: dts: qcom: msm8916: correct sleep clock frequency
+Date: Wed,  5 Feb 2025 14:41:58 +0100
+Message-ID: <20250205134510.604587624@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Zhu <hongxing.zhu@nxp.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit ef61c7d8d032adb467f99d03ccfaa293b417ac75 ]
+[ Upstream commit f088b921890cef28862913e5627bb2e2b5f82125 ]
 
-Since the apps_reset is asserted in imx_pcie_assert_core_reset(), it should
-be deasserted in imx_pcie_deassert_core_reset().
+The MSM8916 platform uses PM8916 to provide sleep clock. According to the
+documentation, that clock has 32.7645 kHz frequency. Correct the sleep
+clock definition.
 
-Fixes: 9b3fe6796d7c ("PCI: imx6: Add code to support i.MX7D")
-Link: https://lore.kernel.org/r/20241126075702.4099164-6-hongxing.zhu@nxp.com
-Signed-off-by: Richard Zhu <hongxing.zhu@nxp.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fixes: f4fb6aeafaaa ("arm64: dts: qcom: msm8916: Add fixed rate on-board oscillators")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20241224-fix-board-clocks-v3-1-e9b08fbeadd3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index 22bf21846b79d..94f5246b3a720 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -775,6 +775,7 @@ static void imx_pcie_assert_core_reset(struct imx_pcie *imx_pcie)
- static int imx_pcie_deassert_core_reset(struct imx_pcie *imx_pcie)
- {
- 	reset_control_deassert(imx_pcie->pciephy_reset);
-+	reset_control_deassert(imx_pcie->apps_reset);
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 5e558bcc9d878..8f35c9af18782 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -125,7 +125,7 @@
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+-			clock-frequency = <32768>;
++			clock-frequency = <32764>;
+ 		};
+ 	};
  
- 	if (imx_pcie->drvdata->core_reset)
- 		imx_pcie->drvdata->core_reset(imx_pcie, false);
 -- 
 2.39.5
 
