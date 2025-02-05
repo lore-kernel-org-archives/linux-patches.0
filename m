@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33D1155CB3;
-	Wed,  5 Feb 2025 14:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B8614B080;
+	Wed,  5 Feb 2025 14:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765473; cv=none; b=YCu74hFDXGgiXefN7mehiC9JcWKakdYfXQC44MlvuCz16fUuPilI7DJcmKnhrRDRMKEEeyOyu8THlpVRGwr36LIH88wDstOLn2PrS0v73C5llHoMrzmsRtkzAqVelDJY/nBUrzYcq+HN0Ak/EHl68vd4CVEHdOcbwJDNLSt7ClQ=
+	t=1738765476; cv=none; b=lRrEpwGcmSbfccu00oTCDri+rXhNQ4EYLKu+dW9HpJHd0KKVPjD/uj2kcQI9o4zlM1IQAwiE8KNYaSYgsKvFpQmC3MJRaYqSjxKB48JqImwNMqgYSRDTuwK3gTzzUzW7nrgowex8zuBpypS/9rFqCyJXb2cxvOrkrBx8W3rA3so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765473; c=relaxed/simple;
-	bh=9ShpvCY4fitGzvqgUhOYynzA/ZuylWGafabvyCgKs2U=;
+	s=arc-20240116; t=1738765476; c=relaxed/simple;
+	bh=39JSK4Iz6h3u7Ax5GVS8VZW3CgqvC3dXSLy9TfImukc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A1xgRPvIQ+dXJEVamFHq2fihLFBXYOj7wHrX6+NWb8G98MvaNRf+lPP0QAakibglhMq/+edvRCqCaphaEufszyA/8RiXz4DkkkcxsjHcePHt8I08MmREfOUqOTZhrQ+IoImE1dZg5zXKfFK6MO7PReTin8hgvRgSD06UX6LvVNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DElwBAgn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dMigO3enEyFf70Usl7Xt9ALSuCCuJTNMPrB3lYAIGj33aOJ8KxSSU7hTC4Ndr4+vJS9blHdDP7++x+wLj5qAuI7jV+QnpbNqMEDVrAlm/mne11mGroSC4L0n7FB9RnJeq2uVWubfKQYRDhgI6CNFYggXVtrJTzqT+DQel/wO08M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gs6CzLnO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DElwBAgn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF33DC4CED1;
-	Wed,  5 Feb 2025 14:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gs6CzLnO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7ECC4CED1;
+	Wed,  5 Feb 2025 14:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738765473;
-	bh=9ShpvCY4fitGzvqgUhOYynzA/ZuylWGafabvyCgKs2U=;
+	s=korg; t=1738765476;
+	bh=39JSK4Iz6h3u7Ax5GVS8VZW3CgqvC3dXSLy9TfImukc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DElwBAgnKQ6IgxyETrVWGwkcFAHI/2TLXqcNjBV3MOj7fBv8SuEEBwgzsjB1I5b2V
-	 HJwSE3ECZ2Ki4yuACc6902svcmukzGvrrD/yt3aGUsP7l9tfDao6GBr0d+TsUHnRp5
-	 5Z20Xh1ZE8+EHbdE3uIn1PpvByinzvM6GSyW3zDE=
+	b=Gs6CzLnOGnXl+vBvjlMwvHasizJeS527U5GOBwyCruMkFUHNsQKB2a7j+xWQH3+b9
+	 xo/64Y/ivHq6LMDjqLYHXaqu/BltCgCCOb/vo7SGzAJt3zEwHOCihoeY7Shh+oToHt
+	 21zPV1GeI1ZbY7b4rOMiV98qYxJsu42i1kDOxdp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Han <hanchunchao@inspur.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.13 181/623] wifi: mt76: mt7925: fix NULL deref check in mt7925_change_vif_links
-Date: Wed,  5 Feb 2025 14:38:43 +0100
-Message-ID: <20250205134503.160095502@linuxfoundation.org>
+Subject: [PATCH 6.12 223/590] net/mlxfw: Drop hard coded max FW flash image size
+Date: Wed,  5 Feb 2025 14:39:38 +0100
+Message-ID: <20250205134503.815526758@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
-References: <20250205134456.221272033@linuxfoundation.org>
+In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
+References: <20250205134455.220373560@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +50,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.13-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Charles Han <hanchunchao@inspur.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 5cd0bd815c8a48862a296df9b30e0ea0da14acd3 ]
+[ Upstream commit 70d81f25cc92cc4e914516c9935ae752f27d78ad ]
 
-In mt7925_change_vif_links() devm_kzalloc() may return NULL but this
-returned value is not checked.
+Currently, mlxfw kernel module limits FW flash image size to be
+10MB at most, preventing the ability to burn recent BlueField-3
+FW that exceeds the said size limit.
 
-Fixes: 69acd6d910b0 ("wifi: mt76: mt7925: add mt7925_change_vif_links")
-Signed-off-by: Charles Han <hanchunchao@inspur.com>
-Link: https://patch.msgid.link/20241025075554.181572-1-hanchunchao@inspur.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Thus, drop the hard coded limit. Instead, rely on FW's
+max_component_size threshold that is reported in MCQI register
+as the size limit for FW image.
+
+Fixes: 410ed13cae39 ("Add the mlxfw module for Mellanox firmware flash process")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Link: https://patch.msgid.link/1737030796-1441634-1-git-send-email-moshe@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index 791c8b00e1126..a5110f8485e52 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -1946,6 +1946,8 @@ mt7925_change_vif_links(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 					     GFP_KERNEL);
- 			mlink = devm_kzalloc(dev->mt76.dev, sizeof(*mlink),
- 					     GFP_KERNEL);
-+			if (!mconf || !mlink)
-+				return -ENOMEM;
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
+index 46245e0b24623..43c84900369a3 100644
+--- a/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
++++ b/drivers/net/ethernet/mellanox/mlxfw/mlxfw_fsm.c
+@@ -14,7 +14,6 @@
+ #define MLXFW_FSM_STATE_WAIT_TIMEOUT_MS 30000
+ #define MLXFW_FSM_STATE_WAIT_ROUNDS \
+ 	(MLXFW_FSM_STATE_WAIT_TIMEOUT_MS / MLXFW_FSM_STATE_WAIT_CYCLE_MS)
+-#define MLXFW_FSM_MAX_COMPONENT_SIZE (10 * (1 << 20))
  
- 		mconfs[link_id] = mconf;
+ static const int mlxfw_fsm_state_errno[] = {
+ 	[MLXFW_FSM_STATE_ERR_ERROR] = -EIO,
+@@ -229,7 +228,6 @@ static int mlxfw_flash_component(struct mlxfw_dev *mlxfw_dev,
+ 		return err;
+ 	}
+ 
+-	comp_max_size = min_t(u32, comp_max_size, MLXFW_FSM_MAX_COMPONENT_SIZE);
+ 	if (comp->data_size > comp_max_size) {
+ 		MLXFW_ERR_MSG(mlxfw_dev, extack,
+ 			      "Component size is bigger than limit", -EINVAL);
 -- 
 2.39.5
 
