@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5EA1FCD0C;
-	Wed,  5 Feb 2025 14:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149A518C039;
+	Wed,  5 Feb 2025 14:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738766858; cv=none; b=FpXGhQ+WZSKhVbqdOrYoBSPNVmkukDuGlIcGYYZnVOMSngIrffXZ8T5QPnejBnJiZTqhx/FKNWyrtnfPSDm5HZ5FXZ+a6FxX34Tv+vozIsLZryNDP0Y+Pe8zszUjOg7cnxLr3YxHtmfzEKDRumZ6W65nnScsmCkGsUc1CWkQ7pk=
+	t=1738766862; cv=none; b=Zs3gP4oMHbnx5KB2t3Qee6z+NVamL87ORBZrmVES4wmVsLncUONfBVGOW1X5CBcfl664e8xrIcHnf2MNPJ4UEDfSw9Goxf70tzb1kbV3UW8WbzEov+vFPEaQcLZr3o62Ihs5x4kOK2JfrtY7ZgB7ArQue1W/Xuiaph7zZ/QPmec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738766858; c=relaxed/simple;
-	bh=yCuxGwhg6UPdKd+qMry/Kd97mNY/7egpXKuou5XJD/s=;
+	s=arc-20240116; t=1738766862; c=relaxed/simple;
+	bh=yfbAVcsjPS/rvApQDjR5AnJNHzE8F2P5PZniOaMcWhU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojYs7yqd/L64+QbGDFCB/GjxL3wiM0rK4QLL/D9FYnwE993L+a0Wu5tKoRai7ZthW9GHeM93uopP7U8uBkGEzJkLpvTjSXc9ngdAZzoUen9xhcUtr756lIh3slns5RTgrqrgtqWcpeuvd0qGq5FHyDb+iX6zmfMgdfNL752uuNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmfBYAo2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nak5xURgrlYm8+s9mGRBRbh8qr90oZhVqaRm6rBU0WlhTg4+zUVnacO8JvnhOHr99lys2yb80Sq914NSIw6q5EEIj2ltyLmQWfqsTqTv7mgR0F6WG8vk/X1YHznv4+JUsA9s3Th+tv7ZYs0O8s1Xr76/zTXziyVZR5Wm/hIljs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSxb+bEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmfBYAo2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECACCC4CED1;
-	Wed,  5 Feb 2025 14:47:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSxb+bEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC93C4CED1;
+	Wed,  5 Feb 2025 14:47:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1738766858;
-	bh=yCuxGwhg6UPdKd+qMry/Kd97mNY/7egpXKuou5XJD/s=;
+	s=korg; t=1738766861;
+	bh=yfbAVcsjPS/rvApQDjR5AnJNHzE8F2P5PZniOaMcWhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vmfBYAo2bps8+NxBAMeuk1xH7hDkNsDGmLNbBTZNb7Dh9Vw6FusRJH3ylgqgu1kyl
-	 UKtYhHJdLrSP9+U8RHOUMKfwD5SYVjM2/gu1df/PDw/pft+copVjO8S9y8c5qNE+3V
-	 1y6BPBZUNk/WsVZz6MJxhzRg50FuZQqsWZvJ1K44=
+	b=BSxb+bEAlREOD9oU8P50y4bwpmaoQ/WNilL+K0nsz7C0FY9qfa7vusx2ihBX7OhoK
+	 2/DH1Uh+shRHlh9KCFZcS5HMp3RLhd1kCg46vc/+e1yeCSTb68fOXG6PS2U1PFiOzI
+	 8DIsivxWL+nCJpaOXoJKsgfOKdFlSsrck1WjPPq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Vishal Chourasia <vishalc@linux.ibm.com>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 372/590] arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: Convert mezzanine riser to dtso
-Date: Wed,  5 Feb 2025 14:42:07 +0100
-Message-ID: <20250205134509.501581193@linuxfoundation.org>
+Subject: [PATCH 6.13 321/623] tools: Sync if_xdp.h uapi tooling header
+Date: Wed,  5 Feb 2025 14:41:03 +0100
+Message-ID: <20250205134508.501601429@linuxfoundation.org>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250205134455.220373560@linuxfoundation.org>
-References: <20250205134455.220373560@linuxfoundation.org>
+In-Reply-To: <20250205134456.221272033@linuxfoundation.org>
+References: <20250205134456.221272033@linuxfoundation.org>
 User-Agent: quilt/0.68
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+6.13-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Vishal Chourasia <vishalc@linux.ibm.com>
 
-[ Upstream commit 30df676a31b7a4881352097d8ae7c2bb83515a17 ]
+[ Upstream commit 01f3ce5328c405179b2c69ea047c423dad2bfa6d ]
 
-Convert the navigation / camera mezzanine from its own dts to a dtso. A
-small amount of additional includes / address / cell size change needs to
-be applied to convert.
+Sync if_xdp.h uapi header to remove following warning:
 
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # rb3
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20241025-b4-linux-next-24-10-25-camss-dts-fixups-v1-2-cdff2f1a5792@linaro.org
-[bjorn: Corrected up makefile syntax, added missing cells for cci_i2c1]
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 80b47f14d543 ("arm64: dts: qcom: sdm845-db845c-navigation-mezzanine: remove disabled ov7251 camera")
+  Warning: Kernel ABI header at 'tools/include/uapi/linux/if_xdp.h'
+  differs from latest version at 'include/uapi/linux/if_xdp.h'
+
+Fixes: 48eb03dd2630 ("xsk: Add TX timestamp and TX checksum offload support")
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20250115032248.125742-1-yoong.siang.song@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/Makefile                      |  3 +++
- ...ine.dts => sdm845-db845c-navigation-mezzanine.dtso} | 10 +++++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
- rename arch/arm64/boot/dts/qcom/{sdm845-db845c-navigation-mezzanine.dts => sdm845-db845c-navigation-mezzanine.dtso} (91%)
+ tools/include/uapi/linux/if_xdp.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index ae002c7cf1268..b13c169ec70d2 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -207,6 +207,9 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
-+
-+sdm845-db845c-navigation-mezzanine-dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
-+
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-similarity index 91%
-rename from arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
-rename to arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-index a21caa6f3fa25..b5f717d0ddd97 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-navigation-mezzanine.dtso
-@@ -4,8 +4,10 @@
+diff --git a/tools/include/uapi/linux/if_xdp.h b/tools/include/uapi/linux/if_xdp.h
+index 2f082b01ff228..42ec5ddaab8dc 100644
+--- a/tools/include/uapi/linux/if_xdp.h
++++ b/tools/include/uapi/linux/if_xdp.h
+@@ -117,12 +117,12 @@ struct xdp_options {
+ 	((1ULL << XSK_UNALIGNED_BUF_OFFSET_SHIFT) - 1)
+ 
+ /* Request transmit timestamp. Upon completion, put it into tx_timestamp
+- * field of union xsk_tx_metadata.
++ * field of struct xsk_tx_metadata.
   */
+ #define XDP_TXMD_FLAGS_TIMESTAMP		(1 << 0)
  
- /dts-v1/;
-+/plugin/;
- 
--#include "sdm845-db845c.dts"
-+#include <dt-bindings/clock/qcom,camcc-sdm845.h>
-+#include <dt-bindings/gpio/gpio.h>
- 
- &camss {
- 	vdda-phy-supply = <&vreg_l1a_0p875>;
-@@ -28,6 +30,9 @@
- };
- 
- &cci_i2c0 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
- 	camera@10 {
- 		compatible = "ovti,ov8856";
- 		reg = <0x10>;
-@@ -65,6 +70,9 @@
- };
- 
- &cci_i2c1 {
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
- 	camera@60 {
- 		compatible = "ovti,ov7251";
- 
+ /* Request transmit checksum offload. Checksum start position and offset
+- * are communicated via csum_start and csum_offset fields of union
++ * are communicated via csum_start and csum_offset fields of struct
+  * xsk_tx_metadata.
+  */
+ #define XDP_TXMD_FLAGS_CHECKSUM			(1 << 1)
 -- 
 2.39.5
 
